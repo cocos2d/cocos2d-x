@@ -207,7 +207,7 @@ Rect LabelBMFont::getBoundingBox() const
     return _label->getBoundingBox();
 }
 
-void LabelBMFont::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void LabelBMFont::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     Node::draw(renderer, transform, transformUpdated);
 #if CC_LABELBMFONT_DEBUG_DRAW
@@ -218,10 +218,11 @@ void LabelBMFont::draw(Renderer *renderer, const kmMat4 &transform, bool transfo
 }
 
 #if CC_LABELBMFONT_DEBUG_DRAW
-void LabelBMFont::drawDebugData(const kmMat4& transform, bool transformUpdated)
+void LabelBMFont::drawDebugData(const Matrix& transform, bool transformUpdated)
 {
-    kmGLPushMatrix();
-    kmGLLoadMatrix(&transform);
+    Director* director = Director::getInstance();
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
 
     auto size = getContentSize();
 
@@ -235,7 +236,7 @@ void LabelBMFont::drawDebugData(const kmMat4& transform, bool transformUpdated)
     
     DrawPrimitives::drawPoly(vertices, 4, true);
 
-    kmGLPopMatrix();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 #endif
 
