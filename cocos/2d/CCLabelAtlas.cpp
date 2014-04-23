@@ -39,6 +39,11 @@ THE SOFTWARE.
 #include "kazmath/GL/matrix.h"
 #include "deprecated/CCString.h"
 
+#if CC_LABELATLAS_DEBUG_DRAW
+#include "renderer/CCRenderer.h"
+#include "CCDirector.h"
+#endif
+
 NS_CC_BEGIN
 
 //CCLabelAtlas - Creation & Init
@@ -245,17 +250,35 @@ void LabelAtlas::updateColor()
 
 //CCLabelAtlas - draw
 
-#if CC_LABELATLAS_DEBUG_DRAW    
-void LabelAtlas::draw()
+void LabelAtlas::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
-    AtlasNode::draw();
+    AtlasNode::draw(renderer, transform, transformUpdated);
+#if CC_LABELATLAS_DEBUG_DRAW
+    _customDebugDrawCommand.init(_globalZOrder);
+    _customDebugDrawCommand.func = CC_CALLBACK_0(LabelAtlas::drawDebugData, this,transform,transformUpdated);
+    renderer->addCommand(&_customDebugDrawCommand);
+#endif
+}
 
-    const Size& s = this->getContentSize();
-    Point vertices[4]={
-        Point(0,0),Point(s.width,0),
-        Point(s.width,s.height),Point(0,s.height),
+#if CC_LABELATLAS_DEBUG_DRAW
+void LabelAtlas::drawDebugData(const kmMat4& transform, bool transformUpdated)
+{
+    kmGLPushMatrix();
+    kmGLLoadMatrix(&transform);
+
+    auto size = getContentSize();
+
+    Point vertices[4]=
+    {
+        Point::ZERO,
+        Point(size.width, 0),
+        Point(size.width, size.height),
+        Point(0, size.height)
     };
-    ccDrawPoly(vertices, 4, true);
+
+    DrawPrimitives::drawPoly(vertices, 4, true);
+
+    kmGLPopMatrix();
 }
 #endif
 

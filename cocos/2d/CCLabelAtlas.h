@@ -28,7 +28,9 @@ THE SOFTWARE.
 #define __CCLABEL_ATLAS_H__
 
 #include "CCAtlasNode.h"
-
+#if CC_LABELATLAS_DEBUG_DRAW
+#include "renderer/CCCustomCommand.h"
+#endif
 NS_CC_BEGIN
 
 /**
@@ -80,10 +82,7 @@ public:
     virtual void setString(const std::string &label) override;
     virtual const std::string& getString(void) const override;
     virtual std::string getDescription() const override;
-
-#if CC_LABELATLAS_DEBUG_DRAW
-    virtual void draw() override;
-#endif
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
 
 protected:
     LabelAtlas()
@@ -95,6 +94,11 @@ protected:
         _string.clear();
     }
     virtual void updateColor() override;
+
+#if CC_LABELATLAS_DEBUG_DRAW
+    CustomCommand   _customDebugDrawCommand;
+    void drawDebugData(const kmMat4& transform, bool transformUpdated);
+#endif //CC_SPRITE_DEBUG_DRAW
 
     // string to render
     std::string _string;
