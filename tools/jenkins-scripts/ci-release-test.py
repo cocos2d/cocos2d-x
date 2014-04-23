@@ -48,25 +48,14 @@ def make_temp_dir():
           os.system(cmd)
 
 def main():
-    #get payload from os env
-    payload_str = os.environ['payload']
-    payload_str = payload_str.decode('utf-8','ignore')
-    #parse to json obj
-    payload = json.loads(payload_str)
-
-    #get pull number
-    tag = payload['tag']
+    #get tag
+    tag = os.environ['tag']
     print 'tag:' + tag
 
-    url = payload['html_url']
-    print "url:" + url
-    pr_desc = '<h3><a href=' + url + '>' + tag + ' is release' + '</a></h3>'
-
-    #get statuses url
-    statuses_url = payload['statuses_url']
+    pr_desc = '<h3>' + tag + ' is release' + '</h3>'
 
     #get pr target branch
-    branch = payload['branch']
+    branch = 'develop'
 
     #set parent build description
     jenkins_url = os.environ['JENKINS_URL']
@@ -75,16 +64,6 @@ def main():
     target_url = jenkins_url + 'job/' + job_name + '/' + build_number + '/'
 
     set_description(pr_desc, target_url)
- 
-    #set commit status to pending
-    data = {"state":"pending", "target_url":target_url}
-    access_token = os.environ['GITHUB_ACCESS_TOKEN']
-    Headers = {"Authorization":"token " + access_token} 
-
-    try:
-        requests.post(statuses_url, data=json.dumps(data), headers=Headers)
-    except:
-        traceback.print_exc()
 
     #pull origin develop
     os.system('git reset --hard')

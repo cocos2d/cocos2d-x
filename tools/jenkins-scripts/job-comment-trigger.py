@@ -106,8 +106,12 @@ def main():
     print 'job_trigger_url is: ', job_trigger_url
 
     #send trigger and payload
-    post_data = {'payload':""}
-    post_data['payload']= json.dumps(payload_forword)
+    if('tag' in payload_forword):
+      post_data = {'tag':""}
+      post_data['tag'] = payload_forword['tag']
+    else:
+      post_data = {'payload':""}
+      post_data['payload']= json.dumps(payload_forword)
     requests.post(job_trigger_url, data=post_data)
 
     return(0)
