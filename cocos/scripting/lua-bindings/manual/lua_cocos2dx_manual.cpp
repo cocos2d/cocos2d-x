@@ -58,47 +58,51 @@ static int tolua_cocos2d_MenuItemImage_create(lua_State* tolua_S)
         }
     } while (0);
     do {
+        if (argc == 2)
+        {
 #if COCOS2D_DEBUG >= 1
-		if (!tolua_isstring(tolua_S,2,0,&tolua_err) ||
-            !tolua_isstring(tolua_S,3,0,&tolua_err))
-        {
-            ok = false;
-		}
-#endif        
-        if (!ok)
-        {
-            ok = true;
-            break;
+            if (!tolua_isstring(tolua_S,2,0,&tolua_err) ||
+                !tolua_isstring(tolua_S,3,0,&tolua_err))
+            {
+                ok = false;
+            }
+#endif
+            if (!ok)
+            {
+                ok = true;
+                break;
+            }
+            const std::string normalImage = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
+            const std::string selectedImage = ((const std::string)  tolua_tocppstring(tolua_S,3,0));
+            MenuItemImage* tolua_ret = (MenuItemImage*)  MenuItemImage::create(normalImage,selectedImage);
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
+            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"cc.MenuItemImage");
+            return 1;
         }
-        const std::string normalImage = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
-        const std::string selectedImage = ((const std::string)  tolua_tocppstring(tolua_S,3,0));
-        MenuItemImage* tolua_ret = (MenuItemImage*)  MenuItemImage::create(normalImage,selectedImage);
-        int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
-        int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
-        toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"cc.MenuItemImage");
-        return 1;
-        
     } while (0);
     do {
-#if COCOS2D_DEBUG >= 1
-        if (!tolua_isstring(tolua_S,2,0,&tolua_err) ||
-            !tolua_isstring(tolua_S,3,0,&tolua_err) ||
-            !tolua_isstring(tolua_S,4,0,&tolua_err) )
+        if (argc == 3)
         {
-            goto tolua_lerror;
-            break;
-        }
+#if COCOS2D_DEBUG >= 1
+            if (!tolua_isstring(tolua_S,2,0,&tolua_err) ||
+                !tolua_isstring(tolua_S,3,0,&tolua_err) ||
+                !tolua_isstring(tolua_S,4,0,&tolua_err) )
+            {
+                goto tolua_lerror;
+                break;
+            }
 #endif
-        const std::string normalImage = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
-        const std::string selectedImage = ((const std::string)  tolua_tocppstring(tolua_S,3,0));
-        const std::string disabledImage = ((const std::string)  tolua_tocppstring(tolua_S,4,0));
-        
-        MenuItemImage* tolua_ret = (MenuItemImage*)  MenuItemImage::create(normalImage,selectedImage,disabledImage);
-        int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
-        int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
-        toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"cc.MenuItemImage");
-        return 1;
-        
+            const std::string normalImage = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
+            const std::string selectedImage = ((const std::string)  tolua_tocppstring(tolua_S,3,0));
+            const std::string disabledImage = ((const std::string)  tolua_tocppstring(tolua_S,4,0));
+            
+            MenuItemImage* tolua_ret = (MenuItemImage*)  MenuItemImage::create(normalImage,selectedImage,disabledImage);
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
+            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"cc.MenuItemImage");
+            return 1;
+        }
     } while (0);
 
 	CCLOG("'create' has wrong number of arguments: %d, was expecting %d\n", argc, 0);
