@@ -1111,6 +1111,10 @@ Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Va
                 {
                     if (!dynamic_cast<Layout*>(widget))
                     {
+                        if (child->getPositionType() == cocos2d::ui::POSITION_PERCENT)
+                        {
+                            child->setPositionPercent(Vector2(child->getPositionPercent().x + 0.5f, child->getPositionPercent().y + 0.5f));
+                        }
                         child->setPosition(Vector2(child->getPositionX() + widget->getSize().width / 2.0f, child->getPositionY() + widget->getSize().height / 2.0f));
                     }
                     widget->addChild(child);
