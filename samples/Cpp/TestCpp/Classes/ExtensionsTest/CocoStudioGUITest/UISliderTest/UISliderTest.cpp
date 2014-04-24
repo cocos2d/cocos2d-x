@@ -77,7 +77,7 @@ void UISliderTest::sliderEvent(CCObject *pSender, SliderEventType type)
 {
     switch (type)
     {
-        case ::cocos2d::gui::SLIDER_PERCENTCHANGED:
+        case SLIDER_PERCENTCHANGED:
         {
             UISlider* slider = dynamic_cast<UISlider*>(pSender);
             int percent = slider->getPercent();
@@ -135,7 +135,7 @@ bool UISliderTest_Scale9::init()
         slider->loadProgressBarTexture("cocosgui/slider_bar_active_9patch.png");
         slider->setScale9Enabled(true);
         slider->setCapInsets(CCRectMake(0, 0, 0, 0));
-        slider->setSize(CCSizeMake(250, 10));
+        slider->setSize(CCSizeMake(250, 19));
         slider->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
 //        slider->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f + slider->getSize().height * 2));
         slider->addEventListenerSlider(this, sliderpercentchangedselector(UISliderTest_Scale9::sliderEvent));

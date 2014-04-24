@@ -26,7 +26,7 @@
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
 
 static const int LABELATLAS_RENDERER_Z = (-1);
 
@@ -80,9 +80,12 @@ void UICCLabelAtlas::updateDisplayedOpacity(GLubyte opacity)
 
 
 
+    
+IMPLEMENT_CLASS_GUI_INFO(LabelAtlas)
+    
 
 LabelAtlas::LabelAtlas():
-_laberAtlasRenderer(NULL),
+_labelAtlasRenderer(NULL),
 _stringValue(""),
 _charMapFileName(""),
 _itemWidth(0),
@@ -111,8 +114,8 @@ LabelAtlas* LabelAtlas::create()
 
 void LabelAtlas::initRenderer()
 {
-    _laberAtlasRenderer = UICCLabelAtlas::create();
-    CCNodeRGBA::addChild(_laberAtlasRenderer, LABELATLAS_RENDERER_Z, -1);
+    _labelAtlasRenderer = UICCLabelAtlas::create();
+    CCNode::addChild(_labelAtlasRenderer, LABELATLAS_RENDERER_Z, -1);
 }
 
 void LabelAtlas::setProperty(const std::string& stringValue, const std::string& charMapFile, int itemWidth, int itemHeight, const std::string& startCharMap)
@@ -122,7 +125,7 @@ void LabelAtlas::setProperty(const std::string& stringValue, const std::string& 
     _itemWidth = itemWidth;
     _itemHeight = itemHeight;
     _startCharMap = startCharMap;
-    _laberAtlasRenderer->setProperty(stringValue, charMapFile, itemWidth, itemHeight, (int)(startCharMap[0]));
+    _labelAtlasRenderer->setProperty(stringValue, charMapFile, itemWidth, itemHeight, (int)(startCharMap[0]));
     updateAnchorPoint();
     labelAtlasScaleChangedWithSize();
 }
@@ -130,19 +133,19 @@ void LabelAtlas::setProperty(const std::string& stringValue, const std::string& 
 void LabelAtlas::setStringValue(const std::string& value)
 {
     _stringValue = value;
-    _laberAtlasRenderer->setString(value.c_str());
+    _labelAtlasRenderer->setString(value.c_str());
     labelAtlasScaleChangedWithSize();
 }
 
 const char* LabelAtlas::getStringValue() const
 {
-    return _laberAtlasRenderer->getString();
+    return _labelAtlasRenderer->getString();
 }
 
 void LabelAtlas::setAnchorPoint(const CCPoint &pt)
 {
     Widget::setAnchorPoint(pt);
-    _laberAtlasRenderer->setAnchorPoint(CCPoint(pt.x, pt.y));
+    _labelAtlasRenderer->setAnchorPoint(CCPoint(pt.x, pt.y));
 }
 
 void LabelAtlas::onSizeChanged()
@@ -153,34 +156,49 @@ void LabelAtlas::onSizeChanged()
 
 const CCSize& LabelAtlas::getContentSize() const
 {
-    return _laberAtlasRenderer->getContentSize();
+    return _labelAtlasRenderer->getContentSize();
 }
 
 CCNode* LabelAtlas::getVirtualRenderer()
 {
-    return _laberAtlasRenderer;
+    return _labelAtlasRenderer;
 }
 
 void LabelAtlas::labelAtlasScaleChangedWithSize()
 {
     if (_ignoreSize)
     {
-        _laberAtlasRenderer->setScale(1.0f);
-        _size = _laberAtlasRenderer->getContentSize();
+        _labelAtlasRenderer->setScale(1.0f);
+        _size = _labelAtlasRenderer->getContentSize();
     }
     else
     {
-        CCSize textureSize = _laberAtlasRenderer->getContentSize();
+        CCSize textureSize = _labelAtlasRenderer->getContentSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
-            _laberAtlasRenderer->setScale(1.0f);
+            _labelAtlasRenderer->setScale(1.0f);
             return;
         }
         float scaleX = _size.width / textureSize.width;
         float scaleY = _size.height / textureSize.height;
-        _laberAtlasRenderer->setScaleX(scaleX);
-        _laberAtlasRenderer->setScaleY(scaleY);
+        _labelAtlasRenderer->setScaleX(scaleX);
+        _labelAtlasRenderer->setScaleY(scaleY);
     }
+}
+    
+void LabelAtlas::updateTextureColor()
+{
+    updateColorToRenderer(_labelAtlasRenderer);
+}
+
+void LabelAtlas::updateTextureOpacity()
+{
+    updateOpacityToRenderer(_labelAtlasRenderer);
+}
+
+void LabelAtlas::updateTextureRGBA()
+{
+    updateRGBAToRenderer(_labelAtlasRenderer);
 }
 
 std::string LabelAtlas::getDescription() const

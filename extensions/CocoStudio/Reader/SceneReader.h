@@ -35,25 +35,45 @@ NS_CC_EXT_BEGIN
 typedef void (CCObject::*SEL_CallFuncOD)(CCObject*, void*);
 #define callfuncOD_selector(_SELECTOR) (SEL_CallFuncOD)(&_SELECTOR)
 
+typedef enum {
+    ///parent: Empty Node
+    ///            ComRender(Sprite, Armature, TMXTiledMap, ParticleSystemQuad, GUIComponent)
+    ///            ComAttribute
+    ///            ComAudio
+    ///            ....
+    ATTACH_EMPTY_NODE,
+
+    ///parent:   ComRender(Sprite, Armature, TMXTiledMap, ParticleSystemQuad, GUIComponent)
+    ///          ComAttribute
+    ///          ComAudio
+    ///          .....
+    ATTACH_RENDER_NODE,
+
+    /// Default AttachComponentType is _EmptyNode
+    DEFAULT = ATTACH_EMPTY_NODE,
+} AttachComponentType;
+
 /**
 *   @js NA
 *   @lua NA
 */
-class SceneReader
+class CC_EX_DLL SceneReader
 {
-public:
-	SceneReader(void);
-	virtual ~SceneReader(void);
-
 public:
 	static SceneReader* sharedSceneReader();
 	static void purge();
 	static const char* sceneReaderVersion();
-	cocos2d::CCNode* createNodeWithSceneFile(const char *pszFileName);
+	cocos2d::CCNode* createNodeWithSceneFile(const char *pszFileName, AttachComponentType eAttachComponent = ATTACH_EMPTY_NODE);
 	static void setTarget(CCObject *rec, SEL_CallFuncOD selector);
 	cocos2d::CCNode* getNodeByTag(int nTag);
+    inline AttachComponentType getAttachComponentType(){return _eAttachComponent;}
+
+public:
+    SceneReader(void);
+    virtual ~SceneReader(void);
+
 private:
-    cocos2d::CCNode* createObject(const rapidjson::Value &root, cocos2d::CCNode* parent);
+    cocos2d::CCNode* createObject(const rapidjson::Value &root, cocos2d::CCNode* parent, AttachComponentType eAttachComponent);
     void setPropertyFromJsonDict(const rapidjson::Value &root, cocos2d::CCNode *node);
     bool readJson(const char *pszFileName, rapidjson::Document &doc);
 	cocos2d::CCNode* nodeByTag(cocos2d::CCNode *pParent, int nTag);
@@ -62,6 +82,7 @@ private:
 	static CCObject*       _pListener;
 	static SEL_CallFuncOD  _pfnSelector;
 	cocos2d::CCNode *_pNode;
+	AttachComponentType _eAttachComponent;
 };
 
 

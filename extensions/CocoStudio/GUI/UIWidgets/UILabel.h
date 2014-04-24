@@ -29,14 +29,16 @@
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
 
 /**
 *   @js NA
 *   @lua NA
 */
-class Label : public Widget
+class CC_EX_DLL Label : public Widget
 {
+    DECLARE_CLASS_GUI_INFO
+    
 public:
     /**
      * Default constructor
@@ -81,6 +83,8 @@ public:
      */
     void setFontSize(int size);
     
+    int getFontSize();
+    
     /**
      * Sets the font name of label.
      *
@@ -88,6 +92,7 @@ public:
      */
     void setFontName(const std::string& name);
     
+    const char* getFontName();
     /**
      * Sets the touch scale enabled of label.
      *
@@ -101,46 +106,6 @@ public:
      * @return  touch scale enabled of label.
      */
     bool isTouchScaleChangeEnabled();
-    
-    /**
-     * Changes both X and Y scale factor of the widget.
-     *
-     * 1.0 is the default scale factor. It modifies the X and Y scale at the same time.
-     *
-     * @param scale     The scale factor for both X and Y axis.
-     */
-    virtual void setScale(float fScale);
-    
-    /**
-     * Changes the scale factor on X axis of this widget
-     *
-     * The deafult value is 1.0 if you haven't changed it before
-     *
-     * @param fScaleX   The scale factor on X axis.
-     */
-    virtual void setScaleX(float fScaleX);
-    
-    /**
-     * Changes the scale factor on Y axis of this widget
-     *
-     * The Default value is 1.0 if you haven't changed it before.
-     *
-     * @param fScaleY   The scale factor on Y axis.
-     */
-    virtual void setScaleY(float fScaleY);
-    
-
-    //override "setFlipX" method of widget.
-    virtual void setFlipX(bool flipX);
-    
-    //override "setFlipY" method of widget.
-    virtual void setFlipY(bool flipY);
-    
-    //override "isFlipX" method of widget.
-    virtual bool isFlipX();
-    
-    //override "isFlipY" method of widget.
-    virtual bool isFlipY();
     
     //override "setAnchorPoint" method of widget.
     virtual void setAnchorPoint(const CCPoint &pt);
@@ -157,8 +122,16 @@ public:
     virtual std::string getDescription() const;
     
     void setTextAreaSize(const CCSize &size);
+    
+    CCSize getTextAreaSize();
+    
     void setTextHorizontalAlignment(CCTextAlignment alignment);
+    
+    CCTextAlignment getTextHorizontalAlignment();
+    
     void setTextVerticalAlignment(CCVerticalTextAlignment alignment);
+    
+    CCVerticalTextAlignment getTextVerticalAlignment();
 protected:
     virtual bool init();
     virtual void initRenderer();
@@ -166,7 +139,11 @@ protected:
     virtual void onPressStateChangedToPressed();
     virtual void onPressStateChangedToDisabled();
     virtual void onSizeChanged();
-    void clickScale(float scaleX, float scaleY);
+    virtual void updateTextureColor();
+    virtual void updateTextureOpacity();
+    virtual void updateTextureRGBA();
+    virtual void updateFlippedX();
+    virtual void updateFlippedY();
     void labelScaleChangedWithSize();
     virtual Widget* createCloneInstance();
     virtual void copySpecialProperties(Widget* model);

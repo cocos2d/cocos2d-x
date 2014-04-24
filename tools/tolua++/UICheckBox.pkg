@@ -19,10 +19,6 @@ class CheckBox : public Widget
     void setSelectedState(bool selected);
     bool getSelectedState();
     virtual void setAnchorPoint(const CCPoint &pt);
-    virtual void setFlipX(bool flipX);
-    virtual void setFlipY(bool flipY);
-    virtual bool isFlipX();
-    virtual bool isFlipY();
     virtual void onTouchEnded(CCTouch *touch, CCEvent *unused_event);
     virtual const CCSize& getContentSize() const;
     virtual CCNode* getVirtualRenderer();

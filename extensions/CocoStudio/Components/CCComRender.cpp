@@ -36,7 +36,11 @@ CCComRender::CCComRender(void)
 
 CCComRender::CCComRender(cocos2d::CCNode *node, const char *comName)
 {
-    m_pRender = node;
+    if (node != NULL)
+    {		
+        m_pRender = node;
+        m_pRender->retain();    
+    }
     m_strName.assign(comName);
 }
 
@@ -116,18 +120,21 @@ bool CCComRender::serialize(void* r)
         int nResType = DICTOOL->getIntValue_json(fileData, "resourceType", -1);
         if (nResType == 0)
         {
-            if (strcmp(pClassName, "CCSprite") == 0 && strFilePath.find(".png") != strFilePath.npos)
+            if (strcmp(pClassName, "CCSprite") == 0 && (strFilePath.find(".png") != strFilePath.npos || strFilePath.find(".pvr.ccz") != strFilePath.npos))
             {
                 m_pRender = CCSprite::create(strFilePath.c_str());
+                m_pRender->retain();
             }
             else if(strcmp(pClassName, "CCTMXTiledMap") == 0 && strFilePath.find(".tmx") != strFilePath.npos)
             {
                 m_pRender = CCTMXTiledMap::create(strFilePath.c_str());
+                m_pRender->retain();
             }
             else if(strcmp(pClassName, "CCParticleSystemQuad") == 0 && strFilePath.find(".plist") != strFilePath.npos)
             {
                 m_pRender = CCParticleSystemQuad::create(strFilePath.c_str());
                 m_pRender->setPosition(ccp(0.0f, 0.0f));
+                m_pRender->retain();
             }
             else if(strcmp(pClassName, "CCArmature") == 0)
             {
@@ -149,6 +156,7 @@ bool CCComRender::serialize(void* r)
                 CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(strFilePath.c_str());
                 CCArmature *pAr = CCArmature::create(name);
                 m_pRender = pAr;
+                m_pRender->retain();
                 const char *actionName = DICTOOL->getStringValue_json(*v, "selectedactionname");
                 if (actionName != NULL && pAr->getAnimation() != NULL)
                 {
@@ -157,10 +165,11 @@ bool CCComRender::serialize(void* r)
             }
             else if(strcmp(pClassName, "GUIComponent") == 0)
             {
-                cocos2d::gui::TouchGroup* tg = cocos2d::gui::TouchGroup::create();
-                cocos2d::gui::Widget* widget = cocos2d::extension::GUIReader::shareReader()->widgetFromJsonFile(strFilePath.c_str());
+                cocos2d::ui::TouchGroup* tg = cocos2d::ui::TouchGroup::create();
+                cocos2d::ui::Widget* widget = cocos2d::extension::GUIReader::shareReader()->widgetFromJsonFile(strFilePath.c_str());
                 tg->addWidget(widget);
                 m_pRender = tg;
+                m_pRender->retain();
             }
             else
             {
@@ -180,6 +189,7 @@ bool CCComRender::serialize(void* r)
                 strPngFile.replace(pos, strPngFile.length(), ".png");
                 CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(strPlistPath.c_str(), strPngFile.c_str());
                 m_pRender = CCSprite::createWithSpriteFrameName(strFilePath.c_str());
+                m_pRender->retain();
             }
             else
             {

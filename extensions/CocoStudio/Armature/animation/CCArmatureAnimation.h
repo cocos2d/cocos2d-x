@@ -49,7 +49,7 @@ typedef void (CCObject::*SEL_FrameEventCallFunc)(CCBone *, const char *, int, in
 #define movementEvent_selector(_SELECTOR) (SEL_MovementEventCallFunc)(&_SELECTOR)
 #define frameEvent_selector(_SELECTOR) (SEL_FrameEventCallFunc)(&_SELECTOR)
 
-struct CCFrameEvent
+struct CC_EX_DLL CCFrameEvent
 {
     CCBone *bone;
     const char *frameEventName;
@@ -57,7 +57,7 @@ struct CCFrameEvent
     int currentFrameIndex;
 };
 
-struct CCMovementEvent
+struct CC_EX_DLL CCMovementEvent
 {
     CCArmature *armature;
     MovementEventType movementType;
@@ -67,7 +67,7 @@ struct CCMovementEvent
 /**
  *  @lua NA
  */
-class  CCArmatureAnimation : public CCProcessBase
+class  CC_EX_DLL CCArmatureAnimation : public CCProcessBase
 {
 public:
     /**

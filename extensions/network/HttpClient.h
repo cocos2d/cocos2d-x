@@ -45,7 +45,7 @@ NS_CC_EXT_BEGIN
  * @js NA
  * @lua NA
  */
-class CCHttpClient : public CCObject
+class CC_EX_DLL CCHttpClient : public CCObject
 {
 public:
     /** Return the shared instance **/

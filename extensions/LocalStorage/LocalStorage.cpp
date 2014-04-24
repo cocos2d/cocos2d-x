@@ -28,6 +28,7 @@
  */
 
 #include "cocos2d.h"
+#include "LocalStorage.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID && CC_TARGET_PLATFORM != CC_PLATFORM_TIZEN)
 

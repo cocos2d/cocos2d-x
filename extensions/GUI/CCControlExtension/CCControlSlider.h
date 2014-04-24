@@ -42,7 +42,7 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-class CCControlSlider: public CCControl
+class CC_EX_DLL CCControlSlider: public CCControl
 {
     //maunally put in the setters
     /** Contains the receiver¡¯s current value. */

@@ -56,7 +56,10 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/ExtensionsTest/CocoStudioComponentsTest/PlayerController.cpp \
 	../Classes/ExtensionsTest/CocoStudioComponentsTest/ProjectileController.cpp \
 	../Classes/ExtensionsTest/CocoStudioComponentsTest/SceneController.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/CocoStudioGUITest.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/CocosGUIScene.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/GUIEditorTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/CustomGUIScene.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/UIScene.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/UISceneManager.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/UIButtonTest/UIButtonTest.cpp \
@@ -73,6 +76,30 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/UISliderTest/UISliderTest.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/UITextFieldTest/UITextFieldTest.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/UIWidgetAddNodeTest/UIWidgetAddNodeTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UIRichTextTest/UIRichTextTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UIScene_Editor.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UISceneManager_Editor.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UIButtonTest/UIButtonTest_Editor.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UICheckBoxTest/UICheckBoxTest_Editor.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UIImageViewTest/UIImageViewTest_Editor.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UILabelAtlasTest/UILabelAtlasTest_Editor.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UILabelBMFontTest/UILabelBMFontTest_Editor.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UILabelTest/UILabelTest_Editor.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UIListViewTest/UIListViewTest_Editor.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UILoadingBarTest/UILoadingBarTest_Editor.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UIPageViewTest/UIPageViewTest_Editor.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UILayoutTest/UILayoutTest_Editor.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UIScrollViewTest/UIScrollViewTest_Editor.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UISliderTest/UISliderTest_Editor.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UITextFieldTest/UITextFieldTest_Editor.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UIWidgetAddNodeTest/UIWidgetAddNodeTest_Editor.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/CustomWidget/CustomImageView.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/CustomWidget/CustomImageViewReader.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/CustomWidget/CustomReader.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/CustomTest/CustomImageTest/CustomImageTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/CustomWidget/CustomParticleWidget.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/CustomWidget/CustomParticleWidgetReader.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/CustomTest/CustomParticleWidgetTest/CustomParticleWidgetTest.cpp \
 	../Classes/ExtensionsTest/CocoStudioSceneTest/SceneEditorTest.cpp \
 	../Classes/ExtensionsTest/CocoStudioSceneTest/TriggerCode/acts.cpp \
 	../Classes/ExtensionsTest/CocoStudioSceneTest/TriggerCode/cons.cpp \

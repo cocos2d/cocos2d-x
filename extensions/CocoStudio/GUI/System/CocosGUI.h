@@ -44,10 +44,11 @@
 #include "../../Reader/GUIReader.h"
 #include "UITouchGroup.h"
 #include "../UIWidgets/Compatible/CompatibleClasses.h"
+#include "../UIWidgets/UIRichText.h"
 
 //NS_CC_EXT_BEGIN
 
-const char* CocosGUIVersion();
+CC_EX_DLL const char* CocosGUIVersion();
 
 //NS_CC_EXT_END
 

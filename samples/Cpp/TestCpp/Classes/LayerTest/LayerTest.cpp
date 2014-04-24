@@ -154,7 +154,9 @@ void LayerTest::backCallback(CCObject* pSender)
     s->release();
 } 
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - Cascading support extensions
+#endif
 
 static void setEnableRecursiveCascading(CCNode* node, bool enable)
 {

@@ -48,7 +48,7 @@ NS_CC_EXT_BEGIN
  * @js NA
  * @lua NA
  */
-class CCPhysicsSprite : public CCSprite
+class CC_EX_DLL CCPhysicsSprite : public CCSprite
 {
 protected:
     bool    m_bIgnoreBodyRotation;

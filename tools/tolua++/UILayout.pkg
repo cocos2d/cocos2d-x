@@ -21,71 +21,94 @@ typedef enum {
 
 
 class Layout : public Widget
-{    
+{
+
     Layout();
     
-    
     virtual ~Layout();
-    
-    
+
     static Layout* create();
         
-    
     void setBackGroundImage(const char* fileName,TextureResType texType = UI_TEX_TYPE_LOCAL);
-    
     
     void setBackGroundImageCapInsets(const CCRect& capInsets);
     
+    const CCRect& getBackGroundImageCapInsets();
     
     void setBackGroundColorType(LayoutBackGroundColorType type);
     
+    LayoutBackGroundColorType getBackGroundColorType();
     
     void setBackGroundImageScale9Enabled(bool enabled);
     
+    bool isBackGroundImageScale9Enabled();
     
     void setBackGroundColor(const ccColor3B &color);
     
+    const ccColor3B& getBackGroundColor();
     
     void setBackGroundColor(const ccColor3B &startColor, const ccColor3B &endColor);
     
+    const ccColor3B& getBackGroundStartColor();
     
-    void setBackGroundColorOpacity(int opacity);
+    const ccColor3B& getBackGroundEndColor();
     
+    void setBackGroundColorOpacity(GLubyte opacity);
+    
+    GLubyte getBackGroundColorOpacity();
     
     void setBackGroundColorVector(const CCPoint &vector);
     
+    const CCPoint& getBackGroundColorVector();
+    
+    void setBackGroundImageColor(const ccColor3B& color);
+    
+    void setBackGroundImageOpacity(GLubyte opacity);
+    
+    const ccColor3B& getBackGroundImageColor();
+    
+    GLubyte getBackGroundImageOpacity();
     
     void removeBackGroundImage();
     
-    
     const CCSize& getBackGroundImageTextureSize() const;
-    
     
     virtual void setClippingEnabled(bool enabled);
     
     void setClippingType(LayoutClippingType type);
     
+    LayoutClippingType getClippingType();
     
     virtual bool isClippingEnabled();
     
-    
     virtual std::string getDescription() const;
     
-    
     virtual void setLayoutType(LayoutType type);
-    
     
     virtual LayoutType getLayoutType() const;
 
     virtual void addChild(CCNode * child);
-    
+
     virtual void addChild(CCNode * child, int zOrder);
-    
+
     virtual void addChild(CCNode* child, int zOrder, int tag);
+    
+    virtual void removeChild(CCNode* child);
+    
+    virtual void removeChild(CCNode* widget, bool cleanup);
+    
+    virtual void removeAllChildren();
+    
+    virtual void removeAllChildrenWithCleanup(bool cleanup);
     
     virtual void visit();
     
     virtual void sortAllChildren();
     
-    void requestDoLayout();  
+    void requestDoLayout();
+    
+    virtual void onEnter();
+    virtual void onExit();
+    
+    virtual bool hitTest(const CCPoint &pt);
 };

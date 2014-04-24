@@ -16,6 +16,7 @@
 #include "UIPageViewTest/UIPageViewTest.h"
 #include "UIListViewTest/UIListViewTest.h"
 #include "UIWidgetAddNodeTest/UIWidgetAddNodeTest.h"
+#include "UIRichTextTest/UIRichTextTest.h"
 /*===*/
 /*
 #include "UISwitchTest/UISwitchTest.h"
@@ -80,6 +81,7 @@ static const char* s_testArray[] =
     "UITextFieldTest",
     "UITextFieldTest_MaxLength",
     "UITextFieldTest_Password",
+    "UITextFieldTest_LineWrap",
     /*===*/
     "UITextFieldTest_LineWrap",
     /**/
@@ -117,6 +119,7 @@ static const char* s_testArray[] =
     /*=*/
     /*===*/
     "UIWidgetAddNodeTest",
+    "UIRichTextTest",
     /*=*/
 };
 
@@ -375,6 +378,9 @@ CCScene *UISceneManager::currentUIScene()
             /*===*/
         case kUIWidgetAddNodeTest:
             return UIWidgetAddNodeTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUIRichTextTest:
+            return UIRichTextTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
             /*=*/
     }
     return NULL;

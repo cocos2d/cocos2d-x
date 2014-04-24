@@ -12,7 +12,8 @@ typedef enum
     
 typedef enum
 {
-    LISTVIEW_ONSELECTEDITEM
+    LISTVIEW_ONSELECTEDITEM_START,
+    LISTVIEW_ONSELECTEDITEM_END,
 }ListViewEventType;
 
 class ListView : public ScrollView
@@ -38,4 +39,5 @@ class ListView : public ScrollView
     virtual void setDirection(SCROLLVIEW_DIR dir);
     virtual std::string getDescription() const;
     void requestRefreshView();
+    void refreshView();
 };

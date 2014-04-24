@@ -30,13 +30,26 @@ THE SOFTWARE.
 #include <string>
 #include <map>
 
+namespace cocos2d
+{
+    namespace ui
+    {
+        class Widget;
+    }
+    namespace extension
+    {
+        class WidgetReaderProtocol;
+    }
+}
+
+
 NS_CC_EXT_BEGIN
 
-class ObjectFactory
+class CC_EX_DLL ObjectFactory
 {
 public:
     typedef cocos2d::CCObject* (*Instance)(void);
-    struct TInfo
+    struct CC_EX_DLL TInfo
     {
         TInfo(void);
         TInfo(const std::string& type, Instance ins = NULL);
@@ -53,6 +66,8 @@ public:
     void destroyInstance();
     CCObject* createObject(std::string name);
 	CCComponent* createComponent(std::string name);
+    ui::Widget* createGUI(std::string name);
+    WidgetReaderProtocol* createWidgetReaderProtocol(std::string name);
     void registerType(const TInfo &t);
     void removeAll();
 private:

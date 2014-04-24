@@ -34,6 +34,9 @@ public:
     ~UIScrollViewTest_Vertical();
     bool init();
     
+    void touchEvent(CCObject* pSender, TouchEventType type);
+    void scrollEvent(CCObject* pSender, ScrollviewEventType type);
+    
 protected:
     UI_SCENE_CREATE_FUNC(UIScrollViewTest_Vertical)
     UILabel* m_pDisplayValueLabel;

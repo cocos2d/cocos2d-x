@@ -38,7 +38,7 @@ NS_CC_EXT_BEGIN
  @js NA
  @lua NA
  */
-class CCHttpResponse : public CCObject
+class CC_EX_DLL CCHttpResponse : public CCObject
 {
 public:
     /** Constructor, it's used by CCHttpClient internal, users don't need to create HttpResponse manually

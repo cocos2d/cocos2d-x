@@ -48,18 +48,18 @@ typedef struct {
 	Animation** animations;
 } SkeletonData;
 
-SkeletonData* SkeletonData_create ();
-void SkeletonData_dispose (SkeletonData* self);
+CC_EX_DLL SkeletonData* SkeletonData_create ();
+CC_EX_DLL void SkeletonData_dispose (SkeletonData* self);
 
-BoneData* SkeletonData_findBone (const SkeletonData* self, const char* boneName);
-int SkeletonData_findBoneIndex (const SkeletonData* self, const char* boneName);
+CC_EX_DLL BoneData* SkeletonData_findBone (const SkeletonData* self, const char* boneName);
+CC_EX_DLL int SkeletonData_findBoneIndex (const SkeletonData* self, const char* boneName);
 
-SlotData* SkeletonData_findSlot (const SkeletonData* self, const char* slotName);
-int SkeletonData_findSlotIndex (const SkeletonData* self, const char* slotName);
+CC_EX_DLL SlotData* SkeletonData_findSlot (const SkeletonData* self, const char* slotName);
+CC_EX_DLL int SkeletonData_findSlotIndex (const SkeletonData* self, const char* slotName);
 
-Skin* SkeletonData_findSkin (const SkeletonData* self, const char* skinName);
+CC_EX_DLL Skin* SkeletonData_findSkin (const SkeletonData* self, const char* skinName);
 
-Animation* SkeletonData_findAnimation (const SkeletonData* self, const char* animationName);
+CC_EX_DLL Animation* SkeletonData_findAnimation (const SkeletonData* self, const char* animationName);
 
 }} // namespace cocos2d { namespace extension {
 

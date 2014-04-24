@@ -27,13 +27,13 @@
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
 
 /**
 *   @js NA
 *   @lua NA
 */
-class UIHelper
+class CC_EX_DLL UIHelper
 {
 public:
     /**
