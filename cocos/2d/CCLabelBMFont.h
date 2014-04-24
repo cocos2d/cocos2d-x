@@ -123,13 +123,15 @@ public:
     virtual Rect getBoundingBox() const override;
 
     virtual std::string getDescription() const override;
+#if CC_LABELBMFONT_DEBUG_DRAW
     virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
-private:
+#endif
 
+private:
 #if CC_LABELBMFONT_DEBUG_DRAW
     CustomCommand   _customDebugDrawCommand;
     void drawDebugData(const Matrix& transform, bool transformUpdated);
-#endif // CC_LABELBMFONT_DEBUG_DRAW
+#endif
     
     // name of fntFile
     std::string _fntFile;
