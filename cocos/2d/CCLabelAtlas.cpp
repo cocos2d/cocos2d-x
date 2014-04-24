@@ -248,18 +248,16 @@ void LabelAtlas::updateColor()
 }
 
 //CCLabelAtlas - draw
-
+#if CC_LABELATLAS_DEBUG_DRAW
 void LabelAtlas::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     AtlasNode::draw(renderer, transform, transformUpdated);
-#if CC_LABELATLAS_DEBUG_DRAW
+
     _customDebugDrawCommand.init(_globalZOrder);
     _customDebugDrawCommand.func = CC_CALLBACK_0(LabelAtlas::drawDebugData, this,transform,transformUpdated);
     renderer->addCommand(&_customDebugDrawCommand);
-#endif
 }
 
-#if CC_LABELATLAS_DEBUG_DRAW
 void LabelAtlas::drawDebugData(const Matrix& transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
