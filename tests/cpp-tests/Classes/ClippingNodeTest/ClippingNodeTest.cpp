@@ -593,7 +593,7 @@ void RawStencilBufferTest::setup()
         _sprites.pushBack(sprite);
 
         Sprite* sprite2 = Sprite::create(s_pathGrossini);
-        sprite2->setAnchorPoint(  Point(0.5, 0) );
+        sprite2->setAnchorPoint(  Vector2(0.5, 0) );
         sprite2->setScale( 2.5f );
         _spritesStencil.pushBack(sprite2);
     }
