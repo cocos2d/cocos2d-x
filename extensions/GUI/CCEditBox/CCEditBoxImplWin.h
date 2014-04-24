@@ -40,7 +40,7 @@ class CCEditBox;
  *  @js NA
  *  @lua NA
  */
-class CCEditBoxImplWin : public CCEditBoxImpl
+class CC_EX_DLL CCEditBoxImplWin : public CCEditBoxImpl
 {
 public:
     CCEditBoxImplWin(CCEditBox* pEditText);

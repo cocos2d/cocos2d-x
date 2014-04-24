@@ -176,8 +176,9 @@ void BaseClippingNodeTest::setup()
 
 }
 
-
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - BasicTest
+#endif
 
 std::string BasicTest::title()
 {
@@ -255,8 +256,9 @@ CCNode* BasicTest::content()
     return NULL;
 }
 
-
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - ShapeTest
+#endif
 
 std::string ShapeTest::title()
 {
@@ -282,8 +284,9 @@ CCNode* ShapeTest::content()
     return node;
 }
 
-
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - ShapeInvertedTest
+#endif
 
 std::string ShapeInvertedTest::title()
 {
@@ -302,7 +305,9 @@ CCClippingNode* ShapeInvertedTest::clipper()
     return clipper;
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - SpriteTest
+#endif
 
 std::string SpriteTest::title()
 {
@@ -335,7 +340,9 @@ CCNode* SpriteTest::content()
     return node;
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - SpriteNoAlphaTest
+#endif
 
 std::string SpriteNoAlphaTest::title()
 {
@@ -354,7 +361,9 @@ CCClippingNode* SpriteNoAlphaTest::clipper()
     return clipper;
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - SpriteInvertedTest
+#endif
 
 std::string SpriteInvertedTest::title()
 {
@@ -374,7 +383,9 @@ CCClippingNode* SpriteInvertedTest::clipper()
     return clipper;
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - NestedTest
+#endif
 
 std::string NestedTest::title()
 {
@@ -419,7 +430,9 @@ void NestedTest::setup()
 
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - HoleDemo
+#endif
 
 HoleDemo::~HoleDemo()
 {
@@ -512,7 +525,9 @@ void HoleDemo::ccTouchesBegan(CCSet* touches, CCEvent* event)
     this->pokeHoleAtPoint(point);
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - ScrollViewDemo
+#endif
 
 std::string ScrollViewDemo::title()
 {
@@ -584,7 +599,9 @@ void ScrollViewDemo::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
     m_bScrolling = false;
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - RawStencilBufferTests
+#endif
 
 //#if COCOS2D_DEBUG > 1
 

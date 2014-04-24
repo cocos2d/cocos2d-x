@@ -11,7 +11,7 @@ class CCBReader;
  *  @js NA
  *  @lua NA
  */
-class CCLayerGradientLoader : public CCLayerLoader {
+class CC_EX_DLL CCLayerGradientLoader : public CCLayerLoader {
     public:
         virtual ~CCLayerGradientLoader() {};
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCLayerGradientLoader, loader);

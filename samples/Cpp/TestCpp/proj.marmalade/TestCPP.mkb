@@ -31,136 +31,61 @@ files
 {
 	[Main]
 	(src)
-	Main.h
-	Main.cpp
+	"*.cpp"
+	"*.h"
 
 	(../Classes)
-	AppDelegate.cpp
-	AppDelegate.h
-	controller.cpp
-	controller.h
-	testBasic.cpp
-	testBasic.h
-	testResource.h
-	tests.h
-	VisibleRect.cpp
-	VisibleRect.h
+	"*.cpp"
+	"*.h"
 
 	[Test/AccelerometerTest]
 	(../Classes/AccelerometerTest)
-	AccelerometerTest.cpp
-	AccelerometerTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/ActionManagerTest]
 	(../Classes/ActionManagerTest)
-	ActionManagerTest.cpp
-	ActionManagerTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/ActionsEaseTest]
 	(../Classes/ActionsEaseTest)
-	ActionsEaseTest.cpp
-	ActionsEaseTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/ActionsProgressTest]
 	(../Classes/ActionsProgressTest)
-	ActionsProgressTest.cpp
-	ActionsProgressTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/ActionsTest]
 	(../Classes/ActionsTest)
-	ActionsTest.cpp
-	ActionsTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/Box2DTest]
 	(../Classes/Box2DTest)
-	Box2dTest.cpp
-	Box2dTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/Box2DTestBed]
 	(../Classes/Box2DTestBed)
-	Box2dView.cpp
-	Box2dView.h
-	GLES-Render.cpp
-	GLES-Render.h
-	Test.cpp
-	Test.h
-	TestEntries.cpp
+	"*.cpp"
+	"*.h"
 
 	[Test/Box2DTestBed/Tests]
 	(../Classes/Box2DTestBed/Tests)
-	AddPair.h
-	ApplyForce.h
-	BodyTypes.h
-	Breakable.h
-	Bridge.h
-	BulletTest.h
-	Cantilever.h
-	Car.h
-	Chain.h
-	CharacterCollision.h
-	CollisionFiltering.h
-	CollisionProcessing.h
-	CompoundShapes.h
-	Confined.h
-	ContinuousTest.h
-	DistanceTest.h
-	Dominos.h
-	DumpShell.h
-	DynamicTreeTest.h
-	EdgeShapes.h
-	EdgeTest.h
-	Gears.h
-	OneSidedPlatform.h
-	Pinball.h
-	PolyCollision.h
-	PolyShapes.h
-	Prismatic.h
-	Pulleys.h
-	Pyramid.h
-	RayCast.h
-	Revolute.h
-	Rope.h
-	RopeJoint.h
-	SensorTest.h
-	ShapeEditing.h
-	SliderCrank.h
-	SphereStack.h
-	TheoJansen.h
-	Tiles.h
-	TimeOfImpact.h
-	Tumbler.h
-	VaryingFriction.h
-	VaryingRestitution.h
-	VerticalStack.h
-	Web.h
+	"*.h"
 
 	[Test/BugsTest]
 	(../Classes/BugsTest)
-	Bug-1159.cpp
-	Bug-1159.h
-	Bug-1174.cpp
-	Bug-1174.h
-	Bug-350.cpp
-	Bug-350.h
-	Bug-422.cpp
-	Bug-422.h
-	Bug-624.cpp
-	Bug-624.h
-	Bug-886.cpp
-	Bug-886.h
-	Bug-899.cpp
-	Bug-899.h
-	Bug-914.cpp
-	Bug-914.h
-	BugsTest.cpp
-	BugsTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/BugsTest/Bug-458]
 	(../Classes/BugsTest/Bug-458)
-	Bug-458.cpp
-	Bug-458.h
-	QuestionContainerSprite.cpp
-	QuestionContainerSprite.h
+	"*.cpp"
+	"*.h"
 
 #	[Test/ChipmunkAccelTouchTest]
 #	(../Classes/ChipmunkAccelTouchTest)
@@ -169,13 +94,13 @@ files
 
 	[Test/ClickAndMoveTest]
 	(../Classes/ClickAndMoveTest)
-	ClickAndMoveTest.cpp
-	ClickAndMoveTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/CocosDenshionTest]
 	(../Classes/CocosDenshionTest)
-	CocosDenshionTest.cpp
-	CocosDenshionTest.h
+	"*.cpp"
+	"*.h"
 
 #	[Test/CurlTest]
 #	(../Classes/CurlTest)
@@ -184,28 +109,28 @@ files
 
 	[Test/CurrentLanguageTest]
 	(../Classes/CurrentLanguageTest)
-	CurrentLanguageTest.cpp
-	CurrentLanguageTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/DrawPrimitivesTest]
 	(../Classes/DrawPrimitivesTest)
-	DrawPrimitivesTest.cpp
-	DrawPrimitivesTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/EffectsAdvancedTest]
 	(../Classes/EffectsAdvancedTest)
-	EffectsAdvancedTest.cpp
-	EffectsAdvancedTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/EffectsTest]
 	(../Classes/EffectsTest)
-	EffectsTest.cpp
-	EffectsTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/ExtensionsTest]
 	(../Classes/ExtensionsTest)
-	ExtensionsTest.cpp
-	ExtensionsTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/ExtensionsTest/CocosBuilderTest]
 	(../Classes/ExtensionsTest/CocosBuilderTest)
@@ -260,40 +185,38 @@ files
 
 	[Test/ExtensionsTest/ControlExtensionTest]
 	(../Classes/ExtensionsTest/ControlExtensionTest)
-	CCControlScene.cpp
-	CCControlScene.h
-	CCControlSceneManager.cpp
-	CCControlSceneManager.h
+	"*.cpp"
+	"*.h"
 
 	[Test/ExtensionsTest/ControlExtensionTest/CCControlButtonTest]
 	(../Classes/ExtensionsTest/ControlExtensionTest/CCControlButtonTest)
-	CCControlButtonTest.cpp
-	CCControlButtonTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/ExtensionsTest/ControlExtensionTest/CCControlColourPicker]
 	(../Classes/ExtensionsTest/ControlExtensionTest/CCControlColourPicker)
-	CCControlColourPickerTest.cpp
-	CCControlColourPickerTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/ExtensionsTest/ControlExtensionTest/CCControlPotentiometerTest]
 	(../Classes/ExtensionsTest/ControlExtensionTest/CCControlPotentiometerTest)
-	CCControlPotentiometerTest.cpp
-	CCControlPotentiometerTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/ExtensionsTest/ControlExtensionTest/CCControlSliderTest]
 	(../Classes/ExtensionsTest/ControlExtensionTest/CCControlSliderTest)
-	CCControlSliderTest.cpp
-	CCControlSliderTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/ExtensionsTest/ControlExtensionTest/CCControlStepperTest]
 	(../Classes/ExtensionsTest/ControlExtensionTest/CCControlStepperTest)
-	CCControlStepperTest.cpp
-	CCControlStepperTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/ExtensionsTest/ControlExtensionTest/CCControlSwitchTest]
 	(../Classes/ExtensionsTest/ControlExtensionTest/CCControlSwitchTest)
-	CCControlSwitchTest.cpp
-	CCControlSwitchTest.h
+	"*.cpp"
+	"*.h"
 
 #	[Test/ExtensionsTest/EditBoxTest]
 #	(../Classes/ExtensionsTest/EditBoxTest)
@@ -312,178 +235,179 @@ files
 
 	[Test/ExtensionsTest/TableViewTest]
 	(../Classes/ExtensionsTest/TableViewTest)
-	CustomTableViewCell.cpp
-	CustomTableViewCell.h
-	TableViewTestScene.cpp
-	TableViewTestScene.h
+	"*.cpp"
+	"*.h"
 
 	[Test/ExtensionsTest/ArmatureTest]
 	(../Classes/ExtensionsTest/CocoStudioArmatureTest)
-	ArmatureScene.cpp
-	ArmatureScene.h
+	"*.cpp"
+	"*.h"
 	
 	[Test/ExtensionsTest/ComponentsTest]
 	(../Classes/ExtensionsTest/CocoStudioComponentsTest)
-	ComponentsTestScene.cpp
-	ComponentsTestScene.h
-	EnemyController.cpp
-	EnemyController.h
-	GameOverScene.cpp
-    GameOverScene.h
-    PlayerController.cpp
-    PlayerController.h
-    ProjectileController.cpp
- 	ProjectileController.h
-	SceneController.cpp
-	SceneController.h
+	"*.cpp"
+	"*.h"
 
 	[Test/ExtensionsTest/CocoStudioGUITest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest)	
-	CocosGUIScene.cpp
-	CocosGUIScene.h
-	UIScene.cpp
-	UIScene.h
-	UISceneManager.cpp
-	UISceneManager.h
+	"*.cpp"
+	"*.h"
 	
 	[Test/ExtensionsTest/CocoStudioGUITest/UIButtonTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UIButtonTest)
-	UIButtonTest.cpp
-	UIButtonTest.h
+	"*.cpp"
+	"*.h"
 	
 	[Test/ExtensionsTest/CocoStudioGUITest/UICheckBoxTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UICheckBoxTest)
-	UICheckBoxTest.cpp
-	UICheckBoxTest.h		
+	"*.cpp"
+	"*.h"	
 	
 	[Test/ExtensionsTest/CocoStudioGUITest/UIImageViewTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UIImageViewTest)
-	UIImageViewTest.cpp
-	UIImageViewTest.h
+	"*.cpp"
+	"*.h"
 	
 	[Test/ExtensionsTest/CocoStudioGUITest/UILabelAtlasTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UILabelAtlasTest)
-	UILabelAtlasTest.cpp
-	UILabelAtlasTest.h
+	"*.cpp"
+	"*.h"
 	
 	[Test/ExtensionsTest/CocoStudioGUITest/UILabelBMFontTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UILabelBMFontTest)
-	UILabelBMFontTest.cpp
-	UILabelBMFontTest.h
+	"*.cpp"
+	"*.h"
 	
 	[Test/ExtensionsTest/CocoStudioGUITest/UILabelTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UILabelTest)
-	UILabelTest.cpp
-	UILabelTest.h
+	"*.cpp"
+	"*.h"
+
+	[Test/ExtensionsTest/CocoStudioGUITest/UILayoutTest]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/UILayoutTest)
+	"*.cpp"
+	"*.h"
 	
 	[Test/ExtensionsTest/CocoStudioGUITest/UIListViewTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UIListViewTest)
-	UIListViewTest.cpp
-	UIListViewTest.h
+	"*.cpp"
+	"*.h"
 	
 	[Test/ExtensionsTest/CocoStudioGUITest/UILoadingBarTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UILoadingBarTest)
-	UILoadingBarTest.cpp
-	UILoadingBarTest.h		
+	"*.cpp"
+	"*.h"		
 	
 	[Test/ExtensionsTest/CocoStudioGUITest/UIPageViewTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UIPageViewTest)
-	UIPageViewTest.cpp
-	UIPageViewTest.h
-	
-	[Test/ExtensionsTest/CocoStudioGUITest/UILayoutTest]
-	(../Classes/ExtensionsTest/CocoStudioGUITest/UILayoutTest)
-	UILayoutTest.cpp
-	UILayoutTest.h
+	"*.cpp"
+	"*.h"
 	
 	[Test/ExtensionsTest/CocoStudioGUITest/UIScrollViewTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UIScrollViewTest)
-	UIScrollViewTest.cpp
-	UIScrollViewTest.h
+	"*.cpp"
+	"*.h"
 	
 	[Test/ExtensionsTest/CocoStudioGUITest/UISliderTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UISliderTest)
-	UISliderTest.cpp
-	UISliderTest.h		
+	"*.cpp"
+	"*.h"
 	
 	[Test/ExtensionsTest/CocoStudioGUITest/UITextFieldTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UITextFieldTest)
-	UITextFieldTest.cpp
-	UITextFieldTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/ExtensionsTest/CocoStudioGUITest/UIWidgetAddNodeTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UIWidgetAddNodeTest)
-	UIWidgetAddNodeTest.cpp
-	UIWidgetAddNodeTest.h
+	"*.cpp"
+	"*.h"
+
+	[Test/ExtensionsTest/CocoStudioGUITest/UIRichTextTest]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/UIRichTextTest)
+	"*.cpp"
+	"*.h"
+
+	[Test/ExtensionsTest/CocoStudioGUITest/CustomWidget]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/CustomWidget)
+	"*.cpp"
+	"*.h"
+
+	[Test/ExtensionsTest/CocoStudioGUITest/CustomTest/CustomImageTest]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/CustomTest/CustomImageTest)
+	"*.cpp"
+	"*.h"
+
+	[Test/ExtensionsTest/CocoStudioGUITest/CustomTest/CustomParticleWidgetTest]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/CustomTest/CustomParticleWidgetTest)
+	"*.cpp"
+	"*.h"
 	
 	[Test/ExtensionsTest/CocoStudioSceneTest]
 	(../Classes/ExtensionsTest/CocoStudioSceneTest)
-	SceneEditorTest.cpp
-	SceneEditorTest.h
+	"*.cpp"
+	"*.h"
     
-        [Test/ExtensionsTest/CocoStudioSceneTest/TriggerCode]
+    [Test/ExtensionsTest/CocoStudioSceneTest/TriggerCode]
 	(../Classes/ExtensionsTest/CocoStudioSceneTest/TriggerCode)
-	acts.cpp
-	acts.h
-	cons.cpp
-	cons.h
-        eventDef.h
+	"*.cpp"
+	"*.h"
 
 	
 	[Test/FontTest]
 	(../Classes/FontTest)
-	FontTest.cpp
-	FontTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/IntervalTest]
 	(../Classes/IntervalTest)
-	IntervalTest.cpp
-	IntervalTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/KeypadTest]
 	(../Classes/KeypadTest)
-	KeypadTest.cpp
-	KeypadTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/LabelTest]
 	(../Classes/LabelTest)
-	LabelTest.cpp
-	LabelTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/LayerTest]
 	(../Classes/LayerTest)
-	LayerTest.cpp
-	LayerTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/MenuTest]
 	(../Classes/MenuTest)
-	MenuTest.cpp
-	MenuTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/MotionStreakTest]
 	(../Classes/MotionStreakTest)
-	MotionStreakTest.cpp
-	MotionStreakTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/MutiTouchTest]
 	(../Classes/MutiTouchTest)
-	MutiTouchTest.cpp
-	MutiTouchTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/NodeTest]
 	(../Classes/NodeTest)
-	NodeTest.cpp
-	NodeTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/ParallaxTest]
 	(../Classes/ParallaxTest)
-	ParallaxTest.cpp
-	ParallaxTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/ParticleTest]
 	(../Classes/ParticleTest)
-	ParticleTest.cpp
-	ParticleTest.h
+	"*.cpp"
+	"*.h"
 
 	["Test/PerformanceTest"]
 	("../Classes/PerformanceTest")
@@ -492,102 +416,98 @@ files
 
 	[Test/RenderTextureTest]
 	(../Classes/RenderTextureTest)
-	RenderTextureTest.cpp
-	RenderTextureTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/RotateWorldTest]
 	(../Classes/RotateWorldTest)
-	RotateWorldTest.cpp
-	RotateWorldTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/SceneTest]
 	(../Classes/SceneTest)
-	SceneTest.cpp
-	SceneTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/SchedulerTest]
 	(../Classes/SchedulerTest)
-	SchedulerTest.cpp
-	SchedulerTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/ShaderTest]
 	(../Classes/ShaderTest)
-	ShaderTest.cpp
-	ShaderTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/SpriteTest]
 	(../Classes/SpriteTest)
-	SpriteTest.cpp
-	SpriteTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/TextInputTest]
 	(../Classes/TextInputTest)
-	TextInputTest.cpp
-	TextInputTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/Texture2dTest]
 	(../Classes/Texture2dTest)
-	Texture2dTest.cpp
-	Texture2dTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/TextureCacheTest]
 	(../Classes/TextureCacheTest)
-	TextureCacheTest.cpp
-	TextureCacheTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/TexturePackerEncryptionTest]
 	(../Classes/TexturePackerEncryptionTest)
-	TextureAtlasEncryptionTest.cpp
-	TextureAtlasEncryptionTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/TileMapTest]
 	(../Classes/TileMapTest)
-	TileMapTest.cpp
-	TileMapTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/TouchesTest]
 	(../Classes/TouchesTest)
-	Ball.cpp
-	Ball.h
-	Paddle.cpp
-	Paddle.h
-	TouchesTest.cpp
-	TouchesTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/TransitionsTest]
 	(../Classes/TransitionsTest)
-	TransitionsTest.cpp
-	TransitionsTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/UserDefaultTest]
 	(../Classes/UserDefaultTest)
-	UserDefaultTest.cpp
-	UserDefaultTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/ZwoptexTest]
 	(../Classes/ZwoptexTest)
-	ZwoptexTest.cpp
-	ZwoptexTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/FileUtilsTest]
 	(../Classes/FileUtilsTest)
-	FileUtilsTest.cpp
-	FileUtilsTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/SpineTest]
 	(../Classes/SpineTest)
-	SpineTest.cpp
-	SpineTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/DataVisitorTest]
 	(../Classes/DataVisitorTest)
-	DataVisitorTest.cpp
-	DataVisitorTest.h
+	"*.cpp"
+	"*.h"
 
 	[Test/ConfigurationTest]
 	(../Classes/ConfigurationTest)
-	ConfigurationTest.cpp
-	ConfigurationTest.h
+	"*.cpp"
+	"*.h"
 }
 
 

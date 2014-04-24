@@ -38,7 +38,7 @@ typedef enum
     POSITION_PERCENT
 }PositionType;
 
-class Widget : public CCNodeRGBA
+class Widget : public CCNode
 {    
     Widget(void);
     
@@ -108,11 +108,12 @@ class Widget : public CCNodeRGBA
     
     virtual void removeFromParentAndCleanup(bool cleanup);
     
+    virtual void removeChild(CCNode* child);
     
-    virtual void removeChild(CCNode* child, bool cleanup = true);
+    virtual void removeChild(CCNode* child, bool cleanup);
     
     
-    virtual void removeChildByTag(int tag, bool cleanup = true);
+    virtual void removeChildByTag(int tag, bool cleanup);
     
     virtual void removeAllChildren();
     
@@ -120,13 +121,24 @@ class Widget : public CCNodeRGBA
     
     
     virtual Widget* getChildByName(const char* name);
+
+    virtual void addNode(CCNode* node);
     
+    virtual void addNode(CCNode * node, int zOrder);
+    
+    virtual void addNode(CCNode* node, int zOrder, int tag);
+
+    virtual CCNode * getNodeByTag(int tag);
+    
+    virtual CCArray* getNodes();
+    
+    virtual void removeNode(CCNode* node);
+    
+    virtual void removeNodeByTag(int tag);
+    
+    virtual void removeAllNodes();
     
     virtual void visit();
-    
-    
-    void addTouchEventListener(CCObject* target,SEL_TouchEvent selector);
-    
     
     void setPosition(const CCPoint &pos);
     
@@ -143,16 +155,24 @@ class Widget : public CCNodeRGBA
     PositionType getPositionType() const;
     
     
-    virtual void setFlipX(bool flipX){};
+    virtual void setFlipX(bool flipX);
     
     
-    virtual bool isFlipX(){return false;};
+    virtual bool isFlipX();
     
     
-    virtual void setFlipY(bool flipY){};
+    virtual void setFlipY(bool flipY);
     
     
-    virtual bool isFlipY(){return false;};
+    virtual bool isFlipY();
+
+    virtual void setColor(const ccColor3B& color);
+    
+    virtual void setOpacity(GLubyte opacity);
+    
+    const ccColor3B& getColor();
+
+    GLubyte getOpacity();
     
     
     void didNotSelectSelf();
@@ -181,7 +201,6 @@ class Widget : public CCNodeRGBA
     
     WidgetType getWidgetType() const;
     
-    
     virtual void setSize(const CCSize &size);
     
     
@@ -195,9 +214,12 @@ class Widget : public CCNodeRGBA
     
     
     const CCSize& getSize() const;
-    
+
+    virtual const CCSize& getLayoutSize();
     
     const CCPoint& getSizePercent() const;
+
+    const CCSize& getCustomSize() const;
     
     
     virtual bool hitTest(const CCPoint &pt);
@@ -236,7 +258,8 @@ class Widget : public CCNodeRGBA
     
     void updateSizeAndPosition();
     
-    
+    void updateSizeAndPosition(const CCSize& parentSize);
+
     void setActionTag(int tag);
 	int getActionTag();
 

@@ -27,7 +27,7 @@
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
 
 TouchGroup::TouchGroup():
 m_pRootWidget(NULL)

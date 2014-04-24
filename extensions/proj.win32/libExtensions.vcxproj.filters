@@ -97,6 +97,9 @@
     <Filter Include="CocoStudio\Trigger">
       <UniqueIdentifier>{1e0308e3-d686-4fb2-af94-fdb25c8a2b46}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CocoStudio\Reader\WidgetReader">
+      <UniqueIdentifier>{d0949a0d-a150-443d-9b5a-84d8e367d5e0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\GUI\CCScrollView\CCScrollView.cpp">
@@ -476,6 +479,51 @@
     </ClCompile>
     <ClCompile Include="..\CocoStudio\GUI\System\UITouchGroup.cpp">
       <Filter>CocoStudio\GUI\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Reader\WidgetReader\WidgetReader.cpp">
+      <Filter>CocoStudio\Reader\WidgetReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Reader\WidgetReader\ButtonReader\ButtonReader.cpp">
+      <Filter>CocoStudio\Reader\WidgetReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Reader\WidgetReader\CheckBoxReader\CheckBoxReader.cpp">
+      <Filter>CocoStudio\Reader\WidgetReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Reader\WidgetReader\ImageViewReader\ImageViewReader.cpp">
+      <Filter>CocoStudio\Reader\WidgetReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Reader\WidgetReader\LabelAtlasReader\LabelAtlasReader.cpp">
+      <Filter>CocoStudio\Reader\WidgetReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Reader\WidgetReader\LabelBMFontReader\LabelBMFontReader.cpp">
+      <Filter>CocoStudio\Reader\WidgetReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Reader\WidgetReader\LabelReader\LabelReader.cpp">
+      <Filter>CocoStudio\Reader\WidgetReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Reader\WidgetReader\LayoutReader\LayoutReader.cpp">
+      <Filter>CocoStudio\Reader\WidgetReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Reader\WidgetReader\ListViewReader\ListViewReader.cpp">
+      <Filter>CocoStudio\Reader\WidgetReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Reader\WidgetReader\LoadingBarReader\LoadingBarReader.cpp">
+      <Filter>CocoStudio\Reader\WidgetReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Reader\WidgetReader\PageViewReader\PageViewReader.cpp">
+      <Filter>CocoStudio\Reader\WidgetReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Reader\WidgetReader\ScrollViewReader\ScrollViewReader.cpp">
+      <Filter>CocoStudio\Reader\WidgetReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Reader\WidgetReader\SliderReader\SliderReader.cpp">
+      <Filter>CocoStudio\Reader\WidgetReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Reader\WidgetReader\TextFieldReader\TextFieldReader.cpp">
+      <Filter>CocoStudio\Reader\WidgetReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UIRichText.cpp">
+      <Filter>CocoStudio\GUI\UIWidgets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -859,6 +907,55 @@
     <ClInclude Include="..\CocoStudio\Components\CCComBase.h">
       <Filter>CocoStudio\Components</Filter>
     </ClInclude>
+    <ClInclude Include="..\CocoStudio\Reader\WidgetReader\WidgetReader.h">
+      <Filter>CocoStudio\Reader\WidgetReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Reader\WidgetReader\WidgetReaderProtocol.h">
+      <Filter>CocoStudio\Reader\WidgetReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Reader\WidgetReader\ButtonReader\ButtonReader.h">
+      <Filter>CocoStudio\Reader\WidgetReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Reader\WidgetReader\CheckBoxReader\CheckBoxReader.h">
+      <Filter>CocoStudio\Reader\WidgetReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Reader\WidgetReader\ImageViewReader\ImageViewReader.h">
+      <Filter>CocoStudio\Reader\WidgetReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Reader\WidgetReader\LabelAtlasReader\LabelAtlasReader.h">
+      <Filter>CocoStudio\Reader\WidgetReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Reader\WidgetReader\LabelBMFontReader\LabelBMFontReader.h">
+      <Filter>CocoStudio\Reader\WidgetReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Reader\WidgetReader\LabelReader\LabelReader.h">
+      <Filter>CocoStudio\Reader\WidgetReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Reader\WidgetReader\LayoutReader\LayoutReader.h">
+      <Filter>CocoStudio\Reader\WidgetReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Reader\WidgetReader\ListViewReader\ListViewReader.h">
+      <Filter>CocoStudio\Reader\WidgetReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Reader\WidgetReader\LoadingBarReader\LoadingBarReader.h">
+      <Filter>CocoStudio\Reader\WidgetReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Reader\WidgetReader\PageViewReader\PageViewReader.h">
+      <Filter>CocoStudio\Reader\WidgetReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Reader\WidgetReader\ScrollViewReader\ScrollViewReader.h">
+      <Filter>CocoStudio\Reader\WidgetReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Reader\WidgetReader\SliderReader\SliderReader.h">
+      <Filter>CocoStudio\Reader\WidgetReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Reader\WidgetReader\TextFieldReader\TextFieldReader.h">
+      <Filter>CocoStudio\Reader\WidgetReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UIRichText.h">
+      <Filter>CocoStudio\GUI\UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ExtensionExport.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\spine\Animation.h">

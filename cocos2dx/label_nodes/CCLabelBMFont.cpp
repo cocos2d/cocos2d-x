@@ -588,6 +588,7 @@ void CCLabelBMFont::createFontChars()
     unsigned int stringLen = m_sString ? cc_wcslen(m_sString) : 0;
     if (stringLen == 0)
     {
+        this->setContentSize(CC_SIZE_PIXELS_TO_POINTS(tmpSize));
         return;
     }
 
@@ -1145,7 +1146,10 @@ void CCLabelBMFont::updateLabel()
                         if (index < 0) continue;
 
                         CCSprite* characterSprite = (CCSprite*)getChildByTag(index);
-                        characterSprite->setPosition(ccpAdd(characterSprite->getPosition(), ccp(shift, 0.0f)));
+                        if (characterSprite)
+                        {
+                            characterSprite->setPosition(ccpAdd(characterSprite->getPosition(), ccp(shift, 0.0f)));
+                        }
                     }
                 }
 

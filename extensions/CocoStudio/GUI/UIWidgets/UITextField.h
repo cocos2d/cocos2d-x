@@ -29,13 +29,13 @@
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
 
 /**
  *  @js NA
  *  @lua NA
  */
-class UICCTextField: public CCTextFieldTTF, public CCTextFieldDelegate
+class CC_EX_DLL UICCTextField: public CCTextFieldTTF, public CCTextFieldDelegate
 {
 public:
     UICCTextField();
@@ -101,17 +101,26 @@ typedef void (CCObject::*SEL_TextFieldEvent)(CCObject*, TextFiledEventType);
 *   @js NA
 *   @lua NA
 */
-class TextField : public Widget
+class CC_EX_DLL TextField : public Widget
 {
+    
+    DECLARE_CLASS_GUI_INFO
+    
 public:
     TextField();
     virtual ~TextField();
     static TextField* create();
     void setTouchSize(const CCSize &size);
+    CCSize getTouchSize();
+    void setTouchAreaEnabled(bool enable);
+    virtual bool hitTest(const CCPoint &pt);
     void setText(const std::string& text);
     void setPlaceHolder(const std::string& value);
+    const char* getPlaceHolder();
     void setFontSize(int size);
+    int getFontSize();
     void setFontName(const std::string& name);
+    const char* getFontName();
     virtual void didNotSelectSelf();
     const char* getStringValue();
     virtual bool onTouchBegan(CCTouch *touch, CCEvent *unused_event);
@@ -122,6 +131,7 @@ public:
     void setPasswordEnabled(bool enable);
     bool isPasswordEnabled();
     void setPasswordStyleText(const char* styleText);
+    const char* getPasswordStyleText();
     virtual void update(float dt);
     bool getAttachWithIME();
     void setAttachWithIME(bool attach);
@@ -144,7 +154,14 @@ public:
     virtual CCNode* getVirtualRenderer();
     void attachWithIME();
     virtual void onEnter();
+    
+    void setTextAreaSize(const CCSize &size);
+    void setTextHorizontalAlignment(CCTextAlignment alignment);
+    void setTextVerticalAlignment(CCVerticalTextAlignment alignment);
+    /*=*/
+    
 protected:
+    virtual bool init();
     virtual void initRenderer();
     // event
     void attachWithIMEEvent();
@@ -152,6 +169,9 @@ protected:
     void insertTextEvent();
     void deleteBackwardEvent();
     virtual void onSizeChanged();
+    virtual void updateTextureColor();
+    virtual void updateTextureOpacity();
+    virtual void updateTextureRGBA();
     void textfieldRendererScaleChangedWithSize();
     virtual Widget* createCloneInstance();
     virtual void copySpecialProperties(Widget* model);

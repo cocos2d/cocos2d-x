@@ -19,8 +19,8 @@ fi
 
 export MAKEFLAGS=-j10
 
-make PLATFORM=linux DEBUG=1 clean
-make PLATFORM=linux DEBUG=0 clean
+#make PLATFORM=linux DEBUG=1 clean
+#make PLATFORM=linux DEBUG=0 clean
 
 make PLATFORM=linux DEBUG=1 all
 make PLATFORM=linux DEBUG=0 all

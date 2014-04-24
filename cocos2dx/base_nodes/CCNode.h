@@ -1466,7 +1466,9 @@ protected:
 
 };
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - CCNodeRGBA
+#endif
 
 /** CCNodeRGBA is a subclass of CCNode that implements the CCRGBAProtocol protocol.
  

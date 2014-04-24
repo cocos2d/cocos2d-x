@@ -592,6 +592,37 @@ CCTexture2D* CCTextureCache::addUIImage(CCImage *image, const char *key)
     return texture;
 }
 
+bool CCTextureCache::reloadTexture(const char* fileName)
+{
+    std::string fullpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(fileName);
+    if (fullpath.size() == 0)
+    {
+        return false;
+    }
+    
+    CCTexture2D * texture = (CCTexture2D*) m_pTextures->objectForKey(fullpath);
+    
+    bool ret = false;
+    if (! texture) {
+        texture = this->addImage(fullpath.c_str());
+        ret = (texture != NULL);
+    }
+    else
+    {
+        do {
+            CCImage* image = new CCImage();
+            CC_BREAK_IF(NULL == image);
+            
+            bool bRet = image->initWithImageFile(fullpath.c_str());
+            CC_BREAK_IF(!bRet);
+            
+            ret = texture->initWithImage(image);
+        } while (0);
+    }
+    
+    return ret;
+}
+
 // TextureCache - Remove
 
 void CCTextureCache::removeAllTextures()

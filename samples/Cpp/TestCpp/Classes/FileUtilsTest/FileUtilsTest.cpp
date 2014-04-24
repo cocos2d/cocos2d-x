@@ -61,7 +61,9 @@ void FileUtilsTestScene::runThisTest()
     CCDirector::sharedDirector()->replaceScene(this);
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 // #pragma mark - FileUtilsDemo
+#endif
 
 void FileUtilsDemo::onEnter()
 {
@@ -132,7 +134,9 @@ string FileUtilsDemo::subtitle()
     return "";
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - TestResolutionDirectories
+#endif
 
 void TestResolutionDirectories::onEnter()
 {
@@ -186,7 +190,9 @@ string TestResolutionDirectories::subtitle()
     return "See the console";
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - TestSearchPath
+#endif
 
 void TestSearchPath::onEnter()
 {
@@ -263,7 +269,9 @@ string TestSearchPath::subtitle()
     return "See the console";
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - TestFilenameLookup
+#endif
 
 void TestFilenameLookup::onEnter()
 {
@@ -307,7 +315,9 @@ string TestFilenameLookup::subtitle()
     return "See the console";
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - TestIsFileExist
+#endif
 
 void TestIsFileExist::onEnter()
 {
@@ -351,7 +361,9 @@ string TestIsFileExist::subtitle()
     return "";
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - TestWritePlist
+#endif
 
 void TextWritePlist::onEnter()
 {

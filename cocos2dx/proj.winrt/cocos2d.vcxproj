@@ -545,6 +545,7 @@
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(ProjectDir)..\platform\third_party\winrt\libraries\vs2012\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
       <AdditionalDependencies>libpng.lib;libjpeg.lib;zlib.lib;freetype.lib;libtiff.lib;d2d1.lib;d3d11.lib;dxgi.lib;ole32.lib;windowscodecs.lib;dwrite.lib;dxguid.lib</AdditionalDependencies>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -561,6 +562,7 @@
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(ProjectDir)..\platform\third_party\winrt\libraries\vs2012\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
       <AdditionalDependencies>libpng.lib;libjpeg.lib;zlib.lib;freetype.lib;libtiff.lib;d2d1.lib;d3d11.lib;dxgi.lib;ole32.lib;windowscodecs.lib;dwrite.lib;dxguid.lib</AdditionalDependencies>
+      <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|arm'">
@@ -579,6 +581,7 @@
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(ProjectDir)..\platform\third_party\winrt\libraries\vs2012\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
       <AdditionalDependencies>libpng.lib;libjpeg.lib;zlib.lib;freetype.lib;libtiff.lib;d2d1.lib;d3d11.lib;dxgi.lib;ole32.lib;windowscodecs.lib;dwrite.lib;dxguid.lib</AdditionalDependencies>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|arm'">
@@ -595,6 +598,7 @@
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(ProjectDir)..\platform\third_party\winrt\libraries\vs2012\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
       <AdditionalDependencies>libpng.lib;libjpeg.lib;zlib.lib;freetype.lib;libtiff.lib;d2d1.lib;d3d11.lib;dxgi.lib;ole32.lib;windowscodecs.lib;dwrite.lib;dxguid.lib</AdditionalDependencies>
+      <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -613,6 +617,7 @@
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(ProjectDir)..\platform\third_party\winrt\libraries\vs2012\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
       <AdditionalDependencies>libpng.lib;libjpeg.lib;zlib.lib;freetype.lib;libtiff.lib;d2d1.lib;d3d11.lib;dxgi.lib;ole32.lib;windowscodecs.lib;dwrite.lib;dxguid.lib</AdditionalDependencies>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -629,6 +634,7 @@
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(ProjectDir)..\platform\third_party\winrt\libraries\vs2012\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
       <AdditionalDependencies>libpng.lib;libjpeg.lib;zlib.lib;freetype.lib;libtiff.lib;d2d1.lib;d3d11.lib;dxgi.lib;ole32.lib;windowscodecs.lib;dwrite.lib;dxguid.lib</AdditionalDependencies>
+      <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

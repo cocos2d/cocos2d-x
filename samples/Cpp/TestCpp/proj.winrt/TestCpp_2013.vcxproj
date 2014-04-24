@@ -133,7 +133,7 @@
       </PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>
       </PrecompiledHeaderOutputFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;..\Classes;$(ProjectDir)..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\..\extensions;$(ProjectDir)..\..\..\..\external;$(ProjectDir)..\..\..\..\external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;..\Classes;$(ProjectDir)..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\..\extensions;$(ProjectDir)..\..\..\..\external;$(ProjectDir)..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\extensions\GUI\CCEditBox;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
@@ -410,22 +410,49 @@
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\ProjectileController.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\SceneController.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIScene.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocoStudioGUITest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomGUIScene.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomTest\CustomImageTest\CustomImageTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomTest\CustomParticleWidgetTest\CustomParticleWidgetTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomImageView.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomImageViewReader.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomParticleWidget.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomParticleWidgetReader.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomReader.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\GUIEditorTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIButtonTest\UIButtonTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIButtonTest\UIButtonTest_Editor.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest_Editor.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest_Editor.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelAtlasTest\UILabelAtlasTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelAtlasTest\UILabelAtlasTest_Editor.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelBMFontTest\UILabelBMFontTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelBMFontTest\UILabelBMFontTest_Editor.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelTest\UILabelTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelTest\UILabelTest_Editor.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest\UILayoutTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest\UILayoutTest_Editor.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIListViewTest\UIListViewTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIListViewTest\UIListViewTest_Editor.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILoadingBarTest\UILoadingBarTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILoadingBarTest\UILoadingBarTest_Editor.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIPageViewTest\UIPageViewTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIPageViewTest\UIPageViewTest_Editor.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIRichTextTest\UIRichTextTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIScene.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UISceneManager.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UISceneManager_Editor.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIScene_Editor.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIScrollViewTest\UIScrollViewTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIScrollViewTest\UIScrollViewTest_Editor.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UISliderTest\UISliderTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UISliderTest\UISliderTest_Editor.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextFieldTest\UITextFieldTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextFieldTest\UITextFieldTest_Editor.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIWidgetAddNodeTest\UIWidgetAddNodeTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIWidgetAddNodeTest\UIWidgetAddNodeTest_Editor.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\SceneEditorTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\acts.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\cons.h" />
@@ -438,6 +465,7 @@
     <ClInclude Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlSliderTest\CCControlSliderTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest\CCControlStepperTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlSwitchTest\CCControlSwitchTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\ExtensionsTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\NotificationCenterTest\NotificationCenterTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\TableViewTest\CustomTableViewCell.h" />
@@ -483,6 +511,9 @@
     <ClInclude Include="..\Classes\UserDefaultTest\UserDefaultTest.h" />
     <ClInclude Include="..\Classes\VisibleRect.h" />
     <ClInclude Include="..\Classes\ZwoptexTest\ZwoptexTest.h" />
+    <ClInclude Include="EditBox.xaml.h">
+      <DependentUpon>EditBox.xaml</DependentUpon>
+    </ClInclude>
     <ClInclude Include="pch.h" />
     <ClInclude Include="MainPage.xaml.h">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -498,6 +529,7 @@
     <Page Include="Common\StandardStyles.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="EditBox.xaml" />
     <Page Include="MainPage.xaml" />
   </ItemGroup>
   <ItemGroup>
@@ -626,22 +658,49 @@
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\ProjectileController.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\SceneController.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIScene.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocoStudioGUITest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomGUIScene.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomTest\CustomImageTest\CustomImageTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomTest\CustomParticleWidgetTest\CustomParticleWidgetTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomImageView.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomImageViewReader.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomParticleWidget.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomParticleWidgetReader.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomReader.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\GUIEditorTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIButtonTest\UIButtonTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIButtonTest\UIButtonTest_Editor.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest_Editor.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest_Editor.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelAtlasTest\UILabelAtlasTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelAtlasTest\UILabelAtlasTest_Editor.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelBMFontTest\UILabelBMFontTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelBMFontTest\UILabelBMFontTest_Editor.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelTest\UILabelTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelTest\UILabelTest_Editor.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest\UILayoutTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest\UILayoutTest_Editor.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIListViewTest\UIListViewTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIListViewTest\UIListViewTest_Editor.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILoadingBarTest\UILoadingBarTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILoadingBarTest\UILoadingBarTest_Editor.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIPageViewTest\UIPageViewTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIPageViewTest\UIPageViewTest_Editor.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIRichTextTest\UIRichTextTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIScene.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UISceneManager.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UISceneManager_Editor.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIScene_Editor.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIScrollViewTest\UIScrollViewTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIScrollViewTest\UIScrollViewTest_Editor.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UISliderTest\UISliderTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UISliderTest\UISliderTest_Editor.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextFieldTest\UITextFieldTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextFieldTest\UITextFieldTest_Editor.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIWidgetAddNodeTest\UIWidgetAddNodeTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIWidgetAddNodeTest\UIWidgetAddNodeTest_Editor.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\SceneEditorTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\acts.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\cons.cpp" />
@@ -653,6 +712,7 @@
     <ClCompile Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlSliderTest\CCControlSliderTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest\CCControlStepperTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlSwitchTest\CCControlSwitchTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\ExtensionsTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\NotificationCenterTest\NotificationCenterTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\TableViewTest\CustomTableViewCell.cpp" />
@@ -760,6 +820,9 @@
     <ClCompile Include="..\Classes\ZwoptexTest\ZwoptexTest.cpp" />
     <ClCompile Include="App.xaml.cpp">
       <DependentUpon>App.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="EditBox.xaml.cpp">
+      <DependentUpon>EditBox.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="MainPage.xaml.cpp">
       <DependentUpon>MainPage.xaml</DependentUpon>

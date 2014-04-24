@@ -122,6 +122,10 @@ CCNode::~CCNode(void)
     CC_SAFE_RELEASE(m_pShaderProgram);
     CC_SAFE_RELEASE(m_pUserObject);
 
+    // m_pComsContainer
+    m_pComponentContainer->removeAll();
+    CC_SAFE_DELETE(m_pComponentContainer);
+
     if(m_pChildren && m_pChildren->count() > 0)
     {
         CCObject* child;
@@ -137,10 +141,6 @@ CCNode::~CCNode(void)
 
     // children
     CC_SAFE_RELEASE(m_pChildren);
-    
-          // m_pComsContainer
-    m_pComponentContainer->removeAll();
-    CC_SAFE_DELETE(m_pComponentContainer);
 }
 
 bool CCNode::init()

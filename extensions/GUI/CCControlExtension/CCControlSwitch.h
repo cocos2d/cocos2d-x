@@ -46,7 +46,7 @@ class CCControlSwitchSprite;
  */
 
 /** @class CCControlSwitch Switch control for Cocos2D. */
-class CCControlSwitch : public CCControl
+class CC_EX_DLL CCControlSwitch : public CCControl
 {
 public:
     CCControlSwitch();

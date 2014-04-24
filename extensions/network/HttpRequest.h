@@ -43,7 +43,7 @@ typedef void (CCObject::*SEL_HttpResponse)(CCHttpClient* client, CCHttpResponse*
  @lua NA
  */
 
-class CCHttpRequest : public CCObject
+class CC_EX_DLL CCHttpRequest : public CCObject
 {
 public:
     /** Use this enum type as param in setReqeustType(param) */

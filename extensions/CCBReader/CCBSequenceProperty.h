@@ -10,7 +10,7 @@ NS_CC_EXT_BEGIN
  *  @js NA
  *  @lua NA
  */
-class CCBSequenceProperty : public CCObject
+class CC_EX_DLL CCBSequenceProperty : public CCObject
 {
 private:
     std::string mName;

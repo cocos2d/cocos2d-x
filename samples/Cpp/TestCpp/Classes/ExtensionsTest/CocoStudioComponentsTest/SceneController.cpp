@@ -38,6 +38,7 @@ bool SceneController::init()
 
 void SceneController::onEnter()
 {
+    CCComController::onEnter();
     _fAddTargetTime = 1.0f;
     
     _targets = new CCArray;
