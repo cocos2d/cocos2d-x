@@ -113,6 +113,8 @@ public:
     virtual float getRotation() const override;
     virtual void setRotation(float fRotation) override;
     virtual const kmMat4& getNodeToParentTransform() const override;
+    
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
 
 protected:
     const Point& getPosFromPhysics() const;
