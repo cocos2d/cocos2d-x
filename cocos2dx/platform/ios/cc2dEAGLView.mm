@@ -245,11 +245,23 @@ static cc2dEAGLView *view = nil;
     return YES;
 }
 
+- (void)willMoveToWindow:(UIWindow *)newWindow
+{
+    if (newWindow == nil)
+    {
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
+    }
+    
+    [super willMoveToWindow:newWindow];
+}
+
 - (void) dealloc
 {
     [renderer_ release];
     self.keyboardShowNotification = NULL; // implicit release
     view = nil;
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     [super dealloc];
 }

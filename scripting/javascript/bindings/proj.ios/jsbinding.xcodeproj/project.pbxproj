@@ -388,6 +388,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				VALID_ARCHS = "armv7 armv7s i386";
 			};
 			name = Debug;
 		};
@@ -433,6 +434,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "armv7 armv7s i386";
 			};
 			name = Release;
 		};
