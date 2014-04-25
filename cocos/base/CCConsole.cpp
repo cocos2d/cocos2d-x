@@ -853,8 +853,7 @@ void Console::commandUpload(int fd)
 
 ssize_t Console::readBytes(int fd, char* buffer, size_t maxlen, bool* more)
 {
-    size_t n;
-	int rc;
+    size_t n, rc;
     char c, *ptr = buffer;
     *more = false;
     for( n = 0; n < maxlen; n++ ) {
@@ -964,8 +963,7 @@ bool Console::parseCommand(int fd)
 
 ssize_t Console::readline(int fd, char* ptr, size_t maxlen)
 {
-    size_t n;
-	int rc;
+    size_t n, rc;
     char c;
 
     for( n = 0; n < maxlen - 1; n++ ) {
