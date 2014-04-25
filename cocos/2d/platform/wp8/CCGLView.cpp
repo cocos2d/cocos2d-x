@@ -173,6 +173,14 @@ void GLView::OnResuming(Platform::Object^ sender, Platform::Object^ args)
 {
 }
 
+// user pressed the Back Key on the phone
+void GLView::OnBackKeyPress()
+{
+    if(m_delegate)
+    {
+        m_delegate->Invoke(Cocos2dEvent::TerminateApp);
+    }
+}
 
 void GLView::OnPointerPressed(CoreWindow^ sender, PointerEventArgs^ args)
 {
@@ -504,5 +512,36 @@ void GLView::setScissorInPoints(float x , float y , float w , float h)
 	}
 }
 
+void GLView::QueueBackKeyPress()
+{
+    std::lock_guard<std::mutex> guard(mMutex);
+    std::shared_ptr<BackButtonEvent> e(new BackButtonEvent());
+    mInputEvents.push(e);
+}
+
+void GLView::QueuePointerEvent(PointerEventType type, PointerEventArgs^ args)
+{
+    std::lock_guard<std::mutex> guard(mMutex);
+    std::shared_ptr<PointerEvent> e(new PointerEvent(type, args));
+    mInputEvents.push(e);
+}
+
+void GLView::QueueEvent(std::shared_ptr<InputEvent>& event)
+{
+    std::lock_guard<std::mutex> guard(mMutex);
+    mInputEvents.push(event);
+}
+
+void GLView::ProcessEvents()
+{
+    std::lock_guard<std::mutex> guard(mMutex);
+
+    while (!mInputEvents.empty())
+    {
+        InputEvent* e = mInputEvents.front().get();
+        e->execute();
+        mInputEvents.pop();
+    }
+}
 
 NS_CC_END

@@ -152,6 +152,7 @@ Classes/PerformanceTest/PerformanceRendererTest.cpp \
 Classes/PerformanceTest/PerformanceContainerTest.cpp \
 Classes/PerformanceTest/PerformanceEventDispatcherTest.cpp \
 Classes/PerformanceTest/PerformanceScenarioTest.cpp \
+Classes/PerformanceTest/PerformanceCallbackTest.cpp \
 Classes/PhysicsTest/PhysicsTest.cpp \
 Classes/ReleasePoolTest/ReleasePoolTest.cpp \
 Classes/RenderTextureTest/RenderTextureTest.cpp \
@@ -171,6 +172,7 @@ Classes/TouchesTest/Ball.cpp \
 Classes/TouchesTest/Paddle.cpp \
 Classes/TouchesTest/TouchesTest.cpp \
 Classes/TransitionsTest/TransitionsTest.cpp \
+Classes/UnitTest/RefPtrTest.cpp \
 Classes/UnitTest/UnitTest.cpp \
 Classes/UserDefaultTest/UserDefaultTest.cpp \
 Classes/ZwoptexTest/ZwoptexTest.cpp

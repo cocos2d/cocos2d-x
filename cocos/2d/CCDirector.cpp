@@ -157,7 +157,7 @@ bool Director::init(void)
 
     _renderer = new Renderer;
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     _console = new Console;
 #endif
     return true;
@@ -184,7 +184,7 @@ Director::~Director(void)
 
     delete _renderer;
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     delete _console;
 #endif
 

@@ -438,6 +438,9 @@
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceTouchesTest.cpp">
       <Filter>Classes\PerformanceTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\PerformanceTest\PerformanceCallbackTest.cpp">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\ZwoptexTest\ZwoptexTest.cpp">
       <Filter>Classes\ZwoptexTest</Filter>
     </ClCompile>
@@ -831,6 +834,9 @@
     <ClCompile Include="..\Classes\ShaderTest\ShaderTest2.cpp">
       <Filter>Classes\ShaderTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\UnitTest\RefPtrTest.cpp">
+      <Filter>Classes\UnitTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -948,6 +954,9 @@
       <Filter>Classes\PerformanceTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceTouchesTest.h">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PerformanceTest\PerformanceCallbackTest.h">
       <Filter>Classes\PerformanceTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ZwoptexTest\ZwoptexTest.h">
@@ -1534,6 +1543,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ShaderTest\ShaderTest2.h">
       <Filter>Classes\ShaderTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UnitTest\RefPtrTest.h">
+      <Filter>Classes\UnitTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

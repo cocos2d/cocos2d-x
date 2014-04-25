@@ -115,7 +115,10 @@ public:
     virtual void setPosition(const Vector2 &position) override;
     virtual float getRotation() const override;
     virtual void setRotation(float fRotation) override;
+    virtual void syncPhysicsTransform() const;
     virtual const Matrix& getNodeToParentTransform() const override;
+    
+    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
 
 protected:
     const Vector2& getPosFromPhysics() const;

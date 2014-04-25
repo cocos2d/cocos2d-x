@@ -58,7 +58,7 @@ Menu* Menu::create()
     return Menu::create(nullptr, nullptr);
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 Menu * Menu::variadicCreate(MenuItem* item, ...)
 {
     va_list args;

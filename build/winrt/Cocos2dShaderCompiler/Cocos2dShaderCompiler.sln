@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30324.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Cocos2dShaderCompiler", "Cocos2dShaderCompiler.vcxproj", "{4F6DEF20-AC4C-487F-85B8-5993519E3911}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcocos2d", "..\..\..\cocos\2d\cocos2d_winrt.vcxproj", "{2330EDF4-5596-4B53-8BA5-158DDDE713D9}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libchipmunk", "..\..\..\external\chipmunk\proj.winrt\chipmunk.vcxproj", "{8B143765-5C1B-4076-9384-3E0EC3650B1A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcocos2d", "..\..\..\cocos\2d\cocos2d_winrt.vcxproj", "{2330EDF4-5596-4B53-8BA5-158DDDE713D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,18 +37,6 @@ Global
 		{4F6DEF20-AC4C-487F-85B8-5993519E3911}.Release|x64.ActiveCfg = Release|x64
 		{4F6DEF20-AC4C-487F-85B8-5993519E3911}.Release|x64.Build.0 = Release|x64
 		{4F6DEF20-AC4C-487F-85B8-5993519E3911}.Release|x64.Deploy.0 = Release|x64
-		{2330EDF4-5596-4B53-8BA5-158DDDE713D9}.Debug|ARM.ActiveCfg = Debug|ARM
-		{2330EDF4-5596-4B53-8BA5-158DDDE713D9}.Debug|ARM.Build.0 = Debug|ARM
-		{2330EDF4-5596-4B53-8BA5-158DDDE713D9}.Debug|Win32.ActiveCfg = Debug|Win32
-		{2330EDF4-5596-4B53-8BA5-158DDDE713D9}.Debug|Win32.Build.0 = Debug|Win32
-		{2330EDF4-5596-4B53-8BA5-158DDDE713D9}.Debug|x64.ActiveCfg = Debug|x64
-		{2330EDF4-5596-4B53-8BA5-158DDDE713D9}.Debug|x64.Build.0 = Debug|x64
-		{2330EDF4-5596-4B53-8BA5-158DDDE713D9}.Release|ARM.ActiveCfg = Release|ARM
-		{2330EDF4-5596-4B53-8BA5-158DDDE713D9}.Release|ARM.Build.0 = Release|ARM
-		{2330EDF4-5596-4B53-8BA5-158DDDE713D9}.Release|Win32.ActiveCfg = Release|Win32
-		{2330EDF4-5596-4B53-8BA5-158DDDE713D9}.Release|Win32.Build.0 = Release|Win32
-		{2330EDF4-5596-4B53-8BA5-158DDDE713D9}.Release|x64.ActiveCfg = Release|x64
-		{2330EDF4-5596-4B53-8BA5-158DDDE713D9}.Release|x64.Build.0 = Release|x64
 		{8B143765-5C1B-4076-9384-3E0EC3650B1A}.Debug|ARM.ActiveCfg = Debug|ARM
 		{8B143765-5C1B-4076-9384-3E0EC3650B1A}.Debug|ARM.Build.0 = Debug|ARM
 		{8B143765-5C1B-4076-9384-3E0EC3650B1A}.Debug|Win32.ActiveCfg = Debug|Win32
@@ -61,6 +49,18 @@ Global
 		{8B143765-5C1B-4076-9384-3E0EC3650B1A}.Release|Win32.Build.0 = Release|Win32
 		{8B143765-5C1B-4076-9384-3E0EC3650B1A}.Release|x64.ActiveCfg = Release|x64
 		{8B143765-5C1B-4076-9384-3E0EC3650B1A}.Release|x64.Build.0 = Release|x64
+		{2330EDF4-5596-4B53-8BA5-158DDDE713D9}.Debug|ARM.ActiveCfg = Debug|ARM
+		{2330EDF4-5596-4B53-8BA5-158DDDE713D9}.Debug|ARM.Build.0 = Debug|ARM
+		{2330EDF4-5596-4B53-8BA5-158DDDE713D9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2330EDF4-5596-4B53-8BA5-158DDDE713D9}.Debug|Win32.Build.0 = Debug|Win32
+		{2330EDF4-5596-4B53-8BA5-158DDDE713D9}.Debug|x64.ActiveCfg = Debug|x64
+		{2330EDF4-5596-4B53-8BA5-158DDDE713D9}.Debug|x64.Build.0 = Debug|x64
+		{2330EDF4-5596-4B53-8BA5-158DDDE713D9}.Release|ARM.ActiveCfg = Release|ARM
+		{2330EDF4-5596-4B53-8BA5-158DDDE713D9}.Release|ARM.Build.0 = Release|ARM
+		{2330EDF4-5596-4B53-8BA5-158DDDE713D9}.Release|Win32.ActiveCfg = Release|Win32
+		{2330EDF4-5596-4B53-8BA5-158DDDE713D9}.Release|Win32.Build.0 = Release|Win32
+		{2330EDF4-5596-4B53-8BA5-158DDDE713D9}.Release|x64.ActiveCfg = Release|x64
+		{2330EDF4-5596-4B53-8BA5-158DDDE713D9}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

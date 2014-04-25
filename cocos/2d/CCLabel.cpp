@@ -572,7 +572,7 @@ float Label::getScaleX() const
 
 void Label::alignText()
 {
-    if (_fontAtlas == nullptr)
+    if (_fontAtlas == nullptr || _currentUTF16String == nullptr)
     {
         return;
     }

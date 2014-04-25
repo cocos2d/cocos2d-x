@@ -328,60 +328,56 @@ void PhysicsSprite::setRotation(float fRotation)
 
 }
 
-// returns the transform matrix according the Chipmunk Body values
-const Matrix& PhysicsSprite::getNodeToParentTransform() const
+void PhysicsSprite::syncPhysicsTransform() const
 {
     // Although scale is not used by physics engines, it is calculated just in case
 	// the sprite is animated (scaled up/down) using actions.
 	// For more info see: http://www.cocos2d-iphone.org/forum/topic/68990
-
+    
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
-
+    
 	cpVect rot = (_ignoreBodyRotation ? cpvforangle(-CC_DEGREES_TO_RADIANS(_rotationX)) : _CPBody->rot);
 	float x = _CPBody->p.x + rot.x * -_anchorPointInPoints.x * _scaleX - rot.y * -_anchorPointInPoints.y * _scaleY;
 	float y = _CPBody->p.y + rot.y * -_anchorPointInPoints.x * _scaleX + rot.x * -_anchorPointInPoints.y * _scaleY;
-
+    
 	if (_ignoreAnchorPointForPosition)
     {
 		x += _anchorPointInPoints.x;
 		y += _anchorPointInPoints.y;
 	}
-
     
     float mat[] = {  (float)rot.x * _scaleX, (float)rot.y * _scaleX, 0,  0,
-                        (float)-rot.y * _scaleY, (float)rot.x * _scaleY,  0,  0,
-                        0,  0,  1,  0,
-                        x,	y,  0,  1};
+        (float)-rot.y * _scaleY, (float)rot.x * _scaleY,  0,  0,
+        0,  0,  1,  0,
+        x,	y,  0,  1};
+    
     
     _transform.set(mat);
     
-    return _transform;
-
-
 #elif CC_ENABLE_BOX2D_INTEGRATION
-
+    
     b2Vec2 pos  = _pB2Body->GetPosition();
-
+    
 	float x = pos.x * _PTMRatio;
 	float y = pos.y * _PTMRatio;
-
+    
 	if (_ignoreAnchorPointForPosition)
     {
 		x += _anchorPointInPoints.x;
 		y += _anchorPointInPoints.y;
 	}
-
+    
 	// Make matrix
 	float radians = _pB2Body->GetAngle();
 	float c = cosf(radians);
 	float s = sinf(radians);
-
+    
 	if (!_anchorPointInPoints.equals(Vector2::ZERO))
     {
 		x += ((c * -_anchorPointInPoints.x * _scaleX) + (-s * -_anchorPointInPoints.y * _scaleY));
 		y += ((s * -_anchorPointInPoints.x * _scaleX) + (c * -_anchorPointInPoints.y * _scaleY));
 	}
-
+    
 	// Rot, Translate Matrix
     
     float mat[] = {  (float)c * _scaleX, (float)s * _scaleX, 0,  0,
@@ -390,9 +386,25 @@ const Matrix& PhysicsSprite::getNodeToParentTransform() const
         x,	y,  0,  1};
     
     _transform.set(mat);
-
-	return _transform;
 #endif
+}
+
+// returns the transform matrix according the Chipmunk Body values
+const Matrix& PhysicsSprite::getNodeToParentTransform() const
+{
+    syncPhysicsTransform();
+    
+	return _transform;
+}
+
+void PhysicsSprite::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+{
+    if (isDirty())
+    {
+        syncPhysicsTransform();
+    }
+    
+    Sprite::draw(renderer, _transform, transformUpdated);
 }
 
 NS_CC_EXT_END

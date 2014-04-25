@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include <wrl/client.h>
 #include <ppl.h>
 #include <ppltasks.h>
+#include <sstream>
 
 NS_CC_BEGIN
 
@@ -40,6 +41,7 @@ using namespace Platform;
 using namespace Windows::Storage;
 using namespace Windows::Storage::Pickers;
 using namespace Windows::Storage::Streams;
+using namespace Windows::Networking::Connectivity;
 
 std::wstring CCUtf8ToUnicode(const char * pszUtf8Str, unsigned len/* = -1*/)
 {
@@ -104,6 +106,48 @@ float getScaledDPIValue(float v) {
 	auto dipFactor = DisplayProperties::LogicalDpi / 96.0f;
 	return v * dipFactor;
 }
+
+void CC_DLL CCLogIPAddresses()
+{
+    auto hostnames = NetworkInformation::GetHostNames();
+    int length = hostnames->Size;
+
+    for(int i = 0; i < length; i++)
+    {
+        auto hn = hostnames->GetAt(i);
+        if (hn->IPInformation != nullptr)
+        {
+            std::string s = PlatformStringToString(hn->DisplayName);
+            CCLog("IP Address: %s:", s.c_str());
+        }
+    }
+}
+
+std::string CC_DLL getDeviceIPAddresses()
+{
+    std::stringstream result;
+
+    auto hostnames = NetworkInformation::GetHostNames();
+    int length = hostnames->Size;
+
+    for(int i = 0; i < length; i++)
+    {
+        auto hn = hostnames->GetAt(i);
+        if (hn->IPInformation != nullptr)
+        {
+            result << PlatformStringToString(hn->DisplayName) << std::endl;
+        }
+    }
+
+    return result.str();
+}
+
+
+
+
+
+
+
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 
