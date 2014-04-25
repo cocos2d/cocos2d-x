@@ -1,11 +1,13 @@
 #include "UnitTest.h"
+#include "RefPtrTest.h"
 
 // For ' < o > ' multiply test scene.
 
 static std::function<Layer*()> createFunctions[] = {
     CL(TemplateVectorTest),
     CL(TemplateMapTest),
-    CL(ValueTest)
+    CL(ValueTest),
+    CL(RefPtrTest)
 };
 
 static int sceneIdx = -1;

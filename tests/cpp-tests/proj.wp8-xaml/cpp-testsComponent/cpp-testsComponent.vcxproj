@@ -183,11 +183,12 @@
     <ClCompile Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\Direct3DInterop.cpp" />
     <ClCompile Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\DirectXBase.cpp" />
     <ClCompile Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\EditBoxEvent.cpp" />
-    <ClCompile Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\InputEvent.cpp" />
     <ClCompile Include="..\..\Classes\BaseTest.cpp" />
     <ClCompile Include="..\..\Classes\ChipmunkTest\ChipmunkTest.cpp" />
     <ClCompile Include="..\..\Classes\ClippingNodeTest\ClippingNodeTest.cpp" />
     <ClCompile Include="..\..\Classes\ConfigurationTest\ConfigurationTest.cpp" />
+    <ClCompile Include="..\..\Classes\ConsoleTest\ConsoleTest.cpp" />
+    <ClCompile Include="..\..\Classes\CurlTest\CurlTest.cpp" />
     <ClCompile Include="..\..\Classes\DataVisitorTest\DataVisitorTest.cpp" />
     <ClCompile Include="..\..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.cpp" />
     <ClCompile Include="..\..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackTestLayer.cpp" />
@@ -309,6 +310,7 @@
     <ClCompile Include="..\..\Classes\PerformanceTest\PerformanceTest.cpp" />
     <ClCompile Include="..\..\Classes\PerformanceTest\PerformanceTextureTest.cpp" />
     <ClCompile Include="..\..\Classes\PerformanceTest\PerformanceTouchesTest.cpp" />
+    <ClCompile Include="..\..\Classes\PerformanceTest\PerformanceCallbackTest.cpp" />
     <ClCompile Include="..\..\Classes\ZwoptexTest\ZwoptexTest.cpp" />
     <ClCompile Include="..\..\Classes\TextInputTest\TextInputTest.cpp" />
     <ClCompile Include="..\..\Classes\UserDefaultTest\UserDefaultTest.cpp" />
@@ -354,6 +356,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</MultiProcessorCompilation>
+      <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</MultiProcessorCompilation>
+      <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</MultiProcessorCompilation>
+      <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</MultiProcessorCompilation>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -363,8 +369,6 @@
     <ClInclude Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\DirectXBase.h" />
     <ClInclude Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\DirectXHelper.h" />
     <ClInclude Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\EditBoxEvent.h" />
-    <ClInclude Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\InputEvent.h" />
-    <ClInclude Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\InputEventTypes.h" />
     <ClInclude Include="..\..\Classes\BaseTest.h" />
     <ClInclude Include="..\..\Classes\Box2DTestBed\Tests\ConvexHull.h" />
     <ClInclude Include="..\..\Classes\Box2DTestBed\Tests\ConveyorBelt.h" />
@@ -374,6 +378,8 @@
     <ClInclude Include="..\..\Classes\ChipmunkTest\ChipmunkTest.h" />
     <ClInclude Include="..\..\Classes\ClippingNodeTest\ClippingNodeTest.h" />
     <ClInclude Include="..\..\Classes\ConfigurationTest\ConfigurationTest.h" />
+    <ClInclude Include="..\..\Classes\ConsoleTest\ConsoleTest.h" />
+    <ClInclude Include="..\..\Classes\CurlTest\CurlTest.h" />
     <ClInclude Include="..\..\Classes\DataVisitorTest\DataVisitorTest.h" />
     <ClInclude Include="..\..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsLayerLoader.h" />
     <ClInclude Include="..\..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.h" />
@@ -500,6 +506,7 @@
     <ClInclude Include="..\..\Classes\PerformanceTest\PerformanceTest.h" />
     <ClInclude Include="..\..\Classes\PerformanceTest\PerformanceTextureTest.h" />
     <ClInclude Include="..\..\Classes\PerformanceTest\PerformanceTouchesTest.h" />
+    <ClInclude Include="..\..\Classes\PerformanceTest\PerformanceCallbackTest.h" />
     <ClInclude Include="..\..\Classes\ZwoptexTest\ZwoptexTest.h" />
     <ClInclude Include="..\..\Classes\TextInputTest\TextInputTest.h" />
     <ClInclude Include="..\..\Classes\UserDefaultTest\UserDefaultTest.h" />

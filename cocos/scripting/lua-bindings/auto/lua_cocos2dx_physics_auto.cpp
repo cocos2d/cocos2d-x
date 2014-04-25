@@ -5,7 +5,7 @@
 
 
 
-int lua_cocos2dx_physics_PhysicsWorld_getGravity(lua_State* tolua_S)
+int lua_cocos2dx_physics_PhysicsWorld_setGravity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::PhysicsWorld* cobj = nullptr;
@@ -25,26 +25,28 @@ int lua_cocos2dx_physics_PhysicsWorld_getGravity(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_getGravity'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_setGravity'", nullptr);
         return 0;
     }
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
+    if (argc == 1) 
     {
+        cocos2d::Point arg0;
+
+        ok &= luaval_to_point(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
-        cocos2d::Point ret = cobj->getGravity();
-        point_to_luaval(tolua_S, ret);
-        return 1;
+        cobj->setGravity(arg0);
+        return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getGravity",argc, 0);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setGravity",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsWorld_getGravity'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsWorld_setGravity'.",&tolua_err);
 #endif
 
     return 0;
@@ -89,52 +91,6 @@ int lua_cocos2dx_physics_PhysicsWorld_getAllBodies(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsWorld_getAllBodies'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_physics_PhysicsWorld_setGravity(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::PhysicsWorld* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.PhysicsWorld",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::PhysicsWorld*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_setGravity'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        cocos2d::Point arg0;
-
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
-        if(!ok)
-            return 0;
-        cobj->setGravity(arg0);
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setGravity",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsWorld_setGravity'.",&tolua_err);
 #endif
 
     return 0;
@@ -619,6 +575,50 @@ int lua_cocos2dx_physics_PhysicsWorld_getDebugDrawMask(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_physics_PhysicsWorld_getGravity(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::PhysicsWorld* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.PhysicsWorld",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::PhysicsWorld*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_getGravity'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cocos2d::Point ret = cobj->getGravity();
+        point_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getGravity",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsWorld_getGravity'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_physics_PhysicsWorld_setDebugDrawMask(lua_State* tolua_S)
 {
     int argc = 0;
@@ -816,9 +816,8 @@ int lua_register_cocos2dx_physics_PhysicsWorld(lua_State* tolua_S)
     tolua_cclass(tolua_S,"PhysicsWorld","cc.PhysicsWorld","",nullptr);
 
     tolua_beginmodule(tolua_S,"PhysicsWorld");
-        tolua_function(tolua_S,"getGravity",lua_cocos2dx_physics_PhysicsWorld_getGravity);
-        tolua_function(tolua_S,"getAllBodies",lua_cocos2dx_physics_PhysicsWorld_getAllBodies);
         tolua_function(tolua_S,"setGravity",lua_cocos2dx_physics_PhysicsWorld_setGravity);
+        tolua_function(tolua_S,"getAllBodies",lua_cocos2dx_physics_PhysicsWorld_getAllBodies);
         tolua_function(tolua_S,"getSpeed",lua_cocos2dx_physics_PhysicsWorld_getSpeed);
         tolua_function(tolua_S,"removeBody",lua_cocos2dx_physics_PhysicsWorld_removeBody);
         tolua_function(tolua_S,"removeJoint",lua_cocos2dx_physics_PhysicsWorld_removeJoint);
@@ -829,6 +828,7 @@ int lua_register_cocos2dx_physics_PhysicsWorld(lua_State* tolua_S)
         tolua_function(tolua_S,"getShape",lua_cocos2dx_physics_PhysicsWorld_getShape);
         tolua_function(tolua_S,"removeAllBodies",lua_cocos2dx_physics_PhysicsWorld_removeAllBodies);
         tolua_function(tolua_S,"getDebugDrawMask",lua_cocos2dx_physics_PhysicsWorld_getDebugDrawMask);
+        tolua_function(tolua_S,"getGravity",lua_cocos2dx_physics_PhysicsWorld_getGravity);
         tolua_function(tolua_S,"setDebugDrawMask",lua_cocos2dx_physics_PhysicsWorld_setDebugDrawMask);
         tolua_function(tolua_S,"getBody",lua_cocos2dx_physics_PhysicsWorld_getBody);
         tolua_function(tolua_S,"setUpdateRate",lua_cocos2dx_physics_PhysicsWorld_setUpdateRate);

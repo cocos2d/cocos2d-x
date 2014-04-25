@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "CCStdC.h"
 #include "CCGL.h"
 #include "platform/CCCommon.h"
+#include "InputEvent.h"
 #include "CCGeometry.h"
 #include "platform/CCGLViewProtocol.h"
 #include <agile.h>
@@ -37,7 +38,8 @@ THE SOFTWARE.
 
 #include <agile.h>
 #include <DirectXMath.h>
-
+#include <mutex>
+#include <queue>
 
 NS_CC_BEGIN
 
@@ -110,6 +112,7 @@ public:
 	void UpdateForWindowSizeChange();
 	void OnRendering();
     void OnSuspending();
+    void GLView::QueueEvent(std::shared_ptr<InputEvent>& event);
 
 private:
 	Windows::Foundation::EventRegistrationToken m_eventToken;
@@ -148,6 +151,9 @@ private:
     float m_fFrameZoomFactor;
 	WinRTWindow^ m_winRTWindow;
 	Windows::Foundation::Rect m_keyboardRect;
+
+    std::queue<std::shared_ptr<InputEvent>> mInputEvents;
+    std::mutex mMutex;
 };
 
 NS_CC_END

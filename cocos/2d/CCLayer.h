@@ -38,6 +38,8 @@ THE SOFTWARE.
 #include "CCEventKeyboard.h"
 #include "renderer/CCCustomCommand.h"
 
+#include "CCPhysicsWorld.h"
+
 NS_CC_BEGIN
 
 /**
@@ -168,6 +170,27 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~Layer();
 
     virtual bool init() override;
+
+#if CC_USE_PHYSICS
+public:
+    virtual void updatePhysics(float delta);
+    virtual void onEnter() override;
+    virtual void onExit() override;
+
+    inline PhysicsWorld* getPhysicsWorld() { return _physicsWorld; }
+    static Layer *createWithPhysics();
+
+CC_CONSTRUCTOR_ACCESS:
+    bool initWithPhysics();
+
+protected:
+    void addChildToPhysicsWorld(Node* child);
+
+    PhysicsWorld* _physicsWorld;
+
+    friend class Node;
+    friend class ProtectedNode;
+#endif // CC_USE_PHYSICS
 
 protected:
     //add the api for avoid use deprecated api
@@ -436,7 +459,7 @@ public:
      * In lua:local create(...)
      * @endcode
      */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     // WP8 in VS2012 does not support nullptr in variable args lists and variadic templates are also not supported
     typedef Layer* M;
     static LayerMultiplex* create(M m1, std::nullptr_t listEnd) { return createVariadic(m1, NULL); }

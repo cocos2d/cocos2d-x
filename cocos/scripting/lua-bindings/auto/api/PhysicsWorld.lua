@@ -3,19 +3,14 @@
 -- @module PhysicsWorld
 
 --------------------------------
--- @function [parent=#PhysicsWorld] getGravity 
+-- @function [parent=#PhysicsWorld] setGravity 
 -- @param self
--- @return point_table#point_table ret (return value: point_table)
+-- @param #point_table point
         
 --------------------------------
 -- @function [parent=#PhysicsWorld] getAllBodies 
 -- @param self
 -- @return array_table#array_table ret (return value: array_table)
-        
---------------------------------
--- @function [parent=#PhysicsWorld] setGravity 
--- @param self
--- @param #point_table point
         
 --------------------------------
 -- @function [parent=#PhysicsWorld] getSpeed 
@@ -71,6 +66,11 @@
 -- @function [parent=#PhysicsWorld] getDebugDrawMask 
 -- @param self
 -- @return int#int ret (return value: int)
+        
+--------------------------------
+-- @function [parent=#PhysicsWorld] getGravity 
+-- @param self
+-- @return point_table#point_table ret (return value: point_table)
         
 --------------------------------
 -- @function [parent=#PhysicsWorld] setDebugDrawMask 

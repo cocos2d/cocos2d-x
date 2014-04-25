@@ -24,7 +24,6 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCGLView.h"
-#include "CCSet.h"
 #include "ccMacros.h"
 #include "CCDirector.h"
 #include "CCTouch.h"
@@ -514,6 +513,12 @@ void GLView::UpdateForWindowSizeChange()
         GLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::SHOW_ALL);
         Director::sharedDirector()->setProjection(Director::sharedDirector()->getProjection());
    }
+}
+
+void GLView::QueueEvent(std::shared_ptr<InputEvent>& event)
+{
+    std::lock_guard<std::mutex> guard(mMutex);
+    mInputEvents.push(event);
 }
 
 NS_CC_END
