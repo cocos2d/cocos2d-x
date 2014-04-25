@@ -1,3 +1,17 @@
+cocos2d-x-3.1 ?.? 2014
+     [NEW]          Android: Adds support for get response when Activity's onActivityResult is triggered
+     [NEW]          Core: Adds RefPtr<T> smart pointer support
+     [NEW]          Test: Adds a sample for making a outline sprite by using a custom shader
+
+     [FIX]          Application: Returns correct value for Application::run on Mac platform
+     [FIX]          Lua: cc.pGetAngle may return wrong value
+     [FIX]          Image: saveToImage may cause memory leak
+     [FIX]          Network: HttpResponse uses std::function as callback
+     [FIX]          Particle: The effect of particle loaded in CocosBuilder is incorrectly
+     [FIX]          Physics: Move physicWorld from Scene to Layer
+     [FIX]          Physics: PhysicsSprite's transform couldn't be updated
+     [FIX]          WP8: Some bug fixes
+
 cocos2d-x-3.0 Apr.23 2014
      [NEW]          Lua: add `RichText` test cases
      [NEW]          EditBox: Added missing Text Font and Placeholder feature for Mac platform
