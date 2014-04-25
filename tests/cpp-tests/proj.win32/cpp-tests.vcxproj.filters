@@ -831,6 +831,9 @@
     <ClCompile Include="..\Classes\ShaderTest\ShaderTest2.cpp">
       <Filter>Classes\ShaderTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\UnitTest\RefPtrTest.cpp">
+      <Filter>Classes\UnitTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -1534,6 +1537,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ShaderTest\ShaderTest2.h">
       <Filter>Classes\ShaderTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UnitTest\RefPtrTest.h">
+      <Filter>Classes\UnitTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
