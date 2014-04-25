@@ -26,21 +26,19 @@ THE SOFTWARE.
 #ifndef __INPUT_EVENT__
 #define __INPUT_EVENT__
 
+#include "cocos2d.h"
 #include "InputEventTypes.h"
 #include <agile.h>
 
-ref class Cocos2dRenderer;
 
 namespace PhoneDirect3DXamlAppComponent
 {
+    public delegate void Cocos2dEventDelegate(Cocos2dEvent event);
+    public delegate void Cocos2dMessageBoxDelegate(Platform::String^  title, Platform::String^ text);
+    public delegate void Cocos2dEditBoxDelegate(Platform::String^ strPlaceHolder, Platform::String^ strText, int maxLength, int inputMode, int inputFlag, Windows::Foundation::EventHandler<Platform::String^>^ receiveHandler);
+}
 
-public delegate void Cocos2dEventDelegate(Cocos2dEvent event);    
-
-public delegate void Cocos2dMessageBoxDelegate(Platform::String^  title, Platform::String^ text);   
-
-public delegate void Cocos2dEditBoxDelegate(Platform::String^ strPlaceHolder, Platform::String^ strText, int maxLength, int inputMode, int inputFlag, Windows::Foundation::EventHandler<Platform::String^>^ receiveHandler);
-
-
+NS_CC_BEGIN
 
 enum PointerEventType
 {
@@ -54,14 +52,25 @@ class InputEvent
 public:
     InputEvent() {};
     virtual ~InputEvent() {};
-    virtual void execute(Cocos2dRenderer^ renderer) = 0;
+    virtual void execute() = 0;
+};
+
+
+class AccelerometerEvent : public InputEvent
+{
+public:
+    AccelerometerEvent(const cocos2d::Acceleration& event);
+    virtual void execute();
+
+private:
+    cocos2d::Acceleration m_event;
 };
 
 class PointerEvent : public InputEvent
 {
 public:
     PointerEvent(PointerEventType type, Windows::UI::Core::PointerEventArgs^ args);
-    virtual void execute(Cocos2dRenderer ^ renderer);
+    virtual void execute();
 
 
 private:
@@ -73,12 +82,12 @@ class KeyboardEvent : public InputEvent
 
 {
 public:
-    KeyboardEvent(Cocos2dKeyEvent type);
-    KeyboardEvent(Cocos2dKeyEvent type, Platform::String^ text);
-    virtual void execute(Cocos2dRenderer ^ renderer);
+    KeyboardEvent(PhoneDirect3DXamlAppComponent::Cocos2dKeyEvent type);
+    KeyboardEvent(PhoneDirect3DXamlAppComponent::Cocos2dKeyEvent type, Platform::String^ text);
+    virtual void execute();
 
 private:
-    Cocos2dKeyEvent m_type;
+    PhoneDirect3DXamlAppComponent::Cocos2dKeyEvent m_type;
     Platform::Agile<Platform::String> m_text;
 };
 
@@ -86,11 +95,10 @@ class BackButtonEvent : public InputEvent
 {
 public:
     BackButtonEvent();
-    virtual void execute(Cocos2dRenderer ^ renderer);
+    virtual void execute();
 };
 
-
-}
+NS_CC_END
 
 #endif // #ifndef __INPUT_EVENT__
 

@@ -36,7 +36,7 @@ namespace PhoneDirect3DXamlAppComponent
 
 	}
 
-	void EditBoxEvent::execute( Cocos2dRenderer ^ renderer )
+	void EditBoxEvent::execute()
 	{
         if(m_handler.Get())
         {

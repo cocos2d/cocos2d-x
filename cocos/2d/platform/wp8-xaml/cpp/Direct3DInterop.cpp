@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "Direct3DInterop.h"
 #include "Direct3DContentProvider.h"
 #include "EditBoxEvent.h"
+#include "cocos2d.h"
 
 using namespace Windows::Foundation;
 using namespace Windows::UI::Core;
@@ -91,69 +92,46 @@ IAsyncAction^ Direct3DInterop::OnSuspending()
 
 void Direct3DInterop::OnBackKeyPress()
 {
-    std::lock_guard<std::mutex> guard(mMutex);
-    std::shared_ptr<BackButtonEvent> e(new BackButtonEvent());
-    mInputEvents.push(e);
+    cocos2d::GLView::sharedOpenGLView()->QueueBackKeyPress();
 }
 
 // Pointer Event Handlers. We need to queue up pointer events to pass them to the drawing thread
 void Direct3DInterop::OnPointerPressed(DrawingSurfaceManipulationHost^ sender, PointerEventArgs^ args)
 {
-    AddPointerEvent(PointerEventType::PointerPressed, args);
+    cocos2d::GLView::sharedOpenGLView()->QueuePointerEvent(cocos2d::PointerEventType::PointerPressed, args);
 }
-
 
 void Direct3DInterop::OnPointerMoved(DrawingSurfaceManipulationHost^ sender, PointerEventArgs^ args)
 {
-    AddPointerEvent(PointerEventType::PointerMoved, args);
+    cocos2d::GLView::sharedOpenGLView()->QueuePointerEvent(cocos2d::PointerEventType::PointerMoved, args);
 }
 
 void Direct3DInterop::OnPointerReleased(DrawingSurfaceManipulationHost^ sender, PointerEventArgs^ args)
 {
-    AddPointerEvent(PointerEventType::PointerReleased, args);
+    cocos2d::GLView::sharedOpenGLView()->QueuePointerEvent(cocos2d::PointerEventType::PointerReleased, args);
 }
 
 void Direct3DInterop::OnCocos2dKeyEvent(Cocos2dKeyEvent key)
 {
-    std::lock_guard<std::mutex> guard(mMutex);
-    std::shared_ptr<KeyboardEvent> e(new KeyboardEvent(key));
-    mInputEvents.push(e);
+    std::shared_ptr<cocos2d::InputEvent> e(new cocos2d::KeyboardEvent(key));
+    cocos2d::GLView::sharedOpenGLView()->QueueEvent(e);
 }
 
 
 void Direct3DInterop::OnCocos2dKeyEvent(Cocos2dKeyEvent key, Platform::String^ text)
 {
-    std::lock_guard<std::mutex> guard(mMutex);
-    std::shared_ptr<KeyboardEvent> e(new KeyboardEvent(key,text));
-    mInputEvents.push(e);
+    std::shared_ptr<cocos2d::InputEvent> e(new cocos2d::KeyboardEvent(key,text));
+    cocos2d::GLView::sharedOpenGLView()->QueueEvent(e);
 }
 
-
-void Direct3DInterop::AddPointerEvent(PointerEventType type, PointerEventArgs^ args)
-{
-    std::lock_guard<std::mutex> guard(mMutex);
-    std::shared_ptr<PointerEvent> e(new PointerEvent(type, args));
-    mInputEvents.push(e);
-}
 
 void Direct3DInterop::OnCocos2dEditboxEvent(Object^ sender, Platform::String^ args, Windows::Foundation::EventHandler<Platform::String^>^ handler)
 {
-	std::lock_guard<std::mutex> guard(mMutex);
-	std::shared_ptr<EditBoxEvent> e(new EditBoxEvent(sender, args, handler));
-	mInputEvents.push(e);
+	std::shared_ptr<cocos2d::InputEvent> e(new EditBoxEvent(sender, args, handler));
+    cocos2d::GLView::sharedOpenGLView()->QueueEvent(e);
 }
 
-void Direct3DInterop::ProcessEvents()
-{
-    std::lock_guard<std::mutex> guard(mMutex);
 
-    while(!mInputEvents.empty())
-    {
-        InputEvent* e = mInputEvents.front().get();
-        e->execute(m_renderer);
-        mInputEvents.pop();
-    }
-}
 
 
 HRESULT Direct3DInterop::PrepareResources(_In_ const LARGE_INTEGER* presentTargetTime, _Inout_ DrawingSurfaceSizeF* desiredRenderTargetSize)
@@ -176,7 +154,7 @@ HRESULT Direct3DInterop::Draw(_In_ ID3D11Device1* device, _In_ ID3D11DeviceConte
     }  
 #endif // 0
 
-    ProcessEvents();
+    cocos2d::GLView::sharedOpenGLView()->ProcessEvents();
     m_renderer->Render();
 	RequestAdditionalFrame();
 	return S_OK;

@@ -60,7 +60,7 @@ class EventListenerCustom;
 class TextureCache;
 class Renderer;
 
-#if  (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
+#if  (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 class Console;
 #endif
 
@@ -371,7 +371,7 @@ public:
     /** Returns the Console 
      @since v3.0
      */
-#if  (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
+#if  (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     Console* getConsole() const { return _console; }
 #endif
 
@@ -482,7 +482,7 @@ protected:
     /* Renderer for the Director */
     Renderer *_renderer;
 
-#if  (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
+#if  (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     /* Console for the director */
     Console *_console;
 #endif

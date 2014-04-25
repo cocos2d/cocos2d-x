@@ -93,7 +93,7 @@ class CC_DLL Sequence : public ActionInterval
 {
 public:
     /** helper constructor to create an array of sequenceable actions */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     // WP8 in VS2012 does not support nullptr in variable args lists and variadic templates are also not supported
     typedef FiniteTimeAction* M;
     static Sequence* create(M m1, std::nullptr_t listEnd) { return variadicCreate(m1, NULL); }
@@ -267,7 +267,7 @@ public:
      * in lua :local create(local object1,local object2, ...)
      * @endcode
      */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     // WP8 in VS2012 does not support nullptr in variable args lists and variadic templates are also not supported
     typedef FiniteTimeAction* M;
     static Spawn* create(M m1, std::nullptr_t listEnd) { return variadicCreate(m1, NULL); }

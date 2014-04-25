@@ -9,13 +9,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libSpine", "..\cocos\editor
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libCocosStudio", "..\cocos\editor-support\cocostudio\proj.wp8\libCocosStudio.vcxproj", "{51E5736E-E1A3-4C94-ABB7-E92ECEF9C12E}"
 	ProjectSection(ProjectDependencies) = postProject
-		{04A0C42F-23BB-469B-A9D8-CA49136ADBD4} = {04A0C42F-23BB-469B-A9D8-CA49136ADBD4}
 		{B5AF91B3-64EA-44E1-84B0-D759E93758FB} = {B5AF91B3-64EA-44E1-84B0-D759E93758FB}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libCocosBuilder", "..\cocos\editor-support\cocosbuilder\proj.wp8\libCocosBuilder.vcxproj", "{20D4035D-FD3F-4FD3-BABA-97BC1C38DFC2}"
 	ProjectSection(ProjectDependencies) = postProject
-		{04A0C42F-23BB-469B-A9D8-CA49136ADBD4} = {04A0C42F-23BB-469B-A9D8-CA49136ADBD4}
 		{B5AF91B3-64EA-44E1-84B0-D759E93758FB} = {B5AF91B3-64EA-44E1-84B0-D759E93758FB}
 	EndProjectSection
 EndProject
@@ -29,6 +27,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "chipmunk", "..\external\chipmunk\proj.wp8\chipmunk.vcxproj", "{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libLocalStorage", "..\cocos\storage\local-storage\proj.wp8\libLocalStorage.vcxproj", "{88982C27-5A7B-40A8-86E7-B3187B44B322}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B5AF91B3-64EA-44E1-84B0-D759E93758FB} = {B5AF91B3-64EA-44E1-84B0-D759E93758FB}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CocosDenshion", "..\cocos\audio\proj.wp8\CocosDenshion.vcxproj", "{DF125891-EEE9-4466-B903-F828FD272158}"
 	ProjectSection(ProjectDependencies) = postProject

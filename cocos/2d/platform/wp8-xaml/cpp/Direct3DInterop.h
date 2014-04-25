@@ -39,7 +39,6 @@ namespace PhoneDirect3DXamlAppComponent
 
 public delegate void RequestAdditionalFrameHandler();
 
-
 [Windows::Foundation::Metadata::WebHostHidden]
 public ref class Direct3DInterop sealed : public Windows::Phone::Input::Interop::IDrawingSurfaceManipulationHandler
 {
@@ -60,7 +59,7 @@ public:
     void OnBackKeyPress();
     void OnCocos2dKeyEvent(Cocos2dKeyEvent key);
     void OnCocos2dKeyEvent(Cocos2dKeyEvent key, Platform::String^ text);
-	void OnCocos2dEditboxEvent(Object^ sender, Platform::String^ args, Windows::Foundation::EventHandler<Platform::String^>^ handler);
+    void OnCocos2dEditboxEvent(Platform::Object^ sender, Platform::String^ args, Windows::Foundation::EventHandler<Platform::String^>^ handler);
 
     property Windows::Graphics::Display::DisplayOrientations WindowOrientation;
     property Windows::Foundation::Size WindowBounds;
@@ -84,13 +83,10 @@ internal:
     bool SendCocos2dEvent(Cocos2dEvent event);
 
 private:
-    void ProcessEvents();
-    void AddPointerEvent(PointerEventType type, Windows::UI::Core::PointerEventArgs^ args);
     Cocos2dRenderer^ m_renderer;
     Windows::Graphics::Display::DisplayOrientations mCurrentOrientation;
 
-    std::queue<std::shared_ptr<InputEvent>> mInputEvents;
-    std::mutex mMutex;
+
     std::mutex mRenderingMutex;
 
     Cocos2dEventDelegate^ m_delegate;

@@ -7,7 +7,7 @@
   <PropertyGroup />
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(EngineRoot)cocos;$(EngineRoot)cocos\2d\platform\winrt;$(EngineRoot)\external\winrt-specific\angle\include;$(EngineRoot)\external\winrt-specific;$(EngineRoot)cocos\2d;$(EngineRoot)cocos\2d\renderer;$(EngineRoot)cocos\math\kazmath;$(EngineRoot)cocos\ui;$(EngineRoot)cocos\base;$(EngineRoot)cocos\physics;$(EngineRoot)cocos\math\kazmath\include;$(GeneratedFilesDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos;$(EngineRoot)cocos\2d\platform\winrt;$(EngineRoot)\external\winrt-specific\angle\include;$(EngineRoot)\external\xxhash;$(EngineRoot)\external\winrt-specific;$(EngineRoot)cocos\2d;$(EngineRoot)cocos\2d\renderer;$(EngineRoot)cocos\math\kazmath;$(EngineRoot)cocos\ui;$(EngineRoot)cocos\base;$(EngineRoot)cocos\physics;$(EngineRoot)cocos\math\kazmath\include;$(GeneratedFilesDir)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
