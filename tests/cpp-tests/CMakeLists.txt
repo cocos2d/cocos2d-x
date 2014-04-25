@@ -147,6 +147,7 @@ set(SAMPLE_SRC
   Classes/PerformanceTest/PerformanceContainerTest.cpp
   Classes/PerformanceTest/PerformanceEventDispatcherTest.cpp
   Classes/PerformanceTest/PerformanceScenarioTest.cpp
+  Classes/PerformanceTest/PerformanceCallbackTest.cpp
   Classes/PhysicsTest/PhysicsTest.cpp
   Classes/ReleasePoolTest/ReleasePoolTest.cpp
   Classes/RenderTextureTest/RenderTextureTest.cpp

@@ -264,6 +264,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\websockets\prebuilt\win32\*.*" "$(Ou
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceTest.cpp" />
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceTextureTest.cpp" />
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceTouchesTest.cpp" />
+    <ClCompile Include="..\Classes\PerformanceTest\PerformanceCallbackTest.cpp" />
     <ClCompile Include="..\Classes\ZwoptexTest\ZwoptexTest.cpp" />
     <ClCompile Include="..\Classes\CurlTest\CurlTest.cpp" />
     <ClCompile Include="..\Classes\TextInputTest\TextInputTest.cpp" />
@@ -445,6 +446,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\websockets\prebuilt\win32\*.*" "$(Ou
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceTest.h" />
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceTextureTest.h" />
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceTouchesTest.h" />
+    <ClInclude Include="..\Classes\PerformanceTest\PerformanceCallbackTest.h" />
     <ClInclude Include="..\Classes\ZwoptexTest\ZwoptexTest.h" />
     <ClInclude Include="..\Classes\CurlTest\CurlTest.h" />
     <ClInclude Include="..\Classes\TextInputTest\TextInputTest.h" />
