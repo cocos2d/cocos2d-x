@@ -74,7 +74,7 @@ tolua_lerror:
     return 0;
 }
 
-int lua_cocos2dx_physics_PhysicsWorld_getScene(lua_State* tolua_S)
+int lua_cocos2dx_physics_PhysicsWorld_getLayer(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::PhysicsWorld* cobj = nullptr;
@@ -93,7 +93,7 @@ int lua_cocos2dx_physics_PhysicsWorld_getScene(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_getScene'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_getLayer'", NULL);
         return 0;
     }
 #endif
@@ -103,7 +103,7 @@ int lua_cocos2dx_physics_PhysicsWorld_getScene(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        cocos2d::Scene& ret = cobj->getScene();
+        cocos2d::Layer& ret = cobj->getLayer();
         do {
             
             std::string hashName = typeid(ret).name();
@@ -112,7 +112,7 @@ int lua_cocos2dx_physics_PhysicsWorld_getScene(lua_State* tolua_S)
             if(iter != g_luaType.end()){
                 className = iter->second.c_str();
             } else {
-                className = "cc.Scene";
+                className = "cc.Layer";
             }
             
             int ID =  (int)(ret._ID);
@@ -122,12 +122,12 @@ int lua_cocos2dx_physics_PhysicsWorld_getScene(lua_State* tolua_S)
         }while (0);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getScene",argc, 0);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getLayer",argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsWorld_getScene'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsWorld_getLayer'.",&tolua_err);
 #endif
     
     return 0;
@@ -1573,8 +1573,8 @@ int register_all_cocos2dx_physics_manual(lua_State* tolua_S)
     lua_rawget(tolua_S, LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
     {
-        lua_pushstring(tolua_S,"getScene");
-        lua_pushcfunction(tolua_S, lua_cocos2dx_physics_PhysicsWorld_getScene );
+        lua_pushstring(tolua_S,"getLayer");
+        lua_pushcfunction(tolua_S, lua_cocos2dx_physics_PhysicsWorld_getLayer );
         lua_rawset(tolua_S,-3);
         lua_pushstring(tolua_S,"queryPoint");
         lua_pushcfunction(tolua_S, lua_cocos2dx_physics_PhysicsWorld_queryPoint );
