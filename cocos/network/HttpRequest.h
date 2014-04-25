@@ -38,6 +38,7 @@ namespace network {
 class HttpClient;
 class HttpResponse;
 
+typedef std::function<void(HttpClient* client, HttpResponse* response)> ccHttpRequestCallback;
 typedef void (cocos2d::Ref::*SEL_HttpResponse)(HttpClient* client, HttpResponse* response);
 #define httpresponse_selector(_SELECTOR) (cocos2d::network::SEL_HttpResponse)(&_SELECTOR)
 
@@ -78,9 +79,10 @@ public:
         _url.clear();
         _requestData.clear();
         _tag.clear();
-        _pTarget = NULL;
-        _pSelector = NULL;
-        _pUserData = NULL;
+        _pTarget = nullptr;
+        _pSelector = nullptr;
+        _pCallback = nullptr;
+        _pUserData = nullptr;
     };
     
     /** Destructor */
@@ -183,7 +185,7 @@ public:
         setResponseCallback(pTarget, (SEL_HttpResponse) pSelector);
     }
 
-    inline void setResponseCallback(Ref* pTarget, SEL_HttpResponse pSelector)
+    CC_DEPRECATED_ATTRIBUTE inline void setResponseCallback(Ref* pTarget, SEL_HttpResponse pSelector)
     {
         _pTarget = pTarget;
         _pSelector = pSelector;
@@ -192,7 +194,13 @@ public:
         {
             _pTarget->retain();
         }
-    }    
+    }
+    
+    inline void setResponseCallback(const ccHttpRequestCallback& callback)
+    {
+        _pCallback = callback;
+    }
+    
     /** Get the target of callback selector funtion, mainly used by HttpClient */
     inline Ref* getTarget()
     {
@@ -218,6 +226,11 @@ public:
         return _prxy(_pSelector);
     }
     
+    inline const ccHttpRequestCallback& getCallback()
+    {
+        return _pCallback;
+    }
+    
     /** Set any custom headers **/
     inline void setHeaders(std::vector<std::string> pHeaders)
    	{
@@ -238,6 +251,7 @@ protected:
     std::string                 _tag;            /// user defined tag, to identify different requests in response callback
     Ref*                        _pTarget;        /// callback target of pSelector function
     SEL_HttpResponse            _pSelector;      /// callback function, e.g. MyLayer::onHttpResponse(HttpClient *sender, HttpResponse * response)
+    ccHttpRequestCallback       _pCallback;      /// C++11 style callbacks
     void*                       _pUserData;      /// You can add your customed data here 
     std::vector<std::string>    _headers;		      /// custom http headers
 };
