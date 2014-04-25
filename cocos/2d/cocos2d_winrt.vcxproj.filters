@@ -109,6 +109,9 @@
     <Filter Include="kazmath\include\GL">
       <UniqueIdentifier>{7c71abeb-8b4b-4be8-a23c-e32fedc65fc9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="deprecated">
+      <UniqueIdentifier>{6e394a3e-2c57-4988-bc51-bea18e491559}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\physics\CCPhysicsBody.cpp">
@@ -388,16 +391,12 @@
       <Filter>tilemap_parallax_nodes</Filter>
     </ClCompile>
     <ClCompile Include="CCConfiguration.cpp" />
-    <ClCompile Include="CCDeprecated.cpp" />
     <ClCompile Include="CCDirector.cpp" />
     <ClCompile Include="ccFPSImages.c" />
     <ClCompile Include="CCScheduler.cpp" />
     <ClCompile Include="ccTypes.cpp" />
     <ClCompile Include="cocos2d.cpp" />
     <ClCompile Include="base64.cpp">
-      <Filter>support</Filter>
-    </ClCompile>
-    <ClCompile Include="CCNotificationCenter.cpp">
       <Filter>support</Filter>
     </ClCompile>
     <ClCompile Include="CCProfiling.cpp">
@@ -442,9 +441,6 @@
     <ClCompile Include="..\base\CCAffineTransform.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="..\base\CCArray.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
     <ClCompile Include="..\base\CCAutoreleasePool.cpp">
       <Filter>base</Filter>
     </ClCompile>
@@ -454,9 +450,6 @@
     <ClCompile Include="..\base\CCDataVisitor.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="..\base\CCDictionary.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
     <ClCompile Include="..\base\CCGeometry.cpp">
       <Filter>base</Filter>
     </ClCompile>
@@ -464,12 +457,6 @@
       <Filter>base</Filter>
     </ClCompile>
     <ClCompile Include="..\base\CCRef.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\base\CCSet.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\base\CCString.cpp">
       <Filter>base</Filter>
     </ClCompile>
     <ClCompile Include="ccUtils.cpp">
@@ -613,6 +600,24 @@
     </ClCompile>
     <ClCompile Include="..\math\kazmath\kazmath\ray3.c">
       <Filter>kazmath\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deprecated\CCArray.cpp">
+      <Filter>deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deprecated\CCDeprecated.cpp">
+      <Filter>deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deprecated\CCDictionary.cpp">
+      <Filter>deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deprecated\CCNotificationCenter.cpp">
+      <Filter>deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deprecated\CCSet.cpp">
+      <Filter>deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deprecated\CCString.cpp">
+      <Filter>deprecated</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -989,9 +994,6 @@
     <ClInclude Include="base64.h">
       <Filter>support</Filter>
     </ClInclude>
-    <ClInclude Include="CCNotificationCenter.h">
-      <Filter>support</Filter>
-    </ClInclude>
     <ClInclude Include="CCProfiling.h">
       <Filter>support</Filter>
     </ClInclude>
@@ -1043,13 +1045,7 @@
     <ClInclude Include="..\base\CCAffineTransform.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="..\base\CCArray.h">
-      <Filter>base</Filter>
-    </ClInclude>
     <ClInclude Include="..\base\CCAutoreleasePool.h">
-      <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\base\CCBool.h">
       <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="..\base\CCData.h">
@@ -1058,31 +1054,13 @@
     <ClInclude Include="..\base\CCDataVisitor.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="..\base\CCDictionary.h">
-      <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\base\CCDouble.h">
-      <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\base\CCFloat.h">
-      <Filter>base</Filter>
-    </ClInclude>
     <ClInclude Include="..\base\CCGeometry.h">
-      <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\base\CCInteger.h">
       <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="..\base\CCNS.h">
       <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="..\base\CCRef.h">
-      <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\base\CCSet.h">
-      <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\base\CCString.h">
       <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="CCEventListenerMouse.h">
@@ -1239,6 +1217,36 @@
     </ClInclude>
     <ClInclude Include="..\math\kazmath\kazmath\ray3.h">
       <Filter>kazmath\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\deprecated\CCArray.h">
+      <Filter>deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\deprecated\CCBool.h">
+      <Filter>deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\deprecated\CCDeprecated.h">
+      <Filter>deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\deprecated\CCDictionary.h">
+      <Filter>deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\deprecated\CCDouble.h">
+      <Filter>deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\deprecated\CCFloat.h">
+      <Filter>deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\deprecated\CCInteger.h">
+      <Filter>deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\deprecated\CCNotificationCenter.h">
+      <Filter>deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\deprecated\CCSet.h">
+      <Filter>deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\deprecated\CCString.h">
+      <Filter>deprecated</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
