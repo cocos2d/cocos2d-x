@@ -16,7 +16,8 @@ namespace ShaderTest2
         CL(EdgeDetectionSpriteTest),
         CL(BloomSpriteTest),
         CL(CelShadingSpriteTest),
-        CL(LensFlareSpriteTest)
+        CL(LensFlareSpriteTest),
+        CL(OutlineShadingSpriteTest)
     };
     
     static unsigned int TEST_CASE_COUNT = sizeof(ShaderTest2::createFunctions) / sizeof(ShaderTest2::createFunctions[0]);
@@ -120,7 +121,7 @@ protected:
     virtual void setCustomUniforms() = 0;
 protected:
     std::string _fragSourceFile;
-    
+    std::string _vertSourceFile;
 protected:
     CustomCommand _renderCommand;
     void onDraw(const kmMat4 &transform, bool transformUpdated);
@@ -128,6 +129,7 @@ protected:
 };
 
 ShaderSprite::ShaderSprite()
+:_vertSourceFile("")
 {
 }
 
@@ -148,10 +150,19 @@ void ShaderSprite::setBackgroundNotification()
 
 void ShaderSprite::initShader()
 {
-    GLchar * fragSource = (GLchar*) String::createWithContentsOfFile(
-                                                                     FileUtils::getInstance()->fullPathForFilename(_fragSourceFile).c_str())->getCString();
+    auto fileUtiles = FileUtils::getInstance();
+    auto fragmentFilePath = fileUtiles->fullPathForFilename(_fragSourceFile);
+    auto fragSource = fileUtiles->getStringFromFile(fragmentFilePath);
+    std::string vertSource;
+    if (_vertSourceFile.empty()) {
+        vertSource = ccPositionTextureColor_vert;
+    }else{
+        std::string vertexFilePath = fileUtiles->fullPathForFilename(_vertSourceFile);
+        vertSource = fileUtiles->getStringFromFile(vertexFilePath);
+    }
+
     auto program = new GLProgram();
-    program->initWithByteArrays(ccPositionTextureColor_vert, fragSource);
+    program->initWithByteArrays(vertSource.c_str(), fragSource.c_str());
     setShaderProgram(program);
     program->release();
     
@@ -630,5 +641,62 @@ LensFlareSpriteTest::LensFlareSpriteTest()
         rect.size = Size(480,320);
         sprite->setPosition(Point(s.width * 0.5, s.height/2));
         addChild(sprite);
+    }
+}
+
+
+class OutlineSprite : public ShaderSprite, public ShaderSpriteCreator<OutlineSprite>
+{
+public:
+    CREATE_FUNC(OutlineSprite);
+    OutlineSprite();
+    
+private:
+    GLuint _outlineColorUniformLocation;
+    GLuint _thresdholdUniformLocation;
+    GLuint _radiusUniformLocation;
+protected:
+    virtual void buildCustomUniforms();
+    virtual void setCustomUniforms();
+};
+
+
+OutlineSprite::OutlineSprite()
+{
+    _fragSourceFile = "Shaders/example_outline.fsh";
+    _vertSourceFile = "Shaders/example_outline.vsh";
+    _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
+}
+
+void OutlineSprite::buildCustomUniforms()
+{
+    auto program = getShaderProgram();
+    _outlineColorUniformLocation = program->getUniformLocation("u_outlineColor");
+    _thresdholdUniformLocation = program->getUniformLocation("u_threshold");
+    _radiusUniformLocation = program->getUniformLocation("u_radius");
+}
+
+void OutlineSprite::setCustomUniforms()
+{
+    GLfloat color[3] = {1.0, 0.2, 0.3};
+    GLfloat radius = 0.01;
+    GLfloat threshold = 1.75;
+    
+    getShaderProgram()->setUniformLocationWith3fv(_outlineColorUniformLocation, color, 1);
+    getShaderProgram()->setUniformLocationWith1f(_radiusUniformLocation, radius);
+    getShaderProgram()->setUniformLocationWith1f(_thresdholdUniformLocation, threshold);
+}
+
+
+OutlineShadingSpriteTest::OutlineShadingSpriteTest()
+{
+    if (ShaderTestDemo2::init()) {
+        auto s = Director::getInstance()->getWinSize();
+        OutlineSprite* sprite = OutlineSprite::createSprite("Images/grossini_dance_10.png");
+        sprite->setPosition(Point(s.width * 0.75, s.height/2));
+        auto sprite2 = Sprite::create("Images/grossini_dance_10.png");
+        sprite2->setPosition(Point(s.width * 0.25, s.height/2));
+        addChild(sprite);
+        addChild(sprite2);
     }
 }
