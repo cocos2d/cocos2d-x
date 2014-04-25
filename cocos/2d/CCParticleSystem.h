@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "CCNode.h"
 #include "CCValue.h"
 #include "deprecated/CCString.h"
+#include "CCSpriteFrame.h"
 
 NS_CC_BEGIN
 
