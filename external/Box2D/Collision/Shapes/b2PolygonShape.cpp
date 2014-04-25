@@ -217,6 +217,8 @@ void b2PolygonShape::Set(const b2Vec2* vertices, int32 count)
 		}
 	}
 	
+    m = m > b2_maxPolygonVertices ? b2_maxPolygonVertices : m;
+
 	m_count = m;
 
 	// Copy vertices.
