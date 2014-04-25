@@ -64,6 +64,9 @@ public:
     /** creates a RenderTexture object with width and height in Points, pixel format is RGBA8888 */
     static RenderTexture * create(int w, int h);
 
+    /** initializes a RenderTexture object with width and height in Pixels and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
+    static RenderTexture * createWithPixels(int w ,int h, Texture2D::PixelFormat format, GLuint depthStencilFormat);
+    
     /** starts grabbing */
     virtual void begin();
 
@@ -176,6 +179,8 @@ public:
     bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat format);
     /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
     bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat format, GLuint depthStencilFormat);
+    /** initializes a RenderTexture object with width and height in Pixels and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
+    bool initWithWidthAndHeightPixels(int w, int h, Texture2D::PixelFormat format, GLuint depthStencilFormat);
 
 protected:
     virtual void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, GLbitfield flags);
