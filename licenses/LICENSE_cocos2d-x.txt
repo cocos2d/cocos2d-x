@@ -1,6 +1,5 @@
-cocos2d-x   http://www.cocos2d-x.org
-
-Copyright (c) 2010-2011 - cocos2d-x community
+Copyright (c) 2013-2014 Chukong Technologies
+Copyright (c) 2010-2012 cocos2d-x community
 (see each file to see the different copyright owners)
 
 
