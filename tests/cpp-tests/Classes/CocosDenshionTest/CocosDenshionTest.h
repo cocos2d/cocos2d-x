@@ -1,7 +1,7 @@
 #ifndef __COCOS_DENSHION_TEST__
 #define __COCOS_DENSHION_TEST__
 
-#include "../testBasic.h"
+#include "../testScene.h"
 
 class AudioSlider;
 

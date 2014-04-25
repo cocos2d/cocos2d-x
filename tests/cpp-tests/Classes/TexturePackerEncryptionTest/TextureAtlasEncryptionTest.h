@@ -2,7 +2,7 @@
 #define _TextureAtlasEncryption_TEST_H_
 
 #include "cocos2d.h"
-#include "../testBasic.h"
+#include "../testScene.h"
 #include <string>
 
 class TextureAtlasEncryptionDemo : public Layer

@@ -10,12 +10,13 @@
 #define __samples__NewEventDispatcherTest__
 
 #include "cocos2d.h"
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "../BaseTest.h"
 
 class EventDispatcherTestScene : public TestScene
 {
 public:
+    EventDispatcherTestScene();
     virtual void runThisTest();
 };
 

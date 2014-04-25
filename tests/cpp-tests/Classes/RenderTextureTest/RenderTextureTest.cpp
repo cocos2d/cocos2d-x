@@ -1,6 +1,6 @@
 #include "CCConfiguration.h"
 #include "RenderTextureTest.h"
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCCustomCommand.h"
 
@@ -47,6 +47,8 @@ static Layer* restartTestCase()
     return layer;
 }
 
+
+
 void RenderTextureTest::onEnter()
 {
     BaseTest::onEnter();
@@ -85,6 +87,19 @@ std::string RenderTextureTest::title() const
 std::string RenderTextureTest::subtitle() const
 {
     return "";
+}
+
+RenderTextureScene::RenderTextureScene()
+{
+    _testCount = MAX_LAYER;
+}
+
+void RenderTextureScene::runThisTest()
+{
+    auto layer = nextTestCase();
+    addChild(layer);
+
+    Director::getInstance()->replaceScene(this);
 }
 
 /**
@@ -276,13 +291,6 @@ std::string RenderTextureIssue937::subtitle() const
     return "All images should be equal...";
 }
 
-void RenderTextureScene::runThisTest()
-{
-    auto layer = nextTestCase();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
-}
 
 /**
 * Impelmentation of RenderTextureZbuffer

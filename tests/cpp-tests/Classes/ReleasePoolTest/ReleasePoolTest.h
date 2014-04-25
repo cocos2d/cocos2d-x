@@ -4,7 +4,7 @@
 #ifndef __RELEASE_POOL_TEST_H__
 #define __RELEASE_POOL_TEST_H__
 
-#include "../testBasic.h"
+#include "../testScene.h"
 
 class ReleasePoolTestScene : public TestScene
 {

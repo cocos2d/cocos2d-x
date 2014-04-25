@@ -1,7 +1,7 @@
 #ifndef __FILEUTILSTEST_H__
 #define __FILEUTILSTEST_H__
 
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "../BaseTest.h"
 
 USING_NS_CC;
@@ -9,6 +9,7 @@ USING_NS_CC;
 class FileUtilsTestScene : public TestScene
 {
 public:
+    FileUtilsTestScene();
     virtual void runThisTest();
 };
 

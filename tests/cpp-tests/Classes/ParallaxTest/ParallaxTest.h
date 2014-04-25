@@ -1,7 +1,7 @@
 #ifndef _PARALLAX_TEST_H_
 #define _PARALLAX_TEST_H_
 
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "../BaseTest.h"
 
 class ParallaxDemo : public BaseTest
@@ -74,6 +74,7 @@ public:
 class ParallaxTestScene : public TestScene
 {
 public:
+    ParallaxTestScene();
     virtual void runThisTest();
 };
 

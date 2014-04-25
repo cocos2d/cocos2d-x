@@ -2,12 +2,13 @@
 #define _FONT_TEST_H_
 
 #include "cocos2d.h"
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "../BaseTest.h"
 
 class FontTestScene : public TestScene
 {
 public:
+	FontTestScene();
     virtual void runThisTest();
 };
 

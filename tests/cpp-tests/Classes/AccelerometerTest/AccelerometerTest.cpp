@@ -85,6 +85,12 @@ void AccelerometerTest::onAcceleration(Acceleration* acc, Event* event)
 // AccelerometerTestScene
 //
 //------------------------------------------------------------------
+
+AccelerometerTestScene::AccelerometerTestScene()
+{
+    _testCount = 1;
+}
+
 void AccelerometerTestScene::runThisTest()
 {
     auto layer = new AccelerometerTest();

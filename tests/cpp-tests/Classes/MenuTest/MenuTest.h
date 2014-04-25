@@ -27,7 +27,7 @@
 #define _MENU_TEST_H_
 
 ////----#include "cocos2d.h"
-#include "../testBasic.h"
+#include "../testScene.h"
 
 class MenuLayerMainMenu : public Layer
 {
@@ -133,6 +133,7 @@ private:
 class MenuTestScene : public TestScene
 {
 public:
+    MenuTestScene();
     virtual void runThisTest();
 };
 

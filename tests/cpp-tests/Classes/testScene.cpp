@@ -1,4 +1,4 @@
-#include "testBasic.h"
+#include "testScene.h"
 #include "controller.h"
 #include "extensions/cocos-ext.h"
 #include "cocostudio/CocoStudio.h"
@@ -17,6 +17,9 @@ TestScene::TestScene(bool bPortrait, bool physics/* = false*/)
     {
         Scene::init();
     }
+    _failed = false;
+    _error = "No Error\r\n";
+    _testCount = 1;
 }
 
 void testScene_callback(Ref *sender )

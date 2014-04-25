@@ -2,7 +2,7 @@
 #define _RENDERTEXTURE_TEST_H_
 
 #include "cocos2d.h"
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "../BaseTest.h"
 #include "renderer/CCCustomCommand.h"
 
@@ -47,6 +47,7 @@ public:
 class RenderTextureScene : public TestScene
 {
 public:
+    RenderTextureScene();
     virtual void runThisTest();
 };
 

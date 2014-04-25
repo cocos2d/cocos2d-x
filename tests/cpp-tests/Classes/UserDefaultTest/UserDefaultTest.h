@@ -2,7 +2,7 @@
 #define _USERDEFAULT_TEST_H_
 
 #include "cocos2d.h"
-#include "../testBasic.h"
+#include "../testScene.h"
 
 class UserDefaultTest : public Layer
 {

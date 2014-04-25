@@ -1153,6 +1153,11 @@ void ScheduleCallbackTest::callback(float dt)
 // SchedulerTestScene
 //
 //------------------------------------------------------------------
+SchedulerTestScene::SchedulerTestScene()
+{
+    _testCount = MAX_LAYER;
+}
+
 void SchedulerTestScene::runThisTest()
 {
     auto layer = nextSchedulerTest();

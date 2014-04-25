@@ -932,6 +932,11 @@ std::string LabelGlyphDesigner::subtitle() const
     return "You should see a font with shawdows and outline";
 }
 
+AtlasTestScene::AtlasTestScene()
+{
+    _testCount = MAX_LAYER;
+}
+
 void AtlasTestScene::runThisTest()
 {
     sceneIdx = -1;

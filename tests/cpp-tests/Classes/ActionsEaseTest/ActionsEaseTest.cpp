@@ -1120,6 +1120,11 @@ void EaseSpriteDemo::backCallback(Ref* sender)
     s->release();
 }
 
+ActionsEaseTestScene::ActionsEaseTestScene(void)
+{
+    _testCount = MAX_LAYER;
+}
+
 void ActionsEaseTestScene::runThisTest()
 {
     auto layer = nextEaseAction();

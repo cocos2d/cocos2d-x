@@ -82,6 +82,10 @@ Layer* restartAction()
     return layer;
 } 
 
+ProgressActionsTestScene::ProgressActionsTestScene()
+{
+    _testCount = MAX_LAYER;
+}
 
 void ProgressActionsTestScene::runThisTest()
 {

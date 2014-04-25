@@ -1,7 +1,7 @@
 #ifndef __TEXT_INPUT_TEST_H__
 #define __TEXT_INPUT_TEST_H__
 
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "../BaseTest.h"
 
 class KeyboardNotificationLayer;
@@ -96,6 +96,7 @@ public:
 class TextInputTestScene : public TestScene
 {
 public:
+    TextInputTestScene();
     virtual void runThisTest();
 };
 

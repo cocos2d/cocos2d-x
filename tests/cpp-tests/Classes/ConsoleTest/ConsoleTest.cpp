@@ -123,6 +123,11 @@ void BaseTestConsole::backCallback(Ref* sender)
     s->release();
 } 
 
+ConsoleTestScene::ConsoleTestScene()
+{
+    _testCount = MAX_LAYER;
+}
+
 void ConsoleTestScene::runThisTest()
 {
     auto layer = nextConsoleTest();

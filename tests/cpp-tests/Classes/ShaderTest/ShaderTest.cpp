@@ -749,6 +749,11 @@ std::string ShaderRetroEffect::subtitle() const
 // ShaderTestScene
 // 
 ///---------------------------------------
+ShaderTestScene::ShaderTestScene()
+{
+    _testCount = MAX_LAYER;
+}
+
 void ShaderTestScene::runThisTest()
 {
     sceneIdx = -1;

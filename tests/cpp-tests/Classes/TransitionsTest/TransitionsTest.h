@@ -26,13 +26,14 @@
 #ifndef _TRANSITIONS_TEST_H_
 #define _TRANSITIONS_TEST_H_
 
-#include "../testBasic.h"
+#include "../testScene.h"
 
 USING_NS_CC;
 
 class TransitionsTestScene : public TestScene
 {
 public:
+    TransitionsTestScene();
     virtual void runThisTest();
 };
 

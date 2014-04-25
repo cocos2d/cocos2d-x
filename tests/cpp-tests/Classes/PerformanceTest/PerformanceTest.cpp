@@ -208,6 +208,11 @@ void PerformBasicLayer::backCallback(Ref* sender)
 //
 ////////////////////////////////////////////////////////
 
+PerformanceTestScene::PerformanceTestScene()
+{
+    _testCount = g_testMax;
+}
+
 void PerformanceTestScene::runThisTest()
 {
     auto layer = new PerformanceMainLayer();

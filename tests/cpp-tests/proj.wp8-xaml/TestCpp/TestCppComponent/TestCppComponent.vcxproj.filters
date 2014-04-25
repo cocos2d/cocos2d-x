@@ -315,7 +315,7 @@
     <ClCompile Include="..\..\..\Classes\controller.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Classes\testBasic.cpp">
+    <ClCompile Include="..\..\..\Classes\testScene.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Classes\VisibleRect.cpp">
@@ -726,7 +726,7 @@
     <ClInclude Include="..\..\..\Classes\controller.h">
       <Filter>Classes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Classes\testBasic.h">
+    <ClInclude Include="..\..\..\Classes\testScene.h">
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Classes\testResource.h">

@@ -275,7 +275,7 @@
     <ClCompile Include="..\..\Classes\VisibleRect.cpp" />
     <ClCompile Include="..\..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\..\Classes\controller.cpp" />
-    <ClCompile Include="..\..\Classes\testBasic.cpp" />
+    <ClCompile Include="..\..\Classes\testScene.cpp" />
     <ClCompile Include="..\..\Classes\ActionsTest\ActionsTest.cpp" />
     <ClCompile Include="..\..\Classes\TransitionsTest\TransitionsTest.cpp" />
     <ClCompile Include="..\..\Classes\EffectsTest\EffectsTest.cpp" />
@@ -464,7 +464,7 @@
     <ClInclude Include="..\..\Classes\VisibleRect.h" />
     <ClInclude Include="..\..\Classes\AppDelegate.h" />
     <ClInclude Include="..\..\Classes\controller.h" />
-    <ClInclude Include="..\..\Classes\testBasic.h" />
+    <ClInclude Include="..\..\Classes\testScene.h" />
     <ClInclude Include="..\..\Classes\testResource.h" />
     <ClInclude Include="..\..\Classes\tests.h" />
     <ClInclude Include="..\..\Classes\ActionsTest\ActionsTest.h" />

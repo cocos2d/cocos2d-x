@@ -37,6 +37,11 @@ static Layer* restartAction()
     return layer;
 }
 
+FileUtilsTestScene::FileUtilsTestScene()
+{
+    _testCount = MAX_LAYER;
+}
+
 void FileUtilsTestScene::runThisTest()
 {
     auto layer = nextAction();

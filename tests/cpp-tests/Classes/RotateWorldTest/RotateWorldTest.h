@@ -1,7 +1,7 @@
 #ifndef _ROTATE_WORLD_TEST_H_
 #define _ROTATE_WORLD_TEST_H_
 
-#include "../testBasic.h"
+#include "../testScene.h"
 
 class RotateWorldTestScene : public TestScene
 {

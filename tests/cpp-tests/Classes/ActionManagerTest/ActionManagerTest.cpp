@@ -312,6 +312,12 @@ void ResumeTest::resumeGrossini(float time)
 // ActionManagerTestScene
 //
 //------------------------------------------------------------------
+
+ActionManagerTestScene::ActionManagerTestScene()
+{
+    _testCount = MAX_LAYER;
+}
+
 void ActionManagerTestScene::runThisTest()
 {
     auto layer = nextActionManagerAction();

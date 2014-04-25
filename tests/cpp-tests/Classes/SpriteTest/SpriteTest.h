@@ -26,7 +26,7 @@
 #define _SPRITE_TEST_H_
 
 #include "cocos2d.h"
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "../BaseTest.h"
 #include <string>
 
@@ -752,6 +752,7 @@ public:
 class SpriteTestScene : public TestScene
 {
 public:
+    SpriteTestScene();
     virtual void runThisTest();
 };
 

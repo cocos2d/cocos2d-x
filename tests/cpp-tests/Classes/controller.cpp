@@ -23,6 +23,7 @@
 typedef struct _Controller{
 	const char *test_name;
 	std::function<TestScene*()> callback;
+    int testCount;
 } Controller;
 Controller g_aTestNames[] = {
 
@@ -30,21 +31,21 @@ Controller g_aTestNames[] = {
     // TESTS MUST BE ORDERED ALPHABETICALLY
     //     violators will be prosecuted
     //
-	{ "Accelerometer", []() { return new AccelerometerTestScene(); } },
-	{ "ActionManager", [](){return new ActionManagerTestScene(); } },
-	{ "Actions - Basic", [](){ return new ActionsTestScene(); } },
-	{ "Actions - Ease", [](){return new ActionsEaseTestScene();} },
-	{ "Actions - Progress", [](){return new ProgressActionsTestScene(); } },
-	{ "Audio - CocosDenshion", []() { return new CocosDenshionTestScene(); } },
-	{ "Box2d - Basic", []() { return new Box2DTestScene(); } },
-	{ "Box2d - TestBed", []() { return new Box2dTestBedScene(); } },
-	{ "Bugs", []() { return new BugsTestScene(); } },
-	{ "Chipmunk", []() { return new ChipmunkAccelTouchTestScene(); } },
-	{ "Click and Move", [](){return new ClickAndMoveTestScene(); } },
-	{ "Configuration", []() { return new ConfigurationTestScene(); } },
+	{ "Accelerometer", []() { return new AccelerometerTestScene(); }, 1 },
+	{ "ActionManager", [](){return new ActionManagerTestScene(); }, 1 },
+	{ "Actions - Basic", [](){ return new ActionsTestScene(); }, 1 },
+	{ "Actions - Ease", [](){return new ActionsEaseTestScene();}, 1 },
+	{ "Actions - Progress", [](){return new ProgressActionsTestScene(); }, 1 },
+	{ "Audio - CocosDenshion", []() { return new CocosDenshionTestScene(); }, 1 },
+	{ "Box2d - Basic", []() { return new Box2DTestScene(); }, 1 },
+	{ "Box2d - TestBed", []() { return new Box2dTestBedScene(); }, 1 },
+	{ "Bugs", []() { return new BugsTestScene(); }, 1 },
+	{ "Chipmunk", []() { return new ChipmunkAccelTouchTestScene(); }, 1 },
+	{ "Click and Move", [](){return new ClickAndMoveTestScene(); }, 1 },
+	{ "Configuration", []() { return new ConfigurationTestScene(); }, 1 },
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
-	{ "Console", []() { return new ConsoleTestScene(); } },
+	{ "Console", []() { return new ConsoleTestScene(); }, 1 },
 #endif
 #endif
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
@@ -53,57 +54,57 @@ Controller g_aTestNames[] = {
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
-	{ "Curl", []() { return new CurlTestScene(); } },
+	{ "Curl", []() { return new CurlTestScene(); }, 1 },
 #endif
 #endif
 #endif
 #endif
 #endif
 #endif
-	{ "Current Language", []() { return new CurrentLanguageTestScene(); } },
-    { "EventDispatcher", []() { return new EventDispatcherTestScene(); } },
-	{ "Effects - Advanced", []() { return new EffectAdvanceScene(); } },
-	{ "Effects - Basic", [](){return new EffectTestScene();} },
-	{ "Extensions", []() { return new ExtensionsTestScene(); } },
-	{ "FileUtils", []() { return new FileUtilsTestScene(); } },
-	{ "Fonts", []() { return new FontTestScene(); } },
-	{ "Interval", [](){return new IntervalTestScene(); } },
-	{ "Keyboard", []() { return new KeyboardTestScene(); } },
-	{ "Keypad", []() { return new KeypadTestScene(); } },
-	{ "Node: Clipping", []() { return new ClippingNodeTestScene(); } },
-	{ "Node: Draw", [](){return new DrawPrimitivesTestScene();} },
-    { "Node: Label - New API", [](){return new AtlasTestSceneNew(); } },
-	{ "Node: Label - Old API", [](){return new AtlasTestScene(); } },
-	{ "Node: Layer", [](){return new LayerTestScene();} },
-	{ "Node: Menu", [](){return new MenuTestScene();} },
-	{ "Node: MotionStreak", [](){return new MotionStreakTestScene();} },
-	{ "Node: Node", [](){return new CocosNodeTestScene();} },
-	{ "Node: Parallax", [](){return new ParallaxTestScene(); } },
-	{ "Node: Particles", [](){return new ParticleTestScene(); } },
-	{ "Node: Physics", []() { return new PhysicsTestScene(); } },
-	{ "Node: RenderTexture", [](){return new RenderTextureScene(); } },
-	{ "Node: Scene", [](){return new SceneTestScene();} },
-	{ "Node: Spine", []() { return new SpineTestScene(); } },
-	{ "Node: Sprite", [](){return new SpriteTestScene(); } },
-	{ "Node: TileMap", [](){return new TileMapTestScene(); } },
-	{ "Node: Text Input", [](){return new TextInputTestScene(); } },
-    { "Mouse", []() { return new MouseTestScene(); } },
-	{ "MutiTouch", []() { return new MutiTouchTestScene(); } },
-	{ "Performance tests", []() { return new PerformanceTestScene(); } },
-    { "Renderer", []() { return new NewRendererTestScene(); } },
-    { "ReleasePool", [](){ return new ReleasePoolTestScene(); } },
-	{ "Rotate World", [](){return new RotateWorldTestScene(); } },
-	{ "Scheduler", [](){return new SchedulerTestScene(); } },
-	{ "Shader - Basic", []() { return new ShaderTestScene(); } },
-    { "Shader - Sprite", []() { return new ShaderTestScene2(); } },
-	{ "Texture2D", [](){return new TextureTestScene(); } },
-	{ "TextureCache", []() { return new TextureCacheTestScene(); } },
-	{ "TexturePacker Encryption", []() { return new TextureAtlasEncryptionTestScene(); } },
-	{ "Touches", [](){return new PongScene();} },
-	{ "Transitions", [](){return new TransitionsTestScene();} },
-    { "Unit Test", []() { return new UnitTestScene(); }},
-	{ "UserDefault", []() { return new UserDefaultTestScene(); } },
-	{ "Zwoptex", []() { return new ZwoptexTestScene(); } },
+	{ "Current Language", []() { return new CurrentLanguageTestScene(); }, 1 },
+    { "EventDispatcher", []() { return new EventDispatcherTestScene(); }, 1 },
+	{ "Effects - Advanced", []() { return new EffectAdvanceScene(); }, 1 },
+	{ "Effects - Basic", [](){return new EffectTestScene();}, 1 },
+	{ "Extensions", []() { return new ExtensionsTestScene(); }, 1 },
+	{ "FileUtils", []() { return new FileUtilsTestScene(); }, 1 },
+	{ "Fonts", []() { return new FontTestScene(); }, 1 },
+	{ "Interval", [](){return new IntervalTestScene(); }, 1 },
+	{ "Keyboard", []() { return new KeyboardTestScene(); }, 1 },
+	{ "Keypad", []() { return new KeypadTestScene(); }, 1 },
+	{ "Node: Clipping", []() { return new ClippingNodeTestScene(); }, 1 },
+	{ "Node: Draw", [](){return new DrawPrimitivesTestScene();}, 1 },
+    { "Node: Label - New API", [](){return new AtlasTestSceneNew(); }, 1 },
+	{ "Node: Label - Old API", [](){return new AtlasTestScene(); }, 1 },
+	{ "Node: Layer", [](){return new LayerTestScene();}, 1 },
+	{ "Node: Menu", [](){return new MenuTestScene();}, 1 },
+	{ "Node: MotionStreak", [](){return new MotionStreakTestScene();}, 1 },
+	{ "Node: Node", [](){return new CocosNodeTestScene();}, 1 },
+	{ "Node: Parallax", [](){return new ParallaxTestScene(); }, 1 },
+	{ "Node: Particles", [](){return new ParticleTestScene(); }, 1 },
+	{ "Node: Physics", []() { return new PhysicsTestScene(); }, 1 },
+	{ "Node: RenderTexture", [](){return new RenderTextureScene(); }, 1 },
+	{ "Node: Scene", [](){return new SceneTestScene();}, 1 },
+	{ "Node: Spine", []() { return new SpineTestScene(); }, 1 },
+	{ "Node: Sprite", [](){return new SpriteTestScene(); }, 1 },
+	{ "Node: TileMap", [](){return new TileMapTestScene(); }, 1 },
+	{ "Node: Text Input", [](){return new TextInputTestScene(); }, 1 },
+    { "Mouse", []() { return new MouseTestScene(); }, 1 },
+	{ "MutiTouch", []() { return new MutiTouchTestScene(); }, 1 },
+	{ "Performance tests", []() { return new PerformanceTestScene(); }, 1 },
+    { "Renderer", []() { return new NewRendererTestScene(); }, 1 },
+    { "ReleasePool", [](){ return new ReleasePoolTestScene(); }, 1 },
+	{ "Rotate World", [](){return new RotateWorldTestScene(); }, 1 },
+	{ "Scheduler", [](){return new SchedulerTestScene(); }, 1 },
+	{ "Shader - Basic", []() { return new ShaderTestScene(); }, 1 },
+    { "Shader - Sprite", []() { return new ShaderTestScene2(); }, 1 },
+	{ "Texture2D", [](){return new TextureTestScene(); }, 1 },
+	{ "TextureCache", []() { return new TextureCacheTestScene(); }, 1 },
+	{ "TexturePacker Encryption", []() { return new TextureAtlasEncryptionTestScene(); }, 1 },
+	{ "Touches", [](){return new PongScene();}, 1 },
+	{ "Transitions", [](){return new TransitionsTestScene();}, 1 },
+    { "Unit Test", []() { return new UnitTestScene(); }, 1 },
+	{ "UserDefault", []() { return new UserDefaultTestScene(); }, 1 },
+	{ "Zwoptex", []() { return new ZwoptexTestScene(); }, 1 },
 };
 
 static int g_testCount = sizeof(g_aTestNames) / sizeof(g_aTestNames[0]);
@@ -112,6 +113,7 @@ static Controller *currentController = nullptr;
 
 static Point s_tCurPos = Point::ZERO;
 
+static int g_totalTestCount = 0;
 //sleep for t seconds
 static void wait(int t)
 {
@@ -132,6 +134,8 @@ TestController::TestController()
     // add menu items for tests
     TTFConfig ttfConfig("fonts/arial.ttf", 24);
     _itemMenu = Menu::create();
+    
+    
     for (int i = 0; i < g_testCount; ++i)
     {
         auto label = Label::createWithTTF(ttfConfig, g_aTestNames[i].test_name);       
@@ -139,6 +143,13 @@ TestController::TestController()
 
         _itemMenu->addChild(menuItem, i + 10000);
         menuItem->setPosition( Point( VisibleRect::center().x, (VisibleRect::top().y - (i + 1) * LINE_SPACE) ));
+
+         auto scene = g_aTestNames[i].callback();
+        if(scene)
+        {
+            g_aTestNames[i].testCount = scene->getTestCount();
+            scene->release();
+        }
     }
 
     _itemMenu->setContentSize(Size(VisibleRect::getVisibleRect().size.width, (g_testCount + 1) * (LINE_SPACE)));
@@ -258,21 +269,13 @@ void TestController::addConsoleAutoTest()
     
     static struct Console::Command autotest = {
         "autotest", 
-        "testcpp autotest command, use -h to list available tests", 
+        "testcpp autotest command, use -h to list available options", 
         [](int fd, const std::string& args) 
         {
             Scheduler *sched = Director::getInstance()->getScheduler();
             if(args == "help" || args == "-h")
             {
-                const char msg[] = "usage: autotest ActionsTest\n\tavailable tests: ";
-                send(fd, msg, sizeof(msg),0);
-                send(fd, "\n",1,0);
-                for(int i = 0; i < g_testCount; i++)
-                {
-                    send(fd, "\t",1,0);
-                    send(fd, g_aTestNames[i].test_name, strlen(g_aTestNames[i].test_name)+1,0);
-                    send(fd, "\n",1,0);
-                }
+ 
                 const char help_main[] = "\tmain, return to main menu\n";
                 send(fd, help_main, sizeof(help_main),0);
 
@@ -284,6 +287,40 @@ void TestController::addConsoleAutoTest()
                 
                 const char help_restart[] = "\trestart, restart current test\n";
                 send(fd, help_restart, sizeof(help_restart),0);
+
+                const char help_list[] = "\tlist, list available tests";
+                send(fd, help_list, sizeof(help_list), 0);
+
+                const char help_count[] = "\tcount, calculate total tests";
+                send(fd, help_count, sizeof(help_count), 0);
+
+                return;
+            }
+            if(args == "list")
+            {
+                for(int i = 0; i < g_testCount; i++)
+                {
+                    send(fd, "\t",1,0);
+                    send(fd, g_aTestNames[i].test_name, strlen(g_aTestNames[i].test_name)+1,0);
+                    send(fd, "\t",1,0);
+                    char count[5];
+                    sprintf(count, "%d", g_aTestNames[i].testCount);
+                    send(fd, count,strlen(count),0);
+                    send(fd, "\n",1,0);
+                }
+                return;
+            }
+            if(args == "count")
+            {
+                int total = 0;
+                for(int i = 0; i < g_testCount; i++)
+                {
+                    total += g_aTestNames[i].testCount;
+                }
+                char count[16];
+                sprintf(count, "%d", total);
+                send(fd, count,strlen(count),0);
+                send(fd, "\n",1,0);
                 return;
             }
             if(args == "main")

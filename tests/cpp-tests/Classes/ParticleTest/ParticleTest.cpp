@@ -2005,6 +2005,11 @@ std::string ParticleAutoBatching::subtitle() const
 //
 // main
 //
+ParticleTestScene::ParticleTestScene()
+{
+    _testCount = MAX_LAYER;
+}
+
 void ParticleTestScene::runThisTest()
 {
     addChild(nextParticleAction());

@@ -1,7 +1,7 @@
 #ifndef __BUGS_TEST_H__
 #define __BUGS_TEST_H__
 
-#include "../testBasic.h"
+#include "../testScene.h"
 
 class BugsTestMainLayer : public Layer
 {
@@ -26,6 +26,7 @@ public:
 class BugsTestScene : public TestScene
 {
 public:
+	BugsTestScene();
     virtual void runThisTest();
 };
 

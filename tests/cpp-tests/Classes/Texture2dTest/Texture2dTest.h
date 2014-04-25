@@ -26,7 +26,7 @@
 #ifndef __TEXTURE2D_TEST_H__
 #define __TEXTURE2D_TEST_H__
 
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "../BaseTest.h"
 #include "renderer/CCCustomCommand.h"
 
@@ -494,6 +494,7 @@ class TextureTestScene : public TestScene
 {
 public:
     CREATE_FUNC(TextureTestScene);
+    TextureTestScene();
     virtual void runThisTest();
 };
 

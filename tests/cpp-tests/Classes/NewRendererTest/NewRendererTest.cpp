@@ -72,6 +72,11 @@ Layer* restartTest()
     return layer;
 }
 
+NewRendererTestScene::NewRendererTestScene()
+{
+    _testCount = MAX_LAYER;
+}
+
 void NewRendererTestScene::runThisTest()
 {
     auto layer = nextTest();

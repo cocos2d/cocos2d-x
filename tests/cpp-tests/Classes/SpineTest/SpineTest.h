@@ -27,7 +27,7 @@
 #define _SPINETEST_H_
 
 #include "cocos2d.h"
-#include "../testBasic.h"
+#include "../testScene.h"
 #include <spine/spine-cocos2dx.h>
 
 class SpineTestScene : public TestScene

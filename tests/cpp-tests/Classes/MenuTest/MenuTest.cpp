@@ -561,6 +561,11 @@ void RemoveMenuItemWhenMove::onTouchMoved(Touch  *touch, Event  *event)
     }
 }
 
+MenuTestScene::MenuTestScene()
+{
+    _testCount = 6;
+}
+
 void MenuTestScene::runThisTest()
 {
     MenuItemFont::setFontSize(20);

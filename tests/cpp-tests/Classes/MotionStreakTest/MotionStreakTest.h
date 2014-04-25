@@ -2,7 +2,7 @@
 #define _MOTION_STREAK_TEST_H_
 
 ////----#include "cocos2d.h"
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "../BaseTest.h"
 
 //USING_NS_CC;
@@ -69,6 +69,7 @@ private:
 class MotionStreakTestScene : public TestScene
 {
 public:
+    MotionStreakTestScene();
     virtual void runThisTest();
 };
 

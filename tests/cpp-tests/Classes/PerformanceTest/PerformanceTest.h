@@ -1,7 +1,7 @@
 #ifndef __PERFORMANCE_TEST_H__
 #define __PERFORMANCE_TEST_H__
 
-#include "../testBasic.h"
+#include "../testScene.h"
 
 class PerformanceMainLayer : public Layer
 {
@@ -42,6 +42,7 @@ protected:
 class PerformanceTestScene : public TestScene
 {
 public:
+    PerformanceTestScene();
     virtual void runThisTest();
 };
 

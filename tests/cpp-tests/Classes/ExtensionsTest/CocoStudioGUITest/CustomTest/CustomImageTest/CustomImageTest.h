@@ -5,7 +5,7 @@
 
 #include "cocos2d.h"
 #include "extensions/cocos-ext.h"
-#include "../../../../testBasic.h"
+#include "../../../../testScene.h"
 
 class CustomImageLayer : public cocos2d::Layer
 {

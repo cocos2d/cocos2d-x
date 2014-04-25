@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 #include "extensions/cocos-ext.h"
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "../BaseTest.h"
 
 USING_NS_CC_EXT;
@@ -306,7 +306,7 @@ class SchedulerTestScene : public TestScene
 {
 public:
     CREATE_FUNC(SchedulerTestScene);
-
+    SchedulerTestScene();
     virtual void runThisTest();
 };
 

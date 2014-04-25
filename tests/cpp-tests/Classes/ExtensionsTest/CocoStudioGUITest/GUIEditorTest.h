@@ -3,7 +3,7 @@
 #ifndef __TestCpp__GUIEditorTest__
 #define __TestCpp__GUIEditorTest__
 
-#include "../../testBasic.h"
+#include "../../testScene.h"
 
 class GUIEditorMainLayer : public Layer
 {

@@ -208,6 +208,11 @@ std::string ZwoptexGenericTest::subtitle() const
     return "Coordinate Formats, Rotation, Trimming, flipX/Y";
 }
 
+ZwoptexTestScene::ZwoptexTestScene()
+{
+    _testCount = MAX_LAYER;
+}
+
 void ZwoptexTestScene::runThisTest()
 {
     auto layer = nextZwoptexTest();

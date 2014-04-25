@@ -6,6 +6,7 @@
 
 USING_NS_CC;
 
+
 class TestScene : public Scene
 {
 public: 
@@ -13,6 +14,15 @@ public:
     virtual void onEnter() override;
 
     virtual void runThisTest() = 0;
+
+    bool isFailed() {return _failed;}
+    std::string& getErrorMessage() {return _error;}
+    int getTestCount() {return _testCount;}
+protected:
+	bool _failed;
+	std::string _error;
+	int _testCount;
+
 };
 
 // C++ 11

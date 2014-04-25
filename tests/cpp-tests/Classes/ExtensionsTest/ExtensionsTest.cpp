@@ -200,6 +200,11 @@ void ExtensionsMainLayer::onMouseScroll(Event* event)
 //
 ////////////////////////////////////////////////////////
 
+ExtensionsTestScene::ExtensionsTestScene()
+{
+    _testCount = g_maxTests;
+}
+
 void ExtensionsTestScene::runThisTest()
 {
     auto layer = new ExtensionsMainLayer();

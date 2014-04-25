@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 #include "Box2D/Box2D.h"
-#include "../testBasic.h"
+#include "../testScene.h"
 
 class Box2DTestLayer : public Layer
 {

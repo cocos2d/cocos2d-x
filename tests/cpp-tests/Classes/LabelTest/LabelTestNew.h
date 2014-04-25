@@ -1,7 +1,7 @@
 #ifndef _ATLAS_TEST_NEW_H_
 #define _ATLAS_TEST_NEW_H_
 
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "../BaseTest.h"
 #include "renderer/CCCustomCommand.h"
 #include "ui/CocosGUI.h"
@@ -158,7 +158,7 @@ class AtlasTestSceneNew : public TestScene
 {
 public:
     CREATE_FUNC(AtlasTestSceneNew);
-
+    AtlasTestSceneNew();
     virtual void runThisTest();
 };
 

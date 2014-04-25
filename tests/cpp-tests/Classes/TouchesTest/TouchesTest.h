@@ -2,7 +2,7 @@
 #define _TOUCHES_TEST__H_
 
 ////----#include "cocos2d.h"
-#include "../testBasic.h"
+#include "../testScene.h"
 
 USING_NS_CC;
 

@@ -1,7 +1,7 @@
 #ifndef __DATAVISITOR_TEST_H__
 #define __DATAVISITOR_TEST_H__
 
-#include "../testBasic.h"
+#include "../testScene.h"
 
 #include <string>
 

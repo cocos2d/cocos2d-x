@@ -5,7 +5,7 @@
 
 #include "cocos2d.h"
 #include "extensions/cocos-ext.h"
-#include "../../testBasic.h"
+#include "../../testScene.h"
 #include "ui/CocosGUI.h"
 
 USING_NS_CC;
