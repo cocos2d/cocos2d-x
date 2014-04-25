@@ -124,7 +124,7 @@ void SIOClientImpl::handshake()
     request->setUrl(pre.str().c_str());
     request->setRequestType(HttpRequest::Type::GET);
 
-    request->setResponseCallback(this, httpresponse_selector(SIOClientImpl::handshakeResponse));
+    request->setResponseCallback(std::bind(&SIOClientImpl::handshakeResponse, this, std::placeholders::_1, std::placeholders::_2));
     request->setTag("handshake");
 
     log("SIOClientImpl::handshake() waiting");
