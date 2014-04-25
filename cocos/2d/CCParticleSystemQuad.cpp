@@ -145,10 +145,10 @@ ParticleSystemQuad * ParticleSystemQuad::create( ValueMap& map)
     return ret;
 }
 
-ParticleSystemQuad * ParticleSystemQuad::create( ValueMap& map, SpriteFrame *frame)
+ParticleSystemQuad * ParticleSystemQuad::create( ValueMap& valueMap, SpriteFrame *frame)
 {
     ParticleSystemQuad *ret = new ParticleSystemQuad();
-    if (ret && ret->initWithValueMap(map, frame))
+    if (ret && ret->initWithValueMapAndSpriteFrame(valueMap, frame))
     {
         ret->autorelease();
         return ret;
@@ -157,167 +157,31 @@ ParticleSystemQuad * ParticleSystemQuad::create( ValueMap& map, SpriteFrame *fra
     return ret;
 }
 
-bool ParticleSystemQuad::initWithValueMap(ValueMap &valueMap, SpriteFrame* frame)
+bool ParticleSystemQuad::initWithValueMapAndSpriteFrame(ValueMap &valueMap, SpriteFrame* frame)
 {
-    std::string dirname = "";
     bool ret = false;
-    unsigned char *buffer = nullptr;
-    unsigned char *deflated = nullptr;
     
     do
     {
-        int maxParticles = valueMap["maxParticles"].asInt();
         // self, not super
-        if(this->initWithTotalParticles(maxParticles))
+        CC_BREAK_IF(!initWithoutSettingTexture(valueMap));
+        
+        //don't get the internal texture if a batchNode is used
+        if (!_batchNode)
         {
-            // Emitter name in particle designer 2.0
-            _configName = valueMap["configName"].asString();
+            // Set a compatible default for the alpha transfer
+            _opacityModifyRGB = false;
             
-            // angle
-            _angle = valueMap["angle"].asFloat();
-            _angleVar = valueMap["angleVariance"].asFloat();
-            
-            // duration
-            _duration = valueMap["duration"].asFloat();
-            
-            // blend function
-            if (_configName.length()>0)
+            if (!_configName.empty())
             {
-                _blendFunc.src = valueMap["blendFuncSource"].asFloat();
-            }
-            else
-            {
-                _blendFunc.src = valueMap["blendFuncSource"].asInt();
-            }
-            _blendFunc.dst = valueMap["blendFuncDestination"].asInt();
-            
-            // color
-            _startColor.r = valueMap["startColorRed"].asFloat();
-            _startColor.g = valueMap["startColorGreen"].asFloat();
-            _startColor.b = valueMap["startColorBlue"].asFloat();
-            _startColor.a = valueMap["startColorAlpha"].asFloat();
-            
-            _startColorVar.r = valueMap["startColorVarianceRed"].asFloat();
-            _startColorVar.g = valueMap["startColorVarianceGreen"].asFloat();
-            _startColorVar.b = valueMap["startColorVarianceBlue"].asFloat();
-            _startColorVar.a = valueMap["startColorVarianceAlpha"].asFloat();
-            
-            _endColor.r = valueMap["finishColorRed"].asFloat();
-            _endColor.g = valueMap["finishColorGreen"].asFloat();
-            _endColor.b = valueMap["finishColorBlue"].asFloat();
-            _endColor.a = valueMap["finishColorAlpha"].asFloat();
-            
-            _endColorVar.r = valueMap["finishColorVarianceRed"].asFloat();
-            _endColorVar.g = valueMap["finishColorVarianceGreen"].asFloat();
-            _endColorVar.b = valueMap["finishColorVarianceBlue"].asFloat();
-            _endColorVar.a = valueMap["finishColorVarianceAlpha"].asFloat();
-            
-            // particle size
-            _startSize = valueMap["startParticleSize"].asFloat();
-            _startSizeVar = valueMap["startParticleSizeVariance"].asFloat();
-            _endSize = valueMap["finishParticleSize"].asFloat();
-            _endSizeVar = valueMap["finishParticleSizeVariance"].asFloat();
-            
-            // position
-            float x = valueMap["sourcePositionx"].asFloat();
-            float y = valueMap["sourcePositiony"].asFloat();
-            this->setPosition( Point(x,y) );
-            _posVar.x = valueMap["sourcePositionVariancex"].asFloat();
-            _posVar.y = valueMap["sourcePositionVariancey"].asFloat();
-            
-            // Spinning
-            _startSpin = valueMap["rotationStart"].asFloat();
-            _startSpinVar = valueMap["rotationStartVariance"].asFloat();
-            _endSpin= valueMap["rotationEnd"].asFloat();
-            _endSpinVar= valueMap["rotationEndVariance"].asFloat();
-            
-            _emitterMode = (Mode) valueMap["emitterType"].asInt();
-            
-            // Mode A: Gravity + tangential accel + radial accel
-            if (_emitterMode == Mode::GRAVITY)
-            {
-                // gravity
-                modeA.gravity.x = valueMap["gravityx"].asFloat();
-                modeA.gravity.y = valueMap["gravityy"].asFloat();
-                
-                // speed
-                modeA.speed = valueMap["speed"].asFloat();
-                modeA.speedVar = valueMap["speedVariance"].asFloat();
-                
-                // radial acceleration
-                modeA.radialAccel = valueMap["radialAcceleration"].asFloat();
-                modeA.radialAccelVar = valueMap["radialAccelVariance"].asFloat();
-                
-                // tangential acceleration
-                modeA.tangentialAccel = valueMap["tangentialAcceleration"].asFloat();
-                modeA.tangentialAccelVar = valueMap["tangentialAccelVariance"].asFloat();
-                
-                // rotation is dir
-                modeA.rotationIsDir = valueMap["rotationIsDir"].asBool();
+                _yCoordFlipped = valueMap["yCoordFlipped"].asInt();
             }
             
-            // or Mode B: radius movement
-            else if (_emitterMode == Mode::RADIUS)
-            {
-                if (_configName.length()>0)
-                {
-                    modeB.startRadius = valueMap["maxRadius"].asInt();
-                }
-                else
-                {
-                    modeB.startRadius = valueMap["maxRadius"].asFloat();
-                }
-                modeB.startRadiusVar = valueMap["maxRadiusVariance"].asFloat();
-                if (_configName.length()>0)
-                {
-                    modeB.endRadius = valueMap["minRadius"].asInt();
-                }
-                else
-                {
-                    modeB.endRadius = valueMap["minRadius"].asFloat();
-                }
-                modeB.endRadiusVar = 0.0f;
-                if (_configName.length()>0)
-                {
-                    modeB.rotatePerSecond = valueMap["rotatePerSecond"].asInt();
-                }
-                else
-                {
-                    modeB.rotatePerSecond = valueMap["rotatePerSecond"].asFloat();
-                }
-                modeB.rotatePerSecondVar = valueMap["rotatePerSecondVariance"].asFloat();
-                
-            } else {
-                CCASSERT( false, "Invalid emitterType in config file");
-                CC_BREAK_IF(true);
-            }
-            
-            // life span
-            _life = valueMap["particleLifespan"].asFloat();
-            _lifeVar = valueMap["particleLifespanVariance"].asFloat();
-            
-            // emission Rate
-            _emissionRate = _totalParticles / _life;
-            
-            //don't get the internal texture if a batchNode is used
-            if (!_batchNode)
-            {
-                // Set a compatible default for the alpha transfer
-                _opacityModifyRGB = false;
-                
-                
-                if (!_configName.empty())
-                {
-                    _yCoordFlipped = valueMap["yCoordFlipped"].asInt();
-                }
-                
-            }
-            setDisplayFrame(frame);
-            ret = true;
         }
+        setDisplayFrame(frame);
+        ret = true;
     } while (0);
-    free(buffer);
-    free(deflated);
+
     return ret;
     
 }

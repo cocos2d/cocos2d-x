@@ -144,7 +144,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool initWithTotalParticles(int numberOfParticles) override;
     
     /** initializes a ParticleSystemQuad from a ValueMap and a SpriteFrame set as a particle */
-    bool initWithValueMap(ValueMap &valueMap, SpriteFrame* frame);
+    bool initWithValueMapAndSpriteFrame(ValueMap &valueMap, SpriteFrame* frame);
     
     
 protected:

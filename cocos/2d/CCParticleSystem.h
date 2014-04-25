@@ -394,15 +394,20 @@ CC_CONSTRUCTOR_ACCESS:
      */
     bool initWithFile(const std::string& plistFile);
     
-    /** initializes a QuadParticleSystem from a Dictionary.
+    /** initializes a QuadParticleSystem from a ValueMap.
      @since v0.99.3
      */
     bool initWithDictionary(ValueMap& dictionary);
     
-    /** initializes a particle system from a NSDictionary and the path from where to load the png
+    /** initializes a particle system from a ValueMap and the path from where to load the png
      @since v2.1
      */
     bool initWithDictionary(ValueMap& dictionary, const std::string& dirname);
+    
+    /** Initializes a particle system from a ValueMap and without setting texture 
+     *  @since v3.0
+     */
+    bool initWithoutSettingTexture(ValueMap& valueMap);
     
     //! Initializes a system with a fixed number of particles
     virtual bool initWithTotalParticles(int numberOfParticles);
