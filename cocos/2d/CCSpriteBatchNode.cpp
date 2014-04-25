@@ -82,6 +82,7 @@ SpriteBatchNode* SpriteBatchNode::create(const std::string& fileImage, ssize_t c
 */
 bool SpriteBatchNode::initWithTexture(Texture2D *tex, ssize_t capacity)
 {
+    CCASSERT(tex, "Texture must be");
     CCASSERT(capacity>=0, "Capacity must be >= 0");
     
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;

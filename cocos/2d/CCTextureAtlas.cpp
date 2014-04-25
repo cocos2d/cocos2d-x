@@ -159,6 +159,7 @@ bool TextureAtlas::initWithFile(const std::string& file, ssize_t capacity)
 
 bool TextureAtlas::initWithTexture(Texture2D *texture, ssize_t capacity)
 {
+    CCASSERT(texture, "Texture must be");
     CCASSERT(capacity>=0, "Capacity must be >= 0");
     
 //    CCASSERT(texture != nullptr, "texture should not be null");
