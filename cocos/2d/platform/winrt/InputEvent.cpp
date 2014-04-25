@@ -24,10 +24,27 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "InputEvent.h"
-#include "Cocos2dRenderer.h"
+#include "CCGLView.h"
+#include "CCEventAcceleration.h"
 
-namespace PhoneDirect3DXamlAppComponent
+NS_CC_BEGIN
+
+using namespace PhoneDirect3DXamlAppComponent;
+
+
+AccelerometerEvent::AccelerometerEvent(const Acceleration& event)
+    : m_event(event)
 {
+
+}
+
+void AccelerometerEvent::execute()
+{
+    auto dispatcher = Director::getInstance()->getEventDispatcher();
+    cocos2d::EventAcceleration accEvent(m_event);
+    dispatcher->dispatchEvent(&accEvent);
+}
+
 
 PointerEvent::PointerEvent(PointerEventType type, Windows::UI::Core::PointerEventArgs^ args)
     : m_type(type), m_args(args)
@@ -35,18 +52,18 @@ PointerEvent::PointerEvent(PointerEventType type, Windows::UI::Core::PointerEven
 
 }
 
-void PointerEvent::execute(Cocos2dRenderer ^ renderer)
+void PointerEvent::execute()
 {
     switch(m_type)
     {
     case PointerEventType::PointerPressed:
-        renderer->OnPointerPressed(m_args.Get());
+        GLView::sharedOpenGLView()->OnPointerPressed(m_args.Get());
         break;
     case PointerEventType::PointerMoved:
-        renderer->OnPointerMoved(m_args.Get());
+        GLView::sharedOpenGLView()->OnPointerMoved(m_args.Get());
         break;           
     case PointerEventType::PointerReleased:
-        renderer->OnPointerReleased(m_args.Get());
+        GLView::sharedOpenGLView()->OnPointerReleased(m_args.Get());
         break;
     }
 }
@@ -63,16 +80,34 @@ KeyboardEvent::KeyboardEvent(Cocos2dKeyEvent type, Platform::String^ text)
 
 }
 
-void KeyboardEvent::execute(Cocos2dRenderer ^ renderer)
+void KeyboardEvent::execute()
 {
     switch(m_type)
     {
     case Cocos2dKeyEvent::Text:
-        renderer->OnKeyPressed(m_text.Get());
+    {
+        char szUtf8[8] = { 0 };
+        int nLen = WideCharToMultiByte(CP_UTF8, 0, (LPCWSTR) m_text.Get()->Data(), 1, szUtf8, sizeof(szUtf8), NULL, NULL);
+        IMEDispatcher::sharedDispatcher()->dispatchInsertText(szUtf8, nLen);
         break;
+    }
     default:
-        renderer->OnCocos2dKeyEvent(m_type);
-        break;      
+        switch (m_type)
+        {
+        case Cocos2dKeyEvent::Escape:
+            //Director::getInstance()()->getKeypadDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
+            break;
+        case Cocos2dKeyEvent::Back:
+            IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+            break;
+        case Cocos2dKeyEvent::Enter:
+            //SetFocus(false);
+            IMEDispatcher::sharedDispatcher()->dispatchInsertText("\n", 1);
+            break;
+        default:
+            break;
+        }        
+        break;
     }
 }
 
@@ -82,11 +117,12 @@ BackButtonEvent::BackButtonEvent()
 
 }
 
-void BackButtonEvent::execute(Cocos2dRenderer ^ renderer)
+void BackButtonEvent::execute()
 {
-    renderer->OnBackKeyPress();
+    GLView::sharedOpenGLView()->OnBackKeyPress();
 }
 
 
-}
+NS_CC_END
+
 

@@ -432,6 +432,9 @@
     <ClCompile Include="..\..\Classes\PerformanceTest\PerformanceTouchesTest.cpp">
       <Filter>Classes\PerformanceTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Classes\PerformanceTest\PerformanceCallbackTest.cpp">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Classes\ZwoptexTest\ZwoptexTest.cpp">
       <Filter>Classes\ZwoptexTest</Filter>
     </ClCompile>
@@ -812,7 +815,6 @@
     <ClCompile Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\Direct3DInterop.cpp" />
     <ClCompile Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\DirectXBase.cpp" />
     <ClCompile Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\EditBoxEvent.cpp" />
-    <ClCompile Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\InputEvent.cpp" />
     <ClCompile Include="..\..\Classes\ConfigurationTest\ConfigurationTest.cpp">
       <Filter>Classes\ConfigurationTest</Filter>
     </ClCompile>
@@ -825,6 +827,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Classes\ExtensionsTest\NetworkTest\WebSocketTest.cpp">
       <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\ConsoleTest\ConsoleTest.cpp">
+      <Filter>Classes\ConsoleTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\CurlTest\CurlTest.cpp">
+      <Filter>Classes\CurlTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -940,6 +948,9 @@
       <Filter>Classes\PerformanceTest</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Classes\PerformanceTest\PerformanceTouchesTest.h">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\PerformanceTest\PerformanceCallbackTest.h">
       <Filter>Classes\PerformanceTest</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Classes\ZwoptexTest\ZwoptexTest.h">
@@ -1518,8 +1529,6 @@
     <ClInclude Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\DirectXBase.h" />
     <ClInclude Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\DirectXHelper.h" />
     <ClInclude Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\EditBoxEvent.h" />
-    <ClInclude Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\InputEvent.h" />
-    <ClInclude Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\InputEventTypes.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="..\..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.h">
       <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
@@ -1529,6 +1538,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Classes\ExtensionsTest\NetworkTest\WebSocketTest.h">
       <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\ConsoleTest\ConsoleTest.h">
+      <Filter>Classes\ConsoleTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\CurlTest\CurlTest.h">
+      <Filter>Classes\CurlTest</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -502,10 +502,15 @@ void HttpClient::dispatchResponseCallbacks()
     if (response)
     {
         HttpRequest *request = response->getHttpRequest();
+        const ccHttpRequestCallback& callback = request->getCallback();
         Ref* pTarget = request->getTarget();
         SEL_HttpResponse pSelector = request->getSelector();
 
-        if (pTarget && pSelector) 
+        if (callback != nullptr)
+        {
+            callback(this, response);
+        }
+        else if (pTarget && pSelector)
         {
             (pTarget->*pSelector)(this, response);
         }

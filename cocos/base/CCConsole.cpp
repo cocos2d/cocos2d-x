@@ -40,7 +40,10 @@
 #include <WS2tcpip.h>
 #include <Winsock2.h>
 #define bzero(a, b) memset(a, 0, b);
-
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#include "inet_ntop_winrt.h"
+#include "CCWinRTUtils.h"
+#endif
 #else
 #include <netdb.h>
 #include <unistd.h>
@@ -107,7 +110,7 @@ static bool isFloat( std::string myString ) {
     return iss.eof() && !iss.fail(); 
 }
 
-#if CC_TARGET_PLATFORM != CC_PLATFORM_WINRT && CC_TARGET_PLATFORM != CC_PLATFORM_WP8
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WINRT
 
 // helper free functions
 
@@ -227,7 +230,7 @@ static void _log(const char *format, va_list args)
     fflush(stdout);
 #endif
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     Director::getInstance()->getConsole()->log(buf);
 #endif
 
@@ -250,7 +253,7 @@ void log(const char * format, ...)
     va_end(args);
 }
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 
 //
 // Console code
@@ -321,9 +324,13 @@ bool Console::listenOnTCP(int port)
     hints.ai_family = AF_INET; // AF_UNSPEC: Do we need IPv6 ?
     hints.ai_socktype = SOCK_STREAM;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     WSADATA wsaData;
     n = WSAStartup(MAKEWORD(2, 2),&wsaData);
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    CCLogIPAddresses();
+#endif
 #endif
 
     if ( (n = getaddrinfo(NULL, serv, &hints, &res)) != 0) {
@@ -343,7 +350,7 @@ bool Console::listenOnTCP(int port)
             break;          /* success */
 
 /* bind error, close and try next one */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
         closesocket(listenfd);
 #else
         close(listenfd);
@@ -430,7 +437,7 @@ void Console::commandExit(int fd, const std::string &args)
 {
     FD_CLR(fd, &_read_set);
     _fds.erase(std::remove(_fds.begin(), _fds.end(), fd), _fds.end());
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
         closesocket(fd);
 #else
         close(fd);
@@ -846,8 +853,7 @@ void Console::commandUpload(int fd)
 
 ssize_t Console::readBytes(int fd, char* buffer, size_t maxlen, bool* more)
 {
-    size_t n;
-	int rc;
+    size_t n, rc;
     char c, *ptr = buffer;
     *more = false;
     for( n = 0; n < maxlen; n++ ) {
@@ -957,8 +963,7 @@ bool Console::parseCommand(int fd)
 
 ssize_t Console::readline(int fd, char* ptr, size_t maxlen)
 {
-    size_t n;
-	int rc;
+    size_t n, rc;
     char c;
 
     for( n = 0; n < maxlen - 1; n++ ) {
@@ -1065,7 +1070,7 @@ void Console::loop()
                     //receive a SIGPIPE, which will cause linux system shutdown the sending process.
                     //Add this ioctl code to check if the socket has been closed by peer.
                     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
                     u_long n = 0;
                     ioctlsocket(fd, FIONREAD, &n);
 #else
@@ -1110,14 +1115,14 @@ void Console::loop()
     // clean up: ignore stdin, stdout and stderr
     for(const auto &fd: _fds )
     {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
         closesocket(fd);
 #else
         close(fd);
 #endif
     }
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     closesocket(_listenfd);
 	WSACleanup();
 #else
@@ -1126,7 +1131,7 @@ void Console::loop()
     _running = false;
 }
 
-#endif /* #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) */
+#endif /* #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) */
 
 
 NS_CC_END

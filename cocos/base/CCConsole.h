@@ -71,7 +71,7 @@ void CC_DLL log(const char * format, ...) CC_FORMAT_PRINTF(1, 2);
  ```
  */
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 class CC_DLL Console
 {
 public:
@@ -146,7 +146,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(Console);
 };
 
-#endif /* #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) */
+#endif /* #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) */
 NS_CC_END
 
 #endif /* defined(__CCCONSOLE_H__) */

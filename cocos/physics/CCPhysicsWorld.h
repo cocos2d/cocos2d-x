@@ -46,7 +46,7 @@ typedef Vector2 Vect;
 
 class Node;
 class Sprite;
-class Scene;
+class Layer;
 class DrawNode;
 class PhysicsDebugDraw;
 
@@ -119,8 +119,8 @@ public:
     /** Get body by tag */
     PhysicsBody* getBody(int tag) const;
     
-    /** Get scene contain this physics world */
-    inline Scene& getScene() const { return *_scene; }
+    /** Get layer contain this physics world */
+    inline Layer& getLayer() const { return *_layer; }
     /** get the gravity value */
     inline Vect getGravity() const { return _gravity; }
     /** set the gravity value */
@@ -144,8 +144,8 @@ public:
     inline int getDebugDrawMask() { return _debugDrawMask; }
     
 protected:
-    static PhysicsWorld* construct(Scene& scene);
-    bool init(Scene& scene);
+    static PhysicsWorld* construct(Layer& layer);
+    bool init(Layer& layer);
     
     virtual void addBody(PhysicsBody* body);
     virtual void addShape(PhysicsShape* shape);
@@ -180,7 +180,7 @@ protected:
     
     Vector<PhysicsBody*> _bodies;
     std::list<PhysicsJoint*> _joints;
-    Scene* _scene;
+    Layer* _layer;
     
     bool _delayDirty;
     PhysicsDebugDraw* _debugDraw;
@@ -198,7 +198,7 @@ protected:
     
     friend class Node;
     friend class Sprite;
-    friend class Scene;
+    friend class Layer;
     friend class PhysicsBody;
     friend class PhysicsShape;
     friend class PhysicsJoint;
