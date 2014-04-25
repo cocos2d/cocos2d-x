@@ -523,15 +523,12 @@ void RenderTexture::onBegin()
     //
     Director *director = Director::getInstance();
     Size size = director->getWinSizeInPixels();
-    kmGLGetMatrix(KM_GL_PROJECTION, &_oldProjMatrix);
-    kmGLMatrixMode(KM_GL_PROJECTION);
-    kmGLLoadMatrix(&_projectionMatrix);
- 
-
-
-    kmGLGetMatrix(KM_GL_MODELVIEW, &_oldTransMatrix);
-    kmGLMatrixMode(KM_GL_MODELVIEW);
-    kmGLLoadMatrix(&_transformMatrix);
+    
+    _oldProjMatrix = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, _projectionMatrix);
+    
+    _oldTransMatrix = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _transformMatrix);
     
     if(!_keepMatrix)
     {
