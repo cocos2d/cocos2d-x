@@ -571,6 +571,7 @@
         "cocos/base/CCPlatformMacros.h", 
         "cocos/base/CCRef.cpp", 
         "cocos/base/CCRef.h", 
+        "cocos/base/CCRefPtr.h", 
         "cocos/base/CCValue.cpp", 
         "cocos/base/CCValue.h", 
         "cocos/base/CCVector.h", 
