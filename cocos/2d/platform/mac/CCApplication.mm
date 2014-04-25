@@ -66,7 +66,7 @@ int Application::run()
 {
     if(!applicationDidFinishLaunching())
     {
-        return 0;
+        return 1;
     }
     
     long lastTime = 0L;
@@ -105,7 +105,7 @@ int Application::run()
     
     glview->release();
     
-    return true;
+    return 0;
 }
 
 void Application::setAnimationInterval(double interval)
