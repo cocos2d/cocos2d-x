@@ -133,6 +133,58 @@ ParticleSystemQuad * ParticleSystemQuad::createWithTotalParticles(int numberOfPa
     return ret;
 }
 
+ParticleSystemQuad * ParticleSystemQuad::create(const ValueMap& map)
+{
+    ParticleSystemQuad *ret = new ParticleSystemQuad();
+    if (ret && ret->initWithDictionary(map))
+    {
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+    return ret;
+}
+
+ParticleSystemQuad * ParticleSystemQuad::create(const ValueMap& valueMap, SpriteFrame *frame)
+{
+    ParticleSystemQuad *ret = new ParticleSystemQuad();
+    if (ret && ret->initWithValueMapAndSpriteFrame(valueMap, frame))
+    {
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+    return ret;
+}
+
+bool ParticleSystemQuad::initWithValueMapAndSpriteFrame(const ValueMap &valueMap, SpriteFrame* frame)
+{
+    bool ret = false;
+    
+    do
+    {
+        // self, not super
+        CC_BREAK_IF(!initWithoutSettingTexture(valueMap));
+        
+        //don't get the internal texture if a batchNode is used
+        if (!_batchNode)
+        {
+            // Set a compatible default for the alpha transfer
+            _opacityModifyRGB = false;
+            
+            if (!_configName.empty())
+            {
+                _yCoordFlipped = getValue(valueMap, "yCoordFlipped").asInt();
+            }
+            
+        }
+        setDisplayFrame(frame);
+        ret = true;
+    } while (0);
+
+    return ret;
+    
+}
 
 // pointRect should be in Texture coordinates, not pixel coordinates
 void ParticleSystemQuad::initTexCoordsWithRect(const Rect& pointRect)
