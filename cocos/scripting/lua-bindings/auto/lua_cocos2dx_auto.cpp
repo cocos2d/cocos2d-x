@@ -34349,6 +34349,96 @@ int lua_register_cocos2dx_LabelBMFont(lua_State* tolua_S)
     return 1;
 }
 
+int lua_cocos2dx_Layer_updatePhysics(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Layer* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Layer",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Layer*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Layer_updatePhysics'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        double arg0;
+
+        ok &= luaval_to_number(tolua_S, 2,&arg0);
+        if(!ok)
+            return 0;
+        cobj->updatePhysics(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "updatePhysics",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Layer_updatePhysics'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Layer_getPhysicsWorld(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Layer* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Layer",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Layer*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Layer_getPhysicsWorld'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cocos2d::PhysicsWorld* ret = cobj->getPhysicsWorld();
+        object_to_luaval<cocos2d::PhysicsWorld>(tolua_S, "cc.PhysicsWorld",(cocos2d::PhysicsWorld*)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getPhysicsWorld",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Layer_getPhysicsWorld'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_Layer_create(lua_State* tolua_S)
 {
     int argc = 0;
@@ -34380,6 +34470,37 @@ int lua_cocos2dx_Layer_create(lua_State* tolua_S)
 #endif
     return 0;
 }
+int lua_cocos2dx_Layer_createWithPhysics(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.Layer",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+            return 0;
+        cocos2d::Layer* ret = cocos2d::Layer::createWithPhysics();
+        object_to_luaval<cocos2d::Layer>(tolua_S, "cc.Layer",(cocos2d::Layer*)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "createWithPhysics",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Layer_createWithPhysics'.",&tolua_err);
+#endif
+    return 0;
+}
 static int lua_cocos2dx_Layer_finalize(lua_State* tolua_S)
 {
     printf("luabindings: finalizing LUA object (Layer)");
@@ -34392,7 +34513,10 @@ int lua_register_cocos2dx_Layer(lua_State* tolua_S)
     tolua_cclass(tolua_S,"Layer","cc.Layer","cc.Node",nullptr);
 
     tolua_beginmodule(tolua_S,"Layer");
+        tolua_function(tolua_S,"updatePhysics",lua_cocos2dx_Layer_updatePhysics);
+        tolua_function(tolua_S,"getPhysicsWorld",lua_cocos2dx_Layer_getPhysicsWorld);
         tolua_function(tolua_S,"create", lua_cocos2dx_Layer_create);
+        tolua_function(tolua_S,"createWithPhysics", lua_cocos2dx_Layer_createWithPhysics);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::Layer).name();
     g_luaType[typeName] = "cc.Layer";
@@ -35427,50 +35551,6 @@ int lua_register_cocos2dx_LayerMultiplex(lua_State* tolua_S)
     return 1;
 }
 
-int lua_cocos2dx_Scene_getPhysicsWorld(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Scene* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Scene",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Scene*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Scene_getPhysicsWorld'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        cocos2d::PhysicsWorld* ret = cobj->getPhysicsWorld();
-        object_to_luaval<cocos2d::PhysicsWorld>(tolua_S, "cc.PhysicsWorld",(cocos2d::PhysicsWorld*)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getPhysicsWorld",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Scene_getPhysicsWorld'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_Scene_create(lua_State* tolua_S)
 {
     int argc = 0;
@@ -35502,37 +35582,6 @@ int lua_cocos2dx_Scene_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-int lua_cocos2dx_Scene_createWithPhysics(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"cc.Scene",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    argc = lua_gettop(tolua_S) - 1;
-
-    if (argc == 0)
-    {
-        if(!ok)
-            return 0;
-        cocos2d::Scene* ret = cocos2d::Scene::createWithPhysics();
-        object_to_luaval<cocos2d::Scene>(tolua_S, "cc.Scene",(cocos2d::Scene*)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "createWithPhysics",argc, 0);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Scene_createWithPhysics'.",&tolua_err);
-#endif
-    return 0;
-}
 static int lua_cocos2dx_Scene_finalize(lua_State* tolua_S)
 {
     printf("luabindings: finalizing LUA object (Scene)");
@@ -35545,9 +35594,7 @@ int lua_register_cocos2dx_Scene(lua_State* tolua_S)
     tolua_cclass(tolua_S,"Scene","cc.Scene","cc.Node",nullptr);
 
     tolua_beginmodule(tolua_S,"Scene");
-        tolua_function(tolua_S,"getPhysicsWorld",lua_cocos2dx_Scene_getPhysicsWorld);
         tolua_function(tolua_S,"create", lua_cocos2dx_Scene_create);
-        tolua_function(tolua_S,"createWithPhysics", lua_cocos2dx_Scene_createWithPhysics);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::Scene).name();
     g_luaType[typeName] = "cc.Scene";
