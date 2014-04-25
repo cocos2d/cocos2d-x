@@ -959,7 +959,20 @@ bool Image::initWithPngData(const unsigned char * data, ssize_t dataLen)
 
         png_read_end(png_ptr, nullptr);
 
-        _preMulti = false;
+        if (_renderFormat == Texture2D::PixelFormat::RGBA8888)
+        {
+            unsigned int *tmp = (unsigned int *)_data;
+            for(unsigned short i = 0; i < _height; i++)
+            {
+                for(unsigned int j = 0; j < rowbytes; j += 4)
+                {
+                    *tmp++ = CC_RGB_PREMULTIPLY_ALPHA( row_pointers[i][j], row_pointers[i][j + 1],
+                                                      row_pointers[i][j + 2], row_pointers[i][j + 3] );
+                }
+            }
+            
+            _preMulti = true;
+        }
 
         if (row_pointers != nullptr)
         {
