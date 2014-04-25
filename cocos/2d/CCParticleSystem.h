@@ -397,23 +397,25 @@ CC_CONSTRUCTOR_ACCESS:
     /** initializes a QuadParticleSystem from a ValueMap.
      @since v0.99.3
      */
-    bool initWithDictionary(ValueMap& dictionary);
+    bool initWithDictionary(const ValueMap& dictionary);
     
     /** initializes a particle system from a ValueMap and the path from where to load the png
      @since v2.1
      */
-    bool initWithDictionary(ValueMap& dictionary, const std::string& dirname);
+    bool initWithDictionary(const ValueMap& dictionary, const std::string& dirname);
     
     /** Initializes a particle system from a ValueMap and without setting texture 
      *  @since v3.0
      */
-    bool initWithoutSettingTexture(ValueMap& valueMap);
+    bool initWithoutSettingTexture(const ValueMap& valueMap);
     
     //! Initializes a system with a fixed number of particles
     virtual bool initWithTotalParticles(int numberOfParticles);
 
 protected:
     virtual void updateBlendFunc();
+    
+    const Value& getValue(const ValueMap& valueMap, const std::string& key);
 
     /** whether or not the particles are using blend additive.
      If enabled, the following blending function will be used.

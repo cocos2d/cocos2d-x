@@ -133,7 +133,7 @@ ParticleSystemQuad * ParticleSystemQuad::createWithTotalParticles(int numberOfPa
     return ret;
 }
 
-ParticleSystemQuad * ParticleSystemQuad::create( ValueMap& map)
+ParticleSystemQuad * ParticleSystemQuad::create(const ValueMap& map)
 {
     ParticleSystemQuad *ret = new ParticleSystemQuad();
     if (ret && ret->initWithDictionary(map))
@@ -145,7 +145,7 @@ ParticleSystemQuad * ParticleSystemQuad::create( ValueMap& map)
     return ret;
 }
 
-ParticleSystemQuad * ParticleSystemQuad::create( ValueMap& valueMap, SpriteFrame *frame)
+ParticleSystemQuad * ParticleSystemQuad::create(const ValueMap& valueMap, SpriteFrame *frame)
 {
     ParticleSystemQuad *ret = new ParticleSystemQuad();
     if (ret && ret->initWithValueMapAndSpriteFrame(valueMap, frame))
@@ -157,7 +157,7 @@ ParticleSystemQuad * ParticleSystemQuad::create( ValueMap& valueMap, SpriteFrame
     return ret;
 }
 
-bool ParticleSystemQuad::initWithValueMapAndSpriteFrame(ValueMap &valueMap, SpriteFrame* frame)
+bool ParticleSystemQuad::initWithValueMapAndSpriteFrame(const ValueMap &valueMap, SpriteFrame* frame)
 {
     bool ret = false;
     
@@ -174,7 +174,7 @@ bool ParticleSystemQuad::initWithValueMapAndSpriteFrame(ValueMap &valueMap, Spri
             
             if (!_configName.empty())
             {
-                _yCoordFlipped = valueMap["yCoordFlipped"].asInt();
+                _yCoordFlipped = getValue(valueMap, "yCoordFlipped").asInt();
             }
             
         }

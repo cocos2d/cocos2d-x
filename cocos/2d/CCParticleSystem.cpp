@@ -59,8 +59,6 @@ THE SOFTWARE.
 // opengl
 #include "CCGL.h"
 
-using namespace std;
-
 
 NS_CC_BEGIN
 
@@ -175,8 +173,8 @@ bool ParticleSystem::initWithFile(const std::string& plistFile)
     CCASSERT( !dict.empty(), "Particles: file not found");
     
     // XXX compute path from a path, should define a function somewhere to do it
-    string listFilePath = plistFile;
-    if (listFilePath.find('/') != string::npos)
+    std::string listFilePath = plistFile;
+    if (listFilePath.find('/') != std::string::npos)
     {
         listFilePath = listFilePath.substr(0, listFilePath.rfind('/') + 1);
         ret = this->initWithDictionary(dict, listFilePath.c_str());
@@ -189,130 +187,130 @@ bool ParticleSystem::initWithFile(const std::string& plistFile)
     return ret;
 }
 
-bool ParticleSystem::initWithDictionary(ValueMap& dictionary)
+bool ParticleSystem::initWithDictionary(const ValueMap& dictionary)
 {
     return initWithDictionary(dictionary, "");
 }
 
-bool ParticleSystem::initWithoutSettingTexture(ValueMap& valueMap)
+bool ParticleSystem::initWithoutSettingTexture(const ValueMap& valueMap)
 {
     bool ret = false;
     do
     {
-        int maxParticles = valueMap["maxParticles"].asInt();
+        int maxParticles = getValue(valueMap, "maxParticles").asInt();
         // self, not super
         CC_BREAK_IF(!initWithTotalParticles(maxParticles));
 
         // Emitter name in particle designer 2.0
-        _configName = valueMap["configName"].asString();
+        _configName = getValue(valueMap, "configName").asString();
 
         // angle
-        _angle = valueMap["angle"].asFloat();
-        _angleVar = valueMap["angleVariance"].asFloat();
+        _angle = getValue(valueMap, "angle").asFloat();
+        _angleVar = getValue(valueMap, "angleVariance").asFloat();
 
         // duration
-        _duration = valueMap["duration"].asFloat();
+        _duration = getValue(valueMap, "duration").asFloat();
 
         // blend function
         if (!_configName.empty())
         {
-            _blendFunc.src = valueMap["blendFuncSource"].asFloat();
+            _blendFunc.src = getValue(valueMap, "blendFuncSource").asFloat();
         }
         else
         {
-            _blendFunc.src = valueMap["blendFuncSource"].asInt();
+            _blendFunc.src = getValue(valueMap, "blendFuncSource").asInt();
         }
         
-        _blendFunc.dst = valueMap["blendFuncDestination"].asInt();
+        _blendFunc.dst = getValue(valueMap, "blendFuncDestination").asInt();
         
         // color
-        _startColor.r = valueMap["startColorRed"].asFloat();
-        _startColor.g = valueMap["startColorGreen"].asFloat();
-        _startColor.b = valueMap["startColorBlue"].asFloat();
-        _startColor.a = valueMap["startColorAlpha"].asFloat();
+        _startColor.r = getValue(valueMap, "startColorRed").asFloat();
+        _startColor.g = getValue(valueMap, "startColorGreen").asFloat();
+        _startColor.b = getValue(valueMap, "startColorBlue").asFloat();
+        _startColor.a = getValue(valueMap, "startColorAlpha").asFloat();
         
-        _startColorVar.r = valueMap["startColorVarianceRed"].asFloat();
-        _startColorVar.g = valueMap["startColorVarianceGreen"].asFloat();
-        _startColorVar.b = valueMap["startColorVarianceBlue"].asFloat();
-        _startColorVar.a = valueMap["startColorVarianceAlpha"].asFloat();
+        _startColorVar.r = getValue(valueMap, "startColorVarianceRed").asFloat();
+        _startColorVar.g = getValue(valueMap, "startColorVarianceGreen").asFloat();
+        _startColorVar.b = getValue(valueMap, "startColorVarianceBlue").asFloat();
+        _startColorVar.a = getValue(valueMap, "startColorVarianceAlpha").asFloat();
         
-        _endColor.r = valueMap["finishColorRed"].asFloat();
-        _endColor.g = valueMap["finishColorGreen"].asFloat();
-        _endColor.b = valueMap["finishColorBlue"].asFloat();
-        _endColor.a = valueMap["finishColorAlpha"].asFloat();
+        _endColor.r = getValue(valueMap, "finishColorRed").asFloat();
+        _endColor.g = getValue(valueMap, "finishColorGreen").asFloat();
+        _endColor.b = getValue(valueMap, "finishColorBlue").asFloat();
+        _endColor.a = getValue(valueMap, "finishColorAlpha").asFloat();
         
-        _endColorVar.r = valueMap["finishColorVarianceRed"].asFloat();
-        _endColorVar.g = valueMap["finishColorVarianceGreen"].asFloat();
-        _endColorVar.b = valueMap["finishColorVarianceBlue"].asFloat();
-        _endColorVar.a = valueMap["finishColorVarianceAlpha"].asFloat();
+        _endColorVar.r = getValue(valueMap, "finishColorVarianceRed").asFloat();
+        _endColorVar.g = getValue(valueMap, "finishColorVarianceGreen").asFloat();
+        _endColorVar.b = getValue(valueMap, "finishColorVarianceBlue").asFloat();
+        _endColorVar.a = getValue(valueMap, "finishColorVarianceAlpha").asFloat();
         
         // particle size
-        _startSize = valueMap["startParticleSize"].asFloat();
-        _startSizeVar = valueMap["startParticleSizeVariance"].asFloat();
-        _endSize = valueMap["finishParticleSize"].asFloat();
-        _endSizeVar = valueMap["finishParticleSizeVariance"].asFloat();
+        _startSize = getValue(valueMap, "startParticleSize").asFloat();
+        _startSizeVar = getValue(valueMap, "startParticleSizeVariance").asFloat();
+        _endSize = getValue(valueMap, "finishParticleSize").asFloat();
+        _endSizeVar = getValue(valueMap, "finishParticleSizeVariance").asFloat();
         
         // position
-        float x = valueMap["sourcePositionx"].asFloat();
-        float y = valueMap["sourcePositiony"].asFloat();
+        float x = getValue(valueMap, "sourcePositionx").asFloat();
+        float y = getValue(valueMap, "sourcePositiony").asFloat();
         this->setPosition( Point(x,y) );
-        _posVar.x = valueMap["sourcePositionVariancex"].asFloat();
-        _posVar.y = valueMap["sourcePositionVariancey"].asFloat();
+        _posVar.x = getValue(valueMap, "sourcePositionVariancex").asFloat();
+        _posVar.y = getValue(valueMap, "sourcePositionVariancey").asFloat();
         
         // Spinning
-        _startSpin = valueMap["rotationStart"].asFloat();
-        _startSpinVar = valueMap["rotationStartVariance"].asFloat();
-        _endSpin= valueMap["rotationEnd"].asFloat();
-        _endSpinVar= valueMap["rotationEndVariance"].asFloat();
+        _startSpin = getValue(valueMap, "rotationStart").asFloat();
+        _startSpinVar = getValue(valueMap, "rotationStartVariance").asFloat();
+        _endSpin= getValue(valueMap, "rotationEnd").asFloat();
+        _endSpinVar= getValue(valueMap, "rotationEndVariance").asFloat();
         
-        _emitterMode = (Mode) valueMap["emitterType"].asInt();
+        _emitterMode = (Mode) getValue(valueMap, "emitterType").asInt();
         
         // Mode A: Gravity + tangential accel + radial accel
         if (_emitterMode == Mode::GRAVITY)
         {
             // gravity
-            modeA.gravity.x = valueMap["gravityx"].asFloat();
-            modeA.gravity.y = valueMap["gravityy"].asFloat();
+            modeA.gravity.x = getValue(valueMap, "gravityx").asFloat();
+            modeA.gravity.y = getValue(valueMap, "gravityy").asFloat();
             
             // speed
-            modeA.speed = valueMap["speed"].asFloat();
-            modeA.speedVar = valueMap["speedVariance"].asFloat();
+            modeA.speed = getValue(valueMap, "speed").asFloat();
+            modeA.speedVar = getValue(valueMap, "speedVariance").asFloat();
             
             // radial acceleration
-            modeA.radialAccel = valueMap["radialAcceleration"].asFloat();
-            modeA.radialAccelVar = valueMap["radialAccelVariance"].asFloat();
+            modeA.radialAccel = getValue(valueMap, "radialAcceleration").asFloat();
+            modeA.radialAccelVar = getValue(valueMap, "radialAccelVariance").asFloat();
             
             // tangential acceleration
-            modeA.tangentialAccel = valueMap["tangentialAcceleration"].asFloat();
-            modeA.tangentialAccelVar = valueMap["tangentialAccelVariance"].asFloat();
+            modeA.tangentialAccel = getValue(valueMap, "tangentialAcceleration").asFloat();
+            modeA.tangentialAccelVar = getValue(valueMap, "tangentialAccelVariance").asFloat();
             
             // rotation is dir
-            modeA.rotationIsDir = valueMap["rotationIsDir"].asBool();
+            modeA.rotationIsDir = getValue(valueMap, "rotationIsDir").asBool();
         }
         // or Mode B: radius movement
         else if (_emitterMode == Mode::RADIUS)
         {
             if (_configName.length()>0)
             {
-                modeB.startRadius = valueMap["maxRadius"].asInt();
+                modeB.startRadius = getValue(valueMap, "maxRadius").asInt();
             }
             else
             {
-                modeB.startRadius = valueMap["maxRadius"].asFloat();
+                modeB.startRadius = getValue(valueMap, "maxRadius").asFloat();
             }
-            modeB.startRadiusVar = valueMap["maxRadiusVariance"].asFloat();
+            modeB.startRadiusVar = getValue(valueMap, "maxRadiusVariance").asFloat();
             if (_configName.length()>0)
             {
-                modeB.endRadius = valueMap["minRadius"].asInt();
+                modeB.endRadius = getValue(valueMap, "minRadius").asInt();
             }
             else
             {
-                modeB.endRadius = valueMap["minRadius"].asFloat();
+                modeB.endRadius = getValue(valueMap, "minRadius").asFloat();
             }
             
             if (valueMap.find("minRadiusVariance") != valueMap.end())
             {
-                modeB.endRadiusVar = valueMap["minRadiusVariance"].asFloat();
+                modeB.endRadiusVar = getValue(valueMap, "minRadiusVariance").asFloat();
             }
             else
             {
@@ -321,13 +319,13 @@ bool ParticleSystem::initWithoutSettingTexture(ValueMap& valueMap)
             
             if (_configName.length()>0)
             {
-                modeB.rotatePerSecond = valueMap["rotatePerSecond"].asInt();
+                modeB.rotatePerSecond = getValue(valueMap, "rotatePerSecond").asInt();
             }
             else
             {
-                modeB.rotatePerSecond = valueMap["rotatePerSecond"].asFloat();
+                modeB.rotatePerSecond = getValue(valueMap, "rotatePerSecond").asFloat();
             }
-            modeB.rotatePerSecondVar = valueMap["rotatePerSecondVariance"].asFloat();
+            modeB.rotatePerSecondVar = getValue(valueMap, "rotatePerSecondVariance").asFloat();
             
         }
         else
@@ -337,8 +335,8 @@ bool ParticleSystem::initWithoutSettingTexture(ValueMap& valueMap)
         }
         
         // life span
-        _life = valueMap["particleLifespan"].asFloat();
-        _lifeVar = valueMap["particleLifespanVariance"].asFloat();
+        _life = getValue(valueMap, "particleLifespan").asFloat();
+        _lifeVar = getValue(valueMap, "particleLifespanVariance").asFloat();
         
         // emission Rate
         _emissionRate = _totalParticles / _life;
@@ -349,7 +347,7 @@ bool ParticleSystem::initWithoutSettingTexture(ValueMap& valueMap)
     return ret;
 }
 
-bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string& dirname)
+bool ParticleSystem::initWithDictionary(const ValueMap& valueMap, const std::string& dirname)
 {
     bool ret = false;
     unsigned char *buffer = nullptr;
@@ -359,7 +357,7 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
     do
     {
         // self, not super
-        CC_BREAK_IF(!initWithoutSettingTexture(dictionary));
+        CC_BREAK_IF(!initWithoutSettingTexture(valueMap));
 
         //don't get the internal texture if a batchNode is used
         if (!_batchNode)
@@ -369,13 +367,13 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
 
             // texture        
             // Try to get the texture from the cache
-            std::string textureName = dictionary["textureFileName"].asString();
+            std::string textureName = getValue(valueMap, "textureFileName").asString();
             
             size_t rPos = textureName.rfind('/');
            
-            if (rPos != string::npos)
+            if (rPos != std::string::npos)
             {
-                string textureDir = textureName.substr(0, rPos + 1);
+                std::string textureDir = textureName.substr(0, rPos + 1);
                 
                 if (!dirname.empty() && textureDir != dirname)
                 {
@@ -406,7 +404,7 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
             }
             else
             {                        
-                std::string textureData = dictionary["textureImageData"].asString();
+                std::string textureData = getValue(valueMap, "textureImageData").asString();
                 CCASSERT(!textureData.empty(), "");
                 
                 auto dataLen = textureData.size();
@@ -435,7 +433,7 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
             
             if (!_configName.empty())
             {
-                _yCoordFlipped = dictionary["yCoordFlipped"].asInt();
+                _yCoordFlipped = getValue(valueMap, "yCoordFlipped").asInt();
             }
             
             CCASSERT( this->_texture != nullptr, "CCParticleSystem: error loading the texture");
@@ -1195,6 +1193,16 @@ void ParticleSystem::setScaleY(float newScaleY)
     Node::setScaleY(newScaleY);
 }
 
+const Value& ParticleSystem::getValue(const ValueMap& valueMap, const std::string& key)
+{
+    auto iter = valueMap.find(key);
+    if (iter != valueMap.end())
+    {
+        return iter->second;
+    }
+    
+    return Value::Null;
+}
 
 NS_CC_END
 
