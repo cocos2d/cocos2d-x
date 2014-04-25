@@ -327,4 +327,11 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class DemoParticleFromValueMap : public ParticleDemo
+{
+public:
+    virtual void onEnter() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
 #endif

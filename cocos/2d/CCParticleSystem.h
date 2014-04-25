@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "CCNode.h"
 #include "CCValue.h"
 #include "deprecated/CCString.h"
+#include "CCSpriteFrame.h"
 
 NS_CC_BEGIN
 
@@ -393,21 +394,32 @@ CC_CONSTRUCTOR_ACCESS:
      */
     bool initWithFile(const std::string& plistFile);
     
-    /** initializes a QuadParticleSystem from a Dictionary.
+    /** initializes a QuadParticleSystem from a ValueMap.
      @since v0.99.3
      */
-    bool initWithDictionary(ValueMap& dictionary);
+    bool initWithDictionary(const ValueMap& dictionary);
     
-    /** initializes a particle system from a NSDictionary and the path from where to load the png
+    /** initializes a particle system from a ValueMap and the path from where to load the png
      @since v2.1
      */
-    bool initWithDictionary(ValueMap& dictionary, const std::string& dirname);
+    bool initWithDictionary(const ValueMap& dictionary, const std::string& dirname);
+    
+    /** Initializes a particle system from a ValueMap and without setting texture 
+     *  @since v3.0
+     */
+    bool initWithoutSettingTexture(const ValueMap& valueMap);
     
     //! Initializes a system with a fixed number of particles
     virtual bool initWithTotalParticles(int numberOfParticles);
 
 protected:
     virtual void updateBlendFunc();
+    
+    /** Gets Value from valuemap by a given key
+     *  It will return Value::Null if valueMap doesn't contain the key
+     *  @since v3.0
+     */
+    const Value& getValue(const ValueMap& valueMap, const std::string& key);
 
     /** whether or not the particles are using blend additive.
      If enabled, the following blending function will be used.

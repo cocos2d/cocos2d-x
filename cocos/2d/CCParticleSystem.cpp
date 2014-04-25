@@ -59,8 +59,6 @@ THE SOFTWARE.
 // opengl
 #include "CCGL.h"
 
-using namespace std;
-
 
 NS_CC_BEGIN
 
@@ -175,8 +173,8 @@ bool ParticleSystem::initWithFile(const std::string& plistFile)
     CCASSERT( !dict.empty(), "Particles: file not found");
     
     // XXX compute path from a path, should define a function somewhere to do it
-    string listFilePath = plistFile;
-    if (listFilePath.find('/') != string::npos)
+    std::string listFilePath = plistFile;
+    if (listFilePath.find('/') != std::string::npos)
     {
         listFilePath = listFilePath.substr(0, listFilePath.rfind('/') + 1);
         ret = this->initWithDictionary(dict, listFilePath.c_str());
@@ -189,243 +187,260 @@ bool ParticleSystem::initWithFile(const std::string& plistFile)
     return ret;
 }
 
-bool ParticleSystem::initWithDictionary(ValueMap& dictionary)
+bool ParticleSystem::initWithDictionary(const ValueMap& dictionary)
 {
     return initWithDictionary(dictionary, "");
 }
 
-bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string& dirname)
+bool ParticleSystem::initWithoutSettingTexture(const ValueMap& valueMap)
+{
+    bool ret = false;
+    do
+    {
+        int maxParticles = getValue(valueMap, "maxParticles").asInt();
+        // self, not super
+        CC_BREAK_IF(!initWithTotalParticles(maxParticles));
+
+        // Emitter name in particle designer 2.0
+        _configName = getValue(valueMap, "configName").asString();
+
+        // angle
+        _angle = getValue(valueMap, "angle").asFloat();
+        _angleVar = getValue(valueMap, "angleVariance").asFloat();
+
+        // duration
+        _duration = getValue(valueMap, "duration").asFloat();
+
+        // blend function
+        if (!_configName.empty())
+        {
+            _blendFunc.src = getValue(valueMap, "blendFuncSource").asFloat();
+        }
+        else
+        {
+            _blendFunc.src = getValue(valueMap, "blendFuncSource").asInt();
+        }
+        
+        _blendFunc.dst = getValue(valueMap, "blendFuncDestination").asInt();
+        
+        // color
+        _startColor.r = getValue(valueMap, "startColorRed").asFloat();
+        _startColor.g = getValue(valueMap, "startColorGreen").asFloat();
+        _startColor.b = getValue(valueMap, "startColorBlue").asFloat();
+        _startColor.a = getValue(valueMap, "startColorAlpha").asFloat();
+        
+        _startColorVar.r = getValue(valueMap, "startColorVarianceRed").asFloat();
+        _startColorVar.g = getValue(valueMap, "startColorVarianceGreen").asFloat();
+        _startColorVar.b = getValue(valueMap, "startColorVarianceBlue").asFloat();
+        _startColorVar.a = getValue(valueMap, "startColorVarianceAlpha").asFloat();
+        
+        _endColor.r = getValue(valueMap, "finishColorRed").asFloat();
+        _endColor.g = getValue(valueMap, "finishColorGreen").asFloat();
+        _endColor.b = getValue(valueMap, "finishColorBlue").asFloat();
+        _endColor.a = getValue(valueMap, "finishColorAlpha").asFloat();
+        
+        _endColorVar.r = getValue(valueMap, "finishColorVarianceRed").asFloat();
+        _endColorVar.g = getValue(valueMap, "finishColorVarianceGreen").asFloat();
+        _endColorVar.b = getValue(valueMap, "finishColorVarianceBlue").asFloat();
+        _endColorVar.a = getValue(valueMap, "finishColorVarianceAlpha").asFloat();
+        
+        // particle size
+        _startSize = getValue(valueMap, "startParticleSize").asFloat();
+        _startSizeVar = getValue(valueMap, "startParticleSizeVariance").asFloat();
+        _endSize = getValue(valueMap, "finishParticleSize").asFloat();
+        _endSizeVar = getValue(valueMap, "finishParticleSizeVariance").asFloat();
+        
+        // position
+        float x = getValue(valueMap, "sourcePositionx").asFloat();
+        float y = getValue(valueMap, "sourcePositiony").asFloat();
+        this->setPosition( Point(x,y) );
+        _posVar.x = getValue(valueMap, "sourcePositionVariancex").asFloat();
+        _posVar.y = getValue(valueMap, "sourcePositionVariancey").asFloat();
+        
+        // Spinning
+        _startSpin = getValue(valueMap, "rotationStart").asFloat();
+        _startSpinVar = getValue(valueMap, "rotationStartVariance").asFloat();
+        _endSpin= getValue(valueMap, "rotationEnd").asFloat();
+        _endSpinVar= getValue(valueMap, "rotationEndVariance").asFloat();
+        
+        _emitterMode = (Mode) getValue(valueMap, "emitterType").asInt();
+        
+        // Mode A: Gravity + tangential accel + radial accel
+        if (_emitterMode == Mode::GRAVITY)
+        {
+            // gravity
+            modeA.gravity.x = getValue(valueMap, "gravityx").asFloat();
+            modeA.gravity.y = getValue(valueMap, "gravityy").asFloat();
+            
+            // speed
+            modeA.speed = getValue(valueMap, "speed").asFloat();
+            modeA.speedVar = getValue(valueMap, "speedVariance").asFloat();
+            
+            // radial acceleration
+            modeA.radialAccel = getValue(valueMap, "radialAcceleration").asFloat();
+            modeA.radialAccelVar = getValue(valueMap, "radialAccelVariance").asFloat();
+            
+            // tangential acceleration
+            modeA.tangentialAccel = getValue(valueMap, "tangentialAcceleration").asFloat();
+            modeA.tangentialAccelVar = getValue(valueMap, "tangentialAccelVariance").asFloat();
+            
+            // rotation is dir
+            modeA.rotationIsDir = getValue(valueMap, "rotationIsDir").asBool();
+        }
+        // or Mode B: radius movement
+        else if (_emitterMode == Mode::RADIUS)
+        {
+            if (_configName.length()>0)
+            {
+                modeB.startRadius = getValue(valueMap, "maxRadius").asInt();
+            }
+            else
+            {
+                modeB.startRadius = getValue(valueMap, "maxRadius").asFloat();
+            }
+            modeB.startRadiusVar = getValue(valueMap, "maxRadiusVariance").asFloat();
+            if (_configName.length()>0)
+            {
+                modeB.endRadius = getValue(valueMap, "minRadius").asInt();
+            }
+            else
+            {
+                modeB.endRadius = getValue(valueMap, "minRadius").asFloat();
+            }
+            
+            if (valueMap.find("minRadiusVariance") != valueMap.end())
+            {
+                modeB.endRadiusVar = getValue(valueMap, "minRadiusVariance").asFloat();
+            }
+            else
+            {
+                modeB.endRadiusVar = 0.0f;
+            }
+            
+            if (_configName.length()>0)
+            {
+                modeB.rotatePerSecond = getValue(valueMap, "rotatePerSecond").asInt();
+            }
+            else
+            {
+                modeB.rotatePerSecond = getValue(valueMap, "rotatePerSecond").asFloat();
+            }
+            modeB.rotatePerSecondVar = getValue(valueMap, "rotatePerSecondVariance").asFloat();
+            
+        }
+        else
+        {
+            CCASSERT( false, "Invalid emitterType in config file");
+            CC_BREAK_IF(true);
+        }
+        
+        // life span
+        _life = getValue(valueMap, "particleLifespan").asFloat();
+        _lifeVar = getValue(valueMap, "particleLifespanVariance").asFloat();
+        
+        // emission Rate
+        _emissionRate = _totalParticles / _life;
+        
+        ret = true;
+    } while (0);
+
+    return ret;
+}
+
+bool ParticleSystem::initWithDictionary(const ValueMap& valueMap, const std::string& dirname)
 {
     bool ret = false;
     unsigned char *buffer = nullptr;
     unsigned char *deflated = nullptr;
     Image *image = nullptr;
-    do 
+    
+    do
     {
-        int maxParticles = dictionary["maxParticles"].asInt();
         // self, not super
-        if(this->initWithTotalParticles(maxParticles))
+        CC_BREAK_IF(!initWithoutSettingTexture(valueMap));
+
+        //don't get the internal texture if a batchNode is used
+        if (!_batchNode)
         {
-            // Emitter name in particle designer 2.0
-            _configName = dictionary["configName"].asString();
+            // Set a compatible default for the alpha transfer
+            _opacityModifyRGB = false;
 
-            // angle
-            _angle = dictionary["angle"].asFloat();
-            _angleVar = dictionary["angleVariance"].asFloat();
-
-            // duration
-            _duration = dictionary["duration"].asFloat();
-
-            // blend function 
-            if (_configName.length()>0)
+            // texture        
+            // Try to get the texture from the cache
+            std::string textureName = getValue(valueMap, "textureFileName").asString();
+            
+            size_t rPos = textureName.rfind('/');
+           
+            if (rPos != std::string::npos)
             {
-                _blendFunc.src = dictionary["blendFuncSource"].asFloat();
+                std::string textureDir = textureName.substr(0, rPos + 1);
+                
+                if (!dirname.empty() && textureDir != dirname)
+                {
+                    textureName = textureName.substr(rPos+1);
+                    textureName = dirname + textureName;
+                }
+            }
+            else if (!dirname.empty() && !textureName.empty())
+            {
+                textureName = dirname + textureName;
+            }
+            
+            Texture2D *tex = nullptr;
+            
+            if (textureName.length() > 0)
+            {
+                // set not pop-up message box when load image failed
+                bool notify = FileUtils::getInstance()->isPopupNotify();
+                FileUtils::getInstance()->setPopupNotify(false);
+                tex = Director::getInstance()->getTextureCache()->addImage(textureName);
+                // reset the value of UIImage notify
+                FileUtils::getInstance()->setPopupNotify(notify);
+            }
+            
+            if (tex)
+            {
+                setTexture(tex);
             }
             else
-            {
-                _blendFunc.src = dictionary["blendFuncSource"].asInt();
-            }
-            _blendFunc.dst = dictionary["blendFuncDestination"].asInt();
-
-            // color
-            _startColor.r = dictionary["startColorRed"].asFloat();
-            _startColor.g = dictionary["startColorGreen"].asFloat();
-            _startColor.b = dictionary["startColorBlue"].asFloat();
-            _startColor.a = dictionary["startColorAlpha"].asFloat();
-
-            _startColorVar.r = dictionary["startColorVarianceRed"].asFloat();
-            _startColorVar.g = dictionary["startColorVarianceGreen"].asFloat();
-            _startColorVar.b = dictionary["startColorVarianceBlue"].asFloat();
-            _startColorVar.a = dictionary["startColorVarianceAlpha"].asFloat();
-
-            _endColor.r = dictionary["finishColorRed"].asFloat();
-            _endColor.g = dictionary["finishColorGreen"].asFloat();
-            _endColor.b = dictionary["finishColorBlue"].asFloat();
-            _endColor.a = dictionary["finishColorAlpha"].asFloat();
-
-            _endColorVar.r = dictionary["finishColorVarianceRed"].asFloat();
-            _endColorVar.g = dictionary["finishColorVarianceGreen"].asFloat();
-            _endColorVar.b = dictionary["finishColorVarianceBlue"].asFloat();
-            _endColorVar.a = dictionary["finishColorVarianceAlpha"].asFloat();
-
-            // particle size
-            _startSize = dictionary["startParticleSize"].asFloat();
-            _startSizeVar = dictionary["startParticleSizeVariance"].asFloat();
-            _endSize = dictionary["finishParticleSize"].asFloat();
-            _endSizeVar = dictionary["finishParticleSizeVariance"].asFloat();
-
-            // position
-            float x = dictionary["sourcePositionx"].asFloat();
-            float y = dictionary["sourcePositiony"].asFloat();
-            this->setPosition( Point(x,y) );            
-            _posVar.x = dictionary["sourcePositionVariancex"].asFloat();
-            _posVar.y = dictionary["sourcePositionVariancey"].asFloat();
-
-            // Spinning
-            _startSpin = dictionary["rotationStart"].asFloat();
-            _startSpinVar = dictionary["rotationStartVariance"].asFloat();
-            _endSpin= dictionary["rotationEnd"].asFloat();
-            _endSpinVar= dictionary["rotationEndVariance"].asFloat();
-
-            _emitterMode = (Mode) dictionary["emitterType"].asInt();
-
-            // Mode A: Gravity + tangential accel + radial accel
-            if (_emitterMode == Mode::GRAVITY)
-            {
-                // gravity
-                modeA.gravity.x = dictionary["gravityx"].asFloat();
-                modeA.gravity.y = dictionary["gravityy"].asFloat();
-
-                // speed
-                modeA.speed = dictionary["speed"].asFloat();
-                modeA.speedVar = dictionary["speedVariance"].asFloat();
-
-                // radial acceleration
-                modeA.radialAccel = dictionary["radialAcceleration"].asFloat();
-                modeA.radialAccelVar = dictionary["radialAccelVariance"].asFloat();
-
-                // tangential acceleration
-                modeA.tangentialAccel = dictionary["tangentialAcceleration"].asFloat();
-                modeA.tangentialAccelVar = dictionary["tangentialAccelVariance"].asFloat();
+            {                        
+                std::string textureData = getValue(valueMap, "textureImageData").asString();
+                CCASSERT(!textureData.empty(), "");
                 
-                // rotation is dir
-                modeA.rotationIsDir = dictionary["rotationIsDir"].asBool();
-            }
-
-            // or Mode B: radius movement
-            else if (_emitterMode == Mode::RADIUS)
-            {
-                if (_configName.length()>0)
+                auto dataLen = textureData.size();
+                if (dataLen != 0)
                 {
-                    modeB.startRadius = dictionary["maxRadius"].asInt();
-                }
-                else
-                {
-                    modeB.startRadius = dictionary["maxRadius"].asFloat();
-                }
-                modeB.startRadiusVar = dictionary["maxRadiusVariance"].asFloat();
-                if (_configName.length()>0)
-                {
-                    modeB.endRadius = dictionary["minRadius"].asInt();
-                }
-                else
-                {
-                    modeB.endRadius = dictionary["minRadius"].asFloat();
-                }
-                
-                if (dictionary.find("minRadiusVariance") != dictionary.end())
-                {
-                    modeB.endRadiusVar = dictionary["minRadiusVariance"].asFloat();
-                }
-                else
-                {
-                    modeB.endRadiusVar = 0.0f;
-                }
-                
-                if (_configName.length()>0)
-                {
-                    modeB.rotatePerSecond = dictionary["rotatePerSecond"].asInt();
-                }
-                else
-                {
-                    modeB.rotatePerSecond = dictionary["rotatePerSecond"].asFloat();
-                }
-                modeB.rotatePerSecondVar = dictionary["rotatePerSecondVariance"].asFloat();
-
-            } else {
-                CCASSERT( false, "Invalid emitterType in config file");
-                CC_BREAK_IF(true);
-            }
-
-            // life span
-            _life = dictionary["particleLifespan"].asFloat();
-            _lifeVar = dictionary["particleLifespanVariance"].asFloat();
-
-            // emission Rate
-            _emissionRate = _totalParticles / _life;
-
-            //don't get the internal texture if a batchNode is used
-            if (!_batchNode)
-            {
-                // Set a compatible default for the alpha transfer
-                _opacityModifyRGB = false;
-
-                // texture        
-                // Try to get the texture from the cache
-                std::string textureName = dictionary["textureFileName"].asString();
-                
-                size_t rPos = textureName.rfind('/');
-               
-                if (rPos != string::npos)
-                {
-                    string textureDir = textureName.substr(0, rPos + 1);
+                    // if it fails, try to get it from the base64-gzipped data    
+                    int decodeLen = base64Decode((unsigned char*)textureData.c_str(), (unsigned int)dataLen, &buffer);
+                    CCASSERT( buffer != nullptr, "CCParticleSystem: error decoding textureImageData");
+                    CC_BREAK_IF(!buffer);
                     
-                    if (!dirname.empty() && textureDir != dirname)
-                    {
-                        textureName = textureName.substr(rPos+1);
-                        textureName = dirname + textureName;
-                    }
-                }
-                else if (!dirname.empty() && !textureName.empty())
-                {
-                	textureName = dirname + textureName;
-                }
-                
-                Texture2D *tex = nullptr;
-                
-                if (textureName.length() > 0)
-                {
-                    // set not pop-up message box when load image failed
-                    bool notify = FileUtils::getInstance()->isPopupNotify();
-                    FileUtils::getInstance()->setPopupNotify(false);
-                    tex = Director::getInstance()->getTextureCache()->addImage(textureName);
-                    // reset the value of UIImage notify
-                    FileUtils::getInstance()->setPopupNotify(notify);
-                }
-                
-                if (tex)
-                {
-                    setTexture(tex);
-                }
-                else
-                {                        
-                    std::string textureData = dictionary["textureImageData"].asString();
-                    CCASSERT(!textureData.empty(), "");
+                    ssize_t deflatedLen = ZipUtils::inflateMemory(buffer, decodeLen, &deflated);
+                    CCASSERT( deflated != nullptr, "CCParticleSystem: error ungzipping textureImageData");
+                    CC_BREAK_IF(!deflated);
                     
-                    auto dataLen = textureData.size();
-                    if (dataLen != 0)
-                    {
-                        // if it fails, try to get it from the base64-gzipped data    
-                        int decodeLen = base64Decode((unsigned char*)textureData.c_str(), (unsigned int)dataLen, &buffer);
-                        CCASSERT( buffer != nullptr, "CCParticleSystem: error decoding textureImageData");
-                        CC_BREAK_IF(!buffer);
-                        
-                        ssize_t deflatedLen = ZipUtils::inflateMemory(buffer, decodeLen, &deflated);
-                        CCASSERT( deflated != nullptr, "CCParticleSystem: error ungzipping textureImageData");
-                        CC_BREAK_IF(!deflated);
-                        
-                        // For android, we should retain it in VolatileTexture::addImage which invoked in Director::getInstance()->getTextureCache()->addUIImage()
-                        image = new Image();
-                        bool isOK = image->initWithImageData(deflated, deflatedLen);
-                        CCASSERT(isOK, "CCParticleSystem: error init image with Data");
-                        CC_BREAK_IF(!isOK);
-                        
-                        setTexture(Director::getInstance()->getTextureCache()->addImage(image, textureName.c_str()));
+                    // For android, we should retain it in VolatileTexture::addImage which invoked in Director::getInstance()->getTextureCache()->addUIImage()
+                    image = new Image();
+                    bool isOK = image->initWithImageData(deflated, deflatedLen);
+                    CCASSERT(isOK, "CCParticleSystem: error init image with Data");
+                    CC_BREAK_IF(!isOK);
+                    
+                    setTexture(Director::getInstance()->getTextureCache()->addImage(image, textureName.c_str()));
 
-                        image->release();
-                    }
+                    image->release();
                 }
-                
-                if (!_configName.empty())
-                {
-                    _yCoordFlipped = dictionary["yCoordFlipped"].asInt();
-                }
-                
-                CCASSERT( this->_texture != nullptr, "CCParticleSystem: error loading the texture");
             }
-            ret = true;
+            
+            if (!_configName.empty())
+            {
+                _yCoordFlipped = getValue(valueMap, "yCoordFlipped").asInt();
+            }
+            
+            CCASSERT( this->_texture != nullptr, "CCParticleSystem: error loading the texture");
         }
+        ret = true;
     } while (0);
+    
     free(buffer);
     free(deflated);
     return ret;
@@ -1178,6 +1193,16 @@ void ParticleSystem::setScaleY(float newScaleY)
     Node::setScaleY(newScaleY);
 }
 
+const Value& ParticleSystem::getValue(const ValueMap& valueMap, const std::string& key)
+{
+    auto iter = valueMap.find(key);
+    if (iter != valueMap.end())
+    {
+        return iter->second;
+    }
+    
+    return Value::Null;
+}
 
 NS_CC_END
 

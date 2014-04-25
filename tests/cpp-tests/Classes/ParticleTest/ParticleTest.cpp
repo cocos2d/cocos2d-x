@@ -944,6 +944,36 @@ void DemoParticleFromFile::onEnter()
 
 //------------------------------------------------------------------
 //
+// DemoParticleFromValueMap
+//
+//------------------------------------------------------------------
+void DemoParticleFromValueMap::onEnter()
+{
+    ParticleDemo::onEnter();
+
+    auto plistData = FileUtils::getInstance()->getValueMapFromFile("Particles/emissionPart.plist");
+    auto emission_frame = SpriteFrame::create("Images/engine.jpg", Rect(0,0,25,32));
+    
+    _emitter = ParticleSystemQuad::create(plistData, emission_frame);
+    
+    _emitter->retain();
+    _background->addChild(_emitter, 10);
+    
+    setEmitterPosition();
+}
+
+std::string DemoParticleFromValueMap::title() const
+{
+    return "Particle Demo";
+}
+
+std::string DemoParticleFromValueMap::subtitle() const
+{
+    return "Creates Particle from ValueMap and SpriteFrame";
+}
+
+//------------------------------------------------------------------
+//
 // ParticleDemo
 //
 //------------------------------------------------------------------
@@ -1010,13 +1040,14 @@ Layer* createParticleLayer(int nIndex)
         case 44: return new Issue3990();
         case 45: return new ParticleAutoBatching();
         case 46: return new ParticleVisibleTest();
+        case 47: return new DemoParticleFromValueMap();
         default:
             break;
     }
 
     return NULL;
 }
-#define MAX_LAYER    47
+#define MAX_LAYER    48
 
 
 Layer* nextParticleAction()

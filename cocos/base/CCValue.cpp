@@ -559,7 +559,7 @@ bool Value::asBool() const
         return _baseData.doubleVal == 0.0 ? false : true;
     }
     
-    return true;
+    return false;
 }
 
 std::string Value::asString() const
