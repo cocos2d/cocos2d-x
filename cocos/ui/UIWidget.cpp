@@ -112,6 +112,7 @@ void Widget::visit(Renderer *renderer, const kmMat4 &parentTransform, bool paren
 {
     if (_enabled)
     {
+        adaptRenderers();
         ProtectedNode::visit(renderer, parentTransform, parentTransformUpdated);
     }
 }
@@ -177,7 +178,7 @@ void Widget::setSize(const Size &size)
     _customSize = size;
     if (_ignoreSize)
     {
-        _size = getContentSize();
+        _size = getVirtualRendererSize();
     }
     else
     {
@@ -228,7 +229,7 @@ void Widget::setSizePercent(const Point &percent)
     }
     if (_ignoreSize)
     {
-        _size = getContentSize();
+        _size = getVirtualRendererSize();
     }
     else
     {
@@ -261,7 +262,7 @@ void Widget::updateSizeAndPosition(const cocos2d::Size &parentSize)
         {
             if (_ignoreSize)
             {
-                _size = getContentSize();
+                _size = getVirtualRendererSize();
             }
             else
             {
@@ -285,7 +286,7 @@ void Widget::updateSizeAndPosition(const cocos2d::Size &parentSize)
             Size cSize = Size(parentSize.width * _sizePercent.x , parentSize.height * _sizePercent.y);
             if (_ignoreSize)
             {
-                _size = getContentSize();
+                _size = getVirtualRendererSize();
             }
             else
             {
@@ -343,7 +344,7 @@ void Widget::ignoreContentAdaptWithSize(bool ignore)
     _ignoreSize = ignore;
     if (_ignoreSize)
     {
-        Size s = getContentSize();
+        Size s = getVirtualRendererSize();
         _size = s;
     }
     else
@@ -375,7 +376,7 @@ const Point& Widget::getSizePercent() const
 
 Point Widget::getWorldPosition()
 {
-    return convertToWorldSpace(Point::ZERO);
+    return convertToWorldSpace(Point(_anchorPoint.x * _contentSize.width, _anchorPoint.y * _contentSize.height));
 }
 
 Node* Widget::getVirtualRenderer()
@@ -385,6 +386,7 @@ Node* Widget::getVirtualRenderer()
 
 void Widget::onSizeChanged()
 {
+    setContentSize(_size);
     for (auto& child : getChildren())
     {
         Widget* widgetChild = dynamic_cast<Widget*>(child);
@@ -395,9 +397,22 @@ void Widget::onSizeChanged()
     }
 }
 
-const Size& Widget::getContentSize() const
+const Size& Widget::getVirtualRendererSize() const
 {
-    return _size;
+    return _contentSize;
+}
+    
+void Widget::updateContentSizeWithTextureSize(const cocos2d::Size &size)
+{
+    if (_ignoreSize)
+    {
+        _size = size;
+    }
+    else
+    {
+        _size = _customSize;
+    }
+    onSizeChanged();
 }
 
 void Widget::setTouchEnabled(bool enable)
@@ -617,8 +632,9 @@ void Widget::addTouchEventListener(Ref *target, SEL_TouchEvent selector)
 bool Widget::hitTest(const Point &pt)
 {
     Point nsp = convertToNodeSpace(pt);
-    Rect bb = Rect(-_size.width * _anchorPoint.x, -_size.height * _anchorPoint.y, _size.width, _size.height);
-    if (nsp.x >= bb.origin.x && nsp.x <= bb.origin.x + bb.size.width && nsp.y >= bb.origin.y && nsp.y <= bb.origin.y + bb.size.height)
+    Rect bb;
+    bb.size = _contentSize;
+    if (bb.containsPoint(nsp))
     {
         return true;
     }
@@ -710,11 +726,6 @@ void Widget::setPositionPercent(const Point &percent)
             setPosition(absPos);
         }
     }
-}
-
-void Widget::updateAnchorPoint()
-{
-    setAnchorPoint(getAnchorPoint());
 }
 
 const Point& Widget::getPositionPercent()

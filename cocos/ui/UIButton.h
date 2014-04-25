@@ -146,9 +146,6 @@ public:
 
     const Rect& getCapInsetsDisabledRenderer();
 
-    //override "setAnchorPoint" of widget.
-    virtual void setAnchorPoint(const Point &pt) override;
-
     /**
      * Sets if button is using scale9 renderer.
      *
@@ -168,8 +165,8 @@ public:
     //override "ignoreContentAdaptWithSize" method of widget.
     virtual void ignoreContentAdaptWithSize(bool ignore) override;
 
-    //override "getContentSize" method of widget.
-    virtual const Size& getContentSize() const override;
+    //override "getVirtualRendererSize" method of widget.
+    virtual const Size& getVirtualRendererSize() const override;
 
     //override "getVirtualRenderer" method of widget.
     virtual Node* getVirtualRenderer() override;
@@ -212,6 +209,8 @@ protected:
     void disabledTextureScaleChangedWithSize();
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
+    virtual void adaptRenderers() override;
+    void updateTitleLocation();
 protected:
     Node* _buttonNormalRenderer;
     Node* _buttonClickedRenderer;
@@ -240,6 +239,9 @@ protected:
     bool _normalTextureLoaded;
     bool _pressedTextureLoaded;
     bool _disabledTextureLoaded;
+    bool _normalTextureAdaptDirty;
+    bool _pressedTextureAdaptDirty;
+    bool _disabledTextureAdaptDirty;
 };
 
 }

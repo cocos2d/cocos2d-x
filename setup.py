@@ -521,6 +521,27 @@ class SetEnvVar(object):
             ret = self._force_update_unix_env(var_name, value)
         return ret
 
+    def _get_ant_path(self):
+        print("  ->Find command ant in system...")
+        ret = None
+        if not self._isWindows():
+            import commands
+            state, result = commands.getstatusoutput("which ant")
+            if state == 0:
+                ret = os.path.dirname(result)
+
+        if ret is not None:
+            print("    ->Path \"%s\" was found\n" % ret)
+        else:
+            print("    ->Command ant not found\n")
+        return ret
+
+    def _find_value_from_sys(self, var_name):
+        if var_name == ANT_ROOT:
+            return self._get_ant_path()
+        else:
+            return None
+
     def set_variable(self, var_name, value):
         print("->Check environment variable %s" % var_name)
         find_value = self._find_environment_variable(var_name)
@@ -538,6 +559,10 @@ class SetEnvVar(object):
                 # do nothing
                 need_action = action_none
         else:
+            if not value:
+                # find the command path in system
+                value = self._find_value_from_sys(var_name)
+
             if not value:
                 value = self._get_input_value(var_name)
 
@@ -575,6 +600,12 @@ class SetEnvVar(object):
         self.file_used_for_setup = self._get_filepath_for_setup()
         
         self.set_console_root()
+
+        if self._isWindows():
+            print('->Configuration for Android platform only, you can also skip and manually edit your environment variables\n')
+        else:
+            print('->Configuration for Android platform only, you can also skip and manually edit "%s"\n' % self.file_used_for_setup)
+
         ndk_ret = self.set_variable(NDK_ROOT, ndk_root)
         sdk_ret = self.set_variable(ANDROID_SDK_ROOT, android_sdk_root)
         ant_ret = self.set_variable(ANT_ROOT, ant_root)

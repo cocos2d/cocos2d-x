@@ -32,13 +32,20 @@ import java.net.SocketException;
 import java.util.Enumeration;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
+
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
+import android.text.format.Formatter;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -47,20 +54,37 @@ import android.widget.Toast;
 
 public class AppActivity extends Cocos2dxActivity{
 
+	static String hostIPAdress="0.0.0.0";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		
 		//2.Set the format of window
-		// getWindow().setFormat(PixelFormat.TRANSLUCENT);
-		if(!isWifiConnected())
+		
+		// Check the wifi is opened when the android:debuggable is "true".
+		if(0!=((this.getApplicationInfo().flags) & ApplicationInfo.FLAG_DEBUGGABLE))
 		{
-			Toast.makeText(this, "wifi is closed!", Toast.LENGTH_SHORT).show();
-			startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+			if(!isWifiConnected())
+			{
+				AlertDialog.Builder builder=new AlertDialog.Builder(this);
+				builder.setTitle("Warning");
+				builder.setMessage("Open Wifi for debuging...");
+				builder.setPositiveButton("OK",new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+						finish();
+						System.exit(0);
+					}
+				});
+				builder.setCancelable(false);
+				builder.show();
+			}
 		}
+		hostIPAdress = getHostIpAddress();
 	}
-	
 	 private boolean isWifiConnected() {  
 	        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);  
 	        if (cm != null) {  
@@ -72,23 +96,15 @@ public class AppActivity extends Cocos2dxActivity{
 	        return false;  
 	    } 
 	 
+	public String getHostIpAddress() {
+		WifiManager wifiMgr = (WifiManager) getSystemService(WIFI_SERVICE);
+		WifiInfo wifiInfo = wifiMgr.getConnectionInfo();
+		int ip = wifiInfo.getIpAddress();
+		return ((ip & 0xFF) + "." + ((ip >>>= 8) & 0xFF) + "." + ((ip >>>= 8) & 0xFF) + "." + ((ip >>>= 8) & 0xFF));
+	}
+	
 	public static String getLocalIpAddress() {
-		try {
-			for (Enumeration<NetworkInterface> en = NetworkInterface
-					.getNetworkInterfaces(); en.hasMoreElements();) {
-				NetworkInterface intf = en.nextElement();
-				for (Enumeration<InetAddress> enumIpAddr = intf
-						.getInetAddresses(); enumIpAddr.hasMoreElements();) {
-					InetAddress inetAddress = enumIpAddr.nextElement();
-					if (!inetAddress.isLoopbackAddress() && !inetAddress.isLinkLocalAddress()) {
-						return inetAddress.getHostAddress().toString();
-					}
-				}
-			}
-		} catch (SocketException ex) {
-			Log.e("WifiPreference IpAddress", ex.toString());
-		}
-		return null;
+		return hostIPAdress;
 	}
 	
 	public static String getSDCardPath() {
@@ -100,4 +116,3 @@ public class AppActivity extends Cocos2dxActivity{
 	}
 	
 }
-

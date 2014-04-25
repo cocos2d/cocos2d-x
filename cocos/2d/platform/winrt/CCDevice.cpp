@@ -46,20 +46,37 @@ int Device::getDPI()
 	return floor(DisplayProperties::LogicalDpi / dipsPerInch + 0.5f); // Round to nearest integer.
 }
 
+static Accelerometer^ sAccelerometer = nullptr;
+
+
 void Device::setAccelerometerEnabled(bool isEnabled)
 {
     static Windows::Foundation::EventRegistrationToken sToken;
+    static bool sEnabled = false;
 
-    auto accelerometer = Accelerometer::GetDefault();
-	if (isEnabled && accelerometer)
+	if (isEnabled)
 	{
-		setAccelerometerInterval(0.0f);
+        sAccelerometer = Accelerometer::GetDefault();
 
-		sToken = accelerometer->ReadingChanged += ref new TypedEventHandler
+        if(sAccelerometer == nullptr)
+        {
+	        MessageBox("This device does not have an accelerometer.","Alert");
+            return;
+        }
+
+		setAccelerometerInterval(0.0f);
+        sEnabled = true;
+
+        sToken = sAccelerometer->ReadingChanged += ref new TypedEventHandler
 			<Accelerometer^,AccelerometerReadingChangedEventArgs^>
-			([=](Accelerometer^, AccelerometerReadingChangedEventArgs^)
+			([](Accelerometer^ a, AccelerometerReadingChangedEventArgs^ e)
 		{
-			AccelerometerReading^ reading = accelerometer->GetCurrentReading();
+            if (!sEnabled)
+            {
+                return;
+            }
+
+			AccelerometerReading^ reading = e->Reading;
             cocos2d::Acceleration acc;
 			acc.x = reading->AccelerationX;
 			acc.y = reading->AccelerationY;
@@ -97,26 +114,34 @@ void Device::setAccelerometerEnabled(bool isEnabled)
                 break;
             }
 #endif
-            cocos2d::EventAcceleration accEvent(acc);
-            auto dispatcher = cocos2d::Director::getInstance()->getEventDispatcher();
-            dispatcher->dispatchEvent(&accEvent);
+	        std::shared_ptr<cocos2d::InputEvent> event(new AccelerometerEvent(acc));
+            cocos2d::GLView::sharedOpenGLView()->QueueEvent(event);
 		});
 	}
 	else
 	{
-		accelerometer->ReadingChanged -= sToken;
+        if (sAccelerometer)
+        {
+            sAccelerometer->ReadingChanged -= sToken;
+            sAccelerometer = nullptr;
+        }
+
+        sEnabled = false;
 	}
 
 }
 
 void Device::setAccelerometerInterval(float interval)
 {
-	auto a =  Accelerometer::GetDefault();
-    if(a)
+    if (sAccelerometer)
     {
-	    int minInterval = a->MinimumReportInterval;
+        int minInterval = sAccelerometer->MinimumReportInterval;
 	    int reqInterval = (int) interval;
-	    a->ReportInterval = reqInterval < minInterval ? minInterval : reqInterval;
+        sAccelerometer->ReportInterval = reqInterval < minInterval ? minInterval : reqInterval;
+    }
+    else
+    {
+        CCLOG("Device::setAccelerometerInterval: accelerometer not enabled.");
     }
 }
 

@@ -67,28 +67,10 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
 
 protected:
-    friend class Node;
-    friend class ProtectedNode;
     friend class SpriteBatchNode;
     
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Scene);
-    
-#if CC_USE_PHYSICS
-public:
-    virtual void addChild(Node* child, int zOrder, int tag) override;
-    virtual void update(float delta) override;
-    inline PhysicsWorld* getPhysicsWorld() { return _physicsWorld; }
-    static Scene *createWithPhysics();
-    
-CC_CONSTRUCTOR_ACCESS:
-    bool initWithPhysics();
-    
-protected:
-    void addChildToPhysicsWorld(Node* child);
-
-    PhysicsWorld* _physicsWorld;
-#endif // CC_USE_PHYSICS
 };
 
 // end of scene group

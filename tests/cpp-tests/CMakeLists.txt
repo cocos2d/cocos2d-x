@@ -173,6 +173,7 @@ set(SAMPLE_SRC
   Classes/DataVisitorTest/DataVisitorTest.cpp
   Classes/ConfigurationTest/ConfigurationTest.cpp
   Classes/ConsoleTest/ConsoleTest.cpp
+  Classes/UnitTest/RefPtrTest.cpp
   Classes/UnitTest/UnitTest.cpp
   Classes/controller.cpp
   Classes/testBasic.cpp

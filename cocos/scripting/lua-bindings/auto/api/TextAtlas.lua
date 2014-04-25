@@ -18,6 +18,10 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
+-- @function [parent=#TextAtlas] adaptRenderers 
+-- @param self
+        
+--------------------------------
 -- @function [parent=#TextAtlas] setStringValue 
 -- @param self
 -- @param #string str
@@ -42,11 +46,6 @@
 -- @return Ref#Ref ret (return value: cc.Ref)
         
 --------------------------------
--- @function [parent=#TextAtlas] setAnchorPoint 
--- @param self
--- @param #point_table point
-        
---------------------------------
 -- @function [parent=#TextAtlas] getVirtualRenderer 
 -- @param self
 -- @return Node#Node ret (return value: cc.Node)
@@ -57,7 +56,7 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- @function [parent=#TextAtlas] getContentSize 
+-- @function [parent=#TextAtlas] getVirtualRendererSize 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)
         

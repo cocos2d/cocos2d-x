@@ -205,7 +205,7 @@ function UIButtonScale9Test:initExtend()
     button:setScale9Enabled(true)
     button:loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "")
     button:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
-    button:setSize(cc.size(150, button:getContentSize().height * 1.5))
+    button:setSize(cc.size(150, button:getVirtualRendererSize().height * 1.5))
     button:addTouchEventListener(touchEvent)
     self._uiLayer:addChild(button)
 end
@@ -399,7 +399,7 @@ function UITextButtonScale9Test:initExtend()
     textButton:setTouchEnabled(true)
     textButton:setScale9Enabled(true)
     textButton:loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "")
-    textButton:setSize(cc.size(180, textButton:getContentSize().height * 1.5))
+    textButton:setSize(cc.size(180, textButton:getVirtualRendererSize().height * 1.5))
     textButton:setTitleText("Text Button scale9 render")
     textButton:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
     textButton:addTouchEventListener(touchEvent)        
@@ -1659,7 +1659,7 @@ function UIPanelTest:initExtend()
     button_scale9:setTouchEnabled(true)
     button_scale9:loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "")
     button_scale9:setScale9Enabled(true)
-    button_scale9:setSize(cc.size(100, button_scale9:getContentSize().height))
+    button_scale9:setSize(cc.size(100, button_scale9:getVirtualRendererSize().height))
     button_scale9:setPosition(cc.p(layout:getSize().width - button_scale9:getSize().width / 2, button_scale9:getSize().height / 2))
     layout:addChild(button_scale9)  
 end
@@ -1729,7 +1729,7 @@ function UIPanelColorTest:initExtend()
     button_scale9:setTouchEnabled(true)
     button_scale9:loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "")
     button_scale9:setScale9Enabled(true)
-    button_scale9:setSize(cc.size(100, button_scale9:getContentSize().height))
+    button_scale9:setSize(cc.size(100, button_scale9:getVirtualRendererSize().height))
     button_scale9:setPosition(cc.p(layout:getSize().width - button_scale9:getSize().width / 2, button_scale9:getSize().height / 2))
     layout:addChild(button_scale9)  
 end
@@ -1799,7 +1799,7 @@ function UIPanelGradientTest:initExtend()
     button_scale9:setTouchEnabled(true)
     button_scale9:loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "")
     button_scale9:setScale9Enabled(true)
-    button_scale9:setSize(cc.size(100, button_scale9:getContentSize().height))
+    button_scale9:setSize(cc.size(100, button_scale9:getVirtualRendererSize().height))
     button_scale9:setPosition(cc.p(layout:getSize().width - button_scale9:getSize().width / 2, button_scale9:getSize().height / 2))
     layout:addChild(button_scale9)  
 end
@@ -1869,7 +1869,7 @@ function UIPanelBackGroundImageTest:initExtend()
     button_scale9:setTouchEnabled(true)
     button_scale9:loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "")
     button_scale9:setScale9Enabled(true)
-    button_scale9:setSize(cc.size(100, button_scale9:getContentSize().height))
+    button_scale9:setSize(cc.size(100, button_scale9:getVirtualRendererSize().height))
     button_scale9:setPosition(cc.p(layout:getSize().width - button_scale9:getSize().width / 2, button_scale9:getSize().height / 2))
     layout:addChild(button_scale9)   
 end
@@ -1939,7 +1939,7 @@ function UIPanelBackGroundImageScale9Test:initExtend()
     button_scale9:setTouchEnabled(true)
     button_scale9:loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "")
     button_scale9:setScale9Enabled(true)
-    button_scale9:setSize(cc.size(100, button_scale9:getContentSize().height))
+    button_scale9:setSize(cc.size(100, button_scale9:getVirtualRendererSize().height))
     button_scale9:setPosition(cc.p(layout:getSize().width - button_scale9:getSize().width / 2, button_scale9:getSize().height / 2))
     layout:addChild(button_scale9)  
 end
@@ -2018,7 +2018,7 @@ function UIPanelLayoutLinearVerticalTest:initExtend()
     button_scale9:setTouchEnabled(true)
     button_scale9:loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "")
     button_scale9:setScale9Enabled(true)
-    button_scale9:setSize(cc.size(100, button_scale9:getContentSize().height))
+    button_scale9:setSize(cc.size(100, button_scale9:getVirtualRendererSize().height))
     layout:addChild(button_scale9)
         
     local lp3 = ccui.LinearLayoutParameter:create()
@@ -2102,7 +2102,7 @@ function UIPanelLayoutLinearHorizontalTest:initExtend()
     button_scale9:setTouchEnabled(true)
     button_scale9:loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "")
     button_scale9:setScale9Enabled(true)
-    button_scale9:setSize(cc.size(100, button_scale9:getContentSize().height))
+    button_scale9:setSize(cc.size(100, button_scale9:getVirtualRendererSize().height))
     layout:addChild(button_scale9)
         
     local lp3 = ccui.LinearLayoutParameter:create()
@@ -2192,7 +2192,7 @@ function UIScrollViewVerticalTest:initExtend()
     button_scale9:setTouchEnabled(true)
     button_scale9:setScale9Enabled(true)
     button_scale9:loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "")
-    button_scale9:setSize(cc.size(100, button_scale9:getContentSize().height))
+    button_scale9:setSize(cc.size(100, button_scale9:getVirtualRendererSize().height))
     button_scale9:setPosition(cc.p(innerWidth / 2, textButton:getBottomInParent() - textButton:getSize().height))
     scrollView:addChild(button_scale9)
         
@@ -2286,7 +2286,7 @@ function UIScrollViewHorizontalTest:initExtend()
     button_scale9:setTouchEnabled(true)
     button_scale9:setScale9Enabled(true)
     button_scale9:loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "")
-    button_scale9:setSize(cc.size(100, button_scale9:getContentSize().height))
+    button_scale9:setSize(cc.size(100, button_scale9:getVirtualRendererSize().height))
     button_scale9:setPosition(cc.p(textButton:getRightInParent() + textButton:getSize().width / 2,
                                        textButton:getBottomInParent() - textButton:getSize().height / 2))
     scrollView:addChild(button_scale9)                
@@ -2878,11 +2878,99 @@ function UINodeContainerTest:initExtend()
         
     local sprite = cc.Sprite:create("cocosui/ccicon.png")
     sprite:setPosition(cc.p(0, sprite:getBoundingBox().height / 4))
+    nodeContainer:addChild(sprite)
 end
 
 function UINodeContainerTest.create()
     local scene = cc.Scene:create()
     local layer = UINodeContainerTest.extend(cc.Layer:create())
+    layer:initExtend()
+    scene:addChild(layer)
+    return scene   
+end
+
+local UIRichTextTest = class("UIRichTextTest",UIScene)
+
+function UIRichTextTest.extend(target)
+    local t = tolua.getpeer(target)
+    if not t then
+        t = {}
+        tolua.setpeer(target, t)
+    end
+    setmetatable(t, UIRichTextTest)
+    return target
+end
+
+function UIRichTextTest:initExtend()
+    
+    self:init()
+
+    local widgetSize = self._widget:getSize()
+
+    local alert = ccui.Text:create("RichText", "fonts/Marker Felt.ttf", 30)
+    alert:setFontName(font_UINodeContainerTest)
+    alert:setColor(cc.c3b(159, 168, 176))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 3.125))
+    self._widget:addChild(alert)
+
+
+    local function touchEvent(sender, eventType)
+        if eventType == ccui.TouchEventType.ended then
+            if self._richText:isIgnoreContentAdaptWithSize() then
+                self._richText:ignoreContentAdaptWithSize(false)
+                self._richText:setSize(cc.size(100, 100))
+            else
+                self._richText:ignoreContentAdaptWithSize(true)
+            end
+        end
+    end
+
+    local button = ccui.Button:create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png")
+    button:setTouchEnabled(true)
+    button:setTitleText("switch")
+    button:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + button:getSize().height * 2.5))
+    button:addTouchEventListener(touchEvent)
+    button:setLocalZOrder(10)
+    self._widget:addChild(button)
+
+    self._richText = ccui.RichText:create()
+    self._richText:ignoreContentAdaptWithSize(false)
+    self._richText:setSize(cc.size(100, 100))
+
+    local re1 = ccui.RichElementText:create(1, cc.c3b(255, 255, 255), 255, "This color is white. ", "Helvetica", 10)
+    local re2 = ccui.RichElementText:create(2, cc.c3b(255, 255,   0), 255, "And this is yellow. ", "Helvetica", 10)
+    local re3 = ccui.RichElementText:create(3, cc.c3b(0,   0, 255), 255, "This one is blue. ", "Helvetica", 10)
+    local re4 = ccui.RichElementText:create(4, cc.c3b(0, 255,   0), 255, "And green. ", "Helvetica", 10)
+    local re5 = ccui.RichElementText:create(5, cc.c3b(255,  0,   0), 255, "Last one is red ", "Helvetica", 10)
+
+    local reimg = ccui.RichElementImage:create(6, cc.c3b(255, 255, 255), 255, "cocosui/sliderballnormal.png")
+
+    ccs.ArmatureDataManager:getInstance():addArmatureFileInfo("cocosui/100/100.ExportJson")
+    local arr = ccs.Armature:create("100")
+    arr:getAnimation():play("Animation1")
+
+    local recustom = ccui.RichElementCustomNode:create(1, cc.c3b(255, 255, 255), 255, arr)
+    local re6 = ccui.RichElementText:create(7, cc.c3b(255, 127,   0), 255, "Have fun!! ", "Helvetica", 10)
+    self._richText:pushBackElement(re1)
+    self._richText:insertElement(re2, 1)
+    self._richText:pushBackElement(re3)
+    self._richText:pushBackElement(re4)
+    self._richText:pushBackElement(re5)
+    self._richText:insertElement(reimg, 2)
+    self._richText:pushBackElement(recustom)
+    self._richText:pushBackElement(re6)
+    
+    self._richText:setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2))
+    self._richText:setLocalZOrder(10)
+    
+    
+    self._widget:addChild(self._richText)
+
+end
+
+function UIRichTextTest.create()
+    local scene = cc.Scene:create()
+    local layer = UIRichTextTest.extend(cc.Layer:create())
     layer:initExtend()
     scene:addChild(layer)
     return scene   
@@ -3140,6 +3228,13 @@ local cocoStudioGuiArray =
         func  = function ()
             return UINodeContainerTest.create()
         end,
+    },
+
+    {
+        title = "UIRichTextTest",
+        func  = function()
+            return UIRichTextTest.create()
+        end
     },
 }
 
