@@ -167,8 +167,6 @@ private:
 protected:
     //! tile properties
     CCDictionary* m_pTileProperties;
-public:
-    std::vector<std::string> _vecTextures;
 
 };
 

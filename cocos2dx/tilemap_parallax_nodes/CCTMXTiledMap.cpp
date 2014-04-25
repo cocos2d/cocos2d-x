@@ -130,12 +130,13 @@ void CCTMXTiledMap::setProperties(CCDictionary* var)
 CCTMXLayer * CCTMXTiledMap::parseLayer(CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo)
 {
     CCTMXTilesetInfo *tileset = tilesetForLayer(layerInfo, mapInfo);
+
     CCTMXLayer *layer = CCTMXLayer::create(tileset, layerInfo, mapInfo);
 
     // tell the layerinfo to release the ownership of the tiles map.
     layerInfo->m_bOwnTiles = false;
     layer->setupTiles();
-    _vecTextures.push_back(tileset->m_sSourceImage);
+    
     return layer;
 }
 
