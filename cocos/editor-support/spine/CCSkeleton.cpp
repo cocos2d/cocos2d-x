@@ -1,38 +1,34 @@
 /******************************************************************************
- * Spine Runtime Software License - Version 1.1
+ * Spine Runtimes Software License
+ * Version 2
  * 
  * Copyright (c) 2013, Esoteric Software
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms in whole or in part, with
- * or without modification, are permitted provided that the following conditions
- * are met:
- * 
- * 1. A Spine Essential, Professional, Enterprise, or Education License must
- *    be purchased from Esoteric Software and the license must remain valid:
- *    http://esotericsoftware.com/
- * 2. Redistributions of source code must retain this license, which is the
- *    above copyright notice, this declaration of conditions and the following
- *    disclaimer.
- * 3. Redistributions in binary form must reproduce this license, which is the
- *    above copyright notice, this declaration of conditions and the following
- *    disclaimer, in the documentation and/or other materials provided with the
- *    distribution.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * You are granted a perpetual, non-exclusive, non-sublicensable and
+ * non-transferable license to install, execute and perform the Spine Runtimes
+ * Software (the "Software") solely for internal use. Without the written
+ * permission of Esoteric Software, you may not (a) modify, translate, adapt or
+ * otherwise create derivative works, improvements of the Software or develop
+ * new applications using the Software or (b) remove, delete, alter or obscure
+ * any trademarks or any copyright, trademark, patent or other intellectual
+ * property or proprietary rights notices on or in the Software, including
+ * any copy thereof. Redistributions in binary or source form must include
+ * this license and terms. THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+ * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL ESOTERIC SOFTARE BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
 #include <spine/CCSkeleton.h>
 #include <spine/spine-cocos2dx.h>
+#include <algorithm>
 
 USING_NS_CC;
 using std::min;
@@ -108,7 +104,8 @@ Skeleton::Skeleton (const char* skeletonDataFile, const char* atlasFile, float s
 
 	spSkeletonJson* json = spSkeletonJson_create(atlas);
 	json->scale = scale == 0 ? (1 / Director::getInstance()->getContentScaleFactor()) : scale;
-	spSkeletonData* skeletonData = spSkeletonJson_readSkeletonDataFile(json, skeletonDataFile);
+    spSkeletonData* skeletonData = spSkeletonJson_readSkeletonDataFile(json, skeletonDataFile);
+    
 	CCAssert(skeletonData, json->error ? json->error : "Error reading skeleton data file.");
 	spSkeletonJson_dispose(json);
 
@@ -127,10 +124,19 @@ void Skeleton::update (float deltaTime) {
 
 void Skeleton::draw(cocos2d::Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
-
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(Skeleton::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_customCommand);
+}
+    
+void resizeUntilLimit(TriangleTextureAtlas * atlas, int limit)
+{
+    // resizing logic
+    while (atlas->getCapacity() <= limit) {
+        atlas->drawTriangles();
+        atlas->removeAllTriangles();
+        if (!atlas->resizeCapacity(atlas->getCapacity() * 2)) return;
+    }
 }
     
 void Skeleton::onDraw(const kmMat4 &transform, bool transformUpdated)
@@ -150,47 +156,110 @@ void Skeleton::onDraw(const kmMat4 &transform, bool transformUpdated)
 		skeleton->b *= skeleton->a;
 	}
 
-	int additive = 0;
-	TextureAtlas* textureAtlas = 0;
-	V3F_C4B_T2F_Quad quad;
-	quad.tl.vertices.z = 0;
-	quad.tr.vertices.z = 0;
-	quad.bl.vertices.z = 0;
-	quad.br.vertices.z = 0;
-	for (int i = 0, n = skeleton->slotCount; i < n; i++) {
+	bool additive = false;
+	bool isPremultipliedAlpha = false;
+    setFittedBlendingFunc(false, false);
+    TriangleTextureAtlas* textureAtlas = nullptr;
+    
+    V3F_C4B_T2F_Triangle triangle;
+    triangle.a.vertices.z = 0;
+    triangle.b.vertices.z = 0;
+    triangle.c.vertices.z = 0;
+    int quadTriangleIds[6] = {
+            0, 1, 2,
+            2, 3, 0
+        };
+	
+    for (int i = 0, n = skeleton->slotCount; i < n; i++) {
 		spSlot* slot = skeleton->drawOrder[i];
-		if (!slot->attachment || slot->attachment->type != ATTACHMENT_REGION) continue;
-		spRegionAttachment* attachment = (spRegionAttachment*)slot->attachment;
-		TextureAtlas* regionTextureAtlas = getTextureAtlas(attachment);
+        if (!slot->attachment) continue;
+        TriangleTextureAtlas* nextTextureAtlas = nullptr;
+        if (slot->attachment->type == ATTACHMENT_REGION)
+        {
+            spRegionAttachment* attachment = (spRegionAttachment*)slot->attachment;
+            nextTextureAtlas = getTextureAtlas(attachment);
+        }
+        else if (slot->attachment->type == ATTACHMENT_MESH)
+        {
+            spMeshAttachment * attachment = (spMeshAttachment*)slot->attachment;
+            nextTextureAtlas = getTextureAtlas(attachment);
+        }
+        else
+        {
+            continue;
+        }
 
-		if (slot->data->additiveBlending != additive) {
-			if (textureAtlas) {
-				textureAtlas->drawQuads();
-				textureAtlas->removeAllQuads();
-			}
-			additive = !additive;
-            GL::blendFunc(blendFunc.src, additive ? GL_ONE : blendFunc.dst);
-		} else if (regionTextureAtlas != textureAtlas && textureAtlas) {
-			textureAtlas->drawQuads();
-			textureAtlas->removeAllQuads();
-		}
-		textureAtlas = regionTextureAtlas;
-        setFittedBlendingFunc(textureAtlas);
+        if (!nextTextureAtlas || !nextTextureAtlas->getTexture()) continue;
+        
+        // If different atlas then draw existsing one
+        if (nextTextureAtlas != textureAtlas)
+        {
+            if (textureAtlas) {
+                drawAndClear(textureAtlas);
+            }
+            textureAtlas = nullptr;
+        }
+        
+        bool wonderAdditive = slot->data->additiveBlending;
+        bool wonderPremultipliedAlpha = nextTextureAtlas->getTexture()->hasPremultipliedAlpha();
+        // If current blending mode is not same then change mode
+        if ( additive != wonderAdditive || isPremultipliedAlpha != wonderPremultipliedAlpha) {
+            if (textureAtlas) {
+                drawAndClear(textureAtlas);
+            }
+            additive = wonderAdditive;
+            isPremultipliedAlpha = wonderPremultipliedAlpha;
+            setFittedBlendingFunc(isPremultipliedAlpha, additive);
+        }
+        
+        textureAtlas = nextTextureAtlas;
 
-		ssize_t quadCount = textureAtlas->getTotalQuads();
-		if (textureAtlas->getCapacity() == quadCount) {
-			textureAtlas->drawQuads();
-			textureAtlas->removeAllQuads();
-			if (!textureAtlas->resizeCapacity(textureAtlas->getCapacity() * 2)) return;
-		}
+        if (slot->attachment->type == ATTACHMENT_REGION)
+        {
+            spRegionAttachment* attachment = (spRegionAttachment*)slot->attachment;
 
-		spRegionAttachment_updateQuad(attachment, slot, &quad, premultipliedAlpha);
-		textureAtlas->updateQuad(&quad, quadCount);
+            resizeUntilLimit(textureAtlas, textureAtlas->getTotalTriangles());
+            
+            V3F_C4B_T2F vertices[4];
+            float verticesPos[8];
+            unsigned int startVerticle = textureAtlas->getTotalVertices();
+
+            spRegionAttachment_computeWorldVertices(attachment, slot->skeleton->x, slot->skeleton->y, slot->bone, verticesPos);
+
+            spRegionAttachment_updateVertices(attachment, slot, vertices, premultipliedAlpha, verticesPos);
+            textureAtlas->updateVertices(vertices, textureAtlas->getTotalVertices(), 4);
+            
+            textureAtlas->setCurrentTriangles(2 + textureAtlas->getCurrentTriangles());
+            textureAtlas->updateTrianglesIndices(quadTriangleIds, 6, startVerticle);
+        }
+        else if (slot->attachment->type == ATTACHMENT_MESH)
+        {
+            spMeshAttachment * attachment = (spMeshAttachment*)slot->attachment;
+
+            unsigned int verticesCount = attachment->verticesLength / 2;
+            unsigned int trianglesCount = attachment->trianglesIndicesLength / 3;
+            
+            // Resizing when buffer is too small.
+            resizeUntilLimit(textureAtlas, trianglesCount + textureAtlas->getTotalTriangles());
+            
+            spMeshAttachment_computeWorldVertices(attachment, slot->skeleton->x, slot->skeleton->y, slot->bone);
+            
+            unsigned int initVertexCount = textureAtlas->getTotalVertices();
+            V3F_C4B_T2F * vertices = (V3F_C4B_T2F *)alloca(sizeof(V3F_C4B_T2F) * attachment->verticesLength / 2);
+            
+            spMeshAttachment_updateVertices(attachment, slot, vertices, premultipliedAlpha);
+            textureAtlas->updateVertices(vertices, textureAtlas->getTotalVertices(), verticesCount);
+
+            textureAtlas->setCurrentTriangles(trianglesCount + textureAtlas->getCurrentTriangles());
+            textureAtlas->updateTrianglesIndices(attachment->trianglesIndices, attachment->trianglesIndicesLength, initVertexCount);
+        }
+
 	}
+
 	if (textureAtlas) {
-		textureAtlas->drawQuads();
-		textureAtlas->removeAllQuads();
+        drawAndClear(textureAtlas);
 	}
+    
 
     if(debugBones || debugSlots) {
         kmGLPushMatrix();
@@ -238,39 +307,24 @@ void Skeleton::onDraw(const kmMat4 &transform, bool transformUpdated)
     }
 }
 
-TextureAtlas* Skeleton::getTextureAtlas (spRegionAttachment* regionAttachment) const {
-	return (TextureAtlas*)((spAtlasRegion*)regionAttachment->rendererObject)->page->rendererObject;
+TriangleTextureAtlas* Skeleton::getTextureAtlas (spRegionAttachment* regionAttachment) const {
+	return (TriangleTextureAtlas*)((spAtlasRegion*)regionAttachment->rendererObject)->page->rendererObject;
 }
 
+TriangleTextureAtlas* Skeleton::getTextureAtlas (spMeshAttachment* meshAttachment) const {
+    return (TriangleTextureAtlas*)((spAtlasRegion*)meshAttachment->rendererObject)->page->rendererObject;
+}
+
+    
 Rect Skeleton::getBoundingBox () const {
-	float minX = FLT_MAX, minY = FLT_MAX, maxX = FLT_MIN, maxY = FLT_MIN;
 	float scaleX = getScaleX();
 	float scaleY = getScaleY();
-	float vertices[8];
-	for (int i = 0; i < skeleton->slotCount; ++i) {
-		spSlot* slot = skeleton->slots[i];
-		if (!slot->attachment || slot->attachment->type != ATTACHMENT_REGION) continue;
-		spRegionAttachment* attachment = (spRegionAttachment*)slot->attachment;
-		spRegionAttachment_computeWorldVertices(attachment, slot->skeleton->x, slot->skeleton->y, slot->bone, vertices);
-		minX = min(minX, vertices[VERTEX_X1] * scaleX);
-		minY = min(minY, vertices[VERTEX_Y1] * scaleY);
-		maxX = max(maxX, vertices[VERTEX_X1] * scaleX);
-		maxY = max(maxY, vertices[VERTEX_Y1] * scaleY);
-		minX = min(minX, vertices[VERTEX_X4] * scaleX);
-		minY = min(minY, vertices[VERTEX_Y4] * scaleY);
-		maxX = max(maxX, vertices[VERTEX_X4] * scaleX);
-		maxY = max(maxY, vertices[VERTEX_Y4] * scaleY);
-		minX = min(minX, vertices[VERTEX_X2] * scaleX);
-		minY = min(minY, vertices[VERTEX_Y2] * scaleY);
-		maxX = max(maxX, vertices[VERTEX_X2] * scaleX);
-		maxY = max(maxY, vertices[VERTEX_Y2] * scaleY);
-		minX = min(minX, vertices[VERTEX_X3] * scaleX);
-		minY = min(minY, vertices[VERTEX_Y3] * scaleY);
-		maxX = max(maxX, vertices[VERTEX_X3] * scaleX);
-		maxY = max(maxY, vertices[VERTEX_Y3] * scaleY);
-	}
+	Rect localBounds = getLocalBounds();
 	Point position = getPosition();
-	return Rect(position.x + minX, position.y + minY, maxX - minX, maxY - minY);
+    return Rect(position.x + localBounds.getMinX() * scaleX,
+                position.y + localBounds.getMinY() * scaleY,
+                localBounds.size.width * scaleX,
+                localBounds.size.height * scaleY);
 }
 
 void Skeleton::onEnter() {
@@ -283,6 +337,90 @@ void Skeleton::onExit() {
 	unscheduleUpdate();
 }
 
+Rect Skeleton::getLocalBounds() const
+{
+    bool first = true;
+    float minX = 0, minY = 0, maxX = 0, maxY = 0;
+    
+    for (int i = 0, n = skeleton->slotCount; i < n; i++) {
+		spSlot* slot = skeleton->drawOrder[i];
+        if (!slot->attachment) continue;
+        if (slot->attachment->type == ATTACHMENT_REGION)
+        {
+            spRegionAttachment* attachment = (spRegionAttachment*)slot->attachment;
+            
+            float verticesPos[8];
+            
+            spRegionAttachment_computeWorldVertices(attachment, slot->skeleton->x, slot->skeleton->y, slot->bone, verticesPos);
+            
+            float regionMinX, regionMinY, regionMaxX, regionMaxY;
+            regionMinX = min(verticesPos[0], min(verticesPos[2], min(verticesPos[4], verticesPos[6])));
+            regionMinY = min(verticesPos[1], min(verticesPos[3], min(verticesPos[5], verticesPos[7])));
+            regionMaxX = max(verticesPos[0], max(verticesPos[2], max(verticesPos[4], verticesPos[6])));
+            regionMaxY = max(verticesPos[1], max(verticesPos[3], max(verticesPos[5], verticesPos[7])));
+            
+            if (first)
+            {
+                minX = regionMinX;
+                minY = regionMinY;
+                maxX = regionMaxX;
+                maxY = regionMaxY;
+                first = false;
+            }
+            else
+            {
+                minX = min(minX, regionMinX);
+                minY = min(minY, regionMinY);
+                maxX = max(maxX, regionMaxX);
+                maxY = max(maxY, regionMaxY);
+            }
+        }
+        else if (slot->attachment->type == ATTACHMENT_MESH)
+        {
+            spMeshAttachment * attachment = (spMeshAttachment*)slot->attachment;
+            
+            unsigned int verticesCount = attachment->verticesLength / 2;
+            if (verticesCount == 0) continue;
+            spMeshAttachment_computeWorldVertices(attachment, slot->skeleton->x, slot->skeleton->y, slot->bone);
+            
+            V3F_C4B_T2F * vertices = (V3F_C4B_T2F *)alloca(sizeof(V3F_C4B_T2F) * verticesCount);
+            
+            spMeshAttachment_updateVertices(attachment, slot, vertices, premultipliedAlpha);
+            
+            float meshMinX = vertices[0].vertices.x
+            , meshMinY = vertices[0].vertices.y
+            , meshMaxX = vertices[0].vertices.x
+            , meshMaxY = vertices[0].vertices.y;
+            
+            for (int j = 1; j < verticesCount; j++)
+            {
+                meshMinX = min(meshMinX, vertices[j].vertices.x);
+                meshMinY = min(meshMinY, vertices[j].vertices.y);
+                meshMaxX = max(meshMaxX, vertices[j].vertices.x);
+                meshMaxY = max(meshMaxY, vertices[j].vertices.y);
+            }
+            
+            if (first)
+            {
+                minX = meshMinX;
+                minY = meshMinY;
+                maxX = meshMaxX;
+                maxY = meshMaxY;
+                first = false;
+            }
+            else
+            {
+                minX = min(minX, meshMinX);
+                minY = min(minY, meshMinY);
+                maxX = max(maxX, meshMaxX);
+                maxY = max(maxY, meshMaxY);
+            }
+        }
+	}
+    
+    return Rect(minX, minY, maxX-minX, maxY-minY);
+}
+    
 // --- Convenience methods for Skeleton_* functions.
 
 void Skeleton::updateWorldTransform () {
@@ -328,16 +466,23 @@ void Skeleton::setBlendFunc (const cocos2d::BlendFunc& aBlendFunc) {
     this->blendFunc = aBlendFunc;
 }
     
-void Skeleton::setFittedBlendingFunc(cocos2d::TextureAtlas * nextRenderedTexture)
+void Skeleton::setFittedBlendingFunc(bool isPremultipliedAlpha, bool additive)
 {
-    if(nextRenderedTexture->getTexture() && nextRenderedTexture->getTexture()->hasPremultipliedAlpha())
+    if(isPremultipliedAlpha)
     {
-        GL::blendFunc(BlendFunc::ALPHA_PREMULTIPLIED.src, BlendFunc::ALPHA_PREMULTIPLIED.dst);
+        GL::blendFunc(BlendFunc::ALPHA_PREMULTIPLIED.src, additive ? GL_ONE : BlendFunc::ALPHA_PREMULTIPLIED.dst);
     }
     else
     {
-        GL::blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED.src, BlendFunc::ALPHA_NON_PREMULTIPLIED.dst);
+        GL::blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED.src, additive ? GL_ONE : BlendFunc::ALPHA_NON_PREMULTIPLIED.dst);
     }
 }
-
+    
+void Skeleton::drawAndClear(TriangleTextureAtlas *atlas)
+{
+    atlas->drawTriangles();
+    atlas->removeAllVertices();
+    atlas->removeAllTriangles();
+    atlas->setCurrentTriangles(0);
+}
 }

@@ -1,10 +1,10 @@
 /******************************************************************************
  * Spine Runtimes Software License
  * Version 2
- * 
+ *
  * Copyright (c) 2013, Esoteric Software
  * All rights reserved.
- * 
+ *
  * You are granted a perpetual, non-exclusive, non-sublicensable and
  * non-transferable license to install, execute and perform the Spine Runtimes
  * Software (the "Software") solely for internal use. Without the written
@@ -26,30 +26,60 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#ifndef SPINE_ATLASATTACHMENTLOADER_H_
-#define SPINE_ATLASATTACHMENTLOADER_H_
+//
+//  MeshAttachment.h
+//  spine-cocos2d-iphone-ios
+//
+//  Created by Wojciech Trzasko CodingFingers on 18.02.2014.
+//
 
-#include <spine/AttachmentLoader.h>
+#ifndef spine_cocos2d_iphone_ios_MeshAttachment_h
+#define spine_cocos2d_iphone_ios_MeshAttachment_h
+
+
+#include <spine/Attachment.h>
 #include <spine/Atlas.h>
+#include <spine/Slot.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+    
+typedef struct spMeshAttachment spMeshAttachment;
+struct spMeshAttachment {
+    
+    spAttachment super;
+    
+    float x, y, scaleX, scaleY, rotation, width, height;
+    
+    void* rendererObject;
+    
+    float* vertices;
+    int verticesLength;
+    
+    int* trianglesIndices;
+    int trianglesIndicesLength;
+    
+    float* worldVertices;
+    int worldVerticesLength;
+    
+    int hullLength;
+    float* edges;
+};
 
-typedef struct {
-	spAttachmentLoader super;
-	spAtlas* atlas;
-} spAtlasAttachmentLoader;
-
-spAtlasAttachmentLoader* spAtlasAttachmentLoader_create (spAtlas* atlas);
-
+spMeshAttachment* spMeshAttachment_create(const char* name);
+void spMeshAttachment_setMesh(spMeshAttachment* self, float* vertices, int verticesLength, int* triangles, int trianglesLength, float* uvs);
+void spMeshAttachment_computeWorldVertices(spMeshAttachment* self, float x, float y, spBone* bone);
+    
 #ifdef SPINE_SHORT_NAMES
-typedef spAtlasAttachmentLoader AtlasAttachmentLoader;
-#define AtlasAttachmentLoader_create(...) spAtlasAttachmentLoader_create(__VA_ARGS__)
+    typedef spMeshAttachment MeshAttachment;
+#define MeshAttachment_create(...)                  spMeshAttachment_create(__VA_ARGS__)
+#define MeshAttachment_updateOffset(...)            spMeshAttachment_updateOffset(__VA_ARGS__)
+#define MeshAttachment_computeWorldVertices(...)    spMeshAttachment_computeWorldVertices(__VA_ARGS__)
 #endif
-
+    
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* SPINE_ATLASATTACHMENTLOADER_H_ */
+#endif

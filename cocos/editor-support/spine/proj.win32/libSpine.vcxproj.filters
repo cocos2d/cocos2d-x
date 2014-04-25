@@ -89,6 +89,12 @@
     <ClInclude Include="..\Slot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\MeshAttachment.h">
+	  <Filter>Header Files</Filter>
+	</ClInclude>
+	<ClInclude Include="..\CCTriangleTextureAtlas.h">
+	  <Filter>Header Files</Filter>
+	</ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Skeleton.cpp">
@@ -163,5 +169,11 @@
     <ClCompile Include="..\RegionAttachment.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+	<ClCompile Include="..\MeshAttachment.cpp">
+	  <Filter>Source Files</Filter>
+	</ClCompile>
+	<ClCompile Include="..\CCTriangleTextureAtlas.cpp">
+	  <Filter>Source Files</Filter>
+	</ClCompile>
   </ItemGroup>
 </Project>

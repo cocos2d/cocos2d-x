@@ -1238,6 +1238,10 @@
 		2905FA8E18CF08D100240AA3 /* UIWidget.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA1418CF08D100240AA3 /* UIWidget.h */; };
 		2905FA8F18CF08D100240AA3 /* UIWidget.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA1418CF08D100240AA3 /* UIWidget.h */; };
 		2986667F18B1B246000E39CA /* CCTweenFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2986667818B1B079000E39CA /* CCTweenFunction.cpp */; };
+		2AC607C118FD265000DE5467 /* CCTriangleTextureAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 2AC607C018FD265000DE5467 /* CCTriangleTextureAtlas.h */; };
+		2AC607C218FD265000DE5467 /* CCTriangleTextureAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 2AC607C018FD265000DE5467 /* CCTriangleTextureAtlas.h */; };
+		2AC607C418FD2A8F00DE5467 /* CCTriangleTextureAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC607C318FD2A8F00DE5467 /* CCTriangleTextureAtlas.cpp */; };
+		2AC607C518FD2A8F00DE5467 /* CCTriangleTextureAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC607C318FD2A8F00DE5467 /* CCTriangleTextureAtlas.cpp */; };
 		2AC795DB1862870F005EC8E1 /* SkeletonBounds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC795D918628689005EC8E1 /* SkeletonBounds.cpp */; };
 		2AC795DC1862870F005EC8E1 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC795D51862867D005EC8E1 /* Event.cpp */; };
 		2AC795DD1862870F005EC8E1 /* EventData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC795D71862867D005EC8E1 /* EventData.cpp */; };
@@ -1254,6 +1258,10 @@
 		2AC795E81862875D005EC8E1 /* Event.h in Headers */ = {isa = PBXBuildFile; fileRef = 2AC795D61862867D005EC8E1 /* Event.h */; };
 		2AC795E91862875D005EC8E1 /* EventData.h in Headers */ = {isa = PBXBuildFile; fileRef = 2AC795D81862867D005EC8E1 /* EventData.h */; };
 		2AC795EA1862875D005EC8E1 /* BoundingBoxAttachment.h in Headers */ = {isa = PBXBuildFile; fileRef = 2AC795D418628672005EC8E1 /* BoundingBoxAttachment.h */; };
+		2AE05FA318FACD1700C840B3 /* MeshAttachment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AE05FA118FACD1700C840B3 /* MeshAttachment.cpp */; };
+		2AE05FA418FACD1700C840B3 /* MeshAttachment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AE05FA118FACD1700C840B3 /* MeshAttachment.cpp */; };
+		2AE05FA518FACD1700C840B3 /* MeshAttachment.h in Headers */ = {isa = PBXBuildFile; fileRef = 2AE05FA218FACD1700C840B3 /* MeshAttachment.h */; };
+		2AE05FA618FACD1700C840B3 /* MeshAttachment.h in Headers */ = {isa = PBXBuildFile; fileRef = 2AE05FA218FACD1700C840B3 /* MeshAttachment.h */; };
 		373B9129187891F400198F86 /* CCComBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 373B910718787C0B00198F86 /* CCComBase.h */; };
 		373B912A187891FB00198F86 /* CCComBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 373B910718787C0B00198F86 /* CCComBase.h */; };
 		3E26D40518ACB5D100834404 /* CCImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E26D40418ACB5D100834404 /* CCImage.cpp */; };
@@ -2395,6 +2403,8 @@
 		2905FA1418CF08D100240AA3 /* UIWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWidget.h; sourceTree = "<group>"; };
 		2986667818B1B079000E39CA /* CCTweenFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTweenFunction.cpp; sourceTree = "<group>"; };
 		2986667918B1B079000E39CA /* CCTweenFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTweenFunction.h; sourceTree = "<group>"; };
+		2AC607C018FD265000DE5467 /* CCTriangleTextureAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTriangleTextureAtlas.h; sourceTree = "<group>"; };
+		2AC607C318FD2A8F00DE5467 /* CCTriangleTextureAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTriangleTextureAtlas.cpp; sourceTree = "<group>"; };
 		2AC795D318628672005EC8E1 /* BoundingBoxAttachment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BoundingBoxAttachment.cpp; sourceTree = "<group>"; };
 		2AC795D418628672005EC8E1 /* BoundingBoxAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoundingBoxAttachment.h; sourceTree = "<group>"; };
 		2AC795D51862867D005EC8E1 /* Event.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Event.cpp; sourceTree = "<group>"; };
@@ -2403,6 +2413,8 @@
 		2AC795D81862867D005EC8E1 /* EventData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventData.h; sourceTree = "<group>"; };
 		2AC795D918628689005EC8E1 /* SkeletonBounds.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SkeletonBounds.cpp; sourceTree = "<group>"; };
 		2AC795DA18628689005EC8E1 /* SkeletonBounds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkeletonBounds.h; sourceTree = "<group>"; };
+		2AE05FA118FACD1700C840B3 /* MeshAttachment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MeshAttachment.cpp; sourceTree = "<group>"; };
+		2AE05FA218FACD1700C840B3 /* MeshAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeshAttachment.h; sourceTree = "<group>"; };
 		373B910718787C0B00198F86 /* CCComBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCComBase.h; sourceTree = "<group>"; };
 		37936A341869B76800E974DD /* document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = document.h; sourceTree = "<group>"; };
 		37936A351869B76800E974DD /* filestream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filestream.h; sourceTree = "<group>"; };
@@ -3933,6 +3945,8 @@
 		1AD71D7C180E26E600808F54 /* spine */ = {
 			isa = PBXGroup;
 			children = (
+				2AE05FA118FACD1700C840B3 /* MeshAttachment.cpp */,
+				2AE05FA218FACD1700C840B3 /* MeshAttachment.h */,
 				2AC795D918628689005EC8E1 /* SkeletonBounds.cpp */,
 				2AC795DA18628689005EC8E1 /* SkeletonBounds.h */,
 				2AC795D51862867D005EC8E1 /* Event.cpp */,
@@ -3984,6 +3998,8 @@
 				1AD71DA6180E26E600808F54 /* spine-cocos2dx.cpp */,
 				1AD71DA7180E26E600808F54 /* spine-cocos2dx.h */,
 				1AD71DA8180E26E600808F54 /* spine.h */,
+				2AC607C018FD265000DE5467 /* CCTriangleTextureAtlas.h */,
+				2AC607C318FD2A8F00DE5467 /* CCTriangleTextureAtlas.cpp */,
 			);
 			path = spine;
 			sourceTree = "<group>";
@@ -5153,6 +5169,7 @@
 				A044DEAF18C6A58700B6CCBD /* kazmath.h in Headers */,
 				2905FA7618CF08D100240AA3 /* UIScrollView.h in Headers */,
 				1A5702C4180BCE2A0088DEC7 /* CCIMEDispatcher.h in Headers */,
+				2AC607C118FD265000DE5467 /* CCTriangleTextureAtlas.h in Headers */,
 				1A12775B18DFCC540005F345 /* CCTweenFunction.h in Headers */,
 				1A5702CA180BCE370088DEC7 /* CCTextFieldTTF.h in Headers */,
 				A044DEB718C6A58700B6CCBD /* mat4.h in Headers */,
@@ -5212,6 +5229,7 @@
 				1AD71DED180E26E600808F54 /* CCMenuLoader.h in Headers */,
 				1AD71DF1180E26E600808F54 /* CCNode+CCBRelativePositioning.h in Headers */,
 				2905FA5C18CF08D100240AA3 /* UILayoutDefine.h in Headers */,
+				2AE05FA518FACD1700C840B3 /* MeshAttachment.h in Headers */,
 				2905FA7218CF08D100240AA3 /* UIScrollInterface.h in Headers */,
 				1AD71DF5180E26E600808F54 /* CCNodeLoader.h in Headers */,
 				1AD71DF9180E26E600808F54 /* CCNodeLoaderLibrary.h in Headers */,
@@ -5555,6 +5573,7 @@
 				50E6D33F18E174130051CA34 /* UIVBox.h in Headers */,
 				1A570115180BC8EE0088DEC7 /* CCDrawNode.h in Headers */,
 				06CAAAC5186AD7E50012A414 /* TriggerObj.h in Headers */,
+				2AC607C218FD265000DE5467 /* CCTriangleTextureAtlas.h in Headers */,
 				2905FA5D18CF08D100240AA3 /* UILayoutDefine.h in Headers */,
 				1A57011E180BC90D0088DEC7 /* CCGrabber.h in Headers */,
 				1A570122180BC90D0088DEC7 /* CCGrid.h in Headers */,
@@ -5812,6 +5831,7 @@
 				A044DEB018C6A58700B6CCBD /* kazmath.h in Headers */,
 				B37510801823ACA100B3BA6A /* CCPhysicsHelper_chipmunk.h in Headers */,
 				A023FA35185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_frag.h in Headers */,
+				2AE05FA618FACD1700C840B3 /* MeshAttachment.h in Headers */,
 				50FCEBA218C72017004AD434 /* LayoutReader.h in Headers */,
 				1A8C59F2180E930E00EF57C3 /* CCSpriteFrameCacheHelper.h in Headers */,
 				1A8C59F6180E930E00EF57C3 /* CCSSceneReader.h in Headers */,
@@ -6183,6 +6203,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2AC795DB1862870F005EC8E1 /* SkeletonBounds.cpp in Sources */,
+				2AC607C418FD2A8F00DE5467 /* CCTriangleTextureAtlas.cpp in Sources */,
 				2AC795DC1862870F005EC8E1 /* Event.cpp in Sources */,
 				1A01C68A18F57BE800EFE3A6 /* CCDeprecated.cpp in Sources */,
 				2905FA5618CF08D100240AA3 /* UILayout.cpp in Sources */,
@@ -6257,6 +6278,7 @@
 				1A570142180BC9460088DEC7 /* CCEventCustom.cpp in Sources */,
 				1A570146180BC9460088DEC7 /* CCEventDispatcher.cpp in Sources */,
 				1A57014A180BC9460088DEC7 /* CCEventKeyboard.cpp in Sources */,
+				2AE05FA318FACD1700C840B3 /* MeshAttachment.cpp in Sources */,
 				1A57014E180BC9460088DEC7 /* CCEventListener.cpp in Sources */,
 				1A570152180BC9460088DEC7 /* CCEventListenerAcceleration.cpp in Sources */,
 				50FCEBA718C72017004AD434 /* LoadingBarReader.cpp in Sources */,
@@ -6807,6 +6829,7 @@
 				1AD71DE2180E26E600808F54 /* CCLayerLoader.cpp in Sources */,
 				1AD71DE6180E26E600808F54 /* CCMenuItemImageLoader.cpp in Sources */,
 				1AD71DEA180E26E600808F54 /* CCMenuItemLoader.cpp in Sources */,
+				2AE05FA418FACD1700C840B3 /* MeshAttachment.cpp in Sources */,
 				593BDCF3184D0A6E00C21E48 /* CCCustomCommand.cpp in Sources */,
 				06CAAAC8186AD7EB0012A414 /* TriggerObj.cpp in Sources */,
 				1AD71DF0180E26E600808F54 /* CCNode+CCBRelativePositioning.cpp in Sources */,
@@ -6886,6 +6909,7 @@
 				1A8C59B4180E930E00EF57C3 /* CCBone.cpp in Sources */,
 				1A8C59B8180E930E00EF57C3 /* CCColliderDetector.cpp in Sources */,
 				1A8C59BC180E930E00EF57C3 /* CCComAttribute.cpp in Sources */,
+				2AC607C518FD2A8F00DE5467 /* CCTriangleTextureAtlas.cpp in Sources */,
 				1A8C59C0180E930E00EF57C3 /* CCComAudio.cpp in Sources */,
 				1A8C59C4180E930E00EF57C3 /* CCComController.cpp in Sources */,
 				1A8C59C8180E930E00EF57C3 /* CCComRender.cpp in Sources */,

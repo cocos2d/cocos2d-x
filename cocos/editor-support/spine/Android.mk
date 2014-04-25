@@ -28,6 +28,8 @@ BoundingBoxAttachment.cpp \
 Event.cpp \
 EventData.cpp \
 SkeletonBounds.cpp \
+MeshAttachment.cpp \
+CCTriangleTextureAtlas.cpp \
 extension.cpp \
 spine-cocos2dx.cpp
 

@@ -30,6 +30,8 @@ set(SPINE_SRC
   Event.cpp
   EventData.cpp
   SkeletonBounds.cpp
+  MeshAttachment.cpp
+  CCTriangleTextureAtlas.cpp
 )
 
 include_directories(

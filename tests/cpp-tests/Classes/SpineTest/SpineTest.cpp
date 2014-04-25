@@ -33,6 +33,17 @@ using namespace cocos2d;
 using namespace std;
 using namespace spine;
 
+void updateBackSprite(Skeleton * skeleton, Sprite * sprite)
+{
+    auto pos = skeleton->getPosition();
+    auto bounds = skeleton->getBoundingBox();
+    auto origBounds = sprite->getTextureRect();
+    
+    sprite->setPosition(Point(bounds.getMinX(), bounds.getMinY()));
+    sprite->setScale((bounds.getMaxX() - bounds.getMinX()) / (origBounds.getMaxX() - origBounds.getMinX()),
+                     (bounds.getMaxY() - bounds.getMinY()) / (origBounds.getMaxY() - origBounds.getMinY()));
+}
+
 //------------------------------------------------------------------
 //
 // SpineTestScene
@@ -49,29 +60,48 @@ void SpineTestScene::runThisTest()
 bool SpineTestLayer::init () {
     if (!Layer::init()) return false;
     
-    skeletonNode = SkeletonAnimation::createWithFile("spine/spineboy.json", "spine/spineboy.atlas");
-    skeletonNode->setMix("walk", "jump", 0.2f);
-    skeletonNode->setMix("jump", "walk", 0.4f);
     
-    skeletonNode->setAnimationListener(this, animationStateEvent_selector(SpineTestLayer::animationStateEvent));
-    skeletonNode->setAnimation(0, "walk", false);
-    skeletonNode->addAnimation(0, "jump", false);
-    skeletonNode->addAnimation(0, "walk", true);
-    skeletonNode->addAnimation(0, "jump", true, 4);
-    // skeletonNode->addAnimation(1, "drawOrder", true);
+    spineboy = SkeletonAnimation::createWithFile("spine/spineboy.json", "spine/spineboy.atlas");
+    spineboy->setAnimation(0, "walk", false);
+    spineboy->addAnimation(0, "jump", true);
+    spineboy->addAnimation(0, "walk", true, 3);
+    spineboy->timeScale = 1.f;
+    spineboy->update(0);
     
-    skeletonNode->timeScale = 0.3f;
-    skeletonNode->debugBones = true;
-    skeletonNode->update(0);
+    spineboy_back = Sprite::create("Images/MagentaSquare.png");
+    spineboy_back->setOpacity(128);
+    spineboy_back->setAnchorPoint(Point(0,0));
     
-    skeletonNode->runAction(CCRepeatForever::create(CCSequence::create(CCFadeOut::create(1),
-                                                                       CCFadeIn::create(1),
-                                                                       CCDelayTime::create(5),
-                                                                       NULL)));
+    monster = SkeletonAnimation::createWithFile("spine/skeleton.json", "spine/skeleton.atlas");
+    monster->setAnimation(0, "animation", true);
+    monster->timeScale = 1.f;
+    monster->update(0);
+    
+    monster_back = Sprite::create("Images/MagentaSquare.png");
+    monster_back->setOpacity(128);
+    monster_back->setAnchorPoint(Point(0,0));
+    
+    goblin = SkeletonAnimation::createWithFile("spine/goblins.json", "spine/goblins.atlas");
+    goblin->setSkin("goblin");
+    goblin->setSlotsToSetupPose();
+    goblin->timeScale = 1.f;
+    goblin->update(0);
+    goblin->setAnimation(0, "walk", true);
+
+    goblin_back = Sprite::create("Images/MagentaSquare.png");
+    goblin_back->setOpacity(128);
+    goblin_back->setAnchorPoint(Point(0,0));
     
     Size windowSize = Director::getInstance()->getWinSize();
-    skeletonNode->setPosition(Point(windowSize.width / 2, 20));
-    addChild(skeletonNode);
+    spineboy->setPosition(Point(1 * windowSize.width / 4, windowSize.height / 5));
+    addChild(spineboy_back);
+    addChild(spineboy);
+    monster->setPosition(Point(2 * windowSize.width / 4, windowSize.height / 5));
+    addChild(monster_back);
+    addChild(monster);
+    goblin->setPosition(Point(3 *windowSize.width / 4, windowSize.height / 5));
+    addChild(goblin_back);
+    addChild(goblin);
     
     scheduleUpdate();
     
@@ -79,7 +109,9 @@ bool SpineTestLayer::init () {
 }
 
 void SpineTestLayer::update (float deltaTime) {
-    
+    updateBackSprite(spineboy, spineboy_back);
+    updateBackSprite(monster, monster_back);
+    updateBackSprite(goblin, goblin_back);
 }
 
 void SpineTestLayer::animationStateEvent (SkeletonAnimation* node, int trackIndex, spEventType type, spEvent* event, int loopCount) {

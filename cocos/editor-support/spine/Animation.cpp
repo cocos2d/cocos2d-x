@@ -1,36 +1,34 @@
 /******************************************************************************
- * Spine Runtime Software License - Version 1.1
+ * Spine Runtimes Software License
+ * Version 2
  * 
  * Copyright (c) 2013, Esoteric Software
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms in whole or in part, with
- * or without modification, are permitted provided that the following conditions
- * are met:
- * 
- * 1. A Spine Essential, Professional, Enterprise, or Education License must
- *    be purchased from Esoteric Software and the license must remain valid:
- *    http://esotericsoftware.com/
- * 2. Redistributions of source code must retain this license, which is the
- *    above copyright notice, this declaration of conditions and the following
- *    disclaimer.
- * 3. Redistributions in binary form must reproduce this license, which is the
- *    above copyright notice, this declaration of conditions and the following
- *    disclaimer, in the documentation and/or other materials provided with the
- *    distribution.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * You are granted a perpetual, non-exclusive, non-sublicensable and
+ * non-transferable license to install, execute and perform the Spine Runtimes
+ * Software (the "Software") solely for internal use. Without the written
+ * permission of Esoteric Software, you may not (a) modify, translate, adapt or
+ * otherwise create derivative works, improvements of the Software or develop
+ * new applications using the Software or (b) remove, delete, alter or obscure
+ * any trademarks or any copyright, trademark, patent or other intellectual
+ * property or proprietary rights notices on or in the Software, including
+ * any copy thereof. Redistributions in binary or source form must include
+ * this license and terms. THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+ * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL ESOTERIC SOFTARE BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
+//
+// Added support for FFD by Wojciech Trzasko CodingFingers on 24.02.2014.
+//
 #include <spine/Animation.h>
 #include <limits.h>
 #include <spine/extension.h>
@@ -636,4 +634,118 @@ void spDrawOrderTimeline_setFrame (spDrawOrderTimeline* self, int frameIndex, fl
 		self->drawOrders[frameIndex] = MALLOC(int, self->slotCount);
 		memcpy(CONST_CAST(int*, self->drawOrders[frameIndex]), drawOrder, self->slotCount * sizeof(int));
 	}
+}
+
+
+/**/
+
+void _FFDTimeline_dispose (spTimeline* timeline)
+{
+    spFFDTimeline* self = SUB_CAST(spFFDTimeline, timeline);
+    int i;
+    
+    _spCurveTimeline_deinit(SUPER(self));
+    
+    for(i = 0; i < self -> framesLength; ++i)
+    {
+        FREE(self->frameVertices[i]);
+    }
+    FREE(self->frameVertices);
+    
+    FREE(self->frames);
+    FREE(self->frameVerticesLength);
+}
+
+#include <stdio.h>
+
+void _spFFDTimeline_apply (const spTimeline* timeline, spSkeleton* skeleton, float lastTime, float time,
+                           spEvent** firedEvents, int* eventCount, float alpha)
+{
+    spFFDTimeline* self = (spFFDTimeline*)timeline;
+    spSlot* slot = skeleton -> slots[self->slotIndex];
+    
+    if(slot->attachment != (spAttachment*)self->meshAttachment) {
+        return;
+    }
+    
+    float verticesLength = 0;
+    
+    // Time is before firts frame
+    if(time < self->frames[0])
+        return;
+    
+    int vertexCount = self->frameVerticesLength[0];
+    
+    int sizeNeeded = vertexCount;
+    if (sizeNeeded > self->meshAttachment->verticesLength) {
+        // TODO: Check if realloc data don't leak.
+        realloc(self->meshAttachment->vertices, sizeNeeded * sizeof(float));
+    }
+    verticesLength = vertexCount;
+    float * vertices = self->meshAttachment->vertices;
+    
+    // Time is after last frame
+    if(time >= self->frames[self->framesLength - 1])
+    {
+        /**
+         * TODO: Check if coping data don't leak.
+         */
+        float * lastVertices = self->frameVertices[self->framesLength - 1];
+        if (alpha < 1)
+        {
+            for (int i = 0; i < vertexCount; i++)
+                vertices[i] += (lastVertices[i] - vertices[i]) * alpha;
+        }
+        else
+        {
+            memcpy(vertices, lastVertices, vertexCount * sizeof(float));
+        }
+        return;
+    }
+    
+    // Interpolate between the previous frame and current frame
+    int frameIndex = binarySearch(self->frames, self->framesLength, time, 1);
+    float frameTime = self->frames[frameIndex];
+    float percent = 1 - (time - frameTime) / (self->frames[frameIndex - 1] - frameTime);
+    percent = spCurveTimeline_getCurvePercent(SUPER(self), frameIndex - 1, percent < 0 ? 0 : (percent > 1 ? 1 : percent));
+    
+    float* prevVertices         = self->frameVertices[frameIndex - 1];
+    float* nextVertices         = self->frameVertices[frameIndex];
+
+    if (alpha < 1)
+    {
+        for (int i = 0; i < vertexCount; ++i)
+        {
+            float prev = prevVertices[i];
+            vertices[i] = (prev + (nextVertices[i] - prev) * percent - vertices[i]) * alpha;
+        }
+    }
+    else
+    {
+        for (int i = 0; i < vertexCount; ++i) {
+            float prev = prevVertices[i];
+            vertices[i] = prev + (nextVertices[i] - prev) * percent;
+        }
+    }    
+}
+
+spFFDTimeline* spFFDTimeline_create(int frameCount)
+{
+    spFFDTimeline* self = NEW(spFFDTimeline);
+    _spCurveTimeline_init(SUPER(self), TIMELINE_FFD, frameCount, _FFDTimeline_dispose, _spFFDTimeline_apply);
+    
+    CONST_CAST(int, self->framesLength) = frameCount;
+    CONST_CAST(float*, self->frames) = CALLOC(float, frameCount);
+    CONST_CAST(float**, self->frameVertices) = CALLOC(float*, frameCount);
+    CONST_CAST(int*, self->frameVerticesLength) = CALLOC(int, frameCount);
+    self -> meshAttachment = NULL;
+    
+    return self;
+}
+
+void spFFDTimeline_setFrame(spFFDTimeline* self, int frameIndex, float time, float* vertices, int verticesLength)
+{
+    self -> frames[frameIndex] = time;
+    self -> frameVertices[frameIndex] = vertices;
+    self -> frameVerticesLength[frameIndex] = verticesLength;
 }

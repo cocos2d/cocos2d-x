@@ -189,6 +189,8 @@
     <ClInclude Include="..\SlotData.h" />
     <ClInclude Include="..\spine-cocos2dx.h" />
     <ClInclude Include="..\spine.h" />
+	<ClInclude Include="..\MeshAttachment.h" />
+	<ClInclude Include="..\CCTriangleTextureAtlas.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
@@ -217,6 +219,8 @@
     <ClCompile Include="..\Slot.cpp" />
     <ClCompile Include="..\SlotData.cpp" />
     <ClCompile Include="..\spine-cocos2dx.cpp" />
+	<ClCompile Include="..\MeshAttachment.cpp" />
+	<ClCompile Include="..\CCTriangleTextureAtlas.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">Create</PrecompiledHeader>
