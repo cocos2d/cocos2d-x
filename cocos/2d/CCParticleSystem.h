@@ -415,6 +415,10 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
     virtual void updateBlendFunc();
     
+    /** Gets Value from valuemap by a given key
+     *  It will return Value::Null if valueMap doesn't contain the key
+     *  @since v3.0
+     */
     const Value& getValue(const ValueMap& valueMap, const std::string& key);
 
     /** whether or not the particles are using blend additive.
