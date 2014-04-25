@@ -36,6 +36,11 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 #include "deprecated/CCString.h"
 #include "CCSprite.h"
 
+#if CC_LABELBMFONT_DEBUG_DRAW
+#include "renderer/CCRenderer.h"
+#include "CCDirector.h"
+#endif
+
 using namespace std;
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
@@ -201,20 +206,36 @@ Rect LabelBMFont::getBoundingBox() const
 {
     return _label->getBoundingBox();
 }
-
-//LabelBMFont - Debug draw
 #if CC_LABELBMFONT_DEBUG_DRAW
-void LabelBMFont::draw()
+void LabelBMFont::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
-    const Size& s = this->getContentSize();
-    Point vertices[4]={
-        Point(0,0),Point(s.width,0),
-        Point(s.width,s.height),Point(0,s.height),
-    };
-    ccDrawPoly(vertices, 4, true);
+    Node::draw(renderer, transform, transformUpdated);
+
+    _customDebugDrawCommand.init(_globalZOrder);
+    _customDebugDrawCommand.func = CC_CALLBACK_0(LabelBMFont::drawDebugData, this,transform,transformUpdated);
+    renderer->addCommand(&_customDebugDrawCommand);
 }
 
-#endif // CC_LABELBMFONT_DEBUG_DRAW
+void LabelBMFont::drawDebugData(const kmMat4& transform, bool transformUpdated)
+{
+    kmGLPushMatrix();
+    kmGLLoadMatrix(&transform);
+
+    auto size = getContentSize();
+
+    Point vertices[4]=
+    {
+        Point::ZERO,
+        Point(size.width, 0),
+        Point(size.width, size.height),
+        Point(0, size.height)
+    };
+    
+    DrawPrimitives::drawPoly(vertices, 4, true);
+
+    kmGLPopMatrix();
+}
+#endif
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic warning "-Wdeprecated-declarations"

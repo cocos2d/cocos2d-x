@@ -280,7 +280,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         setSprite(Sprite::createWithTexture(_texture));
 
         _texture->release();
-        _sprite->setScaleY(-1);
+        _sprite->setFlippedY(true);
 
         _sprite->setBlendFunc( BlendFunc::ALPHA_PREMULTIPLIED );
 
@@ -524,7 +524,9 @@ void RenderTexture::onBegin()
     kmGLGetMatrix(KM_GL_PROJECTION, &_oldProjMatrix);
     kmGLMatrixMode(KM_GL_PROJECTION);
     kmGLLoadMatrix(&_projectionMatrix);
-    
+ 
+
+
     kmGLGetMatrix(KM_GL_MODELVIEW, &_oldTransMatrix);
     kmGLMatrixMode(KM_GL_MODELVIEW);
     kmGLLoadMatrix(&_transformMatrix);
@@ -532,6 +534,15 @@ void RenderTexture::onBegin()
     if(!_keepMatrix)
     {
         director->setProjection(director->getProjection());
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+        kmMat4 modifiedProjection;
+        kmGLGetMatrix(KM_GL_PROJECTION, &modifiedProjection);
+        kmMat4Multiply(&modifiedProjection, CCEGLView::sharedOpenGLView()->getReverseOrientationMatrix(), &modifiedProjection);
+        kmGLMatrixMode(KM_GL_PROJECTION);
+        kmGLLoadMatrix(&modifiedProjection);
+        kmGLMatrixMode(KM_GL_MODELVIEW);
+#endif
 
         const Size& texSize = _texture->getContentSizeInPixels();
 

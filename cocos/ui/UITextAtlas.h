@@ -78,11 +78,8 @@ public:
     //get string value for labelatlas.
     const std::string& getStringValue() const;
     
-    //override "setAnchorPoint" method of widget.
-    virtual void setAnchorPoint(const Point &pt) override;
-    
-    //override "getContentSize" method of widget.
-    virtual const Size& getContentSize() const override;
+    //override "getVirtualRendererSize" method of widget.
+    virtual const Size& getVirtualRendererSize() const override;
     
     //override "getVirtualRenderer" method of widget.
     virtual Node* getVirtualRenderer() override;
@@ -92,6 +89,7 @@ public:
      */
     virtual std::string getDescription() const override;
     
+    virtual void adaptRenderers() override;
 protected:
     virtual void initRenderer() override;
     virtual void onSizeChanged() override;
@@ -108,6 +106,7 @@ protected:
     int _itemWidth;
     int _itemHeight;
     std::string _startCharMap;
+    bool _labelAtlasRendererAdaptDirty;
 };
 
 }

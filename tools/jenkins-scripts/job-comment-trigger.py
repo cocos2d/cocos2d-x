@@ -24,13 +24,13 @@ def main():
     #get comment body
     comment_body = comment['body']
     print comment_body
-    pattern = re.compile("\[ci(\s+)rebuild\]", re.I)
-    result = pattern.search(comment_body)
+    #will check 'ci' comment
+    searchCI = re.search("\[ci.*\]", comment_body)
 
-    # will check console/console create
+    #will check console/console create
     searchConsole = re.search('\[console.*\]', comment_body)
 
-    if result is None and searchConsole is None:
+    if searchCI is None and searchConsole is None:
         print 'skip build for pull request #' + str(pr_num)
         return(0)
     
@@ -57,6 +57,10 @@ def main():
     statuses_url = repository['statuses_url']
     payload_forword['statuses_url'] = statuses_url
     print 'statuses_url: ' + statuses_url
+    #get comments url
+    comments_url = repository['comments_url']
+    payload_forword['comments_url'] = comments_url
+    print 'comments_url: ' + comments_url
 
     #get pr target branch
     branch = repository['base']['ref']
@@ -75,22 +79,39 @@ def main():
     Headers = {"Authorization":"token " + access_token} 
 
     try:
-        requests.post(statuses_url, data=json.dumps(data), headers=Headers)
+        if searchCI:
+          ciOper = searchCI.group()
+          if('rebuild' in ciOper):
+            requests.post(statuses_url, data=json.dumps(data), headers=Headers)
     except:
         traceback.print_exc()
 
     job_trigger_url = ''
-    if result:
-        job_trigger_url = os.environ['JOB_TRIGGER_URL']
+    if searchCI:
+        ciOper = searchCI.group()
+        if('rebuild' in ciOper):
+          job_trigger_url = os.environ['JOB_PULL_REQUEST_BUILD_TRIGGER_URL']
+        if('emptytest' in ciOper):
+          job_trigger_url = os.environ['JOB_EMPTYTEST_TRIGGER_URL']
+        if('release' in ciOper):
+          searchTag = re.search('\[ci release (.*)\]', ciOper)
+          if searchTag:
+            ci_tag = searchTag.group(1)
+            payload_forword['tag'] = ci_tag
+            job_trigger_url = os.environ['JOB_RELEASE_TRIGGER_URL']
     if searchConsole:
         consoleOper = searchConsole.group()
-        job_trigger_url = os.environ['JOB_CONSOLE_TEST_URL']
+        job_trigger_url = os.environ['JOB_CONSOLE_TEST_TRIGGER_URL']
         payload_forword['console'] = consoleOper
     print 'job_trigger_url is: ', job_trigger_url
 
     #send trigger and payload
-    post_data = {'payload':""}
-    post_data['payload']= json.dumps(payload_forword)
+    if('tag' in payload_forword):
+      post_data = {'tag':""}
+      post_data['tag'] = payload_forword['tag']
+    else:
+      post_data = {'payload':""}
+      post_data['payload']= json.dumps(payload_forword)
     requests.post(job_trigger_url, data=post_data)
 
     return(0)

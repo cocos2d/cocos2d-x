@@ -138,12 +138,6 @@
 -- @return color3B_table#color3B_table ret (return value: color3B_table)
         
 --------------------------------
--- @function [parent=#Layout] hitTest 
--- @param self
--- @param #point_table point
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
 -- @function [parent=#Layout] setBackGroundImageScale9Enabled 
 -- @param self
 -- @param #bool bool

@@ -116,11 +116,8 @@ public:
      */
     bool isTouchScaleChangeEnabled();
 
-    //override "setAnchorPoint" method of widget.
-    virtual void setAnchorPoint(const Point &pt) override;
-
-    //override "getContentSize" method of widget.
-    virtual const Size& getContentSize() const override;
+    //override "getVirtualRendererSize" method of widget.
+    virtual const Size& getVirtualRendererSize() const override;
 
     //override "getVirtualRenderer" method of widget.
     virtual Node* getVirtualRenderer() override;
@@ -162,6 +159,7 @@ protected:
     void labelScaleChangedWithSize();
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
+    virtual void adaptRenderers() override;
 protected:
     bool _touchScaleChangeEnabled;
     float _normalScaleValueX;
@@ -170,6 +168,7 @@ protected:
     int _fontSize;
     float _onSelectedScaleOffset;
     Label* _labelRenderer;
+    bool _labelRendererAdaptDirty;
 };
 
 }

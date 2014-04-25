@@ -2,53 +2,54 @@
 
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
-- [Misc Information](#misc-information)
-- [Requirements](#requirements)
-	- [Runtime Requirements](#runtime-requirements)
-	- [Compiler Requirements](#compiler-requirements)
-	- [How to run TestCpp](#how-to-run-testcpp)
-		- [Mac OSX & iOS](#mac-osx--ios)
-		- [Android](#android)
-		- [Windows](#windows)
-		- [Linux](#linux)
-	- [How to start a new game](#how-to-start-a-new-game)
-- [Highlights of v3.0](#highlights-of-v30)
-- [Features in detail](#features-in-detail)
-	- [C++11 features](#c11-features)
-		- [std::function](#stdfunction)
-		- [Strongly typed enums](#strongly-typed-enums)
-		- [override](#override)
-	- [Removed Objective-C patterns](#removed-objective-c-patterns)
-		- [No more 'CC' prefix for C++ classes and free functions](#no-more-cc-prefix-for-c-classes-and-free-functions)
-		- [clone() instead of copy()](#clone-instead-of-copy)
-		- [Singletons use getInstance() and destroyInstance()](#singletons-use-getinstance-and-destroyinstance)
-		- [Object is replaced with Ref](#object-is-replaced-with-ref)
-		- [getters](#getters)
-		- [POD types](#pod-types)
-	- [New Renderer](#new-renderer)
-		- [Renderer features](#renderer-features)
-			- [Auto-batching](#auto-batching)
-			- [Auto-culling](#auto-culling)
-			- [Global Z order](#global-z-order)
-		- [Sprite vs. SpriteBatchNode](#sprite-vs-spritebatchnode)
-	- [Improved LabelTTF / LabelBMFont / LabelAtlas](#improved-labelttf--labelbmfont--labelatlas)
-	- [New EventDispatcher](#new-eventdispatcher)
-	- [Physics Integration](#physics-integration)
-- [Misc API Changes](#misc-api-changes)
-	- [ccTypes.h](#cctypesh)
-	- [deprecated functions and  global variables](#deprecated-functions-and--global-variables)
-- [Changes in the Lua bindings](#changes-in-the-lua-bindings)
-	- [Use bindings-generator tool for lua binding](#use-bindings-generator-tool-for-lua-binding)
-		- [Bind the classes with namespace to lua](#bind-the-classes-with-namespace-to-lua)
-		- [Use ScriptHandlerMgr to manage the register and unregister of Lua function](#use-scripthandlermgr-to-manage-the-register-and-unregister-of-lua-function)
-	- [Misc API changes](#misc-api-changes-1)
-		- [Use cc、ccs、ccui gl and sp as module name](#use-ccccsccui-gl-and-sp-as-module-name)
-		- [Modified functions](#modified-functions)
-		- [Add some modules](#add-some-modules)
-		- [Add more lua bindings](#add-more-lua-bindings)
-		- [Replace some lua-bindings of Class or Struct with lua table](#replace-some-lua-bindings-of-class-or-struct-with-lua-table)
-		- [Support lua script codes call Object-C codes and Java codes](#support-lua-script-codes-call-object-c-codes-and-java-codes)
-		- [Add some lua files to store the constants of different modules](#add-some-lua-files-to-store-the-constants-of-different-modules)
+- [cocos2d-x v3.0 Release Notes](#user-content-cocos2d-x-v30-release-notes)
+- [Misc Information](#user-content-misc-information)
+- [Requirements](#user-content-requirements)
+	- [Runtime Requirements](#user-content-runtime-requirements)
+	- [Compiler Requirements](#user-content-compiler-requirements)
+	- [How to run tests](#user-content-how-to-run-tests)
+		- [Mac OSX & iOS](#user-content-mac-osx--ios)
+		- [Android](#user-content-android)
+		- [Windows](#user-content-windows)
+		- [Linux](#user-content-linux)
+	- [How to start a new game](#user-content-how-to-start-a-new-game)
+- [Highlights of v3.0](#user-content-highlights-of-v30)
+- [Features in detail](#user-content-features-in-detail)
+	- [C++11 features](#user-content-c11-features)
+		- [std::function](#user-content-stdfunction)
+		- [Strongly typed enums](#user-content-strongly-typed-enums)
+		- [override](#user-content-override)
+	- [Removed Objective-C patterns](#user-content-removed-objective-c-patterns)
+		- [No more 'CC' prefix for C++ classes and free functions](#user-content-no-more-cc-prefix-for-c-classes-and-free-functions)
+		- [clone() instead of copy()](#user-content-clone-instead-of-copy)
+		- [Singletons use getInstance() and destroyInstance()](#user-content-singletons-use-getinstance-and-destroyinstance)
+		- [Object is replaced with Ref](#user-content-object-is-replaced-with-ref)
+		- [getters](#user-content-getters)
+		- [POD types](#user-content-pod-types)
+	- [New Renderer](#user-content-new-renderer)
+		- [Renderer features](#user-content-renderer-features)
+			- [Auto-batching](#user-content-auto-batching)
+			- [Auto-culling](#user-content-auto-culling)
+			- [Global Z order](#user-content-global-z-order)
+		- [Sprite vs. SpriteBatchNode](#user-content-sprite-vs-spritebatchnode)
+	- [Improved LabelTTF / LabelBMFont / LabelAtlas](#user-content-improved-labelttf--labelbmfont--labelatlas)
+	- [New EventDispatcher](#user-content-new-eventdispatcher)
+	- [Physics Integration](#user-content-physics-integration)
+- [Misc API Changes](#user-content-misc-api-changes)
+	- [ccTypes.h](#user-content-cctypesh)
+	- [deprecated functions and  global variables](#user-content-deprecated-functions-and--global-variables)
+- [Changes in the Lua bindings](#user-content-changes-in-the-lua-bindings)
+	- [Use bindings-generator tool for lua binding](#user-content-use-bindings-generator-tool-for-lua-binding)
+		- [Bind the classes with namespace to lua](#user-content-bind-the-classes-with-namespace-to-lua)
+		- [Use ScriptHandlerMgr to manage the register and unregister of Lua function](#user-content-use-scripthandlermgr-to-manage-the-register-and-unregister-of-lua-function)
+	- [Misc API changes](#user-content-misc-api-changes-1)
+		- [Use cc、ccs、ccui gl and sp as module name](#user-content-use-ccccsccui-gl-and-sp-as-module-name)
+		- [Modified functions](#user-content-modified-functions)
+		- [Add some modules](#user-content-add-some-modules)
+		- [Add more lua bindings](#user-content-add-more-lua-bindings)
+		- [Replace some lua-bindings of Class or Struct with lua table](#user-content-replace-some-lua-bindings-of-class-or-struct-with-lua-table)
+		- [Support lua script codes call Object-C codes and Java codes](#user-content-support-lua-script-codes-call-object-c-codes-and-java-codes)
+		- [Add some lua files to store the constants of different modules](#user-content-add-some-lua-files-to-store-the-constants-of-different-modules)
 
 # Misc Information
 
@@ -64,7 +65,7 @@
 * iOS 5.0 or newer
 * OS X 10.7 or newer
 * Windows 7 or newer
-* ~~Windows Phone 8 or newer~~ N/A for the moment
+* Windows Phone 8 or newer (initail version)
 * Linux Ubuntu 12.04 (or newer)
 * ~~Browsers via Emscripten~~ N/A for the moment
 
@@ -74,7 +75,7 @@
 * gcc 4.7 for Linux or Android. For Android ndk-r9 or newer is required.
 * Visual Studio 2012 (for Windows)
 
-## How to run TestCpp
+## How to run tests
 
 ### Mac OSX & iOS
 
@@ -136,7 +137,7 @@ Run
     
 ## How to start a new game
 
-Please refer to [ReadMe](../README.md)
+Please refer to [ReadMe](../README.md). And there is a [document](https://github.com/chukong/cocos-docs/blob/master/manual/framework/native/getting-started/v3.0/how-to-start-a-new-game/en.md) for it.
     
 
 # Highlights of v3.0
@@ -149,6 +150,7 @@ Please refer to [ReadMe](../README.md)
 * New UI objects
 * [JavaScript remote debugger](https://github.com/cocos2d/cocos-docs/blob/master/manual/framework/native/scripting/javascript/js-remote-debugger/en.md)
 * Remote Console support
+* Use [cocos console](https://github.com/cocos2d/cocos2d-console) to create and run project
 * Refactor Image - release memory in time and uniform the api of supported file format
 * Automatically generated Lua bindings, add LuaJavaBridge and LuaObjcBridge
 * Templated containers

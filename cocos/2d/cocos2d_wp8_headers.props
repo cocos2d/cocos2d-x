@@ -7,13 +7,13 @@
   <PropertyGroup />
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(EngineRoot)cocos\2d\platform\wp8;$(EngineRoot)cocos\2d\platform\winrt;$(EngineRoot)\external\winrt-specific\angle\include;$(EngineRoot)\external\winrt-specific;$(EngineRoot)cocos\2d;$(EngineRoot)cocos\math\kazmath;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\2d\renderer;$(EngineRoot)cocos\ui;$(EngineRoot)cocos;$(EngineRoot)cocos\base;$(EngineRoot)cocos\physics;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external;$(EngineRoot)cocos\editor-support;$(EngineRoot);$(EngineRoot)cocos\math\kazmath\include;$(EngineRoot)cocos\deprecated;$(GeneratedFilesDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos\2d\platform\wp8;$(EngineRoot)cocos\2d\platform\winrt;$(EngineRoot)\external\winrt-specific\angle\include;$(EngineRoot)\external\curl\include\wp8;$(EngineRoot)\external\winrt-specific;$(EngineRoot)cocos\2d;$(EngineRoot)cocos\math\kazmath;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\2d\renderer;$(EngineRoot)cocos\ui;$(EngineRoot)cocos;$(EngineRoot)cocos\base;$(EngineRoot)cocos\physics;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external;$(EngineRoot)cocos\editor-support;$(EngineRoot);$(EngineRoot)cocos\math\kazmath\include;$(EngineRoot)cocos\deprecated;$(GeneratedFilesDir)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_VARIADIC_MAX=10;NOMINMAX;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CompileAsWinRT>true</CompileAsWinRT>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
-      <DisableSpecificWarnings>4056;</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4056;4996;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>

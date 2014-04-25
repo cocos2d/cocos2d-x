@@ -120,7 +120,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     director->runWithScene(scene);
 
     // Enable Remote Console
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     auto console = director->getConsole();
     console->listenOnTCP(5678);
 #endif
