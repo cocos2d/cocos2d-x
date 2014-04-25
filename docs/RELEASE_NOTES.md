@@ -65,7 +65,7 @@
 * iOS 5.0 or newer
 * OS X 10.7 or newer
 * Windows 7 or newer
-* ~~Windows Phone 8 or newer~~ N/A for the moment
+* Windows Phone 8 or newer (initail version)
 * Linux Ubuntu 12.04 (or newer)
 * ~~Browsers via Emscripten~~ N/A for the moment
 
