@@ -168,6 +168,19 @@ RenderTexture * RenderTexture::create(int w ,int h, Texture2D::PixelFormat eForm
     return nullptr;
 }
 
+RenderTexture * RenderTexture::createWithPixels(int w ,int h, Texture2D::PixelFormat eFormat, GLuint uDepthStencilFormat)
+{
+    RenderTexture *ret = new RenderTexture();
+    
+    if(ret && ret->initWithWidthAndHeightPixels(w, h, eFormat, uDepthStencilFormat))
+    {
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+    return nullptr;
+}
+
 RenderTexture * RenderTexture::create(int w, int h)
 {
     RenderTexture *ret = new RenderTexture();
@@ -188,18 +201,25 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
 
 bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat format, GLuint depthStencilFormat)
 {
+    w = (int)(w * CC_CONTENT_SCALE_FACTOR());
+    h = (int)(h * CC_CONTENT_SCALE_FACTOR());
+    bool ret = initWithWidthAndHeightPixels(w, h, format, depthStencilFormat);
+    _fullRect = _rtTextureRect = Rect(0,0,w,h);
+    Size size = Director::getInstance()->getWinSizeInPixels();
+    _fullviewPort = Rect(0,0,size.width,size.height);
+    
+    return ret;
+}
+
+bool RenderTexture::initWithWidthAndHeightPixels(int w, int h, Texture2D::PixelFormat format, GLuint depthStencilFormat)
+{
     CCASSERT(format != Texture2D::PixelFormat::A8, "only RGB and RGBA formats are valid for a render texture");
 
     bool ret = false;
     void *data = nullptr;
     do 
     {
-        _fullRect = _rtTextureRect = Rect(0,0,w,h);
-        Size size = Director::getInstance()->getWinSizeInPixels();
-        _fullviewPort = Rect(0,0,size.width,size.height);
-        w = (int)(w * CC_CONTENT_SCALE_FACTOR());
-        h = (int)(h * CC_CONTENT_SCALE_FACTOR());
-
+        _fullviewPort = _fullRect = _rtTextureRect = Rect(0,0,w,h);
         glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
 
         // textures must be power of two squared
@@ -524,7 +544,7 @@ void RenderTexture::onBegin()
     kmGLGetMatrix(KM_GL_PROJECTION, &_oldProjMatrix);
     kmGLMatrixMode(KM_GL_PROJECTION);
     kmGLLoadMatrix(&_projectionMatrix);
- 
+    
 
 
     kmGLGetMatrix(KM_GL_MODELVIEW, &_oldTransMatrix);
