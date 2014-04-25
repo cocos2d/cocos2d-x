@@ -106,7 +106,7 @@ local function initWithLayer(layer, callback)
    local debug = false
    local function toggleDebugCallback(sender)
       debug = not debug
-      cc.Director:getInstance():getRunningScene():getPhysicsWorld():setDebugDrawMask(debug and cc.PhysicsWorld.DEBUGDRAW_ALL or cc.PhysicsWorld.DEBUGDRAW_NONE)
+      layer:getPhysicsWorld():setDebugDrawMask(debug and cc.PhysicsWorld.DEBUGDRAW_ALL or cc.PhysicsWorld.DEBUGDRAW_NONE)
    end
 
    layer.toggleDebug = function(self) toggleDebugCallback(nil) end;
@@ -144,7 +144,7 @@ end
 
 local function onTouchBegan(touch, event)
     local location = touch:getLocation()
-    local arr = cc.Director:getInstance():getRunningScene():getPhysicsWorld():getShapes(location)
+    local arr = curLayer:getPhysicsWorld():getShapes(location)
     
     local body
     for _, obj in ipairs(arr) do
@@ -162,7 +162,7 @@ local function onTouchBegan(touch, event)
         curLayer:addChild(mouse);
         local joint = cc.PhysicsJointPin:construct(mouse:getPhysicsBody(), body, location);
         joint:setMaxForce(5000.0 * body:getMass());
-        cc.Director:getInstance():getRunningScene():getPhysicsWorld():addJoint(joint);
+        curLayer:getPhysicsWorld():addJoint(joint);
         touch.mouse = mouse
         
         return true;
@@ -253,7 +253,7 @@ local function makeTriangle(point, size, color, material)
 end
 
 local function PhysicsDemoClickAdd()
-    local layer = cc.Layer:create()
+    local layer = cc.Layer:createWithPhysics()
     local function onEnter()
        local function onTouchEnded(touch, event)
 	  local location = touch:getLocation();
@@ -281,7 +281,7 @@ local function PhysicsDemoClickAdd()
 end
 
 local function PhysicsDemoLogoSmash()
-    local layer = cc.Layer:create()
+    local layer = cc.Layer:createWithPhysics()
 
     local function onEnter()
        local logo_width = 188.0
@@ -327,8 +327,8 @@ local function PhysicsDemoLogoSmash()
 	  return bit.band(bit.rshift(logo_image[bit.rshift(x, 3) + y*logo_raw_length + 1], bit.band(bit.bnot(x), 0x07)), 1)
        end
 
-       cc.Director:getInstance():getRunningScene():getPhysicsWorld():setGravity(cc.p(0, 0));
-       cc.Director:getInstance():getRunningScene():getPhysicsWorld():setUpdateRate(5.0);
+       curLayer:getPhysicsWorld():setGravity(cc.p(0, 0));
+       curLayer:getPhysicsWorld():setUpdateRate(5.0);
        
        layer.ball = cc.SpriteBatchNode:create("Images/ball.png", #logo_image);
        layer:addChild(layer.ball);
@@ -363,7 +363,7 @@ local function PhysicsDemoLogoSmash()
 end
 
 local function PhysicsDemoJoints()
-   local layer = cc.Layer:create()
+   local layer = cc.Layer:createWithPhysics()
    local function onEnter()
     layer:toggleDebug();
     
@@ -384,7 +384,6 @@ local function PhysicsDemoJoints()
     node:setPosition(cc.p(0, 0));
     layer:addChild(node);
 
-    local scene = cc.Director:getInstance():getRunningScene();
     for i in range(0, 3) do
        for j in range(0, 3) do
             local offset = cc.p(VisibleRect:leftBottom().x + 5 + j * width + width/2, VisibleRect:leftBottom().y + 50 + i * height + height/2);
@@ -397,7 +396,7 @@ local function PhysicsDemoJoints()
                     sp2:getPhysicsBody():setTag(DRAG_BODYS_TAG);
                     
                     local joint = cc.PhysicsJointPin:construct(sp1:getPhysicsBody(), sp2:getPhysicsBody(), offset);
-                    cc.Director:getInstance():getRunningScene():getPhysicsWorld():addJoint(joint);
+                    curLayer:getPhysicsWorld():addJoint(joint);
                     
                     layer:addChild(sp1);
                     layer:addChild(sp2);
@@ -408,7 +407,7 @@ local function PhysicsDemoJoints()
                     sp2:getPhysicsBody():setTag(DRAG_BODYS_TAG);
                     
                     local joint = cc.PhysicsJointFixed:construct(sp1:getPhysicsBody(), sp2:getPhysicsBody(), offset);
-                    scene:getPhysicsWorld():addJoint(joint);
+                    curLayer:getPhysicsWorld():addJoint(joint);
                     
                     layer:addChild(sp1);
                     layer:addChild(sp2);
@@ -419,7 +418,7 @@ local function PhysicsDemoJoints()
                     sp2:getPhysicsBody():setTag(DRAG_BODYS_TAG);
                     
                      local joint = cc.PhysicsJointDistance:construct(sp1:getPhysicsBody(), sp2:getPhysicsBody(), cc.p(0, 0), cc.p(0, 0));
-                    scene:getPhysicsWorld():addJoint(joint);
+                    curLayer:getPhysicsWorld():addJoint(joint);
                     
                     layer:addChild(sp1);
                     layer:addChild(sp2);
@@ -430,7 +429,7 @@ local function PhysicsDemoJoints()
                     sp2:getPhysicsBody():setTag(DRAG_BODYS_TAG);
                     
                     local joint = cc.PhysicsJointLimit:construct(sp1:getPhysicsBody(), sp2:getPhysicsBody(), cc.p(0, 0), cc.p(0, 0), 30.0, 60.0);
-                    scene:getPhysicsWorld():addJoint(joint);
+                    curLayer:getPhysicsWorld():addJoint(joint);
                     
                     layer:addChild(sp1);
                     layer:addChild(sp2);
@@ -441,7 +440,7 @@ local function PhysicsDemoJoints()
                     sp2:getPhysicsBody():setTag(DRAG_BODYS_TAG);
                     
                     local joint = cc.PhysicsJointSpring:construct(sp1:getPhysicsBody(), sp2:getPhysicsBody(), cc.p(0, 0), cc.p(0, 0), 500.0, 0.3);
-                    scene:getPhysicsWorld():addJoint(joint);
+                    curLayer:getPhysicsWorld():addJoint(joint);
                     
                     layer:addChild(sp1);
                     layer:addChild(sp2);
@@ -452,7 +451,7 @@ local function PhysicsDemoJoints()
                     sp2:getPhysicsBody():setTag(DRAG_BODYS_TAG);
                     
                     local joint = cc.PhysicsJointGroove:construct(sp1:getPhysicsBody(), sp2:getPhysicsBody(), cc.p(30, 15), cc.p(30, -15), cc.p(-30, 0))
-                    scene:getPhysicsWorld():addJoint(joint);
+                    curLayer:getPhysicsWorld():addJoint(joint);
                     
                     layer:addChild(sp1);
                     layer:addChild(sp2);
@@ -461,10 +460,10 @@ local function PhysicsDemoJoints()
                     sp1:getPhysicsBody():setTag(DRAG_BODYS_TAG);
                     local sp2 = makeBox(cc.p(offset.x + 30, offset.y), cc.size(30, 10));
                     sp2:getPhysicsBody():setTag(DRAG_BODYS_TAG);
-                    scene:getPhysicsWorld():addJoint(cc.PhysicsJointPin:construct(sp1:getPhysicsBody(), box, cc.p(sp1:getPosition())));
-                    scene:getPhysicsWorld():addJoint(cc.PhysicsJointPin:construct(sp2:getPhysicsBody(), box, cc.p(sp2:getPosition())));
+                    curLayer:getPhysicsWorld():addJoint(cc.PhysicsJointPin:construct(sp1:getPhysicsBody(), box, cc.p(sp1:getPosition())));
+                    curLayer:getPhysicsWorld():addJoint(cc.PhysicsJointPin:construct(sp2:getPhysicsBody(), box, cc.p(sp2:getPosition())));
                     local joint = cc.PhysicsJointRotarySpring:construct(sp1:getPhysicsBody(), sp2:getPhysicsBody(), 3000.0, 60.0);
-                    scene:getPhysicsWorld():addJoint(joint);
+                    curLayer:getPhysicsWorld():addJoint(joint);
                     
                     layer:addChild(sp1);
                     layer:addChild(sp2);
@@ -474,10 +473,10 @@ local function PhysicsDemoJoints()
                     local sp2 = makeBox(cc.p(offset.x + 30, offset.y), cc.size(30, 10));
                     sp2:getPhysicsBody():setTag(DRAG_BODYS_TAG);
                     
-                    scene:getPhysicsWorld():addJoint(cc.PhysicsJointPin:construct(sp1:getPhysicsBody(), box, cc.p(sp1:getPosition())));
-                    scene:getPhysicsWorld():addJoint(cc.PhysicsJointPin:construct(sp2:getPhysicsBody(), box, cc.p(sp2:getPosition())));
+                    curLayer:getPhysicsWorld():addJoint(cc.PhysicsJointPin:construct(sp1:getPhysicsBody(), box, cc.p(sp1:getPosition())));
+                    curLayer:getPhysicsWorld():addJoint(cc.PhysicsJointPin:construct(sp2:getPhysicsBody(), box, cc.p(sp2:getPosition())));
                     local joint = cc.PhysicsJointRotaryLimit:construct(sp1:getPhysicsBody(), sp2:getPhysicsBody(), 0.0, math.pi/2);
-                    scene:getPhysicsWorld():addJoint(joint);
+                    curLayer:getPhysicsWorld():addJoint(joint);
                     
                     layer:addChild(sp1);
                     layer:addChild(sp2);
@@ -487,10 +486,10 @@ local function PhysicsDemoJoints()
                     local sp2 = makeBox(cc.p(offset.x + 30, offset.y), cc.size(30, 10));
                     sp2:getPhysicsBody():setTag(DRAG_BODYS_TAG);
                     
-                    scene:getPhysicsWorld():addJoint(cc.PhysicsJointPin:construct(sp1:getPhysicsBody(), box, cc.p(sp1:getPosition())));
-                    scene:getPhysicsWorld():addJoint(cc.PhysicsJointPin:construct(sp2:getPhysicsBody(), box, cc.p(sp2:getPosition())));
+                    curLayer:getPhysicsWorld():addJoint(cc.PhysicsJointPin:construct(sp1:getPhysicsBody(), box, cc.p(sp1:getPosition())));
+                    curLayer:getPhysicsWorld():addJoint(cc.PhysicsJointPin:construct(sp2:getPhysicsBody(), box, cc.p(sp2:getPosition())));
                     local joint = cc.PhysicsJointRatchet:construct(sp1:getPhysicsBody(), sp2:getPhysicsBody(), 0.0, math.pi/2);
-                    scene:getPhysicsWorld():addJoint(joint);
+                    curLayer:getPhysicsWorld():addJoint(joint);
                     
                     layer:addChild(sp1);
                     layer:addChild(sp2);
@@ -500,10 +499,10 @@ local function PhysicsDemoJoints()
                     local sp2 = makeBox(cc.p(offset.x + 30, offset.y), cc.size(30, 10));
                     sp2:getPhysicsBody():setTag(DRAG_BODYS_TAG);
                     
-                    scene:getPhysicsWorld():addJoint(cc.PhysicsJointPin:construct(sp1:getPhysicsBody(), box, cc.p(sp1:getPosition())));
-                    scene:getPhysicsWorld():addJoint(cc.PhysicsJointPin:construct(sp2:getPhysicsBody(), box, cc.p(sp2:getPosition())));
+                    curLayer:getPhysicsWorld():addJoint(cc.PhysicsJointPin:construct(sp1:getPhysicsBody(), box, cc.p(sp1:getPosition())));
+                    curLayer:getPhysicsWorld():addJoint(cc.PhysicsJointPin:construct(sp2:getPhysicsBody(), box, cc.p(sp2:getPosition())));
                     local joint = cc.PhysicsJointGear:construct(sp1:getPhysicsBody(), sp2:getPhysicsBody(), 0.0, 2.0);
-                    scene:getPhysicsWorld():addJoint(joint);
+                    curLayer:getPhysicsWorld():addJoint(joint);
                     
                     layer:addChild(sp1);
                     layer:addChild(sp2);
@@ -513,10 +512,10 @@ local function PhysicsDemoJoints()
                     local sp2 = makeBox(cc.p(offset.x + 30, offset.y), cc.size(30, 10));
                     sp2:getPhysicsBody():setTag(DRAG_BODYS_TAG);
                     
-                    scene:getPhysicsWorld():addJoint(cc.PhysicsJointPin:construct(sp1:getPhysicsBody(), box, cc.p(sp1:getPosition())));
-                    scene:getPhysicsWorld():addJoint(cc.PhysicsJointPin:construct(sp2:getPhysicsBody(), box, cc.p(sp2:getPosition())));
+                    curLayer:getPhysicsWorld():addJoint(cc.PhysicsJointPin:construct(sp1:getPhysicsBody(), box, cc.p(sp1:getPosition())));
+                    curLayer:getPhysicsWorld():addJoint(cc.PhysicsJointPin:construct(sp2:getPhysicsBody(), box, cc.p(sp2:getPosition())));
                     local joint = cc.PhysicsJointMotor:construct(sp1:getPhysicsBody(), sp2:getPhysicsBody(), math.pi/2);
-                    scene:getPhysicsWorld():addJoint(joint);
+                    curLayer:getPhysicsWorld():addJoint(joint);
                     
                     layer:addChild(sp1);
                     layer:addChild(sp2);
@@ -531,7 +530,7 @@ local function PhysicsDemoJoints()
 end
 
 local function PhysicsDemoPyramidStack()
-    local layer = cc.Layer:create()
+    local layer = cc.Layer:createWithPhysics()
 
     local function onEnter()
        local touchListener = cc.EventListenerTouchOneByOne:create();
@@ -569,7 +568,7 @@ local function PhysicsDemoPyramidStack()
 end
 
 local function PhysicsDemoRayCast()
-    local layer = cc.Layer:create()
+    local layer = cc.Layer:createWithPhysics()
 
     local function onEnter()
        local function onTouchEnded(touch, event)
@@ -591,7 +590,7 @@ local function PhysicsDemoRayCast()
        local eventDispatcher = layer:getEventDispatcher()
        eventDispatcher:addEventListenerWithSceneGraphPriority(touchListener, layer);
        
-       cc.Director:getInstance():getRunningScene():getPhysicsWorld():setGravity(cc.p(0,0));
+       curLayer:getPhysicsWorld():setGravity(cc.p(0,0));
        
        local node = cc.DrawNode:create();
        node:setPhysicsBody(cc.PhysicsBody:createEdgeSegment(cc.p(VisibleRect:leftBottom().x, VisibleRect:leftBottom().y + 50), cc.p(VisibleRect:rightBottom().x, VisibleRect:rightBottom().y + 50)))
@@ -636,7 +635,7 @@ local function PhysicsDemoRayCast()
 		return false
 	     end
 
-            cc.Director:getInstance():getRunningScene():getPhysicsWorld():rayCast(func, point1, point2);
+            curLayer:getPhysicsWorld():rayCast(func, point1, point2);
             drawNode:drawSegment(point1, point3, 1, STATIC_COLOR);
             
             if point2.x ~= point3.x or point2.y ~= point3.y then
@@ -654,7 +653,7 @@ local function PhysicsDemoRayCast()
                 return true;
             end
             
-            cc.Director:getInstance():getRunningScene():getPhysicsWorld():rayCast(func, point1, point2);
+            curLayer:getPhysicsWorld():rayCast(func, point1, point2);
             drawNode:drawSegment(point1, point3, 1, STATIC_COLOR);
             
             if point2.x ~= point3.x or point2.y ~= point3.y then
@@ -669,7 +668,7 @@ local function PhysicsDemoRayCast()
                 return true;
             end
             
-            cc.Director:getInstance():getRunningScene():getPhysicsWorld():rayCast(func, point1, point2);
+            curLayer:getPhysicsWorld():rayCast(func, point1, point2);
             drawNode:drawSegment(point1, point2, 1, STATIC_COLOR);
             
             for _, p in ipairs(points) do
@@ -693,7 +692,7 @@ local function PhysicsDemoRayCast()
 end
 
 local function PhysicsDemoOneWayPlatform()
-    local layer = cc.Layer:create()
+    local layer = cc.Layer:createWithPhysics()
     local function onEnter()
 
        local touchListener = cc.EventListenerTouchOneByOne:create();
@@ -734,7 +733,7 @@ local function PhysicsDemoOneWayPlatform()
 end
 
 local function PhysicsDemoActions()
-  local layer = cc.Layer:create()
+  local layer = cc.Layer:createWithPhysics()
   local function onEnter()
     local touchListener = cc.EventListenerTouchOneByOne:create()
     touchListener:registerScriptHandler(onTouchBegan, cc.Handler.EVENT_TOUCH_BEGAN) 
@@ -773,7 +772,7 @@ local function PhysicsDemoActions()
 end
 
 local function PhysicsDemoPump()
-  local layer = cc.Layer:create()
+  local layer = cc.Layer:createWithPhysics()
   local function onEnter()
     layer:toggleDebug();
 
@@ -803,14 +802,14 @@ local function PhysicsDemoPump()
     eventDispatcher:addEventListenerWithSceneGraphPriority(touchListener, layer)
     
     local function update()
-      for _, body in ipairs(cc.Director:getInstance():getRunningScene():getPhysicsWorld():getAllBodies()) do
+      for _, body in ipairs(curLayer:getPhysicsWorld():getAllBodies()) do
         if body:getTag() == DRAG_BODYS_TAG and body:getPosition().y < 0.0 then
             body:getNode():setPosition(cc.p(VisibleRect:leftTop().x + 75, VisibleRect:leftTop().y + math.random() * 90, 0));
             body:setVelocity(cc.p(0, 0));
         end
       end
       
-      local gear = cc.Director:getInstance():getRunningScene():getPhysicsWorld():getBody(1);
+      local gear = curLayer:getPhysicsWorld():getBody(1);
       if gear then
           if distance ~= 0.0 then
             rotationV = rotationV + distance/2500.0;
@@ -871,7 +870,7 @@ local function PhysicsDemoPump()
         cc.p(VisibleRect:leftBottom().x + 102, VisibleRect:leftBottom().y + 20)
     };
     
-    local world = cc.Director:getInstance():getRunningScene():getPhysicsWorld();
+    local world = curLayer:getPhysicsWorld();
     
     -- small gear
     local sgear = cc.Node:create();
@@ -934,7 +933,7 @@ local function PhysicsDemoPump()
 end
 
 local function PhysicsDemoSlice()
-    local layer = cc.Layer:create()
+    local layer = cc.Layer:createWithPhysics()
     local function onEnter()
       layer:toggleDebug()
       local sliceTag = 1;
@@ -994,7 +993,7 @@ local function PhysicsDemoSlice()
       end
 
       local function onTouchEnded(touch, event)
-        cc.Director:getInstance():getRunningScene():getPhysicsWorld():rayCast(slice, touch:getStartLocation(), touch:getLocation());
+        curLayer:getPhysicsWorld():rayCast(slice, touch:getStartLocation(), touch:getLocation());
       end
 
       local touchListener = cc.EventListenerTouchOneByOne:create();
@@ -1025,10 +1024,10 @@ end
 
 
 local function PhysicsDemoBug3988()
-    local layer = cc.Layer:create()
+    local layer = cc.Layer:createWithPhysics()
     local function onEnter()
       layer:toggleDebug();
-      cc.Director:getInstance():getRunningScene():getPhysicsWorld():setGravity(cc.p(0, 0));
+      curLayer:getPhysicsWorld():setGravity(cc.p(0, 0));
 
       local ball  = cc.Sprite:create("Images/YellowSquare.png");
       ball:setPosition(cc.p(VisibleRect:center().x-100, VisibleRect:center().y));
@@ -1048,9 +1047,9 @@ local function PhysicsDemoBug3988()
 end
 
 local function PhysicsContactTest()
-    local layer = cc.Layer:create()
+    local layer = cc.Layer:createWithPhysics()
     local function onEnter()
-      cc.Director:getInstance():getRunningScene():getPhysicsWorld():setGravity(cc.p(0, 0));
+      curLayer:getPhysicsWorld():setGravity(cc.p(0, 0));
       local s = cc.size(VisibleRect:getVisibleRect().width, VisibleRect:getVisibleRect().height);
       
       layer.yellowBoxNum = 50;
@@ -1291,11 +1290,11 @@ local function PhysicsContactTest()
 end
 
 local function PhysicsPositionRotationTest()
-    local layer = cc.Layer:create()
+    local layer = cc.Layer:createWithPhysics()
     local function onEnter()
       layer:toggleDebug()
 
-      cc.Director:getInstance():getRunningScene():getPhysicsWorld():setGravity(cc.p(0, 0));
+      curLayer:getPhysicsWorld():setGravity(cc.p(0, 0));
         
       local touchListener = cc.EventListenerTouchOneByOne:create()
       touchListener:registerScriptHandler(onTouchBegan, cc.Handler.EVENT_TOUCH_BEGAN) 
@@ -1351,10 +1350,9 @@ end
 
 function PhysicsTest()
   cclog("PhysicsTest")
-  local scene = cc.Scene:createWithPhysics()
+  local scene = cc.Scene:create()
 
 
-   Helper.usePhysics = true
    Helper.createFunctionTable = {
       PhysicsDemoLogoSmash,
       PhysicsDemoPyramidStack,

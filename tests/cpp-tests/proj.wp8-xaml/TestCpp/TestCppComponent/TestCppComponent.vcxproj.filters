@@ -642,6 +642,9 @@
     <ClCompile Include="..\..\..\Classes\PerformanceTest\PerformanceTouchesTest.cpp">
       <Filter>Classes\PerformanceTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Classes\PerformanceTest\PerformanceCallbackTest.cpp">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\Classes\PhysicsTest\PhysicsTest.cpp">
       <Filter>Classes\PhysicsTest</Filter>
     </ClCompile>
@@ -1249,6 +1252,9 @@
       <Filter>Classes\PerformanceTest</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Classes\PerformanceTest\PerformanceTouchesTest.h">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\PerformanceTest\PerformanceCallbackTest.h">
       <Filter>Classes\PerformanceTest</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Classes\PhysicsTest\PhysicsTest.h">

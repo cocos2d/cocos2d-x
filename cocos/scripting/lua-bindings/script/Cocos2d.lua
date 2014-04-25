@@ -81,7 +81,7 @@ function cc.pGetAngle(self,other)
     local a2 = cc.pNormalize(self)
     local b2 = cc.pNormalize(other)
     local angle = math.atan2(cc.pCross(a2, b2), cc.pDot(a2, b2) )
-    if angle < 1.192092896e-7 then
+    if math.abs(angle) < 1.192092896e-7 then
         return 0.0
     end
 

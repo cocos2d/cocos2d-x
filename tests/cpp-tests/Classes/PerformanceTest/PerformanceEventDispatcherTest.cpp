@@ -154,8 +154,6 @@ void PerformanceEventDispatcherScene::initWithQuantityOfNodes(unsigned int nNode
     addChild(menuLayer);
     menuLayer->release();
     
-    printf("Size of Node: %lu\n", sizeof(Node));
-    
     int oldFontSize = MenuItemFont::getFontSize();
     MenuItemFont::setFontSize(24);
     

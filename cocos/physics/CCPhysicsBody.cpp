@@ -30,7 +30,7 @@
 
 #include "chipmunk.h"
 
-#include "CCNode.h"
+#include "CCLayer.h"
 
 #include "CCPhysicsShape.h"
 #include "CCPhysicsJoint.h"
@@ -347,18 +347,12 @@ void PhysicsBody::setGravityEnable(bool enable)
 
 void PhysicsBody::setPosition(Vector2 position)
 {
-    if (!_positionResetTag)
-    {
-        cpBodySetPos(_info->getBody(), PhysicsHelper::point2cpv(position + _positionOffset));
-    }
+    cpBodySetPos(_info->getBody(), PhysicsHelper::point2cpv(position + _positionOffset));
 }
 
 void PhysicsBody::setRotation(float rotation)
 {
-    if (!_rotationResetTag)
-    {
-        cpBodySetAngle(_info->getBody(), -PhysicsHelper::float2cpfloat((rotation + _rotationOffset) * (M_PI / 180.0f)));
-    }
+    cpBodySetAngle(_info->getBody(), -PhysicsHelper::float2cpfloat((rotation + _rotationOffset) * (M_PI / 180.0f)));
 }
 
 Vector2 PhysicsBody::getPosition() const
@@ -770,11 +764,19 @@ void PhysicsBody::update(float delta)
     if (_node != nullptr)
     {
         Node* parent = _node->getParent();
-        Vector2 position = parent != nullptr ? parent->convertToNodeSpace(Vector2(getPosition())) : Vector2(getPosition());
+        Layer* layer = &_world->getLayer();
+        
+        Point position = parent != layer ? parent->convertToNodeSpace(layer->convertToWorldSpace(getPosition())) : getPosition();
+        float rotation = getRotation();
+        for (; parent != layer; parent = parent->getParent())
+        {
+            rotation -= parent->getRotation();
+        }
+        
         _positionResetTag = true;
         _rotationResetTag = true;
         _node->setPosition(position);
-        _node->setRotation(getRotation());
+        _node->setRotation(rotation);
         _positionResetTag = false;
         _rotationResetTag = false;
         

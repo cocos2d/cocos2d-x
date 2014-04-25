@@ -1365,6 +1365,11 @@ protected:
     virtual void updateCascadeColor();
     virtual void disableCascadeColor();
     virtual void updateColor() {}
+    
+#if CC_USE_PHYSICS
+    virtual void updatePhysicsBodyPosition(Layer* layer);
+    virtual void updatePhysicsBodyRotation(Layer* layer);
+#endif // CC_USE_PHYSICS
 
     float _rotationX;               ///< rotation on the X-axis
     float _rotationY;               ///< rotation on the Y-axis
@@ -1456,6 +1461,10 @@ protected:
     
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Node);
+    
+#if CC_USE_PHYSICS
+    friend class Layer;
+#endif //CC_USTPS
 };
 
 // NodeRGBA

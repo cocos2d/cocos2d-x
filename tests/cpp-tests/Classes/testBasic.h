@@ -9,7 +9,7 @@ USING_NS_CC;
 class TestScene : public Scene
 {
 public: 
-    TestScene(bool bPortrait = false, bool physics = false);
+    TestScene(bool bPortrait = false);
     virtual void onEnter() override;
 
     virtual void runThisTest() = 0;
