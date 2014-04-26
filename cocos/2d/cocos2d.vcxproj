@@ -187,20 +187,12 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="..\deprecated\CCNotificationCenter.cpp" />
     <ClCompile Include="..\deprecated\CCSet.cpp" />
     <ClCompile Include="..\deprecated\CCString.cpp" />
-    <ClCompile Include="..\math\kazmath\kazmath\aabb.c" />
-    <ClCompile Include="..\math\kazmath\kazmath\GL\mat4stack.c" />
-    <ClCompile Include="..\math\kazmath\kazmath\GL\matrix.c" />
-    <ClCompile Include="..\math\kazmath\kazmath\mat3.c" />
-    <ClCompile Include="..\math\kazmath\kazmath\mat4.c" />
-    <ClCompile Include="..\math\kazmath\kazmath\neon_matrix_impl.c" />
-    <ClCompile Include="..\math\kazmath\kazmath\plane.c" />
-    <ClCompile Include="..\math\kazmath\kazmath\quaternion.c" />
-    <ClCompile Include="..\math\kazmath\kazmath\ray2.c" />
-    <ClCompile Include="..\math\kazmath\kazmath\ray3.c" />
-    <ClCompile Include="..\math\kazmath\kazmath\utility.c" />
-    <ClCompile Include="..\math\kazmath\kazmath\vec2.c" />
-    <ClCompile Include="..\math\kazmath\kazmath\vec3.c" />
-    <ClCompile Include="..\math\kazmath\kazmath\vec4.c" />
+    <ClCompile Include="..\math\MathUtil.cpp" />
+    <ClCompile Include="..\math\Matrix.cpp" />
+    <ClCompile Include="..\math\Quaternion.cpp" />
+    <ClCompile Include="..\math\Vector2.cpp" />
+    <ClCompile Include="..\math\Vector3.cpp" />
+    <ClCompile Include="..\math\Vector4.cpp" />
     <ClCompile Include="..\physics\CCPhysicsBody.cpp" />
     <ClCompile Include="..\physics\CCPhysicsContact.cpp" />
     <ClCompile Include="..\physics\CCPhysicsJoint.cpp" />
@@ -322,7 +314,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="platform\win32\CCStdC.cpp" />
     <ClCompile Include="renderer\CCBatchCommand.cpp" />
     <ClCompile Include="renderer\CCCustomCommand.cpp" />
-    <ClCompile Include="renderer\CCFrustum.cpp" />
     <ClCompile Include="renderer\CCGroupCommand.cpp" />
     <ClCompile Include="renderer\CCMaterialManager.cpp" />
     <ClCompile Include="renderer\CCQuadCommand.cpp" />
@@ -365,21 +356,14 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="..\deprecated\CCNotificationCenter.h" />
     <ClInclude Include="..\deprecated\CCSet.h" />
     <ClInclude Include="..\deprecated\CCString.h" />
-    <ClInclude Include="..\math\kazmath\kazmath\aabb.h" />
-    <ClInclude Include="..\math\kazmath\kazmath\GL\mat4stack.h" />
-    <ClInclude Include="..\math\kazmath\kazmath\GL\matrix.h" />
-    <ClInclude Include="..\math\kazmath\kazmath\kazmath.h" />
-    <ClInclude Include="..\math\kazmath\kazmath\mat3.h" />
-    <ClInclude Include="..\math\kazmath\kazmath\mat4.h" />
-    <ClInclude Include="..\math\kazmath\kazmath\neon_matrix_impl.h" />
-    <ClInclude Include="..\math\kazmath\kazmath\plane.h" />
-    <ClInclude Include="..\math\kazmath\kazmath\quaternion.h" />
-    <ClInclude Include="..\math\kazmath\kazmath\ray2.h" />
-    <ClInclude Include="..\math\kazmath\kazmath\ray3.h" />
-    <ClInclude Include="..\math\kazmath\kazmath\utility.h" />
-    <ClInclude Include="..\math\kazmath\kazmath\vec2.h" />
-    <ClInclude Include="..\math\kazmath\kazmath\vec3.h" />
-    <ClInclude Include="..\math\kazmath\kazmath\vec4.h" />
+    <ClInclude Include="..\math\CCMath.h" />
+    <ClInclude Include="..\math\CCMathBase.h" />
+    <ClInclude Include="..\math\MathUtil.h" />
+    <ClInclude Include="..\math\Matrix.h" />
+    <ClInclude Include="..\math\Quaternion.h" />
+    <ClInclude Include="..\math\Vector2.h" />
+    <ClInclude Include="..\math\Vector3.h" />
+    <ClInclude Include="..\math\Vector4.h" />
     <ClInclude Include="..\physics\CCPhysicsBody.h" />
     <ClInclude Include="..\physics\CCPhysicsContact.h" />
     <ClInclude Include="..\physics\CCPhysicsJoint.h" />
@@ -527,7 +511,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="platform\win32\CCStdC.h" />
     <ClInclude Include="renderer\CCBatchCommand.h" />
     <ClInclude Include="renderer\CCCustomCommand.h" />
-    <ClInclude Include="renderer\CCFrustum.h" />
     <ClInclude Include="renderer\CCGroupCommand.h" />
     <ClInclude Include="renderer\CCMaterialManager.h" />
     <ClInclude Include="renderer\CCQuadCommand.h" />
@@ -542,7 +525,16 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="ZipUtils.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\math\kazmath\kazmath\CMakeLists.txt" />
+    <None Include="..\math\MathUtil.inl" />
+    <None Include="..\math\MathUtilNeon.inl" />
+    <None Include="..\math\Matrix.inl" />
+    <None Include="..\math\Quaternion.inl" />
+    <None Include="..\math\Vector2.inl" />
+    <None Include="..\math\Vector3.inl" />
+    <None Include="..\math\Vector4.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\math\CMakeLists.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

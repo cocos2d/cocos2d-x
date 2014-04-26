@@ -38,7 +38,7 @@
 #include "CCProtocols.h"
 #include "CCEventDispatcher.h"
 #include "CCVector.h"
-#include "CCMath.h"
+#include "math/CCMath.h"
 
 NS_CC_BEGIN
 

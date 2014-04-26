@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 #include "CCGeometry.h"
 #include "CCPlatformMacros.h"
-#include "CCMath.h"
+#include "math/CCMath.h"
 
 NS_CC_BEGIN
 
