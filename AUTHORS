@@ -63,6 +63,7 @@ Developers:
         Fixed potential crashes in EventDispatch while using SceneGraphPriroity listeners and added helper function to check it
         Fixed a protential crash in EventDispatch while unregistering listener right after it was registered
         Adding an extra verification in Node's destructor
+        Added RefPtr<T> smart pointer support 
 
     silverscania
         Pass correct parameter to glPixelStorei when creating a texture
@@ -786,6 +787,7 @@ Developers:
         
     newnon
         Adds getCurrentLanguageCode() which returns iso 639-1 language code
+        Adds support for get response when Activity's onActivityResult is triggered
         
     youknowone
         Adds iOS-like elastic bounceback support for cocos2d::extension::ScrollView
@@ -815,12 +817,14 @@ Developers:
     Mazyod
         Fixed a bug that HTTPClient reports 2xx status codes as errors
         Added missing Text Font and Placeholder feature of EditBox for Mac platform
+        HttpRequest uses std::function as callback
         
     iSevenDays
         Fixed a bug that the result of 'malloc' is incompatible with type 'unsigned char *' in Image::saveImageToPNG
         Fixed a potential memory leak in CCEditBoxImplIOS.mm
         Fixed incompatible pointer conversion in external/chipmunk/src/cpArray.c
-        Fix memory leak in CCImage
+        Fixed memory leak in 'Image'
+        Fixed loosing precision when using 'recv' in 'Console'
         
     ololomax
         Fixed a potential crash in SceneReader::createNodeWithSceneFile
@@ -830,6 +834,15 @@ Developers:
         
     sachingarg05
         Re-added orientation change callback in java activity
+        
+    dplusic
+        Fixed that cc.pGetAngle may return wrong value
+        
+    zifter
+        Fixed a bug that the effect of particle loaded from CocosBuilder is incorrectly
+        
+    twhittock
+        Fixed a bug that Application::run returns wrong value on Mac platform
     
 Retired Core Developers:
     WenSheng Yang
