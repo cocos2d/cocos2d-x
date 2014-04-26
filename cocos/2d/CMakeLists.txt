@@ -128,7 +128,7 @@ set(COCOS2D_SRC
   CCScheduler.cpp
   ccFPSImages.c
   ccTypes.cpp
-  cocos2d.cpp
+  ../cocos2d.cpp
   platform/CCSAXParser.cpp
   platform/CCThread.cpp
   platform/CCGLViewProtocol.cpp
