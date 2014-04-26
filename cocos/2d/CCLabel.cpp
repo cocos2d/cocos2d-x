@@ -260,6 +260,7 @@ Label::Label(FontAtlas *atlas /* = nullptr */, TextHAlignment hAlignment /* = Te
 , _contentDirty(false)
 , _shadowDirty(false)
 , _compatibleMode(false)
+, _insideBounds(true)
 {
     setAnchorPoint(Vector2::ANCHOR_MIDDLE);
     reset();
@@ -904,9 +905,14 @@ void Label::drawShadowWithoutBlur()
 
 void Label::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
-    _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(Label::onDraw, this, transform, transformUpdated);
-    renderer->addCommand(&_customCommand);
+    // Don't do calculate the culling if the transform was not updated
+    _insideBounds = transformUpdated ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
+
+    if(_insideBounds) {
+        _customCommand.init(_globalZOrder);
+        _customCommand.func = CC_CALLBACK_0(Label::onDraw, this, transform, transformUpdated);
+        renderer->addCommand(&_customCommand);
+    }
 }
 
 void Label::createSpriteWithFontDefinition()
