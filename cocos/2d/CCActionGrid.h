@@ -26,8 +26,8 @@ THE SOFTWARE.
 #ifndef __ACTION_CCGRID_ACTION_H__
 #define __ACTION_CCGRID_ACTION_H__
 
-#include "CCActionInterval.h"
-#include "CCActionInstant.h"
+#include "2d/CCActionInterval.h"
+#include "2d/CCActionInstant.h"
 
 NS_CC_BEGIN
 

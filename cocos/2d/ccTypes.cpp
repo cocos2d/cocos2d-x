@@ -25,7 +25,7 @@ Copyright (c) 2013-2014 Chukong Technologies Inc.
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "ccTypes.h"
+#include "2d/ccTypes.h"
 
 NS_CC_BEGIN
 

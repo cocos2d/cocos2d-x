@@ -25,8 +25,8 @@ THE SOFTWARE.
 #ifndef __CCSKIN_H__
 #define __CCSKIN_H__
 
-#include "CCSprite.h"
-#include "renderer/CCQuadCommand.h"
+#include "2d/CCSprite.h"
+#include "2d/renderer/CCQuadCommand.h"
 
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CCBone.h"

@@ -4,7 +4,7 @@
 #include "cocos2d.h"
 #include "../testBasic.h"
 #include "../BaseTest.h"
-#include "renderer/CCCustomCommand.h"
+#include "2d/renderer/CCCustomCommand.h"
 
 class RenderTextureTest : public BaseTest
 {

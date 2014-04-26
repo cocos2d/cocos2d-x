@@ -25,8 +25,8 @@
 #include "chipmunk.h"
 #endif
 
-#include "ccTypes.h"
-#include "CCGeometry.h"
+#include "2d/ccTypes.h"
+#include "base/CCGeometry.h"
 
 
 #include <stdlib.h>

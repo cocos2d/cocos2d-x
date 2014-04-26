@@ -26,7 +26,7 @@ THE SOFTWARE.
 #ifndef __PLATFOMR_CCNS_H__
 #define __PLATFOMR_CCNS_H__
 
-#include "CCGeometry.h"
+#include "base/CCGeometry.h"
 
 NS_CC_BEGIN
 

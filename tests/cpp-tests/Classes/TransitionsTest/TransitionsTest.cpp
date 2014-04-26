@@ -25,7 +25,6 @@
 
 #include "TransitionsTest.h"
 #include "../testResource.h"
-#include "CCConfiguration.h"
 
 #define TRANSITION_DURATION (1.2f)
 

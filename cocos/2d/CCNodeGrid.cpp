@@ -25,9 +25,9 @@
 #include "CCNodeGrid.h"
 #include "CCGrid.h"
 
-#include "renderer/CCGroupCommand.h"
-#include "renderer/CCRenderer.h"
-#include "renderer/CCCustomCommand.h"
+#include "2d/renderer/CCGroupCommand.h"
+#include "2d/renderer/CCRenderer.h"
+#include "2d/renderer/CCCustomCommand.h"
 
 
 NS_CC_BEGIN

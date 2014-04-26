@@ -26,8 +26,8 @@ THE SOFTWARE.
 #ifndef __CC_TEXT_FIELD_H__
 #define __CC_TEXT_FIELD_H__
 
-#include "CCLabel.h"
-#include "CCIMEDelegate.h"
+#include "2d/CCLabel.h"
+#include "2d/CCIMEDelegate.h"
 
 NS_CC_BEGIN
 

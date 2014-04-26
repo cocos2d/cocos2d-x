@@ -30,7 +30,7 @@
 #include "CCFontFNT.h"
 #include "CCFontFreeType.h"
 #include "CCFontCharMap.h"
-#include "CCDirector.h"
+#include "2d/CCDirector.h"
 
 NS_CC_BEGIN
 

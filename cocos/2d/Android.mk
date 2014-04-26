@@ -106,7 +106,7 @@ CCUserDefaultAndroid.cpp \
 ccUTF8.cpp \
 ccUtils.cpp \
 CCVertex.cpp \
-cocos2d.cpp \
+../cocos2d.cpp \
 TGAlib.cpp \
 TransformUtils.cpp \
 ZipUtils.cpp \

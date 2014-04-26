@@ -28,11 +28,11 @@ THE SOFTWARE.
 #ifndef __CCDIRECTOR_H__
 #define __CCDIRECTOR_H__
 
-#include "CCPlatformMacros.h"
+#include "base/CCPlatformMacros.h"
 
-#include "CCRef.h"
-#include "ccTypes.h"
-#include "CCGeometry.h"
+#include "base/CCRef.h"
+#include "2d/ccTypes.h"
+#include "base/CCGeometry.h"
 #include "CCVector.h"
 #include "CCGL.h"
 #include "CCLabelAtlas.h"

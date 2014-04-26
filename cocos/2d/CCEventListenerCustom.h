@@ -25,7 +25,7 @@
 #ifndef __cocos2d_libs__CCCustomEventListener__
 #define __cocos2d_libs__CCCustomEventListener__
 
-#include "CCEventListener.h"
+#include "2d/CCEventListener.h"
 
 NS_CC_BEGIN
 

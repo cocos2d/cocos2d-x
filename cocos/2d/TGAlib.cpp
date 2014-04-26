@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 #include "TGAlib.h"
 #include "CCData.h"
-#include "platform/CCFileUtils.h"
+#include "2d/platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 

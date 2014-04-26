@@ -30,9 +30,9 @@
 #ifndef __CCPARTICLEBATCHNODE_H__
 #define __CCPARTICLEBATCHNODE_H__
 
-#include "CCNode.h"
-#include "CCProtocols.h"
-#include "renderer/CCBatchCommand.h"
+#include "2d/CCNode.h"
+#include "2d/CCProtocols.h"
+#include "2d/renderer/CCBatchCommand.h"
 
 NS_CC_BEGIN
 

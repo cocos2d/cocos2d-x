@@ -2,8 +2,8 @@
 #include "ShaderTest.h"
 #include "../testResource.h"
 #include "cocos2d.h"
-#include "renderer/CCRenderCommand.h"
-#include "renderer/CCCustomCommand.h"
+#include "2d/renderer/CCRenderCommand.h"
+#include "2d/renderer/CCCustomCommand.h"
 
 namespace ShaderTest2
 {

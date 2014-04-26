@@ -26,8 +26,8 @@ Copyright (c) 2013-2014 Chukong Technologies Inc.
 #ifndef __CCBOOL_H__
 #define __CCBOOL_H__
 
-#include "CCRef.h"
-#include "CCDataVisitor.h"
+#include "base/CCRef.h"
+#include "base/CCDataVisitor.h"
 
 NS_CC_BEGIN
 

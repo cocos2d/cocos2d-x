@@ -24,8 +24,8 @@
  ****************************************************************************/
 
 #include "CCData.h"
-#include "platform/CCCommon.h"
-#include "ccMacros.h"
+#include "2d/platform/CCCommon.h"
+#include "2d/ccMacros.h"
 
 #include <string>
 

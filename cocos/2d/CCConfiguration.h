@@ -27,7 +27,7 @@ THE SOFTWARE.
 #ifndef __CCCONFIGURATION_H__
 #define __CCCONFIGURATION_H__
 
-#include "CCRef.h"
+#include "base/CCRef.h"
 #include "CCGL.h"
 #include "CCValue.h"
 #include <string>

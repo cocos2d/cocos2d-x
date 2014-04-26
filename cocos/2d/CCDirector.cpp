@@ -26,7 +26,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 // cocos2d includes
-#include "CCDirector.h"
+#include "2d/CCDirector.h"
 
 // standard includes
 #include <string>
@@ -36,29 +36,29 @@ THE SOFTWARE.
 #include "CCNS.h"
 #include "CCScene.h"
 #include "CCScheduler.h"
-#include "ccMacros.h"
+#include "2d/ccMacros.h"
 #include "CCTransition.h"
 #include "CCTextureCache.h"
-#include "CCSpriteFrameCache.h"
+#include "2d/CCSpriteFrameCache.h"
 #include "CCAutoreleasePool.h"
-#include "platform/CCFileUtils.h"
+#include "2d/platform/CCFileUtils.h"
 #include "CCApplication.h"
 #include "CCFontFNT.h"
 #include "CCFontAtlasCache.h"
-#include "CCActionManager.h"
+#include "2d/CCActionManager.h"
 #include "CCAnimationCache.h"
-#include "CCTouch.h"
+#include "2d/CCTouch.h"
 #include "CCUserDefault.h"
 #include "ccGLStateCache.h"
 #include "CCShaderCache.h"
 #include "CCProfiling.h"
-#include "platform/CCImage.h"
+#include "2d/platform/CCImage.h"
 #include "CCGLView.h"
 #include "CCConfiguration.h"
-#include "CCEventDispatcher.h"
-#include "CCEventCustom.h"
+#include "2d/CCEventDispatcher.h"
+#include "2d/CCEventCustom.h"
 #include "CCFontFreeType.h"
-#include "renderer/CCRenderer.h"
+#include "2d/renderer/CCRenderer.h"
 #include "CCConsole.h"
 
 #include "math/CCMath.h"

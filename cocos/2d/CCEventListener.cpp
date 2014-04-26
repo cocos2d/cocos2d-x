@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCEventListener.h"
-#include "platform/CCCommon.h"
+#include "2d/CCEventListener.h"
+#include "2d/platform/CCCommon.h"
 
 NS_CC_BEGIN
 

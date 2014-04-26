@@ -30,8 +30,8 @@ THE SOFTWARE.
 #include <unistd.h>
 #include <sys/time.h>
 #include <string>
-#include "CCDirector.h"
-#include "platform/CCFileUtils.h"
+#include "2d/CCDirector.h"
+#include "2d/platform/CCFileUtils.h"
 #include "CCGLView.h"
 
 NS_CC_BEGIN

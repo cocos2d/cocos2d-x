@@ -21,19 +21,19 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "CCEventDispatcher.h"
-#include "CCEvent.h"
-#include "CCEventTouch.h"
-#include "CCEventCustom.h"
-#include "CCEventListenerTouch.h"
-#include "CCEventListenerAcceleration.h"
-#include "CCEventListenerMouse.h"
-#include "CCEventListenerKeyboard.h"
-#include "CCEventListenerCustom.h"
+#include "2d/CCEventDispatcher.h"
+#include "2d/CCEvent.h"
+#include "2d/CCEventTouch.h"
+#include "2d/CCEventCustom.h"
+#include "2d/CCEventListenerTouch.h"
+#include "2d/CCEventListenerAcceleration.h"
+#include "2d/CCEventListenerMouse.h"
+#include "2d/CCEventListenerKeyboard.h"
+#include "2d/CCEventListenerCustom.h"
 
 #include "CCScene.h"
-#include "CCDirector.h"
-#include "CCEventType.h"
+#include "2d/CCDirector.h"
+#include "2d/CCEventType.h"
 
 #include <algorithm>
 

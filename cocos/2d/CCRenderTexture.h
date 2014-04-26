@@ -26,11 +26,11 @@ THE SOFTWARE.
 #ifndef __CCRENDER_TEXTURE_H__
 #define __CCRENDER_TEXTURE_H__
 
-#include "CCNode.h"
-#include "CCSprite.h"
-#include "platform/CCImage.h"
-#include "renderer/CCGroupCommand.h"
-#include "renderer/CCCustomCommand.h"
+#include "2d/CCNode.h"
+#include "2d/CCSprite.h"
+#include "2d/platform/CCImage.h"
+#include "2d/renderer/CCGroupCommand.h"
+#include "2d/renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 

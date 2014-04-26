@@ -26,8 +26,8 @@ THE SOFTWARE.
 #ifndef __CCREF_H__
 #define __CCREF_H__
 
-#include "CCPlatformMacros.h"
-#include "ccConfig.h"
+#include "base/CCPlatformMacros.h"
+#include "2d/ccConfig.h"
 
 NS_CC_BEGIN
 

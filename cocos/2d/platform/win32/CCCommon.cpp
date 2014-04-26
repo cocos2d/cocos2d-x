@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
-#include "platform/CCCommon.h"
+#include "2d/platform/CCCommon.h"
 #include "CCStdC.h"
 
 NS_CC_BEGIN

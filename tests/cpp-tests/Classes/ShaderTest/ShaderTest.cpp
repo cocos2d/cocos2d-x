@@ -1,8 +1,8 @@
 #include "ShaderTest.h"
 #include "../testResource.h"
 #include "cocos2d.h"
-#include "renderer/CCCustomCommand.h"
-#include "renderer/CCRenderer.h"
+#include "2d/renderer/CCCustomCommand.h"
+#include "2d/renderer/CCRenderer.h"
 
 static int sceneIdx = -1; 
 

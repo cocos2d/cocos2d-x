@@ -22,7 +22,7 @@
 #ifndef __cocos2dx__ccUTF8__
 #define __cocos2dx__ccUTF8__
 
-#include "CCPlatformMacros.h"
+#include "base/CCPlatformMacros.h"
 #include <vector>
 
 NS_CC_BEGIN

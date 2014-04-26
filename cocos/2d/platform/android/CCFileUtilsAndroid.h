@@ -28,9 +28,9 @@ Copyright (c) 2013-2014 Chukong Technologies Inc.
 #include "CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
-#include "platform/CCFileUtils.h"
-#include "CCPlatformMacros.h"
-#include "ccTypes.h"
+#include "2d/platform/CCFileUtils.h"
+#include "base/CCPlatformMacros.h"
+#include "2d/ccTypes.h"
 #include <string>
 #include <vector>
 #include "jni.h"

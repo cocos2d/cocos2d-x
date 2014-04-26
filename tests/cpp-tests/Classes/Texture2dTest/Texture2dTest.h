@@ -28,7 +28,7 @@
 
 #include "../testBasic.h"
 #include "../BaseTest.h"
-#include "renderer/CCCustomCommand.h"
+#include "2d/renderer/CCCustomCommand.h"
 
 
 class TextureDemo : public BaseTest

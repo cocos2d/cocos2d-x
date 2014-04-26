@@ -23,8 +23,8 @@
 
  ****************************************************************************/
 
-#include "CCEventListener.h"
-#include "CCEventMouse.h"
+#include "2d/CCEventListener.h"
+#include "2d/CCEventMouse.h"
 
 #ifndef __cocos2d_libs__CCMouseEventListener__
 #define __cocos2d_libs__CCMouseEventListener__

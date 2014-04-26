@@ -27,12 +27,12 @@ THE SOFTWARE.
 #include "CCTMXLayer.h"
 #include "CCTMXXMLParser.h"
 #include "CCTMXTiledMap.h"
-#include "CCSprite.h"
+#include "2d/CCSprite.h"
 #include "CCTextureCache.h"
 #include "CCShaderCache.h"
-#include "CCGLProgram.h"
-#include "ccCArray.h"
-#include "CCDirector.h"
+#include "2d/CCGLProgram.h"
+#include "2d/ccCArray.h"
+#include "2d/CCDirector.h"
 
 #include "deprecated/CCString.h" // For StringUtils::format
 

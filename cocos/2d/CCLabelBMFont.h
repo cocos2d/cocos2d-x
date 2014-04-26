@@ -34,9 +34,9 @@ Use any of these editors to generate BMFonts:
 #ifndef __CCBITMAP_FONT_ATLAS_H__
 #define __CCBITMAP_FONT_ATLAS_H__
 
-#include "CCLabel.h"
+#include "2d/CCLabel.h"
 #if CC_LABELBMFONT_DEBUG_DRAW
-#include "renderer/CCCustomCommand.h"
+#include "2d/renderer/CCCustomCommand.h"
 #endif
 
 NS_CC_BEGIN

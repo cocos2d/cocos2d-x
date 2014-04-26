@@ -29,9 +29,9 @@ THE SOFTWARE.
 #include <functional>
 #include <list>
 #include <mutex>
-#include "platform/CCCommon.h"
-#include "CCPlatformMacros.h"
-#include "CCDirector.h"
+#include "2d/platform/CCCommon.h"
+#include "base/CCPlatformMacros.h"
+#include "2d/CCDirector.h"
 
 NS_CC_BEGIN
 

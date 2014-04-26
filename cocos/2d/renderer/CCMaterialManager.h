@@ -26,9 +26,9 @@
 #ifndef _CC_MATERIALMANAGER_H_
 #define _CC_MATERIALMANAGER_H_
 
-#include "CCPlatformMacros.h"
-#include "CCRef.h"
-#include "ccTypes.h"
+#include "base/CCPlatformMacros.h"
+#include "base/CCRef.h"
+#include "2d/ccTypes.h"
 #include <map>
 
 NS_CC_BEGIN

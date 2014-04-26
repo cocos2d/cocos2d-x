@@ -29,9 +29,9 @@ THE SOFTWARE.
 #include "CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
-#include "CCRef.h"
-#include "CCGeometry.h"
-#include "platform/CCGLViewProtocol.h"
+#include "base/CCRef.h"
+#include "base/CCGeometry.h"
+#include "2d/platform/CCGLViewProtocol.h"
 
 NS_CC_BEGIN
 

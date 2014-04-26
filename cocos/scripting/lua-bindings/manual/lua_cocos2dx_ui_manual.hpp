@@ -32,7 +32,7 @@ extern "C" {
 }
 #endif
 
-#include "CCRef.h"
+#include "base/CCRef.h"
 
 TOLUA_API int register_all_cocos2dx_ui_manual(lua_State* L);
 

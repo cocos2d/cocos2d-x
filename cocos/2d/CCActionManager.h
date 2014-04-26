@@ -29,9 +29,9 @@ THE SOFTWARE.
 #ifndef __ACTION_CCACTION_MANAGER_H__
 #define __ACTION_CCACTION_MANAGER_H__
 
-#include "CCAction.h"
+#include "2d/CCAction.h"
 #include "CCVector.h"
-#include "CCRef.h"
+#include "base/CCRef.h"
 
 NS_CC_BEGIN
 

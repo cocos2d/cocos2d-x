@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CCBATCHNODE_H__
 #define __CCBATCHNODE_H__
 
-#include "CCNode.h"
+#include "2d/CCNode.h"
 #include "cocostudio/CCArmatureDefine.h"
 
 namespace cocos2d {

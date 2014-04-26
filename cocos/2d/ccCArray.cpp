@@ -24,9 +24,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "ccCArray.h"
-#include "CCRef.h"
-#include "ccTypes.h"
+#include "2d/ccCArray.h"
+#include "base/CCRef.h"
+#include "2d/ccTypes.h"
 
 NS_CC_BEGIN
 

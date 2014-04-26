@@ -23,7 +23,7 @@
  
  ****************************************************************************/
 
-#include "CCEventKeyboard.h"
+#include "2d/CCEventKeyboard.h"
 
 NS_CC_BEGIN
 

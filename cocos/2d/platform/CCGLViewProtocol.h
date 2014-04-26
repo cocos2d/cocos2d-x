@@ -26,8 +26,8 @@ THE SOFTWARE.
 #ifndef __CCGLVIEWPROTOCOL_H__
 #define __CCGLVIEWPROTOCOL_H__
 
-#include "ccTypes.h"
-#include "CCEventTouch.h"
+#include "2d/ccTypes.h"
+#include "2d/CCEventTouch.h"
 
 #include <vector>
 

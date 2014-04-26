@@ -28,7 +28,7 @@ THE SOFTWARE.
 #define __CCPAGE_TURN_TRANSITION_H__
 
 #include "CCTransition.h"
-#include "renderer/CCCustomCommand.h"
+#include "2d/renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 

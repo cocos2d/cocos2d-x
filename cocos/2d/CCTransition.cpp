@@ -26,14 +26,14 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCTransition.h"
-#include "CCDirector.h"
-#include "CCActionInterval.h"
-#include "CCActionInstant.h"
-#include "CCActionEase.h"
-#include "CCActionCamera.h"
-#include "CCActionTiledGrid.h"
-#include "CCActionGrid.h"
-#include "CCLayer.h"
+#include "2d/CCDirector.h"
+#include "2d/CCActionInterval.h"
+#include "2d/CCActionInstant.h"
+#include "2d/CCActionEase.h"
+#include "2d/CCActionCamera.h"
+#include "2d/CCActionTiledGrid.h"
+#include "2d/CCActionGrid.h"
+#include "2d/CCLayer.h"
 #include "CCRenderTexture.h"
 #include "CCNodeGrid.h"
 

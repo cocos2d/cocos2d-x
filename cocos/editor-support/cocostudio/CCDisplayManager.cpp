@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "cocostudio/CCUtilMath.h"
 #include "cocostudio/CCSkin.h"
 
-#include "CCParticleSystemQuad.h"
+#include "2d/CCParticleSystemQuad.h"
 
 using namespace cocos2d;
 

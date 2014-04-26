@@ -26,24 +26,24 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCNode.h"
+#include "2d/CCNode.h"
 
 #include <algorithm>
 
 #include "deprecated/CCString.h"
-#include "ccCArray.h"
+#include "2d/ccCArray.h"
 #include "TransformUtils.h"
 #include "CCGrid.h"
-#include "CCDirector.h"
+#include "2d/CCDirector.h"
 #include "CCScheduler.h"
-#include "CCTouch.h"
-#include "CCActionManager.h"
+#include "2d/CCTouch.h"
+#include "2d/CCActionManager.h"
 #include "CCScriptSupport.h"
-#include "CCGLProgram.h"
-#include "CCEventDispatcher.h"
-#include "CCEvent.h"
-#include "CCEventTouch.h"
-#include "CCLayer.h"
+#include "2d/CCGLProgram.h"
+#include "2d/CCEventDispatcher.h"
+#include "2d/CCEvent.h"
+#include "2d/CCEventTouch.h"
+#include "2d/CCLayer.h"
 
 #if CC_USE_PHYSICS
 #include "CCPhysicsBody.h"

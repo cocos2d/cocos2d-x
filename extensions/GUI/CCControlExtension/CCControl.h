@@ -31,7 +31,7 @@
 #define __CCCONTROL_H__
 
 #include "CCControlUtils.h"
-#include "CCLayer.h"
+#include "2d/CCLayer.h"
 
 NS_CC_EXT_BEGIN
 

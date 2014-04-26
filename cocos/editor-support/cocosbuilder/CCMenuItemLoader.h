@@ -1,8 +1,8 @@
 #ifndef _CCB_CCMENUITEMLOADER_H_
 #define _CCB_CCMENUITEMLOADER_H_
 
-#include "CCRef.h"
-#include "CCMenuItem.h"
+#include "base/CCRef.h"
+#include "2d/CCMenuItem.h"
 
 #include "CCLayerLoader.h"
 

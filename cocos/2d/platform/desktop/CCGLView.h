@@ -26,9 +26,9 @@ THE SOFTWARE.
 #ifndef __CC_EGLVIEW_DESKTOP_H__
 #define __CC_EGLVIEW_DESKTOP_H__
 
-#include "CCRef.h"
-#include "platform/CCCommon.h"
-#include "platform/CCGLViewProtocol.h"
+#include "base/CCRef.h"
+#include "2d/platform/CCCommon.h"
+#include "2d/platform/CCGLViewProtocol.h"
 #include "glfw3.h"
 
 NS_CC_BEGIN

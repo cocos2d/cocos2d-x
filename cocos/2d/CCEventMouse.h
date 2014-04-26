@@ -26,7 +26,7 @@
 #ifndef __cocos2d_libs__CCMouseEvent__
 #define __cocos2d_libs__CCMouseEvent__
 
-#include "CCEvent.h"
+#include "2d/CCEvent.h"
 
 #define MOUSE_BUTTON_LEFT       0
 #define MOUSE_BUTTON_RIGHT      1

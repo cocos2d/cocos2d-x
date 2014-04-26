@@ -30,11 +30,11 @@ THE SOFTWARE.
 #include <sstream>
 #include "CCTMXXMLParser.h"
 #include "CCTMXTiledMap.h"
-#include "ccMacros.h"
-#include "platform/CCFileUtils.h"
+#include "2d/ccMacros.h"
+#include "2d/platform/CCFileUtils.h"
 #include "ZipUtils.h"
 #include "base64.h"
-#include "CCDirector.h"
+#include "2d/CCDirector.h"
 
 using namespace std;
 

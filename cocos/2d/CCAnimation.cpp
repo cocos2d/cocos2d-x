@@ -26,10 +26,10 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "CCAnimation.h"
 #include "CCTextureCache.h"
-#include "CCTexture2D.h"
-#include "ccMacros.h"
-#include "CCSpriteFrame.h"
-#include "CCDirector.h"
+#include "2d/CCTexture2D.h"
+#include "2d/ccMacros.h"
+#include "2d/CCSpriteFrame.h"
+#include "2d/CCDirector.h"
 
 NS_CC_BEGIN
 

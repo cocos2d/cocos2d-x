@@ -28,10 +28,10 @@ THE SOFTWARE.
 #include <string>
 #include "CCPlatformConfig.h"
 #include "CCPlatformDefine.h"
-#include "CCPlatformMacros.h"
+#include "base/CCPlatformMacros.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#include "platform/android/CCFileUtilsAndroid.h"
+#include "2d/platform/android/CCFileUtilsAndroid.h"
 #elif(CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 // for import ssize_t on win32 platform
 #include "CCStdC.h"

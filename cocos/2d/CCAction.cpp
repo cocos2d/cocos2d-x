@@ -25,10 +25,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCAction.h"
-#include "CCActionInterval.h"
-#include "CCNode.h"
-#include "CCDirector.h"
+#include "2d/CCAction.h"
+#include "2d/CCActionInterval.h"
+#include "2d/CCNode.h"
+#include "2d/CCDirector.h"
 #include "deprecated/CCString.h"
 
 NS_CC_BEGIN

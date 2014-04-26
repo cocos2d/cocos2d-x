@@ -26,7 +26,7 @@ THE SOFTWARE.
 #ifndef __CC_COMMON_H__
 #define __CC_COMMON_H__
 
-#include "CCPlatformMacros.h"
+#include "base/CCPlatformMacros.h"
 
 NS_CC_BEGIN
 
