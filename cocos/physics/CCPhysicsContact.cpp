@@ -25,7 +25,7 @@
 #if CC_USE_PHYSICS
 #include "chipmunk.h"
 
-#include "CCPhysicsBody.h"
+#include "physics/CCPhysicsBody.h"
 
 #include "chipmunk/CCPhysicsContactInfo_chipmunk.h"
 #include "chipmunk/CCPhysicsHelper_chipmunk.h"

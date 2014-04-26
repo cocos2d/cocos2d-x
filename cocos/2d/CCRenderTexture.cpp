@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "2d/CCDirector.h"
 #include "2d/platform/CCImage.h"
 #include "2d/CCGLProgram.h"
-#include "ccGLStateCache.h"
+#include "2d/ccGLStateCache.h"
 #include "CCConfiguration.h"
 #include "ccUtils.h"
 #include "CCTextureCache.h"

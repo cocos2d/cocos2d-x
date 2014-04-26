@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCData.h"
+#include "base/CCData.h"
 #include "2d/platform/CCCommon.h"
 #include "2d/ccMacros.h"
 

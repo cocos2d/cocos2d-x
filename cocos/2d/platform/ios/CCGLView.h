@@ -26,7 +26,7 @@
 #ifndef __CC_EGLVIEW_IPHONE_H__
 #define __CC_EGLVIEW_IPHONE_H__
 
-#include "CCPlatformConfig.h"
+#include "base/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
 #include "base/CCRef.h"

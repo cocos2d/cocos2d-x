@@ -33,7 +33,7 @@ THE SOFTWARE.
 #include "base/CCRef.h"
 #include "2d/ccTypes.h"
 #include "base/CCGeometry.h"
-#include "CCVector.h"
+#include "base/CCVector.h"
 #include "CCGL.h"
 #include "CCLabelAtlas.h"
 #include <stack>

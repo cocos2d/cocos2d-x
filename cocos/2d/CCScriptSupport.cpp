@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCScriptSupport.h"
+#include "2d/CCScriptSupport.h"
 
 #if CC_ENABLE_SCRIPT_BINDING
 

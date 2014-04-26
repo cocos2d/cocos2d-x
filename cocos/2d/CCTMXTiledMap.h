@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 #include "2d/CCNode.h"
 #include "CCTMXObjectGroup.h"
-#include "CCValue.h"
+#include "base/CCValue.h"
 
 NS_CC_BEGIN
 

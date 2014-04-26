@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 #include "base/CCRef.h"
 #include "CCGL.h"
-#include "CCValue.h"
+#include "base/CCValue.h"
 #include <string>
 
 NS_CC_BEGIN

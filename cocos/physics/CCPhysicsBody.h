@@ -30,8 +30,8 @@
 
 #include "base/CCRef.h"
 #include "base/CCGeometry.h"
-#include "CCPhysicsShape.h"
-#include "CCVector.h"
+#include "physics/CCPhysicsShape.h"
+#include "base/CCVector.h"
 
 NS_CC_BEGIN
 

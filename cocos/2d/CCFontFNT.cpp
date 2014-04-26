@@ -28,7 +28,7 @@
 #include "CCConfiguration.h"
 #include "2d/CCDirector.h"
 #include "CCFontAtlas.h"
-#include "CCMap.h"
+#include "base/CCMap.h"
 #include "deprecated/CCString.h"
 #include "CCTextureCache.h"
 #include "ccUTF8.h"

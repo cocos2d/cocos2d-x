@@ -28,10 +28,10 @@ THE SOFTWARE.
 #include <stdarg.h>
 #include "2d/CCLayer.h"
 #include "2d/CCDirector.h"
-#include "CCScriptSupport.h"
+#include "2d/CCScriptSupport.h"
 #include "CCShaderCache.h"
 #include "2d/CCGLProgram.h"
-#include "ccGLStateCache.h"
+#include "2d/ccGLStateCache.h"
 #include "TransformUtils.h"
 // extern
 #include "2d/CCEventDispatcher.h"

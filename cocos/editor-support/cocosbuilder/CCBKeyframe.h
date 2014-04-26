@@ -2,7 +2,7 @@
 #define __CCB_KEYFRAME_H__
 
 #include "base/CCRef.h"
-#include "CCValue.h"
+#include "base/CCValue.h"
 
 
 namespace cocosbuilder {

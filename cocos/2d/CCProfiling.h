@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include <chrono>
 #include "2d/ccConfig.h"
 #include "base/CCRef.h"
-#include "CCMap.h"
+#include "base/CCMap.h"
 
 NS_CC_BEGIN
 

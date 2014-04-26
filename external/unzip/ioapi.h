@@ -21,7 +21,7 @@
 #ifndef _ZLIBIOAPI64_H
 #define _ZLIBIOAPI64_H
 
-#include "CCPlatformConfig.h"
+#include "base/CCPlatformConfig.h"
 
 #if (!defined(_WIN32)) && (!defined(WIN32))
 
