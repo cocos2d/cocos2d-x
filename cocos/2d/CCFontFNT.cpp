@@ -24,15 +24,15 @@
  ****************************************************************************/
 
 #include "CCFontFNT.h"
-#include "uthash.h"
+#include "2d/uthash.h"
 #include "CCConfiguration.h"
-#include "CCDirector.h"
+#include "2d/CCDirector.h"
 #include "CCFontAtlas.h"
 #include "CCMap.h"
 #include "deprecated/CCString.h"
 #include "CCTextureCache.h"
 #include "ccUTF8.h"
-#include "platform/CCFileUtils.h"
+#include "2d/platform/CCFileUtils.h"
 
 using namespace std;
 NS_CC_BEGIN

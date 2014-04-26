@@ -36,10 +36,10 @@
 
 #include <spine/spine.h>
 
-#include "CCNode.h"
-#include "CCProtocols.h"
-#include "CCTextureAtlas.h"
-#include "renderer/CCCustomCommand.h"
+#include "2d/CCNode.h"
+#include "2d/CCProtocols.h"
+#include "2d/CCTextureAtlas.h"
+#include "2d/renderer/CCCustomCommand.h"
 
 namespace spine {
 

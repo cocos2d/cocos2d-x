@@ -30,20 +30,20 @@
 
 #include "CCParticleBatchNode.h"
 #include "CCTextureCache.h"
-#include "CCTextureAtlas.h"
-#include "ccConfig.h"
-#include "ccMacros.h"
+#include "2d/CCTextureAtlas.h"
+#include "2d/ccConfig.h"
+#include "2d/ccMacros.h"
 #include "CCGrid.h"
 #include "CCParticleSystem.h"
 #include "CCShaderCache.h"
-#include "CCGLProgram.h"
+#include "2d/CCGLProgram.h"
 #include "ccGLStateCache.h"
 #include "base64.h"
 #include "ZipUtils.h"
-#include "platform/CCFileUtils.h"
+#include "2d/platform/CCFileUtils.h"
 #include "CCProfiling.h"
-#include "renderer/CCQuadCommand.h"
-#include "renderer/CCRenderer.h"
+#include "2d/renderer/CCQuadCommand.h"
+#include "2d/renderer/CCRenderer.h"
 
 NS_CC_BEGIN
 

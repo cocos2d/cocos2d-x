@@ -25,8 +25,8 @@
 #ifndef __cocos2d_libs__CCAccelerometerListener__
 #define __cocos2d_libs__CCAccelerometerListener__
 
-#include "CCEventListener.h"
-#include "ccTypes.h"
+#include "2d/CCEventListener.h"
+#include "2d/ccTypes.h"
 
 NS_CC_BEGIN
 

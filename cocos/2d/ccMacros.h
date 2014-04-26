@@ -59,7 +59,7 @@ THE SOFTWARE.
 #define CCAssert CCASSERT
 #endif  // CCASSERT
 
-#include "ccConfig.h"
+#include "2d/ccConfig.h"
 
 /** @def CC_SWAP
 simple macro that swaps 2 variables

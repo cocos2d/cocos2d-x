@@ -26,12 +26,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCActionManager.h"
-#include "CCNode.h"
+#include "2d/CCActionManager.h"
+#include "2d/CCNode.h"
 #include "CCScheduler.h"
-#include "ccMacros.h"
-#include "ccCArray.h"
-#include "uthash.h"
+#include "2d/ccMacros.h"
+#include "2d/ccCArray.h"
+#include "2d/uthash.h"
 
 NS_CC_BEGIN
 //

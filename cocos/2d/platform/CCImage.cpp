@@ -50,7 +50,7 @@ extern "C"
 #include "decode.h"
 #endif
 
-#include "ccMacros.h"
+#include "2d/ccMacros.h"
 #include "CCCommon.h"
 #include "CCStdC.h"
 #include "CCFileUtils.h"

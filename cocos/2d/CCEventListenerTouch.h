@@ -26,8 +26,8 @@
 #ifndef __cocos2d_libs__CCTouchEventListener__
 #define __cocos2d_libs__CCTouchEventListener__
 
-#include "CCEventListener.h"
-#include "CCTouch.h"
+#include "2d/CCEventListener.h"
+#include "2d/CCTouch.h"
 
 #include <vector>
 

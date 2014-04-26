@@ -26,9 +26,9 @@
  */
 
 #include "CCControlSwitch.h"
-#include "CCSprite.h"
-#include "CCActionTween.h"
-#include "CCLabel.h"
+#include "2d/CCSprite.h"
+#include "2d/CCActionTween.h"
+#include "2d/CCLabel.h"
 #include "CCClippingNode.h"
 #include "ccShaders.h"
 #include "CCRenderTexture.h"

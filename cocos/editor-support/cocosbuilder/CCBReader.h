@@ -3,7 +3,7 @@
 
 #include <string>
 #include <vector>
-#include "CCNode.h"
+#include "2d/CCNode.h"
 #include "CCData.h"
 #include "CCMap.h"
 #include "CCBSequence.h"

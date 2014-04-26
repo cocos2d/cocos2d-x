@@ -31,11 +31,11 @@ THE SOFTWARE.
 
 #include <vector>
 
-#include "CCNode.h"
-#include "CCProtocols.h"
-#include "CCTextureAtlas.h"
-#include "ccMacros.h"
-#include "renderer/CCBatchCommand.h"
+#include "2d/CCNode.h"
+#include "2d/CCProtocols.h"
+#include "2d/CCTextureAtlas.h"
+#include "2d/ccMacros.h"
+#include "2d/renderer/CCBatchCommand.h"
 
 NS_CC_BEGIN
 

@@ -24,7 +24,7 @@ THE SOFTWARE.
 #ifndef __CCSPRITEFRAMECACHEHELPER_H__
 #define __CCSPRITEFRAMECACHEHELPER_H__
 
-#include "CCPlatformMacros.h"
+#include "base/CCPlatformMacros.h"
 #include "cocostudio/CCArmatureDefine.h"
 #include <stack>
 #include <string>

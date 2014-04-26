@@ -31,19 +31,19 @@ THE SOFTWARE.
 * https://devforums.apple.com/message/37855#37855 by a1studmuffin
 */
 
-#include "CCTexture2D.h"
-#include "ccConfig.h"
-#include "ccMacros.h"
+#include "2d/CCTexture2D.h"
+#include "2d/ccConfig.h"
+#include "2d/ccMacros.h"
 #include "CCConfiguration.h"
-#include "platform/CCImage.h"
+#include "2d/platform/CCImage.h"
 #include "CCGL.h"
 #include "ccUtils.h"
-#include "CCPlatformMacros.h"
-#include "CCDirector.h"
-#include "CCGLProgram.h"
+#include "base/CCPlatformMacros.h"
+#include "2d/CCDirector.h"
+#include "2d/CCGLProgram.h"
 #include "ccGLStateCache.h"
 #include "CCShaderCache.h"
-#include "platform/CCDevice.h"
+#include "2d/platform/CCDevice.h"
 #include "deprecated/CCString.h"
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA

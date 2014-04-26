@@ -25,13 +25,13 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCTransitionPageTurn.h"
-#include "CCDirector.h"
-#include "CCActionInterval.h"
-#include "CCActionInstant.h"
-#include "CCActionGrid.h"
-#include "CCActionPageTurn3D.h"
+#include "2d/CCDirector.h"
+#include "2d/CCActionInterval.h"
+#include "2d/CCActionInstant.h"
+#include "2d/CCActionGrid.h"
+#include "2d/CCActionPageTurn3D.h"
 #include "CCNodeGrid.h"
-#include "renderer/CCRenderer.h"
+#include "2d/renderer/CCRenderer.h"
 
 NS_CC_BEGIN
 

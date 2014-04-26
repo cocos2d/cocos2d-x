@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCActionFrame.h"
-#include "CCActionEase.h"
+#include "cocostudio/CCActionFrame.h"
+#include "2d/CCActionEase.h"
 
 using namespace cocos2d;
 

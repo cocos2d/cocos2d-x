@@ -29,9 +29,9 @@
 #include "CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
-#include "CCRef.h"
-#include "platform/CCCommon.h"
-#include "platform/CCGLViewProtocol.h"
+#include "base/CCRef.h"
+#include "2d/platform/CCCommon.h"
+#include "2d/platform/CCGLViewProtocol.h"
 
 NS_CC_BEGIN
 

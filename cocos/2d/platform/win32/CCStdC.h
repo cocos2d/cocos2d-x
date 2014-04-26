@@ -35,7 +35,7 @@ THE SOFTWARE.
 typedef SSIZE_T ssize_t;
 #endif // __SSIZE_T
 
-#include "CCPlatformMacros.h"
+#include "base/CCPlatformMacros.h"
 #include <float.h>
 
 // for math.h on win32 platform

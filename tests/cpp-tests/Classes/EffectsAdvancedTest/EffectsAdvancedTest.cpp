@@ -1,5 +1,4 @@
 #include "EffectsAdvancedTest.h"
-#include "CCNodeGrid.h"
 
 enum 
 {

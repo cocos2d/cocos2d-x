@@ -1,6 +1,6 @@
 #include "LabelTestNew.h"
 #include "../testResource.h"
-#include "renderer/CCRenderer.h"
+#include "2d/renderer/CCRenderer.h"
 
 using namespace ui;
 

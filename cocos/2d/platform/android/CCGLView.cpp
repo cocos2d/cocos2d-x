@@ -27,8 +27,8 @@ THE SOFTWARE.
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
 #include "CCGLView.h"
-#include "CCDirector.h"
-#include "ccMacros.h"
+#include "2d/CCDirector.h"
+#include "2d/ccMacros.h"
 #include "jni/IMEJni.h"
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 #include "CCGL.h"

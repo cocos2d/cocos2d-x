@@ -24,7 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCLabelTTF.h"
-#include "CCLabel.h"
+#include "2d/CCLabel.h"
 #include "deprecated/CCString.h"
 
 NS_CC_BEGIN

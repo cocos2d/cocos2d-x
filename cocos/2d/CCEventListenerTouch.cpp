@@ -22,9 +22,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCEventListenerTouch.h"
-#include "CCEventDispatcher.h"
-#include "CCEventTouch.h"
+#include "2d/CCEventListenerTouch.h"
+#include "2d/CCEventDispatcher.h"
+#include "2d/CCEventTouch.h"
 
 #include <algorithm>
 

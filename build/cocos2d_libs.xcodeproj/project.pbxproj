@@ -718,10 +718,6 @@
 		1A9DCA30180E6955007A3AD4 /* CCScheduler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9DCA06180E6955007A3AD4 /* CCScheduler.cpp */; };
 		1A9DCA31180E6955007A3AD4 /* CCScheduler.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A9DCA07180E6955007A3AD4 /* CCScheduler.h */; };
 		1A9DCA32180E6955007A3AD4 /* CCScheduler.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A9DCA07180E6955007A3AD4 /* CCScheduler.h */; };
-		1A9DCA37180E6955007A3AD4 /* cocos2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9DCA0A180E6955007A3AD4 /* cocos2d.cpp */; };
-		1A9DCA38180E6955007A3AD4 /* cocos2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9DCA0A180E6955007A3AD4 /* cocos2d.cpp */; };
-		1A9DCA39180E6955007A3AD4 /* cocos2d.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A9DCA0B180E6955007A3AD4 /* cocos2d.h */; };
-		1A9DCA3A180E6955007A3AD4 /* cocos2d.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A9DCA0B180E6955007A3AD4 /* cocos2d.h */; };
 		1A9DCA3B180E6955007A3AD4 /* firePngData.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A9DCA0C180E6955007A3AD4 /* firePngData.h */; };
 		1A9DCA3C180E6955007A3AD4 /* firePngData.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A9DCA0C180E6955007A3AD4 /* firePngData.h */; };
 		1A9DCA3D180E6955007A3AD4 /* TransformUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9DCA0D180E6955007A3AD4 /* TransformUtils.cpp */; };
@@ -1564,6 +1560,10 @@
 		46C02E0818E91123004B7456 /* xxhash.c in Sources */ = {isa = PBXBuildFile; fileRef = 46C02E0518E91123004B7456 /* xxhash.c */; };
 		46C02E0918E91123004B7456 /* xxhash.h in Headers */ = {isa = PBXBuildFile; fileRef = 46C02E0618E91123004B7456 /* xxhash.h */; };
 		46C02E0A18E91123004B7456 /* xxhash.h in Headers */ = {isa = PBXBuildFile; fileRef = 46C02E0618E91123004B7456 /* xxhash.h */; };
+		5027253A190BF1B900AAF4ED /* cocos2d.h in Headers */ = {isa = PBXBuildFile; fileRef = 50272538190BF1B900AAF4ED /* cocos2d.h */; };
+		5027253B190BF1B900AAF4ED /* cocos2d.h in Headers */ = {isa = PBXBuildFile; fileRef = 50272538190BF1B900AAF4ED /* cocos2d.h */; };
+		5027253C190BF1B900AAF4ED /* cocos2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50272539190BF1B900AAF4ED /* cocos2d.cpp */; };
+		5027253D190BF1B900AAF4ED /* cocos2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50272539190BF1B900AAF4ED /* cocos2d.cpp */; };
 		5069133E185016C1009BBDD7 /* CCConsole.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5069133C185016C1009BBDD7 /* CCConsole.cpp */; };
 		5069133F185016C1009BBDD7 /* CCConsole.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5069133C185016C1009BBDD7 /* CCConsole.cpp */; };
 		50691340185016C1009BBDD7 /* CCConsole.h in Headers */ = {isa = PBXBuildFile; fileRef = 5069133D185016C1009BBDD7 /* CCConsole.h */; };
@@ -2186,8 +2186,6 @@
 		1A9DCA05180E6955007A3AD4 /* CCProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProtocols.h; sourceTree = "<group>"; };
 		1A9DCA06180E6955007A3AD4 /* CCScheduler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScheduler.cpp; sourceTree = "<group>"; };
 		1A9DCA07180E6955007A3AD4 /* CCScheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScheduler.h; sourceTree = "<group>"; };
-		1A9DCA0A180E6955007A3AD4 /* cocos2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cocos2d.cpp; sourceTree = "<group>"; };
-		1A9DCA0B180E6955007A3AD4 /* cocos2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocos2d.h; sourceTree = "<group>"; };
 		1A9DCA0C180E6955007A3AD4 /* firePngData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = firePngData.h; sourceTree = "<group>"; };
 		1A9DCA0D180E6955007A3AD4 /* TransformUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TransformUtils.cpp; sourceTree = "<group>"; };
 		1A9DCA0E180E6955007A3AD4 /* TransformUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformUtils.h; sourceTree = "<group>"; };
@@ -2663,6 +2661,8 @@
 		46A170781807CE7A005B8026 /* CCPhysicsWorld.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPhysicsWorld.h; sourceTree = "<group>"; };
 		46C02E0518E91123004B7456 /* xxhash.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = xxhash.c; sourceTree = "<group>"; };
 		46C02E0618E91123004B7456 /* xxhash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xxhash.h; sourceTree = "<group>"; };
+		50272538190BF1B900AAF4ED /* cocos2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cocos2d.h; path = ../cocos/cocos2d.h; sourceTree = "<group>"; };
+		50272539190BF1B900AAF4ED /* cocos2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cocos2d.cpp; path = ../cocos/cocos2d.cpp; sourceTree = "<group>"; };
 		5069133C185016C1009BBDD7 /* CCConsole.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCConsole.cpp; path = ../base/CCConsole.cpp; sourceTree = "<group>"; };
 		5069133D185016C1009BBDD7 /* CCConsole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCConsole.h; path = ../base/CCConsole.h; sourceTree = "<group>"; };
 		50AE5EA1188749250007CFE3 /* CCBatchCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBatchCommand.cpp; sourceTree = "<group>"; };
@@ -2919,6 +2919,8 @@
 				1551A340158F2AB200E66CFE /* Products */,
 				1AAF5849180E40B8000584C8 /* storage */,
 				2905F9E618CF08D000240AA3 /* ui */,
+				50272538190BF1B900AAF4ED /* cocos2d.h */,
+				50272539190BF1B900AAF4ED /* cocos2d.cpp */,
 			);
 			sourceTree = "<group>";
 		};
@@ -3054,7 +3056,6 @@
 				1A5700B9180BC6060088DEC7 /* CCRef.cpp */,
 				1A5700BA180BC6060088DEC7 /* CCRef.h */,
 				1F33634418E379670074764D /* CCRefPtr.h */,
-
 				1AE3C842184F14F700CF29B5 /* CCValue.cpp */,
 				1AE3C843184F14F700CF29B5 /* CCValue.h */,
 				1A85BA0C1845F31700260FC0 /* CCVector.h */,
@@ -4457,8 +4458,6 @@
 				1A9DCA05180E6955007A3AD4 /* CCProtocols.h */,
 				1A9DCA06180E6955007A3AD4 /* CCScheduler.cpp */,
 				1A9DCA07180E6955007A3AD4 /* CCScheduler.h */,
-				1A9DCA0A180E6955007A3AD4 /* cocos2d.cpp */,
-				1A9DCA0B180E6955007A3AD4 /* cocos2d.h */,
 				1A9DCA0C180E6955007A3AD4 /* firePngData.h */,
 				1A9DCA0D180E6955007A3AD4 /* TransformUtils.cpp */,
 				1A9DCA0E180E6955007A3AD4 /* TransformUtils.h */,
@@ -5062,6 +5061,7 @@
 				1A570284180BCC900088DEC7 /* CCSpriteBatchNode.h in Headers */,
 				1A570288180BCC900088DEC7 /* CCSpriteFrame.h in Headers */,
 				1A57028C180BCC900088DEC7 /* CCSpriteFrameCache.h in Headers */,
+				5027253A190BF1B900AAF4ED /* cocos2d.h in Headers */,
 				1A570294180BCCAB0088DEC7 /* CCAnimation.h in Headers */,
 				1A570298180BCCAB0088DEC7 /* CCAnimationCache.h in Headers */,
 				50FCEB9D18C72017004AD434 /* ImageViewReader.h in Headers */,
@@ -5118,7 +5118,6 @@
 				1AD71DBF180E26E600808F54 /* CCBSequence.h in Headers */,
 				1AD71DC3180E26E600808F54 /* CCBSequenceProperty.h in Headers */,
 				1AD71DCB180E26E600808F54 /* CCControlButtonLoader.h in Headers */,
-				A044DEC318C6A58700B6CCBD /* ray2.h in Headers */,
 				1F33634718E379670074764D /* CCRefPtr.h in Headers */,
 				1AD71DCF180E26E600808F54 /* CCControlLoader.h in Headers */,
 				1AD71DD3180E26E600808F54 /* CCLabelBMFontLoader.h in Headers */,
@@ -5192,7 +5191,6 @@
 				1A9DCA2D180E6955007A3AD4 /* CCProtocols.h in Headers */,
 				50FCEBB118C72017004AD434 /* ScrollViewReader.h in Headers */,
 				1A9DCA31180E6955007A3AD4 /* CCScheduler.h in Headers */,
-				1A9DCA39180E6955007A3AD4 /* cocos2d.h in Headers */,
 				1A9DCA3B180E6955007A3AD4 /* firePngData.h in Headers */,
 				1A9DCA3F180E6955007A3AD4 /* TransformUtils.h in Headers */,
 				B37510721823AC9F00B3BA6A /* CCPhysicsBodyInfo_chipmunk.h in Headers */,
@@ -5616,6 +5614,7 @@
 				1AD71DF6180E26E600808F54 /* CCNodeLoader.h in Headers */,
 				1AD71DFA180E26E600808F54 /* CCNodeLoaderLibrary.h in Headers */,
 				B2AF2FAC18EBAEAE00C5807C /* Vector4.h in Headers */,
+				5027253B190BF1B900AAF4ED /* cocos2d.h in Headers */,
 				1AD71DFC180E26E600808F54 /* CCNodeLoaderListener.h in Headers */,
 				1AD71E00180E26E600808F54 /* CCParticleSystemQuadLoader.h in Headers */,
 				1AD71E04180E26E600808F54 /* CCScale9SpriteLoader.h in Headers */,
@@ -5673,7 +5672,6 @@
 				1A0DB7321823827C0025743D /* CCGL.h in Headers */,
 				1A9DCA2E180E6955007A3AD4 /* CCProtocols.h in Headers */,
 				1A9DCA32180E6955007A3AD4 /* CCScheduler.h in Headers */,
-				1A9DCA3A180E6955007A3AD4 /* cocos2d.h in Headers */,
 				1A9DCA3C180E6955007A3AD4 /* firePngData.h in Headers */,
 				1AA95FDF18EBB8EF00AE7485 /* ccShader_Label_frag_df_glow.h in Headers */,
 				1A9DCA40180E6955007A3AD4 /* TransformUtils.h in Headers */,
@@ -6098,6 +6096,7 @@
 				1A01C6A418F58F7500EFE3A6 /* CCNotificationCenter.cpp in Sources */,
 				46A170EA1807CECA005B8026 /* CCPhysicsJoint.cpp in Sources */,
 				46A170141807CBFC005B8026 /* CCFileUtilsApple.mm in Sources */,
+				5027253C190BF1B900AAF4ED /* cocos2d.cpp in Sources */,
 				46A1701D1807CBFC005B8026 /* CCFileUtils.cpp in Sources */,
 				46A170EF1807CECA005B8026 /* CCPhysicsWorld.cpp in Sources */,
 				46A170231807CBFC005B8026 /* CCSAXParser.cpp in Sources */,
@@ -6321,7 +6320,6 @@
 				1A9DCA23180E6955007A3AD4 /* ccFPSImages.c in Sources */,
 				1A9DCA27180E6955007A3AD4 /* CCGLBufferedNode.cpp in Sources */,
 				1A9DCA2F180E6955007A3AD4 /* CCScheduler.cpp in Sources */,
-				1A9DCA37180E6955007A3AD4 /* cocos2d.cpp in Sources */,
 				2905FA5E18CF08D100240AA3 /* UILayoutParameter.cpp in Sources */,
 				1A9DCA3D180E6955007A3AD4 /* TransformUtils.cpp in Sources */,
 				1A9DCA49180E6DE3007A3AD4 /* ccTypes.cpp in Sources */,
@@ -6701,6 +6699,7 @@
 				593BDCF3184D0A6E00C21E48 /* CCCustomCommand.cpp in Sources */,
 				06CAAAC8186AD7EB0012A414 /* TriggerObj.cpp in Sources */,
 				1AD71DF0180E26E600808F54 /* CCNode+CCBRelativePositioning.cpp in Sources */,
+				5027253D190BF1B900AAF4ED /* cocos2d.cpp in Sources */,
 				1AD71DF4180E26E600808F54 /* CCNodeLoader.cpp in Sources */,
 				1AD71DF8180E26E600808F54 /* CCNodeLoaderLibrary.cpp in Sources */,
 				1AD71DFE180E26E600808F54 /* CCParticleSystemQuadLoader.cpp in Sources */,
@@ -6749,7 +6748,6 @@
 				1A9DCA24180E6955007A3AD4 /* ccFPSImages.c in Sources */,
 				1A9DCA28180E6955007A3AD4 /* CCGLBufferedNode.cpp in Sources */,
 				1A9DCA30180E6955007A3AD4 /* CCScheduler.cpp in Sources */,
-				1A9DCA38180E6955007A3AD4 /* cocos2d.cpp in Sources */,
 				1A9DCA3E180E6955007A3AD4 /* TransformUtils.cpp in Sources */,
 				1A9DCA4A180E6DE3007A3AD4 /* ccTypes.cpp in Sources */,
 				50FCEBA018C72017004AD434 /* LayoutReader.cpp in Sources */,
@@ -7041,7 +7039,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math $(SRCROOT)/../cocos/math/kazmath/ $(SRCROOT)/../cocos/2d/platform $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../cocos/ui $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../external $(SRCROOT)/../cocos/storage";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../external";
 			};
 			name = Debug;
 		};
@@ -7075,7 +7073,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math $(SRCROOT)/../cocos/math/kazmath/ $(SRCROOT)/../cocos/2d/platform $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../cocos/ui $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../external $(SRCROOT)/../cocos/storage";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../external";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

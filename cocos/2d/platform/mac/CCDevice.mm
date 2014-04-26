@@ -26,11 +26,11 @@ THE SOFTWARE.
 #include "CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 
-#include "platform/CCDevice.h"
+#include "2d/platform/CCDevice.h"
 #include <Foundation/Foundation.h>
 #include <Cocoa/Cocoa.h>
 #include <string>
-#include "ccTypes.h"
+#include "2d/ccTypes.h"
 
 NS_CC_BEGIN
 

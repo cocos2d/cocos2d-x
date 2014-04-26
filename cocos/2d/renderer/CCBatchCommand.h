@@ -26,7 +26,7 @@
 #define _CC_BATCHCOMMAND_H_
 
 #include "CCRenderCommand.h"
-#include "CCGLProgram.h"
+#include "2d/CCGLProgram.h"
 #include "CCRenderCommandPool.h"
 
 NS_CC_BEGIN

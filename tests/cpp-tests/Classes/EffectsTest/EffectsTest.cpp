@@ -1,6 +1,6 @@
 #include "EffectsTest.h"
 #include "../testResource.h"
-#include "CCNodeGrid.h"
+
 enum {
     kTagTextLayer = 1,
 

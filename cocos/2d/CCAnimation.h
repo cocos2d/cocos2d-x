@@ -28,10 +28,10 @@ THE SOFTWARE.
 #define __CC_ANIMATION_H__
 
 #include "CCPlatformConfig.h"
-#include "CCRef.h"
+#include "base/CCRef.h"
 #include "CCValue.h"
-#include "CCGeometry.h"
-#include "CCSpriteFrame.h"
+#include "base/CCGeometry.h"
+#include "2d/CCSpriteFrame.h"
 #include "CCVector.h"
 
 #include <string>

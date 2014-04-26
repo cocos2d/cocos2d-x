@@ -28,12 +28,12 @@
 
 #include "CCProtectedNode.h"
 
-#include "CCDirector.h"
+#include "2d/CCDirector.h"
 
 #if CC_USE_PHYSICS
 #include "CCPhysicsBody.h"
 #endif
-#include "CCLayer.h"
+#include "2d/CCLayer.h"
 
 NS_CC_BEGIN
 

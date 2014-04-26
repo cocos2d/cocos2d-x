@@ -1,8 +1,8 @@
 #ifndef _CCB_CCLABELTTFLOADER_H_
 #define _CCB_CCLABELTTFLOADER_H_
 
-#include "CCRef.h"
-#include "CCLabel.h"
+#include "base/CCRef.h"
+#include "2d/CCLabel.h"
 
 #include "CCNodeLoader.h"
 

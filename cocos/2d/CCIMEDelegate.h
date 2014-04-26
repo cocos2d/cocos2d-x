@@ -27,7 +27,7 @@ THE SOFTWARE.
 #define __CC_IME_DELEGATE_H__
 
 #include <string>
-#include "CCGeometry.h"
+#include "base/CCGeometry.h"
 
 NS_CC_BEGIN
 extern const std::string STD_STRING_EMPTY;

@@ -5,7 +5,6 @@
 #define __PERFORMANCE_CALLBACK_TEST_H__
 
 #include "PerformanceTest.h"
-#include "CCProfiling.h"
 
 class CallbackBasicLayer : public PerformBasicLayer
 {

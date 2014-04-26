@@ -25,8 +25,8 @@ THE SOFTWARE.
 
 #include "CCFileUtils.h"
 #include "CCData.h"
-#include "ccMacros.h"
-#include "CCDirector.h"
+#include "2d/ccMacros.h"
+#include "2d/CCDirector.h"
 #include "CCSAXParser.h"
 #include "tinyxml2.h"
 #include "unzip.h"

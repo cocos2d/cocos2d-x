@@ -29,8 +29,8 @@
 #include <string>
 #include <stdint.h>
 
-#include "CCRef.h"
-#include "CCPlatformMacros.h"
+#include "base/CCRef.h"
+#include "base/CCPlatformMacros.h"
 
 NS_CC_BEGIN
 

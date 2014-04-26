@@ -29,9 +29,9 @@ THE SOFTWARE.
 
 #include "CCTMXObjectGroup.h"
 #include "CCAtlasNode.h"
-#include "CCSpriteBatchNode.h"
+#include "2d/CCSpriteBatchNode.h"
 #include "CCTMXXMLParser.h"
-#include "ccCArray.h"
+#include "2d/ccCArray.h"
 NS_CC_BEGIN
 
 class TMXMapInfo;

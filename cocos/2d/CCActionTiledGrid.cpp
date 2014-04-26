@@ -23,9 +23,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCActionTiledGrid.h"
-#include "CCDirector.h"
-#include "ccMacros.h"
+#include "2d/CCActionTiledGrid.h"
+#include "2d/CCDirector.h"
+#include "2d/ccMacros.h"
 #include "CCGrid.h"
 #include "CCNodeGrid.h"
 #include <stdlib.h>

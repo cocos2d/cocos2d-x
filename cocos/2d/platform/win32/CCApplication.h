@@ -29,8 +29,8 @@ THE SOFTWARE.
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #include "CCStdC.h"
-#include "platform/CCCommon.h"
-#include "platform/CCApplicationProtocol.h"
+#include "2d/platform/CCCommon.h"
+#include "2d/platform/CCApplicationProtocol.h"
 #include <string>
 
 NS_CC_BEGIN

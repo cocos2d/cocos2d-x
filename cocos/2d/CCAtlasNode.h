@@ -28,10 +28,10 @@ THE SOFTWARE.
 #ifndef __CCATLAS_NODE_H__
 #define __CCATLAS_NODE_H__
 
-#include "CCNode.h"
-#include "CCProtocols.h"
-#include "ccTypes.h"
-#include "renderer/CCQuadCommand.h"
+#include "2d/CCNode.h"
+#include "2d/CCProtocols.h"
+#include "2d/ccTypes.h"
+#include "2d/renderer/CCQuadCommand.h"
 
 NS_CC_BEGIN
 

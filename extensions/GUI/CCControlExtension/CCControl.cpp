@@ -28,12 +28,12 @@
  */
 
 #include "CCControl.h"
-#include "CCDirector.h"
-#include "CCMenu.h"
-#include "CCTouch.h"
+#include "2d/CCDirector.h"
+#include "2d/CCMenu.h"
+#include "2d/CCTouch.h"
 #include "CCInvocation.h"
-#include "CCEventDispatcher.h"
-#include "CCEventListenerTouch.h"
+#include "2d/CCEventDispatcher.h"
+#include "2d/CCEventListenerTouch.h"
 
 NS_CC_EXT_BEGIN
 

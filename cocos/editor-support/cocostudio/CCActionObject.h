@@ -25,8 +25,8 @@ THE SOFTWARE.
 #ifndef __ActionObject_H__
 #define __ActionObject_H__
 
-#include "CCActionNode.h"
-#include "CCActionInstant.h"
+#include "cocostudio/CCActionNode.h"
+#include "2d/CCActionInstant.h"
 #include "cocostudio/DictionaryHelper.h"
 
 namespace cocostudio {

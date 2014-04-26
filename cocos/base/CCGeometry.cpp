@@ -23,8 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCGeometry.h"
-#include "ccMacros.h"
+#include "base/CCGeometry.h"
+#include "2d/ccMacros.h"
 #include <algorithm>
 
 // implementation of Vector2

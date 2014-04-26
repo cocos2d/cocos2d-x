@@ -26,9 +26,9 @@ THE SOFTWARE.
 
 #include "CCConfiguration.h"
 #include <string.h>
-#include "ccMacros.h"
-#include "ccConfig.h"
-#include "platform/CCFileUtils.h"
+#include "2d/ccMacros.h"
+#include "2d/ccConfig.h"
+#include "2d/platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 
