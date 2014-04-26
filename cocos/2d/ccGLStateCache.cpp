@@ -31,10 +31,6 @@ THE SOFTWARE.
 #include "ccConfig.h"
 #include "CCConfiguration.h"
 
-// extern
-#include "kazmath/GL/matrix.h"
-#include "kazmath/kazmath.h"
-
 NS_CC_BEGIN
 
 namespace
@@ -65,8 +61,7 @@ namespace GL {
 
 void invalidateStateCache( void )
 {
-    kmGLFreeAll();
-    
+    Director::getInstance()->resetMatrixStack();
     s_currentProjectionMatrix = -1;
     s_vertexAttribPosition = false;
     s_vertexAttribColor = false;

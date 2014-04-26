@@ -167,7 +167,7 @@ void KeyboardNotificationLayer::keyboardWillShow(IMEKeyboardNotificationInfo& in
     auto& children = getChildren();
     Node * node = 0;
     ssize_t count = children.size();
-    Point pos;
+    Vector2 pos;
     for (int i = 0; i < count; ++i)
     {
         node = children.at(i);
@@ -258,9 +258,9 @@ void TextFieldTTFDefaultTest::onEnter()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)    
     // on android, TextFieldTTF cannot auto adjust its position when soft-keyboard pop up
     // so we had to set a higher position to make it visable
-    pTextField->setPosition(Point(s.width / 2, s.height/2 + 50));
+    pTextField->setPosition(Vector2(s.width / 2, s.height/2 + 50));
 #else
-    pTextField->setPosition(Point(s.width / 2, s.height / 2));
+    pTextField->setPosition(Vector2(s.width / 2, s.height / 2));
 #endif
 
     _trackNode = pTextField;
@@ -320,9 +320,9 @@ void TextFieldTTFActionTest::onEnter()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)    
     // on android, TextFieldTTF cannot auto adjust its position when soft-keyboard pop up
     // so we had to set a higher position
-    _textField->setPosition(Point(s.width / 2, s.height/2 + 50));
+    _textField->setPosition(Vector2(s.width / 2, s.height/2 + 50));
 #else
-    _textField->setPosition(Point(s.width / 2, s.height / 2));
+    _textField->setPosition(Vector2(s.width / 2, s.height / 2));
 #endif
 
     _trackNode = _textField;
@@ -383,7 +383,7 @@ bool TextFieldTTFActionTest::onTextFieldInsertText(TextFieldTTF * sender, const 
         endPos.x += sender->getContentSize().width / 2;
     }
     auto inputTextSize = label->getContentSize();
-    Point beginPos(endPos.x, Director::getInstance()->getWinSize().height - inputTextSize.height * 2); 
+    Vector2 beginPos(endPos.x, Director::getInstance()->getWinSize().height - inputTextSize.height * 2); 
 
     float duration = 0.5;
     label->setPosition(beginPos);
@@ -414,7 +414,7 @@ bool TextFieldTTFActionTest::onTextFieldDeleteBackward(TextFieldTTF * sender, co
     beginPos.x += (textfieldSize.width - labelSize.width) / 2.0f;
     
     auto winSize = Director::getInstance()->getWinSize();
-    Point endPos(- winSize.width / 4.0f, winSize.height * (0.5 + (float)rand() / (2.0f * RAND_MAX)));
+    Vector2 endPos(- winSize.width / 4.0f, winSize.height * (0.5 + (float)rand() / (2.0f * RAND_MAX)));
 
     float duration = 1;
     float rotateDuration = 0.2f;

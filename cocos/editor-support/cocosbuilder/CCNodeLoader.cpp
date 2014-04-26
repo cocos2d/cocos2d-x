@@ -110,7 +110,7 @@ void NodeLoader::parseProperties(Node * pNode, Node * pParent, CCBReader * ccbRe
         {
             case CCBReader::PropertyType::POSITION:
             {
-                Point position = this->parsePropTypePosition(pNode, pParent, ccbReader, propertyName.c_str());
+                Vector2 position = this->parsePropTypePosition(pNode, pParent, ccbReader, propertyName.c_str());
                 if (setProp) 
                 {
                     this->onHandlePropTypePosition(pNode, pParent, propertyName.c_str(), position, ccbReader);
@@ -119,7 +119,7 @@ void NodeLoader::parseProperties(Node * pNode, Node * pParent, CCBReader * ccbRe
             }
             case CCBReader::PropertyType::POINT:
             {
-                Point point = this->parsePropTypePoint(pNode, pParent, ccbReader);
+                Vector2 point = this->parsePropTypePoint(pNode, pParent, ccbReader);
                 if (setProp) 
                 {
                     this->onHandlePropTypePoint(pNode, pParent, propertyName.c_str(), point, ccbReader);
@@ -128,7 +128,7 @@ void NodeLoader::parseProperties(Node * pNode, Node * pParent, CCBReader * ccbRe
             }
             case CCBReader::PropertyType::POINT_LOCK:
             {
-                Point pointLock = this->parsePropTypePointLock(pNode, pParent, ccbReader);
+                Vector2 pointLock = this->parsePropTypePointLock(pNode, pParent, ccbReader);
                 if (setProp) 
                 {
                     this->onHandlePropTypePointLock(pNode, pParent, propertyName.c_str(), pointLock, ccbReader);
@@ -367,7 +367,7 @@ void NodeLoader::parseProperties(Node * pNode, Node * pParent, CCBReader * ccbRe
     }
 }
 
-Point NodeLoader::parsePropTypePosition(Node * pNode, Node * pParent, CCBReader * ccbReader, const char *pPropertyName)
+Vector2 NodeLoader::parsePropTypePosition(Node * pNode, Node * pParent, CCBReader * ccbReader, const char *pPropertyName)
 {
     float x = ccbReader->readFloat();
     float y = ccbReader->readFloat();
@@ -376,7 +376,7 @@ Point NodeLoader::parsePropTypePosition(Node * pNode, Node * pParent, CCBReader 
     
     Size containerSize = ccbReader->getAnimationManager()->getContainerSize(pParent);
     
-    Point pt = getAbsolutePosition(Point(x,y), type, containerSize, pPropertyName);
+    Vector2 pt = getAbsolutePosition(Vector2(x,y), type, containerSize, pPropertyName);
     pNode->setPosition(pt);
     
     if (ccbReader->getAnimatedProperties()->find(pPropertyName) != ccbReader->getAnimatedProperties()->end())
@@ -392,19 +392,19 @@ Point NodeLoader::parsePropTypePosition(Node * pNode, Node * pParent, CCBReader 
     return pt;
 }
 
-Point NodeLoader::parsePropTypePoint(Node * pNode, Node * pParent, CCBReader * ccbReader) 
+Vector2 NodeLoader::parsePropTypePoint(Node * pNode, Node * pParent, CCBReader * ccbReader) 
 {
     float x = ccbReader->readFloat();
     float y = ccbReader->readFloat();
 
-    return Point(x, y);
+    return Vector2(x, y);
 }
 
-Point NodeLoader::parsePropTypePointLock(Node * pNode, Node * pParent, CCBReader * ccbReader) {
+Vector2 NodeLoader::parsePropTypePointLock(Node * pNode, Node * pParent, CCBReader * ccbReader) {
     float x = ccbReader->readFloat();
     float y = ccbReader->readFloat();
 
-    return Point(x, y);
+    return Vector2(x, y);
 }
 
 Size NodeLoader::parsePropTypeSize(Node * pNode, Node * pParent, CCBReader * ccbReader) {
@@ -997,7 +997,7 @@ Node * NodeLoader::parsePropTypeCCBFile(Node * pNode, Node * pParent, CCBReader 
 
 
 
-void NodeLoader::onHandlePropTypePosition(Node * pNode, Node * pParent, const char* pPropertyName, Point pPosition, CCBReader * ccbReader) {
+void NodeLoader::onHandlePropTypePosition(Node * pNode, Node * pParent, const char* pPropertyName, Vector2 pPosition, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_POSITION) == 0) {
         pNode->setPosition(pPosition);
     } else {
@@ -1005,7 +1005,7 @@ void NodeLoader::onHandlePropTypePosition(Node * pNode, Node * pParent, const ch
     }
 }
 
-void NodeLoader::onHandlePropTypePoint(Node * pNode, Node * pParent, const char* pPropertyName, Point pPoint, CCBReader * ccbReader) {
+void NodeLoader::onHandlePropTypePoint(Node * pNode, Node * pParent, const char* pPropertyName, Vector2 pPoint, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_ANCHORPOINT) == 0) {
         pNode->setAnchorPoint(pPoint);
     } else {
@@ -1013,7 +1013,7 @@ void NodeLoader::onHandlePropTypePoint(Node * pNode, Node * pParent, const char*
     }
 }
 
-void NodeLoader::onHandlePropTypePointLock(Node * pNode, Node * pParent, const char* pPropertyName, Point pPointLock, CCBReader * ccbReader) {
+void NodeLoader::onHandlePropTypePointLock(Node * pNode, Node * pParent, const char* pPropertyName, Vector2 pPointLock, CCBReader * ccbReader) {
     ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
 }
 

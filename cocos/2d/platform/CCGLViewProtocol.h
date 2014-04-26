@@ -113,7 +113,7 @@ public:
     /**
      * Get the visible origin point of opengl viewport.
      */
-    virtual Point getVisibleOrigin() const;
+    virtual Vector2 getVisibleOrigin() const;
 
     /**
      * Get the visible rectangle of opengl viewport.

@@ -21,7 +21,7 @@ class PongLayer : public Layer
 private:
     Ball*       _ball;
     Vector<Paddle*>    _paddles;
-    Point     _ballStartingVelocity; 
+    Vector2     _ballStartingVelocity; 
 public:
     PongLayer();
     ~PongLayer();

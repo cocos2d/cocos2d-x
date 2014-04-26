@@ -215,7 +215,7 @@ bool Follow::initWithTarget(Node *followedNode, const Rect& rect/* = Rect::ZERO*
     _boundaryFullyCovered = false;
 
     Size winSize = Director::getInstance()->getWinSize();
-    _fullScreenSize = Point(winSize.width, winSize.height);
+    _fullScreenSize = Vector2(winSize.width, winSize.height);
     _halfScreenSize = _fullScreenSize * 0.5f;
 
     if (_boundarySet)
@@ -257,9 +257,9 @@ void Follow::step(float dt)
         if(_boundaryFullyCovered)
             return;
 
-        Point tempPos = _halfScreenSize - _followedNode->getPosition();
+        Vector2 tempPos = _halfScreenSize - _followedNode->getPosition();
 
-        _target->setPosition(Point(clampf(tempPos.x, _leftBoundary, _rightBoundary),
+        _target->setPosition(Vector2(clampf(tempPos.x, _leftBoundary, _rightBoundary),
                                    clampf(tempPos.y, _bottomBoundary, _topBoundary)));
     }
     else

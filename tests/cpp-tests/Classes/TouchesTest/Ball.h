@@ -9,7 +9,7 @@ USING_NS_CC;
 
 class Ball : public Sprite
 {
-    Point _velocity;
+    Vector2 _velocity;
 public:
     Ball(void);
     virtual ~Ball(void);
@@ -22,8 +22,8 @@ public:
 
 
 public:
-    void setVelocity(Point velocity){_velocity = velocity;}
-    Point getVelocity(){return _velocity;}
+    void setVelocity(Vector2 velocity){_velocity = velocity;}
+    Vector2 getVelocity(){return _velocity;}
 
 public:
     static Ball* ballWithTexture(Texture2D* aTexture);

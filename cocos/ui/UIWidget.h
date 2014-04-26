@@ -208,7 +208,7 @@ public:
      */
     virtual Widget* getChildByName(const char* name);
 
-    virtual void visit(cocos2d::Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
+    virtual void visit(cocos2d::Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated) override;
 
     /**
      * Sets the touch event target/selector of the menu item
@@ -221,31 +221,31 @@ public:
     /**
      * Changes the position (x,y) of the widget in OpenGL coordinates
      *
-     * Usually we use p(x,y) to compose Point object.
+     * Usually we use p(x,y) to compose Vector2 object.
      * The original point (0,0) is at the left-bottom corner of screen.
      *
      * @param position  The position (x,y) of the widget in OpenGL coordinates
      */
-    virtual void setPosition(const Point &pos) override;
+    virtual void setPosition(const Vector2 &pos) override;
 
     /**
      * Changes the position (x,y) of the widget in OpenGL coordinates
      *
-     * Usually we use p(x,y) to compose Point object.
+     * Usually we use p(x,y) to compose Vector2 object.
      * The original point (0,0) is at the left-bottom corner of screen.
      *
      * @param percent  The percent (x,y) of the widget in OpenGL coordinates
      */
-    void setPositionPercent(const Point &percent);
+    void setPositionPercent(const Vector2 &percent);
 
     /**
      * Gets the percent (x,y) of the widget in OpenGL coordinates
      *
-     * @see setPosition(const Point&)
+     * @see setPosition(const Vector2&)
      *
      * @return The percent (x,y) of the widget in OpenGL coordinates
      */
-    const Point& getPositionPercent();
+    const Vector2& getPositionPercent();
 
     /**
      * Changes the position type of the widget
@@ -332,33 +332,33 @@ public:
      *
      * @return true if the point is in parent's area, flase otherwise.
      */
-    bool clippingParentAreaContainPoint(const Point &pt);
+    bool clippingParentAreaContainPoint(const Vector2 &pt);
 
     /*
      * Sends the touch event to widget's parent
      */
-    virtual void checkChildInfo(int handleState,Widget* sender,const Point &touchPoint);
+    virtual void checkChildInfo(int handleState,Widget* sender,const Vector2 &touchPoint);
 
     /*
      * Gets the touch began point of widget when widget is selected.
      *
      * @return the touch began point.
      */
-    const Point& getTouchStartPos();
+    const Vector2& getTouchStartPos();
 
     /*
      * Gets the touch move point of widget when widget is selected.
      *
      * @return the touch move point.
      */
-    const Point& getTouchMovePos();
+    const Vector2& getTouchMovePos();
 
     /*
      * Gets the touch end point of widget when widget is selected.
      *
      * @return the touch end point.
      */
-    const Point& getTouchEndPos();
+    const Vector2& getTouchEndPos();
 
     /**
      * Changes the name that is used to identify the widget easily.
@@ -397,7 +397,7 @@ public:
      *
      * @param percent that is widget's percent size
      */
-    virtual void setSizePercent(const Point &percent);
+    virtual void setSizePercent(const Vector2 &percent);
 
     /**
      * Changes the size type of widget.
@@ -433,7 +433,7 @@ public:
      *
      * @return size percent
      */
-    const Point& getSizePercent() const;
+    const Vector2& getSizePercent() const;
 
     /**
      * Checks a point if is in widget's space
@@ -442,7 +442,7 @@ public:
      *
      * @return true if the point is in widget's space, flase otherwise.
      */
-    virtual bool hitTest(const Point &pt);
+    virtual bool hitTest(const Vector2 &pt);
 
     virtual bool onTouchBegan(Touch *touch, Event *unusedEvent);
     virtual void onTouchMoved(Touch *touch, Event *unusedEvent);
@@ -490,7 +490,7 @@ public:
      *
      * @return world position of widget.
      */
-    Point getWorldPosition();
+    Vector2 getWorldPosition();
 
     /**
      * Gets the Virtual Renderer of widget.
@@ -574,9 +574,9 @@ protected:
     bool _touchPassedEnabled; ///< is the touch event should be passed
     bool _focus;              ///< is the widget on focus
     BrightStyle _brightStyle; ///< bright style
-    Point _touchStartPos;    ///< touch began point
-    Point _touchMovePos;     ///< touch moved point
-    Point _touchEndPos;      ///< touch ended point
+    Vector2 _touchStartPos;    ///< touch began point
+    Vector2 _touchMovePos;     ///< touch moved point
+    Vector2 _touchEndPos;      ///< touch ended point
     Ref*       _touchEventListener;
     SEL_TouchEvent    _touchEventSelector;
     std::string _name;
@@ -587,9 +587,9 @@ protected:
     bool _ignoreSize;
     bool _affectByClipping;
     SizeType _sizeType;
-    Point _sizePercent;
+    Vector2 _sizePercent;
     PositionType _positionType;
-    Point _positionPercent;
+    Vector2 _positionPercent;
     bool _reorderWidgetChildDirty;
     bool _hitted;
     EventListenerTouchOneByOne* _touchListener;

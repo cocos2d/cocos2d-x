@@ -50,7 +50,7 @@ void TextureMenuLayer::onEnter()
     // Title
     auto label = Label::createWithTTF(title().c_str(), "fonts/arial.ttf", 32);
     addChild(label, 1);
-    label->setPosition(Point(s.width/2, s.height-50));
+    label->setPosition(Vector2(s.width/2, s.height-50));
 
     // Subtitle
     std::string strSubTitle = subtitle();
@@ -58,7 +58,7 @@ void TextureMenuLayer::onEnter()
     {
         auto l = Label::createWithTTF(strSubTitle.c_str(), "fonts/Thonburi.ttf", 16);
         addChild(l, 1);
-        l->setPosition(Point(s.width/2, s.height-80));
+        l->setPosition(Vector2(s.width/2, s.height-80));
     }
 
     performTests();

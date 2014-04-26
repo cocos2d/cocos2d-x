@@ -57,7 +57,7 @@ class ControlSaturationBrightnessPicker : public Control
     CC_SYNTHESIZE_READONLY(Sprite*, _overlay, Overlay);
     CC_SYNTHESIZE_READONLY(Sprite*, _shadow, Shadow);
     CC_SYNTHESIZE_READONLY(Sprite*, _slider, Slider);
-    CC_SYNTHESIZE_READONLY(Point, _startPos, StartPos);
+    CC_SYNTHESIZE_READONLY(Vector2, _startPos, StartPos);
 
 protected:
     int         boxPos;
@@ -73,9 +73,9 @@ public:
      * @lua NA
      */
     virtual ~ControlSaturationBrightnessPicker();
-    virtual bool initWithTargetAndPos(Node* target, Point pos);
+    virtual bool initWithTargetAndPos(Node* target, Vector2 pos);
 
-    static ControlSaturationBrightnessPicker* create(Node* target, Point pos);
+    static ControlSaturationBrightnessPicker* create(Node* target, Vector2 pos);
 
     virtual void setEnabled(bool enabled);
     /**
@@ -90,8 +90,8 @@ public:
     virtual void updateDraggerWithHSV(HSV hsv);
 
 protected:    
-    void updateSliderPosition(Point location);
-    bool checkSliderPosition(Point location);
+    void updateSliderPosition(Vector2 location);
+    bool checkSliderPosition(Vector2 location);
 
     virtual bool onTouchBegan(Touch* touch, Event* pEvent);
     virtual void onTouchMoved(Touch *pTouch, Event *pEvent);

@@ -22,15 +22,15 @@ bool UIScrollViewTest_Vertical::init()
         
         // Add a label in which the scrollview alert will be displayed
         _displayValueLabel = Text::create("Move by vertical direction", "fonts/Marker Felt.ttf", 32);
-        _displayValueLabel->setAnchorPoint(Point(0.5f, -1.0f));
-        _displayValueLabel->setPosition(Point(widgetSize.width / 2.0f,
+        _displayValueLabel->setAnchorPoint(Vector2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vector2(widgetSize.width / 2.0f,
                                               widgetSize.height / 2.0f + _displayValueLabel->getContentSize().height * 1.5f));
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
         Text* alert = Text::create("ScrollView vertical", "fonts/Marker Felt.ttf", 30);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.075f));
+        alert->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.075f));
         _uiLayer->addChild(alert);
         
         Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
@@ -41,7 +41,7 @@ bool UIScrollViewTest_Vertical::init()
         ui::ScrollView* scrollView = ui::ScrollView::create();
         scrollView->setSize(Size(280.0f, 150.0f));        
         Size backgroundSize = background->getContentSize();
-        scrollView->setPosition(Point((widgetSize.width - backgroundSize.width) / 2.0f +
+        scrollView->setPosition(Vector2((widgetSize.width - backgroundSize.width) / 2.0f +
                                (backgroundSize.width - scrollView->getSize().width) / 2.0f,
                                (widgetSize.height - backgroundSize.height) / 2.0f +
                                (backgroundSize.height - scrollView->getSize().height) / 2.0f));
@@ -55,21 +55,21 @@ bool UIScrollViewTest_Vertical::init()
         scrollView->setInnerContainerSize(Size(innerWidth, innerHeight));                
         
         Button* button = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
-        button->setPosition(Point(innerWidth / 2.0f, scrollView->getInnerContainerSize().height - button->getSize().height / 2.0f));
+        button->setPosition(Vector2(innerWidth / 2.0f, scrollView->getInnerContainerSize().height - button->getSize().height / 2.0f));
         scrollView->addChild(button);
         
         Button* titleButton = Button::create("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png");
         titleButton->setTitleText("Title Button");
-        titleButton->setPosition(Point(innerWidth / 2.0f, button->getBottomInParent() - button->getSize().height));
+        titleButton->setPosition(Vector2(innerWidth / 2.0f, button->getBottomInParent() - button->getSize().height));
         scrollView->addChild(titleButton);
         
         Button* button_scale9 = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
         button_scale9->setScale9Enabled(true);
         button_scale9->setSize(Size(100.0f, button_scale9->getVirtualRendererSize().height));
-        button_scale9->setPosition(Point(innerWidth / 2.0f, titleButton->getBottomInParent() - titleButton->getSize().height));
+        button_scale9->setPosition(Vector2(innerWidth / 2.0f, titleButton->getBottomInParent() - titleButton->getSize().height));
         scrollView->addChild(button_scale9);
         
-        imageView->setPosition(Point(innerWidth / 2.0f, imageView->getSize().height / 2.0f));
+        imageView->setPosition(Vector2(innerWidth / 2.0f, imageView->getSize().height / 2.0f));
         scrollView->addChild(imageView);            
         
         return true;
@@ -97,13 +97,13 @@ bool UIScrollViewTest_Horizontal::init()
         
         // Add a label in which the scrollview alert will be displayed
         _displayValueLabel = Text::create("Move by horizontal direction","fonts/Marker Felt.ttf",32);
-        _displayValueLabel->setAnchorPoint(Point(0.5f, -1.0f));
-        _displayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + _displayValueLabel->getContentSize().height * 1.5f));
+        _displayValueLabel->setAnchorPoint(Vector2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + _displayValueLabel->getContentSize().height * 1.5f));
         _uiLayer->addChild(_displayValueLabel);            
         
         Text* alert = Text::create("ScrollView horizontal","fonts/Marker Felt.ttf",30);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.075f));
+        alert->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.075f));
         _uiLayer->addChild(alert);
         
         Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
@@ -117,7 +117,7 @@ bool UIScrollViewTest_Horizontal::init()
         scrollView->setSize(Size(280.0f, 150.0f));
         scrollView->setInnerContainerSize(scrollView->getSize());
         Size backgroundSize = background->getContentSize();
-        scrollView->setPosition(Point((widgetSize.width - backgroundSize.width) / 2.0f +
+        scrollView->setPosition(Vector2((widgetSize.width - backgroundSize.width) / 2.0f +
                                     (backgroundSize.width - scrollView->getSize().width) / 2.0f,
                                     (widgetSize.height - backgroundSize.height) / 2.0f +
                                     (backgroundSize.height - scrollView->getSize().height) / 2.0f));
@@ -131,24 +131,24 @@ bool UIScrollViewTest_Horizontal::init()
         scrollView->setInnerContainerSize(Size(innerWidth, innerHeight));
         
         Button* button = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
-        button->setPosition(Point(button->getSize().width / 2.0f,
+        button->setPosition(Vector2(button->getSize().width / 2.0f,
                                 scrollView->getInnerContainerSize().height - button->getSize().height / 2.0f));
         scrollView->addChild(button);
         
         Button* titleButton = Button::create("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png");
         titleButton->setTitleText("Title Button");
-        titleButton->setPosition(Point(button->getRightInParent() + button->getSize().width / 2.0f,
+        titleButton->setPosition(Vector2(button->getRightInParent() + button->getSize().width / 2.0f,
                                     button->getBottomInParent() - button->getSize().height / 2.0f));
         scrollView->addChild(titleButton);
         
         Button* button_scale9 = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
         button_scale9->setScale9Enabled(true);
         button_scale9->setSize(Size(100.0f, button_scale9->getVirtualRendererSize().height));
-        button_scale9->setPosition(Point(titleButton->getRightInParent() + titleButton->getSize().width / 2.0f,
+        button_scale9->setPosition(Vector2(titleButton->getRightInParent() + titleButton->getSize().width / 2.0f,
                                        titleButton->getBottomInParent() - titleButton->getSize().height / 2.0f));
         scrollView->addChild(button_scale9);                
                 
-        imageView->setPosition(Point(innerWidth - imageView->getSize().width / 2.0f,
+        imageView->setPosition(Vector2(innerWidth - imageView->getSize().width / 2.0f,
                                    button_scale9->getBottomInParent() - button_scale9->getSize().height / 2.0f));
         scrollView->addChild(imageView);                
         
@@ -177,14 +177,14 @@ bool UIScrollViewTest_Both::init()
         
         // Add a label in which the dragpanel events will be displayed
         _displayValueLabel = Text::create("Move by any direction","fonts/Marker Felt.ttf",32);
-        _displayValueLabel->setAnchorPoint(Point(0.5f, -1.0f));
-        _displayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + _displayValueLabel->getSize().height * 1.5f));
+        _displayValueLabel->setAnchorPoint(Vector2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + _displayValueLabel->getSize().height * 1.5f));
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
         Text* alert = Text::create("ScrollView both","fonts/Marker Felt.ttf",30);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.075f));
+        alert->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.075f));
         _uiLayer->addChild(alert);
         
         Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
@@ -200,7 +200,7 @@ bool UIScrollViewTest_Both::init()
         scrollView->setBackGroundImage("cocosui/green_edit.png");
         scrollView->setSize(Size(210, 122.5));
         Size backgroundSize = background->getContentSize();
-        scrollView->setPosition(Point((widgetSize.width - backgroundSize.width) / 2.0f +
+        scrollView->setPosition(Vector2((widgetSize.width - backgroundSize.width) / 2.0f +
                                     (backgroundSize.width - scrollView->getSize().width) / 2.0f,
                                     (widgetSize.height - backgroundSize.height) / 2.0f +
                                     (backgroundSize.height - scrollView->getSize().height) / 2.0f));
@@ -209,7 +209,7 @@ bool UIScrollViewTest_Both::init()
         
         scrollView->setInnerContainerSize(imageView->getContentSize());
         Size innerSize = scrollView->getInnerContainerSize();
-        imageView->setPosition(Point(innerSize.width / 2.0f, innerSize.height / 2.0f));
+        imageView->setPosition(Vector2(innerSize.width / 2.0f, innerSize.height / 2.0f));
         
         _uiLayer->addChild(scrollView);
         
@@ -238,14 +238,14 @@ bool UIScrollViewTest_ScrollToPercentBothDirection::init()
         
         // Add a label in which the dragpanel events will be displayed
         _displayValueLabel = Text::create("No Event", "fonts/Marker Felt.ttf",30);
-        _displayValueLabel->setAnchorPoint(Point(0.5f, -1.0f));
-        _displayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + _displayValueLabel->getSize().height * 1.5f));
+        _displayValueLabel->setAnchorPoint(Vector2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + _displayValueLabel->getSize().height * 1.5f));
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
         Text* alert = Text::create("ScrollView scroll to percent both directrion","fonts/Marker Felt.ttf",20);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 4.5));
+        alert->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 4.5));
         _uiLayer->addChild(alert);
         
         Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
@@ -259,13 +259,13 @@ bool UIScrollViewTest_ScrollToPercentBothDirection::init()
         sc->setInnerContainerSize(Size(480, 320));
         sc->setSize(Size(100,100));
         Size backgroundSize = background->getContentSize();
-        sc->setPosition(Point((widgetSize.width - backgroundSize.width) / 2.0f +
+        sc->setPosition(Vector2((widgetSize.width - backgroundSize.width) / 2.0f +
                               (backgroundSize.width - sc->getSize().width) / 2.0f,
                               (widgetSize.height - backgroundSize.height) / 2.0f +
                               (backgroundSize.height - sc->getSize().height) / 2.0f));
-        sc->scrollToPercentBothDirection(Point(50, 50), 1, true);
+        sc->scrollToPercentBothDirection(Vector2(50, 50), 1, true);
         ImageView* iv = ImageView::create("cocosui/Hello.png");
-        iv->setPosition(Point(240, 160));
+        iv->setPosition(Vector2(240, 160));
         sc->addChild(iv);
         _uiLayer->addChild(sc);
         
@@ -293,14 +293,14 @@ bool UIScrollViewTest_ScrollToPercentBothDirection_Bounce::init()
         
         // Add a label in which the dragpanel events will be displayed
         _displayValueLabel = Text::create("No Event","fonts/Marker Felt.ttf",32);
-        _displayValueLabel->setAnchorPoint(Point(0.5f, -1.0f));
-        _displayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + _displayValueLabel->getSize().height * 1.5f));
+        _displayValueLabel->setAnchorPoint(Vector2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + _displayValueLabel->getSize().height * 1.5f));
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
         Text* alert = Text::create("ScrollView scroll to percent both directrion bounce","fonts/Marker Felt.ttf",20);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 4.5));
+        alert->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 4.5));
         _uiLayer->addChild(alert);
         
         Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
@@ -315,13 +315,13 @@ bool UIScrollViewTest_ScrollToPercentBothDirection_Bounce::init()
         sc->setInnerContainerSize(Size(480, 320));
         sc->setSize(Size(100,100));
         Size backgroundSize = background->getContentSize();
-        sc->setPosition(Point((widgetSize.width - backgroundSize.width) / 2.0f +
+        sc->setPosition(Vector2((widgetSize.width - backgroundSize.width) / 2.0f +
                               (backgroundSize.width - sc->getSize().width) / 2.0f,
                               (widgetSize.height - backgroundSize.height) / 2.0f +
                               (backgroundSize.height - sc->getSize().height) / 2.0f));
-        sc->scrollToPercentBothDirection(Point(50, 50), 1, true);
+        sc->scrollToPercentBothDirection(Vector2(50, 50), 1, true);
         ImageView* iv = ImageView::create("cocosui/Hello.png");
-        iv->setPosition(Point(240, 160));
+        iv->setPosition(Vector2(240, 160));
         sc->addChild(iv);
         _uiLayer->addChild(sc);
         return true;

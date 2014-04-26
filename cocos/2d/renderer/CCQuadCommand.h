@@ -28,7 +28,6 @@
 #include "CCRenderCommand.h"
 #include "CCGLProgram.h"
 #include "CCRenderCommandPool.h"
-#include "kazmath/kazmath.h"
 
 NS_CC_BEGIN
 
@@ -45,7 +44,7 @@ public:
     /** Initializes the command with a globalZOrder, a texture ID, a `GLProgram`, a blending function, a pointer to quads,
      * quantity of quads, and the Model View transform to be used for the quads */
     void init(float globalOrder, GLuint texutreID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
-              const kmMat4& mv);
+              const Matrix& mv);
 
     void useMaterial() const;
 
@@ -64,7 +63,7 @@ public:
 
     inline BlendFunc getBlendType() const { return _blendType; }
 
-    inline const kmMat4& getModelView() const { return _mv; }
+    inline const Matrix& getModelView() const { return _mv; }
     
 private:
     void generateMaterialID();
@@ -81,7 +80,7 @@ protected:
     V3F_C4B_T2F_Quad* _quads;
     ssize_t _quadsCount;
 
-    kmMat4 _mv;
+    Matrix _mv;
 };
 NS_CC_END
 

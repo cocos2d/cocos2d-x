@@ -144,7 +144,7 @@ void S9BatchNodeBasic::onEnter()
     blocks->updateWithBatchNode(batchNode, Rect(0, 0, 96, 96), false, Rect(0, 0, 96, 96));
     log("... updateWithBatchNode");
     
-    blocks->setPosition(Point(x, y));
+    blocks->setPosition(Vector2(x, y));
     log("... setPosition");
     
     this->addChild(blocks);
@@ -178,7 +178,7 @@ void S9FrameNameSpriteSheet::onEnter()
     auto blocks = Scale9Sprite::createWithSpriteFrameName("blocks9.png");
     log("... created");
 
-    blocks->setPosition(Point(x, y));
+    blocks->setPosition(Vector2(x, y));
     log("... setPosition");
 
     this->addChild(blocks);
@@ -212,7 +212,7 @@ void S9FrameNameSpriteSheetRotated::onEnter()
     auto blocks = Scale9Sprite::createWithSpriteFrameName("blocks9r.png");
     log("... created");
 
-    blocks->setPosition(Point(x, y));
+    blocks->setPosition(Vector2(x, y));
     log("... setPosition");
 
     this->addChild(blocks);
@@ -253,7 +253,7 @@ void S9BatchNodeScaledNoInsets::onEnter()
     blocks_scaled->updateWithBatchNode(batchNode_scaled, Rect(0, 0, 96, 96), false, Rect(0, 0, 96, 96));
     log("... updateWithBatchNode");
 
-    blocks_scaled->setPosition(Point(x, y));
+    blocks_scaled->setPosition(Vector2(x, y));
     log("... setPosition");
 
     blocks_scaled->setContentSize(Size(96 * 4, 96*2));
@@ -291,7 +291,7 @@ void S9FrameNameSpriteSheetScaledNoInsets::onEnter()
     auto blocks_scaled = Scale9Sprite::createWithSpriteFrameName("blocks9.png");
     log("... created");
 
-    blocks_scaled->setPosition(Point(x, y));
+    blocks_scaled->setPosition(Vector2(x, y));
     log("... setPosition");
 
     blocks_scaled->setContentSize(Size(96 * 4, 96*2));
@@ -330,7 +330,7 @@ void S9FrameNameSpriteSheetRotatedScaledNoInsets::onEnter()
     auto blocks_scaled = Scale9Sprite::createWithSpriteFrameName("blocks9r.png");
     log("... created");
 
-    blocks_scaled->setPosition(Point(x, y));
+    blocks_scaled->setPosition(Vector2(x, y));
     log("... setPosition");
 
     blocks_scaled->setContentSize(Size(96 * 4, 96*2));
@@ -378,7 +378,7 @@ void S9BatchNodeScaleWithCapInsets::onEnter()
     blocks_scaled_with_insets->setContentSize(Size(96 * 4.5, 96 * 2.5));
     log("... setContentSize");
 
-    blocks_scaled_with_insets->setPosition(Point(x, y));
+    blocks_scaled_with_insets->setPosition(Vector2(x, y));
     log("... setPosition");
 
     this->addChild(blocks_scaled_with_insets);
@@ -413,7 +413,7 @@ void S9FrameNameSpriteSheetInsets::onEnter()
     auto blocks_with_insets = Scale9Sprite::createWithSpriteFrameName("blocks9.png", Rect(32, 32, 32, 32));
     log("... created");
 
-    blocks_with_insets->setPosition(Point(x, y));
+    blocks_with_insets->setPosition(Vector2(x, y));
     log("... setPosition");
 
     this->addChild(blocks_with_insets);
@@ -450,7 +450,7 @@ void S9FrameNameSpriteSheetInsetsScaled::onEnter()
     blocks_scaled_with_insets->setContentSize(Size(96 * 4.5, 96 * 2.5));
     log("... setContentSize");
 
-    blocks_scaled_with_insets->setPosition(Point(x, y));
+    blocks_scaled_with_insets->setPosition(Vector2(x, y));
     log("... setPosition");
 
     this->addChild(blocks_scaled_with_insets);
@@ -484,7 +484,7 @@ void S9FrameNameSpriteSheetRotatedInsets::onEnter()
     auto blocks_with_insets = Scale9Sprite::createWithSpriteFrameName("blocks9r.png", Rect(32, 32, 32, 32));
     log("... created");
 
-    blocks_with_insets->setPosition(Point(x, y));
+    blocks_with_insets->setPosition(Vector2(x, y));
     log("... setPosition");
 
     this->addChild(blocks_with_insets);
@@ -521,7 +521,7 @@ void S9_TexturePacker::onEnter()
     auto s = Scale9Sprite::createWithSpriteFrameName("button_normal.png");
     log("... created");
 
-    s->setPosition(Point(x, y));
+    s->setPosition(Vector2(x, y));
     log("... setPosition");
 
     s->setContentSize(Size(14 * 16, 10 * 16));
@@ -535,7 +535,7 @@ void S9_TexturePacker::onEnter()
     auto s2 = Scale9Sprite::createWithSpriteFrameName("button_actived.png");
     log("... created");
 
-    s2->setPosition(Point(x, y));
+    s2->setPosition(Vector2(x, y));
     log("... setPosition");
 
     s2->setContentSize(Size(14 * 16, 10 * 16));
@@ -576,7 +576,7 @@ void S9FrameNameSpriteSheetRotatedInsetsScaled::onEnter()
     blocks_scaled_with_insets->setContentSize(Size(96 * 4.5, 96 * 2.5));
     log("... setContentSize");
 
-    blocks_scaled_with_insets->setPosition(Point(x, y));
+    blocks_scaled_with_insets->setPosition(Vector2(x, y));
     log("... setPosition");
 
     this->addChild(blocks_scaled_with_insets);
@@ -615,7 +615,7 @@ void S9FrameNameSpriteSheetRotatedSetCapInsetLater::onEnter()
     blocks_scaled_with_insets->setInsetRight(32);
 
     blocks_scaled_with_insets->setPreferredSize(Size(32*5.5f, 32*4));
-    blocks_scaled_with_insets->setPosition(Point(x, y));
+    blocks_scaled_with_insets->setPosition(Vector2(x, y));
     log("... setPosition");
     
     this->addChild(blocks_scaled_with_insets);
@@ -654,7 +654,7 @@ void S9CascadeOpacityAndColor::onEnter()
     auto blocks_scaled_with_insets = Scale9Sprite::createWithSpriteFrameName("blocks9r.png");
     log("... created");
     
-    blocks_scaled_with_insets->setPosition(Point(x, y));
+    blocks_scaled_with_insets->setPosition(Vector2(x, y));
     log("... setPosition");
     
     rgba->addChild(blocks_scaled_with_insets);

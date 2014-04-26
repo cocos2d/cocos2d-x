@@ -256,7 +256,7 @@ g_guisTests[] =
 
 static const int g_maxTests = sizeof(g_guisTests) / sizeof(g_guisTests[0]);
 
-static Point s_tCurPos = Point::ZERO;
+static Vector2 s_tCurPos = Vector2::ZERO;
 
 ////////////////////////////////////////////////////////
 //
@@ -276,7 +276,7 @@ void GUIEditorMainLayer::onEnter()
     for (int i = 0; i < g_maxTests; ++i)
     {
         auto pItem = MenuItemFont::create(g_guisTests[i].name, g_guisTests[i].callback);
-        pItem->setPosition(Point(s.width / 2, s.height - (i + 1) * LINE_SPACE));
+        pItem->setPosition(Vector2(s.width / 2, s.height - (i + 1) * LINE_SPACE));
         _itemMenu->addChild(pItem, kItemTagBasic + i);
     }
     
@@ -304,17 +304,17 @@ void GUIEditorMainLayer::onTouchesMoved(const std::vector<Touch*>& touches, Even
     float nMoveY = touchLocation.y - _beginPos.y;
     
     auto curPos  = _itemMenu->getPosition();
-    auto nextPos = Point(curPos.x, curPos.y + nMoveY);
+    auto nextPos = Vector2(curPos.x, curPos.y + nMoveY);
     
     if (nextPos.y < 0.0f)
     {
-        _itemMenu->setPosition(Point::ZERO);
+        _itemMenu->setPosition(Vector2::ZERO);
         return;
     }
     
     if (nextPos.y > ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
     {
-        _itemMenu->setPosition(Point(0, ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        _itemMenu->setPosition(Vector2(0, ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
         return;
     }
     
@@ -339,8 +339,8 @@ void GUIEditorTestScene::onEnter()
     
     Menu* pMenu =CCMenu::create(pMenuItem, nullptr);
 
-    pMenu->setPosition( Point::ZERO );
-    pMenuItem->setPosition( Point( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
+    pMenu->setPosition( Vector2::ZERO );
+    pMenuItem->setPosition( Vector2( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
     
     addChild(pMenu, 1);
 }

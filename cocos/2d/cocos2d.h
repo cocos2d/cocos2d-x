@@ -29,8 +29,8 @@ THE SOFTWARE.
 #define __COCOS2D_H__
 
 // 0x00 HI ME LO
-// 00   03 00 00
-#define COCOS2D_VERSION 0x00030000
+// 00   03 01 00
+#define COCOS2D_VERSION 0x00030100
 
 //
 // all cocos2d include files
@@ -116,7 +116,6 @@ THE SOFTWARE.
 
 // new renderer
 #include "renderer/CCCustomCommand.h"
-#include "renderer/CCFrustum.h"
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCMaterialManager.h"
 #include "renderer/CCQuadCommand.h"
@@ -131,10 +130,6 @@ THE SOFTWARE.
 #include "CCPhysicsShape.h"
 #include "CCPhysicsJoint.h"
 #include "CCPhysicsWorld.h"
-
-// kazmath
-#include "kazmath/kazmath.h"
-#include "kazmath/GL/matrix.h"
 
 // platform
 #include "platform/CCDevice.h"

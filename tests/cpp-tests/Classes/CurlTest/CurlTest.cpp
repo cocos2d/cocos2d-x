@@ -7,7 +7,7 @@ CurlTest::CurlTest()
 {
     auto label = Label::createWithTTF("Curl Test", "fonts/arial.ttf", 28);
     addChild(label, 0);
-    label->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y-50) );
+    label->setPosition( Vector2(VisibleRect::center().x, VisibleRect::top().y-50) );
 
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesEnded = CC_CALLBACK_2(CurlTest::onTouchesEnded, this);

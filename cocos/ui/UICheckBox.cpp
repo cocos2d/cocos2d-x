@@ -465,7 +465,7 @@ void CheckBox::backGroundTextureScaleChangedWithSize()
         _backGroundBoxRenderer->setScaleX(scaleX);
         _backGroundBoxRenderer->setScaleY(scaleY);
     }
-    _backGroundBoxRenderer->setPosition(Point(_contentSize.width / 2, _contentSize.height / 2));
+    _backGroundBoxRenderer->setPosition(Vector2(_contentSize.width / 2, _contentSize.height / 2));
 }
 
 void CheckBox::backGroundSelectedTextureScaleChangedWithSize()
@@ -487,7 +487,7 @@ void CheckBox::backGroundSelectedTextureScaleChangedWithSize()
         _backGroundSelectedBoxRenderer->setScaleX(scaleX);
         _backGroundSelectedBoxRenderer->setScaleY(scaleY);
     }
-    _backGroundSelectedBoxRenderer->setPosition(Point(_contentSize.width / 2, _contentSize.height / 2));
+    _backGroundSelectedBoxRenderer->setPosition(Vector2(_contentSize.width / 2, _contentSize.height / 2));
 }
 
 void CheckBox::frontCrossTextureScaleChangedWithSize()
@@ -509,7 +509,7 @@ void CheckBox::frontCrossTextureScaleChangedWithSize()
         _frontCrossRenderer->setScaleX(scaleX);
         _frontCrossRenderer->setScaleY(scaleY);
     }
-    _frontCrossRenderer->setPosition(Point(_contentSize.width / 2, _contentSize.height / 2));
+    _frontCrossRenderer->setPosition(Vector2(_contentSize.width / 2, _contentSize.height / 2));
 }
 
 void CheckBox::backGroundDisabledTextureScaleChangedWithSize()
@@ -531,7 +531,7 @@ void CheckBox::backGroundDisabledTextureScaleChangedWithSize()
         _backGroundBoxDisabledRenderer->setScaleX(scaleX);
         _backGroundBoxDisabledRenderer->setScaleY(scaleY);
     }
-    _backGroundBoxDisabledRenderer->setPosition(Point(_contentSize.width / 2, _contentSize.height / 2));
+    _backGroundBoxDisabledRenderer->setPosition(Vector2(_contentSize.width / 2, _contentSize.height / 2));
 }
 
 void CheckBox::frontCrossDisabledTextureScaleChangedWithSize()
@@ -553,7 +553,7 @@ void CheckBox::frontCrossDisabledTextureScaleChangedWithSize()
         _frontCrossDisabledRenderer->setScaleX(scaleX);
         _frontCrossDisabledRenderer->setScaleY(scaleY);
     }
-    _frontCrossDisabledRenderer->setPosition(Point(_contentSize.width / 2, _contentSize.height / 2));
+    _frontCrossDisabledRenderer->setPosition(Vector2(_contentSize.width / 2, _contentSize.height / 2));
 }
 
 std::string CheckBox::getDescription() const

@@ -190,12 +190,12 @@ void ColliderDetector::addContourData(ContourData *contourData)
 
 
 #if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
-    std::vector<Point> &calculatedVertexList = colliderBody->_calculatedVertexList;
+    std::vector<Vector2> &calculatedVertexList = colliderBody->_calculatedVertexList;
     
     unsigned long num = contourData->vertexList.size();
     for (unsigned long i = 0; i < num; i++)
     {
-        calculatedVertexList.push_back(Point());
+        calculatedVertexList.push_back(Vector2());
     }
 #endif
 }
@@ -332,9 +332,9 @@ ColliderFilter *ColliderDetector::getColliderFilter()
 #endif
 
 
-Point helpPoint;
+Vector2 helpPoint;
 
-void ColliderDetector::updateTransform(kmMat4 &t)
+void ColliderDetector::updateTransform(Matrix &t)
 {
     if (!_active)
     {
@@ -361,10 +361,10 @@ void ColliderDetector::updateTransform(kmMat4 &t)
 #endif
 
         unsigned long num = contourData->vertexList.size();
-        std::vector<cocos2d::Point> &vs = contourData->vertexList;
+        std::vector<cocos2d::Vector2> &vs = contourData->vertexList;
 
 #if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
-        std::vector<cocos2d::Point> &cvs = colliderBody->_calculatedVertexList;
+        std::vector<cocos2d::Vector2> &cvs = colliderBody->_calculatedVertexList;
 #endif
 
         for (unsigned long i = 0; i < num; i++)

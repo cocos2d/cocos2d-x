@@ -28,9 +28,11 @@ THE SOFTWARE.
 
 #include "CCGeometry.h"
 #include "CCPlatformMacros.h"
-#include "kazmath/kazmath.h"
+#include "math/CCMath.h"
 
 NS_CC_BEGIN
+
+USING_NS_CC_MATH;
 
 struct AffineTransform {
     float a, b, c, d;
@@ -42,7 +44,7 @@ struct AffineTransform {
 CC_DLL AffineTransform __CCAffineTransformMake(float a, float b, float c, float d, float tx, float ty);
 #define AffineTransformMake __CCAffineTransformMake
 
-CC_DLL Point __CCPointApplyAffineTransform(const Point& point, const AffineTransform& t);
+CC_DLL Vector2 __CCPointApplyAffineTransform(const Vector2& point, const AffineTransform& t);
 #define PointApplyAffineTransform __CCPointApplyAffineTransform
 
 CC_DLL Size __CCSizeApplyAffineTransform(const Size& size, const AffineTransform& t);
@@ -51,8 +53,8 @@ CC_DLL Size __CCSizeApplyAffineTransform(const Size& size, const AffineTransform
 CC_DLL AffineTransform AffineTransformMakeIdentity();
 CC_DLL Rect RectApplyAffineTransform(const Rect& rect, const AffineTransform& anAffineTransform);
 
-CC_DLL Rect RectApplyTransform(const Rect& rect, const kmMat4& transform);
-CC_DLL Point PointApplyTransform(const Point& point, const kmMat4& transform);
+CC_DLL Rect RectApplyTransform(const Rect& rect, const Matrix& transform);
+CC_DLL Vector2 PointApplyTransform(const Vector2& point, const Matrix& transform);
 
 CC_DLL AffineTransform AffineTransformTranslate(const AffineTransform& t, float tx, float ty);
 CC_DLL AffineTransform AffineTransformRotate(const AffineTransform& aTransform, float anAngle);
@@ -61,7 +63,7 @@ CC_DLL AffineTransform AffineTransformConcat(const AffineTransform& t1, const Af
 CC_DLL bool AffineTransformEqualToTransform(const AffineTransform& t1, const AffineTransform& t2);
 CC_DLL AffineTransform AffineTransformInvert(const AffineTransform& t);
 
-kmMat4 TransformConcat(const kmMat4& t1, const kmMat4& t2);
+Matrix TransformConcat(const Matrix& t1, const Matrix& t2);
 
 extern CC_DLL const AffineTransform AffineTransformIdentity;
 

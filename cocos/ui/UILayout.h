@@ -152,9 +152,9 @@ public:
      *
      * @param vector
      */
-    void setBackGroundColorVector(const Point &vector);
+    void setBackGroundColorVector(const Vector2 &vector);
     
-    const Point& getBackGroundColorVector();
+    const Vector2& getBackGroundColorVector();
     
     void setBackGroundImageColor(const Color3B& color);
     
@@ -240,7 +240,7 @@ public:
      */
     virtual void addChild(Node* child, int zOrder, int tag) override;
     
-    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
+    virtual void visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated) override;
 
     virtual void removeChild(Node* child, bool cleanup = true) override;
     
@@ -265,7 +265,7 @@ public:
     
     virtual void onEnter() override;
     virtual void onExit() override;
-        
+
 CC_CONSTRUCTOR_ACCESS:
     //override "init" method of widget.
     virtual bool init() override;
@@ -282,8 +282,8 @@ protected:
     virtual void copySpecialProperties(Widget* model) override;
     virtual void copyClonedWidgetChildren(Widget* model) override;
     
-    void stencilClippingVisit(Renderer *renderer, const kmMat4& parentTransform, bool parentTransformUpdated);
-    void scissorClippingVisit(Renderer *renderer, const kmMat4& parentTransform, bool parentTransformUpdated);
+    void stencilClippingVisit(Renderer *renderer, const Matrix& parentTransform, bool parentTransformUpdated);
+    void scissorClippingVisit(Renderer *renderer, const Matrix& parentTransform, bool parentTransformUpdated);
     
     void setStencilClippingSize(const Size& size);
     const Rect& getClippingRect();
@@ -315,7 +315,7 @@ protected:
     Color3B _cColor;
     Color3B _gStartColor;
     Color3B _gEndColor;
-    Point _alongVector;
+    Vector2 _alongVector;
     GLubyte _cOpacity;
     Size _backGroundImageTextureSize;
     LayoutType _layoutType;

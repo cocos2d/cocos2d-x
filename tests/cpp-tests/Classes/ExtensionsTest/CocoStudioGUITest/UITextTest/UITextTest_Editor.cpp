@@ -15,7 +15,7 @@ bool UITextTest_Editor::init()
         _touchGroup->addChild(_layout);
         Size screenSize = CCDirector::getInstance()->getWinSize();
         Size rootSize = _layout->getSize();
-        _touchGroup->setPosition(Point((screenSize.width - rootSize.width) / 2,
+        _touchGroup->setPosition(Vector2((screenSize.width - rootSize.width) / 2,
                                        (screenSize.height - rootSize.height) / 2));
         
         Layout* root = static_cast<Layout*>(_layout->getChildByName("root_Panel"));

@@ -40,7 +40,7 @@ void LayerGradientLoader::onHandlePropTypeBlendFunc(Node * pNode, Node * pParent
 }
 
 
-void LayerGradientLoader::onHandlePropTypePoint(Node * pNode, Node * pParent, const char * pPropertyName, Point pPoint, CCBReader * ccbReader) {
+void LayerGradientLoader::onHandlePropTypePoint(Node * pNode, Node * pParent, const char * pPropertyName, Vector2 pPoint, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_VECTOR) == 0) {
         ((LayerGradient *)pNode)->setVector(pPoint);
 

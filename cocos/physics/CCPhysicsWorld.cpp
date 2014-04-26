@@ -66,8 +66,8 @@ namespace
     {
         PhysicsWorld* world;
         PhysicsRayCastCallbackFunc func;
-        Point p1;
-        Point p2;
+        Vector2 p1;
+        Vector2 p2;
         void* data;
     }RayCastCallbackInfo;
     
@@ -153,8 +153,8 @@ void PhysicsWorldCallback::rayCastCallbackFunc(cpShape *shape, cpFloat t, cpVect
         it->second->getShape(),
         info->p1,
         info->p2,
-        Point(info->p1.x+(info->p2.x-info->p1.x)*t, info->p1.y+(info->p2.y-info->p1.y)*t),
-        Point(n.x, n.y),
+        Vector2(info->p1.x+(info->p2.x-info->p1.x)*t, info->p1.y+(info->p2.y-info->p1.y)*t),
+        Vector2(n.x, n.y),
         (float)t,
     };
     
@@ -334,7 +334,7 @@ void PhysicsWorld::collisionSeparateCallback(PhysicsContact& contact)
     _layer->getEventDispatcher()->dispatchEvent(&contact);
 }
 
-void PhysicsWorld::rayCast(PhysicsRayCastCallbackFunc func, const Point& point1, const Point& point2, void* data)
+void PhysicsWorld::rayCast(PhysicsRayCastCallbackFunc func, const Vector2& point1, const Vector2& point2, void* data)
 {
     CCASSERT(func != nullptr, "func shouldn't be nullptr");
     
@@ -371,7 +371,7 @@ void PhysicsWorld::queryRect(PhysicsQueryRectCallbackFunc func, const Rect& rect
     }
 }
 
-void PhysicsWorld::queryPoint(PhysicsQueryPointCallbackFunc func, const Point& point, void* data)
+void PhysicsWorld::queryPoint(PhysicsQueryPointCallbackFunc func, const Vector2& point, void* data)
 {
     CCASSERT(func != nullptr, "func shouldn't be nullptr");
     
@@ -390,7 +390,7 @@ void PhysicsWorld::queryPoint(PhysicsQueryPointCallbackFunc func, const Point& p
     }
 }
 
-Vector<PhysicsShape*> PhysicsWorld::getShapes(const Point& point) const
+Vector<PhysicsShape*> PhysicsWorld::getShapes(const Vector2& point) const
 {
     Vector<PhysicsShape*> arr;
     cpSpaceNearestPointQuery(this->_info->getSpace(),
@@ -404,7 +404,7 @@ Vector<PhysicsShape*> PhysicsWorld::getShapes(const Point& point) const
     return arr;
 }
 
-PhysicsShape* PhysicsWorld::getShape(const Point& point) const
+PhysicsShape* PhysicsWorld::getShape(const Vector2& point) const
 {
     cpShape* shape = cpSpaceNearestPointQueryNearest(this->_info->getSpace(),
                                     PhysicsHelper::point2cpv(point),
@@ -905,7 +905,7 @@ void PhysicsWorld::update(float delta)
 }
 
 PhysicsWorld::PhysicsWorld()
-: _gravity(Point(0.0f, -98.0f))
+: _gravity(Vector2(0.0f, -98.0f))
 , _speed(1.0f)
 , _updateRate(1)
 , _updateRateCount(0)
@@ -965,16 +965,16 @@ void PhysicsDebugDraw::drawShape(PhysicsShape& shape)
             case CP_CIRCLE_SHAPE:
             {
                 float radius = PhysicsHelper::cpfloat2float(cpCircleShapeGetRadius(subShape));
-                Point centre = PhysicsHelper::cpv2point(cpBodyGetPos(cpShapeGetBody(subShape)))
+                Vector2 centre = PhysicsHelper::cpv2point(cpBodyGetPos(cpShapeGetBody(subShape)))
                 + PhysicsHelper::cpv2point(cpCircleShapeGetOffset(subShape));
                 
                 static const int CIRCLE_SEG_NUM = 12;
-                Point seg[CIRCLE_SEG_NUM] = {};
+                Vector2 seg[CIRCLE_SEG_NUM] = {};
                 
                 for (int i = 0; i < CIRCLE_SEG_NUM; ++i)
                 {
                     float angle = (float)i * M_PI / (float)CIRCLE_SEG_NUM * 2.0f;
-                    Point d(radius * cosf(angle), radius * sinf(angle));
+                    Vector2 d(radius * cosf(angle), radius * sinf(angle));
                     seg[i] = centre + d;
                 }
                 _drawNode->drawPolygon(seg, CIRCLE_SEG_NUM, fillColor, 1, outlineColor);
@@ -992,7 +992,7 @@ void PhysicsDebugDraw::drawShape(PhysicsShape& shape)
             {
                 cpPolyShape* poly = (cpPolyShape*)subShape;
                 int num = poly->numVerts;
-                Point* seg = new Point[num];
+                Vector2* seg = new Vector2[num];
                 
                 PhysicsHelper::cpvs2points(poly->tVerts, seg, num);
                 

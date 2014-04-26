@@ -22,7 +22,7 @@ bool Bug624Layer::init()
         auto size = Director::getInstance()->getWinSize();
         auto label = Label::createWithTTF("Layer1", "fonts/Marker Felt.ttf", 36.0f);
 
-        label->setPosition(Point(size.width/2, size.height/2));
+        label->setPosition(Vector2(size.width/2, size.height/2));
         addChild(label);
         
         Device::setAccelerometerEnabled(true);
@@ -68,7 +68,7 @@ bool Bug624Layer2::init()
         auto size = Director::getInstance()->getWinSize();
         auto label = Label::createWithTTF("Layer2", "fonts/Marker Felt.ttf", 36.0f);
 
-        label->setPosition(Point(size.width/2, size.height/2));
+        label->setPosition(Vector2(size.width/2, size.height/2));
         addChild(label);
         
         Device::setAccelerometerEnabled(true);

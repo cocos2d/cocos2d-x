@@ -240,9 +240,9 @@ bool Control::isOpacityModifyRGB() const
 }
 
 
-Point Control::getTouchLocation(Touch* touch)
+Vector2 Control::getTouchLocation(Touch* touch)
 {
-    Point touchLocation = touch->getLocation();            // Get the touch position
+    Vector2 touchLocation = touch->getLocation();            // Get the touch position
     touchLocation = this->convertToNodeSpace(touchLocation);  // Convert to the node space of this class
     
     return touchLocation;
@@ -250,7 +250,7 @@ Point Control::getTouchLocation(Touch* touch)
 
 bool Control::isTouchInside(Touch* touch)
 {
-    Point touchLocation = touch->getLocation(); // Get the touch position
+    Vector2 touchLocation = touch->getLocation(); // Get the touch position
     touchLocation = this->getParent()->convertToNodeSpace(touchLocation);
     Rect bBox = getBoundingBox();
     return bBox.containsPoint(touchLocation);

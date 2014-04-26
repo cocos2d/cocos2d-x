@@ -26,7 +26,6 @@
 #define __MISCNODE_CCGRID_NODE_H__
 
 #include "CCNode.h"
-#include "kazmath/GL/matrix.h"
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCCustomCommand.h"
 
@@ -55,7 +54,7 @@ public:
     void setTarget(Node *target);
 
     // overrides
-    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
+    virtual void visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated) override;
 
 protected:
     NodeGrid();

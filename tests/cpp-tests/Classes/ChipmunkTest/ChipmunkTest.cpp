@@ -32,7 +32,7 @@ ChipmunkTestLayer::ChipmunkTestLayer()
     
     // title
     auto label = Label::createWithTTF("Multi touch the screen", "fonts/Marker Felt.ttf", 36.0f);
-    label->setPosition(cocos2d::Point( VisibleRect::center().x, VisibleRect::top().y - 30));
+    label->setPosition(cocos2d::Vector2( VisibleRect::center().x, VisibleRect::top().y - 30));
     this->addChild(label, -1);
 
     // reset button
@@ -52,7 +52,7 @@ ChipmunkTestLayer::ChipmunkTestLayer()
 #endif
     addChild(parent, 0, kTagParentNode);
 
-    addNewSpriteAtPosition(cocos2d::Point(200,200));
+    addNewSpriteAtPosition(cocos2d::Vector2(200,200));
 
     // menu for debug layer
     MenuItemFont::setFontSize(18);
@@ -60,7 +60,7 @@ ChipmunkTestLayer::ChipmunkTestLayer()
 
     auto menu = Menu::create(item, NULL);
     this->addChild(menu);
-    menu->setPosition(cocos2d::Point(VisibleRect::right().x-100, VisibleRect::top().y-60));
+    menu->setPosition(cocos2d::Vector2(VisibleRect::right().x-100, VisibleRect::top().y-60));
 
     scheduleUpdate();
 #else
@@ -68,7 +68,7 @@ ChipmunkTestLayer::ChipmunkTestLayer()
                                             "fonts/arial.ttf",
                                             18);
     auto size = Director::getInstance()->getWinSize();
-    label->setPosition(Point(size.width/2, size.height/2));
+    label->setPosition(Vector2(size.width/2, size.height/2));
     
     addChild(label);
     
@@ -160,7 +160,7 @@ void ChipmunkTestLayer::createResetButton()
 
     auto menu = Menu::create(reset, NULL);
 
-    menu->setPosition(cocos2d::Point(VisibleRect::center().x, VisibleRect::bottom().y + 30));
+    menu->setPosition(cocos2d::Vector2(VisibleRect::center().x, VisibleRect::bottom().y + 30));
     this->addChild(menu, -1);
 }
 
@@ -174,7 +174,7 @@ void ChipmunkTestLayer::reset(Ref* sender)
     s->release();
 }
 
-void ChipmunkTestLayer::addNewSpriteAtPosition(cocos2d::Point pos)
+void ChipmunkTestLayer::addNewSpriteAtPosition(cocos2d::Vector2 pos)
 {
 #if CC_ENABLE_CHIPMUNK_INTEGRATION    
     int posx, posy;
@@ -242,7 +242,7 @@ void ChipmunkTestLayer::onAcceleration(Acceleration* acc, Event* event)
     prevX = accelX;
     prevY = accelY;
 
-    auto v = cocos2d::Point( accelX, accelY);
+    auto v = cocos2d::Vector2( accelX, accelY);
     v = v * 200;
     _space->gravity = cpv(v.x, v.y);
 }

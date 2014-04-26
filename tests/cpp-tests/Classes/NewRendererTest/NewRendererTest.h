@@ -78,7 +78,7 @@ public:
     virtual std::string subtitle() const override;
 
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
-    void addNewSpriteWithCoords(Point p);
+    void addNewSpriteWithCoords(Vector2 p);
 
 protected:
     NewSpriteBatchTest();
@@ -102,7 +102,7 @@ protected:
     virtual ~NewClippingNodeTest();
 
     bool _scrolling;
-    Point _lastPoint;
+    Vector2 _lastPoint;
 };
 
 class NewDrawNodeTest : public MultiSceneTest
@@ -131,7 +131,7 @@ protected:
     virtual ~NewCullingTest();
     bool onTouchBegan(Touch* touch, Event  *event);
     void onTouchMoved(Touch* touch, Event  *event);
-    Point _lastPos;
+    Vector2 _lastPos;
 };
 
 class VBOFullTest : public MultiSceneTest

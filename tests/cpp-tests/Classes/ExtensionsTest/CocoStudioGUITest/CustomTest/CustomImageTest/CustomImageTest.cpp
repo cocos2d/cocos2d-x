@@ -42,8 +42,8 @@ void CustomImageScene::onEnter()
     
     Menu* pMenu = Menu::create(pMenuItem, NULL);
     
-    pMenu->setPosition( Point::ZERO );
-    pMenuItem->setPosition( Point( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
+    pMenu->setPosition( Vector2::ZERO );
+    pMenuItem->setPosition( Vector2( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
     
     addChild(pMenu, 1);
 }

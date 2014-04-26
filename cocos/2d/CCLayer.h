@@ -291,7 +291,7 @@ public:
     //
     // Overrides
     //
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
 
     virtual void setContentSize(const Size & var) override;
     /** BlendFunction. Conforms to BlendProtocol protocol */
@@ -320,15 +320,15 @@ CC_CONSTRUCTOR_ACCESS:
     bool initWithColor(const Color4B& color);
 
 protected:
-    void onDraw(const kmMat4& transform, bool transformUpdated);
+    void onDraw(const Matrix& transform, bool transformUpdated);
 
     virtual void updateColor() override;
 
     BlendFunc _blendFunc;
-    Vertex2F _squareVertices[4];
+    Vector2 _squareVertices[4];
     Color4F  _squareColors[4];
     CustomCommand _customCommand;
-    Vertex3F _noMVPVertices[4];
+    Vector3 _noMVPVertices[4];
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(LayerColor);
 
@@ -366,7 +366,7 @@ public:
     static LayerGradient* create(const Color4B& start, const Color4B& end);
 
     /** Creates a full-screen Layer with a gradient between start and end in the direction of v. */
-    static LayerGradient* create(const Color4B& start, const Color4B& end, const Point& v);
+    static LayerGradient* create(const Color4B& start, const Color4B& end, const Vector2& v);
     
     /** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors
      Default: true
@@ -397,9 +397,9 @@ public:
     /** Sets the directional vector that will be used for the gradient.
     The default value is vertical direction (0,-1). 
      */
-    void setVector(const Point& alongVector);
+    void setVector(const Vector2& alongVector);
     /** Returns the directional vector used for the gradient */
-    const Point& getVector() const;
+    const Vector2& getVector() const;
 
     virtual std::string getDescription() const override;
     
@@ -418,7 +418,7 @@ CC_CONSTRUCTOR_ACCESS:
      * @js init
      * @lua init
      */
-    bool initWithColor(const Color4B& start, const Color4B& end, const Point& v);
+    bool initWithColor(const Color4B& start, const Color4B& end, const Vector2& v);
 
 protected:
     virtual void updateColor() override;
@@ -427,7 +427,7 @@ protected:
     Color3B _endColor;
     GLubyte _startOpacity;
     GLubyte _endOpacity;
-    Point   _alongVector;
+    Vector2   _alongVector;
     bool    _compressedInterpolation;
 };
 

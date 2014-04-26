@@ -13,12 +13,12 @@ bool UITextTest::init()
         
         Text* alert = Text::create("Text","fonts/Marker Felt.ttf", 30);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75f));
+        alert->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75f));
         _uiLayer->addChild(alert);        
         
         // Create the text
         Text* text = Text::create("Text", "AmericanTypewriter", 30);
-        text->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + text->getSize().height / 4.0f));
+        text->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + text->getSize().height / 4.0f));
         _uiLayer->addChild(text);
         
         return true;
@@ -36,7 +36,7 @@ bool UITextTest_LineWrap::init()
         
         Text* alert = Text::create("Text line wrap","fonts/Marker Felt.ttf",30);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75f));
+        alert->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75f));
         _uiLayer->addChild(alert);
         
         // Create the line wrap
@@ -44,7 +44,7 @@ bool UITextTest_LineWrap::init()
         text->ignoreContentAdaptWithSize(false);
         text->setSize(Size(280, 150));
         text->setTextHorizontalAlignment(TextHAlignment::CENTER);
-        text->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - text->getSize().height / 8.0f));
+        text->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - text->getSize().height / 8.0f));
         _uiLayer->addChild(text);
         
         return true;
@@ -66,7 +66,7 @@ bool UILabelTest_Effect::init()
         alert->setFontName("fonts/Marker Felt.ttf");
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.05f));
+        alert->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.05f));
         _uiLayer->addChild(alert);
         
         
@@ -88,7 +88,7 @@ bool UILabelTest_Effect::init()
         
         shadow_label->setTextDefinition(shadowTextDef);
         shadow_label->setText("Shadow");
-        shadow_label->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + shadow_label->getSize().height));
+        shadow_label->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + shadow_label->getSize().height));
         
         _uiLayer->addChild(shadow_label);
         
@@ -111,7 +111,7 @@ bool UILabelTest_Effect::init()
         
         stroke_label->setTextDefinition(strokeTextDef);
         stroke_label->setText("Stroke");
-        stroke_label->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        stroke_label->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         
         _uiLayer->addChild(stroke_label);
         
@@ -140,7 +140,7 @@ bool UILabelTest_Effect::init()
         strokeAndShadow_label->setTextDefinition(strokeShaodwTextDef);
 //        strokeAndShadow_label->setFontFillColor(tintColorRed);
         strokeAndShadow_label->setText("Stroke and Shadow");
-        strokeAndShadow_label->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - shadow_label->getSize().height));
+        strokeAndShadow_label->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - shadow_label->getSize().height));
         
         _uiLayer->addChild(strokeAndShadow_label);
         
@@ -161,12 +161,12 @@ bool UITextTest_TTF::init()
         
         Text* alert = Text::create("Text set TTF font","fonts/Marker Felt.ttf",30);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75f));
+        alert->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75f));
         _uiLayer->addChild(alert);
         
         // Create the text, and set font with .ttf
         Text* text = Text::create("Text","fonts/A Damn Mess.ttf",30);
-        text->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + text->getSize().height / 4.0f));
+        text->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + text->getSize().height / 4.0f));
         _uiLayer->addChild(text);
         
         return true;

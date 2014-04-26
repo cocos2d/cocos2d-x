@@ -46,7 +46,7 @@ Box2DTestLayer::Box2DTestLayer()
     auto label = Label::createWithTTF("Tap screen", "fonts/Marker Felt.ttf", 32.0f);
     addChild(label, 0);
     label->setColor(Color3B(0,0,255));
-    label->setPosition(Point( VisibleRect::center().x, VisibleRect::top().y-50));
+    label->setPosition(Vector2( VisibleRect::center().x, VisibleRect::top().y-50));
     
     scheduleUpdate();
 #else
@@ -54,7 +54,7 @@ Box2DTestLayer::Box2DTestLayer()
                                             "fonts/arial.ttf",
                                             18);
     auto size = Director::getInstance()->getWinSize();
-    label->setPosition(Point(size.width/2, size.height/2));
+    label->setPosition(Vector2(size.width/2, size.height/2));
     
     addChild(label);
 #endif
@@ -132,12 +132,12 @@ void Box2DTestLayer::createResetButton()
 
     auto menu = Menu::create(reset, NULL);
 
-    menu->setPosition(Point(VisibleRect::bottom().x, VisibleRect::bottom().y + 30));
+    menu->setPosition(Vector2(VisibleRect::bottom().x, VisibleRect::bottom().y + 30));
     this->addChild(menu, -1);
 
 }
 
-void Box2DTestLayer::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void Box2DTestLayer::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     //
     // IMPORTANT:
@@ -148,30 +148,35 @@ void Box2DTestLayer::draw(Renderer *renderer, const kmMat4 &transform, bool tran
 
 #if CC_ENABLE_BOX2D_INTEGRATION
     GL::enableVertexAttribs( cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION );
-
-    kmGLPushMatrix();
-    kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV);
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    
+    _modelViewMV = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(Box2DTestLayer::onDraw, this);
     renderer->addCommand(&_customCommand);
 
-    kmGLPopMatrix();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 #endif
 }
 
 #if CC_ENABLE_BOX2D_INTEGRATION
 void Box2DTestLayer::onDraw()
 {
-    kmMat4 oldMV;
-    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMV);
-    kmGLLoadMatrix(&_modelViewMV);
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    
+    Matrix oldMV;
+    oldMV = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV);
     world->DrawDebugData();
-    kmGLLoadMatrix(&oldMV);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, oldMV);
 }
 #endif
 
-void Box2DTestLayer::addNewSpriteAtPosition(Point p)
+void Box2DTestLayer::addNewSpriteAtPosition(Vector2 p)
 {
     CCLOG("Add sprite %0.2f x %02.f",p.x,p.y);
     
@@ -205,7 +210,7 @@ void Box2DTestLayer::addNewSpriteAtPosition(Point p)
     parent->addChild(sprite);
     sprite->setB2Body(body);
     sprite->setPTMRatio(PTM_RATIO);
-    sprite->setPosition( Point( p.x, p.y) );
+    sprite->setPosition( Vector2( p.x, p.y) );
 #endif
 }
 

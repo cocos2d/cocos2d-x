@@ -28,7 +28,6 @@
 #include "CCRenderCommand.h"
 #include "CCGLProgram.h"
 #include "CCRenderCommandPool.h"
-#include "kazmath/kazmath.h"
 
 NS_CC_BEGIN
 
@@ -43,7 +42,7 @@ public:
     BatchCommand();
     ~BatchCommand();
 
-    void init(float depth, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const kmMat4& modelViewTransform);
+    void init(float depth, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Matrix& modelViewTransform);
 
     void execute();
 
@@ -57,7 +56,7 @@ protected:
     TextureAtlas *_textureAtlas;
 
     // ModelView transform
-    kmMat4 _mv;
+    Matrix _mv;
 };
 NS_CC_END
 

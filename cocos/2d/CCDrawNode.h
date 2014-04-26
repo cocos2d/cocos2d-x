@@ -50,10 +50,10 @@ public:
     static DrawNode* create();
 
     /** draw a dot at a position, with a given radius and color */
-    void drawDot(const Point &pos, float radius, const Color4F &color);
+    void drawDot(const Vector2 &pos, float radius, const Color4F &color);
     
     /** draw a segment with a radius and color */
-    void drawSegment(const Point &from, const Point &to, float radius, const Color4F &color);
+    void drawSegment(const Vector2 &from, const Vector2 &to, float radius, const Color4F &color);
     
     /** draw a polygon with a fill color and line color
     * @code
@@ -62,16 +62,16 @@ public:
     * In lua:local drawPolygon(local pointTable,local tableCount,local fillColor,local width,local borderColor)
     * @endcode
     */
-    void drawPolygon(Point *verts, int count, const Color4F &fillColor, float borderWidth, const Color4F &borderColor);
+    void drawPolygon(Vector2 *verts, int count, const Color4F &fillColor, float borderWidth, const Color4F &borderColor);
 	
     /** draw a triangle with color */
-    void drawTriangle(const Point &p1, const Point &p2, const Point &p3, const Color4F &color);
+    void drawTriangle(const Vector2 &p1, const Vector2 &p2, const Vector2 &p3, const Color4F &color);
 
     /** draw a cubic bezier curve with color and number of segments */
-    void drawCubicBezier(const Point& from, const Point& control1, const Point& control2, const Point& to, unsigned int segments, const Color4F &color);
+    void drawCubicBezier(const Vector2& from, const Vector2& control1, const Vector2& control2, const Vector2& to, unsigned int segments, const Color4F &color);
 
     /** draw a quadratic bezier curve with color and number of segments */
-    void drawQuadraticBezier(const Point& from, const Point& control, const Point& to, unsigned int segments, const Color4F &color);
+    void drawQuadraticBezier(const Vector2& from, const Vector2& control, const Vector2& to, unsigned int segments, const Color4F &color);
     
     /** Clear the geometry in the node's buffer. */
     void clear();
@@ -89,10 +89,10 @@ public:
     */
     void setBlendFunc(const BlendFunc &blendFunc);
 
-    void onDraw(const kmMat4 &transform, bool transformUpdated);
+    void onDraw(const Matrix &transform, bool transformUpdated);
     
     // Overrides
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
     
 CC_CONSTRUCTOR_ACCESS:
     DrawNode();

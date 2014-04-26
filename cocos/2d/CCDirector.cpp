@@ -59,11 +59,9 @@ THE SOFTWARE.
 #include "CCEventCustom.h"
 #include "CCFontFreeType.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCFrustum.h"
 #include "CCConsole.h"
 
-#include "kazmath/kazmath.h"
-#include "kazmath/GL/matrix.h"
+#include "math/CCMath.h"
 
 /**
  Position of the FPS
@@ -155,6 +153,7 @@ bool Director::init(void)
 
     //init TextureCache
     initTextureCache();
+    initMatrixStack();
 
     _renderer = new Renderer;
 
@@ -284,11 +283,9 @@ void Director::drawScene()
         setNextScene();
     }
 
-    kmGLPushMatrix();
+    pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
-    // global identity matrix is needed... come on kazmath!
-    kmMat4 identity;
-    kmMat4Identity(&identity);
+    Matrix identity = Matrix::identity();
 
     // draw the scene
     if (_runningScene)
@@ -311,7 +308,7 @@ void Director::drawScene()
     _renderer->render();
     _eventDispatcher->dispatchEvent(_eventAfterDraw);
 
-    kmGLPopMatrix();
+    popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
     _totalFrames++;
 
@@ -436,6 +433,165 @@ void Director::setNextDeltaTimeZero(bool nextDeltaTimeZero)
 {
     _nextDeltaTimeZero = nextDeltaTimeZero;
 }
+   
+void Director::initMatrixStack()
+{
+    while (!_modelViewMatrixStack.empty())
+    {
+        _modelViewMatrixStack.pop();
+    }
+    
+    while (!_projectionMatrixStack.empty())
+    {
+        _projectionMatrixStack.pop();
+    }
+    
+    while (!_textureMatrixStack.empty())
+    {
+        _textureMatrixStack.pop();
+    }
+    
+    _modelViewMatrixStack.push(Matrix::identity());
+    _projectionMatrixStack.push(Matrix::identity());
+    _textureMatrixStack.push(Matrix::identity());
+}
+
+void Director::resetMatrixStack()
+{
+    initMatrixStack();
+}
+
+void Director::popMatrix(MATRIX_STACK_TYPE type)
+{
+    if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
+    {
+        _modelViewMatrixStack.pop();
+    }
+    else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
+    {
+        _projectionMatrixStack.pop();
+    }
+    else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
+    {
+        _textureMatrixStack.pop();
+    }
+    else
+    {
+        CCASSERT(false, "unknow matrix stack type");
+    }
+}
+
+void Director::loadIdentityMatrix(MATRIX_STACK_TYPE type)
+{
+    if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
+    {
+        _modelViewMatrixStack.top() = Matrix::identity();
+    }
+    else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
+    {
+        _projectionMatrixStack.top() = Matrix::identity();
+    }
+    else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
+    {
+        _textureMatrixStack.top() = Matrix::identity();
+    }
+    else
+    {
+        CCASSERT(false, "unknow matrix stack type");
+    }
+}
+
+void Director::loadMatrix(MATRIX_STACK_TYPE type, const Matrix& mat)
+{
+    if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
+    {
+        _modelViewMatrixStack.top() = mat;
+    }
+    else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
+    {
+        _projectionMatrixStack.top() = mat;
+    }
+    else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
+    {
+        _textureMatrixStack.top() = mat;
+    }
+    else
+    {
+        CCASSERT(false, "unknow matrix stack type");
+    }
+}
+
+void Director::multiplyMatrix(MATRIX_STACK_TYPE type, const Matrix& mat)
+{
+    if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
+    {
+        _modelViewMatrixStack.top() *= mat;
+    }
+    else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
+    {
+        _projectionMatrixStack.top() *= mat;
+    }
+    else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
+    {
+        _textureMatrixStack.top() *= mat;
+    }
+    else
+    {
+        CCASSERT(false, "unknow matrix stack type");
+    }
+}
+
+void Director::pushMatrix(MATRIX_STACK_TYPE type)
+{
+    if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
+    {
+        _modelViewMatrixStack.push(_modelViewMatrixStack.top());
+    }
+    else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
+    {
+        _projectionMatrixStack.push(_projectionMatrixStack.top());
+    }
+    else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
+    {
+        _textureMatrixStack.push(_textureMatrixStack.top());
+    }
+    else
+    {
+        CCASSERT(false, "unknow matrix stack type");
+    }
+}
+
+Matrix Director::getMatrix(MATRIX_STACK_TYPE type)
+{
+    Matrix result;
+    if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
+    {
+        result = _modelViewMatrixStack.top();
+    }
+    else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
+    {
+        result = _projectionMatrixStack.top();
+    }
+    else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
+    {
+        result = _textureMatrixStack.top();
+    }
+    else
+    {
+        CCASSERT(false, "unknow matrix stack type, will return modelview matrix instead");
+        result =  _modelViewMatrixStack.top();
+    }
+//    float diffResult(0);
+//    for (int index = 0; index <16; ++index)
+//    {
+//        diffResult += abs(result2.mat[index] - result.mat[index]);
+//    }
+//    if(diffResult > 1e-30)
+//    {
+//        CCASSERT(false, "Error in director matrix stack");
+//    }
+    return result;
+}
 
 void Director::setProjection(Projection projection)
 {
@@ -446,53 +602,47 @@ void Director::setProjection(Projection projection)
     switch (projection)
     {
         case Projection::_2D:
-            kmGLMatrixMode(KM_GL_PROJECTION);
-            kmGLLoadIdentity();
+        {
+            loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
             if(getOpenGLView() != nullptr)
             {
-                kmGLMultMatrix( getOpenGLView()->getOrientationMatrix());
+                multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, getOpenGLView()->getOrientationMatrix());
             }
 #endif
-            kmMat4 orthoMatrix;
-            kmMat4OrthographicProjection(&orthoMatrix, 0, size.width, 0, size.height, -1024, 1024);
-            kmGLMultMatrix(&orthoMatrix);
-            kmGLMatrixMode(KM_GL_MODELVIEW);
-            kmGLLoadIdentity();
+            Matrix orthoMatrix;
+            Matrix::createOrthographicOffCenter(0, size.width, 0, size.height, -1024, 1024, &orthoMatrix);
+            multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
+            loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
             break;
-
+        }
+            
         case Projection::_3D:
         {
             float zeye = this->getZEye();
 
-            kmMat4 matrixPerspective, matrixLookup;
+            Matrix matrixPerspective, matrixLookup;
 
-            kmGLMatrixMode(KM_GL_PROJECTION);
-            kmGLLoadIdentity();
+            loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
             
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
             //if needed, we need to add a rotation for Landscape orientations on Windows Phone 8 since it is always in Portrait Mode
             GLView* view = getOpenGLView();
             if(getOpenGLView() != nullptr)
             {
-                kmGLMultMatrix(getOpenGLView()->getOrientationMatrix());
+                multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, getOpenGLView()->getOrientationMatrix());
             }
 #endif
             // issue #1334
-            kmMat4PerspectiveProjection(&matrixPerspective, 60, (GLfloat)size.width/size.height, 10, zeye+size.height/2);
-//            kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500);
+            Matrix::createPerspective(60, (GLfloat)size.width/size.height, 10, zeye+size.height/2, &matrixPerspective);
 
-            kmGLMultMatrix(&matrixPerspective);
+            multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, matrixPerspective);
 
-            kmVec3 eye, center, up;
-            kmVec3Fill(&eye, size.width/2, size.height/2, zeye);
-            kmVec3Fill(&center, size.width/2, size.height/2, 0.0f);
-            kmVec3Fill(&up, 0.0f, 1.0f, 0.0f);
-            kmMat4LookAt(&matrixLookup, &eye, &center, &up);
-            kmGLMultMatrix(&matrixLookup);
-
-            kmGLMatrixMode(KM_GL_MODELVIEW);
-            kmGLLoadIdentity();
+            Vector3 eye(size.width/2, size.height/2, zeye), center(size.width/2, size.height/2, 0.0f), up(0.0f, 1.0f, 0.0f);
+            Matrix::createLookAt(eye, center, up, &matrixLookup);
+            multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, matrixLookup);
+            
+            loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
             break;
         }
 
@@ -564,54 +714,60 @@ void Director::setDepthTest(bool on)
     CHECK_GL_ERROR_DEBUG();
 }
 
-static void GLToClipTransform(kmMat4 *transformOut)
+static void GLToClipTransform(Matrix *transformOut)
 {
-	kmMat4 projection;
-	kmGLGetMatrix(KM_GL_PROJECTION, &projection);
+    if(nullptr == transformOut) return;
+    
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    
+	Matrix projection;
+    projection = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
     //if needed, we need to undo the rotation for Landscape orientation in order to get the correct positions
-	kmMat4Multiply(&projection, Director::getInstance()->getOpenGLView()->getReverseOrientationMatrix(), &projection);
+    projection = Director::getInstance()->getOpenGLView()->getReverseOrientationMatrix() * projection;
 #endif
 
-	kmMat4 modelview;
-	kmGLGetMatrix(KM_GL_MODELVIEW, &modelview);
-
-	kmMat4Multiply(transformOut, &projection, &modelview);
+	Matrix modelview;
+    modelview = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    *transformOut = projection * modelview;
 }
 
-Point Director::convertToGL(const Point& uiPoint)
+Vector2 Director::convertToGL(const Vector2& uiPoint)
 {
-    kmMat4 transform;
+    Matrix transform;
 	GLToClipTransform(&transform);
 
-	kmMat4 transformInv;
-	kmMat4Inverse(&transformInv, &transform);
+	Matrix transformInv;
+    transform.invert(&transformInv);
 
 	// Calculate z=0 using -> transform*[0, 0, 0, 1]/w
-	kmScalar zClip = transform.mat[14]/transform.mat[15];
+	float zClip = transform.m[14]/transform.m[15];
 
     Size glSize = _openGLView->getDesignResolutionSize();
-	kmVec3 clipCoord = {2.0f*uiPoint.x/glSize.width - 1.0f, 1.0f - 2.0f*uiPoint.y/glSize.height, zClip};
+	Vector4 clipCoord(2.0f*uiPoint.x/glSize.width - 1.0f, 1.0f - 2.0f*uiPoint.y/glSize.height, zClip, 1);
 
-	kmVec3 glCoord;
-	kmVec3TransformCoord(&glCoord, &clipCoord, &transformInv);
-
-	return Point(glCoord.x, glCoord.y);
+	Vector4 glCoord;
+    //transformInv.transformPoint(clipCoord, &glCoord);
+    transformInv.transformVector(clipCoord, &glCoord);
+    float factor = 1.0/glCoord.w;
+	return Vector2(glCoord.x * factor, glCoord.y * factor);
 }
 
-Point Director::convertToUI(const Point& glPoint)
+Vector2 Director::convertToUI(const Vector2& glPoint)
 {
-    kmMat4 transform;
+    Matrix transform;
 	GLToClipTransform(&transform);
 
-	kmVec3 clipCoord;
+	Vector4 clipCoord;
 	// Need to calculate the zero depth from the transform.
-	kmVec3 glCoord = {glPoint.x, glPoint.y, 0.0};
-	kmVec3TransformCoord(&clipCoord, &glCoord, &transform);
+	Vector4 glCoord(glPoint.x, glPoint.y, 0.0, 1);
+    transform.transformVector(glCoord, &clipCoord);
 
 	Size glSize = _openGLView->getDesignResolutionSize();
-	return Point(glSize.width*(clipCoord.x*0.5 + 0.5), glSize.height*(-clipCoord.y*0.5 + 0.5));
+    float factor = 1.0/glCoord.w;
+	return Vector2(glSize.width*(clipCoord.x*0.5 + 0.5) * factor, glSize.height*(-clipCoord.y*0.5 + 0.5) * factor);
 }
 
 const Size& Director::getWinSize(void) const
@@ -636,7 +792,7 @@ Size Director::getVisibleSize() const
     }
 }
 
-Point Director::getVisibleOrigin() const
+Vector2 Director::getVisibleOrigin() const
 {
     if (_openGLView)
     {
@@ -644,7 +800,7 @@ Point Director::getVisibleOrigin() const
     }
     else
     {
-        return Point::ZERO;
+        return Vector2::ZERO;
     }
 }
 
@@ -926,9 +1082,7 @@ void Director::showStats()
             prevVerts = currentVerts;
         }
 
-        // global identity matrix is needed... come on kazmath!
-        kmMat4 identity;
-        kmMat4Identity(&identity);
+        Matrix identity = Matrix::identity();
 
         _drawnVerticesLabel->visit(_renderer, identity, false);
         _drawnBatchesLabel->visit(_renderer, identity, false);
@@ -1013,9 +1167,9 @@ void Director::createStatsLabel()
     Texture2D::setDefaultAlphaPixelFormat(currentFormat);
 
     const int height_spacing = 22 / CC_CONTENT_SCALE_FACTOR();
-    _drawnVerticesLabel->setPosition(Point(0, height_spacing*2) + CC_DIRECTOR_STATS_POSITION);
-    _drawnBatchesLabel->setPosition(Point(0, height_spacing*1) + CC_DIRECTOR_STATS_POSITION);
-    _FPSLabel->setPosition(Point(0, height_spacing*0)+CC_DIRECTOR_STATS_POSITION);
+    _drawnVerticesLabel->setPosition(Vector2(0, height_spacing*2) + CC_DIRECTOR_STATS_POSITION);
+    _drawnBatchesLabel->setPosition(Vector2(0, height_spacing*1) + CC_DIRECTOR_STATS_POSITION);
+    _FPSLabel->setPosition(Vector2(0, height_spacing*0)+CC_DIRECTOR_STATS_POSITION);
 }
 
 void Director::setContentScaleFactor(float scaleFactor)

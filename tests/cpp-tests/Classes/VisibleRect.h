@@ -8,15 +8,15 @@ class VisibleRect
 public:
     static cocos2d::Rect getVisibleRect();
 
-    static cocos2d::Point left();
-    static cocos2d::Point right();
-    static cocos2d::Point top();
-    static cocos2d::Point bottom();
-    static cocos2d::Point center();
-    static cocos2d::Point leftTop();
-    static cocos2d::Point rightTop();
-    static cocos2d::Point leftBottom();
-    static cocos2d::Point rightBottom();
+    static cocos2d::Vector2 left();
+    static cocos2d::Vector2 right();
+    static cocos2d::Vector2 top();
+    static cocos2d::Vector2 bottom();
+    static cocos2d::Vector2 center();
+    static cocos2d::Vector2 leftTop();
+    static cocos2d::Vector2 rightTop();
+    static cocos2d::Vector2 leftBottom();
+    static cocos2d::Vector2 rightBottom();
 private:
     static void lazyInit();
     static cocos2d::Rect s_visibleRect;

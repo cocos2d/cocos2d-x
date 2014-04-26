@@ -164,7 +164,6 @@ public:
      */
     bool getSelectedState();
 
-
     //add a call back function would called when checkbox is selected or unselected.
     void addEventListenerCheckBox(Ref* target,SEL_SelectedStateEvent selector);
 

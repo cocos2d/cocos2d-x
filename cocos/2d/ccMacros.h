@@ -52,6 +52,9 @@ THE SOFTWARE.
 #else
     #define CCASSERT(cond, msg)
 #endif
+
+#define GP_ASSERT(cond) CCASSERT(cond, "")
+
 // XXX: Backward compatible
 #define CCAssert CCASSERT
 #endif  // CCASSERT
@@ -150,13 +153,13 @@ On iPhone it returns 2 if RetinaDisplay is On. Otherwise it returns 1
  Converts a rect in pixels to points
  */
 #define CC_POINT_PIXELS_TO_POINTS(__pixels__)                                                                        \
-Point( (__pixels__).x / CC_CONTENT_SCALE_FACTOR(), (__pixels__).y / CC_CONTENT_SCALE_FACTOR())
+Vector2( (__pixels__).x / CC_CONTENT_SCALE_FACTOR(), (__pixels__).y / CC_CONTENT_SCALE_FACTOR())
 
 /** @def CC_POINT_POINTS_TO_PIXELS
  Converts a rect in points to pixels
  */
 #define CC_POINT_POINTS_TO_PIXELS(__points__)                                                                        \
-Point( (__points__).x * CC_CONTENT_SCALE_FACTOR(), (__points__).y * CC_CONTENT_SCALE_FACTOR())
+Vector2( (__points__).x * CC_CONTENT_SCALE_FACTOR(), (__points__).y * CC_CONTENT_SCALE_FACTOR())
 
 /** @def CC_POINT_PIXELS_TO_POINTS
  Converts a rect in pixels to points

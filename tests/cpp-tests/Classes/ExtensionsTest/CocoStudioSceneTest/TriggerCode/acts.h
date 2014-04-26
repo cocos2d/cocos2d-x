@@ -36,7 +36,7 @@ public:
 private:
 	int  _tag;
 	float _duration;
-	cocos2d::Point _pos;
+	cocos2d::Vector2 _pos;
 };
 
 
@@ -54,7 +54,7 @@ public:
 private:
 	int  _tag;
 	float _duration;
-	cocos2d::Point _pos;
+	cocos2d::Vector2 _pos;
 	bool _reverse;
 };
 
@@ -110,7 +110,7 @@ public:
 private:
 	int  _tag;
 	float _duration;
-	cocos2d::Point _scale;
+	cocos2d::Vector2 _scale;
 };
 
 
@@ -128,7 +128,7 @@ public:
 private:
 	int  _tag;
 	float _duration;
-	cocos2d::Point _scale;
+	cocos2d::Vector2 _scale;
 	bool _reverse;
 
 };
@@ -148,7 +148,7 @@ public:
 private:
 	int  _tag;
 	float _duration;
-	cocos2d::Point _skew;
+	cocos2d::Vector2 _skew;
 };
 
 
@@ -166,7 +166,7 @@ public:
 private:
 	int  _tag;
 	float _duration;
-	cocos2d::Point _skew;
+	cocos2d::Vector2 _skew;
 	bool _reverse;
 };
 

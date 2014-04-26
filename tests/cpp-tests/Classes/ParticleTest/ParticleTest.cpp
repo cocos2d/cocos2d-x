@@ -48,7 +48,7 @@ void DemoFire::onEnter()
 
     _emitter->setTexture( Director::getInstance()->getTextureCache()->addImage(s_fire) );//.pvr");
     auto p = _emitter->getPosition();
-    _emitter->setPosition( Point(p.x, 100) );
+    _emitter->setPosition( Vector2(p.x, 100) );
 
     setEmitterPosition();
 }
@@ -145,7 +145,7 @@ void DemoBigFlower::onEnter()
     _emitter->setDuration(-1);
 
     // gravity
-    _emitter->setGravity(Point::ZERO);
+    _emitter->setGravity(Vector2::ZERO);
 
     // angle
     _emitter->setAngle(90);
@@ -164,8 +164,8 @@ void DemoBigFlower::onEnter()
     _emitter->setTangentialAccelVar(0);
 
     // emitter position
-    _emitter->setPosition( Point(160,240) );
-    _emitter->setPosVar(Point::ZERO);
+    _emitter->setPosition( Vector2(160,240) );
+    _emitter->setPosVar(Vector2::ZERO);
 
     // life of particles
     _emitter->setLife(4);
@@ -229,7 +229,7 @@ void DemoRotFlower::onEnter()
     _emitter->setDuration(-1);
 
     // gravity
-    _emitter->setGravity(Point::ZERO);
+    _emitter->setGravity(Vector2::ZERO);
 
     // angle
     _emitter->setAngle(90);
@@ -248,8 +248,8 @@ void DemoRotFlower::onEnter()
     _emitter->setTangentialAccelVar(0);
 
     // emitter position
-    _emitter->setPosition( Point(160,240) );
-    _emitter->setPosVar(Point::ZERO);
+    _emitter->setPosition( Vector2(160,240) );
+    _emitter->setPosVar(Vector2::ZERO);
 
     // life of particles
     _emitter->setLife(3);
@@ -379,7 +379,7 @@ void DemoSmoke::onEnter()
     _emitter->setTexture( Director::getInstance()->getTextureCache()->addImage(s_fire) );
 
     auto p = _emitter->getPosition();
-    _emitter->setPosition( Point( p.x, 100) );
+    _emitter->setPosition( Vector2( p.x, 100) );
 
     setEmitterPosition();
 }
@@ -403,12 +403,12 @@ void DemoSnow::onEnter()
     _background->addChild(_emitter, 10);
 
     auto p = _emitter->getPosition();
-    _emitter->setPosition( Point( p.x, p.y-110) );
+    _emitter->setPosition( Vector2( p.x, p.y-110) );
     _emitter->setLife(3);
     _emitter->setLifeVar(1);
 
     // gravity
-    _emitter->setGravity(Point(0,-10));
+    _emitter->setGravity(Vector2(0,-10));
 
     // speed of particles
     _emitter->setSpeed(130);
@@ -451,7 +451,7 @@ void DemoRain::onEnter()
     _background->addChild(_emitter, 10);
 
     auto p = _emitter->getPosition();
-    _emitter->setPosition( Point( p.x, p.y-100) );
+    _emitter->setPosition( Vector2( p.x, p.y-100) );
     _emitter->setLife(4);
 
     _emitter->setTexture( Director::getInstance()->getTextureCache()->addImage(s_fire) );
@@ -487,7 +487,7 @@ void DemoModernArt::onEnter()
     _emitter->setDuration(-1);
 
     // gravity
-    _emitter->setGravity(Point(0,0));
+    _emitter->setGravity(Vector2(0,0));
 
     // angle
     _emitter->setAngle(0);
@@ -506,8 +506,8 @@ void DemoModernArt::onEnter()
     _emitter->setSpeedVar(10);
 
     // emitter position
-    _emitter->setPosition( Point( s.width/2, s.height/2) );
-    _emitter->setPosVar(Point::ZERO);
+    _emitter->setPosition( Vector2( s.width/2, s.height/2) );
+    _emitter->setPosVar(Vector2::ZERO);
 
     // life of particles
     _emitter->setLife(2.0f);
@@ -596,21 +596,21 @@ void ParallaxParticle::onEnter()
     auto p1 = Sprite::create(s_back3);
     auto p2 = Sprite::create(s_back3);
 
-    p->addChild( p1, 1, Point(0.5f,1), Point(0,250) );
-    p->addChild(p2, 2, Point(1.5f,1), Point(0,50) );
+    p->addChild( p1, 1, Vector2(0.5f,1), Vector2(0,250) );
+    p->addChild(p2, 2, Vector2(1.5f,1), Vector2(0,50) );
 
     _emitter = ParticleFlower::create();
     _emitter->retain();
     _emitter->setTexture( Director::getInstance()->getTextureCache()->addImage(s_fire) );
 
     p1->addChild(_emitter, 10);
-    _emitter->setPosition( Point(250,200) );
+    _emitter->setPosition( Vector2(250,200) );
 
     auto par = ParticleSun::create();
     p2->addChild(par, 10);
     par->setTexture( Director::getInstance()->getTextureCache()->addImage(s_fire) );
 
-    auto move = MoveBy::create(4, Point(300,0));
+    auto move = MoveBy::create(4, Vector2(300,0));
     auto move_back = move->reverse();
     auto seq = Sequence::create( move, move_back, NULL);
     p->runAction(RepeatForever::create(seq));
@@ -662,8 +662,8 @@ void RadiusMode1::onEnter()
 
     // emitter position
     auto size = Director::getInstance()->getWinSize();
-    _emitter->setPosition(Point(size.width/2, size.height/2));
-    _emitter->setPosVar(Point::ZERO);
+    _emitter->setPosition(Vector2(size.width/2, size.height/2));
+    _emitter->setPosVar(Vector2::ZERO);
 
     // life of particles
     _emitter->setLife(5);
@@ -746,8 +746,8 @@ void RadiusMode2::onEnter()
 
     // emitter position
     auto size = Director::getInstance()->getWinSize();
-    _emitter->setPosition(Point(size.width/2, size.height/2));
-    _emitter->setPosVar(Point::ZERO);
+    _emitter->setPosition(Vector2(size.width/2, size.height/2));
+    _emitter->setPosVar(Vector2::ZERO);
 
     // life of particles
     _emitter->setLife(4);
@@ -830,8 +830,8 @@ void Issue704::onEnter()
 
     // emitter position
     auto size = Director::getInstance()->getWinSize();
-    _emitter->setPosition(Point(size.width/2, size.height/2));
-    _emitter->setPosVar(Point::ZERO);
+    _emitter->setPosition(Vector2(size.width/2, size.height/2));
+    _emitter->setPosVar(Vector2::ZERO);
 
     // life of particles
     _emitter->setLife(5);
@@ -1081,22 +1081,22 @@ void ParticleDemo::onEnter(void)
 
     auto menu = Menu::create(item4, NULL);
 
-    menu->setPosition( Point::ZERO );
-    item4->setPosition( Point( VisibleRect::left().x, VisibleRect::bottom().y+ 100) );
-    item4->setAnchorPoint( Point(0,0) );
+    menu->setPosition( Vector2::ZERO );
+    item4->setPosition( Vector2( VisibleRect::left().x, VisibleRect::bottom().y+ 100) );
+    item4->setAnchorPoint( Vector2(0,0) );
 
     addChild( menu, 100 );
 
     auto labelAtlas = LabelAtlas::create("0000", "fps_images.png", 12, 32, '.');
     addChild(labelAtlas, 100, kTagParticleCount);
-    labelAtlas->setPosition(Point(s.width-66,50));
+    labelAtlas->setPosition(Vector2(s.width-66,50));
 
     // moving background
     _background = Sprite::create(s_back3);
     addChild(_background, 5);
-    _background->setPosition( Point(s.width/2, s.height-180) );
+    _background->setPosition( Vector2(s.width/2, s.height-180) );
 
-    auto move = MoveBy::create(4, Point(300,0) );
+    auto move = MoveBy::create(4, Vector2(300,0) );
     auto move_back = move->reverse();
     auto seq = Sequence::create( move, move_back, NULL);
     _background->runAction( RepeatForever::create(seq) );
@@ -1131,10 +1131,10 @@ void ParticleDemo::onTouchesEnded(const std::vector<Touch*>& touches, Event  *ev
 
     auto location = touch->getLocation();
 
-    auto pos = Point::ZERO;
+    auto pos = Vector2::ZERO;
     if (_background)
     {
-        pos = _background->convertToWorldSpace(Point::ZERO);
+        pos = _background->convertToWorldSpace(Vector2::ZERO);
     }
 
     if (_emitter != NULL)
@@ -1196,7 +1196,7 @@ void ParticleDemo::setEmitterPosition()
     auto s = Director::getInstance()->getWinSize();
     if (_emitter != NULL)
     {
-        _emitter->setPosition( Point(s.width / 2, s.height / 2) );
+        _emitter->setPosition( Vector2(s.width / 2, s.height / 2) );
     }
 }
 
@@ -1267,9 +1267,9 @@ void ParticleBatchMultipleEmitters::onEnter()
 
     auto s = Director::getInstance()->getWinSize();
 
-    emitter1->setPosition(Point( s.width/1.25f, s.height/1.25f));
-    emitter2->setPosition(Point( s.width/2, s.height/2));
-    emitter3->setPosition(Point( s.width/4, s.height/4));
+    emitter1->setPosition(Vector2( s.width/1.25f, s.height/1.25f));
+    emitter2->setPosition(Vector2( s.width/2, s.height/2));
+    emitter3->setPosition(Vector2( s.width/4, s.height/4));
 
     auto batch = ParticleBatchNode::createWithTexture(emitter1->getTexture());
 
@@ -1324,9 +1324,9 @@ void ParticleReorder::onEnter()
 
         int neg = (i==0 ? 1 : -1 );
 
-        emitter1->setPosition(Point( s.width/2-30,    s.height/2+60*neg));
-        emitter2->setPosition(Point( s.width/2,        s.height/2+60*neg));
-        emitter3->setPosition(Point( s.width/2+30,    s.height/2+60*neg));
+        emitter1->setPosition(Vector2( s.width/2-30,    s.height/2+60*neg));
+        emitter2->setPosition(Vector2( s.width/2,        s.height/2+60*neg));
+        emitter3->setPosition(Vector2( s.width/2+30,    s.height/2+60*neg));
 
         parent->addChild(emitter1, 0, 1);
         parent->addChild(emitter2, 0, 2);
@@ -1404,7 +1404,7 @@ bool RainbowEffect::initWithTotalParticles(int numberOfParticles)
         setEmitterMode(ParticleSystem::Mode::GRAVITY);
 
         // Gravity Mode: gravity
-        setGravity(Point(0,0));
+        setGravity(Vector2(0,0));
 
         // Gravity mode: radial acceleration
         setRadialAccel(0);
@@ -1421,8 +1421,8 @@ bool RainbowEffect::initWithTotalParticles(int numberOfParticles)
 
         // emitter position
         auto winSize = Director::getInstance()->getWinSize();
-        setPosition(Point(winSize.width/2, winSize.height/2));
-        setPosVar(Point::ZERO);
+        setPosition(Vector2(winSize.width/2, winSize.height/2));
+        setPosVar(Vector2::ZERO);
 
         // life of particles
         setLife(0.5f);
@@ -1478,7 +1478,7 @@ void Issue1201::onEnter()
 
     auto s = Director::getInstance()->getWinSize();
 
-    particle->setPosition(Point(s.width/2, s.height/2));
+    particle->setPosition(Vector2(s.width/2, s.height/2));
 
     _emitter = particle;
 }
@@ -1506,7 +1506,7 @@ void MultipleParticleSystems::onEnter()
     for (int i = 0; i<5; i++) {
         auto particleSystem = ParticleSystemQuad::create("Particles/SpinningPeas.plist");
 
-        particleSystem->setPosition(Point(i*50 ,i*50));
+        particleSystem->setPosition(Vector2(i*50 ,i*50));
 
         particleSystem->setPositionType(ParticleSystem::PositionType::GROUPED);
         addChild(particleSystem);
@@ -1564,7 +1564,7 @@ void MultipleParticleSystemsBatched::onEnter()
         auto particleSystem = ParticleSystemQuad::create("Particles/SpinningPeas.plist");
 
         particleSystem->setPositionType(ParticleSystem::PositionType::GROUPED);
-        particleSystem->setPosition(Point(i*50 ,i*50));
+        particleSystem->setPosition(Vector2(i*50 ,i*50));
 
         batchNode->setTexture(particleSystem->getTexture());
         batchNode->addChild(particleSystem);
@@ -1626,7 +1626,7 @@ void AddAndDeleteParticleSystems::onEnter()
         particleSystem->setPositionType(ParticleSystem::PositionType::GROUPED);
         particleSystem->setTotalParticles(200);
 
-        particleSystem->setPosition(Point(i*15 +100,i*15+100));
+        particleSystem->setPosition(Vector2(i*15 +100,i*15+100));
 
         unsigned int randZ = rand() % 100;
         _batchNode->addChild(particleSystem, randZ, -1);
@@ -1653,7 +1653,7 @@ void AddAndDeleteParticleSystems::removeSystem(float dt)
         particleSystem->setPositionType(ParticleSystem::PositionType::GROUPED);
         particleSystem->setTotalParticles(200);
 
-        particleSystem->setPosition(Point(rand() % 300 ,rand() % 400));
+        particleSystem->setPosition(Vector2(rand() % 300 ,rand() % 400));
 
         CCLOG("add a new system");
         unsigned int randZ = rand() % 100;
@@ -1735,7 +1735,7 @@ void ReorderParticleSystems::onEnter()
         particleSystem->setAngleVar(0);
 
         // emitter position
-        particleSystem->setPosVar(Point::ZERO);
+        particleSystem->setPosVar(Vector2::ZERO);
 
         // life of particles
         particleSystem->setLife(4);
@@ -1772,7 +1772,7 @@ void ReorderParticleSystems::onEnter()
 
         // additive
 
-        particleSystem->setPosition(Point(i*10+120 ,200));
+        particleSystem->setPosition(Vector2(i*10+120 ,200));
 
 
         _batchNode->addChild(particleSystem);
@@ -1987,7 +1987,7 @@ void ParticleAutoBatching::onEnter()
     for(int i=0; i<10; i++) {
         auto particle = ParticleSystemQuad::create("Particles/SmallSun.plist");
         particle->setTotalParticles(100);
-        particle->setPosition(Point(i*s.width/11, s.height/2));
+        particle->setPosition(Vector2(i*s.width/11, s.height/2));
         this->addChild(particle ,10);
     }
 }

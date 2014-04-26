@@ -75,12 +75,12 @@ void TouchesMainScene::onEnter()
     // add title
     auto label = Label::createWithTTF(title().c_str(), "fonts/arial.ttf", 32);
     addChild(label, 1);
-    label->setPosition(Point(s.width/2, s.height-50));
+    label->setPosition(Vector2(s.width/2, s.height-50));
 
     scheduleUpdate();
 
     _plabel = Label::createWithBMFont("fonts/arial16.fnt","00.0");
-    _plabel->setPosition(Point(s.width/2, s.height/2));
+    _plabel->setPosition(Vector2(s.width/2, s.height/2));
     addChild(_plabel);
 
     elapsedTime = 0;
@@ -225,7 +225,7 @@ void TouchesPerformTest3::onEnter()
     // add title
     auto label = Label::createWithTTF(title().c_str(), "fonts/arial.ttf", 32);
     addChild(label, 1);
-    label->setPosition(Point(s.width/2, s.height-50));
+    label->setPosition(Vector2(s.width/2, s.height-50));
     
 #define TOUCH_PROFILER_NAME  "TouchProfileName"
 #define TOUCHABLE_NODE_NUM 1000
@@ -282,7 +282,7 @@ void TouchesPerformTest3::onEnter()
         }
     });
     
-    menuItem->setPosition(Point(0, -20));
+    menuItem->setPosition(Vector2(0, -20));
     auto menu = Menu::create(menuItem, NULL);
     addChild(menu);
 }

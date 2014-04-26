@@ -17,18 +17,18 @@ public:
         setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
     }
 
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
     {
         DrawPrimitives::setDrawColor4B(_touchColor.r, _touchColor.g, _touchColor.b, 255);
         glLineWidth(10);
-        DrawPrimitives::drawLine( Point(0, _touchPoint.y), Point(getContentSize().width, _touchPoint.y) );
-        DrawPrimitives::drawLine( Point(_touchPoint.x, 0), Point(_touchPoint.x, getContentSize().height) );
+        DrawPrimitives::drawLine( Vector2(0, _touchPoint.y), Vector2(getContentSize().width, _touchPoint.y) );
+        DrawPrimitives::drawLine( Vector2(_touchPoint.x, 0), Vector2(_touchPoint.x, getContentSize().height) );
         glLineWidth(1);
         DrawPrimitives::setPointSize(30);
         DrawPrimitives::drawPoint(_touchPoint);
     }
 
-    void setTouchPos(const Point& pt)
+    void setTouchPos(const Vector2& pt)
     {
         _touchPoint = pt;
     }
@@ -42,13 +42,13 @@ public:
     {
         auto pRet = new TouchPoint();
         pRet->setContentSize(pParent->getContentSize());
-        pRet->setAnchorPoint(Point(0.0f, 0.0f));
+        pRet->setAnchorPoint(Vector2(0.0f, 0.0f));
         pRet->autorelease();
         return pRet;
     }
 
 private:
-    Point _touchPoint;
+    Vector2 _touchPoint;
     Color3B _touchColor;
 };
 
@@ -63,7 +63,7 @@ bool MutiTouchTestLayer::init()
         _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
         
         auto title = Label::createWithSystemFont("Please touch the screen!", "", 24);
-        title->setPosition(VisibleRect::top()+Point(0, -40));
+        title->setPosition(VisibleRect::top()+Vector2(0, -40));
         addChild(title);
         
         return true;

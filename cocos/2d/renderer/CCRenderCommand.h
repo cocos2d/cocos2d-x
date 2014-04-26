@@ -29,7 +29,6 @@
 #include "CCPlatformMacros.h"
 #include <stdint.h>
 #include "ccTypes.h"
-#include "kazmath/GL/matrix.h"
 
 NS_CC_BEGIN
 

@@ -92,7 +92,7 @@ void TransitionPageTurn::onDisablePolygonOffset()
     glPolygonOffset(0, 0);
 }
 
-void TransitionPageTurn::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void TransitionPageTurn::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     Scene::draw(renderer, transform, transformUpdated);
     

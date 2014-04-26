@@ -31,11 +31,14 @@ THE SOFTWARE.
 #include "cocostudio/CCArmatureAnimation.h"
 #include "cocostudio/CCSpriteFrameCacheHelper.h"
 #include "cocostudio/CCArmatureDataManager.h"
+#include "math/CCMath.h"
 
 class b2Body;
 struct cpBody;
 
 namespace cocostudio {
+
+USING_NS_CC_MATH;
 
 CC_DEPRECATED_ATTRIBUTE typedef ProcessBase CCProcessBase;
 CC_DEPRECATED_ATTRIBUTE typedef BaseData CCBaseData;
@@ -156,14 +159,14 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void visit(cocos2d::Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
-    virtual void draw(cocos2d::Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+    virtual void visit(cocos2d::Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated) override;
+    virtual void draw(cocos2d::Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
     virtual void update(float dt) override;
 
     virtual void onEnter() override;
     virtual void onExit() override; 
 
-    virtual const kmMat4& getNodeToParentTransform() const override;
+    virtual const Matrix& getNodeToParentTransform() const override;
     /**
      *  @js NA
      *  @lua NA
@@ -180,8 +183,8 @@ public:
      * Set contentsize and Calculate anchor point.
      */
     virtual void updateOffsetPoint();
-    virtual void setAnchorPoint(const cocos2d::Point& point) override;
-    virtual const cocos2d::Point& getAnchorPointInPoints() const override;
+    virtual void setAnchorPoint(const Vector2& point) override;
+    virtual const Vector2& getAnchorPointInPoints() const override;
 
     virtual void setAnimation(ArmatureAnimation *animation);
     virtual ArmatureAnimation *getAnimation() const;
@@ -268,8 +271,8 @@ protected:
 
     cocos2d::BlendFunc _blendFunc;                    //! It's required for CCTextureProtocol inheritance
 
-    cocos2d::Point _offsetPoint;
-    cocos2d::Point _realAnchorPointInPoints;
+    cocos2d::Vector2 _offsetPoint;
+    Vector2 _realAnchorPointInPoints;
 
     ArmatureAnimation *_animation;
 

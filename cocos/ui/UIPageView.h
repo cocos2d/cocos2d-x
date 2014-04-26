@@ -181,11 +181,11 @@ protected:
     Layout* createPage();
     float getPositionXByIndex(ssize_t idx);
     void updateBoundaryPages();
-    virtual void handlePressLogic(const Point &touchPoint) override;
-    virtual void handleMoveLogic(const Point &touchPoint) override;
-    virtual void handleReleaseLogic(const Point &touchPoint) override;
-    virtual void interceptTouchEvent(int handleState, Widget* sender, const Point &touchPoint) override;
-    virtual void checkChildInfo(int handleState, Widget* sender, const Point &touchPoint) override;
+    virtual void handlePressLogic(const Vector2 &touchPoint) override;
+    virtual void handleMoveLogic(const Vector2 &touchPoint) override;
+    virtual void handleReleaseLogic(const Vector2 &touchPoint) override;
+    virtual void interceptTouchEvent(int handleState, Widget* sender, const Vector2 &touchPoint) override;
+    virtual void checkChildInfo(int handleState, Widget* sender, const Vector2 &touchPoint) override;
     virtual bool scrollPages(float touchOffset);
     void movePages(float offset);
     void pageTurningEvent();
@@ -203,7 +203,7 @@ protected:
     PVTouchDir _touchMoveDir;
     float _touchStartLocation;
     float _touchMoveStartLocation;
-    Point _movePagePoint;
+    Vector2 _movePagePoint;
     Widget* _leftChild;
     Widget* _rightChild;
     float _leftBoundary;

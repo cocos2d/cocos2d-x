@@ -230,7 +230,7 @@ protected:
 public:
     static SpriteInGroupCommand* create(const std::string& filename);
     
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
 };
 
 SpriteInGroupCommand* SpriteInGroupCommand::create(const std::string &filename)
@@ -241,7 +241,7 @@ SpriteInGroupCommand* SpriteInGroupCommand::create(const std::string &filename)
     return sprite;
 }
 
-void SpriteInGroupCommand::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void SpriteInGroupCommand::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     CCASSERT(renderer, "Render is null");
     _spriteWrapperCommand.init(_globalZOrder);
@@ -309,7 +309,7 @@ void NewSpriteBatchTest::onTouchesEnded(const std::vector<Touch *> &touches, Eve
     }
 }
 
-void NewSpriteBatchTest::addNewSpriteWithCoords(Point p)
+void NewSpriteBatchTest::addNewSpriteWithCoords(Vector2 p)
 {
     auto BatchNode = static_cast<SpriteBatchNode*>( getChildByTag(kTagSpriteBatchNode) );
 
@@ -321,7 +321,7 @@ void NewSpriteBatchTest::addNewSpriteWithCoords(Point p)
     auto sprite = Sprite::createWithTexture(BatchNode->getTexture(), Rect(x,y,85,121));
     BatchNode->addChild(sprite);
 
-    sprite->setPosition( Point( p.x, p.y) );
+    sprite->setPosition( Vector2( p.x, p.y) );
 
     ActionInterval* action;
     float random = CCRANDOM_0_1();
@@ -350,19 +350,19 @@ NewClippingNodeTest::NewClippingNodeTest()
     auto clipper = ClippingNode::create();
     clipper->setTag( kTagClipperNode );
     clipper->setContentSize(  Size(200, 200) );
-    clipper->setAnchorPoint(  Point(0.5, 0.5) );
-    clipper->setPosition( Point(s.width / 2, s.height / 2) );
+    clipper->setAnchorPoint(  Vector2(0.5, 0.5) );
+    clipper->setPosition( Vector2(s.width / 2, s.height / 2) );
 
     clipper->runAction(RepeatForever::create(RotateBy::create(1, 45)));
     this->addChild(clipper);
 
     //TODO Fix draw node as clip node
 //    auto stencil = NewDrawNode::create();
-//    Point rectangle[4];
-//    rectangle[0] = Point(0, 0);
-//    rectangle[1] = Point(clipper->getContentSize().width, 0);
-//    rectangle[2] = Point(clipper->getContentSize().width, clipper->getContentSize().height);
-//    rectangle[3] = Point(0, clipper->getContentSize().height);
+//    Vector2 rectangle[4];
+//    rectangle[0] = Vector2(0, 0);
+//    rectangle[1] = Vector2(clipper->getContentSize().width, 0);
+//    rectangle[2] = Vector2(clipper->getContentSize().width, clipper->getContentSize().height);
+//    rectangle[3] = Vector2(0, clipper->getContentSize().height);
 //
 //    Color4F white(1, 1, 1, 1);
 //    stencil->drawPolygon(rectangle, 4, white, 1, white);
@@ -376,8 +376,8 @@ NewClippingNodeTest::NewClippingNodeTest()
 
     auto content = Sprite::create("Images/background2.png");
     content->setTag( kTagContentNode );
-    content->setAnchorPoint(  Point(0.5, 0.5) );
-    content->setPosition( Point(clipper->getContentSize().width / 2, clipper->getContentSize().height / 2) );
+    content->setAnchorPoint(  Vector2(0.5, 0.5) );
+    content->setPosition( Vector2(clipper->getContentSize().width / 2, clipper->getContentSize().height / 2) );
     clipper->addChild(content);
 
     _scrolling = false;
@@ -408,7 +408,7 @@ void NewClippingNodeTest::onTouchesBegan(const std::vector<Touch *> &touches, Ev
 {
     Touch *touch = touches[0];
     auto clipper = this->getChildByTag(kTagClipperNode);
-    Point point = clipper->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
+    Vector2 point = clipper->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
     auto rect = Rect(0, 0, clipper->getContentSize().width, clipper->getContentSize().height);
     _scrolling = rect.containsPoint(point);
     _lastPoint = point;
@@ -420,7 +420,7 @@ void NewClippingNodeTest::onTouchesMoved(const std::vector<Touch *> &touches, Ev
     Touch *touch = touches[0];
     auto clipper = this->getChildByTag(kTagClipperNode);
     auto point = clipper->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
-    Point diff = point - _lastPoint;
+    Vector2 diff = point - _lastPoint;
     auto content = clipper->getChildByTag(kTagContentNode);
     content->setPosition(content->getPosition() + diff);
     _lastPoint = point;
@@ -444,11 +444,11 @@ NewDrawNodeTest::NewDrawNodeTest()
     addChild(parent);
 
     auto rectNode = DrawNode::create();
-    Point rectangle[4];
-    rectangle[0] = Point(-50, -50);
-    rectangle[1] = Point(50, -50);
-    rectangle[2] = Point(50, 50);
-    rectangle[3] = Point(-50, 50);
+    Vector2 rectangle[4];
+    rectangle[0] = Vector2(-50, -50);
+    rectangle[1] = Vector2(50, -50);
+    rectangle[2] = Vector2(50, 50);
+    rectangle[3] = Vector2(-50, 50);
 
     Color4F white(1, 1, 1, 1);
     rectNode->drawPolygon(rectangle, 4, white, 1, white);
@@ -475,13 +475,13 @@ NewCullingTest::NewCullingTest()
     Size size = Director::getInstance()->getWinSize();
     auto sprite = Sprite::create("Images/btn-about-normal-vertical.png");
     sprite->setRotation(5);
-    sprite->setPosition(Point(size.width/2,size.height/3));
+    sprite->setPosition(Vector2(size.width/2,size.height/3));
     sprite->setScale(2);
     addChild(sprite);
-    
+
     auto sprite2 = Sprite::create("Images/btn-about-normal-vertical.png");
     sprite2->setRotation(-85);
-    sprite2->setPosition(Point(size.width/2,size.height * 2/3));
+    sprite2->setPosition(Vector2(size.width/2,size.height * 2/3));
     sprite2->setScale(2);
     addChild(sprite2);
     
@@ -540,7 +540,7 @@ VBOFullTest::VBOFullTest()
     for (int i=0; i<Renderer::VBO_SIZE * 2; ++i)
     {
         Sprite* sprite = Sprite::create("Images/grossini_dance_01.png");
-        sprite->setPosition(Point(0,0));
+        sprite->setPosition(Vector2(0,0));
         parent->addChild(sprite);
     }
 }

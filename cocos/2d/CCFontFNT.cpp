@@ -665,7 +665,7 @@ void BMFontConfiguration::parseKerningEntry(std::string line)
     HASH_ADD_INT(_kerningDictionary,key, element);
 }
 
-FontFNT * FontFNT::create(const std::string& fntFilePath, const Point& imageOffset /* = Point::ZERO */)
+FontFNT * FontFNT::create(const std::string& fntFilePath, const Vector2& imageOffset /* = Vector2::ZERO */)
 {
     BMFontConfiguration *newConf = FNTConfigLoadFile(fntFilePath);
     if (!newConf)
@@ -690,7 +690,7 @@ FontFNT * FontFNT::create(const std::string& fntFilePath, const Point& imageOffs
     return tempFont;
 }
 
-FontFNT::FontFNT(BMFontConfiguration *theContfig, const Point& imageOffset /* = Point::ZERO */)
+FontFNT::FontFNT(BMFontConfiguration *theContfig, const Vector2& imageOffset /* = Vector2::ZERO */)
 :_configuration(theContfig)
 ,_imageOffset(CC_POINT_PIXELS_TO_POINTS(imageOffset))
 {

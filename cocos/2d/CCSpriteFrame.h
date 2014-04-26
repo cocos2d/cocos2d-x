@@ -64,7 +64,7 @@ public:
     /** Create a SpriteFrame with a texture filename, rect, rotated, offset and originalSize in pixels.
      The originalSize is the size in pixels of the frame before being trimmed.
      */
-    static SpriteFrame* create(const std::string& filename, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize);
+    static SpriteFrame* create(const std::string& filename, const Rect& rect, bool rotated, const Vector2& offset, const Size& originalSize);
     
     /** Create a SpriteFrame with a texture, rect in points.
      It is assumed that the frame was not trimmed.
@@ -74,7 +74,7 @@ public:
     /** Create a SpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
      The originalSize is the size in points of the frame before being trimmed.
      */
-    static SpriteFrame* createWithTexture(Texture2D* pobTexture, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize);
+    static SpriteFrame* createWithTexture(Texture2D* pobTexture, const Rect& rect, bool rotated, const Vector2& offset, const Size& originalSize);
     /**
      * @js NA
      * @lua NA
@@ -94,14 +94,14 @@ public:
     /** Initializes a SpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
     The originalSize is the size in points of the frame before being trimmed.
     */
-    bool initWithTexture(Texture2D* pobTexture, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize);
+    bool initWithTexture(Texture2D* pobTexture, const Rect& rect, bool rotated, const Vector2& offset, const Size& originalSize);
 
     /** Initializes a SpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
      The originalSize is the size in pixels of the frame before being trimmed.
 
      @since v1.1
      */
-    bool initWithTextureFilename(const std::string& filename, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize);
+    bool initWithTextureFilename(const std::string& filename, const Rect& rect, bool rotated, const Vector2& offset, const Size& originalSize);
 
 
     // attributes
@@ -117,9 +117,9 @@ public:
     void setRect(const Rect& rect);
 
     /** get offset of the frame */
-    const Point& getOffsetInPixels(void) const;
+    const Vector2& getOffsetInPixels(void) const;
     /** set offset of the frame */
-    void setOffsetInPixels(const Point& offsetInPixels);
+    void setOffsetInPixels(const Vector2& offsetInPixels);
 
     /** get original size of the trimmed image */
     inline const Size& getOriginalSizeInPixels(void) const { return _originalSizeInPixels; }
@@ -136,19 +136,19 @@ public:
     /** set texture of the frame, the texture is retained */
     void setTexture(Texture2D* pobTexture);
 
-    const Point& getOffset(void) const;
-    void setOffset(const Point& offsets);
+    const Vector2& getOffset(void) const;
+    void setOffset(const Vector2& offsets);
 
     // Overrides
 	virtual SpriteFrame *clone() const override;
 
 protected:
-    Point _offset;
+    Vector2 _offset;
     Size _originalSize;
     Rect _rectInPixels;
     bool   _rotated;
     Rect _rect;
-    Point _offsetInPixels;
+    Vector2 _offsetInPixels;
     Size _originalSizeInPixels;
     Texture2D *_texture;
     std::string  _textureFilename;
