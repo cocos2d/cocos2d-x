@@ -24,7 +24,7 @@
 #ifndef __CCSAXPARSER_H__
 #define __CCSAXPARSER_H__
 
-#include "CCPlatformConfig.h"
+#include "base/CCPlatformConfig.h"
 #include "2d/platform/CCCommon.h"
 #include <string>
 

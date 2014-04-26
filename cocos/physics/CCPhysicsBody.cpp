@@ -21,7 +21,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "CCPhysicsBody.h"
+#include "physics/CCPhysicsBody.h"
 #if CC_USE_PHYSICS
 
 #include <climits>
@@ -32,9 +32,9 @@
 
 #include "2d/CCLayer.h"
 
-#include "CCPhysicsShape.h"
-#include "CCPhysicsJoint.h"
-#include "CCPhysicsWorld.h"
+#include "physics/CCPhysicsShape.h"
+#include "physics/CCPhysicsJoint.h"
+#include "physics/CCPhysicsWorld.h"
 
 #include "chipmunk/CCPhysicsBodyInfo_chipmunk.h"
 #include "chipmunk/CCPhysicsJointInfo_chipmunk.h"

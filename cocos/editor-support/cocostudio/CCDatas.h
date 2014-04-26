@@ -27,9 +27,9 @@ THE SOFTWARE.
 
 #include "base/CCRef.h"
 #include "2d/ccTypes.h"
-#include "CCVector.h"
-#include "CCMap.h"
-#include "CCAffineTransform.h"
+#include "base/CCVector.h"
+#include "base/CCMap.h"
+#include "base/CCAffineTransform.h"
 
 #include "cocostudio/CCArmatureDefine.h"
 #include "2d/CCTweenFunction.h"

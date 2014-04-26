@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "base/CCPlatformMacros.h"
 #include <string>
-#include "CCData.h"
+#include "base/CCData.h"
 
 NS_CC_BEGIN
 

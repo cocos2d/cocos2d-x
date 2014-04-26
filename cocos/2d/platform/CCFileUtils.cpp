@@ -24,7 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCFileUtils.h"
-#include "CCData.h"
+#include "base/CCData.h"
 #include "2d/ccMacros.h"
 #include "2d/CCDirector.h"
 #include "CCSAXParser.h"

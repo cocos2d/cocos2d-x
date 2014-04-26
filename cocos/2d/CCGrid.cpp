@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "ccUtils.h"
 #include "2d/CCGLProgram.h"
 #include "CCShaderCache.h"
-#include "ccGLStateCache.h"
+#include "2d/ccGLStateCache.h"
 #include "CCGL.h"
 #include "2d/renderer/CCRenderer.h"
 #include "TransformUtils.h"

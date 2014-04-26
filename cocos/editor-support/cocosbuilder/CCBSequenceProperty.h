@@ -2,7 +2,7 @@
 #define __CCB_SEQUENCE_PROPERTY_H__
 
 #include "base/CCRef.h"
-#include "CCVector.h"
+#include "base/CCVector.h"
 #include "CCBKeyframe.h"
 
 namespace cocosbuilder {

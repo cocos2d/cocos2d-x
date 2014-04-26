@@ -22,15 +22,15 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCPhysicsShape.h"
+#include "physics/CCPhysicsShape.h"
 #if CC_USE_PHYSICS
 
 #include <climits>
 
 #include "chipmunk.h"
 
-#include "CCPhysicsBody.h"
-#include "CCPhysicsWorld.h"
+#include "physics/CCPhysicsBody.h"
+#include "physics/CCPhysicsWorld.h"
 
 #include "chipmunk/CCPhysicsBodyInfo_chipmunk.h"
 #include "chipmunk/CCPhysicsShapeInfo_chipmunk.h"

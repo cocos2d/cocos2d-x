@@ -29,7 +29,7 @@ THE SOFTWARE.
 #define __CCTMX_OBJECT_GROUP_H__
 
 #include "base/CCGeometry.h"
-#include "CCValue.h"
+#include "base/CCValue.h"
 #include "base/CCRef.h"
 
 NS_CC_BEGIN

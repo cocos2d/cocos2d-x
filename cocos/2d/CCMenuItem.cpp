@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "2d/CCSprite.h"
 #include "CCLabelAtlas.h"
 #include "2d/CCLabel.h"
-#include "CCScriptSupport.h"
+#include "2d/CCScriptSupport.h"
 #include "deprecated/CCString.h"
 #include <stdarg.h>
 #include <cstring>
