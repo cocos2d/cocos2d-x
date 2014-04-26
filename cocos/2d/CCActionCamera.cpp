@@ -25,8 +25,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCActionCamera.h"
-#include "CCNode.h"
+#include "2d/CCActionCamera.h"
+#include "2d/CCNode.h"
 #include "CCStdC.h"
 
 NS_CC_BEGIN

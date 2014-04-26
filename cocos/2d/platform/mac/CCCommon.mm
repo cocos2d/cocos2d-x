@@ -26,9 +26,9 @@ THE SOFTWARE.
 #include "CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 
-#include "platform/CCCommon.h"
+#include "2d/platform/CCCommon.h"
 
-#include "CCDirector.h"
+#include "2d/CCDirector.h"
 #include "CCGLView.h"
 
 #define GLFW_EXPOSE_NATIVE_NSGL

@@ -28,7 +28,7 @@
  ****************************************************************************/
 
 #include "WebSocket.h"
-#include "CCDirector.h"
+#include "2d/CCDirector.h"
 #include "CCScheduler.h"
 
 #include <thread>

@@ -41,8 +41,8 @@ THE SOFTWARE.
 #define __CCDRAWING_PRIMITIVES__
     
 
-#include "ccTypes.h"
-#include "ccMacros.h"
+#include "2d/ccTypes.h"
+#include "2d/ccMacros.h"
 #include "math/CCMath.h"
 
 /**

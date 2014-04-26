@@ -33,12 +33,12 @@
 #include <errno.h>
 
 #include "CCVector.h"
-#include "CCDirector.h"
+#include "2d/CCDirector.h"
 #include "CCScheduler.h"
 
 #include "curl/curl.h"
 
-#include "platform/CCFileUtils.h"
+#include "2d/platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 

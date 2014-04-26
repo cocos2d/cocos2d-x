@@ -26,22 +26,22 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCSpriteBatchNode.h"
-#include "ccConfig.h"
-#include "CCSprite.h"
+#include "2d/CCSpriteBatchNode.h"
+#include "2d/ccConfig.h"
+#include "2d/CCSprite.h"
 #include "CCGrid.h"
 #include "CCDrawingPrimitives.h"
 #include "CCTextureCache.h"
 #include "CCShaderCache.h"
-#include "CCGLProgram.h"
+#include "2d/CCGLProgram.h"
 #include "ccGLStateCache.h"
-#include "CCDirector.h"
+#include "2d/CCDirector.h"
 #include "TransformUtils.h"
 #include "CCProfiling.h"
-#include "CCLayer.h"
+#include "2d/CCLayer.h"
 #include "CCScene.h"
-#include "renderer/CCRenderer.h"
-#include "renderer/CCQuadCommand.h"
+#include "2d/renderer/CCRenderer.h"
+#include "2d/renderer/CCQuadCommand.h"
 // external
 
 #include "deprecated/CCString.h" // For StringUtils::format

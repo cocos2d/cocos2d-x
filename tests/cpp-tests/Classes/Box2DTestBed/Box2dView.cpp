@@ -1,7 +1,7 @@
 #include "Box2dView.h"
 #include "GLES-Render.h"
 #include "Test.h"
-#include "renderer/CCRenderer.h"
+#include "2d/renderer/CCRenderer.h"
 
 #define kAccelerometerFrequency 30
 #define FRAMES_BETWEEN_PRESSES_FOR_DOUBLE_CLICK 10

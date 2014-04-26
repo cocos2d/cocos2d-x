@@ -25,14 +25,14 @@ THE SOFTWARE.
 #ifndef __CCARMATURE_DATAS_H__
 #define __CCARMATURE_DATAS_H__
 
-#include "CCRef.h"
-#include "ccTypes.h"
+#include "base/CCRef.h"
+#include "2d/ccTypes.h"
 #include "CCVector.h"
 #include "CCMap.h"
 #include "CCAffineTransform.h"
 
 #include "cocostudio/CCArmatureDefine.h"
-#include "CCTweenFunction.h"
+#include "2d/CCTweenFunction.h"
 
 
 #define CC_CREATE_NO_PARAM_NO_INIT(varType)\

@@ -33,7 +33,7 @@
 #include "chipmunk/CCPhysicsBodyInfo_chipmunk.h"
 #include "chipmunk/CCPhysicsShapeInfo_chipmunk.h"
 #include "chipmunk/CCPhysicsHelper_chipmunk.h"
-#include "CCNode.h"
+#include "2d/CCNode.h"
 
 NS_CC_BEGIN
 

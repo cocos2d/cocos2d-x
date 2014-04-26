@@ -24,9 +24,9 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCGLViewProtocol.h"
-#include "CCTouch.h"
-#include "CCDirector.h"
-#include "CCEventDispatcher.h"
+#include "2d/CCTouch.h"
+#include "2d/CCDirector.h"
+#include "2d/CCEventDispatcher.h"
 
 NS_CC_BEGIN
 

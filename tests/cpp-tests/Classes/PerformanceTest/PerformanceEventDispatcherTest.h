@@ -5,7 +5,6 @@
 #define __PERFORMANCE_EVENTDISPATCHER_TEST_H__
 
 #include "PerformanceTest.h"
-#include "CCProfiling.h"
 
 class EventDispatcherBasicLayer : public PerformBasicLayer
 {

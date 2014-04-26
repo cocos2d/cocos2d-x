@@ -43,8 +43,8 @@ THE SOFTWARE.
 #ifndef CC_ARRAY_H
 #define CC_ARRAY_H
 
-#include "ccMacros.h"
-#include "CCRef.h"
+#include "2d/ccMacros.h"
+#include "base/CCRef.h"
 
 #include <stdlib.h>
 #include <string.h>

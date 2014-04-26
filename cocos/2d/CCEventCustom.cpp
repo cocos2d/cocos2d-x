@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCEventCustom.h"
-#include "ccMacros.h"
+#include "2d/CCEventCustom.h"
+#include "2d/ccMacros.h"
 #include <functional>
 
 NS_CC_BEGIN

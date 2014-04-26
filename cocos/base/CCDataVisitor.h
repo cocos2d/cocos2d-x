@@ -25,7 +25,7 @@
 #ifndef __CCDATAVISITOR_H__
 #define __CCDATAVISITOR_H__
 
-#include "CCPlatformMacros.h"
+#include "base/CCPlatformMacros.h"
 #include <string>
 
 NS_CC_BEGIN

@@ -26,7 +26,7 @@
 #ifndef _CC_GROUPCOMMAND_H_
 #define _CC_GROUPCOMMAND_H_
 
-#include "CCRef.h"
+#include "base/CCRef.h"
 #include "CCRenderCommand.h"
 #include "CCRenderCommandPool.h"
 

@@ -27,7 +27,7 @@ THE SOFTWARE.
 #define __EFFECTS_CCGRABBER_H__
 
 #include "CCConfiguration.h"
-#include "CCRef.h"
+#include "base/CCRef.h"
 #include "CCGL.h"
 
 NS_CC_BEGIN

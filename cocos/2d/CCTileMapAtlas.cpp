@@ -25,11 +25,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCTileMapAtlas.h"
-#include "platform/CCFileUtils.h"
-#include "CCTextureAtlas.h"
+#include "2d/platform/CCFileUtils.h"
+#include "2d/CCTextureAtlas.h"
 #include "TGAlib.h"
-#include "ccConfig.h"
-#include "CCDirector.h"
+#include "2d/ccConfig.h"
+#include "2d/CCDirector.h"
 #include "deprecated/CCString.h"
 #include <sstream>
 

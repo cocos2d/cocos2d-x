@@ -26,8 +26,8 @@ THE SOFTWARE.
 #include "CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
-#include "platform/CCDevice.h"
-#include "platform/CCFileUtils.h"
+#include "2d/platform/CCDevice.h"
+#include "2d/platform/CCFileUtils.h"
 #include "CCStdC.h"
 
 NS_CC_BEGIN

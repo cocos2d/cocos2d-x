@@ -25,11 +25,11 @@
 #ifndef __CCPHYSICS_JOINT_INFO_CHIPMUNK_H__
 #define __CCPHYSICS_JOINT_INFO_CHIPMUNK_H__
 
-#include "ccConfig.h"
+#include "2d/ccConfig.h"
 #if CC_USE_PHYSICS
 
 #include "chipmunk.h"
-#include "CCPlatformMacros.h"
+#include "base/CCPlatformMacros.h"
 #include <vector>
 #include <unordered_map>
 NS_CC_BEGIN

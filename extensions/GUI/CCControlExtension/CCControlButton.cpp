@@ -27,9 +27,9 @@
 
 #include "CCControlButton.h"
 #include "CCScale9Sprite.h"
-#include "CCLabel.h"
-#include "CCAction.h"
-#include "CCActionInterval.h"
+#include "2d/CCLabel.h"
+#include "2d/CCAction.h"
+#include "2d/CCActionInterval.h"
 
 using namespace std;
 

@@ -25,11 +25,11 @@
 #ifndef __CCPHYSICS_BODY_H__
 #define __CCPHYSICS_BODY_H__
 
-#include "ccConfig.h"
+#include "2d/ccConfig.h"
 #if CC_USE_PHYSICS
 
-#include "CCRef.h"
-#include "CCGeometry.h"
+#include "base/CCRef.h"
+#include "base/CCGeometry.h"
 #include "CCPhysicsShape.h"
 #include "CCVector.h"
 

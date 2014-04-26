@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "renderer/CCCustomCommand.h"
+#include "2d/renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 

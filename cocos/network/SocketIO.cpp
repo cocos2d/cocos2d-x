@@ -28,7 +28,7 @@
  ****************************************************************************/
 
 #include "SocketIO.h"
-#include "CCDirector.h"
+#include "2d/CCDirector.h"
 #include "CCScheduler.h"
 #include "WebSocket.h"
 #include "HttpClient.h"

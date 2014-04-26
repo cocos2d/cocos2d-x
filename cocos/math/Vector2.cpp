@@ -1,5 +1,5 @@
 #include "Vector2.h"
-#include "ccMacros.h"
+#include "2d/ccMacros.h"
 #include "MathUtil.h"
 
 NS_CC_MATH_BEGIN

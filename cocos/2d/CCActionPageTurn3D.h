@@ -26,7 +26,7 @@ THE SOFTWARE.
 #ifndef __ACTION_CCPAGETURN3D_ACTION_H__
 #define __ACTION_CCPAGETURN3D_ACTION_H__
 
-#include "CCActionGrid3D.h"
+#include "2d/CCActionGrid3D.h"
 
 NS_CC_BEGIN
 

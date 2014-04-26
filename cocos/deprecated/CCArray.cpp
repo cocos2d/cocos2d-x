@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 #include "CCArray.h"
 #include "deprecated/CCString.h"
-#include "platform/CCFileUtils.h"
+#include "2d/platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 

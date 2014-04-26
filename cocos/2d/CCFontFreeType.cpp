@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 #include "ccUTF8.h"
 #include "CCFontFreeType.h"
-#include "platform/CCFileUtils.h"
+#include "2d/platform/CCFileUtils.h"
 #include "edtaa3func.h"
 #include FT_BBOX_H
 

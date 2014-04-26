@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "CCTMXTiledMap.h"
 #include "CCTMXXMLParser.h"
 #include "CCTMXLayer.h"
-#include "CCSprite.h"
+#include "2d/CCSprite.h"
 #include "deprecated/CCString.h" // For StringUtils::format
 
 #include <algorithm>

@@ -35,9 +35,9 @@ THE SOFTWARE.
  * http://zwoptex.zwopple.com/
  */
 
-#include "CCSpriteFrame.h"
-#include "CCTexture2D.h"
-#include "CCRef.h"
+#include "2d/CCSpriteFrame.h"
+#include "2d/CCTexture2D.h"
+#include "base/CCRef.h"
 #include "CCValue.h"
 #include "CCMap.h"
 

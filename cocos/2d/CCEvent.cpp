@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCEvent.h"
+#include "2d/CCEvent.h"
 
 NS_CC_BEGIN
 

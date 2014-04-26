@@ -1,6 +1,6 @@
 
 #include "tolua_fix.h"
-#include "CCRef.h"
+#include "base/CCRef.h"
 #include "LuaBasicConversions.h"
 #include <stdlib.h>
 

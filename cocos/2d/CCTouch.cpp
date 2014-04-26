@@ -23,8 +23,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCTouch.h"
-#include "CCDirector.h"
+#include "2d/CCTouch.h"
+#include "2d/CCDirector.h"
 
 NS_CC_BEGIN
 

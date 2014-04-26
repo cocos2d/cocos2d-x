@@ -25,8 +25,8 @@ THE SOFTWARE.
 #ifndef __ActionFRAME_H__
 #define __ActionFRAME_H__
 
-#include "CCGeometry.h"
-#include "CCActionInterval.h"
+#include "base/CCGeometry.h"
+#include "2d/CCActionInterval.h"
 
 namespace cocostudio {
     

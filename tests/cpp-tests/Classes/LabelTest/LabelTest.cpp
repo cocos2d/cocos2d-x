@@ -1,7 +1,7 @@
 #include "LabelTest.h"
 #include "../testResource.h"
-#include "renderer/CCRenderer.h"
-#include "renderer/CCCustomCommand.h"
+#include "2d/renderer/CCRenderer.h"
+#include "2d/renderer/CCCustomCommand.h"
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"

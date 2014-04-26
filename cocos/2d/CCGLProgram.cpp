@@ -26,12 +26,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCDirector.h"
-#include "CCGLProgram.h"
+#include "2d/CCDirector.h"
+#include "2d/CCGLProgram.h"
 #include "ccGLStateCache.h"
-#include "ccMacros.h"
-#include "platform/CCFileUtils.h"
-#include "uthash.h"
+#include "2d/ccMacros.h"
+#include "2d/platform/CCFileUtils.h"
+#include "2d/uthash.h"
 #include "deprecated/CCString.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)

@@ -25,22 +25,22 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCLabelAtlas.h"
-#include "CCTextureAtlas.h"
+#include "2d/CCTextureAtlas.h"
 #include "CCTextureCache.h"
 #include "CCDrawingPrimitives.h"
-#include "ccConfig.h"
+#include "2d/ccConfig.h"
 #include "CCShaderCache.h"
-#include "CCGLProgram.h"
+#include "2d/CCGLProgram.h"
 #include "ccGLStateCache.h"
-#include "CCDirector.h"
+#include "2d/CCDirector.h"
 #include "TransformUtils.h"
-#include "platform/CCFileUtils.h"
+#include "2d/platform/CCFileUtils.h"
 // external
 #include "deprecated/CCString.h"
 
 #if CC_LABELATLAS_DEBUG_DRAW
-#include "renderer/CCRenderer.h"
-#include "CCDirector.h"
+#include "2d/renderer/CCRenderer.h"
+#include "2d/CCDirector.h"
 #endif
 
 NS_CC_BEGIN

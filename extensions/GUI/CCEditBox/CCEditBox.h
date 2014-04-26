@@ -26,7 +26,7 @@
 #ifndef __CCEDITTEXT_H__
 #define __CCEDITTEXT_H__
 
-#include "CCIMEDelegate.h"
+#include "2d/CCIMEDelegate.h"
 #include "extensions/ExtensionMacros.h"
 #include "../CCControlExtension/CCControlExtensions.h"
 

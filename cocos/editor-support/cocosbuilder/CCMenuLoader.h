@@ -2,8 +2,8 @@
 #define _CCB_CCMENULOADER_H_
 
 #include "CCLayerLoader.h"
-#include "CCRef.h"
-#include "CCMenu.h"
+#include "base/CCRef.h"
+#include "2d/CCMenu.h"
 
 namespace cocosbuilder {
 

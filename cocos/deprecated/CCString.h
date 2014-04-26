@@ -34,7 +34,7 @@ THE SOFTWARE.
 #include <functional>
 #include <sstream>
 #include "CCArray.h"
-#include "CCRef.h"
+#include "base/CCRef.h"
 
 NS_CC_BEGIN
 

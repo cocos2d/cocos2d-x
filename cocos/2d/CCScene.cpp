@@ -26,10 +26,10 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCScene.h"
-#include "CCDirector.h"
-#include "CCLayer.h"
-#include "CCSprite.h"
-#include "CCSpriteBatchNode.h"
+#include "2d/CCDirector.h"
+#include "2d/CCLayer.h"
+#include "2d/CCSprite.h"
+#include "2d/CCSpriteBatchNode.h"
 #include "CCPhysicsWorld.h"
 #include "deprecated/CCString.h"
 

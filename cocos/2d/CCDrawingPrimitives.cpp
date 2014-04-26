@@ -41,15 +41,15 @@ THE SOFTWARE.
 #include <string.h>
 #include <cmath>
 
-#include "ccTypes.h"
-#include "ccMacros.h"
+#include "2d/ccTypes.h"
+#include "2d/ccMacros.h"
 #include "CCGL.h"
-#include "CCDirector.h"
+#include "2d/CCDirector.h"
 #include "ccGLStateCache.h"
 #include "CCShaderCache.h"
-#include "CCGLProgram.h"
-#include "CCActionCatmullRom.h"
-#include "renderer/CCRenderer.h"
+#include "2d/CCGLProgram.h"
+#include "2d/CCActionCatmullRom.h"
+#include "2d/renderer/CCRenderer.h"
 
 NS_CC_BEGIN
 #ifndef M_PI

@@ -1,8 +1,5 @@
-#include "CCConfiguration.h"
 #include "RenderTextureTest.h"
 #include "../testBasic.h"
-#include "renderer/CCRenderer.h"
-#include "renderer/CCCustomCommand.h"
 
 // Test #1 by Jason Booth (slipster216)
 // Test #3 by David Deaco (ddeaco)

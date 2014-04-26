@@ -31,9 +31,9 @@ THE SOFTWARE.
 #include <map>
 #include <map>
 
-#include "CCRef.h"
-#include "CCGeometry.h"
-#include "ccTypes.h"
+#include "base/CCRef.h"
+#include "base/CCGeometry.h"
+#include "2d/ccTypes.h"
 #ifdef EMSCRIPTEN
 #include "CCGLBufferedNode.h"
 #endif // EMSCRIPTEN

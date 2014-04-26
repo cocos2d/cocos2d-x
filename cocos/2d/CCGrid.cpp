@@ -23,16 +23,16 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "ccMacros.h"
+#include "2d/ccMacros.h"
 #include "CCGrid.h"
-#include "CCDirector.h"
+#include "2d/CCDirector.h"
 #include "CCGrabber.h"
 #include "ccUtils.h"
-#include "CCGLProgram.h"
+#include "2d/CCGLProgram.h"
 #include "CCShaderCache.h"
 #include "ccGLStateCache.h"
 #include "CCGL.h"
-#include "renderer/CCRenderer.h"
+#include "2d/renderer/CCRenderer.h"
 #include "TransformUtils.h"
 
 NS_CC_BEGIN

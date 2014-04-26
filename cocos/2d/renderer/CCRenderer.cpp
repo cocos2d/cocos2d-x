@@ -22,21 +22,21 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "renderer/CCRenderer.h"
+#include "2d/renderer/CCRenderer.h"
 
 #include <algorithm>
 
-#include "renderer/CCQuadCommand.h"
-#include "renderer/CCBatchCommand.h"
-#include "renderer/CCCustomCommand.h"
-#include "renderer/CCGroupCommand.h"
+#include "2d/renderer/CCQuadCommand.h"
+#include "2d/renderer/CCBatchCommand.h"
+#include "2d/renderer/CCCustomCommand.h"
+#include "2d/renderer/CCGroupCommand.h"
 #include "CCShaderCache.h"
 #include "ccGLStateCache.h"
 #include "CCConfiguration.h"
-#include "CCDirector.h"
-#include "CCEventDispatcher.h"
-#include "CCEventListenerCustom.h"
-#include "CCEventType.h"
+#include "2d/CCDirector.h"
+#include "2d/CCEventDispatcher.h"
+#include "2d/CCEventListenerCustom.h"
+#include "2d/CCEventType.h"
 
 NS_CC_BEGIN
 

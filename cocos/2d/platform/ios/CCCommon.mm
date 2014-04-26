@@ -26,13 +26,13 @@
 #include "CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
-#include "platform/CCCommon.h"
+#include "2d/platform/CCCommon.h"
 
 #include <stdarg.h>
 #include <stdio.h>
 
 #import <UIKit/UIAlert.h>
-#include "CCDirector.h"
+#include "2d/CCDirector.h"
 #include "CCConsole.h"
 
 NS_CC_BEGIN

@@ -26,8 +26,8 @@ THE SOFTWARE.
 #ifndef __CC_TOUCH_H__
 #define __CC_TOUCH_H__
 
-#include "CCRef.h"
-#include "CCGeometry.h"
+#include "base/CCRef.h"
+#include "base/CCGeometry.h"
 
 NS_CC_BEGIN
 

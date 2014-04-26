@@ -25,12 +25,12 @@
 
 #include "CCScrollView.h"
 #include "CCGLView.h"
-#include "platform/CCDevice.h"
-#include "CCActionInstant.h"
-#include "CCActionInterval.h"
-#include "CCActionTween.h"
-#include "CCDirector.h"
-#include "renderer/CCRenderer.h"
+#include "2d/platform/CCDevice.h"
+#include "2d/CCActionInstant.h"
+#include "2d/CCActionInterval.h"
+#include "2d/CCActionTween.h"
+#include "2d/CCDirector.h"
+#include "2d/renderer/CCRenderer.h"
 
 #include <algorithm>
 

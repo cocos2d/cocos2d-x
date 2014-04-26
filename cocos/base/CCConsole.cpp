@@ -54,11 +54,11 @@
 #include <sys/ioctl.h>
 #endif
 
-#include "CCDirector.h"
+#include "2d/CCDirector.h"
 #include "CCScheduler.h"
 #include "CCScene.h"
 #include "CCPlatformConfig.h"
-#include "platform/CCFileUtils.h"
+#include "2d/platform/CCFileUtils.h"
 #include "CCConfiguration.h"
 #include "CCTextureCache.h"
 #include "CCGLView.h"

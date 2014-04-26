@@ -28,7 +28,7 @@
 #define __CCCONTROLPOTENTIOMETER_H__
 
 #include "CCControl.h"
-#include "CCProgressTimer.h"
+#include "2d/CCProgressTimer.h"
 
 NS_CC_EXT_BEGIN
 

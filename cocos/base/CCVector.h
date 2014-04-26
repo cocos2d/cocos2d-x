@@ -26,8 +26,8 @@ THE SOFTWARE.
 #ifndef __CCVECTOR_H__
 #define __CCVECTOR_H__
 
-#include "ccMacros.h"
-#include "CCRef.h"
+#include "2d/ccMacros.h"
+#include "base/CCRef.h"
 #include <vector>
 #include <functional>
 #include <algorithm> // for std::find

@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "cocostudio/CCArmatureDataManager.h"
 #include "cocostudio/CCTransformHelp.h"
 
-#include "CCParticleSystemQuad.h"
+#include "2d/CCParticleSystemQuad.h"
 
 using namespace cocos2d;
 

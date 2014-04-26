@@ -38,11 +38,11 @@ extern "C" {
 #include "Cocos2dxLuaLoader.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-#include "platform/ios/CCLuaObjcBridge.h"
+#include "2d/platform/ios/CCLuaObjcBridge.h"
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#include "platform/android/CCLuaJavaBridge.h"
+#include "2d/platform/android/CCLuaJavaBridge.h"
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)

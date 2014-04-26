@@ -28,15 +28,15 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCNS.h"
-#include "ccMacros.h"
+#include "2d/ccMacros.h"
 #include "CCTextureCache.h"
-#include "CCSpriteFrameCache.h"
-#include "CCSpriteFrame.h"
-#include "CCSprite.h"
+#include "2d/CCSpriteFrameCache.h"
+#include "2d/CCSpriteFrame.h"
+#include "2d/CCSprite.h"
 #include "TransformUtils.h"
-#include "platform/CCFileUtils.h"
+#include "2d/platform/CCFileUtils.h"
 #include "deprecated/CCString.h"
-#include "CCDirector.h"
+#include "2d/CCDirector.h"
 #include <vector>
 
 using namespace std;

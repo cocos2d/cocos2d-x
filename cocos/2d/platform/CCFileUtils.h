@@ -25,8 +25,8 @@ THE SOFTWARE.
 #ifndef __CC_FILEUTILS_H__
 #define __CC_FILEUTILS_H__
 
-#include "CCPlatformMacros.h"
-#include "ccTypes.h"
+#include "base/CCPlatformMacros.h"
+#include "2d/ccTypes.h"
 #include "CCValue.h"
 #include "CCData.h"
 

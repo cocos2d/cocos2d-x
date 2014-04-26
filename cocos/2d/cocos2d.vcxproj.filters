@@ -398,7 +398,6 @@
     <ClCompile Include="ccFPSImages.c" />
     <ClCompile Include="CCScheduler.cpp" />
     <ClCompile Include="ccTypes.cpp" />
-    <ClCompile Include="cocos2d.cpp" />
     <ClCompile Include="base64.cpp">
       <Filter>support</Filter>
     </ClCompile>
@@ -571,6 +570,7 @@
     <ClCompile Include="..\math\MathUtil.cpp">
       <Filter>math</Filter>
     </ClCompile>
+    <ClCompile Include="..\cocos2d.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -652,9 +652,6 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="ccTypes.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="cocos2d.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="CCLayer.h">
@@ -1157,6 +1154,7 @@
     <ClInclude Include="..\math\CCMathBase.h">
       <Filter>math</Filter>
     </ClInclude>
+    <ClInclude Include="..\cocos2d.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\math\MathUtil.inl">

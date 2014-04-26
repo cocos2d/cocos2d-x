@@ -2,7 +2,6 @@
 #define __PERFORMANCE_NODE_CHILDREN_TEST_H__
 
 #include "PerformanceTest.h"
-#include "CCProfiling.h"
 
 class NodeChildrenMenuLayer : public PerformBasicLayer
 {

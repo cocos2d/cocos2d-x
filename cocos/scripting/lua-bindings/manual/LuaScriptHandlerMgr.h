@@ -30,9 +30,9 @@ extern "C" {
 }
 
 
-#include "CCRef.h"
-#include "ccMacros.h"
-#include "CCActionInstant.h"
+#include "base/CCRef.h"
+#include "2d/ccMacros.h"
+#include "2d/CCActionInstant.h"
 #include <vector>
 #include <map>
 

@@ -29,8 +29,8 @@ THE SOFTWARE.
 #ifndef __CC_TM_XML_PARSER__
 #define __CC_TM_XML_PARSER__
 
-#include "CCGeometry.h"
-#include "platform/CCSAXParser.h"
+#include "base/CCGeometry.h"
+#include "2d/platform/CCSAXParser.h"
 #include "CCVector.h"
 #include "CCValue.h"
 

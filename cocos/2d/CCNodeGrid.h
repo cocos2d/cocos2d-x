@@ -25,9 +25,9 @@
 #ifndef __MISCNODE_CCGRID_NODE_H__
 #define __MISCNODE_CCGRID_NODE_H__
 
-#include "CCNode.h"
-#include "renderer/CCGroupCommand.h"
-#include "renderer/CCCustomCommand.h"
+#include "2d/CCNode.h"
+#include "2d/renderer/CCGroupCommand.h"
+#include "2d/renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 

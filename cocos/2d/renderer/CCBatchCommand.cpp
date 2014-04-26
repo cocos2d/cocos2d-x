@@ -23,10 +23,10 @@
  ****************************************************************************/
 
 
-#include "renderer/CCBatchCommand.h"
+#include "2d/renderer/CCBatchCommand.h"
 #include "ccGLStateCache.h"
-#include "CCTextureAtlas.h"
-#include "CCTexture2D.h"
+#include "2d/CCTextureAtlas.h"
+#include "2d/CCTexture2D.h"
 
 NS_CC_BEGIN
 
