@@ -49,7 +49,7 @@ NS_CC_EXT_BEGIN
 
 ActionObject::~ActionObject()
 {
-	m_ActionNodeList->removeAllObjects();
+	//m_ActionNodeList->removeAllObjects();
 	m_ActionNodeList->release();
 
 	CC_SAFE_RELEASE(m_pScheduler);
