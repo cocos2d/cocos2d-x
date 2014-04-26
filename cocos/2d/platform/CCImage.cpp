@@ -25,7 +25,7 @@ THE SOFTWARE.
 
 
 #include "CCImage.h"
-#include "CCData.h"
+#include "base/CCData.h"
 
 #include <string>
 #include <ctype.h>

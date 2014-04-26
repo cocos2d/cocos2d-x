@@ -28,8 +28,8 @@ THE SOFTWARE.
 #define __CC_ANIMATION_CACHE_H__
 
 #include "base/CCRef.h"
-#include "CCMap.h"
-#include "CCValue.h"
+#include "base/CCMap.h"
+#include "base/CCValue.h"
 
 #include <string>
 

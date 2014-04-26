@@ -25,7 +25,7 @@ Copyright (c) 2013-2014 Chukong Technologies Inc.
 #ifndef __CC_FILEUTILS_ANDROID_H__
 #define __CC_FILEUTILS_ANDROID_H__
 
-#include "CCPlatformConfig.h"
+#include "base/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
 #include "2d/platform/CCFileUtils.h"

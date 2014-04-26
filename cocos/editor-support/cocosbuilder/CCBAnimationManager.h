@@ -1,7 +1,7 @@
 #ifndef __CCB_CCBANIMATION_MANAGER_H__
 #define __CCB_CCBANIMATION_MANAGER_H__
 
-#include "CCMap.h"
+#include "base/CCMap.h"
 #include "2d/CCActionInterval.h"
 #include "2d/CCActionInstant.h"
 #include "2d/CCActionEase.h"

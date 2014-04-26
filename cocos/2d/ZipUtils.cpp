@@ -27,7 +27,7 @@
 #include <stdlib.h>
 
 #include "ZipUtils.h"
-#include "CCData.h"
+#include "base/CCData.h"
 #include "2d/ccMacros.h"
 #include "2d/platform/CCFileUtils.h"
 #include "unzip.h"

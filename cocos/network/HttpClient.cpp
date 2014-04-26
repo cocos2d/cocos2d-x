@@ -32,7 +32,7 @@
 
 #include <errno.h>
 
-#include "CCVector.h"
+#include "base/CCVector.h"
 #include "2d/CCDirector.h"
 #include "CCScheduler.h"
 

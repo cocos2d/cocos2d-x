@@ -28,7 +28,7 @@
 #include "2d/ccConfig.h"
 #if CC_USE_PHYSICS
 
-#include "CCVector.h"
+#include "base/CCVector.h"
 #include "base/CCRef.h"
 #include "base/CCGeometry.h"
 

@@ -32,7 +32,7 @@ THE SOFTWARE.
 #define _USE_MATH_DEFINES
 #endif
 
-#include "CCConsole.h"
+#include "base/CCConsole.h"
 #include "CCStdC.h"
 
 #ifndef CCASSERT

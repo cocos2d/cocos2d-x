@@ -45,7 +45,7 @@ THE SOFTWARE.
 #include "2d/ccMacros.h"
 #include "CCGL.h"
 #include "2d/CCDirector.h"
-#include "ccGLStateCache.h"
+#include "2d/ccGLStateCache.h"
 #include "CCShaderCache.h"
 #include "2d/CCGLProgram.h"
 #include "2d/CCActionCatmullRom.h"

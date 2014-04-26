@@ -26,7 +26,7 @@ THE SOFTWARE.
 #ifndef __CCPLATFORMDEFINE_H__
 #define __CCPLATFORMDEFINE_H__
 
-#include "CCPlatformConfig.h"
+#include "base/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
 #include <string.h>

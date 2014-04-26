@@ -27,12 +27,12 @@ THE SOFTWARE.
 #ifndef __CC_ANIMATION_H__
 #define __CC_ANIMATION_H__
 
-#include "CCPlatformConfig.h"
+#include "base/CCPlatformConfig.h"
 #include "base/CCRef.h"
-#include "CCValue.h"
+#include "base/CCValue.h"
 #include "base/CCGeometry.h"
 #include "2d/CCSpriteFrame.h"
-#include "CCVector.h"
+#include "base/CCVector.h"
 
 #include <string>
 

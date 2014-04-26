@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __SUPPORT_ZIPUTILS_H__
 
 #include <string>
-#include "CCPlatformConfig.h"
+#include "base/CCPlatformConfig.h"
 #include "CCPlatformDefine.h"
 #include "base/CCPlatformMacros.h"
 

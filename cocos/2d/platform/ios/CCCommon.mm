@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCPlatformConfig.h"
+#include "base/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
 #include "2d/platform/CCCommon.h"
@@ -33,7 +33,7 @@
 
 #import <UIKit/UIAlert.h>
 #include "2d/CCDirector.h"
-#include "CCConsole.h"
+#include "base/CCConsole.h"
 
 NS_CC_BEGIN
 

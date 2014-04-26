@@ -27,8 +27,8 @@ THE SOFTWARE.
 
 #include "base/CCPlatformMacros.h"
 #include "2d/ccTypes.h"
-#include "CCValue.h"
-#include "CCData.h"
+#include "base/CCValue.h"
+#include "base/CCData.h"
 
 #include <string>
 #include <vector>

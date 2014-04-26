@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCConsole.h"
+#include "base/CCConsole.h"
 
 #include <thread>
 #include <algorithm>
@@ -57,7 +57,7 @@
 #include "2d/CCDirector.h"
 #include "CCScheduler.h"
 #include "CCScene.h"
-#include "CCPlatformConfig.h"
+#include "base/CCPlatformConfig.h"
 #include "2d/platform/CCFileUtils.h"
 #include "CCConfiguration.h"
 #include "CCTextureCache.h"

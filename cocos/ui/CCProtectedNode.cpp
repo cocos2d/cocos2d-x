@@ -31,7 +31,7 @@
 #include "2d/CCDirector.h"
 
 #if CC_USE_PHYSICS
-#include "CCPhysicsBody.h"
+#include "physics/CCPhysicsBody.h"
 #endif
 #include "2d/CCLayer.h"
 

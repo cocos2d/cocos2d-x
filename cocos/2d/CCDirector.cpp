@@ -49,7 +49,7 @@ THE SOFTWARE.
 #include "CCAnimationCache.h"
 #include "2d/CCTouch.h"
 #include "CCUserDefault.h"
-#include "ccGLStateCache.h"
+#include "2d/ccGLStateCache.h"
 #include "CCShaderCache.h"
 #include "CCProfiling.h"
 #include "2d/platform/CCImage.h"
@@ -59,7 +59,7 @@ THE SOFTWARE.
 #include "2d/CCEventCustom.h"
 #include "CCFontFreeType.h"
 #include "2d/renderer/CCRenderer.h"
-#include "CCConsole.h"
+#include "base/CCConsole.h"
 
 #include "math/CCMath.h"
 
