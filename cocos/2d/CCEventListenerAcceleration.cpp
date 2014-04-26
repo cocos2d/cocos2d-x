@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCEventListenerAcceleration.h"
-#include "CCEventAcceleration.h"
+#include "2d/CCEventListenerAcceleration.h"
+#include "2d/CCEventAcceleration.h"
 
 NS_CC_BEGIN
 

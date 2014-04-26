@@ -27,7 +27,7 @@ THE SOFTWARE.
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #include "CCFileUtilsWin32.h"
-#include "platform/CCCommon.h"
+#include "2d/platform/CCCommon.h"
 #include <Shlobj.h>
 
 using namespace std;

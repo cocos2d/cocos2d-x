@@ -1,8 +1,8 @@
 #ifndef _CCB_CCPARTICLESYSTEMQUADLOADER_H_
 #define _CCB_CCPARTICLESYSTEMQUADLOADER_H_
 
-#include "CCRef.h"
-#include "CCParticleSystemQuad.h"
+#include "base/CCRef.h"
+#include "2d/CCParticleSystemQuad.h"
 
 #include "CCNodeLoader.h"
 

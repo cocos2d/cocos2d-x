@@ -1,7 +1,7 @@
 #ifndef __CCB_KEYFRAME_H__
 #define __CCB_KEYFRAME_H__
 
-#include "CCRef.h"
+#include "base/CCRef.h"
 #include "CCValue.h"
 
 

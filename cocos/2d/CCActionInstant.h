@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include <functional>
 
 #include "CCStdC.h"
-#include "CCAction.h"
+#include "2d/CCAction.h"
 
 NS_CC_BEGIN
 

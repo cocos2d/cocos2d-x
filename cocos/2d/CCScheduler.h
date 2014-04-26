@@ -32,9 +32,9 @@ THE SOFTWARE.
 #include <mutex>
 #include <set>
 
-#include "CCRef.h"
+#include "base/CCRef.h"
 #include "CCVector.h"
-#include "uthash.h"
+#include "2d/uthash.h"
 
 NS_CC_BEGIN
 

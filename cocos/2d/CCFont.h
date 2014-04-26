@@ -28,7 +28,7 @@
 
 #include <string>
 
-#include "CCLabel.h"
+#include "2d/CCLabel.h"
 
 NS_CC_BEGIN
 

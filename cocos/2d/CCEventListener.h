@@ -25,8 +25,8 @@
 #ifndef __CCEVENTLISTENER_H__
 #define __CCEVENTLISTENER_H__
 
-#include "CCPlatformMacros.h"
-#include "CCRef.h"
+#include "base/CCPlatformMacros.h"
+#include "base/CCRef.h"
 
 #include <functional>
 #include <string>

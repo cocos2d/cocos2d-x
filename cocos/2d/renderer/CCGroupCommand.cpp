@@ -23,9 +23,9 @@
  ****************************************************************************/
 
 
-#include "renderer/CCGroupCommand.h"
-#include "renderer/CCRenderer.h"
-#include "CCDirector.h"
+#include "2d/renderer/CCGroupCommand.h"
+#include "2d/renderer/CCRenderer.h"
+#include "2d/CCDirector.h"
 
 NS_CC_BEGIN
 

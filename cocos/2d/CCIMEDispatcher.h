@@ -26,7 +26,7 @@ THE SOFTWARE.
 #ifndef __CC_IME_DISPATCHER_H__
 #define __CC_IME_DISPATCHER_H__
 
-#include "CCIMEDelegate.h"
+#include "2d/CCIMEDelegate.h"
 
 NS_CC_BEGIN
 

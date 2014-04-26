@@ -27,24 +27,24 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCGL.h"
-#include "CCParticleSystemQuad.h"
-#include "CCSpriteFrame.h"
-#include "CCDirector.h"
+#include "2d/CCParticleSystemQuad.h"
+#include "2d/CCSpriteFrame.h"
+#include "2d/CCDirector.h"
 #include "CCParticleBatchNode.h"
-#include "CCTextureAtlas.h"
+#include "2d/CCTextureAtlas.h"
 #include "CCShaderCache.h"
 #include "ccGLStateCache.h"
-#include "CCGLProgram.h"
+#include "2d/CCGLProgram.h"
 #include "TransformUtils.h"
-#include "CCEventType.h"
+#include "2d/CCEventType.h"
 #include "CCConfiguration.h"
-#include "renderer/CCRenderer.h"
-#include "renderer/CCQuadCommand.h"
-#include "renderer/CCCustomCommand.h"
+#include "2d/renderer/CCRenderer.h"
+#include "2d/renderer/CCQuadCommand.h"
+#include "2d/renderer/CCCustomCommand.h"
 
 // extern
-#include "CCEventListenerCustom.h"
-#include "CCEventDispatcher.h"
+#include "2d/CCEventListenerCustom.h"
+#include "2d/CCEventDispatcher.h"
 
 NS_CC_BEGIN
 

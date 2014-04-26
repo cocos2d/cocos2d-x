@@ -25,12 +25,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCAnimationCache.h"
-#include "ccMacros.h"
+#include "2d/ccMacros.h"
 #include "CCAnimation.h"
-#include "CCSpriteFrame.h"
-#include "CCSpriteFrameCache.h"
+#include "2d/CCSpriteFrame.h"
+#include "2d/CCSpriteFrameCache.h"
 #include "deprecated/CCString.h"
-#include "platform/CCFileUtils.h"
+#include "2d/platform/CCFileUtils.h"
 
 using namespace std;
 

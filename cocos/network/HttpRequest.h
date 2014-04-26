@@ -28,8 +28,8 @@
 
 #include <string>
 #include <vector>
-#include "CCRef.h"
-#include "ccMacros.h"
+#include "base/CCRef.h"
+#include "2d/ccMacros.h"
 
 NS_CC_BEGIN
 

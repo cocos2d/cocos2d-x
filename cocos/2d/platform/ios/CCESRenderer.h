@@ -31,7 +31,7 @@
 #include "CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
-#include "CCPlatformMacros.h"
+#include "base/CCPlatformMacros.h"
 #import <QuartzCore/QuartzCore.h>
 
 #import <OpenGLES/EAGL.h>

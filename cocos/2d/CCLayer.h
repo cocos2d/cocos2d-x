@@ -28,15 +28,15 @@ THE SOFTWARE.
 #ifndef __CCLAYER_H__
 #define __CCLAYER_H__
 
-#include "CCNode.h"
-#include "CCProtocols.h"
-#include "CCEventTouch.h"
+#include "2d/CCNode.h"
+#include "2d/CCProtocols.h"
+#include "2d/CCEventTouch.h"
 #ifdef EMSCRIPTEN
 #include "CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
 
-#include "CCEventKeyboard.h"
-#include "renderer/CCCustomCommand.h"
+#include "2d/CCEventKeyboard.h"
+#include "2d/renderer/CCCustomCommand.h"
 
 #include "CCPhysicsWorld.h"
 

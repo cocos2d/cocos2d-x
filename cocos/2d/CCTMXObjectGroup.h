@@ -28,9 +28,9 @@ THE SOFTWARE.
 #ifndef __CCTMX_OBJECT_GROUP_H__
 #define __CCTMX_OBJECT_GROUP_H__
 
-#include "CCGeometry.h"
+#include "base/CCGeometry.h"
 #include "CCValue.h"
-#include "CCRef.h"
+#include "base/CCRef.h"
 
 NS_CC_BEGIN
 

@@ -26,8 +26,8 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCShaderCache.h"
-#include "CCGLProgram.h"
-#include "ccMacros.h"
+#include "2d/CCGLProgram.h"
+#include "2d/ccMacros.h"
 #include "ccShaders.h"
 
 NS_CC_BEGIN

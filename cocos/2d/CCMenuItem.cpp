@@ -25,11 +25,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCMenuItem.h"
-#include "CCActionInterval.h"
-#include "CCSprite.h"
+#include "2d/CCMenuItem.h"
+#include "2d/CCActionInterval.h"
+#include "2d/CCSprite.h"
 #include "CCLabelAtlas.h"
-#include "CCLabel.h"
+#include "2d/CCLabel.h"
 #include "CCScriptSupport.h"
 #include "deprecated/CCString.h"
 #include <stdarg.h>

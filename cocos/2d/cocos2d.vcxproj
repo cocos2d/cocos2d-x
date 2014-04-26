@@ -181,6 +181,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="..\base\CCValue.cpp" />
     <ClCompile Include="..\base\etc1.cpp" />
     <ClCompile Include="..\base\s3tc.cpp" />
+    <ClCompile Include="..\cocos2d.cpp" />
     <ClCompile Include="..\deprecated\CCArray.cpp" />
     <ClCompile Include="..\deprecated\CCDeprecated.cpp" />
     <ClCompile Include="..\deprecated\CCDictionary.cpp" />
@@ -300,7 +301,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="ccUTF8.cpp" />
     <ClCompile Include="ccUtils.cpp" />
     <ClCompile Include="CCVertex.cpp" />
-    <ClCompile Include="cocos2d.cpp" />
     <ClCompile Include="platform\CCGLViewProtocol.cpp" />
     <ClCompile Include="platform\CCFileUtils.cpp" />
     <ClCompile Include="platform\CCImage.cpp" />
@@ -346,6 +346,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="..\base\CCVector.h" />
     <ClInclude Include="..\base\etc1.h" />
     <ClInclude Include="..\base\s3tc.h" />
+    <ClInclude Include="..\cocos2d.h" />
     <ClInclude Include="..\deprecated\CCArray.h" />
     <ClInclude Include="..\deprecated\CCBool.h" />
     <ClInclude Include="..\deprecated\CCDeprecated.h" />
@@ -494,7 +495,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="ccUTF8.h" />
     <ClInclude Include="ccUtils.h" />
     <ClInclude Include="CCVertex.h" />
-    <ClInclude Include="cocos2d.h" />
     <ClInclude Include="platform\CCApplicationProtocol.h" />
     <ClInclude Include="platform\CCCommon.h" />
     <ClInclude Include="platform\CCDevice.h" />

@@ -23,7 +23,7 @@
 #ifndef __PHYSICSNODES_CCPHYSICSSPRITE_H__
 #define __PHYSICSNODES_CCPHYSICSSPRITE_H__
 
-#include "CCSprite.h"
+#include "2d/CCSprite.h"
 #include "extensions/ExtensionMacros.h"
 
 struct cpBody;

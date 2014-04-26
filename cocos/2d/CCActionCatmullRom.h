@@ -37,9 +37,9 @@
 
 #include <vector>
 
-#include "CCActionInterval.h"
-#include "CCNode.h"
-#include "CCGeometry.h"
+#include "2d/CCActionInterval.h"
+#include "2d/CCNode.h"
+#include "base/CCGeometry.h"
 
 NS_CC_BEGIN;
 

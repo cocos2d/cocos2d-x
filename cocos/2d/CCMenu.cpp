@@ -23,12 +23,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCMenu.h"
-#include "CCDirector.h"
+#include "2d/CCMenu.h"
+#include "2d/CCDirector.h"
 #include "CCApplication.h"
-#include "CCTouch.h"
+#include "2d/CCTouch.h"
 #include "CCStdC.h"
-#include "CCEventListenerTouch.h"
+#include "2d/CCEventListenerTouch.h"
 #include "deprecated/CCString.h"
 
 #include <vector>

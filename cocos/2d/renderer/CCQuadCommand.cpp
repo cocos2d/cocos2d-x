@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 
-#include "renderer/CCQuadCommand.h"
+#include "2d/renderer/CCQuadCommand.h"
 #include "ccGLStateCache.h"
 #include "xxhash.h"
 

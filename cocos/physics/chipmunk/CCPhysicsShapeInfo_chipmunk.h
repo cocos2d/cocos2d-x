@@ -25,13 +25,13 @@
 #ifndef __CCPHYSICS_SHAPE_INFO_CHIPMUNK_H__
 #define __CCPHYSICS_SHAPE_INFO_CHIPMUNK_H__
 
-#include "ccConfig.h"
+#include "2d/ccConfig.h"
 #if CC_USE_PHYSICS
 
 #include <vector>
 #include <unordered_map>
 #include "chipmunk.h"
-#include "CCPlatformMacros.h"
+#include "base/CCPlatformMacros.h"
 
 NS_CC_BEGIN
 

@@ -26,23 +26,23 @@ THE SOFTWARE.
 ****************************************************************************/
 
 // cocos2d
-#include "CCTextureAtlas.h"
+#include "2d/CCTextureAtlas.h"
 #include "CCTextureCache.h"
-#include "ccMacros.h"
-#include "CCGLProgram.h"
+#include "2d/ccMacros.h"
+#include "2d/CCGLProgram.h"
 #include "ccGLStateCache.h"
-#include "CCEventType.h"
-#include "CCDirector.h"
+#include "2d/CCEventType.h"
+#include "2d/CCDirector.h"
 #include "CCGL.h"
 #include "CCConfiguration.h"
-#include "renderer/CCRenderer.h"
+#include "2d/renderer/CCRenderer.h"
 
 // support
-#include "CCTexture2D.h"
+#include "2d/CCTexture2D.h"
 #include "deprecated/CCString.h"
 #include <stdlib.h>
-#include "CCEventDispatcher.h"
-#include "CCEventListenerCustom.h"
+#include "2d/CCEventDispatcher.h"
+#include "2d/CCEventListenerCustom.h"
 
 //According to some tests GL_TRIANGLE_STRIP is slower, MUCH slower. Probably I'm doing something very wrong
 

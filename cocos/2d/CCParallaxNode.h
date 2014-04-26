@@ -27,7 +27,7 @@ THE SOFTWARE.
 #ifndef __CCPARALLAX_NODE_H__
 #define __CCPARALLAX_NODE_H__
 
-#include "CCNode.h"
+#include "2d/CCNode.h"
 /*#include "ccArray.h"*/
 
 NS_CC_BEGIN

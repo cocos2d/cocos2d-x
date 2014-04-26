@@ -23,7 +23,7 @@
 
  ****************************************************************************/
 
-#include "CCEventMouse.h"
+#include "2d/CCEventMouse.h"
 
 NS_CC_BEGIN
 

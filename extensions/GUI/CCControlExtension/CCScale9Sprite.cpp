@@ -26,9 +26,9 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCScale9Sprite.h"
-#include "CCPlatformMacros.h"
-#include "CCSprite.h"
-#include "CCSpriteFrameCache.h"
+#include "base/CCPlatformMacros.h"
+#include "2d/CCSprite.h"
+#include "2d/CCSpriteFrameCache.h"
 
 NS_CC_EXT_BEGIN
 

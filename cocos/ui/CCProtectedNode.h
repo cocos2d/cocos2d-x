@@ -30,7 +30,7 @@
 #define __CPROTECTEDCNODE_H__
 
 
-#include "CCNode.h"
+#include "2d/CCNode.h"
 
 NS_CC_BEGIN
 

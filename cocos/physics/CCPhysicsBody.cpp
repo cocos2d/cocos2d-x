@@ -30,7 +30,7 @@
 
 #include "chipmunk.h"
 
-#include "CCLayer.h"
+#include "2d/CCLayer.h"
 
 #include "CCPhysicsShape.h"
 #include "CCPhysicsJoint.h"

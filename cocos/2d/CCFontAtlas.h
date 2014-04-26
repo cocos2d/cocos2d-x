@@ -26,8 +26,8 @@
 #define _CCFontAtlas_h_
 
 #include <unordered_map>
-#include "CCPlatformMacros.h"
-#include "CCRef.h"
+#include "base/CCPlatformMacros.h"
+#include "base/CCRef.h"
 #include "CCStdC.h"
 
 NS_CC_BEGIN

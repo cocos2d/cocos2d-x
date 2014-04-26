@@ -26,15 +26,15 @@ THE SOFTWARE.
 #include "CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
-#include "platform/CCDevice.h"
+#include "2d/platform/CCDevice.h"
 #include <string.h>
 #include <android/log.h>
 #include <jni.h>
-#include "ccTypes.h"
+#include "2d/ccTypes.h"
 #include "jni/DPIJni.h"
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 #include "jni/JniHelper.h"
-#include "platform/CCFileUtils.h"
+#include "2d/platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 

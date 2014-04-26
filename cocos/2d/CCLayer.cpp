@@ -26,25 +26,25 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include <stdarg.h>
-#include "CCLayer.h"
-#include "CCDirector.h"
+#include "2d/CCLayer.h"
+#include "2d/CCDirector.h"
 #include "CCScriptSupport.h"
 #include "CCShaderCache.h"
-#include "CCGLProgram.h"
+#include "2d/CCGLProgram.h"
 #include "ccGLStateCache.h"
 #include "TransformUtils.h"
 // extern
-#include "CCEventDispatcher.h"
-#include "CCEventListenerTouch.h"
-#include "CCEventTouch.h"
-#include "CCEventKeyboard.h"
-#include "CCEventListenerKeyboard.h"
-#include "CCEventAcceleration.h"
-#include "CCEventListenerAcceleration.h"
-#include "platform/CCDevice.h"
+#include "2d/CCEventDispatcher.h"
+#include "2d/CCEventListenerTouch.h"
+#include "2d/CCEventTouch.h"
+#include "2d/CCEventKeyboard.h"
+#include "2d/CCEventListenerKeyboard.h"
+#include "2d/CCEventAcceleration.h"
+#include "2d/CCEventListenerAcceleration.h"
+#include "2d/platform/CCDevice.h"
 #include "CCScene.h"
-#include "renderer/CCCustomCommand.h"
-#include "renderer/CCRenderer.h"
+#include "2d/renderer/CCCustomCommand.h"
+#include "2d/renderer/CCRenderer.h"
 #include "deprecated/CCString.h"
 
 #if CC_USE_PHYSICS

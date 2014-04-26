@@ -32,8 +32,8 @@ extern "C" {
 }
 #endif
 
-#include "CCNode.h"
-#include "renderer/CCCustomCommand.h"
+#include "2d/CCNode.h"
+#include "2d/renderer/CCCustomCommand.h"
 
 class GLNode:public cocos2d::Node
 {

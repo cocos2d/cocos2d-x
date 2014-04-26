@@ -35,7 +35,6 @@
 #include <io.h>
 #include <WS2tcpip.h>
 #endif
-#include "base64.h"
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
 #include "CCWinRTUtils.h"

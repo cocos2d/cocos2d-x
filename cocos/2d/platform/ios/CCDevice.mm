@@ -28,10 +28,10 @@
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
 #include "CCDevice.h"
-#include "ccTypes.h"
-#include "CCEventDispatcher.h"
-#include "CCEventAcceleration.h"
-#include "CCDirector.h"
+#include "2d/ccTypes.h"
+#include "2d/CCEventDispatcher.h"
+#include "2d/CCEventAcceleration.h"
+#include "2d/CCDirector.h"
 #import <UIKit/UIKit.h>
 
 // Accelerometer

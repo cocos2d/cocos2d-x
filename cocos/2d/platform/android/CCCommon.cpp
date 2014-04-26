@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
-#include "platform/CCCommon.h"
+#include "2d/platform/CCCommon.h"
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 #include <android/log.h>
 #include <stdio.h>

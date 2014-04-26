@@ -26,7 +26,7 @@
 #include "CCDictionary.h"
 #include "deprecated/CCString.h"
 #include "CCInteger.h"
-#include "platform/CCFileUtils.h"
+#include "2d/platform/CCFileUtils.h"
 #include "deprecated/CCString.h"
 #include "CCBool.h"
 #include "CCInteger.h"

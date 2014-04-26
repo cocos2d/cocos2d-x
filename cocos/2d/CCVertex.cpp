@@ -25,7 +25,7 @@
  ****************************************************************************/
 
 #include "CCVertex.h"
-#include "ccMacros.h"
+#include "2d/ccMacros.h"
 
 NS_CC_BEGIN
 

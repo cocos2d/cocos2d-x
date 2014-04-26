@@ -29,8 +29,8 @@ THE SOFTWARE.
 #include <math.h>
 #include <functional>
 
-#include "CCPlatformMacros.h"
-#include "ccMacros.h"
+#include "base/CCPlatformMacros.h"
+#include "2d/ccMacros.h"
 #include "math/CCMath.h"
 
 NS_CC_BEGIN

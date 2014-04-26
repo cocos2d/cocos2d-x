@@ -25,9 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCActionInstant.h"
-#include "CCNode.h"
-#include "CCSprite.h"
+#include "2d/CCActionInstant.h"
+#include "2d/CCNode.h"
+#include "2d/CCSprite.h"
 #include "CCScriptSupport.h"
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))

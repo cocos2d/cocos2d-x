@@ -25,11 +25,11 @@
 #ifndef __CCPHYSICS_JOINT_H__
 #define __CCPHYSICS_JOINT_H__
 
-#include "ccConfig.h"
+#include "2d/ccConfig.h"
 #if CC_USE_PHYSICS
 
-#include "CCRef.h"
-#include "CCGeometry.h"
+#include "base/CCRef.h"
+#include "base/CCGeometry.h"
 
 NS_CC_BEGIN
 

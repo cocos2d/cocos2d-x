@@ -26,11 +26,11 @@ THE SOFTWARE.
 #ifndef __EFFECTS_CCGRID_H__
 #define __EFFECTS_CCGRID_H__
 
-#include "CCRef.h"
-#include "CCNode.h"
-#include "ccTypes.h"
-#include "CCTexture2D.h"
-#include "CCDirector.h"
+#include "base/CCRef.h"
+#include "2d/CCNode.h"
+#include "2d/ccTypes.h"
+#include "2d/CCTexture2D.h"
+#include "2d/CCDirector.h"
 #ifdef EMSCRIPTEN
 #include "CCGLBufferedNode.h"
 #endif // EMSCRIPTEN

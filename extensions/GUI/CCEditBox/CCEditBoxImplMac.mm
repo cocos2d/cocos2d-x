@@ -24,7 +24,7 @@
  ****************************************************************************/
 
 #include "CCEditBoxImplMac.h"
-#include "CCDirector.h"
+#include "2d/CCDirector.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 

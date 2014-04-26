@@ -29,8 +29,8 @@
 #include "CCFileUtils.h"
 #include <string>
 #include <vector>
-#include "CCPlatformMacros.h"
-#include "ccTypes.h"
+#include "base/CCPlatformMacros.h"
+#include "2d/ccTypes.h"
 
 NS_CC_BEGIN
 

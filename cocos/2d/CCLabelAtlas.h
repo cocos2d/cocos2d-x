@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 #include "CCAtlasNode.h"
 #if CC_LABELATLAS_DEBUG_DRAW
-#include "renderer/CCCustomCommand.h"
+#include "2d/renderer/CCCustomCommand.h"
 #endif
 NS_CC_BEGIN
 

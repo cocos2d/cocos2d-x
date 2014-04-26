@@ -28,8 +28,8 @@ THE SOFTWARE.
 
 #include <string>
 #include <chrono>
-#include "ccConfig.h"
-#include "CCRef.h"
+#include "2d/ccConfig.h"
+#include "base/CCRef.h"
 #include "CCMap.h"
 
 NS_CC_BEGIN

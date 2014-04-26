@@ -28,9 +28,9 @@ THE SOFTWARE.
 #ifndef __CCTEXTURE_ATLAS_H__
 #define __CCTEXTURE_ATLAS_H__
 
-#include "ccTypes.h"
-#include "CCRef.h"
-#include "ccConfig.h"
+#include "2d/ccTypes.h"
+#include "base/CCRef.h"
+#include "2d/ccConfig.h"
 #include <string>
 
 NS_CC_BEGIN

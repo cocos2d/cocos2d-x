@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
-#include "CCPlatformMacros.h"
+#include "base/CCPlatformMacros.h"
 
 #include <float.h>
 #include <math.h>

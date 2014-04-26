@@ -2,8 +2,8 @@
 #define VECTOR2_H_
 
 #include "CCMathBase.h"
-#include "CCPlatformMacros.h"
-#include "ccMacros.h"
+#include "base/CCPlatformMacros.h"
+#include "2d/ccMacros.h"
 
 NS_CC_MATH_BEGIN
 
