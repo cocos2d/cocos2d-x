@@ -60,6 +60,7 @@ THE SOFTWARE.
 // cocoa
 #include "base/CCAffineTransform.h"
 #include "base/CCRef.h"
+#include "base/CCRefPtr.h"
 #include "base/CCVector.h"
 #include "base/CCMap.h"
 #include "base/CCGeometry.h"

@@ -38,7 +38,7 @@ THE SOFTWARE.
 #include "2d/CCEventKeyboard.h"
 #include "2d/renderer/CCCustomCommand.h"
 
-#include "CCPhysicsWorld.h"
+#include "physics/CCPhysicsWorld.h"
 
 NS_CC_BEGIN
 

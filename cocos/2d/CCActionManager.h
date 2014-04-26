@@ -30,7 +30,7 @@ THE SOFTWARE.
 #define __ACTION_CCACTION_MANAGER_H__
 
 #include "2d/CCAction.h"
-#include "CCVector.h"
+#include "base/CCVector.h"
 #include "base/CCRef.h"
 
 NS_CC_BEGIN

@@ -8,7 +8,6 @@
 
 #include "NewEventDispatcherTest.h"
 #include "testResource.h"
-#include "CCAutoreleasePool.h"
 
 namespace {
     

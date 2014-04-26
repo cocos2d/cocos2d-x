@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 #include "2d/CCDirector.h"
 #include "2d/CCGLProgram.h"
-#include "ccGLStateCache.h"
+#include "2d/ccGLStateCache.h"
 #include "2d/ccMacros.h"
 #include "2d/platform/CCFileUtils.h"
 #include "2d/uthash.h"

@@ -41,7 +41,7 @@ THE SOFTWARE.
 #include "base/CCPlatformMacros.h"
 #include "2d/CCDirector.h"
 #include "2d/CCGLProgram.h"
-#include "ccGLStateCache.h"
+#include "2d/ccGLStateCache.h"
 #include "CCShaderCache.h"
 #include "2d/platform/CCDevice.h"
 #include "deprecated/CCString.h"

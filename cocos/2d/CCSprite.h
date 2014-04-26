@@ -36,7 +36,7 @@ THE SOFTWARE.
 #ifdef EMSCRIPTEN
 #include "CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
-#include "CCPhysicsBody.h"
+#include "physics/CCPhysicsBody.h"
 #include "2d/renderer/CCQuadCommand.h"
 #include "2d/renderer/CCCustomCommand.h"
 

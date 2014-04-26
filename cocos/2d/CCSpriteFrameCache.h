@@ -38,8 +38,8 @@ THE SOFTWARE.
 #include "2d/CCSpriteFrame.h"
 #include "2d/CCTexture2D.h"
 #include "base/CCRef.h"
-#include "CCValue.h"
-#include "CCMap.h"
+#include "base/CCValue.h"
+#include "base/CCMap.h"
 
 #include <set>
 #include <string>

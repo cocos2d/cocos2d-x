@@ -1,5 +1,4 @@
 #include "RefPtrTest.h"
-#include "CCRefPtr.h"
 
 void RefPtrTest::onEnter()
 {

@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCComponent.h"
-#include "CCScriptSupport.h"
+#include "2d/CCScriptSupport.h"
 
 
 NS_CC_BEGIN

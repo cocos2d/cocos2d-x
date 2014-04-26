@@ -38,7 +38,7 @@ THE SOFTWARE.
 #include "CCScheduler.h"
 #include "2d/CCTouch.h"
 #include "2d/CCActionManager.h"
-#include "CCScriptSupport.h"
+#include "2d/CCScriptSupport.h"
 #include "2d/CCGLProgram.h"
 #include "2d/CCEventDispatcher.h"
 #include "2d/CCEvent.h"
@@ -46,7 +46,7 @@ THE SOFTWARE.
 #include "2d/CCLayer.h"
 
 #if CC_USE_PHYSICS
-#include "CCPhysicsBody.h"
+#include "physics/CCPhysicsBody.h"
 #endif
 
 // externals

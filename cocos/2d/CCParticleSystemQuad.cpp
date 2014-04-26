@@ -33,7 +33,7 @@ THE SOFTWARE.
 #include "CCParticleBatchNode.h"
 #include "2d/CCTextureAtlas.h"
 #include "CCShaderCache.h"
-#include "ccGLStateCache.h"
+#include "2d/ccGLStateCache.h"
 #include "2d/CCGLProgram.h"
 #include "TransformUtils.h"
 #include "2d/CCEventType.h"

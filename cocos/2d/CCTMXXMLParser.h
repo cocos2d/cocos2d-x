@@ -31,8 +31,8 @@ THE SOFTWARE.
 
 #include "base/CCGeometry.h"
 #include "2d/platform/CCSAXParser.h"
-#include "CCVector.h"
-#include "CCValue.h"
+#include "base/CCVector.h"
+#include "base/CCValue.h"
 
 #include <string>
 
