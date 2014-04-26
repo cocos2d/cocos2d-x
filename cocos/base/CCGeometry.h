@@ -31,7 +31,7 @@ THE SOFTWARE.
 
 #include "CCPlatformMacros.h"
 #include "ccMacros.h"
-#include "CCMath.h"
+#include "math/CCMath.h"
 
 NS_CC_BEGIN
 

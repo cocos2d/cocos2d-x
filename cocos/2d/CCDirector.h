@@ -37,7 +37,7 @@ THE SOFTWARE.
 #include "CCGL.h"
 #include "CCLabelAtlas.h"
 #include <stack>
-#include "CCMath.h"
+#include "math/CCMath.h"
 
 NS_CC_BEGIN
 

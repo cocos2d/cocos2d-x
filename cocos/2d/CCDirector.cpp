@@ -61,7 +61,7 @@ THE SOFTWARE.
 #include "renderer/CCRenderer.h"
 #include "CCConsole.h"
 
-#include "CCMath.h"
+#include "math/CCMath.h"
 
 /**
  Position of the FPS

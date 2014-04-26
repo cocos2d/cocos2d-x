@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "cocostudio/CCDecorativeDisplay.h"
 #include "cocostudio/CCDisplayManager.h"
 #include "CCNode.h"
-#include "CCMath.h"
+#include "math/CCMath.h"
 
 namespace cocostudio {
 

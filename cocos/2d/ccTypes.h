@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include <string>
 #include "CCGeometry.h"
 #include "CCGL.h"
-#include "CCMath.h"
+#include "math/CCMath.h"
 
 NS_CC_BEGIN
 

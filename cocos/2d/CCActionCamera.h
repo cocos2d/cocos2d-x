@@ -29,7 +29,7 @@ THE SOFTWARE.
 #define __CCCAMERA_ACTION_H__
 
 #include "CCActionInterval.h"
-#include "CCMath.h"
+#include "math/CCMath.h"
 
 NS_CC_BEGIN
 

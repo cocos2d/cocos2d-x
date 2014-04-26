@@ -43,7 +43,7 @@ THE SOFTWARE.
 
 #include "ccTypes.h"
 #include "ccMacros.h"
-#include "CCMath.h"
+#include "math/CCMath.h"
 
 /**
  @file

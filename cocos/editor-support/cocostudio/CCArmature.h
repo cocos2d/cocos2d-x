@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "cocostudio/CCArmatureAnimation.h"
 #include "cocostudio/CCSpriteFrameCacheHelper.h"
 #include "cocostudio/CCArmatureDataManager.h"
-#include "CCMath.h"
+#include "math/CCMath.h"
 
 class b2Body;
 struct cpBody;
