@@ -24,7 +24,7 @@ bool UIButtonTest_Editor::init()
         _touchGroup->addChild(_layout);
         Size screenSize = CCDirector::getInstance()->getWinSize();
         Size rootSize = _layout->getSize();
-        _touchGroup->setPosition(Point((screenSize.width - rootSize.width) / 2,
+        _touchGroup->setPosition(Vector2((screenSize.width - rootSize.width) / 2,
                                        (screenSize.height - rootSize.height) / 2));
         
         Layout* root = static_cast<Layout*>(_layout->getChildByName("root_Panel"));
@@ -47,7 +47,7 @@ bool UIButtonTest_Editor::init()
         _displayValueLabel->setFontName("fonts/Marker Felt.ttf");
         _displayValueLabel->setFontSize(30);
         _displayValueLabel->setText("No event");
-        _displayValueLabel->setPosition(Point(_layout->getSize().width / 2,
+        _displayValueLabel->setPosition(Vector2(_layout->getSize().width / 2,
                                               _layout->getSize().height - _displayValueLabel->getSize().height * 1.75f));
         _touchGroup->addChild(_displayValueLabel);
         

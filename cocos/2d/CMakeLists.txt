@@ -135,7 +135,6 @@ set(COCOS2D_SRC
   platform/CCFileUtils.cpp
   platform/CCImage.cpp
   renderer/CCCustomCommand.cpp
-  renderer/CCFrustum.cpp
   renderer/CCGroupCommand.cpp
   renderer/CCMaterialManager.cpp
   renderer/CCQuadCommand.cpp
@@ -214,9 +213,9 @@ endif()
 
 target_link_libraries(cocos2d
   cocosbase
+  cocosmath
   chipmunk_static
   tinyxml2
-  kazmath
   unzip
   xxhash
   ${COCOS_LINK}

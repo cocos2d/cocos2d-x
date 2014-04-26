@@ -25,7 +25,7 @@ enum
     kItemTagBasic = 5432,
 };
 
-static Point s_tCurPos = Point::ZERO;
+static Vector2 s_tCurPos = Vector2::ZERO;
 
 struct {
 	const char *test_name;
@@ -61,7 +61,7 @@ void BugsTestMainLayer::onEnter()
     for (int i = 0; i < g_maxitems; ++i)
     {
         auto pItem = MenuItemFont::create(g_bugs[i].test_name, g_bugs[i].callback);
-        pItem->setPosition(Point(s.width / 2, s.height - (i + 1) * LINE_SPACE));
+        pItem->setPosition(Vector2(s.width / 2, s.height - (i + 1) * LINE_SPACE));
         _itmeMenu->addChild(pItem, kItemTagBasic + i);
     }
 
@@ -86,17 +86,17 @@ void BugsTestMainLayer::onTouchesMoved(const std::vector<Touch*>& touches, Event
     float nMoveY = touchLocation.y - _beginPos.y;
 
     auto curPos  = _itmeMenu->getPosition();
-    auto nextPos = Point(curPos.x, curPos.y + nMoveY);
+    auto nextPos = Vector2(curPos.x, curPos.y + nMoveY);
     auto winSize = Director::getInstance()->getWinSize();
     if (nextPos.y < 0.0f)
     {
-        _itmeMenu->setPosition(Point::ZERO);
+        _itmeMenu->setPosition(Vector2::ZERO);
         return;
     }
 
     if (nextPos.y > ((g_maxitems + 1)* LINE_SPACE - winSize.height))
     {
-        _itmeMenu->setPosition(Point(0, ((g_maxitems + 1)* LINE_SPACE - winSize.height)));
+        _itmeMenu->setPosition(Vector2(0, ((g_maxitems + 1)* LINE_SPACE - winSize.height)));
         return;
     }
 
@@ -117,9 +117,9 @@ void BugsTestBaseLayer::onEnter()
     MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(24);
     auto pMainItem = MenuItemFont::create("Back", CC_CALLBACK_1(BugsTestBaseLayer::backCallback, this));
-    pMainItem->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
+    pMainItem->setPosition(Vector2(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
     auto menu = Menu::create(pMainItem, NULL);
-    menu->setPosition( Point::ZERO );
+    menu->setPosition( Vector2::ZERO );
     addChild(menu);
 }
 

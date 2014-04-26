@@ -228,7 +228,7 @@ class CC_DLL Place : public ActionInstant //<NSCopying>
 public:
 
     /** creates a Place action with a position */
-    static Place * create(const Point& pos);
+    static Place * create(const Vector2& pos);
 
     //
     // Overrides
@@ -242,10 +242,10 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~Place(){}
 
     /** Initializes a Place action with a position */
-    bool initWithPosition(const Point& pos);
+    bool initWithPosition(const Vector2& pos);
 
 protected:
-    Point _position;
+    Vector2 _position;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Place);

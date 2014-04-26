@@ -125,7 +125,7 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
     // Title
     auto label = Label::createWithTTF(title().c_str(), "fonts/arial.ttf", 32);
     addChild(label, 1);
-    label->setPosition(Point(s.width/2, s.height-50));
+    label->setPosition(Vector2(s.width/2, s.height-50));
 
     // Subtitle
     std::string strSubTitle = subtitle();
@@ -133,7 +133,7 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
     {
         auto l = Label::createWithTTF(strSubTitle.c_str(), "fonts/Thonburi.ttf", 16);
         addChild(l, 1);
-        l->setPosition(Point(s.width/2, s.height-80));
+        l->setPosition(Vector2(s.width/2, s.height-80));
     }
 
     lastRenderedCount = 0;
@@ -168,12 +168,12 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
 
     auto menu = Menu::create(decrease, increase, NULL);
     menu->alignItemsHorizontally();
-    menu->setPosition(Point(s.width/2, s.height/2+15));
+    menu->setPosition(Vector2(s.width/2, s.height/2+15));
     addChild(menu, 1);
 
     auto infoLabel = Label::createWithTTF("0 nodes", "fonts/Marker Felt.ttf", 30);
     infoLabel->setColor(Color3B(0,200,20));
-    infoLabel->setPosition(Point(s.width/2, s.height/2-15));
+    infoLabel->setPosition(Vector2(s.width/2, s.height/2-15));
     addChild(infoLabel, 1, kTagInfoLayer);
 
     auto menuLayer = new NodeChildrenMenuLayer(true, MAX_LAYER, g_curCase);
@@ -240,7 +240,7 @@ void IterateSpriteSheet::updateQuantityOfNodes()
             auto sprite = Sprite::createWithTexture(batchNode->getTexture(), Rect(0, 0, 32, 32));
             batchNode->addChild(sprite);
             sprite->setVisible(false);
-            sprite->setPosition(Point(-1000,-1000));
+            sprite->setPosition(Vector2(-1000,-1000));
         }
     }
 
@@ -450,7 +450,7 @@ void AddRemoveSpriteSheet::updateQuantityOfNodes()
         {
             auto sprite = Sprite::createWithTexture(batchNode->getTexture(), Rect(0, 0, 32, 32));
             batchNode->addChild(sprite);
-            sprite->setPosition(Point( CCRANDOM_0_1()*s.width, CCRANDOM_0_1()*s.height));
+            sprite->setPosition(Vector2( CCRANDOM_0_1()*s.width, CCRANDOM_0_1()*s.height));
             sprite->setVisible(false);
         }
     }
@@ -926,7 +926,7 @@ void VisitSceneGraph::updateQuantityOfNodes()
             auto node = Node::create();
             this->addChild(node);
             node->setVisible(true);
-            node->setPosition(Point(-1000,-1000));
+            node->setPosition(Vector2(-1000,-1000));
             node->setTag(1000 + currentQuantityOfNodes + i );
         }
     }

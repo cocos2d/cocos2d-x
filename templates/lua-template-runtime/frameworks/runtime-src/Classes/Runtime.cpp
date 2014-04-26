@@ -92,15 +92,15 @@ class VisibleRect
 public:
     static Rect getVisibleRect();
     
-    static Point left();
-    static Point right();
-    static Point top();
-    static Point bottom();
-    static Point center();
-    static Point leftTop();
-    static Point rightTop();
-    static Point leftBottom();
-    static Point rightBottom();
+    static Vector2 left();
+    static Vector2 right();
+    static Vector2 top();
+    static Vector2 bottom();
+    static Vector2 center();
+    static Vector2 leftTop();
+    static Vector2 rightTop();
+    static Vector2 leftBottom();
+    static Vector2 rightBottom();
 private:
     static void lazyInit();
     static Rect s_visibleRect;
@@ -121,58 +121,58 @@ Rect VisibleRect::getVisibleRect()
     return s_visibleRect;
 }
 
-Point VisibleRect::left()
+Vector2 VisibleRect::left()
 {
     lazyInit();
-    return Point(s_visibleRect.origin.x, s_visibleRect.origin.y+s_visibleRect.size.height/2);
+    return Vector2(s_visibleRect.origin.x, s_visibleRect.origin.y+s_visibleRect.size.height/2);
 }
 
-Point VisibleRect::right()
+Vector2 VisibleRect::right()
 {
     lazyInit();
-    return Point(s_visibleRect.origin.x+s_visibleRect.size.width, s_visibleRect.origin.y+s_visibleRect.size.height/2);
+    return Vector2(s_visibleRect.origin.x+s_visibleRect.size.width, s_visibleRect.origin.y+s_visibleRect.size.height/2);
 }
 
-Point VisibleRect::top()
+Vector2 VisibleRect::top()
 {
     lazyInit();
-    return Point(s_visibleRect.origin.x+s_visibleRect.size.width/2, s_visibleRect.origin.y+s_visibleRect.size.height);
+    return Vector2(s_visibleRect.origin.x+s_visibleRect.size.width/2, s_visibleRect.origin.y+s_visibleRect.size.height);
 }
 
-Point VisibleRect::bottom()
+Vector2 VisibleRect::bottom()
 {
     lazyInit();
-    return Point(s_visibleRect.origin.x+s_visibleRect.size.width/2, s_visibleRect.origin.y);
+    return Vector2(s_visibleRect.origin.x+s_visibleRect.size.width/2, s_visibleRect.origin.y);
 }
 
-Point VisibleRect::center()
+Vector2 VisibleRect::center()
 {
     lazyInit();
-    return Point(s_visibleRect.origin.x+s_visibleRect.size.width/2, s_visibleRect.origin.y+s_visibleRect.size.height/2);
+    return Vector2(s_visibleRect.origin.x+s_visibleRect.size.width/2, s_visibleRect.origin.y+s_visibleRect.size.height/2);
 }
 
-Point VisibleRect::leftTop()
+Vector2 VisibleRect::leftTop()
 {
     lazyInit();
-    return Point(s_visibleRect.origin.x, s_visibleRect.origin.y+s_visibleRect.size.height);
+    return Vector2(s_visibleRect.origin.x, s_visibleRect.origin.y+s_visibleRect.size.height);
 }
 
-Point VisibleRect::rightTop()
+Vector2 VisibleRect::rightTop()
 {
     lazyInit();
-    return Point(s_visibleRect.origin.x+s_visibleRect.size.width, s_visibleRect.origin.y+s_visibleRect.size.height);
+    return Vector2(s_visibleRect.origin.x+s_visibleRect.size.width, s_visibleRect.origin.y+s_visibleRect.size.height);
 }
 
-Point VisibleRect::leftBottom()
+Vector2 VisibleRect::leftBottom()
 {
     lazyInit();
     return s_visibleRect.origin;
 }
 
-Point VisibleRect::rightBottom()
+Vector2 VisibleRect::rightBottom()
 {
     lazyInit();
-    return Point(s_visibleRect.origin.x+s_visibleRect.size.width, s_visibleRect.origin.y);
+    return Vector2(s_visibleRect.origin.x+s_visibleRect.size.width, s_visibleRect.origin.y);
 }
 
 class ConnectWaitLayer: public Layer
@@ -186,7 +186,7 @@ public:
         sprintf(szIPAddress, "LocalIP: %s",strip.c_str());
         auto label = LabelTTF::create(szIPAddress, "Arial", 24);
         addChild(label, 9999);
-        label->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 30) );
+        label->setPosition( Vector2(VisibleRect::center().x, VisibleRect::top().y - 30) );
         
         string strShowMsg ="";
         if (CC_PLATFORM_WIN32 == CC_TARGET_PLATFORM || CC_PLATFORM_MAC == CC_TARGET_PLATFORM)
@@ -198,15 +198,15 @@ public:
         }		
         auto labelwait = LabelTTF::create(strShowMsg.c_str(), "Arial", 22);
         addChild(labelwait, 10000);
-        labelwait->setPosition( Point(VisibleRect::center().x, VisibleRect::center().y) );
+        labelwait->setPosition( Vector2(VisibleRect::center().x, VisibleRect::center().y) );
         
         
         auto labelPlay = LabelTTF::create("play", "Arial", 20);
         auto menuItem = MenuItemLabel::create(labelPlay, CC_CALLBACK_1(ConnectWaitLayer::playerCallback, this));
         auto menu = Menu::create(menuItem, NULL);
         
-        menu->setPosition( Point::ZERO );
-        menuItem->setPosition( Point( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
+        menu->setPosition( Vector2::ZERO );
+        menuItem->setPosition( Vector2( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
         addChild(menu, 1);
     }
     

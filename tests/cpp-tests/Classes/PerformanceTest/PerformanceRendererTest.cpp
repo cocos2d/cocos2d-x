@@ -39,8 +39,8 @@ void RenderTestLayer::onEnter()
     
     addChild(map,-1);
     
-    //map->setAnchorPoint( Point(0, 0) );
-    //map->setPosition( Point(-20,-200) );
+    //map->setAnchorPoint( Vector2(0, 0) );
+    //map->setPosition( Vector2(-20,-200) );
 }
 
 void RenderTestLayer::showCurrentTest()

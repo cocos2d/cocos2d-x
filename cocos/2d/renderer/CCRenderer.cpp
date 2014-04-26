@@ -38,8 +38,6 @@
 #include "CCEventListenerCustom.h"
 #include "CCEventType.h"
 
-#include "kazmath/kazmath.h"
-
 NS_CC_BEGIN
 
 // helper
@@ -373,26 +371,25 @@ void Renderer::clean()
     _lastMaterialID = 0;
 }
 
-void Renderer::convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const kmMat4& modelView)
+void Renderer::convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const Matrix& modelView)
 {
 //    kmMat4 matrixP, mvp;
 //    kmGLGetMatrix(KM_GL_PROJECTION, &matrixP);
 //    kmMat4Multiply(&mvp, &matrixP, &modelView);
-
-    for(ssize_t i=0; i<quantity; ++i) {
+    for(ssize_t i=0; i<quantity; ++i)
+    {
         V3F_C4B_T2F_Quad *q = &quads[i];
+        Vector3 *vec1 = (Vector3*)&q->bl.vertices;
+        modelView.transformPoint(vec1);
 
-        kmVec3 *vec1 = (kmVec3*)&q->bl.vertices;
-        kmVec3Transform(vec1, vec1, &modelView);
+        Vector3 *vec2 = (Vector3*)&q->br.vertices;
+        modelView.transformPoint(vec2);
 
-        kmVec3 *vec2 = (kmVec3*)&q->br.vertices;
-        kmVec3Transform(vec2, vec2, &modelView);
+        Vector3 *vec3 = (Vector3*)&q->tr.vertices;
+        modelView.transformPoint(vec3);
 
-        kmVec3 *vec3 = (kmVec3*)&q->tr.vertices;
-        kmVec3Transform(vec3, vec3, &modelView);
-
-        kmVec3 *vec4 = (kmVec3*)&q->tl.vertices;
-        kmVec3Transform(vec4, vec4, &modelView);
+        Vector3 *vec4 = (Vector3*)&q->tl.vertices;
+        modelView.transformPoint(vec4);
     }
 }
 
@@ -508,7 +505,7 @@ void Renderer::flush()
 
 // helpers
 
-bool Renderer::checkVisibility(const kmMat4 &transform, const Size &size)
+bool Renderer::checkVisibility(const Matrix &transform, const Size &size)
 {
     // half size of the screen
     Size screen_half = Director::getInstance()->getWinSize();
@@ -518,17 +515,17 @@ bool Renderer::checkVisibility(const kmMat4 &transform, const Size &size)
     float hSizeX = size.width/2;
     float hSizeY = size.height/2;
 
-    kmVec4 v4world, v4local;
-    kmVec4Fill(&v4local, hSizeX, hSizeY, 0, 1);
-    kmVec4MultiplyMat4(&v4world, &v4local, &transform);
+    Vector4 v4world, v4local;
+    v4local.set(hSizeX, hSizeY, 0, 1);
+    transform.transformVector(v4local, &v4world);
 
     // center of screen is (0,0)
     v4world.x -= screen_half.width;
     v4world.y -= screen_half.height;
 
     // convert content size to world coordinates
-    float wshw = std::max(fabsf(hSizeX * transform.mat[0] + hSizeY * transform.mat[4]), fabsf(hSizeX * transform.mat[0] - hSizeY * transform.mat[4]));
-    float wshh = std::max(fabsf(hSizeX * transform.mat[1] + hSizeY * transform.mat[5]), fabsf(hSizeX * transform.mat[1] - hSizeY * transform.mat[5]));
+    float wshw = std::max(fabsf(hSizeX * transform.m[0] + hSizeY * transform.m[4]), fabsf(hSizeX * transform.m[0] - hSizeY * transform.m[4]));
+    float wshh = std::max(fabsf(hSizeX * transform.m[1] + hSizeY * transform.m[5]), fabsf(hSizeX * transform.m[1] - hSizeY * transform.m[5]));
 
     // compare if it in the positive quadrant of the screen
     float tmpx = (fabsf(v4world.x)-wshw);

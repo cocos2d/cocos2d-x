@@ -23,14 +23,14 @@ bool UISliderTest::init()
         
         // Add a label in which the slider alert will be displayed
         _displayValueLabel = Text::create("Move the slider thumb","Move the slider thumb",32);
-        _displayValueLabel->setAnchorPoint(Point(0.5f, -1));
-        _displayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        _displayValueLabel->setAnchorPoint(Vector2(0.5f, -1));
+        _displayValueLabel->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
         Text* alert = Text::create("Slider","fonts/Marker Felt.ttf",30);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75f));
+        alert->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75f));
         _uiLayer->addChild(alert);        
         
         // Create the slider
@@ -38,7 +38,7 @@ bool UISliderTest::init()
         slider->loadBarTexture("cocosui/sliderTrack.png");
         slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
         slider->loadProgressBarTexture("cocosui/sliderProgress.png");
-        slider->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f/* + slider->getSize().height * 2.0f*/));
+        slider->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f/* + slider->getSize().height * 2.0f*/));
         slider->addEventListenerSlider(this, sliderpercentchangedselector(UISliderTest::sliderEvent));
         _uiLayer->addChild(slider);
 
@@ -78,14 +78,14 @@ bool UISliderTest_Scale9::init()
         
         // Add a label in which the slider alert will be displayed
         _displayValueLabel = Text::create("Move the slider thumb","fonts/Marker Felt.ttf",32);
-        _displayValueLabel->setAnchorPoint(Point(0.5f, -1));
-        _displayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        _displayValueLabel->setAnchorPoint(Vector2(0.5f, -1));
+        _displayValueLabel->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
         Text *alert = Text::create("Slider scale9 render","fonts/Marker Felt.ttf",30);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75f));
+        alert->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75f));
         _uiLayer->addChild(alert);
         
         // Create the slider
@@ -96,7 +96,7 @@ bool UISliderTest_Scale9::init()
         slider->setScale9Enabled(true);
         slider->setCapInsets(Rect(0, 0, 0, 0));
         slider->setSize(Size(250.0f, 19));
-        slider->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f/* + slider->getSize().height * 3.0f*/));
+        slider->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f/* + slider->getSize().height * 3.0f*/));
         slider->addEventListenerSlider(this, sliderpercentchangedselector(UISliderTest_Scale9::sliderEvent));
         _uiLayer->addChild(slider);
         

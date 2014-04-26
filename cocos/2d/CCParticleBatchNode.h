@@ -91,13 +91,13 @@ public:
     inline void setTextureAtlas(TextureAtlas* atlas) { _textureAtlas = atlas; };
     
     // Overrides
-    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
+    virtual void visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated) override;
 
     using Node::addChild;
     virtual void addChild(Node * child, int zOrder, int tag) override;
     virtual void removeChild(Node* child, bool cleanup) override;
     virtual void reorderChild(Node * child, int zOrder) override;
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
     virtual Texture2D* getTexture(void) const override;
     virtual void setTexture(Texture2D *texture) override;
     /**

@@ -97,7 +97,7 @@ bool EditBox::initWithSizeAndBackgroundSprite(const Size& size, Scale9Sprite* pP
         
         this->setZoomOnTouchDown(false);
         this->setPreferredSize(size);
-        this->setPosition(Point(0, 0));
+        this->setPosition(Vector2(0, 0));
         this->addTargetWithActionForControlEvent(this, cccontrol_selector(EditBox::touchDownAction), Control::EventType::TOUCH_UP_INSIDE);
         
         return true;
@@ -282,7 +282,7 @@ void EditBox::setReturnType(EditBox::KeyboardReturnType returnType)
 }
 
 /* override function */
-void EditBox::setPosition(const Point& pos)
+void EditBox::setPosition(const Vector2& pos)
 {
     ControlButton::setPosition(pos);
     if (_editBoxImpl != NULL)
@@ -309,7 +309,7 @@ void EditBox::setContentSize(const Size& size)
     }
 }
 
-void EditBox::setAnchorPoint(const Point& anchorPoint)
+void EditBox::setAnchorPoint(const Vector2& anchorPoint)
 {
     ControlButton::setAnchorPoint(anchorPoint);
     if (_editBoxImpl != NULL)
@@ -318,7 +318,7 @@ void EditBox::setAnchorPoint(const Point& anchorPoint)
     }
 }
 
-void EditBox::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
+void EditBox::visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
 {
     ControlButton::visit(renderer, parentTransform, parentTransformUpdated);
     if (_editBoxImpl != NULL)

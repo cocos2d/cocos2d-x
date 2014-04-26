@@ -29,6 +29,8 @@ THE SOFTWARE.
 #include "CCActionInterval.h"
 
 namespace cocostudio {
+    
+USING_NS_CC_MATH;
 
 enum FrameType
 {
@@ -229,14 +231,14 @@ public:
 	*
 	* @param the move action position.
 	*/
-	void setPosition(cocos2d::Point pos);
+	void setPosition(Vector2 pos);
 
 	/**
 	* Gets the move action position.
 	*
 	* @return the move action position.
 	*/
-	cocos2d::Point getPosition();
+	Vector2 getPosition();
 
 	/**
 	* Gets the ActionInterval of ActionFrame.
@@ -247,7 +249,7 @@ public:
 	*/
 	virtual cocos2d::ActionInterval* getAction(float duration);
 protected:
-	cocos2d::Point _position;
+    Vector2 _position;
 };
 
 /**

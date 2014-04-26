@@ -82,14 +82,14 @@ const char* CustomParticleWidget::getParticlePlist() const
     return _emitterPlist;
 }
 
-void CustomParticleWidget::setParticlePosition(const Point &pos)
+void CustomParticleWidget::setParticlePosition(const Vector2 &pos)
 {
     _emitter->setPosition(pos);
     
     _emitterPostion = pos;
 }
 
-const Point& CustomParticleWidget::getParticlePosition() const
+const Vector2& CustomParticleWidget::getParticlePosition() const
 {
     return _emitterPostion;
 }

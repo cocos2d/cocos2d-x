@@ -115,7 +115,7 @@ public:
     inline GroupCommandManager* getGroupCommandManager() const { return _groupCommandManager; };
 
     /** returns whether or not a rectangle is visible or not */
-    bool checkVisibility(const kmMat4& transform, const Size& size);
+    bool checkVisibility(const Matrix& transform, const Size& size);
 
 protected:
 
@@ -133,7 +133,7 @@ protected:
     
     void visitRenderQueue(const RenderQueue& queue);
 
-    void convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const kmMat4& modelView);
+    void convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const Matrix& modelView);
 
     std::stack<int> _commandGroupStack;
     

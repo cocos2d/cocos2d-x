@@ -86,7 +86,7 @@ public:
     virtual ~RenderTextureTestDepthStencil();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
 private:
     CustomCommand _renderCmds[4];
     void onBeforeClear();
@@ -140,7 +140,7 @@ public:
         static SimpleSprite* create(const char* filename, const Rect &rect);
         SimpleSprite();
         ~SimpleSprite();
-        virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated);
+        virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated);
     public:
         RenderTexture *_rt;
     };
@@ -153,7 +153,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     
-    SimpleSprite* addNewSpriteWithCoords(const Point& p);
+    SimpleSprite* addNewSpriteWithCoords(const Vector2& p);
 };
 
 #endif

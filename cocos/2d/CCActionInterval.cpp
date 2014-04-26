@@ -856,7 +856,7 @@ RotateBy* RotateBy::create(float duration, float deltaAngleX, float deltaAngleY)
     return rotateBy;
 }
 
-RotateBy* RotateBy::create(float duration, const Vertex3F& deltaAngle3D)
+RotateBy* RotateBy::create(float duration, const Vector3& deltaAngle3D)
 {
     RotateBy *rotateBy = new RotateBy();
     rotateBy->initWithDuration(duration, deltaAngle3D);
@@ -893,7 +893,7 @@ bool RotateBy::initWithDuration(float duration, float deltaAngleX, float deltaAn
     return false;
 }
 
-bool RotateBy::initWithDuration(float duration, const Vertex3F& deltaAngle3D)
+bool RotateBy::initWithDuration(float duration, const Vector3& deltaAngle3D)
 {
     if (ActionInterval::initWithDuration(duration))
     {
@@ -939,7 +939,7 @@ void RotateBy::update(float time)
     {
         if(_is3D)
         {
-            Vertex3F v;
+            Vector3 v;
             v.x = _startAngle3D.x + _angle3D.x * time;
             v.y = _startAngle3D.y + _angle3D.y * time;
             v.z = _startAngle3D.z + _angle3D.z * time;
@@ -957,7 +957,7 @@ RotateBy* RotateBy::reverse() const
 {
     if(_is3D)
     {
-        Vertex3F v;
+        Vector3 v;
         v.x = - _angle3D.x;
         v.y = - _angle3D.y;
         v.z = - _angle3D.z;
@@ -970,7 +970,7 @@ RotateBy* RotateBy::reverse() const
 // MoveBy
 //
 
-MoveBy* MoveBy::create(float duration, const Point& deltaPosition)
+MoveBy* MoveBy::create(float duration, const Vector2& deltaPosition)
 {
     MoveBy *ret = new MoveBy();
     ret->initWithDuration(duration, deltaPosition);
@@ -979,7 +979,7 @@ MoveBy* MoveBy::create(float duration, const Point& deltaPosition)
     return ret;
 }
 
-bool MoveBy::initWithDuration(float duration, const Point& deltaPosition)
+bool MoveBy::initWithDuration(float duration, const Vector2& deltaPosition)
 {
     if (ActionInterval::initWithDuration(duration))
     {
@@ -1007,7 +1007,7 @@ void MoveBy::startWithTarget(Node *target)
 
 MoveBy* MoveBy::reverse() const
 {
-    return MoveBy::create(_duration, Point( -_positionDelta.x, -_positionDelta.y));
+    return MoveBy::create(_duration, Vector2( -_positionDelta.x, -_positionDelta.y));
 }
 
 
@@ -1016,10 +1016,10 @@ void MoveBy::update(float t)
     if (_target)
     {
 #if CC_ENABLE_STACKABLE_ACTIONS
-        Point currentPos = _target->getPosition();
-        Point diff = currentPos - _previousPosition;
+        Vector2 currentPos = _target->getPosition();
+        Vector2 diff = currentPos - _previousPosition;
         _startPosition = _startPosition + diff;
-        Point newPos =  _startPosition + (_positionDelta * t);
+        Vector2 newPos =  _startPosition + (_positionDelta * t);
         _target->setPosition(newPos);
         _previousPosition = newPos;
 #else
@@ -1032,7 +1032,7 @@ void MoveBy::update(float t)
 // MoveTo
 //
 
-MoveTo* MoveTo::create(float duration, const Point& position)
+MoveTo* MoveTo::create(float duration, const Vector2& position)
 {
     MoveTo *ret = new MoveTo();
     ret->initWithDuration(duration, position);
@@ -1041,7 +1041,7 @@ MoveTo* MoveTo::create(float duration, const Point& position)
     return ret;
 }
 
-bool MoveTo::initWithDuration(float duration, const Point& position)
+bool MoveTo::initWithDuration(float duration, const Vector2& position)
 {
     if (ActionInterval::initWithDuration(duration))
     {
@@ -1249,7 +1249,7 @@ SkewBy* SkewBy::reverse() const
 // JumpBy
 //
 
-JumpBy* JumpBy::create(float duration, const Point& position, float height, int jumps)
+JumpBy* JumpBy::create(float duration, const Vector2& position, float height, int jumps)
 {
     JumpBy *jumpBy = new JumpBy();
     jumpBy->initWithDuration(duration, position, height, jumps);
@@ -1258,7 +1258,7 @@ JumpBy* JumpBy::create(float duration, const Point& position, float height, int 
     return jumpBy;
 }
 
-bool JumpBy::initWithDuration(float duration, const Point& position, float height, int jumps)
+bool JumpBy::initWithDuration(float duration, const Vector2& position, float height, int jumps)
 {
     CCASSERT(jumps>=0, "Number of jumps must be >= 0");
     
@@ -1300,24 +1300,24 @@ void JumpBy::update(float t)
 
         float x = _delta.x * t;
 #if CC_ENABLE_STACKABLE_ACTIONS
-        Point currentPos = _target->getPosition();
+        Vector2 currentPos = _target->getPosition();
 
-        Point diff = currentPos - _previousPos;
+        Vector2 diff = currentPos - _previousPos;
         _startPosition = diff + _startPosition;
 
-        Point newPos = _startPosition + Point(x,y);
+        Vector2 newPos = _startPosition + Vector2(x,y);
         _target->setPosition(newPos);
 
         _previousPos = newPos;
 #else
-        _target->setPosition(_startPosition + Point(x,y));
+        _target->setPosition(_startPosition + Vector2(x,y));
 #endif // !CC_ENABLE_STACKABLE_ACTIONS
     }
 }
 
 JumpBy* JumpBy::reverse() const
 {
-    return JumpBy::create(_duration, Point(-_delta.x, -_delta.y),
+    return JumpBy::create(_duration, Vector2(-_delta.x, -_delta.y),
         _height, _jumps);
 }
 
@@ -1325,7 +1325,7 @@ JumpBy* JumpBy::reverse() const
 // JumpTo
 //
 
-JumpTo* JumpTo::create(float duration, const Point& position, float height, int jumps)
+JumpTo* JumpTo::create(float duration, const Vector2& position, float height, int jumps)
 {
     JumpTo *jumpTo = new JumpTo();
     jumpTo->initWithDuration(duration, position, height, jumps);
@@ -1352,7 +1352,7 @@ JumpTo* JumpTo::reverse() const
 void JumpTo::startWithTarget(Node *target)
 {
     JumpBy::startWithTarget(target);
-    _delta = Point(_delta.x - _startPosition.x, _delta.y - _startPosition.y);
+    _delta = Vector2(_delta.x - _startPosition.x, _delta.y - _startPosition.y);
 }
 
 // Bezier cubic formula:
@@ -1424,16 +1424,16 @@ void BezierBy::update(float time)
         float y = bezierat(ya, yb, yc, yd, time);
 
 #if CC_ENABLE_STACKABLE_ACTIONS
-        Point currentPos = _target->getPosition();
-        Point diff = currentPos - _previousPosition;
+        Vector2 currentPos = _target->getPosition();
+        Vector2 diff = currentPos - _previousPosition;
         _startPosition = _startPosition + diff;
 
-        Point newPos = _startPosition + Point(x,y);
+        Vector2 newPos = _startPosition + Vector2(x,y);
         _target->setPosition(newPos);
 
         _previousPosition = newPos;
 #else
-        _target->setPosition( _startPosition + Point(x,y));
+        _target->setPosition( _startPosition + Vector2(x,y));
 #endif // !CC_ENABLE_STACKABLE_ACTIONS
     }
 }

@@ -43,7 +43,7 @@ bool ControlStepperTest::init()
         auto screenSize = Director::getInstance()->getWinSize();
         
         auto layer = Node::create();
-        layer->setPosition(Point (screenSize.width / 2, screenSize.height / 2));
+        layer->setPosition(Vector2 (screenSize.width / 2, screenSize.height / 2));
         this->addChild(layer, 1);
         
         double layer_width          = 0;
@@ -51,7 +51,7 @@ bool ControlStepperTest::init()
         // Add the black background for the text
         auto background  = Scale9Sprite::create("extensions/buttonBackground.png");
         background->setContentSize(Size(100, 50));
-        background->setPosition(Point(layer_width + background->getContentSize().width / 2.0f, 0));
+        background->setPosition(Vector2(layer_width + background->getContentSize().width / 2.0f, 0));
         layer->addChild(background);
         
         this->setDisplayValueLabel(Label::createWithSystemFont("0", "HelveticaNeue-Bold", 30));
@@ -62,7 +62,7 @@ bool ControlStepperTest::init()
         layer_width                 += background->getContentSize().width;
         
         ControlStepper *stepper   = this->makeControlStepper();
-        stepper->setPosition(Point(layer_width + 10 + stepper->getContentSize().width / 2, 0));
+        stepper->setPosition(Vector2(layer_width + 10 + stepper->getContentSize().width / 2, 0));
         stepper->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlStepperTest::valueChanged), Control::EventType::VALUE_CHANGED);
         layer->addChild(stepper);
         
@@ -70,7 +70,7 @@ bool ControlStepperTest::init()
         
         // Set the layer size
         layer->setContentSize(Size(layer_width, 0));
-        layer->setAnchorPoint(Point(0.5f, 0.5f));
+        layer->setAnchorPoint(Vector2(0.5f, 0.5f));
         
         // Update the value label
         this->valueChanged(stepper, Control::EventType::VALUE_CHANGED);

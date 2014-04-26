@@ -36,9 +36,6 @@ THE SOFTWARE.
 #include "TransformUtils.h"
 #include "renderer/CCRenderer.h"
 
-// external
-#include "kazmath/GL/matrix.h"
-
 NS_CC_BEGIN
 
 // implementation AtlasNode
@@ -136,7 +133,7 @@ void AtlasNode::updateAtlasValues()
 }
 
 // AtlasNode - draw
-void AtlasNode::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void AtlasNode::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     _quadCommand.init(
               _globalZOrder,

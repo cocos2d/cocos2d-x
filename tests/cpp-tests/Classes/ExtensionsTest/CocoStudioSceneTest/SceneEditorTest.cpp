@@ -117,7 +117,7 @@ void SceneEditorTestLayer::onEnter()
     auto label = Label::createWithTTF(pTitle, "fonts/arial.ttf", 18);
     label->setTextColor(Color4B::WHITE);
     addChild(label, 1, 10000);
-    label->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 30) );
+    label->setPosition( Vector2(VisibleRect::center().x, VisibleRect::top().y - 30) );
 
     std::string strSubtitle = subtitle();
     if( ! strSubtitle.empty() )
@@ -125,7 +125,7 @@ void SceneEditorTestLayer::onEnter()
         auto l = Label::createWithTTF(strSubtitle.c_str(), "fonts/arial.ttf", 18);
         l->setTextColor(Color4B::BLACK);
         addChild(l, 1, 10001);
-        l->setPosition(Point(VisibleRect::center().x, VisibleRect::top().y - 60) );
+        l->setPosition(Vector2(VisibleRect::center().x, VisibleRect::top().y - 60) );
     }
 
     // add menu
@@ -138,14 +138,14 @@ void SceneEditorTestLayer::onEnter()
     
     float fScale = 0.5f;
     
-    menu->setPosition(Point(0, 0));
-    backItem->setPosition(Point(VisibleRect::center().x - restartItem->getContentSize().width * 2 * fScale, VisibleRect::bottom().y + restartItem->getContentSize().height / 2));
+    menu->setPosition(Vector2(0, 0));
+    backItem->setPosition(Vector2(VisibleRect::center().x - restartItem->getContentSize().width * 2 * fScale, VisibleRect::bottom().y + restartItem->getContentSize().height / 2));
     backItem->setScale(fScale);
     
-    restartItem->setPosition(Point(VisibleRect::center().x, VisibleRect::bottom().y + restartItem->getContentSize().height / 2));
+    restartItem->setPosition(Vector2(VisibleRect::center().x, VisibleRect::bottom().y + restartItem->getContentSize().height / 2));
     restartItem->setScale(fScale);
     
-    nextItem->setPosition(Point(VisibleRect::center().x + restartItem->getContentSize().width * 2 * fScale, VisibleRect::bottom().y + restartItem->getContentSize().height / 2));
+    nextItem->setPosition(Vector2(VisibleRect::center().x + restartItem->getContentSize().width * 2 * fScale, VisibleRect::bottom().y + restartItem->getContentSize().height / 2));
     nextItem->setScale(fScale);
     
     addChild(menu, 100);
@@ -194,7 +194,7 @@ void SceneEditorTestLayer::backCallback(Ref *pSender)
     s->release();
 }
 
-void SceneEditorTestLayer::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void SceneEditorTestLayer::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     Layer::draw(renderer, transform, transformUpdated);
 }
@@ -344,10 +344,10 @@ cocos2d::Node* ArmatureComponentTest::createGameScene()
 		return nullptr;
 	}
 	ComRender *pBlowFish = static_cast<ComRender*>(node->getChildByTag(10007)->getComponent("CCArmature"));
-	pBlowFish->getNode()->runAction(CCMoveBy::create(10.0f, Point(-1000.0f, 0)));
+	pBlowFish->getNode()->runAction(CCMoveBy::create(10.0f, Vector2(-1000.0f, 0)));
 
 	ComRender *pButterflyfish = static_cast<ComRender*>(node->getChildByTag(10008)->getComponent("CCArmature"));
-	pButterflyfish->getNode()->runAction(CCMoveBy::create(10.0f, Point(-1000.0f, 0)));
+	pButterflyfish->getNode()->runAction(CCMoveBy::create(10.0f, Vector2(-1000.0f, 0)));
 
     return node;
 }
@@ -411,10 +411,10 @@ void UIComponentTest::touchEvent(Ref *pSender, TouchEventType type)
 	case TOUCH_EVENT_BEGAN:
 		{
 			ComRender *pBlowFish = static_cast<ComRender*>(_node->getChildByTag(10010)->getComponent("CCArmature"));
-			pBlowFish->getNode()->runAction(CCMoveBy::create(10.0f, Point(-1000.0f, 0)));
+			pBlowFish->getNode()->runAction(CCMoveBy::create(10.0f, Vector2(-1000.0f, 0)));
 
 			ComRender *pButterflyfish = static_cast<ComRender*>(_node->getChildByTag(10011)->getComponent("CCArmature"));
-			pButterflyfish->getNode()->runAction(CCMoveBy::create(10.0f, Point(-1000.0f, 0)));
+			pButterflyfish->getNode()->runAction(CCMoveBy::create(10.0f, Vector2(-1000.0f, 0)));
 		}
 		break;
 	default:
@@ -522,7 +522,7 @@ cocos2d::Node* ParticleComponentTest::createGameScene()
 	}
 
 	ComRender* Particle = static_cast<ComRender*>(node->getChildByTag(10020)->getComponent("CCParticleSystemQuad"));
-	ActionInterval*  jump = JumpBy::create(5, Point(-500,0), 50, 4);
+	ActionInterval*  jump = JumpBy::create(5, Vector2(-500,0), 50, 4);
 	FiniteTimeAction*  action = Sequence::create( jump, jump->reverse(), nullptr);
 	Particle->getNode()->runAction(action);
     return node;

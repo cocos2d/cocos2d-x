@@ -59,7 +59,7 @@ public:
      virtual void removeAll();
 private:
 	int  _tag;
-	cocos2d::Point _origin;
+	cocos2d::Vector2 _origin;
 	cocos2d::Size  _size;
 };
 

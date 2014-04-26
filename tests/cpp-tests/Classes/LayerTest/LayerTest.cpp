@@ -141,9 +141,9 @@ void LayerTestCascadingOpacityA::onEnter()
     layer1->addChild(label);
     this->addChild( layer1, 0, kTagLayer);
     
-    sister1->setPosition( Point( s.width*1/3, s.height/2));
-    sister2->setPosition( Point( s.width*2/3, s.height/2));
-    label->setPosition( Point( s.width/2, s.height/2));
+    sister1->setPosition( Vector2( s.width*1/3, s.height/2));
+    sister2->setPosition( Vector2( s.width*2/3, s.height/2));
+    label->setPosition( Vector2( s.width/2, s.height/2));
     
     layer1->runAction(
         RepeatForever::create(
@@ -182,7 +182,7 @@ void LayerTestCascadingOpacityB::onEnter()
     auto layer1 = LayerColor::create(Color4B(192, 0, 0, 255), s.width, s.height/2);
     layer1->setCascadeColorEnabled(false);
     
-    layer1->setPosition( Point(0, s.height/2));
+    layer1->setPosition( Vector2(0, s.height/2));
     
     auto sister1 = Sprite::create("Images/grossinis_sister1.png");
     auto sister2 = Sprite::create("Images/grossinis_sister2.png");
@@ -193,9 +193,9 @@ void LayerTestCascadingOpacityB::onEnter()
     layer1->addChild(label);
     this->addChild( layer1, 0, kTagLayer);
     
-    sister1->setPosition( Point( s.width*1/3, 0));
-    sister2->setPosition( Point( s.width*2/3, 0));
-    label->setPosition( Point( s.width/2, 0));
+    sister1->setPosition( Vector2( s.width*1/3, 0));
+    sister2->setPosition( Vector2( s.width*2/3, 0));
+    label->setPosition( Vector2( s.width/2, 0));
     
     layer1->runAction(
      RepeatForever::create(
@@ -235,7 +235,7 @@ void LayerTestCascadingOpacityC::onEnter()
     layer1->setCascadeColorEnabled(false);
     layer1->setCascadeOpacityEnabled(false);
     
-    layer1->setPosition( Point(0, s.height/2));
+    layer1->setPosition( Vector2(0, s.height/2));
     
     auto sister1 = Sprite::create("Images/grossinis_sister1.png");
     auto sister2 = Sprite::create("Images/grossinis_sister2.png");
@@ -246,9 +246,9 @@ void LayerTestCascadingOpacityC::onEnter()
     layer1->addChild(label);
     this->addChild( layer1, 0, kTagLayer);
     
-    sister1->setPosition( Point( s.width*1/3, 0));
-    sister2->setPosition( Point( s.width*2/3, 0));
-    label->setPosition( Point( s.width/2, 0));
+    sister1->setPosition( Vector2( s.width*1/3, 0));
+    sister2->setPosition( Vector2( s.width*2/3, 0));
+    label->setPosition( Vector2( s.width/2, 0));
     
     layer1->runAction(
      RepeatForever::create(
@@ -294,9 +294,9 @@ void LayerTestCascadingColorA::onEnter()
     layer1->addChild(label);
     this->addChild( layer1, 0, kTagLayer);
     
-    sister1->setPosition( Point( s.width*1/3, s.height/2));
-    sister2->setPosition( Point( s.width*2/3, s.height/2));
-    label->setPosition( Point( s.width/2, s.height/2));
+    sister1->setPosition( Vector2( s.width*1/3, s.height/2));
+    sister2->setPosition( Vector2( s.width*2/3, s.height/2));
+    label->setPosition( Vector2( s.width/2, s.height/2));
     
     layer1->runAction(
      RepeatForever::create(
@@ -336,7 +336,7 @@ void LayerTestCascadingColorB::onEnter()
     auto s = Director::getInstance()->getWinSize();
     auto layer1 = LayerColor::create(Color4B(255, 255, 255, 255), s.width, s.height/2);
     
-    layer1->setPosition( Point(0, s.height/2));
+    layer1->setPosition( Vector2(0, s.height/2));
     
     auto sister1 = Sprite::create("Images/grossinis_sister1.png");
     auto sister2 = Sprite::create("Images/grossinis_sister2.png");
@@ -347,9 +347,9 @@ void LayerTestCascadingColorB::onEnter()
     layer1->addChild(label);
     this->addChild( layer1, 0, kTagLayer);
     
-    sister1->setPosition( Point( s.width*1/3, 0));
-    sister2->setPosition( Point( s.width*2/3, 0));
-    label->setPosition( Point( s.width/2, 0));
+    sister1->setPosition( Vector2( s.width*1/3, 0));
+    sister2->setPosition( Vector2( s.width*2/3, 0));
+    label->setPosition( Vector2( s.width/2, 0));
     
     layer1->runAction(
      RepeatForever::create(
@@ -388,7 +388,7 @@ void LayerTestCascadingColorC::onEnter()
     auto s = Director::getInstance()->getWinSize();
     auto layer1 = LayerColor::create(Color4B(255, 255, 255, 255), s.width, s.height/2);
     layer1->setCascadeColorEnabled(false);
-    layer1->setPosition( Point(0, s.height/2));
+    layer1->setPosition( Vector2(0, s.height/2));
     
     auto sister1 = Sprite::create("Images/grossinis_sister1.png");
     auto sister2 = Sprite::create("Images/grossinis_sister2.png");
@@ -399,9 +399,9 @@ void LayerTestCascadingColorC::onEnter()
     layer1->addChild(label);
     this->addChild( layer1, 0, kTagLayer);
     
-    sister1->setPosition( Point( s.width*1/3, 0));
-    sister2->setPosition( Point( s.width*2/3, 0));
-    label->setPosition( Point( s.width/2, 0));
+    sister1->setPosition( Vector2( s.width*1/3, 0));
+    sister2->setPosition( Vector2( s.width*2/3, 0));
+    label->setPosition( Vector2( s.width/2, 0));
     
     layer1->runAction(
      RepeatForever::create(
@@ -449,11 +449,11 @@ void LayerTest1::onEnter()
     auto layer = LayerColor::create( Color4B(0xFF, 0x00, 0x00, 0x80), 200, 200); 
     
     layer->ignoreAnchorPointForPosition(false);
-    layer->setPosition( Point(s.width/2, s.height/2) );
+    layer->setPosition( Vector2(s.width/2, s.height/2) );
     addChild(layer, 1, kTagLayer);
 }
 
-void LayerTest1::updateSize(Point &touchLocation)
+void LayerTest1::updateSize(Vector2 &touchLocation)
 {    
     auto s = Director::getInstance()->getWinSize();
     
@@ -497,12 +497,12 @@ void LayerTest2::onEnter()
 
     auto s = Director::getInstance()->getWinSize();
     auto layer1 = LayerColor::create( Color4B(255, 255, 0, 80), 100, 300);
-    layer1->setPosition(Point(s.width/3, s.height/2));
+    layer1->setPosition(Vector2(s.width/3, s.height/2));
     layer1->ignoreAnchorPointForPosition(false);
     addChild(layer1, 1);
     
     auto layer2 = LayerColor::create( Color4B(0, 0, 255, 255), 100, 300);
-    layer2->setPosition(Point((s.width/3)*2, s.height/2));
+    layer2->setPosition(Vector2((s.width/3)*2, s.height/2));
     layer2->ignoreAnchorPointForPosition(false);
     addChild(layer2, 1);
     
@@ -540,8 +540,8 @@ LayerTestBlend::LayerTestBlend()
     addChild(sister2);
     addChild(layer1, 100, kTagLayer);
     
-    sister1->setPosition( Point( s.width*1/3, s.height/2) );
-    sister2->setPosition( Point( s.width*2/3, s.height/2) );
+    sister1->setPosition( Vector2( s.width*1/3, s.height/2) );
+    sister2->setPosition( Vector2( s.width*2/3, s.height/2) );
 
     schedule( schedule_selector(LayerTestBlend::newBlend), 1.0f);
 }
@@ -581,7 +581,7 @@ std::string LayerTestBlend::subtitle() const
 //------------------------------------------------------------------
 LayerGradientTest::LayerGradientTest()
 {
-    auto layer1 = LayerGradient::create(Color4B(255,0,0,255), Color4B(0,255,0,255), Point(0.9f, 0.9f));
+    auto layer1 = LayerGradient::create(Color4B(255,0,0,255), Color4B(0,255,0,255), Vector2(0.9f, 0.9f));
     addChild(layer1, 0, kTagLayer);
 
     auto listener = EventListenerTouchAllAtOnce::create();
@@ -597,7 +597,7 @@ LayerGradientTest::LayerGradientTest()
     auto menu = Menu::create(item, NULL);
     addChild(menu);
     auto s = Director::getInstance()->getWinSize();
-    menu->setPosition(Point(s.width / 2, 100));
+    menu->setPosition(Vector2(s.width / 2, 100));
 }
 
 void LayerGradientTest::toggleItem(Ref *sender)
@@ -613,7 +613,7 @@ void LayerGradientTest::onTouchesMoved(const std::vector<Touch*>& touches, Event
     auto touch = touches[0];
     auto start = touch->getLocation();    
 
-    auto diff =  Point(s.width/2,s.height/2) - start;
+    auto diff =  Vector2(s.width/2,s.height/2) - start;
     diff = diff.normalize();
 
     auto gradient = static_cast<LayerGradient*>( getChildByTag(1) );
@@ -685,10 +685,10 @@ void LayerIgnoreAnchorPointPos::onEnter()
 
     auto l = LayerColor::create(Color4B(255, 0, 0, 255), 150, 150);
 
-    l->setAnchorPoint(Point(0.5f, 0.5f));
-    l->setPosition(Point( s.width/2, s.height/2));
+    l->setAnchorPoint(Vector2(0.5f, 0.5f));
+    l->setPosition(Vector2( s.width/2, s.height/2));
 
-    auto move = MoveBy::create(2, Point(100,2));
+    auto move = MoveBy::create(2, Vector2(100,2));
     auto back = (MoveBy *)move->reverse();
     auto seq = Sequence::create(move, back, NULL);
     l->runAction(RepeatForever::create(seq));
@@ -697,14 +697,14 @@ void LayerIgnoreAnchorPointPos::onEnter()
     auto child = Sprite::create("Images/grossini.png");
     l->addChild(child);
     auto lsize = l->getContentSize();
-    child->setPosition(Point(lsize.width/2, lsize.height/2));
+    child->setPosition(Vector2(lsize.width/2, lsize.height/2));
 
     auto item = MenuItemFont::create("Toggle ignore anchor point", CC_CALLBACK_1(LayerIgnoreAnchorPointPos::onToggle, this));
 
     auto menu = Menu::create(item, NULL);
     this->addChild(menu);
 
-    menu->setPosition(Point(s.width/2, s.height/2));
+    menu->setPosition(Vector2(s.width/2, s.height/2));
 }
 
 void LayerIgnoreAnchorPointPos::onToggle(Ref* pObject)
@@ -721,7 +721,7 @@ std::string LayerIgnoreAnchorPointPos::title() const
 
 std::string LayerIgnoreAnchorPointPos::subtitle() const
 {
-    return "Ignoring Anchor Point for position";
+    return "Ignoring Anchor Vector2 for position";
 }
 
 // LayerIgnoreAnchorPointRot
@@ -733,8 +733,8 @@ void LayerIgnoreAnchorPointRot::onEnter()
 
     auto l = LayerColor::create(Color4B(255, 0, 0, 255), 200, 200);
 
-    l->setAnchorPoint(Point(0.5f, 0.5f));
-    l->setPosition(Point( s.width/2, s.height/2));
+    l->setAnchorPoint(Vector2(0.5f, 0.5f));
+    l->setPosition(Vector2( s.width/2, s.height/2));
 
     this->addChild(l, 0, kLayerIgnoreAnchorPoint);
 
@@ -745,14 +745,14 @@ void LayerIgnoreAnchorPointRot::onEnter()
     auto child = Sprite::create("Images/grossini.png");
     l->addChild(child);
     auto lsize = l->getContentSize();
-    child->setPosition(Point(lsize.width/2, lsize.height/2));
+    child->setPosition(Vector2(lsize.width/2, lsize.height/2));
 
     auto item = MenuItemFont::create("Toogle ignore anchor point", CC_CALLBACK_1(LayerIgnoreAnchorPointRot::onToggle, this));
 
     auto menu = Menu::create(item, NULL);
     this->addChild(menu);
 
-    menu->setPosition(Point(s.width/2, s.height/2));
+    menu->setPosition(Vector2(s.width/2, s.height/2));
 }
 
 void LayerIgnoreAnchorPointRot::onToggle(Ref* pObject)
@@ -769,7 +769,7 @@ std::string LayerIgnoreAnchorPointRot::title() const
 
 std::string LayerIgnoreAnchorPointRot::subtitle() const
 {
-    return "Ignoring Anchor Point for rotations";
+    return "Ignoring Anchor Vector2 for rotations";
 }
 
 // LayerIgnoreAnchorPointScale
@@ -781,8 +781,8 @@ void LayerIgnoreAnchorPointScale::onEnter()
 
     auto l = LayerColor::create(Color4B(255, 0, 0, 255), 200, 200);
 
-    l->setAnchorPoint(Point(0.5f, 1.0f));
-    l->setPosition(Point( s.width/2, s.height/2));
+    l->setAnchorPoint(Vector2(0.5f, 1.0f));
+    l->setPosition(Vector2( s.width/2, s.height/2));
 
 
     auto scale = ScaleBy::create(2, 2);
@@ -796,14 +796,14 @@ void LayerIgnoreAnchorPointScale::onEnter()
     auto child = Sprite::create("Images/grossini.png");
     l->addChild(child);
     auto lsize = l->getContentSize();
-    child->setPosition(Point(lsize.width/2, lsize.height/2));
+    child->setPosition(Vector2(lsize.width/2, lsize.height/2));
 
     auto item = MenuItemFont::create("Toogle ignore anchor point", CC_CALLBACK_1(LayerIgnoreAnchorPointScale::onToggle, this));
 
     auto menu = Menu::create(item, NULL);
     this->addChild(menu);
 
-    menu->setPosition(Point(s.width/2, s.height/2));
+    menu->setPosition(Vector2(s.width/2, s.height/2));
 }
 
 void LayerIgnoreAnchorPointScale::onToggle(Ref* pObject)
@@ -820,7 +820,7 @@ std::string LayerIgnoreAnchorPointScale::title() const
 
 std::string LayerIgnoreAnchorPointScale::subtitle() const
 {
-    return "Ignoring Anchor Point for scale";
+    return "Ignoring Anchor Vector2 for scale";
 }
 
 void LayerTestScene::runThisTest()
@@ -836,17 +836,17 @@ LayerExtendedBlendOpacityTest::LayerExtendedBlendOpacityTest()
 {
     auto layer1 = LayerGradient::create(Color4B(255, 0, 0, 255), Color4B(255, 0, 255, 255));
     layer1->setContentSize(Size(80, 80));
-    layer1->setPosition(Point(50,50));
+    layer1->setPosition(Vector2(50,50));
     addChild(layer1);
     
     auto layer2 = LayerGradient::create(Color4B(0, 0, 0, 127), Color4B(255, 255, 255, 127));
     layer2->setContentSize(Size(80, 80));
-    layer2->setPosition(Point(100,90));
+    layer2->setPosition(Vector2(100,90));
     addChild(layer2);
     
     auto layer3 = LayerGradient::create();
     layer3->setContentSize(Size(80, 80));
-    layer3->setPosition(Point(150,140));
+    layer3->setPosition(Vector2(150,140));
     layer3->setStartColor(Color3B(255, 0, 0));
     layer3->setEndColor(Color3B(255, 0, 255));
     layer3->setStartOpacity(255);
@@ -879,7 +879,7 @@ void LayerBug3162A::onEnter()
     {
         _layer[i] = LayerColor::create(color[i]);
         _layer[i]->setContentSize(size);
-        _layer[i]->setPosition(Point(size.width/2, size.height/2) - Point(20, 20));
+        _layer[i]->setPosition(Vector2(size.width/2, size.height/2) - Vector2(20, 20));
         _layer[i]->setOpacity(150);
         _layer[i]->setCascadeOpacityEnabled(true);
         if (i > 0)
@@ -922,7 +922,7 @@ void LayerBug3162B::onEnter()
     {
         _layer[i] = LayerColor::create(color[i]);
         _layer[i]->setContentSize(size);
-        _layer[i]->setPosition(Point(size.width/2, size.height/2) - Point(20, 20));
+        _layer[i]->setPosition(Vector2(size.width/2, size.height/2) - Vector2(20, 20));
         //_layer[i]->setOpacity(150);
         if (i > 0)
         {

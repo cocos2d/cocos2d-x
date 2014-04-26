@@ -17,15 +17,15 @@ public:
 
     void initPhysics();
     void createResetButton();
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
 
-    void addNewSpriteAtPosition(Point p);
+    void addNewSpriteAtPosition(Vector2 p);
     void update(float dt);
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 
 #if CC_ENABLE_BOX2D_INTEGRATION
 protected:
-    kmMat4 _modelViewMV;
+    Matrix _modelViewMV;
     void onDraw();
     CustomCommand _customCommand;
 #endif

@@ -22,15 +22,15 @@ bool UIButtonTest::init()
         
         // Add a label in which the button events will be displayed
         _displayValueLabel = Text::create("No Event", "fonts/Marker Felt.ttf",32);
-        _displayValueLabel->setAnchorPoint(Point(0.5f, -1.0f));
-        _displayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        _displayValueLabel->setAnchorPoint(Vector2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         _uiLayer->addChild(_displayValueLabel);        
         
         // Add the alert
         Text* alert = Text::create("Button","fonts/Marker Felt.ttf",30);
         alert->setColor(Color3B(159, 168, 176));                
         
-        alert->setPosition(Point(widgetSize.width / 2.0f,
+        alert->setPosition(Vector2(widgetSize.width / 2.0f,
                                  widgetSize.height / 2.0f - alert->getSize().height * 1.75f));
         
         _uiLayer->addChild(alert);        
@@ -38,7 +38,7 @@ bool UIButtonTest::init()
         // Create the button
         Button* button = Button::create("cocosui/animationbuttonnormal.png",
                                         "cocosui/animationbuttonpressed.png");
-        button->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        button->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         button->addTouchEventListener(this, toucheventselector(UIButtonTest::touchEvent));
         _uiLayer->addChild(button);
 
@@ -93,14 +93,14 @@ bool UIButtonTest_Scale9::init()
         
         // Add a label in which the button events will be displayed
         _displayValueLabel = Text::create("No Event", "fonts/Marker Felt.ttf", 32);
-        _displayValueLabel->setAnchorPoint(Point(0.5f, -1.0f));
-        _displayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        _displayValueLabel->setAnchorPoint(Vector2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
         Text* alert = Text::create("Button scale9 render", "fonts/Marker Felt.ttf",30);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Point(widgetSize.width / 2.0f,
+        alert->setPosition(Vector2(widgetSize.width / 2.0f,
                                  widgetSize.height / 2.0f - alert->getSize().height * 1.75f));
         _uiLayer->addChild(alert);        
         
@@ -108,7 +108,7 @@ bool UIButtonTest_Scale9::init()
         Button* button = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
         // open scale9 render
         button->setScale9Enabled(true);
-        button->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        button->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         button->setSize(Size(150, 70));
         button->addTouchEventListener(this, toucheventselector(UIButtonTest_Scale9::touchEvent));
         _uiLayer->addChild(button);
@@ -161,15 +161,15 @@ bool UIButtonTest_PressedAction::init()
         
         // Add a label in which the button events will be displayed
         _displayValueLabel = Text::create("No Event", "fonts/Marker Felt.ttf",32);
-        _displayValueLabel->setAnchorPoint(Point(0.5f, -1.0f));
-        _displayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        _displayValueLabel->setAnchorPoint(Vector2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
         Text* alert = Text::create("Button Pressed Action", "fonts/Marker Felt.ttf", 30);
         alert->setColor(Color3B(159, 168, 176));
         
-        alert->setPosition(Point(widgetSize.width / 2.0f,
+        alert->setPosition(Vector2(widgetSize.width / 2.0f,
                                  widgetSize.height / 2.0f - alert->getSize().height * 1.75f));
         
         _uiLayer->addChild(alert);
@@ -177,7 +177,7 @@ bool UIButtonTest_PressedAction::init()
         // Create the button
         Button* button = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
         button->setPressedActionEnabled(true);
-        button->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        button->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         button->addTouchEventListener(this, toucheventselector(UIButtonTest_PressedAction::touchEvent));        
         _uiLayer->addChild(button);
         
@@ -230,14 +230,14 @@ bool UIButtonTest_Title::init()
         
         // Add a label in which the text button events will be displayed
         _displayValueLabel = Text::create("No Event", "fonts/Marker Felt.ttf", 32);
-        _displayValueLabel->setAnchorPoint(Point(0.5f, -1));
-        _displayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        _displayValueLabel->setAnchorPoint(Vector2(0.5f, -1));
+        _displayValueLabel->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
         Text* alert = Text::create("Button with title", "fonts/Marker Felt.ttf", 30);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Point(widgetSize.width / 2.0f,
+        alert->setPosition(Vector2(widgetSize.width / 2.0f,
                                  widgetSize.height / 2.0f - alert->getSize().height * 1.75f));
         
         _uiLayer->addChild(alert);
@@ -245,7 +245,7 @@ bool UIButtonTest_Title::init()
         // Create the button with title
         Button* button = Button::create("cocosui/backtotoppressed.png", "cocosui/backtotopnormal.png");
         button->setTitleText("Title Button");
-        button->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        button->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         button->addTouchEventListener(this, toucheventselector(UIButtonTest_Title::touchEvent));
         _uiLayer->addChild(button);
         

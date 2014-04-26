@@ -5,7 +5,7 @@ KeypadTest::KeypadTest()
     auto s = Director::getInstance()->getWinSize();
     auto label = Label::createWithTTF("Keypad Test", "fonts/arial.ttf", 28);
     addChild(label, 0);
-    label->setPosition( Point(s.width/2, s.height-50) );
+    label->setPosition( Vector2(s.width/2, s.height-50) );
 
     auto listener = EventListenerKeyboard::create();
     listener->onKeyReleased = CC_CALLBACK_2(KeypadTest::onKeyReleased, this);
@@ -14,7 +14,7 @@ KeypadTest::KeypadTest()
     
     // create a label to display the tip string
     _label = Label::createWithTTF("Please press any key...", "fonts/arial.ttf", 22);
-    _label->setPosition(Point(s.width / 2, s.height / 2));
+    _label->setPosition(Vector2(s.width / 2, s.height / 2));
     addChild(_label, 0);
     
     _label->retain();

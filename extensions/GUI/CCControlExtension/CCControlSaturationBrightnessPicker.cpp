@@ -56,15 +56,15 @@ ControlSaturationBrightnessPicker::~ControlSaturationBrightnessPicker()
     _slider     = NULL;
 }
     
-bool ControlSaturationBrightnessPicker::initWithTargetAndPos(Node* target, Point pos)
+bool ControlSaturationBrightnessPicker::initWithTargetAndPos(Node* target, Vector2 pos)
 {
     if (Control::init())
     {
         // Add background and slider sprites
-        _background=ControlUtils::addSpriteToTargetWithPosAndAnchor("colourPickerBackground.png", target, pos, Point(0.0f, 0.0f));
-        _overlay=ControlUtils::addSpriteToTargetWithPosAndAnchor("colourPickerOverlay.png", target, pos, Point(0.0f, 0.0f));
-        _shadow=ControlUtils::addSpriteToTargetWithPosAndAnchor("colourPickerShadow.png", target, pos, Point(0.0f, 0.0f));
-        _slider=ControlUtils::addSpriteToTargetWithPosAndAnchor("colourPicker.png", target, pos, Point(0.5f, 0.5f));
+        _background=ControlUtils::addSpriteToTargetWithPosAndAnchor("colourPickerBackground.png", target, pos, Vector2(0.0f, 0.0f));
+        _overlay=ControlUtils::addSpriteToTargetWithPosAndAnchor("colourPickerOverlay.png", target, pos, Vector2(0.0f, 0.0f));
+        _shadow=ControlUtils::addSpriteToTargetWithPosAndAnchor("colourPickerShadow.png", target, pos, Vector2(0.0f, 0.0f));
+        _slider=ControlUtils::addSpriteToTargetWithPosAndAnchor("colourPicker.png", target, pos, Vector2(0.5f, 0.5f));
                 
         _startPos=pos; // starting position of the colour picker        
         boxPos          = 35;    // starting position of the virtual box area for picking a colour
@@ -77,7 +77,7 @@ bool ControlSaturationBrightnessPicker::initWithTargetAndPos(Node* target, Point
     }
 }
 
-ControlSaturationBrightnessPicker* ControlSaturationBrightnessPicker::create(Node* target, Point pos)
+ControlSaturationBrightnessPicker* ControlSaturationBrightnessPicker::create(Node* target, Vector2 pos)
 {
     ControlSaturationBrightnessPicker *pRet = new ControlSaturationBrightnessPicker();
     pRet->initWithTargetAndPos(target, pos);
@@ -108,14 +108,14 @@ void ControlSaturationBrightnessPicker::updateWithHSV(HSV hsv)
 void ControlSaturationBrightnessPicker::updateDraggerWithHSV(HSV hsv)
 {
     // Set the position of the slider to the correct saturation and brightness
-    Point pos = Point(_startPos.x + boxPos + (boxSize*(1 - hsv.s)),
+    Vector2 pos = Vector2(_startPos.x + boxPos + (boxSize*(1 - hsv.s)),
                               _startPos.y + boxPos + (boxSize*hsv.v));
     
     // update
     updateSliderPosition(pos);
 }
 
-void ControlSaturationBrightnessPicker::updateSliderPosition(Point sliderPosition)
+void ControlSaturationBrightnessPicker::updateSliderPosition(Vector2 sliderPosition)
 {
     // Clamp the position of the icon within the circle
     
@@ -156,7 +156,7 @@ void ControlSaturationBrightnessPicker::updateSliderPosition(Point sliderPositio
     _brightness = fabs((_startPos.y + (float)boxPos - sliderPosition.y)/(float)boxSize);
 }
 
-bool ControlSaturationBrightnessPicker::checkSliderPosition(Point location)
+bool ControlSaturationBrightnessPicker::checkSliderPosition(Vector2 location)
 {
     // Clamp the position of the icon within the circle
     
@@ -188,7 +188,7 @@ bool ControlSaturationBrightnessPicker::onTouchBegan(Touch* touch, Event* event)
     }
     
     // Get the touch location
-    Point touchLocation=getTouchLocation(touch);
+    Vector2 touchLocation=getTouchLocation(touch);
 
     // Check the touch position on the slider
     return checkSliderPosition(touchLocation);
@@ -198,7 +198,7 @@ bool ControlSaturationBrightnessPicker::onTouchBegan(Touch* touch, Event* event)
 void ControlSaturationBrightnessPicker::onTouchMoved(Touch* touch, Event* event)
 {
     // Get the touch location
-    Point touchLocation=getTouchLocation(touch);
+    Vector2 touchLocation=getTouchLocation(touch);
 
     //small modification: this allows changing of the colour, even if the touch leaves the bounding area
 //     updateSliderPosition(touchLocation);

@@ -41,56 +41,56 @@ Rect VisibleRect::getVisibleRect()
     return s_visibleRect;
 }
 
-Point VisibleRect::left()
+Vector2 VisibleRect::left()
 {
     lazyInit();
-    return Point(s_visibleRect.origin.x, s_visibleRect.origin.y+s_visibleRect.size.height/2);
+    return Vector2(s_visibleRect.origin.x, s_visibleRect.origin.y+s_visibleRect.size.height/2);
 }
 
-Point VisibleRect::right()
+Vector2 VisibleRect::right()
 {
     lazyInit();
-    return Point(s_visibleRect.origin.x+s_visibleRect.size.width, s_visibleRect.origin.y+s_visibleRect.size.height/2);
+    return Vector2(s_visibleRect.origin.x+s_visibleRect.size.width, s_visibleRect.origin.y+s_visibleRect.size.height/2);
 }
 
-Point VisibleRect::top()
+Vector2 VisibleRect::top()
 {
     lazyInit();
-    return Point(s_visibleRect.origin.x+s_visibleRect.size.width/2, s_visibleRect.origin.y+s_visibleRect.size.height);
+    return Vector2(s_visibleRect.origin.x+s_visibleRect.size.width/2, s_visibleRect.origin.y+s_visibleRect.size.height);
 }
 
-Point VisibleRect::bottom()
+Vector2 VisibleRect::bottom()
 {
     lazyInit();
-    return Point(s_visibleRect.origin.x+s_visibleRect.size.width/2, s_visibleRect.origin.y);
+    return Vector2(s_visibleRect.origin.x+s_visibleRect.size.width/2, s_visibleRect.origin.y);
 }
 
-Point VisibleRect::center()
+Vector2 VisibleRect::center()
 {
     lazyInit();
-    return Point(s_visibleRect.origin.x+s_visibleRect.size.width/2, s_visibleRect.origin.y+s_visibleRect.size.height/2);
+    return Vector2(s_visibleRect.origin.x+s_visibleRect.size.width/2, s_visibleRect.origin.y+s_visibleRect.size.height/2);
 }
 
-Point VisibleRect::leftTop()
+Vector2 VisibleRect::leftTop()
 {
     lazyInit();
-    return Point(s_visibleRect.origin.x, s_visibleRect.origin.y+s_visibleRect.size.height);
+    return Vector2(s_visibleRect.origin.x, s_visibleRect.origin.y+s_visibleRect.size.height);
 }
 
-Point VisibleRect::rightTop()
+Vector2 VisibleRect::rightTop()
 {
     lazyInit();
-    return Point(s_visibleRect.origin.x+s_visibleRect.size.width, s_visibleRect.origin.y+s_visibleRect.size.height);
+    return Vector2(s_visibleRect.origin.x+s_visibleRect.size.width, s_visibleRect.origin.y+s_visibleRect.size.height);
 }
 
-Point VisibleRect::leftBottom()
+Vector2 VisibleRect::leftBottom()
 {
     lazyInit();
     return s_visibleRect.origin;
 }
 
-Point VisibleRect::rightBottom()
+Vector2 VisibleRect::rightBottom()
 {
     lazyInit();
-    return Point(s_visibleRect.origin.x+s_visibleRect.size.width, s_visibleRect.origin.y);
+    return Vector2(s_visibleRect.origin.x+s_visibleRect.size.width, s_visibleRect.origin.y);
 }

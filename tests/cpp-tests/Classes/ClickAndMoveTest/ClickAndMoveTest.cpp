@@ -28,9 +28,9 @@ MainLayer::MainLayer()
     addChild(layer, -1);
         
     addChild(sprite, 0, kTagSprite);
-    sprite->setPosition( Point(20,150) );
+    sprite->setPosition( Vector2(20,150) );
     
-    sprite->runAction( JumpTo::create(4, Point(300,48), 100, 4) );
+    sprite->runAction( JumpTo::create(4, Vector2(300,48), 100, 4) );
     
     layer->runAction( RepeatForever::create(
                                 Sequence::create(
@@ -51,7 +51,7 @@ void MainLayer::onTouchEnded(Touch* touch, Event  *event)
 
     auto s = getChildByTag(kTagSprite);
     s->stopAllActions();
-    s->runAction( MoveTo::create(1, Point(location.x, location.y) ) );
+    s->runAction( MoveTo::create(1, Vector2(location.x, location.y) ) );
     float o = location.x - s->getPosition().x;
     float a = location.y - s->getPosition().y;
     float at = (float) CC_RADIANS_TO_DEGREES( atanf( o/a) );

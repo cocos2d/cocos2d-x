@@ -42,7 +42,7 @@ bool ControlPotentiometerTest::init()
         auto screenSize = Director::getInstance()->getWinSize();
         
         auto layer = Node::create();
-        layer->setPosition(Point(screenSize.width / 2, screenSize.height / 2));
+        layer->setPosition(Vector2(screenSize.width / 2, screenSize.height / 2));
         this->addChild(layer, 1);
         
         double layer_width = 0;
@@ -50,7 +50,7 @@ bool ControlPotentiometerTest::init()
         // Add the black background for the text
         auto background  = Scale9Sprite::create("extensions/buttonBackground.png");
         background->setContentSize(Size(80, 50));
-        background->setPosition(Point(layer_width + background->getContentSize().width / 2.0f, 0));
+        background->setPosition(Vector2(layer_width + background->getContentSize().width / 2.0f, 0));
         layer->addChild(background);
         
         layer_width += background->getContentSize().width;
@@ -64,7 +64,7 @@ bool ControlPotentiometerTest::init()
         ControlPotentiometer *potentiometer = ControlPotentiometer::create("extensions/potentiometerTrack.png"
                                                                                 ,"extensions/potentiometerProgress.png"
                                                                                 ,"extensions/potentiometerButton.png");
-        potentiometer->setPosition(Point(layer_width + 10 + potentiometer->getContentSize().width / 2, 0));
+        potentiometer->setPosition(Vector2(layer_width + 10 + potentiometer->getContentSize().width / 2, 0));
 
         // When the value of the slider will change, the given selector will be call
         potentiometer->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlPotentiometerTest::valueChanged), Control::EventType::VALUE_CHANGED);
@@ -75,7 +75,7 @@ bool ControlPotentiometerTest::init()
         
         // Set the layer size
         layer->setContentSize(Size(layer_width, 0));
-        layer->setAnchorPoint(Point(0.5f, 0.5f));
+        layer->setAnchorPoint(Vector2(0.5f, 0.5f));
         
         // Update the value label
         this->valueChanged(potentiometer, Control::EventType::VALUE_CHANGED);

@@ -117,7 +117,7 @@ public:
     virtual void setup();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    void pokeHoleAtPoint(Point point);
+    void pokeHoleAtPoint(Vector2 point);
     void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
 private:
 	ClippingNode* _outerClipper;
@@ -138,7 +138,7 @@ public:
     void onTouchesEnded(const std::vector<Touch*>& touches, Event  *event);
 private:
 	bool _scrolling;
-    Point _lastPoint;
+    Vector2 _lastPoint;
 };
 
 //#if COCOS2D_DEBUG > 1
@@ -153,7 +153,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     virtual void setup();
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
 
 	virtual void setupStencilForClippingOnPlane(GLint plane);
 	virtual void setupStencilForDrawingOnPlane(GLint plane);
@@ -162,8 +162,8 @@ protected:
     std::list<CustomCommand> _renderCmds;
     void onEnableStencil();
     void onDisableStencil();
-    void onBeforeDrawClip(int planeIndex, const Point& pt);
-    void onBeforeDrawSprite(int planeIndex, const Point& pt);
+    void onBeforeDrawClip(int planeIndex, const Vector2& pt);
+    void onBeforeDrawSprite(int planeIndex, const Vector2& pt);
 protected:
     Vector<Sprite*> _sprites;
     Vector<Sprite*> _spritesStencil;

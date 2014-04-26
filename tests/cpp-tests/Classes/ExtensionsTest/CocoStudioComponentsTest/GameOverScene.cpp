@@ -63,7 +63,7 @@ bool GameOverLayer::init()
 		this->_label = Label::createWithTTF("","fonts/arial.ttf", 32);
 		_label->retain();
 		_label->setColor( Color3B(0, 0, 0) );
-		_label->setPosition( Point(winSize.width/2, winSize.height/2) );
+		_label->setPosition( Vector2(winSize.width/2, winSize.height/2) );
 		this->addChild(_label);
 		
 		this->runAction( Sequence::create(
@@ -79,9 +79,9 @@ bool GameOverLayer::init()
         });
         
         itemBack->setColor(Color3B(0, 0, 0));
-        itemBack->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
+        itemBack->setPosition(Vector2(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
         auto menuBack = Menu::create(itemBack, nullptr);
-        menuBack->setPosition(Point::ZERO);
+        menuBack->setPosition(Vector2::ZERO);
         addChild(menuBack);
         
 		return true;

@@ -178,16 +178,16 @@ Size GLViewProtocol::getVisibleSize() const
     }
 }
 
-Point GLViewProtocol::getVisibleOrigin() const
+Vector2 GLViewProtocol::getVisibleOrigin() const
 {
     if (_resolutionPolicy == ResolutionPolicy::NO_BORDER)
     {
-        return Point((_designResolutionSize.width - _screenSize.width/_scaleX)/2, 
+        return Vector2((_designResolutionSize.width - _screenSize.width/_scaleX)/2, 
                            (_designResolutionSize.height - _screenSize.height/_scaleY)/2);
     }
     else 
     {
-        return Point::ZERO;
+        return Vector2::ZERO;
     }
 }
 

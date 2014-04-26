@@ -42,14 +42,14 @@ class PhysicsWorld;
 
 class PhysicsContactInfo;
 
-typedef Point Vect;
+typedef Vector2 Vect;
 
 typedef struct PhysicsContactData
 {
     static const int POINT_MAX = 4;
-    Point points[POINT_MAX];
+    Vector2 points[POINT_MAX];
     int   count;
-    Point normal;
+    Vector2 normal;
     
     PhysicsContactData()
     : count(0)
@@ -137,7 +137,7 @@ public:
     /** get friction between two bodies*/
     float getFriction() const;
     /** get surface velocity between two bodies*/
-    Point getSurfaceVelocity() const;
+    Vector2 getSurfaceVelocity() const;
     /** set the restitution*/
     void setRestitution(float restitution);
     /** set the friction*/
@@ -168,7 +168,7 @@ public:
     /** get friction between two bodies*/
     float getFriction() const;
     /** get surface velocity between two bodies*/
-    Point getSurfaceVelocity() const;
+    Vector2 getSurfaceVelocity() const;
     
 private:
     PhysicsContactPostSolve(void* contactInfo);

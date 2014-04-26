@@ -244,7 +244,7 @@ void TestFilenameLookup::onEnter()
     this->addChild(sprite);
     
     auto s = Director::getInstance()->getWinSize();
-    sprite->setPosition(Point(s.width/2, s.height/2));
+    sprite->setPosition(Vector2(s.width/2, s.height/2));
 }
 
 void TestFilenameLookup::onExit()
@@ -277,12 +277,12 @@ void TestIsFileExist::onEnter()
     isExist = sharedFileUtils->isFileExist("Images/grossini.png");
     
     pTTF = Label::createWithSystemFont(isExist ? "Images/grossini.png exists" : "Images/grossini.png doesn't exist", "", 20);
-    pTTF->setPosition(Point(s.width/2, s.height/3));
+    pTTF->setPosition(Vector2(s.width/2, s.height/3));
     this->addChild(pTTF);
     
     isExist = sharedFileUtils->isFileExist("Images/grossini.xcf");
     pTTF = Label::createWithSystemFont(isExist ? "Images/grossini.xcf exists" : "Images/grossini.xcf doesn't exist", "", 20);
-    pTTF->setPosition(Point(s.width/2, s.height/3*2));
+    pTTF->setPosition(Vector2(s.width/2, s.height/3*2));
     this->addChild(pTTF);
 }
 
@@ -366,7 +366,7 @@ void TextWritePlist::onEnter()
     auto label = Label::createWithTTF(fullPath.c_str(), "fonts/Thonburi.ttf", 6);
     this->addChild(label);
     auto winSize = Director::getInstance()->getWinSize();
-    label->setPosition(Point(winSize.width/2, winSize.height/3));
+    label->setPosition(Vector2(winSize.width/2, winSize.height/3));
     
     auto loadDict = __Dictionary::createWithContentsOfFile(fullPath.c_str());
     auto loadDictInDict = (__Dictionary*)loadDict->objectForKey("dictInDict, Hello World");

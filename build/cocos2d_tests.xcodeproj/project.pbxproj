@@ -5527,7 +5527,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math/kazmath/ $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/deprecated $(SRCROOT)/../cocos/ui $(SRCROOT)/../cocos/network $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include/chipmunk";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math $(SRCROOT)/../cocos/deprecated $(SRCROOT)/../cocos/math/kazmath/ $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/ui $(SRCROOT)/../cocos/network $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include/chipmunk";
 			};
 			name = Debug;
 		};
@@ -5552,7 +5552,7 @@
 				HEADER_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math/kazmath/ $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/deprecated $(SRCROOT)/../cocos/ui $(SRCROOT)/../cocos/network $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include/chipmunk";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/deprecated $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math $(SRCROOT)/../cocos/math/kazmath/ $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/ui $(SRCROOT)/../cocos/network $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include/chipmunk";
 			};
 			name = Release;
 		};

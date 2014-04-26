@@ -12,7 +12,7 @@ public:
     void onTouchesMoved(const std::vector<Touch*>&touches, Event  *event);
 
 protected:
-    Point _beginPos;
+    Vector2 _beginPos;
     Menu* _itmeMenu;
 };
 
