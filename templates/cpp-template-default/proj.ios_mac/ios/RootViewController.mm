@@ -27,6 +27,15 @@
 #import "cocos2d.h"
 #import "CCEAGLView.h"
 
+/*
+ //how to set device orientation
+ //http://www.cocos2d-x.org/wiki/Device_Orientation
+ 
+*/
+
+//#define DEVICE_ORIENTATION_USE_PORTRAITIT
+//#define DEVICE_ORIENTATION_USE_LANDSCAPE
+
 @implementation RootViewController
 
 /*
@@ -61,7 +70,16 @@
 // For ios6, use supportedInterfaceOrientations & shouldAutorotate instead
 - (NSUInteger) supportedInterfaceOrientations{
 #ifdef __IPHONE_6_0
+    #ifdef DEVICE_ORIENTATION_USE_LANDSCAPE
     return UIInterfaceOrientationMaskAllButUpsideDown;
+#endif
+    
+#ifdef DEVICE_ORIENTATION_USE_PORTRAITIT
+    return UIInterfaceOrientationMaskPortrait;
+#endif
+
+
+return UIInterfaceOrientationMaskAllButUpsideDown;
 #endif
 }
 
