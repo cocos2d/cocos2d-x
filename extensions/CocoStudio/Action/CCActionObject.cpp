@@ -174,6 +174,7 @@ void ActionObject::play(CCCallFunc* func)
 {
 	this->play();
 	this->m_CallBack = func;
+    CC_SAFE_RETAIN(_CallBack);
 }
 
 void ActionObject::pause()
@@ -230,10 +231,15 @@ void ActionObject::simulationActionUpdate(float dt)
 		if (m_CallBack != NULL)
 		{
 			m_CallBack->execute();
+			CC_SAFE_RELEASE_NULL(_CallBack);
 		}
 		if (m_loop)
 		{
 			this->play();
+		}
+		else
+		{
+			m_pScheduler->unscheduleSelector(schedule_selector(ActionObject::simulationActionUpdate), this);
 		}
 	}
 }
