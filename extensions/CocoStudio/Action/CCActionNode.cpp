@@ -66,7 +66,7 @@ ActionNode::~ActionNode()
 
 	if (m_FrameArray != NULL)
 	{
-		m_FrameArray->removeAllObjects();
+		//m_FrameArray->removeAllObjects();
 		CC_SAFE_RELEASE_NULL(m_FrameArray);
 	}
 
