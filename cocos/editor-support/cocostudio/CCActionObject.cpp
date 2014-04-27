@@ -216,6 +216,10 @@ void ActionObject::simulationActionUpdate(float dt)
 		{
 			this->play();
 		}
+        else
+        {
+            _pScheduler->unschedule(schedule_selector(ActionObject::simulationActionUpdate), this);
+        }
 	}
 }
 }
