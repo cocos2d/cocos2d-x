@@ -45,6 +45,7 @@ class CC_DLL FileUtilsApple : public FileUtils
 public:
     /* override funtions */
     virtual std::string getWritablePath() const override;
+    virtual std::string getCachePath() const override;
     virtual std::string getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename) override;
     
     virtual ValueMap getValueMapFromFile(const std::string& filename) override;
@@ -53,6 +54,7 @@ public:
     virtual ValueVector getValueVectorFromFile(const std::string& filename) override;
 private:
     virtual bool isFileExistInternal(const std::string& filePath) const override;
+    std::string getDirPath(NSSearchPathDirectory dir) const;
 };
 
 // end of platform group

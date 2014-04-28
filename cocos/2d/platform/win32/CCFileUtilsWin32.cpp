@@ -319,6 +319,17 @@ string FileUtilsWin32::getWritablePath() const
     return ret;
 }
 
+string FileUtilsWin32::getCachePath() const
+{
+    WCHAR utf16Path[CC_MAX_PATH] = {0};
+    GetTempPathW(sizeof(utf16Path)-1, utf16Path);
+
+    char utf8Path[CC_MAX_PATH] = {0};
+    int nNum = WideCharToMultiByte(CP_UTF8, 0, utf16Path, -1, utf8Path, sizeof(utf8Path), NULL, NULL);
+
+    return convertPathFormatToUnixStyle(utf8Path);
+}
+
 NS_CC_END
 
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32

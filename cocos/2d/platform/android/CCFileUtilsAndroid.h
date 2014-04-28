@@ -75,11 +75,13 @@ public:
     virtual Data getDataFromFile(const std::string& filename) override;
 
     virtual std::string getWritablePath() const;
+    virtual std::string getCachePath() const;
     virtual bool isAbsolutePath(const std::string& strPath) const;
     
 private:
     virtual bool isFileExistInternal(const std::string& strFilePath) const;
     Data getData(const std::string& filename, bool forString);
+    std::string getDirPath(std::string filedir) const;
 
     static AAssetManager* assetmanager;
 };

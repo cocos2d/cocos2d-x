@@ -202,6 +202,12 @@ string CCFileUtilsWinRT::getWritablePath() const
 	return convertPathFormatToUnixStyle(std::string(PlatformStringToString(localFolderPath)) + '\\');
 }
 
+string CCFileUtilsWinRT::getCachePath() const
+{
+	auto localFolderPath = Windows::Storage::ApplicationData::Current->TemporaryFolder->Path;
+	return convertPathFormatToUnixStyle(std::string(PlatformStringToString(localFolderPath)) + '\\');
+}
+
 string CCFileUtilsWinRT::getAppPath()
 {
 	Windows::ApplicationModel::Package^ package = Windows::ApplicationModel::Package::Current;

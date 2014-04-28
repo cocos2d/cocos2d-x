@@ -100,6 +100,11 @@ string FileUtilsLinux::getWritablePath() const
     return _writablePath;
 }
 
+string FileUtilsLinux::getCachePath() const
+{
+    return "/tmp/";
+}
+
 bool FileUtilsLinux::isFileExistInternal(const std::string& strFilePath) const
 {
     if (strFilePath.empty())
