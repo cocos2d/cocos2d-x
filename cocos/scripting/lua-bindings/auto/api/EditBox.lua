@@ -109,12 +109,12 @@
 --------------------------------
 -- @function [parent=#EditBox] setAnchorPoint 
 -- @param self
--- @param #point_table point
+-- @param #cc.math::Vector2 array
         
 --------------------------------
 -- @function [parent=#EditBox] setPosition 
 -- @param self
--- @param #point_table point
+-- @param #cc.math::Vector2 array
         
 --------------------------------
 -- @function [parent=#EditBox] setVisible 

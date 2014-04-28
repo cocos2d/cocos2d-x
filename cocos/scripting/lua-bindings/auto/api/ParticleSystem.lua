@@ -36,7 +36,7 @@
 --------------------------------
 -- @function [parent=#ParticleSystem] setPosVar 
 -- @param self
--- @param #point_table point
+-- @param #cc.math::Vector2 array
         
 --------------------------------
 -- @function [parent=#ParticleSystem] getEndSpin 
@@ -106,7 +106,7 @@
 --------------------------------
 -- @function [parent=#ParticleSystem] getGravity 
 -- @param self
--- @return point_table#point_table ret (return value: point_table)
+-- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
         
 --------------------------------
 -- @function [parent=#ParticleSystem] getTangentialAccel 
@@ -151,7 +151,7 @@
 --------------------------------
 -- @function [parent=#ParticleSystem] getPosVar 
 -- @param self
--- @return point_table#point_table ret (return value: point_table)
+-- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
         
 --------------------------------
 -- @function [parent=#ParticleSystem] updateWithNoTime 
@@ -179,7 +179,7 @@
 --------------------------------
 -- @function [parent=#ParticleSystem] getSourcePosition 
 -- @param self
--- @return point_table#point_table ret (return value: point_table)
+-- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
         
 --------------------------------
 -- @function [parent=#ParticleSystem] setLifeVar 
@@ -200,7 +200,7 @@
 -- @function [parent=#ParticleSystem] updateQuadWithParticle 
 -- @param self
 -- @param #cc.sParticle sparticle
--- @param #point_table point
+-- @param #cc.math::Vector2 array
         
 --------------------------------
 -- @function [parent=#ParticleSystem] getAtlasIndex 
@@ -294,7 +294,7 @@
 --------------------------------
 -- @function [parent=#ParticleSystem] setSourcePosition 
 -- @param self
--- @param #point_table point
+-- @param #cc.math::Vector2 array
         
 --------------------------------
 -- @function [parent=#ParticleSystem] getEndSpinVar 
@@ -389,7 +389,7 @@
 --------------------------------
 -- @function [parent=#ParticleSystem] setGravity 
 -- @param self
--- @param #point_table point
+-- @param #cc.math::Vector2 array
         
 --------------------------------
 -- @function [parent=#ParticleSystem] postStep 

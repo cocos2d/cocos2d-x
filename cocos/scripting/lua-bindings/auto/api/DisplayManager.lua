@@ -11,7 +11,7 @@
 --------------------------------
 -- @function [parent=#DisplayManager] getAnchorPointInPoints 
 -- @param self
--- @return point_table#point_table ret (return value: point_table)
+-- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
         
 --------------------------------
 -- @function [parent=#DisplayManager] getDisplayRenderNodeType 
@@ -57,7 +57,7 @@
 --------------------------------
 -- overload function: containPoint(float, float)
 --          
--- overload function: containPoint(point_table)
+-- overload function: containPoint(cc.math::Vector2)
 --          
 -- @function [parent=#DisplayManager] containPoint
 -- @param self
@@ -90,7 +90,7 @@
 --------------------------------
 -- @function [parent=#DisplayManager] getAnchorPoint 
 -- @param self
--- @return point_table#point_table ret (return value: point_table)
+-- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
         
 --------------------------------
 -- @function [parent=#DisplayManager] getDecorativeDisplayList 

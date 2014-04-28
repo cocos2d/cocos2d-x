@@ -17,8 +17,8 @@
 -- @param self
 -- @param #cc.Node node
 -- @param #int int
--- @param #point_table point
--- @param #point_table point
+-- @param #cc.math::Vector2 array
+-- @param #cc.math::Vector2 array
         
 --------------------------------
 -- @function [parent=#ParallaxNode] removeAllChildrenWithCleanup 
@@ -41,13 +41,6 @@
 -- @param #cc.Node node
 -- @param #int int
 -- @param #int int
-        
---------------------------------
--- @function [parent=#ParallaxNode] visit 
--- @param self
--- @param #cc.Renderer renderer
--- @param #kmMat4 kmmat4
--- @param #bool bool
         
 --------------------------------
 -- @function [parent=#ParallaxNode] removeChild 
