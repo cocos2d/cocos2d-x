@@ -35,8 +35,6 @@ AffineTransform TransformHelp::helpMatrix2;
 Vector2 TransformHelp::helpPoint1;
 Vector2 TransformHelp::helpPoint2;
 
-BaseData helpParentNode;
-
 TransformHelp::TransformHelp()
 {
 }
@@ -65,7 +63,8 @@ void TransformHelp::transformToParent(BaseData &node, const BaseData &parentNode
 
 void TransformHelp::transformFromParentWithoutScale(BaseData &node, const BaseData &parentNode)
 {
-
+    BaseData helpParentNode;
+    
     helpParentNode.copy(&parentNode);
     helpParentNode.scaleX = 1;
     helpParentNode.scaleY = 1;
@@ -81,7 +80,8 @@ void TransformHelp::transformFromParentWithoutScale(BaseData &node, const BaseDa
 
 void TransformHelp::transformToParentWithoutScale(BaseData &node, const BaseData &parentNode)
 {
-
+    BaseData helpParentNode;
+    
     helpParentNode.copy(&parentNode);
     helpParentNode.scaleX = 1;
     helpParentNode.scaleY = 1;
