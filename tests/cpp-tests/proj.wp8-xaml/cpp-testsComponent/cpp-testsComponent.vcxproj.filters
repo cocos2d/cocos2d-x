@@ -834,6 +834,9 @@
     <ClCompile Include="..\..\Classes\CurlTest\CurlTest.cpp">
       <Filter>Classes\CurlTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Classes\UnitTest\RefPtrTest.cpp">
+      <Filter>Classes\UnitTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Classes\AppDelegate.h">
@@ -1544,6 +1547,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Classes\CurlTest\CurlTest.h">
       <Filter>Classes\CurlTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\UnitTest\RefPtrTest.h">
+      <Filter>Classes\UnitTest</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

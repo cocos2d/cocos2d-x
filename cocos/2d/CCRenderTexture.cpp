@@ -535,12 +535,9 @@ void RenderTexture::onBegin()
         director->setProjection(director->getProjection());
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-        kmMat4 modifiedProjection;
-        kmGLGetMatrix(KM_GL_PROJECTION, &modifiedProjection);
-        kmMat4Multiply(&modifiedProjection, CCEGLView::sharedOpenGLView()->getReverseOrientationMatrix(), &modifiedProjection);
-        kmGLMatrixMode(KM_GL_PROJECTION);
-        kmGLLoadMatrix(&modifiedProjection);
-        kmGLMatrixMode(KM_GL_MODELVIEW);
+        Matrix modifiedProjection = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        modifiedProjection = CCEGLView::sharedOpenGLView()->getReverseOrientationMatrix() * modifiedProjection;
+        director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION,modifiedProjection);
 #endif
 
         const Size& texSize = _texture->getContentSizeInPixels();

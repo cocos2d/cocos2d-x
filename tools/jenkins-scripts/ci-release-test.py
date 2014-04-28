@@ -55,7 +55,7 @@ def main():
     pr_desc = '<h3>' + tag + ' is release' + '</h3>'
 
     #get pr target branch
-    branch = 'develop'
+    branch = 'v3'
 
     #set parent build description
     jenkins_url = os.environ['JENKINS_URL']
@@ -65,10 +65,10 @@ def main():
 
     set_description(pr_desc, target_url)
 
-    #pull origin develop
+    #pull origin v3
     os.system('git reset --hard')
     os.system("git clean -xdf -f")
-    os.system("git checkout develop")
+    os.system("git checkout v3")
     os.system("git branch -D " + tag)
     os.system("git clean -xdf -f")
     #fetch tag to local repo
@@ -106,7 +106,7 @@ def main():
         os.system('git reset --hard')
         os.system("git clean -xdf -f")
         make_temp_dir()
-        if(branch == 'develop'):
+        if(branch == 'v3'):
           # Generate binding glue codes
           ret = os.system("python tools/jenkins-scripts/gen_jsb.py")
           if(ret != 0):
@@ -139,7 +139,7 @@ def main():
     os.system("cd " + os.environ['WORKSPACE'])
     os.system("git reset --hard")
     os.system("git clean -xdf -f")
-    os.system("git checkout develop")
+    os.system("git checkout v3")
 
     return(exit_code)
 
