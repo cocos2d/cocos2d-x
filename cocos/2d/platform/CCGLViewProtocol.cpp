@@ -55,6 +55,21 @@ namespace {
         return -1;
     }
     
+    static std::vector<Touch*> getAllTouches()
+    {
+        std::vector<Touch*> ret;
+        int i;
+        int temp = g_indexBitsUsed;
+        
+        for (i = 0; i < EventTouch::MAX_TOUCHES; i++) {
+            if ( temp & 0x00000001) {
+                ret.push_back(g_touches[i]);
+            }
+            temp >>= 1;
+        }
+        return ret;
+    }
+    
     static void removeUsedIndexBit(int index)
     {
         if (index < 0 || index >= EventTouch::MAX_TOUCHES)
@@ -277,6 +292,8 @@ void GLViewProtocol::handleTouchesBegin(int num, intptr_t ids[], float xs[], flo
         return;
     }
     
+    touchEvent._allTouches = getAllTouches();
+    
     touchEvent._eventCode = EventTouch::EventCode::BEGAN;
     auto dispatcher = Director::getInstance()->getEventDispatcher();
     dispatcher->dispatchEvent(&touchEvent);
@@ -324,6 +341,8 @@ void GLViewProtocol::handleTouchesMove(int num, intptr_t ids[], float xs[], floa
         CCLOG("touchesMoved: size = 0");
         return;
     }
+    
+    touchEvent._allTouches = getAllTouches();
     
     touchEvent._eventCode = EventTouch::EventCode::MOVED;
     auto dispatcher = Director::getInstance()->getEventDispatcher();
@@ -378,6 +397,8 @@ void GLViewProtocol::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode,
         CCLOG("touchesEnded or touchesCancel: size = 0");
         return;
     }
+    
+    touchEvent._allTouches = getAllTouches();
     
     touchEvent._eventCode = eventCode;
     auto dispatcher = Director::getInstance()->getEventDispatcher();
