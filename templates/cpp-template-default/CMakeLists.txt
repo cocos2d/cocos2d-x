@@ -61,7 +61,7 @@ include_directories(
   ${COCOS2D_ROOT}/cocos/deprecated
   ${COCOS2D_ROOT}/cocos/physics
   ${COCOS2D_ROOT}/cocos/editor-support
-  ${COCOS2D_ROOT}/cocos/math/kazmath
+  ${COCOS2D_ROOT}/cocos/math
   ${COCOS2D_ROOT}/extensions
   ${COCOS2D_ROOT}/external
   ${COCOS2D_ROOT}/external/edtaa3func
@@ -90,7 +90,7 @@ link_directories(
 )
 
 # kazmath
-add_subdirectory(${COCOS2D_ROOT}/cocos/math/kazmath)
+add_subdirectory(${COCOS2D_ROOT}/cocos/math)
 
 # chipmunk library
 add_subdirectory(${COCOS2D_ROOT}/external/chipmunk/src)
