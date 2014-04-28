@@ -193,6 +193,17 @@ CC_CONSTRUCTOR_ACCESS:
                       TextureResType texType = UI_TEX_TYPE_LOCAL);
 
 
+    /**
+     * Sets whether the widget is enabled
+     *
+     * Highest control of widget.
+     * The default value is true, a widget is default to enabled
+     *
+     * @param enabled   true if the widget is enabled, widget may be touched and visible, false if the widget is disabled, widget cannot be touched and hidden.
+     */
+    virtual void setEnabled(bool enabled) override;
+
+
 protected:
     virtual void initRenderer() override;
     virtual void onPressStateChangedToNormal() override;
