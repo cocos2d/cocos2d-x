@@ -303,6 +303,75 @@ bool luaval_to_point(lua_State* L,int lo,Point* outValue)
     return ok;
 }
 
+bool luaval_to_vector2(lua_State* L,int lo,cocos2d::Vector2* outValue)
+{
+    if (nullptr == L || nullptr == outValue)
+        return false;
+    
+    bool ok = true;
+    
+    tolua_Error tolua_err;
+    if (!tolua_istable(L, lo, 0, &tolua_err) )
+    {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
+        ok = false;
+    }
+    
+    
+    if (ok)
+    {
+        lua_pushstring(L, "x");
+        lua_gettable(L, lo);
+        outValue->x = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "y");
+        lua_gettable(L, lo);
+        outValue->y = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+    }
+    return ok;
+}
+
+bool luaval_to_vector3(lua_State* L,int lo,cocos2d::Vector3* outValue)
+{
+    if (nullptr == L || nullptr == outValue)
+        return false;
+    
+    bool ok = true;
+    
+    tolua_Error tolua_err;
+    if (!tolua_istable(L, lo, 0, &tolua_err) )
+    {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
+        ok = false;
+    }
+    
+    
+    if (ok)
+    {
+        lua_pushstring(L, "x");
+        lua_gettable(L, lo);
+        outValue->x = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "y");
+        lua_gettable(L, lo);
+        outValue->y = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "z");
+        lua_gettable(L, lo);
+        outValue->z = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+    }
+    return ok;
+}
+
 bool luaval_to_physics_material(lua_State* L,int lo,PhysicsMaterial* outValue)
 {
     if (NULL == L || NULL == outValue)
@@ -805,11 +874,49 @@ bool luaval_to_kmMat4(lua_State* L, int lo, kmMat4* outValue )
             lua_gettable(L,lo);
             if (tolua_isnumber(L, -1, 0, &tolua_err))
             {
-                outValue->mat[i] = tolua_tonumber(L, -1, 0);
+                outValue->m[i] = tolua_tonumber(L, -1, 0);
             }
             else
             {
-                outValue->mat[i] = 0;
+                outValue->m[i] = 0;
+            }
+            lua_pop(L, 1);
+        }
+    }
+    
+    return ok;
+}
+
+bool luaval_to_matrix(lua_State* L, int lo, cocos2d::math::Matrix* outValue )
+{
+    if (nullptr == L || nullptr == outValue)
+        return false;
+    
+    bool ok = true;
+    
+    tolua_Error tolua_err;
+    if (!tolua_istable(L, lo, 0, &tolua_err) )
+    {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err);
+        ok = false;
+#endif
+    }
+    
+    if (ok)
+    {
+        size_t len = lua_objlen(L, lo);
+        for (int i = 0; i < len; i++)
+        {
+            lua_pushnumber(L,i + 1);
+            lua_gettable(L,lo);
+            if (tolua_isnumber(L, -1, 0, &tolua_err))
+            {
+                outValue->m[i] = tolua_tonumber(L, -1, 0);
+            }
+            else
+            {
+                outValue->m[i] = 0;
             }
             lua_pop(L, 1);
         }
@@ -1600,9 +1707,40 @@ void point_to_luaval(lua_State* L,const Point& pt)
     lua_rawset(L, -3);                                  /* table[key] = value, L: table */
 }
 
-void physics_material_to_luaval(lua_State* L,const PhysicsMaterial& pm)
+void vector2_to_luaval(lua_State* L,const cocos2d::Vector2& vec2)
 {
     if (NULL  == L)
+        return;
+    lua_newtable(L);                                    /* L: table */
+    lua_pushstring(L, "x");                             /* L: table key */
+    lua_pushnumber(L, (lua_Number) vec2.x);               /* L: table key value*/
+    lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+    lua_pushstring(L, "y");                             /* L: table key */
+    lua_pushnumber(L, (lua_Number) vec2.y);               /* L: table key value*/
+    lua_rawset(L, -3);
+    
+}
+
+void vector3_to_luaval(lua_State* L,const cocos2d::Vector3& vec3)
+{
+    if (NULL  == L)
+        return;
+    
+    lua_newtable(L);                                    /* L: table */
+    lua_pushstring(L, "x");                             /* L: table key */
+    lua_pushnumber(L, (lua_Number) vec3.x);             /* L: table key value*/
+    lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+    lua_pushstring(L, "y");                             /* L: table key */
+    lua_pushnumber(L, (lua_Number) vec3.y);             /* L: table key value*/
+    lua_rawset(L, -3);
+    lua_pushstring(L, "z");                             /* L: table key */
+    lua_pushnumber(L, (lua_Number) vec3.z);             /* L: table key value*/
+    lua_rawset(L, -3);
+}
+
+void physics_material_to_luaval(lua_State* L,const PhysicsMaterial& pm)
+{
+    if (nullptr  == L)
         return;
     lua_newtable(L);                                    /* L: table */
     lua_pushstring(L, "density");                       /* L: table key */
@@ -2262,5 +2400,22 @@ void ccvaluevector_to_luaval(lua_State* L, const cocos2d::ValueVector& inValue)
             default:
                 break;
         }
+    }
+}
+
+void matrix_to_luaval(lua_State* L, const cocos2d::math::Matrix& mat)
+{
+    if (nullptr  == L)
+        return;
+    
+    lua_newtable(L);                                    /* L: table */
+    int indexTable = 1;
+    
+    for (int i = 0; i < 16; i++)
+    {
+        lua_pushnumber(L, (lua_Number)indexTable);
+        lua_pushnumber(L, (lua_Number)mat.m[i]);
+        lua_rawset(L, -3);
+        ++indexTable;
     }
 }
