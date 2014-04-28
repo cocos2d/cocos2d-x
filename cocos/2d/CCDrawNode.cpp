@@ -156,8 +156,6 @@ void DrawNode::ensureCapacity(int count)
 
 bool DrawNode::init()
 {
-    _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
-
     setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR));
     
     ensureCapacity(512);
