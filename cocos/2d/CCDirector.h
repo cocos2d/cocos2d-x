@@ -248,6 +248,9 @@ public:
      * ONLY call it if there is a running scene.
      */
     void popScene();
+    
+    Scene* previousScene(void);
+    void popScene(Scene *trans);
 
     /** Pops out all scenes from the stack until the root scene in the queue.
      * This scene will replace the running one.
