@@ -76,7 +76,7 @@ def main():
 
     #reset path to workspace root
     os.system("cd " + os.environ['WORKSPACE']);
-    os.system("git checkout develop")
+    os.system("git checkout v3")
     os.system("git branch -D pull" + str(pr_num))
     #clean workspace
     print "Before checkout: git clean -xdf -f"    
@@ -102,9 +102,9 @@ def main():
         return(2)
 
     # Generate binding glue codes
-    if(branch == 'develop'):
+    if(branch == 'v3'):
       ret = os.system("python tools/jenkins-scripts/gen_jsb.py")
-    elif(branch == 'master'):
+    elif(branch == 'v2'):
       os.chdir('tools/tojs')
       if(platform.system() == 'Windows'):
         os.environ['NDK_ROOT'] = os.environ['NDK_ROOT_R8E']
@@ -139,7 +139,7 @@ def main():
     #TODO: add android-linux build
     #TODO: add mac build
     node_name = os.environ['NODE_NAME']
-    if(branch == 'develop'):
+    if(branch == 'v3'):
       if(node_name == 'android_mac') or (node_name == 'android_win7'):
         #modify tests/cpp-empty-test/Classes/AppDelegate.cpp to support Console
         modify_file = 'tests/cpp-empty-test/Classes/AppDelegate.cpp'
@@ -171,7 +171,7 @@ def main():
         ret = os.system("cmake ../")
         ret = os.system("make -j10")
         os.chdir("../")
-    elif(branch == 'master'):
+    elif(branch == 'v2'):
       SAMPLES_DIRS = ['Cpp/HelloCpp', 'Cpp/SimpleGame', 'Cpp/TestCpp', 'Javascript/TestJavascript', 'Lua/HelloLua', 'Lua/TestLua']
       SAMPLES_NAMES = ['HelloCpp', 'SimpleGame', 'TestCpp', 'TestJavascript', 'HelloLua', 'TestLua']
       if(node_name == 'android_mac'):
@@ -215,7 +215,7 @@ def main():
     os.system("cd " + os.environ['WORKSPACE'])
     os.system("git reset --hard")
     os.system("git clean -xdf -f")
-    os.system("git checkout develop")
+    os.system("git checkout v3")
     os.system("git branch -D pull" + str(pr_num))
 
     return(exit_code)

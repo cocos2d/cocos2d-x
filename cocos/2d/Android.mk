@@ -167,7 +167,6 @@ renderer/CCRenderMaterial.cpp \
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/.. \
                     $(LOCAL_PATH)/renderer \
-                    $(LOCAL_PATH)/../math/kazmath \
                     $(LOCAL_PATH)/../math \
                     platform/android \
                     $(LOCAL_PATH)/../physics \
@@ -181,7 +180,6 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/.. \
                     $(LOCAL_PATH)/renderer \
-                    $(LOCAL_PATH)/../math/kazmath \
                     $(LOCAL_PATH)/../math \
                     $(LOCAL_PATH)/platform/android \
                     $(LOCAL_PATH)/../physics \

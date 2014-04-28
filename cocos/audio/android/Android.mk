@@ -13,7 +13,6 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../include
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../include \
                     $(LOCAL_PATH)/../.. \
-                    $(LOCAL_PATH)/../../math/kazmath \
                     $(LOCAL_PATH)/../../math \
                     $(LOCAL_PATH)/../../2d \
                     $(LOCAL_PATH)/../../2d/platform/android \
