@@ -34,5 +34,4 @@ before_install:
 # whitelist
 branches:
   only:
-    - master
-    - develop
+    - v3
