@@ -43,12 +43,12 @@
 --------------------------------
 -- @function [parent=#ControlButton] setLabelAnchorPoint 
 -- @param self
--- @param #point_table point
+-- @param #cc.math::Vector2 array
         
 --------------------------------
 -- @function [parent=#ControlButton] getLabelAnchorPoint 
 -- @param self
--- @return point_table#point_table ret (return value: point_table)
+-- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
         
 --------------------------------
 -- @function [parent=#ControlButton] getTitleTTFSizeForState 

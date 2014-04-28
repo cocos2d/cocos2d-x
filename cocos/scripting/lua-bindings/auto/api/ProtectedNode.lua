@@ -63,13 +63,6 @@
 -- @return ProtectedNode#ProtectedNode ret (return value: cc.ProtectedNode)
         
 --------------------------------
--- @function [parent=#ProtectedNode] visit 
--- @param self
--- @param #cc.Renderer renderer
--- @param #kmMat4 kmmat4
--- @param #bool bool
-        
---------------------------------
 -- @function [parent=#ProtectedNode] updateDisplayedOpacity 
 -- @param self
 -- @param #unsigned char char

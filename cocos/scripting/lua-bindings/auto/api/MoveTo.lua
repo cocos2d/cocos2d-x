@@ -7,7 +7,7 @@
 -- @function [parent=#MoveTo] create 
 -- @param self
 -- @param #float float
--- @param #point_table point
+-- @param #cc.math::Vector2 array
 -- @return MoveTo#MoveTo ret (return value: cc.MoveTo)
         
 --------------------------------
