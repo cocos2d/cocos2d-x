@@ -429,7 +429,7 @@ void GLView::UpdateOrientationMatrix()
 	}
 }
 
-cocos2d::Point GLView::TransformToOrientation(Windows::Foundation::Point p)
+cocos2d::Vector2 GLView::TransformToOrientation(Windows::Foundation::Point p)
 {
     cocos2d::Vector2 returnValue;
 
