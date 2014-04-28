@@ -382,19 +382,21 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
     }
     else if (elementName == "image")
     {
-        TMXTilesetInfo* tileset = tmxMapInfo->getTilesets().back();
+        if ( !tmxMapInfo->getTilesets().empty() ) {
+            TMXTilesetInfo* tileset = tmxMapInfo->getTilesets().back();
 
-        // build full path
-        std::string imagename = attributeDict["source"].asString();
-
-        if (_TMXFileName.find_last_of("/") != string::npos)
-        {
-            string dir = _TMXFileName.substr(0, _TMXFileName.find_last_of("/") + 1);
-            tileset->_sourceImage = dir + imagename;
-        }
-        else 
-        {
-            tileset->_sourceImage = _resources + (_resources.size() ? "/" : "") + imagename;
+            // build full path
+            const std::string imagename = attributeDict["source"].asString();
+            if (_TMXFileName.find_last_of("/") != string::npos)
+            {
+                const std::string dir =
+                    _TMXFileName.substr(0, _TMXFileName.find_last_of("/") + 1);
+                tileset->_sourceImage = dir + imagename;
+            }
+            else 
+            {
+                tileset->_sourceImage = _resources + (_resources.size() ? "/" : "") + imagename;
+            }
         }
     } 
     else if (elementName == "data")
