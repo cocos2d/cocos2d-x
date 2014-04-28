@@ -54,6 +54,8 @@ namespace cocostudio
         panel->setSize(Size(w, h));
         /**/
         
+        panel->setClippingEnabled(DICTOOL->getBooleanValue_json(options, "clipAble"));
+        
         bool backGroundScale9Enable = DICTOOL->getBooleanValue_json(options, "backGroundScale9Enable");
         panel->setBackGroundImageScale9Enabled(backGroundScale9Enable);
         int cr = DICTOOL->getIntValue_json(options, "bgColorR");
