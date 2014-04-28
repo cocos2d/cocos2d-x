@@ -48,6 +48,7 @@ set(GAME_SRC
 set(COCOS2D_ROOT ${CMAKE_SOURCE_DIR}/cocos2d)
 
 include_directories(
+  /usr/include/GLFW
   /usr/local/include/GLFW
   ${COCOS2D_ROOT}
   ${COCOS2D_ROOT}/cocos
