@@ -69,8 +69,17 @@ def main():
 
     #set commit status to pending
     target_url = os.environ['JOB_PULL_REQUEST_BUILD_URL']
+
+    #is emptytest or cpptest?
+    test_types = os.environ['TEST_TYPES'].split(', ')
+    in_test_types = False
+    for item in test_types:
+        ciOper = searchCI.group()
+        if (item in ciOper):
+            in_test_types = True
+    print 'test_types:', test_types, in_test_types
     
-    if(action == 'closed'):
+    if(action == 'closed' and not in_test_types):
         print 'pull request #' + str(pr_num) + ' is '+action+', no build triggered'
         return(0)
     
