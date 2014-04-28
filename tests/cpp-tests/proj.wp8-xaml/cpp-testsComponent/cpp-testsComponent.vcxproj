@@ -272,6 +272,7 @@
     <ClCompile Include="..\..\Classes\ShaderTest\ShaderTest2.cpp" />
     <ClCompile Include="..\..\Classes\SpineTest\SpineTest.cpp" />
     <ClCompile Include="..\..\Classes\TexturePackerEncryptionTest\TextureAtlasEncryptionTest.cpp" />
+    <ClCompile Include="..\..\Classes\UnitTest\RefPtrTest.cpp" />
     <ClCompile Include="..\..\Classes\UnitTest\UnitTest.cpp" />
     <ClCompile Include="..\..\Classes\VisibleRect.cpp" />
     <ClCompile Include="..\..\Classes\AppDelegate.cpp" />
@@ -466,6 +467,7 @@
     <ClInclude Include="..\..\Classes\ShaderTest\ShaderTest2.h" />
     <ClInclude Include="..\..\Classes\SpineTest\SpineTest.h" />
     <ClInclude Include="..\..\Classes\TexturePackerEncryptionTest\TextureAtlasEncryptionTest.h" />
+    <ClInclude Include="..\..\Classes\UnitTest\RefPtrTest.h" />
     <ClInclude Include="..\..\Classes\UnitTest\UnitTest.h" />
     <ClInclude Include="..\..\Classes\VisibleRect.h" />
     <ClInclude Include="..\..\Classes\AppDelegate.h" />
