@@ -278,6 +278,12 @@ public:
      */
     void popToRootScene();
 
+    /** Pops out all scenes from the stack.
+     * The new scene will be the root scene and replace the running one.
+     * Internally it will call `popToSceneStackLevel(1)`
+     */
+    void replaceToRootScene(Scene *scene);
+
     /** Pops out all scenes from the stack until it reaches `level`.
      If level is 0, it will end the director.
      If level is 1, it will pop all scenes until it reaches to root scene.

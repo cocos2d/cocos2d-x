@@ -872,6 +872,24 @@ void Director::popToRootScene(void)
     popToSceneStackLevel(1);
 }
 
+void Director::replaceToRootScene(Scene *scene)
+{
+    CCASSERT(_runningScene, "Use runWithScene: instead to start the director");
+    CCASSERT(scene != nullptr, "the scene should not be null");
+
+    popToRootScene();
+    auto rootScene = _scenesStack.back();
+    if (rootScene->isRunning())
+    {
+        rootScene->onExitTransitionDidStart();
+        rootScene->onExit();
+    }
+    rootScene->cleanup();
+    _scenesStack.popBack();
+
+    pushScene(scene);
+}
+
 void Director::popToSceneStackLevel(int level)
 {
     CCASSERT(_runningScene != nullptr, "A running Scene is needed");
