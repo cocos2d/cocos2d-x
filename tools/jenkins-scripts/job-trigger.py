@@ -54,7 +54,10 @@ def main():
     #set commit status to pending
     target_url = os.environ['JOB_PULL_REQUEST_BUILD_URL']
 
-    check_queue_build(action, pr_num, statuses_url)
+    try:    
+        check_queue_build(action, pr_num, statuses_url)
+    except:
+        print 'Can not find build in queue'
     
     if(action == 'closed'):
         print 'pull request #' + str(pr_num) + ' is '+action+', no build triggered'
