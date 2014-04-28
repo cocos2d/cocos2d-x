@@ -397,10 +397,9 @@ void GLView::UpdateWindowSize()
 	}
 }
 
-const kmMat4* GLView::getOrientationMatrix() const 
+const Matrix& GLView::getOrientationMatrix() const 
 {
-    const kmMat4* k = &m_orientationMatrix;
-    return &m_orientationMatrix;
+    return m_orientationMatrix;
 };
 
 
@@ -430,7 +429,7 @@ void GLView::UpdateOrientationMatrix()
 	}
 }
 
-cocos2d::Vector2 GLView::TransformToOrientation(Windows::Foundation::Vector2 p)
+cocos2d::Vector2 GLView::TransformToOrientation(Windows::Foundation::Point p)
 {
     cocos2d::Vector2 returnValue;
 
