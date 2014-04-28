@@ -58,7 +58,9 @@ extern bool luaval_to_std_string(lua_State* L, int lo, std::string* outValue);
 extern bool luaval_to_long(lua_State* L,int lo, long* outValue);
 extern bool luaval_to_ssize(lua_State* L,int lo, ssize_t* outValue);
 
-extern bool luaval_to_point(lua_State* L,int lo,Point* outValue);
+extern bool luaval_to_vector2(lua_State* L,int lo,cocos2d::Vector2* outValue);
+extern bool luaval_to_vector3(lua_State* L,int lo,cocos2d::Vector3* outValue);
+
 extern bool luaval_to_size(lua_State* L,int lo,Size* outValue);
 extern bool luaval_to_rect(lua_State* L,int lo,Rect* outValue);
 extern bool luaval_to_color3b(lua_State* L,int lo,Color3B* outValue);
@@ -67,15 +69,29 @@ extern bool luaval_to_color4f(lua_State* L,int lo,Color4F* outValue);
 extern bool luaval_to_physics_material(lua_State* L,int lo, cocos2d::PhysicsMaterial* outValue);
 extern bool luaval_to_affinetransform(lua_State* L,int lo, AffineTransform* outValue);
 extern bool luaval_to_fontdefinition(lua_State* L, int lo, FontDefinition* outValue );
-extern bool luaval_to_kmMat4(lua_State* L, int lo, kmMat4* outValue );
 extern bool luaval_to_matrix(lua_State* L, int lo, cocos2d::math::Matrix* outValue );
 extern bool luaval_to_array(lua_State* L,int lo, __Array** outValue);
 extern bool luaval_to_dictionary(lua_State* L,int lo, __Dictionary** outValue);
-extern bool luaval_to_array_of_Point(lua_State* L,int lo,Point **points, int *numPoints);
+extern bool luaval_to_array_of_vector2(lua_State* L,int lo,cocos2d::Vector2 **vec2s, int *numPoints);
 extern bool luavals_variadic_to_array(lua_State* L,int argc, __Array** ret);
 extern bool luavals_variadic_to_ccvaluevector(lua_State* L, int argc, cocos2d::ValueVector* ret);
 extern bool luaval_to_vector2(lua_State* L,int lo,cocos2d::Vector2* outValue);
 extern bool luaval_to_vector3(lua_State* L,int lo,cocos2d::Vector3* outValue);
+
+CC_DEPRECATED_ATTRIBUTE static inline bool luaval_to_point(lua_State* L,int lo,cocos2d::Vector2* outValue)
+{
+    return luaval_to_vector2(L, lo, outValue);
+}
+
+CC_DEPRECATED_ATTRIBUTE static inline bool luaval_to_kmMat4(lua_State* L, int lo, cocos2d::math::Matrix* outValue )
+{
+    return luaval_to_matrix(L, lo, outValue);
+}
+CC_DEPRECATED_ATTRIBUTE static inline bool luaval_to_array_of_Point(lua_State* L,int lo,cocos2d::Vector2 **vec2s, int *numPoints)
+{
+    return luaval_to_array_of_vector2(L, lo, vec2s, numPoints);
+}
+
 
 template <class T>
 bool luavals_variadic_to_ccvector( lua_State* L, int argc, cocos2d::Vector<T>* ret)
@@ -216,10 +232,9 @@ bool luaval_to_object(lua_State* L, int lo, const char* type, T** ret)
 
 
 // from native
-extern void point_to_luaval(lua_State* L,const Point& pt);
 extern void vector2_to_luaval(lua_State* L,const cocos2d::Vector2& vec2);
 extern void vector3_to_luaval(lua_State* L,const cocos2d::Vector3& vec3);
-extern void points_to_luaval(lua_State* L,const Point* pt, int count);
+extern void vector2s_to_luaval(lua_State* L,const cocos2d::Vector2* vec2s, int count);
 extern void size_to_luaval(lua_State* L,const Size& sz);
 extern void rect_to_luaval(lua_State* L,const Rect& rt);
 extern void color3b_to_luaval(lua_State* L,const Color3B& cc);
@@ -233,6 +248,16 @@ extern void fontdefinition_to_luaval(lua_State* L,const FontDefinition& inValue)
 extern void array_to_luaval(lua_State* L, __Array* inValue);
 extern void dictionary_to_luaval(lua_State* L, __Dictionary* dict);
 extern void matrix_to_luaval(lua_State* L, const cocos2d::math::Matrix& mat);
+
+CC_DEPRECATED_ATTRIBUTE static inline void point_to_luaval(lua_State* L,const cocos2d::Vector2& pt)
+{
+    vector2_to_luaval(L, pt);
+}
+
+CC_DEPRECATED_ATTRIBUTE static inline void points_to_luaval(lua_State* L,const cocos2d::Vector2* vec2s, int count)
+{
+    vector2s_to_luaval(L, vec2s, count);
+}
 
 template <class T>
 void ccvector_to_luaval(lua_State* L,const cocos2d::Vector<T>& inValue)
