@@ -416,8 +416,28 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     virtual void onEnter() override;
+    
+protected:
+    
+    virtual void loadImagesImpl();
+    
 private:
     int _imageOffset;
+};
+
+class TextureAsyncLeakFix : public TextureAsync
+{
+public:
+    
+    CREATE_FUNC(TextureAsyncLeakFix);
+    
+    virtual std::string title() const override;
+    
+    virtual std::string subtitle() const override;
+    
+protected:
+    
+    virtual void loadImagesImpl() override;
 };
 
 class TextureGlRepeat : public TextureDemo

@@ -86,6 +86,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(TexturePixelFormat),
     CL(TextureBlend),
     CL(TextureAsync),
+    CL(TextureAsyncLeakFix),
     CL(TextureGlClamp),
     CL(TextureGlRepeat),
     CL(TextureSizeTest),
@@ -1539,6 +1540,11 @@ TextureAsync::~TextureAsync()
 
 void TextureAsync::loadImages(float dt)
 {
+    loadImagesImpl();
+}
+
+void TextureAsync::loadImagesImpl()
+{
     for( int i=0;i < 8;i++) {
         for( int j=0;j < 8; j++) {
             char szSpriteName[100] = {0};
@@ -1588,6 +1594,45 @@ std::string TextureAsync::subtitle() const
     return "Textures should load while an animation is being run";
 }
 
+//------------------------------------------------------------------
+//
+// TextureAsyncLeakFix
+//
+//------------------------------------------------------------------
+
+void TextureAsyncLeakFix::loadImagesImpl()
+{
+    for( int i=0;i < 8;i++) {
+        for( int j=0;j < 8; j++) {
+            char szSpriteName[100] = {0};
+            sprintf(szSpriteName, "Images/sprites_test/sprite-%d-%d.png", i, j);
+            Director::getInstance()->getTextureCache()->addImageAsync(szSpriteName, CC_CALLBACK_1(TextureAsync::imageLoaded, this));
+            
+            // Try to trigger the leak bug by loading in the foreground also.
+            // The leak bug was that when background loading had finished, it was not checking to see if the texture had already
+            // been loaded in the foreground.
+            Director::getInstance()->getTextureCache()->addImage(szSpriteName);
+        }
+    }
+    
+    Director::getInstance()->getTextureCache()->addImageAsync("Images/background1.jpg", CC_CALLBACK_1(TextureAsync::imageLoaded, this));
+    Director::getInstance()->getTextureCache()->addImageAsync("Images/background2.jpg", CC_CALLBACK_1(TextureAsync::imageLoaded, this));
+    Director::getInstance()->getTextureCache()->addImageAsync("Images/background.png", CC_CALLBACK_1(TextureAsync::imageLoaded, this));
+    Director::getInstance()->getTextureCache()->addImageAsync("Images/atlastest.png", CC_CALLBACK_1(TextureAsync::imageLoaded, this));
+    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_atlas.png", CC_CALLBACK_1(TextureAsync::imageLoaded, this));
+}
+
+std::string TextureAsyncLeakFix::title() const
+{
+    return "Texture Async Leak Fix";
+}
+
+std::string TextureAsyncLeakFix::subtitle() const
+{
+    return "Should not leak when we load in the foreground textures that\n"
+           "are already loading in the background. Verify test passes using Xcode\n"
+           "Instruments leak detector or other similar tool.";
+}
 
 //------------------------------------------------------------------
 //

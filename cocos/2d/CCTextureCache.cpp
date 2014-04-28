@@ -244,20 +244,32 @@ void TextureCache::addImageAsyncCallBack(float dt)
         Texture2D *texture = nullptr;
         if (image)
         {
-            // generate texture in render thread
-            texture = new Texture2D();
-
-            texture->initWithImage(image);
+            // Memory leak fix: check if the texture is already in the cache before adding it.
+            // Possible that the texture could have been already loaded on the main thread before async loading finishes.
+            auto loadedTextureIter = _textures.find(filename);
+            
+            if (loadedTextureIter == _textures.end())
+            {
+                // Haven't loaded this texture yet in the foreground. Usual case...
+                // Create the texture now in the render thread.
+                texture = new Texture2D();
+                texture->initWithImage(image);
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-            // cache the texture file name
-            VolatileTextureMgr::addImageTexture(texture, filename);
+                // cache the texture file name
+                VolatileTextureMgr::addImageTexture(texture, filename);
 #endif
-            // cache the texture. retain it, since it is added in the map
-            _textures.insert( std::make_pair(filename, texture) );
-            texture->retain();
-
-            texture->autorelease();
+                // cache the texture. retain it, since it is added in the map
+                _textures.insert( std::make_pair(filename, texture) );
+                texture->retain();
+                texture->autorelease();
+            }
+            else
+            {
+                // We already loaded this texture on the main thread while the background thread was downloading it,
+                // just use the already loaded texture..
+                texture = loadedTextureIter->second;
+            }
         }
         else
         {
