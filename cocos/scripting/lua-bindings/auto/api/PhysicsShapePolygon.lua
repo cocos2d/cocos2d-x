@@ -12,7 +12,7 @@
 -- @function [parent=#PhysicsShapePolygon] getPoint 
 -- @param self
 -- @param #int int
--- @return point_table#point_table ret (return value: point_table)
+-- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
         
 --------------------------------
 -- @function [parent=#PhysicsShapePolygon] calculateDefaultMoment 
@@ -22,6 +22,6 @@
 --------------------------------
 -- @function [parent=#PhysicsShapePolygon] getCenter 
 -- @param self
--- @return point_table#point_table ret (return value: point_table)
+-- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
         
 return nil

@@ -6,16 +6,16 @@
 --------------------------------
 -- @function [parent=#DrawNode] drawQuadraticBezier 
 -- @param self
--- @param #point_table point
--- @param #point_table point
--- @param #point_table point
+-- @param #cc.math::Vector2 array
+-- @param #cc.math::Vector2 array
+-- @param #cc.math::Vector2 array
 -- @param #unsigned int int
 -- @param #color4F_table color4f
         
 --------------------------------
 -- @function [parent=#DrawNode] onDraw 
 -- @param self
--- @param #kmMat4 kmmat4
+-- @param #cc.math::Matrix matrix
 -- @param #bool bool
         
 --------------------------------
@@ -25,33 +25,33 @@
 --------------------------------
 -- @function [parent=#DrawNode] drawTriangle 
 -- @param self
--- @param #point_table point
--- @param #point_table point
--- @param #point_table point
+-- @param #cc.math::Vector2 array
+-- @param #cc.math::Vector2 array
+-- @param #cc.math::Vector2 array
 -- @param #color4F_table color4f
         
 --------------------------------
 -- @function [parent=#DrawNode] drawDot 
 -- @param self
--- @param #point_table point
+-- @param #cc.math::Vector2 array
 -- @param #float float
 -- @param #color4F_table color4f
         
 --------------------------------
 -- @function [parent=#DrawNode] drawCubicBezier 
 -- @param self
--- @param #point_table point
--- @param #point_table point
--- @param #point_table point
--- @param #point_table point
+-- @param #cc.math::Vector2 array
+-- @param #cc.math::Vector2 array
+-- @param #cc.math::Vector2 array
+-- @param #cc.math::Vector2 array
 -- @param #unsigned int int
 -- @param #color4F_table color4f
         
 --------------------------------
 -- @function [parent=#DrawNode] drawSegment 
 -- @param self
--- @param #point_table point
--- @param #point_table point
+-- @param #cc.math::Vector2 array
+-- @param #cc.math::Vector2 array
 -- @param #float float
 -- @param #color4F_table color4f
         
@@ -64,7 +64,7 @@
 -- @function [parent=#DrawNode] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #kmMat4 kmmat4
+-- @param #cc.math::Matrix matrix
 -- @param #bool bool
         
 return nil

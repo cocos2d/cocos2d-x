@@ -45,13 +45,13 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- overload function: setUniformsForBuiltins(kmMat4)
+-- overload function: setUniformsForBuiltins(cc.math::Matrix)
 --          
 -- overload function: setUniformsForBuiltins()
 --          
 -- @function [parent=#GLProgram] setUniformsForBuiltins
 -- @param self
--- @param #kmMat4 kmmat4
+-- @param #cc.math::Matrix matrix
 
 --------------------------------
 -- @function [parent=#GLProgram] setUniformLocationWith3i 

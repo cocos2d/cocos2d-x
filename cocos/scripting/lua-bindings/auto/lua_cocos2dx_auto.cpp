@@ -1840,8 +1840,8 @@ int lua_cocos2dx_GLProgram_setUniformsForBuiltins(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 1) {
-            kmMat4 arg0;
-            ok &= luaval_to_kmMat4(tolua_S, 2, &arg0);
+            cocos2d::math::Matrix arg0;
+            ok &= luaval_to_matrix(tolua_S, 2, &arg0);
 
             if (!ok) { break; }
             cobj->setUniformsForBuiltins(arg0);
@@ -2720,8 +2720,8 @@ int lua_cocos2dx_Touch_getPreviousLocationInView(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        cocos2d::Point ret = cobj->getPreviousLocationInView();
-        point_to_luaval(tolua_S, ret);
+        cocos2d::math::Vector2 ret = cobj->getPreviousLocationInView();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getPreviousLocationInView",argc, 0);
@@ -2764,8 +2764,8 @@ int lua_cocos2dx_Touch_getLocation(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        cocos2d::Point ret = cobj->getLocation();
-        point_to_luaval(tolua_S, ret);
+        cocos2d::math::Vector2 ret = cobj->getLocation();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getLocation",argc, 0);
@@ -2808,8 +2808,8 @@ int lua_cocos2dx_Touch_getDelta(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        cocos2d::Point ret = cobj->getDelta();
-        point_to_luaval(tolua_S, ret);
+        cocos2d::math::Vector2 ret = cobj->getDelta();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getDelta",argc, 0);
@@ -2852,8 +2852,8 @@ int lua_cocos2dx_Touch_getStartLocationInView(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        cocos2d::Point ret = cobj->getStartLocationInView();
-        point_to_luaval(tolua_S, ret);
+        cocos2d::math::Vector2 ret = cobj->getStartLocationInView();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getStartLocationInView",argc, 0);
@@ -2896,8 +2896,8 @@ int lua_cocos2dx_Touch_getStartLocation(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        cocos2d::Point ret = cobj->getStartLocation();
-        point_to_luaval(tolua_S, ret);
+        cocos2d::math::Vector2 ret = cobj->getStartLocation();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getStartLocation",argc, 0);
@@ -3036,8 +3036,8 @@ int lua_cocos2dx_Touch_getLocationInView(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        cocos2d::Point ret = cobj->getLocationInView();
-        point_to_luaval(tolua_S, ret);
+        cocos2d::math::Vector2 ret = cobj->getLocationInView();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getLocationInView",argc, 0);
@@ -3080,8 +3080,8 @@ int lua_cocos2dx_Touch_getPreviousLocation(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        cocos2d::Point ret = cobj->getPreviousLocation();
-        point_to_luaval(tolua_S, ret);
+        cocos2d::math::Vector2 ret = cobj->getPreviousLocation();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getPreviousLocation",argc, 0);
@@ -4762,9 +4762,9 @@ int lua_cocos2dx_Texture2D_drawAtPoint(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->drawAtPoint(arg0);
@@ -6528,13 +6528,13 @@ int lua_cocos2dx_Node_convertToWorldSpaceAR(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
-        cocos2d::Point ret = cobj->convertToWorldSpaceAR(arg0);
-        point_to_luaval(tolua_S, ret);
+        cocos2d::math::Vector2 ret = cobj->convertToWorldSpaceAR(arg0);
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "convertToWorldSpaceAR",argc, 1);
@@ -7074,8 +7074,8 @@ int lua_cocos2dx_Node_getNodeToWorldTransform(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        kmMat4 ret = cobj->getNodeToWorldTransform();
-        #pragma warning NO CONVERSION FROM NATIVE FOR kmMat4;
+        cocos2d::math::Matrix ret = cobj->getNodeToWorldTransform();
+        matrix_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getNodeToWorldTransform",argc, 0);
@@ -7118,8 +7118,8 @@ int lua_cocos2dx_Node_getPosition3D(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        cocos2d::Vertex3F ret = cobj->getPosition3D();
-        #pragma warning NO CONVERSION FROM NATIVE FOR Vertex3F;
+        cocos2d::math::Vector3 ret = cobj->getPosition3D();
+        vector3_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getPosition3D",argc, 0);
@@ -7219,13 +7219,13 @@ int lua_cocos2dx_Node_convertToWorldSpace(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
-        cocos2d::Point ret = cobj->convertToWorldSpace(arg0);
-        point_to_luaval(tolua_S, ret);
+        cocos2d::math::Vector2 ret = cobj->convertToWorldSpace(arg0);
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "convertToWorldSpace",argc, 1);
@@ -7495,8 +7495,8 @@ int lua_cocos2dx_Node_convertTouchToNodeSpace(lua_State* tolua_S)
         ok &= luaval_to_object<cocos2d::Touch>(tolua_S, 2, "cc.Touch",&arg0);
         if(!ok)
             return 0;
-        cocos2d::Point ret = cobj->convertTouchToNodeSpace(arg0);
-        point_to_luaval(tolua_S, ret);
+        cocos2d::math::Vector2 ret = cobj->convertTouchToNodeSpace(arg0);
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "convertTouchToNodeSpace",argc, 1);
@@ -7722,8 +7722,8 @@ int lua_cocos2dx_Node_getRotation3D(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        cocos2d::Vertex3F ret = cobj->getRotation3D();
-        #pragma warning NO CONVERSION FROM NATIVE FOR Vertex3F;
+        cocos2d::math::Vector3 ret = cobj->getRotation3D();
+        vector3_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getRotation3D",argc, 0);
@@ -7766,8 +7766,8 @@ int lua_cocos2dx_Node_getNodeToParentTransform(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const kmMat4& ret = cobj->getNodeToParentTransform();
-        #pragma warning NO CONVERSION FROM NATIVE FOR kmMat4;
+        const cocos2d::math::Matrix& ret = cobj->getNodeToParentTransform();
+        matrix_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getNodeToParentTransform",argc, 0);
@@ -7813,8 +7813,8 @@ int lua_cocos2dx_Node_convertTouchToNodeSpaceAR(lua_State* tolua_S)
         ok &= luaval_to_object<cocos2d::Touch>(tolua_S, 2, "cc.Touch",&arg0);
         if(!ok)
             return 0;
-        cocos2d::Point ret = cobj->convertTouchToNodeSpaceAR(arg0);
-        point_to_luaval(tolua_S, ret);
+        cocos2d::math::Vector2 ret = cobj->convertTouchToNodeSpaceAR(arg0);
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "convertTouchToNodeSpaceAR",argc, 1);
@@ -7855,13 +7855,13 @@ int lua_cocos2dx_Node_convertToNodeSpace(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
-        cocos2d::Point ret = cobj->convertToNodeSpace(arg0);
-        point_to_luaval(tolua_S, ret);
+        cocos2d::math::Vector2 ret = cobj->convertToNodeSpace(arg0);
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "convertToNodeSpace",argc, 1);
@@ -7999,8 +7999,8 @@ int lua_cocos2dx_Node_setPosition(lua_State* tolua_S)
     ok  = true;
     do{
         if (argc == 1) {
-            cocos2d::Point arg0;
-            ok &= luaval_to_point(tolua_S, 2, &arg0);
+            cocos2d::math::Vector2 arg0;
+            ok &= luaval_to_vector2(tolua_S, 2, &arg0);
 
             if (!ok) { break; }
             cobj->setPosition(arg0);
@@ -8233,9 +8233,9 @@ int lua_cocos2dx_Node_setRotation3D(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Vertex3F arg0;
+        cocos2d::math::Vector3 arg0;
 
-        #pragma warning NO CONVERSION TO NATIVE FOR Vertex3F;
+        ok &= luaval_to_vector3(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->setRotation3D(arg0);
@@ -8325,9 +8325,9 @@ int lua_cocos2dx_Node_setNodeToParentTransform(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        kmMat4 arg0;
+        cocos2d::math::Matrix arg0;
 
-        ok &= luaval_to_kmMat4(tolua_S, 2, &arg0);
+        ok &= luaval_to_matrix(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->setNodeToParentTransform(arg0);
@@ -8373,8 +8373,8 @@ int lua_cocos2dx_Node_getAnchorPoint(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const cocos2d::Point& ret = cobj->getAnchorPoint();
-        point_to_luaval(tolua_S, ret);
+        const cocos2d::math::Vector2& ret = cobj->getAnchorPoint();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getAnchorPoint",argc, 0);
@@ -8590,13 +8590,13 @@ int lua_cocos2dx_Node_convertToNodeSpaceAR(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
-        cocos2d::Point ret = cobj->convertToNodeSpaceAR(arg0);
-        point_to_luaval(tolua_S, ret);
+        cocos2d::math::Vector2 ret = cobj->convertToNodeSpaceAR(arg0);
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "convertToNodeSpaceAR",argc, 1);
@@ -8652,63 +8652,6 @@ int lua_cocos2dx_Node_addComponent(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_addComponent'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_Node_visit(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Node* cobj = nullptr;
-    bool ok  = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err)) goto tolua_lerror;
-#endif
-    cobj = (cocos2d::Node*)tolua_tousertype(tolua_S,1,0);
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_visit'", nullptr);
-        return 0;
-    }
-#endif
-    argc = lua_gettop(tolua_S)-1;
-    do{
-        if (argc == 0) {
-            cobj->visit();
-            return 0;
-        }
-    }while(0);
-    ok  = true;
-    do{
-        if (argc == 3) {
-            cocos2d::Renderer* arg0;
-            ok &= luaval_to_object<cocos2d::Renderer>(tolua_S, 2, "cc.Renderer",&arg0);
-
-            if (!ok) { break; }
-            kmMat4 arg1;
-            ok &= luaval_to_kmMat4(tolua_S, 3, &arg1);
-
-            if (!ok) { break; }
-            bool arg2;
-            ok &= luaval_to_boolean(tolua_S, 4,&arg2);
-
-            if (!ok) { break; }
-            cobj->visit(arg0, arg1, arg2);
-            return 0;
-        }
-    }while(0);
-    ok  = true;
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "visit",argc, 3);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_visit'.",&tolua_err);
 #endif
 
     return 0;
@@ -8833,8 +8776,8 @@ int lua_cocos2dx_Node_getAnchorPointInPoints(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const cocos2d::Point& ret = cobj->getAnchorPointInPoints();
-        point_to_luaval(tolua_S, ret);
+        const cocos2d::math::Vector2& ret = cobj->getAnchorPointInPoints();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getAnchorPointInPoints",argc, 0);
@@ -9196,8 +9139,8 @@ int lua_cocos2dx_Node_setAdditionalTransform(lua_State* tolua_S)
     ok  = true;
     do{
         if (argc == 1) {
-            kmMat4* arg0;
-            #pragma warning NO CONVERSION TO NATIVE FOR kmMat4*;
+            cocos2d::math::Matrix* arg0;
+            ok &= luaval_to_object<cocos2d::math::Matrix>(tolua_S, 2, "cc.math::Matrix",&arg0);
 
             if (!ok) { break; }
             cobj->setAdditionalTransform(arg0);
@@ -9980,8 +9923,8 @@ int lua_cocos2dx_Node_getParentToNodeTransform(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const kmMat4& ret = cobj->getParentToNodeTransform();
-        #pragma warning NO CONVERSION FROM NATIVE FOR kmMat4;
+        const cocos2d::math::Matrix& ret = cobj->getParentToNodeTransform();
+        matrix_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getParentToNodeTransform",argc, 0);
@@ -10850,8 +10793,8 @@ int lua_cocos2dx_Node_draw(lua_State* tolua_S)
             ok &= luaval_to_object<cocos2d::Renderer>(tolua_S, 2, "cc.Renderer",&arg0);
 
             if (!ok) { break; }
-            kmMat4 arg1;
-            ok &= luaval_to_kmMat4(tolua_S, 3, &arg1);
+            cocos2d::math::Matrix arg1;
+            ok &= luaval_to_matrix(tolua_S, 3, &arg1);
 
             if (!ok) { break; }
             bool arg2;
@@ -10996,9 +10939,9 @@ int lua_cocos2dx_Node_setPosition3D(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Vertex3F arg0;
+        cocos2d::math::Vector3 arg0;
 
-        #pragma warning NO CONVERSION TO NATIVE FOR Vertex3F;
+        ok &= luaval_to_vector3(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->setPosition3D(arg0);
@@ -11133,8 +11076,8 @@ int lua_cocos2dx_Node_getWorldToNodeTransform(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        kmMat4 ret = cobj->getWorldToNodeTransform();
-        #pragma warning NO CONVERSION FROM NATIVE FOR kmMat4;
+        cocos2d::math::Matrix ret = cobj->getWorldToNodeTransform();
+        matrix_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getWorldToNodeTransform",argc, 0);
@@ -11606,7 +11549,6 @@ int lua_register_cocos2dx_Node(lua_State* tolua_S)
         tolua_function(tolua_S,"getChildrenCount",lua_cocos2dx_Node_getChildrenCount);
         tolua_function(tolua_S,"convertToNodeSpaceAR",lua_cocos2dx_Node_convertToNodeSpaceAR);
         tolua_function(tolua_S,"addComponent",lua_cocos2dx_Node_addComponent);
-        tolua_function(tolua_S,"visit",lua_cocos2dx_Node_visit);
         tolua_function(tolua_S,"setShaderProgram",lua_cocos2dx_Node_setShaderProgram);
         tolua_function(tolua_S,"getRotation",lua_cocos2dx_Node_getRotation);
         tolua_function(tolua_S,"getAnchorPointInPoints",lua_cocos2dx_Node_getAnchorPointInPoints);
@@ -11847,8 +11789,8 @@ int lua_cocos2dx_SpriteFrame_initWithTexture(lua_State* tolua_S)
             ok &= luaval_to_boolean(tolua_S, 4,&arg2);
 
             if (!ok) { break; }
-            cocos2d::Point arg3;
-            ok &= luaval_to_point(tolua_S, 5, &arg3);
+            cocos2d::math::Vector2 arg3;
+            ok &= luaval_to_vector2(tolua_S, 5, &arg3);
 
             if (!ok) { break; }
             cocos2d::Size arg4;
@@ -12049,9 +11991,9 @@ int lua_cocos2dx_SpriteFrame_setOffsetInPixels(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->setOffsetInPixels(arg0);
@@ -12275,9 +12217,9 @@ int lua_cocos2dx_SpriteFrame_setOffset(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->setOffset(arg0);
@@ -12323,8 +12265,8 @@ int lua_cocos2dx_SpriteFrame_getOffset(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const cocos2d::Point& ret = cobj->getOffset();
-        point_to_luaval(tolua_S, ret);
+        const cocos2d::math::Vector2& ret = cobj->getOffset();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getOffset",argc, 0);
@@ -12416,8 +12358,8 @@ int lua_cocos2dx_SpriteFrame_initWithTextureFilename(lua_State* tolua_S)
             ok &= luaval_to_boolean(tolua_S, 4,&arg2);
 
             if (!ok) { break; }
-            cocos2d::Point arg3;
-            ok &= luaval_to_point(tolua_S, 5, &arg3);
+            cocos2d::math::Vector2 arg3;
+            ok &= luaval_to_vector2(tolua_S, 5, &arg3);
 
             if (!ok) { break; }
             cocos2d::Size arg4;
@@ -12532,8 +12474,8 @@ int lua_cocos2dx_SpriteFrame_getOffsetInPixels(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const cocos2d::Point& ret = cobj->getOffsetInPixels();
-        point_to_luaval(tolua_S, ret);
+        const cocos2d::math::Vector2& ret = cobj->getOffsetInPixels();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getOffsetInPixels",argc, 0);
@@ -12617,8 +12559,8 @@ int lua_cocos2dx_SpriteFrame_create(lua_State* tolua_S)
             bool arg2;
             ok &= luaval_to_boolean(tolua_S, 4,&arg2);
             if (!ok) { break; }
-            cocos2d::Point arg3;
-            ok &= luaval_to_point(tolua_S, 5, &arg3);
+            cocos2d::math::Vector2 arg3;
+            ok &= luaval_to_vector2(tolua_S, 5, &arg3);
             if (!ok) { break; }
             cocos2d::Size arg4;
             ok &= luaval_to_size(tolua_S, 6, &arg4);
@@ -12680,8 +12622,8 @@ int lua_cocos2dx_SpriteFrame_createWithTexture(lua_State* tolua_S)
             bool arg2;
             ok &= luaval_to_boolean(tolua_S, 4,&arg2);
             if (!ok) { break; }
-            cocos2d::Point arg3;
-            ok &= luaval_to_point(tolua_S, 5, &arg3);
+            cocos2d::math::Vector2 arg3;
+            ok &= luaval_to_vector2(tolua_S, 5, &arg3);
             if (!ok) { break; }
             cocos2d::Size arg4;
             ok &= luaval_to_size(tolua_S, 6, &arg4);
@@ -14550,8 +14492,8 @@ int lua_cocos2dx_RotateBy_create(lua_State* tolua_S)
             double arg0;
             ok &= luaval_to_number(tolua_S, 2,&arg0);
             if (!ok) { break; }
-            cocos2d::Vertex3F arg1;
-            #pragma warning NO CONVERSION TO NATIVE FOR Vertex3F;
+            cocos2d::math::Vector3 arg1;
+            ok &= luaval_to_vector3(tolua_S, 3, &arg1);
             if (!ok) { break; }
             cocos2d::RotateBy* ret = cocos2d::RotateBy::create(arg0, arg1);
             object_to_luaval<cocos2d::RotateBy>(tolua_S, "cc.RotateBy",(cocos2d::RotateBy*)ret);
@@ -14605,9 +14547,9 @@ int lua_cocos2dx_MoveBy_create(lua_State* tolua_S)
     if (argc == 2)
     {
         double arg0;
-        cocos2d::Point arg1;
+        cocos2d::math::Vector2 arg1;
         ok &= luaval_to_number(tolua_S, 2,&arg0);
-        ok &= luaval_to_point(tolua_S, 3, &arg1);
+        ok &= luaval_to_vector2(tolua_S, 3, &arg1);
         if(!ok)
             return 0;
         cocos2d::MoveBy* ret = cocos2d::MoveBy::create(arg0, arg1);
@@ -14660,9 +14602,9 @@ int lua_cocos2dx_MoveTo_create(lua_State* tolua_S)
     if (argc == 2)
     {
         double arg0;
-        cocos2d::Point arg1;
+        cocos2d::math::Vector2 arg1;
         ok &= luaval_to_number(tolua_S, 2,&arg0);
-        ok &= luaval_to_point(tolua_S, 3, &arg1);
+        ok &= luaval_to_vector2(tolua_S, 3, &arg1);
         if(!ok)
             return 0;
         cocos2d::MoveTo* ret = cocos2d::MoveTo::create(arg0, arg1);
@@ -14829,11 +14771,11 @@ int lua_cocos2dx_JumpBy_create(lua_State* tolua_S)
     if (argc == 4)
     {
         double arg0;
-        cocos2d::Point arg1;
+        cocos2d::math::Vector2 arg1;
         double arg2;
         int arg3;
         ok &= luaval_to_number(tolua_S, 2,&arg0);
-        ok &= luaval_to_point(tolua_S, 3, &arg1);
+        ok &= luaval_to_vector2(tolua_S, 3, &arg1);
         ok &= luaval_to_number(tolua_S, 4,&arg2);
         ok &= luaval_to_int32(tolua_S, 5,(int *)&arg3);
         if(!ok)
@@ -14888,11 +14830,11 @@ int lua_cocos2dx_JumpTo_create(lua_State* tolua_S)
     if (argc == 4)
     {
         double arg0;
-        cocos2d::Point arg1;
+        cocos2d::math::Vector2 arg1;
         double arg2;
         int arg3;
         ok &= luaval_to_number(tolua_S, 2,&arg0);
-        ok &= luaval_to_point(tolua_S, 3, &arg1);
+        ok &= luaval_to_vector2(tolua_S, 3, &arg1);
         ok &= luaval_to_number(tolua_S, 4,&arg2);
         ok &= luaval_to_int32(tolua_S, 5,(int *)&arg3);
         if(!ok)
@@ -15986,8 +15928,8 @@ int lua_cocos2dx_ActionCamera_setEye(lua_State* tolua_S)
     ok  = true;
     do{
         if (argc == 1) {
-            kmVec3 arg0;
-            #pragma warning NO CONVERSION TO NATIVE FOR kmVec3;
+            cocos2d::math::Vector3 arg0;
+            ok &= luaval_to_vector3(tolua_S, 2, &arg0);
 
             if (!ok) { break; }
             cobj->setEye(arg0);
@@ -16035,8 +15977,8 @@ int lua_cocos2dx_ActionCamera_getEye(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const kmVec3& ret = cobj->getEye();
-        #pragma warning NO CONVERSION FROM NATIVE FOR kmVec3;
+        const cocos2d::math::Vector3& ret = cobj->getEye();
+        vector3_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getEye",argc, 0);
@@ -16077,9 +16019,9 @@ int lua_cocos2dx_ActionCamera_setUp(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        kmVec3 arg0;
+        cocos2d::math::Vector3 arg0;
 
-        #pragma warning NO CONVERSION TO NATIVE FOR kmVec3;
+        ok &= luaval_to_vector3(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->setUp(arg0);
@@ -16125,8 +16067,8 @@ int lua_cocos2dx_ActionCamera_getCenter(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const kmVec3& ret = cobj->getCenter();
-        #pragma warning NO CONVERSION FROM NATIVE FOR kmVec3;
+        const cocos2d::math::Vector3& ret = cobj->getCenter();
+        vector3_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getCenter",argc, 0);
@@ -16167,9 +16109,9 @@ int lua_cocos2dx_ActionCamera_setCenter(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        kmVec3 arg0;
+        cocos2d::math::Vector3 arg0;
 
-        #pragma warning NO CONVERSION TO NATIVE FOR kmVec3;
+        ok &= luaval_to_vector3(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->setCenter(arg0);
@@ -16215,8 +16157,8 @@ int lua_cocos2dx_ActionCamera_getUp(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const kmVec3& ret = cobj->getUp();
-        #pragma warning NO CONVERSION FROM NATIVE FOR kmVec3;
+        const cocos2d::math::Vector3& ret = cobj->getUp();
+        vector3_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getUp",argc, 0);
@@ -19613,8 +19555,8 @@ int lua_cocos2dx_Place_create(lua_State* tolua_S)
 
     if (argc == 1)
     {
-        cocos2d::Point arg0;
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        cocos2d::math::Vector2 arg0;
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cocos2d::Place* ret = cocos2d::Place::create(arg0);
@@ -20477,9 +20419,9 @@ int lua_cocos2dx_Lens3D_setPosition(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->setPosition(arg0);
@@ -20617,8 +20559,8 @@ int lua_cocos2dx_Lens3D_getPosition(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const cocos2d::Point& ret = cobj->getPosition();
-        point_to_luaval(tolua_S, ret);
+        const cocos2d::math::Vector2& ret = cobj->getPosition();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getPosition",argc, 0);
@@ -20694,11 +20636,11 @@ int lua_cocos2dx_Lens3D_create(lua_State* tolua_S)
     {
         double arg0;
         cocos2d::Size arg1;
-        cocos2d::Point arg2;
+        cocos2d::math::Vector2 arg2;
         double arg3;
         ok &= luaval_to_number(tolua_S, 2,&arg0);
         ok &= luaval_to_size(tolua_S, 3, &arg1);
-        ok &= luaval_to_point(tolua_S, 4, &arg2);
+        ok &= luaval_to_vector2(tolua_S, 4, &arg2);
         ok &= luaval_to_number(tolua_S, 5,&arg3);
         if(!ok)
             return 0;
@@ -20947,9 +20889,9 @@ int lua_cocos2dx_Ripple3D_setPosition(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->setPosition(arg0);
@@ -20995,8 +20937,8 @@ int lua_cocos2dx_Ripple3D_getPosition(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const cocos2d::Point& ret = cobj->getPosition();
-        point_to_luaval(tolua_S, ret);
+        const cocos2d::math::Vector2& ret = cobj->getPosition();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getPosition",argc, 0);
@@ -21028,13 +20970,13 @@ int lua_cocos2dx_Ripple3D_create(lua_State* tolua_S)
     {
         double arg0;
         cocos2d::Size arg1;
-        cocos2d::Point arg2;
+        cocos2d::math::Vector2 arg2;
         double arg3;
         unsigned int arg4;
         double arg5;
         ok &= luaval_to_number(tolua_S, 2,&arg0);
         ok &= luaval_to_size(tolua_S, 3, &arg1);
-        ok &= luaval_to_point(tolua_S, 4, &arg2);
+        ok &= luaval_to_vector2(tolua_S, 4, &arg2);
         ok &= luaval_to_number(tolua_S, 5,&arg3);
         ok &= luaval_to_uint32(tolua_S, 6,&arg4);
         ok &= luaval_to_number(tolua_S, 7,&arg5);
@@ -21835,9 +21777,9 @@ int lua_cocos2dx_Twirl_setPosition(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->setPosition(arg0);
@@ -21883,8 +21825,8 @@ int lua_cocos2dx_Twirl_getPosition(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const cocos2d::Point& ret = cobj->getPosition();
-        point_to_luaval(tolua_S, ret);
+        const cocos2d::math::Vector2& ret = cobj->getPosition();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getPosition",argc, 0);
@@ -21916,12 +21858,12 @@ int lua_cocos2dx_Twirl_create(lua_State* tolua_S)
     {
         double arg0;
         cocos2d::Size arg1;
-        cocos2d::Point arg2;
+        cocos2d::math::Vector2 arg2;
         unsigned int arg3;
         double arg4;
         ok &= luaval_to_number(tolua_S, 2,&arg0);
         ok &= luaval_to_size(tolua_S, 3, &arg1);
-        ok &= luaval_to_point(tolua_S, 4, &arg2);
+        ok &= luaval_to_vector2(tolua_S, 4, &arg2);
         ok &= luaval_to_uint32(tolua_S, 5,&arg3);
         ok &= luaval_to_number(tolua_S, 6,&arg4);
         if(!ok)
@@ -22277,10 +22219,10 @@ int lua_cocos2dx_ShuffleTiles_placeTile(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
         cocos2d::Tile* arg1;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
 
         #pragma warning NO CONVERSION TO NATIVE FOR Tile*;
         if(!ok)
@@ -22482,9 +22424,9 @@ int lua_cocos2dx_FadeOutTRTiles_turnOnTile(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->turnOnTile(arg0);
@@ -22528,9 +22470,9 @@ int lua_cocos2dx_FadeOutTRTiles_turnOffTile(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->turnOffTile(arg0);
@@ -22574,10 +22516,10 @@ int lua_cocos2dx_FadeOutTRTiles_transformTile(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
         double arg1;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
 
         ok &= luaval_to_number(tolua_S, 3,&arg1);
         if(!ok)
@@ -22787,10 +22729,10 @@ int lua_cocos2dx_FadeOutUpTiles_transformTile(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
         double arg1;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
 
         ok &= luaval_to_number(tolua_S, 3,&arg1);
         if(!ok)
@@ -22947,9 +22889,9 @@ int lua_cocos2dx_TurnOffTiles_turnOnTile(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->turnOnTile(arg0);
@@ -22993,9 +22935,9 @@ int lua_cocos2dx_TurnOffTiles_turnOffTile(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->turnOffTile(arg0);
@@ -23867,9 +23809,9 @@ int lua_cocos2dx_CardinalSplineTo_updatePosition(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->updatePosition(arg0);
@@ -24595,17 +24537,17 @@ int lua_cocos2dx_DrawNode_drawQuadraticBezier(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 5) 
     {
-        cocos2d::Point arg0;
-        cocos2d::Point arg1;
-        cocos2d::Point arg2;
+        cocos2d::math::Vector2 arg0;
+        cocos2d::math::Vector2 arg1;
+        cocos2d::math::Vector2 arg2;
         unsigned int arg3;
         cocos2d::Color4F arg4;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
 
-        ok &= luaval_to_point(tolua_S, 3, &arg1);
+        ok &= luaval_to_vector2(tolua_S, 3, &arg1);
 
-        ok &= luaval_to_point(tolua_S, 4, &arg2);
+        ok &= luaval_to_vector2(tolua_S, 4, &arg2);
 
         ok &= luaval_to_uint32(tolua_S, 5,&arg3);
 
@@ -24653,10 +24595,10 @@ int lua_cocos2dx_DrawNode_onDraw(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
-        kmMat4 arg0;
+        cocos2d::math::Matrix arg0;
         bool arg1;
 
-        ok &= luaval_to_kmMat4(tolua_S, 2, &arg0);
+        ok &= luaval_to_matrix(tolua_S, 2, &arg0);
 
         ok &= luaval_to_boolean(tolua_S, 3,&arg1);
         if(!ok)
@@ -24745,16 +24687,16 @@ int lua_cocos2dx_DrawNode_drawTriangle(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 4) 
     {
-        cocos2d::Point arg0;
-        cocos2d::Point arg1;
-        cocos2d::Point arg2;
+        cocos2d::math::Vector2 arg0;
+        cocos2d::math::Vector2 arg1;
+        cocos2d::math::Vector2 arg2;
         cocos2d::Color4F arg3;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
 
-        ok &= luaval_to_point(tolua_S, 3, &arg1);
+        ok &= luaval_to_vector2(tolua_S, 3, &arg1);
 
-        ok &= luaval_to_point(tolua_S, 4, &arg2);
+        ok &= luaval_to_vector2(tolua_S, 4, &arg2);
 
         ok &=luaval_to_color4f(tolua_S, 5, &arg3);
         if(!ok)
@@ -24800,11 +24742,11 @@ int lua_cocos2dx_DrawNode_drawDot(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 3) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
         double arg1;
         cocos2d::Color4F arg2;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
 
         ok &= luaval_to_number(tolua_S, 3,&arg1);
 
@@ -24852,20 +24794,20 @@ int lua_cocos2dx_DrawNode_drawCubicBezier(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 6) 
     {
-        cocos2d::Point arg0;
-        cocos2d::Point arg1;
-        cocos2d::Point arg2;
-        cocos2d::Point arg3;
+        cocos2d::math::Vector2 arg0;
+        cocos2d::math::Vector2 arg1;
+        cocos2d::math::Vector2 arg2;
+        cocos2d::math::Vector2 arg3;
         unsigned int arg4;
         cocos2d::Color4F arg5;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
 
-        ok &= luaval_to_point(tolua_S, 3, &arg1);
+        ok &= luaval_to_vector2(tolua_S, 3, &arg1);
 
-        ok &= luaval_to_point(tolua_S, 4, &arg2);
+        ok &= luaval_to_vector2(tolua_S, 4, &arg2);
 
-        ok &= luaval_to_point(tolua_S, 5, &arg3);
+        ok &= luaval_to_vector2(tolua_S, 5, &arg3);
 
         ok &= luaval_to_uint32(tolua_S, 6,&arg4);
 
@@ -24913,14 +24855,14 @@ int lua_cocos2dx_DrawNode_drawSegment(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 4) 
     {
-        cocos2d::Point arg0;
-        cocos2d::Point arg1;
+        cocos2d::math::Vector2 arg0;
+        cocos2d::math::Vector2 arg1;
         double arg2;
         cocos2d::Color4F arg3;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
 
-        ok &= luaval_to_point(tolua_S, 3, &arg1);
+        ok &= luaval_to_vector2(tolua_S, 3, &arg1);
 
         ok &= luaval_to_number(tolua_S, 4,&arg2);
 
@@ -25374,7 +25316,7 @@ int lua_cocos2dx_Director_pause(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_Director_setContentScaleFactor(lua_State* tolua_S)
+int lua_cocos2dx_Director_pushScene(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -25394,7 +25336,7 @@ int lua_cocos2dx_Director_setContentScaleFactor(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setContentScaleFactor'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_pushScene'", nullptr);
         return 0;
     }
 #endif
@@ -25402,20 +25344,64 @@ int lua_cocos2dx_Director_setContentScaleFactor(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        double arg0;
+        cocos2d::Scene* arg0;
 
-        ok &= luaval_to_number(tolua_S, 2,&arg0);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 2, "cc.Scene",&arg0);
         if(!ok)
             return 0;
-        cobj->setContentScaleFactor(arg0);
+        cobj->pushScene(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setContentScaleFactor",argc, 1);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "pushScene",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_setContentScaleFactor'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_pushScene'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Director_getDeltaTime(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Director* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Director",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Director*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getDeltaTime'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        double ret = cobj->getDeltaTime();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getDeltaTime",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_getDeltaTime'.",&tolua_err);
 #endif
 
     return 0;
@@ -25508,7 +25494,7 @@ int lua_cocos2dx_Director_getWinSizeInPixels(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_Director_getDeltaTime(lua_State* tolua_S)
+int lua_cocos2dx_Director_getConsole(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -25528,7 +25514,7 @@ int lua_cocos2dx_Director_getDeltaTime(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getDeltaTime'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getConsole'", nullptr);
         return 0;
     }
 #endif
@@ -25538,16 +25524,62 @@ int lua_cocos2dx_Director_getDeltaTime(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        double ret = cobj->getDeltaTime();
-        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        cocos2d::Console* ret = cobj->getConsole();
+        object_to_luaval<cocos2d::Console>(tolua_S, "cc.Console",(cocos2d::Console*)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getDeltaTime",argc, 0);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getConsole",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_getDeltaTime'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_getConsole'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Director_pushMatrix(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Director* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Director",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Director*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_pushMatrix'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::MATRIX_STACK_TYPE arg0;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0);
+        if(!ok)
+            return 0;
+        cobj->pushMatrix(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "pushMatrix",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_pushMatrix'.",&tolua_err);
 #endif
 
     return 0;
@@ -25726,6 +25758,55 @@ int lua_cocos2dx_Director_popToRootScene(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_popToRootScene'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Director_loadMatrix(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Director* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Director",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Director*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_loadMatrix'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 2) 
+    {
+        cocos2d::MATRIX_STACK_TYPE arg0;
+        cocos2d::math::Matrix arg1;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0);
+
+        ok &= luaval_to_matrix(tolua_S, 3, &arg1);
+        if(!ok)
+            return 0;
+        cobj->loadMatrix(arg0, arg1);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "loadMatrix",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_loadMatrix'.",&tolua_err);
 #endif
 
     return 0;
@@ -25936,8 +26017,8 @@ int lua_cocos2dx_Director_getVisibleOrigin(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        cocos2d::Point ret = cobj->getVisibleOrigin();
-        point_to_luaval(tolua_S, ret);
+        cocos2d::math::Vector2 ret = cobj->getVisibleOrigin();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getVisibleOrigin",argc, 0);
@@ -26155,13 +26236,13 @@ int lua_cocos2dx_Director_convertToUI(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
-        cocos2d::Point ret = cobj->convertToUI(arg0);
-        point_to_luaval(tolua_S, ret);
+        cocos2d::math::Vector2 ret = cobj->convertToUI(arg0);
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "convertToUI",argc, 1);
@@ -26524,6 +26605,52 @@ int lua_cocos2dx_Director_stopAnimation(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_Director_setContentScaleFactor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Director* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Director",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Director*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setContentScaleFactor'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        double arg0;
+
+        ok &= luaval_to_number(tolua_S, 2,&arg0);
+        if(!ok)
+            return 0;
+        cobj->setContentScaleFactor(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setContentScaleFactor",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_setContentScaleFactor'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_Director_popToSceneStackLevel(lua_State* tolua_S)
 {
     int argc = 0;
@@ -26774,13 +26901,13 @@ int lua_cocos2dx_Director_convertToGL(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
-        cocos2d::Point ret = cobj->convertToGL(arg0);
-        point_to_luaval(tolua_S, ret);
+        cocos2d::math::Vector2 ret = cobj->convertToGL(arg0);
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "convertToGL",argc, 1);
@@ -27015,6 +27142,97 @@ int lua_cocos2dx_Director_drawScene(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_Director_getZEye(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Director* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Director",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Director*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getZEye'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        double ret = cobj->getZEye();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getZEye",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_getZEye'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Director_getMatrix(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Director* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Director",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Director*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getMatrix'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::MATRIX_STACK_TYPE arg0;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0);
+        if(!ok)
+            return 0;
+        cocos2d::math::Matrix ret = cobj->getMatrix(arg0);
+        matrix_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getMatrix",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_getMatrix'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_Director_popScene(lua_State* tolua_S)
 {
     int argc = 0;
@@ -27148,7 +27366,7 @@ int lua_cocos2dx_Director_setProjection(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_Director_getConsole(lua_State* tolua_S)
+int lua_cocos2dx_Director_loadIdentityMatrix(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -27168,70 +27386,28 @@ int lua_cocos2dx_Director_getConsole(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getConsole'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_loadIdentityMatrix'", nullptr);
         return 0;
     }
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
+    if (argc == 1) 
     {
+        cocos2d::MATRIX_STACK_TYPE arg0;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0);
         if(!ok)
             return 0;
-        cocos2d::Console* ret = cobj->getConsole();
-        object_to_luaval<cocos2d::Console>(tolua_S, "cc.Console",(cocos2d::Console*)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getConsole",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_getConsole'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_Director_getZEye(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Director* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Director",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Director*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getZEye'", nullptr);
+        cobj->loadIdentityMatrix(arg0);
         return 0;
     }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        double ret = cobj->getZEye();
-        tolua_pushnumber(tolua_S,(lua_Number)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getZEye",argc, 0);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "loadIdentityMatrix",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_getZEye'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_loadIdentityMatrix'.",&tolua_err);
 #endif
 
     return 0;
@@ -27278,6 +27454,95 @@ int lua_cocos2dx_Director_setNextDeltaTimeZero(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_setNextDeltaTimeZero'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Director_resetMatrixStack(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Director* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Director",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Director*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_resetMatrixStack'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cobj->resetMatrixStack();
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "resetMatrixStack",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_resetMatrixStack'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Director_popMatrix(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Director* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Director",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Director*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_popMatrix'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::MATRIX_STACK_TYPE arg0;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0);
+        if(!ok)
+            return 0;
+        cobj->popMatrix(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "popMatrix",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_popMatrix'.",&tolua_err);
 #endif
 
     return 0;
@@ -27370,7 +27635,7 @@ int lua_cocos2dx_Director_getScheduler(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_Director_pushScene(lua_State* tolua_S)
+int lua_cocos2dx_Director_setAnimationInterval(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -27390,7 +27655,7 @@ int lua_cocos2dx_Director_pushScene(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_pushScene'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setAnimationInterval'", nullptr);
         return 0;
     }
 #endif
@@ -27398,20 +27663,20 @@ int lua_cocos2dx_Director_pushScene(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Scene* arg0;
+        double arg0;
 
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 2, "cc.Scene",&arg0);
+        ok &= luaval_to_number(tolua_S, 2,&arg0);
         if(!ok)
             return 0;
-        cobj->pushScene(arg0);
+        cobj->setAnimationInterval(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "pushScene",argc, 1);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setAnimationInterval",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_pushScene'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_setAnimationInterval'.",&tolua_err);
 #endif
 
     return 0;
@@ -27596,7 +27861,7 @@ int lua_cocos2dx_Director_replaceScene(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_Director_setAnimationInterval(lua_State* tolua_S)
+int lua_cocos2dx_Director_multiplyMatrix(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -27616,28 +27881,31 @@ int lua_cocos2dx_Director_setAnimationInterval(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setAnimationInterval'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_multiplyMatrix'", nullptr);
         return 0;
     }
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
+    if (argc == 2) 
     {
-        double arg0;
+        cocos2d::MATRIX_STACK_TYPE arg0;
+        cocos2d::math::Matrix arg1;
 
-        ok &= luaval_to_number(tolua_S, 2,&arg0);
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0);
+
+        ok &= luaval_to_matrix(tolua_S, 3, &arg1);
         if(!ok)
             return 0;
-        cobj->setAnimationInterval(arg0);
+        cobj->multiplyMatrix(arg0, arg1);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setAnimationInterval",argc, 1);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "multiplyMatrix",argc, 2);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_setAnimationInterval'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_multiplyMatrix'.",&tolua_err);
 #endif
 
     return 0;
@@ -27730,14 +27998,17 @@ int lua_register_cocos2dx_Director(lua_State* tolua_S)
 
     tolua_beginmodule(tolua_S,"Director");
         tolua_function(tolua_S,"pause",lua_cocos2dx_Director_pause);
-        tolua_function(tolua_S,"setContentScaleFactor",lua_cocos2dx_Director_setContentScaleFactor);
+        tolua_function(tolua_S,"pushScene",lua_cocos2dx_Director_pushScene);
+        tolua_function(tolua_S,"getDeltaTime",lua_cocos2dx_Director_getDeltaTime);
         tolua_function(tolua_S,"getContentScaleFactor",lua_cocos2dx_Director_getContentScaleFactor);
         tolua_function(tolua_S,"getWinSizeInPixels",lua_cocos2dx_Director_getWinSizeInPixels);
-        tolua_function(tolua_S,"getDeltaTime",lua_cocos2dx_Director_getDeltaTime);
+        tolua_function(tolua_S,"getConsole",lua_cocos2dx_Director_getConsole);
+        tolua_function(tolua_S,"pushMatrix",lua_cocos2dx_Director_pushMatrix);
         tolua_function(tolua_S,"setGLDefaultValues",lua_cocos2dx_Director_setGLDefaultValues);
         tolua_function(tolua_S,"setActionManager",lua_cocos2dx_Director_setActionManager);
         tolua_function(tolua_S,"setAlphaBlending",lua_cocos2dx_Director_setAlphaBlending);
         tolua_function(tolua_S,"popToRootScene",lua_cocos2dx_Director_popToRootScene);
+        tolua_function(tolua_S,"loadMatrix",lua_cocos2dx_Director_loadMatrix);
         tolua_function(tolua_S,"getNotificationNode",lua_cocos2dx_Director_getNotificationNode);
         tolua_function(tolua_S,"getWinSize",lua_cocos2dx_Director_getWinSize);
         tolua_function(tolua_S,"getTextureCache",lua_cocos2dx_Director_getTextureCache);
@@ -27756,6 +28027,7 @@ int lua_register_cocos2dx_Director(lua_State* tolua_S)
         tolua_function(tolua_S,"getRunningScene",lua_cocos2dx_Director_getRunningScene);
         tolua_function(tolua_S,"setViewport",lua_cocos2dx_Director_setViewport);
         tolua_function(tolua_S,"stopAnimation",lua_cocos2dx_Director_stopAnimation);
+        tolua_function(tolua_S,"setContentScaleFactor",lua_cocos2dx_Director_setContentScaleFactor);
         tolua_function(tolua_S,"popToSceneStackLevel",lua_cocos2dx_Director_popToSceneStackLevel);
         tolua_function(tolua_S,"resume",lua_cocos2dx_Director_resume);
         tolua_function(tolua_S,"isNextDeltaTimeZero",lua_cocos2dx_Director_isNextDeltaTimeZero);
@@ -27767,20 +28039,23 @@ int lua_register_cocos2dx_Director(lua_State* tolua_S)
         tolua_function(tolua_S,"runWithScene",lua_cocos2dx_Director_runWithScene);
         tolua_function(tolua_S,"setNotificationNode",lua_cocos2dx_Director_setNotificationNode);
         tolua_function(tolua_S,"drawScene",lua_cocos2dx_Director_drawScene);
+        tolua_function(tolua_S,"getZEye",lua_cocos2dx_Director_getZEye);
+        tolua_function(tolua_S,"getMatrix",lua_cocos2dx_Director_getMatrix);
         tolua_function(tolua_S,"popScene",lua_cocos2dx_Director_popScene);
         tolua_function(tolua_S,"isDisplayStats",lua_cocos2dx_Director_isDisplayStats);
         tolua_function(tolua_S,"setProjection",lua_cocos2dx_Director_setProjection);
-        tolua_function(tolua_S,"getConsole",lua_cocos2dx_Director_getConsole);
-        tolua_function(tolua_S,"getZEye",lua_cocos2dx_Director_getZEye);
+        tolua_function(tolua_S,"loadIdentityMatrix",lua_cocos2dx_Director_loadIdentityMatrix);
         tolua_function(tolua_S,"setNextDeltaTimeZero",lua_cocos2dx_Director_setNextDeltaTimeZero);
+        tolua_function(tolua_S,"resetMatrixStack",lua_cocos2dx_Director_resetMatrixStack);
+        tolua_function(tolua_S,"popMatrix",lua_cocos2dx_Director_popMatrix);
         tolua_function(tolua_S,"getVisibleSize",lua_cocos2dx_Director_getVisibleSize);
         tolua_function(tolua_S,"getScheduler",lua_cocos2dx_Director_getScheduler);
-        tolua_function(tolua_S,"pushScene",lua_cocos2dx_Director_pushScene);
+        tolua_function(tolua_S,"setAnimationInterval",lua_cocos2dx_Director_setAnimationInterval);
         tolua_function(tolua_S,"getAnimationInterval",lua_cocos2dx_Director_getAnimationInterval);
         tolua_function(tolua_S,"isPaused",lua_cocos2dx_Director_isPaused);
         tolua_function(tolua_S,"setDisplayStats",lua_cocos2dx_Director_setDisplayStats);
         tolua_function(tolua_S,"replaceScene",lua_cocos2dx_Director_replaceScene);
-        tolua_function(tolua_S,"setAnimationInterval",lua_cocos2dx_Director_setAnimationInterval);
+        tolua_function(tolua_S,"multiplyMatrix",lua_cocos2dx_Director_multiplyMatrix);
         tolua_function(tolua_S,"getActionManager",lua_cocos2dx_Director_getActionManager);
         tolua_function(tolua_S,"getInstance", lua_cocos2dx_Director_getInstance);
     tolua_endmodule(tolua_S);
@@ -28086,8 +28361,8 @@ int lua_cocos2dx_GridBase_getStep(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const cocos2d::Point& ret = cobj->getStep();
-        point_to_luaval(tolua_S, ret);
+        const cocos2d::math::Vector2& ret = cobj->getStep();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getStep",argc, 0);
@@ -28171,9 +28446,9 @@ int lua_cocos2dx_GridBase_setStep(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->setStep(arg0);
@@ -31983,11 +32258,11 @@ int lua_cocos2dx_Label_setBMFontFilePath(lua_State* tolua_S)
     if (argc == 2) 
     {
         std::string arg0;
-        cocos2d::Point arg1;
+        cocos2d::math::Vector2 arg1;
 
         ok &= luaval_to_std_string(tolua_S, 2,&arg0);
 
-        ok &= luaval_to_point(tolua_S, 3, &arg1);
+        ok &= luaval_to_vector2(tolua_S, 3, &arg1);
         if(!ok)
             return 0;
         bool ret = cobj->setBMFontFilePath(arg0, arg1);
@@ -33216,12 +33491,12 @@ int lua_cocos2dx_Label_createWithBMFont(lua_State* tolua_S)
         std::string arg1;
         cocos2d::TextHAlignment arg2;
         int arg3;
-        cocos2d::Point arg4;
+        cocos2d::math::Vector2 arg4;
         ok &= luaval_to_std_string(tolua_S, 2,&arg0);
         ok &= luaval_to_std_string(tolua_S, 3,&arg1);
         ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2);
         ok &= luaval_to_int32(tolua_S, 5,(int *)&arg3);
-        ok &= luaval_to_point(tolua_S, 6, &arg4);
+        ok &= luaval_to_vector2(tolua_S, 6, &arg4);
         if(!ok)
             return 0;
         cocos2d::Label* ret = cocos2d::Label::createWithBMFont(arg0, arg1, arg2, arg3, arg4);
@@ -33899,7 +34174,7 @@ int lua_cocos2dx_LabelBMFont_initWithString(lua_State* tolua_S)
         std::string arg1;
         double arg2;
         cocos2d::TextHAlignment arg3;
-        cocos2d::Point arg4;
+        cocos2d::math::Vector2 arg4;
 
         ok &= luaval_to_std_string(tolua_S, 2,&arg0);
 
@@ -33909,7 +34184,7 @@ int lua_cocos2dx_LabelBMFont_initWithString(lua_State* tolua_S)
 
         ok &= luaval_to_int32(tolua_S, 5,(int *)&arg3);
 
-        ok &= luaval_to_point(tolua_S, 6, &arg4);
+        ok &= luaval_to_vector2(tolua_S, 6, &arg4);
         if(!ok)
             return 0;
         bool ret = cobj->initWithString(arg0, arg1, arg2, arg3, arg4);
@@ -34055,11 +34330,11 @@ int lua_cocos2dx_LabelBMFont_setFntFile(lua_State* tolua_S)
     if (argc == 2) 
     {
         std::string arg0;
-        cocos2d::Point arg1;
+        cocos2d::math::Vector2 arg1;
 
         ok &= luaval_to_std_string(tolua_S, 2,&arg0);
 
-        ok &= luaval_to_point(tolua_S, 3, &arg1);
+        ok &= luaval_to_vector2(tolua_S, 3, &arg1);
         if(!ok)
             return 0;
         cobj->setFntFile(arg0, arg1);
@@ -34264,8 +34539,8 @@ int lua_cocos2dx_LabelBMFont_create(lua_State* tolua_S)
             cocos2d::TextHAlignment arg3;
             ok &= luaval_to_int32(tolua_S, 5,(int *)&arg3);
             if (!ok) { break; }
-            cocos2d::Point arg4;
-            ok &= luaval_to_point(tolua_S, 6, &arg4);
+            cocos2d::math::Vector2 arg4;
+            ok &= luaval_to_vector2(tolua_S, 6, &arg4);
             if (!ok) { break; }
             cocos2d::LabelBMFont* ret = cocos2d::LabelBMFont::create(arg0, arg1, arg2, arg3, arg4);
             object_to_luaval<cocos2d::LabelBMFont>(tolua_S, "cc.LabelBMFont",(cocos2d::LabelBMFont*)ret);
@@ -34912,9 +35187,9 @@ int lua_cocos2dx_LayerGradient_setVector(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->setVector(arg0);
@@ -35098,8 +35373,8 @@ int lua_cocos2dx_LayerGradient_getVector(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const cocos2d::Point& ret = cobj->getVector();
-        point_to_luaval(tolua_S, ret);
+        const cocos2d::math::Vector2& ret = cobj->getVector();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getVector",argc, 0);
@@ -35342,8 +35617,8 @@ int lua_cocos2dx_LayerGradient_create(lua_State* tolua_S)
             cocos2d::Color4B arg1;
             ok &=luaval_to_color4b(tolua_S, 3, &arg1);
             if (!ok) { break; }
-            cocos2d::Point arg2;
-            ok &= luaval_to_point(tolua_S, 4, &arg2);
+            cocos2d::math::Vector2 arg2;
+            ok &= luaval_to_vector2(tolua_S, 4, &arg2);
             if (!ok) { break; }
             cocos2d::LayerGradient* ret = cocos2d::LayerGradient::create(arg0, arg1, arg2);
             object_to_luaval<cocos2d::LayerGradient>(tolua_S, "cc.LayerGradient",(cocos2d::LayerGradient*)ret);
@@ -41856,8 +42131,8 @@ int lua_cocos2dx_Sprite_getOffsetPosition(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const cocos2d::Point& ret = cobj->getOffsetPosition();
-        point_to_luaval(tolua_S, ret);
+        const cocos2d::math::Vector2& ret = cobj->getOffsetPosition();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getOffsetPosition",argc, 0);
@@ -43015,9 +43290,9 @@ int lua_cocos2dx_ProgressTimer_setBarChangeRate(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->setBarChangeRate(arg0);
@@ -43239,9 +43514,9 @@ int lua_cocos2dx_ProgressTimer_setMidpoint(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->setMidpoint(arg0);
@@ -43287,8 +43562,8 @@ int lua_cocos2dx_ProgressTimer_getBarChangeRate(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        cocos2d::Point ret = cobj->getBarChangeRate();
-        point_to_luaval(tolua_S, ret);
+        cocos2d::math::Vector2 ret = cobj->getBarChangeRate();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getBarChangeRate",argc, 0);
@@ -43384,8 +43659,8 @@ int lua_cocos2dx_ProgressTimer_getMidpoint(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        cocos2d::Point ret = cobj->getMidpoint();
-        point_to_luaval(tolua_S, ret);
+        cocos2d::math::Vector2 ret = cobj->getMidpoint();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getMidpoint",argc, 0);
@@ -44332,11 +44607,11 @@ int lua_cocos2dx_RenderTexture_setVirtualViewport(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 3) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
         cocos2d::Rect arg1;
         cocos2d::Rect arg2;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
 
         ok &= luaval_to_rect(tolua_S, 3, &arg1);
 
@@ -46651,9 +46926,9 @@ int lua_cocos2dx_ParticleSystem_setPosVar(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->setPosVar(arg0);
@@ -47287,8 +47562,8 @@ int lua_cocos2dx_ParticleSystem_getGravity(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const cocos2d::Point& ret = cobj->getGravity();
-        point_to_luaval(tolua_S, ret);
+        const cocos2d::math::Vector2& ret = cobj->getGravity();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getGravity",argc, 0);
@@ -47693,8 +47968,8 @@ int lua_cocos2dx_ParticleSystem_getPosVar(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const cocos2d::Point& ret = cobj->getPosVar();
-        point_to_luaval(tolua_S, ret);
+        const cocos2d::math::Vector2& ret = cobj->getPosVar();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getPosVar",argc, 0);
@@ -47957,8 +48232,8 @@ int lua_cocos2dx_ParticleSystem_getSourcePosition(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const cocos2d::Point& ret = cobj->getSourcePosition();
-        point_to_luaval(tolua_S, ret);
+        const cocos2d::math::Vector2& ret = cobj->getSourcePosition();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getSourcePosition",argc, 0);
@@ -48138,11 +48413,11 @@ int lua_cocos2dx_ParticleSystem_updateQuadWithParticle(lua_State* tolua_S)
     if (argc == 2) 
     {
         cocos2d::sParticle* arg0;
-        cocos2d::Point arg1;
+        cocos2d::math::Vector2 arg1;
 
         #pragma warning NO CONVERSION TO NATIVE FOR sParticle*;
 
-        ok &= luaval_to_point(tolua_S, 3, &arg1);
+        ok &= luaval_to_vector2(tolua_S, 3, &arg1);
         if(!ok)
             return 0;
         cobj->updateQuadWithParticle(arg0, arg1);
@@ -48995,9 +49270,9 @@ int lua_cocos2dx_ParticleSystem_setSourcePosition(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->setSourcePosition(arg0);
@@ -49855,9 +50130,9 @@ int lua_cocos2dx_ParticleSystem_setGravity(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->setGravity(arg0);
@@ -53812,8 +54087,8 @@ int lua_cocos2dx_GLViewProtocol_getVisibleOrigin(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        cocos2d::Point ret = cobj->getVisibleOrigin();
-        point_to_luaval(tolua_S, ret);
+        cocos2d::math::Vector2 ret = cobj->getVisibleOrigin();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getVisibleOrigin",argc, 0);
@@ -57096,16 +57371,16 @@ int lua_cocos2dx_ParallaxNode_addChild(lua_State* tolua_S)
     {
         cocos2d::Node* arg0;
         int arg1;
-        cocos2d::Point arg2;
-        cocos2d::Point arg3;
+        cocos2d::math::Vector2 arg2;
+        cocos2d::math::Vector2 arg3;
 
         ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
 
         ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
 
-        ok &= luaval_to_point(tolua_S, 4, &arg2);
+        ok &= luaval_to_vector2(tolua_S, 4, &arg2);
 
-        ok &= luaval_to_point(tolua_S, 5, &arg3);
+        ok &= luaval_to_vector2(tolua_S, 5, &arg3);
         if(!ok)
             return 0;
         cobj->addChild(arg0, arg1, arg2, arg3);
@@ -57296,9 +57571,9 @@ int lua_cocos2dx_TMXObjectGroup_setPositionOffset(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->setPositionOffset(arg0);
@@ -57391,8 +57666,8 @@ int lua_cocos2dx_TMXObjectGroup_getPositionOffset(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const cocos2d::Point& ret = cobj->getPositionOffset();
-        point_to_luaval(tolua_S, ret);
+        const cocos2d::math::Vector2& ret = cobj->getPositionOffset();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getPositionOffset",argc, 0);
@@ -59687,9 +59962,9 @@ int lua_cocos2dx_TMXLayer_getTileGIDAt(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         unsigned int ret = cobj->getTileGIDAt(arg0);
@@ -59698,10 +59973,10 @@ int lua_cocos2dx_TMXLayer_getTileGIDAt(lua_State* tolua_S)
     }
     if (argc == 2) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
         cocos2d::TMXTileFlags_* arg1;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
 
         #pragma warning NO CONVERSION TO NATIVE FOR TMXTileFlags_*;
         if(!ok)
@@ -59748,13 +60023,13 @@ int lua_cocos2dx_TMXLayer_getPositionAt(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
-        cocos2d::Point ret = cobj->getPositionAt(arg0);
-        point_to_luaval(tolua_S, ret);
+        cocos2d::math::Vector2 ret = cobj->getPositionAt(arg0);
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getPositionAt",argc, 1);
@@ -60156,9 +60431,9 @@ int lua_cocos2dx_TMXLayer_removeTileAt(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->removeTileAt(arg0);
@@ -60297,8 +60572,8 @@ int lua_cocos2dx_TMXLayer_setTileGID(lua_State* tolua_S)
             ok &= luaval_to_uint32(tolua_S, 2,&arg0);
 
             if (!ok) { break; }
-            cocos2d::Point arg1;
-            ok &= luaval_to_point(tolua_S, 3, &arg1);
+            cocos2d::math::Vector2 arg1;
+            ok &= luaval_to_vector2(tolua_S, 3, &arg1);
 
             if (!ok) { break; }
             cocos2d::TMXTileFlags_ arg2;
@@ -60316,8 +60591,8 @@ int lua_cocos2dx_TMXLayer_setTileGID(lua_State* tolua_S)
             ok &= luaval_to_uint32(tolua_S, 2,&arg0);
 
             if (!ok) { break; }
-            cocos2d::Point arg1;
-            ok &= luaval_to_point(tolua_S, 3, &arg1);
+            cocos2d::math::Vector2 arg1;
+            ok &= luaval_to_vector2(tolua_S, 3, &arg1);
 
             if (!ok) { break; }
             cobj->setTileGID(arg0, arg1);
@@ -60681,9 +60956,9 @@ int lua_cocos2dx_TMXLayer_getTileAt(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cocos2d::Sprite* ret = cobj->getTileAt(arg0);
@@ -61681,9 +61956,9 @@ int lua_cocos2dx_TileMapAtlas_getTileAt(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cocos2d::Color3B ret = cobj->getTileAt(arg0);
@@ -61729,11 +62004,11 @@ int lua_cocos2dx_TileMapAtlas_setTile(lua_State* tolua_S)
     if (argc == 2) 
     {
         cocos2d::Color3B arg0;
-        cocos2d::Point arg1;
+        cocos2d::math::Vector2 arg1;
 
         ok &= luaval_to_color3b(tolua_S, 2, &arg0);
 
-        ok &= luaval_to_point(tolua_S, 3, &arg1);
+        ok &= luaval_to_vector2(tolua_S, 3, &arg1);
         if(!ok)
             return 0;
         cobj->setTile(arg0, arg1);

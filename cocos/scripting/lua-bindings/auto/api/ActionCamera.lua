@@ -6,7 +6,7 @@
 --------------------------------
 -- overload function: setEye(float, float, float)
 --          
--- overload function: setEye(kmVec3)
+-- overload function: setEye(cc.math::Vector3)
 --          
 -- @function [parent=#ActionCamera] setEye
 -- @param self
@@ -17,27 +17,27 @@
 --------------------------------
 -- @function [parent=#ActionCamera] getEye 
 -- @param self
--- @return kmVec3#kmVec3 ret (return value: kmVec3)
+-- @return math::Vector3#math::Vector3 ret (return value: cc.math::Vector3)
         
 --------------------------------
 -- @function [parent=#ActionCamera] setUp 
 -- @param self
--- @param #kmVec3 kmvec3
+-- @param #cc.math::Vector3 array
         
 --------------------------------
 -- @function [parent=#ActionCamera] getCenter 
 -- @param self
--- @return kmVec3#kmVec3 ret (return value: kmVec3)
+-- @return math::Vector3#math::Vector3 ret (return value: cc.math::Vector3)
         
 --------------------------------
 -- @function [parent=#ActionCamera] setCenter 
 -- @param self
--- @param #kmVec3 kmvec3
+-- @param #cc.math::Vector3 array
         
 --------------------------------
 -- @function [parent=#ActionCamera] getUp 
 -- @param self
--- @return kmVec3#kmVec3 ret (return value: kmVec3)
+-- @return math::Vector3#math::Vector3 ret (return value: cc.math::Vector3)
         
 --------------------------------
 -- @function [parent=#ActionCamera] startWithTarget 
