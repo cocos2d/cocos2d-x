@@ -12,7 +12,7 @@
 --------------------------------
 -- @function [parent=#RichText] setAnchorPoint 
 -- @param self
--- @param #point_table point
+-- @param #cc.math::Vector2 array
         
 --------------------------------
 -- @function [parent=#RichText] pushBackElement 

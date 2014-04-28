@@ -680,6 +680,11 @@ std::string FileUtils::getPathForFilename(const std::string& filename, const std
 
 std::string FileUtils::fullPathForFilename(const std::string &filename)
 {
+    if (filename.empty())
+    {
+        return "";
+    }
+    
     if (isAbsolutePath(filename))
     {
         return filename;

@@ -21,7 +21,7 @@
 --------------------------------
 -- @function [parent=#LayerGradient] setVector 
 -- @param self
--- @param #point_table point
+-- @param #cc.math::Vector2 array
         
 --------------------------------
 -- @function [parent=#LayerGradient] setStartOpacity 
@@ -41,7 +41,7 @@
 --------------------------------
 -- @function [parent=#LayerGradient] getVector 
 -- @param self
--- @return point_table#point_table ret (return value: point_table)
+-- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
         
 --------------------------------
 -- @function [parent=#LayerGradient] setEndColor 
@@ -68,13 +68,13 @@
 --          
 -- overload function: create()
 --          
--- overload function: create(color4B_table, color4B_table, point_table)
+-- overload function: create(color4B_table, color4B_table, cc.math::Vector2)
 --          
 -- @function [parent=#LayerGradient] create
 -- @param self
 -- @param #color4B_table color4b
 -- @param #color4B_table color4b
--- @param #point_table point
+-- @param #cc.math::Vector2 array
 -- @return LayerGradient#LayerGradient ret (retunr value: cc.LayerGradient)
 
 --------------------------------

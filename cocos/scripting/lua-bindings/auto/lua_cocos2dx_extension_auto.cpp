@@ -2027,8 +2027,8 @@ int lua_cocos2dx_extension_Control_getTouchLocation(lua_State* tolua_S)
         ok &= luaval_to_object<cocos2d::Touch>(tolua_S, 2, "cc.Touch",&arg0);
         if(!ok)
             return 0;
-        cocos2d::Point ret = cobj->getTouchLocation(arg0);
-        point_to_luaval(tolua_S, ret);
+        cocos2d::math::Vector2 ret = cobj->getTouchLocation(arg0);
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getTouchLocation",argc, 1);
@@ -2506,9 +2506,9 @@ int lua_cocos2dx_extension_ControlButton_setLabelAnchorPoint(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->setLabelAnchorPoint(arg0);
@@ -2554,8 +2554,8 @@ int lua_cocos2dx_extension_ControlButton_getLabelAnchorPoint(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const cocos2d::Point& ret = cobj->getLabelAnchorPoint();
-        point_to_luaval(tolua_S, ret);
+        const cocos2d::math::Vector2& ret = cobj->getLabelAnchorPoint();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getLabelAnchorPoint",argc, 0);
@@ -4170,11 +4170,11 @@ int lua_cocos2dx_extension_ControlHuePicker_initWithTargetAndPos(lua_State* tolu
     if (argc == 2) 
     {
         cocos2d::Node* arg0;
-        cocos2d::Point arg1;
+        cocos2d::math::Vector2 arg1;
 
         ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
 
-        ok &= luaval_to_point(tolua_S, 3, &arg1);
+        ok &= luaval_to_vector2(tolua_S, 3, &arg1);
         if(!ok)
             return 0;
         bool ret = cobj->initWithTargetAndPos(arg0, arg1);
@@ -4267,8 +4267,8 @@ int lua_cocos2dx_extension_ControlHuePicker_getStartPos(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        cocos2d::Point ret = cobj->getStartPos();
-        point_to_luaval(tolua_S, ret);
+        cocos2d::math::Vector2 ret = cobj->getStartPos();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getStartPos",argc, 0);
@@ -4613,9 +4613,9 @@ int lua_cocos2dx_extension_ControlHuePicker_create(lua_State* tolua_S)
     if (argc == 2)
     {
         cocos2d::Node* arg0;
-        cocos2d::Point arg1;
+        cocos2d::math::Vector2 arg1;
         ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
-        ok &= luaval_to_point(tolua_S, 3, &arg1);
+        ok &= luaval_to_vector2(tolua_S, 3, &arg1);
         if(!ok)
             return 0;
         cocos2d::extension::ControlHuePicker* ret = cocos2d::extension::ControlHuePicker::create(arg0, arg1);
@@ -4769,11 +4769,11 @@ int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_initWithTargetAndPo
     if (argc == 2) 
     {
         cocos2d::Node* arg0;
-        cocos2d::Point arg1;
+        cocos2d::math::Vector2 arg1;
 
         ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
 
-        ok &= luaval_to_point(tolua_S, 3, &arg1);
+        ok &= luaval_to_vector2(tolua_S, 3, &arg1);
         if(!ok)
             return 0;
         bool ret = cobj->initWithTargetAndPos(arg0, arg1);
@@ -4820,8 +4820,8 @@ int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getStartPos(lua_Sta
     {
         if(!ok)
             return 0;
-        cocos2d::Point ret = cobj->getStartPos();
-        point_to_luaval(tolua_S, ret);
+        cocos2d::math::Vector2 ret = cobj->getStartPos();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getStartPos",argc, 0);
@@ -5118,9 +5118,9 @@ int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_create(lua_State* t
     if (argc == 2)
     {
         cocos2d::Node* arg0;
-        cocos2d::Point arg1;
+        cocos2d::math::Vector2 arg1;
         ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
-        ok &= luaval_to_point(tolua_S, 3, &arg1);
+        ok &= luaval_to_vector2(tolua_S, 3, &arg1);
         if(!ok)
             return 0;
         cocos2d::extension::ControlSaturationBrightnessPicker* ret = cocos2d::extension::ControlSaturationBrightnessPicker::create(arg0, arg1);
@@ -5828,9 +5828,9 @@ int lua_cocos2dx_extension_ControlPotentiometer_setPreviousLocation(lua_State* t
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->setPreviousLocation(arg0);
@@ -6008,18 +6008,18 @@ int lua_cocos2dx_extension_ControlPotentiometer_angleInDegreesBetweenLineFromPoi
     argc = lua_gettop(tolua_S)-1;
     if (argc == 4) 
     {
-        cocos2d::Point arg0;
-        cocos2d::Point arg1;
-        cocos2d::Point arg2;
-        cocos2d::Point arg3;
+        cocos2d::math::Vector2 arg0;
+        cocos2d::math::Vector2 arg1;
+        cocos2d::math::Vector2 arg2;
+        cocos2d::math::Vector2 arg3;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
 
-        ok &= luaval_to_point(tolua_S, 3, &arg1);
+        ok &= luaval_to_vector2(tolua_S, 3, &arg1);
 
-        ok &= luaval_to_point(tolua_S, 4, &arg2);
+        ok &= luaval_to_vector2(tolua_S, 4, &arg2);
 
-        ok &= luaval_to_point(tolua_S, 5, &arg3);
+        ok &= luaval_to_vector2(tolua_S, 5, &arg3);
         if(!ok)
             return 0;
         double ret = cobj->angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint(arg0, arg1, arg2, arg3);
@@ -6064,9 +6064,9 @@ int lua_cocos2dx_extension_ControlPotentiometer_potentiometerBegan(lua_State* to
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->potentiometerBegan(arg0);
@@ -6292,8 +6292,8 @@ int lua_cocos2dx_extension_ControlPotentiometer_getPreviousLocation(lua_State* t
     {
         if(!ok)
             return 0;
-        cocos2d::Point ret = cobj->getPreviousLocation();
-        point_to_luaval(tolua_S, ret);
+        cocos2d::math::Vector2 ret = cobj->getPreviousLocation();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getPreviousLocation",argc, 0);
@@ -6334,12 +6334,12 @@ int lua_cocos2dx_extension_ControlPotentiometer_distanceBetweenPointAndPoint(lua
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
-        cocos2d::Point arg0;
-        cocos2d::Point arg1;
+        cocos2d::math::Vector2 arg0;
+        cocos2d::math::Vector2 arg1;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
 
-        ok &= luaval_to_point(tolua_S, 3, &arg1);
+        ok &= luaval_to_vector2(tolua_S, 3, &arg1);
         if(!ok)
             return 0;
         double ret = cobj->distanceBetweenPointAndPoint(arg0, arg1);
@@ -6384,9 +6384,9 @@ int lua_cocos2dx_extension_ControlPotentiometer_potentiometerEnded(lua_State* to
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->potentiometerEnded(arg0);
@@ -6619,9 +6619,9 @@ int lua_cocos2dx_extension_ControlPotentiometer_potentiometerMoved(lua_State* to
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->potentiometerMoved(arg0);
@@ -6824,8 +6824,8 @@ int lua_cocos2dx_extension_ControlSlider_locationFromTouch(lua_State* tolua_S)
         ok &= luaval_to_object<cocos2d::Touch>(tolua_S, 2, "cc.Touch",&arg0);
         if(!ok)
             return 0;
-        cocos2d::Point ret = cobj->locationFromTouch(arg0);
-        point_to_luaval(tolua_S, ret);
+        cocos2d::math::Vector2 ret = cobj->locationFromTouch(arg0);
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "locationFromTouch",argc, 1);
@@ -8249,9 +8249,9 @@ int lua_cocos2dx_extension_ControlStepper_updateLayoutUsingTouchLocation(lua_Sta
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->updateLayoutUsingTouchLocation(arg0);
@@ -9374,8 +9374,8 @@ int lua_cocos2dx_extension_ControlSwitch_locationFromTouch(lua_State* tolua_S)
         ok &= luaval_to_object<cocos2d::Touch>(tolua_S, 2, "cc.Touch",&arg0);
         if(!ok)
             return 0;
-        cocos2d::Point ret = cobj->locationFromTouch(arg0);
-        point_to_luaval(tolua_S, ret);
+        cocos2d::math::Vector2 ret = cobj->locationFromTouch(arg0);
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "locationFromTouch",argc, 1);
@@ -9688,10 +9688,10 @@ int lua_cocos2dx_extension_ScrollView_setContentOffsetInDuration(lua_State* tolu
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
         double arg1;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
 
         ok &= luaval_to_number(tolua_S, 3,&arg1);
         if(!ok)
@@ -10253,9 +10253,9 @@ int lua_cocos2dx_extension_ScrollView_setContentOffset(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->setContentOffset(arg0);
@@ -10263,10 +10263,10 @@ int lua_cocos2dx_extension_ScrollView_setContentOffset(lua_State* tolua_S)
     }
     if (argc == 2) 
     {
-        cocos2d::Point arg0;
+        cocos2d::math::Vector2 arg0;
         bool arg1;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
 
         ok &= luaval_to_boolean(tolua_S, 3,&arg1);
         if(!ok)
@@ -10541,8 +10541,8 @@ int lua_cocos2dx_extension_ScrollView_getContentOffset(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        cocos2d::Point ret = cobj->getContentOffset();
-        point_to_luaval(tolua_S, ret);
+        cocos2d::math::Vector2 ret = cobj->getContentOffset();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getContentOffset",argc, 0);
@@ -10816,8 +10816,8 @@ int lua_cocos2dx_extension_ScrollView_maxContainerOffset(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        cocos2d::Point ret = cobj->maxContainerOffset();
-        point_to_luaval(tolua_S, ret);
+        cocos2d::math::Vector2 ret = cobj->maxContainerOffset();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "maxContainerOffset",argc, 0);
@@ -11001,8 +11001,8 @@ int lua_cocos2dx_extension_ScrollView_minContainerOffset(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        cocos2d::Point ret = cobj->minContainerOffset();
-        point_to_luaval(tolua_S, ret);
+        cocos2d::math::Vector2 ret = cobj->minContainerOffset();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "minContainerOffset",argc, 0);
