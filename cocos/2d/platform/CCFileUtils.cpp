@@ -666,10 +666,10 @@ std::string FileUtils::getPathForFilename(const std::string& filename, const std
         file = filename.substr(pos+1);
     }
     
-    // searchPath + file_path + resourceDirectory
+    // searchPath + resourceDirectory + file_path
     std::string path = searchPath;
-    path += file_path;
     path += resolutionDirectory;
+    path += file_path;
     
     path = getFullPathForDirectoryAndFilename(path, file);
     
