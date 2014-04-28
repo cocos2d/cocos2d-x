@@ -118,20 +118,13 @@
 -- @function [parent=#SpriteBatchNode] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #kmMat4 kmmat4
+-- @param #cc.math::Matrix matrix
 -- @param #bool bool
         
 --------------------------------
 -- @function [parent=#SpriteBatchNode] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)
-        
---------------------------------
--- @function [parent=#SpriteBatchNode] visit 
--- @param self
--- @param #cc.Renderer renderer
--- @param #kmMat4 kmmat4
--- @param #bool bool
         
 --------------------------------
 -- @function [parent=#SpriteBatchNode] sortAllChildren 

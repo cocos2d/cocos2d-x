@@ -6,7 +6,7 @@
 --------------------------------
 -- @function [parent=#Place] create 
 -- @param self
--- @param #point_table point
+-- @param #cc.math::Vector2 array
 -- @return Place#Place ret (return value: cc.Place)
         
 --------------------------------

@@ -6,7 +6,7 @@
 --------------------------------
 -- @function [parent=#FadeOutUpTiles] transformTile 
 -- @param self
--- @param #point_table point
+-- @param #cc.math::Vector2 array
 -- @param #float float
         
 --------------------------------
