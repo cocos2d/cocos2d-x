@@ -191,6 +191,9 @@ public:
     */
     CCSize getWinSize(void);
 
+    // set the size of the OpenGL view in points
+    void setWinSize(CCSize size);
+
     /** returns the size of the OpenGL view in pixels.
     */
     CCSize getWinSizeInPixels(void);

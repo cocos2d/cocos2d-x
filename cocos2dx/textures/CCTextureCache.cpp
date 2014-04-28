@@ -413,70 +413,83 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
     texture = (CCTexture2D*)m_pTextures->objectForKey(pathKey.c_str());
 
     std::string fullpath = pathKey; // (CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(path));
-    if (! texture) 
+
+    std::string lowerCase(pathKey);
+    for (unsigned int i = 0; i < lowerCase.length(); ++i)
     {
-        std::string lowerCase(pathKey);
-        for (unsigned int i = 0; i < lowerCase.length(); ++i)
+        lowerCase[i] = tolower(lowerCase[i]);
+    }
+    // all images are handled by UIImage except PVR extension that is handled by our own handler
+    do 
+    {
+        if (std::string::npos != lowerCase.find(".pvr"))
         {
-            lowerCase[i] = tolower(lowerCase[i]);
-        }
-        // all images are handled by UIImage except PVR extension that is handled by our own handler
-        do 
-        {
-            if (std::string::npos != lowerCase.find(".pvr"))
+            if (texture == NULL)
             {
                 texture = this->addPVRImage(fullpath.c_str());
             }
-            else if (std::string::npos != lowerCase.find(".pkm"))
+        }
+        else if (std::string::npos != lowerCase.find(".pkm"))
+        {
+            if (texture == NULL)
             {
                 // ETC1 file format, only supportted on Android
                 texture = this->addETCImage(fullpath.c_str());
             }
+        }
+        else
+        {
+            CCImage::EImageFormat eImageFormat = CCImage::kFmtUnKnown;
+            if (std::string::npos != lowerCase.find(".png"))
+            {
+                eImageFormat = CCImage::kFmtPng;
+            }
+            else if (std::string::npos != lowerCase.find(".jpg") || std::string::npos != lowerCase.find(".jpeg"))
+            {
+                eImageFormat = CCImage::kFmtJpg;
+            }
+            else if (std::string::npos != lowerCase.find(".tif") || std::string::npos != lowerCase.find(".tiff"))
+            {
+                eImageFormat = CCImage::kFmtTiff;
+            }
+            else if (std::string::npos != lowerCase.find(".webp"))
+            {
+                eImageFormat = CCImage::kFmtWebp;
+            }
+                
+            pImage = new CCImage();
+            CC_BREAK_IF(NULL == pImage);
+
+            bool bRet = pImage->initWithImageFile(fullpath.c_str(), eImageFormat);
+            CC_BREAK_IF(!bRet);
+
+
+            if (texture == NULL)
+            {
+                texture = new CCTexture2D();
+            }
             else
             {
-                CCImage::EImageFormat eImageFormat = CCImage::kFmtUnKnown;
-                if (std::string::npos != lowerCase.find(".png"))
-                {
-                    eImageFormat = CCImage::kFmtPng;
-                }
-                else if (std::string::npos != lowerCase.find(".jpg") || std::string::npos != lowerCase.find(".jpeg"))
-                {
-                    eImageFormat = CCImage::kFmtJpg;
-                }
-                else if (std::string::npos != lowerCase.find(".tif") || std::string::npos != lowerCase.find(".tiff"))
-                {
-                    eImageFormat = CCImage::kFmtTiff;
-                }
-                else if (std::string::npos != lowerCase.find(".webp"))
-                {
-                    eImageFormat = CCImage::kFmtWebp;
-                }
-                
-                pImage = new CCImage();
-                CC_BREAK_IF(NULL == pImage);
-
-                bool bRet = pImage->initWithImageFile(fullpath.c_str(), eImageFormat);
-                CC_BREAK_IF(!bRet);
-
-                texture = new CCTexture2D();
-                
-                if( texture &&
-                    texture->initWithImage(pImage) )
-                {
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-                    // cache the texture file name
-                    VolatileTexture::addImageTexture(texture, fullpath.c_str(), eImageFormat);
-#endif
-                    m_pTextures->setObject(texture, pathKey.c_str());
-                    texture->release();
-                }
-                else
-                {
-                    CCLOG("cocos2d: Couldn't create texture for file:%s in CCTextureCache", path);
-                }
+                texture->retain();
             }
-        } while (0);
-    }
+
+            if( texture &&
+                texture->initWithImage(pImage) )
+            {
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+                // cache the texture file name
+                VolatileTexture::addImageTexture(texture, fullpath.c_str(), eImageFormat);
+#endif
+                //CCTexture2D::setDefaultAlphaPixelFormat(oldPixelFormat);
+                m_pTextures->setObject(texture, pathKey.c_str());
+                texture->release();
+            }
+            else
+            {
+                CCLOG("cocos2d: Couldn't create texture for file:%s in CCTextureCache", path);
+            }
+        }
+    } while (0);
 
     CC_SAFE_RELEASE(pImage);
 
@@ -592,7 +605,7 @@ CCTexture2D* CCTextureCache::addUIImage(CCImage *image, const char *key)
     return texture;
 }
 
-bool CCTextureCache::reloadTexture(const char* fileName)
+bool CCTextureCache::reloadTexture(const char* fileName, unsigned short &imageWidth, unsigned short &imageHeight)
 {
     std::string fullpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(fileName);
     if (fullpath.size() == 0)
@@ -617,6 +630,8 @@ bool CCTextureCache::reloadTexture(const char* fileName)
             CC_BREAK_IF(!bRet);
             
             ret = texture->initWithImage(image);
+            imageWidth = image->getWidth();
+            imageHeight = image->getHeight();
         } while (0);
     }
     

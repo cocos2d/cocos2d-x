@@ -28,6 +28,7 @@ THE SOFTWARE.
 
 #include "base_nodes/CCNode.h"
 #include "CCTMXObjectGroup.h"
+#include <vector>
 
 NS_CC_BEGIN
 

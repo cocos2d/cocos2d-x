@@ -512,6 +512,11 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
             
             m_bPreMulti = true;
         }
+        else
+        {
+            m_bHasAlpha = false;
+            m_bPreMulti = false;
+        }
 
         CC_SAFE_FREE(row_pointers);
 
