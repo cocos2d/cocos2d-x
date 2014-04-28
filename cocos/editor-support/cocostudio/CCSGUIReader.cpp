@@ -1113,9 +1113,9 @@ Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Va
                     {
                         if (child->getPositionType() == cocos2d::ui::POSITION_PERCENT)
                         {
-                            child->setPositionPercent(Point(child->getPositionPercent().x + 0.5f, child->getPositionPercent().y + 0.5f));
+                            child->setPositionPercent(Point(child->getPositionPercent().x + widget->getAnchorPoint().x, child->getPositionPercent().y + widget->getAnchorPoint().y));
                         }
-                        child->setPosition(Point(child->getPositionX() + widget->getSize().width / 2.0f, child->getPositionY() + widget->getSize().height / 2.0f));
+                        child->setPosition(Point(child->getPositionX() + widget->getAnchorPointInPoints().x, child->getPositionY() + widget->getAnchorPointInPoints().y));
                     }
                     widget->addChild(child);
                 }
