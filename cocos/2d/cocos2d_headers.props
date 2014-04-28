@@ -7,7 +7,7 @@
   <PropertyGroup />
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(EngineRoot)cocos;$(EngineRoot)cocos\2d;$(EngineRoot)cocos\2d\renderer;$(EngineRoot)cocos\ui;$(EngineRoot)cocos\base;$(EngineRoot)cocos\physics;$(EngineRoot)cocos\math\kazmath;$(EngineRoot)cocos\2d\platform\win32;$(EngineRoot)cocos\2d\platform\desktop;$(EngineRoot)external\glfw3\include\win32;$(EngineRoot)external\win32-specific\gles\include\OGLES</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos;$(EngineRoot)cocos\2d;$(EngineRoot)cocos\2d\renderer;$(EngineRoot)cocos\ui;$(EngineRoot)cocos\base;$(EngineRoot)cocos\physics;$(EngineRoot)cocos\math\kazmath;$(EngineRoot)cocos\2d\platform\win32;$(EngineRoot)cocos\2d\platform\desktop;$(EngineRoot)external\glfw3\include\win32;$(EngineRoot)external\win32-specific\gles\include\OGLES;$(EngineRoot)cocos\krinsen;$(EngineRoot)\extensions;$(EngineRoot)\external;$(EngineRoot)cocos\audio\include;C:\Program Files\Java\jdk1.7.0_51\include;C:\Program Files\Java\jdk1.7.0_51\include\win32;C:\Projects\cocos2d\cocos\editor-support</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_VARIADIC_MAX=10;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
