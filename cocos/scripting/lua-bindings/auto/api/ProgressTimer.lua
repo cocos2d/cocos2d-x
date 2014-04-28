@@ -11,7 +11,7 @@
 --------------------------------
 -- @function [parent=#ProgressTimer] setBarChangeRate 
 -- @param self
--- @param #point_table point
+-- @param #cc.math::Vector2 array
         
 --------------------------------
 -- @function [parent=#ProgressTimer] getPercentage 
@@ -36,12 +36,12 @@
 --------------------------------
 -- @function [parent=#ProgressTimer] setMidpoint 
 -- @param self
--- @param #point_table point
+-- @param #cc.math::Vector2 array
         
 --------------------------------
 -- @function [parent=#ProgressTimer] getBarChangeRate 
 -- @param self
--- @return point_table#point_table ret (return value: point_table)
+-- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
         
 --------------------------------
 -- overload function: setReverseDirection(bool)
@@ -55,7 +55,7 @@
 --------------------------------
 -- @function [parent=#ProgressTimer] getMidpoint 
 -- @param self
--- @return point_table#point_table ret (return value: point_table)
+-- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
         
 --------------------------------
 -- @function [parent=#ProgressTimer] setPercentage 
@@ -76,13 +76,13 @@
 --------------------------------
 -- @function [parent=#ProgressTimer] setAnchorPoint 
 -- @param self
--- @param #point_table point
+-- @param #cc.math::Vector2 array
         
 --------------------------------
 -- @function [parent=#ProgressTimer] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #kmMat4 kmmat4
+-- @param #cc.math::Matrix matrix
 -- @param #bool bool
         
 --------------------------------

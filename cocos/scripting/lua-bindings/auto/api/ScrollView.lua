@@ -24,7 +24,7 @@
 --------------------------------
 -- @function [parent=#ScrollView] scrollToPercentBothDirection 
 -- @param self
--- @param #point_table point
+-- @param #cc.math::Vector2 array
 -- @param #float float
 -- @param #bool bool
         
@@ -123,7 +123,7 @@
 --------------------------------
 -- @function [parent=#ScrollView] jumpToPercentBothDirection 
 -- @param self
--- @param #point_table point
+-- @param #cc.math::Vector2 array
         
 --------------------------------
 -- @function [parent=#ScrollView] scrollToPercentVertical 

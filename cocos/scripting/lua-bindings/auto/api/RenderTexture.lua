@@ -6,7 +6,7 @@
 --------------------------------
 -- @function [parent=#RenderTexture] setVirtualViewport 
 -- @param self
--- @param #point_table point
+-- @param #cc.math::Vector2 array
 -- @param #rect_table rect
 -- @param #rect_table rect
         
@@ -169,14 +169,7 @@
 -- @function [parent=#RenderTexture] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #kmMat4 kmmat4
--- @param #bool bool
-        
---------------------------------
--- @function [parent=#RenderTexture] visit 
--- @param self
--- @param #cc.Renderer renderer
--- @param #kmMat4 kmmat4
+-- @param #cc.math::Matrix matrix
 -- @param #bool bool
         
 --------------------------------

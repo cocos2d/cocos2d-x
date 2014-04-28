@@ -114,7 +114,7 @@
 --------------------------------
 -- @function [parent=#Slider] hitTest 
 -- @param self
--- @param #point_table point
+-- @param #cc.math::Vector2 array
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
