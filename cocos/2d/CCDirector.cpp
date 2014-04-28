@@ -253,6 +253,13 @@ void Director::setGLDefaultValues()
 // Draw the Scene
 void Director::drawScene()
 {
+    // calculate overflow time from last frame, if > 0, skip a frame.
+    static double overflowTime = 0;
+    double perFrameTime = 1.0f / 60;
+    overflowTime -= perFrameTime;
+    if (overflowTime > 0) return;
+    overflowTime = 0;
+
     // calculate "global" dt
     calculateDeltaTime();
     
@@ -321,6 +328,14 @@ void Director::drawScene()
     if (_displayStats)
     {
         calculateMPF();
+    }
+
+    // calc total cost time of this frame
+    overflowTime = m_fSecondsPerFrame;
+    if (m_fSecondsPerFrame > perFrameTime)
+    {
+        // avoid getting too long time in debug mode 
+        overflowTime = perFrameTime + fmod(m_fSecondsPerFrame, perFrameTime);
     }
 }
 
