@@ -21,6 +21,7 @@ There are two ways of building Android projects.
 	* Build and Run whole project.
 	* Logcat view.
 	* Debug Java code.
+	* Debug C++ code.
 	* Javascript editor.
 	* Project management.
 2. True C++ editing, including:
@@ -47,12 +48,7 @@ There are two ways of building Android projects.
     3. Add this line `none /cygdrive cygdrive binary,noacl,posix=0,user 0 0` to `Cygwin\etc\fstab` file.
    
 3. Set up Variables: 
-	1. Path Variable `COCOS2DX`: 
-		* Eclipse->Preferences->General->Workspace->**Linked Resources**
-		* Click **New** button to add a Path Variable `COCOS2DX` pointing to the root cocos2d-x directory.
-		![Example](https://lh5.googleusercontent.com/-oPpk9kg3e5w/UUOYlq8n7aI/AAAAAAAAsdQ/zLA4eghBH9U/s400/cocos2d-x-eclipse-vars.png)
-
-	2. C/C++ Environment Variable `NDK_ROOT`: 
+	1. C/C++ Environment Variable `NDK_ROOT`: 
 		* Eclipse->Preferences->C/C++->Build->**Environment**.
 		* Click **Add** button and add a new variable `NDK_ROOT` pointing to the root NDK directory.
 		![Example](https://lh3.googleusercontent.com/-AVcY8IAT0_g/UUOYltoRobI/AAAAAAAAsdM/22D2J9u3sig/s400/cocos2d-x-eclipse-ndk.png)
@@ -60,7 +56,7 @@ There are two ways of building Android projects.
 		
 4. Import libcocos2dx library project:
 	1. File->New->Project->Android Project From Existing Code.
-	2. Click **Browse** button and open `cocos2d-x/cocos2dx/platform/android/java` directory.
+	2. Click **Browse** button and open `cocos2d/cocos/2d/platform/android/java` directory.
 	3. Click **Finish** to add project.
 	
 #### Adding and running from Eclipse
@@ -68,16 +64,16 @@ There are two ways of building Android projects.
 ![Example](https://lh3.googleusercontent.com/-SLBOu6e3QbE/UUOcOXYaGqI/AAAAAAAAsdo/tYBY2SylOSM/s288/cocos2d-x-eclipse-project-from-code.png) ![Import](https://lh5.googleusercontent.com/-XzC9Pn65USc/UUOcOTAwizI/AAAAAAAAsdk/4b6YM-oim9Y/s400/cocos2d-x-eclipse-import-project.png)
 
 1. File->New->Project->Android Project From Existing Code
-2. **Browse** to your project directory. eg: `cocos2d-x/cocos2dx/samples/Cpp/TestCpp/proj.android/`
+2. **Browse** to your project directory. eg: `~home/MyGame/proj.android/`
 3. Add the project 
 4. Click **Run** or **Debug** to compile C++ followed by Java and to run on connected device or emulator.
 
 
 ### Running project from Command Line
 
-    $ cd cocos2d-x/samples/Cpp/TestCpp/proj.android/
+    $ cd ~home/MyGame/proj.android/
     $ export NDK_ROOT=/path/to/ndk
-    $ ./build_native.sh
+    $ ./build_native.py
     $ ant debug install
 
 If the last command results in sdk.dir missing error then do: 

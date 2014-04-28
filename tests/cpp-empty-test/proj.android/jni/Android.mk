@@ -2,6 +2,11 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
+$(call import-add-path,$(LOCAL_PATH)/../../../..)
+$(call import-add-path,$(LOCAL_PATH)/../../../../cocos)
+$(call import-add-path,$(LOCAL_PATH)/../../../../external)
+
+
 LOCAL_MODULE := cpp_empty_test_shared
 
 LOCAL_MODULE_FILENAME := libcpp_empty_test
