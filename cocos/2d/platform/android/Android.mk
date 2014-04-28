@@ -28,7 +28,6 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../.. \
                     $(LOCAL_PATH)/../../.. \
                     $(LOCAL_PATH)/../../../base \
-                    $(LOCAL_PATH)/../../../math/kazmath \
                     $(LOCAL_PATH)/../../../math \
                     $(LOCAL_PATH)/../../../physics
 
