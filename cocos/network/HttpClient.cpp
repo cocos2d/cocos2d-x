@@ -445,10 +445,10 @@ bool HttpClient::lazyInitThreadSemphore()
         s_requestQueue = new Vector<HttpRequest*>();
         s_responseQueue = new Vector<HttpResponse*>();
         
+        s_need_quit = false;
+        
         auto t = std::thread(CC_CALLBACK_0(HttpClient::networkThread, this));
         t.detach();
-        
-        s_need_quit = false;
     }
     
     return true;
