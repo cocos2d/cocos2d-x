@@ -69,8 +69,11 @@ def main():
     message = last_commit['commit']['message']
 
     pattern = re.compile("\[ci(\s+)skip\]", re.I)
-    result = pattern.search(message)
-    if result is not None:
+    result_commit_title = pattern.search(message)
+
+    title = pr['title']
+    result_pr_title = pattern.search(title)
+    if result_commit_title is not None or result_pr_title is not None:
         print 'skip build for pull request #' + str(pr_num)
         return(0)
     
