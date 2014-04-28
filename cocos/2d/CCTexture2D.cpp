@@ -728,6 +728,9 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
         CCLOG("cocos2d: Texture2D. Can't create Texture. UIImage is nil");
         return false;
     }
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    VolatileTexture::addImage(this, image);
+#endif
 
     int imageWidth = image->getWidth();
     int imageHeight = image->getHeight();
