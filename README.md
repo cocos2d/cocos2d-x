@@ -147,8 +147,8 @@ or
 $ bin/lua-empty-test/lua-empty-test
 ```
 
-      You may meet building errors when building libGLFW.so. It is because libGL.so directs to an error target,
-      you should make it to direct to a correct one. `install-deps-linux.sh` only has to be run once.
+You may meet building errors when building libGLFW.so. It is because libGL.so directs to an error target,
+you should make it to direct to a correct one. `install-deps-linux.sh` only has to be run once.
 
 * For Windows
 
