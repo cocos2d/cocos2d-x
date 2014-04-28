@@ -58,9 +58,6 @@
     <Filter Include="script_support">
       <UniqueIdentifier>{5b082c5c-d396-43ca-b3b1-997d0f6247d0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="kazmath">
-      <UniqueIdentifier>{7751500e-ac9e-4604-a96d-670b30b7d8bd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="shaders">
       <UniqueIdentifier>{163895ae-8a8e-46bf-bdf2-98bb2c1347fc}</UniqueIdentifier>
     </Filter>
@@ -105,6 +102,9 @@
     </Filter>
     <Filter Include="deprecated">
       <UniqueIdentifier>{5598fb0c-c012-45b6-8e43-447e7891b61d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="math">
+      <UniqueIdentifier>{9bbf7050-757b-41b1-ab15-418db52c2023}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -383,7 +383,6 @@
     <ClCompile Include="ccFPSImages.c" />
     <ClCompile Include="CCScheduler.cpp" />
     <ClCompile Include="ccTypes.cpp" />
-    <ClCompile Include="cocos2d.cpp" />
     <ClCompile Include="base64.cpp">
       <Filter>support</Filter>
     </ClCompile>
@@ -483,9 +482,6 @@
     <ClCompile Include="renderer\CCCustomCommand.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
-    <ClCompile Include="renderer\CCFrustum.cpp">
-      <Filter>renderer</Filter>
-    </ClCompile>
     <ClCompile Include="renderer\CCGroupCommand.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
@@ -547,48 +543,6 @@
     <ClCompile Include="platform\winrt\sha1.cpp">
       <Filter>platform\winrt</Filter>
     </ClCompile>
-    <ClCompile Include="..\math\kazmath\kazmath\aabb.c">
-      <Filter>kazmath</Filter>
-    </ClCompile>
-    <ClCompile Include="..\math\kazmath\kazmath\mat3.c">
-      <Filter>kazmath</Filter>
-    </ClCompile>
-    <ClCompile Include="..\math\kazmath\kazmath\mat4.c">
-      <Filter>kazmath</Filter>
-    </ClCompile>
-    <ClCompile Include="..\math\kazmath\kazmath\GL\mat4stack.c">
-      <Filter>kazmath</Filter>
-    </ClCompile>
-    <ClCompile Include="..\math\kazmath\kazmath\GL\matrix.c">
-      <Filter>kazmath</Filter>
-    </ClCompile>
-    <ClCompile Include="..\math\kazmath\kazmath\neon_matrix_impl.c">
-      <Filter>kazmath</Filter>
-    </ClCompile>
-    <ClCompile Include="..\math\kazmath\kazmath\plane.c">
-      <Filter>kazmath</Filter>
-    </ClCompile>
-    <ClCompile Include="..\math\kazmath\kazmath\quaternion.c">
-      <Filter>kazmath</Filter>
-    </ClCompile>
-    <ClCompile Include="..\math\kazmath\kazmath\ray2.c">
-      <Filter>kazmath</Filter>
-    </ClCompile>
-    <ClCompile Include="..\math\kazmath\kazmath\utility.c">
-      <Filter>kazmath</Filter>
-    </ClCompile>
-    <ClCompile Include="..\math\kazmath\kazmath\vec2.c">
-      <Filter>kazmath</Filter>
-    </ClCompile>
-    <ClCompile Include="..\math\kazmath\kazmath\vec4.c">
-      <Filter>kazmath</Filter>
-    </ClCompile>
-    <ClCompile Include="..\math\kazmath\kazmath\vec3.c">
-      <Filter>kazmath</Filter>
-    </ClCompile>
-    <ClCompile Include="..\math\kazmath\kazmath\ray3.c">
-      <Filter>kazmath</Filter>
-    </ClCompile>
     <ClCompile Include="platform\winrt\pch.cpp">
       <Filter>platform\winrt</Filter>
     </ClCompile>
@@ -618,6 +572,25 @@
     </ClCompile>
     <ClCompile Include="platform\winrt\inet_ntop_winrt.cpp">
       <Filter>platform\winrt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cocos2d.cpp" />
+    <ClCompile Include="..\math\MathUtil.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\Matrix.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\Quaternion.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\Vector2.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\Vector3.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\Vector4.cpp">
+      <Filter>math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1048,9 +1021,6 @@
     <ClInclude Include="renderer\CCCustomCommand.h">
       <Filter>renderer</Filter>
     </ClInclude>
-    <ClInclude Include="renderer\CCFrustum.h">
-      <Filter>renderer</Filter>
-    </ClInclude>
     <ClInclude Include="renderer\CCGroupCommand.h">
       <Filter>renderer</Filter>
     </ClInclude>
@@ -1118,51 +1088,6 @@
     <ClInclude Include="platform\winrt\sha1.h">
       <Filter>platform\winrt</Filter>
     </ClInclude>
-    <ClInclude Include="..\math\kazmath\kazmath\aabb.h">
-      <Filter>kazmath</Filter>
-    </ClInclude>
-    <ClInclude Include="..\math\kazmath\kazmath\kazmath.h">
-      <Filter>kazmath</Filter>
-    </ClInclude>
-    <ClInclude Include="..\math\kazmath\kazmath\mat3.h">
-      <Filter>kazmath</Filter>
-    </ClInclude>
-    <ClInclude Include="..\math\kazmath\kazmath\mat4.h">
-      <Filter>kazmath</Filter>
-    </ClInclude>
-    <ClInclude Include="..\math\kazmath\kazmath\GL\mat4stack.h">
-      <Filter>kazmath</Filter>
-    </ClInclude>
-    <ClInclude Include="..\math\kazmath\kazmath\GL\matrix.h">
-      <Filter>kazmath</Filter>
-    </ClInclude>
-    <ClInclude Include="..\math\kazmath\kazmath\neon_matrix_impl.h">
-      <Filter>kazmath</Filter>
-    </ClInclude>
-    <ClInclude Include="..\math\kazmath\kazmath\plane.h">
-      <Filter>kazmath</Filter>
-    </ClInclude>
-    <ClInclude Include="..\math\kazmath\kazmath\quaternion.h">
-      <Filter>kazmath</Filter>
-    </ClInclude>
-    <ClInclude Include="..\math\kazmath\kazmath\ray2.h">
-      <Filter>kazmath</Filter>
-    </ClInclude>
-    <ClInclude Include="..\math\kazmath\kazmath\utility.h">
-      <Filter>kazmath</Filter>
-    </ClInclude>
-    <ClInclude Include="..\math\kazmath\kazmath\vec4.h">
-      <Filter>kazmath</Filter>
-    </ClInclude>
-    <ClInclude Include="..\math\kazmath\kazmath\vec3.h">
-      <Filter>kazmath</Filter>
-    </ClInclude>
-    <ClInclude Include="..\math\kazmath\kazmath\vec2.h">
-      <Filter>kazmath</Filter>
-    </ClInclude>
-    <ClInclude Include="..\math\kazmath\kazmath\ray3.h">
-      <Filter>kazmath</Filter>
-    </ClInclude>
     <ClInclude Include="platform\winrt\pch.h">
       <Filter>platform\winrt</Filter>
     </ClInclude>
@@ -1208,5 +1133,52 @@
     <ClInclude Include="platform\winrt\inet_ntop_winrt.h">
       <Filter>platform\winrt</Filter>
     </ClInclude>
+    <ClInclude Include="..\math\CCMath.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\CCMathBase.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\MathUtil.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\Matrix.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\Quaternion.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\Vector2.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\Vector3.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\Vector4.h">
+      <Filter>math</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\math\MathUtil.inl">
+      <Filter>math</Filter>
+    </None>
+    <None Include="..\math\MathUtilNeon.inl">
+      <Filter>math</Filter>
+    </None>
+    <None Include="..\math\Matrix.inl">
+      <Filter>math</Filter>
+    </None>
+    <None Include="..\math\Quaternion.inl">
+      <Filter>math</Filter>
+    </None>
+    <None Include="..\math\Vector2.inl">
+      <Filter>math</Filter>
+    </None>
+    <None Include="..\math\Vector3.inl">
+      <Filter>math</Filter>
+    </None>
+    <None Include="..\math\Vector4.inl">
+      <Filter>math</Filter>
+    </None>
   </ItemGroup>
 </Project>
