@@ -166,6 +166,7 @@ void ActionObject::play(CallFunc* func)
 {
 	this->play();
 	this->_CallBack = func;
+    CC_SAFE_RETAIN(_CallBack);
 }
 void ActionObject::pause()
 {
@@ -209,11 +210,16 @@ void ActionObject::simulationActionUpdate(float dt)
 		if (_CallBack != nullptr)
 		{
 			_CallBack->execute();
+            CC_SAFE_RELEASE_NULL(_CallBack);
 		}
 		if (_loop)
 		{
 			this->play();
 		}
+        else
+        {
+            _pScheduler->unschedule(schedule_selector(ActionObject::simulationActionUpdate), this);
+        }
 	}
 }
 }
