@@ -73,7 +73,7 @@ const char* GLProgram::UNIFORM_NAME_TIME = "CC_Time";
 const char* GLProgram::UNIFORM_NAME_SIN_TIME = "CC_SinTime";
 const char* GLProgram::UNIFORM_NAME_COS_TIME = "CC_CosTime";
 const char* GLProgram::UNIFORM_NAME_RANDOM01 = "CC_Random01";
-const char* GLProgram::UNIFORM_NAME_SAMPLER	= "CC_Texture0";
+const char* GLProgram::UNIFORM_NAME_SAMPLER = "CC_Texture0";
 const char* GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE = "CC_alpha_value";
 
 // Attribute names
@@ -140,7 +140,7 @@ bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar*
         if (!compileShader(&_vertShader, GL_VERTEX_SHADER, vShaderByteArray))
         {
             CCLOG("cocos2d: ERROR: Failed to compile vertex shader");
- 			return false;
+            return false;
        }
     }
 
@@ -150,7 +150,7 @@ bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar*
         if (!compileShader(&_fragShader, GL_FRAGMENT_SHADER, fShaderByteArray))
         {
             CCLOG("cocos2d: ERROR: Failed to compile fragment shader");
-			return false;
+            return false;
         }
     }
 
@@ -246,11 +246,11 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
     if (! status)
     {
         GLsizei length;
-		glGetShaderiv(*shader, GL_SHADER_SOURCE_LENGTH, &length);
-		GLchar* src = (GLchar *)malloc(sizeof(GLchar) * length);
-		
-		glGetShaderSource(*shader, length, nullptr, src);
-		CCLOG("cocos2d: ERROR: Failed to compile shader:\n%s", src);
+        glGetShaderiv(*shader, GL_SHADER_SOURCE_LENGTH, &length);
+        GLchar* src = (GLchar *)malloc(sizeof(GLchar) * length);
+        
+        glGetShaderSource(*shader, length, nullptr, src);
+        CCLOG("cocos2d: ERROR: Failed to compile shader:\n%s", src);
         
         if (type == GL_VERTEX_SHADER)
         {
@@ -285,26 +285,26 @@ void GLProgram::bindAttribLocation(const char* attributeName, GLuint index) cons
 void GLProgram::updateUniforms()
 {
     _uniforms[UNIFORM_P_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_P_MATRIX);
-	_uniforms[UNIFORM_MV_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_MV_MATRIX);
-	_uniforms[UNIFORM_MVP_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_MVP_MATRIX);
-	
-	_uniforms[UNIFORM_TIME] = glGetUniformLocation(_program, UNIFORM_NAME_TIME);
-	_uniforms[UNIFORM_SIN_TIME] = glGetUniformLocation(_program, UNIFORM_NAME_SIN_TIME);
-	_uniforms[UNIFORM_COS_TIME] = glGetUniformLocation(_program, UNIFORM_NAME_COS_TIME);
+    _uniforms[UNIFORM_MV_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_MV_MATRIX);
+    _uniforms[UNIFORM_MVP_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_MVP_MATRIX);
+    
+    _uniforms[UNIFORM_TIME] = glGetUniformLocation(_program, UNIFORM_NAME_TIME);
+    _uniforms[UNIFORM_SIN_TIME] = glGetUniformLocation(_program, UNIFORM_NAME_SIN_TIME);
+    _uniforms[UNIFORM_COS_TIME] = glGetUniformLocation(_program, UNIFORM_NAME_COS_TIME);
 
     _uniforms[UNIFORM_RANDOM01] = glGetUniformLocation(_program, UNIFORM_NAME_RANDOM01);
 
     _uniforms[UNIFORM_SAMPLER] = glGetUniformLocation(_program, UNIFORM_NAME_SAMPLER);
 
     _flags.usesP = _uniforms[UNIFORM_P_MATRIX] != -1;
-	_flags.usesMV = _uniforms[UNIFORM_MV_MATRIX] != -1;
+    _flags.usesMV = _uniforms[UNIFORM_MV_MATRIX] != -1;
     _flags.usesMVP = _uniforms[UNIFORM_MVP_MATRIX] != -1;
-	_flags.usesTime = (
+    _flags.usesTime = (
                        _uniforms[UNIFORM_TIME] != -1 ||
                        _uniforms[UNIFORM_SIN_TIME] != -1 ||
                        _uniforms[UNIFORM_COS_TIME] != -1
                        );
-	_flags.usesRandom = _uniforms[UNIFORM_RANDOM01] != -1;
+    _flags.usesRandom = _uniforms[UNIFORM_RANDOM01] != -1;
 
     this->use();
     
@@ -340,10 +340,10 @@ bool GLProgram::link()
     }
     
     _vertShader = _fragShader = 0;
-	
+    
 #if DEBUG || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     glGetProgramiv(_program, GL_LINK_STATUS, &status);
-	
+    
     if (status == GL_FALSE)
     {
         CCLOG("cocos2d: ERROR: Failed to link program: %i", _program);
@@ -629,7 +629,7 @@ void GLProgram::setUniformsForBuiltins()
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     
-	Matrix matrixMV;
+    Matrix matrixMV;
     matrixMV = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
     setUniformsForBuiltins(matrixMV);
@@ -650,19 +650,19 @@ void GLProgram::setUniformsForBuiltins(const Matrix &matrixMV)
         setUniformLocationWithMatrix4fv(_uniforms[UNIFORM_MVP_MATRIX], matrixMVP.m, 1);
     }
 
-	if(_flags.usesTime) {
-		Director *director = Director::getInstance();
-		// This doesn't give the most accurate global time value.
-		// Cocos2D doesn't store a high precision time value, so this will have to do.
-		// Getting Mach time per frame per shader using time could be extremely expensive.
+    if(_flags.usesTime) {
+        Director *director = Director::getInstance();
+        // This doesn't give the most accurate global time value.
+        // Cocos2D doesn't store a high precision time value, so this will have to do.
+        // Getting Mach time per frame per shader using time could be extremely expensive.
         float time = director->getTotalFrames() * director->getAnimationInterval();
-		
+        
         setUniformLocationWith4f(_uniforms[GLProgram::UNIFORM_TIME], time/10.0, time, time*2, time*4);
         setUniformLocationWith4f(_uniforms[GLProgram::UNIFORM_SIN_TIME], time/8.0, time/4.0, time/2.0, sinf(time));
         setUniformLocationWith4f(_uniforms[GLProgram::UNIFORM_COS_TIME], time/8.0, time/4.0, time/2.0, cosf(time));
-	}
-	
-	if(_flags.usesRandom)
+    }
+    
+    if(_flags.usesRandom)
         setUniformLocationWith4f(_uniforms[GLProgram::UNIFORM_RANDOM01], CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1());
 }
 
