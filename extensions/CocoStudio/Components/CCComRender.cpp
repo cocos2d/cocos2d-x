@@ -167,7 +167,10 @@ bool CCComRender::serialize(void* r)
             {
                 cocos2d::ui::TouchGroup* tg = cocos2d::ui::TouchGroup::create();
                 cocos2d::ui::Widget* widget = cocos2d::extension::GUIReader::shareReader()->widgetFromJsonFile(strFilePath.c_str());
-                tg->addWidget(widget);
+                if (widget != NULL)
+                {
+                    tg->addWidget(widget);
+                }
                 m_pRender = tg;
                 m_pRender->retain();
             }
