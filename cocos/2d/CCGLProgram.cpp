@@ -367,17 +367,17 @@ void GLProgram::use()
     GL::useProgram(_program);
 }
 
-std::string GLProgram::logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc) const
+std::string GLProgram::logForOpenGLShader(GLuint object) const
 {
     std::string ret;
     GLint logLength = 0, charsWritten = 0;
 
-    infoFunc(object, GL_INFO_LOG_LENGTH, &logLength);
+    glGetShaderiv(object, GL_INFO_LOG_LENGTH, &logLength);
     if (logLength < 1)
         return "";
 
     char *logBytes = (char*)malloc(logLength);
-    logFunc(object, logLength, &charsWritten, logBytes);
+    glGetShaderInfoLog(object, logLength, &charsWritten, logBytes);
 
     ret = logBytes;
 
@@ -387,17 +387,30 @@ std::string GLProgram::logForOpenGLObject(GLuint object, GLInfoFunction infoFunc
 
 std::string GLProgram::getVertexShaderLog() const
 {
-    return this->logForOpenGLObject(_vertShader, (GLInfoFunction)&glGetShaderiv, (GLLogFunction)&glGetShaderInfoLog);
+    return this->logForOpenGLShader(_vertShader);
 }
 
 std::string GLProgram::getFragmentShaderLog() const
 {
-    return this->logForOpenGLObject(_fragShader, (GLInfoFunction)&glGetShaderiv, (GLLogFunction)&glGetShaderInfoLog);
+    return this->logForOpenGLShader(_fragShader);
 }
 
 std::string GLProgram::getProgramLog() const
 {
-    return this->logForOpenGLObject(_program, (GLInfoFunction)&glGetProgramiv, (GLLogFunction)&glGetProgramInfoLog);
+    std::string ret;
+    GLint logLength = 0, charsWritten = 0;
+
+    glGetProgramiv(_program, GL_INFO_LOG_LENGTH, &logLength);
+    if (logLength < 1)
+        return "";
+
+    char *logBytes = (char*)malloc(logLength);
+    glGetProgramInfoLog(_program, logLength, &charsWritten, logBytes);
+
+    ret = logBytes;
+
+    free(logBytes);
+    return ret;
 }
 
 // Uniform cache
