@@ -411,6 +411,28 @@ void Sprite::setVertexRect(const Rect& rect)
     _rect = rect;
 }
 
+// Sets the texture Coords Offset.
+void Sprite::setTextureUOffset(float u)
+{
+    if (nullptr == _textureAtlas)
+    {
+        _quad.bl.texCoords.u += u;
+        _quad.br.texCoords.u += u;
+        _quad.tl.texCoords.u += u;
+        _quad.tr.texCoords.u += u;
+    }
+}
+void Sprite::setTextureVOffset(float v)
+{
+    if (nullptr == _textureAtlas)
+    {
+        _quad.bl.texCoords.v += v;
+        _quad.br.texCoords.v += v;
+        _quad.tl.texCoords.v += v;
+        _quad.tr.texCoords.v += v;
+    }
+}
+
 void Sprite::setTextureCoords(Rect rect)
 {
     rect = CC_RECT_POINTS_TO_PIXELS(rect);

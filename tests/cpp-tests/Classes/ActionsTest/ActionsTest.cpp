@@ -32,7 +32,7 @@
 #include "2d/renderer/CCGroupCommand.h"
 
 static std::function<Layer*()> createFunctions[] = {
-
+    CL(UVMoveAnimationTest),
     CL(ActionManual),
     CL(ActionMove),
     CL(ActionRotate),
@@ -52,7 +52,7 @@ static std::function<Layer*()> createFunctions[] = {
     CL(ActionAnimate),
     CL(ActionSequence),
     CL(ActionSequence2),
-	CL(ActionRemoveSelf),
+    CL(ActionRemoveSelf),
     CL(ActionSpawn),
     CL(ActionReverse),
     CL(ActionDelayTime),
@@ -157,9 +157,9 @@ void ActionsDemo::onEnter()
 
 void ActionsDemo::onExit()
 {
-    _grossini->release();
-    _tamara->release();
-    _kathia->release();
+    CC_SAFE_RELEASE(_grossini);
+    CC_SAFE_RELEASE(_tamara);
+    CC_SAFE_RELEASE(_kathia);
 
     BaseTest::onExit();
 }
@@ -240,6 +240,49 @@ void ActionsDemo::alignSpritesLeft(unsigned int numberOfSprites)
         _tamara->setPosition( Vector2(60, 2*s.height/3));
         _kathia->setPosition( Vector2(60, s.height/3));
     }
+}
+
+//------------------------------------------------------------------
+//
+// UVMoveAnimationTest
+//
+//------------------------------------------------------------------
+void UVMoveAnimationTest::onEnter()
+{
+    ActionsDemo::onEnter();
+    
+    _grossini->removeFromParent();
+    _grossini = nullptr;
+    _tamara->removeFromParent();
+    _tamara = nullptr;
+    _kathia->removeFromParent();
+    _kathia = nullptr;
+
+    auto sprite = Sprite::create("Images/halo_1.png");
+    sprite->setPosition(VisibleRect::center());
+    this->addChild(sprite);
+
+    auto move = UVMoveAnimation::create(5, Vector2(1,0));
+    auto move_back = move->reverse();
+
+    auto move_ease_in = EaseExponentialIn::create(move->clone());
+    auto move_ease_in_back = move_ease_in->reverse();
+
+    auto move_ease_out = EaseExponentialOut::create(move->clone());
+    auto move_ease_out_back = move_ease_out->reverse();
+
+    auto delay = DelayTime::create(0.25f);
+
+    auto seq1 = Sequence::create(move, delay, move_back, delay->clone(), nullptr);
+    auto seq2 = Sequence::create(move_ease_in, delay->clone(), move_ease_in_back, delay->clone(), nullptr);
+    auto seq3 = Sequence::create(move_ease_out, delay->clone(), move_ease_out_back, delay->clone(), nullptr);
+
+    sprite->runAction( RepeatForever::create(seq1));
+}
+
+std::string UVMoveAnimationTest::subtitle() const
+{
+    return "UV Move Animation Test";
 }
 
 //------------------------------------------------------------------

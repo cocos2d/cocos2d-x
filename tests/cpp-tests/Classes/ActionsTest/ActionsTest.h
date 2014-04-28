@@ -28,7 +28,6 @@
 
 #include "../testBasic.h"
 #include "../BaseTest.h"
-////----#include "cocos2d.h"
 
 USING_NS_CC;
 
@@ -60,6 +59,15 @@ public:
     void restartCallback(Ref* sender);
     void nextCallback(Ref* sender);
     void backCallback(Ref* sender);
+};
+
+class UVMoveAnimationTest : public ActionsDemo
+{
+public:
+    CREATE_FUNC(UVMoveAnimationTest);
+    
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
 };
 
 class ActionManual : public ActionsDemo
