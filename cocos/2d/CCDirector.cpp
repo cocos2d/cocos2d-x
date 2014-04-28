@@ -201,38 +201,38 @@ Director::~Director(void)
 
 void Director::setDefaultValues(void)
 {
-	Configuration *conf = Configuration::getInstance();
+    Configuration *conf = Configuration::getInstance();
 
-	// default FPS
-	double fps = conf->getValue("cocos2d.x.fps", Value(kDefaultFPS)).asDouble();
-	_oldAnimationInterval = _animationInterval = 1.0 / fps;
+    // default FPS
+    double fps = conf->getValue("cocos2d.x.fps", Value(kDefaultFPS)).asDouble();
+    _oldAnimationInterval = _animationInterval = 1.0 / fps;
 
-	// Display FPS
-	_displayStats = conf->getValue("cocos2d.x.display_fps", Value(false)).asBool();
+    // Display FPS
+    _displayStats = conf->getValue("cocos2d.x.display_fps", Value(false)).asBool();
 
-	// GL projection
+    // GL projection
     std::string projection = conf->getValue("cocos2d.x.gl.projection", Value("3d")).asString();
-	if (projection == "3d")
-		_projection = Projection::_3D;
-	else if (projection == "2d")
-		_projection = Projection::_2D;
-	else if (projection == "custom")
-		_projection = Projection::CUSTOM;
-	else
-		CCASSERT(false, "Invalid projection value");
+    if (projection == "3d")
+        _projection = Projection::_3D;
+    else if (projection == "2d")
+        _projection = Projection::_2D;
+    else if (projection == "custom")
+        _projection = Projection::CUSTOM;
+    else
+        CCASSERT(false, "Invalid projection value");
 
-	// Default pixel format for PNG images with alpha
+    // Default pixel format for PNG images with alpha
     std::string pixel_format = conf->getValue("cocos2d.x.texture.pixel_format_for_png", Value("rgba8888")).asString();
-	if (pixel_format == "rgba8888")
-		Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
-	else if(pixel_format == "rgba4444")
-		Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
-	else if(pixel_format == "rgba5551")
-		Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB5A1);
+    if (pixel_format == "rgba8888")
+        Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
+    else if(pixel_format == "rgba4444")
+        Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
+    else if(pixel_format == "rgba5551")
+        Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB5A1);
 
-	// PVR v2 has alpha premultiplied ?
-	bool pvr_alpha_premultipled = conf->getValue("cocos2d.x.texture.pvrv2_has_alpha_premultiplied", Value(false)).asBool();
-	Texture2D::PVRImagesHavePremultipliedAlpha(pvr_alpha_premultipled);
+    // PVR v2 has alpha premultiplied ?
+    bool pvr_alpha_premultipled = conf->getValue("cocos2d.x.texture.pvrv2_has_alpha_premultiplied", Value(false)).asBool();
+    Texture2D::PVRImagesHavePremultipliedAlpha(pvr_alpha_premultipled);
 }
 
 void Director::setGLDefaultValues()
@@ -359,7 +359,7 @@ void Director::calculateDeltaTime()
 }
 float Director::getDeltaTime() const
 {
-	return _deltaTime;
+    return _deltaTime;
 }
 void Director::setOpenGLView(GLView *openGLView)
 {
@@ -367,9 +367,9 @@ void Director::setOpenGLView(GLView *openGLView)
 
     if (_openGLView != openGLView)
     {
-		// Configuration. Gather GPU info
-		Configuration *conf = Configuration::getInstance();
-		conf->gatherGPUInfo();
+        // Configuration. Gather GPU info
+        Configuration *conf = Configuration::getInstance();
+        conf->gatherGPUInfo();
         CCLOG("%s\n",conf->getInfo().c_str());
 
         if(_openGLView)
@@ -721,7 +721,7 @@ static void GLToClipTransform(Matrix *transformOut)
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     
-	Matrix projection;
+    Matrix projection;
     projection = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
@@ -729,7 +729,7 @@ static void GLToClipTransform(Matrix *transformOut)
     projection = Director::getInstance()->getOpenGLView()->getReverseOrientationMatrix() * projection;
 #endif
 
-	Matrix modelview;
+    Matrix modelview;
     modelview = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     *transformOut = projection * modelview;
 }
@@ -737,37 +737,37 @@ static void GLToClipTransform(Matrix *transformOut)
 Vector2 Director::convertToGL(const Vector2& uiPoint)
 {
     Matrix transform;
-	GLToClipTransform(&transform);
+    GLToClipTransform(&transform);
 
-	Matrix transformInv;
+    Matrix transformInv;
     transform.invert(&transformInv);
 
-	// Calculate z=0 using -> transform*[0, 0, 0, 1]/w
-	float zClip = transform.m[14]/transform.m[15];
+    // Calculate z=0 using -> transform*[0, 0, 0, 1]/w
+    float zClip = transform.m[14]/transform.m[15];
 
     Size glSize = _openGLView->getDesignResolutionSize();
-	Vector4 clipCoord(2.0f*uiPoint.x/glSize.width - 1.0f, 1.0f - 2.0f*uiPoint.y/glSize.height, zClip, 1);
+    Vector4 clipCoord(2.0f*uiPoint.x/glSize.width - 1.0f, 1.0f - 2.0f*uiPoint.y/glSize.height, zClip, 1);
 
-	Vector4 glCoord;
+    Vector4 glCoord;
     //transformInv.transformPoint(clipCoord, &glCoord);
     transformInv.transformVector(clipCoord, &glCoord);
     float factor = 1.0/glCoord.w;
-	return Vector2(glCoord.x * factor, glCoord.y * factor);
+    return Vector2(glCoord.x * factor, glCoord.y * factor);
 }
 
 Vector2 Director::convertToUI(const Vector2& glPoint)
 {
     Matrix transform;
-	GLToClipTransform(&transform);
+    GLToClipTransform(&transform);
 
-	Vector4 clipCoord;
-	// Need to calculate the zero depth from the transform.
-	Vector4 glCoord(glPoint.x, glPoint.y, 0.0, 1);
+    Vector4 clipCoord;
+    // Need to calculate the zero depth from the transform.
+    Vector4 glCoord(glPoint.x, glPoint.y, 0.0, 1);
     transform.transformVector(glCoord, &clipCoord);
 
-	Size glSize = _openGLView->getDesignResolutionSize();
+    Size glSize = _openGLView->getDesignResolutionSize();
     float factor = 1.0/glCoord.w;
-	return Vector2(glSize.width*(clipCoord.x*0.5 + 0.5) * factor, glSize.height*(-clipCoord.y*0.5 + 0.5) * factor);
+    return Vector2(glSize.width*(clipCoord.x*0.5 + 0.5) * factor, glSize.height*(-clipCoord.y*0.5 + 0.5) * factor);
 }
 
 const Size& Director::getWinSize(void) const
@@ -819,7 +819,7 @@ void Director::replaceScene(Scene *scene)
 {
     CCASSERT(_runningScene, "Use runWithScene: instead to start the director");
     CCASSERT(scene != nullptr, "the scene should not be null");
-	
+    
     if (_nextScene)
     {
         if (_nextScene->isRunning())
@@ -888,24 +888,24 @@ void Director::popToSceneStackLevel(int level)
     if (level >= c)
         return;
 
-	// pop stack until reaching desired level
-	while (c > level)
+    // pop stack until reaching desired level
+    while (c > level)
     {
         auto current = _scenesStack.back();
 
-		if (current->isRunning())
+        if (current->isRunning())
         {
             current->onExitTransitionDidStart();
             current->onExit();
-		}
+        }
 
         current->cleanup();
         _scenesStack.popBack();
-		--c;
-	}
+        --c;
+    }
 
     _nextScene = _scenesStack.back();
-	_sendCleanupToScene = false;
+    _sendCleanupToScene = false;
 }
 
 void Director::end()
@@ -1103,7 +1103,7 @@ void Director::getFPSImageData(unsigned char** datapointer, ssize_t* length)
 {
     // XXX fixed me if it should be used 
     *datapointer = cc_fps_images_png;
-	*length = cc_fps_images_len();
+    *length = cc_fps_images_len();
 }
 
 void Director::createStatsLabel()
