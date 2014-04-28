@@ -656,47 +656,62 @@ void ControlButton::onTouchEnded(Touch *pTouch, Event *pEvent)
 
 void ControlButton::setOpacity(GLubyte opacity)
 {
-    // XXX fixed me if not correct
     Control::setOpacity(opacity);
-//    _opacity = opacity;
-//    
-//    Ref* child;
-//    Array* children=getChildren();
-//    CCARRAY_FOREACH(children, child)
-//    {
-//        RGBAProtocol* pNode = dynamic_cast<RGBAProtocol*>(child);        
-//        if (pNode)
-//        {
-//            pNode->setOpacity(opacity);
-//        }
-//    }
-    
+
     for (auto iter = _backgroundSpriteDispatchTable.begin(); iter != _backgroundSpriteDispatchTable.end(); ++iter)
+    {
+        iter->second->setOpacity(opacity);
+    }
+
+    for (auto iter = _titleLabelDispatchTable.begin(); iter != _titleLabelDispatchTable.end(); ++iter)
     {
         iter->second->setOpacity(opacity);
     }
 }
 
-GLubyte ControlButton::getOpacity() const
+void ControlButton::updateDisplayedOpacity(GLubyte parentOpacity)
 {
-    return _realOpacity;
-}
+    Control::updateDisplayedOpacity(parentOpacity);
 
+    for (auto iter = _backgroundSpriteDispatchTable.begin(); iter != _backgroundSpriteDispatchTable.end(); ++iter)
+    {
+        iter->second->updateDisplayedOpacity(parentOpacity);
+    }
+
+    for (auto iter = _titleLabelDispatchTable.begin(); iter != _titleLabelDispatchTable.end(); ++iter)
+    {
+        iter->second->updateDisplayedOpacity(parentOpacity);
+    }
+}
 void ControlButton::setColor(const Color3B & color)
 {
-	Control::setColor(color);
-	
+    Control::setColor(color);
+
     for (auto iter = _backgroundSpriteDispatchTable.begin(); iter != _backgroundSpriteDispatchTable.end(); ++iter)
+    {
+        iter->second->setColor(color);
+    }
+
+    for (auto iter = _titleLabelDispatchTable.begin(); iter != _titleLabelDispatchTable.end(); ++iter)
     {
         iter->second->setColor(color);
     }
 }
 
-const Color3B& ControlButton::getColor() const
+void ControlButton::updateDisplayedColor(const Color3B& parentColor)
 {
-	return _realColor;
-}
+    Control::updateDisplayedColor(parentColor);
 
+    for (auto iter = _backgroundSpriteDispatchTable.begin(); iter != _backgroundSpriteDispatchTable.end(); ++iter)
+    {
+        iter->second->updateDisplayedColor(parentColor);
+    }
+
+    for (auto iter = _titleLabelDispatchTable.begin(); iter != _titleLabelDispatchTable.end(); ++iter)
+    {
+        iter->second->updateDisplayedColor(parentColor);
+    }
+}
 void ControlButton::onTouchCancelled(Touch *pTouch, Event *pEvent)
 {
     _isPushed = false;
