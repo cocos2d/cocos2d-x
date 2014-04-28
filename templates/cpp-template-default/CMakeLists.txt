@@ -89,7 +89,7 @@ link_directories(
   ${COCOS2D_ROOT}/external/linux-specific/fmod/prebuilt/${ARCH_DIR}
 )
 
-# kazmath
+# math
 add_subdirectory(${COCOS2D_ROOT}/cocos/math)
 
 # chipmunk library
