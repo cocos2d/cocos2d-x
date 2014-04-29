@@ -699,7 +699,7 @@ int lua_cocos2dx_physics_PhysicsShape_recenterPoints(lua_State* tolua_S)
             return 0;
         }
         cocos2d::PhysicsShape::recenterPoints(arg0, arg1);
-        vector2s_to_luaval(tolua_S, arg0, arg1);
+        vector2_array_to_luaval(tolua_S, arg0, arg1);
         CC_SAFE_FREE(arg0);
         
         return 0;
@@ -721,7 +721,7 @@ int lua_cocos2dx_physics_PhysicsShape_recenterPoints(lua_State* tolua_S)
             return 0;
         }
         cocos2d::PhysicsShape::recenterPoints(arg0, arg1, arg2);
-        vector2s_to_luaval(tolua_S, arg0, arg1);
+        vector2_array_to_luaval(tolua_S, arg0, arg1);
         CC_SAFE_FREE(arg0);
         return 0;
     }
@@ -805,7 +805,7 @@ int lua_cocos2dx_physics_PhysicsShapeBox_getPoints(lua_State* tolua_S)
     {
         cocos2d::Vector2 arg0[4];
         cobj->getPoints(arg0);
-        vector2s_to_luaval(tolua_S, arg0, 4);
+        vector2_array_to_luaval(tolua_S, arg0, 4);
         return 0;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getPoints",argc, 1);
@@ -848,7 +848,7 @@ int lua_cocos2dx_physics_PhysicsShapePolygon_getPoints(lua_State* tolua_S)
         int count = cobj->getPointsCount();
         cocos2d::Vector2* arg0 = new cocos2d::Vector2[count];
         cobj->getPoints(arg0);
-        vector2s_to_luaval(tolua_S, arg0, count);
+        vector2_array_to_luaval(tolua_S, arg0, count);
         CC_SAFE_FREE(arg0);
         return 0;
     }
@@ -1089,7 +1089,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgeBox_getPoints(lua_State* tolua_S)
         int count = cobj->getPointsCount();
         cocos2d::Vector2* arg0 = new cocos2d::Vector2[count];
         cobj->getPoints(arg0);
-        vector2s_to_luaval(tolua_S, arg0, count);
+        vector2_array_to_luaval(tolua_S, arg0, count);
         CC_SAFE_FREE(arg0);
         return 0;
     }
@@ -1133,7 +1133,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgePolygon_getPoints(lua_State* tolua_S)
         int count = cobj->getPointsCount();
         cocos2d::Vector2* arg0 = new cocos2d::Vector2[count];
         cobj->getPoints(arg0);
-        vector2s_to_luaval(tolua_S, arg0, count);
+        vector2_array_to_luaval(tolua_S, arg0, count);
         CC_SAFE_FREE(arg0);
         return 0;
     }
@@ -1177,7 +1177,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgeChain_getPoints(lua_State* tolua_S)
         int count = cobj->getPointsCount();
         cocos2d::Vector2* arg0 = new cocos2d::Vector2[count];
         cobj->getPoints(arg0);
-        vector2s_to_luaval(tolua_S, arg0, count);
+        vector2_array_to_luaval(tolua_S, arg0, count);
         CC_SAFE_FREE(arg0);
         return 0;
     }
