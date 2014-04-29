@@ -2288,20 +2288,20 @@ int lua_cocos2d_CardinalSplineBy_create(lua_State* tolua_S)
         double dur = 0.0;
         ok &= luaval_to_number(tolua_S, 2, &dur);
         if (!ok)
-            return false;
+            return 0;
         
         int num = 0;
         cocos2d::Vector2 *arr = NULL;
         ok &= luaval_to_array_of_vector2(tolua_S, 3, &arr, &num);
         if (!ok)
-            return false;
+            return 0;
         
         double ten = 0.0;
         ok &= luaval_to_number(tolua_S, 4, &ten);
         if (!ok)
         {
             CC_SAFE_DELETE_ARRAY(arr);
-            return false;
+            return 0;
         }
         
         if (num > 0)
@@ -2360,13 +2360,13 @@ int tolua_cocos2d_CatmullRomBy_create(lua_State* tolua_S)
         double dur = 0.0;
         ok &= luaval_to_number(tolua_S, 2, &dur);
         if (!ok)
-            return false;
+            return 0;
         
         int num = 0;
         cocos2d::Vector2 *arr = NULL;
         ok &= luaval_to_array_of_vector2(tolua_S, 3, &arr, &num);
         if (!ok)
-            return false;
+            return 0;
         
         if (num > 0)
         {
@@ -2424,13 +2424,13 @@ int tolua_cocos2d_CatmullRomTo_create(lua_State* tolua_S)
         double dur = 0.0;
         ok &= luaval_to_number(tolua_S, 2, &dur);
         if (!ok)
-            return false;
+            return 0;
         
         int num = 0;
         cocos2d::Vector2 *arr = NULL;
         ok &= luaval_to_array_of_vector2(tolua_S, 3, &arr, &num);
         if (!ok)
-            return false;
+            return 0;
         
         if (num > 0)
         {
@@ -2488,18 +2488,18 @@ int tolua_cocos2d_BezierBy_create(lua_State* tolua_S)
         double t = 0.0;
         ok &= luaval_to_number(tolua_S, 2, &t);
         if (!ok)
-            return false;
+            return 0;
         
         int num = 0;
         cocos2d::Vector2 *arr = NULL;
         ok &= luaval_to_array_of_vector2(tolua_S, 3, &arr, &num);
         if (!ok)
-            return false;
+            return 0;
         
         if (num < 3)
         {
             CC_SAFE_DELETE_ARRAY(arr);
-            return false;
+            return 0;
         }
         
         ccBezierConfig config;
@@ -2548,18 +2548,18 @@ int tolua_cocos2d_BezierTo_create(lua_State* tolua_S)
         double t = 0.0;
         ok &= luaval_to_number(tolua_S, 2, &t);
         if (!ok)
-            return false;
+            return 0;
         
         int num = 0;
         cocos2d::Vector2 *arr = NULL;
         ok &= luaval_to_array_of_vector2(tolua_S, 3, &arr, &num);
         if (!ok)
-            return false;
+            return 0;
         
         if (num < 3)
         {
             CC_SAFE_DELETE_ARRAY(arr);
-            return false;
+            return 0;
         }
         
         ccBezierConfig config;
