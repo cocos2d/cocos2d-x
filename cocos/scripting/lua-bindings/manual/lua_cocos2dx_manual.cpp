@@ -2125,8 +2125,8 @@ int tolua_cocos2d_Node_setAnchorPoint(lua_State* tolua_S)
     
     if (1 == argc)
     {
-        cocos2d::Point pt;
-        ok &= luaval_to_point(tolua_S, 2, &pt);
+        cocos2d::Vector2 pt;
+        ok &= luaval_to_vector2(tolua_S, 2, &pt);
         if (!ok)
             return 0;
         
@@ -2147,7 +2147,7 @@ int tolua_cocos2d_Node_setAnchorPoint(lua_State* tolua_S)
         if (!ok)
             return 0;
         
-        cobj->setAnchorPoint(Point(x,y));
+        cobj->setAnchorPoint(cocos2d::Vector2(x,y));
         return 0;
     }
     
@@ -2291,8 +2291,8 @@ int lua_cocos2d_CardinalSplineBy_create(lua_State* tolua_S)
             return false;
         
         int num = 0;
-        Point *arr = NULL;
-        ok &= luaval_to_array_of_Point(tolua_S, 3, &arr, &num);
+        cocos2d::Vector2 *arr = NULL;
+        ok &= luaval_to_array_of_vector2(tolua_S, 3, &arr, &num);
         if (!ok)
             return false;
         
@@ -2360,8 +2360,8 @@ int tolua_cocos2d_CatmullRomBy_create(lua_State* tolua_S)
             return false;
         
         int num = 0;
-        Point *arr = NULL;
-        ok &= luaval_to_array_of_Point(tolua_S, 3, &arr, &num);
+        cocos2d::Vector2 *arr = NULL;
+        ok &= luaval_to_array_of_vector2(tolua_S, 3, &arr, &num);
         if (!ok)
             return false;
         
@@ -2424,8 +2424,8 @@ int tolua_cocos2d_CatmullRomTo_create(lua_State* tolua_S)
             return false;
         
         int num = 0;
-        Point *arr = NULL;
-        ok &= luaval_to_array_of_Point(tolua_S, 3, &arr, &num);
+        cocos2d::Vector2 *arr = NULL;
+        ok &= luaval_to_array_of_vector2(tolua_S, 3, &arr, &num);
         if (!ok)
             return false;
         
@@ -2488,8 +2488,8 @@ int tolua_cocos2d_BezierBy_create(lua_State* tolua_S)
             return false;
         
         int num = 0;
-        Point *arr = NULL;
-        ok &= luaval_to_array_of_Point(tolua_S, 3, &arr, &num);
+        cocos2d::Vector2 *arr = NULL;
+        ok &= luaval_to_array_of_vector2(tolua_S, 3, &arr, &num);
         if (!ok)
             return false;
         
@@ -2548,8 +2548,8 @@ int tolua_cocos2d_BezierTo_create(lua_State* tolua_S)
             return false;
         
         int num = 0;
-        Point *arr = NULL;
-        ok &= luaval_to_array_of_Point(tolua_S, 3, &arr, &num);
+        cocos2d::Vector2 *arr = NULL;
+        ok &= luaval_to_array_of_vector2(tolua_S, 3, &arr, &num);
         if (!ok)
             return false;
         
@@ -2623,7 +2623,7 @@ static int tolua_cocos2d_DrawNode_drawPolygon(lua_State* tolua_S)
         size_t size = lua_tonumber(tolua_S, 3);
         if ( size > 0 )
         {
-            Point* points = new Point[size];
+            cocos2d::Vector2* points = new cocos2d::Vector2[size];
             if (NULL == points)
                 return 0;
             
@@ -2639,7 +2639,7 @@ static int tolua_cocos2d_DrawNode_drawPolygon(lua_State* tolua_S)
 #endif
                 }
                 
-                if(!luaval_to_point(tolua_S, lua_gettop(tolua_S), &points[i]))
+                if(!luaval_to_vector2(tolua_S, lua_gettop(tolua_S), &points[i]))
                 {
                     lua_pop(tolua_S, 1);
                     CC_SAFE_DELETE_ARRAY(points);
