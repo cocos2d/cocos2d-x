@@ -310,6 +310,10 @@ APP_FILE_SUFFIX = {
 	'ios':'.app',
 	'android':'-debug-unaligned.apk'
 }
+if os.environ.has_key('APP_FILE_SUFFIX'):
+	str_app_suffix = os.environ['APP_FILE_SUFFIX']
+	APP_FILE_SUFFIX = eval(str_app_suffix)
+
 def getPackageSize():
 	for proj in project_types:
 		for phone in phonePlats:
