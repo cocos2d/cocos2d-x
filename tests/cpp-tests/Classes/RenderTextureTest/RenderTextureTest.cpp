@@ -408,8 +408,7 @@ void RenderTextureZbuffer::renderScreenShot()
     {
         return;
     }
-    texture->setAnchorPoint(Vector2(0, 0));
-    texture->setKeepMatrix(true);
+    
     texture->begin();
 
     this->visit();
