@@ -470,6 +470,9 @@ Developers:
         
     kienvn
         Fixed CCLabelBMFont crashes when there are invalid characters which aren't in fnt file
+        
+    mikeweib
+        Fixed bone's position is wrong  when animation has only a single bone
 
 Retired Core Developers:
     WenSheng Yang
