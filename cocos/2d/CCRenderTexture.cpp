@@ -194,11 +194,12 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
     do 
     {
         _fullRect = _rtTextureRect = Rect(0,0,w,h);
-        Size size = Director::getInstance()->getWinSizeInPixels();
-        _fullviewPort = Rect(0,0,size.width,size.height);
+        //Size size = Director::getInstance()->getWinSizeInPixels();
+        //_fullviewPort = Rect(0,0,size.width,size.height);
         w = (int)(w * CC_CONTENT_SCALE_FACTOR());
         h = (int)(h * CC_CONTENT_SCALE_FACTOR());
-
+        _fullviewPort = Rect(0,0,w,h);
+        
         glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
 
         // textures must be power of two squared
@@ -522,7 +523,6 @@ void RenderTexture::onBegin()
 {
     //
     Director *director = Director::getInstance();
-    Size size = director->getWinSizeInPixels();
     
     _oldProjMatrix = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, _projectionMatrix);
@@ -533,22 +533,19 @@ void RenderTexture::onBegin()
     if(!_keepMatrix)
     {
         director->setProjection(director->getProjection());
-
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-        Matrix modifiedProjection = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-        modifiedProjection = CCEGLView::sharedOpenGLView()->getReverseOrientationMatrix() * modifiedProjection;
-        director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION,modifiedProjection);
-#endif
-
+        
         const Size& texSize = _texture->getContentSizeInPixels();
-
+        
         // Calculate the adjustment ratios based on the old and new projections
+        Size size = Director::getInstance()->getWinSizeInPixels();
         float widthRatio = size.width / texSize.width;
         float heightRatio = size.height / texSize.height;
+        
         Matrix orthoMatrix;
         Matrix::createOrthographicOffCenter((float)-1.0 / widthRatio, (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1, 1, &orthoMatrix);
-        director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, orthoMatrix);
+        director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
     }
+    
     //calculate viewport
     {
         Rect viewport;
@@ -695,13 +692,14 @@ void RenderTexture::begin()
         const Size& texSize = _texture->getContentSizeInPixels();
         
         // Calculate the adjustment ratios based on the old and new projections
-        Size size = director->getWinSizeInPixels();
+        Size size = Director::getInstance()->getWinSizeInPixels();
+        
         float widthRatio = size.width / texSize.width;
         float heightRatio = size.height / texSize.height;
         
         Matrix orthoMatrix;
         Matrix::createOrthographicOffCenter((float)-1.0 / widthRatio, (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1, 1, &orthoMatrix);
-        director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, orthoMatrix);
+        director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
     }
 
     _groupCommand.init(_globalZOrder);
