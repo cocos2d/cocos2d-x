@@ -72,6 +72,11 @@ public:
                                  ObjectFactory::Instance ins,
                                  CCObject* object,
                                  SEL_ParseEvent callBack);
+
+	void setAdaptSize(const CCSize &size);
+	cocos2d::CCSize getAdaptSize();
+	bool isValidSize();
+
 protected:
     std::string m_strFilePath;
     CCDictionary* _fileDesignSizes;
@@ -80,6 +85,8 @@ protected:
     ParseCallBackMap _mapParseSelector;
     typedef std::map<std::string, CCObject*> ParseObjectMap;
     ParseObjectMap _mapObject;
+
+    CCSize _adaptSize;
     
 public:
     ParseCallBackMap getParseCallBackMap() { return _mapParseSelector; };

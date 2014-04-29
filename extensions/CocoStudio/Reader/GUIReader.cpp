@@ -84,6 +84,8 @@ GUIReader::GUIReader()
     factoryCreate->registerType(CREATE_CLASS_GUI_INFO(ListView));
     factoryCreate->registerType(CREATE_CLASS_GUI_INFO(PageView));
     factoryCreate->registerType(CREATE_CLASS_GUI_INFO(ScrollView));
+
+	_adaptSize = CCSize(-1.0f, -1.0f);
 }
 
 GUIReader::~GUIReader()
@@ -180,6 +182,21 @@ void GUIReader::registerTypeAndCallBack(const std::string& classType,
     {
         _mapParseSelector.insert(ParseCallBackMap::value_type(classType, callBack));
     }
+}
+
+void GUIReader::setAdaptSize(const CCSize &size)
+{
+	_adaptSize = size;
+}
+
+cocos2d::CCSize GUIReader::getAdaptSize()
+{
+	return _adaptSize;
+}
+
+bool GUIReader::isValidSize()
+{
+	return _adaptSize.width > 0.0f && _adaptSize.height > 0.0f;
 }
 
 
@@ -1612,8 +1629,17 @@ void WidgetPropertiesReader0300::setPropsForLayoutFromJsonDictionary(cocos2d::ui
     bool adaptScrenn = DICTOOL->getBooleanValue_json(options, "adaptScreen");
     if (adaptScrenn)
     {
-        CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-        w = screenSize.width;
+        CCSize screenSize;
+		if (GUIReader::shareReader()->isValidSize())
+		{
+			screenSize = GUIReader::shareReader()->getAdaptSize();
+		}
+		else
+		{
+			screenSize = CCDirector::sharedDirector()->getWinSize();
+		
+		}
+		w = screenSize.width;
         h = screenSize.height;
     }
     else
