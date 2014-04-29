@@ -485,7 +485,6 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
                 else
                 {
                     texture->retain();
-                    texture->releaseData();
                 }
 #else
                 texture = new CCTexture2D();
