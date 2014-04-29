@@ -4889,14 +4889,14 @@ int tolua_cocos2d_DrawPrimitives_drawCatmullRom00(lua_State* tolua_S)
         PointArray* points = PointArray::create(num);        
         if (NULL == points)
         {
-            free(arr);
+            CC_SAFE_DELETE_ARRAY(arr);
             return 0;
         }
         
         for( int i = 0; i < num; i++) {
             points->addControlPoint(arr[i]);
         }
-        free(arr);
+        CC_SAFE_DELETE_ARRAY(arr);
         
         unsigned int segments = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
         
@@ -4936,14 +4936,14 @@ int tolua_cocos2d_DrawPrimitives_drawCardinalSpline00(lua_State* tolua_S)
         PointArray* config = PointArray::create(num);
         if (NULL == config)
         {
-            free(arr);
+            CC_SAFE_DELETE_ARRAY(arr);
             return 0;
         }
         
         for( int i = 0; i < num; i++) {
             config->addControlPoint(arr[i]);
         }
-        free(arr);
+        CC_SAFE_DELETE_ARRAY(arr);
         float tension = ((float)  tolua_tonumber(tolua_S,2,0));
         unsigned int segments = ((unsigned int)  tolua_tonumber(tolua_S,3,0));
         DrawPrimitives::drawCardinalSpline(config,tension,segments);

@@ -2299,7 +2299,10 @@ int lua_cocos2d_CardinalSplineBy_create(lua_State* tolua_S)
         double ten = 0.0;
         ok &= luaval_to_number(tolua_S, 4, &ten);
         if (!ok)
+        {
+            CC_SAFE_DELETE_ARRAY(arr);
             return false;
+        }
         
         if (num > 0)
         {
@@ -2307,7 +2310,7 @@ int lua_cocos2d_CardinalSplineBy_create(lua_State* tolua_S)
             
             if (NULL == points)
             {
-                free(arr);
+                CC_SAFE_DELETE_ARRAY(arr);
                 return 0;
             }
             
@@ -2315,7 +2318,7 @@ int lua_cocos2d_CardinalSplineBy_create(lua_State* tolua_S)
                 points->addControlPoint(arr[i]);
             }
             
-            free(arr);
+            CC_SAFE_DELETE_ARRAY(arr);
             CardinalSplineBy* tolua_ret = CardinalSplineBy::create(dur, points, ten);
             if (NULL != tolua_ret)
             {
@@ -2371,7 +2374,7 @@ int tolua_cocos2d_CatmullRomBy_create(lua_State* tolua_S)
             
             if (NULL == points)
             {
-                free(arr);
+                CC_SAFE_DELETE_ARRAY(arr);
                 return 0;
             }
             
@@ -2379,7 +2382,7 @@ int tolua_cocos2d_CatmullRomBy_create(lua_State* tolua_S)
                 points->addControlPoint(arr[i]);
             }
             
-            free(arr);
+            CC_SAFE_DELETE_ARRAY(arr);
             CatmullRomBy* tolua_ret = CatmullRomBy::create(dur, points);
             if (NULL != tolua_ret)
             {
@@ -2435,7 +2438,7 @@ int tolua_cocos2d_CatmullRomTo_create(lua_State* tolua_S)
             
             if (NULL == points)
             {
-                free(arr);
+                CC_SAFE_DELETE_ARRAY(arr);
                 return 0;
             }
             
@@ -2443,7 +2446,7 @@ int tolua_cocos2d_CatmullRomTo_create(lua_State* tolua_S)
                 points->addControlPoint(arr[i]);
             }
             
-            free(arr);
+            CC_SAFE_DELETE_ARRAY(arr);
             CatmullRomTo* tolua_ret = CatmullRomTo::create(dur, points);
             if (NULL != tolua_ret)
             {
@@ -2495,7 +2498,7 @@ int tolua_cocos2d_BezierBy_create(lua_State* tolua_S)
         
         if (num < 3)
         {
-            free(arr);
+            CC_SAFE_DELETE_ARRAY(arr);
             return false;
         }
         
@@ -2503,7 +2506,7 @@ int tolua_cocos2d_BezierBy_create(lua_State* tolua_S)
         config.controlPoint_1 = arr[0];
         config.controlPoint_2 = arr[1];
         config.endPosition = arr[2];
-        free(arr);
+        CC_SAFE_DELETE_ARRAY(arr);
         
         BezierBy* tolua_ret = BezierBy::create(t, config);
         if (NULL != tolua_ret)
@@ -2555,7 +2558,7 @@ int tolua_cocos2d_BezierTo_create(lua_State* tolua_S)
         
         if (num < 3)
         {
-            free(arr);
+            CC_SAFE_DELETE_ARRAY(arr);
             return false;
         }
         
@@ -2563,7 +2566,7 @@ int tolua_cocos2d_BezierTo_create(lua_State* tolua_S)
         config.controlPoint_1 = arr[0];
         config.controlPoint_2 = arr[1];
         config.endPosition = arr[2];
-        free(arr);
+        CC_SAFE_DELETE_ARRAY(arr);
         
         BezierTo* tolua_ret = BezierTo::create(t, config);
         if (NULL != tolua_ret)
