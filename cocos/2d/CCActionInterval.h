@@ -1080,6 +1080,33 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(TargetedAction);
 };
 
+class CC_DLL UVMoveAnimation : public ActionInterval
+{
+public:
+    /** creates the action */
+    static UVMoveAnimation* create(float duration, const Vector2& UVOffset);
+
+    //
+    // Overrides
+    //
+    virtual UVMoveAnimation* clone() const override;
+    virtual UVMoveAnimation* reverse() const  override;
+    virtual void startWithTarget(Node *target) override;
+    virtual void update(float time) override;
+CC_CONSTRUCTOR_ACCESS:
+    UVMoveAnimation() {}
+    virtual ~UVMoveAnimation() {}
+
+    /** initializes the action */
+    bool initWithDuration(float duration, const Vector2& UVOffset);
+
+protected:
+    Vector2 _UVOffset;
+    Vector2 _UVOffset_Last;
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(UVMoveAnimation);
+};
+
 // end of actions group
 /// @}
 

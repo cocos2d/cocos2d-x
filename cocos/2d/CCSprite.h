@@ -225,6 +225,13 @@ public:
      */
     virtual void setVertexRect(const Rect& rect);
 
+    /*
+     * Sets the texture Coords Offset.
+     * Useful if you want to Create UV Animation.
+     */
+    virtual void setTextureUOffset(float u);
+    virtual void setTextureVOffset(float v);
+
     /**
      * Sets a new SpriteFrame to the Sprite.
      */

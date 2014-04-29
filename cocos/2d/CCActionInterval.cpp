@@ -2372,4 +2372,74 @@ void TargetedAction::setForcedTarget(Node* forcedTarget)
     }
 }
 
+// UVMoveAniamtion
+UVMoveAnimation* UVMoveAnimation::create(float duration, const Vector2& UVOffset)
+{
+    UVMoveAnimation *ret = new UVMoveAnimation();
+    ret->initWithDuration(duration, UVOffset);
+    ret->autorelease();
+    return ret;
+}
+
+bool UVMoveAnimation::initWithDuration(float duration, const Vector2& UVOffset)
+{
+    if (ActionInterval::initWithDuration(duration))
+    {
+        _UVOffset = UVOffset;
+        _UVOffset_Last = Vector2::ZERO;
+        return true;
+    }
+    return false;
+}
+
+UVMoveAnimation* UVMoveAnimation::clone() const
+{
+    // no copy constructor
+    auto ret = new UVMoveAnimation();
+    ret->initWithDuration(_duration, _UVOffset);
+    ret->autorelease();
+    return ret;
+}
+
+void UVMoveAnimation::startWithTarget(Node *target)
+{
+    ActionInterval::startWithTarget(target);
+
+    Sprite* sprite = dynamic_cast<Sprite*>(_target);
+    if (sprite)
+    {
+        Texture2D* texture = sprite->getTexture();
+        if (texture)
+        {
+            texture->setAliasTexParameters();
+            Texture2D::TexParams params;
+            params.minFilter = GL_LINEAR;
+            params.magFilter = GL_LINEAR;
+            params.wrapS = GL_REPEAT;
+            params.wrapT = GL_REPEAT;
+            texture->setTexParameters(params);
+        }
+    }
+}
+
+UVMoveAnimation* UVMoveAnimation::reverse() const
+{
+    return UVMoveAnimation::create(_duration, Vector2( -_UVOffset.x, -_UVOffset.y));
+}
+
+void UVMoveAnimation::update(float t)
+{
+    if (_target)
+    {
+        Sprite* sprite = dynamic_cast<Sprite*>(_target);
+        if (sprite)
+        {
+            Vector2 newUVOffset(_UVOffset.x * t,_UVOffset.y * t);
+            sprite->setTextureUOffset(newUVOffset.x - _UVOffset_Last.x);
+            sprite->setTextureVOffset(newUVOffset.y - _UVOffset_Last.y);
+            _UVOffset_Last = newUVOffset;
+        }
+    }
+}
+
 NS_CC_END
