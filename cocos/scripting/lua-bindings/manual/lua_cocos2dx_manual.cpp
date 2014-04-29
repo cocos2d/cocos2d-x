@@ -2623,8 +2623,8 @@ static int tolua_cocos2d_DrawNode_drawPolygon(lua_State* tolua_S)
         size_t size = lua_tonumber(tolua_S, 3);
         if ( size > 0 )
         {
-            cocos2d::Vector2* vec2s = new cocos2d::Vector2[size];
-            if (NULL == vec2s)
+            cocos2d::Vector2* points = new cocos2d::Vector2[size];
+            if (NULL == points)
                 return 0;
             
             for (int i = 0; i < size; i++)
@@ -2633,16 +2633,16 @@ static int tolua_cocos2d_DrawNode_drawPolygon(lua_State* tolua_S)
                 lua_gettable(tolua_S,2);
                 if (!tolua_istable(tolua_S,-1, 0, &tolua_err))
                 {
-                    CC_SAFE_DELETE_ARRAY(vec2s);
+                    CC_SAFE_DELETE_ARRAY(points);
 #if COCOS2D_DEBUG >= 1
                     goto tolua_lerror;
 #endif
                 }
                 
-                if(!luaval_to_vector2(tolua_S, lua_gettop(tolua_S), &vec2s[i]))
+                if(!luaval_to_vector2(tolua_S, lua_gettop(tolua_S), &points[i]))
                 {
                     lua_pop(tolua_S, 1);
-                    CC_SAFE_DELETE_ARRAY(vec2s);
+                    CC_SAFE_DELETE_ARRAY(points);
                     return 0;
                 }
                 lua_pop(tolua_S, 1);
@@ -2651,7 +2651,7 @@ static int tolua_cocos2d_DrawNode_drawPolygon(lua_State* tolua_S)
             Color4F fillColor;
             if (!luaval_to_color4f(tolua_S, 4, &fillColor))
             {
-                CC_SAFE_DELETE_ARRAY(vec2s);
+                CC_SAFE_DELETE_ARRAY(points);
                 return 0;
             }
             
@@ -2660,12 +2660,12 @@ static int tolua_cocos2d_DrawNode_drawPolygon(lua_State* tolua_S)
             Color4F borderColor;
             if (!luaval_to_color4f(tolua_S, 6, &borderColor))
             {
-                CC_SAFE_DELETE_ARRAY(vec2s);
+                CC_SAFE_DELETE_ARRAY(points);
                 return 0;
             }
             
-            self->drawPolygon(vec2s, (int)size, fillColor, borderWidth, borderColor);
-            CC_SAFE_DELETE_ARRAY(vec2s);
+            self->drawPolygon(points, (int)size, fillColor, borderWidth, borderColor);
+            CC_SAFE_DELETE_ARRAY(points);
             return 0;
         }        
     }

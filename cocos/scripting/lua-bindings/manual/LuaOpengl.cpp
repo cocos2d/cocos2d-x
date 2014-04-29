@@ -4437,8 +4437,8 @@ static int tolua_cocos2d_DrawPrimitives_drawPoints00(lua_State* tolua_S)
         
         if (numberOfPoints > 0)
         {
-            cocos2d::Vector2* vec2s = new cocos2d::Vector2[numberOfPoints];
-            if (NULL == vec2s)
+            cocos2d::Vector2* points = new cocos2d::Vector2[numberOfPoints];
+            if (NULL == points)
                 return 0;
             
             for (int i = 0; i < numberOfPoints; i++)
@@ -4447,20 +4447,20 @@ static int tolua_cocos2d_DrawPrimitives_drawPoints00(lua_State* tolua_S)
                 lua_gettable(tolua_S,1);
                 if (!tolua_istable(tolua_S,-1, 0, &tolua_err))
                 {
-                    CC_SAFE_DELETE_ARRAY(vec2s);
+                    CC_SAFE_DELETE_ARRAY(points);
                     goto tolua_lerror;
                 }
                 
-                if(!luaval_to_vector2(tolua_S, lua_gettop(tolua_S), &vec2s[i]))
+                if(!luaval_to_vector2(tolua_S, lua_gettop(tolua_S), &points[i]))
                 {
                     lua_pop(tolua_S, 1);
-                    CC_SAFE_DELETE_ARRAY(vec2s);
+                    CC_SAFE_DELETE_ARRAY(points);
                     return 0;
                 }
                 lua_pop(tolua_S, 1);
             }
-            DrawPrimitives::drawPoints(vec2s, numberOfPoints);
-            CC_SAFE_DELETE_ARRAY(vec2s);
+            DrawPrimitives::drawPoints(points, numberOfPoints);
+            CC_SAFE_DELETE_ARRAY(points);
         }
     }
     return 0;
@@ -4599,8 +4599,8 @@ static int tolua_cocos2d_DrawPrimitives_drawPoly00(lua_State* tolua_S)
 
         if (numOfVertices > 0)
         {
-            cocos2d::Vector2* vec2s = new cocos2d::Vector2[numOfVertices];
-            if (NULL == vec2s)
+            cocos2d::Vector2* points = new cocos2d::Vector2[numOfVertices];
+            if (NULL == points)
                 return 0;
 
             for (int i = 0; i < numOfVertices; i++)
@@ -4609,20 +4609,20 @@ static int tolua_cocos2d_DrawPrimitives_drawPoly00(lua_State* tolua_S)
                 lua_gettable(tolua_S,1);
                 if (!tolua_istable(tolua_S,-1, 0, &tolua_err))
                 {
-                    CC_SAFE_DELETE_ARRAY(vec2s);
+                    CC_SAFE_DELETE_ARRAY(points);
                     goto tolua_lerror;
                 }
                 
-                if(!luaval_to_vector2(tolua_S, lua_gettop(tolua_S), &vec2s[i]))
+                if(!luaval_to_vector2(tolua_S, lua_gettop(tolua_S), &points[i]))
                 {
                     lua_pop(tolua_S, 1);
-                    CC_SAFE_DELETE_ARRAY(vec2s);
+                    CC_SAFE_DELETE_ARRAY(points);
                     return 0;
                 }
                 lua_pop(tolua_S, 1);
             }
-            DrawPrimitives::drawPoly(vec2s,numOfVertices,closePolygon);
-            CC_SAFE_DELETE_ARRAY(vec2s);
+            DrawPrimitives::drawPoly(points,numOfVertices,closePolygon);
+            CC_SAFE_DELETE_ARRAY(points);
         }
     }
     return 0;
@@ -4653,8 +4653,8 @@ static int tolua_cocos2d_DrawPrimitives_drawSolidPoly00(lua_State* tolua_S)
         unsigned int numberOfPoints = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
         if (numberOfPoints > 0)
         {
-            cocos2d::Vector2* vec2s = new cocos2d::Vector2[numberOfPoints];
-            if (NULL == vec2s)
+            cocos2d::Vector2* points = new cocos2d::Vector2[numberOfPoints];
+            if (NULL == points)
                 return 0;
 
             for (int i = 0; i < numberOfPoints; i++)
@@ -4663,14 +4663,14 @@ static int tolua_cocos2d_DrawPrimitives_drawSolidPoly00(lua_State* tolua_S)
                 lua_gettable(tolua_S,1);
                 if (!tolua_istable(tolua_S,-1, 0, &tolua_err))
                 {
-                    CC_SAFE_DELETE_ARRAY(vec2s);
+                    CC_SAFE_DELETE_ARRAY(points);
                     goto tolua_lerror;
                 }
                 
-                if(!luaval_to_vector2(tolua_S, lua_gettop(tolua_S), &vec2s[i]))
+                if(!luaval_to_vector2(tolua_S, lua_gettop(tolua_S), &points[i]))
                 {
                     lua_pop(tolua_S, 1);
-                    CC_SAFE_DELETE_ARRAY(vec2s);
+                    CC_SAFE_DELETE_ARRAY(points);
                     return 0;
                 }
                 lua_pop(tolua_S, 1);
@@ -4679,12 +4679,12 @@ static int tolua_cocos2d_DrawPrimitives_drawSolidPoly00(lua_State* tolua_S)
             Color4F color;
             if (!luaval_to_color4f(tolua_S, 3, &color))
             {
-                CC_SAFE_DELETE_ARRAY(vec2s);
+                CC_SAFE_DELETE_ARRAY(points);
                 return 0;
             }
             
-            DrawPrimitives::drawSolidPoly(vec2s,numberOfPoints,color);
-            CC_SAFE_DELETE_ARRAY(vec2s);
+            DrawPrimitives::drawSolidPoly(points,numberOfPoints,color);
+            CC_SAFE_DELETE_ARRAY(points);
         }
     }
     return 0;

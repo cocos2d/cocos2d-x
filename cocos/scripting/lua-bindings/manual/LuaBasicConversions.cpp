@@ -1059,7 +1059,7 @@ bool luaval_to_dictionary(lua_State* L,int lo, __Dictionary** outValue)
     return ok;
 }
 
-bool luaval_to_array_of_vector2(lua_State* L,int lo,cocos2d::Vector2 **vec2s, int *numPoints)
+bool luaval_to_array_of_vector2(lua_State* L,int lo,cocos2d::Vector2 **points, int *numPoints)
 {
     if (NULL == L)
         return false;
@@ -1108,7 +1108,7 @@ bool luaval_to_array_of_vector2(lua_State* L,int lo,cocos2d::Vector2 **vec2s, in
             }
             
             *numPoints = (int)len;
-            *vec2s    = array;
+            *points    = array;
         }
     }
     return ok;
@@ -1611,7 +1611,7 @@ bool luaval_to_std_vector_int(lua_State* L, int lo, std::vector<int>* ret)
     return ok;
 }
 
-void vector2s_to_luaval(lua_State* L,const cocos2d::Vector2* vec2s, int count)
+void vector2_array_to_luaval(lua_State* L,const cocos2d::Vector2* points, int count)
 {
     if (NULL  == L)
         return;
@@ -1619,7 +1619,7 @@ void vector2s_to_luaval(lua_State* L,const cocos2d::Vector2* vec2s, int count)
     for (int i = 1; i <= count; ++i)
     {
         lua_pushnumber(L, i);
-        vector2_to_luaval(L, vec2s[i-1]);
+        vector2_to_luaval(L, points[i-1]);
         lua_rawset(L, -3);
     }
 }
@@ -1720,7 +1720,7 @@ void physics_contactdata_to_luaval(lua_State* L, const PhysicsContactData* data)
     lua_newtable(L);                                    /* L: table */
     
     lua_pushstring(L, "points");
-    vector2s_to_luaval(L, data->points, data->count);
+    vector2_array_to_luaval(L, data->points, data->count);
     lua_rawset(L, -3);
     
     lua_pushstring(L, "normal");
