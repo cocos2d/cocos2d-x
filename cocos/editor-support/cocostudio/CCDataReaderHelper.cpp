@@ -1190,9 +1190,9 @@ void DataReaderHelper::addDataFromJsonCache(const std::string& fileContent, Data
     if (fileContent.size() >= 3) {
         // Skip BOM if exists
         const unsigned char* c = (const unsigned char *)fileContent.c_str();
-	    unsigned bom = c[0] | (c[1] << 8) | (c[2] << 16) | (c[3] << 24);
+	    unsigned bom = c[0] | (c[1] << 8) | (c[2] << 16);
 
-        if ((bom & 0xFFFFFF) == 0xBFBBEF)  // UTF8 BOM
+        if (bom == 0xBFBBEF)  // UTF8 BOM
         {
             stream.Take();
             stream.Take();
