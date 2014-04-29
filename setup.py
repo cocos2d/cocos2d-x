@@ -318,11 +318,11 @@ class SetEnvVar(object):
 
     def _check_valid(self, var_name, value):
         ret = False
-        if var_name == NDK_ROOT:
+        if value is not None and var_name == NDK_ROOT:
             ret = self._is_ndk_root_valid(value)
-        elif var_name == ANDROID_SDK_ROOT:
+        elif value is not None and var_name == ANDROID_SDK_ROOT:
             ret = self._is_android_sdk_root_valid(value)
-        elif var_name == ANT_ROOT:
+        elif value is not None and var_name == ANT_ROOT:
             ret = self._is_ant_root_valid(value)
         else:
             ret = False
@@ -570,9 +570,17 @@ class SetEnvVar(object):
         if var_name == ANT_ROOT:
             return self._get_ant_path()
 	elif var_name == NDK_ROOT:
-            return os.path.abspath(os.path.join(self._get_ndkbuild_path(),os.pardir))
+	    ndkpath = self._get_ndkbuild_path()
+	    if ndkpath is not None:
+	        return os.path.abspath(os.path.join(ndkpath,os.pardir))
+	    else :
+	        return None
 	elif var_name == ANDROID_SDK_ROOT:
-            return os.path.abspath(os.path.join(self._get_android_path(),os.pardir))
+	    sdkpath = self._get_android_path()
+	    if sdkpath is not None:	
+                return os.path.abspath(os.path.join(sdkpath,os.pardir))
+	    else :
+		return None
         else:
             return None
 
