@@ -413,8 +413,12 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
     texture = (CCTexture2D*)m_pTextures->objectForKey(pathKey.c_str());
 
     std::string fullpath = pathKey; // (CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(path));
+
+#if !CC_ENABLE_RELOAD_PLIST_DATA
     if (! texture) 
+#endif
     {
+
         std::string lowerCase(pathKey);
         for (unsigned int i = 0; i < lowerCase.length(); ++i)
         {
@@ -425,12 +429,27 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
         {
             if (std::string::npos != lowerCase.find(".pvr"))
             {
+#if CC_ENABLE_RELOAD_PLIST_DATA
+                if (texture == NULL)
+                {
+                    texture = this->addPVRImage(fullpath.c_str());
+                }
+#else
                 texture = this->addPVRImage(fullpath.c_str());
+#endif        
             }
             else if (std::string::npos != lowerCase.find(".pkm"))
             {
+#if CC_ENABLE_RELOAD_PLIST_DATA
+                if (texture == NULL)
+                {
+                    // ETC1 file format, only supportted on Android
+                    texture = this->addETCImage(fullpath.c_str());
+                }
+#else
                 // ETC1 file format, only supportted on Android
                 texture = this->addETCImage(fullpath.c_str());
+#endif        
             }
             else
             {
@@ -458,8 +477,19 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
                 bool bRet = pImage->initWithImageFile(fullpath.c_str(), eImageFormat);
                 CC_BREAK_IF(!bRet);
 
+#if CC_ENABLE_RELOAD_PLIST_DATA
+                if (texture == NULL)
+                {
+                    texture = new CCTexture2D();
+                }
+                else
+                {
+                    texture->retain();
+                    texture->releaseData();
+                }
+#else
                 texture = new CCTexture2D();
-                
+#endif 
                 if( texture &&
                     texture->initWithImage(pImage) )
                 {
@@ -592,7 +622,7 @@ CCTexture2D* CCTextureCache::addUIImage(CCImage *image, const char *key)
     return texture;
 }
 
-bool CCTextureCache::reloadTexture(const char* fileName)
+bool CCTextureCache::reloadTexture(const char* fileName, unsigned short &imageWidth, unsigned short &imageHeight)
 {
     std::string fullpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(fileName);
     if (fullpath.size() == 0)
@@ -617,6 +647,8 @@ bool CCTextureCache::reloadTexture(const char* fileName)
             CC_BREAK_IF(!bRet);
             
             ret = texture->initWithImage(image);
+            imageWidth = image->getWidth();
+            imageHeight = image->getHeight();
         } while (0);
     }
     

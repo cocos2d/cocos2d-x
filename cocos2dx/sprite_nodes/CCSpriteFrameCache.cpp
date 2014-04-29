@@ -106,10 +106,13 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary,
         CCDictionary* frameDict = (CCDictionary*)pElement->getObject();
         std::string spriteFrameName = pElement->getStrKey();
         CCSpriteFrame* spriteFrame = (CCSpriteFrame*)m_pSpriteFrames->objectForKey(spriteFrameName);
+
+#if !CC_ENABLE_RELOAD_PLIST_DATA
         if (spriteFrame)
         {
             continue;
         }
+#endif
         
         if(format == 0) 
         {
@@ -129,8 +132,23 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary,
             // abs ow/oh
             ow = abs(ow);
             oh = abs(oh);
+
+#if CC_ENABLE_RELOAD_PLIST_DATA
+            // create frame
+            if (spriteFrame == NULL)
+            {
+                spriteFrame = new CCSpriteFrame();
+            }
+            else
+            {
+                spriteFrame->setTexture(NULL);
+                spriteFrame->retain();
+            }
+#else
             // create frame
             spriteFrame = new CCSpriteFrame();
+#endif
+            
             spriteFrame->initWithTexture(pobTexture, 
                                         CCRectMake(x, y, w, h), 
                                         false,
@@ -152,8 +170,21 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary,
             CCPoint offset = CCPointFromString(frameDict->valueForKey("offset")->getCString());
             CCSize sourceSize = CCSizeFromString(frameDict->valueForKey("sourceSize")->getCString());
 
+#if CC_ENABLE_RELOAD_PLIST_DATA
+            // create frame
+            if (spriteFrame == NULL)
+            {
+                spriteFrame = new CCSpriteFrame();
+            }
+            else
+            {
+                spriteFrame->setTexture(NULL);
+                spriteFrame->retain();
+            }
+#else
             // create frame
             spriteFrame = new CCSpriteFrame();
+#endif
             spriteFrame->initWithTexture(pobTexture, 
                 frame,
                 rotated,
@@ -186,8 +217,15 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary,
                 m_pSpriteFramesAliases->setObject(frameKey, oneAlias.c_str());
             }
             frameKey->release();
-            // create frame
+           
+#if CC_ENABLE_RELOAD_PLIST_DATA
+            if (spriteFrame == NULL)
+            {
+                spriteFrame = new CCSpriteFrame();
+            }
+#else
             spriteFrame = new CCSpriteFrame();
+#endif
             spriteFrame->initWithTexture(pobTexture,
                             CCRectMake(textureRect.origin.x, textureRect.origin.y, spriteSize.width, spriteSize.height),
                             textureRotated,
@@ -230,7 +268,9 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
 {
     CCAssert(pszPlist, "plist filename should not be NULL");
 
+#if !CC_ENABLE_RELOAD_PLIST_DATA
     if (m_pLoadedFileNames->find(pszPlist) == m_pLoadedFileNames->end())
+#endif
     {
         std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszPlist);
         CCDictionary *dict = CCDictionary::createWithContentsOfFileThreadSafe(fullPath.c_str());
@@ -278,7 +318,61 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
 
         dict->release();
     }
+}
 
+bool CCSpriteFrameCache::reloadSpriteFramesWithFile(const char* pszPlist)
+{
+#if CC_ENABLE_RELOAD_PLIST_DATA
+    CCAssert(pszPlist, "plist filename should not be NULL");
+
+    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszPlist);
+    CCDictionary *dict = CCDictionary::createWithContentsOfFileThreadSafe(fullPath.c_str());
+
+    string texturePath("");
+
+    CCDictionary* metadataDict = (CCDictionary*)dict->objectForKey("metadata");
+    if (metadataDict)
+    {
+        // try to read  texture file name from meta data
+        texturePath = metadataDict->valueForKey("textureFileName")->getCString();
+    }
+
+    if (! texturePath.empty())
+    {
+        // build texture path relative to plist file
+        texturePath = CCFileUtils::sharedFileUtils()->fullPathFromRelativeFile(texturePath.c_str(), pszPlist);
+    }
+    else
+    {
+        // build texture path by replacing file extension
+        texturePath = pszPlist;
+
+        // remove .xxx
+        size_t startPos = texturePath.find_last_of("."); 
+        texturePath = texturePath.erase(startPos);
+
+        // append .png
+        texturePath = texturePath.append(".png");
+
+        CCLOG("cocos2d: CCSpriteFrameCache: Trying to use file %s as texture", texturePath.c_str());
+    }
+
+    CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage(texturePath.c_str());
+
+    if (pTexture)
+    {
+        addSpriteFramesWithDictionary(dict, pTexture);
+        m_pLoadedFileNames->insert(pszPlist);
+    }
+    else
+    {
+        CCLOG("cocos2d: CCSpriteFrameCache: Couldn't load texture");
+        return false;
+    }
+    dict->release();
+#endif
+
+    return true;
 }
 
 void CCSpriteFrameCache::addSpriteFrame(CCSpriteFrame *pobFrame, const char *pszFrameName)

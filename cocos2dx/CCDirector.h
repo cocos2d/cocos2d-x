@@ -186,10 +186,13 @@ public:
     void setDelegate(CCDirectorDelegate* pDelegate);
 
     // window size
-
     /** returns the size of the OpenGL view in points.
     */
     CCSize getWinSize(void);
+
+     /** set the window size
+     */
+    void setWinSize(CCSize size);
 
     /** returns the size of the OpenGL view in pixels.
     */
