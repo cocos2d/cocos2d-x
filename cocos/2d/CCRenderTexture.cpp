@@ -533,7 +533,13 @@ void RenderTexture::onBegin()
     if(!_keepMatrix)
     {
         director->setProjection(director->getProjection());
-        
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+        Matrix modifiedProjection = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        modifiedProjection = CCEGLView::sharedOpenGLView()->getReverseOrientationMatrix() * modifiedProjection;
+        director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION,modifiedProjection);
+#endif
+
         const Size& texSize = _texture->getContentSizeInPixels();
         
         // Calculate the adjustment ratios based on the old and new projections
