@@ -493,7 +493,7 @@ int LuaEngine::handleTouchEvent(void* data)
 
     Touch* touch = touchScriptData->touch;
     if (NULL != touch) {
-        const Point pt = Director::getInstance()->convertToGL(touch->getLocationInView());
+        const cocos2d::Vector2 pt = Director::getInstance()->convertToGL(touch->getLocationInView());
         _stack->pushFloat(pt.x);
         _stack->pushFloat(pt.y);
         ret = _stack->executeFunctionByHandler(handler, 3);
@@ -546,7 +546,7 @@ int LuaEngine::handleTouchesEvent(void* data)
     int i = 1;
     for (auto& touch : touchesScriptData->touches)
     {
-        Point pt = pDirector->convertToGL(touch->getLocationInView());
+        cocos2d::Vector2 pt = pDirector->convertToGL(touch->getLocationInView());
         lua_pushnumber(L, pt.x);
         lua_rawseti(L, -2, i++);
         lua_pushnumber(L, pt.y);
