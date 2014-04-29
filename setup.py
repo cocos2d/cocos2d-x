@@ -318,11 +318,11 @@ class SetEnvVar(object):
 
     def _check_valid(self, var_name, value):
         ret = False
-        if value is not None and var_name == NDK_ROOT:
+        if var_name == NDK_ROOT:
             ret = self._is_ndk_root_valid(value)
-        elif value is not None and var_name == ANDROID_SDK_ROOT:
+        elif var_name == ANDROID_SDK_ROOT:
             ret = self._is_android_sdk_root_valid(value)
-        elif value is not None and var_name == ANT_ROOT:
+        elif var_name == ANT_ROOT:
             ret = self._is_ant_root_valid(value)
         else:
             ret = False
