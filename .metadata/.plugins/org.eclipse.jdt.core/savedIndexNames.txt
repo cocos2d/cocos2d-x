@@ -1,4 +1,0 @@
-INDEX VERSION 1.126+/Users/su1livan/Desktop/cocos2d-x/.metadata/.plugins/org.eclipse.jdt.core
-1799179507.index
-4003095935.index
-2741727132.index
