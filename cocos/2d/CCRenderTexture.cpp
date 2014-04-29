@@ -537,7 +537,7 @@ void RenderTexture::onBegin()
         const Size& texSize = _texture->getContentSizeInPixels();
         
         // Calculate the adjustment ratios based on the old and new projections
-        Size size = Director::getInstance()->getWinSizeInPixels();
+        Size size = director->getWinSizeInPixels();
         float widthRatio = size.width / texSize.width;
         float heightRatio = size.height / texSize.height;
         
@@ -692,7 +692,7 @@ void RenderTexture::begin()
         const Size& texSize = _texture->getContentSizeInPixels();
         
         // Calculate the adjustment ratios based on the old and new projections
-        Size size = Director::getInstance()->getWinSizeInPixels();
+        Size size = director->getWinSizeInPixels();
         
         float widthRatio = size.width / texSize.width;
         float heightRatio = size.height / texSize.height;
