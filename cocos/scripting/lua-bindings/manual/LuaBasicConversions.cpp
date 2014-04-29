@@ -1081,7 +1081,7 @@ bool luaval_to_array_of_vector2(lua_State* L,int lo,cocos2d::Vector2 **points, i
         size_t len = lua_objlen(L, lo);
         if (len > 0)
         {
-            cocos2d::Vector2* array = (cocos2d::Vector2*)malloc(sizeof(cocos2d::Vector2) * len);
+            cocos2d::Vector2* array = (cocos2d::Vector2*) new Vector2[len];
             if (NULL == array)
                 return false;
             for (uint32_t i = 0; i < len; ++i)
@@ -1094,14 +1094,14 @@ bool luaval_to_array_of_vector2(lua_State* L,int lo,cocos2d::Vector2 **points, i
                     luaval_to_native_err(L,"#ferror:",&tolua_err);
 #endif
                     lua_pop(L, 1);
-                    free(array);
+                    CC_SAFE_DELETE_ARRAY(array);
                     return false;
                 }
                 ok &= luaval_to_vector2(L, lua_gettop(L), &array[i]);
                 if (!ok)
                 {
                     lua_pop(L, 1);
-                    free(array);
+                    CC_SAFE_DELETE_ARRAY(array);
                     return false;
                 }
                 lua_pop(L, 1);
