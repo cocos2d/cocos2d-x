@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.path="$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java" external.root.project.path="$MODULE_DIR$/../../../../../../MyGame" external.system.id="GRADLE" external.system.module.group="MyGame" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="android-gradle" name="Android-Gradle">
+      <configuration>
+        <option name="GRADLE_PROJECT_PATH" value=":cocos2dx" />
+      </configuration>
+    </facet>
+    <facet type="android" name="Android">
+      <configuration>
+        <option name="SELECTED_BUILD_VARIANT" value="debug" />
+        <option name="ASSEMBLE_TASK_NAME" value="assembleDebug" />
+        <option name="COMPILE_JAVA_TASK_NAME" value="compileDebugJava" />
+        <option name="ASSEMBLE_TEST_TASK_NAME" value="assembleDebugTest" />
+        <option name="SOURCE_GEN_TASK_NAME" value="generateDebugSources" />
+        <option name="ALLOW_USER_CONFIGURATION" value="false" />
+        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/res" />
+        <option name="LIBRARY_PROJECT" value="true" />
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="false">
+    <output url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/build/classes/debug" />
+    <output-test url="file://$MODULE_DIR$/build/classes/test" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java">
+      <sourceFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/build/source/r/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/build/source/aidl/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/build/source/buildConfig/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/build/source/rs/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/build/res/rs/debug" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/build/source/r/test/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/build/source/aidl/test/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/build/source/buildConfig/test/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/build/source/rs/test/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/build/res/rs/test/debug" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/src/debug/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/src/debug/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/src/debug/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/src/debug/assets" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/src/debug/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/src/debug/jni" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/src/debug/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/src" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/assets" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/src/main/jni" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/src/androidTest/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/src/androidTest/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/src/androidTest/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/src/androidTest/assets" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/src/androidTest/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/src/androidTest/jni" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/src/androidTest/rs" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/.settings" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/build/apk" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/build/assets" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/build/bundles" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/build/classes" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/build/dependency-cache" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/build/incremental" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/build/libs" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/build/manifests" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/build/res" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/build/symbols" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../../../../../../cocos2d-x/cocos/2d/platform/android/java/build/tmp" />
+    </content>
+    <orderEntry type="jdk" jdkName="Android API 19 Platform" jdkType="Android SDK" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
+
