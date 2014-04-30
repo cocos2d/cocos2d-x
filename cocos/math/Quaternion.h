@@ -167,7 +167,7 @@ public:
      *
      * @param dst A quaternion to store the conjugate in.
      */
-    void conjugate(Quaternion* dst) const;
+    Quaternion getConjugated() const;
 
     /**
      * Sets this quaternion to the inverse of itself.
@@ -193,7 +193,7 @@ public:
      * 
      * @return true if the inverse can be computed, false otherwise.
      */
-    bool inverse(Quaternion* dst) const;
+    Quaternion getInversed() const;
 
     /**
      * Multiplies this quaternion by the specified one and stores the result in this quaternion.
