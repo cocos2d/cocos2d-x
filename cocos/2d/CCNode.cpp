@@ -1378,7 +1378,7 @@ const Matrix& Node::getNodeToParentTransform() const
         }
         if(_rotationX) {
             Matrix rotX;
-            Matrix::createRotationX(CC_DEGREES_TO_RADIANS(_rotationX), &rotX);
+            Matrix::createRotationY(CC_DEGREES_TO_RADIANS(_rotationX), &rotX);
             _transform = _transform * rotX;
         }
 
