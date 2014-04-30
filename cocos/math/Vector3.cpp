@@ -241,7 +241,7 @@ void Vector3::normalize()
     z *= n;
 }
 
-Vector3 Vector3::getNormalize() const
+Vector3 Vector3::getNormalized() const
 {
     Vector3 v(*this);
     v.normalize();

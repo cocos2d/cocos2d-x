@@ -293,7 +293,7 @@ public:
      *
      * @param dst The destination vector.
      */
-    Vector3 getNormalize() const;
+    Vector3 getNormalized() const;
 
     /**
      * Scales all elements of this vector by the specified value.

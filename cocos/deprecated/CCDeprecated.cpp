@@ -372,7 +372,7 @@ CC_DLL Vector3* kmVec3Lerp(Vector3* pOut, const Vector3* pV1, const Vector3* pV2
 
 Vector3* kmVec3Normalize(Vector3* pOut, const Vector3* pIn)
 {
-    *pOut = pIn->getNormalize();
+    *pOut = pIn->getNormalized();
     return pOut;
 }
 
@@ -456,7 +456,7 @@ float kmVec2LengthSq(const Vector2* pIn)
 
 Vector2* kmVec2Normalize(Vector2* pOut, const Vector2* pIn)
 {
-    *pOut = pIn->getNormalize();
+    *pOut = pIn->getNormalized();
     return pOut;
 }
 
@@ -534,7 +534,7 @@ Vector4* kmVec4Lerp(Vector4* pOut, const Vector4* pV1, const Vector4* pV2, float
 
 Vector4* kmVec4Normalize(Vector4* pOut, const Vector4* pIn)
 {
-    *pOut = pIn->getNormalize();
+    *pOut = pIn->getNormalized();
     return pOut;
 }
 

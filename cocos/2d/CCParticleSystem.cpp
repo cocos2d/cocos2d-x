@@ -710,7 +710,7 @@ void ParticleSystem::update(float dt)
                     // radial acceleration
                     if (p->pos.x || p->pos.y)
                     {
-                        radial = p->pos.getNormalize();
+                        radial = p->pos.getNormalized();
                     }
                     tangential = radial;
                     radial = radial * p->modeA.radialAccel;

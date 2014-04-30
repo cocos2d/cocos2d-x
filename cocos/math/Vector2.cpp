@@ -225,7 +225,7 @@ void Vector2::normalize()
     y *= n;
 }
 
-Vector2 Vector2::getNormalize() const
+Vector2 Vector2::getNormalized() const
 {
     Vector2 v(*this);
     v.normalize();
@@ -335,8 +335,8 @@ bool Vector2::fuzzyEquals(const Vector2& b, float var) const
 
 float Vector2::getAngle(const Vector2& other) const
 {
-    Vector2 a2 = getNormalize();
-    Vector2 b2 = other.getNormalize();
+    Vector2 a2 = getNormalized();
+    Vector2 b2 = other.getNormalized();
     float angle = atan2f(a2.cross(b2), a2.dot(b2));
     if( fabs(angle) < FLT_EPSILON ) return 0.f;
     return angle;
