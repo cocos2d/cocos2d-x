@@ -739,8 +739,7 @@ Vector2 Director::convertToGL(const Vector2& uiPoint)
     Matrix transform;
     GLToClipTransform(&transform);
 
-    Matrix transformInv;
-    transform.invert(&transformInv);
+    Matrix transformInv = transform.getInversed();
 
     // Calculate z=0 using -> transform*[0, 0, 0, 1]/w
     float zClip = transform.m[14]/transform.m[15];
