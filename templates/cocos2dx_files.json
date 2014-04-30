@@ -277,6 +277,7 @@
         "cocos/2d/platform/android/java/ant.properties", 
         "cocos/2d/platform/android/java/build.xml",  
         "cocos/2d/platform/android/java/build.gradle",
+        "cocos/2d/platform/android/java/cocos2dx.iml",
         "cocos/2d/platform/android/java/proguard-project.txt", 
         "cocos/2d/platform/android/java/project.properties",
         "cocos/2d/platform/android/java/res/", 
