@@ -48,6 +48,7 @@ public class Cocos2dxMusic {
 	private float mLeftVolume;
 	private float mRightVolume;
 	private boolean mPaused;
+	private boolean mPausedFlag = false;
 	private String mCurrentPath;
 
 	// ===========================================================
@@ -142,6 +143,7 @@ public class Cocos2dxMusic {
 		if (this.mBackgroundMediaPlayer != null && this.mBackgroundMediaPlayer.isPlaying()) {
 			this.mBackgroundMediaPlayer.pause();
 			this.mPaused = true;
+			this.mPausedFlag = true;
 		}
 	}
 
@@ -149,6 +151,7 @@ public class Cocos2dxMusic {
 		if (this.mBackgroundMediaPlayer != null && this.mPaused) {
 			this.mBackgroundMediaPlayer.start();
 			this.mPaused = false;
+			this.mPausedFlag = false;
 		}
 	}
 
@@ -211,6 +214,22 @@ public class Cocos2dxMusic {
 		}
 	}
 
+	public void onEnterBackground(){
+		if (this.mBackgroundMediaPlayer != null && this.mBackgroundMediaPlayer.isPlaying()) {
+			this.mBackgroundMediaPlayer.pause();
+			this.mPaused = true;
+		}
+	}
+	
+	public void onEnterForeground(){
+		if(!this.mPausedFlag){
+			if (this.mBackgroundMediaPlayer != null && this.mPaused) {
+				this.mBackgroundMediaPlayer.start();
+				this.mPaused = false;
+			}
+		}
+	}
+	
 	private void initData() {
 		this.mLeftVolume = 0.5f;
 		this.mRightVolume = 0.5f;
