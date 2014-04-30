@@ -223,37 +223,29 @@ void Vector3::negate()
     z = -z;
 }
 
-Vector3& Vector3::normalize()
+void Vector3::normalize()
 {
-    normalize(this);
-    return *this;
-}
-
-void Vector3::normalize(Vector3* dst) const
-{
-    GP_ASSERT(dst);
-
-    if (dst != this)
-    {
-        dst->x = x;
-        dst->y = y;
-        dst->z = z;
-    }
-
     float n = x * x + y * y + z * z;
     // Already normalized.
     if (n == 1.0f)
         return;
-
+    
     n = sqrt(n);
     // Too close to zero.
     if (n < MATH_TOLERANCE)
         return;
-
+    
     n = 1.0f / n;
-    dst->x *= n;
-    dst->y *= n;
-    dst->z *= n;
+    x *= n;
+    y *= n;
+    z *= n;
+}
+
+Vector3 Vector3::getNormalized() const
+{
+    Vector3 v(*this);
+    v.normalize();
+    return v;
 }
 
 void Vector3::scale(float scalar)

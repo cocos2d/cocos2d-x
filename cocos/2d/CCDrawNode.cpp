@@ -81,7 +81,7 @@ static inline Vector2 v2fforangle(float _a_)
 
 static inline Vector2 v2fnormalize(const Vector2 &p)
 {
-	Vector2 r = Vector2(p.x, p.y).normalize();
+	Vector2 r = Vector2(p.x, p.y).getNormalized();
 	return v2f(r.x, r.y);
 }
 

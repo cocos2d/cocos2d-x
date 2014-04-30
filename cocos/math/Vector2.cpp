@@ -208,35 +208,28 @@ void Vector2::negate()
     y = -y;
 }
 
-Vector2& Vector2::normalize()
+void Vector2::normalize()
 {
-    normalize(this);
-    return *this;
-}
-
-void Vector2::normalize(Vector2* dst) const
-{
-    GP_ASSERT(dst);
-
-    if (dst != this)
-    {
-        dst->x = x;
-        dst->y = y;
-    }
-
     float n = x * x + y * y;
     // Already normalized.
     if (n == 1.0f)
         return;
-
+    
     n = sqrt(n);
     // Too close to zero.
     if (n < MATH_TOLERANCE)
         return;
-
+    
     n = 1.0f / n;
-    dst->x *= n;
-    dst->y *= n;
+    x *= n;
+    y *= n;
+}
+
+Vector2 Vector2::getNormalized() const
+{
+    Vector2 v(*this);
+    v.normalize();
+    return v;
 }
 
 void Vector2::scale(float scalar)
@@ -342,8 +335,8 @@ bool Vector2::fuzzyEquals(const Vector2& b, float var) const
 
 float Vector2::getAngle(const Vector2& other) const
 {
-    Vector2 a2 = normalize();
-    Vector2 b2 = other.normalize();
+    Vector2 a2 = getNormalized();
+    Vector2 b2 = other.getNormalized();
     float angle = atan2f(a2.cross(b2), a2.dot(b2));
     if( fabs(angle) < FLT_EPSILON ) return 0.f;
     return angle;

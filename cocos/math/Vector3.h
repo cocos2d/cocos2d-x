@@ -282,7 +282,7 @@ public:
      * 
      * @return This vector, after the normalization occurs.
      */
-    Vector3& normalize();
+    void normalize();
 
     /**
      * Normalizes this vector and stores the result in dst.
@@ -293,7 +293,7 @@ public:
      *
      * @param dst The destination vector.
      */
-    void normalize(Vector3* dst) const;
+    Vector3 getNormalized() const;
 
     /**
      * Scales all elements of this vector by the specified value.

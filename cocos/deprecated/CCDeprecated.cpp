@@ -314,7 +314,7 @@ Matrix* kmMat4RotationZ(Matrix* pOut, const float radians)
     return pOut;
 }
 
-Matrix* kmMat4RotationAxisAngle(Matrix* pOut, const struct Vector3* axis, float radians)
+Matrix* kmMat4RotationAxisAngle(Matrix* pOut, const Vector3* axis, float radians)
 {
     Matrix::createRotation(*axis, radians, pOut);
     return pOut;
@@ -338,7 +338,7 @@ Matrix* kmMat4OrthographicProjection(Matrix* pOut, float left, float right, floa
     return pOut;
 }
 
-Matrix* kmMat4LookAt(Matrix* pOut, const struct Vector3* pEye, const struct Vector3* pCenter, const struct Vector3* pUp)
+Matrix* kmMat4LookAt(Matrix* pOut, const Vector3* pEye, const Vector3* pCenter, const Vector3* pUp)
 {
     Matrix::createLookAt(*pEye, *pCenter, *pUp, pOut);
     return pOut;
@@ -372,7 +372,7 @@ CC_DLL Vector3* kmVec3Lerp(Vector3* pOut, const Vector3* pV1, const Vector3* pV2
 
 Vector3* kmVec3Normalize(Vector3* pOut, const Vector3* pIn)
 {
-    pIn->normalize(pOut);
+    *pOut = pIn->getNormalized();
     return pOut;
 }
 
@@ -456,7 +456,7 @@ float kmVec2LengthSq(const Vector2* pIn)
 
 Vector2* kmVec2Normalize(Vector2* pOut, const Vector2* pIn)
 {
-    pIn->normalize(pOut);
+    *pOut = pIn->getNormalized();
     return pOut;
 }
 
@@ -534,7 +534,7 @@ Vector4* kmVec4Lerp(Vector4* pOut, const Vector4* pV1, const Vector4* pV2, float
 
 Vector4* kmVec4Normalize(Vector4* pOut, const Vector4* pIn)
 {
-    pIn->normalize(pOut);
+    *pOut = pIn->getNormalized();
     return pOut;
 }
 
