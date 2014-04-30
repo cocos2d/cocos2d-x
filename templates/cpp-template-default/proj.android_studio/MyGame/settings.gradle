@@ -1,3 +1,0 @@
-include ':app'
-include ':cocos2dx'
-project(':cocos2dx').projectDir = new File('../../../cocos2d-x/cocos/2d/platform/android/java')
