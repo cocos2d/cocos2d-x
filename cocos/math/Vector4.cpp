@@ -253,39 +253,30 @@ void Vector4::negate()
     w = -w;
 }
 
-Vector4& Vector4::normalize()
+void Vector4::normalize()
 {
-    normalize(this);
-    return *this;
-}
-
-void Vector4::normalize(Vector4* dst) const
-{
-    GP_ASSERT(dst);
-
-    if (dst != this)
-    {
-        dst->x = x;
-        dst->y = y;
-        dst->z = z;
-        dst->w = w;
-    }
-
     float n = x * x + y * y + z * z + w * w;
     // Already normalized.
     if (n == 1.0f)
         return;
-
+    
     n = sqrt(n);
     // Too close to zero.
     if (n < MATH_TOLERANCE)
         return;
-
+    
     n = 1.0f / n;
-    dst->x *= n;
-    dst->y *= n;
-    dst->z *= n;
-    dst->w *= n;
+    x *= n;
+    y *= n;
+    z *= n;
+    w *= n;
+}
+
+Vector4 Vector4::getNormalized() const
+{
+    Vector4 v(*this);
+    v.normalize();
+    return v;
 }
 
 void Vector4::scale(float scalar)
