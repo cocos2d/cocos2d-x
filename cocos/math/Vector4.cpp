@@ -252,7 +252,7 @@ void Vector4::normalize()
     w *= n;
 }
 
-Vector4 Vector4::getNormalize() const
+Vector4 Vector4::getNormalized() const
 {
     Vector4 v(*this);
     v.normalize();

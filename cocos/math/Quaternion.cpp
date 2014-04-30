@@ -167,7 +167,7 @@ void Quaternion::normalize()
     w *= n;
 }
 
-Quaternion Quaternion::getNormalize() const
+Quaternion Quaternion::getNormalized() const
 {
     Quaternion q(*this);
     q.normalize();

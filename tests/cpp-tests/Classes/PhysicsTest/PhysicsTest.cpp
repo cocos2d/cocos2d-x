@@ -1182,7 +1182,7 @@ bool PhysicsDemoSlice::slice(PhysicsWorld &world, const PhysicsRayCastInfo& info
     if (!info.shape->containsPoint(info.start) && !info.shape->containsPoint(info.end))
     {
         Vector2 normal = info.end - info.start;
-        normal = normal.getPerp().getNormalize();
+        normal = normal.getPerp().getNormalized();
         float dist = info.start.dot(normal);
         
         clipPoly(dynamic_cast<PhysicsShapePolygon*>(info.shape), normal, dist);
