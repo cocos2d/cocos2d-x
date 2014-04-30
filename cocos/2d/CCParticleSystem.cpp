@@ -725,14 +725,14 @@ void ParticleSystem::update(float dt)
                     tmp = radial + tangential + modeA.gravity;
                     tmp = tmp * dt;
                     p->modeA.dir = p->modeA.dir + tmp;
-					if (_configName.length()>0 && _yCoordFlipped == -1)
-					{
+                    if (_configName.length()>0 && _yCoordFlipped == -1)
+                    {
                         tmp = p->modeA.dir * -dt;
-					}
-					else
-					{
-						 tmp = p->modeA.dir * dt;
-					}
+                    }
+                    else
+                    {
+                        tmp = p->modeA.dir * dt;
+                    }
                     p->pos = p->pos + tmp;
                 }
 
