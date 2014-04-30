@@ -4,6 +4,11 @@ cocos2d-x-2.2.4 ??
      [FIX]    CocoStudio: ArmatureDataManager::removeArmatureFileInfo can't remove image from cache
      [FIX]    CocoStudio: Bone's position is wrong  when animation has only a single bone
      [FIX]    CocoStudio: Logical error in CCBone:: setBlendFunc 
+     [FIX]    WP8: precompiled headers are enabled, Angle libs are precompiled
+     [FIX]    WP8: WP8-XAML uses DrawingSurfaceBackgroundGrid for better performance and to fix Device memory leak with DrawingSurface
+     [FIX]    WP8 & WinRT: Removed debug prebuilt libs
+     [FIX]    WP8: Added purgeSharedSpriteFrameCache() to purge in CCDirector to fix dangling refcounts on textures
+     [NEW]    WP8: curl and websockets are supported
 
 cocos2d-x-2.2.3 @Mar.14 2014
 [All]
