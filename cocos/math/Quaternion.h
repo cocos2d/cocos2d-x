@@ -228,7 +228,7 @@ public:
      *
      * @param dst A quaternion to store the result in.
      */
-    void normalize(Quaternion* dst) const;
+    Quaternion getNormalized() const;
 
     /**
      * Sets the elements of the quaternion to the specified values.
