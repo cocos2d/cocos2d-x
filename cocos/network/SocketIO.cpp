@@ -28,8 +28,8 @@
  ****************************************************************************/
 
 #include "SocketIO.h"
-#include "2d/CCDirector.h"
-#include "CCScheduler.h"
+#include "base/CCDirector.h"
+#include "base/CCScheduler.h"
 #include "WebSocket.h"
 #include "HttpClient.h"
 #include <algorithm>

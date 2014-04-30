@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include <unistd.h>
 #include <sys/time.h>
 #include <string>
-#include "2d/CCDirector.h"
+#include "base/CCDirector.h"
 #include "2d/platform/CCFileUtils.h"
 #include "CCGLView.h"
 

@@ -31,7 +31,7 @@ extern "C" {
 
 
 #include "base/CCRef.h"
-#include "2d/ccMacros.h"
+#include "base/ccMacros.h"
 #include "2d/CCActionInstant.h"
 #include <vector>
 #include <map>

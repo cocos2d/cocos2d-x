@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "base/CCPlatformConfig.h"
 #include "base/CCRef.h"
 #include "base/CCValue.h"
-#include "base/CCGeometry.h"
+#include "math/CCGeometry.h"
 #include "2d/CCSpriteFrame.h"
 #include "base/CCVector.h"
 

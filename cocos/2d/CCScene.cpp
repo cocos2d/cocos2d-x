@@ -26,7 +26,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCScene.h"
-#include "2d/CCDirector.h"
+#include "base/CCDirector.h"
 #include "2d/CCLayer.h"
 #include "2d/CCSprite.h"
 #include "2d/CCSpriteBatchNode.h"

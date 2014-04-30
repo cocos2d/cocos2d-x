@@ -25,7 +25,7 @@
 #ifndef __CCPHYSICS_SHAPE_INFO_CHIPMUNK_H__
 #define __CCPHYSICS_SHAPE_INFO_CHIPMUNK_H__
 
-#include "2d/ccConfig.h"
+#include "base/ccConfig.h"
 #if CC_USE_PHYSICS
 
 #include <vector>

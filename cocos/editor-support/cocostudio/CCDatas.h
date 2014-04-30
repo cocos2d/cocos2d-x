@@ -26,10 +26,10 @@ THE SOFTWARE.
 #define __CCARMATURE_DATAS_H__
 
 #include "base/CCRef.h"
-#include "2d/ccTypes.h"
+#include "base/ccTypes.h"
 #include "base/CCVector.h"
 #include "base/CCMap.h"
-#include "base/CCAffineTransform.h"
+#include "math/CCAffineTransform.h"
 
 #include "cocostudio/CCArmatureDefine.h"
 #include "2d/CCTweenFunction.h"

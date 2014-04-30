@@ -30,7 +30,7 @@ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 #include "2d/platform/CCFileUtils.h"
 #include "base/CCPlatformMacros.h"
-#include "2d/ccTypes.h"
+#include "base/ccTypes.h"
 #include <string>
 #include <vector>
 #include "jni.h"

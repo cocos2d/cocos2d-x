@@ -27,7 +27,7 @@
 
 #include "ccUTF8.h"
 #include "CCLabelTextFormatter.h"
-#include "2d/CCDirector.h"
+#include "base/CCDirector.h"
 #include "2d/CCLabel.h"
 
 using namespace std;

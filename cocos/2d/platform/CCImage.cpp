@@ -50,13 +50,13 @@ extern "C"
 #include "decode.h"
 #endif
 
-#include "2d/ccMacros.h"
+#include "base/ccMacros.h"
 #include "CCCommon.h"
 #include "CCStdC.h"
 #include "CCFileUtils.h"
 #include "CCConfiguration.h"
 #include "ccUtils.h"
-#include "ZipUtils.h"
+#include "base/ZipUtils.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "android/CCFileUtilsAndroid.h"
 #endif

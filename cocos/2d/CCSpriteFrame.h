@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "2d/CCNode.h"
 #include "2d/CCProtocols.h"
 #include "base/CCRef.h"
-#include "base/CCGeometry.h"
+#include "math/CCGeometry.h"
 
 NS_CC_BEGIN
 

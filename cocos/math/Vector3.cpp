@@ -1,6 +1,6 @@
 #include "Vector3.h"
 #include "MathUtil.h"
-#include "2d/ccMacros.h"
+#include "base/ccMacros.h"
 
 NS_CC_MATH_BEGIN
 

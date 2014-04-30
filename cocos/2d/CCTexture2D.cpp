@@ -32,14 +32,14 @@ THE SOFTWARE.
 */
 
 #include "2d/CCTexture2D.h"
-#include "2d/ccConfig.h"
-#include "2d/ccMacros.h"
+#include "base/ccConfig.h"
+#include "base/ccMacros.h"
 #include "CCConfiguration.h"
 #include "2d/platform/CCImage.h"
 #include "CCGL.h"
 #include "ccUtils.h"
 #include "base/CCPlatformMacros.h"
-#include "2d/CCDirector.h"
+#include "base/CCDirector.h"
 #include "2d/CCGLProgram.h"
 #include "2d/ccGLStateCache.h"
 #include "CCShaderCache.h"
@@ -1058,7 +1058,7 @@ Texture2D::PixelFormat Texture2D::convertDataToFormat(const unsigned char* data,
 }
 
 // implementation Texture2D (Text)
-bool Texture2D::initWithString(const char *text, const char *fontName, float fontSize, const Size& dimensions/* = Size(0, 0)*/, TextHAlignment hAlignment/* =  TextHAlignment::CENTER */, TextVAlignment vAlignment/* =  TextVAlignment::TOP */)
+bool Texture2D::initWithString(const char *text, const std::string& fontName, float fontSize, const Size& dimensions/* = Size(0, 0)*/, TextHAlignment hAlignment/* =  TextHAlignment::CENTER */, TextVAlignment vAlignment/* =  TextVAlignment::TOP */)
 {
     FontDefinition tempDef;
     
@@ -1066,7 +1066,7 @@ bool Texture2D::initWithString(const char *text, const char *fontName, float fon
     tempDef._stroke._strokeEnabled = false;
    
     
-    tempDef._fontName      = std::string(fontName);
+    tempDef._fontName      = fontName;
     tempDef._fontSize      = fontSize;
     tempDef._dimensions    = dimensions;
     tempDef._alignment     = hAlignment;

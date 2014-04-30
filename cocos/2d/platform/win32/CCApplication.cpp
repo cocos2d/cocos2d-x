@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 #include "CCApplication.h"
 #include "CCGLView.h"
-#include "2d/CCDirector.h"
+#include "base/CCDirector.h"
 #include <algorithm>
 #include "2d/platform/CCFileUtils.h"
 /**

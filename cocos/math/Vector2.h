@@ -3,7 +3,7 @@
 
 #include "CCMathBase.h"
 #include "base/CCPlatformMacros.h"
-#include "2d/ccMacros.h"
+#include "base/ccMacros.h"
 
 NS_CC_MATH_BEGIN
 

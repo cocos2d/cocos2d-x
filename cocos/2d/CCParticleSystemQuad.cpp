@@ -29,22 +29,22 @@ THE SOFTWARE.
 #include "CCGL.h"
 #include "2d/CCParticleSystemQuad.h"
 #include "2d/CCSpriteFrame.h"
-#include "2d/CCDirector.h"
+#include "base/CCDirector.h"
 #include "CCParticleBatchNode.h"
 #include "2d/CCTextureAtlas.h"
 #include "CCShaderCache.h"
 #include "2d/ccGLStateCache.h"
 #include "2d/CCGLProgram.h"
 #include "TransformUtils.h"
-#include "2d/CCEventType.h"
+#include "base/CCEventType.h"
 #include "CCConfiguration.h"
-#include "2d/renderer/CCRenderer.h"
-#include "2d/renderer/CCQuadCommand.h"
-#include "2d/renderer/CCCustomCommand.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCQuadCommand.h"
+#include "renderer/CCCustomCommand.h"
 
 // extern
-#include "2d/CCEventListenerCustom.h"
-#include "2d/CCEventDispatcher.h"
+#include "base/CCEventListenerCustom.h"
+#include "base/CCEventDispatcher.h"
 
 NS_CC_BEGIN
 

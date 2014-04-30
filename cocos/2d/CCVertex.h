@@ -26,7 +26,7 @@
 #ifndef __CCVERTEX_H__
 #define __CCVERTEX_H__
 
-#include "2d/ccTypes.h"
+#include "base/ccTypes.h"
 
 NS_CC_BEGIN
 
