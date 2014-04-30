@@ -614,7 +614,7 @@ void LayerGradientTest::onTouchesMoved(const std::vector<Touch*>& touches, Event
     auto start = touch->getLocation();    
 
     auto diff =  Vector2(s.width/2,s.height/2) - start;
-    diff = diff.normalize();
+    diff = diff.getNormalize();
 
     auto gradient = static_cast<LayerGradient*>( getChildByTag(1) );
     gradient->setVector(diff);
