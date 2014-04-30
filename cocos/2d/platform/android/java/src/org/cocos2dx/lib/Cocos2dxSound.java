@@ -201,7 +201,6 @@ public class Cocos2dxSound {
 	}
 
 	public void pauseAllEffects() {
-		//this.mSoundPool.autoPause();
 		if (!this.mPathStreamIDsMap.isEmpty()) {
 			final Iterator<Entry<String, ArrayList<Integer>>> iter = this.mPathStreamIDsMap.entrySet().iterator();
 			while (iter.hasNext()) {
