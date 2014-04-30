@@ -9,8 +9,11 @@ cocos2d-x-3.1 Apr.30 2014
      [FIX]          Lua: cc.pGetAngle may return wrong value
      [FIX]          Network: HttpRequest uses std::function as callback
      [FIX]          Particle: The effect of particle loaded from CocosBuilder is incorrectly
+     [FIX]          ParticleSystem: particle direction in verticality is opposite when "configName" has value
+                    and "yCoordFlipped" is -1
      [FIX]          Physics: Move physicWorld from Scene to Layer
      [FIX]          Physics: PhysicsSprite's transform couldn't be updated
+     [FIX]          Value: default value changed to false
      [FIX]          WP8: Some bug fixes
 
 cocos2d-x-3.0 Apr.23 2014
