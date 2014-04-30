@@ -534,7 +534,7 @@ Vector4* kmVec4Lerp(Vector4* pOut, const Vector4* pV1, const Vector4* pV2, float
 
 Vector4* kmVec4Normalize(Vector4* pOut, const Vector4* pIn)
 {
-    pIn->normalize(pOut);
+    *pOut = pIn->getNormalize();
     return pOut;
 }
 
