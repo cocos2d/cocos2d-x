@@ -654,12 +654,14 @@ void Matrix::getBackVector(Vector3* dst) const
     dst->z = m[10];
 }
 
-bool Matrix::invert()
+Matrix Matrix::getInversed() const
 {
-    return invert(this);
+    Matrix mat(*this);
+    mat.inverse();
+    return mat;
 }
 
-bool Matrix::invert(Matrix* dst) const
+bool Matrix::inverse()
 {
     float a0 = m[0] * m[5] - m[1] * m[4];
     float a1 = m[0] * m[6] - m[2] * m[4];
@@ -703,7 +705,7 @@ bool Matrix::invert(Matrix* dst) const
     inverse.m[14] = -m[12] * a3 + m[13] * a1 - m[14] * a0;
     inverse.m[15] = m[8] * a3 - m[9] * a1 + m[10] * a0;
 
-    multiply(inverse, 1.0f / det, dst);
+    multiply(inverse, 1.0f / det, this);
 
     return true;
 }
@@ -744,14 +746,14 @@ void Matrix::multiply(const Matrix& m1, const Matrix& m2, Matrix* dst)
 
 void Matrix::negate()
 {
-    negate(this);
+    MathUtil::negateMatrix(m, m);
 }
 
-void Matrix::negate(Matrix* dst) const
+Matrix Matrix::getNegated() const
 {
-    GP_ASSERT(dst);
-
-    MathUtil::negateMatrix(m, dst->m);
+    Matrix mat(*this);
+    mat.negate();
+    return mat;
 }
 
 void Matrix::rotate(const Quaternion& q)
@@ -966,14 +968,14 @@ void Matrix::translate(const Vector3& t, Matrix* dst) const
 
 void Matrix::transpose()
 {
-    transpose(this);
+    MathUtil::transposeMatrix(m, m);
 }
 
-void Matrix::transpose(Matrix* dst) const
+Matrix Matrix::getTransposed() const
 {
-    GP_ASSERT(dst);
-
-    MathUtil::transposeMatrix(m, dst->m);
+    Matrix mat(*this);
+    mat.transpose();
+    return mat;
 }
 
 NS_CC_MATH_END

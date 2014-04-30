@@ -379,7 +379,7 @@ void Lens3D::update(float time)
                     
                     if (vect.getLength() > 0)
                     {
-                        vect = vect.normalize();
+                        vect.normalize();
                         Vector2 new_vect = vect * new_r;
                         v.z += (_concave ? -1.0f : 1.0f) * new_vect.getLength() * _lensEffect;
                     }

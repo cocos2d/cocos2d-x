@@ -101,35 +101,28 @@ void Quaternion::createFromAxisAngle(const Vector3& axis, float angle, Quaternio
 
 void Quaternion::conjugate()
 {
-    conjugate(this);
+    x = -x;
+    y = -y;
+    z = -z;
+    w =  w;
 }
 
-void Quaternion::conjugate(Quaternion* dst) const
+Quaternion Quaternion::getConjugated() const
 {
-    GP_ASSERT(dst);
-
-    dst->x = -x;
-    dst->y = -y;
-    dst->z = -z;
-    dst->w =  w;
+    Quaternion q(*this);
+    q.conjugate();
+    return q;
 }
 
 bool Quaternion::inverse()
 {
-    return inverse(this);
-}
-
-bool Quaternion::inverse(Quaternion* dst) const
-{
-    GP_ASSERT(dst);
-
     float n = x * x + y * y + z * z + w * w;
     if (n == 1.0f)
     {
-        dst->x = -x;
-        dst->y = -y;
-        dst->z = -z;
-        dst->w = w;
+        x = -x;
+        y = -y;
+        z = -z;
+        w = w;
 
         return true;
     }
@@ -139,12 +132,19 @@ bool Quaternion::inverse(Quaternion* dst) const
         return false;
 
     n = 1.0f / n;
-    dst->x = -x * n;
-    dst->y = -y * n;
-    dst->z = -z * n;
-    dst->w = w * n;
+    x = -x * n;
+    y = -y * n;
+    z = -z * n;
+    w = w * n;
 
     return true;
+}
+
+Quaternion Quaternion::getInversed() const
+{
+    Quaternion q(*this);
+    q.inverse();
+    return q;
 }
 
 void Quaternion::multiply(const Quaternion& q)
@@ -169,37 +169,29 @@ void Quaternion::multiply(const Quaternion& q1, const Quaternion& q2, Quaternion
 
 void Quaternion::normalize()
 {
-    normalize(this);
-}
-
-void Quaternion::normalize(Quaternion* dst) const
-{
-    GP_ASSERT(dst);
-
-    if (this != dst)
-    {
-        dst->x = x;
-        dst->y = y;
-        dst->z = z;
-        dst->w = w;
-    }
-
     float n = x * x + y * y + z * z + w * w;
-
+    
     // Already normalized.
     if (n == 1.0f)
         return;
-
+    
     n = sqrt(n);
     // Too close to zero.
     if (n < 0.000001f)
         return;
-
+    
     n = 1.0f / n;
-    dst->x *= n;
-    dst->y *= n;
-    dst->z *= n;
-    dst->w *= n;
+    x *= n;
+    y *= n;
+    z *= n;
+    w *= n;
+}
+
+Quaternion Quaternion::getNormalized() const
+{
+    Quaternion q(*this);
+    q.normalize();
+    return q;
 }
 
 void Quaternion::set(float xx, float yy, float zz, float ww)
