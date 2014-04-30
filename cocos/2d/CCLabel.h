@@ -28,8 +28,8 @@
 #define _COCOS2D_CCLABEL_H_
 
 #include "2d/CCSpriteBatchNode.h"
-#include "2d/ccTypes.h"
-#include "2d/renderer/CCCustomCommand.h"
+#include "base/ccTypes.h"
+#include "renderer/CCCustomCommand.h"
 #include "CCFontAtlas.h"
 
 NS_CC_BEGIN

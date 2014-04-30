@@ -32,11 +32,11 @@ THE SOFTWARE.
 
 #include "CCTextureCache.h"
 #include "2d/CCTexture2D.h"
-#include "2d/ccMacros.h"
-#include "2d/CCDirector.h"
+#include "base/ccMacros.h"
+#include "base/CCDirector.h"
 #include "2d/platform/CCFileUtils.h"
 #include "ccUtils.h"
-#include "CCScheduler.h"
+#include "base/CCScheduler.h"
 #include "deprecated/CCString.h"
 
 

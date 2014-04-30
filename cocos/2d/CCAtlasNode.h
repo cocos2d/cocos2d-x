@@ -30,8 +30,8 @@ THE SOFTWARE.
 
 #include "2d/CCNode.h"
 #include "2d/CCProtocols.h"
-#include "2d/ccTypes.h"
-#include "2d/renderer/CCQuadCommand.h"
+#include "base/ccTypes.h"
+#include "renderer/CCQuadCommand.h"
 
 NS_CC_BEGIN
 

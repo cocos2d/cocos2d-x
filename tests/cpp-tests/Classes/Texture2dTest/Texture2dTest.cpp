@@ -26,7 +26,6 @@
 // local import
 #include "Texture2dTest.h"
 #include "../testResource.h"
-#include "2d/renderer/CCRenderer.h"
 
 enum {
     kTagLabel = 1,

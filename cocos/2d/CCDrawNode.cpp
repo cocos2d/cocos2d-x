@@ -24,13 +24,13 @@
 #include "2d/CCDrawNode.h"
 #include "CCShaderCache.h"
 #include "CCGL.h"
-#include "2d/CCEventType.h"
+#include "base/CCEventType.h"
 #include "CCConfiguration.h"
-#include "2d/renderer/CCCustomCommand.h"
-#include "2d/renderer/CCRenderer.h"
-#include "2d/CCDirector.h"
-#include "2d/CCEventListenerCustom.h"
-#include "2d/CCEventDispatcher.h"
+#include "renderer/CCCustomCommand.h"
+#include "renderer/CCRenderer.h"
+#include "base/CCDirector.h"
+#include "base/CCEventListenerCustom.h"
+#include "base/CCEventDispatcher.h"
 
 NS_CC_BEGIN
 

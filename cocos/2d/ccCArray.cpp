@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 #include "2d/ccCArray.h"
 #include "base/CCRef.h"
-#include "2d/ccTypes.h"
+#include "base/ccTypes.h"
 
 NS_CC_BEGIN
 

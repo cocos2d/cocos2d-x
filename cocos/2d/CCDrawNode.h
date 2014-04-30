@@ -32,8 +32,8 @@
 #define __CCDRAWNODES_CCDRAW_NODE_H__
 
 #include "2d/CCNode.h"
-#include "2d/ccTypes.h"
-#include "2d/renderer/CCCustomCommand.h"
+#include "base/ccTypes.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 

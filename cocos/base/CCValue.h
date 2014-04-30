@@ -26,7 +26,7 @@
 #define __cocos2d_libs__CCValue__
 
 #include "base/CCPlatformMacros.h"
-#include "2d/ccMacros.h"
+#include "base/ccMacros.h"
 #include <string>
 #include <vector>
 #include <unordered_map>

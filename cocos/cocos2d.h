@@ -35,7 +35,50 @@ THE SOFTWARE.
 //
 // all cocos2d include files
 //
-#include "2d/ccConfig.h"
+#include "base/ccConfig.h"
+
+// base
+#include "base/CCRef.h"
+#include "base/CCRefPtr.h"
+#include "base/CCVector.h"
+#include "base/CCMap.h"
+#include "base/CCAutoreleasePool.h"
+#include "base/CCNS.h"
+#include "base/CCData.h"
+#include "base/CCValue.h"
+#include "base/ccConfig.h"
+#include "base/ccMacros.h"
+#include "base/ccTypes.h"
+#include "base/CCConfiguration.h"
+#include "base/CCDirector.h"
+#include "base/CCScheduler.h"
+#include "base/base64.h"
+#include "base/ZipUtils.h"
+#include "base/CCProfiling.h"
+#include "base/CCConsole.h"
+
+// EventDispatcher
+#include "base/CCEventDispatcher.h"
+#include "base/CCEventListenerTouch.h"
+#include "base/CCEventTouch.h"
+#include "base/CCEventListenerKeyboard.h"
+#include "base/CCEventKeyboard.h"
+#include "base/CCEventListenerMouse.h"
+#include "base/CCEventMouse.h"
+#include "base/CCEventAcceleration.h"
+#include "base/CCEventListenerAcceleration.h"
+#include "base/CCEventCustom.h"
+#include "base/CCEventListenerCustom.h"
+
+// math
+#include "math/CCAffineTransform.h"
+#include "math/CCGeometry.h"
+#include "math/Vector2.h"
+#include "math/Vector3.h"
+#include "math/Vector4.h"
+#include "math/Matrix.h"
+#include "math/Quaternion.h"
+#include "math/MathUtil.h"
 
 // actions
 #include "2d/CCAction.h"
@@ -53,77 +96,48 @@ THE SOFTWARE.
 #include "2d/CCActionCatmullRom.h"
 #include "2d/CCTweenFunction.h"
 
-// base_nodes
+// 2d nodes
 #include "2d/CCNode.h"
 #include "2d/CCAtlasNode.h"
-
-// cocoa
-#include "base/CCAffineTransform.h"
-#include "base/CCRef.h"
-#include "base/CCRefPtr.h"
-#include "base/CCVector.h"
-#include "base/CCMap.h"
-#include "base/CCGeometry.h"
-#include "base/CCAutoreleasePool.h"
-#include "base/CCNS.h"
-#include "base/CCData.h"
-#include "base/CCValue.h"
-
-// draw nodes
 #include "2d/CCDrawingPrimitives.h"
 #include "2d/CCDrawNode.h"
-
-// effects
-#include "2d/CCGrabber.h"
-#include "2d/CCGrid.h"
-
-// include
-#include "2d/CCEventType.h"
-#include "2d/CCProtocols.h"
-#include "2d/ccConfig.h"
-#include "2d/ccMacros.h"
-#include "2d/ccTypes.h"
-
-// label_nodes
 #include "2d/CCLabelAtlas.h"
 #include "2d/CCLabelTTF.h"
 #include "2d/CCLabelBMFont.h"
 #include "2d/CCLabel.h"
 #include "2d/CCFontFNT.h"
-
-// layers_scenes_transitions_nodes
 #include "2d/CCLayer.h"
 #include "2d/CCScene.h"
 #include "2d/CCTransition.h"
 #include "2d/CCTransitionPageTurn.h"
 #include "2d/CCTransitionProgress.h"
-
-// menu_nodes
 #include "2d/CCMenu.h"
 #include "2d/CCMenuItem.h"
-
-// misc_nodes
 #include "2d/CCClippingNode.h"
 #include "2d/CCMotionStreak.h"
 #include "2d/CCProgressTimer.h"
 #include "2d/CCRenderTexture.h"
 #include "2d/CCNodeGrid.h"
-
-// particle_nodes
 #include "2d/CCParticleBatchNode.h"
 #include "2d/CCParticleSystem.h"
 #include "2d/CCParticleExamples.h"
 #include "2d/CCParticleSystemQuad.h"
 
+// 2d utils
+#include "2d/CCGrabber.h"
+#include "2d/CCGrid.h"
+
+// include
+#include "base/CCEventType.h"
+#include "2d/CCProtocols.h"
+
 // new renderer
-#include "2d/renderer/CCCustomCommand.h"
-#include "2d/renderer/CCGroupCommand.h"
-#include "2d/renderer/CCMaterialManager.h"
-#include "2d/renderer/CCQuadCommand.h"
-#include "2d/renderer/CCRenderCommand.h"
-#include "2d/renderer/CCRenderCommandPool.h"
-#include "2d/renderer/CCRenderMaterial.h"
-#include "2d/renderer/CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
+#include "renderer/CCGroupCommand.h"
+#include "renderer/CCQuadCommand.h"
+#include "renderer/CCRenderCommand.h"
+#include "renderer/CCRenderCommandPool.h"
+#include "renderer/CCRenderer.h"
 
 // physics
 #include "physics/CCPhysicsBody.h"
@@ -219,8 +233,6 @@ THE SOFTWARE.
 
 // support
 #include "2d/ccUTF8.h"
-#include "2d/CCProfiling.h"
-#include "base/CCConsole.h"
 #include "2d/CCUserDefault.h"
 #include "2d/CCVertex.h"
 
@@ -242,31 +254,9 @@ THE SOFTWARE.
 #include "2d/CCTMXXMLParser.h"
 #include "2d/CCTileMapAtlas.h"
 
-// EventDispatcher
-#include "2d/CCEventDispatcher.h"
-#include "2d/CCEventListenerTouch.h"
-#include "2d/CCEventTouch.h"
-#include "2d/CCEventListenerKeyboard.h"
-#include "2d/CCEventKeyboard.h"
-#include "2d/CCEventListenerMouse.h"
-#include "2d/CCEventMouse.h"
-#include "2d/CCEventAcceleration.h"
-#include "2d/CCEventListenerAcceleration.h"
-#include "2d/CCEventCustom.h"
-#include "2d/CCEventListenerCustom.h"
-
-// root
-#include "2d/CCConfiguration.h"
-#include "2d/CCDirector.h"
-#include "2d/CCScheduler.h"
-
 // component
 #include "2d/CCComponent.h"
 #include "2d/CCComponentContainer.h"
-
-// Extras
-#include "2d/base64.h"
-#include "2d/ZipUtils.h"
 
 // Audio
 #include "audio/include/SimpleAudioEngine.h"

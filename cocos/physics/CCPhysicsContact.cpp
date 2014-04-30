@@ -30,7 +30,7 @@
 #include "chipmunk/CCPhysicsContactInfo_chipmunk.h"
 #include "chipmunk/CCPhysicsHelper_chipmunk.h"
 
-#include "2d/CCEventCustom.h"
+#include "base/CCEventCustom.h"
 
 NS_CC_BEGIN
 

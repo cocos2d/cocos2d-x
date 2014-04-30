@@ -29,8 +29,8 @@
 #include "2d/CCActionInstant.h"
 #include "2d/CCActionInterval.h"
 #include "2d/CCActionTween.h"
-#include "2d/CCDirector.h"
-#include "2d/renderer/CCRenderer.h"
+#include "base/CCDirector.h"
+#include "renderer/CCRenderer.h"
 
 #include <algorithm>
 

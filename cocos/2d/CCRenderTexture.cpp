@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 #include "CCConfiguration.h"
 #include "CCRenderTexture.h"
-#include "2d/CCDirector.h"
+#include "base/CCDirector.h"
 #include "2d/platform/CCImage.h"
 #include "2d/CCGLProgram.h"
 #include "2d/ccGLStateCache.h"
@@ -35,16 +35,16 @@ THE SOFTWARE.
 #include "CCTextureCache.h"
 #include "2d/platform/CCFileUtils.h"
 #include "CCGL.h"
-#include "2d/CCEventType.h"
+#include "base/CCEventType.h"
 #include "CCGrid.h"
 
-#include "2d/renderer/CCRenderer.h"
-#include "2d/renderer/CCGroupCommand.h"
-#include "2d/renderer/CCCustomCommand.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCGroupCommand.h"
+#include "renderer/CCCustomCommand.h"
 
 // extern
-#include "2d/CCEventListenerCustom.h"
-#include "2d/CCEventDispatcher.h"
+#include "base/CCEventListenerCustom.h"
+#include "base/CCEventDispatcher.h"
 
 NS_CC_BEGIN
 

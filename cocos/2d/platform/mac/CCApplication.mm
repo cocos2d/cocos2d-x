@@ -30,8 +30,8 @@ THE SOFTWARE.
 #import <Cocoa/Cocoa.h>
 #include <algorithm>
 #include "2d/platform/CCFileUtils.h"
-#include "base/CCGeometry.h"
-#include "2d/CCDirector.h"
+#include "math/CCGeometry.h"
+#include "base/CCDirector.h"
 #import "CCDirectorCaller.h"
 #include "CCGLView.h"
 

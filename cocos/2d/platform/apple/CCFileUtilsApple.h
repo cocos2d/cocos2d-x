@@ -30,7 +30,7 @@
 #include <string>
 #include <vector>
 #include "base/CCPlatformMacros.h"
-#include "2d/ccTypes.h"
+#include "base/ccTypes.h"
 
 NS_CC_BEGIN
 

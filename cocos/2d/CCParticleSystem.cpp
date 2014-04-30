@@ -47,14 +47,14 @@ THE SOFTWARE.
 #include <string>
 
 #include "CCParticleBatchNode.h"
-#include "2d/ccTypes.h"
+#include "base/ccTypes.h"
 #include "CCTextureCache.h"
 #include "2d/CCTextureAtlas.h"
-#include "base64.h"
+#include "base/base64.h"
 #include "2d/platform/CCFileUtils.h"
 #include "2d/platform/CCImage.h"
-#include "ZipUtils.h"
-#include "2d/CCDirector.h"
+#include "base/ZipUtils.h"
+#include "base/CCDirector.h"
 #include "CCProfiling.h"
 // opengl
 #include "CCGL.h"

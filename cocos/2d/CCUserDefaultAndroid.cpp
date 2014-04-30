@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "CCUserDefault.h"
 #include "base/CCPlatformConfig.h"
 #include "2d/platform/CCCommon.h"
-#include "base64.h"
+#include "base/base64.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "2d/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"

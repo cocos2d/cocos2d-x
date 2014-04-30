@@ -27,6 +27,7 @@
 #define __CC_REF_PTR_H__
 
 #include "base/CCRef.h"
+#include "base/ccMacros.h"
 #include <type_traits>
 
 NS_CC_BEGIN

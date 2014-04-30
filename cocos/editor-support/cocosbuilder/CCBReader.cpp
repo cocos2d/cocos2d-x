@@ -1,7 +1,7 @@
 #include <ctype.h>
 #include <algorithm>
 
-#include "2d/CCDirector.h"
+#include "base/CCDirector.h"
 #include "2d/platform/CCFileUtils.h"
 #include "CCScene.h"
 #include "CCTextureCache.h"

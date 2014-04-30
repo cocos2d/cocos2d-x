@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 #include "2d/platform/CCFileUtils.h"
 #include "base/CCPlatformMacros.h"
-#include "2d/ccTypes.h"
+#include "base/ccTypes.h"
 #include <string>
 #include <vector>
 

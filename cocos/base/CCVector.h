@@ -26,7 +26,7 @@ THE SOFTWARE.
 #ifndef __CCVECTOR_H__
 #define __CCVECTOR_H__
 
-#include "2d/ccMacros.h"
+#include "base/ccMacros.h"
 #include "base/CCRef.h"
 #include <vector>
 #include <functional>

@@ -34,8 +34,8 @@ THE SOFTWARE.
 #include "2d/CCNode.h"
 #include "2d/CCProtocols.h"
 #include "2d/CCTextureAtlas.h"
-#include "2d/ccMacros.h"
-#include "2d/renderer/CCBatchCommand.h"
+#include "base/ccMacros.h"
+#include "renderer/CCBatchCommand.h"
 
 NS_CC_BEGIN
 

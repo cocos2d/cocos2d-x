@@ -54,15 +54,15 @@
 #include <sys/ioctl.h>
 #endif
 
-#include "2d/CCDirector.h"
-#include "CCScheduler.h"
+#include "base/CCDirector.h"
+#include "base/CCScheduler.h"
 #include "CCScene.h"
 #include "base/CCPlatformConfig.h"
 #include "2d/platform/CCFileUtils.h"
 #include "CCConfiguration.h"
 #include "CCTextureCache.h"
 #include "CCGLView.h"
-#include "base64.h"
+#include "base/base64.h"
 NS_CC_BEGIN
 
 //TODO: these general utils should be in a seperate class
