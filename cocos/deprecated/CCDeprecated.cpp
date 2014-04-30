@@ -372,7 +372,7 @@ CC_DLL Vector3* kmVec3Lerp(Vector3* pOut, const Vector3* pV1, const Vector3* pV2
 
 Vector3* kmVec3Normalize(Vector3* pOut, const Vector3* pIn)
 {
-    pIn->normalize(pOut);
+    *pOut = pIn->getNormalize();
     return pOut;
 }
 
