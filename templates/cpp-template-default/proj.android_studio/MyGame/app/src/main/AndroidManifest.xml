@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.your_company.mygame.app"
-    android:versionCode="1"
-    android:versionName="1.0">
+    package="com.your_company.mygame.app">
 
-    <uses-sdk android:minSdkVersion="9"/>
     <uses-feature android:glEsVersion="0x00020000" />
+
+    <supports-screens android:anyDensity="true"
+        android:smallScreens="true"
+        android:normalScreens="true"
+        android:largeScreens="true"
+        android:xlargeScreens="true"/>
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:label="@string/app_name">
 
-        <activity android:name="org.cocos2dx.cpp.AppActivity"
+        <activity android:name="com.your_company.mygame.app.AppActivity"
             android:label="@string/app_name"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
@@ -31,10 +33,6 @@
 
     </application>
 
-    <supports-screens android:anyDensity="true"
-        android:smallScreens="true"
-        android:normalScreens="true"
-        android:largeScreens="true"
-        android:xlargeScreens="true"/>
+
 
 </manifest>
