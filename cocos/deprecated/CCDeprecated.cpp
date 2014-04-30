@@ -274,13 +274,13 @@ Matrix* kmMat4Identity(Matrix* pOut)
 
 Matrix* kmMat4Inverse(Matrix* pOut, const Matrix* pM)
 {
-    pM->invert(pOut);
+    *pOut = pM->getInversed();
     return pOut;
 }
 
 Matrix* kmMat4Transpose(Matrix* pOut, const Matrix* pIn)
 {
-    pIn->transpose(pOut);
+    *pOut = pIn->getTransposed();
     return pOut;
 }
 

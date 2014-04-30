@@ -467,7 +467,7 @@ public:
      *
      * @return true if the the matrix can be inverted, false otherwise.
      */
-    bool invert();
+    bool inverse();
 
     /**
      * Stores the inverse of this matrix in the specified matrix.
@@ -476,7 +476,7 @@ public:
      * 
      * @return true if the the matrix can be inverted, false otherwise.
      */
-    bool invert(Matrix* dst) const;
+    Matrix getInversed() const;
 
     /**
      * Determines if this matrix is equal to the identity matrix.
@@ -535,7 +535,7 @@ public:
      *
      * @param dst A matrix to store the result in.
      */
-    void negate(Matrix* dst) const;
+    Matrix getNegated() const;
 
     /**
      * Post-multiplies this matrix by the matrix corresponding to the
@@ -856,7 +856,7 @@ public:
      *
      * @param dst A matrix to store the result in.
      */
-    void transpose(Matrix* dst) const;
+    Matrix getTransposed() const;
 
     /**
      * Calculates the sum of this matrix with the given matrix.
