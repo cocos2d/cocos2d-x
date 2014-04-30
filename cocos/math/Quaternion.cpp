@@ -81,35 +81,28 @@ void Quaternion::createFromAxisAngle(const Vector3& axis, float angle, Quaternio
 
 void Quaternion::conjugate()
 {
-    conjugate(this);
+    x = -x;
+    y = -y;
+    z = -z;
+    w =  w;
 }
 
-void Quaternion::conjugate(Quaternion* dst) const
+Quaternion Quaternion::getConjugated() const
 {
-    GP_ASSERT(dst);
-
-    dst->x = -x;
-    dst->y = -y;
-    dst->z = -z;
-    dst->w =  w;
+    Quaternion q(*this);
+    q.conjugate();
+    return q;
 }
 
 bool Quaternion::inverse()
 {
-    return inverse(this);
-}
-
-bool Quaternion::inverse(Quaternion* dst) const
-{
-    GP_ASSERT(dst);
-
     float n = x * x + y * y + z * z + w * w;
     if (n == 1.0f)
     {
-        dst->x = -x;
-        dst->y = -y;
-        dst->z = -z;
-        dst->w = w;
+        x = -x;
+        y = -y;
+        z = -z;
+        w = w;
 
         return true;
     }
@@ -119,12 +112,19 @@ bool Quaternion::inverse(Quaternion* dst) const
         return false;
 
     n = 1.0f / n;
-    dst->x = -x * n;
-    dst->y = -y * n;
-    dst->z = -z * n;
-    dst->w = w * n;
+    x = -x * n;
+    y = -y * n;
+    z = -z * n;
+    w = w * n;
 
     return true;
+}
+
+Quaternion Quaternion::getInversed() const
+{
+    Quaternion q(*this);
+    q.inverse();
+    return q;
 }
 
 void Quaternion::multiply(const Quaternion& q)

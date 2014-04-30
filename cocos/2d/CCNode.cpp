@@ -1452,7 +1452,7 @@ AffineTransform Node::getParentToNodeAffineTransform() const
 const Matrix& Node::getParentToNodeTransform() const
 {
     if ( _inverseDirty ) {
-        _transform.invert(&_inverse);
+        _inverse = _transform.getInversed();
         _inverseDirty = false;
     }
 
@@ -1489,9 +1489,7 @@ AffineTransform Node::getWorldToNodeAffineTransform() const
 
 Matrix Node::getWorldToNodeTransform() const
 {
-    Matrix result = getNodeToWorldTransform();
-    result.invert();
-    return result;
+    return getNodeToWorldTransform().getInversed();
 }
 
 
