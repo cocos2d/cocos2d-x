@@ -85,6 +85,7 @@
       <CompileAsWinRT>true</CompileAsWinRT>
       <AdditionalIncludeDirectories>../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
+      <DisableSpecificWarnings>4127;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -108,6 +109,7 @@
       <CompileAsWinRT>true</CompileAsWinRT>
       <AdditionalIncludeDirectories>../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
+      <DisableSpecificWarnings>4127;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -130,6 +132,7 @@
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <CompileAsWinRT>true</CompileAsWinRT>
       <AdditionalIncludeDirectories>../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4127;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -152,6 +155,7 @@
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <CompileAsWinRT>true</CompileAsWinRT>
       <AdditionalIncludeDirectories>../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4127;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -174,8 +178,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\wp8\Audio.h" />
-    <ClInclude Include="..\wp8\corewrappers.h" />
-    <ClInclude Include="..\wp8\DirectXHelper.h" />
     <ClInclude Include="..\wp8\MediaStreamer.h" />
     <ClInclude Include=".\pch.h" />
   </ItemGroup>

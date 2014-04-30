@@ -61,6 +61,11 @@ THE SOFTWARE.
     #include "./compat/stdint.h"
 #endif
 
+//typedef SSIZE_T ssize_t;
+// ssize_t was redefined as int in libwebsockets.h.
+// Therefore, to avoid conflict, we needs the same definition.
+typedef int ssize_t;
+
 #define _WINSOCKAPI_
 // Structure timeval has define in winsock.h, include windows.h for it.
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WP8

@@ -125,24 +125,22 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libEGL.lib;libGLESv2.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
     </Link>
     <ClCompile>
-      <PrecompiledHeaderFile>
-      </PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>
-      </PrecompiledHeaderOutputFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;..\Classes;$(ProjectDir)..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\..\extensions;$(ProjectDir)..\..\..\..\external;$(ProjectDir)..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\extensions\GUI\CCEditBox;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\winrt\angle\include;..\Classes;$(ProjectDir)..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\..\extensions;$(ProjectDir)..\..\..\..\external;$(ProjectDir)..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\extensions\GUI\CCEditBox;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
     <ClCompile>
       <PreprocessorDefinitions>WINRT;_WINRT;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_ENABLE_CHIPMUNK_INTEGRATION=1;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
       </AdditionalOptions>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -152,23 +150,26 @@
       <WholeProgramOptimization Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</WholeProgramOptimization>
       <WholeProgramOptimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</WholeProgramOptimization>
       <WholeProgramOptimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</WholeProgramOptimization>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">pch.h</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pch.h</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">$(SolutionDir)\$(Platform)\$(Configuration)\cocos2d;$(SolutionDir)\$(Platform)\$(Configuration)\libExtensions;$(SolutionDir)\$(Platform)\$(Configuration)\CocosDenshion</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\winrt\libraries\vs2012\$(Platform)\;$(SolutionDir)\$(Platform)\$(Configuration)\cocos2d;$(SolutionDir)\$(Platform)\$(Configuration)\libExtensions;$(SolutionDir)\$(Platform)\$(Configuration)\CocosDenshion</AdditionalLibraryDirectories>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">/NODEFAULTLIB:library %(AdditionalOptions)</AdditionalOptions>
       <IgnoreSpecificDefaultLibraries Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">LIBCMT.lib</IgnoreSpecificDefaultLibraries>
       <LinkTimeCodeGeneration Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
       <GenerateDebugInformation Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</GenerateDebugInformation>
     </Link>
     <Link>
-      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)\$(Platform)\$(Configuration)\cocos2d;$(SolutionDir)\$(Platform)\$(Configuration)\libExtensions;$(SolutionDir)\$(Platform)\$(Configuration)\CocosDenshion</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\winrt\libraries\vs2012\$(Platform)\;$(SolutionDir)\$(Platform)\$(Configuration)\cocos2d;$(SolutionDir)\$(Platform)\$(Configuration)\libExtensions;$(SolutionDir)\$(Platform)\$(Configuration)\CocosDenshion</AdditionalLibraryDirectories>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">/NODEFAULTLIB:library %(AdditionalOptions)</AdditionalOptions>
       <IgnoreSpecificDefaultLibraries Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">LIBCMT.lib</IgnoreSpecificDefaultLibraries>
       <LinkTimeCodeGeneration Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
       <GenerateDebugInformation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</GenerateDebugInformation>
     </Link>
     <Link>
-      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)\$(Platform)\$(Configuration)\cocos2d;$(SolutionDir)\$(Platform)\$(Configuration)\libExtensions;$(SolutionDir)\$(Platform)\$(Configuration)\CocosDenshion</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\winrt\libraries\vs2012\$(Platform)\;$(SolutionDir)\$(Platform)\$(Configuration)\cocos2d;$(SolutionDir)\$(Platform)\$(Configuration)\libExtensions;$(SolutionDir)\$(Platform)\$(Configuration)\CocosDenshion</AdditionalLibraryDirectories>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">/NODEFAULTLIB:library %(AdditionalOptions)</AdditionalOptions>
       <IgnoreSpecificDefaultLibraries Condition="'$(Configuration)|$(Platform)'=='Release|x64'">LIBCMT.lib</IgnoreSpecificDefaultLibraries>
       <LinkTimeCodeGeneration Condition="'$(Configuration)|$(Platform)'=='Release|x64'">UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
@@ -224,9 +225,9 @@
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
     <ClCompile>
       <PreprocessorDefinitions>WINRT;_WINRT;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
       </AdditionalOptions>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -237,21 +238,24 @@
       <WholeProgramOptimization Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</WholeProgramOptimization>
       <WholeProgramOptimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</WholeProgramOptimization>
       <WholeProgramOptimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</WholeProgramOptimization>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">pch.h</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch.h</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">$(SolutionDir)\$(Platform)\$(Configuration)\cocos2d;$(SolutionDir)\$(Platform)\$(Configuration)\libExtensions;$(SolutionDir)\$(Platform)\$(Configuration)\CocosDenshion</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\winrt\libraries\vs2012\$(Platform)\;$(SolutionDir)\$(Platform)\$(Configuration)\cocos2d;$(SolutionDir)\$(Platform)\$(Configuration)\libExtensions;$(SolutionDir)\$(Platform)\$(Configuration)\CocosDenshion</AdditionalLibraryDirectories>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">/NODEFAULTLIB:library %(AdditionalOptions)</AdditionalOptions>
       <IgnoreSpecificDefaultLibraries Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">LIBCMT.lib</IgnoreSpecificDefaultLibraries>
       <LinkTimeCodeGeneration Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <Link>
-      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)\$(Platform)\$(Configuration)\cocos2d;$(SolutionDir)\$(Platform)\$(Configuration)\libExtensions;$(SolutionDir)\$(Platform)\$(Configuration)\CocosDenshion</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\winrt\libraries\vs2012\$(Platform)\;$(SolutionDir)\$(Platform)\$(Configuration)\cocos2d;$(SolutionDir)\$(Platform)\$(Configuration)\libExtensions;$(SolutionDir)\$(Platform)\$(Configuration)\CocosDenshion</AdditionalLibraryDirectories>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/NODEFAULTLIB:library %(AdditionalOptions)</AdditionalOptions>
       <IgnoreSpecificDefaultLibraries Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">LIBCMT.lib</IgnoreSpecificDefaultLibraries>
       <LinkTimeCodeGeneration Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <Link>
-      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)\$(Platform)\$(Configuration)\cocos2d;$(SolutionDir)\$(Platform)\$(Configuration)\libExtensions;$(SolutionDir)\$(Platform)\$(Configuration)\CocosDenshion</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\winrt\libraries\vs2012\$(Platform)\;$(SolutionDir)\$(Platform)\$(Configuration)\cocos2d;$(SolutionDir)\$(Platform)\$(Configuration)\libExtensions;$(SolutionDir)\$(Platform)\$(Configuration)\CocosDenshion</AdditionalLibraryDirectories>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/NODEFAULTLIB:library %(AdditionalOptions)</AdditionalOptions>
       <IgnoreSpecificDefaultLibraries Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">LIBCMT.lib</IgnoreSpecificDefaultLibraries>
       <LinkTimeCodeGeneration Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
@@ -536,6 +540,22 @@
     <AppxManifest Include="Package_2013.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <None Include="..\..\..\..\cocos2dx\platform\third_party\winrt\libraries\vs2013\ARM\libEGL.dll">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\..\cocos2dx\platform\third_party\winrt\libraries\vs2013\ARM\libGLESv2.dll">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\..\cocos2dx\platform\third_party\winrt\libraries\vs2013\Win32\libEGL.dll">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\..\cocos2dx\platform\third_party\winrt\libraries\vs2013\Win32\libGLESv2.dll">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
     <None Include="TestCpp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -827,17 +847,40 @@
     <ClCompile Include="MainPage.xaml.cpp">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+      </ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+      </ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </ForcedIncludeFiles>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common\esUtil_winrt_2013.vcxproj">
-      <Project>{44eedad2-d9ad-45dc-83b0-e5f50bd4377b}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\src\libEGL\libEGL_winrt_2013.vcxproj">
-      <Project>{cd5990d7-2d62-490e-8436-ccd388893139}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\src\libGLESv2\libGLESv2_winrt_2013.vcxproj">
-      <Project>{5c1b40b9-6262-44a0-97a6-a8b9f032e6e0}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\cocos2dx\proj.winrt\cocos2d_2013.vcxproj">
       <Project>{12155db2-c528-4c56-8292-5e87fc315769}</Project>
     </ProjectReference>

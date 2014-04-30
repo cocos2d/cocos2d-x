@@ -1,4 +1,8 @@
-﻿using System;
+﻿#if DEBUG
+#define DISPLAY_MEMORY
+#endif
+
+using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,12 +22,15 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.Phone.Shell;
 using Windows.UI.Input;
+using System.Windows.Threading;
+using Microsoft.Phone.Info;
 
 namespace PhoneDirect3DXamlAppInterop
 {
     public partial class MainPage : PhoneApplicationPage
     {
         private Direct3DInterop m_d3dInterop = null;
+        private DispatcherTimer m_timer;
 
         // event handler for CCEditBox
         private event EventHandler<String> m_receiveHandler;
@@ -35,9 +42,14 @@ namespace PhoneDirect3DXamlAppInterop
         public MainPage()
         {
             InitializeComponent();
+#if DISPLAY_MEMORY
+            StartTimer();
+#else
+            MemoryDisplay.Visibility = Visibility.Collapsed;
+#endif
         }
 
-        private void DrawingSurface_Loaded(object sender, RoutedEventArgs e)
+        private void DrawingSurfaceBackground_Loaded(object sender, RoutedEventArgs e)
         {
             if (m_d3dInterop == null)
             {
@@ -45,13 +57,13 @@ namespace PhoneDirect3DXamlAppInterop
 
                 // Set WindowBounds to size of DrawingSurface
                 m_d3dInterop.WindowBounds = new Windows.Foundation.Size(
-                    (float)DrawingSurface.ActualWidth,
-                    (float)DrawingSurface.ActualHeight
+                    (float)Application.Current.Host.Content.ActualWidth,
+                    (float)Application.Current.Host.Content.ActualHeight
                     );
 
-                // Hook-up native component to DrawingSurface
-                DrawingSurface.SetContentProvider(m_d3dInterop.CreateContentProvider());
-                DrawingSurface.SetManipulationHandler(m_d3dInterop);
+                // Hook-up native component to DrawingSurfaceBackgroundGrid
+                DrawingSurfaceBackground.SetBackgroundContentProvider(m_d3dInterop.CreateContentProvider());
+                DrawingSurfaceBackground.SetBackgroundManipulationHandler(m_d3dInterop);
 
                 // Hook-up Cocos2d-x delegates
                 m_d3dInterop.SetCocos2dEventDelegate(OnCocos2dEvent);
@@ -128,7 +140,7 @@ namespace PhoneDirect3DXamlAppInterop
                             m_textBox.MaxLength = 1;
                             m_textBox.KeyDown += OnKeyDown;
                             m_textBox.KeyUp += OnKeyUp;
-                            LayoutRoot.Children.Add(m_textBox);
+                            DrawingSurfaceBackground.Children.Add(m_textBox);
                         }
                         m_textBox.Focus();
                         break;
@@ -136,7 +148,7 @@ namespace PhoneDirect3DXamlAppInterop
                     case Cocos2dEvent.HideKeyboard:
                         if (m_textBox != null)
                         {
-                            LayoutRoot.Children.Remove(m_textBox);
+                            DrawingSurfaceBackground.Children.Remove(m_textBox);
                         }
                         m_textBox = null;
                         break;
@@ -151,7 +163,7 @@ namespace PhoneDirect3DXamlAppInterop
             Deployment.Current.Dispatcher.BeginInvoke(() =>
             {
                 EditBox editbox = new EditBox(this, strPlaceHolder, strText, maxLength, inputMode, inputFlag);
-                LayoutRoot.Children.Add(editbox);
+                DrawingSurfaceBackground.Children.Add(editbox);
             });
         }
 
@@ -160,6 +172,30 @@ namespace PhoneDirect3DXamlAppInterop
             if (m_d3dInterop != null && m_receiveHandler != null)
             {
                 m_d3dInterop.OnCocos2dEditboxEvent(sender, str, m_receiveHandler);
+            }
+        }
+
+        private void StartTimer()
+        {
+            m_timer = new DispatcherTimer();
+            m_timer.Interval = new TimeSpan(0, 0, 1);
+            m_timer.Tick += new EventHandler(TimerTick);
+            m_timer.Start();
+        }
+
+        private void TimerTick(object sender, EventArgs e)
+        {
+            try
+            {
+                // These are TextBlock controls that are created in the page’s XAML file.  
+                float value = DeviceStatus.ApplicationCurrentMemoryUsage / (1024.0f * 1024.0f);
+                MemoryTextBlock.Text = value.ToString();
+                value = DeviceStatus.ApplicationPeakMemoryUsage / (1024.0f * 1024.0f);
+                PeakMemoryTextBlock.Text = value.ToString();
+            }
+            catch (Exception ex)
+            {
+                MemoryTextBlock.Text = ex.Message;
             }
         }
     }

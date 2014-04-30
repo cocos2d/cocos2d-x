@@ -47,4 +47,10 @@
   <ItemGroup>
     <Xml Include="WMAppManifest.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\x86\libEGL_phone.dll" />
+    <None Include="..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\x86\libGLESv2_phone.dll" />
+    <None Include="..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\arm\libEGL_phone.dll" />
+    <None Include="..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\arm\libGLESv2_phone.dll" />
+  </ItemGroup>
 </Project>

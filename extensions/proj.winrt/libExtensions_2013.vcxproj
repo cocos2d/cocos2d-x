@@ -142,7 +142,6 @@
     <ClCompile Include="..\GUI\CCScrollView\CCSorting.cpp" />
     <ClCompile Include="..\GUI\CCScrollView\CCTableView.cpp" />
     <ClCompile Include="..\GUI\CCScrollView\CCTableViewCell.cpp" />
-    <ClCompile Include="..\network\HttpClient.cpp" />
     <ClCompile Include="..\physics_nodes\CCPhysicsDebugNode.cpp" />
     <ClCompile Include="..\physics_nodes\CCPhysicsSprite.cpp" />
     <ClCompile Include="..\spine\Animation.cpp" />
@@ -166,6 +165,26 @@
     <ClCompile Include="..\spine\Slot.cpp" />
     <ClCompile Include="..\spine\SlotData.cpp" />
     <ClCompile Include="..\spine\spine-cocos2dx.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+      </ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+      </ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </ForcedIncludeFiles>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\cocos2dx\platform\winrt\CCPThreadWinRT.h" />
@@ -306,9 +325,6 @@
     <ClInclude Include="..\GUI\CCScrollView\CCSorting.h" />
     <ClInclude Include="..\GUI\CCScrollView\CCTableView.h" />
     <ClInclude Include="..\GUI\CCScrollView\CCTableViewCell.h" />
-    <ClInclude Include="..\network\HttpClient.h" />
-    <ClInclude Include="..\network\HttpRequest.h" />
-    <ClInclude Include="..\network\HttpResponse.h" />
     <ClInclude Include="..\physics_nodes\CCPhysicsDebugNode.h" />
     <ClInclude Include="..\physics_nodes\CCPhysicsSprite.h" />
     <ClInclude Include="..\spine\Animation.h" />
@@ -332,6 +348,7 @@
     <ClInclude Include="..\spine\SlotData.h" />
     <ClInclude Include="..\spine\spine-cocos2dx.h" />
     <ClInclude Include="..\spine\spine.h" />
+    <ClInclude Include="pch.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{f8a69a16-14eb-4e5c-8f99-4cbfc5a6e089}</ProjectGuid>
@@ -430,17 +447,17 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <PrecompiledHeaderFile />
-      <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\zlib;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angle\include;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\zlib;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_LIB;WINRT;_WINRT;COCOS2D_DEBUG=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <WholeProgramOptimization>true</WholeProgramOptimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -454,16 +471,16 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <PrecompiledHeaderFile />
-      <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\zlib;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angle\include;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\zlib;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_LIB;WINRT;_WINRT;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <WholeProgramOptimization>true</WholeProgramOptimization>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -477,16 +494,16 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|arm'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <PrecompiledHeaderFile />
-      <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\zlib;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angle\include;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\zlib;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_LIB;WINRT;_WINRT;COCOS2D_DEBUG=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <WholeProgramOptimization>true</WholeProgramOptimization>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -500,16 +517,16 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|arm'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <PrecompiledHeaderFile />
-      <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\zlib;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angle\include;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\zlib;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_LIB;WINRT;_WINRT;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <WholeProgramOptimization>true</WholeProgramOptimization>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -523,16 +540,16 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <PrecompiledHeaderFile />
-      <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\zlib;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angle\include;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\zlib;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_LIB;WINRT;_WINRT;COCOS2D_DEBUG=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <WholeProgramOptimization>true</WholeProgramOptimization>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -546,16 +563,16 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <PrecompiledHeaderFile />
-      <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\zlib;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angle\include;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\zlib;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_LIB;WINRT;_WINRT;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <WholeProgramOptimization>true</WholeProgramOptimization>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

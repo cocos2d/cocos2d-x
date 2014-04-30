@@ -9,8 +9,6 @@
   <ItemGroup>
     <ClInclude Include=".\pch.h" />
     <ClInclude Include="..\wp8\Audio.h" />
-    <ClInclude Include="..\wp8\corewrappers.h" />
-    <ClInclude Include="..\wp8\DirectXHelper.h" />
     <ClInclude Include="..\wp8\MediaStreamer.h" />
   </ItemGroup>
 </Project>
