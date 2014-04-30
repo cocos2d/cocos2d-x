@@ -314,7 +314,7 @@ Matrix* kmMat4RotationZ(Matrix* pOut, const float radians)
     return pOut;
 }
 
-Matrix* kmMat4RotationAxisAngle(Matrix* pOut, const struct Vector3* axis, float radians)
+Matrix* kmMat4RotationAxisAngle(Matrix* pOut, const Vector3* axis, float radians)
 {
     Matrix::createRotation(*axis, radians, pOut);
     return pOut;
@@ -338,7 +338,7 @@ Matrix* kmMat4OrthographicProjection(Matrix* pOut, float left, float right, floa
     return pOut;
 }
 
-Matrix* kmMat4LookAt(Matrix* pOut, const struct Vector3* pEye, const struct Vector3* pCenter, const struct Vector3* pUp)
+Matrix* kmMat4LookAt(Matrix* pOut, const Vector3* pEye, const Vector3* pCenter, const Vector3* pUp)
 {
     Matrix::createLookAt(*pEye, *pCenter, *pUp, pOut);
     return pOut;
