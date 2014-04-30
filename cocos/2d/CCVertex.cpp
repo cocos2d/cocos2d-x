@@ -46,26 +46,26 @@ void ccVertexLineToPolygon(Vector2 *points, float stroke, Vector2 *vertices, uns
         Vector2 perpVector;
 
         if(i == 0)
-            perpVector = (p1 - points[i+1]).normalize().getPerp();
+            perpVector = (p1 - points[i+1]).getNormalize().getPerp();
         else if(i == nuPointsMinus)
-            perpVector = (points[i-1] - p1).normalize().getPerp();
+            perpVector = (points[i-1] - p1).getNormalize().getPerp();
         else
         {
             Vector2 p2 = points[i+1];
             Vector2 p0 = points[i-1];
 
-            Vector2 p2p1 = (p2 - p1).normalize();
-            Vector2 p0p1 = (p0 - p1).normalize();
+            Vector2 p2p1 = (p2 - p1).getNormalize();
+            Vector2 p0p1 = (p0 - p1).getNormalize();
 
             // Calculate angle between vectors
             float angle = acosf(p2p1.dot(p0p1));
 
             if(angle < CC_DEGREES_TO_RADIANS(70))
-                perpVector = p2p1.getMidpoint(p0p1).normalize().getPerp();
+                perpVector = p2p1.getMidpoint(p0p1).getNormalize().getPerp();
             else if(angle < CC_DEGREES_TO_RADIANS(170))
-                perpVector = p2p1.getMidpoint(p0p1).normalize();
+                perpVector = p2p1.getMidpoint(p0p1).getNormalize();
             else
-                perpVector = (p2 - p0).normalize().getPerp();
+                perpVector = (p2 - p0).getNormalize().getPerp();
         }
         perpVector = perpVector * stroke;
 

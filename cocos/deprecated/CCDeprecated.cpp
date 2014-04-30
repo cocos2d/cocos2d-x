@@ -456,7 +456,7 @@ float kmVec2LengthSq(const Vector2* pIn)
 
 Vector2* kmVec2Normalize(Vector2* pOut, const Vector2* pIn)
 {
-    pIn->normalize(pOut);
+    *pOut = pIn->getNormalize();
     return pOut;
 }
 

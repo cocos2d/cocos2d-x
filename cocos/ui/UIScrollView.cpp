@@ -392,56 +392,56 @@ bool ScrollView::checkNeedBounce()
         {
             Vector2 scrollVector = Vector2(0.0f, _size.height) - Vector2(_innerContainer->getLeftInParent(), _innerContainer->getTopInParent());
             float orSpeed = scrollVector.getLength()/(0.2f);
-            _bounceDir = scrollVector.normalize();
+            _bounceDir = scrollVector.getNormalize();
             startBounceChildren(orSpeed);
         }
         else if (_topBounceNeeded && _rightBounceNeeded)
         {
             Vector2 scrollVector = Vector2(_size.width, _size.height) - Vector2(_innerContainer->getRightInParent(), _innerContainer->getTopInParent());
             float orSpeed = scrollVector.getLength()/(0.2f);
-            _bounceDir = scrollVector.normalize();
+            _bounceDir = scrollVector.getNormalize();
             startBounceChildren(orSpeed);
         }
         else if (_bottomBounceNeeded && _leftBounceNeeded)
         {
             Vector2 scrollVector = Vector2::ZERO - Vector2(_innerContainer->getLeftInParent(), _innerContainer->getBottomInParent());
             float orSpeed = scrollVector.getLength()/(0.2f);
-            _bounceDir = scrollVector.normalize();
+            _bounceDir = scrollVector.getNormalize();
             startBounceChildren(orSpeed);
         }
         else if (_bottomBounceNeeded && _rightBounceNeeded)
         {
             Vector2 scrollVector = Vector2(_size.width, 0.0f) - Vector2(_innerContainer->getRightInParent(), _innerContainer->getBottomInParent());
             float orSpeed = scrollVector.getLength()/(0.2f);
-            _bounceDir = scrollVector.normalize();
+            _bounceDir = scrollVector.getNormalize();
             startBounceChildren(orSpeed);
         }
         else if (_topBounceNeeded)
         {
             Vector2 scrollVector = Vector2(0.0f, _size.height) - Vector2(0.0f, _innerContainer->getTopInParent());
             float orSpeed = scrollVector.getLength()/(0.2f);
-            _bounceDir = scrollVector.normalize();
+            _bounceDir = scrollVector.getNormalize();
             startBounceChildren(orSpeed);
         }
         else if (_bottomBounceNeeded)
         {
             Vector2 scrollVector = Vector2::ZERO - Vector2(0.0f, _innerContainer->getBottomInParent());
             float orSpeed = scrollVector.getLength()/(0.2f);
-            _bounceDir = scrollVector.normalize();
+            _bounceDir = scrollVector.getNormalize();
             startBounceChildren(orSpeed);
         }
         else if (_leftBounceNeeded)
         {
             Vector2 scrollVector = Vector2::ZERO - Vector2(_innerContainer->getLeftInParent(), 0.0f);
             float orSpeed = scrollVector.getLength()/(0.2f);
-            _bounceDir = scrollVector.normalize();
+            _bounceDir = scrollVector.getNormalize();
             startBounceChildren(orSpeed);
         }
         else if (_rightBounceNeeded)
         {
             Vector2 scrollVector = Vector2(_size.width, 0.0f) - Vector2(_innerContainer->getRightInParent(), 0.0f);
             float orSpeed = scrollVector.getLength()/(0.2f);
-            _bounceDir = scrollVector.normalize();
+            _bounceDir = scrollVector.getNormalize();
             startBounceChildren(orSpeed);
         }
         return true;
@@ -524,7 +524,7 @@ void ScrollView::startAutoScrollChildrenWithDestination(const Vector2& des, floa
     _needCheckAutoScrollDestination = false;
     _autoScrollDestination = des;
     Vector2 dis = des - _innerContainer->getPosition();
-    Vector2 dir = dis.normalize();
+    Vector2 dir = dis.getNormalize();
     float orSpeed = 0.0f;
     float acceleration = -1000.0f;
     if (attenuated)
@@ -1412,7 +1412,7 @@ void ScrollView::endRecordSlidAction()
             {
                 Vector2 subVector = _touchEndedPoint - _touchBeganPoint;
                 totalDis = subVector.getLength();
-                dir = subVector.normalize();
+                dir = subVector.getNormalize();
                 break;
             }
             default:

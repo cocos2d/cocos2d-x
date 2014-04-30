@@ -220,7 +220,7 @@ CC_DEPRECATED_ATTRIBUTE static inline float ccpDistance(const Vector2& v1, const
  */
 CC_DEPRECATED_ATTRIBUTE static inline Vector2 ccpNormalize(const Vector2& v)
 {
-    return v.normalize();
+    return v.getNormalize();
 }
 
 /** Converts radians to a normalized vector.
