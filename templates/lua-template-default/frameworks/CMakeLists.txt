@@ -58,16 +58,10 @@ include_directories(
   ${COCOS2D_ROOT}
   ${COCOS2D_ROOT}/cocos
   ${COCOS2D_ROOT}/cocos/audio/include
-  ${COCOS2D_ROOT}/cocos/2d
-  ${COCOS2D_ROOT}/cocos/2d/renderer
   ${COCOS2D_ROOT}/cocos/2d/platform
   ${COCOS2D_ROOT}/cocos/2d/platform/desktop
   ${COCOS2D_ROOT}/cocos/2d/platform/linux
-  ${COCOS2D_ROOT}/cocos/base
-  ${COCOS2D_ROOT}/cocos/deprecated
-  ${COCOS2D_ROOT}/cocos/physics
   ${COCOS2D_ROOT}/cocos/editor-support
-  ${COCOS2D_ROOT}/cocos/math/kazmath
   ${COCOS2D_ROOT}/extensions
   ${COCOS2D_ROOT}/external
   ${COCOS2D_ROOT}/external/edtaa3func
@@ -93,9 +87,6 @@ link_directories(
   ${COCOS2D_ROOT}/external/linux-specific/fmod/prebuilt/${ARCH_DIR}
 )
 
-# kazmath
-add_subdirectory(${COCOS2D_ROOT}/cocos/math/kazmath)
-
 # chipmunk library
 add_subdirectory(${COCOS2D_ROOT}/external/chipmunk/src)
 
@@ -114,17 +105,8 @@ add_subdirectory(${COCOS2D_ROOT}/cocos/audio)
 # xxhash library
 add_subdirectory(${COCOS2D_ROOT}/external/xxhash)
 
-# cocos base library
-add_subdirectory(${COCOS2D_ROOT}/cocos/base)
-
 # cocos 2d library
-add_subdirectory(${COCOS2D_ROOT}/cocos/2d)
-
-# gui
-add_subdirectory(${COCOS2D_ROOT}/cocos/ui)
-
-# network
-add_subdirectory(${COCOS2D_ROOT}/cocos/network)
+add_subdirectory(${COCOS2D_ROOT}/cocos)
 
 # extensions
 add_subdirectory(${COCOS2D_ROOT}/extensions)
@@ -163,8 +145,6 @@ endif()
 
 target_link_libraries(${APP_NAME}
   luabinding
-  ui
-  network
   spine
   cocostudio
   cocosbuilder
