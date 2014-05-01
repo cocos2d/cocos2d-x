@@ -186,11 +186,11 @@ void DataReaderHelper::loadData()
 
         if (pAsyncStruct->configType == DragonBone_XML)
         {
-            DataReaderHelper::addDataFromCache(pAsyncStruct->fileContent.c_str(), pDataInfo);
+            DataReaderHelper::addDataFromCache(pAsyncStruct->fileContent, pDataInfo);
         }
         else if(pAsyncStruct->configType == CocoStudio_JSON)
         {
-            DataReaderHelper::addDataFromJsonCache(pAsyncStruct->fileContent.c_str(), pDataInfo);
+            DataReaderHelper::addDataFromJsonCache(pAsyncStruct->fileContent, pDataInfo);
         }
 
         // put the image info into the queue
@@ -1185,8 +1185,22 @@ ContourData *DataReaderHelper::decodeContour(tinyxml2::XMLElement *contourXML, D
 void DataReaderHelper::addDataFromJsonCache(const std::string& fileContent, DataInfo *dataInfo)
 {
 	rapidjson::Document json;
-	
-	json.Parse<0>(fileContent.c_str());
+    rapidjson::StringStream stream(fileContent.c_str());
+
+    if (fileContent.size() >= 3) {
+        // Skip BOM if exists
+        const unsigned char* c = (const unsigned char *)fileContent.c_str();
+	    unsigned bom = c[0] | (c[1] << 8) | (c[2] << 16);
+
+        if (bom == 0xBFBBEF)  // UTF8 BOM
+        {
+            stream.Take();
+            stream.Take();
+            stream.Take();
+        }
+    }
+
+    json.ParseStream<0>(stream);
     if (json.HasParseError()) {
         CCLOG("GetParseError %s\n",json.GetParseError());
     }
