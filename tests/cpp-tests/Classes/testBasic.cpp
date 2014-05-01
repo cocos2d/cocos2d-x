@@ -3,9 +3,20 @@
 #include "extensions/cocos-ext.h"
 #include "cocostudio/CocoStudio.h"
 
-TestScene::TestScene(bool bPortrait)
+TestScene::TestScene(bool bPortrait, bool physics/* = false*/)
 {
-    Scene::init();
+    if (physics)
+    {
+#if CC_USE_PHYSICS
+        TestScene::initWithPhysics();
+#else
+        Scene::init();
+#endif
+    }
+    else
+    {
+        Scene::init();
+    }
 }
 
 void testScene_callback(Ref *sender )
