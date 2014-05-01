@@ -30,13 +30,13 @@ THE SOFTWARE.
 
 #include "2d/CCNode.h"
 #include "2d/CCProtocols.h"
-#include "2d/CCEventTouch.h"
+#include "base/CCEventTouch.h"
 #ifdef EMSCRIPTEN
 #include "CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
 
-#include "2d/CCEventKeyboard.h"
-#include "2d/renderer/CCCustomCommand.h"
+#include "base/CCEventKeyboard.h"
+#include "renderer/CCCustomCommand.h"
 
 #include "physics/CCPhysicsWorld.h"
 

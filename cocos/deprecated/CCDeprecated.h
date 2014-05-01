@@ -30,8 +30,8 @@
 #define __COCOS2D_CCDEPRECATED_H__
 
 #include <math.h>
-#include "base/CCGeometry.h"
-#include "2d/ccTypes.h"
+#include "math/CCGeometry.h"
+#include "base/ccTypes.h"
 
 NS_CC_BEGIN
 
@@ -220,7 +220,7 @@ CC_DEPRECATED_ATTRIBUTE static inline float ccpDistance(const Vector2& v1, const
  */
 CC_DEPRECATED_ATTRIBUTE static inline Vector2 ccpNormalize(const Vector2& v)
 {
-    return v.normalize();
+    return v.getNormalized();
 }
 
 /** Converts radians to a normalized vector.
@@ -1082,12 +1082,12 @@ CC_DEPRECATED_ATTRIBUTE CC_DLL Matrix* kmMat4Translation(Matrix* pOut, const flo
 CC_DEPRECATED_ATTRIBUTE CC_DLL Matrix* kmMat4RotationX(Matrix* pOut, const float radians);
 CC_DEPRECATED_ATTRIBUTE CC_DLL Matrix* kmMat4RotationY(Matrix* pOut, const float radians);
 CC_DEPRECATED_ATTRIBUTE CC_DLL Matrix* kmMat4RotationZ(Matrix* pOut, const float radians);
-CC_DEPRECATED_ATTRIBUTE CC_DLL Matrix* kmMat4RotationAxisAngle(Matrix* pOut, const struct Vector3* axis, float radians);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Matrix* kmMat4RotationAxisAngle(Matrix* pOut, const Vector3* axis, float radians);
 CC_DEPRECATED_ATTRIBUTE CC_DLL Matrix* kmMat4Scaling(Matrix* pOut, const float x, const float y, const float z);
 
 CC_DEPRECATED_ATTRIBUTE CC_DLL Matrix* kmMat4PerspectiveProjection(Matrix* pOut, float fovY, float aspect, float zNear, float zFar);
 CC_DEPRECATED_ATTRIBUTE CC_DLL Matrix* kmMat4OrthographicProjection(Matrix* pOut, float left, float right, float bottom, float top, float nearVal, float farVal);
-CC_DEPRECATED_ATTRIBUTE CC_DLL Matrix* kmMat4LookAt(Matrix* pOut, const struct Vector3* pEye, const struct Vector3* pCenter, const struct Vector3* pUp);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Matrix* kmMat4LookAt(Matrix* pOut, const Vector3* pEye, const Vector3* pCenter, const Vector3* pUp);
 
 //kmVec3
 CC_DEPRECATED_ATTRIBUTE typedef Vector3 kmVec3;

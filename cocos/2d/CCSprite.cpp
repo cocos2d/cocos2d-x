@@ -24,26 +24,27 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+
 #include "2d/CCSprite.h"
 #include "2d/CCSpriteBatchNode.h"
-#include "CCAnimation.h"
-#include "CCAnimationCache.h"
-#include "2d/ccConfig.h"
+#include "2d/CCAnimation.h"
+#include "2d/CCAnimationCache.h"
 #include "2d/CCSpriteFrame.h"
 #include "2d/CCSpriteFrameCache.h"
-#include "CCTextureCache.h"
-#include "CCDrawingPrimitives.h"
-#include "CCShaderCache.h"
+#include "2d/CCTextureCache.h"
+#include "2d/CCDrawingPrimitives.h"
+#include "2d/CCShaderCache.h"
 #include "2d/ccGLStateCache.h"
 #include "2d/CCGLProgram.h"
-#include "2d/CCDirector.h"
-#include "base/CCGeometry.h"
 #include "2d/CCTexture2D.h"
-#include "base/CCAffineTransform.h"
-#include "TransformUtils.h"
-#include "CCProfiling.h"
-#include "2d/CCDirector.h"
-#include "2d/renderer/CCRenderer.h"
+#include "base/CCProfiling.h"
+#include "base/CCDirector.h"
+#include "base/CCDirector.h"
+#include "base/ccConfig.h"
+#include "math/CCGeometry.h"
+#include "math/CCAffineTransform.h"
+#include "math/TransformUtils.h"
+#include "renderer/CCRenderer.h"
 
 #include "deprecated/CCString.h"
 
@@ -61,7 +62,7 @@ NS_CC_BEGIN
 Sprite* Sprite::createWithTexture(Texture2D *texture)
 {
     Sprite *sprite = new Sprite();
-    if (sprite && sprite->initWithTexture(texture))
+    if (sprite->initWithTexture(texture))
     {
         sprite->autorelease();
         return sprite;
@@ -73,7 +74,7 @@ Sprite* Sprite::createWithTexture(Texture2D *texture)
 Sprite* Sprite::createWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
 {
     Sprite *sprite = new Sprite();
-    if (sprite && sprite->initWithTexture(texture, rect, rotated))
+    if (sprite->initWithTexture(texture, rect, rotated))
     {
         sprite->autorelease();
         return sprite;
@@ -85,7 +86,7 @@ Sprite* Sprite::createWithTexture(Texture2D *texture, const Rect& rect, bool rot
 Sprite* Sprite::create(const std::string& filename)
 {
     Sprite *sprite = new Sprite();
-    if (sprite && sprite->initWithFile(filename))
+    if (sprite->initWithFile(filename))
     {
         sprite->autorelease();
         return sprite;
@@ -97,7 +98,7 @@ Sprite* Sprite::create(const std::string& filename)
 Sprite* Sprite::create(const std::string& filename, const Rect& rect)
 {
     Sprite *sprite = new Sprite();
-    if (sprite && sprite->initWithFile(filename, rect))
+    if (sprite->initWithFile(filename, rect))
     {
         sprite->autorelease();
         return sprite;
@@ -109,7 +110,7 @@ Sprite* Sprite::create(const std::string& filename, const Rect& rect)
 Sprite* Sprite::createWithSpriteFrame(SpriteFrame *spriteFrame)
 {
     Sprite *sprite = new Sprite();
-    if (spriteFrame && sprite && sprite->initWithSpriteFrame(spriteFrame))
+    if (spriteFrame && sprite->initWithSpriteFrame(spriteFrame))
     {
         sprite->autorelease();
         return sprite;

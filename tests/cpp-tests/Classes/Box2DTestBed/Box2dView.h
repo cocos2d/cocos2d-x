@@ -3,7 +3,7 @@
 
 //#include "cocos2d.h"
 #include "../testBasic.h"
-#include "2d/renderer/CCCustomCommand.h"
+#include "renderer/CCCustomCommand.h"
 
 class MenuLayer : public Layer
 {

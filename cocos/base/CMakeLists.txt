@@ -3,18 +3,45 @@ set(COCOS_BASE_SRC
   ../deprecated/CCArray.cpp
   ../deprecated/CCDictionary.cpp
   ../deprecated/CCString.cpp
-  CCAffineTransform.cpp
   CCAutoreleasePool.cpp
-  CCGeometry.cpp
-  CCNS.cpp
-  CCRef.cpp
-  CCDataVisitor.cpp
+  CCAutoreleasePool.h
+  CCConfiguration.cpp
+  CCConfiguration.h
+  CCConsole.cpp
+  CCConsole.h
   CCData.cpp
+  CCData.h
+  CCDataVisitor.cpp
+  CCDataVisitor.h
+  CCDirector.cpp
+  CCDirector.h
+  CCEvent.cpp
+  CCEvent.h
+  CCEventAcceleration.cpp
+  CCEventAcceleration.h
+  CCEventCustom.cpp
+  CCEventDispatcher.cpp
+  CCEventKeyboard.cpp
+  CCEventListener.cpp
+  CCEventListenerAcceleration.cpp
+  CCEventListenerCustom.cpp
+  CCEventListenerKeyboard.cpp
+  CCEventListenerMouse.cpp
+  CCEventListenerTouch.cpp
+  CCEventMouse.cpp
+  CCEventTouch.cpp
+  CCNS.cpp
+  CCProfiling.cpp
+  CCRef.cpp
+  CCScheduler.cpp
+  CCTouch.cpp
   CCValue.cpp
+  ZipUtils.cpp
+  atitc.cpp
+  base64.cpp
+  ccTypes.cpp
   etc1.cpp
   s3tc.cpp
-  atitc.cpp
-  CCConsole.cpp
 )
 
 add_library(cocosbase STATIC

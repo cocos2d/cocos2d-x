@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include <string.h>
 #include <android/log.h>
 #include <jni.h>
-#include "2d/ccTypes.h"
+#include "base/ccTypes.h"
 #include "jni/DPIJni.h"
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 #include "jni/JniHelper.h"

@@ -22,11 +22,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCUserDefault.h"
+#include "2d/CCUserDefault.h"
 #include "2d/platform/CCCommon.h"
 #include "2d/platform/CCFileUtils.h"
 #include "tinyxml2.h"
-#include "base64.h"
+#include "base/base64.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS && CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
 

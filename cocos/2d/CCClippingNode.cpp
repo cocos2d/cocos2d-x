@@ -25,15 +25,15 @@
  *
  */
 
-#include "CCClippingNode.h"
+#include "2d/CCClippingNode.h"
 #include "2d/CCGLProgram.h"
-#include "CCShaderCache.h"
-#include "2d/CCDirector.h"
-#include "CCDrawingPrimitives.h"
+#include "2d/CCShaderCache.h"
+#include "2d/CCDrawingPrimitives.h"
+#include "base/CCDirector.h"
 
-#include "2d/renderer/CCRenderer.h"
-#include "2d/renderer/CCGroupCommand.h"
-#include "2d/renderer/CCCustomCommand.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCGroupCommand.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 

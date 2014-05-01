@@ -28,8 +28,8 @@ THE SOFTWARE.
 #include "2d/platform/CCFileUtils.h"
 #include "2d/CCTextureAtlas.h"
 #include "TGAlib.h"
-#include "2d/ccConfig.h"
-#include "2d/CCDirector.h"
+#include "base/ccConfig.h"
+#include "base/CCDirector.h"
 #include "deprecated/CCString.h"
 #include <sstream>
 

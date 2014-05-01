@@ -29,7 +29,7 @@
 #include <iostream>
 #include <unordered_map>
 
-#include "CCFontAtlas.h"
+#include "2d/CCFontAtlas.h"
 #include "2d/CCLabel.h"
 
 NS_CC_BEGIN

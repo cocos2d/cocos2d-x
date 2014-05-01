@@ -27,7 +27,7 @@ THE SOFTWARE.
 #define __MISC_NODE_CCPROGRESS_TIMER_H__
 
 #include "2d/CCSprite.h"
-#include "2d/renderer/CCCustomCommand.h"
+#include "renderer/CCCustomCommand.h"
 #ifdef EMSCRIPTEN
 #include "CCGLBufferedNode.h"
 #endif // EMSCRIPTEN

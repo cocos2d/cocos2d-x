@@ -24,7 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "2d/CCActionGrid3D.h"
-#include "2d/CCDirector.h"
+#include "base/CCDirector.h"
 #include <stdlib.h>
 
 NS_CC_BEGIN
@@ -379,7 +379,7 @@ void Lens3D::update(float time)
                     
                     if (vect.getLength() > 0)
                     {
-                        vect = vect.normalize();
+                        vect.normalize();
                         Vector2 new_vect = vect * new_r;
                         v.z += (_concave ? -1.0f : 1.0f) * new_vect.getLength() * _lensEffect;
                     }

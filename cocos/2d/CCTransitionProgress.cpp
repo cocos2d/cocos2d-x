@@ -26,9 +26,9 @@ THE SOFTWARE.
 ****************************************************************************/
 
 
-#include "CCTransitionProgress.h"
-#include "2d/CCDirector.h"
-#include "CCRenderTexture.h"
+#include "2d/CCTransitionProgress.h"
+#include "base/CCDirector.h"
+#include "2d/CCRenderTexture.h"
 #include "2d/CCProgressTimer.h"
 #include "2d/CCLayer.h"
 #include "2d/CCActionInstant.h"

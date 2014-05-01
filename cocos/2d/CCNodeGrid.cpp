@@ -22,12 +22,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCNodeGrid.h"
-#include "CCGrid.h"
+#include "2d/CCNodeGrid.h"
+#include "2d/CCGrid.h"
 
-#include "2d/renderer/CCGroupCommand.h"
-#include "2d/renderer/CCRenderer.h"
-#include "2d/renderer/CCCustomCommand.h"
+#include "renderer/CCGroupCommand.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
 
 
 NS_CC_BEGIN

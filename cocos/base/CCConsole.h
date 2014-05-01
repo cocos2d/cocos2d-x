@@ -47,7 +47,7 @@ typedef SSIZE_T ssize_t;
 #include <mutex>
 #include <stdarg.h>
 
-#include "2d/ccMacros.h"
+#include "base/ccMacros.h"
 #include "base/CCPlatformMacros.h"
 
 

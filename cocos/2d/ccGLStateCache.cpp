@@ -27,9 +27,9 @@ THE SOFTWARE.
 
 #include "2d/ccGLStateCache.h"
 #include "2d/CCGLProgram.h"
-#include "2d/CCDirector.h"
-#include "2d/ccConfig.h"
-#include "CCConfiguration.h"
+#include "base/CCDirector.h"
+#include "base/ccConfig.h"
+#include "base/CCConfiguration.h"
 
 NS_CC_BEGIN
 

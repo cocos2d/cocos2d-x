@@ -28,11 +28,11 @@ THE SOFTWARE.
 #include "CCTMXXMLParser.h"
 #include "CCTMXTiledMap.h"
 #include "2d/CCSprite.h"
-#include "CCTextureCache.h"
-#include "CCShaderCache.h"
+#include "2d/CCTextureCache.h"
+#include "2d/CCShaderCache.h"
 #include "2d/CCGLProgram.h"
 #include "2d/ccCArray.h"
-#include "2d/CCDirector.h"
+#include "base/CCDirector.h"
 
 #include "deprecated/CCString.h" // For StringUtils::format
 

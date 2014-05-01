@@ -24,9 +24,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "2d/CCActionGrid.h"
-#include "2d/CCDirector.h"
-#include "CCGrid.h"
-#include "CCNodeGrid.h"
+#include "base/CCDirector.h"
+#include "2d/CCGrid.h"
+#include "2d/CCNodeGrid.h"
 
 NS_CC_BEGIN
 // implementation of GridAction

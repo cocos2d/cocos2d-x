@@ -30,7 +30,7 @@ endif()
 set(COCOS2D_SRC
   CCAction.cpp
   CCActionCamera.cpp
-  CCTweenFunction.cpp
+  CCActionCatmullRom.cpp
   CCActionEase.cpp
   CCActionGrid.cpp
   CCActionGrid3D.cpp
@@ -40,108 +40,80 @@ set(COCOS2D_SRC
   CCActionPageTurn3D.cpp
   CCActionProgressTimer.cpp
   CCActionTiledGrid.cpp
-  CCActionCatmullRom.cpp
   CCActionTween.cpp
+  CCAnimation.cpp
+  CCAnimationCache.cpp
   CCAtlasNode.cpp
-  CCNode.cpp
-  CCEventAcceleration.cpp
-  CCEventListenerAcceleration.cpp
-  CCEvent.cpp
-  CCEventDispatcher.cpp
-  CCEventListener.cpp
-  CCEventKeyboard.cpp
-  CCEventListenerKeyboard.cpp
-  CCEventMouse.cpp
-  CCEventListenerMouse.cpp
-  CCTouch.cpp
-  CCEventTouch.cpp
-  CCEventListenerTouch.cpp
-  CCEventCustom.cpp
-  CCEventListenerCustom.cpp
-  CCDrawingPrimitives.cpp
+  CCClippingNode.cpp
+  CCComponent.cpp
+  CCComponentContainer.cpp
   CCDrawNode.cpp
-  CCGrabber.cpp
-  CCGrid.cpp
-  CCNodeGrid.cpp
+  CCDrawingPrimitives.cpp
   CCFont.cpp
   CCFontAtlas.cpp
   CCFontAtlasCache.cpp
+  CCFontCharMap.cpp
   CCFontFNT.cpp
   CCFontFreeType.cpp
-  CCFontCharMap.cpp
+  CCGLBufferedNode.cpp
+  CCGLProgram.cpp
+  CCGrabber.cpp
+  CCGrid.cpp
+  CCIMEDispatcher.cpp
   CCLabel.cpp
   CCLabelAtlas.cpp
   CCLabelBMFont.cpp
   CCLabelTTF.cpp
   CCLabelTextFormatter.cpp
   CCLayer.cpp
-  CCScene.cpp
-  CCTransition.cpp
-  CCTransitionPageTurn.cpp
-  CCTransitionProgress.cpp
   CCMenu.cpp
   CCMenuItem.cpp
   CCMotionStreak.cpp
-  CCProgressTimer.cpp
-  CCClippingNode.cpp
-  CCRenderTexture.cpp
+  CCNode.cpp
+  CCNodeGrid.cpp
+  CCParallaxNode.cpp
+  CCParticleBatchNode.cpp
   CCParticleExamples.cpp
   CCParticleSystem.cpp
   CCParticleSystemQuad.cpp
-  CCParticleBatchNode.cpp
+  CCProgressTimer.cpp
+  CCRenderTexture.cpp
+  CCScene.cpp
   CCScriptSupport.cpp
-  CCAnimation.cpp
-  CCAnimationCache.cpp
+  CCShaderCache.cpp
   CCSprite.cpp
   CCSpriteBatchNode.cpp
   CCSpriteFrame.cpp
   CCSpriteFrameCache.cpp
-  ccUTF8.cpp
-  CCProfiling.cpp
-  CCUserDefault.cpp
-  TransformUtils.cpp
-  base64.cpp
-  ccUtils.cpp
-  CCVertex.cpp
-  TGAlib.cpp
-  ZipUtils.cpp
-  ccCArray.cpp
-  CCComponent.cpp
-  CCComponentContainer.cpp
-  CCIMEDispatcher.cpp
-  CCTextFieldTTF.cpp
-  CCTexture2D.cpp
-  CCTextureAtlas.cpp
-  CCTextureCache.cpp
-  CCParallaxNode.cpp
   CCTMXLayer.cpp
   CCTMXObjectGroup.cpp
   CCTMXTiledMap.cpp
   CCTMXXMLParser.cpp
+  CCTextFieldTTF.cpp
+  CCTexture2D.cpp
+  CCTextureAtlas.cpp
+  CCTextureCache.cpp
   CCTileMapAtlas.cpp
-  CCGLProgram.cpp
+  CCTransition.cpp
+  CCTransitionPageTurn.cpp
+  CCTransitionProgress.cpp
+  CCTweenFunction.cpp
+  CCUserDefault.cpp
+  CCUserDefaultAndroid.cpp
+  CCVertex.cpp
+  TGAlib.cpp
+  ccCArray.cpp
   ccGLStateCache.cpp
-  CCShaderCache.cpp
   ccShaders.cpp
-  CCConfiguration.cpp
-  CCDirector.cpp
-  CCScheduler.cpp
+  ccUTF8.cpp
+  ccUtils.cpp
   ccFPSImages.c
-  ccTypes.cpp
   ../cocos2d.cpp
   platform/CCSAXParser.cpp
   platform/CCThread.cpp
   platform/CCGLViewProtocol.cpp
   platform/CCFileUtils.cpp
   platform/CCImage.cpp
-  renderer/CCCustomCommand.cpp
-  renderer/CCGroupCommand.cpp
-  renderer/CCMaterialManager.cpp
-  renderer/CCQuadCommand.cpp
-  renderer/CCBatchCommand.cpp
-  renderer/CCRenderCommand.cpp
-  renderer/CCRenderer.cpp
-  renderer/CCRenderMaterial.cpp
   ../deprecated/CCDeprecated.cpp
   ../deprecated/CCNotificationCenter.cpp
   ../../external/edtaa3func/edtaa3func.cpp
@@ -212,6 +184,7 @@ set(COCOS_LINK
 endif()
 
 target_link_libraries(cocos2d
+  cocosrenderer
   cocosbase
   cocosmath
   chipmunk_static

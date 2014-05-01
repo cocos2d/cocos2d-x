@@ -1,9 +1,29 @@
+/**
+ Copyright 2013 BlackBerry Inc.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+
+ Original file from GamePlay3D: http://gameplay3d.org
+
+ This file was modified to fit the cocos2d-x project
+ */
+
 #ifndef VECTOR2_H_
 #define VECTOR2_H_
 
 #include "CCMathBase.h"
 #include "base/CCPlatformMacros.h"
-#include "2d/ccMacros.h"
+#include "base/ccMacros.h"
 
 NS_CC_MATH_BEGIN
 
@@ -248,7 +268,7 @@ public:
      * 
      * @return This vector, after the normalization occurs.
      */
-    Vector2& normalize();
+    void normalize();
 
     /**
      * Normalizes this vector and stores the result in dst.
@@ -259,7 +279,7 @@ public:
      *
      * @param dst The destination vector.
      */
-    void normalize(Vector2* dst) const;
+    Vector2 getNormalized() const;
 
     /**
      * Scales all elements of this vector by the specified value.
@@ -614,19 +634,6 @@ public:
      */
     inline Vector2 unrotate(const Vector2& other) const {
         return Vector2(x*other.x + y*other.y, y*other.x - x*other.y);
-    };
-
-    /** Returns point multiplied to a length of 1.
-     * If the point is 0, it returns (1, 0)
-     @return Vector2
-     @since v2.1.4
-     * @js NA
-     * @lua NA
-     */
-    inline Vector2 normalize() const {
-        float length = getLength();
-        if(length == 0.) return Vector2(1.f, 0);
-        return *this / getLength();
     };
 
     /** Linear Interpolation between two points a and b

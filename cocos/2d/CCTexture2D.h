@@ -32,8 +32,8 @@ THE SOFTWARE.
 #include <map>
 
 #include "base/CCRef.h"
-#include "base/CCGeometry.h"
-#include "2d/ccTypes.h"
+#include "math/CCGeometry.h"
+#include "base/ccTypes.h"
 #ifdef EMSCRIPTEN
 #include "CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
@@ -252,7 +252,7 @@ public:
     bool initWithImage(Image * image, PixelFormat format);
 
     /** Initializes a texture from a string with dimensions, alignment, font name and font size */
-    bool initWithString(const char *text,  const char *fontName, float fontSize, const Size& dimensions = Size(0, 0), TextHAlignment hAlignment = TextHAlignment::CENTER, TextVAlignment vAlignment = TextVAlignment::TOP);
+    bool initWithString(const char *text,  const std::string &fontName, float fontSize, const Size& dimensions = Size(0, 0), TextHAlignment hAlignment = TextHAlignment::CENTER, TextVAlignment vAlignment = TextVAlignment::TOP);
     /** Initializes a texture from a string using a text definition*/
     bool initWithString(const char *text, const FontDefinition& textDefinition);
 

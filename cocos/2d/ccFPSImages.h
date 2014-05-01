@@ -22,6 +22,9 @@
  * THE SOFTWARE.
  */
 
+#ifndef __CCFPSIMAGES__H
+#define __CCFPSIMAGES__H
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -32,3 +35,5 @@ unsigned int cc_fps_images_len(void);
 #ifdef __cplusplus
 }
 #endif
+
+#endif // __CCFPSIMAGES__H

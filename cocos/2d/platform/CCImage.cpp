@@ -39,24 +39,24 @@ extern "C"
 {
 #include "png.h"
 #include "tiffio.h"
-#include "etc1.h"
+#include "base/etc1.h"
 #include "jpeglib.h"
 }
-#include "s3tc.h"
-#include "atitc.h"
-#include "TGAlib.h"
+#include "base/s3tc.h"
+#include "base/atitc.h"
+#include "2d/TGAlib.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 #include "decode.h"
 #endif
 
-#include "2d/ccMacros.h"
+#include "base/ccMacros.h"
 #include "CCCommon.h"
 #include "CCStdC.h"
 #include "CCFileUtils.h"
-#include "CCConfiguration.h"
-#include "ccUtils.h"
-#include "ZipUtils.h"
+#include "base/CCConfiguration.h"
+#include "2d/ccUtils.h"
+#include "base/ZipUtils.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "android/CCFileUtilsAndroid.h"
 #endif

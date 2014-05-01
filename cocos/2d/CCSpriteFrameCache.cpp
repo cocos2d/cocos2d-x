@@ -27,16 +27,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCNS.h"
-#include "2d/ccMacros.h"
-#include "CCTextureCache.h"
+#include "base/CCNS.h"
+#include "base/ccMacros.h"
+#include "2d/CCTextureCache.h"
 #include "2d/CCSpriteFrameCache.h"
 #include "2d/CCSpriteFrame.h"
 #include "2d/CCSprite.h"
-#include "TransformUtils.h"
+#include "math/TransformUtils.h"
 #include "2d/platform/CCFileUtils.h"
 #include "deprecated/CCString.h"
-#include "2d/CCDirector.h"
+#include "base/CCDirector.h"
 #include <vector>
 
 using namespace std;

@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "2d/CCAction.h"
 #include "2d/CCActionInterval.h"
 #include "2d/CCNode.h"
-#include "2d/CCDirector.h"
+#include "base/CCDirector.h"
 #include "deprecated/CCString.h"
 
 NS_CC_BEGIN

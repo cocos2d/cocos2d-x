@@ -30,13 +30,13 @@ THE SOFTWARE.
 #include <cctype>
 #include <list>
 
-#include "CCTextureCache.h"
+#include "2d/CCTextureCache.h"
 #include "2d/CCTexture2D.h"
-#include "2d/ccMacros.h"
-#include "2d/CCDirector.h"
+#include "base/ccMacros.h"
+#include "base/CCDirector.h"
 #include "2d/platform/CCFileUtils.h"
-#include "ccUtils.h"
-#include "CCScheduler.h"
+#include "2d/ccUtils.h"
+#include "base/CCScheduler.h"
 #include "deprecated/CCString.h"
 
 

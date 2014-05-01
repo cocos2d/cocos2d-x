@@ -24,22 +24,22 @@
  ****************************************************************************/
 
 #include "2d/CCLabel.h"
-#include "CCFontAtlasCache.h"
+#include "2d/CCFontAtlasCache.h"
 #include "CCLabelTextFormatter.h"
 #include "2d/CCSprite.h"
-#include "CCShaderCache.h"
+#include "2d/CCShaderCache.h"
 #include "ccUTF8.h"
 #include "2d/CCSpriteFrame.h"
-#include "2d/CCDirector.h"
-#include "2d/renderer/CCRenderer.h"
+#include "base/CCDirector.h"
+#include "renderer/CCRenderer.h"
 #include "CCFont.h"
-#include "2d/CCEventListenerCustom.h"
-#include "2d/CCEventDispatcher.h"
-#include "2d/CCEventType.h"
-#include "2d/CCEventCustom.h"
+#include "base/CCEventListenerCustom.h"
+#include "base/CCEventDispatcher.h"
+#include "base/CCEventType.h"
+#include "base/CCEventCustom.h"
 #include "2d/platform/CCFileUtils.h"
 #include "deprecated/CCString.h"
-#include "CCProfiling.h"
+#include "base/CCProfiling.h"
 
 NS_CC_BEGIN
 

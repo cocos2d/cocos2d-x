@@ -25,7 +25,7 @@
 
 #include "base/CCData.h"
 #include "2d/platform/CCCommon.h"
-#include "2d/ccMacros.h"
+#include "base/ccMacros.h"
 
 #include <string>
 

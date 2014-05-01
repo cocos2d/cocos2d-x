@@ -160,7 +160,7 @@ void PhysicsDemo::onEnter()
         auto item = MenuItemFont::create("Toggle debug", CC_CALLBACK_1(PhysicsDemo::toggleDebugCallback, this));
         auto menu = Menu::create(item, nullptr);
         this->addChild(menu);
-        menu->setPosition(Point(getContentSize().width-50, getContentSize().height/2));
+        menu->setPosition(Vector2(getContentSize().width-50, getContentSize().height/2));
     }
 }
 
@@ -436,7 +436,7 @@ void PhysicsDemo::onTouchEnded(Touch* touch, Event* event)
 void PhysicsDemoLogoSmash::onEnter()
 {
     PhysicsDemo::onEnter();
-    getPhysicsWorld()->setGravity(Point(0, 0));
+    getPhysicsWorld()->setGravity(Vector2::ZERO);
     getPhysicsWorld()->setUpdateRate(5.0f);
     
     _ball = SpriteBatchNode::create("Images/ball.png", sizeof(logo_image)/sizeof(logo_image[0]));
@@ -463,8 +463,8 @@ void PhysicsDemoLogoSmash::onEnter()
         }
     }
     
-    auto bullet = makeBall(Point(400, 0), 10, PhysicsMaterial(PHYSICS_INFINITY, 0, 0));
-    bullet->getPhysicsBody()->setVelocity(Point(200, 0));
+    auto bullet = makeBall(Vector2(400, 0), 10, PhysicsMaterial(PHYSICS_INFINITY, 0, 0));
+    bullet->getPhysicsBody()->setVelocity(Vector2(200, 0));
     
     bullet->setPosition(Vector2(-500, VisibleRect::getVisibleRect().size.height/2));
     
@@ -550,7 +550,7 @@ void PhysicsDemoRayCast::onEnter()
     
     auto menu = Menu::create(item, NULL);
     this->addChild(menu);
-    menu->setPosition(Point(VisibleRect::left().x+100, VisibleRect::top().y-10));
+    menu->setPosition(Vector2(VisibleRect::left().x+100, VisibleRect::top().y-10));
 }
 
 void PhysicsDemoRayCast::changeModeCallback(Ref* sender)
@@ -807,7 +807,7 @@ void PhysicsDemoJoints::onEnter()
                     auto sp2 = makeBox(offset + Vector2(30, 0), Size(30, 10));
                     sp2->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
                     
-                    PhysicsJointGroove* joint = PhysicsJointGroove::construct(sp1->getPhysicsBody(), sp2->getPhysicsBody(), Point(30, 15), Point(30, -15), Point(-30, 0));
+                    PhysicsJointGroove* joint = PhysicsJointGroove::construct(sp1->getPhysicsBody(), sp2->getPhysicsBody(), Vector2(30, 15), Vector2(30, -15), Vector2(-30, 0));
                     getPhysicsWorld()->addJoint(joint);
                     
                     this->addChild(sp1);
@@ -1182,7 +1182,7 @@ bool PhysicsDemoSlice::slice(PhysicsWorld &world, const PhysicsRayCastInfo& info
     if (!info.shape->containsPoint(info.start) && !info.shape->containsPoint(info.end))
     {
         Vector2 normal = info.end - info.start;
-        normal = normal.getPerp().normalize();
+        normal = normal.getPerp().getNormalized();
         float dist = info.start.dot(normal);
         
         clipPoly(dynamic_cast<PhysicsShapePolygon*>(info.shape), normal, dist);
@@ -1566,16 +1566,16 @@ void PhysicsPositionRotationTest::onEnter()
         
         auto wall = Node::create();
         wall->setPhysicsBody(PhysicsBody::createEdgeBox(layers[i]->getContentSize(), PhysicsMaterial(0.1f, 1, 0.0f)));
-        wall->setPosition(Point(halfSize/2));
+        wall->setPosition(Vector2(halfSize/2));
         layers[i]->addChild(wall);
         this->addChild(layers[i]);
     }
-    layers[0]->setPosition(Point(halfSize.width/2, halfSize.height/2 + 60));
-    layers[1]->setPosition(Point(halfSize.width/2*3, halfSize.height/2 + 60));
+    layers[0]->setPosition(Vector2(halfSize.width/2, halfSize.height/2 + 60));
+    layers[1]->setPosition(Vector2(halfSize.width/2*3, halfSize.height/2 + 60));
     
     // anchor test
     auto anchorNode = Sprite::create("Images/YellowSquare.png");
-    anchorNode->setAnchorPoint(Point(0.1f, 0.9f));
+    anchorNode->setAnchorPoint(Vector2(0.1f, 0.9f));
     anchorNode->setPosition(100, 50);
     anchorNode->setScale(0.25);
     anchorNode->setPhysicsBody(PhysicsBody::createBox(anchorNode->getContentSize()*anchorNode->getScale()));
@@ -1610,10 +1610,10 @@ void PhysicsPositionRotationTest::onEnter()
     for (int i = 0; i < 30; ++i)
     {
         Size size(10 + CCRANDOM_0_1()*10, 10 + CCRANDOM_0_1()*10);
-        Point position = Point(halfSize.width, halfSize.height) - Point(size.width, size.height);
+        Vector2 position = Vector2(halfSize.width, halfSize.height) - Vector2(size.width, size.height);
         position.x = position.x * CCRANDOM_0_1();
         position.y = position.y * CCRANDOM_0_1();
-        position = position + Point(size.width/2, size.height/2);
+        position = position + Vector2(size.width/2, size.height/2);
         Vect velocity((CCRANDOM_0_1() - 0.5)*200, (CCRANDOM_0_1() - 0.5)*200);
         auto box = makeBox(position, size, 0, PhysicsMaterial(0.1f, 1, 0.0f));
         box->getPhysicsBody()->setVelocity(velocity);
@@ -1621,8 +1621,8 @@ void PhysicsPositionRotationTest::onEnter()
         layers[1]->addChild(box);
     }
     
-    MoveTo* moveTo = MoveTo::create(1.0f, Point(halfSize.width/2, halfSize.height/2 + 60));
-    MoveTo* moveBack = MoveTo::create(1.0f, Point(halfSize.width/2*3, halfSize.height/2 + 60));
+    MoveTo* moveTo = MoveTo::create(1.0f, Vector2(halfSize.width/2, halfSize.height/2 + 60));
+    MoveTo* moveBack = MoveTo::create(1.0f, Vector2(halfSize.width/2*3, halfSize.height/2 + 60));
     ScaleTo* thrink = ScaleTo::create(1.0f, 0.5f);
     ScaleTo* amplify = ScaleTo::create(1.0f, 2.0f);
     ScaleTo* scaleBack = ScaleTo::create(1.0f, 1.0f);

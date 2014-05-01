@@ -24,27 +24,27 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCConfiguration.h"
-#include "CCRenderTexture.h"
-#include "2d/CCDirector.h"
+#include "base/CCConfiguration.h"
+#include "2d/CCRenderTexture.h"
+#include "base/CCDirector.h"
 #include "2d/platform/CCImage.h"
 #include "2d/CCGLProgram.h"
 #include "2d/ccGLStateCache.h"
-#include "CCConfiguration.h"
-#include "ccUtils.h"
-#include "CCTextureCache.h"
+#include "base/CCConfiguration.h"
+#include "2d/ccUtils.h"
+#include "2d/CCTextureCache.h"
 #include "2d/platform/CCFileUtils.h"
 #include "CCGL.h"
-#include "2d/CCEventType.h"
-#include "CCGrid.h"
+#include "base/CCEventType.h"
+#include "2d/CCGrid.h"
 
-#include "2d/renderer/CCRenderer.h"
-#include "2d/renderer/CCGroupCommand.h"
-#include "2d/renderer/CCCustomCommand.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCGroupCommand.h"
+#include "renderer/CCCustomCommand.h"
 
 // extern
-#include "2d/CCEventListenerCustom.h"
-#include "2d/CCEventDispatcher.h"
+#include "base/CCEventListenerCustom.h"
+#include "base/CCEventDispatcher.h"
 
 NS_CC_BEGIN
 
@@ -194,11 +194,12 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
     do 
     {
         _fullRect = _rtTextureRect = Rect(0,0,w,h);
-        Size size = Director::getInstance()->getWinSizeInPixels();
-        _fullviewPort = Rect(0,0,size.width,size.height);
+        //Size size = Director::getInstance()->getWinSizeInPixels();
+        //_fullviewPort = Rect(0,0,size.width,size.height);
         w = (int)(w * CC_CONTENT_SCALE_FACTOR());
         h = (int)(h * CC_CONTENT_SCALE_FACTOR());
-
+        _fullviewPort = Rect(0,0,w,h);
+        
         glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
 
         // textures must be power of two squared
@@ -522,7 +523,6 @@ void RenderTexture::onBegin()
 {
     //
     Director *director = Director::getInstance();
-    Size size = director->getWinSizeInPixels();
     
     _oldProjMatrix = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, _projectionMatrix);
@@ -541,14 +541,17 @@ void RenderTexture::onBegin()
 #endif
 
         const Size& texSize = _texture->getContentSizeInPixels();
-
+        
         // Calculate the adjustment ratios based on the old and new projections
+        Size size = director->getWinSizeInPixels();
         float widthRatio = size.width / texSize.width;
         float heightRatio = size.height / texSize.height;
+        
         Matrix orthoMatrix;
         Matrix::createOrthographicOffCenter((float)-1.0 / widthRatio, (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1, 1, &orthoMatrix);
-        director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, orthoMatrix);
+        director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
     }
+    
     //calculate viewport
     {
         Rect viewport;
@@ -696,12 +699,13 @@ void RenderTexture::begin()
         
         // Calculate the adjustment ratios based on the old and new projections
         Size size = director->getWinSizeInPixels();
+        
         float widthRatio = size.width / texSize.width;
         float heightRatio = size.height / texSize.height;
         
         Matrix orthoMatrix;
         Matrix::createOrthographicOffCenter((float)-1.0 / widthRatio, (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1, 1, &orthoMatrix);
-        director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, orthoMatrix);
+        director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
     }
 
     _groupCommand.init(_globalZOrder);

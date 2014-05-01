@@ -27,21 +27,21 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "2d/CCSpriteBatchNode.h"
-#include "2d/ccConfig.h"
+#include "base/ccConfig.h"
 #include "2d/CCSprite.h"
-#include "CCGrid.h"
-#include "CCDrawingPrimitives.h"
-#include "CCTextureCache.h"
-#include "CCShaderCache.h"
+#include "2d/CCGrid.h"
+#include "2d/CCDrawingPrimitives.h"
+#include "2d/CCTextureCache.h"
+#include "2d/CCShaderCache.h"
 #include "2d/CCGLProgram.h"
 #include "2d/ccGLStateCache.h"
-#include "2d/CCDirector.h"
-#include "TransformUtils.h"
-#include "CCProfiling.h"
+#include "base/CCDirector.h"
+#include "math/TransformUtils.h"
+#include "base/CCProfiling.h"
 #include "2d/CCLayer.h"
-#include "CCScene.h"
-#include "2d/renderer/CCRenderer.h"
-#include "2d/renderer/CCQuadCommand.h"
+#include "2d/CCScene.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCQuadCommand.h"
 // external
 
 #include "deprecated/CCString.h" // For StringUtils::format

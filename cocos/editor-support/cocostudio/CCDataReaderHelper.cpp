@@ -23,8 +23,8 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "2d/platform/CCFileUtils.h"
-#include "2d/CCDirector.h"
-#include "CCScheduler.h"
+#include "base/CCDirector.h"
+#include "base/CCScheduler.h"
 
 #include "tinyxml2.h"
 

@@ -25,16 +25,16 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "2d/CCProgressTimer.h"
 
-#include "2d/ccMacros.h"
-#include "CCTextureCache.h"
+#include "base/ccMacros.h"
+#include "2d/CCTextureCache.h"
 #include "2d/CCGLProgram.h"
-#include "CCShaderCache.h"
+#include "2d/CCShaderCache.h"
 #include "2d/ccGLStateCache.h"
-#include "2d/CCDirector.h"
-#include "TransformUtils.h"
-#include "CCDrawingPrimitives.h"
-#include "2d/renderer/CCRenderer.h"
-#include "2d/renderer/CCCustomCommand.h"
+#include "base/CCDirector.h"
+#include "math/TransformUtils.h"
+#include "2d/CCDrawingPrimitives.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
 
 // extern
 #include <float.h>

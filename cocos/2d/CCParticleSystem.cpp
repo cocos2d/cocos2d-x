@@ -47,15 +47,15 @@ THE SOFTWARE.
 #include <string>
 
 #include "CCParticleBatchNode.h"
-#include "2d/ccTypes.h"
-#include "CCTextureCache.h"
+#include "base/ccTypes.h"
+#include "2d/CCTextureCache.h"
 #include "2d/CCTextureAtlas.h"
-#include "base64.h"
+#include "base/base64.h"
 #include "2d/platform/CCFileUtils.h"
 #include "2d/platform/CCImage.h"
-#include "ZipUtils.h"
-#include "2d/CCDirector.h"
-#include "CCProfiling.h"
+#include "base/ZipUtils.h"
+#include "base/CCDirector.h"
+#include "base/CCProfiling.h"
 // opengl
 #include "CCGL.h"
 
@@ -710,7 +710,7 @@ void ParticleSystem::update(float dt)
                     // radial acceleration
                     if (p->pos.x || p->pos.y)
                     {
-                        radial = p->pos.normalize();
+                        radial = p->pos.getNormalized();
                     }
                     tangential = radial;
                     radial = radial * p->modeA.radialAccel;
@@ -725,21 +725,14 @@ void ParticleSystem::update(float dt)
                     tmp = radial + tangential + modeA.gravity;
                     tmp = tmp * dt;
                     p->modeA.dir = p->modeA.dir + tmp;
-					if (_configName.length()>0)
-					{
-						if (_yCoordFlipped == -1)
-						{
-							 tmp = p->modeA.dir * dt;
-						}
-						else
-						{
-							 tmp = p->modeA.dir * -dt;
-						}
-					}
-					else
-					{
-						 tmp = p->modeA.dir * dt;
-					}
+                    if (_configName.length()>0 && _yCoordFlipped == -1)
+                    {
+                        tmp = p->modeA.dir * -dt;
+                    }
+                    else
+                    {
+                        tmp = p->modeA.dir * dt;
+                    }
                     p->pos = p->pos + tmp;
                 }
 

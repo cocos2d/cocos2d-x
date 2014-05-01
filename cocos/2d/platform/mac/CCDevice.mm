@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include <Foundation/Foundation.h>
 #include <Cocoa/Cocoa.h>
 #include <string>
-#include "2d/ccTypes.h"
+#include "base/ccTypes.h"
 
 NS_CC_BEGIN
 

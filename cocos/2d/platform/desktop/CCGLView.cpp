@@ -24,12 +24,12 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCGLView.h"
-#include "2d/CCDirector.h"
-#include "2d/CCTouch.h"
-#include "2d/CCEventDispatcher.h"
-#include "2d/CCEventKeyboard.h"
-#include "2d/CCEventMouse.h"
-#include "CCIMEDispatcher.h"
+#include "base/CCDirector.h"
+#include "base/CCTouch.h"
+#include "base/CCEventDispatcher.h"
+#include "base/CCEventKeyboard.h"
+#include "base/CCEventMouse.h"
+#include "2d/CCIMEDispatcher.h"
 
 #include <unordered_map>
 

@@ -29,9 +29,9 @@
 #include "2d/CCSprite.h"
 #include "2d/CCActionTween.h"
 #include "2d/CCLabel.h"
-#include "CCClippingNode.h"
-#include "ccShaders.h"
-#include "CCRenderTexture.h"
+#include "2d/CCClippingNode.h"
+#include "2d/ccShaders.h"
+#include "2d/CCRenderTexture.h"
 
 NS_CC_EXT_BEGIN
 // ControlSwitchSprite

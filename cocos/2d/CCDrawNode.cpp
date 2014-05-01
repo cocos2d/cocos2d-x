@@ -22,15 +22,15 @@
  */
 
 #include "2d/CCDrawNode.h"
-#include "CCShaderCache.h"
+#include "2d/CCShaderCache.h"
 #include "CCGL.h"
-#include "2d/CCEventType.h"
-#include "CCConfiguration.h"
-#include "2d/renderer/CCCustomCommand.h"
-#include "2d/renderer/CCRenderer.h"
-#include "2d/CCDirector.h"
-#include "2d/CCEventListenerCustom.h"
-#include "2d/CCEventDispatcher.h"
+#include "base/CCEventType.h"
+#include "base/CCConfiguration.h"
+#include "renderer/CCCustomCommand.h"
+#include "renderer/CCRenderer.h"
+#include "base/CCDirector.h"
+#include "base/CCEventListenerCustom.h"
+#include "base/CCEventDispatcher.h"
 
 NS_CC_BEGIN
 
@@ -81,7 +81,7 @@ static inline Vector2 v2fforangle(float _a_)
 
 static inline Vector2 v2fnormalize(const Vector2 &p)
 {
-	Vector2 r = Vector2(p.x, p.y).normalize();
+	Vector2 r = Vector2(p.x, p.y).getNormalized();
 	return v2f(r.x, r.y);
 }
 

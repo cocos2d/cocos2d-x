@@ -25,8 +25,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCTransition.h"
-#include "2d/CCDirector.h"
+#include "2d/CCTransition.h"
+#include "base/CCDirector.h"
 #include "2d/CCActionInterval.h"
 #include "2d/CCActionInstant.h"
 #include "2d/CCActionEase.h"
@@ -34,8 +34,8 @@ THE SOFTWARE.
 #include "2d/CCActionTiledGrid.h"
 #include "2d/CCActionGrid.h"
 #include "2d/CCLayer.h"
-#include "CCRenderTexture.h"
-#include "CCNodeGrid.h"
+#include "2d/CCRenderTexture.h"
+#include "2d/CCNodeGrid.h"
 
 NS_CC_BEGIN
 

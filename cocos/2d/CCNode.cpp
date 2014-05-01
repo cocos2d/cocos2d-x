@@ -32,17 +32,17 @@ THE SOFTWARE.
 
 #include "deprecated/CCString.h"
 #include "2d/ccCArray.h"
-#include "TransformUtils.h"
-#include "CCGrid.h"
-#include "2d/CCDirector.h"
-#include "CCScheduler.h"
-#include "2d/CCTouch.h"
+#include "math/TransformUtils.h"
+#include "2d/CCGrid.h"
+#include "base/CCDirector.h"
+#include "base/CCScheduler.h"
+#include "base/CCTouch.h"
 #include "2d/CCActionManager.h"
 #include "2d/CCScriptSupport.h"
 #include "2d/CCGLProgram.h"
-#include "2d/CCEventDispatcher.h"
-#include "2d/CCEvent.h"
-#include "2d/CCEventTouch.h"
+#include "base/CCEventDispatcher.h"
+#include "base/CCEvent.h"
+#include "base/CCEventTouch.h"
 #include "2d/CCLayer.h"
 
 #if CC_USE_PHYSICS
@@ -50,8 +50,8 @@ THE SOFTWARE.
 #endif
 
 // externals
-#include "CCComponent.h"
-#include "CCComponentContainer.h"
+#include "2d/CCComponent.h"
+#include "2d/CCComponentContainer.h"
 
 
 
@@ -1378,7 +1378,7 @@ const Matrix& Node::getNodeToParentTransform() const
         }
         if(_rotationX) {
             Matrix rotX;
-            Matrix::createRotationY(CC_DEGREES_TO_RADIANS(_rotationX), &rotX);
+            Matrix::createRotationX(CC_DEGREES_TO_RADIANS(_rotationX), &rotX);
             _transform = _transform * rotX;
         }
 
@@ -1452,7 +1452,7 @@ AffineTransform Node::getParentToNodeAffineTransform() const
 const Matrix& Node::getParentToNodeTransform() const
 {
     if ( _inverseDirty ) {
-        _transform.invert(&_inverse);
+        _inverse = _transform.getInversed();
         _inverseDirty = false;
     }
 
@@ -1489,9 +1489,7 @@ AffineTransform Node::getWorldToNodeAffineTransform() const
 
 Matrix Node::getWorldToNodeTransform() const
 {
-    Matrix result = getNodeToWorldTransform();
-    result.invert();
-    return result;
+    return getNodeToWorldTransform().getInversed();
 }
 
 
@@ -1588,7 +1586,7 @@ void Node::updatePhysicsBodyPosition(Layer* layer)
     {
         if (layer != nullptr && layer->getPhysicsWorld() != nullptr)
         {
-            Point pos = getParent() == layer ? getPosition() : layer->convertToNodeSpace(_parent->convertToWorldSpace(getPosition()));
+            Vector2 pos = getParent() == layer ? getPosition() : layer->convertToNodeSpace(_parent->convertToWorldSpace(getPosition()));
             _physicsBody->setPosition(pos);
         }
         else
