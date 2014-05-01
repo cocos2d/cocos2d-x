@@ -12,26 +12,6 @@
 
 
 --------------------------------------------------------
--- the cc Action
--- @field [parent=#cc] Action#Action Action preloaded module
-
-
---------------------------------------------------------
--- the cc FiniteTimeAction
--- @field [parent=#cc] FiniteTimeAction#FiniteTimeAction FiniteTimeAction preloaded module
-
-
---------------------------------------------------------
--- the cc Speed
--- @field [parent=#cc] Speed#Speed Speed preloaded module
-
-
---------------------------------------------------------
--- the cc Follow
--- @field [parent=#cc] Follow#Follow Follow preloaded module
-
-
---------------------------------------------------------
 -- the cc GLProgram
 -- @field [parent=#cc] GLProgram#GLProgram GLProgram preloaded module
 
@@ -74,6 +54,101 @@
 --------------------------------------------------------
 -- the cc Node
 -- @field [parent=#cc] Node#Node Node preloaded module
+
+
+--------------------------------------------------------
+-- the cc AtlasNode
+-- @field [parent=#cc] AtlasNode#AtlasNode AtlasNode preloaded module
+
+
+--------------------------------------------------------
+-- the cc LabelAtlas
+-- @field [parent=#cc] LabelAtlas#LabelAtlas LabelAtlas preloaded module
+
+
+--------------------------------------------------------
+-- the cc Director
+-- @field [parent=#cc] Director#Director Director preloaded module
+
+
+--------------------------------------------------------
+-- the cc Timer
+-- @field [parent=#cc] Timer#Timer Timer preloaded module
+
+
+--------------------------------------------------------
+-- the cc Scheduler
+-- @field [parent=#cc] Scheduler#Scheduler Scheduler preloaded module
+
+
+--------------------------------------------------------
+-- the cc FileUtils
+-- @field [parent=#cc] FileUtils#FileUtils FileUtils preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventListenerTouchOneByOne
+-- @field [parent=#cc] EventListenerTouchOneByOne#EventListenerTouchOneByOne EventListenerTouchOneByOne preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventListenerTouchAllAtOnce
+-- @field [parent=#cc] EventListenerTouchAllAtOnce#EventListenerTouchAllAtOnce EventListenerTouchAllAtOnce preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventListenerKeyboard
+-- @field [parent=#cc] EventListenerKeyboard#EventListenerKeyboard EventListenerKeyboard preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventMouse
+-- @field [parent=#cc] EventMouse#EventMouse EventMouse preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventListenerMouse
+-- @field [parent=#cc] EventListenerMouse#EventListenerMouse EventListenerMouse preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventAcceleration
+-- @field [parent=#cc] EventAcceleration#EventAcceleration EventAcceleration preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventListenerAcceleration
+-- @field [parent=#cc] EventListenerAcceleration#EventListenerAcceleration EventListenerAcceleration preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventCustom
+-- @field [parent=#cc] EventCustom#EventCustom EventCustom preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventListenerCustom
+-- @field [parent=#cc] EventListenerCustom#EventListenerCustom EventListenerCustom preloaded module
+
+
+--------------------------------------------------------
+-- the cc Action
+-- @field [parent=#cc] Action#Action Action preloaded module
+
+
+--------------------------------------------------------
+-- the cc FiniteTimeAction
+-- @field [parent=#cc] FiniteTimeAction#FiniteTimeAction FiniteTimeAction preloaded module
+
+
+--------------------------------------------------------
+-- the cc Speed
+-- @field [parent=#cc] Speed#Speed Speed preloaded module
+
+
+--------------------------------------------------------
+-- the cc Follow
+-- @field [parent=#cc] Follow#Follow Follow preloaded module
 
 
 --------------------------------------------------------
@@ -642,38 +717,8 @@
 
 
 --------------------------------------------------------
--- the cc AtlasNode
--- @field [parent=#cc] AtlasNode#AtlasNode AtlasNode preloaded module
-
-
---------------------------------------------------------
 -- the cc DrawNode
 -- @field [parent=#cc] DrawNode#DrawNode DrawNode preloaded module
-
-
---------------------------------------------------------
--- the cc LabelAtlas
--- @field [parent=#cc] LabelAtlas#LabelAtlas LabelAtlas preloaded module
-
-
---------------------------------------------------------
--- the cc Director
--- @field [parent=#cc] Director#Director Director preloaded module
-
-
---------------------------------------------------------
--- the cc GridBase
--- @field [parent=#cc] GridBase#GridBase GridBase preloaded module
-
-
---------------------------------------------------------
--- the cc Grid3D
--- @field [parent=#cc] Grid3D#Grid3D Grid3D preloaded module
-
-
---------------------------------------------------------
--- the cc TiledGrid3D
--- @field [parent=#cc] TiledGrid3D#TiledGrid3D TiledGrid3D preloaded module
 
 
 --------------------------------------------------------
@@ -1052,18 +1097,18 @@
 
 
 --------------------------------------------------------
--- the cc EventListenerCustom
--- @field [parent=#cc] EventListenerCustom#EventListenerCustom EventListenerCustom preloaded module
+-- the cc GridBase
+-- @field [parent=#cc] GridBase#GridBase GridBase preloaded module
 
 
 --------------------------------------------------------
--- the cc EventCustom
--- @field [parent=#cc] EventCustom#EventCustom EventCustom preloaded module
+-- the cc Grid3D
+-- @field [parent=#cc] Grid3D#Grid3D Grid3D preloaded module
 
 
 --------------------------------------------------------
--- the cc FileUtils
--- @field [parent=#cc] FileUtils#FileUtils FileUtils preloaded module
+-- the cc TiledGrid3D
+-- @field [parent=#cc] TiledGrid3D#TiledGrid3D TiledGrid3D preloaded module
 
 
 --------------------------------------------------------
@@ -1144,51 +1189,6 @@
 --------------------------------------------------------
 -- the cc TileMapAtlas
 -- @field [parent=#cc] TileMapAtlas#TileMapAtlas TileMapAtlas preloaded module
-
-
---------------------------------------------------------
--- the cc EventListenerTouchOneByOne
--- @field [parent=#cc] EventListenerTouchOneByOne#EventListenerTouchOneByOne EventListenerTouchOneByOne preloaded module
-
-
---------------------------------------------------------
--- the cc EventListenerTouchAllAtOnce
--- @field [parent=#cc] EventListenerTouchAllAtOnce#EventListenerTouchAllAtOnce EventListenerTouchAllAtOnce preloaded module
-
-
---------------------------------------------------------
--- the cc EventListenerKeyboard
--- @field [parent=#cc] EventListenerKeyboard#EventListenerKeyboard EventListenerKeyboard preloaded module
-
-
---------------------------------------------------------
--- the cc EventMouse
--- @field [parent=#cc] EventMouse#EventMouse EventMouse preloaded module
-
-
---------------------------------------------------------
--- the cc EventListenerMouse
--- @field [parent=#cc] EventListenerMouse#EventListenerMouse EventListenerMouse preloaded module
-
-
---------------------------------------------------------
--- the cc EventAcceleration
--- @field [parent=#cc] EventAcceleration#EventAcceleration EventAcceleration preloaded module
-
-
---------------------------------------------------------
--- the cc EventListenerAcceleration
--- @field [parent=#cc] EventListenerAcceleration#EventListenerAcceleration EventListenerAcceleration preloaded module
-
-
---------------------------------------------------------
--- the cc Timer
--- @field [parent=#cc] Timer#Timer Timer preloaded module
-
-
---------------------------------------------------------
--- the cc Scheduler
--- @field [parent=#cc] Scheduler#Scheduler Scheduler preloaded module
 
 
 --------------------------------------------------------
