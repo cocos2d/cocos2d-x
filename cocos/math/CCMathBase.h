@@ -33,4 +33,4 @@
 #endif
 
 
-#endif
+#endif // __CCMATHBASE_H__

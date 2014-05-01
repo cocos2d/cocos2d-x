@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include "CCShaderCache.h"
 #include "2d/CCGLProgram.h"
 #include "2d/ccCArray.h"
-#include "2d/CCDirector.h"
+#include "base/CCDirector.h"
 
 #include "deprecated/CCString.h" // For StringUtils::format
 

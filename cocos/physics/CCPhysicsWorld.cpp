@@ -44,9 +44,9 @@
 
 #include "2d/CCDrawNode.h"
 #include "2d/CCLayer.h"
-#include "2d/CCDirector.h"
-#include "2d/CCEventDispatcher.h"
-#include "2d/CCEventCustom.h"
+#include "base/CCDirector.h"
+#include "base/CCEventDispatcher.h"
+#include "base/CCEventCustom.h"
 
 #include <algorithm>
 

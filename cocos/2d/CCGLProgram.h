@@ -30,7 +30,7 @@ THE SOFTWARE.
 #ifndef __CCGLPROGRAM_H__
 #define __CCGLPROGRAM_H__
 
-#include "2d/ccMacros.h"
+#include "base/ccMacros.h"
 #include "base/CCRef.h"
 #include "CCGL.h"
 #include "math/CCMath.h"

@@ -27,7 +27,7 @@
 #define __CCSCROLLVIEW_H__
 
 #include "2d/CCLayer.h"
-#include "2d/CCEventListenerTouch.h"
+#include "base/CCEventListenerTouch.h"
 #include "2d/CCActionTween.h"
 #include "extensions/ExtensionMacros.h"
 

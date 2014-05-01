@@ -29,11 +29,11 @@ THE SOFTWARE.
 #include "cocostudio/CCDatas.h"
 #include "cocostudio/CCSkin.h"
 
-#include "2d/renderer/CCRenderer.h"
-#include "2d/renderer/CCGroupCommand.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCGroupCommand.h"
 #include "CCShaderCache.h"
 #include "CCDrawingPrimitives.h"
-#include "2d/CCDirector.h"
+#include "base/CCDirector.h"
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
 #include "Box2D/Box2D.h"

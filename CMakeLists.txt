@@ -138,10 +138,8 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/audio/include
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/2d
-  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/2d/renderer
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/2d/platform
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/base
-  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/math
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/deprecated
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/physics
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/editor-support
@@ -237,6 +235,9 @@ add_subdirectory(cocos/audio)
 
 # cocos base library
 add_subdirectory(cocos/base)
+
+# cocos renderer library
+add_subdirectory(cocos/renderer)
 
 # cocos math library
 add_subdirectory(cocos/math)

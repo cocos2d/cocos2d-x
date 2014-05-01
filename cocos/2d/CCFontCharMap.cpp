@@ -26,7 +26,7 @@
 #include "CCFontCharMap.h"
 #include "CCFontAtlas.h"
 #include "2d/platform/CCFileUtils.h"
-#include "2d/CCDirector.h"
+#include "base/CCDirector.h"
 #include "CCTextureCache.h"
 #include "ccUTF8.h"
 

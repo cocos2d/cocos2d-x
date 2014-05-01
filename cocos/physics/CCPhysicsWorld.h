@@ -25,12 +25,12 @@
 #ifndef __CCPHYSICS_WORLD_H__
 #define __CCPHYSICS_WORLD_H__
 
-#include "2d/ccConfig.h"
+#include "base/ccConfig.h"
 #if CC_USE_PHYSICS
 
 #include "base/CCVector.h"
 #include "base/CCRef.h"
-#include "base/CCGeometry.h"
+#include "math/CCGeometry.h"
 
 #include <list>
 

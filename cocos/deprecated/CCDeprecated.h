@@ -30,8 +30,8 @@
 #define __COCOS2D_CCDEPRECATED_H__
 
 #include <math.h>
-#include "base/CCGeometry.h"
-#include "2d/ccTypes.h"
+#include "math/CCGeometry.h"
+#include "base/ccTypes.h"
 
 NS_CC_BEGIN
 

@@ -33,7 +33,7 @@
 #include "CCDirectorCaller.h"
 #include "CCGLView.h"
 #include "CCSet.h"
-#include "2d/CCTouch.h"
+#include "base/CCTouch.h"
 
 NS_CC_BEGIN
 

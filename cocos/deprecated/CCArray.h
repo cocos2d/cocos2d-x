@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include <vector>
 #include <algorithm>
 #include "base/CCRef.h"
-#include "2d/ccMacros.h"
+#include "base/ccMacros.h"
 #else
 #include "2d/ccCArray.h"
 #endif

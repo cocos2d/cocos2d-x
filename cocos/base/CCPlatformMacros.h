@@ -28,7 +28,7 @@ Copyright (c) 2013-2014 Chukong Technologies
 /**
  * define some platform specific macros
  */
-#include "2d/ccConfig.h"
+#include "base/ccConfig.h"
 #include "base/CCPlatformConfig.h"
 #include "CCPlatformDefine.h"
 

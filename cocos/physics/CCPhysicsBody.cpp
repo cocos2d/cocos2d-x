@@ -766,7 +766,7 @@ void PhysicsBody::update(float delta)
         Node* parent = _node->getParent();
         Layer* layer = &_world->getLayer();
         
-        Point position = parent != layer ? parent->convertToNodeSpace(layer->convertToWorldSpace(getPosition())) : getPosition();
+        Vector2 position = parent != layer ? parent->convertToNodeSpace(layer->convertToWorldSpace(getPosition())) : getPosition();
         float rotation = getRotation();
         for (; parent != layer; parent = parent->getParent())
         {

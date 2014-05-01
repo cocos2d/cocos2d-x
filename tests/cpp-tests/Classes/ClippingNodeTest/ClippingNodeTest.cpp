@@ -7,7 +7,7 @@
 
 #include "ClippingNodeTest.h"
 #include "../testResource.h"
-#include "2d/renderer/CCRenderer.h"
+#include "renderer/CCRenderer.h"
 
 enum {
 	kTagTitleLabel = 1,
