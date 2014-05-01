@@ -65,7 +65,7 @@ Layer::Layer()
 , _swallowsTouches(true)
 {
     _ignoreAnchorPointForPosition = true;
-    setAnchorPoint(Point(0.5f, 0.5f));
+    setAnchorPoint(Vector2(0.5f, 0.5f));
 }
 
 Layer::~Layer()
