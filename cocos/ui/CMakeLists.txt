@@ -1,35 +1,26 @@
-set(GUI_SRC
-  UIWidget.cpp
-  UILayout.cpp
-  UILayoutParameter.cpp
-  UILayoutDefine.cpp
-  CocosGUI.cpp
-  UIHelper.cpp
-  UIListView.cpp
-  UIPageView.cpp
-  UIScrollView.cpp
-  UIButton.cpp
-  UICheckBox.cpp
-  UIImageView.cpp
-  UIText.cpp
-  UITextAtlas.cpp
-  UITextBMFont.cpp
-  UILoadingBar.cpp
-  UISlider.cpp
-  UITextField.cpp
-  UIRichText.cpp
-  CCProtectedNode.cpp
-  UIHBox.cpp
-  UIVBox.cpp
-  UIRelativeBox.cpp
+set(COCOS_UI_SRC
+  ui/CCProtectedNode.cpp
+  ui/CocosGUI.cpp
+  ui/UIButton.cpp
+  ui/UICheckBox.cpp
+  ui/UIHBox.cpp
+  ui/UIHelper.cpp
+  ui/UIImageView.cpp
+  ui/UILayout.cpp
+  ui/UILayoutDefine.cpp
+  ui/UILayoutParameter.cpp
+  ui/UIListView.cpp
+  ui/UILoadingBar.cpp
+  ui/UIPageView.cpp
+  ui/UIRelativeBox.cpp
+  ui/UIRichText.cpp
+  ui/UIScrollView.cpp
+  ui/UISlider.cpp
+  ui/UITextAtlas.cpp
+  ui/UITextBMFont.cpp
+  ui/UIText.cpp
+  ui/UITextField.cpp
+  ui/UIVBox.cpp
+  ui/UIWidget.cpp
 )
 
-add_library(ui STATIC
-  ${GUI_SRC}
-)
-
-set_target_properties(ui
-    PROPERTIES
-    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-)
