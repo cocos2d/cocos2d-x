@@ -87,12 +87,12 @@
 --------------------------------
 -- overload function: initWithString(char, cc.FontDefinition)
 --          
--- overload function: initWithString(char, char, float, size_table, cc.TextHAlignment, cc.TextVAlignment)
+-- overload function: initWithString(char, string, float, size_table, cc.TextHAlignment, cc.TextVAlignment)
 --          
 -- @function [parent=#Texture2D] initWithString
 -- @param self
 -- @param #char char
--- @param #char char
+-- @param #string str
 -- @param #float float
 -- @param #size_table size
 -- @param #cc.TextHAlignment texthalignment
