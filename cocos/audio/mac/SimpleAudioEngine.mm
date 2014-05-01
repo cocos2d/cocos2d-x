@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "audio/include/SimpleAudioEngine.h"
-#include "audio/include/SimpleAudioEngine_objc.h"
+#include "SimpleAudioEngine_objc.h"
 #include <string>
 
 #include "CCFileUtils.h"
