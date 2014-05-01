@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
 <map version="1.0" orientation="orthogonal" width="12" height="12" tilewidth="101" tileheight="81">
  <tileset firstgid="1" name="Untitled" tilewidth="101" tileheight="171" spacing="2" margin="2">
-  <image source="ortho-test1.png"/>
+  <image source="ortho-test1.png" width="1024" height="1024"/>
  </tileset>
  <layer name="grass" width="12" height="12">
   <data encoding="base64" compression="gzip">
