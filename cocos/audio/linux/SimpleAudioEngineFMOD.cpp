@@ -24,7 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #ifndef OPENAL
 
-#include "SimpleAudioEngine.h"
+#include "audio/include/SimpleAudioEngine.h"
 #include "FmodAudioPlayer.h"
 #include "cocos2d.h"
 USING_NS_CC;

@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCNodeGrid.h"
-#include "CCGrid.h"
+#include "2d/CCNodeGrid.h"
+#include "2d/CCGrid.h"
 
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCRenderer.h"

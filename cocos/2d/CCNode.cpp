@@ -32,8 +32,8 @@ THE SOFTWARE.
 
 #include "deprecated/CCString.h"
 #include "2d/ccCArray.h"
-#include "TransformUtils.h"
-#include "CCGrid.h"
+#include "math/TransformUtils.h"
+#include "2d/CCGrid.h"
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 #include "base/CCTouch.h"
@@ -50,8 +50,8 @@ THE SOFTWARE.
 #endif
 
 // externals
-#include "CCComponent.h"
-#include "CCComponentContainer.h"
+#include "2d/CCComponent.h"
+#include "2d/CCComponentContainer.h"
 
 
 

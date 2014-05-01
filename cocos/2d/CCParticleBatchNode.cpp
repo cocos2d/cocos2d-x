@@ -29,19 +29,19 @@
  */
 
 #include "CCParticleBatchNode.h"
-#include "CCTextureCache.h"
+#include "2d/CCTextureCache.h"
 #include "2d/CCTextureAtlas.h"
 #include "base/ccConfig.h"
 #include "base/ccMacros.h"
-#include "CCGrid.h"
+#include "2d/CCGrid.h"
 #include "CCParticleSystem.h"
-#include "CCShaderCache.h"
+#include "2d/CCShaderCache.h"
 #include "2d/CCGLProgram.h"
 #include "2d/ccGLStateCache.h"
 #include "base/base64.h"
 #include "base/ZipUtils.h"
 #include "2d/platform/CCFileUtils.h"
-#include "CCProfiling.h"
+#include "base/CCProfiling.h"
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCRenderer.h"
 

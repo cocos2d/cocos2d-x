@@ -25,7 +25,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCScene.h"
+#include "2d/CCScene.h"
 #include "base/CCDirector.h"
 #include "2d/CCLayer.h"
 #include "2d/CCSprite.h"

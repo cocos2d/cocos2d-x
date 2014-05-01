@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCVertex.h"
+#include "2d/CCVertex.h"
 #include "base/ccMacros.h"
 
 NS_CC_BEGIN

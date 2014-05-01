@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "2d/CCGLProgram.h"
 #include "base/CCDirector.h"
 #include "base/ccConfig.h"
-#include "CCConfiguration.h"
+#include "base/CCConfiguration.h"
 
 NS_CC_BEGIN
 

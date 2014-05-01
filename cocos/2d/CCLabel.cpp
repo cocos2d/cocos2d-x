@@ -24,10 +24,10 @@
  ****************************************************************************/
 
 #include "2d/CCLabel.h"
-#include "CCFontAtlasCache.h"
+#include "2d/CCFontAtlasCache.h"
 #include "CCLabelTextFormatter.h"
 #include "2d/CCSprite.h"
-#include "CCShaderCache.h"
+#include "2d/CCShaderCache.h"
 #include "ccUTF8.h"
 #include "2d/CCSpriteFrame.h"
 #include "base/CCDirector.h"
@@ -39,7 +39,7 @@
 #include "base/CCEventCustom.h"
 #include "2d/platform/CCFileUtils.h"
 #include "deprecated/CCString.h"
-#include "CCProfiling.h"
+#include "base/CCProfiling.h"
 
 NS_CC_BEGIN
 

@@ -23,8 +23,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCFontAtlas.h"
-#include "CCFontFreeType.h"
+#include "2d/CCFontAtlas.h"
+#include "2d/CCFontFreeType.h"
 #include "ccUTF8.h"
 #include "base/CCDirector.h"
 #include "base/CCEventListenerCustom.h"

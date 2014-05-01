@@ -31,7 +31,7 @@
 #include "base/CCEventListenerKeyboard.h"
 #include "base/CCEventListenerCustom.h"
 
-#include "CCScene.h"
+#include "2d/CCScene.h"
 #include "base/CCDirector.h"
 #include "base/CCEventType.h"
 

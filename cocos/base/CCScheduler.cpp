@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "base/CCScheduler.h"
 #include "base/ccMacros.h"
 #include "base/CCDirector.h"
-#include "utlist.h"
+#include "2d/utlist.h"
 #include "2d/ccCArray.h"
 #include "2d/CCScriptSupport.h"
 

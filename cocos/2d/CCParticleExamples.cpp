@@ -26,7 +26,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "CCParticleExamples.h"
 #include "base/CCDirector.h"
-#include "CCTextureCache.h"
+#include "2d/CCTextureCache.h"
 #include "firePngData.h"
 #include "2d/platform/CCImage.h"
 
