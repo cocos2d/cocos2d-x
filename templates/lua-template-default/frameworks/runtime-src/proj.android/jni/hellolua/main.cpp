@@ -1,7 +1,6 @@
 #include "AppDelegate.h"
 #include "cocos2d.h"
-#include "CCEventType.h"
-#include "platform/android/jni/JniHelper.h"
+#include "2d/platform/android/jni/JniHelper.h"
 #include <jni.h>
 #include <android/log.h>
 

@@ -33,7 +33,7 @@ spine-cocos2dx.cpp
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../2d \
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/../.. \
 $(LOCAL_PATH)/..
 
 LOCAL_CFLAGS += -Wno-psabi
@@ -43,4 +43,4 @@ LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
 
 include $(BUILD_STATIC_LIBRARY)
 
-$(call import-module,2d)
+$(call import-module,.)

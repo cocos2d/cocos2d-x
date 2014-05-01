@@ -94,7 +94,7 @@ include $(BUILD_STATIC_LIBRARY)
 
 $(call import-module,lua/luajit/prebuilt/android)
 $(call import-module,extensions)
-$(call import-module,2d)
+$(call import-module,.)
 $(call import-module,websockets/prebuilt/android)
 $(call import-module,network)
 $(call import-module,editor-support/cocostudio)
