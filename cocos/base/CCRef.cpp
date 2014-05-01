@@ -62,13 +62,15 @@ Ref::~Ref()
 void Ref::retain()
 {
     CCASSERT(_referenceCount > 0, "reference count should greater than 0");
-    ++_referenceCount;
+//    ++_referenceCount;
+    __sync_add_and_fetch(&_referenceCount, 1);
 }
 
 void Ref::release()
 {
     CCASSERT(_referenceCount > 0, "reference count should greater than 0");
-    --_referenceCount;
+//    --_referenceCount;
+    __sync_add_and_fetch(&_referenceCount, -1);
     
     if (_referenceCount == 0)
     {
