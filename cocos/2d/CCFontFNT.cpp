@@ -23,14 +23,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCFontFNT.h"
+#include "2d/CCFontFNT.h"
 #include "2d/uthash.h"
-#include "CCConfiguration.h"
+#include "base/CCConfiguration.h"
 #include "base/CCDirector.h"
-#include "CCFontAtlas.h"
+#include "2d/CCFontAtlas.h"
 #include "base/CCMap.h"
 #include "deprecated/CCString.h"
-#include "CCTextureCache.h"
+#include "2d/CCTextureCache.h"
 #include "ccUTF8.h"
 #include "2d/platform/CCFileUtils.h"
 

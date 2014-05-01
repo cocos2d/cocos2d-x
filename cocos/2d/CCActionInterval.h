@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include "2d/CCAction.h"
 #include "2d/CCProtocols.h"
 #include "2d/CCSpriteFrame.h"
-#include "CCAnimation.h"
+#include "2d/CCAnimation.h"
 #include "base/CCVector.h"
 #include <vector>
 

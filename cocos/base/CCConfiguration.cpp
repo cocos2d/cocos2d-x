@@ -24,7 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCConfiguration.h"
+#include "base/CCConfiguration.h"
 #include <string.h>
 #include "base/ccMacros.h"
 #include "base/ccConfig.h"

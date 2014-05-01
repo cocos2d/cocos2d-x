@@ -34,20 +34,20 @@ THE SOFTWARE.
 #include "2d/CCTexture2D.h"
 #include "base/ccConfig.h"
 #include "base/ccMacros.h"
-#include "CCConfiguration.h"
+#include "base/CCConfiguration.h"
 #include "2d/platform/CCImage.h"
 #include "CCGL.h"
-#include "ccUtils.h"
+#include "2d/ccUtils.h"
 #include "base/CCPlatformMacros.h"
 #include "base/CCDirector.h"
 #include "2d/CCGLProgram.h"
 #include "2d/ccGLStateCache.h"
-#include "CCShaderCache.h"
+#include "2d/CCShaderCache.h"
 #include "2d/platform/CCDevice.h"
 #include "deprecated/CCString.h"
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    #include "CCTextureCache.h"
+    #include "2d/CCTextureCache.h"
 #endif
 
 NS_CC_BEGIN
