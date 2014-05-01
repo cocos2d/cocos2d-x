@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "audio/include/SimpleAudioEngine.h"
-#include "audio/include/SimpleAudioEngine_objc.h"
+#include "SimpleAudioEngine_objc.h"
 #include "cocos2d.h"
 USING_NS_CC;
 
