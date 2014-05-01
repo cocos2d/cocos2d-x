@@ -340,18 +340,11 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         s.height = attributeDict["height"].asFloat();
         layer->_layerSize = s;
 
-        layer->_visible = attributeDict["visible"].asBool();
+        Value& visibleValue = attributeDict["visible"];
+        layer->_visible = visibleValue.isNull() ? true : visibleValue.asBool();
 
         Value& opacityValue = attributeDict["opacity"];
-
-        if( !opacityValue.isNull() )
-        {
-            layer->_opacity = (unsigned char)(255.0f * opacityValue.asFloat());
-        }
-        else
-        {
-            layer->_opacity = 255;
-        }
+        layer->_opacity = opacityValue.isNull() ? 255 : (unsigned char)(255.0f * opacityValue.asFloat());
 
         float x = attributeDict["x"].asFloat();
         float y = attributeDict["y"].asFloat();
