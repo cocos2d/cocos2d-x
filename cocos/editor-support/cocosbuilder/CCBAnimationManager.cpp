@@ -4,7 +4,7 @@
 #include "CCBReader.h"
 #include "CCBKeyframe.h"
 #include "CCNode+CCBRelativePositioning.h"
-#include "SimpleAudioEngine.h"
+#include "audio/include/SimpleAudioEngine.h"
 #include "CCBSelectorResolver.h"
 
 #include <string>

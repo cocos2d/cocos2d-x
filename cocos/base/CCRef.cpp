@@ -24,7 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "base/CCRef.h"
-#include "CCAutoreleasePool.h"
+#include "base/CCAutoreleasePool.h"
 #include "base/ccMacros.h"
 #include "2d/CCScriptSupport.h"
 

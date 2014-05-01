@@ -25,10 +25,10 @@
 
 #include <sstream>
 
-#include "CCFontAtlasCache.h"
+#include "2d/CCFontAtlasCache.h"
 
-#include "CCFontFNT.h"
-#include "CCFontFreeType.h"
+#include "2d/CCFontFNT.h"
+#include "2d/CCFontFreeType.h"
 #include "CCFontCharMap.h"
 #include "base/CCDirector.h"
 

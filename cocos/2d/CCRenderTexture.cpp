@@ -24,19 +24,19 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCConfiguration.h"
-#include "CCRenderTexture.h"
+#include "base/CCConfiguration.h"
+#include "2d/CCRenderTexture.h"
 #include "base/CCDirector.h"
 #include "2d/platform/CCImage.h"
 #include "2d/CCGLProgram.h"
 #include "2d/ccGLStateCache.h"
-#include "CCConfiguration.h"
-#include "ccUtils.h"
-#include "CCTextureCache.h"
+#include "base/CCConfiguration.h"
+#include "2d/ccUtils.h"
+#include "2d/CCTextureCache.h"
 #include "2d/platform/CCFileUtils.h"
 #include "CCGL.h"
 #include "base/CCEventType.h"
-#include "CCGrid.h"
+#include "2d/CCGrid.h"
 
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGroupCommand.h"

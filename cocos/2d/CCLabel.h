@@ -30,7 +30,7 @@
 #include "2d/CCSpriteBatchNode.h"
 #include "base/ccTypes.h"
 #include "renderer/CCCustomCommand.h"
-#include "CCFontAtlas.h"
+#include "2d/CCFontAtlas.h"
 
 NS_CC_BEGIN
 

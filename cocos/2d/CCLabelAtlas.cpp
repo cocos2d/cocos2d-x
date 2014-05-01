@@ -26,14 +26,14 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "CCLabelAtlas.h"
 #include "2d/CCTextureAtlas.h"
-#include "CCTextureCache.h"
-#include "CCDrawingPrimitives.h"
+#include "2d/CCTextureCache.h"
+#include "2d/CCDrawingPrimitives.h"
 #include "base/ccConfig.h"
-#include "CCShaderCache.h"
+#include "2d/CCShaderCache.h"
 #include "2d/CCGLProgram.h"
 #include "2d/ccGLStateCache.h"
 #include "base/CCDirector.h"
-#include "TransformUtils.h"
+#include "math/TransformUtils.h"
 #include "2d/platform/CCFileUtils.h"
 // external
 #include "deprecated/CCString.h"

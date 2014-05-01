@@ -36,7 +36,7 @@ THE SOFTWARE.
  *
  */
 
-#include "CCDrawingPrimitives.h"
+#include "2d/CCDrawingPrimitives.h"
 
 #include <string.h>
 #include <cmath>
@@ -46,7 +46,7 @@ THE SOFTWARE.
 #include "CCGL.h"
 #include "base/CCDirector.h"
 #include "2d/ccGLStateCache.h"
-#include "CCShaderCache.h"
+#include "2d/CCShaderCache.h"
 #include "2d/CCGLProgram.h"
 #include "2d/CCActionCatmullRom.h"
 #include "renderer/CCRenderer.h"

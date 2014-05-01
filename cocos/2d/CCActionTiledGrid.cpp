@@ -24,10 +24,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "2d/CCActionTiledGrid.h"
+#include "2d/CCGrid.h"
+#include "2d/CCNodeGrid.h"
 #include "base/CCDirector.h"
 #include "base/ccMacros.h"
-#include "CCGrid.h"
-#include "CCNodeGrid.h"
 #include <stdlib.h>
 
 NS_CC_BEGIN

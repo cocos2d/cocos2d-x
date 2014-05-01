@@ -102,7 +102,6 @@ set(COCOS2D_SRC
   CCUserDefaultAndroid.cpp
   CCVertex.cpp
   TGAlib.cpp
-  TransformUtils.cpp
   ccCArray.cpp
   ccGLStateCache.cpp
   ccShaders.cpp

@@ -25,11 +25,11 @@
  *
  */
 
-#include "CCClippingNode.h"
+#include "2d/CCClippingNode.h"
 #include "2d/CCGLProgram.h"
-#include "CCShaderCache.h"
+#include "2d/CCShaderCache.h"
+#include "2d/CCDrawingPrimitives.h"
 #include "base/CCDirector.h"
-#include "CCDrawingPrimitives.h"
 
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGroupCommand.h"

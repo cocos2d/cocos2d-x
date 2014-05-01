@@ -79,9 +79,6 @@
     <Filter Include="platform\etc">
       <UniqueIdentifier>{47fda93e-6eb4-4abc-b5bc-725bf667a395}</UniqueIdentifier>
     </Filter>
-    <Filter Include="event_dispatcher">
-      <UniqueIdentifier>{3ff2746c-a91b-4b86-93b7-43a9ec14825b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="physics">
       <UniqueIdentifier>{08593631-5bf5-46aa-9436-62595c4f7bf6}</UniqueIdentifier>
     </Filter>
@@ -134,42 +131,6 @@
     </ClCompile>
     <ClCompile Include="CCGrid.cpp">
       <Filter>effects</Filter>
-    </ClCompile>
-    <ClCompile Include="CCEventDispatcher.cpp">
-      <Filter>event_dispatcher</Filter>
-    </ClCompile>
-    <ClCompile Include="CCEventKeyboard.cpp">
-      <Filter>event_dispatcher</Filter>
-    </ClCompile>
-    <ClCompile Include="CCEventListener.cpp">
-      <Filter>event_dispatcher</Filter>
-    </ClCompile>
-    <ClCompile Include="CCEventListenerAcceleration.cpp">
-      <Filter>event_dispatcher</Filter>
-    </ClCompile>
-    <ClCompile Include="CCEventListenerCustom.cpp">
-      <Filter>event_dispatcher</Filter>
-    </ClCompile>
-    <ClCompile Include="CCEventListenerKeyboard.cpp">
-      <Filter>event_dispatcher</Filter>
-    </ClCompile>
-    <ClCompile Include="CCEventListenerTouch.cpp">
-      <Filter>event_dispatcher</Filter>
-    </ClCompile>
-    <ClCompile Include="CCEventTouch.cpp">
-      <Filter>event_dispatcher</Filter>
-    </ClCompile>
-    <ClCompile Include="CCEvent.cpp">
-      <Filter>event_dispatcher</Filter>
-    </ClCompile>
-    <ClCompile Include="CCEventAcceleration.cpp">
-      <Filter>event_dispatcher</Filter>
-    </ClCompile>
-    <ClCompile Include="CCEventCustom.cpp">
-      <Filter>event_dispatcher</Filter>
-    </ClCompile>
-    <ClCompile Include="CCTouch.cpp">
-      <Filter>event_dispatcher</Filter>
     </ClCompile>
     <ClCompile Include="CCLayer.cpp">
       <Filter>layers_scenes_transitions_nodes</Filter>
@@ -427,12 +388,6 @@
     <ClCompile Include="ccUtils.cpp">
       <Filter>support</Filter>
     </ClCompile>
-    <ClCompile Include="CCEventListenerMouse.cpp">
-      <Filter>event_dispatcher</Filter>
-    </ClCompile>
-    <ClCompile Include="CCEventMouse.cpp">
-      <Filter>event_dispatcher</Filter>
-    </ClCompile>
     <ClCompile Include="..\physics\chipmunk\CCPhysicsBodyInfo_chipmunk.cpp">
       <Filter>physics\chipmunk</Filter>
     </ClCompile>
@@ -643,42 +598,6 @@
     </ClInclude>
     <ClInclude Include="CCGrid.h">
       <Filter>effects</Filter>
-    </ClInclude>
-    <ClInclude Include="CCEventDispatcher.h">
-      <Filter>event_dispatcher</Filter>
-    </ClInclude>
-    <ClInclude Include="CCEventKeyboard.h">
-      <Filter>event_dispatcher</Filter>
-    </ClInclude>
-    <ClInclude Include="CCEventListener.h">
-      <Filter>event_dispatcher</Filter>
-    </ClInclude>
-    <ClInclude Include="CCEventListenerAcceleration.h">
-      <Filter>event_dispatcher</Filter>
-    </ClInclude>
-    <ClInclude Include="CCEventListenerCustom.h">
-      <Filter>event_dispatcher</Filter>
-    </ClInclude>
-    <ClInclude Include="CCEventListenerKeyboard.h">
-      <Filter>event_dispatcher</Filter>
-    </ClInclude>
-    <ClInclude Include="CCEventListenerTouch.h">
-      <Filter>event_dispatcher</Filter>
-    </ClInclude>
-    <ClInclude Include="CCEventTouch.h">
-      <Filter>event_dispatcher</Filter>
-    </ClInclude>
-    <ClInclude Include="CCEvent.h">
-      <Filter>event_dispatcher</Filter>
-    </ClInclude>
-    <ClInclude Include="CCEventAcceleration.h">
-      <Filter>event_dispatcher</Filter>
-    </ClInclude>
-    <ClInclude Include="CCEventCustom.h">
-      <Filter>event_dispatcher</Filter>
-    </ClInclude>
-    <ClInclude Include="CCTouch.h">
-      <Filter>event_dispatcher</Filter>
     </ClInclude>
     <ClInclude Include="CCProtocols.h">
       <Filter>include</Filter>
@@ -1013,12 +932,6 @@
     </ClInclude>
     <ClInclude Include="..\..\external\unzip\unzip.h">
       <Filter>support\zip_support</Filter>
-    </ClInclude>
-    <ClInclude Include="CCEventListenerMouse.h">
-      <Filter>event_dispatcher</Filter>
-    </ClInclude>
-    <ClInclude Include="CCEventMouse.h">
-      <Filter>event_dispatcher</Filter>
     </ClInclude>
     <ClInclude Include="..\physics\chipmunk\CCPhysicsBodyInfo_chipmunk.h">
       <Filter>physics\chipmunk</Filter>
