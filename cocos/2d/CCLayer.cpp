@@ -63,19 +63,14 @@ Layer::Layer()
 , _accelerationListener(nullptr)
 , _touchMode(Touch::DispatchMode::ALL_AT_ONCE)
 , _swallowsTouches(true)
-#if CC_USE_PHYSICS
-, _physicsWorld(nullptr)
-#endif
 {
     _ignoreAnchorPointForPosition = true;
-    setAnchorPoint(Vector2(0.5f, 0.5f));
+    setAnchorPoint(Point(0.5f, 0.5f));
 }
 
 Layer::~Layer()
 {
-#if CC_USE_PHYSICS
-    CC_SAFE_DELETE(_physicsWorld);
-#endif
+
 }
 
 bool Layer::init()
@@ -438,93 +433,6 @@ std::string Layer::getDescription() const
 {
     return StringUtils::format("<Layer | Tag = %d>", _tag);
 }
-
-#if CC_USE_PHYSICS
-void Layer::onEnter()
-{
-    Node::onEnter();
-    
-    if (_physicsWorld != nullptr)
-    {
-        this->schedule(schedule_selector(Layer::updatePhysics));
-    }
-}
-
-void Layer::onExit()
-{
-    Node::onExit();
-    
-    if (_physicsWorld != nullptr)
-    {
-        this->unschedule(schedule_selector(Layer::updatePhysics));
-    }
-}
-
-void Layer::updatePhysics(float delta)
-{
-    if (nullptr != _physicsWorld)
-    {
-        _physicsWorld->update(delta);
-    }
-}
-
-Layer* Layer::createWithPhysics()
-{
-    Layer *ret = new Layer();
-    if (ret && ret->initWithPhysics())
-    {
-        ret->autorelease();
-        return ret;
-    }
-    else
-    {
-        CC_SAFE_DELETE(ret);
-        return nullptr;
-    }
-}
-
-bool Layer::initWithPhysics()
-{
-    bool ret = false;
-    do
-    {
-        Director * director;
-        CC_BREAK_IF( ! (director = Director::getInstance()) );
-        this->setContentSize(director->getWinSize());
-        CC_BREAK_IF(! (_physicsWorld = PhysicsWorld::construct(*this)));
-
-        // success
-        ret = true;
-    } while (0);
-    return ret;
-}
-
-void Layer::addChildToPhysicsWorld(Node* child)
-{
-    if (_physicsWorld)
-    {
-        std::function<void(Node*)> addToPhysicsWorldFunc = nullptr;
-        addToPhysicsWorldFunc = [this, &addToPhysicsWorldFunc](Node* node) -> void
-        {
-            if (node->getPhysicsBody())
-            {
-                _physicsWorld->addBody(node->getPhysicsBody());
-                
-                node->updatePhysicsBodyPosition(this);
-                node->updatePhysicsBodyRotation(this);
-            }
-            
-            auto& children = node->getChildren();
-            for( const auto &n : children) {
-                addToPhysicsWorldFunc(n);
-            }
-        };
-        
-        addToPhysicsWorldFunc(child);
-    }
-}
-#endif
-
 
 __LayerRGBA::__LayerRGBA()
 {
