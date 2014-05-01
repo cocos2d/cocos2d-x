@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "SimpleAudioEngine.h"
-#include "SimpleAudioEngine_objc.h"
+#include "audio/include/SimpleAudioEngine.h"
+#include "audio/include/SimpleAudioEngine_objc.h"
 #include <string>
 
 #include "CCFileUtils.h"

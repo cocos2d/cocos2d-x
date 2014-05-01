@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventKeyboard.h"
 #include "base/CCEventMouse.h"
-#include "CCIMEDispatcher.h"
+#include "2d/CCIMEDispatcher.h"
 
 #include <unordered_map>
 

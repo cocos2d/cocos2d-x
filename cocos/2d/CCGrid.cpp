@@ -24,16 +24,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "base/ccMacros.h"
-#include "CCGrid.h"
+#include "2d/CCGrid.h"
 #include "base/CCDirector.h"
 #include "CCGrabber.h"
-#include "ccUtils.h"
+#include "2d/ccUtils.h"
 #include "2d/CCGLProgram.h"
-#include "CCShaderCache.h"
+#include "2d/CCShaderCache.h"
 #include "2d/ccGLStateCache.h"
 #include "CCGL.h"
 #include "renderer/CCRenderer.h"
-#include "TransformUtils.h"
+#include "math/TransformUtils.h"
 
 NS_CC_BEGIN
 // implementation of GridBase

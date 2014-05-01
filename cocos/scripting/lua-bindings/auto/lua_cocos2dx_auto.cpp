@@ -1,6 +1,6 @@
 #include "lua_cocos2dx_auto.hpp"
 #include "cocos2d.h"
-#include "SimpleAudioEngine.h"
+#include "audio/include/SimpleAudioEngine.h"
 #include "CCProtectedNode.h"
 #include "tolua_fix.h"
 #include "LuaBasicConversions.h"
