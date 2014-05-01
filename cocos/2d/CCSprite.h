@@ -31,14 +31,14 @@ THE SOFTWARE.
 #include "2d/CCNode.h"
 #include "2d/CCProtocols.h"
 #include "2d/CCTextureAtlas.h"
-#include "2d/ccTypes.h"
+#include "base/ccTypes.h"
 #include <string>
 #ifdef EMSCRIPTEN
 #include "CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
 #include "physics/CCPhysicsBody.h"
-#include "2d/renderer/CCQuadCommand.h"
-#include "2d/renderer/CCCustomCommand.h"
+#include "renderer/CCQuadCommand.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 

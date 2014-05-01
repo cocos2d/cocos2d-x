@@ -32,7 +32,7 @@
 #include <stdio.h>
 
 #import <UIKit/UIAlert.h>
-#include "2d/CCDirector.h"
+#include "base/CCDirector.h"
 #include "base/CCConsole.h"
 
 NS_CC_BEGIN

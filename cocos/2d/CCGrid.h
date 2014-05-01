@@ -28,9 +28,9 @@ THE SOFTWARE.
 
 #include "base/CCRef.h"
 #include "2d/CCNode.h"
-#include "2d/ccTypes.h"
+#include "base/ccTypes.h"
 #include "2d/CCTexture2D.h"
-#include "2d/CCDirector.h"
+#include "base/CCDirector.h"
 #ifdef EMSCRIPTEN
 #include "CCGLBufferedNode.h"
 #endif // EMSCRIPTEN

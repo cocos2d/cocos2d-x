@@ -2,8 +2,8 @@
 #include "ShaderTest.h"
 #include "../testResource.h"
 #include "cocos2d.h"
-#include "2d/renderer/CCRenderCommand.h"
-#include "2d/renderer/CCCustomCommand.h"
+#include "renderer/CCRenderCommand.h"
+#include "renderer/CCCustomCommand.h"
 
 namespace ShaderTest2
 {
@@ -693,9 +693,9 @@ OutlineShadingSpriteTest::OutlineShadingSpriteTest()
     if (ShaderTestDemo2::init()) {
         auto s = Director::getInstance()->getWinSize();
         OutlineSprite* sprite = OutlineSprite::createSprite("Images/grossini_dance_10.png");
-        sprite->setPosition(Point(s.width * 0.75, s.height/2));
+        sprite->setPosition(Vector2(s.width * 0.75, s.height/2));
         auto sprite2 = Sprite::create("Images/grossini_dance_10.png");
-        sprite2->setPosition(Point(s.width * 0.25, s.height/2));
+        sprite2->setPosition(Vector2(s.width * 0.25, s.height/2));
         addChild(sprite);
         addChild(sprite2);
     }

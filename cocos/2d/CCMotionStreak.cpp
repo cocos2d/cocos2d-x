@@ -28,11 +28,11 @@ THE SOFTWARE.
 #include "2d/ccGLStateCache.h"
 #include "2d/CCGLProgram.h"
 #include "CCShaderCache.h"
-#include "2d/ccMacros.h"
-#include "2d/CCDirector.h"
+#include "base/ccMacros.h"
+#include "base/CCDirector.h"
 #include "CCVertex.h"
-#include "2d/renderer/CCCustomCommand.h"
-#include "2d/renderer/CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
+#include "renderer/CCRenderer.h"
 
 NS_CC_BEGIN
 

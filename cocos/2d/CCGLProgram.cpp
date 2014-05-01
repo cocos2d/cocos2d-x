@@ -26,10 +26,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "2d/CCDirector.h"
+#include "base/CCDirector.h"
 #include "2d/CCGLProgram.h"
 #include "2d/ccGLStateCache.h"
-#include "2d/ccMacros.h"
+#include "base/ccMacros.h"
 #include "2d/platform/CCFileUtils.h"
 #include "2d/uthash.h"
 #include "deprecated/CCString.h"

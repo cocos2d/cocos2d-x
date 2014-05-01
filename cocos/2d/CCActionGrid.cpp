@@ -24,7 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "2d/CCActionGrid.h"
-#include "2d/CCDirector.h"
+#include "base/CCDirector.h"
 #include "CCGrid.h"
 #include "CCNodeGrid.h"
 

@@ -26,10 +26,10 @@
 #include "CCFontAtlas.h"
 #include "CCFontFreeType.h"
 #include "ccUTF8.h"
-#include "2d/CCDirector.h"
-#include "2d/CCEventListenerCustom.h"
-#include "2d/CCEventDispatcher.h"
-#include "2d/CCEventType.h"
+#include "base/CCDirector.h"
+#include "base/CCEventListenerCustom.h"
+#include "base/CCEventDispatcher.h"
+#include "base/CCEventType.h"
 
 NS_CC_BEGIN
 

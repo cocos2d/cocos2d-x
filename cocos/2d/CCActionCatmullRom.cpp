@@ -29,7 +29,7 @@
  *
  * Adapted from cocos2d-x to cocos2d-iphone by Ricardo Quesada
  */
-#include "2d/ccMacros.h"
+#include "base/ccMacros.h"
 #include "2d/CCActionCatmullRom.h"
 
 using namespace std;

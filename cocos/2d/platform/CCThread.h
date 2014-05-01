@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include <mutex>
 #include "2d/platform/CCCommon.h"
 #include "base/CCPlatformMacros.h"
-#include "2d/CCDirector.h"
+#include "base/CCDirector.h"
 
 NS_CC_BEGIN
 

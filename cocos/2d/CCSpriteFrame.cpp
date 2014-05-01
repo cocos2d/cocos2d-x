@@ -26,7 +26,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "CCTextureCache.h"
 #include "2d/CCSpriteFrame.h"
-#include "2d/CCDirector.h"
+#include "base/CCDirector.h"
 
 NS_CC_BEGIN
 

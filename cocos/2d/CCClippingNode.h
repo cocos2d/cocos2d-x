@@ -30,8 +30,8 @@
 
 #include "2d/CCNode.h"
 #include "CCGL.h"
-#include "2d/renderer/CCGroupCommand.h"
-#include "2d/renderer/CCCustomCommand.h"
+#include "renderer/CCGroupCommand.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 

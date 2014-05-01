@@ -24,11 +24,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "2d/CCMenu.h"
-#include "2d/CCDirector.h"
+#include "base/CCDirector.h"
 #include "CCApplication.h"
-#include "2d/CCTouch.h"
+#include "base/CCTouch.h"
 #include "CCStdC.h"
-#include "2d/CCEventListenerTouch.h"
+#include "base/CCEventListenerTouch.h"
 #include "deprecated/CCString.h"
 
 #include <vector>

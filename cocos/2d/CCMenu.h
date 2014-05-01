@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "2d/CCMenuItem.h"
 #include "2d/CCLayer.h"
 #include "base/CCVector.h"
-#include "2d/CCEventTouch.h"
+#include "base/CCEventTouch.h"
 #include "base/CCValue.h"
 
 NS_CC_BEGIN

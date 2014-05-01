@@ -28,8 +28,8 @@
  */
 
 #include "CCControlSlider.h"
-#include "2d/CCTouch.h"
-#include "2d/CCDirector.h"
+#include "base/CCTouch.h"
+#include "base/CCDirector.h"
 
 NS_CC_EXT_BEGIN
 

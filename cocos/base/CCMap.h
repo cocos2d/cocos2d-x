@@ -27,7 +27,7 @@
 
 #define USE_STD_UNORDERED_MAP 1
 
-#include "2d/ccMacros.h"
+#include "base/ccMacros.h"
 #include "base/CCRef.h"
 #include <vector>
 

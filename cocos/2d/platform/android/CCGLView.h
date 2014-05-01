@@ -30,7 +30,7 @@ THE SOFTWARE.
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
 #include "base/CCRef.h"
-#include "base/CCGeometry.h"
+#include "math/CCGeometry.h"
 #include "2d/platform/CCGLViewProtocol.h"
 
 NS_CC_BEGIN

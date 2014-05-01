@@ -28,19 +28,19 @@ THE SOFTWARE.
 #include "2d/CCTextureAtlas.h"
 #include "CCTextureCache.h"
 #include "CCDrawingPrimitives.h"
-#include "2d/ccConfig.h"
+#include "base/ccConfig.h"
 #include "CCShaderCache.h"
 #include "2d/CCGLProgram.h"
 #include "2d/ccGLStateCache.h"
-#include "2d/CCDirector.h"
+#include "base/CCDirector.h"
 #include "TransformUtils.h"
 #include "2d/platform/CCFileUtils.h"
 // external
 #include "deprecated/CCString.h"
 
 #if CC_LABELATLAS_DEBUG_DRAW
-#include "2d/renderer/CCRenderer.h"
-#include "2d/CCDirector.h"
+#include "renderer/CCRenderer.h"
+#include "base/CCDirector.h"
 #endif
 
 NS_CC_BEGIN

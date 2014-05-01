@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 #include "2d/CCSpriteFrame.h"
 #include "2d/CCSpriteFrameCache.h"
-#include "2d/CCDirector.h"
-#include "2d/renderer/CCRenderer.h"
+#include "base/CCDirector.h"
+#include "renderer/CCRenderer.h"
 
 #include "cocostudio/CCSkin.h"
 #include "cocostudio/CCTransformHelp.h"

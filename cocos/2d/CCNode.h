@@ -29,14 +29,14 @@
 #ifndef __CCNODE_H__
 #define __CCNODE_H__
 
-#include "2d/ccMacros.h"
-#include "base/CCAffineTransform.h"
+#include "base/ccMacros.h"
+#include "math/CCAffineTransform.h"
 #include "CCGL.h"
 #include "2d/ccGLStateCache.h"
 #include "2d/CCGLProgram.h"
 #include "2d/CCScriptSupport.h"
 #include "2d/CCProtocols.h"
-#include "2d/CCEventDispatcher.h"
+#include "base/CCEventDispatcher.h"
 #include "base/CCVector.h"
 #include "math/CCMath.h"
 

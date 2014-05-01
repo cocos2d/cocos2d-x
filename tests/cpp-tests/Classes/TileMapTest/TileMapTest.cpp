@@ -1,7 +1,5 @@
 #include "TileMapTest.h"
 #include "../testResource.h"
-#include "2d/renderer/CCRenderer.h"
-#include "2d/renderer/CCCustomCommand.h"
 
 enum 
 {

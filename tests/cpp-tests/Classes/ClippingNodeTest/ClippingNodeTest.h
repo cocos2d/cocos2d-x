@@ -3,7 +3,7 @@
 
 #include "../testBasic.h"
 #include "../BaseTest.h"
-#include "2d/renderer/CCCustomCommand.h"
+#include "renderer/CCCustomCommand.h"
 #include <list>
 
 class BaseClippingNodeTest : public BaseTest
