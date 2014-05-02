@@ -125,7 +125,8 @@ const char* CCBProxy::getNodeTypeName(Node* pNode)
         return "cc.ParticleSystemQuad";
     }
 
-    return "No Support";
+    return "cc.Node"
+    //return "No Support";
 }
 
 void CCBProxy::setCallback(Node* node,int handle, int controlEvents)
