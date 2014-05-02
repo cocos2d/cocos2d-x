@@ -73,11 +73,6 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
--- @function [parent=#PhysicsWorld] getScene 
--- @param self
--- @return Scene#Scene ret (return value: cc.Scene)
-        
---------------------------------
 -- @function [parent=#PhysicsWorld] setDebugDrawMask 
 -- @param self
 -- @param #int int
