@@ -84,7 +84,7 @@ def do_build(cocos_root, ndk_root, app_android_root,ndk_build_param,sdk_root,and
     if ndk_build_param == None:
         command = '%s -j%d -C %s %s' % (ndk_path, num_of_cpu, app_android_root, ndk_module_path)
     else:
-        command = '%s -j%d -C %s %s %s' % (ndk_path, num_of_cpu, app_android_root, ''.join(str(e) for e in ndk_build_param), ndk_module_path)
+        command = '%s -j%d -C %s %s %s' % (ndk_path, num_of_cpu, app_android_root, ' '.join(str(e) for e in ndk_build_param), ndk_module_path)
     if os.system(command) != 0:
         raise Exception("Build dynamic library for project [ " + app_android_root + " ] fails!")
     elif android_platform is not None:
@@ -125,6 +125,29 @@ def copy_resources(app_android_root):
     if os.path.isdir(resources_dir):
         copy_files(resources_dir, assets_dir)
 
+def vararg_callback(option, opt_str, value, parser):
+    assert value is None
+    value = []
+
+    def floatable(str):
+        try:
+            float(str)
+            return True
+        except ValueError:
+            return False
+
+    for arg in parser.rargs:
+        # stop on --foo like options
+        if arg[:2] == "--" and len(arg) > 2:
+            break
+        # stop on -a, but not on -3 or -3.0
+        if arg[:1] == "-" and len(arg) > 1 and not floatable(arg):
+            break
+        value.append(arg)
+
+    del parser.rargs[:len(value)]
+    setattr(parser.values, option.dest, value)
+
 def build(ndk_build_param,android_platform,build_mode):
 
     ndk_root = check_environment_variables()
@@ -156,7 +179,7 @@ def build(ndk_build_param,android_platform,build_mode):
 if __name__ == '__main__':
 
     parser = OptionParser()
-    parser.add_option("-n", "--ndk", dest="ndk_build_param", help='parameter for ndk-build')
+    parser.add_option("-n", "--ndk", dest="ndk_build_param", help='parameter for ndk-build', action="callback", callback=vararg_callback)
     parser.add_option("-p", "--platform", dest="android_platform", 
     help='parameter for android-update.Without the parameter,the script just build dynamic library for project. Valid android-platform are:[10|11|12|13|14|15|16|17|18|19]')
     parser.add_option("-b", "--build", dest="build_mode", 
