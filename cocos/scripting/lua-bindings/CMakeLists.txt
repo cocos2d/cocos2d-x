@@ -29,6 +29,7 @@ set(LUABINDING_SRC
 include_directories(
   auto
   manual
+  ../../audio/include
   ../../editor-support/cocosbuilder
   ../../editor-support/cocostudio
   ../../editor-support/spine
