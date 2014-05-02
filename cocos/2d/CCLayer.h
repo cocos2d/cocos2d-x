@@ -171,27 +171,6 @@ CC_CONSTRUCTOR_ACCESS:
 
     virtual bool init() override;
 
-#if CC_USE_PHYSICS
-public:
-    virtual void updatePhysics(float delta);
-    virtual void onEnter() override;
-    virtual void onExit() override;
-
-    inline PhysicsWorld* getPhysicsWorld() { return _physicsWorld; }
-    static Layer *createWithPhysics();
-
-CC_CONSTRUCTOR_ACCESS:
-    bool initWithPhysics();
-
-protected:
-    void addChildToPhysicsWorld(Node* child);
-
-    PhysicsWorld* _physicsWorld;
-
-    friend class Node;
-    friend class ProtectedNode;
-#endif // CC_USE_PHYSICS
-
 protected:
     //add the api for avoid use deprecated api
     void _addTouchListener();
