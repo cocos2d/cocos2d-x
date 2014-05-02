@@ -43,7 +43,7 @@
 #include "chipmunk/CCPhysicsHelper_chipmunk.h"
 
 #include "2d/CCDrawNode.h"
-#include "2d/CCLayer.h"
+#include "2d/CCScene.h"
 #include "base/CCDirector.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventCustom.h"
@@ -289,7 +289,7 @@ int PhysicsWorld::collisionBeginCallback(PhysicsContact& contact)
     {
         contact.setEventCode(PhysicsContact::EventCode::BEGIN);
         contact.setWorld(this);
-        _layer->getEventDispatcher()->dispatchEvent(&contact);
+        _scene->getEventDispatcher()->dispatchEvent(&contact);
     }
     
     return ret ? contact.resetResult() : false;
@@ -305,7 +305,7 @@ int PhysicsWorld::collisionPreSolveCallback(PhysicsContact& contact)
     
     contact.setEventCode(PhysicsContact::EventCode::PRESOLVE);
     contact.setWorld(this);
-    _layer->getEventDispatcher()->dispatchEvent(&contact);
+    _scene->getEventDispatcher()->dispatchEvent(&contact);
     
     return contact.resetResult();
 }
@@ -319,7 +319,7 @@ void PhysicsWorld::collisionPostSolveCallback(PhysicsContact& contact)
     
     contact.setEventCode(PhysicsContact::EventCode::POSTSOLVE);
     contact.setWorld(this);
-    _layer->getEventDispatcher()->dispatchEvent(&contact);
+    _scene->getEventDispatcher()->dispatchEvent(&contact);
 }
 
 void PhysicsWorld::collisionSeparateCallback(PhysicsContact& contact)
@@ -331,7 +331,7 @@ void PhysicsWorld::collisionSeparateCallback(PhysicsContact& contact)
     
     contact.setEventCode(PhysicsContact::EventCode::SEPERATE);
     contact.setWorld(this);
-    _layer->getEventDispatcher()->dispatchEvent(&contact);
+    _scene->getEventDispatcher()->dispatchEvent(&contact);
 }
 
 void PhysicsWorld::rayCast(PhysicsRayCastCallbackFunc func, const Vector2& point1, const Vector2& point2, void* data)
@@ -416,10 +416,10 @@ PhysicsShape* PhysicsWorld::getShape(const Vector2& point) const
     return shape == nullptr ? nullptr : PhysicsShapeInfo::getMap().find(shape)->second->getShape();
 }
 
-PhysicsWorld* PhysicsWorld::construct(Layer& layer)
+PhysicsWorld* PhysicsWorld::construct(Scene& scene)
 {
     PhysicsWorld * world = new PhysicsWorld();
-    if(world && world->init(layer))
+    if(world && world->init(scene))
     {
         return world;
     }
@@ -428,14 +428,14 @@ PhysicsWorld* PhysicsWorld::construct(Layer& layer)
     return nullptr;
 }
 
-bool PhysicsWorld::init(Layer& layer)
+bool PhysicsWorld::init(Scene& scene)
 {
     do
     {
         _info = new PhysicsWorldInfo();
         CC_BREAK_IF(_info == nullptr);
         
-        _layer = &layer;
+        _scene = &scene;
         
         _info->setGravity(_gravity);
         
@@ -911,7 +911,7 @@ PhysicsWorld::PhysicsWorld()
 , _updateRateCount(0)
 , _updateTime(0.0f)
 , _info(nullptr)
-, _layer(nullptr)
+, _scene(nullptr)
 , _delayDirty(false)
 , _debugDraw(nullptr)
 , _debugDrawMask(DEBUGDRAW_NONE)
@@ -932,7 +932,7 @@ PhysicsDebugDraw::PhysicsDebugDraw(PhysicsWorld& world)
 , _world(world)
 {
     _drawNode = DrawNode::create();
-    _world.getLayer().addChild(_drawNode);
+    _world.getScene().addChild(_drawNode);
 }
 
 PhysicsDebugDraw::~PhysicsDebugDraw()
