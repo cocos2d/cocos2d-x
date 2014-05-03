@@ -536,9 +536,51 @@ class SetEnvVar(object):
             print("    ->Command ant not found\n")
         return ret
 
+    def _get_android_path(self):
+        print("  ->Find command android in system...")
+        ret = None
+        if not self._isWindows():
+            import commands
+            state, result = commands.getstatusoutput("which android")
+            if state == 0:
+                ret = os.path.dirname(result)
+
+        if ret is not None:
+            print("    ->Path \"%s\" was found\n" % ret)
+        else:
+            print("    ->Command android not found\n")
+        return ret
+
+    def _get_ndkbuild_path(self):
+        print("  ->Find command ndk-build in system...")
+        ret = None
+        if not self._isWindows():
+            import commands
+            state, result = commands.getstatusoutput("which ndk-build")
+            if state == 0:
+                ret = os.path.dirname(result)
+
+        if ret is not None:
+            print("    ->Path \"%s\" was found\n" % ret)
+        else:
+            print("    ->Command ndk-build not found\n")
+        return ret
+
     def _find_value_from_sys(self, var_name):
         if var_name == ANT_ROOT:
             return self._get_ant_path()
+	elif var_name == NDK_ROOT:
+	    ndkpath = self._get_ndkbuild_path()
+	    if ndkpath is not None:
+	        return os.path.abspath(os.path.join(ndkpath,os.pardir))
+	    else :
+	        return None
+	elif var_name == ANDROID_SDK_ROOT:
+	    sdkpath = self._get_android_path()
+	    if sdkpath is not None:	
+                return os.path.abspath(os.path.join(sdkpath,os.pardir))
+	    else :
+		return None
         else:
             return None
 
