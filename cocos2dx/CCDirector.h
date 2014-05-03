@@ -364,7 +364,7 @@ public:
 
 protected:
 
-    void purgeDirector();
+    virtual void purgeDirector();
     bool m_bPurgeDirecotorInNextLoop; // this flag will be set to true in end()
     
     void setNextScene(void);
