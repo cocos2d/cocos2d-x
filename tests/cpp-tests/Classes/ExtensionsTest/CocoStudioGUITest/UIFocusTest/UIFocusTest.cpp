@@ -78,24 +78,47 @@ bool UIFocusTestHorizontal::init()
         
         Size winSize = Director::getInstance()->getVisibleSize();
         
-        HBox *layout = HBox::create();
-        layout->setPosition(Vector2(20, winSize.height/2 + 40));
-        _uiLayer->addChild(layout);
-        layout->setFocused(true);
-        _firstFocusedWidget = layout;
+        _horizontalLayout = HBox::create();
+        _horizontalLayout->setPosition(Vector2(20, winSize.height/2 + 40));
+        _uiLayer->addChild(_horizontalLayout);
+        _horizontalLayout->setFocused(true);
+        _horizontalLayout->setLoopFocus(true);
+        _firstFocusedWidget = _horizontalLayout;
         
         int count = 3;
         for (int i=0; i<count; ++i) {
             ImageView *w = ImageView::create("cocosui/scrollviewbg.png");
-            layout->addChild(w);
+            _horizontalLayout->addChild(w);
         }
         
+        _loopText = Text::create("loop enabled", "Airal", 20);
+        _loopText->setPosition(Vector2(winSize.width/2, winSize.height - 50));
+        _loopText->setColor(Color3B::GREEN);
+        this->addChild(_loopText);
         
+        auto btn = Button::create("cocosui/switch-mask.png");
+        btn->setTitleText("Toggle Loop");
+        btn->setPosition(Vector2(60, winSize.height - 50));
+        btn->setTitleColor(Color3B::RED);
+        btn->addTouchEventListener(this, toucheventselector(UIFocusTestHorizontal::toggleFocusLoop));
+        this->addChild(btn);
       
         
         return true;
     }
     return false;
+}
+
+void UIFocusTestHorizontal::toggleFocusLoop(cocos2d::Ref * pObjc, TouchEventType type)
+{
+    if (type == TouchEventType::TOUCH_EVENT_ENDED) {
+        _horizontalLayout->setLoopFocus(!_horizontalLayout->getLoopFocus());
+        if (_horizontalLayout->getLoopFocus()) {
+            _loopText->setText("loop enabled");
+        }else{
+            _loopText->setText("loop disabled");
+        }
+    }
 }
 
 void UIFocusTestHorizontal::onFocusChanged(cocos2d::ui::Widget *widgetLostFocus, cocos2d::ui::Widget *widgetGetFocus)

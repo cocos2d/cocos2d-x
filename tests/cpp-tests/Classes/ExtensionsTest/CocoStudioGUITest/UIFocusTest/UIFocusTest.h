@@ -40,8 +40,12 @@ public:
     virtual void onUpKeyPressed() ;
     virtual void onDownKeyPressed() ;
     virtual void onFocusChanged(Widget* widgetLostFocus, Widget* widgetGetFocus);
+    
+    void toggleFocusLoop(Ref*,TouchEventType);
 protected:
     UI_SCENE_CREATE_FUNC(UIFocusTestHorizontal);
+    Layout *_horizontalLayout;
+    Text *_loopText;
 };
 
 #endif /* defined(__cocos2d_tests__UIFocusTest__) */
