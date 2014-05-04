@@ -8,7 +8,7 @@ COCOS2DX_ROOT="$DIR"/../..
 HOST_NAME=""
 
 pushd $COCOS2DX_ROOT
-    bash download-deps.sh
+    python download-deps.py
 popd
 
 mkdir -p $HOME/bin
@@ -69,7 +69,7 @@ elif [ "$PLATFORM"x = "android"x ]; then
     install_android_ndk
 elif [ "$PLATFORM"x = "emscripten"x ]; then
     sudo rm -rf /dev/shm && sudo ln -s /run/shm /dev/shm
-    
+
     install_android_ndk
 elif [ "$PLATFORM"x = "ios"x ]; then
     install_android_ndk
@@ -83,4 +83,3 @@ else
     echo "Unknown \$PLATFORM: '$PLATFORM'"
     exit 1
 fi
-
