@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 #coding=utf-8
 #
 # ./download-deps.py
@@ -13,6 +13,7 @@ import urllib2
 import os.path,zipfile
 import shutil
 import sys
+import traceback
 from sys import stdout
 
 prefix = 'https://codeload.github.com/minggo/cocos2d-x-resources/zip/'
@@ -41,21 +42,21 @@ def download_file(url, file_name):
     f.close()
 
 def unzip(src,dst):
-    zfile = zipfile.ZipFile(src)
-    for name in zfile.namelist():
-        (dirname, filename) = os.path.split(name)
-        if filename == '':
-            # directory
-            if not os.path.exists(dirname):
-                path = os.path.join(dst,dirname)
-                os.mkdir(dirname)
+    zf = zipfile.ZipFile(src)
+    for file in zf.filelist:
+        name = file.filename
+        perm = ((file.external_attr >> 16L) & 0777)
+
+        if name.endswith('/'):
+            outfile = os.path.join(dst, name)
+            if not os.path.exists(outfile):
+                os.mkdir(outfile, perm)
         else:
-            # file
-            path = os.path.join(dst, name)
-            fd = open(path, 'w')
-            fd.write(zfile.read(name))
-            fd.close()
-    zfile.close()
+            outfile = os.path.join(dst, name)
+            fh = os.open(outfile, os.O_CREAT | os.O_WRONLY, perm)
+            os.write(fh, zf.read(name))
+            os.close(fh)
+    zf.close()
 
 def copy_files(src, dst):
     for item in os.listdir(src):
@@ -86,5 +87,5 @@ if __name__ == '__main__':
     try:
         main()
     except Exception as e:
-        print(e)
+        traceback.print_exc()
         sys.exit(1)
