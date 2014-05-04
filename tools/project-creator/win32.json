@@ -1,0 +1,13 @@
+{
+    "rename":               ["PROJECT_NAME.vcxproj",
+                             "PROJECT_NAME.vcxproj.filters",
+                             "PROJECT_NAME.vcxproj.user",
+                             "PROJECT_NAME.sln"],
+    "remove":               [],
+    "replace_package_name": [],
+    "replace_project_name": ["PROJECT_NAME.vcxproj",
+                             "PROJECT_NAME.vcxproj.filters",
+                             "PROJECT_NAME.vcxproj.user",
+                             "PROJECT_NAME.sln",
+                             "main.cpp"]
+}

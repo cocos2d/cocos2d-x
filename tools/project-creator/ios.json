@@ -1,0 +1,8 @@
+{
+    "rename":               ["PROJECT_NAME.xcodeproj"],
+    "remove":               ["PROJECT_NAME.xcodeproj/project.xcworkspace",
+                             "PROJECT_NAME.xcodeproj/xcuserdata"],
+    "replace_package_name": ["Info.plist"],
+    "replace_project_name": ["Info.plist",
+		                     "PROJECT_NAME.xcodeproj/project.pbxproj"]
+}
