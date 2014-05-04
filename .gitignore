@@ -43,14 +43,6 @@ gen/
 assets/
 local.properties
 
-# Ignore files built by NaCl
-samples/Cpp/HelloCpp/proj.nacl/Resources/
-samples/Cpp/TestCpp/proj.nacl/Resources/
-samples/Cpp/TestCpp/proj.nacl/out/
-samples/Cpp/SimpleGame/proj.nacl/Resources/
-samples/Lua/HelloLua/proj.nacl/Resources/
-samples/Lua/TestLua/proj.nacl/Resources/
-
 # Ignore python compiled files
 *.pyc
 
@@ -120,3 +112,23 @@ tests/*/publish/
 
 # Android
 project.properties
+
+# Ignore large binary files
+external/curl
+external/freetype2
+external/glfw3
+external/jpeg
+external/linux-specific
+external/lua/lua/prebuilt/ios
+external/lua/luajit/prebuilt
+external/png
+external/sqlite3
+external/tiff
+external/webp
+external/websockets
+external/win32-specific
+external/winrt-specific
+external/wp8-specific
+templates/lua-template-runtime/runtime
+tests/cpp-tests/Resources
+tests/lua-tests/res
