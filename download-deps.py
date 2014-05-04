@@ -81,7 +81,6 @@ def unpack_zipfile(filename, extract_dir, progress_filter=default_filter):
                 ensure_directory(target)
             else:
                 # file
-                ensure_directory(target)
                 data = z.read(info.filename)
                 f = open(target,'wb')
                 try:
