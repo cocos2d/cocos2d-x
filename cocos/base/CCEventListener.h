@@ -54,6 +54,7 @@ public:
         KEYBOARD,
         MOUSE,
         ACCELERATION,
+        FOCUS,
         CUSTOM
     };
 

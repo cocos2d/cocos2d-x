@@ -30,12 +30,14 @@ NS_CC_BEGIN
 
 namespace ui {
 
+Widget* Widget::_focusedWidget = nullptr;
+    
 Widget::Widget():
 _enabled(true),
 _bright(true),
 _touchEnabled(false),
 _touchPassedEnabled(false),
-_focus(false),
+_highlight(false),
 _brightStyle(BRIGHT_NONE),
 _touchStartPos(Vector2::ZERO),
 _touchMovePos(Vector2::ZERO),
@@ -59,9 +61,12 @@ _touchListener(nullptr),
 _color(Color3B::WHITE),
 _opacity(255),
 _flippedX(false),
-_flippedY(false)
+_flippedY(false),
+_focused(false),
+_focusEnabled(true)
 {
-
+    onFocusChanged = CC_CALLBACK_2(Widget::onFocusChange,this);
+    onNextFocusedWidget = nullptr;
 }
 
 Widget::~Widget()
@@ -445,21 +450,21 @@ bool Widget::isTouchEnabled() const
     return _touchEnabled;
 }
 
-bool Widget::isFocused() const
+bool Widget::isHilighted() const
 {
-    return _focus;
+    return _highlight;
 }
 
-void Widget::setFocused(bool fucos)
+void Widget::setHilighted(bool hilight)
 {
-    if (fucos == _focus)
+    if (hilight == _highlight)
     {
         return;
     }
-    _focus = fucos;
+    _highlight = hilight;
     if (_bright)
     {
-        if (_focus)
+        if (_highlight)
         {
             setBrightStyle(BRIGHT_HIGHLIGHT);
         }
@@ -543,7 +548,7 @@ bool Widget::onTouchBegan(Touch *touch, Event *unusedEvent)
     {
         return false;
     }
-    setFocused(true);
+    setHilighted(true);
     Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
@@ -556,7 +561,7 @@ bool Widget::onTouchBegan(Touch *touch, Event *unusedEvent)
 void Widget::onTouchMoved(Touch *touch, Event *unusedEvent)
 {
     _touchMovePos = touch->getLocation();
-    setFocused(hitTest(_touchMovePos));
+    setHilighted(hitTest(_touchMovePos));
     Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
@@ -568,14 +573,14 @@ void Widget::onTouchMoved(Touch *touch, Event *unusedEvent)
 void Widget::onTouchEnded(Touch *touch, Event *unusedEvent)
 {
     _touchEndPos = touch->getLocation();
-    bool focus = _focus;
-    setFocused(false);
+    bool highlight = _highlight;
+    setHilighted(false);
     Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
         widgetParent->checkChildInfo(2,this,_touchEndPos);
     }
-    if (focus)
+    if (highlight)
     {
         releaseUpEvent();
     }
@@ -587,7 +592,7 @@ void Widget::onTouchEnded(Touch *touch, Event *unusedEvent)
 
 void Widget::onTouchCancelled(Touch *touch, Event *unusedEvent)
 {
-    setFocused(false);
+    setHilighted(false);
     cancelUpEvent();
 }
 
@@ -941,6 +946,95 @@ void Widget::setActionTag(int tag)
 int Widget::getActionTag()
 {
 	return _actionTag;
+}
+    
+void Widget::setFocused(bool focus)
+{
+    _focused = focus;
+    
+    //make sure there is only one focusedWidget
+    if (focus) {
+        //handling only widget, ignore the layut
+        Layout *l = dynamic_cast<Layout*>(this);
+        if (nullptr == l) {
+            _focusedWidget = this;
+        }
+    }
+    
+}
+
+bool Widget::isFocused()
+{
+    return _focused;
+}
+
+void Widget::setFocusEnabled(bool enable)
+{
+    _focusEnabled = enable;
+}
+
+bool Widget::isFocusEnabled()
+{
+    return _focusEnabled;
+}
+
+Widget* Widget::nextFocus(cocos2d::ui::FocusDirection dir,  Widget* current)
+{
+    if (nullptr == onNextFocusedWidget || nullptr == onNextFocusedWidget(dir) ) {
+        if (this->isFocused() || !current->isFocusEnabled()) {
+            Node* parent = this->getParent();
+            Layout* layout = dynamic_cast<Layout*>(parent);
+            if (nullptr == layout) {
+                //the outer layout's default behaviour is : loop focus
+                if (dynamic_cast<Layout*>(current)) {
+                    return current->nextFocus(dir, current);
+                }
+                return current;
+            }else{
+                Widget *nextWidget = layout->nextFocus(dir, current);
+                return nextWidget;
+            }
+        }else{
+            return current;
+        }
+    }
+    else{
+        Widget *getFocusWidget = onNextFocusedWidget(dir);
+        this->dispatchFocusEvent(this, getFocusWidget);
+        return getFocusWidget;
+    }
+}
+
+void Widget::dispatchFocusEvent(cocos2d::ui::Widget *widgetLoseFocus, cocos2d::ui::Widget *widgetGetFocus)
+{
+    if (widgetGetFocus) {
+        widgetGetFocus->onFocusChanged(widgetLoseFocus, widgetGetFocus);
+    }
+    
+    if (widgetLoseFocus) {
+        widgetLoseFocus->onFocusChanged(widgetLoseFocus, widgetGetFocus);
+    }
+    
+//    EventFocus event(widgetLoseFocus, widgetGetFocus);
+//    auto dispatcher = cocos2d::Director::getInstance()->getEventDispatcher();
+//    dispatcher->dispatchEvent(&event);
+    
+}
+
+void Widget::onFocusChange(Widget* widgetLostFocus, Widget* widgetGetFocus)
+{
+    if (widgetLostFocus) {
+        widgetLostFocus->setFocused(false);
+    }
+    
+    if (widgetGetFocus) {
+        widgetGetFocus->setFocused(true);
+    }
+}
+
+Widget* Widget::getCurrentFocusedWidget()
+{
+    return _focusedWidget;
 }
 
 }

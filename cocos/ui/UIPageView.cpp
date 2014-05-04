@@ -550,7 +550,7 @@ void PageView::interceptTouchEvent(int handleState, Widget *sender, const Vector
             offset = fabs(sender->getTouchStartPos().x - touchPoint.x);
             if (offset > _childFocusCancelOffset)
             {
-                sender->setFocused(false);
+                sender->setHilighted(false);
                 handleMoveLogic(touchPoint);
             }
         }
