@@ -95,11 +95,13 @@ def unpack_zipfile(filename, extract_dir, progress_filter=default_filter):
         z.close()
 
 def main():
-    download_file(prefix+filename, filename+'.zip')
     workpath = os.path.dirname(os.path.realpath(__file__))
 
     if os.path.exists(extracted_folder_name):
         shutil.rmtree(extracted_folder_name)
+
+    if not os.path.isfile(filename + '.zip'):
+        download_file(prefix+filename, filename+'.zip')
 
     print("Extracting files, please wait ...")
     unpack_zipfile(filename+'.zip', workpath)
@@ -107,8 +109,8 @@ def main():
     print("Copying files ...")
     distutils.dir_util.copy_tree(extracted_folder_name, workpath)
     print("Cleaning ...")
-    if os.path.isfile(filename+'.zip'):
-        os.remove(filename+'.zip')
+    # if os.path.isfile(filename+'.zip'):
+    #     os.remove(filename+'.zip')
     if os.path.exists(extracted_folder_name):
         shutil.rmtree(extracted_folder_name)
     print("DONE! Cheers!")
