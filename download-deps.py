@@ -69,11 +69,17 @@ def copy_files(src, dst):
             copy_files(path, new_dst)
 
 def main():
-    # download_file(prefix+filename, filename+'.zip')
+    download_file(prefix+filename, filename+'.zip')
     workpath = os.path.dirname(os.path.realpath(__file__))
+    print("Extracting files, please wait ...")
     unzip(filename+'.zip', workpath)
     copy_files(extracted_folder_name, workpath)
-    # os.remove(filename+'.zip')
+    print("Cleaning ...")
+    if os.path.isfile(filename+'.zip'):
+        os.remove(filename+'.zip')
+    if os.path.exists(extracted_folder_name):
+        shutil.rmtree(extracted_folder_name)
+    print("DONE! Cheers!")
 
 # -------------- main --------------
 if __name__ == '__main__':
