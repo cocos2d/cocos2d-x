@@ -190,14 +190,17 @@ def socket_status_on_device(device):
 				break
 	except Exception, e:
 		info_of_socket_result = test_name[gIdx]+' is crashed!'
-	time.sleep(2)
+	time.sleep(3)
 	soc.close()
-	time.sleep(2)
+	time.sleep(3)
 	info_empty_test['socket'][name] = info_of_socket_result
 	return status_socket
 
+monkey_test_lv = 500
+if os.environ.has_key('MONKEY_LEVEL'):
+	monkey_test_lv = os.environ['MONKEY_LEVEL']
 def monkey_test(device):
-	cmd = 'adb -s '+device['name']+' shell monkey -p '+package_name[gIdx]+' -v 500'
+	cmd = 'adb -s '+device['name']+' shell monkey -p '+package_name[gIdx]+' -v '+str(monkey_test_lv)
 	result = os.popen(cmd).read()
 	print 'monkey test result: ', result
 
@@ -241,12 +244,11 @@ def excute_test_on_device(device):
 	time.sleep(3)
 	info_socket = socket_status_on_device(device)
 	print 'socket:', info_socket
-	info_close = close_opend_apk_on_device(device)
-	print 'close', info_close
-	open_apk_on_device(device)
-	time.sleep(5)
+	time.sleep(2)
 	monkey_test(device)
 	time.sleep(3)
+	info_close = close_opend_apk_on_device(device)
+	print 'close', info_close
 	info_uninstall = uninstall_apk_on_device(device)
 	print 'uninstall:', info_uninstall
 	allThreadIsRunning[device['name']] = 0
