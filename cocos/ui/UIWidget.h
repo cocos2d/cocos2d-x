@@ -567,7 +567,7 @@ public:
      *@param current  the current focused widget
      *@return the next focused widget in a layout
      */
-    virtual Widget* nextFocus(FocusDirection dir, Widget* current);
+    virtual Widget* nextFocusedWidget(FocusDirection dir, Widget* current);
     
 CC_CONSTRUCTOR_ACCESS:
     //initializes state of widget.
