@@ -16,7 +16,6 @@ import sys
 import traceback
 import distutils
 from sys import stdout
-from pkg_resources import ensure_directory
 from distutils.errors import DistutilsError
 from distutils.dir_util import copy_tree, remove_tree
 
@@ -48,6 +47,10 @@ def download_file(url, file_name):
 def default_filter(src,dst):
     """The default progress/filter callback; returns True for all files"""
     return dst
+
+def ensure_directory(target):
+    if not os.path.exists(target):
+        os.mkdir(target)
 
 def unpack_zipfile(filename, extract_dir, progress_filter=default_filter):
     """Unpack zip `filename` to `extract_dir`
@@ -93,7 +96,7 @@ def unpack_zipfile(filename, extract_dir, progress_filter=default_filter):
         z.close()
 
 def main():
-    download_file(prefix+filename, filename+'.zip')
+    # download_file(prefix+filename, filename+'.zip')
     workpath = os.path.dirname(os.path.realpath(__file__))
 
     if os.path.exists(extracted_folder_name):
