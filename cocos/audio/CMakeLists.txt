@@ -9,6 +9,7 @@ if(WIN32)
   set(AUDIO_SRC
     win32/SimpleAudioEngine.cpp
     win32/MciPlayer.cpp
+	win32/MciPlayer.h
   )
 elseif(APPLE)
 
@@ -16,6 +17,8 @@ else()
   set(AUDIO_SRC
     linux/SimpleAudioEngineFMOD.cpp
     linux/FmodAudioPlayer.cpp
+	linux/FmodAudioPlayer.h
+	linux/AudioPlayer.h
   )
 
   include_directories(
@@ -26,6 +29,8 @@ endif()
 
 add_library(audio STATIC
   ${AUDIO_SRC}
+  include/Export.h
+  include/SimpleAudioEngine.h
 )
 
 if((NOT APPLE) AND (NOT WIN32))
