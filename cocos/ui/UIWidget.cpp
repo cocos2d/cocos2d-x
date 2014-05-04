@@ -978,7 +978,7 @@ bool Widget::isFocusEnabled()
     return _focusEnabled;
 }
 
-Widget* Widget::nextFocus(cocos2d::ui::FocusDirection dir,  Widget* current)
+Widget* Widget::nextFocusedWidget(cocos2d::ui::FocusDirection dir,  Widget* current)
 {
     if (nullptr == onNextFocusedWidget || nullptr == onNextFocusedWidget(dir) ) {
         if (this->isFocused() || !current->isFocusEnabled()) {
@@ -987,11 +987,11 @@ Widget* Widget::nextFocus(cocos2d::ui::FocusDirection dir,  Widget* current)
             if (nullptr == layout) {
                 //the outer layout's default behaviour is : loop focus
                 if (dynamic_cast<Layout*>(current)) {
-                    return current->nextFocus(dir, current);
+                    return current->nextFocusedWidget(dir, current);
                 }
                 return current;
             }else{
-                Widget *nextWidget = layout->nextFocus(dir, current);
+                Widget *nextWidget = layout->nextFocusedWidget(dir, current);
                 return nextWidget;
             }
         }else{

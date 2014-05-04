@@ -265,6 +265,43 @@ public:
     
     virtual void onEnter() override;
     virtual void onExit() override;
+    
+    /**
+     * If a layout is loop focused which means that the focus movement will be inside the layout
+     *@param loop  pass true to let the focus movement loop inside the layout
+     */
+    void setLoopFocus(bool loop);
+    
+    /**
+     *@return If the layout support focus loop, then it will return true, otherwise it returns false. The default value is false.
+     */
+    bool getLoopFocus();
+    
+    /**
+     *@param pass To specify whether the layout pass its focus to its child
+     */
+    void setPassFocusToChild(bool pass);
+    
+    /**
+     * @return To query whether the layout will pass the focus to its children or not. The default value is true
+     */
+    bool getPassFocusToChild();
+    
+    /**
+     *  When a widget is in a layout, you could call this method to get the next focused widget within a specified direction.
+     *  If the widget is not in a layout, it will return itself
+     *@param dir the direction to look for the next focused widget in a layout
+     *@param current  the current focused widget
+     *@return the next focused widget in a layout
+     */
+    virtual Widget* nextFocusedWidget(FocusDirection dir, Widget* current) override;
+    
+    /**
+     * To specify a user-defined functor to decide which widget should get focus 
+     * @param FocusDirection the finding direction
+     * @return return the index of widget in the layout
+     */
+    std::function<int(FocusDirection)> onPassFocusToChild;
 
 CC_CONSTRUCTOR_ACCESS:
     //override "init" method of widget.
@@ -300,6 +337,67 @@ protected:
     void updateBackGroundImageOpacity();
     void updateBackGroundImageRGBA();
     LayoutExecutant* createCurrentLayoutExecutant();
+    
+    /**
+     *get the content size of the layout, it will accumulate all its children's content size
+     */
+    Size getLayoutContentSize() const;
+    
+    /**
+     * When the layout get focused, it the layout pass the focus to its child, it will use this method to determine which child 
+     * will get the focus.  The current algorithm to determine which child will get focus is nearest-distance-priority algorithm
+     *@param dir next focused widget direction
+     *@return The index of child widget in the container
+     */
+    virtual int whichChildToGetFocus(FocusDirection dir);
+    
+    /**
+     * find a focus enabled child Widget in the layout by index
+     */
+    Widget* findFocusEnabledChildWidgetByIndex(int index);
+    
+    /**
+     * get the center point of a widget in world space
+     */
+    Vector2 getWorldCenterPoint(Widget* node);
+    
+    /**
+     * this method is called internally by nextFocusedWidget. When the dir is Right/Down, then this method will be called
+     *@param dir  the direction.
+     *@param current  the current focused widget
+     *@return the next focused widget
+     */
+    Widget* getNextFocusedWidget(FocusDirection dir,Widget *current);
+    
+    /**
+     * this method is called internally by nextFocusedWidget. When the dir is Left/Up, then this method will be called
+     *@param dir  the direction.
+     *@param current  the current focused widget
+     *@return the next focused widget
+     */
+    Widget* getPreviousFocusedWidget(FocusDirection dir, Widget *current);
+    
+    /**
+     * whether it is the last element according to all their parents
+     */
+    bool  isLastWidgetInContainer(Widget* widget, FocusDirection dir);
+    
+    /**Lookup any parent widget with a layout type as the direction,
+     * if the layout is loop focused, then return true, otherwise
+     * It returns false
+     */
+    bool  isWidgetAncestorSupportLoopFocus(Widget* widget, FocusDirection dir);
+    
+    /**
+     * pass the focus to the layout's next focus enabled child
+     */
+    Widget* passFocusToChild(FocusDirection dir, Widget* current);
+    
+    /**
+     * If there are no focus enabled child in the layout, it will return false, otherwise it returns true
+     */
+    bool checkFocusEnabledChild();
+    
 protected:
     bool _clippingEnabled;
     
@@ -356,6 +454,9 @@ protected:
     CustomCommand _afterVisitCmdStencil;
     CustomCommand _beforeVisitCmdScissor;
     CustomCommand _afterVisitCmdScissor;
+    
+    bool _loopFocus; //whether enable loop focus or not
+    bool _passFocusToChild;  //on default, it will pass the focus to the next nearest widget
 };
     
 }
