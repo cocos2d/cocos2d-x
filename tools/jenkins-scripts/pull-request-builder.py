@@ -146,6 +146,11 @@ def main():
         data = codecs.open(modify_file, encoding='UTF-8').read()
         data = re.sub("director->setDisplayStats\(true\);", "director->setDisplayStats(true); director->getConsole()->listenOnTCP(5678);", data)
         codecs.open(modify_file, 'wb', encoding='UTF-8').write(data)
+        #modify tests/cpp-empty-test/HelloWorldScene.cpp
+        modify_file = 'tests/cpp-empty-test/Classes/HelloWorldScene.cpp'
+        data = codecs.open(modify_file, encoding='UTF-8').read()
+        data = re.sub("this->addChild\(menu, 1\);", "//this->addChild(menu, 1);", data)
+        codecs.open(modify_file, 'wb', encoding='UTF-8').write(data)
         #modify tests/cpp-empty-test/proj.android/AndroidManifest.xml to support Console
         modify_file = 'tests/cpp-empty-test/proj.android/AndroidManifest.xml'
         data = codecs.open(modify_file, encoding='UTF-8').read()
