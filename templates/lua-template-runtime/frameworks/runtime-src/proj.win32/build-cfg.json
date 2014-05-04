@@ -1,0 +1,25 @@
+{
+    "copy_resources": [
+        {
+            "from": "../../../src",
+            "to": "src"
+        },
+        {
+            "from": "../../../res",
+            "to": "res"
+        }
+    ],
+    "must_copy_resources": [
+        {
+            "from": "../../cocos2d-x/cocos/scripting/lua-bindings/script",
+            "to": ""
+        },
+        {
+            "from": "../../cocos2d-x/external/lua/luasocket",
+            "to": "",
+            "include": [
+                "*.lua"
+            ]
+        }
+    ]
+}
