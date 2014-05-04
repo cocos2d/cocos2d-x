@@ -27,19 +27,40 @@ def download_file(url, file_name):
     u = urllib2.urlopen(url)
     f = open(file_name, 'wb')
     meta = u.info()
-    file_size = int(meta.getheaders("Content-Length")[0])
-    print("Downloading: %s, file size: %dK, please wait ... " % (file_name, file_size / 1000))
+    content_len = meta.getheaders("Content-Length")
+    is_support_progress = False
+    file_size = 0
+    if len(content_len) > 0:
+        file_size = int(content_len[0])
+        is_support_progress = True
+
+    if is_support_progress:
+        print("Downloading: %s, file size: %dK, please wait ... " % (file_name, file_size / 1000))
+    else:
+        print("Downloading: %s, please wait ... " % (file_name))
 
     file_size_dl = 0
     block_sz = 8192
+
+    progress_index = 0
+    progress_icon = ['-', '\\', '|', '-', '/', '*']
+
     while True:
         buffer = u.read(block_sz)
         if not buffer:
             break
 
         file_size_dl += len(buffer)
+
+        progress_index += 1
         f.write(buffer)
-        status = r"%10dK  [%3.2f%%]" % (file_size_dl / 1000, file_size_dl * 100. / file_size)
+
+        status = ""
+        if is_support_progress:
+            status = r"%10dK  [%3.2f%%]" % (file_size_dl / 1000, file_size_dl * 100. / file_size)
+        else:
+            status = ' ' * 30 + progress_icon[progress_index % len(progress_icon)]
+
         status = status + chr(8)*(len(status)+1)
         print(status),
     f.close()
