@@ -293,7 +293,7 @@ void CheckBox::loadTextureFrontCrossDisabled(const std::string& frontCrossDisabl
 void CheckBox::onTouchEnded(Touch *touch, Event *unusedEvent)
 {
     _touchEndPos = touch->getLocation();
-    if (_focus)
+    if (_highlight)
     {
         releaseUpEvent();
         if (_isSelected){
@@ -306,7 +306,7 @@ void CheckBox::onTouchEnded(Touch *touch, Event *unusedEvent)
             selectedEvent();
         }
     }
-    setFocused(false);
+    setHilighted(false);
     Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {

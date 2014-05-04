@@ -35,7 +35,7 @@ _enabled(true),
 _bright(true),
 _touchEnabled(false),
 _touchPassedEnabled(false),
-_focus(false),
+_highlight(false),
 _brightStyle(BRIGHT_NONE),
 _touchStartPos(Vector2::ZERO),
 _touchMovePos(Vector2::ZERO),
@@ -445,21 +445,21 @@ bool Widget::isTouchEnabled() const
     return _touchEnabled;
 }
 
-bool Widget::isFocused() const
+bool Widget::isHilighted() const
 {
-    return _focus;
+    return _highlight;
 }
 
-void Widget::setFocused(bool fucos)
+void Widget::setHilighted(bool hilight)
 {
-    if (fucos == _focus)
+    if (hilight == _highlight)
     {
         return;
     }
-    _focus = fucos;
+    _highlight = hilight;
     if (_bright)
     {
-        if (_focus)
+        if (_highlight)
         {
             setBrightStyle(BRIGHT_HIGHLIGHT);
         }
@@ -543,7 +543,7 @@ bool Widget::onTouchBegan(Touch *touch, Event *unusedEvent)
     {
         return false;
     }
-    setFocused(true);
+    setHilighted(true);
     Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
@@ -556,7 +556,7 @@ bool Widget::onTouchBegan(Touch *touch, Event *unusedEvent)
 void Widget::onTouchMoved(Touch *touch, Event *unusedEvent)
 {
     _touchMovePos = touch->getLocation();
-    setFocused(hitTest(_touchMovePos));
+    setHilighted(hitTest(_touchMovePos));
     Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
@@ -568,14 +568,14 @@ void Widget::onTouchMoved(Touch *touch, Event *unusedEvent)
 void Widget::onTouchEnded(Touch *touch, Event *unusedEvent)
 {
     _touchEndPos = touch->getLocation();
-    bool focus = _focus;
-    setFocused(false);
+    bool highlight = _highlight;
+    setHilighted(false);
     Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
         widgetParent->checkChildInfo(2,this,_touchEndPos);
     }
-    if (focus)
+    if (highlight)
     {
         releaseUpEvent();
     }
@@ -587,7 +587,7 @@ void Widget::onTouchEnded(Touch *touch, Event *unusedEvent)
 
 void Widget::onTouchCancelled(Touch *touch, Event *unusedEvent)
 {
-    setFocused(false);
+    setHilighted(false);
     cancelUpEvent();
 }
 
