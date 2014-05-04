@@ -14,7 +14,10 @@ import os.path,zipfile
 import shutil
 import sys
 import traceback
+import distutils
 from sys import stdout
+from distutils.errors import DistutilsError
+from distutils.dir_util import copy_tree, remove_tree
 
 prefix = 'https://codeload.github.com/minggo/cocos2d-x-resources/zip/'
 filename = 'cocos2d-x-deps-v3-1'
@@ -41,40 +44,69 @@ def download_file(url, file_name):
         #print(status),
     f.close()
 
-def unzip(src,dst):
-    zf = zipfile.ZipFile(src)
-    for file in zf.filelist:
-        name = file.filename
-        perm = ((file.external_attr >> 16L) & 0777)
+def default_filter(src,dst):
+    """The default progress/filter callback; returns True for all files"""
+    return dst
 
-        if name.endswith('/'):
-            outfile = os.path.join(dst, name)
-            if not os.path.exists(outfile):
-                os.mkdir(outfile, perm)
-        else:
-            outfile = os.path.join(dst, name)
-            fh = os.open(outfile, os.O_CREAT | os.O_WRONLY, perm)
-            os.write(fh, zf.read(name))
-            os.close(fh)
-    zf.close()
+def ensure_directory(target):
+    if not os.path.exists(target):
+        os.mkdir(target)
 
-def copy_files(src, dst):
-    for item in os.listdir(src):
-        path = os.path.join(src, item)
-        if os.path.isfile(path):
-            shutil.copy(path, dst)
-        elif os.path.isdir(path):
-            new_dst = os.path.join(dst, item)
-            if not os.path.exists(new_dst):
-                os.mkdir(new_dst)
-            copy_files(path, new_dst)
+def unpack_zipfile(filename, extract_dir, progress_filter=default_filter):
+    """Unpack zip `filename` to `extract_dir`
+
+    Raises ``UnrecognizedFormat`` if `filename` is not a zipfile (as determined
+    by ``zipfile.is_zipfile()``).  See ``unpack_archive()`` for an explanation
+    of the `progress_filter` argument.
+    """
+
+    if not zipfile.is_zipfile(filename):
+        raise UnrecognizedFormat("%s is not a zip file" % (filename,))
+
+    z = zipfile.ZipFile(filename)
+    try:
+        for info in z.infolist():
+            name = info.filename
+
+            # don't extract absolute paths or ones with .. in them
+            if name.startswith('/') or '..' in name:
+                continue
+
+            target = os.path.join(extract_dir, *name.split('/'))
+            target = progress_filter(name, target)
+            if not target:
+                continue
+            if name.endswith('/'):
+                # directory
+                ensure_directory(target)
+            else:
+                # file
+                ensure_directory(target)
+                data = z.read(info.filename)
+                f = open(target,'wb')
+                try:
+                    f.write(data)
+                finally:
+                    f.close()
+                    del data
+            unix_attributes = info.external_attr >> 16
+            if unix_attributes:
+                os.chmod(target, unix_attributes)
+    finally:
+        z.close()
 
 def main():
     download_file(prefix+filename, filename+'.zip')
     workpath = os.path.dirname(os.path.realpath(__file__))
+
+    if os.path.exists(extracted_folder_name):
+        shutil.rmtree(extracted_folder_name)
+
     print("Extracting files, please wait ...")
-    unzip(filename+'.zip', workpath)
-    copy_files(extracted_folder_name, workpath)
+    unpack_zipfile(filename+'.zip', workpath)
+    print("Extraction done!")
+    print("Copying files ...")
+    distutils.dir_util.copy_tree(extracted_folder_name, workpath)
     print("Cleaning ...")
     if os.path.isfile(filename+'.zip'):
         os.remove(filename+'.zip')
