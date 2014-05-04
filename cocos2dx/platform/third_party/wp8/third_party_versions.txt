@@ -1,5 +1,0 @@
-libjpeg			8b
-libpng			1.4.2
-OGLES			2.08.28.0634
-zlib			1.2.5
-
