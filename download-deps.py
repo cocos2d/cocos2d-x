@@ -37,7 +37,7 @@ def download_file(url, file_name):
         f.write(buffer)
         status = r"%10d  [%3.2f%%]" % (file_size_dl, file_size_dl * 100. / file_size)
         status = status + chr(8)*(len(status)+1)
-        print(status)
+        print(status),
     f.close()
 
 def unzip(src,dst):
