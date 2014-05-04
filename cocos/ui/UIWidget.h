@@ -72,6 +72,7 @@ typedef enum
     POSITION_ABSOLUTE,
     POSITION_PERCENT
 }PositionType;
+    
 
 typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType);
 #define toucheventselector(_SELECTOR) (SEL_TouchEvent)(&_SELECTOR)
@@ -156,20 +157,20 @@ public:
     bool isTouchEnabled() const;
 
     /**
-     * Determines if the widget is on focused
+     * Determines if the widget is highlighted
      *
-     * @return true if the widget is on focused, false if the widget is not on focused.
+     * @return true if the widget is highlighted, false if the widget is not hignlighted .
      */
-    bool isFocused() const;
+    bool isHilighted() const;
 
     /**
-     * Sets whether the widget is on focused
+     * Sets whether the widget is hilighted
      *
-     * The default value is false, a widget is default to not on focused
+     * The default value is false, a widget is default to not hilighted
      *
-     * @param fucosed   true if the widget is on focused, false if the widget is not on focused.
+     * @param hilight   true if the widget is hilighted, false if the widget is not hilighted.
      */
-    void setFocused(bool fucosed);
+    void setHilighted(bool hilight);
 
     /**
      * Gets the left boundary position of this widget.
@@ -572,7 +573,7 @@ protected:
     bool _bright;             ///< is this widget bright
     bool _touchEnabled;       ///< is this widget touch endabled
     bool _touchPassedEnabled; ///< is the touch event should be passed
-    bool _focus;              ///< is the widget on focus
+    bool _highlight;              ///< is the widget on focus
     BrightStyle _brightStyle; ///< bright style
     Vector2 _touchStartPos;    ///< touch began point
     Vector2 _touchMovePos;     ///< touch moved point
@@ -598,7 +599,6 @@ protected:
     bool _flippedX;
     bool _flippedY;
     Map<int, LayoutParameter*> _layoutParameterDictionary;
-
 };
 }
 
