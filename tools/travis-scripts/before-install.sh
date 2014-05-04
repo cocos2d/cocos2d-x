@@ -7,6 +7,10 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COCOS2DX_ROOT="$DIR"/../..
 HOST_NAME=""
 
+pushd $COCOS2DX_ROOT
+    bash download-deps.sh
+popd
+
 mkdir -p $HOME/bin
 cd $HOME/bin
 
@@ -58,20 +62,16 @@ elif [ "$PLATFORM"x = "linux"x ]; then
     sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.7 90 --slave /usr/bin/g++ g++ /usr/bin/g++-4.7
     g++ --version
     bash $COCOS2DX_ROOT/build/install-deps-linux.sh
-    bash download-deps.sh
     install_android_ndk
 elif [ "$PLATFORM"x = "nacl"x ]; then
-    bash download-deps.sh
     install_nacl_sdk
 elif [ "$PLATFORM"x = "android"x ]; then
-    bash download-deps.sh
     install_android_ndk
 elif [ "$PLATFORM"x = "emscripten"x ]; then
     sudo rm -rf /dev/shm && sudo ln -s /run/shm /dev/shm
-    bash download-deps.sh
+    
     install_android_ndk
 elif [ "$PLATFORM"x = "ios"x ]; then
-    bash download-deps.sh
     install_android_ndk
 
     pushd $COCOS2DX_ROOT
