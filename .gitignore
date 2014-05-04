@@ -132,3 +132,4 @@ external/wp8-specific
 templates/lua-template-runtime/runtime
 tests/cpp-tests/Resources
 tests/lua-tests/res
+/cocos2d-x-deps-v3-1.zip
