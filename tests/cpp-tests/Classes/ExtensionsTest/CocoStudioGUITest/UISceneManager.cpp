@@ -17,6 +17,7 @@
 #include "UIListViewTest/UIListViewTest.h"
 #include "UIWidgetAddNodeTest/UIWidgetAddNodeTest.h"
 #include "UIRichTextTest/UIRichTextTest.h"
+#include "UIFocusTest/UIFocusTest.h"
 /*
 #include "UISwitchTest/UISwitchTest.h"
  */
@@ -109,6 +110,7 @@ static const char* s_testArray[] =
      */
     "UIWidgetAddNodeTest",
     "UIRichTextTest",
+    "UIFocusTest",
 };
 
 static UISceneManager *sharedInstance = NULL;
@@ -359,6 +361,8 @@ Scene *UISceneManager::currentUIScene()
             
         case kUIRichTextTest:
             return UIRichTextTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case KUIFocusTest:
+            return UIFocusTestHorizontal::sceneWithTitle(s_testArray[_currentUISceneId]);
     }
     return NULL;
 }

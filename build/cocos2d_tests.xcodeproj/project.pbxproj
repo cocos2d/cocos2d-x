@@ -828,6 +828,8 @@
 		1AF152DA18FD252A00A52F3D /* PerformanceCallbackTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AF152D718FD252A00A52F3D /* PerformanceCallbackTest.cpp */; };
 		1F33634F18E37E840074764D /* RefPtrTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F33634D18E37E840074764D /* RefPtrTest.cpp */; };
 		1F33635018E37E840074764D /* RefPtrTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F33634D18E37E840074764D /* RefPtrTest.cpp */; };
+		296CAD2E19161CCC00C64FBF /* UIFocusTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 296CAD2C19161CCC00C64FBF /* UIFocusTest.cpp */; };
+		296CAD2F19161CCC00C64FBF /* UIFocusTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 296CAD2C19161CCC00C64FBF /* UIFocusTest.cpp */; };
 		298B28F818CFF9EC00C1920F /* cocosui in Resources */ = {isa = PBXBuildFile; fileRef = 298B28F718CFF9EC00C1920F /* cocosui */; };
 		298B28F918CFF9EC00C1920F /* cocosui in Resources */ = {isa = PBXBuildFile; fileRef = 298B28F718CFF9EC00C1920F /* cocosui */; };
 		298B28FA18CFF9EC00C1920F /* cocosui in Resources */ = {isa = PBXBuildFile; fileRef = 298B28F718CFF9EC00C1920F /* cocosui */; };
@@ -1865,6 +1867,8 @@
 		1D6058910D05DD3D006BFB54 /* cpp-tests Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cpp-tests Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F33634D18E37E840074764D /* RefPtrTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RefPtrTest.cpp; sourceTree = "<group>"; };
 		1F33634E18E37E840074764D /* RefPtrTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefPtrTest.h; sourceTree = "<group>"; };
+		296CAD2C19161CCC00C64FBF /* UIFocusTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UIFocusTest.cpp; path = UIFocusTest/UIFocusTest.cpp; sourceTree = "<group>"; };
+		296CAD2D19161CCC00C64FBF /* UIFocusTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIFocusTest.h; path = UIFocusTest/UIFocusTest.h; sourceTree = "<group>"; };
 		298B28F718CFF9EC00C1920F /* cocosui */ = {isa = PBXFileReference; lastKnownFileType = folder; name = cocosui; path = "../tests/cpp-tests/Resources/cocosui"; sourceTree = "<group>"; };
 		46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		A035A71117822E9E00987F6C /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -2725,6 +2729,7 @@
 		1AC359EC18CECF0B00F37B72 /* CocoStudioGUITest */ = {
 			isa = PBXGroup;
 			children = (
+				296CAD3219161CD500C64FBF /* UIFocusTest */,
 				1AC359ED18CECF0B00F37B72 /* CocosGUIScene.cpp */,
 				1AC359EE18CECF0B00F37B72 /* CocosGUIScene.h */,
 				1AC359EF18CECF0B00F37B72 /* CocoStudioGUITest.cpp */,
@@ -3724,6 +3729,15 @@
 			name = tests;
 			sourceTree = "<group>";
 		};
+		296CAD3219161CD500C64FBF /* UIFocusTest */ = {
+			isa = PBXGroup;
+			children = (
+				296CAD2C19161CCC00C64FBF /* UIFocusTest.cpp */,
+				296CAD2D19161CCC00C64FBF /* UIFocusTest.h */,
+			);
+			name = UIFocusTest;
+			sourceTree = "<group>";
+		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
@@ -4697,6 +4711,7 @@
 				1AC35B6518CECF0C00F37B72 /* EffectsTest.cpp in Sources */,
 				1AC35B7118CECF0C00F37B72 /* TestHeaderLayer.cpp in Sources */,
 				1AC35B2118CECF0C00F37B72 /* ActionManagerTest.cpp in Sources */,
+				296CAD2E19161CCC00C64FBF /* UIFocusTest.cpp in Sources */,
 				1AC35BA318CECF0C00F37B72 /* UIImageViewTest_Editor.cpp in Sources */,
 				1AC35BCF18CECF0C00F37B72 /* UITextFieldTest.cpp in Sources */,
 				1AC35B9B18CECF0C00F37B72 /* UIButtonTest_Editor.cpp in Sources */,
@@ -4868,6 +4883,7 @@
 				1AC35BDE18CECF0C00F37B72 /* acts.cpp in Sources */,
 				1AC35B7618CECF0C00F37B72 /* ArmatureScene.cpp in Sources */,
 				1AC35B8E18CECF0C00F37B72 /* CustomImageView.cpp in Sources */,
+				296CAD2F19161CCC00C64FBF /* UIFocusTest.cpp in Sources */,
 				1AC35B8218CECF0C00F37B72 /* SceneController.cpp in Sources */,
 				1AC35B3418CECF0C00F37B72 /* Test.cpp in Sources */,
 				1AC35C2418CECF0C00F37B72 /* ParticleTest.cpp in Sources */,

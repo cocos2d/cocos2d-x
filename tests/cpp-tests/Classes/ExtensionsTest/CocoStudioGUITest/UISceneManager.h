@@ -101,6 +101,7 @@ enum
      */
     kUIWidgetAddNodeTest,
     kUIRichTextTest,
+    KUIFocusTest,
     kUITestMax
 };
 

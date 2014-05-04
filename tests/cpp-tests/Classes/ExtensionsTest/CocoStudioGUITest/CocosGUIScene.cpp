@@ -267,6 +267,18 @@ g_guisTests[] =
             Director::getInstance()->replaceScene(pScene);
         }
 	},
+    {
+        "gui focus test",
+        [](Ref* sender)
+        {
+            UISceneManager* pManager = UISceneManager::sharedUISceneManager();
+            pManager->setCurrentUISceneId(KUIFocusTest);
+            pManager->setMinUISceneId(KUIFocusTest);
+            pManager->setMaxUISceneId(KUIFocusTest);
+            Scene* pScene = pManager->currentUIScene();
+            Director::getInstance()->replaceScene(pScene);
+        }
+    }
 };
 
 static const int g_maxTests = sizeof(g_guisTests) / sizeof(g_guisTests[0]);
