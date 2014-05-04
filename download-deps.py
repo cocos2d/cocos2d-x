@@ -96,7 +96,7 @@ def unpack_zipfile(filename, extract_dir, progress_filter=default_filter):
         z.close()
 
 def main():
-    # download_file(prefix+filename, filename+'.zip')
+    download_file(prefix+filename, filename+'.zip')
     workpath = os.path.dirname(os.path.realpath(__file__))
 
     if os.path.exists(extracted_folder_name):
