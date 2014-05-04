@@ -126,7 +126,7 @@ def getDeviceInfomation():
 		getDeviceInfoByName(device['name'])
 
 info_empty_test = {}
-info_empty_test_pro = ['install','open','socket','uninstall']
+info_empty_test_pro = ['install','open','socket', 'close','uninstall']
 def init_info_empty_test():
 	for item in info_empty_test_pro:
 		info_empty_test[item] = {}
@@ -183,8 +183,6 @@ def socket_status_on_device(device):
 				print data
 				if data.find('size:') > -1:
 					info_of_socket_result = 'OK'
-					print 'close', test_name[gIdx]
-					soc.send('director end')
 					status_socket = True
 					break
 			if not data:
@@ -192,11 +190,35 @@ def socket_status_on_device(device):
 				break
 	except Exception, e:
 		info_of_socket_result = test_name[gIdx]+' is crashed!'
-	time.sleep(2)
+	time.sleep(3)
 	soc.close()
-	time.sleep(2)
+	time.sleep(3)
 	info_empty_test['socket'][name] = info_of_socket_result
 	return status_socket
+
+monkey_test_lv = 500
+if os.environ.has_key('MONKEY_LEVEL'):
+	monkey_test_lv = os.environ['MONKEY_LEVEL']
+def monkey_test(device):
+	cmd = 'adb -s '+device['name']+' shell monkey -p '+package_name[gIdx]+' -v '+str(monkey_test_lv)
+	result = os.popen(cmd).read()
+	print 'monkey test result: ', result
+
+def close_opend_apk_on_device(device):
+	name = device['name']
+	ip = device['ip']
+	soc = socket.socket( socket.AF_INET, socket.SOCK_STREAM )
+	info_of_close_apk = ''
+	print 'close', test_name[gIdx]
+	try:
+		soc.connect((ip, PORT))
+		soc.send('director end\r\n')
+		info_of_close_apk = 'OK'
+	except Exception, e:
+		info_of_close_apk = 'FAILED'
+	soc.close()
+	info_empty_test['close'][name] = info_of_close_apk
+	return info_of_close_apk
 
 def uninstall_apk_on_device(device):
 	# adb shell pm uninstall -n org.cocos2dx.hellolua
@@ -222,6 +244,11 @@ def excute_test_on_device(device):
 	time.sleep(3)
 	info_socket = socket_status_on_device(device)
 	print 'socket:', info_socket
+	time.sleep(2)
+	monkey_test(device)
+	time.sleep(3)
+	info_close = close_opend_apk_on_device(device)
+	print 'close', info_close
 	info_uninstall = uninstall_apk_on_device(device)
 	print 'uninstall:', info_uninstall
 	allThreadIsRunning[device['name']] = 0
@@ -229,7 +256,8 @@ def excute_test_on_device(device):
 address_of_result_html = ''
 def send_result_to_master():
 	if not os.environ.has_key('REMOTE_IP'):
-		return false
+		print 'not found remote ip.'
+		return False
 	remote_ip = os.environ['REMOTE_IP']
 	remote_port = os.environ['REMOTE_PORT']
 	remote_user = os.environ['REMOTE_USER']
@@ -293,7 +321,7 @@ def log_emptytest_result():
 		appendToResult('install: ' + str(info_empty_test['install'][name]))
 		appendToResult('open: ' + str(info_empty_test['open'][name]))
 		appendToResult('telnet ' + str(device['ip'])+' : ' + str(info_empty_test['socket'][name]))
-		appendToResult('close: ' + str(info_empty_test['socket'][name]))
+		appendToResult('close: ' + str(info_empty_test['close'][name]))
 		appendToResult('uninstall: ' + str(info_empty_test['uninstall'][name]))
 		if not info_empty_test['install'][name] or not info_empty_test['open'][name] or not info_empty_test['socket'][name] or not info_empty_test['uninstall'][name]:
 			empty_test_result = False
