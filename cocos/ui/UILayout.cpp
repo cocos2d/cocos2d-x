@@ -1637,35 +1637,13 @@ int Layout::whichChildToGetFocus(FocusDirection dir)
 
 Widget* Layout::findFocusEnabledChildWidgetByIndex(int index)
 {
-    ssize_t size = _children.size();
-    int count = 0;
-    int oldIndex = index;
-    Widget *pWidget = nullptr;
-    while (index < size) {
-        Widget* firstChild = dynamic_cast<Widget*>(_children.at(index));
-        if (firstChild && firstChild->isFocusEnabled()) {
-            pWidget = firstChild;
-            break;
-        }
-        count++;
-        index++;
+  
+    Widget *pWidget = this->getNextWidgetByIndex(index);
+    
+    if (pWidget && pWidget->isFocusEnabled()) {
+        return pWidget;
     }
-    
-    if (nullptr == pWidget) {
-        int begin = 0;
-        while (begin < oldIndex) {
-            Widget* firstChild = dynamic_cast<Widget*>(_children.at(begin));
-            if (firstChild && firstChild->isFocusEnabled()) {
-                pWidget = firstChild;
-                break;
-            }
-            count++;
-            begin++;
-        }
-    }
-    
-    
-    return pWidget;
+    return nullptr;
 }
 
 Widget* Layout::passFocusToChild(cocos2d::ui::FocusDirection dir, cocos2d::ui::Widget *current)
@@ -1703,6 +1681,39 @@ bool Layout::checkFocusEnabledChild()
         }
     }
     return ret;
+}
+
+Widget* Layout::getNextWidgetByIndex(int index)
+{
+    ssize_t size = _children.size();
+    int count = 0;
+    int oldIndex = index;
+    Widget *pWidget = nullptr;
+    while (index < size) {
+        Widget* firstChild = dynamic_cast<Widget*>(_children.at(index));
+        if (firstChild) {
+            pWidget = firstChild;
+            break;
+        }
+        count++;
+        index++;
+    }
+    
+    if (nullptr == pWidget) {
+        int begin = 0;
+        while (begin < oldIndex) {
+            Widget* firstChild = dynamic_cast<Widget*>(_children.at(begin));
+            if (firstChild) {
+                pWidget = firstChild;
+                break;
+            }
+            count++;
+            begin++;
+        }
+    }
+    
+    
+    return pWidget;
 }
 
 Widget* Layout::getPreviousFocusedWidget(FocusDirection dir, Widget *current)
