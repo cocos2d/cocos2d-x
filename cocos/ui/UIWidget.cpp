@@ -30,6 +30,8 @@ NS_CC_BEGIN
 
 namespace ui {
 
+Widget* Widget::_focusedWidget = nullptr;
+    
 Widget::Widget():
 _enabled(true),
 _bright(true),
@@ -59,9 +61,12 @@ _touchListener(nullptr),
 _color(Color3B::WHITE),
 _opacity(255),
 _flippedX(false),
-_flippedY(false)
+_flippedY(false),
+_focused(false),
+_focusEnabled(true)
 {
-
+    onFocusChanged = CC_CALLBACK_2(Widget::onFocusChange,this);
+    onNextFocusedWidget = nullptr;
 }
 
 Widget::~Widget()
@@ -941,6 +946,95 @@ void Widget::setActionTag(int tag)
 int Widget::getActionTag()
 {
 	return _actionTag;
+}
+    
+void Widget::setFocused(bool focus)
+{
+    _focused = focus;
+    
+    //make sure there is only one focusedWidget
+    if (focus) {
+        //handling only widget, ignore the layut
+        Layout *l = dynamic_cast<Layout*>(this);
+        if (nullptr == l) {
+            _focusedWidget = this;
+        }
+    }
+    
+}
+
+bool Widget::isFocused()
+{
+    return _focused;
+}
+
+void Widget::setFocusEnabled(bool enable)
+{
+    _focusEnabled = enable;
+}
+
+bool Widget::isFocusEnabled()
+{
+    return _focusEnabled;
+}
+
+Widget* Widget::nextFocus(cocos2d::ui::FocusDirection dir,  Widget* current)
+{
+    if (nullptr == onNextFocusedWidget || nullptr == onNextFocusedWidget(dir) ) {
+        if (this->isFocused() || !current->isFocusEnabled()) {
+            Node* parent = this->getParent();
+            Layout* layout = dynamic_cast<Layout*>(parent);
+            if (nullptr == layout) {
+                //the outer layout's default behaviour is : loop focus
+                if (dynamic_cast<Layout*>(current)) {
+                    return current->nextFocus(dir, current);
+                }
+                return current;
+            }else{
+                Widget *nextWidget = layout->nextFocus(dir, current);
+                return nextWidget;
+            }
+        }else{
+            return current;
+        }
+    }
+    else{
+        Widget *getFocusWidget = onNextFocusedWidget(dir);
+        this->dispatchFocusEvent(this, getFocusWidget);
+        return getFocusWidget;
+    }
+}
+
+void Widget::dispatchFocusEvent(cocos2d::ui::Widget *widgetLoseFocus, cocos2d::ui::Widget *widgetGetFocus)
+{
+    if (widgetGetFocus) {
+        widgetGetFocus->onFocusChanged(widgetLoseFocus, widgetGetFocus);
+    }
+    
+    if (widgetLoseFocus) {
+        widgetLoseFocus->onFocusChanged(widgetLoseFocus, widgetGetFocus);
+    }
+    
+//    EventFocus event(widgetLoseFocus, widgetGetFocus);
+//    auto dispatcher = cocos2d::Director::getInstance()->getEventDispatcher();
+//    dispatcher->dispatchEvent(&event);
+    
+}
+
+void Widget::onFocusChange(Widget* widgetLostFocus, Widget* widgetGetFocus)
+{
+    if (widgetLostFocus) {
+        widgetLostFocus->setFocused(false);
+    }
+    
+    if (widgetGetFocus) {
+        widgetGetFocus->setFocused(true);
+    }
+}
+
+Widget* Widget::getCurrentFocusedWidget()
+{
+    return _focusedWidget;
 }
 
 }
