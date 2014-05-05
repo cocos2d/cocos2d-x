@@ -110,7 +110,8 @@ static const char* s_testArray[] =
      */
     "UIWidgetAddNodeTest",
     "UIRichTextTest",
-    "UIFocusTest",
+    "UIFocusTest-HBox",
+    "UIFocusTest-VBox"
 };
 
 static UISceneManager *sharedInstance = NULL;
@@ -361,8 +362,11 @@ Scene *UISceneManager::currentUIScene()
             
         case kUIRichTextTest:
             return UIRichTextTest::sceneWithTitle(s_testArray[_currentUISceneId]);
-        case KUIFocusTest:
+        case KUIFocusTest_HBox:
             return UIFocusTestHorizontal::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case KUIFocusTest_VBox:
+            return UIFocusTestVertical::sceneWithTitle(s_testArray[_currentUISceneId]);
+        
     }
     return NULL;
 }

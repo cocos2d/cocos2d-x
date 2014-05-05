@@ -74,6 +74,9 @@ Widget::~Widget()
     _touchEventListener = nullptr;
     _touchEventSelector = nullptr;
     setTouchEnabled(false);
+    if (_focusedWidget == this) {
+        _focusedWidget = nullptr;
+    }
 }
 
 Widget* Widget::create()

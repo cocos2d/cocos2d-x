@@ -15,7 +15,7 @@ class UIFocusTestBase : public UIScene
 {
 public:
     UIFocusTestBase();
-    ~UIFocusTestBase();
+    virtual ~UIFocusTestBase();
     bool init();
     
     virtual void onLeftKeyPressed() = 0;
@@ -33,7 +33,7 @@ class UIFocusTestHorizontal : public UIFocusTestBase
 {
 public:
     UIFocusTestHorizontal();
-    ~UIFocusTestHorizontal();
+    virtual ~UIFocusTestHorizontal();
     bool init();
     virtual void onLeftKeyPressed() ;
     virtual void onRightKeyPressed();
@@ -47,5 +47,25 @@ protected:
     Layout *_horizontalLayout;
     Text *_loopText;
 };
+
+class UIFocusTestVertical : public UIFocusTestBase
+{
+public:
+    UIFocusTestVertical();
+    virtual ~UIFocusTestVertical();
+    bool init();
+    virtual void onLeftKeyPressed() ;
+    virtual void onRightKeyPressed();
+    virtual void onUpKeyPressed() ;
+    virtual void onDownKeyPressed() ;
+    virtual void onFocusChanged(Widget* widgetLostFocus, Widget* widgetGetFocus);
+    
+    void toggleFocusLoop(Ref*,TouchEventType);
+protected:
+    UI_SCENE_CREATE_FUNC(UIFocusTestVertical);
+    Layout *_verticalLayout;
+    Text *_loopText;
+};
+
 
 #endif /* defined(__cocos2d_tests__UIFocusTest__) */
