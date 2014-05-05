@@ -7,10 +7,6 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COCOS2DX_ROOT="$DIR"/../..
 HOST_NAME=""
 
-pushd $COCOS2DX_ROOT
-    python download-deps.py
-popd
-
 mkdir -p $HOME/bin
 cd $HOME/bin
 
