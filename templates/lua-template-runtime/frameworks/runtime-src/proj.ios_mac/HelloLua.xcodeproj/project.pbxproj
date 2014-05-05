@@ -1019,6 +1019,7 @@
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = mac/Info.plist;
 				LIBRARY_SEARCH_PATHS = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_LDFLAGS = (
 					"-image_base",
 					100000000,
@@ -1045,6 +1046,7 @@
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = mac/Info.plist;
 				LIBRARY_SEARCH_PATHS = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_LDFLAGS = (
 					"-image_base",
 					100000000,

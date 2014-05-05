@@ -177,6 +177,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
+    <ClInclude Include="..\Classes\ConfigParser.h" />
     <ClInclude Include="..\Classes\Runtime.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="resource.h" />
@@ -184,6 +185,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
+    <ClCompile Include="..\Classes\ConfigParser.cpp" />
     <ClCompile Include="..\Classes\Runtime.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Runtime_win32.cpp" />

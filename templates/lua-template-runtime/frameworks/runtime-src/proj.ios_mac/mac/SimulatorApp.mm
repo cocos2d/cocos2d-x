@@ -45,6 +45,8 @@ bool g_landscape = false;
 cocos2d::Size g_screenSize;
 GLView* g_eglView = nullptr;
 
+static AppController* g_nsAppDelegate=nullptr;
+
 using namespace std;
 using namespace cocos2d;
 
@@ -74,9 +76,8 @@ std::string getCurAppPath(void)
         extern std::string g_resourcePath;
         g_resourcePath = [[args objectAtIndex:1]UTF8String];
     }
-
+    g_nsAppDelegate =self;
     AppDelegate app;
-    [self createSimulator:[NSString stringWithUTF8String:"HelloLua"] viewWidth:960 viewHeight:640 factor:1.0];
     Application::getInstance()->run();
     // After run, application needs to be terminated immediately.
     [NSApp terminate: self];
@@ -115,6 +116,14 @@ std::string getCurAppPath(void)
     [window makeKeyAndOrderFront:self];
 }
 
+void createSimulator(const char* viewName, float width, float height,float frameZoomFactor)
+{
+    if(g_nsAppDelegate)
+    {
+        [g_nsAppDelegate createSimulator:[NSString stringWithUTF8String:viewName] viewWidth:width viewHeight:height factor:frameZoomFactor];
+    }
+    
+}
 
 - (void) createViewMenu
 {

@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "glfw3native.h"
 #include "resource.h"
 #include "Runtime.h"
+#include "ConfigParser.h"
 
 #include <string>
 #include <vector>
@@ -47,9 +48,9 @@ void createViewMenu()
     HMENU menu = GetMenu(glfwGetWin32Window(g_eglView->getWindow()));
     HMENU viewMenu = GetSubMenu(menu, 1);
 
-    for (int i = SimulatorConfig::getInstance()->getScreenSizeCount() - 1; i >= 0; --i)
+    for (int i = ConfigParser::getInstance()->getScreenSizeCount() - 1; i >= 0; --i)
     {
-        SimulatorScreenSize size = SimulatorConfig::getInstance()->getScreenSize(i);
+        SimulatorScreenSize size = ConfigParser::getInstance()->getScreenSize(i);
         wstring menuName;
         menuName.assign(size.title.begin(), size.title.end());
 
@@ -91,12 +92,12 @@ void updateMenu()
         height = w;
     }
 
-    int count = SimulatorConfig::getInstance()->getScreenSizeCount();
+    int count = ConfigParser::getInstance()->getScreenSizeCount();
     for (int i = 0; i < count; ++i)
     {
         bool bSel = false;
 
-        SimulatorScreenSize size = SimulatorConfig::getInstance()->getScreenSize(i);
+        SimulatorScreenSize size = ConfigParser::getInstance()->getScreenSize(i);
         if (size.width == width && size.height == height)
         {
             bSel = true;
@@ -190,9 +191,9 @@ void onViewZoomOut(int viewMenuID)
 void onViewChangeFrameSize(int viewMenuID)
 {
     int index = viewMenuID - ID_VIEW_SIZE;
-    if (index >= 0 && index < SimulatorConfig::getInstance()->getScreenSizeCount())
+    if (index >= 0 && index < ConfigParser::getInstance()->getScreenSizeCount())
     {
-        SimulatorScreenSize size = SimulatorConfig::getInstance()->getScreenSize(index);
+        SimulatorScreenSize size = ConfigParser::getInstance()->getScreenSize(index);
         g_screenSize.width = size.width;
         g_screenSize.height = size.height;
         updateView();	
@@ -247,7 +248,7 @@ LRESULT CALLBACK SNewWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
                 onHelpAbout();
 
             default:
-                if (wmId >= ID_VIEW_SIZE && wmId <= ID_VIEW_SIZE + SimulatorConfig::getInstance()->getScreenSizeCount() - 1)
+                if (wmId >= ID_VIEW_SIZE && wmId <= ID_VIEW_SIZE + ConfigParser::getInstance()->getScreenSizeCount() - 1)
                 {
                     onViewChangeFrameSize(wmId);
                     break;

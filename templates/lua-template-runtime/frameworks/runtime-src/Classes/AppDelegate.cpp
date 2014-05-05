@@ -3,6 +3,7 @@
 #include "SimpleAudioEngine.h"
 #include "cocos2d.h"
 #include "Runtime.h"
+#include "ConfigParser.h"
 
 using namespace CocosDenshion;
 
@@ -20,15 +21,26 @@ AppDelegate::~AppDelegate()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
+
+#ifdef COCOS2D_DEBUG
+    initRuntime();
+#endif
+    
     // initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLView::createWithRect("HelloLua", Rect(0,0,900,640));
+        ConfigParser::getInstance()->readConfig();
+        Size viewSize = ConfigParser::getInstance()->getInitViewSize();
+        string title = ConfigParser::getInstance()->getInitViewName();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+        extern void createSimulator(const char* viewName, float width, float height,float frameZoomFactor = 1.0f);
+        createSimulator(title.c_str(),viewSize.width,viewSize.height);
+#else
+        glview = GLView::createWithRect(title.c_str(), Rect(0,0,viewSize.width,viewSize.height));
         director->setOpenGLView(glview);
+#endif
     }
-
-    glview->setDesignResolutionSize(480, 320, ResolutionPolicy::NO_BORDER);
 
     // turn on display FPS
     director->setDisplayStats(true);
@@ -62,3 +74,4 @@ void AppDelegate::applicationWillEnterForeground()
 
     SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
 }
+
