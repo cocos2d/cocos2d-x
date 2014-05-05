@@ -270,7 +270,7 @@ CCNode* CCBReader::readNodeGraphFromData(CCData *pData, CCObject *pOwner, const 
     CCDictionary* animationManagers = CCDictionary::create();
     CCNode *pNodeGraph = readFileWithCleanUp(true, animationManagers);
     
-    if (pNodeGraph && mActionManager->getAutoPlaySequenceId() != -1 && !jsControlled)
+    if (pNodeGraph && mActionManager->getAutoPlaySequenceId() != -1)
     {
         // Auto play animations
         mActionManager->runAnimationsForSequenceIdTweenDuration(mActionManager->getAutoPlaySequenceId(), 0);
