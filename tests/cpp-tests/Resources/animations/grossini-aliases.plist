@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>frames</key>
+	<dict>
+		<key>grossini_dance_01.png</key>
+		<dict>
+			<key>spriteSize</key>
+			<string>{51, 109}</string>
+			<key>textureRect</key>
+			<string>{{2, 2}, {51, 109}}</string>
+			<key>spriteOffset</key>
+			<string>{0, -1}</string>
+			<key>textureRotated</key>
+			<false/>
+			<key>spriteSourceSize</key>
+			<string>{85, 121}</string>
+			<key>aliases</key>
+			<array>
+				<string>dance_01</string>
+			</array>
+		</dict>
+		<key>grossini_dance_02.png</key>
+		<dict>
+			<key>spriteSize</key>
+			<string>{63, 109}</string>
+			<key>textureRect</key>
+			<string>{{55, 2}, {63, 109}}</string>
+			<key>spriteOffset</key>
+			<string>{-6, -1}</string>
+			<key>textureRotated</key>
+			<false/>
+			<key>spriteSourceSize</key>
+			<string>{85, 121}</string>
+			<key>aliases</key>
+			<array>
+				<string>dance_02</string>
+			</array>
+		</dict>
+		<key>grossini_dance_03.png</key>
+		<dict>
+			<key>spriteSize</key>
+			<string>{63, 109}</string>
+			<key>textureRect</key>
+			<string>{{120, 2}, {63, 109}}</string>
+			<key>spriteOffset</key>
+			<string>{-6, -1}</string>
+			<key>textureRotated</key>
+			<false/>
+			<key>spriteSourceSize</key>
+			<string>{85, 121}</string>
+			<key>aliases</key>
+			<array>
+				<string>dance_03</string>
+			</array>
+		</dict>
+		<key>grossini_dance_04.png</key>
+		<dict>
+			<key>spriteSize</key>
+			<string>{74, 109}</string>
+			<key>textureRect</key>
+			<string>{{185, 2}, {74, 109}}</string>
+			<key>spriteOffset</key>
+			<string>{-0.5, -1}</string>
+			<key>textureRotated</key>
+			<false/>
+			<key>spriteSourceSize</key>
+			<string>{85, 121}</string>
+			<key>aliases</key>
+			<array>
+				<string>dance_04</string>
+			</array>
+		</dict>
+		<key>grossini_dance_05.png</key>
+		<dict>
+			<key>spriteSize</key>
+			<string>{74, 109}</string>
+			<key>textureRect</key>
+			<string>{{261, 2}, {74, 109}}</string>
+			<key>spriteOffset</key>
+			<string>{-0.5, -1}</string>
+			<key>textureRotated</key>
+			<false/>
+			<key>spriteSourceSize</key>
+			<string>{85, 121}</string>
+			<key>aliases</key>
+			<array>
+				<string>dance_05</string>
+			</array>
+		</dict>
+		<key>grossini_dance_06.png</key>
+		<dict>
+			<key>spriteSize</key>
+			<string>{63, 109}</string>
+			<key>textureRect</key>
+			<string>{{337, 2}, {63, 109}}</string>
+			<key>spriteOffset</key>
+			<string>{-6, -1}</string>
+			<key>textureRotated</key>
+			<false/>
+			<key>spriteSourceSize</key>
+			<string>{85, 121}</string>
+			<key>aliases</key>
+			<array>
+				<string>dance_06</string>
+			</array>
+		</dict>
+		<key>grossini_dance_07.png</key>
+		<dict>
+			<key>spriteSize</key>
+			<string>{63, 109}</string>
+			<key>textureRect</key>
+			<string>{{402, 2}, {63, 109}}</string>
+			<key>spriteOffset</key>
+			<string>{-6, -1}</string>
+			<key>textureRotated</key>
+			<false/>
+			<key>spriteSourceSize</key>
+			<string>{85, 121}</string>
+			<key>aliases</key>
+			<array>
+				<string>dance_07</string>
+			</array>
+		</dict>
+		<key>grossini_dance_08.png</key>
+		<dict>
+			<key>spriteSize</key>
+			<string>{51, 109}</string>
+			<key>textureRect</key>
+			<string>{{2, 113}, {51, 109}}</string>
+			<key>spriteOffset</key>
+			<string>{0, -1}</string>
+			<key>textureRotated</key>
+			<false/>
+			<key>spriteSourceSize</key>
+			<string>{85, 121}</string>
+			<key>aliases</key>
+			<array>
+				<string>dance_08</string>
+			</array>
+		</dict>
+		<key>grossini_dance_09.png</key>
+		<dict>
+			<key>spriteSize</key>
+			<string>{51, 109}</string>
+			<key>textureRect</key>
+			<string>{{55, 113}, {51, 109}}</string>
+			<key>spriteOffset</key>
+			<string>{0, -1}</string>
+			<key>textureRotated</key>
+			<false/>
+			<key>spriteSourceSize</key>
+			<string>{85, 121}</string>
+			<key>aliases</key>
+			<array>
+				<string>dance_09</string>
+			</array>
+		</dict>
+		<key>grossini_dance_10.png</key>
+		<dict>
+			<key>spriteSize</key>
+			<string>{62, 109}</string>
+			<key>textureRect</key>
+			<string>{{108, 113}, {62, 109}}</string>
+			<key>spriteOffset</key>
+			<string>{5.5, -1}</string>
+			<key>textureRotated</key>
+			<false/>
+			<key>spriteSourceSize</key>
+			<string>{85, 121}</string>
+			<key>aliases</key>
+			<array>
+				<string>dance_10</string>
+			</array>
+		</dict>
+		<key>grossini_dance_11.png</key>
+		<dict>
+			<key>spriteSize</key>
+			<string>{62, 109}</string>
+			<key>textureRect</key>
+			<string>{{172, 113}, {62, 109}}</string>
+			<key>spriteOffset</key>
+			<string>{5.5, -1}</string>
+			<key>textureRotated</key>
+			<false/>
+			<key>spriteSourceSize</key>
+			<string>{85, 121}</string>
+			<key>aliases</key>
+			<array>
+				<string>dance_11</string>
+			</array>
+		</dict>
+		<key>grossini_dance_12.png</key>
+		<dict>
+			<key>spriteSize</key>
+			<string>{51, 106}</string>
+			<key>textureRect</key>
+			<string>{{236, 113}, {51, 106}}</string>
+			<key>spriteOffset</key>
+			<string>{0, -2.5}</string>
+			<key>textureRotated</key>
+			<false/>
+			<key>spriteSourceSize</key>
+			<string>{85, 121}</string>
+			<key>aliases</key>
+			<array>
+				<string>dance_12</string>
+			</array>
+		</dict>
+		<key>grossini_dance_13.png</key>
+		<dict>
+			<key>spriteSize</key>
+			<string>{51, 109}</string>
+			<key>textureRect</key>
+			<string>{{289, 113}, {51, 109}}</string>
+			<key>spriteOffset</key>
+			<string>{0, -1}</string>
+			<key>textureRotated</key>
+			<false/>
+			<key>spriteSourceSize</key>
+			<string>{85, 121}</string>
+			<key>aliases</key>
+			<array>
+				<string>dance_13</string>
+			</array>
+		</dict>
+		<key>grossini_dance_14.png</key>
+		<dict>
+			<key>spriteSize</key>
+			<string>{51, 106}</string>
+			<key>textureRect</key>
+			<string>{{342, 113}, {51, 106}}</string>
+			<key>spriteOffset</key>
+			<string>{0, -2.5}</string>
+			<key>textureRotated</key>
+			<false/>
+			<key>spriteSourceSize</key>
+			<string>{85, 121}</string>
+			<key>aliases</key>
+			<array>
+				<string>dance_14</string>
+			</array>
+		</dict>
+	</dict>
+	<key>metadata</key>
+	<dict>
+		<key>format</key>
+		<integer>3</integer>
+		<key>size</key>
+		<string>{512, 256}</string>
+	</dict>
+</dict>
+</plist>
