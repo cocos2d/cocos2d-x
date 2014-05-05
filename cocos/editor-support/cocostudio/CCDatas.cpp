@@ -290,7 +290,7 @@ void FrameData::copy(const BaseData *baseData)
             }
         }
 
-		blendFunc = frameData->blendFunc;
+        blendFunc = frameData->blendFunc;
         isTween = frameData->isTween;
     }
 }
