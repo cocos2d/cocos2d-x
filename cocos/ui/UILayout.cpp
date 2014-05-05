@@ -1722,8 +1722,7 @@ Widget* Layout::getPreviousFocusedWidget(FocusDirection dir, Widget *current)
     ssize_t previousWidgetPos = _children.getIndex(current);
     previousWidgetPos = previousWidgetPos - 1;
     if (previousWidgetPos >= 0) {
-        //FIXEDME: find the next avalable widget
-        nextWidget = (Widget*)_children.at(previousWidgetPos);
+        nextWidget = this->getNextWidgetByIndex(previousWidgetPos);
         if (nextWidget->isFocusEnabled()) {
             
             this->dispatchFocusEvent(current, nextWidget);
@@ -1747,8 +1746,7 @@ Widget* Layout::getPreviousFocusedWidget(FocusDirection dir, Widget *current)
         if (_loopFocus) {
             if (checkFocusEnabledChild()) {
                 previousWidgetPos = _children.size()-1;
-                //FIXEDME: find the next avalable widget
-                nextWidget = (Widget*)_children.at(previousWidgetPos);
+                nextWidget = this->getNextWidgetByIndex(previousWidgetPos);
                 if (nextWidget->isFocusEnabled()) {
                     
                     this->dispatchFocusEvent(current, nextWidget);
@@ -1793,8 +1791,7 @@ Widget* Layout::getNextFocusedWidget(FocusDirection dir, Widget *current)
     ssize_t previousWidgetPos = _children.getIndex(current);
     previousWidgetPos = previousWidgetPos + 1;
     if (previousWidgetPos < _children.size()) {
-        //FIXEDME: find the next avalable widget
-        nextWidget = (Widget*)(_children.at(previousWidgetPos));
+        nextWidget = this->getNextWidgetByIndex(previousWidgetPos);
         //handle widget
         if (nextWidget) {
             if (nextWidget->isFocusEnabled()) {
@@ -1814,7 +1811,6 @@ Widget* Layout::getNextFocusedWidget(FocusDirection dir, Widget *current)
                 return nextWidget->nextFocusedWidget(dir, nextWidget);
             }
         }
-        //TODO: handle not widget scenaro
         else{
             return current;
         }
@@ -1822,8 +1818,7 @@ Widget* Layout::getNextFocusedWidget(FocusDirection dir, Widget *current)
         if (_loopFocus) {
             if (checkFocusEnabledChild()) {
                 previousWidgetPos = 0;
-                //FIXEDME: find the next avalable widget
-                nextWidget = (Widget*)_children.at(previousWidgetPos);
+                nextWidget = this->getNextWidgetByIndex(previousWidgetPos);
                 if (nextWidget->isFocusEnabled()) {
                     
                     this->dispatchFocusEvent(current, nextWidget);
