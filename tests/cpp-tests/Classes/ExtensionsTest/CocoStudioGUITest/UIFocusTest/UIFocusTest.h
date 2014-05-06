@@ -20,11 +20,11 @@ public:
     virtual ~UIFocusTestBase();
     bool init();
     
-    virtual void onLeftKeyPressed() = 0;
-    virtual void onRightKeyPressed() = 0;
-    virtual void onUpKeyPressed() = 0;
-    virtual void onDownKeyPressed() = 0;
-    virtual void onFocusChanged(Widget* widgetLostFocus, Widget* widgetGetFocus) = 0;
+    virtual void onLeftKeyPressed();
+    virtual void onRightKeyPressed();
+    virtual void onUpKeyPressed();
+    virtual void onDownKeyPressed();
+    virtual void onFocusChanged(Widget* widgetLostFocus, Widget* widgetGetFocus);
 
     void onImageViewClicked(Ref* ref, TouchEventType touchType);
 
@@ -40,11 +40,7 @@ public:
     UIFocusTestHorizontal();
     virtual ~UIFocusTestHorizontal();
     bool init();
-    virtual void onLeftKeyPressed() ;
-    virtual void onRightKeyPressed();
-    virtual void onUpKeyPressed() ;
-    virtual void onDownKeyPressed() ;
-    virtual void onFocusChanged(Widget* widgetLostFocus, Widget* widgetGetFocus);
+   
     
     void toggleFocusLoop(Ref*,TouchEventType);
     
@@ -60,11 +56,7 @@ public:
     UIFocusTestVertical();
     virtual ~UIFocusTestVertical();
     bool init();
-    virtual void onLeftKeyPressed() ;
-    virtual void onRightKeyPressed();
-    virtual void onUpKeyPressed() ;
-    virtual void onDownKeyPressed() ;
-    virtual void onFocusChanged(Widget* widgetLostFocus, Widget* widgetGetFocus);
+   
     
     void toggleFocusLoop(Ref*,TouchEventType);
 protected:
@@ -72,6 +64,22 @@ protected:
     Layout *_verticalLayout;
     Text *_loopText;
 };
+
+class UIFocusTestNestedLayout1 : public UIFocusTestBase
+{
+public:
+    UIFocusTestNestedLayout1();
+    virtual ~UIFocusTestNestedLayout1();
+    bool init();
+    
+    
+    void toggleFocusLoop(Ref*,TouchEventType);
+protected:
+    UI_SCENE_CREATE_FUNC(UIFocusTestNestedLayout1);
+    Layout *_verticalLayout;
+    Text *_loopText;
+};
+
 
 
 #endif /* defined(__cocos2d_tests__UIFocusTest__) */

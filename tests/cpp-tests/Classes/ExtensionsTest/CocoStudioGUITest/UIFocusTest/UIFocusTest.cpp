@@ -75,6 +75,52 @@ void UIFocusTestBase::onImageViewClicked(cocos2d::Ref *ref, TouchEventType touch
     }
 }
 
+void UIFocusTestBase::onLeftKeyPressed()
+{
+    if (_firstFocusedWidget) {
+        _firstFocusedWidget = _firstFocusedWidget->nextFocusedWidget(FocusDirection::FocusDirection_Left, _firstFocusedWidget);
+    }
+}
+
+void UIFocusTestBase::onRightKeyPressed()
+{
+    if (_firstFocusedWidget) {
+        _firstFocusedWidget = _firstFocusedWidget->nextFocusedWidget(FocusDirection::FocusDirection_Right, _firstFocusedWidget);
+    }
+}
+
+void UIFocusTestBase::onUpKeyPressed()
+{
+    if (_firstFocusedWidget) {
+        _firstFocusedWidget = _firstFocusedWidget->nextFocusedWidget(FocusDirection::FocusDirection_Up, _firstFocusedWidget);
+    }
+    
+}
+
+void UIFocusTestBase::onDownKeyPressed()
+{
+    if (_firstFocusedWidget) {
+        _firstFocusedWidget = _firstFocusedWidget->nextFocusedWidget(FocusDirection::FocusDirection_Down, _firstFocusedWidget);
+    }
+    
+}
+
+void UIFocusTestBase::onFocusChanged(cocos2d::ui::Widget *widgetLostFocus, cocos2d::ui::Widget *widgetGetFocus)
+{
+    //only change the widgets' state
+    Layout *getLayout = dynamic_cast<Layout*>(widgetGetFocus);
+    if (!getLayout && widgetGetFocus && widgetGetFocus->isFocusEnabled()) {
+        widgetGetFocus->setScale(1.2);
+        widgetGetFocus->setColor(Color3B::RED);
+    }
+    
+    Layout *loseLayout = dynamic_cast<Layout*>(widgetLostFocus);
+    if (!loseLayout && widgetLostFocus && widgetLostFocus->isFocusEnabled()) {
+        widgetLostFocus->setScale(1.0);
+        widgetLostFocus->setColor(Color3B::WHITE);
+    }
+}
+
 
 //UIFocusTestHorizontal
 UIFocusTestHorizontal::UIFocusTestHorizontal()
@@ -142,51 +188,6 @@ void UIFocusTestHorizontal::toggleFocusLoop(cocos2d::Ref * pObjc, TouchEventType
     }
 }
 
-void UIFocusTestHorizontal::onFocusChanged(cocos2d::ui::Widget *widgetLostFocus, cocos2d::ui::Widget *widgetGetFocus)
-{
-    //only change the widgets' state
-    Layout *getLayout = dynamic_cast<Layout*>(widgetGetFocus);
-    if (!getLayout && widgetGetFocus && widgetGetFocus->isFocusEnabled()) {
-        widgetGetFocus->setScale(1.2);
-        widgetGetFocus->setColor(Color3B::RED);
-    }
-    
-    Layout *loseLayout = dynamic_cast<Layout*>(widgetLostFocus);
-    if (!loseLayout && widgetLostFocus && widgetLostFocus->isFocusEnabled()) {
-        widgetLostFocus->setScale(1.0);
-        widgetLostFocus->setColor(Color3B::WHITE);
-    }
-}
-
-void UIFocusTestHorizontal::onLeftKeyPressed()
-{
-    if (_firstFocusedWidget) {
-        _firstFocusedWidget = _firstFocusedWidget->nextFocusedWidget(FocusDirection::FocusDirection_Left, _firstFocusedWidget);
-    }
-}
-
-void UIFocusTestHorizontal::onRightKeyPressed()
-{
-    if (_firstFocusedWidget) {
-        _firstFocusedWidget = _firstFocusedWidget->nextFocusedWidget(FocusDirection::FocusDirection_Right, _firstFocusedWidget);
-    }
-}
-
-void UIFocusTestHorizontal::onUpKeyPressed()
-{
-    if (_firstFocusedWidget) {
-        _firstFocusedWidget = _firstFocusedWidget->nextFocusedWidget(FocusDirection::FocusDirection_Up, _firstFocusedWidget);
-    }
-
-}
-
-void UIFocusTestHorizontal::onDownKeyPressed()
-{
-    if (_firstFocusedWidget) {
-        _firstFocusedWidget = _firstFocusedWidget->nextFocusedWidget(FocusDirection::FocusDirection_Down, _firstFocusedWidget);
-    }
-
-}
 
 //UIFocusTestVertical
 UIFocusTestVertical::UIFocusTestVertical()
@@ -253,48 +254,4 @@ void UIFocusTestVertical::toggleFocusLoop(cocos2d::Ref * pObjc, TouchEventType t
     }
 }
 
-void UIFocusTestVertical::onFocusChanged(cocos2d::ui::Widget *widgetLostFocus, cocos2d::ui::Widget *widgetGetFocus)
-{
-    //only change the widgets' state
-    Layout *getLayout = dynamic_cast<Layout*>(widgetGetFocus);
-    if (!getLayout && widgetGetFocus && widgetGetFocus->isFocusEnabled()) {
-        widgetGetFocus->setScale(1.2);
-        widgetGetFocus->setColor(Color3B::RED);
-    }
-    
-    Layout *loseLayout = dynamic_cast<Layout*>(widgetLostFocus);
-    if (!loseLayout && widgetLostFocus && widgetLostFocus->isFocusEnabled()) {
-        widgetLostFocus->setScale(1.0);
-        widgetLostFocus->setColor(Color3B::WHITE);
-    }
-}
-
-void UIFocusTestVertical::onLeftKeyPressed()
-{
-    if (_firstFocusedWidget) {
-        _firstFocusedWidget = _firstFocusedWidget->nextFocusedWidget(FocusDirection::FocusDirection_Left, _firstFocusedWidget);
-    }
-}
-
-void UIFocusTestVertical::onRightKeyPressed()
-{
-    if (_firstFocusedWidget) {
-        _firstFocusedWidget = _firstFocusedWidget->nextFocusedWidget(FocusDirection::FocusDirection_Right, _firstFocusedWidget);
-    }
-}
-
-void UIFocusTestVertical::onUpKeyPressed()
-{
-    if (_firstFocusedWidget) {
-        _firstFocusedWidget = _firstFocusedWidget->nextFocusedWidget(FocusDirection::FocusDirection_Up, _firstFocusedWidget);
-    }
-    
-}
-
-void UIFocusTestVertical::onDownKeyPressed()
-{
-    if (_firstFocusedWidget) {
-        _firstFocusedWidget = _firstFocusedWidget->nextFocusedWidget(FocusDirection::FocusDirection_Down, _firstFocusedWidget);
-    }
-    
-}
+//UIFocusTestNestedLayout1
