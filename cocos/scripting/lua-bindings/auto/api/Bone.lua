@@ -162,7 +162,7 @@
 --------------------------------
 -- @function [parent=#Bone] getNodeToArmatureTransform 
 -- @param self
--- @return math::Matrix#math::Matrix ret (return value: cc.math::Matrix)
+-- @return Matrix#Matrix ret (return value: cc.Matrix)
         
 --------------------------------
 -- @function [parent=#Bone] getDisplayManager 
@@ -202,7 +202,7 @@
 --------------------------------
 -- @function [parent=#Bone] getNodeToWorldTransform 
 -- @param self
--- @return math::Matrix#math::Matrix ret (return value: cc.math::Matrix)
+-- @return Matrix#Matrix ret (return value: cc.Matrix)
         
 --------------------------------
 -- @function [parent=#Bone] update 

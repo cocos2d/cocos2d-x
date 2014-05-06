@@ -3026,7 +3026,7 @@ int lua_cocos2dx_studio_ContourData_addVertex(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::math::Vector2 arg0;
+        cocos2d::Vector2 arg0;
 
         ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
@@ -3813,7 +3813,7 @@ int lua_cocos2dx_studio_DisplayManager_getAnchorPointInPoints(lua_State* tolua_S
     {
         if(!ok)
             return 0;
-        cocos2d::math::Vector2 ret = cobj->getAnchorPointInPoints();
+        cocos2d::Vector2 ret = cobj->getAnchorPointInPoints();
         vector2_to_luaval(tolua_S, ret);
         return 1;
     }
@@ -4198,7 +4198,7 @@ int lua_cocos2dx_studio_DisplayManager_containPoint(lua_State* tolua_S)
     ok  = true;
     do{
         if (argc == 1) {
-            cocos2d::math::Vector2 arg0;
+            cocos2d::Vector2 arg0;
             ok &= luaval_to_vector2(tolua_S, 2, &arg0);
 
             if (!ok) { break; }
@@ -4434,7 +4434,7 @@ int lua_cocos2dx_studio_DisplayManager_getAnchorPoint(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        cocos2d::math::Vector2 ret = cobj->getAnchorPoint();
+        cocos2d::Vector2 ret = cobj->getAnchorPoint();
         vector2_to_luaval(tolua_S, ret);
         return 1;
     }
@@ -6051,7 +6051,7 @@ int lua_cocos2dx_studio_Bone_getNodeToArmatureTransform(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        cocos2d::math::Matrix ret = cobj->getNodeToArmatureTransform();
+        cocos2d::Matrix ret = cobj->getNodeToArmatureTransform();
         matrix_to_luaval(tolua_S, ret);
         return 1;
     }
@@ -9615,7 +9615,7 @@ int lua_cocos2dx_studio_Skin_getNodeToWorldTransformAR(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        cocos2d::math::Matrix ret = cobj->getNodeToWorldTransformAR();
+        cocos2d::Matrix ret = cobj->getNodeToWorldTransformAR();
         matrix_to_luaval(tolua_S, ret);
         return 1;
     }

@@ -6,7 +6,7 @@
 --------------------------------
 -- @function [parent=#RenderTexture] setVirtualViewport 
 -- @param self
--- @param #cc.math::Vector2 array
+-- @param #array_table array
 -- @param #rect_table rect
 -- @param #rect_table rect
         
@@ -169,7 +169,7 @@
 -- @function [parent=#RenderTexture] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #cc.math::Matrix matrix
+-- @param #cc.Matrix matrix
 -- @param #bool bool
         
 --------------------------------

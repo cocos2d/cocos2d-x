@@ -28,7 +28,6 @@ THE SOFTWARE.
 
 #include "CCStdC.h"
 #include "platform/CCCommon.h"
-#include "CCGeometry.h"
 #include "platform/CCGLViewProtocol.h"
 #include "InputEvent.h"
 
