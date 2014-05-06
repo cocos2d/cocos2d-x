@@ -68,42 +68,6 @@ Vector4::~Vector4()
 {
 }
 
-const Vector4& Vector4::zero()
-{
-    static Vector4 value(0.0f, 0.0f, 0.0f, 0.0f);
-    return value;
-}
-
-const Vector4& Vector4::one()
-{
-    static Vector4 value(1.0f, 1.0f, 1.0f, 1.0f);
-    return value;
-}
-
-const Vector4& Vector4::unitX()
-{
-    static Vector4 value(1.0f, 0.0f, 0.0f, 0.0f);
-    return value;
-}
-
-const Vector4& Vector4::unitY()
-{
-    static Vector4 value(0.0f, 1.0f, 0.0f, 0.0f);
-    return value;
-}
-
-const Vector4& Vector4::unitZ()
-{
-    static Vector4 value(0.0f, 0.0f, 1.0f, 0.0f);
-    return value;
-}
-
-const Vector4& Vector4::unitW()
-{
-    static Vector4 value(0.0f, 0.0f, 0.0f, 1.0f);
-    return value;
-}
-
 bool Vector4::isZero() const
 {
     return x == 0.0f && y == 0.0f && z == 0.0f && w == 0.0f;
@@ -338,5 +302,12 @@ void Vector4::subtract(const Vector4& v1, const Vector4& v2, Vector4* dst)
     dst->z = v1.z - v2.z;
     dst->w = v1.w - v2.w;
 }
+
+const Vector4 Vector4::ZERO = Vector4(0.0f, 0.0f, 0.0f, 0.0f);
+const Vector4 Vector4::ONE = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+const Vector4 Vector4::UNIT_X = Vector4(1.0f, 0.0f, 0.0f, 0.0f);
+const Vector4 Vector4::UNIT_Y = Vector4(0.0f, 1.0f, 0.0f, 0.0f);
+const Vector4 Vector4::UNIT_Z = Vector4(0.0f, 0.0f, 1.0f, 0.0f);
+const Vector4 Vector4::UNIT_W = Vector4(0.0f, 0.0f, 0.0f, 1.0f);
 
 NS_CC_MATH_END

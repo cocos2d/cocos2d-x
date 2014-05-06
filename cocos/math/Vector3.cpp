@@ -68,36 +68,6 @@ Vector3::~Vector3()
 {
 }
 
-const Vector3& Vector3::zero()
-{
-    static Vector3 value(0.0f, 0.0f, 0.0f);
-    return value;
-}
-
-const Vector3& Vector3::one()
-{
-    static Vector3 value(1.0f, 1.0f, 1.0f);
-    return value;
-}
-
-const Vector3& Vector3::unitX()
-{
-    static Vector3 value(1.0f, 0.0f, 0.0f);
-    return value;
-}
-
-const Vector3& Vector3::unitY()
-{
-    static Vector3 value(0.0f, 1.0f, 0.0f);
-    return value;
-}
-
-const Vector3& Vector3::unitZ()
-{
-    static Vector3 value(0.0f, 0.0f, 1.0f);
-    return value;
-}
-
 bool Vector3::isZero() const
 {
     return x == 0.0f && y == 0.0f && z == 0.0f;
@@ -328,5 +298,11 @@ void Vector3::smooth(const Vector3& target, float elapsedTime, float responseTim
         *this += (target - *this) * (elapsedTime / (elapsedTime + responseTime));
     }
 }
+
+const Vector3 Vector3::ZERO = Vector3(0.0f, 0.0f, 0.0f);
+const Vector3 Vector3::ONE = Vector3(1.0f, 1.0f, 1.0f);
+const Vector3 Vector3::UNIT_X = Vector3(1.0f, 0.0f, 0.0f);
+const Vector3 Vector3::UNIT_Y = Vector3(0.0f, 1.0f, 0.0f);
+const Vector3 Vector3::UNIT_Z = Vector3(0.0f, 0.0f, 1.0f);
 
 NS_CC_MATH_END

@@ -104,7 +104,7 @@ void Quaternion::conjugate()
     x = -x;
     y = -y;
     z = -z;
-    w =  w;
+    //w =  w;
 }
 
 Quaternion Quaternion::getConjugated() const
@@ -122,7 +122,7 @@ bool Quaternion::inverse()
         x = -x;
         y = -y;
         z = -z;
-        w = w;
+        //w = w;
 
         return true;
     }
