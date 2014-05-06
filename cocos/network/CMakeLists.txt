@@ -25,6 +25,13 @@ set(COCOS_NETWORK_SRC
 )
 
 set(COCOS_NETWORK_LINK
+IF ( WIN32 )
+target_link_libraries(network
+  libcurl_imp
+  ${PLATFORM_LINK}
+)
+ELSE()
   curl
   ${PLATFORM_LINK}
 )
+ENDIF()
