@@ -7,7 +7,7 @@
 -- @function [parent=#JumpBy] create 
 -- @param self
 -- @param #float float
--- @param #cc.math::Vector2 array
+-- @param #array_table array
 -- @param #float float
 -- @param #int int
 -- @return JumpBy#JumpBy ret (return value: cc.JumpBy)

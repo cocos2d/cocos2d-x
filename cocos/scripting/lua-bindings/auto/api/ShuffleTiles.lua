@@ -6,7 +6,7 @@
 --------------------------------
 -- @function [parent=#ShuffleTiles] placeTile 
 -- @param self
--- @param #cc.math::Vector2 array
+-- @param #array_table array
 -- @param #cc.Tile tile
         
 --------------------------------

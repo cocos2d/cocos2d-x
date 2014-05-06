@@ -76,7 +76,7 @@
 -- @function [parent=#Label] setBMFontFilePath 
 -- @param self
 -- @param #string str
--- @param #cc.math::Vector2 array
+-- @param #array_table array
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -222,7 +222,7 @@
 -- @param #string str
 -- @param #cc.TextHAlignment texthalignment
 -- @param #int int
--- @param #cc.math::Vector2 array
+-- @param #array_table array
 -- @return Label#Label ret (return value: cc.Label)
         
 --------------------------------
@@ -260,7 +260,7 @@
 -- @function [parent=#Label] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #cc.math::Matrix matrix
+-- @param #cc.Matrix matrix
 -- @param #bool bool
         
 --------------------------------

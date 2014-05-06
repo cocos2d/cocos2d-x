@@ -58,7 +58,7 @@
 -- @function [parent=#Director] loadMatrix 
 -- @param self
 -- @param #cc.MATRIX_STACK_TYPE matrix_stack_type
--- @param #cc.math::Matrix matrix
+-- @param #cc.Matrix matrix
         
 --------------------------------
 -- @function [parent=#Director] getNotificationNode 
@@ -83,7 +83,7 @@
 --------------------------------
 -- @function [parent=#Director] getVisibleOrigin 
 -- @param self
--- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#Director] mainLoop 
@@ -107,8 +107,8 @@
 --------------------------------
 -- @function [parent=#Director] convertToUI 
 -- @param self
--- @param #cc.math::Vector2 array
--- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
+-- @param #array_table array
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#Director] setDefaultValues 
@@ -177,8 +177,8 @@
 --------------------------------
 -- @function [parent=#Director] convertToGL 
 -- @param self
--- @param #cc.math::Vector2 array
--- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
+-- @param #array_table array
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#Director] purgeCachedData 
@@ -212,7 +212,7 @@
 -- @function [parent=#Director] getMatrix 
 -- @param self
 -- @param #cc.MATRIX_STACK_TYPE matrix_stack_type
--- @return math::Matrix#math::Matrix ret (return value: cc.math::Matrix)
+-- @return Matrix#Matrix ret (return value: cc.Matrix)
         
 --------------------------------
 -- @function [parent=#Director] popScene 
@@ -286,7 +286,7 @@
 -- @function [parent=#Director] multiplyMatrix 
 -- @param self
 -- @param #cc.MATRIX_STACK_TYPE matrix_stack_type
--- @param #cc.math::Matrix matrix
+-- @param #cc.Matrix matrix
         
 --------------------------------
 -- @function [parent=#Director] getActionManager 
