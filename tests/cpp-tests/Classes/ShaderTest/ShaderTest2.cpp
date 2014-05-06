@@ -867,6 +867,7 @@ void AttribSprite::initShader()
     
     attribname ="a_color";
     shader->getAttrib(attribname)->_type = GL_UNSIGNED_BYTE;
+    shader->getAttrib(attribname)->_normalized = GL_TRUE;
     shader->getAttrib(attribname)->_index = 1;
     
     attribname ="a_texCoord";

@@ -35,6 +35,7 @@ THE SOFTWARE.
 #include "CCGL.h"
 #include "math/CCMath.h"
 #include <set>
+#include <unordered_map>
 
 NS_CC_BEGIN
 
@@ -60,12 +61,15 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
  */
 class GLProgramData
 {
+    friend class GLProgram;
+
 public:
 	typedef struct _VertexAttrib
 	{
 		GLuint _index;
 		GLint _size;
 		GLenum _type;
+        GLboolean _normalized;
 		std::string _name;
 	} VertexAttrib;
     
@@ -77,34 +81,27 @@ public:
 		GLenum _type;
 		UniformValue* _uniformvalue;
 	} Uniform;
-    
-public:
+
 	GLProgramData();
 	~GLProgramData();
-    
-    
-	void addUniform(const std::string &name, Uniform* uniform);
-	void addAttrib(const std::string &name,  VertexAttrib* attrib);
-    
-    
-    
-	Uniform* getUniform(unsigned int index);
-	Uniform* getUniform(const std::string& name);
-	VertexAttrib* getAttrib(unsigned int index);
-    VertexAttrib* getAttrib(const std::string& name);
+
+    Uniform* getUniformByLocation(GLint location);
+	Uniform* getUniformByName(const std::string& name);
+	VertexAttrib* getVertexAttribByIndex(unsigned int index);
+    VertexAttrib* getVertexAttribByName(const std::string& name);
     std::vector<GLProgramData::VertexAttrib*> getVertexAttributes(const std::string* attrNames, int count);
-    
-	unsigned int getUniformCount();
-	unsigned int getAttribCount();
-    
-    void setVertexSize(GLint size) { _vertexsize = size;}
+	ssize_t getUniformCount();
+	ssize_t getAttribCount();
 	GLint getVertexSize() {return _vertexsize;}
-    
-private:
+
+protected:
+	void addUniform(const std::string &name, Uniform* uniform);
+	void addVertexAttrib(const std::string &name,  VertexAttrib* attrib);
+    void setVertexSize(GLint size) { _vertexsize = size;}
+
 	GLint _vertexsize;
-    
-	std::map<std::string, Uniform*> _uniforms;
-	std::map<std::string, VertexAttrib*> _vertAttributes;
+	std::unordered_map<std::string, Uniform*> _uniforms;
+	std::unordered_map<std::string, VertexAttrib*> _vertAttributes;
 };
 
 
@@ -214,7 +211,7 @@ public:
     
 	//void bindUniformValue(std::string uniformName, int value);
 	UniformValue* getUniformValue(const std::string &name);
-    GLProgramData::VertexAttrib* getAttrib(std::string& name);
+    GLProgramData::VertexAttrib* getAttrib(const std::string& name);
     
     void bindAllAttrib();
 

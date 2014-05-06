@@ -225,9 +225,9 @@ void GLProgram::setUniformsForUserDef()
 
 void GLProgram::setAttribForUserDef()
 {
-    for(unsigned int i = 0, count = _programData->getAttribCount(); i < count; ++i)
+    for(ssize_t i = 0, count = _programData->getAttribCount(); i < count; ++i)
     {
-        GLProgramData::VertexAttrib* attrib = _programData->getAttrib(i);
+        GLProgramData::VertexAttrib* attrib = _programData->getVertexAttribByIndex(i);
         if(i == 0)
         {
             glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
@@ -249,9 +249,9 @@ void GLProgram::setVertexAttrib(const GLvoid* vertex, bool isTight)
 	static GLint vertexsize = 0;
     if(vertexsize == 0)
     {
-        for(unsigned int i = 0, count = _programData->getAttribCount(); i < count; ++i)
+        for(ssize_t i = 0, count = _programData->getAttribCount(); i < count; ++i)
         {
-            GLProgramData::VertexAttrib* _attrib = _programData->getAttrib(i);
+            GLProgramData::VertexAttrib* _attrib = _programData->getVertexAttribByIndex(i);
         
             if(_attrib->_type == GL_UNSIGNED_BYTE)
                 vertexsize += _attrib->_size ;
@@ -263,10 +263,10 @@ void GLProgram::setVertexAttrib(const GLvoid* vertex, bool isTight)
         vertexsize = 0;
     
     size_t offset = 0;
-	for(unsigned int i = 0, count = _programData->getAttribCount(); i < count; ++i)
+	for(ssize_t i = 0, count = _programData->getAttribCount(); i < count; ++i)
 	{
         
-		GLProgramData::VertexAttrib* _attrib = _programData->getAttrib(i);
+		GLProgramData::VertexAttrib* _attrib = _programData->getVertexAttribByIndex(i);
 		std::string name = _attrib->_name;
 		GLint size = _attrib->_size;
 		GLenum type = _attrib->_type;
@@ -374,7 +374,7 @@ void GLProgram::autoParse()
                 attrib->_index = i;
                 //vertexsize +=size;
                 
-				_programData->addAttrib(name, attrib);
+				_programData->addVertexAttrib(name, attrib);
                 
 				//_user_vertAttributes[attribName] = attribLocation;
             //    bindAttribLocation(attribName,attribLocation);
@@ -434,7 +434,7 @@ void GLProgram::autoParse()
     
     for(unsigned int i = 0, count = _programData->getAttribCount(); i < count; ++i)
 	{
-		GLProgramData::VertexAttrib* _attrib = _programData->getAttrib(i);
+		GLProgramData::VertexAttrib* _attrib = _programData->getVertexAttribByIndex(i);
 		std::string name = _attrib->_name;
         GLint attribLocation = getAttribLocation(name.c_str());
         bindAttribLocation( name.c_str(),attribLocation);
@@ -444,13 +444,13 @@ void GLProgram::autoParse()
 
 UniformValue* GLProgram::getUniformValue(const std::string &name)
 {
-	GLProgramData::Uniform* uniform = _programData->getUniform(name);
+	GLProgramData::Uniform* uniform = _programData->getUniformByName(name);
 	return uniform->_uniformvalue;
 }
 
-GLProgramData::VertexAttrib* GLProgram::getAttrib(std::string &name)
+GLProgramData::VertexAttrib* GLProgram::getAttrib(const std::string &name)
 {
-    GLProgramData::VertexAttrib* attrib = _programData->getAttrib(name);
+    GLProgramData::VertexAttrib* attrib = _programData->getVertexAttribByName(name);
     return attrib;
 }
 
@@ -950,60 +950,80 @@ _vertexsize(0)
 
 GLProgramData::~GLProgramData()
 {
-	for(std::map<std::string, Uniform*>::iterator itr = _uniforms.begin(); itr != _uniforms.end(); itr++)
+	for(auto itr : _uniforms)
 	{
-		CC_SAFE_DELETE(itr->second);
+		CC_SAFE_DELETE(itr.second);
 	}
 	
-	for(std::map<std::string, VertexAttrib*>::iterator itr = _vertAttributes.begin(); itr != _vertAttributes.end(); itr++)
+	for(auto itr : _vertAttributes)
 	{
-		CC_SAFE_DELETE(itr->second);
+		CC_SAFE_DELETE(itr.second);
 	}
 }
+
+//
+// Uniform
+//
 
 void GLProgramData::addUniform(const std::string &name, Uniform* uniform)
 {
 	_uniforms[name] = uniform;
 }
 
-void GLProgramData::addAttrib(const std::string &name, VertexAttrib* attrib)
+GLProgramData::Uniform* GLProgramData::getUniformByLocation(GLint location)
+{
+	for (const auto &itr : _uniforms)
+	{
+		if (itr.second->_location == location)
+		{
+			return itr.second;
+		}
+	}
+	return nullptr;
+}
+
+GLProgramData::Uniform* GLProgramData::getUniformByName(const std::string& name)
+{
+    const auto& itr = _uniforms.find(name);
+	if(itr != _uniforms.end())
+		return itr->second;
+
+    return nullptr;
+}
+
+ssize_t GLProgramData::getUniformCount()
+{
+	return _uniforms.size();
+}
+
+//
+// VertexAttrib
+//
+
+void GLProgramData::addVertexAttrib(const std::string &name, VertexAttrib* attrib)
 {
 	_vertAttributes[name] = attrib;
 }
 
-GLProgramData::Uniform* GLProgramData::getUniform(unsigned int index)
-{
-	unsigned int i = 0;
-	for (std::map<std::string, Uniform*>::const_iterator itr = _uniforms.begin(); itr != _uniforms.end(); itr++, i++)
-	{
-		if (i == index)
-		{
-			return itr->second;
-		}
-	}
-	return NULL;
-}
-
-GLProgramData::Uniform* GLProgramData::getUniform(const std::string& name)
-{
-	std::map<std::string, Uniform*>::const_iterator itr = _uniforms.find(name);
-	if(itr != _uniforms.end())
-		return itr->second;
-	else
-		return NULL;
-}
-
-GLProgramData::VertexAttrib* GLProgramData::getAttrib(unsigned int index)
+GLProgramData::VertexAttrib* GLProgramData::getVertexAttribByIndex(unsigned int index)
 {
 	//unsigned int i = 0;
-	for (std::map<std::string, VertexAttrib*>::const_iterator itr = _vertAttributes.begin(); itr != _vertAttributes.end(); itr++)
+	for (const auto& itr : _vertAttributes )
 	{
-		if (itr->second->_index == index)
+		if (itr.second->_index == index)
 		{
-			return itr->second;
+			return itr.second;
 		}
 	}
-	return NULL;
+	return nullptr;
+}
+
+GLProgramData::VertexAttrib* GLProgramData::getVertexAttribByName(const std::string& name)
+{
+    const auto &itr = _vertAttributes.find(name);
+	if(itr != _vertAttributes.end())
+		return itr->second;
+    return nullptr;
 }
 
 std::vector<GLProgramData::VertexAttrib*> GLProgramData::getVertexAttributes(const std::string* attrNames, int count)
@@ -1017,21 +1037,7 @@ std::vector<GLProgramData::VertexAttrib*> GLProgramData::getVertexAttributes(con
     return attribs;
 }
 
-GLProgramData::VertexAttrib* GLProgramData::getAttrib(const std::string& name)
-{
-    std::map<std::string, VertexAttrib*>::const_iterator itr = _vertAttributes.find(name);
-	if(itr != _vertAttributes.end())
-		return itr->second;
-	else
-		return NULL;
-}
-
-unsigned int GLProgramData::getUniformCount()
-{
-	return _uniforms.size();
-}
-
-unsigned int GLProgramData::getAttribCount()
+ssize_t GLProgramData::getAttribCount()
 {
 	return _vertAttributes.size();
 }
