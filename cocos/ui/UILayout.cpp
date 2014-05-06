@@ -1543,31 +1543,32 @@ bool Layout::getPassFocusToChild()
 Size Layout::getLayoutContentSize()const
 {
     auto children = this->getChildren();
-    Size layoutSize;
-    float height = 0;
-    float width = 0;
-    for(auto widget : children)
+    Size layoutSize = Size::ZERO;
+    int widgetCount =0;
+    for(const auto& widget : children)
     {
         Layout *layout = dynamic_cast<Layout*>(widget);
         if (nullptr != layout) {
-            layoutSize = layoutSize + layout->getLayoutSize();
+            layoutSize = layoutSize + layout->getLayoutContentSize();
         }
-        Widget *w = dynamic_cast<Widget*>(widget);
-        if (w) {
-            Margin m = w->getLayoutParameter(LAYOUT_PARAMETER_LINEAR)->getMargin();
-            layoutSize = layoutSize + w->getSize() + Size(m.right + m.left,  m.top + m.bottom) * 0.5;
+        else{
+            Widget *w = dynamic_cast<Widget*>(widget);
+            if (w) {
+                widgetCount++;
+                Margin m = w->getLayoutParameter(LAYOUT_PARAMETER_LINEAR)->getMargin();
+                layoutSize = layoutSize + w->getSize() + Size(m.right + m.left,  m.top + m.bottom) * 0.5;
+            }
         }
-        height = w->getSize().height;
-        width = w->getSize().width;
     }
     
-    if (_layoutType == LAYOUT_LINEAR_HORIZONTAL) {
-        layoutSize = Size(layoutSize.width, layoutSize.height - children.size() * height);
+    //substract extra size
+    LayoutType type = this->getLayoutType();
+    if (type == LAYOUT_LINEAR_HORIZONTAL) {
+        layoutSize = layoutSize - Size(0, layoutSize.height/widgetCount * (widgetCount-1));
     }
-    if (_layoutType == LAYOUT_LINEAR_VERTICAL) {
-        layoutSize = Size(layoutSize.width - children.size() * width,  layoutSize.height);
+    if (type == LAYOUT_LINEAR_VERTICAL) {
+        layoutSize = layoutSize - Size(layoutSize.width/widgetCount * (widgetCount-1), 0);
     }
-    
     return layoutSize;
 }
 
@@ -1576,10 +1577,12 @@ Vector2 Layout::getWorldCenterPoint(Widget* widget)
     Vector2 widgetPosition =  widget->getWorldPosition();
     
     Layout *layout = dynamic_cast<Layout*>(widget);
-    Size widgetSize = layout ? layout->getLayoutSize() :  widget->getSize();
+    Size widgetSize = layout ? layout->getLayoutContentSize() :  widget->getSize();
     Vector2 anchorPoint = widget->getAnchorPoint();
+    
+    int sign = layout ? -1 : 1;
     widgetPosition = Vector2(widgetPosition.x + (0.5-anchorPoint.x) * widgetSize.width,
-                           widgetPosition.y + (0.5 - anchorPoint.y) * widgetSize.height);
+                           widgetPosition.y + (0.5 - anchorPoint.y) * widgetSize.height * sign);
     return widgetPosition;
 }
 
