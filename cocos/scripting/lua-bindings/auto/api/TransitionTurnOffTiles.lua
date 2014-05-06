@@ -20,7 +20,7 @@
 -- @function [parent=#TransitionTurnOffTiles] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #cc.math::Matrix matrix
+-- @param #cc.Matrix matrix
 -- @param #bool bool
         
 return nil

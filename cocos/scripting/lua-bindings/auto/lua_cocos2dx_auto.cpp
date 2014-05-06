@@ -8018,7 +8018,7 @@ int lua_cocos2dx_Node_setAdditionalTransform(lua_State* tolua_S)
     do{
         if (argc == 1) {
             cocos2d::Matrix* arg0;
-            ok &= luaval_to_object<cocos2d::Matrix>(tolua_S, 2, "cc.math::Matrix",&arg0);
+            ok &= luaval_to_object<cocos2d::Matrix>(tolua_S, 2, "cc.Matrix",&arg0);
 
             if (!ok) { break; }
             cobj->setAdditionalTransform(arg0);
