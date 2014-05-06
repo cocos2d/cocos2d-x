@@ -59,7 +59,7 @@ def download_file(url, file_name):
             speed = len(buffer) / (new_time - old_time) / 1000
             status = ""
             if file_size != 0:
-                percent = int(file_size_dl * 100. / file_size)
+                percent = file_size_dl * 100. / file_size
                 status = r" Downloaded: %6dK / Total: %dK, Percent: %3.2f%%, Speed: %6.2f KB/S" % (file_size_dl / 1000, file_size / 1000, percent, speed)
             else:
                 status = r" Downloaded: %6dK, Speed: %6.2f KB/S" % (file_size_dl / 1000, speed)
