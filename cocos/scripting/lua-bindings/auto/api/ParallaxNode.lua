@@ -17,8 +17,8 @@
 -- @param self
 -- @param #cc.Node node
 -- @param #int int
--- @param #cc.math::Vector2 array
--- @param #cc.math::Vector2 array
+-- @param #array_table array
+-- @param #array_table array
         
 --------------------------------
 -- @function [parent=#ParallaxNode] removeAllChildrenWithCleanup 

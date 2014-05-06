@@ -6,41 +6,41 @@
 --------------------------------
 -- @function [parent=#PhysicsJointGroove] setAnchr2 
 -- @param self
--- @param #cc.math::Vector2 array
+-- @param #array_table array
         
 --------------------------------
 -- @function [parent=#PhysicsJointGroove] setGrooveA 
 -- @param self
--- @param #cc.math::Vector2 array
+-- @param #array_table array
         
 --------------------------------
 -- @function [parent=#PhysicsJointGroove] setGrooveB 
 -- @param self
--- @param #cc.math::Vector2 array
+-- @param #array_table array
         
 --------------------------------
 -- @function [parent=#PhysicsJointGroove] getGrooveA 
 -- @param self
--- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#PhysicsJointGroove] getGrooveB 
 -- @param self
--- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#PhysicsJointGroove] getAnchr2 
 -- @param self
--- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#PhysicsJointGroove] construct 
 -- @param self
 -- @param #cc.PhysicsBody physicsbody
 -- @param #cc.PhysicsBody physicsbody
--- @param #cc.math::Vector2 array
--- @param #cc.math::Vector2 array
--- @param #cc.math::Vector2 array
+-- @param #array_table array
+-- @param #array_table array
+-- @param #array_table array
 -- @return PhysicsJointGroove#PhysicsJointGroove ret (return value: cc.PhysicsJointGroove)
         
 return nil

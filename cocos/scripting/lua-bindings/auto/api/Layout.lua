@@ -6,7 +6,7 @@
 --------------------------------
 -- @function [parent=#Layout] setBackGroundColorVector 
 -- @param self
--- @param #cc.math::Vector2 array
+-- @param #array_table array
         
 --------------------------------
 -- @function [parent=#Layout] setClippingType 
@@ -26,7 +26,7 @@
 --------------------------------
 -- @function [parent=#Layout] getBackGroundColorVector 
 -- @param self
--- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#Layout] getClippingType 

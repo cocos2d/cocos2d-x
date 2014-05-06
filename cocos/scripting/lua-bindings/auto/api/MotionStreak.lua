@@ -99,7 +99,7 @@
 --------------------------------
 -- overload function: setPosition(float, float)
 --          
--- overload function: setPosition(cc.math::Vector2)
+-- overload function: setPosition(array_table)
 --          
 -- @function [parent=#MotionStreak] setPosition
 -- @param self

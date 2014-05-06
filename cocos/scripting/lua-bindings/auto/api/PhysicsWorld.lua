@@ -5,7 +5,7 @@
 --------------------------------
 -- @function [parent=#PhysicsWorld] getGravity 
 -- @param self
--- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#PhysicsWorld] getAllBodies 
@@ -15,7 +15,7 @@
 --------------------------------
 -- @function [parent=#PhysicsWorld] setGravity 
 -- @param self
--- @param #cc.math::Vector2 array
+-- @param #array_table array
         
 --------------------------------
 -- @function [parent=#PhysicsWorld] getSpeed 
@@ -50,7 +50,7 @@
 --------------------------------
 -- @function [parent=#PhysicsWorld] getShapes 
 -- @param self
--- @param #cc.math::Vector2 array
+-- @param #array_table array
 -- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
@@ -60,7 +60,7 @@
 --------------------------------
 -- @function [parent=#PhysicsWorld] getShape 
 -- @param self
--- @param #cc.math::Vector2 array
+-- @param #array_table array
 -- @return PhysicsShape#PhysicsShape ret (return value: cc.PhysicsShape)
         
 --------------------------------

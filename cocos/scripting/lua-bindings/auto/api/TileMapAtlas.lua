@@ -24,14 +24,14 @@
 --------------------------------
 -- @function [parent=#TileMapAtlas] getTileAt 
 -- @param self
--- @param #cc.math::Vector2 array
+-- @param #array_table array
 -- @return color3B_table#color3B_table ret (return value: color3B_table)
         
 --------------------------------
 -- @function [parent=#TileMapAtlas] setTile 
 -- @param self
 -- @param #color3B_table color3b
--- @param #cc.math::Vector2 array
+-- @param #array_table array
         
 --------------------------------
 -- @function [parent=#TileMapAtlas] setTGAInfo 
