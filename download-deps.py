@@ -43,7 +43,7 @@ def download_file(url, file_name):
 
     file_size_dl = 0
     block_sz = 8192
-
+    block_size_per_second = 0
     old_time=time()
 
     while True:
@@ -52,11 +52,11 @@ def download_file(url, file_name):
             break
 
         file_size_dl += len(buffer)
-
+        block_size_per_second += len(buffer)
         f.write(buffer)
         new_time = time()
         if (new_time - old_time) > 1:
-            speed = len(buffer) / (new_time - old_time) / 1000
+            speed = block_size_per_second / (new_time - old_time) / 1000.0
             status = ""
             if file_size != 0:
                 percent = file_size_dl * 100. / file_size
@@ -67,6 +67,7 @@ def download_file(url, file_name):
             status = status + chr(8)*(len(status)+1)
             print(status),
             sys.stdout.flush()
+            block_size_per_second = 0
             old_time = new_time
 
     print("--> Downloading finished!")
