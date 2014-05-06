@@ -169,7 +169,7 @@ public:
      *
      * @return true if the widget is highlighted, false if the widget is not hignlighted .
      */
-    bool isHilighted() const;
+    bool isHighlighted() const;
 
     /**
      * Sets whether the widget is hilighted
@@ -178,7 +178,7 @@ public:
      *
      * @param hilight   true if the widget is hilighted, false if the widget is not hilighted.
      */
-    void setHilighted(bool hilight);
+    void setHighlighted(bool hilight);
 
     /**
      * Gets the left boundary position of this widget.

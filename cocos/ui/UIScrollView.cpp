@@ -1528,7 +1528,7 @@ void ScrollView::interceptTouchEvent(int handleState, Widget *sender, const Vect
             float offset = (sender->getTouchStartPos() - touchPoint).getLength();
             if (offset > _childFocusCancelOffset)
             {
-                sender->setHilighted(false);
+                sender->setHighlighted(false);
                 handleMoveLogic(touchPoint);
             }
         }

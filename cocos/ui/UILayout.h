@@ -381,7 +381,7 @@ protected:
      * find the nth elment in the _children array. Only the Widget descendant object will be returned
      *@param index  The index of a element in the _children array
      */
-    Widget* getNextWidgetByIndex(int index);
+    Widget* getNextWidgetByIndex(ssize_t index);
     /**
      * whether it is the last element according to all their parents
      */

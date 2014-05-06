@@ -453,12 +453,12 @@ bool Widget::isTouchEnabled() const
     return _touchEnabled;
 }
 
-bool Widget::isHilighted() const
+bool Widget::isHighlighted() const
 {
     return _highlight;
 }
 
-void Widget::setHilighted(bool hilight)
+void Widget::setHighlighted(bool hilight)
 {
     if (hilight == _highlight)
     {
@@ -551,7 +551,7 @@ bool Widget::onTouchBegan(Touch *touch, Event *unusedEvent)
     {
         return false;
     }
-    setHilighted(true);
+    setHighlighted(true);
     Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
@@ -564,7 +564,7 @@ bool Widget::onTouchBegan(Touch *touch, Event *unusedEvent)
 void Widget::onTouchMoved(Touch *touch, Event *unusedEvent)
 {
     _touchMovePos = touch->getLocation();
-    setHilighted(hitTest(_touchMovePos));
+    setHighlighted(hitTest(_touchMovePos));
     Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
@@ -577,7 +577,7 @@ void Widget::onTouchEnded(Touch *touch, Event *unusedEvent)
 {
     _touchEndPos = touch->getLocation();
     bool highlight = _highlight;
-    setHilighted(false);
+    setHighlighted(false);
     Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
@@ -595,7 +595,7 @@ void Widget::onTouchEnded(Touch *touch, Event *unusedEvent)
 
 void Widget::onTouchCancelled(Touch *touch, Event *unusedEvent)
 {
-    setHilighted(false);
+    setHighlighted(false);
     cancelUpEvent();
 }
 

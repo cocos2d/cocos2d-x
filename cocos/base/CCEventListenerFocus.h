@@ -55,7 +55,6 @@ private:
     EventListenerFocus();
     bool init();
     
-    
     friend class EventDispatcher;
 };
 

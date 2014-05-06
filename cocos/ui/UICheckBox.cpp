@@ -306,7 +306,7 @@ void CheckBox::onTouchEnded(Touch *touch, Event *unusedEvent)
             selectedEvent();
         }
     }
-    setHilighted(false);
+    setHighlighted(false);
     Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
