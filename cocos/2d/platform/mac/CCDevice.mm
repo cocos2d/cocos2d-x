@@ -239,7 +239,7 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
         height = (short)info.height;
         width = (short)info.width;
         ret.fastSet(info.data,width * height * 4);
-		hasPremultipliedAlpha = true;
+        hasPremultipliedAlpha = true;
     } while (0);
     
     return ret;
