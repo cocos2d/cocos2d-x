@@ -60,6 +60,21 @@ bool UIFocusTestBase::init()
     return false;
 }
 
+void UIFocusTestBase::onImageViewClicked(cocos2d::Ref *ref, TouchEventType touchType)
+{
+    if (touchType == TouchEventType::TOUCH_EVENT_ENDED) {
+        Widget *w = (Widget*)ref;
+        if (w->isFocusEnabled()) {
+            w->setFocusEnabled(false);
+            w->setColor(Color3B::WHITE);
+            w->setScale(0.8);
+        }else{
+            w->setFocusEnabled(true);
+            w->setScale(1.0);
+        }
+    }
+}
+
 
 //UIFocusTestHorizontal
 UIFocusTestHorizontal::UIFocusTestHorizontal()
@@ -89,6 +104,8 @@ bool UIFocusTestHorizontal::init()
         int count = 3;
         for (int i=0; i<count; ++i) {
             ImageView *w = ImageView::create("cocosui/scrollviewbg.png");
+            w->setTouchEnabled(true);
+            w->addTouchEventListener(this, toucheventselector(UIFocusTestHorizontal::onImageViewClicked));
             _horizontalLayout->addChild(w);
         }
         
@@ -110,6 +127,9 @@ bool UIFocusTestHorizontal::init()
     return false;
 }
 
+
+
+
 void UIFocusTestHorizontal::toggleFocusLoop(cocos2d::Ref * pObjc, TouchEventType type)
 {
     if (type == TouchEventType::TOUCH_EVENT_ENDED) {
@@ -126,13 +146,13 @@ void UIFocusTestHorizontal::onFocusChanged(cocos2d::ui::Widget *widgetLostFocus,
 {
     //only change the widgets' state
     Layout *getLayout = dynamic_cast<Layout*>(widgetGetFocus);
-    if (!getLayout && widgetGetFocus) {
+    if (!getLayout && widgetGetFocus && widgetGetFocus->isFocusEnabled()) {
         widgetGetFocus->setScale(1.2);
         widgetGetFocus->setColor(Color3B::RED);
     }
     
     Layout *loseLayout = dynamic_cast<Layout*>(widgetLostFocus);
-    if (!loseLayout && widgetLostFocus) {
+    if (!loseLayout && widgetLostFocus && widgetLostFocus->isFocusEnabled()) {
         widgetLostFocus->setScale(1.0);
         widgetLostFocus->setColor(Color3B::WHITE);
     }
@@ -197,6 +217,8 @@ bool UIFocusTestVertical::init()
         int count = 3;
         for (int i=0; i<count; ++i) {
             ImageView *w = ImageView::create("cocosui/scrollviewbg.png");
+            w->setTouchEnabled(true);
+            w->addTouchEventListener(this, toucheventselector(UIFocusTestVertical::onImageViewClicked));
             _verticalLayout->addChild(w);
         }
         
@@ -218,6 +240,7 @@ bool UIFocusTestVertical::init()
     return false;
 }
 
+
 void UIFocusTestVertical::toggleFocusLoop(cocos2d::Ref * pObjc, TouchEventType type)
 {
     if (type == TouchEventType::TOUCH_EVENT_ENDED) {
@@ -234,13 +257,13 @@ void UIFocusTestVertical::onFocusChanged(cocos2d::ui::Widget *widgetLostFocus, c
 {
     //only change the widgets' state
     Layout *getLayout = dynamic_cast<Layout*>(widgetGetFocus);
-    if (!getLayout && widgetGetFocus) {
+    if (!getLayout && widgetGetFocus && widgetGetFocus->isFocusEnabled()) {
         widgetGetFocus->setScale(1.2);
         widgetGetFocus->setColor(Color3B::RED);
     }
     
     Layout *loseLayout = dynamic_cast<Layout*>(widgetLostFocus);
-    if (!loseLayout && widgetLostFocus) {
+    if (!loseLayout && widgetLostFocus && widgetLostFocus->isFocusEnabled()) {
         widgetLostFocus->setScale(1.0);
         widgetLostFocus->setColor(Color3B::WHITE);
     }

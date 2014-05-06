@@ -11,6 +11,8 @@
 
 #include "../UIScene.h"
 
+
+
 class UIFocusTestBase : public UIScene
 {
 public:
@@ -23,6 +25,9 @@ public:
     virtual void onUpKeyPressed() = 0;
     virtual void onDownKeyPressed() = 0;
     virtual void onFocusChanged(Widget* widgetLostFocus, Widget* widgetGetFocus) = 0;
+
+    void onImageViewClicked(Ref* ref, TouchEventType touchType);
+
 protected:
     Menu *_dpadMenu;
     Widget *_firstFocusedWidget;
@@ -42,6 +47,7 @@ public:
     virtual void onFocusChanged(Widget* widgetLostFocus, Widget* widgetGetFocus);
     
     void toggleFocusLoop(Ref*,TouchEventType);
+    
 protected:
     UI_SCENE_CREATE_FUNC(UIFocusTestHorizontal);
     Layout *_horizontalLayout;
