@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include "2d/platform/CCFileUtils.h"
 #include "2d/uthash.h"
 #include "deprecated/CCString.h"
+#include "CCGL.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 #include "CCPrecompiledShaders.h"
@@ -88,9 +89,10 @@ GLProgram::GLProgram()
 , _fragShader(0)
 , _hashForUniforms(nullptr)
 , _flags()
+,_isTight(false)
 {
     memset(_uniforms, 0, sizeof(_uniforms));
-    _programDate = new GLProgramData();
+    _programData = new GLProgramData();
 }
 
 GLProgram::~GLProgram()
@@ -116,7 +118,7 @@ GLProgram::~GLProgram()
         free(current_element);
     }
     
-    CC_SAFE_DELETE(_programDate);
+    CC_SAFE_DELETE(_programData);
 }
 
 bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
@@ -208,8 +210,6 @@ bool GLProgram::initWithFilenames(const std::string &vShaderFilename, const std:
     return initWithByteArrays(vertexSource.c_str(), fragmentSource.c_str());
 }
 
-
-
 void GLProgram::setUniformsForUserDef()
 {
 	Director* director = Director::getInstance();
@@ -220,28 +220,68 @@ void GLProgram::setUniformsForUserDef()
     
 	Matrix matrixP = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     
+	// Set Uniform value
 }
 
-
-void GLProgram::setVertexAttrib(const GLvoid* vertex)
+void GLProgram::setAttribForUserDef()
 {
-	GLint vertexsize = _programDate->getVertexSize();
-	for(unsigned int i = 0, count = _programDate->getAttribCount(); i < count; ++i)
+    for(unsigned int i = 0, count = _programData->getAttribCount(); i < count; ++i)
+    {
+        GLProgramData::VertexAttrib* attrib = _programData->getAttrib(i);
+        if(i == 0)
+        {
+            glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+        }
+        else if(attrib->_type == GL_FLOAT_VEC4)
+        {
+            glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
+        }
+        else if(attrib->_type == GL_FLOAT_VEC2)
+        {
+            glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORDS);
+        }
+    }
+}
+
+// have some questions.
+void GLProgram::setVertexAttrib(const GLvoid* vertex, bool isTight)
+{
+	static GLint vertexsize = 0;
+    if(vertexsize == 0)
+    {
+        for(unsigned int i = 0, count = _programData->getAttribCount(); i < count; ++i)
+        {
+            GLProgramData::VertexAttrib* _attrib = _programData->getAttrib(i);
+        
+            if(_attrib->_type == GL_UNSIGNED_BYTE)
+                vertexsize += _attrib->_size ;
+            else
+                vertexsize += _attrib->_size * 4;
+        }
+    }
+    if(isTight)
+        vertexsize = 0;
+    
+    size_t offset = 0;
+	for(unsigned int i = 0, count = _programData->getAttribCount(); i < count; ++i)
 	{
-		GLProgramData::VertexAttib* _attrib = _programDate->getAttrib(i);
+        
+		GLProgramData::VertexAttrib* _attrib = _programData->getAttrib(i);
 		std::string name = _attrib->_name;
 		GLint size = _attrib->_size;
 		GLenum type = _attrib->_type;
+        bool normalized = GL_FALSE;
         
-		glVertexAttribPointer(i, size, type, GL_FALSE, vertexsize, vertex);
-        
+		glVertexAttribPointer(i, size, type, normalized, vertexsize, (size_t*)(vertex)+ offset);
+        if(_attrib->_type != GL_UNSIGNED_BYTE)
+            offset += size * 4 ;
+        else
+            offset += size;
 	}
-    // glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 2, vertex);
 }
 
 void GLProgram::autoParse()
 {
-    
 	// Link	program
 	GLint status = GL_TRUE;
 	glLinkProgram(_program);
@@ -327,24 +367,22 @@ void GLProgram::autoParse()
                         break;
                 }
                 
-                GLProgramData::_VertexAttib* attrib = new GLProgramData::_VertexAttib();
+                GLProgramData::_VertexAttrib* attrib = new GLProgramData::_VertexAttrib();
                 attrib->_name = name;
                 attrib->_size = size;
                 attrib->_type = attribType;
-                attrib->_index = attribLocation;
-                vertexsize +=size;
+                attrib->_index = i;
+                //vertexsize +=size;
                 
-                
-				_programDate->addAttrib(name, attrib);
+				_programData->addAttrib(name, attrib);
                 
 				//_user_vertAttributes[attribName] = attribLocation;
-                
+            //    bindAttribLocation(attribName,attribLocation);
 			}
-            _programDate->setVertexSize(vertexsize);
 			CC_SAFE_DELETE_ARRAY(attribName);
 		}
 	}
-    
+
 	// Query and store uniforms from the program.
 	GLint activeUniforms;
 	glGetProgramiv(_program, GL_ACTIVE_UNIFORMS, &activeUniforms);
@@ -388,19 +426,33 @@ void GLProgram::autoParse()
                 uniform->_uniformvalue = uniformvalue;
                 uniformvalue->init(this, uniform);
                 
-				_programDate->addUniform(name, uniform);
+				_programData->addUniform(name, uniform);
 			}
 			CC_SAFE_DELETE_ARRAY(uniformName);
 		}
 	}
+    
+    for(unsigned int i = 0, count = _programData->getAttribCount(); i < count; ++i)
+	{
+		GLProgramData::VertexAttrib* _attrib = _programData->getAttrib(i);
+		std::string name = _attrib->_name;
+        GLint attribLocation = getAttribLocation(name.c_str());
+        bindAttribLocation( name.c_str(),attribLocation);
+	}
+    
 }
 
 UniformValue* GLProgram::getUniformValue(const std::string &name)
 {
-	GLProgramData::Uniform* uniform = _programDate->getUniform(name);
+	GLProgramData::Uniform* uniform = _programData->getUniform(name);
 	return uniform->_uniformvalue;
 }
 
+GLProgramData::VertexAttrib* GLProgram::getAttrib(std::string &name)
+{
+    GLProgramData::VertexAttrib* attrib = _programData->getAttrib(name);
+    return attrib;
+}
 
 std::string GLProgram::getDescription() const
 {
@@ -903,18 +955,18 @@ GLProgramData::~GLProgramData()
 		CC_SAFE_DELETE(itr->second);
 	}
 	
-	for(std::map<std::string, VertexAttib*>::iterator itr = _vertAttributes.begin(); itr != _vertAttributes.end(); itr++)
+	for(std::map<std::string, VertexAttrib*>::iterator itr = _vertAttributes.begin(); itr != _vertAttributes.end(); itr++)
 	{
 		CC_SAFE_DELETE(itr->second);
 	}
 }
 
-void GLProgramData::addUniform(std::string &name, Uniform* uniform)
+void GLProgramData::addUniform(const std::string &name, Uniform* uniform)
 {
 	_uniforms[name] = uniform;
 }
 
-void GLProgramData::addAttrib(std::string &name, VertexAttib* attrib)
+void GLProgramData::addAttrib(const std::string &name, VertexAttrib* attrib)
 {
 	_vertAttributes[name] = attrib;
 }
@@ -941,12 +993,12 @@ GLProgramData::Uniform* GLProgramData::getUniform(const std::string& name)
 		return NULL;
 }
 
-GLProgramData::VertexAttib* GLProgramData::getAttrib(unsigned int index)
+GLProgramData::VertexAttrib* GLProgramData::getAttrib(unsigned int index)
 {
-	unsigned int i = 0;
-	for (std::map<std::string, VertexAttib*>::const_iterator itr = _vertAttributes.begin(); itr != _vertAttributes.end(); itr++, i++)
+	//unsigned int i = 0;
+	for (std::map<std::string, VertexAttrib*>::const_iterator itr = _vertAttributes.begin(); itr != _vertAttributes.end(); itr++)
 	{
-		if (i == index)
+		if (itr->second->_index == index)
 		{
 			return itr->second;
 		}
@@ -954,15 +1006,24 @@ GLProgramData::VertexAttib* GLProgramData::getAttrib(unsigned int index)
 	return NULL;
 }
 
-std::vector<GLProgramData::VertexAttib*> GLProgramData::getVertexAttributes(const std::string* attrNames, int count)
+std::vector<GLProgramData::VertexAttrib*> GLProgramData::getVertexAttributes(const std::string* attrNames, int count)
 {
-    std::vector<GLProgramData::VertexAttib*> attribs;
+    std::vector<GLProgramData::VertexAttrib*> attribs;
     for (auto i = 0; i < count; i++) {
         auto it = _vertAttributes.find(attrNames[i]);
         CCASSERT(it != _vertAttributes.end(), "attribute not find");
         attribs.push_back(it->second);
     }
     return attribs;
+}
+
+GLProgramData::VertexAttrib* GLProgramData::getAttrib(const std::string& name)
+{
+    std::map<std::string, VertexAttrib*>::const_iterator itr = _vertAttributes.find(name);
+	if(itr != _vertAttributes.end())
+		return itr->second;
+	else
+		return NULL;
 }
 
 unsigned int GLProgramData::getUniformCount()
@@ -976,7 +1037,9 @@ unsigned int GLProgramData::getAttribCount()
 }
 
 
-UniformValue::UniformValue(): _uniform(nullptr), _program(nullptr)
+UniformValue::UniformValue()
+:_uniform(nullptr)
+,_program(nullptr)
 {
     
 }

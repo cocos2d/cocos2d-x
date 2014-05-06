@@ -48,9 +48,65 @@ USING_NS_CC_MATH;
 struct _hashUniformEntry;
 class GLProgramData;
 class UniformValue;
+struct VertexAttrib;
 
 typedef void (*GLInfoFunction)(GLuint program, GLenum pname, GLint* params);
 typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length, GLchar* infolog);
+
+
+
+/** GLProgramData
+ Class store user defined vertexAttributes and uniforms
+ */
+class GLProgramData
+{
+public:
+	typedef struct _VertexAttrib
+	{
+		GLuint _index;
+		GLint _size;
+		GLenum _type;
+		std::string _name;
+	} VertexAttrib;
+    
+	typedef struct _Uniform
+	{
+	  	GLint _location;
+        GLint _size;
+		std::string _name;
+		GLenum _type;
+		UniformValue* _uniformvalue;
+	} Uniform;
+    
+public:
+	GLProgramData();
+	~GLProgramData();
+    
+    
+	void addUniform(const std::string &name, Uniform* uniform);
+	void addAttrib(const std::string &name,  VertexAttrib* attrib);
+    
+    
+    
+	Uniform* getUniform(unsigned int index);
+	Uniform* getUniform(const std::string& name);
+	VertexAttrib* getAttrib(unsigned int index);
+    VertexAttrib* getAttrib(const std::string& name);
+    std::vector<GLProgramData::VertexAttrib*> getVertexAttributes(const std::string* attrNames, int count);
+    
+	unsigned int getUniformCount();
+	unsigned int getAttribCount();
+    
+    void setVertexSize(GLint size) { _vertexsize = size;}
+	GLint getVertexSize() {return _vertexsize;}
+    
+private:
+	GLint _vertexsize;
+    
+	std::map<std::string, Uniform*> _uniforms;
+	std::map<std::string, VertexAttrib*> _vertAttributes;
+};
+
 
 /** GLProgram
  Class that implements a glProgram
@@ -151,12 +207,16 @@ public:
     
     //void bindAttirbForUserdef();
 	void setUniformsForUserDef();
-	void setVertexAttrib(const GLvoid* vertex);
+
+    void setAttribForUserDef();
+	void setVertexAttrib(const GLvoid* vertex, bool isTight);
     void autoParse();
     
 	//void bindUniformValue(std::string uniformName, int value);
 	UniformValue* getUniformValue(const std::string &name);
-
+    GLProgramData::VertexAttrib* getAttrib(std::string& name);
+    
+    void bindAllAttrib();
 
     /**  It will add a new attribute to the shader by calling glBindAttribLocation */
     void bindAttribLocation(const char* attributeName, GLuint index) const;
@@ -272,7 +332,7 @@ public:
     inline const GLuint getProgram() const { return _program; }
     
 
-    GLProgramData* getProgramData() { return _programDate; }
+    GLProgramData* getProgramData() { return _programData; }
     // DEPRECATED
     CC_DEPRECATED_ATTRIBUTE bool initWithVertexShaderByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
     { return initWithByteArrays(vShaderByteArray, fShaderByteArray); }
@@ -297,8 +357,9 @@ private:
     GLint             _uniforms[UNIFORM_MAX];
     struct _hashUniformEntry* _hashForUniforms;
 	bool              _hasShaderCompiler;
+    bool              _isTight;
     
-    GLProgramData* _programDate;
+    GLProgramData* _programData;
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     std::string       _shaderId;
@@ -321,56 +382,6 @@ public:
 // end of shaders group
 /// @}
 
-
-/** GLProgramData
- Class store user defined vertexAttributes and uniforms
- */
-class GLProgramData
-{
-public:
-	typedef struct _VertexAttib
-	{
-		GLuint _index;
-		GLint _size;
-		GLenum _type;
-		std::string _name;
-	} VertexAttib;
-    
-	typedef struct _Uniform
-	{
-	  	GLint _location;
-        GLint _size;
-		std::string _name;
-		GLenum _type;
-		UniformValue* _uniformvalue;
-	} Uniform;
-    
-public:
-	GLProgramData();
-	~GLProgramData();
-    
-    
-	void addUniform(std::string &name, Uniform* uniform);
-	void addAttrib(std::string &name,  VertexAttib* attrib);
-    
-	Uniform* getUniform(unsigned int index);
-	Uniform* getUniform(const std::string& name);
-	VertexAttib* getAttrib(unsigned int index);
-    
-    std::vector<GLProgramData::VertexAttib*> getVertexAttributes(const std::string* attrNames, int count);
-    
-	unsigned int getUniformCount();
-	unsigned int getAttribCount();
-    
-    void setVertexSize(GLint size) { _vertexsize = size;}
-	GLint getVertexSize() {return _vertexsize;}
-    
-private:
-	GLint _vertexsize;
-    
-	std::map<std::string, Uniform*> _uniforms;
-	std::map<std::string, VertexAttib*> _vertAttributes;
-};
 
 
 class UniformValue

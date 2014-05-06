@@ -63,7 +63,7 @@ public:
     
     VertexAttribBind(const std::vector<VertexAttribType>& elems);
     
-    VertexAttribBind(const std::vector<GLProgramData::VertexAttib*>& attribs);
+    VertexAttribBind(const std::vector<GLProgramData::VertexAttrib*>& attribs);
     
     virtual ~VertexAttribBind();
     
