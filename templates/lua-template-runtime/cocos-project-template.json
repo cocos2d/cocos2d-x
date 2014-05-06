@@ -124,7 +124,7 @@
             "src_project_name": "HelloLua",
             "files": [
                 "res/config.json",
-                
+                ".project",
                 "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj",
                 "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.filters",
                 "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.user",
