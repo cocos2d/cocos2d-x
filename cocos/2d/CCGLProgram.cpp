@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include "2d/platform/CCFileUtils.h"
 #include "2d/uthash.h"
 #include "deprecated/CCString.h"
+#include "CCGL.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 #include "CCPrecompiledShaders.h"
@@ -88,8 +89,10 @@ GLProgram::GLProgram()
 , _fragShader(0)
 , _hashForUniforms(nullptr)
 , _flags()
+,_isTight(false)
 {
     memset(_uniforms, 0, sizeof(_uniforms));
+    _programData = new GLProgramData();
 }
 
 GLProgram::~GLProgram()
@@ -114,6 +117,8 @@ GLProgram::~GLProgram()
         free(current_element->value);
         free(current_element);
     }
+    
+    CC_SAFE_DELETE(_programData);
 }
 
 bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
@@ -204,6 +209,256 @@ bool GLProgram::initWithFilenames(const std::string &vShaderFilename, const std:
 
     return initWithByteArrays(vertexSource.c_str(), fragmentSource.c_str());
 }
+
+void GLProgram::setUniformsForUserDef()
+{
+	Director* director = Director::getInstance();
+	CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    
+	Matrix matrixMV;
+	matrixMV = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    
+	Matrix matrixP = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    
+	// Set Uniform value
+    
+    for(unsigned int i = 0, count = _programData->getUniformCount(); i < count; ++i)
+    {
+        _programData->getUniform(i)->_uniformvalue->bindUniform(this);
+    }
+}
+
+void GLProgram::setAttribForUserDef()
+{
+    for(unsigned int i = 0, count = _programData->getAttribCount(); i < count; ++i)
+    {
+        GLProgramData::VertexAttrib* attrib = _programData->getAttrib(i);
+        if(i == 0)
+        {
+            glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+        }
+        else if(attrib->_type == GL_FLOAT_VEC4)
+        {
+            glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
+        }
+        else if(attrib->_type == GL_FLOAT_VEC2)
+        {
+            glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORDS);
+        }
+    }
+}
+
+// have some questions.
+void GLProgram::setVertexAttrib(const GLvoid* vertex, bool isTight)
+{
+	static GLint vertexsize = 0;
+    if(vertexsize == 0)
+    {
+        for(unsigned int i = 0, count = _programData->getAttribCount(); i < count; ++i)
+        {
+            GLProgramData::VertexAttrib* _attrib = _programData->getAttrib(i);
+        
+            if(_attrib->_type == GL_UNSIGNED_BYTE)
+                vertexsize += _attrib->_size ;
+            else
+                vertexsize += _attrib->_size * 4;
+        }
+    }
+    if(isTight)
+        vertexsize = 0;
+    
+    size_t offset = 0;
+	for(unsigned int i = 0, count = _programData->getAttribCount(); i < count; ++i)
+	{
+        
+		GLProgramData::VertexAttrib* _attrib = _programData->getAttrib(i);
+		std::string name = _attrib->_name;
+		GLint size = _attrib->_size;
+		GLenum type = _attrib->_type;
+        bool normalized = GL_FALSE;
+        
+		glVertexAttribPointer(i, size, type, normalized, vertexsize, (size_t*)(vertex)+ offset);
+        if(_attrib->_type != GL_UNSIGNED_BYTE)
+            offset += size * 4 ;
+        else
+            offset += size;
+	}
+}
+
+void GLProgram::autoParse()
+{
+	// Link	program
+	GLint status = GL_TRUE;
+	glLinkProgram(_program);
+    
+	// Delete shaders after linking
+	if (_vertShader)
+	{
+		glDeleteShader(_vertShader);
+	}
+    
+	if (_fragShader)
+	{
+		glDeleteShader(_fragShader);
+	}
+    
+	_vertShader = _fragShader = 0;
+    
+	// Query and store vertex attribute meta-data from the program.
+	GLint activeAttributes;
+	GLint length;
+	glGetProgramiv(_program, GL_ACTIVE_ATTRIBUTES, &activeAttributes);
+	if(activeAttributes > 0)
+	{
+		glGetProgramiv(_program, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &length);
+		if(length > 0)
+		{
+			GLchar* attribName = new GLchar[length + 1];
+			GLint attribSize;
+			GLenum attribType;
+			GLint attribLocation;
+            GLint vertexsize = 0;
+            
+			for(int i = 0; i < activeAttributes; ++i)
+			{
+				// Query attribute info.
+				glGetActiveAttrib(_program, i, length, NULL, &attribSize, &attribType, attribName);
+				attribName[length] = '\0';
+                
+				// Query the pre-assigned attribute location
+				attribLocation = glGetAttribLocation(_program, attribName);
+				std::string name = attribName;
+                
+                GLuint size;
+                switch (attribType) {
+                    case GL_FLOAT:
+                        size = 1;
+                        attribType = GL_FLOAT;
+                        break;
+                    case GL_FLOAT_VEC2:
+                        attribType = GL_FLOAT;
+                        size = 2;
+                        break;
+                    case GL_FLOAT_VEC3:
+                        attribType = GL_FLOAT;
+                        size = 3;
+                        break;
+                    case GL_FLOAT_VEC4:
+                        attribType = GL_FLOAT;
+                            size = 4;
+                        break;
+                    case GL_FLOAT_MAT4:
+                        attribType = GL_FLOAT;
+                        size = 16;
+                        break;
+                    case GL_INT:
+                        size = 1;
+                        attribType = GL_INT;
+                        break;
+                    case GL_INT_VEC2:
+                        size = 2;
+                        attribType = GL_INT;
+                        break;
+                    case GL_INT_VEC3:
+                        size = 3;
+                        attribType = GL_INT;
+                        break;
+                    case GL_INT_VEC4:
+                        size = 4;
+                        attribType = GL_INT;
+                        break;
+                    default:
+                        size = 1;
+                        break;
+                }
+                
+                GLProgramData::_VertexAttrib* attrib = new GLProgramData::_VertexAttrib();
+                attrib->_name = name;
+                attrib->_size = size;
+                attrib->_type = attribType;
+                attrib->_index = i;
+                //vertexsize +=size;
+                
+				_programData->addAttrib(name, attrib);
+                
+				//_user_vertAttributes[attribName] = attribLocation;
+            //    bindAttribLocation(attribName,attribLocation);
+			}
+			CC_SAFE_DELETE_ARRAY(attribName);
+		}
+	}
+
+	// Query and store uniforms from the program.
+	GLint activeUniforms;
+	glGetProgramiv(_program, GL_ACTIVE_UNIFORMS, &activeUniforms);
+	if(activeUniforms > 0)
+	{
+		glGetProgramiv(_program, GL_ACTIVE_UNIFORM_MAX_LENGTH, &length);
+		if(length > 0)
+		{
+			GLchar* uniformName = new char[length + 1];
+			GLint uniformSize;
+			GLenum uniformType;
+			GLint uniformLocation;
+            
+			unsigned int  sampleIndex = 0;
+			for(int i = 0; i < activeUniforms; ++i)
+			{
+				// Query uniform info.
+				glGetActiveUniform(_program, i, length, NULL, &uniformSize, &uniformType, uniformName);
+				uniformName[length] = '\0';
+                
+				if(uniformSize > 1 && length > 3)
+				{
+					char* c = strrchr(uniformName, '[');
+					if(c)
+					{
+						*c = '\0';
+					}
+				}
+                
+				uniformLocation = glGetUniformLocation(_program, uniformName);
+				//_user_uniforms[uniformName] = uniformLocation;
+				std::string name = uniformName;
+                GLProgramData::_Uniform* uniform = new GLProgramData::_Uniform();
+                
+                uniform->_location = uniformLocation;
+                uniform->_name = uniformName;
+                uniform->_size = uniformSize;
+                uniform->_type = uniformType;
+                
+                UniformValue* uniformvalue = new UniformValue();
+                uniform->_uniformvalue = uniformvalue;
+                uniformvalue->init(uniform);
+                
+				_programData->addUniform(name, uniform);
+			}
+			CC_SAFE_DELETE_ARRAY(uniformName);
+		}
+	}
+    
+    for(unsigned int i = 0, count = _programData->getAttribCount(); i < count; ++i)
+	{
+		GLProgramData::VertexAttrib* _attrib = _programData->getAttrib(i);
+		std::string name = _attrib->_name;
+        GLint attribLocation = getAttribLocation(name.c_str());
+        bindAttribLocation( name.c_str(),attribLocation);
+	}
+    
+}
+
+UniformValue* GLProgram::getUniform(std::string &name)
+{
+	GLProgramData::Uniform* uniform = _programData->getUniform(name);
+	return uniform->_uniformvalue;
+}
+
+GLProgramData::VertexAttrib* GLProgram::getAttrib(std::string &name)
+{
+    GLProgramData::VertexAttrib* attrib = _programData->getAttrib(name);
+    return attrib;
+}
+
 
 std::string GLProgram::getDescription() const
 {
@@ -326,7 +581,7 @@ bool GLProgram::link()
 #endif
 
     GLint status = GL_TRUE;
-    
+    	
     glLinkProgram(_program);
 
     if (_vertShader)
@@ -687,6 +942,289 @@ void GLProgram::reset()
         free(current_element);
     }
     _hashForUniforms = nullptr;
+}
+
+
+
+
+GLProgramData::GLProgramData():
+_vertexsize(0)
+{
+	_uniforms.clear();
+	_vertAttributes.clear();
+}
+
+GLProgramData::~GLProgramData()
+{
+	for(std::map<std::string, Uniform*>::iterator itr = _uniforms.begin(); itr != _uniforms.end(); itr++)
+	{
+		CC_SAFE_DELETE(itr->second);
+	}
+	
+	for(std::map<std::string, VertexAttrib*>::iterator itr = _vertAttributes.begin(); itr != _vertAttributes.end(); itr++)
+	{
+		CC_SAFE_DELETE(itr->second);
+	}
+}
+
+void GLProgramData::addUniform(std::string &name, Uniform* uniform)
+{
+	_uniforms[name] = uniform;
+}
+
+void GLProgramData::addAttrib(std::string &name, VertexAttrib* attrib)
+{
+	_vertAttributes[name] = attrib;
+}
+
+GLProgramData::Uniform* GLProgramData::getUniform(unsigned int index)
+{
+	unsigned int i = 0;
+	for (std::map<std::string, Uniform*>::const_iterator itr = _uniforms.begin(); itr != _uniforms.end(); itr++, i++)
+	{
+		if (i == index)
+		{
+			return itr->second;
+		}
+	}
+	return NULL;
+}
+
+GLProgramData::Uniform* GLProgramData::getUniform(std::string& name)
+{
+	std::map<std::string, Uniform*>::const_iterator itr = _uniforms.find(name);
+	if(itr != _uniforms.end())
+		return itr->second;
+	else
+		return NULL;
+}
+
+GLProgramData::VertexAttrib* GLProgramData::getAttrib(unsigned int index)
+{
+	//unsigned int i = 0;
+	for (std::map<std::string, VertexAttrib*>::const_iterator itr = _vertAttributes.begin(); itr != _vertAttributes.end(); itr++)
+	{
+		if (itr->second->_index == index)
+		{
+			return itr->second;
+		}
+	}
+	return NULL;
+}
+
+GLProgramData::VertexAttrib* GLProgramData::getAttrib(std::string& name)
+{
+    std::map<std::string, VertexAttrib*>::const_iterator itr = _vertAttributes.find(name);
+	if(itr != _vertAttributes.end())
+		return itr->second;
+	else
+		return NULL;
+}
+
+unsigned int GLProgramData::getUniformCount()
+{
+	return _uniforms.size();
+}
+
+unsigned int GLProgramData::getAttribCount()
+{
+	return _vertAttributes.size();
+}
+
+
+UniformValue::UniformValue(): _count(0),_type(UniformValue::NONE),_update(false)
+{
+    
+}
+
+UniformValue::~UniformValue()
+{
+	resetValue();
+}
+
+bool UniformValue::init(GLProgramData::Uniform* uniform)
+{
+	resetValue();
+	_uniform = uniform;
+	return true;
+}
+
+void UniformValue::bindUniform(GLProgram* program)
+{
+	switch(_type){
+		case UniformValue::FLOAT:
+            program->setUniformLocationWith1f(_uniform->_location, *_value.floatPtrValue);
+			break;
+		case UniformValue::INT:
+            program->setUniformLocationWith1i(_uniform->_location, *_value.intPtrValue);
+			break;
+		case UniformValue::VECTOR2:
+            program->setUniformLocationWith2f(_uniform->_location, _value.vec2PtrValue->x,  _value.vec2PtrValue->y);
+			break;
+		case UniformValue::VECTOR3:
+            program->setUniformLocationWith3f(_uniform->_location, _value.vec3PtrValue->x,  _value.vec3PtrValue->y, _value.vec3PtrValue->z);
+			break;
+		case UniformValue::VECTOR4:
+            program->setUniformLocationWith4f(_uniform->_location, _value.vec4PtrValue->x,  _value.vec4PtrValue->y, _value.vec4PtrValue->z, _value.vec4PtrValue->w);
+			break;
+		case UniformValue::MATRIX:
+            program->setUniformLocationWithMatrix4fv(_uniform->_location, _value.matPtrValue->m, _count);
+			break;
+		default:
+			break;
+	}
+}
+
+bool UniformValue::setValue(float value)
+{
+    _update = false;
+    if(*(_value.floatPtrValue) == value)
+        return true;
+    
+	if(_uniform && _uniform->_type == GL_FLOAT)
+	{
+		_count = 1;
+		_type = UniformValue::FLOAT;
+		if(_value.floatPtrValue == nullptr)
+			_value.floatPtrValue = new float[_count];
+		
+		*(_value.floatPtrValue) = value;
+        _update = true;
+		return true;
+	}
+	return false;
+}
+
+bool UniformValue::setValue(int value)
+{
+    _update = false;
+    if(_value.intPtrValue != nullptr)
+        if(*(_value.intPtrValue) == value)
+            return true;
+    
+	if(_uniform && _uniform->_type == GL_INT)
+	{
+		_count = 1;
+		_type = UniformValue::INT;
+		if(_value.floatPtrValue == nullptr)
+			_value.floatPtrValue = new float[_count];
+        
+		*(_value.floatPtrValue) = value;
+        _update = true;
+		return true;
+	}
+	return false;
+}
+
+bool UniformValue::setValue(const Vector2& value)
+{
+    _update = false;
+    if(_value.vec2PtrValue != nullptr)
+        if(*(_value.vec2PtrValue) == value)
+            return true;
+    
+	if(_uniform && _uniform->_type == GL_FLOAT_VEC2)
+	{
+		_count = 1;
+		_type = UniformValue::VECTOR2;
+		if(_value.vec2PtrValue == nullptr)
+			_value.vec2PtrValue = new Vector2[_count];
+        
+		*(_value.vec2PtrValue) = value;
+		return true;
+	}
+	return false;
+}
+
+bool UniformValue::setValue(const Vector3& value)
+{
+    _update = false;
+    if(_value.vec3PtrValue != nullptr)
+        if(*(_value.vec3PtrValue) == value)
+            return true;
+    
+	if(_uniform && _uniform->_type == GL_FLOAT_VEC3)
+	{
+		_count = 1;
+		_type = UniformValue::VECTOR3;
+		if(_value.vec3PtrValue == nullptr)
+			_value.vec3PtrValue = new Vector3[_count];
+        
+		*(_value.vec3PtrValue) = value;
+		return true;
+	}
+	return false;
+}
+
+bool UniformValue::setValue(const Vector4& value)
+{
+    _update = false;
+    if(_value.vec4PtrValue != nullptr)
+        if(*(_value.vec4PtrValue) == value)
+            return true;
+    
+	if(_uniform && _uniform->_type == GL_FLOAT_VEC4)
+	{
+		_count = 1;
+		_type = UniformValue::VECTOR4;
+		if(_value.vec4PtrValue == nullptr)
+			_value.vec4PtrValue = new Vector4[_count];
+        
+		*(_value.vec4PtrValue) = value;
+		return true;
+	}
+	return false;
+}
+
+bool UniformValue::setValue(const Matrix& value)
+{
+    _update = false;
+    //  if(_value.matPtrValue != nullptr)
+    //     if(*(_value.matPtrValue) == value)
+    //        return true;
+    
+	if(_uniform && _uniform->_type == GL_FLOAT_MAT4)
+	{
+		_count = 1;
+		_type = UniformValue::MATRIX;
+		if(_value.matPtrValue == nullptr)
+			_value.matPtrValue = new Matrix[_count];
+        
+		*(_value.matPtrValue) = value;
+		return true;
+	}
+	return false;
+}
+
+void UniformValue::resetValue()
+{
+	switch(_type)
+	{
+        case UniformValue::FLOAT :
+            CC_SAFE_DELETE(_value.floatPtrValue);
+            break;
+        case UniformValue::INT:
+            CC_SAFE_DELETE(_value.intPtrValue);
+            break;
+        case UniformValue::VECTOR2:
+            CC_SAFE_DELETE(_value.vec2PtrValue);
+            break;
+        case UniformValue::VECTOR3:
+            CC_SAFE_DELETE(_value.vec3PtrValue);
+            break;
+        case UniformValue::VECTOR4:
+            CC_SAFE_DELETE(_value.vec4PtrValue);
+            break;
+        case UniformValue::MATRIX:
+            CC_SAFE_DELETE(_value.matPtrValue);
+            break;
+        default:
+            break;
+	}
+    
+	memset(&_value,0, sizeof(_value));
+	_count = 0;
+	_type = UniformValue::NONE;
 }
 
 NS_CC_END
