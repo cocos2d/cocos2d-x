@@ -96,30 +96,6 @@ Vector2::~Vector2()
 {
 }
 
-const Vector2& Vector2::zero()
-{
-    static Vector2 value(0.0f, 0.0f);
-    return value;
-}
-
-const Vector2& Vector2::one()
-{
-    static Vector2 value(1.0f, 1.0f);
-    return value;
-}
-
-const Vector2& Vector2::unitX()
-{
-    static Vector2 value(1.0f, 0.0f);
-    return value;
-}
-
-const Vector2& Vector2::unitY()
-{
-    static Vector2 value(0.0f, 1.0f);
-    return value;
-}
-
 bool Vector2::isZero() const
 {
     return x == 0.0f && y == 0.0f;
@@ -474,6 +450,9 @@ Vector2 Vector2::getIntersectPoint(const Vector2& A, const Vector2& B, const Vec
 }
 
 const Vector2 Vector2::ZERO = Vector2(0.0f, 0.0f);
+const Vector2 Vector2::ONE = Vector2(1.0f, 1.0f);
+const Vector2 Vector2::UNIT_X = Vector2(1.0f, 0.0f);
+const Vector2 Vector2::UNIT_Y = Vector2(0.0f, 1.0f);
 const Vector2 Vector2::ANCHOR_MIDDLE = Vector2(0.5f, 0.5f);
 const Vector2 Vector2::ANCHOR_BOTTOM_LEFT = Vector2(0.0f, 0.0f);
 const Vector2 Vector2::ANCHOR_TOP_LEFT = Vector2(0.0f, 1.0f);
