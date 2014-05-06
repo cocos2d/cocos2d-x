@@ -103,6 +103,7 @@ enum
     kUIRichTextTest,
     KUIFocusTest_HBox,
     KUIFocusTest_VBox,
+    KUIFocusTest_NestedLayout1,
     kUITestMax
 };
 
