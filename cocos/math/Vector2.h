@@ -742,6 +742,8 @@ public:
  */
 inline const Vector2 operator*(float x, const Vector2& v);
 
+typedef Vector2 Point2;
+
 NS_CC_MATH_END
 
 #include "Vector2.inl"

@@ -21,7 +21,7 @@
 --------------------------------
 -- @function [parent=#LayerGradient] setVector 
 -- @param self
--- @param #cc.math::Vector2 array
+-- @param #array_table array
         
 --------------------------------
 -- @function [parent=#LayerGradient] setStartOpacity 
@@ -41,7 +41,7 @@
 --------------------------------
 -- @function [parent=#LayerGradient] getVector 
 -- @param self
--- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#LayerGradient] setEndColor 
@@ -68,13 +68,13 @@
 --          
 -- overload function: create()
 --          
--- overload function: create(color4B_table, color4B_table, cc.math::Vector2)
+-- overload function: create(color4B_table, color4B_table, array_table)
 --          
 -- @function [parent=#LayerGradient] create
 -- @param self
 -- @param #color4B_table color4b
 -- @param #color4B_table color4b
--- @param #cc.math::Vector2 array
+-- @param #array_table array
 -- @return LayerGradient#LayerGradient ret (retunr value: cc.LayerGradient)
 
 --------------------------------

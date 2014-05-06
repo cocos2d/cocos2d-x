@@ -467,6 +467,8 @@ public:
  */
 inline const Vector3 operator*(float x, const Vector3& v);
 
+typedef Vector3 Point3;
+
 NS_CC_MATH_END
 
 #include "Vector3.inl"

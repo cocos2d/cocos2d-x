@@ -770,6 +770,7 @@ CC_DEPRECATED_ATTRIBUTE typedef GLView CCEGLView;
 CC_DEPRECATED_ATTRIBUTE typedef Component CCComponent;
 CC_DEPRECATED_ATTRIBUTE typedef AffineTransform CCAffineTransform;
 CC_DEPRECATED_ATTRIBUTE typedef Vector2 CCPoint;
+CC_DEPRECATED_ATTRIBUTE typedef Vector2 Point;
 CC_DEPRECATED_ATTRIBUTE typedef Size CCSize;
 CC_DEPRECATED_ATTRIBUTE typedef Rect CCRect;
 CC_DEPRECATED_ATTRIBUTE typedef Color3B ccColor3B;

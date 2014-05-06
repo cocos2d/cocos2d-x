@@ -42,11 +42,6 @@ USING_NS_CC_MATH;
  * @{
  */
 
-// for Vector2 assignement operator and copy constructor
-class CC_DLL Size;
-
-CC_DEPRECATED_ATTRIBUTE typedef Vector2 Point;
-
 class CC_DLL Size
 {
 public:
