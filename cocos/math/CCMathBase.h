@@ -23,9 +23,9 @@
 //#define M_1_PI                      0.31830988618379067154
 
 #ifdef __cplusplus
-    #define NS_CC_MATH_BEGIN                     namespace cocos2d { namespace math {
-    #define NS_CC_MATH_END                       } }
-    #define USING_NS_CC_MATH                     using namespace cocos2d::math
+    #define NS_CC_MATH_BEGIN                     namespace cocos2d {
+    #define NS_CC_MATH_END                       }
+    #define USING_NS_CC_MATH                     using namespace cocos2d
 #else
     #define NS_CC_MATH_BEGIN 
     #define NS_CC_MATH_END 

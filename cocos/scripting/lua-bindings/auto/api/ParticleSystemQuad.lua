@@ -19,9 +19,11 @@
 --          
 -- overload function: create()
 --          
+-- overload function: create(map_table)
+--          
 -- @function [parent=#ParticleSystemQuad] create
 -- @param self
--- @param #string str
+-- @param #map_table map
 -- @return ParticleSystemQuad#ParticleSystemQuad ret (retunr value: cc.ParticleSystemQuad)
 
 --------------------------------
