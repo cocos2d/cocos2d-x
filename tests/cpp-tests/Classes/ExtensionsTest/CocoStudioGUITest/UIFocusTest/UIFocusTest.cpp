@@ -66,11 +66,10 @@ void UIFocusTestBase::onImageViewClicked(cocos2d::Ref *ref, TouchEventType touch
         Widget *w = (Widget*)ref;
         if (w->isFocusEnabled()) {
             w->setFocusEnabled(false);
-            w->setColor(Color3B::WHITE);
-            w->setScale(0.8);
+            w->setColor(Color3B::YELLOW);
         }else{
             w->setFocusEnabled(true);
-            w->setScale(1.0);
+            w->setColor(Color3B::WHITE);
         }
     }
 }
@@ -110,13 +109,11 @@ void UIFocusTestBase::onFocusChanged(cocos2d::ui::Widget *widgetLostFocus, cocos
     //only change the widgets' state
     Layout *getLayout = dynamic_cast<Layout*>(widgetGetFocus);
     if (!getLayout && widgetGetFocus && widgetGetFocus->isFocusEnabled()) {
-        widgetGetFocus->setScale(1.2);
         widgetGetFocus->setColor(Color3B::RED);
     }
     
     Layout *loseLayout = dynamic_cast<Layout*>(widgetLostFocus);
     if (!loseLayout && widgetLostFocus && widgetLostFocus->isFocusEnabled()) {
-        widgetLostFocus->setScale(1.0);
         widgetLostFocus->setColor(Color3B::WHITE);
     }
 }
@@ -283,7 +280,9 @@ bool UIFocusTestNestedLayout1::init()
         int count = 1;
         for (int i=0; i<count; ++i) {
             ImageView *w = ImageView::create("cocosui/scrollviewbg.png");
+            w->setAnchorPoint(Vector2::ZERO);
             w->setTouchEnabled(true);
+            w->setScaleX(2.5);
             w->addTouchEventListener(this, toucheventselector(UIFocusTestVertical::onImageViewClicked));
             _verticalLayout->addChild(w);
         }
@@ -296,6 +295,8 @@ bool UIFocusTestNestedLayout1::init()
         count = 2;
         for (int i=0; i < count; ++i) {
             ImageView *w = ImageView::create("cocosui/scrollviewbg.png");
+            w->setAnchorPoint(Vector2(0,1));
+            w->setScaleY(2.0);
             w->setTouchEnabled(true);
             w->addTouchEventListener(this, toucheventselector(UIFocusTestVertical::onImageViewClicked));
             hbox->addChild(w);
