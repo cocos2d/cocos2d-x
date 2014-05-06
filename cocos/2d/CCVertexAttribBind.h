@@ -1,0 +1,72 @@
+/****************************************************************************
+
+****************************************************************************/
+
+#ifndef __CCVRETEXATTRIBBIND_H__
+#define __CCVRETEXATTRIBBIND_H__
+
+#include "base/ccMacros.h"
+#include "base/CCRef.h"
+#include "CCGL.h"
+#include "math/CCMath.h"
+#include "2d/CCGLProgram.h"
+#include <set>
+
+NS_CC_BEGIN
+
+USING_NS_CC_MATH;
+
+////vertex attribute/////
+class VertexAttribType
+{
+    friend class VertexAttribBind;
+    friend class GLProgram;
+public:
+    VertexAttribType();
+    
+    VertexAttribType(GLenum type, int size);
+    
+    int getByteSize();
+    
+protected:
+    GLenum _type;
+    int _size;
+    int _location;
+    int _offset;
+};
+
+////vertex attributes bind
+class VertexAttribBind
+{
+public:
+    VertexAttribBind(const VertexAttribType* elem, int count);
+    
+    VertexAttribBind(const std::vector<VertexAttribType>& elems);
+    
+    VertexAttribBind(const std::vector<GLProgramData::VertexAttib*>& attribs);
+    
+    virtual ~VertexAttribBind();
+    
+    /**
+     * bind vertex attributes.
+     *
+     * @param   index Position in _vertexAttribs
+     * @param  attribLocation location in shader. It can be queried from GLProgram, eg. program->getAttribLocation("a_position")
+     */
+    void bindAttribute(int index, int attribLocation);
+    
+    /**bind attributes pointer**/
+    void bindAttributePtr(void* vertexPointer = nullptr);
+    
+protected:
+    
+    void setVertexAttribElems(const VertexAttribType* elem, int count);
+    
+    VertexAttribType* _vertexAttribs;
+    int _vertexAtttribCount;
+    int _stride;
+};
+
+NS_CC_END
+
+#endif /* __CCVRETEXATTRIBBIND_H__ */

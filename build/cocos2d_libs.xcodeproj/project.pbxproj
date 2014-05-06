@@ -1115,6 +1115,10 @@
 		3E26D40518ACB5D100834404 /* CCImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E26D40418ACB5D100834404 /* CCImage.cpp */; };
 		3E26D40618ACB5D100834404 /* CCImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E26D40418ACB5D100834404 /* CCImage.cpp */; };
 		3E26D40818ACB63900834404 /* CCDevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E26D40718ACB63900834404 /* CCDevice.mm */; };
+		3E9D30DF19195B22008EB309 /* CCVertexAttribBind.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E9D30DD19195B22008EB309 /* CCVertexAttribBind.cpp */; };
+		3E9D30E019195B22008EB309 /* CCVertexAttribBind.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E9D30DD19195B22008EB309 /* CCVertexAttribBind.cpp */; };
+		3E9D30E119195B22008EB309 /* CCVertexAttribBind.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E9D30DE19195B22008EB309 /* CCVertexAttribBind.h */; };
+		3E9D30E219195B22008EB309 /* CCVertexAttribBind.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E9D30DE19195B22008EB309 /* CCVertexAttribBind.h */; };
 		460E468118080832000CDD6D /* cocos-ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A167D21807AF4D005B8026 /* cocos-ext.h */; };
 		460E468218080836000CDD6D /* cocos-ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A167D21807AF4D005B8026 /* cocos-ext.h */; };
 		460E477B180808F5000CDD6D /* ExtensionMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168321807AF4E005B8026 /* ExtensionMacros.h */; };
@@ -2302,6 +2306,8 @@
 		37936A3E1869B76800E974DD /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
 		3E26D40418ACB5D100834404 /* CCImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCImage.cpp; sourceTree = "<group>"; };
 		3E26D40718ACB63900834404 /* CCDevice.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCDevice.mm; sourceTree = "<group>"; };
+		3E9D30DD19195B22008EB309 /* CCVertexAttribBind.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCVertexAttribBind.cpp; sourceTree = "<group>"; };
+		3E9D30DE19195B22008EB309 /* CCVertexAttribBind.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVertexAttribBind.h; sourceTree = "<group>"; };
 		46A15FCC1807A544005B8026 /* AUTHORS */ = {isa = PBXFileReference; lastKnownFileType = text; name = AUTHORS; path = ../AUTHORS; sourceTree = "<group>"; };
 		46A15FCE1807A544005B8026 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		46A15FE11807A56F005B8026 /* Export.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Export.h; sourceTree = "<group>"; };
@@ -3226,6 +3232,8 @@
 		1A570238180BCC580088DEC7 /* shaders */ = {
 			isa = PBXGroup;
 			children = (
+				3E9D30DD19195B22008EB309 /* CCVertexAttribBind.cpp */,
+				3E9D30DE19195B22008EB309 /* CCVertexAttribBind.h */,
 				1A57052F180BD9500088DEC7 /* CCGLProgram.cpp */,
 				1A570530180BD9500088DEC7 /* CCGLProgram.h */,
 				1A570531180BD9500088DEC7 /* ccGLStateCache.cpp */,
@@ -4929,6 +4937,7 @@
 				1A57007F180BC5A10088DEC7 /* CCActionInterval.h in Headers */,
 				1A01C69A18F57BE800EFE3A6 /* CCSet.h in Headers */,
 				A023FA36185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_vert.h in Headers */,
+				3E9D30E119195B22008EB309 /* CCVertexAttribBind.h in Headers */,
 				1A570083180BC5A10088DEC7 /* CCActionManager.h in Headers */,
 				1A570087180BC5A10088DEC7 /* CCActionPageTurn3D.h in Headers */,
 				ED9C6A9618599AD8000A5232 /* CCNodeGrid.h in Headers */,
@@ -5501,6 +5510,7 @@
 				50FCEBA618C72017004AD434 /* ListViewReader.h in Headers */,
 				1A57025A180BCC6F0088DEC7 /* ccShader_PositionTexture_frag.h in Headers */,
 				500DC9B919106E6D007B91BF /* TransformUtils.h in Headers */,
+				3E9D30E219195B22008EB309 /* CCVertexAttribBind.h in Headers */,
 				1A57025C180BCC6F0088DEC7 /* ccShader_PositionTexture_uColor_frag.h in Headers */,
 				1A57025E180BCC6F0088DEC7 /* ccShader_PositionTexture_uColor_vert.h in Headers */,
 				1A570260180BCC6F0088DEC7 /* ccShader_PositionTexture_vert.h in Headers */,
@@ -6311,6 +6321,7 @@
 				1A8C59B3180E930E00EF57C3 /* CCBone.cpp in Sources */,
 				1A8C59B7180E930E00EF57C3 /* CCColliderDetector.cpp in Sources */,
 				1A8C59BB180E930E00EF57C3 /* CCComAttribute.cpp in Sources */,
+				3E9D30DF19195B22008EB309 /* CCVertexAttribBind.cpp in Sources */,
 				1A8C59BF180E930E00EF57C3 /* CCComAudio.cpp in Sources */,
 				1A8C59C3180E930E00EF57C3 /* CCComController.cpp in Sources */,
 				2905FA5218CF08D100240AA3 /* UIImageView.cpp in Sources */,
@@ -6692,6 +6703,7 @@
 				1A01C68B18F57BE800EFE3A6 /* CCDeprecated.cpp in Sources */,
 				1AD71EBE180E26E600808F54 /* CCSkeletonAnimation.cpp in Sources */,
 				500DC94119106300007B91BF /* CCData.cpp in Sources */,
+				3E9D30E019195B22008EB309 /* CCVertexAttribBind.cpp in Sources */,
 				50FCEBBC18C72017004AD434 /* TextBMFontReader.cpp in Sources */,
 				500DC8BB19105D41007B91BF /* CCQuadCommand.cpp in Sources */,
 				1AD71EC2180E26E600808F54 /* extension.cpp in Sources */,
