@@ -116,6 +116,7 @@ void UIFocusTestBase::onFocusChanged(cocos2d::ui::Widget *widgetLostFocus, cocos
     if (!loseLayout && widgetLostFocus && widgetLostFocus->isFocusEnabled()) {
         widgetLostFocus->setColor(Color3B::WHITE);
     }
+    CCLOG("on focus change, %d widget get focus, %d widget lose focus", widgetGetFocus->getTag(),  widgetLostFocus->getTag());
 }
 
 
@@ -148,6 +149,7 @@ bool UIFocusTestHorizontal::init()
         for (int i=0; i<count; ++i) {
             ImageView *w = ImageView::create("cocosui/scrollviewbg.png");
             w->setTouchEnabled(true);
+            w->setTag(i);
             w->addTouchEventListener(this, toucheventselector(UIFocusTestHorizontal::onImageViewClicked));
             _horizontalLayout->addChild(w);
         }

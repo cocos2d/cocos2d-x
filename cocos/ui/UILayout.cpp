@@ -1651,14 +1651,19 @@ int Layout::whichChildToGetFocus(FocusDirection dir)
     return 0;
 }
 
-Widget* Layout::findFocusEnabledChildWidgetByIndex(int index)
+Widget* Layout::findFocusEnabledChildWidgetByIndex(ssize_t index)
 {
   
     Widget *pWidget = this->getNextWidgetByIndex(index);
     
-    if (pWidget && pWidget->isFocusEnabled())
+    if (pWidget)
     {
-        return pWidget;
+        if (pWidget->isFocusEnabled())
+        {
+            return pWidget;
+        }
+        index = index + 1;
+        return this->findFocusEnabledChildWidgetByIndex(index);
     }
     return nullptr;
 }
@@ -1667,22 +1672,28 @@ Widget* Layout::passFocusToChild(cocos2d::ui::FocusDirection dir, cocos2d::ui::W
 {
     if (_passFocusToChild)
     {
-        int index = onPassFocusToChild(dir);
-        Widget *widget = this->findFocusEnabledChildWidgetByIndex(index);
-        if (widget)
+        if (checkFocusEnabledChild())
         {
-            this->dispatchFocusEvent(current, widget);
-            Layout *layout = dynamic_cast<Layout*>(widget);
-            if (layout)
+            int index = onPassFocusToChild(dir);
+            Widget *widget = this->findFocusEnabledChildWidgetByIndex(index);
+            if (widget)
             {
-                return layout->nextFocusedWidget(dir, layout);
-            }
-            else
-            {
-                return widget;
+                this->dispatchFocusEvent(current, widget);
+                Layout *layout = dynamic_cast<Layout*>(widget);
+                if (layout)
+                {
+                    return layout->nextFocusedWidget(dir, layout);
+                }
+                else
+                {
+                    return widget;
+                }
             }
         }
-        
+        else
+        {
+            return this;
+        }
     }
     
     return Widget::nextFocusedWidget(dir, this);
@@ -1766,8 +1777,7 @@ Widget* Layout::getPreviousFocusedWidget(FocusDirection dir, Widget *current)
         else
         {
             //handling the disabled widget, there is no actual focus lose or get, so we don't need any envet
-            this->dispatchFocusEvent(current, nullptr);
-            return nextWidget->nextFocusedWidget(dir, nextWidget);
+            return this->getPreviousFocusedWidget(dir, nextWidget);
         }
     }else
     {
@@ -1793,13 +1803,12 @@ Widget* Layout::getPreviousFocusedWidget(FocusDirection dir, Widget *current)
                 }
                 else
                 {
-                    this->dispatchFocusEvent(current, nullptr);
-                    return nextWidget->nextFocusedWidget(dir, nextWidget);
+                    return this->getPreviousFocusedWidget(dir, nextWidget);
                 }
             }
             else
             {
-                return  current;
+                return _focusedWidget;
             }
         }
         else
@@ -1811,7 +1820,7 @@ Widget* Layout::getPreviousFocusedWidget(FocusDirection dir, Widget *current)
                     this->dispatchFocusEvent(current, this);
                     return Widget::nextFocusedWidget(dir, this);
                 }
-                return current;
+                return _focusedWidget;
             }
             else
             {
@@ -1850,8 +1859,7 @@ Widget* Layout::getNextFocusedWidget(FocusDirection dir, Widget *current)
             }
             else
             {
-                this->dispatchFocusEvent(current, nullptr);
-                return nextWidget->nextFocusedWidget(dir, nextWidget);
+                return this->getNextFocusedWidget(dir, nextWidget);
             }
         }
         else
@@ -1882,13 +1890,12 @@ Widget* Layout::getNextFocusedWidget(FocusDirection dir, Widget *current)
                 }
                 else
                 {
-                    this->dispatchFocusEvent(current, nullptr);
-                    return nextWidget->nextFocusedWidget(dir, nextWidget);
+                    return this->getNextFocusedWidget(dir, nextWidget);
                 }
             }
             else
             {
-                return current;
+                return _focusedWidget;
             }
         }
         else{
@@ -1899,7 +1906,7 @@ Widget* Layout::getNextFocusedWidget(FocusDirection dir, Widget *current)
                     this->dispatchFocusEvent(current, this);
                     return Widget::nextFocusedWidget(dir, this);
                 }
-                return current;
+                return _focusedWidget;
             }
             else
             {

@@ -958,8 +958,8 @@ void Widget::setFocused(bool focus)
     //make sure there is only one focusedWidget
     if (focus) {
         //handling only widget, ignore the layut
-        Layout *l = dynamic_cast<Layout*>(this);
-        if (nullptr == l) {
+        Layout *layout = dynamic_cast<Layout*>(this);
+        if (nullptr == layout) {
             _focusedWidget = this;
         }
     }
@@ -1010,22 +1010,32 @@ Widget* Widget::nextFocusedWidget(cocos2d::ui::FocusDirection dir,  Widget* curr
 
 void Widget::dispatchFocusEvent(cocos2d::ui::Widget *widgetLoseFocus, cocos2d::ui::Widget *widgetGetFocus)
 {
-    if (widgetGetFocus) {
-        widgetGetFocus->onFocusChanged(widgetLoseFocus, widgetGetFocus);
+    //if the widgetLoseFocus doesn't get focus, it will use the previous focused widget instead
+    if (!widgetLoseFocus->isFocused()) {
+        widgetLoseFocus = _focusedWidget;
     }
     
-    if (widgetLoseFocus) {
-        widgetLoseFocus->onFocusChanged(widgetLoseFocus, widgetGetFocus);
+    if (widgetGetFocus != widgetLoseFocus)
+    {
+        
+        if (widgetGetFocus) {
+            widgetGetFocus->onFocusChanged(widgetLoseFocus, widgetGetFocus);
+        }
+        
+        if (widgetLoseFocus) {
+            widgetLoseFocus->onFocusChanged(widgetLoseFocus, widgetGetFocus);
+        }
+        
+        EventFocus event(widgetLoseFocus, widgetGetFocus);
+        auto dispatcher = cocos2d::Director::getInstance()->getEventDispatcher();
+        dispatcher->dispatchEvent(&event);
     }
-    
-    EventFocus event(widgetLoseFocus, widgetGetFocus);
-    auto dispatcher = cocos2d::Director::getInstance()->getEventDispatcher();
-    dispatcher->dispatchEvent(&event);
     
 }
 
 void Widget::onFocusChange(Widget* widgetLostFocus, Widget* widgetGetFocus)
 {
+    //only change focus when there is indeed a get&lose happens
     if (widgetLostFocus) {
         widgetLostFocus->setFocused(false);
     }

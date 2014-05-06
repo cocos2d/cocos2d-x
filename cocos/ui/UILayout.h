@@ -354,7 +354,7 @@ protected:
     /**
      * find a focus enabled child Widget in the layout by index
      */
-    Widget* findFocusEnabledChildWidgetByIndex(int index);
+    Widget* findFocusEnabledChildWidgetByIndex(ssize_t index);
     
     /**
      * get the center point of a widget in world space
