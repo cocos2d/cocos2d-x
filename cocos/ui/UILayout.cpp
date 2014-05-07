@@ -1595,7 +1595,7 @@ Vector2 Layout::getWorldCenterPoint(Widget* widget)
 int Layout::whichChildToGetFocus(FocusDirection dir)
 {
     Widget* previousWidget = this->getCurrentFocusedWidget();
-    if (previousWidget == nullptr)
+    if (previousWidget == nullptr || previousWidget == this)
     {
         return 0;
     }

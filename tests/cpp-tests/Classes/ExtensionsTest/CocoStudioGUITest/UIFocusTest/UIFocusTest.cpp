@@ -77,6 +77,9 @@ void UIFocusTestBase::onImageViewClicked(cocos2d::Ref *ref, TouchEventType touch
 void UIFocusTestBase::onLeftKeyPressed()
 {
     if (_firstFocusedWidget) {
+        if (!_firstFocusedWidget->isFocused()) {
+            _firstFocusedWidget = _firstFocusedWidget->getCurrentFocusedWidget();
+        }
         _firstFocusedWidget = _firstFocusedWidget->nextFocusedWidget(FocusDirection::FocusDirection_Left, _firstFocusedWidget);
     }
 }
@@ -84,6 +87,9 @@ void UIFocusTestBase::onLeftKeyPressed()
 void UIFocusTestBase::onRightKeyPressed()
 {
     if (_firstFocusedWidget) {
+        if (!_firstFocusedWidget->isFocused()) {
+            _firstFocusedWidget = _firstFocusedWidget->getCurrentFocusedWidget();
+        }
         _firstFocusedWidget = _firstFocusedWidget->nextFocusedWidget(FocusDirection::FocusDirection_Right, _firstFocusedWidget);
     }
 }
@@ -91,6 +97,9 @@ void UIFocusTestBase::onRightKeyPressed()
 void UIFocusTestBase::onUpKeyPressed()
 {
     if (_firstFocusedWidget) {
+        if (!_firstFocusedWidget->isFocused()) {
+            _firstFocusedWidget = _firstFocusedWidget->getCurrentFocusedWidget();
+        }
         _firstFocusedWidget = _firstFocusedWidget->nextFocusedWidget(FocusDirection::FocusDirection_Up, _firstFocusedWidget);
     }
     
@@ -99,6 +108,9 @@ void UIFocusTestBase::onUpKeyPressed()
 void UIFocusTestBase::onDownKeyPressed()
 {
     if (_firstFocusedWidget) {
+        if (!_firstFocusedWidget->isFocused()) {
+            _firstFocusedWidget = _firstFocusedWidget->getCurrentFocusedWidget();
+        }
         _firstFocusedWidget = _firstFocusedWidget->nextFocusedWidget(FocusDirection::FocusDirection_Down, _firstFocusedWidget);
     }
     
@@ -116,7 +128,10 @@ void UIFocusTestBase::onFocusChanged(cocos2d::ui::Widget *widgetLostFocus, cocos
     if (!loseLayout && widgetLostFocus && widgetLostFocus->isFocusEnabled()) {
         widgetLostFocus->setColor(Color3B::WHITE);
     }
-    CCLOG("on focus change, %d widget get focus, %d widget lose focus", widgetGetFocus->getTag(),  widgetLostFocus->getTag());
+    
+    if (widgetLostFocus && widgetGetFocus) {
+        CCLOG("on focus change, %d widget get focus, %d widget lose focus", widgetGetFocus->getTag(),  widgetLostFocus->getTag());
+    }
 }
 
 
@@ -223,6 +238,9 @@ bool UIFocusTestVertical::init()
             w->setTag(i);
             w->addTouchEventListener(this, toucheventselector(UIFocusTestVertical::onImageViewClicked));
             _verticalLayout->addChild(w);
+            if (i == 2) {
+                w->requestFocus();
+            }
         }
         
         _loopText = Text::create("loop enabled", "Airal", 20);
@@ -314,8 +332,7 @@ bool UIFocusTestNestedLayout1::init()
         VBox *innerVBox = VBox::create();
         hbox->addChild(innerVBox);
         innerVBox->setTag(102);
-        //call this method will cause the focus constraint to the layout and it will never pass out
-        innerVBox->setPassFocusToChild(false);
+//        innerVBox->setPassFocusToChild(false);
 //        innerVBox->setFocusEnabled(false);
        
         

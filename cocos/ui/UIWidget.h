@@ -569,6 +569,11 @@ public:
      */
     virtual Widget* nextFocusedWidget(FocusDirection dir, Widget* current);
     
+    /**
+     * when a widget calls this method, it will get focus immediately.
+     */
+    void requestFocus();
+    
 CC_CONSTRUCTOR_ACCESS:
     //initializes state of widget.
     virtual bool init() override;
