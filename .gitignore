@@ -133,5 +133,5 @@ project.properties
 /external/win32-specific/
 /external/winrt-specific/
 /external/wp8-specific/
-/v3-deps-*.zip
+/v*-deps-*.zip
 /external/version.json
