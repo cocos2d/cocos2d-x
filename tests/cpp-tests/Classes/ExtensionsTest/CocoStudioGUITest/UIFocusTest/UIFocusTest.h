@@ -95,6 +95,21 @@ protected:
     Text *_loopText;
 };
 
+class UIFocusTestNestedLayout3 : public UIFocusTestBase
+{
+public:
+    UIFocusTestNestedLayout3();
+    virtual ~UIFocusTestNestedLayout3();
+    bool init();
+    
+    
+    void toggleFocusLoop(Ref*,TouchEventType);
+protected:
+    UI_SCENE_CREATE_FUNC(UIFocusTestNestedLayout3);
+    Layout *_verticalLayout;
+    Text *_loopText;
+};
+
 
 
 #endif /* defined(__cocos2d_tests__UIFocusTest__) */

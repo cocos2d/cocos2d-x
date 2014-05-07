@@ -609,7 +609,7 @@ _passFocusToChild(true),
 _loopFocus(false)
 {
     _widgetType = WidgetTypeContainer;
-    onPassFocusToChild = CC_CALLBACK_1(Layout::findNearestChildWidgetIndex, this);
+    onPassFocusToChild = CC_CALLBACK_2(Layout::findNearestChildWidgetIndex, this);
 }
 
 Layout::~Layout()
@@ -1578,23 +1578,49 @@ Size Layout::getLayoutContentSize()const
 
 Vector2 Layout::getWorldCenterPoint(Widget* widget)
 {
-    Vector2 widgetPosition =  widget->getWorldPosition();
-    
     Layout *layout = dynamic_cast<Layout*>(widget);
+    //FIXEDME: we don't need to calculate the content size of layout anymore
     Size widgetSize = layout ? layout->getLayoutContentSize() :  widget->getSize();
-    Vector2 anchorPoint = widget->getAnchorPoint();
-    
-    int sign = layout ? -1 : 1;
-    widgetPosition = Vector2(widgetPosition.x + (0.5-anchorPoint.x) * widgetSize.width,
-                           widgetPosition.y + (0.5 - anchorPoint.y) * widgetSize.height * sign);
-    return widgetPosition;
+//    CCLOG("contnet size : width = %f, height = %f", widgetSize.width, widgetSize.height);
+    return widget->convertToWorldSpace(Vector2(widgetSize.width/2, widgetSize.height/2));
 }
 
-
-int Layout::findNearestChildWidgetIndex(FocusDirection direction)
+float Layout::caculateShortestDistance(Widget* baseWidget)
 {
-    Widget* previousWidget = this->getCurrentFocusedWidget();
-    if (previousWidget == nullptr || previousWidget == this)
+    float distance = FLT_MAX;
+    
+    Vector2 widgetPosition =  this->getWorldCenterPoint(baseWidget);
+    
+    for (Node* node : _children) {
+        Layout *layout = dynamic_cast<Layout*>(node);
+        int length;
+        if (layout) {
+            length = layout->caculateShortestDistance(baseWidget);
+        }
+        else
+        {
+            Widget* w = dynamic_cast<Widget*>(node);
+            if (w) {
+                Vector2 wPosition = this->getWorldCenterPoint(w);
+                length = (wPosition - widgetPosition).length();
+            }
+            else {
+                continue;
+            }
+        }
+        
+        if (length < distance) {
+            distance = length;
+        }
+        
+        
+    }
+    return distance;
+}
+
+int Layout::findNearestChildWidgetIndex(FocusDirection direction, Widget* baseWidget)
+{
+    if (baseWidget == nullptr || baseWidget == this)
     {
         return 0;
     }
@@ -1605,18 +1631,28 @@ int Layout::findNearestChildWidgetIndex(FocusDirection direction)
     int found = 0;
     if (direction == FocusDirection::FocusDirection_Left || direction == FocusDirection::FocusDirection_Right)
     {
-        Vector2 widgetPosition =  this->getWorldCenterPoint(previousWidget);
+        Vector2 widgetPosition =  this->getWorldCenterPoint(baseWidget);
         while (index <  count)
         {
             Widget *w = dynamic_cast<Widget*>(this->getChildren().at(index));
             if (w && w->isFocusEnabled())
             {
                 Vector2 wPosition = this->getWorldCenterPoint(w);
-                float length = (wPosition - widgetPosition).getLength();
+                float length;
+                Layout *layout = dynamic_cast<Layout*>(w);
+                if (layout)
+                {
+                    length = layout->caculateShortestDistance(baseWidget);
+                }
+                else
+                {
+                    length = (wPosition - widgetPosition).getLength();
+                }
+               
                 if (length < distance)
                 {
-                    found = index;
-                    distance = length;
+                        found = index;
+                        distance = length;
                 }
             }
             index++;
@@ -1628,19 +1664,30 @@ int Layout::findNearestChildWidgetIndex(FocusDirection direction)
     found = 0;
     distance = FLT_MAX;
     if (direction == FocusDirection::FocusDirection_Down || direction == FocusDirection::FocusDirection_Up) {
-        Vector2 widgetPostion = this->getWorldCenterPoint(previousWidget);
+        Vector2 widgetPosition = this->getWorldCenterPoint(baseWidget);
         while (index < count)
         {
             Widget *w = dynamic_cast<Widget*>(this->getChildren().at(index));
             if (w && w->isFocusEnabled())
             {
-                Vector2 wPostion = this->getWorldCenterPoint(w);
-                float length = (wPostion - widgetPostion).getLength();
+                Vector2 wPosition = this->getWorldCenterPoint(w);
+                float length;
+                Layout *layout = dynamic_cast<Layout*>(w);
+                if (layout)
+                {
+                    length = layout->caculateShortestDistance(baseWidget);
+                }
+                else
+                {
+                    length = (wPosition - widgetPosition).getLength();
+                }
+                
                 if (length < distance)
                 {
                     found = index;
                     distance = length;
                 }
+
             }
             index++;
         }
@@ -1653,7 +1700,7 @@ int Layout::findNearestChildWidgetIndex(FocusDirection direction)
 Widget* Layout::findFocusEnabledChildWidgetByIndex(ssize_t index)
 {
   
-    Widget *widget = this->getNextWidgetByIndex(index);
+    Widget *widget = this->getChildWidgetByIndex(index);
     
     if (widget)
     {
@@ -1671,8 +1718,10 @@ Widget* Layout::passFocusToChild(cocos2d::ui::FocusDirection dir, cocos2d::ui::W
 {
     if (checkFocusEnabledChild())
     {
-        int index = onPassFocusToChild(dir);
-        Widget *widget = this->findFocusEnabledChildWidgetByIndex(index);
+        Widget* previousWidget = this->getCurrentFocusedWidget(true);
+        int index = onPassFocusToChild(dir, previousWidget);
+        
+        Widget *widget = this->getChildWidgetByIndex(index);
         this->dispatchFocusEvent(current, widget);
         Layout *layout = dynamic_cast<Layout*>(widget);
         if (layout)
@@ -1706,7 +1755,7 @@ bool Layout::checkFocusEnabledChild()
     return ret;
 }
 
-Widget* Layout::getNextWidgetByIndex(ssize_t index)
+Widget* Layout::getChildWidgetByIndex(ssize_t index)
 {
     ssize_t size = _children.size();
     int count = 0;
@@ -1751,7 +1800,7 @@ Widget* Layout::getPreviousFocusedWidget(FocusDirection direction, Widget *curre
     previousWidgetPos = previousWidgetPos - 1;
     if (previousWidgetPos >= 0)
     {
-        nextWidget = this->getNextWidgetByIndex(previousWidgetPos);
+        nextWidget = this->getChildWidgetByIndex(previousWidgetPos);
         if (nextWidget->isFocusEnabled())
         {
             
@@ -1777,7 +1826,7 @@ Widget* Layout::getPreviousFocusedWidget(FocusDirection direction, Widget *curre
             if (checkFocusEnabledChild())
             {
                 previousWidgetPos = _children.size()-1;
-                nextWidget = this->getNextWidgetByIndex(previousWidgetPos);
+                nextWidget = this->getChildWidgetByIndex(previousWidgetPos);
                 if (nextWidget->isFocusEnabled())
                 {
                     this->dispatchFocusEvent(current, nextWidget);
@@ -1841,7 +1890,7 @@ Widget* Layout::getNextFocusedWidget(FocusDirection direction, Widget *current)
     previousWidgetPos = previousWidgetPos + 1;
     if (previousWidgetPos < _children.size())
     {
-        nextWidget = this->getNextWidgetByIndex(previousWidgetPos);
+        nextWidget = this->getChildWidgetByIndex(previousWidgetPos);
         //handle widget
         if (nextWidget)
         {
@@ -1875,7 +1924,7 @@ Widget* Layout::getNextFocusedWidget(FocusDirection direction, Widget *current)
             if (checkFocusEnabledChild())
             {
                 previousWidgetPos = 0;
-                nextWidget = this->getNextWidgetByIndex(previousWidgetPos);
+                nextWidget = this->getChildWidgetByIndex(previousWidgetPos);
                 if (nextWidget->isFocusEnabled())
                 {
                     

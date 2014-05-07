@@ -31,6 +31,7 @@ NS_CC_BEGIN
 namespace ui {
 
 Widget* Widget::_focusedWidget = nullptr;
+Widget* Widget::_realFocusedWidget = nullptr;
     
 Widget::Widget():
 _enabled(true),
@@ -76,6 +77,9 @@ Widget::~Widget()
     setTouchEnabled(false);
     if (_focusedWidget == this) {
         _focusedWidget = nullptr;
+    }
+    if (_realFocusedWidget == this) {
+        _realFocusedWidget = nullptr;
     }
 }
 
@@ -958,6 +962,9 @@ void Widget::setFocused(bool focus)
     //make sure there is only one focusedWidget
     if (focus) {
         _focusedWidget = this;
+        if (!dynamic_cast<Layout*>(this)) {
+            _realFocusedWidget = this;
+        }
     }
     
 }
@@ -1064,10 +1071,15 @@ void Widget::onFocusChange(Widget* widgetLostFocus, Widget* widgetGetFocus)
     }
 }
 
-Widget* Widget::getCurrentFocusedWidget()
+Widget* Widget::getCurrentFocusedWidget(bool isWidget)
 {
+    if (isWidget) {
+        return _realFocusedWidget;
+    }
     return _focusedWidget;
 }
+
+
 
 }
 

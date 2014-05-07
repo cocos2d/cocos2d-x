@@ -593,6 +593,7 @@ CC_CONSTRUCTOR_ACCESS:
      *@return void
      */
     void  dispatchFocusEvent(Widget* widgetLoseFocus, Widget* widgetGetFocus);
+
     
 protected:
     //call back function called when size changed.
@@ -666,12 +667,16 @@ protected:
     /**
      * store the only one focued widget
      */
-    static Widget *_focusedWidget;
+    static Widget *_focusedWidget;  //both layout & widget will be stored in this variable
+    static Widget *_realFocusedWidget; //only the widget class will be stored in this variable
 public:
     /**
      * no matter what widget object you call this method on , it will return you the exact one focused widget
+     * @param isWidget  if your set isWidget to true, it will return the _realFocusedWidget which is always a widget
+     *                  otherwise, it will return a widget or a layout
      */
-    Widget* getCurrentFocusedWidget();
+    Widget* getCurrentFocusedWidget(bool isWidget);
+    
     std::function<void(Widget*,Widget*)> onFocusChanged;
     std::function<Widget*(FocusDirection)> onNextFocusedWidget;
 };

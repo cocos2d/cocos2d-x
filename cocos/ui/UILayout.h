@@ -301,7 +301,7 @@ public:
      * @param FocusDirection the finding direction
      * @return return the index of widget in the layout
      */
-    std::function<int(FocusDirection)> onPassFocusToChild;
+    std::function<int(FocusDirection, Widget*)> onPassFocusToChild;
 
 CC_CONSTRUCTOR_ACCESS:
     //override "init" method of widget.
@@ -349,7 +349,14 @@ protected:
      *@param dir next focused widget direction
      *@return The index of child widget in the container
      */
-     int findNearestChildWidgetIndex(FocusDirection direction);
+     int findNearestChildWidgetIndex(FocusDirection direction, Widget* baseWidget);
+    
+    /**
+     * caculate the shortest distance between the baseWidget and the children of the layout
+     *@param the base widget which will be used to caculate the distance between the layout's children and itself
+     *@return return the shortest distance between the baseWidget and the layout's children
+     */
+    float caculateShortestDistance(Widget* baseWidget);
     
     /**
      * find a focus enabled child Widget in the layout by index
@@ -381,7 +388,7 @@ protected:
      * find the nth elment in the _children array. Only the Widget descendant object will be returned
      *@param index  The index of a element in the _children array
      */
-    Widget* getNextWidgetByIndex(ssize_t index);
+    Widget* getChildWidgetByIndex(ssize_t index);
     /**
      * whether it is the last element according to all their parents
      */
