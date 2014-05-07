@@ -47,120 +47,49 @@ USING_NS_CC_MATH;
  */
 
 struct _hashUniformEntry;
-class GLProgramData;
-class UniformValue;
 class GLProgram;
-struct _Uniform;
 
 typedef void (*GLInfoFunction)(GLuint program, GLenum pname, GLint* params);
 typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length, GLchar* infolog);
 
 
-class UniformValue
+class VertexAttrib
 {
 public:
-	UniformValue();
-	~UniformValue();
+    VertexAttrib();
+    ~VertexAttrib();
+    void setPointer(GLsizei stride, void* pointer = nullptr, GLboolean isNormalized = GL_FALSE);
 
-	bool init(GLProgram* program, struct _Uniform* uniform);
-
-	bool setValue(float value);
-
-	bool setValue(int value);
-
-	bool setValue(const Vector2& value);
-
-	bool setValue(const Vector3& value);
-
-	bool setValue(const Vector4& value);
-
-	bool setValue(const Matrix& value);
-
-	bool setValue(const Vector2* value, int count);
-
-    bool setValue(const Vector3* value, int count);
-
-    bool setValue(const Vector4* value, int count);
-
-    bool setValue(const Matrix* value, int count);
-
-protected:
-	GLProgram* _program;  // weak ref
-    struct _Uniform* _uniform;  // weak ref
-};
-
-typedef struct _VertexAttrib
-{
     GLuint index;
     GLint size;
     GLenum type;
     GLboolean normalized;
     std::string name;
-    void setPointer(GLsizei stride, void* pointer = nullptr, GLboolean isNormalized = GL_FALSE)
-    {
-        GLenum elemtype = type;
-        GLint elemsize = size;
-        switch (type) {
-            case GL_FLOAT_VEC2:
-                elemtype = GL_FLOAT;
-                elemsize = 2;
-                break;
-            case GL_FLOAT_VEC3:
-                elemtype = GL_FLOAT;
-                elemsize = 3;
-                break;
-            case GL_FLOAT_VEC4:
-                elemtype = GL_FLOAT;
-                elemsize = 4;
-                break;
-                
-            default:
-                break;
-        }
-        glVertexAttribPointer(index, elemsize, elemtype, isNormalized, stride, pointer);
-    }
-    
-} VertexAttrib;
+};
 
-typedef struct _Uniform
+class Uniform
 {
+public:
+    Uniform();
+    ~Uniform();
+    bool init(GLProgram* program);
+	bool setValue(float value);
+	bool setValue(int value);
+	bool setValue(const Vector2& value);
+	bool setValue(const Vector3& value);
+	bool setValue(const Vector4& value);
+	bool setValue(const Matrix& value);
+	bool setValue(const Vector2* value, int count);
+    bool setValue(const Vector3* value, int count);
+    bool setValue(const Vector4* value, int count);
+    bool setValue(const Matrix* value, int count);
+
     GLint location;
     GLint size;
     std::string name;
     GLenum type;
-    UniformValue value;
-} Uniform;
 
-
-/** GLProgramData
- Class store user defined vertexAttributes and uniforms
- */
-class GLProgramData
-{
-    friend class GLProgram;
-
-public:
-
-	GLProgramData();
-	~GLProgramData();
-
-    Uniform* getUniformByLocation(GLint location);
-	Uniform* getUniformByName(const std::string& name);
-	VertexAttrib* getVertexAttribByIndex(unsigned int index);
-    VertexAttrib* getVertexAttribByName(const std::string& name);
-    std::vector<VertexAttrib*> getVertexAttributes(const std::string* attrNames, int count);
-	ssize_t getUniformCount();
-	ssize_t getAttribCount();
-	GLint getVertexSize() {return _vertexsize;}
-
-protected:
-	void addUniform(const std::string &name, Uniform* uniform);
-	void addVertexAttrib(const std::string &name,  VertexAttrib* attrib);
-    void setVertexSize(GLint size) { _vertexsize = size;}
-
-	GLint _vertexsize;
-	std::unordered_map<std::string, Uniform*> _uniforms;
-	std::unordered_map<std::string, VertexAttrib*> _vertAttributes;
+	GLProgram* _program;  // weak ref
 };
 
 
@@ -261,8 +190,8 @@ public:
      */
     bool initWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename);
 
-	//void bindUniformValue(std::string uniformName, int value);
-	UniformValue* getUniformValue(const std::string& name);
+	//void bindUniform(std::string uniformName, int value);
+	Uniform* getUniform(const std::string& name);
     VertexAttrib* getVertexAttrib(const std::string& name);
 
     /**  It will add a new attribute to the shader by calling glBindAttribLocation */
@@ -363,7 +292,7 @@ public:
     void setUniformsForBuiltins();
     void setUniformsForBuiltins(const Matrix &modelView);
 
-    void setUniformByName(const std::string& uniformName, const UniformValue &value);
+    void setUniformByName(const std::string& uniformName, const Uniform &value);
 
 
     // Attribute

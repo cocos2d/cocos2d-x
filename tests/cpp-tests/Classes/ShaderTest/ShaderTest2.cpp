@@ -888,7 +888,6 @@ void AttribSprite::setCustomUniforms()
 
 void AttribSprite::onDraw(const Matrix &transform, bool transformUpdated)
 {
-    
     // Set Shader GLProgram
 	auto program = getShaderProgram();
 	program->use();
@@ -924,7 +923,7 @@ void AttribSprite::onDraw(const Matrix &transform, bool transformUpdated)
 //    program->setVertexAttrib((void*)offset, false);
     float a = getDisplayedOpacity() / 255.f;
     GLfloat vertices[] = {0,0,0,1,0,0,a, 30,0,0,0,1,0,a, 30,30,0,0,0,1,a};
-    stride = 28;
+    stride = sizeof(vertices)/3;
     program->getVertexAttrib("a_position")->setPointer(stride, (void*)(vertices));
     program->getVertexAttrib("a_color")->setPointer(stride, (void*)(vertices + 3*sizeof(GL_FLOAT)));
     //program->getUniformValue("u_diffuseColor")->setValue(Vector4(1,1,1,1));

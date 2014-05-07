@@ -275,7 +275,7 @@ void GLProgram::parseUniforms()
 				uniform.location = glGetUniformLocation(_program, uniformName);
                 
                 //something wrong, uniform is an object not a pointer, may be released soon
-                uniform.value.init(this, &uniform);
+                uniform.init(this);
 
                 _uniformsDictionary[uniform.name] = uniform;
 			}
@@ -283,11 +283,11 @@ void GLProgram::parseUniforms()
 	}
 }
 
-UniformValue* GLProgram::getUniformValue(const std::string &name)
+Uniform* GLProgram::getUniform(const std::string &name)
 {
     const auto itr = _uniformsDictionary.find(name);
     if( itr != _uniformsDictionary.end())
-        return &itr->second.value;
+        return &itr->second;
     return nullptr;
 }
 
@@ -786,202 +786,134 @@ void GLProgram::reset()
     _hashForUniforms = nullptr;
 }
 
-
-
-
-GLProgramData::GLProgramData():
-_vertexsize(0)
+//
+// VertexAttrib
+//
+VertexAttrib::VertexAttrib()
 {
-	_uniforms.clear();
-	_vertAttributes.clear();
 }
 
-GLProgramData::~GLProgramData()
+VertexAttrib::~VertexAttrib()
 {
-	for(auto itr : _uniforms)
-	{
-		CC_SAFE_DELETE(itr.second);
-	}
-	
-	for(auto itr : _vertAttributes)
-	{
-		CC_SAFE_DELETE(itr.second);
-	}
+}
+
+void VertexAttrib::setPointer(GLsizei stride, void* pointer, GLboolean isNormalized)
+{
+    GLenum elemtype = type;
+    GLint elemsize = size;
+    switch (type) {
+        case GL_FLOAT_VEC2:
+            elemtype = GL_FLOAT;
+            elemsize = 2;
+            break;
+        case GL_FLOAT_VEC3:
+            elemtype = GL_FLOAT;
+            elemsize = 3;
+            break;
+        case GL_FLOAT_VEC4:
+            elemtype = GL_FLOAT;
+            elemsize = 4;
+            break;
+
+        default:
+            break;
+    }
+    glVertexAttribPointer(index, elemsize, elemtype, isNormalized, stride, pointer);
 }
 
 //
 // Uniform
 //
 
-void GLProgramData::addUniform(const std::string &name, Uniform* uniform)
+Uniform::Uniform()
+:_program(nullptr)
 {
-	_uniforms[name] = uniform;
+
 }
 
-Uniform* GLProgramData::getUniformByLocation(GLint location)
-{
-	for (const auto &itr : _uniforms)
-	{
-		if (itr.second->location == location)
-		{
-			return itr.second;
-		}
-	}
-	return nullptr;
-}
-
-Uniform* GLProgramData::getUniformByName(const std::string& name)
-{
-    const auto& itr = _uniforms.find(name);
-	if(itr != _uniforms.end())
-		return itr->second;
-
-    return nullptr;
-}
-
-ssize_t GLProgramData::getUniformCount()
-{
-	return _uniforms.size();
-}
-
-//
-// VertexAttrib
-//
-
-void GLProgramData::addVertexAttrib(const std::string &name, VertexAttrib* attrib)
-{
-	_vertAttributes[name] = attrib;
-}
-
-VertexAttrib* GLProgramData::getVertexAttribByIndex(unsigned int index)
-{
-	//unsigned int i = 0;
-	for (const auto& itr : _vertAttributes )
-	{
-		if (itr.second->index == index)
-		{
-			return itr.second;
-		}
-	}
-	return nullptr;
-}
-
-VertexAttrib* GLProgramData::getVertexAttribByName(const std::string& name)
-{
-    const auto &itr = _vertAttributes.find(name);
-	if(itr != _vertAttributes.end())
-		return itr->second;
-    return nullptr;
-}
-
-std::vector<VertexAttrib*> GLProgramData::getVertexAttributes(const std::string* attrNames, int count)
-{
-    std::vector<VertexAttrib*> attribs;
-    for (auto i = 0; i < count; i++) {
-        auto it = _vertAttributes.find(attrNames[i]);
-        CCASSERT(it != _vertAttributes.end(), "attribute not find");
-        attribs.push_back(it->second);
-    }
-    return attribs;
-}
-
-ssize_t GLProgramData::getAttribCount()
-{
-	return _vertAttributes.size();
-}
-
-
-UniformValue::UniformValue()
-:_uniform(nullptr)
-,_program(nullptr)
-{
-    
-}
-
-UniformValue::~UniformValue()
+Uniform::~Uniform()
 {
 }
 
-bool UniformValue::init(GLProgram* program, Uniform* uniform)
+bool Uniform::init(GLProgram* program)
 {
 	_program = program;
-    _uniform = uniform;
-    return program && program && uniform->location != -1;
+    return program && program && location != -1;
 }
 
-bool UniformValue::setValue(float value)
+bool Uniform::setValue(float value)
 {
-    CCASSERT (_uniform && _uniform->type == GL_FLOAT, "");
-    _program->setUniformLocationWith1f(_uniform->location, value);
+    CCASSERT (type == GL_FLOAT, "");
+    _program->setUniformLocationWith1f(location, value);
     
     return true;
 }
 
-bool UniformValue::setValue(int value)
+bool Uniform::setValue(int value)
 {
-    CCASSERT (_uniform && (_uniform->type == GL_INT || _uniform->type == GL_SAMPLER_2D), "");
-    _program->setUniformLocationWith1i(_uniform->location, value);
+    CCASSERT ((type == GL_INT || type == GL_SAMPLER_2D), "");
+    _program->setUniformLocationWith1i(location, value);
     
     return true;
 }
 
-bool UniformValue::setValue(const Vector2& value)
+bool Uniform::setValue(const Vector2& value)
 {
-    CCASSERT (_uniform && _uniform->type == GL_FLOAT_VEC2, "");
-    _program->setUniformLocationWith2f(_uniform->location, value.x, value.y);
+    CCASSERT (type == GL_FLOAT_VEC2, "");
+    _program->setUniformLocationWith2f(location, value.x, value.y);
     
     return true;
 }
 
-bool UniformValue::setValue(const Vector3& value)
+bool Uniform::setValue(const Vector3& value)
 {
-    CCASSERT (_uniform && _uniform->type == GL_FLOAT_VEC3, "");
-    _program->setUniformLocationWith3f(_uniform->location, value.x, value.y, value.z);
+    CCASSERT (type == GL_FLOAT_VEC3, "");
+    _program->setUniformLocationWith3f(location, value.x, value.y, value.z);
     
     return true;
 }
 
-bool UniformValue::setValue(const Vector4& value)
+bool Uniform::setValue(const Vector4& value)
 {
-    CCASSERT (_uniform && _uniform->type == GL_FLOAT_VEC4, "");
-    _program->setUniformLocationWith4f(_uniform->location, value.x, value.y, value.z, value.w);
+    CCASSERT (type == GL_FLOAT_VEC4, "");
+    _program->setUniformLocationWith4f(location, value.x, value.y, value.z, value.w);
     
     return true;
 }
 
-bool UniformValue::setValue(const Matrix& value)
+bool Uniform::setValue(const Matrix& value)
 {
-    CCASSERT(_uniform && _uniform->type == GL_FLOAT_MAT4, "");
-    _program->setUniformLocationWithMatrix4fv(_uniform->location, value.m, 1);
+    CCASSERT(type == GL_FLOAT_MAT4, "");
+    _program->setUniformLocationWithMatrix4fv(location, value.m, 1);
     
     return true;
 }
 
-bool UniformValue::setValue(const Vector2* value, int count)
+bool Uniform::setValue(const Vector2* value, int count)
 {
-    CCASSERT (_uniform && _uniform->type == GL_FLOAT_VEC2 && _uniform->size == count, "");
-    _program->setUniformLocationWith2fv(_uniform->location, (GLfloat*)value, count);
+    CCASSERT (type == GL_FLOAT_VEC2 && size == count, "");
+    _program->setUniformLocationWith2fv(location, (GLfloat*)value, count);
     return true;
 }
 
-bool UniformValue::setValue(const Vector3* value, int count)
+bool Uniform::setValue(const Vector3* value, int count)
 {
-    CCASSERT (_uniform && _uniform->type == GL_FLOAT_VEC3 && _uniform->size == count, "");
-    _program->setUniformLocationWith3fv(_uniform->location, (GLfloat*)value, count);
+    CCASSERT (type == GL_FLOAT_VEC3 && size == count, "");
+    _program->setUniformLocationWith3fv(location, (GLfloat*)value, count);
     return true;
 }
 
-bool UniformValue::setValue(const Vector4* value, int count)
+bool Uniform::setValue(const Vector4* value, int count)
 {
-    CCASSERT (_uniform && _uniform->type == GL_FLOAT_VEC4 && _uniform->size == count, "");
-    _program->setUniformLocationWith4fv(_uniform->location, (GLfloat*)value, count);
+    CCASSERT (type == GL_FLOAT_VEC4 && size == count, "");
+    _program->setUniformLocationWith4fv(location, (GLfloat*)value, count);
     return true;
 }
 
-bool UniformValue::setValue(const Matrix* value, int count)
+bool Uniform::setValue(const Matrix* value, int count)
 {
-    CCASSERT (_uniform && _uniform->type == GL_FLOAT_MAT4 && _uniform->size == count, "");
-    _program->setUniformLocationWithMatrix4fv(_uniform->location, (GLfloat*)value, count);
+    CCASSERT (type == GL_FLOAT_MAT4 && size == count, "");
+    _program->setUniformLocationWithMatrix4fv(location, (GLfloat*)value, count);
     return true;
 }
 
