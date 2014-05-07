@@ -8,7 +8,7 @@ COCOS2DX_ROOT="$DIR"/../..
 HOST_NAME=""
 
 pushd $COCOS2DX_ROOT
-python download-deps.py
+python download-deps.py -r=yes
 popd
 
 mkdir -p $HOME/bin
