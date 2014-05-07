@@ -34,14 +34,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************"""
 
-
-import urllib2
 import os.path,zipfile
 import shutil
 import sys
 import traceback
 import distutils
 import fileinput
+import json
 
 from optparse import OptionParser
 from time import time
@@ -55,16 +54,14 @@ _workpath=''
 # github server may not reponse a header information which contains `Content-Length`,
 # therefore, the size needs to be written hardcode here. While server doesn't return
 # `Content-Length`, use it instead
+_current_3rd_libs_version = 'v3-deps-1'
 _zip_file_bytes = 57132755
 _repo_name = 'cocos2d-x-external'
-_filename_prefix = 'v3-deps-1'
-_filename = _filename_prefix + '.zip'
+_filename = _current_3rd_libs_version + '.zip'
 _downloaded_file_url = 'https://github.com/cocos2d/' + _repo_name + '/archive/' + _filename
 # 'v' letter was swallowed by github, so we need to substring it from the 2nd letter
-_extracted_folder_name = _repo_name + '-' + _filename_prefix[1:]
+_extracted_folder_name = _repo_name + '-' + _current_3rd_libs_version[1:]
 # ----------------------------------------
-
-_remove_downloaded_zip_file = None
 
 def get_input_value(prompt):
     ret = raw_input(prompt)
@@ -73,7 +70,7 @@ def get_input_value(prompt):
 
 def download_file(url, filename):
     print("==> Ready to download '%s' from '%s'" % (filename, url))
-
+    import urllib2
     u = urllib2.urlopen(url)
     f = open(filename, 'wb')
     meta = u.info()
@@ -184,10 +181,9 @@ def ask_to_delete_downloaded_zip_file(filename):
     ret = ret.strip()
     if ret != 'yes' and ret != 'no':
         print("==> Invalid answer, please answer 'yes' or 'no'!")
-        ask_to_delete_downloaded_zip_file(filename)
-
-    if ret == "yes":
-        os.remove(filename)
+        return ask_to_delete_downloaded_zip_file(filename)
+    else:
+        return True if ret == 'yes' else False
 
 def download_and_unzip_file(url, filename):
     if not os.path.isfile(filename):
@@ -201,8 +197,47 @@ def download_and_unzip_file(url, filename):
         print("==> Download it from internet again, please wait...")
         download_and_unzip_file(url, filename)
 
+def _check_python_version():
+    major_ver = sys.version_info[0]
+    if major_ver > 2:
+        print ("The python version is %d.%d. But python 2.x is required. (Version 2.7 is well tested)\n"
+               "Download it here: https://www.python.org/" % (major_ver, sys.version_info[1]))
+        return False
+
+    return True
+
+def need_to_update_3rd_libs():
+    version_file_path = os.path.join(_workpath, "external", "version.json")
+    if not os.path.isfile(version_file_path):
+        return True
+
+    with open(version_file_path) as data_file:
+        data = json.load(data_file)
+
+    if data['prebuilt_libs_version'] == _current_3rd_libs_version:
+        return False
+    return True
+
 def main():
     _workpath = os.path.dirname(os.path.realpath(__file__))
+
+    if not _check_python_version():
+        exit()
+
+    parser = OptionParser()
+    parser.add_option('-r', '--remove-download',
+                      action="store", type="string", dest='to_remove_downloaded_zip_file', default=None,
+                      help="Whether to remove downloaded zip file, 'yes' or 'no'")
+
+    parser.add_option("-f", "--force-update",
+                      action="store_true", dest="force_update", default=False,
+                      help="Whether to force update the third party libraries")
+
+    (opts, args) = parser.parse_args()
+
+    if not opts.force_update and not need_to_update_3rd_libs():
+        print("==> Not need to update the third party libraries!")
+        exit()
 
     if os.path.exists(_extracted_folder_name):
         shutil.rmtree(_extracted_folder_name)
@@ -217,39 +252,18 @@ def main():
     print("==> Cleaning...")
     if os.path.exists(_extracted_folder_name):
         shutil.rmtree(_extracted_folder_name)
-    if _remove_downloaded_zip_file:
-        if os.path.isfile(_filename):
+    if os.path.isfile(_filename):
+        if opts.to_remove_downloaded_zip_file != None:
+            if opts.to_remove_downloaded_zip_file == 'yes':
+                os.remove(_filename)
+        elif ask_to_delete_downloaded_zip_file(_filename):
             os.remove(_filename)
-    else:
-        if os.path.isfile(_filename):
-            ask_to_delete_downloaded_zip_file(_filename)
+
     print("==> DONE! Prebuilt libraries were installed successfully! Cheers!")
-
-
-def _check_python_version():
-    major_ver = sys.version_info[0]
-    if major_ver > 2:
-        print ("The python version is %d.%d. But python 2.x is required. (Version 2.7 is well tested)\n"
-               "Download it here: https://www.python.org/" % (major_ver, sys.version_info[1]))
-        return False
-
-    return True
 
 # -------------- main --------------
 if __name__ == '__main__':
     try:
-        if not _check_python_version():
-            exit()
-
-        parser = OptionParser()
-        parser.add_option('-r', '--remove-download',
-                          action="store_true", dest='to_remove_downloaded_zip_file', default=False,
-                          help='Whether to remove downloaded zip file')
-        (opts, args) = parser.parse_args()
-
-        if opts.to_remove_downloaded_zip_file:
-            _remove_downloaded_zip_file = True
-
         main()
     except Exception as e:
         traceback.print_exc()
