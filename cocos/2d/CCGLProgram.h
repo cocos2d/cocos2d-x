@@ -172,14 +172,8 @@ public:
     static const char* ATTRIBUTE_NAME_COLOR;
     static const char* ATTRIBUTE_NAME_POSITION;
     static const char* ATTRIBUTE_NAME_TEX_COORD;
-    /**
-     * @js ctor
-     */
+
     GLProgram();
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual ~GLProgram();
     /** Initializes the GLProgram with a vertex and fragment with bytes array 
      * @js initWithString
@@ -188,6 +182,7 @@ public:
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     /** Initializes the CCGLProgram with precompiled shader program */
+    static GLProgram* createWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
     bool initWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
 #endif
 
@@ -195,12 +190,14 @@ public:
      * @js initWithString
      * @lua initWithString
      */
+    static GLProgram* createWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
     bool initWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
 
     /** Initializes the GLProgram with a vertex and fragment with contents of filenames 
      * @js init
      * @lua init
      */
+    static GLProgram* createWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename);
     bool initWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename);
 
 	//void bindUniform(std::string uniformName, int value);

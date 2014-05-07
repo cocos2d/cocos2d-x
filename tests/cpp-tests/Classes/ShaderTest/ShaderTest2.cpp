@@ -166,11 +166,9 @@ void ShaderSprite::initShader()
         vertSource = fileUtiles->getStringFromFile(vertexFilePath);
     }
 
-    auto program = new GLProgram();
-    program->initWithByteArrays(vertSource.c_str(), fragSource.c_str());
+    auto program = GLProgram::createWithByteArrays(vertSource.c_str(), fragSource.c_str());
     setShaderProgram(program);
-    program->release();
-    
+
     CHECK_GL_ERROR_DEBUG();
 
     program->link();
@@ -742,8 +740,7 @@ UniformSprite::~UniformSprite()
 
 void UniformSprite::initShader()
 {
-    auto shader = new GLProgram();
-    shader->initWithFilenames(_vertSourceFile, _fragSourceFile);
+    auto shader = GLProgram::createWithFilenames(_vertSourceFile, _fragSourceFile);
     shader->link();
     
     shader->updateUniforms();
@@ -752,8 +749,6 @@ void UniformSprite::initShader()
     
 //    std::string attribname ="a_position";
 //    shader->getAttrib(attribname)->size = 2;
-    
-    shader->release();
 }
 
 void UniformSprite::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
@@ -845,14 +840,10 @@ AttribSprite::~AttribSprite()
 
 void AttribSprite::initShader()
 {
-    auto shader = new GLProgram();
-
-    shader->initWithFilenames(_vertSourceFile, _fragSourceFile);
+    auto shader = GLProgram::createWithFilenames(_vertSourceFile, _fragSourceFile);
     shader->link();
     shader->updateUniforms();
-    this->setShaderProgram(shader);
-    
-    shader->release();
+    this->setShaderProgram(shader);    
 }
 
 void AttribSprite::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)

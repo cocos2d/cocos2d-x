@@ -1,8 +1,6 @@
 #include "ShaderTest.h"
 #include "../testResource.h"
 #include "cocos2d.h"
-#include "renderer/CCCustomCommand.h"
-#include "renderer/CCRenderer.h"
 
 static int sceneIdx = -1; 
 
@@ -113,9 +111,6 @@ ShaderNode::ShaderNode()
 :_center(Vector2(0.0f, 0.0f))
 ,_resolution(Vector2(0.0f, 0.0f))
 ,_time(0.0f)
-,_uniformCenter(0)
-,_uniformResolution(0)
-,_uniformTime(0)
 {
 }
 
@@ -161,21 +156,14 @@ bool ShaderNode::initWithVertex(const char *vert, const char *frag)
 
 void ShaderNode::loadShaderVertex(const char *vert, const char *frag)
 {
-    auto shader = new GLProgram();
-    shader->initWithFilenames(vert, frag);
+    auto shader = GLProgram::createWithFilenames(vert, frag);
 
     shader->bindAttribLocation("aVertex", GLProgram::VERTEX_ATTRIB_POSITION);
     shader->link();
 
     shader->updateUniforms();
 
-    _uniformCenter = shader->getUniformLocation("center");
-    _uniformResolution = shader->getUniformLocation("resolution");
-    _uniformTime = shader->getUniformLocation("time");
-
     this->setShaderProgram(shader);
-
-    shader->release();
 }
 
 void ShaderNode::update(float dt)
@@ -202,12 +190,10 @@ void ShaderNode::onDraw(const Matrix &transform, bool transformUpdated)
     auto shader = getShaderProgram();
     shader->use();
     shader->setUniformsForBuiltins(transform);
-    shader->setUniformLocationWith2f(_uniformCenter, _center.x, _center.y);
-    shader->setUniformLocationWith2f(_uniformResolution, _resolution.x, _resolution.y);
-    
-    // time changes all the time, so it is Ok to call OpenGL directly, and not the "cached" version
-    glUniform1f(_uniformTime, _time);
-    
+
+    shader->getUniform("center")->setValue(_center);
+    shader->getUniform("resolution")->setValue(_resolution);
+
     GL::enableVertexAttribs( cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION );
 
     float w = SIZE_X, h = SIZE_Y;
@@ -447,9 +433,6 @@ protected:
     float     _cons;
     float     _weightSum;
 
-    GLuint    pixelSizeLocation;
-    GLuint    coefficientLocation;
-
     CustomCommand _customCommand;
 };
 
@@ -502,11 +485,9 @@ void SpriteBlur::initProgram()
 {
     GLchar * fragSource = (GLchar*) String::createWithContentsOfFile(
                                 FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur.fsh").c_str())->getCString();  
-    auto program = new GLProgram();
-    program->initWithByteArrays(ccPositionTextureColor_vert, fragSource);
+    auto program = GLProgram::createWithByteArrays(ccPositionTextureColor_vert, fragSource);
     setShaderProgram(program);
-    program->release();
-    
+
     CHECK_GL_ERROR_DEBUG();
     
     program->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
@@ -521,12 +502,7 @@ void SpriteBlur::initProgram()
     
     program->updateUniforms();
     
-    CHECK_GL_ERROR_DEBUG();
-    
-    pixelSizeLocation = program->getUniformLocation("onePixelSize");
-    coefficientLocation = program->getUniformLocation("gaussianCoefficient");
-
-    CHECK_GL_ERROR_DEBUG();
+    CHECK_GL_ERROR_DEBUG();    
 }
 
 void SpriteBlur::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
@@ -545,8 +521,9 @@ void SpriteBlur::onDraw(const Matrix &transform, bool transformUpdated)
     auto program = getShaderProgram();
     program->use();
     program->setUniformsForBuiltins(transform);
-    program->setUniformLocationWith2f(pixelSizeLocation, _pixelSize.x, _pixelSize.y);
-    program->setUniformLocationWith4f(coefficientLocation, _samplingRadius, _scale,_cons,_weightSum);
+
+    program->getUniform("onePixelSize")->setValue(_pixelSize);
+    program->getUniform("gaussianCoefficient")->setValue(Vector4(_samplingRadius, _scale, _cons, _weightSum));
     
     GL::bindTexture2D( getTexture()->getName());
     
@@ -687,9 +664,8 @@ bool ShaderRetroEffect::init()
 {
     if( ShaderTestDemo::init() ) {
 
-        GLchar * fragSource = (GLchar*) String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename("Shaders/example_HorizontalColor.fsh").c_str())->getCString();
-        auto p = new GLProgram();
-        p->initWithByteArrays(ccPositionTexture_vert, fragSource);
+        GLchar * fragSource = (GLchar*) String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename("Shaders/example_HorizontalColor.fsh"))->getCString();
+        auto p = GLProgram::createWithByteArrays(ccPositionTexture_vert, fragSource);
 
         p->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
         p->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
@@ -703,8 +679,6 @@ bool ShaderRetroEffect::init()
         _label = Label::createWithBMFont("fonts/west_england-64.fnt","RETRO EFFECT");
         _label->setAnchorPoint(Vector2::ANCHOR_MIDDLE);
         _label->setShaderProgram(p);
-
-        p->release();
 
         _label->setPosition(Vector2(s.width/2,s.height/2));
 

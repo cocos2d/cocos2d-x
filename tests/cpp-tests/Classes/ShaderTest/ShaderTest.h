@@ -131,7 +131,6 @@ protected:
     Vector2 _center;
     Vector2 _resolution;
     float      _time;
-    GLuint     _uniformCenter, _uniformResolution, _uniformTime;
     std::string _vertFileName;
     std::string _fragFileName;
     CustomCommand _customCommand;
