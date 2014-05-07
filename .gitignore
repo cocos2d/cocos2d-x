@@ -134,3 +134,4 @@ project.properties
 /external/winrt-specific/
 /external/wp8-specific/
 /v3-deps-*.zip
+/external/version.json
