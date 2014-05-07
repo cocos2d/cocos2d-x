@@ -54,6 +54,7 @@ _repo_name = ''
 _filename = ''
 _downloaded_file_url = ''
 _extracted_folder_name = ''
+_zip_file_size = 0
 
 def get_input_value(prompt):
     ret = raw_input(prompt)
@@ -81,8 +82,8 @@ def download_file(url, filename):
         # github server may not reponse a header information which contains `Content-Length`,
         # therefore, the size needs to be written hardcode here. While server doesn't return
         # `Content-Length`, use it instead
-        print("==> WARNING: Couldn't grab the file size!")
-        # file_size = _zip_file_bytes
+        print("==> WARNING: Couldn't grab the file size from remote, use 'zip_file_size' section in 'external/config.json'")
+        file_size = _zip_file_size
 
     print("==> Start to download, please wait ...")
 
@@ -233,11 +234,13 @@ def grab_config():
     global _filename
     global _downloaded_file_url
     global _extracted_folder_name
+    global _zip_file_size
 
     _current_3rd_libs_version = data["current_libs_version"]
     _repo_name = data["repo_name"]
     _filename = _current_3rd_libs_version + '.zip'
     _downloaded_file_url = data["repo_parent"] + _repo_name + '/archive/' + _filename
+    _zip_file_size = int(data["zip_file_size"])
     # 'v' letter was swallowed by github, so we need to substring it from the 2nd letter
     _extracted_folder_name = _repo_name + '-' + _current_3rd_libs_version[1:]
 
