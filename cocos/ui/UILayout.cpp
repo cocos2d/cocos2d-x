@@ -1542,7 +1542,7 @@ bool Layout::getPassFocusToChild()
 
 Size Layout::getLayoutContentSize()const
 {
-    auto children = this->getChildren();
+    const auto& children = this->getChildren();
     Size layoutSize = Size::ZERO;
     int widgetCount =0;
     for(const auto& widget : children)
