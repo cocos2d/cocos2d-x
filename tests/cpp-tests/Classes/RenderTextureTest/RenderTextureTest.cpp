@@ -606,8 +606,7 @@ RenderTextureTargetNode::RenderTextureTargetNode()
     this->renderTexture = renderTexture;
     
     renderTexture->setPosition(Vector2(s.width/2, s.height/2));
-    //		[renderTexture setPosition:Vector2(s.width, s.height)];
-    //		renderTexture.scale = 2;
+    // renderTexture->setScale(2.0f);
     
     /* add the sprites to the render texture */
     renderTexture->addChild(sprite1);
