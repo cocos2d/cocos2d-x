@@ -96,6 +96,30 @@ typedef struct _VertexAttrib
     GLenum type;
     GLboolean normalized;
     std::string name;
+    void setPointer(GLsizei stride, void* pointer = nullptr, GLboolean isNormalized = GL_FALSE)
+    {
+        GLenum elemtype = type;
+        GLint elemsize = size;
+        switch (type) {
+            case GL_FLOAT_VEC2:
+                elemtype = GL_FLOAT;
+                elemsize = 2;
+                break;
+            case GL_FLOAT_VEC3:
+                elemtype = GL_FLOAT;
+                elemsize = 3;
+                break;
+            case GL_FLOAT_VEC4:
+                elemtype = GL_FLOAT;
+                elemsize = 4;
+                break;
+                
+            default:
+                break;
+        }
+        glVertexAttribPointer(index, elemsize, elemtype, isNormalized, stride, pointer);
+    }
+    
 } VertexAttrib;
 
 typedef struct _Uniform

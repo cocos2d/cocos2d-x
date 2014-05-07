@@ -746,14 +746,14 @@ void UniformSprite::initShader()
 {
     auto shader = new GLProgram();
     shader->initWithFilenames(_vertSourceFile, _fragSourceFile);
-    //shader->link();
+    shader->link();
     
     shader->updateUniforms();
     
     this->setShaderProgram(shader);
     
-    std::string attribname ="a_position";
-    shader->getAttrib(attribname)->size = 2;
+//    std::string attribname ="a_position";
+//    shader->getAttrib(attribname)->size = 2;
     
     shader->release();
 }
@@ -772,8 +772,6 @@ void UniformSprite::setCustomUniforms()
     _shaderProgram->getUniformValue(name)->setValue(Vector2(480,320));
     name = "resolution";
     _shaderProgram->getUniformValue(name)->setValue(Vector2(256,256));
-    
-	_shaderProgram->setUniformsForUserDef();
 }
 
 void UniformSprite::onDraw(const Matrix &transform, bool transformUpdated)
@@ -785,8 +783,6 @@ void UniformSprite::onDraw(const Matrix &transform, bool transformUpdated)
     
     setCustomUniforms();
     //GL::bindTexture2D( getTexture()->getName());
-    program->setAttribForUserDef();
-    
 
     float w = 256, h = 256;
     GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
@@ -852,24 +848,28 @@ AttribSprite::~AttribSprite()
 void AttribSprite::initShader()
 {
     auto shader = new GLProgram();
-    shader->initWithFilenames(_vertSourceFile, _fragSourceFile);
-    
+    //shader->initWithFilenames(_vertSourceFile, _fragSourceFile);
+    shader->initWithFilenames("Shaders/example_attribautobind.vsh", "Shaders/example_attribautobind.fsh");
+    shader->link();
     shader->updateUniforms();
     this->setShaderProgram(shader);
     
     shader->release();
     
-    std::string attribname ="a_position";
-    shader->getAttrib(attribname)->size = 3;
-    shader->getAttrib(attribname)->index = 0;
     
-    attribname ="a_color";
-    shader->getAttrib(attribname)->type = GL_UNSIGNED_BYTE;
-    shader->getAttrib(attribname)->normalized = GL_TRUE;
-    shader->getAttrib(attribname)->index = 1;
     
-    attribname ="a_texCoord";
-    shader->getAttrib(attribname)->index = 2;
+    
+//    std::string attribname ="a_position";
+//    shader->getAttrib(attribname)->size = 3;
+//    shader->getAttrib(attribname)->index = 0;
+//    
+//    attribname ="a_color";
+//    shader->getAttrib(attribname)->type = GL_UNSIGNED_BYTE;
+//    shader->getAttrib(attribname)->normalized = GL_TRUE;
+//    shader->getAttrib(attribname)->index = 1;
+//    
+//    attribname ="a_texCoord";
+//    shader->getAttrib(attribname)->index = 2;
     
 }
 
@@ -898,7 +898,7 @@ void AttribSprite::onDraw(const Matrix &transform, bool transformUpdated)
     
     // Set
     //glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-    //GL::enableVertexAttribs(cocos2d::GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
+    GL::enableVertexAttribs(cocos2d::GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
     GL::blendFunc(_blendFunc.src, _blendFunc.dst);
     GL::bindTexture2D( getTexture()->getName());
     
@@ -922,7 +922,15 @@ void AttribSprite::onDraw(const Matrix &transform, bool transformUpdated)
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
     */
 //    program->setVertexAttrib((void*)offset, false);
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    float a = getDisplayedOpacity() / 255.f;
+    GLfloat vertices[] = {0,0,0,1,0,0,a, 30,0,0,0,1,0,a, 30,30,0,0,0,1,a};
+    stride = 28;
+    program->getVertexAttrib("a_position")->setPointer(stride, (void*)(vertices));
+    program->getVertexAttrib("a_color")->setPointer(stride, (void*)(vertices + 3*sizeof(GL_FLOAT)));
+    //program->getUniformValue("u_diffuseColor")->setValue(Vector4(1,1,1,1));
+    
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+    //glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
     
     CHECK_GL_ERROR_DEBUG();

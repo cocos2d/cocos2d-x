@@ -273,6 +273,8 @@ void GLProgram::parseUniforms()
 				}
                 uniform.name = std::string(uniformName);
 				uniform.location = glGetUniformLocation(_program, uniformName);
+                
+                //something wrong, uniform is an object not a pointer, may be released soon
                 uniform.value.init(this, &uniform);
 
                 _uniformsDictionary[uniform.name] = uniform;
