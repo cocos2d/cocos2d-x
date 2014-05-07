@@ -3,7 +3,7 @@
 #
 # ./download-deps.py
 #
-# Download Cocos2D-X resources from github (https://github.com/cocos2d/cocos2d-x-external) and extract from ZIP
+# Download Cocos2D-X resources from github (https://github.com/cocos2d/cocos2d-x-3rd-party-libs-bin) and extract from ZIP
 #
 # Helps prevent repo bloat due to large binary files since they can
 # be hosted separately.
