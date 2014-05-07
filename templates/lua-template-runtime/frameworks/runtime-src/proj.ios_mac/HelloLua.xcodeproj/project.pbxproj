@@ -94,6 +94,8 @@
 		C03781F618BF65B100FE4F13 /* libluabindings iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C03781B618BF654500FE4F13 /* libluabindings iOS.a */; };
 		C0619CD71896894800872C26 /* Runtime_ios-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = C0619CD61896894800872C26 /* Runtime_ios-mac.mm */; };
 		C0619CD81896894800872C26 /* Runtime_ios-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = C0619CD61896894800872C26 /* Runtime_ios-mac.mm */; };
+		C06C3796191A1D1E00617BED /* ConfigParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C06C3794191A1D1E00617BED /* ConfigParser.cpp */; };
+		C06C3797191A1D1E00617BED /* ConfigParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C06C3794191A1D1E00617BED /* ConfigParser.cpp */; };
 		C07828F818B4D72E00BD2287 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C07828F418B4D72E00BD2287 /* main.m */; };
 		C07828F918B4D72E00BD2287 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C07828F518B4D72E00BD2287 /* MainMenu.xib */; };
 		C07828FA18B4D72E00BD2287 /* SimulatorApp.mm in Sources */ = {isa = PBXBuildFile; fileRef = C07828F718B4D72E00BD2287 /* SimulatorApp.mm */; };
@@ -362,6 +364,8 @@
 		C03781CD18BF656A00FE4F13 /* OpenglConstants.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = OpenglConstants.lua; path = "../../cocos2d-x/cocos/scripting/lua-bindings/script/OpenglConstants.lua"; sourceTree = "<group>"; };
 		C03781CE18BF656A00FE4F13 /* StudioConstants.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = StudioConstants.lua; path = "../../cocos2d-x/cocos/scripting/lua-bindings/script/StudioConstants.lua"; sourceTree = "<group>"; };
 		C0619CD61896894800872C26 /* Runtime_ios-mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "Runtime_ios-mac.mm"; sourceTree = "<group>"; };
+		C06C3794191A1D1E00617BED /* ConfigParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ConfigParser.cpp; path = ../Classes/ConfigParser.cpp; sourceTree = "<group>"; };
+		C06C3795191A1D1E00617BED /* ConfigParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConfigParser.h; path = ../Classes/ConfigParser.h; sourceTree = "<group>"; };
 		C07828F418B4D72E00BD2287 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C07828F518B4D72E00BD2287 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		C07828F618B4D72E00BD2287 /* SimulatorApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimulatorApp.h; sourceTree = "<group>"; };
@@ -615,6 +619,8 @@
 		F293BB7C15EB830F00256477 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				C06C3794191A1D1E00617BED /* ConfigParser.cpp */,
+				C06C3795191A1D1E00617BED /* ConfigParser.h */,
 				C07828FB18B4DC6F00BD2287 /* Runtime.cpp */,
 				C07828FC18B4DC6F00BD2287 /* Runtime.h */,
 				C0619CD61896894800872C26 /* Runtime_ios-mac.mm */,
@@ -916,6 +922,7 @@
 				5023813317EBBCE400990C9B /* AppDelegate.cpp in Sources */,
 				C09BA7EE18BCA49600A85A3E /* NSAppSheetAdditions.m in Sources */,
 				C07828FE18B4DC7000BD2287 /* Runtime.cpp in Sources */,
+				C06C3797191A1D1E00617BED /* ConfigParser.cpp in Sources */,
 				C09BA7E818BC929700A85A3E /* WorkSpaceDialogController.mm in Sources */,
 				C07828F818B4D72E00BD2287 /* main.m in Sources */,
 				C0619CD81896894800872C26 /* Runtime_ios-mac.mm in Sources */,
@@ -928,6 +935,7 @@
 			files = (
 				5023812517EBBCAC00990C9B /* RootViewController.mm in Sources */,
 				F293BB9C15EB831F00256477 /* AppDelegate.cpp in Sources */,
+				C06C3796191A1D1E00617BED /* ConfigParser.cpp in Sources */,
 				5023812417EBBCAC00990C9B /* main.m in Sources */,
 				C0619CD71896894800872C26 /* Runtime_ios-mac.mm in Sources */,
 				C07828FD18B4DC6F00BD2287 /* Runtime.cpp in Sources */,

@@ -117,10 +117,17 @@ std::string getCurAppPath(void)
     [window makeKeyAndOrderFront:self];
 }
 
-void createSimulator(const char* viewName, float width, float height,float frameZoomFactor)
+void createSimulator(const char* viewName, float width, float height,bool isLandscape,float frameZoomFactor)
 {
     if(g_nsAppDelegate)
     {
+        if((isLandscape && height > width) ||  (!isLandscape && width > height))
+        {
+            float tmpvalue =width;
+            width = height;
+            height = width;
+        }
+        
         [g_nsAppDelegate createSimulator:[NSString stringWithUTF8String:viewName] viewWidth:width viewHeight:height factor:frameZoomFactor];
     }
     
@@ -281,9 +288,26 @@ void createSimulator(const char* viewName, float width, float height,float frame
     [self updateView];
 }
 
-- (IBAction) onReloadScript:(id)sender
+- (void) launch:(NSArray*)args
 {
-    reloadScript("");
+    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
+    NSMutableDictionary *configuration = [NSMutableDictionary dictionaryWithObject:args forKey:NSWorkspaceLaunchConfigurationArguments];
+    NSError *error = [[[NSError alloc] init] autorelease];
+    [[NSWorkspace sharedWorkspace] launchApplicationAtURL:url
+                                                  options:NSWorkspaceLaunchNewInstance
+                                            configuration:configuration error:&error];
+}
+
+- (void) relaunch:(NSArray*)args
+{
+    [self launch:args];
+    [[NSApplication sharedApplication] terminate:self];
+}
+
+- (IBAction) onRelaunch:(id)sender
+{
+    NSArray* args=[[NSArray alloc] initWithObjects:@" ", nil];
+    [self relaunch:args];
 }
 
 

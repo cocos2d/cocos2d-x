@@ -1,5 +1,6 @@
 {
     "init_view":{
+       "isLandscape": true,
        "name": "HelloLua",
        "width": 960,
        "height": 640    
