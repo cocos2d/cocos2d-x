@@ -61,13 +61,19 @@ class VertexAttrib
 public:
     VertexAttrib();
     ~VertexAttrib();
-    void setPointer(GLsizei stride, void* pointer = nullptr, GLboolean isNormalized = GL_FALSE);
-    void redefineType(GLenum type, GLint size, GLboolean normalized);
+
+    void setPointer(GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid *pointer);
+    void setPointer(GLsizei stride, const GLvoid *pointer);
+
+    void redefineTypeAndSize(GLenum type, GLint size, GLboolean normalized);
+    void updateTypeAndSize();
 
 protected:
     GLuint _index;
     GLint _size;
+    GLint _originalSize;
     GLenum _type;
+    GLenum _originalType;
     GLboolean _normalized;
     std::string _name;
 };

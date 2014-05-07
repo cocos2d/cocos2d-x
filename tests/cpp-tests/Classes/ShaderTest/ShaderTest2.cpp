@@ -172,13 +172,7 @@ void ShaderSprite::initShader()
     program->release();
     
     CHECK_GL_ERROR_DEBUG();
-    
-    program->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
-    program->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
-    program->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
-    
-    CHECK_GL_ERROR_DEBUG();
-    
+
     program->link();
     
     CHECK_GL_ERROR_DEBUG();
@@ -190,6 +184,10 @@ void ShaderSprite::initShader()
     buildCustomUniforms();
     
     CHECK_GL_ERROR_DEBUG();
+
+    program->getVertexAttrib("a_color")->redefineTypeAndSize(GL_UNSIGNED_BYTE, 4, GL_TRUE);
+    program->getVertexAttrib("a_position")->redefineTypeAndSize(GL_FLOAT, 3, GL_FALSE);
+    program->getVertexAttrib("a_texCoord")->redefineTypeAndSize(GL_FLOAT, 2, GL_FALSE);
 }
 
 void ShaderSprite::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
@@ -220,16 +218,16 @@ void ShaderSprite::onDraw(const Matrix &transform, bool transformUpdated)
     
     // vertex
     int diff = offsetof( V3F_C4B_T2F, vertices);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
-    
+    shader->getVertexAttrib("a_position")->setPointer(kQuadSize, (void*) (offset + diff));
+
     // texCoods
     diff = offsetof( V3F_C4B_T2F, texCoords);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
-    
+    shader->getVertexAttrib("a_texCoord")->setPointer(kQuadSize, (void*) (offset + diff));
+
     // color
     diff = offsetof( V3F_C4B_T2F, colors);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
-    
+    shader->getVertexAttrib("a_color")->setPointer(kQuadSize, (void*) (offset + diff));
+
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
 }
@@ -769,9 +767,9 @@ void UniformSprite::setCustomUniforms()
 {
     
     std::string name = "center";
-    _shaderProgram->getUniformValue(name)->setValue(Vector2(480,320));
+    _shaderProgram->getUniform(name)->setValue(Vector2(480,320));
     name = "resolution";
-    _shaderProgram->getUniformValue(name)->setValue(Vector2(256,256));
+    _shaderProgram->getUniform(name)->setValue(Vector2(256,256));
 }
 
 void UniformSprite::onDraw(const Matrix &transform, bool transformUpdated)
@@ -848,29 +846,13 @@ AttribSprite::~AttribSprite()
 void AttribSprite::initShader()
 {
     auto shader = new GLProgram();
-    //shader->initWithFilenames(_vertSourceFile, _fragSourceFile);
-    shader->initWithFilenames("Shaders/example_attribautobind.vsh", "Shaders/example_attribautobind.fsh");
+
+    shader->initWithFilenames(_vertSourceFile, _fragSourceFile);
     shader->link();
     shader->updateUniforms();
     this->setShaderProgram(shader);
     
     shader->release();
-    
-    
-    
-    
-//    std::string attribname ="a_position";
-//    shader->getAttrib(attribname)->size = 3;
-//    shader->getAttrib(attribname)->index = 0;
-//    
-//    attribname ="a_color";
-//    shader->getAttrib(attribname)->type = GL_UNSIGNED_BYTE;
-//    shader->getAttrib(attribname)->normalized = GL_TRUE;
-//    shader->getAttrib(attribname)->index = 1;
-//    
-//    attribname ="a_texCoord";
-//    shader->getAttrib(attribname)->index = 2;
-    
 }
 
 void AttribSprite::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
@@ -907,29 +889,20 @@ void AttribSprite::onDraw(const Matrix &transform, bool transformUpdated)
     #define kQuadSize sizeof(_quad.bl)
     size_t offset = (size_t)&_quad;
     size_t stride = kQuadSize;
-    /*
-    // vertex
+
     int diff = offsetof( V3F_C4B_T2F, vertices);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
-    
-    // texCoods
-    diff = offsetof( V3F_C4B_T2F, texCoords);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
-    
-    // color
+    program->getVertexAttrib("a_position")->setPointer(3, GL_FLOAT, GL_FALSE, stride, (void*) (offset + diff));
+
     diff = offsetof( V3F_C4B_T2F, colors);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
-    */
-//    program->setVertexAttrib((void*)offset, false);
-    float a = getDisplayedOpacity() / 255.f;
-    GLfloat vertices[] = {0,0,0,1,0,0,a, 30,0,0,0,1,0,a, 30,30,0,0,0,1,a};
-    stride = sizeof(vertices)/3;
-    program->getVertexAttrib("a_position")->setPointer(stride, (void*)(vertices));
-    program->getVertexAttrib("a_color")->setPointer(stride, (void*)(vertices + 3*sizeof(GL_FLOAT)));
+    program->getVertexAttrib("a_color")->setPointer(4, GL_UNSIGNED_BYTE, GL_TRUE, stride, (void*) (offset + diff));
+
+    diff = offsetof( V3F_C4B_T2F, texCoords);
+    program->getVertexAttrib("a_texCoord")->setPointer(2, GL_FLOAT, GL_FALSE, stride, (void*) (offset + diff));
+
     //program->getUniformValue("u_diffuseColor")->setValue(Vector4(1,1,1,1));
     
-    glDrawArrays(GL_TRIANGLES, 0, 3);
-    //glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+//    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
     
     CHECK_GL_ERROR_DEBUG();

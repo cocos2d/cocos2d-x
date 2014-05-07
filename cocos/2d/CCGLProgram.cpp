@@ -227,14 +227,14 @@ void GLProgram::parseVertexAttribs()
 			for(int i = 0; i < activeAttributes; ++i)
 			{
 				// Query attribute info.
-				glGetActiveAttrib(_program, i, length, NULL, &attribute._size, &attribute._type, attribName);
+				glGetActiveAttrib(_program, i, length, NULL, &attribute._originalSize, &attribute._originalType, attribName);
 				attribName[length] = '\0';
                 attribute._name = std::string(attribName);
 
 				// Query the pre-assigned attribute location
 				attribute._index = glGetAttribLocation(_program, attribName);
-
                 _attributesDictionary[attribute._name] = attribute;
+                attribute.updateTypeAndSize();
 			}
 		}
 	}
@@ -423,6 +423,10 @@ bool GLProgram::link()
     	
     glLinkProgram(_program);
 
+
+    parseVertexAttribs();
+    parseUniforms();
+
     if (_vertShader)
     {
         glDeleteShader(_vertShader);
@@ -452,9 +456,6 @@ bool GLProgram::link()
         CCPrecompiledShaders::getInstance()->addProgram(_program, _shaderId);
     }
 #endif
-
-    parseVertexAttribs();
-    parseUniforms();
 
     return (status == GL_TRUE);
 }
@@ -790,6 +791,9 @@ void GLProgram::reset()
 // VertexAttrib
 //
 VertexAttrib::VertexAttrib()
+: _size(-1)
+, _type(-1)
+, _normalized(false)
 {
 }
 
@@ -797,32 +801,54 @@ VertexAttrib::~VertexAttrib()
 {
 }
 
-void VertexAttrib::setPointer(GLsizei stride, void* pointer, GLboolean isNormalized)
+void VertexAttrib::updateTypeAndSize()
 {
-    GLenum elemtype = _type;
-    GLint elemsize = _size;
-    switch (_type) {
+    switch (_originalType) {
         case GL_FLOAT_VEC2:
-            elemtype = GL_FLOAT;
-            elemsize = 2;
+            _type = GL_FLOAT;
+            _size = 2;
             break;
         case GL_FLOAT_VEC3:
-            elemtype = GL_FLOAT;
-            elemsize = 3;
+            _type = GL_FLOAT;
+            _size = 3;
             break;
         case GL_FLOAT_VEC4:
-            elemtype = GL_FLOAT;
-            elemsize = 4;
+            _type = GL_FLOAT;
+            _size = 4;
+            break;
+        case GL_FLOAT_MAT2:
+            _type = GL_FLOAT;
+            _size = 4;
+            break;
+        case GL_FLOAT_MAT3:
+            _type = GL_FLOAT;
+            _size = 9;
+            break;
+        case GL_FLOAT_MAT4:
+            _type = GL_FLOAT;
+            _size = 16;
             break;
 
         default:
             break;
     }
-    glVertexAttribPointer(_index, elemsize, elemtype, isNormalized, stride, pointer);
 }
 
-void VertexAttrib::redefineType(GLenum type, GLint size, GLboolean normalized)
+void VertexAttrib::setPointer(GLsizei stride, const GLvoid *pointer)
 {
+    glVertexAttribPointer(_index, _size, _type, _normalized, stride, pointer);
+}
+
+void VertexAttrib::setPointer(GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid *pointer)
+{
+    glVertexAttribPointer(_index, size, type, normalized, stride, pointer);
+}
+
+void VertexAttrib::redefineTypeAndSize(GLenum type, GLint size, GLboolean normalized)
+{
+    _type = type;
+    _size = size;
+    _normalized = normalized;
 }
 
 //
