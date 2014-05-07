@@ -49,11 +49,63 @@ USING_NS_CC_MATH;
 struct _hashUniformEntry;
 class GLProgramData;
 class UniformValue;
-struct VertexAttrib;
+class GLProgram;
+struct _Uniform;
 
 typedef void (*GLInfoFunction)(GLuint program, GLenum pname, GLint* params);
 typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length, GLchar* infolog);
 
+
+class UniformValue
+{
+public:
+	UniformValue();
+	~UniformValue();
+
+	bool init(GLProgram* program, struct _Uniform* uniform);
+
+	bool setValue(float value);
+
+	bool setValue(int value);
+
+	bool setValue(const Vector2& value);
+
+	bool setValue(const Vector3& value);
+
+	bool setValue(const Vector4& value);
+
+	bool setValue(const Matrix& value);
+
+	bool setValue(const Vector2* value, int count);
+
+    bool setValue(const Vector3* value, int count);
+
+    bool setValue(const Vector4* value, int count);
+
+    bool setValue(const Matrix* value, int count);
+
+protected:
+	GLProgram* _program;  // weak ref
+    struct _Uniform* _uniform;  // weak ref
+};
+
+typedef struct _VertexAttrib
+{
+    GLuint index;
+    GLint size;
+    GLenum type;
+    GLboolean normalized;
+    std::string name;
+} VertexAttrib;
+
+typedef struct _Uniform
+{
+    GLint location;
+    GLint size;
+    std::string name;
+    GLenum type;
+    UniformValue value;
+} Uniform;
 
 
 /** GLProgramData
@@ -64,23 +116,6 @@ class GLProgramData
     friend class GLProgram;
 
 public:
-	typedef struct _VertexAttrib
-	{
-		GLuint _index;
-		GLint _size;
-		GLenum _type;
-        GLboolean _normalized;
-		std::string _name;
-	} VertexAttrib;
-    
-	typedef struct _Uniform
-	{
-	  	GLint _location;
-        GLint _size;
-		std::string _name;
-		GLenum _type;
-		UniformValue* _uniformvalue;
-	} Uniform;
 
 	GLProgramData();
 	~GLProgramData();
@@ -89,7 +124,7 @@ public:
 	Uniform* getUniformByName(const std::string& name);
 	VertexAttrib* getVertexAttribByIndex(unsigned int index);
     VertexAttrib* getVertexAttribByName(const std::string& name);
-    std::vector<GLProgramData::VertexAttrib*> getVertexAttributes(const std::string* attrNames, int count);
+    std::vector<VertexAttrib*> getVertexAttributes(const std::string* attrNames, int count);
 	ssize_t getUniformCount();
 	ssize_t getAttribCount();
 	GLint getVertexSize() {return _vertexsize;}
@@ -201,28 +236,19 @@ public:
      * @lua init
      */
     bool initWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename);
-    
-    //void bindAttirbForUserdef();
-	void setUniformsForUserDef();
 
-    void setAttribForUserDef();
-	void setVertexAttrib(const GLvoid* vertex, bool isTight);
-    void autoParse();
-    
 	//void bindUniformValue(std::string uniformName, int value);
-	UniformValue* getUniformValue(const std::string &name);
-    GLProgramData::VertexAttrib* getAttrib(const std::string& name);
-    
-    void bindAllAttrib();
+	UniformValue* getUniformValue(const std::string& name);
+    VertexAttrib* getVertexAttrib(const std::string& name);
 
     /**  It will add a new attribute to the shader by calling glBindAttribLocation */
-    void bindAttribLocation(const char* attributeName, GLuint index) const;
+    void bindAttribLocation(const std::string& attributeName, GLuint index) const;
 
     /** calls glGetAttribLocation */
-    GLint getAttribLocation(const char* attributeName) const;
+    GLint getAttribLocation(const std::string& attributeName) const;
 
     /** calls glGetUniformLocation() */
-    GLint getUniformLocation(const char* attributeName) const;
+    GLint getUniformLocation(const std::string& attributeName) const;
 
     /** links the glProgram */
     bool link();
@@ -313,6 +339,11 @@ public:
     void setUniformsForBuiltins();
     void setUniformsForBuiltins(const Matrix &modelView);
 
+    void setUniformByName(const std::string& uniformName, const UniformValue &value);
+
+
+    // Attribute
+
     /** returns the vertexShader error log */
     std::string getVertexShaderLog() const;
 
@@ -327,9 +358,7 @@ public:
     void reset();
     
     inline const GLuint getProgram() const { return _program; }
-    
 
-    GLProgramData* getProgramData() { return _programData; }
     // DEPRECATED
     CC_DEPRECATED_ATTRIBUTE bool initWithVertexShaderByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
     { return initWithByteArrays(vShaderByteArray, fShaderByteArray); }
@@ -337,27 +366,24 @@ public:
     { return initWithFilenames(vShaderByteArray, fShaderByteArray); }
     CC_DEPRECATED_ATTRIBUTE void addAttribute(const char* attributeName, GLuint index) const { return bindAttribLocation(attributeName, index); }
 
-private:
+
+protected:
     bool updateUniformLocation(GLint location, const GLvoid* data, unsigned int bytes);
     virtual std::string getDescription() const;
+    void parseVertexAttribs();
+    void parseUniforms();
 
     bool compileShader(GLuint * shader, GLenum type, const GLchar* source);
     std::string logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc) const;
 
-protected:
     GLuint            _program;
-    
-private:
 
     GLuint            _vertShader;
     GLuint            _fragShader;
     GLint             _uniforms[UNIFORM_MAX];
     struct _hashUniformEntry* _hashForUniforms;
 	bool              _hasShaderCompiler;
-    bool              _isTight;
-    
-    GLProgramData* _programData;
-    
+        
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     std::string       _shaderId;
 #endif
@@ -372,48 +398,13 @@ private:
         // handy way to initialize the bitfield
         flag_struct() { memset(this, 0, sizeof(*this)); }
     } _flags;
-public:
-    static const GLuint _maxMaterialIDNumber;
+
+    std::unordered_map<std::string, Uniform> _uniformsDictionary;
+    std::unordered_map<std::string, VertexAttrib> _attributesDictionary;
 };
 
 // end of shaders group
 /// @}
-
-
-
-class UniformValue
-{
-public:
-	UniformValue();
-	~UniformValue();
-    
-	bool init(GLProgram* program, GLProgramData::Uniform* uniform);
-    
-	bool setValue(float value);
-    
-	bool setValue(int value);
-    
-	bool setValue(const Vector2& value);
-    
-	bool setValue(const Vector3& value);
-    
-	bool setValue(const Vector4& value);
-    
-	bool setValue(const Matrix& value);
-    
-	bool setValue(const Vector2* value, int count);
-    
-    bool setValue(const Vector3* value, int count);
-    
-    bool setValue(const Vector4* value, int count);
-    
-    bool setValue(const Matrix* value, int count);
-    
-protected:
-	GLProgram* _program;
-    GLProgramData::Uniform* _uniform;
-};
-
 
 NS_CC_END
 

@@ -746,7 +746,6 @@ void UniformSprite::initShader()
 {
     auto shader = new GLProgram();
     shader->initWithFilenames(_vertSourceFile, _fragSourceFile);
-    shader->autoParse();
     //shader->link();
     
     shader->updateUniforms();
@@ -754,7 +753,7 @@ void UniformSprite::initShader()
     this->setShaderProgram(shader);
     
     std::string attribname ="a_position";
-    shader->getAttrib(attribname)->_size = 2;
+    shader->getAttrib(attribname)->size = 2;
     
     shader->release();
 }
@@ -791,8 +790,8 @@ void UniformSprite::onDraw(const Matrix &transform, bool transformUpdated)
 
     float w = 256, h = 256;
     GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
-    program->setVertexAttrib(vertices, true);
-    
+//    program->setVertexAttrib(vertices, true);
+
 	// Draw Call Test
 	glDrawArrays(GL_TRIANGLES, 0, 6);
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,6);
@@ -855,23 +854,22 @@ void AttribSprite::initShader()
     auto shader = new GLProgram();
     shader->initWithFilenames(_vertSourceFile, _fragSourceFile);
     
-    shader->autoParse();
     shader->updateUniforms();
     this->setShaderProgram(shader);
     
     shader->release();
     
     std::string attribname ="a_position";
-    shader->getAttrib(attribname)->_size = 3;
-    shader->getAttrib(attribname)->_index = 0;
+    shader->getAttrib(attribname)->size = 3;
+    shader->getAttrib(attribname)->index = 0;
     
     attribname ="a_color";
-    shader->getAttrib(attribname)->_type = GL_UNSIGNED_BYTE;
-    shader->getAttrib(attribname)->_normalized = GL_TRUE;
-    shader->getAttrib(attribname)->_index = 1;
+    shader->getAttrib(attribname)->type = GL_UNSIGNED_BYTE;
+    shader->getAttrib(attribname)->normalized = GL_TRUE;
+    shader->getAttrib(attribname)->index = 1;
     
     attribname ="a_texCoord";
-    shader->getAttrib(attribname)->_index = 2;
+    shader->getAttrib(attribname)->index = 2;
     
 }
 
@@ -923,7 +921,7 @@ void AttribSprite::onDraw(const Matrix &transform, bool transformUpdated)
     diff = offsetof( V3F_C4B_T2F, colors);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
     */
-    program->setVertexAttrib((void*)offset, false);
+//    program->setVertexAttrib((void*)offset, false);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
     

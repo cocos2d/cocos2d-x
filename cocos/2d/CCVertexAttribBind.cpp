@@ -89,12 +89,12 @@ VertexAttribBind::VertexAttribBind(const std::vector<VertexAttribType>& elems)
     setVertexAttribElems(&elems[0], elems.size());
 }
 
-VertexAttribBind::VertexAttribBind(const std::vector<GLProgramData::VertexAttrib*>& attribs)
+VertexAttribBind::VertexAttribBind(const std::vector<VertexAttrib*>& attribs)
 {
     std::vector<VertexAttribType> elems;
     for (auto it = attribs.begin(); it != attribs.end(); it++) {
-        VertexAttribType type((*it)->_type, (*it)->_size);
-        type._location = (*it)->_index;
+        VertexAttribType type((*it)->type, (*it)->size);
+        type._location = (*it)->index;
         elems.push_back(type);
     }
     setVertexAttribElems(&elems[0], elems.size());
