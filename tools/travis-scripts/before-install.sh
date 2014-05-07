@@ -6,6 +6,11 @@ set -e
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COCOS2DX_ROOT="$DIR"/../..
 HOST_NAME=""
+
+pushd $COCOS2DX_ROOT
+python download-deps.py -r=yes
+popd
+
 mkdir -p $HOME/bin
 pushd $HOME/bin
 
@@ -80,24 +85,24 @@ if [ "$PLATFORM"x = "nacl"x ]; then
     sudo apt-get install libc6:i386
     echo "Download nacl_sdk ..."
     wget http://storage.googleapis.com/nativeclient-mirror/nacl/nacl_sdk/nacl_sdk.zip
-    echo "Decompress nacl_sdk.zip" 
+    echo "Decompress nacl_sdk.zip"
     unzip nacl_sdk.zip
     nacl_sdk/naclsdk update --force pepper_canary
 fi
 
-if [ "$PLATFORM"x = "android"x ]; then 
+if [ "$PLATFORM"x = "android"x ]; then
     install_android_ndk
     install_llvm
 fi
 
-if [ "$PLATFORM"x = "emscripten"x ]; then 
+if [ "$PLATFORM"x = "emscripten"x ]; then
     install_llvm_3_2
 fi
 
 if [ "$PLATFORM"x = "ios"x ]; then
     install_android_ndk
     install_llvm
-    
+
     pushd $COCOS2DX_ROOT
     git submodule add https://github.com/facebook/xctool.git ./xctool
     git submodule init

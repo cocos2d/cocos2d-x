@@ -49,7 +49,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/ExtensionsTest/ExtensionsTest.cpp \
 	../Classes/ExtensionsTest/NotificationCenterTest/NotificationCenterTest.cpp \
 	../Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp \
-    ../Classes/ExtensionsTest/CocoStudioArmatureTest/ArmatureScene.cpp \
+	../Classes/ExtensionsTest/CocoStudioArmatureTest/ArmatureScene.cpp \
 	../Classes/ExtensionsTest/CocoStudioComponentsTest/ComponentsTestScene.cpp \
 	../Classes/ExtensionsTest/CocoStudioComponentsTest/EnemyController.cpp \
 	../Classes/ExtensionsTest/CocoStudioComponentsTest/GameOverScene.cpp \
@@ -155,7 +155,6 @@ RESOURCES = \
 	Images/HelloWorld.png \
 	Images/Icon.png \
 	Images/Pea.png \
-	Images/PlanetCute-1024x1024.png \
 	Images/SendScoreButton.png \
 	Images/SendScoreButtonPressed.png \
 	Images/SpinningPeas.png \
@@ -227,7 +226,6 @@ RESOURCES = \
 	Images/hole_effect.png \
 	Images/hole_stencil.png \
 	Images/labelatlas.png \
-	Images/landscape-1024x1024.png \
 	Images/logo-mipmap.pvr \
 	Images/logo-nomipmap.pvr \
 	Images/menuitemsprite.png \
@@ -310,15 +308,6 @@ RESOURCES = \
 	Images/stars2.png \
 	Images/streak.png \
 	Images/test-rgba1.png \
-	Images/test_1021x1024.png \
-	Images/test_1021x1024_a8.pvr \
-	Images/test_1021x1024_a8.pvr.gz \
-	Images/test_1021x1024_rgb888.pvr \
-	Images/test_1021x1024_rgb888.pvr.gz \
-	Images/test_1021x1024_rgba4444.pvr \
-	Images/test_1021x1024_rgba4444.pvr.gz \
-	Images/test_1021x1024_rgba8888.pvr \
-	Images/test_1021x1024_rgba8888.pvr.gz \
 	Images/test_blend.png \
 	Images/test_image-bad_encoding.pvr \
 	Images/test_image.jpeg \
@@ -489,7 +478,7 @@ RESOURCES = \
 	fonts/west_england-64.fnt \
 	fonts/west_england-64.png \
 	fps_images.png \
-    fonts/bitmapFontTest.fnt \
+	fonts/bitmapFontTest.fnt \
 	zwoptex/grossini-generic.plist \
 	zwoptex/grossini-generic.png \
 	zwoptex/grossini.plist \
