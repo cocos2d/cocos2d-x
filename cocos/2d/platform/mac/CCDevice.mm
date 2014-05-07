@@ -224,7 +224,7 @@ static bool _initWithString(const char * text, Device::TextAlign align, const ch
     return ret;
 }
 
-Data Device::getTextureDataForText(const char * text,const FontDefinition& textDefinition,TextAlign align,int &width,int &height)
+Data Device::getTextureDataForText(const char * text, const FontDefinition& textDefinition, TextAlign align, int &width, int &height, bool& hasPremultipliedAlpha)
 {
     Data ret;
     do {
@@ -239,6 +239,7 @@ Data Device::getTextureDataForText(const char * text,const FontDefinition& textD
         height = (short)info.height;
         width = (short)info.width;
         ret.fastSet(info.data,width * height * 4);
+        hasPremultipliedAlpha = true;
     } while (0);
     
     return ret;
