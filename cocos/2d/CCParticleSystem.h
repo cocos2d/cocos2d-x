@@ -27,9 +27,9 @@ THE SOFTWARE.
 #ifndef __CCPARTICLE_SYSTEM_H__
 #define __CCPARTICLE_SYSTEM_H__
 
-#include "CCProtocols.h"
-#include "CCNode.h"
-#include "CCValue.h"
+#include "2d/CCProtocols.h"
+#include "2d/CCNode.h"
+#include "base/CCValue.h"
 #include "deprecated/CCString.h"
 
 NS_CC_BEGIN
@@ -45,8 +45,8 @@ class ParticleBatchNode;
 Structure that contains the values of each particle
 */
 typedef struct sParticle {
-    Point     pos;
-    Point     startPos;
+    Vector2     pos;
+    Vector2     startPos;
 
     Color4F    color;
     Color4F    deltaColor;
@@ -63,7 +63,7 @@ typedef struct sParticle {
 
     //! Mode A: gravity, direction, radial accel, tangential accel
     struct {
-        Point        dir;
+        Vector2        dir;
         float        radialAccel;
         float        tangentialAccel;
     } modeA;
@@ -78,7 +78,7 @@ typedef struct sParticle {
 
 }tParticle;
 
-//typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tParticle*, Point);
+//typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tParticle*, Vector2);
 
 class Texture2D;
 
@@ -192,7 +192,7 @@ public:
     bool isFull();
 
     //! should be overridden by subclasses
-    virtual void updateQuadWithParticle(tParticle* particle, const Point& newPosition);
+    virtual void updateQuadWithParticle(tParticle* particle, const Vector2& newPosition);
     //! should be overridden by subclasses
     virtual void postStep();
 
@@ -202,8 +202,8 @@ public:
     virtual void setAutoRemoveOnFinish(bool var);
 
     // mode A
-    virtual const Point& getGravity();
-    virtual void setGravity(const Point& g);
+    virtual const Vector2& getGravity();
+    virtual void setGravity(const Vector2& g);
     virtual float getSpeed() const;
     virtual void setSpeed(float speed);
     virtual float getSpeedVar() const;
@@ -256,12 +256,12 @@ public:
     inline void setDuration(float duration) { _duration = duration; };
     
     /** sourcePosition of the emitter */
-    inline const Point& getSourcePosition() const { return _sourcePosition; };
-    inline void setSourcePosition(const Point& pos) { _sourcePosition = pos; };
+    inline const Vector2& getSourcePosition() const { return _sourcePosition; };
+    inline void setSourcePosition(const Vector2& pos) { _sourcePosition = pos; };
     
     /** Position variance of the emitter */
-    inline const Point& getPosVar() const { return _posVar; };
-    inline void setPosVar(const Point& pos) { _posVar = pos; };
+    inline const Vector2& getPosVar() const { return _posVar; };
+    inline void setPosVar(const Vector2& pos) { _posVar = pos; };
 
     /** life, and life variation of each particle */
     inline float getLife() const { return _life; };
@@ -432,7 +432,7 @@ protected:
     //! Mode A:Gravity + Tangential Accel + Radial Accel
     struct {
         /** Gravity value. Only available in 'Gravity' mode. */
-        Point gravity;
+        Vector2 gravity;
         /** speed of each particle. Only available in 'Gravity' mode.  */
         float speed;
         /** speed variance of each particle. Only available in 'Gravity' mode. */
@@ -503,9 +503,9 @@ protected:
     /** How many seconds the emitter will run. -1 means 'forever' */
     float _duration;
     /** sourcePosition of the emitter */
-    Point _sourcePosition;
+    Vector2 _sourcePosition;
     /** Position variance of the emitter */
-    Point _posVar;
+    Vector2 _posVar;
     /** life, and life variation of each particle */
     float _life;
     /** life variance of each particle */

@@ -25,10 +25,10 @@ THE SOFTWARE.
 #ifndef __CC_FILEUTILS_H__
 #define __CC_FILEUTILS_H__
 
-#include "CCPlatformMacros.h"
-#include "ccTypes.h"
-#include "CCValue.h"
-#include "CCData.h"
+#include "base/CCPlatformMacros.h"
+#include "base/ccTypes.h"
+#include "base/CCValue.h"
+#include "base/CCData.h"
 
 #include <string>
 #include <vector>

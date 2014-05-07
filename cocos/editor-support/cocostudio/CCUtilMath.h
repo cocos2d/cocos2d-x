@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CCUTILMATH_H__
 #define __CCUTILMATH_H__
 
-#include "CCSprite.h"
+#include "2d/CCSprite.h"
 #include "cocostudio/CCArmatureDefine.h"
 #include <math.h>
 
@@ -37,18 +37,18 @@ namespace cocostudio {
 
 
 //! hit test function
-bool isSpriteContainPoint(cocos2d::Sprite *sprite, cocos2d::Point point);
-bool isSpriteContainPoint(cocos2d::Sprite *sprite, cocos2d::Point point, cocos2d::Point &outPoint);
+bool isSpriteContainPoint(cocos2d::Sprite *sprite, cocos2d::Vector2 point);
+bool isSpriteContainPoint(cocos2d::Sprite *sprite, cocos2d::Vector2 point, cocos2d::Vector2 &outPoint);
 
 #define CC_SPRITE_CONTAIN_POINT(sprite, point) isSpriteContainPoint((sprite), (point))
 #define CC_SPRITE_CONTAIN_POINT_WITH_RETURN(sprite, point, outPoint) isSpriteContainPoint((sprite), (point), outPoint)
 
 
 //! motion curve function
-cocos2d::Point bezierTo(float t, cocos2d::Point &point1, cocos2d::Point &point2, cocos2d::Point &point3);
-cocos2d::Point bezierTo(float t, cocos2d::Point &point1, cocos2d::Point &point2, cocos2d::Point &point3, cocos2d::Point &point4);
+cocos2d::Vector2 bezierTo(float t, cocos2d::Vector2 &point1, cocos2d::Vector2 &point2, cocos2d::Vector2 &point3);
+cocos2d::Vector2 bezierTo(float t, cocos2d::Vector2 &point1, cocos2d::Vector2 &point2, cocos2d::Vector2 &point3, cocos2d::Vector2 &point4);
 
-cocos2d::Point circleTo(float t, cocos2d::Point &center, float radius, float fromRadian, float radianDif);
+cocos2d::Vector2 circleTo(float t, cocos2d::Vector2 &center, float radius, float fromRadian, float radianDif);
 
 
 }

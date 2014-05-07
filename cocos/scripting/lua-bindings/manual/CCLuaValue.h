@@ -34,8 +34,8 @@ extern "C" {
 #include "lua.h"
 }
 
-#include "ccTypes.h"
-#include "CCRef.h"
+#include "base/ccTypes.h"
+#include "base/CCRef.h"
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
 using std::memset;

@@ -23,15 +23,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCPlatformConfig.h"
+#include "base/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
 #include "CCApplication.h"
 #include <unistd.h>
 #include <sys/time.h>
 #include <string>
-#include "CCDirector.h"
-#include "platform/CCFileUtils.h"
+#include "base/CCDirector.h"
+#include "2d/platform/CCFileUtils.h"
 #include "CCGLView.h"
 
 NS_CC_BEGIN

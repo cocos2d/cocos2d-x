@@ -27,9 +27,9 @@ THE SOFTWARE.
 #ifndef __CC_ANIMATION_CACHE_H__
 #define __CC_ANIMATION_CACHE_H__
 
-#include "CCRef.h"
-#include "CCMap.h"
-#include "CCValue.h"
+#include "base/CCRef.h"
+#include "base/CCMap.h"
+#include "base/CCValue.h"
 
 #include <string>
 

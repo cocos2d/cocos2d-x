@@ -99,7 +99,7 @@
 --------------------------------
 -- overload function: setPosition(float, float)
 --          
--- overload function: setPosition(point_table)
+-- overload function: setPosition(array_table)
 --          
 -- @function [parent=#MotionStreak] setPosition
 -- @param self

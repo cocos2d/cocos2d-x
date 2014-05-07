@@ -25,12 +25,12 @@ THE SOFTWARE.
 #ifndef __CC_APPLICATION_WIN32_H__
 #define __CC_APPLICATION_WIN32_H__
 
-#include "CCPlatformConfig.h"
+#include "base/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #include "CCStdC.h"
-#include "platform/CCCommon.h"
-#include "platform/CCApplicationProtocol.h"
+#include "2d/platform/CCCommon.h"
+#include "2d/platform/CCApplicationProtocol.h"
 #include <string>
 
 NS_CC_BEGIN

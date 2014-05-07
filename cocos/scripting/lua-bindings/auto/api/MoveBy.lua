@@ -7,7 +7,7 @@
 -- @function [parent=#MoveBy] create 
 -- @param self
 -- @param #float float
--- @param #point_table point
+-- @param #array_table array
 -- @return MoveBy#MoveBy ret (return value: cc.MoveBy)
         
 --------------------------------

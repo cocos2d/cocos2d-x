@@ -28,7 +28,7 @@
 #ifndef __MISCNODE_CCCLIPPING_NODE_H__
 #define __MISCNODE_CCCLIPPING_NODE_H__
 
-#include "CCNode.h"
+#include "2d/CCNode.h"
 #include "CCGL.h"
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCCustomCommand.h"
@@ -95,7 +95,7 @@ public:
      * @lua NA
      */
     virtual void onExit() override;
-    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
+    virtual void visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated) override;
     
 CC_CONSTRUCTOR_ACCESS:
     ClippingNode();

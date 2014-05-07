@@ -1,8 +1,6 @@
 #include "ShaderTest.h"
 #include "../testResource.h"
 #include "cocos2d.h"
-#include "renderer/CCCustomCommand.h"
-#include "renderer/CCRenderer.h"
 
 static int sceneIdx = -1; 
 
@@ -110,8 +108,8 @@ enum
 };
 
 ShaderNode::ShaderNode()
-:_center(Vertex2F(0.0f, 0.0f))
-,_resolution(Vertex2F(0.0f, 0.0f))
+:_center(Vector2(0.0f, 0.0f))
+,_resolution(Vector2(0.0f, 0.0f))
 ,_time(0.0f)
 ,_uniformCenter(0)
 ,_uniformResolution(0)
@@ -146,12 +144,12 @@ bool ShaderNode::initWithVertex(const char *vert, const char *frag)
     loadShaderVertex(vert, frag);
 
     _time = 0;
-    _resolution = Vertex2F(SIZE_X, SIZE_Y);
+    _resolution = Vector2(SIZE_X, SIZE_Y);
 
     scheduleUpdate();
 
     setContentSize(Size(SIZE_X, SIZE_Y));
-    setAnchorPoint(Point(0.5f, 0.5f));
+    setAnchorPoint(Vector2(0.5f, 0.5f));
     
     _vertFileName = vert;
     _fragFileName = frag;
@@ -183,21 +181,21 @@ void ShaderNode::update(float dt)
     _time += dt;
 }
 
-void ShaderNode::setPosition(const Point &newPosition)
+void ShaderNode::setPosition(const Vector2 &newPosition)
 {
     Node::setPosition(newPosition);
     auto position = getPosition();
-    _center = Vertex2F(position.x * CC_CONTENT_SCALE_FACTOR(), position.y * CC_CONTENT_SCALE_FACTOR());
+    _center = Vector2(position.x * CC_CONTENT_SCALE_FACTOR(), position.y * CC_CONTENT_SCALE_FACTOR());
 }
 
-void ShaderNode::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void ShaderNode::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(ShaderNode::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_customCommand);
 }
 
-void ShaderNode::onDraw(const kmMat4 &transform, bool transformUpdated)
+void ShaderNode::onDraw(const Matrix &transform, bool transformUpdated)
 {
     auto shader = getShaderProgram();
     shader->use();
@@ -235,7 +233,7 @@ bool ShaderMonjori::init()
         auto sn = ShaderNode::shaderNodeWithVertex("Shaders/example_Monjori.vsh", "Shaders/example_Monjori.fsh");
 
         auto s = Director::getInstance()->getWinSize();
-        sn->setPosition(Point(s.width/2, s.height/2));
+        sn->setPosition(Vector2(s.width/2, s.height/2));
 
         addChild(sn);
 
@@ -269,7 +267,7 @@ bool ShaderMandelbrot::init()
         auto sn = ShaderNode::shaderNodeWithVertex("Shaders/example_Mandelbrot.vsh", "Shaders/example_Mandelbrot.fsh");
 
         auto s = Director::getInstance()->getWinSize();
-        sn->setPosition(Point(s.width/2, s.height/2));
+        sn->setPosition(Vector2(s.width/2, s.height/2));
 
         addChild(sn);
 
@@ -302,7 +300,7 @@ bool ShaderJulia::init()
         auto sn = ShaderNode::shaderNodeWithVertex("Shaders/example_Julia.vsh", "Shaders/example_Julia.fsh");
 
         auto s = Director::getInstance()->getWinSize();
-        sn->setPosition(Point(s.width/2, s.height/2));
+        sn->setPosition(Vector2(s.width/2, s.height/2));
 
         addChild(sn);
 
@@ -336,7 +334,7 @@ bool ShaderHeart::init()
         auto sn = ShaderNode::shaderNodeWithVertex("Shaders/example_Heart.vsh", "Shaders/example_Heart.fsh");
 
         auto s = Director::getInstance()->getWinSize();
-        sn->setPosition(Point(s.width/2, s.height/2));
+        sn->setPosition(Vector2(s.width/2, s.height/2));
 
         addChild(sn);
 
@@ -369,7 +367,7 @@ bool ShaderFlower::init()
         auto sn = ShaderNode::shaderNodeWithVertex("Shaders/example_Flower.vsh", "Shaders/example_Flower.fsh");
 
         auto s = Director::getInstance()->getWinSize();
-        sn->setPosition(Point(s.width/2, s.height/2));
+        sn->setPosition(Vector2(s.width/2, s.height/2));
 
         addChild(sn);
 
@@ -402,7 +400,7 @@ bool ShaderPlasma::init()
         auto sn = ShaderNode::shaderNodeWithVertex("Shaders/example_Plasma.vsh", "Shaders/example_Plasma.fsh");
 
         auto s = Director::getInstance()->getWinSize();
-        sn->setPosition(Point(s.width/2, s.height/2));
+        sn->setPosition(Vector2(s.width/2, s.height/2));
 
         addChild(sn);
 
@@ -430,16 +428,16 @@ public:
     ~SpriteBlur();
     void setBlurSize(float f);
     bool initWithTexture(Texture2D* texture, const Rect&  rect);
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
     void initProgram();
 
     static SpriteBlur* create(const char *pszFileName);
 
 protected:
-    void onDraw(const kmMat4 &transform, bool transformUpdated);
+    void onDraw(const Matrix &transform, bool transformUpdated);
 
     int       _blurRadius;
-    Point     _pixelSize;
+    Vector2     _pixelSize;
 
     int       _samplingRadius;
     //gaussian = cons * exp( (dx*dx + dy*dy) * scale);
@@ -488,7 +486,7 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
         
         auto s = getTexture()->getContentSizeInPixels();
 
-        _pixelSize = Point(1/s.width, 1/s.height);
+        _pixelSize = Vector2(1/s.width, 1/s.height);
         _samplingRadius = 0;
         this->initProgram();
 
@@ -529,14 +527,14 @@ void SpriteBlur::initProgram()
     CHECK_GL_ERROR_DEBUG();
 }
 
-void SpriteBlur::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void SpriteBlur::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(SpriteBlur::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_customCommand);
 }
 
-void SpriteBlur::onDraw(const kmMat4 &transform, bool transformUpdated)
+void SpriteBlur::onDraw(const Matrix &transform, bool transformUpdated)
 {
     GL::enableVertexAttribs(cocos2d::GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
     BlendFunc blend = getBlendFunc();
@@ -630,11 +628,11 @@ ControlSlider* ShaderBlur::createSliderCtl()
     auto screenSize = Director::getInstance()->getWinSize();
     
     ControlSlider *slider = ControlSlider::create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
-    slider->setAnchorPoint(Point(0.5f, 1.0f));
+    slider->setAnchorPoint(Vector2(0.5f, 1.0f));
     slider->setMinimumValue(0.0f); // Sets the min value of range
     slider->setMaximumValue(25.0f); // Sets the max value of range
     
-    slider->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 3.0f));
+    slider->setPosition(Vector2(screenSize.width / 2.0f, screenSize.height / 3.0f));
 
     // When the value of the slider will change, the given selector will be call
     slider->addTargetWithActionForControlEvents(this, cccontrol_selector(ShaderBlur::sliderAction), Control::EventType::VALUE_CHANGED);
@@ -653,8 +651,8 @@ bool ShaderBlur::init()
         auto sprite = Sprite::create("Images/grossini.png");
 
         auto s = Director::getInstance()->getWinSize();
-        _blurSprite->setPosition(Point(s.width/3, s.height/2));
-        sprite->setPosition(Point(2*s.width/3, s.height/2));
+        _blurSprite->setPosition(Vector2(s.width/3, s.height/2));
+        sprite->setPosition(Vector2(2*s.width/3, s.height/2));
 
         addChild(_blurSprite);
         addChild(sprite);
@@ -701,12 +699,12 @@ bool ShaderRetroEffect::init()
         auto s = director->getWinSize();
 
         _label = Label::createWithBMFont("fonts/west_england-64.fnt","RETRO EFFECT");
-        _label->setAnchorPoint(Point::ANCHOR_MIDDLE);
+        _label->setAnchorPoint(Vector2::ANCHOR_MIDDLE);
         _label->setShaderProgram(p);
 
         p->release();
 
-        _label->setPosition(Point(s.width/2,s.height/2));
+        _label->setPosition(Vector2(s.width/2,s.height/2));
 
         addChild(_label);
 
@@ -725,7 +723,7 @@ void ShaderRetroEffect::update(float dt)
     {
         auto sprite = _label->getLetter(i);
         auto oldPosition = sprite->getPosition();
-        sprite->setPosition(Point( oldPosition.x, sinf( _accum * 2 + i/2.0) * 20  ));
+        sprite->setPosition(Vector2( oldPosition.x, sinf( _accum * 2 + i/2.0) * 20  ));
         
         // add fabs() to prevent negative scaling
         float scaleY = ( sinf( _accum * 2 + i/2.0 + 0.707) );

@@ -32,13 +32,13 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 
 ****************************************************************************/
 #include "CCLabelBMFont.h"
-#include "CCDrawingPrimitives.h"
+#include "2d/CCDrawingPrimitives.h"
 #include "deprecated/CCString.h"
-#include "CCSprite.h"
+#include "2d/CCSprite.h"
 
 #if CC_LABELBMFONT_DEBUG_DRAW
 #include "renderer/CCRenderer.h"
-#include "CCDirector.h"
+#include "base/CCDirector.h"
 #endif
 
 using namespace std;
@@ -65,7 +65,7 @@ LabelBMFont * LabelBMFont::create()
 }
 
 //LabelBMFont - Creation & Init
-LabelBMFont *LabelBMFont::create(const std::string& str, const std::string& fntFile, float width /* = 0 */, TextHAlignment alignment /* = TextHAlignment::LEFT */,const Point& imageOffset /* = Point::ZERO */)
+LabelBMFont *LabelBMFont::create(const std::string& str, const std::string& fntFile, float width /* = 0 */, TextHAlignment alignment /* = TextHAlignment::LEFT */,const Vector2& imageOffset /* = Vector2::ZERO */)
 {
     LabelBMFont *ret = new LabelBMFont();
     if(ret && ret->initWithString(str, fntFile, width, alignment,imageOffset))
@@ -77,7 +77,7 @@ LabelBMFont *LabelBMFont::create(const std::string& str, const std::string& fntF
     return nullptr;
 }
 
-bool LabelBMFont::initWithString(const std::string& str, const std::string& fntFile, float width /* = 0 */, TextHAlignment alignment /* = TextHAlignment::LEFT */,const Point& imageOffset /* = Point::ZERO */)
+bool LabelBMFont::initWithString(const std::string& str, const std::string& fntFile, float width /* = 0 */, TextHAlignment alignment /* = TextHAlignment::LEFT */,const Vector2& imageOffset /* = Vector2::ZERO */)
 {
     if (_label->setBMFontFilePath(fntFile,imageOffset))
     {
@@ -95,9 +95,9 @@ bool LabelBMFont::initWithString(const std::string& str, const std::string& fntF
 LabelBMFont::LabelBMFont()
 {
     _label = Label::create();
-    _label->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+    _label->setAnchorPoint(Vector2::ANCHOR_BOTTOM_LEFT);
     this->addChild(_label);
-    this->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    this->setAnchorPoint(Vector2::ANCHOR_MIDDLE);
     _cascadeOpacityEnabled = true;
 }
 
@@ -152,7 +152,7 @@ void LabelBMFont::setLineBreakWithoutSpace( bool breakWithoutSpace )
 }
 
 // LabelBMFont - FntFile
-void LabelBMFont::setFntFile(const std::string& fntFile, const Point& imageOffset /* = Point::ZERO */)
+void LabelBMFont::setFntFile(const std::string& fntFile, const Vector2& imageOffset /* = Vector2::ZERO */)
 {
     if (_fntFile.compare(fntFile) != 0)
     {
@@ -207,7 +207,7 @@ Rect LabelBMFont::getBoundingBox() const
     return _label->getBoundingBox();
 }
 #if CC_LABELBMFONT_DEBUG_DRAW
-void LabelBMFont::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void LabelBMFont::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     Node::draw(renderer, transform, transformUpdated);
 
@@ -216,24 +216,25 @@ void LabelBMFont::draw(Renderer *renderer, const kmMat4 &transform, bool transfo
     renderer->addCommand(&_customDebugDrawCommand);
 }
 
-void LabelBMFont::drawDebugData(const kmMat4& transform, bool transformUpdated)
+void LabelBMFont::drawDebugData(const Matrix& transform, bool transformUpdated)
 {
-    kmGLPushMatrix();
-    kmGLLoadMatrix(&transform);
+    Director* director = Director::getInstance();
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
 
     auto size = getContentSize();
 
-    Point vertices[4]=
+    Vector2 vertices[4]=
     {
-        Point::ZERO,
-        Point(size.width, 0),
-        Point(size.width, size.height),
-        Point(0, size.height)
+        Vector2::ZERO,
+        Vector2(size.width, 0),
+        Vector2(size.width, size.height),
+        Vector2(0, size.height)
     };
     
     DrawPrimitives::drawPoly(vertices, 4, true);
 
-    kmGLPopMatrix();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 #endif
 

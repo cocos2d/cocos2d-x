@@ -31,9 +31,9 @@ THE SOFTWARE.
 #include <map>
 #include <map>
 
-#include "CCRef.h"
-#include "CCGeometry.h"
-#include "ccTypes.h"
+#include "base/CCRef.h"
+#include "math/CCGeometry.h"
+#include "base/ccTypes.h"
 #ifdef EMSCRIPTEN
 #include "CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
@@ -230,7 +230,7 @@ public:
     These functions require GL_TEXTURE_2D and both GL_VERTEX_ARRAY and GL_TEXTURE_COORD_ARRAY client states to be enabled.
     */
     /** draws a texture at a given point */
-    void drawAtPoint(const Point& point);
+    void drawAtPoint(const Vector2& point);
     /** draws a texture inside a rect */
     void drawInRect(const Rect& rect);
 
@@ -252,7 +252,7 @@ public:
     bool initWithImage(Image * image, PixelFormat format);
 
     /** Initializes a texture from a string with dimensions, alignment, font name and font size */
-    bool initWithString(const char *text,  const char *fontName, float fontSize, const Size& dimensions = Size(0, 0), TextHAlignment hAlignment = TextHAlignment::CENTER, TextVAlignment vAlignment = TextVAlignment::TOP);
+    bool initWithString(const char *text,  const std::string &fontName, float fontSize, const Size& dimensions = Size(0, 0), TextHAlignment hAlignment = TextHAlignment::CENTER, TextVAlignment vAlignment = TextVAlignment::TOP);
     /** Initializes a texture from a string using a text definition*/
     bool initWithString(const char *text, const FontDefinition& textDefinition);
 

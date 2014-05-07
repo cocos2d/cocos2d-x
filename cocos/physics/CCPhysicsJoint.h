@@ -25,11 +25,11 @@
 #ifndef __CCPHYSICS_JOINT_H__
 #define __CCPHYSICS_JOINT_H__
 
-#include "ccConfig.h"
+#include "base/ccConfig.h"
 #if CC_USE_PHYSICS
 
-#include "CCRef.h"
-#include "CCGeometry.h"
+#include "base/CCRef.h"
+#include "math/CCGeometry.h"
 
 NS_CC_BEGIN
 
@@ -100,10 +100,10 @@ protected:
 class PhysicsJointFixed : public PhysicsJoint
 {
 public:
-    static PhysicsJointFixed* construct(PhysicsBody* a, PhysicsBody* b, const Point& anchr);
+    static PhysicsJointFixed* construct(PhysicsBody* a, PhysicsBody* b, const Vector2& anchr);
     
 protected:
-    bool init(PhysicsBody* a, PhysicsBody* b, const Point& anchr);
+    bool init(PhysicsBody* a, PhysicsBody* b, const Vector2& anchr);
     
 protected:
     PhysicsJointFixed() {}
@@ -116,20 +116,20 @@ protected:
 class PhysicsJointLimit : public PhysicsJoint
 {
 public:
-    static PhysicsJointLimit* construct(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2);
-    static PhysicsJointLimit* construct(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2, float min, float max);
+    static PhysicsJointLimit* construct(PhysicsBody* a, PhysicsBody* b, const Vector2& anchr1, const Vector2& anchr2);
+    static PhysicsJointLimit* construct(PhysicsBody* a, PhysicsBody* b, const Vector2& anchr1, const Vector2& anchr2, float min, float max);
     
-    Point getAnchr1() const;
-    void setAnchr1(const Point& anchr1);
-    Point getAnchr2() const;
-    void setAnchr2(const Point& anchr2);
+    Vector2 getAnchr1() const;
+    void setAnchr1(const Vector2& anchr1);
+    Vector2 getAnchr2() const;
+    void setAnchr2(const Vector2& anchr2);
     float getMin() const;
     void setMin(float min);
     float getMax() const;
     void setMax(float max);
     
 protected:
-    bool init(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2, float min, float max);
+    bool init(PhysicsBody* a, PhysicsBody* b, const Vector2& anchr1, const Vector2& anchr2, float min, float max);
     
 protected:
     PhysicsJointLimit() {}
@@ -142,10 +142,10 @@ protected:
 class PhysicsJointPin : public PhysicsJoint
 {
 public:
-    static PhysicsJointPin* construct(PhysicsBody* a, PhysicsBody* b, const Point& anchr);
+    static PhysicsJointPin* construct(PhysicsBody* a, PhysicsBody* b, const Vector2& anchr);
     
 protected:
-    bool init(PhysicsBody* a, PhysicsBody* b, const Point& anchr);
+    bool init(PhysicsBody* a, PhysicsBody* b, const Vector2& anchr);
     
 protected:
     PhysicsJointPin() {}
@@ -156,13 +156,13 @@ protected:
 class PhysicsJointDistance : public PhysicsJoint
 {
 public:
-    static PhysicsJointDistance* construct(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2);
+    static PhysicsJointDistance* construct(PhysicsBody* a, PhysicsBody* b, const Vector2& anchr1, const Vector2& anchr2);
     
     float getDistance() const;
     void setDistance(float distance);
     
 protected:
-    bool init(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2);
+    bool init(PhysicsBody* a, PhysicsBody* b, const Vector2& anchr1, const Vector2& anchr2);
     
 protected:
     PhysicsJointDistance() {}
@@ -173,11 +173,11 @@ protected:
 class PhysicsJointSpring : public PhysicsJoint
 {
 public:
-    static PhysicsJointSpring* construct(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2, float stiffness, float damping);
-    Point getAnchr1() const;
-    void setAnchr1(const Point& anchr1);
-    Point getAnchr2() const;
-    void setAnchr2(const Point& anchr2);
+    static PhysicsJointSpring* construct(PhysicsBody* a, PhysicsBody* b, const Vector2& anchr1, const Vector2& anchr2, float stiffness, float damping);
+    Vector2 getAnchr1() const;
+    void setAnchr1(const Vector2& anchr1);
+    Vector2 getAnchr2() const;
+    void setAnchr2(const Vector2& anchr2);
     float getRestLength() const;
     void setRestLength(float restLength);
     float getStiffness() const;
@@ -186,7 +186,7 @@ public:
     void setDamping(float damping);
     
 protected:
-    bool init(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2, float stiffness, float damping);
+    bool init(PhysicsBody* a, PhysicsBody* b, const Vector2& anchr1, const Vector2& anchr2, float stiffness, float damping);
     
 protected:
     PhysicsJointSpring() {}
@@ -197,17 +197,17 @@ protected:
 class PhysicsJointGroove : public PhysicsJoint
 {
 public:
-    static PhysicsJointGroove* construct(PhysicsBody* a, PhysicsBody* b, const Point& grooveA, const Point& grooveB, const Point& anchr2);
+    static PhysicsJointGroove* construct(PhysicsBody* a, PhysicsBody* b, const Vector2& grooveA, const Vector2& grooveB, const Vector2& anchr2);
     
-    Point getGrooveA() const;
-    void setGrooveA(const Point& grooveA);
-    Point getGrooveB() const;
-    void setGrooveB(const Point& grooveB);
-    Point getAnchr2() const;
-    void setAnchr2(const Point& anchr2);
+    Vector2 getGrooveA() const;
+    void setGrooveA(const Vector2& grooveA);
+    Vector2 getGrooveB() const;
+    void setGrooveB(const Vector2& grooveB);
+    Vector2 getAnchr2() const;
+    void setAnchr2(const Vector2& anchr2);
     
 protected:
-    bool init(PhysicsBody* a, PhysicsBody* b, const Point& grooveA, const Point& grooveB, const Point& anchr);
+    bool init(PhysicsBody* a, PhysicsBody* b, const Vector2& grooveA, const Vector2& grooveB, const Vector2& anchr);
     
 protected:
     PhysicsJointGroove() {}

@@ -45,7 +45,7 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/.. \
                     
 include $(BUILD_STATIC_LIBRARY)
 
-$(call import-module,2d)
+$(call import-module,.)
 $(call import-module,audio/android)
 $(call import-module,curl/prebuilt/android)
 $(call import-module,Box2D)

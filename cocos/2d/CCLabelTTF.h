@@ -26,7 +26,7 @@ THE SOFTWARE.
 #ifndef __CCLABELTTF_H__
 #define __CCLABELTTF_H__
 
-#include "CCNode.h"
+#include "2d/CCNode.h"
 
 NS_CC_BEGIN
 
@@ -150,7 +150,7 @@ public:
      * @lua NA
      */
     virtual std::string getDescription() const override;
-    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
+    virtual void visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated) override;
     virtual const Size& getContentSize() const override;
 protected:
     Label*    _renderLabel;

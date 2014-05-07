@@ -53,7 +53,7 @@
 --------------------------------
 -- @function [parent=#GLViewProtocol] getVisibleOrigin 
 -- @param self
--- @return point_table#point_table ret (return value: point_table)
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#GLViewProtocol] getFrameSize 

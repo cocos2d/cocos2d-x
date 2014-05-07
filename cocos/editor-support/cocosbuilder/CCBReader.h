@@ -3,9 +3,9 @@
 
 #include <string>
 #include <vector>
-#include "CCNode.h"
-#include "CCData.h"
-#include "CCMap.h"
+#include "2d/CCNode.h"
+#include "base/CCData.h"
+#include "base/CCMap.h"
 #include "CCBSequence.h"
 #include "extensions/GUI/CCControlExtension/CCControl.h"
 

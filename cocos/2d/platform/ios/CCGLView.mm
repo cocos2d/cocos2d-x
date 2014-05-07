@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCPlatformConfig.h"
+#include "base/CCPlatformConfig.h"
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
@@ -33,7 +33,7 @@
 #include "CCDirectorCaller.h"
 #include "CCGLView.h"
 #include "CCSet.h"
-#include "CCTouch.h"
+#include "base/CCTouch.h"
 
 NS_CC_BEGIN
 

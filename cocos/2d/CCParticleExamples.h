@@ -27,7 +27,7 @@ THE SOFTWARE.
 #ifndef __CCPARTICLE_EXAMPLE_H__
 #define __CCPARTICLE_EXAMPLE_H__
 
-#include "CCParticleSystemQuad.h"
+#include "2d/CCParticleSystemQuad.h"
 
 NS_CC_BEGIN
 

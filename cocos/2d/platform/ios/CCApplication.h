@@ -26,11 +26,11 @@ THE SOFTWARE.
 #ifndef __CC_APPLICATION_IOS_H__
 #define __CC_APPLICATION_IOS_H__
 
-#include "CCPlatformConfig.h"
+#include "base/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
-#include "platform/CCCommon.h"
-#include "platform/CCApplicationProtocol.h"
+#include "2d/platform/CCCommon.h"
+#include "2d/platform/CCApplicationProtocol.h"
 
 NS_CC_BEGIN
 

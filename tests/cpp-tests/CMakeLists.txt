@@ -193,8 +193,6 @@ add_executable(${APP_NAME}
 )
 
 target_link_libraries(${APP_NAME}
-  ui
-  network
   spine
   cocostudio
   cocosbuilder

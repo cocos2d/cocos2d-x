@@ -25,8 +25,8 @@
 #include "chipmunk.h"
 #endif
 
-#include "ccTypes.h"
-#include "CCGeometry.h"
+#include "base/ccTypes.h"
+#include "math/CCGeometry.h"
 
 
 #include <stdlib.h>
@@ -63,15 +63,15 @@ static Color4F ColorForBody(cpBody *body)
 	}
 }
 
-static Point cpVert2Point(const cpVect &vert)
+static Vector2 cpVert2Point(const cpVect &vert)
 {
-    return Point(vert.x, vert.y);
+    return Vector2(vert.x, vert.y);
 }
 
-static Point* cpVertArray2ccpArrayN(const cpVect* cpVertArray, unsigned int count)
+static Vector2* cpVertArray2ccpArrayN(const cpVect* cpVertArray, unsigned int count)
 {
     if (count == 0) return NULL;
-    Point* pPoints = new Point[count];
+    Vector2* pPoints = new Vector2[count];
     
     for (unsigned int i = 0; i < count; ++i)
     {
@@ -108,7 +108,7 @@ static void DrawShape(cpShape *shape, DrawNode *renderer)
             cpPolyShape *poly = (cpPolyShape *)shape;
             Color4F line = color;
             line.a = cpflerp(color.a, 1.0, 0.5);
-            Point* pPoints = cpVertArray2ccpArrayN(poly->tVerts, poly->numVerts);
+            Vector2* pPoints = cpVertArray2ccpArrayN(poly->tVerts, poly->numVerts);
             renderer->drawPolygon(pPoints, poly->numVerts, color, 1.0, line);
             CC_SAFE_DELETE_ARRAY(pPoints);
         }
@@ -182,7 +182,7 @@ static void DrawConstraint(cpConstraint *constraint, DrawNode *renderer)
 
 // implementation of PhysicsDebugNode
 
-void PhysicsDebugNode::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void PhysicsDebugNode::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     if (! _spacePtr)
     {

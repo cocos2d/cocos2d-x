@@ -120,16 +120,16 @@ public:
     void loadShaderVertex(const char *vert, const char *frag);
 
     virtual void update(float dt);
-    virtual void setPosition(const Point &newPosition);
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+    virtual void setPosition(const Vector2 &newPosition);
+    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
 
     static ShaderNode* shaderNodeWithVertex(const char *vert, const char *frag);
 
 protected:
-    void onDraw(const kmMat4 &transform, bool transformUpdated);
+    void onDraw(const Matrix &transform, bool transformUpdated);
 
-    Vertex2F _center;
-    Vertex2F _resolution;
+    Vector2 _center;
+    Vector2 _resolution;
     float      _time;
     GLuint     _uniformCenter, _uniformResolution, _uniformTime;
     std::string _vertFileName;

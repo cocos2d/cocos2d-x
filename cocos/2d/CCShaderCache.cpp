@@ -25,10 +25,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCShaderCache.h"
-#include "CCGLProgram.h"
-#include "ccMacros.h"
-#include "ccShaders.h"
+#include "2d/CCShaderCache.h"
+#include "2d/CCGLProgram.h"
+#include "base/ccMacros.h"
+#include "2d/ccShaders.h"
 
 NS_CC_BEGIN
 

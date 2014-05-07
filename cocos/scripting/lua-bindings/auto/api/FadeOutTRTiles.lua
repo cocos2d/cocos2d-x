@@ -6,17 +6,17 @@
 --------------------------------
 -- @function [parent=#FadeOutTRTiles] turnOnTile 
 -- @param self
--- @param #point_table point
+-- @param #array_table array
         
 --------------------------------
 -- @function [parent=#FadeOutTRTiles] turnOffTile 
 -- @param self
--- @param #point_table point
+-- @param #array_table array
         
 --------------------------------
 -- @function [parent=#FadeOutTRTiles] transformTile 
 -- @param self
--- @param #point_table point
+-- @param #array_table array
 -- @param #float float
         
 --------------------------------

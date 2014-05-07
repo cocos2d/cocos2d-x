@@ -841,9 +841,9 @@ int lua_cocos2dx_ui_Widget_setSizePercent(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->setSizePercent(arg0);
@@ -1069,8 +1069,8 @@ int lua_cocos2dx_ui_Widget_getTouchEndPos(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const cocos2d::Point& ret = cobj->getTouchEndPos();
-        point_to_luaval(tolua_S, ret);
+        const cocos2d::Vector2& ret = cobj->getTouchEndPos();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getTouchEndPos",argc, 0);
@@ -1111,9 +1111,9 @@ int lua_cocos2dx_ui_Widget_setPositionPercent(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->setPositionPercent(arg0);
@@ -1783,8 +1783,8 @@ int lua_cocos2dx_ui_Widget_getWorldPosition(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        cocos2d::Point ret = cobj->getWorldPosition();
-        point_to_luaval(tolua_S, ret);
+        cocos2d::Vector2 ret = cobj->getWorldPosition();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getWorldPosition",argc, 0);
@@ -2006,8 +2006,8 @@ int lua_cocos2dx_ui_Widget_getTouchMovePos(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const cocos2d::Point& ret = cobj->getTouchMovePos();
-        point_to_luaval(tolua_S, ret);
+        const cocos2d::Vector2& ret = cobj->getTouchMovePos();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getTouchMovePos",argc, 0);
@@ -2278,8 +2278,8 @@ int lua_cocos2dx_ui_Widget_getSizePercent(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const cocos2d::Point& ret = cobj->getSizePercent();
-        point_to_luaval(tolua_S, ret);
+        const cocos2d::Vector2& ret = cobj->getSizePercent();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getSizePercent",argc, 0);
@@ -2322,8 +2322,8 @@ int lua_cocos2dx_ui_Widget_getTouchStartPos(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const cocos2d::Point& ret = cobj->getTouchStartPos();
-        point_to_luaval(tolua_S, ret);
+        const cocos2d::Vector2& ret = cobj->getTouchStartPos();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getTouchStartPos",argc, 0);
@@ -2454,9 +2454,9 @@ int lua_cocos2dx_ui_Widget_clippingParentAreaContainPoint(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         bool ret = cobj->clippingParentAreaContainPoint(arg0);
@@ -2774,8 +2774,8 @@ int lua_cocos2dx_ui_Widget_getPositionPercent(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const cocos2d::Point& ret = cobj->getPositionPercent();
-        point_to_luaval(tolua_S, ret);
+        const cocos2d::Vector2& ret = cobj->getPositionPercent();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getPositionPercent",argc, 0);
@@ -2816,9 +2816,9 @@ int lua_cocos2dx_ui_Widget_hitTest(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         bool ret = cobj->hitTest(arg0);
@@ -2999,13 +2999,13 @@ int lua_cocos2dx_ui_Widget_checkChildInfo(lua_State* tolua_S)
     {
         int arg0;
         cocos2d::ui::Widget* arg1;
-        cocos2d::Point arg2;
+        cocos2d::Vector2 arg2;
 
         ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0);
 
         ok &= luaval_to_object<cocos2d::ui::Widget>(tolua_S, 3, "ccui.Widget",&arg1);
 
-        ok &= luaval_to_point(tolua_S, 4, &arg2);
+        ok &= luaval_to_vector2(tolua_S, 4, &arg2);
         if(!ok)
             return 0;
         cobj->checkChildInfo(arg0, arg1, arg2);
@@ -3278,9 +3278,9 @@ int lua_cocos2dx_ui_Layout_setBackGroundColorVector(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->setBackGroundColorVector(arg0);
@@ -3464,8 +3464,8 @@ int lua_cocos2dx_ui_Layout_getBackGroundColorVector(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const cocos2d::Point& ret = cobj->getBackGroundColorVector();
-        point_to_luaval(tolua_S, ret);
+        const cocos2d::Vector2& ret = cobj->getBackGroundColorVector();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getBackGroundColorVector",argc, 0);
@@ -8960,11 +8960,11 @@ int lua_cocos2dx_ui_ScrollView_scrollToPercentBothDirection(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 3) 
     {
-        cocos2d::Point arg0;
+        cocos2d::Vector2 arg0;
         double arg1;
         bool arg2;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
 
         ok &= luaval_to_number(tolua_S, 3,&arg1);
 
@@ -9869,9 +9869,9 @@ int lua_cocos2dx_ui_ScrollView_jumpToPercentBothDirection(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->jumpToPercentBothDirection(arg0);
@@ -13508,9 +13508,9 @@ int lua_cocos2dx_ui_TextField_hitTest(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         bool ret = cobj->hitTest(arg0);
@@ -15474,9 +15474,9 @@ int lua_cocos2dx_ui_RichText_setAnchorPoint(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->setAnchorPoint(arg0);

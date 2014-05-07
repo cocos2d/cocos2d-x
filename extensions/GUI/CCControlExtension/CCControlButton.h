@@ -33,7 +33,7 @@
 #include "CCControl.h"
 #include "CCInvocation.h"
 #include "CCScale9Sprite.h"
-#include "CCMap.h"
+#include "base/CCMap.h"
 
 NS_CC_EXT_BEGIN
 
@@ -231,7 +231,7 @@ protected:
     /** Scale ratio button on touchdown. Default value 1.1f */
     CC_SYNTHESIZE(float, _scaleRatio, ScaleRatio);
 
-    CC_PROPERTY_PASS_BY_REF(Point, _labelAnchorPoint, LabelAnchorPoint);
+    CC_PROPERTY_PASS_BY_REF(Vector2, _labelAnchorPoint, LabelAnchorPoint);
 
     std::unordered_map<int, std::string> _titleDispatchTable;
     std::unordered_map<int, Color3B> _titleColorDispatchTable;

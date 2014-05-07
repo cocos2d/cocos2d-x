@@ -19,7 +19,7 @@
 -- @param #cc.Texture2D texture2d
         
 --------------------------------
--- overload function: initWithTexture(cc.Texture2D, rect_table, bool, point_table, size_table)
+-- overload function: initWithTexture(cc.Texture2D, rect_table, bool, array_table, size_table)
 --          
 -- overload function: initWithTexture(cc.Texture2D, rect_table)
 --          
@@ -28,7 +28,7 @@
 -- @param #cc.Texture2D texture2d
 -- @param #rect_table rect
 -- @param #bool bool
--- @param #point_table point
+-- @param #array_table array
 -- @param #size_table size
 -- @return bool#bool ret (retunr value: bool)
 
@@ -50,7 +50,7 @@
 --------------------------------
 -- @function [parent=#SpriteFrame] setOffsetInPixels 
 -- @param self
--- @param #point_table point
+-- @param #array_table array
         
 --------------------------------
 -- @function [parent=#SpriteFrame] getRectInPixels 
@@ -75,12 +75,12 @@
 --------------------------------
 -- @function [parent=#SpriteFrame] setOffset 
 -- @param self
--- @param #point_table point
+-- @param #array_table array
         
 --------------------------------
 -- @function [parent=#SpriteFrame] getOffset 
 -- @param self
--- @return point_table#point_table ret (return value: point_table)
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#SpriteFrame] isRotated 
@@ -88,7 +88,7 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- overload function: initWithTextureFilename(string, rect_table, bool, point_table, size_table)
+-- overload function: initWithTextureFilename(string, rect_table, bool, array_table, size_table)
 --          
 -- overload function: initWithTextureFilename(string, rect_table)
 --          
@@ -97,7 +97,7 @@
 -- @param #string str
 -- @param #rect_table rect
 -- @param #bool bool
--- @param #point_table point
+-- @param #array_table array
 -- @param #size_table size
 -- @return bool#bool ret (retunr value: bool)
 
@@ -109,7 +109,7 @@
 --------------------------------
 -- @function [parent=#SpriteFrame] getOffsetInPixels 
 -- @param self
--- @return point_table#point_table ret (return value: point_table)
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#SpriteFrame] getOriginalSize 
@@ -117,7 +117,7 @@
 -- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
--- overload function: create(string, rect_table, bool, point_table, size_table)
+-- overload function: create(string, rect_table, bool, array_table, size_table)
 --          
 -- overload function: create(string, rect_table)
 --          
@@ -126,12 +126,12 @@
 -- @param #string str
 -- @param #rect_table rect
 -- @param #bool bool
--- @param #point_table point
+-- @param #array_table array
 -- @param #size_table size
 -- @return SpriteFrame#SpriteFrame ret (retunr value: cc.SpriteFrame)
 
 --------------------------------
--- overload function: createWithTexture(cc.Texture2D, rect_table, bool, point_table, size_table)
+-- overload function: createWithTexture(cc.Texture2D, rect_table, bool, array_table, size_table)
 --          
 -- overload function: createWithTexture(cc.Texture2D, rect_table)
 --          
@@ -140,7 +140,7 @@
 -- @param #cc.Texture2D texture2d
 -- @param #rect_table rect
 -- @param #bool bool
--- @param #point_table point
+-- @param #array_table array
 -- @param #size_table size
 -- @return SpriteFrame#SpriteFrame ret (retunr value: cc.SpriteFrame)
 

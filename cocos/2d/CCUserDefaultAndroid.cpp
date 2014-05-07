@@ -22,13 +22,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCUserDefault.h"
-#include "CCPlatformConfig.h"
-#include "platform/CCCommon.h"
-#include "base64.h"
+#include "2d/CCUserDefault.h"
+#include "base/CCPlatformConfig.h"
+#include "2d/platform/CCCommon.h"
+#include "base/base64.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
+#include "2d/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 
 // root name of xml
 #define USERDEFAULT_ROOT_NAME    "userDefaultRoot"
@@ -38,7 +38,7 @@ THE SOFTWARE.
 #define XML_FILE_NAME "UserDefault.xml"
 
 #ifdef KEEP_COMPATABILITY
-#include "platform/CCFileUtils.h"
+#include "2d/platform/CCFileUtils.h"
 #include "../tinyxml2/tinyxml2.h"
 #endif
 

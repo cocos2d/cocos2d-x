@@ -6,15 +6,15 @@
 --------------------------------
 -- @function [parent=#TMXLayer] getTileGIDAt 
 -- @param self
--- @param #point_table point
+-- @param #array_table array
 -- @param #cc.TMXTileFlags_ tmxtileflags_
 -- @return unsigned int#unsigned int ret (return value: unsigned int)
         
 --------------------------------
 -- @function [parent=#TMXLayer] getPositionAt 
 -- @param self
--- @param #point_table point
--- @return point_table#point_table ret (return value: point_table)
+-- @param #array_table array
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#TMXLayer] setLayerOrientation 
@@ -58,7 +58,7 @@
 --------------------------------
 -- @function [parent=#TMXLayer] removeTileAt 
 -- @param self
--- @param #point_table point
+-- @param #array_table array
         
 --------------------------------
 -- @function [parent=#TMXLayer] initWithTilesetInfo 
@@ -73,14 +73,14 @@
 -- @param self
         
 --------------------------------
--- overload function: setTileGID(unsigned int, point_table, cc.TMXTileFlags_)
+-- overload function: setTileGID(unsigned int, array_table, cc.TMXTileFlags_)
 --          
--- overload function: setTileGID(unsigned int, point_table)
+-- overload function: setTileGID(unsigned int, array_table)
 --          
 -- @function [parent=#TMXLayer] setTileGID
 -- @param self
 -- @param #unsigned int int
--- @param #point_table point
+-- @param #array_table array
 -- @param #cc.TMXTileFlags_ tmxtileflags_
 
 --------------------------------
@@ -126,7 +126,7 @@
 --------------------------------
 -- @function [parent=#TMXLayer] getTileAt 
 -- @param self
--- @param #point_table point
+-- @param #array_table array
 -- @return Sprite#Sprite ret (return value: cc.Sprite)
         
 --------------------------------

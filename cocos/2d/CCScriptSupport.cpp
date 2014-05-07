@@ -23,11 +23,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCScriptSupport.h"
+#include "2d/CCScriptSupport.h"
 
 #if CC_ENABLE_SCRIPT_BINDING
 
-#include "CCScheduler.h"
+#include "base/CCScheduler.h"
 
 bool CC_DLL cc_assert_script_compatible(const char *msg)
 {

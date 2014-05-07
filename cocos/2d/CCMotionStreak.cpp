@@ -23,14 +23,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCMotionStreak.h"
-#include "CCTextureCache.h"
-#include "ccGLStateCache.h"
-#include "CCGLProgram.h"
-#include "CCShaderCache.h"
-#include "ccMacros.h"
-#include "CCDirector.h"
-#include "CCVertex.h"
+#include "2d/CCMotionStreak.h"
+#include "2d/CCTextureCache.h"
+#include "2d/ccGLStateCache.h"
+#include "2d/CCGLProgram.h"
+#include "2d/CCShaderCache.h"
+#include "2d/CCVertex.h"
+#include "base/ccMacros.h"
+#include "base/CCDirector.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCRenderer.h"
 
@@ -41,7 +41,7 @@ MotionStreak::MotionStreak()
 , _startingPositionInitialized(false)
 , _texture(nullptr)
 , _blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED)
-, _positionR(Point::ZERO)
+, _positionR(Vector2::ZERO)
 , _stroke(0.0f)
 , _fadeDelta(0.0f)
 , _minSeg(0.0f)
@@ -102,12 +102,12 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
 
 bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Color3B& color, Texture2D* texture)
 {
-    Node::setPosition(Point::ZERO);
-    setAnchorPoint(Point::ZERO);
+    Node::setPosition(Vector2::ZERO);
+    setAnchorPoint(Vector2::ZERO);
     ignoreAnchorPointForPosition(true);
     _startingPositionInitialized = false;
 
-    _positionR = Point::ZERO;
+    _positionR = Vector2::ZERO;
     _fastMode = true;
     _minSeg = (minSeg == -1.0f) ? stroke/5.0f : minSeg;
     _minSeg *= _minSeg;
@@ -118,9 +118,9 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
     _maxPoints = (int)(fade*60.0f)+2;
     _nuPoints = 0;
     _pointState = (float *)malloc(sizeof(float) * _maxPoints);
-    _pointVertexes = (Point*)malloc(sizeof(Point) * _maxPoints);
+    _pointVertexes = (Vector2*)malloc(sizeof(Vector2) * _maxPoints);
 
-    _vertices = (Vertex2F*)malloc(sizeof(Vertex2F) * _maxPoints * 2);
+    _vertices = (Vector2*)malloc(sizeof(Vector2) * _maxPoints * 2);
     _texCoords = (Tex2F*)malloc(sizeof(Tex2F) * _maxPoints * 2);
     _colorPointer =  (GLubyte*)malloc(sizeof(GLubyte) * _maxPoints * 2 * 4);
 
@@ -137,7 +137,7 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
     return true;
 }
 
-void MotionStreak::setPosition(const Point& position)
+void MotionStreak::setPosition(const Vector2& position)
 {
     if (!_startingPositionInitialized) {
         _startingPositionInitialized = true;
@@ -154,7 +154,7 @@ void MotionStreak::setPosition(float x, float y)
     _positionR.y = y;
 }
 
-const Point& MotionStreak::getPosition() const
+const Vector2& MotionStreak::getPosition() const
 {
     return _positionR;
 }
@@ -373,7 +373,7 @@ void MotionStreak::reset()
     _nuPoints = 0;
 }
 
-void MotionStreak::onDraw(const kmMat4 &transform, bool transformUpdated)
+void MotionStreak::onDraw(const Matrix &transform, bool transformUpdated)
 {  
     getShaderProgram()->use();
     getShaderProgram()->setUniformsForBuiltins(transform);
@@ -385,7 +385,7 @@ void MotionStreak::onDraw(const kmMat4 &transform, bool transformUpdated)
 
 #ifdef EMSCRIPTEN
     // Size calculations from ::initWithFade
-    setGLBufferData(_vertices, (sizeof(Vertex2F) * _maxPoints * 2), 0);
+    setGLBufferData(_vertices, (sizeof(Vector2) * _maxPoints * 2), 0);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
     setGLBufferData(_texCoords, (sizeof(Tex2F) * _maxPoints * 2), 1);
@@ -403,7 +403,7 @@ void MotionStreak::onDraw(const kmMat4 &transform, bool transformUpdated)
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _nuPoints*2);
 }
 
-void MotionStreak::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void MotionStreak::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     if(_nuPoints <= 1)
         return;

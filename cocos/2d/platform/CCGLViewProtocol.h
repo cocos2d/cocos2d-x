@@ -26,8 +26,8 @@ THE SOFTWARE.
 #ifndef __CCGLVIEWPROTOCOL_H__
 #define __CCGLVIEWPROTOCOL_H__
 
-#include "ccTypes.h"
-#include "CCEventTouch.h"
+#include "base/ccTypes.h"
+#include "base/CCEventTouch.h"
 
 #include <vector>
 
@@ -113,7 +113,7 @@ public:
     /**
      * Get the visible origin point of opengl viewport.
      */
-    virtual Point getVisibleOrigin() const;
+    virtual Vector2 getVisibleOrigin() const;
 
     /**
      * Get the visible rectangle of opengl viewport.

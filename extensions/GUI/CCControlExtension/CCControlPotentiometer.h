@@ -28,7 +28,7 @@
 #define __CCCONTROLPOTENTIOMETER_H__
 
 #include "CCControl.h"
-#include "CCProgressTimer.h"
+#include "2d/CCProgressTimer.h"
 
 NS_CC_EXT_BEGIN
 
@@ -82,18 +82,18 @@ public:
     virtual void onTouchEnded(Touch *pTouch, Event *pEvent) override;
 
     /** Factorize the event dispath into these methods. */
-    void potentiometerBegan(Point location);
-    void potentiometerMoved(Point location);
-    void potentiometerEnded(Point location);
+    void potentiometerBegan(Vector2 location);
+    void potentiometerMoved(Vector2 location);
+    void potentiometerEnded(Vector2 location);
 
     /** Returns the distance between the point1 and point2. */
-    float distanceBetweenPointAndPoint(Point point1, Point point2);
+    float distanceBetweenPointAndPoint(Vector2 point1, Vector2 point2);
     /** Returns the angle in degree between line1 and line2. */
     float angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint(
-        Point beginLineA, 
-        Point endLineA,
-        Point beginLineB,
-        Point endLineB);
+        Vector2 beginLineA, 
+        Vector2 endLineA,
+        Vector2 beginLineB,
+        Vector2 endLineB);
 
 protected:
     /** Contains the receiver’s current value. */
@@ -107,7 +107,7 @@ protected:
 
     CC_SYNTHESIZE_RETAIN(Sprite*, _thumbSprite, ThumbSprite)
     CC_SYNTHESIZE_RETAIN(ProgressTimer*, _progressTimer, ProgressTimer)
-    CC_SYNTHESIZE(Point, _previousLocation, PreviousLocation)
+    CC_SYNTHESIZE(Vector2, _previousLocation, PreviousLocation)
 };
 
 // end of GUI group

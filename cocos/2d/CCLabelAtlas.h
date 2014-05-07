@@ -84,7 +84,7 @@ public:
     virtual std::string getDescription() const override;
 
 #if CC_LABELATLAS_DEBUG_DRAW
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
 #endif
 
 protected:
@@ -100,7 +100,7 @@ protected:
 
 #if CC_LABELATLAS_DEBUG_DRAW
     CustomCommand   _customDebugDrawCommand;
-    void drawDebugData(const kmMat4& transform, bool transformUpdated);
+    void drawDebugData(const Matrix& transform, bool transformUpdated);
 #endif
 
     // string to render

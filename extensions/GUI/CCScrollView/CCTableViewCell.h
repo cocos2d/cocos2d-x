@@ -27,7 +27,7 @@
 #define __CCTABLEVIEWCELL_H__
 
 #include "extensions/ExtensionMacros.h"
-#include "CCNode.h"
+#include "2d/CCNode.h"
 
 NS_CC_EXT_BEGIN
 

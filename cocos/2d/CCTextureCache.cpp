@@ -30,19 +30,19 @@ THE SOFTWARE.
 #include <cctype>
 #include <list>
 
-#include "CCTextureCache.h"
-#include "CCTexture2D.h"
-#include "ccMacros.h"
-#include "CCDirector.h"
-#include "platform/CCFileUtils.h"
-#include "ccUtils.h"
-#include "CCScheduler.h"
+#include "2d/CCTextureCache.h"
+#include "2d/CCTexture2D.h"
+#include "base/ccMacros.h"
+#include "base/CCDirector.h"
+#include "2d/platform/CCFileUtils.h"
+#include "2d/ccUtils.h"
+#include "base/CCScheduler.h"
 #include "deprecated/CCString.h"
 
 
 #ifdef EMSCRIPTEN
 #include <emscripten/emscripten.h>
-#include "platform/emscripten/CCTextureCacheEmscripten.h"
+#include "2d/platform/emscripten/CCTextureCacheEmscripten.h"
 #endif // EMSCRIPTEN
 
 using namespace std;

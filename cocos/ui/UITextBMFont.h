@@ -66,6 +66,7 @@ public:
     
     /** get string value for labelbmfont*/
     const std::string getStringValue();
+
     virtual const Size& getVirtualRendererSize() const override;
     virtual Node* getVirtualRenderer() override;
     /**

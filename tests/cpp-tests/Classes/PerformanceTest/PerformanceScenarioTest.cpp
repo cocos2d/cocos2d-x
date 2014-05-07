@@ -40,7 +40,7 @@ void ScenarioMenuLayer::onEnter()
     // Title
     auto label = Label::createWithTTF(title().c_str(), "fonts/arial.ttf", 32);
     addChild(label, 1);
-    label->setPosition(Point(s.width/2, s.height-50));
+    label->setPosition(Vector2(s.width/2, s.height-50));
 
     // Subtitle
     std::string strSubTitle = subtitle();
@@ -48,7 +48,7 @@ void ScenarioMenuLayer::onEnter()
     {
         auto l = Label::createWithTTF(strSubTitle.c_str(), "fonts/Thonburi.ttf", 16);
         addChild(l, 1);
-        l->setPosition(Point(s.width/2, s.height-80));
+        l->setPosition(Vector2(s.width/2, s.height-80));
     }
 
     performTests();
@@ -90,12 +90,12 @@ void ScenarioTest::performTests()
 
     // add tile map
     _map1 = TMXTiledMap::create("TileMaps/iso-test.tmx");
-    _map1->setAnchorPoint( Point(0.5, 0.5) );
+    _map1->setAnchorPoint( Vector2(0.5, 0.5) );
     _map1->setPosition(origin);
     this->addChild(_map1);
 
     _map2 = TMXTiledMap::create("TileMaps/iso-test2.tmx");
-    _map2->setAnchorPoint( Point(0.5, 0.5) );
+    _map2->setAnchorPoint( Vector2(0.5, 0.5) );
     _map2->setPosition(origin);
     this->addChild(_map2);
 
@@ -106,8 +106,8 @@ void ScenarioTest::performTests()
                                                     MenuItemFont::create( "Add/Remove Particle"),
                                                     MenuItemFont::create( "Add/Remove Particle System"),
                                                     NULL);
-    _itemToggle->setAnchorPoint(Point(0.0f, 0.5f));
-    _itemToggle->setPosition(Point(origin.x, origin.y + s.height / 2));
+    _itemToggle->setAnchorPoint(Vector2(0.0f, 0.5f));
+    _itemToggle->setPosition(Vector2(origin.x, origin.y + s.height / 2));
 
     // add decrease & increase menu item
     MenuItemFont::setFontSize(65);
@@ -127,7 +127,7 @@ void ScenarioTest::performTests()
             break;
         }
 	});
-    decrease->setPosition(Point(origin.x + s.width / 2 - 80, origin.y + 80));
+    decrease->setPosition(Vector2(origin.x + s.width / 2 - 80, origin.y + 80));
     decrease->setColor(Color3B(0,200,20));
     auto increase = MenuItemFont::create(" + ", [&](Ref *sender) {
 		int idx = _itemToggle->getSelectedIndex();
@@ -146,30 +146,30 @@ void ScenarioTest::performTests()
         }
 	});
     increase->setColor(Color3B(0,200,20));
-    increase->setPosition(Point(origin.x + s.width / 2 + 80, origin.y + 80));
+    increase->setPosition(Vector2(origin.x + s.width / 2 + 80, origin.y + 80));
     
     auto menu = Menu::create(_itemToggle, decrease, increase, NULL);
-    menu->setPosition(Point(0.0f, 0.0f));
+    menu->setPosition(Vector2(0.0f, 0.0f));
     addChild(menu, 10);
 
     
     // add tip labels
     _spriteLabel = Label::createWithTTF("Sprites : 0", "fonts/arial.ttf", 15);
-    _spriteLabel->setAnchorPoint(Point(0.0f, 0.5f));
+    _spriteLabel->setAnchorPoint(Vector2(0.0f, 0.5f));
     addChild(_spriteLabel, 10);
-    _spriteLabel->setPosition(Point(origin.x, origin.y + s.height/2 + 70));
+    _spriteLabel->setPosition(Vector2(origin.x, origin.y + s.height/2 + 70));
     
     char str[32] = { 0 };
     sprintf(str, "Particles : %d", _particleNumber);
     _particleLabel = Label::createWithTTF(str, "fonts/arial.ttf", 15);
-    _particleLabel->setAnchorPoint(Point(0.0f, 0.5f));
+    _particleLabel->setAnchorPoint(Vector2(0.0f, 0.5f));
     addChild(_particleLabel, 10);
-    _particleLabel->setPosition(Point(origin.x, origin.y + s.height/2 + 45));
+    _particleLabel->setPosition(Vector2(origin.x, origin.y + s.height/2 + 45));
     
     _parsysLabel = Label::createWithTTF("Particle System : 0", "fonts/arial.ttf", 15);
-    _parsysLabel->setAnchorPoint(Point(0.0f, 0.5f));
+    _parsysLabel->setAnchorPoint(Vector2(0.0f, 0.5f));
     addChild(_parsysLabel, 10);
-    _parsysLabel->setPosition(Point(origin.x, origin.y + s.height/2 + 20));
+    _parsysLabel->setPosition(Vector2(origin.x, origin.y + s.height/2 + 20));
 
     // add sprites
     addNewSprites(_initSpriteNum);
@@ -236,7 +236,7 @@ void ScenarioTest::addNewSprites(int num)
         
         float randomx = CCRANDOM_0_1();
         float randomy = CCRANDOM_0_1();
-        sprite->setPosition(origin + Point(randomx * s.width, randomy * s.height));
+        sprite->setPosition(origin + Vector2(randomx * s.width, randomy * s.height));
         
         ActionInterval* action;
         float random = CCRANDOM_0_1();
@@ -310,7 +310,7 @@ void ScenarioTest::addParticleSystem(int num)
 
         float randomx = CCRANDOM_0_1();
         float randomy = CCRANDOM_0_1();
-        par->setPosition(origin + Point(s.width * randomx, s.height * randomy));
+        par->setPosition(origin + Vector2(s.width * randomx, s.height * randomy));
         par->setTotalParticles(_particleNumber);
         addChild(par, 9);
 

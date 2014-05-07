@@ -25,12 +25,12 @@ THE SOFTWARE.
 #ifndef __CC_EXTENTIONS_CCINPUTDELEGATE_H__
 #define __CC_EXTENTIONS_CCINPUTDELEGATE_H__
 
-#include "CCPlatformMacros.h"
-#include "CCTouch.h"
-#include "CCEvent.h"
-#include "ccTypes.h"
-#include "CCEventKeyboard.h"
-#include "CCEventListener.h"
+#include "base/CCPlatformMacros.h"
+#include "base/CCTouch.h"
+#include "base/CCEvent.h"
+#include "base/ccTypes.h"
+#include "base/CCEventKeyboard.h"
+#include "base/CCEventListener.h"
 
 namespace cocos2d {
     class __Set;

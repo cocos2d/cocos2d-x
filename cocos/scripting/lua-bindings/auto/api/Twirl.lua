@@ -26,19 +26,19 @@
 --------------------------------
 -- @function [parent=#Twirl] setPosition 
 -- @param self
--- @param #point_table point
+-- @param #array_table array
         
 --------------------------------
 -- @function [parent=#Twirl] getPosition 
 -- @param self
--- @return point_table#point_table ret (return value: point_table)
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#Twirl] create 
 -- @param self
 -- @param #float float
 -- @param #size_table size
--- @param #point_table point
+-- @param #array_table array
 -- @param #unsigned int int
 -- @param #float float
 -- @return Twirl#Twirl ret (return value: cc.Twirl)

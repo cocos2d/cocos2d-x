@@ -23,7 +23,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCActionPageTurn3D.h"
+#include "2d/CCActionPageTurn3D.h"
 
 NS_CC_BEGIN
 
@@ -76,7 +76,7 @@ void PageTurn3D::update(float time)
         for (int j = 0; j <= _gridSize.height; ++j)
         {
             // Get original vertex
-            Vertex3F p = getOriginalVertex(Point(i ,j));
+            Vector3 p = getOriginalVertex(Vector2(i ,j));
             
             float R = sqrtf((p.x * p.x) + ((p.y - ay) * (p.y - ay)));
             float r = R * sinTheta;
@@ -111,7 +111,7 @@ void PageTurn3D::update(float time)
             }
             
             // Set new coords
-            setVertex(Point(i, j), p);
+            setVertex(Vector2(i, j), p);
             
         }
     }

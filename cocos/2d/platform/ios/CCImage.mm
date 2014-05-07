@@ -23,11 +23,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCPlatformConfig.h"
+#include "base/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
-#import "CCImage.h"
-#import "platform/CCCommon.h"
+#import "2d/platform/CCImage.h"
+#import "2d/platform/CCCommon.h"
 #import <string>
 
 #import <Foundation/Foundation.h>

@@ -11,7 +11,7 @@
 --------------------------------
 -- @function [parent=#CardinalSplineTo] updatePosition 
 -- @param self
--- @param #point_table point
+-- @param #array_table array
         
 --------------------------------
 -- @function [parent=#CardinalSplineTo] initWithDuration 

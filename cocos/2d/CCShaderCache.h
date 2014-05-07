@@ -28,7 +28,7 @@ THE SOFTWARE.
 #ifndef __CCSHADERCACHE_H__
 #define __CCSHADERCACHE_H__
 
-#include "CCRef.h"
+#include "base/CCRef.h"
 
 #include <string>
 #include <unordered_map>

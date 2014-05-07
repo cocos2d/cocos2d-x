@@ -1,8 +1,5 @@
-#include "CCConfiguration.h"
 #include "RenderTextureTest.h"
 #include "../testBasic.h"
-#include "renderer/CCRenderer.h"
-#include "renderer/CCCustomCommand.h"
 
 // Test #1 by Jason Booth (slipster216)
 // Test #3 by David Deaco (ddeaco)
@@ -97,7 +94,7 @@ RenderTextureSave::RenderTextureSave()
     // create a render texture, this is what we are going to draw into
     _target = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA8888);
     _target->retain();
-    _target->setPosition(Point(s.width / 2, s.height / 2));
+    _target->setPosition(Vector2(s.width / 2, s.height / 2));
 
     // note that the render texture is a Node, and contains a sprite of its texture for convience,
     // so we can just parent it to the scene like any other Node
@@ -114,7 +111,7 @@ RenderTextureSave::RenderTextureSave()
     auto menu = Menu::create(item1, item2, NULL);
     this->addChild(menu);
     menu->alignItemsVertically();
-    menu->setPosition(Point(VisibleRect::rightTop().x - 80, VisibleRect::rightTop().y - 30));
+    menu->setPosition(Vector2(VisibleRect::rightTop().x - 80, VisibleRect::rightTop().y - 30));
 }
 
 std::string RenderTextureSave::title() const
@@ -151,7 +148,7 @@ void RenderTextureSave::saveImage(cocos2d::Ref *sender)
         auto sprite = Sprite::create(fileName);
         addChild(sprite);
         sprite->setScale(0.3f);
-        sprite->setPosition(Point(40, 40));
+        sprite->setPosition(Vector2(40, 40));
         sprite->setRotation(counter * 3);
     };
     runAction(Sequence::create(action1, CallFunc::create(func), NULL));
@@ -195,7 +192,7 @@ void RenderTextureSave::onTouchesMoved(const std::vector<Touch*>& touches, Event
             float difx = end.x - start.x;
             float dify = end.y - start.y;
             float delta = (float)i / distance;
-            _brushs.at(i)->setPosition(Point(start.x + (difx * delta), start.y + (dify * delta)));
+            _brushs.at(i)->setPosition(Vector2(start.x + (difx * delta), start.y + (dify * delta)));
             _brushs.at(i)->setRotation(rand() % 360);
             float r = (float)(rand() % 50 / 50.f) + 0.25f;
             _brushs.at(i)->setScale(r);
@@ -234,10 +231,10 @@ RenderTextureIssue937::RenderTextureIssue937()
 
     auto s = Director::getInstance()->getWinSize();
     auto spr_premulti = Sprite::create("Images/fire.png");
-    spr_premulti->setPosition(Point(s.width/2-16, s.height/2+16));
+    spr_premulti->setPosition(Vector2(s.width/2-16, s.height/2+16));
 
     auto spr_nonpremulti = Sprite::create("Images/fire.png");
-    spr_nonpremulti->setPosition(Point(s.width/2-16, s.height/2-16));
+    spr_nonpremulti->setPosition(Vector2(s.width/2-16, s.height/2-16));
     
     /* A2 & B2 setup */
     auto rend = RenderTexture::create(32, 64, Texture2D::PixelFormat::RGBA8888);
@@ -250,7 +247,7 @@ RenderTextureIssue937::RenderTextureIssue937()
     auto spr_size = spr_premulti->getContentSize();
     rend->setKeepMatrix(true);
     Size pixelSize = Director::getInstance()->getWinSizeInPixels();
-    rend->setVirtualViewport(Point(s.width/2-32, s.height/2-32),Rect(0,0,s.width,s.height),Rect(0,0,pixelSize.width,pixelSize.height));
+    rend->setVirtualViewport(Vector2(s.width/2-32, s.height/2-32),Rect(0,0,s.width,s.height),Rect(0,0,pixelSize.width,pixelSize.height));
 
     // It's possible to modify the RenderTexture blending function by
     //        [[rend sprite] setBlendFunc:(BlendFunc) {GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
@@ -259,7 +256,7 @@ RenderTextureIssue937::RenderTextureIssue937()
     spr_nonpremulti->visit();
     rend->end();
 
-    rend->setPosition(Point(s.width/2+16, s.height/2));
+    rend->setPosition(Vector2(s.width/2+16, s.height/2));
 
     addChild(spr_nonpremulti);
     addChild(spr_premulti);
@@ -298,15 +295,15 @@ RenderTextureZbuffer::RenderTextureZbuffer()
     
     auto size = Director::getInstance()->getWinSize();
     auto label = Label::createWithTTF("vertexZ = 50", "fonts/Marker Felt.ttf", 64);
-    label->setPosition(Point(size.width / 2, size.height * 0.25f));
+    label->setPosition(Vector2(size.width / 2, size.height * 0.25f));
     this->addChild(label);
 
     auto label2 = Label::createWithTTF("vertexZ = 0", "fonts/Marker Felt.ttf", 64);
-    label2->setPosition(Point(size.width / 2, size.height * 0.5f));
+    label2->setPosition(Vector2(size.width / 2, size.height * 0.5f));
     this->addChild(label2);
 
     auto label3 = Label::createWithTTF("vertexZ = -50", "fonts/Marker Felt.ttf", 64);
-    label3->setPosition(Point(size.width / 2, size.height * 0.75f));
+    label3->setPosition(Vector2(size.width / 2, size.height * 0.75f));
     this->addChild(label3);
 
     label->setPositionZ(50);
@@ -411,8 +408,7 @@ void RenderTextureZbuffer::renderScreenShot()
     {
         return;
     }
-    texture->setAnchorPoint(Point(0, 0));
-    texture->setKeepMatrix(true);
+    
     texture->begin();
 
     this->visit();
@@ -421,7 +417,7 @@ void RenderTextureZbuffer::renderScreenShot()
 
     auto sprite = Sprite::createWithTexture(texture->getSprite()->getTexture());
 
-    sprite->setPosition(Point(256, 256));
+    sprite->setPosition(Vector2(256, 256));
     sprite->setOpacity(182);
     sprite->setFlippedY(1);
     this->addChild(sprite, 999999);
@@ -455,7 +451,7 @@ RenderTexturePartTest::RenderTexturePartTest()
     _rend->retain();
     _rend->setKeepMatrix(true);
     Size pixelSize = Director::getInstance()->getWinSizeInPixels();
-    _rend->setVirtualViewport(Point(size.width/2-150, size.height/2-150),Rect(0,0,size.width,size.height),Rect(0,0,pixelSize.width,pixelSize.height));
+    _rend->setVirtualViewport(Vector2(size.width/2-150, size.height/2-150),Rect(0,0,size.width,size.height),Rect(0,0,pixelSize.width,pixelSize.height));
     
     _rend->beginWithClear(1, 0, 0, 1);
     sprite1->visit();
@@ -465,7 +461,7 @@ RenderTexturePartTest::RenderTexturePartTest()
     _rend->end();
     
     _spriteDraw = Sprite::createWithTexture(_rend->getSprite()->getTexture());
-    FiniteTimeAction* baseAction = MoveBy::create(1, Point(size.width,0));
+    FiniteTimeAction* baseAction = MoveBy::create(1, Vector2(size.width,0));
     _spriteDraw->setPosition(0,size.height/2);
     _spriteDraw->setScaleY(-1);
     _spriteDraw->runAction(RepeatForever::create(Sequence::create
@@ -496,19 +492,19 @@ RenderTextureTestDepthStencil::RenderTextureTestDepthStencil()
 
     _spriteDS = Sprite::create("Images/fire.png");
     _spriteDS->retain();
-    _spriteDS->setPosition(Point(s.width * 0.25f, 0));
+    _spriteDS->setPosition(Vector2(s.width * 0.25f, 0));
     _spriteDS->setScale(10);
     
     _spriteDraw = Sprite::create("Images/fire.png");
     _spriteDraw->retain();
-    _spriteDraw->setPosition(Point(s.width * 0.25f, 0));
+    _spriteDraw->setPosition(Vector2(s.width * 0.25f, 0));
     _spriteDraw->setScale(10);
     //! move sprite half width and height, and draw only where not marked
-    _spriteDraw->setPosition(_spriteDraw->getPosition() + Point(_spriteDraw->getContentSize().width * _spriteDraw->getScale() * 0.5, _spriteDraw->getContentSize().height * _spriteDraw->getScale() * 0.5));
+    _spriteDraw->setPosition(_spriteDraw->getPosition() + Vector2(_spriteDraw->getContentSize().width * _spriteDraw->getScale() * 0.5, _spriteDraw->getContentSize().height * _spriteDraw->getScale() * 0.5));
     
     _rend = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444, GL_DEPTH24_STENCIL8);
 
-    _rend->setPosition(Point(s.width * 0.5f, s.height * 0.5f));
+    _rend->setPosition(Vector2(s.width * 0.5f, s.height * 0.5f));
 
     this->addChild(_rend);
 }
@@ -519,7 +515,7 @@ RenderTextureTestDepthStencil::~RenderTextureTestDepthStencil()
     CC_SAFE_RELEASE(_spriteDS);
 }
 
-void RenderTextureTestDepthStencil::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void RenderTextureTestDepthStencil::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     _renderCmds[0].init(_globalZOrder);
     _renderCmds[0].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforeClear, this);
@@ -609,8 +605,8 @@ RenderTextureTargetNode::RenderTextureTargetNode()
     auto renderTexture = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444);
     this->renderTexture = renderTexture;
     
-    renderTexture->setPosition(Point(s.width/2, s.height/2));
-    //		[renderTexture setPosition:Point(s.width, s.height)];
+    renderTexture->setPosition(Vector2(s.width/2, s.height/2));
+    //		[renderTexture setPosition:Vector2(s.width, s.height)];
     //		renderTexture.scale = 2;
     
     /* add the sprites to the render texture */
@@ -631,7 +627,7 @@ RenderTextureTargetNode::RenderTextureTargetNode()
     auto menu = Menu::create(item, NULL);
     addChild(menu);
 
-    menu->setPosition(Point(s.width/2, s.height/2));
+    menu->setPosition(Vector2(s.width/2, s.height/2));
 }
 
 void RenderTextureTargetNode::touched(Ref* sender)
@@ -651,8 +647,8 @@ void RenderTextureTargetNode::update(float dt)
 {
     static float time = 0;
     float r = 80;
-    sprite1->setPosition(Point(cosf(time * 2) * r, sinf(time * 2) * r));
-    sprite2->setPosition(Point(sinf(time * 2) * r, cosf(time * 2) * r));
+    sprite1->setPosition(Vector2(cosf(time * 2) * r, sinf(time * 2) * r));
+    sprite2->setPosition(Vector2(sinf(time * 2) * r, cosf(time * 2) * r));
     
     time += dt;
 }
@@ -690,7 +686,7 @@ SpriteRenderTextureBug::SimpleSprite* SpriteRenderTextureBug::SimpleSprite::crea
     return sprite;
 }
 
-void SpriteRenderTextureBug::SimpleSprite::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void SpriteRenderTextureBug::SimpleSprite::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     if (_rt == nullptr)
     {
@@ -712,10 +708,10 @@ SpriteRenderTextureBug::SpriteRenderTextureBug()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     auto s = Director::getInstance()->getWinSize();
-    addNewSpriteWithCoords(Point(s.width/2, s.height/2));
+    addNewSpriteWithCoords(Vector2(s.width/2, s.height/2));
 }
 
-SpriteRenderTextureBug::SimpleSprite* SpriteRenderTextureBug::addNewSpriteWithCoords(const Point& p)
+SpriteRenderTextureBug::SimpleSprite* SpriteRenderTextureBug::addNewSpriteWithCoords(const Vector2& p)
 {
     int idx = CCRANDOM_0_1() * 1400 / 100;
 	int x = (idx%5) * 85;

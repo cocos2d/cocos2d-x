@@ -28,9 +28,9 @@ THE SOFTWARE.
 #ifndef __CCTMX_OBJECT_GROUP_H__
 #define __CCTMX_OBJECT_GROUP_H__
 
-#include "CCGeometry.h"
-#include "CCValue.h"
-#include "CCRef.h"
+#include "math/CCGeometry.h"
+#include "base/CCValue.h"
+#include "base/CCRef.h"
 
 NS_CC_BEGIN
 
@@ -71,10 +71,10 @@ public:
     CC_DEPRECATED_ATTRIBUTE ValueMap objectNamed(const std::string& objectName) const { return getObject(objectName); };
     
     /** Gets the offset position of child objects */
-    inline const Point& getPositionOffset() const { return _positionOffset; };
+    inline const Vector2& getPositionOffset() const { return _positionOffset; };
     
     /** Sets the offset position of child objects */
-    inline void setPositionOffset(const Point& offset) { _positionOffset = offset; };
+    inline void setPositionOffset(const Vector2& offset) { _positionOffset = offset; };
     
     /** Gets the list of properties stored in a dictionary */
     inline const ValueMap& getProperties() const { return _properties; };
@@ -98,7 +98,7 @@ protected:
     /** name of the group */
     std::string _groupName;
     /** offset position of child objects */
-    Point _positionOffset;
+    Vector2 _positionOffset;
     /** list of properties stored in a dictionary */
     ValueMap _properties;
     /** array of the objects */

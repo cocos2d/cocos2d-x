@@ -11,6 +11,6 @@
 --------------------------------
 -- @function [parent=#PhysicsShapeEdgePolygon] getCenter 
 -- @param self
--- @return point_table#point_table ret (return value: point_table)
+-- @return array_table#array_table ret (return value: array_table)
         
 return nil

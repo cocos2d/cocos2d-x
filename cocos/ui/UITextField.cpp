@@ -436,11 +436,11 @@ void TextField::setTouchAreaEnabled(bool enable)
     _useTouchArea = enable;
 }
     
-bool TextField::hitTest(const Point &pt)
+bool TextField::hitTest(const Vector2 &pt)
 {
     if (_useTouchArea)
     {
-        Point nsp = convertToNodeSpace(pt);
+        Vector2 nsp = convertToNodeSpace(pt);
         Rect bb = Rect(-_touchWidth * _anchorPoint.x, -_touchHeight * _anchorPoint.y, _touchWidth, _touchHeight);
         if (nsp.x >= bb.origin.x && nsp.x <= bb.origin.x + bb.size.width && nsp.y >= bb.origin.y && nsp.y <= bb.origin.y + bb.size.height)
         {

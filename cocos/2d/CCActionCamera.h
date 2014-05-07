@@ -28,10 +28,12 @@ THE SOFTWARE.
 #ifndef __CCCAMERA_ACTION_H__
 #define __CCCAMERA_ACTION_H__
 
-#include "CCActionInterval.h"
-#include "kazmath/kazmath.h"
+#include "2d/CCActionInterval.h"
+#include "math/CCMath.h"
 
 NS_CC_BEGIN
+
+USING_NS_CC_MATH;
 
 class Camera;
 
@@ -63,27 +65,27 @@ public:
 	virtual ActionCamera *clone() const override;
 
     /* sets the Eye value of the Camera */
-    void setEye(const kmVec3 &eye);
+    void setEye(const Vector3 &eye);
     void setEye(float x, float y, float z);
     /* returns the Eye value of the Camera */
-    const kmVec3& getEye() const { return _eye; }
+    const Vector3& getEye() const { return _eye; }
     /* sets the Center value of the Camera */
-    void setCenter(const kmVec3 &center);
+    void setCenter(const Vector3 &center);
     /* returns the Center value of the Camera */
-    const kmVec3& getCenter() const { return _center; }
+    const Vector3& getCenter() const { return _center; }
     /* sets the Up value of the Camera */
-    void setUp(const kmVec3 &up);
+    void setUp(const Vector3 &up);
     /* Returns the Up value of the Camera */
-    const kmVec3& getUp() const { return _up; }
+    const Vector3& getUp() const { return _up; }
 
 protected:
 
     void restore();
     void updateTransform();
 
-    kmVec3 _center;
-    kmVec3 _eye;
-    kmVec3 _up;
+    Vector3 _center;
+    Vector3 _eye;
+    Vector3 _up;
 };
 
 /** 

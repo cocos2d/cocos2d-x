@@ -162,7 +162,7 @@
 --------------------------------
 -- @function [parent=#Bone] getNodeToArmatureTransform 
 -- @param self
--- @return kmMat4#kmMat4 ret (return value: kmMat4)
+-- @return Matrix#Matrix ret (return value: cc.Matrix)
         
 --------------------------------
 -- @function [parent=#Bone] getDisplayManager 
@@ -202,7 +202,7 @@
 --------------------------------
 -- @function [parent=#Bone] getNodeToWorldTransform 
 -- @param self
--- @return kmMat4#kmMat4 ret (return value: kmMat4)
+-- @return Matrix#Matrix ret (return value: cc.Matrix)
         
 --------------------------------
 -- @function [parent=#Bone] update 

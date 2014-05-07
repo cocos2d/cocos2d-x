@@ -28,7 +28,6 @@ THE SOFTWARE.
 
 #include "CCStdC.h"
 #include "platform/CCCommon.h"
-#include "CCGeometry.h"
 #include "platform/CCGLViewProtocol.h"
 #include "InputEvent.h"
 
@@ -42,7 +41,6 @@ THE SOFTWARE.
 
 #include <agile.h>
 #include <DirectXMath.h>
-#include "kazmath/mat4.h"
 
 #include <EGL/egl.h>
 
@@ -63,8 +61,8 @@ public:
     virtual void swapBuffers();
     virtual void setViewPortInPoints(float x , float y , float w , float h);
     virtual void setScissorInPoints(float x , float y , float w , float h);
-    const kmMat4* getOrientationMatrix() const;
-    const kmMat4* getReverseOrientationMatrix () const {return &m_reverseOrientationMatrix;};
+    const Matrix& getOrientationMatrix() const;
+    const Matrix& getReverseOrientationMatrix () const {return m_reverseOrientationMatrix;};
 
     Windows::Graphics::Display::DisplayOrientations getDeviceOrientation() {return m_orientation;};
 
@@ -148,8 +146,8 @@ private:
 	void UpdateWindowSize();
     void UpdateOrientationMatrix();
 
-    cocos2d::Point TransformToOrientation(Windows::Foundation::Point point);
- 	cocos2d::Point  GetPoint(Windows::UI::Core::PointerEventArgs^ args);
+    cocos2d::Vector2 TransformToOrientation(Windows::Foundation::Point point);
+ 	cocos2d::Vector2  GetPoint(Windows::UI::Core::PointerEventArgs^ args);
        
     Windows::Foundation::Rect m_windowBounds;
 	Windows::Foundation::EventRegistrationToken m_eventToken;
@@ -164,8 +162,8 @@ private:
 	bool m_lastPointValid;
 	bool m_windowClosed;
 	bool m_windowVisible;
-    kmMat4 m_orientationMatrix;
-    kmMat4 m_reverseOrientationMatrix;
+    Matrix m_orientationMatrix;
+    Matrix m_reverseOrientationMatrix;
 
 
     bool m_running;

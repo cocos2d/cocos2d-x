@@ -40,7 +40,7 @@ void PlayerController::onTouchesEnded(const std::vector<Touch*>& touches, Event 
 {
     // Choose one of the touches to work with
 	Touch* touch = touches[0];
-	Point location = touch->getLocation();
+	Vector2 location = touch->getLocation();
     
 
 	Sprite *projectile = Sprite::create("components/Projectile.png", Rect(0, 0, 20, 20));

@@ -46,7 +46,7 @@
 -- @param #string str
 -- @param #float float
 -- @param #cc.TextHAlignment texthalignment
--- @param #point_table point
+-- @param #array_table array
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -63,7 +63,7 @@
 -- @function [parent=#LabelBMFont] setFntFile 
 -- @param self
 -- @param #string str
--- @param #point_table point
+-- @param #array_table array
         
 --------------------------------
 -- @function [parent=#LabelBMFont] setAlignment 
@@ -78,7 +78,7 @@
 --------------------------------
 -- overload function: create()
 --          
--- overload function: create(string, string, float, cc.TextHAlignment, point_table)
+-- overload function: create(string, string, float, cc.TextHAlignment, array_table)
 --          
 -- @function [parent=#LabelBMFont] create
 -- @param self
@@ -86,7 +86,7 @@
 -- @param #string str
 -- @param #float float
 -- @param #cc.TextHAlignment texthalignment
--- @param #point_table point
+-- @param #array_table array
 -- @return LabelBMFont#LabelBMFont ret (retunr value: cc.LabelBMFont)
 
 --------------------------------

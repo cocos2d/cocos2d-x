@@ -39,7 +39,7 @@ void Bug422Layer::reset()
 
     float x = CCRANDOM_0_1() * 50;
     float y = CCRANDOM_0_1() * 50;
-    menu->setPosition(menu->getPosition() + Point(x,y));
+    menu->setPosition(menu->getPosition() + Vector2(x,y));
     addChild(menu, 0, localtag);    
 
     //[self check:self];

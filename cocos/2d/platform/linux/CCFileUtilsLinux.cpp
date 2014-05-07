@@ -23,12 +23,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCPlatformConfig.h"
+#include "base/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
 #include "CCFileUtilsLinux.h"
-#include "platform/CCCommon.h"
-#include "ccMacros.h"
+#include "2d/platform/CCCommon.h"
+#include "base/ccMacros.h"
 #include "CCApplication.h"
 #include "deprecated/CCString.h"
 #include <unistd.h>

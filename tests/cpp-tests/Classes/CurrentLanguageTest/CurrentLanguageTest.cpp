@@ -4,7 +4,7 @@ CurrentLanguageTest::CurrentLanguageTest()
 {
     auto label = Label::createWithTTF("Current language Test", "fonts/arial.ttf", 28);
     addChild(label, 0);
-    label->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y-50) );
+    label->setPosition( Vector2(VisibleRect::center().x, VisibleRect::top().y-50) );
 
     auto labelLanguage = Label::createWithTTF("", "fonts/arial.ttf", 20);
     labelLanguage->setPosition(VisibleRect::center());

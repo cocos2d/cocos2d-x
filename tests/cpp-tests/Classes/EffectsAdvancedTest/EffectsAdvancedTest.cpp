@@ -1,5 +1,4 @@
 #include "EffectsAdvancedTest.h"
-#include "CCNodeGrid.h"
 
 enum 
 {
@@ -29,7 +28,7 @@ void Effect1::onEnter()
     //     Waves3D is Grid3D and it's size is (15,10)
     
     auto size = Director::getInstance()->getWinSize();
-    auto lens = Lens3D::create(0.0f, Size(15,10), Point(size.width/2,size.height/2), 240);
+    auto lens = Lens3D::create(0.0f, Size(15,10), Vector2(size.width/2,size.height/2), 240);
     auto waves = Waves3D::create(10, Size(15,10), 18, 15);
 
     auto reuse = ReuseGrid::create(1);
@@ -107,7 +106,7 @@ void Effect3::onEnter()
     _target2->runAction( RepeatForever::create( shaky ) );
     
     // moving background. Testing issue #244
-    auto move = MoveBy::create(3, Point(200,0) );
+    auto move = MoveBy::create(3, Vector2(200,0) );
     _bgNode->runAction(RepeatForever::create( Sequence::create(move, move->reverse(), NULL) ));    
 }
 
@@ -126,12 +125,12 @@ std::string Effect3::title() const
 class Lens3DTarget : public Node
 {
 public:
-    virtual void setPosition(const Point& var)
+    virtual void setPosition(const Vector2& var)
     {
         _lens3D->setPosition(var);
     }
     
-    virtual const Point& getPosition() const
+    virtual const Vector2& getPosition() const
     {
         return _lens3D->getPosition();
     }
@@ -157,8 +156,8 @@ void Effect4::onEnter()
     EffectAdvanceTextLayer::onEnter();
     //Node* gridNode = NodeGrid::create();
     
-    auto lens = Lens3D::create(10, Size(32,24), Point(100,180), 150);
-    auto move = JumpBy::create(5, Point(380,0), 100, 4);
+    auto lens = Lens3D::create(10, Size(32,24), Vector2(100,180), 150);
+    auto move = JumpBy::create(5, Vector2(380,0), 100, 4);
     auto move_back = move->reverse();
     auto seq = Sequence::create( move, move_back, NULL);
 
@@ -239,7 +238,7 @@ void Issue631::onEnter()
     auto layer = LayerColor::create( Color4B(255,0,0,255) );
     addChild(layer, -10);
     auto sprite = Sprite::create("Images/grossini.png");
-    sprite->setPosition( Point(50,80) );
+    sprite->setPosition( Vector2(50,80) );
     layer->addChild(sprite, 10);
     
     // foreground
@@ -340,7 +339,7 @@ void EffectAdvanceTextLayer::onEnter(void)
     BaseTest::onEnter();
     
     _bgNode = NodeGrid::create();
-    _bgNode->setAnchorPoint(Point(0.5,0.5));
+    _bgNode->setAnchorPoint(Vector2(0.5,0.5));
     addChild(_bgNode);
     //_bgNode->setPosition( VisibleRect::center() );
     auto bg = Sprite::create("Images/background3.png");
@@ -350,22 +349,22 @@ void EffectAdvanceTextLayer::onEnter(void)
     _bgNode->addChild(bg);
 
     _target1 = NodeGrid::create();
-    _target1->setAnchorPoint(Point(0.5,0.5));
+    _target1->setAnchorPoint(Vector2(0.5,0.5));
     auto grossini = Sprite::create("Images/grossinis_sister2.png");
     _target1->addChild(grossini);
     _bgNode->addChild(_target1);
-    _target1->setPosition( Point(VisibleRect::left().x+VisibleRect::getVisibleRect().size.width/3.0f, VisibleRect::bottom().y+ 200) );
+    _target1->setPosition( Vector2(VisibleRect::left().x+VisibleRect::getVisibleRect().size.width/3.0f, VisibleRect::bottom().y+ 200) );
     auto sc = ScaleBy::create(2, 5);
     auto sc_back = sc->reverse();
     _target1->runAction( RepeatForever::create(Sequence::create(sc, sc_back, NULL) ) );
 
 
     _target2 = NodeGrid::create();
-    _target2->setAnchorPoint(Point(0.5,0.5));
+    _target2->setAnchorPoint(Vector2(0.5,0.5));
     auto tamara = Sprite::create("Images/grossinis_sister1.png");
     _target2->addChild(tamara);
     _bgNode->addChild(_target2);
-    _target2->setPosition( Point(VisibleRect::left().x+2*VisibleRect::getVisibleRect().size.width/3.0f,VisibleRect::bottom().y+200) );
+    _target2->setPosition( Vector2(VisibleRect::left().x+2*VisibleRect::getVisibleRect().size.width/3.0f,VisibleRect::bottom().y+200) );
     auto sc2 = ScaleBy::create(2, 5);
     auto sc2_back = sc2->reverse();
     _target2->runAction( RepeatForever::create(Sequence::create(sc2, sc2_back, NULL) ) );    

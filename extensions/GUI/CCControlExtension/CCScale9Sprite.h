@@ -28,9 +28,9 @@ THE SOFTWARE.
 #ifndef __CCScale9Sprite_H__
 #define __CCScale9Sprite_H__
 
-#include "CCNode.h"
-#include "CCSpriteFrame.h"
-#include "CCSpriteBatchNode.h"
+#include "2d/CCNode.h"
+#include "2d/CCSpriteFrame.h"
+#include "2d/CCSpriteBatchNode.h"
 
 #include "../../ExtensionMacros.h"
 
@@ -261,7 +261,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
+    virtual void visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated) override;
     virtual void setOpacityModifyRGB(bool bValue) override;
     virtual bool isOpacityModifyRGB(void) const override;
     virtual void setOpacity(GLubyte opacity) override;

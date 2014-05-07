@@ -8,7 +8,6 @@
 
 #include "NewEventDispatcherTest.h"
 #include "testResource.h"
-#include "CCAutoreleasePool.h"
 
 namespace {
     
@@ -128,21 +127,21 @@ void TouchableSpriteTest::onEnter()
 {
     EventDispatcherTestDemo::onEnter();
 
-    Point origin = Director::getInstance()->getVisibleOrigin();
+    Vector2 origin = Director::getInstance()->getVisibleOrigin();
     Size size = Director::getInstance()->getVisibleSize();
     
     auto containerForSprite1 = Node::create();
     auto sprite1 = Sprite::create("Images/CyanSquare.png");
-    sprite1->setPosition(origin+Point(size.width/2, size.height/2) + Point(-80, 80));
+    sprite1->setPosition(origin+Vector2(size.width/2, size.height/2) + Vector2(-80, 80));
     containerForSprite1->addChild(sprite1);
     addChild(containerForSprite1, 10);
     
     auto sprite2 = Sprite::create("Images/MagentaSquare.png");
-    sprite2->setPosition(origin+Point(size.width/2, size.height/2));
+    sprite2->setPosition(origin+Vector2(size.width/2, size.height/2));
     addChild(sprite2, 20);
     
     auto sprite3 = Sprite::create("Images/YellowSquare.png");
-    sprite3->setPosition(Point(0, 0));
+    sprite3->setPosition(Vector2(0, 0));
     sprite2->addChild(sprite3, 1);
     
     // Make sprite1 touchable
@@ -152,7 +151,7 @@ void TouchableSpriteTest::onEnter()
     listener1->onTouchBegan = [](Touch* touch, Event* event){
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
         
-        Point locationInNode = target->convertToNodeSpace(touch->getLocation());
+        Vector2 locationInNode = target->convertToNodeSpace(touch->getLocation());
         Size s = target->getContentSize();
         Rect rect = Rect(0, 0, s.width, s.height);
         
@@ -200,20 +199,20 @@ void TouchableSpriteTest::onEnter()
         });
         
         nextItem->setFontSizeObj(16);
-        nextItem->setPosition(VisibleRect::right() + Point(-100, -30));
+        nextItem->setPosition(VisibleRect::right() + Vector2(-100, -30));
         
         auto menu2 = Menu::create(nextItem, NULL);
-        menu2->setPosition(Point(0, 0));
-        menu2->setAnchorPoint(Point(0, 0));
+        menu2->setPosition(Vector2(0, 0));
+        menu2->setAnchorPoint(Vector2(0, 0));
         this->addChild(menu2);
     });
     
     removeAllTouchItem->setFontSizeObj(16);
-    removeAllTouchItem->setPosition(VisibleRect::right() + Point(-100, 0));
+    removeAllTouchItem->setPosition(VisibleRect::right() + Vector2(-100, 0));
     
     auto menu = Menu::create(removeAllTouchItem, nullptr);
-    menu->setPosition(Point(0, 0));
-    menu->setAnchorPoint(Point(0, 0));
+    menu->setPosition(Vector2(0, 0));
+    menu->setAnchorPoint(Vector2(0, 0));
     addChild(menu);
 }
 
@@ -264,7 +263,7 @@ public:
         
         listener->onTouchBegan = [=](Touch* touch, Event* event){
             
-            Point locationInNode = this->convertToNodeSpace(touch->getLocation());
+            Vector2 locationInNode = this->convertToNodeSpace(touch->getLocation());
             Size s = this->getContentSize();
             Rect rect = Rect(0, 0, s.width, s.height);
             
@@ -318,22 +317,22 @@ void FixedPriorityTest::onEnter()
 {
     EventDispatcherTestDemo::onEnter();
     
-    Point origin = Director::getInstance()->getVisibleOrigin();
+    Vector2 origin = Director::getInstance()->getVisibleOrigin();
     Size size = Director::getInstance()->getVisibleSize();
     
     auto sprite1 = TouchableSprite::create(30);
     sprite1->setTexture("Images/CyanSquare.png");
-    sprite1->setPosition(origin+Point(size.width/2, size.height/2) + Point(-80, 40));
+    sprite1->setPosition(origin+Vector2(size.width/2, size.height/2) + Vector2(-80, 40));
     addChild(sprite1, 10);
     
     auto sprite2 = TouchableSprite::create(20);
     sprite2->setTexture("Images/MagentaSquare.png");
-    sprite2->setPosition(origin+Point(size.width/2, size.height/2));
+    sprite2->setPosition(origin+Vector2(size.width/2, size.height/2));
     addChild(sprite2, 20);
     
     auto sprite3 = TouchableSprite::create(10);
     sprite3->setTexture("Images/YellowSquare.png");
-    sprite3->setPosition(Point(0, 0));
+    sprite3->setPosition(Vector2(0, 0));
     sprite2->addChild(sprite3, 1);
 
 }
@@ -353,11 +352,11 @@ void RemoveListenerWhenDispatching::onEnter()
 {
     EventDispatcherTestDemo::onEnter();
     
-    Point origin = Director::getInstance()->getVisibleOrigin();
+    Vector2 origin = Director::getInstance()->getVisibleOrigin();
     Size size = Director::getInstance()->getVisibleSize();
     
     auto sprite1 = Sprite::create("Images/CyanSquare.png");
-    sprite1->setPosition(origin+Point(size.width/2, size.height/2));
+    sprite1->setPosition(origin+Vector2(size.width/2, size.height/2));
     addChild(sprite1, 10);
     
     // Make sprite1 touchable
@@ -368,7 +367,7 @@ void RemoveListenerWhenDispatching::onEnter()
     std::shared_ptr<bool> firstClick(new bool(true));
     
     listener1->onTouchBegan = [=](Touch* touch, Event* event){
-        Point locationInNode = sprite1->convertToNodeSpace(touch->getLocation());
+        Vector2 locationInNode = sprite1->convertToNodeSpace(touch->getLocation());
         Size s = sprite1->getContentSize();
         Rect rect = Rect(0, 0, s.width, s.height);
         
@@ -387,7 +386,7 @@ void RemoveListenerWhenDispatching::onEnter()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener1, sprite1);
     
     auto statusLabel = Label::createWithSystemFont("The sprite could be touched!", "", 20);
-    statusLabel->setPosition(origin + Point(size.width/2, size.height-90));
+    statusLabel->setPosition(origin + Vector2(size.width/2, size.height-90));
     addChild(statusLabel);
     std::shared_ptr<bool> enable(new bool(true));
     // Enable/Disable item
@@ -408,10 +407,10 @@ void RemoveListenerWhenDispatching::onEnter()
         }
     }, MenuItemFont::create("Enabled"), MenuItemFont::create("Disabled"), NULL);
     
-    toggleItem->setPosition(origin + Point(size.width/2, 80));
+    toggleItem->setPosition(origin + Vector2(size.width/2, 80));
     auto menu = Menu::create(toggleItem, nullptr);
-    menu->setPosition(Point(0, 0));
-    menu->setAnchorPoint(Point(0, 0));
+    menu->setPosition(Vector2(0, 0));
+    menu->setAnchorPoint(Vector2(0, 0));
     addChild(menu, -1);
 }
 
@@ -430,13 +429,13 @@ void CustomEventTest::onEnter()
 {
     EventDispatcherTestDemo::onEnter();
     
-    Point origin = Director::getInstance()->getVisibleOrigin();
+    Vector2 origin = Director::getInstance()->getVisibleOrigin();
     Size size = Director::getInstance()->getVisibleSize();
     
     MenuItemFont::setFontSize(20);
     
     auto statusLabel = Label::createWithSystemFont("No custom event 1 received!", "", 20);
-    statusLabel->setPosition(origin + Point(size.width/2, size.height-90));
+    statusLabel->setPosition(origin + Vector2(size.width/2, size.height-90));
     addChild(statusLabel);
 
     _listener = EventListenerCustom::create("game_custom_event1", [=](EventCustom* event){
@@ -459,10 +458,10 @@ void CustomEventTest::onEnter()
         _eventDispatcher->dispatchEvent(&event);
         CC_SAFE_DELETE_ARRAY(buf);
     });
-    sendItem->setPosition(origin + Point(size.width/2, size.height/2));
+    sendItem->setPosition(origin + Vector2(size.width/2, size.height/2));
     
     auto statusLabel2 = Label::createWithSystemFont("No custom event 2 received!", "", 20);
-    statusLabel2->setPosition(origin + Point(size.width/2, size.height-120));
+    statusLabel2->setPosition(origin + Vector2(size.width/2, size.height-120));
     addChild(statusLabel2);
     
     _listener2 = EventListenerCustom::create("game_custom_event2", [=](EventCustom* event){
@@ -485,11 +484,11 @@ void CustomEventTest::onEnter()
         _eventDispatcher->dispatchEvent(&event);
         CC_SAFE_DELETE_ARRAY(buf);
     });
-    sendItem2->setPosition(origin + Point(size.width/2, size.height/2 - 40));
+    sendItem2->setPosition(origin + Vector2(size.width/2, size.height/2 - 40));
     
     auto menu = Menu::create(sendItem, sendItem2, nullptr);
-    menu->setPosition(Point(0, 0));
-    menu->setAnchorPoint(Point(0, 0));
+    menu->setPosition(Vector2(0, 0));
+    menu->setAnchorPoint(Vector2(0, 0));
     addChild(menu, -1);
 }
 
@@ -515,11 +514,11 @@ void LabelKeyboardEventTest::onEnter()
 {
     EventDispatcherTestDemo::onEnter();
     
-    Point origin = Director::getInstance()->getVisibleOrigin();
+    Vector2 origin = Director::getInstance()->getVisibleOrigin();
     Size size = Director::getInstance()->getVisibleSize();
     
     auto statusLabel = Label::createWithSystemFont("No keyboard event received!", "", 20);
-    statusLabel->setPosition(origin + Point(size.width/2, size.height/2));
+    statusLabel->setPosition(origin + Vector2(size.width/2, size.height/2));
     addChild(statusLabel);
         
     auto listener = EventListenerKeyboard::create();
@@ -561,13 +560,13 @@ _pos = _max;        \
 
     EventDispatcherTestDemo::onEnter();
     
-    Point origin = Director::getInstance()->getVisibleOrigin();
+    Vector2 origin = Director::getInstance()->getVisibleOrigin();
     Size size = Director::getInstance()->getVisibleSize();
     
     Device::setAccelerometerEnabled(true);
     
     auto sprite = Sprite::create(s_Ball);
-    sprite->setPosition(origin + Point(size.width/2, size.height/2));
+    sprite->setPosition(origin + Vector2(size.width/2, size.height/2));
     addChild(sprite);
     
     auto listener = EventListenerAcceleration::create([=](Acceleration* acc, Event* event){
@@ -611,11 +610,11 @@ void RemoveAndRetainNodeTest::onEnter()
     
     EventDispatcherTestDemo::onEnter();
     
-    Point origin = Director::getInstance()->getVisibleOrigin();
+    Vector2 origin = Director::getInstance()->getVisibleOrigin();
     Size size = Director::getInstance()->getVisibleSize();
     
     _sprite = Sprite::create("Images/CyanSquare.png");
-    _sprite->setPosition(origin+Point(size.width/2, size.height/2));
+    _sprite->setPosition(origin+Vector2(size.width/2, size.height/2));
     addChild(_sprite, 10);
     
     // Make sprite1 touchable
@@ -625,7 +624,7 @@ void RemoveAndRetainNodeTest::onEnter()
     listener1->onTouchBegan = [](Touch* touch, Event* event){
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
         
-        Point locationInNode = target->convertToNodeSpace(touch->getLocation());
+        Vector2 locationInNode = target->convertToNodeSpace(touch->getLocation());
         Size s = target->getContentSize();
         Rect rect = Rect(0, 0, s.width, s.height);
         
@@ -702,17 +701,17 @@ void RemoveListenerAfterAddingTest::onEnter()
         _eventDispatcher->removeEventListener(listener);
     });
 
-    item1->setPosition(VisibleRect::center() + Point(0, 80));
+    item1->setPosition(VisibleRect::center() + Vector2(0, 80));
     
     auto addNextButton = [this](){
         auto next = MenuItemFont::create("Please Click Me To Reset!", [this](Ref* sender){
             this->restartCallback(nullptr);
         });
-        next->setPosition(VisibleRect::center() + Point(0, -40));
+        next->setPosition(VisibleRect::center() + Vector2(0, -40));
         
         auto menu = Menu::create(next, nullptr);
         menu->setPosition(VisibleRect::leftBottom());
-        menu->setAnchorPoint(Point::ZERO);
+        menu->setAnchorPoint(Vector2::ZERO);
         this->addChild(menu);
     };
     
@@ -729,7 +728,7 @@ void RemoveListenerAfterAddingTest::onEnter()
         addNextButton();
     });
     
-    item2->setPosition(VisibleRect::center() + Point(0, 40));
+    item2->setPosition(VisibleRect::center() + Vector2(0, 40));
     
     auto item3 = MenuItemFont::create("Click Me 3", [=](Ref* sender){
         auto listener = EventListenerTouchOneByOne::create();
@@ -748,7 +747,7 @@ void RemoveListenerAfterAddingTest::onEnter()
     
     auto menu = Menu::create(item1, item2, item3, nullptr);
     menu->setPosition(VisibleRect::leftBottom());
-    menu->setAnchorPoint(Point::ZERO);
+    menu->setAnchorPoint(Vector2::ZERO);
 
     addChild(menu);
 }
@@ -790,23 +789,23 @@ void DirectorEventTest::onEnter()
     TTFConfig ttfConfig("fonts/arial.ttf", 20);
 
     _label1 = Label::createWithTTF(ttfConfig, "Update: 0");
-    _label1->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+    _label1->setAnchorPoint(Vector2::ANCHOR_BOTTOM_LEFT);
     _label1->setPosition(30,s.height/2 + 60);
     this->addChild(_label1);
 
     _label2 = Label::createWithTTF(ttfConfig, "Visit: 0");
-    _label2->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+    _label2->setAnchorPoint(Vector2::ANCHOR_BOTTOM_LEFT);
     _label2->setPosition(30,s.height/2 + 20);
     this->addChild(_label2);
 
     _label3 = Label::createWithTTF(ttfConfig, "Draw: 0");
-    _label3->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+    _label3->setAnchorPoint(Vector2::ANCHOR_BOTTOM_LEFT);
     _label3->setPosition(30,30);
     _label3->setPosition(30,s.height/2 - 20);
     this->addChild(_label3);
 
     _label4 = Label::createWithTTF(ttfConfig, "Projection: 0");
-    _label4->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+    _label4->setAnchorPoint(Vector2::ANCHOR_BOTTOM_LEFT);
     _label4->setPosition(30,30);
     _label4->setPosition(30,s.height/2 - 60);
     this->addChild(_label4);
@@ -900,7 +899,7 @@ GlobalZTouchTest::GlobalZTouchTest()
     listener->onTouchBegan = [](Touch* touch, Event* event){
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
         
-        Point locationInNode = target->convertToNodeSpace(touch->getLocation());
+        Vector2 locationInNode = target->convertToNodeSpace(touch->getLocation());
         Size s = target->getContentSize();
         Rect rect = Rect(0, 0, s.width, s.height);
         
@@ -1083,9 +1082,9 @@ StopPropagationTest::StopPropagationTest()
     }
 }
 
-bool StopPropagationTest::isPointInNode(Point pt, Node* node)
+bool StopPropagationTest::isPointInNode(Vector2 pt, Node* node)
 {
-    Point locationInNode = node->convertToNodeSpace(pt);
+    Vector2 locationInNode = node->convertToNodeSpace(pt);
     Size s = node->getContentSize();
     Rect rect = Rect(0, 0, s.width, s.height);
     
@@ -1096,7 +1095,7 @@ bool StopPropagationTest::isPointInNode(Point pt, Node* node)
     return false;
 }
 
-bool StopPropagationTest::isPointInTopHalfAreaOfScreen(Point pt)
+bool StopPropagationTest::isPointInTopHalfAreaOfScreen(Vector2 pt)
 {
     Size winSize = Director::getInstance()->getWinSize();
     
@@ -1120,22 +1119,22 @@ std::string StopPropagationTest::subtitle() const
 // PauseResumeTargetTest
 PauseResumeTargetTest::PauseResumeTargetTest()
 {
-    Point origin = Director::getInstance()->getVisibleOrigin();
+    Vector2 origin = Director::getInstance()->getVisibleOrigin();
     Size size = Director::getInstance()->getVisibleSize();
     
     auto sprite1 = TouchableSprite::create();
     sprite1->setTexture("Images/CyanSquare.png");
-    sprite1->setPosition(origin+Point(size.width/2, size.height/2) + Point(-80, 40));
+    sprite1->setPosition(origin+Vector2(size.width/2, size.height/2) + Vector2(-80, 40));
     addChild(sprite1, -10);
     
     auto sprite2 = TouchableSprite::create();
     sprite2->setTexture("Images/MagentaSquare.png");
-    sprite2->setPosition(origin+Point(size.width/2, size.height/2));
+    sprite2->setPosition(origin+Vector2(size.width/2, size.height/2));
     addChild(sprite2, -20);
     
     auto sprite3 = TouchableSprite::create(100); // Sprite3 uses fixed priority listener
     sprite3->setTexture("Images/YellowSquare.png");
-    sprite3->setPosition(Point(0, 0));
+    sprite3->setPosition(Vector2(0, 0));
     sprite2->addChild(sprite3, -1);
     
     auto popup = MenuItemFont::create("Popup", [=](Ref* sender){
@@ -1155,18 +1154,18 @@ PauseResumeTargetTest::PauseResumeTargetTest()
         closeItem->setPosition(VisibleRect::center());
         
         auto closeMenu = Menu::create(closeItem, NULL);
-        closeMenu->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
-        closeMenu->setPosition(Point::ZERO);
+        closeMenu->setAnchorPoint(Vector2::ANCHOR_BOTTOM_LEFT);
+        closeMenu->setPosition(Vector2::ZERO);
         
         colorLayer->addChild(closeMenu);
     });
     
-    popup->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
+    popup->setAnchorPoint(Vector2::ANCHOR_MIDDLE_RIGHT);
     popup->setPosition(VisibleRect::right());
     
     auto menu = Menu::create(popup, nullptr);
-    menu->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
-    menu->setPosition(Point::ZERO);
+    menu->setAnchorPoint(Vector2::ANCHOR_BOTTOM_LEFT);
+    menu->setPosition(Vector2::ZERO);
     
     addChild(menu);
 }
@@ -1192,8 +1191,8 @@ Issue4129::Issue4129()
     _customlistener = _eventDispatcher->addCustomEventListener(EVENT_COME_TO_BACKGROUND, [this](EventCustom* event){
         
         auto label = Label::createWithSystemFont("Yeah, this issue was fixed.", "", 20);
-        label->setAnchorPoint(Point(0, 0.5f));
-        label->setPosition(Point(VisibleRect::left()));
+        label->setAnchorPoint(Vector2(0, 0.5f));
+        label->setPosition(Vector2(VisibleRect::left()));
         this->addChild(label);
         
         // After test, remove it.
@@ -1215,11 +1214,11 @@ Issue4129::Issue4129()
         });
         
         nextItem->setFontSizeObj(16);
-        nextItem->setPosition(VisibleRect::right() + Point(-100, -30));
+        nextItem->setPosition(VisibleRect::right() + Vector2(-100, -30));
         
         auto menu2 = Menu::create(nextItem, NULL);
-        menu2->setPosition(Point(0, 0));
-        menu2->setAnchorPoint(Point(0, 0));
+        menu2->setPosition(Vector2(0, 0));
+        menu2->setAnchorPoint(Vector2(0, 0));
         this->addChild(menu2);
         
         // Simulate to dispatch 'come to background' event
@@ -1227,11 +1226,11 @@ Issue4129::Issue4129()
     });
     
     removeAllTouchItem->setFontSizeObj(16);
-    removeAllTouchItem->setPosition(VisibleRect::right() + Point(-100, 0));
+    removeAllTouchItem->setPosition(VisibleRect::right() + Vector2(-100, 0));
     
     auto menu = Menu::create(removeAllTouchItem, nullptr);
-    menu->setPosition(Point(0, 0));
-    menu->setAnchorPoint(Point(0, 0));
+    menu->setPosition(Vector2(0, 0));
+    menu->setAnchorPoint(Vector2(0, 0));
     addChild(menu);
 }
 
@@ -1256,23 +1255,23 @@ std::string Issue4129::subtitle() const
 // Issue4160
 Issue4160::Issue4160()
 {
-    Point origin = Director::getInstance()->getVisibleOrigin();
+    Vector2 origin = Director::getInstance()->getVisibleOrigin();
     Size size = Director::getInstance()->getVisibleSize();
     
     auto sprite1 = TouchableSprite::create(-30);
     sprite1->setTexture("Images/CyanSquare.png");
-    sprite1->setPosition(origin+Point(size.width/2, size.height/2) + Point(-80, 40));
+    sprite1->setPosition(origin+Vector2(size.width/2, size.height/2) + Vector2(-80, 40));
     addChild(sprite1, -10);
     
     auto sprite2 = TouchableSprite::create(-20);
     sprite2->setTexture("Images/MagentaSquare.png");
     sprite2->removeListenerOnTouchEnded(true);
-    sprite2->setPosition(origin+Point(size.width/2, size.height/2));
+    sprite2->setPosition(origin+Vector2(size.width/2, size.height/2));
     addChild(sprite2, -20);
     
     auto sprite3 = TouchableSprite::create(-10);
     sprite3->setTexture("Images/YellowSquare.png");
-    sprite3->setPosition(Point(0, 0));
+    sprite3->setPosition(Vector2(0, 0));
     sprite2->addChild(sprite3, -1);
 }
 
@@ -1362,7 +1361,7 @@ DanglingNodePointersTest::DanglingNodePointersTest()
 {
 #if CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS == 1 && COCOS2D_DEBUG > 0
     
-    Point origin = Director::getInstance()->getVisibleOrigin();
+    Vector2 origin = Director::getInstance()->getVisibleOrigin();
     Size size = Director::getInstance()->getVisibleSize();
     
     auto callback2 = [](DanglingNodePointersTestSprite * sprite2)
@@ -1381,18 +1380,18 @@ DanglingNodePointersTest::DanglingNodePointersTest()
         // Recreate sprite 1 again
         sprite2 = DanglingNodePointersTestSprite::create(callback2);
         sprite2->setTexture("Images/MagentaSquare.png");
-        sprite2->setPosition(origin+Point(size.width/2, size.height/2));
+        sprite2->setPosition(origin+Vector2(size.width/2, size.height/2));
         sprite1->addChild(sprite2, -20);
     };
     
     auto sprite1 = DanglingNodePointersTestSprite::create(callback1);    // Sprite 1 will receive touch before sprite 2
     sprite1->setTexture("Images/CyanSquare.png");
-    sprite1->setPosition(origin+Point(size.width/2, size.height/2));
+    sprite1->setPosition(origin+Vector2(size.width/2, size.height/2));
     addChild(sprite1, -10);
     
     auto sprite2 = DanglingNodePointersTestSprite::create(callback2);   // Sprite 2 will be removed when sprite 1 is touched, should never receive an event.
     sprite2->setTexture("Images/MagentaSquare.png");
-    sprite2->setPosition(origin+Point(size.width/2, size.height/2));
+    sprite2->setPosition(origin+Vector2(size.width/2, size.height/2));
     sprite1->addChild(sprite2, -20);
     
 #endif
@@ -1421,7 +1420,7 @@ std::string DanglingNodePointersTest::subtitle() const
 
 RegisterAndUnregisterWhileEventHanldingTest::RegisterAndUnregisterWhileEventHanldingTest()
 {
-    Point origin = Director::getInstance()->getVisibleOrigin();
+    Vector2 origin = Director::getInstance()->getVisibleOrigin();
     Size size = Director::getInstance()->getVisibleSize();
     
     auto callback1 = [=](DanglingNodePointersTestSprite * sprite)
@@ -1436,7 +1435,7 @@ RegisterAndUnregisterWhileEventHanldingTest::RegisterAndUnregisterWhileEventHanl
             
             auto sprite2 = DanglingNodePointersTestSprite::create(callback2);
             sprite2->setTexture("Images/CyanSquare.png");
-            sprite2->setPosition(origin+Point(size.width/2, size.height/2));
+            sprite2->setPosition(origin+Vector2(size.width/2, size.height/2));
             
             addChild(sprite2, 0);
             removeChild(sprite2);
@@ -1445,7 +1444,7 @@ RegisterAndUnregisterWhileEventHanldingTest::RegisterAndUnregisterWhileEventHanl
     
     auto sprite1 = DanglingNodePointersTestSprite::create(callback1);
     sprite1->setTexture("Images/CyanSquare.png");
-    sprite1->setPosition(origin+Point(size.width/2, size.height/2));
+    sprite1->setPosition(origin+Vector2(size.width/2, size.height/2));
     addChild(sprite1, -10);
 }
 

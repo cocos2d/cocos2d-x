@@ -26,9 +26,9 @@ THE SOFTWARE.
 #ifndef __CCDEVICE_H__
 #define __CCDEVICE_H__
 
-#include "CCPlatformMacros.h"
-#include "ccMacros.h"
-#include "CCData.h"
+#include "base/CCPlatformMacros.h"
+#include "base/ccMacros.h"
+#include "base/CCData.h"
 
 NS_CC_BEGIN
 
@@ -64,7 +64,7 @@ public:
      */
     static void setAccelerometerInterval(float interval);
 
-    static Data getTextureDataForText(const char * text,const FontDefinition& textDefinition,TextAlign align,int &widht,int &height);
+    static Data getTextureDataForText(const char * text, const FontDefinition& textDefinition, TextAlign align, int &width, int &height, bool& hasPremultipliedAlpha);
 
 private:
     CC_DISALLOW_IMPLICIT_CONSTRUCTORS(Device);

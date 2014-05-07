@@ -28,49 +28,49 @@ WebSocketTestLayer::WebSocketTestLayer()
     const int SPACE = 35;
     
     auto label = Label::createWithTTF("WebSocket Test", "fonts/arial.ttf", 28);
-    label->setPosition(Point(winSize.width / 2, winSize.height - MARGIN));
+    label->setPosition(Vector2(winSize.width / 2, winSize.height - MARGIN));
     addChild(label, 0);
     
     auto menuRequest = Menu::create();
-    menuRequest->setPosition(Point::ZERO);
+    menuRequest->setPosition(Vector2::ZERO);
     addChild(menuRequest);
     
     // Send Text
     auto labelSendText = Label::createWithTTF("Send Text", "fonts/arial.ttf", 22);
     auto itemSendText = MenuItemLabel::create(labelSendText, CC_CALLBACK_1(WebSocketTestLayer::onMenuSendTextClicked, this));
-    itemSendText->setPosition(Point(winSize.width / 2, winSize.height - MARGIN - SPACE));
+    itemSendText->setPosition(Vector2(winSize.width / 2, winSize.height - MARGIN - SPACE));
     menuRequest->addChild(itemSendText);
     
     // Send Binary
     auto labelSendBinary = Label::createWithTTF("Send Binary", "fonts/arial.ttf", 22);
     auto itemSendBinary = MenuItemLabel::create(labelSendBinary, CC_CALLBACK_1(WebSocketTestLayer::onMenuSendBinaryClicked, this));
-    itemSendBinary->setPosition(Point(winSize.width / 2, winSize.height - MARGIN - 2 * SPACE));
+    itemSendBinary->setPosition(Vector2(winSize.width / 2, winSize.height - MARGIN - 2 * SPACE));
     menuRequest->addChild(itemSendBinary);
     
 
     // Send Text Status Label
     _sendTextStatus = Label::createWithTTF("Send Text WS is waiting...", "fonts/arial.ttf", 14, Size(160, 100), TextHAlignment::CENTER, TextVAlignment::TOP);
-    _sendTextStatus->setAnchorPoint(Point(0, 0));
-    _sendTextStatus->setPosition(Point(VisibleRect::left().x, VisibleRect::rightBottom().y + 25));
+    _sendTextStatus->setAnchorPoint(Vector2(0, 0));
+    _sendTextStatus->setPosition(Vector2(VisibleRect::left().x, VisibleRect::rightBottom().y + 25));
     this->addChild(_sendTextStatus);
     
     // Send Binary Status Label
     _sendBinaryStatus = Label::createWithTTF("Send Binary WS is waiting...", "fonts/arial.ttf", 14, Size(160, 100), TextHAlignment::CENTER, TextVAlignment::TOP);
-    _sendBinaryStatus->setAnchorPoint(Point(0, 0));
-    _sendBinaryStatus->setPosition(Point(VisibleRect::left().x + 160, VisibleRect::rightBottom().y + 25));
+    _sendBinaryStatus->setAnchorPoint(Vector2(0, 0));
+    _sendBinaryStatus->setPosition(Vector2(VisibleRect::left().x + 160, VisibleRect::rightBottom().y + 25));
     this->addChild(_sendBinaryStatus);
     
     // Error Label
     _errorStatus = Label::createWithTTF("Error WS is waiting...", "fonts/arial.ttf", 14, Size(160, 100), TextHAlignment::CENTER, TextVAlignment::TOP);
-    _errorStatus->setAnchorPoint(Point(0, 0));
-    _errorStatus->setPosition(Point(VisibleRect::left().x + 320, VisibleRect::rightBottom().y + 25));
+    _errorStatus->setAnchorPoint(Vector2(0, 0));
+    _errorStatus->setPosition(Vector2(VisibleRect::left().x + 320, VisibleRect::rightBottom().y + 25));
     this->addChild(_errorStatus);
     
     // Back Menu
     auto itemBack = MenuItemFont::create("Back", CC_CALLBACK_1(WebSocketTestLayer::toExtensionsMainLayer, this));
-    itemBack->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
+    itemBack->setPosition(Vector2(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
     auto menuBack = Menu::create(itemBack, NULL);
-    menuBack->setPosition(Point::ZERO);
+    menuBack->setPosition(Vector2::ZERO);
     addChild(menuBack);
     
     _wsiSendText = new network::WebSocket();

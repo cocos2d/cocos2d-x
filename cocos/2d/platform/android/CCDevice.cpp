@@ -23,18 +23,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCPlatformConfig.h"
+#include "base/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
-#include "platform/CCDevice.h"
+#include "2d/platform/CCDevice.h"
 #include <string.h>
 #include <android/log.h>
 #include <jni.h>
-#include "ccTypes.h"
+#include "base/ccTypes.h"
 #include "jni/DPIJni.h"
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 #include "jni/JniHelper.h"
-#include "platform/CCFileUtils.h"
+#include "2d/platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 
@@ -167,7 +167,7 @@ static BitmapDC& sharedBitmapDC()
     return s_BmpDC;
 }
 
-Data Device::getTextureDataForText(const char * text,const FontDefinition& textDefinition,TextAlign align,int &width,int &height)
+Data Device::getTextureDataForText(const char * text, const FontDefinition& textDefinition, TextAlign align, int &width, int &height, bool& hasPremultipliedAlpha)
 {
     Data ret;
     do 
@@ -196,6 +196,7 @@ Data Device::getTextureDataForText(const char * text,const FontDefinition& textD
         width = dc._width;
         height = dc._height;
         ret.fastSet(dc._data,width * height * 4);
+        hasPremultipliedAlpha = true;
     } while (0);
 
     return ret;

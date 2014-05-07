@@ -23,11 +23,11 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "cocostudio/CCInputDelegate.h"
-#include "CCDirector.h"
-#include "platform/CCDevice.h"
-#include "CCEventListenerTouch.h"
-#include "CCEventListenerAcceleration.h"
-#include "CCEventListenerKeyboard.h"
+#include "base/CCDirector.h"
+#include "2d/platform/CCDevice.h"
+#include "base/CCEventListenerTouch.h"
+#include "base/CCEventListenerAcceleration.h"
+#include "base/CCEventListenerKeyboard.h"
 
 using namespace cocos2d;
 

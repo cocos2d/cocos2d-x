@@ -27,9 +27,9 @@
 
 #include "CCControlButton.h"
 #include "CCScale9Sprite.h"
-#include "CCLabel.h"
-#include "CCAction.h"
-#include "CCActionInterval.h"
+#include "2d/CCLabel.h"
+#include "2d/CCAction.h"
+#include "2d/CCActionInterval.h"
 
 using namespace std;
 
@@ -89,7 +89,7 @@ bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, Scale9Sprite* b
         
         // Set the default anchor point
         ignoreAnchorPointForPosition(false);
-        setAnchorPoint(Point::ANCHOR_MIDDLE);
+        setAnchorPoint(Vector2::ANCHOR_MIDDLE);
         
         // Set the nodes
         setTitleLabel(node);
@@ -107,7 +107,7 @@ bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, Scale9Sprite* b
         setTitleLabelForState(node, Control::State::NORMAL);
         setBackgroundSpriteForState(backgroundSprite, Control::State::NORMAL);
         
-        setLabelAnchorPoint(Point::ANCHOR_MIDDLE);
+        setLabelAnchorPoint(Vector2::ANCHOR_MIDDLE);
 
         // Layout update
         needsLayout();
@@ -250,12 +250,12 @@ bool ControlButton::doesAdjustBackgroundImage()
     return _doesAdjustBackgroundImage;
 }
 
-const Point& ControlButton::getLabelAnchorPoint() const
+const Vector2& ControlButton::getLabelAnchorPoint() const
 {
     return this->_labelAnchorPoint;
 }
 
-void ControlButton::setLabelAnchorPoint(const Point& labelAnchorPoint)
+void ControlButton::setLabelAnchorPoint(const Vector2& labelAnchorPoint)
 {
     this->_labelAnchorPoint = labelAnchorPoint;
     if (_titleLabel != nullptr)
@@ -348,7 +348,7 @@ void ControlButton::setTitleLabelForState(Node* titleLabel, State state)
 
     _titleLabelDispatchTable.insert((int)state, titleLabel);
     titleLabel->setVisible(false);
-    titleLabel->setAnchorPoint(Point(0.5f, 0.5f));
+    titleLabel->setAnchorPoint(Vector2(0.5f, 0.5f));
     addChild(titleLabel, 1);
 
     // If the current state if equal to the given state we update the layout
@@ -447,7 +447,7 @@ void ControlButton::setBackgroundSpriteForState(Scale9Sprite* sprite, State stat
 
     _backgroundSpriteDispatchTable.insert((int)state, sprite);
     sprite->setVisible(false);
-    sprite->setAnchorPoint(Point(0.5f, 0.5f));
+    sprite->setAnchorPoint(Vector2(0.5f, 0.5f));
     addChild(sprite);
 
     if (this->_preferredSize.width != 0 || this->_preferredSize.height != 0)
@@ -509,14 +509,14 @@ void ControlButton::needsLayout()
     }
     if (_titleLabel != nullptr)
     {
-        _titleLabel->setPosition(Point (getContentSize().width / 2, getContentSize().height / 2));
+        _titleLabel->setPosition(Vector2 (getContentSize().width / 2, getContentSize().height / 2));
     }
     
     // Update the background sprite
     this->setBackgroundSprite(this->getBackgroundSpriteForState(_state));
     if (_backgroundSprite != nullptr)
     {
-        _backgroundSprite->setPosition(Point (getContentSize().width / 2, getContentSize().height / 2));
+        _backgroundSprite->setPosition(Vector2 (getContentSize().width / 2, getContentSize().height / 2));
     }
    
     // Get the title label size
@@ -571,14 +571,14 @@ void ControlButton::needsLayout()
     
     if (_titleLabel != nullptr)
     {
-        _titleLabel->setPosition(Point(getContentSize().width/2, getContentSize().height/2));
+        _titleLabel->setPosition(Vector2(getContentSize().width/2, getContentSize().height/2));
         // Make visible the background and the label
         _titleLabel->setVisible(true);
     }
   
     if (_backgroundSprite != nullptr)
     {
-        _backgroundSprite->setPosition(Point(getContentSize().width/2, getContentSize().height/2));
+        _backgroundSprite->setPosition(Vector2(getContentSize().width/2, getContentSize().height/2));
         _backgroundSprite->setVisible(true);   
     }   
 }

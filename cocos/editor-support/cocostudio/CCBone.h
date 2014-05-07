@@ -30,9 +30,12 @@ THE SOFTWARE.
 #include "cocostudio/CCTween.h"
 #include "cocostudio/CCDecorativeDisplay.h"
 #include "cocostudio/CCDisplayManager.h"
-#include "CCNode.h"
+#include "2d/CCNode.h"
+#include "math/CCMath.h"
 
 namespace cocostudio {
+
+USING_NS_CC_MATH;
 
 class Armature;
 
@@ -153,8 +156,8 @@ public:
     virtual void setTransformDirty(bool dirty) { _boneTransformDirty = dirty; }
     virtual bool isTransformDirty() { return _boneTransformDirty; }
 
-    virtual kmMat4 getNodeToArmatureTransform() const;
-    virtual kmMat4 getNodeToWorldTransform() const override;
+    virtual Matrix getNodeToArmatureTransform() const;
+    virtual Matrix getNodeToWorldTransform() const override;
 
     Node *getDisplayRenderNode();
     DisplayType getDisplayRenderNodeType();
@@ -247,7 +250,7 @@ protected:
     bool _boneTransformDirty;          //! Whether or not transform dirty
 
     //! self Transform, use this to change display's state
-    kmMat4 _worldTransform;
+    Matrix _worldTransform;
 
     BaseData *_worldInfo;
     

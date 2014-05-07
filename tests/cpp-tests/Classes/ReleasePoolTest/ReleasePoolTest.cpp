@@ -27,7 +27,7 @@ void ReleasePoolTestScene::runThisTest()
     // title
     auto label = Label::createWithTTF("AutoreasePool Test", "fonts/arial.ttf", 32);
     addChild(label, 9999);
-    label->setPosition(Point(VisibleRect::center().x, VisibleRect::top().y - 30));
+    label->setPosition(Vector2(VisibleRect::center().x, VisibleRect::top().y - 30));
     
     // reference count should be added when added into auto release pool
     

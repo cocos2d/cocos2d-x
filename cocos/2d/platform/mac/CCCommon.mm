@@ -23,12 +23,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCPlatformConfig.h"
+#include "base/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 
-#include "platform/CCCommon.h"
+#include "2d/platform/CCCommon.h"
 
-#include "CCDirector.h"
+#include "base/CCDirector.h"
 #include "CCGLView.h"
 
 #define GLFW_EXPOSE_NATIVE_NSGL

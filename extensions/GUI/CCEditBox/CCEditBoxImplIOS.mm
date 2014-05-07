@@ -270,7 +270,7 @@ EditBoxImplIOS::EditBoxImplIOS(EditBox* pEditText)
 : EditBoxImpl(pEditText)
 , _label(nullptr)
 , _labelPlaceHolder(nullptr)
-, _anchorPoint(Point(0.5f, 0.5f))
+, _anchorPoint(Vector2(0.5f, 0.5f))
 , _systemControl(nullptr)
 , _maxTextLength(-1)
 {
@@ -323,14 +323,14 @@ void EditBoxImplIOS::initInactiveLabels(const Size& size)
 	const char* pDefaultFontName = [[_systemControl.textField.font fontName] UTF8String];
 
 	_label = Label::create();
-    _label->setAnchorPoint(Point(0, 0.5f));
+    _label->setAnchorPoint(Vector2(0, 0.5f));
     _label->setColor(Color3B::WHITE);
     _label->setVisible(false);
     _editBox->addChild(_label, kLabelZOrder);
 	
     _labelPlaceHolder = Label::create();
 	// align the text vertically center
-    _labelPlaceHolder->setAnchorPoint(Point(0, 0.5f));
+    _labelPlaceHolder->setAnchorPoint(Vector2(0, 0.5f));
     _labelPlaceHolder->setColor(Color3B::GRAY);
     _editBox->addChild(_labelPlaceHolder, kLabelZOrder);
     
@@ -340,8 +340,8 @@ void EditBoxImplIOS::initInactiveLabels(const Size& size)
 
 void EditBoxImplIOS::placeInactiveLabels()
 {
-    _label->setPosition(Point(CC_EDIT_BOX_PADDING, _contentSize.height / 2.0f));
-    _labelPlaceHolder->setPosition(Point(CC_EDIT_BOX_PADDING, _contentSize.height / 2.0f));
+    _label->setPosition(Vector2(CC_EDIT_BOX_PADDING, _contentSize.height / 2.0f));
+    _labelPlaceHolder->setPosition(Vector2(CC_EDIT_BOX_PADDING, _contentSize.height / 2.0f));
 }
 
 void EditBoxImplIOS::setInactiveText(const char* pText)
@@ -550,15 +550,15 @@ void EditBoxImplIOS::setPlaceHolder(const char* pText)
 	_labelPlaceHolder->setString(pText);
 }
 
-static CGPoint convertDesignCoordToScreenCoord(const Point& designCoord, bool bInRetinaMode)
+static CGPoint convertDesignCoordToScreenCoord(const Vector2& designCoord, bool bInRetinaMode)
 {
     auto glview = cocos2d::Director::getInstance()->getOpenGLView();
     CCEAGLView *eaglview = (CCEAGLView *) glview->getEAGLView();
 
     float viewH = (float)[eaglview getHeight];
     
-    Point visiblePos = Point(designCoord.x * glview->getScaleX(), designCoord.y * glview->getScaleY());
-    Point screenGLPos = visiblePos + glview->getViewPortRect().origin;
+    Vector2 visiblePos = Vector2(designCoord.x * glview->getScaleX(), designCoord.y * glview->getScaleY());
+    Vector2 screenGLPos = visiblePos + glview->getViewPortRect().origin;
     
     CGPoint screenPos = CGPointMake(screenGLPos.x, viewH - screenGLPos.y);
     
@@ -571,7 +571,7 @@ static CGPoint convertDesignCoordToScreenCoord(const Point& designCoord, bool bI
     return screenPos;
 }
 
-void EditBoxImplIOS::setPosition(const Point& pos)
+void EditBoxImplIOS::setPosition(const Vector2& pos)
 {
 	_position = pos;
 	adjustTextFieldPosition();
@@ -598,7 +598,7 @@ void EditBoxImplIOS::setContentSize(const Size& size)
     [_systemControl setContentSize:controlSize];
 }
 
-void EditBoxImplIOS::setAnchorPoint(const Point& anchorPoint)
+void EditBoxImplIOS::setAnchorPoint(const Vector2& anchorPoint)
 {
     CCLOG("[Edit text] anchor point = (%f, %f)", anchorPoint.x, anchorPoint.y);
 	_anchorPoint = anchorPoint;
@@ -633,7 +633,7 @@ void EditBoxImplIOS::adjustTextFieldPosition()
 	Rect rect = Rect(0, 0, contentSize.width, contentSize.height);
     rect = RectApplyAffineTransform(rect, _editBox->nodeToWorldTransform());
 	
-	Point designCoord = Point(rect.origin.x, rect.origin.y + rect.size.height);
+	Vector2 designCoord = Vector2(rect.origin.x, rect.origin.y + rect.size.height);
     [_systemControl setPosition:convertDesignCoordToScreenCoord(designCoord, _inRetinaMode)];
 }
 

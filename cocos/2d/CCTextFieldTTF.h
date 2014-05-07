@@ -26,8 +26,8 @@ THE SOFTWARE.
 #ifndef __CC_TEXT_FIELD_H__
 #define __CC_TEXT_FIELD_H__
 
-#include "CCLabel.h"
-#include "CCIMEDelegate.h"
+#include "2d/CCLabel.h"
+#include "2d/CCIMEDelegate.h"
 
 NS_CC_BEGIN
 
@@ -86,7 +86,7 @@ public:
     /**
     @brief    If the sender doesn't want to draw, return true.
     */
-    virtual bool onVisit(TextFieldTTF * sender,Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+    virtual bool onVisit(TextFieldTTF * sender,Renderer *renderer, const Matrix &transform, bool transformUpdated)
     {
         CC_UNUSED_PARAM(sender);
         return false;
@@ -165,7 +165,7 @@ public:
     virtual void setSecureTextEntry(bool value);
     virtual bool isSecureTextEntry();
 
-    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
+    virtual void visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated) override;
 
 protected:
     //////////////////////////////////////////////////////////////////////////

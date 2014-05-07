@@ -29,21 +29,20 @@
 #ifndef __CCNODE_H__
 #define __CCNODE_H__
 
-#include "ccMacros.h"
-#include "CCAffineTransform.h"
+#include "base/ccMacros.h"
+#include "math/CCAffineTransform.h"
 #include "CCGL.h"
-#include "ccGLStateCache.h"
-#include "CCGLProgram.h"
-#include "CCScriptSupport.h"
-#include "CCProtocols.h"
-#include "CCEventDispatcher.h"
-#include "CCVector.h"
-#include "kazmath/kazmath.h"
+#include "2d/ccGLStateCache.h"
+#include "2d/CCGLProgram.h"
+#include "2d/CCScriptSupport.h"
+#include "2d/CCProtocols.h"
+#include "base/CCEventDispatcher.h"
+#include "base/CCVector.h"
+#include "math/CCMath.h"
 
 NS_CC_BEGIN
 
 class GridBase;
-class Point;
 class Touch;
 class Action;
 class LabelProtocol;
@@ -70,6 +69,8 @@ enum {
     kNodeOnExitTransitionDidStart,
     kNodeOnCleanup
 };
+
+USING_NS_CC_MATH;
 
 bool nodeComparisonLess(Node* n1, Node* n2);
 
@@ -273,37 +274,37 @@ public:
     /**
      * Sets the position (x,y) of the node in its parent's coordinate system.
      *
-     * Usually we use `Point(x,y)` to compose Point object.
+     * Usually we use `Vector2(x,y)` to compose Vector2 object.
      * This code snippet sets the node in the center of screen.
      @code
      Size size = Director::getInstance()->getWinSize();
-     node->setPosition( Point(size.width/2, size.height/2) )
+     node->setPosition( Vector2(size.width/2, size.height/2) )
      @endcode
      *
      * @param position  The position (x,y) of the node in OpenGL coordinates
      */
-    virtual void setPosition(const Point &position);
+    virtual void setPosition(const Vector2 &position);
     /**
      * Gets the position (x,y) of the node in its parent's coordinate system.
      *
-     * @see setPosition(const Point&)
+     * @see setPosition(const Vector2&)
      *
      * @return The position (x,y) of the node in OpenGL coordinates
      * @code
      * In js and lua return value is table which contains x,y
      * @endcode
      */
-    virtual const Point& getPosition() const;
+    virtual const Vector2& getPosition() const;
     /**
      * Sets the position (x,y) of the node in its parent's coordinate system.
      *
-     * Passing two numbers (x,y) is much efficient than passing Point object.
+     * Passing two numbers (x,y) is much efficient than passing Vector2 object.
      * This method is bound to Lua and JavaScript.
      * Passing a number is 10 times faster than passing a object from Lua to c++
      *
      @code
      // sample code in Lua
-     local pos  = node::getPosition()  -- returns Point object from C++
+     local pos  = node::getPosition()  -- returns Vector2 object from C++
      node:setPosition(x, y)            -- pass x, y coordinate to C++
      @endcode
      *
@@ -312,7 +313,7 @@ public:
      */
     virtual void setPosition(float x, float y);
     /**
-     * Gets position in a more efficient way, returns two number instead of a Point object
+     * Gets position in a more efficient way, returns two number instead of a Vector2 object
      *
      * @see `setPosition(float, float)`
      * In js,out value not return
@@ -330,11 +331,11 @@ public:
     /**
      * Sets the position (X, Y, and Z) in its parent's coordinate system
      */
-    virtual void setPosition3D(const Vertex3F& position);
+    virtual void setPosition3D(const Vector3& position);
     /**
      * returns the position (X,Y,Z) in its parent's coordinate system
      */
-    virtual Vertex3F getPosition3D() const;
+    virtual Vector3 getPosition3D() const;
 
     /**
      * Sets the 'z' coordinate in the position. It is the OpenGL Z vertex value.
@@ -419,15 +420,15 @@ public:
      *
      * @param anchorPoint   The anchor point of node.
      */
-    virtual void setAnchorPoint(const Point& anchorPoint);
+    virtual void setAnchorPoint(const Vector2& anchorPoint);
     /**
      * Returns the anchor point in percent.
      *
-     * @see `setAnchorPoint(const Point&)`
+     * @see `setAnchorPoint(const Vector2&)`
      *
      * @return The anchor point of node.
      */
-    virtual const Point& getAnchorPoint() const;
+    virtual const Vector2& getAnchorPoint() const;
     /**
      * Returns the anchorPoint in absolute pixels.
      *
@@ -436,7 +437,7 @@ public:
      *
      * @return The anchor point in absolute pixels.
      */
-    virtual const Point& getAnchorPointInPoints() const;
+    virtual const Vector2& getAnchorPointInPoints() const;
 
 
     /**
@@ -498,11 +499,11 @@ public:
      * Sets the rotation (X,Y,Z) in degrees.
      * Useful for 3d rotations
      */
-    virtual void setRotation3D(const Vertex3F& rotation);
+    virtual void setRotation3D(const Vector3& rotation);
     /**
      * returns the rotation (X,Y,Z) in degrees.
      */
-    virtual Vertex3F getRotation3D() const;
+    virtual Vector3 getRotation3D() const;
 
     /**
      * Sets the X rotation (angle) of the node in degrees which performs a horizontal rotational skew.
@@ -919,13 +920,13 @@ public:
      * AND YOU SHOULD NOT DISABLE THEM AFTER DRAWING YOUR NODE
      * But if you enable any other GL state, you should disable it after drawing your node.
      */
-    virtual void draw(Renderer *renderer, const kmMat4& transform, bool transformUpdated);
+    virtual void draw(Renderer *renderer, const Matrix& transform, bool transformUpdated);
     virtual void draw() final;
 
     /**
      * Visits this node's children and draw them recursively.
      */
-    virtual void visit(Renderer *renderer, const kmMat4& parentTransform, bool parentTransformUpdated);
+    virtual void visit(Renderer *renderer, const Matrix& parentTransform, bool parentTransformUpdated);
     virtual void visit() final;
 
 
@@ -1190,13 +1191,13 @@ public:
      * Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
      * The matrix is in Pixels.
      */
-    virtual const kmMat4& getNodeToParentTransform() const;
+    virtual const Matrix& getNodeToParentTransform() const;
     virtual AffineTransform getNodeToParentAffineTransform() const;
 
     /** 
      * Sets the Transformation matrix manually.
      */
-    virtual void setNodeToParentTransform(const kmMat4& transform);
+    virtual void setNodeToParentTransform(const Matrix& transform);
 
     /** @deprecated use getNodeToParentTransform() instead */
     CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform nodeToParentTransform() const { return getNodeToParentAffineTransform(); }
@@ -1205,7 +1206,7 @@ public:
      * Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.
      * The matrix is in Pixels.
      */
-    virtual const kmMat4& getParentToNodeTransform() const;
+    virtual const Matrix& getParentToNodeTransform() const;
     virtual AffineTransform getParentToNodeAffineTransform() const;
 
     /** @deprecated Use getParentToNodeTransform() instead */
@@ -1214,7 +1215,7 @@ public:
     /**
      * Returns the world affine transform matrix. The matrix is in Pixels.
      */
-    virtual kmMat4 getNodeToWorldTransform() const;
+    virtual Matrix getNodeToWorldTransform() const;
     virtual AffineTransform getNodeToWorldAffineTransform() const;
 
     /** @deprecated Use getNodeToWorldTransform() instead */
@@ -1223,7 +1224,7 @@ public:
     /**
      * Returns the inverse world affine transform matrix. The matrix is in Pixels.
      */
-    virtual kmMat4 getWorldToNodeTransform() const;
+    virtual Matrix getWorldToNodeTransform() const;
     virtual AffineTransform getWorldToNodeAffineTransform() const;
 
 
@@ -1237,36 +1238,36 @@ public:
     /// @name Coordinate Converters
 
     /**
-     * Converts a Point to node (local) space coordinates. The result is in Points.
+     * Converts a Vector2 to node (local) space coordinates. The result is in Points.
      */
-    Point convertToNodeSpace(const Point& worldPoint) const;
+    Vector2 convertToNodeSpace(const Vector2& worldPoint) const;
 
     /**
-     * Converts a Point to world space coordinates. The result is in Points.
+     * Converts a Vector2 to world space coordinates. The result is in Points.
      */
-    Point convertToWorldSpace(const Point& nodePoint) const;
+    Vector2 convertToWorldSpace(const Vector2& nodePoint) const;
 
     /**
-     * Converts a Point to node (local) space coordinates. The result is in Points.
+     * Converts a Vector2 to node (local) space coordinates. The result is in Points.
      * treating the returned/received node point as anchor relative.
      */
-    Point convertToNodeSpaceAR(const Point& worldPoint) const;
+    Vector2 convertToNodeSpaceAR(const Vector2& worldPoint) const;
 
     /**
-     * Converts a local Point to world space coordinates.The result is in Points.
+     * Converts a local Vector2 to world space coordinates.The result is in Points.
      * treating the returned/received node point as anchor relative.
      */
-    Point convertToWorldSpaceAR(const Point& nodePoint) const;
+    Vector2 convertToWorldSpaceAR(const Vector2& nodePoint) const;
 
     /**
-     * convenience methods which take a Touch instead of Point
+     * convenience methods which take a Touch instead of Vector2
      */
-    Point convertTouchToNodeSpace(Touch * touch) const;
+    Vector2 convertTouchToNodeSpace(Touch * touch) const;
 
     /**
      * converts a Touch (world coordinates) into a local coordinate. This method is AR (Anchor Relative).
      */
-    Point convertTouchToNodeSpaceAR(Touch * touch) const;
+    Vector2 convertTouchToNodeSpaceAR(Touch * touch) const;
 
 	/**
      *  Sets an additional transform matrix to the node.
@@ -1276,7 +1277,7 @@ public:
      *  @note The additional transform will be concatenated at the end of getNodeToParentTransform.
      *        It could be used to simulate `parent-child` relationship between two nodes (e.g. one is in BatchNode, another isn't).
      */
-    void setAdditionalTransform(kmMat4* additionalTransform);
+    void setAdditionalTransform(Matrix* additionalTransform);
     void setAdditionalTransform(const AffineTransform& additionalTransform);
 
     /// @} end of Coordinate Converters
@@ -1308,7 +1309,7 @@ public:
 #if CC_USE_PHYSICS
     /**
      *   set the PhysicsBody that let the sprite effect with physics
-     * @note This method will set anchor point to Point::ANCHOR_MIDDLE if body not null, and you cann't change anchor point if node has a physics body.
+     * @note This method will set anchor point to Vector2::ANCHOR_MIDDLE if body not null, and you cann't change anchor point if node has a physics body.
      */
     void setPhysicsBody(PhysicsBody* body);
 
@@ -1355,9 +1356,9 @@ protected:
     void detachChild(Node *child, ssize_t index, bool doCleanup);
 
     /// Convert cocos2d coordinates to UI windows coordinate.
-    Point convertToWindowSpace(const Point& nodePoint) const;
+    Vector2 convertToWindowSpace(const Vector2& nodePoint) const;
 
-    kmMat4 transform(const kmMat4 &parentTransform);
+    Matrix transform(const Matrix &parentTransform);
 
     virtual void updateCascadeOpacity();
     virtual void disableCascadeOpacity();
@@ -1366,8 +1367,8 @@ protected:
     virtual void updateColor() {}
     
 #if CC_USE_PHYSICS
-    virtual void updatePhysicsBodyPosition(Layer* layer);
-    virtual void updatePhysicsBodyRotation(Layer* layer);
+    virtual void updatePhysicsBodyPosition(Scene* layer);
+    virtual void updatePhysicsBodyRotation(Scene* layer);
 #endif // CC_USE_PHYSICS
 
     float _rotationX;               ///< rotation on the X-axis
@@ -1381,25 +1382,25 @@ protected:
     float _scaleY;                  ///< scaling factor on y-axis
     float _scaleZ;                  ///< scaling factor on z-axis
 
-    Point _position;                ///< position of the node
+    Vector2 _position;                ///< position of the node
     float _positionZ;               ///< OpenGL real Z position
 
     float _skewX;                   ///< skew angle on x-axis
     float _skewY;                   ///< skew angle on y-axis
 
-    Point _anchorPointInPoints;     ///< anchor point in points
-    Point _anchorPoint;             ///< anchor point normalized (NOT in points)
+    Vector2 _anchorPointInPoints;     ///< anchor point in points
+    Vector2 _anchorPoint;             ///< anchor point normalized (NOT in points)
 
     Size _contentSize;              ///< untransformed size of the node
 
-    kmMat4  _modelViewTransform;    ///< ModelView transform of the Node.
+    Matrix  _modelViewTransform;    ///< ModelView transform of the Node.
 
     // "cache" variables are allowed to be mutable
-    mutable kmMat4 _transform;      ///< transform
+    mutable Matrix _transform;      ///< transform
     mutable bool _transformDirty;   ///< transform dirty flag
-    mutable kmMat4 _inverse;        ///< inverse transform
+    mutable Matrix _inverse;        ///< inverse transform
     mutable bool _inverseDirty;     ///< inverse transform dirty flag
-    mutable kmMat4 _additionalTransform; ///< transform
+    mutable Matrix _additionalTransform; ///< transform
     bool _useAdditionalTransform;   ///< The flag to check whether the additional transform is dirty
     bool _transformUpdated;         ///< Whether or not the Transform object was updated since the last frame
 
@@ -1430,7 +1431,7 @@ protected:
 
     bool _visible;                  ///< is this node visible
 
-    bool _ignoreAnchorPointForPosition; ///< true if the Anchor Point will be (0,0) when you position the Node, false otherwise.
+    bool _ignoreAnchorPointForPosition; ///< true if the Anchor Vector2 will be (0,0) when you position the Node, false otherwise.
                                           ///< Used by Layer and Scene.
 
     bool _reorderChildDirty;          ///< children order dirty flag

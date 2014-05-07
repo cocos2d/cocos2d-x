@@ -30,7 +30,7 @@
 #define __CPROTECTEDCNODE_H__
 
 
-#include "CCNode.h"
+#include "2d/CCNode.h"
 
 NS_CC_BEGIN
 
@@ -127,7 +127,7 @@ public:
     
     /// @} end of Children and Parent
     
-    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool transformUpdated) override;
+    virtual void visit(Renderer *renderer, const Matrix &parentTransform, bool transformUpdated) override;
     
     virtual void cleanup() override;
     

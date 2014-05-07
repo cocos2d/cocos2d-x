@@ -26,7 +26,7 @@ THE SOFTWARE.
 #ifndef __ACTION_CCTILEDGRID_ACTION_H__
 #define __ACTION_CCTILEDGRID_ACTION_H__
 
-#include "CCActionGrid.h"
+#include "2d/CCActionGrid.h"
 
 NS_CC_BEGIN
 
@@ -100,7 +100,7 @@ public:
 
     void shuffle(unsigned int *array, unsigned int len);
     Size getDelta(const Size& pos) const;
-    void placeTile(const Point& pos, Tile *t);
+    void placeTile(const Vector2& pos, Tile *t);
 
     // Overrides
     virtual void startWithTarget(Node *target) override;
@@ -134,9 +134,9 @@ public:
     static FadeOutTRTiles* create(float duration, const Size& gridSize);
 
     virtual float testFunc(const Size& pos, float time);
-    void turnOnTile(const Point& pos);
-    void turnOffTile(const Point& pos);
-    virtual void transformTile(const Point& pos, float distance);
+    void turnOnTile(const Vector2& pos);
+    void turnOffTile(const Vector2& pos);
+    virtual void transformTile(const Vector2& pos, float distance);
 
     // Overrides
     virtual void update(float time) override;
@@ -180,7 +180,7 @@ public:
     /** creates the action with the grid size and the duration */
     static FadeOutUpTiles* create(float duration, const Size& gridSize);
 
-    virtual void transformTile(const Point& pos, float distance);
+    virtual void transformTile(const Vector2& pos, float distance);
 
     // Overrides
 	virtual FadeOutUpTiles* clone() const override;
@@ -227,8 +227,8 @@ public:
     static TurnOffTiles* create(float duration, const Size& gridSize, unsigned int seed);
 
     void shuffle(unsigned int *array, unsigned int len);
-    void turnOnTile(const Point& pos);
-    void turnOffTile(const Point& pos);
+    void turnOnTile(const Vector2& pos);
+    void turnOffTile(const Vector2& pos);
 
     // Overrides
 	virtual TurnOffTiles* clone() const override;

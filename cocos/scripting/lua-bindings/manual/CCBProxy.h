@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 #include "CCLuaEngine.h"
-#include "SimpleAudioEngine.h"
+#include "audio/include/SimpleAudioEngine.h"
 #include "extensions/cocos-ext.h"
 #include "cocosbuilder/CocosBuilder.h"
 

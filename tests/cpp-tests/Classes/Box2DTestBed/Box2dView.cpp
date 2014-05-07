@@ -49,7 +49,7 @@ MenuLayer* MenuLayer::menuWithEntryID(int entryId)
 bool MenuLayer::initWithEntryID(int entryId)
 {
     auto director = Director::getInstance();
-	Point visibleOrigin = director->getVisibleOrigin();
+	Vector2 visibleOrigin = director->getVisibleOrigin();
 	Size visibleSize = director->getVisibleSize();
 
     m_entryID = entryId;
@@ -57,11 +57,11 @@ bool MenuLayer::initWithEntryID(int entryId)
     Box2DView* view = Box2DView::viewWithEntryID( entryId );
     addChild(view, 0, kTagBox2DNode);
     view->setScale(15);
-    view->setAnchorPoint( Point(0,0) );
-    view->setPosition( Point(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/3) );  
+    view->setAnchorPoint( Vector2(0,0) );
+    view->setPosition( Vector2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/3) );  
     auto label = Label::createWithTTF(view->title().c_str(), "fonts/arial.ttf", 28);
     addChild(label, 1);
-    label->setPosition( Point(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height-50) );
+    label->setPosition( Vector2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height-50) );
 
     auto item1 = MenuItemImage::create("Images/b1.png", "Images/b2.png", CC_CALLBACK_1(MenuLayer::backCallback, this) );
     auto item2 = MenuItemImage::create("Images/r1.png","Images/r2.png", CC_CALLBACK_1( MenuLayer::restartCallback, this) );
@@ -69,10 +69,10 @@ bool MenuLayer::initWithEntryID(int entryId)
 
     auto menu = Menu::create(item1, item2, item3, NULL);
 
-    menu->setPosition( Point::ZERO );
-    item1->setPosition(Point(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item2->setPosition(Point(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item3->setPosition(Point(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    menu->setPosition( Vector2::ZERO );
+    item1->setPosition(Vector2(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item2->setPosition(Vector2(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item3->setPosition(Vector2(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
     
     addChild(menu, 1);
     
@@ -202,7 +202,7 @@ std::string Box2DView::title() const
     return std::string(m_entry->name);
 }
 
-void Box2DView::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void Box2DView::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     Layer::draw(renderer, transform, transformUpdated);
 
@@ -211,17 +211,19 @@ void Box2DView::draw(Renderer *renderer, const kmMat4 &transform, bool transform
     renderer->addCommand(&_customCmd);
 }
 
-void Box2DView::onDraw(const kmMat4 &transform, bool transformUpdated)
+void Box2DView::onDraw(const Matrix &transform, bool transformUpdated)
 {
-    kmGLPushMatrix();
-    kmGLLoadMatrix(&transform);
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
 
     GL::enableVertexAttribs( cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION );
     m_test->Step(&settings);
     m_test->m_world->DrawDebugData();
     CHECK_GL_ERROR_DEBUG();
     
-    kmGLPopMatrix();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
 Box2DView::~Box2DView()

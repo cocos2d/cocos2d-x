@@ -25,15 +25,15 @@ bool UIListViewTest_Vertical::init()
         Size widgetSize = _widget->getSize();
         
         _displayValueLabel = Text::create("Move by vertical direction", "fonts/Marker Felt.ttf", 32);
-        _displayValueLabel->setAnchorPoint(Point(0.5f, -1.0f));
-        _displayValueLabel->setPosition(Point(widgetSize.width / 2.0f,
+        _displayValueLabel->setAnchorPoint(Vector2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vector2(widgetSize.width / 2.0f,
                                               widgetSize.height / 2.0f + _displayValueLabel->getContentSize().height * 1.5f));
         _uiLayer->addChild(_displayValueLabel);
         
         
         Text* alert = Text::create("ListView vertical", "fonts/Marker Felt.ttf", 30);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Point(widgetSize.width / 2.0f,
+        alert->setPosition(Vector2(widgetSize.width / 2.0f,
                                  widgetSize.height / 2.0f - alert->getSize().height * 3.075f));
         _uiLayer->addChild(alert);
         
@@ -62,7 +62,7 @@ bool UIListViewTest_Vertical::init()
         listView->setBackGroundImage("cocosui/green_edit.png");
         listView->setBackGroundImageScale9Enabled(true);
         listView->setSize(Size(240, 130));
-        listView->setPosition(Point((widgetSize.width - backgroundSize.width) / 2.0f +
+        listView->setPosition(Vector2((widgetSize.width - backgroundSize.width) / 2.0f +
                                     (backgroundSize.width - listView->getSize().width) / 2.0f,
                                     (widgetSize.height - backgroundSize.height) / 2.0f +
                                     (backgroundSize.height - listView->getSize().height) / 2.0f));
@@ -77,7 +77,7 @@ bool UIListViewTest_Vertical::init()
         Layout* default_item = Layout::create();
         default_item->setTouchEnabled(true);
         default_item->setSize(default_button->getSize());
-        default_button->setPosition(Point(default_item->getSize().width / 2.0f,
+        default_button->setPosition(Vector2(default_item->getSize().width / 2.0f,
                                           default_item->getSize().height / 2.0f));
         default_item->addChild(default_button);
         
@@ -106,7 +106,7 @@ bool UIListViewTest_Vertical::init()
             
             Layout *custom_item = Layout::create();
             custom_item->setSize(custom_button->getSize());
-            custom_button->setPosition(Point(custom_item->getSize().width / 2.0f, custom_item->getSize().height / 2.0f));
+            custom_button->setPosition(Vector2(custom_item->getSize().width / 2.0f, custom_item->getSize().height / 2.0f));
             custom_item->addChild(custom_button);
             
             listView->pushBackCustomItem(custom_item);
@@ -123,7 +123,7 @@ bool UIListViewTest_Vertical::init()
             
             Layout *custom_item = Layout::create();
             custom_item->setSize(custom_button->getSize());
-            custom_button->setPosition(Point(custom_item->getSize().width / 2.0f, custom_item->getSize().height / 2.0f));
+            custom_button->setPosition(Vector2(custom_item->getSize().width / 2.0f, custom_item->getSize().height / 2.0f));
             custom_item->addChild(custom_button);
             
             listView->insertCustomItem(custom_item, items_count);
@@ -201,8 +201,8 @@ bool UIListViewTest_Horizontal::init()
         Size widgetSize = _widget->getSize();
         
         _displayValueLabel = Text::create("Move by horizontal direction", "fonts/Marker Felt.ttf", 32);
-        _displayValueLabel->setAnchorPoint(Point(0.5f, -1.0f));
-        _displayValueLabel->setPosition(Point(widgetSize.width / 2.0f,
+        _displayValueLabel->setAnchorPoint(Vector2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vector2(widgetSize.width / 2.0f,
                                               widgetSize.height / 2.0f
                                               + _displayValueLabel->getContentSize().height * 1.5f));
         
@@ -211,7 +211,7 @@ bool UIListViewTest_Horizontal::init()
         
         Text* alert = Text::create("ListView horizontal", "fonts/Marker Felt.ttf", 30);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.075f));
+        alert->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.075f));
         _uiLayer->addChild(alert);
         
         Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
@@ -239,7 +239,7 @@ bool UIListViewTest_Horizontal::init()
         listView->setBackGroundImage("cocosui/green_edit.png");
         listView->setBackGroundImageScale9Enabled(true);
         listView->setSize(Size(240, 130));
-        listView->setPosition(Point((widgetSize.width - backgroundSize.width) / 2.0f +
+        listView->setPosition(Vector2((widgetSize.width - backgroundSize.width) / 2.0f +
                                     (backgroundSize.width - listView->getSize().width) / 2.0f,
                                     (widgetSize.height - backgroundSize.height) / 2.0f +
                                     (backgroundSize.height - listView->getSize().height) / 2.0f));
@@ -254,7 +254,7 @@ bool UIListViewTest_Horizontal::init()
         Layout *default_item = Layout::create();
         default_item->setTouchEnabled(true);
         default_item->setSize(default_button->getSize());
-        default_button->setPosition(Point(default_item->getSize().width / 2.0f, default_item->getSize().height / 2.0f));
+        default_button->setPosition(Vector2(default_item->getSize().width / 2.0f, default_item->getSize().height / 2.0f));
         default_item->addChild(default_button);
         
         // set model
@@ -282,7 +282,7 @@ bool UIListViewTest_Horizontal::init()
             
             Layout* custom_item = Layout::create();
             custom_item->setSize(custom_button->getSize());
-            custom_button->setPosition(Point(custom_item->getSize().width / 2.0f, custom_item->getSize().height / 2.0f));
+            custom_button->setPosition(Vector2(custom_item->getSize().width / 2.0f, custom_item->getSize().height / 2.0f));
             custom_item->addChild(custom_button);
             
             listView->pushBackCustomItem(custom_item);
@@ -299,7 +299,7 @@ bool UIListViewTest_Horizontal::init()
             
             Layout* custom_item = Layout::create();
             custom_item->setSize(custom_button->getSize());
-            custom_button->setPosition(Point(custom_item->getSize().width / 2.0f, custom_item->getSize().height / 2.0f));
+            custom_button->setPosition(Vector2(custom_item->getSize().width / 2.0f, custom_item->getSize().height / 2.0f));
             custom_item->addChild(custom_button);
             
             listView->insertCustomItem(custom_item, items_count);

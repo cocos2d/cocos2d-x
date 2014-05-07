@@ -23,11 +23,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCPlatformConfig.h"
+#include "base/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
-#include "platform/CCDevice.h"
-#include "platform/CCFileUtils.h"
+#include "2d/platform/CCDevice.h"
+#include "2d/platform/CCFileUtils.h"
 #include "CCStdC.h"
 
 NS_CC_BEGIN
@@ -377,7 +377,7 @@ static BitmapDC& sharedBitmapDC()
     return s_BmpDC;
 }
 
-Data Device::getTextureDataForText(const char * text,const FontDefinition& textDefinition,TextAlign align,int &width,int &height)
+Data Device::getTextureDataForText(const char * text, const FontDefinition& textDefinition, TextAlign align, int &width, int &height, bool& hasPremultipliedAlpha)
 {
     Data ret;
     do 
@@ -429,7 +429,9 @@ Data Device::getTextureDataForText(const char * text,const FontDefinition& textD
         }
 
         ret.fastSet(dataBuf,dataLen);
+        hasPremultipliedAlpha = false;
     } while (0);
+
     return ret;
 }
 

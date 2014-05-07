@@ -26,7 +26,7 @@ THE SOFTWARE.
 #ifndef __CC_STD_C_H__
 #define __CC_STD_C_H__
 
-#include "CCPlatformConfig.h"
+#include "base/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #include <BaseTsd.h>
@@ -35,7 +35,7 @@ THE SOFTWARE.
 typedef SSIZE_T ssize_t;
 #endif // __SSIZE_T
 
-#include "CCPlatformMacros.h"
+#include "base/CCPlatformMacros.h"
 #include <float.h>
 
 // for math.h on win32 platform

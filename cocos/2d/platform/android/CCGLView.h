@@ -26,12 +26,12 @@ THE SOFTWARE.
 #ifndef __CC_EGLVIEW_ANDROID_H__
 #define __CC_EGLVIEW_ANDROID_H__
 
-#include "CCPlatformConfig.h"
+#include "base/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
-#include "CCRef.h"
-#include "CCGeometry.h"
-#include "platform/CCGLViewProtocol.h"
+#include "base/CCRef.h"
+#include "math/CCGeometry.h"
+#include "2d/platform/CCGLViewProtocol.h"
 
 NS_CC_BEGIN
 

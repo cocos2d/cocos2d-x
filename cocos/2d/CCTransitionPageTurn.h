@@ -27,7 +27,7 @@ THE SOFTWARE.
 #ifndef __CCPAGE_TURN_TRANSITION_H__
 #define __CCPAGE_TURN_TRANSITION_H__
 
-#include "CCTransition.h"
+#include "2d/CCTransition.h"
 #include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
@@ -72,7 +72,7 @@ public:
     //
     // Overrides
     //
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
 
     /**
     * Creates a base transition with duration and incoming scene.

@@ -25,7 +25,6 @@
 
 #include "TransitionsTest.h"
 #include "../testResource.h"
-#include "CCConfiguration.h"
 
 #define TRANSITION_DURATION (1.2f)
 
@@ -263,17 +262,17 @@ TestLayer1::TestLayer1(void)
     y = size.height;
 
     auto bg1 = Sprite::create(s_back1);
-    bg1->setPosition( Point(size.width/2, size.height/2) );
+    bg1->setPosition( Vector2(size.width/2, size.height/2) );
     addChild(bg1, -1);
 
     auto title = Label::createWithTTF( (transitions[s_nSceneIdx]).name, "fonts/Thonburi.ttf", 32 );
     addChild(title);
     title->setColor( Color3B(255,32,32) );
-    title->setPosition( Point(x/2, y-100) );
+    title->setPosition( Vector2(x/2, y-100) );
 
     auto label = Label::createWithTTF("SCENE 1", "fonts/Marker Felt.ttf", 38);
     label->setColor( Color3B(16,16,255));
-    label->setPosition( Point(x/2,y/2));    
+    label->setPosition( Vector2(x/2,y/2));    
     addChild( label);
 
     // menu
@@ -283,10 +282,10 @@ TestLayer1::TestLayer1(void)
 
     auto menu = Menu::create(item1, item2, item3, NULL);
 
-    menu->setPosition( Point::ZERO );
-    item1->setPosition(Point(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item2->setPosition(Point(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item3->setPosition(Point(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    menu->setPosition( Vector2::ZERO );
+    item1->setPosition(Vector2(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item2->setPosition(Vector2(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item3->setPosition(Vector2(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
 
     addChild(menu, 1);    
 
@@ -393,17 +392,17 @@ TestLayer2::TestLayer2()
     y = size.height;
 
     auto bg1 = Sprite::create(s_back2);
-    bg1->setPosition( Point(size.width/2, size.height/2) );
+    bg1->setPosition( Vector2(size.width/2, size.height/2) );
     addChild(bg1, -1);
 
     auto title = Label::createWithTTF((transitions[s_nSceneIdx]).name, "fonts/Thonburi.ttf", 32 );
     addChild(title);
     title->setColor( Color3B(255,32,32) );
-    title->setPosition( Point(x/2, y-100) );
+    title->setPosition( Vector2(x/2, y-100) );
 
     auto label = Label::createWithTTF("SCENE 2", "fonts/Marker Felt.ttf", 38);
     label->setColor( Color3B(16,16,255));
-    label->setPosition( Point(x/2,y/2));    
+    label->setPosition( Vector2(x/2,y/2));    
     addChild( label);
 
     // menu
@@ -413,10 +412,10 @@ TestLayer2::TestLayer2()
 
     auto menu = Menu::create(item1, item2, item3, NULL);
 
-    menu->setPosition( Point::ZERO );
-    item1->setPosition(Point(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item2->setPosition(Point(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item3->setPosition(Point(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    menu->setPosition( Vector2::ZERO );
+    item1->setPosition(Vector2(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item2->setPosition(Vector2(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item3->setPosition(Vector2(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
 
     addChild(menu, 1);    
 

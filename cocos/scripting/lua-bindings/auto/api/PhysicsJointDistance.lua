@@ -18,8 +18,8 @@
 -- @param self
 -- @param #cc.PhysicsBody physicsbody
 -- @param #cc.PhysicsBody physicsbody
--- @param #point_table point
--- @param #point_table point
+-- @param #array_table array
+-- @param #array_table array
 -- @return PhysicsJointDistance#PhysicsJointDistance ret (return value: cc.PhysicsJointDistance)
         
 return nil

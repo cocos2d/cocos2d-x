@@ -32,17 +32,17 @@ extern "C" {
 }
 #endif
 
-#include "CCNode.h"
+#include "2d/CCNode.h"
 #include "renderer/CCCustomCommand.h"
 
 class GLNode:public cocos2d::Node
 {
 public:
     virtual ~GLNode(){}
-    virtual void draw(cocos2d::Renderer *renderer, const kmMat4& transform, bool transformUpdated) override;
+    virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Matrix& transform, bool transformUpdated) override;
 protected:
     cocos2d::CustomCommand _renderCmd;
-    void onDraw(const kmMat4 &transform, bool transformUpdated);
+    void onDraw(const cocos2d::Matrix &transform, bool transformUpdated);
 };
 
 TOLUA_API int tolua_opengl_open(lua_State* tolua_S);

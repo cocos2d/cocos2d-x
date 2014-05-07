@@ -11,6 +11,7 @@ import sys
 import json
 import time
 import socket
+import threading
 import smtplib
 from email.mime.text import MIMEText
 from os.path import join, getsize
@@ -176,6 +177,30 @@ def appendToResult(content):
 	global console_result
 	console_result = console_result + content
 
+info_of_close_app = {}
+cur_test_name = ''
+class myThread(threading.Thread):
+    def __init__(self,threadname):
+        threading.Thread.__init__(self,name=threadname)
+    def run(self):
+        run_name = self.getName()
+        print 'run_name:', run_name
+        if run_name == 'close':
+        	while True:
+        		soc = socket.socket( socket.AF_INET, socket.SOCK_STREAM )
+        		try:
+        			soc.connect(('localhost', PORT))
+        			cmd_close = 'director end\r\n'
+        			print 'cmd close:', cmd_close
+        			soc.send(cmd_close)
+        			time.sleep(2)
+        			global cur_test_name
+        			print 'cur_test_name:', cur_test_name
+        			info_of_close_app[cur_test_name] = True
+        			break
+        		except Exception, e:
+					time.sleep(5)
+
 # if any error 
 ANY_ERROR_IN_RUN = 0
 # excute cocos command
@@ -212,14 +237,14 @@ def cocos_project(level):
 						if phone == 'android' and getAndroidDevices() == 0:
 							strInfo = 'no android device, please checkout the device is running ok.'
 							print strInfo
-							# appendToResult('	'+strInfo+"\n\r\t")
 						else:
-							info_cmd = os.system(cmd)
-							print 'info '+COCOS_CMD[level]+':', not info_cmd
 							if level == ENUM_PARAM.run:
-								time.sleep(20)
-								strClose = close_proj(proj, phone)
-								appendToResult('	'+strClose+"\n\r\t")
+								global cur_test_name
+								cur_test_name = proj+','+phone
+								thread_close = myThread('close')
+								thread_close.start()
+							info_cmd = os.system(cmd)
+							time.sleep(5)
 							appendToResult('	'+cmd +': ' + str(not info_cmd) + ".\n\r\t")
 
 # build and run according to params of provided.(lv_ignore: e.g:ignore new)
@@ -310,6 +335,10 @@ APP_FILE_SUFFIX = {
 	'ios':'.app',
 	'android':'-debug-unaligned.apk'
 }
+if os.environ.has_key('APP_FILE_SUFFIX'):
+	str_app_suffix = os.environ['APP_FILE_SUFFIX']
+	APP_FILE_SUFFIX = eval(str_app_suffix)
+
 def getPackageSize():
 	for proj in project_types:
 		for phone in phonePlats:

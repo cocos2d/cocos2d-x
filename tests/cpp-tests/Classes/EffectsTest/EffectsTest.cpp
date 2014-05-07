@@ -1,6 +1,6 @@
 #include "EffectsTest.h"
 #include "../testResource.h"
-#include "CCNodeGrid.h"
+
 enum {
     kTagTextLayer = 1,
 
@@ -86,7 +86,7 @@ public:
     static ActionInterval* create(float t)
     {
         auto size = Director::getInstance()->getWinSize();
-        return Lens3D::create(t, Size(15,10), Point(size.width/2,size.height/2), 240); 
+        return Lens3D::create(t, Size(15,10), Vector2(size.width/2,size.height/2), 240); 
     }
 };
 
@@ -97,7 +97,7 @@ public:
     static ActionInterval* create(float t)
     {
         auto size = Director::getInstance()->getWinSize();
-        return Ripple3D::create(t, Size(32,24), Point(size.width/2,size.height/2), 240, 4, 160);
+        return Ripple3D::create(t, Size(32,24), Vector2(size.width/2,size.height/2), 240, 4, 160);
     }
 };
 
@@ -128,7 +128,7 @@ public:
     static ActionInterval* create(float t)
     {
         auto size = Director::getInstance()->getWinSize();
-        return Twirl::create(t, Size(12,8), Point(size.width/2, size.height/2), 1, 2.5f); 
+        return Twirl::create(t, Size(12,8), Vector2(size.width/2, size.height/2), 1, 2.5f); 
     }
 };
 
@@ -349,26 +349,26 @@ TextLayer::TextLayer(void)
     
     auto bg = Sprite::create(s_back3);
     _gridNodeTarget->addChild(bg, 0);
-//  bg->setAnchorPoint( Point::ZERO );
+//  bg->setAnchorPoint( Vector2::ZERO );
     bg->setPosition(VisibleRect::center());
 
     auto grossini = Sprite::create(s_pathSister2);
     _gridNodeTarget->addChild(grossini, 1);
-    grossini->setPosition( Point(VisibleRect::left().x+VisibleRect::getVisibleRect().size.width/3,VisibleRect::center().y) );
+    grossini->setPosition( Vector2(VisibleRect::left().x+VisibleRect::getVisibleRect().size.width/3,VisibleRect::center().y) );
     auto sc = ScaleBy::create(2, 5);
     auto sc_back = sc->reverse();
     grossini->runAction( RepeatForever::create(Sequence::create(sc, sc_back, NULL) ) );
 
     auto tamara = Sprite::create(s_pathSister1);
     _gridNodeTarget->addChild(tamara, 1);
-    tamara->setPosition( Point(VisibleRect::left().x+2*VisibleRect::getVisibleRect().size.width/3,VisibleRect::center().y) );
+    tamara->setPosition( Vector2(VisibleRect::left().x+2*VisibleRect::getVisibleRect().size.width/3,VisibleRect::center().y) );
     auto sc2 = ScaleBy::create(2, 5);
     auto sc2_back = sc2->reverse();
     tamara->runAction( RepeatForever::create(Sequence::create(sc2, sc2_back, NULL)) );
     
     auto label = Label::createWithTTF((effectsList[actionIdx]).c_str(), "fonts/Marker Felt.ttf", 32);
     
-    label->setPosition( Point(VisibleRect::center().x,VisibleRect::top().y-80) );
+    label->setPosition( Vector2(VisibleRect::center().x,VisibleRect::top().y-80) );
     addChild(label);
     label->setTag( kTagLabel );
     

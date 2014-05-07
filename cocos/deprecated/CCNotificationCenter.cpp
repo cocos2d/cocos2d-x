@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 #include "CCNotificationCenter.h"
 #include "deprecated/CCArray.h"
-#include "CCScriptSupport.h"
+#include "2d/CCScriptSupport.h"
 #include <string>
 
 using namespace std;

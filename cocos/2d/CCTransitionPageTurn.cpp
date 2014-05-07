@@ -24,13 +24,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCTransitionPageTurn.h"
-#include "CCDirector.h"
-#include "CCActionInterval.h"
-#include "CCActionInstant.h"
-#include "CCActionGrid.h"
-#include "CCActionPageTurn3D.h"
-#include "CCNodeGrid.h"
+#include "2d/CCTransitionPageTurn.h"
+#include "base/CCDirector.h"
+#include "2d/CCActionInterval.h"
+#include "2d/CCActionInstant.h"
+#include "2d/CCActionGrid.h"
+#include "2d/CCActionPageTurn3D.h"
+#include "2d/CCNodeGrid.h"
 #include "renderer/CCRenderer.h"
 
 NS_CC_BEGIN
@@ -92,7 +92,7 @@ void TransitionPageTurn::onDisablePolygonOffset()
     glPolygonOffset(0, 0);
 }
 
-void TransitionPageTurn::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void TransitionPageTurn::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     Scene::draw(renderer, transform, transformUpdated);
     

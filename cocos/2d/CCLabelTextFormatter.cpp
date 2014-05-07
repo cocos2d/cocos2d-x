@@ -27,8 +27,8 @@
 
 #include "ccUTF8.h"
 #include "CCLabelTextFormatter.h"
-#include "CCDirector.h"
-#include "CCLabel.h"
+#include "base/CCDirector.h"
+#include "2d/CCLabel.h"
 
 using namespace std;
 
@@ -319,7 +319,7 @@ bool LabelTextFormatter::createStringSprites(Label *theLabel)
     auto strWhole = theLabel->_currentUTF16String;
     auto fontAtlas = theLabel->_fontAtlas;
     FontLetterDefinition tempDefinition;
-    Point letterPosition;
+    Vector2 letterPosition;
     const auto& kernings = theLabel->_horizontalKernings;
 
     float clipTop = 0;

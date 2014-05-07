@@ -3026,9 +3026,9 @@ int lua_cocos2dx_studio_ContourData_addVertex(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Point arg0;
+        cocos2d::Vector2 arg0;
 
-        ok &= luaval_to_point(tolua_S, 2, &arg0);
+        ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->addVertex(arg0);
@@ -3813,8 +3813,8 @@ int lua_cocos2dx_studio_DisplayManager_getAnchorPointInPoints(lua_State* tolua_S
     {
         if(!ok)
             return 0;
-        cocos2d::Point ret = cobj->getAnchorPointInPoints();
-        point_to_luaval(tolua_S, ret);
+        cocos2d::Vector2 ret = cobj->getAnchorPointInPoints();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getAnchorPointInPoints",argc, 0);
@@ -4198,8 +4198,8 @@ int lua_cocos2dx_studio_DisplayManager_containPoint(lua_State* tolua_S)
     ok  = true;
     do{
         if (argc == 1) {
-            cocos2d::Point arg0;
-            ok &= luaval_to_point(tolua_S, 2, &arg0);
+            cocos2d::Vector2 arg0;
+            ok &= luaval_to_vector2(tolua_S, 2, &arg0);
 
             if (!ok) { break; }
             bool ret = cobj->containPoint(arg0);
@@ -4434,8 +4434,8 @@ int lua_cocos2dx_studio_DisplayManager_getAnchorPoint(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        cocos2d::Point ret = cobj->getAnchorPoint();
-        point_to_luaval(tolua_S, ret);
+        cocos2d::Vector2 ret = cobj->getAnchorPoint();
+        vector2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getAnchorPoint",argc, 0);
@@ -6051,8 +6051,8 @@ int lua_cocos2dx_studio_Bone_getNodeToArmatureTransform(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        kmMat4 ret = cobj->getNodeToArmatureTransform();
-        #pragma warning NO CONVERSION FROM NATIVE FOR kmMat4;
+        cocos2d::Matrix ret = cobj->getNodeToArmatureTransform();
+        matrix_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getNodeToArmatureTransform",argc, 0);
@@ -9615,8 +9615,8 @@ int lua_cocos2dx_studio_Skin_getNodeToWorldTransformAR(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        kmMat4 ret = cobj->getNodeToWorldTransformAR();
-        #pragma warning NO CONVERSION FROM NATIVE FOR kmMat4;
+        cocos2d::Matrix ret = cobj->getNodeToWorldTransformAR();
+        matrix_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getNodeToWorldTransformAR",argc, 0);

@@ -25,14 +25,14 @@ THE SOFTWARE.
 #ifndef __CCARMATURE_DATAS_H__
 #define __CCARMATURE_DATAS_H__
 
-#include "CCRef.h"
-#include "ccTypes.h"
-#include "CCVector.h"
-#include "CCMap.h"
-#include "CCAffineTransform.h"
+#include "base/CCRef.h"
+#include "base/ccTypes.h"
+#include "base/CCVector.h"
+#include "base/CCMap.h"
+#include "math/CCAffineTransform.h"
 
 #include "cocostudio/CCArmatureDefine.h"
-#include "CCTweenFunction.h"
+#include "2d/CCTweenFunction.h"
 
 
 #define CC_CREATE_NO_PARAM_NO_INIT(varType)\
@@ -502,9 +502,9 @@ public:
     ~ContourData(void);
 
     virtual bool init();
-    virtual void addVertex(cocos2d::Point &vertex);
+    virtual void addVertex(cocos2d::Vector2 &vertex);
 public:
-    std::vector<cocos2d::Point> vertexList;	//! Save contour vertex info, vertex saved in a Point
+    std::vector<cocos2d::Vector2> vertexList;	//! Save contour vertex info, vertex saved in a Vector2
 };
 
 

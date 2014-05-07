@@ -26,7 +26,7 @@
 #ifndef __CCVERTEX_H__
 #define __CCVERTEX_H__
 
-#include "ccTypes.h"
+#include "base/ccTypes.h"
 
 NS_CC_BEGIN
 
@@ -38,7 +38,7 @@ NS_CC_BEGIN
 /** @file CCVertex.h */
 
 /** converts a line to a polygon */
-void CC_DLL ccVertexLineToPolygon(Point *points, float stroke, Vertex2F *vertices, unsigned int offset, unsigned int nuPoints);
+void CC_DLL ccVertexLineToPolygon(Vector2 *points, float stroke, Vector2 *vertices, unsigned int offset, unsigned int nuPoints);
 
 /** returns whether or not the line intersects */
 bool CC_DLL ccVertexLineIntersect(float Ax, float Ay,

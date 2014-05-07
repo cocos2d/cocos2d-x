@@ -29,9 +29,9 @@ THE SOFTWARE.
 
 #include "CCTMXObjectGroup.h"
 #include "CCAtlasNode.h"
-#include "CCSpriteBatchNode.h"
+#include "2d/CCSpriteBatchNode.h"
 #include "CCTMXXMLParser.h"
-#include "ccCArray.h"
+#include "2d/ccCArray.h"
 NS_CC_BEGIN
 
 class TMXMapInfo;
@@ -102,16 +102,16 @@ public:
     The Sprite can be treated like any other Sprite: rotated, scaled, translated, opacity, color, etc.
     You can remove either by calling:
     - layer->removeChild(sprite, cleanup);
-    - or layer->removeTileAt(Point(x,y));
+    - or layer->removeTileAt(Vector2(x,y));
     */
-    Sprite* getTileAt(const Point& tileCoordinate);
-    CC_DEPRECATED_ATTRIBUTE Sprite* tileAt(const Point& tileCoordinate) { return getTileAt(tileCoordinate); };
+    Sprite* getTileAt(const Vector2& tileCoordinate);
+    CC_DEPRECATED_ATTRIBUTE Sprite* tileAt(const Vector2& tileCoordinate) { return getTileAt(tileCoordinate); };
     
     /** returns the tile gid at a given tile coordinate. It also returns the tile flags.
      This method requires the the tile map has not been previously released (eg. don't call [layer releaseMap])
      */
-    uint32_t getTileGIDAt(const Point& tileCoordinate, TMXTileFlags* flags = nullptr);
-    CC_DEPRECATED_ATTRIBUTE uint32_t tileGIDAt(const Point& tileCoordinate, TMXTileFlags* flags = nullptr){
+    uint32_t getTileGIDAt(const Vector2& tileCoordinate, TMXTileFlags* flags = nullptr);
+    CC_DEPRECATED_ATTRIBUTE uint32_t tileGIDAt(const Vector2& tileCoordinate, TMXTileFlags* flags = nullptr){
         return getTileGIDAt(tileCoordinate, flags);
     };
 
@@ -119,7 +119,7 @@ public:
     The Tile GID can be obtained by using the method "tileGIDAt" or by using the TMX editor -> Tileset Mgr +1.
     If a tile is already placed at that position, then it will be removed.
     */
-    void setTileGID(uint32_t gid, const Point& tileCoordinate);
+    void setTileGID(uint32_t gid, const Vector2& tileCoordinate);
 
     /** sets the tile gid (gid = tile global id) at a given tile coordinate.
      The Tile GID can be obtained by using the method "tileGIDAt" or by using the TMX editor -> Tileset Mgr +1.
@@ -128,14 +128,14 @@ public:
      Use withFlags if the tile flags need to be changed as well
      */
 
-    void setTileGID(uint32_t gid, const Point& tileCoordinate, TMXTileFlags flags);
+    void setTileGID(uint32_t gid, const Vector2& tileCoordinate, TMXTileFlags flags);
 
     /** removes a tile at given tile coordinate */
-    void removeTileAt(const Point& tileCoordinate);
+    void removeTileAt(const Vector2& tileCoordinate);
 
     /** returns the position in points of a given tile coordinate */
-    Point getPositionAt(const Point& tileCoordinate);
-    CC_DEPRECATED_ATTRIBUTE Point positionAt(const Point& tileCoordinate) { return getPositionAt(tileCoordinate); };
+    Vector2 getPositionAt(const Vector2& tileCoordinate);
+    CC_DEPRECATED_ATTRIBUTE Vector2 positionAt(const Vector2& tileCoordinate) { return getPositionAt(tileCoordinate); };
 
     /** return the value for the specific property name */
     Value getProperty(const std::string& propertyName) const;
@@ -193,22 +193,22 @@ public:
     virtual std::string getDescription() const override;
 
 private:
-    Point getPositionForIsoAt(const Point& pos);
-    Point getPositionForOrthoAt(const Point& pos);
-    Point getPositionForHexAt(const Point& pos);
+    Vector2 getPositionForIsoAt(const Vector2& pos);
+    Vector2 getPositionForOrthoAt(const Vector2& pos);
+    Vector2 getPositionForHexAt(const Vector2& pos);
 
-    Point calculateLayerOffset(const Point& offset);
+    Vector2 calculateLayerOffset(const Vector2& offset);
 
     /* optimization methods */
-    Sprite* appendTileForGID(uint32_t gid, const Point& pos);
-    Sprite* insertTileForGID(uint32_t gid, const Point& pos);
-    Sprite* updateTileForGID(uint32_t gid, const Point& pos);
+    Sprite* appendTileForGID(uint32_t gid, const Vector2& pos);
+    Sprite* insertTileForGID(uint32_t gid, const Vector2& pos);
+    Sprite* updateTileForGID(uint32_t gid, const Vector2& pos);
 
     /* The layer recognizes some special properties, like cc_vertez */
     void parseInternalProperties();
-    void setupTileSprite(Sprite* sprite, Point pos, int gid);
+    void setupTileSprite(Sprite* sprite, Vector2 pos, int gid);
     Sprite* reusedTileWithRect(Rect rect);
-    int getVertexZForPos(const Point& pos);
+    int getVertexZForPos(const Vector2& pos);
 
     // index
     ssize_t atlasIndexForExistantZ(int z);

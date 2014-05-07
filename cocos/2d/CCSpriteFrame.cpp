@@ -24,9 +24,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCTextureCache.h"
-#include "CCSpriteFrame.h"
-#include "CCDirector.h"
+#include "2d/CCTextureCache.h"
+#include "2d/CCSpriteFrame.h"
+#include "base/CCDirector.h"
 
 NS_CC_BEGIN
 
@@ -50,7 +50,7 @@ SpriteFrame* SpriteFrame::createWithTexture(Texture2D *texture, const Rect& rect
     return spriteFrame;
 }
 
-SpriteFrame* SpriteFrame::createWithTexture(Texture2D* texture, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize)
+SpriteFrame* SpriteFrame::createWithTexture(Texture2D* texture, const Rect& rect, bool rotated, const Vector2& offset, const Size& originalSize)
 {
     SpriteFrame *spriteFrame = new SpriteFrame();
     spriteFrame->initWithTexture(texture, rect, rotated, offset, originalSize);
@@ -59,7 +59,7 @@ SpriteFrame* SpriteFrame::createWithTexture(Texture2D* texture, const Rect& rect
     return spriteFrame;
 }
 
-SpriteFrame* SpriteFrame::create(const std::string& filename, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize)
+SpriteFrame* SpriteFrame::create(const std::string& filename, const Rect& rect, bool rotated, const Vector2& offset, const Size& originalSize)
 {
     SpriteFrame *spriteFrame = new SpriteFrame();
     spriteFrame->initWithTextureFilename(filename, rect, rotated, offset, originalSize);
@@ -71,16 +71,16 @@ SpriteFrame* SpriteFrame::create(const std::string& filename, const Rect& rect, 
 bool SpriteFrame::initWithTexture(Texture2D* texture, const Rect& rect)
 {
     Rect rectInPixels = CC_RECT_POINTS_TO_PIXELS(rect);
-    return initWithTexture(texture, rectInPixels, false, Point::ZERO, rectInPixels.size);
+    return initWithTexture(texture, rectInPixels, false, Vector2::ZERO, rectInPixels.size);
 }
 
 bool SpriteFrame::initWithTextureFilename(const std::string& filename, const Rect& rect)
 {
     Rect rectInPixels = CC_RECT_POINTS_TO_PIXELS( rect );
-    return initWithTextureFilename(filename, rectInPixels, false, Point::ZERO, rectInPixels.size);
+    return initWithTextureFilename(filename, rectInPixels, false, Vector2::ZERO, rectInPixels.size);
 }
 
-bool SpriteFrame::initWithTexture(Texture2D* texture, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize)
+bool SpriteFrame::initWithTexture(Texture2D* texture, const Rect& rect, bool rotated, const Vector2& offset, const Size& originalSize)
 {
     _texture = texture;
 
@@ -100,7 +100,7 @@ bool SpriteFrame::initWithTexture(Texture2D* texture, const Rect& rect, bool rot
     return true;
 }
 
-bool SpriteFrame::initWithTextureFilename(const std::string& filename, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize)
+bool SpriteFrame::initWithTextureFilename(const std::string& filename, const Rect& rect, bool rotated, const Vector2& offset, const Size& originalSize)
 {
     _texture = nullptr;
     _textureFilename = filename;
@@ -143,23 +143,23 @@ void SpriteFrame::setRectInPixels(const Rect& rectInPixels)
     _rect = CC_RECT_PIXELS_TO_POINTS(rectInPixels);
 }
 
-const Point& SpriteFrame::getOffset() const
+const Vector2& SpriteFrame::getOffset() const
 {
     return _offset;
 }
 
-void SpriteFrame::setOffset(const Point& offsets)
+void SpriteFrame::setOffset(const Vector2& offsets)
 {
     _offset = offsets;
     _offsetInPixels = CC_POINT_POINTS_TO_PIXELS( _offset );
 }
 
-const Point& SpriteFrame::getOffsetInPixels() const
+const Vector2& SpriteFrame::getOffsetInPixels() const
 {
     return _offsetInPixels;
 }
 
-void SpriteFrame::setOffsetInPixels(const Point& offsetInPixels)
+void SpriteFrame::setOffsetInPixels(const Vector2& offsetInPixels)
 {
     _offsetInPixels = offsetInPixels;
     _offset = CC_POINT_PIXELS_TO_POINTS( _offsetInPixels );

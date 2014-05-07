@@ -24,9 +24,9 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCFileUtils.h"
-#include "CCData.h"
-#include "ccMacros.h"
-#include "CCDirector.h"
+#include "base/CCData.h"
+#include "base/ccMacros.h"
+#include "base/CCDirector.h"
 #include "CCSAXParser.h"
 #include "tinyxml2.h"
 #include "unzip.h"
@@ -680,6 +680,11 @@ std::string FileUtils::getPathForFilename(const std::string& filename, const std
 
 std::string FileUtils::fullPathForFilename(const std::string &filename)
 {
+    if (filename.empty())
+    {
+        return "";
+    }
+    
     if (isAbsolutePath(filename))
     {
         return filename;

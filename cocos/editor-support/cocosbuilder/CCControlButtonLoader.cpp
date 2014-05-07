@@ -68,7 +68,7 @@ void ControlButtonLoader::onHandlePropTypeFloatScale(Node * pNode, Node * pParen
     }
 }
 
-void ControlButtonLoader::onHandlePropTypePoint(Node * pNode, Node * pParent, const char * pPropertyName, Point pPoint, CCBReader * ccbReader) {
+void ControlButtonLoader::onHandlePropTypePoint(Node * pNode, Node * pParent, const char * pPropertyName, Vector2 pPoint, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_LABELANCHORPOINT) == 0) {
         ((ControlButton *)pNode)->setLabelAnchorPoint(pPoint);
     } else {

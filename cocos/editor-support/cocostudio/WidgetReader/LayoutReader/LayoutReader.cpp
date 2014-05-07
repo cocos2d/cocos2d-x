@@ -54,6 +54,8 @@ namespace cocostudio
         panel->setSize(Size(w, h));
         /**/
         
+        panel->setClippingEnabled(DICTOOL->getBooleanValue_json(options, "clipAble"));
+        
         bool backGroundScale9Enable = DICTOOL->getBooleanValue_json(options, "backGroundScale9Enable");
         panel->setBackGroundImageScale9Enabled(backGroundScale9Enable);
         int cr = DICTOOL->getIntValue_json(options, "bgColorR");
@@ -70,7 +72,7 @@ namespace cocostudio
         
         float bgcv1 = DICTOOL->getFloatValue_json(options, "vectorX");
         float bgcv2 = DICTOOL->getFloatValue_json(options, "vectorY");
-        panel->setBackGroundColorVector(Point(bgcv1, bgcv2));
+        panel->setBackGroundColorVector(Vector2(bgcv1, bgcv2));
         
         int co = DICTOOL->getIntValue_json(options, "bgColorOpacity");
         

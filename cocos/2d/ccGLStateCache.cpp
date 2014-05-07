@@ -25,15 +25,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "ccGLStateCache.h"
-#include "CCGLProgram.h"
-#include "CCDirector.h"
-#include "ccConfig.h"
-#include "CCConfiguration.h"
-
-// extern
-#include "kazmath/GL/matrix.h"
-#include "kazmath/kazmath.h"
+#include "2d/ccGLStateCache.h"
+#include "2d/CCGLProgram.h"
+#include "base/CCDirector.h"
+#include "base/ccConfig.h"
+#include "base/CCConfiguration.h"
 
 NS_CC_BEGIN
 
@@ -65,8 +61,7 @@ namespace GL {
 
 void invalidateStateCache( void )
 {
-    kmGLFreeAll();
-    
+    Director::getInstance()->resetMatrixStack();
     s_currentProjectionMatrix = -1;
     s_vertexAttribPosition = false;
     s_vertexAttribColor = false;

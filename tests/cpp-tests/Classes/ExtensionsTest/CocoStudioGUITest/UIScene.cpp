@@ -32,7 +32,7 @@ bool UIScene::init()
         
         Size screenSize = CCDirector::getInstance()->getWinSize();
         Size rootSize = _widget->getSize();
-        _uiLayer->setPosition(Point((screenSize.width - rootSize.width) / 2,
+        _uiLayer->setPosition(Vector2((screenSize.width - rootSize.width) / 2,
                                     (screenSize.height - rootSize.height) / 2));
         
         Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
@@ -56,7 +56,7 @@ bool UIScene::init()
         mainMenuLabel->setText("MainMenu");
         mainMenuLabel->setFontSize(20);
         mainMenuLabel->setTouchScaleChangeEnabled(true);
-        mainMenuLabel->setPosition(Point(430,30));
+        mainMenuLabel->setPosition(Vector2(430,30));
         mainMenuLabel->setTouchEnabled(true);
         mainMenuLabel->addTouchEventListener(this, toucheventselector(UIScene::menuCloseCallback));
         _uiLayer->addWidget(mainMenuLabel);

@@ -10,7 +10,7 @@ UserDefaultTest::UserDefaultTest()
     auto s = Director::getInstance()->getWinSize();
     auto label = Label::createWithTTF("CCUserDefault test see log", "fonts/arial.ttf", 28);
     addChild(label, 0);
-    label->setPosition( Point(s.width/2, s.height-50) );
+    label->setPosition( Vector2(s.width/2, s.height-50) );
 
     doTest();
 }

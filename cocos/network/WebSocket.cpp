@@ -28,8 +28,8 @@
  ****************************************************************************/
 
 #include "WebSocket.h"
-#include "CCDirector.h"
-#include "CCScheduler.h"
+#include "base/CCDirector.h"
+#include "base/CCScheduler.h"
 
 #include <thread>
 #include <mutex>

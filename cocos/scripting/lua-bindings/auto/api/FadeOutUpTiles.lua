@@ -6,7 +6,7 @@
 --------------------------------
 -- @function [parent=#FadeOutUpTiles] transformTile 
 -- @param self
--- @param #point_table point
+-- @param #array_table array
 -- @param #float float
         
 --------------------------------

@@ -48,14 +48,14 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- overload function: applyImpulse(point_table, point_table)
+-- overload function: applyImpulse(array_table, array_table)
 --          
--- overload function: applyImpulse(point_table)
+-- overload function: applyImpulse(array_table)
 --          
 -- @function [parent=#PhysicsBody] applyImpulse
 -- @param self
--- @param #point_table point
--- @param #point_table point
+-- @param #array_table array
+-- @param #array_table array
 
 --------------------------------
 -- @function [parent=#PhysicsBody] setRotationOffset 
@@ -63,14 +63,14 @@
 -- @param #float float
         
 --------------------------------
--- overload function: applyForce(point_table, point_table)
+-- overload function: applyForce(array_table, array_table)
 --          
--- overload function: applyForce(point_table)
+-- overload function: applyForce(array_table)
 --          
 -- @function [parent=#PhysicsBody] applyForce
 -- @param self
--- @param #point_table point
--- @param #point_table point
+-- @param #array_table array
+-- @param #array_table array
 
 --------------------------------
 -- @function [parent=#PhysicsBody] addShape 
@@ -97,7 +97,7 @@
 --------------------------------
 -- @function [parent=#PhysicsBody] getVelocity 
 -- @param self
--- @return point_table#point_table ret (return value: point_table)
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#PhysicsBody] getLinearDamping 
@@ -126,7 +126,7 @@
 --------------------------------
 -- @function [parent=#PhysicsBody] getPositionOffset 
 -- @param self
--- @return point_table#point_table ret (return value: point_table)
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#PhysicsBody] setCategoryBitmask 
@@ -146,7 +146,7 @@
 --------------------------------
 -- @function [parent=#PhysicsBody] getPosition 
 -- @param self
--- @return point_table#point_table ret (return value: point_table)
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#PhysicsBody] setEnable 
@@ -176,8 +176,8 @@
 --------------------------------
 -- @function [parent=#PhysicsBody] local2World 
 -- @param self
--- @param #point_table point
--- @return point_table#point_table ret (return value: point_table)
+-- @param #array_table array
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#PhysicsBody] getCategoryBitmask 
@@ -212,8 +212,8 @@
 --------------------------------
 -- @function [parent=#PhysicsBody] world2Local 
 -- @param self
--- @param #point_table point
--- @return point_table#point_table ret (return value: point_table)
+-- @param #array_table array
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#PhysicsBody] isEnabled 
@@ -243,7 +243,7 @@
 --------------------------------
 -- @function [parent=#PhysicsBody] setVelocity 
 -- @param self
--- @param #point_table point
+-- @param #array_table array
         
 --------------------------------
 -- @function [parent=#PhysicsBody] setLinearDamping 
@@ -258,7 +258,7 @@
 --------------------------------
 -- @function [parent=#PhysicsBody] setPositionOffset 
 -- @param self
--- @param #point_table point
+-- @param #array_table array
         
 --------------------------------
 -- @function [parent=#PhysicsBody] setRotationEnable 
@@ -278,8 +278,8 @@
 --------------------------------
 -- @function [parent=#PhysicsBody] getVelocityAtLocalPoint 
 -- @param self
--- @param #point_table point
--- @return point_table#point_table ret (return value: point_table)
+-- @param #array_table array
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#PhysicsBody] isResting 
@@ -305,8 +305,8 @@
 --------------------------------
 -- @function [parent=#PhysicsBody] getVelocityAtWorldPoint 
 -- @param self
--- @param #point_table point
--- @return point_table#point_table ret (return value: point_table)
+-- @param #array_table array
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#PhysicsBody] setContactTestBitmask 
@@ -332,14 +332,14 @@
 -- @param self
 -- @param #size_table size
 -- @param #cc.PhysicsMaterial physicsmaterial
--- @param #point_table point
+-- @param #array_table array
 -- @return PhysicsBody#PhysicsBody ret (return value: cc.PhysicsBody)
         
 --------------------------------
 -- @function [parent=#PhysicsBody] createEdgeSegment 
 -- @param self
--- @param #point_table point
--- @param #point_table point
+-- @param #array_table array
+-- @param #array_table array
 -- @param #cc.PhysicsMaterial physicsmaterial
 -- @param #float float
 -- @return PhysicsBody#PhysicsBody ret (return value: cc.PhysicsBody)
@@ -363,7 +363,7 @@
 -- @param #size_table size
 -- @param #cc.PhysicsMaterial physicsmaterial
 -- @param #float float
--- @param #point_table point
+-- @param #array_table array
 -- @return PhysicsBody#PhysicsBody ret (return value: cc.PhysicsBody)
         
 --------------------------------
@@ -371,7 +371,7 @@
 -- @param self
 -- @param #float float
 -- @param #cc.PhysicsMaterial physicsmaterial
--- @param #point_table point
+-- @param #array_table array
 -- @return PhysicsBody#PhysicsBody ret (return value: cc.PhysicsBody)
         
 return nil

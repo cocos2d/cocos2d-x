@@ -23,11 +23,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCPlatformConfig.h"
+#include "base/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #include "CCFileUtilsWin32.h"
-#include "platform/CCCommon.h"
+#include "2d/platform/CCCommon.h"
 #include <Shlobj.h>
 
 using namespace std;

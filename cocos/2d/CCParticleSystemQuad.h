@@ -65,6 +65,8 @@ public:
      This plist files can be created manually or with Particle Designer:
      */
     static ParticleSystemQuad * create(const std::string& filename);
+    /** creates a Particle Emitter with a dictionary */
+    static ParticleSystemQuad * create(ValueMap &dictionary);
 
     /** Sets a new SpriteFrame as particle.
     WARNING: this method is experimental. Use setTextureWithRect instead.
@@ -94,7 +96,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void updateQuadWithParticle(tParticle* particle, const Point& newPosition) override;
+    virtual void updateQuadWithParticle(tParticle* particle, const Vector2& newPosition) override;
     /**
      * @js NA
      * @lua NA
@@ -104,7 +106,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
 
     /**
      * @js NA

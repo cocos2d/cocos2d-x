@@ -28,7 +28,6 @@
 
 #include "../testBasic.h"
 #include "../BaseTest.h"
-#include "renderer/CCCustomCommand.h"
 
 
 class TextureDemo : public BaseTest
@@ -466,9 +465,9 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     virtual void onEnter() override;
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
 protected:
-    void onDraw(const kmMat4 &transform, bool transformUpdated);
+    void onDraw(const Matrix &transform, bool transformUpdated);
 
     CustomCommand _renderCmd;
     Texture2D* _tex1, *_Tex2F;
@@ -482,9 +481,9 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     virtual void onEnter() override;
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
 protected:
-    void onDraw(const kmMat4 &transform, bool transformUpdated);
+    void onDraw(const Matrix &transform, bool transformUpdated);
 
     CustomCommand _renderCmd;
     Texture2D* _tex1, *_Tex2F;

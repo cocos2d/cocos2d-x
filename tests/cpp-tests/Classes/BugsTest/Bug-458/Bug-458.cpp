@@ -30,7 +30,7 @@ bool Bug458Layer::init()
         auto sprite2 = MenuItemSprite::create(layer, layer2, CC_CALLBACK_1(Bug458Layer::selectAnswer, this) );
         auto menu = Menu::create(sprite, sprite2, NULL);
         menu->alignItemsVerticallyWithPadding(100);
-        menu->setPosition(Point(size.width / 2, size.height / 2));
+        menu->setPosition(Vector2(size.width / 2, size.height / 2));
 
         // add the label as a child to this Layer
         addChild(menu);

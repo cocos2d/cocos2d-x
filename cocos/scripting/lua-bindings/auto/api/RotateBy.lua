@@ -8,7 +8,7 @@
 --          
 -- overload function: create(float, float)
 --          
--- overload function: create(float, cc.Vertex3F)
+-- overload function: create(float, array_table)
 --          
 -- @function [parent=#RotateBy] create
 -- @param self

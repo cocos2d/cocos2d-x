@@ -22,8 +22,8 @@ bool UIPageViewTest::init()
         
         // Add a label in which the dragpanel events will be displayed
         _displayValueLabel = Text::create("Move by horizontal direction", "fonts/Marker Felt.ttf", 32);
-        _displayValueLabel->setAnchorPoint(Point(0.5f, -1.0f));
-        _displayValueLabel->setPosition(Point(widgetSize.width / 2.0f,
+        _displayValueLabel->setAnchorPoint(Vector2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vector2(widgetSize.width / 2.0f,
                                               widgetSize.height / 2.0f +
                                               _displayValueLabel->getContentSize().height * 1.5));
         _uiLayer->addChild(_displayValueLabel);
@@ -31,7 +31,7 @@ bool UIPageViewTest::init()
         // Add the black background
         Text* alert = Text::create("PageView", "fonts/Marker Felt.ttf", 30);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.075f));
+        alert->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.075f));
         _uiLayer->addChild(alert);
         
         Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
@@ -42,7 +42,7 @@ bool UIPageViewTest::init()
         PageView* pageView = PageView::create();
         pageView->setSize(Size(240.0f, 130.0f));
         Size backgroundSize = background->getContentSize();
-        pageView->setPosition(Point((widgetSize.width - backgroundSize.width) / 2.0f +
+        pageView->setPosition(Vector2((widgetSize.width - backgroundSize.width) / 2.0f +
                                   (backgroundSize.width - pageView->getSize().width) / 2.0f,
                                   (widgetSize.height - backgroundSize.height) / 2.0f +
                                   (backgroundSize.height - pageView->getSize().height) / 2.0f));
@@ -55,12 +55,12 @@ bool UIPageViewTest::init()
             ImageView* imageView = ImageView::create("cocosui/scrollviewbg.png");
             imageView->setScale9Enabled(true);
             imageView->setSize(Size(240, 130));
-            imageView->setPosition(Point(layout->getSize().width / 2.0f, layout->getSize().height / 2.0f));
+            imageView->setPosition(Vector2(layout->getSize().width / 2.0f, layout->getSize().height / 2.0f));
             layout->addChild(imageView);
             
             Text* label = Text::create(StringUtils::format("page %d",(i+1)), "fonts/Marker Felt.ttf", 30);
             label->setColor(Color3B(192, 192, 192));
-            label->setPosition(Point(layout->getSize().width / 2.0f, layout->getSize().height / 2.0f));
+            label->setPosition(Vector2(layout->getSize().width / 2.0f, layout->getSize().height / 2.0f));
             layout->addChild(label);
             
             pageView->addPage(layout);

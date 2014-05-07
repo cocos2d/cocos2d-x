@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include <stack>
 #include <vector>
 #include <string>
-#include "CCRef.h"
+#include "base/CCRef.h"
 
 NS_CC_BEGIN
 

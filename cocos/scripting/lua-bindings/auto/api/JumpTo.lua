@@ -7,7 +7,7 @@
 -- @function [parent=#JumpTo] create 
 -- @param self
 -- @param #float float
--- @param #point_table point
+-- @param #array_table array
 -- @param #float float
 -- @param #int int
 -- @return JumpTo#JumpTo ret (return value: cc.JumpTo)

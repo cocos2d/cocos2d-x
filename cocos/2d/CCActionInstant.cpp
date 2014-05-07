@@ -25,10 +25,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCActionInstant.h"
-#include "CCNode.h"
-#include "CCSprite.h"
-#include "CCScriptSupport.h"
+#include "2d/CCActionInstant.h"
+#include "2d/CCNode.h"
+#include "2d/CCSprite.h"
+#include "2d/CCScriptSupport.h"
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
@@ -278,7 +278,7 @@ FlipY * FlipY::clone() const
 // Place
 //
 
-Place* Place::create(const Point& pos)
+Place* Place::create(const Vector2& pos)
 {
     Place *ret = new Place();
 
@@ -291,7 +291,7 @@ Place* Place::create(const Point& pos)
     return nullptr;
 }
 
-bool Place::initWithPosition(const Point& pos) {
+bool Place::initWithPosition(const Vector2& pos) {
     _position = pos;
     return true;
 }

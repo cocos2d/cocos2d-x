@@ -30,13 +30,15 @@ THE SOFTWARE.
 #ifndef __CCGLPROGRAM_H__
 #define __CCGLPROGRAM_H__
 
-#include "ccMacros.h"
-#include "CCRef.h"
+#include "base/ccMacros.h"
+#include "base/CCRef.h"
 #include "CCGL.h"
-#include "kazmath/kazmath.h"
+#include "math/CCMath.h"
 #include <set>
 
 NS_CC_BEGIN
+
+USING_NS_CC_MATH;
 
 /**
  * @addtogroup shaders
@@ -241,7 +243,7 @@ public:
     
     /** will update the builtin uniforms if they are different than the previous call for this same shader program. */
     void setUniformsForBuiltins();
-    void setUniformsForBuiltins(const kmMat4 &modelView);
+    void setUniformsForBuiltins(const Matrix &modelView);
 
     /** returns the vertexShader error log */
     std::string getVertexShaderLog() const;

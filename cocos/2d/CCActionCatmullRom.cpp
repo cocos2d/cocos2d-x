@@ -29,8 +29,8 @@
  *
  * Adapted from cocos2d-x to cocos2d-iphone by Ricardo Quesada
  */
-#include "ccMacros.h"
-#include "CCActionCatmullRom.h"
+#include "base/ccMacros.h"
+#include "2d/CCActionCatmullRom.h"
 
 using namespace std;
 
@@ -62,18 +62,18 @@ PointArray* PointArray::create(ssize_t capacity)
 
 bool PointArray::initWithCapacity(ssize_t capacity)
 {
-    _controlPoints = new vector<Point*>();
+    _controlPoints = new vector<Vector2*>();
     
     return true;
 }
 
 PointArray* PointArray::clone() const
 {
-    vector<Point*> *newArray = new vector<Point*>();
-    vector<Point*>::iterator iter;
+    vector<Vector2*> *newArray = new vector<Vector2*>();
+    vector<Vector2*>::iterator iter;
     for (iter = _controlPoints->begin(); iter != _controlPoints->end(); ++iter)
     {
-        newArray->push_back(new Point((*iter)->x, (*iter)->y));
+        newArray->push_back(new Vector2((*iter)->x, (*iter)->y));
     }
     
     PointArray *points = new PointArray();
@@ -88,7 +88,7 @@ PointArray::~PointArray()
 {
     CCLOGINFO("deallocing PointArray: %p", this);
 
-    vector<Point*>::iterator iter;
+    vector<Vector2*>::iterator iter;
     for (iter = _controlPoints->begin(); iter != _controlPoints->end(); ++iter)
     {
         delete *iter;
@@ -98,17 +98,17 @@ PointArray::~PointArray()
 
 PointArray::PointArray() :_controlPoints(nullptr){}
 
-const std::vector<Point*>* PointArray::getControlPoints() const
+const std::vector<Vector2*>* PointArray::getControlPoints() const
 {
     return _controlPoints;
 }
 
-void PointArray::setControlPoints(vector<Point*> *controlPoints)
+void PointArray::setControlPoints(vector<Vector2*> *controlPoints)
 {
     CCASSERT(controlPoints != nullptr, "control points should not be nullptr");
     
     // delete old points
-    vector<Point*>::iterator iter;
+    vector<Vector2*>::iterator iter;
     for (iter = _controlPoints->begin(); iter != _controlPoints->end(); ++iter)
     {
         delete *iter;
@@ -118,35 +118,35 @@ void PointArray::setControlPoints(vector<Point*> *controlPoints)
     _controlPoints = controlPoints;
 }
 
-void PointArray::addControlPoint(Point controlPoint)
+void PointArray::addControlPoint(Vector2 controlPoint)
 {    
-    _controlPoints->push_back(new Point(controlPoint.x, controlPoint.y));
+    _controlPoints->push_back(new Vector2(controlPoint.x, controlPoint.y));
 }
 
-void PointArray::insertControlPoint(Point &controlPoint, ssize_t index)
+void PointArray::insertControlPoint(Vector2 &controlPoint, ssize_t index)
 {
-    Point *temp = new Point(controlPoint.x, controlPoint.y);
+    Vector2 *temp = new Vector2(controlPoint.x, controlPoint.y);
     _controlPoints->insert(_controlPoints->begin() + index, temp);
 }
 
-Point PointArray::getControlPointAtIndex(ssize_t index)
+Vector2 PointArray::getControlPointAtIndex(ssize_t index)
 {
     index = MIN(static_cast<ssize_t>(_controlPoints->size())-1, MAX(index, 0));
     return *(_controlPoints->at(index));
 }
 
-void PointArray::replaceControlPoint(cocos2d::Point &controlPoint, ssize_t index)
+void PointArray::replaceControlPoint(cocos2d::Vector2 &controlPoint, ssize_t index)
 {
 
-    Point *temp = _controlPoints->at(index);
+    Vector2 *temp = _controlPoints->at(index);
     temp->x = controlPoint.x;
     temp->y = controlPoint.y;
 }
 
 void PointArray::removeControlPointAtIndex(ssize_t index)
 {
-    vector<Point*>::iterator iter = _controlPoints->begin() + index;
-    Point* removedPoint = *iter;
+    vector<Vector2*>::iterator iter = _controlPoints->begin() + index;
+    Vector2* removedPoint = *iter;
     _controlPoints->erase(iter);
     delete removedPoint;
 }
@@ -158,13 +158,13 @@ ssize_t PointArray::count() const
 
 PointArray* PointArray::reverse() const
 {
-    vector<Point*> *newArray = new vector<Point*>();
-    vector<Point*>::reverse_iterator iter;
-    Point *point = nullptr;
+    vector<Vector2*> *newArray = new vector<Vector2*>();
+    vector<Vector2*>::reverse_iterator iter;
+    Vector2 *point = nullptr;
     for (iter = _controlPoints->rbegin(); iter != _controlPoints->rend(); ++iter)
     {
         point = *iter;
-        newArray->push_back(new Point(point->x, point->y));
+        newArray->push_back(new Vector2(point->x, point->y));
     }
     PointArray *config = PointArray::create(0);
     config->setControlPoints(newArray);
@@ -175,8 +175,8 @@ PointArray* PointArray::reverse() const
 void PointArray::reverseInline()
 {
     size_t l = _controlPoints->size();
-    Point *p1 = nullptr;
-    Point *p2 = nullptr;
+    Vector2 *p1 = nullptr;
+    Vector2 *p2 = nullptr;
     float x, y;
     for (size_t i = 0; i < l/2; ++i)
     {
@@ -195,7 +195,7 @@ void PointArray::reverseInline()
 }
 
 // CatmullRom Spline formula:
-Point ccCardinalSplineAt(Point &p0, Point &p1, Point &p2, Point &p3, float tension, float t)
+Vector2 ccCardinalSplineAt(Vector2 &p0, Vector2 &p1, Vector2 &p2, Vector2 &p3, float tension, float t)
 {
     float t2 = t * t;
     float t3 = t2 * t;
@@ -213,7 +213,7 @@ Point ccCardinalSplineAt(Point &p0, Point &p1, Point &p2, Point &p3, float tensi
     float x = (p0.x*b1 + p1.x*b2 + p2.x*b3 + p3.x*b4);
     float y = (p0.y*b1 + p1.y*b2 + p2.y*b3 + p3.y*b4);
 	
-	return Point(x,y);
+	return Vector2(x,y);
 }
 
 /* Implementation of CardinalSplineTo
@@ -274,7 +274,7 @@ void CardinalSplineTo::startWithTarget(cocos2d::Node *target)
     _deltaT = (float) 1 / (_points->count() - 1);
 
     _previousPosition = target->getPosition();
-    _accumulatedDiff = Point::ZERO;
+    _accumulatedDiff = Vector2::ZERO;
 }
 
 CardinalSplineTo* CardinalSplineTo::clone() const
@@ -307,17 +307,17 @@ void CardinalSplineTo::update(float time)
     }
     
 	// Interpolate    
-    Point pp0 = _points->getControlPointAtIndex(p-1);
-    Point pp1 = _points->getControlPointAtIndex(p+0);
-    Point pp2 = _points->getControlPointAtIndex(p+1);
-    Point pp3 = _points->getControlPointAtIndex(p+2);
+    Vector2 pp0 = _points->getControlPointAtIndex(p-1);
+    Vector2 pp1 = _points->getControlPointAtIndex(p+0);
+    Vector2 pp2 = _points->getControlPointAtIndex(p+1);
+    Vector2 pp3 = _points->getControlPointAtIndex(p+2);
 	
-    Point newPos = ccCardinalSplineAt(pp0, pp1, pp2, pp3, _tension, lt);
+    Vector2 newPos = ccCardinalSplineAt(pp0, pp1, pp2, pp3, _tension, lt);
 	
 #if CC_ENABLE_STACKABLE_ACTIONS
     // Support for stacked actions
     Node *node = _target;
-    Point diff = node->getPosition() - _previousPosition;
+    Vector2 diff = node->getPosition() - _previousPosition;
     if( diff.x !=0 || diff.y != 0 ) {
         _accumulatedDiff = _accumulatedDiff + diff;
         newPos = newPos + _accumulatedDiff;
@@ -327,7 +327,7 @@ void CardinalSplineTo::update(float time)
     this->updatePosition(newPos);
 }
 
-void CardinalSplineTo::updatePosition(cocos2d::Point &newPos)
+void CardinalSplineTo::updatePosition(cocos2d::Vector2 &newPos)
 {
     _target->setPosition(newPos);
     _previousPosition = newPos;
@@ -365,9 +365,9 @@ CardinalSplineBy::CardinalSplineBy() : _startPosition(0,0)
 {
 }
 
-void CardinalSplineBy::updatePosition(cocos2d::Point &newPos)
+void CardinalSplineBy::updatePosition(cocos2d::Vector2 &newPos)
 {
-    Point p = newPos + _startPosition;
+    Vector2 p = newPos + _startPosition;
     _target->setPosition(p);
     _previousPosition = p;
 }
@@ -379,11 +379,11 @@ CardinalSplineBy* CardinalSplineBy::reverse() const
 	//
 	// convert "absolutes" to "diffs"
 	//
-    Point p = copyConfig->getControlPointAtIndex(0);
+    Vector2 p = copyConfig->getControlPointAtIndex(0);
     for (ssize_t i = 1; i < copyConfig->count(); ++i)
     {
-        Point current = copyConfig->getControlPointAtIndex(i);
-        Point diff = current - p;
+        Vector2 current = copyConfig->getControlPointAtIndex(i);
+        Vector2 diff = current - p;
         copyConfig->replaceControlPoint(diff, i);
         
         p = current;
@@ -404,9 +404,9 @@ CardinalSplineBy* CardinalSplineBy::reverse() const
     
     for (ssize_t i = 1; i < pReverse->count(); ++i)
     {
-        Point current = pReverse->getControlPointAtIndex(i);
+        Vector2 current = pReverse->getControlPointAtIndex(i);
         current = -current;
-        Point abs = current + p;
+        Vector2 abs = current + p;
         pReverse->replaceControlPoint(abs, i);
         
         p = abs;
@@ -524,11 +524,11 @@ CatmullRomBy* CatmullRomBy::reverse() const
 	//
 	// convert "absolutes" to "diffs"
 	//
-    Point p = copyConfig->getControlPointAtIndex(0);
+    Vector2 p = copyConfig->getControlPointAtIndex(0);
     for (ssize_t i = 1; i < copyConfig->count(); ++i)
     {
-        Point current = copyConfig->getControlPointAtIndex(i);
-        Point diff = current - p;
+        Vector2 current = copyConfig->getControlPointAtIndex(i);
+        Vector2 diff = current - p;
         copyConfig->replaceControlPoint(diff, i);
 
         p = current;
@@ -549,9 +549,9 @@ CatmullRomBy* CatmullRomBy::reverse() const
 
     for (ssize_t i = 1; i < reverse->count(); ++i)
     {
-        Point current = reverse->getControlPointAtIndex(i);
+        Vector2 current = reverse->getControlPointAtIndex(i);
         current = -current;
-        Point abs = current + p;
+        Vector2 abs = current + p;
         reverse->replaceControlPoint(abs, i);
 
         p = abs;

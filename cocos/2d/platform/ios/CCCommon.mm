@@ -23,17 +23,17 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCPlatformConfig.h"
+#include "base/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
-#include "platform/CCCommon.h"
+#include "2d/platform/CCCommon.h"
 
 #include <stdarg.h>
 #include <stdio.h>
 
 #import <UIKit/UIAlert.h>
-#include "CCDirector.h"
-#include "CCConsole.h"
+#include "base/CCDirector.h"
+#include "base/CCConsole.h"
 
 NS_CC_BEGIN
 

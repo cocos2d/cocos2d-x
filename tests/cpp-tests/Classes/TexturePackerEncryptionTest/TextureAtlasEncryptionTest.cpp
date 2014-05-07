@@ -1,6 +1,5 @@
 #include "TextureAtlasEncryptionTest.h"
 #include "../testResource.h"
-#include "ZipUtils.h"
 
 std::string TextureAtlasEncryptionDemo::title() const
 {
@@ -19,14 +18,14 @@ void TextureAtlasEncryptionDemo::onEnter()
     auto s = Director::getInstance()->getWinSize();
     
     auto label = Label::createWithTTF(title().c_str(), "fonts/arial.ttf", 28);
-    label->setPosition( Point(s.width/2, s.height * 0.75f) );
+    label->setPosition( Vector2(s.width/2, s.height * 0.75f) );
     this->addChild(label, 1);
     
     std::string strSubtitle = subtitle();
     if(strSubtitle.empty() == false)
     {
         auto subLabel = Label::createWithTTF(strSubtitle.c_str(), "fonts/Thonburi.ttf", 16);
-        subLabel->setPosition( Point(s.width/2, s.height-80) );
+        subLabel->setPosition( Vector2(s.width/2, s.height-80) );
         this->addChild(subLabel, 1);
     }
     
@@ -35,11 +34,11 @@ void TextureAtlasEncryptionDemo::onEnter()
     
     // Create a sprite from the non-encrypted atlas
     auto nonencryptedSprite = Sprite::createWithSpriteFrameName("Icon.png");
-    nonencryptedSprite->setPosition(Point(s.width * 0.25f, s.height * 0.5f));
+    nonencryptedSprite->setPosition(Vector2(s.width * 0.25f, s.height * 0.5f));
     this->addChild(nonencryptedSprite);
     
     auto nonencryptedSpriteLabel = Label::createWithTTF("non-encrypted", "fonts/arial.ttf", 28);
-    nonencryptedSpriteLabel->setPosition(Point(s.width * 0.25f, nonencryptedSprite->getBoundingBox().getMinY() - nonencryptedSprite->getContentSize().height/2));
+    nonencryptedSpriteLabel->setPosition(Vector2(s.width * 0.25f, nonencryptedSprite->getBoundingBox().getMinY() - nonencryptedSprite->getContentSize().height/2));
     this->addChild(nonencryptedSpriteLabel, 1);
     
     // Load the encrypted atlas
@@ -62,11 +61,11 @@ void TextureAtlasEncryptionDemo::onEnter()
     
     // 3) Create a sprite from the encrypted atlas
     auto encryptedSprite = Sprite::createWithSpriteFrameName("powered.png");
-    encryptedSprite->setPosition(Point(s.width * 0.75f, s.height * 0.5f));
+    encryptedSprite->setPosition(Vector2(s.width * 0.75f, s.height * 0.5f));
     this->addChild(encryptedSprite);
     
     auto encryptedSpriteLabel = Label::createWithTTF("encrypted", "fonts/arial.ttf", 28);
-    encryptedSpriteLabel->setPosition(Point(s.width * 0.75f, encryptedSprite->getBoundingBox().getMinY() - encryptedSpriteLabel->getContentSize().height/2));
+    encryptedSpriteLabel->setPosition(Vector2(s.width * 0.75f, encryptedSprite->getBoundingBox().getMinY() - encryptedSpriteLabel->getContentSize().height/2));
     this->addChild(encryptedSpriteLabel, 1);
 }
 

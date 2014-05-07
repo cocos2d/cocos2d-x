@@ -26,11 +26,11 @@ THE SOFTWARE.
 #ifndef __CCMENU_H_
 #define __CCMENU_H_
 
-#include "CCMenuItem.h"
-#include "CCLayer.h"
-#include "CCVector.h"
-#include "CCEventTouch.h"
-#include "CCValue.h"
+#include "2d/CCMenuItem.h"
+#include "2d/CCLayer.h"
+#include "base/CCVector.h"
+#include "base/CCEventTouch.h"
+#include "base/CCValue.h"
 
 NS_CC_BEGIN
 

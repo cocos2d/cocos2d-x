@@ -3,9 +3,20 @@
 #include "extensions/cocos-ext.h"
 #include "cocostudio/CocoStudio.h"
 
-TestScene::TestScene(bool bPortrait)
+TestScene::TestScene(bool bPortrait, bool physics/* = false*/)
 {
-    Scene::init();
+    if (physics)
+    {
+#if CC_USE_PHYSICS
+        TestScene::initWithPhysics();
+#else
+        Scene::init();
+#endif
+    }
+    else
+    {
+        Scene::init();
+    }
 }
 
 void testScene_callback(Ref *sender )
@@ -32,8 +43,8 @@ void TestScene::onEnter()
     auto menuItem = MenuItemLabel::create(label, testScene_callback );
     auto menu = Menu::create(menuItem, NULL);
 
-    menu->setPosition( Point::ZERO );
-    menuItem->setPosition( Point( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
+    menu->setPosition( Vector2::ZERO );
+    menuItem->setPosition( Vector2( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
 
     addChild(menu, 1);
 }

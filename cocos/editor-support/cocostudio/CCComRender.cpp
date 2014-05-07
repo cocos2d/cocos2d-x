@@ -137,7 +137,7 @@ bool ComRender::serialize(void* r)
 			else if(strcmp(className, "CCParticleSystemQuad") == 0 && filePath.find(".plist") != std::string::npos)
 			{
 				_render = ParticleSystemQuad::create(filePath.c_str());
-                _render->setPosition(Point(0.0f, 0.0f));
+                _render->setPosition(Vector2(0.0f, 0.0f));
                 _render->retain();
 			}
 			else if(strcmp(className, "CCArmature") == 0)

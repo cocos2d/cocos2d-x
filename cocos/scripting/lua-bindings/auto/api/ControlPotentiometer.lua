@@ -6,7 +6,7 @@
 --------------------------------
 -- @function [parent=#ControlPotentiometer] setPreviousLocation 
 -- @param self
--- @param #point_table point
+-- @param #array_table array
         
 --------------------------------
 -- @function [parent=#ControlPotentiometer] setValue 
@@ -26,16 +26,16 @@
 --------------------------------
 -- @function [parent=#ControlPotentiometer] angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint 
 -- @param self
--- @param #point_table point
--- @param #point_table point
--- @param #point_table point
--- @param #point_table point
+-- @param #array_table array
+-- @param #array_table array
+-- @param #array_table array
+-- @param #array_table array
 -- @return float#float ret (return value: float)
         
 --------------------------------
 -- @function [parent=#ControlPotentiometer] potentiometerBegan 
 -- @param self
--- @param #point_table point
+-- @param #array_table array
         
 --------------------------------
 -- @function [parent=#ControlPotentiometer] setMaximumValue 
@@ -60,19 +60,19 @@
 --------------------------------
 -- @function [parent=#ControlPotentiometer] getPreviousLocation 
 -- @param self
--- @return point_table#point_table ret (return value: point_table)
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#ControlPotentiometer] distanceBetweenPointAndPoint 
 -- @param self
--- @param #point_table point
--- @param #point_table point
+-- @param #array_table array
+-- @param #array_table array
 -- @return float#float ret (return value: float)
         
 --------------------------------
 -- @function [parent=#ControlPotentiometer] potentiometerEnded 
 -- @param self
--- @param #point_table point
+-- @param #array_table array
         
 --------------------------------
 -- @function [parent=#ControlPotentiometer] setProgressTimer 
@@ -100,7 +100,7 @@
 --------------------------------
 -- @function [parent=#ControlPotentiometer] potentiometerMoved 
 -- @param self
--- @param #point_table point
+-- @param #array_table array
         
 --------------------------------
 -- @function [parent=#ControlPotentiometer] create 

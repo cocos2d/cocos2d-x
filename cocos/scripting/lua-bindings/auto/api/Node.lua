@@ -72,8 +72,8 @@
 --------------------------------
 -- @function [parent=#Node] convertToWorldSpaceAR 
 -- @param self
--- @param #point_table point
--- @return point_table#point_table ret (return value: point_table)
+-- @param #array_table array
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#Node] isIgnoreAnchorPointForPosition 
@@ -132,12 +132,12 @@
 --------------------------------
 -- @function [parent=#Node] getNodeToWorldTransform 
 -- @param self
--- @return kmMat4#kmMat4 ret (return value: kmMat4)
+-- @return Matrix#Matrix ret (return value: cc.Matrix)
         
 --------------------------------
 -- @function [parent=#Node] getPosition3D 
 -- @param self
--- @return Vertex3F#Vertex3F ret (return value: cc.Vertex3F)
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#Node] removeChild 
@@ -148,8 +148,8 @@
 --------------------------------
 -- @function [parent=#Node] convertToWorldSpace 
 -- @param self
--- @param #point_table point
--- @return point_table#point_table ret (return value: point_table)
+-- @param #array_table array
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#Node] getScene 
@@ -180,7 +180,7 @@
 -- @function [parent=#Node] convertTouchToNodeSpace 
 -- @param self
 -- @param #cc.Touch touch
--- @return point_table#point_table ret (return value: point_table)
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- overload function: removeAllChildrenWithCleanup(bool)
@@ -209,24 +209,24 @@
 --------------------------------
 -- @function [parent=#Node] getRotation3D 
 -- @param self
--- @return Vertex3F#Vertex3F ret (return value: cc.Vertex3F)
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#Node] getNodeToParentTransform 
 -- @param self
--- @return kmMat4#kmMat4 ret (return value: kmMat4)
+-- @return Matrix#Matrix ret (return value: cc.Matrix)
         
 --------------------------------
 -- @function [parent=#Node] convertTouchToNodeSpaceAR 
 -- @param self
 -- @param #cc.Touch touch
--- @return point_table#point_table ret (return value: point_table)
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#Node] convertToNodeSpace 
 -- @param self
--- @param #point_table point
--- @return point_table#point_table ret (return value: point_table)
+-- @param #array_table array
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#Node] resume 
@@ -240,7 +240,7 @@
 --------------------------------
 -- overload function: setPosition(float, float)
 --          
--- overload function: setPosition(point_table)
+-- overload function: setPosition(array_table)
 --          
 -- @function [parent=#Node] setPosition
 -- @param self
@@ -271,7 +271,7 @@
 --------------------------------
 -- @function [parent=#Node] setRotation3D 
 -- @param self
--- @param #cc.Vertex3F vertex3f
+-- @param #array_table array
         
 --------------------------------
 -- @function [parent=#Node] setPositionX 
@@ -281,12 +281,12 @@
 --------------------------------
 -- @function [parent=#Node] setNodeToParentTransform 
 -- @param self
--- @param #kmMat4 kmmat4
+-- @param #cc.Matrix matrix
         
 --------------------------------
 -- @function [parent=#Node] getAnchorPoint 
 -- @param self
--- @return point_table#point_table ret (return value: point_table)
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#Node] getNumberOfRunningActions 
@@ -310,8 +310,8 @@
 --------------------------------
 -- @function [parent=#Node] convertToNodeSpaceAR 
 -- @param self
--- @param #point_table point
--- @return point_table#point_table ret (return value: point_table)
+-- @param #array_table array
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#Node] addComponent 
@@ -319,17 +319,6 @@
 -- @param #cc.Component component
 -- @return bool#bool ret (return value: bool)
         
---------------------------------
--- overload function: visit()
---          
--- overload function: visit(cc.Renderer, kmMat4, bool)
---          
--- @function [parent=#Node] visit
--- @param self
--- @param #cc.Renderer renderer
--- @param #kmMat4 kmmat4
--- @param #bool bool
-
 --------------------------------
 -- @function [parent=#Node] setShaderProgram 
 -- @param self
@@ -343,7 +332,7 @@
 --------------------------------
 -- @function [parent=#Node] getAnchorPointInPoints 
 -- @param self
--- @return point_table#point_table ret (return value: point_table)
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#Node] runAction 
@@ -384,11 +373,11 @@
 --------------------------------
 -- overload function: setAdditionalTransform(cc.AffineTransform)
 --          
--- overload function: setAdditionalTransform(kmMat4)
+-- overload function: setAdditionalTransform(cc.Matrix)
 --          
 -- @function [parent=#Node] setAdditionalTransform
 -- @param self
--- @param #kmMat4 kmmat4
+-- @param #cc.Matrix matrix
 
 --------------------------------
 -- @function [parent=#Node] getDisplayedOpacity 
@@ -482,7 +471,7 @@
 --------------------------------
 -- @function [parent=#Node] getParentToNodeTransform 
 -- @param self
--- @return kmMat4#kmMat4 ret (return value: kmMat4)
+-- @return Matrix#Matrix ret (return value: cc.Matrix)
         
 --------------------------------
 -- @function [parent=#Node] setGlobalZOrder 
@@ -583,12 +572,12 @@
 --------------------------------
 -- overload function: draw()
 --          
--- overload function: draw(cc.Renderer, kmMat4, bool)
+-- overload function: draw(cc.Renderer, cc.Matrix, bool)
 --          
 -- @function [parent=#Node] draw
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #kmMat4 kmmat4
+-- @param #cc.Matrix matrix
 -- @param #bool bool
 
 --------------------------------
@@ -608,7 +597,7 @@
 --------------------------------
 -- @function [parent=#Node] setPosition3D 
 -- @param self
--- @param #cc.Vertex3F vertex3f
+-- @param #array_table array
         
 --------------------------------
 -- @function [parent=#Node] update 
@@ -622,7 +611,7 @@
 --------------------------------
 -- @function [parent=#Node] getWorldToNodeTransform 
 -- @param self
--- @return kmMat4#kmMat4 ret (return value: kmMat4)
+-- @return Matrix#Matrix ret (return value: cc.Matrix)
         
 --------------------------------
 -- @function [parent=#Node] getScale 

@@ -1,6 +1,5 @@
 #include "CocosDenshionTest.h"
 #include "cocos2d.h"
-#include "SimpleAudioEngine.h"
 #include "extensions/GUI/CCControlExtension/CCControlSlider.h"
 
 // android effect only support ogg
@@ -175,9 +174,9 @@ public:
             _lblMinValue = Label::createWithTTF(buffer, "fonts/arial.ttf", 8);
             addChild(_lblMinValue);
             if (_direction == Vertical)
-                _lblMinValue->setPosition(Point(12.0, -50.0));
+                _lblMinValue->setPosition(Vector2(12.0, -50.0));
             else
-                _lblMinValue->setPosition(Point(-50, 12.0));
+                _lblMinValue->setPosition(Vector2(-50, 12.0));
         } else {
             _lblMinValue->setString(buffer);
         }
@@ -187,9 +186,9 @@ public:
             _lblMaxValue = Label::createWithTTF(buffer, "fonts/arial.ttf", 8);
             addChild(_lblMaxValue);
             if (_direction == Vertical)
-                _lblMaxValue->setPosition(Point(12.0, 50.0));
+                _lblMaxValue->setPosition(Vector2(12.0, 50.0));
             else
-                _lblMaxValue->setPosition(Point(50, 12.0));
+                _lblMaxValue->setPosition(Vector2(50, 12.0));
         } else {
             _lblMaxValue->setString(buffer);
         }
@@ -398,7 +397,7 @@ void CocosDenshionTest::addSliders()
 void CocosDenshionTest::addChildAt(Node *node, float percentageX, float percentageY)
 {
     const Size size = VisibleRect::getVisibleRect().size;
-    node->setPosition(Point(percentageX * size.width, percentageY * size.height));
+    node->setPosition(Vector2(percentageX * size.width, percentageY * size.height));
     addChild(node);
 }
 

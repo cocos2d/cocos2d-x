@@ -45,29 +45,29 @@ bool ControlSliderTest::init()
         // Add a label in which the slider value will be displayed
         _displayValueLabel = Label::createWithTTF("Move the slider thumb!\nThe lower slider is restricted." ,"fonts/Marker Felt.ttf", 32);
         _displayValueLabel->retain();
-        _displayValueLabel->setAnchorPoint(Point(0.5f, -1.0f));
-        _displayValueLabel->setPosition(Point(screenSize.width / 1.7f, screenSize.height / 2.0f));
+        _displayValueLabel->setAnchorPoint(Vector2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vector2(screenSize.width / 1.7f, screenSize.height / 2.0f));
         addChild(_displayValueLabel);
 
         // Add the slider
         ControlSlider *slider = ControlSlider::create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
-        slider->setAnchorPoint(Point(0.5f, 1.0f));
+        slider->setAnchorPoint(Vector2(0.5f, 1.0f));
         slider->setMinimumValue(0.0f); // Sets the min value of range
         slider->setMaximumValue(5.0f); // Sets the max value of range
-        slider->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f + 16));
+        slider->setPosition(Vector2(screenSize.width / 2.0f, screenSize.height / 2.0f + 16));
 		slider->setTag(1);
 
         // When the value of the slider will change, the given selector will be call
         slider->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlSliderTest::valueChanged), Control::EventType::VALUE_CHANGED);
 
 		ControlSlider *restrictSlider = ControlSlider::create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
-        restrictSlider->setAnchorPoint(Point(0.5f, 1.0f));
+        restrictSlider->setAnchorPoint(Vector2(0.5f, 1.0f));
         restrictSlider->setMinimumValue(0.0f); // Sets the min value of range
         restrictSlider->setMaximumValue(5.0f); // Sets the max value of range
 		restrictSlider->setMaximumAllowedValue(4.0f);
 		restrictSlider->setMinimumAllowedValue(1.5f);
 		restrictSlider->setValue(3.0f);
-        restrictSlider->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f - 24));
+        restrictSlider->setPosition(Vector2(screenSize.width / 2.0f, screenSize.height / 2.0f - 24));
 		restrictSlider->setTag(2);
 
 	//same with restricted

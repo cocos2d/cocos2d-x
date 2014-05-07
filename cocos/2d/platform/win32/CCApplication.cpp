@@ -23,14 +23,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCPlatformConfig.h"
+#include "base/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #include "CCApplication.h"
 #include "CCGLView.h"
-#include "CCDirector.h"
+#include "base/CCDirector.h"
 #include <algorithm>
-#include "platform/CCFileUtils.h"
+#include "2d/platform/CCFileUtils.h"
 /**
 @brief    This function change the PVRFrame show/hide setting in register.
 @param  bEnable If true show the PVRFrame window, otherwise hide.

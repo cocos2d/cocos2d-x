@@ -26,13 +26,13 @@
 #ifndef __SCRIPT_SUPPORT_H__
 #define __SCRIPT_SUPPORT_H__
 
-#include "ccConfig.h"
+#include "base/ccConfig.h"
 #if CC_ENABLE_SCRIPT_BINDING
 
-#include "platform/CCCommon.h"
-#include "CCTouch.h"
-#include "CCEventTouch.h"
-#include "CCEventKeyboard.h"
+#include "2d/platform/CCCommon.h"
+#include "base/CCTouch.h"
+#include "base/CCEventTouch.h"
+#include "base/CCEventKeyboard.h"
 #include <map>
 #include <string>
 #include <list>

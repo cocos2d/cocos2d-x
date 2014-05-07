@@ -23,10 +23,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCPlatformConfig.h"
+#include "base/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
-#include "platform/CCDevice.h"
+#include "2d/platform/CCDevice.h"
 #include <X11/Xlib.h>
 #include <stdio.h>
 
@@ -36,7 +36,7 @@ THE SOFTWARE.
 #include <string>
 #include <sstream>
 #include <fontconfig/fontconfig.h>
-#include "platform/CCFileUtils.h"
+#include "2d/platform/CCFileUtils.h"
 
 #include "ft2build.h"
 #include FT_FREETYPE_H
@@ -480,7 +480,7 @@ static BitmapDC& sharedBitmapDC()
 	return s_BmpDC;
 }
 
-Data Device::getTextureDataForText(const char * text,const FontDefinition& textDefinition,TextAlign align,int &width,int &height)
+Data Device::getTextureDataForText(const char * text, const FontDefinition& textDefinition, TextAlign align, int &width, int &height, bool& hasPremultipliedAlpha)
 {
     Data ret;
     do 
@@ -493,6 +493,7 @@ Data Device::getTextureDataForText(const char * text,const FontDefinition& textD
         height = dc.iMaxLineHeight;
         dc.reset();
         ret.fastSet(dc._data,width * height * 4);
+        hasPremultipliedAlpha = true;
     } while (0);
 
     return ret;

@@ -26,11 +26,11 @@ THE SOFTWARE.
 #ifndef CCAPLICATION_H_
 #define CCAPLICATION_H_
 
-#include "CCPlatformConfig.h"
+#include "base/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
-#include "platform/CCCommon.h"
-#include "platform/CCApplicationProtocol.h"
+#include "2d/platform/CCCommon.h"
+#include "2d/platform/CCApplicationProtocol.h"
 #include <string>
 
 NS_CC_BEGIN

@@ -87,7 +87,7 @@ void Paddle::onTouchMoved(Touch* touch, Event* event)
     
     auto touchPoint = touch->getLocation();
     
-    setPosition( Point(touchPoint.x, getPosition().y) );
+    setPosition( Vector2(touchPoint.x, getPosition().y) );
 }
 
 Paddle* Paddle::clone() const

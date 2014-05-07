@@ -26,10 +26,10 @@ THE SOFTWARE.
 #ifndef __CC_STD_C_H__
 #define __CC_STD_C_H__
 
-#include "CCPlatformConfig.h"
+#include "base/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
-#include "CCPlatformMacros.h"
+#include "base/CCPlatformMacros.h"
 
 #include <float.h>
 #include <math.h>

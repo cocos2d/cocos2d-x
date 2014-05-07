@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCActionFrame.h"
-#include "CCActionEase.h"
+#include "cocostudio/CCActionFrame.h"
+#include "2d/CCActionEase.h"
 
 using namespace cocos2d;
 
@@ -221,7 +221,7 @@ ActionInterval* ActionFrame::getEasingAction(ActionInterval* action)
 //////////////////////////////////////////////////////////////////////////
 
 ActionMoveFrame::ActionMoveFrame()
-	: _position(Point(0.0f,0.0f))
+	: _position(Vector2(0.0f,0.0f))
 {
 	_frameType = (int)kKeyframeMove;
 }
@@ -229,11 +229,11 @@ ActionMoveFrame::~ActionMoveFrame()
 {
 
 }
-void ActionMoveFrame::setPosition(Point pos)
+void ActionMoveFrame::setPosition(Vector2 pos)
 {
 	_position = pos;
 }
-Point ActionMoveFrame::getPosition()
+Vector2 ActionMoveFrame::getPosition()
 {
 	return _position;
 }

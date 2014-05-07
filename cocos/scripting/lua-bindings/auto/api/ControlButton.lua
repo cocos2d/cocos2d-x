@@ -43,12 +43,12 @@
 --------------------------------
 -- @function [parent=#ControlButton] setLabelAnchorPoint 
 -- @param self
--- @param #point_table point
+-- @param #array_table array
         
 --------------------------------
 -- @function [parent=#ControlButton] getLabelAnchorPoint 
 -- @param self
--- @return point_table#point_table ret (return value: point_table)
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#ControlButton] getTitleTTFSizeForState 

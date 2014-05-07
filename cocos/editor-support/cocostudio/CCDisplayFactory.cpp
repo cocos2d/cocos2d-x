@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "cocostudio/CCArmatureDataManager.h"
 #include "cocostudio/CCTransformHelp.h"
 
-#include "CCParticleSystemQuad.h"
+#include "2d/CCParticleSystemQuad.h"
 
 using namespace cocos2d;
 
@@ -93,7 +93,7 @@ void DisplayFactory::updateDisplay(Bone *bone, float dt, bool dirty)
         break;
     default:
     {
-        kmMat4 transform = bone->getNodeToArmatureTransform();
+        Matrix transform = bone->getNodeToArmatureTransform();
         display->setAdditionalTransform(&transform);
     }
     break;
@@ -113,12 +113,12 @@ void DisplayFactory::updateDisplay(Bone *bone, float dt, bool dirty)
                 CC_BREAK_IF(!detector->getBody());
 #endif
 
-                kmMat4 displayTransform = display->getNodeToParentTransform();
-                Point anchorPoint =  display->getAnchorPointInPoints();
+                Matrix displayTransform = display->getNodeToParentTransform();
+                Vector2 anchorPoint =  display->getAnchorPointInPoints();
                 anchorPoint = PointApplyTransform(anchorPoint, displayTransform);
-                displayTransform.mat[12] = anchorPoint.x;
-                displayTransform.mat[13] = anchorPoint.y;
-                kmMat4 t = TransformConcat( bone->getArmature()->getNodeToParentTransform(),displayTransform);
+                displayTransform.m[12] = anchorPoint.x;
+                displayTransform.m[13] = anchorPoint.y;
+                Matrix t = TransformConcat( bone->getArmature()->getNodeToParentTransform(),displayTransform);
                 detector->updateTransform(t);
             }
             while (0);
@@ -202,7 +202,7 @@ void DisplayFactory::initSpriteDisplay(Bone *bone, DecorativeDisplay *decoDispla
     if(textureData)
     {
         //! Init display anchorPoint, every Texture have a anchor point
-        skin->setAnchorPoint(Point( textureData->pivotX, textureData->pivotY));
+        skin->setAnchorPoint(Vector2( textureData->pivotX, textureData->pivotY));
     }
 
 

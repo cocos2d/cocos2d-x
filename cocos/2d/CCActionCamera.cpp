@@ -25,8 +25,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCActionCamera.h"
-#include "CCNode.h"
+#include "2d/CCActionCamera.h"
+#include "2d/CCNode.h"
 #include "CCStdC.h"
 
 NS_CC_BEGIN
@@ -34,10 +34,10 @@ NS_CC_BEGIN
 // CameraAction
 //
 ActionCamera::ActionCamera()
+: _center(0, 0, 0)
+, _eye(0, 0, FLT_EPSILON)
+, _up(0, 1, 0)
 {
-    kmVec3Fill(&_center, 0, 0, 0);
-    kmVec3Fill(&_eye, 0, 0, FLT_EPSILON);
-    kmVec3Fill(&_up, 0, 1, 0);
 }
 void ActionCamera::startWithTarget(Node *target)
 {
@@ -60,12 +60,12 @@ ActionCamera * ActionCamera::reverse() const
 
 void ActionCamera::restore()
 {
-    kmVec3Fill(&_center, 0, 0, 0);
-    kmVec3Fill(&_eye, 0, 0, FLT_EPSILON);
-    kmVec3Fill(&_up, 0, 1, 0);
+    _center = Vector3(0, 0, 0);
+    _eye = Vector3(0, 0, FLT_EPSILON);
+    _up = Vector3(0, 1, 0);
 }
 
-void ActionCamera::setEye(const kmVec3& eye)
+void ActionCamera::setEye(const Vector3& eye)
 {
     _eye = eye;
     updateTransform();
@@ -73,17 +73,17 @@ void ActionCamera::setEye(const kmVec3& eye)
 
 void ActionCamera::setEye(float x, float y, float z)
 {
-    kmVec3Fill(&_eye, x, y, z);
+    _eye = Vector3(x, y, z);
     updateTransform();
 }
 
-void ActionCamera::setCenter(const kmVec3& center)
+void ActionCamera::setCenter(const Vector3& center)
 {
     _center = center;
     updateTransform();
 }
 
-void ActionCamera::setUp(const kmVec3& up)
+void ActionCamera::setUp(const Vector3& up)
 {
     _up = up;
     updateTransform();
@@ -91,28 +91,28 @@ void ActionCamera::setUp(const kmVec3& up)
 
 void ActionCamera::updateTransform()
 {
-    kmMat4 lookupMatrix;
-    kmMat4LookAt(&lookupMatrix, &_eye, &_center, &_up);
+    Matrix lookupMatrix;
+    Matrix::createLookAt(_eye.x, _eye.y, _eye.z, _center.x, _center.y, _center.z, _up.x, _up.y, _up.z, &lookupMatrix);
 
-    Point anchorPoint = _target->getAnchorPointInPoints();
+    Vector2 anchorPoint = _target->getAnchorPointInPoints();
 
-    bool needsTranslation = !anchorPoint.equals(Point::ZERO);
+    bool needsTranslation = !anchorPoint.equals(Vector2::ZERO);
 
-    kmMat4 mv;
-    kmMat4Identity(&mv);
+    Matrix mv = Matrix::identity();
 
     if(needsTranslation) {
-        kmMat4 t;
-        kmMat4Translation(&t, anchorPoint.x, anchorPoint.y, 0);
-        kmMat4Multiply(&mv, &mv, &t);
+        Matrix t;
+        Matrix::createTranslation(anchorPoint.x, anchorPoint.y, 0, &t);
+        mv = mv * t;
     }
-
-    kmMat4Multiply(&mv, &mv, &lookupMatrix);
+    
+    mv = mv * lookupMatrix;
 
     if(needsTranslation) {
-        kmMat4 t;
-        kmMat4Translation(&t, -anchorPoint.x, -anchorPoint.y, 0);
-        kmMat4Multiply(&mv, &mv, &t);
+        
+        Matrix t;
+        Matrix::createTranslation(-anchorPoint.x, -anchorPoint.y, 0, &t);
+        mv = mv * t;
     }
 
     // XXX FIXME TODO

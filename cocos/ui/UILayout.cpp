@@ -25,11 +25,10 @@ THE SOFTWARE.
 #include "ui/UILayout.h"
 #include "ui/UIHelper.h"
 #include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"
-#include "kazmath/GL/matrix.h"
-#include "CCGLProgram.h"
-#include "CCShaderCache.h"
-#include "CCDirector.h"
-#include "CCDrawingPrimitives.h"
+#include "2d/CCGLProgram.h"
+#include "2d/CCShaderCache.h"
+#include "base/CCDirector.h"
+#include "2d/CCDrawingPrimitives.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCCustomCommand.h"
@@ -136,7 +135,7 @@ void LinearVerticalLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Ve
             if (layoutParameter)
             {
                 LinearGravity childGravity = layoutParameter->getGravity();
-                Point ap = child->getAnchorPoint();
+                Vector2 ap = child->getAnchorPoint();
                 Size cs = child->getSize();
                 float finalPosX = ap.x * cs.width;
                 float finalPosY = topBoundary - ((1.0f-ap.y) * cs.height);
@@ -157,7 +156,7 @@ void LinearVerticalLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Ve
                 Margin mg = layoutParameter->getMargin();
                 finalPosX += mg.left;
                 finalPosY -= mg.top;
-                child->setPosition(Point(finalPosX, finalPosY));
+                child->setPosition(Vector2(finalPosX, finalPosY));
                 topBoundary = child->getBottomInParent() - mg.bottom;
             }
         }
@@ -176,7 +175,7 @@ void LinearHorizontalLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, 
             if (layoutParameter)
             {
                 LinearGravity childGravity = layoutParameter->getGravity();
-                Point ap = child->getAnchorPoint();
+                Vector2 ap = child->getAnchorPoint();
                 Size cs = child->getSize();
                 float finalPosX = leftBoundary + (ap.x * cs.width);
                 float finalPosY = layoutSize.height - (1.0f - ap.y) * cs.height;
@@ -197,7 +196,7 @@ void LinearHorizontalLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, 
                 Margin mg = layoutParameter->getMargin();
                 finalPosX += mg.left;
                 finalPosY -= mg.top;
-                child->setPosition(Point(finalPosX, finalPosY));
+                child->setPosition(Vector2(finalPosX, finalPosY));
                 leftBoundary = child->getRightInParent() + mg.right;
             }
         }
@@ -232,7 +231,7 @@ void RelativeLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Vector<c
                 {
                     continue;
                 }
-                Point ap = child->getAnchorPoint();
+                Vector2 ap = child->getAnchorPoint();
                 Size cs = child->getSize();
                 RelativeAlign align = layoutParameter->getAlign();
                 const char* relativeName = layoutParameter->getRelativeToWidgetName();
@@ -550,7 +549,7 @@ void RelativeLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Vector<c
                     default:
                         break;
                 }
-                child->setPosition(Point(finalPosX, finalPosY));
+                child->setPosition(Vector2(finalPosX, finalPosY));
                 layoutParameter->_put = true;
                 unlayoutChildCount--;
             }
@@ -580,7 +579,7 @@ _gradientRender(nullptr),
 _cColor(Color3B::WHITE),
 _gStartColor(Color3B::WHITE),
 _gEndColor(Color3B::WHITE),
-_alongVector(Point(0.0f, -1.0f)),
+_alongVector(Vector2(0.0f, -1.0f)),
 _cOpacity(255),
 _backGroundImageTextureSize(Size::ZERO),
 _layoutType(LAYOUT_ABSOLUTE),
@@ -656,7 +655,7 @@ bool Layout::init()
         setBright(true);
         ignoreContentAdaptWithSize(false);
         setSize(Size::ZERO);
-        setAnchorPoint(Point::ZERO);
+        setAnchorPoint(Vector2::ZERO);
         return true;
     }
     return false;
@@ -701,7 +700,7 @@ bool Layout::isClippingEnabled()
     return _clippingEnabled;
 }
 
-void Layout::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
+void Layout::visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
 {
     if (!_enabled)
     {
@@ -734,7 +733,7 @@ void Layout::sortAllChildren()
     doLayout();
 }
     
-void Layout::stencilClippingVisit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
+void Layout::stencilClippingVisit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
 {
     if(!_visible)
         return;
@@ -745,11 +744,12 @@ void Layout::stencilClippingVisit(Renderer *renderer, const kmMat4 &parentTransf
     _transformUpdated = false;
 
     // IMPORTANT:
-    // To ease the migration to v3.0, we still support the kmGL stack,
+    // To ease the migration to v3.0, we still support the Matrix stack,
     // but it is deprecated and your code should not rely on it
-    kmGLPushMatrix();
-    kmGLLoadMatrix(&_modelViewTransform);
-
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
     //Add group command
 
     _groupCommand.init(_globalZOrder);
@@ -817,7 +817,7 @@ void Layout::stencilClippingVisit(Renderer *renderer, const kmMat4 &parentTransf
     
     renderer->popGroup();
     
-    kmGLPopMatrix();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
     
 void Layout::onBeforeVisitStencil()
@@ -842,20 +842,18 @@ void Layout::onBeforeVisitStencil()
     glDepthMask(GL_FALSE);
     glStencilFunc(GL_NEVER, mask_layer, mask_layer);
     glStencilOp(GL_ZERO, GL_KEEP, GL_KEEP);
-    kmGLMatrixMode(KM_GL_MODELVIEW);
-    kmGLPushMatrix();
-    kmGLLoadIdentity();
+
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     
-    kmGLMatrixMode(KM_GL_PROJECTION);
-    kmGLPushMatrix();
-    kmGLLoadIdentity();
+    DrawPrimitives::drawSolidRect(Vector2(-1,-1), Vector2(1,1), Color4F(1, 1, 1, 1));
     
-    DrawPrimitives::drawSolidRect(Point(-1,-1), Point(1,1), Color4F(1, 1, 1, 1));
-    
-    kmGLMatrixMode(KM_GL_PROJECTION);
-    kmGLPopMatrix();
-    kmGLMatrixMode(KM_GL_MODELVIEW);
-    kmGLPopMatrix();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     glStencilFunc(GL_NEVER, mask_layer, mask_layer);
     glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
 }
@@ -893,7 +891,7 @@ void Layout::onAfterVisitScissor()
     glDisable(GL_SCISSOR_TEST);
 }
     
-void Layout::scissorClippingVisit(Renderer *renderer, const kmMat4& parentTransform, bool parentTransformUpdated)
+void Layout::scissorClippingVisit(Renderer *renderer, const Matrix& parentTransform, bool parentTransformUpdated)
 {
     _beforeVisitCmdScissor.init(_globalZOrder);
     _beforeVisitCmdScissor.func = CC_CALLBACK_0(Layout::onBeforeVisitScissor, this);
@@ -972,11 +970,11 @@ void Layout::setStencilClippingSize(const Size &size)
 {
     if (_clippingEnabled && _clippingType == LAYOUT_CLIPPING_STENCIL)
     {
-        Point rect[4];
-        rect[0] = Point::ZERO;
-        rect[1] = Point(_size.width, 0);
-        rect[2] = Point(_size.width, _size.height);
-        rect[3] = Point(0, _size.height);
+        Vector2 rect[4];
+        rect[0] = Vector2::ZERO;
+        rect[1] = Vector2(_size.width, 0);
+        rect[2] = Vector2(_size.width, _size.height);
+        rect[3] = Vector2(0, _size.height);
         Color4F green(0, 1, 0, 1);
         _clippingStencil->clear();
         _clippingStencil->drawPolygon(rect, 4, green, 0, green);
@@ -987,7 +985,7 @@ const Rect& Layout::getClippingRect()
 {
     if (_clippingRectDirty)
     {
-        Point worldPos = convertToWorldSpace(Point::ZERO);
+        Vector2 worldPos = convertToWorldSpace(Vector2::ZERO);
         AffineTransform t = getNodeToWorldAffineTransform();
         float scissorWidth = _size.width*t.a;
         float scissorHeight = _size.height*t.d;
@@ -1070,7 +1068,7 @@ void Layout::onSizeChanged()
     _clippingRectDirty = true;
     if (_backGroundImage)
     {
-        _backGroundImage->setPosition(Point(_size.width/2.0f, _size.height/2.0f));
+        _backGroundImage->setPosition(Vector2(_size.width/2.0f, _size.height/2.0f));
         if (_backGroundScale9Enabled && _backGroundImage)
         {
             static_cast<extension::Scale9Sprite*>(_backGroundImage)->setPreferredSize(_size);
@@ -1148,7 +1146,7 @@ void Layout::setBackGroundImage(const std::string& fileName,TextureResType texTy
         }
     }
     _backGroundImageTextureSize = _backGroundImage->getContentSize();
-    _backGroundImage->setPosition(Point(_size.width/2.0f, _size.height/2.0f));
+    _backGroundImage->setPosition(Vector2(_size.width/2.0f, _size.height/2.0f));
     updateBackGroundImageRGBA();
 }
 
@@ -1213,7 +1211,7 @@ void Layout::addBackGroundImage()
         _backGroundImage = Sprite::create();
         addProtectedChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
     }
-    _backGroundImage->setPosition(Point(_size.width/2.0f, _size.height/2.0f));
+    _backGroundImage->setPosition(Vector2(_size.width/2.0f, _size.height/2.0f));
 }
 
 void Layout::removeBackGroundImage()
@@ -1357,7 +1355,7 @@ GLubyte Layout::getBackGroundColorOpacity()
     return _cOpacity;
 }
 
-void Layout::setBackGroundColorVector(const Point &vector)
+void Layout::setBackGroundColorVector(const Vector2 &vector)
 {
     _alongVector = vector;
     if (_gradientRender)
@@ -1366,7 +1364,7 @@ void Layout::setBackGroundColorVector(const Point &vector)
     }
 }
     
-const Point& Layout::getBackGroundColorVector()
+const Vector2& Layout::getBackGroundColorVector()
 {
     return _alongVector;
 }

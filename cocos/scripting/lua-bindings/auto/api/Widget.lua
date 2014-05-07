@@ -6,7 +6,7 @@
 --------------------------------
 -- @function [parent=#Widget] setSizePercent 
 -- @param self
--- @param #point_table point
+-- @param #array_table array
         
 --------------------------------
 -- @function [parent=#Widget] getCustomSize 
@@ -31,12 +31,12 @@
 --------------------------------
 -- @function [parent=#Widget] getTouchEndPos 
 -- @param self
--- @return point_table#point_table ret (return value: point_table)
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#Widget] setPositionPercent 
 -- @param self
--- @param #point_table point
+-- @param #array_table array
         
 --------------------------------
 -- @function [parent=#Widget] getLayoutSize 
@@ -113,7 +113,7 @@
 --------------------------------
 -- @function [parent=#Widget] getWorldPosition 
 -- @param self
--- @return point_table#point_table ret (return value: point_table)
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#Widget] didNotSelectSelf 
@@ -137,7 +137,7 @@
 --------------------------------
 -- @function [parent=#Widget] getTouchMovePos 
 -- @param self
--- @return point_table#point_table ret (return value: point_table)
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#Widget] setEnabled 
@@ -167,12 +167,12 @@
 --------------------------------
 -- @function [parent=#Widget] getSizePercent 
 -- @param self
--- @return point_table#point_table ret (return value: point_table)
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#Widget] getTouchStartPos 
 -- @param self
--- @return point_table#point_table ret (return value: point_table)
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#Widget] setActionTag 
@@ -187,7 +187,7 @@
 --------------------------------
 -- @function [parent=#Widget] clippingParentAreaContainPoint 
 -- @param self
--- @param #point_table point
+-- @param #array_table array
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -227,12 +227,12 @@
 --------------------------------
 -- @function [parent=#Widget] getPositionPercent 
 -- @param self
--- @return point_table#point_table ret (return value: point_table)
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#Widget] hitTest 
 -- @param self
--- @param #point_table point
+-- @param #array_table array
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -255,7 +255,7 @@
 -- @param self
 -- @param #int int
 -- @param #ccui.Widget widget
--- @param #point_table point
+-- @param #array_table array
         
 --------------------------------
 -- @function [parent=#Widget] setSize 
@@ -295,7 +295,7 @@
 --------------------------------
 -- @function [parent=#Widget] setPosition 
 -- @param self
--- @param #point_table point
+-- @param #array_table array
         
 --------------------------------
 -- @function [parent=#Widget] getDescription 

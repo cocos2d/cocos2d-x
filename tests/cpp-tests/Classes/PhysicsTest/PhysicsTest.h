@@ -15,6 +15,11 @@ public:
     
 public:
     virtual void runThisTest();
+    
+    void toggleDebug();
+    
+private:
+    bool _debugDraw;
 };
 
 #if CC_USE_PHYSICS == 0
@@ -27,26 +32,11 @@ public:
 };
 #else
 
-#define CREATE_WITH_PHYSICS_FUNC(__TYPE__) \
-static __TYPE__* createWithPhysics() \
-{ \
-__TYPE__ *ret = new __TYPE__(); \
-if (ret && ret->initWithPhysics()) \
-{ \
-ret->autorelease(); \
-return ret; \
-} \
-else \
-{ \
-delete ret; \
-ret = nullptr; \
-return nullptr; \
-} \
-}
 class PhysicsDemo : public BaseTest
 {
 public:
-    CREATE_WITH_PHYSICS_FUNC(PhysicsDemo);
+    CREATE_FUNC(PhysicsDemo);
+
     PhysicsDemo();
     virtual ~PhysicsDemo();
     
@@ -59,32 +49,26 @@ public:
     void backCallback(Ref* sender);
     void toggleDebugCallback(Ref* sender);
     
-    Sprite* addGrossiniAtPosition(Point p, float scale = 1.0);
-    Sprite* makeBall(Point point, float radius, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
-    Sprite* makeBox(Point point, Size size, int color = 0, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
-    Sprite* makeTriangle(Point point, Size size, int color = 0, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
+    Sprite* addGrossiniAtPosition(Vector2 p, float scale = 1.0);
+    Sprite* makeBall(Vector2 point, float radius, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
+    Sprite* makeBox(Vector2 point, Size size, int color = 0, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
+    Sprite* makeTriangle(Vector2 point, Size size, int color = 0, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
     
     bool onTouchBegan(Touch* touch, Event* event);
     void onTouchMoved(Touch* touch, Event* event);
     void onTouchEnded(Touch* touch, Event* event);
     
-    void toggleDebug();
-    inline void setRoot(bool isRoot) { _isRoot = isRoot; }
-    
 protected:
+    PhysicsTestScene* _scene;
     Texture2D* _spriteTexture;    // weak ref
     SpriteBatchNode* _ball;
     std::unordered_map<int, Node*> _mouses;
-    
-private:
-    bool _debugDraw;
-    bool _isRoot;
 };
 
 class PhysicsDemoClickAdd : public PhysicsDemo
 {
 public:
-    CREATE_WITH_PHYSICS_FUNC(PhysicsDemoClickAdd);
+    CREATE_FUNC(PhysicsDemoClickAdd);
 
     virtual ~PhysicsDemoClickAdd();
     void onEnter() override;
@@ -97,7 +81,7 @@ public:
 class PhysicsDemoLogoSmash : public PhysicsDemo
 {
 public:
-    CREATE_WITH_PHYSICS_FUNC(PhysicsDemoLogoSmash);
+    CREATE_FUNC(PhysicsDemoLogoSmash);
 
     void onEnter() override;
     virtual std::string title() const override;
@@ -106,7 +90,7 @@ public:
 class PhysicsDemoPyramidStack : public PhysicsDemo
 {
 public:
-    CREATE_WITH_PHYSICS_FUNC(PhysicsDemoPyramidStack);
+    CREATE_FUNC(PhysicsDemoPyramidStack);
 
     void onEnter() override;
     void updateOnce(float delta);
@@ -116,7 +100,7 @@ public:
 class PhysicsDemoRayCast : public PhysicsDemo
 {
 public:
-    CREATE_WITH_PHYSICS_FUNC(PhysicsDemoRayCast);
+    CREATE_FUNC(PhysicsDemoRayCast);
 
     PhysicsDemoRayCast();
 
@@ -138,7 +122,7 @@ private:
 class PhysicsDemoJoints : public PhysicsDemo
 {
 public:
-    CREATE_WITH_PHYSICS_FUNC(PhysicsDemoJoints);
+    CREATE_FUNC(PhysicsDemoJoints);
 
     void onEnter() override;
     virtual std::string title() const override;
@@ -147,7 +131,7 @@ public:
 class PhysicsDemoActions : public PhysicsDemo
 {
 public:
-    CREATE_WITH_PHYSICS_FUNC(PhysicsDemoActions);
+    CREATE_FUNC(PhysicsDemoActions);
 
     void onEnter() override;
     virtual std::string title() const override;
@@ -156,7 +140,7 @@ public:
 class PhysicsDemoPump : public PhysicsDemo
 {
 public:
-    CREATE_WITH_PHYSICS_FUNC(PhysicsDemoPump);
+    CREATE_FUNC(PhysicsDemoPump);
 
     void onEnter() override;
     void update(float delta) override;
@@ -175,7 +159,7 @@ private:
 class PhysicsDemoOneWayPlatform : public PhysicsDemo
 {
 public:
-    CREATE_WITH_PHYSICS_FUNC(PhysicsDemoOneWayPlatform);
+    CREATE_FUNC(PhysicsDemoOneWayPlatform);
 
     void onEnter() override;
     virtual std::string title() const override;
@@ -186,14 +170,14 @@ public:
 class PhysicsDemoSlice : public PhysicsDemo
 {
 public:
-    CREATE_WITH_PHYSICS_FUNC(PhysicsDemoSlice);
+    CREATE_FUNC(PhysicsDemoSlice);
 
     void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     
     bool slice(PhysicsWorld& world, const PhysicsRayCastInfo& info, void* data);
-    void clipPoly(PhysicsShapePolygon* shape, Point normal, float distance);
+    void clipPoly(PhysicsShapePolygon* shape, Vector2 normal, float distance);
     
     void onTouchEnded(Touch *touch, Event *event);
     
@@ -204,7 +188,7 @@ private:
 class PhysicsDemoBug3988 : public PhysicsDemo
 {
 public:
-    CREATE_WITH_PHYSICS_FUNC(PhysicsDemoBug3988);
+    CREATE_FUNC(PhysicsDemoBug3988);
 
     void onEnter() override;
     virtual std::string title() const override;
@@ -214,7 +198,7 @@ public:
 class PhysicsContactTest : public PhysicsDemo
 {
 public:
-    CREATE_WITH_PHYSICS_FUNC(PhysicsContactTest);
+    CREATE_FUNC(PhysicsContactTest);
     
     void onEnter() override;
     void resetTest();
@@ -239,13 +223,12 @@ public:
     
     void onEnter() override;
     virtual std::string title() const override;
-    virtual std::string subtitle() const override;
 };
 
 class PhysicsSetGravityEnableTest : public PhysicsDemo
 {
 public:
-    CREATE_WITH_PHYSICS_FUNC(PhysicsSetGravityEnableTest);
+    CREATE_FUNC(PhysicsSetGravityEnableTest);
     
     void onEnter() override;
     void onScheduleOnce(float delta);

@@ -78,9 +78,9 @@ class NodeLoader : public cocos2d::Ref {
     protected:
         CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(cocos2d::Node);
 
-        virtual cocos2d::Point parsePropTypePosition(cocos2d::Node * pNode, cocos2d::Node * pParent, CCBReader * ccbReader, const char *pPropertyName);
-        virtual cocos2d::Point parsePropTypePoint(cocos2d::Node * pNode, cocos2d::Node * pParent, CCBReader * ccbReader);
-        virtual cocos2d::Point parsePropTypePointLock(cocos2d::Node * pNode,cocos2d:: Node * pParent, CCBReader * ccbReader);
+        virtual cocos2d::Vector2 parsePropTypePosition(cocos2d::Node * pNode, cocos2d::Node * pParent, CCBReader * ccbReader, const char *pPropertyName);
+        virtual cocos2d::Vector2 parsePropTypePoint(cocos2d::Node * pNode, cocos2d::Node * pParent, CCBReader * ccbReader);
+        virtual cocos2d::Vector2 parsePropTypePointLock(cocos2d::Node * pNode,cocos2d:: Node * pParent, CCBReader * ccbReader);
         virtual cocos2d::Size parsePropTypeSize(cocos2d::Node * pNode, cocos2d::Node * pParent, CCBReader * ccbReader);
         virtual float * parsePropTypeScaleLock(cocos2d::Node * pNode, cocos2d::Node * pParent, CCBReader * ccbReader, const char *pPropertyName);
         virtual float parsePropTypeFloat(cocos2d::Node * pNode, cocos2d::Node * pParent, CCBReader * ccbReader);
@@ -108,9 +108,9 @@ class NodeLoader : public cocos2d::Ref {
         virtual float * parsePropTypeFloatXY(cocos2d::Node * pNode, cocos2d::Node * pParent, CCBReader * ccbReader);
 
 
-        virtual void onHandlePropTypePosition(cocos2d::Node * pNode,cocos2d:: Node * pParent, const char* pPropertyName, cocos2d::Point pPosition, CCBReader * ccbReader);
-        virtual void onHandlePropTypePoint(cocos2d::Node * pNode, cocos2d::Node * pParent, const char* pPropertyName, cocos2d::Point pPoint, CCBReader * ccbReader);
-        virtual void onHandlePropTypePointLock(cocos2d::Node * pNode, cocos2d::Node * pParent, const char* pPropertyName, cocos2d::Point pPointLock, CCBReader * ccbReader);
+        virtual void onHandlePropTypePosition(cocos2d::Node * pNode,cocos2d:: Node * pParent, const char* pPropertyName, cocos2d::Vector2 pPosition, CCBReader * ccbReader);
+        virtual void onHandlePropTypePoint(cocos2d::Node * pNode, cocos2d::Node * pParent, const char* pPropertyName, cocos2d::Vector2 pPoint, CCBReader * ccbReader);
+        virtual void onHandlePropTypePointLock(cocos2d::Node * pNode, cocos2d::Node * pParent, const char* pPropertyName, cocos2d::Vector2 pPointLock, CCBReader * ccbReader);
         virtual void onHandlePropTypeSize(cocos2d::Node * pNode, cocos2d::Node * pParent, const char* pPropertyName, cocos2d::Size pSize, CCBReader * ccbReader);
         virtual void onHandlePropTypeScaleLock(cocos2d::Node * pNode, cocos2d::Node * pParent, const char* pPropertyName, float * pScaleLock, CCBReader * ccbReader);
         virtual void onHandlePropTypeFloat(cocos2d::Node * pNode, cocos2d::Node * pParent, const char* pPropertyName, float pFloat, CCBReader * ccbReader);

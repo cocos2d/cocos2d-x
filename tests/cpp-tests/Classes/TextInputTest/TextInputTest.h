@@ -45,7 +45,7 @@ public:
 
 protected:
     Node * _trackNode;
-    Point  _beginPos;
+    Vector2  _beginPos;
 };
 
 //////////////////////////////////////////////////////////////////////////

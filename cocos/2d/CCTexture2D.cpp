@@ -31,23 +31,23 @@ THE SOFTWARE.
 * https://devforums.apple.com/message/37855#37855 by a1studmuffin
 */
 
-#include "CCTexture2D.h"
-#include "ccConfig.h"
-#include "ccMacros.h"
-#include "CCConfiguration.h"
-#include "platform/CCImage.h"
+#include "2d/CCTexture2D.h"
+#include "base/ccConfig.h"
+#include "base/ccMacros.h"
+#include "base/CCConfiguration.h"
+#include "2d/platform/CCImage.h"
 #include "CCGL.h"
-#include "ccUtils.h"
-#include "CCPlatformMacros.h"
-#include "CCDirector.h"
-#include "CCGLProgram.h"
-#include "ccGLStateCache.h"
-#include "CCShaderCache.h"
-#include "platform/CCDevice.h"
+#include "2d/ccUtils.h"
+#include "base/CCPlatformMacros.h"
+#include "base/CCDirector.h"
+#include "2d/CCGLProgram.h"
+#include "2d/ccGLStateCache.h"
+#include "2d/CCShaderCache.h"
+#include "2d/platform/CCDevice.h"
 #include "deprecated/CCString.h"
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    #include "CCTextureCache.h"
+    #include "2d/CCTextureCache.h"
 #endif
 
 NS_CC_BEGIN
@@ -1058,7 +1058,7 @@ Texture2D::PixelFormat Texture2D::convertDataToFormat(const unsigned char* data,
 }
 
 // implementation Texture2D (Text)
-bool Texture2D::initWithString(const char *text, const char *fontName, float fontSize, const Size& dimensions/* = Size(0, 0)*/, TextHAlignment hAlignment/* =  TextHAlignment::CENTER */, TextVAlignment vAlignment/* =  TextVAlignment::TOP */)
+bool Texture2D::initWithString(const char *text, const std::string& fontName, float fontSize, const Size& dimensions/* = Size(0, 0)*/, TextHAlignment hAlignment/* =  TextHAlignment::CENTER */, TextVAlignment vAlignment/* =  TextVAlignment::TOP */)
 {
     FontDefinition tempDef;
     
@@ -1066,7 +1066,7 @@ bool Texture2D::initWithString(const char *text, const char *fontName, float fon
     tempDef._stroke._strokeEnabled = false;
    
     
-    tempDef._fontName      = std::string(fontName);
+    tempDef._fontName      = fontName;
     tempDef._fontSize      = fontSize;
     tempDef._dimensions    = dimensions;
     tempDef._alignment     = hAlignment;
@@ -1079,7 +1079,10 @@ bool Texture2D::initWithString(const char *text, const char *fontName, float fon
 bool Texture2D::initWithString(const char *text, const FontDefinition& textDefinition)
 {
     if(!text || 0 == strlen(text))
+    {
         return false;
+    }
+
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // cache the texture data
     VolatileTextureMgr::addStringTexture(this, text, textDefinition);
@@ -1127,9 +1130,11 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
     textDef._stroke._strokeSize *= contentScaleFactor;
     textDef._shadow._shadowEnabled = false;
     
-    Data outData = Device::getTextureDataForText(text,textDef,align,imageWidth,imageHeight);
+    Data outData = Device::getTextureDataForText(text, textDef, align, imageWidth, imageHeight, _hasPremultipliedAlpha);
     if(outData.isNull())
+    {
         return false;
+    }
 
     Size  imageSize = Size((float)imageWidth, (float)imageHeight);
     pixelFormat = convertDataToFormat(outData.getBytes(), imageWidth*imageHeight*4, PixelFormat::RGBA8888, pixelFormat, &outTempData, &outTempDataLen);
@@ -1140,18 +1145,14 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
     {
         free(outTempData);
     }
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-    _hasPremultipliedAlpha = true;
-#else
-    _hasPremultipliedAlpha = false;
-#endif
+
     return ret;
 }
 
 
 // implementation Texture2D (Drawing)
 
-void Texture2D::drawAtPoint(const Point& point)
+void Texture2D::drawAtPoint(const Vector2& point)
 {
     GLfloat    coordinates[] = {
         0.0f,    _maxT,

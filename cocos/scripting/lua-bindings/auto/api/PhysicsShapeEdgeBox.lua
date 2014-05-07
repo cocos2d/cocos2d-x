@@ -14,12 +14,12 @@
 -- @param #size_table size
 -- @param #cc.PhysicsMaterial physicsmaterial
 -- @param #float float
--- @param #point_table point
+-- @param #array_table array
 -- @return PhysicsShapeEdgeBox#PhysicsShapeEdgeBox ret (return value: cc.PhysicsShapeEdgeBox)
         
 --------------------------------
 -- @function [parent=#PhysicsShapeEdgeBox] getOffset 
 -- @param self
--- @return point_table#point_table ret (return value: point_table)
+-- @return array_table#array_table ret (return value: array_table)
         
 return nil

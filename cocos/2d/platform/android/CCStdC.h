@@ -26,10 +26,10 @@ THE SOFTWARE.
 #ifndef __CC_STD_C_H__
 #define __CC_STD_C_H__
 
-#include "CCPlatformConfig.h"
+#include "base/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
-#include "CCPlatformMacros.h"
+#include "base/CCPlatformMacros.h"
 #include <float.h>
 #include <math.h>
 #include <string.h>
@@ -39,6 +39,7 @@ THE SOFTWARE.
 #include <time.h>
 #include <sys/time.h>
 #include <stdint.h>
+#include <cassert>
 
 #ifndef MIN
 #define MIN(x,y) (((x) > (y)) ? (y) : (x))

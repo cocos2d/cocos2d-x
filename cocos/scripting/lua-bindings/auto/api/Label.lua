@@ -76,7 +76,7 @@
 -- @function [parent=#Label] setBMFontFilePath 
 -- @param self
 -- @param #string str
--- @param #point_table point
+-- @param #array_table array
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -222,7 +222,7 @@
 -- @param #string str
 -- @param #cc.TextHAlignment texthalignment
 -- @param #int int
--- @param #point_table point
+-- @param #array_table array
 -- @return Label#Label ret (return value: cc.Label)
         
 --------------------------------
@@ -260,7 +260,7 @@
 -- @function [parent=#Label] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #kmMat4 kmmat4
+-- @param #cc.Matrix matrix
 -- @param #bool bool
         
 --------------------------------
@@ -294,13 +294,6 @@
 -- @function [parent=#Label] setBlendFunc 
 -- @param self
 -- @param #cc.BlendFunc blendfunc
-        
---------------------------------
--- @function [parent=#Label] visit 
--- @param self
--- @param #cc.Renderer renderer
--- @param #kmMat4 kmmat4
--- @param #bool bool
         
 --------------------------------
 -- @function [parent=#Label] getScaleX 

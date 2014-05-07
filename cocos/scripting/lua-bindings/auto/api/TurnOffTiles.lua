@@ -6,12 +6,12 @@
 --------------------------------
 -- @function [parent=#TurnOffTiles] turnOnTile 
 -- @param self
--- @param #point_table point
+-- @param #array_table array
         
 --------------------------------
 -- @function [parent=#TurnOffTiles] turnOffTile 
 -- @param self
--- @param #point_table point
+-- @param #array_table array
         
 --------------------------------
 -- @function [parent=#TurnOffTiles] shuffle 

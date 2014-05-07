@@ -1,8 +1,8 @@
 #ifndef _CCB_CCPARTICLESYSTEMQUADLOADER_H_
 #define _CCB_CCPARTICLESYSTEMQUADLOADER_H_
 
-#include "CCRef.h"
-#include "CCParticleSystemQuad.h"
+#include "base/CCRef.h"
+#include "2d/CCParticleSystemQuad.h"
 
 #include "CCNodeLoader.h"
 
@@ -39,7 +39,7 @@ protected:
      * @js NA
      * @lua NA
      */
-    virtual void onHandlePropTypePoint(cocos2d::Node * pNode, cocos2d::Node * pParent, const char * pPropertyName, cocos2d::Point pPoint, CCBReader * ccbReader);
+    virtual void onHandlePropTypePoint(cocos2d::Node * pNode, cocos2d::Node * pParent, const char * pPropertyName, cocos2d::Vector2 pPoint, CCBReader * ccbReader);
     /**
      * @js NA
      * @lua NA

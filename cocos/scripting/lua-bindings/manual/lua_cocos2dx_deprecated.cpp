@@ -1532,7 +1532,7 @@ static int tolua_cocos2d_kmGLLoadMatrix00(lua_State* tolua_S)
             else
 #endif
             {
-                mat4.mat[i] = tolua_tonumber(tolua_S, -1, 0);
+                mat4.m[i] = tolua_tonumber(tolua_S, -1, 0);
                 lua_pop(tolua_S, 1);
             }
         }

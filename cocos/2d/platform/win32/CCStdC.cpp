@@ -25,7 +25,7 @@ THE SOFTWARE.
 
 #include "CCStdC.h"
 
-#include "CCPlatformConfig.h"
+#include "base/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #ifndef __MINGW32__

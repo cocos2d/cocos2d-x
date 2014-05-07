@@ -24,14 +24,14 @@
 --------------------------------
 -- @function [parent=#TileMapAtlas] getTileAt 
 -- @param self
--- @param #point_table point
+-- @param #array_table array
 -- @return color3B_table#color3B_table ret (return value: color3B_table)
         
 --------------------------------
 -- @function [parent=#TileMapAtlas] setTile 
 -- @param self
 -- @param #color3B_table color3b
--- @param #point_table point
+-- @param #array_table array
         
 --------------------------------
 -- @function [parent=#TileMapAtlas] setTGAInfo 

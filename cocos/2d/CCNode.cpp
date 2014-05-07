@@ -26,33 +26,32 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCNode.h"
+#include "2d/CCNode.h"
 
 #include <algorithm>
 
 #include "deprecated/CCString.h"
-#include "ccCArray.h"
-#include "TransformUtils.h"
-#include "CCGrid.h"
-#include "CCDirector.h"
-#include "CCScheduler.h"
-#include "CCTouch.h"
-#include "CCActionManager.h"
-#include "CCScriptSupport.h"
-#include "CCGLProgram.h"
-#include "CCEventDispatcher.h"
-#include "CCEvent.h"
-#include "CCEventTouch.h"
-#include "CCLayer.h"
+#include "2d/ccCArray.h"
+#include "math/TransformUtils.h"
+#include "2d/CCGrid.h"
+#include "base/CCDirector.h"
+#include "base/CCScheduler.h"
+#include "base/CCTouch.h"
+#include "2d/CCActionManager.h"
+#include "2d/CCScriptSupport.h"
+#include "2d/CCGLProgram.h"
+#include "base/CCEventDispatcher.h"
+#include "base/CCEvent.h"
+#include "base/CCEventTouch.h"
+#include "2d/CCScene.h"
 
 #if CC_USE_PHYSICS
-#include "CCPhysicsBody.h"
+#include "physics/CCPhysicsBody.h"
 #endif
 
 // externals
-#include "kazmath/GL/matrix.h"
-#include "CCComponent.h"
-#include "CCComponentContainer.h"
+#include "2d/CCComponent.h"
+#include "2d/CCComponentContainer.h"
 
 
 
@@ -83,11 +82,11 @@ Node::Node(void)
 , _scaleY(1.0f)
 , _scaleZ(1.0f)
 , _positionZ(0.0f)
-, _position(Point::ZERO)
+, _position(Vector2::ZERO)
 , _skewX(0.0f)
 , _skewY(0.0f)
-, _anchorPointInPoints(Point::ZERO)
-, _anchorPoint(Point::ZERO)
+, _anchorPointInPoints(Vector2::ZERO)
+, _anchorPoint(Vector2::ZERO)
 , _contentSize(Size::ZERO)
 , _useAdditionalTransform(false)
 , _transformDirty(true)
@@ -137,10 +136,7 @@ Node::Node(void)
     ScriptEngineProtocol* engine = ScriptEngineManager::getInstance()->getScriptEngine();
     _scriptType = engine != nullptr ? engine->getScriptType() : kScriptTypeNone;
 #endif
-    
-    kmMat4Identity(&_transform);
-    kmMat4Identity(&_inverse);
-    kmMat4Identity(&_additionalTransform);
+    _transform = _inverse = _additionalTransform = Matrix::identity();
 }
 
 Node::~Node()
@@ -271,8 +267,8 @@ void Node::setRotation(float rotation)
 #if CC_USE_PHYSICS
     if (_physicsBody && !_physicsBody->_rotationResetTag)
     {
-        Layer* layer = _physicsBody->getWorld() != nullptr ? &_physicsBody->getWorld()->getLayer() : nullptr;
-        updatePhysicsBodyRotation(layer);
+        Scene* scene = _physicsBody->getWorld() != nullptr ? &_physicsBody->getWorld()->getScene() : nullptr;
+        updatePhysicsBodyRotation(scene);
     }
 #endif
 }
@@ -282,7 +278,7 @@ float Node::getRotationSkewX() const
     return _rotationZ_X;
 }
 
-void Node::setRotation3D(const Vertex3F& rotation)
+void Node::setRotation3D(const Vector3& rotation)
 {
     if (_rotationX == rotation.x &&
         _rotationY == rotation.y &&
@@ -300,18 +296,18 @@ void Node::setRotation3D(const Vertex3F& rotation)
 #if CC_USE_PHYSICS
     if (_physicsBody)
     {
-        Layer* layer = _physicsBody->getWorld() != nullptr ? &_physicsBody->getWorld()->getLayer() : nullptr;
-        updatePhysicsBodyRotation(layer);
+        Scene* scene = _physicsBody->getWorld() != nullptr ? &_physicsBody->getWorld()->getScene() : nullptr;
+        updatePhysicsBodyRotation(scene);
     }
 #endif
 }
 
-Vertex3F Node::getRotation3D() const
+Vector3 Node::getRotation3D() const
 {
     // rotation Z is decomposed in 2 to simulate Skew for Flash animations
     CCASSERT(_rotationZ_X == _rotationZ_Y, "_rotationZ_X != _rotationZ_Y");
 
-    return Vertex3F(_rotationX,_rotationY,_rotationZ_X);
+    return Vector3(_rotationX,_rotationY,_rotationZ_X);
 }
 
 void Node::setRotationSkewX(float rotationX)
@@ -415,13 +411,13 @@ void Node::setScaleY(float scaleY)
 
 
 /// position getter
-const Point& Node::getPosition() const
+const Vector2& Node::getPosition() const
 {
     return _position;
 }
 
 /// position setter
-void Node::setPosition(const Point& position)
+void Node::setPosition(const Vector2& position)
 {
     if (_position.equals(position))
         return;
@@ -432,8 +428,8 @@ void Node::setPosition(const Point& position)
 #if CC_USE_PHYSICS
     if (_physicsBody != nullptr && !_physicsBody->_positionResetTag)
     {
-        Layer* layer = _physicsBody->getWorld() != nullptr ? &_physicsBody->getWorld()->getLayer() : nullptr;
-        updatePhysicsBodyPosition(layer);
+        Scene* scene = _physicsBody->getWorld() != nullptr ? &_physicsBody->getWorld()->getScene() : nullptr;
+        updatePhysicsBodyPosition(scene);
     }
 #endif
 }
@@ -446,18 +442,18 @@ void Node::getPosition(float* x, float* y) const
 
 void Node::setPosition(float x, float y)
 {
-    setPosition(Point(x, y));
+    setPosition(Vector2(x, y));
 }
 
-void Node::setPosition3D(const Vertex3F& position)
+void Node::setPosition3D(const Vector3& position)
 {
     _positionZ = position.z;
-    setPosition(Point(position.x, position.y));
+    setPosition(Vector2(position.x, position.y));
 }
 
-Vertex3F Node::getPosition3D() const
+Vector3 Node::getPosition3D() const
 {
-    Vertex3F ret;
+    Vector3 ret;
     ret.x = _position.x;
     ret.y = _position.y;
     ret.z = _positionZ;
@@ -471,7 +467,7 @@ float Node::getPositionX() const
 
 void Node::setPositionX(float x)
 {
-    setPosition(Point(x, _position.y));
+    setPosition(Vector2(x, _position.y));
 }
 
 float Node::getPositionY() const
@@ -481,7 +477,7 @@ float Node::getPositionY() const
 
 void Node::setPositionY(float y)
 {
-    setPosition(Point(_position.x, y));
+    setPosition(Vector2(_position.x, y));
 }
 
 float Node::getPositionZ() const
@@ -524,21 +520,21 @@ void Node::setVisible(bool var)
     }
 }
 
-const Point& Node::getAnchorPointInPoints() const
+const Vector2& Node::getAnchorPointInPoints() const
 {
     return _anchorPointInPoints;
 }
 
 /// anchorPoint getter
-const Point& Node::getAnchorPoint() const
+const Vector2& Node::getAnchorPoint() const
 {
     return _anchorPoint;
 }
 
-void Node::setAnchorPoint(const Point& point)
+void Node::setAnchorPoint(const Vector2& point)
 {
 #if CC_USE_PHYSICS
-    if (_physicsBody != nullptr && !point.equals(Point::ANCHOR_MIDDLE))
+    if (_physicsBody != nullptr && !point.equals(Vector2::ANCHOR_MIDDLE))
     {
         CCLOG("Node warning: This node has a physics body, the anchor must be in the middle, you cann't change this to other value.");
         return;
@@ -548,7 +544,7 @@ void Node::setAnchorPoint(const Point& point)
     if( ! point.equals(_anchorPoint))
     {
         _anchorPoint = point;
-        _anchorPointInPoints = Point(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y );
+        _anchorPointInPoints = Vector2(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y );
         _transformUpdated = _transformDirty = _inverseDirty = true;
     }
 }
@@ -565,7 +561,7 @@ void Node::setContentSize(const Size & size)
     {
         _contentSize = size;
 
-        _anchorPointInPoints = Point(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y );
+        _anchorPointInPoints = Vector2(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y );
         _transformUpdated = _transformDirty = _inverseDirty = true;
     }
 }
@@ -738,10 +734,10 @@ void Node::addChild(Node *child, int zOrder, int tag)
     // Recursive add children with which have physics body.
     for (Node* node = this; node != nullptr; node = node->getParent())
     {
-        Layer* layer = dynamic_cast<Layer*>(node);
-        if (layer != nullptr && layer->getPhysicsWorld() != nullptr)
+        Scene* scene = dynamic_cast<Scene*>(node);
+        if (scene != nullptr && scene->getPhysicsWorld() != nullptr)
         {
-            layer->addChildToPhysicsWorld(child);
+            scene->addChildToPhysicsWorld(child);
             break;
         }
     }
@@ -925,19 +921,18 @@ void Node::draw()
     draw(renderer, _modelViewTransform, true);
 }
 
-void Node::draw(Renderer* renderer, const kmMat4 &transform, bool transformUpdated)
+void Node::draw(Renderer* renderer, const Matrix &transform, bool transformUpdated)
 {
 }
 
 void Node::visit()
 {
     auto renderer = Director::getInstance()->getRenderer();
-    kmMat4 parentTransform;
-    kmGLGetMatrix(KM_GL_MODELVIEW, &parentTransform);
+    Matrix parentTransform = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     visit(renderer, parentTransform, true);
 }
 
-void Node::visit(Renderer* renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
+void Node::visit(Renderer* renderer, const Matrix &parentTransform, bool parentTransformUpdated)
 {
     // quick return if not visible. children won't be drawn.
     if (!_visible)
@@ -952,10 +947,12 @@ void Node::visit(Renderer* renderer, const kmMat4 &parentTransform, bool parentT
 
 
     // IMPORTANT:
-    // To ease the migration to v3.0, we still support the kmGL stack,
+    // To ease the migration to v3.0, we still support the Matrix stack,
     // but it is deprecated and your code should not rely on it
-    kmGLPushMatrix();
-    kmGLLoadMatrix(&_modelViewTransform);
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
 
     int i = 0;
 
@@ -986,14 +983,13 @@ void Node::visit(Renderer* renderer, const kmMat4 &parentTransform, bool parentT
     // reset for next frame
     _orderOfArrival = 0;
  
-    kmGLPopMatrix();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
-kmMat4 Node::transform(const kmMat4& parentTransform)
+Matrix Node::transform(const Matrix& parentTransform)
 {
-    kmMat4 ret = this->getNodeToParentTransform();
-    kmMat4Multiply(&ret, &parentTransform, &ret);
-
+    Matrix ret = this->getNodeToParentTransform();
+    ret  = parentTransform * ret;
     return ret;
 }
 
@@ -1315,13 +1311,12 @@ void Node::update(float fDelta)
 AffineTransform Node::getNodeToParentAffineTransform() const
 {
     AffineTransform ret;
-    kmMat4 ret4 = getNodeToParentTransform();
-    GLToCGAffine(ret4.mat, &ret);
+    GLToCGAffine(getNodeToParentTransform().m, &ret);
 
     return ret;
 }
 
-const kmMat4& Node::getNodeToParentTransform() const
+const Matrix& Node::getNodeToParentTransform() const
 {
     if (_transformDirty)
     {
@@ -1356,7 +1351,7 @@ const kmMat4& Node::getNodeToParentTransform() const
         // optimization:
         // inline anchor point calculation if skew is not needed
         // Adjusted transform calculation for rotational skew
-        if (! needsSkewMatrix && !_anchorPointInPoints.equals(Point::ZERO))
+        if (! needsSkewMatrix && !_anchorPointInPoints.equals(Vector2::ZERO))
         {
             x += cy * -_anchorPointInPoints.x * _scaleX + -sx * -_anchorPointInPoints.y * _scaleY;
             y += sy * -_anchorPointInPoints.x * _scaleX +  cx * -_anchorPointInPoints.y * _scaleY;
@@ -1365,52 +1360,52 @@ const kmMat4& Node::getNodeToParentTransform() const
 
         // Build Transform Matrix
         // Adjusted transform calculation for rotational skew
-        kmScalar mat[] = {
+        float mat[] = {
                         cy * _scaleX,   sy * _scaleX,   0,          0,
                         -sx * _scaleY,  cx * _scaleY,   0,          0,
                         0,              0,              _scaleZ,    0,
                         x,              y,              z,          1 };
         
-        kmMat4Fill(&_transform, mat);
+        _transform.set(mat);
 
         // XXX
         // FIX ME: Expensive operation.
         // FIX ME: It should be done together with the rotationZ
         if(_rotationY) {
-            kmMat4 rotY;
-            kmMat4RotationY(&rotY,CC_DEGREES_TO_RADIANS(_rotationY));
-            kmMat4Multiply(&_transform, &_transform, &rotY);
+            Matrix rotY;
+            Matrix::createRotationY(CC_DEGREES_TO_RADIANS(_rotationY), &rotY);
+            _transform = _transform * rotY;
         }
         if(_rotationX) {
-            kmMat4 rotX;
-            kmMat4RotationX(&rotX,CC_DEGREES_TO_RADIANS(_rotationX));
-            kmMat4Multiply(&_transform, &_transform, &rotX);
+            Matrix rotX;
+            Matrix::createRotationX(CC_DEGREES_TO_RADIANS(_rotationX), &rotX);
+            _transform = _transform * rotX;
         }
 
         // XXX: Try to inline skew
         // If skew is needed, apply skew and then anchor point
         if (needsSkewMatrix)
         {
-            kmMat4 skewMatrix = { 1, (float)tanf(CC_DEGREES_TO_RADIANS(_skewY)), 0, 0,
-                                  (float)tanf(CC_DEGREES_TO_RADIANS(_skewX)), 1, 0, 0,
-                                  0,  0,  1, 0,
-                                  0,  0,  0, 1};
+            Matrix skewMatrix(1, (float)tanf(CC_DEGREES_TO_RADIANS(_skewY)), 0, 0,
+                              (float)tanf(CC_DEGREES_TO_RADIANS(_skewX)), 1, 0, 0,
+                              0,  0,  1, 0,
+                              0,  0,  0, 1);
 
-            kmMat4Multiply(&_transform, &_transform, &skewMatrix);
+            _transform = _transform * skewMatrix;
 
             // adjust anchor point
-            if (!_anchorPointInPoints.equals(Point::ZERO))
+            if (!_anchorPointInPoints.equals(Vector2::ZERO))
             {
-                // XXX: Argh, kmMat needs a "translate" method.
+                // XXX: Argh, Matrix needs a "translate" method.
                 // XXX: Although this is faster than multiplying a vec4 * mat4
-                _transform.mat[12] += _transform.mat[0] * -_anchorPointInPoints.x + _transform.mat[4] * -_anchorPointInPoints.y;
-                _transform.mat[13] += _transform.mat[1] * -_anchorPointInPoints.x + _transform.mat[5] * -_anchorPointInPoints.y;
+                _transform.m[12] += _transform.m[0] * -_anchorPointInPoints.x + _transform.m[4] * -_anchorPointInPoints.y;
+                _transform.m[13] += _transform.m[1] * -_anchorPointInPoints.x + _transform.m[5] * -_anchorPointInPoints.y;
             }
         }
 
         if (_useAdditionalTransform)
         {
-            kmMat4Multiply(&_transform, &_transform, &_additionalTransform);
+            _transform = _transform * _additionalTransform;
         }
 
         _transformDirty = false;
@@ -1419,7 +1414,7 @@ const kmMat4& Node::getNodeToParentTransform() const
     return _transform;
 }
 
-void Node::setNodeToParentTransform(const kmMat4& transform)
+void Node::setNodeToParentTransform(const Matrix& transform)
 {
     _transform = transform;
     _transformDirty = false;
@@ -1428,12 +1423,12 @@ void Node::setNodeToParentTransform(const kmMat4& transform)
 
 void Node::setAdditionalTransform(const AffineTransform& additionalTransform)
 {
-    kmMat4 tmp;
-    CGAffineToGL(additionalTransform, tmp.mat);
+    Matrix tmp;
+    CGAffineToGL(additionalTransform, tmp.m);
     setAdditionalTransform(&tmp);
 }
 
-void Node::setAdditionalTransform(kmMat4* additionalTransform)
+void Node::setAdditionalTransform(Matrix* additionalTransform)
 {
     if(additionalTransform == nullptr) {
         _useAdditionalTransform = false;
@@ -1448,16 +1443,16 @@ void Node::setAdditionalTransform(kmMat4* additionalTransform)
 AffineTransform Node::getParentToNodeAffineTransform() const
 {
     AffineTransform ret;
-    kmMat4 ret4 = getParentToNodeTransform();
+    Matrix ret4 = getParentToNodeTransform();
 
-    GLToCGAffine(ret4.mat,&ret);
+    GLToCGAffine(ret4.m,&ret);
     return ret;
 }
 
-const kmMat4& Node::getParentToNodeTransform() const
+const Matrix& Node::getParentToNodeTransform() const
 {
     if ( _inverseDirty ) {
-        kmMat4Inverse(&_inverse, &_transform);
+        _inverse = _transform.getInversed();
         _inverseDirty = false;
     }
 
@@ -1475,12 +1470,14 @@ AffineTransform Node::getNodeToWorldAffineTransform() const
     return t;
 }
 
-kmMat4 Node::getNodeToWorldTransform() const
+Matrix Node::getNodeToWorldTransform() const
 {
-    kmMat4 t = this->getNodeToParentTransform();
+    Matrix t = this->getNodeToParentTransform();
 
     for (Node *p = _parent; p != nullptr; p = p->getParent())
-        kmMat4Multiply(&t, &p->getNodeToParentTransform(), &t);
+    {
+        t = p->getNodeToParentTransform() * t;
+    }
 
     return t;
 }
@@ -1490,62 +1487,59 @@ AffineTransform Node::getWorldToNodeAffineTransform() const
     return AffineTransformInvert(this->getNodeToWorldAffineTransform());
 }
 
-kmMat4 Node::getWorldToNodeTransform() const
+Matrix Node::getWorldToNodeTransform() const
 {
-    kmMat4 tmp, tmp2;
-
-    tmp2 = this->getNodeToWorldTransform();
-    kmMat4Inverse(&tmp, &tmp2);
-    return tmp;
+    return getNodeToWorldTransform().getInversed();
 }
 
 
-Point Node::convertToNodeSpace(const Point& worldPoint) const
+Vector2 Node::convertToNodeSpace(const Vector2& worldPoint) const
 {
-    kmMat4 tmp = getWorldToNodeTransform();
-    kmVec3 vec3 = {worldPoint.x, worldPoint.y, 0};
-    kmVec3 ret;
-    kmVec3Transform(&ret, &vec3, &tmp);
-    return Point(ret.x, ret.y);
+    Matrix tmp = getWorldToNodeTransform();
+    Vector3 vec3(worldPoint.x, worldPoint.y, 0);
+    Vector3 ret;
+    tmp.transformPoint(vec3,&ret);
+    return Vector2(ret.x, ret.y);
 }
 
-Point Node::convertToWorldSpace(const Point& nodePoint) const
+Vector2 Node::convertToWorldSpace(const Vector2& nodePoint) const
 {
-    kmMat4 tmp = getNodeToWorldTransform();
-    kmVec3 vec3 = {nodePoint.x, nodePoint.y, 0};
-    kmVec3 ret;
-    kmVec3Transform(&ret, &vec3, &tmp);
-    return Point(ret.x, ret.y);
+    Matrix tmp = getNodeToWorldTransform();
+    Vector3 vec3(nodePoint.x, nodePoint.y, 0);
+    Vector3 ret;
+    tmp.transformPoint(vec3,&ret);
+    return Vector2(ret.x, ret.y);
 
 }
 
-Point Node::convertToNodeSpaceAR(const Point& worldPoint) const
+Vector2 Node::convertToNodeSpaceAR(const Vector2& worldPoint) const
 {
-    Point nodePoint = convertToNodeSpace(worldPoint);
+    Vector2 nodePoint = convertToNodeSpace(worldPoint);
     return nodePoint - _anchorPointInPoints;
 }
 
-Point Node::convertToWorldSpaceAR(const Point& nodePoint) const
+Vector2 Node::convertToWorldSpaceAR(const Vector2& nodePoint) const
 {
-    Point pt = nodePoint + _anchorPointInPoints;
+    Vector2 pt = nodePoint + _anchorPointInPoints;
     return convertToWorldSpace(pt);
 }
 
-Point Node::convertToWindowSpace(const Point& nodePoint) const
+Vector2 Node::convertToWindowSpace(const Vector2& nodePoint) const
 {
-    Point worldPoint = this->convertToWorldSpace(nodePoint);
+    Vector2 worldPoint = this->convertToWorldSpace(nodePoint);
     return Director::getInstance()->convertToUI(worldPoint);
 }
 
-// convenience methods which take a Touch instead of Point
-Point Node::convertTouchToNodeSpace(Touch *touch) const
+// convenience methods which take a Touch instead of Vector2
+Vector2 Node::convertTouchToNodeSpace(Touch *touch) const
 {
-    Point point = touch->getLocation();
+    Vector2 point = touch->getLocation();
     return this->convertToNodeSpace(point);
 }
-Point Node::convertTouchToNodeSpaceAR(Touch *touch) const
+
+Vector2 Node::convertTouchToNodeSpaceAR(Touch *touch) const
 {
-    Point point = touch->getLocation();
+    Vector2 point = touch->getLocation();
     return this->convertToNodeSpaceAR(point);
 }
 
@@ -1586,13 +1580,13 @@ void Node::removeAllComponents()
 
 #if CC_USE_PHYSICS
 
-void Node::updatePhysicsBodyPosition(Layer* layer)
+void Node::updatePhysicsBodyPosition(Scene* scene)
 {
     if (_physicsBody != nullptr)
     {
-        if (layer != nullptr && layer->getPhysicsWorld() != nullptr)
+        if (scene != nullptr && scene->getPhysicsWorld() != nullptr)
         {
-            Point pos = getParent() == layer ? getPosition() : layer->convertToNodeSpace(_parent->convertToWorldSpace(getPosition()));
+            Vector2 pos = getParent() == scene ? getPosition() : scene->convertToNodeSpace(_parent->convertToWorldSpace(getPosition()));
             _physicsBody->setPosition(pos);
         }
         else
@@ -1602,14 +1596,14 @@ void Node::updatePhysicsBodyPosition(Layer* layer)
     }
 }
 
-void Node::updatePhysicsBodyRotation(Layer* layer)
+void Node::updatePhysicsBodyRotation(Scene* scene)
 {
     if (_physicsBody != nullptr)
     {
-        if (layer != nullptr && layer->getPhysicsWorld() != nullptr)
+        if (scene != nullptr && scene->getPhysicsWorld() != nullptr)
         {
             float rotation = _rotationZ_X;
-            for (Node* parent = _parent; parent != layer; parent = parent->getParent())
+            for (Node* parent = _parent; parent != scene; parent = parent->getParent())
             {
                 rotation += parent->getRotation();
             }
@@ -1631,10 +1625,10 @@ void Node::setPhysicsBody(PhysicsBody* body)
         
         // physics rotation based on body position, but node rotation based on node anthor point
         // it cann't support both of them, so I clear the anthor point to default.
-        if (!getAnchorPoint().equals(Point::ANCHOR_MIDDLE))
+        if (!getAnchorPoint().equals(Vector2::ANCHOR_MIDDLE))
         {
-            CCLOG("Node warning: setPhysicsBody sets anchor point to Point::ANCHOR_MIDDLE.");
-            setAnchorPoint(Point::ANCHOR_MIDDLE);
+            CCLOG("Node warning: setPhysicsBody sets anchor point to Vector2::ANCHOR_MIDDLE.");
+            setAnchorPoint(Vector2::ANCHOR_MIDDLE);
         }
     }
     
@@ -1656,19 +1650,19 @@ void Node::setPhysicsBody(PhysicsBody* body)
     if (body != nullptr)
     {
         Node* node;
-        Layer* layer = nullptr;
+        Scene* scene = nullptr;
         for (node = this->getParent(); node != nullptr; node = node->getParent())
         {
-            Layer* tmpLayer = dynamic_cast<Layer*>(node);
-            if (tmpLayer != nullptr && tmpLayer->getPhysicsWorld() != nullptr)
+            Scene* tmpScene = dynamic_cast<Scene*>(node);
+            if (tmpScene != nullptr && tmpScene->getPhysicsWorld() != nullptr)
             {
-                layer = tmpLayer;
+                scene = tmpScene;
                 break;
             }
         }
         
-        updatePhysicsBodyPosition(layer);
-        updatePhysicsBodyRotation(layer);
+        updatePhysicsBodyPosition(scene);
+        updatePhysicsBodyRotation(scene);
     }
 }
 

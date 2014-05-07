@@ -37,12 +37,12 @@ THE SOFTWARE.
 #include <unordered_map>
 #include <functional>
 
-#include "CCRef.h"
-#include "CCTexture2D.h"
-#include "platform/CCImage.h"
+#include "base/CCRef.h"
+#include "2d/CCTexture2D.h"
+#include "2d/platform/CCImage.h"
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    #include "platform/CCImage.h"
+    #include "2d/platform/CCImage.h"
     #include <list>
 #endif
 

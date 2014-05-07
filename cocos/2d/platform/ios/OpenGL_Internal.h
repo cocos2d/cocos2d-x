@@ -61,7 +61,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 */
 
-#include "CCPlatformConfig.h"
+#include "base/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
 /* Generic error reporting */

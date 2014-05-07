@@ -27,10 +27,10 @@
 #ifndef _COCOS2D_CCLABEL_H_
 #define _COCOS2D_CCLABEL_H_
 
-#include "CCSpriteBatchNode.h"
-#include "ccTypes.h"
+#include "2d/CCSpriteBatchNode.h"
+#include "base/ccTypes.h"
 #include "renderer/CCCustomCommand.h"
-#include "CCFontAtlas.h"
+#include "2d/CCFontAtlas.h"
 
 NS_CC_BEGIN
 
@@ -104,7 +104,7 @@ public:
     /* Creates a label with an FNT file,an initial string,horizontal alignment,max line width and the offset of image*/
     static Label* createWithBMFont(const std::string& bmfontFilePath, const std::string& text,
         const TextHAlignment& alignment = TextHAlignment::LEFT, int maxLineWidth = 0, 
-        const Point& imageOffset = Point::ZERO);
+        const Vector2& imageOffset = Vector2::ZERO);
     
     static Label * createWithCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
     static Label * createWithCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
@@ -114,7 +114,7 @@ public:
     virtual bool setTTFConfig(const TTFConfig& ttfConfig);
     virtual const TTFConfig& getTTFConfig() const { return _fontConfig;}
 
-    virtual bool setBMFontFilePath(const std::string& bmfontFilePath, const Point& imageOffset = Point::ZERO);
+    virtual bool setBMFontFilePath(const std::string& bmfontFilePath, const Vector2& imageOffset = Vector2::ZERO);
     const std::string& getBMFontFilePath() const { return _bmFontPath;}
 
     virtual bool setCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
@@ -237,8 +237,8 @@ public:
 
     virtual Rect getBoundingBox() const override;
 
-    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+    virtual void visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated) override;
+    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
 
     CC_DEPRECATED_ATTRIBUTE static Label* create(const std::string& text, const std::string& font, float fontSize,
         const Size& dimensions = Size::ZERO, TextHAlignment hAlignment = TextHAlignment::LEFT,
@@ -248,13 +248,13 @@ public:
     CC_DEPRECATED_ATTRIBUTE const FontDefinition& getFontDefinition() const { return _fontDefinition; }
 
 protected:
-    void onDraw(const kmMat4& transform, bool transformUpdated);
+    void onDraw(const Matrix& transform, bool transformUpdated);
 
     struct LetterInfo
     {
         FontLetterDefinition def;
 
-        Point position;
+        Vector2 position;
         Size  contentSize;
         int   atlasIndex;
     };
@@ -279,7 +279,7 @@ protected:
 
     virtual void setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled = false, bool useA8Shader = false);
 
-    bool recordLetterInfo(const cocos2d::Point& point,const FontLetterDefinition& letterDef, int spriteIndex);
+    bool recordLetterInfo(const cocos2d::Vector2& point,const FontLetterDefinition& letterDef, int spriteIndex);
     bool recordPlaceholderInfo(int spriteIndex);
 
     void setFontScale(float fontScale);
@@ -365,7 +365,7 @@ protected:
     bool    _shadowEnabled;
     Size    _shadowOffset;
     int     _shadowBlurRadius;
-    kmMat4  _shadowTransform;
+    Matrix  _shadowTransform;
     Color3B _shadowColor;
     float   _shadowOpacity;
     Sprite*   _shadowNode;
@@ -377,6 +377,7 @@ protected:
 
     bool _clipEnabled;
     bool _blendFuncDirty;
+    bool _insideBounds;                     /// whether or not the sprite was inside bounds the previous frame
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Label);
