@@ -12,9 +12,11 @@ import traceback
 import platform
 import subprocess
 import codecs
+from shutil import copy
 
 #set Jenkins build description using submitDescription to mock browser behavior
-#TODO: need to set parent build description 
+#TODO: need to set parent build description
+
 def set_description(desc, url):
     req_data = urllib.urlencode({'description': desc})
     req = urllib2.Request(url + 'submitDescription', req_data)
@@ -26,6 +28,32 @@ def set_description(desc, url):
         urllib2.urlopen(req)
     except:
         traceback.print_exc()
+
+def check_current_3rd_libs(build_status):
+    #get current_libs config
+    config_file_path = "external/config.json"
+    if not os.path.isfile(config_file_path):
+        raise Exception("Could not find 'external/config.json'")
+
+    with open(config_file_path) as data_file:
+        data = json.load(data_file)
+
+    current_3rd_libs_version = data["current_libs_version"]
+    filename = current_3rd_libs_version + '.zip'
+    node_name = os.environ['NODE_NAME']
+    backup_path = '../../../cocos-2dx-external/node/' + node_name + '/'
+    
+    if(build_status == 'start'):
+      source_dir = backup_path + filename
+      dest_dir = filename
+    elif(build_status == 'finish'):
+      source_dir = filename
+      dest_dir = backup_path + filename
+    if not os.path.isfile(source_dir) and (build_status == 'start'):
+      os.system('python download-deps.py -r no')
+    else:
+      copy(source_dir, dest_dir)
+
 def main():
     #get payload from os env
     payload_str = os.environ['payload']
@@ -100,6 +128,9 @@ def main():
     ret = os.system(git_update_submodule)
     if(ret != 0):
         return(2)
+
+    #copy check_current_3rd_libs
+    check_current_3rd_libs('start')
 
     # Generate binding glue codes
     if(branch == 'v3'):
@@ -201,6 +232,9 @@ def main():
         ret = os.system('make -j10')
       else:
         ret = 0
+
+    #backup check_current_3rd_libs
+    check_current_3rd_libs('finish')
 
     #get build result
     print "build finished and return " + str(ret)
