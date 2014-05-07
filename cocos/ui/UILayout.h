@@ -294,10 +294,10 @@ public:
      *@param current  the current focused widget
      *@return the next focused widget in a layout
      */
-    virtual Widget* findNextFocusedWidget(FocusDirection dir, Widget* current) override;
+    virtual Widget* findNextFocusedWidget(FocusDirection direction, Widget* current) override;
     
     /**
-     * To specify a user-defined functor to decide which widget should get focus 
+     * To specify a user-defined functor to decide which child widget of the layout should get focused
      * @param FocusDirection the finding direction
      * @return return the index of widget in the layout
      */
@@ -349,7 +349,7 @@ protected:
      *@param dir next focused widget direction
      *@return The index of child widget in the container
      */
-    virtual int whichChildToGetFocus(FocusDirection dir);
+     int findNearestChildWidgetIndex(FocusDirection direction);
     
     /**
      * find a focus enabled child Widget in the layout by index
@@ -367,7 +367,7 @@ protected:
      *@param current  the current focused widget
      *@return the next focused widget
      */
-    Widget* getNextFocusedWidget(FocusDirection dir,Widget *current);
+    Widget* getNextFocusedWidget(FocusDirection direction,Widget *current);
     
     /**
      * this method is called internally by nextFocusedWidget. When the dir is Left/Up, then this method will be called
@@ -375,7 +375,7 @@ protected:
      *@param current  the current focused widget
      *@return the next focused widget
      */
-    Widget* getPreviousFocusedWidget(FocusDirection dir, Widget *current);
+    Widget* getPreviousFocusedWidget(FocusDirection direction, Widget *current);
     
     /**
      * find the nth elment in the _children array. Only the Widget descendant object will be returned
@@ -385,18 +385,18 @@ protected:
     /**
      * whether it is the last element according to all their parents
      */
-    bool  isLastWidgetInContainer(Widget* widget, FocusDirection dir);
+    bool  isLastWidgetInContainer(Widget* widget, FocusDirection direction);
     
     /**Lookup any parent widget with a layout type as the direction,
      * if the layout is loop focused, then return true, otherwise
      * It returns false
      */
-    bool  isWidgetAncestorSupportLoopFocus(Widget* widget, FocusDirection dir);
+    bool  isWidgetAncestorSupportLoopFocus(Widget* widget, FocusDirection direction);
     
     /**
      * pass the focus to the layout's next focus enabled child
      */
-    Widget* passFocusToChild(FocusDirection dir, Widget* current);
+    Widget* passFocusToChild(FocusDirection direction, Widget* current);
     
     /**
      * If there are no focus enabled child in the layout, it will return false, otherwise it returns true

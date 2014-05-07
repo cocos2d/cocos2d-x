@@ -977,9 +977,9 @@ bool Widget::isFocusEnabled()
     return _focusEnabled;
 }
 
-Widget* Widget::findNextFocusedWidget(cocos2d::ui::FocusDirection dir,  Widget* current)
+Widget* Widget::findNextFocusedWidget(cocos2d::ui::FocusDirection direction,  Widget* current)
 {
-    if (nullptr == onNextFocusedWidget || nullptr == onNextFocusedWidget(dir) ) {
+    if (nullptr == onNextFocusedWidget || nullptr == onNextFocusedWidget(direction) ) {
         if (this->isFocused() || !current->isFocusEnabled())
         {
             Node* parent = this->getParent();
@@ -989,13 +989,13 @@ Widget* Widget::findNextFocusedWidget(cocos2d::ui::FocusDirection dir,  Widget* 
                 //the outer layout's default behaviour is : loop focus
                 if (dynamic_cast<Layout*>(current))
                 {
-                    return current->findNextFocusedWidget(dir, current);
+                    return current->findNextFocusedWidget(direction, current);
                 }
                 return current;
             }
             else
             {
-                Widget *nextWidget = layout->findNextFocusedWidget(dir, current);
+                Widget *nextWidget = layout->findNextFocusedWidget(direction, current);
                 return nextWidget;
             }
         }
@@ -1006,7 +1006,7 @@ Widget* Widget::findNextFocusedWidget(cocos2d::ui::FocusDirection dir,  Widget* 
     }
     else
     {
-        Widget *getFocusWidget = onNextFocusedWidget(dir);
+        Widget *getFocusWidget = onNextFocusedWidget(direction);
         this->dispatchFocusEvent(this, getFocusWidget);
         return getFocusWidget;
     }

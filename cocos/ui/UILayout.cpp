@@ -609,7 +609,7 @@ _passFocusToChild(true),
 _loopFocus(false)
 {
     _widgetType = WidgetTypeContainer;
-    onPassFocusToChild = CC_CALLBACK_1(Layout::whichChildToGetFocus, this);
+    onPassFocusToChild = CC_CALLBACK_1(Layout::findNearestChildWidgetIndex, this);
 }
 
 Layout::~Layout()
@@ -1591,7 +1591,7 @@ Vector2 Layout::getWorldCenterPoint(Widget* widget)
 }
 
 
-int Layout::whichChildToGetFocus(FocusDirection dir)
+int Layout::findNearestChildWidgetIndex(FocusDirection direction)
 {
     Widget* previousWidget = this->getCurrentFocusedWidget();
     if (previousWidget == nullptr || previousWidget == this)
@@ -1603,7 +1603,7 @@ int Layout::whichChildToGetFocus(FocusDirection dir)
     
     float distance = FLT_MAX;
     int found = 0;
-    if (dir == FocusDirection::FocusDirection_Left || dir == FocusDirection::FocusDirection_Right)
+    if (direction == FocusDirection::FocusDirection_Left || direction == FocusDirection::FocusDirection_Right)
     {
         Vector2 widgetPosition =  this->getWorldCenterPoint(previousWidget);
         while (index <  count)
@@ -1627,7 +1627,7 @@ int Layout::whichChildToGetFocus(FocusDirection dir)
     index = 0;
     found = 0;
     distance = FLT_MAX;
-    if (dir == FocusDirection::FocusDirection_Down || dir == FocusDirection::FocusDirection_Up) {
+    if (direction == FocusDirection::FocusDirection_Down || direction == FocusDirection::FocusDirection_Up) {
         Vector2 widgetPostion = this->getWorldCenterPoint(previousWidget);
         while (index < count)
         {
@@ -1744,7 +1744,7 @@ Widget* Layout::getNextWidgetByIndex(ssize_t index)
     return widget;
 }
 
-Widget* Layout::getPreviousFocusedWidget(FocusDirection dir, Widget *current)
+Widget* Layout::getPreviousFocusedWidget(FocusDirection direction, Widget *current)
 {
     Widget *nextWidget = nullptr;
     ssize_t previousWidgetPos = _children.getIndex(current);
@@ -1760,7 +1760,7 @@ Widget* Layout::getPreviousFocusedWidget(FocusDirection dir, Widget *current)
             Layout* layout = dynamic_cast<Layout*>(nextWidget);
             if (layout)
             {
-                return layout->findNextFocusedWidget(dir, layout);
+                return layout->findNextFocusedWidget(direction, layout);
             }
            
             return nextWidget;
@@ -1768,7 +1768,7 @@ Widget* Layout::getPreviousFocusedWidget(FocusDirection dir, Widget *current)
         else
         {
             //handling the disabled widget, there is no actual focus lose or get, so we don't need any envet
-            return this->getPreviousFocusedWidget(dir, nextWidget);
+            return this->getPreviousFocusedWidget(direction, nextWidget);
         }
     }else
     {
@@ -1784,7 +1784,7 @@ Widget* Layout::getPreviousFocusedWidget(FocusDirection dir, Widget *current)
                     Layout* layout = dynamic_cast<Layout*>(nextWidget);
                     if (layout)
                     {
-                        return layout->findNextFocusedWidget(dir, layout);
+                        return layout->findNextFocusedWidget(direction, layout);
                     }
                     else
                     {
@@ -1793,7 +1793,7 @@ Widget* Layout::getPreviousFocusedWidget(FocusDirection dir, Widget *current)
                 }
                 else
                 {
-                    return this->getPreviousFocusedWidget(dir, nextWidget);
+                    return this->getPreviousFocusedWidget(direction, nextWidget);
                 }
             }
             else
@@ -1809,12 +1809,12 @@ Widget* Layout::getPreviousFocusedWidget(FocusDirection dir, Widget *current)
         }
         else
         {
-            if (isLastWidgetInContainer(current, dir))
+            if (isLastWidgetInContainer(current, direction))
             {
-                if (isWidgetAncestorSupportLoopFocus(this, dir))
+                if (isWidgetAncestorSupportLoopFocus(this, direction))
                 {
                     this->dispatchFocusEvent(current, this);
-                    return Widget::findNextFocusedWidget(dir, this);
+                    return Widget::findNextFocusedWidget(direction, this);
                 }
                 if (dynamic_cast<Layout*>(current)) {
                     return current;
@@ -1828,13 +1828,13 @@ Widget* Layout::getPreviousFocusedWidget(FocusDirection dir, Widget *current)
             {
                 //call parent method to get its parent's next focus enabled widget
                 this->dispatchFocusEvent(current,this);
-                return Widget::findNextFocusedWidget(dir, this);
+                return Widget::findNextFocusedWidget(direction, this);
             }
         }
     }
 }
 
-Widget* Layout::getNextFocusedWidget(FocusDirection dir, Widget *current)
+Widget* Layout::getNextFocusedWidget(FocusDirection direction, Widget *current)
 {
     Widget *nextWidget = nullptr;
     ssize_t previousWidgetPos = _children.getIndex(current);
@@ -1852,7 +1852,7 @@ Widget* Layout::getNextFocusedWidget(FocusDirection dir, Widget *current)
                 Layout* layout = dynamic_cast<Layout*>(nextWidget);
                 if (layout)
                 {
-                    return layout->findNextFocusedWidget(dir, layout);
+                    return layout->findNextFocusedWidget(direction, layout);
                 }
                 else
                 {
@@ -1861,7 +1861,7 @@ Widget* Layout::getNextFocusedWidget(FocusDirection dir, Widget *current)
             }
             else
             {
-                return this->getNextFocusedWidget(dir, nextWidget);
+                return this->getNextFocusedWidget(direction, nextWidget);
             }
         }
         else
@@ -1884,7 +1884,7 @@ Widget* Layout::getNextFocusedWidget(FocusDirection dir, Widget *current)
                     Layout* layout = dynamic_cast<Layout*>(nextWidget);
                     if (layout)
                     {
-                        return layout->findNextFocusedWidget(dir, layout);
+                        return layout->findNextFocusedWidget(direction, layout);
                     }else
                     {
                         return nextWidget;
@@ -1892,7 +1892,7 @@ Widget* Layout::getNextFocusedWidget(FocusDirection dir, Widget *current)
                 }
                 else
                 {
-                    return this->getNextFocusedWidget(dir, nextWidget);
+                    return this->getNextFocusedWidget(direction, nextWidget);
                 }
             }
             else
@@ -1907,12 +1907,12 @@ Widget* Layout::getNextFocusedWidget(FocusDirection dir, Widget *current)
             }
         }
         else{
-            if (isLastWidgetInContainer(current, dir))
+            if (isLastWidgetInContainer(current, direction))
             {
-                if (isWidgetAncestorSupportLoopFocus(this, dir))
+                if (isWidgetAncestorSupportLoopFocus(this, direction))
                 {
                     this->dispatchFocusEvent(current, this);
-                    return Widget::findNextFocusedWidget(dir, this);
+                    return Widget::findNextFocusedWidget(direction, this);
                 }
                 if (dynamic_cast<Layout*>(current)) {
                     return current;
@@ -1926,13 +1926,13 @@ Widget* Layout::getNextFocusedWidget(FocusDirection dir, Widget *current)
             {
                 //call parent method to get its parent's next focus enabled widget
                 this->dispatchFocusEvent(current,this);
-                return Widget::findNextFocusedWidget(dir, this);
+                return Widget::findNextFocusedWidget(direction, this);
             }
         }
     }
 }
 
-bool  Layout::isLastWidgetInContainer(Widget* widget, FocusDirection dir)
+bool  Layout::isLastWidgetInContainer(Widget* widget, FocusDirection direction)
 {
     Layout* parent = dynamic_cast<Layout*>(widget->getParent());
     if (parent == nullptr)
@@ -1944,43 +1944,43 @@ bool  Layout::isLastWidgetInContainer(Widget* widget, FocusDirection dir)
     ssize_t index = container.getIndex(widget);
     if (parent->getLayoutType() == LAYOUT_LINEAR_HORIZONTAL)
     {
-        if (dir == FocusDirection::FocusDirection_Left) {
+        if (direction == FocusDirection::FocusDirection_Left) {
             if (index == 0)
             {
-                return true * isLastWidgetInContainer(parent, dir);
+                return true * isLastWidgetInContainer(parent, direction);
             }
             else
             {
                 return false;
             }
         }
-        if (dir == FocusDirection::FocusDirection_Right) {
+        if (direction == FocusDirection::FocusDirection_Right) {
             if (index == container.size()-1)
             {
-                return true * isLastWidgetInContainer(parent, dir);
+                return true * isLastWidgetInContainer(parent, direction);
             }
             else
             {
                 return false;
             }
         }
-        if (dir == FocusDirection::FocusDirection_Down)
+        if (direction == FocusDirection::FocusDirection_Down)
         {
-            return isLastWidgetInContainer(parent, dir);
+            return isLastWidgetInContainer(parent, direction);
         }
         
-        if (dir == FocusDirection::FocusDirection_Up)
+        if (direction == FocusDirection::FocusDirection_Up)
         {
-            return isLastWidgetInContainer(parent, dir);
+            return isLastWidgetInContainer(parent, direction);
         }
     }
     else if(parent->getLayoutType() == LAYOUT_LINEAR_VERTICAL)
     {
-        if (dir == FocusDirection::FocusDirection_Up)
+        if (direction == FocusDirection::FocusDirection_Up)
         {
             if (index == 0)
             {
-                return true * isLastWidgetInContainer(parent, dir);
+                return true * isLastWidgetInContainer(parent, direction);
                 
             }
             else
@@ -1988,25 +1988,25 @@ bool  Layout::isLastWidgetInContainer(Widget* widget, FocusDirection dir)
                 return false;
             }
         }
-        if (dir == FocusDirection::FocusDirection_Down)
+        if (direction == FocusDirection::FocusDirection_Down)
         {
             if (index == container.size() - 1)
             {
-                return true * isLastWidgetInContainer(parent, dir);
+                return true * isLastWidgetInContainer(parent, direction);
             }
             else
             {
                 return false;
             }
         }
-        if (dir == FocusDirection::FocusDirection_Left)
+        if (direction == FocusDirection::FocusDirection_Left)
         {
-            return isLastWidgetInContainer(parent, dir);
+            return isLastWidgetInContainer(parent, direction);
         }
         
-        if (dir == FocusDirection::FocusDirection_Right)
+        if (direction == FocusDirection::FocusDirection_Right)
         {
-            return isLastWidgetInContainer(parent, dir);
+            return isLastWidgetInContainer(parent, direction);
         }
     }
     else
@@ -2018,7 +2018,7 @@ bool  Layout::isLastWidgetInContainer(Widget* widget, FocusDirection dir)
     return false;
 }
 
-bool  Layout::isWidgetAncestorSupportLoopFocus(Widget* widget, FocusDirection dir)
+bool  Layout::isWidgetAncestorSupportLoopFocus(Widget* widget, FocusDirection direction)
 {
     Layout* parent = dynamic_cast<Layout*>(widget->getParent());
     if (parent == nullptr)
@@ -2030,24 +2030,24 @@ bool  Layout::isWidgetAncestorSupportLoopFocus(Widget* widget, FocusDirection di
         auto layoutType = parent->getLayoutType();
         if (layoutType == LAYOUT_LINEAR_HORIZONTAL)
         {
-            if (dir == FocusDirection::FocusDirection_Left || dir == FocusDirection::FocusDirection_Right)
+            if (direction == FocusDirection::FocusDirection_Left || direction == FocusDirection::FocusDirection_Right)
             {
                 return true;
             }
             else
             {
-                return isWidgetAncestorSupportLoopFocus(parent, dir);
+                return isWidgetAncestorSupportLoopFocus(parent, direction);
             }
         }
         if (layoutType == LAYOUT_LINEAR_VERTICAL)
         {
-            if (dir == FocusDirection::FocusDirection_Down || dir == FocusDirection::FocusDirection_Up)
+            if (direction == FocusDirection::FocusDirection_Down || direction == FocusDirection::FocusDirection_Up)
             {
                 return true;
             }
             else
             {
-                return isWidgetAncestorSupportLoopFocus(parent, dir);
+                return isWidgetAncestorSupportLoopFocus(parent, direction);
             }
         }
         else
@@ -2058,21 +2058,20 @@ bool  Layout::isWidgetAncestorSupportLoopFocus(Widget* widget, FocusDirection di
     }
     else
     {
-        return isWidgetAncestorSupportLoopFocus(parent, dir);
+        return isWidgetAncestorSupportLoopFocus(parent, direction);
     }
 }
 
 
 
 
-Widget* Layout::findNextFocusedWidget(FocusDirection dir, Widget* current)
+Widget* Layout::findNextFocusedWidget(FocusDirection direction, Widget* current)
 {
-    
     if (this->isFocused())
     {
         if (_passFocusToChild)
         {
-            return this->passFocusToChild(dir, current);
+            return this->passFocusToChild(direction, current);
         }
         else
         {
@@ -2080,7 +2079,7 @@ Widget* Layout::findNextFocusedWidget(FocusDirection dir, Widget* current)
             if (nullptr == parent) {
                 return this;
             }
-            return parent->findNextFocusedWidget(dir, this);
+            return parent->findNextFocusedWidget(direction, this);
             
         }
     }
@@ -2088,31 +2087,31 @@ Widget* Layout::findNextFocusedWidget(FocusDirection dir, Widget* current)
     {
         if (_layoutType == LAYOUT_LINEAR_HORIZONTAL)
         {
-            switch (dir)
+            switch (direction)
             {
                 case FocusDirection::FocusDirection_Left:
                 {
-                    return this->getPreviousFocusedWidget(dir, current);
+                    return this->getPreviousFocusedWidget(direction, current);
                 }break;
                 case FocusDirection::FocusDirection_Right:
                 {
-                    return this->getNextFocusedWidget(dir, current);
+                    return this->getNextFocusedWidget(direction, current);
                 }break;
                 case FocusDirection::FocusDirection_Down:
                 case FocusDirection::FocusDirection_Up:
                 {
-                    if (isLastWidgetInContainer(this, dir))
+                    if (isLastWidgetInContainer(this, direction))
                     {
-                        if (isWidgetAncestorSupportLoopFocus(current, dir))
+                        if (isWidgetAncestorSupportLoopFocus(current, direction))
                         {
                             this->dispatchFocusEvent(current, this);
-                            return Widget::findNextFocusedWidget(dir, this);
+                            return Widget::findNextFocusedWidget(direction, this);
                         }
                         return current;
                     }
                     else{
                         this->dispatchFocusEvent(current, this);
-                        return Widget::findNextFocusedWidget(dir, this);
+                        return Widget::findNextFocusedWidget(direction, this);
                     }
                 }break;
                 default:
@@ -2125,34 +2124,34 @@ Widget* Layout::findNextFocusedWidget(FocusDirection dir, Widget* current)
         }
         else if (_layoutType == LAYOUT_LINEAR_VERTICAL)
         {
-            switch (dir)
+            switch (direction)
             {
                 case FocusDirection::FocusDirection_Left:
                 case FocusDirection::FocusDirection_Right:
                 {
-                    if (isLastWidgetInContainer(this, dir))
+                    if (isLastWidgetInContainer(this, direction))
                     {
-                        if (isWidgetAncestorSupportLoopFocus(current, dir))
+                        if (isWidgetAncestorSupportLoopFocus(current, direction))
                         {
                             this->dispatchFocusEvent(current, this);
-                            return Widget::findNextFocusedWidget(dir, this);
+                            return Widget::findNextFocusedWidget(direction, this);
                         }
                         return current;
                     }
                     else
                     {
                         this->dispatchFocusEvent(current, this);
-                        return Widget::findNextFocusedWidget(dir, this);
+                        return Widget::findNextFocusedWidget(direction, this);
                     }
                 } break;
                 case FocusDirection::FocusDirection_Down:
                 {
-                    return getNextFocusedWidget(dir, current);
+                    return getNextFocusedWidget(direction, current);
                 }
                     break;
                 case FocusDirection::FocusDirection_Up:
                 {
-                    return getPreviousFocusedWidget(dir, current);
+                    return getPreviousFocusedWidget(direction, current);
                 }
                     break;
                 default:
