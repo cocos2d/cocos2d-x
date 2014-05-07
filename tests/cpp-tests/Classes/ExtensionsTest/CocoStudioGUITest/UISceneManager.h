@@ -104,6 +104,7 @@ enum
     KUIFocusTest_HBox,
     KUIFocusTest_VBox,
     KUIFocusTest_NestedLayout1,
+    KUIFocusTest_NestedLayout2,
     kUITestMax
 };
 

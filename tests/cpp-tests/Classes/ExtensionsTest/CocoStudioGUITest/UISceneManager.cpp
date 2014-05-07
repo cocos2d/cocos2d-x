@@ -112,7 +112,8 @@ static const char* s_testArray[] =
     "UIRichTextTest",
     "UIFocusTest-HBox",
     "UIFocusTest-VBox",
-    "UIFocusTest-NestedLayout1"
+    "UIFocusTest-NestedLayout1",
+    "UIFocusTest-NestedLayout2"
 };
 
 static UISceneManager *sharedInstance = NULL;
@@ -369,6 +370,8 @@ Scene *UISceneManager::currentUIScene()
             return UIFocusTestVertical::sceneWithTitle(s_testArray[_currentUISceneId]);
         case KUIFocusTest_NestedLayout1:
             return UIFocusTestNestedLayout1::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case KUIFocusTest_NestedLayout2:
+            return UIFocusTestNestedLayout2::sceneWithTitle(s_testArray[_currentUISceneId]);
         
     }
     return NULL;
