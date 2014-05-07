@@ -26,6 +26,8 @@
 #include <string>
 #include "AppDelegate.h"
 
+void createSimulator(const char* viewName, float width, float height,float frameZoomFactor = 1.0f);
+
 @interface AppController : NSObject <NSApplicationDelegate, NSWindowDelegate>
 {
     NSWindow *window;

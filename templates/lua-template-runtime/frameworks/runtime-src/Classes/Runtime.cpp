@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "json/filestream.h"
 #include "json/stringbuffer.h"
 #include "json/writer.h"
+#include "LuaBasicConversions.h"
 
 #ifdef _WIN32
 #include <direct.h>
@@ -49,7 +50,7 @@ static rapidjson::Document g_filecfgjson;
 extern string getIPAddress();
 const char* getRuntimeVersion()
 {
-    return "0.0.1";
+    return "1.1";
 }
 void startScript(string strDebugArg)
 {
@@ -92,15 +93,15 @@ class VisibleRect
 public:
     static Rect getVisibleRect();
     
-    static Vector2 left();
-    static Vector2 right();
-    static Vector2 top();
-    static Vector2 bottom();
-    static Vector2 center();
-    static Vector2 leftTop();
-    static Vector2 rightTop();
-    static Vector2 leftBottom();
-    static Vector2 rightBottom();
+    static Point left();
+    static Point right();
+    static Point top();
+    static Point bottom();
+    static Point center();
+    static Point leftTop();
+    static Point rightTop();
+    static Point leftBottom();
+    static Point rightBottom();
 private:
     static void lazyInit();
     static Rect s_visibleRect;
@@ -121,58 +122,58 @@ Rect VisibleRect::getVisibleRect()
     return s_visibleRect;
 }
 
-Vector2 VisibleRect::left()
+Point VisibleRect::left()
 {
     lazyInit();
-    return Vector2(s_visibleRect.origin.x, s_visibleRect.origin.y+s_visibleRect.size.height/2);
+    return Point(s_visibleRect.origin.x, s_visibleRect.origin.y+s_visibleRect.size.height/2);
 }
 
-Vector2 VisibleRect::right()
+Point VisibleRect::right()
 {
     lazyInit();
-    return Vector2(s_visibleRect.origin.x+s_visibleRect.size.width, s_visibleRect.origin.y+s_visibleRect.size.height/2);
+    return Point(s_visibleRect.origin.x+s_visibleRect.size.width, s_visibleRect.origin.y+s_visibleRect.size.height/2);
 }
 
-Vector2 VisibleRect::top()
+Point VisibleRect::top()
 {
     lazyInit();
-    return Vector2(s_visibleRect.origin.x+s_visibleRect.size.width/2, s_visibleRect.origin.y+s_visibleRect.size.height);
+    return Point(s_visibleRect.origin.x+s_visibleRect.size.width/2, s_visibleRect.origin.y+s_visibleRect.size.height);
 }
 
-Vector2 VisibleRect::bottom()
+Point VisibleRect::bottom()
 {
     lazyInit();
-    return Vector2(s_visibleRect.origin.x+s_visibleRect.size.width/2, s_visibleRect.origin.y);
+    return Point(s_visibleRect.origin.x+s_visibleRect.size.width/2, s_visibleRect.origin.y);
 }
 
-Vector2 VisibleRect::center()
+Point VisibleRect::center()
 {
     lazyInit();
-    return Vector2(s_visibleRect.origin.x+s_visibleRect.size.width/2, s_visibleRect.origin.y+s_visibleRect.size.height/2);
+    return Point(s_visibleRect.origin.x+s_visibleRect.size.width/2, s_visibleRect.origin.y+s_visibleRect.size.height/2);
 }
 
-Vector2 VisibleRect::leftTop()
+Point VisibleRect::leftTop()
 {
     lazyInit();
-    return Vector2(s_visibleRect.origin.x, s_visibleRect.origin.y+s_visibleRect.size.height);
+    return Point(s_visibleRect.origin.x, s_visibleRect.origin.y+s_visibleRect.size.height);
 }
 
-Vector2 VisibleRect::rightTop()
+Point VisibleRect::rightTop()
 {
     lazyInit();
-    return Vector2(s_visibleRect.origin.x+s_visibleRect.size.width, s_visibleRect.origin.y+s_visibleRect.size.height);
+    return Point(s_visibleRect.origin.x+s_visibleRect.size.width, s_visibleRect.origin.y+s_visibleRect.size.height);
 }
 
-Vector2 VisibleRect::leftBottom()
+Point VisibleRect::leftBottom()
 {
     lazyInit();
     return s_visibleRect.origin;
 }
 
-Vector2 VisibleRect::rightBottom()
+Point VisibleRect::rightBottom()
 {
     lazyInit();
-    return Vector2(s_visibleRect.origin.x+s_visibleRect.size.width, s_visibleRect.origin.y);
+    return Point(s_visibleRect.origin.x+s_visibleRect.size.width, s_visibleRect.origin.y);
 }
 
 class ConnectWaitLayer: public Layer
@@ -186,7 +187,7 @@ public:
         sprintf(szIPAddress, "LocalIP: %s",strip.c_str());
         auto label = LabelTTF::create(szIPAddress, "Arial", 24);
         addChild(label, 9999);
-        label->setPosition( Vector2(VisibleRect::center().x, VisibleRect::top().y - 30) );
+        label->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 30) );
         
         string strShowMsg ="";
         if (CC_PLATFORM_WIN32 == CC_TARGET_PLATFORM || CC_PLATFORM_MAC == CC_TARGET_PLATFORM)
@@ -198,15 +199,15 @@ public:
         }		
         auto labelwait = LabelTTF::create(strShowMsg.c_str(), "Arial", 22);
         addChild(labelwait, 10000);
-        labelwait->setPosition( Vector2(VisibleRect::center().x, VisibleRect::center().y) );
+        labelwait->setPosition( Point(VisibleRect::center().x, VisibleRect::center().y) );
         
         
-        auto labelPlay = LabelTTF::create("play", "Arial", 20);
+        auto labelPlay = LabelTTF::create("play", "Arial", 36);
         auto menuItem = MenuItemLabel::create(labelPlay, CC_CALLBACK_1(ConnectWaitLayer::playerCallback, this));
         auto menu = Menu::create(menuItem, NULL);
         
-        menu->setPosition( Vector2::ZERO );
-        menuItem->setPosition( Vector2( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
+        menu->setPosition( Point::ZERO );
+        menuItem->setPosition( Point( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
         addChild(menu, 1);
     }
     
@@ -748,6 +749,98 @@ private:
     FileServer* _fileserver;
 };
 
+int lua_cocos2dx_runtime_addSearchPath(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::FileUtils* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.FileUtils",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::FileUtils*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_addSearchPath'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        std::string arg0;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0);
+        if(!ok)
+            return 0;
+
+        if (!FileUtils::getInstance()->isAbsolutePath(arg0))
+            arg0 = g_resourcePath+arg0;
+
+        cobj->addSearchPath(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "addSearchPath",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_FileUtils_addSearchPath'.",&tolua_err);
+#endif
+
+    return 0;
+}
+
+static void register_runtime_override_function(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "cc.FileUtils");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        tolua_function(tolua_S,"addSearchPath",lua_cocos2dx_runtime_addSearchPath);
+    }
+    lua_pop(tolua_S, 1);
+}
+
+bool initRuntime()
+{
+    vector<string> searchPathArray;
+    searchPathArray=FileUtils::getInstance()->getSearchPaths();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    if (g_resourcePath.empty())
+    {
+        extern std::string getCurAppPath();
+        string resourcePath = getCurAppPath();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+        resourcePath.append("/../../");
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+        resourcePath.append("/../../../");
+#endif
+        resourcePath =replaceAll(resourcePath,"\\","/");
+        g_resourcePath = resourcePath;
+    }
+    
+#else
+    g_resourcePath = FileUtils::getInstance()->getWritablePath();
+    g_resourcePath += "debugruntime/";
+#endif
+    
+    g_resourcePath=replaceAll(g_resourcePath,"\\","/");
+    searchPathArray.insert(searchPathArray.begin(),g_resourcePath);
+    FileUtils::getInstance()->setSearchPaths(searchPathArray);
+
+    return true;
+}
+
 bool startRuntime()
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
@@ -764,33 +857,13 @@ bool startRuntime()
 #endif
 #endif
 
-    vector<string> searchPathArray;
-    searchPathArray=FileUtils::getInstance()->getSearchPaths();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    if (g_resourcePath.empty())
-    {
-        extern std::string getCurAppPath();
-        string resourcePath = getCurAppPath();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-        resourcePath.append("/../../");
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-        resourcePath.append("/../../../");
-#endif
-        resourcePath =replaceAll(resourcePath,"\\","/");
-        g_resourcePath = resourcePath;
-    }
-
-#else
-    g_resourcePath = FileUtils::getInstance()->getWritablePath();
-    
-#endif
-   
-    g_resourcePath=replaceAll(g_resourcePath,"\\","/");
-    searchPathArray.insert(searchPathArray.begin(),g_resourcePath);
-    FileUtils::getInstance()->setSearchPaths(searchPathArray);
     static ConsoleCustomCommand s_customCommand;
     auto engine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
+
+    LuaStack* stack = engine->getLuaStack();
+    register_runtime_override_function(stack->getLuaState());
+
     luaopen_debugger(engine->getLuaStack()->getLuaState());
     
     readResFileFinfo();
@@ -803,40 +876,3 @@ bool startRuntime()
     return true;
 }
 
-
-// SimulatorConfig
-SimulatorConfig *SimulatorConfig::s_sharedInstance = NULL;
-SimulatorConfig *SimulatorConfig::getInstance(void)
-{
-    if (!s_sharedInstance)
-    {
-        s_sharedInstance = new SimulatorConfig();
-    }
-    return s_sharedInstance;
-}
-
-SimulatorConfig::SimulatorConfig(void)
-{
-    m_screenSizeArray.push_back(SimulatorScreenSize("iPhone 3Gs (480x320)", 480, 320));
-    m_screenSizeArray.push_back(SimulatorScreenSize("iPhone 4 (960x640)", 960, 640));
-    m_screenSizeArray.push_back(SimulatorScreenSize("iPhone 5 (1136x640)", 1136, 640));
-    m_screenSizeArray.push_back(SimulatorScreenSize("iPad (1024x768)", 1024, 768));
-    m_screenSizeArray.push_back(SimulatorScreenSize("iPad Retina (2048x1536)", 2048, 1536));
-    m_screenSizeArray.push_back(SimulatorScreenSize("Android (800x480)", 800, 480));
-    m_screenSizeArray.push_back(SimulatorScreenSize("Android (854x480)", 854, 480));
-    m_screenSizeArray.push_back(SimulatorScreenSize("Android (960x540)", 960, 540));
-    m_screenSizeArray.push_back(SimulatorScreenSize("Android (1024x600)", 1024, 600));
-    m_screenSizeArray.push_back(SimulatorScreenSize("Android (1280x720)", 1280, 720));
-    m_screenSizeArray.push_back(SimulatorScreenSize("Android (1280x800)", 1280, 800));
-    m_screenSizeArray.push_back(SimulatorScreenSize("Android (1920x1080)", 1920, 1080));
-}
-
-int SimulatorConfig::getScreenSizeCount(void)
-{
-    return (int)m_screenSizeArray.size();
-}
-
-const SimulatorScreenSize SimulatorConfig::getScreenSize(int index)
-{
-    return m_screenSizeArray.at(index);
-}
