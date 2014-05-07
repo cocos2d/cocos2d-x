@@ -26,19 +26,19 @@
 --------------------------------
 -- @function [parent=#Twirl] setPosition 
 -- @param self
--- @param #cc.math::Vector2 array
+-- @param #array_table array
         
 --------------------------------
 -- @function [parent=#Twirl] getPosition 
 -- @param self
--- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#Twirl] create 
 -- @param self
 -- @param #float float
 -- @param #size_table size
--- @param #cc.math::Vector2 array
+-- @param #array_table array
 -- @param #unsigned int int
 -- @param #float float
 -- @return Twirl#Twirl ret (return value: cc.Twirl)

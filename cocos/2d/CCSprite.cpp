@@ -61,8 +61,8 @@ NS_CC_BEGIN
 
 Sprite* Sprite::createWithTexture(Texture2D *texture)
 {
-    Sprite *sprite = new Sprite();
-    if (sprite->initWithTexture(texture))
+    Sprite *sprite = new (std::nothrow) Sprite();
+    if (sprite && sprite->initWithTexture(texture))
     {
         sprite->autorelease();
         return sprite;
@@ -73,8 +73,8 @@ Sprite* Sprite::createWithTexture(Texture2D *texture)
 
 Sprite* Sprite::createWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
 {
-    Sprite *sprite = new Sprite();
-    if (sprite->initWithTexture(texture, rect, rotated))
+    Sprite *sprite = new (std::nothrow) Sprite();
+    if (sprite && sprite->initWithTexture(texture, rect, rotated))
     {
         sprite->autorelease();
         return sprite;
@@ -85,8 +85,8 @@ Sprite* Sprite::createWithTexture(Texture2D *texture, const Rect& rect, bool rot
 
 Sprite* Sprite::create(const std::string& filename)
 {
-    Sprite *sprite = new Sprite();
-    if (sprite->initWithFile(filename))
+    Sprite *sprite = new (std::nothrow) Sprite();
+    if (sprite && sprite->initWithFile(filename))
     {
         sprite->autorelease();
         return sprite;
@@ -97,8 +97,8 @@ Sprite* Sprite::create(const std::string& filename)
 
 Sprite* Sprite::create(const std::string& filename, const Rect& rect)
 {
-    Sprite *sprite = new Sprite();
-    if (sprite->initWithFile(filename, rect))
+    Sprite *sprite = new (std::nothrow) Sprite();
+    if (sprite && sprite->initWithFile(filename, rect))
     {
         sprite->autorelease();
         return sprite;
@@ -109,8 +109,8 @@ Sprite* Sprite::create(const std::string& filename, const Rect& rect)
 
 Sprite* Sprite::createWithSpriteFrame(SpriteFrame *spriteFrame)
 {
-    Sprite *sprite = new Sprite();
-    if (spriteFrame && sprite->initWithSpriteFrame(spriteFrame))
+    Sprite *sprite = new (std::nothrow) Sprite();
+    if (sprite && spriteFrame && sprite->initWithSpriteFrame(spriteFrame))
     {
         sprite->autorelease();
         return sprite;
@@ -134,7 +134,7 @@ Sprite* Sprite::createWithSpriteFrameName(const std::string& spriteFrameName)
 
 Sprite* Sprite::create()
 {
-    Sprite *sprite = new Sprite();
+    Sprite *sprite = new (std::nothrow) Sprite();
     if (sprite && sprite->init())
     {
         sprite->autorelease();

@@ -817,7 +817,7 @@ bool luaval_to_fontdefinition(lua_State* L, int lo, FontDefinition* outValue )
     return ok;
 }
 
-bool luaval_to_matrix(lua_State* L, int lo, cocos2d::math::Matrix* outValue )
+bool luaval_to_matrix(lua_State* L, int lo, cocos2d::Matrix* outValue )
 {
     if (nullptr == L || nullptr == outValue)
         return false;
@@ -2320,7 +2320,7 @@ void ccvaluevector_to_luaval(lua_State* L, const cocos2d::ValueVector& inValue)
     }
 }
 
-void matrix_to_luaval(lua_State* L, const cocos2d::math::Matrix& mat)
+void matrix_to_luaval(lua_State* L, const cocos2d::Matrix& mat)
 {
     if (nullptr  == L)
         return;

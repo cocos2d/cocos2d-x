@@ -45,13 +45,13 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- overload function: setUniformsForBuiltins(cc.math::Matrix)
+-- overload function: setUniformsForBuiltins(cc.Matrix)
 --          
 -- overload function: setUniformsForBuiltins()
 --          
 -- @function [parent=#GLProgram] setUniformsForBuiltins
 -- @param self
--- @param #cc.math::Matrix matrix
+-- @param #cc.Matrix matrix
 
 --------------------------------
 -- @function [parent=#GLProgram] setUniformLocationWith3i 
