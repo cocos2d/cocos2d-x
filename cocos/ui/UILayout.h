@@ -273,9 +273,9 @@ public:
     void setLoopFocus(bool loop);
     
     /**
-     *@return If the layout support focus loop, then it will return true, otherwise it returns false. The default value is false.
+     *@return If focus loop is enabled, then it will return true, otherwise it returns false. The default value is false.
      */
-    bool getLoopFocus();
+    bool isLoopFocus();
     
     /**
      *@param pass To specify whether the layout pass its focus to its child
@@ -285,7 +285,7 @@ public:
     /**
      * @return To query whether the layout will pass the focus to its children or not. The default value is true
      */
-    bool getPassFocusToChild();
+    bool isPassFocusToChild();
     
     /**
      *  When a widget is in a layout, you could call this method to get the next focused widget within a specified direction.
@@ -294,7 +294,7 @@ public:
      *@param current  the current focused widget
      *@return the next focused widget in a layout
      */
-    virtual Widget* nextFocusedWidget(FocusDirection dir, Widget* current) override;
+    virtual Widget* findNextFocusedWidget(FocusDirection dir, Widget* current) override;
     
     /**
      * To specify a user-defined functor to decide which widget should get focus 

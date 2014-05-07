@@ -977,27 +977,35 @@ bool Widget::isFocusEnabled()
     return _focusEnabled;
 }
 
-Widget* Widget::nextFocusedWidget(cocos2d::ui::FocusDirection dir,  Widget* current)
+Widget* Widget::findNextFocusedWidget(cocos2d::ui::FocusDirection dir,  Widget* current)
 {
     if (nullptr == onNextFocusedWidget || nullptr == onNextFocusedWidget(dir) ) {
-        if (this->isFocused() || !current->isFocusEnabled()) {
+        if (this->isFocused() || !current->isFocusEnabled())
+        {
             Node* parent = this->getParent();
             Layout* layout = dynamic_cast<Layout*>(parent);
-            if (nullptr == layout) {
+            if (nullptr == layout)
+            {
                 //the outer layout's default behaviour is : loop focus
-                if (dynamic_cast<Layout*>(current)) {
-                    return current->nextFocusedWidget(dir, current);
+                if (dynamic_cast<Layout*>(current))
+                {
+                    return current->findNextFocusedWidget(dir, current);
                 }
                 return current;
-            }else{
-                Widget *nextWidget = layout->nextFocusedWidget(dir, current);
+            }
+            else
+            {
+                Widget *nextWidget = layout->findNextFocusedWidget(dir, current);
                 return nextWidget;
             }
-        }else{
+        }
+        else
+        {
             return current;
         }
     }
-    else{
+    else
+    {
         Widget *getFocusWidget = onNextFocusedWidget(dir);
         this->dispatchFocusEvent(this, getFocusWidget);
         return getFocusWidget;
@@ -1007,18 +1015,21 @@ Widget* Widget::nextFocusedWidget(cocos2d::ui::FocusDirection dir,  Widget* curr
 void Widget::dispatchFocusEvent(cocos2d::ui::Widget *widgetLoseFocus, cocos2d::ui::Widget *widgetGetFocus)
 {
     //if the widgetLoseFocus doesn't get focus, it will use the previous focused widget instead
-    if (widgetLoseFocus && !widgetLoseFocus->isFocused()) {
+    if (widgetLoseFocus && !widgetLoseFocus->isFocused())
+    {
         widgetLoseFocus = _focusedWidget;
     }
     
     if (widgetGetFocus != widgetLoseFocus)
     {
         
-        if (widgetGetFocus) {
+        if (widgetGetFocus)
+        {
             widgetGetFocus->onFocusChanged(widgetLoseFocus, widgetGetFocus);
         }
         
-        if (widgetLoseFocus) {
+        if (widgetLoseFocus)
+        {
             widgetLoseFocus->onFocusChanged(widgetLoseFocus, widgetGetFocus);
         }
         
@@ -1031,7 +1042,8 @@ void Widget::dispatchFocusEvent(cocos2d::ui::Widget *widgetLoseFocus, cocos2d::u
 
 void Widget::requestFocus()
 {
-    if (this == _focusedWidget) {
+    if (this == _focusedWidget)
+    {
         return;
     }
     
@@ -1041,11 +1053,13 @@ void Widget::requestFocus()
 void Widget::onFocusChange(Widget* widgetLostFocus, Widget* widgetGetFocus)
 {
     //only change focus when there is indeed a get&lose happens
-    if (widgetLostFocus) {
+    if (widgetLostFocus)
+    {
         widgetLostFocus->setFocused(false);
     }
     
-    if (widgetGetFocus) {
+    if (widgetGetFocus)
+    {
         widgetGetFocus->setFocused(true);
     }
 }

@@ -567,7 +567,7 @@ public:
      *@param current  the current focused widget
      *@return the next focused widget in a layout
      */
-    virtual Widget* nextFocusedWidget(FocusDirection dir, Widget* current);
+    virtual Widget* findNextFocusedWidget(FocusDirection dir, Widget* current);
     
     /**
      * when a widget calls this method, it will get focus immediately.

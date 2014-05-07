@@ -80,7 +80,7 @@ void UIFocusTestBase::onLeftKeyPressed()
         if (!_firstFocusedWidget->isFocused()) {
             _firstFocusedWidget = _firstFocusedWidget->getCurrentFocusedWidget();
         }
-        _firstFocusedWidget = _firstFocusedWidget->nextFocusedWidget(FocusDirection::FocusDirection_Left, _firstFocusedWidget);
+        _firstFocusedWidget = _firstFocusedWidget->findNextFocusedWidget(FocusDirection::FocusDirection_Left, _firstFocusedWidget);
     }
 }
 
@@ -90,7 +90,7 @@ void UIFocusTestBase::onRightKeyPressed()
         if (!_firstFocusedWidget->isFocused()) {
             _firstFocusedWidget = _firstFocusedWidget->getCurrentFocusedWidget();
         }
-        _firstFocusedWidget = _firstFocusedWidget->nextFocusedWidget(FocusDirection::FocusDirection_Right, _firstFocusedWidget);
+        _firstFocusedWidget = _firstFocusedWidget->findNextFocusedWidget(FocusDirection::FocusDirection_Right, _firstFocusedWidget);
     }
 }
 
@@ -100,7 +100,7 @@ void UIFocusTestBase::onUpKeyPressed()
         if (!_firstFocusedWidget->isFocused()) {
             _firstFocusedWidget = _firstFocusedWidget->getCurrentFocusedWidget();
         }
-        _firstFocusedWidget = _firstFocusedWidget->nextFocusedWidget(FocusDirection::FocusDirection_Up, _firstFocusedWidget);
+        _firstFocusedWidget = _firstFocusedWidget->findNextFocusedWidget(FocusDirection::FocusDirection_Up, _firstFocusedWidget);
     }
     
 }
@@ -111,7 +111,7 @@ void UIFocusTestBase::onDownKeyPressed()
         if (!_firstFocusedWidget->isFocused()) {
             _firstFocusedWidget = _firstFocusedWidget->getCurrentFocusedWidget();
         }
-        _firstFocusedWidget = _firstFocusedWidget->nextFocusedWidget(FocusDirection::FocusDirection_Down, _firstFocusedWidget);
+        _firstFocusedWidget = _firstFocusedWidget->findNextFocusedWidget(FocusDirection::FocusDirection_Down, _firstFocusedWidget);
     }
     
 }
@@ -194,8 +194,8 @@ bool UIFocusTestHorizontal::init()
 void UIFocusTestHorizontal::toggleFocusLoop(cocos2d::Ref * pObjc, TouchEventType type)
 {
     if (type == TouchEventType::TOUCH_EVENT_ENDED) {
-        _horizontalLayout->setLoopFocus(!_horizontalLayout->getLoopFocus());
-        if (_horizontalLayout->getLoopFocus()) {
+        _horizontalLayout->setLoopFocus(!_horizontalLayout->isLoopFocus());
+        if (_horizontalLayout->isLoopFocus()) {
             _loopText->setText("loop enabled");
         }else{
             _loopText->setText("loop disabled");
@@ -265,8 +265,8 @@ bool UIFocusTestVertical::init()
 void UIFocusTestVertical::toggleFocusLoop(cocos2d::Ref * pObjc, TouchEventType type)
 {
     if (type == TouchEventType::TOUCH_EVENT_ENDED) {
-        _verticalLayout->setLoopFocus(!_verticalLayout->getLoopFocus());
-        if (_verticalLayout->getLoopFocus()) {
+        _verticalLayout->setLoopFocus(!_verticalLayout->isLoopFocus());
+        if (_verticalLayout->isLoopFocus()) {
             _loopText->setText("loop enabled");
         }else{
             _loopText->setText("loop disabled");
@@ -367,8 +367,8 @@ bool UIFocusTestNestedLayout1::init()
 void UIFocusTestNestedLayout1::toggleFocusLoop(cocos2d::Ref * pObjc, TouchEventType type)
 {
     if (type == TouchEventType::TOUCH_EVENT_ENDED) {
-        _verticalLayout->setLoopFocus(!_verticalLayout->getLoopFocus());
-        if (_verticalLayout->getLoopFocus()) {
+        _verticalLayout->setLoopFocus(!_verticalLayout->isLoopFocus());
+        if (_verticalLayout->isLoopFocus()) {
             _loopText->setText("loop enabled");
         }else{
             _loopText->setText("loop disabled");
@@ -469,8 +469,8 @@ bool UIFocusTestNestedLayout2::init()
 void UIFocusTestNestedLayout2::toggleFocusLoop(cocos2d::Ref * pObjc, TouchEventType type)
 {
     if (type == TouchEventType::TOUCH_EVENT_ENDED) {
-        _horizontalLayout->setLoopFocus(!_horizontalLayout->getLoopFocus());
-        if (_horizontalLayout->getLoopFocus()) {
+        _horizontalLayout->setLoopFocus(!_horizontalLayout->isLoopFocus());
+        if (_horizontalLayout->isLoopFocus()) {
             _loopText->setText("loop enabled");
         }else{
             _loopText->setText("loop disabled");
