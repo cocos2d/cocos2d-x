@@ -1,0 +1,51 @@
+
+
+includepaths
+{	
+	"../../"
+}
+
+files
+{
+	("../../Box2D")
+	"*.h"
+	
+	("../Collision/Shapes")
+	[Collision/Shapes]
+	"*.h"
+	"*.cpp"
+
+	("../Collision")
+	[Collision]
+	"*.h"
+	"*.cpp"
+
+	("../Common")
+	[Common]
+	"*.h"
+	"*.cpp"
+
+
+	("../Dynamics/Contacts")
+	[Dynamics/Contacts]
+	"*.h"
+	"*.cpp"
+
+
+	("../Dynamics/Joints")
+	[Dynamics/Joints]
+	"*.h"
+	"*.cpp"
+
+	("../Dynamics")
+	[Dynamics]
+	"*.h"
+	"*.cpp"
+	
+	("../Rope")
+	[Rope]
+	"*.h"
+	"*.cpp"
+	
+}
+
