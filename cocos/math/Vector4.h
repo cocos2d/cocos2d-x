@@ -109,48 +109,6 @@ public:
     ~Vector4();
 
     /**
-     * Returns the zero vector.
-     *
-     * @return The 4-element vector of 0s.
-     */
-    static const Vector4& zero();
-
-    /**
-     * Returns the one vector.
-     *
-     * @return The 4-element vector of 1s.
-     */
-    static const Vector4& one();
-
-    /**
-     * Returns the unit x vector.
-     *
-     * @return The 4-element unit vector along the x axis.
-     */
-    static const Vector4& unitX();
-
-    /**
-     * Returns the unit y vector.
-     *
-     * @return The 4-element unit vector along the y axis.
-     */
-    static const Vector4& unitY();
-
-    /**
-     * Returns the unit z vector.
-     *
-     * @return The 4-element unit vector along the z axis.
-     */
-    static const Vector4& unitZ();
-
-    /**
-     * Returns the unit w vector.
-     *
-     * @return The 4-element unit vector along the w axis.
-     */
-    static const Vector4& unitW();
-
-    /**
      * Indicates whether this vector contains all zeros.
      *
      * @return true if this vector contains all zeros, false otherwise.
@@ -462,6 +420,19 @@ public:
      * @return True if this vector is not equal to the given vector, false otherwise.
      */
     inline bool operator!=(const Vector4& v) const;
+    
+    /** equals to Vector4(0,0,0,0) */
+    static const Vector4 ZERO;
+    /** equals to Vector4(1,1,1,1) */
+    static const Vector4 ONE;
+    /** equals to Vector4(1,0,0,0) */
+    static const Vector4 UNIT_X;
+    /** equals to Vector4(0,1,0,0) */
+    static const Vector4 UNIT_Y;
+    /** equals to Vector4(0,0,1,0) */
+    static const Vector4 UNIT_Z;
+    /** equals to Vector4(0,0,0,1) */
+    static const Vector4 UNIT_W;
 };
 
 /**

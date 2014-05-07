@@ -955,6 +955,7 @@
         "docs/RELEASE_NOTES.md", 
         "docs/cocos2dx_portrait.png", 
         "docs/doxygen.config", 
+        "download-deps.py", 
         "extensions/Android.mk", 
         "extensions/CMakeLists.txt", 
         "extensions/ExtensionMacros.h", 
