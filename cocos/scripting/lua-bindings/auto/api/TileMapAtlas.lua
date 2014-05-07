@@ -17,11 +17,6 @@
 -- @param self
         
 --------------------------------
--- @function [parent=#TileMapAtlas] getTGAInfo 
--- @param self
--- @return sImageTGA#sImageTGA ret (return value: cc.sImageTGA)
-        
---------------------------------
 -- @function [parent=#TileMapAtlas] getTileAt 
 -- @param self
 -- @param #array_table array

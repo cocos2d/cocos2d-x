@@ -33,6 +33,12 @@
 -- @param self
         
 --------------------------------
+-- @function [parent=#Label] setTTFConfig 
+-- @param self
+-- @param #cc._ttfConfig _ttfconfig
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- @function [parent=#Label] getTextColor 
 -- @param self
 -- @return color4B_table#color4B_table ret (return value: color4B_table)
