@@ -518,18 +518,6 @@ void Texture2D::setShaderProgram(GLProgram* shaderProgram)
     _shaderProgram = shaderProgram;
 }
 
-void Texture2D::releaseData(void *data)
-{
-    free(data);
-}
-
-void* Texture2D::keepData(void *data, unsigned int length)
-{
-    CC_UNUSED_PARAM(length);
-    //The texture data mustn't be saved because it isn't a mutable texture.
-    return data;
-}
-
 bool Texture2D::hasPremultipliedAlpha() const
 {
     return _hasPremultipliedAlpha;

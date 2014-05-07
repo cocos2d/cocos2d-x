@@ -203,17 +203,6 @@ public:
      */
     virtual std::string getDescription() const;
 
-    /** These functions are needed to create mutable textures
-     * @js NA
-     * @lua NA
-     */
-    void releaseData(void *data);
-    /**
-     * @js NA
-     * @lua NA
-     */
-    void* keepData(void *data, unsigned int length);
-
     /** Initializes with a texture2d with data 
      * @js NA
      * @lua NA
