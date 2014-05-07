@@ -29,7 +29,7 @@ def set_description(desc, url):
     except:
         traceback.print_exc()
 
-def check_current_3rd_libs(build_status):
+def check_current_3rd_libs():
     #get current_libs config
     config_file_path = "external/config.json"
     if not os.path.isfile(config_file_path):
@@ -41,18 +41,13 @@ def check_current_3rd_libs(build_status):
     current_3rd_libs_version = data["current_libs_version"]
     filename = current_3rd_libs_version + '.zip'
     node_name = os.environ['NODE_NAME']
-    backup_path = '../../../cocos-2dx-external/node/' + node_name + '/'
-    
-    if(build_status == 'start'):
-      source_dir = backup_path + filename
-      dest_dir = filename
-    elif(build_status == 'finish'):
-      source_dir = filename
-      dest_dir = backup_path + filename
-    if not os.path.isfile(source_dir) and (build_status == 'start'):
-      os.system('python download-deps.py -r no')
-    else:
-      copy(source_dir, dest_dir)
+    backup_file = '../../../cocos-2dx-external/node/' + node_name + '/' + filename
+    current_file = filename
+    if os.path.isfile(backup_file):
+      copy(backup_file, current_file)
+    os.system('python download-deps.py -r no')
+    #backup file
+    copy(current_file, backup_file)
 
 def main():
     #get payload from os env
@@ -130,7 +125,7 @@ def main():
         return(2)
 
     #copy check_current_3rd_libs
-    check_current_3rd_libs('start')
+    check_current_3rd_libs()
 
     # Generate binding glue codes
     if(branch == 'v3'):
@@ -232,9 +227,6 @@ def main():
         ret = os.system('make -j10')
       else:
         ret = 0
-
-    #backup check_current_3rd_libs
-    check_current_3rd_libs('finish')
 
     #get build result
     print "build finished and return " + str(ret)
