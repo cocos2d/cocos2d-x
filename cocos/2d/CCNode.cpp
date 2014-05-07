@@ -499,6 +499,22 @@ void Node::setPositionZ(float positionZ)
     setGlobalZOrder(positionZ);
 }
 
+void Node::setPositionNormalized(float x, float y)
+{
+    _positionNormalized = Vector2(x,y);
+    if (_parent)
+    {
+        const Size& s = _parent->getContentSize();
+        setPosition(s.width * x, s.height * y);
+    }
+}
+
+void Node::getPositionNormalized(float* x, float* y) const
+{
+    *x = _positionNormalized.x;
+    *y = _positionNormalized.y;
+}
+
 ssize_t Node::getChildrenCount() const
 {
     return _children.size();
