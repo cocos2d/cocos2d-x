@@ -352,6 +352,7 @@ ScriptingCore::ScriptingCore()
     //JS_SetCStringsAreUTF8();
     this->addRegisterCallback(registerDefaultClasses);
     this->runLoop = new SimpleRunLoop();
+    this->runLoop->autorelease();
 }
 
 void ScriptingCore::string_report(jsval val) {
@@ -1642,6 +1643,10 @@ jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length /* = -1 */) 
             ret = STRING_TO_JSVAL(str);
         }
         delete[] strUTF16;
+    }
+    else if (strUTF16)
+    {
+        delete[] strUTF16;      // "" empty string case
     }
     return ret;
 }
