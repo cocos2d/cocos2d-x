@@ -55,20 +55,27 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
 
 class VertexAttrib
 {
+    friend class GLProgram;
+    friend class VertexAttribBind;
+
 public:
     VertexAttrib();
     ~VertexAttrib();
     void setPointer(GLsizei stride, void* pointer = nullptr, GLboolean isNormalized = GL_FALSE);
+    void redefineType(GLenum type, GLint size, GLboolean normalized);
 
-    GLuint index;
-    GLint size;
-    GLenum type;
-    GLboolean normalized;
-    std::string name;
+protected:
+    GLuint _index;
+    GLint _size;
+    GLenum _type;
+    GLboolean _normalized;
+    std::string _name;
 };
 
 class Uniform
 {
+    friend class GLProgram;
+
 public:
     Uniform();
     ~Uniform();
@@ -84,11 +91,11 @@ public:
     bool setValue(const Vector4* value, int count);
     bool setValue(const Matrix* value, int count);
 
-    GLint location;
-    GLint size;
-    std::string name;
-    GLenum type;
-
+protected:
+    GLint _location;
+    GLint _size;
+    std::string _name;
+    GLenum _type;
 	GLProgram* _program;  // weak ref
 };
 
