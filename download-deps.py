@@ -49,19 +49,11 @@ from distutils.errors import DistutilsError
 from distutils.dir_util import copy_tree, remove_tree
 
 _workpath=''
-
-# -- Section for configuring file url -----
-# github server may not reponse a header information which contains `Content-Length`,
-# therefore, the size needs to be written hardcode here. While server doesn't return
-# `Content-Length`, use it instead
-_current_3rd_libs_version = 'v3-deps-1'
-_zip_file_bytes = 57132755
-_repo_name = 'cocos2d-x-external'
-_filename = _current_3rd_libs_version + '.zip'
-_downloaded_file_url = 'https://github.com/cocos2d/' + _repo_name + '/archive/' + _filename
-# 'v' letter was swallowed by github, so we need to substring it from the 2nd letter
-_extracted_folder_name = _repo_name + '-' + _current_3rd_libs_version[1:]
-# ----------------------------------------
+_current_3rd_libs_version = ''
+_repo_name = ''
+_filename = ''
+_downloaded_file_url = ''
+_extracted_folder_name = ''
 
 def get_input_value(prompt):
     ret = raw_input(prompt)
@@ -71,7 +63,14 @@ def get_input_value(prompt):
 def download_file(url, filename):
     print("==> Ready to download '%s' from '%s'" % (filename, url))
     import urllib2
-    u = urllib2.urlopen(url)
+    try:
+        u = urllib2.urlopen(url)
+    except urllib2.HTTPError as e:
+        if e.code == 404:
+            print("==> Error: Could not find the file from url: '%s'" % (url))
+        print("==> Http request failed, error code: " + str(e.code) + ", reason: " + e.read())
+        sys.exit(1)
+
     f = open(filename, 'wb')
     meta = u.info()
     content_len = meta.getheaders("Content-Length")
@@ -79,8 +78,11 @@ def download_file(url, filename):
     if content_len and len(content_len) > 0:
         file_size = int(content_len[0])
     else:
+        # github server may not reponse a header information which contains `Content-Length`,
+        # therefore, the size needs to be written hardcode here. While server doesn't return
+        # `Content-Length`, use it instead
         print("==> WARNING: Couldn't grab the file size!")
-        file_size = _zip_file_bytes
+        # file_size = _zip_file_bytes
 
     print("==> Start to download, please wait ...")
 
@@ -218,6 +220,27 @@ def need_to_update_3rd_libs():
         return False
     return True
 
+def grab_config():
+    config_file_path = os.path.join(_workpath, "external", "config.json")
+    if not os.path.isfile(config_file_path):
+        raise Exception("Could not find 'external/config.json'")
+
+    with open(config_file_path) as data_file:
+        data = json.load(data_file)
+
+    global _current_3rd_libs_version
+    global _repo_name
+    global _filename
+    global _downloaded_file_url
+    global _extracted_folder_name
+
+    _current_3rd_libs_version = data["current_libs_version"]
+    _repo_name = data["repo_name"]
+    _filename = _current_3rd_libs_version + '.zip'
+    _downloaded_file_url = data["repo_parent"] + _repo_name + '/archive/' + _filename
+    # 'v' letter was swallowed by github, so we need to substring it from the 2nd letter
+    _extracted_folder_name = _repo_name + '-' + _current_3rd_libs_version[1:]
+
 def main():
     _workpath = os.path.dirname(os.path.realpath(__file__))
 
@@ -234,6 +257,8 @@ def main():
                       help="Whether to force update the third party libraries")
 
     (opts, args) = parser.parse_args()
+
+    grab_config()
 
     if not opts.force_update and not need_to_update_3rd_libs():
         print("==> Not need to update the third party libraries!")
