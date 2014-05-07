@@ -143,6 +143,7 @@ bool UIFocusTestHorizontal::init()
         
         _horizontalLayout->setFocused(true);
         _horizontalLayout->setLoopFocus(true);
+        _horizontalLayout->setTag(100);
         _firstFocusedWidget = _horizontalLayout;
         
         int count = 3;
@@ -208,6 +209,7 @@ bool UIFocusTestVertical::init()
         _verticalLayout = VBox::create();
         _verticalLayout->setPosition(Vector2(winSize.width/2 - 100, winSize.height - 70));
         _uiLayer->addChild(_verticalLayout);
+        _verticalLayout->setTag(100);
         _verticalLayout->setScale(0.8);
         
         _verticalLayout->setFocused(true);
@@ -218,6 +220,7 @@ bool UIFocusTestVertical::init()
         for (int i=0; i<count; ++i) {
             ImageView *w = ImageView::create("cocosui/scrollviewbg.png");
             w->setTouchEnabled(true);
+            w->setTag(i);
             w->addTouchEventListener(this, toucheventselector(UIFocusTestVertical::onImageViewClicked));
             _verticalLayout->addChild(w);
         }
@@ -277,14 +280,16 @@ bool UIFocusTestNestedLayout1::init()
         
         _verticalLayout->setFocused(true);
         _verticalLayout->setLoopFocus(true);
+        _verticalLayout->setTag(100);
         _firstFocusedWidget = _verticalLayout;
         
-        int count = 1;
-        for (int i=0; i<count; ++i) {
+        int count1 = 1;
+        for (int i=0; i<count1; ++i) {
             ImageView *w = ImageView::create("cocosui/scrollviewbg.png");
             w->setAnchorPoint(Vector2::ZERO);
             w->setTouchEnabled(true);
             w->setScaleX(2.5);
+            w->setTag(i+count1);
             w->addTouchEventListener(this, toucheventselector(UIFocusTestVertical::onImageViewClicked));
             _verticalLayout->addChild(w);
         }
@@ -292,25 +297,33 @@ bool UIFocusTestNestedLayout1::init()
         //add HBox into VBox
         HBox *hbox = HBox::create();
         hbox->setScale(0.8);
+        hbox->setTag(101);
         _verticalLayout->addChild(hbox);
         
-        count = 2;
-        for (int i=0; i < count; ++i) {
+        int count2 = 2;
+        for (int i=0; i < count2; ++i) {
             ImageView *w = ImageView::create("cocosui/scrollviewbg.png");
             w->setAnchorPoint(Vector2(0,1));
             w->setScaleY(2.0);
             w->setTouchEnabled(true);
+            w->setTag(i+count1+count2);
             w->addTouchEventListener(this, toucheventselector(UIFocusTestVertical::onImageViewClicked));
             hbox->addChild(w);
         }
         
         VBox *innerVBox = VBox::create();
         hbox->addChild(innerVBox);
+        innerVBox->setTag(102);
+        //call this method will cause the focus constraint to the layout and it will never pass out
+        innerVBox->setPassFocusToChild(false);
+//        innerVBox->setFocusEnabled(false);
+       
         
-        count = 2;
-        for (int i=0; i<count; ++i) {
+        int count3 = 2;
+        for (int i=0; i<count3; ++i) {
             ImageView *w = ImageView::create("cocosui/scrollviewbg.png");
             w->setTouchEnabled(true);
+            w->setTag(i+count1+count2+count3);
             w->addTouchEventListener(this, toucheventselector(UIFocusTestVertical::onImageViewClicked));
             innerVBox->addChild(w);
         }

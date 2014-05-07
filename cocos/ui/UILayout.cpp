@@ -1670,34 +1670,26 @@ Widget* Layout::findFocusEnabledChildWidgetByIndex(ssize_t index)
 
 Widget* Layout::passFocusToChild(cocos2d::ui::FocusDirection dir, cocos2d::ui::Widget *current)
 {
-    if (_passFocusToChild)
+    if (checkFocusEnabledChild())
     {
-        if (checkFocusEnabledChild())
+        int index = onPassFocusToChild(dir);
+        Widget *widget = this->findFocusEnabledChildWidgetByIndex(index);
+        this->dispatchFocusEvent(current, widget);
+        Layout *layout = dynamic_cast<Layout*>(widget);
+        if (layout)
         {
-            int index = onPassFocusToChild(dir);
-            Widget *widget = this->findFocusEnabledChildWidgetByIndex(index);
-            if (widget)
-            {
-                this->dispatchFocusEvent(current, widget);
-                Layout *layout = dynamic_cast<Layout*>(widget);
-                if (layout)
-                {
-                    return layout->nextFocusedWidget(dir, layout);
-                }
-                else
-                {
-                    return widget;
-                }
-            }
+            return layout->nextFocusedWidget(dir, layout);
         }
         else
         {
-            return this;
+            return widget;
         }
     }
-    
-    return Widget::nextFocusedWidget(dir, this);
-    
+    else
+    {
+        return this;
+    }
+        
 }
 
 bool Layout::checkFocusEnabledChild()
@@ -1790,7 +1782,6 @@ Widget* Layout::getPreviousFocusedWidget(FocusDirection dir, Widget *current)
                 if (nextWidget->isFocusEnabled())
                 {
                     this->dispatchFocusEvent(current, nextWidget);
-                    
                     Layout* layout = dynamic_cast<Layout*>(nextWidget);
                     if (layout)
                     {
@@ -1808,7 +1799,13 @@ Widget* Layout::getPreviousFocusedWidget(FocusDirection dir, Widget *current)
             }
             else
             {
-                return _focusedWidget;
+                if (dynamic_cast<Layout*>(current)) {
+                    return current;
+                }
+                else
+                {
+                    return _focusedWidget;
+                }
             }
         }
         else
@@ -1820,7 +1817,13 @@ Widget* Layout::getPreviousFocusedWidget(FocusDirection dir, Widget *current)
                     this->dispatchFocusEvent(current, this);
                     return Widget::nextFocusedWidget(dir, this);
                 }
-                return _focusedWidget;
+                if (dynamic_cast<Layout*>(current)) {
+                    return current;
+                }
+                else
+                {
+                    return _focusedWidget;
+                }
             }
             else
             {
@@ -1895,7 +1898,13 @@ Widget* Layout::getNextFocusedWidget(FocusDirection dir, Widget *current)
             }
             else
             {
-                return _focusedWidget;
+                if (dynamic_cast<Layout*>(current)) {
+                    return current;
+                }
+                else
+                {
+                    return _focusedWidget;
+                }
             }
         }
         else{
@@ -1906,7 +1915,13 @@ Widget* Layout::getNextFocusedWidget(FocusDirection dir, Widget *current)
                     this->dispatchFocusEvent(current, this);
                     return Widget::nextFocusedWidget(dir, this);
                 }
-                return _focusedWidget;
+                if (dynamic_cast<Layout*>(current)) {
+                    return current;
+                }
+                else
+                {
+                    return _focusedWidget;
+                }
             }
             else
             {
@@ -2053,9 +2068,22 @@ bool  Layout::isWidgetAncestorSupportLoopFocus(Widget* widget, FocusDirection di
 
 Widget* Layout::nextFocusedWidget(FocusDirection dir, Widget* current)
 {
+    
     if (this->isFocused())
     {
-        return this->passFocusToChild(dir, current);
+        if (_passFocusToChild)
+        {
+            return this->passFocusToChild(dir, current);
+        }
+        else
+        {
+            Layout* parent = dynamic_cast<Layout*>(this->getParent());
+            if (nullptr == parent) {
+                return this;
+            }
+            return parent->nextFocusedWidget(dir, this);
+            
+        }
     }
     else if(current->isFocused() || !current->isFocusEnabled())
     {
