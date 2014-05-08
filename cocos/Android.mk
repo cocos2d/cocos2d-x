@@ -159,7 +159,8 @@ physics/chipmunk/CCPhysicsContactInfo_chipmunk.cpp \
 physics/chipmunk/CCPhysicsJointInfo_chipmunk.cpp \
 physics/chipmunk/CCPhysicsShapeInfo_chipmunk.cpp \
 physics/chipmunk/CCPhysicsWorldInfo_chipmunk.cpp \
-../external/ConvertUTF/ConvertUTF.cpp \
+../external/ConvertUTF/ConvertUTFWrapper.cpp \
+../external/ConvertUTF/ConvertUTF.c \
 ../external/tinyxml2/tinyxml2.cpp \
 ../external/unzip/ioapi.cpp \
 ../external/unzip/unzip.cpp \
