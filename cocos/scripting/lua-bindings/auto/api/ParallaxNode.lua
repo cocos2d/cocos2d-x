@@ -4,15 +4,6 @@
 -- @extend Node
 
 --------------------------------
--- overload function: getParallaxArray()
---          
--- overload function: getParallaxArray()
---          
--- @function [parent=#ParallaxNode] getParallaxArray
--- @param self
--- @return _ccArray#_ccArray ret (retunr value: cc._ccArray)
-
---------------------------------
 -- @function [parent=#ParallaxNode] addChild 
 -- @param self
 -- @param #cc.Node node
