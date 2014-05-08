@@ -80,7 +80,7 @@ void UIFocusTestBase::onLeftKeyPressed()
         if (!_firstFocusedWidget->isFocused()) {
             _firstFocusedWidget = _firstFocusedWidget->getCurrentFocusedWidget(false);
         }
-        _firstFocusedWidget = _firstFocusedWidget->findNextFocusedWidget(FocusDirection::FocusDirection_Left, _firstFocusedWidget);
+        _firstFocusedWidget = _firstFocusedWidget->findNextFocusedWidget(Widget::FocusDirection::LEFT, _firstFocusedWidget);
     }
 }
 
@@ -90,7 +90,7 @@ void UIFocusTestBase::onRightKeyPressed()
         if (!_firstFocusedWidget->isFocused()) {
             _firstFocusedWidget = _firstFocusedWidget->getCurrentFocusedWidget(false);
         }
-        _firstFocusedWidget = _firstFocusedWidget->findNextFocusedWidget(FocusDirection::FocusDirection_Right, _firstFocusedWidget);
+        _firstFocusedWidget = _firstFocusedWidget->findNextFocusedWidget(Widget::FocusDirection::RIGHT, _firstFocusedWidget);
     }
 }
 
@@ -100,7 +100,7 @@ void UIFocusTestBase::onUpKeyPressed()
         if (!_firstFocusedWidget->isFocused()) {
             _firstFocusedWidget = _firstFocusedWidget->getCurrentFocusedWidget(false);
         }
-        _firstFocusedWidget = _firstFocusedWidget->findNextFocusedWidget(FocusDirection::FocusDirection_Up, _firstFocusedWidget);
+        _firstFocusedWidget = _firstFocusedWidget->findNextFocusedWidget(Widget::FocusDirection::UP, _firstFocusedWidget);
     }
     
 }
@@ -111,7 +111,7 @@ void UIFocusTestBase::onDownKeyPressed()
         if (!_firstFocusedWidget->isFocused()) {
             _firstFocusedWidget = _firstFocusedWidget->getCurrentFocusedWidget(false);
         }
-        _firstFocusedWidget = _firstFocusedWidget->findNextFocusedWidget(FocusDirection::FocusDirection_Down, _firstFocusedWidget);
+        _firstFocusedWidget = _firstFocusedWidget->findNextFocusedWidget(Widget::FocusDirection::DOWN, _firstFocusedWidget);
     }
     
 }

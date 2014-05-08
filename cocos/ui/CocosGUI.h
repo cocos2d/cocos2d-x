@@ -45,6 +45,7 @@ THE SOFTWARE.
 #include "ui/UIHBox.h"
 #include "ui/UIVBox.h"
 #include "ui/UIRelativeBox.h"
+#include "ui/UIDeprecated.h"
 
 NS_CC_BEGIN
 namespace ui {

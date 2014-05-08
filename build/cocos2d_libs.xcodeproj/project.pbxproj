@@ -2287,6 +2287,7 @@
 		2905FA1218CF08D100240AA3 /* UITextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextField.h; sourceTree = "<group>"; };
 		2905FA1318CF08D100240AA3 /* UIWidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIWidget.cpp; sourceTree = "<group>"; };
 		2905FA1418CF08D100240AA3 /* UIWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWidget.h; sourceTree = "<group>"; };
+		29080DEB191B82CE0066F8DF /* UIDeprecated.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIDeprecated.h; sourceTree = "<group>"; };
 		296CAD201915EC8000C64FBF /* CCEventFocus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCEventFocus.cpp; path = ../base/CCEventFocus.cpp; sourceTree = "<group>"; };
 		296CAD211915EC8000C64FBF /* CCEventFocus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEventFocus.h; path = ../base/CCEventFocus.h; sourceTree = "<group>"; };
 		296CAD261915EC9900C64FBF /* CCEventListenerFocus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCEventListenerFocus.cpp; path = ../base/CCEventListenerFocus.cpp; sourceTree = "<group>"; };
@@ -4021,6 +4022,7 @@
 				50E6D33118E174130051CA34 /* UIRelativeBox.h */,
 				50E6D33218E174130051CA34 /* UIVBox.cpp */,
 				50E6D33318E174130051CA34 /* UIVBox.h */,
+				29080DEB191B82CE0066F8DF /* UIDeprecated.h */,
 			);
 			name = ui;
 			path = ../cocos/ui;

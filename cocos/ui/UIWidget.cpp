@@ -984,12 +984,13 @@ bool Widget::isFocusEnabled()
     return _focusEnabled;
 }
 
-Widget* Widget::findNextFocusedWidget(cocos2d::ui::FocusDirection direction,  Widget* current)
+Widget* Widget::findNextFocusedWidget(FocusDirection direction,  Widget* current)
 {
     if (nullptr == onNextFocusedWidget || nullptr == onNextFocusedWidget(direction) ) {
         if (this->isFocused() || !current->isFocusEnabled())
         {
             Node* parent = this->getParent();
+            
             Layout* layout = dynamic_cast<Layout*>(parent);
             if (nullptr == layout)
             {

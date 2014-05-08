@@ -1675,7 +1675,7 @@ int Layout::findNearestChildWidgetIndex(FocusDirection direction, Widget* baseWi
     
     float distance = FLT_MAX;
     int found = 0;
-    if (direction == FocusDirection::FocusDirection_Left || direction == FocusDirection::FocusDirection_Right)
+    if (direction == FocusDirection::LEFT || direction == FocusDirection::RIGHT)
     {
         Vector2 widgetPosition =  this->getWorldCenterPoint(baseWidget);
         while (index <  count)
@@ -1709,7 +1709,7 @@ int Layout::findNearestChildWidgetIndex(FocusDirection direction, Widget* baseWi
     index = 0;
     found = 0;
     distance = FLT_MAX;
-    if (direction == FocusDirection::FocusDirection_Down || direction == FocusDirection::FocusDirection_Up) {
+    if (direction == FocusDirection::DOWN || direction == FocusDirection::UP) {
         Vector2 widgetPosition = this->getWorldCenterPoint(baseWidget);
         while (index < count)
         {
@@ -1743,7 +1743,7 @@ int Layout::findNearestChildWidgetIndex(FocusDirection direction, Widget* baseWi
     return 0;
 }
     
-int Layout::findFarestChildWidgetIndex(cocos2d::ui::FocusDirection direction, cocos2d::ui::Widget *baseWidget)
+int Layout::findFarestChildWidgetIndex(FocusDirection direction, cocos2d::ui::Widget *baseWidget)
 {
     if (baseWidget == nullptr || baseWidget == this)
     {
@@ -1754,7 +1754,7 @@ int Layout::findFarestChildWidgetIndex(cocos2d::ui::FocusDirection direction, co
     
     float distance = -FLT_MAX;
     int found = 0;
-    if (direction == FocusDirection::FocusDirection_Left || direction == FocusDirection::FocusDirection_Right)
+    if (direction == FocusDirection::LEFT || direction == FocusDirection::RIGHT)
     {
         Vector2 widgetPosition =  this->getWorldCenterPoint(baseWidget);
         while (index <  count)
@@ -1788,7 +1788,7 @@ int Layout::findFarestChildWidgetIndex(cocos2d::ui::FocusDirection direction, co
     index = 0;
     found = 0;
     distance = -FLT_MAX;
-    if (direction == FocusDirection::FocusDirection_Down || direction == FocusDirection::FocusDirection_Up) {
+    if (direction == FocusDirection::DOWN || direction == FocusDirection::UP) {
         Vector2 widgetPosition = this->getWorldCenterPoint(baseWidget);
         while (index < count)
         {
@@ -1873,27 +1873,27 @@ void Layout::findProperSearchingFunctor(FocusDirection dir, Widget* baseWidget)
     
     Vector2 layoutPosition = this->getWorldCenterPoint(this->findFirstNonLayoutWidget());
     
-    if (dir == FocusDirection::FocusDirection_Left) {
+    if (dir == FocusDirection::LEFT) {
         if (previousWidgetPosition.x > layoutPosition.x) {
             onPassFocusToChild = CC_CALLBACK_2(Layout::findNearestChildWidgetIndex, this);
         }
         else{
             onPassFocusToChild = CC_CALLBACK_2(Layout::findFarestChildWidgetIndex, this);
         }
-    }else if(dir == FocusDirection::FocusDirection_Right){
+    }else if(dir == FocusDirection::RIGHT){
         if (previousWidgetPosition.x > layoutPosition.x) {
             onPassFocusToChild = CC_CALLBACK_2(Layout::findFarestChildWidgetIndex, this);
         }
         else{
             onPassFocusToChild = CC_CALLBACK_2(Layout::findNearestChildWidgetIndex, this);
         }
-    }else if(dir == FocusDirection::FocusDirection_Down){
+    }else if(dir == FocusDirection::DOWN){
         if (previousWidgetPosition.y > layoutPosition.y) {
             onPassFocusToChild = CC_CALLBACK_2(Layout::findNearestChildWidgetIndex, this);
         }else{
             onPassFocusToChild = CC_CALLBACK_2(Layout::findFarestChildWidgetIndex, this);
         }
-    }else if(dir == FocusDirection::FocusDirection_Up){
+    }else if(dir == FocusDirection::UP){
         if (previousWidgetPosition.y < layoutPosition.y) {
             onPassFocusToChild = CC_CALLBACK_2(Layout::findNearestChildWidgetIndex, this);
         }else{
@@ -1906,7 +1906,7 @@ void Layout::findProperSearchingFunctor(FocusDirection dir, Widget* baseWidget)
 }
 
 
-Widget* Layout::passFocusToChild(cocos2d::ui::FocusDirection dir, cocos2d::ui::Widget *current)
+Widget* Layout::passFocusToChild(FocusDirection dir, cocos2d::ui::Widget *current)
 {
     if (checkFocusEnabledChild())
     {
@@ -2188,7 +2188,7 @@ bool  Layout::isLastWidgetInContainer(Widget* widget, FocusDirection direction)
     ssize_t index = container.getIndex(widget);
     if (parent->getLayoutType() == LAYOUT_LINEAR_HORIZONTAL)
     {
-        if (direction == FocusDirection::FocusDirection_Left) {
+        if (direction == FocusDirection::LEFT) {
             if (index == 0)
             {
                 return true * isLastWidgetInContainer(parent, direction);
@@ -2198,7 +2198,7 @@ bool  Layout::isLastWidgetInContainer(Widget* widget, FocusDirection direction)
                 return false;
             }
         }
-        if (direction == FocusDirection::FocusDirection_Right) {
+        if (direction == FocusDirection::RIGHT) {
             if (index == container.size()-1)
             {
                 return true * isLastWidgetInContainer(parent, direction);
@@ -2208,19 +2208,19 @@ bool  Layout::isLastWidgetInContainer(Widget* widget, FocusDirection direction)
                 return false;
             }
         }
-        if (direction == FocusDirection::FocusDirection_Down)
+        if (direction == FocusDirection::DOWN)
         {
             return isLastWidgetInContainer(parent, direction);
         }
         
-        if (direction == FocusDirection::FocusDirection_Up)
+        if (direction == FocusDirection::UP)
         {
             return isLastWidgetInContainer(parent, direction);
         }
     }
     else if(parent->getLayoutType() == LAYOUT_LINEAR_VERTICAL)
     {
-        if (direction == FocusDirection::FocusDirection_Up)
+        if (direction == FocusDirection::UP)
         {
             if (index == 0)
             {
@@ -2232,7 +2232,7 @@ bool  Layout::isLastWidgetInContainer(Widget* widget, FocusDirection direction)
                 return false;
             }
         }
-        if (direction == FocusDirection::FocusDirection_Down)
+        if (direction == FocusDirection::DOWN)
         {
             if (index == container.size() - 1)
             {
@@ -2243,12 +2243,12 @@ bool  Layout::isLastWidgetInContainer(Widget* widget, FocusDirection direction)
                 return false;
             }
         }
-        if (direction == FocusDirection::FocusDirection_Left)
+        if (direction == FocusDirection::LEFT)
         {
             return isLastWidgetInContainer(parent, direction);
         }
         
-        if (direction == FocusDirection::FocusDirection_Right)
+        if (direction == FocusDirection::RIGHT)
         {
             return isLastWidgetInContainer(parent, direction);
         }
@@ -2274,7 +2274,7 @@ bool  Layout::isWidgetAncestorSupportLoopFocus(Widget* widget, FocusDirection di
         auto layoutType = parent->getLayoutType();
         if (layoutType == LAYOUT_LINEAR_HORIZONTAL)
         {
-            if (direction == FocusDirection::FocusDirection_Left || direction == FocusDirection::FocusDirection_Right)
+            if (direction == FocusDirection::LEFT || direction == FocusDirection::RIGHT)
             {
                 return true;
             }
@@ -2285,7 +2285,7 @@ bool  Layout::isWidgetAncestorSupportLoopFocus(Widget* widget, FocusDirection di
         }
         if (layoutType == LAYOUT_LINEAR_VERTICAL)
         {
-            if (direction == FocusDirection::FocusDirection_Down || direction == FocusDirection::FocusDirection_Up)
+            if (direction == FocusDirection::DOWN || direction == FocusDirection::UP)
             {
                 return true;
             }
@@ -2338,16 +2338,16 @@ Widget* Layout::findNextFocusedWidget(FocusDirection direction, Widget* current)
         {
             switch (direction)
             {
-                case FocusDirection::FocusDirection_Left:
+                case FocusDirection::LEFT:
                 {
                     return this->getPreviousFocusedWidget(direction, current);
                 }break;
-                case FocusDirection::FocusDirection_Right:
+                case FocusDirection::RIGHT:
                 {
                     return this->getNextFocusedWidget(direction, current);
                 }break;
-                case FocusDirection::FocusDirection_Down:
-                case FocusDirection::FocusDirection_Up:
+                case FocusDirection::DOWN:
+                case FocusDirection::UP:
                 {
                     if (isLastWidgetInContainer(this, direction))
                     {
@@ -2375,8 +2375,8 @@ Widget* Layout::findNextFocusedWidget(FocusDirection direction, Widget* current)
         {
             switch (direction)
             {
-                case FocusDirection::FocusDirection_Left:
-                case FocusDirection::FocusDirection_Right:
+                case FocusDirection::LEFT:
+                case FocusDirection::RIGHT:
                 {
                     if (isLastWidgetInContainer(this, direction))
                     {
@@ -2393,12 +2393,12 @@ Widget* Layout::findNextFocusedWidget(FocusDirection direction, Widget* current)
                         return Widget::findNextFocusedWidget(direction, this);
                     }
                 } break;
-                case FocusDirection::FocusDirection_Down:
+                case FocusDirection::DOWN:
                 {
                     return getNextFocusedWidget(direction, current);
                 }
                     break;
-                case FocusDirection::FocusDirection_Up:
+                case FocusDirection::UP:
                 {
                     return getPreviousFocusedWidget(direction, current);
                 }

@@ -73,13 +73,7 @@ typedef enum
     POSITION_PERCENT
 }PositionType;
     
-enum class FocusDirection
-{
-    FocusDirection_Left,
-    FocusDirection_Right,
-    FocusDirection_Up,
-    FocusDirection_Down
-};
+
     
 
 typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType);
@@ -91,6 +85,14 @@ typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType);
 class Widget : public ProtectedNode
 {
 public:
+    enum class FocusDirection
+    {
+        LEFT,
+        RIGHT,
+        UP,
+        DOWN
+    };
+    
     /**
      * Default constructor
      */
