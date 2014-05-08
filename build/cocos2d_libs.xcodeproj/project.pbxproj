@@ -1610,10 +1610,6 @@
 		500DC9BD19106E89007B91BF /* CCProfiling.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500DC9BA19106E89007B91BF /* CCProfiling.cpp */; };
 		500DC9BE19106E89007B91BF /* CCProfiling.h in Headers */ = {isa = PBXBuildFile; fileRef = 500DC9BB19106E89007B91BF /* CCProfiling.h */; };
 		500DC9BF19106E89007B91BF /* CCProfiling.h in Headers */ = {isa = PBXBuildFile; fileRef = 500DC9BB19106E89007B91BF /* CCProfiling.h */; };
-		500DC9E5191BF301007B91BF /* CCVertexAttribBind.h in Headers */ = {isa = PBXBuildFile; fileRef = 500DC9E1191BF301007B91BF /* CCVertexAttribBind.h */; };
-		500DC9E6191BF301007B91BF /* CCVertexAttribBind.h in Headers */ = {isa = PBXBuildFile; fileRef = 500DC9E1191BF301007B91BF /* CCVertexAttribBind.h */; };
-		500DC9E7191BF301007B91BF /* CCVertexAttribBind.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500DC9E2191BF301007B91BF /* CCVertexAttribBind.cpp */; };
-		500DC9E8191BF301007B91BF /* CCVertexAttribBind.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500DC9E2191BF301007B91BF /* CCVertexAttribBind.cpp */; };
 		500DC9E9191BF301007B91BF /* CCGLProgramState.h in Headers */ = {isa = PBXBuildFile; fileRef = 500DC9E3191BF301007B91BF /* CCGLProgramState.h */; };
 		500DC9EA191BF301007B91BF /* CCGLProgramState.h in Headers */ = {isa = PBXBuildFile; fileRef = 500DC9E3191BF301007B91BF /* CCGLProgramState.h */; };
 		500DC9EB191BF301007B91BF /* CCGLProgramState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500DC9E4191BF301007B91BF /* CCGLProgramState.cpp */; };
@@ -2700,8 +2696,6 @@
 		500DC9B519106E6D007B91BF /* TransformUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformUtils.h; sourceTree = "<group>"; };
 		500DC9BA19106E89007B91BF /* CCProfiling.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCProfiling.cpp; path = ../base/CCProfiling.cpp; sourceTree = "<group>"; };
 		500DC9BB19106E89007B91BF /* CCProfiling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCProfiling.h; path = ../base/CCProfiling.h; sourceTree = "<group>"; };
-		500DC9E1191BF301007B91BF /* CCVertexAttribBind.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVertexAttribBind.h; sourceTree = "<group>"; };
-		500DC9E2191BF301007B91BF /* CCVertexAttribBind.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCVertexAttribBind.cpp; sourceTree = "<group>"; };
 		500DC9E3191BF301007B91BF /* CCGLProgramState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGLProgramState.h; sourceTree = "<group>"; };
 		500DC9E4191BF301007B91BF /* CCGLProgramState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGLProgramState.cpp; sourceTree = "<group>"; };
 		50272538190BF1B900AAF4ED /* cocos2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cocos2d.h; path = ../cocos/cocos2d.h; sourceTree = "<group>"; };
@@ -3258,8 +3252,6 @@
 		1A570238180BCC580088DEC7 /* shaders */ = {
 			isa = PBXGroup;
 			children = (
-				500DC9E1191BF301007B91BF /* CCVertexAttribBind.h */,
-				500DC9E2191BF301007B91BF /* CCVertexAttribBind.cpp */,
 				500DC9E3191BF301007B91BF /* CCGLProgramState.h */,
 				500DC9E4191BF301007B91BF /* CCGLProgramState.cpp */,
 				1A57052F180BD9500088DEC7 /* CCGLProgram.cpp */,
@@ -5042,7 +5034,6 @@
 				1A57022F180BCC1A0088DEC7 /* CCParticleSystemQuad.h in Headers */,
 				500DC96A19106300007B91BF /* CCEventListenerCustom.h in Headers */,
 				B2AF2F9718EBAEAE00C5807C /* MathUtil.h in Headers */,
-				500DC9E5191BF301007B91BF /* CCVertexAttribBind.h in Headers */,
 				1A570236180BCC4D0088DEC7 /* CCScriptSupport.h in Headers */,
 				1A57024D180BCC6F0088DEC7 /* ccShader_Position_uColor_frag.h in Headers */,
 				1A57024F180BCC6F0088DEC7 /* ccShader_Position_uColor_vert.h in Headers */,
@@ -5653,7 +5644,6 @@
 				1AD71EAC180E26E600808F54 /* Attachment.h in Headers */,
 				500DC94719106300007B91BF /* CCDataVisitor.h in Headers */,
 				2905FA4918CF08D100240AA3 /* UIButton.h in Headers */,
-				500DC9E6191BF301007B91BF /* CCVertexAttribBind.h in Headers */,
 				500DC96719106300007B91BF /* CCEventListenerAcceleration.h in Headers */,
 				1AD71EB0180E26E600808F54 /* AttachmentLoader.h in Headers */,
 				1AD71EB4180E26E600808F54 /* Bone.h in Headers */,
@@ -6216,7 +6206,6 @@
 				1A570225180BCC1A0088DEC7 /* CCParticleExamples.cpp in Sources */,
 				1A570229180BCC1A0088DEC7 /* CCParticleSystem.cpp in Sources */,
 				1A57022D180BCC1A0088DEC7 /* CCParticleSystemQuad.cpp in Sources */,
-				500DC9E7191BF301007B91BF /* CCVertexAttribBind.cpp in Sources */,
 				500DC9B01910633C007B91BF /* CCTouch.cpp in Sources */,
 				50FCEB9B18C72017004AD434 /* ImageViewReader.cpp in Sources */,
 				500DC9AA19106300007B91BF /* ZipUtils.cpp in Sources */,
@@ -6774,7 +6763,6 @@
 				1AAF5854180E40B9000584C8 /* LocalStorageAndroid.cpp in Sources */,
 				1A9DCA24180E6955007A3AD4 /* ccFPSImages.c in Sources */,
 				1A9DCA28180E6955007A3AD4 /* CCGLBufferedNode.cpp in Sources */,
-				500DC9E8191BF301007B91BF /* CCVertexAttribBind.cpp in Sources */,
 				50FCEBA018C72017004AD434 /* LayoutReader.cpp in Sources */,
 				50E6D33518E174130051CA34 /* UIHBox.cpp in Sources */,
 				500DC98F19106300007B91BF /* CCRef.cpp in Sources */,
