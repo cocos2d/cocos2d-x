@@ -159,6 +159,7 @@ physics/chipmunk/CCPhysicsContactInfo_chipmunk.cpp \
 physics/chipmunk/CCPhysicsJointInfo_chipmunk.cpp \
 physics/chipmunk/CCPhysicsShapeInfo_chipmunk.cpp \
 physics/chipmunk/CCPhysicsWorldInfo_chipmunk.cpp \
+../external/ConvertUTF/ConvertUTF.cpp \
 ../external/tinyxml2/tinyxml2.cpp \
 ../external/unzip/ioapi.cpp \
 ../external/unzip/unzip.cpp \
@@ -182,7 +183,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/unzip \
                     $(LOCAL_PATH)/../external/chipmunk/include/chipmunk \
                     $(LOCAL_PATH)/../external/edtaa3func \
-                    $(LOCAL_PATH)/../external/xxhash
+                    $(LOCAL_PATH)/../external/xxhash \
+                    $(LOCAL_PATH)/../external/ConvertUTF
 
 
 LOCAL_LDLIBS := -lGLESv2 \
