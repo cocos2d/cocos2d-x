@@ -406,7 +406,6 @@
     <ClCompile Include="platform\CCImage.cpp">
       <Filter>platform</Filter>
     </ClCompile>
-    <ClCompile Include="CCTweenFunction.cpp" />
     <ClCompile Include="..\..\external\xxhash\xxhash.c">
       <Filter>xxhash</Filter>
     </ClCompile>
@@ -587,6 +586,9 @@
     </ClCompile>
     <ClCompile Include="..\..\external\ConvertUTF\ConvertUTFWrapper.cpp">
       <Filter>ConvertUTF</Filter>
+    </ClCompile>
+    <ClCompile Include="CCTweenFunction.cpp">
+      <Filter>actions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -921,7 +923,6 @@
     <ClInclude Include="platform\desktop\CCGLView.h">
       <Filter>platform\desktop</Filter>
     </ClInclude>
-    <ClInclude Include="CCTweenFunction.h" />
     <ClInclude Include="..\..\external\xxhash\xxhash.h">
       <Filter>xxhash</Filter>
     </ClInclude>
@@ -1138,6 +1139,9 @@
     </ClInclude>
     <ClInclude Include="..\..\external\ConvertUTF\ConvertUTF.h">
       <Filter>ConvertUTF</Filter>
+    </ClInclude>
+    <ClInclude Include="CCTweenFunction.h">
+      <Filter>actions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
