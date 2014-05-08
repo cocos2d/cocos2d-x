@@ -17,7 +17,20 @@ static struct
 }
 g_guisTests[] =
 {
+    {
+        "gui focus test",
+        [](Ref* sender)
+        {
+            UISceneManager* pManager = UISceneManager::sharedUISceneManager();
+            pManager->setCurrentUISceneId(KUIFocusTest_HBox);
+            pManager->setMinUISceneId(KUIFocusTest_HBox);
+            pManager->setMaxUISceneId(KUIFocusTest_NestedLayout3);
+            Scene* pScene = pManager->currentUIScene();
+            Director::getInstance()->replaceScene(pScene);
+        }
+    },
 	{
+        
         "gui ButtonTest",
         [](Ref* sender)
         {
@@ -267,18 +280,7 @@ g_guisTests[] =
             Director::getInstance()->replaceScene(pScene);
         }
 	},
-    {
-        "gui focus test",
-        [](Ref* sender)
-        {
-            UISceneManager* pManager = UISceneManager::sharedUISceneManager();
-            pManager->setCurrentUISceneId(KUIFocusTest_HBox);
-            pManager->setMinUISceneId(KUIFocusTest_HBox);
-            pManager->setMaxUISceneId(KUIFocusTest_NestedLayout3);
-            Scene* pScene = pManager->currentUIScene();
-            Director::getInstance()->replaceScene(pScene);
-        }
-    }
+   
 };
 
 static const int g_maxTests = sizeof(g_guisTests) / sizeof(g_guisTests[0]);
