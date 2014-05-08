@@ -44,6 +44,11 @@
 -- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
+-- @function [parent=#Widget] setHighlighted 
+-- @param self
+-- @param #bool bool
+        
+--------------------------------
 -- @function [parent=#Widget] setPositionType 
 -- @param self
 -- @param #ccui.PositionType positiontype
@@ -62,6 +67,11 @@
 -- @function [parent=#Widget] getBottomInParent 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+-- @function [parent=#Widget] isHighlighted 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @function [parent=#Widget] getLayoutParameter 
@@ -99,6 +109,13 @@
 -- @function [parent=#Widget] getVirtualRendererSize 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)
+        
+--------------------------------
+-- @function [parent=#Widget] findNextFocusedWidget 
+-- @param self
+-- @param #ccui.FocusDirection focusdirection
+-- @param #ccui.Widget widget
+-- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
 -- @function [parent=#Widget] isTouchEnabled 
@@ -175,6 +192,11 @@
 -- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
+-- @function [parent=#Widget] setFocusEnabled 
+-- @param self
+-- @param #bool bool
+        
+--------------------------------
 -- @function [parent=#Widget] setActionTag 
 -- @param self
 -- @param #int int
@@ -191,9 +213,19 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- @function [parent=#Widget] getCurrentFocusedWidget 
+-- @param self
+-- @param #bool bool
+-- @return Widget#Widget ret (return value: ccui.Widget)
+        
+--------------------------------
 -- @function [parent=#Widget] getTopInParent 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+-- @function [parent=#Widget] requestFocus 
+-- @param self
         
 --------------------------------
 -- overload function: updateSizeAndPosition(size_table)
@@ -266,6 +298,11 @@
 -- @function [parent=#Widget] setBright 
 -- @param self
 -- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#Widget] isFocusEnabled 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @function [parent=#Widget] create 
