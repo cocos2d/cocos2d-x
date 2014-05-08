@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include <string>
 using namespace std;
 
-bool initRuntime();
+bool initRuntime(string& entryfile);
 bool startRuntime();
 
 bool reloadScript(const string& modulefile);
