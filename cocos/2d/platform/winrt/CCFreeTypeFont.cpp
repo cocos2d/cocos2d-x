@@ -84,6 +84,10 @@ unsigned char* CCFreeTypeFont::initWithString(const char * text, const FontDefin
     m_inWidth = textDefinition._dimensions.width;
     m_inHeight = textDefinition._dimensions.height;
 
+    m_fontFillColorR = textDefinition._fontFillColor.r;
+    m_fontFillColorG = textDefinition._fontFillColor.g;
+    m_fontFillColorB = textDefinition._fontFillColor.b;
+
 #if 0
     // check the cache for the font file buffer
     auto ittFontNames = s_fontsNames.find(textDefinition._fontName);
@@ -304,10 +308,10 @@ void CCFreeTypeFont::draw_bitmap(unsigned char* pBuffer, FT_Bitmap*  bitmap, FT_
             if(value > 0)
             {
                 FT_Int index = (j * m_width * 4) + (i * 4);
+                pBuffer[index++] = m_fontFillColorR;
+                pBuffer[index++] = m_fontFillColorG;
+                pBuffer[index++] = m_fontFillColorB;
                 pBuffer[index++] = value;
-                pBuffer[index++] = value;
-                pBuffer[index++] = value;
-                pBuffer[index++] = 0xff;
            }
         }
     }  

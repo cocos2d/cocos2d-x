@@ -285,9 +285,6 @@ public:
     void setUniformsForBuiltins();
     void setUniformsForBuiltins(const Matrix &modelView);
 
-    void setUniformByName(const std::string& uniformName, const Uniform &value);
-
-
     // Attribute
 
     /** returns the vertexShader error log */

@@ -101,6 +101,14 @@ enum
      */
     kUIWidgetAddNodeTest,
     kUIRichTextTest,
+    KUIFocusTest_HBox,
+    KUIFocusTest_VBox,
+    KUIFocusTest_NestedLayout1,
+    KUIFocusTest_NestedLayout2,
+    KUIFocusTest_NestedLayout3,
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    kUIVideoWidgetTest,
+#endif
     kUITestMax
 };
 

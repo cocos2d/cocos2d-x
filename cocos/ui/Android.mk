@@ -28,9 +28,8 @@ UIRichText.cpp \
 CCProtectedNode.cpp \
 UIHBox.cpp \
 UIVBox.cpp \
-UIRelativeBox.cpp
-
-
+UIRelativeBox.cpp \
+UIVideoWidgetAndroid.cpp
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/.. \
 $(LOCAL_PATH)/../editor-support

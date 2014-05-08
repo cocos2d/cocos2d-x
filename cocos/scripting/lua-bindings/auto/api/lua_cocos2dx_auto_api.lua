@@ -132,6 +132,16 @@
 
 
 --------------------------------------------------------
+-- the cc EventFocus
+-- @field [parent=#cc] EventFocus#EventFocus EventFocus preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventListenerFocus
+-- @field [parent=#cc] EventListenerFocus#EventListenerFocus EventListenerFocus preloaded module
+
+
+--------------------------------------------------------
 -- the cc Action
 -- @field [parent=#cc] Action#Action Action preloaded module
 

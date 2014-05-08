@@ -6,15 +6,15 @@
 --------------------------------
 -- @function [parent=#TMXLayer] getTileGIDAt 
 -- @param self
--- @param #array_table array
+-- @param #vector2_table array
 -- @param #cc.TMXTileFlags_ tmxtileflags_
 -- @return unsigned int#unsigned int ret (return value: unsigned int)
         
 --------------------------------
 -- @function [parent=#TMXLayer] getPositionAt 
 -- @param self
--- @param #array_table array
--- @return array_table#array_table ret (return value: array_table)
+-- @param #vector2_table array
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#TMXLayer] setLayerOrientation 
@@ -58,7 +58,7 @@
 --------------------------------
 -- @function [parent=#TMXLayer] removeTileAt 
 -- @param self
--- @param #array_table array
+-- @param #vector2_table array
         
 --------------------------------
 -- @function [parent=#TMXLayer] initWithTilesetInfo 
@@ -73,14 +73,14 @@
 -- @param self
         
 --------------------------------
--- overload function: setTileGID(unsigned int, array_table, cc.TMXTileFlags_)
+-- overload function: setTileGID(unsigned int, vector2_table, cc.TMXTileFlags_)
 --          
--- overload function: setTileGID(unsigned int, array_table)
+-- overload function: setTileGID(unsigned int, vector2_table)
 --          
 -- @function [parent=#TMXLayer] setTileGID
 -- @param self
 -- @param #unsigned int int
--- @param #array_table array
+-- @param #vector2_table array
 -- @param #cc.TMXTileFlags_ tmxtileflags_
 
 --------------------------------
@@ -126,7 +126,7 @@
 --------------------------------
 -- @function [parent=#TMXLayer] getTileAt 
 -- @param self
--- @param #array_table array
+-- @param #vector2_table array
 -- @return Sprite#Sprite ret (return value: cc.Sprite)
         
 --------------------------------

@@ -2,7 +2,6 @@
 #include "extensions/cocos-ext.h"
 #include "UIScene.h"
 #include "UISceneManager.h"
-#include "../ExtensionsTest.h"
 #include "editor-support/cocostudio/CCSGUIReader.h"
 #include "CocosGUIScene.h"
 
@@ -73,9 +72,7 @@ void UIScene::menuCloseCallback(Ref* pSender, TouchEventType type)
     if (type == TOUCH_EVENT_ENDED)
     {
         _uiLayer->removeFromParent();
-        auto scene = new ExtensionsTestScene();
-        scene->runThisTest();
-        scene->release();
+        
     }
 }
 

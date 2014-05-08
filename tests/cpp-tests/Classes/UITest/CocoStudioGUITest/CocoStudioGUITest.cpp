@@ -5,7 +5,8 @@
 #include "CocosGUIScene.h"
 #include "GUIEditorTest.h"
 #include "CustomGUIScene.h"
-
+#include "controller.h"
+#include "cocostudio/CocoStudio.h"
 
 enum
 {
@@ -93,35 +94,6 @@ void CocoStudioGUIMainLayer::onTouchesBegan(const std::vector<Touch*>& touches, 
     _beginPos = touch->getLocation();
 }
 
-/*
-void CocoStudioGUIMainLayer::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
-{
-    auto touch = static_cast<Touch*>(touches[0]);
-    
-    auto touchLocation = touch->getLocation();
-    float nMoveY = touchLocation.y - _beginPos.y;
-    
-    auto curPos  = _itemMenu->getPosition();
-    auto nextPos = Vector2(curPos.x, curPos.y + nMoveY);
-    
-    if (nextPos.y < 0.0f)
-    {
-        _itemMenu->setPosition(Vector2::ZERO);
-        return;
-    }
-    
-    float y = (g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height;
-    if (nextPos.y > y)
-    {
-        _itemMenu->setPosition(Vector2(0, y));
-        return;
-    }
-    
-    _itemMenu->setPosition(nextPos);
-    _beginPos = touchLocation;
-    _curPos   = nextPos;
-}
- */
 
 ////////////////////////////////////////////////////////
 //
@@ -156,7 +128,13 @@ void CocoStudioGUITestScene::runThisTest()
 
 void CocoStudioGUITestScene::BackCallback(Ref* pSender)
 {
-    ExtensionsTestScene* pScene = new ExtensionsTestScene();
-    pScene->runThisTest();
-    pScene->release();
+    auto scene = Scene::create();
+    
+    auto layer = new TestController();
+    scene->addChild(layer);
+    layer->release();
+    
+    Director::getInstance()->replaceScene(scene);
+    
+    cocostudio::ArmatureDataManager::destroyInstance();
 }

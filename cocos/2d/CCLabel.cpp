@@ -934,6 +934,7 @@ void Label::createSpriteWithFontDefinition()
     Node::addChild(_textSprite,0,Node::INVALID_TAG);
 
     _textSprite->updateDisplayedColor(_displayedColor);
+    _textSprite->updateDisplayedOpacity(_displayedOpacity);
 }
 
 void Label::setFontDefinition(const FontDefinition& textDefinition)

@@ -17,6 +17,10 @@
 #include "UIListViewTest/UIListViewTest.h"
 #include "UIWidgetAddNodeTest/UIWidgetAddNodeTest.h"
 #include "UIRichTextTest/UIRichTextTest.h"
+#include "UIFocusTest/UIFocusTest.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#include "UIVideoWidgetTest/UIVideoWidgetTest.h"
+#endif
 /*
 #include "UISwitchTest/UISwitchTest.h"
  */
@@ -109,6 +113,14 @@ static const char* s_testArray[] =
      */
     "UIWidgetAddNodeTest",
     "UIRichTextTest",
+    "UIFocusTest-HBox",
+    "UIFocusTest-VBox",
+    "UIFocusTest-NestedLayout1",
+    "UIFocusTest-NestedLayout2",
+    "UIFocusTest-NestedLayout3",
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    "UIVideoWidgetTest"
+#endif
 };
 
 static UISceneManager *sharedInstance = NULL;
@@ -359,6 +371,20 @@ Scene *UISceneManager::currentUIScene()
             
         case kUIRichTextTest:
             return UIRichTextTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case KUIFocusTest_HBox:
+            return UIFocusTestHorizontal::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case KUIFocusTest_VBox:
+            return UIFocusTestVertical::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case KUIFocusTest_NestedLayout1:
+            return UIFocusTestNestedLayout1::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case KUIFocusTest_NestedLayout2:
+            return UIFocusTestNestedLayout2::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case KUIFocusTest_NestedLayout3:
+            return UIFocusTestNestedLayout3::sceneWithTitle(s_testArray[_currentUISceneId]);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        case kUIVideoWidgetTest:
+            return VideoWidgetTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+#endif
     }
     return NULL;
 }

@@ -18,7 +18,7 @@
 -- @param self
 -- @param #size_table size
 -- @param #cc.PhysicsMaterial physicsmaterial
--- @param #array_table array
+-- @param #vector2_table array
 -- @return PhysicsShapeBox#PhysicsShapeBox ret (return value: cc.PhysicsShapeBox)
         
 --------------------------------
@@ -32,13 +32,13 @@
 -- @param self
 -- @param #float float
 -- @param #size_table size
--- @param #array_table array
+-- @param #vector2_table array
 -- @return float#float ret (return value: float)
         
 --------------------------------
 -- @function [parent=#PhysicsShapeBox] getOffset 
 -- @param self
--- @return array_table#array_table ret (return value: array_table)
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#PhysicsShapeBox] calculateDefaultMoment 
