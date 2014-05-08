@@ -158,7 +158,7 @@ local function OpenGLTestMainLayer()
         InitTitle(RetroEffectlayer)
         local program = cc.GLProgram:create("Shaders/example_ColorBars.vsh", "Shaders/example_ColorBars.fsh")
         program:bindAttribLocation(cc.ATTRIBUTE_NAME_POSITION, cc.VERTEX_ATTRIB_POSITION) 
-        program:bindAttribLocation(cc.ATTRIBUTE_NAME_TEX_COORD, cc.VERTEX_ATTRIB_TEX_COORDS)
+        program:bindAttribLocation(cc.ATTRIBUTE_NAME_TEX_COORD, cc.VERTEX_ATTRIB_TEX_COORD)
         program:link()
         program:updateUniforms()
 
@@ -653,7 +653,7 @@ local function OpenGLTestMainLayer()
 
 
                 gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexTextureBuffer.buffer_id)
-                gl.vertexAttribPointer(cc.VERTEX_ATTRIB_TEX_COORDS,2,gl.FLOAT,false,0,0)
+                gl.vertexAttribPointer(cc.VERTEX_ATTRIB_TEX_COORD,2,gl.FLOAT,false,0,0)
 
                 gl.drawArrays(gl.TRIANGLE_STRIP,0,4)
 

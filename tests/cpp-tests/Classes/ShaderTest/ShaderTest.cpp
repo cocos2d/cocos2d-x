@@ -116,6 +116,7 @@ ShaderNode::ShaderNode()
 
 ShaderNode::~ShaderNode()
 {
+    CC_SAFE_RELEASE(_glProgramState);
 }
 
 ShaderNode* ShaderNode::shaderNodeWithVertex(const char *vert, const char *frag)
@@ -142,6 +143,7 @@ bool ShaderNode::initWithVertex(const char *vert, const char *frag)
 
     _time = 0;
     _resolution = Vector2(SIZE_X, SIZE_Y);
+    _glProgramState->getUniformValue("resolution")->setValue(_resolution);
 
     scheduleUpdate();
 
@@ -164,6 +166,9 @@ void ShaderNode::loadShaderVertex(const char *vert, const char *frag)
     shader->updateUniforms();
 
     this->setShaderProgram(shader);
+
+    _glProgramState = GLProgramState::create(shader);
+    _glProgramState->retain();
 }
 
 void ShaderNode::update(float dt)
@@ -176,6 +181,7 @@ void ShaderNode::setPosition(const Vector2 &newPosition)
     Node::setPosition(newPosition);
     auto position = getPosition();
     _center = Vector2(position.x * CC_CONTENT_SCALE_FACTOR(), position.y * CC_CONTENT_SCALE_FACTOR());
+    _glProgramState->getUniformValue("center")->setValue(_center);
 }
 
 void ShaderNode::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
@@ -187,25 +193,16 @@ void ShaderNode::draw(Renderer *renderer, const Matrix &transform, bool transfor
 
 void ShaderNode::onDraw(const Matrix &transform, bool transformUpdated)
 {
-    auto shader = getShaderProgram();
-    shader->use();
-    shader->setUniformsForBuiltins(transform);
-
-    // TODO: riq FIXME
-//    shader->getUniform("center")->setValue(_center);
-//    shader->getUniform("resolution")->setValue(_resolution);
-
-    GL::enableVertexAttribs( cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION );
 
     float w = SIZE_X, h = SIZE_Y;
     GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
 
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-    
+    _glProgramState->setVertexAttribPointer("a_position", 2, GL_FLOAT, GL_FALSE, 0, vertices);
+    _glProgramState->apply(transform);
+
     glDrawArrays(GL_TRIANGLES, 0, 6);
     
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,6);
-
 }
 
 /// ShaderMonjori
@@ -435,10 +432,12 @@ protected:
     float     _weightSum;
 
     CustomCommand _customCommand;
+    GLProgramState *_glProgramState;
 };
 
 SpriteBlur::~SpriteBlur()
 {
+    CC_SAFE_RELEASE(_glProgramState);
 }
 
 SpriteBlur* SpriteBlur::create(const char *pszFileName)
@@ -473,8 +472,11 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
         auto s = getTexture()->getContentSizeInPixels();
 
         _pixelSize = Vector2(1/s.width, 1/s.height);
+
         _samplingRadius = 0;
         this->initProgram();
+
+        _glProgramState->getUniformValue("onePixelSize")->setValue(_pixelSize);
 
         return true;
     }
@@ -490,20 +492,30 @@ void SpriteBlur::initProgram()
     setShaderProgram(program);
 
     CHECK_GL_ERROR_DEBUG();
-    
-    program->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
-    program->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
-    program->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
 
-    CHECK_GL_ERROR_DEBUG();
-    
     program->link();
     
     CHECK_GL_ERROR_DEBUG();
     
     program->updateUniforms();
     
-    CHECK_GL_ERROR_DEBUG();    
+    CHECK_GL_ERROR_DEBUG();
+
+    _glProgramState = GLProgramState::create(program);
+    _glProgramState->retain();
+
+#define kQuadSize sizeof(_quad.bl)
+    size_t offset = (size_t)&_quad;
+
+    // position
+    int diff = offsetof( V3F_C4B_T2F, vertices);
+    _glProgramState->setVertexAttribPointer("a_position", 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+    // texcoord
+    diff = offsetof( V3F_C4B_T2F, texCoords);
+    _glProgramState->setVertexAttribPointer("a_texCoord", 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+    // color
+    diff = offsetof( V3F_C4B_T2F, colors);
+    _glProgramState->setVertexAttribPointer("a_color", 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
 }
 
 void SpriteBlur::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
@@ -515,38 +527,11 @@ void SpriteBlur::draw(Renderer *renderer, const Matrix &transform, bool transfor
 
 void SpriteBlur::onDraw(const Matrix &transform, bool transformUpdated)
 {
-    GL::enableVertexAttribs(cocos2d::GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
-    BlendFunc blend = getBlendFunc();
-    GL::blendFunc(blend.src, blend.dst);
+    _glProgramState->setTexture(getTexture());
+    _glProgramState->setBlendFunc(getBlendFunc());
+    
+    _glProgramState->apply(transform);
 
-    auto program = getShaderProgram();
-    program->use();
-    program->setUniformsForBuiltins(transform);
-
-    // TODO: riq FIXME
-//    program->getUniform("onePixelSize")->setValue(_pixelSize);
-//    program->getUniform("gaussianCoefficient")->setValue(Vector4(_samplingRadius, _scale, _cons, _weightSum));
-
-    GL::bindTexture2D( getTexture()->getName());
-    
-    //
-    // Attributes
-    //
-    #define kQuadSize sizeof(_quad.bl)
-    size_t offset = (size_t)&_quad;
-    
-    // vertex
-    int diff = offsetof( V3F_C4B_T2F, vertices);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
-    
-    // texCoods
-    diff = offsetof( V3F_C4B_T2F, texCoords);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
-    
-    // color
-    diff = offsetof( V3F_C4B_T2F, colors);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
-    
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,4);
@@ -585,6 +570,8 @@ void SpriteBlur::setBlurSize(float f)
         }
     }
     log("_blurRadius:%d",_blurRadius);
+
+    _glProgramState->getUniformValue("gaussianCoefficient")->setValue(Vector4(_samplingRadius, _scale, _cons, _weightSum));
 }
 
 // ShaderBlur
@@ -670,7 +657,7 @@ bool ShaderRetroEffect::init()
         auto p = GLProgram::createWithByteArrays(ccPositionTexture_vert, fragSource);
 
         p->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
-        p->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
+        p->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORD);
 
         p->link();
         p->updateUniforms();

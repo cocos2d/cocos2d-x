@@ -95,14 +95,15 @@ protected:
 class VertexAttribValue
 {
     friend class GLProgram;
+    friend class GLProgramState;
 
 public:
     VertexAttribValue(VertexAttrib *vertexAttrib);
     VertexAttribValue();
     ~VertexAttribValue();
 
-	void setValue(GLint size, GLenum type, GLboolean normalized, GLsizei stride, GLvoid *pointer);
-    void setValue(const std::function<void(VertexAttrib*)> callback);
+	void setPointer(GLint size, GLenum type, GLboolean normalized, GLsizei stride, GLvoid *pointer);
+    void setCallback(const std::function<void(VertexAttrib*)> callback);
     void apply();
 
 protected:
@@ -137,26 +138,36 @@ protected:
 class GLProgramState : public Ref
 {
 public:
-    GLProgramState* create(GLProgram* glprogram);
+    static GLProgramState* create(GLProgram* glprogram);
 
-    void apply();
-    void setTexture(Texture2D *texture) { _textures.insert(0, texture); }
+    void apply(const Matrix& modelView);
+
+    void setGLProgram(GLProgram* glprogram);
+    GLProgram* getGLProgram() const { return _glprogram; }
+
+    void setTexture(Texture2D *texture);
     Texture2D* getTexture() const { return _textures.at(0); }
 
     void setBlendFunc(const BlendFunc& blendFunc) { _blendFunc = blendFunc; }
     const BlendFunc& getBlendFunc() const { return _blendFunc; }
 
+    void setVertexAttribCallback(const std::string &name, const std::function<void(VertexAttrib*)> callback);
+    void setVertexAttribPointer(const std::string &name, GLint size, GLenum type, GLboolean normalized, GLsizei stride, GLvoid *pointer);
+
     UniformValue* getUniformValue(const std::string &uniformName);
-    VertexAttribValue* getVertexAttribValue(const std::string &attributeName);
 
 protected:
     GLProgramState();
     ~GLProgramState();
     bool init(GLProgram* program);
+    void resetGLProgram();
+    VertexAttribValue* getVertexAttribValue(const std::string &attributeName);
 
     std::unordered_map<std::string, UniformValue> _uniforms;
     std::unordered_map<std::string, VertexAttribValue> _attributes;
-    
+
+    uint32_t _vertexAttribsFlags;
+
     GLProgram *_glprogram;
     Vector<Texture2D*> _textures;
     BlendFunc _blendFunc;

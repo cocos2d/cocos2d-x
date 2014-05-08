@@ -82,6 +82,7 @@ const char* GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE = "CC_alpha_value";
 const char* GLProgram::ATTRIBUTE_NAME_COLOR = "a_color";
 const char* GLProgram::ATTRIBUTE_NAME_POSITION = "a_position";
 const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD = "a_texCoord";
+const char* GLProgram::ATTRIBUTE_NAME_NORMAL = "a_normal";
 
 
 GLProgram* GLProgram::createWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
@@ -241,6 +242,26 @@ bool GLProgram::initWithFilenames(const std::string &vShaderFilename, const std:
     std::string fragmentSource = fileUtils->getStringFromFile(FileUtils::getInstance()->fullPathForFilename(fShaderFilename));
 
     return initWithByteArrays(vertexSource.c_str(), fragmentSource.c_str());
+}
+
+void GLProgram::bindPredefinedVertexAttribs()
+{
+    static const struct {
+        const char *attributeName;
+        int location;
+    } attribute_locations[] =
+    {
+        {GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION},
+        {GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR},
+        {GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORD},
+        {GLProgram::ATTRIBUTE_NAME_NORMAL, GLProgram::VERTEX_ATTRIB_NORMAL},
+    };
+
+    const int size = sizeof(attribute_locations) / sizeof(attribute_locations[0]);
+
+    for(int i=0; i<size;i++) {
+        glBindAttribLocation(_program, attribute_locations[i].location, attribute_locations[i].attributeName);
+    }
 }
 
 void GLProgram::parseVertexAttribs()
@@ -448,7 +469,6 @@ void GLProgram::updateUniforms()
 bool GLProgram::link()
 {
     CCASSERT(_program != 0, "Cannot link invalid program");
-    
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     if(!_hasShaderCompiler)
@@ -459,9 +479,10 @@ bool GLProgram::link()
 #endif
 
     GLint status = GL_TRUE;
-    	
-    glLinkProgram(_program);
 
+    bindPredefinedVertexAttribs();
+
+    glLinkProgram(_program);
 
     parseVertexAttribs();
     parseUniforms();

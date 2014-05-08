@@ -33,17 +33,18 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+static const int MAX_ATTRIBUTES = 16;
+static const int MAX_ACTIVE_TEXTURE = 16;
+
 namespace
 {
     static GLuint s_currentProjectionMatrix = -1;
-    static unsigned int s_attributeFlags = 0;
+    static uint32_t s_attributeFlags = 0;  // 32 attributes max
 
 #if CC_ENABLE_GL_STATE_CACHE
-    
-#define kMaxActiveTexture 16
-    
+
     static GLuint    s_currentShaderProgram = -1;
-    static GLuint    s_currentBoundTexture[kMaxActiveTexture] =  {(GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, (GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, (GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, (GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, };
+    static GLuint    s_currentBoundTexture[MAX_ACTIVE_TEXTURE] =  {(GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, (GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, (GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, (GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, };
     static GLenum    s_blendingSource = -1;
     static GLenum    s_blendingDest = -1;
     static int       s_GLServerState = 0;
@@ -65,7 +66,7 @@ void invalidateStateCache( void )
 
 #if CC_ENABLE_GL_STATE_CACHE
     s_currentShaderProgram = -1;
-    for( int i=0; i < kMaxActiveTexture; i++ )
+    for( int i=0; i < MAX_ACTIVE_TEXTURE; i++ )
     {
         s_currentBoundTexture[i] = -1;
     }
@@ -147,7 +148,7 @@ void bindTexture2D(GLuint textureId)
 void bindTexture2DN(GLuint textureUnit, GLuint textureId)
 {
 #if CC_ENABLE_GL_STATE_CACHE
-    CCASSERT(textureUnit < kMaxActiveTexture, "textureUnit is too big");
+    CCASSERT(textureUnit < MAX_ACTIVE_TEXTURE, "textureUnit is too big");
     if (s_currentBoundTexture[textureUnit] != textureId)
     {
         s_currentBoundTexture[textureUnit] = textureId;
@@ -210,12 +211,12 @@ void bindVAO(GLuint vaoId)
 
 // GL Vertex Attrib functions
 
-void enableVertexAttribs( unsigned int flags )
+void enableVertexAttribs(uint32_t flags)
 {
     bindVAO(0);
 
     // hardcoded!
-    for(int i=0; i < 16; i++) {
+    for(int i=0; i < MAX_ATTRIBUTES; i++) {
         unsigned int bit = 1 << i;
         bool enabled = flags & bit;
         bool enabledBefore = s_attributeFlags & bit;

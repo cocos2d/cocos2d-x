@@ -52,6 +52,10 @@ UniformValue::UniformValue(Uniform *uniform, GLProgram* glprogram)
 {
 }
 
+UniformValue::~UniformValue()
+{
+}
+
 void UniformValue::apply()
 {
     if(_useCallback) {
@@ -158,10 +162,12 @@ VertexAttribValue::VertexAttribValue(VertexAttrib *vertexAttrib)
 {
 }
 
-void VertexAttribValue::apply()
+VertexAttribValue::~VertexAttribValue()
 {
-    GL::enableVertexAttribs(0);
-    
+}
+
+void VertexAttribValue::apply()
+{    
     if(_useCallback) {
         _value.callback(_vertexAttrib);
     }
@@ -176,13 +182,13 @@ void VertexAttribValue::apply()
     }
 }
 
-void VertexAttribValue::setValue(const std::function<void(VertexAttrib*)> callback)
+void VertexAttribValue::setCallback(const std::function<void(VertexAttrib*)> callback)
 {
     _value.callback = callback;
     _useCallback = true;
 }
 
-void VertexAttribValue::setValue(GLint size, GLenum type, GLboolean normalized, GLsizei stride, GLvoid *pointer)
+void VertexAttribValue::setPointer(GLint size, GLenum type, GLboolean normalized, GLsizei stride, GLvoid *pointer)
 {
     _value.pointer.size = size;
     _value.pointer.type = type;
@@ -199,8 +205,6 @@ void VertexAttribValue::setValue(GLint size, GLenum type, GLboolean normalized, 
 
 GLProgramState* GLProgramState::create(GLProgram *glprogram)
 {
-    CCASSERT(glprogram, "invalid shader");
-
     auto ret = new (std::nothrow) GLProgramState;
     if(ret && ret->init(glprogram)) {
         ret->autorelease();
@@ -210,6 +214,12 @@ GLProgramState* GLProgramState::create(GLProgram *glprogram)
     return nullptr;
 }
 
+GLProgramState::GLProgramState()
+: _vertexAttribsFlags(0)
+, _blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED)
+{
+}
+
 GLProgramState::~GLProgramState()
 {
     _glprogram->release();
@@ -217,6 +227,8 @@ GLProgramState::~GLProgramState()
 
 bool GLProgramState::init(GLProgram* glprogram)
 {
+    CCASSERT(glprogram, "invalid shader");
+
     _glprogram = glprogram;
     _glprogram->retain();
 
@@ -232,13 +244,22 @@ bool GLProgramState::init(GLProgram* glprogram)
 
     return true;
 }
-void GLProgramState::apply()
+
+void GLProgramState::resetGLProgram()
+{
+    CC_SAFE_RELEASE(_glprogram);
+    _uniforms.clear();
+    _attributes.clear();
+}
+
+void GLProgramState::apply(const Matrix& modelView)
 {
     CCASSERT(_glprogram, "invalid glprogram");
 
     // set shader
     _glprogram->use();
 
+    _glprogram->setUniformsForBuiltins(modelView);
 
     // set texture
     int i = 0;
@@ -250,15 +271,36 @@ void GLProgramState::apply()
     GL::blendFunc(_blendFunc.src, _blendFunc.dst);
 
 
-    // set uniforms
-    for(auto& uniform : _uniforms) {
-        uniform.second.apply();
-    }
+    // enable/disable vertex attribs
+    GL::enableVertexAttribs(_vertexAttribsFlags);
 
     // set attributes
     for(auto &attribute : _attributes) {
         attribute.second.apply();
     }
+
+    // set uniforms
+    for(auto& uniform : _uniforms) {
+        uniform.second.apply();
+    }
+}
+
+void GLProgramState::setGLProgram(GLProgram *glprogram)
+{
+    CCASSERT(glprogram,  "invalid GLProgram");
+
+    if( _glprogram != glprogram) {
+        resetGLProgram();
+        init(glprogram);
+    }
+}
+
+void GLProgramState::setTexture(cocos2d::Texture2D *texture)
+{
+    if(_textures.size()>0)
+        _textures.replace(0, texture);
+    else
+        _textures.pushBack(texture);
 }
 
 UniformValue* GLProgramState::getUniformValue(const std::string &name)
@@ -276,5 +318,20 @@ VertexAttribValue* GLProgramState::getVertexAttribValue(const std::string &name)
         return &itr->second;
     return nullptr;
 }
+
+void GLProgramState::setVertexAttribCallback(const std::string &name, const std::function<void(VertexAttrib*)> callback)
+{
+    VertexAttribValue *v = getVertexAttribValue(name);
+    v->setCallback(callback);
+    _vertexAttribsFlags |= 1 << v->_vertexAttrib->_index;
+}
+
+void GLProgramState::setVertexAttribPointer(const std::string &name, GLint size, GLenum type, GLboolean normalized, GLsizei stride, GLvoid *pointer)
+{
+    auto v = getVertexAttribValue(name);
+    v->setPointer(size, type, normalized, stride, pointer);
+    _vertexAttribsFlags |= 1 << v->_vertexAttrib->_index;
+}
+
 
 NS_CC_END

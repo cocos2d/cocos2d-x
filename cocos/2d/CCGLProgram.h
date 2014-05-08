@@ -56,6 +56,7 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
 class VertexAttrib
 {
     friend class GLProgram;
+    friend class GLProgramState;
     friend class VertexAttribValue;
     friend class VertexAttribBind;
 
@@ -102,9 +103,13 @@ public:
     {
         VERTEX_ATTRIB_POSITION,
         VERTEX_ATTRIB_COLOR,
-        VERTEX_ATTRIB_TEX_COORDS,
-        
+        VERTEX_ATTRIB_TEX_COORD,
+        VERTEX_ATTRIB_NORMAL,
+
         VERTEX_ATTRIB_MAX,
+
+        // backward compatibility
+        VERTEX_ATTRIB_TEX_COORDS = VERTEX_ATTRIB_TEX_COORD,
     };
     
     enum
@@ -155,6 +160,7 @@ public:
     static const char* ATTRIBUTE_NAME_COLOR;
     static const char* ATTRIBUTE_NAME_POSITION;
     static const char* ATTRIBUTE_NAME_TEX_COORD;
+    static const char* ATTRIBUTE_NAME_NORMAL;
 
     GLProgram();
     virtual ~GLProgram();
@@ -313,6 +319,8 @@ public:
 protected:
     bool updateUniformLocation(GLint location, const GLvoid* data, unsigned int bytes);
     virtual std::string getDescription() const;
+
+    void bindPredefinedVertexAttribs();
     void parseVertexAttribs();
     void parseUniforms();
 
