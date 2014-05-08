@@ -125,17 +125,15 @@ bool UTF8ToUTF16(const std::string& utf8, std::u16string& outUtf16)
     }
 
     bool ret = false;
-    const size_t utf16Bytes = (utf8.length()+1) << 1;
+    
+    const size_t utf16Bytes = (utf8.length()+1) * sizeof(char16_t);
     char16_t* utf16 = (char16_t*)malloc(utf16Bytes);
     memset(utf16, 0, utf16Bytes);
 
-    UTF16* utf16Start = (UTF16*)utf16;
-    UTF16* utf16End = ((UTF16*)utf16) + (utf8.length());
+    char* utf16ptr = reinterpret_cast<char*>(utf16);
+    const UTF8* error = nullptr;
 
-    const UTF8* utf8Start = (const UTF8*)utf8.data();
-    const UTF8* utf8End = ((const UTF8*)utf8.data()) + utf8.length();
-
-    if (conversionOK == ConvertUTF8toUTF16((const UTF8 **) &utf8Start, utf8End, &utf16Start, utf16End, strictConversion))
+    if (llvm::ConvertUTF8toWide(2, utf8, utf16ptr, error))
     {
         outUtf16 = utf16;
         ret = true;
@@ -154,26 +152,7 @@ bool UTF16ToUTF8(const std::u16string& utf16, std::string& outUtf8)
         return true;
     }
 
-    bool ret = false;
-    const size_t utf8Bytes = (utf16.length() << 2) + 1;
-    char* utf8 = (char*)malloc(utf8Bytes);
-    memset(utf8, 0, utf8Bytes);
-
-    UTF8 *utf8Start = (UTF8*)utf8;
-    UTF8 *utf8End = ((UTF8*)utf8) + (utf8Bytes -1);
-
-    const UTF16* utf16Start = (const UTF16*)utf16.data();
-    const UTF16* utf16End = ((const UTF16*)utf16.data()) + utf16.length();
-
-    if (conversionOK == ConvertUTF16toUTF8(&utf16Start, utf16End, &utf8Start, utf8End, strictConversion))
-    {
-        outUtf8 = utf8;
-        ret = true;
-    }
-
-    free(utf8);
-
-    return ret;
+    return llvm::convertUTF16ToUTF8String(utf16, outUtf8);
 }
 
 std::vector<char16_t> getUTF16VectorFromUTF16String(const std::u16string& str)
