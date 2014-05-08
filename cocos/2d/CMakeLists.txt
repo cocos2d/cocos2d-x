@@ -27,7 +27,7 @@ set(COCOS_2D_PLATFORM_SRC
 endif()
 
 include_directories(
-  ../external
+  ../external/ConvertUTF
 )
 
 

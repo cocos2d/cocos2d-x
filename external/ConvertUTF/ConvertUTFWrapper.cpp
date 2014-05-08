@@ -12,6 +12,7 @@
 #include <string>
 #include <vector>
 #include <assert.h>
+#include <memory.h>
 
 namespace llvm {
 
