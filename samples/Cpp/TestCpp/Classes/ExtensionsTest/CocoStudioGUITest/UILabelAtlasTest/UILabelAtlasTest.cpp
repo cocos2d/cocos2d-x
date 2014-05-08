@@ -22,7 +22,7 @@ bool UILabelAtlasTest::init()
         
         // Create the label atlas
         UILabelAtlas* labelAtlas = UILabelAtlas::create();
-        labelAtlas->setProperty("1234567890", "cocosgui/labelatlas.png", 17, 22, "0");
+        labelAtlas->setProperty("1234567890", "cocosui/labelatlas.png", 17, 22, "0");
         labelAtlas->setPosition(ccp((widgetSize.width) / 2, widgetSize.height / 2.0f));
         
         m_pUiLayer->addWidget(labelAtlas);                

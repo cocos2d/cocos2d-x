@@ -30,7 +30,7 @@ bool UIRichTextTest::init()
         
         UIButton* button = UIButton::create();
         button->setTouchEnabled(true);
-        button->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
+        button->loadTextures("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png", "");
         button->setTitleText("switch");
         button->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f + button->getSize().height * 2.5));
         button->addTouchEventListener(this, toucheventselector(UIRichTextTest::touchEvent));
@@ -48,9 +48,9 @@ bool UIRichTextTest::init()
         RichElementText* re4 = RichElementText::create(4, ccGREEN, 255, "And green. ", "Helvetica", 10);
         RichElementText* re5 = RichElementText::create(5, ccRED, 255, "Last one is red ", "Helvetica", 10);
         
-        RichElementImage* reimg = RichElementImage::create(6, ccWHITE, 255, "cocosgui/sliderballnormal.png");
+        RichElementImage* reimg = RichElementImage::create(6, ccWHITE, 255, "cocosui/sliderballnormal.png");
         
-        CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("cocosgui/100/100.ExportJson");
+        CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("cocosui/100/100.ExportJson");
         CCArmature *pAr = CCArmature::create("100");
         pAr->getAnimation()->play("Animation1");
         

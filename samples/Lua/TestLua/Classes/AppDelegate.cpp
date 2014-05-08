@@ -48,16 +48,17 @@ bool AppDelegate::applicationDidFinishLaunching()
         
     std::vector<std::string> searchPaths;
     searchPaths.push_back("cocosbuilderRes");
-    searchPaths.insert(searchPaths.begin(), "scenetest/ArmatureComponentTest");
-    searchPaths.insert(searchPaths.begin(), "scenetest/AttributeComponentTest");
-    searchPaths.insert(searchPaths.begin(), "scenetest/BackgroundComponentTest");
-    searchPaths.insert(searchPaths.begin(), "scenetest/EffectComponentTest");
-    searchPaths.insert(searchPaths.begin(), "scenetest/LoadSceneEdtiorFileTest");
-    searchPaths.insert(searchPaths.begin(), "scenetest/ParticleComponentTest");
-    searchPaths.insert(searchPaths.begin(), "scenetest/SpriteComponentTest");
-    searchPaths.insert(searchPaths.begin(), "scenetest/TmxMapComponentTest");
-    searchPaths.insert(searchPaths.begin(), "scenetest/UIComponentTest");
-    searchPaths.insert(searchPaths.begin(), "scenetest/TriggerTest");
+    searchPaths.insert(searchPaths.begin(), "ccs-res");
+    searchPaths.insert(searchPaths.begin(), "ccs-res/scenetest/ArmatureComponentTest");
+    searchPaths.insert(searchPaths.begin(), "ccs-res/scenetest/AttributeComponentTest");
+    searchPaths.insert(searchPaths.begin(), "ccs-res/scenetest/BackgroundComponentTest");
+    searchPaths.insert(searchPaths.begin(), "ccs-res/scenetest/EffectComponentTest");
+    searchPaths.insert(searchPaths.begin(), "ccs-res/scenetest/LoadSceneEdtiorFileTest");
+    searchPaths.insert(searchPaths.begin(), "ccs-res/scenetest/ParticleComponentTest");
+    searchPaths.insert(searchPaths.begin(), "ccs-res/scenetest/SpriteComponentTest");
+    searchPaths.insert(searchPaths.begin(), "ccs-res/scenetest/TmxMapComponentTest");
+    searchPaths.insert(searchPaths.begin(), "ccs-res/scenetest/UIComponentTest");
+    searchPaths.insert(searchPaths.begin(), "ccs-res/scenetest/TriggerTest");
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
     searchPaths.push_back("TestCppResources");

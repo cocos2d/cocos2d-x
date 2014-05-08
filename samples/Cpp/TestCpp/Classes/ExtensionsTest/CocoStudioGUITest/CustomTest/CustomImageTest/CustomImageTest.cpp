@@ -24,7 +24,7 @@ void CustomImageLayer::onEnter()
     
     Layout* layout = static_cast<Layout*>(GUIReader::shareReader()->
                                           widgetFromJsonFile
-                                          ("cocosgui/CustomImageViewTest/NewProject_2_1.ExportJson"));
+                                          ("cocosui/CustomImageViewTest/NewProject_2_1.ExportJson"));
     addChild(layout);
 }
 

@@ -9,7 +9,7 @@ bool UILabelTest_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosgui/UIEditorTest/UILabel_Editor/ui_label_editor_1.json"));
+        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UILabel_Editor/ui_label_editor_1.json"));
         _touchGroup->addWidget(_layout);
         CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
         CCSize rootSize = _layout->getSize();
