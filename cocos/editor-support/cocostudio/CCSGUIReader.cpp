@@ -1134,7 +1134,7 @@ void WidgetPropertiesReader0300::setPropsForWidgetFromJsonDictionary(Widget*widg
     }
     
     widget->setSizeType((SizeType)DICTOOL->getIntValue_json(options, "sizeType"));
-    widget->setPositionType((PositionType)DICTOOL->getIntValue_json(options, "positionType"));
+    widget->setPositionType((Widget::PositionType)DICTOOL->getIntValue_json(options, "positionType"));
     
     widget->setSizePercent(Vector2(DICTOOL->getFloatValue_json(options, "sizePercentX"), DICTOOL->getFloatValue_json(options, "sizePercentY")));
     widget->setPositionPercent(Vector2(DICTOOL->getFloatValue_json(options, "positionPercentX"), DICTOOL->getFloatValue_json(options, "positionPercentY")));

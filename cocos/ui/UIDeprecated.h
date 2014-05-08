@@ -16,6 +16,9 @@ NS_CC_BEGIN
 
 namespace ui {
    
+CC_DEPRECATED_ATTRIBUTE const Widget::PositionType POSITION_ABSOLUTE = Widget::PositionType::ABSOLUTE;
+CC_DEPRECATED_ATTRIBUTE const Widget::PositionType POSITION_PERCENT = Widget::PositionType::PERCENT;
+
 
 }
 

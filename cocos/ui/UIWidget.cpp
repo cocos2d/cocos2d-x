@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "ui/UIWidget.h"
 #include "ui/UILayout.h"
 #include "ui/UIHelper.h"
+#include "ui/UIDeprecated.h"
 
 NS_CC_BEGIN
 
@@ -54,7 +55,7 @@ _ignoreSize(false),
 _affectByClipping(false),
 _sizeType(SIZE_ABSOLUTE),
 _sizePercent(Vector2::ZERO),
-_positionType(POSITION_ABSOLUTE),
+_positionType(PositionType::ABSOLUTE),
 _positionPercent(Vector2::ZERO),
 _reorderWidgetChildDirty(true),
 _hitted(false),
@@ -314,7 +315,7 @@ void Widget::updateSizeAndPosition(const cocos2d::Size &parentSize)
     Vector2 absPos = getPosition();
     switch (_positionType)
     {
-        case POSITION_ABSOLUTE:
+        case PositionType::ABSOLUTE:
         {
             if (parentSize.width <= 0.0f || parentSize.height <= 0.0f)
             {
@@ -326,7 +327,7 @@ void Widget::updateSizeAndPosition(const cocos2d::Size &parentSize)
             }
             break;
         }
-        case POSITION_PERCENT:
+        case PositionType::PERCENT:
         {
             absPos = Vector2(parentSize.width * _positionPercent.x, parentSize.height * _positionPercent.y);
             break;
@@ -750,7 +751,7 @@ void Widget::setPositionType(PositionType type)
     _positionType = type;
 }
 
-PositionType Widget::getPositionType() const
+Widget::PositionType Widget::getPositionType() const
 {
     return _positionType;
 }

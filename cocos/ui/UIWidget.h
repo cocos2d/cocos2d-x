@@ -67,13 +67,6 @@ typedef enum
     SIZE_PERCENT
 }SizeType;
 
-typedef enum
-{
-    POSITION_ABSOLUTE,
-    POSITION_PERCENT
-}PositionType;
-    
-
     
 
 typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType);
@@ -91,6 +84,12 @@ public:
         RIGHT,
         UP,
         DOWN
+    };
+    
+    enum class PositionType
+    {
+        ABSOLUTE,
+        PERCENT
     };
     
     /**
