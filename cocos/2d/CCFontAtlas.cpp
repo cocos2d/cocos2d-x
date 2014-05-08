@@ -240,7 +240,7 @@ bool FontAtlas::prepareLetterDefinitions(const std::u16string& utf16String)
 
     float startY = _currentPageOrigY;
 
-    for (int i = 0; i < length; ++i)
+    for (size_t i = 0; i < length; ++i)
     {
         auto outIterator = _fontLetterDefinitions.find(utf16String[i]);
 
