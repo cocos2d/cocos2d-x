@@ -13,3 +13,6 @@
 [submodule "plugin"]
         path = plugin
         url = https://github.com/cocos2d-x/plugin-x.git
+[submodule "samples/Cpp/TestCpp/Resources/ccs-res"]
+	path = samples/Cpp/TestCpp/Resources/ccs-res
+	url = git://github.com/dumganhar/ccs-res.git

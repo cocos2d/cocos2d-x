@@ -21,7 +21,7 @@ bool UILabelBMFontTest::init()
         
         // Create the LabelBMFont
         UILabelBMFont* labelBMFont = UILabelBMFont::create();
-        labelBMFont->setFntFile("cocosgui/bitmapFontTest2.fnt");
+        labelBMFont->setFntFile("cocosui/bitmapFontTest2.fnt");
         labelBMFont->setText("BMFont");
         labelBMFont->setPosition(ccp(widgetSize.width / 2, widgetSize.height / 2.0f + labelBMFont->getSize().height / 8.0f));
         m_pUiLayer->addWidget(labelBMFont);

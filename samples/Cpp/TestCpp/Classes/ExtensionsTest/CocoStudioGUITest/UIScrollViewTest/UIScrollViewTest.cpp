@@ -54,7 +54,7 @@ bool UIScrollViewTest_Vertical::init()
         m_pUiLayer->addWidget(scrollView);
         
         UIImageView* imageView = UIImageView::create();
-        imageView->loadTexture("cocosgui/ccicon.png");
+        imageView->loadTexture("cocosui/ccicon.png");
         
         float innerWidth = scrollView->getSize().width;
         float innerHeight = scrollView->getSize().height + imageView->getSize().height * 2;
@@ -64,13 +64,13 @@ bool UIScrollViewTest_Vertical::init()
         
         UIButton* button = UIButton::create();
         button->setTouchEnabled(true);
-        button->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
+        button->loadTextures("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png", "");
         button->setPosition(ccp(innerWidth / 2, scrollView->getInnerContainerSize().height - button->getSize().height / 2));
         scrollView->addChild(button);
         
         UIButton* titleButton = UIButton::create();
         titleButton->setTouchEnabled(true);
-        titleButton->loadTextures("cocosgui/backtotopnormal.png", "cocosgui/backtotoppressed.png", "");
+        titleButton->loadTextures("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png", "");
         titleButton->setTitleText("Title Button");
         titleButton->setPosition(ccp(innerWidth / 2, button->getBottomInParent() - button->getSize().height));
         scrollView->addChild(titleButton);
@@ -78,7 +78,7 @@ bool UIScrollViewTest_Vertical::init()
         UIButton* button_scale9 = UIButton::create();
         button_scale9->setTouchEnabled(true);
         button_scale9->setScale9Enabled(true);
-        button_scale9->loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "");
+        button_scale9->loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "");
         button_scale9->setSize(CCSizeMake(100, button_scale9->getContentSize().height));
         button_scale9->setPosition(ccp(innerWidth / 2, titleButton->getBottomInParent() - titleButton->getSize().height));
         scrollView->addChild(button_scale9);
@@ -168,7 +168,7 @@ bool UIScrollViewTest_Horizontal::init()
         m_pUiLayer->addWidget(scrollView);
         
         UIImageView* imageView = UIImageView::create();
-        imageView->loadTexture("cocosgui/ccicon.png");
+        imageView->loadTexture("cocosui/ccicon.png");
         
         float innerWidth = scrollView->getSize().width + imageView->getSize().width * 2;
         float innerHeight = scrollView->getSize().height;
@@ -177,14 +177,14 @@ bool UIScrollViewTest_Horizontal::init()
         
         UIButton* button = UIButton::create();
         button->setTouchEnabled(true);
-        button->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
+        button->loadTextures("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png", "");
         button->setPosition(ccp(button->getSize().width / 2,
                                 scrollView->getInnerContainerSize().height - button->getSize().height / 2));
         scrollView->addChild(button);
         
         UIButton* titleButton = UIButton::create();
         titleButton->setTouchEnabled(true);
-        titleButton->loadTextures("cocosgui/backtotopnormal.png", "cocosgui/backtotoppressed.png", "");
+        titleButton->loadTextures("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png", "");
         titleButton->setTitleText("Title Button");
         titleButton->setPosition(ccp(button->getRightInParent() + button->getSize().width / 2,
                                     button->getBottomInParent() - button->getSize().height / 2));
@@ -193,7 +193,7 @@ bool UIScrollViewTest_Horizontal::init()
         UIButton* button_scale9 = UIButton::create();
         button_scale9->setTouchEnabled(true);
         button_scale9->setScale9Enabled(true);
-        button_scale9->loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "");
+        button_scale9->loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "");
         button_scale9->setSize(CCSizeMake(100, button_scale9->getContentSize().height));
         button_scale9->setPosition(ccp(titleButton->getRightInParent() + titleButton->getSize().width / 2,
                                        titleButton->getBottomInParent() - titleButton->getSize().height / 2));
@@ -253,7 +253,7 @@ bool UIScrollViewTest_Both::init()
         scrollView->setTouchEnabled(true);
         scrollView->setBounceEnabled(true);
         scrollView->setBackGroundImageScale9Enabled(true);
-        scrollView->setBackGroundImage("cocosgui/green_edit.png");
+        scrollView->setBackGroundImage("cocosui/green_edit.png");
         scrollView->setSize(CCSizeMake(210, 122.5));
         CCSize backgroundSize = background->getContentSize();
         scrollView->setPosition(ccp((widgetSize.width - backgroundSize.width) / 2 +
@@ -262,7 +262,7 @@ bool UIScrollViewTest_Both::init()
                                     (backgroundSize.height - scrollView->getSize().height) / 2));
         UIImageView* imageView = UIImageView::create();
         imageView->setTouchEnabled(true);
-        imageView->loadTexture("cocosgui/b11.png");
+        imageView->loadTexture("cocosui/b11.png");
         scrollView->addChild(imageView);
         
         scrollView->setInnerContainerSize(imageView->getContentSize());
@@ -327,7 +327,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection::init()
                             (backgroundSize.height - sc->getSize().height) / 2));
         sc->scrollToPercentBothDirection(ccp(50, 50), 1, true);
         UIImageView* iv = UIImageView::create();
-        iv->loadTexture("cocosgui/Hello.png");
+        iv->loadTexture("cocosui/Hello.png");
         iv->setPosition(ccp(240, 160));
         sc->addChild(iv);
         m_pUiLayer->addWidget(sc);
@@ -388,7 +388,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection_Bounce::init()
                             (backgroundSize.height - sc->getSize().height) / 2));
         sc->scrollToPercentBothDirection(ccp(50, 50), 1, true);
         UIImageView* iv = UIImageView::create();
-        iv->loadTexture("cocosgui/Hello.png");
+        iv->loadTexture("cocosui/Hello.png");
         iv->setPosition(ccp(240, 160));
         sc->addChild(iv);
         m_pUiLayer->addWidget(sc);

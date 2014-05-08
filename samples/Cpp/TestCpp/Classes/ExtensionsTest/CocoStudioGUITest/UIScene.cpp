@@ -33,7 +33,7 @@ bool UIScene::init()
         m_pUiLayer = UILayer::create();
         addChild(m_pUiLayer);
         
-        m_pWidget = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosgui/UITest/UITest.json"));
+        m_pWidget = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UITest/UITest.json"));
         m_pUiLayer->addWidget(m_pWidget);
 
         
@@ -83,7 +83,7 @@ bool UIScene::init()
         CCTime::gettimeofdayCocos2d(&startval, NULL);
         for (int i = 0; i < 10; i++)
         {
-            GUIReader::shareReader()->widgetFromJsonFile("cocosgui/UITest/UITest.json");
+            GUIReader::shareReader()->widgetFromJsonFile("cocosui/UITest/UITest.json");
         }
         CCTime::gettimeofdayCocos2d(&endval, NULL);
         del = CCTime::timersubCocos2d(&startval,&endval);

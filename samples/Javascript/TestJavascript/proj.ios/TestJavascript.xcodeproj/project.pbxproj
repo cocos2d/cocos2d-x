@@ -101,7 +101,6 @@
 		15A3D5631682F20C002FB0C5 /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = 15A3D4621682F14C002FB0C5 /* main.js */; };
 		15A3D5651682F20C002FB0C5 /* tests_resources-jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = 15A3D4711682F14C002FB0C5 /* tests_resources-jsb.js */; };
 		15A3D5681682F20C002FB0C5 /* tests-main.js in Resources */ = {isa = PBXBuildFile; fileRef = 15A3D4741682F14C002FB0C5 /* tests-main.js */; };
-		15F8E09F18C87A87006C3EE8 /* FileTest in Resources */ = {isa = PBXBuildFile; fileRef = 15F8E09E18C87A87006C3EE8 /* FileTest */; };
 		1A05B4BE174F6F5400BFE80B /* jsb_websocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A05B4BD174F6F5400BFE80B /* jsb_websocket.cpp */; };
 		1A2757BE1697FBE500504026 /* jsb_chipmunk.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2757B01697FAAD00504026 /* jsb_chipmunk.js */; };
 		1A2757BF1697FBE500504026 /* jsb_cocos2d.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2757B11697FAAD00504026 /* jsb_cocos2d.js */; };
@@ -274,6 +273,7 @@
 		1AB1F48516EDBDB700FEB62A /* jsb_cocos2dx_extension_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AB1F48016EDBDB700FEB62A /* jsb_cocos2dx_extension_auto.cpp */; };
 		1AB1F48816EDBF2700FEB62A /* jsb_cocos2d_extension.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AB1F48616EDBEF100FEB62A /* jsb_cocos2d_extension.js */; };
 		1AB1F48B16EDC09700FEB62A /* jsb_cocos2dx_extension_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AB1F48916EDC09700FEB62A /* jsb_cocos2dx_extension_manual.cpp */; };
+		1AB241F4191BC31400F393DD /* FileTest in Resources */ = {isa = PBXBuildFile; fileRef = 1AB241F3191BC31400F393DD /* FileTest */; };
 		1AF2873C17F014C200642436 /* jsb_deprecated.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2873B17F014C200642436 /* jsb_deprecated.js */; };
 		1AF2873E17F014C900642436 /* main.debug.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2873D17F014C900642436 /* main.debug.js */; };
 		1AF2873F17F014D700642436 /* jsb_deprecated.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AF2873B17F014C200642436 /* jsb_deprecated.js */; };
@@ -310,7 +310,6 @@
 		2961DF5118C996120017F5DB /* SliderReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DF3E18C996120017F5DB /* SliderReader.cpp */; };
 		2961DF5218C996120017F5DB /* TextFieldReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DF4118C996120017F5DB /* TextFieldReader.cpp */; };
 		2961DF5318C996120017F5DB /* WidgetReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DF4318C996120017F5DB /* WidgetReader.cpp */; };
-		2961DF5E18C9B2670017F5DB /* FileTest in Resources */ = {isa = PBXBuildFile; fileRef = 2961DF5D18C9B2670017F5DB /* FileTest */; };
 		375BD48918683FD50024609E /* ObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD48118683FD50024609E /* ObjectFactory.cpp */; };
 		375BD48A18683FD50024609E /* TriggerBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD48318683FD50024609E /* TriggerBase.cpp */; };
 		375BD48B18683FD50024609E /* TriggerMng.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD48518683FD50024609E /* TriggerMng.cpp */; };
@@ -698,7 +697,6 @@
 		15DB6536184C2ACC002905B6 /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reader.h; sourceTree = "<group>"; };
 		15DB6537184C2ACC002905B6 /* stringbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringbuffer.h; sourceTree = "<group>"; };
 		15DB6538184C2ACC002905B6 /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
-		15F8E09E18C87A87006C3EE8 /* FileTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = FileTest; path = ../../Shared/tests/FileTest; sourceTree = "<group>"; };
 		1A05B47E174F34B800BFE80B /* jsb_helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_helper.h; sourceTree = "<group>"; };
 		1A05B4BC174F6F4C00BFE80B /* jsb_websocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_websocket.h; sourceTree = "<group>"; };
 		1A05B4BD174F6F5400BFE80B /* jsb_websocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_websocket.cpp; sourceTree = "<group>"; };
@@ -879,6 +877,7 @@
 		1AB1F48616EDBEF100FEB62A /* jsb_cocos2d_extension.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocos2d_extension.js; sourceTree = "<group>"; };
 		1AB1F48916EDC09700FEB62A /* jsb_cocos2dx_extension_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_extension_manual.cpp; sourceTree = "<group>"; };
 		1AB1F48A16EDC09700FEB62A /* jsb_cocos2dx_extension_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_cocos2dx_extension_manual.h; sourceTree = "<group>"; };
+		1AB241F3191BC31400F393DD /* FileTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = FileTest; path = ../../Shared/tests/FileTest; sourceTree = "<group>"; };
 		1AF2873B17F014C200642436 /* jsb_deprecated.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_deprecated.js; sourceTree = "<group>"; };
 		1AF2873D17F014C900642436 /* main.debug.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = main.debug.js; sourceTree = "<group>"; };
 		1AF5AE54175737F5009C997A /* WebSocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebSocket.cpp; sourceTree = "<group>"; };
@@ -922,7 +921,6 @@
 		2961DF4318C996120017F5DB /* WidgetReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WidgetReader.cpp; sourceTree = "<group>"; };
 		2961DF4418C996120017F5DB /* WidgetReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetReader.h; sourceTree = "<group>"; };
 		2961DF4518C996120017F5DB /* WidgetReaderProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetReaderProtocol.h; sourceTree = "<group>"; };
-		2961DF5D18C9B2670017F5DB /* FileTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = FileTest; path = ../../Shared/tests/FileTest; sourceTree = "<group>"; };
 		373B911B18788F7500198F86 /* CCComBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCComBase.h; sourceTree = "<group>"; };
 		375BD48118683FD50024609E /* ObjectFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectFactory.cpp; sourceTree = "<group>"; };
 		375BD48218683FD50024609E /* ObjectFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectFactory.h; sourceTree = "<group>"; };
@@ -1995,7 +1993,6 @@
 		D401B5FC16FB169100F2529D /* js_src_raw */ = {
 			isa = PBXGroup;
 			children = (
-				2961DF5D18C9B2670017F5DB /* FileTest */,
 				1AA51A7816F708FA000FDF05 /* ActionManagerTest */,
 				1AA51A7916F708FA000FDF05 /* ActionsTest */,
 				1AA51A7A16F708FA000FDF05 /* BaseTestLayer */,
@@ -2013,6 +2010,7 @@
 				1AA51A8316F708FA000FDF05 /* EffectsTest */,
 				1AA51A8416F708FA000FDF05 /* EventTest */,
 				1AA51A8516F708FA000FDF05 /* ExtensionsTest */,
+				1AB241F3191BC31400F393DD /* FileTest */,
 				1AA51A8716F708FA000FDF05 /* FontTest */,
 				1AA51A8816F708FA000FDF05 /* IntervalTest */,
 				1AA51A8916F708FA000FDF05 /* LabelTest */,
@@ -2223,7 +2221,7 @@
 				1AA51ABE16F708FA000FDF05 /* SpriteTest in Resources */,
 				1AA51ABF16F708FA000FDF05 /* SysTest in Resources */,
 				1AA51AC016F708FA000FDF05 /* TextInputTest in Resources */,
-				2961DF5E18C9B2670017F5DB /* FileTest in Resources */,
+				1AB241F4191BC31400F393DD /* FileTest in Resources */,
 				1AA51AC116F708FA000FDF05 /* TextureCacheTest in Resources */,
 				1AA51AC216F708FA000FDF05 /* TileMapTest in Resources */,
 				1AA51AC316F708FA000FDF05 /* TouchesTest in Resources */,
@@ -2239,7 +2237,6 @@
 				A22656EF1743DCBB00598A2C /* ClippingNodeTest in Resources */,
 				1A729AC117E1C60B00F37B6A /* MotionStreakTest in Resources */,
 				1AAB66F51831FD6A0091F8AC /* CocoStudioTest in Resources */,
-				15F8E09F18C87A87006C3EE8 /* FileTest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

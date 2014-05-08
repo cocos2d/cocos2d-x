@@ -21,7 +21,7 @@ bool UIImageViewTest::init()
         
         // Create the imageview
         UIImageView* imageView = UIImageView::create();
-        imageView->loadTexture("cocosgui/ccicon.png");
+        imageView->loadTexture("cocosui/ccicon.png");
         imageView->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f + imageView->getSize().height / 4.0f));
         m_pUiLayer->addWidget(imageView);
         
@@ -50,7 +50,7 @@ bool UIImageViewTest_Scale9::init()
         // Create the imageview
         UIImageView* imageView = UIImageView::create();
         imageView->setScale9Enabled(true);
-        imageView->loadTexture("cocosgui/buttonHighlighted.png");
+        imageView->loadTexture("cocosui/buttonHighlighted.png");
         imageView->setSize(CCSizeMake(200, 85));
         imageView->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f + imageView->getSize().height / 4.0f));
         m_pUiLayer->addWidget(imageView);

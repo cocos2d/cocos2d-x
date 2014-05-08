@@ -21,7 +21,7 @@ bool UILoadingBarTest_Editor::init()
     {
         scheduleUpdate();
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosgui/UIEditorTest/UILoadingBar_Editor/ui_loadingbar_editor_1.json"));
+        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UILoadingBar_Editor/ui_loadingbar_editor_1.json"));
         _touchGroup->addWidget(_layout);
         CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
         CCSize rootSize = _layout->getSize();
