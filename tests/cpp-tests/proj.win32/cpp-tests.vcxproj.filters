@@ -325,6 +325,9 @@
     <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest\CustomTest\CustomParticleWidgetTest">
       <UniqueIdentifier>{f2e15a07-0d4e-407f-b4dc-d7692afe64a4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest\UIFocusTest">
+      <UniqueIdentifier>{f78b81ee-c6ab-43ea-b7bb-0e4ee1fa375f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -836,6 +839,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\UnitTest\RefPtrTest.cpp">
       <Filter>Classes\UnitTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIFocusTest\UIFocusTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIFocusTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1546,6 +1552,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\UnitTest\RefPtrTest.h">
       <Filter>Classes\UnitTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIFocusTest\UIFocusTest.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIFocusTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

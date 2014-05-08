@@ -72,6 +72,15 @@ typedef enum
     POSITION_ABSOLUTE,
     POSITION_PERCENT
 }PositionType;
+    
+enum class FocusDirection
+{
+    FocusDirection_Left,
+    FocusDirection_Right,
+    FocusDirection_Up,
+    FocusDirection_Down
+};
+    
 
 typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType);
 #define toucheventselector(_SELECTOR) (SEL_TouchEvent)(&_SELECTOR)
@@ -156,20 +165,20 @@ public:
     bool isTouchEnabled() const;
 
     /**
-     * Determines if the widget is on focused
+     * Determines if the widget is highlighted
      *
-     * @return true if the widget is on focused, false if the widget is not on focused.
+     * @return true if the widget is highlighted, false if the widget is not hignlighted .
      */
-    bool isFocused() const;
+    bool isHighlighted() const;
 
     /**
-     * Sets whether the widget is on focused
+     * Sets whether the widget is hilighted
      *
-     * The default value is false, a widget is default to not on focused
+     * The default value is false, a widget is default to not hilighted
      *
-     * @param fucosed   true if the widget is on focused, false if the widget is not on focused.
+     * @param hilight   true if the widget is hilighted, false if the widget is not hilighted.
      */
-    void setFocused(bool fucosed);
+    void setHighlighted(bool hilight);
 
     /**
      * Gets the left boundary position of this widget.
@@ -529,9 +538,62 @@ public:
     void setActionTag(int tag);
 	int getActionTag();
     
+    /**
+     *@return  whether the widget is focused or not
+     */
+    bool isFocused();
+    
+    /**
+     *@param focus  pass true to let the widget get focus or pass false to let the widget lose focus
+     *@return void
+     */
+    void setFocused(bool focus);
+    
+    /**
+     *@return true represent the widget could accept focus, false represent the widget couldn't accept focus
+     */
+    bool isFocusEnabled();
+    
+    /**
+     *@param enable pass true/false to enable/disable the focus ability of a widget
+     *@return void
+     */
+    void setFocusEnabled(bool enable);
+    
+    /**
+     *  When a widget is in a layout, you could call this method to get the next focused widget within a specified direction. 
+     *  If the widget is not in a layout, it will return itself
+     *@param dir the direction to look for the next focused widget in a layout
+     *@param current  the current focused widget
+     *@return the next focused widget in a layout
+     */
+    virtual Widget* findNextFocusedWidget(FocusDirection direction, Widget* current);
+    
+    /**
+     * when a widget calls this method, it will get focus immediately.
+     */
+    void requestFocus();
+    
 CC_CONSTRUCTOR_ACCESS:
     //initializes state of widget.
     virtual bool init() override;
+    
+    /**
+     * This method is called when a focus change event happens
+     *@param widgetLostFocus  The widget which lose its focus
+     *@param widgetGetFocus  The widget whihc get its focus
+     *@return void
+     */
+    void onFocusChange(Widget* widgetLostFocus, Widget* widgetGetFocus);
+    
+    /**
+     * Dispatch a EventFocus through a EventDispatcher
+     *@param widgetLoseFocus  The widget which lose its focus
+     *@param widgetGetFocus he widget whihc get its focus
+     *@return void
+     */
+    void  dispatchFocusEvent(Widget* widgetLoseFocus, Widget* widgetGetFocus);
+
     
 protected:
     //call back function called when size changed.
@@ -572,7 +634,7 @@ protected:
     bool _bright;             ///< is this widget bright
     bool _touchEnabled;       ///< is this widget touch endabled
     bool _touchPassedEnabled; ///< is the touch event should be passed
-    bool _focus;              ///< is the widget on focus
+    bool _highlight;              ///< is the widget on focus
     BrightStyle _brightStyle; ///< bright style
     Vector2 _touchStartPos;    ///< touch began point
     Vector2 _touchMovePos;     ///< touch moved point
@@ -598,7 +660,25 @@ protected:
     bool _flippedX;
     bool _flippedY;
     Map<int, LayoutParameter*> _layoutParameterDictionary;
-
+    
+    bool _focused;
+    bool _focusEnabled;
+    
+    /**
+     * store the only one focued widget
+     */
+    static Widget *_focusedWidget;  //both layout & widget will be stored in this variable
+    static Widget *_realFocusedWidget; //only the widget class will be stored in this variable
+public:
+    /**
+     * no matter what widget object you call this method on , it will return you the exact one focused widget
+     * @param isWidget  if your set isWidget to true, it will return the _realFocusedWidget which is always a widget
+     *                  otherwise, it will return a widget or a layout
+     */
+    Widget* getCurrentFocusedWidget(bool isWidget);
+    
+    std::function<void(Widget*,Widget*)> onFocusChanged;
+    std::function<Widget*(FocusDirection)> onNextFocusedWidget;
 };
 }
 

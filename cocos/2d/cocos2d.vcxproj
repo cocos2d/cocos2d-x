@@ -181,10 +181,12 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="..\base\CCEventAcceleration.cpp" />
     <ClCompile Include="..\base\CCEventCustom.cpp" />
     <ClCompile Include="..\base\CCEventDispatcher.cpp" />
+    <ClCompile Include="..\base\CCEventFocus.cpp" />
     <ClCompile Include="..\base\CCEventKeyboard.cpp" />
     <ClCompile Include="..\base\CCEventListener.cpp" />
     <ClCompile Include="..\base\CCEventListenerAcceleration.cpp" />
     <ClCompile Include="..\base\CCEventListenerCustom.cpp" />
+    <ClCompile Include="..\base\CCEventListenerFocus.cpp" />
     <ClCompile Include="..\base\CCEventListenerKeyboard.cpp" />
     <ClCompile Include="..\base\CCEventListenerMouse.cpp" />
     <ClCompile Include="..\base\CCEventListenerTouch.cpp" />
@@ -341,10 +343,12 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="..\base\CCEventAcceleration.h" />
     <ClInclude Include="..\base\CCEventCustom.h" />
     <ClInclude Include="..\base\CCEventDispatcher.h" />
+    <ClInclude Include="..\base\CCEventFocus.h" />
     <ClInclude Include="..\base\CCEventKeyboard.h" />
     <ClInclude Include="..\base\CCEventListener.h" />
     <ClInclude Include="..\base\CCEventListenerAcceleration.h" />
     <ClInclude Include="..\base\CCEventListenerCustom.h" />
+    <ClInclude Include="..\base\CCEventListenerFocus.h" />
     <ClInclude Include="..\base\CCEventListenerKeyboard.h" />
     <ClInclude Include="..\base\CCEventListenerMouse.h" />
     <ClInclude Include="..\base\CCEventListenerTouch.h" />
