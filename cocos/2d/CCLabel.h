@@ -286,9 +286,9 @@ protected:
     
     virtual void alignText();
     
-    bool computeHorizontalKernings(unsigned short int *stringToRender);
-    bool setCurrentString(unsigned short *stringToSet);
-    bool setOriginalString(unsigned short *stringToSet);
+    bool computeHorizontalKernings(const std::u16string& stringToRender);
+    bool setCurrentString(const std::u16string& stringToSet);
+    bool setOriginalString(const std::u16string& stringToSet);
     void computeStringNumLines();
 
     void updateQuads();
@@ -344,8 +344,8 @@ protected:
     TextVAlignment _vAlignment;
 
     int           _currNumLines;
-    unsigned short int * _currentUTF16String;
-    unsigned short int * _originalUTF16String;
+    std::u16string _currentUTF16String;
+    std::u16string _originalUTF16String;
     std::string          _originalUTF8String;
 
     float _fontScale;
