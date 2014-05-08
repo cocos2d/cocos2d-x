@@ -99,7 +99,7 @@ bool SpriteBatchNode::initWithTexture(Texture2D *tex, ssize_t capacity)
 
     _descendants.reserve(capacity);
     
-    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+    setGLProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
     return true;
 }
 

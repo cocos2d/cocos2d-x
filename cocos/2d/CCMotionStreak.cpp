@@ -128,7 +128,7 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
     _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
 
     // shader program
-    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+    setGLProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
     setTexture(texture);
     setColor(color);
@@ -375,8 +375,8 @@ void MotionStreak::reset()
 
 void MotionStreak::onDraw(const Matrix &transform, bool transformUpdated)
 {  
-    getShaderProgram()->use();
-    getShaderProgram()->setUniformsForBuiltins(transform);
+    getGLProgram()->use();
+    getGLProgram()->setUniformsForBuiltins(transform);
 
     GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
     GL::blendFunc( _blendFunc.src, _blendFunc.dst );

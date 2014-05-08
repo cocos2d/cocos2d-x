@@ -158,7 +158,7 @@ bool DrawNode::init()
 {
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 
-    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR));
+    setGLProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR));
     
     ensureCapacity(512);
     
@@ -214,8 +214,9 @@ void DrawNode::draw(Renderer *renderer, const Matrix &transform, bool transformU
 
 void DrawNode::onDraw(const Matrix &transform, bool transformUpdated)
 {
-    getShaderProgram()->use();
-    getShaderProgram()->setUniformsForBuiltins(transform);
+    auto glProgram = getGLProgram();
+    glProgram->use();
+    glProgram->setUniformsForBuiltins(transform);
 
     GL::blendFunc(_blendFunc.src, _blendFunc.dst);
 

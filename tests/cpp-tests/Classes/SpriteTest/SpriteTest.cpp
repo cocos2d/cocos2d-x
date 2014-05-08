@@ -950,9 +950,9 @@ SpriteZVertex::SpriteZVertex()
 
     // set alpha test value
     // NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
-    if (getShaderProgram())
+    if (getGLProgram())
     {
-        getShaderProgram()->setUniformLocationWith1f(alphaValueLocation, 0.0f);
+        getGLProgram()->setUniformLocationWith1f(alphaValueLocation, 0.0f);
     }
     
     
@@ -975,7 +975,7 @@ SpriteZVertex::SpriteZVertex()
         auto sprite = Sprite::create("Images/grossini_dance_atlas.png", Rect(85*0, 121*1, 85, 121));
         sprite->setPosition( Vector2((i+1)*step, s.height/2) );
         sprite->setPositionZ( 10 + i*40 );
-        sprite->setShaderProgram(alphaTestShader);
+        sprite->setGLProgram(alphaTestShader);
         node->addChild(sprite, 0);
         
     }
@@ -985,7 +985,7 @@ SpriteZVertex::SpriteZVertex()
         auto sprite = Sprite::create("Images/grossini_dance_atlas.png", Rect(85*1, 121*0, 85, 121));
         sprite->setPosition( Vector2( (i+1)*step, s.height/2) );
         sprite->setPositionZ( 10 + (10-i)*40 );
-        sprite->setShaderProgram(alphaTestShader);
+        sprite->setGLProgram(alphaTestShader);
         node->addChild(sprite, 0);
     }
 
@@ -1040,9 +1040,9 @@ SpriteBatchNodeZVertex::SpriteBatchNodeZVertex()
 
     // set alpha test value
     // NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
-    if (getShaderProgram())
+    if (getGLProgram())
     {
-        getShaderProgram()->setUniformLocationWith1f(alphaValueLocation, 0.0f);
+        getGLProgram()->setUniformLocationWith1f(alphaValueLocation, 0.0f);
     }
     
     auto s = Director::getInstance()->getWinSize();
@@ -1056,7 +1056,7 @@ SpriteBatchNodeZVertex::SpriteBatchNodeZVertex()
     batch->setAnchorPoint( Vector2::ANCHOR_MIDDLE);
     batch->setPosition( Vector2(s.width/2, s.height/2));
     
-    batch->setShaderProgram(alphaTestShader);
+    batch->setGLProgram(alphaTestShader);
     addChild(batch, 0, kTagSpriteBatchNode);        
     
     for(int i=0;i<5;i++) 

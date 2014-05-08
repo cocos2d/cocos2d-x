@@ -751,7 +751,7 @@ void RawStencilBufferTestAlphaTest::setup()
     auto program = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV);
     for(int i = 0; i < _planeCount; ++i)
     {
-        _spritesStencil.at(i)->setShaderProgram(program );
+        _spritesStencil.at(i)->setGLProgram(program );
     }
 }
 //@implementation RawStencilBufferTest4

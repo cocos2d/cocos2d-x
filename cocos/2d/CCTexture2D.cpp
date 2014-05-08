@@ -506,12 +506,12 @@ void Texture2D::setMaxT(GLfloat maxT)
     _maxT = maxT;
 }
 
-GLProgram* Texture2D::getShaderProgram() const
+GLProgram* Texture2D::getGLProgram() const
 {
     return _shaderProgram;
 }
 
-void Texture2D::setShaderProgram(GLProgram* shaderProgram)
+void Texture2D::setGLProgram(GLProgram* shaderProgram)
 {
     CC_SAFE_RETAIN(shaderProgram);
     CC_SAFE_RELEASE(_shaderProgram);
@@ -692,7 +692,7 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
     _hasPremultipliedAlpha = false;
     _hasMipmaps = mipmapsNum > 1;
 
-    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE));
+    setGLProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE));
 
     return true;
 }

@@ -166,7 +166,7 @@ void ShaderSprite::setBackgroundNotification()
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
-            this->setShaderProgram(nullptr);
+            this->setGLProgram(nullptr);
             this->initShader();
         });
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);

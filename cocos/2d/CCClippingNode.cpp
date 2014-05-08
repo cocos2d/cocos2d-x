@@ -45,7 +45,7 @@ static GLint s_layer = -1;
 
 static void setProgram(Node *n, GLProgram *p)
 {
-    n->setShaderProgram(p);
+    n->setGLProgram(p);
     
     auto& children = n->getChildren();
     for(const auto &child : children) {

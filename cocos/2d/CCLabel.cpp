@@ -342,21 +342,21 @@ void Label::updateShaderProgram()
     {
     case cocos2d::LabelEffect::NORMAL:
         if (_useDistanceField)
-            setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL));
+            setGLProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL));
         else if (_useA8Shader)
-            setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_LABEL_NORMAL));
+            setGLProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_LABEL_NORMAL));
         else
-            setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+            setGLProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
         break;
     case cocos2d::LabelEffect::OUTLINE: 
-        setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_LABEL_OUTLINE));
+        setGLProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_LABEL_OUTLINE));
         _uniformEffectColor = glGetUniformLocation(getGLProgram()->getProgram(), "v_effectColor");
         break;
     case cocos2d::LabelEffect::GLOW:
         if (_useDistanceField)
         {
-            setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_GLOW));
+            setGLProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_GLOW));
             _uniformEffectColor = glGetUniformLocation(getGLProgram()->getProgram(), "v_effectColor");
         }
         break;

@@ -86,7 +86,7 @@ bool ProgressTimer::initWithSprite(Sprite* sp)
     setBarChangeRate(Vector2(1,1));
     setSprite(sp);
     // shader program
-    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+    setGLProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
     return true;
 }
 
@@ -502,8 +502,8 @@ Vector2 ProgressTimer::boundaryTexCoord(char index)
 void ProgressTimer::onDraw(const Matrix &transform, bool transformUpdated)
 {
 
-    getShaderProgram()->use();
-    getShaderProgram()->setUniformsForBuiltins(transform);
+    getGLProgram()->use();
+    getGLProgram()->setUniformsForBuiltins(transform);
 
     GL::blendFunc( _sprite->getBlendFunc().src, _sprite->getBlendFunc().dst );
 

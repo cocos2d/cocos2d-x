@@ -1426,7 +1426,7 @@
 		1AC3599018CECF0B00F37B72 /* ChipmunkTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChipmunkTest.h; sourceTree = "<group>"; };
 		1AC3599218CECF0B00F37B72 /* ClickAndMoveTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClickAndMoveTest.cpp; sourceTree = "<group>"; };
 		1AC3599318CECF0B00F37B72 /* ClickAndMoveTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClickAndMoveTest.h; sourceTree = "<group>"; };
-		1AC3599518CECF0B00F37B72 /* ClippingNodeTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClippingNodeTest.cpp; sourceTree = "<group>"; };
+		1AC3599518CECF0B00F37B72 /* ClippingNodeTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = ClippingNodeTest.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		1AC3599618CECF0B00F37B72 /* ClippingNodeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClippingNodeTest.h; sourceTree = "<group>"; };
 		1AC3599818CECF0B00F37B72 /* CocosDenshionTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocosDenshionTest.cpp; sourceTree = "<group>"; };
 		1AC3599918CECF0B00F37B72 /* CocosDenshionTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosDenshionTest.h; sourceTree = "<group>"; };
@@ -1476,7 +1476,7 @@
 		1AC359D918CECF0B00F37B72 /* TimelineCallbackLayerLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineCallbackLayerLoader.h; sourceTree = "<group>"; };
 		1AC359DA18CECF0B00F37B72 /* TimelineCallbackTestLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TimelineCallbackTestLayer.cpp; sourceTree = "<group>"; };
 		1AC359DB18CECF0B00F37B72 /* TimelineCallbackTestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineCallbackTestLayer.h; sourceTree = "<group>"; };
-		1AC359DD18CECF0B00F37B72 /* ArmatureScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ArmatureScene.cpp; sourceTree = "<group>"; };
+		1AC359DD18CECF0B00F37B72 /* ArmatureScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = ArmatureScene.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		1AC359DE18CECF0B00F37B72 /* ArmatureScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArmatureScene.h; sourceTree = "<group>"; };
 		1AC359E018CECF0B00F37B72 /* ComponentsTestScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ComponentsTestScene.cpp; sourceTree = "<group>"; };
 		1AC359E118CECF0B00F37B72 /* ComponentsTestScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComponentsTestScene.h; sourceTree = "<group>"; };
@@ -1543,7 +1543,7 @@
 		1AC35A9D18CECF0B00F37B72 /* KeyboardTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardTest.h; sourceTree = "<group>"; };
 		1AC35A9F18CECF0B00F37B72 /* KeypadTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KeypadTest.cpp; sourceTree = "<group>"; };
 		1AC35AA018CECF0B00F37B72 /* KeypadTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeypadTest.h; sourceTree = "<group>"; };
-		1AC35AA218CECF0C00F37B72 /* LabelTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LabelTest.cpp; sourceTree = "<group>"; };
+		1AC35AA218CECF0C00F37B72 /* LabelTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = LabelTest.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		1AC35AA318CECF0C00F37B72 /* LabelTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelTest.h; sourceTree = "<group>"; };
 		1AC35AA418CECF0C00F37B72 /* LabelTestNew.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LabelTestNew.cpp; sourceTree = "<group>"; };
 		1AC35AA518CECF0C00F37B72 /* LabelTestNew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelTestNew.h; sourceTree = "<group>"; };
@@ -1553,13 +1553,13 @@
 		1AC35AAB18CECF0C00F37B72 /* MenuTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTest.h; sourceTree = "<group>"; };
 		1AC35AAD18CECF0C00F37B72 /* MotionStreakTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MotionStreakTest.cpp; sourceTree = "<group>"; };
 		1AC35AAE18CECF0C00F37B72 /* MotionStreakTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionStreakTest.h; sourceTree = "<group>"; };
-		1AC35AB018CECF0C00F37B72 /* MutiTouchTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MutiTouchTest.cpp; sourceTree = "<group>"; };
+		1AC35AB018CECF0C00F37B72 /* MutiTouchTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = MutiTouchTest.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		1AC35AB118CECF0C00F37B72 /* MutiTouchTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MutiTouchTest.h; sourceTree = "<group>"; };
 		1AC35AB318CECF0C00F37B72 /* NewEventDispatcherTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NewEventDispatcherTest.cpp; sourceTree = "<group>"; };
 		1AC35AB418CECF0C00F37B72 /* NewEventDispatcherTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewEventDispatcherTest.h; sourceTree = "<group>"; };
 		1AC35AB618CECF0C00F37B72 /* NewRendererTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NewRendererTest.cpp; sourceTree = "<group>"; };
 		1AC35AB718CECF0C00F37B72 /* NewRendererTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewRendererTest.h; sourceTree = "<group>"; };
-		1AC35AB918CECF0C00F37B72 /* NodeTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NodeTest.cpp; sourceTree = "<group>"; };
+		1AC35AB918CECF0C00F37B72 /* NodeTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = NodeTest.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		1AC35ABA18CECF0C00F37B72 /* NodeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeTest.h; sourceTree = "<group>"; };
 		1AC35ABC18CECF0C00F37B72 /* ParallaxTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParallaxTest.cpp; sourceTree = "<group>"; };
 		1AC35ABD18CECF0C00F37B72 /* ParallaxTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParallaxTest.h; sourceTree = "<group>"; };
@@ -1607,7 +1607,7 @@
 		1AC35AF018CECF0C00F37B72 /* ShaderTest2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderTest2.h; sourceTree = "<group>"; };
 		1AC35AF218CECF0C00F37B72 /* SpineTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpineTest.cpp; sourceTree = "<group>"; };
 		1AC35AF318CECF0C00F37B72 /* SpineTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpineTest.h; sourceTree = "<group>"; };
-		1AC35AF518CECF0C00F37B72 /* SpriteTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpriteTest.cpp; sourceTree = "<group>"; };
+		1AC35AF518CECF0C00F37B72 /* SpriteTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = SpriteTest.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		1AC35AF618CECF0C00F37B72 /* SpriteTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteTest.h; sourceTree = "<group>"; };
 		1AC35AF718CECF0C00F37B72 /* testBasic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = testBasic.cpp; sourceTree = "<group>"; };
 		1AC35AF818CECF0C00F37B72 /* testBasic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testBasic.h; sourceTree = "<group>"; };

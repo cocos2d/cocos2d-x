@@ -169,7 +169,7 @@ void AtlasDemo::backCallback(Ref* sender)
 //------------------------------------------------------------------
 Atlas1::Atlas1()
 {
-    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE));
+    setGLProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE));
     _textureAtlas = TextureAtlas::create(s_AtlasTest, 3); _textureAtlas->retain();
     
     auto s = Director::getInstance()->getWinSize();
@@ -222,8 +222,8 @@ void Atlas1::draw(Renderer *renderer, const Matrix &transform, bool transformUpd
 
 void Atlas1::onDraw(const Matrix &transform, bool transformUpdated)
 {
-    getShaderProgram()->use();
-    getShaderProgram()->setUniformsForBuiltins(transform);
+    getGLProgram()->use();
+    getGLProgram()->setUniformsForBuiltins(transform);
     _textureAtlas->drawQuads();
 }
 

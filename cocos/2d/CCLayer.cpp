@@ -534,7 +534,7 @@ bool LayerColor::initWithColor(const Color4B& color, GLfloat w, GLfloat h)
         updateColor();
         setContentSize(Size(w, h));
 
-        setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_COLOR_NO_MVP));
+        setGLProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_COLOR_NO_MVP));
         return true;
     }
     return false;
@@ -602,8 +602,8 @@ void LayerColor::draw(Renderer *renderer, const Matrix &transform, bool transfor
 
 void LayerColor::onDraw(const Matrix& transform, bool transformUpdated)
 {
-    getShaderProgram()->use();
-    getShaderProgram()->setUniformsForBuiltins(transform);
+    getGLProgram()->use();
+    getGLProgram()->setUniformsForBuiltins(transform);
 
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR );
     //

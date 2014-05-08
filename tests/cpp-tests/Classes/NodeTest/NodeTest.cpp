@@ -990,7 +990,7 @@ public:
         sprite->autorelease();
 
         auto shader = CCShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR);
-        sprite->setShaderProgram(shader);
+        sprite->setGLProgram(shader);
         return sprite;
     }
     virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
@@ -1010,8 +1010,8 @@ void MySprite::draw(Renderer *renderer, const Matrix &transform, bool transformU
 
 void MySprite::onDraw(const Matrix &transform, bool transformUpdated)
 {
-    getShaderProgram()->use();
-    getShaderProgram()->setUniformsForBuiltins(transform);
+    getGLProgram()->use();
+    getGLProgram()->setUniformsForBuiltins(transform);
 
     GL::blendFunc( _blendFunc.src, _blendFunc.dst );
 

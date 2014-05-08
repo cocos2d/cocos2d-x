@@ -182,7 +182,7 @@ bool Armature::init(const std::string& name)
 
         }
 
-        setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+        setGLProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
         setCascadeOpacityEnabled(true);
         setCascadeColorEnabled(true);

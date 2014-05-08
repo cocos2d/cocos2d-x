@@ -150,7 +150,7 @@ void SceneEditorTestLayer::onEnter()
     
     addChild(menu, 100);
     
-    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+    setGLProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 }
 
 void SceneEditorTestLayer::onExit()
