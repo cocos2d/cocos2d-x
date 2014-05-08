@@ -19,6 +19,7 @@
 #include <io.h>
 #endif
 #include "cocostudio/CocoStudio.h"
+#include "UITest/UITest.h"
 
 typedef struct _Controller{
 	const char *test_name;
@@ -30,6 +31,7 @@ Controller g_aTestNames[] = {
     // TESTS MUST BE ORDERED ALPHABETICALLY
     //     violators will be prosecuted
     //
+    { "A new UI", [](){  return new UITestScene(); }},
 	{ "Accelerometer", []() { return new AccelerometerTestScene(); } },
 	{ "ActionManager", [](){return new ActionManagerTestScene(); } },
 	{ "Actions - Basic", [](){ return new ActionsTestScene(); } },
