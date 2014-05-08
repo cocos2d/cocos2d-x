@@ -34,9 +34,7 @@ NS_CC_BEGIN
 
 bool LabelTextFormatter::multilineText(Label *theLabel)
 {
-    //int strLen = theLabel->getStringLength();
     auto limit = theLabel->_limitShowCount;
-
     auto strWhole = theLabel->_currentUTF16String;
 
     std::vector<char16_t> multiline_string;
@@ -175,7 +173,9 @@ bool LabelTextFormatter::multilineText(Label *theLabel)
 
     std::u16string strNew(multiline_string.begin(), multiline_string.end());
     
-    theLabel->setCurrentString(strNew);
+    theLabel->_originalUTF16String = strNew;
+    theLabel->computeStringNumLines();
+    theLabel->computeHorizontalKernings(theLabel->_originalUTF16String);
 
     return true;
 }

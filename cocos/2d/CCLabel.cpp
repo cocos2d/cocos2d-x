@@ -301,7 +301,7 @@ void Label::reset()
     TTFConfig temp;
     _fontConfig = temp;
 
-    _fontDirty = false;
+    _systemFontDirty = false;
     _systemFont = "Helvetica";
     _systemFontSize = 12;
 
@@ -472,6 +472,13 @@ void Label::setString(const std::string& text)
 {
     _originalUTF8String = text;
     _contentDirty = true;
+
+    std::u16string utf16String;
+    if (StringUtils::UTF8ToUTF16(_originalUTF8String, utf16String))
+    {
+        _originalUTF16String = utf16String;
+        _currentUTF16String  = utf16String;
+    }
 }
 
 void Label::setAlignment(TextHAlignment hAlignment,TextVAlignment vAlignment)
@@ -644,25 +651,6 @@ bool Label::computeHorizontalKernings(const std::u16string& stringToRender)
         return false;
     else
         return true;
-}
-
-bool Label::setOriginalString(const std::u16string& stringToSet)
-{
-    _originalUTF16String = stringToSet;
-    return true;
-}
-
-bool Label::setCurrentString(const std::u16string& stringToSet)
-{
-    _currentUTF16String  = stringToSet;
-    computeStringNumLines();
-
-    // compute the advances
-    if (_fontAtlas)
-    {
-        computeHorizontalKernings(stringToSet);
-    }
-    return true;
 }
 
 void Label::updateQuads()
@@ -939,11 +927,10 @@ void Label::setFontDefinition(const FontDefinition& textDefinition)
 
 void Label::updateContent()
 {
-    std::u16string utf16String;
-    if (StringUtils::UTF8ToUTF16(_originalUTF8String, utf16String))
+    computeStringNumLines();
+    if (_fontAtlas)
     {
-        setCurrentString(utf16String);
-        setOriginalString(utf16String);
+        computeHorizontalKernings(_originalUTF16String);
     }
 
     if (_textSprite)
@@ -1019,7 +1006,7 @@ void Label::updateFont()
     }
 
     _contentDirty = true;
-    _fontDirty = false;
+    _systemFontDirty = false;
 }
 
 void Label::drawTextSprite(Renderer *renderer, bool parentTransformUpdated)
@@ -1058,7 +1045,7 @@ void Label::visit(Renderer *renderer, const Matrix &parentTransform, bool parent
     {
         return;
     }
-    if (_fontDirty)
+    if (_systemFontDirty)
     {
         updateFont();
     }
@@ -1119,7 +1106,7 @@ void Label::setSystemFontName(const std::string& systemFont)
     if (systemFont != _systemFont)
     {
         _systemFont = systemFont;
-        _fontDirty = true;
+        _systemFontDirty = true;
     }
 }
 
@@ -1128,16 +1115,15 @@ void Label::setSystemFontSize(float fontSize)
     if (_systemFontSize != fontSize)
     {
         _systemFontSize = fontSize;
-        _fontDirty = true;
+        _systemFontDirty = true;
     }
 }
 
 ///// PROTOCOL STUFF
 Sprite * Label::getLetter(int letterIndex)
 {
-    if (_fontDirty)
+    if (_systemFontDirty || _currentLabelType == LabelType::STRING_TEXTURE)
     {
-        updateFont();
         return nullptr;
     }
 
@@ -1313,7 +1299,7 @@ std::string Label::getDescription() const
 
 const Size& Label::getContentSize() const
 {
-    if (_fontDirty)
+    if (_systemFontDirty)
     {
         const_cast<Label*>(this)->updateFont();
     }

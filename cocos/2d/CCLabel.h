@@ -287,8 +287,7 @@ protected:
     virtual void alignText();
     
     bool computeHorizontalKernings(const std::u16string& stringToRender);
-    bool setCurrentString(const std::u16string& stringToSet);
-    bool setOriginalString(const std::u16string& stringToSet);
+
     void computeStringNumLines();
 
     void updateQuads();
@@ -311,7 +310,7 @@ protected:
     bool _isOpacityModifyRGB;
     bool _contentDirty;
 
-    bool _fontDirty;
+    bool _systemFontDirty;
     std::string _systemFont;
     float         _systemFontSize;
     LabelType _currentLabelType;
