@@ -6,7 +6,7 @@
 --------------------------------
 -- @function [parent=#Widget] setSizePercent 
 -- @param self
--- @param #array_table array
+-- @param #vector2_table array
         
 --------------------------------
 -- @function [parent=#Widget] getCustomSize 
@@ -31,12 +31,12 @@
 --------------------------------
 -- @function [parent=#Widget] getTouchEndPos 
 -- @param self
--- @return array_table#array_table ret (return value: array_table)
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#Widget] setPositionPercent 
 -- @param self
--- @param #array_table array
+-- @param #vector2_table array
         
 --------------------------------
 -- @function [parent=#Widget] getLayoutSize 
@@ -113,7 +113,7 @@
 --------------------------------
 -- @function [parent=#Widget] getWorldPosition 
 -- @param self
--- @return array_table#array_table ret (return value: array_table)
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#Widget] didNotSelectSelf 
@@ -137,7 +137,7 @@
 --------------------------------
 -- @function [parent=#Widget] getTouchMovePos 
 -- @param self
--- @return array_table#array_table ret (return value: array_table)
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#Widget] setEnabled 
@@ -167,12 +167,12 @@
 --------------------------------
 -- @function [parent=#Widget] getSizePercent 
 -- @param self
--- @return array_table#array_table ret (return value: array_table)
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#Widget] getTouchStartPos 
 -- @param self
--- @return array_table#array_table ret (return value: array_table)
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#Widget] setActionTag 
@@ -187,7 +187,7 @@
 --------------------------------
 -- @function [parent=#Widget] clippingParentAreaContainPoint 
 -- @param self
--- @param #array_table array
+-- @param #vector2_table array
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -227,12 +227,12 @@
 --------------------------------
 -- @function [parent=#Widget] getPositionPercent 
 -- @param self
--- @return array_table#array_table ret (return value: array_table)
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#Widget] hitTest 
 -- @param self
--- @param #array_table array
+-- @param #vector2_table array
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -255,7 +255,7 @@
 -- @param self
 -- @param #int int
 -- @param #ccui.Widget widget
--- @param #array_table array
+-- @param #vector2_table array
         
 --------------------------------
 -- @function [parent=#Widget] setSize 
@@ -275,12 +275,12 @@
 --------------------------------
 -- @function [parent=#Widget] setColor 
 -- @param self
--- @param #color3B_table color3b
+-- @param #color3b_table color3b
         
 --------------------------------
 -- @function [parent=#Widget] getColor 
 -- @param self
--- @return color3B_table#color3B_table ret (return value: color3B_table)
+-- @return color3b_table#color3b_table ret (return value: color3b_table)
         
 --------------------------------
 -- @function [parent=#Widget] setOpacity 
@@ -295,7 +295,7 @@
 --------------------------------
 -- @function [parent=#Widget] setPosition 
 -- @param self
--- @param #array_table array
+-- @param #vector2_table array
         
 --------------------------------
 -- @function [parent=#Widget] getDescription 

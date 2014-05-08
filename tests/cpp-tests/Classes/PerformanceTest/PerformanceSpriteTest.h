@@ -101,7 +101,7 @@ protected:
 
     static const  int MAX_AUTO_TEST_TIMES  = 25;
     static const  int MAX_SPRITE_TEST_CASE = 7;
-    static const  int MAX_SUB_TEST_NUMS    = 9;
+    static const  int MAX_SUB_TEST_NUMS    = 13;
     static const  int AUTO_TEST_NODE_NUM1  = 500;
     static const  int AUTO_TEST_NODE_NUM2  = 1500;
 };

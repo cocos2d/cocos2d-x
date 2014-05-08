@@ -56,7 +56,7 @@
 --------------------------------
 -- @function [parent=#PhysicsShape] containsPoint 
 -- @param self
--- @param #array_table array
+-- @param #vector2_table array
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -77,7 +77,7 @@
 --------------------------------
 -- @function [parent=#PhysicsShape] getCenter 
 -- @param self
--- @return array_table#array_table ret (return value: array_table)
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#PhysicsShape] getDensity 
@@ -112,7 +112,7 @@
 --------------------------------
 -- @function [parent=#PhysicsShape] getOffset 
 -- @param self
--- @return array_table#array_table ret (return value: array_table)
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#PhysicsShape] getRestitution 
