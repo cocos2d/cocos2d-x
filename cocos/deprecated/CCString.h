@@ -205,40 +205,19 @@ struct StringCompare : public std::binary_function<__String *, __String *, bool>
 #define StringMake(str) String::create(str)
 #define ccs             StringMake
 
-class StringUtils
+namespace StringUtils {
+
+template<typename T>
+std::string toString(T arg)
 {
-public:
+    std::stringstream ss;
+    ss << arg;
+    return ss.str();
+}
+
+std::string format(const char* format, ...) CC_FORMAT_PRINTF(1, 2);
     
-    template<typename T>
-    static std::string toString(T arg)
-    {
-        std::stringstream ss;
-        ss << arg;
-        return ss.str();
-    }
-    
-    static std::string format(const char* format, ...) CC_FORMAT_PRINTF(1, 2)
-    {
-        #define CC_MAX_STRING_LENGTH (1024*100)
-        
-        std::string ret;
-        
-        va_list ap;
-        va_start(ap, format);
-        
-        char* buf = (char*)malloc(CC_MAX_STRING_LENGTH);
-        if (buf != nullptr)
-        {
-            vsnprintf(buf, CC_MAX_STRING_LENGTH, format, ap);
-            ret = buf;
-            free(buf);
-        }
-        va_end(ap);
-        
-        return ret;
-    }
-    
-};
+} // namespace StringUtils {
 
 // end of data_structure group
 /// @}
