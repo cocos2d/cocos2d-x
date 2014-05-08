@@ -11,6 +11,7 @@
 //#include "llvm/Support/SwapByteOrder.h"
 #include <string>
 #include <vector>
+#include <stdint.h>  // uint16_t
 #include <assert.h>
 #include <memory.h>
 
