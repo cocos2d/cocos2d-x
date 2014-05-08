@@ -79,23 +79,12 @@ protected:
     std::string _name;
 };
 
-class Uniform
+struct Uniform
 {
-    friend class GLProgram;
-    friend class UniformValue;
-
-public:
-    Uniform();
-    ~Uniform();
-    bool init(GLProgram* program);
-    void apply();
-
-protected:
-    GLint _location;
-    GLint _size;
-    std::string _name;
-    GLenum _type;
-	GLProgram* _program;  // weak ref
+    GLint location;
+    GLint size;
+    std::string name;
+    GLenum type;
 };
 
 /** GLProgram

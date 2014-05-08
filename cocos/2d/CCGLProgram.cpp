@@ -296,7 +296,7 @@ void GLProgram::parseUniforms()
 			for(int i = 0; i < activeUniforms; ++i)
 			{
 				// Query uniform info.
-				glGetActiveUniform(_program, i, length, NULL, &uniform._size, &uniform._type, uniformName);
+				glGetActiveUniform(_program, i, length, NULL, &uniform.size, &uniform.type, uniformName);
 				uniformName[length] = '\0';
 
                 // Only add uniforms that are not build-in.
@@ -304,7 +304,7 @@ void GLProgram::parseUniforms()
                 if(strncmp("CC_", uniformName, 3) != 0) {
 
                     // remove possible array '[]' from uniform name
-                    if(uniform._size > 1 && length > 3)
+                    if(uniform.size > 1 && length > 3)
                     {
                         char* c = strrchr(uniformName, '[');
                         if(c)
@@ -312,13 +312,10 @@ void GLProgram::parseUniforms()
                             *c = '\0';
                         }
                     }
-                    uniform._name = std::string(uniformName);
-                    uniform._location = glGetUniformLocation(_program, uniformName);
+                    uniform.name = std::string(uniformName);
+                    uniform.location = glGetUniformLocation(_program, uniformName);
                     
-                    //something wrong, uniform is an object not a pointer, may be released soon
-                    uniform.init(this);
-
-                    _uniformsDictionary[uniform._name] = uniform;
+                    _uniformsDictionary[uniform.name] = uniform;
                 }
 			}
 		}
@@ -891,26 +888,6 @@ void VertexAttrib::redefineTypeAndSize(GLenum type, GLint size, GLboolean normal
     _type = type;
     _size = size;
     _normalized = normalized;
-}
-
-//
-// Uniform
-//
-
-Uniform::Uniform()
-:_program(nullptr)
-{
-
-}
-
-Uniform::~Uniform()
-{
-}
-
-bool Uniform::init(GLProgram* program)
-{
-	_program = program;
-    return program && program && _location != -1;
 }
 
 NS_CC_END

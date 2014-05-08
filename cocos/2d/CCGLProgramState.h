@@ -51,7 +51,7 @@ class UniformValue
 
 public:
     UniformValue();
-    UniformValue(Uniform *uniform);
+    UniformValue(Uniform *uniform, GLProgram* glprogram);
     ~UniformValue();
 
 	void setValue(float value);
@@ -66,8 +66,9 @@ public:
 
 protected:
 	Uniform* _uniform;  // weak ref
+    GLProgram* _glprogram; // weak ref
     bool _useCallback;
-    
+
     union U{
         float floatValue;
         int intValue;

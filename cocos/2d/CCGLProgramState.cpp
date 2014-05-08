@@ -41,12 +41,14 @@ NS_CC_BEGIN
 UniformValue::UniformValue()
 : _useCallback(false)
 , _uniform(nullptr)
+, _glprogram(nullptr)
 {
 }
 
-UniformValue::UniformValue(Uniform *uniform)
+UniformValue::UniformValue(Uniform *uniform, GLProgram* glprogram)
 : _useCallback(false)
 , _uniform(uniform)
+, _glprogram(glprogram)
 {
 }
 
@@ -57,30 +59,30 @@ void UniformValue::apply()
     }
     else
     {
-        switch (_uniform->_type) {
+        switch (_uniform->type) {
             case GL_FLOAT:
-                _uniform->_program->setUniformLocationWith1f(_uniform->_location, _value.floatValue);
+                _glprogram->setUniformLocationWith1f(_uniform->location, _value.floatValue);
                 break;
 
             case GL_INT:
             case GL_SAMPLER_2D:
-                _uniform->_program->setUniformLocationWith1i(_uniform->_location, _value.intValue);
+                _glprogram->setUniformLocationWith1i(_uniform->location, _value.intValue);
                 break;
 
             case GL_FLOAT_VEC2:
-                _uniform->_program->setUniformLocationWith2f(_uniform->_location, _value.v2Value.x, _value.v2Value.y);
+                _glprogram->setUniformLocationWith2f(_uniform->location, _value.v2Value.x, _value.v2Value.y);
                 break;
 
             case GL_FLOAT_VEC3:
-                _uniform->_program->setUniformLocationWith3f(_uniform->_location, _value.v3Value.x, _value.v3Value.y, _value.v3Value.z);
+                _glprogram->setUniformLocationWith3f(_uniform->location, _value.v3Value.x, _value.v3Value.y, _value.v3Value.z);
                 break;
 
             case GL_FLOAT_VEC4:
-                _uniform->_program->setUniformLocationWith4f(_uniform->_location, _value.v4Value.x, _value.v4Value.y, _value.v4Value.z, _value.v4Value.w);
+                _glprogram->setUniformLocationWith4f(_uniform->location, _value.v4Value.x, _value.v4Value.y, _value.v4Value.z, _value.v4Value.w);
                 break;
 
             case GL_FLOAT_MAT4:
-                _uniform->_program->setUniformLocationWithMatrix4fv(_uniform->_location, (GLfloat*)&_value.matrixValue, 1);
+                _glprogram->setUniformLocationWithMatrix4fv(_uniform->location, (GLfloat*)&_value.matrixValue, 1);
                 break;
 
             default:
@@ -98,37 +100,37 @@ void UniformValue::setValue(const std::function<void(Uniform*)> callback)
 
 void UniformValue::setValue(float value)
 {
-    CCASSERT (_uniform->_type == GL_FLOAT, "");
+    CCASSERT (_uniform->type == GL_FLOAT, "");
     _value.floatValue = value;
 }
 
 void UniformValue::setValue(int value)
 {
-    CCASSERT ((_uniform->_type == GL_INT || _uniform->_type == GL_SAMPLER_2D), "");
+    CCASSERT ((_uniform->type == GL_INT || _uniform->type == GL_SAMPLER_2D), "");
     _value.intValue = value;
 }
 
 void UniformValue::setValue(const Vector2& value)
 {
-    CCASSERT (_uniform->_type == GL_FLOAT_VEC2, "");
+    CCASSERT (_uniform->type == GL_FLOAT_VEC2, "");
     _value.v2Value = value;
 }
 
 void UniformValue::setValue(const Vector3& value)
 {
-    CCASSERT (_uniform->_type == GL_FLOAT_VEC3, "");
+    CCASSERT (_uniform->type == GL_FLOAT_VEC3, "");
     _value.v3Value = value;
 }
 
 void UniformValue::setValue(const Vector4& value)
 {
-    CCASSERT (_uniform->_type == GL_FLOAT_VEC4, "");
+    CCASSERT (_uniform->type == GL_FLOAT_VEC4, "");
     _value.v4Value = value;
 }
 
 void UniformValue::setValue(const Matrix& value)
 {
-    CCASSERT(_uniform->_type == GL_FLOAT_MAT4, "");
+    CCASSERT(_uniform->type == GL_FLOAT_MAT4, "");
     _value.matrixValue = value;
 }
 
@@ -218,7 +220,7 @@ bool GLProgramState::init(GLProgram* glprogram)
     }
 
     for(auto &uniform : _glprogram->_uniformsDictionary) {
-        UniformValue value(&uniform.second);
+        UniformValue value(&uniform.second, _glprogram);
         _uniforms[uniform.first] = value;
     }
 
