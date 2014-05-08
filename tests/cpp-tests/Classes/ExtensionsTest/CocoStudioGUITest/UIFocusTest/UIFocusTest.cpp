@@ -544,7 +544,7 @@ bool UIFocusTestNestedLayout3::init()
         bottomHBox->setLayoutParameter(vparams);
         count = 3;
         LinearLayoutParameter *bottomParams = LinearLayoutParameter::create();
-        bottomParams->setMargin(Margin(0, 0, 10, 0));
+        bottomParams->setMargin(Margin(0, 0, 8, 0));
         for (int i=0; i < count; ++i) {
             ImageView *w = ImageView::create("cocosui/scrollviewbg.png");
             w->setLayoutParameter(bottomParams);
