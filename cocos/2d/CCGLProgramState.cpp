@@ -102,36 +102,42 @@ void UniformValue::setValue(float value)
 {
     CCASSERT (_uniform->type == GL_FLOAT, "");
     _value.floatValue = value;
+    _useCallback = false;
 }
 
 void UniformValue::setValue(int value)
 {
     CCASSERT ((_uniform->type == GL_INT || _uniform->type == GL_SAMPLER_2D), "");
     _value.intValue = value;
+    _useCallback = false;
 }
 
 void UniformValue::setValue(const Vector2& value)
 {
     CCASSERT (_uniform->type == GL_FLOAT_VEC2, "");
     _value.v2Value = value;
+    _useCallback = false;
 }
 
 void UniformValue::setValue(const Vector3& value)
 {
     CCASSERT (_uniform->type == GL_FLOAT_VEC3, "");
     _value.v3Value = value;
+    _useCallback = false;
 }
 
 void UniformValue::setValue(const Vector4& value)
 {
     CCASSERT (_uniform->type == GL_FLOAT_VEC4, "");
     _value.v4Value = value;
+    _useCallback = false;
 }
 
 void UniformValue::setValue(const Matrix& value)
 {
     CCASSERT(_uniform->type == GL_FLOAT_MAT4, "");
     _value.matrixValue = value;
+    _useCallback = false;
 }
 
 //
