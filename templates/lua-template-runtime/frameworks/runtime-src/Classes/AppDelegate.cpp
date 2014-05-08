@@ -21,9 +21,9 @@ AppDelegate::~AppDelegate()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
-
+    string entryfile ="src/main.lua";
 #if (COCOS2D_DEBUG>0)
-    initRuntime();
+    initRuntime(entryfile);
 #endif
     
     // initialize director
@@ -38,7 +38,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         Size viewSize = ConfigParser::getInstance()->getInitViewSize();
         string title = ConfigParser::getInstance()->getInitViewName();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-        extern void createSimulator(const char* viewName, float width, float height,float frameZoomFactor = 1.0f);
+        extern void createSimulator(const char* viewName, float width, float height,bool isLandscape = true, float frameZoomFactor = 1.0f);
         bool isLanscape = ConfigParser::getInstance()->isLanscape();
         createSimulator(title.c_str(),viewSize.width,viewSize.height,isLanscape);
 #else
@@ -53,14 +53,19 @@ bool AppDelegate::applicationDidFinishLaunching()
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
    
+    auto engine = LuaEngine::getInstance();
+    ScriptEngineManager::getInstance()->setScriptEngine(engine);
+    
+    //register custom function
+    //LuaStack* stack = engine->getLuaStack();
+    //register_custom_function(stack->getLuaState());
+    
 #if (COCOS2D_DEBUG>0)
     if (startRuntime())
         return true;
 #endif
 
-    auto engine = LuaEngine::getInstance();
-    ScriptEngineManager::getInstance()->setScriptEngine(engine);
-    engine->executeScriptFile("src/main.lua");
+    engine->executeScriptFile(entryfile.c_str());
     return true;
 }
 
