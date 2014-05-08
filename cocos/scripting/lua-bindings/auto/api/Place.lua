@@ -6,7 +6,7 @@
 --------------------------------
 -- @function [parent=#Place] create 
 -- @param self
--- @param #array_table array
+-- @param #vector2_table array
 -- @return Place#Place ret (return value: cc.Place)
         
 --------------------------------

@@ -6,7 +6,7 @@
 --------------------------------
 -- @function [parent=#Layout] setBackGroundColorVector 
 -- @param self
--- @param #array_table array
+-- @param #vector2_table array
         
 --------------------------------
 -- @function [parent=#Layout] setClippingType 
@@ -21,12 +21,12 @@
 --------------------------------
 -- @function [parent=#Layout] setBackGroundImageColor 
 -- @param self
--- @param #color3B_table color3b
+-- @param #color3b_table color3b
         
 --------------------------------
 -- @function [parent=#Layout] getBackGroundColorVector 
 -- @param self
--- @return array_table#array_table ret (return value: array_table)
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#Layout] getClippingType 
@@ -59,14 +59,14 @@
 -- @param #ccui.TextureResType texturerestype
         
 --------------------------------
--- overload function: setBackGroundColor(color3B_table, color3B_table)
+-- overload function: setBackGroundColor(color3b_table, color3b_table)
 --          
--- overload function: setBackGroundColor(color3B_table)
+-- overload function: setBackGroundColor(color3b_table)
 --          
 -- @function [parent=#Layout] setBackGroundColor
 -- @param self
--- @param #color3B_table color3b
--- @param #color3B_table color3b
+-- @param #color3b_table color3b
+-- @param #color3b_table color3b
 
 --------------------------------
 -- @function [parent=#Layout] requestDoLayout 
@@ -80,7 +80,7 @@
 --------------------------------
 -- @function [parent=#Layout] getBackGroundColor 
 -- @param self
--- @return color3B_table#color3B_table ret (return value: color3B_table)
+-- @return color3b_table#color3b_table ret (return value: color3b_table)
         
 --------------------------------
 -- @function [parent=#Layout] setClippingEnabled 
@@ -90,7 +90,7 @@
 --------------------------------
 -- @function [parent=#Layout] getBackGroundImageColor 
 -- @param self
--- @return color3B_table#color3B_table ret (return value: color3B_table)
+-- @return color3b_table#color3b_table ret (return value: color3b_table)
         
 --------------------------------
 -- @function [parent=#Layout] isBackGroundImageScale9Enabled 
@@ -105,7 +105,7 @@
 --------------------------------
 -- @function [parent=#Layout] getBackGroundEndColor 
 -- @param self
--- @return color3B_table#color3B_table ret (return value: color3B_table)
+-- @return color3b_table#color3b_table ret (return value: color3b_table)
         
 --------------------------------
 -- @function [parent=#Layout] setBackGroundColorOpacity 
@@ -135,7 +135,7 @@
 --------------------------------
 -- @function [parent=#Layout] getBackGroundStartColor 
 -- @param self
--- @return color3B_table#color3B_table ret (return value: color3B_table)
+-- @return color3b_table#color3b_table ret (return value: color3b_table)
         
 --------------------------------
 -- @function [parent=#Layout] setBackGroundImageScale9Enabled 

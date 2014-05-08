@@ -16,7 +16,7 @@
 --------------------------------
 -- @function [parent=#CardinalSplineBy] updatePosition 
 -- @param self
--- @param #array_table array
+-- @param #vector2_table array
         
 --------------------------------
 -- @function [parent=#CardinalSplineBy] reverse 
