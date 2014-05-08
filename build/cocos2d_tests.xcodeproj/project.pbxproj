@@ -812,6 +812,9 @@
 		29080DE4191B595E0066F8DF /* UIWidgetAddNodeTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29080D89191B595E0066F8DF /* UIWidgetAddNodeTest.cpp */; };
 		29080DE5191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29080D8B191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp */; };
 		29080DE6191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29080D8B191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp */; };
+		3EA0FB5E191B92F100B170C8 /* cocosvideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 3EA0FB5D191B92F100B170C8 /* cocosvideo.mp4 */; };
+		3EA0FB64191B931500B170C8 /* UIVideoWidgetTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0FB62191B931500B170C8 /* UIVideoWidgetTest.cpp */; };
+		3EA0FB66191B933000B170C8 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EA0FB65191B933000B170C8 /* MediaPlayer.framework */; };
 		A05FCACA177C124500BE600E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
 		A07A521E1783A1D20073F6A7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
 		A07A521F1783A1D20073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
@@ -1844,6 +1847,10 @@
 		29080D8A191B595E0066F8DF /* UIWidgetAddNodeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWidgetAddNodeTest.h; sourceTree = "<group>"; };
 		29080D8B191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIWidgetAddNodeTest_Editor.cpp; sourceTree = "<group>"; };
 		29080D8C191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWidgetAddNodeTest_Editor.h; sourceTree = "<group>"; };
+		3EA0FB5D191B92F100B170C8 /* cocosvideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = cocosvideo.mp4; path = "../tests/cpp-tests/Resources/cocosvideo.mp4"; sourceTree = "<group>"; };
+		3EA0FB62191B931500B170C8 /* UIVideoWidgetTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIVideoWidgetTest.cpp; sourceTree = "<group>"; };
+		3EA0FB63191B931500B170C8 /* UIVideoWidgetTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIVideoWidgetTest.h; sourceTree = "<group>"; };
+		3EA0FB65191B933000B170C8 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/MediaPlayer.framework; sourceTree = DEVELOPER_DIR; };
 		46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		A035A71117822E9E00987F6C /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		A07A52291783A1D20073F6A7 /* cpp-tests iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cpp-tests iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2011,6 +2018,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EA0FB66191B933000B170C8 /* MediaPlayer.framework in Frameworks */,
 				1AAF53FE180E39D4000584C8 /* libbox2d iOS.a in Frameworks */,
 				1AAF53FF180E39D4000584C8 /* libchipmunk iOS.a in Frameworks */,
 				1AAF5400180E39D4000584C8 /* libcocos2dx iOS.a in Frameworks */,
@@ -3256,6 +3264,7 @@
 		1AC35CA818CED83500F37B72 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3EA0FB5D191B92F100B170C8 /* cocosvideo.mp4 */,
 				1AC35CA918CED84500F37B72 /* animations */,
 				1AC35CAE18CED84500F37B72 /* ccb */,
 				1A221C9B191771E300FD2BE4 /* ccs-res */,
@@ -3462,6 +3471,7 @@
 		29080D1E191B595E0066F8DF /* CocoStudioGUITest */ = {
 			isa = PBXGroup;
 			children = (
+				3EA0FB61191B931500B170C8 /* UIVideoWidgetTest */,
 				29080D1F191B595E0066F8DF /* CocosGUIScene.cpp */,
 				29080D20191B595E0066F8DF /* CocosGUIScene.h */,
 				29080D21191B595E0066F8DF /* CocoStudioGUITest.cpp */,
@@ -3733,6 +3743,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3EA0FB65191B933000B170C8 /* MediaPlayer.framework */,
 				1ABCA3AF18CDA06D0087CE3A /* libz.dylib */,
 				1ABCA3A818CD9F130087CE3A /* AudioToolbox.framework */,
 				1ABCA3A618CD9F0D0087CE3A /* OpenAL.framework */,
@@ -3767,6 +3778,15 @@
 				1ABCA28818CD91510087CE3A /* Other Frameworks */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3EA0FB61191B931500B170C8 /* UIVideoWidgetTest */ = {
+			isa = PBXGroup;
+			children = (
+				3EA0FB62191B931500B170C8 /* UIVideoWidgetTest.cpp */,
+				3EA0FB63191B931500B170C8 /* UIVideoWidgetTest.h */,
+			);
+			path = UIVideoWidgetTest;
 			sourceTree = "<group>";
 		};
 		46A15F9D1807A4F8005B8026 /* Products */ = {
@@ -4440,6 +4460,7 @@
 				1AC35D0518CED84500F37B72 /* Shaders in Resources */,
 				1AC35CD318CED84500F37B72 /* background.ogg in Resources */,
 				1AC35CCB18CED84500F37B72 /* animations in Resources */,
+				3EA0FB5E191B92F100B170C8 /* cocosvideo.mp4 in Resources */,
 				1AC35C8C18CECF1400F37B72 /* Icon-114.png in Resources */,
 				1AC35CF118CED84500F37B72 /* hd in Resources */,
 				1AC35C9318CECF1400F37B72 /* Icon-57.png in Resources */,
@@ -4774,6 +4795,7 @@
 				1AC35B4218CECF0C00F37B72 /* QuestionContainerSprite.cpp in Sources */,
 				1AC35B6218CECF0C00F37B72 /* DrawPrimitivesTest.cpp in Sources */,
 				29080DDC191B595E0066F8DF /* UITextFieldTest.cpp in Sources */,
+				3EA0FB64191B931500B170C8 /* UIVideoWidgetTest.cpp in Sources */,
 				1AC35C1818CECF0C00F37B72 /* MotionStreakTest.cpp in Sources */,
 				1AC35C0618CECF0C00F37B72 /* FontTest.cpp in Sources */,
 				1AC35C3818CECF0C00F37B72 /* PerformanceTest.cpp in Sources */,
