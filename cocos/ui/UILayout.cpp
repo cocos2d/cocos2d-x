@@ -37,527 +37,6 @@ NS_CC_BEGIN
 
 namespace ui {
     
-class LayoutExecutant : public Ref
-{
-public:
-    LayoutExecutant(){};
-    virtual ~LayoutExecutant(){};
-    static LayoutExecutant* create();
-    virtual void doLayout(const Size& layoutSize, Vector<Node*> container){};
-};
-
-class LinearVerticalLayoutExecutant : public LayoutExecutant
-{
-public:
-    LinearVerticalLayoutExecutant(){};
-    virtual ~LinearVerticalLayoutExecutant(){};
-    static LinearVerticalLayoutExecutant* create();
-    virtual void doLayout(const Size& layoutSize, Vector<Node*> container);
-};
-
-class LinearHorizontalLayoutExecutant : public LayoutExecutant
-{
-public:
-    LinearHorizontalLayoutExecutant(){};
-    virtual ~LinearHorizontalLayoutExecutant(){};
-    static LinearHorizontalLayoutExecutant* create();
-    virtual void doLayout(const Size& layoutSize, Vector<Node*> container);
-};
-
-class RelativeLayoutExecutant : public LayoutExecutant
-{
-public:
-    RelativeLayoutExecutant(){};
-    virtual ~RelativeLayoutExecutant(){};
-    static RelativeLayoutExecutant* create();
-    virtual void doLayout(const Size& layoutSize, Vector<Node*> container);
-};
-    
-LayoutExecutant* LayoutExecutant::create()
-{
-    LayoutExecutant* exe = new LayoutExecutant();
-    if (exe)
-    {
-        exe->autorelease();
-        return exe;
-    }
-    CC_SAFE_DELETE(exe);
-    return nullptr;
-}
-    
-LinearVerticalLayoutExecutant* LinearVerticalLayoutExecutant::create()
-{
-    LinearVerticalLayoutExecutant* exe = new LinearVerticalLayoutExecutant();
-    if (exe)
-    {
-        exe->autorelease();
-        return exe;
-    }
-    CC_SAFE_DELETE(exe);
-    return nullptr;
-}
-
-LinearHorizontalLayoutExecutant* LinearHorizontalLayoutExecutant::create()
-{
-    LinearHorizontalLayoutExecutant* exe = new LinearHorizontalLayoutExecutant();
-    if (exe)
-    {
-        exe->autorelease();
-        return exe;
-    }
-    CC_SAFE_DELETE(exe);
-    return nullptr;
-}
-
-RelativeLayoutExecutant* RelativeLayoutExecutant::create()
-{
-    RelativeLayoutExecutant* exe = new RelativeLayoutExecutant();
-    if (exe)
-    {
-        exe->autorelease();
-        return exe;
-    }
-    CC_SAFE_DELETE(exe);
-    return nullptr;
-}
-    
-void LinearVerticalLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Vector<cocos2d::Node *> container)
-{
-    float topBoundary = layoutSize.height;
-    
-    for (auto& subWidget : container)
-    {
-        Widget* child = dynamic_cast<Widget*>(subWidget);
-        if (child)
-        {
-            LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
-            
-            if (layoutParameter)
-            {
-                LinearGravity childGravity = layoutParameter->getGravity();
-                Vector2 ap = child->getAnchorPoint();
-                Size cs = child->getSize();
-                float finalPosX = ap.x * cs.width;
-                float finalPosY = topBoundary - ((1.0f-ap.y) * cs.height);
-                switch (childGravity)
-                {
-                    case LINEAR_GRAVITY_NONE:
-                    case LINEAR_GRAVITY_LEFT:
-                        break;
-                    case LINEAR_GRAVITY_RIGHT:
-                        finalPosX = layoutSize.width - ((1.0f - ap.x) * cs.width);
-                        break;
-                    case LINEAR_GRAVITY_CENTER_HORIZONTAL:
-                        finalPosX = layoutSize.width / 2.0f - cs.width * (0.5f-ap.x);
-                        break;
-                    default:
-                        break;
-                }
-                Margin mg = layoutParameter->getMargin();
-                finalPosX += mg.left;
-                finalPosY -= mg.top;
-                child->setPosition(Vector2(finalPosX, finalPosY));
-                topBoundary = child->getBottomInParent() - mg.bottom;
-            }
-        }
-    }
-}
-    
-void LinearHorizontalLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Vector<cocos2d::Node *> container)
-{
-    float leftBoundary = 0.0f;
-    for (auto& subWidget : container)
-    {
-        Widget* child = dynamic_cast<Widget*>(subWidget);
-        if (child)
-        {
-            LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
-            if (layoutParameter)
-            {
-                LinearGravity childGravity = layoutParameter->getGravity();
-                Vector2 ap = child->getAnchorPoint();
-                Size cs = child->getSize();
-                float finalPosX = leftBoundary + (ap.x * cs.width);
-                float finalPosY = layoutSize.height - (1.0f - ap.y) * cs.height;
-                switch (childGravity)
-                {
-                    case LINEAR_GRAVITY_NONE:
-                    case LINEAR_GRAVITY_TOP:
-                        break;
-                    case LINEAR_GRAVITY_BOTTOM:
-                        finalPosY = ap.y * cs.height;
-                        break;
-                    case LINEAR_GRAVITY_CENTER_VERTICAL:
-                        finalPosY = layoutSize.height / 2.0f - cs.height * (0.5f - ap.y);
-                        break;
-                    default:
-                        break;
-                }
-                Margin mg = layoutParameter->getMargin();
-                finalPosX += mg.left;
-                finalPosY -= mg.top;
-                child->setPosition(Vector2(finalPosX, finalPosY));
-                leftBoundary = child->getRightInParent() + mg.right;
-            }
-        }
-    }
-}
-
-void RelativeLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Vector<cocos2d::Node *> container)
-{
-    ssize_t unlayoutChildCount = 0;
-    Vector<Widget*> widgetChildren;
-    for (auto& subWidget : container)
-    {
-        Widget* child = dynamic_cast<Widget*>(subWidget);
-        if (child)
-        {
-            RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
-            layoutParameter->_put = false;
-            unlayoutChildCount++;
-            widgetChildren.pushBack(child);
-        }
-    }
-    while (unlayoutChildCount > 0)
-    {
-        for (auto& subWidget : widgetChildren)
-        {
-            Widget* child = static_cast<Widget*>(subWidget);
-            RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
-            
-            if (layoutParameter)
-            {
-                if (layoutParameter->_put)
-                {
-                    continue;
-                }
-                Vector2 ap = child->getAnchorPoint();
-                Size cs = child->getSize();
-                RelativeAlign align = layoutParameter->getAlign();
-                const char* relativeName = layoutParameter->getRelativeToWidgetName();
-                Widget* relativeWidget = nullptr;
-                RelativeLayoutParameter* relativeWidgetLP = nullptr;
-                float finalPosX = 0.0f;
-                float finalPosY = 0.0f;
-                if (relativeName && strcmp(relativeName, ""))
-                {
-                    for (auto& sWidget : widgetChildren)
-                    {
-                        if (sWidget)
-                        {
-                            RelativeLayoutParameter* rlayoutParameter = dynamic_cast<RelativeLayoutParameter*>(sWidget->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
-                            if (rlayoutParameter && strcmp(rlayoutParameter->getRelativeName(), relativeName) == 0)
-                            {
-                                relativeWidget = sWidget;
-                                relativeWidgetLP = rlayoutParameter;
-                                break;
-                            }
-                        }
-                    }
-                }
-                switch (align)
-                {
-                    case RELATIVE_ALIGN_NONE:
-                    case RELATIVE_ALIGN_PARENT_TOP_LEFT:
-                        finalPosX = ap.x * cs.width;
-                        finalPosY = layoutSize.height - ((1.0f - ap.y) * cs.height);
-                        break;
-                    case RELATIVE_ALIGN_PARENT_TOP_CENTER_HORIZONTAL:
-                        finalPosX = layoutSize.width * 0.5f - cs.width * (0.5f - ap.x);
-                        finalPosY = layoutSize.height - ((1.0f - ap.y) * cs.height);
-                        break;
-                    case RELATIVE_ALIGN_PARENT_TOP_RIGHT:
-                        finalPosX = layoutSize.width - ((1.0f - ap.x) * cs.width);
-                        finalPosY = layoutSize.height - ((1.0f - ap.y) * cs.height);
-                        break;
-                    case RELATIVE_ALIGN_PARENT_LEFT_CENTER_VERTICAL:
-                        finalPosX = ap.x * cs.width;
-                        finalPosY = layoutSize.height * 0.5f - cs.height * (0.5f - ap.y);
-                        break;
-                    case RELATIVE_CENTER_IN_PARENT:
-                        finalPosX = layoutSize.width * 0.5f - cs.width * (0.5f - ap.x);
-                        finalPosY = layoutSize.height * 0.5f - cs.height * (0.5f - ap.y);
-                        break;
-                    case RELATIVE_ALIGN_PARENT_RIGHT_CENTER_VERTICAL:
-                        finalPosX = layoutSize.width - ((1.0f - ap.x) * cs.width);
-                        finalPosY = layoutSize.height * 0.5f - cs.height * (0.5f - ap.y);
-                        break;
-                    case RELATIVE_ALIGN_PARENT_LEFT_BOTTOM:
-                        finalPosX = ap.x * cs.width;
-                        finalPosY = ap.y * cs.height;
-                        break;
-                    case RELATIVE_ALIGN_PARENT_BOTTOM_CENTER_HORIZONTAL:
-                        finalPosX = layoutSize.width * 0.5f - cs.width * (0.5f - ap.x);
-                        finalPosY = ap.y * cs.height;
-                        break;
-                    case RELATIVE_ALIGN_PARENT_RIGHT_BOTTOM:
-                        finalPosX = layoutSize.width - ((1.0f - ap.x) * cs.width);
-                        finalPosY = ap.y * cs.height;
-                        break;
-                        
-                    case RELATIVE_LOCATION_ABOVE_LEFTALIGN:
-                        if (relativeWidget)
-                        {
-                            if (relativeWidgetLP && !relativeWidgetLP->_put)
-                            {
-                                continue;
-                            }
-                            float locationBottom = relativeWidget->getTopInParent();
-                            float locationLeft = relativeWidget->getLeftInParent();
-                            finalPosY = locationBottom + ap.y * cs.height;
-                            finalPosX = locationLeft + ap.x * cs.width;
-                        }
-                        break;
-                    case RELATIVE_LOCATION_ABOVE_CENTER:
-                        if (relativeWidget)
-                        {
-                            if (relativeWidgetLP && !relativeWidgetLP->_put)
-                            {
-                                continue;
-                            }
-                            Size rbs = relativeWidget->getSize();
-                            float locationBottom = relativeWidget->getTopInParent();
-                            
-                            finalPosY = locationBottom + ap.y * cs.height;
-                            finalPosX = relativeWidget->getLeftInParent() + rbs.width * 0.5f + ap.x * cs.width - cs.width * 0.5f;
-                        }
-                        break;
-                    case RELATIVE_LOCATION_ABOVE_RIGHTALIGN:
-                        if (relativeWidget)
-                        {
-                            if (relativeWidgetLP && !relativeWidgetLP->_put)
-                            {
-                                continue;
-                            }
-                            float locationBottom = relativeWidget->getTopInParent();
-                            float locationRight = relativeWidget->getRightInParent();
-                            finalPosY = locationBottom + ap.y * cs.height;
-                            finalPosX = locationRight - (1.0f - ap.x) * cs.width;
-                        }
-                        break;
-                    case RELATIVE_LOCATION_LEFT_OF_TOPALIGN:
-                        if (relativeWidget)
-                        {
-                            if (relativeWidgetLP && !relativeWidgetLP->_put)
-                            {
-                                continue;
-                            }
-                            float locationTop = relativeWidget->getTopInParent();
-                            float locationRight = relativeWidget->getLeftInParent();
-                            finalPosY = locationTop - (1.0f - ap.y) * cs.height;
-                            finalPosX = locationRight - (1.0f - ap.x) * cs.width;
-                        }
-                        break;
-                    case RELATIVE_LOCATION_LEFT_OF_CENTER:
-                        if (relativeWidget)
-                        {
-                            if (relativeWidgetLP && !relativeWidgetLP->_put)
-                            {
-                                continue;
-                            }
-                            Size rbs = relativeWidget->getSize();
-                            float locationRight = relativeWidget->getLeftInParent();
-                            finalPosX = locationRight - (1.0f - ap.x) * cs.width;
-                            
-                            finalPosY = relativeWidget->getBottomInParent() + rbs.height * 0.5f + ap.y * cs.height - cs.height * 0.5f;
-                        }
-                        break;
-                    case RELATIVE_LOCATION_LEFT_OF_BOTTOMALIGN:
-                        if (relativeWidget)
-                        {
-                            if (relativeWidgetLP && !relativeWidgetLP->_put)
-                            {
-                                continue;
-                            }
-                            float locationBottom = relativeWidget->getBottomInParent();
-                            float locationRight = relativeWidget->getLeftInParent();
-                            finalPosY = locationBottom + ap.y * cs.height;
-                            finalPosX = locationRight - (1.0f - ap.x) * cs.width;
-                        }
-                        break;
-                    case RELATIVE_LOCATION_RIGHT_OF_TOPALIGN:
-                        if (relativeWidget)
-                        {
-                            if (relativeWidgetLP && !relativeWidgetLP->_put)
-                            {
-                                continue;
-                            }
-                            float locationTop = relativeWidget->getTopInParent();
-                            float locationLeft = relativeWidget->getRightInParent();
-                            finalPosY = locationTop - (1.0f - ap.y) * cs.height;
-                            finalPosX = locationLeft + ap.x * cs.width;
-                        }
-                        break;
-                    case RELATIVE_LOCATION_RIGHT_OF_CENTER:
-                        if (relativeWidget)
-                        {
-                            if (relativeWidgetLP && !relativeWidgetLP->_put)
-                            {
-                                continue;
-                            }
-                            Size rbs = relativeWidget->getSize();
-                            float locationLeft = relativeWidget->getRightInParent();
-                            finalPosX = locationLeft + ap.x * cs.width;
-                            
-                            finalPosY = relativeWidget->getBottomInParent() + rbs.height * 0.5f + ap.y * cs.height - cs.height * 0.5f;
-                        }
-                        break;
-                    case RELATIVE_LOCATION_RIGHT_OF_BOTTOMALIGN:
-                        if (relativeWidget)
-                        {
-                            if (relativeWidgetLP && !relativeWidgetLP->_put)
-                            {
-                                continue;
-                            }
-                            float locationBottom = relativeWidget->getBottomInParent();
-                            float locationLeft = relativeWidget->getRightInParent();
-                            finalPosY = locationBottom + ap.y * cs.height;
-                            finalPosX = locationLeft + ap.x * cs.width;
-                        }
-                        break;
-                    case RELATIVE_LOCATION_BELOW_LEFTALIGN:
-                        if (relativeWidget)
-                        {
-                            if (relativeWidgetLP && !relativeWidgetLP->_put)
-                            {
-                                continue;
-                            }
-                            float locationTop = relativeWidget->getBottomInParent();
-                            float locationLeft = relativeWidget->getLeftInParent();
-                            finalPosY = locationTop - (1.0f - ap.y) * cs.height;
-                            finalPosX = locationLeft + ap.x * cs.width;
-                        }
-                        break;
-                    case RELATIVE_LOCATION_BELOW_CENTER:
-                        if (relativeWidget)
-                        {
-                            if (relativeWidgetLP && !relativeWidgetLP->_put)
-                            {
-                                continue;
-                            }
-                            Size rbs = relativeWidget->getSize();
-                            float locationTop = relativeWidget->getBottomInParent();
-                            
-                            finalPosY = locationTop - (1.0f - ap.y) * cs.height;
-                            finalPosX = relativeWidget->getLeftInParent() + rbs.width * 0.5f + ap.x * cs.width - cs.width * 0.5f;
-                        }
-                        break;
-                    case RELATIVE_LOCATION_BELOW_RIGHTALIGN:
-                        if (relativeWidget)
-                        {
-                            if (relativeWidgetLP && !relativeWidgetLP->_put)
-                            {
-                                continue;
-                            }
-                            float locationTop = relativeWidget->getBottomInParent();
-                            float locationRight = relativeWidget->getRightInParent();
-                            finalPosY = locationTop - (1.0f - ap.y) * cs.height;
-                            finalPosX = locationRight - (1.0f - ap.x) * cs.width;
-                        }
-                        break;
-                    default:
-                        break;
-                }
-                Margin relativeWidgetMargin;
-                Margin mg = layoutParameter->getMargin();
-                if (relativeWidgetLP)
-                {
-                    relativeWidgetMargin = relativeWidgetLP->getMargin();
-                }
-                //handle margin
-                switch (align)
-                {
-                    case RELATIVE_ALIGN_NONE:
-                    case RELATIVE_ALIGN_PARENT_TOP_LEFT:
-                        finalPosX += mg.left;
-                        finalPosY -= mg.top;
-                        break;
-                    case RELATIVE_ALIGN_PARENT_TOP_CENTER_HORIZONTAL:
-                        finalPosY -= mg.top;
-                        break;
-                    case RELATIVE_ALIGN_PARENT_TOP_RIGHT:
-                        finalPosX -= mg.right;
-                        finalPosY -= mg.top;
-                        break;
-                    case RELATIVE_ALIGN_PARENT_LEFT_CENTER_VERTICAL:
-                        finalPosX += mg.left;
-                        break;
-                    case RELATIVE_CENTER_IN_PARENT:
-                        break;
-                    case RELATIVE_ALIGN_PARENT_RIGHT_CENTER_VERTICAL:
-                        finalPosX -= mg.right;
-                        break;
-                    case RELATIVE_ALIGN_PARENT_LEFT_BOTTOM:
-                        finalPosX += mg.left;
-                        finalPosY += mg.bottom;
-                        break;
-                    case RELATIVE_ALIGN_PARENT_BOTTOM_CENTER_HORIZONTAL:
-                        finalPosY += mg.bottom;
-                        break;
-                    case RELATIVE_ALIGN_PARENT_RIGHT_BOTTOM:
-                        finalPosX -= mg.right;
-                        finalPosY += mg.bottom;
-                        break;
-                        
-                    case RELATIVE_LOCATION_ABOVE_LEFTALIGN:
-                        finalPosY += mg.bottom;
-                        finalPosX += mg.left;
-                        break;
-                    case RELATIVE_LOCATION_ABOVE_RIGHTALIGN:
-                        finalPosY += mg.bottom;
-                        finalPosX -= mg.right;
-                        break;
-                    case RELATIVE_LOCATION_ABOVE_CENTER:
-                        finalPosY += mg.bottom;
-                        break;
-                        
-                    case RELATIVE_LOCATION_LEFT_OF_TOPALIGN:
-                        finalPosX -= mg.right;
-                        finalPosY -= mg.top;
-                        break;
-                    case RELATIVE_LOCATION_LEFT_OF_BOTTOMALIGN:
-                        finalPosX -= mg.right;
-                        finalPosY += mg.bottom;
-                        break;
-                    case RELATIVE_LOCATION_LEFT_OF_CENTER:
-                        finalPosX -= mg.right;
-                        break;
-                        
-                    case RELATIVE_LOCATION_RIGHT_OF_TOPALIGN:
-                        finalPosX += mg.left;
-                        finalPosY -= mg.top;
-                        break;
-                    case RELATIVE_LOCATION_RIGHT_OF_BOTTOMALIGN:
-                        finalPosX += mg.left;
-                        finalPosY += mg.bottom;
-                        break;
-                    case RELATIVE_LOCATION_RIGHT_OF_CENTER:
-                        finalPosX += mg.left;
-                        break;
-                        
-                    case RELATIVE_LOCATION_BELOW_LEFTALIGN:
-                        finalPosY -= mg.top;
-                        finalPosX += mg.left;
-                        break;
-                    case RELATIVE_LOCATION_BELOW_RIGHTALIGN:
-                        finalPosY -= mg.top;
-                        finalPosX -= mg.right;
-                        break;
-                    case RELATIVE_LOCATION_BELOW_CENTER:
-                        finalPosY -= mg.top;
-                        break;
-                    default:
-                        break;
-                }
-                child->setPosition(Vector2(finalPosX, finalPosY));
-                layoutParameter->_put = true;
-                unlayoutChildCount--;
-            }
-        }
-    }
-    widgetChildren.clear();
-}
-    
 static const int BACKGROUNDIMAGE_Z = (-1);
 static const int BCAKGROUNDCOLORRENDERER_Z = (-2);
 
@@ -582,7 +61,6 @@ _gEndColor(Color3B::WHITE),
 _alongVector(Vector2(0.0f, -1.0f)),
 _cOpacity(255),
 _backGroundImageTextureSize(Size::ZERO),
-_layoutType(LAYOUT_ABSOLUTE),
 _clippingType(LAYOUT_CLIPPING_STENCIL),
 _clippingStencil(nullptr),
 _scissorRectDirty(false),
@@ -604,7 +82,6 @@ _currentAlphaTestFunc(GL_ALWAYS),
 _currentAlphaTestRef(1),
 _backGroundImageColor(Color3B::WHITE),
 _backGroundImageOpacity(255),
-_curLayoutExecutant(nullptr),
 _passFocusToChild(true),
 _loopFocus(false)
 {
@@ -615,7 +92,6 @@ _loopFocus(false)
 Layout::~Layout()
 {
     CC_SAFE_RELEASE(_clippingStencil);
-    CC_SAFE_RELEASE(_curLayoutExecutant);
 }
     
 void Layout::onEnter()
@@ -676,7 +152,7 @@ void Layout::addChild(Node * child, int zOrder)
 
 void Layout::addChild(Node *child, int zOrder, int tag)
 {
-    supplyTheLayoutParameterLackToChild(static_cast<Widget*>(child));
+    supplyTheLayoutParameterLackToChild(dynamic_cast<LayoutParameterProtocol*>(child));
     Widget::addChild(child, zOrder, tag);
     _doLayoutDirty = true;
 }
@@ -1167,7 +643,7 @@ const Rect& Layout::getBackGroundImageCapInsets()
     return _backGroundImageCapInsets;
 }
 
-void Layout::supplyTheLayoutParameterLackToChild(Widget *child)
+void Layout::supplyTheLayoutParameterLackToChild(LayoutParameterProtocol *child)
 {
     if (!child)
     {
@@ -1175,24 +651,24 @@ void Layout::supplyTheLayoutParameterLackToChild(Widget *child)
     }
     switch (_layoutType)
     {
-        case LAYOUT_ABSOLUTE:
+        case layout::LAYOUT_ABSOLUTE:
             break;
-        case LAYOUT_LINEAR_HORIZONTAL:
-        case LAYOUT_LINEAR_VERTICAL:
+        case layout::LAYOUT_LINEAR_HORIZONTAL:
+        case layout::LAYOUT_LINEAR_VERTICAL:
         {
-            LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
+            layout::LinearLayoutParameter* layoutParameter = dynamic_cast<layout::LinearLayoutParameter*>(child->getLayoutParameter(layout::LAYOUT_PARAMETER_LINEAR));
             if (!layoutParameter)
             {
-                child->setLayoutParameter(LinearLayoutParameter::create());
+                child->setLayoutParameter(layout::LinearLayoutParameter::create());
             }
             break;
         }
-        case LAYOUT_RELATIVE:
+        case layout::LAYOUT_RELATIVE:
         {
-            RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
+            layout::RelativeLayoutParameter* layoutParameter = dynamic_cast<layout::RelativeLayoutParameter*>(child->getLayoutParameter(layout::LAYOUT_PARAMETER_RELATIVE));
             if (!layoutParameter)
             {
-                child->setLayoutParameter(RelativeLayoutParameter::create());
+                child->setLayoutParameter(layout::RelativeLayoutParameter::create());
             }
             break;
         }
@@ -1424,44 +900,21 @@ const Size& Layout::getBackGroundImageTextureSize() const
     return _backGroundImageTextureSize;
 }
 
-void Layout::setLayoutType(LayoutType type)
+void Layout::setLayoutType(layout::LayoutType type)
 {
-    _layoutType = type;
-    CC_SAFE_RELEASE_NULL(_curLayoutExecutant);
-    _curLayoutExecutant = createCurrentLayoutExecutant();
-    CC_SAFE_RETAIN(_curLayoutExecutant);
+    LayoutProtocol::setLayoutType(type);
     for (auto& child : _children)
     {
         Widget* widgetChild = dynamic_cast<Widget*>(child);
         if (widgetChild)
         {
-            supplyTheLayoutParameterLackToChild(static_cast<Widget*>(child));
+            supplyTheLayoutParameterLackToChild(dynamic_cast<LayoutParameterProtocol*>(child));
         }
     }
     _doLayoutDirty = true;
 }
-    
-LayoutExecutant* Layout::createCurrentLayoutExecutant()
-{
-    LayoutExecutant* exe = nullptr;
-    switch (_layoutType)
-    {
-        case LAYOUT_LINEAR_VERTICAL:
-            exe = LinearVerticalLayoutExecutant::create();
-            break;
-        case LAYOUT_LINEAR_HORIZONTAL:
-            exe = LinearHorizontalLayoutExecutant::create();
-            break;
-        case LAYOUT_RELATIVE:
-            exe = RelativeLayoutExecutant::create();
-            break;
-        default:
-            break;
-    }
-    return exe;
-}
 
-LayoutType Layout::getLayoutType() const
+layout::LayoutType Layout::getLayoutType() const
 {
     return _layoutType;
 }
@@ -1477,10 +930,7 @@ void Layout::doLayout()
     {
         return;
     }
-    if (_curLayoutExecutant)
-    {
-        _curLayoutExecutant->doLayout(getSize(), getChildren());
-    }
+    LayoutProtocol::doLayout(getSize(), getChildren());
     _doLayoutDirty = false;
 }
 
@@ -1557,19 +1007,19 @@ Size Layout::getLayoutContentSize()const
             if (w)
             {
                 widgetCount++;
-                Margin m = w->getLayoutParameter(LAYOUT_PARAMETER_LINEAR)->getMargin();
+                layout::Margin m = w->getLayoutParameter(layout::LAYOUT_PARAMETER_LINEAR)->getMargin();
                 layoutSize = layoutSize + w->getSize() + Size(m.right + m.left,  m.top + m.bottom) * 0.5;
             }
         }
     }
     
     //substract extra size
-    LayoutType type = this->getLayoutType();
-    if (type == LAYOUT_LINEAR_HORIZONTAL)
+    layout::LayoutType type = this->getLayoutType();
+    if (type == layout::LAYOUT_LINEAR_HORIZONTAL)
     {
         layoutSize = layoutSize - Size(0, layoutSize.height/widgetCount * (widgetCount-1));
     }
-    if (type == LAYOUT_LINEAR_VERTICAL)
+    if (type == layout::LAYOUT_LINEAR_VERTICAL)
     {
         layoutSize = layoutSize - Size(layoutSize.width/widgetCount * (widgetCount-1), 0);
     }
@@ -2186,7 +1636,7 @@ bool  Layout::isLastWidgetInContainer(Widget* widget, FocusDirection direction)
     
     auto container = parent->getChildren();
     ssize_t index = container.getIndex(widget);
-    if (parent->getLayoutType() == LAYOUT_LINEAR_HORIZONTAL)
+    if (parent->getLayoutType() == layout::LAYOUT_LINEAR_HORIZONTAL)
     {
         if (direction == FocusDirection::FocusDirection_Left) {
             if (index == 0)
@@ -2218,7 +1668,7 @@ bool  Layout::isLastWidgetInContainer(Widget* widget, FocusDirection direction)
             return isLastWidgetInContainer(parent, direction);
         }
     }
-    else if(parent->getLayoutType() == LAYOUT_LINEAR_VERTICAL)
+    else if(parent->getLayoutType() == layout::LAYOUT_LINEAR_VERTICAL)
     {
         if (direction == FocusDirection::FocusDirection_Up)
         {
@@ -2272,7 +1722,7 @@ bool  Layout::isWidgetAncestorSupportLoopFocus(Widget* widget, FocusDirection di
     if (parent->isLoopFocus())
     {
         auto layoutType = parent->getLayoutType();
-        if (layoutType == LAYOUT_LINEAR_HORIZONTAL)
+        if (layoutType == layout::LAYOUT_LINEAR_HORIZONTAL)
         {
             if (direction == FocusDirection::FocusDirection_Left || direction == FocusDirection::FocusDirection_Right)
             {
@@ -2283,7 +1733,7 @@ bool  Layout::isWidgetAncestorSupportLoopFocus(Widget* widget, FocusDirection di
                 return isWidgetAncestorSupportLoopFocus(parent, direction);
             }
         }
-        if (layoutType == LAYOUT_LINEAR_VERTICAL)
+        if (layoutType == layout::LAYOUT_LINEAR_VERTICAL)
         {
             if (direction == FocusDirection::FocusDirection_Down || direction == FocusDirection::FocusDirection_Up)
             {
@@ -2334,7 +1784,7 @@ Widget* Layout::findNextFocusedWidget(FocusDirection direction, Widget* current)
     }
     else if(current->isFocused() || !current->isFocusEnabled())
     {
-        if (_layoutType == LAYOUT_LINEAR_HORIZONTAL)
+        if (_layoutType == layout::LAYOUT_LINEAR_HORIZONTAL)
         {
             switch (direction)
             {
@@ -2371,7 +1821,7 @@ Widget* Layout::findNextFocusedWidget(FocusDirection direction, Widget* current)
                     break;
             }
         }
-        else if (_layoutType == LAYOUT_LINEAR_VERTICAL)
+        else if (_layoutType == layout::LAYOUT_LINEAR_VERTICAL)
         {
             switch (direction)
             {

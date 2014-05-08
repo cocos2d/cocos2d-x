@@ -815,20 +815,6 @@ WidgetType Widget::getWidgetType() const
     return _widgetType;
 }
 
-void Widget::setLayoutParameter(LayoutParameter *parameter)
-{
-    if (!parameter)
-    {
-        return;
-    }
-    _layoutParameterDictionary.insert(parameter->getLayoutType(), parameter);
-}
-
-LayoutParameter* Widget::getLayoutParameter(LayoutParameterType type)
-{
-    return dynamic_cast<LayoutParameter*>(_layoutParameterDictionary.at(type));
-}
-
 std::string Widget::getDescription() const
 {
     return "Widget";
@@ -896,7 +882,7 @@ void Widget::copyProperties(Widget *widget)
     setFlippedY(widget->isFlippedY());
     setColor(widget->getColor());
     setOpacity(widget->getOpacity());
-    Map<int, LayoutParameter*>& layoutParameterDic = widget->_layoutParameterDictionary;
+    Map<int, layout::LayoutParameter*>& layoutParameterDic = widget->_layoutParameterDictionary;
     for (auto iter = layoutParameterDic.begin(); iter != layoutParameterDic.end(); ++iter)
     {
         setLayoutParameter(iter->second->clone());

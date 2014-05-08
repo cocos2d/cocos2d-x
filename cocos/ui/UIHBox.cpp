@@ -64,7 +64,7 @@ bool HBox::init()
 {
     if (Layout::init())
     {
-        setLayoutType(LAYOUT_LINEAR_HORIZONTAL);
+        setLayoutType(layout::LAYOUT_LINEAR_HORIZONTAL);
         return true;
     }
     return false;
