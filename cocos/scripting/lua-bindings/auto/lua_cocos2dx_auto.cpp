@@ -16042,6 +16042,84 @@ int lua_register_cocos2dx_EventListenerCustom(lua_State* tolua_S)
     return 1;
 }
 
+int lua_cocos2dx_EventFocus_constructor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::EventFocus* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 2) 
+    {
+        cocos2d::ui::Widget* arg0;
+        cocos2d::ui::Widget* arg1;
+
+        ok &= luaval_to_object<cocos2d::ui::Widget>(tolua_S, 2, "ccui.Widget",&arg0);
+
+        ok &= luaval_to_object<cocos2d::ui::Widget>(tolua_S, 3, "ccui.Widget",&arg1);
+        if(!ok)
+            return 0;
+        cobj = new cocos2d::EventFocus(arg0, arg1);
+        cobj->autorelease();
+        int ID =  (int)cobj->_ID ;
+        int* luaID =  &cobj->_luaID ;
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.EventFocus");
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "EventFocus",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EventFocus_constructor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+
+static int lua_cocos2dx_EventFocus_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (EventFocus)");
+    return 0;
+}
+
+int lua_register_cocos2dx_EventFocus(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"cc.EventFocus");
+    tolua_cclass(tolua_S,"EventFocus","cc.EventFocus","cc.Event",nullptr);
+
+    tolua_beginmodule(tolua_S,"EventFocus");
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::EventFocus).name();
+    g_luaType[typeName] = "cc.EventFocus";
+    g_typeCast["EventFocus"] = "cc.EventFocus";
+    return 1;
+}
+
+static int lua_cocos2dx_EventListenerFocus_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (EventListenerFocus)");
+    return 0;
+}
+
+int lua_register_cocos2dx_EventListenerFocus(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"cc.EventListenerFocus");
+    tolua_cclass(tolua_S,"EventListenerFocus","cc.EventListenerFocus","cc.EventListener",nullptr);
+
+    tolua_beginmodule(tolua_S,"EventListenerFocus");
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::EventListenerFocus).name();
+    g_luaType[typeName] = "cc.EventListenerFocus";
+    g_typeCast["EventListenerFocus"] = "cc.EventListenerFocus";
+    return 1;
+}
+
 int lua_cocos2dx_Action_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
@@ -65285,7 +65363,7 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	lua_register_cocos2dx_RotateTo(tolua_S);
 	lua_register_cocos2dx_TransitionSplitRows(tolua_S);
 	lua_register_cocos2dx_TransitionProgressRadialCCW(tolua_S);
-	lua_register_cocos2dx_ScaleTo(tolua_S);
+	lua_register_cocos2dx_EventListenerFocus(tolua_S);
 	lua_register_cocos2dx_TransitionPageTurn(tolua_S);
 	lua_register_cocos2dx_BezierBy(tolua_S);
 	lua_register_cocos2dx_BezierTo(tolua_S);
@@ -65294,13 +65372,15 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	lua_register_cocos2dx_ActionManager(tolua_S);
 	lua_register_cocos2dx_TransitionFade(tolua_S);
 	lua_register_cocos2dx_TransitionZoomFlipX(tolua_S);
+	lua_register_cocos2dx_EventFocus(tolua_S);
 	lua_register_cocos2dx_EaseQuinticActionInOut(tolua_S);
 	lua_register_cocos2dx_SpriteFrameCache(tolua_S);
 	lua_register_cocos2dx_TransitionCrossFade(tolua_S);
 	lua_register_cocos2dx_Ripple3D(tolua_S);
 	lua_register_cocos2dx_Lens3D(tolua_S);
-	lua_register_cocos2dx_EaseQuarticActionInOut(tolua_S);
+	lua_register_cocos2dx_ScaleTo(tolua_S);
 	lua_register_cocos2dx_Spawn(tolua_S);
+	lua_register_cocos2dx_EaseQuarticActionInOut(tolua_S);
 	lua_register_cocos2dx_ShakyTiles3D(tolua_S);
 	lua_register_cocos2dx_PageTurn3D(tolua_S);
 	lua_register_cocos2dx_TransitionSlideInL(tolua_S);
