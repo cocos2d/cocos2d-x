@@ -137,7 +137,6 @@ private:
     int searchNewPositionInChildrenForZ(int z);
     void getCurrentIndex(int* oldIndex, int* newIndex, Node* child, int z);
     int addChildHelper(ParticleSystem* child, int z, int aTag);
-    void updateBlendFunc(void);
     /** the texture atlas used for drawing the quads */
     TextureAtlas* _textureAtlas;
 

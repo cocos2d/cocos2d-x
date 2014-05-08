@@ -407,7 +407,6 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool initWithTotalParticles(int numberOfParticles);
 
 protected:
-    virtual void updateBlendFunc();
 
     /** whether or not the particles are using blend additive.
      If enabled, the following blending function will be used.
@@ -566,6 +565,9 @@ protected:
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleSystem);
+    
+public:
+    static BlendFunc PARTICLE_BLEND_DEFAULT;
 };
 
 // end of particle_nodes group
