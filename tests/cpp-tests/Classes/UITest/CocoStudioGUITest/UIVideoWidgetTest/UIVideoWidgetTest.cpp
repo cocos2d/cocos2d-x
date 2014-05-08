@@ -1,4 +1,4 @@
-#include "UiVideoWidgetTest.h"
+#include "UIVideoWidgetTest.h"
 
 USING_NS_CC;
 using namespace cocos2d::experimental::ui;
