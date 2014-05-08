@@ -187,15 +187,9 @@ void ShaderSprite::initShader()
     }
 
     auto program = GLProgram::createWithByteArrays(vertSource.c_str(), fragSource.c_str());
-    program->link();
-    program->updateUniforms();
     setGLProgram(program);
 
     auto glprogramState = getGLProgramState();
-
-    // hack, fix it later
-    glprogramState->setTexture(getTexture());
-    glprogramState->setBlendFunc(getBlendFunc());
 
     setCustomUniforms();
 
@@ -219,13 +213,12 @@ void ShaderSprite::draw(Renderer *renderer, const Matrix &transform, bool transf
     _renderCommand.init(_globalZOrder);
     _renderCommand.func = CC_CALLBACK_0(ShaderSprite::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_renderCommand);
-
 }
 
 void ShaderSprite::onDraw(const Matrix &transform, bool transformUpdated)
 {
-    getGLProgramState()->setTexture(getTexture());
-    getGLProgramState()->setBlendFunc(getBlendFunc());
+    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+    GL::bindTexture2D(_texture->getName());
 
     getGLProgramState()->apply(transform);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -249,7 +242,6 @@ NormalSprite::NormalSprite()
 
 void NormalSprite::setCustomUniforms()
 {
-    
 }
 
 class GreyScaleSprite : public ShaderSprite, public ShaderSpriteCreator<GreyScaleSprite>
@@ -623,9 +615,9 @@ OutlineShadingSpriteTest::OutlineShadingSpriteTest()
     if (ShaderTestDemo2::init()) {
         auto s = Director::getInstance()->getWinSize();
         OutlineSprite* sprite = OutlineSprite::createSprite("Images/grossini_dance_10.png");
-        sprite->setPosition(Point(s.width * 0.75, s.height/2));
+        sprite->setPosition(Vector2(s.width * 0.75, s.height/2));
         auto sprite2 = Sprite::create("Images/grossini_dance_10.png");
-        sprite2->setPosition(Point(s.width * 0.25, s.height/2));
+        sprite2->setPosition(Vector2(s.width * 0.25, s.height/2));
         addChild(sprite);
         addChild(sprite2);
     }
@@ -668,9 +660,6 @@ UniformSprite::~UniformSprite()
 void UniformSprite::initShader()
 {
     auto shader = GLProgram::createWithFilenames(_vertSourceFile, _fragSourceFile);
-    shader->link();
-    shader->updateUniforms();
-
     this->setGLProgram(shader);
 }
 
@@ -690,14 +679,14 @@ void UniformSprite::setCustomUniforms()
 
 void UniformSprite::onDraw(const Matrix &transform, bool transformUpdated)
 {
-    auto glprogramstate = getGLProgramState();
+    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+    GL::bindTexture2D(_texture->getName());
 
     float w = 256, h = 256;
     GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
 
+    auto glprogramstate = getGLProgramState();
     glprogramstate->setVertexAttribPointer("a_position", 2, GL_FLOAT, GL_FALSE, 0, vertices);
-
-    // Set Shader GLProgram
 	glprogramstate->apply(transform);
 
 
@@ -760,8 +749,6 @@ AttribSprite::~AttribSprite()
 void AttribSprite::initShader()
 {
     auto glProgram = GLProgram::createWithFilenames(_vertSourceFile, _fragSourceFile);
-    glProgram->link();
-    glProgram->updateUniforms();
     setGLProgram(glProgram);
 
     auto glProgramState = getGLProgramState();
@@ -795,11 +782,11 @@ void AttribSprite::setCustomUniforms()
 
 void AttribSprite::onDraw(const Matrix &transform, bool transformUpdated)
 {
-    getGLProgramState()->setTexture(getTexture());
-    getGLProgramState()->setBlendFunc(getBlendFunc());
+    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+    GL::bindTexture2D(_texture->getName());
+
     getGLProgramState()->apply(transform);
 
-//    glDrawArrays(GL_TRIANGLES, 0, 3);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
     

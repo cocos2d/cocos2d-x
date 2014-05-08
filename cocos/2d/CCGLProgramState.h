@@ -27,7 +27,6 @@ THE SOFTWARE.
 
 #include "base/ccTypes.h"
 #include "base/CCVector.h"
-#include "2d/CCTexture2D.h"
 #include "math/Vector2.h"
 #include "math/Vector3.h"
 #include "math/Vector4.h"
@@ -145,12 +144,6 @@ public:
     void setGLProgram(GLProgram* glprogram);
     GLProgram* getGLProgram() const { return _glprogram; }
 
-    void setTexture(Texture2D *texture);
-    Texture2D* getTexture() const { return _textures.at(0); }
-
-    void setBlendFunc(const BlendFunc& blendFunc) { _blendFunc = blendFunc; }
-    const BlendFunc& getBlendFunc() const { return _blendFunc; }
-
     void setVertexAttribCallback(const std::string &name, const std::function<void(VertexAttrib*)> callback);
     void setVertexAttribPointer(const std::string &name, GLint size, GLenum type, GLboolean normalized, GLsizei stride, GLvoid *pointer);
 
@@ -169,8 +162,6 @@ protected:
     uint32_t _vertexAttribsFlags;
 
     GLProgram *_glprogram;
-    Vector<Texture2D*> _textures;
-    BlendFunc _blendFunc;
 };
 
 NS_CC_END

@@ -216,7 +216,6 @@ GLProgramState* GLProgramState::create(GLProgram *glprogram)
 
 GLProgramState::GLProgramState()
 : _vertexAttribsFlags(0)
-, _blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED)
 {
 }
 
@@ -261,15 +260,6 @@ void GLProgramState::apply(const Matrix& modelView)
 
     _glprogram->setUniformsForBuiltins(modelView);
 
-    // set texture
-    int i = 0;
-    for(const auto& texture : _textures) {
-        GL::bindTexture2DN(i++, texture->getName());
-    }
-
-    // set blending function
-    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
-
 
     // enable/disable vertex attribs
     GL::enableVertexAttribs(_vertexAttribsFlags);
@@ -293,14 +283,6 @@ void GLProgramState::setGLProgram(GLProgram *glprogram)
         resetGLProgram();
         init(glprogram);
     }
-}
-
-void GLProgramState::setTexture(cocos2d::Texture2D *texture)
-{
-    if(_textures.size()>0)
-        _textures.replace(0, texture);
-    else
-        _textures.pushBack(texture);
 }
 
 UniformValue* GLProgramState::getUniformValue(const std::string &name)

@@ -89,6 +89,8 @@ GLProgram* GLProgram::createWithByteArrays(const GLchar* vShaderByteArray, const
 {
     auto ret = new (std::nothrow) GLProgram();
     if(ret && ret->initWithByteArrays(vShaderByteArray, fShaderByteArray)) {
+        ret->link();
+        ret->updateUniforms();
         ret->autorelease();
         return ret;
     }
@@ -101,6 +103,8 @@ GLProgram* GLProgram::createWithFilenames(const std::string& vShaderFilename, co
 {
     auto ret = new (std::nothrow) GLProgram();
     if(ret && ret->initWithFilenames(vShaderFilename, fShaderFilename)) {
+        ret->link();
+        ret->updateUniforms();
         ret->autorelease();
         return ret;
     }
@@ -207,6 +211,8 @@ GLProgram* GLProgram::createWithPrecompiledProgramByteArray(const GLchar* vShade
 {
     auto ret = new (std::nothrow) GLProgram();
     if(ret && ret->initWithPrecompiledProgramByteArray(vShaderByteArray, fShaderByteArray)) {
+        ret->link();
+        ret->updateUniforms();
         ret->autorelease();
         return ret;
     }

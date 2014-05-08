@@ -158,12 +158,6 @@ bool ShaderNode::initWithVertex(const char *vert, const char *frag)
 void ShaderNode::loadShaderVertex(const char *vert, const char *frag)
 {
     auto shader = GLProgram::createWithFilenames(vert, frag);
-
-    shader->bindAttribLocation("aVertex", GLProgram::VERTEX_ATTRIB_POSITION);
-    shader->link();
-
-    shader->updateUniforms();
-
     this->setGLProgram(shader);
 }
 
@@ -189,7 +183,6 @@ void ShaderNode::draw(Renderer *renderer, const Matrix &transform, bool transfor
 
 void ShaderNode::onDraw(const Matrix &transform, bool transformUpdated)
 {
-
     float w = SIZE_X, h = SIZE_Y;
     GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
 
@@ -484,10 +477,6 @@ void SpriteBlur::initProgram()
     GLchar * fragSource = (GLchar*) String::createWithContentsOfFile(
                                 FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur.fsh").c_str())->getCString();  
     auto program = GLProgram::createWithByteArrays(ccPositionTextureColor_vert, fragSource);
-    program->link();
-    program->updateUniforms();
-    
-    CHECK_GL_ERROR_DEBUG();
     setGLProgram(program);
 
     auto glProgramState = getGLProgramState();
@@ -514,14 +503,13 @@ void SpriteBlur::draw(Renderer *renderer, const Matrix &transform, bool transfor
 
 void SpriteBlur::onDraw(const Matrix &transform, bool transformUpdated)
 {
+    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+    GL::bindTexture2D(_texture->getName());
+
     auto glProgramState = getGLProgramState();
-    glProgramState->setTexture(getTexture());
-    glProgramState->setBlendFunc(getBlendFunc());
-    
     glProgramState->apply(transform);
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-    
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,4);
 }
 
@@ -644,18 +632,12 @@ bool ShaderRetroEffect::init()
         GLchar * fragSource = (GLchar*) String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename("Shaders/example_HorizontalColor.fsh"))->getCString();
         auto p = GLProgram::createWithByteArrays(ccPositionTexture_vert, fragSource);
 
-        p->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
-        p->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORD);
-
-        p->link();
-        p->updateUniforms();
-
         auto director = Director::getInstance();
         auto s = director->getWinSize();
 
         _label = Label::createWithBMFont("fonts/west_england-64.fnt","RETRO EFFECT");
         _label->setAnchorPoint(Vector2::ANCHOR_MIDDLE);
-        _label->setShaderProgram(p);
+        _label->setGLProgram(p);
 
         _label->setPosition(Vector2(s.width/2,s.height/2));
 
