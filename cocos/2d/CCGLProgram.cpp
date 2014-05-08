@@ -284,14 +284,13 @@ void GLProgram::parseVertexAttribs()
 			for(int i = 0; i < activeAttributes; ++i)
 			{
 				// Query attribute info.
-				glGetActiveAttrib(_program, i, length, NULL, &attribute._originalSize, &attribute._originalType, attribName);
+				glGetActiveAttrib(_program, i, length, NULL, &attribute.size, &attribute.type, attribName);
 				attribName[length] = '\0';
-                attribute._name = std::string(attribName);
+                attribute.name = std::string(attribName);
 
 				// Query the pre-assigned attribute location
-				attribute._index = glGetAttribLocation(_program, attribName);
-                _attributesDictionary[attribute._name] = attribute;
-                attribute.updateTypeAndSize();
+				attribute.index = glGetAttribLocation(_program, attribName);
+                _attributesDictionary[attribute.name] = attribute;
 			}
 		}
 	}
@@ -845,70 +844,6 @@ void GLProgram::reset()
         free(current_element);
     }
     _hashForUniforms = nullptr;
-}
-
-//
-// VertexAttrib
-//
-VertexAttrib::VertexAttrib()
-: _size(-1)
-, _type(-1)
-, _normalized(false)
-{
-}
-
-VertexAttrib::~VertexAttrib()
-{
-}
-
-void VertexAttrib::updateTypeAndSize()
-{
-    switch (_originalType) {
-        case GL_FLOAT_VEC2:
-            _type = GL_FLOAT;
-            _size = 2;
-            break;
-        case GL_FLOAT_VEC3:
-            _type = GL_FLOAT;
-            _size = 3;
-            break;
-        case GL_FLOAT_VEC4:
-            _type = GL_FLOAT;
-            _size = 4;
-            break;
-        case GL_FLOAT_MAT2:
-            _type = GL_FLOAT;
-            _size = 4;
-            break;
-        case GL_FLOAT_MAT3:
-            _type = GL_FLOAT;
-            _size = 9;
-            break;
-        case GL_FLOAT_MAT4:
-            _type = GL_FLOAT;
-            _size = 16;
-            break;
-
-        default:
-            break;
-    }
-}
-
-void VertexAttrib::setPointer(GLsizei stride, const GLvoid *pointer)
-{
-    glVertexAttribPointer(_index, _size, _type, _normalized, stride, pointer);
-}
-
-void VertexAttrib::setPointer(GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid *pointer)
-{
-    glVertexAttribPointer(_index, size, type, normalized, stride, pointer);
-}
-
-void VertexAttrib::redefineTypeAndSize(GLenum type, GLint size, GLboolean normalized)
-{
-    _type = type;
-    _size = size;
-    _normalized = normalized;
 }
 
 NS_CC_END

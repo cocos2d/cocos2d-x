@@ -53,39 +53,20 @@ typedef void (*GLInfoFunction)(GLuint program, GLenum pname, GLint* params);
 typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length, GLchar* infolog);
 
 
-class VertexAttrib
+struct VertexAttrib
 {
-    friend class GLProgram;
-    friend class GLProgramState;
-    friend class VertexAttribValue;
-    friend class VertexAttribBind;
-
-public:
-    VertexAttrib();
-    ~VertexAttrib();
-
-    void setPointer(GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid *pointer);
-    void setPointer(GLsizei stride, const GLvoid *pointer);
-
-    void redefineTypeAndSize(GLenum type, GLint size, GLboolean normalized);
-    void updateTypeAndSize();
-
-protected:
-    GLuint _index;
-    GLint _size;
-    GLint _originalSize;
-    GLenum _type;
-    GLenum _originalType;
-    GLboolean _normalized;
-    std::string _name;
+    GLuint index;
+    GLint size;
+    GLenum type;
+    std::string name;
 };
 
 struct Uniform
 {
     GLint location;
     GLint size;
-    std::string name;
     GLenum type;
+    std::string name;
 };
 
 /** GLProgram

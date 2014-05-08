@@ -173,7 +173,7 @@ void VertexAttribValue::apply()
     }
     else
     {
-        glVertexAttribPointer(_vertexAttrib->_index,
+        glVertexAttribPointer(_vertexAttrib->index,
                               _value.pointer.size,
                               _value.pointer.type,
                               _value.pointer.normalized,
@@ -323,14 +323,14 @@ void GLProgramState::setVertexAttribCallback(const std::string &name, const std:
 {
     VertexAttribValue *v = getVertexAttribValue(name);
     v->setCallback(callback);
-    _vertexAttribsFlags |= 1 << v->_vertexAttrib->_index;
+    _vertexAttribsFlags |= 1 << v->_vertexAttrib->index;
 }
 
 void GLProgramState::setVertexAttribPointer(const std::string &name, GLint size, GLenum type, GLboolean normalized, GLsizei stride, GLvoid *pointer)
 {
     auto v = getVertexAttribValue(name);
     v->setPointer(size, type, normalized, stride, pointer);
-    _vertexAttribsFlags |= 1 << v->_vertexAttrib->_index;
+    _vertexAttribsFlags |= 1 << v->_vertexAttrib->index;
 }
 
 
