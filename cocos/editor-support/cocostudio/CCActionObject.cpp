@@ -218,7 +218,6 @@ void ActionObject::simulationActionUpdate(float dt)
 		}
 		else
 		{
-			CC_SAFE_RELEASE_NULL(_CallBack);
 			_pScheduler->unschedule(schedule_selector(ActionObject::simulationActionUpdate), this);
 		}
 	}
