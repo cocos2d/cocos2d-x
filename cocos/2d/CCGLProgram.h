@@ -46,9 +46,64 @@ USING_NS_CC_MATH;
  */
 
 struct _hashUniformEntry;
+class GLProgramData;
+class UniformValue;
+struct VertexAttrib;
 
 typedef void (*GLInfoFunction)(GLuint program, GLenum pname, GLint* params);
 typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length, GLchar* infolog);
+
+
+
+/** GLProgramData
+ Class store user defined vertexAttributes and uniforms
+ */
+class GLProgramData
+{
+public:
+	typedef struct _VertexAttrib
+	{
+		GLuint _index;
+		GLint _size;
+		GLenum _type;
+		std::string _name;
+	} VertexAttrib;
+    
+	typedef struct _Uniform
+	{
+	  	GLint _location;
+        GLint _size;
+		std::string _name;
+		GLenum _type;
+		UniformValue* _uniformvalue;
+	} Uniform;
+    
+public:
+	GLProgramData();
+	~GLProgramData();
+    
+    
+	void addUniform(std::string &name, Uniform* uniform);
+	void addAttrib(std::string &name,  VertexAttrib* attrib);
+    
+	Uniform* getUniform(unsigned int index);
+	Uniform* getUniform(std::string& name);
+	VertexAttrib* getAttrib(unsigned int index);
+    VertexAttrib* getAttrib(std::string& name);
+    
+	unsigned int getUniformCount();
+	unsigned int getAttribCount();
+    
+    void setVertexSize(GLint size) { _vertexsize = size;}
+	GLint getVertexSize() {return _vertexsize;}
+    
+private:
+	GLint _vertexsize;
+    
+	std::map<std::string, Uniform*> _uniforms;
+	std::map<std::string, VertexAttrib*> _vertAttributes;
+};
+
 
 /** GLProgram
  Class that implements a glProgram
@@ -146,6 +201,18 @@ public:
      * @lua init
      */
     bool initWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename);
+    
+    //void bindAttirbForUserdef();
+	void setUniformsForUserDef();
+    void setAttribForUserDef();
+	void setVertexAttrib(const GLvoid* vertex, bool isTight);
+    void autoParse();
+    
+	//void bindUniformValue(std::string uniformName, int value);
+	UniformValue* getUniform(std::string &name);
+    GLProgramData::VertexAttrib* getAttrib(std::string& name);
+    
+    void bindAllAttrib();
 
     /**  It will add a new attribute to the shader by calling glBindAttribLocation */
     void bindAttribLocation(const char* attributeName, GLuint index) const;
@@ -274,13 +341,20 @@ private:
     bool compileShader(GLuint * shader, GLenum type, const GLchar* source);
     std::string logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc) const;
 
-private:
+protected:
     GLuint            _program;
+    
+private:
+
     GLuint            _vertShader;
     GLuint            _fragShader;
     GLint             _uniforms[UNIFORM_MAX];
     struct _hashUniformEntry* _hashForUniforms;
 	bool              _hasShaderCompiler;
+    bool              _isTight;
+    
+    GLProgramData* _programData;
+    
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     std::string       _shaderId;
 #endif
@@ -301,6 +375,60 @@ public:
 
 // end of shaders group
 /// @}
+
+
+
+class UniformValue
+{
+public:
+	UniformValue();
+	~UniformValue();
+    
+	bool init(GLProgramData::Uniform* uniform);
+    
+	void bindUniform(GLProgram* program);
+    
+	bool setValue(float value);
+    
+	bool setValue(int value);
+    
+	bool setValue(const Vector2& value);
+    
+	bool setValue(const Vector3& value);
+    
+	bool setValue(const Vector4& value);
+    
+	bool setValue(const Matrix& value);
+    
+	void resetValue();
+    
+protected:
+	GLProgramData::Uniform* _uniform;
+    bool _update;
+	int _count;
+	union
+	{
+		float* floatPtrValue;
+		int* intPtrValue;
+		Vector2* vec2PtrValue;
+		Vector3* vec3PtrValue;
+		Vector4* vec4PtrValue;
+		Matrix* matPtrValue;
+        
+		//const Texture2D* textureValue;
+	}_value;
+	enum
+	{
+		NONE,
+		FLOAT,
+		INT,
+		VECTOR2,
+		VECTOR3,
+		VECTOR4,
+		MATRIX,
+	}_type;
+};
+
 
 NS_CC_END
 

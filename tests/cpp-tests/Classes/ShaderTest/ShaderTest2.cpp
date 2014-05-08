@@ -1,4 +1,4 @@
-#include "ShaderTest2.h"
+	#include "ShaderTest2.h"
 #include "ShaderTest.h"
 #include "../testResource.h"
 #include "cocos2d.h"
@@ -9,6 +9,7 @@ namespace ShaderTest2
 {
     static std::function<Layer*()> createFunctions[] =
     {
+         CL(AttribShaderTest),
         CL(NormalSpriteTest),
         CL(GreyScaleSpriteTest),
         CL(BlurSpriteTest),
@@ -17,7 +18,11 @@ namespace ShaderTest2
         CL(BloomSpriteTest),
         CL(CelShadingSpriteTest),
         CL(LensFlareSpriteTest),
-        CL(OutlineShadingSpriteTest)
+        CL(OutlineShadingSpriteTest),
+        CL(UniformShaderTest),
+       
+        CL(UniformAttribShaderTest)
+        
     };
     
     static unsigned int TEST_CASE_COUNT = sizeof(ShaderTest2::createFunctions) / sizeof(ShaderTest2::createFunctions[0]);
@@ -693,10 +698,252 @@ OutlineShadingSpriteTest::OutlineShadingSpriteTest()
     if (ShaderTestDemo2::init()) {
         auto s = Director::getInstance()->getWinSize();
         OutlineSprite* sprite = OutlineSprite::createSprite("Images/grossini_dance_10.png");
-        sprite->setPosition(Vector2(s.width * 0.75, s.height/2));
+        sprite->setPosition(Point(s.width * 0.75, s.height/2));
         auto sprite2 = Sprite::create("Images/grossini_dance_10.png");
-        sprite2->setPosition(Vector2(s.width * 0.25, s.height/2));
+        sprite2->setPosition(Point(s.width * 0.25, s.height/2));
         addChild(sprite);
         addChild(sprite2);
     }
+}
+
+class UniformSprite : public Sprite
+{
+public:
+    UniformSprite();
+    ~UniformSprite();
+    CREATE_FUNC(UniformSprite);
+    
+    virtual void initShader();
+   // void setBackgroundNotification();
+    
+    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
+   // void listenBackToForeground(Ref *obj);
+    
+protected:
+//    virtual void buildCustomUniforms();
+    virtual void setCustomUniforms();
+protected:
+    std::string _fragSourceFile;
+    std::string _vertSourceFile;
+protected:
+    CustomCommand _renderCommand;
+    void onDraw(const Matrix &transform, bool transformUpdated);
+
+};
+
+UniformSprite::UniformSprite()
+{
+    _vertSourceFile = "Shaders/example_Heart.vsh";
+    _fragSourceFile = "Shaders/example_Heart.fsh";
+}
+
+UniformSprite::~UniformSprite()
+{
+    
+}
+
+void UniformSprite::initShader()
+{
+    auto shader = new GLProgram();
+    shader->initWithFilenames(_vertSourceFile, _fragSourceFile);
+    shader->autoParse();
+    //shader->link();
+    
+    shader->updateUniforms();
+    
+    this->setShaderProgram(shader);
+    
+    std::string attribname ="a_position";
+    shader->getAttrib(attribname)->_size = 2;
+    
+    shader->release();
+}
+
+void UniformSprite::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+{
+    _renderCommand.init(_globalZOrder);
+	_renderCommand.func = CC_CALLBACK_0(UniformSprite::onDraw, this, transform, transformUpdated);
+	renderer->addCommand(&_renderCommand);
+}
+
+void UniformSprite::setCustomUniforms()
+{
+    
+    std::string name = "center";
+    _shaderProgram->getUniform(name)->setValue(Vector2(480,320));
+    name = "resolution";
+    _shaderProgram->getUniform(name)->setValue(Vector2(256,256));
+    
+	_shaderProgram->setUniformsForUserDef();
+}
+
+void UniformSprite::onDraw(const Matrix &transform, bool transformUpdated)
+{
+    // Set Shader GLProgram
+	auto program = getShaderProgram();
+	program->use();
+    program->setUniformsForBuiltins(transform);
+    
+    setCustomUniforms();
+    //GL::bindTexture2D( getTexture()->getName());
+    program->setAttribForUserDef();
+    
+
+    float w = 256, h = 256;
+    GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
+    program->setVertexAttrib(vertices, true);
+    
+	// Draw Call Test
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,6);
+    
+    CHECK_GL_ERROR_DEBUG();
+}
+
+
+UniformShaderTest::UniformShaderTest()
+{
+    if (ShaderTestDemo2::init()) {
+        auto s = Director::getInstance()->getWinSize();
+        UniformSprite* sprite = UniformSprite::create();
+        setContentSize(Size(256, 256));
+        setAnchorPoint(Vector2(0.5f, 0.5f));
+        sprite->initShader();
+        sprite->setPosition(64,64);
+        addChild(sprite);
+    }
+}
+
+
+class AttribSprite : public Sprite
+{
+public:
+    AttribSprite();
+    ~AttribSprite();
+    CREATE_FUNC(AttribSprite);
+    
+    virtual void initShader();
+    // void setBackgroundNotification();
+    
+    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
+    // void listenBackToForeground(Ref *obj);
+    
+protected:
+    //    virtual void buildCustomUniforms();
+    virtual void setCustomUniforms();
+protected:
+    std::string _fragSourceFile;
+    std::string _vertSourceFile;
+protected:
+    CustomCommand _renderCommand;
+    void onDraw(const Matrix &transform, bool transformUpdated);
+};
+
+AttribSprite::AttribSprite()
+{
+    _fragSourceFile = "Shaders/example_normal.fsh";
+    _vertSourceFile = "Shaders/example_normal.vsh";
+}
+
+AttribSprite::~AttribSprite()
+{
+    
+}
+
+void AttribSprite::initShader()
+{
+    auto shader = new GLProgram();
+    shader->initWithFilenames(_vertSourceFile, _fragSourceFile);
+    
+    shader->autoParse();
+    shader->updateUniforms();
+    this->setShaderProgram(shader);
+    
+    shader->release();
+    
+    std::string attribname ="a_position";
+    shader->getAttrib(attribname)->_size = 3;
+    shader->getAttrib(attribname)->_index = 0;
+    
+    attribname ="a_color";
+    shader->getAttrib(attribname)->_type = GL_UNSIGNED_BYTE;
+    shader->getAttrib(attribname)->_index = 1;
+    
+    attribname ="a_texCoord";
+    shader->getAttrib(attribname)->_index = 2;
+    
+}
+
+void AttribSprite::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+{
+    _renderCommand.init(_globalZOrder);
+	_renderCommand.func = CC_CALLBACK_0(AttribSprite::onDraw, this, transform, transformUpdated);
+	renderer->addCommand(&_renderCommand);
+}
+
+void AttribSprite::setCustomUniforms()
+{
+
+
+}
+
+void AttribSprite::onDraw(const Matrix &transform, bool transformUpdated)
+{
+    
+    // Set Shader GLProgram
+	auto program = getShaderProgram();
+	program->use();
+    program->setUniformsForBuiltins(transform);
+    
+    setCustomUniforms();
+    
+    // Set
+    //glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+    //GL::enableVertexAttribs(cocos2d::GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
+    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+    GL::bindTexture2D( getTexture()->getName());
+    
+    //
+    // Attributes
+    //
+    #define kQuadSize sizeof(_quad.bl)
+    size_t offset = (size_t)&_quad;
+    size_t stride = kQuadSize;
+    /*
+    // vertex
+    int diff = offsetof( V3F_C4B_T2F, vertices);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+    
+    // texCoods
+    diff = offsetof( V3F_C4B_T2F, texCoords);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+    
+    // color
+    diff = offsetof( V3F_C4B_T2F, colors);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
+    */
+    program->setVertexAttrib((void*)offset, false);
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
+    
+    CHECK_GL_ERROR_DEBUG();
+}
+
+AttribShaderTest::AttribShaderTest()
+{
+    if (ShaderTestDemo2::init())
+    {
+        auto s = Director::getInstance()->getWinSize();
+        AttribSprite* sprite = AttribSprite::create();
+        sprite->setTexture("Images/powered.png");
+        sprite->initShader();
+        sprite->setPosition(Vector2(s.width/2, s.height/2));
+        addChild(sprite);
+    }
+   
+}
+
+UniformAttribShaderTest::UniformAttribShaderTest()
+{
+
 }
