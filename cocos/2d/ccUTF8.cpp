@@ -256,7 +256,11 @@ unsigned short* cc_utf8_to_utf16(const char* str_old, int length/* = -1*/, int* 
     {
         ret = new unsigned short[outUtf16.length() + 1];
         ret[outUtf16.length()] = 0;
-        memcpy(ret, outUtf16.data(), outUtf16.length());
+        memcpy(ret, outUtf16.data(), outUtf16.length() * sizeof(unsigned short));
+        if (rUtf16Size)
+        {
+            *rUtf16Size = static_cast<int>(outUtf16.length());
+        }
     }
     
     return ret;
