@@ -568,6 +568,8 @@ ScriptingCore::~ScriptingCore()
 
 void ScriptingCore::cleanup()
 {
+    this->runLoop->release();
+    
     localStorageFree();
     removeAllRoots(cx_);
     if (cx_)
@@ -1642,6 +1644,10 @@ jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length /* = -1 */) 
             ret = STRING_TO_JSVAL(str);
         }
         delete[] strUTF16;
+    }
+    else if (strUTF16)
+    {
+        delete[] strUTF16;      // "" empty string case
     }
     return ret;
 }
