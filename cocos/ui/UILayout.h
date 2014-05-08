@@ -299,6 +299,7 @@ public:
     /**
      * To specify a user-defined functor to decide which child widget of the layout should get focused
      * @param FocusDirection the finding direction
+     * @param this previous focused widget
      * @return return the index of widget in the layout
      */
     std::function<int(FocusDirection, Widget*)> onPassFocusToChild;
@@ -383,6 +384,11 @@ protected:
      * find the first non-layout widget in this layout
      */
     Widget *findFirstNonLayoutWidget();
+    
+    /**
+     * find the fisrt focus enabled widget index in the layout, it will recusive searching the child widget
+     */
+    int findFirstFocusEnabledWidgetIndex();
     
     /**
      * find a focus enabled child Widget in the layout by index

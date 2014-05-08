@@ -1649,11 +1649,26 @@ float Layout::caculateFarestDistance(cocos2d::ui::Widget *baseWidget)
     return distance;
 }
 
+int Layout::findFirstFocusEnabledWidgetIndex()
+{
+    ssize_t index = 0;
+    ssize_t count = this->getChildren().size();
+    while (index < count) {
+        Widget* w =  dynamic_cast<Widget*>(_children.at(index));
+        if (w && w->isFocusEnabled()) {
+            return (int)index;
+        }
+        index++;
+    }
+    CCASSERT(0, "invalide operation");
+    return 0;
+}
+
 int Layout::findNearestChildWidgetIndex(FocusDirection direction, Widget* baseWidget)
 {
     if (baseWidget == nullptr || baseWidget == this)
     {
-        return 0;
+        return this->findFirstFocusEnabledWidgetIndex();
     }
     int index = 0;
     ssize_t count = this->getChildren().size();
@@ -1732,7 +1747,7 @@ int Layout::findFarestChildWidgetIndex(cocos2d::ui::FocusDirection direction, co
 {
     if (baseWidget == nullptr || baseWidget == this)
     {
-        return 0;
+        return this->findFirstFocusEnabledWidgetIndex();
     }
     int index = 0;
     ssize_t count = this->getChildren().size();
@@ -2298,19 +2313,24 @@ Widget* Layout::findNextFocusedWidget(FocusDirection direction, Widget* current)
 {
     if (this->isFocused())
     {
+        Layout* parent = dynamic_cast<Layout*>(this->getParent());
+
         if (_passFocusToChild)
         {
-            return this->passFocusToChild(direction, current);
-        }
-        else
-        {
-            Layout* parent = dynamic_cast<Layout*>(this->getParent());
-            if (nullptr == parent) {
-                return this;
+            Widget * w = this->passFocusToChild(direction, current);
+            if (dynamic_cast<Layout*>(w)) {
+                if (parent) {
+                    return parent->findNextFocusedWidget(direction, this);
+                }
             }
-            return parent->findNextFocusedWidget(direction, this);
-            
+            return w;
         }
+        
+        if (nullptr == parent) {
+            return this;
+        }
+        return parent->findNextFocusedWidget(direction, this);
+            
     }
     else if(current->isFocused() || !current->isFocusEnabled())
     {
