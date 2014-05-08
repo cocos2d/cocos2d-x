@@ -98,6 +98,7 @@ Classes/UITest/CocoStudioGUITest/UITextAtlasTest/UITextAtlasTest_Editor.cpp \
 Classes/UITest/CocoStudioGUITest/UITextBMFontTest/UITextBMFontTest_Editor.cpp \
 Classes/UITest/CocoStudioGUITest/UITextFieldTest/UITextFieldTest_Editor.cpp \
 Classes/UITest/CocoStudioGUITest/UIWidgetAddNodeTest/UIWidgetAddNodeTest_Editor.cpp \
+Classes/UITest/CocoStudioGUITest/UIVideoWidgetTest/UIVideoWidgetTest.cpp \
 Classes/UITest/CocoStudioGUITest/CustomWidget/CustomImageView.cpp \
 Classes/UITest/CocoStudioGUITest/CustomWidget/CustomImageViewReader.cpp \
 Classes/UITest/CocoStudioGUITest/CustomWidget/CustomParticleWidget.cpp \
