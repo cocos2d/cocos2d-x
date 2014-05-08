@@ -201,7 +201,15 @@ public class Cocos2dxSound {
 	}
 
 	public void pauseAllEffects() {
-		this.mSoundPool.autoPause();
+		if (!this.mPathStreamIDsMap.isEmpty()) {
+			final Iterator<Entry<String, ArrayList<Integer>>> iter = this.mPathStreamIDsMap.entrySet().iterator();
+			while (iter.hasNext()) {
+				final Entry<String, ArrayList<Integer>> entry = iter.next();
+				for (final int pStreamID : entry.getValue()) {
+					this.mSoundPool.pause(pStreamID);
+				}
+			}
+		}
 	}
 
 	public void resumeAllEffects() {
@@ -317,6 +325,14 @@ public class Cocos2dxSound {
 		streamIDs.add(streamID);
 
 		return streamID;
+	}
+
+	public void onEnterBackground(){
+		this.mSoundPool.autoPause();
+	}
+
+	public void onEnterForeground(){
+		this.mSoundPool.autoResume();
 	}
 
 	// ===========================================================
