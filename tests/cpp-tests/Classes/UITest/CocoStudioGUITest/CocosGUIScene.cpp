@@ -279,7 +279,20 @@ g_guisTests[] =
             Director::getInstance()->replaceScene(pScene);
         }
 	},
-   
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    {
+        "gui VideoWidgetTest",
+            [](Ref* sender)
+        {
+            UISceneManager* pManager = UISceneManager::sharedUISceneManager();
+            pManager->setCurrentUISceneId(kUIVideoWidgetTest);
+            pManager->setMinUISceneId(kUIVideoWidgetTest);
+            pManager->setMaxUISceneId(kUIVideoWidgetTest);
+            Scene* pScene = pManager->currentUIScene();
+            Director::getInstance()->replaceScene(pScene);
+        }
+    }
+#endif
 };
 
 static const int g_maxTests = sizeof(g_guisTests) / sizeof(g_guisTests[0]);
