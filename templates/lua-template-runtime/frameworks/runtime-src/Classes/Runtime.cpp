@@ -724,9 +724,23 @@ static void register_runtime_override_function(lua_State* tolua_S)
     lua_pop(tolua_S, 1);
 }
 
-bool initRuntime(string& execufile)
+bool initRuntime(string& entryfile)
 {
-    g_entryfile = execufile;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) 
+#ifndef _DEBUG 
+    return false; 
+#endif 
+#elif(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) 
+#ifdef NDEBUG 
+    return false; 
+#endif 
+#elif(CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#ifndef COCOS2D_DEBUG 
+    return false; 
+#endif
+#endif
+
+    g_entryfile = entryfile;
     vector<string> searchPathArray;
     searchPathArray=FileUtils::getInstance()->getSearchPaths();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
@@ -749,6 +763,11 @@ bool initRuntime(string& execufile)
 #endif
     
     g_resourcePath=replaceAll(g_resourcePath,"\\","/");
+    if (g_resourcePath.at(g_resourcePath.length()-1) != '/')
+    {
+        g_resourcePath.append("/");
+    }
+    
     searchPathArray.insert(searchPathArray.begin(),g_resourcePath);
     FileUtils::getInstance()->setSearchPaths(searchPathArray);
 
@@ -757,17 +776,17 @@ bool initRuntime(string& execufile)
 
 bool startRuntime()
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-#ifndef _DEBUG
-    return false;
-#endif
-#elif(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#ifdef NDEBUG
-    return false;
-#endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) 
+#ifndef _DEBUG 
+    return false; 
+#endif 
+#elif(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) 
+#ifdef NDEBUG 
+    return false; 
+#endif 
 #elif(CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-#ifndef COCOS2D_DEBUG
-    return false;
+#ifndef COCOS2D_DEBUG 
+    return false; 
 #endif
 #endif
 
