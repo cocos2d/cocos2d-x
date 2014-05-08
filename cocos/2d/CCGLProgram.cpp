@@ -298,22 +298,28 @@ void GLProgram::parseUniforms()
 				// Query uniform info.
 				glGetActiveUniform(_program, i, length, NULL, &uniform._size, &uniform._type, uniformName);
 				uniformName[length] = '\0';
-                // remove possible array '[]' from uniform name
-				if(uniform._size > 1 && length > 3)
-				{
-					char* c = strrchr(uniformName, '[');
-					if(c)
-					{
-						*c = '\0';
-					}
-				}
-                uniform._name = std::string(uniformName);
-				uniform._location = glGetUniformLocation(_program, uniformName);
-                
-                //something wrong, uniform is an object not a pointer, may be released soon
-                uniform.init(this);
 
-                _uniformsDictionary[uniform._name] = uniform;
+                // Only add uniforms that are not build-in.
+                // The ones that start with 'CC_' are built-ins
+                if(strncmp("CC_", uniformName, 3) != 0) {
+
+                    // remove possible array '[]' from uniform name
+                    if(uniform._size > 1 && length > 3)
+                    {
+                        char* c = strrchr(uniformName, '[');
+                        if(c)
+                        {
+                            *c = '\0';
+                        }
+                    }
+                    uniform._name = std::string(uniformName);
+                    uniform._location = glGetUniformLocation(_program, uniformName);
+                    
+                    //something wrong, uniform is an object not a pointer, may be released soon
+                    uniform.init(this);
+
+                    _uniformsDictionary[uniform._name] = uniform;
+                }
 			}
 		}
 	}
@@ -905,82 +911,6 @@ bool Uniform::init(GLProgram* program)
 {
 	_program = program;
     return program && program && _location != -1;
-}
-
-bool Uniform::setValue(float value)
-{
-    CCASSERT (_type == GL_FLOAT, "");
-    _program->setUniformLocationWith1f(_location, value);
-    
-    return true;
-}
-
-bool Uniform::setValue(int value)
-{
-    CCASSERT ((_type == GL_INT || _type == GL_SAMPLER_2D), "");
-    _program->setUniformLocationWith1i(_location, value);
-    
-    return true;
-}
-
-bool Uniform::setValue(const Vector2& value)
-{
-    CCASSERT (_type == GL_FLOAT_VEC2, "");
-    _program->setUniformLocationWith2f(_location, value.x, value.y);
-    
-    return true;
-}
-
-bool Uniform::setValue(const Vector3& value)
-{
-    CCASSERT (_type == GL_FLOAT_VEC3, "");
-    _program->setUniformLocationWith3f(_location, value.x, value.y, value.z);
-    
-    return true;
-}
-
-bool Uniform::setValue(const Vector4& value)
-{
-    CCASSERT (_type == GL_FLOAT_VEC4, "");
-    _program->setUniformLocationWith4f(_location, value.x, value.y, value.z, value.w);
-    
-    return true;
-}
-
-bool Uniform::setValue(const Matrix& value)
-{
-    CCASSERT(_type == GL_FLOAT_MAT4, "");
-    _program->setUniformLocationWithMatrix4fv(_location, value.m, 1);
-    
-    return true;
-}
-
-bool Uniform::setValue(const Vector2* value, int count)
-{
-    CCASSERT (_type == GL_FLOAT_VEC2 && _size == count, "");
-    _program->setUniformLocationWith2fv(_location, (GLfloat*)value, count);
-    return true;
-}
-
-bool Uniform::setValue(const Vector3* value, int count)
-{
-    CCASSERT (_type == GL_FLOAT_VEC3 && _size == count, "");
-    _program->setUniformLocationWith3fv(_location, (GLfloat*)value, count);
-    return true;
-}
-
-bool Uniform::setValue(const Vector4* value, int count)
-{
-    CCASSERT (_type == GL_FLOAT_VEC4 && _size == count, "");
-    _program->setUniformLocationWith4fv(_location, (GLfloat*)value, count);
-    return true;
-}
-
-bool Uniform::setValue(const Matrix* value, int count)
-{
-    CCASSERT (_type == GL_FLOAT_MAT4 && _size == count, "");
-    _program->setUniformLocationWithMatrix4fv(_location, (GLfloat*)value, count);
-    return true;
 }
 
 NS_CC_END

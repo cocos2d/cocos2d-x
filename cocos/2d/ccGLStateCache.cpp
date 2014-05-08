@@ -35,11 +35,9 @@ NS_CC_BEGIN
 
 namespace
 {
-    static GLuint      s_currentProjectionMatrix = -1;
-    static bool        s_vertexAttribPosition = false;
-    static bool        s_vertexAttribColor = false;
-    static bool        s_vertexAttribTexCoords = false;
-    
+    static GLuint s_currentProjectionMatrix = -1;
+    static unsigned int s_attributeFlags = 0;
+
 #if CC_ENABLE_GL_STATE_CACHE
     
 #define kMaxActiveTexture 16
@@ -63,10 +61,8 @@ void invalidateStateCache( void )
 {
     Director::getInstance()->resetMatrixStack();
     s_currentProjectionMatrix = -1;
-    s_vertexAttribPosition = false;
-    s_vertexAttribColor = false;
-    s_vertexAttribTexCoords = false;
-    
+    s_attributeFlags = 0;
+
 #if CC_ENABLE_GL_STATE_CACHE
     s_currentShaderProgram = -1;
     for( int i=0; i < kMaxActiveTexture; i++ )
@@ -217,42 +213,20 @@ void bindVAO(GLuint vaoId)
 void enableVertexAttribs( unsigned int flags )
 {
     bindVAO(0);
-    
-    /* Position */
-    bool enablePosition = flags & VERTEX_ATTRIB_FLAG_POSITION;
 
-    if( enablePosition != s_vertexAttribPosition ) {
-        if( enablePosition )
-            glEnableVertexAttribArray( GLProgram::VERTEX_ATTRIB_POSITION );
-        else
-            glDisableVertexAttribArray( GLProgram::VERTEX_ATTRIB_POSITION );
-
-        s_vertexAttribPosition = enablePosition;
+    // hardcoded!
+    for(int i=0; i < 16; i++) {
+        unsigned int bit = 1 << i;
+        bool enabled = flags & bit;
+        bool enabledBefore = s_attributeFlags & bit;
+        if(enabled != enabledBefore) {
+            if( enabled )
+                glEnableVertexAttribArray(i);
+            else
+                glDisableVertexAttribArray(i);
+        }
     }
-
-    /* Color */
-    bool enableColor = (flags & VERTEX_ATTRIB_FLAG_COLOR) != 0 ? true : false;
-
-    if( enableColor != s_vertexAttribColor ) {
-        if( enableColor )
-            glEnableVertexAttribArray( GLProgram::VERTEX_ATTRIB_COLOR );
-        else
-            glDisableVertexAttribArray( GLProgram::VERTEX_ATTRIB_COLOR );
-
-        s_vertexAttribColor = enableColor;
-    }
-
-    /* Tex Coords */
-    bool enableTexCoords = (flags & VERTEX_ATTRIB_FLAG_TEX_COORDS) != 0 ? true : false;
-
-    if( enableTexCoords != s_vertexAttribTexCoords ) {
-        if( enableTexCoords )
-            glEnableVertexAttribArray( GLProgram::VERTEX_ATTRIB_TEX_COORDS );
-        else
-            glDisableVertexAttribArray( GLProgram::VERTEX_ATTRIB_TEX_COORDS );
-
-        s_vertexAttribTexCoords = enableTexCoords;
-    }
+    s_attributeFlags = flags;
 }
 
 // GL Uniforms functions

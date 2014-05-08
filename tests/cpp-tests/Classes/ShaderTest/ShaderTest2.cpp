@@ -760,11 +760,9 @@ void UniformSprite::draw(Renderer *renderer, const Matrix &transform, bool trans
 
 void UniformSprite::setCustomUniforms()
 {
-    
-    std::string name = "center";
-    _shaderProgram->getUniform(name)->setValue(Vector2(480,320));
-    name = "resolution";
-    _shaderProgram->getUniform(name)->setValue(Vector2(256,256));
+    // FIXME riq TODO
+//    _shaderProgram->getUniform("center")->setValue(Vector2(480,320));
+//    _shaderProgram->getUniform("resolution")->setValue(Vector2(256,256));
 }
 
 void UniformSprite::onDraw(const Matrix &transform, bool transformUpdated)
@@ -843,7 +841,7 @@ void AttribSprite::initShader()
     auto shader = GLProgram::createWithFilenames(_vertSourceFile, _fragSourceFile);
     shader->link();
     shader->updateUniforms();
-    this->setShaderProgram(shader);    
+    this->setShaderProgram(shader);
 }
 
 void AttribSprite::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
@@ -855,8 +853,6 @@ void AttribSprite::draw(Renderer *renderer, const Matrix &transform, bool transf
 
 void AttribSprite::setCustomUniforms()
 {
-
-
 }
 
 void AttribSprite::onDraw(const Matrix &transform, bool transformUpdated)

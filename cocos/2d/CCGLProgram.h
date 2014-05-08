@@ -32,9 +32,9 @@ THE SOFTWARE.
 
 #include "base/ccMacros.h"
 #include "base/CCRef.h"
+#include "base/ccTypes.h"
 #include "CCGL.h"
 #include "math/CCMath.h"
-#include <set>
 #include <unordered_map>
 
 NS_CC_BEGIN
@@ -56,6 +56,7 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
 class VertexAttrib
 {
     friend class GLProgram;
+    friend class VertexAttribValue;
     friend class VertexAttribBind;
 
 public:
@@ -81,21 +82,13 @@ protected:
 class Uniform
 {
     friend class GLProgram;
+    friend class UniformValue;
 
 public:
     Uniform();
     ~Uniform();
     bool init(GLProgram* program);
-	bool setValue(float value);
-	bool setValue(int value);
-	bool setValue(const Vector2& value);
-	bool setValue(const Vector3& value);
-	bool setValue(const Vector4& value);
-	bool setValue(const Matrix& value);
-	bool setValue(const Vector2* value, int count);
-    bool setValue(const Vector3* value, int count);
-    bool setValue(const Vector4* value, int count);
-    bool setValue(const Matrix* value, int count);
+    void apply();
 
 protected:
     GLint _location;
@@ -105,7 +98,6 @@ protected:
 	GLProgram* _program;  // weak ref
 };
 
-
 /** GLProgram
  Class that implements a glProgram
  
@@ -114,6 +106,8 @@ protected:
  */
 class CC_DLL GLProgram : public Ref
 {
+    friend class GLProgramState;
+
 public:
     enum
     {
@@ -365,9 +359,6 @@ protected:
     std::unordered_map<std::string, Uniform> _uniformsDictionary;
     std::unordered_map<std::string, VertexAttrib> _attributesDictionary;
 };
-
-// end of shaders group
-/// @}
 
 NS_CC_END
 

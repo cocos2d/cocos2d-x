@@ -1604,6 +1604,10 @@
 		500DC9BD19106E89007B91BF /* CCProfiling.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500DC9BA19106E89007B91BF /* CCProfiling.cpp */; };
 		500DC9BE19106E89007B91BF /* CCProfiling.h in Headers */ = {isa = PBXBuildFile; fileRef = 500DC9BB19106E89007B91BF /* CCProfiling.h */; };
 		500DC9BF19106E89007B91BF /* CCProfiling.h in Headers */ = {isa = PBXBuildFile; fileRef = 500DC9BB19106E89007B91BF /* CCProfiling.h */; };
+		500DC9D9191B0175007B91BF /* CCGLProgramState.h in Headers */ = {isa = PBXBuildFile; fileRef = 500DC9D7191B0175007B91BF /* CCGLProgramState.h */; };
+		500DC9DA191B0175007B91BF /* CCGLProgramState.h in Headers */ = {isa = PBXBuildFile; fileRef = 500DC9D7191B0175007B91BF /* CCGLProgramState.h */; };
+		500DC9DB191B0175007B91BF /* CCGLProgramState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500DC9D8191B0175007B91BF /* CCGLProgramState.cpp */; };
+		500DC9DC191B0175007B91BF /* CCGLProgramState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500DC9D8191B0175007B91BF /* CCGLProgramState.cpp */; };
 		5027253A190BF1B900AAF4ED /* cocos2d.h in Headers */ = {isa = PBXBuildFile; fileRef = 50272538190BF1B900AAF4ED /* cocos2d.h */; };
 		5027253B190BF1B900AAF4ED /* cocos2d.h in Headers */ = {isa = PBXBuildFile; fileRef = 50272538190BF1B900AAF4ED /* cocos2d.h */; };
 		5027253C190BF1B900AAF4ED /* cocos2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50272539190BF1B900AAF4ED /* cocos2d.cpp */; };
@@ -2682,6 +2686,8 @@
 		500DC9B519106E6D007B91BF /* TransformUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformUtils.h; sourceTree = "<group>"; };
 		500DC9BA19106E89007B91BF /* CCProfiling.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCProfiling.cpp; path = ../base/CCProfiling.cpp; sourceTree = "<group>"; };
 		500DC9BB19106E89007B91BF /* CCProfiling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCProfiling.h; path = ../base/CCProfiling.h; sourceTree = "<group>"; };
+		500DC9D7191B0175007B91BF /* CCGLProgramState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGLProgramState.h; sourceTree = "<group>"; };
+		500DC9D8191B0175007B91BF /* CCGLProgramState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGLProgramState.cpp; sourceTree = "<group>"; };
 		50272538190BF1B900AAF4ED /* cocos2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cocos2d.h; path = ../cocos/cocos2d.h; sourceTree = "<group>"; };
 		50272539190BF1B900AAF4ED /* cocos2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cocos2d.cpp; path = ../cocos/cocos2d.cpp; sourceTree = "<group>"; };
 		50DC5180187B817900A9C23F /* RELEASE_NOTES.md */ = {isa = PBXFileReference; lastKnownFileType = text; name = RELEASE_NOTES.md; path = ../docs/RELEASE_NOTES.md; sourceTree = "<group>"; };
@@ -3232,6 +3238,8 @@
 		1A570238180BCC580088DEC7 /* shaders */ = {
 			isa = PBXGroup;
 			children = (
+				500DC9D7191B0175007B91BF /* CCGLProgramState.h */,
+				500DC9D8191B0175007B91BF /* CCGLProgramState.cpp */,
 				3E9D30DD19195B22008EB309 /* CCVertexAttribBind.cpp */,
 				3E9D30DE19195B22008EB309 /* CCVertexAttribBind.h */,
 				1A57052F180BD9500088DEC7 /* CCGLProgram.cpp */,
@@ -4921,6 +4929,7 @@
 				500DC98C19106300007B91BF /* CCPlatformMacros.h in Headers */,
 				46A170131807CBFC005B8026 /* CCFileUtilsApple.h in Headers */,
 				46A1701F1807CBFC005B8026 /* CCImage.h in Headers */,
+				500DC9D9191B0175007B91BF /* CCGLProgramState.h in Headers */,
 				46A170181807CBFC005B8026 /* CCApplicationProtocol.h in Headers */,
 				1A570063180BC5A10088DEC7 /* CCAction.h in Headers */,
 				1A570067180BC5A10088DEC7 /* CCActionCamera.h in Headers */,
@@ -5417,6 +5426,7 @@
 				500DC9AD19106300007B91BF /* ZipUtils.h in Headers */,
 				50FCEBC218C72017004AD434 /* TextFieldReader.h in Headers */,
 				1A570068180BC5A10088DEC7 /* CCActionCamera.h in Headers */,
+				500DC9DA191B0175007B91BF /* CCGLProgramState.h in Headers */,
 				1A57006C180BC5A10088DEC7 /* CCActionCatmullRom.h in Headers */,
 				1A570070180BC5A10088DEC7 /* CCActionEase.h in Headers */,
 				1A570074180BC5A10088DEC7 /* CCActionGrid.h in Headers */,
@@ -6213,6 +6223,7 @@
 				1A5702FA180BCE750088DEC7 /* CCTMXXMLParser.cpp in Sources */,
 				1A570300180BCE890088DEC7 /* CCParallaxNode.cpp in Sources */,
 				1A570305180BCED90088DEC7 /* ccUtils.cpp in Sources */,
+				500DC9DB191B0175007B91BF /* CCGLProgramState.cpp in Sources */,
 				1A57030C180BCF190088DEC7 /* CCComponent.cpp in Sources */,
 				500DC96019106300007B91BF /* CCEventListener.cpp in Sources */,
 				1A570310180BCF190088DEC7 /* CCComponentContainer.cpp in Sources */,
@@ -6525,6 +6536,7 @@
 				1A01C68F18F57BE800EFE3A6 /* CCDictionary.cpp in Sources */,
 				06CAAACC186AD7F50012A414 /* TriggerMng.cpp in Sources */,
 				46A1703D1807CC07005B8026 /* CCCommon.mm in Sources */,
+				500DC9DC191B0175007B91BF /* CCGLProgramState.cpp in Sources */,
 				50FCEBC818C72017004AD434 /* WidgetReader.cpp in Sources */,
 				46A1702F1807CBFE005B8026 /* CCGLViewProtocol.cpp in Sources */,
 				46A170FC1807CECB005B8026 /* CCPhysicsBody.cpp in Sources */,

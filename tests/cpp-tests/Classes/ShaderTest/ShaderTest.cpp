@@ -191,8 +191,9 @@ void ShaderNode::onDraw(const Matrix &transform, bool transformUpdated)
     shader->use();
     shader->setUniformsForBuiltins(transform);
 
-    shader->getUniform("center")->setValue(_center);
-    shader->getUniform("resolution")->setValue(_resolution);
+    // TODO: riq FIXME
+//    shader->getUniform("center")->setValue(_center);
+//    shader->getUniform("resolution")->setValue(_resolution);
 
     GL::enableVertexAttribs( cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION );
 
@@ -522,9 +523,10 @@ void SpriteBlur::onDraw(const Matrix &transform, bool transformUpdated)
     program->use();
     program->setUniformsForBuiltins(transform);
 
-    program->getUniform("onePixelSize")->setValue(_pixelSize);
-    program->getUniform("gaussianCoefficient")->setValue(Vector4(_samplingRadius, _scale, _cons, _weightSum));
-    
+    // TODO: riq FIXME
+//    program->getUniform("onePixelSize")->setValue(_pixelSize);
+//    program->getUniform("gaussianCoefficient")->setValue(Vector4(_samplingRadius, _scale, _cons, _weightSum));
+
     GL::bindTexture2D( getTexture()->getName());
     
     //
