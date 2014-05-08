@@ -136,7 +136,6 @@ protected:
     std::string _vertFileName;
     std::string _fragFileName;
     CustomCommand _customCommand;
-    GLProgramState *_glProgramState;
 };
 
 class ShaderTestScene : public TestScene

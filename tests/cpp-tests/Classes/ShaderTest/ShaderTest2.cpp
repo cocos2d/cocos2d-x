@@ -1,9 +1,31 @@
-	#include "ShaderTest2.h"
+/****************************************************************************
+ Copyright (c) 2014 Chukong Technologies Inc.
+
+ http://www.cocos2d-x.org
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
+#include "ShaderTest2.h"
 #include "ShaderTest.h"
 #include "../testResource.h"
 #include "cocos2d.h"
-#include "renderer/CCRenderCommand.h"
-#include "renderer/CCCustomCommand.h"
 
 namespace ShaderTest2
 {
@@ -122,15 +144,13 @@ public:
     void listenBackToForeground(Ref *obj);
     
 protected:
-    virtual void buildCustomUniforms() = 0;
     virtual void setCustomUniforms() = 0;
-protected:
+
     std::string _fragSourceFile;
     std::string _vertSourceFile;
-protected:
+
     CustomCommand _renderCommand;
     void onDraw(const Matrix &transform, bool transformUpdated);
-
 };
 
 ShaderSprite::ShaderSprite()
@@ -167,25 +187,31 @@ void ShaderSprite::initShader()
     }
 
     auto program = GLProgram::createWithByteArrays(vertSource.c_str(), fragSource.c_str());
-    setShaderProgram(program);
-
-    CHECK_GL_ERROR_DEBUG();
-
     program->link();
-    
-    CHECK_GL_ERROR_DEBUG();
-    
     program->updateUniforms();
-    
-    CHECK_GL_ERROR_DEBUG();
-    
-    buildCustomUniforms();
-    
-    CHECK_GL_ERROR_DEBUG();
+    setGLProgram(program);
 
-    program->getVertexAttrib("a_color")->redefineTypeAndSize(GL_UNSIGNED_BYTE, 4, GL_TRUE);
-    program->getVertexAttrib("a_position")->redefineTypeAndSize(GL_FLOAT, 3, GL_FALSE);
-    program->getVertexAttrib("a_texCoord")->redefineTypeAndSize(GL_FLOAT, 2, GL_FALSE);
+    auto glprogramState = getGLProgramState();
+
+    // hack, fix it later
+    glprogramState->setTexture(getTexture());
+    glprogramState->setBlendFunc(getBlendFunc());
+
+    setCustomUniforms();
+
+#define kQuadSize sizeof(_quad.bl)
+    size_t offset = (size_t)&_quad;
+
+    // vertex
+    int diff = offsetof( V3F_C4B_T2F, vertices);
+    glprogramState->setVertexAttribPointer("a_position", 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+    // texCoods
+    diff = offsetof( V3F_C4B_T2F, texCoords);
+    glprogramState->setVertexAttribPointer("a_texCoord", 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+    // color
+    diff = offsetof( V3F_C4B_T2F, colors);
+    glprogramState->setVertexAttribPointer("a_color", 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*) (offset + diff));
+
 }
 
 void ShaderSprite::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
@@ -198,34 +224,10 @@ void ShaderSprite::draw(Renderer *renderer, const Matrix &transform, bool transf
 
 void ShaderSprite::onDraw(const Matrix &transform, bool transformUpdated)
 {
-    auto shader = getShaderProgram();
-    shader->use();
-    shader->setUniformsForBuiltins(transform);
+    getGLProgramState()->setTexture(getTexture());
+    getGLProgramState()->setBlendFunc(getBlendFunc());
 
-    setCustomUniforms();
-    
-    GL::enableVertexAttribs(cocos2d::GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
-    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
-    GL::bindTexture2D( getTexture()->getName());
-    
-    //
-    // Attributes
-    //
-    #define kQuadSize sizeof(_quad.bl)
-    size_t offset = (size_t)&_quad;
-    
-    // vertex
-    int diff = offsetof( V3F_C4B_T2F, vertices);
-    shader->getVertexAttrib("a_position")->setPointer(kQuadSize, (void*) (offset + diff));
-
-    // texCoods
-    diff = offsetof( V3F_C4B_T2F, texCoords);
-    shader->getVertexAttrib("a_texCoord")->setPointer(kQuadSize, (void*) (offset + diff));
-
-    // color
-    diff = offsetof( V3F_C4B_T2F, colors);
-    shader->getVertexAttrib("a_color")->setPointer(kQuadSize, (void*) (offset + diff));
-
+    getGLProgramState()->apply(transform);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
 }
@@ -235,19 +237,14 @@ class NormalSprite : public ShaderSprite, public ShaderSpriteCreator<NormalSprit
 public:
     CREATE_FUNC(NormalSprite);
     NormalSprite();
+
 protected:
-    virtual void buildCustomUniforms();
-    virtual void setCustomUniforms();
+    virtual void setCustomUniforms() override;
 };
 
 NormalSprite::NormalSprite()
 {
     _fragSourceFile = "Shaders/example_normal.fsh";
-}
-
-void NormalSprite::buildCustomUniforms()
-{
-    
 }
 
 void NormalSprite::setCustomUniforms()
@@ -260,9 +257,9 @@ class GreyScaleSprite : public ShaderSprite, public ShaderSpriteCreator<GreyScal
 public:
     CREATE_FUNC(GreyScaleSprite);
     GreyScaleSprite();
+
 protected:
-    virtual void buildCustomUniforms();
-    virtual void setCustomUniforms();
+    virtual void setCustomUniforms() override;
 };
 
 GreyScaleSprite::GreyScaleSprite()
@@ -270,14 +267,8 @@ GreyScaleSprite::GreyScaleSprite()
     _fragSourceFile = "Shaders/example_greyScale.fsh";
 }
 
-void GreyScaleSprite::buildCustomUniforms()
-{
-    
-}
-
 void GreyScaleSprite::setCustomUniforms()
 {
-    
 }
 
 class BlurSprite : public ShaderSprite, public ShaderSpriteCreator<BlurSprite>
@@ -286,10 +277,10 @@ public:
     CREATE_FUNC(BlurSprite);
     BlurSprite();
     void setBlurSize(float f);
+
 protected:
-    virtual void buildCustomUniforms();
-    virtual void setCustomUniforms();
-protected:
+    virtual void setCustomUniforms() override;
+
     int       _blurRadius;
     Vector2     _pixelSize;
     
@@ -297,9 +288,6 @@ protected:
     float     _scale;
     float     _cons;
     float     _weightSum;
-    
-    GLuint    pixelSizeLocation;
-    GLuint    coefficientLocation;
 };
 
 BlurSprite::BlurSprite()
@@ -307,7 +295,7 @@ BlurSprite::BlurSprite()
     _fragSourceFile = "Shaders/example_Blur.fsh";
 }
 
-void BlurSprite::buildCustomUniforms()
+void BlurSprite::setCustomUniforms()
 {
     auto s = getTexture()->getContentSizeInPixels();
     _blurRadius = 0;
@@ -315,16 +303,10 @@ void BlurSprite::buildCustomUniforms()
     _samplingRadius = 0;
 
     setBlurSize(3.0f);
-    auto program = getShaderProgram();
-    pixelSizeLocation = program->getUniformLocation("onePixelSize");
-    coefficientLocation = program->getUniformLocation("gaussianCoefficient");
-}
 
-void BlurSprite::setCustomUniforms()
-{
-    auto program = getShaderProgram();
-    program->setUniformLocationWith2f(pixelSizeLocation, _pixelSize.x, _pixelSize.y);
-    program->setUniformLocationWith4f(coefficientLocation, _samplingRadius, _scale,_cons,_weightSum);
+    auto programState = getGLProgramState();
+    programState->getUniformValue("onePixelSize")->setValue(_pixelSize);
+    programState->getUniformValue("gaussianCoefficient")->setValue(Vector4(_samplingRadius, _scale, _cons, _weightSum));
 }
 
 void BlurSprite::setBlurSize(float f)
@@ -367,13 +349,11 @@ class NoiseSprite : public ShaderSprite, public ShaderSpriteCreator<NoiseSprite>
 public:
     CREATE_FUNC(NoiseSprite);
     NoiseSprite();
-    
-private:
-    GLfloat _resolution[2];
-    GLuint _resolutionLoc;
+
 protected:
-    virtual void buildCustomUniforms();
-    virtual void setCustomUniforms();
+    virtual void setCustomUniforms() override;
+
+    GLfloat _resolution[2];
 };
 
 NoiseSprite::NoiseSprite()
@@ -381,18 +361,11 @@ NoiseSprite::NoiseSprite()
     _fragSourceFile = "Shaders/example_Noisy.fsh";
 }
 
-void NoiseSprite::buildCustomUniforms()
-{
-    auto program = getShaderProgram();
-    _resolutionLoc = program->getUniformLocation("resolution");
-}
-
 void NoiseSprite::setCustomUniforms()
 {
     _resolution[0] = getTexture()->getContentSizeInPixels().width;
     _resolution[1] = getTexture()->getContentSizeInPixels().height;
-    
-    getShaderProgram()->setUniformLocationWith2fv(_resolutionLoc, _resolution, 1);
+    getGLProgramState()->getUniformValue("resolution")->setValue(Vector2(_resolution[0],_resolution[1]));
 }
 
 class EdgeDetectionSprite : public ShaderSprite, public ShaderSpriteCreator<EdgeDetectionSprite>
@@ -401,12 +374,10 @@ public:
     CREATE_FUNC(EdgeDetectionSprite);
     EdgeDetectionSprite();
     
-private:
-    GLfloat _resolution[2];
-    GLuint _resolutionLoc;
 protected:
-    virtual void buildCustomUniforms();
-    virtual void setCustomUniforms();
+    virtual void setCustomUniforms() override;
+
+    GLfloat _resolution[2];
 };
 
 EdgeDetectionSprite::EdgeDetectionSprite()
@@ -414,18 +385,14 @@ EdgeDetectionSprite::EdgeDetectionSprite()
     _fragSourceFile = "Shaders/example_edgeDetection.fsh";
 }
 
-void EdgeDetectionSprite::buildCustomUniforms()
-{
-    auto program = getShaderProgram();
-    _resolutionLoc = program->getUniformLocation("resolution");
-}
-
 void EdgeDetectionSprite::setCustomUniforms()
 {
-    _resolution[0] = getTexture()->getContentSizeInPixels().width;
-    _resolution[1] = getTexture()->getContentSizeInPixels().height;
-    
-    getShaderProgram()->setUniformLocationWith2fv(_resolutionLoc, _resolution, 1);
+    auto programState = getGLProgramState();
+
+    _resolution[0] = getContentSize().width;
+    _resolution[1] = getContentSize().height;
+
+    programState->getUniformValue("resolution")->setValue(Vector2(_resolution[0], _resolution[1]));
 }
 
 class BloomSprite : public ShaderSprite, public ShaderSpriteCreator<BloomSprite>
@@ -434,12 +401,10 @@ public:
     CREATE_FUNC(BloomSprite);
     BloomSprite();
     
-private:
-    GLfloat _resolution[2];
-    GLuint _resolutionLoc;
 protected:
-    virtual void buildCustomUniforms();
-    virtual void setCustomUniforms();
+    virtual void setCustomUniforms() override;
+
+    GLfloat _resolution[2];
 };
 
 BloomSprite::BloomSprite()
@@ -447,18 +412,8 @@ BloomSprite::BloomSprite()
     _fragSourceFile = "Shaders/example_bloom.fsh";
 }
 
-void BloomSprite::buildCustomUniforms()
-{
-    auto program = getShaderProgram();
-    _resolutionLoc = program->getUniformLocation("resolution");
-}
-
 void BloomSprite::setCustomUniforms()
 {
-    _resolution[0] = getTexture()->getContentSizeInPixels().width;
-    _resolution[1] = getTexture()->getContentSizeInPixels().height;
-    
-    getShaderProgram()->setUniformLocationWith2fv(_resolutionLoc, _resolution, 1);
 }
 
 class CelShadingSprite : public ShaderSprite, public ShaderSpriteCreator<CelShadingSprite>
@@ -467,12 +422,10 @@ public:
     CREATE_FUNC(CelShadingSprite);
     CelShadingSprite();
     
-private:
-    GLfloat _resolution[2];
-    GLuint _resolutionLoc;
 protected:
-    virtual void buildCustomUniforms();
-    virtual void setCustomUniforms();
+    virtual void setCustomUniforms() override;
+
+    GLfloat _resolution[2];
 };
 
 CelShadingSprite::CelShadingSprite()
@@ -480,18 +433,14 @@ CelShadingSprite::CelShadingSprite()
     _fragSourceFile = "Shaders/example_celShading.fsh";
 }
 
-void CelShadingSprite::buildCustomUniforms()
-{
-    auto program = getShaderProgram();
-    _resolutionLoc = program->getUniformLocation("resolution");
-}
-
 void CelShadingSprite::setCustomUniforms()
 {
-    _resolution[0] = getTexture()->getContentSizeInPixels().width;
-    _resolution[1] = getTexture()->getContentSizeInPixels().height;
-    
-    getShaderProgram()->setUniformLocationWith2fv(_resolutionLoc, _resolution, 1);
+    auto programState = getGLProgramState();
+
+    _resolution[0] = getContentSize().width;
+    _resolution[1] = getContentSize().height;
+
+    programState->getUniformValue("resolution")->setValue(Vector2(_resolution[0], _resolution[1]));
 }
 
 class LensFlareSprite : public ShaderSprite, public ShaderSpriteCreator<LensFlareSprite>
@@ -499,15 +448,12 @@ class LensFlareSprite : public ShaderSprite, public ShaderSpriteCreator<LensFlar
 public:
     CREATE_FUNC(LensFlareSprite);
     LensFlareSprite();
-    
-private:
+
+protected:
+    virtual void setCustomUniforms() override;
+
     GLfloat _resolution[2];
     GLfloat _textureResolution[2];
-    GLuint _resolutionLoc;
-    GLuint _textureResolutionLoc;
-protected:
-    virtual void buildCustomUniforms();
-    virtual void setCustomUniforms();
 };
 
 LensFlareSprite::LensFlareSprite()
@@ -515,23 +461,17 @@ LensFlareSprite::LensFlareSprite()
     _fragSourceFile = "Shaders/example_lensFlare.fsh";
 }
 
-void LensFlareSprite::buildCustomUniforms()
-{
-    auto program = getShaderProgram();
-    _resolutionLoc = program->getUniformLocation("resolution");
-    _textureResolutionLoc = program->getUniformLocation("textureResolution");
-}
-
 void LensFlareSprite::setCustomUniforms()
 {
+    auto programState = getGLProgramState();
+
     _textureResolution[0] = getTexture()->getContentSizeInPixels().width;
     _textureResolution[1] = getTexture()->getContentSizeInPixels().height;
-    
     _resolution[0] = getContentSize().width;
     _resolution[1] = getContentSize().height;
-    
-    getShaderProgram()->setUniformLocationWith2fv(_resolutionLoc, _resolution, 1);
-    getShaderProgram()->setUniformLocationWith2fv(_textureResolutionLoc, _textureResolution, 1);
+
+    programState->getUniformValue("resolution")->setValue(Vector2(_resolution[0], _resolution[1]));
+    programState->getUniformValue("textureResolution")->setValue(Vector2(_textureResolution[0], _textureResolution[1]));
 }
 
 NormalSpriteTest::NormalSpriteTest()
@@ -652,13 +592,8 @@ public:
     CREATE_FUNC(OutlineSprite);
     OutlineSprite();
     
-private:
-    GLuint _outlineColorUniformLocation;
-    GLuint _thresdholdUniformLocation;
-    GLuint _radiusUniformLocation;
 protected:
-    virtual void buildCustomUniforms();
-    virtual void setCustomUniforms();
+    virtual void setCustomUniforms() override;
 };
 
 
@@ -669,23 +604,17 @@ OutlineSprite::OutlineSprite()
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 }
 
-void OutlineSprite::buildCustomUniforms()
-{
-    auto program = getShaderProgram();
-    _outlineColorUniformLocation = program->getUniformLocation("u_outlineColor");
-    _thresdholdUniformLocation = program->getUniformLocation("u_threshold");
-    _radiusUniformLocation = program->getUniformLocation("u_radius");
-}
-
 void OutlineSprite::setCustomUniforms()
 {
-    GLfloat color[3] = {1.0, 0.2, 0.3};
+    Vector3 color(1.0, 0.2, 0.3);
     GLfloat radius = 0.01;
     GLfloat threshold = 1.75;
-    
-    getShaderProgram()->setUniformLocationWith3fv(_outlineColorUniformLocation, color, 1);
-    getShaderProgram()->setUniformLocationWith1f(_radiusUniformLocation, radius);
-    getShaderProgram()->setUniformLocationWith1f(_thresdholdUniformLocation, threshold);
+
+    auto programState = getGLProgramState();
+
+    programState->getUniformValue("u_outlineColor")->setValue(color);
+    programState->getUniformValue("u_radius")->setValue(radius);
+    programState->getUniformValue("u_threshold")->setValue(threshold);
 }
 
 
@@ -716,15 +645,13 @@ public:
    // void listenBackToForeground(Ref *obj);
     
 protected:
-//    virtual void buildCustomUniforms();
     virtual void setCustomUniforms();
-protected:
+
     std::string _fragSourceFile;
     std::string _vertSourceFile;
-protected:
+
     CustomCommand _renderCommand;
     void onDraw(const Matrix &transform, bool transformUpdated);
-
 };
 
 UniformSprite::UniformSprite()
@@ -742,13 +669,9 @@ void UniformSprite::initShader()
 {
     auto shader = GLProgram::createWithFilenames(_vertSourceFile, _fragSourceFile);
     shader->link();
-    
     shader->updateUniforms();
-    
-    this->setShaderProgram(shader);
-    
-//    std::string attribname ="a_position";
-//    shader->getAttrib(attribname)->size = 2;
+
+    this->setGLProgram(shader);
 }
 
 void UniformSprite::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
@@ -760,24 +683,23 @@ void UniformSprite::draw(Renderer *renderer, const Matrix &transform, bool trans
 
 void UniformSprite::setCustomUniforms()
 {
-    // FIXME riq TODO
-//    _shaderProgram->getUniform("center")->setValue(Vector2(480,320));
-//    _shaderProgram->getUniform("resolution")->setValue(Vector2(256,256));
+    auto glprogramstate = getGLProgramState();
+    glprogramstate->getUniformValue("center")->setValue(Vector2(480,320));
+    glprogramstate->getUniformValue("resolution")->setValue(Vector2(256,256));
 }
 
 void UniformSprite::onDraw(const Matrix &transform, bool transformUpdated)
 {
-    // Set Shader GLProgram
-	auto program = getShaderProgram();
-	program->use();
-    program->setUniformsForBuiltins(transform);
-    
-    setCustomUniforms();
-    //GL::bindTexture2D( getTexture()->getName());
+    auto glprogramstate = getGLProgramState();
 
     float w = 256, h = 256;
     GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
-//    program->setVertexAttrib(vertices, true);
+
+    glprogramstate->setVertexAttribPointer("a_position", 2, GL_FLOAT, GL_FALSE, 0, vertices);
+
+    // Set Shader GLProgram
+	glprogramstate->apply(transform);
+
 
 	// Draw Call Test
 	glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -815,12 +737,11 @@ public:
     // void listenBackToForeground(Ref *obj);
     
 protected:
-    //    virtual void buildCustomUniforms();
     virtual void setCustomUniforms();
-protected:
+
     std::string _fragSourceFile;
     std::string _vertSourceFile;
-protected:
+
     CustomCommand _renderCommand;
     void onDraw(const Matrix &transform, bool transformUpdated);
 };
@@ -838,10 +759,27 @@ AttribSprite::~AttribSprite()
 
 void AttribSprite::initShader()
 {
-    auto shader = GLProgram::createWithFilenames(_vertSourceFile, _fragSourceFile);
-    shader->link();
-    shader->updateUniforms();
-    this->setShaderProgram(shader);
+    auto glProgram = GLProgram::createWithFilenames(_vertSourceFile, _fragSourceFile);
+    glProgram->link();
+    glProgram->updateUniforms();
+    setGLProgram(glProgram);
+
+    auto glProgramState = getGLProgramState();
+
+#define kQuadSize sizeof(_quad.bl)
+    size_t offset = (size_t)&_quad;
+
+    // vertex
+    int diff = offsetof( V3F_C4B_T2F, vertices);
+    glProgramState->setVertexAttribPointer("a_position", 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+    // texCoods
+    diff = offsetof( V3F_C4B_T2F, texCoords);
+    glProgramState->setVertexAttribPointer("a_texCoord", 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+    // color
+    diff = offsetof( V3F_C4B_T2F, colors);
+    glProgramState->setVertexAttribPointer("a_color", 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*) (offset + diff));
+
+    //program->getUniformValue("u_diffuseColor")->setValue(Vector4(1,1,1,1));
 }
 
 void AttribSprite::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
@@ -857,37 +795,10 @@ void AttribSprite::setCustomUniforms()
 
 void AttribSprite::onDraw(const Matrix &transform, bool transformUpdated)
 {
-    // Set Shader GLProgram
-	auto program = getShaderProgram();
-	program->use();
-    program->setUniformsForBuiltins(transform);
-    
-    setCustomUniforms();
-    
-    // Set
-    //glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-    GL::enableVertexAttribs(cocos2d::GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
-    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
-    GL::bindTexture2D( getTexture()->getName());
-    
-    //
-    // Attributes
-    //
-    #define kQuadSize sizeof(_quad.bl)
-    size_t offset = (size_t)&_quad;
-    size_t stride = kQuadSize;
+    getGLProgramState()->setTexture(getTexture());
+    getGLProgramState()->setBlendFunc(getBlendFunc());
+    getGLProgramState()->apply(transform);
 
-    int diff = offsetof( V3F_C4B_T2F, vertices);
-    program->getVertexAttrib("a_position")->setPointer(3, GL_FLOAT, GL_FALSE, stride, (void*) (offset + diff));
-
-    diff = offsetof( V3F_C4B_T2F, colors);
-    program->getVertexAttrib("a_color")->setPointer(4, GL_UNSIGNED_BYTE, GL_TRUE, stride, (void*) (offset + diff));
-
-    diff = offsetof( V3F_C4B_T2F, texCoords);
-    program->getVertexAttrib("a_texCoord")->setPointer(2, GL_FLOAT, GL_FALSE, stride, (void*) (offset + diff));
-
-    //program->getUniformValue("u_diffuseColor")->setValue(Vector4(1,1,1,1));
-    
 //    glDrawArrays(GL_TRIANGLES, 0, 3);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);

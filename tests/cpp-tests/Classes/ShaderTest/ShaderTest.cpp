@@ -116,7 +116,6 @@ ShaderNode::ShaderNode()
 
 ShaderNode::~ShaderNode()
 {
-    CC_SAFE_RELEASE(_glProgramState);
 }
 
 ShaderNode* ShaderNode::shaderNodeWithVertex(const char *vert, const char *frag)
@@ -143,7 +142,7 @@ bool ShaderNode::initWithVertex(const char *vert, const char *frag)
 
     _time = 0;
     _resolution = Vector2(SIZE_X, SIZE_Y);
-    _glProgramState->getUniformValue("resolution")->setValue(_resolution);
+    getGLProgramState()->getUniformValue("resolution")->setValue(_resolution);
 
     scheduleUpdate();
 
@@ -165,10 +164,7 @@ void ShaderNode::loadShaderVertex(const char *vert, const char *frag)
 
     shader->updateUniforms();
 
-    this->setShaderProgram(shader);
-
-    _glProgramState = GLProgramState::create(shader);
-    _glProgramState->retain();
+    this->setGLProgram(shader);
 }
 
 void ShaderNode::update(float dt)
@@ -181,7 +177,7 @@ void ShaderNode::setPosition(const Vector2 &newPosition)
     Node::setPosition(newPosition);
     auto position = getPosition();
     _center = Vector2(position.x * CC_CONTENT_SCALE_FACTOR(), position.y * CC_CONTENT_SCALE_FACTOR());
-    _glProgramState->getUniformValue("center")->setValue(_center);
+    getGLProgramState()->getUniformValue("center")->setValue(_center);
 }
 
 void ShaderNode::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
@@ -197,8 +193,9 @@ void ShaderNode::onDraw(const Matrix &transform, bool transformUpdated)
     float w = SIZE_X, h = SIZE_Y;
     GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
 
-    _glProgramState->setVertexAttribPointer("a_position", 2, GL_FLOAT, GL_FALSE, 0, vertices);
-    _glProgramState->apply(transform);
+    auto glProgramState = getGLProgramState();
+    glProgramState->setVertexAttribPointer("a_position", 2, GL_FLOAT, GL_FALSE, 0, vertices);
+    glProgramState->apply(transform);
 
     glDrawArrays(GL_TRIANGLES, 0, 6);
     
@@ -432,12 +429,10 @@ protected:
     float     _weightSum;
 
     CustomCommand _customCommand;
-    GLProgramState *_glProgramState;
 };
 
 SpriteBlur::~SpriteBlur()
 {
-    CC_SAFE_RELEASE(_glProgramState);
 }
 
 SpriteBlur* SpriteBlur::create(const char *pszFileName)
@@ -476,7 +471,7 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
         _samplingRadius = 0;
         this->initProgram();
 
-        _glProgramState->getUniformValue("onePixelSize")->setValue(_pixelSize);
+        getGLProgramState()->getUniformValue("onePixelSize")->setValue(_pixelSize);
 
         return true;
     }
@@ -489,33 +484,25 @@ void SpriteBlur::initProgram()
     GLchar * fragSource = (GLchar*) String::createWithContentsOfFile(
                                 FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur.fsh").c_str())->getCString();  
     auto program = GLProgram::createWithByteArrays(ccPositionTextureColor_vert, fragSource);
-    setShaderProgram(program);
-
-    CHECK_GL_ERROR_DEBUG();
-
     program->link();
-    
-    CHECK_GL_ERROR_DEBUG();
-    
     program->updateUniforms();
     
     CHECK_GL_ERROR_DEBUG();
+    setGLProgram(program);
 
-    _glProgramState = GLProgramState::create(program);
-    _glProgramState->retain();
-
+    auto glProgramState = getGLProgramState();
 #define kQuadSize sizeof(_quad.bl)
     size_t offset = (size_t)&_quad;
 
     // position
     int diff = offsetof( V3F_C4B_T2F, vertices);
-    _glProgramState->setVertexAttribPointer("a_position", 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+    glProgramState->setVertexAttribPointer("a_position", 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
     // texcoord
     diff = offsetof( V3F_C4B_T2F, texCoords);
-    _glProgramState->setVertexAttribPointer("a_texCoord", 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+    glProgramState->setVertexAttribPointer("a_texCoord", 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
     // color
     diff = offsetof( V3F_C4B_T2F, colors);
-    _glProgramState->setVertexAttribPointer("a_color", 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
+    glProgramState->setVertexAttribPointer("a_color", 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
 }
 
 void SpriteBlur::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
@@ -527,10 +514,11 @@ void SpriteBlur::draw(Renderer *renderer, const Matrix &transform, bool transfor
 
 void SpriteBlur::onDraw(const Matrix &transform, bool transformUpdated)
 {
-    _glProgramState->setTexture(getTexture());
-    _glProgramState->setBlendFunc(getBlendFunc());
+    auto glProgramState = getGLProgramState();
+    glProgramState->setTexture(getTexture());
+    glProgramState->setBlendFunc(getBlendFunc());
     
-    _glProgramState->apply(transform);
+    glProgramState->apply(transform);
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     
@@ -571,7 +559,7 @@ void SpriteBlur::setBlurSize(float f)
     }
     log("_blurRadius:%d",_blurRadius);
 
-    _glProgramState->getUniformValue("gaussianCoefficient")->setValue(Vector4(_samplingRadius, _scale, _cons, _weightSum));
+    getGLProgramState()->getUniformValue("gaussianCoefficient")->setValue(Vector4(_samplingRadius, _scale, _cons, _weightSum));
 }
 
 // ShaderBlur

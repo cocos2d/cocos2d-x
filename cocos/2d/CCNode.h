@@ -33,7 +33,6 @@
 #include "math/CCAffineTransform.h"
 #include "CCGL.h"
 #include "2d/ccGLStateCache.h"
-#include "2d/CCGLProgram.h"
 #include "2d/CCScriptSupport.h"
 #include "2d/CCProtocols.h"
 #include "base/CCEventDispatcher.h"
@@ -53,6 +52,8 @@ class ComponentContainer;
 class EventDispatcher;
 class Scene;
 class Renderer;
+class GLProgram;
+class GLProgramState;
 #if CC_USE_PHYSICS
 class PhysicsBody;
 #endif
@@ -821,14 +822,17 @@ public:
 
 
     /// @{
-    /// @name Shader Program
+    /// @name GLProgram
     /**
-     * Return the shader program currently used for this node
+     * Return the GLProgram (shader) currently used for this node
      *
-     * @return The shader program currently used for this node
+     * @return The GLProgram (shader) currently used for this node
      */
-    virtual GLProgram* getShaderProgram() { return _shaderProgram; }
-    virtual const GLProgram* getShaderProgram() const { return _shaderProgram; }
+    GLProgram* getGLProgram();
+    CC_DEPRECATED_ATTRIBUTE GLProgram* getShaderProgram() { return getGLProgram(); }
+
+    GLProgramState *getGLProgramState();
+    void setGLProgramState(GLProgramState *glProgramState);
 
     /**
      * Sets the shader program for this node
@@ -836,12 +840,13 @@ public:
      * Since v2.0, each rendering node must set its shader program.
      * It should be set in initialize phase.
      @code
-     node->setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+     node->setGLrProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
      @endcode
      *
      * @param shaderProgram The shader program
      */
-    virtual void setShaderProgram(GLProgram *shaderProgram);
+    void setGLProgram(GLProgram *glprogram);
+    CC_DEPRECATED_ATTRIBUTE void setShaderProgram(GLProgram *glprogram) { setGLProgram(glprogram); }
     /// @} end of Shader Program
 
 
@@ -1417,7 +1422,7 @@ protected:
     void *_userData;                ///< A user assingned void pointer, Can be point to any cpp object
     Ref *_userObject;               ///< A user assigned Object
 
-    GLProgram *_shaderProgram;      ///< OpenGL shader
+    GLProgramState *_glProgramState; ///< OpenGL Program State
 
     int _orderOfArrival;            ///< used to preserve sequence while sorting children with the same localZOrder
 

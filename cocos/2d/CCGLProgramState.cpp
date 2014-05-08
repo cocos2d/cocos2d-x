@@ -322,15 +322,27 @@ VertexAttribValue* GLProgramState::getVertexAttribValue(const std::string &name)
 void GLProgramState::setVertexAttribCallback(const std::string &name, const std::function<void(VertexAttrib*)> callback)
 {
     VertexAttribValue *v = getVertexAttribValue(name);
-    v->setCallback(callback);
-    _vertexAttribsFlags |= 1 << v->_vertexAttrib->index;
+    if(v) {
+        v->setCallback(callback);
+        _vertexAttribsFlags |= 1 << v->_vertexAttrib->index;
+    }
+    else
+    {
+        CCASSERT(false, "attribute not found");
+    }
 }
 
 void GLProgramState::setVertexAttribPointer(const std::string &name, GLint size, GLenum type, GLboolean normalized, GLsizei stride, GLvoid *pointer)
 {
     auto v = getVertexAttribValue(name);
-    v->setPointer(size, type, normalized, stride, pointer);
-    _vertexAttribsFlags |= 1 << v->_vertexAttrib->index;
+    if(v) {
+        v->setPointer(size, type, normalized, stride, pointer);
+        _vertexAttribsFlags |= 1 << v->_vertexAttrib->index;
+    }
+    else
+    {
+        CCASSERT(false, "attribute not found");
+    }
 }
 
 

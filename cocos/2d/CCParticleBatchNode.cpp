@@ -392,7 +392,7 @@ void ParticleBatchNode::draw(Renderer *renderer, const Matrix &transform, bool t
 
     _batchCommand.init(
                        _globalZOrder,
-                       _shaderProgram,
+                       getGLProgram(),
                        _blendFunc,
                        _textureAtlas,
                        _modelViewTransform);

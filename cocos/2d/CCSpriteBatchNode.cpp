@@ -368,7 +368,7 @@ void SpriteBatchNode::draw(Renderer *renderer, const Matrix &transform, bool tra
 
     _batchCommand.init(
                        _globalZOrder,
-                       _shaderProgram,
+                       getGLProgram(),
                        _blendFunc,
                        _textureAtlas,
                        transform);
