@@ -28,7 +28,7 @@ def setAndroidOrientation(orientation):
         except Exception:
             print("parser %s file failure" % filePath)
 
-def setConfigJson(name,viewWith,viewHeight):
+def setConfigJson(name,viewWith,viewHeight,orientation):
     dir_path = os.path.dirname(__file__)
     filePath = os.path.join(dir_path,"res/config.json")
     try:
@@ -42,6 +42,10 @@ def setConfigJson(name,viewWith,viewHeight):
                 cfg_content["init_view"]["width"] = viewWith
             if viewHeight:
                 cfg_content["init_view"]["height"] = viewHeight
+            if orientation:
+                cfg_content["init_view"]["isLandscape"] = True
+            else:
+                cfg_content["init_view"]["isLandscape"] = False
         else:
             initViewObject={}
             if name:
@@ -50,6 +54,11 @@ def setConfigJson(name,viewWith,viewHeight):
                 initViewObject["width"] = viewWith
             if viewHeight:
                 initViewObject["height"] = viewHeight
+            if orientation:
+                initViewObject["isLandscape"] = True
+            else:
+                initViewObject["isLandscape"] = False
+
             cfg_content["init_view"] = initViewObject
         f = open(filePath,"w")
         json.dump(cfg_content,f,indent=4)
