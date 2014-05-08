@@ -352,7 +352,6 @@ ScriptingCore::ScriptingCore()
     //JS_SetCStringsAreUTF8();
     this->addRegisterCallback(registerDefaultClasses);
     this->runLoop = new SimpleRunLoop();
-    this->runLoop->autorelease();
 }
 
 void ScriptingCore::string_report(jsval val) {
@@ -569,6 +568,8 @@ ScriptingCore::~ScriptingCore()
 
 void ScriptingCore::cleanup()
 {
+    this->runLoop->release();
+    
     localStorageFree();
     removeAllRoots(cx_);
     if (cx_)
