@@ -765,6 +765,10 @@
 		1ABA68AF1888D700007D1BB4 /* CCFontCharMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1ABA68AC1888D700007D1BB4 /* CCFontCharMap.cpp */; };
 		1ABA68B01888D700007D1BB4 /* CCFontCharMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 1ABA68AD1888D700007D1BB4 /* CCFontCharMap.h */; };
 		1ABA68B11888D700007D1BB4 /* CCFontCharMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 1ABA68AD1888D700007D1BB4 /* CCFontCharMap.h */; };
+		1AC0269A1914068200FA920D /* ConvertUTF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC026981914068200FA920D /* ConvertUTF.cpp */; };
+		1AC0269B1914068200FA920D /* ConvertUTF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC026981914068200FA920D /* ConvertUTF.cpp */; };
+		1AC0269C1914068200FA920D /* ConvertUTF.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC026991914068200FA920D /* ConvertUTF.h */; };
+		1AC0269D1914068200FA920D /* ConvertUTF.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC026991914068200FA920D /* ConvertUTF.h */; };
 		1AD71DA9180E26E600808F54 /* CCBAnimationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD71CFA180E26E600808F54 /* CCBAnimationManager.cpp */; };
 		1AD71DAA180E26E600808F54 /* CCBAnimationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD71CFA180E26E600808F54 /* CCBAnimationManager.cpp */; };
 		1AD71DAB180E26E600808F54 /* CCBAnimationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71CFB180E26E600808F54 /* CCBAnimationManager.h */; };
@@ -2125,6 +2129,8 @@
 		1AAF584E180E40B9000584C8 /* LocalStorageAndroid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorageAndroid.cpp; sourceTree = "<group>"; };
 		1ABA68AC1888D700007D1BB4 /* CCFontCharMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFontCharMap.cpp; sourceTree = "<group>"; };
 		1ABA68AD1888D700007D1BB4 /* CCFontCharMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFontCharMap.h; sourceTree = "<group>"; };
+		1AC026981914068200FA920D /* ConvertUTF.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConvertUTF.cpp; sourceTree = "<group>"; };
+		1AC026991914068200FA920D /* ConvertUTF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConvertUTF.h; sourceTree = "<group>"; };
 		1AD71CFA180E26E600808F54 /* CCBAnimationManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBAnimationManager.cpp; sourceTree = "<group>"; };
 		1AD71CFB180E26E600808F54 /* CCBAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBAnimationManager.h; sourceTree = "<group>"; };
 		1AD71CFC180E26E600808F54 /* CCBFileLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBFileLoader.cpp; sourceTree = "<group>"; };
@@ -3372,6 +3378,7 @@
 		1A57033E180BD0490088DEC7 /* external */ = {
 			isa = PBXGroup;
 			children = (
+				1AC026971914068200FA920D /* ConvertUTF */,
 				46C02E0418E91123004B7456 /* xxhash */,
 				46A168B21807AF9C005B8026 /* Box2D */,
 				46A1693A1807AFD6005B8026 /* chipmunk */,
@@ -3787,6 +3794,16 @@
 				1AAF584E180E40B9000584C8 /* LocalStorageAndroid.cpp */,
 			);
 			path = "local-storage";
+			sourceTree = "<group>";
+		};
+		1AC026971914068200FA920D /* ConvertUTF */ = {
+			isa = PBXGroup;
+			children = (
+				1AC026981914068200FA920D /* ConvertUTF.cpp */,
+				1AC026991914068200FA920D /* ConvertUTF.h */,
+			);
+			name = ConvertUTF;
+			path = ../external/ConvertUTF;
 			sourceTree = "<group>";
 		};
 		1AD71CF7180E26E600808F54 /* editor-support */ = {
@@ -4998,6 +5015,7 @@
 				50FCEB9918C72017004AD434 /* CheckBoxReader.h in Headers */,
 				50E6D33E18E174130051CA34 /* UIVBox.h in Headers */,
 				500DC9AC19106300007B91BF /* ZipUtils.h in Headers */,
+				1AC0269C1914068200FA920D /* ConvertUTF.h in Headers */,
 				1A57019F180BCB590088DEC7 /* CCFont.h in Headers */,
 				1A5701A3180BCB590088DEC7 /* CCFontAtlas.h in Headers */,
 				1A01C68618F57BE800EFE3A6 /* CCArray.h in Headers */,
@@ -5564,6 +5582,7 @@
 				5034CA44191D591100CE6051 /* ccShader_Label.vert in Headers */,
 				1A5702F5180BCE750088DEC7 /* CCTMXObjectGroup.h in Headers */,
 				1A5702F9180BCE750088DEC7 /* CCTMXTiledMap.h in Headers */,
+				1AC0269D1914068200FA920D /* ConvertUTF.h in Headers */,
 				500DC9A119106300007B91BF /* CCVector.h in Headers */,
 				1A5702FD180BCE750088DEC7 /* CCTMXXMLParser.h in Headers */,
 				1A570303180BCE890088DEC7 /* CCParallaxNode.h in Headers */,
@@ -6093,6 +6112,7 @@
 				2AC795DB1862870F005EC8E1 /* SkeletonBounds.cpp in Sources */,
 				2AC795DC1862870F005EC8E1 /* Event.cpp in Sources */,
 				1A01C68A18F57BE800EFE3A6 /* CCDeprecated.cpp in Sources */,
+				1AC0269A1914068200FA920D /* ConvertUTF.cpp in Sources */,
 				500DC93219106300007B91BF /* CCAutoreleasePool.cpp in Sources */,
 				2905FA5618CF08D100240AA3 /* UILayout.cpp in Sources */,
 				2AC795DD1862870F005EC8E1 /* EventData.cpp in Sources */,
@@ -6803,6 +6823,7 @@
 				1A8C59EC180E930E00EF57C3 /* CCSkin.cpp in Sources */,
 				2905FA4718CF08D100240AA3 /* UIButton.cpp in Sources */,
 				1A8C59F0180E930E00EF57C3 /* CCSpriteFrameCacheHelper.cpp in Sources */,
+				1AC0269B1914068200FA920D /* ConvertUTF.cpp in Sources */,
 				B2AF2FA218EBAEAE00C5807C /* Vector2.cpp in Sources */,
 				500DC8D219105F7D007B91BF /* CCAffineTransform.cpp in Sources */,
 				1A8C59F4180E930E00EF57C3 /* CCSSceneReader.cpp in Sources */,
