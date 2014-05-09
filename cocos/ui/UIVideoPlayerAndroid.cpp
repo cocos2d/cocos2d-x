@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UIVideoWidget.h"
+#include "UIVideoPlayer.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include <unordered_map>
@@ -152,20 +152,20 @@ void setVideoKeepRatioEnabled(int index,bool enabled)
 
 using namespace cocos2d::experimental::ui;
 
-static std::unordered_map<int, VideoWidget*> s_allVideoWidgets;
+static std::unordered_map<int, VideoPlayer*> s_allVideoPlayers;
 
-VideoWidget::VideoWidget()
-: _videoWidgetIndex(-1)
+VideoPlayer::VideoPlayer()
+: _videoPlayerIndex(-1)
 , _callback(nullptr)
 , _fullScreenEnabled(false)
 , _fullScreenDirty(false)
 , _keepAspectRatioEnabled(false)
 {
-    _videoWidgetIndex = createVideoWidgetJNI();
-    s_allVideoWidgets[_videoWidgetIndex] = this;
+    _videoPlayerIndex = createVideoWidgetJNI();
+    s_allVideoPlayers[_videoPlayerIndex] = this;
 
     auto listener = EventListenerKeyboard::create();
-    listener->onKeyReleased = [&](EventKeyboard::KeyCode keycode, Event* event){
+    listener->onKeyReleased = [&](EventKeyboard::KeyCode keycode, cocos2d::Event* event){
         if (keycode == EventKeyboard::KeyCode::KEY_BACKSPACE && _fullScreenEnabled)
         {
             this->setFullScreenEnabled(false);
@@ -175,27 +175,27 @@ VideoWidget::VideoWidget()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
-VideoWidget::~VideoWidget()
+VideoPlayer::~VideoPlayer()
 {
-    s_allVideoWidgets.erase(_videoWidgetIndex);
-    removeVideoWidgetJNI(_videoWidgetIndex);
+    s_allVideoPlayers.erase(_videoPlayerIndex);
+    removeVideoWidgetJNI(_videoPlayerIndex);
 }
 
-void VideoWidget::setVideoFileName(const std::string& fileName)
+void VideoPlayer::setVideoFileName(const std::string& fileName)
 {
     _videoUrl = fileName;
-    _videoSource = VideoWidget::VideoSource::FILENAME;
-    setVideoURLJNI(_videoWidgetIndex, (int)VideoSource::FILENAME,_videoUrl);
+    _videoSource = VideoPlayer::VideoSource::FILENAME;
+    setVideoURLJNI(_videoPlayerIndex, (int)VideoSource::FILENAME,_videoUrl);
 }
 
-void VideoWidget::setVideoURL(const std::string& videoUrl)
+void VideoPlayer::setVideoURL(const std::string& videoUrl)
 {
     _videoUrl = videoUrl;
-    _videoSource = VideoWidget::VideoSource::URL;
-    setVideoURLJNI(_videoWidgetIndex,(int)VideoSource::URL,_videoUrl);
+    _videoSource = VideoPlayer::VideoSource::URL;
+    setVideoURLJNI(_videoPlayerIndex,(int)VideoSource::URL,_videoUrl);
 }
 
-void VideoWidget::draw(Renderer* renderer, const Matrix &transform, bool transformUpdated)
+void VideoPlayer::draw(Renderer* renderer, const Matrix &transform, bool transformUpdated)
 {
     cocos2d::ui::Widget::draw(renderer,transform,transformUpdated);
 
@@ -208,7 +208,7 @@ void VideoWidget::draw(Renderer* renderer, const Matrix &transform, bool transfo
 
         if (_fullScreenEnabled)
         {
-            setVideoRectJNI(_videoWidgetIndex,0,0,frameSize.width,frameSize.height);
+            setVideoRectJNI(_videoPlayerIndex,0,0,frameSize.width,frameSize.height);
         } 
         else
         {
@@ -220,20 +220,20 @@ void VideoWidget::draw(Renderer* renderer, const Matrix &transform, bool transfo
             auto uiLeft = frameSize.width / 2 + (leftBottom.x - winSize.width / 2 ) * glView->getScaleX();
             auto uiTop = frameSize.height /2 - (rightTop.y - winSize.height / 2) * glView->getScaleY();
 
-            setVideoRectJNI(_videoWidgetIndex,uiLeft,uiTop,
+            setVideoRectJNI(_videoPlayerIndex,uiLeft,uiTop,
                 (rightTop.x - leftBottom.x) * glView->getScaleX(),
                 (rightTop.y - leftBottom.y) * glView->getScaleY());
         } 
     }
 
-#if CC_VIDEOWIDGET_DEBUG_DRAW
+#if CC_VIDEOPLAYER_DEBUG_DRAW
     _customDebugDrawCommand.init(_globalZOrder);
-    _customDebugDrawCommand.func = CC_CALLBACK_0(VideoWidget::drawDebugData, this);
+    _customDebugDrawCommand.func = CC_CALLBACK_0(VideoPlayer::drawDebugData, this);
     renderer->addCommand(&_customDebugDrawCommand);
 #endif
 }
 
-void VideoWidget::setFullScreenEnabled(bool enabled)
+void VideoPlayer::setFullScreenEnabled(bool enabled)
 {
     if (_fullScreenEnabled != enabled)
     {
@@ -242,22 +242,22 @@ void VideoWidget::setFullScreenEnabled(bool enabled)
     }
 }
 
-bool VideoWidget::isFullScreenEnabled()
+bool VideoPlayer::isFullScreenEnabled()
 {
     return _fullScreenEnabled;
 }
 
-void VideoWidget::setKeepAspectRatioEnabled(bool enable)
+void VideoPlayer::setKeepAspectRatioEnabled(bool enable)
 {
     if (_keepAspectRatioEnabled != enable)
     {
         _keepAspectRatioEnabled = enable;
-        setVideoKeepRatioEnabled(_videoWidgetIndex,enable);
+        setVideoKeepRatioEnabled(_videoPlayerIndex,enable);
     }
 }
 
-#if CC_VIDEOWIDGET_DEBUG_DRAW
-void VideoWidget::drawDebugData()
+#if CC_VIDEOPLAYER_DEBUG_DRAW
+void VideoPlayer::drawDebugData()
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -281,69 +281,69 @@ void VideoWidget::drawDebugData()
 }
 #endif
 
-void VideoWidget::startVideo()
+void VideoPlayer::startVideo()
 {
     if (! _videoUrl.empty())
     {
-        startVideoJNI(_videoWidgetIndex);
+        startVideoJNI(_videoPlayerIndex);
     }
 }
 
-void VideoWidget::pauseVideo()
+void VideoPlayer::pauseVideo()
 {
     if (! _videoUrl.empty())
     {
-        pauseVideoJNI(_videoWidgetIndex);
+        pauseVideoJNI(_videoPlayerIndex);
     }
 }
 
-void VideoWidget::resumeVideo()
+void VideoPlayer::resumeVideo()
 {
     if (! _videoUrl.empty())
     {
-        resumeVideoJNI(_videoWidgetIndex);
+        resumeVideoJNI(_videoPlayerIndex);
     }
 }
 
-void VideoWidget::stopVideo()
+void VideoPlayer::stopVideo()
 {
     if (! _videoUrl.empty())
     {
-        stopVideoJNI(_videoWidgetIndex);
+        stopVideoJNI(_videoPlayerIndex);
     }
 }
 
-void VideoWidget::seekVideoTo(float sec)
+void VideoPlayer::seekVideoTo(float sec)
 {
     if (! _videoUrl.empty())
     {
-        seekVideoToJNI(_videoWidgetIndex,int(sec * 1000));
+        seekVideoToJNI(_videoPlayerIndex,int(sec * 1000));
     }
 }
 
-bool VideoWidget::isPlaying() const
+bool VideoPlayer::isPlaying() const
 {
     return _isPlaying;
 }
 
-void VideoWidget::setVisible(bool visible)
+void VideoPlayer::setVisible(bool visible)
 {
     cocos2d::ui::Widget::setVisible(visible);
 
     if (! _videoUrl.empty())
     {
-        setVideoVisible(_videoWidgetIndex,visible);
+        setVideoVisible(_videoPlayerIndex,visible);
     } 
 }
 
-void VideoWidget::setEventListener(const VideoWidgetCallback& callback)
+void VideoPlayer::setEventListener(const EventCallback& callback)
 {
     _callback = callback;
 }
 
-void VideoWidget::onVideoEvent(VideoWidgetEvent event)
+void VideoPlayer::onVideoEvent(VideoPlayer::Event event)
 {
-    if (event == VideoWidgetEvent::PLAYING) {
+    if (event == VideoPlayer::Event::PLAYING) {
         _isPlaying = true;
     } else {
         _isPlaying = false;
@@ -357,10 +357,10 @@ void VideoWidget::onVideoEvent(VideoWidgetEvent event)
 
 void executeVideoCallback(int index,int event)
 {
-    auto it = s_allVideoWidgets.find(index);
-    if (it != s_allVideoWidgets.end())
+    auto it = s_allVideoPlayers.find(index);
+    if (it != s_allVideoPlayers.end())
     {
-        s_allVideoWidgets[index]->onVideoEvent((VideoWidgetEvent)event);
+        s_allVideoPlayers[index]->onVideoEvent((VideoPlayer::Event)event);
     }
 }
 

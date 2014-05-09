@@ -1,14 +1,14 @@
-#ifndef __tests__VideoWidgetTest__
-#define __tests__VideoWidgetTest__
+#ifndef __tests__VideoPlayerTest__
+#define __tests__VideoPlayerTest__
 
 #include "../UIScene.h"
 
 USING_NS_CC;
 
-class VideoWidgetTest : public UIScene
+class VideoPlayerTest : public UIScene
 {
 public:
-    UI_SCENE_CREATE_FUNC(VideoWidgetTest);
+    UI_SCENE_CREATE_FUNC(VideoPlayerTest);
 
     virtual bool init();
 
@@ -26,14 +26,14 @@ public:
     
     void sliderCallback(Ref *sender, ui::SliderEventType eventType);
 
-    void videoEventCallback(Ref* sender, experimental::ui::VideoWidgetEvent eventType);
+    void videoEventCallback(Ref* sender, experimental::ui::VideoPlayer::Event eventType);
 
 private:
     void createVideo();
     void createSlider();
 
     MenuItemFont* _hintItem;
-    experimental::ui::VideoWidget* _videoWidget;
+    experimental::ui::VideoPlayer* _videoPlayer;
     Label* _videoStateLabel;
     Rect _visibleRect;
 
@@ -41,4 +41,4 @@ private:
 
 };
 
-#endif // __tests__VideoWidgetTest__
+#endif // __tests__VideoPlayerTest__

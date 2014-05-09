@@ -594,6 +594,12 @@
     <ClCompile Include="..\math\TransformUtils.cpp">
       <Filter>math</Filter>
     </ClCompile>
+    <ClCompile Include="..\base\CCEventFocus.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\CCEventListenerFocus.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -1173,6 +1179,12 @@
     </ClInclude>
     <ClInclude Include="..\math\TransformUtils.h">
       <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCEventFocus.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCEventListenerFocus.h">
+      <Filter>base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
