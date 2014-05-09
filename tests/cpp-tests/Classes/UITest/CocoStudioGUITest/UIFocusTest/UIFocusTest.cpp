@@ -225,7 +225,7 @@ bool UIFocusTestVertical::init()
         _verticalLayout->setPosition(Vector2(winSize.width/2 - 100, winSize.height - 70));
         _uiLayer->addChild(_verticalLayout);
         _verticalLayout->setTag(100);
-        _verticalLayout->setScale(0.8);
+        _verticalLayout->setScale(0.5);
         
         _verticalLayout->setFocused(true);
         _verticalLayout->setLoopFocus(true);
@@ -292,9 +292,9 @@ bool UIFocusTestNestedLayout1::init()
         Size winSize = Director::getInstance()->getVisibleSize();
         
         _verticalLayout = VBox::create();
-        _verticalLayout->setPosition(Vector2(winSize.width/2 - 100, winSize.height - 70));
+        _verticalLayout->setPosition(Vector2(winSize.width/2 - 80, winSize.height - 70));
         _uiLayer->addChild(_verticalLayout);
-        _verticalLayout->setScale(0.8);
+        _verticalLayout->setScale(0.5);
         
         _verticalLayout->setFocused(true);
         _verticalLayout->setLoopFocus(true);
@@ -396,7 +396,7 @@ bool UIFocusTestNestedLayout2::init()
         _horizontalLayout = HBox::create();
         _horizontalLayout->setPosition(Vector2(winSize.width/2 - 200, winSize.height - 70));
         _uiLayer->addChild(_horizontalLayout);
-        _horizontalLayout->setScale(0.8);
+        _horizontalLayout->setScale(0.6);
         
         _horizontalLayout->setFocused(true);
         _horizontalLayout->setLoopFocus(true);

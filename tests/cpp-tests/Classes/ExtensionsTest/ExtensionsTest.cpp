@@ -11,7 +11,6 @@
 #include "CocoStudioArmatureTest/ArmatureScene.h"
 #include "CocoStudioComponentsTest/ComponentsTestScene.h"
 #include "CocoStudioSceneTest/SceneEditorTest.h"
-#include "CocoStudioGUITest/CocoStudioGUITest.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) 
 #include "NetworkTest/WebSocketTest.h"
@@ -85,13 +84,6 @@ static struct {
 	                                       scene->runThisTest();
 	                                       scene->release();
  }
-	},
-    { "CocoStudioGUITest", [](Ref *sender)
-        {
-            CocoStudioGUITestScene* pScene = new CocoStudioGUITestScene();
-            pScene->runThisTest();
-            pScene->release();
-        }
 	},
 };
 

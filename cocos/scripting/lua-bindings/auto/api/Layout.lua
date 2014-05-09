@@ -19,6 +19,11 @@
 -- @param #ccui.LayoutBackGroundColorType layoutbackgroundcolortype
         
 --------------------------------
+-- @function [parent=#Layout] setLoopFocus 
+-- @param self
+-- @param #bool bool
+        
+--------------------------------
 -- @function [parent=#Layout] setBackGroundImageColor 
 -- @param self
 -- @param #color3b_table color3b
@@ -32,6 +37,11 @@
 -- @function [parent=#Layout] getClippingType 
 -- @param self
 -- @return LayoutClippingType#LayoutClippingType ret (return value: ccui.LayoutClippingType)
+        
+--------------------------------
+-- @function [parent=#Layout] isLoopFocus 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @function [parent=#Layout] removeBackGroundImage 
@@ -118,6 +128,11 @@
 -- @return unsigned char#unsigned char ret (return value: unsigned char)
         
 --------------------------------
+-- @function [parent=#Layout] isPassFocusToChild 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- @function [parent=#Layout] setBackGroundImageCapInsets 
 -- @param self
 -- @param #rect_table rect
@@ -131,6 +146,11 @@
 -- @function [parent=#Layout] getLayoutType 
 -- @param self
 -- @return LayoutType#LayoutType ret (return value: ccui.LayoutType)
+        
+--------------------------------
+-- @function [parent=#Layout] setPassFocusToChild 
+-- @param self
+-- @param #bool bool
         
 --------------------------------
 -- @function [parent=#Layout] getBackGroundStartColor 
@@ -187,6 +207,13 @@
 --------------------------------
 -- @function [parent=#Layout] sortAllChildren 
 -- @param self
+        
+--------------------------------
+-- @function [parent=#Layout] findNextFocusedWidget 
+-- @param self
+-- @param #ccui.FocusDirection focusdirection
+-- @param #ccui.Widget widget
+-- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
 -- @function [parent=#Layout] removeChild 

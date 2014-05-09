@@ -81,6 +81,9 @@
     <ClInclude Include="..\..\ui\UIVBox.h">
       <Filter>Layouts</Filter>
     </ClInclude>
+    <ClInclude Include="..\UIHBox.h">
+      <Filter>UIWidgets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ui\UILayout.cpp">
@@ -145,6 +148,9 @@
     </ClCompile>
     <ClCompile Include="..\..\ui\UIVBox.cpp">
       <Filter>Layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UIHBox.cpp">
+      <Filter>UIWidgets</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

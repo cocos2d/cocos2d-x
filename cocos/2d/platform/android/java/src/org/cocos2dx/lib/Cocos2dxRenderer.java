@@ -28,6 +28,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 import android.opengl.GLSurfaceView;
 
+import org.cocos2dx.lib.Cocos2dxHelper;
 public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
 	// ===========================================================
 	// Constants
@@ -144,10 +145,12 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
 	}
 
 	public void handleOnPause() {
+		Cocos2dxHelper.onEnterBackground();
 		Cocos2dxRenderer.nativeOnPause();
 	}
 
 	public void handleOnResume() {
+		Cocos2dxHelper.onEnterForeground();
 		Cocos2dxRenderer.nativeOnResume();
 	}
 

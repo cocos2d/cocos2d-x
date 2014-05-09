@@ -1,7 +1,6 @@
 #include "CocosGUIScene.h"
 #include "CocoStudioGUITest.h"
 #include "UISceneManager.h"
-#include "../ExtensionsTest.h"
 #include "cocostudio/CocoStudio.h"
 
 enum
@@ -280,7 +279,20 @@ g_guisTests[] =
             Director::getInstance()->replaceScene(pScene);
         }
 	},
-   
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    {
+        "gui VideoWidgetTest",
+            [](Ref* sender)
+        {
+            UISceneManager* pManager = UISceneManager::sharedUISceneManager();
+            pManager->setCurrentUISceneId(kUIVideoWidgetTest);
+            pManager->setMinUISceneId(kUIVideoWidgetTest);
+            pManager->setMaxUISceneId(kUIVideoWidgetTest);
+            Scene* pScene = pManager->currentUIScene();
+            Director::getInstance()->replaceScene(pScene);
+        }
+    }
+#endif
 };
 
 static const int g_maxTests = sizeof(g_guisTests) / sizeof(g_guisTests[0]);
@@ -389,78 +401,3 @@ void CocosGUITestScene::BackCallback(Ref* pSender)
     pScene->runThisTest();
     pScene->release();
 }
-
-/*
-const char* gui_scene_names[1] =
-{
-    "CocosGUIWidgetTest",
-};
-
-CocosGUITestScene::CocosGUITestScene(bool bPortrait)
-: _ul(nullptr)
-, _label(nullptr)
-, _itemMenu(nullptr)
-{
-	TestScene::init();
-}
-
-CocosGUITestScene::~CocosGUITestScene()
-{
-	cocostudio::SceneReader::getInstance()->purgeSceneReader();
-	cocostudio::ActionManagerEx::purgeActionManager();
-}
-
-void CocosGUITestScene::runThisTest()
-{
-    
-	Director::getInstance()->replaceScene(this);
-
-    Size s = Director::getInstance()->getWinSize();
-    
-    _itemMenu = Menu::create();
-    _itemMenu->setPosition(Vector2::ZERO);
-    MenuItemFont::setFontName("fonts/arial.ttf");
-    MenuItemFont::setFontSize(24);
-    for (int i = 0; i < sizeof(gui_scene_names) / sizeof(gui_scene_names[0]); ++i)
-    {
-        auto item = MenuItemFont::create(gui_scene_names[i],
-                                         CC_CALLBACK_1( CocosGUITestScene::menuCallback, this));
-        item->setPosition(Vector2(s.width / 2, s.height - s.height / 4 - (i + 1) * 40));
-        item->setTag(i);
-        _itemMenu->addChild(item);
-    }
-    addChild(_itemMenu);
-}
-void CocosGUITestScene::MainMenuCallback(Ref* pSender)
-{
-    auto pScene = new ExtensionsTestScene();
-	pScene->runThisTest();
-}
-
-void CocosGUITestScene::load(Ref *pSender, int count)
-{
-    char tmp[10];
-    sprintf(tmp,"%d", count);
-    _label->setString(CCString::createWithFormat("%i", count)->getCString());
-}
-
-void CocosGUITestScene::menuCallback(Ref *pSender)
-{
-    auto pItem = static_cast<MenuItemFont*>(pSender);
-    
-    switch (pItem->getTag())
-    {
-        case 0:
-            {
-                UISceneManager* pManager = UISceneManager::sharedUISceneManager();
-                Scene* pScene = pManager->currentUIScene();
-                Director::getInstance()->replaceScene(pScene);
-            }
-            break;
-            break;
-            
-        default:
-            break;
-    }
-}
-*/
