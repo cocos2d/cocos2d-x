@@ -38,7 +38,7 @@ _barType(LoadingBarTypeLeft),
 _percent(100),
 _totalLength(0),
 _barRenderer(nullptr),
-_renderBarTexType(UI_TEX_TYPE_LOCAL),
+_renderBarTexType(TextureResType::LOCAL),
 _barRendererTextureSize(Size::ZERO),
 _scale9Enabled(false),
 _prevIgnoreSize(true),
@@ -129,7 +129,7 @@ int LoadingBar::getDirection()
     _textureFile = texture;
     switch (_renderBarTexType)
     {
-        case UI_TEX_TYPE_LOCAL:
+        case TextureResType::LOCAL:
             if (_scale9Enabled)
             {
                 extension::Scale9Sprite* barRendererScale9 = static_cast<extension::Scale9Sprite*>(_barRenderer);
@@ -141,7 +141,7 @@ int LoadingBar::getDirection()
                 static_cast<Sprite*>(_barRenderer)->setTexture(texture);
             }
             break;
-        case UI_TEX_TYPE_PLIST:
+        case TextureResType::PLIST:
             if (_scale9Enabled)
             {
                 extension::Scale9Sprite* barRendererScale9 = static_cast<extension::Scale9Sprite*>(_barRenderer);

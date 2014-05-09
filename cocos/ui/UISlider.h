@@ -71,7 +71,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadBarTexture(const std::string& fileName,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadBarTexture(const std::string& fileName,TextureResType texType = TextureResType::LOCAL);
     
     /**
      * Sets if slider is using scale9 renderer.
@@ -121,7 +121,7 @@ public:
     void loadSlidBallTextures(const std::string& normal,
                               const std::string& pressed,
                               const std::string& disabled,
-                              TextureResType texType = UI_TEX_TYPE_LOCAL);
+                              TextureResType texType = TextureResType::LOCAL);
     
     /**
      * Load normal state texture for slider ball.
@@ -130,7 +130,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadSlidBallTextureNormal(const std::string& normal,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadSlidBallTextureNormal(const std::string& normal,TextureResType texType = TextureResType::LOCAL);
     
     /**
      * Load selected state texture for slider ball.
@@ -139,7 +139,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadSlidBallTexturePressed(const std::string& pressed,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadSlidBallTexturePressed(const std::string& pressed,TextureResType texType = TextureResType::LOCAL);
     
     /**
      * Load dark state texture for slider ball.
@@ -148,7 +148,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadSlidBallTextureDisabled(const std::string& disabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadSlidBallTextureDisabled(const std::string& disabled,TextureResType texType = TextureResType::LOCAL);
     
     /**
      * Load dark state texture for slider progress bar.
@@ -157,7 +157,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadProgressBarTexture(const std::string& fileName, TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadProgressBarTexture(const std::string& fileName, TextureResType texType = TextureResType::LOCAL);
     
     /**
      * Changes the progress direction of slider.

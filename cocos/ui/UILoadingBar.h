@@ -91,7 +91,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadTexture(const std::string& texture,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadTexture(const std::string& texture,TextureResType texType = TextureResType::LOCAL);
     
     /**
      * Changes the progress direction of loadingbar.

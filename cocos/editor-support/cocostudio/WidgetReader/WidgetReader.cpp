@@ -175,17 +175,17 @@ namespace cocostudio
     
     std::string WidgetReader::getResourcePath(const rapidjson::Value &dict,
                                               const std::string &key,
-                                              cocos2d::ui::TextureResType texType)
+                                              cocos2d::ui::Widget::TextureResType texType)
     {
         std::string jsonPath = GUIReader::getInstance()->getFilePath();
         const char* imageFileName = DICTOOL->getStringValue_json(dict, key.c_str());
         std::string imageFileName_tp;
         if (nullptr != imageFileName)
         {
-            if (texType == UI_TEX_TYPE_LOCAL) {
+            if (texType == ui::Widget::TextureResType::LOCAL) {
                 imageFileName_tp = jsonPath + imageFileName;
             }
-            else if(texType == UI_TEX_TYPE_PLIST){
+            else if(texType == ui::Widget::TextureResType::PLIST){
                 imageFileName_tp = imageFileName;
             }
             else{

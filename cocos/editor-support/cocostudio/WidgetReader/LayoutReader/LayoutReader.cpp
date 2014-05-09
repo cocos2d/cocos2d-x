@@ -85,8 +85,8 @@ namespace cocostudio
         
         const rapidjson::Value& imageFileNameDic = DICTOOL->getSubDictionary_json(options, "backGroundImageData");
         int imageFileNameType = DICTOOL->getIntValue_json(imageFileNameDic, "resourceType");
-        std::string imageFileName = this->getResourcePath(imageFileNameDic, "path", (TextureResType)imageFileNameType);
-        panel->setBackGroundImage(imageFileName, (TextureResType)imageFileNameType);
+        std::string imageFileName = this->getResourcePath(imageFileNameDic, "path", (Widget::TextureResType)imageFileNameType);
+        panel->setBackGroundImage(imageFileName, (Widget::TextureResType)imageFileNameType);
         
         
         if (backGroundScale9Enable)

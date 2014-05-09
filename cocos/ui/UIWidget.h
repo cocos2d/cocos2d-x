@@ -46,12 +46,6 @@ typedef enum
     WidgetTypeWidget, //control
     WidgetTypeContainer //container
 }WidgetType;
-
-typedef enum
-{
-    UI_TEX_TYPE_LOCAL = 0,
-    UI_TEX_TYPE_PLIST = 1
-}TextureResType;
    
     
     
@@ -100,6 +94,12 @@ public:
         MOVED,
         ENDED,
         CANCELED
+    };
+    
+    enum class TextureResType
+    {
+        LOCAL = 0,
+        PLIST = 1
     };
 
     

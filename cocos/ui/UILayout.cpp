@@ -573,7 +573,7 @@ _backGroundImage(nullptr),
 _backGroundImageFileName(""),
 _backGroundImageCapInsets(Rect::ZERO),
 _colorType(LAYOUT_COLOR_NONE),
-_bgImageTexType(UI_TEX_TYPE_LOCAL),
+_bgImageTexType(TextureResType::LOCAL),
 _colorRender(nullptr),
 _gradientRender(nullptr),
 _cColor(Color3B::WHITE),
@@ -1123,10 +1123,10 @@ void Layout::setBackGroundImage(const std::string& fileName,TextureResType texTy
         extension::Scale9Sprite* bgiScale9 = static_cast<extension::Scale9Sprite*>(_backGroundImage);
         switch (_bgImageTexType)
         {
-            case UI_TEX_TYPE_LOCAL:
+            case TextureResType::LOCAL:
                 bgiScale9->initWithFile(fileName);
                 break;
-            case UI_TEX_TYPE_PLIST:
+            case TextureResType::PLIST:
                 bgiScale9->initWithSpriteFrameName(fileName);
                 break;
             default:
@@ -1138,10 +1138,10 @@ void Layout::setBackGroundImage(const std::string& fileName,TextureResType texTy
     {
         switch (_bgImageTexType)
         {
-            case UI_TEX_TYPE_LOCAL:
+            case TextureResType::LOCAL:
                 static_cast<Sprite*>(_backGroundImage)->setTexture(fileName);
                 break;
-            case UI_TEX_TYPE_PLIST:
+            case TextureResType::PLIST:
                 static_cast<Sprite*>(_backGroundImage)->setSpriteFrame(fileName);
                 break;
             default:

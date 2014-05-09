@@ -83,7 +83,7 @@ public:
                             const std::string& cross,
                             const std::string& backGroundDisabled,
                             const std::string& frontCrossDisabled,
-                            TextureResType texType = UI_TEX_TYPE_LOCAL);
+                            TextureResType texType = TextureResType::LOCAL);
 
     /**
      * Load textures for checkbox.
@@ -103,7 +103,7 @@ public:
                       const std::string& cross,
                       const std::string& backGroundDisabled,
                       const std::string& frontCrossDisabled,
-                      TextureResType texType = UI_TEX_TYPE_LOCAL);
+                      TextureResType texType = TextureResType::LOCAL);
 
     /**
      * Load backGround texture for checkbox.
@@ -112,7 +112,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadTextureBackGround(const std::string& backGround,TextureResType type = UI_TEX_TYPE_LOCAL);
+    void loadTextureBackGround(const std::string& backGround,TextureResType type = TextureResType::LOCAL);
 
     /**
      * Load backGroundSelected texture for checkbox.
@@ -121,7 +121,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadTextureBackGroundSelected(const std::string& backGroundSelected,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadTextureBackGroundSelected(const std::string& backGroundSelected,TextureResType texType = TextureResType::LOCAL);
 
     /**
      * Load cross texture for checkbox.
@@ -130,7 +130,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadTextureFrontCross(const std::string&,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadTextureFrontCross(const std::string&,TextureResType texType = TextureResType::LOCAL);
 
     /**
      * Load backGroundDisabled texture for checkbox.
@@ -139,7 +139,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadTextureBackGroundDisabled(const std::string& backGroundDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadTextureBackGroundDisabled(const std::string& backGroundDisabled,TextureResType texType = TextureResType::LOCAL);
 
     /**
      * Load frontCrossDisabled texture for checkbox.
@@ -148,7 +148,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadTextureFrontCrossDisabled(const std::string& frontCrossDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadTextureFrontCrossDisabled(const std::string& frontCrossDisabled,TextureResType texType = TextureResType::LOCAL);
 
     /**
      * Sets selcted state for checkbox.
@@ -188,7 +188,7 @@ CC_CONSTRUCTOR_ACCESS:
                       const std::string& cross,
                       const std::string& backGroundDisabled,
                       const std::string& frontCrossDisabled,
-                      TextureResType texType = UI_TEX_TYPE_LOCAL);
+                      TextureResType texType = TextureResType::LOCAL);
 
 protected:
     virtual void initRenderer() override;
