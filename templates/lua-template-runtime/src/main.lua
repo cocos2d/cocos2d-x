@@ -12,6 +12,7 @@ function __G__TRACKBACK__(msg)
     cclog("LUA ERROR: " .. tostring(msg) .. "\n")
     cclog(debug.traceback())
     cclog("----------------------------------------")
+    return msg
 end
 
 local function main()
@@ -230,4 +231,7 @@ local function main()
 end
 
 
-xpcall(main, __G__TRACKBACK__)
+local status, msg = xpcall(main, __G__TRACKBACK__)
+if not status then
+    error(msg)
+end

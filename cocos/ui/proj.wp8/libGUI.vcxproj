@@ -186,6 +186,7 @@
     <ClInclude Include="..\..\ui\UITextField.h" />
     <ClInclude Include="..\..\ui\UIVBox.h" />
     <ClInclude Include="..\..\ui\UIWidget.h" />
+    <ClInclude Include="..\UIHBox.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ui\CCProtectedNode.cpp" />
@@ -209,5 +210,6 @@
     <ClCompile Include="..\..\ui\UITextField.cpp" />
     <ClCompile Include="..\..\ui\UIVBox.cpp" />
     <ClCompile Include="..\..\ui\UIWidget.cpp" />
+    <ClCompile Include="..\UIHBox.cpp" />
   </ItemGroup>
 </Project>

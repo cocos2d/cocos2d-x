@@ -1113,9 +1113,9 @@ Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Va
                     {
                         if (child->getPositionType() == ui::Widget::PositionType::PERCENT)
                         {
-                            child->setPositionPercent(Vector2(child->getPositionPercent().x + 0.5f, child->getPositionPercent().y + 0.5f));
+                            child->setPositionPercent(Vector2(child->getPositionPercent().x + widget->getAnchorPoint().x, child->getPositionPercent().y + widget->getAnchorPoint().y));
                         }
-                        child->setPosition(Vector2(child->getPositionX() + widget->getSize().width / 2.0f, child->getPositionY() + widget->getSize().height / 2.0f));
+                        child->setPosition(Vector2(child->getPositionX() + widget->getAnchorPointInPoints().x, child->getPositionY() + widget->getAnchorPointInPoints().y));
                     }
                     widget->addChild(child);
                 }
