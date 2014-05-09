@@ -1111,7 +1111,7 @@ Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Va
                 {
                     if (!dynamic_cast<Layout*>(widget))
                     {
-                        if (child->getPositionType() == cocos2d::ui::POSITION_PERCENT)
+                        if (child->getPositionType() == ui::Widget::PositionType::PERCENT)
                         {
                             child->setPositionPercent(Vector2(child->getPositionPercent().x + 0.5f, child->getPositionPercent().y + 0.5f));
                         }
