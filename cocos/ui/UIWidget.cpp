@@ -39,7 +39,7 @@ _bright(true),
 _touchEnabled(false),
 _touchPassedEnabled(false),
 _highlight(false),
-_brightStyle(BRIGHT_NONE),
+_brightStyle(BrightStyle::NONE),
 _touchStartPos(Vector2::ZERO),
 _touchMovePos(Vector2::ZERO),
 _touchEndPos(Vector2::ZERO),
@@ -476,11 +476,11 @@ void Widget::setHighlighted(bool hilight)
     {
         if (_highlight)
         {
-            setBrightStyle(BRIGHT_HIGHLIGHT);
+            setBrightStyle(BrightStyle::HIGHLIGHT);
         }
         else
         {
-            setBrightStyle(BRIGHT_NORMAL);
+            setBrightStyle(BrightStyle::NORMAL);
         }
     }
     else
@@ -494,8 +494,8 @@ void Widget::setBright(bool bright)
     _bright = bright;
     if (_bright)
     {
-        _brightStyle = BRIGHT_NONE;
-        setBrightStyle(BRIGHT_NORMAL);
+        _brightStyle = BrightStyle::NONE;
+        setBrightStyle(BrightStyle::NORMAL);
     }
     else
     {
@@ -512,10 +512,10 @@ void Widget::setBrightStyle(BrightStyle style)
     _brightStyle = style;
     switch (_brightStyle)
     {
-        case BRIGHT_NORMAL:
+        case BrightStyle::NORMAL:
             onPressStateChangedToNormal();
             break;
-        case BRIGHT_HIGHLIGHT:
+        case BrightStyle::HIGHLIGHT:
             onPressStateChangedToPressed();
             break;
         default:

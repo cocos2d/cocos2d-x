@@ -149,7 +149,7 @@ void Button::setScale9Enabled(bool able)
     {
         return;
     }
-    _brightStyle = BRIGHT_NONE;
+    _brightStyle = BrightStyle::NONE;
     _scale9Enabled = able;
     removeProtectedChild(_buttonNormalRenderer);
     removeProtectedChild(_buttonClickedRenderer);
@@ -562,9 +562,9 @@ Node* Button::getVirtualRenderer()
     {
         switch (_brightStyle)
         {
-            case BRIGHT_NORMAL:
+            case BrightStyle::NORMAL:
                 return _buttonNormalRenderer;
-            case BRIGHT_HIGHLIGHT:
+            case BrightStyle::HIGHLIGHT:
                 return _buttonClickedRenderer;
             default:
                 return nullptr;

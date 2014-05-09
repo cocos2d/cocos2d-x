@@ -33,15 +33,6 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 namespace ui {
-
-typedef enum
-{
-    BRIGHT_NONE = -1,
-    BRIGHT_NORMAL,
-    BRIGHT_HIGHLIGHT
-}BrightStyle;
-   
-    
     
 CC_DEPRECATED_ATTRIBUTE typedef enum
 {
@@ -100,6 +91,13 @@ public:
     {
         ELEMENT,
         CONTAINER
+    };
+    
+    enum class BrightStyle
+    {
+        NONE = -1,
+        NORMAL,
+        HIGHLIGHT
     };
 
     

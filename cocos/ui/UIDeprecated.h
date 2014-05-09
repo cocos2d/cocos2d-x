@@ -41,12 +41,17 @@ CC_DEPRECATED_ATTRIBUTE const Widget::TextureResType UI_TEX_TYPE_LOCAL = Widget:
 CC_DEPRECATED_ATTRIBUTE const Widget::TextureResType UI_TEX_TYPE_PLIST = Widget::TextureResType::PLIST;
 CC_DEPRECATED_ATTRIBUTE const Widget::Type WidgetTypeWidget = Widget::Type::ELEMENT;
 CC_DEPRECATED_ATTRIBUTE const Widget::Type WidgetTypeContainer = Widget::Type::CONTAINER;
+CC_DEPRECATED_ATTRIBUTE const Widget::BrightStyle BRIGHT_NONE = Widget::BrightStyle::NONE;
+CC_DEPRECATED_ATTRIBUTE const Widget::BrightStyle BRIGHT_NORMAL = Widget::BrightStyle::NORMAL;
+CC_DEPRECATED_ATTRIBUTE const Widget::BrightStyle BRIGHT_HIGHLIGHT = Widget::BrightStyle::HIGHLIGHT;
+
 
     
 CC_DEPRECATED_ATTRIBUTE typedef Widget::TextureResType TextureResType;
 CC_DEPRECATED_ATTRIBUTE typedef Widget::PositionType   PositionType;
 CC_DEPRECATED_ATTRIBUTE typedef Widget::SizeType SizeType;
 CC_DEPRECATED_ATTRIBUTE typedef Widget::Type WidgetType;
+CC_DEPRECATED_ATTRIBUTE typedef Widget::BrightStyle BrightStyle;
 
 
 
