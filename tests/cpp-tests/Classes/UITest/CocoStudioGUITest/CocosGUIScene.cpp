@@ -281,13 +281,13 @@ g_guisTests[] =
 	},
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     {
-        "gui VideoWidgetTest",
+        "gui VideoPlayerTest",
             [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
-            pManager->setCurrentUISceneId(kUIVideoWidgetTest);
-            pManager->setMinUISceneId(kUIVideoWidgetTest);
-            pManager->setMaxUISceneId(kUIVideoWidgetTest);
+            pManager->setCurrentUISceneId(kUIVideoPlayerTest);
+            pManager->setMinUISceneId(kUIVideoPlayerTest);
+            pManager->setMaxUISceneId(kUIVideoPlayerTest);
             Scene* pScene = pManager->currentUIScene();
             Director::getInstance()->replaceScene(pScene);
         }

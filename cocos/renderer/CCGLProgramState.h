@@ -170,6 +170,7 @@ protected:
     uint32_t _vertexAttribsFlags;
 
     GLProgram *_glprogram;
+    bool       _useCache;
 };
 
 NS_CC_END

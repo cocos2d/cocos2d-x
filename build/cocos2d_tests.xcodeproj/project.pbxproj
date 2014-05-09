@@ -813,8 +813,8 @@
 		29080DE5191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29080D8B191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp */; };
 		29080DE6191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29080D8B191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp */; };
 		3EA0FB5E191B92F100B170C8 /* cocosvideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 3EA0FB5D191B92F100B170C8 /* cocosvideo.mp4 */; };
-		3EA0FB64191B931500B170C8 /* UIVideoWidgetTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0FB62191B931500B170C8 /* UIVideoWidgetTest.cpp */; };
 		3EA0FB66191B933000B170C8 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EA0FB65191B933000B170C8 /* MediaPlayer.framework */; };
+		3EA0FB72191C844400B170C8 /* UIVideoPlayerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0FB70191C844400B170C8 /* UIVideoPlayerTest.cpp */; };
 		A05FCACA177C124500BE600E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
 		A07A521E1783A1D20073F6A7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
 		A07A521F1783A1D20073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
@@ -1848,9 +1848,9 @@
 		29080D8B191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIWidgetAddNodeTest_Editor.cpp; sourceTree = "<group>"; };
 		29080D8C191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWidgetAddNodeTest_Editor.h; sourceTree = "<group>"; };
 		3EA0FB5D191B92F100B170C8 /* cocosvideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = cocosvideo.mp4; path = "../tests/cpp-tests/Resources/cocosvideo.mp4"; sourceTree = "<group>"; };
-		3EA0FB62191B931500B170C8 /* UIVideoWidgetTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIVideoWidgetTest.cpp; sourceTree = "<group>"; };
-		3EA0FB63191B931500B170C8 /* UIVideoWidgetTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIVideoWidgetTest.h; sourceTree = "<group>"; };
 		3EA0FB65191B933000B170C8 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/MediaPlayer.framework; sourceTree = DEVELOPER_DIR; };
+		3EA0FB70191C844400B170C8 /* UIVideoPlayerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIVideoPlayerTest.cpp; sourceTree = "<group>"; };
+		3EA0FB71191C844400B170C8 /* UIVideoPlayerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIVideoPlayerTest.h; sourceTree = "<group>"; };
 		46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		70A7F72D191D3E4900F0F206 /* shaderTest.psh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = shaderTest.psh.h; sourceTree = "<group>"; };
 		70A7F730191D421B00F0F206 /* ShaderTest.vsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTest.vsh.h; sourceTree = "<group>"; };
@@ -3475,7 +3475,7 @@
 		29080D1E191B595E0066F8DF /* CocoStudioGUITest */ = {
 			isa = PBXGroup;
 			children = (
-				3EA0FB61191B931500B170C8 /* UIVideoWidgetTest */,
+				3EA0FB6F191C844400B170C8 /* UIVideoPlayerTest */,
 				29080D1F191B595E0066F8DF /* CocosGUIScene.cpp */,
 				29080D20191B595E0066F8DF /* CocosGUIScene.h */,
 				29080D21191B595E0066F8DF /* CocoStudioGUITest.cpp */,
@@ -3784,13 +3784,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		3EA0FB61191B931500B170C8 /* UIVideoWidgetTest */ = {
+		3EA0FB6F191C844400B170C8 /* UIVideoPlayerTest */ = {
 			isa = PBXGroup;
 			children = (
-				3EA0FB62191B931500B170C8 /* UIVideoWidgetTest.cpp */,
-				3EA0FB63191B931500B170C8 /* UIVideoWidgetTest.h */,
+				3EA0FB70191C844400B170C8 /* UIVideoPlayerTest.cpp */,
+				3EA0FB71191C844400B170C8 /* UIVideoPlayerTest.h */,
 			);
-			path = UIVideoWidgetTest;
+			path = UIVideoPlayerTest;
 			sourceTree = "<group>";
 		};
 		46A15F9D1807A4F8005B8026 /* Products */ = {
@@ -4799,7 +4799,6 @@
 				1AC35B4218CECF0C00F37B72 /* QuestionContainerSprite.cpp in Sources */,
 				1AC35B6218CECF0C00F37B72 /* DrawPrimitivesTest.cpp in Sources */,
 				29080DDC191B595E0066F8DF /* UITextFieldTest.cpp in Sources */,
-				3EA0FB64191B931500B170C8 /* UIVideoWidgetTest.cpp in Sources */,
 				1AC35C1818CECF0C00F37B72 /* MotionStreakTest.cpp in Sources */,
 				1AC35C0618CECF0C00F37B72 /* FontTest.cpp in Sources */,
 				1AC35C3818CECF0C00F37B72 /* PerformanceTest.cpp in Sources */,
@@ -4853,6 +4852,7 @@
 				1AC35C8618CECF1400F37B72 /* RootViewController.mm in Sources */,
 				1AC35C5C18CECF0C00F37B72 /* TileMapTest.cpp in Sources */,
 				29080DC2191B595E0066F8DF /* UIRichTextTest.cpp in Sources */,
+				3EA0FB72191C844400B170C8 /* UIVideoPlayerTest.cpp in Sources */,
 				1AC35B4818CECF0C00F37B72 /* Bug-899.cpp in Sources */,
 				1AC35C1C18CECF0C00F37B72 /* NewEventDispatcherTest.cpp in Sources */,
 				1AC35C2E18CECF0C00F37B72 /* PerformanceNodeChildrenTest.cpp in Sources */,

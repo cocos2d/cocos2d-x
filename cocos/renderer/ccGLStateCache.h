@@ -28,6 +28,8 @@ THE SOFTWARE.
 #ifndef __CCGLSTATE_H__
 #define __CCGLSTATE_H__
 
+#include <cstdint>
+
 #include "CCGL.h"
 #include "base/CCPlatformMacros.h"
 
