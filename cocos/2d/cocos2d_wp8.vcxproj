@@ -270,10 +270,16 @@
     <ClCompile Include="..\physics\chipmunk\CCPhysicsWorldInfo_chipmunk.cpp" />
     <ClCompile Include="..\renderer\CCBatchCommand.cpp" />
     <ClCompile Include="..\renderer\CCCustomCommand.cpp" />
+    <ClCompile Include="..\renderer\CCGLProgram.cpp" />
+    <ClCompile Include="..\renderer\CCGLProgramState.cpp" />
+    <ClCompile Include="..\renderer\CCGLProgramStateCache.cpp" />
+    <ClCompile Include="..\renderer\ccGLStateCache.cpp" />
     <ClCompile Include="..\renderer\CCGroupCommand.cpp" />
     <ClCompile Include="..\renderer\CCQuadCommand.cpp" />
     <ClCompile Include="..\renderer\CCRenderCommand.cpp" />
     <ClCompile Include="..\renderer\CCRenderer.cpp" />
+    <ClCompile Include="..\renderer\CCShaderCache.cpp" />
+    <ClCompile Include="..\renderer\ccShaders.cpp" />
     <ClCompile Include="CCAction.cpp" />
     <ClCompile Include="CCActionCamera.cpp" />
     <ClCompile Include="CCActionCatmullRom.cpp" />
@@ -320,8 +326,6 @@
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </ForcedIncludeFiles>
     </ClCompile>
-    <ClCompile Include="CCGLProgram.cpp" />
-    <ClCompile Include="ccGLStateCache.cpp" />
     <ClCompile Include="CCGrabber.cpp" />
     <ClCompile Include="CCGrid.cpp" />
     <ClCompile Include="CCNodeGrid.cpp" />
@@ -345,8 +349,6 @@
     <ClCompile Include="CCRenderTexture.cpp" />
     <ClCompile Include="CCScene.cpp" />
     <ClCompile Include="CCScriptSupport.cpp" />
-    <ClCompile Include="CCShaderCache.cpp" />
-    <ClCompile Include="ccShaders.cpp" />
     <ClCompile Include="CCSprite.cpp" />
     <ClCompile Include="CCSpriteBatchNode.cpp" />
     <ClCompile Include="CCSpriteFrame.cpp" />
@@ -494,11 +496,39 @@
     <ClInclude Include="..\physics\chipmunk\CCPhysicsWorldInfo_chipmunk.h" />
     <ClInclude Include="..\renderer\CCBatchCommand.h" />
     <ClInclude Include="..\renderer\CCCustomCommand.h" />
+    <ClInclude Include="..\renderer\CCGLProgram.h" />
+    <ClInclude Include="..\renderer\CCGLProgramState.h" />
+    <ClInclude Include="..\renderer\CCGLProgramStateCache.h" />
+    <ClInclude Include="..\renderer\ccGLStateCache.h" />
     <ClInclude Include="..\renderer\CCGroupCommand.h" />
     <ClInclude Include="..\renderer\CCQuadCommand.h" />
     <ClInclude Include="..\renderer\CCRenderCommand.h" />
     <ClInclude Include="..\renderer\CCRenderCommandPool.h" />
     <ClInclude Include="..\renderer\CCRenderer.h" />
+    <ClInclude Include="..\renderer\CCShaderCache.h" />
+    <ClInclude Include="..\renderer\ccShaders.h" />
+    <ClInclude Include="..\renderer\ccShader_Label_frag_df.h" />
+    <ClInclude Include="..\renderer\ccShader_Label_frag_df_glow.h" />
+    <ClInclude Include="..\renderer\ccShader_Label_frag_normal.h" />
+    <ClInclude Include="..\renderer\ccShader_Label_frag_outline.h" />
+    <ClInclude Include="..\renderer\ccShader_Label_vert.h" />
+    <ClInclude Include="..\renderer\ccShader_PositionColorLengthTexture_frag.h" />
+    <ClInclude Include="..\renderer\ccShader_PositionColorLengthTexture_vert.h" />
+    <ClInclude Include="..\renderer\ccShader_PositionColor_frag.h" />
+    <ClInclude Include="..\renderer\ccShader_PositionColor_vert.h" />
+    <ClInclude Include="..\renderer\ccShader_PositionTextureA8Color_frag.h" />
+    <ClInclude Include="..\renderer\ccShader_PositionTextureA8Color_vert.h" />
+    <ClInclude Include="..\renderer\ccShader_PositionTextureColorAlphaTest_frag.h" />
+    <ClInclude Include="..\renderer\ccShader_PositionTextureColor_frag.h" />
+    <ClInclude Include="..\renderer\ccShader_PositionTextureColor_noMVP_frag.h" />
+    <ClInclude Include="..\renderer\ccShader_PositionTextureColor_noMVP_vert.h" />
+    <ClInclude Include="..\renderer\ccShader_PositionTextureColor_vert.h" />
+    <ClInclude Include="..\renderer\ccShader_PositionTexture_frag.h" />
+    <ClInclude Include="..\renderer\ccShader_PositionTexture_uColor_frag.h" />
+    <ClInclude Include="..\renderer\ccShader_PositionTexture_uColor_vert.h" />
+    <ClInclude Include="..\renderer\ccShader_PositionTexture_vert.h" />
+    <ClInclude Include="..\renderer\ccShader_Position_uColor_frag.h" />
+    <ClInclude Include="..\renderer\ccShader_Position_uColor_vert.h" />
     <ClInclude Include="CCAction.h" />
     <ClInclude Include="CCActionCamera.h" />
     <ClInclude Include="CCActionCatmullRom.h" />
@@ -530,8 +560,6 @@
     <ClInclude Include="CCFontFNT.h" />
     <ClInclude Include="CCFontFreeType.h" />
     <ClInclude Include="ccFPSImages.h" />
-    <ClInclude Include="CCGLProgram.h" />
-    <ClInclude Include="ccGLStateCache.h" />
     <ClInclude Include="CCGrabber.h" />
     <ClInclude Include="CCGrid.h" />
     <ClInclude Include="CCNodeGrid.h" />
@@ -558,8 +586,6 @@
     <ClInclude Include="CCRenderTexture.h" />
     <ClInclude Include="CCScene.h" />
     <ClInclude Include="CCScriptSupport.h" />
-    <ClInclude Include="CCShaderCache.h" />
-    <ClInclude Include="ccShaders.h" />
     <ClInclude Include="CCSprite.h" />
     <ClInclude Include="CCSpriteBatchNode.h" />
     <ClInclude Include="CCSpriteFrame.h" />

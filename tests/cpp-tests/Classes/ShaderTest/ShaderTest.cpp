@@ -723,6 +723,8 @@ bool UniformShaderNode::initWithVertex(const char *vert, const char *frag)
     
     _vertFileName = vert;
     _fragFileName = frag;
+
+	return true;
 }
 
 void UniformShaderNode::loadShaderVertex(const char *vert, const char *frag)
