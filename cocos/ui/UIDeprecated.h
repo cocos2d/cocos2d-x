@@ -26,7 +26,6 @@
 #define cocos2d_libs_UIDeprecated_h
 
 #include "base/CCPlatformMacros.h"
-//#include "ui/UIWidget.h"
 
 NS_CC_BEGIN
 
@@ -45,17 +44,12 @@ CC_DEPRECATED_ATTRIBUTE const Widget::BrightStyle BRIGHT_NONE = Widget::BrightSt
 CC_DEPRECATED_ATTRIBUTE const Widget::BrightStyle BRIGHT_NORMAL = Widget::BrightStyle::NORMAL;
 CC_DEPRECATED_ATTRIBUTE const Widget::BrightStyle BRIGHT_HIGHLIGHT = Widget::BrightStyle::HIGHLIGHT;
 
-
     
 CC_DEPRECATED_ATTRIBUTE typedef Widget::TextureResType TextureResType;
 CC_DEPRECATED_ATTRIBUTE typedef Widget::PositionType   PositionType;
 CC_DEPRECATED_ATTRIBUTE typedef Widget::SizeType SizeType;
 CC_DEPRECATED_ATTRIBUTE typedef Widget::Type WidgetType;
 CC_DEPRECATED_ATTRIBUTE typedef Widget::BrightStyle BrightStyle;
-
-
-
-    
 
 }
 

@@ -81,9 +81,6 @@ Widget::~Widget()
     if (_realFocusedWidget == this) {
         _realFocusedWidget = nullptr;
     }
-    
-    CC_SAFE_RELEASE_NULL(_touchEventListener);
-    
 }
 
 Widget* Widget::create()
@@ -661,9 +658,6 @@ void Widget::addTouchEventListener(Ref *target, SEL_TouchEvent selector)
 {
     _touchEventListener = target;
     _touchEventSelector = selector;
-    CC_SAFE_RETAIN(target);
-    
-    
 }
     
 void Widget::addTouchEventListener(Widget::ccWidgetTouchCallback callback)

@@ -31,13 +31,13 @@ NS_CC_BEGIN
 
 namespace ui {
 
-typedef enum
+CC_DEPRECATED_ATTRIBUTE typedef enum
 {
     CHECKBOX_STATE_EVENT_SELECTED,
     CHECKBOX_STATE_EVENT_UNSELECTED
 }CheckBoxEventType;
 
-typedef void (Ref::*SEL_SelectedStateEvent)(Ref*,CheckBoxEventType);
+CC_DEPRECATED_ATTRIBUTE typedef void (Ref::*SEL_SelectedStateEvent)(Ref*,CheckBoxEventType);
 #define checkboxselectedeventselector(_SELECTOR) (SEL_SelectedStateEvent)(&_SELECTOR)
 
 /**
@@ -50,6 +50,14 @@ class CheckBox : public Widget
     DECLARE_CLASS_GUI_INFO
     
 public:
+    enum class EventType
+    {
+        SELECTED,
+        UNSELECTED
+    };
+    
+    typedef std::function<void(Ref*,CheckBox::EventType)> ccCheckBoxCallback;
+    
     /**
      * Default constructor
      */
@@ -165,7 +173,8 @@ public:
     bool getSelectedState();
 
     //add a call back function would called when checkbox is selected or unselected.
-    void addEventListenerCheckBox(Ref* target,SEL_SelectedStateEvent selector);
+    CC_DEPRECATED_ATTRIBUTE void addEventListenerCheckBox(Ref* target,SEL_SelectedStateEvent selector);
+    void addEventListener(ccCheckBoxCallback callback);
 
     //override "onTouchEnded" method of widget.
     virtual void onTouchEnded(Touch *touch, Event *unusedEvent);
@@ -218,9 +227,10 @@ protected:
     Sprite* _backGroundBoxDisabledRenderer;
     Sprite* _frontCrossDisabledRenderer;
     bool _isSelected;
-
+    //if you use the old event callback, it will retain the _checkBoxEventListener
     Ref*       _checkBoxEventListener;
     SEL_SelectedStateEvent    _checkBoxEventSelector;
+    ccCheckBoxCallback _checkBoxEventCallback;
 
     TextureResType _backGroundTexType;
     TextureResType _backGroundSelectedTexType;

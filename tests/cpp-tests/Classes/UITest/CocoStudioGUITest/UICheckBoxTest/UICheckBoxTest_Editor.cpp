@@ -35,7 +35,7 @@ bool UICheckBoxTest_Editor::init()
         _sceneTitle = static_cast<Text*>(Helper::seekWidgetByName(root, "UItest"));
         
         CheckBox* checkbox = static_cast<CheckBox*>(Helper::seekWidgetByName(root, "CheckBox_540"));
-        checkbox->addEventListenerCheckBox(this, checkboxselectedeventselector(UICheckBoxTest_Editor::selectedStateEvent));
+        checkbox->addEventListener(CC_CALLBACK_2(UICheckBoxTest_Editor::selectedStateEvent, this));
         
         _displayValueLabel = Text::create();
         _displayValueLabel->setFontName("fonts/Marker Felt.ttf");
@@ -51,15 +51,15 @@ bool UICheckBoxTest_Editor::init()
     return false;
 }
 
-void UICheckBoxTest_Editor::selectedStateEvent(Ref *pSender, CheckBoxEventType type)
+void UICheckBoxTest_Editor::selectedStateEvent(Ref *pSender, CheckBox::EventType type)
 {
     switch (type)
     {
-        case CHECKBOX_STATE_EVENT_UNSELECTED:
+        case CheckBox::EventType::UNSELECTED:
             _displayValueLabel->setText("Unselected");
             break;
             
-        case CHECKBOX_STATE_EVENT_SELECTED:
+        case CheckBox::EventType::SELECTED:
             _displayValueLabel->setText("Selected");
             break;
             

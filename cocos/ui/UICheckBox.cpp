@@ -65,7 +65,6 @@ _frontCrossDisabledRendererAdaptDirty(true)
 
 CheckBox::~CheckBox()
 {
-    _checkBoxEventListener = nullptr;
     _checkBoxEventSelector = nullptr;
 }
 
@@ -359,6 +358,11 @@ bool CheckBox::getSelectedState()
 
 void CheckBox::selectedEvent()
 {
+    if (_checkBoxEventCallback)
+    {
+        _checkBoxEventCallback(this, EventType::SELECTED);
+    }
+    
     if (_checkBoxEventListener && _checkBoxEventSelector)
     {
         (_checkBoxEventListener->*_checkBoxEventSelector)(this,CHECKBOX_STATE_EVENT_SELECTED);
@@ -367,6 +371,9 @@ void CheckBox::selectedEvent()
 
 void CheckBox::unSelectedEvent()
 {
+    if (_checkBoxEventCallback) {
+        _checkBoxEventCallback(this, EventType::UNSELECTED);
+    }
     if (_checkBoxEventListener && _checkBoxEventSelector)
     {
         (_checkBoxEventListener->*_checkBoxEventSelector)(this,CHECKBOX_STATE_EVENT_UNSELECTED);
@@ -377,6 +384,11 @@ void CheckBox::addEventListenerCheckBox(Ref *target, SEL_SelectedStateEvent sele
 {
     _checkBoxEventListener = target;
     _checkBoxEventSelector = selector;
+}
+
+void CheckBox::addEventListener(ccCheckBoxCallback callback)
+{
+    _checkBoxEventCallback = callback;
 }
     
 void CheckBox::updateFlippedX()
