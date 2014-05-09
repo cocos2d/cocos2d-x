@@ -1067,6 +1067,10 @@
 		3E26D40518ACB5D100834404 /* CCImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E26D40418ACB5D100834404 /* CCImage.cpp */; };
 		3E26D40618ACB5D100834404 /* CCImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E26D40418ACB5D100834404 /* CCImage.cpp */; };
 		3E26D40818ACB63900834404 /* CCDevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E26D40718ACB63900834404 /* CCDevice.mm */; };
+		3E9C7E5C191C61EB00429574 /* CCGLProgramStateCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E9C7E5A191C61EB00429574 /* CCGLProgramStateCache.cpp */; };
+		3E9C7E5D191C61EB00429574 /* CCGLProgramStateCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E9C7E5A191C61EB00429574 /* CCGLProgramStateCache.cpp */; };
+		3E9C7E5E191C61EB00429574 /* CCGLProgramStateCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E9C7E5B191C61EB00429574 /* CCGLProgramStateCache.h */; };
+		3E9C7E5F191C61EB00429574 /* CCGLProgramStateCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E9C7E5B191C61EB00429574 /* CCGLProgramStateCache.h */; };
 		3EA0FB5B191B92CC00B170C8 /* UIVideoWidget.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EA0FB59191B92CC00B170C8 /* UIVideoWidget.h */; };
 		3EA0FB5C191B92CC00B170C8 /* UIVideoWidgetIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0FB5A191B92CC00B170C8 /* UIVideoWidgetIOS.mm */; };
 		460E468118080832000CDD6D /* cocos-ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A167D21807AF4D005B8026 /* cocos-ext.h */; };
@@ -2292,6 +2296,8 @@
 		37936A3E1869B76800E974DD /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
 		3E26D40418ACB5D100834404 /* CCImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCImage.cpp; sourceTree = "<group>"; };
 		3E26D40718ACB63900834404 /* CCDevice.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCDevice.mm; sourceTree = "<group>"; };
+		3E9C7E5A191C61EB00429574 /* CCGLProgramStateCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGLProgramStateCache.cpp; sourceTree = "<group>"; };
+		3E9C7E5B191C61EB00429574 /* CCGLProgramStateCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGLProgramStateCache.h; sourceTree = "<group>"; };
 		3EA0FB59191B92CC00B170C8 /* UIVideoWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIVideoWidget.h; sourceTree = "<group>"; };
 		3EA0FB5A191B92CC00B170C8 /* UIVideoWidgetIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UIVideoWidgetIOS.mm; sourceTree = "<group>"; };
 		46A15FCC1807A544005B8026 /* AUTHORS */ = {isa = PBXFileReference; lastKnownFileType = text; name = AUTHORS; path = ../AUTHORS; sourceTree = "<group>"; };
@@ -4609,6 +4615,8 @@
 		500DC89819105D41007B91BF /* renderer */ = {
 			isa = PBXGroup;
 			children = (
+				3E9C7E5A191C61EB00429574 /* CCGLProgramStateCache.cpp */,
+				3E9C7E5B191C61EB00429574 /* CCGLProgramStateCache.h */,
 				5034C9F4191C5D6800CE6051 /* Shaders */,
 				5034C993191C5D4500CE6051 /* ccShaders.h */,
 				5034C994191C5D4500CE6051 /* ccShaders.cpp */,
@@ -4923,6 +4931,7 @@
 				2905FA4818CF08D100240AA3 /* UIButton.h in Headers */,
 				46A170EB1807CECA005B8026 /* CCPhysicsJoint.h in Headers */,
 				46A170241807CBFC005B8026 /* CCSAXParser.h in Headers */,
+				3E9C7E5E191C61EB00429574 /* CCGLProgramStateCache.h in Headers */,
 				46A1701A1807CBFC005B8026 /* CCDevice.h in Headers */,
 				B2AF2F9F18EBAEAE00C5807C /* Quaternion.h in Headers */,
 				46A170161807CBFC005B8026 /* CCLock.h in Headers */,
@@ -5590,6 +5599,7 @@
 				1A570332180BCFD50088DEC7 /* CCUserDefault.h in Headers */,
 				500DC94319106300007B91BF /* CCData.h in Headers */,
 				1A57034E180BD09B0088DEC7 /* tinyxml2.h in Headers */,
+				3E9C7E5F191C61EB00429574 /* CCGLProgramStateCache.h in Headers */,
 				1A570357180BD0B00088DEC7 /* ioapi.h in Headers */,
 				1A01C69B18F57BE800EFE3A6 /* CCSet.h in Headers */,
 				1A57035B180BD0B00088DEC7 /* unzip.h in Headers */,
@@ -6271,6 +6281,7 @@
 				1AD71DCD180E26E600808F54 /* CCControlLoader.cpp in Sources */,
 				50FCEBC718C72017004AD434 /* WidgetReader.cpp in Sources */,
 				1AD71DD1180E26E600808F54 /* CCLabelBMFontLoader.cpp in Sources */,
+				3E9C7E5C191C61EB00429574 /* CCGLProgramStateCache.cpp in Sources */,
 				1AD71DD5180E26E600808F54 /* CCLabelTTFLoader.cpp in Sources */,
 				1AD71DD9180E26E600808F54 /* CCLayerColorLoader.cpp in Sources */,
 				500DC94C19106300007B91BF /* CCEvent.cpp in Sources */,
@@ -6576,6 +6587,7 @@
 				50FCEB9818C72017004AD434 /* CheckBoxReader.cpp in Sources */,
 				1A570076180BC5A10088DEC7 /* CCActionGrid3D.cpp in Sources */,
 				500DC99D19106300007B91BF /* CCValue.cpp in Sources */,
+				3E9C7E5D191C61EB00429574 /* CCGLProgramStateCache.cpp in Sources */,
 				3EA0FB5C191B92CC00B170C8 /* UIVideoWidgetIOS.mm in Sources */,
 				B37510851823ACA100B3BA6A /* CCPhysicsWorldInfo_chipmunk.cpp in Sources */,
 				1A57007A180BC5A10088DEC7 /* CCActionInstant.cpp in Sources */,

@@ -644,13 +644,11 @@ void Node::setGLProgramState(cocos2d::GLProgramState *glProgramState)
 
 void Node::setGLProgram(GLProgram *glProgram)
 {
-    if(_glProgramState == nullptr) {
+    if (_glProgramState == nullptr || (_glProgramState && _glProgramState->getGLProgram() != glProgram))
+    {
+        CC_SAFE_RELEASE(_glProgramState);
         _glProgramState = GLProgramState::create(glProgram);
         _glProgramState->retain();
-    }
-    else
-    {
-        _glProgramState->setGLProgram(glProgram);
     }
 }
 
