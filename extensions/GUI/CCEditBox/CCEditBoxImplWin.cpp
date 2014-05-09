@@ -157,7 +157,7 @@ void CCEditBoxImplWin::setText(const char* pText)
 
             if (kEditBoxInputFlagPassword == m_eEditBoxInputFlag)
             {
-                long length = cc_utf8_strlen(m_strText.c_str(), -1);
+                long length = cc_utf8_strlen(m_strText.c_str());
                 for (long i = 0; i < length; i++)
                 {
                     strToShow.append("*");
