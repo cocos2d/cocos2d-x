@@ -60,8 +60,6 @@ cocos2d.cpp \
 2d/CCRenderTexture.cpp \
 2d/CCScene.cpp \
 2d/CCScriptSupport.cpp \
-2d/CCShaderCache.cpp \
-2d/ccShaders.cpp \
 2d/CCSpriteBatchNode.cpp \
 2d/CCSprite.cpp \
 2d/CCSpriteFrameCache.cpp \
@@ -144,7 +142,7 @@ renderer/CCQuadCommand.cpp \
 renderer/CCRenderCommand.cpp \
 renderer/CCRenderer.cpp \
 renderer/CCShaderCache.cpp \
-renderer/CCShaderCache.cpp \
+renderer/CCShaders.cpp \
 deprecated/CCArray.cpp \
 deprecated/CCSet.cpp \
 deprecated/CCString.cpp \
