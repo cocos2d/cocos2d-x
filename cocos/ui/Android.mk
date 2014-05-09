@@ -8,8 +8,6 @@ LOCAL_MODULE_FILENAME := libui
 LOCAL_SRC_FILES := \
 UIWidget.cpp \
 UILayout.cpp \
-UILayoutParameter.cpp \
-UILayoutDefine.cpp \
 CocosGUI.cpp \
 UIHelper.cpp \
 UIListView.cpp \

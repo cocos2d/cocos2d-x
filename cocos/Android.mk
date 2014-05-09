@@ -157,6 +157,8 @@ physics/chipmunk/CCPhysicsContactInfo_chipmunk.cpp \
 physics/chipmunk/CCPhysicsJointInfo_chipmunk.cpp \
 physics/chipmunk/CCPhysicsShapeInfo_chipmunk.cpp \
 physics/chipmunk/CCPhysicsWorldInfo_chipmunk.cpp \
+layout/CCLayoutParameterProtocol.cpp \
+layout/CCLayoutProtocol.cpp \
 ../external/tinyxml2/tinyxml2.cpp \
 ../external/unzip/ioapi.cpp \
 ../external/unzip/unzip.cpp \
