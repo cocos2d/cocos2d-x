@@ -136,8 +136,9 @@ protected:
 //
 class GLProgramState : public Ref
 {
+    friend class GLProgramStateCache;
 public:
-    static GLProgramState* create(GLProgram* glprogram);
+    static GLProgramState* create(GLProgram* glprogram, bool useCache = true);
 
     void apply(const Matrix& modelView);
 
