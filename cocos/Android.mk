@@ -8,9 +8,9 @@ LOCAL_MODULE_FILENAME := libcocos2d
 
 LOCAL_SRC_FILES := \
 cocos2d.cpp \
+2d/CCAction.cpp \
 2d/CCActionCamera.cpp \
 2d/CCActionCatmullRom.cpp \
-2d/CCAction.cpp \
 2d/CCActionEase.cpp \
 2d/CCActionGrid3D.cpp \
 2d/CCActionGrid.cpp \
@@ -37,8 +37,6 @@ cocos2d.cpp \
 2d/CCFontFNT.cpp \
 2d/CCFontFreeType.cpp \
 2d/CCGLBufferedNode.cpp \
-2d/CCGLProgram.cpp \
-2d/ccGLStateCache.cpp \
 2d/CCGrabber.cpp \
 2d/CCGrid.cpp \
 2d/CCIMEDispatcher.cpp \
@@ -135,12 +133,18 @@ base/base64.cpp \
 base/ccTypes.cpp \
 base/etc1.cpp \
 base/s3tc.cpp \
+renderer/CCBatchCommand.cpp \
 renderer/CCCustomCommand.cpp \
+renderer/CCGLProgram.cpp \
+renderer/CCGLProgramState.cpp \
+renderer/CCGLProgramStateCache.cpp \
+renderer/CCGLStateCache.cpp \
 renderer/CCGroupCommand.cpp \
 renderer/CCQuadCommand.cpp \
-renderer/CCBatchCommand.cpp \
 renderer/CCRenderCommand.cpp \
 renderer/CCRenderer.cpp \
+renderer/CCShaderCache.cpp \
+renderer/CCShaderCache.cpp \
 deprecated/CCArray.cpp \
 deprecated/CCSet.cpp \
 deprecated/CCString.cpp \
