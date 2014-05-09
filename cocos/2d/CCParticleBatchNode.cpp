@@ -99,7 +99,7 @@ bool ParticleBatchNode::initWithTexture(Texture2D *tex, int capacity)
 
     _children.reserve(capacity);
     
-    _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
+    _blendFunc = ParticleSystem::PARTICLE_BLEND_DEFAULT;
 
     setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
@@ -463,21 +463,9 @@ void ParticleBatchNode::updateAllAtlasIndexes()
 
 // ParticleBatchNode - CocosNodeTexture protocol
 
-void ParticleBatchNode::updateBlendFunc()
-{
-    if( ! _textureAtlas->getTexture()->hasPremultipliedAlpha())
-        _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
-}
-
 void ParticleBatchNode::setTexture(Texture2D* texture)
 {
     _textureAtlas->setTexture(texture);
-
-    // If the new texture has No premultiplied alpha, AND the blendFunc hasn't been changed, then update it
-    if( texture && ! texture->hasPremultipliedAlpha() && ( _blendFunc.src == CC_BLEND_SRC && _blendFunc.dst == CC_BLEND_DST ) )
-    {
-        _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
-    }
 }
 
 Texture2D* ParticleBatchNode::getTexture() const

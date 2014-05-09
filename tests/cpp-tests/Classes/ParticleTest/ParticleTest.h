@@ -164,7 +164,9 @@ public:
     virtual void onEnter() override;
     virtual std::string subtitle() const override
     {
-        return _title;
+        std::string result = "DemoParticleFromFile: ";
+        result.append(_title);
+        return result;
     }
 };
 

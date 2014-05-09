@@ -81,6 +81,8 @@ NS_CC_BEGIN
 //  cocos2d uses a another approach, but the results are almost identical. 
 //
 
+BlendFunc ParticleSystem::PARTICLE_BLEND_DEFAULT = BlendFunc::ALPHA_PREMULTIPLIED;
+
 ParticleSystem::ParticleSystem()
 : _isBlendAdditive(false)
 , _isAutoRemoveOnFinish(false)
@@ -115,7 +117,7 @@ ParticleSystem::ParticleSystem()
 , _emissionRate(0)
 , _totalParticles(0)
 , _texture(nullptr)
-, _blendFunc(BlendFunc::ALPHA_PREMULTIPLIED)
+, _blendFunc(ParticleSystem::PARTICLE_BLEND_DEFAULT)
 , _opacityModifyRGB(false)
 , _yCoordFlipped(0)
 , _positionType(PositionType::FREE)
@@ -459,7 +461,7 @@ bool ParticleSystem::initWithTotalParticles(int numberOfParticles)
     _isActive = true;
 
     // default blend function
-    _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
+    _blendFunc = ParticleSystem::PARTICLE_BLEND_DEFAULT;
 
     // default movement type;
     _positionType = PositionType::FREE;
@@ -860,31 +862,6 @@ void ParticleSystem::setTexture(Texture2D* var)
         CC_SAFE_RETAIN(var);
         CC_SAFE_RELEASE(_texture);
         _texture = var;
-        updateBlendFunc();
-    }
-}
-
-void ParticleSystem::updateBlendFunc()
-{
-    CCASSERT(! _batchNode, "Can't change blending functions when the particle is being batched");
-
-    if(_texture)
-    {
-        bool premultiplied = _texture->hasPremultipliedAlpha();
-        
-        _opacityModifyRGB = false;
-        
-        if( _texture && ( _blendFunc.src == CC_BLEND_SRC && _blendFunc.dst == CC_BLEND_DST ) )
-        {
-            if( premultiplied )
-            {
-                _opacityModifyRGB = true;
-            }
-            else
-            {
-                _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
-            }
-        }
     }
 }
 
@@ -902,10 +879,7 @@ void ParticleSystem::setBlendAdditive(bool additive)
     }
     else
     {
-        if( _texture && ! _texture->hasPremultipliedAlpha() )
-            _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
-        else 
-            _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
+        _blendFunc = ParticleSystem::PARTICLE_BLEND_DEFAULT;
     }
 }
 
@@ -1107,10 +1081,7 @@ const BlendFunc& ParticleSystem::getBlendFunc() const
 
 void ParticleSystem::setBlendFunc(const BlendFunc &blendFunc)
 {
-    if( _blendFunc.src != blendFunc.src || _blendFunc.dst != blendFunc.dst ) {
-        _blendFunc = blendFunc;
-        this->updateBlendFunc();
-    }
+    _blendFunc = blendFunc;
 }
 
 bool ParticleSystem::isAutoRemoveOnFinish() const

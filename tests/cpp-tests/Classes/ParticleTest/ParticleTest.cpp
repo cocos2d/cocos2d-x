@@ -1866,8 +1866,11 @@ void PremultipliedAlphaTest::onEnter()
 
     // Cocos2d "normal" blend func for premul causes alpha to be ignored (oversaturates colors)
     _emitter->setBlendFunc( BlendFunc::ALPHA_PREMULTIPLIED );
-
-    CCASSERT(_emitter->isOpacityModifyRGB(), "Particle texture does not have premultiplied alpha, test is useless");
+    
+    if(!_emitter->isOpacityModifyRGB())
+    {
+        CCLOGERROR("Particle texture does not have premultiplied alpha, test is useless");
+    }
 
     // Toggle next line to see old behavior
     //	this->emitter.opacityModifyRGB = NO;
