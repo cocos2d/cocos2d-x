@@ -1,96 +1,113 @@
-//
-//  ccUTF8.h
-//  cocos2dx
-//
-//  Created by James Chen on 2/27/13.
-//
+/****************************************************************************
+ Copyright (c) 2014 cocos2d-x.org
+ Copyright (c) 2014 Chukong Technologies Inc.
+
+ http://www.cocos2d-x.org
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 
 #ifndef __cocos2dx__ccUTF8__
 #define __cocos2dx__ccUTF8__
 
 #include "platform/CCPlatformMacros.h"
 #include <vector>
+#include <string>
 
 NS_CC_BEGIN
 
-CC_DLL int cc_wcslen(const unsigned short* str);
 
+/** Trims the space characters at the end of UTF8 string */
 CC_DLL void cc_utf8_trim_ws(std::vector<unsigned short>* str);
 
-/*
- * @ch is the unicode character whitespace?
+/**
+ * Whether the character is a whitespace character.
  *
- * Reference: http://en.wikipedia.org/wiki/Whitespace_character#Unicode
+ * @param ch    the unicode character
+ * @returns     whether the character is a white space character.
  *
- * Return value: weather the character is a whitespace character.
+ * @see http://en.wikipedia.org/wiki/Whitespace_character#Unicode
  * */
 CC_DLL bool isspace_unicode(unsigned short ch);
 
-/*
- * cc_utf8_strlen:
- * @p: pointer to the start of a UTF-8 encoded string.
- * @max: the maximum number of bytes to examine. If @max
- *       is less than 0, then the string is assumed to be
- *       null-terminated. If @max is 0, @p will not be examined and
- *       may be %NULL.
+/**
+ * Whether the character is a Chinese/Japanese/Korean character.
  *
- * Returns the length of the string in characters.
+ * @param ch    the unicode character
+ * @returns     whether the character is a Chinese character.
  *
- * Return value: the length of the string in characters
- **/
-CC_DLL long
-cc_utf8_strlen (const char * p, int max);
-
-/*
- * @str:    the string to search through.
- * @c:        the character to not look for.
- *
- * Return value: the index of the last character that is not c.
+ * @see http://www.searchtb.com/2012/04/chinese_encode.html
+ * @see http://tieba.baidu.com/p/748765987
  * */
-CC_DLL unsigned int cc_utf8_find_last_not_char(std::vector<unsigned short> str, unsigned short c);
+CC_DLL bool iscjk_unicode(unsigned short ch);
 
-CC_DLL std::vector<unsigned short> cc_utf16_vec_from_utf16_str(const unsigned short* str);
-
-/*
- * cc_utf8_to_utf16:
- * @str_old: pointer to the start of a C string.
- *
- * Creates a utf8 string from a cstring.
- *
- * Return value: the newly created utf8 string.
- * */
-CC_DLL unsigned short* cc_utf8_to_utf16(const char* str_old, int length = -1, int* rUtf16Size = NULL);
 
 /**
- * cc_utf16_to_utf8:
- * @str: a UTF-16 encoded string
- * @len: the maximum length of @str to use. If @len < 0, then
- *       the string is terminated with a 0 character.
- * @items_read: location to store number of words read, or %NULL.
- *              If %NULL, then %G_CONVERT_ERROR_PARTIAL_INPUT will be
- *              returned in case @str contains a trailing partial
- *              character. If an error occurs then the index of the
- *              invalid input is stored here.
- * @items_written: location to store number of bytes written, or %NULL.
- *                 The value stored here does not include the trailing
- *                 0 byte.
- * @error: location to store the error occuring, or %NULL to ignore
- *         errors. Any of the errors in #GConvertError other than
- *         %G_CONVERT_ERROR_NO_CONVERSION may occur.
+ * Returns the character count in UTF16 string
+ * @param str pointer to the start of a UTF-16 encoded string. It must be an NULL terminal UTF8 string.
+ */
+CC_DLL int cc_wcslen(const unsigned short* str);
+
+/**
+ * Returns the length of the string in characters.
  *
- * Convert a string from UTF-16 to UTF-8. The result will be
- * terminated with a 0 byte.
+ * @param p pointer to the start of a UTF-8 encoded string. It must be an NULL terminal UTF8 string.
  *
- * Return value: a pointer to a newly allocated UTF-8 string.
- *               This value must be freed with free(). If an
- *               error occurs, %NULL will be returned and
- *               @error set.
+ * @returns the length of the string in characters
  **/
-CC_DLL char *
-cc_utf16_to_utf8 (const unsigned short  *str,
-                  long             len,
-                  long            *items_read,
-                  long            *items_written);
+CC_DLL long cc_utf8_strlen (const char * p, int max);
+
+/**
+ * Find the last character that is not equal to the character given.
+ *
+ * @param str   the string to be searched.
+ * @param c     the character to be searched for.
+ *
+ * @returns the index of the last character that is not \p c.
+ * */
+CC_DLL unsigned int cc_utf8_find_last_not_char(const std::vector<unsigned short>& str, unsigned short c);
+
+/** Gets UTF16 character vector from UTF16 string */
+CC_DLL std::vector<unsigned short> cc_utf16_vec_from_utf16_str(const unsigned short* str);
+
+/**
+ * Creates an utf8 string from a c string. The result will be null terminated.
+ *
+ * @param utf8 pointer to the start of a C string. It must be an NULL terminal UTF8 string.
+ * @param outUTF16CharacterCount The character count in the return UTF16 string.
+ *
+ * @returns the newly created utf16 string, it must be released with `delete[]`,
+ *          If an error occurs, %NULL will be returned.
+ * */
+CC_DLL unsigned short* cc_utf8_to_utf16(const char* utf8, int* outUTF16CharacterCount = NULL);
+
+/**
+ * Converts a string from UTF-16 to UTF-8. The result will be null terminated.
+ *
+ * @param utf16 an UTF-16 encoded string, It must be an NULL terminal UTF16 string.
+ * @param outUTF8CharacterCount The character count in the return UTF8 string.
+ *
+ * @returns a pointer to a newly allocated UTF-8 string. This value must be
+ *          released with `delete[]`. If an error occurs, %NULL will be returned.
+ **/
+CC_DLL char* cc_utf16_to_utf8(const unsigned short* utf16, int* outUTF8CharacterCount = NULL);
+
 
 NS_CC_END
 
