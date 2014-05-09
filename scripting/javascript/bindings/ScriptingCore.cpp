@@ -1626,7 +1626,7 @@ jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length /* = -1 */) 
     }
     jsval ret = JSVAL_NULL;
     int utf16_size = 0;
-    jschar* strUTF16 = (jschar*)cc_utf8_to_utf16(v, length, &utf16_size);
+    jschar* strUTF16 = (jschar*)cc_utf8_to_utf16(v, &utf16_size);
 
     if (strUTF16 && utf16_size > 0) {
         JSString* str = JS_NewUCStringCopyN(cx, strUTF16, utf16_size);

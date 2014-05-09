@@ -294,7 +294,7 @@ public:
         // JS_EncodeString isn't supported in SpiderMonkey ff19.0.
         //buffer = JS_EncodeString(cx, string);
         unsigned short* pStrUTF16 = (unsigned short*)JS_GetStringCharsZ(cx, str);
-        buffer = cc_utf16_to_utf8(pStrUTF16, -1, NULL, NULL);
+        buffer = cc_utf16_to_utf8(pStrUTF16);
 	}
 	std::string get() {
         return buffer;
