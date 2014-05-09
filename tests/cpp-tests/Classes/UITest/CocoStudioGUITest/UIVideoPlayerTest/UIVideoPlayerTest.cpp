@@ -1,9 +1,9 @@
-#include "UIVideoWidgetTest.h"
+#include "UIVideoPlayerTest.h"
 
 USING_NS_CC;
 using namespace cocos2d::experimental::ui;
 
-bool VideoWidgetTest::init()
+bool VideoPlayerTest::init()
 {
     if ( !UIScene::init() )
     {
@@ -14,36 +14,36 @@ bool VideoWidgetTest::init()
 
     MenuItemFont::setFontSize(16);
 
-    auto fullSwitch = MenuItemFont::create("FullScreenSwitch", CC_CALLBACK_1(VideoWidgetTest::menuFullScreenCallback, this));
+    auto fullSwitch = MenuItemFont::create("FullScreenSwitch", CC_CALLBACK_1(VideoPlayerTest::menuFullScreenCallback, this));
     fullSwitch->setAnchorPoint(Vector2::ANCHOR_BOTTOM_LEFT);
     fullSwitch->setPosition(Vector2(_visibleRect.origin.x + 10,_visibleRect.origin.y + 50));
 
-    auto pauseItem = MenuItemFont::create("Pause", CC_CALLBACK_1(VideoWidgetTest::menuPauseCallback, this));
+    auto pauseItem = MenuItemFont::create("Pause", CC_CALLBACK_1(VideoPlayerTest::menuPauseCallback, this));
     pauseItem->setAnchorPoint(Vector2::ANCHOR_BOTTOM_LEFT);
     pauseItem->setPosition(Vector2(_visibleRect.origin.x + 10,_visibleRect.origin.y + 100));
 
-    auto resumeItem = MenuItemFont::create("Resume", CC_CALLBACK_1(VideoWidgetTest::menuResumeCallback, this));
+    auto resumeItem = MenuItemFont::create("Resume", CC_CALLBACK_1(VideoPlayerTest::menuResumeCallback, this));
     resumeItem->setAnchorPoint(Vector2::ANCHOR_BOTTOM_LEFT);
     resumeItem->setPosition(Vector2(_visibleRect.origin.x + 10,_visibleRect.origin.y + 150));
 
-    auto stopItem = MenuItemFont::create("Stop", CC_CALLBACK_1(VideoWidgetTest::menuStopCallback, this));
+    auto stopItem = MenuItemFont::create("Stop", CC_CALLBACK_1(VideoPlayerTest::menuStopCallback, this));
     stopItem->setAnchorPoint(Vector2::ANCHOR_BOTTOM_LEFT);
     stopItem->setPosition(Vector2(_visibleRect.origin.x + 10,_visibleRect.origin.y + 200));
 
-    auto hintItem = MenuItemFont::create("Hint", CC_CALLBACK_1(VideoWidgetTest::menuHintCallback, this));
+    auto hintItem = MenuItemFont::create("Hint", CC_CALLBACK_1(VideoPlayerTest::menuHintCallback, this));
     hintItem->setAnchorPoint(Vector2::ANCHOR_BOTTOM_LEFT);
     hintItem->setPosition(Vector2(_visibleRect.origin.x + 10,_visibleRect.origin.y + 250));
 
     //-------------------------------------------------------------------------------------------------------------------
-    auto resourceVideo = MenuItemFont::create("Play resource video", CC_CALLBACK_1(VideoWidgetTest::menuResourceVideoCallback, this));
+    auto resourceVideo = MenuItemFont::create("Play resource video", CC_CALLBACK_1(VideoPlayerTest::menuResourceVideoCallback, this));
     resourceVideo->setAnchorPoint(Vector2::ANCHOR_MIDDLE_RIGHT);
     resourceVideo->setPosition(Vector2(_visibleRect.origin.x + _visibleRect.size.width - 10,_visibleRect.origin.y + 50));
 
-    auto onlineVideo = MenuItemFont::create("Play online video", CC_CALLBACK_1(VideoWidgetTest::menuOnlineVideoCallback, this));
+    auto onlineVideo = MenuItemFont::create("Play online video", CC_CALLBACK_1(VideoPlayerTest::menuOnlineVideoCallback, this));
     onlineVideo->setAnchorPoint(Vector2::ANCHOR_MIDDLE_RIGHT);
     onlineVideo->setPosition(Vector2(_visibleRect.origin.x + _visibleRect.size.width - 10,_visibleRect.origin.y + 100));
 
-    auto ratioSwitch = MenuItemFont::create("KeepRatioSwitch", CC_CALLBACK_1(VideoWidgetTest::menuRatioCallback, this));
+    auto ratioSwitch = MenuItemFont::create("KeepRatioSwitch", CC_CALLBACK_1(VideoPlayerTest::menuRatioCallback, this));
     ratioSwitch->setAnchorPoint(Vector2::ANCHOR_MIDDLE_RIGHT);
     ratioSwitch->setPosition(Vector2(_visibleRect.origin.x + _visibleRect.size.width - 10,_visibleRect.origin.y + 150));
 
@@ -60,7 +60,7 @@ bool VideoWidgetTest::init()
     return true;
 }
 
-void VideoWidgetTest::menuCloseCallback(Ref* sender)
+void VideoPlayerTest::menuCloseCallback(Ref* sender)
 {
     Director::getInstance()->end();
 
@@ -69,88 +69,88 @@ void VideoWidgetTest::menuCloseCallback(Ref* sender)
 #endif
 }
 
-void VideoWidgetTest::menuFullScreenCallback(Ref* sender)
+void VideoPlayerTest::menuFullScreenCallback(Ref* sender)
 {
-    if (_videoWidget)
+    if (_videoPlayer)
     {
-        _videoWidget->setFullScreenEnabled(! _videoWidget->isFullScreenEnabled());
+        _videoPlayer->setFullScreenEnabled(! _videoPlayer->isFullScreenEnabled());
     }
 }
 
-void VideoWidgetTest::menuRatioCallback(Ref* sender)
+void VideoPlayerTest::menuRatioCallback(Ref* sender)
 {
-    if (_videoWidget)
+    if (_videoPlayer)
     {
-        _videoWidget->setKeepAspectRatioEnabled(! _videoWidget->isKeepAspectRatioEnabled());
+        _videoPlayer->setKeepAspectRatioEnabled(! _videoPlayer->isKeepAspectRatioEnabled());
     }
 }
 
-void VideoWidgetTest::menuResourceVideoCallback(Ref* sender)
+void VideoPlayerTest::menuResourceVideoCallback(Ref* sender)
 {
-    if (_videoWidget)
+    if (_videoPlayer)
     {
-        _videoWidget->setVideoFileName("cocosvideo.mp4");
-        _videoWidget->startVideo();
+        _videoPlayer->setVideoFileName("cocosvideo.mp4");
+        _videoPlayer->startVideo();
     }
 }
 
-void VideoWidgetTest::menuOnlineVideoCallback(Ref* sender)
+void VideoPlayerTest::menuOnlineVideoCallback(Ref* sender)
 {
-    if (_videoWidget)
+    if (_videoPlayer)
     {
-        _videoWidget->setVideoURL("http://video001.smgbb.cn/gslb/program/FDN/FDN1190949/HLSVodService.m3u8?_mdCode=6065719&_cdnCode=B2B_XL_TEST&_type=0&_rCode=TerOut_18865&_userId=020341000456068&_categoryCode=SMG_HUAYU&_categoryPath=SMG_1002,SMG_HUAYU,&_adPositionId=01001000&_adCategorySource=0&_flag=.m3u8&_enCode=m3u8&taskID=ysh_ps_002-ott_1397459105893_020341000456068&_client=103&_cms=ctv&_CDNToken=76C043FD4969501754DC19E54EC8DC2C");
-        _videoWidget->startVideo();
+        _videoPlayer->setVideoURL("http://video001.smgbb.cn/gslb/program/FDN/FDN1190949/HLSVodService.m3u8?_mdCode=6065719&_cdnCode=B2B_XL_TEST&_type=0&_rCode=TerOut_18865&_userId=020341000456068&_categoryCode=SMG_HUAYU&_categoryPath=SMG_1002,SMG_HUAYU,&_adPositionId=01001000&_adCategorySource=0&_flag=.m3u8&_enCode=m3u8&taskID=ysh_ps_002-ott_1397459105893_020341000456068&_client=103&_cms=ctv&_CDNToken=76C043FD4969501754DC19E54EC8DC2C");
+        _videoPlayer->startVideo();
     }
 }
 
-void VideoWidgetTest::menuPauseCallback(Ref* sender)
+void VideoPlayerTest::menuPauseCallback(Ref* sender)
 {
-    if (_videoWidget)
+    if (_videoPlayer)
     {
-        _videoWidget->pauseVideo();
+        _videoPlayer->pauseVideo();
     }
 }
 
-void VideoWidgetTest::menuResumeCallback(Ref* sender)
+void VideoPlayerTest::menuResumeCallback(Ref* sender)
 {
-    if (_videoWidget)
+    if (_videoPlayer)
     {
-        _videoWidget->resumeVideo();
+        _videoPlayer->resumeVideo();
     }
 }
 
-void VideoWidgetTest::menuStopCallback(Ref* sender)
+void VideoPlayerTest::menuStopCallback(Ref* sender)
 {
-    if (_videoWidget)
+    if (_videoPlayer)
     {
-        _videoWidget->stopVideo();
+        _videoPlayer->stopVideo();
     }
 }
 
-void VideoWidgetTest::menuHintCallback(Ref* sender)
+void VideoPlayerTest::menuHintCallback(Ref* sender)
 {
-    if (_videoWidget)
+    if (_videoPlayer)
     {
-        _videoWidget->setVisible(! _videoWidget->isVisible());
+        _videoPlayer->setVisible(! _videoPlayer->isVisible());
     }
 }
 
-void VideoWidgetTest::createVideo()
+void VideoPlayerTest::createVideo()
 {
     auto centerPos = Vector2(_visibleRect.origin.x + _visibleRect.size.width / 2,_visibleRect.origin.y + _visibleRect.size.height /2);
 
     auto widgetSize = _widget->getSize();
 
-    _videoWidget = VideoWidget::create();
-    _videoWidget->setPosition(centerPos);
-    _videoWidget->setAnchorPoint(Vector2::ANCHOR_MIDDLE);
-    _videoWidget->setContentSize(Size(widgetSize.width * 0.4f,widgetSize.height * 0.4f));
-    _uiLayer->addChild(_videoWidget);
+    _videoPlayer = VideoPlayer::create();
+    _videoPlayer->setPosition(centerPos);
+    _videoPlayer->setAnchorPoint(Vector2::ANCHOR_MIDDLE);
+    _videoPlayer->setContentSize(Size(widgetSize.width * 0.4f,widgetSize.height * 0.4f));
+    _uiLayer->addChild(_videoPlayer);
     
-    _videoWidget->setEventListener(CC_CALLBACK_2(VideoWidgetTest::videoEventCallback, this));
+    _videoPlayer->setEventListener(CC_CALLBACK_2(VideoPlayerTest::videoEventCallback, this));
 }
 
-void VideoWidgetTest::createSlider()
+void VideoPlayerTest::createSlider()
 {
     auto centerPos = Vector2(_visibleRect.origin.x + _visibleRect.size.width / 2,_visibleRect.origin.y + _visibleRect.size.height /2);
 
@@ -161,7 +161,7 @@ void VideoWidgetTest::createSlider()
     hSlider->loadProgressBarTexture("cocosui/sliderProgress.png");
     hSlider->setPosition(Vector2(centerPos.x, _visibleRect.origin.y + _visibleRect.size.height * 0.15f));
     hSlider->setPercent(50);
-    hSlider->addEventListenerSlider(this, sliderpercentchangedselector(VideoWidgetTest::sliderCallback));
+    hSlider->addEventListenerSlider(this, sliderpercentchangedselector(VideoPlayerTest::sliderCallback));
     _uiLayer->addChild(hSlider,0,1);
 
     auto vSlider = ui::Slider::create();
@@ -172,13 +172,13 @@ void VideoWidgetTest::createSlider()
     vSlider->setPosition(Vector2(_visibleRect.origin.x + _visibleRect.size.width * 0.15f, centerPos.y));
     vSlider->setRotation(90);
     vSlider->setPercent(50);
-    vSlider->addEventListenerSlider(this, sliderpercentchangedselector(VideoWidgetTest::sliderCallback));
+    vSlider->addEventListenerSlider(this, sliderpercentchangedselector(VideoPlayerTest::sliderCallback));
     _uiLayer->addChild(vSlider,0,2);
 }
 
-void VideoWidgetTest::sliderCallback(Ref *sender, ui::SliderEventType eventType)
+void VideoPlayerTest::sliderCallback(Ref *sender, ui::SliderEventType eventType)
 {
-    if (eventType == SLIDER_PERCENTCHANGED && _videoWidget)
+    if (eventType == SLIDER_PERCENTCHANGED && _videoPlayer)
     {
         Slider*  hSlider = (Slider*)this->getChildByTag(1);
         Slider*  vSlider = (Slider*)this->getChildByTag(2);
@@ -186,23 +186,23 @@ void VideoWidgetTest::sliderCallback(Ref *sender, ui::SliderEventType eventType)
         auto newPosX = _visibleRect.origin.x + _visibleRect.size.width / 2 + hSlider->getPercent() - 50;
         auto newPosY = _visibleRect.origin.y + _visibleRect.size.height / 2 + 50 - vSlider->getPercent();
 
-        _videoWidget->setPosition(Vector2(newPosX,newPosY));
+        _videoPlayer->setPosition(Vector2(newPosX,newPosY));
     }
 }
 
-void VideoWidgetTest::videoEventCallback(Ref* sender, VideoWidgetEvent eventType)
+void VideoPlayerTest::videoEventCallback(Ref* sender, VideoPlayer::Event eventType)
 {
     switch (eventType) {
-        case VideoWidgetEvent::PLAYING:
+        case VideoPlayer::Event::PLAYING:
             _videoStateLabel->setString("PLAYING");
             break;
-        case VideoWidgetEvent::PAUSED:
+        case VideoPlayer::Event::PAUSED:
             _videoStateLabel->setString("PAUSED");
             break;
-        case VideoWidgetEvent::STOPPED:
+        case VideoPlayer::Event::STOPPED:
             _videoStateLabel->setString("STOPPED");
             break;
-        case VideoWidgetEvent::COMPLETED:
+        case VideoPlayer::Event::COMPLETED:
             _videoStateLabel->setString("COMPLETED");
             break;
         default:
