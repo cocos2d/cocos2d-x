@@ -77,7 +77,7 @@
 --------------------------------
 -- @function [parent=#LabelTTF] setFontFillColor 
 -- @param self
--- @param #color3B_table color3b
+-- @param #color3b_table color3b
 -- @param #bool bool
         
 --------------------------------
@@ -88,7 +88,7 @@
 --------------------------------
 -- @function [parent=#LabelTTF] enableStroke 
 -- @param self
--- @param #color3B_table color3b
+-- @param #color3b_table color3b
 -- @param #float float
 -- @param #bool bool
         

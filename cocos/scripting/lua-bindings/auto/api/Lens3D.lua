@@ -6,7 +6,7 @@
 --------------------------------
 -- @function [parent=#Lens3D] setPosition 
 -- @param self
--- @param #array_table array
+-- @param #vector2_table array
         
 --------------------------------
 -- @function [parent=#Lens3D] setConcave 
@@ -21,7 +21,7 @@
 --------------------------------
 -- @function [parent=#Lens3D] getPosition 
 -- @param self
--- @return array_table#array_table ret (return value: array_table)
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#Lens3D] getLensEffect 
@@ -33,7 +33,7 @@
 -- @param self
 -- @param #float float
 -- @param #size_table size
--- @param #array_table array
+-- @param #vector2_table array
 -- @param #float float
 -- @return Lens3D#Lens3D ret (return value: cc.Lens3D)
         

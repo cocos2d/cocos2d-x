@@ -12,13 +12,13 @@
 -- @function [parent=#ControlSaturationBrightnessPicker] initWithTargetAndPos 
 -- @param self
 -- @param #cc.Node node
--- @param #array_table array
+-- @param #vector2_table array
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @function [parent=#ControlSaturationBrightnessPicker] getStartPos 
 -- @param self
--- @return array_table#array_table ret (return value: array_table)
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#ControlSaturationBrightnessPicker] getOverlay 
@@ -54,7 +54,7 @@
 -- @function [parent=#ControlSaturationBrightnessPicker] create 
 -- @param self
 -- @param #cc.Node node
--- @param #array_table array
+-- @param #vector2_table array
 -- @return ControlSaturationBrightnessPicker#ControlSaturationBrightnessPicker ret (return value: cc.ControlSaturationBrightnessPicker)
         
 --------------------------------

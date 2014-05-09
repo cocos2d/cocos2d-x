@@ -18,8 +18,8 @@
 -- @param self
 -- @param #cc.PhysicsBody physicsbody
 -- @param #cc.PhysicsBody physicsbody
--- @param #array_table array
--- @param #array_table array
+-- @param #vector2_table array
+-- @param #vector2_table array
 -- @return PhysicsJointDistance#PhysicsJointDistance ret (return value: cc.PhysicsJointDistance)
         
 return nil

@@ -8,7 +8,7 @@
 --          
 -- overload function: create(float, float)
 --          
--- overload function: create(float, array_table)
+-- overload function: create(float, vector3_table)
 --          
 -- @function [parent=#RotateBy] create
 -- @param self

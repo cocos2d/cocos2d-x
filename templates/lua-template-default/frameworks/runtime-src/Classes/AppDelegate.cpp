@@ -36,9 +36,11 @@ bool AppDelegate::applicationDidFinishLaunching()
     director->setAnimationInterval(1.0 / 60);
 
 
-	auto engine = LuaEngine::getInstance();
-	ScriptEngineManager::getInstance()->setScriptEngine(engine);
-	engine->executeScriptFile("src/main.lua");
+    auto engine = LuaEngine::getInstance();
+    ScriptEngineManager::getInstance()->setScriptEngine(engine);
+    if (engine->executeScriptFile("src/main.lua")) {
+        return false;
+    }
 
     return true;
 }

@@ -1093,6 +1093,14 @@
 		2905FA8D18CF08D100240AA3 /* UIWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2905FA1318CF08D100240AA3 /* UIWidget.cpp */; };
 		2905FA8E18CF08D100240AA3 /* UIWidget.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA1418CF08D100240AA3 /* UIWidget.h */; };
 		2905FA8F18CF08D100240AA3 /* UIWidget.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA1418CF08D100240AA3 /* UIWidget.h */; };
+		296CAD221915EC8000C64FBF /* CCEventFocus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 296CAD201915EC8000C64FBF /* CCEventFocus.cpp */; };
+		296CAD231915EC8000C64FBF /* CCEventFocus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 296CAD201915EC8000C64FBF /* CCEventFocus.cpp */; };
+		296CAD241915EC8000C64FBF /* CCEventFocus.h in Headers */ = {isa = PBXBuildFile; fileRef = 296CAD211915EC8000C64FBF /* CCEventFocus.h */; };
+		296CAD251915EC8000C64FBF /* CCEventFocus.h in Headers */ = {isa = PBXBuildFile; fileRef = 296CAD211915EC8000C64FBF /* CCEventFocus.h */; };
+		296CAD281915EC9900C64FBF /* CCEventListenerFocus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 296CAD261915EC9900C64FBF /* CCEventListenerFocus.cpp */; };
+		296CAD291915EC9900C64FBF /* CCEventListenerFocus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 296CAD261915EC9900C64FBF /* CCEventListenerFocus.cpp */; };
+		296CAD2A1915EC9900C64FBF /* CCEventListenerFocus.h in Headers */ = {isa = PBXBuildFile; fileRef = 296CAD271915EC9900C64FBF /* CCEventListenerFocus.h */; };
+		296CAD2B1915EC9900C64FBF /* CCEventListenerFocus.h in Headers */ = {isa = PBXBuildFile; fileRef = 296CAD271915EC9900C64FBF /* CCEventListenerFocus.h */; };
 		2986667F18B1B246000E39CA /* CCTweenFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2986667818B1B079000E39CA /* CCTweenFunction.cpp */; };
 		2AC795DB1862870F005EC8E1 /* SkeletonBounds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC795D918628689005EC8E1 /* SkeletonBounds.cpp */; };
 		2AC795DC1862870F005EC8E1 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC795D51862867D005EC8E1 /* Event.cpp */; };
@@ -1115,6 +1123,8 @@
 		3E26D40518ACB5D100834404 /* CCImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E26D40418ACB5D100834404 /* CCImage.cpp */; };
 		3E26D40618ACB5D100834404 /* CCImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E26D40418ACB5D100834404 /* CCImage.cpp */; };
 		3E26D40818ACB63900834404 /* CCDevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E26D40718ACB63900834404 /* CCDevice.mm */; };
+		3EA0FB6B191C841D00B170C8 /* UIVideoPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EA0FB69191C841D00B170C8 /* UIVideoPlayer.h */; };
+		3EA0FB6C191C841D00B170C8 /* UIVideoPlayerIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0FB6A191C841D00B170C8 /* UIVideoPlayerIOS.mm */; };
 		460E468118080832000CDD6D /* cocos-ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A167D21807AF4D005B8026 /* cocos-ext.h */; };
 		460E468218080836000CDD6D /* cocos-ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A167D21807AF4D005B8026 /* cocos-ext.h */; };
 		460E477B180808F5000CDD6D /* ExtensionMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168321807AF4E005B8026 /* ExtensionMacros.h */; };
@@ -2279,6 +2289,10 @@
 		2905FA1218CF08D100240AA3 /* UITextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextField.h; sourceTree = "<group>"; };
 		2905FA1318CF08D100240AA3 /* UIWidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIWidget.cpp; sourceTree = "<group>"; };
 		2905FA1418CF08D100240AA3 /* UIWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWidget.h; sourceTree = "<group>"; };
+		296CAD201915EC8000C64FBF /* CCEventFocus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCEventFocus.cpp; path = ../base/CCEventFocus.cpp; sourceTree = "<group>"; };
+		296CAD211915EC8000C64FBF /* CCEventFocus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEventFocus.h; path = ../base/CCEventFocus.h; sourceTree = "<group>"; };
+		296CAD261915EC9900C64FBF /* CCEventListenerFocus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCEventListenerFocus.cpp; path = ../base/CCEventListenerFocus.cpp; sourceTree = "<group>"; };
+		296CAD271915EC9900C64FBF /* CCEventListenerFocus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEventListenerFocus.h; path = ../base/CCEventListenerFocus.h; sourceTree = "<group>"; };
 		2986667818B1B079000E39CA /* CCTweenFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTweenFunction.cpp; sourceTree = "<group>"; };
 		2986667918B1B079000E39CA /* CCTweenFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTweenFunction.h; sourceTree = "<group>"; };
 		2AC795D318628672005EC8E1 /* BoundingBoxAttachment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BoundingBoxAttachment.cpp; sourceTree = "<group>"; };
@@ -2302,6 +2316,8 @@
 		37936A3E1869B76800E974DD /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
 		3E26D40418ACB5D100834404 /* CCImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCImage.cpp; sourceTree = "<group>"; };
 		3E26D40718ACB63900834404 /* CCDevice.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCDevice.mm; sourceTree = "<group>"; };
+		3EA0FB69191C841D00B170C8 /* UIVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIVideoPlayer.h; sourceTree = "<group>"; };
+		3EA0FB6A191C841D00B170C8 /* UIVideoPlayerIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UIVideoPlayerIOS.mm; sourceTree = "<group>"; };
 		46A15FCC1807A544005B8026 /* AUTHORS */ = {isa = PBXFileReference; lastKnownFileType = text; name = AUTHORS; path = ../AUTHORS; sourceTree = "<group>"; };
 		46A15FCE1807A544005B8026 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		46A15FE11807A56F005B8026 /* Export.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Export.h; sourceTree = "<group>"; };
@@ -3098,6 +3114,10 @@
 				500DC92719106300007B91BF /* s3tc.h */,
 				500DC92819106300007B91BF /* ZipUtils.cpp */,
 				500DC92919106300007B91BF /* ZipUtils.h */,
+				296CAD201915EC8000C64FBF /* CCEventFocus.cpp */,
+				296CAD211915EC8000C64FBF /* CCEventFocus.h */,
+				296CAD261915EC9900C64FBF /* CCEventListenerFocus.cpp */,
+				296CAD271915EC9900C64FBF /* CCEventListenerFocus.h */,
 			);
 			name = base;
 			path = ../cocos/2d;
@@ -3957,6 +3977,8 @@
 		2905F9E618CF08D000240AA3 /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				3EA0FB69191C841D00B170C8 /* UIVideoPlayer.h */,
+				3EA0FB6A191C841D00B170C8 /* UIVideoPlayerIOS.mm */,
 				2905F9E918CF08D000240AA3 /* CocosGUI.cpp */,
 				2905F9EA18CF08D000240AA3 /* CocosGUI.h */,
 				2905F9EB18CF08D000240AA3 /* GUIDefine.h */,
@@ -4928,6 +4950,7 @@
 				500DC94E19106300007B91BF /* CCEvent.h in Headers */,
 				1A57007F180BC5A10088DEC7 /* CCActionInterval.h in Headers */,
 				1A01C69A18F57BE800EFE3A6 /* CCSet.h in Headers */,
+				296CAD2A1915EC9900C64FBF /* CCEventListenerFocus.h in Headers */,
 				A023FA36185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_vert.h in Headers */,
 				1A570083180BC5A10088DEC7 /* CCActionManager.h in Headers */,
 				1A570087180BC5A10088DEC7 /* CCActionPageTurn3D.h in Headers */,
@@ -5078,6 +5101,7 @@
 				1A570356180BD0B00088DEC7 /* ioapi.h in Headers */,
 				500DC99619106300007B91BF /* CCScheduler.h in Headers */,
 				1A57035A180BD0B00088DEC7 /* unzip.h in Headers */,
+				296CAD241915EC8000C64FBF /* CCEventFocus.h in Headers */,
 				1A570535180BD9500088DEC7 /* CCGLProgram.h in Headers */,
 				1AA95FE018EBB8EF00AE7485 /* ccShader_Label_frag_df.h in Headers */,
 				500DC98819106300007B91BF /* CCNS.h in Headers */,
@@ -5463,6 +5487,7 @@
 				2905FA7B18CF08D100240AA3 /* UISlider.h in Headers */,
 				1AA95FE318EBB8EF00AE7485 /* ccShader_Label_frag_normal.h in Headers */,
 				1A5701CE180BCB5A0088DEC7 /* CCLabelTTF.h in Headers */,
+				296CAD251915EC8000C64FBF /* CCEventFocus.h in Headers */,
 				50FCEBCA18C72017004AD434 /* WidgetReader.h in Headers */,
 				1A5701E1180BCB8C0088DEC7 /* CCLayer.h in Headers */,
 				1A5701E5180BCB8C0088DEC7 /* CCScene.h in Headers */,
@@ -5592,6 +5617,7 @@
 				B2AF2FAC18EBAEAE00C5807C /* Vector4.h in Headers */,
 				5027253B190BF1B900AAF4ED /* cocos2d.h in Headers */,
 				1AD71DFC180E26E600808F54 /* CCNodeLoaderListener.h in Headers */,
+				3EA0FB6B191C841D00B170C8 /* UIVideoPlayer.h in Headers */,
 				1AD71E00180E26E600808F54 /* CCParticleSystemQuadLoader.h in Headers */,
 				1AD71E04180E26E600808F54 /* CCScale9SpriteLoader.h in Headers */,
 				1AD71E08180E26E600808F54 /* CCScrollViewLoader.h in Headers */,
@@ -5647,6 +5673,7 @@
 				1A9DCA3C180E6955007A3AD4 /* firePngData.h in Headers */,
 				1AA95FDF18EBB8EF00AE7485 /* ccShader_Label_frag_df_glow.h in Headers */,
 				1A01C69F18F57BE800EFE3A6 /* CCString.h in Headers */,
+				296CAD2B1915EC9900C64FBF /* CCEventListenerFocus.h in Headers */,
 				1A01C69118F57BE800EFE3A6 /* CCDictionary.h in Headers */,
 				500DC99B19106300007B91BF /* ccTypes.h in Headers */,
 				1A8C598E180E930E00EF57C3 /* CCActionFrame.h in Headers */,
@@ -6110,6 +6137,7 @@
 				1A570081180BC5A10088DEC7 /* CCActionManager.cpp in Sources */,
 				1A570085180BC5A10088DEC7 /* CCActionPageTurn3D.cpp in Sources */,
 				1A570089180BC5A10088DEC7 /* CCActionProgressTimer.cpp in Sources */,
+				296CAD281915EC9900C64FBF /* CCEventListenerFocus.cpp in Sources */,
 				1A57008D180BC5A10088DEC7 /* CCActionTiledGrid.cpp in Sources */,
 				1A570091180BC5A10088DEC7 /* CCActionTween.cpp in Sources */,
 				B2AF2F9918EBAEAE00C5807C /* Matrix.cpp in Sources */,
@@ -6278,6 +6306,7 @@
 				1AD71ECD180E26E600808F54 /* Skeleton.cpp in Sources */,
 				1AD71ED1180E26E600808F54 /* SkeletonData.cpp in Sources */,
 				1AD71ED5180E26E600808F54 /* SkeletonJson.cpp in Sources */,
+				296CAD221915EC8000C64FBF /* CCEventFocus.cpp in Sources */,
 				1AD71ED9180E26E600808F54 /* Skin.cpp in Sources */,
 				1AD71EDD180E26E600808F54 /* Slot.cpp in Sources */,
 				1AD71EE1180E26E600808F54 /* SlotData.cpp in Sources */,
@@ -6484,6 +6513,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				296CAD291915EC9900C64FBF /* CCEventListenerFocus.cpp in Sources */,
 				1A01C69918F57BE800EFE3A6 /* CCSet.cpp in Sources */,
 				1A01C69D18F57BE800EFE3A6 /* CCString.cpp in Sources */,
 				2986667F18B1B246000E39CA /* CCTweenFunction.cpp in Sources */,
@@ -6523,6 +6553,7 @@
 				500DC92B19106300007B91BF /* atitc.cpp in Sources */,
 				46A170FE1807CECB005B8026 /* CCPhysicsContact.cpp in Sources */,
 				46A170391807CBFE005B8026 /* CCThread.cpp in Sources */,
+				3EA0FB6C191C841D00B170C8 /* UIVideoPlayerIOS.mm in Sources */,
 				46A170421807CC07005B8026 /* CCGLView.mm in Sources */,
 				1A570062180BC5A10088DEC7 /* CCAction.cpp in Sources */,
 				1A570066180BC5A10088DEC7 /* CCActionCamera.cpp in Sources */,
@@ -6631,6 +6662,7 @@
 				1A570306180BCED90088DEC7 /* ccUtils.cpp in Sources */,
 				1A57030D180BCF190088DEC7 /* CCComponent.cpp in Sources */,
 				1A570311180BCF190088DEC7 /* CCComponentContainer.cpp in Sources */,
+				296CAD231915EC8000C64FBF /* CCEventFocus.cpp in Sources */,
 				1A57031A180BCF430088DEC7 /* ccCArray.cpp in Sources */,
 				B375107C1823ACA100B3BA6A /* CCPhysicsBodyInfo_chipmunk.cpp in Sources */,
 				50FCEBB418C72017004AD434 /* SliderReader.cpp in Sources */,
