@@ -1566,50 +1566,42 @@
 		5034CA1E191D591100CE6051 /* CCShaderCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034C9F9191D591000CE6051 /* CCShaderCache.h */; };
 		5034CA1F191D591100CE6051 /* CCShaderCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5034C9FA191D591000CE6051 /* CCShaderCache.cpp */; };
 		5034CA20191D591100CE6051 /* CCShaderCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5034C9FA191D591000CE6051 /* CCShaderCache.cpp */; };
-		5034CA21191D591100CE6051 /* ccShader_PositionTextureColorAlphaTest_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034C9FB191D591000CE6051 /* ccShader_PositionTextureColorAlphaTest_frag.h */; };
-		5034CA22191D591100CE6051 /* ccShader_PositionTextureColorAlphaTest_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034C9FB191D591000CE6051 /* ccShader_PositionTextureColorAlphaTest_frag.h */; };
-		5034CA23191D591100CE6051 /* ccShader_PositionTextureColor_vert.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034C9FC191D591000CE6051 /* ccShader_PositionTextureColor_vert.h */; };
-		5034CA24191D591100CE6051 /* ccShader_PositionTextureColor_vert.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034C9FC191D591000CE6051 /* ccShader_PositionTextureColor_vert.h */; };
-		5034CA25191D591100CE6051 /* ccShader_PositionTextureColor_noMVP_vert.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034C9FD191D591000CE6051 /* ccShader_PositionTextureColor_noMVP_vert.h */; };
-		5034CA26191D591100CE6051 /* ccShader_PositionTextureColor_noMVP_vert.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034C9FD191D591000CE6051 /* ccShader_PositionTextureColor_noMVP_vert.h */; };
-		5034CA27191D591100CE6051 /* ccShader_PositionTextureColor_noMVP_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034C9FE191D591000CE6051 /* ccShader_PositionTextureColor_noMVP_frag.h */; };
-		5034CA28191D591100CE6051 /* ccShader_PositionTextureColor_noMVP_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034C9FE191D591000CE6051 /* ccShader_PositionTextureColor_noMVP_frag.h */; };
-		5034CA29191D591100CE6051 /* ccShader_PositionTextureColor_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034C9FF191D591000CE6051 /* ccShader_PositionTextureColor_frag.h */; };
-		5034CA2A191D591100CE6051 /* ccShader_PositionTextureColor_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034C9FF191D591000CE6051 /* ccShader_PositionTextureColor_frag.h */; };
-		5034CA2B191D591100CE6051 /* ccShader_PositionTextureA8Color_vert.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA00191D591000CE6051 /* ccShader_PositionTextureA8Color_vert.h */; };
-		5034CA2C191D591100CE6051 /* ccShader_PositionTextureA8Color_vert.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA00191D591000CE6051 /* ccShader_PositionTextureA8Color_vert.h */; };
-		5034CA2D191D591100CE6051 /* ccShader_PositionTextureA8Color_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA01191D591000CE6051 /* ccShader_PositionTextureA8Color_frag.h */; };
-		5034CA2E191D591100CE6051 /* ccShader_PositionTextureA8Color_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA01191D591000CE6051 /* ccShader_PositionTextureA8Color_frag.h */; };
-		5034CA2F191D591100CE6051 /* ccShader_PositionTexture_vert.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA02191D591000CE6051 /* ccShader_PositionTexture_vert.h */; };
-		5034CA30191D591100CE6051 /* ccShader_PositionTexture_vert.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA02191D591000CE6051 /* ccShader_PositionTexture_vert.h */; };
-		5034CA31191D591100CE6051 /* ccShader_PositionTexture_uColor_vert.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA03191D591000CE6051 /* ccShader_PositionTexture_uColor_vert.h */; };
-		5034CA32191D591100CE6051 /* ccShader_PositionTexture_uColor_vert.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA03191D591000CE6051 /* ccShader_PositionTexture_uColor_vert.h */; };
-		5034CA33191D591100CE6051 /* ccShader_PositionTexture_uColor_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA04191D591000CE6051 /* ccShader_PositionTexture_uColor_frag.h */; };
-		5034CA34191D591100CE6051 /* ccShader_PositionTexture_uColor_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA04191D591000CE6051 /* ccShader_PositionTexture_uColor_frag.h */; };
-		5034CA35191D591100CE6051 /* ccShader_PositionTexture_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA05191D591000CE6051 /* ccShader_PositionTexture_frag.h */; };
-		5034CA36191D591100CE6051 /* ccShader_PositionTexture_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA05191D591000CE6051 /* ccShader_PositionTexture_frag.h */; };
-		5034CA37191D591100CE6051 /* ccShader_PositionColorLengthTexture_vert.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA06191D591000CE6051 /* ccShader_PositionColorLengthTexture_vert.h */; };
-		5034CA38191D591100CE6051 /* ccShader_PositionColorLengthTexture_vert.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA06191D591000CE6051 /* ccShader_PositionColorLengthTexture_vert.h */; };
-		5034CA39191D591100CE6051 /* ccShader_PositionColorLengthTexture_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA07191D591000CE6051 /* ccShader_PositionColorLengthTexture_frag.h */; };
-		5034CA3A191D591100CE6051 /* ccShader_PositionColorLengthTexture_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA07191D591000CE6051 /* ccShader_PositionColorLengthTexture_frag.h */; };
-		5034CA3B191D591100CE6051 /* ccShader_PositionColor_vert.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA08191D591000CE6051 /* ccShader_PositionColor_vert.h */; };
-		5034CA3C191D591100CE6051 /* ccShader_PositionColor_vert.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA08191D591000CE6051 /* ccShader_PositionColor_vert.h */; };
-		5034CA3D191D591100CE6051 /* ccShader_PositionColor_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA09191D591000CE6051 /* ccShader_PositionColor_frag.h */; };
-		5034CA3E191D591100CE6051 /* ccShader_PositionColor_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA09191D591000CE6051 /* ccShader_PositionColor_frag.h */; };
-		5034CA3F191D591100CE6051 /* ccShader_Position_uColor_vert.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA0A191D591000CE6051 /* ccShader_Position_uColor_vert.h */; };
-		5034CA40191D591100CE6051 /* ccShader_Position_uColor_vert.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA0A191D591000CE6051 /* ccShader_Position_uColor_vert.h */; };
-		5034CA41191D591100CE6051 /* ccShader_Position_uColor_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA0B191D591000CE6051 /* ccShader_Position_uColor_frag.h */; };
-		5034CA42191D591100CE6051 /* ccShader_Position_uColor_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA0B191D591000CE6051 /* ccShader_Position_uColor_frag.h */; };
-		5034CA43191D591100CE6051 /* ccShader_Label_vert.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA0C191D591000CE6051 /* ccShader_Label_vert.h */; };
-		5034CA44191D591100CE6051 /* ccShader_Label_vert.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA0C191D591000CE6051 /* ccShader_Label_vert.h */; };
-		5034CA45191D591100CE6051 /* ccShader_Label_frag_outline.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA0D191D591000CE6051 /* ccShader_Label_frag_outline.h */; };
-		5034CA46191D591100CE6051 /* ccShader_Label_frag_outline.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA0D191D591000CE6051 /* ccShader_Label_frag_outline.h */; };
-		5034CA47191D591100CE6051 /* ccShader_Label_frag_normal.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA0E191D591000CE6051 /* ccShader_Label_frag_normal.h */; };
-		5034CA48191D591100CE6051 /* ccShader_Label_frag_normal.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA0E191D591000CE6051 /* ccShader_Label_frag_normal.h */; };
-		5034CA49191D591100CE6051 /* ccShader_Label_frag_df.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA0F191D591000CE6051 /* ccShader_Label_frag_df.h */; };
-		5034CA4A191D591100CE6051 /* ccShader_Label_frag_df.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA0F191D591000CE6051 /* ccShader_Label_frag_df.h */; };
-		5034CA4B191D591100CE6051 /* ccShader_Label_frag_df_glow.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA10191D591000CE6051 /* ccShader_Label_frag_df_glow.h */; };
-		5034CA4C191D591100CE6051 /* ccShader_Label_frag_df_glow.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA10191D591000CE6051 /* ccShader_Label_frag_df_glow.h */; };
+		5034CA21191D591100CE6051 /* ccShader_PositionTextureColorAlphaTest.frag in Headers */ = {isa = PBXBuildFile; fileRef = 5034C9FB191D591000CE6051 /* ccShader_PositionTextureColorAlphaTest.frag */; };
+		5034CA22191D591100CE6051 /* ccShader_PositionTextureColorAlphaTest.frag in Headers */ = {isa = PBXBuildFile; fileRef = 5034C9FB191D591000CE6051 /* ccShader_PositionTextureColorAlphaTest.frag */; };
+		5034CA2B191D591100CE6051 /* ccShader_PositionTextureA8Color.vert in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA00191D591000CE6051 /* ccShader_PositionTextureA8Color.vert */; };
+		5034CA2C191D591100CE6051 /* ccShader_PositionTextureA8Color.vert in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA00191D591000CE6051 /* ccShader_PositionTextureA8Color.vert */; };
+		5034CA2D191D591100CE6051 /* ccShader_PositionTextureA8Color.frag in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA01191D591000CE6051 /* ccShader_PositionTextureA8Color.frag */; };
+		5034CA2E191D591100CE6051 /* ccShader_PositionTextureA8Color.frag in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA01191D591000CE6051 /* ccShader_PositionTextureA8Color.frag */; };
+		5034CA2F191D591100CE6051 /* ccShader_PositionTexture.vert in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA02191D591000CE6051 /* ccShader_PositionTexture.vert */; };
+		5034CA30191D591100CE6051 /* ccShader_PositionTexture.vert in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA02191D591000CE6051 /* ccShader_PositionTexture.vert */; };
+		5034CA31191D591100CE6051 /* ccShader_PositionTexture_uColor.vert in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA03191D591000CE6051 /* ccShader_PositionTexture_uColor.vert */; };
+		5034CA32191D591100CE6051 /* ccShader_PositionTexture_uColor.vert in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA03191D591000CE6051 /* ccShader_PositionTexture_uColor.vert */; };
+		5034CA33191D591100CE6051 /* ccShader_PositionTexture_uColor.frag in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA04191D591000CE6051 /* ccShader_PositionTexture_uColor.frag */; };
+		5034CA34191D591100CE6051 /* ccShader_PositionTexture_uColor.frag in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA04191D591000CE6051 /* ccShader_PositionTexture_uColor.frag */; };
+		5034CA35191D591100CE6051 /* ccShader_PositionTexture.frag in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA05191D591000CE6051 /* ccShader_PositionTexture.frag */; };
+		5034CA36191D591100CE6051 /* ccShader_PositionTexture.frag in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA05191D591000CE6051 /* ccShader_PositionTexture.frag */; };
+		5034CA37191D591100CE6051 /* ccShader_PositionColorLengthTexture.vert in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA06191D591000CE6051 /* ccShader_PositionColorLengthTexture.vert */; };
+		5034CA38191D591100CE6051 /* ccShader_PositionColorLengthTexture.vert in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA06191D591000CE6051 /* ccShader_PositionColorLengthTexture.vert */; };
+		5034CA39191D591100CE6051 /* ccShader_PositionColorLengthTexture.frag in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA07191D591000CE6051 /* ccShader_PositionColorLengthTexture.frag */; };
+		5034CA3A191D591100CE6051 /* ccShader_PositionColorLengthTexture.frag in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA07191D591000CE6051 /* ccShader_PositionColorLengthTexture.frag */; };
+		5034CA3B191D591100CE6051 /* ccShader_PositionColor.vert in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA08191D591000CE6051 /* ccShader_PositionColor.vert */; };
+		5034CA3C191D591100CE6051 /* ccShader_PositionColor.vert in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA08191D591000CE6051 /* ccShader_PositionColor.vert */; };
+		5034CA3D191D591100CE6051 /* ccShader_PositionColor.frag in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA09191D591000CE6051 /* ccShader_PositionColor.frag */; };
+		5034CA3E191D591100CE6051 /* ccShader_PositionColor.frag in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA09191D591000CE6051 /* ccShader_PositionColor.frag */; };
+		5034CA3F191D591100CE6051 /* ccShader_Position_uColor.vert in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA0A191D591000CE6051 /* ccShader_Position_uColor.vert */; };
+		5034CA40191D591100CE6051 /* ccShader_Position_uColor.vert in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA0A191D591000CE6051 /* ccShader_Position_uColor.vert */; };
+		5034CA41191D591100CE6051 /* ccShader_Position_uColor.frag in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA0B191D591000CE6051 /* ccShader_Position_uColor.frag */; };
+		5034CA42191D591100CE6051 /* ccShader_Position_uColor.frag in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA0B191D591000CE6051 /* ccShader_Position_uColor.frag */; };
+		5034CA43191D591100CE6051 /* ccShader_Label.vert in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA0C191D591000CE6051 /* ccShader_Label.vert */; };
+		5034CA44191D591100CE6051 /* ccShader_Label.vert in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA0C191D591000CE6051 /* ccShader_Label.vert */; };
+		5034CA45191D591100CE6051 /* ccShader_Label_outline.frag in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA0D191D591000CE6051 /* ccShader_Label_outline.frag */; };
+		5034CA46191D591100CE6051 /* ccShader_Label_outline.frag in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA0D191D591000CE6051 /* ccShader_Label_outline.frag */; };
+		5034CA47191D591100CE6051 /* ccShader_Label_normal.frag in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA0E191D591000CE6051 /* ccShader_Label_normal.frag */; };
+		5034CA48191D591100CE6051 /* ccShader_Label_normal.frag in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA0E191D591000CE6051 /* ccShader_Label_normal.frag */; };
+		5034CA49191D591100CE6051 /* ccShader_Label_df.frag in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA0F191D591000CE6051 /* ccShader_Label_df.frag */; };
+		5034CA4A191D591100CE6051 /* ccShader_Label_df.frag in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA0F191D591000CE6051 /* ccShader_Label_df.frag */; };
+		5034CA4B191D591100CE6051 /* ccShader_Label_df_glow.frag in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA10191D591000CE6051 /* ccShader_Label_df_glow.frag */; };
+		5034CA4C191D591100CE6051 /* ccShader_Label_df_glow.frag in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA10191D591000CE6051 /* ccShader_Label_df_glow.frag */; };
 		5034CA4D191D591100CE6051 /* ccGLStateCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA11191D591000CE6051 /* ccGLStateCache.h */; };
 		5034CA4E191D591100CE6051 /* ccGLStateCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA11191D591000CE6051 /* ccGLStateCache.h */; };
 		5034CA4F191D591100CE6051 /* ccGLStateCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5034CA12191D591000CE6051 /* ccGLStateCache.cpp */; };
@@ -2678,28 +2670,24 @@
 		5034C9F8191D591000CE6051 /* ccShaders.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ccShaders.cpp; sourceTree = "<group>"; };
 		5034C9F9191D591000CE6051 /* CCShaderCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCShaderCache.h; sourceTree = "<group>"; };
 		5034C9FA191D591000CE6051 /* CCShaderCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCShaderCache.cpp; sourceTree = "<group>"; };
-		5034C9FB191D591000CE6051 /* ccShader_PositionTextureColorAlphaTest_frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionTextureColorAlphaTest_frag.h; sourceTree = "<group>"; };
-		5034C9FC191D591000CE6051 /* ccShader_PositionTextureColor_vert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionTextureColor_vert.h; sourceTree = "<group>"; };
-		5034C9FD191D591000CE6051 /* ccShader_PositionTextureColor_noMVP_vert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionTextureColor_noMVP_vert.h; sourceTree = "<group>"; };
-		5034C9FE191D591000CE6051 /* ccShader_PositionTextureColor_noMVP_frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionTextureColor_noMVP_frag.h; sourceTree = "<group>"; };
-		5034C9FF191D591000CE6051 /* ccShader_PositionTextureColor_frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionTextureColor_frag.h; sourceTree = "<group>"; };
-		5034CA00191D591000CE6051 /* ccShader_PositionTextureA8Color_vert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionTextureA8Color_vert.h; sourceTree = "<group>"; };
-		5034CA01191D591000CE6051 /* ccShader_PositionTextureA8Color_frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionTextureA8Color_frag.h; sourceTree = "<group>"; };
-		5034CA02191D591000CE6051 /* ccShader_PositionTexture_vert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionTexture_vert.h; sourceTree = "<group>"; };
-		5034CA03191D591000CE6051 /* ccShader_PositionTexture_uColor_vert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionTexture_uColor_vert.h; sourceTree = "<group>"; };
-		5034CA04191D591000CE6051 /* ccShader_PositionTexture_uColor_frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionTexture_uColor_frag.h; sourceTree = "<group>"; };
-		5034CA05191D591000CE6051 /* ccShader_PositionTexture_frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionTexture_frag.h; sourceTree = "<group>"; };
-		5034CA06191D591000CE6051 /* ccShader_PositionColorLengthTexture_vert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionColorLengthTexture_vert.h; sourceTree = "<group>"; };
-		5034CA07191D591000CE6051 /* ccShader_PositionColorLengthTexture_frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionColorLengthTexture_frag.h; sourceTree = "<group>"; };
-		5034CA08191D591000CE6051 /* ccShader_PositionColor_vert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionColor_vert.h; sourceTree = "<group>"; };
-		5034CA09191D591000CE6051 /* ccShader_PositionColor_frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionColor_frag.h; sourceTree = "<group>"; };
-		5034CA0A191D591000CE6051 /* ccShader_Position_uColor_vert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_Position_uColor_vert.h; sourceTree = "<group>"; };
-		5034CA0B191D591000CE6051 /* ccShader_Position_uColor_frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_Position_uColor_frag.h; sourceTree = "<group>"; };
-		5034CA0C191D591000CE6051 /* ccShader_Label_vert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_Label_vert.h; sourceTree = "<group>"; };
-		5034CA0D191D591000CE6051 /* ccShader_Label_frag_outline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_Label_frag_outline.h; sourceTree = "<group>"; };
-		5034CA0E191D591000CE6051 /* ccShader_Label_frag_normal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_Label_frag_normal.h; sourceTree = "<group>"; };
-		5034CA0F191D591000CE6051 /* ccShader_Label_frag_df.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_Label_frag_df.h; sourceTree = "<group>"; };
-		5034CA10191D591000CE6051 /* ccShader_Label_frag_df_glow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_Label_frag_df_glow.h; sourceTree = "<group>"; };
+		5034C9FB191D591000CE6051 /* ccShader_PositionTextureColorAlphaTest.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionTextureColorAlphaTest.frag; sourceTree = "<group>"; };
+		5034CA00191D591000CE6051 /* ccShader_PositionTextureA8Color.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionTextureA8Color.vert; sourceTree = "<group>"; };
+		5034CA01191D591000CE6051 /* ccShader_PositionTextureA8Color.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionTextureA8Color.frag; sourceTree = "<group>"; };
+		5034CA02191D591000CE6051 /* ccShader_PositionTexture.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionTexture.vert; sourceTree = "<group>"; };
+		5034CA03191D591000CE6051 /* ccShader_PositionTexture_uColor.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionTexture_uColor.vert; sourceTree = "<group>"; };
+		5034CA04191D591000CE6051 /* ccShader_PositionTexture_uColor.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionTexture_uColor.frag; sourceTree = "<group>"; };
+		5034CA05191D591000CE6051 /* ccShader_PositionTexture.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionTexture.frag; sourceTree = "<group>"; };
+		5034CA06191D591000CE6051 /* ccShader_PositionColorLengthTexture.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionColorLengthTexture.vert; sourceTree = "<group>"; };
+		5034CA07191D591000CE6051 /* ccShader_PositionColorLengthTexture.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionColorLengthTexture.frag; sourceTree = "<group>"; };
+		5034CA08191D591000CE6051 /* ccShader_PositionColor.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionColor.vert; sourceTree = "<group>"; };
+		5034CA09191D591000CE6051 /* ccShader_PositionColor.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionColor.frag; sourceTree = "<group>"; };
+		5034CA0A191D591000CE6051 /* ccShader_Position_uColor.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_Position_uColor.vert; sourceTree = "<group>"; };
+		5034CA0B191D591000CE6051 /* ccShader_Position_uColor.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_Position_uColor.frag; sourceTree = "<group>"; };
+		5034CA0C191D591000CE6051 /* ccShader_Label.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_Label.vert; sourceTree = "<group>"; };
+		5034CA0D191D591000CE6051 /* ccShader_Label_outline.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_Label_outline.frag; sourceTree = "<group>"; };
+		5034CA0E191D591000CE6051 /* ccShader_Label_normal.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_Label_normal.frag; sourceTree = "<group>"; };
+		5034CA0F191D591000CE6051 /* ccShader_Label_df.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_Label_df.frag; sourceTree = "<group>"; };
+		5034CA10191D591000CE6051 /* ccShader_Label_df_glow.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_Label_df_glow.frag; sourceTree = "<group>"; };
 		5034CA11191D591000CE6051 /* ccGLStateCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccGLStateCache.h; sourceTree = "<group>"; };
 		5034CA12191D591000CE6051 /* ccGLStateCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ccGLStateCache.cpp; sourceTree = "<group>"; };
 		5034CA13191D591000CE6051 /* CCGLProgramStateCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGLProgramStateCache.h; sourceTree = "<group>"; };
@@ -2708,6 +2696,10 @@
 		5034CA16191D591000CE6051 /* CCGLProgramState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGLProgramState.cpp; sourceTree = "<group>"; };
 		5034CA17191D591000CE6051 /* CCGLProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGLProgram.h; sourceTree = "<group>"; };
 		5034CA18191D591000CE6051 /* CCGLProgram.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGLProgram.cpp; sourceTree = "<group>"; };
+		5034CA60191D91CF00CE6051 /* ccShader_PositionTextureColor.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionTextureColor.vert; sourceTree = "<group>"; };
+		5034CA61191D91CF00CE6051 /* ccShader_PositionTextureColor.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionTextureColor.frag; sourceTree = "<group>"; };
+		5034CA62191D91CF00CE6051 /* ccShader_PositionTextureColor_noMVP.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionTextureColor_noMVP.vert; sourceTree = "<group>"; };
+		5034CA63191D91CF00CE6051 /* ccShader_PositionTextureColor_noMVP.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionTextureColor_noMVP.frag; sourceTree = "<group>"; };
 		50DC5180187B817900A9C23F /* RELEASE_NOTES.md */ = {isa = PBXFileReference; lastKnownFileType = text; name = RELEASE_NOTES.md; path = ../docs/RELEASE_NOTES.md; sourceTree = "<group>"; };
 		50E6D30C18DADB5D0051CA34 /* CCProtectedNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCProtectedNode.cpp; sourceTree = "<group>"; };
 		50E6D30D18DADB5D0051CA34 /* CCProtectedNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProtectedNode.h; sourceTree = "<group>"; };
@@ -4649,28 +4641,28 @@
 		5034CA5D191D591900CE6051 /* shaders */ = {
 			isa = PBXGroup;
 			children = (
-				5034C9FB191D591000CE6051 /* ccShader_PositionTextureColorAlphaTest_frag.h */,
-				5034C9FC191D591000CE6051 /* ccShader_PositionTextureColor_vert.h */,
-				5034C9FD191D591000CE6051 /* ccShader_PositionTextureColor_noMVP_vert.h */,
-				5034C9FE191D591000CE6051 /* ccShader_PositionTextureColor_noMVP_frag.h */,
-				5034C9FF191D591000CE6051 /* ccShader_PositionTextureColor_frag.h */,
-				5034CA00191D591000CE6051 /* ccShader_PositionTextureA8Color_vert.h */,
-				5034CA01191D591000CE6051 /* ccShader_PositionTextureA8Color_frag.h */,
-				5034CA02191D591000CE6051 /* ccShader_PositionTexture_vert.h */,
-				5034CA03191D591000CE6051 /* ccShader_PositionTexture_uColor_vert.h */,
-				5034CA04191D591000CE6051 /* ccShader_PositionTexture_uColor_frag.h */,
-				5034CA05191D591000CE6051 /* ccShader_PositionTexture_frag.h */,
-				5034CA06191D591000CE6051 /* ccShader_PositionColorLengthTexture_vert.h */,
-				5034CA07191D591000CE6051 /* ccShader_PositionColorLengthTexture_frag.h */,
-				5034CA08191D591000CE6051 /* ccShader_PositionColor_vert.h */,
-				5034CA09191D591000CE6051 /* ccShader_PositionColor_frag.h */,
-				5034CA0A191D591000CE6051 /* ccShader_Position_uColor_vert.h */,
-				5034CA0B191D591000CE6051 /* ccShader_Position_uColor_frag.h */,
-				5034CA0C191D591000CE6051 /* ccShader_Label_vert.h */,
-				5034CA0D191D591000CE6051 /* ccShader_Label_frag_outline.h */,
-				5034CA0E191D591000CE6051 /* ccShader_Label_frag_normal.h */,
-				5034CA0F191D591000CE6051 /* ccShader_Label_frag_df.h */,
-				5034CA10191D591000CE6051 /* ccShader_Label_frag_df_glow.h */,
+				5034CA60191D91CF00CE6051 /* ccShader_PositionTextureColor.vert */,
+				5034CA61191D91CF00CE6051 /* ccShader_PositionTextureColor.frag */,
+				5034CA62191D91CF00CE6051 /* ccShader_PositionTextureColor_noMVP.vert */,
+				5034CA63191D91CF00CE6051 /* ccShader_PositionTextureColor_noMVP.frag */,
+				5034C9FB191D591000CE6051 /* ccShader_PositionTextureColorAlphaTest.frag */,
+				5034CA00191D591000CE6051 /* ccShader_PositionTextureA8Color.vert */,
+				5034CA01191D591000CE6051 /* ccShader_PositionTextureA8Color.frag */,
+				5034CA02191D591000CE6051 /* ccShader_PositionTexture.vert */,
+				5034CA05191D591000CE6051 /* ccShader_PositionTexture.frag */,
+				5034CA03191D591000CE6051 /* ccShader_PositionTexture_uColor.vert */,
+				5034CA04191D591000CE6051 /* ccShader_PositionTexture_uColor.frag */,
+				5034CA06191D591000CE6051 /* ccShader_PositionColorLengthTexture.vert */,
+				5034CA07191D591000CE6051 /* ccShader_PositionColorLengthTexture.frag */,
+				5034CA08191D591000CE6051 /* ccShader_PositionColor.vert */,
+				5034CA09191D591000CE6051 /* ccShader_PositionColor.frag */,
+				5034CA0A191D591000CE6051 /* ccShader_Position_uColor.vert */,
+				5034CA0B191D591000CE6051 /* ccShader_Position_uColor.frag */,
+				5034CA0C191D591000CE6051 /* ccShader_Label.vert */,
+				5034CA0D191D591000CE6051 /* ccShader_Label_outline.frag */,
+				5034CA0E191D591000CE6051 /* ccShader_Label_normal.frag */,
+				5034CA0F191D591000CE6051 /* ccShader_Label_df.frag */,
+				5034CA10191D591000CE6051 /* ccShader_Label_df_glow.frag */,
 			);
 			name = shaders;
 			sourceTree = "<group>";
@@ -4912,7 +4904,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5034CA39191D591100CE6051 /* ccShader_PositionColorLengthTexture_frag.h in Headers */,
+				5034CA39191D591100CE6051 /* ccShader_PositionColorLengthTexture.frag in Headers */,
 				2AC795DF18628723005EC8E1 /* SkeletonBounds.h in Headers */,
 				2AC795E018628723005EC8E1 /* Event.h in Headers */,
 				2AC795E118628723005EC8E1 /* EventData.h in Headers */,
@@ -4923,7 +4915,7 @@
 				06CAAAC9186AD7EE0012A414 /* TriggerMng.h in Headers */,
 				2905FA6018CF08D100240AA3 /* UILayoutParameter.h in Headers */,
 				1ABA68B01888D700007D1BB4 /* CCFontCharMap.h in Headers */,
-				5034CA3F191D591100CE6051 /* ccShader_Position_uColor_vert.h in Headers */,
+				5034CA3F191D591100CE6051 /* ccShader_Position_uColor.vert in Headers */,
 				500DC8B419105D41007B91BF /* CCGroupCommand.h in Headers */,
 				500DC8D319105F7D007B91BF /* CCAffineTransform.h in Headers */,
 				46A170191807CBFC005B8026 /* CCCommon.h in Headers */,
@@ -4961,7 +4953,7 @@
 				1A57006F180BC5A10088DEC7 /* CCActionEase.h in Headers */,
 				1A570073180BC5A10088DEC7 /* CCActionGrid.h in Headers */,
 				50FCEBB518C72017004AD434 /* SliderReader.h in Headers */,
-				5034CA3B191D591100CE6051 /* ccShader_PositionColor_vert.h in Headers */,
+				5034CA3B191D591100CE6051 /* ccShader_PositionColor.vert in Headers */,
 				06CAAAD1186AD8010012A414 /* ObjectFactory.h in Headers */,
 				1A570077180BC5A10088DEC7 /* CCActionGrid3D.h in Headers */,
 				1A57007B180BC5A10088DEC7 /* CCActionInstant.h in Headers */,
@@ -4969,7 +4961,6 @@
 				500DC94E19106300007B91BF /* CCEvent.h in Headers */,
 				1A57007F180BC5A10088DEC7 /* CCActionInterval.h in Headers */,
 				1A01C69A18F57BE800EFE3A6 /* CCSet.h in Headers */,
-				5034CA23191D591100CE6051 /* ccShader_PositionTextureColor_vert.h in Headers */,
 				296CAD2A1915EC9900C64FBF /* CCEventListenerFocus.h in Headers */,
 				1A570083180BC5A10088DEC7 /* CCActionManager.h in Headers */,
 				1A570087180BC5A10088DEC7 /* CCActionPageTurn3D.h in Headers */,
@@ -4999,7 +4990,7 @@
 				500DC98219106300007B91BF /* ccMacros.h in Headers */,
 				1A57011D180BC90D0088DEC7 /* CCGrabber.h in Headers */,
 				1A570121180BC90D0088DEC7 /* CCGrid.h in Headers */,
-				5034CA2D191D591100CE6051 /* ccShader_PositionTextureA8Color_frag.h in Headers */,
+				5034CA2D191D591100CE6051 /* ccShader_PositionTextureA8Color.frag in Headers */,
 				50E6D33A18E174130051CA34 /* UIRelativeBox.h in Headers */,
 				500DC8C619105D41007B91BF /* CCRenderer.h in Headers */,
 				50E6D30F18DADB5D0051CA34 /* CCProtectedNode.h in Headers */,
@@ -5012,7 +5003,7 @@
 				1A01C68618F57BE800EFE3A6 /* CCArray.h in Headers */,
 				1A5701A7180BCB590088DEC7 /* CCFontAtlasCache.h in Headers */,
 				1A5701B3180BCB590088DEC7 /* CCFontFNT.h in Headers */,
-				5034CA47191D591100CE6051 /* ccShader_Label_frag_normal.h in Headers */,
+				5034CA47191D591100CE6051 /* ccShader_Label_normal.frag in Headers */,
 				1A5701B7180BCB5A0088DEC7 /* CCFontFreeType.h in Headers */,
 				500DC94219106300007B91BF /* CCData.h in Headers */,
 				1A5701BB180BCB5A0088DEC7 /* CCLabel.h in Headers */,
@@ -5020,7 +5011,7 @@
 				1A5701C3180BCB5A0088DEC7 /* CCLabelBMFont.h in Headers */,
 				500DC93A19106300007B91BF /* CCConfiguration.h in Headers */,
 				1A5701C9180BCB5A0088DEC7 /* CCLabelTextFormatter.h in Headers */,
-				5034CA37191D591100CE6051 /* ccShader_PositionColorLengthTexture_vert.h in Headers */,
+				5034CA37191D591100CE6051 /* ccShader_PositionColorLengthTexture.vert in Headers */,
 				1A5701CD180BCB5A0088DEC7 /* CCLabelTTF.h in Headers */,
 				1A5701E0180BCB8C0088DEC7 /* CCLayer.h in Headers */,
 				1A5701E4180BCB8C0088DEC7 /* CCScene.h in Headers */,
@@ -5041,11 +5032,11 @@
 				500DC99E19106300007B91BF /* CCValue.h in Headers */,
 				1A01C69618F57BE800EFE3A6 /* CCInteger.h in Headers */,
 				1A570223180BCC1A0088DEC7 /* CCParticleBatchNode.h in Headers */,
-				5034CA43191D591100CE6051 /* ccShader_Label_vert.h in Headers */,
+				5034CA43191D591100CE6051 /* ccShader_Label.vert in Headers */,
 				1A570227180BCC1A0088DEC7 /* CCParticleExamples.h in Headers */,
 				1A57022B180BCC1A0088DEC7 /* CCParticleSystem.h in Headers */,
-				5034CA2F191D591100CE6051 /* ccShader_PositionTexture_vert.h in Headers */,
-				5034CA4B191D591100CE6051 /* ccShader_Label_frag_df_glow.h in Headers */,
+				5034CA2F191D591100CE6051 /* ccShader_PositionTexture.vert in Headers */,
+				5034CA4B191D591100CE6051 /* ccShader_Label_df_glow.frag in Headers */,
 				1A57022F180BCC1A0088DEC7 /* CCParticleSystemQuad.h in Headers */,
 				500DC96A19106300007B91BF /* CCEventListenerCustom.h in Headers */,
 				B2AF2F9718EBAEAE00C5807C /* MathUtil.h in Headers */,
@@ -5053,19 +5044,19 @@
 				500DC95E19106300007B91BF /* CCEventKeyboard.h in Headers */,
 				2905FA4218CF08D100240AA3 /* CocosGUI.h in Headers */,
 				500DC95A19106300007B91BF /* CCEventDispatcher.h in Headers */,
-				5034CA49191D591100CE6051 /* ccShader_Label_frag_df.h in Headers */,
+				5034CA49191D591100CE6051 /* ccShader_Label_df.frag in Headers */,
 				500DC9A019106300007B91BF /* CCVector.h in Headers */,
 				500DC92C19106300007B91BF /* atitc.h in Headers */,
 				1A01C68C18F57BE800EFE3A6 /* CCDeprecated.h in Headers */,
 				500DC98419106300007B91BF /* CCMap.h in Headers */,
 				2905FA6418CF08D100240AA3 /* UIListView.h in Headers */,
 				50FCEBB918C72017004AD434 /* TextAtlasReader.h in Headers */,
-				5034CA3D191D591100CE6051 /* ccShader_PositionColor_frag.h in Headers */,
+				5034CA3D191D591100CE6051 /* ccShader_PositionColor.frag in Headers */,
 				1A570280180BCC900088DEC7 /* CCSprite.h in Headers */,
 				1A570284180BCC900088DEC7 /* CCSpriteBatchNode.h in Headers */,
 				500DC9A419106300007B91BF /* etc1.h in Headers */,
 				5034CA55191D591100CE6051 /* CCGLProgramState.h in Headers */,
-				5034CA2B191D591100CE6051 /* ccShader_PositionTextureA8Color_vert.h in Headers */,
+				5034CA2B191D591100CE6051 /* ccShader_PositionTextureA8Color.vert in Headers */,
 				1A570288180BCC900088DEC7 /* CCSpriteFrame.h in Headers */,
 				1A57028C180BCC900088DEC7 /* CCSpriteFrameCache.h in Headers */,
 				5027253A190BF1B900AAF4ED /* cocos2d.h in Headers */,
@@ -5080,7 +5071,6 @@
 				1A5702C0180BCE2A0088DEC7 /* CCIMEDelegate.h in Headers */,
 				2905FA7618CF08D100240AA3 /* UIScrollView.h in Headers */,
 				1A5702C4180BCE2A0088DEC7 /* CCIMEDispatcher.h in Headers */,
-				5034CA25191D591100CE6051 /* ccShader_PositionTextureColor_noMVP_vert.h in Headers */,
 				1A12775B18DFCC540005F345 /* CCTweenFunction.h in Headers */,
 				1A5702CA180BCE370088DEC7 /* CCTextFieldTTF.h in Headers */,
 				1A5702D5180BCE570088DEC7 /* CCTexture2D.h in Headers */,
@@ -5091,7 +5081,7 @@
 				50FCEBAD18C72017004AD434 /* PageViewReader.h in Headers */,
 				1A5702F4180BCE750088DEC7 /* CCTMXObjectGroup.h in Headers */,
 				1A5702F8180BCE750088DEC7 /* CCTMXTiledMap.h in Headers */,
-				5034CA21191D591100CE6051 /* ccShader_PositionTextureColorAlphaTest_frag.h in Headers */,
+				5034CA21191D591100CE6051 /* ccShader_PositionTextureColorAlphaTest.frag in Headers */,
 				1A5702FC180BCE750088DEC7 /* CCTMXXMLParser.h in Headers */,
 				1A570302180BCE890088DEC7 /* CCParallaxNode.h in Headers */,
 				1A57030E180BCF190088DEC7 /* CCComponent.h in Headers */,
@@ -5123,12 +5113,11 @@
 				1AD71DB9180E26E600808F54 /* CCBReader.h in Headers */,
 				2905FA7E18CF08D100240AA3 /* UIText.h in Headers */,
 				1AD71DBB180E26E600808F54 /* CCBSelectorResolver.h in Headers */,
-				5034CA29191D591100CE6051 /* ccShader_PositionTextureColor_frag.h in Headers */,
-				5034CA35191D591100CE6051 /* ccShader_PositionTexture_frag.h in Headers */,
+				5034CA35191D591100CE6051 /* ccShader_PositionTexture.frag in Headers */,
 				500DC98019106300007B91BF /* CCEventType.h in Headers */,
 				1AD71DBF180E26E600808F54 /* CCBSequence.h in Headers */,
 				1AD71DC3180E26E600808F54 /* CCBSequenceProperty.h in Headers */,
-				5034CA31191D591100CE6051 /* ccShader_PositionTexture_uColor_vert.h in Headers */,
+				5034CA31191D591100CE6051 /* ccShader_PositionTexture_uColor.vert in Headers */,
 				1AD71DCB180E26E600808F54 /* CCControlButtonLoader.h in Headers */,
 				1AD71DCF180E26E600808F54 /* CCControlLoader.h in Headers */,
 				1AD71DD3180E26E600808F54 /* CCLabelBMFontLoader.h in Headers */,
@@ -5179,10 +5168,9 @@
 				500DC8D919105F7D007B91BF /* CCMathBase.h in Headers */,
 				06CAAACD186AD7F90012A414 /* TriggerBase.h in Headers */,
 				1AD71ECB180E26E600808F54 /* RegionAttachment.h in Headers */,
-				5034CA27191D591100CE6051 /* ccShader_PositionTextureColor_noMVP_frag.h in Headers */,
 				2905FA8618CF08D100240AA3 /* UITextBMFont.h in Headers */,
 				1AD71ECF180E26E600808F54 /* Skeleton.h in Headers */,
-				5034CA41191D591100CE6051 /* ccShader_Position_uColor_frag.h in Headers */,
+				5034CA41191D591100CE6051 /* ccShader_Position_uColor.frag in Headers */,
 				1A01C69E18F57BE800EFE3A6 /* CCString.h in Headers */,
 				500DC9B819106E6D007B91BF /* TransformUtils.h in Headers */,
 				1AD71ED3180E26E600808F54 /* SkeletonData.h in Headers */,
@@ -5225,7 +5213,7 @@
 				1A8C59B1180E930E00EF57C3 /* CCBatchNode.h in Headers */,
 				2905FA5418CF08D100240AA3 /* UIImageView.h in Headers */,
 				1A8C59B5180E930E00EF57C3 /* CCBone.h in Headers */,
-				5034CA45191D591100CE6051 /* ccShader_Label_frag_outline.h in Headers */,
+				5034CA45191D591100CE6051 /* ccShader_Label_outline.frag in Headers */,
 				500DC96219106300007B91BF /* CCEventListener.h in Headers */,
 				1A8C59B9180E930E00EF57C3 /* CCColliderDetector.h in Headers */,
 				1A8C59BD180E930E00EF57C3 /* CCComAttribute.h in Headers */,
@@ -5242,7 +5230,7 @@
 				1A8C59E1180E930E00EF57C3 /* CCInputDelegate.h in Headers */,
 				1A8C59E5180E930E00EF57C3 /* CCProcessBase.h in Headers */,
 				1A8C59E9180E930E00EF57C3 /* CCSGUIReader.h in Headers */,
-				5034CA33191D591100CE6051 /* ccShader_PositionTexture_uColor_frag.h in Headers */,
+				5034CA33191D591100CE6051 /* ccShader_PositionTexture_uColor.frag in Headers */,
 				1A8C59ED180E930E00EF57C3 /* CCSkin.h in Headers */,
 				5034CA1D191D591100CE6051 /* CCShaderCache.h in Headers */,
 				1A8C59F1180E930E00EF57C3 /* CCSpriteFrameCacheHelper.h in Headers */,
@@ -5419,7 +5407,7 @@
 				50FCEBAE18C72017004AD434 /* PageViewReader.h in Headers */,
 				46A1703F1807CC07005B8026 /* CCDirectorCaller.h in Headers */,
 				46A170381807CBFE005B8026 /* CCSAXParser.h in Headers */,
-				5034CA38191D591100CE6051 /* ccShader_PositionColorLengthTexture_vert.h in Headers */,
+				5034CA38191D591100CE6051 /* ccShader_PositionColorLengthTexture.vert in Headers */,
 				500DC97319106300007B91BF /* CCEventListenerMouse.h in Headers */,
 				500DC99319106300007B91BF /* CCRefPtr.h in Headers */,
 				46A1702E1807CBFE005B8026 /* CCDevice.h in Headers */,
@@ -5442,9 +5430,8 @@
 				46A170271807CBFE005B8026 /* CCFileUtilsApple.h in Headers */,
 				46A170431807CC07005B8026 /* CCES2Renderer.h in Headers */,
 				46A170331807CBFE005B8026 /* CCImage.h in Headers */,
-				5034CA40191D591100CE6051 /* ccShader_Position_uColor_vert.h in Headers */,
+				5034CA40191D591100CE6051 /* ccShader_Position_uColor.vert in Headers */,
 				2905FA5518CF08D100240AA3 /* UIImageView.h in Headers */,
-				5034CA28191D591100CE6051 /* ccShader_PositionTextureColor_noMVP_frag.h in Headers */,
 				46A170481807CC07005B8026 /* CCPlatformDefine.h in Headers */,
 				46A1704C1807CC07005B8026 /* OpenGL_Internal.h in Headers */,
 				46A1702C1807CBFE005B8026 /* CCApplicationProtocol.h in Headers */,
@@ -5454,11 +5441,11 @@
 				50FCEBC218C72017004AD434 /* TextFieldReader.h in Headers */,
 				1A570068180BC5A10088DEC7 /* CCActionCamera.h in Headers */,
 				1A57006C180BC5A10088DEC7 /* CCActionCatmullRom.h in Headers */,
-				5034CA3A191D591100CE6051 /* ccShader_PositionColorLengthTexture_frag.h in Headers */,
+				5034CA3A191D591100CE6051 /* ccShader_PositionColorLengthTexture.frag in Headers */,
 				1A570070180BC5A10088DEC7 /* CCActionEase.h in Headers */,
 				1A570074180BC5A10088DEC7 /* CCActionGrid.h in Headers */,
 				B37510841823ACA100B3BA6A /* CCPhysicsShapeInfo_chipmunk.h in Headers */,
-				5034CA46191D591100CE6051 /* ccShader_Label_frag_outline.h in Headers */,
+				5034CA46191D591100CE6051 /* ccShader_Label_outline.frag in Headers */,
 				1A570078180BC5A10088DEC7 /* CCActionGrid3D.h in Headers */,
 				1A01C68918F57BE800EFE3A6 /* CCBool.h in Headers */,
 				1A57007C180BC5A10088DEC7 /* CCActionInstant.h in Headers */,
@@ -5480,7 +5467,7 @@
 				2905FA6D18CF08D100240AA3 /* UIPageView.h in Headers */,
 				2905FA7318CF08D100240AA3 /* UIScrollInterface.h in Headers */,
 				2905FA4318CF08D100240AA3 /* CocosGUI.h in Headers */,
-				5034CA30191D591100CE6051 /* ccShader_PositionTexture_vert.h in Headers */,
+				5034CA30191D591100CE6051 /* ccShader_PositionTexture.vert in Headers */,
 				500DC93119106300007B91BF /* base64.h in Headers */,
 				B2AF2FA018EBAEAE00C5807C /* Quaternion.h in Headers */,
 				50E6D33718E174130051CA34 /* UIHBox.h in Headers */,
@@ -5496,7 +5483,7 @@
 				500DC8C719105D41007B91BF /* CCRenderer.h in Headers */,
 				500DC98519106300007B91BF /* CCMap.h in Headers */,
 				50FCEBBA18C72017004AD434 /* TextAtlasReader.h in Headers */,
-				5034CA2E191D591100CE6051 /* ccShader_PositionTextureA8Color_frag.h in Headers */,
+				5034CA2E191D591100CE6051 /* ccShader_PositionTextureA8Color.frag in Headers */,
 				1A5701A0180BCB590088DEC7 /* CCFont.h in Headers */,
 				1A5701A4180BCB590088DEC7 /* CCFontAtlas.h in Headers */,
 				1A5701A8180BCB590088DEC7 /* CCFontAtlasCache.h in Headers */,
@@ -5505,14 +5492,14 @@
 				1A5701B8180BCB5A0088DEC7 /* CCFontFreeType.h in Headers */,
 				1A5701BC180BCB5A0088DEC7 /* CCLabel.h in Headers */,
 				1A5701C0180BCB5A0088DEC7 /* CCLabelAtlas.h in Headers */,
-				5034CA42191D591100CE6051 /* ccShader_Position_uColor_frag.h in Headers */,
+				5034CA42191D591100CE6051 /* ccShader_Position_uColor.frag in Headers */,
 				500DC97719106300007B91BF /* CCEventListenerTouch.h in Headers */,
 				500DC93F19106300007B91BF /* CCConsole.h in Headers */,
 				1A5701C4180BCB5A0088DEC7 /* CCLabelBMFont.h in Headers */,
 				1A01C69518F57BE800EFE3A6 /* CCFloat.h in Headers */,
 				1A5701CA180BCB5A0088DEC7 /* CCLabelTextFormatter.h in Headers */,
 				2905FA7B18CF08D100240AA3 /* UISlider.h in Headers */,
-				5034CA22191D591100CE6051 /* ccShader_PositionTextureColorAlphaTest_frag.h in Headers */,
+				5034CA22191D591100CE6051 /* ccShader_PositionTextureColorAlphaTest.frag in Headers */,
 				1A5701CE180BCB5A0088DEC7 /* CCLabelTTF.h in Headers */,
 				296CAD251915EC8000C64FBF /* CCEventFocus.h in Headers */,
 				50FCEBCA18C72017004AD434 /* WidgetReader.h in Headers */,
@@ -5527,7 +5514,7 @@
 				50FCEBBE18C72017004AD434 /* TextBMFontReader.h in Headers */,
 				1A5701FE180BCBAD0088DEC7 /* CCMenuItem.h in Headers */,
 				1A570205180BCBD40088DEC7 /* CCClippingNode.h in Headers */,
-				5034CA34191D591100CE6051 /* ccShader_PositionTexture_uColor_frag.h in Headers */,
+				5034CA34191D591100CE6051 /* ccShader_PositionTexture_uColor.frag in Headers */,
 				1A57020B180BCBDF0088DEC7 /* CCMotionStreak.h in Headers */,
 				1A570213180BCBF40088DEC7 /* CCProgressTimer.h in Headers */,
 				B37510821823ACA100B3BA6A /* CCPhysicsJointInfo_chipmunk.h in Headers */,
@@ -5540,16 +5527,14 @@
 				1A570228180BCC1A0088DEC7 /* CCParticleExamples.h in Headers */,
 				1A57022C180BCC1A0088DEC7 /* CCParticleSystem.h in Headers */,
 				1A570230180BCC1A0088DEC7 /* CCParticleSystemQuad.h in Headers */,
-				5034CA24191D591100CE6051 /* ccShader_PositionTextureColor_vert.h in Headers */,
-				5034CA2C191D591100CE6051 /* ccShader_PositionTextureA8Color_vert.h in Headers */,
+				5034CA2C191D591100CE6051 /* ccShader_PositionTextureA8Color.vert in Headers */,
 				1A570237180BCC4D0088DEC7 /* CCScriptSupport.h in Headers */,
 				2905FA8B18CF08D100240AA3 /* UITextField.h in Headers */,
-				5034CA26191D591100CE6051 /* ccShader_PositionTextureColor_noMVP_vert.h in Headers */,
 				500DC96F19106300007B91BF /* CCEventListenerKeyboard.h in Headers */,
 				500DC8B519105D41007B91BF /* CCGroupCommand.h in Headers */,
 				50FCEBA618C72017004AD434 /* ListViewReader.h in Headers */,
 				500DC9B919106E6D007B91BF /* TransformUtils.h in Headers */,
-				5034CA4A191D591100CE6051 /* ccShader_Label_frag_df.h in Headers */,
+				5034CA4A191D591100CE6051 /* ccShader_Label_df.frag in Headers */,
 				500DC99119106300007B91BF /* CCRef.h in Headers */,
 				1A570281180BCC900088DEC7 /* CCSprite.h in Headers */,
 				1A570285180BCC900088DEC7 /* CCSpriteBatchNode.h in Headers */,
@@ -5576,7 +5561,7 @@
 				1A5702ED180BCE750088DEC7 /* CCTileMapAtlas.h in Headers */,
 				500DC99F19106300007B91BF /* CCValue.h in Headers */,
 				1A5702F1180BCE750088DEC7 /* CCTMXLayer.h in Headers */,
-				5034CA44191D591100CE6051 /* ccShader_Label_vert.h in Headers */,
+				5034CA44191D591100CE6051 /* ccShader_Label.vert in Headers */,
 				1A5702F5180BCE750088DEC7 /* CCTMXObjectGroup.h in Headers */,
 				1A5702F9180BCE750088DEC7 /* CCTMXTiledMap.h in Headers */,
 				500DC9A119106300007B91BF /* CCVector.h in Headers */,
@@ -5602,11 +5587,11 @@
 				1A570357180BD0B00088DEC7 /* ioapi.h in Headers */,
 				1A01C69B18F57BE800EFE3A6 /* CCSet.h in Headers */,
 				1A57035B180BD0B00088DEC7 /* unzip.h in Headers */,
-				5034CA48191D591100CE6051 /* ccShader_Label_frag_normal.h in Headers */,
+				5034CA48191D591100CE6051 /* ccShader_Label_normal.frag in Headers */,
 				1AD71DAC180E26E600808F54 /* CCBAnimationManager.h in Headers */,
 				1AD71DB0180E26E600808F54 /* CCBFileLoader.h in Headers */,
 				1AD71DB4180E26E600808F54 /* CCBKeyframe.h in Headers */,
-				5034CA3E191D591100CE6051 /* ccShader_PositionColor_frag.h in Headers */,
+				5034CA3E191D591100CE6051 /* ccShader_PositionColor.frag in Headers */,
 				1AD71DB6180E26E600808F54 /* CCBMemberVariableAssigner.h in Headers */,
 				1AD71DBA180E26E600808F54 /* CCBReader.h in Headers */,
 				1AD71DBC180E26E600808F54 /* CCBSelectorResolver.h in Headers */,
@@ -5616,9 +5601,9 @@
 				1AD71DCC180E26E600808F54 /* CCControlButtonLoader.h in Headers */,
 				1AD71DD0180E26E600808F54 /* CCControlLoader.h in Headers */,
 				1AD71DD4180E26E600808F54 /* CCLabelBMFontLoader.h in Headers */,
-				5034CA3C191D591100CE6051 /* ccShader_PositionColor_vert.h in Headers */,
+				5034CA3C191D591100CE6051 /* ccShader_PositionColor.vert in Headers */,
 				46C02E0A18E91123004B7456 /* xxhash.h in Headers */,
-				5034CA4C191D591100CE6051 /* ccShader_Label_frag_df_glow.h in Headers */,
+				5034CA4C191D591100CE6051 /* ccShader_Label_df_glow.frag in Headers */,
 				50E6D33B18E174130051CA34 /* UIRelativeBox.h in Headers */,
 				1AD71DD8180E26E600808F54 /* CCLabelTTFLoader.h in Headers */,
 				1AD71DDC180E26E600808F54 /* CCLayerColorLoader.h in Headers */,
@@ -5635,7 +5620,6 @@
 				5027253B190BF1B900AAF4ED /* cocos2d.h in Headers */,
 				1AD71DFC180E26E600808F54 /* CCNodeLoaderListener.h in Headers */,
 				3EA0FB6B191C841D00B170C8 /* UIVideoPlayer.h in Headers */,
-				5034CA2A191D591100CE6051 /* ccShader_PositionTextureColor_frag.h in Headers */,
 				1AD71E00180E26E600808F54 /* CCParticleSystemQuadLoader.h in Headers */,
 				1AD71E04180E26E600808F54 /* CCScale9SpriteLoader.h in Headers */,
 				1AD71E08180E26E600808F54 /* CCScrollViewLoader.h in Headers */,
@@ -5655,7 +5639,7 @@
 				2905FA4918CF08D100240AA3 /* UIButton.h in Headers */,
 				500DC96719106300007B91BF /* CCEventListenerAcceleration.h in Headers */,
 				1AD71EB0180E26E600808F54 /* AttachmentLoader.h in Headers */,
-				5034CA32191D591100CE6051 /* ccShader_PositionTexture_uColor_vert.h in Headers */,
+				5034CA32191D591100CE6051 /* ccShader_PositionTexture_uColor.vert in Headers */,
 				1AD71EB4180E26E600808F54 /* Bone.h in Headers */,
 				1AD71EB8180E26E600808F54 /* BoneData.h in Headers */,
 				06CAAACA186AD7EF0012A414 /* TriggerMng.h in Headers */,
@@ -5697,7 +5681,7 @@
 				500DC99B19106300007B91BF /* ccTypes.h in Headers */,
 				1A8C598E180E930E00EF57C3 /* CCActionFrame.h in Headers */,
 				1A8C5992180E930E00EF57C3 /* CCActionFrameEasing.h in Headers */,
-				5034CA36191D591100CE6051 /* ccShader_PositionTexture_frag.h in Headers */,
+				5034CA36191D591100CE6051 /* ccShader_PositionTexture.frag in Headers */,
 				5034CA56191D591100CE6051 /* CCGLProgramState.h in Headers */,
 				1A8C5996180E930E00EF57C3 /* CCActionManagerEx.h in Headers */,
 				2905FA4D18CF08D100240AA3 /* UICheckBox.h in Headers */,

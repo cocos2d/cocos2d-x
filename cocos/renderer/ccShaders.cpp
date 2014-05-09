@@ -26,71 +26,48 @@ THE SOFTWARE.
 
 #include "renderer/ccShaders.h"
 
+#define STRINGIFY(A)  #A
+
 NS_CC_BEGIN
 //
-const GLchar * ccPosition_uColor_frag = 
-#include "ccShader_Position_uColor_frag.h"
-const GLchar * ccPosition_uColor_vert =
-#include "ccShader_Position_uColor_vert.h"
+#include "ccShader_Position_uColor.frag"
+#include "ccShader_Position_uColor.vert"
 
 //
-const GLchar * ccPositionColor_frag =
-#include "ccShader_PositionColor_frag.h"
-const GLchar * ccPositionColor_vert =
-#include "ccShader_PositionColor_vert.h"
+#include "ccShader_PositionColor.frag"
+#include "ccShader_PositionColor.vert"
 
 //
-const GLchar * ccPositionTexture_frag =
-#include "ccShader_PositionTexture_frag.h"
-const GLchar * ccPositionTexture_vert =
-#include "ccShader_PositionTexture_vert.h"
+#include "ccShader_PositionTexture.frag"
+#include "ccShader_PositionTexture.vert"
 
 //
-const GLchar * ccPositionTextureA8Color_frag =
-#include "ccShader_PositionTextureA8Color_frag.h"
-const GLchar * ccPositionTextureA8Color_vert =
-#include "ccShader_PositionTextureA8Color_vert.h"
+#include "ccShader_PositionTextureA8Color.frag"
+#include "ccShader_PositionTextureA8Color.vert"
 
 //
-const GLchar * ccPositionTextureColor_frag =
-#include "ccShader_PositionTextureColor_frag.h"
-const GLchar * ccPositionTextureColor_vert =
-#include "ccShader_PositionTextureColor_vert.h"
+#include "ccShader_PositionTextureColor.frag"
+#include "ccShader_PositionTextureColor.vert"
 
 //
-const GLchar * ccPositionTextureColor_noMVP_frag =
-#include "ccShader_PositionTextureColor_noMVP_frag.h"
-const GLchar * ccPositionTextureColor_noMVP_vert =
-#include "ccShader_PositionTextureColor_noMVP_vert.h"
+#include "ccShader_PositionTextureColor_noMVP.frag"
+#include "ccShader_PositionTextureColor_noMVP.vert"
 
 //
-const GLchar * ccPositionTextureColorAlphaTest_frag = 
-#include "ccShader_PositionTextureColorAlphaTest_frag.h"
+#include "ccShader_PositionTextureColorAlphaTest.frag"
 
 //
-const GLchar * ccPositionTexture_uColor_frag = 
-#include "ccShader_PositionTexture_uColor_frag.h"
-const GLchar * ccPositionTexture_uColor_vert = 
-#include "ccShader_PositionTexture_uColor_vert.h"
+#include "ccShader_PositionTexture_uColor.frag"
+#include "ccShader_PositionTexture_uColor.vert"
 
-const GLchar * ccPositionColorLengthTexture_frag =
-#include "ccShader_PositionColorLengthTexture_frag.h"
-const GLchar * ccPositionColorLengthTexture_vert =
-#include "ccShader_PositionColorLengthTexture_vert.h"
+#include "ccShader_PositionColorLengthTexture.frag"
+#include "ccShader_PositionColorLengthTexture.vert"
 
-const GLchar * ccLabelDistanceFieldNormal_frag =
-#include "ccShader_Label_frag_df.h"
-
-const GLchar * ccLabelDistanceFieldGlow_frag =
-#include "ccShader_Label_frag_df_glow.h"
-
-const GLchar * ccLabelNormal_frag =
-#include "ccShader_Label_frag_normal.h"
-
-const GLchar * ccLabelOutline_frag =
-#include "ccShader_Label_frag_outline.h"
-
-const GLchar * ccLabel_vert =
-#include "ccShader_Label_vert.h"
+//
+#include "ccShader_Label.vert"
+#include "ccShader_Label_df.frag"
+#include "ccShader_Label_df_glow.frag"
+#include "ccShader_Label_normal.frag"
+#include "ccShader_Label_outline.frag"
 
 NS_CC_END

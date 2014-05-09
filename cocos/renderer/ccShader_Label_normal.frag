@@ -23,18 +23,20 @@
  * THE SOFTWARE.
  */
 
-"														\n\
-attribute vec4 a_position;								\n\
-attribute vec4 a_color;									\n\
-#ifdef GL_ES											\n\
-varying lowp vec4 v_fragmentColor;						\n\
-#else													\n\
-varying vec4 v_fragmentColor;							\n\
-#endif													\n\
-														\n\
-void main()												\n\
-{														\n\
-    gl_Position = CC_MVPMatrix * a_position;			\n\
-	v_fragmentColor = a_color;							\n\
-}														\n\
-";
+const char* ccLabelNormal_frag = STRINGIFY(
+#ifdef GL_ES
+precision lowp float;
+#endif
+
+varying vec4 v_fragmentColor;
+varying vec2 v_texCoord;
+uniform sampler2D CC_Texture0;
+uniform vec4 v_textColor; 
+
+void main()
+{
+    gl_FragColor =  v_fragmentColor * vec4( v_textColor.rgb,// RGB from uniform
+        v_textColor.a * texture2D(CC_Texture0, v_texCoord).a// A from texture & uniform
+    );
+}
+);

@@ -1,8 +1,7 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * Copyright (c) 2011 Ricardo Quesada
- * Copyright (c) 2012 Zynga Inc.
+ * Copyright (c) 2011 Brian Chapados
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,19 +22,27 @@
  * THE SOFTWARE.
  */
 
-"									\n\
-attribute vec4 a_position;			\n\
-attribute vec2 a_texCoord;			\n\
-									\n\
-#ifdef GL_ES						\n\
-varying mediump vec2 v_texCoord;	\n\
-#else								\n\
-varying vec2 v_texCoord;			\n\
-#endif								\n\
-									\n\
-void main()							\n\
-{									\n\
-    gl_Position = CC_MVPMatrix * a_position;		\n\
-	v_texCoord = a_texCoord;		\n\
-}									\n\
-";
+const char* ccPositionTextureColorAlphaTest_frag = STRINGIFY(
+
+#ifdef GL_ES
+precision lowp float;
+#endif
+
+varying vec4 v_fragmentColor;
+varying vec2 v_texCoord;
+uniform sampler2D CC_Texture0;
+uniform float CC_alpha_value;
+
+void main()
+{
+    vec4 texColor = texture2D(CC_Texture0, v_texCoord);
+
+// mimic: glAlphaFunc(GL_GREATER)
+// pass if ( incoming_pixel >= CC_alpha_value ) => fail if incoming_pixel < CC_alpha_value
+
+    if ( texColor.a <= CC_alpha_value )
+        discard;
+
+    gl_FragColor = texColor * v_fragmentColor;
+}
+);

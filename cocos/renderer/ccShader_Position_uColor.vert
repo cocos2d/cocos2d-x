@@ -23,19 +23,22 @@
  * THE SOFTWARE.
  */
 
-"										\n\
-#ifdef GL_ES							\n\
-precision lowp float;					\n\
-#endif									\n\
-										\n\
-uniform		vec4 u_color;				\n\
-										\n\
-varying vec2 v_texCoord;				\n\
-										\n\
-uniform sampler2D CC_Texture0;			\n\
-										\n\
-void main()								\n\
-{										\n\
-	gl_FragColor =  texture2D(CC_Texture0, v_texCoord) * u_color;	\n\
-}										\n\
-";
+const char* ccPosition_uColor_vert = STRINGIFY(
+
+attribute vec4 a_position;
+uniform vec4 u_color;
+uniform float u_pointSize;
+
+#ifdef GL_ES
+varying lowp vec4 v_fragmentColor;
+#else
+varying vec4 v_fragmentColor;
+#endif
+
+void main()
+{
+    gl_Position = CC_MVPMatrix * a_position;
+    gl_PointSize = u_pointSize;
+    v_fragmentColor = u_color;
+}
+);

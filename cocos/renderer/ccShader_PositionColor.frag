@@ -23,15 +23,16 @@
  * THE SOFTWARE.
  */
 
-"										\n\
-#ifdef GL_ES							\n\
-precision lowp float;					\n\
-#endif									\n\
-										\n\
-varying vec4 v_fragmentColor;			\n\
-										\n\
-void main()								\n\
-{										\n\
-	gl_FragColor = v_fragmentColor;		\n\
-}										\n\
-";
+const char* ccPositionColor_frag = STRINGIFY(
+
+#ifdef GL_ES
+precision lowp float;
+#endif
+
+varying vec4 v_fragmentColor;
+
+void main()
+{
+    gl_FragColor = v_fragmentColor;
+}
+);

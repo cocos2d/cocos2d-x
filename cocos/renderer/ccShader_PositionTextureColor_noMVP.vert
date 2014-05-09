@@ -23,21 +23,23 @@
  * THE SOFTWARE.
  */
 
-"													\n\
-attribute vec4 a_position;							\n\
-uniform	vec4 u_color;								\n\
-uniform float u_pointSize;							\n\
-													\n\
-#ifdef GL_ES										\n\
-varying lowp vec4 v_fragmentColor;					\n\
-#else												\n\
-varying vec4 v_fragmentColor;						\n\
-#endif												\n\
-													\n\
-void main()											\n\
-{													\n\
-    gl_Position = CC_MVPMatrix * a_position;		\n\
-	gl_PointSize = u_pointSize;						\n\
-	v_fragmentColor = u_color;						\n\
-}													\n\
-";
+const char* ccPositionTextureColor_noMVP_vert = STRINGIFY(
+attribute vec4 a_position;
+attribute vec2 a_texCoord;
+attribute vec4 a_color;
+
+#ifdef GL_ES
+varying lowp vec4 v_fragmentColor;
+varying mediump vec2 v_texCoord;
+#else
+varying vec4 v_fragmentColor;
+varying vec2 v_texCoord;
+#endif
+
+void main()
+{
+    gl_Position = CC_PMatrix * a_position;
+    v_fragmentColor = a_color;
+    v_texCoord = a_texCoord;
+}
+);
