@@ -91,6 +91,21 @@ public:
     
     virtual void update();
     
+    /* @brief Gets url of a asset for the given key.
+     */
+    const char* get(const char* key) const;
+    
+    /* @brief Gets storage path.
+     */
+    const char* getStoragePath() const;
+    
+    /* @brief Sets storage path.
+     *
+     * @param storagePath The path to store downloaded resources.
+     * @warm The path should be a valid path.
+     */
+    void setStoragePath(const char* storagePath);
+    
     /* @brief Gets url of manifest.
      */
     const char* getManifestUrl() const;
@@ -106,17 +121,6 @@ public:
     /* @brief Sets version file url.
      */
     void setVersionFileUrl(const char* versionFileUrl);
-    
-    /* @brief Gets storage path.
-     */
-    const char* getStoragePath() const;
-    
-    /* @brief Sets storage path.
-     *
-     * @param storagePath The path to store downloaded resources.
-     * @warm The path should be a valid path.
-     */
-    void setStoragePath(const char* storagePath);
     
     /* @brief Gets remote package url.
      */
@@ -134,6 +138,18 @@ public:
      */
     const char* getLocalEngineVersion() const;
     
+    /* @brief Gets remote manifest version.
+     */
+    const char* getRemoteManifestVersion() const;
+    
+    /* @brief Gets remote version for the given group.
+     */
+    const char* getRemoteGroupVersion(int group) const;
+    
+    /* @brief Gets remote engine version.
+     */
+    const char* getRemoteEngineVersion() const;
+    
     /** @brief Sets connection time out in seconds
      */
     void setConnectionTimeout(unsigned int timeout);
@@ -148,6 +164,7 @@ public:
     friend int assetsManagerProgressFunc(void *, double, double, double, double);
     
 protected:
+    void loadManifest();
     bool downLoad();
     void checkStoragePath();
     bool uncompress();
