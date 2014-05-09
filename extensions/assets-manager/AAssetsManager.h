@@ -81,9 +81,9 @@ public:
     
     /* @brief To access within scripting environment
      */
-    static AAssetsManager* create();
+    static AAssetsManager* create(const char* manifestUrl);
     
-    /* @brief Check out if there is a new version resource.
+    /* @brief Check out if there is a new version of manifest.
      *        You may use this method before updating, then let user determine whether
      *        he wants to update resources.
      */
@@ -91,29 +91,21 @@ public:
     
     virtual void update();
     
-    /* @brief Gets url of package.
+    /* @brief Gets url of manifest.
      */
-    const char* getPackageUrl() const;
+    const char* getManifestUrl() const;
     
     /* @brief Sets package url.
      */
-    void setPackageUrl(const char* packageUrl);
+    void setManifestUrl(const char* manifestUrl);
     
     /* @brief Gets version file url.
      */
     const char* getVersionFileUrl() const;
     
-    /* @brief Gets version file url.
+    /* @brief Sets version file url.
      */
     void setVersionFileUrl(const char* versionFileUrl);
-    
-    /* @brief Gets current version code.
-     */
-    std::string getVersion();
-    
-    /* @brief Deletes recorded version code.
-     */
-    void deleteVersion();
     
     /* @brief Gets storage path.
      */
@@ -126,6 +118,22 @@ public:
      */
     void setStoragePath(const char* storagePath);
     
+    /* @brief Gets remote package url.
+     */
+    const char* getRemoteRootUrl() const;
+    
+    /* @brief Gets local manifest version.
+     */
+    const char* getLocalManifestVersion() const;
+    
+    /* @brief Gets local version for the given group.
+     */
+    const char* getLocalGroupVersion(int group) const;
+    
+    /* @brief Gets local engine version.
+     */
+    const char* getLocalEngineVersion() const;
+    
     /** @brief Sets connection time out in seconds
      */
     void setConnectionTimeout(unsigned int timeout);
@@ -133,6 +141,7 @@ public:
     /** @brief Gets connection time out in secondes
      */
     unsigned int getConnectionTimeout();
+    
     
     /* downloadAndUncompress is the entry of a new thread
      */
@@ -159,41 +168,47 @@ private:
     //! The path to store downloaded resources.
     std::string _storagePath;
     
+    //! The remote path of manifest file
     std::string _manifestUrl;
     
+    //! The remote path of version file [Optional]
     std::string _versionUrl;
     
+    //! The url of remote package's root
     std::string _remoteUrl;
     
-    //! The version of downloaded resources.
+    //! The version of local manifest
     std::string _currentVer;
     
-    std::string _groupVer;
+    //! All groups exist in manifest
+    std::vector<int> _groups;
     
+    //! The versions of all local group
+    std::map<int, std::string> _groupVer;
+    
+    //! The version of local engine
     std::string _engineVer;
     
+    //! The version of remote manifest
     std::string _remoteManifestVer;
     
-    std::string _remoteGroupVer;
+    //! The versions of all remote group
+    std::map<int, std::string> _remoteGroupVer;
     
+    //! The version of remote engine
     std::string _remoteEngineVer;
     
+    //! Full assets list
     ValueMap* _assets;
     
-    
-    
-    
-    std::string _packageUrl;
-    std::string _versionFileUrl;
-    
-    std::string _downloadedVersion;
-    
-    void *_curl;
-    
+    //! Time out configuration for connection
     unsigned int _connectionTimeout;
     
+    //! CURL ref
+    void *_curl;
+    
+    //! Indicate whether AssetsManager is downloading assets
     bool _isDownloading;
-    bool _shouldDeleteDelegateWhenExit;
 };
 
 NS_CC_EXT_END;
