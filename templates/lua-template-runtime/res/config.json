@@ -1,9 +1,10 @@
 {
-    "init_view":{
+    "init_cfg":{
        "isLandscape": true,
        "name": "HelloLua",
        "width": 960,
-       "height": 640    
+       "height": 640,
+       "entry": "src/main.lua"
     },
     "simulator_screen_size": [
         {

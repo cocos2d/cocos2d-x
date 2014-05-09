@@ -23,8 +23,6 @@ bool ConfigParser::isInit()
 
 void ConfigParser::readConfig()
 {
-    _initViewSize.setSize(960,640);
-    _viewName="HelloLua";
     _isInit = true;
     string filecfg = "res/config.json";
     string fullPathFile = FileUtils::getInstance()->fullPathForFilename(filecfg);
@@ -34,9 +32,9 @@ void ConfigParser::readConfig()
         rapidjson::FileStream inputStream(pFile);
         _docRootjson.ParseStream<0>(inputStream);
         fclose(pFile);
-        if (_docRootjson.HasMember("init_view") && _docRootjson["init_view"].IsObject())
+        if (_docRootjson.HasMember("init_cfg") && _docRootjson["init_cfg"].IsObject())
         {
-            const rapidjson::Value& objectInitView = _docRootjson["init_view"];
+            const rapidjson::Value& objectInitView = _docRootjson["init_cfg"];
             if (objectInitView.HasMember("width") && objectInitView.HasMember("height"))
             {
                 _initViewSize.width = objectInitView["width"].GetUint();
@@ -48,6 +46,9 @@ void ConfigParser::readConfig()
             }
             if (objectInitView.HasMember("isLandscape") && objectInitView["isLandscape"].IsBool()) {
                 _isLandscape = objectInitView["isLandscape"].GetBool();
+            }
+            if (objectInitView.HasMember("entry") && objectInitView["entry"].IsString()) {
+                _entryfile = objectInitView["entry"].GetString();
             }
         }
         if (_docRootjson.HasMember("simulator_screen_size"))
@@ -72,16 +73,24 @@ void ConfigParser::readConfig()
 
 ConfigParser::ConfigParser(void):_isInit(false),_isLandscape(true)
 {
-
+    _initViewSize.setSize(960,640);
+    _viewName = "HelloLua";
+    _entryfile = "src/main.lua";
 }
 
 rapidjson::Document& ConfigParser::getConfigJsonRoot()
 {
     return _docRootjson;
 }
+
 string ConfigParser::getInitViewName()
 {
     return _viewName;
+}
+
+string ConfigParser::getEntryFile()
+{
+    return _entryfile;
 }
 
 Size ConfigParser::getInitViewSize()

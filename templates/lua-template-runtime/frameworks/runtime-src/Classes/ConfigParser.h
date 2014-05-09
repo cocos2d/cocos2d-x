@@ -33,6 +33,7 @@ public:
     int getScreenSizeCount(void);
     cocos2d::Size getInitViewSize();
     string getInitViewName();
+    string getEntryFile();
     rapidjson::Document& getConfigJsonRoot();
     const SimulatorScreenSize getScreenSize(int index);
     bool isLanscape();
@@ -44,6 +45,7 @@ private:
     ScreenSizeArray _screenSizeArray;
     cocos2d::Size _initViewSize;
     string _viewName;
+    string _entryfile;
     bool _isLandscape;
     bool _isInit;
     
