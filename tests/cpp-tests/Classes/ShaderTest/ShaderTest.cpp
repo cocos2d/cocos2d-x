@@ -1,16 +1,18 @@
 #include "ShaderTest.h"
 #include "../testResource.h"
 #include "cocos2d.h"
+#include "ShaderTest.vsh.h"
+#include "shaderTest.psh.h"
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    8
+#define MAX_LAYER    11
 
 static Layer* createShaderLayer(int nIndex)
 {
     switch (sceneIdx)
     {
-    case 0: return new ShaderMonjori();
+    case 0: return new ShaderFalme();
     case 1: return new ShaderMandelbrot();
     case 2: return new ShaderJulia();
     case 3: return new ShaderHeart();
@@ -18,6 +20,9 @@ static Layer* createShaderLayer(int nIndex)
     case 5: return new ShaderPlasma();
     case 6: return new ShaderBlur();
     case 7: return new ShaderRetroEffect();
+    case 8: return new ShaderMonjori();
+    case 9: return new ShaderStarNest();
+    case 10: return new ShaderRelentless();
     }
 
     return NULL;
@@ -676,6 +681,198 @@ std::string ShaderRetroEffect::subtitle() const
 {
     return "sin() effect with moving colors";
 }
+
+
+
+UniformShaderNode::UniformShaderNode()
+:_center(Vector2(0.0f, 0.0f))
+,_resolution(Vector2(0.0f, 0.0f))
+,_time(0.0f)
+{
+    
+}
+
+UniformShaderNode::~UniformShaderNode()
+{
+    
+}
+
+bool UniformShaderNode::initWithVertex(const char *vert, const char *frag)
+{
+    
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
+        this->setGLProgram(nullptr);
+        loadShaderVertex(_vertFileName.c_str(), _fragFileName.c_str());
+    });
+    
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+#endif
+    
+    loadShaderVertex(vert, frag);
+    
+    _time = 0;
+    auto s = Director::getInstance()->getWinSize();
+    _resolution = Vector2(s.width * CC_CONTENT_SCALE_FACTOR(), s.height * CC_CONTENT_SCALE_FACTOR());
+    getGLProgramState()->setUniformVec2("resolution", _resolution);
+    
+    scheduleUpdate();
+    
+    //setContentSize(Size(getContentSize().width, getContentSize().height));
+    setAnchorPoint(Vector2(0.5f, 0.5f));
+    
+    _vertFileName = vert;
+    _fragFileName = frag;
+}
+
+void UniformShaderNode::loadShaderVertex(const char *vert, const char *frag)
+{
+    auto shader = GLProgram::createWithByteArrays(vert, frag);
+    this->setGLProgram(shader);
+}
+
+void UniformShaderNode::update(float dt)
+{
+    _time += dt;
+}
+
+void UniformShaderNode::setPosition(const Vector2 &newPosition)
+{
+    Node::setPosition(newPosition);
+    auto position = getPosition();
+//_center = Vector2(position.x * CC_CONTENT_SCALE_FACTOR(), position.y * CC_CONTENT_SCALE_FACTOR());
+ //   getGLProgramState()->setUniformVec2("center", _center);
+}
+
+void UniformShaderNode::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+{
+    _customCommand.init(_globalZOrder);
+    _customCommand.func = CC_CALLBACK_0(UniformShaderNode::onDraw, this, transform, transformUpdated);
+    renderer->addCommand(&_customCommand);
+
+}
+
+UniformShaderNode* UniformShaderNode::shaderNodeWithVertex(const char *vert, const char *frag)
+{
+    auto node = new UniformShaderNode();
+    node->initWithVertex(vert, frag);
+    node->autorelease();
+    
+    return node;
+}
+
+void UniformShaderNode::onDraw(const Matrix &transform, bool transformUpdated)
+{
+    float w = getContentSize().width, h = getContentSize().height;
+    GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
+    
+    auto glProgramState = getGLProgramState();
+    glProgramState->setVertexAttribPointer("a_position", 2, GL_FLOAT, GL_FALSE, 0, vertices);
+    glProgramState->apply(transform);
+    
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+    
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,6);
+
+}
+
+ShaderRelentless::ShaderRelentless()
+{
+    init();
+}
+
+std::string ShaderRelentless::title() const
+{
+    return "ShaderToy Test";
+}
+
+std::string ShaderRelentless::subtitle() const
+{
+    return "Relentless";
+}
+
+bool ShaderRelentless::init()
+{
+    if (ShaderTestDemo::init())
+    {
+        auto sn = UniformShaderNode::shaderNodeWithVertex(shadertestvsh, shadertoyRelentlessFrag);
+        
+        auto s = Director::getInstance()->getWinSize();
+        sn->setPosition(Vector2(s.width/2, s.height/2));
+        sn->setContentSize(Size(s.width,s.height));
+        addChild(sn);
+        
+        return true;
+    }
+    
+    return false;
+}
+
+ShaderStarNest::ShaderStarNest()
+{
+    init();
+}
+
+std::string ShaderStarNest::title() const
+{
+    return "ShaderToy Test";
+}
+
+std::string ShaderStarNest::subtitle() const
+{
+    return "Star Nest";
+}
+
+bool ShaderStarNest::init()
+{
+    if (ShaderTestDemo::init())
+    {
+        auto sn = UniformShaderNode::shaderNodeWithVertex(shadertestvsh, starNestFrg);
+        
+        auto s = Director::getInstance()->getWinSize();
+        sn->setPosition(Vector2(s.width/2, s.height/2));
+        sn->setContentSize(Size(s.width,s.height));
+        addChild(sn);
+        
+        return true;
+    }
+    
+    return false;
+}
+
+
+ShaderFalme::ShaderFalme()
+{
+    init();
+}
+
+std::string ShaderFalme::title() const
+{
+    return "ShaderToy Test";
+}
+
+std::string ShaderFalme::subtitle() const
+{
+    return "Flame";
+}
+
+bool ShaderFalme::init()
+{
+    if (ShaderTestDemo::init())
+    {
+        auto sn = UniformShaderNode::shaderNodeWithVertex(shadertestvsh, starFlame);
+        
+        auto s = Director::getInstance()->getWinSize();
+        sn->setPosition(Vector2(s.width/2, s.height/2));
+        sn->setContentSize(Size(s.width,s.height));
+        addChild(sn);
+        
+        return true;
+    }
+    
+    return false;
+}
+
 
 ///---------------------------------------
 //
