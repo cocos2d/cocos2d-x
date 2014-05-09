@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __LAYOUT_H__
 
 #include "ui/UIWidget.h"
-#include "layout/CCLayoutProtocol.h"
+#include "ui/CCLayoutProtocol.h"
 
 NS_CC_BEGIN
 
@@ -45,7 +45,7 @@ typedef enum {
 }LayoutClippingType;
 
     
-class Layout : public Widget, public layout::LayoutProtocol
+class Layout : public Widget, public LayoutProtocol
 {
     
     DECLARE_CLASS_GUI_INFO
@@ -196,7 +196,7 @@ public:
      *
      * @param LayoutType
      */
-    virtual void setLayoutType(layout::LayoutType type);
+    virtual void setLayoutType(LayoutType type);
     
     /**
      * Gets LayoutType.
@@ -205,7 +205,7 @@ public:
      *
      * @return LayoutType
      */
-    virtual layout::LayoutType getLayoutType() const;
+    virtual LayoutType getLayoutType() const;
 
     virtual void addChild(Node * child) override;
     /**

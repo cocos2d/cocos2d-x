@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "ui/CCProtectedNode.h"
 #include "ui/GUIDefine.h"
-#include "layout/CCLayoutParameterProtocol.h"
+#include "ui/CCLayoutParameterProtocol.h"
 
 NS_CC_BEGIN
 
@@ -87,7 +87,7 @@ typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType);
 *   @js NA
 *   @lua NA
 */
-class Widget : public ProtectedNode, public layout::LayoutParameterProtocol
+class Widget : public ProtectedNode, public LayoutParameterProtocol
 {
 public:
     /**

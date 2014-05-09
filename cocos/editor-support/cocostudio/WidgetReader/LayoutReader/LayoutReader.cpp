@@ -97,7 +97,7 @@ namespace cocostudio
             float ch = DICTOOL->getFloatValue_json(options, "capInsetsHeight");
             panel->setBackGroundImageCapInsets(Rect(cx, cy, cw, ch));
         }
-        panel->setLayoutType((layout::LayoutType)DICTOOL->getIntValue_json(options, "layoutType"));
+        panel->setLayoutType((LayoutType)DICTOOL->getIntValue_json(options, "layoutType"));
         
         int bgimgcr = DICTOOL->getIntValue_json(options, "colorR");
         int bgimgcg = DICTOOL->getIntValue_json(options, "colorG");

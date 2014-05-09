@@ -145,7 +145,7 @@ public:
      *
      * @param LayoutType
      */
-    virtual void setLayoutType(layout::LayoutType type) override{};
+    virtual void setLayoutType(LayoutType type) override{};
     
     /**
      * Gets LayoutType.
@@ -154,7 +154,7 @@ public:
      *
      * @return LayoutType
      */
-    virtual layout::LayoutType getLayoutType() const override{return layout::LAYOUT_ABSOLUTE;};
+    virtual LayoutType getLayoutType() const override{return LAYOUT_ABSOLUTE;};
     
     /**
      * Returns the "class name" of widget.

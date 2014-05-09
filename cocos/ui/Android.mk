@@ -26,7 +26,9 @@ UIRichText.cpp \
 CCProtectedNode.cpp \
 UIHBox.cpp \
 UIVBox.cpp \
-UIRelativeBox.cpp
+UIRelativeBox.cpp \
+CCLayoutParameterProtocol.cpp \
+CCLayoutProtocol.cpp
 
 
 

@@ -16,7 +16,6 @@ include(ui/CMakeLists.txt)
 include(deprecated/CMakeLists.txt)
 include(network/CMakeLists.txt)
 include(storage/CMakeLists.txt)
-include(layout/CMakeLists.txt)
 
 add_library(cocos2d STATIC
   ${COCOS_SRC}

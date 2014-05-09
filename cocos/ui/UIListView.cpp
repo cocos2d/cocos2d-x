@@ -68,7 +68,7 @@ bool ListView::init()
 {
     if (ScrollView::init())
     {
-        setLayoutType(layout::LAYOUT_LINEAR_VERTICAL);
+        setLayoutType(LAYOUT_LINEAR_VERTICAL);
         return true;
     }
     return false;
@@ -129,30 +129,30 @@ void ListView::remedyLayoutParameter(Widget *item)
     switch (_direction) {
         case SCROLLVIEW_DIR_VERTICAL:
         {
-            layout::LinearLayoutParameter* llp = (layout::LinearLayoutParameter*)(item->getLayoutParameter(layout::LAYOUT_PARAMETER_LINEAR));
+            LinearLayoutParameter* llp = (LinearLayoutParameter*)(item->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
             if (!llp)
             {
-                layout::LinearLayoutParameter* defaultLp = layout::LinearLayoutParameter::create();
+                LinearLayoutParameter* defaultLp = LinearLayoutParameter::create();
                 switch (_gravity) {
                     case LISTVIEW_GRAVITY_LEFT:
-                        defaultLp->setGravity(layout::LINEAR_GRAVITY_LEFT);
+                        defaultLp->setGravity(LINEAR_GRAVITY_LEFT);
                         break;
                     case LISTVIEW_GRAVITY_RIGHT:
-                        defaultLp->setGravity(layout::LINEAR_GRAVITY_RIGHT);
+                        defaultLp->setGravity(LINEAR_GRAVITY_RIGHT);
                         break;
                     case LISTVIEW_GRAVITY_CENTER_HORIZONTAL:
-                        defaultLp->setGravity(layout::LINEAR_GRAVITY_CENTER_HORIZONTAL);
+                        defaultLp->setGravity(LINEAR_GRAVITY_CENTER_HORIZONTAL);
                         break;
                     default:
                         break;
                 }
                 if (getIndex(item) == 0)
                 {
-                    defaultLp->setMargin(layout::MarginZero);
+                    defaultLp->setMargin(MarginZero);
                 }
                 else
                 {
-                    defaultLp->setMargin(layout::Margin(0.0f, _itemsMargin, 0.0f, 0.0f));
+                    defaultLp->setMargin(Margin(0.0f, _itemsMargin, 0.0f, 0.0f));
                 }
                 item->setLayoutParameter(defaultLp);
             }
@@ -160,21 +160,21 @@ void ListView::remedyLayoutParameter(Widget *item)
             {
                 if (getIndex(item) == 0)
                 {
-                    llp->setMargin(layout::MarginZero);
+                    llp->setMargin(MarginZero);
                 }
                 else
                 {
-                    llp->setMargin(layout::Margin(0.0f, _itemsMargin, 0.0f, 0.0f));
+                    llp->setMargin(Margin(0.0f, _itemsMargin, 0.0f, 0.0f));
                 }
                 switch (_gravity) {
                     case LISTVIEW_GRAVITY_LEFT:
-                        llp->setGravity(layout::LINEAR_GRAVITY_LEFT);
+                        llp->setGravity(LINEAR_GRAVITY_LEFT);
                         break;
                     case LISTVIEW_GRAVITY_RIGHT:
-                        llp->setGravity(layout::LINEAR_GRAVITY_RIGHT);
+                        llp->setGravity(LINEAR_GRAVITY_RIGHT);
                         break;
                     case LISTVIEW_GRAVITY_CENTER_HORIZONTAL:
-                        llp->setGravity(layout::LINEAR_GRAVITY_CENTER_HORIZONTAL);
+                        llp->setGravity(LINEAR_GRAVITY_CENTER_HORIZONTAL);
                         break;
                     default:
                         break;
@@ -184,30 +184,30 @@ void ListView::remedyLayoutParameter(Widget *item)
         }
         case SCROLLVIEW_DIR_HORIZONTAL:
         {
-            layout::LinearLayoutParameter* llp = (layout::LinearLayoutParameter*)(item->getLayoutParameter(layout::LAYOUT_PARAMETER_LINEAR));
+            LinearLayoutParameter* llp = (LinearLayoutParameter*)(item->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
             if (!llp)
             {
-                layout::LinearLayoutParameter* defaultLp = layout::LinearLayoutParameter::create();
+                LinearLayoutParameter* defaultLp = LinearLayoutParameter::create();
                 switch (_gravity) {
                     case LISTVIEW_GRAVITY_TOP:
-                        defaultLp->setGravity(layout::LINEAR_GRAVITY_TOP);
+                        defaultLp->setGravity(LINEAR_GRAVITY_TOP);
                         break;
                     case LISTVIEW_GRAVITY_BOTTOM:
-                        defaultLp->setGravity(layout::LINEAR_GRAVITY_BOTTOM);
+                        defaultLp->setGravity(LINEAR_GRAVITY_BOTTOM);
                         break;
                     case LISTVIEW_GRAVITY_CENTER_VERTICAL:
-                        defaultLp->setGravity(layout::LINEAR_GRAVITY_CENTER_VERTICAL);
+                        defaultLp->setGravity(LINEAR_GRAVITY_CENTER_VERTICAL);
                         break;
                     default:
                         break;
                 }
                 if (getIndex(item) == 0)
                 {
-                    defaultLp->setMargin(layout::MarginZero);
+                    defaultLp->setMargin(MarginZero);
                 }
                 else
                 {
-                    defaultLp->setMargin(layout::Margin(_itemsMargin, 0.0f, 0.0f, 0.0f));
+                    defaultLp->setMargin(Margin(_itemsMargin, 0.0f, 0.0f, 0.0f));
                 }
                 item->setLayoutParameter(defaultLp);
             }
@@ -215,21 +215,21 @@ void ListView::remedyLayoutParameter(Widget *item)
             {
                 if (getIndex(item) == 0)
                 {
-                    llp->setMargin(layout::MarginZero);
+                    llp->setMargin(MarginZero);
                 }
                 else
                 {
-                    llp->setMargin(layout::Margin(_itemsMargin, 0.0f, 0.0f, 0.0f));
+                    llp->setMargin(Margin(_itemsMargin, 0.0f, 0.0f, 0.0f));
                 }
                 switch (_gravity) {
                     case LISTVIEW_GRAVITY_TOP:
-                        llp->setGravity(layout::LINEAR_GRAVITY_TOP);
+                        llp->setGravity(LINEAR_GRAVITY_TOP);
                         break;
                     case LISTVIEW_GRAVITY_BOTTOM:
-                        llp->setGravity(layout::LINEAR_GRAVITY_BOTTOM);
+                        llp->setGravity(LINEAR_GRAVITY_BOTTOM);
                         break;
                     case LISTVIEW_GRAVITY_CENTER_VERTICAL:
-                        llp->setGravity(layout::LINEAR_GRAVITY_CENTER_VERTICAL);
+                        llp->setGravity(LINEAR_GRAVITY_CENTER_VERTICAL);
                         break;
                     default:
                         break;
@@ -361,10 +361,10 @@ void ListView::setDirection(SCROLLVIEW_DIR dir)
     switch (dir)
     {
         case SCROLLVIEW_DIR_VERTICAL:
-            setLayoutType(layout::LAYOUT_LINEAR_VERTICAL);
+            setLayoutType(LAYOUT_LINEAR_VERTICAL);
             break;
         case SCROLLVIEW_DIR_HORIZONTAL:
-            setLayoutType(layout::LAYOUT_LINEAR_HORIZONTAL);
+            setLayoutType(LAYOUT_LINEAR_HORIZONTAL);
             break;
         case SCROLLVIEW_DIR_BOTH:
             return;

@@ -42,7 +42,6 @@ THE SOFTWARE.
 
 using namespace cocos2d::ui;
 using namespace cocos2d;
-using namespace cocos2d::layout;
 
 
 namespace cocostudio {

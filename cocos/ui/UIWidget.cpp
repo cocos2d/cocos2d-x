@@ -882,7 +882,7 @@ void Widget::copyProperties(Widget *widget)
     setFlippedY(widget->isFlippedY());
     setColor(widget->getColor());
     setOpacity(widget->getOpacity());
-    Map<int, layout::LayoutParameter*>& layoutParameterDic = widget->_layoutParameterDictionary;
+    Map<int, LayoutParameter*>& layoutParameterDic = widget->_layoutParameterDictionary;
     for (auto iter = layoutParameterDic.begin(); iter != layoutParameterDic.end(); ++iter)
     {
         setLayoutParameter(iter->second->clone());

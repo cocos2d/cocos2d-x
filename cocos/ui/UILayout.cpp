@@ -651,24 +651,24 @@ void Layout::supplyTheLayoutParameterLackToChild(LayoutParameterProtocol *child)
     }
     switch (_layoutType)
     {
-        case layout::LAYOUT_ABSOLUTE:
+        case LAYOUT_ABSOLUTE:
             break;
-        case layout::LAYOUT_LINEAR_HORIZONTAL:
-        case layout::LAYOUT_LINEAR_VERTICAL:
+        case LAYOUT_LINEAR_HORIZONTAL:
+        case LAYOUT_LINEAR_VERTICAL:
         {
-            layout::LinearLayoutParameter* layoutParameter = dynamic_cast<layout::LinearLayoutParameter*>(child->getLayoutParameter(layout::LAYOUT_PARAMETER_LINEAR));
+            LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
             if (!layoutParameter)
             {
-                child->setLayoutParameter(layout::LinearLayoutParameter::create());
+                child->setLayoutParameter(LinearLayoutParameter::create());
             }
             break;
         }
-        case layout::LAYOUT_RELATIVE:
+        case LAYOUT_RELATIVE:
         {
-            layout::RelativeLayoutParameter* layoutParameter = dynamic_cast<layout::RelativeLayoutParameter*>(child->getLayoutParameter(layout::LAYOUT_PARAMETER_RELATIVE));
+            RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
             if (!layoutParameter)
             {
-                child->setLayoutParameter(layout::RelativeLayoutParameter::create());
+                child->setLayoutParameter(RelativeLayoutParameter::create());
             }
             break;
         }
@@ -900,7 +900,7 @@ const Size& Layout::getBackGroundImageTextureSize() const
     return _backGroundImageTextureSize;
 }
 
-void Layout::setLayoutType(layout::LayoutType type)
+void Layout::setLayoutType(LayoutType type)
 {
     LayoutProtocol::setLayoutType(type);
     for (auto& child : _children)
@@ -914,7 +914,7 @@ void Layout::setLayoutType(layout::LayoutType type)
     _doLayoutDirty = true;
 }
 
-layout::LayoutType Layout::getLayoutType() const
+LayoutType Layout::getLayoutType() const
 {
     return _layoutType;
 }
@@ -1007,19 +1007,19 @@ Size Layout::getLayoutContentSize()const
             if (w)
             {
                 widgetCount++;
-                layout::Margin m = w->getLayoutParameter(layout::LAYOUT_PARAMETER_LINEAR)->getMargin();
+                Margin m = w->getLayoutParameter(LAYOUT_PARAMETER_LINEAR)->getMargin();
                 layoutSize = layoutSize + w->getSize() + Size(m.right + m.left,  m.top + m.bottom) * 0.5;
             }
         }
     }
     
     //substract extra size
-    layout::LayoutType type = this->getLayoutType();
-    if (type == layout::LAYOUT_LINEAR_HORIZONTAL)
+    LayoutType type = this->getLayoutType();
+    if (type == LAYOUT_LINEAR_HORIZONTAL)
     {
         layoutSize = layoutSize - Size(0, layoutSize.height/widgetCount * (widgetCount-1));
     }
-    if (type == layout::LAYOUT_LINEAR_VERTICAL)
+    if (type == LAYOUT_LINEAR_VERTICAL)
     {
         layoutSize = layoutSize - Size(layoutSize.width/widgetCount * (widgetCount-1), 0);
     }
@@ -1636,7 +1636,7 @@ bool  Layout::isLastWidgetInContainer(Widget* widget, FocusDirection direction)
     
     auto container = parent->getChildren();
     ssize_t index = container.getIndex(widget);
-    if (parent->getLayoutType() == layout::LAYOUT_LINEAR_HORIZONTAL)
+    if (parent->getLayoutType() == LAYOUT_LINEAR_HORIZONTAL)
     {
         if (direction == FocusDirection::FocusDirection_Left) {
             if (index == 0)
@@ -1668,7 +1668,7 @@ bool  Layout::isLastWidgetInContainer(Widget* widget, FocusDirection direction)
             return isLastWidgetInContainer(parent, direction);
         }
     }
-    else if(parent->getLayoutType() == layout::LAYOUT_LINEAR_VERTICAL)
+    else if(parent->getLayoutType() == LAYOUT_LINEAR_VERTICAL)
     {
         if (direction == FocusDirection::FocusDirection_Up)
         {
@@ -1722,7 +1722,7 @@ bool  Layout::isWidgetAncestorSupportLoopFocus(Widget* widget, FocusDirection di
     if (parent->isLoopFocus())
     {
         auto layoutType = parent->getLayoutType();
-        if (layoutType == layout::LAYOUT_LINEAR_HORIZONTAL)
+        if (layoutType == LAYOUT_LINEAR_HORIZONTAL)
         {
             if (direction == FocusDirection::FocusDirection_Left || direction == FocusDirection::FocusDirection_Right)
             {
@@ -1733,7 +1733,7 @@ bool  Layout::isWidgetAncestorSupportLoopFocus(Widget* widget, FocusDirection di
                 return isWidgetAncestorSupportLoopFocus(parent, direction);
             }
         }
-        if (layoutType == layout::LAYOUT_LINEAR_VERTICAL)
+        if (layoutType == LAYOUT_LINEAR_VERTICAL)
         {
             if (direction == FocusDirection::FocusDirection_Down || direction == FocusDirection::FocusDirection_Up)
             {
@@ -1784,7 +1784,7 @@ Widget* Layout::findNextFocusedWidget(FocusDirection direction, Widget* current)
     }
     else if(current->isFocused() || !current->isFocusEnabled())
     {
-        if (_layoutType == layout::LAYOUT_LINEAR_HORIZONTAL)
+        if (_layoutType == LAYOUT_LINEAR_HORIZONTAL)
         {
             switch (direction)
             {
@@ -1821,7 +1821,7 @@ Widget* Layout::findNextFocusedWidget(FocusDirection direction, Widget* current)
                     break;
             }
         }
-        else if (_layoutType == layout::LAYOUT_LINEAR_VERTICAL)
+        else if (_layoutType == LAYOUT_LINEAR_VERTICAL)
         {
             switch (direction)
             {
