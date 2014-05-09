@@ -297,10 +297,10 @@ void CCFreeTypeFont::draw_bitmap(unsigned char* pBuffer, FT_Bitmap*  bitmap, FT_
             if(value > 0)
             {
                 FT_Int index = (j * m_width * 4) + (i * 4);
-                pBuffer[index++] = value;
-                pBuffer[index++] = value;
-                pBuffer[index++] = value;
                 pBuffer[index++] = 0xff;
+                pBuffer[index++] = 0xff;
+                pBuffer[index++] = 0xff;
+                pBuffer[index++] = value;
            }
         }
     }  
