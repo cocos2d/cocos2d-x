@@ -1,4 +1,6 @@
 cocos2d-x-2.2.4 ??
+     [NEW]    WP8: curl and websockets are supported
+
      [FIX]    Audio: Limit max sound number to 3 to fix crash on sumsung i9100
      [FIX]    CCLabelBMFont: Crash when there are invalid characters which aren't in fnt file
      [FIX]    CocoStudio: ArmatureDataManager::removeArmatureFileInfo can't remove image from cache
@@ -6,10 +8,10 @@ cocos2d-x-2.2.4 ??
      [FIX]    CocoStudio: Logical error in CCBone:: setBlendFunc 
      [FIX]    WP8: precompiled headers are enabled, Angle libs are precompiled
      [FIX]    WP8: WP8-XAML uses DrawingSurfaceBackgroundGrid for better performance and to fix Device memory leak with DrawingSurface
-     [FIX]    WP8 & WinRT: Removed debug prebuilt libs
      [FIX]    WP8: Added purgeSharedSpriteFrameCache() to purge in CCDirector to fix dangling refcounts on textures
-     [NEW]    WP8: curl and websockets are supported
-
+     [FIX]    WP8 & WinRT: Removed debug prebuilt libs
+     [FIX]    WP8 & WinRT: Label created with LabelTTF has black border on WINRT/WP8
+     
 cocos2d-x-2.2.3 @Mar.14 2014
 [All]
      [NEW]    Adds Dutch Language support.
