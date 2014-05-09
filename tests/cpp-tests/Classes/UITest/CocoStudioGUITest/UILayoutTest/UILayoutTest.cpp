@@ -95,7 +95,7 @@ bool UILayoutTest_Color::init()
         
         // Create the layout with color render
         Layout* layout = Layout::create();
-        layout->setBackGroundColorType(LAYOUT_COLOR_SOLID);
+        layout->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
         layout->setBackGroundColor(Color3B(128, 128, 128));
         layout->setSize(Size(280, 150));
         Size backgroundSize = background->getContentSize();
@@ -159,7 +159,7 @@ bool UILayoutTest_Gradient::init()
         
         // Create the layout with gradient render
         Layout* layout = Layout::create();
-        layout->setBackGroundColorType(LAYOUT_COLOR_GRADIENT);
+        layout->setBackGroundColorType(Layout::BackGroundColorType::GRADIENT);
         layout->setBackGroundColor(Color3B(64, 64, 64), Color3B(192, 192, 192));
         layout->setSize(Size(280, 150));
         Size backgroundSize = background->getContentSize();
@@ -495,7 +495,7 @@ bool UILayoutTest_Layout_Relative_Align_Parent::init()
         Layout* layout = Layout::create();
         layout->setLayoutType(LayoutType::RELATIVE);
         layout->setSize(Size(280, 150));
-        layout->setBackGroundColorType(LAYOUT_COLOR_SOLID);
+        layout->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
         layout->setBackGroundColor(Color3B::GREEN);
         Size backgroundSize = background->getSize();
         layout->setPosition(Vector2((widgetSize.width - backgroundSize.width) / 2.0f +

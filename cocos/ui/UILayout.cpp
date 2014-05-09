@@ -572,7 +572,7 @@ _backGroundScale9Enabled(false),
 _backGroundImage(nullptr),
 _backGroundImageFileName(""),
 _backGroundImageCapInsets(Rect::ZERO),
-_colorType(LAYOUT_COLOR_NONE),
+_colorType(BackGroundColorType::NONE),
 _bgImageTexType(TextureResType::LOCAL),
 _colorRender(nullptr),
 _gradientRender(nullptr),
@@ -1229,7 +1229,7 @@ void Layout::removeBackGroundImage()
     _backGroundImageTextureSize = Size::ZERO;
 }
 
-void Layout::setBackGroundColorType(LayoutBackGroundColorType type)
+void Layout::setBackGroundColorType(BackGroundColorType type)
 {
     if (_colorType == type)
     {
@@ -1237,7 +1237,7 @@ void Layout::setBackGroundColorType(LayoutBackGroundColorType type)
     }
     switch (_colorType)
     {
-        case LAYOUT_COLOR_NONE:
+        case BackGroundColorType::NONE:
             if (_colorRender)
             {
                 removeProtectedChild(_colorRender);
@@ -1249,14 +1249,14 @@ void Layout::setBackGroundColorType(LayoutBackGroundColorType type)
                 _gradientRender = nullptr;
             }
             break;
-        case LAYOUT_COLOR_SOLID:
+        case BackGroundColorType::SOLID:
             if (_colorRender)
             {
                 removeProtectedChild(_colorRender);
                 _colorRender = nullptr;
             }
             break;
-        case LAYOUT_COLOR_GRADIENT:
+        case BackGroundColorType::GRADIENT:
             if (_gradientRender)
             {
                 removeProtectedChild(_gradientRender);
@@ -1269,16 +1269,16 @@ void Layout::setBackGroundColorType(LayoutBackGroundColorType type)
     _colorType = type;
     switch (_colorType)
     {
-        case LAYOUT_COLOR_NONE:
+        case BackGroundColorType::NONE:
             break;
-        case LAYOUT_COLOR_SOLID:
+        case BackGroundColorType::SOLID:
             _colorRender = LayerColor::create();
             _colorRender->setContentSize(_size);
             _colorRender->setOpacity(_cOpacity);
             _colorRender->setColor(_cColor);
             addProtectedChild(_colorRender, BCAKGROUNDCOLORRENDERER_Z, -1);
             break;
-        case LAYOUT_COLOR_GRADIENT:
+        case BackGroundColorType::GRADIENT:
             _gradientRender = LayerGradient::create();
             _gradientRender->setContentSize(_size);
             _gradientRender->setOpacity(_cOpacity);
@@ -1292,7 +1292,7 @@ void Layout::setBackGroundColorType(LayoutBackGroundColorType type)
     }
 }
     
-LayoutBackGroundColorType Layout::getBackGroundColorType()
+Layout::BackGroundColorType Layout::getBackGroundColorType()
 {
     return _colorType;
 }
@@ -1340,12 +1340,12 @@ void Layout::setBackGroundColorOpacity(GLubyte opacity)
     _cOpacity = opacity;
     switch (_colorType)
     {
-        case LAYOUT_COLOR_NONE:
+        case BackGroundColorType::NONE:
             break;
-        case LAYOUT_COLOR_SOLID:
+        case BackGroundColorType::SOLID:
             _colorRender->setOpacity(opacity);
             break;
-        case LAYOUT_COLOR_GRADIENT:
+        case BackGroundColorType::GRADIENT:
             _gradientRender->setOpacity(opacity);
             break;
         default:

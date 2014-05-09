@@ -77,7 +77,7 @@ namespace cocostudio
         int co = DICTOOL->getIntValue_json(options, "bgColorOpacity");
         
         int colorType = DICTOOL->getIntValue_json(options, "colorType");
-        panel->setBackGroundColorType(LayoutBackGroundColorType(colorType));
+        panel->setBackGroundColorType(Layout::BackGroundColorType(colorType));
         panel->setBackGroundColor(Color3B(scr, scg, scb),Color3B(ecr, ecg, ecb));
         panel->setBackGroundColor(Color3B(cr, cg, cb));
         panel->setBackGroundColorOpacity(co);

@@ -694,7 +694,7 @@ void WidgetPropertiesReader0250::setPropsForLayoutFromJsonDictionary(Widget*widg
     int co = DICTOOL->getIntValue_json(options, "bgColorOpacity");
     
     int colorType = DICTOOL->getIntValue_json(options, "colorType");
-    panel->setBackGroundColorType(LayoutBackGroundColorType(colorType));
+    panel->setBackGroundColorType(Layout::BackGroundColorType(colorType));
     panel->setBackGroundColor(Color3B(scr, scg, scb),Color3B(ecr, ecg, ecb));
     panel->setBackGroundColor(Color3B(cr, cg, cb));
     panel->setBackGroundColorOpacity(co);
@@ -1658,7 +1658,7 @@ void WidgetPropertiesReader0300::setPropsForLayoutFromJsonDictionary(Widget*widg
     int co = DICTOOL->getIntValue_json(options, "bgColorOpacity");
     
     int colorType = DICTOOL->getIntValue_json(options, "colorType");
-    panel->setBackGroundColorType(LayoutBackGroundColorType(colorType));
+    panel->setBackGroundColorType(Layout::BackGroundColorType(colorType));
     panel->setBackGroundColor(Color3B(scr, scg, scb),Color3B(ecr, ecg, ecb));
     panel->setBackGroundColor(Color3B(cr, cg, cb));
     panel->setBackGroundColorOpacity(co);
@@ -1694,7 +1694,7 @@ void WidgetPropertiesReader0300::setPropsForLayoutFromJsonDictionary(Widget*widg
         float ch = DICTOOL->getFloatValue_json(options, "capInsetsHeight");
         panel->setBackGroundImageCapInsets(Rect(cx, cy, cw, ch));
     }
-    panel->setLayoutType((LayoutType)DICTOOL->getIntValue_json(options, "layoutType"));
+    panel->setLayoutType((Layout::LayoutType)DICTOOL->getIntValue_json(options, "layoutType"));
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 

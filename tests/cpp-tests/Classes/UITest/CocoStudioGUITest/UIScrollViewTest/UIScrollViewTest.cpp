@@ -254,7 +254,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection::init()
         
         ui::ScrollView* sc = ui::ScrollView::create();
         sc->setBackGroundColor(Color3B::GREEN);
-        sc->setBackGroundColorType(LAYOUT_COLOR_SOLID);
+        sc->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
         sc->setDirection(SCROLLVIEW_DIR_BOTH);
         sc->setInnerContainerSize(Size(480, 320));
         sc->setSize(Size(100,100));
@@ -309,7 +309,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection_Bounce::init()
         
         ui::ScrollView* sc = ui::ScrollView::create();
         sc->setBackGroundColor(Color3B::GREEN);
-        sc->setBackGroundColorType(LAYOUT_COLOR_SOLID);
+        sc->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
         sc->setBounceEnabled(true);
         sc->setDirection(SCROLLVIEW_DIR_BOTH);
         sc->setInnerContainerSize(Size(480, 320));

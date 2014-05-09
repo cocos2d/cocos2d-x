@@ -31,16 +31,6 @@ NS_CC_BEGIN
 
 namespace ui {
 
-typedef enum
-{
-    LAYOUT_COLOR_NONE,
-    LAYOUT_COLOR_SOLID,
-    LAYOUT_COLOR_GRADIENT
-}LayoutBackGroundColorType;
-
-
-
-
 /**
  *  @js NA
  *  @lua NA
@@ -65,6 +55,13 @@ public:
         VERTICAL,
         HORIZONTAL,
         RELATIVE
+    };
+    
+    enum class BackGroundColorType
+    {
+        NONE,
+        SOLID,
+        GRADIENT
     };
     /**
      * Default constructor
@@ -106,9 +103,9 @@ public:
      *
      * @param type   @see LayoutBackGroundColorType.
      */
-    void setBackGroundColorType(LayoutBackGroundColorType type);
+    void setBackGroundColorType(BackGroundColorType type);
     
-    LayoutBackGroundColorType getBackGroundColorType();
+    BackGroundColorType getBackGroundColorType();
     
     /**
      * Sets background iamge use scale9 renderer.
@@ -453,7 +450,7 @@ protected:
     Node* _backGroundImage;
     std::string _backGroundImageFileName;
     Rect _backGroundImageCapInsets;
-    LayoutBackGroundColorType _colorType;
+    BackGroundColorType _colorType;
     TextureResType _bgImageTexType;
     LayerColor* _colorRender;
     LayerGradient* _gradientRender;

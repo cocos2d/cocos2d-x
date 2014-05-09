@@ -48,6 +48,10 @@ CC_DEPRECATED_ATTRIBUTE const Layout::LayoutType LAYOUT_ABSOLUTE = Layout::Layou
 CC_DEPRECATED_ATTRIBUTE const Layout::LayoutType LAYOUT_LINEAR_VERTICAL = Layout::LayoutType::VERTICAL;
 CC_DEPRECATED_ATTRIBUTE const Layout::LayoutType LAYOUT_LINEAR_HORIZONTAL = Layout::LayoutType::HORIZONTAL;
 CC_DEPRECATED_ATTRIBUTE const Layout::LayoutType LAYOUT_RELATIVE = Layout::LayoutType::VERTICAL;
+CC_DEPRECATED_ATTRIBUTE const Layout::BackGroundColorType LAYOUT_COLOR_NONE = Layout::BackGroundColorType::NONE;
+CC_DEPRECATED_ATTRIBUTE const Layout::BackGroundColorType LAYOUT_COLOR_SOLID = Layout::BackGroundColorType::SOLID;
+CC_DEPRECATED_ATTRIBUTE const Layout::BackGroundColorType LAYOUT_COLOR_GRADIENT
+                                                        = Layout::BackGroundColorType::GRADIENT;
 
 
     
@@ -58,6 +62,7 @@ CC_DEPRECATED_ATTRIBUTE typedef Widget::Type WidgetType;
 CC_DEPRECATED_ATTRIBUTE typedef Widget::BrightStyle BrightStyle;
 CC_DEPRECATED_ATTRIBUTE typedef Layout::ClippingType LayoutClippingType;
 CC_DEPRECATED_ATTRIBUTE typedef Layout::LayoutType LayoutType;
+CC_DEPRECATED_ATTRIBUTE typedef Layout::BackGroundColorType LayoutBackGroundColorType;
 
 
 }
