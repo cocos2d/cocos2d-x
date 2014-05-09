@@ -275,24 +275,26 @@ bool WebSocket::init(const Delegate& delegate,
         host.erase(0,6);
         useSSL = true;
     }
-    
+
+    std::string path = "/";
+    pos = host.find("/");
+    if(pos >= 0){
+        path = host.substr(pos, host.size());
+        host.erase(pos, host.size());
+    }else{
+        pos = host.find("?");
+        if(pos >= 0){
+            path += host.substr(pos, host.size());
+            host.erase(pos, host.size());
+        }
+    }
+
     pos = host.find(":");
     if(pos >= 0){
         port = atoi(host.substr(pos+1, host.size()).c_str());
-    }
-    
-    pos = host.find("/", pos);
-    std::string path = "/";
-    if(pos >= 0){
-        path += host.substr(pos + 1, host.size());
-    }
-    
-    pos = host.find(":");
-    if(pos >= 0){
         host.erase(pos, host.size());
     }
 
-    
     _host = host;
     _port = port;
     _path = path;
