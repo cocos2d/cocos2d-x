@@ -25,11 +25,36 @@
 #ifndef __LAYOUTPARMETER_H__
 #define __LAYOUTPARMETER_H__
 
-#include "ui/UILayoutDefine.h"
+#include <string>
+#include "base/CCRef.h"
+
 
 NS_CC_BEGIN
 
 namespace ui {
+
+/**
+ *   @js NA
+ *   @lua NA
+ */
+class Margin
+{
+public:
+    float left;
+    float top;
+    float right;
+    float bottom;
+    
+public:
+    Margin();
+    Margin(float l, float t, float r, float b);
+    Margin(const Margin& other);
+    Margin& operator= (const Margin& other);
+    void setMargin(float l, float t, float r, float b);
+    bool equals(const Margin& target) const;
+};
+
+const Margin MarginZero = Margin();
 
 typedef enum
 {
@@ -37,6 +62,44 @@ typedef enum
     LAYOUT_PARAMETER_LINEAR,
     LAYOUT_PARAMETER_RELATIVE
 }LayoutParameterType;
+    
+typedef enum
+{
+    LINEAR_GRAVITY_NONE,
+    LINEAR_GRAVITY_LEFT,
+    LINEAR_GRAVITY_TOP,
+    LINEAR_GRAVITY_RIGHT,
+    LINEAR_GRAVITY_BOTTOM,
+    LINEAR_GRAVITY_CENTER_VERTICAL,
+    LINEAR_GRAVITY_CENTER_HORIZONTAL
+}LinearGravity;
+    
+typedef enum
+{
+    RELATIVE_ALIGN_NONE,
+    RELATIVE_ALIGN_PARENT_TOP_LEFT,
+    RELATIVE_ALIGN_PARENT_TOP_CENTER_HORIZONTAL,
+    RELATIVE_ALIGN_PARENT_TOP_RIGHT,
+    RELATIVE_ALIGN_PARENT_LEFT_CENTER_VERTICAL,
+    RELATIVE_CENTER_IN_PARENT,
+    RELATIVE_ALIGN_PARENT_RIGHT_CENTER_VERTICAL,
+    RELATIVE_ALIGN_PARENT_LEFT_BOTTOM,
+    RELATIVE_ALIGN_PARENT_BOTTOM_CENTER_HORIZONTAL,
+    RELATIVE_ALIGN_PARENT_RIGHT_BOTTOM,
+    
+    RELATIVE_LOCATION_ABOVE_LEFTALIGN,
+    RELATIVE_LOCATION_ABOVE_CENTER,
+    RELATIVE_LOCATION_ABOVE_RIGHTALIGN,
+    RELATIVE_LOCATION_LEFT_OF_TOPALIGN,
+    RELATIVE_LOCATION_LEFT_OF_CENTER,
+    RELATIVE_LOCATION_LEFT_OF_BOTTOMALIGN,
+    RELATIVE_LOCATION_RIGHT_OF_TOPALIGN,
+    RELATIVE_LOCATION_RIGHT_OF_CENTER,
+    RELATIVE_LOCATION_RIGHT_OF_BOTTOMALIGN,
+    RELATIVE_LOCATION_BELOW_LEFTALIGN,
+    RELATIVE_LOCATION_BELOW_CENTER,
+    RELATIVE_LOCATION_BELOW_RIGHTALIGN
+}RelativeAlign;
 /**
 *   @js NA
 *   @lua NA
