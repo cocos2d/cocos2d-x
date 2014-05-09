@@ -345,7 +345,7 @@ bool UILayoutTest_Layout_Linear_Vertical::init()
         
         // Create the layout
         Layout* layout = Layout::create();
-        layout->setLayoutType(LAYOUT_LINEAR_VERTICAL);
+        layout->setLayoutType(LayoutType::VERTICAL);
         layout->setSize(Size(280, 150));        
         Size backgroundSize = background->getSize();
         layout->setPosition(Vector2((widgetSize.width - backgroundSize.width) / 2.0f +
@@ -419,7 +419,7 @@ bool UILayoutTest_Layout_Linear_Horizontal::init()
         
         // Create the layout
         Layout* layout = Layout::create();
-        layout->setLayoutType(LAYOUT_LINEAR_HORIZONTAL);
+        layout->setLayoutType(LayoutType::HORIZONTAL);
         layout->setClippingEnabled(true);
         layout->setSize(Size(280, 150));        
         Size backgroundSize = background->getSize();
@@ -493,7 +493,7 @@ bool UILayoutTest_Layout_Relative_Align_Parent::init()
         
         // Create the layout
         Layout* layout = Layout::create();
-        layout->setLayoutType(LAYOUT_RELATIVE);
+        layout->setLayoutType(LayoutType::RELATIVE);
         layout->setSize(Size(280, 150));
         layout->setBackGroundColorType(LAYOUT_COLOR_SOLID);
         layout->setBackGroundColor(Color3B::GREEN);
@@ -628,7 +628,7 @@ bool UILayoutTest_Layout_Relative_Location::init()
         
         // Create the layout
         Layout* layout = Layout::create();
-        layout->setLayoutType(LAYOUT_RELATIVE);
+        layout->setLayoutType(LayoutType::RELATIVE);
         layout->setSize(Size(280, 150));
         Size backgroundSize = background->getSize();
         layout->setPosition(Vector2((widgetSize.width - backgroundSize.width) / 2.0f +

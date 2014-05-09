@@ -1667,7 +1667,7 @@ void ScrollView::setLayoutType(LayoutType type)
     _innerContainer->setLayoutType(type);
 }
 
-LayoutType ScrollView::getLayoutType() const
+Layout::LayoutType ScrollView::getLayoutType() const
 {
     return _innerContainer->getLayoutType();
 }

@@ -154,7 +154,7 @@ public:
      *
      * @return LayoutType
      */
-    virtual LayoutType getLayoutType() const override{return LAYOUT_ABSOLUTE;};
+    virtual LayoutType getLayoutType() const override{return LayoutType::ABSOLUTE;};
     
     /**
      * Returns the "class name" of widget.

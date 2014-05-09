@@ -38,13 +38,6 @@ typedef enum
     LAYOUT_COLOR_GRADIENT
 }LayoutBackGroundColorType;
 
-typedef enum
-{
-    LAYOUT_ABSOLUTE,
-    LAYOUT_LINEAR_VERTICAL,
-    LAYOUT_LINEAR_HORIZONTAL,
-    LAYOUT_RELATIVE
-}LayoutType;
 
 
 
@@ -64,6 +57,14 @@ public:
     {
         STENCIL,
         SCISSOR
+    };
+    
+    enum class LayoutType
+    {
+        ABSOLUTE,
+        VERTICAL,
+        HORIZONTAL,
+        RELATIVE
     };
     /**
      * Default constructor

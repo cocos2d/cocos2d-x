@@ -68,7 +68,7 @@ bool ListView::init()
 {
     if (ScrollView::init())
     {
-        setLayoutType(LAYOUT_LINEAR_VERTICAL);
+        setLayoutType(LayoutType::VERTICAL);
         return true;
     }
     return false;
@@ -361,10 +361,10 @@ void ListView::setDirection(SCROLLVIEW_DIR dir)
     switch (dir)
     {
         case SCROLLVIEW_DIR_VERTICAL:
-            setLayoutType(LAYOUT_LINEAR_VERTICAL);
+            setLayoutType(LayoutType::VERTICAL);
             break;
         case SCROLLVIEW_DIR_HORIZONTAL:
-            setLayoutType(LAYOUT_LINEAR_HORIZONTAL);
+            setLayoutType(LayoutType::HORIZONTAL);
             break;
         case SCROLLVIEW_DIR_BOTH:
             return;
