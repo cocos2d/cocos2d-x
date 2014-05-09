@@ -69,14 +69,23 @@ protected:
     bool _useCallback;
 
     union U{
-        float floatValue;
+#ifndef WIN32
+		float floatValue;
         int intValue;
         Vector2 v2Value;
         Vector3 v3Value;
         Vector4 v4Value;
         Matrix matrixValue;
         std::function<void(Uniform*)> callback;
-
+#else
+		float floatValue;
+		int intValue;
+		float v2Value[2];
+		float v3Value[3];
+		float v4Value[4];
+		float matrixValue[16];
+		std::function<void(Uniform*)> *callback;
+#endif
         U() { memset( this, 0, sizeof(*this) ); }
         ~U(){}
         U& operator=( const U& other ) {
@@ -117,7 +126,7 @@ protected:
             GLsizei stride;
             GLvoid *pointer;
         } pointer;
-        std::function<void(VertexAttrib*)> callback;
+        std::function<void(VertexAttrib*)> *callback;
 
         U() { memset( this, 0, sizeof(*this) ); }
         ~U(){}
