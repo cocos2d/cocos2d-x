@@ -210,12 +210,14 @@ GLProgramState* GLProgramState::create(GLProgram *glprogram, bool useCache)
     if (useCache)
     {
         ret = GLProgramStateCache::getInstance()->getProgramState(glprogram);
+        ret->_useCache = useCache;
     }
     else
     {
         ret = new (std::nothrow) GLProgramState;
         if(!ret || !ret->init(glprogram))
             CC_SAFE_RELEASE(ret);
+        ret->_useCache = useCache;
     }
     
     return ret;
@@ -223,13 +225,17 @@ GLProgramState* GLProgramState::create(GLProgram *glprogram, bool useCache)
 
 GLProgramState::GLProgramState()
 : _vertexAttribsFlags(0)
+, _useCache(false)
+, _glprogram(nullptr)
 {
 }
 
 GLProgramState::~GLProgramState()
 {
-    GLProgramStateCache::getInstance()->removeProgramState(_glprogram);
-    _glprogram->release();
+    if (_useCache)
+       GLProgramStateCache::getInstance()->removeProgramState(_glprogram);
+    
+    CC_SAFE_RELEASE(_glprogram);
 }
 
 bool GLProgramState::init(GLProgram* glprogram)
