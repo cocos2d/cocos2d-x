@@ -564,10 +564,6 @@
     <ClCompile Include="..\base\CCEventListenerFocus.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="CCGLProgram.cpp" />
-    <ClCompile Include="ccGLStateCache.cpp" />
-    <ClCompile Include="CCShaderCache.cpp" />
-    <ClCompile Include="ccShaders.cpp" />
     <ClCompile Include="..\renderer\CCGLProgramStateCache.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
@@ -1116,26 +1112,6 @@
     <ClInclude Include="..\base\CCEventListenerFocus.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="CCGLProgram.h" />
-    <ClInclude Include="ccGLStateCache.h" />
-    <ClInclude Include="CCShaderCache.h" />
-    <ClInclude Include="ccShaderEx_SwitchMask_frag.h" />
-    <ClInclude Include="ccShaders.h" />
-    <ClInclude Include="ccShader_PositionColorLengthTexture_frag.h" />
-    <ClInclude Include="ccShader_PositionColorLengthTexture_vert.h" />
-    <ClInclude Include="ccShader_PositionColor_frag.h" />
-    <ClInclude Include="ccShader_PositionColor_vert.h" />
-    <ClInclude Include="ccShader_PositionTextureA8Color_frag.h" />
-    <ClInclude Include="ccShader_PositionTextureA8Color_vert.h" />
-    <ClInclude Include="ccShader_PositionTextureColorAlphaTest_frag.h" />
-    <ClInclude Include="ccShader_PositionTextureColor_frag.h" />
-    <ClInclude Include="ccShader_PositionTextureColor_vert.h" />
-    <ClInclude Include="ccShader_PositionTexture_frag.h" />
-    <ClInclude Include="ccShader_PositionTexture_uColor_frag.h" />
-    <ClInclude Include="ccShader_PositionTexture_uColor_vert.h" />
-    <ClInclude Include="ccShader_PositionTexture_vert.h" />
-    <ClInclude Include="ccShader_Position_uColor_frag.h" />
-    <ClInclude Include="ccShader_Position_uColor_vert.h" />
     <ClInclude Include="..\renderer\CCGLProgramStateCache.h">
       <Filter>renderer</Filter>
     </ClInclude>
