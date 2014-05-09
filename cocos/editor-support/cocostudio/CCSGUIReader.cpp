@@ -1189,7 +1189,7 @@ void WidgetPropertiesReader0300::setPropsForWidgetFromJsonDictionary(Widget*widg
             {
                 parameter = LinearLayoutParameter::create();
 				int gravity = DICTOOL->getIntValue_json(layoutParameterDic, "gravity");
-                ((LinearLayoutParameter*)parameter)->setGravity((LinearGravity)gravity);
+                ((LinearLayoutParameter*)parameter)->setGravity((LinearLayoutParameter::LinearGravity)gravity);
                 break;
             }
             case 2:

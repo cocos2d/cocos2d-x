@@ -360,7 +360,7 @@ bool UILayoutTest_Layout_Linear_Vertical::init()
         
         LinearLayoutParameter* lp1 = LinearLayoutParameter::create();
         button->setLayoutParameter(lp1);
-        lp1->setGravity(LINEAR_GRAVITY_CENTER_HORIZONTAL);
+        lp1->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
         lp1->setMargin(Margin(0.0f, 5.0f, 0.0f, 10.0f));
         
         
@@ -370,7 +370,7 @@ bool UILayoutTest_Layout_Linear_Vertical::init()
         
         LinearLayoutParameter* lp2 = LinearLayoutParameter::create();
         titleButton->setLayoutParameter(lp2);
-        lp2->setGravity(LINEAR_GRAVITY_CENTER_HORIZONTAL);
+        lp2->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
         lp2->setMargin(Margin(0.0f, 10.0f, 0.0f, 10.0f));
         
         
@@ -381,7 +381,7 @@ bool UILayoutTest_Layout_Linear_Vertical::init()
         
         LinearLayoutParameter* lp3 = LinearLayoutParameter::create();
         button_scale9->setLayoutParameter(lp3);
-        lp3->setGravity(LINEAR_GRAVITY_CENTER_HORIZONTAL);
+        lp3->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
         lp3->setMargin(Margin(0.0f, 10.0f, 0.0f, 10.0f));
         
         
@@ -434,7 +434,7 @@ bool UILayoutTest_Layout_Linear_Horizontal::init()
         
         LinearLayoutParameter* lp1 = LinearLayoutParameter::create();
         button->setLayoutParameter(lp1);
-        lp1->setGravity(LINEAR_GRAVITY_CENTER_VERTICAL);
+        lp1->setGravity(LinearLayoutParameter::LinearGravity::CENTER_VERTICAL);
         lp1->setMargin(Margin(0.0f, 10.0f, 0.0f, 10.0f));
         
         
@@ -444,7 +444,7 @@ bool UILayoutTest_Layout_Linear_Horizontal::init()
         
         LinearLayoutParameter* lp2 = LinearLayoutParameter::create();
         titleButton->setLayoutParameter(lp2);
-        lp2->setGravity(LINEAR_GRAVITY_CENTER_VERTICAL);
+        lp2->setGravity(LinearLayoutParameter::LinearGravity::CENTER_VERTICAL);
         lp2->setMargin(Margin(0.0f, 10.0f, 0.0f, 10.0f));
         
         
@@ -455,7 +455,7 @@ bool UILayoutTest_Layout_Linear_Horizontal::init()
         
         LinearLayoutParameter* lp3 = LinearLayoutParameter::create();
         button_scale9->setLayoutParameter(lp3);
-        lp3->setGravity(LINEAR_GRAVITY_CENTER_VERTICAL);
+        lp3->setGravity(LinearLayoutParameter::LinearGravity::CENTER_VERTICAL);
         lp3->setMargin(Margin(0.0f, 10.0f, 0.0f, 10.0f));
         
         

@@ -118,7 +118,7 @@ namespace cocostudio
                 {
                     parameter = LinearLayoutParameter::create();
                     int gravity = DICTOOL->getIntValue_json(layoutParameterDic, "gravity");
-                    ((LinearLayoutParameter*)parameter)->setGravity((LinearGravity)gravity);
+                    ((LinearLayoutParameter*)parameter)->setGravity((cocos2d::ui::LinearLayoutParameter::LinearGravity)gravity);
                     break;
                 }
                 case 2:

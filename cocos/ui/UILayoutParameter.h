@@ -57,16 +57,7 @@ public:
 const Margin MarginZero = Margin();
 
     
-typedef enum
-{
-    LINEAR_GRAVITY_NONE,
-    LINEAR_GRAVITY_LEFT,
-    LINEAR_GRAVITY_TOP,
-    LINEAR_GRAVITY_RIGHT,
-    LINEAR_GRAVITY_BOTTOM,
-    LINEAR_GRAVITY_CENTER_VERTICAL,
-    LINEAR_GRAVITY_CENTER_HORIZONTAL
-}LinearGravity;
+
     
 typedef enum
 {
@@ -160,6 +151,8 @@ protected:
     Margin _margin;
     Type _layoutParameterType;
 };
+
+    
 /**
 *   @js NA
 *   @lua NA
@@ -167,10 +160,21 @@ protected:
 class LinearLayoutParameter : public LayoutParameter
 {
 public:
+    enum class LinearGravity
+    {
+        NONE,
+        LEFT,
+        TOP,
+        RIGHT,
+        BOTTOM,
+        CENTER_VERTICAL,
+        CENTER_HORIZONTAL
+    };
     /**
      * Default constructor
      */
-    LinearLayoutParameter() : _linearGravity(LINEAR_GRAVITY_NONE)
+    LinearLayoutParameter()
+    : _linearGravity(LinearGravity::NONE)
     {
         _layoutParameterType = Type::LINEAR;
     };

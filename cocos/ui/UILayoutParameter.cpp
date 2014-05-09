@@ -122,7 +122,7 @@ void LinearLayoutParameter::setGravity(LinearGravity gravity)
     _linearGravity = gravity;
 }
 
-LinearGravity LinearLayoutParameter::getGravity() const
+LinearLayoutParameter::LinearGravity LinearLayoutParameter::getGravity() const
 {
     return _linearGravity;
 }

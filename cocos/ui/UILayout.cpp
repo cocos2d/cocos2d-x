@@ -134,20 +134,20 @@ void LinearVerticalLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Ve
             
             if (layoutParameter)
             {
-                LinearGravity childGravity = layoutParameter->getGravity();
+                LinearLayoutParameter::LinearGravity childGravity = layoutParameter->getGravity();
                 Vector2 ap = child->getAnchorPoint();
                 Size cs = child->getSize();
                 float finalPosX = ap.x * cs.width;
                 float finalPosY = topBoundary - ((1.0f-ap.y) * cs.height);
                 switch (childGravity)
                 {
-                    case LINEAR_GRAVITY_NONE:
-                    case LINEAR_GRAVITY_LEFT:
+                    case LinearLayoutParameter::LinearGravity::NONE:
+                    case LinearLayoutParameter::LinearGravity::LEFT:
                         break;
-                    case LINEAR_GRAVITY_RIGHT:
+                    case LinearLayoutParameter::LinearGravity::RIGHT:
                         finalPosX = layoutSize.width - ((1.0f - ap.x) * cs.width);
                         break;
-                    case LINEAR_GRAVITY_CENTER_HORIZONTAL:
+                    case LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL:
                         finalPosX = layoutSize.width / 2.0f - cs.width * (0.5f-ap.x);
                         break;
                     default:
@@ -174,20 +174,20 @@ void LinearHorizontalLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, 
             LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LayoutParameter::Type::LINEAR));
             if (layoutParameter)
             {
-                LinearGravity childGravity = layoutParameter->getGravity();
+                LinearLayoutParameter::LinearGravity childGravity = layoutParameter->getGravity();
                 Vector2 ap = child->getAnchorPoint();
                 Size cs = child->getSize();
                 float finalPosX = leftBoundary + (ap.x * cs.width);
                 float finalPosY = layoutSize.height - (1.0f - ap.y) * cs.height;
                 switch (childGravity)
                 {
-                    case LINEAR_GRAVITY_NONE:
-                    case LINEAR_GRAVITY_TOP:
+                    case LinearLayoutParameter::LinearGravity::NONE:
+                    case LinearLayoutParameter::LinearGravity::TOP:
                         break;
-                    case LINEAR_GRAVITY_BOTTOM:
+                    case LinearLayoutParameter::LinearGravity::BOTTOM:
                         finalPosY = ap.y * cs.height;
                         break;
-                    case LINEAR_GRAVITY_CENTER_VERTICAL:
+                    case LinearLayoutParameter::LinearGravity::CENTER_VERTICAL:
                         finalPosY = layoutSize.height / 2.0f - cs.height * (0.5f - ap.y);
                         break;
                     default:

@@ -55,7 +55,20 @@ CC_DEPRECATED_ATTRIBUTE const Layout::BackGroundColorType LAYOUT_COLOR_GRADIENT
 CC_DEPRECATED_ATTRIBUTE const LayoutParameter::Type LAYOUT_PARAMETER_NONE = LayoutParameter::Type::NONE;
 CC_DEPRECATED_ATTRIBUTE const LayoutParameter::Type LAYOUT_PARAMETER_LINEAR = LayoutParameter::Type::LINEAR;
 CC_DEPRECATED_ATTRIBUTE const LayoutParameter::Type LAYOUT_PARAMETER_RELATIVE = LayoutParameter::Type::RELATIVE;
-
+CC_DEPRECATED_ATTRIBUTE const LinearLayoutParameter::LinearGravity LINEAR_GRAVITY_NONE
+    = LinearLayoutParameter::LinearGravity::NONE;
+CC_DEPRECATED_ATTRIBUTE const LinearLayoutParameter::LinearGravity LINEAR_GRAVITY_LEFT
+    = LinearLayoutParameter::LinearGravity::LEFT;
+CC_DEPRECATED_ATTRIBUTE const LinearLayoutParameter::LinearGravity LINEAR_GRAVITY_TOP
+    = LinearLayoutParameter::LinearGravity::TOP;
+CC_DEPRECATED_ATTRIBUTE const LinearLayoutParameter::LinearGravity LINEAR_GRAVITY_RIGHT
+    = LinearLayoutParameter::LinearGravity::RIGHT;
+CC_DEPRECATED_ATTRIBUTE const LinearLayoutParameter::LinearGravity LINEAR_GRAVITY_BOTTOM
+    = LinearLayoutParameter::LinearGravity::BOTTOM;
+CC_DEPRECATED_ATTRIBUTE const LinearLayoutParameter::LinearGravity LINEAR_GRAVITY_CENTER_VERTICAL
+    = LinearLayoutParameter::LinearGravity::CENTER_VERTICAL;
+CC_DEPRECATED_ATTRIBUTE const LinearLayoutParameter::LinearGravity LINEAR_GRAVITY_CENTER_HORIZONTAL
+    = LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL;
 
     
 CC_DEPRECATED_ATTRIBUTE typedef Widget::TextureResType TextureResType;
@@ -67,6 +80,7 @@ CC_DEPRECATED_ATTRIBUTE typedef Layout::ClippingType LayoutClippingType;
 CC_DEPRECATED_ATTRIBUTE typedef Layout::LayoutType LayoutType;
 CC_DEPRECATED_ATTRIBUTE typedef Layout::BackGroundColorType LayoutBackGroundColorType;
 CC_DEPRECATED_ATTRIBUTE typedef LayoutParameter::Type LayoutParameterType;
+CC_DEPRECATED_ATTRIBUTE typedef LinearLayoutParameter::LinearGravity LinearGravity;
 
 
 }

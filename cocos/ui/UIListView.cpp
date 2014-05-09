@@ -135,13 +135,13 @@ void ListView::remedyLayoutParameter(Widget *item)
                 LinearLayoutParameter* defaultLp = LinearLayoutParameter::create();
                 switch (_gravity) {
                     case LISTVIEW_GRAVITY_LEFT:
-                        defaultLp->setGravity(LINEAR_GRAVITY_LEFT);
+                        defaultLp->setGravity(LinearLayoutParameter::LinearGravity::LEFT);
                         break;
                     case LISTVIEW_GRAVITY_RIGHT:
-                        defaultLp->setGravity(LINEAR_GRAVITY_RIGHT);
+                        defaultLp->setGravity(LinearLayoutParameter::LinearGravity::RIGHT);
                         break;
                     case LISTVIEW_GRAVITY_CENTER_HORIZONTAL:
-                        defaultLp->setGravity(LINEAR_GRAVITY_CENTER_HORIZONTAL);
+                        defaultLp->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
                         break;
                     default:
                         break;
@@ -168,13 +168,13 @@ void ListView::remedyLayoutParameter(Widget *item)
                 }
                 switch (_gravity) {
                     case LISTVIEW_GRAVITY_LEFT:
-                        llp->setGravity(LINEAR_GRAVITY_LEFT);
+                        llp->setGravity(LinearLayoutParameter::LinearGravity::LEFT);
                         break;
                     case LISTVIEW_GRAVITY_RIGHT:
-                        llp->setGravity(LINEAR_GRAVITY_RIGHT);
+                        llp->setGravity(LinearLayoutParameter::LinearGravity::RIGHT);
                         break;
                     case LISTVIEW_GRAVITY_CENTER_HORIZONTAL:
-                        llp->setGravity(LINEAR_GRAVITY_CENTER_HORIZONTAL);
+                        llp->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
                         break;
                     default:
                         break;
@@ -190,13 +190,13 @@ void ListView::remedyLayoutParameter(Widget *item)
                 LinearLayoutParameter* defaultLp = LinearLayoutParameter::create();
                 switch (_gravity) {
                     case LISTVIEW_GRAVITY_TOP:
-                        defaultLp->setGravity(LINEAR_GRAVITY_TOP);
+                        defaultLp->setGravity(LinearLayoutParameter::LinearGravity::TOP);
                         break;
                     case LISTVIEW_GRAVITY_BOTTOM:
-                        defaultLp->setGravity(LINEAR_GRAVITY_BOTTOM);
+                        defaultLp->setGravity(LinearLayoutParameter::LinearGravity::BOTTOM);
                         break;
                     case LISTVIEW_GRAVITY_CENTER_VERTICAL:
-                        defaultLp->setGravity(LINEAR_GRAVITY_CENTER_VERTICAL);
+                        defaultLp->setGravity(LinearLayoutParameter::LinearGravity::CENTER_VERTICAL);
                         break;
                     default:
                         break;
@@ -223,13 +223,13 @@ void ListView::remedyLayoutParameter(Widget *item)
                 }
                 switch (_gravity) {
                     case LISTVIEW_GRAVITY_TOP:
-                        llp->setGravity(LINEAR_GRAVITY_TOP);
+                        llp->setGravity(LinearLayoutParameter::LinearGravity::TOP);
                         break;
                     case LISTVIEW_GRAVITY_BOTTOM:
-                        llp->setGravity(LINEAR_GRAVITY_BOTTOM);
+                        llp->setGravity(LinearLayoutParameter::LinearGravity::BOTTOM);
                         break;
                     case LISTVIEW_GRAVITY_CENTER_VERTICAL:
-                        llp->setGravity(LINEAR_GRAVITY_CENTER_VERTICAL);
+                        llp->setGravity(LinearLayoutParameter::LinearGravity::CENTER_VERTICAL);
                         break;
                     default:
                         break;
