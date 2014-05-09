@@ -64,15 +64,15 @@ void UILoadingBarTest_Editor::update(float delta)
     loadingBar_right_to_left->setPercent(_count);
 }
 
-void UILoadingBarTest_Editor::toCocosGUITestScene(Ref *sender, TouchEventType type)
+void UILoadingBarTest_Editor::toCocosGUITestScene(Widget::TouchEventType event)
 {
-    switch (type)
+    switch (event)
     {
-        case TOUCH_EVENT_ENDED:
+        case Widget::TouchEventType::ENDED:
         {
             unscheduleUpdate();
             
-            UIScene_Editor::toGUIEditorTestScene(sender, type);            
+            UIScene_Editor::toGUIEditorTestScene(event);
         }
             break;
             
