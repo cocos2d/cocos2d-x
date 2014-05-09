@@ -26,9 +26,8 @@ THE SOFTWARE.
 #define __UIWIDGET_H__
 
 #include "ui/CCProtectedNode.h"
-#include "ui/UILayoutDefine.h"
-#include "ui/UILayoutParameter.h"
 #include "ui/GUIDefine.h"
+#include "layout/CCLayoutParameterProtocol.h"
 
 NS_CC_BEGIN
 
@@ -88,7 +87,7 @@ typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType);
 *   @js NA
 *   @lua NA
 */
-class Widget : public ProtectedNode
+class Widget : public ProtectedNode, public layout::LayoutParameterProtocol
 {
 public:
     /**
@@ -459,28 +458,6 @@ public:
     virtual void onTouchCancelled(Touch *touch, Event *unusedEvent);
 
     /**
-     * Sets a LayoutParameter to widget.
-     *
-     * @see LayoutParameter
-     *
-     * @param LayoutParameter pointer
-     *
-     * @param type  Relative or Linear
-     */
-    void setLayoutParameter(LayoutParameter* parameter);
-
-    /**
-     * Gets LayoutParameter of widget.
-     *
-     * @see LayoutParameter
-     *
-     * @param type  Relative or Linear
-     *
-     * @return LayoutParameter
-     */
-    LayoutParameter* getLayoutParameter(LayoutParameterType type);
-
-    /**
      * Ignore the widget size
      *
      * @param ignore, true that widget will ignore it's size, use texture size, false otherwise. Default value is true.
@@ -659,7 +636,6 @@ protected:
     GLubyte _opacity;
     bool _flippedX;
     bool _flippedY;
-    Map<int, LayoutParameter*> _layoutParameterDictionary;
     
     bool _focused;
     bool _focusEnabled;

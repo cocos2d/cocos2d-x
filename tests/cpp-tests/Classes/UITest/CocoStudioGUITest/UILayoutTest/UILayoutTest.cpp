@@ -5,6 +5,8 @@
 
 // UILayoutTest
 
+using namespace cocos2d::layout;
+
 UILayoutTest::UILayoutTest()
 {
 }

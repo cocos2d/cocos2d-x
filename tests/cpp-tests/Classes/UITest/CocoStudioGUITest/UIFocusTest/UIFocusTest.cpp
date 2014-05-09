@@ -8,6 +8,8 @@
 
 #include "UIFocusTest.h"
 
+using namespace cocos2d::layout;
+
 UIFocusTestBase::UIFocusTestBase()
 {
     

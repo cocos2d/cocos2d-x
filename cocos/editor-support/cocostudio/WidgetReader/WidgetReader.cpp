@@ -4,6 +4,7 @@
 
 USING_NS_CC;
 using namespace ui;
+using namespace layout;
 
 namespace cocostudio
 {
