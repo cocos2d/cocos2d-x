@@ -60,10 +60,10 @@ public:
     ~UIScene_Editor();
     
     bool init();
-    virtual void previousCallback(Widget::TouchEventType event);
-    virtual void nextCallback(Widget::TouchEventType event);
+    virtual void previousCallback(Ref* sender, Widget::TouchEventType event);
+    virtual void nextCallback(Ref* sender, Widget::TouchEventType event);
     
-    void toGUIEditorTestScene(Widget::TouchEventType event);
+    void toGUIEditorTestScene(Ref* sender, Widget::TouchEventType event);
     
     /** Title label of the scene.*/
     CC_SYNTHESIZE_READONLY(Text*, _sceneTitle, SceneTitle)

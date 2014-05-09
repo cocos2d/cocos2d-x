@@ -31,7 +31,8 @@ bool UILoadingBarTest_Editor::init()
         Layout* root = static_cast<Layout*>(_layout->getChildByName("root_Panel"));
         
         Text* back_label = static_cast<Text*>(Helper::seekWidgetByName(root, "back"));
-        back_label->addTouchEventListener(this, toucheventselector(UIScene_Editor::toGUIEditorTestScene));
+//        back_label->addTouchEventListener(this, toucheventselector(UIScene_Editor::toGUIEditorTestScene));
+        back_label->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::toGUIEditorTestScene, this));
         
         _sceneTitle = static_cast<Text*>(Helper::seekWidgetByName(root, "UItest"));
         
@@ -64,7 +65,7 @@ void UILoadingBarTest_Editor::update(float delta)
     loadingBar_right_to_left->setPercent(_count);
 }
 
-void UILoadingBarTest_Editor::toCocosGUITestScene(Widget::TouchEventType event)
+void UILoadingBarTest_Editor::toCocosGUITestScene(Ref* sender, Widget::TouchEventType event)
 {
     switch (event)
     {
@@ -72,7 +73,7 @@ void UILoadingBarTest_Editor::toCocosGUITestScene(Widget::TouchEventType event)
         {
             unscheduleUpdate();
             
-            UIScene_Editor::toGUIEditorTestScene(event);
+            UIScene_Editor::toGUIEditorTestScene(sender, event);
         }
             break;
             

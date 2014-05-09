@@ -30,7 +30,7 @@ bool UISliderTest_Editor::init()
         Layout* root = static_cast<Layout*>(_layout->getChildByName("root_Panel"));
         
         Text* back_label = static_cast<Text*>(Helper::seekWidgetByName(root, "back"));
-        back_label->addTouchEventListener(this, toucheventselector(UIScene_Editor::toGUIEditorTestScene));
+        back_label->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::toGUIEditorTestScene, this));
         
         _sceneTitle = static_cast<Text*>(Helper::seekWidgetByName(root, "UItest"));
         

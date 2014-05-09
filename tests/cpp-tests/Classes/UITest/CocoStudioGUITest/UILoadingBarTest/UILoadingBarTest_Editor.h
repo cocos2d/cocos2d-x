@@ -12,7 +12,7 @@ public:
     ~UILoadingBarTest_Editor();
     bool init();
     void update(float delta);
-    void toCocosGUITestScene(Widget::TouchEventType event);
+    void toCocosGUITestScene(Ref* sender, Widget::TouchEventType event);
     
 protected:
     UI_SCENE_EDITOR_CREATE_FUNC(UILoadingBarTest_Editor)

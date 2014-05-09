@@ -32,7 +32,7 @@ bool UIScene_Editor::init()
     return false;
 }
 
-void UIScene_Editor::previousCallback(Widget::TouchEventType event)
+void UIScene_Editor::previousCallback(Ref* sender, Widget::TouchEventType event)
 {
     switch (event)
     {
@@ -45,7 +45,7 @@ void UIScene_Editor::previousCallback(Widget::TouchEventType event)
     }
 }
 
-void UIScene_Editor::nextCallback(Widget::TouchEventType event)
+void UIScene_Editor::nextCallback(Ref* sender, Widget::TouchEventType event)
 {
     switch (event)
     {
@@ -58,7 +58,7 @@ void UIScene_Editor::nextCallback(Widget::TouchEventType event)
     }
 }
 
-void UIScene_Editor::toGUIEditorTestScene(Widget::TouchEventType event)
+void UIScene_Editor::toGUIEditorTestScene(Ref* sender, Widget::TouchEventType event)
 {
     switch (event)
     {

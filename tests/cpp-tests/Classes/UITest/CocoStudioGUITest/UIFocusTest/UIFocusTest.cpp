@@ -60,9 +60,9 @@ bool UIFocusTestBase::init()
     return false;
 }
 
-void UIFocusTestBase::onImageViewClicked(cocos2d::Ref *ref, TouchEventType touchType)
+void UIFocusTestBase::onImageViewClicked(cocos2d::Ref *ref, Widget::TouchEventType touchType)
 {
-    if (touchType == TouchEventType::TOUCH_EVENT_ENDED) {
+    if (touchType == Widget::TouchEventType::ENDED) {
         Widget *w = (Widget*)ref;
         if (w->isFocusEnabled()) {
             w->setFocusEnabled(false);
@@ -166,7 +166,7 @@ bool UIFocusTestHorizontal::init()
             ImageView *w = ImageView::create("cocosui/scrollviewbg.png");
             w->setTouchEnabled(true);
             w->setTag(i);
-            w->addTouchEventListener(this, toucheventselector(UIFocusTestHorizontal::onImageViewClicked));
+            w->addTouchEventListener(CC_CALLBACK_2(UIFocusTestHorizontal::onImageViewClicked, this));
             _horizontalLayout->addChild(w);
         }
         
@@ -179,7 +179,7 @@ bool UIFocusTestHorizontal::init()
         btn->setTitleText("Toggle Loop");
         btn->setPosition(Vector2(60, winSize.height - 50));
         btn->setTitleColor(Color3B::RED);
-        btn->addTouchEventListener(this, toucheventselector(UIFocusTestHorizontal::toggleFocusLoop));
+        btn->addTouchEventListener(CC_CALLBACK_2(UIFocusTestHorizontal::toggleFocusLoop,this));
         this->addChild(btn);
       
         
@@ -191,9 +191,9 @@ bool UIFocusTestHorizontal::init()
 
 
 
-void UIFocusTestHorizontal::toggleFocusLoop(cocos2d::Ref * pObjc, TouchEventType type)
+void UIFocusTestHorizontal::toggleFocusLoop(cocos2d::Ref * pObjc, Widget::TouchEventType type)
 {
-    if (type == TouchEventType::TOUCH_EVENT_ENDED) {
+    if (type == Widget::TouchEventType::ENDED) {
         _horizontalLayout->setLoopFocus(!_horizontalLayout->isLoopFocus());
         if (_horizontalLayout->isLoopFocus()) {
             _loopText->setText("loop enabled");
@@ -236,7 +236,7 @@ bool UIFocusTestVertical::init()
             ImageView *w = ImageView::create("cocosui/scrollviewbg.png");
             w->setTouchEnabled(true);
             w->setTag(i);
-            w->addTouchEventListener(this, toucheventselector(UIFocusTestVertical::onImageViewClicked));
+            w->addTouchEventListener(CC_CALLBACK_2(UIFocusTestVertical::onImageViewClicked, this));
             _verticalLayout->addChild(w);
             if (i == 2) {
                 w->requestFocus();
@@ -252,7 +252,7 @@ bool UIFocusTestVertical::init()
         btn->setTitleText("Toggle Loop");
         btn->setPosition(Vector2(60, winSize.height - 50));
         btn->setTitleColor(Color3B::RED);
-        btn->addTouchEventListener(this, toucheventselector(UIFocusTestHorizontal::toggleFocusLoop));
+        btn->addTouchEventListener(CC_CALLBACK_2(UIFocusTestVertical::toggleFocusLoop, this));
         this->addChild(btn);
         
         
@@ -262,9 +262,9 @@ bool UIFocusTestVertical::init()
 }
 
 
-void UIFocusTestVertical::toggleFocusLoop(cocos2d::Ref * pObjc, TouchEventType type)
+void UIFocusTestVertical::toggleFocusLoop(cocos2d::Ref * pObjc, Widget::TouchEventType type)
 {
-    if (type == TouchEventType::TOUCH_EVENT_ENDED) {
+    if (type == Widget::TouchEventType::ENDED) {
         _verticalLayout->setLoopFocus(!_verticalLayout->isLoopFocus());
         if (_verticalLayout->isLoopFocus()) {
             _loopText->setText("loop enabled");
@@ -308,7 +308,7 @@ bool UIFocusTestNestedLayout1::init()
             w->setTouchEnabled(true);
             w->setScaleX(2.5);
             w->setTag(i+count1);
-            w->addTouchEventListener(this, toucheventselector(UIFocusTestVertical::onImageViewClicked));
+            w->addTouchEventListener(CC_CALLBACK_2(UIFocusTestNestedLayout1::onImageViewClicked, this));
             _verticalLayout->addChild(w);
         }
         
@@ -325,7 +325,7 @@ bool UIFocusTestNestedLayout1::init()
             w->setScaleY(2.0);
             w->setTouchEnabled(true);
             w->setTag(i+count1+count2);
-            w->addTouchEventListener(this, toucheventselector(UIFocusTestVertical::onImageViewClicked));
+            w->addTouchEventListener(CC_CALLBACK_2(UIFocusTestNestedLayout1::onImageViewClicked, this));
             hbox->addChild(w);
         }
         
@@ -341,7 +341,7 @@ bool UIFocusTestNestedLayout1::init()
             ImageView *w = ImageView::create("cocosui/scrollviewbg.png");
             w->setTouchEnabled(true);
             w->setTag(i+count1+count2+count3);
-            w->addTouchEventListener(this, toucheventselector(UIFocusTestVertical::onImageViewClicked));
+            w->addTouchEventListener(CC_CALLBACK_2(UIFocusTestNestedLayout1::onImageViewClicked, this));
             innerVBox->addChild(w);
         }
 
@@ -354,7 +354,7 @@ bool UIFocusTestNestedLayout1::init()
         btn->setTitleText("Toggle Loop");
         btn->setPosition(Vector2(60, winSize.height - 50));
         btn->setTitleColor(Color3B::RED);
-        btn->addTouchEventListener(this, toucheventselector(UIFocusTestHorizontal::toggleFocusLoop));
+        btn->addTouchEventListener(CC_CALLBACK_2(UIFocusTestNestedLayout1::toggleFocusLoop, this));
         this->addChild(btn);
         
         
@@ -364,9 +364,9 @@ bool UIFocusTestNestedLayout1::init()
 }
 
 
-void UIFocusTestNestedLayout1::toggleFocusLoop(cocos2d::Ref * pObjc, TouchEventType type)
+void UIFocusTestNestedLayout1::toggleFocusLoop(cocos2d::Ref * pObjc, Widget::TouchEventType type)
 {
-    if (type == TouchEventType::TOUCH_EVENT_ENDED) {
+    if (type == Widget::TouchEventType::ENDED) {
         _verticalLayout->setLoopFocus(!_verticalLayout->isLoopFocus());
         if (_verticalLayout->isLoopFocus()) {
             _loopText->setText("loop enabled");
@@ -410,7 +410,7 @@ bool UIFocusTestNestedLayout2::init()
             w->setTouchEnabled(true);
             w->setTag(i+count1);
             w->setScaleY(2.4);
-            w->addTouchEventListener(this, toucheventselector(UIFocusTestVertical::onImageViewClicked));
+            w->addTouchEventListener(CC_CALLBACK_2(UIFocusTestNestedLayout2::onImageViewClicked, this));
             _horizontalLayout->addChild(w);
         }
         
@@ -427,7 +427,7 @@ bool UIFocusTestNestedLayout2::init()
             w->setScaleX(2.0);
             w->setTouchEnabled(true);
             w->setTag(i+count1+count2);
-            w->addTouchEventListener(this, toucheventselector(UIFocusTestVertical::onImageViewClicked));
+            w->addTouchEventListener(CC_CALLBACK_2(UIFocusTestNestedLayout2::onImageViewClicked, this));
             vbox->addChild(w);
         }
         
@@ -443,7 +443,7 @@ bool UIFocusTestNestedLayout2::init()
             ImageView *w = ImageView::create("cocosui/scrollviewbg.png");
             w->setTouchEnabled(true);
             w->setTag(i+count1+count2+count3);
-            w->addTouchEventListener(this, toucheventselector(UIFocusTestVertical::onImageViewClicked));
+            w->addTouchEventListener(CC_CALLBACK_2(UIFocusTestNestedLayout2::onImageViewClicked, this));
             innerHBox->addChild(w);
         }
         
@@ -456,7 +456,7 @@ bool UIFocusTestNestedLayout2::init()
         btn->setTitleText("Toggle Loop");
         btn->setPosition(Vector2(60, winSize.height - 50));
         btn->setTitleColor(Color3B::RED);
-        btn->addTouchEventListener(this, toucheventselector(UIFocusTestHorizontal::toggleFocusLoop));
+        btn->addTouchEventListener(CC_CALLBACK_2(UIFocusTestNestedLayout2::toggleFocusLoop, this));
         this->addChild(btn);
         
         
@@ -466,9 +466,9 @@ bool UIFocusTestNestedLayout2::init()
 }
 
 
-void UIFocusTestNestedLayout2::toggleFocusLoop(cocos2d::Ref * pObjc, TouchEventType type)
+void UIFocusTestNestedLayout2::toggleFocusLoop(cocos2d::Ref * pObjc, Widget::TouchEventType type)
 {
-    if (type == TouchEventType::TOUCH_EVENT_ENDED) {
+    if (type == Widget::TouchEventType::ENDED) {
         _horizontalLayout->setLoopFocus(!_horizontalLayout->isLoopFocus());
         if (_horizontalLayout->isLoopFocus()) {
             _loopText->setText("loop enabled");
@@ -529,7 +529,7 @@ bool UIFocusTestNestedLayout3::init()
                 ImageView *w = ImageView::create("cocosui/scrollviewbg.png");
                 w->setTouchEnabled(true);
                 w->setTag(j+firstVbox->getTag()+1);
-                w->addTouchEventListener(this, toucheventselector(UIFocusTestVertical::onImageViewClicked));
+                w->addTouchEventListener(CC_CALLBACK_2(UIFocusTestBase::onImageViewClicked, this));
                 firstVbox->addChild(w);
             }
             
@@ -550,7 +550,7 @@ bool UIFocusTestNestedLayout3::init()
             w->setLayoutParameter(bottomParams);
             w->setTouchEnabled(true);
             w->setTag(i+601);
-            w->addTouchEventListener(this, toucheventselector(UIFocusTestVertical::onImageViewClicked));
+            w->addTouchEventListener(CC_CALLBACK_2(UIFocusTestBase::onImageViewClicked, this));
             bottomHBox->addChild(w);
         }
         _verticalLayout->addChild(bottomHBox);
@@ -566,7 +566,7 @@ bool UIFocusTestNestedLayout3::init()
         btn->setTitleText("Toggle Loop");
         btn->setPosition(Vector2(60, winSize.height - 50));
         btn->setTitleColor(Color3B::RED);
-        btn->addTouchEventListener(this, toucheventselector(UIFocusTestHorizontal::toggleFocusLoop));
+        btn->addTouchEventListener(CC_CALLBACK_2(UIFocusTestNestedLayout3::toggleFocusLoop, this));
         this->addChild(btn);
         
         
@@ -576,9 +576,9 @@ bool UIFocusTestNestedLayout3::init()
 }
 
 
-void UIFocusTestNestedLayout3::toggleFocusLoop(cocos2d::Ref * pObjc, TouchEventType type)
+void UIFocusTestNestedLayout3::toggleFocusLoop(cocos2d::Ref * pObjc, Widget::TouchEventType type)
 {
-    if (type == TouchEventType::TOUCH_EVENT_ENDED) {
+    if (type == Widget::TouchEventType::ENDED) {
         _verticalLayout->setLoopFocus(!_verticalLayout->isLoopFocus());
         if (_verticalLayout->isLoopFocus()) {
             _loopText->setText("loop enabled");
