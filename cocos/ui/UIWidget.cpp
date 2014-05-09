@@ -25,7 +25,6 @@ THE SOFTWARE.
 #include "ui/UIWidget.h"
 #include "ui/UILayout.h"
 #include "ui/UIHelper.h"
-#include "ui/UIDeprecated.h"
 
 NS_CC_BEGIN
 
@@ -73,15 +72,18 @@ _focusEnabled(true)
 
 Widget::~Widget()
 {
-    _touchEventListener = nullptr;
-    _touchEventSelector = nullptr;
     setTouchEnabled(false);
+    
+    //cleanup focused widget
     if (_focusedWidget == this) {
         _focusedWidget = nullptr;
     }
     if (_realFocusedWidget == this) {
         _realFocusedWidget = nullptr;
     }
+    
+    CC_SAFE_RELEASE_NULL(_touchEventListener);
+    
 }
 
 Widget* Widget::create()
@@ -606,6 +608,10 @@ void Widget::onTouchCancelled(Touch *touch, Event *unusedEvent)
 
 void Widget::pushDownEvent()
 {
+    if (_touchEventCallback) {
+        _touchEventCallback(this, TouchEventType::BEGAN);
+    }
+    
     if (_touchEventListener && _touchEventSelector)
     {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_BEGAN);
@@ -614,6 +620,10 @@ void Widget::pushDownEvent()
 
 void Widget::moveEvent()
 {
+    if (_touchEventCallback) {
+        _touchEventCallback(this, TouchEventType::MOVED);
+    }
+    
     if (_touchEventListener && _touchEventSelector)
     {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_MOVED);
@@ -622,6 +632,11 @@ void Widget::moveEvent()
 
 void Widget::releaseUpEvent()
 {
+    
+    if (_touchEventCallback) {
+        _touchEventCallback(this, TouchEventType::ENDED);
+    }
+    
     if (_touchEventListener && _touchEventSelector)
     {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_ENDED);
@@ -630,16 +645,30 @@ void Widget::releaseUpEvent()
 
 void Widget::cancelUpEvent()
 {
+    if (_touchEventCallback)
+    {
+        _touchEventCallback(this, TouchEventType::CANCELED);
+    }
+   
     if (_touchEventListener && _touchEventSelector)
     {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_CANCELED);
     }
+   
 }
 
 void Widget::addTouchEventListener(Ref *target, SEL_TouchEvent selector)
 {
     _touchEventListener = target;
     _touchEventSelector = selector;
+    CC_SAFE_RETAIN(target);
+    
+    
+}
+    
+void Widget::addTouchEventListener(Widget::ccWidgetTouchCallback callback)
+{
+    this->_touchEventCallback = callback;
 }
 
 bool Widget::hitTest(const Vector2 &pt)

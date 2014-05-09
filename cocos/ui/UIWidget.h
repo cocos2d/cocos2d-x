@@ -52,8 +52,10 @@ typedef enum
     UI_TEX_TYPE_LOCAL = 0,
     UI_TEX_TYPE_PLIST = 1
 }TextureResType;
-
-typedef enum
+   
+    
+    
+CC_DEPRECATED_ATTRIBUTE typedef enum
 {
     TOUCH_EVENT_BEGAN,
     TOUCH_EVENT_MOVED,
@@ -61,9 +63,10 @@ typedef enum
     TOUCH_EVENT_CANCELED
 }TouchEventType;
     
-
-typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType);
+CC_DEPRECATED_ATTRIBUTE typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType);
 #define toucheventselector(_SELECTOR) (SEL_TouchEvent)(&_SELECTOR)
+
+
 /**
 *   @js NA
 *   @lua NA
@@ -90,6 +93,18 @@ public:
         ABSOLUTE,
         PERCENT
     };
+    
+    enum class TouchEventType
+    {
+        BEGAN,
+        MOVED,
+        ENDED,
+        CANCELED
+    };
+
+    
+    typedef std::function<void(Ref*,Widget::TouchEventType)> ccWidgetTouchCallback;
+
     
     /**
      * Default constructor
@@ -222,8 +237,8 @@ public:
     /**
      * Sets the touch event target/selector of the menu item
      */
-    void addTouchEventListener(Ref* target,SEL_TouchEvent selector);
-
+    CC_DEPRECATED_ATTRIBUTE void addTouchEventListener(Ref* target,SEL_TouchEvent selector);
+    void addTouchEventListener(ccWidgetTouchCallback callback);
 
     //cocos2d property
 
@@ -639,8 +654,13 @@ protected:
     Vector2 _touchStartPos;    ///< touch began point
     Vector2 _touchMovePos;     ///< touch moved point
     Vector2 _touchEndPos;      ///< touch ended point
+    
+    //if use the old API, we must retain the _touchEventListener
     Ref*       _touchEventListener;
     SEL_TouchEvent    _touchEventSelector;
+    
+    ccWidgetTouchCallback _touchEventCallback;
+    
     std::string _name;
     WidgetType _widgetType;
 	int _actionTag;
