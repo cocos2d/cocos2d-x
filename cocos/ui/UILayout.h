@@ -46,10 +46,7 @@ typedef enum
     LAYOUT_RELATIVE
 }LayoutType;
 
-typedef enum {
-    LAYOUT_CLIPPING_STENCIL,
-    LAYOUT_CLIPPING_SCISSOR
-}LayoutClippingType;
+
 
 /**
  *  @js NA
@@ -63,6 +60,11 @@ class Layout : public Widget
     DECLARE_CLASS_GUI_INFO
     
 public:
+    enum class ClippingType
+    {
+        STENCIL,
+        SCISSOR
+    };
     /**
      * Default constructor
      */
@@ -185,9 +187,9 @@ public:
      */
     virtual void setClippingEnabled(bool enabled);
     
-    void setClippingType(LayoutClippingType type);
+    void setClippingType(ClippingType type);
     
-    LayoutClippingType getClippingType();
+    ClippingType getClippingType();
     
     /**
      * Gets if layout is clipping enabled.
@@ -461,7 +463,7 @@ protected:
     GLubyte _cOpacity;
     Size _backGroundImageTextureSize;
     LayoutType _layoutType;
-    LayoutClippingType _clippingType;
+    ClippingType _clippingType;
     DrawNode* _clippingStencil;
     bool _scissorRectDirty;
     Rect _clippingRect;

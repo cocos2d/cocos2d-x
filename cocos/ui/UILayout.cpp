@@ -583,7 +583,7 @@ _alongVector(Vector2(0.0f, -1.0f)),
 _cOpacity(255),
 _backGroundImageTextureSize(Size::ZERO),
 _layoutType(LAYOUT_ABSOLUTE),
-_clippingType(LAYOUT_CLIPPING_STENCIL),
+_clippingType(ClippingType::STENCIL),
 _clippingStencil(nullptr),
 _scissorRectDirty(false),
 _clippingRect(Rect::ZERO),
@@ -714,10 +714,10 @@ void Layout::visit(Renderer *renderer, const Matrix &parentTransform, bool paren
     {
         switch (_clippingType)
         {
-            case LAYOUT_CLIPPING_STENCIL:
+            case ClippingType::STENCIL:
                 stencilClippingVisit(renderer, parentTransform, parentTransformUpdated);
                 break;
-            case LAYOUT_CLIPPING_SCISSOR:
+            case ClippingType::SCISSOR:
                 scissorClippingVisit(renderer, parentTransform, parentTransformUpdated);
                 break;
             default:
@@ -916,7 +916,7 @@ void Layout::setClippingEnabled(bool able)
     _clippingEnabled = able;
     switch (_clippingType)
     {
-        case LAYOUT_CLIPPING_STENCIL:
+        case ClippingType::STENCIL:
             if (able)
             {
                 static bool once = true;
@@ -952,7 +952,7 @@ void Layout::setClippingEnabled(bool able)
     }
 }
     
-void Layout::setClippingType(LayoutClippingType type)
+void Layout::setClippingType(ClippingType type)
 {
     if (type == _clippingType)
     {
@@ -964,14 +964,14 @@ void Layout::setClippingType(LayoutClippingType type)
     setClippingEnabled(clippingEnabled);
 }
     
-LayoutClippingType Layout::getClippingType()
+Layout::ClippingType Layout::getClippingType()
 {
     return _clippingType;
 }
     
 void Layout::setStencilClippingSize(const Size &size)
 {
-    if (_clippingEnabled && _clippingType == LAYOUT_CLIPPING_STENCIL)
+    if (_clippingEnabled && _clippingType == ClippingType::STENCIL)
     {
         Vector2 rect[4];
         rect[0] = Vector2::ZERO;
