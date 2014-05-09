@@ -510,7 +510,7 @@ bool UILayoutTest_Layout_Relative_Align_Parent::init()
         layout->addChild(button_TopLeft);
         
         RelativeLayoutParameter* rp_TopLeft = RelativeLayoutParameter::create();
-        rp_TopLeft->setAlign(RELATIVE_ALIGN_PARENT_TOP_LEFT);
+        rp_TopLeft->setAlign(RelativeLayoutParameter::RelativeAlign::PARENT_TOP_LEFT);
         button_TopLeft->setLayoutParameter(rp_TopLeft);
         
         
@@ -520,7 +520,7 @@ bool UILayoutTest_Layout_Relative_Align_Parent::init()
         layout->addChild(button_TopCenter);
         
         RelativeLayoutParameter* rp_TopCenter = RelativeLayoutParameter::create();
-        rp_TopCenter->setAlign(RELATIVE_ALIGN_PARENT_TOP_CENTER_HORIZONTAL);
+        rp_TopCenter->setAlign(RelativeLayoutParameter::RelativeAlign::PARENT_TOP_CENTER_HORIZONTAL);
         button_TopCenter->setLayoutParameter(rp_TopCenter);
         
         
@@ -530,7 +530,7 @@ bool UILayoutTest_Layout_Relative_Align_Parent::init()
         layout->addChild(button_TopRight);
         
         RelativeLayoutParameter* rp_TopRight = RelativeLayoutParameter::create();
-        rp_TopRight->setAlign(RELATIVE_ALIGN_PARENT_TOP_RIGHT);
+        rp_TopRight->setAlign(RelativeLayoutParameter::RelativeAlign::PARENT_TOP_RIGHT);
         button_TopRight->setLayoutParameter(rp_TopRight);
         
         
@@ -540,7 +540,7 @@ bool UILayoutTest_Layout_Relative_Align_Parent::init()
         layout->addChild(button_LeftCenter);
         
         RelativeLayoutParameter* rp_LeftCenter = RelativeLayoutParameter::create();
-        rp_LeftCenter->setAlign(RELATIVE_ALIGN_PARENT_LEFT_CENTER_VERTICAL);
+        rp_LeftCenter->setAlign(RelativeLayoutParameter::RelativeAlign::PARENT_LEFT_CENTER_VERTICAL);
         button_LeftCenter->setLayoutParameter(rp_LeftCenter);
         
         
@@ -550,7 +550,7 @@ bool UILayoutTest_Layout_Relative_Align_Parent::init()
         layout->addChild(buttonCenter);
         
         RelativeLayoutParameter* rpCenter = RelativeLayoutParameter::create();
-        rpCenter->setAlign(RELATIVE_CENTER_IN_PARENT);
+        rpCenter->setAlign(RelativeLayoutParameter::RelativeAlign::CENTER_IN_PARENT);
         buttonCenter->setLayoutParameter(rpCenter);
         
         
@@ -560,7 +560,7 @@ bool UILayoutTest_Layout_Relative_Align_Parent::init()
         layout->addChild(button_RightCenter);
         
         RelativeLayoutParameter* rp_RightCenter = RelativeLayoutParameter::create();
-        rp_RightCenter->setAlign(RELATIVE_ALIGN_PARENT_RIGHT_CENTER_VERTICAL);
+        rp_RightCenter->setAlign(RelativeLayoutParameter::RelativeAlign::PARENT_RIGHT_CENTER_VERTICAL);
         button_RightCenter->setLayoutParameter(rp_RightCenter);
         
         
@@ -570,7 +570,7 @@ bool UILayoutTest_Layout_Relative_Align_Parent::init()
         layout->addChild(button_LeftBottom);
         
         RelativeLayoutParameter* rp_LeftBottom = RelativeLayoutParameter::create();
-        rp_LeftBottom->setAlign(RELATIVE_ALIGN_PARENT_LEFT_BOTTOM);
+        rp_LeftBottom->setAlign(RelativeLayoutParameter::RelativeAlign::PARENT_LEFT_BOTTOM);
         button_LeftBottom->setLayoutParameter(rp_LeftBottom);
         
         
@@ -580,7 +580,7 @@ bool UILayoutTest_Layout_Relative_Align_Parent::init()
         layout->addChild(button_BottomCenter);
         
         RelativeLayoutParameter* rp_BottomCenter = RelativeLayoutParameter::create();
-        rp_BottomCenter->setAlign(RELATIVE_ALIGN_PARENT_BOTTOM_CENTER_HORIZONTAL);
+        rp_BottomCenter->setAlign(RelativeLayoutParameter::RelativeAlign::PARENT_BOTTOM_CENTER_HORIZONTAL);
         button_BottomCenter->setLayoutParameter(rp_BottomCenter);
         
         
@@ -590,7 +590,7 @@ bool UILayoutTest_Layout_Relative_Align_Parent::init()
         layout->addChild(button_RightBottom);
         
         RelativeLayoutParameter* rp_RightBottom = RelativeLayoutParameter::create();
-        rp_RightBottom->setAlign(RELATIVE_ALIGN_PARENT_RIGHT_BOTTOM);
+        rp_RightBottom->setAlign(RelativeLayoutParameter::RelativeAlign::PARENT_RIGHT_BOTTOM);
         button_RightBottom->setLayoutParameter(rp_RightBottom);
         
         
@@ -643,7 +643,7 @@ bool UILayoutTest_Layout_Relative_Location::init()
         
         RelativeLayoutParameter* rp_Center = RelativeLayoutParameter::create();
         rp_Center->setRelativeName("rp_Center");
-        rp_Center->setAlign(RELATIVE_CENTER_IN_PARENT);
+        rp_Center->setAlign(RelativeLayoutParameter::RelativeAlign::CENTER_IN_PARENT);
         imageView_Center->setLayoutParameter(rp_Center);
         
         
@@ -653,7 +653,7 @@ bool UILayoutTest_Layout_Relative_Location::init()
         
         RelativeLayoutParameter* rp_AboveCenter = RelativeLayoutParameter::create();
         rp_AboveCenter->setRelativeToWidgetName("rp_Center");
-        rp_AboveCenter->setAlign(RELATIVE_LOCATION_ABOVE_CENTER);
+        rp_AboveCenter->setAlign(RelativeLayoutParameter::RelativeAlign::LOCATION_ABOVE_CENTER);
         imageView_AboveCenter->setLayoutParameter(rp_AboveCenter);
         
         
@@ -663,7 +663,7 @@ bool UILayoutTest_Layout_Relative_Location::init()
         
         RelativeLayoutParameter* rp_BelowCenter = RelativeLayoutParameter::create();
         rp_BelowCenter->setRelativeToWidgetName("rp_Center");
-        rp_BelowCenter->setAlign(RELATIVE_LOCATION_BELOW_CENTER);
+        rp_BelowCenter->setAlign(RelativeLayoutParameter::RelativeAlign::LOCATION_BELOW_CENTER);
         imageView_BelowCenter->setLayoutParameter(rp_BelowCenter);
         
         
@@ -673,7 +673,7 @@ bool UILayoutTest_Layout_Relative_Location::init()
         
         RelativeLayoutParameter* rp_LeftCenter = RelativeLayoutParameter::create();
         rp_LeftCenter->setRelativeToWidgetName("rp_Center");
-        rp_LeftCenter->setAlign(RELATIVE_LOCATION_LEFT_OF_CENTER);
+        rp_LeftCenter->setAlign(RelativeLayoutParameter::RelativeAlign::LOCATION_LEFT_OF_CENTER);
         imageView_LeftCenter->setLayoutParameter(rp_LeftCenter);
         
         
@@ -684,7 +684,7 @@ bool UILayoutTest_Layout_Relative_Location::init()
         
         RelativeLayoutParameter* rp_RightCenter = RelativeLayoutParameter::create();
         rp_RightCenter->setRelativeToWidgetName("rp_Center");
-        rp_RightCenter->setAlign(RELATIVE_LOCATION_RIGHT_OF_CENTER);
+        rp_RightCenter->setAlign(RelativeLayoutParameter::RelativeAlign::LOCATION_RIGHT_OF_CENTER);
         imageView_RightCenter->setLayoutParameter(rp_RightCenter);
         
         

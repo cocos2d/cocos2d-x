@@ -233,7 +233,7 @@ void RelativeLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Vector<c
                 }
                 Vector2 ap = child->getAnchorPoint();
                 Size cs = child->getSize();
-                RelativeAlign align = layoutParameter->getAlign();
+                RelativeLayoutParameter::RelativeAlign align = layoutParameter->getAlign();
                 const char* relativeName = layoutParameter->getRelativeToWidgetName();
                 Widget* relativeWidget = nullptr;
                 RelativeLayoutParameter* relativeWidgetLP = nullptr;
@@ -257,45 +257,45 @@ void RelativeLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Vector<c
                 }
                 switch (align)
                 {
-                    case RELATIVE_ALIGN_NONE:
-                    case RELATIVE_ALIGN_PARENT_TOP_LEFT:
+                    case RelativeLayoutParameter::RelativeAlign::NONE:
+                    case RelativeLayoutParameter::RelativeAlign::PARENT_TOP_LEFT:
                         finalPosX = ap.x * cs.width;
                         finalPosY = layoutSize.height - ((1.0f - ap.y) * cs.height);
                         break;
-                    case RELATIVE_ALIGN_PARENT_TOP_CENTER_HORIZONTAL:
+                    case RelativeLayoutParameter::RelativeAlign::PARENT_TOP_CENTER_HORIZONTAL:
                         finalPosX = layoutSize.width * 0.5f - cs.width * (0.5f - ap.x);
                         finalPosY = layoutSize.height - ((1.0f - ap.y) * cs.height);
                         break;
-                    case RELATIVE_ALIGN_PARENT_TOP_RIGHT:
+                    case RelativeLayoutParameter::RelativeAlign::PARENT_TOP_RIGHT:
                         finalPosX = layoutSize.width - ((1.0f - ap.x) * cs.width);
                         finalPosY = layoutSize.height - ((1.0f - ap.y) * cs.height);
                         break;
-                    case RELATIVE_ALIGN_PARENT_LEFT_CENTER_VERTICAL:
+                    case RelativeLayoutParameter::RelativeAlign::PARENT_LEFT_CENTER_VERTICAL:
                         finalPosX = ap.x * cs.width;
                         finalPosY = layoutSize.height * 0.5f - cs.height * (0.5f - ap.y);
                         break;
-                    case RELATIVE_CENTER_IN_PARENT:
+                    case RelativeLayoutParameter::RelativeAlign::CENTER_IN_PARENT:
                         finalPosX = layoutSize.width * 0.5f - cs.width * (0.5f - ap.x);
                         finalPosY = layoutSize.height * 0.5f - cs.height * (0.5f - ap.y);
                         break;
-                    case RELATIVE_ALIGN_PARENT_RIGHT_CENTER_VERTICAL:
+                    case RelativeLayoutParameter::RelativeAlign::PARENT_RIGHT_CENTER_VERTICAL:
                         finalPosX = layoutSize.width - ((1.0f - ap.x) * cs.width);
                         finalPosY = layoutSize.height * 0.5f - cs.height * (0.5f - ap.y);
                         break;
-                    case RELATIVE_ALIGN_PARENT_LEFT_BOTTOM:
+                    case RelativeLayoutParameter::RelativeAlign::PARENT_LEFT_BOTTOM:
                         finalPosX = ap.x * cs.width;
                         finalPosY = ap.y * cs.height;
                         break;
-                    case RELATIVE_ALIGN_PARENT_BOTTOM_CENTER_HORIZONTAL:
+                    case RelativeLayoutParameter::RelativeAlign::PARENT_BOTTOM_CENTER_HORIZONTAL:
                         finalPosX = layoutSize.width * 0.5f - cs.width * (0.5f - ap.x);
                         finalPosY = ap.y * cs.height;
                         break;
-                    case RELATIVE_ALIGN_PARENT_RIGHT_BOTTOM:
+                    case RelativeLayoutParameter::RelativeAlign::PARENT_RIGHT_BOTTOM:
                         finalPosX = layoutSize.width - ((1.0f - ap.x) * cs.width);
                         finalPosY = ap.y * cs.height;
                         break;
                         
-                    case RELATIVE_LOCATION_ABOVE_LEFTALIGN:
+                    case RelativeLayoutParameter::RelativeAlign::LOCATION_ABOVE_LEFTALIGN:
                         if (relativeWidget)
                         {
                             if (relativeWidgetLP && !relativeWidgetLP->_put)
@@ -308,7 +308,7 @@ void RelativeLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Vector<c
                             finalPosX = locationLeft + ap.x * cs.width;
                         }
                         break;
-                    case RELATIVE_LOCATION_ABOVE_CENTER:
+                    case RelativeLayoutParameter::RelativeAlign::LOCATION_ABOVE_CENTER:
                         if (relativeWidget)
                         {
                             if (relativeWidgetLP && !relativeWidgetLP->_put)
@@ -322,7 +322,7 @@ void RelativeLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Vector<c
                             finalPosX = relativeWidget->getLeftInParent() + rbs.width * 0.5f + ap.x * cs.width - cs.width * 0.5f;
                         }
                         break;
-                    case RELATIVE_LOCATION_ABOVE_RIGHTALIGN:
+                    case RelativeLayoutParameter::RelativeAlign::LOCATION_ABOVE_RIGHTALIGN:
                         if (relativeWidget)
                         {
                             if (relativeWidgetLP && !relativeWidgetLP->_put)
@@ -335,7 +335,7 @@ void RelativeLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Vector<c
                             finalPosX = locationRight - (1.0f - ap.x) * cs.width;
                         }
                         break;
-                    case RELATIVE_LOCATION_LEFT_OF_TOPALIGN:
+                    case RelativeLayoutParameter::RelativeAlign::LOCATION_LEFT_OF_TOPALIGN:
                         if (relativeWidget)
                         {
                             if (relativeWidgetLP && !relativeWidgetLP->_put)
@@ -348,7 +348,7 @@ void RelativeLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Vector<c
                             finalPosX = locationRight - (1.0f - ap.x) * cs.width;
                         }
                         break;
-                    case RELATIVE_LOCATION_LEFT_OF_CENTER:
+                    case RelativeLayoutParameter::RelativeAlign::LOCATION_LEFT_OF_CENTER:
                         if (relativeWidget)
                         {
                             if (relativeWidgetLP && !relativeWidgetLP->_put)
@@ -362,7 +362,7 @@ void RelativeLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Vector<c
                             finalPosY = relativeWidget->getBottomInParent() + rbs.height * 0.5f + ap.y * cs.height - cs.height * 0.5f;
                         }
                         break;
-                    case RELATIVE_LOCATION_LEFT_OF_BOTTOMALIGN:
+                    case RelativeLayoutParameter::RelativeAlign::LOCATION_LEFT_OF_BOTTOMALIGN:
                         if (relativeWidget)
                         {
                             if (relativeWidgetLP && !relativeWidgetLP->_put)
@@ -375,7 +375,7 @@ void RelativeLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Vector<c
                             finalPosX = locationRight - (1.0f - ap.x) * cs.width;
                         }
                         break;
-                    case RELATIVE_LOCATION_RIGHT_OF_TOPALIGN:
+                    case RelativeLayoutParameter::RelativeAlign::LOCATION_RIGHT_OF_TOPALIGN:
                         if (relativeWidget)
                         {
                             if (relativeWidgetLP && !relativeWidgetLP->_put)
@@ -388,7 +388,7 @@ void RelativeLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Vector<c
                             finalPosX = locationLeft + ap.x * cs.width;
                         }
                         break;
-                    case RELATIVE_LOCATION_RIGHT_OF_CENTER:
+                    case RelativeLayoutParameter::RelativeAlign::LOCATION_RIGHT_OF_CENTER:
                         if (relativeWidget)
                         {
                             if (relativeWidgetLP && !relativeWidgetLP->_put)
@@ -402,7 +402,7 @@ void RelativeLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Vector<c
                             finalPosY = relativeWidget->getBottomInParent() + rbs.height * 0.5f + ap.y * cs.height - cs.height * 0.5f;
                         }
                         break;
-                    case RELATIVE_LOCATION_RIGHT_OF_BOTTOMALIGN:
+                    case RelativeLayoutParameter::RelativeAlign::LOCATION_RIGHT_OF_BOTTOMALIGN:
                         if (relativeWidget)
                         {
                             if (relativeWidgetLP && !relativeWidgetLP->_put)
@@ -415,7 +415,7 @@ void RelativeLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Vector<c
                             finalPosX = locationLeft + ap.x * cs.width;
                         }
                         break;
-                    case RELATIVE_LOCATION_BELOW_LEFTALIGN:
+                    case RelativeLayoutParameter::RelativeAlign::LOCATION_BELOW_LEFTALIGN:
                         if (relativeWidget)
                         {
                             if (relativeWidgetLP && !relativeWidgetLP->_put)
@@ -428,7 +428,7 @@ void RelativeLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Vector<c
                             finalPosX = locationLeft + ap.x * cs.width;
                         }
                         break;
-                    case RELATIVE_LOCATION_BELOW_CENTER:
+                    case RelativeLayoutParameter::RelativeAlign::LOCATION_BELOW_CENTER:
                         if (relativeWidget)
                         {
                             if (relativeWidgetLP && !relativeWidgetLP->_put)
@@ -442,7 +442,7 @@ void RelativeLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Vector<c
                             finalPosX = relativeWidget->getLeftInParent() + rbs.width * 0.5f + ap.x * cs.width - cs.width * 0.5f;
                         }
                         break;
-                    case RELATIVE_LOCATION_BELOW_RIGHTALIGN:
+                    case RelativeLayoutParameter::RelativeAlign::LOCATION_BELOW_RIGHTALIGN:
                         if (relativeWidget)
                         {
                             if (relativeWidgetLP && !relativeWidgetLP->_put)
@@ -467,83 +467,83 @@ void RelativeLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Vector<c
                 //handle margin
                 switch (align)
                 {
-                    case RELATIVE_ALIGN_NONE:
-                    case RELATIVE_ALIGN_PARENT_TOP_LEFT:
+                    case RelativeLayoutParameter::RelativeAlign::NONE:
+                    case RelativeLayoutParameter::RelativeAlign::PARENT_TOP_LEFT:
                         finalPosX += mg.left;
                         finalPosY -= mg.top;
                         break;
-                    case RELATIVE_ALIGN_PARENT_TOP_CENTER_HORIZONTAL:
+                    case RelativeLayoutParameter::RelativeAlign::PARENT_TOP_CENTER_HORIZONTAL:
                         finalPosY -= mg.top;
                         break;
-                    case RELATIVE_ALIGN_PARENT_TOP_RIGHT:
+                    case RelativeLayoutParameter::RelativeAlign::PARENT_TOP_RIGHT:
                         finalPosX -= mg.right;
                         finalPosY -= mg.top;
                         break;
-                    case RELATIVE_ALIGN_PARENT_LEFT_CENTER_VERTICAL:
+                    case RelativeLayoutParameter::RelativeAlign::PARENT_LEFT_CENTER_VERTICAL:
                         finalPosX += mg.left;
                         break;
-                    case RELATIVE_CENTER_IN_PARENT:
+                    case RelativeLayoutParameter::RelativeAlign::CENTER_IN_PARENT:
                         break;
-                    case RELATIVE_ALIGN_PARENT_RIGHT_CENTER_VERTICAL:
+                    case RelativeLayoutParameter::RelativeAlign::PARENT_RIGHT_CENTER_VERTICAL:
                         finalPosX -= mg.right;
                         break;
-                    case RELATIVE_ALIGN_PARENT_LEFT_BOTTOM:
+                    case RelativeLayoutParameter::RelativeAlign::PARENT_LEFT_BOTTOM:
                         finalPosX += mg.left;
                         finalPosY += mg.bottom;
                         break;
-                    case RELATIVE_ALIGN_PARENT_BOTTOM_CENTER_HORIZONTAL:
+                    case RelativeLayoutParameter::RelativeAlign::PARENT_BOTTOM_CENTER_HORIZONTAL:
                         finalPosY += mg.bottom;
                         break;
-                    case RELATIVE_ALIGN_PARENT_RIGHT_BOTTOM:
+                    case RelativeLayoutParameter::RelativeAlign::PARENT_RIGHT_BOTTOM:
                         finalPosX -= mg.right;
                         finalPosY += mg.bottom;
                         break;
                         
-                    case RELATIVE_LOCATION_ABOVE_LEFTALIGN:
+                    case RelativeLayoutParameter::RelativeAlign::LOCATION_ABOVE_LEFTALIGN:
                         finalPosY += mg.bottom;
                         finalPosX += mg.left;
                         break;
-                    case RELATIVE_LOCATION_ABOVE_RIGHTALIGN:
+                    case RelativeLayoutParameter::RelativeAlign::LOCATION_ABOVE_RIGHTALIGN:
                         finalPosY += mg.bottom;
                         finalPosX -= mg.right;
                         break;
-                    case RELATIVE_LOCATION_ABOVE_CENTER:
+                    case RelativeLayoutParameter::RelativeAlign::LOCATION_ABOVE_CENTER:
                         finalPosY += mg.bottom;
                         break;
                         
-                    case RELATIVE_LOCATION_LEFT_OF_TOPALIGN:
+                    case RelativeLayoutParameter::RelativeAlign::LOCATION_LEFT_OF_TOPALIGN:
                         finalPosX -= mg.right;
                         finalPosY -= mg.top;
                         break;
-                    case RELATIVE_LOCATION_LEFT_OF_BOTTOMALIGN:
+                    case RelativeLayoutParameter::RelativeAlign::LOCATION_LEFT_OF_BOTTOMALIGN:
                         finalPosX -= mg.right;
                         finalPosY += mg.bottom;
                         break;
-                    case RELATIVE_LOCATION_LEFT_OF_CENTER:
+                    case RelativeLayoutParameter::RelativeAlign::LOCATION_LEFT_OF_CENTER:
                         finalPosX -= mg.right;
                         break;
                         
-                    case RELATIVE_LOCATION_RIGHT_OF_TOPALIGN:
+                    case RelativeLayoutParameter::RelativeAlign::LOCATION_RIGHT_OF_TOPALIGN:
                         finalPosX += mg.left;
                         finalPosY -= mg.top;
                         break;
-                    case RELATIVE_LOCATION_RIGHT_OF_BOTTOMALIGN:
+                    case RelativeLayoutParameter::RelativeAlign::LOCATION_RIGHT_OF_BOTTOMALIGN:
                         finalPosX += mg.left;
                         finalPosY += mg.bottom;
                         break;
-                    case RELATIVE_LOCATION_RIGHT_OF_CENTER:
+                    case RelativeLayoutParameter::RelativeAlign::LOCATION_RIGHT_OF_CENTER:
                         finalPosX += mg.left;
                         break;
                         
-                    case RELATIVE_LOCATION_BELOW_LEFTALIGN:
+                    case RelativeLayoutParameter::RelativeAlign::LOCATION_BELOW_LEFTALIGN:
                         finalPosY -= mg.top;
                         finalPosX += mg.left;
                         break;
-                    case RELATIVE_LOCATION_BELOW_RIGHTALIGN:
+                    case RelativeLayoutParameter::RelativeAlign::LOCATION_BELOW_RIGHTALIGN:
                         finalPosY -= mg.top;
                         finalPosX -= mg.right;
                         break;
-                    case RELATIVE_LOCATION_BELOW_CENTER:
+                    case RelativeLayoutParameter::RelativeAlign::LOCATION_BELOW_CENTER:
                         finalPosY -= mg.top;
                         break;
                     default:

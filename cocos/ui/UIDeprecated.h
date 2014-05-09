@@ -69,6 +69,51 @@ CC_DEPRECATED_ATTRIBUTE const LinearLayoutParameter::LinearGravity LINEAR_GRAVIT
     = LinearLayoutParameter::LinearGravity::CENTER_VERTICAL;
 CC_DEPRECATED_ATTRIBUTE const LinearLayoutParameter::LinearGravity LINEAR_GRAVITY_CENTER_HORIZONTAL
     = LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL;
+    
+CC_DEPRECATED_ATTRIBUTE const RelativeLayoutParameter::RelativeAlign RELATIVE_ALIGN_NONE
+    = RelativeLayoutParameter::RelativeAlign::NONE;
+CC_DEPRECATED_ATTRIBUTE const RelativeLayoutParameter::RelativeAlign RELATIVE_ALIGN_PARENT_TOP_LEFT
+    = RelativeLayoutParameter::RelativeAlign::PARENT_TOP_LEFT;
+CC_DEPRECATED_ATTRIBUTE const RelativeLayoutParameter::RelativeAlign RELATIVE_ALIGN_PARENT_TOP_CENTER_HORIZONTAL
+    = RelativeLayoutParameter::RelativeAlign::PARENT_TOP_CENTER_HORIZONTAL;
+CC_DEPRECATED_ATTRIBUTE const RelativeLayoutParameter::RelativeAlign RELATIVE_ALIGN_PARENT_TOP_RIGHT
+    = RelativeLayoutParameter::RelativeAlign::PARENT_TOP_RIGHT;
+CC_DEPRECATED_ATTRIBUTE const RelativeLayoutParameter::RelativeAlign RELATIVE_ALIGN_PARENT_LEFT_CENTER_VERTICAL
+    = RelativeLayoutParameter::RelativeAlign::PARENT_LEFT_CENTER_VERTICAL;
+CC_DEPRECATED_ATTRIBUTE const RelativeLayoutParameter::RelativeAlign RELATIVE_CENTER_IN_PARENT
+    = RelativeLayoutParameter::RelativeAlign::CENTER_IN_PARENT;
+CC_DEPRECATED_ATTRIBUTE const RelativeLayoutParameter::RelativeAlign RELATIVE_ALIGN_PARENT_RIGHT_CENTER_VERTICAL
+    = RelativeLayoutParameter::RelativeAlign::PARENT_RIGHT_CENTER_VERTICAL;
+CC_DEPRECATED_ATTRIBUTE const RelativeLayoutParameter::RelativeAlign RELATIVE_ALIGN_PARENT_LEFT_BOTTOM
+    = RelativeLayoutParameter::RelativeAlign::PARENT_LEFT_BOTTOM;
+CC_DEPRECATED_ATTRIBUTE const RelativeLayoutParameter::RelativeAlign RELATIVE_ALIGN_PARENT_BOTTOM_CENTER_HORIZONTAL
+    = RelativeLayoutParameter::RelativeAlign::PARENT_BOTTOM_CENTER_HORIZONTAL;
+CC_DEPRECATED_ATTRIBUTE const RelativeLayoutParameter::RelativeAlign RELATIVE_ALIGN_PARENT_RIGHT_BOTTOM
+    = RelativeLayoutParameter::RelativeAlign::PARENT_RIGHT_BOTTOM;
+CC_DEPRECATED_ATTRIBUTE const RelativeLayoutParameter::RelativeAlign RELATIVE_LOCATION_ABOVE_LEFTALIGN
+    = RelativeLayoutParameter::RelativeAlign::LOCATION_ABOVE_LEFTALIGN;
+CC_DEPRECATED_ATTRIBUTE const RelativeLayoutParameter::RelativeAlign RELATIVE_LOCATION_ABOVE_CENTER
+    = RelativeLayoutParameter::RelativeAlign::LOCATION_ABOVE_CENTER;
+CC_DEPRECATED_ATTRIBUTE const RelativeLayoutParameter::RelativeAlign RELATIVE_LOCATION_ABOVE_RIGHTALIGN
+    = RelativeLayoutParameter::RelativeAlign::LOCATION_ABOVE_RIGHTALIGN;
+CC_DEPRECATED_ATTRIBUTE const RelativeLayoutParameter::RelativeAlign RELATIVE_LOCATION_LEFT_OF_TOPALIGN
+    = RelativeLayoutParameter::RelativeAlign::LOCATION_LEFT_OF_TOPALIGN;
+CC_DEPRECATED_ATTRIBUTE const RelativeLayoutParameter::RelativeAlign RELATIVE_LOCATION_LEFT_OF_CENTER
+    = RelativeLayoutParameter::RelativeAlign::LOCATION_LEFT_OF_CENTER;
+CC_DEPRECATED_ATTRIBUTE const RelativeLayoutParameter::RelativeAlign RELATIVE_LOCATION_LEFT_OF_BOTTOMALIGN
+    = RelativeLayoutParameter::RelativeAlign::LOCATION_LEFT_OF_BOTTOMALIGN;
+CC_DEPRECATED_ATTRIBUTE const RelativeLayoutParameter::RelativeAlign RELATIVE_LOCATION_RIGHT_OF_TOPALIGN
+    = RelativeLayoutParameter::RelativeAlign::LOCATION_RIGHT_OF_TOPALIGN;
+CC_DEPRECATED_ATTRIBUTE const RelativeLayoutParameter::RelativeAlign RELATIVE_LOCATION_RIGHT_OF_CENTER
+    = RelativeLayoutParameter::RelativeAlign::LOCATION_RIGHT_OF_CENTER;
+CC_DEPRECATED_ATTRIBUTE const RelativeLayoutParameter::RelativeAlign RELATIVE_LOCATION_RIGHT_OF_BOTTOMALIGN
+    = RelativeLayoutParameter::RelativeAlign::LOCATION_RIGHT_OF_BOTTOMALIGN;
+CC_DEPRECATED_ATTRIBUTE const RelativeLayoutParameter::RelativeAlign RELATIVE_LOCATION_BELOW_LEFTALIGN
+    = RelativeLayoutParameter::RelativeAlign::LOCATION_BELOW_LEFTALIGN;
+CC_DEPRECATED_ATTRIBUTE const RelativeLayoutParameter::RelativeAlign RELATIVE_LOCATION_BELOW_CENTER
+    = RelativeLayoutParameter::RelativeAlign::LOCATION_BELOW_CENTER;
+CC_DEPRECATED_ATTRIBUTE const RelativeLayoutParameter::RelativeAlign RELATIVE_LOCATION_BELOW_RIGHTALIGN
+    = RelativeLayoutParameter::RelativeAlign::LOCATION_BELOW_RIGHTALIGN;
 
     
 CC_DEPRECATED_ATTRIBUTE typedef Widget::TextureResType TextureResType;
@@ -81,6 +126,7 @@ CC_DEPRECATED_ATTRIBUTE typedef Layout::LayoutType LayoutType;
 CC_DEPRECATED_ATTRIBUTE typedef Layout::BackGroundColorType LayoutBackGroundColorType;
 CC_DEPRECATED_ATTRIBUTE typedef LayoutParameter::Type LayoutParameterType;
 CC_DEPRECATED_ATTRIBUTE typedef LinearLayoutParameter::LinearGravity LinearGravity;
+CC_DEPRECATED_ATTRIBUTE typedef RelativeLayoutParameter::RelativeAlign RelativeAlign;
 
 
 }

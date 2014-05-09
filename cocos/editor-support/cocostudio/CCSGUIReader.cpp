@@ -1201,7 +1201,7 @@ void WidgetPropertiesReader0300::setPropsForWidgetFromJsonDictionary(Widget*widg
 				const char* relativeToName = DICTOOL->getStringValue_json(layoutParameterDic, "relativeToName");
                 rParameter->setRelativeToWidgetName(relativeToName);
 				int align = DICTOOL->getIntValue_json(layoutParameterDic, "align");
-                rParameter->setAlign((RelativeAlign)align);
+                rParameter->setAlign((RelativeLayoutParameter::RelativeAlign)align);
                 break;
             }
             default:

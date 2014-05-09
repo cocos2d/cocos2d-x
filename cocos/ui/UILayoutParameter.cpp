@@ -159,7 +159,7 @@ void RelativeLayoutParameter::setAlign(RelativeAlign align)
     _relativeAlign = align;
 }
 
-RelativeAlign RelativeLayoutParameter::getAlign() const
+RelativeLayoutParameter::RelativeAlign RelativeLayoutParameter::getAlign() const
 {
     return _relativeAlign;
 }
