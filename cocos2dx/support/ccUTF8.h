@@ -71,7 +71,7 @@ CC_DLL int cc_wcslen(const unsigned short* str);
  *
  * @returns the length of the string in characters
  **/
-CC_DLL long cc_utf8_strlen (const char * p, int max);
+CC_DLL long cc_utf8_strlen (const char * p);
 
 /**
  * Find the last character that is not equal to the character given.
