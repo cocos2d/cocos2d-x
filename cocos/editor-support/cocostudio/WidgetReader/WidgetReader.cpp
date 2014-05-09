@@ -43,7 +43,7 @@ namespace cocostudio
             widget->ignoreContentAdaptWithSize(DICTOOL->getBooleanValue_json(options, "ignoreSize"));
         }
         
-        widget->setSizeType((SizeType)DICTOOL->getIntValue_json(options, "sizeType"));
+        widget->setSizeType((Widget::SizeType)DICTOOL->getIntValue_json(options, "sizeType"));
         widget->setPositionType((Widget::PositionType)DICTOOL->getIntValue_json(options, "positionType"));
         
         widget->setSizePercent(Vector2(DICTOOL->getFloatValue_json(options, "sizePercentX"), DICTOOL->getFloatValue_json(options, "sizePercentY")));

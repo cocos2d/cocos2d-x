@@ -60,13 +60,6 @@ typedef enum
     TOUCH_EVENT_ENDED,
     TOUCH_EVENT_CANCELED
 }TouchEventType;
-
-typedef enum
-{
-    SIZE_ABSOLUTE,
-    SIZE_PERCENT
-}SizeType;
-
     
 
 typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType);
@@ -87,6 +80,12 @@ public:
     };
     
     enum class PositionType
+    {
+        ABSOLUTE,
+        PERCENT
+    };
+    
+    enum class SizeType
     {
         ABSOLUTE,
         PERCENT

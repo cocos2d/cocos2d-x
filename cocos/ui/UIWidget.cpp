@@ -53,7 +53,7 @@ _size(Size::ZERO),
 _customSize(Size::ZERO),
 _ignoreSize(false),
 _affectByClipping(false),
-_sizeType(SIZE_ABSOLUTE),
+_sizeType(SizeType::ABSOLUTE),
 _sizePercent(Vector2::ZERO),
 _positionType(PositionType::ABSOLUTE),
 _positionPercent(Vector2::ZERO),
@@ -271,7 +271,7 @@ void Widget::updateSizeAndPosition(const cocos2d::Size &parentSize)
 {
     switch (_sizeType)
     {
-        case SIZE_ABSOLUTE:
+        case SizeType::ABSOLUTE:
         {
             if (_ignoreSize)
             {
@@ -294,7 +294,7 @@ void Widget::updateSizeAndPosition(const cocos2d::Size &parentSize)
             _sizePercent = Vector2(spx, spy);
             break;
         }
-        case SIZE_PERCENT:
+        case SizeType::PERCENT:
         {
             Size cSize = Size(parentSize.width * _sizePercent.x , parentSize.height * _sizePercent.y);
             if (_ignoreSize)
@@ -343,7 +343,7 @@ void Widget::setSizeType(SizeType type)
     _sizeType = type;
 }
 
-SizeType Widget::getSizeType() const
+Widget::SizeType Widget::getSizeType() const
 {
     return _sizeType;
 }
