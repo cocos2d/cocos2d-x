@@ -26,9 +26,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "2d/CCGLProgramState.h"
-#include "2d/CCGLProgram.h"
-#include "2d/ccGLStateCache.h"
+#include "renderer/CCGLProgramState.h"
+#include "renderer/CCGLProgram.h"
+#include "renderer/ccGLStateCache.h"
 
 NS_CC_BEGIN
 
@@ -96,48 +96,48 @@ void UniformValue::apply()
     }
 }
 
-void UniformValue::setValue(const std::function<void(Uniform*)> callback)
+void UniformValue::setCallback(const std::function<void(Uniform*)> &callback)
 {
     _value.callback = callback;
     _useCallback = true;
 }
 
-void UniformValue::setValue(float value)
+void UniformValue::setFloat(float value)
 {
     CCASSERT (_uniform->type == GL_FLOAT, "");
     _value.floatValue = value;
     _useCallback = false;
 }
 
-void UniformValue::setValue(int value)
+void UniformValue::setInt(int value)
 {
     CCASSERT ((_uniform->type == GL_INT || _uniform->type == GL_SAMPLER_2D), "");
     _value.intValue = value;
     _useCallback = false;
 }
 
-void UniformValue::setValue(const Vector2& value)
+void UniformValue::setVec2(const Vector2& value)
 {
     CCASSERT (_uniform->type == GL_FLOAT_VEC2, "");
     _value.v2Value = value;
     _useCallback = false;
 }
 
-void UniformValue::setValue(const Vector3& value)
+void UniformValue::setVec3(const Vector3& value)
 {
     CCASSERT (_uniform->type == GL_FLOAT_VEC3, "");
     _value.v3Value = value;
     _useCallback = false;
 }
 
-void UniformValue::setValue(const Vector4& value)
+void UniformValue::setVec4(const Vector4& value)
 {
     CCASSERT (_uniform->type == GL_FLOAT_VEC4, "");
     _value.v4Value = value;
     _useCallback = false;
 }
 
-void UniformValue::setValue(const Matrix& value)
+void UniformValue::setMat4(const Matrix& value)
 {
     CCASSERT(_uniform->type == GL_FLOAT_MAT4, "");
     _value.matrixValue = value;
@@ -182,7 +182,7 @@ void VertexAttribValue::apply()
     }
 }
 
-void VertexAttribValue::setCallback(const std::function<void(VertexAttrib*)> callback)
+void VertexAttribValue::setCallback(const std::function<void(VertexAttrib*)> &callback)
 {
     _value.callback = callback;
     _useCallback = true;
@@ -301,7 +301,8 @@ VertexAttribValue* GLProgramState::getVertexAttribValue(const std::string &name)
     return nullptr;
 }
 
-void GLProgramState::setVertexAttribCallback(const std::string &name, const std::function<void(VertexAttrib*)> callback)
+// VertexAttrib Setters
+void GLProgramState::setVertexAttribCallback(const std::string &name, const std::function<void(VertexAttrib*)> &callback)
 {
     VertexAttribValue *v = getVertexAttribValue(name);
     if(v) {
@@ -325,6 +326,57 @@ void GLProgramState::setVertexAttribPointer(const std::string &name, GLint size,
     {
         CCASSERT(false, "attribute not found");
     }
+}
+
+// Uniform Setters
+
+void GLProgramState::setUniformCallback(const std::string &uniformName, const std::function<void(Uniform*)> &callback)
+{
+    auto v = getUniformValue(uniformName);
+    CCASSERT(v, "unknown uniform value");
+    v->setCallback(callback);
+}
+
+void GLProgramState::setUniformFloat(const std::string &uniformName, float value)
+{
+    auto v = getUniformValue(uniformName);
+    CCASSERT(v, "unknown uniform value");
+    v->setFloat(value);
+}
+
+void GLProgramState::setUniformInt(const std::string &uniformName, int value)
+{
+    auto v = getUniformValue(uniformName);
+    CCASSERT(v, "unknown uniform value");
+    v->setInt(value);
+}
+
+void GLProgramState::setUniformVec2(const std::string &uniformName, const Vector2& value)
+{
+    auto v = getUniformValue(uniformName);
+    CCASSERT(v, "unknown uniform value");
+    v->setVec2(value);
+}
+
+void GLProgramState::setUniformVec3(const std::string &uniformName, const Vector3& value)
+{
+    auto v = getUniformValue(uniformName);
+    CCASSERT(v, "unknown uniform value");
+    v->setVec3(value);
+}
+
+void GLProgramState::setUniformVec4(const std::string &uniformName, const Vector4& value)
+{
+    auto v = getUniformValue(uniformName);
+    CCASSERT(v, "unknown uniform value");
+    v->setVec4(value);
+}
+
+void GLProgramState::setUniformMat4(const std::string &uniformName, const Matrix& value)
+{
+    auto v = getUniformValue(uniformName);
+    CCASSERT(v, "unknown uniform value");
+    v->setMat4(value);
 }
 
 

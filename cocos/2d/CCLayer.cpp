@@ -29,9 +29,9 @@ THE SOFTWARE.
 #include "2d/CCLayer.h"
 #include "base/CCDirector.h"
 #include "2d/CCScriptSupport.h"
-#include "2d/CCShaderCache.h"
-#include "2d/CCGLProgram.h"
-#include "2d/ccGLStateCache.h"
+#include "renderer/CCShaderCache.h"
+#include "renderer/CCGLProgram.h"
+#include "renderer/ccGLStateCache.h"
 #include "math/TransformUtils.h"
 // extern
 #include "base/CCEventDispatcher.h"

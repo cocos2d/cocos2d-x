@@ -40,9 +40,9 @@ THE SOFTWARE.
 #include "2d/ccUtils.h"
 #include "base/CCPlatformMacros.h"
 #include "base/CCDirector.h"
-#include "2d/CCGLProgram.h"
-#include "2d/ccGLStateCache.h"
-#include "2d/CCShaderCache.h"
+#include "renderer/CCGLProgram.h"
+#include "renderer/ccGLStateCache.h"
+#include "renderer/CCShaderCache.h"
 #include "2d/platform/CCDevice.h"
 #include "deprecated/CCString.h"
 

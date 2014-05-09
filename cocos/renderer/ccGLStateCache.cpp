@@ -25,8 +25,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "2d/ccGLStateCache.h"
-#include "2d/CCGLProgram.h"
+#include "renderer/ccGLStateCache.h"
+#include "renderer/CCGLProgram.h"
 #include "base/CCDirector.h"
 #include "base/ccConfig.h"
 #include "base/CCConfiguration.h"

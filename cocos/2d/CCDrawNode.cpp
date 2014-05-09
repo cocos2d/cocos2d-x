@@ -22,7 +22,7 @@
  */
 
 #include "2d/CCDrawNode.h"
-#include "2d/CCShaderCache.h"
+#include "renderer/CCShaderCache.h"
 #include "CCGL.h"
 #include "base/CCEventType.h"
 #include "base/CCConfiguration.h"

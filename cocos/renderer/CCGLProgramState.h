@@ -53,13 +53,13 @@ public:
     UniformValue(Uniform *uniform, GLProgram* glprogram);
     ~UniformValue();
 
-	void setValue(float value);
-	void setValue(int value);
-	void setValue(const Vector2& value);
-	void setValue(const Vector3& value);
-	void setValue(const Vector4& value);
-	void setValue(const Matrix& value);
-    void setValue(const std::function<void(Uniform*)> callback);
+	void setFloat(float value);
+	void setInt(int value);
+	void setVec2(const Vector2& value);
+	void setVec3(const Vector3& value);
+	void setVec4(const Vector4& value);
+	void setMat4(const Matrix& value);
+    void setCallback(const std::function<void(Uniform*)> &callback);
 
     void apply();
 
@@ -102,7 +102,7 @@ public:
     ~VertexAttribValue();
 
 	void setPointer(GLint size, GLenum type, GLboolean normalized, GLsizei stride, GLvoid *pointer);
-    void setCallback(const std::function<void(VertexAttrib*)> callback);
+    void setCallback(const std::function<void(VertexAttrib*)> &callback);
     void apply();
 
 protected:
@@ -144,10 +144,16 @@ public:
     void setGLProgram(GLProgram* glprogram);
     GLProgram* getGLProgram() const { return _glprogram; }
 
-    void setVertexAttribCallback(const std::string &name, const std::function<void(VertexAttrib*)> callback);
+    void setVertexAttribCallback(const std::string &name, const std::function<void(VertexAttrib*)> &callback);
     void setVertexAttribPointer(const std::string &name, GLint size, GLenum type, GLboolean normalized, GLsizei stride, GLvoid *pointer);
 
-    UniformValue* getUniformValue(const std::string &uniformName);
+    void setUniformFloat(const std::string &uniformName, float value);
+	void setUniformInt(const std::string &uniformName, int value);
+	void setUniformVec2(const std::string &uniformName, const Vector2& value);
+	void setUniformVec3(const std::string &uniformName, const Vector3& value);
+	void setUniformVec4(const std::string &uniformName, const Vector4& value);
+	void setUniformMat4(const std::string &uniformName, const Matrix& value);
+    void setUniformCallback(const std::string &uniformName, const std::function<void(Uniform*)> &callback);
 
 protected:
     GLProgramState();
@@ -155,6 +161,7 @@ protected:
     bool init(GLProgram* program);
     void resetGLProgram();
     VertexAttribValue* getVertexAttribValue(const std::string &attributeName);
+    UniformValue* getUniformValue(const std::string &uniformName);
 
     std::unordered_map<std::string, UniformValue> _uniforms;
     std::unordered_map<std::string, VertexAttribValue> _attributes;

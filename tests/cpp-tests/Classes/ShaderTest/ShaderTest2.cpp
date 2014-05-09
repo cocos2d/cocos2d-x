@@ -22,6 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+
 #include "ShaderTest2.h"
 #include "ShaderTest.h"
 #include "../testResource.h"
@@ -297,8 +298,8 @@ void BlurSprite::setCustomUniforms()
     setBlurSize(3.0f);
 
     auto programState = getGLProgramState();
-    programState->getUniformValue("onePixelSize")->setValue(_pixelSize);
-    programState->getUniformValue("gaussianCoefficient")->setValue(Vector4(_samplingRadius, _scale, _cons, _weightSum));
+    programState->setUniformVec2("onePixelSize", _pixelSize);
+    programState->setUniformVec4("gaussianCoefficient", Vector4(_samplingRadius, _scale, _cons, _weightSum));
 }
 
 void BlurSprite::setBlurSize(float f)
@@ -357,7 +358,7 @@ void NoiseSprite::setCustomUniforms()
 {
     _resolution[0] = getTexture()->getContentSizeInPixels().width;
     _resolution[1] = getTexture()->getContentSizeInPixels().height;
-    getGLProgramState()->getUniformValue("resolution")->setValue(Vector2(_resolution[0],_resolution[1]));
+    getGLProgramState()->setUniformVec2("resolution", Vector2(_resolution[0],_resolution[1]));
 }
 
 class EdgeDetectionSprite : public ShaderSprite, public ShaderSpriteCreator<EdgeDetectionSprite>
@@ -384,7 +385,7 @@ void EdgeDetectionSprite::setCustomUniforms()
     _resolution[0] = getContentSize().width;
     _resolution[1] = getContentSize().height;
 
-    programState->getUniformValue("resolution")->setValue(Vector2(_resolution[0], _resolution[1]));
+    programState->setUniformVec2("resolution", Vector2(_resolution[0], _resolution[1]));
 }
 
 class BloomSprite : public ShaderSprite, public ShaderSpriteCreator<BloomSprite>
@@ -432,7 +433,7 @@ void CelShadingSprite::setCustomUniforms()
     _resolution[0] = getContentSize().width;
     _resolution[1] = getContentSize().height;
 
-    programState->getUniformValue("resolution")->setValue(Vector2(_resolution[0], _resolution[1]));
+    programState->setUniformVec2("resolution", Vector2(_resolution[0], _resolution[1]));
 }
 
 class LensFlareSprite : public ShaderSprite, public ShaderSpriteCreator<LensFlareSprite>
@@ -462,8 +463,8 @@ void LensFlareSprite::setCustomUniforms()
     _resolution[0] = getContentSize().width;
     _resolution[1] = getContentSize().height;
 
-    programState->getUniformValue("resolution")->setValue(Vector2(_resolution[0], _resolution[1]));
-    programState->getUniformValue("textureResolution")->setValue(Vector2(_textureResolution[0], _textureResolution[1]));
+    programState->setUniformVec2("resolution", Vector2(_resolution[0], _resolution[1]));
+    programState->setUniformVec2("textureResolution", Vector2(_textureResolution[0], _textureResolution[1]));
 }
 
 NormalSpriteTest::NormalSpriteTest()
@@ -604,9 +605,9 @@ void OutlineSprite::setCustomUniforms()
 
     auto programState = getGLProgramState();
 
-    programState->getUniformValue("u_outlineColor")->setValue(color);
-    programState->getUniformValue("u_radius")->setValue(radius);
-    programState->getUniformValue("u_threshold")->setValue(threshold);
+    programState->setUniformVec3("u_outlineColor", color);
+    programState->setUniformFloat("u_radius", radius);
+    programState->setUniformFloat("u_threshold", threshold);
 }
 
 
@@ -673,8 +674,8 @@ void UniformSprite::draw(Renderer *renderer, const Matrix &transform, bool trans
 void UniformSprite::setCustomUniforms()
 {
     auto glprogramstate = getGLProgramState();
-    glprogramstate->getUniformValue("center")->setValue(Vector2(480,320));
-    glprogramstate->getUniformValue("resolution")->setValue(Vector2(256,256));
+    glprogramstate->setUniformVec2("center", Vector2(480,320));
+    glprogramstate->setUniformVec2("resolution", Vector2(256,256));
 }
 
 void UniformSprite::onDraw(const Matrix &transform, bool transformUpdated)

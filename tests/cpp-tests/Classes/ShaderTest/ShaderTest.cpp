@@ -142,7 +142,7 @@ bool ShaderNode::initWithVertex(const char *vert, const char *frag)
 
     _time = 0;
     _resolution = Vector2(SIZE_X, SIZE_Y);
-    getGLProgramState()->getUniformValue("resolution")->setValue(_resolution);
+    getGLProgramState()->setUniformVec2("resolution", _resolution);
 
     scheduleUpdate();
 
@@ -171,7 +171,7 @@ void ShaderNode::setPosition(const Vector2 &newPosition)
     Node::setPosition(newPosition);
     auto position = getPosition();
     _center = Vector2(position.x * CC_CONTENT_SCALE_FACTOR(), position.y * CC_CONTENT_SCALE_FACTOR());
-    getGLProgramState()->getUniformValue("center")->setValue(_center);
+    getGLProgramState()->setUniformVec2("center", _center);
 }
 
 void ShaderNode::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
@@ -464,7 +464,7 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
         _samplingRadius = 0;
         this->initProgram();
 
-        getGLProgramState()->getUniformValue("onePixelSize")->setValue(_pixelSize);
+        getGLProgramState()->setUniformVec2("onePixelSize", _pixelSize);
 
         return true;
     }
@@ -547,7 +547,7 @@ void SpriteBlur::setBlurSize(float f)
     }
     log("_blurRadius:%d",_blurRadius);
 
-    getGLProgramState()->getUniformValue("gaussianCoefficient")->setValue(Vector4(_samplingRadius, _scale, _cons, _weightSum));
+    getGLProgramState()->setUniformVec4("gaussianCoefficient", Vector4(_samplingRadius, _scale, _cons, _weightSum));
 }
 
 // ShaderBlur

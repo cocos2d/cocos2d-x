@@ -26,8 +26,8 @@
  */
 
 #include "2d/CCClippingNode.h"
-#include "2d/CCGLProgram.h"
-#include "2d/CCShaderCache.h"
+#include "renderer/CCGLProgram.h"
+#include "renderer/CCShaderCache.h"
 #include "2d/CCDrawingPrimitives.h"
 #include "base/CCDirector.h"
 

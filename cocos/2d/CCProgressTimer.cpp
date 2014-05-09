@@ -27,9 +27,9 @@ THE SOFTWARE.
 
 #include "base/ccMacros.h"
 #include "2d/CCTextureCache.h"
-#include "2d/CCGLProgram.h"
-#include "2d/CCShaderCache.h"
-#include "2d/ccGLStateCache.h"
+#include "renderer/CCGLProgram.h"
+#include "renderer/CCShaderCache.h"
+#include "renderer/ccGLStateCache.h"
 #include "base/CCDirector.h"
 #include "math/TransformUtils.h"
 #include "2d/CCDrawingPrimitives.h"

@@ -31,7 +31,7 @@ THE SOFTWARE.
 
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGroupCommand.h"
-#include "2d/CCShaderCache.h"
+#include "renderer/CCShaderCache.h"
 #include "2d/CCDrawingPrimitives.h"
 #include "base/CCDirector.h"
 

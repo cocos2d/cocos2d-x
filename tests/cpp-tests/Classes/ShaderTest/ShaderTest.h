@@ -5,8 +5,6 @@
 #include "extensions/cocos-ext.h"
 #include "../BaseTest.h"
 
-#include "2d/CCGLProgramState.h"
-
 USING_NS_CC_EXT;
 
 class ShaderTestDemo : public BaseTest

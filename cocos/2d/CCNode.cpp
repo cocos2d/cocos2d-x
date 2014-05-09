@@ -40,11 +40,11 @@ THE SOFTWARE.
 #include "2d/CCGrid.h"
 #include "2d/CCActionManager.h"
 #include "2d/CCScriptSupport.h"
-#include "2d/CCGLProgram.h"
 #include "2d/CCScene.h"
-#include "2d/CCGLProgramState.h"
 #include "2d/CCComponent.h"
 #include "2d/CCComponentContainer.h"
+#include "renderer/CCGLProgram.h"
+#include "renderer/CCGLProgramState.h"
 #include "math/TransformUtils.h"
 
 #include "deprecated/CCString.h"

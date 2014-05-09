@@ -29,8 +29,8 @@ THE SOFTWARE.
 #include "CCTMXTiledMap.h"
 #include "2d/CCSprite.h"
 #include "2d/CCTextureCache.h"
-#include "2d/CCShaderCache.h"
-#include "2d/CCGLProgram.h"
+#include "renderer/CCShaderCache.h"
+#include "renderer/CCGLProgram.h"
 #include "2d/ccCArray.h"
 #include "base/CCDirector.h"
 
