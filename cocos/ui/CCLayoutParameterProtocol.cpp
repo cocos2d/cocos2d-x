@@ -22,14 +22,43 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "ui/UILayoutParameter.h"
-#include "ui/UILayout.h"
+#include "ui/CCLayoutParameterProtocol.h"
 
 NS_CC_BEGIN
+namespace ui{
+    
+Margin::Margin(void) : left(0), top(0), right(0), bottom(0)
+{
+}
 
-namespace ui {
+Margin::Margin(float l, float t, float r, float b) : left(l), top(t), right(r), bottom(b)
+{
+}
 
+Margin::Margin(const Margin& other) : left(other.left), top(other.top), right(other.right), bottom(other.bottom)
+{
+}
 
+Margin& Margin::operator= (const Margin& other)
+{
+    setMargin(other.left, other.top, other.right, other.bottom);
+    return *this;
+}
+
+void Margin::setMargin(float l, float t, float r, float b)
+{
+    left = l;
+    top = t;
+    right = r;
+    bottom = b;
+}
+
+bool Margin::equals(const Margin &target) const
+{
+    return (left == target.left && top == target.top && right == target.right && bottom == target.bottom);
+}
+
+    
 LayoutParameter* LayoutParameter::create()
 {
     LayoutParameter* parameter = new LayoutParameter();
@@ -56,19 +85,19 @@ LayoutParameterType LayoutParameter::getLayoutType() const
 {
     return _layoutParameterType;
 }
-    
+
 LayoutParameter* LayoutParameter::clone()
 {
     LayoutParameter* clonedParameter = createCloneInstance();
     clonedParameter->copyProperties(this);
     return clonedParameter;
 }
-    
+
 LayoutParameter* LayoutParameter::createCloneInstance()
 {
     return LayoutParameter::create();
 }
-    
+
 void LayoutParameter::copyProperties(LayoutParameter *model)
 {
     _margin = model->_margin;
@@ -95,7 +124,7 @@ LinearGravity LinearLayoutParameter::getGravity() const
 {
     return _linearGravity;
 }
-    
+
 LayoutParameter* LinearLayoutParameter::createCloneInstance()
 {
     return LinearLayoutParameter::create();
@@ -152,7 +181,7 @@ const char* RelativeLayoutParameter::getRelativeName() const
 {
     return _relativeLayoutName.c_str();
 }
-    
+
 LayoutParameter* RelativeLayoutParameter::createCloneInstance()
 {
     return RelativeLayoutParameter::create();
@@ -169,7 +198,30 @@ void RelativeLayoutParameter::copyProperties(LayoutParameter *model)
         setRelativeToWidgetName(parameter->_relativeWidgetName.c_str());
     }
 }
-
+    
+LayoutParameterProtocol::LayoutParameterProtocol()
+{
+    
+}
+    
+LayoutParameterProtocol::~LayoutParameterProtocol()
+{
+    
+}
+    
+void LayoutParameterProtocol::setLayoutParameter(LayoutParameter *parameter)
+{
+    if (!parameter)
+    {
+        return;
+    }
+    _layoutParameterDictionary.insert(parameter->getLayoutType(), parameter);
 }
 
+LayoutParameter* LayoutParameterProtocol::getLayoutParameter(LayoutParameterType type)
+{
+    return dynamic_cast<LayoutParameter*>(_layoutParameterDictionary.at(type));
+}
+    
+}
 NS_CC_END
