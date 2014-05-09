@@ -845,12 +845,12 @@ void Widget::setLayoutParameter(LayoutParameter *parameter)
     {
         return;
     }
-    _layoutParameterDictionary.insert(parameter->getLayoutType(), parameter);
+    _layoutParameterDictionary.insert((int)parameter->getLayoutType(), parameter);
 }
 
-LayoutParameter* Widget::getLayoutParameter(LayoutParameterType type)
+LayoutParameter* Widget::getLayoutParameter(LayoutParameter::Type type)
 {
-    return dynamic_cast<LayoutParameter*>(_layoutParameterDictionary.at(type));
+    return dynamic_cast<LayoutParameter*>(_layoutParameterDictionary.at((int)type));
 }
 
 std::string Widget::getDescription() const
@@ -920,6 +920,7 @@ void Widget::copyProperties(Widget *widget)
     setFlippedY(widget->isFlippedY());
     setColor(widget->getColor());
     setOpacity(widget->getOpacity());
+    //FIXME:copy focus properties, also make sure all the subclass the copy behavior is correct
     Map<int, LayoutParameter*>& layoutParameterDic = widget->_layoutParameterDictionary;
     for (auto iter = layoutParameterDic.begin(); iter != layoutParameterDic.end(); ++iter)
     {

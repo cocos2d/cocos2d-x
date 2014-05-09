@@ -56,12 +56,6 @@ public:
 
 const Margin MarginZero = Margin();
 
-typedef enum
-{
-    LAYOUT_PARAMETER_NONE,
-    LAYOUT_PARAMETER_LINEAR,
-    LAYOUT_PARAMETER_RELATIVE
-}LayoutParameterType;
     
 typedef enum
 {
@@ -107,10 +101,19 @@ typedef enum
 class LayoutParameter : public Ref
 {
 public:
+    enum class Type : int
+    {
+        NONE = 0,
+        LINEAR,
+        RELATIVE
+    };
     /**
      * Default constructor
      */
-    LayoutParameter() : _margin(Margin()){_layoutParameterType = LAYOUT_PARAMETER_NONE;};
+    LayoutParameter() : _margin(Margin())
+    {
+        _layoutParameterType = Type::NONE;
+    };
     
     /**
      * Default destructor
@@ -148,14 +151,14 @@ public:
      *
      * @return LayoutParameterType
      */
-    LayoutParameterType getLayoutType() const;
+    Type getLayoutType() const;
     
     LayoutParameter* clone();
     virtual LayoutParameter* createCloneInstance();
     virtual void copyProperties(LayoutParameter* model);
 protected:
     Margin _margin;
-    LayoutParameterType _layoutParameterType;
+    Type _layoutParameterType;
 };
 /**
 *   @js NA
@@ -167,7 +170,10 @@ public:
     /**
      * Default constructor
      */
-    LinearLayoutParameter() : _linearGravity(LINEAR_GRAVITY_NONE){_layoutParameterType = LAYOUT_PARAMETER_LINEAR;};
+    LinearLayoutParameter() : _linearGravity(LINEAR_GRAVITY_NONE)
+    {
+        _layoutParameterType = Type::LINEAR;
+    };
     
     /**
      * Default destructor
@@ -213,7 +219,14 @@ public:
     /**
      * Default constructor
      */
-    RelativeLayoutParameter() : _relativeAlign(RELATIVE_ALIGN_NONE),_relativeWidgetName(""),_relativeLayoutName(""),_put(false){_layoutParameterType = LAYOUT_PARAMETER_RELATIVE;};
+    RelativeLayoutParameter()
+    : _relativeAlign(RELATIVE_ALIGN_NONE),
+    _relativeWidgetName(""),
+    _relativeLayoutName(""),
+    _put(false)
+    {
+        _layoutParameterType = Type::RELATIVE;
+    };
     
     /**
      * Default destructor

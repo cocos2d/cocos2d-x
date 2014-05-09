@@ -83,7 +83,7 @@ const Margin& LayoutParameter::getMargin() const
     return _margin;
 }
 
-LayoutParameterType LayoutParameter::getLayoutType() const
+LayoutParameter::Type LayoutParameter::getLayoutType() const
 {
     return _layoutParameterType;
 }

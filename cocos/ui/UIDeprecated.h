@@ -52,6 +52,9 @@ CC_DEPRECATED_ATTRIBUTE const Layout::BackGroundColorType LAYOUT_COLOR_NONE = La
 CC_DEPRECATED_ATTRIBUTE const Layout::BackGroundColorType LAYOUT_COLOR_SOLID = Layout::BackGroundColorType::SOLID;
 CC_DEPRECATED_ATTRIBUTE const Layout::BackGroundColorType LAYOUT_COLOR_GRADIENT
                                                         = Layout::BackGroundColorType::GRADIENT;
+CC_DEPRECATED_ATTRIBUTE const LayoutParameter::Type LAYOUT_PARAMETER_NONE = LayoutParameter::Type::NONE;
+CC_DEPRECATED_ATTRIBUTE const LayoutParameter::Type LAYOUT_PARAMETER_LINEAR = LayoutParameter::Type::LINEAR;
+CC_DEPRECATED_ATTRIBUTE const LayoutParameter::Type LAYOUT_PARAMETER_RELATIVE = LayoutParameter::Type::RELATIVE;
 
 
     
@@ -63,6 +66,7 @@ CC_DEPRECATED_ATTRIBUTE typedef Widget::BrightStyle BrightStyle;
 CC_DEPRECATED_ATTRIBUTE typedef Layout::ClippingType LayoutClippingType;
 CC_DEPRECATED_ATTRIBUTE typedef Layout::LayoutType LayoutType;
 CC_DEPRECATED_ATTRIBUTE typedef Layout::BackGroundColorType LayoutBackGroundColorType;
+CC_DEPRECATED_ATTRIBUTE typedef LayoutParameter::Type LayoutParameterType;
 
 
 }

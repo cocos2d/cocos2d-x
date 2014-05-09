@@ -130,7 +130,7 @@ void LinearVerticalLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Ve
         Widget* child = dynamic_cast<Widget*>(subWidget);
         if (child)
         {
-            LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
+            LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LayoutParameter::Type::LINEAR));
             
             if (layoutParameter)
             {
@@ -171,7 +171,7 @@ void LinearHorizontalLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, 
         Widget* child = dynamic_cast<Widget*>(subWidget);
         if (child)
         {
-            LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
+            LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LayoutParameter::Type::LINEAR));
             if (layoutParameter)
             {
                 LinearGravity childGravity = layoutParameter->getGravity();
@@ -212,7 +212,7 @@ void RelativeLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Vector<c
         Widget* child = dynamic_cast<Widget*>(subWidget);
         if (child)
         {
-            RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
+            RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LayoutParameter::Type::RELATIVE));
             layoutParameter->_put = false;
             unlayoutChildCount++;
             widgetChildren.pushBack(child);
@@ -223,7 +223,7 @@ void RelativeLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Vector<c
         for (auto& subWidget : widgetChildren)
         {
             Widget* child = static_cast<Widget*>(subWidget);
-            RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
+            RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LayoutParameter::Type::RELATIVE));
             
             if (layoutParameter)
             {
@@ -245,7 +245,7 @@ void RelativeLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Vector<c
                     {
                         if (sWidget)
                         {
-                            RelativeLayoutParameter* rlayoutParameter = dynamic_cast<RelativeLayoutParameter*>(sWidget->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
+                            RelativeLayoutParameter* rlayoutParameter = dynamic_cast<RelativeLayoutParameter*>(sWidget->getLayoutParameter(LayoutParameter::Type::RELATIVE));
                             if (rlayoutParameter && strcmp(rlayoutParameter->getRelativeName(), relativeName) == 0)
                             {
                                 relativeWidget = sWidget;
@@ -1180,7 +1180,7 @@ void Layout::supplyTheLayoutParameterLackToChild(Widget *child)
         case LayoutType::HORIZONTAL:
         case LayoutType::VERTICAL:
         {
-            LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
+            LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LayoutParameter::Type::LINEAR));
             if (!layoutParameter)
             {
                 child->setLayoutParameter(LinearLayoutParameter::create());
@@ -1189,7 +1189,7 @@ void Layout::supplyTheLayoutParameterLackToChild(Widget *child)
         }
         case LayoutType::RELATIVE:
         {
-            RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
+            RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LayoutParameter::Type::RELATIVE));
             if (!layoutParameter)
             {
                 child->setLayoutParameter(RelativeLayoutParameter::create());
@@ -1557,7 +1557,7 @@ Size Layout::getLayoutContentSize()const
             if (w)
             {
                 widgetCount++;
-                Margin m = w->getLayoutParameter(LAYOUT_PARAMETER_LINEAR)->getMargin();
+                Margin m = w->getLayoutParameter(LayoutParameter::Type::LINEAR)->getMargin();
                 layoutSize = layoutSize + w->getSize() + Size(m.right + m.left,  m.top + m.bottom) * 0.5;
             }
         }

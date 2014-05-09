@@ -490,7 +490,7 @@ public:
      *
      * @return LayoutParameter
      */
-    LayoutParameter* getLayoutParameter(LayoutParameterType type);
+    LayoutParameter* getLayoutParameter(LayoutParameter::Type type);
 
     /**
      * Ignore the widget size

@@ -129,7 +129,7 @@ void ListView::remedyLayoutParameter(Widget *item)
     switch (_direction) {
         case SCROLLVIEW_DIR_VERTICAL:
         {
-            LinearLayoutParameter* llp = (LinearLayoutParameter*)(item->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
+            LinearLayoutParameter* llp = (LinearLayoutParameter*)(item->getLayoutParameter(LayoutParameter::Type::LINEAR));
             if (!llp)
             {
                 LinearLayoutParameter* defaultLp = LinearLayoutParameter::create();
@@ -184,7 +184,7 @@ void ListView::remedyLayoutParameter(Widget *item)
         }
         case SCROLLVIEW_DIR_HORIZONTAL:
         {
-            LinearLayoutParameter* llp = (LinearLayoutParameter*)(item->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
+            LinearLayoutParameter* llp = (LinearLayoutParameter*)(item->getLayoutParameter(LayoutParameter::Type::LINEAR));
             if (!llp)
             {
                 LinearLayoutParameter* defaultLp = LinearLayoutParameter::create();
