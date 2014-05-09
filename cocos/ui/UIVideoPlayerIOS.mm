@@ -22,9 +22,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UIVideoWidget.h"
+#include "UIVideoPlayer.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+
+using namespace cocos2d::experimental::ui;
 //-------------------------------------------------------------------------------------
 #include "CCEAGLView.h"
 #import <MediaPlayer/MediaPlayer.h>
@@ -45,7 +47,7 @@
 - (void) setFullScreenEnabled:(bool) enabled;
 - (bool) isFullScreenEnabled;
 
--(id) init:(void*) widget;
+-(id) init:(void*) videoPlayer;
 
 -(void) videoFinished:(NSNotification*) notification;
 -(void) playStateChange;
@@ -62,14 +64,14 @@
     int _height;
     bool _keepRatioEnabled;
     
-    cocos2d::experimental::ui::VideoWidget* _widget;
+    VideoPlayer* _videoPlayer;
 }
 
--(id)init:(void*)widget
+-(id)init:(void*)videoPlayer
 {
     if (self = [super init]) {
         self.moviePlayer = nullptr;
-        _widget = (cocos2d::experimental::ui::VideoWidget*)widget;
+        _videoPlayer = (VideoPlayer*)videoPlayer;
         _keepRatioEnabled = false;
     }
     
@@ -85,7 +87,7 @@
         [self.moviePlayer stop];
         [self.moviePlayer.view removeFromSuperview];
         self.moviePlayer = nullptr;
-        _widget = nullptr;
+        _videoPlayer = nullptr;
     }
     [super dealloc];
 }
@@ -163,11 +165,11 @@
 
 -(void) videoFinished:(NSNotification *)notification
 {
-    if(_widget != nullptr)
+    if(_videoPlayer != nullptr)
     {
         if([self.moviePlayer playbackState] != MPMoviePlaybackStateStopped)
         {
-            _widget->onVideoEvent(cocos2d::experimental::ui::VideoWidgetEvent::COMPLETED);
+            _videoPlayer->onVideoEvent(VideoPlayer::Event::COMPLETED);
         }
     }
 }
@@ -177,13 +179,13 @@
     MPMoviePlaybackState state = [self.moviePlayer playbackState];
     switch (state) {
         case MPMoviePlaybackStatePaused:
-            _widget->onVideoEvent(cocos2d::experimental::ui::VideoWidgetEvent::PAUSED);
+            _videoPlayer->onVideoEvent(VideoPlayer::Event::PAUSED);
             break;
         case MPMoviePlaybackStateStopped:
-            _widget->onVideoEvent(cocos2d::experimental::ui::VideoWidgetEvent::STOPPED);
+            _videoPlayer->onVideoEvent(VideoPlayer::Event::STOPPED);
             break;
         case MPMoviePlaybackStatePlaying:
-            _widget->onVideoEvent(cocos2d::experimental::ui::VideoWidgetEvent::PLAYING);
+            _videoPlayer->onVideoEvent(VideoPlayer::Event::PLAYING);
             break;
         case MPMoviePlaybackStateInterrupted:
             break;
@@ -277,10 +279,8 @@
 @end
 //------------------------------------------------------------------------------------------------------------
 
-using namespace cocos2d::experimental::ui;
-
-VideoWidget::VideoWidget()
-: _videoWidgetIndex(-1)
+VideoPlayer::VideoPlayer()
+: _videoPlayerIndex(-1)
 , _callback(nullptr)
 , _fullScreenEnabled(false)
 , _fullScreenDirty(false)
@@ -290,7 +290,7 @@ VideoWidget::VideoWidget()
     _videiView = [[UIVideoViewWrapperIos alloc] init:this];
 }
 
-VideoWidget::~VideoWidget()
+VideoPlayer::~VideoPlayer()
 {
     if(_videiView)
     {
@@ -298,21 +298,21 @@ VideoWidget::~VideoWidget()
     }
 }
 
-void VideoWidget::setVideoFileName(const std::string& fileName)
+void VideoPlayer::setVideoFileName(const std::string& fileName)
 {
     _videoUrl = fileName;
-    _videoSource = VideoWidget::VideoSource::FILENAME;
+    _videoSource = VideoPlayer::VideoSource::FILENAME;
     [((UIVideoViewWrapperIos*)_videiView) setVideoURL:(int)_videoSource :_videoUrl];
 }
 
-void VideoWidget::setVideoURL(const std::string& videoUrl)
+void VideoPlayer::setVideoURL(const std::string& videoUrl)
 {
     _videoUrl = videoUrl;
-    _videoSource = VideoWidget::VideoSource::URL;
+    _videoSource = VideoPlayer::VideoSource::URL;
     [((UIVideoViewWrapperIos*)_videiView) setVideoURL:(int)_videoSource :_videoUrl];
 }
 
-void VideoWidget::draw(Renderer* renderer, const Matrix &transform, bool transformUpdated)
+void VideoPlayer::draw(Renderer* renderer, const Matrix &transform, bool transformUpdated)
 {
     cocos2d::ui::Widget::draw(renderer,transform,transformUpdated);
     
@@ -336,24 +336,24 @@ void VideoWidget::draw(Renderer* renderer, const Matrix &transform, bool transfo
                                                           :( (rightTop.y - leftBottom.y) * glView->getScaleY()/scaleFactor)];
     }
     
-#if CC_VIDEOWIDGET_DEBUG_DRAW
+#if CC_VIDEOPLAYER_DEBUG_DRAW
     _customDebugDrawCommand.init(_globalZOrder);
-    _customDebugDrawCommand.func = CC_CALLBACK_0(VideoWidget::drawDebugData, this);
+    _customDebugDrawCommand.func = CC_CALLBACK_0(VideoPlayer::drawDebugData, this);
     renderer->addCommand(&_customDebugDrawCommand);
 #endif
 }
 
-bool VideoWidget::isFullScreenEnabled()
+bool VideoPlayer::isFullScreenEnabled()
 {
     return [((UIVideoViewWrapperIos*)_videiView) isFullScreenEnabled];
 }
 
-void VideoWidget::setFullScreenEnabled(bool enabled)
+void VideoPlayer::setFullScreenEnabled(bool enabled)
 {
     [((UIVideoViewWrapperIos*)_videiView) setFullScreenEnabled:enabled];
 }
 
-void VideoWidget::setKeepAspectRatioEnabled(bool enable)
+void VideoPlayer::setKeepAspectRatioEnabled(bool enable)
 {
     if (_keepAspectRatioEnabled != enable)
     {
@@ -362,8 +362,8 @@ void VideoWidget::setKeepAspectRatioEnabled(bool enable)
     }
 }
 
-#if CC_VIDEOWIDGET_DEBUG_DRAW
-void VideoWidget::drawDebugData()
+#if CC_VIDEOPLAYER_DEBUG_DRAW
+void VideoPlayer::drawDebugData()
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -387,7 +387,7 @@ void VideoWidget::drawDebugData()
 }
 #endif
 
-void VideoWidget::startVideo()
+void VideoPlayer::startVideo()
 {
     if (! _videoUrl.empty())
     {
@@ -395,7 +395,7 @@ void VideoWidget::startVideo()
     }
 }
 
-void VideoWidget::pauseVideo()
+void VideoPlayer::pauseVideo()
 {
     if (! _videoUrl.empty())
     {
@@ -403,7 +403,7 @@ void VideoWidget::pauseVideo()
     }
 }
 
-void VideoWidget::resumeVideo()
+void VideoPlayer::resumeVideo()
 {
     if (! _videoUrl.empty())
     {
@@ -411,7 +411,7 @@ void VideoWidget::resumeVideo()
     }
 }
 
-void VideoWidget::stopVideo()
+void VideoPlayer::stopVideo()
 {
     if (! _videoUrl.empty())
     {
@@ -419,7 +419,7 @@ void VideoWidget::stopVideo()
     }
 }
 
-void VideoWidget::seekVideoTo(float sec)
+void VideoPlayer::seekVideoTo(float sec)
 {
     if (! _videoUrl.empty())
     {
@@ -427,12 +427,12 @@ void VideoWidget::seekVideoTo(float sec)
     }
 }
 
-bool VideoWidget::isPlaying() const
+bool VideoPlayer::isPlaying() const
 {
     return _isPlaying;
 }
 
-void VideoWidget::setVisible(bool visible)
+void VideoPlayer::setVisible(bool visible)
 {
     cocos2d::ui::Widget::setVisible(visible);
     
@@ -442,14 +442,14 @@ void VideoWidget::setVisible(bool visible)
     }
 }
 
-void VideoWidget::setEventListener(const VideoWidgetCallback& callback)
+void VideoPlayer::setEventListener(const EventCallback& callback)
 {
     _callback = callback;
 }
 
-void VideoWidget::onVideoEvent(VideoWidgetEvent event)
+void VideoPlayer::onVideoEvent(VideoPlayer::Event event)
 {
-    if (event == VideoWidgetEvent::PLAYING) {
+    if (event == VideoPlayer::Event::PLAYING) {
         _isPlaying = true;
     } else {
         _isPlaying = false;

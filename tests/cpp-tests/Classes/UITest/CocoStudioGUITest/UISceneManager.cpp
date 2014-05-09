@@ -19,7 +19,7 @@
 #include "UIRichTextTest/UIRichTextTest.h"
 #include "UIFocusTest/UIFocusTest.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-#include "UIVideoWidgetTest/UIVideoWidgetTest.h"
+#include "UIVideoPlayerTest/UIVideoPlayerTest.h"
 #endif
 /*
 #include "UISwitchTest/UISwitchTest.h"
@@ -119,7 +119,7 @@ static const char* s_testArray[] =
     "UIFocusTest-NestedLayout2",
     "UIFocusTest-NestedLayout3",
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    "UIVideoWidgetTest"
+    "UIVideoPlayerTest"
 #endif
 };
 
@@ -382,8 +382,8 @@ Scene *UISceneManager::currentUIScene()
         case KUIFocusTest_NestedLayout3:
             return UIFocusTestNestedLayout3::sceneWithTitle(s_testArray[_currentUISceneId]);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        case kUIVideoWidgetTest:
-            return VideoWidgetTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIVideoPlayerTest:
+            return VideoPlayerTest::sceneWithTitle(s_testArray[_currentUISceneId]);
 #endif
     }
     return NULL;
