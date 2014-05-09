@@ -74,3 +74,14 @@
         </jscomp>
     </target>
 </project>
+<!--
+there is no file obfuscate_exclude_cocos2d in v2.x .
+
+in 2.2.3 obfuscate_exclude_cocos2d.js ,should add 
+CSSProperties.prototype.getTargetPlatform; 
+CSSProperties.prototype.setKeypadEnabled; 
+CSSProperties.prototype.ccs; 
+CSSProperties.prototype.UILayer;   (ccs.UILayer.create())
+......
+
+so many   a.b.c()    like this ,it would be obfuscated!!  -->
