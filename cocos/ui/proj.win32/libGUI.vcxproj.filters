@@ -54,16 +54,10 @@
     <ClInclude Include="..\CocosGUI.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="..\UILayoutDefine.h">
-      <Filter>Layouts</Filter>
-    </ClInclude>
     <ClInclude Include="..\UIWidget.h">
       <Filter>BaseClasses</Filter>
     </ClInclude>
     <ClInclude Include="..\UILayout.h">
-      <Filter>Layouts</Filter>
-    </ClInclude>
-    <ClInclude Include="..\UILayoutParameter.h">
       <Filter>Layouts</Filter>
     </ClInclude>
     <ClInclude Include="..\UITextBMFont.h">
@@ -88,6 +82,12 @@
       <Filter>Layouts</Filter>
     </ClInclude>
     <ClInclude Include="..\UIVBox.h">
+      <Filter>Layouts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCLayoutParameterProtocol.h">
+      <Filter>Layouts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCLayoutProtocol.h">
       <Filter>Layouts</Filter>
     </ClInclude>
   </ItemGroup>
@@ -125,16 +125,10 @@
     <ClCompile Include="..\CocosGUI.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="..\UILayoutDefine.cpp">
-      <Filter>Layouts</Filter>
-    </ClCompile>
     <ClCompile Include="..\UIWidget.cpp">
       <Filter>BaseClasses</Filter>
     </ClCompile>
     <ClCompile Include="..\UILayout.cpp">
-      <Filter>Layouts</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UILayoutParameter.cpp">
       <Filter>Layouts</Filter>
     </ClCompile>
     <ClCompile Include="..\UITextBMFont.cpp">
@@ -159,6 +153,12 @@
       <Filter>Layouts</Filter>
     </ClCompile>
     <ClCompile Include="..\UIVBox.cpp">
+      <Filter>Layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCLayoutParameterProtocol.cpp">
+      <Filter>Layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCLayoutProtocol.cpp">
       <Filter>Layouts</Filter>
     </ClCompile>
   </ItemGroup>

@@ -7,8 +7,6 @@ set(COCOS_UI_SRC
   ui/UIHelper.cpp
   ui/UIImageView.cpp
   ui/UILayout.cpp
-  ui/UILayoutDefine.cpp
-  ui/UILayoutParameter.cpp
   ui/UIListView.cpp
   ui/UILoadingBar.cpp
   ui/UIPageView.cpp
@@ -22,5 +20,7 @@ set(COCOS_UI_SRC
   ui/UITextField.cpp
   ui/UIVBox.cpp
   ui/UIWidget.cpp
+  ui/CCLayoutParameterProtocol.cpp
+  ui/CCLayoutProtocol.cpp
 )
 

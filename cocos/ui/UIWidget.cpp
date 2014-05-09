@@ -815,20 +815,6 @@ WidgetType Widget::getWidgetType() const
     return _widgetType;
 }
 
-void Widget::setLayoutParameter(LayoutParameter *parameter)
-{
-    if (!parameter)
-    {
-        return;
-    }
-    _layoutParameterDictionary.insert(parameter->getLayoutType(), parameter);
-}
-
-LayoutParameter* Widget::getLayoutParameter(LayoutParameterType type)
-{
-    return dynamic_cast<LayoutParameter*>(_layoutParameterDictionary.at(type));
-}
-
 std::string Widget::getDescription() const
 {
     return "Widget";
