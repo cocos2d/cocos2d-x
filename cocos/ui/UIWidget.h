@@ -40,12 +40,6 @@ typedef enum
     BRIGHT_NORMAL,
     BRIGHT_HIGHLIGHT
 }BrightStyle;
-
-typedef enum
-{
-    WidgetTypeWidget, //control
-    WidgetTypeContainer //container
-}WidgetType;
    
     
     
@@ -100,6 +94,12 @@ public:
     {
         LOCAL = 0,
         PLIST = 1
+    };
+    
+    enum class Type
+    {
+        ELEMENT,
+        CONTAINER
     };
 
     
@@ -407,7 +407,7 @@ public:
      *
      * @return A WidgetType
      */
-    WidgetType getWidgetType() const;
+    Type getWidgetType() const;
 
     /**
      * Changes the size that is widget's size
@@ -662,7 +662,7 @@ protected:
     ccWidgetTouchCallback _touchEventCallback;
     
     std::string _name;
-    WidgetType _widgetType;
+    Type _widgetType;
 	int _actionTag;
     Size _size;
     Size _customSize;

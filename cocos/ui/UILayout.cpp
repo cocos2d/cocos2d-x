@@ -608,7 +608,7 @@ _curLayoutExecutant(nullptr),
 _passFocusToChild(true),
 _loopFocus(false)
 {
-    _widgetType = WidgetTypeContainer;
+    _widgetType = Type::CONTAINER;
     onPassFocusToChild = CC_CALLBACK_2(Layout::findNearestChildWidgetIndex, this);
 }
 

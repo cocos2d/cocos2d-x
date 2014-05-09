@@ -46,7 +46,7 @@ _touchEndPos(Vector2::ZERO),
 _touchEventListener(nullptr),
 _touchEventSelector(nullptr),
 _name("default"),
-_widgetType(WidgetTypeWidget),
+_widgetType(Type::ELEMENT),
 _actionTag(0),
 _size(Size::ZERO),
 _customSize(Size::ZERO),
@@ -840,7 +840,7 @@ const char* Widget::getName() const
     return _name.c_str();
 }
 
-WidgetType Widget::getWidgetType() const
+Widget::Type Widget::getWidgetType() const
 {
     return _widgetType;
 }

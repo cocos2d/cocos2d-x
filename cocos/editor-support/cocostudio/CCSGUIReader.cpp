@@ -412,9 +412,9 @@ void WidgetPropertiesReader0250::setColorPropsForWidgetFromJsonDictionary(Widget
     int colorB = cb ? DICTOOL->getIntValue_json(options, "colorB") : 255;
     widget->setColor(Color3B(colorR, colorG, colorB));
     bool apx = DICTOOL->checkObjectExist_json(options, "anchorPointX");
-    float apxf = apx ? DICTOOL->getFloatValue_json(options, "anchorPointX") : ((widget->getWidgetType() == WidgetTypeWidget) ? 0.5f : 0.0f);
+    float apxf = apx ? DICTOOL->getFloatValue_json(options, "anchorPointX") : ((widget->getWidgetType() == Widget::Type::ELEMENT) ? 0.5f : 0.0f);
     bool apy = DICTOOL->checkObjectExist_json(options, "anchorPointY");
-    float apyf = apy ? DICTOOL->getFloatValue_json(options, "anchorPointY") : ((widget->getWidgetType() == WidgetTypeWidget) ? 0.5f : 0.0f);
+    float apyf = apy ? DICTOOL->getFloatValue_json(options, "anchorPointY") : ((widget->getWidgetType() == Widget::Type::ELEMENT) ? 0.5f : 0.0f);
     widget->setAnchorPoint(Vector2(apxf, apyf));
     bool flipX = DICTOOL->getBooleanValue_json(options, "flipX");
     bool flipY = DICTOOL->getBooleanValue_json(options, "flipY");
@@ -450,7 +450,7 @@ void WidgetPropertiesReader0250::setPropsForButtonFromJsonDictionary(Widget*widg
         
         if (useMergedTexture)
         {
-            button->loadTextures(normalFileName, pressedFileName, disabledFileName,UI_TEX_TYPE_PLIST);
+            button->loadTextures(normalFileName, pressedFileName, disabledFileName,TextureResType::PLIST);
         }
         else
         {
@@ -470,7 +470,7 @@ void WidgetPropertiesReader0250::setPropsForButtonFromJsonDictionary(Widget*widg
     {
         if (useMergedTexture)
         {
-            button->loadTextures(normalFileName, pressedFileName, disabledFileName,UI_TEX_TYPE_PLIST);
+            button->loadTextures(normalFileName, pressedFileName, disabledFileName,TextureResType::PLIST);
         }
         else
         {
@@ -531,7 +531,7 @@ void WidgetPropertiesReader0250::setPropsForCheckBoxFromJsonDictionary(Widget*wi
     
     if (useMergedTexture)
     {
-        checkBox->loadTextures(backGroundFileName, backGroundSelectedFileName, frontCrossFileName,backGroundDisabledFileName,frontCrossDisabledFileName,UI_TEX_TYPE_PLIST);
+        checkBox->loadTextures(backGroundFileName, backGroundSelectedFileName, frontCrossFileName,backGroundDisabledFileName,frontCrossDisabledFileName,TextureResType::PLIST);
     }
     else
     {
@@ -566,7 +566,7 @@ void WidgetPropertiesReader0250::setPropsForImageViewFromJsonDictionary(Widget*w
     {
         if (useMergedTexture)
         {
-            imageView->loadTexture(imageFileName,UI_TEX_TYPE_PLIST);
+            imageView->loadTexture(imageFileName,TextureResType::PLIST);
         }
         else
         {
@@ -593,7 +593,7 @@ void WidgetPropertiesReader0250::setPropsForImageViewFromJsonDictionary(Widget*w
     {
         if (useMergedTexture)
         {
-            imageView->loadTexture(imageFileName,UI_TEX_TYPE_PLIST);
+            imageView->loadTexture(imageFileName,TextureResType::PLIST);
         }
         else
         {
@@ -711,7 +711,7 @@ void WidgetPropertiesReader0250::setPropsForLayoutFromJsonDictionary(Widget*widg
         float ch = DICTOOL->getFloatValue_json(options, "capInsetsHeight");
         if (useMergedTexture)
         {
-            panel->setBackGroundImage(imageFileName,UI_TEX_TYPE_PLIST);
+            panel->setBackGroundImage(imageFileName,TextureResType::PLIST);
         }
         else
         {
@@ -724,7 +724,7 @@ void WidgetPropertiesReader0250::setPropsForLayoutFromJsonDictionary(Widget*widg
         
         if (useMergedTexture)
         {
-            panel->setBackGroundImage(imageFileName,UI_TEX_TYPE_PLIST);
+            panel->setBackGroundImage(imageFileName,TextureResType::PLIST);
         }
         else
         {
@@ -766,7 +766,7 @@ void WidgetPropertiesReader0250::setPropsForSliderFromJsonDictionary(Widget*widg
             const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():nullptr;
             if (useMergedTexture)
             {
-                slider->loadBarTexture(imageFileName,UI_TEX_TYPE_PLIST);
+                slider->loadBarTexture(imageFileName,TextureResType::PLIST);
             }
             else
             {
@@ -781,7 +781,7 @@ void WidgetPropertiesReader0250::setPropsForSliderFromJsonDictionary(Widget*widg
             const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():nullptr;
             if (useMergedTexture)
             {
-                slider->loadBarTexture(imageFileName,UI_TEX_TYPE_PLIST);
+                slider->loadBarTexture(imageFileName,TextureResType::PLIST);
             }
             else
             {
@@ -802,7 +802,7 @@ void WidgetPropertiesReader0250::setPropsForSliderFromJsonDictionary(Widget*widg
     const char* disabledFileName_tp =  (disabledFileName && (strcmp(disabledFileName, "") != 0))?tp_d.append(disabledFileName).c_str():nullptr;
     if (useMergedTexture)
     {
-        slider->loadSlidBallTextures(normalFileName,pressedFileName,disabledFileName,UI_TEX_TYPE_PLIST);
+        slider->loadSlidBallTextures(normalFileName,pressedFileName,disabledFileName,TextureResType::PLIST);
     }
     else
     {
@@ -815,7 +815,7 @@ void WidgetPropertiesReader0250::setPropsForSliderFromJsonDictionary(Widget*widg
     const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():nullptr;
     if (useMergedTexture)
     {
-        slider->loadProgressBarTexture(imageFileName, UI_TEX_TYPE_PLIST);
+        slider->loadProgressBarTexture(imageFileName, TextureResType::PLIST);
     }
     else
     {
@@ -884,7 +884,7 @@ void WidgetPropertiesReader0250::setPropsForLoadingBarFromJsonDictionary(Widget 
     const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():nullptr;
     if (useMergedTexture)
     {
-        loadingBar->loadTexture(imageFileName,UI_TEX_TYPE_PLIST);
+        loadingBar->loadTexture(imageFileName,TextureResType::PLIST);
     }
     else
     {
@@ -1234,9 +1234,9 @@ void WidgetPropertiesReader0300::setColorPropsForWidgetFromJsonDictionary(Widget
     int colorB = cb ? DICTOOL->getIntValue_json(options, "colorB") : 255;
     widget->setColor(Color3B(colorR, colorG, colorB));
     bool apx = DICTOOL->checkObjectExist_json(options, "anchorPointX");
-    float apxf = apx ? DICTOOL->getFloatValue_json(options, "anchorPointX") : ((widget->getWidgetType() == WidgetTypeWidget) ? 0.5f : 0.0f);
+    float apxf = apx ? DICTOOL->getFloatValue_json(options, "anchorPointX") : ((widget->getWidgetType() == Widget::Type::ELEMENT) ? 0.5f : 0.0f);
     bool apy = DICTOOL->checkObjectExist_json(options, "anchorPointY");
-    float apyf = apy ? DICTOOL->getFloatValue_json(options, "anchorPointY") : ((widget->getWidgetType() == WidgetTypeWidget) ? 0.5f : 0.0f);
+    float apyf = apy ? DICTOOL->getFloatValue_json(options, "anchorPointY") : ((widget->getWidgetType() == Widget::Type::ELEMENT) ? 0.5f : 0.0f);
     widget->setAnchorPoint(Vector2(apxf, apyf));
     bool flipX = DICTOOL->getBooleanValue_json(options, "flipX");
     bool flipY = DICTOOL->getBooleanValue_json(options, "flipY");
@@ -1266,7 +1266,7 @@ void WidgetPropertiesReader0300::setPropsForButtonFromJsonDictionary(Widget*widg
         case 1:
         {
             const char* normalFileName = DICTOOL->getStringValue_json(normalDic, "path");
-            button->loadTextureNormal(normalFileName,UI_TEX_TYPE_PLIST);
+            button->loadTextureNormal(normalFileName,TextureResType::PLIST);
             break;
         }
         default:
@@ -1287,7 +1287,7 @@ void WidgetPropertiesReader0300::setPropsForButtonFromJsonDictionary(Widget*widg
         case 1:
         {
             const char* pressedFileName = DICTOOL->getStringValue_json(pressedDic, "path");
-            button->loadTexturePressed(pressedFileName,UI_TEX_TYPE_PLIST);
+            button->loadTexturePressed(pressedFileName,TextureResType::PLIST);
             break;
         }
         default:
@@ -1308,7 +1308,7 @@ void WidgetPropertiesReader0300::setPropsForButtonFromJsonDictionary(Widget*widg
         case 1:
         {
             const char* disabledFileName = DICTOOL->getStringValue_json(disabledDic, "path");
-            button->loadTextureDisabled(disabledFileName,UI_TEX_TYPE_PLIST);
+            button->loadTextureDisabled(disabledFileName,TextureResType::PLIST);
             break;
         }
         default:
@@ -1381,7 +1381,7 @@ void WidgetPropertiesReader0300::setPropsForCheckBoxFromJsonDictionary(Widget*wi
         case 1:
         {
             const char* backGroundFileName = DICTOOL->getStringValue_json(backGroundDic, "path");
-            checkBox->loadTextureBackGround(backGroundFileName,UI_TEX_TYPE_PLIST);
+            checkBox->loadTextureBackGround(backGroundFileName,TextureResType::PLIST);
             break;
         }
         default:
@@ -1403,7 +1403,7 @@ void WidgetPropertiesReader0300::setPropsForCheckBoxFromJsonDictionary(Widget*wi
         case 1:
         {
             const char* backGroundSelectedFileName = DICTOOL->getStringValue_json(backGroundSelectedDic, "path");
-            checkBox->loadTextureBackGroundSelected(backGroundSelectedFileName,UI_TEX_TYPE_PLIST);
+            checkBox->loadTextureBackGroundSelected(backGroundSelectedFileName,TextureResType::PLIST);
             break;
         }
         default:
@@ -1425,7 +1425,7 @@ void WidgetPropertiesReader0300::setPropsForCheckBoxFromJsonDictionary(Widget*wi
         case 1:
         {
             const char* frontCrossFileName = DICTOOL->getStringValue_json(frontCrossDic, "path");
-            checkBox->loadTextureFrontCross(frontCrossFileName,UI_TEX_TYPE_PLIST);
+            checkBox->loadTextureFrontCross(frontCrossFileName,TextureResType::PLIST);
             break;
         }
         default:
@@ -1447,7 +1447,7 @@ void WidgetPropertiesReader0300::setPropsForCheckBoxFromJsonDictionary(Widget*wi
         case 1:
         {
             const char* backGroundDisabledFileName = DICTOOL->getStringValue_json(backGroundDisabledDic, "path");
-            checkBox->loadTextureBackGroundDisabled(backGroundDisabledFileName,UI_TEX_TYPE_PLIST);
+            checkBox->loadTextureBackGroundDisabled(backGroundDisabledFileName,TextureResType::PLIST);
             break;
         }
         default:
@@ -1469,7 +1469,7 @@ void WidgetPropertiesReader0300::setPropsForCheckBoxFromJsonDictionary(Widget*wi
         case 1:
         {
             const char* frontCrossDisabledFileName = DICTOOL->getStringValue_json(options, "path");
-            checkBox->loadTextureFrontCrossDisabled(frontCrossDisabledFileName,UI_TEX_TYPE_PLIST);
+            checkBox->loadTextureFrontCrossDisabled(frontCrossDisabledFileName,TextureResType::PLIST);
             break;
         }
         default:
@@ -1504,7 +1504,7 @@ void WidgetPropertiesReader0300::setPropsForImageViewFromJsonDictionary(Widget*w
         case 1:
         {
             const char* imageFileName = DICTOOL->getStringValue_json(imageFileNameDic, "path");
-            imageView->loadTexture(imageFileName,UI_TEX_TYPE_PLIST);
+            imageView->loadTexture(imageFileName,TextureResType::PLIST);
             break;
         }
         default:
@@ -1679,7 +1679,7 @@ void WidgetPropertiesReader0300::setPropsForLayoutFromJsonDictionary(Widget*widg
         case 1:
         {
             const char* imageFileName = DICTOOL->getStringValue_json(imageFileNameDic, "path");
-            panel->setBackGroundImage(imageFileName,UI_TEX_TYPE_PLIST);
+            panel->setBackGroundImage(imageFileName,TextureResType::PLIST);
             break;
         }
         default:
@@ -1740,7 +1740,7 @@ void WidgetPropertiesReader0300::setPropsForSliderFromJsonDictionary(Widget*widg
                 case 1:
                 {
                     const char* imageFileName =  DICTOOL->getStringValue_json(imageFileNameDic, "path");
-                    slider->loadBarTexture(imageFileName,UI_TEX_TYPE_PLIST);
+                    slider->loadBarTexture(imageFileName,TextureResType::PLIST);
                     break;
                 }
                 default:
@@ -1766,7 +1766,7 @@ void WidgetPropertiesReader0300::setPropsForSliderFromJsonDictionary(Widget*widg
                 case 1:
                 {
                     const char*imageFileName =  DICTOOL->getStringValue_json(imageFileNameDic, "path");
-                    slider->loadBarTexture(imageFileName,UI_TEX_TYPE_PLIST);
+                    slider->loadBarTexture(imageFileName,TextureResType::PLIST);
                     break;
                 }
                 default:
@@ -1790,7 +1790,7 @@ void WidgetPropertiesReader0300::setPropsForSliderFromJsonDictionary(Widget*widg
         case 1:
         {
             const char* normalFileName = DICTOOL->getStringValue_json(normalDic, "path");
-            slider->loadSlidBallTextureNormal(normalFileName,UI_TEX_TYPE_PLIST);
+            slider->loadSlidBallTextureNormal(normalFileName,TextureResType::PLIST);
             break;
         }
         default:
@@ -1812,7 +1812,7 @@ void WidgetPropertiesReader0300::setPropsForSliderFromJsonDictionary(Widget*widg
         case 1:
         {
             const char* pressedFileName = DICTOOL->getStringValue_json(pressedDic, "path");
-            slider->loadSlidBallTexturePressed(pressedFileName,UI_TEX_TYPE_PLIST);
+            slider->loadSlidBallTexturePressed(pressedFileName,TextureResType::PLIST);
             break;
         }
         default:
@@ -1834,7 +1834,7 @@ void WidgetPropertiesReader0300::setPropsForSliderFromJsonDictionary(Widget*widg
         case 1:
         {
             const char* disabledFileName = DICTOOL->getStringValue_json(disabledDic, "path");
-            slider->loadSlidBallTextureDisabled(disabledFileName,UI_TEX_TYPE_PLIST);
+            slider->loadSlidBallTextureDisabled(disabledFileName,TextureResType::PLIST);
             break;
         }
         default:
@@ -1858,7 +1858,7 @@ void WidgetPropertiesReader0300::setPropsForSliderFromJsonDictionary(Widget*widg
         case 1:
         {
             const char* imageFileName = DICTOOL->getStringValue_json(progressBarDic, "path");
-            slider->loadProgressBarTexture(imageFileName,UI_TEX_TYPE_PLIST);
+            slider->loadProgressBarTexture(imageFileName,TextureResType::PLIST);
             break;
         }
         default:
@@ -1941,7 +1941,7 @@ void WidgetPropertiesReader0300::setPropsForLoadingBarFromJsonDictionary(Widget 
         case 1:
         {
             const char* imageFileName = DICTOOL->getStringValue_json(imageFileNameDic, "path");
-            loadingBar->loadTexture(imageFileName,UI_TEX_TYPE_PLIST);
+            loadingBar->loadTexture(imageFileName,TextureResType::PLIST);
             break;
         }
         default:

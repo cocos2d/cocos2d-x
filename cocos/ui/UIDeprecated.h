@@ -39,10 +39,14 @@ CC_DEPRECATED_ATTRIBUTE const Widget::SizeType SIZE_ABSOLUTE = Widget::SizeType:
 CC_DEPRECATED_ATTRIBUTE const Widget::SizeType SIZE_PERCENT = Widget::SizeType::PERCENT;
 CC_DEPRECATED_ATTRIBUTE const Widget::TextureResType UI_TEX_TYPE_LOCAL = Widget::TextureResType::LOCAL;
 CC_DEPRECATED_ATTRIBUTE const Widget::TextureResType UI_TEX_TYPE_PLIST = Widget::TextureResType::PLIST;
+CC_DEPRECATED_ATTRIBUTE const Widget::Type WidgetTypeWidget = Widget::Type::ELEMENT;
+CC_DEPRECATED_ATTRIBUTE const Widget::Type WidgetTypeContainer = Widget::Type::CONTAINER;
+
     
 CC_DEPRECATED_ATTRIBUTE typedef Widget::TextureResType TextureResType;
 CC_DEPRECATED_ATTRIBUTE typedef Widget::PositionType   PositionType;
 CC_DEPRECATED_ATTRIBUTE typedef Widget::SizeType SizeType;
+CC_DEPRECATED_ATTRIBUTE typedef Widget::Type WidgetType;
 
 
 
