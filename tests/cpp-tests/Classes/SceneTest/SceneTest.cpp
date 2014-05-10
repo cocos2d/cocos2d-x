@@ -30,10 +30,18 @@ SceneTestLayer1::SceneTestLayer1()
     auto s = Director::getInstance()->getWinSize();
     auto sprite = Sprite::create(s_pathGrossini);
     addChild(sprite);
-    sprite->setPosition( Vector2(s.width-40, s.height/2) );
     auto rotate = RotateBy::create(2, 360);
     auto repeat = RepeatForever::create(rotate);
     sprite->runAction(repeat);
+
+    auto move = Sequence::create(
+        MoveTo::create(2, Vector2(0.0f, s.height)),
+        MoveTo::create(2, Vector2(s.width, s.height)),
+        MoveTo::create(2, Vector2(s.width, 0.0f)),
+        MoveTo::create(2, Vector2(0.0f, 0.0f)),
+        nullptr);
+    auto repeatMove = RepeatForever::create(move);
+    sprite->runAction(repeatMove);
 
     schedule( schedule_selector(SceneTestLayer1::testDealloc) );
 }
@@ -84,13 +92,7 @@ void SceneTestLayer1::onPushSceneTran(Ref* sender)
 
 void SceneTestLayer1::onQuit(Ref* sender)
 {
-    //getCocosApp()->exit();
-    //CCDirector::getInstance()->poscene();
-
-    //// HA HA... no more terminate on sdk v3.0
-    //// http://developer.apple.com/iphone/library/qa/qa2008/qa1561.html
-    //if( [[UIApplication sharedApplication] respondsToSelector:@selector(terminate)] )
-    //    [[UIApplication sharedApplication] performSelector:@selector(terminate)];
+    Director::getInstance()->popToSceneStackLevel(0);
 }
 
 //------------------------------------------------------------------
@@ -106,8 +108,9 @@ SceneTestLayer2::SceneTestLayer2()
     auto item1 = MenuItemFont::create( "replaceScene", CC_CALLBACK_1(SceneTestLayer2::onReplaceScene, this));
     auto item2 = MenuItemFont::create( "replaceScene w/transition", CC_CALLBACK_1(SceneTestLayer2::onReplaceSceneTran, this));
     auto item3 = MenuItemFont::create( "Go Back", CC_CALLBACK_1(SceneTestLayer2::onGoBack, this));
+    auto item4 = MenuItemFont::create("Go Back w/transition", CC_CALLBACK_1(SceneTestLayer2::onGoBackTransition, this));
     
-    auto menu = Menu::create( item1, item2, item3, NULL );
+    auto menu = Menu::create(item1, item2, item3, item4, nullptr);
     menu->alignItemsVertically();
     
     addChild( menu );
@@ -115,10 +118,18 @@ SceneTestLayer2::SceneTestLayer2()
     auto s = Director::getInstance()->getWinSize();
     auto sprite = Sprite::create(s_pathGrossini);
     addChild(sprite);
-    sprite->setPosition( Vector2(s.width-40, s.height/2) );
     auto rotate = RotateBy::create(2, 360);
     auto repeat = RepeatForever::create(rotate);
     sprite->runAction(repeat);
+
+    auto move = Sequence::create(
+        MoveTo::create(2, Vector2(0.0f, s.height)),
+        MoveTo::create(2, Vector2(s.width, s.height)),
+        MoveTo::create(2, Vector2(s.width, 0.0f)),
+        MoveTo::create(2, Vector2(0.0f, 0.0f)),
+        nullptr);
+    auto repeatMove = RepeatForever::create(move);
+    sprite->runAction(repeatMove);
 
     schedule( schedule_selector(SceneTestLayer2::testDealloc) );
 }
@@ -133,6 +144,11 @@ void SceneTestLayer2::testDealloc(float dt)
 void SceneTestLayer2::onGoBack(Ref* sender)
 {
     Director::getInstance()->popScene();
+}
+
+void SceneTestLayer2::onGoBackTransition(Ref* sender)
+{
+    Director::getInstance()->replaceScene(TransitionFlipX::create(2, Director::getInstance()->popScene()));
 }
 
 void SceneTestLayer2::onReplaceScene(Ref* sender)
@@ -171,12 +187,15 @@ bool SceneTestLayer3::init()
     {
         auto s = Director::getInstance()->getWinSize();
 
-        auto item0 = MenuItemFont::create("Touch to pushScene (self)", CC_CALLBACK_1(SceneTestLayer3::item0Clicked, this));
-        auto item1 = MenuItemFont::create("Touch to poscene", CC_CALLBACK_1(SceneTestLayer3::item1Clicked, this));
-        auto item2 = MenuItemFont::create("Touch to popToRootScene", CC_CALLBACK_1(SceneTestLayer3::item2Clicked, this));
-        auto item3 = MenuItemFont::create("Touch to popToSceneStackLevel(2)", CC_CALLBACK_1(SceneTestLayer3::item3Clicked, this));
+        auto item0 = MenuItemFont::create("pushScene (self)", CC_CALLBACK_1(SceneTestLayer3::item0Clicked, this));
+        auto item1 = MenuItemFont::create("popScene", CC_CALLBACK_1(SceneTestLayer3::item1Clicked, this));
+        auto item2 = MenuItemFont::create("popToRootScene", CC_CALLBACK_1(SceneTestLayer3::item2Clicked, this));
+        auto item3 = MenuItemFont::create("popToSceneStackLevel(2)", CC_CALLBACK_1(SceneTestLayer3::item3Clicked, this));
+        auto item4 = MenuItemFont::create("popScene w/transition", CC_CALLBACK_1(SceneTestLayer3::item4Clicked, this));
+        auto item5 = MenuItemFont::create("popToRootScene w/transition", CC_CALLBACK_1(SceneTestLayer3::item5Clicked, this));
+        auto item6 = MenuItemFont::create("popToSceneStackLevel(2) w/transition", CC_CALLBACK_1(SceneTestLayer3::item6Clicked, this));
 
-        auto menu = Menu::create(item0, item1, item2, item3, NULL);
+        auto menu = Menu::create(item0, item1, item2, item3, item4, item5, item6, nullptr);
         this->addChild(menu);
         menu->alignItemsVertically();
 
@@ -184,10 +203,19 @@ bool SceneTestLayer3::init()
 
         auto sprite = Sprite::create(s_pathGrossini);
         addChild(sprite);
-        sprite->setPosition( Vector2(s.width/2, 40) );
         auto rotate = RotateBy::create(2, 360);
         auto repeat = RepeatForever::create(rotate);
         sprite->runAction(repeat);
+
+        auto move = Sequence::create(
+            MoveTo::create(2, Vector2(0.0f, s.height)),
+            MoveTo::create(2, Vector2(s.width, s.height)),
+            MoveTo::create(2, Vector2(s.width, 0.0f)),
+            MoveTo::create(2, Vector2(0.0f, 0.0f)),
+            nullptr);
+        auto repeatMove = RepeatForever::create(move);
+        sprite->runAction(repeatMove);
+
         return true;
     }
     return false;
@@ -218,6 +246,36 @@ void SceneTestLayer3::item2Clicked(Ref* sender)
 void SceneTestLayer3::item3Clicked(Ref* sender)
 {
     Director::getInstance()->popToSceneStackLevel(2);
+}
+
+void SceneTestLayer3::item4Clicked(Ref* sender)
+{
+    auto nextScene = Director::getInstance()->popScene();
+    // if pop scene is successful
+    if (nextScene != nullptr)
+    {
+        Director::getInstance()->replaceScene(TransitionFlipX::create(2, nextScene));
+    }
+}
+
+void SceneTestLayer3::item5Clicked(Ref* sender)
+{
+    auto nextScene = Director::getInstance()->popToRootScene();
+    // if pop to root scene is successful
+    if (nextScene != nullptr)
+    {
+        Director::getInstance()->replaceScene(TransitionFlipX::create(2, nextScene));
+    }
+}
+
+void SceneTestLayer3::item6Clicked(Ref* sender)
+{
+    auto nextScene = Director::getInstance()->popToSceneStackLevel(2);
+    // if pop tot scenes stack level is successful
+    if (nextScene != nullptr)
+    {
+        Director::getInstance()->replaceScene(TransitionFlipX::create(2, nextScene));
+    }
 }
 
 void SceneTestScene::runThisTest()

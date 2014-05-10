@@ -29,6 +29,7 @@ public:
 
     void testDealloc(float dt);
     void onGoBack(Ref* sender);
+    void onGoBackTransition(Ref* sender);
     void onReplaceScene(Ref* sender);
     void onReplaceSceneTran(Ref* sender);
 
@@ -45,6 +46,10 @@ public:
     void item1Clicked(Ref* sender);
     void item2Clicked(Ref* sender);
     void item3Clicked(Ref* sender);
+    void item4Clicked(Ref* sender);
+    void item5Clicked(Ref* sender);
+    void item6Clicked(Ref* sender);
+
     CREATE_FUNC(SceneTestLayer3)
 } ;
 
