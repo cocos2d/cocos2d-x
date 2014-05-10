@@ -155,18 +155,6 @@ bool UTF16ToUTF8(const std::u16string& utf16, std::string& outUtf8)
     return llvm::convertUTF16ToUTF8String(utf16, outUtf8);
 }
 
-std::vector<char16_t> getUTF16VectorFromUTF16String(const std::u16string& str)
-{
-    std::vector<char16_t> str_new;
-
-    size_t len = str.length();
-    for (size_t i = 0; i < len; ++i)
-    {
-        str_new.push_back(str[i]);
-    }
-    return str_new;
-}
-
 std::vector<char16_t> getChar16VectorFromUTF16String(const std::u16string& utf16)
 {
     std::vector<char16_t> ret;
