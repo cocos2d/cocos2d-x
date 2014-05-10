@@ -5,6 +5,7 @@ import plistlib
 import os.path
 import argparse
 import glob
+import shutil
 
 #keys in dictionary
 metaDataKey = 'metaData'
@@ -38,14 +39,14 @@ def processConvertFile(filename):
     print('Begin process particle file: ' + filename)
     fp = open(filename, 'r')
     pl = plistlib.readPlist(fp) 
-    backupFileName = filename+'.backup'
-    print('Write backup file to ' + backupFileName)
-    plistlib.writePlist(pl,backupFileName)
 
     if (not pl.has_key(yCoordFlippedKey)):
         print('Skip plist file: ' + filename + ' for there is no key for yCoordFlipped,')
     else:
         if(not checkFlippedConvertFlag(pl)):
+            backupFileName = filename+'.backup'
+            print('Write backup file to ' + backupFileName)
+            shutil.copyfile(filename,backupFileName)
             print('converting...')
             pl[yCoordFlippedKey] = -pl[yCoordFlippedKey]
             writeFlippedConvertFlag(pl)
