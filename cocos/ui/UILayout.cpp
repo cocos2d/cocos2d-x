@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "ui/UIHelper.h"
 #include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"
 #include "renderer/CCGLProgram.h"
-#include "renderer/CCShaderCache.h"
+#include "renderer/CCGLProgramCache.h"
 #include "base/CCDirector.h"
 #include "2d/CCDrawingPrimitives.h"
 #include "renderer/CCRenderer.h"

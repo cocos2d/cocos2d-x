@@ -27,25 +27,26 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "2d/CCSpriteBatchNode.h"
-#include "base/ccConfig.h"
+
 #include "2d/CCSprite.h"
 #include "2d/CCGrid.h"
 #include "2d/CCDrawingPrimitives.h"
 #include "2d/CCTextureCache.h"
-#include "renderer/CCShaderCache.h"
-#include "renderer/CCGLProgram.h"
-#include "renderer/ccGLStateCache.h"
-#include "base/CCDirector.h"
-#include "math/TransformUtils.h"
-#include "base/CCProfiling.h"
 #include "2d/CCLayer.h"
 #include "2d/CCScene.h"
+#include "base/ccConfig.h"
+#include "base/CCDirector.h"
+#include "base/CCProfiling.h"
+#include "renderer/CCGLProgramState.h"
+#include "renderer/CCGLProgram.h"
+#include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCQuadCommand.h"
-// external
+#include "math/TransformUtils.h"
 
 #include "deprecated/CCString.h" // For StringUtils::format
 
+// external
 #include <algorithm>
 
 NS_CC_BEGIN
@@ -99,7 +100,7 @@ bool SpriteBatchNode::initWithTexture(Texture2D *tex, ssize_t capacity)
 
     _descendants.reserve(capacity);
     
-    setGLProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+    setGLProgramState(GLProgramState::getWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
     return true;
 }
 

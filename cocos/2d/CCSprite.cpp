@@ -33,10 +33,11 @@ THE SOFTWARE.
 #include "2d/CCSpriteFrameCache.h"
 #include "2d/CCTextureCache.h"
 #include "2d/CCDrawingPrimitives.h"
-#include "renderer/CCShaderCache.h"
+#include "2d/CCTexture2D.h"
+#include "renderer/CCGLProgramState.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgram.h"
-#include "2d/CCTexture2D.h"
+#include "renderer/CCRenderer.h"
 #include "base/CCProfiling.h"
 #include "base/CCDirector.h"
 #include "base/CCDirector.h"
@@ -44,7 +45,6 @@ THE SOFTWARE.
 #include "math/CCGeometry.h"
 #include "math/CCAffineTransform.h"
 #include "math/TransformUtils.h"
-#include "renderer/CCRenderer.h"
 
 #include "deprecated/CCString.h"
 
@@ -248,9 +248,9 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         _quad.tl.colors = Color4B::WHITE;
         _quad.tr.colors = Color4B::WHITE;
         
-        // shader program
-        setGLProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
-        
+        // shader state
+        setGLProgramState(GLProgramState::getWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
+
         // update texture (calls updateBlendFunc)
         setTexture(texture);
         setTextureRect(rect, rotated, rect.size);

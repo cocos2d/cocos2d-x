@@ -29,15 +29,15 @@ THE SOFTWARE.
 #include "CCGL.h"
 #include "2d/CCParticleSystemQuad.h"
 #include "2d/CCSpriteFrame.h"
-#include "base/CCDirector.h"
-#include "CCParticleBatchNode.h"
+#include "2d/CCParticleBatchNode.h"
 #include "2d/CCTextureAtlas.h"
-#include "renderer/CCShaderCache.h"
-#include "renderer/ccGLStateCache.h"
-#include "renderer/CCGLProgram.h"
-#include "math/TransformUtils.h"
+#include "base/CCDirector.h"
 #include "base/CCEventType.h"
 #include "base/CCConfiguration.h"
+#include "math/TransformUtils.h"
+#include "renderer/CCGLProgramState.h"
+#include "renderer/ccGLStateCache.h"
+#include "renderer/CCGLProgram.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCCustomCommand.h"
@@ -131,7 +131,7 @@ bool ParticleSystemQuad::initWithTotalParticles(int numberOfParticles)
             setupVBO();
         }
 
-        setGLProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
+        setGLProgramState(GLProgramState::getWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
         // Need to listen the event only when not use batchnode, because it will use VBO

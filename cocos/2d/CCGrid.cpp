@@ -23,16 +23,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+
 #include "base/ccMacros.h"
-#include "2d/CCGrid.h"
 #include "base/CCDirector.h"
-#include "CCGrabber.h"
+#include "2d/CCGrabber.h"
 #include "2d/ccUtils.h"
+#include "2d/CCGrid.h"
 #include "renderer/CCGLProgram.h"
-#include "renderer/CCShaderCache.h"
+#include "renderer/CCGLProgramCache.h"
 #include "renderer/ccGLStateCache.h"
-#include "CCGL.h"
 #include "renderer/CCRenderer.h"
+#include "CCGL.h"
 #include "math/TransformUtils.h"
 
 NS_CC_BEGIN
@@ -102,7 +103,7 @@ bool GridBase::initWithSize(const Size& gridSize, Texture2D *texture, bool flipp
         ret = false;
     }
     
-    _shaderProgram = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE);
+    _shaderProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE);
     calculateVertexPoints();
 
     return ret;

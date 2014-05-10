@@ -31,20 +31,22 @@ THE SOFTWARE.
 * https://devforums.apple.com/message/37855#37855 by a1studmuffin
 */
 
+#include "CCGL.h"
 #include "2d/CCTexture2D.h"
+#include "2d/platform/CCImage.h"
+#include "2d/ccUtils.h"
+#include "2d/platform/CCDevice.h"
 #include "base/ccConfig.h"
 #include "base/ccMacros.h"
 #include "base/CCConfiguration.h"
-#include "2d/platform/CCImage.h"
-#include "CCGL.h"
-#include "2d/ccUtils.h"
 #include "base/CCPlatformMacros.h"
 #include "base/CCDirector.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/ccGLStateCache.h"
-#include "renderer/CCShaderCache.h"
-#include "2d/platform/CCDevice.h"
+#include "renderer/CCGLProgramCache.h"
+
 #include "deprecated/CCString.h"
+
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     #include "2d/CCTextureCache.h"
@@ -692,8 +694,8 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
     _hasPremultipliedAlpha = false;
     _hasMipmaps = mipmapsNum > 1;
 
-    setGLProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE));
-
+    // shader
+    setGLProgram(GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE));
     return true;
 }
 

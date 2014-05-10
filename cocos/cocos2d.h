@@ -141,9 +141,9 @@ THE SOFTWARE.
 #include "renderer/CCRenderCommandPool.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGLProgram.h"
+#include "renderer/CCGLProgramCache.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/ccGLStateCache.h"
-#include "renderer/CCShaderCache.h"
 #include "renderer/ccShaders.h"
 
 // physics

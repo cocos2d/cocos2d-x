@@ -26,15 +26,15 @@ THE SOFTWARE.
 #include "2d/CCProgressTimer.h"
 
 #include "base/ccMacros.h"
-#include "2d/CCTextureCache.h"
-#include "renderer/CCGLProgram.h"
-#include "renderer/CCShaderCache.h"
-#include "renderer/ccGLStateCache.h"
 #include "base/CCDirector.h"
-#include "math/TransformUtils.h"
+#include "2d/CCTextureCache.h"
 #include "2d/CCDrawingPrimitives.h"
+#include "renderer/CCGLProgram.h"
+#include "renderer/CCGLProgramState.h"
+#include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCCustomCommand.h"
+#include "math/TransformUtils.h"
 
 // extern
 #include <float.h>
@@ -85,8 +85,9 @@ bool ProgressTimer::initWithSprite(Sprite* sp)
     setMidpoint(Vector2(0.5f, 0.5f));
     setBarChangeRate(Vector2(1,1));
     setSprite(sp);
-    // shader program
-    setGLProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+
+    // shader state
+    setGLProgramState(GLProgramState::getWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
     return true;
 }
 

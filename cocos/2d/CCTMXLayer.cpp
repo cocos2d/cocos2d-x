@@ -24,14 +24,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCTMXLayer.h"
-#include "CCTMXXMLParser.h"
-#include "CCTMXTiledMap.h"
+#include "2d/CCTMXLayer.h"
+#include "2d/CCTMXXMLParser.h"
+#include "2d/CCTMXTiledMap.h"
 #include "2d/CCSprite.h"
 #include "2d/CCTextureCache.h"
-#include "renderer/CCShaderCache.h"
-#include "renderer/CCGLProgram.h"
 #include "2d/ccCArray.h"
+#include "renderer/CCGLProgramState.h"
+#include "renderer/CCGLProgram.h"
 #include "base/CCDirector.h"
 
 #include "deprecated/CCString.h" // For StringUtils::format
@@ -205,7 +205,7 @@ void TMXLayer::parseInternalProperties()
             _useAutomaticVertexZ = true;
             auto alphaFuncVal = getProperty("cc_alpha_func");
             float alphaFuncValue = alphaFuncVal.asFloat();
-            setGLProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST));
+            setGLProgramState(GLProgramState::getWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST));
 
             GLint alphaValueLocation = glGetUniformLocation(getGLProgram()->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
 

@@ -56094,7 +56094,7 @@ int lua_cocos2dx_ShaderCache_getInstance(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        cocos2d::ShaderCache* ret = cocos2d::ShaderCache::getInstance();
+        cocos2d::ShaderCache* ret = cocos2d::GLProgramCache::getInstance();
         object_to_luaval<cocos2d::ShaderCache>(tolua_S, "cc.ShaderCache",(cocos2d::ShaderCache*)ret);
         return 1;
     }

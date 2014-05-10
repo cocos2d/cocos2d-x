@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "math/Vector3.h"
 #include "math/Vector4.h"
 
-#include <unordered_map>
+#include "base/CCMap.h"
 
 NS_CC_BEGIN
 
@@ -48,19 +48,17 @@ class GLProgramStateCache
 {
 public:
     static GLProgramStateCache* getInstance();
-    
     static void destroyInstance();
     
-    GLProgramState* getProgramState(GLProgram* program);
-	
-    void removeProgramState(GLProgram* program);
-    
+    GLProgramState* getGLProgramState(GLProgram* program);
+	void removeAllGLProgramState();
+    void removeUnusedGLProgramState();
+
 protected:
     GLProgramStateCache();
-    
     ~GLProgramStateCache();
     
-    std::unordered_map<GLProgram*, GLProgramState*> _glProgramStates;
+    Map<GLProgram*, GLProgramState*> _glProgramStates;
     static GLProgramStateCache* s_instance;
 };
 

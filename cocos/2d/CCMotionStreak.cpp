@@ -25,14 +25,14 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "2d/CCMotionStreak.h"
 #include "2d/CCTextureCache.h"
+#include "2d/CCVertex.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgram.h"
-#include "renderer/CCShaderCache.h"
-#include "2d/CCVertex.h"
-#include "base/ccMacros.h"
-#include "base/CCDirector.h"
+#include "renderer/CCGLProgramState.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCRenderer.h"
+#include "base/ccMacros.h"
+#include "base/CCDirector.h"
 
 NS_CC_BEGIN
 
@@ -127,8 +127,8 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
     // Set blend mode
     _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
 
-    // shader program
-    setGLProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+    // shader state
+    setGLProgramState(GLProgramState::getWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
     setTexture(texture);
     setColor(color);

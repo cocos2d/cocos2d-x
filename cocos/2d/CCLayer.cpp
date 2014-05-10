@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "2d/CCLayer.h"
 #include "base/CCDirector.h"
 #include "2d/CCScriptSupport.h"
-#include "renderer/CCShaderCache.h"
+#include "renderer/CCGLProgramCache.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/ccGLStateCache.h"
 #include "math/TransformUtils.h"
@@ -534,7 +534,7 @@ bool LayerColor::initWithColor(const Color4B& color, GLfloat w, GLfloat h)
         updateColor();
         setContentSize(Size(w, h));
 
-        setGLProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_COLOR_NO_MVP));
+        setGLProgram(GLProgramCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_COLOR_NO_MVP));
         return true;
     }
     return false;

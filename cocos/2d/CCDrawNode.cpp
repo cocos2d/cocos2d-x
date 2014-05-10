@@ -22,12 +22,12 @@
  */
 
 #include "2d/CCDrawNode.h"
-#include "renderer/CCShaderCache.h"
 #include "CCGL.h"
 #include "base/CCEventType.h"
 #include "base/CCConfiguration.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCGLProgramState.h"
 #include "base/CCDirector.h"
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
@@ -158,7 +158,7 @@ bool DrawNode::init()
 {
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 
-    setGLProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR));
+    setGLProgramState(GLProgramState::getWithGLProgramName(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR));
     
     ensureCapacity(512);
     

@@ -30,7 +30,7 @@
 #include "renderer/CCBatchCommand.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCGroupCommand.h"
-#include "renderer/CCShaderCache.h"
+#include "renderer/CCGLProgramCache.h"
 #include "renderer/ccGLStateCache.h"
 #include "base/CCConfiguration.h"
 #include "base/CCDirector.h"

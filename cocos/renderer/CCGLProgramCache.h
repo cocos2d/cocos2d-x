@@ -25,8 +25,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCSHADERCACHE_H__
-#define __CCSHADERCACHE_H__
+#ifndef __CCGLPROGRAMCACHE_H__
+#define __CCGLPROGRAMCACHE_H__
 
 #include "base/CCRef.h"
 
@@ -42,56 +42,56 @@ class GLProgram;
  * @{
  */
 
-/** ShaderCache
- Singleton that stores manages GL shaders
+/** GLProgramCache
+ Singleton that stores manages GLProgram objects (shaders)
  @since v2.0
  */
-class CC_DLL ShaderCache : public Ref 
+class CC_DLL GLProgramCache : public Ref
 {
 public:
     /**
      * @js ctor
      */
-    ShaderCache();
+    GLProgramCache();
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~ShaderCache();
+    ~GLProgramCache();
 
     /** returns the shared instance */
-    static ShaderCache* getInstance();
+    static GLProgramCache* getInstance();
 
     /** purges the cache. It releases the retained instance. */
     static void destroyInstance();
 
     /** @deprecated Use getInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static ShaderCache* sharedShaderCache();
+    CC_DEPRECATED_ATTRIBUTE static GLProgramCache* sharedShaderCache();
 
     /** @deprecated Use destroyInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static void purgeSharedShaderCache();
 
     /** loads the default shaders */
-    void loadDefaultShaders();
-    
+    void loadDefaultGLPrograms();
+    CC_DEPRECATED_ATTRIBUTE void loadDefaultShaders() { loadDefaultGLPrograms(); }
+
     /** reload the default shaders */
-    void reloadDefaultShaders();
+    void reloadDefaultGLPrograms();
+    CC_DEPRECATED_ATTRIBUTE void reloadDefaultShaders() { reloadDefaultGLPrograms(); }
 
     /** returns a GL program for a given key 
      */
-    GLProgram * getProgram(const std::string &key);
-    /** @deprecated Use getProgram() instead
-     * @js NA
-     * @lua NA
-     */
-    CC_DEPRECATED_ATTRIBUTE GLProgram * programForKey(const std::string &key){ return getProgram(key); }
+    GLProgram * getGLProgram(const std::string &key);
+    CC_DEPRECATED_ATTRIBUTE GLProgram * getProgram(const std::string &key) { return getGLProgram(key); }
+    CC_DEPRECATED_ATTRIBUTE GLProgram * programForKey(const std::string &key){ return getGLProgram(key); }
 
     /** adds a GLProgram to the cache for a given name */
-    void addProgram(GLProgram* program, const std::string &key);
+    void addGLProgram(GLProgram* program, const std::string &key);
+    CC_DEPRECATED_ATTRIBUTE void addProgram(GLProgram* program, const std::string &key) { addGLProgram(program, key); }
 
 private:
     bool init();
-    void loadDefaultShader(GLProgram *program, int type);
+    void loadDefaultGLProgram(GLProgram *program, int type);
 
 //    Dictionary* _programs;
     std::unordered_map<std::string, GLProgram*> _programs;
@@ -102,4 +102,4 @@ private:
 
 NS_CC_END
 
-#endif /* __CCSHADERCACHE_H__ */
+#endif /* __CCGLPROGRAMCACHE_H__ */

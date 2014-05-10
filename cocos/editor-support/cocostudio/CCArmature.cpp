@@ -31,7 +31,7 @@ THE SOFTWARE.
 
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGroupCommand.h"
-#include "renderer/CCShaderCache.h"
+#include "renderer/CCGLProgramState.h"
 #include "2d/CCDrawingPrimitives.h"
 #include "base/CCDirector.h"
 
@@ -182,7 +182,7 @@ bool Armature::init(const std::string& name)
 
         }
 
-        setGLProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+        setGLProgramState(GLProgramState::getWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
         setCascadeOpacityEnabled(true);
         setCascadeColorEnabled(true);

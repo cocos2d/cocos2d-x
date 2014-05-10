@@ -43,7 +43,8 @@ THE SOFTWARE.
 #include "2d/CCFontAtlasCache.h"
 #include "2d/CCAnimationCache.h"
 #include "2d/CCUserDefault.h"
-#include "renderer/CCShaderCache.h"
+#include "renderer/CCGLProgramCache.h"
+#include "renderer/CCGLProgramStateCache.h"
 #include "2d/CCTransition.h"
 #include "2d/CCTextureCache.h"
 #include "2d/CCFontFreeType.h"
@@ -952,7 +953,8 @@ void Director::purgeDirector()
     DrawPrimitives::free();
     AnimationCache::destroyInstance();
     SpriteFrameCache::destroyInstance();
-    ShaderCache::destroyInstance();
+    GLProgramCache::destroyInstance();
+    GLProgramStateCache::destroyInstance();
     FileUtils::destroyInstance();
     Configuration::destroyInstance();
 

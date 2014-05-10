@@ -27,7 +27,7 @@
 
 #include "2d/CCClippingNode.h"
 #include "renderer/CCGLProgram.h"
-#include "renderer/CCShaderCache.h"
+#include "renderer/CCGLProgramCache.h"
 #include "2d/CCDrawingPrimitives.h"
 #include "base/CCDirector.h"
 
@@ -237,7 +237,7 @@ void ClippingNode::visit(Renderer *renderer, const Matrix &parentTransform, bool
 #else
         // since glAlphaTest do not exists in OES, use a shader that writes
         // pixel only if greater than an alpha threshold
-        GLProgram *program = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV);
+        GLProgram *program = GLProgramCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV);
         GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
         // set our alphaThreshold
         program->use();

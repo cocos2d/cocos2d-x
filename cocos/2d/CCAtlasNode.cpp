@@ -29,12 +29,12 @@ THE SOFTWARE.
 #include "2d/CCTextureAtlas.h"
 #include "2d/CCTextureCache.h"
 #include "base/CCDirector.h"
-#include "renderer/CCGLProgram.h"
-#include "renderer/CCShaderCache.h"
-#include "renderer/ccGLStateCache.h"
 #include "base/CCDirector.h"
-#include "math/TransformUtils.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCGLProgram.h"
+#include "renderer/CCGLProgramState.h"
+#include "renderer/ccGLStateCache.h"
+#include "math/TransformUtils.h"
 
 NS_CC_BEGIN
 
@@ -106,7 +106,7 @@ bool AtlasNode::initWithTexture(Texture2D* texture, int tileWidth, int tileHeigh
     _quadsToDraw = itemsToRender;
 
     // shader stuff
-    setGLProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
+    setGLProgramState(GLProgramState::getWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
 
     return true;
 }

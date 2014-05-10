@@ -1562,10 +1562,10 @@
 		5034CA1A191D591100CE6051 /* ccShaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034C9F7191D591000CE6051 /* ccShaders.h */; };
 		5034CA1B191D591100CE6051 /* ccShaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5034C9F8191D591000CE6051 /* ccShaders.cpp */; };
 		5034CA1C191D591100CE6051 /* ccShaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5034C9F8191D591000CE6051 /* ccShaders.cpp */; };
-		5034CA1D191D591100CE6051 /* CCShaderCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034C9F9191D591000CE6051 /* CCShaderCache.h */; };
-		5034CA1E191D591100CE6051 /* CCShaderCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034C9F9191D591000CE6051 /* CCShaderCache.h */; };
-		5034CA1F191D591100CE6051 /* CCShaderCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5034C9FA191D591000CE6051 /* CCShaderCache.cpp */; };
-		5034CA20191D591100CE6051 /* CCShaderCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5034C9FA191D591000CE6051 /* CCShaderCache.cpp */; };
+		5034CA1D191D591100CE6051 /* CCGLProgramCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034C9F9191D591000CE6051 /* CCGLProgramCache.h */; };
+		5034CA1E191D591100CE6051 /* CCGLProgramCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034C9F9191D591000CE6051 /* CCGLProgramCache.h */; };
+		5034CA1F191D591100CE6051 /* CCGLProgramCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5034C9FA191D591000CE6051 /* CCGLProgramCache.cpp */; };
+		5034CA20191D591100CE6051 /* CCGLProgramCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5034C9FA191D591000CE6051 /* CCGLProgramCache.cpp */; };
 		5034CA21191D591100CE6051 /* ccShader_PositionTextureColorAlphaTest.frag in Headers */ = {isa = PBXBuildFile; fileRef = 5034C9FB191D591000CE6051 /* ccShader_PositionTextureColorAlphaTest.frag */; };
 		5034CA22191D591100CE6051 /* ccShader_PositionTextureColorAlphaTest.frag in Headers */ = {isa = PBXBuildFile; fileRef = 5034C9FB191D591000CE6051 /* ccShader_PositionTextureColorAlphaTest.frag */; };
 		5034CA2B191D591100CE6051 /* ccShader_PositionTextureA8Color.vert in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA00191D591000CE6051 /* ccShader_PositionTextureA8Color.vert */; };
@@ -2668,8 +2668,8 @@
 		50272539190BF1B900AAF4ED /* cocos2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cocos2d.cpp; path = ../cocos/cocos2d.cpp; sourceTree = "<group>"; };
 		5034C9F7191D591000CE6051 /* ccShaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShaders.h; sourceTree = "<group>"; };
 		5034C9F8191D591000CE6051 /* ccShaders.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ccShaders.cpp; sourceTree = "<group>"; };
-		5034C9F9191D591000CE6051 /* CCShaderCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCShaderCache.h; sourceTree = "<group>"; };
-		5034C9FA191D591000CE6051 /* CCShaderCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCShaderCache.cpp; sourceTree = "<group>"; };
+		5034C9F9191D591000CE6051 /* CCGLProgramCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGLProgramCache.h; sourceTree = "<group>"; };
+		5034C9FA191D591000CE6051 /* CCGLProgramCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGLProgramCache.cpp; sourceTree = "<group>"; };
 		5034C9FB191D591000CE6051 /* ccShader_PositionTextureColorAlphaTest.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionTextureColorAlphaTest.frag; sourceTree = "<group>"; };
 		5034CA00191D591000CE6051 /* ccShader_PositionTextureA8Color.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionTextureA8Color.vert; sourceTree = "<group>"; };
 		5034CA01191D591000CE6051 /* ccShader_PositionTextureA8Color.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionTextureA8Color.frag; sourceTree = "<group>"; };
@@ -4610,8 +4610,8 @@
 				5034CA5D191D591900CE6051 /* shaders */,
 				5034C9F7191D591000CE6051 /* ccShaders.h */,
 				5034C9F8191D591000CE6051 /* ccShaders.cpp */,
-				5034C9F9191D591000CE6051 /* CCShaderCache.h */,
-				5034C9FA191D591000CE6051 /* CCShaderCache.cpp */,
+				5034C9F9191D591000CE6051 /* CCGLProgramCache.h */,
+				5034C9FA191D591000CE6051 /* CCGLProgramCache.cpp */,
 				5034CA11191D591000CE6051 /* ccGLStateCache.h */,
 				5034CA12191D591000CE6051 /* ccGLStateCache.cpp */,
 				5034CA13191D591000CE6051 /* CCGLProgramStateCache.h */,
@@ -5232,7 +5232,7 @@
 				1A8C59E9180E930E00EF57C3 /* CCSGUIReader.h in Headers */,
 				5034CA33191D591100CE6051 /* ccShader_PositionTexture_uColor.frag in Headers */,
 				1A8C59ED180E930E00EF57C3 /* CCSkin.h in Headers */,
-				5034CA1D191D591100CE6051 /* CCShaderCache.h in Headers */,
+				5034CA1D191D591100CE6051 /* CCGLProgramCache.h in Headers */,
 				1A8C59F1180E930E00EF57C3 /* CCSpriteFrameCacheHelper.h in Headers */,
 				1A8C59F5180E930E00EF57C3 /* CCSSceneReader.h in Headers */,
 				1A8C59F9180E930E00EF57C3 /* CCTransformHelp.h in Headers */,
@@ -5550,7 +5550,7 @@
 				2905FA6918CF08D100240AA3 /* UILoadingBar.h in Headers */,
 				2905FA8F18CF08D100240AA3 /* UIWidget.h in Headers */,
 				1A5702C5180BCE2A0088DEC7 /* CCIMEDispatcher.h in Headers */,
-				5034CA1E191D591100CE6051 /* CCShaderCache.h in Headers */,
+				5034CA1E191D591100CE6051 /* CCGLProgramCache.h in Headers */,
 				50FCEB9A18C72017004AD434 /* CheckBoxReader.h in Headers */,
 				500DC8AD19105D41007B91BF /* CCBatchCommand.h in Headers */,
 				1A5702CB180BCE370088DEC7 /* CCTextFieldTTF.h in Headers */,
@@ -6173,7 +6173,7 @@
 				5034CA1B191D591100CE6051 /* ccShaders.cpp in Sources */,
 				1A5701B1180BCB590088DEC7 /* CCFontFNT.cpp in Sources */,
 				1A5701B5180BCB590088DEC7 /* CCFontFreeType.cpp in Sources */,
-				5034CA1F191D591100CE6051 /* CCShaderCache.cpp in Sources */,
+				5034CA1F191D591100CE6051 /* CCGLProgramCache.cpp in Sources */,
 				1A5701B9180BCB5A0088DEC7 /* CCLabel.cpp in Sources */,
 				500DC93819106300007B91BF /* CCConfiguration.cpp in Sources */,
 				500DC9A619106300007B91BF /* s3tc.cpp in Sources */,
@@ -6794,7 +6794,7 @@
 				46C02E0818E91123004B7456 /* xxhash.c in Sources */,
 				500DC95D19106300007B91BF /* CCEventKeyboard.cpp in Sources */,
 				2905FA4118CF08D100240AA3 /* CocosGUI.cpp in Sources */,
-				5034CA20191D591100CE6051 /* CCShaderCache.cpp in Sources */,
+				5034CA20191D591100CE6051 /* CCGLProgramCache.cpp in Sources */,
 				1A01C68518F57BE800EFE3A6 /* CCArray.cpp in Sources */,
 				1A8C59DC180E930E00EF57C3 /* CCDisplayManager.cpp in Sources */,
 				1A8C59E0180E930E00EF57C3 /* CCInputDelegate.cpp in Sources */,

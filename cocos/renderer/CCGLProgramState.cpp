@@ -28,8 +28,9 @@ THE SOFTWARE.
 
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCGLProgram.h"
-#include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgramStateCache.h"
+#include "renderer/CCGLProgramCache.h"
+#include "renderer/ccGLStateCache.h"
 
 NS_CC_BEGIN
 
@@ -218,37 +219,41 @@ void VertexAttribValue::setPointer(GLint size, GLenum type, GLboolean normalized
 //
 //
 
-GLProgramState* GLProgramState::create(GLProgram *glprogram, bool useCache)
+GLProgramState* GLProgramState::create(GLProgram *glprogram)
 {
     GLProgramState* ret = nullptr;
-    if (useCache)
-    {
-        ret = GLProgramStateCache::getInstance()->getProgramState(glprogram);
-        ret->_useCache = useCache;
-    }
-    else
-    {
-        ret = new (std::nothrow) GLProgramState;
-        if(!ret || !ret->init(glprogram))
-            CC_SAFE_RELEASE(ret);
-        ret->_useCache = useCache;
-    }
-    
+    ret = new (std::nothrow) GLProgramState;
+    if(!ret || !ret->init(glprogram))
+        CC_SAFE_RELEASE(ret);
+
+    return ret;
+}
+
+GLProgramState* GLProgramState::getWithGLProgramName(const std::string &glProgramName )
+{
+    GLProgram *glProgram = GLProgramCache::getInstance()->getGLProgram(glProgramName);
+    if( glProgram )
+        return get(glProgram);
+
+    CCLOG("cocos2d: warning: GLProgram '%s' not found", glProgramName.c_str());
+    return nullptr;
+}
+
+
+GLProgramState* GLProgramState::get(GLProgram *glprogram)
+{
+    GLProgramState* ret = GLProgramStateCache::getInstance()->getGLProgramState(glprogram);
     return ret;
 }
 
 GLProgramState::GLProgramState()
 : _vertexAttribsFlags(0)
-, _useCache(false)
 , _glprogram(nullptr)
 {
 }
 
 GLProgramState::~GLProgramState()
-{
-    if (_useCache)
-       GLProgramStateCache::getInstance()->removeProgramState(_glprogram);
-    
+{    
     CC_SAFE_RELEASE(_glprogram);
 }
 

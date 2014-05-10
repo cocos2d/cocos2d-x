@@ -989,8 +989,8 @@ public:
         sprite->initWithFile(spritefilename);
         sprite->autorelease();
 
-        auto shader = CCShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR);
-        sprite->setGLProgram(shader);
+        auto shaderState = GLProgramState::getWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR);
+        sprite->setGLProgramState(shaderState);
         return sprite;
     }
     virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;

@@ -129,16 +129,24 @@ protected:
 };
 
 
-//
-//
-// GLProgramState
-//
-//
+/**
+ GLProgramState holds the 'state' (uniforms and attributes) of the GLProgram.
+ A GLProgram can be used by thousands of Nodes, but if different uniform values 
+ are going to be used, then each node will need its own GLProgramState
+ */
 class GLProgramState : public Ref
 {
     friend class GLProgramStateCache;
 public:
-    static GLProgramState* create(GLProgram* glprogram, bool useCache = true);
+
+    /** returns a new instance of GLProgramState for a given GLProgram */
+    static GLProgramState* create(GLProgram* glprogram);
+
+    /** gets-or-creates an instance of GLProgramState for a given GLProgram */
+    static GLProgramState* get(GLProgram* glprogram);
+
+    /** gets-or-creates an instance of GLProgramState for a given GLProgramName */
+    static GLProgramState* getWithGLProgramName(const std::string &glProgramName );
 
     void apply(const Matrix& modelView);
 
@@ -170,7 +178,6 @@ protected:
     uint32_t _vertexAttribsFlags;
 
     GLProgram *_glprogram;
-    bool       _useCache;
 };
 
 NS_CC_END
