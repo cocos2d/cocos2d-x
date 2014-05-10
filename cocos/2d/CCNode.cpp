@@ -647,7 +647,7 @@ void Node::setGLProgram(GLProgram *glProgram)
     if (_glProgramState == nullptr || (_glProgramState && _glProgramState->getGLProgram() != glProgram))
     {
         CC_SAFE_RELEASE(_glProgramState);
-        _glProgramState = GLProgramState::create(glProgram);
+        _glProgramState = GLProgramState::get(glProgram);
         _glProgramState->retain();
     }
 }

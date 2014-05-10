@@ -27,13 +27,15 @@ THE SOFTWARE.
 
 #include <stdarg.h>
 #include "2d/CCLayer.h"
-#include "base/CCDirector.h"
 #include "2d/CCScriptSupport.h"
-#include "renderer/CCGLProgramCache.h"
+#include "2d/platform/CCDevice.h"
+#include "2d/CCScene.h"
+#include "renderer/CCGLProgramState.h"
 #include "renderer/CCGLProgram.h"
+#include "renderer/CCCustomCommand.h"
+#include "renderer/CCRenderer.h"
 #include "renderer/ccGLStateCache.h"
-#include "math/TransformUtils.h"
-// extern
+#include "base/CCDirector.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventListenerTouch.h"
 #include "base/CCEventTouch.h"
@@ -41,10 +43,8 @@ THE SOFTWARE.
 #include "base/CCEventListenerKeyboard.h"
 #include "base/CCEventAcceleration.h"
 #include "base/CCEventListenerAcceleration.h"
-#include "2d/platform/CCDevice.h"
-#include "2d/CCScene.h"
-#include "renderer/CCCustomCommand.h"
-#include "renderer/CCRenderer.h"
+#include "math/TransformUtils.h"
+
 #include "deprecated/CCString.h"
 
 #if CC_USE_PHYSICS
@@ -534,7 +534,7 @@ bool LayerColor::initWithColor(const Color4B& color, GLfloat w, GLfloat h)
         updateColor();
         setContentSize(Size(w, h));
 
-        setGLProgram(GLProgramCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_COLOR_NO_MVP));
+        setGLProgramState(GLProgramState::getWithGLProgramName(GLProgram::SHADER_NAME_POSITION_COLOR_NO_MVP));
         return true;
     }
     return false;
