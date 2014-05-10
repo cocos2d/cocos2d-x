@@ -25,9 +25,9 @@
 
 const char* ccPositionTexture_uColor_frag = STRINGIFY(
 
-#ifdef GL_ES\n
+\n#ifdef GL_ES\n
 precision lowp float;
-#endif\n
+\n#endif\n
 
 uniform vec4 u_color;
 

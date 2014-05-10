@@ -24,9 +24,9 @@
 
 const char* ccPositionTextureColorAlphaTest_frag = STRINGIFY(
 
-#ifdef GL_ES
+\n#ifdef GL_ES\n
 precision lowp float;
-#endif
+\n#endif\n
 
 varying vec4 v_fragmentColor;
 varying vec2 v_texCoord;
@@ -37,8 +37,8 @@ void main()
 {
     vec4 texColor = texture2D(CC_Texture0, v_texCoord);
 
-// mimic: glAlphaFunc(GL_GREATER)
-// pass if ( incoming_pixel >= CC_alpha_value ) => fail if incoming_pixel < CC_alpha_value
+\n// mimic: glAlphaFunc(GL_GREATER)
+\n// pass if ( incoming_pixel >= CC_alpha_value ) => fail if incoming_pixel < CC_alpha_value\n
 
     if ( texColor.a <= CC_alpha_value )
         discard;

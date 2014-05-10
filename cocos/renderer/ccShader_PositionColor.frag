@@ -25,9 +25,9 @@
 
 const char* ccPositionColor_frag = STRINGIFY(
 
-#ifdef GL_ES\n
+\n#ifdef GL_ES\n
 precision lowp float;
-#endif\n
+\n#endif\n
 
 varying vec4 v_fragmentColor;
 

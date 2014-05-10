@@ -28,11 +28,11 @@ const char* ccPositionTexture_vert = STRINGIFY(
 attribute vec4 a_position;
 attribute vec2 a_texCoord;
 
-#ifdef GL_ES\n
+\n#ifdef GL_ES\n
 varying mediump vec2 v_texCoord;
-#else\n
+\n#else\n
 varying vec2 v_texCoord;
-#endif\n
+\n#endif\n
 
 void main()
 {

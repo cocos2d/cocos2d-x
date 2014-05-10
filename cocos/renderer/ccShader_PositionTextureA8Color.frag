@@ -25,9 +25,9 @@
 
 const char* ccPositionTextureA8Color_frag = STRINGIFY(
 
-#ifdef GL_ES\n
+\n#ifdef GL_ES\n
 precision lowp float;
-#endif\n
+\n#endif\n
 
 varying vec4 v_fragmentColor;
 varying vec2 v_texCoord;
@@ -35,8 +35,8 @@ uniform sampler2D CC_Texture0;
 
 void main()
 {
-    gl_FragColor = vec4( v_fragmentColor.rgb,// RGB from uniform
-        v_fragmentColor.a * texture2D(CC_Texture0, v_texCoord).a // A from texture & uniform
+    gl_FragColor = vec4( v_fragmentColor.rgb,// RGB from uniform\n
+        v_fragmentColor.a * texture2D(CC_Texture0, v_texCoord).a // A from texture & uniform\n
     );
 }
 );
