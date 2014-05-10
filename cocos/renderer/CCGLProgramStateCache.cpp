@@ -33,16 +33,11 @@ GLProgramStateCache* GLProgramStateCache::s_instance = nullptr;
 
 GLProgramStateCache::GLProgramStateCache()
 {
-    s_instance = nullptr;
 }
 
 GLProgramStateCache::~GLProgramStateCache()
 {
-    for (auto itr = _glProgramStates.begin(); itr != _glProgramStates.end(); itr++) {
-        itr->second->release();
-    }
     _glProgramStates.clear();
-    s_instance = nullptr;
 }
 
 GLProgramStateCache* GLProgramStateCache::getInstance()
