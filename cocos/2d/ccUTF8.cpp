@@ -177,6 +177,8 @@ long getCharacterCountInUTF8String(const std::string& utf8)
 
 int cc_wcslen(const unsigned short* str)
 {
+    if (str == nullptr)
+        return -1;
     int i=0;
     while(*str++) i++;
     return i;
@@ -184,6 +186,8 @@ int cc_wcslen(const unsigned short* str)
 
 void cc_utf8_trim_ws(std::vector<unsigned short>* str)
 {
+    if (str == nullptr)
+        return;
     // unsigned short and char16_t are both 2 bytes
     std::vector<char16_t>* ret = reinterpret_cast<std::vector<char16_t>*>(str);
     StringUtils::trimUTF16Vector(*ret);
@@ -204,6 +208,8 @@ bool iscjk_unicode(unsigned short ch)
 long cc_utf8_strlen (const char * p, int max)
 {
     CC_UNUSED_PARAM(max);
+    if (p == nullptr)
+        return -1;
     return StringUtils::getCharacterCountInUTF8String(p);
 }
 
@@ -220,8 +226,12 @@ unsigned int cc_utf8_find_last_not_char(const std::vector<unsigned short>& str, 
 
 std::vector<unsigned short> cc_utf16_vec_from_utf16_str(const unsigned short* str)
 {
-    int len = cc_wcslen(str);
     std::vector<unsigned short> str_new;
+    
+    if (str == nullptr)
+        return str_new;
+    
+    int len = cc_wcslen(str);
     
     for (int i = 0; i < len; ++i)
     {
