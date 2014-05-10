@@ -4,7 +4,7 @@
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    11
+#define MAX_LAYER    10
 
 static Layer* createShaderLayer(int nIndex)
 {
