@@ -170,30 +170,30 @@ protected:
     
 };
 
-class ShaderRelentless : public ShaderTestDemo
+class ShaderLensFlare : public ShaderTestDemo
 {
 public:
-    ShaderRelentless();
+    ShaderLensFlare();
     
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     virtual bool init();
 };
 
-class ShaderStarNest : public ShaderTestDemo
+class ShaderFireBall : public ShaderTestDemo
 {
 public:
-    ShaderStarNest();
+    ShaderFireBall();
     
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     virtual bool init();
 };
 
-class ShaderFalme : public ShaderTestDemo
+class ShaderGlow : public ShaderTestDemo
 {
 public:
-    ShaderFalme();
+    ShaderGlow();
     
     virtual std::string title() const override;
     virtual std::string subtitle() const override;

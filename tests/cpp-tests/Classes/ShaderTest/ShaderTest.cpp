@@ -1,8 +1,6 @@
 #include "ShaderTest.h"
 #include "../testResource.h"
 #include "cocos2d.h"
-#include "ShaderTest.vsh.h"
-#include "shaderTest.psh.h"
 
 static int sceneIdx = -1; 
 
@@ -12,7 +10,7 @@ static Layer* createShaderLayer(int nIndex)
 {
     switch (sceneIdx)
     {
-    case 0: return new ShaderFalme();
+    case 0: return new ShaderLensFlare();
     case 1: return new ShaderMandelbrot();
     case 2: return new ShaderJulia();
     case 3: return new ShaderHeart();
@@ -21,10 +19,9 @@ static Layer* createShaderLayer(int nIndex)
     case 6: return new ShaderBlur();
     case 7: return new ShaderRetroEffect();
     case 8: return new ShaderMonjori();
-    case 9: return new ShaderStarNest();
-    case 10: return new ShaderRelentless();
+    //case 9: return new ShaderFireBall();
+    case 9: return new ShaderGlow();
     }
-
     return NULL;
 }
 
@@ -713,7 +710,7 @@ bool UniformShaderNode::initWithVertex(const char *vert, const char *frag)
     
     _time = 0;
     auto s = Director::getInstance()->getWinSize();
-    _resolution = Vector2(s.width * CC_CONTENT_SCALE_FACTOR(), s.height * CC_CONTENT_SCALE_FACTOR());
+    _resolution = Vector2(s.width , s.height );
     getGLProgramState()->setUniformVec2("resolution", _resolution);
     
     scheduleUpdate();
@@ -723,13 +720,13 @@ bool UniformShaderNode::initWithVertex(const char *vert, const char *frag)
     
     _vertFileName = vert;
     _fragFileName = frag;
-
+	
 	return true;
 }
 
 void UniformShaderNode::loadShaderVertex(const char *vert, const char *frag)
 {
-    auto shader = GLProgram::createWithByteArrays(vert, frag);
+    auto shader = GLProgram::createWithFilenames(vert, frag);
     this->setGLProgram(shader);
 }
 
@@ -742,8 +739,8 @@ void UniformShaderNode::setPosition(const Vector2 &newPosition)
 {
     Node::setPosition(newPosition);
     auto position = getPosition();
-//_center = Vector2(position.x * CC_CONTENT_SCALE_FACTOR(), position.y * CC_CONTENT_SCALE_FACTOR());
- //   getGLProgramState()->setUniformVec2("center", _center);
+	_center = Vector2(position.x * CC_CONTENT_SCALE_FACTOR(), position.y * CC_CONTENT_SCALE_FACTOR());
+    getGLProgramState()->setUniformVec2("center", _center);
 }
 
 void UniformShaderNode::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
@@ -778,30 +775,30 @@ void UniformShaderNode::onDraw(const Matrix &transform, bool transformUpdated)
 
 }
 
-ShaderRelentless::ShaderRelentless()
+ShaderLensFlare::ShaderLensFlare()
 {
     init();
 }
 
-std::string ShaderRelentless::title() const
+std::string ShaderLensFlare::title() const
 {
     return "ShaderToy Test";
 }
 
-std::string ShaderRelentless::subtitle() const
+std::string ShaderLensFlare::subtitle() const
 {
-    return "Relentless";
+    return "Lens Flare	";
 }
 
-bool ShaderRelentless::init()
+bool ShaderLensFlare::init()
 {
     if (ShaderTestDemo::init())
     {
-        auto sn = UniformShaderNode::shaderNodeWithVertex(shadertestvsh, shadertoyRelentlessFrag);
+        auto sn = UniformShaderNode::shaderNodeWithVertex("Shaders/example_Heart.vsh", "Shaders/shadertoy_LensFlare.fsh");
         
         auto s = Director::getInstance()->getWinSize();
         sn->setPosition(Vector2(s.width/2, s.height/2));
-        sn->setContentSize(Size(s.width,s.height));
+        sn->setContentSize(Size(s.width/2,s.height/2));
         addChild(sn);
         
         return true;
@@ -810,30 +807,30 @@ bool ShaderRelentless::init()
     return false;
 }
 
-ShaderStarNest::ShaderStarNest()
+ShaderFireBall::ShaderFireBall()
 {
     init();
 }
 
-std::string ShaderStarNest::title() const
+std::string ShaderFireBall::title() const
 {
     return "ShaderToy Test";
 }
 
-std::string ShaderStarNest::subtitle() const
+std::string ShaderFireBall::subtitle() const
 {
-    return "Star Nest";
+    return "Fire Ball";
 }
 
-bool ShaderStarNest::init()
+bool ShaderFireBall::init()
 {
     if (ShaderTestDemo::init())
     {
-        auto sn = UniformShaderNode::shaderNodeWithVertex(shadertestvsh, starNestFrg);
+        auto sn = UniformShaderNode::shaderNodeWithVertex("Shaders/example_Heart.vsh", "Shaders/shadertoy_FireBall.fsh");
         
         auto s = Director::getInstance()->getWinSize();
         sn->setPosition(Vector2(s.width/2, s.height/2));
-        sn->setContentSize(Size(s.width,s.height));
+        sn->setContentSize(Size(s.width/2,s.height/2));
         addChild(sn);
         
         return true;
@@ -843,30 +840,30 @@ bool ShaderStarNest::init()
 }
 
 
-ShaderFalme::ShaderFalme()
+ShaderGlow::ShaderGlow()
 {
     init();
 }
 
-std::string ShaderFalme::title() const
+std::string ShaderGlow::title() const
 {
     return "ShaderToy Test";
 }
 
-std::string ShaderFalme::subtitle() const
+std::string ShaderGlow::subtitle() const
 {
-    return "Flame";
+    return "Glow";
 }
 
-bool ShaderFalme::init()
+bool ShaderGlow::init()
 {
     if (ShaderTestDemo::init())
     {
-        auto sn = UniformShaderNode::shaderNodeWithVertex(shadertestvsh, starFlame);
+        auto sn = UniformShaderNode::shaderNodeWithVertex("Shaders/example_Heart.vsh", "Shaders/shadertoy_Glow.fsh");
         
         auto s = Director::getInstance()->getWinSize();
         sn->setPosition(Vector2(s.width/2, s.height/2));
-        sn->setContentSize(Size(s.width,s.height));
+        sn->setContentSize(Size(s.width/2,s.height/2));
         addChild(sn);
         
         return true;
