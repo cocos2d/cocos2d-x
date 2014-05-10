@@ -4,11 +4,6 @@
 -- @extend Ref
 
 --------------------------------
--- @function [parent=#Texture2D] getShaderProgram 
--- @param self
--- @return GLProgram#GLProgram ret (return value: cc.GLProgram)
-        
---------------------------------
 -- @function [parent=#Texture2D] getMaxT 
 -- @param self
 -- @return float#float ret (return value: float)
@@ -29,11 +24,6 @@
 -- @param #cc.Texture2D::PixelFormat pixelformat
 -- @return bool#bool ret (retunr value: bool)
 
---------------------------------
--- @function [parent=#Texture2D] setShaderProgram 
--- @param self
--- @param #cc.GLProgram glprogram
-        
 --------------------------------
 -- @function [parent=#Texture2D] getMaxS 
 -- @param self
@@ -152,9 +142,19 @@
 -- @param #vector2_table array
         
 --------------------------------
+-- @function [parent=#Texture2D] getGLProgram 
+-- @param self
+-- @return GLProgram#GLProgram ret (return value: cc.GLProgram)
+        
+--------------------------------
 -- @function [parent=#Texture2D] hasMipmaps 
 -- @param self
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#Texture2D] setGLProgram 
+-- @param self
+-- @param #cc.GLProgram glprogram
         
 --------------------------------
 -- @function [parent=#Texture2D] setMaxS 
