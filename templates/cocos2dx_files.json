@@ -852,6 +852,8 @@
         "cocos/renderer/CCCustomCommand.h", 
         "cocos/renderer/CCGLProgram.cpp", 
         "cocos/renderer/CCGLProgram.h", 
+        "cocos/renderer/CCGLProgramCache.cpp", 
+        "cocos/renderer/CCGLProgramCache.h", 
         "cocos/renderer/CCGLProgramState.cpp", 
         "cocos/renderer/CCGLProgramState.h", 
         "cocos/renderer/CCGLProgramStateCache.cpp", 
@@ -865,8 +867,6 @@
         "cocos/renderer/CCRenderCommandPool.h", 
         "cocos/renderer/CCRenderer.cpp", 
         "cocos/renderer/CCRenderer.h", 
-        "cocos/renderer/CCShaderCache.cpp", 
-        "cocos/renderer/CCShaderCache.h", 
         "cocos/renderer/CMakeLists.txt", 
         "cocos/renderer/ccGLStateCache.cpp", 
         "cocos/renderer/ccGLStateCache.h", 
@@ -3474,6 +3474,7 @@
         "plugin/tools/toolsForPublish/checkEnvironment.sh", 
         "plugin/tools/toolsForPublish/genPrebuildMK.sh", 
         "plugin/tools/toolsForPublish/publishPlugin.sh", 
+        "tools/particle/convert_YCoordFlipped.py", 
         "v3-deps-1.zip"
     ], 
     "lua": [
