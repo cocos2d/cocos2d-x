@@ -751,7 +751,8 @@ CC_DEPRECATED_ATTRIBUTE typedef ParticleSnow CCParticleSnow;
 CC_DEPRECATED_ATTRIBUTE typedef ParticleRain CCParticleRain;
 CC_DEPRECATED_ATTRIBUTE typedef FileUtils CCFileUtils;
 CC_DEPRECATED_ATTRIBUTE typedef Application CCApplication;
-CC_DEPRECATED_ATTRIBUTE typedef ShaderCache CCShaderCache;
+CC_DEPRECATED_ATTRIBUTE typedef GLProgramCache CCShaderCache;
+CC_DEPRECATED_ATTRIBUTE typedef GLProgramCache ShaderCache;
 CC_DEPRECATED_ATTRIBUTE typedef AnimationCache CCAnimationCache;
 CC_DEPRECATED_ATTRIBUTE typedef SpriteFrameCache CCSpriteFrameCache;
 CC_DEPRECATED_ATTRIBUTE typedef TextureCache CCTextureCache;
@@ -806,7 +807,7 @@ CC_DEPRECATED_ATTRIBUTE typedef void* CCZone;
 
 CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttrib_Position = GLProgram::VERTEX_ATTRIB_POSITION;
 CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttrib_Color = GLProgram::VERTEX_ATTRIB_COLOR;
-CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttrib_TexCoords = GLProgram::VERTEX_ATTRIB_TEX_COORDS;
+CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttrib_TexCoords = GLProgram::VERTEX_ATTRIB_TEX_COORD;
 CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttrib_MAX = GLProgram::VERTEX_ATTRIB_MAX;
 
 CC_DEPRECATED_ATTRIBUTE const int kCCUniformPMatrix = GLProgram::UNIFORM_P_MATRIX;

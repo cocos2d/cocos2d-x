@@ -174,7 +174,7 @@ public:
      *          it means that you needn't do a release operation unless you retain it.
      * @js NA
      */
-    static __String* createWithContentsOfFile(const char* filename);
+    static __String* createWithContentsOfFile(const std::string& filename);
     /**
      * @js NA
      * @lua NA

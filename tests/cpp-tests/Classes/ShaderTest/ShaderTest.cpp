@@ -4,13 +4,13 @@
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    8
+#define MAX_LAYER    11
 
 static Layer* createShaderLayer(int nIndex)
 {
     switch (sceneIdx)
     {
-    case 0: return new ShaderMonjori();
+    case 0: return new ShaderLensFlare();
     case 1: return new ShaderMandelbrot();
     case 2: return new ShaderJulia();
     case 3: return new ShaderHeart();
@@ -18,8 +18,10 @@ static Layer* createShaderLayer(int nIndex)
     case 5: return new ShaderPlasma();
     case 6: return new ShaderBlur();
     case 7: return new ShaderRetroEffect();
+    case 8: return new ShaderMonjori();
+    //case 9: return new ShaderFireBall();
+    case 9: return new ShaderGlow();
     }
-
     return NULL;
 }
 
@@ -111,9 +113,6 @@ ShaderNode::ShaderNode()
 :_center(Vector2(0.0f, 0.0f))
 ,_resolution(Vector2(0.0f, 0.0f))
 ,_time(0.0f)
-,_uniformCenter(0)
-,_uniformResolution(0)
-,_uniformTime(0)
 {
 }
 
@@ -134,7 +133,7 @@ bool ShaderNode::initWithVertex(const char *vert, const char *frag)
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
-            this->setShaderProgram(nullptr);
+            this->setGLProgram(nullptr);
             loadShaderVertex(_vertFileName.c_str(), _fragFileName.c_str());
         });
 
@@ -145,6 +144,7 @@ bool ShaderNode::initWithVertex(const char *vert, const char *frag)
 
     _time = 0;
     _resolution = Vector2(SIZE_X, SIZE_Y);
+    getGLProgramState()->setUniformVec2("resolution", _resolution);
 
     scheduleUpdate();
 
@@ -159,21 +159,8 @@ bool ShaderNode::initWithVertex(const char *vert, const char *frag)
 
 void ShaderNode::loadShaderVertex(const char *vert, const char *frag)
 {
-    auto shader = new GLProgram();
-    shader->initWithFilenames(vert, frag);
-
-    shader->bindAttribLocation("aVertex", GLProgram::VERTEX_ATTRIB_POSITION);
-    shader->link();
-
-    shader->updateUniforms();
-
-    _uniformCenter = shader->getUniformLocation("center");
-    _uniformResolution = shader->getUniformLocation("resolution");
-    _uniformTime = shader->getUniformLocation("time");
-
-    this->setShaderProgram(shader);
-
-    shader->release();
+    auto shader = GLProgram::createWithFilenames(vert, frag);
+    this->setGLProgram(shader);
 }
 
 void ShaderNode::update(float dt)
@@ -186,6 +173,7 @@ void ShaderNode::setPosition(const Vector2 &newPosition)
     Node::setPosition(newPosition);
     auto position = getPosition();
     _center = Vector2(position.x * CC_CONTENT_SCALE_FACTOR(), position.y * CC_CONTENT_SCALE_FACTOR());
+    getGLProgramState()->setUniformVec2("center", _center);
 }
 
 void ShaderNode::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
@@ -197,26 +185,16 @@ void ShaderNode::draw(Renderer *renderer, const Matrix &transform, bool transfor
 
 void ShaderNode::onDraw(const Matrix &transform, bool transformUpdated)
 {
-    auto shader = getShaderProgram();
-    shader->use();
-    shader->setUniformsForBuiltins(transform);
-    shader->setUniformLocationWith2f(_uniformCenter, _center.x, _center.y);
-    shader->setUniformLocationWith2f(_uniformResolution, _resolution.x, _resolution.y);
-    
-    // time changes all the time, so it is Ok to call OpenGL directly, and not the "cached" version
-    glUniform1f(_uniformTime, _time);
-    
-    GL::enableVertexAttribs( cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION );
-
     float w = SIZE_X, h = SIZE_Y;
     GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
 
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-    
+    auto glProgramState = getGLProgramState();
+    glProgramState->setVertexAttribPointer("a_position", 2, GL_FLOAT, GL_FALSE, 0, vertices);
+    glProgramState->apply(transform);
+
     glDrawArrays(GL_TRIANGLES, 0, 6);
     
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,6);
-
 }
 
 /// ShaderMonjori
@@ -445,9 +423,6 @@ protected:
     float     _cons;
     float     _weightSum;
 
-    GLuint    pixelSizeLocation;
-    GLuint    coefficientLocation;
-
     CustomCommand _customCommand;
 };
 
@@ -477,7 +452,7 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
     {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
         auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
-                setShaderProgram(nullptr);
+                setGLProgram(nullptr);
                 initProgram();
             });
 
@@ -487,8 +462,11 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
         auto s = getTexture()->getContentSizeInPixels();
 
         _pixelSize = Vector2(1/s.width, 1/s.height);
+
         _samplingRadius = 0;
         this->initProgram();
+
+        getGLProgramState()->setUniformVec2("onePixelSize", _pixelSize);
 
         return true;
     }
@@ -500,31 +478,22 @@ void SpriteBlur::initProgram()
 {
     GLchar * fragSource = (GLchar*) String::createWithContentsOfFile(
                                 FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur.fsh").c_str())->getCString();  
-    auto program = new GLProgram();
-    program->initWithByteArrays(ccPositionTextureColor_vert, fragSource);
-    setShaderProgram(program);
-    program->release();
-    
-    CHECK_GL_ERROR_DEBUG();
-    
-    program->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
-    program->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
-    program->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
+    auto program = GLProgram::createWithByteArrays(ccPositionTextureColor_vert, fragSource);
+    setGLProgram(program);
 
-    CHECK_GL_ERROR_DEBUG();
-    
-    program->link();
-    
-    CHECK_GL_ERROR_DEBUG();
-    
-    program->updateUniforms();
-    
-    CHECK_GL_ERROR_DEBUG();
-    
-    pixelSizeLocation = program->getUniformLocation("onePixelSize");
-    coefficientLocation = program->getUniformLocation("gaussianCoefficient");
+    auto glProgramState = getGLProgramState();
+#define kQuadSize sizeof(_quad.bl)
+    size_t offset = (size_t)&_quad;
 
-    CHECK_GL_ERROR_DEBUG();
+    // position
+    int diff = offsetof( V3F_C4B_T2F, vertices);
+    glProgramState->setVertexAttribPointer("a_position", 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+    // texcoord
+    diff = offsetof( V3F_C4B_T2F, texCoords);
+    glProgramState->setVertexAttribPointer("a_texCoord", 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+    // color
+    diff = offsetof( V3F_C4B_T2F, colors);
+    glProgramState->setVertexAttribPointer("a_color", 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
 }
 
 void SpriteBlur::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
@@ -536,38 +505,13 @@ void SpriteBlur::draw(Renderer *renderer, const Matrix &transform, bool transfor
 
 void SpriteBlur::onDraw(const Matrix &transform, bool transformUpdated)
 {
-    GL::enableVertexAttribs(cocos2d::GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
-    BlendFunc blend = getBlendFunc();
-    GL::blendFunc(blend.src, blend.dst);
+    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+    GL::bindTexture2D(_texture->getName());
 
-    auto program = getShaderProgram();
-    program->use();
-    program->setUniformsForBuiltins(transform);
-    program->setUniformLocationWith2f(pixelSizeLocation, _pixelSize.x, _pixelSize.y);
-    program->setUniformLocationWith4f(coefficientLocation, _samplingRadius, _scale,_cons,_weightSum);
-    
-    GL::bindTexture2D( getTexture()->getName());
-    
-    //
-    // Attributes
-    //
-    #define kQuadSize sizeof(_quad.bl)
-    size_t offset = (size_t)&_quad;
-    
-    // vertex
-    int diff = offsetof( V3F_C4B_T2F, vertices);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
-    
-    // texCoods
-    diff = offsetof( V3F_C4B_T2F, texCoords);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
-    
-    // color
-    diff = offsetof( V3F_C4B_T2F, colors);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
-    
+    auto glProgramState = getGLProgramState();
+    glProgramState->apply(transform);
+
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-    
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,4);
 }
 
@@ -604,6 +548,8 @@ void SpriteBlur::setBlurSize(float f)
         }
     }
     log("_blurRadius:%d",_blurRadius);
+
+    getGLProgramState()->setUniformVec4("gaussianCoefficient", Vector4(_samplingRadius, _scale, _cons, _weightSum));
 }
 
 // ShaderBlur
@@ -685,24 +631,15 @@ bool ShaderRetroEffect::init()
 {
     if( ShaderTestDemo::init() ) {
 
-        GLchar * fragSource = (GLchar*) String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename("Shaders/example_HorizontalColor.fsh").c_str())->getCString();
-        auto p = new GLProgram();
-        p->initWithByteArrays(ccPositionTexture_vert, fragSource);
-
-        p->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
-        p->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
-
-        p->link();
-        p->updateUniforms();
+        GLchar * fragSource = (GLchar*) String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename("Shaders/example_HorizontalColor.fsh"))->getCString();
+        auto p = GLProgram::createWithByteArrays(ccPositionTexture_vert, fragSource);
 
         auto director = Director::getInstance();
         auto s = director->getWinSize();
 
         _label = Label::createWithBMFont("fonts/west_england-64.fnt","RETRO EFFECT");
         _label->setAnchorPoint(Vector2::ANCHOR_MIDDLE);
-        _label->setShaderProgram(p);
-
-        p->release();
+        _label->setGLProgram(p);
 
         _label->setPosition(Vector2(s.width/2,s.height/2));
 
@@ -741,6 +678,200 @@ std::string ShaderRetroEffect::subtitle() const
 {
     return "sin() effect with moving colors";
 }
+
+
+
+UniformShaderNode::UniformShaderNode()
+:_center(Vector2(0.0f, 0.0f))
+,_resolution(Vector2(0.0f, 0.0f))
+,_time(0.0f)
+{
+    
+}
+
+UniformShaderNode::~UniformShaderNode()
+{
+    
+}
+
+bool UniformShaderNode::initWithVertex(const char *vert, const char *frag)
+{
+    
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
+        this->setGLProgram(nullptr);
+        loadShaderVertex(_vertFileName.c_str(), _fragFileName.c_str());
+    });
+    
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+#endif
+    
+    loadShaderVertex(vert, frag);
+    
+    _time = 0;
+    auto s = Director::getInstance()->getWinSize();
+    _resolution = Vector2(s.width , s.height );
+    getGLProgramState()->setUniformVec2("resolution", _resolution);
+    
+    scheduleUpdate();
+    
+    //setContentSize(Size(getContentSize().width, getContentSize().height));
+    setAnchorPoint(Vector2(0.5f, 0.5f));
+    
+    _vertFileName = vert;
+    _fragFileName = frag;
+	
+	return true;
+}
+
+void UniformShaderNode::loadShaderVertex(const char *vert, const char *frag)
+{
+    auto shader = GLProgram::createWithFilenames(vert, frag);
+    this->setGLProgram(shader);
+}
+
+void UniformShaderNode::update(float dt)
+{
+    _time += dt;
+}
+
+void UniformShaderNode::setPosition(const Vector2 &newPosition)
+{
+    Node::setPosition(newPosition);
+    auto position = getPosition();
+	_center = Vector2(position.x * CC_CONTENT_SCALE_FACTOR(), position.y * CC_CONTENT_SCALE_FACTOR());
+    getGLProgramState()->setUniformVec2("center", _center);
+}
+
+void UniformShaderNode::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+{
+    _customCommand.init(_globalZOrder);
+    _customCommand.func = CC_CALLBACK_0(UniformShaderNode::onDraw, this, transform, transformUpdated);
+    renderer->addCommand(&_customCommand);
+
+}
+
+UniformShaderNode* UniformShaderNode::shaderNodeWithVertex(const char *vert, const char *frag)
+{
+    auto node = new UniformShaderNode();
+    node->initWithVertex(vert, frag);
+    node->autorelease();
+    
+    return node;
+}
+
+void UniformShaderNode::onDraw(const Matrix &transform, bool transformUpdated)
+{
+    float w = getContentSize().width, h = getContentSize().height;
+    GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
+    
+    auto glProgramState = getGLProgramState();
+    glProgramState->setVertexAttribPointer("a_position", 2, GL_FLOAT, GL_FALSE, 0, vertices);
+    glProgramState->apply(transform);
+    
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+    
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,6);
+
+}
+
+ShaderLensFlare::ShaderLensFlare()
+{
+    init();
+}
+
+std::string ShaderLensFlare::title() const
+{
+    return "ShaderToy Test";
+}
+
+std::string ShaderLensFlare::subtitle() const
+{
+    return "Lens Flare	";
+}
+
+bool ShaderLensFlare::init()
+{
+    if (ShaderTestDemo::init())
+    {
+        auto sn = UniformShaderNode::shaderNodeWithVertex("Shaders/example_Heart.vsh", "Shaders/shadertoy_LensFlare.fsh");
+        
+        auto s = Director::getInstance()->getWinSize();
+        sn->setPosition(Vector2(s.width/2, s.height/2));
+        sn->setContentSize(Size(s.width/2,s.height/2));
+        addChild(sn);
+        
+        return true;
+    }
+    
+    return false;
+}
+
+ShaderFireBall::ShaderFireBall()
+{
+    init();
+}
+
+std::string ShaderFireBall::title() const
+{
+    return "ShaderToy Test";
+}
+
+std::string ShaderFireBall::subtitle() const
+{
+    return "Fire Ball";
+}
+
+bool ShaderFireBall::init()
+{
+    if (ShaderTestDemo::init())
+    {
+        auto sn = UniformShaderNode::shaderNodeWithVertex("Shaders/example_Heart.vsh", "Shaders/shadertoy_FireBall.fsh");
+        
+        auto s = Director::getInstance()->getWinSize();
+        sn->setPosition(Vector2(s.width/2, s.height/2));
+        sn->setContentSize(Size(s.width/2,s.height/2));
+        addChild(sn);
+        
+        return true;
+    }
+    
+    return false;
+}
+
+
+ShaderGlow::ShaderGlow()
+{
+    init();
+}
+
+std::string ShaderGlow::title() const
+{
+    return "ShaderToy Test";
+}
+
+std::string ShaderGlow::subtitle() const
+{
+    return "Glow";
+}
+
+bool ShaderGlow::init()
+{
+    if (ShaderTestDemo::init())
+    {
+        auto sn = UniformShaderNode::shaderNodeWithVertex("Shaders/example_Heart.vsh", "Shaders/shadertoy_Glow.fsh");
+        
+        auto s = Director::getInstance()->getWinSize();
+        sn->setPosition(Vector2(s.width/2, s.height/2));
+        sn->setContentSize(Size(s.width/2,s.height/2));
+        addChild(sn);
+        
+        return true;
+    }
+    
+    return false;
+}
+
 
 ///---------------------------------------
 //

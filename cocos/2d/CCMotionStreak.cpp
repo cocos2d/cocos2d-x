@@ -25,14 +25,14 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "2d/CCMotionStreak.h"
 #include "2d/CCTextureCache.h"
-#include "2d/ccGLStateCache.h"
-#include "2d/CCGLProgram.h"
-#include "2d/CCShaderCache.h"
 #include "2d/CCVertex.h"
-#include "base/ccMacros.h"
-#include "base/CCDirector.h"
+#include "renderer/ccGLStateCache.h"
+#include "renderer/CCGLProgram.h"
+#include "renderer/CCGLProgramState.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCRenderer.h"
+#include "base/ccMacros.h"
+#include "base/CCDirector.h"
 
 NS_CC_BEGIN
 
@@ -127,8 +127,8 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
     // Set blend mode
     _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
 
-    // shader program
-    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+    // shader state
+    setGLProgramState(GLProgramState::getWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
     setTexture(texture);
     setColor(color);
@@ -375,8 +375,8 @@ void MotionStreak::reset()
 
 void MotionStreak::onDraw(const Matrix &transform, bool transformUpdated)
 {  
-    getShaderProgram()->use();
-    getShaderProgram()->setUniformsForBuiltins(transform);
+    getGLProgram()->use();
+    getGLProgram()->setUniformsForBuiltins(transform);
 
     GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
     GL::blendFunc( _blendFunc.src, _blendFunc.dst );
@@ -389,13 +389,13 @@ void MotionStreak::onDraw(const Matrix &transform, bool transformUpdated)
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
     setGLBufferData(_texCoords, (sizeof(Tex2F) * _maxPoints * 2), 1);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
     setGLBufferData(_colorPointer, (sizeof(GLubyte) * _maxPoints * 2 * 4), 2);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, 0);
 #else
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, _vertices);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, 0, _texCoords);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, _texCoords);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, _colorPointer);
 #endif // EMSCRIPTEN
 

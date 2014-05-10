@@ -27,7 +27,7 @@
 #include "2d/CCFontAtlasCache.h"
 #include "CCLabelTextFormatter.h"
 #include "2d/CCSprite.h"
-#include "2d/CCShaderCache.h"
+#include "renderer/CCGLProgramCache.h"
 #include "ccUTF8.h"
 #include "2d/CCSpriteFrame.h"
 #include "base/CCDirector.h"
@@ -342,29 +342,29 @@ void Label::updateShaderProgram()
     {
     case cocos2d::LabelEffect::NORMAL:
         if (_useDistanceField)
-            setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL));
+            setGLProgram(GLProgramCache::getInstance()->getProgram(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL));
         else if (_useA8Shader)
-            setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_LABEL_NORMAL));
+            setGLProgram(GLProgramCache::getInstance()->getProgram(GLProgram::SHADER_NAME_LABEL_NORMAL));
         else
-            setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+            setGLProgram(GLProgramCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
         break;
     case cocos2d::LabelEffect::OUTLINE: 
-        setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_LABEL_OUTLINE));
-        _uniformEffectColor = glGetUniformLocation(_shaderProgram->getProgram(), "v_effectColor");
+        setGLProgram(GLProgramCache::getInstance()->getProgram(GLProgram::SHADER_NAME_LABEL_OUTLINE));
+        _uniformEffectColor = glGetUniformLocation(getGLProgram()->getProgram(), "v_effectColor");
         break;
     case cocos2d::LabelEffect::GLOW:
         if (_useDistanceField)
         {
-            setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_GLOW));
-            _uniformEffectColor = glGetUniformLocation(_shaderProgram->getProgram(), "v_effectColor");
+            setGLProgram(GLProgramCache::getInstance()->getProgram(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_GLOW));
+            _uniformEffectColor = glGetUniformLocation(getGLProgram()->getProgram(), "v_effectColor");
         }
         break;
     default:
         return;
     }
     
-    _uniformTextColor = glGetUniformLocation(_shaderProgram->getProgram(), "v_textColor");
+    _uniformTextColor = glGetUniformLocation(getGLProgram()->getProgram(), "v_textColor");
 }
 
 void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false */, bool useA8Shader /* = false */)
@@ -846,18 +846,19 @@ void Label::onDraw(const Matrix& transform, bool transformUpdated)
         return;
     }
 
-    _shaderProgram->use();
+    auto glprogram = getGLProgram();
+    glprogram->use();
     GL::blendFunc( _blendFunc.src, _blendFunc.dst );
 
     if (_currentLabelType == LabelType::TTF)
     {
-        _shaderProgram->setUniformLocationWith4f(_uniformTextColor, 
+        glprogram->setUniformLocationWith4f(_uniformTextColor,
             _textColorF.r,_textColorF.g,_textColorF.b,_textColorF.a);
     }
 
     if (_currLabelEffect == LabelEffect::OUTLINE || _currLabelEffect == LabelEffect::GLOW)
     {
-         _shaderProgram->setUniformLocationWith4f(_uniformEffectColor, 
+         glprogram->setUniformLocationWith4f(_uniformEffectColor,
              _effectColorF.r,_effectColorF.g,_effectColorF.b,_effectColorF.a);
     }
 
@@ -866,7 +867,7 @@ void Label::onDraw(const Matrix& transform, bool transformUpdated)
         drawShadowWithoutBlur();
     }
 
-    _shaderProgram->setUniformsForBuiltins(transform);
+    glprogram->setUniformsForBuiltins(transform);
 
     for(const auto &child: _children)
     {
@@ -889,7 +890,7 @@ void Label::drawShadowWithoutBlur()
     _displayedOpacity = _shadowOpacity * _displayedOpacity;
     setColor(_shadowColor);
 
-    _shaderProgram->setUniformsForBuiltins(_shadowTransform);
+    getGLProgram()->setUniformsForBuiltins(_shadowTransform);
     for(const auto &child: _children)
     {
         child->updateTransform();

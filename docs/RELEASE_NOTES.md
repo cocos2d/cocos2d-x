@@ -615,7 +615,7 @@ color3B = Color3B::WHITE;
 	| FileUtils::sharedFileUtils | FileUtils::getInstance |
 	| FileUtils::purgeFileUtils | FileUtils::destroyInstance |
 	| GLView::sharedOpenGLView | GLView::getInstance |
-	| ShaderCache::sharedShaderCache | ShaderCache::getInstance |
+	| ShaderCache::sharedShaderCache | GLProgramCache::getInstance |
 	| ShaderCache::purgeSharedShaderCache | ShaderCache::destroyInstance |
 	| AnimationCache::sharedAnimationCache | AnimationCache::getInstance |
 	| AnimationCache::purgeSharedAnimationCache | AnimationCache::destroyInstance |

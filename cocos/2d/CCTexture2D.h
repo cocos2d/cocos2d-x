@@ -350,8 +350,8 @@ public:
     
     Size getContentSize() const;
     
-    void setShaderProgram(GLProgram* program);
-    GLProgram* getShaderProgram() const;
+    void setGLProgram(GLProgram* program);
+    GLProgram* getGLProgram() const;
     
 public:
     static const PixelFormatInfoMap& getPixelFormatInfoMap();

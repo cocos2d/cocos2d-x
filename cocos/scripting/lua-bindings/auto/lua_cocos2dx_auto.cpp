@@ -2468,7 +2468,7 @@ int lua_cocos2dx_Texture2D_getShaderProgram(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        cocos2d::GLProgram* ret = cobj->getShaderProgram();
+        cocos2d::GLProgram* ret = cobj->getGLProgram();
         object_to_luaval<cocos2d::GLProgram>(tolua_S, "cc.GLProgram",(cocos2d::GLProgram*)ret);
         return 1;
     }
@@ -2629,7 +2629,7 @@ int lua_cocos2dx_Texture2D_initWithImage(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_Texture2D_setShaderProgram(lua_State* tolua_S)
+int lua_cocos2dx_Texture2D_setGLProgram(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Texture2D* cobj = nullptr;
@@ -2662,7 +2662,7 @@ int lua_cocos2dx_Texture2D_setShaderProgram(lua_State* tolua_S)
         ok &= luaval_to_object<cocos2d::GLProgram>(tolua_S, 2, "cc.GLProgram",&arg0);
         if(!ok)
             return 0;
-        cobj->setShaderProgram(arg0);
+        cobj->setGLProgram(arg0);
         return 0;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setShaderProgram",argc, 1);
@@ -5082,7 +5082,7 @@ int lua_cocos2dx_Node_getShaderProgram(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 0) {
-            const cocos2d::GLProgram* ret = cobj->getShaderProgram();
+            const cocos2d::GLProgram* ret = cobj->getGLProgram();
             object_to_luaval<cocos2d::GLProgram>(tolua_S, "cc.GLProgram",(cocos2d::GLProgram*)ret);
             return 1;
         }
@@ -5090,7 +5090,7 @@ int lua_cocos2dx_Node_getShaderProgram(lua_State* tolua_S)
     ok  = true;
     do{
         if (argc == 0) {
-            cocos2d::GLProgram* ret = cobj->getShaderProgram();
+            cocos2d::GLProgram* ret = cobj->getGLProgram();
             object_to_luaval<cocos2d::GLProgram>(tolua_S, "cc.GLProgram",(cocos2d::GLProgram*)ret);
             return 1;
         }
@@ -7534,7 +7534,7 @@ int lua_cocos2dx_Node_addComponent(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_Node_setShaderProgram(lua_State* tolua_S)
+int lua_cocos2dx_Node_setGLProgram(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -7567,7 +7567,7 @@ int lua_cocos2dx_Node_setShaderProgram(lua_State* tolua_S)
         ok &= luaval_to_object<cocos2d::GLProgram>(tolua_S, 2, "cc.GLProgram",&arg0);
         if(!ok)
             return 0;
-        cobj->setShaderProgram(arg0);
+        cobj->setGLProgram(arg0);
         return 0;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setShaderProgram",argc, 1);
@@ -56094,7 +56094,7 @@ int lua_cocos2dx_ShaderCache_getInstance(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        cocos2d::ShaderCache* ret = cocos2d::ShaderCache::getInstance();
+        cocos2d::ShaderCache* ret = cocos2d::GLProgramCache::getInstance();
         object_to_luaval<cocos2d::ShaderCache>(tolua_S, "cc.ShaderCache",(cocos2d::ShaderCache*)ret);
         return 1;
     }
