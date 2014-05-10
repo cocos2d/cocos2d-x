@@ -32,7 +32,6 @@ namespace ShaderTest2
 {
     static std::function<Layer*()> createFunctions[] =
     {
-        CL(AttribShaderTest),
         CL(NormalSpriteTest),
         CL(GreyScaleSpriteTest),
         CL(BlurSpriteTest),
@@ -42,10 +41,6 @@ namespace ShaderTest2
         CL(CelShadingSpriteTest),
         CL(LensFlareSpriteTest),
         CL(OutlineShadingSpriteTest),
-        CL(UniformShaderTest),
-       
-        CL(UniformAttribShaderTest)
-        
     };
     
     static unsigned int TEST_CASE_COUNT = sizeof(ShaderTest2::createFunctions) / sizeof(ShaderTest2::createFunctions[0]);
@@ -698,21 +693,6 @@ void UniformSprite::onDraw(const Matrix &transform, bool transformUpdated)
     CHECK_GL_ERROR_DEBUG();
 }
 
-
-UniformShaderTest::UniformShaderTest()
-{
-    if (ShaderTestDemo2::init()) {
-        auto s = Director::getInstance()->getWinSize();
-        UniformSprite* sprite = UniformSprite::create();
-        setContentSize(Size(256, 256));
-        setAnchorPoint(Vector2(0.5f, 0.5f));
-        sprite->initShader();
-        sprite->setPosition(64,64);
-        addChild(sprite);
-    }
-}
-
-
 class AttribSprite : public Sprite
 {
 public:
@@ -792,23 +772,4 @@ void AttribSprite::onDraw(const Matrix &transform, bool transformUpdated)
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
     
     CHECK_GL_ERROR_DEBUG();
-}
-
-AttribShaderTest::AttribShaderTest()
-{
-    if (ShaderTestDemo2::init())
-    {
-        auto s = Director::getInstance()->getWinSize();
-        AttribSprite* sprite = AttribSprite::create();
-        sprite->setTexture("Images/powered.png");
-        sprite->initShader();
-        sprite->setPosition(Vector2(s.width/2, s.height/2));
-        addChild(sprite);
-    }
-   
-}
-
-UniformAttribShaderTest::UniformAttribShaderTest()
-{
-
 }
