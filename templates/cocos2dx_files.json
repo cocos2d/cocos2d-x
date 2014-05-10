@@ -3727,7 +3727,6 @@
         "cocos/scripting/lua-bindings/auto/api/Scheduler.lua", 
         "cocos/scripting/lua-bindings/auto/api/ScrollView.lua", 
         "cocos/scripting/lua-bindings/auto/api/Sequence.lua", 
-        "cocos/scripting/lua-bindings/auto/api/ShaderCache.lua", 
         "cocos/scripting/lua-bindings/auto/api/Shaky3D.lua", 
         "cocos/scripting/lua-bindings/auto/api/ShakyTiles3D.lua", 
         "cocos/scripting/lua-bindings/auto/api/ShatteredTiles3D.lua", 
