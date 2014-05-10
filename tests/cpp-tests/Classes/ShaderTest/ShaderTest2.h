@@ -102,28 +102,5 @@ public:
     virtual std::string subtitle() const {return "OutlineShadingSpriteTest";}
 };
 
-class UniformShaderTest : public ShaderTestDemo2
-{
-public:
-    CREATE_FUNC(UniformShaderTest);
-    UniformShaderTest();
-    virtual std::string  subtitle() const {return "UniformShaderTest";}
-};
-
-class AttribShaderTest : public ShaderTestDemo2
-{
-public:
-    CREATE_FUNC(AttribShaderTest);
-    AttribShaderTest();
-    virtual std::string subtitle() const {return "AttribShaderTest";}
-};
-
-class UniformAttribShaderTest : public ShaderTestDemo2
-{
-public:
-    CREATE_FUNC(UniformAttribShaderTest);
-    UniformAttribShaderTest();
-    virtual std::string subtitle() const {return "UniformAndShaderTest";}	
-};
 
 #endif
