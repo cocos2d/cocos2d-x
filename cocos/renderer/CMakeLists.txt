@@ -8,7 +8,7 @@ set(COCOS_RENDERER_SRC
   renderer/CCQuadCommand.cpp
   renderer/CCRenderCommand.cpp
   renderer/CCRenderer.cpp
-  renderer/CCShaderCache.cpp
+  renderer/CCGLProgramCache.cpp
   renderer/ccGLStateCache.cpp
   renderer/ccShaders.cpp
 )
