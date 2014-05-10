@@ -600,10 +600,10 @@
     <ClCompile Include="..\renderer\ccGLStateCache.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
-    <ClCompile Include="..\renderer\CCShaderCache.cpp">
+    <ClCompile Include="..\renderer\ccShaders.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
-    <ClCompile Include="..\renderer\ccShaders.cpp">
+    <ClCompile Include="..\renderer\CCGLProgramCache.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1192,77 +1192,11 @@
     <ClInclude Include="..\renderer\ccGLStateCache.h">
       <Filter>renderer</Filter>
     </ClInclude>
-    <ClInclude Include="..\renderer\CCShaderCache.h">
-      <Filter>renderer</Filter>
-    </ClInclude>
     <ClInclude Include="..\renderer\ccShaders.h">
       <Filter>renderer</Filter>
     </ClInclude>
-    <ClInclude Include="..\renderer\ccShader_Label_frag_df.h">
-      <Filter>renderer\Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\renderer\ccShader_Label_frag_df_glow.h">
-      <Filter>renderer\Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\renderer\ccShader_Label_frag_normal.h">
-      <Filter>renderer\Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\renderer\ccShader_Label_frag_outline.h">
-      <Filter>renderer\Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\renderer\ccShader_Label_vert.h">
-      <Filter>renderer\Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\renderer\ccShader_Position_uColor_frag.h">
-      <Filter>renderer\Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\renderer\ccShader_Position_uColor_vert.h">
-      <Filter>renderer\Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\renderer\ccShader_PositionColor_frag.h">
-      <Filter>renderer\Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\renderer\ccShader_PositionColor_vert.h">
-      <Filter>renderer\Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\renderer\ccShader_PositionColorLengthTexture_frag.h">
-      <Filter>renderer\Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\renderer\ccShader_PositionColorLengthTexture_vert.h">
-      <Filter>renderer\Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\renderer\ccShader_PositionTexture_frag.h">
-      <Filter>renderer\Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\renderer\ccShader_PositionTexture_uColor_frag.h">
-      <Filter>renderer\Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\renderer\ccShader_PositionTexture_uColor_vert.h">
-      <Filter>renderer\Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\renderer\ccShader_PositionTexture_vert.h">
-      <Filter>renderer\Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\renderer\ccShader_PositionTextureA8Color_frag.h">
-      <Filter>renderer\Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\renderer\ccShader_PositionTextureA8Color_vert.h">
-      <Filter>renderer\Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\renderer\ccShader_PositionTextureColor_frag.h">
-      <Filter>renderer\Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\renderer\ccShader_PositionTextureColor_noMVP_frag.h">
-      <Filter>renderer\Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\renderer\ccShader_PositionTextureColor_noMVP_vert.h">
-      <Filter>renderer\Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\renderer\ccShader_PositionTextureColor_vert.h">
-      <Filter>renderer\Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\renderer\ccShader_PositionTextureColorAlphaTest_frag.h">
-      <Filter>renderer\Shaders</Filter>
+    <ClInclude Include="..\renderer\CCGLProgramCache.h">
+      <Filter>renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1286,6 +1220,72 @@
     </None>
     <None Include="..\math\Vector4.inl">
       <Filter>math</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_Label.vert">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_Label_df.frag">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_Label_df_glow.frag">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_Label_normal.frag">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_Label_outline.frag">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_Position_uColor.frag">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_Position_uColor.vert">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionColor.frag">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionColor.vert">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionColorLengthTexture.frag">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionColorLengthTexture.vert">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionTexture.frag">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionTexture.vert">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionTexture_uColor.frag">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionTexture_uColor.vert">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionTextureA8Color.frag">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionTextureA8Color.vert">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionTextureColor.frag">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionTextureColor.vert">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionTextureColor_noMVP.frag">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionTextureColor_noMVP.vert">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionTextureColorAlphaTest.frag">
+      <Filter>renderer\Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
