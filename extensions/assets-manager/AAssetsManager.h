@@ -26,25 +26,25 @@
 #define __AAssetsManager__
 
 #include <string>
-
+#include <map>
+#include <vector>
 #include <mutex>
 
 #include "cocos2d.h"
 #include "extensions/ExtensionMacros.h"
+#include "json/document.h"
 
 NS_CC_EXT_BEGIN
 
 struct Asset {
     std::string md5;
     std::string path;
-    int group;
+    std::string group;
     bool updating;
 };
 
 /*
  *  This class is used to auto update resources, such as pictures or scripts.
- *  The updated package should be a zip file. And there should be a file named
- *  version in the server, which contains version code.
  */
 class AAssetsManager : public Ref
 {
@@ -72,7 +72,7 @@ public:
         UNCOMPRESS,
     };
     
-    AAssetsManager();
+    AAssetsManager(const char* manifestUrl = NULL, const char* storagePath = "");
     /**
      * @js NA
      * @lua NA
@@ -81,15 +81,15 @@ public:
     
     /* @brief To access within scripting environment
      */
-    static AAssetsManager* create(const char* manifestUrl);
+    static AAssetsManager* create(const char* manifestUrl, const char* storagePath = "");
     
     /* @brief Check out if there is a new version of manifest.
      *        You may use this method before updating, then let user determine whether
      *        he wants to update resources.
      */
-    virtual bool checkUpdate();
+    //virtual bool checkUpdate();
     
-    virtual void update();
+    //virtual void update();
     
     /* @brief Gets url of a asset for the given key.
      */
@@ -165,6 +165,7 @@ public:
     
 protected:
     void loadManifest();
+    Asset parseAsset(const rapidjson::Value& json);
     bool downLoad();
     void checkStoragePath();
     bool uncompress();
@@ -185,11 +186,14 @@ private:
     //! The path to store downloaded resources.
     std::string _storagePath;
     
-    //! The remote path of manifest file
+    //! The path of local manifest file
     std::string _manifestUrl;
     
+    //! The remote path of manifest file
+    std::string _remoteManifestUrl;
+    
     //! The remote path of version file [Optional]
-    std::string _versionUrl;
+    std::string _remoteVersionUrl;
     
     //! The url of remote package's root
     std::string _remoteUrl;
@@ -198,10 +202,10 @@ private:
     std::string _currentVer;
     
     //! All groups exist in manifest
-    std::vector<int> _groups;
+    std::vector<std::string> _groups;
     
     //! The versions of all local group
-    std::map<int, std::string> _groupVer;
+    std::map<std::string, std::string> _groupVer;
     
     //! The version of local engine
     std::string _engineVer;
@@ -216,7 +220,10 @@ private:
     std::string _remoteEngineVer;
     
     //! Full assets list
-    ValueMap* _assets;
+    std::map<std::string, Asset> _assets;
+    
+    //! Indicate whether the manifest file have been parsed
+    bool _manifestLoaded;
     
     //! Time out configuration for connection
     unsigned int _connectionTimeout;
