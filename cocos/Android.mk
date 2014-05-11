@@ -142,7 +142,7 @@ renderer/CCQuadCommand.cpp \
 renderer/CCRenderCommand.cpp \
 renderer/CCRenderer.cpp \
 renderer/CCGLProgramCache.cpp \
-renderer/CCShaders.cpp \
+renderer/ccShaders.cpp \
 deprecated/CCArray.cpp \
 deprecated/CCSet.cpp \
 deprecated/CCString.cpp \
