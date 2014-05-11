@@ -1755,6 +1755,8 @@
 		BA6B87F7191B7E1B00C20DA5 /* AAssetsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = BA6B87F1191B7E1B00C20DA5 /* AAssetsManager.h */; };
 		BA6B87F8191B7E1B00C20DA5 /* AAssetsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = BA6B87F1191B7E1B00C20DA5 /* AAssetsManager.h */; };
 		BA6B87F9191B7E1B00C20DA5 /* AAssetsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = BA6B87F1191B7E1B00C20DA5 /* AAssetsManager.h */; };
+		BAD138ED191F6199007733DD /* Downloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAD138EB191F6199007733DD /* Downloader.cpp */; };
+		BAD138EE191F6199007733DD /* Downloader.h in Headers */ = {isa = PBXBuildFile; fileRef = BAD138EC191F6199007733DD /* Downloader.h */; };
 		ED9C6A9418599AD8000A5232 /* CCNodeGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */; };
 		ED9C6A9518599AD8000A5232 /* CCNodeGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */; };
 		ED9C6A9618599AD8000A5232 /* CCNodeGrid.h in Headers */ = {isa = PBXBuildFile; fileRef = ED9C6A9318599AD8000A5232 /* CCNodeGrid.h */; };
@@ -2816,6 +2818,8 @@
 		B3AF019F1842FBA400A98B85 /* b2MotorJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2MotorJoint.h; sourceTree = "<group>"; };
 		BA6B87F0191B7E1B00C20DA5 /* AAssetsManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AAssetsManager.cpp; sourceTree = "<group>"; };
 		BA6B87F1191B7E1B00C20DA5 /* AAssetsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAssetsManager.h; sourceTree = "<group>"; };
+		BAD138EB191F6199007733DD /* Downloader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Downloader.cpp; sourceTree = "<group>"; };
+		BAD138EC191F6199007733DD /* Downloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Downloader.h; sourceTree = "<group>"; };
 		ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCNodeGrid.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		ED9C6A9318599AD8000A5232 /* CCNodeGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNodeGrid.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -3730,6 +3734,8 @@
 				1AAF5352180E3060000584C8 /* AssetsManager.h */,
 				BA6B87F0191B7E1B00C20DA5 /* AAssetsManager.cpp */,
 				BA6B87F1191B7E1B00C20DA5 /* AAssetsManager.h */,
+				BAD138EB191F6199007733DD /* Downloader.cpp */,
+				BAD138EC191F6199007733DD /* Downloader.h */,
 			);
 			path = "assets-manager";
 			sourceTree = "<group>";
@@ -5101,6 +5107,7 @@
 				1A57031F180BCF430088DEC7 /* utlist.h in Headers */,
 				1A01C69418F57BE800EFE3A6 /* CCFloat.h in Headers */,
 				1A570326180BCF660088DEC7 /* TGAlib.h in Headers */,
+				BAD138EE191F6199007733DD /* Downloader.h in Headers */,
 				1A570331180BCFD50088DEC7 /* CCUserDefault.h in Headers */,
 				500DC93419106300007B91BF /* CCAutoreleasePool.h in Headers */,
 				2905FA5818CF08D100240AA3 /* UILayout.h in Headers */,
@@ -6267,6 +6274,7 @@
 				1AD71DB7180E26E600808F54 /* CCBReader.cpp in Sources */,
 				B2AF2FA518EBAEAE00C5807C /* Vector3.cpp in Sources */,
 				1AD71DBD180E26E600808F54 /* CCBSequence.cpp in Sources */,
+				BAD138ED191F6199007733DD /* Downloader.cpp in Sources */,
 				1AD71DC1180E26E600808F54 /* CCBSequenceProperty.cpp in Sources */,
 				1AD71DC9180E26E600808F54 /* CCControlButtonLoader.cpp in Sources */,
 				1AD71DCD180E26E600808F54 /* CCControlLoader.cpp in Sources */,
