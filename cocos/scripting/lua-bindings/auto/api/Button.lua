@@ -26,7 +26,7 @@
 --------------------------------
 -- @function [parent=#Button] setTitleColor 
 -- @param self
--- @param #color3B_table color3b
+-- @param #color3b_table color3b
         
 --------------------------------
 -- @function [parent=#Button] setCapInsetsDisabledRenderer 
@@ -112,7 +112,7 @@
 --------------------------------
 -- @function [parent=#Button] getTitleColor 
 -- @param self
--- @return color3B_table#color3B_table ret (return value: color3B_table)
+-- @return color3b_table#color3b_table ret (return value: color3b_table)
         
 --------------------------------
 -- @function [parent=#Button] setPressedActionEnabled 

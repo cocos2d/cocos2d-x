@@ -292,6 +292,16 @@ public class Cocos2dxHelper {
 		}
 	}
 
+	public static void onEnterBackground() {
+		sCocos2dSound.onEnterBackground();
+		sCocos2dMusic.onEnterBackground();
+	}
+	
+	public static void onEnterForeground() {
+		sCocos2dSound.onEnterForeground();
+		sCocos2dMusic.onEnterForeground();
+	}
+	
 	public static void terminateProcess() {
 		android.os.Process.killProcess(android.os.Process.myPid());
 	}

@@ -26,15 +26,15 @@ THE SOFTWARE.
 #include "2d/CCProgressTimer.h"
 
 #include "base/ccMacros.h"
-#include "2d/CCTextureCache.h"
-#include "2d/CCGLProgram.h"
-#include "2d/CCShaderCache.h"
-#include "2d/ccGLStateCache.h"
 #include "base/CCDirector.h"
-#include "math/TransformUtils.h"
+#include "2d/CCTextureCache.h"
 #include "2d/CCDrawingPrimitives.h"
+#include "renderer/CCGLProgram.h"
+#include "renderer/CCGLProgramState.h"
+#include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCCustomCommand.h"
+#include "math/TransformUtils.h"
 
 // extern
 #include <float.h>
@@ -85,8 +85,9 @@ bool ProgressTimer::initWithSprite(Sprite* sp)
     setMidpoint(Vector2(0.5f, 0.5f));
     setBarChangeRate(Vector2(1,1));
     setSprite(sp);
-    // shader program
-    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+
+    // shader state
+    setGLProgramState(GLProgramState::getWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
     return true;
 }
 
@@ -502,8 +503,8 @@ Vector2 ProgressTimer::boundaryTexCoord(char index)
 void ProgressTimer::onDraw(const Matrix &transform, bool transformUpdated)
 {
 
-    getShaderProgram()->use();
-    getShaderProgram()->setUniformsForBuiltins(transform);
+    getGLProgram()->use();
+    getGLProgram()->setUniformsForBuiltins(transform);
 
     GL::blendFunc( _sprite->getBlendFunc().src, _sprite->getBlendFunc().dst );
 
@@ -521,10 +522,10 @@ void ProgressTimer::onDraw(const Matrix &transform, bool transformUpdated)
     glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V2F_C4B_T2F), (GLvoid*)offset);
 
     offset += sizeof(Color4B);
-    glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid*)offset);
+    glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid*)offset);
 #else
     glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]) , &_vertexData[0].vertices);
-    glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]), &_vertexData[0].texCoords);
+    glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]), &_vertexData[0].texCoords);
     glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(_vertexData[0]), &_vertexData[0].colors);
 #endif // EMSCRIPTEN
 

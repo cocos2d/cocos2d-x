@@ -102,4 +102,5 @@ public:
     virtual std::string subtitle() const {return "OutlineShadingSpriteTest";}
 };
 
+
 #endif

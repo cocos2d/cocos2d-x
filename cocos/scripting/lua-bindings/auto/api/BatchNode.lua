@@ -30,7 +30,7 @@
 -- @function [parent=#BatchNode] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #cc.Matrix matrix
+-- @param #matrix_table matrix
 -- @param #bool bool
         
 --------------------------------

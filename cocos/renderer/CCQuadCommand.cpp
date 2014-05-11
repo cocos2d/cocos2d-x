@@ -24,7 +24,7 @@
 
 
 #include "renderer/CCQuadCommand.h"
-#include "2d/ccGLStateCache.h"
+#include "renderer/ccGLStateCache.h"
 #include "xxhash.h"
 
 NS_CC_BEGIN

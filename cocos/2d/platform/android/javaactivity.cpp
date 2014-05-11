@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "CCEventCustom.h"
 #include "CCEventType.h"
 #include "CCGLView.h"
-#include "CCShaderCache.h"
+#include "CCGLProgramCache.h"
 #include "CCTextureCache.h"
 #include "platform/android/jni/JniHelper.h"
 #include <android/log.h>
@@ -68,7 +68,7 @@ void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thi
     else
     {
         cocos2d::GL::invalidateStateCache();
-        cocos2d::ShaderCache::getInstance()->reloadDefaultShaders();
+        cocos2d::GLProgramCache::getInstance()->reloadDefaultGLPrograms();
         cocos2d::DrawPrimitives::init();
         cocos2d::VolatileTextureMgr::reloadAllTextures();
 

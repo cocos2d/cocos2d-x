@@ -31,20 +31,22 @@ THE SOFTWARE.
 * https://devforums.apple.com/message/37855#37855 by a1studmuffin
 */
 
+#include "CCGL.h"
 #include "2d/CCTexture2D.h"
+#include "2d/platform/CCImage.h"
+#include "2d/ccUtils.h"
+#include "2d/platform/CCDevice.h"
 #include "base/ccConfig.h"
 #include "base/ccMacros.h"
 #include "base/CCConfiguration.h"
-#include "2d/platform/CCImage.h"
-#include "CCGL.h"
-#include "2d/ccUtils.h"
 #include "base/CCPlatformMacros.h"
 #include "base/CCDirector.h"
-#include "2d/CCGLProgram.h"
-#include "2d/ccGLStateCache.h"
-#include "2d/CCShaderCache.h"
-#include "2d/platform/CCDevice.h"
+#include "renderer/CCGLProgram.h"
+#include "renderer/ccGLStateCache.h"
+#include "renderer/CCGLProgramCache.h"
+
 #include "deprecated/CCString.h"
+
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     #include "2d/CCTextureCache.h"
@@ -506,12 +508,12 @@ void Texture2D::setMaxT(GLfloat maxT)
     _maxT = maxT;
 }
 
-GLProgram* Texture2D::getShaderProgram() const
+GLProgram* Texture2D::getGLProgram() const
 {
     return _shaderProgram;
 }
 
-void Texture2D::setShaderProgram(GLProgram* shaderProgram)
+void Texture2D::setGLProgram(GLProgram* shaderProgram)
 {
     CC_SAFE_RETAIN(shaderProgram);
     CC_SAFE_RELEASE(_shaderProgram);
@@ -692,8 +694,8 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
     _hasPremultipliedAlpha = false;
     _hasMipmaps = mipmapsNum > 1;
 
-    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE));
-
+    // shader
+    setGLProgram(GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE));
     return true;
 }
 
@@ -1181,10 +1183,10 @@ void Texture2D::drawAtPoint(const Vector2& point)
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
     setGLBufferData(coordinates, 8 * sizeof(GLfloat), 1);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
 #endif // EMSCRIPTEN
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -1214,10 +1216,10 @@ void Texture2D::drawInRect(const Rect& rect)
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
     setGLBufferData(coordinates, 8 * sizeof(GLfloat), 1);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
 #endif // EMSCRIPTEN
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }

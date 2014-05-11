@@ -69,7 +69,7 @@ void Skeleton::initialize () {
     
 	setOpacityModifyRGB(true);
 
-    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+    setGLProgramState(GLProgramState::getWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 }
 
 void Skeleton::setSkeletonData (spSkeletonData *skeletonData, bool isOwnsSkeletonData) {
@@ -135,8 +135,8 @@ void Skeleton::draw(cocos2d::Renderer *renderer, const Matrix &transform, bool t
     
 void Skeleton::onDraw(const Matrix &transform, bool transformUpdated)
 {
-    getShaderProgram()->use();
-    getShaderProgram()->setUniformsForBuiltins(transform);
+    getGLProgram()->use();
+    getGLProgram()->setUniformsForBuiltins(transform);
 
     GL::blendFunc(blendFunc.src, blendFunc.dst);
 	Color3B color = getColor();

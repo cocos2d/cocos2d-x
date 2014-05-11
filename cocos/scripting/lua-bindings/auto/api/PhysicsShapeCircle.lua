@@ -13,7 +13,7 @@
 -- @param self
 -- @param #float float
 -- @param #cc.PhysicsMaterial physicsmaterial
--- @param #array_table array
+-- @param #vector2_table array
 -- @return PhysicsShapeCircle#PhysicsShapeCircle ret (return value: cc.PhysicsShapeCircle)
         
 --------------------------------
@@ -27,13 +27,13 @@
 -- @param self
 -- @param #float float
 -- @param #float float
--- @param #array_table array
+-- @param #vector2_table array
 -- @return float#float ret (return value: float)
         
 --------------------------------
 -- @function [parent=#PhysicsShapeCircle] getOffset 
 -- @param self
--- @return array_table#array_table ret (return value: array_table)
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#PhysicsShapeCircle] calculateDefaultMoment 

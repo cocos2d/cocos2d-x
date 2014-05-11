@@ -45,13 +45,19 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- overload function: setUniformsForBuiltins(cc.Matrix)
+-- @function [parent=#GLProgram] getUniform 
+-- @param self
+-- @param #string str
+-- @return Uniform#Uniform ret (return value: cc.Uniform)
+        
+--------------------------------
+-- overload function: setUniformsForBuiltins(matrix_table)
 --          
 -- overload function: setUniformsForBuiltins()
 --          
 -- @function [parent=#GLProgram] setUniformsForBuiltins
 -- @param self
--- @param #cc.Matrix matrix
+-- @param #matrix_table matrix
 
 --------------------------------
 -- @function [parent=#GLProgram] setUniformLocationWith3i 
@@ -82,7 +88,7 @@
 --------------------------------
 -- @function [parent=#GLProgram] getUniformLocation 
 -- @param self
--- @param #char char
+-- @param #string str
 -- @return int#int ret (return value: int)
         
 --------------------------------
@@ -112,14 +118,20 @@
 --------------------------------
 -- @function [parent=#GLProgram] bindAttribLocation 
 -- @param self
--- @param #char char
+-- @param #string str
 -- @param #unsigned int int
         
 --------------------------------
 -- @function [parent=#GLProgram] getAttribLocation 
 -- @param self
--- @param #char char
+-- @param #string str
 -- @return int#int ret (return value: int)
+        
+--------------------------------
+-- @function [parent=#GLProgram] getVertexAttrib 
+-- @param self
+-- @param #string str
+-- @return VertexAttrib#VertexAttrib ret (return value: cc.VertexAttrib)
         
 --------------------------------
 -- @function [parent=#GLProgram] setUniformLocationWithMatrix2fv 
@@ -148,6 +160,20 @@
 -- @param #int int
 -- @param #int int
 -- @param #int int
+        
+--------------------------------
+-- @function [parent=#GLProgram] createWithByteArrays 
+-- @param self
+-- @param #char char
+-- @param #char char
+-- @return GLProgram#GLProgram ret (return value: cc.GLProgram)
+        
+--------------------------------
+-- @function [parent=#GLProgram] createWithFilenames 
+-- @param self
+-- @param #string str
+-- @param #string str
+-- @return GLProgram#GLProgram ret (return value: cc.GLProgram)
         
 --------------------------------
 -- @function [parent=#GLProgram] GLProgram 
