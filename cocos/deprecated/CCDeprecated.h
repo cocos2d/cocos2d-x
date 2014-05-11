@@ -1,19 +1,19 @@
 /****************************************************************************
  Copyright (c) 2013      cocos2d-x.org
  Copyright (c) 2013-2014 Chukong Technologies Inc.
- 
+
  http://www.cocos2d-x.org
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -446,7 +446,7 @@ CC_DEPRECATED_ATTRIBUTE static inline Color4F ccc4FFromccc4B(Color4B c)
 
 CC_DEPRECATED_ATTRIBUTE static inline Color4B ccc4BFromccc4F(Color4F c)
 {
-	return Color4B((GLubyte)(c.r*255), (GLubyte)(c.g*255), (GLubyte)(c.b*255), (GLubyte)(c.a*255));
+        return Color4B((GLubyte)(c.r*255), (GLubyte)(c.g*255), (GLubyte)(c.b*255), (GLubyte)(c.a*255));
 }
 
 CC_DEPRECATED_ATTRIBUTE static inline bool ccc4FEqual(Color4F a, Color4F b)
@@ -1110,13 +1110,13 @@ CC_DEPRECATED_ATTRIBUTE CC_DLL Vector3* kmVec3Scale(Vector3* pOut, const Vector3
 CC_DEPRECATED_ATTRIBUTE CC_DLL Vector3* kmVec3Assign(Vector3* pOut, const Vector3* pIn);
 CC_DEPRECATED_ATTRIBUTE CC_DLL Vector3* kmVec3Zero(Vector3* pOut);
 
-CC_DEPRECATED_ATTRIBUTE const Vector3 KM_VEC3_NEG_Z = Vector3(0, 0, -1);
-CC_DEPRECATED_ATTRIBUTE const Vector3 KM_VEC3_POS_Z = Vector3(0, 0, 1);
-CC_DEPRECATED_ATTRIBUTE const Vector3 KM_VEC3_POS_Y = Vector3(0, 1, 0);
-CC_DEPRECATED_ATTRIBUTE const Vector3 KM_VEC3_NEG_Y = Vector3(0, -1, 0);
-CC_DEPRECATED_ATTRIBUTE const Vector3 KM_VEC3_NEG_X = Vector3(-1, 0, 0);
-CC_DEPRECATED_ATTRIBUTE const Vector3 KM_VEC3_POS_X = Vector3(1, 0, 0);
-CC_DEPRECATED_ATTRIBUTE const Vector3 KM_VEC3_ZERO = Vector3(0, 0, 0);
+CC_DEPRECATED_ATTRIBUTE extern const Vector3 KM_VEC3_NEG_Z;
+CC_DEPRECATED_ATTRIBUTE extern const Vector3 KM_VEC3_POS_Z;
+CC_DEPRECATED_ATTRIBUTE extern const Vector3 KM_VEC3_POS_Y;
+CC_DEPRECATED_ATTRIBUTE extern const Vector3 KM_VEC3_NEG_Y;
+CC_DEPRECATED_ATTRIBUTE extern const Vector3 KM_VEC3_NEG_X;
+CC_DEPRECATED_ATTRIBUTE extern const Vector3 KM_VEC3_POS_X;
+CC_DEPRECATED_ATTRIBUTE extern const Vector3 KM_VEC3_ZERO;
 
 //kmVec2
 CC_DEPRECATED_ATTRIBUTE typedef Vector2 kmVec2;
@@ -1131,11 +1131,11 @@ CC_DEPRECATED_ATTRIBUTE CC_DLL Vector2* kmVec2Subtract(Vector2* pOut, const Vect
 CC_DEPRECATED_ATTRIBUTE CC_DLL Vector2* kmVec2Scale(Vector2* pOut, const Vector2* pIn, const float s);
 CC_DEPRECATED_ATTRIBUTE CC_DLL Vector2* kmVec2Assign(Vector2* pOut, const Vector2* pIn);
 
-CC_DEPRECATED_ATTRIBUTE const Vector2 KM_VEC2_POS_Y = Vector2(0, 1);
-CC_DEPRECATED_ATTRIBUTE const Vector2 KM_VEC2_NEG_Y = Vector2(0, -1);
-CC_DEPRECATED_ATTRIBUTE const Vector2 KM_VEC2_NEG_X = Vector2(-1, 0);
-CC_DEPRECATED_ATTRIBUTE const Vector2 KM_VEC2_POS_X = Vector2(1, 0);
-CC_DEPRECATED_ATTRIBUTE const Vector2 KM_VEC2_ZERO = Vector2(0, 0);
+CC_DEPRECATED_ATTRIBUTE extern const Vector2 KM_VEC2_POS_Y;
+CC_DEPRECATED_ATTRIBUTE extern const Vector2 KM_VEC2_NEG_Y;
+CC_DEPRECATED_ATTRIBUTE extern const Vector2 KM_VEC2_NEG_X;
+CC_DEPRECATED_ATTRIBUTE extern const Vector2 KM_VEC2_POS_X;
+CC_DEPRECATED_ATTRIBUTE extern const Vector2 KM_VEC2_ZERO;
 
 //kmVec4
 CC_DEPRECATED_ATTRIBUTE typedef Vector4 kmVec4;
