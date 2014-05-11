@@ -36,8 +36,8 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class GLProgram;
-class Uniform;
-class VertexAttrib;
+struct Uniform;
+struct VertexAttrib;
 
 //
 //
