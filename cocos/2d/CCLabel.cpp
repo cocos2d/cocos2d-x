@@ -1193,7 +1193,7 @@ void Label::computeStringNumLines()
 
 int Label::getStringLength() const
 {
-    return _currentUTF16String.length();
+    return static_cast<int>(_currentUTF16String.length());
 }
 
 // RGBA protocol
