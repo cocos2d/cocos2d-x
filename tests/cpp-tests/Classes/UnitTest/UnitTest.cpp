@@ -729,10 +729,8 @@ static const char16_t WHITE_SPACE_CODE[] =
     0x3000
 };
 
-void UTFConversionTest::onEnter()
+static void doUTFConversion()
 {
-    UnitTestDemo::onEnter();
-
     bool isSuccess = false;
     
     std::string originalUTF8 = (const char*)__utf8Code;
@@ -744,7 +742,7 @@ void UTFConversionTest::onEnter()
     
     if (isSuccess)
     {
-        isSuccess = ::std::memcmp(utf8Str.data(), originalUTF8.data(), originalUTF8.length()+1)==0;
+        isSuccess = memcmp(utf8Str.data(), originalUTF8.data(), originalUTF8.length()+1)==0;
     }
     
     CCASSERT(isSuccess, "StringUtils::UTF16ToUTF8 failed");
@@ -755,16 +753,16 @@ void UTFConversionTest::onEnter()
     
     if (isSuccess)
     {
-        isSuccess = ::std::memcmp(utf16Str.data(), originalUTF16.data(), originalUTF16.length()+1)==0;
+        isSuccess = memcmp(utf16Str.data(), originalUTF16.data(), originalUTF16.length()+1)==0;
     }
-
+    
     CCASSERT(isSuccess && (utf16Str.length() == TEST_CODE_NUM), "StringUtils::UTF8ToUTF16 failed");
-
+    
     //---------------------------
     auto vec1 = StringUtils::getChar16VectorFromUTF16String(originalUTF16);
     
     CCASSERT(vec1.size() == originalUTF16.length(), "StringUtils::getChar16VectorFromUTF16String failed");
-
+    
     //---------------------------
     std::vector<char16_t> vec2( vec1 );
     vec2.push_back(0x2009);
@@ -784,11 +782,11 @@ void UTFConversionTest::onEnter()
     
     //---------------------------
     CCASSERT(StringUtils::getCharacterCountInUTF8String(originalUTF8) == TEST_CODE_NUM, "StringUtils::getCharacterCountInUTF8String failed");
-
+    
     //---------------------------
     int lastIndex = StringUtils::getIndexOfLastNotChar16(vec3, 0x2009);
     CCASSERT(lastIndex == (vec1.size()-1), "StringUtils::getIndexOfLastNotChar16 failed");
-
+    
     //---------------------------
     CCASSERT(originalUTF16.length() == TEST_CODE_NUM, "The length of the original utf16 string isn't equal to TEST_CODE_NUM");
     
@@ -802,6 +800,16 @@ void UTFConversionTest::onEnter()
     CCASSERT(!StringUtils::isUnicodeSpace(0xFFFF), "StringUtils::isUnicodeSpace failed");
     
     CCASSERT(!StringUtils::isCJKUnicode(0xFFFF) && StringUtils::isCJKUnicode(0x3100), "StringUtils::isCJKUnicode failed");
+}
+
+void UTFConversionTest::onEnter()
+{
+    UnitTestDemo::onEnter();
+
+    for (int i = 0; i < 10000; ++i)
+    {
+        doUTFConversion();
+    }
 }
 
 std::string UTFConversionTest::subtitle() const
