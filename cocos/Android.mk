@@ -136,7 +136,7 @@ renderer/CCCustomCommand.cpp \
 renderer/CCGLProgram.cpp \
 renderer/CCGLProgramState.cpp \
 renderer/CCGLProgramStateCache.cpp \
-renderer/CCGLStateCache.cpp \
+renderer/ccGLStateCache.cpp \
 renderer/CCGroupCommand.cpp \
 renderer/CCQuadCommand.cpp \
 renderer/CCRenderCommand.cpp \
