@@ -125,6 +125,9 @@ CC_DEPRECATED_ATTRIBUTE const LoadingBar::Direction LoadingBarTypeLeft =  Loadin
 CC_DEPRECATED_ATTRIBUTE const LoadingBar::Direction LoadingBarTypeRight =  LoadingBar::Direction::RIGHT;
 CC_DEPRECATED_ATTRIBUTE const PageView::TouchDirection PAGEVIEW_TOUCHLEFT =  PageView::TouchDirection::LEFT;
 CC_DEPRECATED_ATTRIBUTE const PageView::TouchDirection PAGEVIEW_TOUCHRIGHT =  PageView::TouchDirection::RIGHT;
+CC_DEPRECATED_ATTRIBUTE const RichElement::Type RICH_TEXT =  RichElement::Type::TEXT;
+CC_DEPRECATED_ATTRIBUTE const RichElement::Type RICH_IMAGE =  RichElement::Type::IMAGE;
+CC_DEPRECATED_ATTRIBUTE const RichElement::Type RICH_CUSTOM =  RichElement::Type::CUSTOM;
 
     
 CC_DEPRECATED_ATTRIBUTE typedef Widget::TextureResType TextureResType;
@@ -141,6 +144,8 @@ CC_DEPRECATED_ATTRIBUTE typedef RelativeLayoutParameter::RelativeAlign RelativeA
 CC_DEPRECATED_ATTRIBUTE typedef ListView::Gravity ListViewGravity;
 CC_DEPRECATED_ATTRIBUTE typedef LoadingBar::Direction LoadingBarType;
 CC_DEPRECATED_ATTRIBUTE typedef PageView::TouchDirection PVTouchDir;
+CC_DEPRECATED_ATTRIBUTE typedef RichElement::Type RichElementType;
+
 
 
 }

@@ -205,7 +205,7 @@ void RichText::formatText()
                 Node* elementRenderer = NULL;
                 switch (element->_type)
                 {
-                    case RICH_TEXT:
+                    case RichElement::Type::TEXT:
                     {
                         RichElementText* elmtText = static_cast<RichElementText*>(element);
                         if (FileUtils::getInstance()->isFileExist(elmtText->_fontName))
@@ -218,13 +218,13 @@ void RichText::formatText()
                         }
                         break;
                     }
-                    case RICH_IMAGE:
+                    case RichElement::Type::IMAGE:
                     {
                         RichElementImage* elmtImage = static_cast<RichElementImage*>(element);
                         elementRenderer = Sprite::create(elmtImage->_filePath.c_str());
                         break;
                     }
-                    case RICH_CUSTOM:
+                    case RichElement::Type::CUSTOM:
                     {
                         RichElementCustomNode* elmtCustom = static_cast<RichElementCustomNode*>(element);
                         elementRenderer = elmtCustom->_customNode;
@@ -247,19 +247,19 @@ void RichText::formatText()
                 RichElement* element = static_cast<RichElement*>(_richElements.at(i));
                 switch (element->_type)
                 {
-                    case RICH_TEXT:
+                    case RichElement::Type::TEXT:
                     {
                         RichElementText* elmtText = static_cast<RichElementText*>(element);
                         handleTextRenderer(elmtText->_text.c_str(), elmtText->_fontName.c_str(), elmtText->_fontSize, elmtText->_color, elmtText->_opacity);
                         break;
                     }
-                    case RICH_IMAGE:
+                    case RichElement::Type::IMAGE:
                     {
                         RichElementImage* elmtImage = static_cast<RichElementImage*>(element);
                         handleImageRenderer(elmtImage->_filePath.c_str(), elmtImage->_color, elmtImage->_opacity);
                         break;
                     }
-                    case RICH_CUSTOM:
+                    case RichElement::Type::CUSTOM:
                     {
                         RichElementCustomNode* elmtCustom = static_cast<RichElementCustomNode*>(element);
                         handleCustomRenderer(elmtCustom->_customNode);

@@ -31,20 +31,20 @@ NS_CC_BEGIN
 
 namespace ui {
     
-typedef enum {
-    RICH_TEXT,
-    RICH_IMAGE,
-    RICH_CUSTOM
-}RichElementType;
-    
 class RichElement : public Ref
 {
 public:
+    enum class Type
+    {
+        TEXT,
+        IMAGE,
+        CUSTOM
+    };
     RichElement(){};
     virtual ~RichElement(){};
     bool init(int tag, const Color3B& color, GLubyte opacity);
 protected:
-    RichElementType _type;
+    Type _type;
     int _tag;
     Color3B _color;
     GLubyte _opacity;
@@ -54,7 +54,7 @@ protected:
 class RichElementText : public RichElement
 {
 public:
-    RichElementText(){_type = RICH_TEXT;};
+    RichElementText(){_type = Type::TEXT;};
     virtual ~RichElementText(){};
     bool init(int tag, const Color3B& color, GLubyte opacity, const char* text, const char* fontName, float fontSize);
     static RichElementText* create(int tag, const Color3B& color, GLubyte opacity, const char* text, const char* fontName, float fontSize);
@@ -69,7 +69,7 @@ protected:
 class RichElementImage : public RichElement
 {
 public:
-    RichElementImage(){_type = RICH_IMAGE;};
+    RichElementImage(){_type = Type::IMAGE;};
     virtual ~RichElementImage(){};
     bool init(int tag, const Color3B& color, GLubyte opacity, const char* filePath);
     static RichElementImage* create(int tag, const Color3B& color, GLubyte opacity, const char* filePath);
@@ -83,7 +83,7 @@ protected:
 class RichElementCustomNode : public RichElement
 {
 public:
-    RichElementCustomNode(){_type = RICH_CUSTOM;};
+    RichElementCustomNode(){_type = Type::CUSTOM;};
     virtual ~RichElementCustomNode(){CC_SAFE_RELEASE(_customNode);};
     bool init(int tag, const Color3B& color, GLubyte opacity, Node* customNode);
     static RichElementCustomNode* create(int tag, const Color3B& color, GLubyte opacity, Node* customNode);
