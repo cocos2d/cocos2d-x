@@ -17,7 +17,7 @@ cd $HOME/bin
 install_android_ndk()
 {
     # Download android ndk
-    if [ "$PLATFORM"x = "ios"x ]; then
+    if [ "$PLATFORM"x = "mac-ios"x ]; then
         HOST_NAME="darwin"
     else
         HOST_NAME="linux"
@@ -71,14 +71,22 @@ elif [ "$PLATFORM"x = "emscripten"x ]; then
     sudo rm -rf /dev/shm && sudo ln -s /run/shm /dev/shm
 
     install_android_ndk
-elif [ "$PLATFORM"x = "ios"x ]; then
-    install_android_ndk
-
-    pushd $COCOS2DX_ROOT
-    git submodule add https://github.com/facebook/xctool.git ./xctool
-    git submodule init
-    git submodule update
-    popd
+elif [ "$PLATFORM"x = "mac-ios"x ]; then
+    if [ "$PUSH_TO_MAC"x = "YES"x ]; then
+        cd $COCOS2DX_ROOT
+        git config user.email ${GH_EMAIL_MAC}
+        git config user.name ${GH_USER_MAC}
+        git checkout -B $TRAVIS_BRANCH
+        cp tools/travis-scripts/travis_mac.yml ./.travis.yml
+        git add .travis.yml
+        cat .travis.yml
+        git commit --amend -m "`git log -1 --pretty=%B`"
+        git remote add travis-mac https://$GH_USER_MAC:$GH_PASSWORD_MAC@github.com/cocos-travis-mac/cocos2d-x.git
+        git push -f travis-mac $TRAVIS_BRANCH 2> /dev/null > /dev/null
+    else
+        echo "xctool version: `xctool --version`"
+        install_android_ndk
+    fi
 else
     echo "Unknown \$PLATFORM: '$PLATFORM'"
     exit 1
