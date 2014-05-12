@@ -113,6 +113,10 @@ elif [ "$PLATFORM"x = "emscripten"x ]; then
     export LLVM_ROOT=$LLVM
     EMCC_DEBUG=1 make PLATFORM=emscripten -j 8
 elif [ "$PLATFORM"x = "mac-ios"x ]; then
+    if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
+        exit 0
+    fi
+
     if [ "$PUSH_TO_MAC"x != "YES"x ]; then
         cd $COCOS2DX_ROOT/tools/travis-scripts
         ./generate-bindings.sh

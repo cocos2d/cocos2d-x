@@ -72,6 +72,10 @@ elif [ "$PLATFORM"x = "emscripten"x ]; then
 
     install_android_ndk
 elif [ "$PLATFORM"x = "mac-ios"x ]; then
+    if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
+        exit 0
+    fi
+
     if [ "$PUSH_TO_MAC"x = "YES"x ]; then
         cd $COCOS2DX_ROOT
         git config user.email ${GH_EMAIL_MAC}
