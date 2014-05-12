@@ -39,7 +39,7 @@ NS_CC_EXT_BEGIN;
 #define LOW_SPEED_LIMIT     1L
 #define LOW_SPEED_TIME      5L
 
-const std::regex REGEX_FILENAME("([\\w\\d\\.]+)\\.([\\w\\d])$");
+//const std::regex REGEX_FILENAME("([\\w\\d\\._\\-]+)\\.([\\w\\d])$");
 
 static size_t curlWriteFunc(void *ptr, size_t size, size_t nmemb, void *userdata)
 {
@@ -61,9 +61,9 @@ int downloadProgressFunc(void *ptr, double totalToDownload, double nowDownloaded
             DownloaderDelegateProtocol* delegate = downloader->getDelegate();
             if (delegate)
                 delegate->onProgress(percent);
+            
+            CCLOG("downloading... %d%%", percent);
         });
-        
-        CCLOG("downloading... %d%%", percent);
     }
     
     return 0;
@@ -90,28 +90,65 @@ bool Downloader::init()
     return true;
 }
 
-bool Downloader::download(const char* srcUrl, const char* storagePath)
+void Downloader::notifyError(ErrorCode code, const char* msg/* ="" */)
 {
+    Error err;
+    err.code = code;
+    err.message = msg;
+    Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
+        if (this->_delegate)
+            this->_delegate->onError(err);
+    });
+}
+
+bool Downloader::checkStoragePath(const char* storagePath)
+{
+    int l = sizeof(storagePath);
+    if (l > 0 && storagePath[l - 1] != '/')
+    {
+        return false;
+    }
+    return true;
+}
+
+void Downloader::download(const char *srcUrl, const char *storagePath)
+{
+    auto t = std::thread(&Downloader::downloadAsync, this, srcUrl, storagePath);
+    t.detach();
+}
+
+void Downloader::downloadAsync(const char* srcUrl, const char* storagePath)
+{
+    // Asserts
     if (!_curl)
-        this->_delegate->onError(ErrorCode::CURL_UNINIT);
+        this->notifyError(ErrorCode::CURL_UNINIT);
+    if (checkStoragePath(storagePath))
+        this->notifyError(ErrorCode::INVALID_STORAGE_PATH);
     
     // Find file name and file extension
-    std::smatch m;
-    std::string filename = srcUrl;
-    std::regex_search(filename, m, REGEX_FILENAME);
-    filename = m.str();
+    std::string url(srcUrl);
+    std::string filename = "";
+    unsigned long found = url.find_last_of("/\\");
+    if (found != std::string::npos)
+        filename = url.substr(found+1);
+    if (filename.size() == 0)
+    {
+        std::string msg = "Invalid url or filename not exist error: " + url;
+        this->notifyError(ErrorCode::INVALID_URL, msg.c_str());
+        return;
+    }
+    //std::smatch m;
+    //std::regex_search(url, m, REGEX_FILENAME);
+    //std::string filename = m.str();
     
     // Create a file to save package.
     const std::string outFileName = storagePath + filename;
     FILE *fp = fopen(outFileName.c_str(), "wb");
     if (!fp)
     {
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
-            if (this->_delegate)
-                this->_delegate->onError(ErrorCode::CREATE_FILE);
-        });
-        CCLOG("can not create file %s", outFileName.c_str());
-        return false;
+        std::string msg = "Can not create file " + outFileName;
+        this->notifyError(ErrorCode::CREATE_FILE, msg.c_str());
+        return;
     }
     
     // Download pacakge
@@ -130,19 +167,18 @@ bool Downloader::download(const char* srcUrl, const char* storagePath)
     curl_easy_cleanup(_curl);
     if (res != 0)
     {
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
-            if (this->_delegate)
-                this->_delegate->onError(ErrorCode::NETWORK);
-        });
-        CCLOG("error when download package");
+        this->notifyError(ErrorCode::NETWORK, "Error when download file");
         fclose(fp);
-        return false;
+        return;
     }
     
-    CCLOG("succeed downloading file %s", srcUrl);
+    Director::getInstance()->getScheduler()->performFunctionInCocosThread([srcUrl, this]{
+        if (this->_delegate)
+            this->_delegate->onSuccess();
+        CCLOG("Succeed downloading file %s", srcUrl);
+    });
     
     fclose(fp);
-    return true;
 }
 
 NS_CC_EXT_END;

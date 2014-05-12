@@ -26,6 +26,9 @@
 #define __Downloader__
 
 #include "cocos2d.h"
+#include "extensions/ExtensionMacros.h"
+
+NS_CC_EXT_BEGIN
 
 class DownloaderDelegateProtocol;
 
@@ -54,7 +57,17 @@ public:
          */
         UNCOMPRESS,
         
-        CURL_UNINIT
+        CURL_UNINIT,
+        
+        INVALID_URL,
+        
+        INVALID_STORAGE_PATH
+    };
+    
+    struct Error
+    {
+        ErrorCode code;
+        std::string message;
     };
     
     /**
@@ -66,7 +79,15 @@ public:
     
     DownloaderDelegateProtocol* getDelegate() const { return _delegate ;}
     
-    bool download(const char* srcUrl, const char* storagePath);
+    void download(const char* srcUrl, const char* storagePath);
+    
+protected:
+    
+    void downloadAsync(const char* srcUrl, const char* storagePath);
+    
+    void notifyError(ErrorCode code, const char* msg = "");
+    
+    bool checkStoragePath(const char* storagePath);
     
 protected:
     
@@ -81,11 +102,11 @@ public:
     virtual ~DownloaderDelegateProtocol() {};
 
     /* @brief Call back function for error
-     @param errorCode Type of error
+     @param error Error object
      * @js NA
      * @lua NA
      */
-    virtual void onError(Downloader::ErrorCode errorCode) {};
+    virtual void onError(const Downloader::Error &error) {};
     
     /** @brief Call back function for recording downloading percent
      @param percent How much percent downloaded
@@ -103,5 +124,7 @@ public:
      */
     virtual void onSuccess() {};
 };
+
+NS_CC_EXT_END;
 
 #endif /* defined(__Downloader__) */
