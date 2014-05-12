@@ -31,11 +31,6 @@ NS_CC_BEGIN
 
 namespace ui {
 
-typedef enum
-{
-    LoadingBarTypeLeft,
-    LoadingBarTypeRight
-}LoadingBarType;
 /**
 *   @js NA
 *   @lua NA
@@ -46,6 +41,11 @@ class LoadingBar : public Widget
     DECLARE_CLASS_GUI_INFO
     
 public:
+    enum class Direction
+    {
+        LEFT,
+        RIGHT
+    };
     /**
      * Default constructor
      */
@@ -73,7 +73,8 @@ public:
      *
      * @param LoadingBarType
      */
-    void setDirection(LoadingBarType dir);
+    CC_DEPRECATED_ATTRIBUTE void setDirection(Direction direction);
+    void setBarDirection(Direction direction);
     
     /**
      * Gets the progress direction of loadingbar.
@@ -82,7 +83,8 @@ public:
      *
      * @param LoadingBarType
      */
-    int getDirection();
+    CC_DEPRECATED_ATTRIBUTE int getDirection();
+    Direction getBarDirection();
     
     /**
      * Load texture for loadingbar.
@@ -150,7 +152,7 @@ protected:
     virtual void copySpecialProperties(Widget* model) override;
     virtual void adaptRenderers() override;
 protected:
-    LoadingBarType _barType;
+    Direction _direction;
     int _percent;
     float _totalLength;
     Node* _barRenderer;

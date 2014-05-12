@@ -111,7 +111,7 @@ bool UILoadingBarTest_Right::init()
         // Create the loading bar
         LoadingBar* loadingBar = LoadingBar::create("cocosui/sliderProgress.png");
         loadingBar->setTag(0);
-        loadingBar->setDirection(LoadingBarTypeRight);
+        loadingBar->setBarDirection(LoadingBar::Direction::RIGHT);
         
         loadingBar->setPosition(Vector2(widgetSize.width / 2.0f,
                                       widgetSize.height / 2.0f + loadingBar->getSize().height / 4.0f));
@@ -276,7 +276,7 @@ bool UILoadingBarTest_Right_Scale9::init()
         loadingBar->setScale9Enabled(true);
         loadingBar->setCapInsets(Rect(0, 0, 0, 0));
         loadingBar->setSize(Size(300, 13));
-        loadingBar->setDirection(LoadingBarTypeRight);        
+        loadingBar->setBarDirection(LoadingBar::Direction::RIGHT);
         
         loadingBar->setPosition(Vector2(widgetSize.width / 2.0f,
                                       widgetSize.height / 2.0f + loadingBar->getSize().height / 4.0f));

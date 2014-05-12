@@ -314,7 +314,6 @@ bool UIListViewTest_Horizontal::init()
             ssize_t index = listView->getIndex(item);
             button->setTitleText(static_cast<__String*>(_array->getObjectAtIndex(index))->getCString());
         }
-        
         // remove last item
         listView->removeLastItem();
         
