@@ -113,11 +113,6 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     auto scene = Scene::create();
     auto layer = new TestController();
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
-    layer->addConsoleAutoTest();
-#endif
-
-    layer->autorelease();
 
     scene->addChild(layer);
     director->runWithScene(scene);
@@ -126,8 +121,10 @@ bool AppDelegate::applicationDidFinishLaunching()
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     auto console = director->getConsole();
     console->listenOnTCP(5678);
+    layer->addConsoleAutoTest();
+    //layer->startAutoRun();
 #endif
-
+    layer->autorelease();
     return true;
 }
 

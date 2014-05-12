@@ -19,7 +19,8 @@ public:
 
     void onMouseScroll(Event *event);
     void addConsoleAutoTest();
-
+    void autorun();
+    void startAutoRun();
 private:
     Vector2 _beginPos;
     Menu* _itemMenu;
