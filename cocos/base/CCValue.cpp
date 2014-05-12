@@ -33,7 +33,7 @@ const Value Value::Null;
 Value::Value()
 : _type(Type::NONE)
 {
-
+    memset(&_field, 0, sizeof(_field));
 }
 
 Value::Value(unsigned char v)
@@ -126,11 +126,13 @@ Value::Value(ValueMapIntKey&& v)
 }
 
 Value::Value(const Value& other)
+: _type(Type::NONE)
 {
     *this = other;
 }
 
 Value::Value(Value&& other)
+: _type(Type::NONE)
 {
     *this = std::move(other);
 }
@@ -162,21 +164,36 @@ Value& Value::operator= (const Value& other)
                 _field.boolVal = other._field.boolVal;
                 break;
             case Type::STRING:
+                if (_field.strVal == nullptr)
+                {
+                    _field.strVal = new std::string();
+                }
                 *_field.strVal = *other._field.strVal;
                 break;
             case Type::VECTOR:
+                if (_field.vectorVal == nullptr)
+                {
+                    _field.vectorVal = new ValueVector();
+                }
                 *_field.vectorVal = *other._field.vectorVal;
                 break;
             case Type::MAP:
+                if (_field.mapVal == nullptr)
+                {
+                    _field.mapVal = new ValueMap();
+                }
                 *_field.mapVal = *other._field.mapVal;
                 break;
             case Type::INT_KEY_MAP:
+                if (_field.intKeyMapVal == nullptr)
+                {
+                    _field.intKeyMapVal = new ValueMapIntKey();
+                }
                 *_field.intKeyMapVal = *other._field.intKeyMapVal;
                 break;
             default:
                 break;
         }
-        _type = other._type;
     }
     return *this;
 }
@@ -185,7 +202,7 @@ Value& Value::operator= (Value&& other)
 {
     if (this != &other)
     {
-        reset(other._type);
+        clear();
         switch (other._type)
         {
             case Type::BYTE:
@@ -667,14 +684,6 @@ std::string Value::getDescription()
 
 void Value::clear()
 {
-    reset(Type::NONE);
-}
-
-void Value::reset(Type type)
-{
-    if (_type == type)
-        return;
-
     // Free memory the old value allocated
     switch (_type)
     {
@@ -708,6 +717,16 @@ void Value::reset(Type type)
         default:
             break;
     }
+    
+    _type = Type::NONE;
+}
+
+void Value::reset(Type type)
+{
+    if (_type == type)
+        return;
+
+    clear();
 
     // Allocate memory for the new value
     switch (type)

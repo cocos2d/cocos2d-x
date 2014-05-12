@@ -51,12 +51,12 @@
 --------------------------------
 -- @function [parent=#Widget] setPositionType 
 -- @param self
--- @param #ccui.PositionType positiontype
+-- @param #ccui.Widget::PositionType positiontype
         
 --------------------------------
 -- @function [parent=#Widget] getName 
 -- @param self
--- @return char#char ret (return value: char)
+-- @return string#string ret (return value: string)
         
 --------------------------------
 -- @function [parent=#Widget] isIgnoreContentAdaptWithSize 
@@ -76,23 +76,23 @@
 --------------------------------
 -- @function [parent=#Widget] getLayoutParameter 
 -- @param self
--- @param #ccui.LayoutParameterType layoutparametertype
+-- @param #ccui.LayoutParameter::Type type
 -- @return LayoutParameter#LayoutParameter ret (return value: ccui.LayoutParameter)
         
 --------------------------------
 -- @function [parent=#Widget] getPositionType 
 -- @param self
--- @return PositionType#PositionType ret (return value: ccui.PositionType)
+-- @return Widget::PositionType#Widget::PositionType ret (return value: ccui.Widget::PositionType)
         
 --------------------------------
 -- @function [parent=#Widget] getWidgetType 
 -- @param self
--- @return WidgetType#WidgetType ret (return value: ccui.WidgetType)
+-- @return Widget::Type#Widget::Type ret (return value: ccui.Widget::Type)
         
 --------------------------------
 -- @function [parent=#Widget] getChildByName 
 -- @param self
--- @param #char char
+-- @param #string str
 -- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
@@ -113,7 +113,7 @@
 --------------------------------
 -- @function [parent=#Widget] findNextFocusedWidget 
 -- @param self
--- @param #ccui.FocusDirection focusdirection
+-- @param #ccui.Widget::FocusDirection focusdirection
 -- @param #ccui.Widget widget
 -- @return Widget#Widget ret (return value: ccui.Widget)
         
@@ -169,12 +169,12 @@
 --------------------------------
 -- @function [parent=#Widget] setBrightStyle 
 -- @param self
--- @param #ccui.BrightStyle brightstyle
+-- @param #ccui.Widget::BrightStyle brightstyle
         
 --------------------------------
 -- @function [parent=#Widget] setName 
 -- @param self
--- @param #char char
+-- @param #string str
         
 --------------------------------
 -- @function [parent=#Widget] setLayoutParameter 
@@ -249,12 +249,17 @@
 --------------------------------
 -- @function [parent=#Widget] getSizeType 
 -- @param self
--- @return SizeType#SizeType ret (return value: ccui.SizeType)
+-- @return Widget::SizeType#Widget::SizeType ret (return value: ccui.Widget::SizeType)
         
 --------------------------------
 -- @function [parent=#Widget] ignoreContentAdaptWithSize 
 -- @param self
 -- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#Widget] addTouchEventListener 
+-- @param self
+-- @param #function func
         
 --------------------------------
 -- @function [parent=#Widget] getPositionPercent 
@@ -280,7 +285,7 @@
 --------------------------------
 -- @function [parent=#Widget] setSizeType 
 -- @param self
--- @param #ccui.SizeType sizetype
+-- @param #ccui.Widget::SizeType sizetype
         
 --------------------------------
 -- @function [parent=#Widget] checkChildInfo 

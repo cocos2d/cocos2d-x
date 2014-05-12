@@ -11,7 +11,7 @@ public:
     UISliderTest_Editor();
     ~UISliderTest_Editor();
     bool init();
-    void sliderEvent(Ref* pSender, SliderEventType type);
+    void sliderEvent(Ref* pSender, Slider::EventType type);
     
 protected:
     UI_SCENE_EDITOR_CREATE_FUNC(UISliderTest_Editor)

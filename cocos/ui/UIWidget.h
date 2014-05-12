@@ -26,71 +26,91 @@ THE SOFTWARE.
 #define __UIWIDGET_H__
 
 #include "ui/CCProtectedNode.h"
-#include "ui/UILayoutDefine.h"
 #include "ui/UILayoutParameter.h"
 #include "ui/GUIDefine.h"
 
 NS_CC_BEGIN
 
 namespace ui {
-
-typedef enum
-{
-    BRIGHT_NONE = -1,
-    BRIGHT_NORMAL,
-    BRIGHT_HIGHLIGHT
-}BrightStyle;
-
-typedef enum
-{
-    WidgetTypeWidget, //control
-    WidgetTypeContainer //container
-}WidgetType;
-
-typedef enum
-{
-    UI_TEX_TYPE_LOCAL = 0,
-    UI_TEX_TYPE_PLIST = 1
-}TextureResType;
-
-typedef enum
+    
+CC_DEPRECATED_ATTRIBUTE typedef enum
 {
     TOUCH_EVENT_BEGAN,
     TOUCH_EVENT_MOVED,
     TOUCH_EVENT_ENDED,
     TOUCH_EVENT_CANCELED
 }TouchEventType;
-
-typedef enum
-{
-    SIZE_ABSOLUTE,
-    SIZE_PERCENT
-}SizeType;
-
-typedef enum
-{
-    POSITION_ABSOLUTE,
-    POSITION_PERCENT
-}PositionType;
     
-enum class FocusDirection
-{
-    FocusDirection_Left,
-    FocusDirection_Right,
-    FocusDirection_Up,
-    FocusDirection_Down
-};
-    
-
-typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType);
+CC_DEPRECATED_ATTRIBUTE typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType);
 #define toucheventselector(_SELECTOR) (SEL_TouchEvent)(&_SELECTOR)
+
+
 /**
 *   @js NA
 *   @lua NA
 */
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#ifdef ABSOLUTE
+#undef ABSOLUTE
+#endif
+#endif
+
+
 class Widget : public ProtectedNode
 {
 public:
+    enum class FocusDirection
+    {
+        LEFT,
+        RIGHT,
+        UP,
+        DOWN
+    };
+    
+    enum class PositionType
+    {
+        ABSOLUTE,
+        PERCENT
+    };
+    
+    enum class SizeType
+    {
+        ABSOLUTE,
+        PERCENT
+    };
+    
+    enum class TouchEventType
+    {
+        BEGAN,
+        MOVED,
+        ENDED,
+        CANCELED
+    };
+    
+    enum class TextureResType
+    {
+        LOCAL = 0,
+        PLIST = 1
+    };
+    
+    enum class Type
+    {
+        ELEMENT,
+        CONTAINER
+    };
+    
+    enum class BrightStyle
+    {
+        NONE = -1,
+        NORMAL,
+        HIGHLIGHT
+    };
+
+    
+    typedef std::function<void(Ref*,Widget::TouchEventType)> ccWidgetTouchCallback;
+
+    
     /**
      * Default constructor
      */
@@ -215,15 +235,15 @@ public:
      *
      * @return a Widget object whose name equals to the input parameter
      */
-    virtual Widget* getChildByName(const char* name);
+    virtual Widget* getChildByName(const std::string& name);
 
     virtual void visit(cocos2d::Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated) override;
 
     /**
      * Sets the touch event target/selector of the menu item
      */
-    void addTouchEventListener(Ref* target,SEL_TouchEvent selector);
-
+    CC_DEPRECATED_ATTRIBUTE void addTouchEventListener(Ref* target,SEL_TouchEvent selector);
+    void addTouchEventListener(ccWidgetTouchCallback callback);
 
     //cocos2d property
 
@@ -372,18 +392,18 @@ public:
     /**
      * Changes the name that is used to identify the widget easily.
      *
-     * @param A const char* that indentifies the widget.
+     * @param A const std::string that indentifies the widget.
      */
-    void setName(const char* name);
+    void setName(const std::string& name);
 
     /**
      * Returns a name that is used to identify the widget easily.
      *
      * You can set tags to widget then identify them easily.
      *
-     * @return A const char* that identifies the widget.
+     * @return A const std::string that identifies the widget.
      */
-    const char* getName() const;
+    const std::string& getName() const;
 
     /**
      * Returns a type that is widget's type
@@ -392,7 +412,7 @@ public:
      *
      * @return A WidgetType
      */
-    WidgetType getWidgetType() const;
+    Type getWidgetType() const;
 
     /**
      * Changes the size that is widget's size
@@ -478,7 +498,7 @@ public:
      *
      * @return LayoutParameter
      */
-    LayoutParameter* getLayoutParameter(LayoutParameterType type);
+    LayoutParameter* getLayoutParameter(LayoutParameter::Type type);
 
     /**
      * Ignore the widget size
@@ -639,10 +659,27 @@ protected:
     Vector2 _touchStartPos;    ///< touch began point
     Vector2 _touchMovePos;     ///< touch moved point
     Vector2 _touchEndPos;      ///< touch ended point
+    
+    //if use the old API, we must retain the _touchEventListener
     Ref*       _touchEventListener;
+    
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (push)
+#pragma warning (disable: 4996)
+#endif
     SEL_TouchEvent    _touchEventSelector;
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic warning "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (pop)
+#endif
+    
+    ccWidgetTouchCallback _touchEventCallback;
+    
     std::string _name;
-    WidgetType _widgetType;
+    Type _widgetType;
 	int _actionTag;
     Size _size;
     Size _customSize;

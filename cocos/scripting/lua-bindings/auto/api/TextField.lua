@@ -59,6 +59,11 @@
 -- @param #cc.TextVAlignment textvalignment
         
 --------------------------------
+-- @function [parent=#TextField] addEventListener 
+-- @param self
+-- @param #function func
+        
+--------------------------------
 -- @function [parent=#TextField] didNotSelectSelf 
 -- @param self
         

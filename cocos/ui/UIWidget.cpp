@@ -39,22 +39,22 @@ _bright(true),
 _touchEnabled(false),
 _touchPassedEnabled(false),
 _highlight(false),
-_brightStyle(BRIGHT_NONE),
+_brightStyle(BrightStyle::NONE),
 _touchStartPos(Vector2::ZERO),
 _touchMovePos(Vector2::ZERO),
 _touchEndPos(Vector2::ZERO),
 _touchEventListener(nullptr),
 _touchEventSelector(nullptr),
 _name("default"),
-_widgetType(WidgetTypeWidget),
+_widgetType(Type::ELEMENT),
 _actionTag(0),
 _size(Size::ZERO),
 _customSize(Size::ZERO),
 _ignoreSize(false),
 _affectByClipping(false),
-_sizeType(SIZE_ABSOLUTE),
+_sizeType(SizeType::ABSOLUTE),
 _sizePercent(Vector2::ZERO),
-_positionType(POSITION_ABSOLUTE),
+_positionType(PositionType::ABSOLUTE),
 _positionPercent(Vector2::ZERO),
 _reorderWidgetChildDirty(true),
 _hitted(false),
@@ -72,9 +72,9 @@ _focusEnabled(true)
 
 Widget::~Widget()
 {
-    _touchEventListener = nullptr;
-    _touchEventSelector = nullptr;
     setTouchEnabled(false);
+    
+    //cleanup focused widget
     if (_focusedWidget == this) {
         _focusedWidget = nullptr;
     }
@@ -162,7 +162,7 @@ void Widget::setEnabled(bool enabled)
     }
 }
 
-Widget* Widget::getChildByName(const char *name)
+Widget* Widget::getChildByName(const std::string& name)
 {
     for (auto& child : _children)
     {
@@ -171,7 +171,7 @@ Widget* Widget::getChildByName(const char *name)
             Widget* widgetChild = dynamic_cast<Widget*>(child);
             if (widgetChild)
             {
-                if (strcmp(widgetChild->getName(), name) == 0)
+                if (widgetChild->getName() == name)
                 {
                     return widgetChild;
                 }
@@ -270,7 +270,7 @@ void Widget::updateSizeAndPosition(const cocos2d::Size &parentSize)
 {
     switch (_sizeType)
     {
-        case SIZE_ABSOLUTE:
+        case SizeType::ABSOLUTE:
         {
             if (_ignoreSize)
             {
@@ -293,7 +293,7 @@ void Widget::updateSizeAndPosition(const cocos2d::Size &parentSize)
             _sizePercent = Vector2(spx, spy);
             break;
         }
-        case SIZE_PERCENT:
+        case SizeType::PERCENT:
         {
             Size cSize = Size(parentSize.width * _sizePercent.x , parentSize.height * _sizePercent.y);
             if (_ignoreSize)
@@ -314,7 +314,7 @@ void Widget::updateSizeAndPosition(const cocos2d::Size &parentSize)
     Vector2 absPos = getPosition();
     switch (_positionType)
     {
-        case POSITION_ABSOLUTE:
+        case PositionType::ABSOLUTE:
         {
             if (parentSize.width <= 0.0f || parentSize.height <= 0.0f)
             {
@@ -326,7 +326,7 @@ void Widget::updateSizeAndPosition(const cocos2d::Size &parentSize)
             }
             break;
         }
-        case POSITION_PERCENT:
+        case PositionType::PERCENT:
         {
             absPos = Vector2(parentSize.width * _positionPercent.x, parentSize.height * _positionPercent.y);
             break;
@@ -342,7 +342,7 @@ void Widget::setSizeType(SizeType type)
     _sizeType = type;
 }
 
-SizeType Widget::getSizeType() const
+Widget::SizeType Widget::getSizeType() const
 {
     return _sizeType;
 }
@@ -473,11 +473,11 @@ void Widget::setHighlighted(bool hilight)
     {
         if (_highlight)
         {
-            setBrightStyle(BRIGHT_HIGHLIGHT);
+            setBrightStyle(BrightStyle::HIGHLIGHT);
         }
         else
         {
-            setBrightStyle(BRIGHT_NORMAL);
+            setBrightStyle(BrightStyle::NORMAL);
         }
     }
     else
@@ -491,8 +491,8 @@ void Widget::setBright(bool bright)
     _bright = bright;
     if (_bright)
     {
-        _brightStyle = BRIGHT_NONE;
-        setBrightStyle(BRIGHT_NORMAL);
+        _brightStyle = BrightStyle::NONE;
+        setBrightStyle(BrightStyle::NORMAL);
     }
     else
     {
@@ -509,10 +509,10 @@ void Widget::setBrightStyle(BrightStyle style)
     _brightStyle = style;
     switch (_brightStyle)
     {
-        case BRIGHT_NORMAL:
+        case BrightStyle::NORMAL:
             onPressStateChangedToNormal();
             break;
-        case BRIGHT_HIGHLIGHT:
+        case BrightStyle::HIGHLIGHT:
             onPressStateChangedToPressed();
             break;
         default:
@@ -605,6 +605,10 @@ void Widget::onTouchCancelled(Touch *touch, Event *unusedEvent)
 
 void Widget::pushDownEvent()
 {
+    if (_touchEventCallback) {
+        _touchEventCallback(this, TouchEventType::BEGAN);
+    }
+    
     if (_touchEventListener && _touchEventSelector)
     {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_BEGAN);
@@ -613,6 +617,10 @@ void Widget::pushDownEvent()
 
 void Widget::moveEvent()
 {
+    if (_touchEventCallback) {
+        _touchEventCallback(this, TouchEventType::MOVED);
+    }
+    
     if (_touchEventListener && _touchEventSelector)
     {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_MOVED);
@@ -621,6 +629,11 @@ void Widget::moveEvent()
 
 void Widget::releaseUpEvent()
 {
+    
+    if (_touchEventCallback) {
+        _touchEventCallback(this, TouchEventType::ENDED);
+    }
+    
     if (_touchEventListener && _touchEventSelector)
     {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_ENDED);
@@ -629,16 +642,27 @@ void Widget::releaseUpEvent()
 
 void Widget::cancelUpEvent()
 {
+    if (_touchEventCallback)
+    {
+        _touchEventCallback(this, TouchEventType::CANCELED);
+    }
+   
     if (_touchEventListener && _touchEventSelector)
     {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_CANCELED);
     }
+   
 }
 
 void Widget::addTouchEventListener(Ref *target, SEL_TouchEvent selector)
 {
     _touchEventListener = target;
     _touchEventSelector = selector;
+}
+    
+void Widget::addTouchEventListener(Widget::ccWidgetTouchCallback callback)
+{
+    this->_touchEventCallback = callback;
 }
 
 bool Widget::hitTest(const Vector2 &pt)
@@ -750,7 +774,7 @@ void Widget::setPositionType(PositionType type)
     _positionType = type;
 }
 
-PositionType Widget::getPositionType() const
+Widget::PositionType Widget::getPositionType() const
 {
     return _positionType;
 }
@@ -800,17 +824,17 @@ const Vector2& Widget::getTouchEndPos()
     return _touchEndPos;
 }
 
-void Widget::setName(const char* name)
+void Widget::setName(const std::string& name)
 {
     _name = name;
 }
 
-const char* Widget::getName() const
+const std::string& Widget::getName() const
 {
-    return _name.c_str();
+    return _name;
 }
 
-WidgetType Widget::getWidgetType() const
+Widget::Type Widget::getWidgetType() const
 {
     return _widgetType;
 }
@@ -821,12 +845,12 @@ void Widget::setLayoutParameter(LayoutParameter *parameter)
     {
         return;
     }
-    _layoutParameterDictionary.insert(parameter->getLayoutType(), parameter);
+    _layoutParameterDictionary.insert((int)parameter->getLayoutType(), parameter);
 }
 
-LayoutParameter* Widget::getLayoutParameter(LayoutParameterType type)
+LayoutParameter* Widget::getLayoutParameter(LayoutParameter::Type type)
 {
-    return dynamic_cast<LayoutParameter*>(_layoutParameterDictionary.at(type));
+    return dynamic_cast<LayoutParameter*>(_layoutParameterDictionary.at((int)type));
 }
 
 std::string Widget::getDescription() const
@@ -896,6 +920,7 @@ void Widget::copyProperties(Widget *widget)
     setFlippedY(widget->isFlippedY());
     setColor(widget->getColor());
     setOpacity(widget->getOpacity());
+    //FIXME:copy focus properties, also make sure all the subclass the copy behavior is correct
     Map<int, LayoutParameter*>& layoutParameterDic = widget->_layoutParameterDictionary;
     for (auto iter = layoutParameterDic.begin(); iter != layoutParameterDic.end(); ++iter)
     {
@@ -984,12 +1009,13 @@ bool Widget::isFocusEnabled()
     return _focusEnabled;
 }
 
-Widget* Widget::findNextFocusedWidget(cocos2d::ui::FocusDirection direction,  Widget* current)
+Widget* Widget::findNextFocusedWidget(FocusDirection direction,  Widget* current)
 {
     if (nullptr == onNextFocusedWidget || nullptr == onNextFocusedWidget(direction) ) {
         if (this->isFocused() || !current->isFocusEnabled())
         {
             Node* parent = this->getParent();
+            
             Layout* layout = dynamic_cast<Layout*>(parent);
             if (nullptr == layout)
             {

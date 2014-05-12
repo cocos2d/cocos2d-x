@@ -26,7 +26,7 @@ public:
     virtual void onDownKeyPressed();
     virtual void onFocusChanged(Widget* widgetLostFocus, Widget* widgetGetFocus);
 
-    void onImageViewClicked(Ref* ref, TouchEventType touchType);
+    void onImageViewClicked(Ref* ref, Widget::TouchEventType touchType);
 
 protected:
     Menu *_dpadMenu;
@@ -42,7 +42,7 @@ public:
     bool init();
    
     
-    void toggleFocusLoop(Ref*,TouchEventType);
+    void toggleFocusLoop(Ref*,Widget::TouchEventType);
     
 protected:
     UI_SCENE_CREATE_FUNC(UIFocusTestHorizontal);
@@ -58,7 +58,7 @@ public:
     bool init();
    
     
-    void toggleFocusLoop(Ref*,TouchEventType);
+    void toggleFocusLoop(Ref*,Widget::TouchEventType);
 protected:
     UI_SCENE_CREATE_FUNC(UIFocusTestVertical);
     Layout *_verticalLayout;
@@ -73,7 +73,7 @@ public:
     bool init();
     
     
-    void toggleFocusLoop(Ref*,TouchEventType);
+    void toggleFocusLoop(Ref*,Widget::TouchEventType);
 protected:
     UI_SCENE_CREATE_FUNC(UIFocusTestNestedLayout1);
     Layout *_verticalLayout;
@@ -88,7 +88,7 @@ public:
     bool init();
     
     
-    void toggleFocusLoop(Ref*,TouchEventType);
+    void toggleFocusLoop(Ref*,Widget::TouchEventType);
 protected:
     UI_SCENE_CREATE_FUNC(UIFocusTestNestedLayout2);
     Layout *_horizontalLayout;
@@ -103,7 +103,7 @@ public:
     bool init();
     
     
-    void toggleFocusLoop(Ref*,TouchEventType);
+    void toggleFocusLoop(Ref*,Widget::TouchEventType);
 protected:
     UI_SCENE_CREATE_FUNC(UIFocusTestNestedLayout3);
     Layout *_verticalLayout;

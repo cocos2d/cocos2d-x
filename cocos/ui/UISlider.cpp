@@ -56,13 +56,14 @@ _capInsetsBarRenderer(Rect::ZERO),
 _capInsetsProgressBarRenderer(Rect::ZERO),
 _sliderEventListener(nullptr),
 _sliderEventSelector(nullptr),
-_barTexType(UI_TEX_TYPE_LOCAL),
-_progressBarTexType(UI_TEX_TYPE_LOCAL),
-_ballNTexType(UI_TEX_TYPE_LOCAL),
-_ballPTexType(UI_TEX_TYPE_LOCAL),
-_ballDTexType(UI_TEX_TYPE_LOCAL),
+_barTexType(TextureResType::LOCAL),
+_progressBarTexType(TextureResType::LOCAL),
+_ballNTexType(TextureResType::LOCAL),
+_ballPTexType(TextureResType::LOCAL),
+_ballDTexType(TextureResType::LOCAL),
 _barRendererAdaptDirty(true),
-_progressBarRendererDirty(true)
+_progressBarRendererDirty(true),
+_eventCallback(nullptr)
 {
 }
 
@@ -123,7 +124,7 @@ void Slider::loadBarTexture(const std::string& fileName, TextureResType texType)
     _barTexType = texType;
     switch (_barTexType)
     {
-        case UI_TEX_TYPE_LOCAL:
+        case TextureResType::LOCAL:
             if (_scale9Enabled)
             {
                 static_cast<extension::Scale9Sprite*>(_barRenderer)->initWithFile(fileName);
@@ -133,7 +134,7 @@ void Slider::loadBarTexture(const std::string& fileName, TextureResType texType)
                 static_cast<Sprite*>(_barRenderer)->setTexture(fileName);
             }
             break;
-        case UI_TEX_TYPE_PLIST:
+        case TextureResType::PLIST:
             if (_scale9Enabled)
             {
                 static_cast<extension::Scale9Sprite*>(_barRenderer)->initWithSpriteFrameName(fileName);
@@ -162,7 +163,7 @@ void Slider::loadProgressBarTexture(const std::string& fileName, TextureResType 
     _progressBarTexType = texType;
     switch (_progressBarTexType)
     {
-        case UI_TEX_TYPE_LOCAL:
+        case TextureResType::LOCAL:
             if (_scale9Enabled)
             {
                 static_cast<extension::Scale9Sprite*>(_progressBarRenderer)->initWithFile(fileName);
@@ -172,7 +173,7 @@ void Slider::loadProgressBarTexture(const std::string& fileName, TextureResType 
                 static_cast<Sprite*>(_progressBarRenderer)->setTexture(fileName);
             }
             break;
-        case UI_TEX_TYPE_PLIST:
+        case TextureResType::PLIST:
             if (_scale9Enabled)
             {
                 static_cast<extension::Scale9Sprite*>(_progressBarRenderer)->initWithSpriteFrameName(fileName);
@@ -298,10 +299,10 @@ void Slider::loadSlidBallTextureNormal(const std::string& normal,TextureResType 
     _ballNTexType = texType;
     switch (_ballNTexType)
     {
-        case UI_TEX_TYPE_LOCAL:
+        case TextureResType::LOCAL:
             _slidBallNormalRenderer->setTexture(normal);
             break;
-        case UI_TEX_TYPE_PLIST:
+        case TextureResType::PLIST:
             _slidBallNormalRenderer->setSpriteFrame(normal);
             break;
         default:
@@ -320,10 +321,10 @@ void Slider::loadSlidBallTexturePressed(const std::string& pressed,TextureResTyp
     _ballPTexType = texType;
     switch (_ballPTexType)
     {
-        case UI_TEX_TYPE_LOCAL:
+        case TextureResType::LOCAL:
             _slidBallPressedRenderer->setTexture(pressed);
             break;
-        case UI_TEX_TYPE_PLIST:
+        case TextureResType::PLIST:
             _slidBallPressedRenderer->setSpriteFrame(pressed);
             break;
         default:
@@ -342,10 +343,10 @@ void Slider::loadSlidBallTexturePressed(const std::string& pressed,TextureResTyp
     _ballDTexType = texType;
     switch (_ballDTexType)
     {
-        case UI_TEX_TYPE_LOCAL:
+        case TextureResType::LOCAL:
             _slidBallDisabledRenderer->setTexture(disabled);
             break;
-        case UI_TEX_TYPE_PLIST:
+        case TextureResType::PLIST:
             _slidBallDisabledRenderer->setSpriteFrame(disabled);
             break;
         default:
@@ -432,12 +433,20 @@ void Slider::addEventListenerSlider(Ref *target, SEL_SlidPercentChangedEvent sel
     _sliderEventListener = target;
     _sliderEventSelector = selector;
 }
+    
+void Slider::addEventListener(ccSliderCallback callback)
+{
+    _eventCallback = callback;
+}
 
 void Slider::percentChangedEvent()
 {
     if (_sliderEventListener && _sliderEventSelector)
     {
         (_sliderEventListener->*_sliderEventSelector)(this,SLIDER_PERCENTCHANGED);
+    }
+    if (_eventCallback) {
+        _eventCallback(this, EventType::ON_PERCENTAGE_CHANGED);
     }
 }
 
