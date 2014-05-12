@@ -162,7 +162,7 @@ void Widget::setEnabled(bool enabled)
     }
 }
 
-Widget* Widget::getChildByName(const char *name)
+Widget* Widget::getChildByName(const std::string& name)
 {
     for (auto& child : _children)
     {
@@ -171,7 +171,7 @@ Widget* Widget::getChildByName(const char *name)
             Widget* widgetChild = dynamic_cast<Widget*>(child);
             if (widgetChild)
             {
-                if (strcmp(widgetChild->getName(), name) == 0)
+                if (widgetChild->getName() == name)
                 {
                     return widgetChild;
                 }
@@ -824,14 +824,14 @@ const Vector2& Widget::getTouchEndPos()
     return _touchEndPos;
 }
 
-void Widget::setName(const char* name)
+void Widget::setName(const std::string& name)
 {
     _name = name;
 }
 
-const char* Widget::getName() const
+const std::string& Widget::getName() const
 {
-    return _name.c_str();
+    return _name;
 }
 
 Widget::Type Widget::getWidgetType() const

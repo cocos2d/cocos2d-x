@@ -298,7 +298,7 @@ public:
     
     virtual Node * getChildByTag(int tag) override;
     
-    virtual Widget* getChildByName(const char* name) override;
+    virtual Widget* getChildByName(const std::string& name) override;
     
     virtual bool onTouchBegan(Touch *touch, Event *unusedEvent) override;
     virtual void onTouchMoved(Touch *touch, Event *unusedEvent) override;

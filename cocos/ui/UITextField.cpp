@@ -61,14 +61,14 @@ UICCTextField::~UICCTextField()
 {
 }
 
-UICCTextField * UICCTextField::create(const char *placeholder, const char *fontName, float fontSize)
+UICCTextField * UICCTextField::create(const std::string& placeholder, const std::string& fontName, float fontSize)
 {
     UICCTextField *pRet = new UICCTextField();
     
     if(pRet && pRet->initWithPlaceHolder("", fontName, fontSize))
     {
         pRet->autorelease();
-        if (placeholder)
+        if (!placeholder.empty())
         {
             pRet->setPlaceHolder(placeholder);
         }
@@ -121,7 +121,7 @@ bool UICCTextField::onTextFieldDetachWithIME(TextFieldTTF *pSender)
     return false;
 }
 
-void UICCTextField::insertText(const char * text, size_t len)
+void UICCTextField::insertText(const char*  text, size_t len)
 {
     std::string input_text = text;
     
@@ -276,9 +276,9 @@ bool UICCTextField::isPasswordEnabled()
     return _passwordEnabled;
 }
 
-void UICCTextField::setPasswordStyleText(const char* styleText)
+void UICCTextField::setPasswordStyleText(const std::string& styleText)
 {
-    if (strlen(styleText) > 1)
+    if (styleText.length() > 1)
     {
         return;
     }
@@ -290,10 +290,10 @@ void UICCTextField::setPasswordStyleText(const char* styleText)
     _passwordStyleText = styleText;
 }
 
-void UICCTextField::setPasswordText(const char *text)
+void UICCTextField::setPasswordText(const std::string& text)
 {
     std::string tempStr = "";
-    int text_count = _calcCharCount(text);
+    int text_count = _calcCharCount(text.c_str());
     int max = text_count;
     
     if (_maxLengthEnabled)

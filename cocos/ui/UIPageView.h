@@ -184,7 +184,7 @@ protected:
     virtual const Vector<Node*>& getChildren() const override{return Widget::getChildren();};
     virtual ssize_t getChildrenCount() const override {return Widget::getChildrenCount();};
     virtual Node * getChildByTag(int tag) override {return Widget::getChildByTag(tag);};
-    virtual Widget* getChildByName(const char* name) override {return Widget::getChildByName(name);};
+virtual Widget* getChildByName(const std::string& name) override {return Widget::getChildByName(name);};
 
     Layout* createPage();
     float getPositionXByIndex(ssize_t idx);

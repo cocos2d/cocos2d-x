@@ -227,7 +227,7 @@ public:
      *
      * @return a Widget object whose name equals to the input parameter
      */
-    virtual Widget* getChildByName(const char* name);
+    virtual Widget* getChildByName(const std::string& name);
 
     virtual void visit(cocos2d::Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated) override;
 
@@ -384,18 +384,18 @@ public:
     /**
      * Changes the name that is used to identify the widget easily.
      *
-     * @param A const char* that indentifies the widget.
+     * @param A const std::string that indentifies the widget.
      */
-    void setName(const char* name);
+    void setName(const std::string& name);
 
     /**
      * Returns a name that is used to identify the widget easily.
      *
      * You can set tags to widget then identify them easily.
      *
-     * @return A const char* that identifies the widget.
+     * @return A const std::string that identifies the widget.
      */
-    const char* getName() const;
+    const std::string& getName() const;
 
     /**
      * Returns a type that is widget's type

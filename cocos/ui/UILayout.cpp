@@ -234,19 +234,19 @@ void RelativeLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Vector<c
                 Vector2 ap = child->getAnchorPoint();
                 Size cs = child->getSize();
                 RelativeLayoutParameter::RelativeAlign align = layoutParameter->getAlign();
-                const char* relativeName = layoutParameter->getRelativeToWidgetName();
+                const std::string relativeName = layoutParameter->getRelativeToWidgetName();
                 Widget* relativeWidget = nullptr;
                 RelativeLayoutParameter* relativeWidgetLP = nullptr;
                 float finalPosX = 0.0f;
                 float finalPosY = 0.0f;
-                if (relativeName && strcmp(relativeName, ""))
+                if (!relativeName.empty())
                 {
                     for (auto& sWidget : widgetChildren)
                     {
                         if (sWidget)
                         {
                             RelativeLayoutParameter* rlayoutParameter = dynamic_cast<RelativeLayoutParameter*>(sWidget->getLayoutParameter(LayoutParameter::Type::RELATIVE));
-                            if (rlayoutParameter && strcmp(rlayoutParameter->getRelativeName(), relativeName) == 0)
+                            if (rlayoutParameter &&  rlayoutParameter->getRelativeName() == relativeName)
                             {
                                 relativeWidget = sWidget;
                                 relativeWidgetLP = rlayoutParameter;

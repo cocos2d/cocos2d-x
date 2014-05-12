@@ -164,24 +164,24 @@ RelativeLayoutParameter::RelativeAlign RelativeLayoutParameter::getAlign() const
     return _relativeAlign;
 }
 
-void RelativeLayoutParameter::setRelativeToWidgetName(const char *name)
+void RelativeLayoutParameter::setRelativeToWidgetName(const std::string& name)
 {
     _relativeWidgetName = name;
 }
 
-const char* RelativeLayoutParameter::getRelativeToWidgetName() const
+const std::string& RelativeLayoutParameter::getRelativeToWidgetName() const
 {
-    return _relativeWidgetName.c_str();
+    return _relativeWidgetName;
 }
 
-void RelativeLayoutParameter::setRelativeName(const char* name)
+void RelativeLayoutParameter::setRelativeName(const std::string& name)
 {
     _relativeLayoutName = name;
 }
 
-const char* RelativeLayoutParameter::getRelativeName() const
+const std::string& RelativeLayoutParameter::getRelativeName() const
 {
-    return _relativeLayoutName.c_str();
+    return _relativeLayoutName;
 }
     
 LayoutParameter* RelativeLayoutParameter::createCloneInstance()
@@ -196,8 +196,8 @@ void RelativeLayoutParameter::copyProperties(LayoutParameter *model)
     if (parameter)
     {
         setAlign(parameter->_relativeAlign);
-        setRelativeName(parameter->_relativeLayoutName.c_str());
-        setRelativeToWidgetName(parameter->_relativeWidgetName.c_str());
+        setRelativeName(parameter->_relativeLayoutName);
+        setRelativeToWidgetName(parameter->_relativeWidgetName);
     }
 }
 

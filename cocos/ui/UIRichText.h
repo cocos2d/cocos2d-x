@@ -56,8 +56,8 @@ class RichElementText : public RichElement
 public:
     RichElementText(){_type = Type::TEXT;};
     virtual ~RichElementText(){};
-    bool init(int tag, const Color3B& color, GLubyte opacity, const char* text, const char* fontName, float fontSize);
-    static RichElementText* create(int tag, const Color3B& color, GLubyte opacity, const char* text, const char* fontName, float fontSize);
+    bool init(int tag, const Color3B& color, GLubyte opacity, const std::string& text, const std::string& fontName, float fontSize);
+    static RichElementText* create(int tag, const Color3B& color, GLubyte opacity, const std::string& text, const std::string& fontName, float fontSize);
 protected:
     std::string _text;
     std::string _fontName;
@@ -71,8 +71,8 @@ class RichElementImage : public RichElement
 public:
     RichElementImage(){_type = Type::IMAGE;};
     virtual ~RichElementImage(){};
-    bool init(int tag, const Color3B& color, GLubyte opacity, const char* filePath);
-    static RichElementImage* create(int tag, const Color3B& color, GLubyte opacity, const char* filePath);
+    bool init(int tag, const Color3B& color, GLubyte opacity, const std::string& filePath);
+    static RichElementImage* create(int tag, const Color3B& color, GLubyte opacity, const std::string& filePath);
 protected:
     std::string _filePath;
     Rect _textureRect;
@@ -116,8 +116,8 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
     virtual void initRenderer();
     void pushToContainer(Node* renderer);
-    void handleTextRenderer(const char* text, const char* fontName, float fontSize, const Color3B& color, GLubyte opacity);
-    void handleImageRenderer(const char* fileParh, const Color3B& color, GLubyte opacity);
+    void handleTextRenderer(const std::string& text, const std::string& fontName, float fontSize, const Color3B& color, GLubyte opacity);
+    void handleImageRenderer(const std::string& fileParh, const Color3B& color, GLubyte opacity);
     void handleCustomRenderer(Node* renderer);
     void formarRenderers();
     void addNewLine();

@@ -268,28 +268,28 @@ public:
      *
      * @param name
      */
-    void setRelativeToWidgetName(const char* name);
+    void setRelativeToWidgetName(const std::string& name);
     
     /**
      * Gets the key of LayoutParameter. Witch widget named this is relative to.
      *
      * @return name
      */
-    const char* getRelativeToWidgetName() const;
+    const std::string& getRelativeToWidgetName() const;
     
     /**
      * Sets a name in Relative Layout for LayoutParameter.
      *
      * @param name
      */
-    void setRelativeName(const char* name);
+    void setRelativeName(const std::string& name);
     
     /**
      * Gets a name in Relative Layout of LayoutParameter.
      *
      * @return name
      */
-    const char* getRelativeName() const;
+    const std::string& getRelativeName() const;
     
     virtual LayoutParameter* createCloneInstance() override;
     virtual void copyProperties(LayoutParameter* model) override;

@@ -44,7 +44,7 @@ public:
     virtual void onEnter() override;
     
     // static
-    static UICCTextField* create(const char *placeholder, const char *fontName, float fontSize);
+    static UICCTextField* create(const std::string& placeholder, const std::string& fontName, float fontSize);
     
     // CCTextFieldDelegate
     virtual bool onTextFieldAttachWithIME(TextFieldTTF *pSender) override;
@@ -65,8 +65,8 @@ public:
     int getCharCount();
     void setPasswordEnabled(bool enable);
     bool isPasswordEnabled();
-    void setPasswordStyleText(const char* styleText);
-    void setPasswordText(const char* text);
+    void setPasswordStyleText(const std::string& styleText);
+    void setPasswordText(const std::string& text);
     void setAttachWithIME(bool attach);
     bool getAttachWithIME();
     void setDetachWithIME(bool detach);
