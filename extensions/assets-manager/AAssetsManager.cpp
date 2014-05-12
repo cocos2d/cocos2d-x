@@ -76,7 +76,7 @@ struct ProgressMessage
 
 // Implementation of AssetsManager
 
-AAssetsManager::AAssetsManager(const char* manifestUrl, const char* storagePath/* = "" */)
+AAssetsManager::AAssetsManager(const std::string& manifestUrl, const std::string& storagePath/* = "" */)
 :  _storagePath(storagePath)
 , _manifestUrl(manifestUrl)
 , _remoteManifestUrl("")
@@ -93,6 +93,8 @@ AAssetsManager::AAssetsManager(const char* manifestUrl, const char* storagePath/
 {
     _downloader = new Downloader(this);
     adjustStoragePath();
+    if (_storagePath.size() > 0)
+        prependSearchPath(_storagePath);
     loadManifest();
 }
 
@@ -106,6 +108,14 @@ void AAssetsManager::adjustStoragePath()
     {
         _storagePath.append("/");
     }
+}
+
+void AAssetsManager::prependSearchPath(const std::string& path)
+{
+    std::vector<std::string> searchPaths = FileUtils::getInstance()->getSearchPaths();
+    std::vector<std::string>::iterator iter = searchPaths.begin();
+    searchPaths.insert(iter, path);
+    FileUtils::getInstance()->setSearchPaths(searchPaths);
 }
 
 void AAssetsManager::loadManifest()
@@ -236,6 +246,7 @@ void AAssetsManager::onProgress(int percent)
 void AAssetsManager::onSuccess()
 {
     CCLOG("SUCCEED\n");
+    
     
 }
 

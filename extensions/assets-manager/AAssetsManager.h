@@ -73,7 +73,7 @@ public:
         UNCOMPRESS,
     };
     
-    AAssetsManager(const char* manifestUrl = NULL, const char* storagePath = "");
+    AAssetsManager(const std::string& manifestUrl = NULL, const std::string& storagePath = "");
     /**
      * @js NA
      * @lua NA
@@ -82,7 +82,7 @@ public:
     
     /* @brief To access within scripting environment
      */
-    static AAssetsManager* create(const char* manifestUrl, const char* storagePath = "");
+    static AAssetsManager* create(const std::string& manifestUrl, const std::string& storagePath = "");
     
     /* @brief Check out if there is a new version of manifest.
      *        You may use this method before updating, then let user determine whether
@@ -189,8 +189,8 @@ protected:
     bool downLoad();
     void adjustStoragePath();
     bool uncompress();
-    bool createDirectory(const char *path);
-    void setSearchPath();
+    bool createDirectory(const std::string& path);
+    void prependSearchPath(const std::string& path);
     void downloadAndUncompress();
     
 private:

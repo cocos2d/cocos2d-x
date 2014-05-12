@@ -79,15 +79,15 @@ public:
     
     DownloaderDelegateProtocol* getDelegate() const { return _delegate ;}
     
-    void download(const char* srcUrl, const char* storagePath);
+    void download(const std::string &srcUrl, const std::string &storagePath);
     
 protected:
     
-    void downloadAsync(const char* srcUrl, const char* storagePath);
+    void downloadAsync(const std::string &srcUrl, const std::string &storagePath);
     
-    void notifyError(ErrorCode code, const char* msg = "");
+    void notifyError(ErrorCode code, const std::string &msg = "");
     
-    bool checkStoragePath(const char* storagePath);
+    bool checkStoragePath(const std::string& storagePath);
     
 protected:
     

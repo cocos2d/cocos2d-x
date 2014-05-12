@@ -90,7 +90,7 @@ bool Downloader::init()
     return true;
 }
 
-void Downloader::notifyError(ErrorCode code, const char* msg/* ="" */)
+void Downloader::notifyError(ErrorCode code, const std::string &msg/* ="" */)
 {
     Error err;
     err.code = code;
@@ -101,9 +101,9 @@ void Downloader::notifyError(ErrorCode code, const char* msg/* ="" */)
     });
 }
 
-bool Downloader::checkStoragePath(const char* storagePath)
+bool Downloader::checkStoragePath(const std::string &storagePath)
 {
-    int l = sizeof(storagePath);
+    size_t l = storagePath.size();
     if (l > 0 && storagePath[l - 1] != '/')
     {
         return false;
@@ -111,13 +111,13 @@ bool Downloader::checkStoragePath(const char* storagePath)
     return true;
 }
 
-void Downloader::download(const char *srcUrl, const char *storagePath)
+void Downloader::download(const std::string &srcUrl, const std::string &storagePath)
 {
     auto t = std::thread(&Downloader::downloadAsync, this, srcUrl, storagePath);
     t.detach();
 }
 
-void Downloader::downloadAsync(const char* srcUrl, const char* storagePath)
+void Downloader::downloadAsync(const std::string &srcUrl, const std::string &storagePath)
 {
     // Asserts
     if (!_curl)
@@ -126,15 +126,14 @@ void Downloader::downloadAsync(const char* srcUrl, const char* storagePath)
         this->notifyError(ErrorCode::INVALID_STORAGE_PATH);
     
     // Find file name and file extension
-    std::string url(srcUrl);
     std::string filename = "";
-    unsigned long found = url.find_last_of("/\\");
+    unsigned long found = srcUrl.find_last_of("/\\");
     if (found != std::string::npos)
-        filename = url.substr(found+1);
+        filename = srcUrl.substr(found+1);
     if (filename.size() == 0)
     {
-        std::string msg = "Invalid url or filename not exist error: " + url;
-        this->notifyError(ErrorCode::INVALID_URL, msg.c_str());
+        std::string msg = "Invalid url or filename not exist error: " + srcUrl;
+        this->notifyError(ErrorCode::INVALID_URL, msg);
         return;
     }
     //std::smatch m;
@@ -147,13 +146,13 @@ void Downloader::downloadAsync(const char* srcUrl, const char* storagePath)
     if (!fp)
     {
         std::string msg = "Can not create file " + outFileName;
-        this->notifyError(ErrorCode::CREATE_FILE, msg.c_str());
+        this->notifyError(ErrorCode::CREATE_FILE, msg);
         return;
     }
     
     // Download pacakge
     CURLcode res;
-    curl_easy_setopt(_curl, CURLOPT_URL, srcUrl);
+    curl_easy_setopt(_curl, CURLOPT_URL, srcUrl.c_str());
     curl_easy_setopt(_curl, CURLOPT_WRITEFUNCTION, curlWriteFunc);
     curl_easy_setopt(_curl, CURLOPT_WRITEDATA, fp);
     curl_easy_setopt(_curl, CURLOPT_NOPROGRESS, false);
@@ -175,7 +174,7 @@ void Downloader::downloadAsync(const char* srcUrl, const char* storagePath)
     Director::getInstance()->getScheduler()->performFunctionInCocosThread([srcUrl, this]{
         if (this->_delegate)
             this->_delegate->onSuccess();
-        CCLOG("Succeed downloading file %s", srcUrl);
+        CCLOG("Succeed downloading file %s", srcUrl.c_str());
     });
     
     fclose(fp);
