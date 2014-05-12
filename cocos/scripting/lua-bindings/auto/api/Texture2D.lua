@@ -127,6 +127,11 @@
 -- @return Texture2D::PixelFormat#Texture2D::PixelFormat ret (return value: cc.Texture2D::PixelFormat)
         
 --------------------------------
+-- @function [parent=#Texture2D] setGLProgram 
+-- @param self
+-- @param #cc.GLProgram glprogram
+        
+--------------------------------
 -- @function [parent=#Texture2D] getContentSizeInPixels 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)
@@ -150,11 +155,6 @@
 -- @function [parent=#Texture2D] hasMipmaps 
 -- @param self
 -- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- @function [parent=#Texture2D] setGLProgram 
--- @param self
--- @param #cc.GLProgram glprogram
         
 --------------------------------
 -- @function [parent=#Texture2D] setMaxS 
