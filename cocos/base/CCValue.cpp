@@ -126,11 +126,13 @@ Value::Value(ValueMapIntKey&& v)
 }
 
 Value::Value(const Value& other)
+: _type(Type::NONE)
 {
     *this = other;
 }
 
 Value::Value(Value&& other)
+: _type(Type::NONE)
 {
     *this = std::move(other);
 }
@@ -192,7 +194,6 @@ Value& Value::operator= (const Value& other)
             default:
                 break;
         }
-        _type = other._type;
     }
     return *this;
 }
@@ -201,7 +202,7 @@ Value& Value::operator= (Value&& other)
 {
     if (this != &other)
     {
-        reset(other._type);
+        clear();
         switch (other._type)
         {
             case Type::BYTE:
@@ -683,14 +684,6 @@ std::string Value::getDescription()
 
 void Value::clear()
 {
-    reset(Type::NONE);
-}
-
-void Value::reset(Type type)
-{
-    if (_type == type)
-        return;
-
     // Free memory the old value allocated
     switch (_type)
     {
@@ -724,6 +717,16 @@ void Value::reset(Type type)
         default:
             break;
     }
+    
+    _type = Type::NONE;
+}
+
+void Value::reset(Type type)
+{
+    if (_type == type)
+        return;
+
+    clear();
 
     // Allocate memory for the new value
     switch (type)
