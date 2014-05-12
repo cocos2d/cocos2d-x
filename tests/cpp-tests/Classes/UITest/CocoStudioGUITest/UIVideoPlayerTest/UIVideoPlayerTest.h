@@ -24,7 +24,7 @@ public:
     void menuStopCallback(Ref* sender);
     void menuHintCallback(Ref* sender);
     
-    void sliderCallback(Ref *sender, ui::SliderEventType eventType);
+    void sliderCallback(Ref *sender, ui::Slider::EventType eventType);
 
     void videoEventCallback(Ref* sender, experimental::ui::VideoPlayer::Event eventType);
 

@@ -62,7 +62,8 @@ _ballNTexType(TextureResType::LOCAL),
 _ballPTexType(TextureResType::LOCAL),
 _ballDTexType(TextureResType::LOCAL),
 _barRendererAdaptDirty(true),
-_progressBarRendererDirty(true)
+_progressBarRendererDirty(true),
+_eventCallback(nullptr)
 {
 }
 
@@ -432,12 +433,20 @@ void Slider::addEventListenerSlider(Ref *target, SEL_SlidPercentChangedEvent sel
     _sliderEventListener = target;
     _sliderEventSelector = selector;
 }
+    
+void Slider::addEventListener(ccSliderCallback callback)
+{
+    _eventCallback = callback;
+}
 
 void Slider::percentChangedEvent()
 {
     if (_sliderEventListener && _sliderEventSelector)
     {
         (_sliderEventListener->*_sliderEventSelector)(this,SLIDER_PERCENTCHANGED);
+    }
+    if (_eventCallback) {
+        _eventCallback(this, EventType::ON_PERCENTAGE_CHANGED);
     }
 }
 

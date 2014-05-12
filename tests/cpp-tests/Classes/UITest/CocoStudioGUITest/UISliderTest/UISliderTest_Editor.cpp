@@ -36,10 +36,10 @@ bool UISliderTest_Editor::init()
         
         
         Slider* slider = static_cast<Slider*>(Helper::seekWidgetByName(root, "Slider_738"));
-        slider->addEventListenerSlider(this, sliderpercentchangedselector(UISliderTest_Editor::sliderEvent));
+        slider->addEventListener(CC_CALLBACK_2(UISliderTest_Editor::sliderEvent, this));
         
         Slider* scale9_slider = static_cast<Slider*>(Helper::seekWidgetByName(root, "Slider_740"));
-        scale9_slider->addEventListenerSlider(this, sliderpercentchangedselector(UISliderTest_Editor::sliderEvent));
+        scale9_slider->addEventListener(CC_CALLBACK_2(UISliderTest_Editor::sliderEvent, this));
         
         
         _displayValueLabel = Text::create();
@@ -56,11 +56,11 @@ bool UISliderTest_Editor::init()
     return false;
 }
 
-void UISliderTest_Editor::sliderEvent(Ref *pSender, SliderEventType type)
+void UISliderTest_Editor::sliderEvent(Ref *pSender, Slider::EventType type)
 {
     switch (type)
     {
-        case SLIDER_PERCENTCHANGED:
+        case Slider::EventType::ON_PERCENTAGE_CHANGED:
         {
             Slider* slider = static_cast<Slider*>(pSender);
             _displayValueLabel->setText(CCString::createWithFormat("percent %d", slider->getPercent())->getCString());
