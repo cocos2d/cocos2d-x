@@ -31,25 +31,14 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 namespace ui{
-
-typedef enum
-{
-    LISTVIEW_GRAVITY_LEFT,
-    LISTVIEW_GRAVITY_RIGHT,
-    LISTVIEW_GRAVITY_CENTER_HORIZONTAL,
     
-    LISTVIEW_GRAVITY_TOP,
-    LISTVIEW_GRAVITY_BOTTOM,
-    LISTVIEW_GRAVITY_CENTER_VERTICAL,
-}ListViewGravity;
-    
-typedef enum
+CC_DEPRECATED_ATTRIBUTE typedef enum
 {
     LISTVIEW_ONSELECTEDITEM_START,
     LISTVIEW_ONSELECTEDITEM_END
 }ListViewEventType;
 
-typedef void (Ref::*SEL_ListViewEvent)(Ref*,ListViewEventType);
+CC_DEPRECATED_ATTRIBUTE typedef void (Ref::*SEL_ListViewEvent)(Ref*,ListViewEventType);
 #define listvieweventselector(_SELECTOR) (SEL_ListViewEvent)(&_SELECTOR)
 
 class ListView : public ScrollView
@@ -58,6 +47,23 @@ class ListView : public ScrollView
     DECLARE_CLASS_GUI_INFO
     
 public:
+    enum class Gravity
+    {
+        LEFT,
+        RIGHT,
+        CENTER_HORIZONTAL,
+        TOP,
+        BOTTOM,
+        CENTER_VERTICAL
+    };
+    
+    enum class EventType
+    {
+        ON_SELECTED_ITEM_START,
+        ON_SELECTED_ITEM_END
+    };
+    
+    typedef std::function<void(Ref*, EventType)> ccListViewCallback;
     
     /**
      * Default constructor
@@ -144,7 +150,7 @@ public:
      * Changes the gravity of listview.
      * @see ListViewGravity
      */
-    void setGravity(ListViewGravity gravity);
+    void setGravity(Gravity gravity);
     
     /**
      * Changes the margin between each item.
@@ -159,7 +165,8 @@ public:
     
     ssize_t getCurSelectedIndex() const;
     
-    void addEventListenerListView(Ref* target, SEL_ListViewEvent selector);
+    CC_DEPRECATED_ATTRIBUTE void addEventListenerListView(Ref* target, SEL_ListViewEvent selector);
+    void addEventListener(ccListViewCallback callback);
     
     /**
      * Changes scroll direction of scrollview.
@@ -203,10 +210,24 @@ protected:
     
     Widget* _model;
     Vector<Widget*> _items;
-    ListViewGravity _gravity;
+    Gravity _gravity;
     float _itemsMargin;
+    
     Ref*       _listViewEventListener;
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (push)
+#pragma warning (disable: 4996)
+#endif
     SEL_ListViewEvent    _listViewEventSelector;
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic warning "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (pop)
+#endif
+    ccListViewCallback _eventCallback;
+    
     ssize_t _curSelectedIndex;
     bool _refreshViewDirty;
 };

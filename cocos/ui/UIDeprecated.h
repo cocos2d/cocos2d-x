@@ -115,6 +115,12 @@ CC_DEPRECATED_ATTRIBUTE const RelativeLayoutParameter::RelativeAlign RELATIVE_LO
 CC_DEPRECATED_ATTRIBUTE const RelativeLayoutParameter::RelativeAlign RELATIVE_LOCATION_BELOW_RIGHTALIGN
     = RelativeLayoutParameter::RelativeAlign::LOCATION_BELOW_RIGHTALIGN;
 
+CC_DEPRECATED_ATTRIBUTE const ListView::Gravity LISTVIEW_GRAVITY_LEFT = ListView::Gravity::LEFT;
+CC_DEPRECATED_ATTRIBUTE const ListView::Gravity LISTVIEW_GRAVITY_RIGHT = ListView::Gravity::RIGHT;
+CC_DEPRECATED_ATTRIBUTE const ListView::Gravity LISTVIEW_GRAVITY_CENTER_HORIZONTAL = ListView::Gravity::CENTER_HORIZONTAL;
+CC_DEPRECATED_ATTRIBUTE const ListView::Gravity LISTVIEW_GRAVITY_TOP = ListView::Gravity::TOP;
+CC_DEPRECATED_ATTRIBUTE const ListView::Gravity LISTVIEW_GRAVITY_BOTTOM = ListView::Gravity::BOTTOM;
+CC_DEPRECATED_ATTRIBUTE const ListView::Gravity LISTVIEW_GRAVITY_CENTER_VERTICAL = ListView::Gravity::CENTER_VERTICAL;
     
 CC_DEPRECATED_ATTRIBUTE typedef Widget::TextureResType TextureResType;
 CC_DEPRECATED_ATTRIBUTE typedef Widget::PositionType   PositionType;
@@ -127,6 +133,7 @@ CC_DEPRECATED_ATTRIBUTE typedef Layout::BackGroundColorType LayoutBackGroundColo
 CC_DEPRECATED_ATTRIBUTE typedef LayoutParameter::Type LayoutParameterType;
 CC_DEPRECATED_ATTRIBUTE typedef LinearLayoutParameter::LinearGravity LinearGravity;
 CC_DEPRECATED_ATTRIBUTE typedef RelativeLayoutParameter::RelativeAlign RelativeAlign;
+CC_DEPRECATED_ATTRIBUTE typedef ListView::Gravity ListViewGravity;
 
 
 }

@@ -66,7 +66,7 @@ bool UIListViewTest_Vertical::init()
                                     (backgroundSize.width - listView->getSize().width) / 2.0f,
                                     (widgetSize.height - backgroundSize.height) / 2.0f +
                                     (backgroundSize.height - listView->getSize().height) / 2.0f));
-        listView->addEventListenerListView(this, listvieweventselector(UIListViewTest_Vertical::selectedItemEvent));
+        listView->addEventListener(CC_CALLBACK_2(UIListViewTest_Vertical::selectedItemEvent, this));
         _uiLayer->addChild(listView);
         
         
@@ -147,7 +147,7 @@ bool UIListViewTest_Vertical::init()
         listView->removeItem(items_count - 1);
         
         // set all items layout gravity
-        listView->setGravity(LISTVIEW_GRAVITY_CENTER_VERTICAL);
+        listView->setGravity(ListView::Gravity::CENTER_VERTICAL);
         
         // set items margin
         listView->setItemsMargin(2.0f);
@@ -158,18 +158,18 @@ bool UIListViewTest_Vertical::init()
     return false;
 }
 
-void UIListViewTest_Vertical::selectedItemEvent(Ref *pSender, ListViewEventType type)
+void UIListViewTest_Vertical::selectedItemEvent(Ref *pSender, ListView::EventType type)
 {
     switch (type)
     {
-        case cocos2d::ui::LISTVIEW_ONSELECTEDITEM_START:
+        case cocos2d::ui::ListView::EventType::ON_SELECTED_ITEM_START:
         {
             ListView* listView = static_cast<ListView*>(pSender);
             CC_UNUSED_PARAM(listView);
             CCLOG("select child start index = %ld", listView->getCurSelectedIndex());
             break;
         }
-        case cocos2d::ui::LISTVIEW_ONSELECTEDITEM_END:
+        case cocos2d::ui::ListView::EventType::ON_SELECTED_ITEM_END:
         {
             ListView* listView = static_cast<ListView*>(pSender);
             CC_UNUSED_PARAM(listView);
@@ -243,7 +243,7 @@ bool UIListViewTest_Horizontal::init()
                                     (backgroundSize.width - listView->getSize().width) / 2.0f,
                                     (widgetSize.height - backgroundSize.height) / 2.0f +
                                     (backgroundSize.height - listView->getSize().height) / 2.0f));
-        listView->addEventListenerListView(this, listvieweventselector(UIListViewTest_Horizontal::selectedItemEvent));
+        listView->addEventListener(CC_CALLBACK_2(UIListViewTest_Horizontal::selectedItemEvent, this));
         _uiLayer->addChild(listView);
         
         
@@ -323,7 +323,7 @@ bool UIListViewTest_Horizontal::init()
         listView->removeItem(items_count - 1);        
         
         // set all items layout gravity
-        listView->setGravity(LISTVIEW_GRAVITY_CENTER_VERTICAL);
+        listView->setGravity(ListView::Gravity::CENTER_VERTICAL);
         
         // set items margin
         listView->setItemsMargin(2);
@@ -334,18 +334,18 @@ bool UIListViewTest_Horizontal::init()
     return false;
 }
 
-void UIListViewTest_Horizontal::selectedItemEvent(Ref *pSender, ListViewEventType type)
+void UIListViewTest_Horizontal::selectedItemEvent(Ref *pSender, ListView::EventType type)
 {
     switch (type)
     {
-        case cocos2d::ui::LISTVIEW_ONSELECTEDITEM_START:
+        case cocos2d::ui::ListView::EventType::ON_SELECTED_ITEM_START:
         {
             ListView* listView = static_cast<ListView*>(pSender);
             CC_UNUSED_PARAM(listView);
             CCLOG("select child start index = %ld", listView->getCurSelectedIndex());
             break;
         }
-        case cocos2d::ui::LISTVIEW_ONSELECTEDITEM_END:
+        case cocos2d::ui::ListView::EventType::ON_SELECTED_ITEM_END:
         {
             ListView* listView = static_cast<ListView*>(pSender);
             CC_UNUSED_PARAM(listView);

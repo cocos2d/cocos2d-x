@@ -2020,7 +2020,7 @@ void WidgetPropertiesReader0300::setPropsForListViewFromJsonDictionary(Widget* w
 	int direction = DICTOOL->getFloatValue_json(options, "direction");
 	listView->setDirection((SCROLLVIEW_DIR)direction);
     
-    ListViewGravity gravity = (ListViewGravity)DICTOOL->getIntValue_json(options, "gravity");
+    ListView::Gravity gravity = (ListView::Gravity)DICTOOL->getIntValue_json(options, "gravity");
     listView->setGravity(gravity);
     
     float itemMargin = DICTOOL->getFloatValue_json(options, "itemMargin");
