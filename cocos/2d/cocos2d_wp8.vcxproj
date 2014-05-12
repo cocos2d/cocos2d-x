@@ -188,6 +188,19 @@
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\external\ConvertUTF\ConvertUTF.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</CompileAsWinRT>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\external\ConvertUTF\ConvertUTFWrapper.cpp" />
     <ClCompile Include="..\..\external\edtaa3func\edtaa3func.cpp" />
     <ClCompile Include="..\..\external\tinyxml2\tinyxml2.cpp" />
     <ClCompile Include="..\..\external\unzip\ioapi.cpp" />
@@ -416,6 +429,7 @@
     <ClCompile Include="TGAlib.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\external\ConvertUTF\ConvertUTF.h" />
     <ClInclude Include="..\..\external\edtaa3func\edtaa3func.h" />
     <ClInclude Include="..\..\external\tinyxml2\tinyxml2.h" />
     <ClInclude Include="..\..\external\unzip\ioapi.h" />
