@@ -364,6 +364,7 @@ _touchHeight(0.0f),
 _useTouchArea(false),
 _textFieldEventListener(nullptr),
 _textFieldEventSelector(nullptr),
+_eventCallback(nullptr),
 _passwordStyleText(""),
 _textFieldRendererAdaptDirty(true)
 {
@@ -697,6 +698,9 @@ void TextField::attachWithIMEEvent()
     {
         (_textFieldEventListener->*_textFieldEventSelector)(this, TEXTFIELD_EVENT_ATTACH_WITH_IME);
     }
+    if (_eventCallback) {
+        _eventCallback(this, EventType::ATTACH_WITH_IME);
+    }
 }
 
 void TextField::detachWithIMEEvent()
@@ -704,6 +708,9 @@ void TextField::detachWithIMEEvent()
     if (_textFieldEventListener && _textFieldEventSelector)
     {
         (_textFieldEventListener->*_textFieldEventSelector)(this, TEXTFIELD_EVENT_DETACH_WITH_IME);
+    }
+    if (_eventCallback) {
+        _eventCallback(this, EventType::DETACH_WITH_IME);
     }
 }
 
@@ -713,6 +720,9 @@ void TextField::insertTextEvent()
     {
         (_textFieldEventListener->*_textFieldEventSelector)(this, TEXTFIELD_EVENT_INSERT_TEXT);
     }
+    if (_eventCallback) {
+        _eventCallback(this, EventType::INSERT_TEXT);
+    }
 }
 
 void TextField::deleteBackwardEvent()
@@ -721,12 +731,20 @@ void TextField::deleteBackwardEvent()
     {
         (_textFieldEventListener->*_textFieldEventSelector)(this, TEXTFIELD_EVENT_DELETE_BACKWARD);
     }
+    if (_eventCallback) {
+        _eventCallback(this, EventType::DELETE_BACKWARD);
+    }
 }
 
 void TextField::addEventListenerTextField(Ref *target, SEL_TextFieldEvent selecor)
 {
     _textFieldEventListener = target;
     _textFieldEventSelector = selecor;
+}
+    
+void TextField::addEventListener(ccTextFieldCallback callback)
+{
+    _eventCallback = callback;
 }
 
 void TextField::onSizeChanged()

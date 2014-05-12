@@ -33,7 +33,7 @@ public:
     UITextFieldTest_Editor();
     ~UITextFieldTest_Editor();
     bool init();
-    void textFieldEvent(Ref* pSender, TextFiledEventType type);
+    void textFieldEvent(Ref* pSender, TextField::EventType type);
     
 protected:
     UI_SCENE_EDITOR_CREATE_FUNC(UITextFieldTest_Editor)

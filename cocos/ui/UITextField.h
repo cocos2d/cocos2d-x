@@ -86,7 +86,7 @@ protected:
     bool _deleteBackward;
 };
 
-typedef enum
+CC_DEPRECATED_ATTRIBUTE typedef enum
 {
     TEXTFIELD_EVENT_ATTACH_WITH_IME,
     TEXTFIELD_EVENT_DETACH_WITH_IME,
@@ -94,7 +94,7 @@ typedef enum
     TEXTFIELD_EVENT_DELETE_BACKWARD,
 }TextFiledEventType;
 
-typedef void (Ref::*SEL_TextFieldEvent)(Ref*, TextFiledEventType);
+CC_DEPRECATED_ATTRIBUTE typedef void (Ref::*SEL_TextFieldEvent)(Ref*, TextFiledEventType);
 #define textfieldeventselector(_SELECTOR) (SEL_TextFieldEvent)(&_SELECTOR)
 
 /** class UITextField : public Widget
@@ -107,6 +107,15 @@ class TextField : public Widget
     DECLARE_CLASS_GUI_INFO
     
 public:
+    enum class EventType
+    {
+        ATTACH_WITH_IME,
+        DETACH_WITH_IME,
+        INSERT_TEXT,
+        DELETE_BACKWARD,
+    };
+    typedef std::function<void(Ref*, EventType)> ccTextFieldCallback;
+    
     TextField();
     virtual ~TextField();
     static TextField* create();
@@ -144,7 +153,8 @@ public:
     void setInsertText(bool insertText);
     bool getDeleteBackward();
     void setDeleteBackward(bool deleteBackward);
-    void addEventListenerTextField(Ref* target, SEL_TextFieldEvent selecor);
+    CC_DEPRECATED_ATTRIBUTE void addEventListenerTextField(Ref* target, SEL_TextFieldEvent selecor);
+    void addEventListener(ccTextFieldCallback callback);
     
     /**
      * Returns the "class name" of widget.
@@ -185,7 +195,19 @@ protected:
     bool _useTouchArea;
     
     Ref* _textFieldEventListener;
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (push)
+#pragma warning (disable: 4996)
+#endif
     SEL_TextFieldEvent _textFieldEventSelector;
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic warning "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (pop)
+#endif
+    ccTextFieldCallback _eventCallback;
     
     std::string _passwordStyleText;
     bool _textFieldRendererAdaptDirty;
