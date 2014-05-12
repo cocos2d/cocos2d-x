@@ -336,7 +336,7 @@ void VideoPlayer::setVisible(bool visible)
     } 
 }
 
-void VideoPlayer::setEventListener(const EventCallback& callback)
+void VideoPlayer::addEventListener(const VideoPlayer::EventCallback& callback)
 {
     _callback = callback;
 }

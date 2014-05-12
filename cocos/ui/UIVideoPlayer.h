@@ -71,7 +71,7 @@ namespace experimental{
             virtual void setFullScreenEnabled(bool enabled);
             virtual bool isFullScreenEnabled();
 
-            virtual void addEventListener(const EventCallback& callback);
+            virtual void addEventListener(const VideoPlayer::EventCallback& callback);
 
             virtual void onVideoEvent(VideoPlayer::EventType event);
             virtual void draw(Renderer *renderer, const Matrix& transform, bool transformUpdated) override;
