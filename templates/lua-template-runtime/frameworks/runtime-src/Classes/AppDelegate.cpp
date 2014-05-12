@@ -43,7 +43,9 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     auto engine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
-    engine->executeScriptFile("src/main.lua");
+    if (engine->executeScriptFile("src/main.lua")) {
+        return false;
+    }
     return true;
 }
 

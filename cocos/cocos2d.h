@@ -69,6 +69,8 @@ THE SOFTWARE.
 #include "base/CCEventListenerAcceleration.h"
 #include "base/CCEventCustom.h"
 #include "base/CCEventListenerCustom.h"
+#include "base/CCEventFocus.h"
+#include "base/CCEventListenerFocus.h"
 
 // math
 #include "math/CCAffineTransform.h"
@@ -138,6 +140,11 @@ THE SOFTWARE.
 #include "renderer/CCRenderCommand.h"
 #include "renderer/CCRenderCommandPool.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCGLProgram.h"
+#include "renderer/CCGLProgramCache.h"
+#include "renderer/CCGLProgramState.h"
+#include "renderer/ccGLStateCache.h"
+#include "renderer/ccShaders.h"
 
 // physics
 #include "physics/CCPhysicsBody.h"
@@ -216,12 +223,6 @@ THE SOFTWARE.
 
 // script_support
 #include "2d/CCScriptSupport.h"
-
-// shaders
-#include "2d/CCGLProgram.h"
-#include "2d/ccGLStateCache.h"
-#include "2d/CCShaderCache.h"
-#include "2d/ccShaders.h"
 
 // sprite_nodes
 #include "2d/CCAnimation.h"

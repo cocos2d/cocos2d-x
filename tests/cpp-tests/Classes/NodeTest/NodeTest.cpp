@@ -989,8 +989,8 @@ public:
         sprite->initWithFile(spritefilename);
         sprite->autorelease();
 
-        auto shader = CCShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR);
-        sprite->setShaderProgram(shader);
+        auto shaderState = GLProgramState::getWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR);
+        sprite->setGLProgramState(shaderState);
         return sprite;
     }
     virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
@@ -1010,8 +1010,8 @@ void MySprite::draw(Renderer *renderer, const Matrix &transform, bool transformU
 
 void MySprite::onDraw(const Matrix &transform, bool transformUpdated)
 {
-    getShaderProgram()->use();
-    getShaderProgram()->setUniformsForBuiltins(transform);
+    getGLProgram()->use();
+    getGLProgram()->setUniformsForBuiltins(transform);
 
     GL::blendFunc( _blendFunc.src, _blendFunc.dst );
 
@@ -1027,7 +1027,7 @@ void MySprite::onDraw(const Matrix &transform, bool transformUpdated)
 
     // texCoods
     diff = offsetof( V3F_C4B_T2F, texCoords);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
 
     // color
     diff = offsetof( V3F_C4B_T2F, colors);

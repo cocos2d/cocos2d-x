@@ -4,20 +4,20 @@
 -- @extend Widget
 
 --------------------------------
--- @function [parent=#LoadingBar] setPercent 
+-- @function [parent=#LoadingBar] setBarDirection 
 -- @param self
--- @param #int int
+-- @param #ccui.LoadingBar::Direction direction
         
 --------------------------------
 -- @function [parent=#LoadingBar] loadTexture 
 -- @param self
 -- @param #string str
--- @param #ccui.TextureResType texturerestype
+-- @param #ccui.Widget::TextureResType texturerestype
         
 --------------------------------
--- @function [parent=#LoadingBar] setDirection 
+-- @function [parent=#LoadingBar] setPercent 
 -- @param self
--- @param #ccui.LoadingBarType loadingbartype
+-- @param #int int
         
 --------------------------------
 -- @function [parent=#LoadingBar] setScale9Enabled 
@@ -30,14 +30,9 @@
 -- @param #rect_table rect
         
 --------------------------------
--- @function [parent=#LoadingBar] getDirection 
+-- @function [parent=#LoadingBar] getBarDirection 
 -- @param self
--- @return int#int ret (return value: int)
-        
---------------------------------
--- @function [parent=#LoadingBar] getCapInsets 
--- @param self
--- @return rect_table#rect_table ret (return value: rect_table)
+-- @return LoadingBar::Direction#LoadingBar::Direction ret (return value: ccui.LoadingBar::Direction)
         
 --------------------------------
 -- @function [parent=#LoadingBar] isScale9Enabled 
@@ -48,6 +43,11 @@
 -- @function [parent=#LoadingBar] getPercent 
 -- @param self
 -- @return int#int ret (return value: int)
+        
+--------------------------------
+-- @function [parent=#LoadingBar] getCapInsets 
+-- @param self
+-- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
 -- overload function: create(string, int)

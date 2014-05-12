@@ -28,22 +28,24 @@
  *
  */
 
-#include "CCParticleBatchNode.h"
+#include "2d/CCParticleBatchNode.h"
+
 #include "2d/CCTextureCache.h"
 #include "2d/CCTextureAtlas.h"
-#include "base/ccConfig.h"
-#include "base/ccMacros.h"
 #include "2d/CCGrid.h"
-#include "CCParticleSystem.h"
-#include "2d/CCShaderCache.h"
-#include "2d/CCGLProgram.h"
-#include "2d/ccGLStateCache.h"
-#include "base/base64.h"
-#include "base/ZipUtils.h"
+#include "2d/CCParticleSystem.h"
 #include "2d/platform/CCFileUtils.h"
 #include "base/CCProfiling.h"
+#include "base/ccConfig.h"
+#include "base/ccMacros.h"
+#include "base/base64.h"
+#include "base/ZipUtils.h"
+#include "renderer/CCGLProgramState.h"
+#include "renderer/CCGLProgram.h"
+#include "renderer/ccGLStateCache.h"
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCRenderer.h"
+
 
 NS_CC_BEGIN
 
@@ -101,7 +103,7 @@ bool ParticleBatchNode::initWithTexture(Texture2D *tex, int capacity)
     
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 
-    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+    setGLProgramState(GLProgramState::getWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
     return true;
 }
@@ -392,7 +394,7 @@ void ParticleBatchNode::draw(Renderer *renderer, const Matrix &transform, bool t
 
     _batchCommand.init(
                        _globalZOrder,
-                       _shaderProgram,
+                       getGLProgram(),
                        _blendFunc,
                        _textureAtlas,
                        _modelViewTransform);

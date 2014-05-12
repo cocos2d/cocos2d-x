@@ -129,8 +129,8 @@ public class Cocos2dxSound {
 		// stop effects
 		final ArrayList<Integer> streamIDs = this.mPathStreamIDsMap.get(pPath);
 		if (streamIDs != null) {
-			for (final Integer pStreamID : streamIDs) {
-				this.mSoundPool.stop(pStreamID);
+			for (final Integer steamID : streamIDs) {
+				this.mSoundPool.stop(steamID);
 			}
 		}
 		this.mPathStreamIDsMap.remove(pPath);
@@ -180,28 +180,36 @@ public class Cocos2dxSound {
 		return streamID;
 	}
 
-	public void stopEffect(final int pStreamID) {
-		this.mSoundPool.stop(pStreamID);
+	public void stopEffect(final int steamID) {
+		this.mSoundPool.stop(steamID);
 
 		// remove record
 		for (final String pPath : this.mPathStreamIDsMap.keySet()) {
-			if (this.mPathStreamIDsMap.get(pPath).contains(pStreamID)) {
-				this.mPathStreamIDsMap.get(pPath).remove(this.mPathStreamIDsMap.get(pPath).indexOf(pStreamID));
+			if (this.mPathStreamIDsMap.get(pPath).contains(steamID)) {
+				this.mPathStreamIDsMap.get(pPath).remove(this.mPathStreamIDsMap.get(pPath).indexOf(steamID));
 				break;
 			}
 		}
 	}
 
-	public void pauseEffect(final int pStreamID) {
-		this.mSoundPool.pause(pStreamID);
+	public void pauseEffect(final int steamID) {
+		this.mSoundPool.pause(steamID);
 	}
 
-	public void resumeEffect(final int pStreamID) {
-		this.mSoundPool.resume(pStreamID);
+	public void resumeEffect(final int steamID) {
+		this.mSoundPool.resume(steamID);
 	}
 
 	public void pauseAllEffects() {
-		this.mSoundPool.autoPause();
+		if (!this.mPathStreamIDsMap.isEmpty()) {
+			final Iterator<Entry<String, ArrayList<Integer>>> iter = this.mPathStreamIDsMap.entrySet().iterator();
+			while (iter.hasNext()) {
+				final Entry<String, ArrayList<Integer>> entry = iter.next();
+				for (final int steamID : entry.getValue()) {
+					this.mSoundPool.pause(steamID);
+				}
+			}
+		}
 	}
 
 	public void resumeAllEffects() {
@@ -211,8 +219,8 @@ public class Cocos2dxSound {
 			final Iterator<Entry<String, ArrayList<Integer>>> iter = this.mPathStreamIDsMap.entrySet().iterator();
 			while (iter.hasNext()) {
 				final Entry<String, ArrayList<Integer>> entry = iter.next();
-				for (final int pStreamID : entry.getValue()) {
-					this.mSoundPool.resume(pStreamID);
+				for (final int steamID : entry.getValue()) {
+					this.mSoundPool.resume(steamID);
 				}
 			}
 		}
@@ -225,8 +233,8 @@ public class Cocos2dxSound {
 			final Iterator<?> iter = this.mPathStreamIDsMap.entrySet().iterator();
 			while (iter.hasNext()) {
 				final Map.Entry<String, ArrayList<Integer>> entry = (Map.Entry<String, ArrayList<Integer>>) iter.next();
-				for (final int pStreamID : entry.getValue()) {
-					this.mSoundPool.stop(pStreamID);
+				for (final int steamID : entry.getValue()) {
+					this.mSoundPool.stop(steamID);
 				}
 			}
 		}
@@ -255,8 +263,8 @@ public class Cocos2dxSound {
 			final Iterator<Entry<String, ArrayList<Integer>>> iter = this.mPathStreamIDsMap.entrySet().iterator();
 			while (iter.hasNext()) {
 				final Entry<String, ArrayList<Integer>> entry = iter.next();
-				for (final int pStreamID : entry.getValue()) {
-					this.mSoundPool.setVolume(pStreamID, this.mLeftVolume, this.mRightVolume);
+				for (final int steamID : entry.getValue()) {
+					this.mSoundPool.setVolume(steamID, this.mLeftVolume, this.mRightVolume);
 				}
 			}
 		}
@@ -317,6 +325,14 @@ public class Cocos2dxSound {
 		streamIDs.add(streamID);
 
 		return streamID;
+	}
+
+	public void onEnterBackground(){
+		this.mSoundPool.autoPause();
+	}
+
+	public void onEnterForeground(){
+		this.mSoundPool.autoResume();
 	}
 
 	// ===========================================================

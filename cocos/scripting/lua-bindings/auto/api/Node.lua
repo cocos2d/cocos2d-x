@@ -28,15 +28,6 @@
 -- @param #cc.PhysicsBody physicsbody
         
 --------------------------------
--- overload function: getShaderProgram()
---          
--- overload function: getShaderProgram()
---          
--- @function [parent=#Node] getShaderProgram
--- @param self
--- @return GLProgram#GLProgram ret (retunr value: cc.GLProgram)
-
---------------------------------
 -- @function [parent=#Node] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)
@@ -72,8 +63,8 @@
 --------------------------------
 -- @function [parent=#Node] convertToWorldSpaceAR 
 -- @param self
--- @param #array_table array
--- @return array_table#array_table ret (return value: array_table)
+-- @param #vector2_table array
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#Node] isIgnoreAnchorPointForPosition 
@@ -125,19 +116,19 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
--- @function [parent=#Node] getNodeToWorldAffineTransform 
+-- @function [parent=#Node] getGLProgram 
 -- @param self
--- @return AffineTransform#AffineTransform ret (return value: cc.AffineTransform)
+-- @return GLProgram#GLProgram ret (return value: cc.GLProgram)
         
 --------------------------------
 -- @function [parent=#Node] getNodeToWorldTransform 
 -- @param self
--- @return Matrix#Matrix ret (return value: cc.Matrix)
+-- @return matrix_table#matrix_table ret (return value: matrix_table)
         
 --------------------------------
 -- @function [parent=#Node] getPosition3D 
 -- @param self
--- @return array_table#array_table ret (return value: array_table)
+-- @return vector3_table#vector3_table ret (return value: vector3_table)
         
 --------------------------------
 -- @function [parent=#Node] removeChild 
@@ -148,8 +139,8 @@
 --------------------------------
 -- @function [parent=#Node] convertToWorldSpace 
 -- @param self
--- @param #array_table array
--- @return array_table#array_table ret (return value: array_table)
+-- @param #vector2_table array
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#Node] getScene 
@@ -167,9 +158,9 @@
 -- @param #float float
         
 --------------------------------
--- @function [parent=#Node] setSkewY 
+-- @function [parent=#Node] setGLProgramState 
 -- @param self
--- @param #float float
+-- @param #cc.GLProgramState glprogramstate
         
 --------------------------------
 -- @function [parent=#Node] getOpacity 
@@ -180,7 +171,7 @@
 -- @function [parent=#Node] convertTouchToNodeSpace 
 -- @param self
 -- @param #cc.Touch touch
--- @return array_table#array_table ret (return value: array_table)
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- overload function: removeAllChildrenWithCleanup(bool)
@@ -209,24 +200,24 @@
 --------------------------------
 -- @function [parent=#Node] getRotation3D 
 -- @param self
--- @return array_table#array_table ret (return value: array_table)
+-- @return vector3_table#vector3_table ret (return value: vector3_table)
         
 --------------------------------
 -- @function [parent=#Node] getNodeToParentTransform 
 -- @param self
--- @return Matrix#Matrix ret (return value: cc.Matrix)
+-- @return matrix_table#matrix_table ret (return value: matrix_table)
         
 --------------------------------
 -- @function [parent=#Node] convertTouchToNodeSpaceAR 
 -- @param self
 -- @param #cc.Touch touch
--- @return array_table#array_table ret (return value: array_table)
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#Node] convertToNodeSpace 
 -- @param self
--- @param #array_table array
--- @return array_table#array_table ret (return value: array_table)
+-- @param #vector2_table array
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#Node] resume 
@@ -240,7 +231,7 @@
 --------------------------------
 -- overload function: setPosition(float, float)
 --          
--- overload function: setPosition(array_table)
+-- overload function: setPosition(vector2_table)
 --          
 -- @function [parent=#Node] setPosition
 -- @param self
@@ -264,6 +255,11 @@
 -- @param #bool bool
         
 --------------------------------
+-- @function [parent=#Node] setSkewY 
+-- @param self
+-- @param #float float
+        
+--------------------------------
 -- @function [parent=#Node] setPositionZ 
 -- @param self
 -- @param #float float
@@ -271,7 +267,7 @@
 --------------------------------
 -- @function [parent=#Node] setRotation3D 
 -- @param self
--- @param #array_table array
+-- @param #vector3_table array
         
 --------------------------------
 -- @function [parent=#Node] setPositionX 
@@ -281,12 +277,12 @@
 --------------------------------
 -- @function [parent=#Node] setNodeToParentTransform 
 -- @param self
--- @param #cc.Matrix matrix
+-- @param #matrix_table matrix
         
 --------------------------------
 -- @function [parent=#Node] getAnchorPoint 
 -- @param self
--- @return array_table#array_table ret (return value: array_table)
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#Node] getNumberOfRunningActions 
@@ -310,8 +306,8 @@
 --------------------------------
 -- @function [parent=#Node] convertToNodeSpaceAR 
 -- @param self
--- @param #array_table array
--- @return array_table#array_table ret (return value: array_table)
+-- @param #vector2_table array
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#Node] addComponent 
@@ -320,9 +316,9 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- @function [parent=#Node] setShaderProgram 
+-- @function [parent=#Node] isOpacityModifyRGB 
 -- @param self
--- @param #cc.GLProgram glprogram
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @function [parent=#Node] getRotation 
@@ -332,13 +328,18 @@
 --------------------------------
 -- @function [parent=#Node] getAnchorPointInPoints 
 -- @param self
--- @return array_table#array_table ret (return value: array_table)
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#Node] runAction 
 -- @param self
 -- @param #cc.Action action
 -- @return Action#Action ret (return value: cc.Action)
+        
+--------------------------------
+-- @function [parent=#Node] getGLProgramState 
+-- @param self
+-- @return GLProgramState#GLProgramState ret (return value: cc.GLProgramState)
         
 --------------------------------
 -- @function [parent=#Node] setScheduler 
@@ -362,7 +363,7 @@
 --------------------------------
 -- @function [parent=#Node] getDisplayedColor 
 -- @param self
--- @return color3B_table#color3B_table ret (return value: color3B_table)
+-- @return color3b_table#color3b_table ret (return value: color3b_table)
         
 --------------------------------
 -- @function [parent=#Node] getActionByTag 
@@ -373,11 +374,11 @@
 --------------------------------
 -- overload function: setAdditionalTransform(cc.AffineTransform)
 --          
--- overload function: setAdditionalTransform(cc.Matrix)
+-- overload function: setAdditionalTransform(matrix_table)
 --          
 -- @function [parent=#Node] setAdditionalTransform
 -- @param self
--- @param #cc.Matrix matrix
+-- @param #matrix_table matrix
 
 --------------------------------
 -- @function [parent=#Node] getDisplayedOpacity 
@@ -416,7 +417,7 @@
 --------------------------------
 -- @function [parent=#Node] setColor 
 -- @param self
--- @param #color3B_table color3b
+-- @param #color3b_table color3b
         
 --------------------------------
 -- @function [parent=#Node] isRunning 
@@ -459,9 +460,14 @@
 -- @param #float float
         
 --------------------------------
+-- @function [parent=#Node] getNodeToWorldAffineTransform 
+-- @param self
+-- @return AffineTransform#AffineTransform ret (return value: cc.AffineTransform)
+        
+--------------------------------
 -- @function [parent=#Node] updateDisplayedColor 
 -- @param self
--- @param #color3B_table color3b
+-- @param #color3b_table color3b
         
 --------------------------------
 -- @function [parent=#Node] setVisible 
@@ -471,7 +477,7 @@
 --------------------------------
 -- @function [parent=#Node] getParentToNodeTransform 
 -- @param self
--- @return Matrix#Matrix ret (return value: cc.Matrix)
+-- @return matrix_table#matrix_table ret (return value: matrix_table)
         
 --------------------------------
 -- @function [parent=#Node] setGlobalZOrder 
@@ -552,7 +558,7 @@
 --------------------------------
 -- @function [parent=#Node] getColor 
 -- @param self
--- @return color3B_table#color3B_table ret (return value: color3B_table)
+-- @return color3b_table#color3b_table ret (return value: color3b_table)
         
 --------------------------------
 -- @function [parent=#Node] getBoundingBox 
@@ -572,12 +578,12 @@
 --------------------------------
 -- overload function: draw()
 --          
--- overload function: draw(cc.Renderer, cc.Matrix, bool)
+-- overload function: draw(cc.Renderer, matrix_table, bool)
 --          
 -- @function [parent=#Node] draw
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #cc.Matrix matrix
+-- @param #matrix_table matrix
 -- @param #bool bool
 
 --------------------------------
@@ -597,7 +603,7 @@
 --------------------------------
 -- @function [parent=#Node] setPosition3D 
 -- @param self
--- @param #array_table array
+-- @param #vector3_table array
         
 --------------------------------
 -- @function [parent=#Node] update 
@@ -611,7 +617,12 @@
 --------------------------------
 -- @function [parent=#Node] getWorldToNodeTransform 
 -- @param self
--- @return Matrix#Matrix ret (return value: cc.Matrix)
+-- @return matrix_table#matrix_table ret (return value: matrix_table)
+        
+--------------------------------
+-- @function [parent=#Node] setGLProgram 
+-- @param self
+-- @param #cc.GLProgram glprogram
         
 --------------------------------
 -- @function [parent=#Node] getScale 
@@ -635,11 +646,6 @@
         
 --------------------------------
 -- @function [parent=#Node] isCascadeColorEnabled 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- @function [parent=#Node] isOpacityModifyRGB 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         

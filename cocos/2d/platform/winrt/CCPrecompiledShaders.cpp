@@ -24,7 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "CCPrecompiledShaders.h"
 #include "CCWinRTUtils.h"
-#include "CCGLProgram.h"
+#include "renderer/CCGLProgram.h"
 #include "sha1.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)

@@ -31,12 +31,12 @@ NS_CC_BEGIN
 
 namespace ui {
 
-typedef enum
+CC_DEPRECATED_ATTRIBUTE typedef enum
 {
     SLIDER_PERCENTCHANGED
 }SliderEventType;
 
-typedef void (Ref::*SEL_SlidPercentChangedEvent)(Ref*,SliderEventType);
+CC_DEPRECATED_ATTRIBUTE typedef void (Ref::*SEL_SlidPercentChangedEvent)(Ref*,SliderEventType);
 #define sliderpercentchangedselector(_SELECTOR) (SEL_SlidPercentChangedEvent)(&_SELECTOR)
 
 /**
@@ -49,6 +49,11 @@ class Slider : public Widget
     DECLARE_CLASS_GUI_INFO
     
 public:
+    enum class EventType
+    {
+        ON_PERCENTAGE_CHANGED
+    };
+    typedef std::function<void(Ref*,EventType)> ccSliderCallback;
     /**
      * Default constructor
      */
@@ -71,7 +76,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadBarTexture(const std::string& fileName,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadBarTexture(const std::string& fileName,TextureResType texType = TextureResType::LOCAL);
     
     /**
      * Sets if slider is using scale9 renderer.
@@ -121,7 +126,7 @@ public:
     void loadSlidBallTextures(const std::string& normal,
                               const std::string& pressed,
                               const std::string& disabled,
-                              TextureResType texType = UI_TEX_TYPE_LOCAL);
+                              TextureResType texType = TextureResType::LOCAL);
     
     /**
      * Load normal state texture for slider ball.
@@ -130,7 +135,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadSlidBallTextureNormal(const std::string& normal,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadSlidBallTextureNormal(const std::string& normal,TextureResType texType = TextureResType::LOCAL);
     
     /**
      * Load selected state texture for slider ball.
@@ -139,7 +144,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadSlidBallTexturePressed(const std::string& pressed,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadSlidBallTexturePressed(const std::string& pressed,TextureResType texType = TextureResType::LOCAL);
     
     /**
      * Load dark state texture for slider ball.
@@ -148,7 +153,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadSlidBallTextureDisabled(const std::string& disabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadSlidBallTextureDisabled(const std::string& disabled,TextureResType texType = TextureResType::LOCAL);
     
     /**
      * Load dark state texture for slider progress bar.
@@ -157,7 +162,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadProgressBarTexture(const std::string& fileName, TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadProgressBarTexture(const std::string& fileName, TextureResType texType = TextureResType::LOCAL);
     
     /**
      * Changes the progress direction of slider.
@@ -176,7 +181,8 @@ public:
     /**
      * Add call back function called when slider's percent has changed to slider.
      */
-    void addEventListenerSlider(Ref* target,SEL_SlidPercentChangedEvent selector);
+    CC_DEPRECATED_ATTRIBUTE void addEventListenerSlider(Ref* target,SEL_SlidPercentChangedEvent selector);
+    void addEventListener(ccSliderCallback callback);
     
     virtual bool onTouchBegan(Touch *touch, Event *unusedEvent) override;
     virtual void onTouchMoved(Touch *touch, Event *unusedEvent) override;
@@ -243,7 +249,21 @@ protected:
     Rect _capInsetsProgressBarRenderer;
 
     Ref*       _sliderEventListener;
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (push)
+#pragma warning (disable: 4996)
+#endif
     SEL_SlidPercentChangedEvent    _sliderEventSelector;
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic warning "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (pop)
+#endif
+    
+    ccSliderCallback  _eventCallback;
+    
     TextureResType _barTexType;
     TextureResType _progressBarTexType;
     TextureResType _ballNTexType;

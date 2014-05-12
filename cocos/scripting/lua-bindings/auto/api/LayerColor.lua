@@ -20,15 +20,15 @@
 -- @param #float float
         
 --------------------------------
--- overload function: create(color4B_table, float, float)
+-- overload function: create(color4b_table, float, float)
 --          
 -- overload function: create()
 --          
--- overload function: create(color4B_table)
+-- overload function: create(color4b_table)
 --          
 -- @function [parent=#LayerColor] create
 -- @param self
--- @param #color4B_table color4b
+-- @param #color4b_table color4b
 -- @param #float float
 -- @param #float float
 -- @return LayerColor#LayerColor ret (retunr value: cc.LayerColor)
@@ -37,7 +37,7 @@
 -- @function [parent=#LayerColor] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #cc.Matrix matrix
+-- @param #matrix_table matrix
 -- @param #bool bool
         
 --------------------------------

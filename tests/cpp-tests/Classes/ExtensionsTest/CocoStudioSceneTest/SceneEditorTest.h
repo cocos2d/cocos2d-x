@@ -100,7 +100,7 @@ public:
 	virtual void onEnter() override;
     virtual void onExit() override;
     cocos2d::Node* createGameScene();
-	void touchEvent(cocos2d::Ref *pSender, cocos2d::ui::TouchEventType type);
+	void touchEvent(cocos2d::Ref *pSender, ui::Widget::TouchEventType type);
 private:
 	cocos2d::Node* _node;
 };

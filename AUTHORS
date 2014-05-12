@@ -843,6 +843,9 @@ Developers:
         
     twhittock
         Fixed a bug that Application::run returns wrong value on Mac platform
+        
+    asmodehn
+        Added SDK / NDK detection based on PATH in Setup.py
     
 Retired Core Developers:
     WenSheng Yang

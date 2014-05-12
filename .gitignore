@@ -112,3 +112,26 @@ tests/*/publish/
 
 # Android
 project.properties
+
+# Ignore prebuilt libraries folder
+/external/xxhash/
+/external/curl/
+/external/edtaa3func/
+/external/freetype2/
+/external/glfw3/
+/external/jpeg/
+/external/json/
+/external/linux-specific/
+/external/lua/
+/external/png/
+/external/sqlite3/
+/external/tiff/
+/external/tinyxml2/
+/external/unzip/
+/external/webp/
+/external/websockets/
+/external/win32-specific/
+/external/winrt-specific/
+/external/wp8-specific/
+/v*-deps-*.zip
+/external/version.json

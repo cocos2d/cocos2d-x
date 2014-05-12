@@ -43,8 +43,8 @@ namespace cocostudio
             widget->ignoreContentAdaptWithSize(DICTOOL->getBooleanValue_json(options, "ignoreSize"));
         }
         
-        widget->setSizeType((SizeType)DICTOOL->getIntValue_json(options, "sizeType"));
-        widget->setPositionType((PositionType)DICTOOL->getIntValue_json(options, "positionType"));
+        widget->setSizeType((Widget::SizeType)DICTOOL->getIntValue_json(options, "sizeType"));
+        widget->setPositionType((Widget::PositionType)DICTOOL->getIntValue_json(options, "positionType"));
         
         widget->setSizePercent(Vector2(DICTOOL->getFloatValue_json(options, "sizePercentX"), DICTOOL->getFloatValue_json(options, "sizePercentY")));
         widget->setPositionPercent(Vector2(DICTOOL->getFloatValue_json(options, "positionPercentX"), DICTOOL->getFloatValue_json(options, "positionPercentY")));
@@ -118,7 +118,7 @@ namespace cocostudio
                 {
                     parameter = LinearLayoutParameter::create();
                     int gravity = DICTOOL->getIntValue_json(layoutParameterDic, "gravity");
-                    ((LinearLayoutParameter*)parameter)->setGravity((LinearGravity)gravity);
+                    ((LinearLayoutParameter*)parameter)->setGravity((cocos2d::ui::LinearLayoutParameter::LinearGravity)gravity);
                     break;
                 }
                 case 2:
@@ -130,7 +130,7 @@ namespace cocostudio
                     const char* relativeToName = DICTOOL->getStringValue_json(layoutParameterDic, "relativeToName");
                     rParameter->setRelativeToWidgetName(relativeToName);
                     int align = DICTOOL->getIntValue_json(layoutParameterDic, "align");
-                    rParameter->setAlign((RelativeAlign)align);
+                    rParameter->setAlign((cocos2d::ui::RelativeLayoutParameter::RelativeAlign)align);
                     break;
                 }
                 default:
@@ -163,9 +163,9 @@ namespace cocostudio
         int colorB = cb ? DICTOOL->getIntValue_json(options, "colorB") : 255;
         widget->setColor(Color3B(colorR, colorG, colorB));
         bool apx = DICTOOL->checkObjectExist_json(options, "anchorPointX");
-        float apxf = apx ? DICTOOL->getFloatValue_json(options, "anchorPointX") : ((widget->getWidgetType() == WidgetTypeWidget) ? 0.5f : 0.0f);
+        float apxf = apx ? DICTOOL->getFloatValue_json(options, "anchorPointX") : ((widget->getWidgetType() == Widget::Type::ELEMENT) ? 0.5f : 0.0f);
         bool apy = DICTOOL->checkObjectExist_json(options, "anchorPointY");
-        float apyf = apy ? DICTOOL->getFloatValue_json(options, "anchorPointY") : ((widget->getWidgetType() == WidgetTypeWidget) ? 0.5f : 0.0f);
+        float apyf = apy ? DICTOOL->getFloatValue_json(options, "anchorPointY") : ((widget->getWidgetType() == Widget::Type::ELEMENT) ? 0.5f : 0.0f);
         widget->setAnchorPoint(Vector2(apxf, apyf));
         bool flipX = DICTOOL->getBooleanValue_json(options, "flipX");
         bool flipY = DICTOOL->getBooleanValue_json(options, "flipY");
@@ -175,17 +175,17 @@ namespace cocostudio
     
     std::string WidgetReader::getResourcePath(const rapidjson::Value &dict,
                                               const std::string &key,
-                                              cocos2d::ui::TextureResType texType)
+                                              cocos2d::ui::Widget::TextureResType texType)
     {
         std::string jsonPath = GUIReader::getInstance()->getFilePath();
         const char* imageFileName = DICTOOL->getStringValue_json(dict, key.c_str());
         std::string imageFileName_tp;
         if (nullptr != imageFileName)
         {
-            if (texType == UI_TEX_TYPE_LOCAL) {
+            if (texType == ui::Widget::TextureResType::LOCAL) {
                 imageFileName_tp = jsonPath + imageFileName;
             }
-            else if(texType == UI_TEX_TYPE_PLIST){
+            else if(texType == ui::Widget::TextureResType::PLIST){
                 imageFileName_tp = imageFileName;
             }
             else{
