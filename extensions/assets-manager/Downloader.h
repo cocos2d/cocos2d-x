@@ -79,11 +79,11 @@ public:
     
     DownloaderDelegateProtocol* getDelegate() const { return _delegate ;}
     
-    void download(const std::string &srcUrl, const std::string &storagePath);
+    void download(const std::string &srcUrl, const std::string &storagePath, const std::string &rename = "");
     
 protected:
     
-    void downloadAsync(const std::string &srcUrl, const std::string &storagePath);
+    void downloadAsync(const std::string &srcUrl, const std::string &storagePath, const std::string &filename);
     
     void notifyError(ErrorCode code, const std::string &msg = "");
     
@@ -122,7 +122,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void onSuccess() {};
+    virtual void onSuccess(const std::string &filename, const std::string &srcUrl) {};
 };
 
 NS_CC_EXT_END;

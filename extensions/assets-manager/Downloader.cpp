@@ -28,7 +28,6 @@
 #include <curl/easy.h>
 #include <stdio.h>
 #include <thread>
-#include <regex>
 
 using namespace cocos2d;
 
@@ -111,35 +110,48 @@ bool Downloader::checkStoragePath(const std::string &storagePath)
     return true;
 }
 
-void Downloader::download(const std::string &srcUrl, const std::string &storagePath)
+void Downloader::download(const std::string &srcUrl, const std::string &storagePath, const std::string &rename/* = ""*/)
 {
-    auto t = std::thread(&Downloader::downloadAsync, this, srcUrl, storagePath);
+    Error err;
+    // Asserts
+    if (!_curl)
+    {
+        err.code = ErrorCode::CURL_UNINIT;
+        if (this->_delegate) this->_delegate->onError(err);
+        return;
+    }
+    if (!checkStoragePath(storagePath))
+    {
+        err.code = ErrorCode::INVALID_STORAGE_PATH;
+        if (this->_delegate) this->_delegate->onError(err);
+        return;
+    }
+    
+    // Find file name and file extension
+    std::string filename = rename;
+    if (filename.size() == 0)
+    {
+        unsigned long found = srcUrl.find_last_of("/\\");
+        if (found != std::string::npos)
+            filename = srcUrl.substr(found+1);
+        if (filename.size() == 0)
+        {
+            err.code = ErrorCode::INVALID_URL;
+            err.message = "Invalid url or filename not exist error: " + srcUrl;
+            if (this->_delegate) this->_delegate->onError(err);
+            return;
+        }
+        //std::smatch m;
+        //std::regex_search(url, m, REGEX_FILENAME);
+        //std::string filename = m.str();
+    }
+    
+    auto t = std::thread(&Downloader::downloadAsync, this, srcUrl, storagePath, filename);
     t.detach();
 }
 
-void Downloader::downloadAsync(const std::string &srcUrl, const std::string &storagePath)
+void Downloader::downloadAsync(const std::string &srcUrl, const std::string &storagePath, const std::string &filename)
 {
-    // Asserts
-    if (!_curl)
-        this->notifyError(ErrorCode::CURL_UNINIT);
-    if (checkStoragePath(storagePath))
-        this->notifyError(ErrorCode::INVALID_STORAGE_PATH);
-    
-    // Find file name and file extension
-    std::string filename = "";
-    unsigned long found = srcUrl.find_last_of("/\\");
-    if (found != std::string::npos)
-        filename = srcUrl.substr(found+1);
-    if (filename.size() == 0)
-    {
-        std::string msg = "Invalid url or filename not exist error: " + srcUrl;
-        this->notifyError(ErrorCode::INVALID_URL, msg);
-        return;
-    }
-    //std::smatch m;
-    //std::regex_search(url, m, REGEX_FILENAME);
-    //std::string filename = m.str();
-    
     // Create a file to save package.
     const std::string outFileName = storagePath + filename;
     FILE *fp = fopen(outFileName.c_str(), "wb");
@@ -171,10 +183,9 @@ void Downloader::downloadAsync(const std::string &srcUrl, const std::string &sto
         return;
     }
     
-    Director::getInstance()->getScheduler()->performFunctionInCocosThread([srcUrl, this]{
+    Director::getInstance()->getScheduler()->performFunctionInCocosThread([filename, srcUrl, this]{
         if (this->_delegate)
-            this->_delegate->onSuccess();
-        CCLOG("Succeed downloading file %s", srcUrl.c_str());
+            this->_delegate->onSuccess(filename, srcUrl);
     });
     
     fclose(fp);
