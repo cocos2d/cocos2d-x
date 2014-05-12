@@ -73,9 +73,9 @@ class CocosZipInstaller(object):
         try:
             data = self.load_json_file(version_path)
             if remote_version_key == None:
-                self._downloaded_version = data["version"]
+                self._remote_version = data["version"]
             else:
-                self._downloaded_version = data["remote_version_key"]
+                self._remote_version = data[remote_version_key]
         except:
             print("==> version file doesn't exist")
 
@@ -218,7 +218,7 @@ class CocosZipInstaller(object):
         with open(self._version_path) as data_file:
             data = json.load(data_file)
 
-        if data['version'] == self._current_version:
+        if self._remote_version == self._current_version:
             return False
         return True
 
