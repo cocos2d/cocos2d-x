@@ -890,7 +890,7 @@ void WidgetPropertiesReader0250::setPropsForLoadingBarFromJsonDictionary(Widget 
     {
         loadingBar->loadTexture(imageFileName_tp);
     }
-    loadingBar->setDirection(LoadingBarType(DICTOOL->getIntValue_json(options, "direction")));
+    loadingBar->setBarDirection(LoadingBar::Direction(DICTOOL->getIntValue_json(options, "direction")));
     loadingBar->setPercent(DICTOOL->getIntValue_json(options, "percent"));
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
@@ -1967,7 +1967,7 @@ void WidgetPropertiesReader0300::setPropsForLoadingBarFromJsonDictionary(Widget 
     }
     /**/
     
-    loadingBar->setDirection(LoadingBarType(DICTOOL->getIntValue_json(options, "direction")));
+    loadingBar->setBarDirection(LoadingBar::Direction(DICTOOL->getIntValue_json(options, "direction")));
     loadingBar->setPercent(DICTOOL->getIntValue_json(options, "percent"));
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }

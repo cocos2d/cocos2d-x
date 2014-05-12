@@ -32,7 +32,7 @@ IMPLEMENT_CLASS_GUI_INFO(PageView)
 
 PageView::PageView():
 _curPageIdx(0),
-_touchMoveDir(PAGEVIEW_TOUCHLEFT),
+_touchMoveDir(TouchDirection::LEFT),
 _touchStartLocation(0.0f),
 _touchMoveStartLocation(0.0f),
 _movePagePoint(Vector2::ZERO),
@@ -46,7 +46,8 @@ _autoScrollSpeed(0.0f),
 _autoScrollDir(0),
 _childFocusCancelOffset(5.0f),
 _pageViewEventListener(nullptr),
-_pageViewEventSelector(nullptr)
+_pageViewEventSelector(nullptr),
+_eventCallback(nullptr)
 {
 }
 
@@ -439,7 +440,7 @@ bool PageView::scrollPages(float touchOffset)
     
     switch (_touchMoveDir)
     {
-        case PAGEVIEW_TOUCHLEFT: // left
+        case TouchDirection::LEFT: // left
             if (_rightChild->getRightInParent() + touchOffset <= _rightBoundary)
             {
                 realOffset = _rightBoundary - _rightChild->getRightInParent();
@@ -448,7 +449,7 @@ bool PageView::scrollPages(float touchOffset)
             }
             break;
             
-        case PAGEVIEW_TOUCHRIGHT: // right
+        case TouchDirection::RIGHT: // right
             if (_leftChild->getLeftInParent() + touchOffset >= _leftBoundary)
             {
                 realOffset = _leftBoundary - _leftChild->getLeftInParent();
@@ -480,11 +481,11 @@ void PageView::handleMoveLogic(const Vector2 &touchPoint)
     _touchMoveStartLocation = moveX;
     if (offset < 0)
     {
-        _touchMoveDir = PAGEVIEW_TOUCHLEFT;
+        _touchMoveDir = TouchDirection::LEFT;
     }
     else if (offset > 0)
     {
-        _touchMoveDir = PAGEVIEW_TOUCHRIGHT;
+        _touchMoveDir = TouchDirection::RIGHT;
     }
     scrollPages(offset);
 }
@@ -571,12 +572,20 @@ void PageView::pageTurningEvent()
     {
         (_pageViewEventListener->*_pageViewEventSelector)(this, PAGEVIEW_EVENT_TURNING);
     }
+    if (_eventCallback) {
+        _eventCallback(this,EventType::TURNING);
+    }
 }
 
 void PageView::addEventListenerPageView(Ref *target, SEL_PageViewEvent selector)
 {
     _pageViewEventListener = target;
     _pageViewEventSelector = selector;
+}
+    
+void PageView::addEventListener(ccPageViewCallback callback)
+{
+    _eventCallback = callback;
 }
 
 ssize_t PageView::getCurPageIndex() const

@@ -123,6 +123,8 @@ CC_DEPRECATED_ATTRIBUTE const ListView::Gravity LISTVIEW_GRAVITY_BOTTOM = ListVi
 CC_DEPRECATED_ATTRIBUTE const ListView::Gravity LISTVIEW_GRAVITY_CENTER_VERTICAL = ListView::Gravity::CENTER_VERTICAL;
 CC_DEPRECATED_ATTRIBUTE const LoadingBar::Direction LoadingBarTypeLeft =  LoadingBar::Direction::LEFT;
 CC_DEPRECATED_ATTRIBUTE const LoadingBar::Direction LoadingBarTypeRight =  LoadingBar::Direction::RIGHT;
+CC_DEPRECATED_ATTRIBUTE const PageView::TouchDirection PAGEVIEW_TOUCHLEFT =  PageView::TouchDirection::LEFT;
+CC_DEPRECATED_ATTRIBUTE const PageView::TouchDirection PAGEVIEW_TOUCHRIGHT =  PageView::TouchDirection::RIGHT;
 
     
 CC_DEPRECATED_ATTRIBUTE typedef Widget::TextureResType TextureResType;
@@ -137,7 +139,8 @@ CC_DEPRECATED_ATTRIBUTE typedef LayoutParameter::Type LayoutParameterType;
 CC_DEPRECATED_ATTRIBUTE typedef LinearLayoutParameter::LinearGravity LinearGravity;
 CC_DEPRECATED_ATTRIBUTE typedef RelativeLayoutParameter::RelativeAlign RelativeAlign;
 CC_DEPRECATED_ATTRIBUTE typedef ListView::Gravity ListViewGravity;
-    CC_DEPRECATED_ATTRIBUTE typedef LoadingBar::Direction LoadingBarType;
+CC_DEPRECATED_ATTRIBUTE typedef LoadingBar::Direction LoadingBarType;
+CC_DEPRECATED_ATTRIBUTE typedef PageView::TouchDirection PVTouchDir;
 
 
 }
