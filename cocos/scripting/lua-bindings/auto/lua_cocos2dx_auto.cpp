@@ -3195,6 +3195,52 @@ int lua_cocos2dx_Texture2D_getPixelFormat(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_Texture2D_setGLProgram(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Texture2D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Texture2D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_setGLProgram'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::GLProgram* arg0;
+
+        ok &= luaval_to_object<cocos2d::GLProgram>(tolua_S, 2, "cc.GLProgram",&arg0);
+        if(!ok)
+            return 0;
+        cobj->setGLProgram(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setGLProgram",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Texture2D_setGLProgram'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_Texture2D_getContentSizeInPixels(lua_State* tolua_S)
 {
     int argc = 0;
@@ -3417,52 +3463,6 @@ int lua_cocos2dx_Texture2D_hasMipmaps(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_Texture2D_setGLProgram(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Texture2D* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Texture2D",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_setGLProgram'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        cocos2d::GLProgram* arg0;
-
-        ok &= luaval_to_object<cocos2d::GLProgram>(tolua_S, 2, "cc.GLProgram",&arg0);
-        if(!ok)
-            return 0;
-        cobj->setGLProgram(arg0);
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setGLProgram",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Texture2D_setGLProgram'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_Texture2D_setMaxS(lua_State* tolua_S)
 {
     int argc = 0;
@@ -3669,12 +3669,12 @@ int lua_register_cocos2dx_Texture2D(lua_State* tolua_S)
         tolua_function(tolua_S,"generateMipmap",lua_cocos2dx_Texture2D_generateMipmap);
         tolua_function(tolua_S,"getDescription",lua_cocos2dx_Texture2D_getDescription);
         tolua_function(tolua_S,"getPixelFormat",lua_cocos2dx_Texture2D_getPixelFormat);
+        tolua_function(tolua_S,"setGLProgram",lua_cocos2dx_Texture2D_setGLProgram);
         tolua_function(tolua_S,"getContentSizeInPixels",lua_cocos2dx_Texture2D_getContentSizeInPixels);
         tolua_function(tolua_S,"getPixelsWide",lua_cocos2dx_Texture2D_getPixelsWide);
         tolua_function(tolua_S,"drawAtPoint",lua_cocos2dx_Texture2D_drawAtPoint);
         tolua_function(tolua_S,"getGLProgram",lua_cocos2dx_Texture2D_getGLProgram);
         tolua_function(tolua_S,"hasMipmaps",lua_cocos2dx_Texture2D_hasMipmaps);
-        tolua_function(tolua_S,"setGLProgram",lua_cocos2dx_Texture2D_setGLProgram);
         tolua_function(tolua_S,"setMaxS",lua_cocos2dx_Texture2D_setMaxS);
         tolua_function(tolua_S,"new",lua_cocos2dx_Texture2D_constructor);
         tolua_function(tolua_S,"setDefaultAlphaPixelFormat", lua_cocos2dx_Texture2D_setDefaultAlphaPixelFormat);
