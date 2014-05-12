@@ -33,7 +33,7 @@ const Value Value::Null;
 Value::Value()
 : _type(Type::NONE)
 {
-
+    memset(&_field, 0, sizeof(_field));
 }
 
 Value::Value(unsigned char v)
@@ -162,15 +162,31 @@ Value& Value::operator= (const Value& other)
                 _field.boolVal = other._field.boolVal;
                 break;
             case Type::STRING:
+                if (_field.strVal == nullptr)
+                {
+                    _field.strVal = new std::string();
+                }
                 *_field.strVal = *other._field.strVal;
                 break;
             case Type::VECTOR:
+                if (_field.vectorVal == nullptr)
+                {
+                    _field.vectorVal = new ValueVector();
+                }
                 *_field.vectorVal = *other._field.vectorVal;
                 break;
             case Type::MAP:
+                if (_field.mapVal == nullptr)
+                {
+                    _field.mapVal = new ValueMap();
+                }
                 *_field.mapVal = *other._field.mapVal;
                 break;
             case Type::INT_KEY_MAP:
+                if (_field.intKeyMapVal == nullptr)
+                {
+                    _field.intKeyMapVal = new ValueMapIntKey();
+                }
                 *_field.intKeyMapVal = *other._field.intKeyMapVal;
                 break;
             default:
