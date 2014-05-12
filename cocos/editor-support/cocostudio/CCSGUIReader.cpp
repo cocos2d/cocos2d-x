@@ -1265,7 +1265,10 @@ void WidgetPropertiesReader0300::setColorPropsForWidgetFromJsonDictionary(Widget
         apyf = widget->getAnchorPoint().y;
     }
     
-    widget->setAnchorPoint(Vector2(apxf, apyf));
+    if (apx || apy) {
+        widget->setAnchorPoint(Vector2(apxf, apyf));
+    }
+    
     bool flipX = DICTOOL->getBooleanValue_json(options, "flipX");
     bool flipY = DICTOOL->getBooleanValue_json(options, "flipY");
     widget->setFlippedX(flipX);
