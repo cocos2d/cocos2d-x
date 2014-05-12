@@ -147,7 +147,7 @@ void VideoPlayerTest::createVideo()
     _videoPlayer->setContentSize(Size(widgetSize.width * 0.4f,widgetSize.height * 0.4f));
     _uiLayer->addChild(_videoPlayer);
     
-    _videoPlayer->setEventListener(CC_CALLBACK_2(VideoPlayerTest::videoEventCallback, this));
+    _videoPlayer->addEventListener(CC_CALLBACK_2(VideoPlayerTest::videoEventCallback, this));
 }
 
 void VideoPlayerTest::createSlider()
@@ -190,19 +190,19 @@ void VideoPlayerTest::sliderCallback(Ref *sender, ui::Slider::EventType eventTyp
     }
 }
 
-void VideoPlayerTest::videoEventCallback(Ref* sender, VideoPlayer::Event eventType)
+void VideoPlayerTest::videoEventCallback(Ref* sender, VideoPlayer::EventType eventType)
 {
     switch (eventType) {
-        case VideoPlayer::Event::PLAYING:
+        case VideoPlayer::EventType::PLAYING:
             _videoStateLabel->setString("PLAYING");
             break;
-        case VideoPlayer::Event::PAUSED:
+        case VideoPlayer::EventType::PAUSED:
             _videoStateLabel->setString("PAUSED");
             break;
-        case VideoPlayer::Event::STOPPED:
+        case VideoPlayer::EventType::STOPPED:
             _videoStateLabel->setString("STOPPED");
             break;
-        case VideoPlayer::Event::COMPLETED:
+        case VideoPlayer::EventType::COMPLETED:
             _videoStateLabel->setString("COMPLETED");
             break;
         default:

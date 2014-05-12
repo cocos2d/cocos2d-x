@@ -26,7 +26,7 @@ public:
     
     void sliderCallback(Ref *sender, ui::Slider::EventType eventType);
 
-    void videoEventCallback(Ref* sender, experimental::ui::VideoPlayer::Event eventType);
+    void videoEventCallback(Ref* sender, experimental::ui::VideoPlayer::EventType eventType);
 
 private:
     void createVideo();

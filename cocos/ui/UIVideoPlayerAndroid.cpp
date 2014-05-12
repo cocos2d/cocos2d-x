@@ -341,9 +341,9 @@ void VideoPlayer::setEventListener(const EventCallback& callback)
     _callback = callback;
 }
 
-void VideoPlayer::onVideoEvent(VideoPlayer::Event event)
+void VideoPlayer::onVideoEvent(VideoPlayer::EventType event)
 {
-    if (event == VideoPlayer::Event::PLAYING) {
+    if (event == VideoPlayer::EventType::PLAYING) {
         _isPlaying = true;
     } else {
         _isPlaying = false;
@@ -360,7 +360,7 @@ void executeVideoCallback(int index,int event)
     auto it = s_allVideoPlayers.find(index);
     if (it != s_allVideoPlayers.end())
     {
-        s_allVideoPlayers[index]->onVideoEvent((VideoPlayer::Event)event);
+        s_allVideoPlayers[index]->onVideoEvent((VideoPlayer::EventType)event);
     }
 }
 
