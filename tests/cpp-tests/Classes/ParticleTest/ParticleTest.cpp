@@ -995,28 +995,30 @@ Layer* createParticleLayer(int nIndex)
         case 30: return new DemoParticleFromFile("Galaxy");
         case 31: return new DemoParticleFromFile("Phoenix");
         case 32: return new DemoParticleFromFile("lines");
-        case 33: return new RadiusMode1();
-        case 34: return new RadiusMode2();
-        case 35: return new Issue704();
-        case 36: return new Issue870();
-        case 37: return new Issue1201();
+        case 33: return new DemoParticleFromFile("ButterFly");
+        case 34: return new DemoParticleFromFile("ButterFlyYFlipped");
+        case 35: return new RadiusMode1();
+        case 36: return new RadiusMode2();
+        case 37: return new Issue704();
+        case 38: return new Issue870();
+        case 39: return new Issue1201();
         // v1.1 tests
-        case 38: return new MultipleParticleSystems();
-        case 39: return new MultipleParticleSystemsBatched();
-        case 40: return new AddAndDeleteParticleSystems();
-        case 41: return new ReorderParticleSystems();
-        case 42: return new PremultipliedAlphaTest();
-        case 43: return new PremultipliedAlphaTest2();
-        case 44: return new Issue3990();
-        case 45: return new ParticleAutoBatching();
-        case 46: return new ParticleVisibleTest();
+        case 40: return new MultipleParticleSystems();
+        case 41: return new MultipleParticleSystemsBatched();
+        case 42: return new AddAndDeleteParticleSystems();
+        case 43: return new ReorderParticleSystems();
+        case 44: return new PremultipliedAlphaTest();
+        case 45: return new PremultipliedAlphaTest2();
+        case 46: return new Issue3990();
+        case 47: return new ParticleAutoBatching();
+        case 48: return new ParticleVisibleTest();
         default:
             break;
     }
 
     return NULL;
 }
-#define MAX_LAYER    47
+#define MAX_LAYER    49
 
 
 Layer* nextParticleAction()
