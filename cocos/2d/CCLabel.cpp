@@ -476,7 +476,6 @@ void Label::setString(const std::string& text)
     std::u16string utf16String;
     if (StringUtils::UTF8ToUTF16(_originalUTF8String, utf16String))
     {
-        _originalUTF16String = utf16String;
         _currentUTF16String  = utf16String;
     }
 }
@@ -927,10 +926,16 @@ void Label::setFontDefinition(const FontDefinition& textDefinition)
 
 void Label::updateContent()
 {
+    std::u16string utf16String;
+    if (StringUtils::UTF8ToUTF16(_originalUTF8String, utf16String))
+    {
+        _currentUTF16String  = utf16String;
+    }
+
     computeStringNumLines();
     if (_fontAtlas)
     {
-        computeHorizontalKernings(_originalUTF16String);
+        computeHorizontalKernings(_currentUTF16String);
     }
 
     if (_textSprite)
