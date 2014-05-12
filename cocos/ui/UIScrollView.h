@@ -41,15 +41,7 @@ public:
     virtual const Size& getLayoutSize() override;
 };
 
-enum SCROLLVIEW_DIR
-{
-    SCROLLVIEW_DIR_NONE,
-    SCROLLVIEW_DIR_VERTICAL,
-    SCROLLVIEW_DIR_HORIZONTAL,
-    SCROLLVIEW_DIR_BOTH
-};
-
-typedef enum
+CC_DEPRECATED_ATTRIBUTE typedef enum
 {
     SCROLLVIEW_EVENT_SCROLL_TO_TOP,
     SCROLLVIEW_EVENT_SCROLL_TO_BOTTOM,
@@ -62,7 +54,7 @@ typedef enum
     SCROLLVIEW_EVENT_BOUNCE_RIGHT
 }ScrollviewEventType;
 
-typedef void (Ref::*SEL_ScrollViewEvent)(Ref*, ScrollviewEventType);
+CC_DEPRECATED_ATTRIBUTE typedef void (Ref::*SEL_ScrollViewEvent)(Ref*, ScrollviewEventType);
 #define scrollvieweventselector(_SELECTOR) (SEL_ScrollViewEvent)(&_SELECTOR)
 
 
@@ -72,6 +64,27 @@ class ScrollView : public Layout , public UIScrollInterface
     DECLARE_CLASS_GUI_INFO
     
 public:
+    enum class Direction
+    {
+        NONE,
+        VERTICAL,
+        HORIZONTAL,
+        BOTH
+    };
+    
+    enum class EventType
+    {
+        SCROLL_TO_TOP,
+        SCROLL_TO_BOTTOM,
+        SCROLL_TO_LEFT,
+        SCROLL_TO_RIGHT,
+        SCROLLING,
+        BOUNCE_TOP,
+        BOUNCE_BOTTOM,
+        BOUNCE_LEFT,
+        BOUNCE_RIGHT
+    };
+    typedef std::function<void(Ref*, EventType)> ccScrollViewCallback;
     /**
      * Default constructor
      */
@@ -94,7 +107,7 @@ public:
      *
      * @param SCROLLVIEW_DIR
      */
-    virtual void setDirection(SCROLLVIEW_DIR dir);
+    virtual void setDirection(Direction dir);
     
     /**
      * Gets scroll direction of scrollview.
@@ -103,7 +116,7 @@ public:
      *
      * @return SCROLLVIEW_DIR
      */
-    SCROLLVIEW_DIR getDirection();
+    Direction getDirection();
     
     /**
      * Gets inner container of scrollview.
@@ -245,7 +258,8 @@ public:
     /**
      * Add call back function called scrollview event triggered
      */
-    void addEventListenerScrollView(Ref* target, SEL_ScrollViewEvent selector);
+    CC_DEPRECATED_ATTRIBUTE void addEventListenerScrollView(Ref* target, SEL_ScrollViewEvent selector);
+    void addEventListener(ccScrollViewCallback callback);
         
     virtual void addChild(Node * child) override;
     /**
@@ -371,7 +385,7 @@ protected:
 protected:
     Layout* _innerContainer;
     
-    SCROLLVIEW_DIR _direction;
+    Direction _direction;
 
     Vector2 _touchBeganPoint;
     Vector2 _touchMovedPoint;
@@ -418,7 +432,19 @@ protected:
 
     
     Ref* _scrollViewEventListener;
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (push)
+#pragma warning (disable: 4996)
+#endif
     SEL_ScrollViewEvent _scrollViewEventSelector;
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic warning "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (pop)
+#endif
+    ccScrollViewCallback _eventCallback;
 };
 
 }

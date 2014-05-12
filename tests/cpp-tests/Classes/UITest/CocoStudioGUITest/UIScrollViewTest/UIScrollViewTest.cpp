@@ -113,7 +113,7 @@ bool UIScrollViewTest_Horizontal::init()
         // Create the scrollview by horizontal
         ui::ScrollView* scrollView = ui::ScrollView::create();
         scrollView->setBounceEnabled(true);
-        scrollView->setDirection(SCROLLVIEW_DIR_HORIZONTAL);
+        scrollView->setDirection(ui::ScrollView::Direction::HORIZONTAL);
         scrollView->setSize(Size(280.0f, 150.0f));
         scrollView->setInnerContainerSize(scrollView->getSize());
         Size backgroundSize = background->getContentSize();
@@ -193,7 +193,7 @@ bool UIScrollViewTest_Both::init()
         
         // Create the dragpanel
         ui::ScrollView* scrollView = ui::ScrollView::create();
-        scrollView->setDirection(SCROLLVIEW_DIR_BOTH);
+        scrollView->setDirection(ui::ScrollView::Direction::BOTH);
         scrollView->setTouchEnabled(true);
         scrollView->setBounceEnabled(true);
         scrollView->setBackGroundImageScale9Enabled(true);
@@ -255,7 +255,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection::init()
         ui::ScrollView* sc = ui::ScrollView::create();
         sc->setBackGroundColor(Color3B::GREEN);
         sc->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
-        sc->setDirection(SCROLLVIEW_DIR_BOTH);
+        sc->setDirection(ui::ScrollView::Direction::BOTH);
         sc->setInnerContainerSize(Size(480, 320));
         sc->setSize(Size(100,100));
         Size backgroundSize = background->getContentSize();
@@ -311,7 +311,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection_Bounce::init()
         sc->setBackGroundColor(Color3B::GREEN);
         sc->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
         sc->setBounceEnabled(true);
-        sc->setDirection(SCROLLVIEW_DIR_BOTH);
+        sc->setDirection(ui::ScrollView::Direction::BOTH);
         sc->setInnerContainerSize(Size(480, 320));
         sc->setSize(Size(100,100));
         Size backgroundSize = background->getContentSize();

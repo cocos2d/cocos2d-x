@@ -175,7 +175,7 @@ public:
      *
      * @param SCROLLVIEW_DIR
      */
-    virtual void setDirection(SCROLLVIEW_DIR dir) override;
+    virtual void setDirection(Direction dir) override;
     
     virtual std::string getDescription() const override;
     

@@ -742,7 +742,7 @@ void WidgetPropertiesReader0250::setPropsForScrollViewFromJsonDictionary(Widget*
     float innerHeight = DICTOOL->getFloatValue_json(options, "innerHeight");
     scrollView->setInnerContainerSize(Size(innerWidth, innerHeight));
 	int direction = DICTOOL->getFloatValue_json(options, "direction");
-    scrollView->setDirection((SCROLLVIEW_DIR)direction);
+    scrollView->setDirection((ScrollView::Direction)direction);
     scrollView->setBounceEnabled(DICTOOL->getBooleanValue_json(options, "bounceEnable"));
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
@@ -1706,7 +1706,7 @@ void WidgetPropertiesReader0300::setPropsForScrollViewFromJsonDictionary(Widget*
     float innerHeight = DICTOOL->getFloatValue_json(options, "innerHeight");
     scrollView->setInnerContainerSize(Size(innerWidth, innerHeight));
 	int direction = DICTOOL->getFloatValue_json(options, "direction");
-    scrollView->setDirection((SCROLLVIEW_DIR)direction);
+    scrollView->setDirection((ScrollView::Direction)direction);
     scrollView->setBounceEnabled(DICTOOL->getBooleanValue_json(options, "bounceEnable"));
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
@@ -2018,7 +2018,7 @@ void WidgetPropertiesReader0300::setPropsForListViewFromJsonDictionary(Widget* w
     float innerHeight = DICTOOL->getFloatValue_json(options, "innerHeight");
     listView->setInnerContainerSize(Size(innerWidth, innerHeight));
 	int direction = DICTOOL->getFloatValue_json(options, "direction");
-	listView->setDirection((SCROLLVIEW_DIR)direction);
+	listView->setDirection((ScrollView::Direction)direction);
     
     ListView::Gravity gravity = (ListView::Gravity)DICTOOL->getIntValue_json(options, "gravity");
     listView->setGravity(gravity);

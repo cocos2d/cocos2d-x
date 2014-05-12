@@ -90,7 +90,7 @@ void ListView::updateInnerContainerSize()
 {
     switch (_direction)
     {
-        case SCROLLVIEW_DIR_VERTICAL:
+        case Direction::VERTICAL:
         {
             size_t length = _items.size();
             float totalHeight = (length - 1) * _itemsMargin;
@@ -103,7 +103,7 @@ void ListView::updateInnerContainerSize()
             setInnerContainerSize(Size(finalWidth, finalHeight));
             break;
         }
-        case SCROLLVIEW_DIR_HORIZONTAL:
+        case Direction::HORIZONTAL:
         {
             size_t length = _items.size();
             float totalWidth = (length - 1) * _itemsMargin;
@@ -128,7 +128,7 @@ void ListView::remedyLayoutParameter(Widget *item)
         return;
     }
     switch (_direction) {
-        case SCROLLVIEW_DIR_VERTICAL:
+        case Direction::VERTICAL:
         {
             LinearLayoutParameter* llp = (LinearLayoutParameter*)(item->getLayoutParameter(LayoutParameter::Type::LINEAR));
             if (!llp)
@@ -183,7 +183,7 @@ void ListView::remedyLayoutParameter(Widget *item)
             }
             break;
         }
-        case SCROLLVIEW_DIR_HORIZONTAL:
+        case Direction::HORIZONTAL:
         {
             LinearLayoutParameter* llp = (LinearLayoutParameter*)(item->getLayoutParameter(LayoutParameter::Type::LINEAR));
             if (!llp)
@@ -357,17 +357,17 @@ float ListView::getItemsMargin()
     return _itemsMargin;
 }
 
-void ListView::setDirection(SCROLLVIEW_DIR dir)
+void ListView::setDirection(Direction dir)
 {
     switch (dir)
     {
-        case SCROLLVIEW_DIR_VERTICAL:
+        case Direction::VERTICAL:
             setLayoutType(LayoutType::VERTICAL);
             break;
-        case SCROLLVIEW_DIR_HORIZONTAL:
+        case Direction::HORIZONTAL:
             setLayoutType(LayoutType::HORIZONTAL);
             break;
-        case SCROLLVIEW_DIR_BOTH:
+        case Direction::BOTH:
             return;
         default:
             return;

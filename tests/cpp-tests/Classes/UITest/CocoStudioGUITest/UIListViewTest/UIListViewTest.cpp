@@ -56,7 +56,7 @@ bool UIListViewTest_Vertical::init()
         // Create the list view ex
         ListView* listView = ListView::create();
         // set list view ex direction
-        listView->setDirection(SCROLLVIEW_DIR_VERTICAL);
+        listView->setDirection(ui::ScrollView::Direction::VERTICAL);
         listView->setTouchEnabled(true);
         listView->setBounceEnabled(true);
         listView->setBackGroundImage("cocosui/green_edit.png");
@@ -233,7 +233,7 @@ bool UIListViewTest_Horizontal::init()
         // Create the list view ex
         ListView* listView = ListView::create();
         // set list view ex direction
-        listView->setDirection(SCROLLVIEW_DIR_HORIZONTAL);
+        listView->setDirection(ui::ScrollView::Direction::HORIZONTAL);
         listView->setTouchEnabled(true);
         listView->setBounceEnabled(true);
         listView->setBackGroundImage("cocosui/green_edit.png");

@@ -128,6 +128,10 @@ CC_DEPRECATED_ATTRIBUTE const PageView::TouchDirection PAGEVIEW_TOUCHRIGHT =  Pa
 CC_DEPRECATED_ATTRIBUTE const RichElement::Type RICH_TEXT =  RichElement::Type::TEXT;
 CC_DEPRECATED_ATTRIBUTE const RichElement::Type RICH_IMAGE =  RichElement::Type::IMAGE;
 CC_DEPRECATED_ATTRIBUTE const RichElement::Type RICH_CUSTOM =  RichElement::Type::CUSTOM;
+CC_DEPRECATED_ATTRIBUTE const ScrollView::Direction SCROLLVIEW_DIR_NONE =  ScrollView::Direction::NONE;
+CC_DEPRECATED_ATTRIBUTE const ScrollView::Direction SCROLLVIEW_DIR_VERTICAL =  ScrollView::Direction::VERTICAL;
+CC_DEPRECATED_ATTRIBUTE const ScrollView::Direction SCROLLVIEW_DIR_HORIZONTAL =  ScrollView::Direction::HORIZONTAL;
+CC_DEPRECATED_ATTRIBUTE const ScrollView::Direction SCROLLVIEW_DIR_BOTH =  ScrollView::Direction::BOTH;
 
     
 CC_DEPRECATED_ATTRIBUTE typedef Widget::TextureResType TextureResType;
@@ -145,6 +149,7 @@ CC_DEPRECATED_ATTRIBUTE typedef ListView::Gravity ListViewGravity;
 CC_DEPRECATED_ATTRIBUTE typedef LoadingBar::Direction LoadingBarType;
 CC_DEPRECATED_ATTRIBUTE typedef PageView::TouchDirection PVTouchDir;
 CC_DEPRECATED_ATTRIBUTE typedef RichElement::Type RichElementType;
+CC_DEPRECATED_ATTRIBUTE typedef ScrollView::Direction SCROLLVIEW_DIR;
 
 
 
