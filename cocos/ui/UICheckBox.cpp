@@ -45,11 +45,11 @@ _frontCrossDisabledRenderer(nullptr),
 _isSelected(true),
 _checkBoxEventListener(nullptr),
 _checkBoxEventSelector(nullptr),
-_backGroundTexType(UI_TEX_TYPE_LOCAL),
-_backGroundSelectedTexType(UI_TEX_TYPE_LOCAL),
-_frontCrossTexType(UI_TEX_TYPE_LOCAL),
-_backGroundDisabledTexType(UI_TEX_TYPE_LOCAL),
-_frontCrossDisabledTexType(UI_TEX_TYPE_LOCAL),
+_backGroundTexType(TextureResType::LOCAL),
+_backGroundSelectedTexType(TextureResType::LOCAL),
+_frontCrossTexType(TextureResType::LOCAL),
+_backGroundDisabledTexType(TextureResType::LOCAL),
+_frontCrossDisabledTexType(TextureResType::LOCAL),
 _backGroundFileName(""),
 _backGroundSelectedFileName(""),
 _frontCrossFileName(""),
@@ -65,7 +65,6 @@ _frontCrossDisabledRendererAdaptDirty(true)
 
 CheckBox::~CheckBox()
 {
-    _checkBoxEventListener = nullptr;
     _checkBoxEventSelector = nullptr;
 }
 
@@ -174,10 +173,10 @@ void CheckBox::loadTextureBackGround(const std::string& backGround,TextureResTyp
     _backGroundTexType = texType;
     switch (_backGroundTexType)
     {
-        case UI_TEX_TYPE_LOCAL:
+        case TextureResType::LOCAL:
             _backGroundBoxRenderer->setTexture(backGround);
             break;
-        case UI_TEX_TYPE_PLIST:
+        case TextureResType::PLIST:
             _backGroundBoxRenderer->setSpriteFrame(backGround);
             break;
         default:
@@ -200,10 +199,10 @@ void CheckBox::loadTextureBackGroundSelected(const std::string& backGroundSelect
     _backGroundSelectedTexType = texType;
     switch (_backGroundSelectedTexType)
     {
-        case UI_TEX_TYPE_LOCAL:
+        case TextureResType::LOCAL:
             _backGroundSelectedBoxRenderer->setTexture(backGroundSelected);
             break;
-        case UI_TEX_TYPE_PLIST:
+        case TextureResType::PLIST:
             _backGroundSelectedBoxRenderer->setSpriteFrame(backGroundSelected);
             break;
         default:
@@ -225,10 +224,10 @@ void CheckBox::loadTextureFrontCross(const std::string& cross,TextureResType tex
     _frontCrossTexType = texType;
     switch (_frontCrossTexType)
     {
-        case UI_TEX_TYPE_LOCAL:
+        case TextureResType::LOCAL:
             _frontCrossRenderer->setTexture(cross);
             break;
-        case UI_TEX_TYPE_PLIST:
+        case TextureResType::PLIST:
             _frontCrossRenderer->setSpriteFrame(cross);
             break;
         default:
@@ -250,10 +249,10 @@ void CheckBox::loadTextureBackGroundDisabled(const std::string& backGroundDisabl
     _backGroundDisabledTexType = texType;
     switch (_backGroundDisabledTexType)
     {
-        case UI_TEX_TYPE_LOCAL:
+        case TextureResType::LOCAL:
             _backGroundBoxDisabledRenderer->setTexture(backGroundDisabled);
             break;
-        case UI_TEX_TYPE_PLIST:
+        case TextureResType::PLIST:
             _backGroundBoxDisabledRenderer->setSpriteFrame(backGroundDisabled);
             break;
         default:
@@ -275,10 +274,10 @@ void CheckBox::loadTextureFrontCrossDisabled(const std::string& frontCrossDisabl
     _frontCrossDisabledTexType = texType;
     switch (_frontCrossDisabledTexType)
     {
-        case UI_TEX_TYPE_LOCAL:
+        case TextureResType::LOCAL:
             _frontCrossDisabledRenderer->setTexture(frontCrossDisabled);
             break;
-        case UI_TEX_TYPE_PLIST:
+        case TextureResType::PLIST:
             _frontCrossDisabledRenderer->setSpriteFrame(frontCrossDisabled);
             break;
         default:
@@ -359,6 +358,11 @@ bool CheckBox::getSelectedState()
 
 void CheckBox::selectedEvent()
 {
+    if (_checkBoxEventCallback)
+    {
+        _checkBoxEventCallback(this, EventType::SELECTED);
+    }
+    
     if (_checkBoxEventListener && _checkBoxEventSelector)
     {
         (_checkBoxEventListener->*_checkBoxEventSelector)(this,CHECKBOX_STATE_EVENT_SELECTED);
@@ -367,6 +371,9 @@ void CheckBox::selectedEvent()
 
 void CheckBox::unSelectedEvent()
 {
+    if (_checkBoxEventCallback) {
+        _checkBoxEventCallback(this, EventType::UNSELECTED);
+    }
     if (_checkBoxEventListener && _checkBoxEventSelector)
     {
         (_checkBoxEventListener->*_checkBoxEventSelector)(this,CHECKBOX_STATE_EVENT_UNSELECTED);
@@ -377,6 +384,11 @@ void CheckBox::addEventListenerCheckBox(Ref *target, SEL_SelectedStateEvent sele
 {
     _checkBoxEventListener = target;
     _checkBoxEventSelector = selector;
+}
+
+void CheckBox::addEventListener(ccCheckBoxCallback callback)
+{
+    _checkBoxEventCallback = callback;
 }
     
 void CheckBox::updateFlippedX()

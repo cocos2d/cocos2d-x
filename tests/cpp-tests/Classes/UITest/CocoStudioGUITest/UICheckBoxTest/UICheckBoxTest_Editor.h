@@ -33,7 +33,7 @@ public:
     UICheckBoxTest_Editor();
     ~UICheckBoxTest_Editor();
     bool init();
-    void selectedStateEvent(Ref* pSender, CheckBoxEventType type);
+    void selectedStateEvent(Ref* pSender, CheckBox::EventType type);
     
 protected:
     UI_SCENE_EDITOR_CREATE_FUNC(UICheckBoxTest_Editor)

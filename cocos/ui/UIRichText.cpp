@@ -55,7 +55,7 @@ bool RichElement::init(int tag, const Color3B &color, GLubyte opacity)
 }
     
     
-RichElementText* RichElementText::create(int tag, const Color3B &color, GLubyte opacity, const char *text, const char *fontName, float fontSize)
+RichElementText* RichElementText::create(int tag, const Color3B &color, GLubyte opacity, const std::string& text, const std::string& fontName, float fontSize)
 {
     RichElementText* element = new RichElementText();
     if (element && element->init(tag, color, opacity, text, fontName, fontSize))
@@ -67,7 +67,7 @@ RichElementText* RichElementText::create(int tag, const Color3B &color, GLubyte 
     return NULL;
 }
     
-bool RichElementText::init(int tag, const Color3B &color, GLubyte opacity, const char *text, const char *fontName, float fontSize)
+bool RichElementText::init(int tag, const Color3B &color, GLubyte opacity, const std::string& text, const std::string& fontName, float fontSize)
 {
     if (RichElement::init(tag, color, opacity))
     {
@@ -79,7 +79,7 @@ bool RichElementText::init(int tag, const Color3B &color, GLubyte opacity, const
     return false;
 }
 
-RichElementImage* RichElementImage::create(int tag, const Color3B &color, GLubyte opacity, const char *filePath)
+RichElementImage* RichElementImage::create(int tag, const Color3B &color, GLubyte opacity, const std::string& filePath)
 {
     RichElementImage* element = new RichElementImage();
     if (element && element->init(tag, color, opacity, filePath))
@@ -91,7 +91,7 @@ RichElementImage* RichElementImage::create(int tag, const Color3B &color, GLubyt
     return NULL;
 }
     
-bool RichElementImage::init(int tag, const Color3B &color, GLubyte opacity, const char *filePath)
+bool RichElementImage::init(int tag, const Color3B &color, GLubyte opacity, const std::string& filePath)
 {
     if (RichElement::init(tag, color, opacity))
     {
@@ -205,7 +205,7 @@ void RichText::formatText()
                 Node* elementRenderer = NULL;
                 switch (element->_type)
                 {
-                    case RICH_TEXT:
+                    case RichElement::Type::TEXT:
                     {
                         RichElementText* elmtText = static_cast<RichElementText*>(element);
                         if (FileUtils::getInstance()->isFileExist(elmtText->_fontName))
@@ -218,13 +218,13 @@ void RichText::formatText()
                         }
                         break;
                     }
-                    case RICH_IMAGE:
+                    case RichElement::Type::IMAGE:
                     {
                         RichElementImage* elmtImage = static_cast<RichElementImage*>(element);
                         elementRenderer = Sprite::create(elmtImage->_filePath.c_str());
                         break;
                     }
-                    case RICH_CUSTOM:
+                    case RichElement::Type::CUSTOM:
                     {
                         RichElementCustomNode* elmtCustom = static_cast<RichElementCustomNode*>(element);
                         elementRenderer = elmtCustom->_customNode;
@@ -247,19 +247,19 @@ void RichText::formatText()
                 RichElement* element = static_cast<RichElement*>(_richElements.at(i));
                 switch (element->_type)
                 {
-                    case RICH_TEXT:
+                    case RichElement::Type::TEXT:
                     {
                         RichElementText* elmtText = static_cast<RichElementText*>(element);
                         handleTextRenderer(elmtText->_text.c_str(), elmtText->_fontName.c_str(), elmtText->_fontSize, elmtText->_color, elmtText->_opacity);
                         break;
                     }
-                    case RICH_IMAGE:
+                    case RichElement::Type::IMAGE:
                     {
                         RichElementImage* elmtImage = static_cast<RichElementImage*>(element);
                         handleImageRenderer(elmtImage->_filePath.c_str(), elmtImage->_color, elmtImage->_opacity);
                         break;
                     }
-                    case RICH_CUSTOM:
+                    case RichElement::Type::CUSTOM:
                     {
                         RichElementCustomNode* elmtCustom = static_cast<RichElementCustomNode*>(element);
                         handleCustomRenderer(elmtCustom->_customNode);
@@ -275,7 +275,7 @@ void RichText::formatText()
     }
 }
     
-void RichText::handleTextRenderer(const char *text, const char *fontName, float fontSize, const Color3B &color, GLubyte opacity)
+void RichText::handleTextRenderer(const std::string& text, const std::string& fontName, float fontSize, const Color3B &color, GLubyte opacity)
 {
     auto fileExist = FileUtils::getInstance()->isFileExist(fontName);
     Label* textRenderer = nullptr;
@@ -293,7 +293,7 @@ void RichText::handleTextRenderer(const char *text, const char *fontName, float 
     {
         float overstepPercent = (-_leftSpaceWidth) / textRendererWidth;
         std::string curText = text;
-        size_t stringLength = _calcCharCount(text);
+        size_t stringLength = _calcCharCount(text.c_str());
         int leftLength = stringLength * (1.0f - overstepPercent);
         std::string leftWords = curText.substr(0, leftLength);
         std::string cutWords = curText.substr(leftLength, curText.length()-1);
@@ -327,7 +327,7 @@ void RichText::handleTextRenderer(const char *text, const char *fontName, float 
     }
 }
     
-void RichText::handleImageRenderer(const char *fileParh, const Color3B &color, GLubyte opacity)
+void RichText::handleImageRenderer(const std::string& fileParh, const Color3B &color, GLubyte opacity)
 {
     Sprite* imageRenderer = Sprite::create(fileParh);
     handleCustomRenderer(imageRenderer);

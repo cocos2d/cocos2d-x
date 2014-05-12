@@ -34,7 +34,7 @@ public:
     ~UIButtonTest_Editor();
     
     bool init();
-    void touchEvent(Ref* pSender, TouchEventType type);        
+    void touchEvent(Ref* pSender, Widget::TouchEventType type);
     
 protected:
     UI_SCENE_EDITOR_CREATE_FUNC(UIButtonTest_Editor);

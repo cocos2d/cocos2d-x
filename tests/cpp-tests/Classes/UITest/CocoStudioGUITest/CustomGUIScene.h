@@ -19,7 +19,7 @@ public:
     void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
 //    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);    
     
-    void touchEvent(Ref* pSender, TouchEventType type);
+    void touchEvent(Ref* pSender, Widget::TouchEventType type);
     
 private:
     Vector2 _beginPos;

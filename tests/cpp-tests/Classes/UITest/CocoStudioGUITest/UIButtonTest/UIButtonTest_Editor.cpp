@@ -30,18 +30,22 @@ bool UIButtonTest_Editor::init()
         Layout* root = static_cast<Layout*>(_layout->getChildByName("root_Panel"));
 
         Text* back_label = static_cast<Text*>(Helper::seekWidgetByName(root, "back"));
-        back_label->addTouchEventListener(this, toucheventselector(UIScene_Editor::toGUIEditorTestScene));
+//        back_label->addTouchEventListener(this, toucheventselector(UIScene_Editor::toGUIEditorTestScene));
+        back_label->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::toGUIEditorTestScene, this));
         
         _sceneTitle = static_cast<Text*>(Helper::seekWidgetByName(root, "UItest"));
         
         Button* button = static_cast<Button*>(Helper::seekWidgetByName(root, "Button_123"));
-        button->addTouchEventListener(this, toucheventselector(UIButtonTest_Editor::touchEvent));
+//        button->addTouchEventListener(this, toucheventselector(UIButtonTest_Editor::touchEvent));
+        button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest_Editor::touchEvent, this));
         
         Button* title_button = static_cast<Button*>(Helper::seekWidgetByName(root, "Button_126"));
-        title_button->addTouchEventListener(this, toucheventselector(UIButtonTest_Editor::touchEvent));
+//        title_button->addTouchEventListener(this, toucheventselector(UIButtonTest_Editor::touchEvent));
+        title_button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest_Editor::touchEvent, this));
         
         Button* scale9_button = static_cast<Button*>(Helper::seekWidgetByName(root, "Button_129"));
-        scale9_button->addTouchEventListener(this, toucheventselector(UIButtonTest_Editor::touchEvent));
+//        scale9_button->addTouchEventListener(this, toucheventselector(UIButtonTest_Editor::touchEvent));
+        scale9_button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest_Editor::touchEvent, this));
         
         _displayValueLabel = Text::create();
         _displayValueLabel->setFontName("fonts/Marker Felt.ttf");
@@ -57,23 +61,23 @@ bool UIButtonTest_Editor::init()
     return false;
 }
 
-void UIButtonTest_Editor::touchEvent(Ref *pSender, TouchEventType type)
+void UIButtonTest_Editor::touchEvent(Ref *pSender, Widget::TouchEventType type)
 {
     switch (type)
     {
-        case TOUCH_EVENT_BEGAN:
+        case Widget::TouchEventType::BEGAN:
             _displayValueLabel->setText("Touch Down");
             break;
             
-        case TOUCH_EVENT_MOVED:
+        case Widget::TouchEventType::MOVED:
             _displayValueLabel->setText("Touch Moved");
             break;
             
-        case TOUCH_EVENT_ENDED:
+        case Widget::TouchEventType::ENDED:
             _displayValueLabel->setText("Touch Ended");
             break;
             
-        case TOUCH_EVENT_CANCELED:
+        case Widget::TouchEventType::CANCELED:
             _displayValueLabel->setText("Touch Canceled");
             break;
             
