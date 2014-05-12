@@ -182,8 +182,8 @@ def main():
         # create and save apk
         if(ret == 0):
           sample_dir = 'tests/cpp-empty-test/proj.android/'
-          os.system('android update project -p cocos/2d/platform/android/java/ -t android-13')
-          os.system('android update project -p ' + sample_dir + ' -t android-13')
+          os.system('android update project -p cocos/2d/platform/android/java/ -t android-10')
+          os.system('android update project -p ' + sample_dir + ' -t android-10')
           os.system('ant debug -f ' + sample_dir + 'build.xml')
           local_apk = sample_dir + 'bin/CppEmptyTest-debug.apk'
           remote_apk = 'apks/cpp_empty_test/cpp_empty_test_' + str(pr_num) + '.apk'
