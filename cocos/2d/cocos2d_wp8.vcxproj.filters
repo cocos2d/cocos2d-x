@@ -103,6 +103,9 @@
     <Filter Include="renderer\Shaders">
       <UniqueIdentifier>{3237780d-1154-4049-bf53-151c421f26e9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ConvertUTF">
+      <UniqueIdentifier>{026f880b-7918-49f8-8f0d-00f7593ce326}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\physics\CCPhysicsBody.cpp">
@@ -605,6 +608,12 @@
     </ClCompile>
     <ClCompile Include="..\renderer\CCGLProgramCache.cpp">
       <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\ConvertUTF\ConvertUTF.c">
+      <Filter>ConvertUTF</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\ConvertUTF\ConvertUTFWrapper.cpp">
+      <Filter>ConvertUTF</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1197,6 +1206,9 @@
     </ClInclude>
     <ClInclude Include="..\renderer\CCGLProgramCache.h">
       <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\ConvertUTF\ConvertUTF.h">
+      <Filter>ConvertUTF</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
