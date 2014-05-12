@@ -91,11 +91,21 @@ AAssetsManager::AAssetsManager(const char* manifestUrl, const char* storagePath/
 , _connectionTimeout(0)
 , _isDownloading(false)
 {
+    _downloader = new Downloader(this);
+    adjustStoragePath();
     loadManifest();
 }
 
 AAssetsManager::~AAssetsManager()
 {
+}
+
+void AAssetsManager::adjustStoragePath()
+{
+    if (_storagePath.size() > 0 && _storagePath[_storagePath.size() - 1] != '/')
+    {
+        _storagePath.append("/");
+    }
 }
 
 void AAssetsManager::loadManifest()
@@ -181,6 +191,9 @@ void AAssetsManager::loadManifest()
                 }
             }
         }
+        
+        // Download version and manifest file
+        _downloader->download(_remoteVersionUrl.c_str(), _storagePath.c_str());
     }
 }
 
@@ -207,6 +220,23 @@ Asset AAssetsManager::parseAsset(const rapidjson::Value& json) {
     }
     
     return asset;
+}
+
+
+void AAssetsManager::onError(const Downloader::Error &error)
+{
+    CCLOG("%d : %s\n", error.code, error.message.c_str());
+}
+
+void AAssetsManager::onProgress(int percent)
+{
+    CCLOG("Progress: %d\n", percent);
+}
+
+void AAssetsManager::onSuccess()
+{
+    CCLOG("SUCCEED\n");
+    
 }
 
 NS_CC_EXT_END;

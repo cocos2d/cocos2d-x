@@ -31,6 +31,7 @@
 #include <mutex>
 
 #include "cocos2d.h"
+#include "Downloader.h"
 #include "extensions/ExtensionMacros.h"
 #include "json/document.h"
 
@@ -46,7 +47,7 @@ struct Asset {
 /*
  *  This class is used to auto update resources, such as pictures or scripts.
  */
-class AAssetsManager : public Ref
+class AAssetsManager : public Ref, DownloaderDelegateProtocol
 {
 public:
     enum class ErrorCode
@@ -159,15 +160,34 @@ public:
     unsigned int getConnectionTimeout();
     
     
-    /* downloadAndUncompress is the entry of a new thread
+    /* @brief Call back function for error
+     @param errorCode Type of error
+     * @js NA
+     * @lua NA
      */
-    friend int assetsManagerProgressFunc(void *, double, double, double, double);
+    virtual void onError(const Downloader::Error &error);
+    
+    /** @brief Call back function for recording downloading percent
+     @param percent How much percent downloaded
+     @warning    This call back function just for recording downloading percent.
+     AssetsManager will do some other thing after downloading, you should
+     write code in onSuccess() after downloading.
+     * @js NA
+     * @lua NA
+     */
+    virtual void onProgress(int percent);
+    
+    /** @brief Call back function for success
+     * @js NA
+     * @lua NA
+     */
+    virtual void onSuccess();
     
 protected:
     void loadManifest();
     Asset parseAsset(const rapidjson::Value& json);
     bool downLoad();
-    void checkStoragePath();
+    void adjustStoragePath();
     bool uncompress();
     bool createDirectory(const char *path);
     void setSearchPath();
@@ -229,7 +249,10 @@ private:
     unsigned int _connectionTimeout;
     
     //! CURL ref
-    void *_curl;
+    void*_curl;
+    
+    //! Downloader
+    Downloader* _downloader;
     
     //! Indicate whether AssetsManager is downloading assets
     bool _isDownloading;
