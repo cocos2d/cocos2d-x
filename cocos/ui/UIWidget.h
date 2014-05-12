@@ -49,6 +49,14 @@ CC_DEPRECATED_ATTRIBUTE typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType)
 *   @js NA
 *   @lua NA
 */
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#ifdef ABSOLUTE
+#undef ABSOLUTE
+#endif
+#endif
+
+
 class Widget : public ProtectedNode
 {
 public:
