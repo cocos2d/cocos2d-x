@@ -100,8 +100,8 @@
     <Filter Include="math">
       <UniqueIdentifier>{02a21a86-8f65-441b-ae13-11dec1c45ee5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="renderer\shaders">
-      <UniqueIdentifier>{438e71df-3684-4619-9659-10e07ed6cd62}</UniqueIdentifier>
+    <Filter Include="ConvertUTF">
+      <UniqueIdentifier>{6c1e4a6b-c168-436b-aa63-0af7f4caebf9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -406,7 +406,6 @@
     <ClCompile Include="platform\CCImage.cpp">
       <Filter>platform</Filter>
     </ClCompile>
-    <ClCompile Include="CCTweenFunction.cpp" />
     <ClCompile Include="..\..\external\xxhash\xxhash.c">
       <Filter>xxhash</Filter>
     </ClCompile>
@@ -581,6 +580,15 @@
     </ClCompile>
     <ClCompile Include="..\renderer\CCGLProgramCache.cpp">
       <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\ConvertUTF\ConvertUTF.c">
+      <Filter>ConvertUTF</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\ConvertUTF\ConvertUTFWrapper.cpp">
+      <Filter>ConvertUTF</Filter>
+    </ClCompile>
+    <ClCompile Include="CCTweenFunction.cpp">
+      <Filter>actions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -915,7 +923,6 @@
     <ClInclude Include="platform\desktop\CCGLView.h">
       <Filter>platform\desktop</Filter>
     </ClInclude>
-    <ClInclude Include="CCTweenFunction.h" />
     <ClInclude Include="..\..\external\xxhash\xxhash.h">
       <Filter>xxhash</Filter>
     </ClInclude>
@@ -1129,6 +1136,12 @@
     </ClInclude>
     <ClInclude Include="..\renderer\CCGLProgramCache.h">
       <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\ConvertUTF\ConvertUTF.h">
+      <Filter>ConvertUTF</Filter>
+    </ClInclude>
+    <ClInclude Include="CCTweenFunction.h">
+      <Filter>actions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
