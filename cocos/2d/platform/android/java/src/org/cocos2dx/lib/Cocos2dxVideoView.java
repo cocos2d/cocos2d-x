@@ -682,10 +682,9 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
 		// TODO Auto-generated method stub
 		return true;
 	}
-
-    @Override
+    	
     public int getAudioSessionId () {
        // TODO Auto-generated method stub
-       return 0;
+       return mMediaPlayer.getAudioSessionId();
     }
 }
