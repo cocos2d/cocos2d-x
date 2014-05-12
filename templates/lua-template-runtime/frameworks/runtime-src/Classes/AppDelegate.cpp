@@ -21,9 +21,9 @@ AppDelegate::~AppDelegate()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
-    string entryfile ="src/main.lua";
+    
 #if (COCOS2D_DEBUG>0)
-    initRuntime(entryfile);
+    initRuntime();
 #endif
     
     // initialize director
@@ -65,7 +65,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         return true;
 #endif
 
-    engine->executeScriptFile(entryfile.c_str());
+    engine->executeScriptFile(ConfigParser::getInstance()->getEntryFile().c_str());
     return true;
 }
 

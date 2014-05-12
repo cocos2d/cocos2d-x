@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "json/writer.h"
 #include "LuaBasicConversions.h"
 #include "VisibleRect.h"
+#include "ConfigParser.h"
 
 #ifdef _WIN32
 #include <direct.h>
@@ -47,7 +48,6 @@ using namespace cocos2d;
 
 std::string g_resourcePath;
 static rapidjson::Document g_filecfgjson; 
-static string g_entryfile;
 extern string getIPAddress();
 const char* getRuntimeVersion()
 {
@@ -63,7 +63,7 @@ void startScript(string strDebugArg)
         engine->executeString(strDebugArg.c_str());
     }
     cocos2d::log("debug args = %s",strDebugArg.c_str());
-    engine->executeScriptFile(g_entryfile.c_str());
+    engine->executeScriptFile(ConfigParser::getInstance()->getEntryFile().c_str());
 }
 
 bool reloadScript(const string& modulefile)
@@ -71,7 +71,7 @@ bool reloadScript(const string& modulefile)
     string strfile = modulefile;
     if (strfile.empty())
     {
-        strfile = g_entryfile;
+        strfile = ConfigParser::getInstance()->getEntryFile().c_str();
     }
 
     auto director = Director::getInstance();
@@ -583,6 +583,14 @@ public:
                     dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
                     dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
                     
+                }else if (strcmp(strcmd.c_str(),"getEntryfile")==0)
+                {
+                    rapidjson::Value bodyvalue(rapidjson::kObjectType);
+                    rapidjson::Value entryFileValue(rapidjson::kStringType);
+                    entryFileValue.SetString(ConfigParser::getInstance()->getEntryFile().c_str(),dReplyParse.GetAllocator());
+                    bodyvalue.AddMember("entryfile",entryFileValue,dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
                 }else if(strcmp(strcmd.c_str(),"getIP")==0)
                 {
                     rapidjson::Value bodyvalue(rapidjson::kObjectType);
@@ -724,7 +732,7 @@ static void register_runtime_override_function(lua_State* tolua_S)
     lua_pop(tolua_S, 1);
 }
 
-bool initRuntime(string& entryfile)
+bool initRuntime()
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) 
 #ifndef _DEBUG 
@@ -740,7 +748,6 @@ bool initRuntime(string& entryfile)
 #endif
 #endif
 
-    g_entryfile = entryfile;
     vector<string> searchPathArray;
     searchPathArray=FileUtils::getInstance()->getSearchPaths();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
