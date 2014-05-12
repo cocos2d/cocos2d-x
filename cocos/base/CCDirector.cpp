@@ -819,11 +819,13 @@ void Director::replaceScene(Scene *scene)
     CCASSERT(_runningScene, "Use runWithScene: instead to start the director");
     CCASSERT(scene != nullptr, "the scene should not be null");
     
+    if (scene == _nextScene)
+        return;
+    
     if (_nextScene)
     {
         if (_nextScene->isRunning())
         {
-            _nextScene->onExitTransitionDidStart();
             _nextScene->onExit();
         }
         _nextScene->cleanup();
@@ -894,7 +896,6 @@ void Director::popToSceneStackLevel(int level)
 
         if (current->isRunning())
         {
-            current->onExitTransitionDidStart();
             current->onExit();
         }
 
@@ -925,7 +926,6 @@ void Director::purgeDirector()
 
     if (_runningScene)
     {
-        _runningScene->onExitTransitionDidStart();
         _runningScene->onExit();
         _runningScene->cleanup();
         _runningScene->release();
