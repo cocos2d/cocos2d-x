@@ -173,9 +173,9 @@ bool LabelTextFormatter::multilineText(Label *theLabel)
 
     std::u16string strNew(multiline_string.begin(), multiline_string.end());
     
-    theLabel->_originalUTF16String = strNew;
+    theLabel->_currentUTF16String = strNew;
     theLabel->computeStringNumLines();
-    theLabel->computeHorizontalKernings(theLabel->_originalUTF16String);
+    theLabel->computeHorizontalKernings(theLabel->_currentUTF16String);
 
     return true;
 }

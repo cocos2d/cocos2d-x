@@ -344,7 +344,6 @@ protected:
 
     int           _currNumLines;
     std::u16string _currentUTF16String;
-    std::u16string _originalUTF16String;
     std::string          _originalUTF8String;
 
     float _fontScale;
