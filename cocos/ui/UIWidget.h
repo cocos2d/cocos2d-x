@@ -86,12 +86,6 @@ public:
         PLIST = 1
     };
     
-    enum class Type
-    {
-        ELEMENT,
-        CONTAINER
-    };
-    
     enum class BrightStyle
     {
         NONE = -1,
@@ -398,15 +392,6 @@ public:
     const std::string& getName() const;
 
     /**
-     * Returns a type that is widget's type
-     *
-     * @see WidgetType
-     *
-     * @return A WidgetType
-     */
-    Type getWidgetType() const;
-
-    /**
      * Changes the size that is widget's size
      *
      * @param size that is widget's size
@@ -671,7 +656,6 @@ protected:
     ccWidgetTouchCallback _touchEventCallback;
     
     std::string _name;
-    Type _widgetType;
 	int _actionTag;
     Size _size;
     Size _customSize;

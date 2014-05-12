@@ -163,10 +163,29 @@ namespace cocostudio
         int colorB = cb ? DICTOOL->getIntValue_json(options, "colorB") : 255;
         widget->setColor(Color3B(colorR, colorG, colorB));
         bool apx = DICTOOL->checkObjectExist_json(options, "anchorPointX");
-        float apxf = apx ? DICTOOL->getFloatValue_json(options, "anchorPointX") : ((widget->getWidgetType() == Widget::Type::ELEMENT) ? 0.5f : 0.0f);
+        
+        float apxf;
+        float apyf;
+        if (apx) {
+            apxf =  DICTOOL->getFloatValue_json(options, "anchorPointX");
+        }
+        else{
+            apxf = widget->getAnchorPoint().x;
+        }
+        
         bool apy = DICTOOL->checkObjectExist_json(options, "anchorPointY");
-        float apyf = apy ? DICTOOL->getFloatValue_json(options, "anchorPointY") : ((widget->getWidgetType() == Widget::Type::ELEMENT) ? 0.5f : 0.0f);
-        widget->setAnchorPoint(Vector2(apxf, apyf));
+        
+        if (apy) {
+            apyf = DICTOOL->getFloatValue_json(options, "anchorPointY");
+        }
+        else{
+            apyf = widget->getAnchorPoint().y;
+        }
+        
+        if (apx || apy) {
+            widget->setAnchorPoint(Vector2(apxf, apyf));
+        }
+        
         bool flipX = DICTOOL->getBooleanValue_json(options, "flipX");
         bool flipY = DICTOOL->getBooleanValue_json(options, "flipY");
         widget->setFlippedX(flipX);

@@ -63,7 +63,7 @@ const Margin MarginZero = Margin();
 class LayoutParameter : public Ref
 {
 public:
-    enum class Type : int
+    enum class Type
     {
         NONE = 0,
         LINEAR,
