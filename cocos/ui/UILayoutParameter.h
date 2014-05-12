@@ -60,6 +60,13 @@ const Margin MarginZero = Margin();
 *   @js NA
 *   @lua NA
 */
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#ifdef RELATIVE
+#undef RELATIVE
+#endif
+#endif
+
 class LayoutParameter : public Ref
 {
 public:
