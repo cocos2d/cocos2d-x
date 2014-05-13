@@ -40,6 +40,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(NewDrawNodeTest),
     CL(NewCullingTest),
     CL(VBOFullTest),
+	CL(CaptureScreenTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -558,4 +559,74 @@ std::string VBOFullTest::title() const
 std::string VBOFullTest::subtitle() const
 {
     return "VBO full Test, everthing should render normally";
+}
+
+CaptureScreenTest::CaptureScreenTest()
+{
+    Size s = Director::getInstance()->getWinSize();
+    Vector2 left(s.width / 4, s.height / 2);
+    Vector2 right(s.width / 4 * 3, s.height / 2);
+	
+    auto sp1 = Sprite::create("Images/grossini.png");
+    sp1->setPosition(left);
+    auto move1 = MoveBy::create(1, Vector2(s.width/2, 0));
+    auto seq1 = RepeatForever::create(Sequence::create(move1, move1->reverse(), NULL));
+    addChild(sp1);
+    sp1->runAction(seq1);
+    auto sp2 = Sprite::create("Images/grossinis_sister1.png");
+    sp2->setPosition(right);
+    auto move2 = MoveBy::create(1, Vector2(-s.width/2, 0));
+    auto seq2 = RepeatForever::create(Sequence::create(move2, move2->reverse(), NULL));
+    addChild(sp2);
+    sp2->runAction(seq2);
+
+    auto label1 = Label::createWithTTF(TTFConfig("fonts/arial.ttf"), "capture all");
+    auto mi1 = MenuItemLabel::create(label1, CC_CALLBACK_1(CaptureScreenTest::onCaptured, this, Rect::ZERO));
+    auto label2 = Label::createWithTTF(TTFConfig("fonts/arial.ttf"), "capture half");
+    auto mi2 = MenuItemLabel::create(label2, CC_CALLBACK_1(CaptureScreenTest::onCaptured, this, Rect(0, 0, s.width/2, s.height)));
+    mi2->setPosition(0, -15);
+    auto menu = Menu::create(mi1, mi2, NULL);
+    addChild(menu);
+    menu->setPosition(s.width / 2, s.height / 4);
+}
+
+CaptureScreenTest::~CaptureScreenTest()
+{
+}
+
+std::string CaptureScreenTest::title() const
+{
+    return "New Renderer";
+}
+
+std::string CaptureScreenTest::subtitle() const
+{
+    return "Capture screen test, press the munu items to capture the screen";
+}
+
+void CaptureScreenTest::onCaptured(Ref*, const Rect& rect)
+{
+    _savedFilename = "CaptureScreenTest-Shot.png";
+    Director::getInstance()->getRenderer()->captureScreen(
+	    CC_CALLBACK_1(CaptureScreenTest::afterCaptured, this),
+	    _savedFilename,
+	    rect);
+}
+
+void CaptureScreenTest::afterCaptured(bool succeed)
+{
+    if (succeed)
+    {
+	    TextureCache::getInstance()->removeTextureForKey(_savedFilename);
+	    removeChildByTag(119);
+	    auto sp = Sprite::create(_savedFilename);
+	    addChild(sp, 0, 119);
+	    Size s = Director::getInstance()->getWinSize();
+	    sp->setPosition(s.width / 2, s.height / 2);
+	    sp->setScale(0.25);
+    }
+    else
+    {
+	    log("Something went wrong");
+    }
 }
