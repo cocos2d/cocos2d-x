@@ -301,13 +301,20 @@ INT_PTR CALLBACK AboutDialogCallback(HWND hDlg, UINT message, WPARAM wParam, LPA
     return (INT_PTR)FALSE;
 }
 
-void createSimulator(const char* viewName, float width, float height, float frameZoomFactor)
+void createSimulator(const char* viewName, float width, float height, bool isLandscape, float frameZoomFactor)
 {
     if (g_eglView)
     {
         return;
     }
 
+    if((isLandscape && height > width) ||  (!isLandscape && width > height))
+    {
+        float tmpvalue =width;
+        width = height;
+        height = width;
+    }
+    
     g_eglView = GLView::createWithRect(viewName,Rect(0,0,width,height),frameZoomFactor);
     auto director = Director::getInstance();
     director->setOpenGLView(g_eglView);

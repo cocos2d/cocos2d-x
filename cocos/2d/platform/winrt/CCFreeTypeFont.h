@@ -129,6 +129,9 @@ private:
 
     FTLineInfo*     m_currentLine;  // the current line object to add words to.
 
+    int             m_fontFillColorR;
+    int             m_fontFillColorG;
+    int             m_fontFillColorB;
 };
 
 NS_CC_END

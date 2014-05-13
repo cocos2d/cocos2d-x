@@ -1,6 +1,16 @@
 cocos2d-x-3.1-alpha1 May.8 2014
+    [NEW]           UI: add navigation support
+    [NEW]           UI: add a widget to play video
+    [NEW]           VS: support VS 2013
+
+    [FIX]           Audio: pause sound automatically when go to background on Android
     [FIX]           Label: label is unsharp if it's created by system font with small size on iOS & Mac OS X
+    [FIX]           Label: Label created with system font is still visible when its opacity is 0
+    [FIX]           Label: Label created with system font havs black border on WP8/WINRT
+    [FIX]           Lua: A potential crash in the bindings of sp.SkeletonAnimation.setAnimation
+    [FIX]           Lua: Lua template should fail to launch on lua error
     [FIX]           ParticleSystem: Particles can be created without a texture
+
 
 cocos2d-x-3.1-alpha0 May.1 2014
      [NEW]          Android: Adds support for get response when Activity's onActivityResult is triggered

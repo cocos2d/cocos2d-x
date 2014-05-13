@@ -77,6 +77,8 @@ extern bool luavals_variadic_to_array(lua_State* L,int argc, __Array** ret);
 extern bool luavals_variadic_to_ccvaluevector(lua_State* L, int argc, cocos2d::ValueVector* ret);
 extern bool luaval_to_vector2(lua_State* L,int lo,cocos2d::Vector2* outValue);
 extern bool luaval_to_vector3(lua_State* L,int lo,cocos2d::Vector3* outValue);
+extern bool luaval_to_blendfunc(lua_State* L, int lo, cocos2d::BlendFunc* outValue);
+extern bool luaval_to_ttfconfig(lua_State* L, int lo, cocos2d::TTFConfig* outValue);
 
 CC_DEPRECATED_ATTRIBUTE static inline bool luaval_to_point(lua_State* L,int lo,cocos2d::Vector2* outValue)
 {
@@ -248,6 +250,8 @@ extern void fontdefinition_to_luaval(lua_State* L,const FontDefinition& inValue)
 extern void array_to_luaval(lua_State* L, __Array* inValue);
 extern void dictionary_to_luaval(lua_State* L, __Dictionary* dict);
 extern void matrix_to_luaval(lua_State* L, const cocos2d::Matrix& mat);
+extern void blendfunc_to_luaval(lua_State* L, const cocos2d::BlendFunc& func);
+extern void ttfconfig_to_luaval(lua_State* L, const cocos2d::TTFConfig& config);
 
 CC_DEPRECATED_ATTRIBUTE static inline void point_to_luaval(lua_State* L,const cocos2d::Vector2& pt)
 {

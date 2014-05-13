@@ -16,36 +16,44 @@ ConfigParser *ConfigParser::getInstance(void)
     return s_sharedInstance;
 }
 
+bool ConfigParser::isInit()
+{
+    return _isInit;
+}
+
 void ConfigParser::readConfig()
 {
-    _initViewSize.setSize(960,640);
-    _viewName="HelloLua";
+    _isInit = true;
     string filecfg = "res/config.json";
     string fullPathFile = FileUtils::getInstance()->fullPathForFilename(filecfg);
     FILE * pFile = fopen (fullPathFile.c_str() , "r");
     if(pFile)
     {
         rapidjson::FileStream inputStream(pFile);
-        rapidjson::Document runtimecfgjson; 
-        runtimecfgjson.ParseStream<0>(inputStream);
+        _docRootjson.ParseStream<0>(inputStream);
         fclose(pFile);
-        if (runtimecfgjson.HasMember("init_view") && runtimecfgjson["init_view"].IsObject())
+        if (_docRootjson.HasMember("init_cfg") && _docRootjson["init_cfg"].IsObject())
         {
-            const rapidjson::Value& objectInitView = runtimecfgjson["init_view"];
+            const rapidjson::Value& objectInitView = _docRootjson["init_cfg"];
             if (objectInitView.HasMember("width") && objectInitView.HasMember("height"))
             {
                 _initViewSize.width = objectInitView["width"].GetUint();
                 _initViewSize.height = objectInitView["height"].GetUint();
             }
-            if (objectInitView.HasMember("name"))
+            if (objectInitView.HasMember("name") && objectInitView["name"].IsString())
             {
                 _viewName = objectInitView["name"].GetString();
             }
-            
+            if (objectInitView.HasMember("isLandscape") && objectInitView["isLandscape"].IsBool()) {
+                _isLandscape = objectInitView["isLandscape"].GetBool();
+            }
+            if (objectInitView.HasMember("entry") && objectInitView["entry"].IsString()) {
+                _entryfile = objectInitView["entry"].GetString();
+            }
         }
-        if (runtimecfgjson.HasMember("simulator_screen_size"))
+        if (_docRootjson.HasMember("simulator_screen_size"))
         {
-            const rapidjson::Value& ArrayScreenSize = runtimecfgjson["simulator_screen_size"];
+            const rapidjson::Value& ArrayScreenSize = _docRootjson["simulator_screen_size"];
             if (ArrayScreenSize.IsArray())
             {
                 for (int i=0; i<ArrayScreenSize.Size(); i++)
@@ -58,22 +66,41 @@ void ConfigParser::readConfig()
                 }
             }
         }
+        
     }
 
 }
 
-ConfigParser::ConfigParser(void)
+ConfigParser::ConfigParser(void):_isInit(false),_isLandscape(true)
 {
-
+    _initViewSize.setSize(960,640);
+    _viewName = "HelloLua";
+    _entryfile = "src/main.lua";
 }
+
+rapidjson::Document& ConfigParser::getConfigJsonRoot()
+{
+    return _docRootjson;
+}
+
 string ConfigParser::getInitViewName()
 {
     return _viewName;
 }
 
+string ConfigParser::getEntryFile()
+{
+    return _entryfile;
+}
+
 Size ConfigParser::getInitViewSize()
 {
     return _initViewSize;
+}
+
+bool ConfigParser::isLanscape()
+{
+    return _isLandscape;
 }
 
 int ConfigParser::getScreenSizeCount(void)

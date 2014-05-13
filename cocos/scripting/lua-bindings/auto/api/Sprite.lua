@@ -44,7 +44,7 @@
 --------------------------------
 -- @function [parent=#Sprite] getOffsetPosition 
 -- @param self
--- @return array_table#array_table ret (return value: array_table)
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#Sprite] removeAllChildrenWithCleanup 
@@ -184,7 +184,7 @@
 -- @function [parent=#Sprite] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #cc.Matrix matrix
+-- @param #matrix_table matrix
 -- @param #bool bool
         
 --------------------------------
@@ -217,7 +217,7 @@
 --------------------------------
 -- @function [parent=#Sprite] setAnchorPoint 
 -- @param self
--- @param #array_table array
+-- @param #vector2_table array
         
 --------------------------------
 -- @function [parent=#Sprite] setRotationSkewX 

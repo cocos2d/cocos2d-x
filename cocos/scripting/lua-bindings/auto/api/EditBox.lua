@@ -36,12 +36,12 @@
 --------------------------------
 -- @function [parent=#EditBox] setPlaceholderFontColor 
 -- @param self
--- @param #color3B_table color3b
+-- @param #color3b_table color3b
         
 --------------------------------
 -- @function [parent=#EditBox] setFontColor 
 -- @param self
--- @param #color3B_table color3b
+-- @param #color3b_table color3b
         
 --------------------------------
 -- @function [parent=#EditBox] setPlaceholderFont 
@@ -109,12 +109,12 @@
 --------------------------------
 -- @function [parent=#EditBox] setAnchorPoint 
 -- @param self
--- @param #array_table array
+-- @param #vector2_table array
         
 --------------------------------
 -- @function [parent=#EditBox] setPosition 
 -- @param self
--- @param #array_table array
+-- @param #vector2_table array
         
 --------------------------------
 -- @function [parent=#EditBox] setVisible 

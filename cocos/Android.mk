@@ -121,6 +121,8 @@ base/CCEventListenerMouse.cpp \
 base/CCEventListenerTouch.cpp \
 base/CCEventMouse.cpp \
 base/CCEventTouch.cpp \
+base/CCEventFocus.cpp \
+base/CCEventListenerFocus.cpp \
 base/CCNS.cpp \
 base/CCProfiling.cpp \
 base/CCRef.cpp \
@@ -164,6 +166,7 @@ physics/chipmunk/CCPhysicsWorldInfo_chipmunk.cpp \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/. \
+                    $(LOCAL_PATH)/2d \
                     $(LOCAL_PATH)/2d/platform/android \
                     $(LOCAL_PATH)/../external/tinyxml2 \
                     $(LOCAL_PATH)/../external/unzip \

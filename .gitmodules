@@ -1,15 +1,12 @@
 [submodule "tools/cocos2d-console"]
-	path = tools/cocos2d-console
-	url = git://github.com/cocos2d/cocos2d-console.git
+        path = tools/cocos2d-console
+        url = git://github.com/cocos2d/cocos2d-console.git
 [submodule "plugin"]
-	path = plugin
-	url = https://github.com/cocos2d-x/plugin-x.git
+        path = plugin
+        url = https://github.com/cocos2d-x/plugin-x.git
 [submodule "tools/bindings-generator"]
-	path = tools/bindings-generator
-	url = git://github.com/cocos2d/bindings-generator.git
-[submodule "external"]
-	path = external
-	url = git://github.com/cocos2d/cocos2d-x-external.git
+        path = tools/bindings-generator
+        url = git://github.com/cocos2d/bindings-generator.git
 [submodule "tests/cpp-tests/Resources/ccs-res"]
-	path = tests/cpp-tests/Resources/ccs-res
-	url = git://github.com/dumganhar/ccs-res.git
+        path = tests/cpp-tests/Resources/ccs-res
+        url = git://github.com/dumganhar/ccs-res.git

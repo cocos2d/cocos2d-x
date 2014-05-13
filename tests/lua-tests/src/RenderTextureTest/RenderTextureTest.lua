@@ -416,8 +416,7 @@ end
 --     this:renderTexture = renderTexture
 
 --     renderTexture:setPosition(cc.p(s.width/2, s.height/2))
---     --          [renderTexture setPosition:cc.p(s.width, s.height)]
---     --          renderTexture.scale = 2
+--     renderTexture:setScale(2.0)
 
 --     /* add the sprites to the render texture */
 --     renderTexture:addChild(sprite1)

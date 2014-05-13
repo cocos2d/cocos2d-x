@@ -20,6 +20,8 @@ set(COCOS_BASE_SRC
   base/CCEventListenerTouch.cpp
   base/CCEventMouse.cpp
   base/CCEventTouch.cpp
+  base/CCEventFocus.cpp
+  base/CCEventListenerFocus.cpp
   base/CCNS.cpp
   base/CCProfiling.cpp
   base/CCRef.cpp

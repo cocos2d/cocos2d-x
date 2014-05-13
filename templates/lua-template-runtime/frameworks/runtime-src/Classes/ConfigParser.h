@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "cocos2d.h"
+#include "json/document.h"
 using namespace std;
 USING_NS_CC;
 
@@ -32,14 +33,23 @@ public:
     int getScreenSizeCount(void);
     cocos2d::Size getInitViewSize();
     string getInitViewName();
+    string getEntryFile();
+    rapidjson::Document& getConfigJsonRoot();
     const SimulatorScreenSize getScreenSize(int index);
-
+    bool isLanscape();
+    bool isInit();
+    
 private:
     ConfigParser(void);
     static ConfigParser *s_sharedInstance;
     ScreenSizeArray _screenSizeArray;
     cocos2d::Size _initViewSize;
     string _viewName;
+    string _entryfile;
+    bool _isLandscape;
+    bool _isInit;
+    
+    rapidjson::Document _docRootjson;
 };
 
 #endif  // __CONFIG_PARSER_H__

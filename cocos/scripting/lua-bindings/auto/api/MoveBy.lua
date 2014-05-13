@@ -7,7 +7,7 @@
 -- @function [parent=#MoveBy] create 
 -- @param self
 -- @param #float float
--- @param #array_table array
+-- @param #vector2_table array
 -- @return MoveBy#MoveBy ret (return value: cc.MoveBy)
         
 --------------------------------

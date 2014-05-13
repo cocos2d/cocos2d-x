@@ -21,8 +21,8 @@ AppDelegate::~AppDelegate()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
-
-#ifdef COCOS2D_DEBUG
+    
+#if (COCOS2D_DEBUG>0)
     initRuntime();
 #endif
     
@@ -30,12 +30,17 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        ConfigParser::getInstance()->readConfig();
+        
+        if (!ConfigParser::getInstance()->isInit()) {
+            ConfigParser::getInstance()->readConfig();
+        }
+
         Size viewSize = ConfigParser::getInstance()->getInitViewSize();
         string title = ConfigParser::getInstance()->getInitViewName();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-        extern void createSimulator(const char* viewName, float width, float height,float frameZoomFactor = 1.0f);
-        createSimulator(title.c_str(),viewSize.width,viewSize.height);
+        extern void createSimulator(const char* viewName, float width, float height,bool isLandscape = true, float frameZoomFactor = 1.0f);
+        bool isLanscape = ConfigParser::getInstance()->isLanscape();
+        createSimulator(title.c_str(),viewSize.width,viewSize.height,isLanscape);
 #else
         glview = GLView::createWithRect(title.c_str(), Rect(0,0,viewSize.width,viewSize.height));
         director->setOpenGLView(glview);
@@ -48,14 +53,19 @@ bool AppDelegate::applicationDidFinishLaunching()
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
    
-#ifdef COCOS2D_DEBUG
+    auto engine = LuaEngine::getInstance();
+    ScriptEngineManager::getInstance()->setScriptEngine(engine);
+    
+    //register custom function
+    //LuaStack* stack = engine->getLuaStack();
+    //register_custom_function(stack->getLuaState());
+    
+#if (COCOS2D_DEBUG>0)
     if (startRuntime())
         return true;
 #endif
 
-    auto engine = LuaEngine::getInstance();
-    ScriptEngineManager::getInstance()->setScriptEngine(engine);
-    engine->executeScriptFile("src/main.lua");
+    engine->executeScriptFile(ConfigParser::getInstance()->getEntryFile().c_str());
     return true;
 }
 

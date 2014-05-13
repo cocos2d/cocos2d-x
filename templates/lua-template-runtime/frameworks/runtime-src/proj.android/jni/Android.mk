@@ -8,6 +8,7 @@ LOCAL_MODULE_FILENAME := libcocos2dlua
 
 LOCAL_SRC_FILES := lua/main.cpp \
                    lua/Runtime_android.cpp \
+                   ../../Classes/VisibleRect.cpp \
                    ../../Classes/AppDelegate.cpp \
                    ../../Classes/ConfigParser.cpp \
                    ../../Classes/Runtime.cpp
