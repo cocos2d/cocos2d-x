@@ -187,7 +187,7 @@ int LoadingBar::getDirection()
             }
             break;
     }
-//    barRendererScaleChangedWithSize();
+    barRendererScaleChangedWithSize();
     updateContentSizeWithTextureSize(_barRendererTextureSize);
     _barRendererAdaptDirty = true;
 }
