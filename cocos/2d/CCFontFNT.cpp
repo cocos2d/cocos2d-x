@@ -711,12 +711,9 @@ void FontFNT::purgeCachedData()
     }
 }
 
-int * FontFNT::getHorizontalKerningForTextUTF16(unsigned short *text, int &outNumLetters) const
+int * FontFNT::getHorizontalKerningForTextUTF16(const std::u16string& text, int &outNumLetters) const
 {
-    if (!text)
-        return 0;
-    
-    outNumLetters = cc_wcslen(text);
+    outNumLetters = static_cast<int>(text.length());
     
     if (!outNumLetters)
         return 0;

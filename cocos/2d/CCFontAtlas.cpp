@@ -202,7 +202,7 @@ void FontAtlas::addLetterDefinition(const FontLetterDefinition &letterDefinition
     _fontLetterDefinitions[letterDefinition.letteCharUTF16] = letterDefinition;
 }
 
-bool FontAtlas::getLetterDefinitionForChar(unsigned short  letteCharUTF16, FontLetterDefinition &outDefinition)
+bool FontAtlas::getLetterDefinitionForChar(char16_t letteCharUTF16, FontLetterDefinition &outDefinition)
 {
     auto outIterator = _fontLetterDefinitions.find(letteCharUTF16);
 
@@ -218,13 +218,13 @@ bool FontAtlas::getLetterDefinitionForChar(unsigned short  letteCharUTF16, FontL
     }
 }
 
-bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
+bool FontAtlas::prepareLetterDefinitions(const std::u16string& utf16String)
 {
     FontFreeType* fontTTf = dynamic_cast<FontFreeType*>(_font);
-    if(fontTTf == nullptr || utf16String == nullptr)
+    if(fontTTf == nullptr)
         return false;
 
-    int length = cc_wcslen(utf16String);
+    size_t length = utf16String.length();
 
     float offsetAdjust = _letterPadding / 2;  
     long bitmapWidth;
@@ -240,7 +240,7 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
 
     float startY = _currentPageOrigY;
 
-    for (int i = 0; i < length; ++i)
+    for (size_t i = 0; i < length; ++i)
     {
         auto outIterator = _fontLetterDefinitions.find(utf16String[i]);
 

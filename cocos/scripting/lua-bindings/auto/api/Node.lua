@@ -28,15 +28,6 @@
 -- @param #cc.PhysicsBody physicsbody
         
 --------------------------------
--- overload function: getShaderProgram()
---          
--- overload function: getShaderProgram()
---          
--- @function [parent=#Node] getShaderProgram
--- @param self
--- @return GLProgram#GLProgram ret (retunr value: cc.GLProgram)
-
---------------------------------
 -- @function [parent=#Node] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)
@@ -125,9 +116,9 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
--- @function [parent=#Node] getNodeToWorldAffineTransform 
+-- @function [parent=#Node] getGLProgram 
 -- @param self
--- @return AffineTransform#AffineTransform ret (return value: cc.AffineTransform)
+-- @return GLProgram#GLProgram ret (return value: cc.GLProgram)
         
 --------------------------------
 -- @function [parent=#Node] getNodeToWorldTransform 
@@ -167,9 +158,9 @@
 -- @param #float float
         
 --------------------------------
--- @function [parent=#Node] setSkewY 
+-- @function [parent=#Node] setGLProgramState 
 -- @param self
--- @param #float float
+-- @param #cc.GLProgramState glprogramstate
         
 --------------------------------
 -- @function [parent=#Node] getOpacity 
@@ -264,6 +255,11 @@
 -- @param #bool bool
         
 --------------------------------
+-- @function [parent=#Node] setSkewY 
+-- @param self
+-- @param #float float
+        
+--------------------------------
 -- @function [parent=#Node] setPositionZ 
 -- @param self
 -- @param #float float
@@ -320,9 +316,9 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- @function [parent=#Node] setShaderProgram 
+-- @function [parent=#Node] isOpacityModifyRGB 
 -- @param self
--- @param #cc.GLProgram glprogram
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @function [parent=#Node] getRotation 
@@ -339,6 +335,11 @@
 -- @param self
 -- @param #cc.Action action
 -- @return Action#Action ret (return value: cc.Action)
+        
+--------------------------------
+-- @function [parent=#Node] getGLProgramState 
+-- @param self
+-- @return GLProgramState#GLProgramState ret (return value: cc.GLProgramState)
         
 --------------------------------
 -- @function [parent=#Node] setScheduler 
@@ -457,6 +458,11 @@
 -- @function [parent=#Node] setPositionY 
 -- @param self
 -- @param #float float
+        
+--------------------------------
+-- @function [parent=#Node] getNodeToWorldAffineTransform 
+-- @param self
+-- @return AffineTransform#AffineTransform ret (return value: cc.AffineTransform)
         
 --------------------------------
 -- @function [parent=#Node] updateDisplayedColor 
@@ -614,6 +620,11 @@
 -- @return matrix_table#matrix_table ret (return value: matrix_table)
         
 --------------------------------
+-- @function [parent=#Node] setGLProgram 
+-- @param self
+-- @param #cc.GLProgram glprogram
+        
+--------------------------------
 -- @function [parent=#Node] getScale 
 -- @param self
 -- @return float#float ret (return value: float)
@@ -635,11 +646,6 @@
         
 --------------------------------
 -- @function [parent=#Node] isCascadeColorEnabled 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- @function [parent=#Node] isOpacityModifyRGB 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         

@@ -35,9 +35,9 @@ public:
     bool init();
     void update(float delta);
 
-	virtual void previousCallback(Ref* sender, TouchEventType type) override;
-	virtual void restartCallback(Ref* sender, TouchEventType type) override;
-	virtual void nextCallback(Ref* sender, TouchEventType type) override;
+	virtual void previousCallback(Ref* sender, Widget::TouchEventType type) override;
+	virtual void restartCallback(Ref* sender, Widget::TouchEventType type) override;
+	virtual void nextCallback(Ref* sender, Widget::TouchEventType type) override;
     
 protected:
     UI_SCENE_CREATE_FUNC(UILoadingBarTest_Left)
@@ -52,9 +52,9 @@ public:
     bool init();
     void update(float delta);
 
-	virtual void previousCallback(Ref* sender, TouchEventType type) override;
-	virtual void restartCallback(Ref* sender, TouchEventType type) override;
-	virtual void nextCallback(Ref* sender, TouchEventType type) override;
+	virtual void previousCallback(Ref* sender, Widget::TouchEventType type) override;
+	virtual void restartCallback(Ref* sender, Widget::TouchEventType type) override;
+	virtual void nextCallback(Ref* sender, Widget::TouchEventType type) override;
     
 protected:
     UI_SCENE_CREATE_FUNC(UILoadingBarTest_Right)
@@ -69,9 +69,9 @@ public:
     bool init();
     void update(float delta);
 
-	virtual void previousCallback(Ref* sender, TouchEventType type) override;
-	virtual void restartCallback(Ref* sender, TouchEventType type) override;
-	virtual void nextCallback(Ref* sender, TouchEventType type) override;
+	virtual void previousCallback(Ref* sender, Widget::TouchEventType type) override;
+	virtual void restartCallback(Ref* sender, Widget::TouchEventType type) override;
+	virtual void nextCallback(Ref* sender, Widget::TouchEventType type) override;
     
 protected:
     UI_SCENE_CREATE_FUNC(UILoadingBarTest_Left_Scale9)
@@ -86,9 +86,9 @@ public:
     bool init();
     void update(float delta);
 
-	virtual void previousCallback(Ref* sender, TouchEventType type) override;
-	virtual void restartCallback(Ref* sender, TouchEventType type) override;
-	virtual void nextCallback(Ref* sender, TouchEventType type) override;
+	virtual void previousCallback(Ref* sender, Widget::TouchEventType type) override;
+	virtual void restartCallback(Ref* sender, Widget::TouchEventType type) override;
+	virtual void nextCallback(Ref* sender, Widget::TouchEventType type) override;
     
 protected:
     UI_SCENE_CREATE_FUNC(UILoadingBarTest_Right_Scale9)

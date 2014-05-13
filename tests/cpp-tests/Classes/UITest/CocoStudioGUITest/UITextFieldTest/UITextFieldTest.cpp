@@ -35,7 +35,7 @@ bool UITextFieldTest::init()
         TextField* textField = TextField::create("input words here","fonts/Marker Felt.ttf",30);
 
         textField->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
-        textField->addEventListenerTextField(this, textfieldeventselector(UITextFieldTest::textFieldEvent));
+        textField->addEventListener(CC_CALLBACK_2(UITextFieldTest::textFieldEvent, this));
         _uiLayer->addChild(textField);
         
         
@@ -44,11 +44,11 @@ bool UITextFieldTest::init()
     return false;
 }
 
-void UITextFieldTest::textFieldEvent(Ref *pSender, TextFiledEventType type)
+void UITextFieldTest::textFieldEvent(Ref *pSender, TextField::EventType type)
 {
     switch (type)
     {
-        case TEXTFIELD_EVENT_ATTACH_WITH_IME:
+        case TextField::EventType::ATTACH_WITH_IME:
         {
             TextField* textField = dynamic_cast<TextField*>(pSender);
             Size screenSize = CCDirector::getInstance()->getWinSize();
@@ -58,7 +58,7 @@ void UITextFieldTest::textFieldEvent(Ref *pSender, TextFiledEventType type)
         }
             break;
             
-        case TEXTFIELD_EVENT_DETACH_WITH_IME:
+        case TextField::EventType::DETACH_WITH_IME:
         {
             TextField* textField = dynamic_cast<TextField*>(pSender);
             Size screenSize = CCDirector::getInstance()->getWinSize();
@@ -67,11 +67,11 @@ void UITextFieldTest::textFieldEvent(Ref *pSender, TextFiledEventType type)
         }
             break;
             
-        case TEXTFIELD_EVENT_INSERT_TEXT:
+        case TextField::EventType::INSERT_TEXT:
             _displayValueLabel->setText(String::createWithFormat("insert words")->getCString());
             break;
             
-        case TEXTFIELD_EVENT_DELETE_BACKWARD:
+        case TextField::EventType::DELETE_BACKWARD:
             _displayValueLabel->setText(String::createWithFormat("delete word")->getCString());
             break;
             
@@ -114,7 +114,7 @@ bool UITextFieldTest_MaxLength::init()
         textField->setMaxLengthEnabled(true);
         textField->setMaxLength(3);
         textField->setPosition(Vector2(screenSize.width / 2.0f, screenSize.height / 2.0f));
-        textField->addEventListenerTextField(this, textfieldeventselector(UITextFieldTest_MaxLength::textFieldEvent));
+        textField->addEventListener(CC_CALLBACK_2(UITextFieldTest_MaxLength::textFieldEvent, this));
         _uiLayer->addChild(textField);
         
         return true;
@@ -122,11 +122,11 @@ bool UITextFieldTest_MaxLength::init()
     return false;
 }
 
-void UITextFieldTest_MaxLength::textFieldEvent(Ref *pSender, TextFiledEventType type)
+void UITextFieldTest_MaxLength::textFieldEvent(Ref *pSender, TextField::EventType type)
 {
     switch (type)
     {
-        case TEXTFIELD_EVENT_ATTACH_WITH_IME:
+        case TextField::EventType::ATTACH_WITH_IME:
         {
             TextField* textField = dynamic_cast<TextField*>(pSender);
             Size screenSize = CCDirector::getInstance()->getWinSize();
@@ -136,7 +136,7 @@ void UITextFieldTest_MaxLength::textFieldEvent(Ref *pSender, TextFiledEventType 
         }
             break;
             
-        case TEXTFIELD_EVENT_DETACH_WITH_IME:
+        case TextField::EventType::DETACH_WITH_IME:
         {
             TextField* textField = dynamic_cast<TextField*>(pSender);
             Size screenSize = CCDirector::getInstance()->getWinSize();
@@ -145,14 +145,14 @@ void UITextFieldTest_MaxLength::textFieldEvent(Ref *pSender, TextFiledEventType 
         }
             break;
             
-        case TEXTFIELD_EVENT_INSERT_TEXT:
+        case TextField::EventType::INSERT_TEXT:
         {
             TextField* textField = dynamic_cast<TextField*>(pSender);
             _displayValueLabel->setText(String::createWithFormat("insert words max length %d", textField->getMaxLength())->getCString());
         }
             break;
             
-        case TEXTFIELD_EVENT_DELETE_BACKWARD:
+        case TextField::EventType::DELETE_BACKWARD:
         {
             TextField* textField = dynamic_cast<TextField*>(pSender);
             _displayValueLabel->setText(String::createWithFormat("delete word max length %d", textField->getMaxLength())->getCString());
@@ -198,7 +198,7 @@ bool UITextFieldTest_Password::init()
         textField->setPasswordEnabled(true);
         textField->setPasswordStyleText("*");
         textField->setPosition(Vector2(screenSize.width / 2.0f, screenSize.height / 2.0f));
-        textField->addEventListenerTextField(this, textfieldeventselector(UITextFieldTest_Password::textFieldEvent));
+        textField->addEventListener(CC_CALLBACK_2(UITextFieldTest_Password::textFieldEvent, this));
         _uiLayer->addChild(textField);
         
         return true;
@@ -206,11 +206,11 @@ bool UITextFieldTest_Password::init()
     return false;
 }
 
-void UITextFieldTest_Password::textFieldEvent(Ref *pSender, TextFiledEventType type)
+void UITextFieldTest_Password::textFieldEvent(Ref *pSender, TextField::EventType type)
 {
     switch (type)
     {
-        case TEXTFIELD_EVENT_ATTACH_WITH_IME:
+        case TextField::EventType::ATTACH_WITH_IME:
         {
             TextField* textField = dynamic_cast<TextField*>(pSender);
             Size screenSize = CCDirector::getInstance()->getWinSize();
@@ -220,7 +220,7 @@ void UITextFieldTest_Password::textFieldEvent(Ref *pSender, TextFiledEventType t
         }
             break;
             
-        case TEXTFIELD_EVENT_DETACH_WITH_IME:
+        case TextField::EventType::DETACH_WITH_IME:
         {
             TextField* textField = dynamic_cast<TextField*>(pSender);
             Size screenSize = CCDirector::getInstance()->getWinSize();
@@ -229,11 +229,11 @@ void UITextFieldTest_Password::textFieldEvent(Ref *pSender, TextFiledEventType t
         }
             break;
             
-        case TEXTFIELD_EVENT_INSERT_TEXT:
+        case TextField::EventType::INSERT_TEXT:
             _displayValueLabel->setText(String::createWithFormat("insert words password")->getCString());
             break;
             
-        case TEXTFIELD_EVENT_DELETE_BACKWARD:
+        case TextField::EventType::DELETE_BACKWARD:
             _displayValueLabel->setText(String::createWithFormat("delete word password")->getCString());
             break;
             
@@ -279,7 +279,7 @@ bool UITextFieldTest_LineWrap::init()
         textField->setTextHorizontalAlignment(TextHAlignment::CENTER);
         textField->setTextVerticalAlignment(TextVAlignment::CENTER);
         textField->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
-        textField->addEventListenerTextField(this, textfieldeventselector(UITextFieldTest_LineWrap::textFieldEvent));
+        textField->addEventListener(CC_CALLBACK_2(UITextFieldTest_LineWrap::textFieldEvent, this));
         _uiLayer->addChild(textField);
         
         return true;
@@ -287,11 +287,11 @@ bool UITextFieldTest_LineWrap::init()
     return false;
 }
 
-void UITextFieldTest_LineWrap::textFieldEvent(Ref *pSender, TextFiledEventType type)
+void UITextFieldTest_LineWrap::textFieldEvent(Ref *pSender, TextField::EventType type)
 {
     switch (type)
     {
-        case TEXTFIELD_EVENT_ATTACH_WITH_IME:
+        case TextField::EventType::ATTACH_WITH_IME:
         {
             TextField* textField = dynamic_cast<TextField*>(pSender);
             Size widgetSize = _widget->getSize();
@@ -304,7 +304,7 @@ void UITextFieldTest_LineWrap::textFieldEvent(Ref *pSender, TextFiledEventType t
         }
             break;
             
-        case TEXTFIELD_EVENT_DETACH_WITH_IME:
+        case TextField::EventType::DETACH_WITH_IME:
         {
             TextField* textField = dynamic_cast<TextField*>(pSender);
             Size widgetSize = _widget->getSize();
@@ -316,11 +316,11 @@ void UITextFieldTest_LineWrap::textFieldEvent(Ref *pSender, TextFiledEventType t
         }
             break;
             
-        case TEXTFIELD_EVENT_INSERT_TEXT:
+        case TextField::EventType::INSERT_TEXT:
             _displayValueLabel->setText(CCString::createWithFormat("insert words")->getCString());
             break;
             
-        case TEXTFIELD_EVENT_DELETE_BACKWARD:
+        case TextField::EventType::DELETE_BACKWARD:
             _displayValueLabel->setText(CCString::createWithFormat("delete word")->getCString());
             break;
             

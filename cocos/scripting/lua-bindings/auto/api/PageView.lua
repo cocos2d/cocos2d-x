@@ -27,6 +27,11 @@
 -- @param #ccui.Layout layout
         
 --------------------------------
+-- @function [parent=#PageView] addEventListener 
+-- @param self
+-- @param #function func
+        
+--------------------------------
 -- @function [parent=#PageView] insertPage 
 -- @param self
 -- @param #ccui.Layout layout
@@ -69,7 +74,7 @@
 --------------------------------
 -- @function [parent=#PageView] getLayoutType 
 -- @param self
--- @return LayoutType#LayoutType ret (return value: ccui.LayoutType)
+-- @return Layout::Type#Layout::Type ret (return value: ccui.Layout::Type)
         
 --------------------------------
 -- @function [parent=#PageView] getDescription 
@@ -84,7 +89,7 @@
 --------------------------------
 -- @function [parent=#PageView] setLayoutType 
 -- @param self
--- @param #ccui.LayoutType layouttype
+-- @param #ccui.Layout::Type type
         
 --------------------------------
 -- @function [parent=#PageView] PageView 

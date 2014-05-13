@@ -31,26 +31,6 @@ NS_CC_BEGIN
 
 namespace ui {
 
-typedef enum
-{
-    LAYOUT_COLOR_NONE,
-    LAYOUT_COLOR_SOLID,
-    LAYOUT_COLOR_GRADIENT
-}LayoutBackGroundColorType;
-
-typedef enum
-{
-    LAYOUT_ABSOLUTE,
-    LAYOUT_LINEAR_VERTICAL,
-    LAYOUT_LINEAR_HORIZONTAL,
-    LAYOUT_RELATIVE
-}LayoutType;
-
-typedef enum {
-    LAYOUT_CLIPPING_STENCIL,
-    LAYOUT_CLIPPING_SCISSOR
-}LayoutClippingType;
-
 /**
  *  @js NA
  *  @lua NA
@@ -63,6 +43,27 @@ class Layout : public Widget
     DECLARE_CLASS_GUI_INFO
     
 public:
+    enum class Type
+    {
+        ABSOLUTE,
+        VERTICAL,
+        HORIZONTAL,
+        RELATIVE
+    };
+    
+    enum class ClippingType
+    {
+        STENCIL,
+        SCISSOR
+    };
+    
+    enum class BackGroundColorType
+    {
+        NONE,
+        SOLID,
+        GRADIENT
+    };
+    
     /**
      * Default constructor
      */
@@ -77,7 +78,7 @@ public:
      * Allocates and initializes a layout.
      */
     static Layout* create();
-        
+    
     //background
     /**
      * Sets a background image for layout
@@ -86,7 +87,7 @@ public:
      *
      * @param texType @see TextureResType. UI_TEX_TYPE_LOCAL means local file, UI_TEX_TYPE_PLIST means sprite frame.
      */
-    void setBackGroundImage(const std::string& fileName,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void setBackGroundImage(const std::string& fileName,TextureResType texType = TextureResType::LOCAL);
     
     /**
      * Sets a background image capinsets for layout, if the background image is a scale9 render.
@@ -103,9 +104,9 @@ public:
      *
      * @param type   @see LayoutBackGroundColorType.
      */
-    void setBackGroundColorType(LayoutBackGroundColorType type);
+    void setBackGroundColorType(BackGroundColorType type);
     
-    LayoutBackGroundColorType getBackGroundColorType();
+    BackGroundColorType getBackGroundColorType();
     
     /**
      * Sets background iamge use scale9 renderer.
@@ -185,9 +186,9 @@ public:
      */
     virtual void setClippingEnabled(bool enabled);
     
-    void setClippingType(LayoutClippingType type);
+    void setClippingType(ClippingType type);
     
-    LayoutClippingType getClippingType();
+    ClippingType getClippingType();
     
     /**
      * Gets if layout is clipping enabled.
@@ -201,23 +202,10 @@ public:
      */
     virtual std::string getDescription() const override;
     
-    /**
-     * Sets LayoutType.
-     *
-     * @see LayoutType
-     *
-     * @param LayoutType
-     */
-    virtual void setLayoutType(LayoutType type);
+
+    virtual void setLayoutType(Type type);
     
-    /**
-     * Gets LayoutType.
-     *
-     * @see LayoutType
-     *
-     * @return LayoutType
-     */
-    virtual LayoutType getLayoutType() const;
+    virtual  Type getLayoutType() const;
 
     virtual void addChild(Node * child) override;
     /**
@@ -450,7 +438,7 @@ protected:
     Node* _backGroundImage;
     std::string _backGroundImageFileName;
     Rect _backGroundImageCapInsets;
-    LayoutBackGroundColorType _colorType;
+    BackGroundColorType _colorType;
     TextureResType _bgImageTexType;
     LayerColor* _colorRender;
     LayerGradient* _gradientRender;
@@ -460,8 +448,8 @@ protected:
     Vector2 _alongVector;
     GLubyte _cOpacity;
     Size _backGroundImageTextureSize;
-    LayoutType _layoutType;
-    LayoutClippingType _clippingType;
+    Type _layoutType;
+    ClippingType _clippingType;
     DrawNode* _clippingStencil;
     bool _scissorRectDirty;
     Rect _clippingRect;

@@ -1,7 +1,9 @@
 {
     "do_default": {
         "exclude_from_template": [
-            "frameworks/runtime-src"
+            "frameworks/runtime-src",
+            "runtime/config.json",
+            "runtime/version.json"
         ],
         "project_replace_project_name": {
             "src_project_name": "HelloLua",

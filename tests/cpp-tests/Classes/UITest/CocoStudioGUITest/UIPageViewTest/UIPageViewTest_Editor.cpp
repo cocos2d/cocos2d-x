@@ -30,7 +30,7 @@ bool UIPageViewTest_Editor::init()
         Layout* root = static_cast<Layout*>(_layout->getChildByName("root_Panel"));
         
         Text* back_label = static_cast<Text*>(Helper::seekWidgetByName(root, "back"));
-        back_label->addTouchEventListener(this, toucheventselector(UIScene_Editor::toGUIEditorTestScene));
+        back_label->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::toGUIEditorTestScene, this));
         
         _sceneTitle = static_cast<Text*>(Helper::seekWidgetByName(root, "UItest"));
         
@@ -39,7 +39,7 @@ bool UIPageViewTest_Editor::init()
         left_button->setPosition(Vector2(_layout->getSize().width / 2 - left_button->getSize().width,
                                        left_button->getSize().height * 0.625));
         left_button->setTouchEnabled(true);
-        left_button->addTouchEventListener(this, toucheventselector(UIScene_Editor::previousCallback));
+        left_button->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::previousCallback, this));
         left_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
         _layout->addChild(left_button);
         
@@ -49,7 +49,7 @@ bool UIPageViewTest_Editor::init()
                                         right_button->getSize().height * 0.625));
         right_button->setTouchEnabled(true);
         right_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
-        right_button->addTouchEventListener(this, toucheventselector(UIScene_Editor::nextCallback));
+        right_button->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::nextCallback, this));
         _layout->addChild(right_button);
         
         return true;
