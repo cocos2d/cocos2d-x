@@ -150,6 +150,7 @@ public:
         CC_SAFE_RETAIN(sprite);
         CC_SAFE_RELEASE(_sprite);
         _sprite = sprite;
+        _sprite->setAnchorPoint(Vector2::ZERO);
     };
     
     // Overrides

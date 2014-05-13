@@ -646,8 +646,9 @@ void RenderTextureTargetNode::update(float dt)
 {
     static float time = 0;
     float r = 80;
-    sprite1->setPosition(Vector2(cosf(time * 2) * r, sinf(time * 2) * r));
-    sprite2->setPosition(Vector2(sinf(time * 2) * r, cosf(time * 2) * r));
+    Size winSize = Director::getInstance()->getWinSize();
+    sprite1->setPosition(Vector2(cosf(time * 2) * r + winSize.width / 2, sinf(time * 2) * r + winSize.height / 2));
+    sprite2->setPosition(Vector2(sinf(time * 2) * r + winSize.width / 2, cosf(time * 2) * r + winSize.height / 2));
     
     time += dt;
 }

@@ -191,6 +191,8 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
 
     bool ret = false;
     void *data = nullptr;
+    int designWidth = w;
+    int designHeight = h;
     do 
     {
         _fullRect = _rtTextureRect = Rect(0,0,w,h);
@@ -275,6 +277,12 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         CCASSERT(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Could not attach texture to framebuffer");
 
         _texture->setAliasTexParameters();
+        
+        // default transform anchor: center
+        setAnchorPoint(Vector2(0.5f, 0.5f));
+        
+        // content size using design resolution
+        setContentSize(Size(designWidth, designHeight));
 
         // retained
         setSprite(Sprite::createWithTexture(_texture));
@@ -672,7 +680,7 @@ void RenderTexture::draw(Renderer *renderer, const Matrix &transform, bool trans
         for(const auto &child: _children)
         {
             if (child != _sprite)
-                child->visit(renderer, transform, transformUpdated);
+                child->visit(renderer, Matrix::identity(), transformUpdated);
         }
 
         //End will pop the current render group
