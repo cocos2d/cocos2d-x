@@ -39,7 +39,7 @@ protected:
 
     void onDraw(const Matrix &transform, bool transformUpdated);
     
-    static GLProgram* getDefGLProgram(bool textured = true);
+    virtual GLProgram* getDefGLProgram(bool textured = true);
 
     CustomCommand     _customCommand;
     Mesh              *_mesh;
@@ -54,8 +54,7 @@ protected:
     
     std::string       _path;
 
-    static GLProgram* s_defGLProgramTex;
-    static GLProgram* s_defGLProgram;
+    
 };
 
 NS_CC_END

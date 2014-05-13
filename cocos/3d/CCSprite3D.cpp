@@ -21,10 +21,6 @@ NS_CC_BEGIN
 
 std::map<std::string, std::vector<std::string> > __cachedSpriteTexNames;
 
-GLProgram* Sprite3D::s_defGLProgramTex = nullptr;
-GLProgram* Sprite3D::s_defGLProgram = nullptr;
-
-
 Sprite3D* Sprite3D::create(const std::string &modelPath)
 {
     if (modelPath.length() < 4)
@@ -164,19 +160,23 @@ bool Sprite3D::init(const std::string &path)
 
 GLProgram* Sprite3D::getDefGLProgram(bool textured)
 {
-    if(s_defGLProgramTex == nullptr)
+    static GLProgram s_defGLProgramTex;
+    static GLProgram s_defGLProgram;
+    if(textured && s_defGLProgramTex.getProgram() == 0)
     {
-        s_defGLProgramTex = GLProgram::createWithByteArrays(baseVertexShader, baseTexturedFrag);
-        s_defGLProgramTex->retain();
+        s_defGLProgramTex.initWithByteArrays(baseVertexShader, baseTexturedFrag);
+        s_defGLProgramTex.link();
+        s_defGLProgramTex.updateUniforms();
     }
     
-    if(s_defGLProgram == nullptr)
+    if(!textured && s_defGLProgram.getProgram() == 0)
     {
-        s_defGLProgram = GLProgram::createWithByteArrays(baseVertexShader, baseColoredFrag);
-        s_defGLProgram->retain();
+        s_defGLProgram.initWithByteArrays(baseVertexShader, baseTexturedFrag);
+        s_defGLProgram.link();
+        s_defGLProgram.updateUniforms();
     }
     
-    return textured ? s_defGLProgramTex : s_defGLProgram;
+    return textured ? &s_defGLProgramTex : &s_defGLProgram;
 }
 
 
