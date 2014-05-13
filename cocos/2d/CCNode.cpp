@@ -915,6 +915,7 @@ void Node::detachChild(Node *child, ssize_t childIndex, bool doCleanup)
 // helper used by reorderChild & add
 void Node::insertChild(Node* child, int z)
 {
+    _transformUpdated = true;
     _reorderChildDirty = true;
     _children.pushBack(child);
     child->_setLocalZOrder(z);
