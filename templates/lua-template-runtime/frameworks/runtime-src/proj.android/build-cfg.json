@@ -27,6 +27,13 @@
             "to": ""
         },
         {
+            "from": "../../../res",
+            "to": "res",
+            "include": [
+                "config.json"
+            ]
+        },
+        {
             "from": "../../cocos2d-x/external/lua/luasocket",
             "to": "",
             "include": [
