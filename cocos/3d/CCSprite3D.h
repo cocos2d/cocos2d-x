@@ -20,12 +20,18 @@ class Sprite3D : public Node
 {
 public:
     static Sprite3D* create(const std::string &modelPath);
-    
+    static Sprite3D* create(const std::string &modelPath, const std::string &texturePath);
+    //static Sprite3D* create(Mesh* mesh, const std::string& texturePath);
+    //todo add if we need multitexture in the sprite3d
+    //static Sprite3D* create(const std::string &modelPath, const std::vector<std::string> &texturePath);
+    //static Sprite3D* create(const std::string &modelPath, const std::vector<std::string> &texturePath);
+
     int           getMeshPartCount() const;
     
-    Mesh* getMesh() { return _mesh; }
+    Mesh* getMesh() const { return _mesh; }
     
     void setTexture(const std::string& texFile);
+    //void setTexture(Texture2D* texture);
 
 protected:
     Sprite3D();

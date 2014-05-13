@@ -36,9 +36,41 @@ Sprite3D* Sprite3D::create(const std::string &modelPath)
         sprite->autorelease();
         return sprite;
     }
-    
+    CC_SAFE_DELETE(sprite);
     return nullptr;
 }
+
+Sprite3D* Sprite3D::create(const std::string &modelPath, const std::string &texturePath)
+{
+    if (modelPath.length() < 4)
+        CCASSERT(false, "improper name specified when creating Sprite3D");
+    
+    auto sprite = new Sprite3D();
+    if (sprite && sprite->initWithFile(modelPath))
+    {
+        sprite->setTexture(texturePath);
+        sprite->autorelease();
+        return sprite;
+    }
+    CC_SAFE_DELETE(sprite);
+    return nullptr;
+}
+
+// Sprite3D* Sprite3D::create(Mesh* mesh, const std::string& texturePath)
+// {
+//     CCASSERT(nullptr != mesh, "Could not create a Sprite3D from a null Mesh");
+//     auto sprite = new Sprite3D();
+//     if(sprite)
+//     {
+//         sprite->_mesh = mesh;
+//         sprite->_mesh->retain();
+//         sprite->setTexture(texturePath);
+//         sprite->autorelease();
+//         return sprite;
+//     }
+//     CC_SAFE_DELETE(sprite);
+//     return nullptr;
+// }
 
 //.mtl file should at the same directory with the same name if exist
 bool Sprite3D::loadFromObj(const std::string& path)
