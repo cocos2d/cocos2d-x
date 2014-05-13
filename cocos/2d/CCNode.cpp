@@ -135,7 +135,7 @@ Node::Node(void)
     ScriptEngineProtocol* engine = ScriptEngineManager::getInstance()->getScriptEngine();
     _scriptType = engine != nullptr ? engine->getScriptType() : kScriptTypeNone;
 #endif
-    _transform = _inverse = _additionalTransform = Matrix::identity();
+    _transform = _inverse = _additionalTransform = Matrix::IDENTITY;
 }
 
 Node::~Node()

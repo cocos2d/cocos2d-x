@@ -98,7 +98,7 @@ void ActionCamera::updateTransform()
 
     bool needsTranslation = !anchorPoint.equals(Vector2::ZERO);
 
-    Matrix mv = Matrix::identity();
+    Matrix mv = Matrix::IDENTITY;
 
     if(needsTranslation) {
         Matrix t;

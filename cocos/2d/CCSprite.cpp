@@ -1004,7 +1004,7 @@ void Sprite::setBatchNode(SpriteBatchNode *spriteBatchNode)
     } else {
 
         // using batch
-        _transformToBatch = Matrix::identity();
+        _transformToBatch = Matrix::IDENTITY;
         setTextureAtlas(_batchNode->getTextureAtlas()); // weak ref
     }
 }

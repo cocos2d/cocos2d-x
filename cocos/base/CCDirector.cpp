@@ -285,19 +285,17 @@ void Director::drawScene()
 
     pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
-    Matrix identity = Matrix::identity();
-
     // draw the scene
     if (_runningScene)
     {
-        _runningScene->visit(_renderer, identity, false);
+        _runningScene->visit(_renderer, Matrix::IDENTITY, false);
         _eventDispatcher->dispatchEvent(_eventAfterVisit);
     }
 
     // draw the notifications node
     if (_notificationNode)
     {
-        _notificationNode->visit(_renderer, identity, false);
+        _notificationNode->visit(_renderer, Matrix::IDENTITY, false);
     }
 
     if (_displayStats)
@@ -451,9 +449,9 @@ void Director::initMatrixStack()
         _textureMatrixStack.pop();
     }
     
-    _modelViewMatrixStack.push(Matrix::identity());
-    _projectionMatrixStack.push(Matrix::identity());
-    _textureMatrixStack.push(Matrix::identity());
+    _modelViewMatrixStack.push(Matrix::IDENTITY);
+    _projectionMatrixStack.push(Matrix::IDENTITY);
+    _textureMatrixStack.push(Matrix::IDENTITY);
 }
 
 void Director::resetMatrixStack()
@@ -485,15 +483,15 @@ void Director::loadIdentityMatrix(MATRIX_STACK_TYPE type)
 {
     if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
     {
-        _modelViewMatrixStack.top() = Matrix::identity();
+        _modelViewMatrixStack.top() = Matrix::IDENTITY;
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
     {
-        _projectionMatrixStack.top() = Matrix::identity();
+        _projectionMatrixStack.top() = Matrix::IDENTITY;
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
     {
-        _textureMatrixStack.top() = Matrix::identity();
+        _textureMatrixStack.top() = Matrix::IDENTITY;
     }
     else
     {
@@ -1082,7 +1080,7 @@ void Director::showStats()
             prevVerts = currentVerts;
         }
 
-        Matrix identity = Matrix::identity();
+        Matrix identity = Matrix::IDENTITY;
 
         _drawnVerticesLabel->visit(_renderer, identity, false);
         _drawnBatchesLabel->visit(_renderer, identity, false);

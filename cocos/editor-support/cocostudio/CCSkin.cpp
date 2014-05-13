@@ -86,7 +86,7 @@ Skin::Skin()
     , _armature(nullptr)
     , _displayName("")
 {
-    _skinTransform = Matrix::identity();
+    _skinTransform = Matrix::IDENTITY;
 }
 
 bool Skin::initWithSpriteFrameName(const std::string& spriteFrameName)
