@@ -33,7 +33,8 @@ MeshCache::~MeshCache()
 
 MeshCache* MeshCache::getInstance()
 {
-    if (! _cacheInstance) {
+    if (! _cacheInstance)
+    {
         _cacheInstance = new MeshCache();
     }
     
@@ -42,7 +43,8 @@ MeshCache* MeshCache::getInstance()
 
 void MeshCache::purgeMeshCache()
 {
-    if (_cacheInstance) {
+    if (_cacheInstance)
+    {
         CC_SAFE_DELETE(_cacheInstance);
     }
 }
@@ -53,7 +55,7 @@ bool MeshCache::addMesh(const std::string& fileName, Mesh* mesh)
     auto it = _cachedMeshes.find(fullPath);
     if (it == _cachedMeshes.end())
     {
-        _cachedMeshes[fullPath] = mesh;
+        _cachedMeshes.insert(fileName, mesh);
         return true;
     }
     return false;
@@ -72,8 +74,8 @@ void MeshCache::removeMesh(const std::string& fileName)
 {
     const std::string fullPath = FileUtils::getInstance()->fullPathForFilename(fileName);
     auto it = _cachedMeshes.find(fullPath);
-    if (it != _cachedMeshes.end()) {
-        CC_SAFE_DELETE(it->second);
+    if (it != _cachedMeshes.end())
+    {
         _cachedMeshes.erase(it);
     }
 }
@@ -81,7 +83,8 @@ void MeshCache::removeMesh(const std::string& fileName)
 void MeshCache::removeMesh(const Mesh* mesh)
 {
     auto it = _cachedMeshes.begin();
-    for (; it != _cachedMeshes.end(); it++) {
+    for (; it != _cachedMeshes.end(); it++)
+    {
         if (it->second == mesh)
         {
             _cachedMeshes.erase(it);
@@ -93,7 +96,8 @@ void MeshCache::removeMesh(const Mesh* mesh)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 void MeshCache::listenBackToForeground(EventCustom* event)
 {
-    for (auto iter = _cachedMeshes.begin(); iter != _cachedMeshes.end(); ++iter) {
+    for (auto iter = _cachedMeshes.begin(); iter != _cachedMeshes.end(); ++iter)
+    {
         Mesh* mesh = iter->second;
         mesh->restore();
     }
