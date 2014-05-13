@@ -16,7 +16,6 @@
 // version 0.9.0: Initial
 //
 
-
 #include <cstdlib>
 #include <cstring>
 #include <cassert>
