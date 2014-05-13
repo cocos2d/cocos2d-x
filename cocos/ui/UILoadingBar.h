@@ -64,7 +64,7 @@ public:
     /**
      * create a LoadingBar with a texture and a percentage
      **/
-    static LoadingBar* create(const std::string& textureName, int percentage = 0);
+    static LoadingBar* create(const std::string& textureName, float percentage = 0);
     
     /**
      * Changes the progress direction of loadingbar.
@@ -100,14 +100,14 @@ public:
      *
      * @param percent    percent value from 1 to 100.
      */
-    void setPercent(int percent);
+    void setPercent(float percent);
     
     /**
      * Gets the progress direction of loadingbar.
      *
      * @return percent    percent value from 1 to 100.
      */
-    int getPercent();
+    float getPercent();
     
     /**
      * Sets if loadingbar is using scale9 renderer.
@@ -153,7 +153,7 @@ protected:
     virtual void adaptRenderers() override;
 protected:
     Direction _direction;
-    int _percent;
+    float _percent;
     float _totalLength;
     Node* _barRenderer;
     TextureResType _renderBarTexType;
