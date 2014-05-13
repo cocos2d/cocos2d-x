@@ -177,6 +177,7 @@ class GitArchiver(object):
         else:
             raise RuntimeError("Unknown format: {f}".format(f=output_format))
 
+        print("Making archive: (%s) , please wait ..." % output_path)
         for file_path in self.extra:
             if not dry_run:
                 if self.verbose:
