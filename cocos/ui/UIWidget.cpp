@@ -46,7 +46,6 @@ _touchEndPos(Vector2::ZERO),
 _touchEventListener(nullptr),
 _touchEventSelector(nullptr),
 _name("default"),
-_widgetType(Type::ELEMENT),
 _actionTag(0),
 _size(Size::ZERO),
 _customSize(Size::ZERO),
@@ -68,6 +67,7 @@ _focusEnabled(true)
 {
     onFocusChanged = CC_CALLBACK_2(Widget::onFocusChange,this);
     onNextFocusedWidget = nullptr;
+    this->setAnchorPoint(Vector2(0.5f, 0.5f));
 }
 
 Widget::~Widget()
@@ -834,10 +834,6 @@ const std::string& Widget::getName() const
     return _name;
 }
 
-Widget::Type Widget::getWidgetType() const
-{
-    return _widgetType;
-}
 
 void Widget::setLayoutParameter(LayoutParameter *parameter)
 {

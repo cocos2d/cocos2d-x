@@ -249,7 +249,7 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         _quad.tr.colors = Color4B::WHITE;
         
         // shader state
-        setGLProgramState(GLProgramState::getWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
+        setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
 
         // update texture (calls updateBlendFunc)
         setTexture(texture);
@@ -590,7 +590,7 @@ void Sprite::draw(Renderer *renderer, const Matrix &transform, bool transformUpd
 
     if(_insideBounds)
     {
-        _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgram(), _blendFunc, &_quad, 1, transform);
+        _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, transform);
         renderer->addCommand(&_quadCommand);
 #if CC_SPRITE_DEBUG_DRAW
         _customDebugDrawCommand.init(_globalZOrder);

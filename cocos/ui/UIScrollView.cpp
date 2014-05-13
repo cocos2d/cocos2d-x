@@ -1695,12 +1695,12 @@ Layout* ScrollView::getInnerContainer()
     return _innerContainer;
 }
 
-void ScrollView::setLayoutType(LayoutType type)
+void ScrollView::setLayoutType(Type type)
 {
     _innerContainer->setLayoutType(type);
 }
 
-Layout::LayoutType ScrollView::getLayoutType() const
+Layout::Type ScrollView::getLayoutType() const
 {
     return _innerContainer->getLayoutType();
 }
