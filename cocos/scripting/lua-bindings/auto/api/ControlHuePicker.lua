@@ -12,7 +12,7 @@
 -- @function [parent=#ControlHuePicker] initWithTargetAndPos 
 -- @param self
 -- @param #cc.Node node
--- @param #cc.math::Vector2 array
+-- @param #vector2_table array
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -23,7 +23,7 @@
 --------------------------------
 -- @function [parent=#ControlHuePicker] getStartPos 
 -- @param self
--- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#ControlHuePicker] getHue 
@@ -64,7 +64,7 @@
 -- @function [parent=#ControlHuePicker] create 
 -- @param self
 -- @param #cc.Node node
--- @param #cc.math::Vector2 array
+-- @param #vector2_table array
 -- @return ControlHuePicker#ControlHuePicker ret (return value: cc.ControlHuePicker)
         
 --------------------------------

@@ -11,7 +11,7 @@
 --------------------------------
 -- @function [parent=#Skin] getNodeToWorldTransformAR 
 -- @param self
--- @return math::Matrix#math::Matrix ret (return value: cc.math::Matrix)
+-- @return matrix_table#matrix_table ret (return value: matrix_table)
         
 --------------------------------
 -- @function [parent=#Skin] initWithFile 
@@ -62,13 +62,13 @@
 --------------------------------
 -- @function [parent=#Skin] getNodeToWorldTransform 
 -- @param self
--- @return math::Matrix#math::Matrix ret (return value: cc.math::Matrix)
+-- @return matrix_table#matrix_table ret (return value: matrix_table)
         
 --------------------------------
 -- @function [parent=#Skin] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #cc.math::Matrix matrix
+-- @param #matrix_table matrix
 -- @param #bool bool
         
 --------------------------------

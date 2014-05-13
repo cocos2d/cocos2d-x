@@ -58,7 +58,7 @@
 -- @function [parent=#Director] loadMatrix 
 -- @param self
 -- @param #cc.MATRIX_STACK_TYPE matrix_stack_type
--- @param #cc.math::Matrix matrix
+-- @param #matrix_table matrix
         
 --------------------------------
 -- @function [parent=#Director] getNotificationNode 
@@ -83,7 +83,7 @@
 --------------------------------
 -- @function [parent=#Director] getVisibleOrigin 
 -- @param self
--- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#Director] mainLoop 
@@ -107,8 +107,8 @@
 --------------------------------
 -- @function [parent=#Director] convertToUI 
 -- @param self
--- @param #cc.math::Vector2 array
--- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
+-- @param #vector2_table array
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#Director] setDefaultValues 
@@ -177,8 +177,8 @@
 --------------------------------
 -- @function [parent=#Director] convertToGL 
 -- @param self
--- @param #cc.math::Vector2 array
--- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
+-- @param #vector2_table array
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#Director] purgeCachedData 
@@ -212,7 +212,7 @@
 -- @function [parent=#Director] getMatrix 
 -- @param self
 -- @param #cc.MATRIX_STACK_TYPE matrix_stack_type
--- @return math::Matrix#math::Matrix ret (return value: cc.math::Matrix)
+-- @return matrix_table#matrix_table ret (return value: matrix_table)
         
 --------------------------------
 -- @function [parent=#Director] popScene 
@@ -286,7 +286,7 @@
 -- @function [parent=#Director] multiplyMatrix 
 -- @param self
 -- @param #cc.MATRIX_STACK_TYPE matrix_stack_type
--- @param #cc.math::Matrix matrix
+-- @param #matrix_table matrix
         
 --------------------------------
 -- @function [parent=#Director] getActionManager 

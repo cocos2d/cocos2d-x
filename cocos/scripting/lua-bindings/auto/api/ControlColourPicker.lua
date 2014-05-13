@@ -16,7 +16,7 @@
 --------------------------------
 -- @function [parent=#ControlColourPicker] setColor 
 -- @param self
--- @param #color3B_table color3b
+-- @param #color3b_table color3b
         
 --------------------------------
 -- @function [parent=#ControlColourPicker] hueSliderValueChanged 

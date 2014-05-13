@@ -23,6 +23,8 @@
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
+	<PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
+	<PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>	
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -30,6 +32,8 @@
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
+	<PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
+	<PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>	
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -181,10 +185,12 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="..\base\CCEventAcceleration.cpp" />
     <ClCompile Include="..\base\CCEventCustom.cpp" />
     <ClCompile Include="..\base\CCEventDispatcher.cpp" />
+    <ClCompile Include="..\base\CCEventFocus.cpp" />
     <ClCompile Include="..\base\CCEventKeyboard.cpp" />
     <ClCompile Include="..\base\CCEventListener.cpp" />
     <ClCompile Include="..\base\CCEventListenerAcceleration.cpp" />
     <ClCompile Include="..\base\CCEventListenerCustom.cpp" />
+    <ClCompile Include="..\base\CCEventListenerFocus.cpp" />
     <ClCompile Include="..\base\CCEventListenerKeyboard.cpp" />
     <ClCompile Include="..\base\CCEventListenerMouse.cpp" />
     <ClCompile Include="..\base\CCEventListenerTouch.cpp" />
@@ -341,10 +347,12 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="..\base\CCEventAcceleration.h" />
     <ClInclude Include="..\base\CCEventCustom.h" />
     <ClInclude Include="..\base\CCEventDispatcher.h" />
+    <ClInclude Include="..\base\CCEventFocus.h" />
     <ClInclude Include="..\base\CCEventKeyboard.h" />
     <ClInclude Include="..\base\CCEventListener.h" />
     <ClInclude Include="..\base\CCEventListenerAcceleration.h" />
     <ClInclude Include="..\base\CCEventListenerCustom.h" />
+    <ClInclude Include="..\base\CCEventListenerFocus.h" />
     <ClInclude Include="..\base\CCEventListenerKeyboard.h" />
     <ClInclude Include="..\base\CCEventListenerMouse.h" />
     <ClInclude Include="..\base\CCEventListenerTouch.h" />

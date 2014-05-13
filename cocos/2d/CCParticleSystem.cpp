@@ -387,9 +387,9 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
                 {
                     setTexture(tex);
                 }
-                else
+                else if( dictionary.find("textureImageData") != dictionary.end() )
                 {                        
-                    std::string textureData = dictionary["textureImageData"].asString();
+                    std::string textureData = dictionary.at("textureImageData").asString();
                     CCASSERT(!textureData.empty(), "");
                     
                     auto dataLen = textureData.size();
@@ -420,8 +420,9 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
                 {
                     _yCoordFlipped = dictionary["yCoordFlipped"].asInt();
                 }
-                
-                CCASSERT( this->_texture != nullptr, "CCParticleSystem: error loading the texture");
+
+                if( !this->_texture)
+                    CCLOGWARN("cocos2d: Warning: ParticleSystemQuad system without a texture");
             }
             ret = true;
         }

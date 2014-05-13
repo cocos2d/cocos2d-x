@@ -604,9 +604,12 @@ _currentAlphaTestFunc(GL_ALWAYS),
 _currentAlphaTestRef(1),
 _backGroundImageColor(Color3B::WHITE),
 _backGroundImageOpacity(255),
-_curLayoutExecutant(nullptr)
+_curLayoutExecutant(nullptr),
+_passFocusToChild(true),
+_loopFocus(false)
 {
     _widgetType = WidgetTypeContainer;
+    onPassFocusToChild = CC_CALLBACK_2(Layout::findNearestChildWidgetIndex, this);
 }
 
 Layout::~Layout()
@@ -1514,5 +1517,911 @@ void Layout::copySpecialProperties(Widget *widget)
         setClippingType(layout->_clippingType);
     }
 }
+    
+void Layout::setLoopFocus(bool loop)
+{
+    _loopFocus = loop;
+}
+
+bool Layout::isLoopFocus()
+{
+    return _loopFocus;
+}
+
+
+void Layout::setPassFocusToChild(bool pass)
+{
+    _passFocusToChild = pass;
+}
+
+bool Layout::isPassFocusToChild()
+{
+    return _passFocusToChild;
+}
+
+Size Layout::getLayoutContentSize()const
+{
+    const auto& children = this->getChildren();
+    Size layoutSize = Size::ZERO;
+    int widgetCount =0;
+    for(const auto& widget : children)
+    {
+        Layout *layout = dynamic_cast<Layout*>(widget);
+        if (nullptr != layout)
+        {
+            layoutSize = layoutSize + layout->getLayoutContentSize();
+        }
+        else
+        {
+            Widget *w = dynamic_cast<Widget*>(widget);
+            if (w)
+            {
+                widgetCount++;
+                Margin m = w->getLayoutParameter(LAYOUT_PARAMETER_LINEAR)->getMargin();
+                layoutSize = layoutSize + w->getSize() + Size(m.right + m.left,  m.top + m.bottom) * 0.5;
+            }
+        }
+    }
+    
+    //substract extra size
+    LayoutType type = this->getLayoutType();
+    if (type == LAYOUT_LINEAR_HORIZONTAL)
+    {
+        layoutSize = layoutSize - Size(0, layoutSize.height/widgetCount * (widgetCount-1));
+    }
+    if (type == LAYOUT_LINEAR_VERTICAL)
+    {
+        layoutSize = layoutSize - Size(layoutSize.width/widgetCount * (widgetCount-1), 0);
+    }
+    return layoutSize;
+}
+
+Vector2 Layout::getWorldCenterPoint(Widget* widget)
+{
+    Layout *layout = dynamic_cast<Layout*>(widget);
+    //FIXEDME: we don't need to calculate the content size of layout anymore
+    Size widgetSize = layout ? layout->getLayoutContentSize() :  widget->getSize();
+//    CCLOG("contnet size : width = %f, height = %f", widgetSize.width, widgetSize.height);
+    return widget->convertToWorldSpace(Vector2(widgetSize.width/2, widgetSize.height/2));
+}
+
+float Layout::caculateNearestDistance(Widget* baseWidget)
+{
+    float distance = FLT_MAX;
+    
+    Vector2 widgetPosition =  this->getWorldCenterPoint(baseWidget);
+    
+    for (Node* node : _children) {
+        Layout *layout = dynamic_cast<Layout*>(node);
+        int length;
+        if (layout) {
+            length = layout->caculateNearestDistance(baseWidget);
+        }
+        else
+        {
+            Widget* w = dynamic_cast<Widget*>(node);
+            if (w && w->isFocusEnabled()) {
+                Vector2 wPosition = this->getWorldCenterPoint(w);
+                length = (wPosition - widgetPosition).length();
+            }
+            else {
+                continue;
+            }
+        }
+        
+        if (length < distance) {
+            distance = length;
+        }
+        
+        
+    }
+    return distance;
+}
+    
+float Layout::caculateFarestDistance(cocos2d::ui::Widget *baseWidget)
+{
+    float distance = -FLT_MAX;
+    
+    Vector2 widgetPosition =  this->getWorldCenterPoint(baseWidget);
+    
+    for (Node* node : _children) {
+        Layout *layout = dynamic_cast<Layout*>(node);
+        int length;
+        if (layout) {
+            length = layout->caculateFarestDistance(baseWidget);
+        }
+        else
+        {
+            Widget* w = dynamic_cast<Widget*>(node);
+            if (w && w->isFocusEnabled()) {
+                Vector2 wPosition = this->getWorldCenterPoint(w);
+                length = (wPosition - widgetPosition).length();
+            }
+            else {
+                continue;
+            }
+        }
+        
+        if (length > distance) {
+            distance = length;
+        }
+    }
+    return distance;
+}
+
+int Layout::findFirstFocusEnabledWidgetIndex()
+{
+    ssize_t index = 0;
+    ssize_t count = this->getChildren().size();
+    while (index < count) {
+        Widget* w =  dynamic_cast<Widget*>(_children.at(index));
+        if (w && w->isFocusEnabled()) {
+            return (int)index;
+        }
+        index++;
+    }
+    CCASSERT(0, "invalide operation");
+    return 0;
+}
+
+int Layout::findNearestChildWidgetIndex(FocusDirection direction, Widget* baseWidget)
+{
+    if (baseWidget == nullptr || baseWidget == this)
+    {
+        return this->findFirstFocusEnabledWidgetIndex();
+    }
+    int index = 0;
+    ssize_t count = this->getChildren().size();
+    
+    float distance = FLT_MAX;
+    int found = 0;
+    if (direction == FocusDirection::FocusDirection_Left || direction == FocusDirection::FocusDirection_Right)
+    {
+        Vector2 widgetPosition =  this->getWorldCenterPoint(baseWidget);
+        while (index <  count)
+        {
+            Widget *w = dynamic_cast<Widget*>(this->getChildren().at(index));
+            if (w && w->isFocusEnabled())
+            {
+                Vector2 wPosition = this->getWorldCenterPoint(w);
+                float length;
+                Layout *layout = dynamic_cast<Layout*>(w);
+                if (layout)
+                {
+                    length = layout->caculateNearestDistance(baseWidget);
+                }
+                else
+                {
+                    length = (wPosition - widgetPosition).getLength();
+                }
+               
+                if (length < distance)
+                {
+                        found = index;
+                        distance = length;
+                }
+            }
+            index++;
+        }
+        return  found;
+    }
+    
+    index = 0;
+    found = 0;
+    distance = FLT_MAX;
+    if (direction == FocusDirection::FocusDirection_Down || direction == FocusDirection::FocusDirection_Up) {
+        Vector2 widgetPosition = this->getWorldCenterPoint(baseWidget);
+        while (index < count)
+        {
+            Widget *w = dynamic_cast<Widget*>(this->getChildren().at(index));
+            if (w && w->isFocusEnabled())
+            {
+                Vector2 wPosition = this->getWorldCenterPoint(w);
+                float length;
+                Layout *layout = dynamic_cast<Layout*>(w);
+                if (layout)
+                {
+                    length = layout->caculateNearestDistance(baseWidget);
+                }
+                else
+                {
+                    length = (wPosition - widgetPosition).getLength();
+                }
+                
+                if (length < distance)
+                {
+                    found = index;
+                    distance = length;
+                }
+
+            }
+            index++;
+        }
+        return found;
+    }
+    CCASSERT(0, "invalid focus direction!!!");
+    return 0;
+}
+    
+int Layout::findFarestChildWidgetIndex(cocos2d::ui::FocusDirection direction, cocos2d::ui::Widget *baseWidget)
+{
+    if (baseWidget == nullptr || baseWidget == this)
+    {
+        return this->findFirstFocusEnabledWidgetIndex();
+    }
+    int index = 0;
+    ssize_t count = this->getChildren().size();
+    
+    float distance = -FLT_MAX;
+    int found = 0;
+    if (direction == FocusDirection::FocusDirection_Left || direction == FocusDirection::FocusDirection_Right)
+    {
+        Vector2 widgetPosition =  this->getWorldCenterPoint(baseWidget);
+        while (index <  count)
+        {
+            Widget *w = dynamic_cast<Widget*>(this->getChildren().at(index));
+            if (w && w->isFocusEnabled())
+            {
+                Vector2 wPosition = this->getWorldCenterPoint(w);
+                float length;
+                Layout *layout = dynamic_cast<Layout*>(w);
+                if (layout)
+                {
+                    length = layout->caculateFarestDistance(baseWidget);
+                }
+                else
+                {
+                    length = (wPosition - widgetPosition).getLength();
+                }
+                
+                if (length > distance)
+                {
+                    found = index;
+                    distance = length;
+                }
+            }
+            index++;
+        }
+        return  found;
+    }
+    
+    index = 0;
+    found = 0;
+    distance = -FLT_MAX;
+    if (direction == FocusDirection::FocusDirection_Down || direction == FocusDirection::FocusDirection_Up) {
+        Vector2 widgetPosition = this->getWorldCenterPoint(baseWidget);
+        while (index < count)
+        {
+            Widget *w = dynamic_cast<Widget*>(this->getChildren().at(index));
+            if (w && w->isFocusEnabled())
+            {
+                Vector2 wPosition = this->getWorldCenterPoint(w);
+                float length;
+                Layout *layout = dynamic_cast<Layout*>(w);
+                if (layout)
+                {
+                    length = layout->caculateFarestDistance(baseWidget);
+                }
+                else
+                {
+                    length = (wPosition - widgetPosition).getLength();
+                }
+                
+                if (length > distance)
+                {
+                    found = index;
+                    distance = length;
+                }
+                
+            }
+            index++;
+        }
+        return found;
+    }
+    CCASSERT(0, "invalid focus direction!!!");
+    return 0;
+}
+    
+
+
+Widget* Layout::findFocusEnabledChildWidgetByIndex(ssize_t index)
+{
+  
+    Widget *widget = this->getChildWidgetByIndex(index);
+    
+    if (widget)
+    {
+        if (widget->isFocusEnabled())
+        {
+            return widget;
+        }
+        index = index + 1;
+        return this->findFocusEnabledChildWidgetByIndex(index);
+    }
+    return nullptr;
+}
+    
+Widget *Layout::findFirstNonLayoutWidget()
+{
+    Widget* widget = nullptr;
+    for(Node *node : _children)
+    {
+        Layout* layout = dynamic_cast<Layout*>(node);
+        if (layout) {
+            widget = layout->findFirstNonLayoutWidget();
+        }
+        else{
+            Widget *w = dynamic_cast<Widget*>(node);
+            if (w) {
+                widget = w;
+                break;
+            }
+        }
+        
+    }
+    
+    return widget;
+}
+    
+void Layout::findProperSearchingFunctor(FocusDirection dir, Widget* baseWidget)
+{
+    if (baseWidget == nullptr) {
+        return;
+    }
+    
+    Vector2 previousWidgetPosition = this->getWorldCenterPoint(baseWidget);
+    
+    Vector2 layoutPosition = this->getWorldCenterPoint(this->findFirstNonLayoutWidget());
+    
+    if (dir == FocusDirection::FocusDirection_Left) {
+        if (previousWidgetPosition.x > layoutPosition.x) {
+            onPassFocusToChild = CC_CALLBACK_2(Layout::findNearestChildWidgetIndex, this);
+        }
+        else{
+            onPassFocusToChild = CC_CALLBACK_2(Layout::findFarestChildWidgetIndex, this);
+        }
+    }else if(dir == FocusDirection::FocusDirection_Right){
+        if (previousWidgetPosition.x > layoutPosition.x) {
+            onPassFocusToChild = CC_CALLBACK_2(Layout::findFarestChildWidgetIndex, this);
+        }
+        else{
+            onPassFocusToChild = CC_CALLBACK_2(Layout::findNearestChildWidgetIndex, this);
+        }
+    }else if(dir == FocusDirection::FocusDirection_Down){
+        if (previousWidgetPosition.y > layoutPosition.y) {
+            onPassFocusToChild = CC_CALLBACK_2(Layout::findNearestChildWidgetIndex, this);
+        }else{
+            onPassFocusToChild = CC_CALLBACK_2(Layout::findFarestChildWidgetIndex, this);
+        }
+    }else if(dir == FocusDirection::FocusDirection_Up){
+        if (previousWidgetPosition.y < layoutPosition.y) {
+            onPassFocusToChild = CC_CALLBACK_2(Layout::findNearestChildWidgetIndex, this);
+        }else{
+            onPassFocusToChild = CC_CALLBACK_2(Layout::findFarestChildWidgetIndex, this);
+        }
+    }else{
+        CCASSERT(0, "invalid direction!");
+    }
+
+}
+
+
+Widget* Layout::passFocusToChild(cocos2d::ui::FocusDirection dir, cocos2d::ui::Widget *current)
+{
+    if (checkFocusEnabledChild())
+    {
+        Widget* previousWidget = this->getCurrentFocusedWidget(true);
+        
+        this->findProperSearchingFunctor(dir, previousWidget);
+        
+        int index = onPassFocusToChild(dir, previousWidget);
+        
+        Widget *widget = this->getChildWidgetByIndex(index);
+        this->dispatchFocusEvent(current, widget);
+        Layout *layout = dynamic_cast<Layout*>(widget);
+        if (layout)
+        {
+            return layout->findNextFocusedWidget(dir, layout);
+        }
+        else
+        {
+            return widget;
+        }
+    }
+    else
+    {
+        return this;
+    }
+        
+}
+
+bool Layout::checkFocusEnabledChild()
+{
+    bool ret = false;
+    for(Node* node : _children)
+    {
+        Widget* widget = dynamic_cast<Widget*>(node);
+        if (widget && widget->isFocusEnabled())
+        {
+            ret = true;
+            break;
+        }
+    }
+    return ret;
+}
+
+Widget* Layout::getChildWidgetByIndex(ssize_t index)
+{
+    ssize_t size = _children.size();
+    int count = 0;
+    ssize_t oldIndex = index;
+    Widget *widget = nullptr;
+    while (index < size)
+    {
+        Widget* firstChild = dynamic_cast<Widget*>(_children.at(index));
+        if (firstChild)
+        {
+            widget = firstChild;
+            break;
+        }
+        count++;
+        index++;
+    }
+    
+    if (nullptr == widget)
+    {
+        int begin = 0;
+        while (begin < oldIndex)
+        {
+            Widget* firstChild = dynamic_cast<Widget*>(_children.at(begin));
+            if (firstChild)
+            {
+                widget = firstChild;
+                break;
+            }
+            count++;
+            begin++;
+        }
+    }
+    
+    
+    return widget;
+}
+
+Widget* Layout::getPreviousFocusedWidget(FocusDirection direction, Widget *current)
+{
+    Widget *nextWidget = nullptr;
+    ssize_t previousWidgetPos = _children.getIndex(current);
+    previousWidgetPos = previousWidgetPos - 1;
+    if (previousWidgetPos >= 0)
+    {
+        nextWidget = this->getChildWidgetByIndex(previousWidgetPos);
+        if (nextWidget->isFocusEnabled())
+        {
+            
+            this->dispatchFocusEvent(current, nextWidget);
+            
+            Layout* layout = dynamic_cast<Layout*>(nextWidget);
+            if (layout)
+            {
+                return layout->findNextFocusedWidget(direction, layout);
+            }
+           
+            return nextWidget;
+        }
+        else
+        {
+            //handling the disabled widget, there is no actual focus lose or get, so we don't need any envet
+            return this->getPreviousFocusedWidget(direction, nextWidget);
+        }
+    }else
+    {
+        if (_loopFocus)
+        {
+            if (checkFocusEnabledChild())
+            {
+                previousWidgetPos = _children.size()-1;
+                nextWidget = this->getChildWidgetByIndex(previousWidgetPos);
+                if (nextWidget->isFocusEnabled())
+                {
+                    this->dispatchFocusEvent(current, nextWidget);
+                    Layout* layout = dynamic_cast<Layout*>(nextWidget);
+                    if (layout)
+                    {
+                        return layout->findNextFocusedWidget(direction, layout);
+                    }
+                    else
+                    {
+                        return nextWidget;
+                    }
+                }
+                else
+                {
+                    return this->getPreviousFocusedWidget(direction, nextWidget);
+                }
+            }
+            else
+            {
+                if (dynamic_cast<Layout*>(current)) {
+                    return current;
+                }
+                else
+                {
+                    return _focusedWidget;
+                }
+            }
+        }
+        else
+        {
+            if (isLastWidgetInContainer(current, direction))
+            {
+                if (isWidgetAncestorSupportLoopFocus(this, direction))
+                {
+                    this->dispatchFocusEvent(current, this);
+                    return Widget::findNextFocusedWidget(direction, this);
+                }
+                if (dynamic_cast<Layout*>(current)) {
+                    return current;
+                }
+                else
+                {
+                    return _focusedWidget;
+                }
+            }
+            else
+            {
+                //call parent method to get its parent's next focus enabled widget
+                this->dispatchFocusEvent(current,this);
+                return Widget::findNextFocusedWidget(direction, this);
+            }
+        }
+    }
+}
+
+Widget* Layout::getNextFocusedWidget(FocusDirection direction, Widget *current)
+{
+    Widget *nextWidget = nullptr;
+    ssize_t previousWidgetPos = _children.getIndex(current);
+    previousWidgetPos = previousWidgetPos + 1;
+    if (previousWidgetPos < _children.size())
+    {
+        nextWidget = this->getChildWidgetByIndex(previousWidgetPos);
+        //handle widget
+        if (nextWidget)
+        {
+            if (nextWidget->isFocusEnabled())
+            {
+                
+                this->dispatchFocusEvent(current, nextWidget);
+                Layout* layout = dynamic_cast<Layout*>(nextWidget);
+                if (layout)
+                {
+                    return layout->findNextFocusedWidget(direction, layout);
+                }
+                else
+                {
+                    return nextWidget;
+                }
+            }
+            else
+            {
+                return this->getNextFocusedWidget(direction, nextWidget);
+            }
+        }
+        else
+        {
+            return current;
+        }
+    }else
+    {
+        if (_loopFocus)
+        {
+            if (checkFocusEnabledChild())
+            {
+                previousWidgetPos = 0;
+                nextWidget = this->getChildWidgetByIndex(previousWidgetPos);
+                if (nextWidget->isFocusEnabled())
+                {
+                    
+                    this->dispatchFocusEvent(current, nextWidget);
+                    
+                    Layout* layout = dynamic_cast<Layout*>(nextWidget);
+                    if (layout)
+                    {
+                        return layout->findNextFocusedWidget(direction, layout);
+                    }else
+                    {
+                        return nextWidget;
+                    }
+                }
+                else
+                {
+                    return this->getNextFocusedWidget(direction, nextWidget);
+                }
+            }
+            else
+            {
+                if (dynamic_cast<Layout*>(current)) {
+                    return current;
+                }
+                else
+                {
+                    return _focusedWidget;
+                }
+            }
+        }
+        else{
+            if (isLastWidgetInContainer(current, direction))
+            {
+                if (isWidgetAncestorSupportLoopFocus(this, direction))
+                {
+                    this->dispatchFocusEvent(current, this);
+                    return Widget::findNextFocusedWidget(direction, this);
+                }
+                if (dynamic_cast<Layout*>(current)) {
+                    return current;
+                }
+                else
+                {
+                    return _focusedWidget;
+                }
+            }
+            else
+            {
+                //call parent method to get its parent's next focus enabled widget
+                this->dispatchFocusEvent(current,this);
+                return Widget::findNextFocusedWidget(direction, this);
+            }
+        }
+    }
+}
+
+bool  Layout::isLastWidgetInContainer(Widget* widget, FocusDirection direction)
+{
+    Layout* parent = dynamic_cast<Layout*>(widget->getParent());
+    if (parent == nullptr)
+    {
+        return true;
+    }
+    
+    auto container = parent->getChildren();
+    ssize_t index = container.getIndex(widget);
+    if (parent->getLayoutType() == LAYOUT_LINEAR_HORIZONTAL)
+    {
+        if (direction == FocusDirection::FocusDirection_Left) {
+            if (index == 0)
+            {
+                return true * isLastWidgetInContainer(parent, direction);
+            }
+            else
+            {
+                return false;
+            }
+        }
+        if (direction == FocusDirection::FocusDirection_Right) {
+            if (index == container.size()-1)
+            {
+                return true * isLastWidgetInContainer(parent, direction);
+            }
+            else
+            {
+                return false;
+            }
+        }
+        if (direction == FocusDirection::FocusDirection_Down)
+        {
+            return isLastWidgetInContainer(parent, direction);
+        }
+        
+        if (direction == FocusDirection::FocusDirection_Up)
+        {
+            return isLastWidgetInContainer(parent, direction);
+        }
+    }
+    else if(parent->getLayoutType() == LAYOUT_LINEAR_VERTICAL)
+    {
+        if (direction == FocusDirection::FocusDirection_Up)
+        {
+            if (index == 0)
+            {
+                return true * isLastWidgetInContainer(parent, direction);
+                
+            }
+            else
+            {
+                return false;
+            }
+        }
+        if (direction == FocusDirection::FocusDirection_Down)
+        {
+            if (index == container.size() - 1)
+            {
+                return true * isLastWidgetInContainer(parent, direction);
+            }
+            else
+            {
+                return false;
+            }
+        }
+        if (direction == FocusDirection::FocusDirection_Left)
+        {
+            return isLastWidgetInContainer(parent, direction);
+        }
+        
+        if (direction == FocusDirection::FocusDirection_Right)
+        {
+            return isLastWidgetInContainer(parent, direction);
+        }
+    }
+    else
+    {
+        CCASSERT(0, "invalid layout Type");
+        return false;
+    }
+    
+    return false;
+}
+
+bool  Layout::isWidgetAncestorSupportLoopFocus(Widget* widget, FocusDirection direction)
+{
+    Layout* parent = dynamic_cast<Layout*>(widget->getParent());
+    if (parent == nullptr)
+    {
+        return false;
+    }
+    if (parent->isLoopFocus())
+    {
+        auto layoutType = parent->getLayoutType();
+        if (layoutType == LAYOUT_LINEAR_HORIZONTAL)
+        {
+            if (direction == FocusDirection::FocusDirection_Left || direction == FocusDirection::FocusDirection_Right)
+            {
+                return true;
+            }
+            else
+            {
+                return isWidgetAncestorSupportLoopFocus(parent, direction);
+            }
+        }
+        if (layoutType == LAYOUT_LINEAR_VERTICAL)
+        {
+            if (direction == FocusDirection::FocusDirection_Down || direction == FocusDirection::FocusDirection_Up)
+            {
+                return true;
+            }
+            else
+            {
+                return isWidgetAncestorSupportLoopFocus(parent, direction);
+            }
+        }
+        else
+        {
+            CCASSERT(0, "invalid layout type");
+        }
+        
+    }
+    else
+    {
+        return isWidgetAncestorSupportLoopFocus(parent, direction);
+    }
+}
+
+
+
+
+Widget* Layout::findNextFocusedWidget(FocusDirection direction, Widget* current)
+{
+    if (this->isFocused())
+    {
+        Layout* parent = dynamic_cast<Layout*>(this->getParent());
+
+        if (_passFocusToChild)
+        {
+            Widget * w = this->passFocusToChild(direction, current);
+            if (dynamic_cast<Layout*>(w)) {
+                if (parent) {
+                    return parent->findNextFocusedWidget(direction, this);
+                }
+            }
+            return w;
+        }
+        
+        if (nullptr == parent) {
+            return this;
+        }
+        return parent->findNextFocusedWidget(direction, this);
+            
+    }
+    else if(current->isFocused() || !current->isFocusEnabled())
+    {
+        if (_layoutType == LAYOUT_LINEAR_HORIZONTAL)
+        {
+            switch (direction)
+            {
+                case FocusDirection::FocusDirection_Left:
+                {
+                    return this->getPreviousFocusedWidget(direction, current);
+                }break;
+                case FocusDirection::FocusDirection_Right:
+                {
+                    return this->getNextFocusedWidget(direction, current);
+                }break;
+                case FocusDirection::FocusDirection_Down:
+                case FocusDirection::FocusDirection_Up:
+                {
+                    if (isLastWidgetInContainer(this, direction))
+                    {
+                        if (isWidgetAncestorSupportLoopFocus(current, direction))
+                        {
+                            this->dispatchFocusEvent(current, this);
+                            return Widget::findNextFocusedWidget(direction, this);
+                        }
+                        return current;
+                    }
+                    else{
+                        this->dispatchFocusEvent(current, this);
+                        return Widget::findNextFocusedWidget(direction, this);
+                    }
+                }break;
+                default:
+                {
+                    CCASSERT(0, "Invalid Focus Direction");
+                    return current;
+                }
+                    break;
+            }
+        }
+        else if (_layoutType == LAYOUT_LINEAR_VERTICAL)
+        {
+            switch (direction)
+            {
+                case FocusDirection::FocusDirection_Left:
+                case FocusDirection::FocusDirection_Right:
+                {
+                    if (isLastWidgetInContainer(this, direction))
+                    {
+                        if (isWidgetAncestorSupportLoopFocus(current, direction))
+                        {
+                            this->dispatchFocusEvent(current, this);
+                            return Widget::findNextFocusedWidget(direction, this);
+                        }
+                        return current;
+                    }
+                    else
+                    {
+                        this->dispatchFocusEvent(current, this);
+                        return Widget::findNextFocusedWidget(direction, this);
+                    }
+                } break;
+                case FocusDirection::FocusDirection_Down:
+                {
+                    return getNextFocusedWidget(direction, current);
+                }
+                    break;
+                case FocusDirection::FocusDirection_Up:
+                {
+                    return getPreviousFocusedWidget(direction, current);
+                }
+                    break;
+                default:
+                {
+                    CCASSERT(0, "Invalid Focus Direction");
+                    return current;
+                }
+                    break;
+            }
+        }
+        else
+        {
+            CCASSERT(0, "Un Supported Layout type, please use VBox and HBox instead!!!");
+            return current;
+        }
+    }
+    else
+    {
+        return current;
+    }
+}
+    
 }
 NS_CC_END

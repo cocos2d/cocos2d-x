@@ -6,16 +6,16 @@
 --------------------------------
 -- @function [parent=#DrawNode] drawQuadraticBezier 
 -- @param self
--- @param #cc.math::Vector2 array
--- @param #cc.math::Vector2 array
--- @param #cc.math::Vector2 array
+-- @param #vector2_table array
+-- @param #vector2_table array
+-- @param #vector2_table array
 -- @param #unsigned int int
--- @param #color4F_table color4f
+-- @param #color4f_table color4f
         
 --------------------------------
 -- @function [parent=#DrawNode] onDraw 
 -- @param self
--- @param #cc.math::Matrix matrix
+-- @param #matrix_table matrix
 -- @param #bool bool
         
 --------------------------------
@@ -25,35 +25,35 @@
 --------------------------------
 -- @function [parent=#DrawNode] drawTriangle 
 -- @param self
--- @param #cc.math::Vector2 array
--- @param #cc.math::Vector2 array
--- @param #cc.math::Vector2 array
--- @param #color4F_table color4f
+-- @param #vector2_table array
+-- @param #vector2_table array
+-- @param #vector2_table array
+-- @param #color4f_table color4f
         
 --------------------------------
 -- @function [parent=#DrawNode] drawDot 
 -- @param self
--- @param #cc.math::Vector2 array
+-- @param #vector2_table array
 -- @param #float float
--- @param #color4F_table color4f
+-- @param #color4f_table color4f
         
 --------------------------------
 -- @function [parent=#DrawNode] drawCubicBezier 
 -- @param self
--- @param #cc.math::Vector2 array
--- @param #cc.math::Vector2 array
--- @param #cc.math::Vector2 array
--- @param #cc.math::Vector2 array
+-- @param #vector2_table array
+-- @param #vector2_table array
+-- @param #vector2_table array
+-- @param #vector2_table array
 -- @param #unsigned int int
--- @param #color4F_table color4f
+-- @param #color4f_table color4f
         
 --------------------------------
 -- @function [parent=#DrawNode] drawSegment 
 -- @param self
--- @param #cc.math::Vector2 array
--- @param #cc.math::Vector2 array
+-- @param #vector2_table array
+-- @param #vector2_table array
 -- @param #float float
--- @param #color4F_table color4f
+-- @param #color4f_table color4f
         
 --------------------------------
 -- @function [parent=#DrawNode] create 
@@ -64,7 +64,7 @@
 -- @function [parent=#DrawNode] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #cc.math::Matrix matrix
+-- @param #matrix_table matrix
 -- @param #bool bool
         
 return nil

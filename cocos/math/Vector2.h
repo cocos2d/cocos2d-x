@@ -98,34 +98,6 @@ public:
     ~Vector2();
 
     /**
-     * Returns the zero vector.
-     *
-     * @return The 2-element vector of 0s.
-     */
-    static const Vector2& zero();
-
-    /**
-     * Returns the one vector.
-     *
-     * @return The 2-element vector of 1s.
-     */
-    static const Vector2& one();
-
-    /**
-     * Returns the unit x vector.
-     *
-     * @return The 2-element unit vector along the x axis.
-     */
-    static const Vector2& unitX();
-
-    /**
-     * Returns the unit y vector.
-     *
-     * @return The 2-element unit vector along the y axis.
-     */
-    static const Vector2& unitY();
-
-    /**
      * Indicates whether this vector contains all zeros.
      *
      * @return true if this vector contains all zeros, false otherwise.
@@ -735,6 +707,12 @@ public:
     
     /** equals to Vector2(0,0) */
     static const Vector2 ZERO;
+    /** equals to Vector2(1,1) */
+    static const Vector2 ONE;
+    /** equals to Vector2(1,0) */
+    static const Vector2 UNIT_X;
+    /** equals to Vector2(0,1) */
+    static const Vector2 UNIT_Y;
     /** equals to Vector2(0.5, 0.5) */
     static const Vector2 ANCHOR_MIDDLE;
     /** equals to Vector2(0, 0) */
@@ -763,6 +741,8 @@ public:
  * @return The scaled vector.
  */
 inline const Vector2 operator*(float x, const Vector2& v);
+
+typedef Vector2 Point2;
 
 NS_CC_MATH_END
 

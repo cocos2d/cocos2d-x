@@ -147,7 +147,7 @@ void Device::setAccelerometerInterval(float interval)
 
 
 
-Data Device::getTextureDataForText(const char * text,const FontDefinition& textDefinition,TextAlign align,int &width,int &height)
+Data Device::getTextureDataForText(const char * text, const FontDefinition& textDefinition, TextAlign align, int &width, int &height, bool& hasPremultipliedAlpha)
 {
     Data ret;
     ssize_t dataLen;
@@ -157,6 +157,7 @@ Data Device::getTextureDataForText(const char * text,const FontDefinition& textD
     if (data)
     {
         ret.fastSet(data, dataLen);
+        hasPremultipliedAlpha = false;
     }
 
     return ret;

@@ -65,28 +65,41 @@ extern "C" {
         cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesCancel(size, id, x, y);
     }
 
-    #define KEYCODE_BACK 0x04
-    #define KEYCODE_MENU 0x52
-
+#define KEYCODE_BACK 0x04
+#define KEYCODE_MENU 0x52
+#define KEYCODE_DPAD_UP 0x13
+#define KEYCODE_DPAD_DOWN 0x14
+#define KEYCODE_DPAD_LEFT 0x15
+#define KEYCODE_DPAD_RIGHT 0x16
+#define KEYCODE_ENTER 0x42
+#define KEYCODE_PLAY  0x7e
+#define KEYCODE_DPAD_CENTER  0x17
+    
+    
+    static std::unordered_map<int, cocos2d::EventKeyboard::KeyCode> g_keyCodeMap = {
+        { KEYCODE_BACK , cocos2d::EventKeyboard::KeyCode::KEY_ESCAPE},
+        { KEYCODE_MENU , cocos2d::EventKeyboard::KeyCode::KEY_MENU},
+        { KEYCODE_DPAD_UP  , cocos2d::EventKeyboard::KeyCode::KEY_DPAD_UP },
+        { KEYCODE_DPAD_DOWN , cocos2d::EventKeyboard::KeyCode::KEY_DPAD_DOWN },
+        { KEYCODE_DPAD_LEFT , cocos2d::EventKeyboard::KeyCode::KEY_DPAD_LEFT },
+        { KEYCODE_DPAD_RIGHT , cocos2d::EventKeyboard::KeyCode::KEY_DPAD_RIGHT },
+        { KEYCODE_ENTER  , cocos2d::EventKeyboard::KeyCode::KEY_ENTER},
+        { KEYCODE_PLAY  , cocos2d::EventKeyboard::KeyCode::KEY_PLAY},
+        { KEYCODE_DPAD_CENTER  , cocos2d::EventKeyboard::KeyCode::KEY_DPAD_CENTER},
+        
+    };
+    
     JNIEXPORT jboolean JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeKeyDown(JNIEnv * env, jobject thiz, jint keyCode) {
         Director* pDirector = Director::getInstance();
-        switch (keyCode) {
-            case KEYCODE_BACK:
-                {
-                    cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_BACKSPACE, false);
-                    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
-                    return JNI_TRUE;
-                }
-            case KEYCODE_MENU:
-                {
-                    cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_MENU, false);
-                    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
-
-                    return JNI_TRUE;
-                }
-            default:
-                return JNI_FALSE;
+        
+        auto iterKeyCode = g_keyCodeMap.find(keyCode);
+        if (iterKeyCode == g_keyCodeMap.end()) {
+            return JNI_FALSE;
         }
-        return JNI_FALSE;
-    }
-}
+        
+        cocos2d::EventKeyboard::KeyCode cocos2dKey = g_keyCodeMap.at(keyCode);
+        cocos2d::EventKeyboard event(cocos2dKey, false);
+        cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+        return JNI_TRUE;
+        
+    }}

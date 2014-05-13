@@ -72,8 +72,8 @@
 --------------------------------
 -- @function [parent=#Node] convertToWorldSpaceAR 
 -- @param self
--- @param #cc.math::Vector2 array
--- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
+-- @param #vector2_table array
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#Node] isIgnoreAnchorPointForPosition 
@@ -132,12 +132,12 @@
 --------------------------------
 -- @function [parent=#Node] getNodeToWorldTransform 
 -- @param self
--- @return math::Matrix#math::Matrix ret (return value: cc.math::Matrix)
+-- @return matrix_table#matrix_table ret (return value: matrix_table)
         
 --------------------------------
 -- @function [parent=#Node] getPosition3D 
 -- @param self
--- @return math::Vector3#math::Vector3 ret (return value: cc.math::Vector3)
+-- @return vector3_table#vector3_table ret (return value: vector3_table)
         
 --------------------------------
 -- @function [parent=#Node] removeChild 
@@ -148,8 +148,8 @@
 --------------------------------
 -- @function [parent=#Node] convertToWorldSpace 
 -- @param self
--- @param #cc.math::Vector2 array
--- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
+-- @param #vector2_table array
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#Node] getScene 
@@ -180,7 +180,7 @@
 -- @function [parent=#Node] convertTouchToNodeSpace 
 -- @param self
 -- @param #cc.Touch touch
--- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- overload function: removeAllChildrenWithCleanup(bool)
@@ -209,24 +209,24 @@
 --------------------------------
 -- @function [parent=#Node] getRotation3D 
 -- @param self
--- @return math::Vector3#math::Vector3 ret (return value: cc.math::Vector3)
+-- @return vector3_table#vector3_table ret (return value: vector3_table)
         
 --------------------------------
 -- @function [parent=#Node] getNodeToParentTransform 
 -- @param self
--- @return math::Matrix#math::Matrix ret (return value: cc.math::Matrix)
+-- @return matrix_table#matrix_table ret (return value: matrix_table)
         
 --------------------------------
 -- @function [parent=#Node] convertTouchToNodeSpaceAR 
 -- @param self
 -- @param #cc.Touch touch
--- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#Node] convertToNodeSpace 
 -- @param self
--- @param #cc.math::Vector2 array
--- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
+-- @param #vector2_table array
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#Node] resume 
@@ -240,7 +240,7 @@
 --------------------------------
 -- overload function: setPosition(float, float)
 --          
--- overload function: setPosition(cc.math::Vector2)
+-- overload function: setPosition(vector2_table)
 --          
 -- @function [parent=#Node] setPosition
 -- @param self
@@ -271,7 +271,7 @@
 --------------------------------
 -- @function [parent=#Node] setRotation3D 
 -- @param self
--- @param #cc.math::Vector3 array
+-- @param #vector3_table array
         
 --------------------------------
 -- @function [parent=#Node] setPositionX 
@@ -281,12 +281,12 @@
 --------------------------------
 -- @function [parent=#Node] setNodeToParentTransform 
 -- @param self
--- @param #cc.math::Matrix matrix
+-- @param #matrix_table matrix
         
 --------------------------------
 -- @function [parent=#Node] getAnchorPoint 
 -- @param self
--- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#Node] getNumberOfRunningActions 
@@ -310,8 +310,8 @@
 --------------------------------
 -- @function [parent=#Node] convertToNodeSpaceAR 
 -- @param self
--- @param #cc.math::Vector2 array
--- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
+-- @param #vector2_table array
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#Node] addComponent 
@@ -332,7 +332,7 @@
 --------------------------------
 -- @function [parent=#Node] getAnchorPointInPoints 
 -- @param self
--- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#Node] runAction 
@@ -362,7 +362,7 @@
 --------------------------------
 -- @function [parent=#Node] getDisplayedColor 
 -- @param self
--- @return color3B_table#color3B_table ret (return value: color3B_table)
+-- @return color3b_table#color3b_table ret (return value: color3b_table)
         
 --------------------------------
 -- @function [parent=#Node] getActionByTag 
@@ -373,11 +373,11 @@
 --------------------------------
 -- overload function: setAdditionalTransform(cc.AffineTransform)
 --          
--- overload function: setAdditionalTransform(cc.math::Matrix)
+-- overload function: setAdditionalTransform(matrix_table)
 --          
 -- @function [parent=#Node] setAdditionalTransform
 -- @param self
--- @param #cc.math::Matrix matrix
+-- @param #matrix_table matrix
 
 --------------------------------
 -- @function [parent=#Node] getDisplayedOpacity 
@@ -416,7 +416,7 @@
 --------------------------------
 -- @function [parent=#Node] setColor 
 -- @param self
--- @param #color3B_table color3b
+-- @param #color3b_table color3b
         
 --------------------------------
 -- @function [parent=#Node] isRunning 
@@ -461,7 +461,7 @@
 --------------------------------
 -- @function [parent=#Node] updateDisplayedColor 
 -- @param self
--- @param #color3B_table color3b
+-- @param #color3b_table color3b
         
 --------------------------------
 -- @function [parent=#Node] setVisible 
@@ -471,7 +471,7 @@
 --------------------------------
 -- @function [parent=#Node] getParentToNodeTransform 
 -- @param self
--- @return math::Matrix#math::Matrix ret (return value: cc.math::Matrix)
+-- @return matrix_table#matrix_table ret (return value: matrix_table)
         
 --------------------------------
 -- @function [parent=#Node] setGlobalZOrder 
@@ -552,7 +552,7 @@
 --------------------------------
 -- @function [parent=#Node] getColor 
 -- @param self
--- @return color3B_table#color3B_table ret (return value: color3B_table)
+-- @return color3b_table#color3b_table ret (return value: color3b_table)
         
 --------------------------------
 -- @function [parent=#Node] getBoundingBox 
@@ -572,12 +572,12 @@
 --------------------------------
 -- overload function: draw()
 --          
--- overload function: draw(cc.Renderer, cc.math::Matrix, bool)
+-- overload function: draw(cc.Renderer, matrix_table, bool)
 --          
 -- @function [parent=#Node] draw
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #cc.math::Matrix matrix
+-- @param #matrix_table matrix
 -- @param #bool bool
 
 --------------------------------
@@ -597,7 +597,7 @@
 --------------------------------
 -- @function [parent=#Node] setPosition3D 
 -- @param self
--- @param #cc.math::Vector3 array
+-- @param #vector3_table array
         
 --------------------------------
 -- @function [parent=#Node] update 
@@ -611,7 +611,7 @@
 --------------------------------
 -- @function [parent=#Node] getWorldToNodeTransform 
 -- @param self
--- @return math::Matrix#math::Matrix ret (return value: cc.math::Matrix)
+-- @return matrix_table#matrix_table ret (return value: matrix_table)
         
 --------------------------------
 -- @function [parent=#Node] getScale 

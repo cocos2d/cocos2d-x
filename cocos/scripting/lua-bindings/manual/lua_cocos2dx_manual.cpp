@@ -4894,60 +4894,6 @@ static void extendGridAction(lua_State* tolua_S)
     lua_pop(tolua_S, 1);
 }
 
-static bool luaval_to_TTFConfig(lua_State* L,int lo, TTFConfig* ret)
-{
-    if (nullptr == ret)
-        return false;
-    
-    bool ok = true;
-    
-    tolua_Error tolua_err;
-    if (!tolua_istable(L, lo, 0, &tolua_err) )
-    {
-#if COCOS2D_DEBUG >=1
-        luaval_to_native_err(L,"#ferror:",&tolua_err);
-#endif
-        ok = false;
-    }
-    
-    if (ok)
-    {
-        lua_pushstring(L, "fontFilePath");         /* L: paramStack key */
-        lua_gettable(L,lo);                        /* L: paramStack paramStack[lo][key] */
-        ret->fontFilePath = lua_isstring(L, -1)? lua_tostring(L, -1) : "";
-        lua_pop(L,1);                              /* L: paramStack*/
-        
-        lua_pushstring(L, "fontSize");
-        lua_gettable(L,lo);
-        ret->fontSize = lua_isnumber(L, -1)?(int)lua_tointeger(L, -1) : 0;
-        lua_pop(L,1);
-        
-        lua_pushstring(L, "glyphs");
-        lua_gettable(L, lo);
-        ret->glyphs = lua_isnumber(L, -1)?static_cast<GlyphCollection>(lua_tointeger(L, -1)) : GlyphCollection::NEHE;
-        lua_pop(L, 1);
-        
-        lua_pushstring(L, "customGlyphs");
-        lua_gettable(L, lo);
-        ret->customGlyphs = lua_isstring(L, -1)?lua_tostring(L, -1) : "";
-        lua_pop(L, 1);
-        
-        lua_pushstring(L, "distanceFieldEnabled");
-        lua_gettable(L, lo);
-        ret->distanceFieldEnabled = lua_isboolean(L, -1)?lua_toboolean(L, -1) : false;
-        lua_pop(L, 1);
-        
-        lua_pushstring(L, "outlineSize");
-        lua_gettable(L, lo);
-        ret->outlineSize = lua_isnumber(L, -1)?(int)lua_tointeger(L, -1) : 0;
-        lua_pop(L, 1);
-        
-        return true;
-    }
-    
-    return false;
-}
-
 static int lua_cocos2dx_Label_createWithTTF00(lua_State* L)
 {
     if (nullptr == L)
@@ -4978,7 +4924,7 @@ static int lua_cocos2dx_Label_createWithTTF00(lua_State* L)
         TTFConfig ttfConfig("");
         std::string text = "";
 
-        ok &= luaval_to_TTFConfig(L, 2, &ttfConfig);
+        ok &= luaval_to_ttfconfig(L, 2, &ttfConfig);
         if (!ok)
             return 0;
         
@@ -5002,57 +4948,6 @@ tolua_lerror:
     tolua_error(L,"#ferror in function 'lua_cocos2dx_Label_createWithTTF'.",&tolua_err);
 #endif
     return 0;
-}
-
-static int lua_cocos2dx_Label_setTTFConfig(lua_State* L)
-{
-    if (nullptr == L)
-        return 0;
-    
-    int argc = 0;
-    cocos2d::Label* self = nullptr;
-    bool ok  = true;
-    
-#if COCOS2D_DEBUG >= 1
-	tolua_Error tolua_err;
-	if (!tolua_isusertype(L,1,"cc.Label",0,&tolua_err)) goto tolua_lerror;
-#endif
-    
-    self = static_cast<cocos2d::Label*>(tolua_tousertype(L, 1, 0));
-    
-#if COCOS2D_DEBUG >= 1
-    if (nullptr == self)
-    {
-		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_Label_setTTFConfig'\n", nullptr);
-		return 0;
-	}
-#endif
-    
-    argc = lua_gettop(L) - 1;
-    if(1 == argc)
-    {
-        
-#if COCOS2D_DEBUG >= 1
-        if (!tolua_istable(L, 2, 0, &tolua_err))
-            goto tolua_lerror;
-#endif
-        TTFConfig ttfConfig("");
-        ok &= luaval_to_TTFConfig(L, 2, &ttfConfig);
-        if (!ok)
-            return 0;
-        
-        self->setTTFConfig(ttfConfig);
-        return 1;
-    }
-    
-    CCLOG("'create' has wrong number of arguments: %d, was expecting %d\n", argc, 1);
-	return 0;
-    
-#if COCOS2D_DEBUG >= 1
-tolua_lerror:
-    tolua_error(L,"#ferror in function 'setTTFConfig'.",&tolua_err);
-    return 0;
-#endif
 }
 
 static int lua_cocos2dx_Label_createWithTTF01(lua_State* L)
@@ -5163,7 +5058,6 @@ static void extendLabel(lua_State* tolua_S)
     if (lua_istable(tolua_S,-1))
     {
         tolua_function(tolua_S, "createWithTTF", lua_cocos2dx_Label_createWithTTF00);
-        tolua_function(tolua_S, "setTTFConfig",  lua_cocos2dx_Label_setTTFConfig);
         tolua_function(tolua_S, "createWithTTF", lua_cocos2dx_Label_createWithTTF01);
         tolua_function(tolua_S, "create", lua_cocos2dx_Label_create_deprecated);
     }

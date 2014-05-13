@@ -20,7 +20,7 @@
 --------------------------------
 -- @function [parent=#MotionStreak] tintWithColor 
 -- @param self
--- @param #color3B_table color3b
+-- @param #color3b_table color3b
         
 --------------------------------
 -- @function [parent=#MotionStreak] setStartingPositionInitialized 
@@ -43,16 +43,16 @@
 -- @param #bool bool
         
 --------------------------------
--- overload function: create(float, float, float, color3B_table, cc.Texture2D)
+-- overload function: create(float, float, float, color3b_table, cc.Texture2D)
 --          
--- overload function: create(float, float, float, color3B_table, string)
+-- overload function: create(float, float, float, color3b_table, string)
 --          
 -- @function [parent=#MotionStreak] create
 -- @param self
 -- @param #float float
 -- @param #float float
 -- @param #float float
--- @param #color3B_table color3b
+-- @param #color3b_table color3b
 -- @param #string str
 -- @return MotionStreak#MotionStreak ret (retunr value: cc.MotionStreak)
 
@@ -99,7 +99,7 @@
 --------------------------------
 -- overload function: setPosition(float, float)
 --          
--- overload function: setPosition(cc.math::Vector2)
+-- overload function: setPosition(vector2_table)
 --          
 -- @function [parent=#MotionStreak] setPosition
 -- @param self
