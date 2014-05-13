@@ -24,13 +24,10 @@
  ****************************************************************************/
 
 #include "Sprite3DTest.h"
+#include "3d/CCSprite3D.h"
 
 #include <algorithm>
 #include "../testResource.h"
-
-#include "3d/Sprite3D.h"
-
-
 
 enum
 {

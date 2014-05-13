@@ -5,9 +5,11 @@
 #include <string>
 #include <vector>
 
-#include "ccTypes.h"
-#include "MeshPart.h"
-#include "CCMath.h"
+#include "base/CCRef.h"
+#include "base/ccTypes.h"
+#include "CCMeshPart.h"
+#include "math/CCMath.h"
+#include "renderer/ccGLStateCache.h"
 
 USING_NS_CC_MATH;
 
@@ -34,7 +36,8 @@ struct RenderMeshData
     bool generateNormals();
 };
 
-namespace GL {
+namespace GL
+{
     enum
     {
          VERTEX_ATTRIB_FLAG_NORMAL = VERTEX_ATTRIB_FLAG_TEX_COORDS << 1,

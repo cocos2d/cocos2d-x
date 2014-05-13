@@ -1,7 +1,6 @@
-#include "MeshCache.h"
-#include "Mesh.h"
-#include "cocos2d.h"
-//#include "MeshMaterial.h"
+#include "CCMeshCache.h"
+#include "CCMesh.h"
+#include "2d/platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 

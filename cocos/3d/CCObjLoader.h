@@ -12,7 +12,7 @@
 #include <string>
 #include <vector>
 #include <map>
-#include "ccTypes.h"
+#include "base/ccTypes.h"
 
 NS_CC_BEGIN
 

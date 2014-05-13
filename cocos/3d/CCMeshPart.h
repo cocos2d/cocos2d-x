@@ -6,9 +6,7 @@
 #include <string>
 #include <vector>
 
-#include "ccTypes.h"
-
-#include "cocos2d.h"
+#include "base/ccTypes.h"
 
 NS_CC_BEGIN
 

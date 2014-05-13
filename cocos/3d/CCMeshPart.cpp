@@ -1,14 +1,11 @@
-#include "MeshPART.h"
-
 #include <list>
 #include <fstream>
 #include <iostream>
 #include <sstream>
 
-#include "cocos2d.h"
-#include "ccMacros.h"
-#include "MeshPart.h"
-#include "Mesh.h"
+#include "base/ccMacros.h"
+#include "CCMeshPart.h"
+#include "CCMesh.h"
 
 using namespace std;
 using namespace cocos2d;
