@@ -113,6 +113,9 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     auto scene = Scene::create();
     auto layer = new TestController();
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
+    layer->addConsoleAutoTest();
+#endif
     layer->autorelease();
     layer->addConsoleAutoTest();
     scene->addChild(layer);
