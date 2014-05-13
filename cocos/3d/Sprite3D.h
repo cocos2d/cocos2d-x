@@ -64,7 +64,7 @@ protected:
     
     int               _partcount;
     
-    GLProgramState**   _programState;
+    Vector<GLProgramState*>   _programState;
     
     Vector<Texture2D*>    _textures;
     

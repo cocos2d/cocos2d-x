@@ -3,8 +3,8 @@
 #define __MESH_CACHE_H_
 
 #include <string>
-#include <map>
-#include "ccTypes.h"
+#include "base/ccTypes.h"
+#include "base/CCMap.h"
 
 NS_CC_BEGIN
 
@@ -33,7 +33,7 @@ protected:
     MeshCache();
     
     static MeshCache* _cacheInstance;
-    std::map<std::string, Mesh*> _cachedMeshes; //cached meshes
+    Map<std::string, Mesh*> _cachedMeshes; //cached meshes
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     EventListenerCustom* _backToForegroundlistener;

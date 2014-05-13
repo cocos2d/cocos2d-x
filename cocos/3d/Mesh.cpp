@@ -36,9 +36,11 @@ std::vector<float>& RenderMeshData::generateNormals(std::vector<float>& posions,
     std::vector<std::vector<Vector3>> faceVertexNormalList;
     faceVertexNormalList.resize(numVertex);
     
-    for (const auto& partIndex : partindices) {
+    for (const auto& partIndex : partindices)
+    {
         int triangles = partIndex.size() / 3;
-        for (int i = 0; i < triangles; i++) {
+        for (int i = 0; i < triangles; i++)
+        {
             int triangleIdx = i * 3;
             v1.set(posions[partIndex[triangleIdx] ], posions[partIndex[triangleIdx]+1 ], posions[partIndex[triangleIdx] + 2 ]);
             v2.set(posions[partIndex[triangleIdx + 1] ], posions[partIndex[triangleIdx + 1] + 1 ], posions[partIndex[triangleIdx + 1] + 2 ]);
@@ -98,9 +100,11 @@ bool RenderMeshData::generateNormals()
     std::vector<std::vector<Vector3>> faceVertexNormalList;
     faceVertexNormalList.resize(numVertex);
     
-    for (const auto& partIndex : _partindices) {
+    for (const auto& partIndex : _partindices)
+    {
         int triangles = partIndex.size() / 3;
-        for (int i = 0; i < triangles; i++) {
+        for (int i = 0; i < triangles; i++)
+        {
             int triangleIdx = i * 3;
             v1.set(_vertexs[partIndex[triangleIdx] ], _vertexs[partIndex[triangleIdx]+1 ], _vertexs[partIndex[triangleIdx] + 2 ]);
             v2.set(_vertexs[partIndex[triangleIdx + 1] ], _vertexs[partIndex[triangleIdx + 1] + 1 ], _vertexs[partIndex[triangleIdx + 1] + 2 ]);
@@ -132,7 +136,8 @@ bool RenderMeshData::generateNormals()
     
     std::vector<float> vertexs((vertexsize + 3) * numVertex);
     
-    for (int i = 0; i < numVertex; i++) {
+    for (int i = 0; i < numVertex; i++)
+    {
         int idx = i * vertexsize;
         vertexs.push_back(_vertexs[idx]);
         vertexs.push_back(_vertexs[idx + 1]);
@@ -245,16 +250,13 @@ void Mesh::releaseMeshPart()
 Mesh* Mesh::create(std::vector<float>& posions, std::vector<float>& normals, std::vector<float>& texs, const std::vector<std::vector<unsigned short> >& partindices)
 {
     auto mesh = new Mesh();
-    bool ret = mesh->init(posions, normals, texs, partindices);
+    if(mesh && mesh->init(posions, normals, texs, partindices))
     {
-        if (!ret)
-        {
-            delete mesh;
-            return nullptr;
-        }
+        mesh->autorelease();
+        return mesh;
     }
-    mesh->autorelease();
-    return mesh;
+    CC_SAFE_DELETE(mesh);
+    return nullptr;
 }
 
 bool Mesh::init(std::vector<float>& posions, std::vector<float>& normals, std::vector<float>& texs, const std::vector<std::vector<unsigned short> >& partindices)
@@ -328,8 +330,6 @@ void Mesh::restore()
         auto& idxs = _renderdata._partindices[i];
         addMeshPart(PrimitiveType_TRIANGLES, IndexFormat_INDEX16, (void*)&idxs[0], idxs.size());
     }
-    
-    
 }
 
 NS_CC_END

@@ -32,10 +32,10 @@ GLProgram* Sprite3D::s_defGLProgram = nullptr;
 Sprite3D* Sprite3D::create(const std::string &modelPath)
 {
     if (modelPath.length() < 4)
-        return nullptr;
+        CCASSERT(false, "improper name specified when creating Sprite3D");
     
-    auto sprite = new Sprite3D;
-    if (sprite->init(modelPath))
+    auto sprite = new Sprite3D();
+    if (sprite && sprite->init(modelPath))
     {
         sprite->autorelease();
         return sprite;
@@ -63,7 +63,8 @@ bool Sprite3D::loadFromObj(const std::string& path)
     //convert to mesh and material
     std::vector<std::vector<unsigned short> > indices;
     std::vector<std::string> matnames;
-    for (auto it = shapes.shapes.begin(); it != shapes.shapes.end(); it++) {
+    for (auto it = shapes.shapes.begin(); it != shapes.shapes.end(); it++)
+    {
         indices.push_back((*it).mesh.indices);
         matnames.push_back(dir + (*it).material.diffuse_texname);
     }
@@ -73,25 +74,22 @@ bool Sprite3D::loadFromObj(const std::string& path)
     if (_model == nullptr)
         return false;
     
-    
-
     _partcount = indices.size();
     
-    _programState = new GLProgramState*[_partcount];
     
-    for (auto it = 0; it != matnames.size(); it++) {
-        //auto material = GLProgramState::get
+    for (auto it = 0; it != matnames.size(); it++)
+    {
         if (!matnames[it].empty())
         {
             auto tex = Director::getInstance()->getTextureCache()->addImage(matnames[it]);
-            if (tex)
-            _textures.pushBack(tex);
+            if (tex) _textures.pushBack(tex);
         }
         
     }
     
-    for (int i = 0; i < _model->getMeshPartCount(); i++) {
-        _programState[i] = GLProgramState::get(getDefGLProgram(_model->getAttribFlag() & GL::VERTEX_ATTRIB_FLAG_TEX_COORDS));
+    for (int i = 0; i < _model->getMeshPartCount(); i++)
+    {
+        _programState.pushBack(GLProgramState::get(getDefGLProgram(_model->getAttribFlag() & GL::VERTEX_ATTRIB_FLAG_TEX_COORDS)));
     }
     
     //add to cache
@@ -103,7 +101,7 @@ bool Sprite3D::loadFromObj(const std::string& path)
     return true;
 }
 
-Sprite3D::Sprite3D(): _programState(nullptr), _partcount(0), _model(nullptr)
+Sprite3D::Sprite3D(): _partcount(0), _model(nullptr)
 {
 }
 
@@ -112,89 +110,69 @@ Sprite3D::~Sprite3D()
     
     CC_SAFE_RELEASE_NULL(_model);
     
-    for(auto i = 0; i < _partcount; i++)
-        CC_SAFE_RELEASE_NULL(_programState[i]);
-
-    CC_SAFE_DELETE_ARRAY(_programState);
-    
 }
 
 
 bool Sprite3D::init(const std::string &path)
 {
-    for(auto i = 0; i < _partcount; i++)
-        CC_SAFE_RELEASE_NULL(_programState[i]);
     _partcount = 0;
     
-    CC_SAFE_DELETE_ARRAY(_programState);
     CC_SAFE_RELEASE_NULL(_model);
+    _programState.clear();
+    _textures.clear();
     
     //find from the cache
     Mesh* mesh = MeshCache::getInstance()->getMesh(path);
     if (mesh)
     {
-        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
         _model = mesh;
-        mesh->retain();
+        _model->retain();
+        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
+
         _partcount = mesh->getMeshPartCount();
         
-        _programState = new GLProgramState*[_partcount];
-        
         auto matnames = __cachedSpriteTexNames[fullPath];
-        for (auto it = 0; it != matnames.size(); it++) {
-
+        for (auto it = 0; it != matnames.size(); it++)
+        {
             auto tex = Director::getInstance()->getTextureCache()->addImage(matnames[it]);
-            if (tex)
-            _textures.pushBack(tex);
-            
+            if (tex) _textures.pushBack(tex);
         }
         
-        for (int i = 0; i < _model->getMeshPartCount(); i++) {
-            _programState[i] = GLProgramState::get(getDefGLProgram(mesh->getAttribFlag() & GL::VERTEX_ATTRIB_FLAG_TEX_COORDS));
+        for (int i = 0; i < _model->getMeshPartCount(); i++)
+        {
+            _programState.pushBack(GLProgramState::get(getDefGLProgram(mesh->getAttribFlag() & GL::VERTEX_ATTRIB_FLAG_TEX_COORDS)));
         }
         
         _path = fullPath;
+        return true;
     }
     else
     {
         //load from file
         std::string ext = path.substr(path.length() - 4, 4);
-        if (ext == ".obj")
+        if (ext != ".obj" || !loadFromObj(path))
         {
-            if (!loadFromObj(path))
                 return false;
         }
-        else
-            return false;
+        return true;
     }
-    
-    
-    return true;
 }
 
 GLProgram* Sprite3D::getDefGLProgram(bool textured)
 {
- 
-    if (textured && s_defGLProgramTex)
-        return s_defGLProgramTex;
-    
-    if (!textured && s_defGLProgram)
-        return s_defGLProgram;
-    
-    GLProgram* program = nullptr;
-    if (textured)
+    if(s_defGLProgramTex == nullptr)
     {
         s_defGLProgramTex = GLProgram::createWithByteArrays(baseVertexShader, baseTexturedFrag);
-        program = s_defGLProgramTex;
-        
+        s_defGLProgramTex->retain();
     }
-    else
+    
+    if(s_defGLProgram == nullptr)
     {
         s_defGLProgram = GLProgram::createWithByteArrays(baseVertexShader, baseColoredFrag);
-        program = s_defGLProgram;
+        s_defGLProgram->retain();
     }
-
-    return program;
+    
+    return textured ? s_defGLProgramTex : s_defGLProgram;
 }
 
 
@@ -232,11 +210,12 @@ void Sprite3D::onDraw(const Matrix &transform, bool transformUpdated)
     Color4F color(getDisplayedColor());
     color.a = getDisplayedOpacity() / 255.0f;
     
-    if (_programState && _model)
+    if (_model)
     {
-        for (int i = 0; i < _model->getMeshPartCount(); i++) {
+        for (int i = 0; i < _model->getMeshPartCount(); i++)
+        {
             auto meshPart = _model->getMeshPart(i);
-            auto programstate = _programState[i];
+            auto programstate = _programState.at(i);
             size_t offset = (size_t)_model->getVertexPointer();
             programstate->setVertexAttribPointer("a_position", 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)offset);
             programstate->setVertexAttribPointer("a_texCoord", 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(offset + 6 * sizeof(float)));
