@@ -189,7 +189,7 @@ protected:
     virtual Vector<Node*>& getChildren() override{return ScrollView::getChildren();};
     virtual const Vector<Node*>& getChildren() const override{return ScrollView::getChildren();};
     virtual ssize_t getChildrenCount() const override {return ScrollView::getChildrenCount();};
-    virtual Node * getChildByTag(int tag) override {return ScrollView::getChildByTag(tag);};
+    virtual Node * getChildByTag(int tag) const override {return ScrollView::getChildByTag(tag);};
     virtual Widget* getChildByName(const char* name) override {return ScrollView::getChildByName(name);};
     void updateInnerContainerSize();
     void remedyLayoutParameter(Widget* item);

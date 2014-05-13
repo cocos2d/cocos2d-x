@@ -282,7 +282,7 @@ public:
     
     virtual ssize_t getChildrenCount() const override;
     
-    virtual Node * getChildByTag(int tag) override;
+    virtual Node * getChildByTag(int tag) const override;
     
     virtual Widget* getChildByName(const char* name) override;
     
