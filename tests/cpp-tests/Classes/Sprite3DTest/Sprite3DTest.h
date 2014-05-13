@@ -25,7 +25,6 @@
 #ifndef _SPRITE3D_TEST_H_
 #define _SPRITE3D_TEST_H_
 
-#include "cocos2d.h"
 #include "../testBasic.h"
 #include "../BaseTest.h"
 #include <string>

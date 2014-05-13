@@ -29,7 +29,6 @@ NS_CC_BEGIN
 class GLProgramState;
 class Mesh;
 class Texture2D;
-class Sprite3DEffect;
 
 class Sprite3D : public Node
 {
