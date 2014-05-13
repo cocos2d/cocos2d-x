@@ -30,7 +30,7 @@ void ConfigParser::readConfig()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID && !defined(NDEBUG)) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS && defined(COCOS2D_DEBUG))
     string fullPathFile = FileUtils::getInstance()->getWritablePath();
     fullPathFile.append(filecfg.c_str());
-    FILE * pFile = fopen (fullPathFile.c_str() , "r");
+    pFile = fopen (fullPathFile.c_str() , "r");
 #endif
 
     if (!pFile)
