@@ -25,8 +25,20 @@ void ConfigParser::readConfig()
 {
     _isInit = true;
     string filecfg = "res/config.json";
-    string fullPathFile = FileUtils::getInstance()->fullPathForFilename(filecfg);
+    FILE * pFile = nullptr;
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID && !defined(NDEBUG)) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS && defined(COCOS2D_DEBUG))
+    string fullPathFile = FileUtils::getInstance()->getWritablePath();
+    fullPathFile.append(filecfg.c_str());
     FILE * pFile = fopen (fullPathFile.c_str() , "r");
+#endif
+
+    if (!pFile)
+    {
+        string fullPathFile = FileUtils::getInstance()->fullPathForFilename(filecfg);
+        pFile = fopen (fullPathFile.c_str() , "r");
+    }
+
     if(pFile)
     {
         rapidjson::FileStream inputStream(pFile);
