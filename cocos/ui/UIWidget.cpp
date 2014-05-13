@@ -523,6 +523,9 @@ Widget* Widget::getAncensterWidget(Node* node)
         return nullptr;
     }
     Node* parent = node->getParent();
+    if (nullptr == parent) {
+        return nullptr;
+    }
     Widget* parentWidget = dynamic_cast<Widget*>(parent);
     if (parentWidget) {
         return parentWidget;
