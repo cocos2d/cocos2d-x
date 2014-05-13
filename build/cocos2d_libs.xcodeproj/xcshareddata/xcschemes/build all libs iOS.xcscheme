@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A07A4E0B178386390073F6A7"
-               BuildableName = "build-all-libs iOS"
+               BuildableName = "build all libs iOS"
                BlueprintName = "build all libs iOS"
                ReferencedContainer = "container:cocos2d_libs.xcodeproj">
             </BuildableReference>

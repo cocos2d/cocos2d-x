@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A035ACBB1782469700987F6C"
-               BuildableName = "build-all-tests"
+               BuildableName = "build all tests Mac"
                BlueprintName = "build all tests Mac"
                ReferencedContainer = "container:cocos2d_tests.xcodeproj">
             </BuildableReference>
