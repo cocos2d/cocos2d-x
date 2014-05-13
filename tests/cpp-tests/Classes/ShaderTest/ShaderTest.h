@@ -152,16 +152,6 @@ public:
     virtual bool init();
 };
 
-class ShaderFireBall : public ShaderTestDemo
-{
-public:
-    ShaderFireBall();
-    
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-    virtual bool init();
-};
-
 class ShaderGlow : public ShaderTestDemo
 {
 public:
@@ -172,8 +162,14 @@ public:
     virtual bool init();
 };
 
+class ShaderMultiTexture : public ShaderTestDemo
+{
+public:
+    ShaderMultiTexture();
 
-
-//CCLayer* nextAction();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual bool init();
+};
 
 #endif
