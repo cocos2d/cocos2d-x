@@ -43,8 +43,6 @@
 
 namespace spine {
 
-USING_NS_CC_MATH;
-
 /**
 Draws a skeleton.
 */
@@ -69,8 +67,8 @@ public:
 	virtual ~Skeleton ();
 
 	virtual void update (float deltaTime) override;
-	virtual void draw(cocos2d::Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
-    void onDraw(const Matrix &transform, bool transformUpdated);
+	virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Matrix &transform, bool transformUpdated) override;
+    void onDraw(const cocos2d::Matrix &transform, bool transformUpdated);
 	void onEnter() override;
 	void onExit() override;
 	virtual cocos2d::Rect getBoundingBox () const override;

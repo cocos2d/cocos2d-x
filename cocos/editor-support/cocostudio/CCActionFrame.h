@@ -30,8 +30,6 @@ THE SOFTWARE.
 
 namespace cocostudio {
     
-USING_NS_CC_MATH;
-
 enum FrameType
 {
 	kKeyframeMove = 0,
@@ -231,14 +229,14 @@ public:
 	*
 	* @param the move action position.
 	*/
-	void setPosition(Vector2 pos);
+	void setPosition(cocos2d::Vector2 pos);
 
 	/**
 	* Gets the move action position.
 	*
 	* @return the move action position.
 	*/
-	Vector2 getPosition();
+	cocos2d::Vector2 getPosition();
 
 	/**
 	* Gets the ActionInterval of ActionFrame.
@@ -249,7 +247,7 @@ public:
 	*/
 	virtual cocos2d::ActionInterval* getAction(float duration);
 protected:
-    Vector2 _position;
+    cocos2d::Vector2 _position;
 };
 
 /**
