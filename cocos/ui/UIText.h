@@ -41,6 +41,11 @@ class Text : public Widget
     DECLARE_CLASS_GUI_INFO
     
 public:
+    enum class Type
+    {
+        SYSTEM,
+        TTF
+    };
     /**
      * Default constructor
      */
@@ -101,6 +106,8 @@ public:
     void setFontName(const std::string& name);
 
     const std::string& getFontName();
+    
+    Type getType() const;
 
     /**
      * Sets the touch scale enabled of label.
@@ -169,6 +176,7 @@ protected:
     float _onSelectedScaleOffset;
     Label* _labelRenderer;
     bool _labelRendererAdaptDirty;
+    Type _type;
 };
 
 }
