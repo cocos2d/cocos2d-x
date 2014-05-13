@@ -989,7 +989,7 @@ public:
         sprite->initWithFile(spritefilename);
         sprite->autorelease();
 
-        auto shaderState = GLProgramState::getWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR);
+        auto shaderState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR);
         sprite->setGLProgramState(shaderState);
         return sprite;
     }

@@ -120,7 +120,7 @@ ShaderNode::~ShaderNode()
 {
 }
 
-ShaderNode* ShaderNode::shaderNodeWithVertex(const char *vert, const char *frag)
+ShaderNode* ShaderNode::shaderNodeWithVertex(const std::string &vert, const std::string& frag)
 {
     auto node = new ShaderNode();
     node->initWithVertex(vert, frag);
@@ -129,16 +129,19 @@ ShaderNode* ShaderNode::shaderNodeWithVertex(const char *vert, const char *frag)
     return node;
 }
 
-bool ShaderNode::initWithVertex(const char *vert, const char *frag)
+bool ShaderNode::initWithVertex(const std::string &vert, const std::string &frag)
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
-            this->setGLProgram(nullptr);
-            loadShaderVertex(_vertFileName.c_str(), _fragFileName.c_str());
+            this->setGLProgramState(nullptr);
+            loadShaderVertex(_vertFileName, _fragFileName);
         });
 
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 #endif
+
+    _vertFileName = vert;
+    _fragFileName = frag;
 
     loadShaderVertex(vert, frag);
 
@@ -151,16 +154,30 @@ bool ShaderNode::initWithVertex(const char *vert, const char *frag)
     setContentSize(Size(SIZE_X, SIZE_Y));
     setAnchorPoint(Vector2(0.5f, 0.5f));
     
-    _vertFileName = vert;
-    _fragFileName = frag;
 
     return true;
 }
 
-void ShaderNode::loadShaderVertex(const char *vert, const char *frag)
+void ShaderNode::loadShaderVertex(const std::string &vert, const std::string &frag)
 {
-    auto shader = GLProgram::createWithFilenames(vert, frag);
-    this->setGLProgram(shader);
+    auto fileUtiles = FileUtils::getInstance();
+
+    // frag
+    auto fragmentFilePath = fileUtiles->fullPathForFilename(frag);
+    auto fragSource = fileUtiles->getStringFromFile(fragmentFilePath);
+
+    // vert
+    std::string vertSource;
+    if (vert.empty()) {
+        vertSource = ccPositionTextureColor_vert;
+    } else {
+        std::string vertexFilePath = fileUtiles->fullPathForFilename(vert);
+        vertSource = fileUtiles->getStringFromFile(vertexFilePath);
+    }
+
+    auto glprogram = GLProgram::createWithByteArrays(vertSource.c_str(), fragSource.c_str());
+    auto glprogramstate = GLProgramState::getOrCreate(glprogram);
+    setGLProgramState(glprogramstate);
 }
 
 void ShaderNode::update(float dt)
@@ -208,7 +225,7 @@ bool ShaderMonjori::init()
 {
     if (ShaderTestDemo::init())
     {
-        auto sn = ShaderNode::shaderNodeWithVertex("Shaders/example_Monjori.vsh", "Shaders/example_Monjori.fsh");
+        auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/example_Monjori.fsh");
 
         auto s = Director::getInstance()->getWinSize();
         sn->setPosition(Vector2(s.width/2, s.height/2));
@@ -242,7 +259,7 @@ bool ShaderMandelbrot::init()
 {
     if (ShaderTestDemo::init())
     {
-        auto sn = ShaderNode::shaderNodeWithVertex("Shaders/example_Mandelbrot.vsh", "Shaders/example_Mandelbrot.fsh");
+        auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/example_Mandelbrot.fsh");
 
         auto s = Director::getInstance()->getWinSize();
         sn->setPosition(Vector2(s.width/2, s.height/2));
@@ -275,7 +292,7 @@ bool ShaderJulia::init()
 {
     if (ShaderTestDemo::init())
     {
-        auto sn = ShaderNode::shaderNodeWithVertex("Shaders/example_Julia.vsh", "Shaders/example_Julia.fsh");
+        auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/example_Julia.fsh");
 
         auto s = Director::getInstance()->getWinSize();
         sn->setPosition(Vector2(s.width/2, s.height/2));
@@ -309,7 +326,7 @@ bool ShaderHeart::init()
 {
     if (ShaderTestDemo::init())
     {
-        auto sn = ShaderNode::shaderNodeWithVertex("Shaders/example_Heart.vsh", "Shaders/example_Heart.fsh");
+        auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/example_Heart.fsh");
 
         auto s = Director::getInstance()->getWinSize();
         sn->setPosition(Vector2(s.width/2, s.height/2));
@@ -342,7 +359,7 @@ bool ShaderFlower::init()
 {
     if (ShaderTestDemo::init())
     {
-        auto sn = ShaderNode::shaderNodeWithVertex("Shaders/example_Flower.vsh", "Shaders/example_Flower.fsh");
+        auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/example_Flower.fsh");
 
         auto s = Director::getInstance()->getWinSize();
         sn->setPosition(Vector2(s.width/2, s.height/2));
@@ -375,7 +392,7 @@ bool ShaderPlasma::init()
 {
     if (ShaderTestDemo::init())
     {
-        auto sn = ShaderNode::shaderNodeWithVertex("Shaders/example_Plasma.vsh", "Shaders/example_Plasma.fsh");
+        auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/example_Plasma.fsh");
 
         auto s = Director::getInstance()->getWinSize();
         sn->setPosition(Vector2(s.width/2, s.height/2));
@@ -406,15 +423,13 @@ public:
     ~SpriteBlur();
     void setBlurSize(float f);
     bool initWithTexture(Texture2D* texture, const Rect&  rect);
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
-    void initProgram();
+    void initGLProgram();
 
     static SpriteBlur* create(const char *pszFileName);
 
 protected:
-    void onDraw(const Matrix &transform, bool transformUpdated);
 
-    int       _blurRadius;
+    int         _blurRadius;
     Vector2     _pixelSize;
 
     int       _samplingRadius;
@@ -422,8 +437,6 @@ protected:
     float     _scale;
     float     _cons;
     float     _weightSum;
-
-    CustomCommand _customCommand;
 };
 
 SpriteBlur::~SpriteBlur()
@@ -453,7 +466,7 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
 #if CC_ENABLE_CACHE_TEXTURE_DATA
         auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
                 setGLProgram(nullptr);
-                initProgram();
+                initGLProgram();
             });
 
         _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
@@ -464,7 +477,7 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
         _pixelSize = Vector2(1/s.width, 1/s.height);
 
         _samplingRadius = 0;
-        this->initProgram();
+        this->initGLProgram();
 
         getGLProgramState()->setUniformVec2("onePixelSize", _pixelSize);
 
@@ -474,45 +487,14 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
     return false;
 }
 
-void SpriteBlur::initProgram()
+void SpriteBlur::initGLProgram()
 {
     GLchar * fragSource = (GLchar*) String::createWithContentsOfFile(
                                 FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur.fsh").c_str())->getCString();  
-    auto program = GLProgram::createWithByteArrays(ccPositionTextureColor_vert, fragSource);
-    setGLProgram(program);
+    auto program = GLProgram::createWithByteArrays(ccPositionTextureColor_noMVP_vert, fragSource);
 
-    auto glProgramState = getGLProgramState();
-#define kQuadSize sizeof(_quad.bl)
-    size_t offset = (size_t)&_quad;
-
-    // position
-    int diff = offsetof( V3F_C4B_T2F, vertices);
-    glProgramState->setVertexAttribPointer("a_position", 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
-    // texcoord
-    diff = offsetof( V3F_C4B_T2F, texCoords);
-    glProgramState->setVertexAttribPointer("a_texCoord", 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
-    // color
-    diff = offsetof( V3F_C4B_T2F, colors);
-    glProgramState->setVertexAttribPointer("a_color", 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
-}
-
-void SpriteBlur::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
-{
-    _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(SpriteBlur::onDraw, this, transform, transformUpdated);
-    renderer->addCommand(&_customCommand);
-}
-
-void SpriteBlur::onDraw(const Matrix &transform, bool transformUpdated)
-{
-    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
-    GL::bindTexture2D(_texture->getName());
-
-    auto glProgramState = getGLProgramState();
-    glProgramState->apply(transform);
-
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,4);
+    auto glProgramState = GLProgramState::getOrCreate(program);
+    setGLProgramState(glProgramState);
 }
 
 void SpriteBlur::setBlurSize(float f)
@@ -614,8 +596,8 @@ bool ShaderBlur::init()
 
 void ShaderBlur::sliderAction(Ref* sender, Control::EventType controlEvent)
 {
-    ControlSlider* pSlider = (ControlSlider*)sender;
-    _blurSprite->setBlurSize(pSlider->getValue());
+    ControlSlider* slider = (ControlSlider*)sender;
+    _blurSprite->setBlurSize(slider->getValue());
 }
 
 // ShaderRetroEffect
@@ -680,101 +662,6 @@ std::string ShaderRetroEffect::subtitle() const
 }
 
 
-
-UniformShaderNode::UniformShaderNode()
-:_center(Vector2(0.0f, 0.0f))
-,_resolution(Vector2(0.0f, 0.0f))
-,_time(0.0f)
-{
-    
-}
-
-UniformShaderNode::~UniformShaderNode()
-{
-    
-}
-
-bool UniformShaderNode::initWithVertex(const char *vert, const char *frag)
-{
-    
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
-        this->setGLProgram(nullptr);
-        loadShaderVertex(_vertFileName.c_str(), _fragFileName.c_str());
-    });
-    
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-#endif
-    
-    loadShaderVertex(vert, frag);
-    
-    _time = 0;
-    auto s = Director::getInstance()->getWinSize();
-    _resolution = Vector2(s.width , s.height );
-    getGLProgramState()->setUniformVec2("resolution", _resolution);
-    
-    scheduleUpdate();
-    
-    //setContentSize(Size(getContentSize().width, getContentSize().height));
-    setAnchorPoint(Vector2(0.5f, 0.5f));
-    
-    _vertFileName = vert;
-    _fragFileName = frag;
-	
-	return true;
-}
-
-void UniformShaderNode::loadShaderVertex(const char *vert, const char *frag)
-{
-    auto shader = GLProgram::createWithFilenames(vert, frag);
-    this->setGLProgram(shader);
-}
-
-void UniformShaderNode::update(float dt)
-{
-    _time += dt;
-}
-
-void UniformShaderNode::setPosition(const Vector2 &newPosition)
-{
-    Node::setPosition(newPosition);
-    auto position = getPosition();
-	_center = Vector2(position.x * CC_CONTENT_SCALE_FACTOR(), position.y * CC_CONTENT_SCALE_FACTOR());
-    getGLProgramState()->setUniformVec2("center", _center);
-}
-
-void UniformShaderNode::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
-{
-    _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(UniformShaderNode::onDraw, this, transform, transformUpdated);
-    renderer->addCommand(&_customCommand);
-
-}
-
-UniformShaderNode* UniformShaderNode::shaderNodeWithVertex(const char *vert, const char *frag)
-{
-    auto node = new UniformShaderNode();
-    node->initWithVertex(vert, frag);
-    node->autorelease();
-    
-    return node;
-}
-
-void UniformShaderNode::onDraw(const Matrix &transform, bool transformUpdated)
-{
-    float w = getContentSize().width, h = getContentSize().height;
-    GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
-    
-    auto glProgramState = getGLProgramState();
-    glProgramState->setVertexAttribPointer("a_position", 2, GL_FLOAT, GL_FALSE, 0, vertices);
-    glProgramState->apply(transform);
-    
-    glDrawArrays(GL_TRIANGLES, 0, 6);
-    
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,6);
-
-}
-
 ShaderLensFlare::ShaderLensFlare()
 {
     init();
@@ -794,7 +681,7 @@ bool ShaderLensFlare::init()
 {
     if (ShaderTestDemo::init())
     {
-        auto sn = UniformShaderNode::shaderNodeWithVertex("Shaders/example_Heart.vsh", "Shaders/shadertoy_LensFlare.fsh");
+        auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/shadertoy_LensFlare.fsh");
         
         auto s = Director::getInstance()->getWinSize();
         sn->setPosition(Vector2(s.width/2, s.height/2));
@@ -826,7 +713,7 @@ bool ShaderFireBall::init()
 {
     if (ShaderTestDemo::init())
     {
-        auto sn = UniformShaderNode::shaderNodeWithVertex("Shaders/example_Heart.vsh", "Shaders/shadertoy_FireBall.fsh");
+        auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/shadertoy_FireBall.fsh");
         
         auto s = Director::getInstance()->getWinSize();
         sn->setPosition(Vector2(s.width/2, s.height/2));
@@ -859,7 +746,7 @@ bool ShaderGlow::init()
 {
     if (ShaderTestDemo::init())
     {
-        auto sn = UniformShaderNode::shaderNodeWithVertex("Shaders/example_Heart.vsh", "Shaders/shadertoy_Glow.fsh");
+        auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/shadertoy_Glow.fsh");
         
         auto s = Director::getInstance()->getWinSize();
         sn->setPosition(Vector2(s.width/2, s.height/2));

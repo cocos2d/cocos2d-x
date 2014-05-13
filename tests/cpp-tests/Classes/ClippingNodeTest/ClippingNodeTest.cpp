@@ -748,7 +748,7 @@ void RawStencilBufferTest3::setupStencilForDrawingOnPlane(GLint plane)
 void RawStencilBufferTestAlphaTest::setup()
 {
     RawStencilBufferTest::setup();
-    auto programState = GLProgramState::getWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV);
+    auto programState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV);
     for(int i = 0; i < _planeCount; ++i)
     {
         _spritesStencil.at(i)->setGLProgramState(programState);

@@ -166,12 +166,14 @@ void UniformValue::setMat4(const Matrix& value)
 VertexAttribValue::VertexAttribValue()
 : _useCallback(false)
 , _vertexAttrib(nullptr)
+, _enabled(false)
 {
 }
 
 VertexAttribValue::VertexAttribValue(VertexAttrib *vertexAttrib)
 : _useCallback(false)
 , _vertexAttrib(vertexAttrib)
+, _enabled(false)
 {
 }
 
@@ -182,18 +184,20 @@ VertexAttribValue::~VertexAttribValue()
 }
 
 void VertexAttribValue::apply()
-{    
-    if(_useCallback) {
-        (*_value.callback)(_vertexAttrib);
-    }
-    else
-    {
-        glVertexAttribPointer(_vertexAttrib->index,
-                              _value.pointer.size,
-                              _value.pointer.type,
-                              _value.pointer.normalized,
-                              _value.pointer.stride,
-                              _value.pointer.pointer);
+{
+    if(_enabled) {
+        if(_useCallback) {
+            (*_value.callback)(_vertexAttrib);
+        }
+        else
+        {
+            glVertexAttribPointer(_vertexAttrib->index,
+                                  _value.pointer.size,
+                                  _value.pointer.type,
+                                  _value.pointer.normalized,
+                                  _value.pointer.stride,
+                                  _value.pointer.pointer);
+        }
     }
 }
 
@@ -202,6 +206,7 @@ void VertexAttribValue::setCallback(const std::function<void(VertexAttrib*)> &ca
 	_value.callback = new std::function<void(VertexAttrib*)>();
 	*_value.callback = callback;
     _useCallback = true;
+    _enabled = true;
 }
 
 void VertexAttribValue::setPointer(GLint size, GLenum type, GLboolean normalized, GLsizei stride, GLvoid *pointer)
@@ -211,6 +216,7 @@ void VertexAttribValue::setPointer(GLint size, GLenum type, GLboolean normalized
     _value.pointer.normalized = normalized;
     _value.pointer.stride = stride;
     _value.pointer.pointer = pointer;
+    _enabled = true;
 }
 
 //
@@ -229,18 +235,18 @@ GLProgramState* GLProgramState::create(GLProgram *glprogram)
     return ret;
 }
 
-GLProgramState* GLProgramState::getWithGLProgramName(const std::string &glProgramName )
+GLProgramState* GLProgramState::getOrCreateWithGLProgramName(const std::string &glProgramName )
 {
     GLProgram *glProgram = GLProgramCache::getInstance()->getGLProgram(glProgramName);
     if( glProgram )
-        return get(glProgram);
+        return getOrCreate(glProgram);
 
     CCLOG("cocos2d: warning: GLProgram '%s' not found", glProgramName.c_str());
     return nullptr;
 }
 
 
-GLProgramState* GLProgramState::get(GLProgram *glprogram)
+GLProgramState* GLProgramState::getOrCreate(GLProgram *glprogram)
 {
     GLProgramState* ret = GLProgramStateCache::getInstance()->getGLProgramState(glprogram);
     return ret;
@@ -294,12 +300,16 @@ void GLProgramState::apply(const Matrix& modelView)
     _glprogram->setUniformsForBuiltins(modelView);
 
 
-    // enable/disable vertex attribs
-    GL::enableVertexAttribs(_vertexAttribsFlags);
+    // quick hack:
+    // Don't deal with attributes if they were set
+    if(_vertexAttribsFlags) {
+        // enable/disable vertex attribs
+        GL::enableVertexAttribs(_vertexAttribsFlags);
 
-    // set attributes
-    for(auto &attribute : _attributes) {
-        attribute.second.apply();
+        // set attributes
+        for(auto &attribute : _attributes) {
+            attribute.second.apply();
+        }
     }
 
     // set uniforms

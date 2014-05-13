@@ -108,6 +108,7 @@ public:
 protected:
 	VertexAttrib* _vertexAttrib;  // weak ref
     bool _useCallback;
+    bool _enabled;
 
     union U{
         struct {
@@ -143,19 +144,22 @@ public:
     static GLProgramState* create(GLProgram* glprogram);
 
     /** gets-or-creates an instance of GLProgramState for a given GLProgram */
-    static GLProgramState* get(GLProgram* glprogram);
+    static GLProgramState* getOrCreate(GLProgram* glprogram);
 
     /** gets-or-creates an instance of GLProgramState for a given GLProgramName */
-    static GLProgramState* getWithGLProgramName(const std::string &glProgramName );
+    static GLProgramState* getOrCreateWithGLProgramName(const std::string &glProgramName );
 
     void apply(const Matrix& modelView);
 
     void setGLProgram(GLProgram* glprogram);
     GLProgram* getGLProgram() const { return _glprogram; }
 
+    uint32_t getVertexAttribsFlags() const { return _vertexAttribsFlags; }
+    ssize_t getVertexAttribCount() const { return _attributes.size(); }
     void setVertexAttribCallback(const std::string &name, const std::function<void(VertexAttrib*)> &callback);
     void setVertexAttribPointer(const std::string &name, GLint size, GLenum type, GLboolean normalized, GLsizei stride, GLvoid *pointer);
 
+    ssize_t getUniformCount() const { return _uniforms.size(); }
     void setUniformFloat(const std::string &uniformName, float value);
 	void setUniformInt(const std::string &uniformName, int value);
 	void setUniformVec2(const std::string &uniformName, const Vector2& value);
@@ -163,6 +167,7 @@ public:
 	void setUniformVec4(const std::string &uniformName, const Vector4& value);
 	void setUniformMat4(const std::string &uniformName, const Matrix& value);
     void setUniformCallback(const std::string &uniformName, const std::function<void(Uniform*)> &callback);
+
 
 protected:
     GLProgramState();
@@ -176,7 +181,6 @@ protected:
     std::unordered_map<std::string, VertexAttribValue> _attributes;
 
     uint32_t _vertexAttribsFlags;
-
     GLProgram *_glprogram;
 };
 
