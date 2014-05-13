@@ -68,10 +68,10 @@ bool Sprite3D::loadFromObj(const std::string& path)
         indices.push_back((*it).mesh.indices);
         matnames.push_back(dir + (*it).material.diffuse_texname);
     }
-    _model = Mesh::create(shapes.positions, shapes.normals, shapes.texcoords, indices);
+    _mesh = Mesh::create(shapes.positions, shapes.normals, shapes.texcoords, indices);
     
-    _model->retain();
-    if (_model == nullptr)
+    _mesh->retain();
+    if (_mesh == nullptr)
         return false;
     
     _partcount = indices.size();
@@ -87,28 +87,28 @@ bool Sprite3D::loadFromObj(const std::string& path)
         
     }
     
-    for (int i = 0; i < _model->getMeshPartCount(); i++)
+    for (int i = 0; i < _mesh->getMeshPartCount(); i++)
     {
-        _programState.pushBack(GLProgramState::get(getDefGLProgram(_model->getAttribFlag() & GL::VERTEX_ATTRIB_FLAG_TEX_COORDS)));
+        _programState.pushBack(GLProgramState::get(getDefGLProgram(_mesh->getAttribFlag() & GL::VERTEX_ATTRIB_FLAG_TEX_COORDS)));
     }
     
     //add to cache
     __cachedSpriteTexNames[fullPath] = matnames;
-    MeshCache::getInstance()->addMesh(fullPath, _model);
+    MeshCache::getInstance()->addMesh(fullPath, _mesh);
     
     _path = fullPath;
 
     return true;
 }
 
-Sprite3D::Sprite3D(): _partcount(0), _model(nullptr)
+Sprite3D::Sprite3D(): _partcount(0), _mesh(nullptr)
 {
 }
 
 Sprite3D::~Sprite3D()
 {
     
-    CC_SAFE_RELEASE_NULL(_model);
+    CC_SAFE_RELEASE_NULL(_mesh);
     
 }
 
@@ -117,7 +117,7 @@ bool Sprite3D::init(const std::string &path)
 {
     _partcount = 0;
     
-    CC_SAFE_RELEASE_NULL(_model);
+    CC_SAFE_RELEASE_NULL(_mesh);
     _programState.clear();
     _textures.clear();
     
@@ -125,8 +125,8 @@ bool Sprite3D::init(const std::string &path)
     Mesh* mesh = MeshCache::getInstance()->getMesh(path);
     if (mesh)
     {
-        _model = mesh;
-        _model->retain();
+        _mesh = mesh;
+        _mesh->retain();
         std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
 
         _partcount = mesh->getMeshPartCount();
@@ -138,7 +138,7 @@ bool Sprite3D::init(const std::string &path)
             if (tex) _textures.pushBack(tex);
         }
         
-        for (int i = 0; i < _model->getMeshPartCount(); i++)
+        for (int i = 0; i < _mesh->getMeshPartCount(); i++)
         {
             _programState.pushBack(GLProgramState::get(getDefGLProgram(mesh->getAttribFlag() & GL::VERTEX_ATTRIB_FLAG_TEX_COORDS)));
         }
@@ -210,13 +210,13 @@ void Sprite3D::onDraw(const Matrix &transform, bool transformUpdated)
     Color4F color(getDisplayedColor());
     color.a = getDisplayedOpacity() / 255.0f;
     
-    if (_model)
+    if (_mesh)
     {
-        for (int i = 0; i < _model->getMeshPartCount(); i++)
+        for (int i = 0; i < _mesh->getMeshPartCount(); i++)
         {
-            auto meshPart = _model->getMeshPart(i);
+            auto meshPart = _mesh->getMeshPart(i);
             auto programstate = _programState.at(i);
-            size_t offset = (size_t)_model->getVertexPointer();
+            size_t offset = (size_t)_mesh->getVertexPointer();
             programstate->setVertexAttribPointer("a_position", 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)offset);
             programstate->setVertexAttribPointer("a_texCoord", 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(offset + 6 * sizeof(float)));
             
@@ -232,10 +232,10 @@ void Sprite3D::onDraw(const Matrix &transform, bool transformUpdated)
         }
     }
     
-//    if (_partMaterials && _model)
+//    if (_partMaterials && _mesh)
 //    {
 //        
-//        for (int i = 0; i < _model->getMeshPartCount(); i++) {
+//        for (int i = 0; i < _mesh->getMeshPartCount(); i++) {
 //            auto material = getMeshMaterial(i);
 //            material->getProgram()->use();
 //            material->getProgram()->setUniformsForBuiltins(transform);
@@ -243,7 +243,7 @@ void Sprite3D::onDraw(const Matrix &transform, bool transformUpdated)
 //            material->setColor(Vector4(color.r, color.g, color.b, color.a));
 //            material->bind();
 //            
-//            MeshPart* meshPart = _model->getMeshPart(i);
+//            MeshPart* meshPart = _mesh->getMeshPart(i);
 //            
 //            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshPart->getIndexBuffer());
 //            glDrawElements(meshPart->getPrimitiveType(), meshPart->getIndexCount(), meshPart->getIndexFormat(), 0);

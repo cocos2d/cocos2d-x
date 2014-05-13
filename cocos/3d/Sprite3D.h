@@ -39,7 +39,7 @@ public:
     int           getMeshPartCount() const;
     
     
-    Mesh* getMesh() { return _model; }
+    Mesh* getMesh() { return _mesh; }
     
     void setTexture(const std::string& texFile);
     
@@ -60,7 +60,7 @@ protected:
     
 
     CustomCommand     _customCommand;
-    Mesh              *_model;
+    Mesh              *_mesh;
     
     int               _partcount;
     
