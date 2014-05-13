@@ -148,6 +148,7 @@ protected:
 
 class CaptureScreenTest : public MultiSceneTest
 {
+    static const int ChildTag = 119;
 public:
     CREATE_FUNC(CaptureScreenTest);
     virtual std::string title() const override;
@@ -158,9 +159,9 @@ protected:
     ~CaptureScreenTest();
 
     void onCaptured(Ref*, const Rect& rect);
-    void afterCaptured(bool succeed, const std::string& target);
+    void afterCaptured(bool succeed, const std::string& outputFile);
 
-    std::string _savedFilename;
+    std::string _filename;
 };
 
 #endif //__NewRendererTest_H_

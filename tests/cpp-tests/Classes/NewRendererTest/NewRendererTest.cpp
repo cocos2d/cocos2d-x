@@ -561,6 +561,7 @@ std::string VBOFullTest::subtitle() const
     return "VBO full Test, everthing should render normally";
 }
 
+const int CaptureScreenTest::ChildTag;
 CaptureScreenTest::CaptureScreenTest()
 {
     Size s = Director::getInstance()->getWinSize();
@@ -589,7 +590,7 @@ CaptureScreenTest::CaptureScreenTest()
     addChild(menu);
     menu->setPosition(s.width / 2, s.height / 4);
 
-    _savedFilename = "";
+    _filename = "";
 }
 
 CaptureScreenTest::~CaptureScreenTest()
@@ -608,25 +609,25 @@ std::string CaptureScreenTest::subtitle() const
 
 void CaptureScreenTest::onCaptured(Ref*, const Rect& rect)
 {
-	TextureCache::getInstance()->removeTextureForKey(_savedFilename);
-	removeChildByTag(119);
-    _savedFilename = "CaptureScreenTest-Shot.png";
+    Director::getInstance()->getTextureCache()->removeTextureForKey(_filename);
+	removeChildByTag(ChildTag);
+    _filename = "CaptureScreenTest.png";
     Director::getInstance()->getRenderer()->captureScreen(
 	    CC_CALLBACK_2(CaptureScreenTest::afterCaptured, this),
-	    _savedFilename,
+	    _filename,
 	    rect);
 }
 
-void CaptureScreenTest::afterCaptured(bool succeed, const std::string& target)
+void CaptureScreenTest::afterCaptured(bool succeed, const std::string& outputFile)
 {
     if (succeed)
     {
-	    auto sp = Sprite::create(target);
-	    addChild(sp, 0, 119);
+	    auto sp = Sprite::create(outputFile);
+	    addChild(sp, 0, ChildTag);
 	    Size s = Director::getInstance()->getWinSize();
 	    sp->setPosition(s.width / 2, s.height / 2);
 	    sp->setScale(0.25);
-        _savedFilename = target;
+        _filename = outputFile;
     }
     else
     {

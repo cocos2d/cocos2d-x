@@ -39,6 +39,7 @@
 #include "base/CCEventType.h"
 #include "2d/platform/CCImage.h"
 #include "2d/platform/CCFileUtils.h"
+#include "CCGLView.h"
 
 NS_CC_BEGIN
 
@@ -546,20 +547,28 @@ void Renderer::captureScreen(std::function<void(bool, const std::string&)> after
 
 void Renderer::onCaptureScreen(std::function<void(bool, const std::string&)> afterCaptured, const std::string& filename, bool flipped, const Rect& rect)
 {
-    float scaleFactor = Director::getInstance()->getContentScaleFactor();
-    int originx = (int)rect.origin.x;
-    int originy = (int)rect.origin.y;
-    int width = (int)rect.size.width * scaleFactor;
-    int height = (int)rect.size.height * scaleFactor;
+    // Generally the user specifiy the rect with design resolution, thus we have to convert it
+    // into a significant value which is metered by pixel.
+    Size frameSize = Director::getInstance()->getOpenGLView()->getFrameSize();
+    int originx = 0;
+    int originy = 0;
+    int width = (int)frameSize.width;
+    int height = (int)frameSize.height;
     bool succeed = false;
-    std::string targetFile = "";
+    std::string outputFile = "";
 
-    if (rect.equals(Rect::ZERO))
+    if (!rect.equals(Rect::ZERO))
     {
-	    originx = 0;
-	    originy = 0;
-	    width  = (int)Director::getInstance()->getWinSize().width * scaleFactor;
-	    height = (int)Director::getInstance()->getWinSize().height * scaleFactor;
+        originx = (int)rect.origin.x;
+        originy = (int)rect.origin.y;
+        width = (int)rect.size.width * Director::getInstance()->getOpenGLView()->getScaleX();
+        height = (int)rect.size.height * Director::getInstance()->getOpenGLView()->getScaleY();
+        
+        auto clip = [](int in, int min, int max) { return std::max(std::min(in, max), min); };
+        originx = clip(originx, 0, (int)frameSize.width);
+        originy = clip(originy, 0, (int)frameSize.height);
+        width = clip(width, 0, frameSize.width - originx);
+        height = clip(height, 0, frameSize.height - originy);
     }
 
     do
@@ -596,14 +605,14 @@ void Renderer::onCaptureScreen(std::function<void(bool, const std::string&)> aft
         {
             image->initWithRawData(buffer, width * height * 4, width, height, 8);
             CC_SAFE_DELETE_ARRAY(buffer);
-            targetFile = FileUtils::getInstance()->getWritablePath() + filename;
-            image->saveToFile(targetFile);
+            outputFile = FileUtils::getInstance()->getWritablePath() + filename;
+            image->saveToFile(outputFile);
             succeed = true;
         }
         CC_SAFE_DELETE(image);
     }while(0);
     	
-    afterCaptured(succeed, targetFile);
+    afterCaptured(succeed, outputFile);
 }
 
 NS_CC_END
