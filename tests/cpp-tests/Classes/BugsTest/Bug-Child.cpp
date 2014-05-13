@@ -29,7 +29,7 @@ bool BugChild::init()
         auto size = Director::getInstance()->getWinSize();
         
         // create and initialize a Label
-        auto item1 = MenuItemFont::create("restart", CC_CALLBACK_1(BugChild::switchChild, this));
+        auto item1 = MenuItemFont::create("Switch Child", CC_CALLBACK_1(BugChild::switchChild, this));
         
         menu = Menu::create(item1, NULL);
         
@@ -37,16 +37,18 @@ bool BugChild::init()
         menu->setPosition(size.width/2, 100);
         addChild(menu);
         
-        parent1 = Sprite::create("grossini.png");
-        parent1->setPosition(100, size.height/2);
+        parent1 = Sprite::create("Images/grossini.png");
+        parent1->setPosition(size.width/4, size.height/2);
         addChild(parent1);
         
-        parent2 = Sprite::create("grossini_sister1.png");
-        parent2->setPosition(300, size.height/2);
+        parent2 = Sprite::create("Images/grossinis_sister1.png");
+        parent2->setPosition(size.width*3/4, size.height/2);
         addChild(parent2);
         
-        child = Sprite::create("grossini_sister2.png");
-        
+        child = Sprite::create("Images/grossinis_sister2.png");
+        child->setPosition(20, 20);
+        child->retain();
+        parent1->addChild(child);
         return true;
     }
     
@@ -57,12 +59,14 @@ void BugChild::switchChild(Ref *sender)
 {
     if(parent1->getChildrenCount() > 0)
     {
-        child->removeFromParent();
+        parent1->removeChild(child, false);
         parent2->addChild(child);
+        CCLOG("Child attached to parent2");
     }
     else
     {
-        child->removeFromParent();
+        parent2->removeChild(child, false);
         parent1->addChild(child);
+        CCLOG("Child attached to parent1");
     }
 }
