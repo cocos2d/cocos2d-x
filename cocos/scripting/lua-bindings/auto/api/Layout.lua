@@ -145,7 +145,7 @@
 --------------------------------
 -- @function [parent=#Layout] getLayoutType 
 -- @param self
--- @return Layout::LayoutType#Layout::LayoutType ret (return value: ccui.Layout::LayoutType)
+-- @return Layout::Type#Layout::Type ret (return value: ccui.Layout::Type)
         
 --------------------------------
 -- @function [parent=#Layout] setPassFocusToChild 
@@ -165,7 +165,7 @@
 --------------------------------
 -- @function [parent=#Layout] setLayoutType 
 -- @param self
--- @param #ccui.Layout::LayoutType layouttype
+-- @param #ccui.Layout::Type type
         
 --------------------------------
 -- @function [parent=#Layout] create 

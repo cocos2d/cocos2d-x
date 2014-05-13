@@ -37,17 +37,15 @@ CC_DEPRECATED_ATTRIBUTE const Widget::SizeType SIZE_ABSOLUTE = Widget::SizeType:
 CC_DEPRECATED_ATTRIBUTE const Widget::SizeType SIZE_PERCENT = Widget::SizeType::PERCENT;
 CC_DEPRECATED_ATTRIBUTE const Widget::TextureResType UI_TEX_TYPE_LOCAL = Widget::TextureResType::LOCAL;
 CC_DEPRECATED_ATTRIBUTE const Widget::TextureResType UI_TEX_TYPE_PLIST = Widget::TextureResType::PLIST;
-CC_DEPRECATED_ATTRIBUTE const Widget::Type WidgetTypeWidget = Widget::Type::ELEMENT;
-CC_DEPRECATED_ATTRIBUTE const Widget::Type WidgetTypeContainer = Widget::Type::CONTAINER;
 CC_DEPRECATED_ATTRIBUTE const Widget::BrightStyle BRIGHT_NONE = Widget::BrightStyle::NONE;
 CC_DEPRECATED_ATTRIBUTE const Widget::BrightStyle BRIGHT_NORMAL = Widget::BrightStyle::NORMAL;
 CC_DEPRECATED_ATTRIBUTE const Widget::BrightStyle BRIGHT_HIGHLIGHT = Widget::BrightStyle::HIGHLIGHT;
 CC_DEPRECATED_ATTRIBUTE const Layout::ClippingType LAYOUT_CLIPPING_STENCIL = Layout::ClippingType::STENCIL;
 CC_DEPRECATED_ATTRIBUTE const Layout::ClippingType LAYOUT_CLIPPING_SCISSOR = Layout::ClippingType::SCISSOR;
-CC_DEPRECATED_ATTRIBUTE const Layout::LayoutType LAYOUT_ABSOLUTE = Layout::LayoutType::ABSOLUTE;
-CC_DEPRECATED_ATTRIBUTE const Layout::LayoutType LAYOUT_LINEAR_VERTICAL = Layout::LayoutType::VERTICAL;
-CC_DEPRECATED_ATTRIBUTE const Layout::LayoutType LAYOUT_LINEAR_HORIZONTAL = Layout::LayoutType::HORIZONTAL;
-CC_DEPRECATED_ATTRIBUTE const Layout::LayoutType LAYOUT_RELATIVE = Layout::LayoutType::VERTICAL;
+CC_DEPRECATED_ATTRIBUTE const Layout::Type LAYOUT_ABSOLUTE = Layout::Type::ABSOLUTE;
+CC_DEPRECATED_ATTRIBUTE const Layout::Type LAYOUT_LINEAR_VERTICAL = Layout::Type::VERTICAL;
+CC_DEPRECATED_ATTRIBUTE const Layout::Type LAYOUT_LINEAR_HORIZONTAL = Layout::Type::HORIZONTAL;
+CC_DEPRECATED_ATTRIBUTE const Layout::Type LAYOUT_RELATIVE = Layout::Type::VERTICAL;
 CC_DEPRECATED_ATTRIBUTE const Layout::BackGroundColorType LAYOUT_COLOR_NONE = Layout::BackGroundColorType::NONE;
 CC_DEPRECATED_ATTRIBUTE const Layout::BackGroundColorType LAYOUT_COLOR_SOLID = Layout::BackGroundColorType::SOLID;
 CC_DEPRECATED_ATTRIBUTE const Layout::BackGroundColorType LAYOUT_COLOR_GRADIENT
@@ -137,10 +135,9 @@ CC_DEPRECATED_ATTRIBUTE const ScrollView::Direction SCROLLVIEW_DIR_BOTH =  Scrol
 CC_DEPRECATED_ATTRIBUTE typedef Widget::TextureResType TextureResType;
 CC_DEPRECATED_ATTRIBUTE typedef Widget::PositionType   PositionType;
 CC_DEPRECATED_ATTRIBUTE typedef Widget::SizeType SizeType;
-CC_DEPRECATED_ATTRIBUTE typedef Widget::Type WidgetType;
 CC_DEPRECATED_ATTRIBUTE typedef Widget::BrightStyle BrightStyle;
 CC_DEPRECATED_ATTRIBUTE typedef Layout::ClippingType LayoutClippingType;
-CC_DEPRECATED_ATTRIBUTE typedef Layout::LayoutType LayoutType;
+CC_DEPRECATED_ATTRIBUTE typedef Layout::Type LayoutType;
 CC_DEPRECATED_ATTRIBUTE typedef Layout::BackGroundColorType LayoutBackGroundColorType;
 CC_DEPRECATED_ATTRIBUTE typedef LayoutParameter::Type LayoutParameterType;
 CC_DEPRECATED_ATTRIBUTE typedef LinearLayoutParameter::LinearGravity LinearGravity;
