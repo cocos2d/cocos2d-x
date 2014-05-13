@@ -64,7 +64,7 @@ bool VBox::init()
 {
     if (Layout::init())
     {
-        setLayoutType(Layout::Type::VERTICAL);
+        setLayoutType(Type::VERTICAL);
         return true;
     }
     return false;

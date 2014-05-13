@@ -32,14 +32,7 @@ NS_CC_BEGIN
 
 namespace ui {
     
-class ScrollInnerContainer : public Layout
-{
-public:
-    ScrollInnerContainer();
-    virtual ~ScrollInnerContainer();
-    static ScrollInnerContainer* create();
-    virtual const Size& getLayoutSize() override;
-};
+class ScrollInnerContainer;
 
 CC_DEPRECATED_ATTRIBUTE typedef enum
 {

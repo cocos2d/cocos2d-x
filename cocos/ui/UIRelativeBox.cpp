@@ -64,7 +64,7 @@ bool RelativeBox::init()
 {
     if (Layout::init())
     {
-        setLayoutType(Layout::Type::RELATIVE);
+        setLayoutType(Type::RELATIVE);
         return true;
     }
     return false;
