@@ -236,7 +236,7 @@ def grab_config():
     global _extracted_folder_name
     global _zip_file_size
 
-    _current_3rd_libs_version = data["current_libs_version"]
+    _current_3rd_libs_version = data["version"]
     _repo_name = data["repo_name"]
     _filename = _current_3rd_libs_version + '.zip'
     _downloaded_file_url = data["repo_parent"] + _repo_name + '/archive/' + _filename
