@@ -86,7 +86,7 @@ Skin::Skin()
     , _armature(nullptr)
     , _displayName("")
 {
-    _skinTransform = Matrix::identity();
+    _skinTransform = Matrix::IDENTITY;
 }
 
 bool Skin::initWithSpriteFrameName(const std::string& spriteFrameName)
@@ -224,7 +224,7 @@ void Skin::draw(Renderer *renderer, const Matrix &transform, bool transformUpdat
     Matrix mv = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
     //TODO implement z order
-    _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgram(), _blendFunc, &_quad, 1, mv);
+    _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, mv);
     renderer->addCommand(&_quadCommand);
 }
 

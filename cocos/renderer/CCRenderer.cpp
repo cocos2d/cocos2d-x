@@ -450,10 +450,10 @@ void Renderer::drawBatchedQuads()
     }
 
     //Start drawing verties in batch
-    //for(auto i = _batchedQuadCommands.begin(); i != _batchedQuadCommands.end(); ++i)
     for(const auto& cmd : _batchedQuadCommands)
     {
-        if(_lastMaterialID != cmd->getMaterialID())
+        auto newMaterialID = cmd->getMaterialID();
+        if(_lastMaterialID != newMaterialID || newMaterialID == QuadCommand::MATERIAL_ID_DO_NOT_BATCH)
         {
             //Draw quads
             if(quadsToDraw > 0)
@@ -468,7 +468,7 @@ void Renderer::drawBatchedQuads()
 
             //Use new material
             cmd->useMaterial();
-            _lastMaterialID = cmd->getMaterialID();
+            _lastMaterialID = newMaterialID;
         }
 
         quadsToDraw += cmd->getQuadCount();

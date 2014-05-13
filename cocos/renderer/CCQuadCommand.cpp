@@ -25,20 +25,17 @@
 
 #include "renderer/CCQuadCommand.h"
 #include "renderer/ccGLStateCache.h"
+#include "renderer/CCGLProgram.h"
+#include "renderer/CCGLProgramState.h"
 #include "xxhash.h"
 
 NS_CC_BEGIN
 
 
-static  void convertIntToByteArray(int value, int* output)
-{
-    *output = value;
-}
-
 QuadCommand::QuadCommand()
 :_materialID(0)
 ,_textureID(0)
-,_shader(nullptr)
+,_glProgramState(nullptr)
 ,_blendType(BlendFunc::DISABLE)
 ,_quads(nullptr)
 ,_quadsCount(0)
@@ -46,8 +43,11 @@ QuadCommand::QuadCommand()
     _type = RenderCommand::Type::QUAD_COMMAND;
 }
 
-void QuadCommand::init(float globalOrder, GLuint textureID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, ssize_t quadCount, const Matrix &mv)
+void QuadCommand::init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, ssize_t quadCount, const Matrix &mv)
 {
+    CCASSERT(glProgramState, "Invalid GLProgramState");
+    CCASSERT(glProgramState->getVertexAttribsFlags() == 0, "No custom attributes are supported in QuadCommand");
+
     _globalOrder = globalOrder;
 
     _quadsCount = quadCount;
@@ -55,12 +55,12 @@ void QuadCommand::init(float globalOrder, GLuint textureID, GLProgram* shader, B
 
     _mv = mv;
 
-    if( _textureID != textureID || _blendType.src != blendType.src || _blendType.dst != blendType.dst || _shader != shader) {
-        
+    if( _textureID != textureID || _blendType.src != blendType.src || _blendType.dst != blendType.dst || _glProgramState != glProgramState) {
+
         _textureID = textureID;
         _blendType = blendType;
-        _shader = shader;
-        
+        _glProgramState = glProgramState;
+
         generateMaterialID();
     }
 }
@@ -71,48 +71,29 @@ QuadCommand::~QuadCommand()
 
 void QuadCommand::generateMaterialID()
 {
-    //TODO fix blend id generation
-    int blendID = 0;
-    if(_blendType == BlendFunc::DISABLE)
+
+    if(_glProgramState->getUniformCount() > 0)
     {
-        blendID = 0;
-    }
-    else if(_blendType == BlendFunc::ALPHA_PREMULTIPLIED)
-    {
-        blendID = 1;
-    }
-    else if(_blendType == BlendFunc::ALPHA_NON_PREMULTIPLIED)
-    {
-        blendID = 2;
-    }
-    else if(_blendType == BlendFunc::ADDITIVE)
-    {
-        blendID = 3;
+        _materialID = QuadCommand::MATERIAL_ID_DO_NOT_BATCH;
     }
     else
     {
-        blendID = 4;
+        int glProgram = (int)_glProgramState->getGLProgram()->getProgram();
+        int intArray[4] = { glProgram, (int)_textureID, (int)_blendType.src, (int)_blendType.dst};
+
+        _materialID = XXH32((const void*)intArray, sizeof(intArray), 0);
     }
-    
-    // convert program id, texture id and blend id into byte array
-    int intArray[3];
-    convertIntToByteArray(_shader->getProgram(), intArray);
-    convertIntToByteArray(blendID, intArray+1);
-    convertIntToByteArray(_textureID, intArray+2);
-    
-    _materialID = XXH32((const void*)intArray, sizeof(intArray), 0);
 }
 
 void QuadCommand::useMaterial() const
 {
-    _shader->use();
-    _shader->setUniformsForBuiltins(_mv);
-
     //Set texture
     GL::bindTexture2D(_textureID);
 
     //set blend mode
     GL::blendFunc(_blendType.src, _blendType.dst);
+
+    _glProgramState->apply(_mv);
 }
 
 NS_CC_END

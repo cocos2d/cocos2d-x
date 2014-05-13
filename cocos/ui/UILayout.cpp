@@ -582,7 +582,7 @@ _gEndColor(Color3B::WHITE),
 _alongVector(Vector2(0.0f, -1.0f)),
 _cOpacity(255),
 _backGroundImageTextureSize(Size::ZERO),
-_layoutType(LayoutType::ABSOLUTE),
+_layoutType(Type::ABSOLUTE),
 _clippingType(ClippingType::STENCIL),
 _clippingStencil(nullptr),
 _scissorRectDirty(false),
@@ -608,8 +608,8 @@ _curLayoutExecutant(nullptr),
 _passFocusToChild(true),
 _loopFocus(false)
 {
-    _widgetType = Widget::Type::CONTAINER;
     onPassFocusToChild = CC_CALLBACK_2(Layout::findNearestChildWidgetIndex, this);
+    this->setAnchorPoint(Vector2::ZERO);
 }
 
 Layout::~Layout()
@@ -1175,10 +1175,10 @@ void Layout::supplyTheLayoutParameterLackToChild(Widget *child)
     }
     switch (_layoutType)
     {
-        case LayoutType::ABSOLUTE:
+        case Type::ABSOLUTE:
             break;
-        case LayoutType::HORIZONTAL:
-        case LayoutType::VERTICAL:
+        case Type::HORIZONTAL:
+        case Type::VERTICAL:
         {
             LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LayoutParameter::Type::LINEAR));
             if (!layoutParameter)
@@ -1187,7 +1187,7 @@ void Layout::supplyTheLayoutParameterLackToChild(Widget *child)
             }
             break;
         }
-        case LayoutType::RELATIVE:
+        case Type::RELATIVE:
         {
             RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LayoutParameter::Type::RELATIVE));
             if (!layoutParameter)
@@ -1424,7 +1424,7 @@ const Size& Layout::getBackGroundImageTextureSize() const
     return _backGroundImageTextureSize;
 }
 
-void Layout::setLayoutType(LayoutType type)
+void Layout::setLayoutType(Type type)
 {
     _layoutType = type;
     CC_SAFE_RELEASE_NULL(_curLayoutExecutant);
@@ -1446,13 +1446,13 @@ LayoutExecutant* Layout::createCurrentLayoutExecutant()
     LayoutExecutant* exe = nullptr;
     switch (_layoutType)
     {
-        case LayoutType::VERTICAL:
+        case Type::VERTICAL:
             exe = LinearVerticalLayoutExecutant::create();
             break;
-        case LayoutType::HORIZONTAL:
+        case Type::HORIZONTAL:
             exe = LinearHorizontalLayoutExecutant::create();
             break;
-        case LayoutType::RELATIVE:
+        case Type::RELATIVE:
             exe = RelativeLayoutExecutant::create();
             break;
         default:
@@ -1461,7 +1461,7 @@ LayoutExecutant* Layout::createCurrentLayoutExecutant()
     return exe;
 }
 
-Layout::LayoutType Layout::getLayoutType() const
+Layout::Type Layout::getLayoutType() const
 {
     return _layoutType;
 }
@@ -1564,12 +1564,12 @@ Size Layout::getLayoutContentSize()const
     }
     
     //substract extra size
-    LayoutType type = this->getLayoutType();
-    if (type == LayoutType::HORIZONTAL)
+    Type type = this->getLayoutType();
+    if (type == Type::HORIZONTAL)
     {
         layoutSize = layoutSize - Size(0, layoutSize.height/widgetCount * (widgetCount-1));
     }
-    if (type == LayoutType::VERTICAL)
+    if (type == Type::VERTICAL)
     {
         layoutSize = layoutSize - Size(layoutSize.width/widgetCount * (widgetCount-1), 0);
     }
@@ -2186,7 +2186,7 @@ bool  Layout::isLastWidgetInContainer(Widget* widget, FocusDirection direction)
     
     auto container = parent->getChildren();
     ssize_t index = container.getIndex(widget);
-    if (parent->getLayoutType() == LayoutType::HORIZONTAL)
+    if (parent->getLayoutType() == Type::HORIZONTAL)
     {
         if (direction == FocusDirection::LEFT) {
             if (index == 0)
@@ -2218,7 +2218,7 @@ bool  Layout::isLastWidgetInContainer(Widget* widget, FocusDirection direction)
             return isLastWidgetInContainer(parent, direction);
         }
     }
-    else if(parent->getLayoutType() == LayoutType::VERTICAL)
+    else if(parent->getLayoutType() == Type::VERTICAL)
     {
         if (direction == FocusDirection::UP)
         {
@@ -2272,7 +2272,7 @@ bool  Layout::isWidgetAncestorSupportLoopFocus(Widget* widget, FocusDirection di
     if (parent->isLoopFocus())
     {
         auto layoutType = parent->getLayoutType();
-        if (layoutType == LayoutType::HORIZONTAL)
+        if (layoutType == Type::HORIZONTAL)
         {
             if (direction == FocusDirection::LEFT || direction == FocusDirection::RIGHT)
             {
@@ -2283,7 +2283,7 @@ bool  Layout::isWidgetAncestorSupportLoopFocus(Widget* widget, FocusDirection di
                 return isWidgetAncestorSupportLoopFocus(parent, direction);
             }
         }
-        if (layoutType == LayoutType::VERTICAL)
+        if (layoutType == Type::VERTICAL)
         {
             if (direction == FocusDirection::DOWN || direction == FocusDirection::UP)
             {
@@ -2334,7 +2334,7 @@ Widget* Layout::findNextFocusedWidget(FocusDirection direction, Widget* current)
     }
     else if(current->isFocused() || !current->isFocusEnabled())
     {
-        if (_layoutType == LayoutType::HORIZONTAL)
+        if (_layoutType == Type::HORIZONTAL)
         {
             switch (direction)
             {
@@ -2371,7 +2371,7 @@ Widget* Layout::findNextFocusedWidget(FocusDirection direction, Widget* current)
                     break;
             }
         }
-        else if (_layoutType == LayoutType::VERTICAL)
+        else if (_layoutType == Type::VERTICAL)
         {
             switch (direction)
             {

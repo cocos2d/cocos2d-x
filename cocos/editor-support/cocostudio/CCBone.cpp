@@ -72,7 +72,7 @@ Bone::Bone()
     _displayManager = nullptr;
     _ignoreMovementBoneData = false;
 //    _worldTransform = AffineTransformMake(1, 0, 0, 1, 0, 0);
-    _worldTransform = Matrix::identity();
+    _worldTransform = Matrix::IDENTITY;
     _boneTransformDirty = true;
     _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
     _blendDirty = false;

@@ -39,8 +39,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-USING_NS_CC_MATH;
-
 /**
  * @addtogroup shaders
  * @{
