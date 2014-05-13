@@ -178,7 +178,6 @@ def unpack_zipfile(filename, extract_dir, progress_filter=default_filter):
         z.close()
         print("==> Extraction done!")
 
-
 def ask_to_delete_downloaded_zip_file(filename):
     ret = get_input_value("==> Whether to delete the downloaded zip file? It may be reused when you execute this script next time! (yes/no): ")
     ret = ret.strip()
