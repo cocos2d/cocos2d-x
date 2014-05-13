@@ -117,7 +117,6 @@ bool CheckBox::init(const std::string& backGround,
         }
         
         setSelectedState(false);
-        setTouchEnabled(true);
         loadTextures(backGround, backGroundSeleted, cross, backGroundDisabled, frontCrossDisabled,texType);
     } while (0);
     return ret;

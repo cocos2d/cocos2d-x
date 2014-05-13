@@ -113,7 +113,6 @@ bool Button::init(const std::string &normalImage,
             break;
         }
         
-        setTouchEnabled(true);
         this->loadTextures(normalImage, selectedImage, disableImage,texType);
     } while (0);
     return ret;

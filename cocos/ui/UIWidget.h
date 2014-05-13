@@ -161,7 +161,7 @@ public:
      *
      * @param visible   true if the widget is touch enabled, false if the widget is touch disabled.
      */
-    CC_DEPRECATED_ATTRIBUTE virtual void setTouchEnabled(bool enabled);
+    virtual void setTouchEnabled(bool enabled);
 
     /**
      * To set the bright style of widget.
@@ -177,7 +177,7 @@ public:
      *
      * @return true if the widget is touch enabled, false if the widget is touch disabled.
      */
-    CC_DEPRECATED_ATTRIBUTE bool isTouchEnabled() const;
+    bool isTouchEnabled() const;
 
     /**
      * Determines if the widget is highlighted
@@ -635,11 +635,14 @@ protected:
     Widget* getWidgetParent();
     void updateContentSizeWithTextureSize(const Size& size);
     virtual void adaptRenderers(){};
+    bool isAncestorsEnable();
+    Widget* getAncensterWidget(Node* node);
+    bool isAncestorsVisible(Node* node);
+
 protected:
     bool _enabled;            ///< Highest control of widget
     bool _bright;             ///< is this widget bright
     bool _touchEnabled;       ///< is this widget touch endabled
-    bool _touchPassedEnabled; ///< is the touch event should be passed
     bool _highlight;              ///< is the widget on focus
     BrightStyle _brightStyle; ///< bright style
     Vector2 _touchStartPos;    ///< touch began point
