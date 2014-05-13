@@ -32,8 +32,6 @@ THE SOFTWARE.
 #include "math/Vector4.h"
 
 #include <unordered_map>
-#include <vector>
-
 
 NS_CC_BEGIN
 

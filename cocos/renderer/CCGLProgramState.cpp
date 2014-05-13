@@ -390,67 +390,64 @@ void GLProgramState::setVertexAttribPointer(const std::string &name, GLint size,
 void GLProgramState::setUniformCallback(const std::string &uniformName, const std::function<void(Uniform*)> &callback)
 {
     auto v = getUniformValue(uniformName);
-	if (v)
-		v->setCallback(callback);
-	else
-		CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
+    if (v)
+        v->setCallback(callback);
+    else
+        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
 }
 
 void GLProgramState::setUniformFloat(const std::string &uniformName, float value)
 {
     auto v = getUniformValue(uniformName);
-	if (v)
-		v->setFloat(value);
-	else
-		CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
-
+    if (v)
+        v->setFloat(value);
+    else
+        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
 }
 
 void GLProgramState::setUniformInt(const std::string &uniformName, int value)
 {
     auto v = getUniformValue(uniformName);
     if(v)
-		v->setInt(value);
-	else
-		CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
-
+        v->setInt(value);
+    else
+        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
 }
 
 void GLProgramState::setUniformVec2(const std::string &uniformName, const Vector2& value)
 {
     auto v = getUniformValue(uniformName);
-	if (v)
-		v->setVec2(value);
-	else
-		CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
-
+    if (v)
+        v->setVec2(value);
+    else
+        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
 }
 
 void GLProgramState::setUniformVec3(const std::string &uniformName, const Vector3& value)
 {
     auto v = getUniformValue(uniformName);
-	if (v)
-		v->setVec3(value);
-	else
-		CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
+    if (v)
+        v->setVec3(value);
+    else
+        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
 }
 
 void GLProgramState::setUniformVec4(const std::string &uniformName, const Vector4& value)
 {
     auto v = getUniformValue(uniformName);
-	if (v)
-		v->setVec4(value);
-	else
-		CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
+    if (v)
+        v->setVec4(value);
+    else
+        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
 }
 
 void GLProgramState::setUniformMat4(const std::string &uniformName, const Matrix& value)
 {
     auto v = getUniformValue(uniformName);
-	if (v)
-		v->setMat4(value);
-	else
-		CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
+    if (v)
+        v->setMat4(value);
+    else
+        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
 }
 
 // Textures
@@ -464,10 +461,10 @@ void GLProgramState::setUniformTexture(const std::string &uniformName, Texture2D
 void GLProgramState::setUniformTexture(const std::string &uniformName, GLuint textureId)
 {
     auto v = getUniformValue(uniformName);
-	if (v)
-		v->setTexture(textureId, _textureUnitIndex++);
-	else
-		CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
+    if (v)
+        v->setTexture(textureId, _textureUnitIndex++);
+    else
+        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
 }
 
 
