@@ -19,6 +19,7 @@
 #include <netdb.h>
 #else
 #include <io.h>
+#include <WS2tcpip.h>
 #endif
 #include "cocostudio/CocoStudio.h"
 #include "UITest/UITest.h"
