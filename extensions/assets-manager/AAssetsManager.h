@@ -73,6 +73,9 @@ public:
         UNCOMPRESS,
     };
     
+    //! The root of writable path
+    static std::string s_nWritableRoot;
+    
     AAssetsManager(const std::string& manifestUrl = NULL, const std::string& storagePath = "");
     /**
      * @js NA
@@ -94,62 +97,62 @@ public:
     
     /* @brief Gets url of a asset for the given key.
      */
-    const char* get(const char* key) const;
+    const std::string& get(const std::string& key) const;
     
     /* @brief Gets storage path.
      */
-    const char* getStoragePath() const;
+    const std::string& getStoragePath() const;
     
     /* @brief Sets storage path.
      *
      * @param storagePath The path to store downloaded resources.
      * @warm The path should be a valid path.
      */
-    void setStoragePath(const char* storagePath);
+    void setStoragePath(const std::string& storagePath);
     
     /* @brief Gets url of manifest.
      */
-    const char* getManifestUrl() const;
+    const std::string& getManifestUrl() const;
     
     /* @brief Sets package url.
      */
-    void setManifestUrl(const char* manifestUrl);
+    void setManifestUrl(const std::string& manifestUrl);
     
     /* @brief Gets version file url.
      */
-    const char* getVersionFileUrl() const;
+    const std::string& getVersionFileUrl() const;
     
     /* @brief Sets version file url.
      */
-    void setVersionFileUrl(const char* versionFileUrl);
+    void setVersionFileUrl(const std::string& versionFileUrl);
     
     /* @brief Gets remote package url.
      */
-    const char* getRemoteRootUrl() const;
+    const std::string& getRemoteRootUrl() const;
     
     /* @brief Gets local manifest version.
      */
-    const char* getLocalManifestVersion() const;
+    const std::string& getLocalManifestVersion() const;
     
     /* @brief Gets local version for the given group.
      */
-    const char* getLocalGroupVersion(int group) const;
+    const std::string& getLocalGroupVersion(int group) const;
     
     /* @brief Gets local engine version.
      */
-    const char* getLocalEngineVersion() const;
+    const std::string& getLocalEngineVersion() const;
     
     /* @brief Gets remote manifest version.
      */
-    const char* getRemoteManifestVersion() const;
+    const std::string& getRemoteManifestVersion() const;
     
     /* @brief Gets remote version for the given group.
      */
-    const char* getRemoteGroupVersion(int group) const;
+    const std::string& getRemoteGroupVersion(int group) const;
     
     /* @brief Gets remote engine version.
      */
-    const char* getRemoteEngineVersion() const;
+    const std::string& getRemoteEngineVersion() const;
     
     /** @brief Sets connection time out in seconds
      */
@@ -181,7 +184,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void onSuccess();
+    virtual void onSuccess(const std::string &filename, const std::string &srcUrl);
     
 protected:
     void loadManifest();
@@ -203,6 +206,7 @@ private:
     void destroyStoragePath();
     
 private:
+    
     //! The path to store downloaded resources.
     std::string _storagePath;
     
