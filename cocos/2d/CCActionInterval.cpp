@@ -2140,6 +2140,7 @@ Animate::Animate()
 , _origFrame(nullptr)
 , _executedLoops(0)
 , _animation(nullptr)
+, _frameDisplayedEvent(nullptr)
 {
 
 }
@@ -2149,6 +2150,7 @@ Animate::~Animate()
     CC_SAFE_RELEASE(_animation);
     CC_SAFE_RELEASE(_origFrame);
     CC_SAFE_DELETE(_splitTimes);
+    CC_SAFE_RELEASE(_frameDisplayedEvent);
 }
 
 bool Animate::initWithAnimation(Animation* animation)
@@ -2259,12 +2261,13 @@ void Animate::update(float t)
             const ValueMap& dict = frame->getUserInfo();
             if ( !dict.empty() )
             {
-                static EventCustom event(AnimationFrameDisplayedNotification);
-                static AnimationFrame::DisplayedNotificationInfo info;
-                info.target = _target;
-                info.userInfo = &dict;
-                event.setUserData(&info);
-                Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+                if (_frameDisplayedEvent == nullptr)
+                    _frameDisplayedEvent = new EventCustom(AnimationFrameDisplayedNotification);
+                
+                _frameDisplayedEventInfo.target = _target;
+                _frameDisplayedEventInfo.userInfo = &dict;
+                _frameDisplayedEvent->setUserData(&_frameDisplayedEventInfo);
+                Director::getInstance()->getEventDispatcher()->dispatchEvent(_frameDisplayedEvent);
             }
             _nextFrame = i+1;
         }

@@ -58,7 +58,7 @@ class CC_DLL AnimationFrame : public Ref, public Clonable
 {
 public:
     
-    struct DisplayedNotificationInfo
+    struct DisplayedEventInfo
     {
         Node* target;
         const ValueMap* userInfo;
