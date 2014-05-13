@@ -107,7 +107,7 @@ public:
      *
      * @return percent    percent value from 1 to 100.
      */
-    float getPercent();
+    float getPercent() const;
     
     /**
      * Sets if loadingbar is using scale9 renderer.

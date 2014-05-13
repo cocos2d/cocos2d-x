@@ -271,7 +271,7 @@ void LoadingBar::setPercent(float percent)
     }
 }
 
-float LoadingBar::getPercent()
+float LoadingBar::getPercent() const
 {
     return _percent;
 }
