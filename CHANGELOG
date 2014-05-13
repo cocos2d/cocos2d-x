@@ -1,4 +1,5 @@
 cocos2d-x-3.1-alpha1 May.9 2014
+    [NEW]           Animate: Dispatch a custom event after an animation frame is displayed
     [NEW]           GLProgram: Easy to customize uniforms and attributes by using the new class GLProgramState
     [NEW]           Template: cpp project support Eclipse c++ project
     [NEW]           UI: add navigation support
