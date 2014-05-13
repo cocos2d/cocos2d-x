@@ -157,7 +157,7 @@ void Sprite3D1::addNewSpriteWithCoords(Point p)
 //    auto sprite = Sprite3D::create("sprite3dTest/scene01.obj");
     
     //option 2: load obj and assign the texture
-    auto sprite = Sprite3D::create("sprite3dTest/boss.obj");
+    auto sprite = Sprite3D::create("Sprite3DTest/boss.obj");
     sprite->setScale(3.f);
     sprite->setTexture("Sprite3DTest/boss.png");
     

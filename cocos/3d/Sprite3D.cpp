@@ -237,18 +237,19 @@ void Sprite3D::onDraw(const Matrix &transform, bool transformUpdated)
         for (int i = 0; i < _model->getMeshPartCount(); i++) {
             auto meshPart = _model->getMeshPart(i);
             auto programstate = _programState[i];
-            programstate->setVertexAttribPointer("a_position", 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), _model->getVertexPointer());
-            programstate->setVertexAttribPointer("a_texCoord", 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), ((char*)_model->getVertexPointer() + 6 * sizeof(float)));
+            size_t offset = (size_t)_model->getVertexPointer();
+            programstate->setVertexAttribPointer("a_position", 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)offset);
+            programstate->setVertexAttribPointer("a_texCoord", 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(offset + 6 * sizeof(float)));
             
-            //programstate->setUniformVec4("u_color", Vector4(color.r, color.g, color.b, color.a));
+            programstate->setUniformVec4("u_color", Vector4(color.r, color.g, color.b, color.a));
             if (_textures.at(i))
             {
                 GL::bindTexture2D(_textures.at(i)->getName());
             }
             programstate->apply(transform);
             
-            //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshPart->getIndexBuffer());
-            glDrawElements(meshPart->getPrimitiveType(), meshPart->getIndexCount(), meshPart->getIndexFormat(), _model->getIndexPointer(i));
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshPart->getIndexBuffer());
+            glDrawElements(meshPart->getPrimitiveType(), meshPart->getIndexCount(), meshPart->getIndexFormat(), 0);
         }
     }
     

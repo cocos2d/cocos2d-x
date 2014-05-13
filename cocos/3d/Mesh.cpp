@@ -315,7 +315,7 @@ void Mesh::addMeshPart(PrimitiveType primitiveType, IndexFormat indexformat,  vo
 
 void* Mesh::getVertexPointer()
 {
-    return &_renderdata._vertexs;
+    return &_renderdata._vertexs[0];
 }
 
 void Mesh::restore()
