@@ -113,7 +113,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     auto scene = Scene::create();
     auto layer = new TestController();
-
+    layer->autorelease();
+    layer->addConsoleAutoTest();
     scene->addChild(layer);
     director->runWithScene(scene);
 
@@ -121,10 +122,14 @@ bool AppDelegate::applicationDidFinishLaunching()
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     auto console = director->getConsole();
     console->listenOnTCP(5678);
-    layer->addConsoleAutoTest();
-    //layer->startAutoRun();
+    Configuration *conf = Configuration::getInstance();
+    bool isAutoRun = conf->getValue("cocos2d.x.testcpp.autorun", Value(false)).asBool();
+    if(isAutoRun)
+    {
+        layer->startAutoRun();
+    }
 #endif
-    layer->autorelease();
+    
     return true;
 }
 
