@@ -166,7 +166,7 @@ public:
      *
      * @param visible   true if the widget is touch enabled, false if the widget is touch disabled.
      */
-    virtual void setTouchEnabled(bool enabled);
+    CC_DEPRECATED_ATTRIBUTE virtual void setTouchEnabled(bool enabled);
 
     /**
      * To set the bright style of widget.
@@ -182,7 +182,7 @@ public:
      *
      * @return true if the widget is touch enabled, false if the widget is touch disabled.
      */
-    bool isTouchEnabled() const;
+    CC_DEPRECATED_ATTRIBUTE bool isTouchEnabled() const;
 
     /**
      * Determines if the widget is highlighted
