@@ -4,23 +4,23 @@
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    10
+#define MAX_LAYER    11
 
 static Layer* createShaderLayer(int nIndex)
 {
     switch (sceneIdx)
     {
-    case 0: return new ShaderLensFlare();
-    case 1: return new ShaderMandelbrot();
-    case 2: return new ShaderJulia();
-    case 3: return new ShaderHeart();
-    case 4: return new ShaderFlower();
-    case 5: return new ShaderPlasma();
-    case 6: return new ShaderBlur();
-    case 7: return new ShaderRetroEffect();
-    case 8: return new ShaderMonjori();
-    //case 9: return new ShaderFireBall();
-    case 9: return new ShaderGlow();
+        case 0: return new ShaderLensFlare();
+        case 1: return new ShaderMandelbrot();
+        case 2: return new ShaderJulia();
+        case 3: return new ShaderHeart();
+        case 4: return new ShaderFlower();
+        case 5: return new ShaderPlasma();
+        case 6: return new ShaderBlur();
+        case 7: return new ShaderRetroEffect();
+        case 8: return new ShaderMonjori();
+        case 9: return new ShaderGlow();
+        case 10: return new ShaderMultiTexture();
     }
     return NULL;
 }
@@ -694,39 +694,9 @@ bool ShaderLensFlare::init()
     return false;
 }
 
-ShaderFireBall::ShaderFireBall()
-{
-    init();
-}
-
-std::string ShaderFireBall::title() const
-{
-    return "ShaderToy Test";
-}
-
-std::string ShaderFireBall::subtitle() const
-{
-    return "Fire Ball";
-}
-
-bool ShaderFireBall::init()
-{
-    if (ShaderTestDemo::init())
-    {
-        auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/shadertoy_FireBall.fsh");
-        
-        auto s = Director::getInstance()->getWinSize();
-        sn->setPosition(Vector2(s.width/2, s.height/2));
-        sn->setContentSize(Size(s.width/2,s.height/2));
-        addChild(sn);
-        
-        return true;
-    }
-    
-    return false;
-}
-
-
+//
+// ShaderGlow
+//
 ShaderGlow::ShaderGlow()
 {
     init();
@@ -756,6 +726,48 @@ bool ShaderGlow::init()
         return true;
     }
     
+    return false;
+}
+
+//
+// ShaderMultiTexture
+//
+ShaderMultiTexture::ShaderMultiTexture()
+{
+    init();
+}
+
+std::string ShaderMultiTexture::title() const
+{
+    return "MultiTexture test";
+}
+
+std::string ShaderMultiTexture::subtitle() const
+{
+    return "MultiTexture";
+}
+
+bool ShaderMultiTexture::init()
+{
+    if (ShaderTestDemo::init())
+    {
+        auto s = Director::getInstance()->getWinSize();
+
+        auto sprite = Sprite::create("Images/grossinis_sister1.png");
+        Texture2D *texture1 = Director::getInstance()->getTextureCache()->addImage("Images/grossinis_sister2.png");
+
+        addChild(sprite);
+
+        sprite->setPosition(Vector2(s.width/2, s.height/2));
+
+        auto glprogram = GLProgram::createWithFilenames("Shaders/example_MultiTexture.vsh", "Shaders/example_MultiTexture.fsh");
+        auto glprogramstate = GLProgramState::getOrCreate(glprogram);
+        sprite->setGLProgramState(glprogramstate);
+
+        glprogramstate->setUniformTexture("u_texture1", texture1);
+        return true;
+    }
+
     return false;
 }
 
