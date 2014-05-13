@@ -1,15 +1,14 @@
-#include "Mesh.h"
+#include "CCMesh.h"
 
 #include <list>
 #include <fstream>
 #include <iostream>
 #include <sstream>
 
-#include "cocos2d.h"
-#include "ccMacros.h"
-#include "MeshPart.h"
-#include "ObjLoader.h"
-#include "MeshCache.h"
+#include "base/ccMacros.h"
+#include "CCMeshPart.h"
+#include "CCObjLoader.h"
+#include "CCMeshCache.h"
 
 using namespace std;
 

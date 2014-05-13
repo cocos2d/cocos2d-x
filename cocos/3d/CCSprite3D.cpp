@@ -6,20 +6,23 @@
 //
 //
 
-#include "cocos2d.h"
-#include "Sprite3D.h"
-#include "MeshCache.h"
-#include "Mesh.h"
+#include "CCSprite3D.h"
+#include "CCMeshCache.h"
+#include "CCMesh.h"
 
+#include "CCObjLoader.h"
+#include "2d/platform/CCFileUtils.h"
+#include "base/CCDirector.h"
+#include "2d/CCTextureCache.h"
+#include "renderer/CCRenderer.h"
 #include "renderer/CCGLProgramState.h"
 
+//begin include shader file
 #define STRINGIFY(A)  #A
-//#include "../Shaders/TexturedLighting.es2.vert.h"
 #include "Textured.es2.vert.h"
 #include "Textured.es2.frag.h"
 #include "Colored.es2.frag.h"
-
-#include "ObjLoader.h"
+//end include shader file
 
 NS_CC_BEGIN
 

@@ -27,7 +27,7 @@
 #include <fstream>
 #include <sstream>
 
-#include "ObjLoader.h"
+#include "CCObjLoader.h"
 
 NS_CC_BEGIN
 
