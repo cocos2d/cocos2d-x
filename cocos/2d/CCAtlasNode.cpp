@@ -106,7 +106,7 @@ bool AtlasNode::initWithTexture(Texture2D* texture, int tileWidth, int tileHeigh
     _quadsToDraw = itemsToRender;
 
     // shader stuff
-    setGLProgramState(GLProgramState::getWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
+    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
 
     return true;
 }
@@ -138,7 +138,7 @@ void AtlasNode::draw(Renderer *renderer, const Matrix &transform, bool transform
     _quadCommand.init(
               _globalZOrder,
               _textureAtlas->getTexture()->getName(),
-              getGLProgram(),
+              getGLProgramState(),
               _blendFunc,
               _textureAtlas->getQuads(),
               _quadsToDraw,

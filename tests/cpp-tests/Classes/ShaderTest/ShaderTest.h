@@ -113,19 +113,19 @@ protected:
 class ShaderNode : public Node
 {
 public:
-    ShaderNode();
-    ~ShaderNode();
-
-    bool initWithVertex(const char *vert, const char *frag);
-    void loadShaderVertex(const char *vert, const char *frag);
+    static ShaderNode* shaderNodeWithVertex(const std::string &vert, const std::string &frag);
 
     virtual void update(float dt);
     virtual void setPosition(const Vector2 &newPosition);
     virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
 
-    static ShaderNode* shaderNodeWithVertex(const char *vert, const char *frag);
-
 protected:
+    ShaderNode();
+    ~ShaderNode();
+
+    bool initWithVertex(const std::string &vert, const std::string &frag);
+    void loadShaderVertex(const std::string &vert, const std::string &frag);
+
     void onDraw(const Matrix &transform, bool transformUpdated);
 
     Vector2 _center;
@@ -140,34 +140,6 @@ class ShaderTestScene : public TestScene
 {
 public:
     virtual void runThisTest();
-};
-
-
-class UniformShaderNode : public Node
-{
-public:
-    UniformShaderNode();
-    ~UniformShaderNode();
-    
-    bool initWithVertex(const char *vert, const char *frag);
-    void loadShaderVertex(const char *vert, const char *frag);
-    
-    virtual void update(float dt);
-    virtual void setPosition(const Vector2 &newPosition);
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
-    
-    static UniformShaderNode* shaderNodeWithVertex(const char *vert, const char *frag);
-
-protected:
-    void onDraw(const Matrix &transform, bool transformUpdated);
-    
-    Vector2 _center;
-    Vector2 _resolution;
-    float      _time;
-    std::string _vertFileName;
-    std::string _fragFileName;
-    CustomCommand _customCommand;
-    
 };
 
 class ShaderLensFlare : public ShaderTestDemo
