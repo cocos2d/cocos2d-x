@@ -656,7 +656,7 @@ protected:
     ccWidgetTouchCallback _touchEventCallback;
     
     std::string _name;
-	int _actionTag;
+    int _actionTag;
     Size _size;
     Size _customSize;
     bool _ignoreSize;
