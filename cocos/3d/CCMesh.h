@@ -1,6 +1,6 @@
 
-#ifndef __CCMESH_H_
-#define __CCMESH_H_
+#ifndef __CCMESH_H__
+#define __CCMESH_H__
 
 #include <string>
 #include <vector>

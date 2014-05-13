@@ -1,3 +1,4 @@
+
 static const char* baseVertexShader = STRINGIFY(
 
 attribute vec4 a_position;

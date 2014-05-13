@@ -1,6 +1,6 @@
 
-#ifndef __MESH_CACHE_H_
-#define __MESH_CACHE_H_
+#ifndef __CCMESH_CACHE_H__
+#define __CCMESH_CACHE_H__
 
 #include <string>
 #include "base/ccTypes.h"
