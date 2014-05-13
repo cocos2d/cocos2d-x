@@ -26,15 +26,14 @@ bool AppDelegate::applicationDidFinishLaunching()
     initRuntime();
 #endif
     
-    // initialize director
-    auto director = Director::getInstance();
-    auto glview = director->getOpenGLView();
-    if(!glview) {
-        
-        if (!ConfigParser::getInstance()->isInit()) {
+    if (!ConfigParser::getInstance()->isInit()) {
             ConfigParser::getInstance()->readConfig();
         }
 
+    // initialize director
+    auto director = Director::getInstance();
+    auto glview = director->getOpenGLView();    
+    if(!glview) {
         Size viewSize = ConfigParser::getInstance()->getInitViewSize();
         string title = ConfigParser::getInstance()->getInitViewName();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
