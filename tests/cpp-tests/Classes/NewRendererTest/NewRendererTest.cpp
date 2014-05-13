@@ -588,6 +588,8 @@ CaptureScreenTest::CaptureScreenTest()
     auto menu = Menu::create(mi1, mi2, NULL);
     addChild(menu);
     menu->setPosition(s.width / 2, s.height / 4);
+
+    _savedFilename = "";
 }
 
 CaptureScreenTest::~CaptureScreenTest()
@@ -606,24 +608,25 @@ std::string CaptureScreenTest::subtitle() const
 
 void CaptureScreenTest::onCaptured(Ref*, const Rect& rect)
 {
+	TextureCache::getInstance()->removeTextureForKey(_savedFilename);
+	removeChildByTag(119);
     _savedFilename = "CaptureScreenTest-Shot.png";
     Director::getInstance()->getRenderer()->captureScreen(
-	    CC_CALLBACK_1(CaptureScreenTest::afterCaptured, this),
+	    CC_CALLBACK_2(CaptureScreenTest::afterCaptured, this),
 	    _savedFilename,
 	    rect);
 }
 
-void CaptureScreenTest::afterCaptured(bool succeed)
+void CaptureScreenTest::afterCaptured(bool succeed, const std::string& target)
 {
     if (succeed)
     {
-	    TextureCache::getInstance()->removeTextureForKey(_savedFilename);
-	    removeChildByTag(119);
-	    auto sp = Sprite::create(_savedFilename);
+	    auto sp = Sprite::create(target);
 	    addChild(sp, 0, 119);
 	    Size s = Director::getInstance()->getWinSize();
 	    sp->setPosition(s.width / 2, s.height / 2);
 	    sp->setScale(0.25);
+        _savedFilename = target;
     }
     else
     {

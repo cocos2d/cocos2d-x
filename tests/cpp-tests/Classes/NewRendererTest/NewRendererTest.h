@@ -158,7 +158,7 @@ protected:
     ~CaptureScreenTest();
 
     void onCaptured(Ref*, const Rect& rect);
-    void afterCaptured(bool succeed);
+    void afterCaptured(bool succeed, const std::string& target);
 
     std::string _savedFilename;
 };
