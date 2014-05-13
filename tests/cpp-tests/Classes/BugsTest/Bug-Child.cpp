@@ -31,7 +31,7 @@ bool BugChild::init()
         // create and initialize a Label
         auto item1 = MenuItemFont::create("Switch Child", CC_CALLBACK_1(BugChild::switchChild, this));
         
-        menu = Menu::create(item1, NULL);
+        menu = Menu::create(item1, nullptr);
         
         menu->alignItemsVertically();
         menu->setPosition(size.width/2, 100);
