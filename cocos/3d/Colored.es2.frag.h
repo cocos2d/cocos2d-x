@@ -1,3 +1,4 @@
+
 static const char* baseColoredFrag = STRINGIFY(
 
 #ifdef GL_ES

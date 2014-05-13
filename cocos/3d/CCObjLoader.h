@@ -6,8 +6,8 @@
 // copied from Syoyo Fujita
 // https://github.com/syoyo/tinyobjloader
 
-#ifndef _OBJLOADER_H
-#define _OBJLOADER_H
+#ifndef __CCOBJLOADER_H__
+#define __CCOBJLOADER_H__
 
 #include <string>
 #include <vector>

@@ -1,3 +1,4 @@
+
 static const char* baseTexturedFrag = STRINGIFY(
 
 #ifdef GL_ES

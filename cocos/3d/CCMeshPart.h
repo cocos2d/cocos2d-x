@@ -1,7 +1,6 @@
 
-#ifndef __CCMESHPART_H_
-#define __CCMESHPART_H_
-
+#ifndef __CCMESHPART_H__
+#define __CCMESHPART_H__
 
 #include <string>
 #include <vector>
