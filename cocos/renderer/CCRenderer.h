@@ -28,6 +28,7 @@
 
 #include "base/CCPlatformMacros.h"
 #include "CCRenderCommand.h"
+#include "CCCustomCommand.h"
 #include "renderer/CCGLProgram.h"
 #include "CCGL.h"
 #include <vector>
@@ -117,6 +118,9 @@ public:
     /** returns whether or not a rectangle is visible or not */
     bool checkVisibility(const Matrix& transform, const Size& size);
 
+	/** capture screen */
+	void captureScreen(std::function<void(bool)> afterCaptued, const std::string& filename, bool flipped, const Rect& rect = Rect::ZERO);
+
 protected:
 
     void setupIndices();
@@ -134,6 +138,8 @@ protected:
     void visitRenderQueue(const RenderQueue& queue);
 
     void convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const Matrix& modelView);
+
+	void onCaptureScreen(std::function<void(bool)> afterCaptued, const std::string& fileanme, bool flipped, const Rect& rect);
 
     std::stack<int> _commandGroupStack;
     
@@ -159,6 +165,8 @@ protected:
     bool _isRendering;
     
     GroupCommandManager* _groupCommandManager;
+
+	CustomCommand _captureScreen;
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     EventListenerCustom* _cacheTextureListener;
