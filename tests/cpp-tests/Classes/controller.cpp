@@ -512,7 +512,10 @@ void TestController::autorun()
     strcpy(cmd, tmp.c_str());
     wait(3);
     send(sfd,cmd,strlen(cmd),0);
-    wait(3600);
+    while(true)
+    {
+        wait(1);
+    }
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
         closesocket(sfd);
         WSACleanup();

@@ -14,6 +14,8 @@
 		<string>rgba8888</string>
 		<key>cocos2d.x.texture.pvrv2_has_alpha_premultiplied</key>
 		<false/>
+		<key>cocos2d.x.testcpp.autorun</key>
+		<true/>
 	</dict>
 	<key>metadata</key>
 	<dict>
