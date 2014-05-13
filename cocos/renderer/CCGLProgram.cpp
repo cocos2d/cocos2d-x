@@ -328,7 +328,7 @@ void GLProgram::parseUniforms()
 				glGetActiveUniform(_program, i, length, NULL, &uniform.size, &uniform.type, uniformName);
 				uniformName[length] = '\0';
 
-                // Only add uniforms that are not build-in.
+                // Only add uniforms that are not built-in.
                 // The ones that start with 'CC_' are built-ins
                 if(strncmp("CC_", uniformName, 3) != 0) {
 
@@ -617,7 +617,7 @@ GLint GLProgram::getUniformLocationForName(const char* name) const
 
 void GLProgram::setUniformLocationWith1i(GLint location, GLint i1)
 {
-    bool updated =  updateUniformLocation(location, &i1, sizeof(i1)*1);
+    bool updated = updateUniformLocation(location, &i1, sizeof(i1)*1);
     
     if( updated )
     {
@@ -628,7 +628,7 @@ void GLProgram::setUniformLocationWith1i(GLint location, GLint i1)
 void GLProgram::setUniformLocationWith2i(GLint location, GLint i1, GLint i2)
 {
     GLint ints[2] = {i1,i2};
-    bool updated =  updateUniformLocation(location, ints, sizeof(ints));
+    bool updated = updateUniformLocation(location, ints, sizeof(ints));
     
     if( updated )
     {
@@ -639,7 +639,7 @@ void GLProgram::setUniformLocationWith2i(GLint location, GLint i1, GLint i2)
 void GLProgram::setUniformLocationWith3i(GLint location, GLint i1, GLint i2, GLint i3)
 {
     GLint ints[3] = {i1,i2,i3};
-    bool updated =  updateUniformLocation(location, ints, sizeof(ints));
+    bool updated = updateUniformLocation(location, ints, sizeof(ints));
     
     if( updated )
     {
@@ -650,7 +650,7 @@ void GLProgram::setUniformLocationWith3i(GLint location, GLint i1, GLint i2, GLi
 void GLProgram::setUniformLocationWith4i(GLint location, GLint i1, GLint i2, GLint i3, GLint i4)
 {
     GLint ints[4] = {i1,i2,i3,i4};
-    bool updated =  updateUniformLocation(location, ints, sizeof(ints));
+    bool updated = updateUniformLocation(location, ints, sizeof(ints));
     
     if( updated )
     {
@@ -660,7 +660,7 @@ void GLProgram::setUniformLocationWith4i(GLint location, GLint i1, GLint i2, GLi
 
 void GLProgram::setUniformLocationWith2iv(GLint location, GLint* ints, unsigned int numberOfArrays)
 {
-    bool updated =  updateUniformLocation(location, ints, sizeof(int)*2*numberOfArrays);
+    bool updated = updateUniformLocation(location, ints, sizeof(int)*2*numberOfArrays);
     
     if( updated )
     {
@@ -670,7 +670,7 @@ void GLProgram::setUniformLocationWith2iv(GLint location, GLint* ints, unsigned 
 
 void GLProgram::setUniformLocationWith3iv(GLint location, GLint* ints, unsigned int numberOfArrays)
 {
-    bool updated =  updateUniformLocation(location, ints, sizeof(int)*3*numberOfArrays);
+    bool updated = updateUniformLocation(location, ints, sizeof(int)*3*numberOfArrays);
     
     if( updated )
     {
@@ -680,7 +680,7 @@ void GLProgram::setUniformLocationWith3iv(GLint location, GLint* ints, unsigned 
 
 void GLProgram::setUniformLocationWith4iv(GLint location, GLint* ints, unsigned int numberOfArrays)
 {
-    bool updated =  updateUniformLocation(location, ints, sizeof(int)*4*numberOfArrays);
+    bool updated = updateUniformLocation(location, ints, sizeof(int)*4*numberOfArrays);
     
     if( updated )
     {
@@ -690,7 +690,7 @@ void GLProgram::setUniformLocationWith4iv(GLint location, GLint* ints, unsigned 
 
 void GLProgram::setUniformLocationWith1f(GLint location, GLfloat f1)
 {
-    bool updated =  updateUniformLocation(location, &f1, sizeof(f1)*1);
+    bool updated = updateUniformLocation(location, &f1, sizeof(f1)*1);
 
     if( updated )
     {
@@ -712,7 +712,7 @@ void GLProgram::setUniformLocationWith2f(GLint location, GLfloat f1, GLfloat f2)
 void GLProgram::setUniformLocationWith3f(GLint location, GLfloat f1, GLfloat f2, GLfloat f3)
 {
     GLfloat floats[3] = {f1,f2,f3};
-    bool updated =  updateUniformLocation(location, floats, sizeof(floats));
+    bool updated = updateUniformLocation(location, floats, sizeof(floats));
 
     if( updated )
     {
@@ -723,7 +723,7 @@ void GLProgram::setUniformLocationWith3f(GLint location, GLfloat f1, GLfloat f2,
 void GLProgram::setUniformLocationWith4f(GLint location, GLfloat f1, GLfloat f2, GLfloat f3, GLfloat f4)
 {
     GLfloat floats[4] = {f1,f2,f3,f4};
-    bool updated =  updateUniformLocation(location, floats, sizeof(floats));
+    bool updated = updateUniformLocation(location, floats, sizeof(floats));
 
     if( updated )
     {
@@ -733,7 +733,7 @@ void GLProgram::setUniformLocationWith4f(GLint location, GLfloat f1, GLfloat f2,
 
 void GLProgram::setUniformLocationWith2fv(GLint location, const GLfloat* floats, unsigned int numberOfArrays)
 {
-    bool updated =  updateUniformLocation(location, floats, sizeof(float)*2*numberOfArrays);
+    bool updated = updateUniformLocation(location, floats, sizeof(float)*2*numberOfArrays);
 
     if( updated )
     {
@@ -743,7 +743,7 @@ void GLProgram::setUniformLocationWith2fv(GLint location, const GLfloat* floats,
 
 void GLProgram::setUniformLocationWith3fv(GLint location, const GLfloat* floats, unsigned int numberOfArrays)
 {
-    bool updated =  updateUniformLocation(location, floats, sizeof(float)*3*numberOfArrays);
+    bool updated = updateUniformLocation(location, floats, sizeof(float)*3*numberOfArrays);
 
     if( updated )
     {
@@ -753,7 +753,7 @@ void GLProgram::setUniformLocationWith3fv(GLint location, const GLfloat* floats,
 
 void GLProgram::setUniformLocationWith4fv(GLint location, const GLfloat* floats, unsigned int numberOfArrays)
 {
-    bool updated =  updateUniformLocation(location, floats, sizeof(float)*4*numberOfArrays);
+    bool updated = updateUniformLocation(location, floats, sizeof(float)*4*numberOfArrays);
 
     if( updated )
     {
@@ -762,7 +762,7 @@ void GLProgram::setUniformLocationWith4fv(GLint location, const GLfloat* floats,
 }
 
 void GLProgram::setUniformLocationWithMatrix2fv(GLint location, const GLfloat* matrixArray, unsigned int numberOfMatrices) {
-    bool updated =  updateUniformLocation(location, matrixArray, sizeof(float)*4*numberOfMatrices);
+    bool updated = updateUniformLocation(location, matrixArray, sizeof(float)*4*numberOfMatrices);
     
     if( updated )
     {
@@ -771,7 +771,7 @@ void GLProgram::setUniformLocationWithMatrix2fv(GLint location, const GLfloat* m
 }
 
 void GLProgram::setUniformLocationWithMatrix3fv(GLint location, const GLfloat* matrixArray, unsigned int numberOfMatrices) {
-    bool updated =  updateUniformLocation(location, matrixArray, sizeof(float)*9*numberOfMatrices);
+    bool updated = updateUniformLocation(location, matrixArray, sizeof(float)*9*numberOfMatrices);
     
     if( updated )
     {
@@ -782,7 +782,7 @@ void GLProgram::setUniformLocationWithMatrix3fv(GLint location, const GLfloat* m
 
 void GLProgram::setUniformLocationWithMatrix4fv(GLint location, const GLfloat* matrixArray, unsigned int numberOfMatrices)
 {
-    bool updated =  updateUniformLocation(location, matrixArray, sizeof(float)*16*numberOfMatrices);
+    bool updated = updateUniformLocation(location, matrixArray, sizeof(float)*16*numberOfMatrices);
 
     if( updated )
     {

@@ -36,6 +36,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class GLProgram;
+class Texture2D;
 struct Uniform;
 struct VertexAttrib;
 
@@ -60,6 +61,7 @@ public:
 	void setVec4(const Vector4& value);
 	void setMat4(const Matrix& value);
     void setCallback(const std::function<void(Uniform*)> &callback);
+    void setTexture(GLuint textureId, GLuint activeTexture);
 
     void apply();
 
@@ -75,6 +77,10 @@ protected:
 		float v3Value[3];
 		float v4Value[4];
 		float matrixValue[16];
+        struct {
+            GLuint textureId;
+            GLuint textureUnit;
+        } tex;
 		std::function<void(Uniform*)> *callback;
 
         U() { memset( this, 0, sizeof(*this) ); }
@@ -154,20 +160,23 @@ public:
     void setGLProgram(GLProgram* glprogram);
     GLProgram* getGLProgram() const { return _glprogram; }
 
+    // vertex attribs
     uint32_t getVertexAttribsFlags() const { return _vertexAttribsFlags; }
     ssize_t getVertexAttribCount() const { return _attributes.size(); }
     void setVertexAttribCallback(const std::string &name, const std::function<void(VertexAttrib*)> &callback);
     void setVertexAttribPointer(const std::string &name, GLint size, GLenum type, GLboolean normalized, GLsizei stride, GLvoid *pointer);
 
+    // user defined uniforms
     ssize_t getUniformCount() const { return _uniforms.size(); }
-    void setUniformFloat(const std::string &uniformName, float value);
 	void setUniformInt(const std::string &uniformName, int value);
+    void setUniformFloat(const std::string &uniformName, float value);
 	void setUniformVec2(const std::string &uniformName, const Vector2& value);
 	void setUniformVec3(const std::string &uniformName, const Vector3& value);
 	void setUniformVec4(const std::string &uniformName, const Vector4& value);
 	void setUniformMat4(const std::string &uniformName, const Matrix& value);
     void setUniformCallback(const std::string &uniformName, const std::function<void(Uniform*)> &callback);
-
+    void setUniformTexture(const std::string &uniformName, Texture2D *texture);
+    void setUniformTexture(const std::string &uniformName, GLuint textureId);
 
 protected:
     GLProgramState();
@@ -180,6 +189,7 @@ protected:
     std::unordered_map<std::string, UniformValue> _uniforms;
     std::unordered_map<std::string, VertexAttribValue> _attributes;
 
+    int _textureUnitIndex;
     uint32_t _vertexAttribsFlags;
     GLProgram *_glprogram;
 };

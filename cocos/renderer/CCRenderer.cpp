@@ -453,7 +453,7 @@ void Renderer::drawBatchedQuads()
     for(const auto& cmd : _batchedQuadCommands)
     {
         auto newMaterialID = cmd->getMaterialID();
-        if(_lastMaterialID != newMaterialID || newMaterialID == QuadCommand::MATERIAL_ID_IGNORE)
+        if(_lastMaterialID != newMaterialID || newMaterialID == QuadCommand::MATERIAL_ID_DO_NOT_BATCH)
         {
             //Draw quads
             if(quadsToDraw > 0)

@@ -35,7 +35,7 @@ NS_CC_BEGIN
 class QuadCommand : public RenderCommand
 {
 public:
-    static const int MATERIAL_ID_IGNORE = 0;
+    static const int MATERIAL_ID_DO_NOT_BATCH = 0;
 
     QuadCommand();
     ~QuadCommand();
