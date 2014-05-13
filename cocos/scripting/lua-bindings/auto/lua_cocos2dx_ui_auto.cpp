@@ -8912,9 +8912,9 @@ int lua_cocos2dx_ui_LoadingBar_setPercent(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        int arg0;
+        double arg0;
 
-        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0);
+        ok &= luaval_to_number(tolua_S, 2,&arg0);
         if(!ok)
             return 0;
         cobj->setPercent(arg0);
@@ -9140,7 +9140,7 @@ int lua_cocos2dx_ui_LoadingBar_getPercent(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        int ret = cobj->getPercent();
+        double ret = cobj->getPercent();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
@@ -9232,8 +9232,8 @@ int lua_cocos2dx_ui_LoadingBar_create(lua_State* tolua_S)
             std::string arg0;
             ok &= luaval_to_std_string(tolua_S, 2,&arg0);
             if (!ok) { break; }
-            int arg1;
-            ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
+            double arg1;
+            ok &= luaval_to_number(tolua_S, 3,&arg1);
             if (!ok) { break; }
             cocos2d::ui::LoadingBar* ret = cocos2d::ui::LoadingBar::create(arg0, arg1);
             object_to_luaval<cocos2d::ui::LoadingBar>(tolua_S, "ccui.LoadingBar",(cocos2d::ui::LoadingBar*)ret);
