@@ -71,8 +71,6 @@ enum {
     kNodeOnCleanup
 };
 
-USING_NS_CC_MATH;
-
 bool nodeComparisonLess(Node* n1, Node* n2);
 
 class EventListener;

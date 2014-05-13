@@ -218,6 +218,30 @@ Widget* GUIReader::widgetFromJsonFile(const char *fileName)
 }
 
 
+void WidgetPropertiesReader::setAnchorPointForWidget(cocos2d::ui::Widget *widget, const rapidjson::Value &options)
+{
+    bool isAnchorPointXExists = DICTOOL->checkObjectExist_json(options, "anchorPointX");
+    float anchorPointXInFile;
+    if (isAnchorPointXExists) {
+        anchorPointXInFile = DICTOOL->getFloatValue_json(options, "anchorPointX");
+    }else{
+        anchorPointXInFile = widget->getAnchorPoint().x;
+    }
+    
+    bool isAnchorPointYExists = DICTOOL->checkObjectExist_json(options, "anchorPointY");
+    float anchorPointYInFile;
+    if (isAnchorPointYExists) {
+        anchorPointYInFile = DICTOOL->getFloatValue_json(options, "anchorPointY");
+    }
+    else{
+        anchorPointYInFile = widget->getAnchorPoint().y;
+    }
+    
+    if (isAnchorPointXExists || isAnchorPointYExists) {
+        widget->setAnchorPoint(Vector2(anchorPointXInFile, anchorPointYInFile));
+    }
+}
+
 
 Widget* WidgetPropertiesReader0250::createWidget(const rapidjson::Value& data, const char* fullPath, const char* fileName)
 {
@@ -411,11 +435,9 @@ void WidgetPropertiesReader0250::setColorPropsForWidgetFromJsonDictionary(Widget
     int colorG = cg ? DICTOOL->getIntValue_json(options, "colorG") : 255;
     int colorB = cb ? DICTOOL->getIntValue_json(options, "colorB") : 255;
     widget->setColor(Color3B(colorR, colorG, colorB));
-    bool apx = DICTOOL->checkObjectExist_json(options, "anchorPointX");
-    float apxf = apx ? DICTOOL->getFloatValue_json(options, "anchorPointX") : ((widget->getWidgetType() == Widget::Type::ELEMENT) ? 0.5f : 0.0f);
-    bool apy = DICTOOL->checkObjectExist_json(options, "anchorPointY");
-    float apyf = apy ? DICTOOL->getFloatValue_json(options, "anchorPointY") : ((widget->getWidgetType() == Widget::Type::ELEMENT) ? 0.5f : 0.0f);
-    widget->setAnchorPoint(Vector2(apxf, apyf));
+    
+    this->setAnchorPointForWidget(widget, options);
+    
     bool flipX = DICTOOL->getBooleanValue_json(options, "flipX");
     bool flipY = DICTOOL->getBooleanValue_json(options, "flipY");
     widget->setFlippedX(flipX);
@@ -1233,16 +1255,16 @@ void WidgetPropertiesReader0300::setColorPropsForWidgetFromJsonDictionary(Widget
     int colorG = cg ? DICTOOL->getIntValue_json(options, "colorG") : 255;
     int colorB = cb ? DICTOOL->getIntValue_json(options, "colorB") : 255;
     widget->setColor(Color3B(colorR, colorG, colorB));
-    bool apx = DICTOOL->checkObjectExist_json(options, "anchorPointX");
-    float apxf = apx ? DICTOOL->getFloatValue_json(options, "anchorPointX") : ((widget->getWidgetType() == Widget::Type::ELEMENT) ? 0.5f : 0.0f);
-    bool apy = DICTOOL->checkObjectExist_json(options, "anchorPointY");
-    float apyf = apy ? DICTOOL->getFloatValue_json(options, "anchorPointY") : ((widget->getWidgetType() == Widget::Type::ELEMENT) ? 0.5f : 0.0f);
-    widget->setAnchorPoint(Vector2(apxf, apyf));
+   
+    this->setAnchorPointForWidget(widget, options);
+    
     bool flipX = DICTOOL->getBooleanValue_json(options, "flipX");
     bool flipY = DICTOOL->getBooleanValue_json(options, "flipY");
     widget->setFlippedX(flipX);
     widget->setFlippedY(flipY);
 }
+    
+
 
 void WidgetPropertiesReader0300::setPropsForButtonFromJsonDictionary(Widget*widget,const rapidjson::Value& options)
 {
@@ -1694,7 +1716,7 @@ void WidgetPropertiesReader0300::setPropsForLayoutFromJsonDictionary(Widget*widg
         float ch = DICTOOL->getFloatValue_json(options, "capInsetsHeight");
         panel->setBackGroundImageCapInsets(Rect(cx, cy, cw, ch));
     }
-    panel->setLayoutType((Layout::LayoutType)DICTOOL->getIntValue_json(options, "layoutType"));
+    panel->setLayoutType((Layout::Type)DICTOOL->getIntValue_json(options, "layoutType"));
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 

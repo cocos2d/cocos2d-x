@@ -136,7 +136,6 @@ public:
     virtual void initShader();
     void setBackgroundNotification();
 
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
     void listenBackToForeground(Ref *obj);
     
 protected:
@@ -144,9 +143,6 @@ protected:
 
     std::string _fragSourceFile;
     std::string _vertSourceFile;
-
-    CustomCommand _renderCommand;
-    void onDraw(const Matrix &transform, bool transformUpdated);
 };
 
 ShaderSprite::ShaderSprite()
@@ -162,7 +158,7 @@ void ShaderSprite::setBackgroundNotification()
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
-            this->setGLProgram(nullptr);
+            this->setGLProgramState(nullptr);
             this->initShader();
         });
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
@@ -176,49 +172,17 @@ void ShaderSprite::initShader()
     auto fragSource = fileUtiles->getStringFromFile(fragmentFilePath);
     std::string vertSource;
     if (_vertSourceFile.empty()) {
-        vertSource = ccPositionTextureColor_vert;
+        vertSource = ccPositionTextureColor_noMVP_vert;
     }else{
         std::string vertexFilePath = fileUtiles->fullPathForFilename(_vertSourceFile);
         vertSource = fileUtiles->getStringFromFile(vertexFilePath);
     }
 
-    auto program = GLProgram::createWithByteArrays(vertSource.c_str(), fragSource.c_str());
-    setGLProgram(program);
-
-    auto glprogramState = getGLProgramState();
+    auto glprogram = GLProgram::createWithByteArrays(vertSource.c_str(), fragSource.c_str());
+    auto glprogramState = GLProgramState::getOrCreate(glprogram);
+    this->setGLProgramState(glprogramState);
 
     setCustomUniforms();
-
-#define kQuadSize sizeof(_quad.bl)
-    size_t offset = (size_t)&_quad;
-
-    // vertex
-    int diff = offsetof( V3F_C4B_T2F, vertices);
-    glprogramState->setVertexAttribPointer("a_position", 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
-    // texCoods
-    diff = offsetof( V3F_C4B_T2F, texCoords);
-    glprogramState->setVertexAttribPointer("a_texCoord", 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
-    // color
-    diff = offsetof( V3F_C4B_T2F, colors);
-    glprogramState->setVertexAttribPointer("a_color", 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*) (offset + diff));
-
-}
-
-void ShaderSprite::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
-{
-    _renderCommand.init(_globalZOrder);
-    _renderCommand.func = CC_CALLBACK_0(ShaderSprite::onDraw, this, transform, transformUpdated);
-    renderer->addCommand(&_renderCommand);
-}
-
-void ShaderSprite::onDraw(const Matrix &transform, bool transformUpdated)
-{
-    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
-    GL::bindTexture2D(_texture->getName());
-
-    getGLProgramState()->apply(transform);
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
 }
 
 class NormalSprite : public ShaderSprite, public ShaderSpriteCreator<NormalSprite>
@@ -588,7 +552,7 @@ protected:
 OutlineSprite::OutlineSprite()
 {
     _fragSourceFile = "Shaders/example_outline.fsh";
-    _vertSourceFile = "Shaders/example_outline.vsh";
+    _vertSourceFile = ""; //"Shaders/example_outline.vsh";
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 }
 
@@ -619,157 +583,3 @@ OutlineShadingSpriteTest::OutlineShadingSpriteTest()
     }
 }
 
-class UniformSprite : public Sprite
-{
-public:
-    UniformSprite();
-    ~UniformSprite();
-    CREATE_FUNC(UniformSprite);
-    
-    virtual void initShader();
-   // void setBackgroundNotification();
-    
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
-   // void listenBackToForeground(Ref *obj);
-    
-protected:
-    virtual void setCustomUniforms();
-
-    std::string _fragSourceFile;
-    std::string _vertSourceFile;
-
-    CustomCommand _renderCommand;
-    void onDraw(const Matrix &transform, bool transformUpdated);
-};
-
-UniformSprite::UniformSprite()
-{
-    _vertSourceFile = "Shaders/example_Heart.vsh";
-    _fragSourceFile = "Shaders/example_Heart.fsh";
-}
-
-UniformSprite::~UniformSprite()
-{
-    
-}
-
-void UniformSprite::initShader()
-{
-    auto shader = GLProgram::createWithFilenames(_vertSourceFile, _fragSourceFile);
-    this->setGLProgram(shader);
-}
-
-void UniformSprite::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
-{
-    _renderCommand.init(_globalZOrder);
-	_renderCommand.func = CC_CALLBACK_0(UniformSprite::onDraw, this, transform, transformUpdated);
-	renderer->addCommand(&_renderCommand);
-}
-
-void UniformSprite::setCustomUniforms()
-{
-    auto glprogramstate = getGLProgramState();
-    glprogramstate->setUniformVec2("center", Vector2(480,320));
-    glprogramstate->setUniformVec2("resolution", Vector2(256,256));
-}
-
-void UniformSprite::onDraw(const Matrix &transform, bool transformUpdated)
-{
-    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
-    GL::bindTexture2D(_texture->getName());
-
-    float w = 256, h = 256;
-    GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
-
-    auto glprogramstate = getGLProgramState();
-    glprogramstate->setVertexAttribPointer("a_position", 2, GL_FLOAT, GL_FALSE, 0, vertices);
-	glprogramstate->apply(transform);
-
-
-	// Draw Call Test
-	glDrawArrays(GL_TRIANGLES, 0, 6);
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,6);
-    
-    CHECK_GL_ERROR_DEBUG();
-}
-
-class AttribSprite : public Sprite
-{
-public:
-    AttribSprite();
-    ~AttribSprite();
-    CREATE_FUNC(AttribSprite);
-    
-    virtual void initShader();
-    // void setBackgroundNotification();
-    
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
-    // void listenBackToForeground(Ref *obj);
-    
-protected:
-    virtual void setCustomUniforms();
-
-    std::string _fragSourceFile;
-    std::string _vertSourceFile;
-
-    CustomCommand _renderCommand;
-    void onDraw(const Matrix &transform, bool transformUpdated);
-};
-
-AttribSprite::AttribSprite()
-{
-    _fragSourceFile = "Shaders/example_normal.fsh";
-    _vertSourceFile = "Shaders/example_normal.vsh";
-}
-
-AttribSprite::~AttribSprite()
-{
-    
-}
-
-void AttribSprite::initShader()
-{
-    auto glProgram = GLProgram::createWithFilenames(_vertSourceFile, _fragSourceFile);
-    setGLProgram(glProgram);
-
-    auto glProgramState = getGLProgramState();
-
-#define kQuadSize sizeof(_quad.bl)
-    size_t offset = (size_t)&_quad;
-
-    // vertex
-    int diff = offsetof( V3F_C4B_T2F, vertices);
-    glProgramState->setVertexAttribPointer("a_position", 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
-    // texCoods
-    diff = offsetof( V3F_C4B_T2F, texCoords);
-    glProgramState->setVertexAttribPointer("a_texCoord", 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
-    // color
-    diff = offsetof( V3F_C4B_T2F, colors);
-    glProgramState->setVertexAttribPointer("a_color", 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*) (offset + diff));
-
-    //program->getUniformValue("u_diffuseColor")->setValue(Vector4(1,1,1,1));
-}
-
-void AttribSprite::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
-{
-    _renderCommand.init(_globalZOrder);
-	_renderCommand.func = CC_CALLBACK_0(AttribSprite::onDraw, this, transform, transformUpdated);
-	renderer->addCommand(&_renderCommand);
-}
-
-void AttribSprite::setCustomUniforms()
-{
-}
-
-void AttribSprite::onDraw(const Matrix &transform, bool transformUpdated)
-{
-    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
-    GL::bindTexture2D(_texture->getName());
-
-    getGLProgramState()->apply(transform);
-
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
-    
-    CHECK_GL_ERROR_DEBUG();
-}

@@ -113,7 +113,7 @@ bool Sprite3D::loadFromObj(const std::string& path)
     
     for (int i = 0; i < _mesh->getMeshPartCount(); i++)
     {
-        auto programstate = GLProgramState::get(getDefGLProgram(_mesh->getAttribFlag() & GL::VERTEX_ATTRIB_FLAG_TEX_COORDS));
+        auto programstate = GLProgramState::getOrCreate(getDefGLProgram(_mesh->getAttribFlag() & GL::VERTEX_ATTRIB_FLAG_TEX_COORD));
         _programState.pushBack(programstate);
         
         programstate->setVertexAttribPointer("a_position", 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
@@ -165,7 +165,7 @@ bool Sprite3D::initWithFile(const std::string &path)
         
         for (int i = 0; i < _mesh->getMeshPartCount(); i++)
         {
-            auto programstate = GLProgramState::get(getDefGLProgram(mesh->getAttribFlag() & GL::VERTEX_ATTRIB_FLAG_TEX_COORDS));
+            auto programstate = GLProgramState::getOrCreate(getDefGLProgram(mesh->getAttribFlag() & GL::VERTEX_ATTRIB_FLAG_TEX_COORD));
             _programState.pushBack(programstate);
             
             programstate->setVertexAttribPointer("a_position", 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);

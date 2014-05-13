@@ -40,7 +40,7 @@ namespace GL
 {
     enum
     {
-         VERTEX_ATTRIB_FLAG_NORMAL = VERTEX_ATTRIB_FLAG_TEX_COORDS << 1,
+         VERTEX_ATTRIB_FLAG_NORMAL = VERTEX_ATTRIB_FLAG_TEX_COORD << 1,
     };
 }
 

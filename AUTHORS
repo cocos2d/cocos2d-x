@@ -846,6 +846,9 @@ Developers:
         
     asmodehn
         Added SDK / NDK detection based on PATH in Setup.py
+        
+    myourys
+        Make cpp template support Eclipse c++ project
     
 Retired Core Developers:
     WenSheng Yang

@@ -275,7 +275,7 @@ Matrix* kmMat4Assign(Matrix* pOut, const Matrix* pIn)
 
 Matrix* kmMat4Identity(Matrix* pOut)
 {
-    *pOut = Matrix::identity();
+    *pOut = Matrix::IDENTITY;
     return pOut;
 }
 

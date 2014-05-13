@@ -7,8 +7,6 @@
 
 namespace cocosbuilder {
 
-USING_NS_CC_MATH;
-
 /* Forward declaration. */
 class CCBReader;
 
@@ -33,7 +31,7 @@ protected:
     virtual cocos2d::extension::Scale9Sprite * createNode(cocos2d::Node * pParent, cocosbuilder::CCBReader * ccbReader) {
         cocos2d::extension::Scale9Sprite* pNode = cocos2d::extension::Scale9Sprite::create();
         
-        pNode->setAnchorPoint(Vector2(0,0));
+        pNode->setAnchorPoint(cocos2d::Vector2::ZERO);
         
         return pNode;
     };

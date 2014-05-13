@@ -17,7 +17,7 @@
 --------------------------------
 -- @function [parent=#LoadingBar] setPercent 
 -- @param self
--- @param #int int
+-- @param #float float
         
 --------------------------------
 -- @function [parent=#LoadingBar] setScale9Enabled 
@@ -42,7 +42,7 @@
 --------------------------------
 -- @function [parent=#LoadingBar] getPercent 
 -- @param self
--- @return int#int ret (return value: int)
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- @function [parent=#LoadingBar] getCapInsets 
@@ -50,14 +50,14 @@
 -- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
--- overload function: create(string, int)
+-- overload function: create(string, float)
 --          
 -- overload function: create()
 --          
 -- @function [parent=#LoadingBar] create
 -- @param self
 -- @param #string str
--- @param #int int
+-- @param #float float
 -- @return LoadingBar#LoadingBar ret (retunr value: ccui.LoadingBar)
 
 --------------------------------
