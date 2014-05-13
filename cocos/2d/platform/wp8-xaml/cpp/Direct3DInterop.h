@@ -43,7 +43,7 @@ public delegate void RequestAdditionalFrameHandler();
 public ref class Direct3DInterop sealed : public Windows::Phone::Input::Interop::IDrawingSurfaceManipulationHandler
 {
 public:
-    Direct3DInterop();
+    Direct3DInterop(Windows::Graphics::Display::DisplayOrientations orientation);
 
 	Windows::Phone::Graphics::Interop::IDrawingSurfaceBackgroundContentProvider^ CreateContentProvider();
 

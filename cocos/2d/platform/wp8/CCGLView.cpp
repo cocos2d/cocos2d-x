@@ -89,7 +89,6 @@ GLView::GLView()
 {
 	s_pEglView = this;
     _viewName =  "cocos2dx";
-    UpdateOrientationMatrix();
 }
 
 GLView::~GLView()
@@ -114,8 +113,9 @@ bool GLView::initWithFullScreen(const std::string& viewName)
 }
 
 
-bool GLView::Create(EGLDisplay eglDisplay, EGLContext eglContext, EGLSurface eglSurface, float width, float height)
+bool GLView::Create(EGLDisplay eglDisplay, EGLContext eglContext, EGLSurface eglSurface, float width, float height, DisplayOrientations orientation)
 {
+    m_orientation = orientation;
     m_eglDisplay = eglDisplay;
     m_eglContext = eglContext;
     m_eglSurface = eglSurface;

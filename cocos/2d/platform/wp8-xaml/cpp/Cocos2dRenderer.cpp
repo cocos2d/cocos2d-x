@@ -39,9 +39,10 @@ using namespace PhoneDirect3DXamlAppComponent;
 
 USING_NS_CC;
 
-Cocos2dRenderer::Cocos2dRenderer(): mInitialized(false), m_loadingComplete(false), m_delegate(nullptr), m_messageBoxDelegate(nullptr)
+Cocos2dRenderer::Cocos2dRenderer(Windows::Graphics::Display::DisplayOrientations orientation): mInitialized(false), m_loadingComplete(false), m_delegate(nullptr), m_messageBoxDelegate(nullptr)
 {
     mApp = new AppDelegate();
+    m_orientation = orientation;
 }
 
 // Creates and restores Cocos2d-x after DirectX and Angle contexts are created or updated
@@ -53,7 +54,7 @@ void Cocos2dRenderer::CreateGLResources()
     {
         mInitialized = true;
         GLView* glview = GLView::create("Test Cpp");
-	    glview->Create(m_eglDisplay, m_eglContext, m_eglSurface, m_renderTargetSize.Width, m_renderTargetSize.Height);
+	    glview->Create(m_eglDisplay, m_eglContext, m_eglSurface, m_renderTargetSize.Width, m_renderTargetSize.Height,m_orientation);
         director->setOpenGLView(glview);
         CCApplication::getInstance()->run();
         glview->SetXamlEventDelegate(m_delegate);
