@@ -118,8 +118,8 @@ public:
     /** returns whether or not a rectangle is visible or not */
     bool checkVisibility(const Matrix& transform, const Size& size);
 
-	/** capture screen */
-	void captureScreen(std::function<void(bool)> afterCaptued, const std::string& filename, bool flipped, const Rect& rect = Rect::ZERO);
+    /** capture screen */
+    void captureScreen(std::function<void(bool)> afterCaptued, const std::string& filename, const Rect& rect = Rect::ZERO);
 
 protected:
 
@@ -139,7 +139,7 @@ protected:
 
     void convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const Matrix& modelView);
 
-	void onCaptureScreen(std::function<void(bool)> afterCaptued, const std::string& fileanme, bool flipped, const Rect& rect);
+    void onCaptureScreen(std::function<void(bool)> afterCaptued, const std::string& fileanme, bool flipped, const Rect& rect);
 
     std::stack<int> _commandGroupStack;
     

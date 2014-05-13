@@ -536,71 +536,71 @@ bool Renderer::checkVisibility(const Matrix &transform, const Size &size)
     return ret;
 }
 
-void Renderer::captureScreen(std::function<void(bool)> afterCaptured, const std::string& filename, bool flipped, const Rect& rect)
+void Renderer::captureScreen(std::function<void(bool)> afterCaptured, const std::string& filename, const Rect& rect)
 {
-	_captureScreen.init(1000);
-	_captureScreen.func = CC_CALLBACK_0(Renderer::onCaptureScreen, this, afterCaptured, filename, flipped, rect);
-	addCommand(&_captureScreen);
+    _captureScreen.init(std::numeric_limits<float>::max());
+    _captureScreen.func = CC_CALLBACK_0(Renderer::onCaptureScreen, this, afterCaptured, filename, true, rect);
+    addCommand(&_captureScreen);
 }
 
 void Renderer::onCaptureScreen(std::function<void(bool)> afterCaptured, const std::string& filename, bool flipped, const Rect& rect)
 {
-	float scaleFactor = Director::getInstance()->getContentScaleFactor();
-	int originx = (int)rect.origin.x;
-	int originy = (int)rect.origin.y;
-	int width = (int)rect.size.width * scaleFactor;
-	int height = (int)rect.size.height * scaleFactor;
-	bool succeed = false;
+    float scaleFactor = Director::getInstance()->getContentScaleFactor();
+    int originx = (int)rect.origin.x;
+    int originy = (int)rect.origin.y;
+    int width = (int)rect.size.width * scaleFactor;
+    int height = (int)rect.size.height * scaleFactor;
+    bool succeed = false;
 
-	if (rect.equals(Rect::ZERO))
-	{
-		originx = 0;
-		originy = 0;
-		width  = (int)Director::getInstance()->getWinSize().width * scaleFactor;
-		height = (int)Director::getInstance()->getWinSize().height * scaleFactor;
-	}
-	
-	do
-	{
-		GLubyte* buffer = new GLubyte[width * height * 4];
-		if (!buffer)
-		{
-			CC_SAFE_DELETE_ARRAY(buffer);
-			break;
-		}
+    if (rect.equals(Rect::ZERO))
+    {
+	    originx = 0;
+	    originy = 0;
+	    width  = (int)Director::getInstance()->getWinSize().width * scaleFactor;
+	    height = (int)Director::getInstance()->getWinSize().height * scaleFactor;
+    }
+
+    do
+    {
+	    GLubyte* buffer = new GLubyte[width * height * 4];
+	    if (!buffer)
+	    {
+		    CC_SAFE_DELETE_ARRAY(buffer);
+		    break;
+	    }
 		
-		glPixelStorei(GL_PACK_ALIGNMENT, 1);
-		glReadPixels(originx, originy, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
+	    glPixelStorei(GL_PACK_ALIGNMENT, 1);
+	    glReadPixels(originx, originy, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
 
-		if (flipped)
-		{
-			GLubyte* flippedBuffer = new GLubyte[width * height * 4];
-			if (!flippedBuffer)
-			{
-				CC_SAFE_DELETE(flippedBuffer);
-				break;
-			}
+	    if (flipped)
+	    {
+		    GLubyte* flippedBuffer = new GLubyte[width * height * 4];
+		    if (!flippedBuffer)
+		    {
+			    CC_SAFE_DELETE(flippedBuffer);
+			    break;
+		    }
 
-			for (int row = 0; row < height; ++row)
-			{
-				memcpy(flippedBuffer + (height - row - 1) * width * 4, buffer + row * width * 4, width * 4);
-			}
-			memcpy(buffer, flippedBuffer, width * height * 4);
-			CC_SAFE_DELETE_ARRAY(flippedBuffer);
-		}
+		    for (int row = 0; row < height; ++row)
+		    {
+			    memcpy(flippedBuffer + (height - row - 1) * width * 4, buffer + row * width * 4, width * 4);
+		    }
+		    memcpy(buffer, flippedBuffer, width * height * 4);
+		    CC_SAFE_DELETE_ARRAY(flippedBuffer);
+	    }
 
-		Image* image = new Image();
-		if (image)
-		{
-			image->initWithRawData(buffer, width * height * 4, width, height, 8);
-			CC_SAFE_DELETE_ARRAY(buffer);
-			image->saveToFile(filename);
-			succeed = true;
-		}
-		CC_SAFE_DELETE(image);
-	}while(0);
-
-	afterCaptured(succeed);
+	    Image* image = new Image();
+	    if (image)
+	    {
+		    image->initWithRawData(buffer, width * height * 4, width, height, 8);
+		    CC_SAFE_DELETE_ARRAY(buffer);
+		    image->saveToFile(filename);
+		    succeed = true;
+	    }
+	    CC_SAFE_DELETE(image);
+    }while(0);
+    	
+    afterCaptured(succeed);
 }
 
 NS_CC_END

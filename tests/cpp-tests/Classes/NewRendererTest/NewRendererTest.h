@@ -149,18 +149,18 @@ protected:
 class CaptureScreenTest : public MultiSceneTest
 {
 public:
-	CREATE_FUNC(CaptureScreenTest);
-	virtual std::string title() const override;
-	virtual std::string subtitle() const override;
+    CREATE_FUNC(CaptureScreenTest);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 
 protected:
-	CaptureScreenTest();
-	~CaptureScreenTest();
+    CaptureScreenTest();
+    ~CaptureScreenTest();
 
-	void onCaptured(Ref*, const Rect& rect);
-	void afterCaptured(bool succeed);
+    void onCaptured(Ref*, const Rect& rect);
+    void afterCaptured(bool succeed);
 
-	std::string _savedFilename;
+    std::string _savedFilename;
 };
 
 #endif //__NewRendererTest_H_
