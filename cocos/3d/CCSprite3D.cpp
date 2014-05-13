@@ -1,10 +1,3 @@
-//
-//  SkyboxNode.m
-//  testar1
-//
-//  Created by Pasi Kettunen on 12.12.2012.
-//
-//
 
 #include "CCSprite3D.h"
 #include "CCMeshCache.h"

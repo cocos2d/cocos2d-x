@@ -1,19 +1,6 @@
-/*
- *
- * SkyboxNode is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * SkyboxNode is distributed WITHOUT ANY WARRANTY; See the
- * GNU General Public License for more details.
- *
- * Note: The 'cocos2d for iPhone' license also applies if used in conjunction
- * with the Cocos2D framework.
- */
 
-#ifndef __SPRITE3D_H_
-#define __SPRITE3D_H_
+#ifndef __CCSPRITE3D_H__
+#define __CCSPRITE3D_H__
 
 #include <vector>
 #include "base/CCVector.h"
@@ -22,7 +9,6 @@
 #include "2d/CCNode.h"
 
 #include "renderer/CCCustomCommand.h"
-
 
 NS_CC_BEGIN
 
@@ -38,11 +24,9 @@ public:
     
     int           getMeshPartCount() const;
     
-    
     Mesh* getMesh() { return _mesh; }
     
     void setTexture(const std::string& texFile);
-    
 
 protected:
     Sprite3D();
@@ -57,7 +41,6 @@ protected:
     void onDraw(const Matrix &transform, bool transformUpdated);
     
     static GLProgram* getDefGLProgram(bool textured = true);
-    
 
     CustomCommand     _customCommand;
     Mesh              *_mesh;
@@ -71,7 +54,6 @@ protected:
     //Sprite3DEffect*     _effect;
     
     std::string       _path;
-    
 
     static GLProgram* s_defGLProgramTex;
     static GLProgram* s_defGLProgram;
