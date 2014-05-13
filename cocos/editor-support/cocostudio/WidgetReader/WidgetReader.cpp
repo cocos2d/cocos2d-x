@@ -162,29 +162,8 @@ namespace cocostudio
         int colorG = cg ? DICTOOL->getIntValue_json(options, "colorG") : 255;
         int colorB = cb ? DICTOOL->getIntValue_json(options, "colorB") : 255;
         widget->setColor(Color3B(colorR, colorG, colorB));
-        bool apx = DICTOOL->checkObjectExist_json(options, "anchorPointX");
         
-        float apxf;
-        float apyf;
-        if (apx) {
-            apxf =  DICTOOL->getFloatValue_json(options, "anchorPointX");
-        }
-        else{
-            apxf = widget->getAnchorPoint().x;
-        }
-        
-        bool apy = DICTOOL->checkObjectExist_json(options, "anchorPointY");
-        
-        if (apy) {
-            apyf = DICTOOL->getFloatValue_json(options, "anchorPointY");
-        }
-        else{
-            apyf = widget->getAnchorPoint().y;
-        }
-        
-        if (apx || apy) {
-            widget->setAnchorPoint(Vector2(apxf, apyf));
-        }
+        this->setAnchorPointForWidget(widget, options);
         
         bool flipX = DICTOOL->getBooleanValue_json(options, "flipX");
         bool flipY = DICTOOL->getBooleanValue_json(options, "flipY");
@@ -213,4 +192,31 @@ namespace cocostudio
         }
         return imageFileName_tp;
     }
+    
+    void WidgetReader::setAnchorPointForWidget(cocos2d::ui::Widget *widget, const rapidjson::Value &options)
+    {
+        bool isAnchorPointXExists = DICTOOL->checkObjectExist_json(options, "anchorPointX");
+        float anchorPointXInFile;
+        if (isAnchorPointXExists) {
+            anchorPointXInFile = DICTOOL->getFloatValue_json(options, "anchorPointX");
+        }else{
+            anchorPointXInFile = widget->getAnchorPoint().x;
+        }
+        
+        bool isAnchorPointYExists = DICTOOL->checkObjectExist_json(options, "anchorPointY");
+        float anchorPointYInFile;
+        if (isAnchorPointYExists) {
+            anchorPointYInFile = DICTOOL->getFloatValue_json(options, "anchorPointY");
+        }
+        else{
+            anchorPointYInFile = widget->getAnchorPoint().y;
+        }
+        
+        if (isAnchorPointXExists || isAnchorPointYExists) {
+            widget->setAnchorPoint(Vector2(anchorPointXInFile, anchorPointYInFile));
+        }
+    }
 }
+
+
+
