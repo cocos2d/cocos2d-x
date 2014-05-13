@@ -30,6 +30,9 @@ THE SOFTWARE.
 #include "2d/CCNode.h"
 #include "CCStdC.h"
 #include "2d/CCActionInstant.h"
+#include "base/CCDirector.h"
+#include "base/CCEventCustom.h"
+
 #include <stdarg.h>
 
 NS_CC_BEGIN
@@ -2256,7 +2259,12 @@ void Animate::update(float t)
             const ValueMap& dict = frame->getUserInfo();
             if ( !dict.empty() )
             {
-                //TODO: [[NSNotificationCenter defaultCenter] postNotificationName:AnimationFrameDisplayedNotification object:target_ userInfo:dict];
+                static EventCustom event(AnimationFrameDisplayedNotification);
+                static AnimationFrame::DisplayedNotificationInfo info;
+                info.target = _target;
+                info.userInfo = &dict;
+                event.setUserData(&info);
+                Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
             }
             _nextFrame = i+1;
         }

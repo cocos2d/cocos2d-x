@@ -57,6 +57,13 @@ class SpriteFrame;
 class CC_DLL AnimationFrame : public Ref, public Clonable
 {
 public:
+    
+    struct DisplayedNotificationInfo
+    {
+        Node* target;
+        const ValueMap* userInfo;
+    };
+    
     /**
      * Creates the animation frame with a spriteframe, number of delay units and a notification user info
      * @since 3.0
