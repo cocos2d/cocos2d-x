@@ -31,7 +31,7 @@ Sprite3D* Sprite3D::create(const std::string &modelPath)
         CCASSERT(false, "improper name specified when creating Sprite3D");
     
     auto sprite = new Sprite3D();
-    if (sprite && sprite->init(modelPath))
+    if (sprite && sprite->initWithFile(modelPath))
     {
         sprite->autorelease();
         return sprite;
@@ -103,13 +103,10 @@ Sprite3D::Sprite3D(): _partcount(0), _mesh(nullptr)
 
 Sprite3D::~Sprite3D()
 {
-    
     CC_SAFE_RELEASE_NULL(_mesh);
-    
 }
 
-
-bool Sprite3D::init(const std::string &path)
+bool Sprite3D::initWithFile(const std::string &path)
 {
     _partcount = 0;
     

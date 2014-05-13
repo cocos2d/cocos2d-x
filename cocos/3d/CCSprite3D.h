@@ -30,7 +30,7 @@ public:
 protected:
     Sprite3D();
     virtual ~Sprite3D();
-    bool init(const std::string &path);
+    bool initWithFile(const std::string &path);
     
     //.mtl file should at the same directory with the same name if exist
     bool loadFromObj(const std::string& path);
