@@ -146,7 +146,7 @@ bool RenderMeshData::generateNormals()
         vertexs.push_back(_normalVertexLists[idx].x);
         vertexs.push_back(_normalVertexLists[idx].y);
         vertexs.push_back(_normalVertexLists[idx].z);
-        if (attrFlag & GL::VERTEX_ATTRIB_FLAG_TEX_COORDS)
+        if (attrFlag & GL::VERTEX_ATTRIB_FLAG_TEX_COORD)
         {
             idx = i * vertexsize;
             vertexs.push_back(_vertexs[idx + 3]);
@@ -190,7 +190,7 @@ bool RenderMeshData::initFrom(std::vector<float>& posions, std::vector<float>& n
     if (texs.size())
     {
         vertexsize += 2;
-        attrFlag |= GL::VERTEX_ATTRIB_FLAG_TEX_COORDS;
+        attrFlag |= GL::VERTEX_ATTRIB_FLAG_TEX_COORD;
     }
     
     _vertexs.clear();
@@ -208,7 +208,7 @@ bool RenderMeshData::initFrom(std::vector<float>& posions, std::vector<float>& n
             _vertexs.push_back(normals[i * 3 + 2]);
         }
         
-        if (attrFlag & GL::VERTEX_ATTRIB_FLAG_TEX_COORDS)
+        if (attrFlag & GL::VERTEX_ATTRIB_FLAG_TEX_COORD)
         {
             _vertexs.push_back(texs[i * 2]);
             _vertexs.push_back(texs[i * 2 + 1]);
