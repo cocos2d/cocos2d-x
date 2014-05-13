@@ -322,7 +322,7 @@ public:
      *
      * @param LayoutType
      */
-    virtual void setLayoutType(LayoutType type) override;
+    virtual void setLayoutType(Type type) override;
     
     /**
      * Gets LayoutType.
@@ -331,7 +331,7 @@ public:
      *
      * @return LayoutType
      */
-    virtual LayoutType getLayoutType() const override;
+    virtual Type getLayoutType() const override;
     
     /**
      * Returns the "class name" of widget.

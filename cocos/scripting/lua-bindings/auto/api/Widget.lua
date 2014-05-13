@@ -85,11 +85,6 @@
 -- @return Widget::PositionType#Widget::PositionType ret (return value: ccui.Widget::PositionType)
         
 --------------------------------
--- @function [parent=#Widget] getWidgetType 
--- @param self
--- @return Widget::Type#Widget::Type ret (return value: ccui.Widget::Type)
-        
---------------------------------
 -- @function [parent=#Widget] getChildByName 
 -- @param self
 -- @param #string str
