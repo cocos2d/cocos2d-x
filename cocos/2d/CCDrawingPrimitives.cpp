@@ -45,9 +45,9 @@ THE SOFTWARE.
 #include "base/ccMacros.h"
 #include "CCGL.h"
 #include "base/CCDirector.h"
-#include "2d/ccGLStateCache.h"
-#include "2d/CCShaderCache.h"
-#include "2d/CCGLProgram.h"
+#include "renderer/ccGLStateCache.h"
+#include "renderer/CCGLProgramCache.h"
+#include "renderer/CCGLProgram.h"
 #include "2d/CCActionCatmullRom.h"
 #include "renderer/CCRenderer.h"
 
@@ -99,7 +99,7 @@ static void lazy_init( void )
         //
         // Position and 1 color passed as a uniform (to simulate glColor4ub )
         //
-        s_shader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
+        s_shader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
         s_shader->retain();
         
         s_colorLocation = s_shader->getUniformLocation("u_color");

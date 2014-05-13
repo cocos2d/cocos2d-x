@@ -31,7 +31,7 @@
 --------------------------------
 -- @function [parent=#ScrollView] getDirection 
 -- @param self
--- @return SCROLLVIEW_DIR#SCROLLVIEW_DIR ret (return value: ccui.SCROLLVIEW_DIR)
+-- @return ScrollView::Direction#ScrollView::Direction ret (return value: ccui.ScrollView::Direction)
         
 --------------------------------
 -- @function [parent=#ScrollView] scrollToBottomLeft 
@@ -51,7 +51,7 @@
 --------------------------------
 -- @function [parent=#ScrollView] setDirection 
 -- @param self
--- @param #ccui.SCROLLVIEW_DIR scrollview_dir
+-- @param #ccui.ScrollView::Direction direction
         
 --------------------------------
 -- @function [parent=#ScrollView] scrollToTopLeft 
@@ -86,6 +86,11 @@
 -- @function [parent=#ScrollView] jumpToPercentVertical 
 -- @param self
 -- @param #float float
+        
+--------------------------------
+-- @function [parent=#ScrollView] addEventListener 
+-- @param self
+-- @param #function func
         
 --------------------------------
 -- @function [parent=#ScrollView] setInertiaScrollEnabled 
@@ -190,7 +195,7 @@
 --------------------------------
 -- @function [parent=#ScrollView] getChildByName 
 -- @param self
--- @param #char char
+-- @param #string str
 -- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
@@ -206,7 +211,7 @@
 --------------------------------
 -- @function [parent=#ScrollView] getLayoutType 
 -- @param self
--- @return LayoutType#LayoutType ret (return value: ccui.LayoutType)
+-- @return Layout::Type#Layout::Type ret (return value: ccui.Layout::Type)
         
 --------------------------------
 -- @function [parent=#ScrollView] removeAllChildrenWithCleanup 
@@ -246,7 +251,7 @@
 --------------------------------
 -- @function [parent=#ScrollView] setLayoutType 
 -- @param self
--- @param #ccui.LayoutType layouttype
+-- @param #ccui.Layout::Type type
         
 --------------------------------
 -- @function [parent=#ScrollView] ScrollView 

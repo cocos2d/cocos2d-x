@@ -30,21 +30,17 @@
 #include "base/CCDirector.h"
 #include "2d/CCLabel.h"
 
-using namespace std;
-
 NS_CC_BEGIN
 
 bool LabelTextFormatter::multilineText(Label *theLabel)
 {
-    //int strLen = theLabel->getStringLength();
     auto limit = theLabel->_limitShowCount;
-
     auto strWhole = theLabel->_currentUTF16String;
 
-    vector<unsigned short> multiline_string;
+    std::vector<char16_t> multiline_string;
     multiline_string.reserve( limit );
 
-    vector<unsigned short> last_word;
+    std::vector<char16_t> last_word;
     last_word.reserve( 25 );
 
     bool   isStartOfLine  = false, isStartOfWord = false;
@@ -70,7 +66,7 @@ bool LabelTextFormatter::multilineText(Label *theLabel)
             tIndex = j+skip+justSkipped;
             if (strWhole[tIndex-1] == '\n')
             {
-                cc_utf8_trim_ws(&last_word);
+                StringUtils::trimUTF16Vector(last_word);
 
                 last_word.push_back('\n');
                 multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
@@ -93,7 +89,7 @@ bool LabelTextFormatter::multilineText(Label *theLabel)
         if (tIndex >= limit)
             break;
 
-        unsigned short character = strWhole[tIndex];
+        char16_t character = strWhole[tIndex];
 
         if (!isStartOfWord)
         {
@@ -109,15 +105,15 @@ bool LabelTextFormatter::multilineText(Label *theLabel)
         
         // 1) Whitespace.
         // 2) This character is non-CJK, but the last character is CJK
-        bool isspace = isspace_unicode(character);
+        bool isspace = StringUtils::isUnicodeSpace(character);
         bool isCJK = false;
         if(!isspace)
         {
-            isCJK = iscjk_unicode(character);
+            isCJK = StringUtils::isCJKUnicode(character);
         }
 
         if (isspace ||
-            (!last_word.empty() && iscjk_unicode(last_word.back()) && !isCJK))
+            (!last_word.empty() && StringUtils::isCJKUnicode(last_word.back()) && !isCJK))
         {
             // if current character is white space, put it into the current word
             if (isspace) last_word.push_back(character);
@@ -139,9 +135,9 @@ bool LabelTextFormatter::multilineText(Label *theLabel)
             {
                 last_word.push_back(character);
                 
-                int found = cc_utf8_find_last_not_char(multiline_string, ' ');
+                int found = StringUtils::getIndexOfLastNotChar16(multiline_string, ' ');
                 if (found != -1)
-                    cc_utf8_trim_ws(&multiline_string);
+                    StringUtils::trimUTF16Vector(multiline_string);
                 else
                     multiline_string.clear();
 
@@ -153,7 +149,7 @@ bool LabelTextFormatter::multilineText(Label *theLabel)
             }
             else
             {
-                cc_utf8_trim_ws(&last_word);
+                StringUtils::trimUTF16Vector(last_word);
 
                 last_word.push_back('\n');
                 
@@ -175,16 +171,11 @@ bool LabelTextFormatter::multilineText(Label *theLabel)
 
     multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
 
-    size_t size = multiline_string.size();
-    unsigned short* strNew = new unsigned short[size + 1];
-
-    for (size_t j = 0; j < size; ++j)
-    {
-        strNew[j] = multiline_string[j];
-    }
-
-    strNew[size] = 0;
-    theLabel->setCurrentString(strNew);
+    std::u16string strNew(multiline_string.begin(), multiline_string.end());
+    
+    theLabel->_currentUTF16String = strNew;
+    theLabel->computeStringNumLines();
+    theLabel->computeHorizontalKernings(theLabel->_currentUTF16String);
 
     return true;
 }
@@ -194,8 +185,8 @@ bool LabelTextFormatter::alignText(Label *theLabel)
     int i = 0;
     
     int lineNumber = 0;
-    int strLen = cc_wcslen(theLabel->_currentUTF16String);
-    vector<unsigned short> lastLine;
+    int strLen = static_cast<int>(theLabel->_currentUTF16String.length());
+    std::vector<char16_t> lastLine;
     auto strWhole = theLabel->_currentUTF16String;
 
     if (theLabel->_labelWidth > theLabel->_contentSize.width)
@@ -205,7 +196,7 @@ bool LabelTextFormatter::alignText(Label *theLabel)
 
     for (int ctr = 0; ctr <= strLen; ++ctr)
     { 
-        unsigned short currentChar = strWhole[ctr];
+        char16_t currentChar = strWhole[ctr];
 
         if (currentChar == '\n' || currentChar == 0)
         {
@@ -334,7 +325,7 @@ bool LabelTextFormatter::createStringSprites(Label *theLabel)
     
     for (unsigned int i = 0; i < stringLen; i++)
     {
-        unsigned short c    = strWhole[i];
+        char16_t c    = strWhole[i];
         if (fontAtlas->getLetterDefinitionForChar(c, tempDefinition))
         {
             charXOffset         = tempDefinition.offsetX;

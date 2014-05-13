@@ -24,7 +24,7 @@
 
 
 #include "renderer/CCBatchCommand.h"
-#include "2d/ccGLStateCache.h"
+#include "renderer/ccGLStateCache.h"
 #include "2d/CCTextureAtlas.h"
 #include "2d/CCTexture2D.h"
 

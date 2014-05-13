@@ -59,10 +59,10 @@ public:
     ~UIScene();
     bool init();
     // Menu Callbacks
-    void toCocosGUITestScene(Ref* sender, TouchEventType type);
-    virtual void previousCallback(Ref* sender, TouchEventType type);
-    virtual void restartCallback(Ref* sender, TouchEventType type);
-    virtual void nextCallback(Ref* sender, TouchEventType type);
+    void toCocosGUITestScene(Ref* sender, Widget::TouchEventType type);
+    virtual void previousCallback(Ref* sender, Widget::TouchEventType type);
+    virtual void restartCallback(Ref* sender, Widget::TouchEventType type);
+    virtual void nextCallback(Ref* sender, Widget::TouchEventType type);
     
     /** Title label of the scene. */    
     CC_SYNTHESIZE_READONLY(Text*, _sceneTitle, SceneTitle)
@@ -71,7 +71,7 @@ public:
     
 protected:
     // a selector callback
-    void menuCloseCallback(Ref* pSender, TouchEventType type);
+    void menuCloseCallback(Ref* sender, Widget::TouchEventType type);
     
 protected:
     Layer* _uiLayer;

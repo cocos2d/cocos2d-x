@@ -20,7 +20,7 @@
 -- @function [parent=#Helper] seekWidgetByName 
 -- @param self
 -- @param #ccui.Widget widget
--- @param #char char
+-- @param #string str
 -- @return Widget#Widget ret (return value: ccui.Widget)
         
 return nil

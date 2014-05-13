@@ -271,6 +271,61 @@ void WinRTWindow::OnPointerWheelChanged(CoreWindow^ sender, PointerEventArgs^ ar
     GLView::sharedOpenGLView()->handleTouchesEnd(1, &id, &p.x, &p.y);
 }
 
+// user pressed the Back Key on the phone
+void GLView::OnBackKeyPress()
+{
+#if 0
+    if (m_delegate)
+    {
+        m_delegate->Invoke(Cocos2dEvent::TerminateApp);
+    }
+#endif // 0
+
+}
+
+
+void GLView::OnPointerPressed(PointerEventArgs^ args)
+{
+#if 0
+    int id = args->CurrentPoint->PointerId;
+    Vector2 pt = GetPoint(args);
+    handleTouchesBegin(1, &id, &pt.x, &pt.y);
+#endif
+}
+
+void GLView::OnPointerMoved(PointerEventArgs^ args)
+{
+#if 0
+    auto currentPoint = args->CurrentPoint;
+    if (currentPoint->IsInContact)
+    {
+        if (m_lastPointValid)
+        {
+            int id = args->CurrentPoint->PointerId;
+            Vector2 p = GetPoint(args);
+            handleTouchesMove(1, &id, &p.x, &p.y);
+        }
+        m_lastPoint = currentPoint->Position;
+        m_lastPointValid = true;
+    }
+    else
+    {
+        m_lastPointValid = false;
+    }
+#endif
+}
+
+void GLView::OnPointerReleased(PointerEventArgs^ args)
+{
+#if 0
+    int id = args->CurrentPoint->PointerId;
+    Vector2 pt = GetPoint(args);
+    handleTouchesEnd(1, &id, &pt.x, &pt.y);
+#endif // 0
+
+}
+
+
 
 void WinRTWindow::OnPointerPressed(CoreWindow^ sender, PointerEventArgs^ args)
 {

@@ -39,7 +39,7 @@ bool UISliderTest::init()
         slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
         slider->loadProgressBarTexture("cocosui/sliderProgress.png");
         slider->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f/* + slider->getSize().height * 2.0f*/));
-        slider->addEventListenerSlider(this, sliderpercentchangedselector(UISliderTest::sliderEvent));
+        slider->addEventListener(CC_CALLBACK_2(UISliderTest::sliderEvent, this));
         _uiLayer->addChild(slider);
 
         
@@ -48,9 +48,9 @@ bool UISliderTest::init()
     return false;
 }
 
-void UISliderTest::sliderEvent(Ref *pSender, SliderEventType type)
+void UISliderTest::sliderEvent(Ref *pSender, Slider::EventType type)
 {
-    if (type == SLIDER_PERCENTCHANGED)
+    if (type == Slider::EventType::ON_PERCENTAGE_CHANGED)
     {
         Slider* slider = dynamic_cast<Slider*>(pSender);
         int percent = slider->getPercent();
@@ -97,7 +97,7 @@ bool UISliderTest_Scale9::init()
         slider->setCapInsets(Rect(0, 0, 0, 0));
         slider->setSize(Size(250.0f, 19));
         slider->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f/* + slider->getSize().height * 3.0f*/));
-        slider->addEventListenerSlider(this, sliderpercentchangedselector(UISliderTest_Scale9::sliderEvent));
+        slider->addEventListener(CC_CALLBACK_2(UISliderTest_Scale9::sliderEvent, this));
         _uiLayer->addChild(slider);
         
         
@@ -106,9 +106,9 @@ bool UISliderTest_Scale9::init()
     return false;
 }
 
-void UISliderTest_Scale9::sliderEvent(Ref *pSender, SliderEventType type)
+void UISliderTest_Scale9::sliderEvent(Ref *pSender, Slider::EventType type)
 {
-    if (type == SLIDER_PERCENTCHANGED)
+    if (type == Slider::EventType::ON_PERCENTAGE_CHANGED)
     {
         Slider* slider = dynamic_cast<Slider*>(pSender);
         int percent = slider->getPercent();

@@ -11,7 +11,7 @@ public:
     UIRichTextTest();
     ~UIRichTextTest();
     bool init();
-    void touchEvent(Ref *pSender, TouchEventType type);
+    void touchEvent(Ref *pSender, Widget::TouchEventType type);
     
 protected:
     UI_SCENE_CREATE_FUNC(UIRichTextTest)

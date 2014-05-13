@@ -9,7 +9,7 @@
 -- @param #int int
 -- @param #color3b_table color3b
 -- @param #unsigned char char
--- @param #char char
+-- @param #string str
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -18,7 +18,7 @@
 -- @param #int int
 -- @param #color3b_table color3b
 -- @param #unsigned char char
--- @param #char char
+-- @param #string str
 -- @return RichElementImage#RichElementImage ret (return value: ccui.RichElementImage)
         
 --------------------------------
