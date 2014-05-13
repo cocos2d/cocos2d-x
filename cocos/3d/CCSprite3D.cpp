@@ -27,14 +27,46 @@ Sprite3D* Sprite3D::create(const std::string &modelPath)
         CCASSERT(false, "improper name specified when creating Sprite3D");
     
     auto sprite = new Sprite3D();
-    if (sprite && sprite->init(modelPath))
+    if (sprite && sprite->initWithFile(modelPath))
     {
         sprite->autorelease();
         return sprite;
     }
-    
+    CC_SAFE_DELETE(sprite);
     return nullptr;
 }
+
+Sprite3D* Sprite3D::create(const std::string &modelPath, const std::string &texturePath)
+{
+    if (modelPath.length() < 4)
+        CCASSERT(false, "improper name specified when creating Sprite3D");
+    
+    auto sprite = new Sprite3D();
+    if (sprite && sprite->initWithFile(modelPath))
+    {
+        sprite->setTexture(texturePath);
+        sprite->autorelease();
+        return sprite;
+    }
+    CC_SAFE_DELETE(sprite);
+    return nullptr;
+}
+
+// Sprite3D* Sprite3D::create(Mesh* mesh, const std::string& texturePath)
+// {
+//     CCASSERT(nullptr != mesh, "Could not create a Sprite3D from a null Mesh");
+//     auto sprite = new Sprite3D();
+//     if(sprite)
+//     {
+//         sprite->_mesh = mesh;
+//         sprite->_mesh->retain();
+//         sprite->setTexture(texturePath);
+//         sprite->autorelease();
+//         return sprite;
+//     }
+//     CC_SAFE_DELETE(sprite);
+//     return nullptr;
+// }
 
 //.mtl file should at the same directory with the same name if exist
 bool Sprite3D::loadFromObj(const std::string& path)
@@ -103,13 +135,10 @@ Sprite3D::Sprite3D(): _partcount(0), _mesh(nullptr)
 
 Sprite3D::~Sprite3D()
 {
-    
     CC_SAFE_RELEASE_NULL(_mesh);
-    
 }
 
-
-bool Sprite3D::init(const std::string &path)
+bool Sprite3D::initWithFile(const std::string &path)
 {
     _partcount = 0;
     
@@ -220,7 +249,7 @@ void Sprite3D::onDraw(const Matrix &transform, bool transformUpdated)
         {
             auto meshPart = _mesh->getMeshPart(i);
             auto programstate = _programState.at(i);
-            size_t offset = 0;//(size_t)_mesh->getVertexPointer();
+            //size_t offset = 0;//(size_t)_mesh->getVertexPointer();
             
             
             programstate->setUniformVec4("u_color", Vector4(color.r, color.g, color.b, color.a));
