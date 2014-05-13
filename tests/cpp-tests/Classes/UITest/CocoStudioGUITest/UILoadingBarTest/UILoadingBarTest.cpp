@@ -54,27 +54,27 @@ void UILoadingBarTest_Left::update(float delta)
     loadingBar->setPercent(_count);
 }
 
-void UILoadingBarTest_Left::previousCallback(Ref* sender, TouchEventType type)
+void UILoadingBarTest_Left::previousCallback(Ref* sender, Widget::TouchEventType type)
 {
-    if (type == TOUCH_EVENT_ENDED)
+    if (type == Widget::TouchEventType::ENDED)
     {
         unscheduleUpdate();
         UIScene::previousCallback(sender, type);
     }
 }
 
-void UILoadingBarTest_Left::restartCallback(Ref* sender, TouchEventType type)
+void UILoadingBarTest_Left::restartCallback(Ref* sender, Widget::TouchEventType type)
 {
-    if (type == TOUCH_EVENT_ENDED)
+    if (type == Widget::TouchEventType::ENDED)
     {
         unscheduleUpdate();
         UIScene::restartCallback(sender, type);
     }
 }
 
-void UILoadingBarTest_Left::nextCallback(Ref* sender, TouchEventType type)
+void UILoadingBarTest_Left::nextCallback(Ref* sender, Widget::TouchEventType type)
 {
-    if (type == TOUCH_EVENT_ENDED)
+    if (type == Widget::TouchEventType::ENDED)
     {
         unscheduleUpdate();
         UIScene::nextCallback(sender, type);
@@ -111,7 +111,7 @@ bool UILoadingBarTest_Right::init()
         // Create the loading bar
         LoadingBar* loadingBar = LoadingBar::create("cocosui/sliderProgress.png");
         loadingBar->setTag(0);
-        loadingBar->setDirection(LoadingBarTypeRight);
+        loadingBar->setBarDirection(LoadingBar::Direction::RIGHT);
         
         loadingBar->setPosition(Vector2(widgetSize.width / 2.0f,
                                       widgetSize.height / 2.0f + loadingBar->getSize().height / 4.0f));
@@ -134,27 +134,27 @@ void UILoadingBarTest_Right::update(float delta)
     loadingBar->setPercent(_count);
 }
 
-void UILoadingBarTest_Right::previousCallback(Ref* sender, TouchEventType type)
+void UILoadingBarTest_Right::previousCallback(Ref* sender, Widget::TouchEventType type)
 {
-    if (type == TOUCH_EVENT_ENDED)
+    if (type == Widget::TouchEventType::ENDED)
     {
         unscheduleUpdate();
         UIScene::previousCallback(sender, type);
     }
 }
 
-void UILoadingBarTest_Right::restartCallback(Ref* sender, TouchEventType type)
+void UILoadingBarTest_Right::restartCallback(Ref* sender, Widget::TouchEventType type)
 {
-    if (type == TOUCH_EVENT_ENDED)
+    if (type == Widget::TouchEventType::ENDED)
     {
         unscheduleUpdate();
         UIScene::restartCallback(sender, type);
     }
 }
 
-void UILoadingBarTest_Right::nextCallback(Ref* sender, TouchEventType type)
+void UILoadingBarTest_Right::nextCallback(Ref* sender, Widget::TouchEventType type)
 {
-    if (type == TOUCH_EVENT_ENDED)
+    if (type == Widget::TouchEventType::ENDED)
     {
         unscheduleUpdate();
         UIScene::nextCallback(sender, type);
@@ -216,27 +216,27 @@ void UILoadingBarTest_Left_Scale9::update(float delta)
     loadingBar->setPercent(_count);
 }
 
-void UILoadingBarTest_Left_Scale9::previousCallback(Ref* sender, TouchEventType type)
+void UILoadingBarTest_Left_Scale9::previousCallback(Ref* sender, Widget::TouchEventType type)
 {
-    if (type == TOUCH_EVENT_ENDED)
+    if (type == Widget::TouchEventType::ENDED)
     {
         unscheduleUpdate();
         UIScene::previousCallback(sender, type);
     }
 }
 
-void UILoadingBarTest_Left_Scale9::restartCallback(Ref* sender, TouchEventType type)
+void UILoadingBarTest_Left_Scale9::restartCallback(Ref* sender, Widget::TouchEventType type)
 {
-    if (type == TOUCH_EVENT_ENDED)
+    if (type == Widget::TouchEventType::ENDED)
     {
         unscheduleUpdate();
-        UIScene::restartCallback(sender, type);
+        UIScene::restartCallback(sender,  type);
     }
 }
 
-void UILoadingBarTest_Left_Scale9::nextCallback(Ref* sender, TouchEventType type)
+void UILoadingBarTest_Left_Scale9::nextCallback(Ref* sender, Widget::TouchEventType type)
 {
-    if (type == TOUCH_EVENT_ENDED)
+    if (type == Widget::TouchEventType::ENDED)
     {
         unscheduleUpdate();
         UIScene::nextCallback(sender, type);
@@ -276,7 +276,7 @@ bool UILoadingBarTest_Right_Scale9::init()
         loadingBar->setScale9Enabled(true);
         loadingBar->setCapInsets(Rect(0, 0, 0, 0));
         loadingBar->setSize(Size(300, 13));
-        loadingBar->setDirection(LoadingBarTypeRight);        
+        loadingBar->setBarDirection(LoadingBar::Direction::RIGHT);
         
         loadingBar->setPosition(Vector2(widgetSize.width / 2.0f,
                                       widgetSize.height / 2.0f + loadingBar->getSize().height / 4.0f));
@@ -299,27 +299,27 @@ void UILoadingBarTest_Right_Scale9::update(float delta)
     loadingBar->setPercent(_count);
 }
 
-void UILoadingBarTest_Right_Scale9::previousCallback(Ref* sender, TouchEventType type)
+void UILoadingBarTest_Right_Scale9::previousCallback(Ref* sender, Widget::TouchEventType type)
 {
-    if (type == TOUCH_EVENT_ENDED)
+    if (type == Widget::TouchEventType::ENDED)
     {
         unscheduleUpdate();
         UIScene::previousCallback(sender, type);
     }
 }
 
-void UILoadingBarTest_Right_Scale9::restartCallback(Ref* sender, TouchEventType type)
+void UILoadingBarTest_Right_Scale9::restartCallback(Ref* sender, Widget::TouchEventType type)
 {
-    if (type == TOUCH_EVENT_ENDED)
+    if (type == Widget::TouchEventType::ENDED)
     {
         unscheduleUpdate();
-        UIScene::restartCallback(sender, type);
+        UIScene::restartCallback(sender,  type);
     }
 }
 
-void UILoadingBarTest_Right_Scale9::nextCallback(Ref* sender, TouchEventType type)
+void UILoadingBarTest_Right_Scale9::nextCallback(Ref* sender, Widget::TouchEventType type)
 {
-    if (type == TOUCH_EVENT_ENDED)
+    if (type == Widget::TouchEventType::ENDED)
     {
         unscheduleUpdate();
         UIScene::nextCallback(sender, type);

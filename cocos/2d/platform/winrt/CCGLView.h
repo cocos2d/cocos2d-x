@@ -30,7 +30,6 @@ THE SOFTWARE.
 #include "CCGL.h"
 #include "platform/CCCommon.h"
 #include "InputEvent.h"
-#include "CCGeometry.h"
 #include "platform/CCGLViewProtocol.h"
 #include <agile.h>
 
@@ -80,7 +79,7 @@ private:
 
 	Platform::Agile<Windows::UI::Core::CoreWindow> m_window;
 
-	Windows::Foundation::Vector2 m_lastPoint;
+	Windows::Foundation::Point m_lastPoint;
 	Windows::Foundation::EventRegistrationToken m_eventToken;
 	bool m_lastPointValid;
 	bool m_textInputEnabled;
@@ -114,9 +113,16 @@ public:
     void OnSuspending();
     void GLView::QueueEvent(std::shared_ptr<InputEvent>& event);
 
+    void OnPointerPressed(Windows::UI::Core::PointerEventArgs^ args);
+    void OnPointerMoved(Windows::UI::Core::PointerEventArgs^ args);
+    void OnPointerReleased(Windows::UI::Core::PointerEventArgs^ args);
+    void OnPointerPressed(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::PointerEventArgs^ args);
+    void OnBackKeyPress();
+
+
 private:
 	Windows::Foundation::EventRegistrationToken m_eventToken;
-	Windows::Foundation::Vector2 m_lastPoint;
+	Windows::Foundation::Point m_lastPoint;
 	bool m_lastPointValid;
 
 public:

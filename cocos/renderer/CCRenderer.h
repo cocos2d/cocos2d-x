@@ -28,7 +28,7 @@
 
 #include "base/CCPlatformMacros.h"
 #include "CCRenderCommand.h"
-#include "2d/CCGLProgram.h"
+#include "renderer/CCGLProgram.h"
 #include "CCGL.h"
 #include <vector>
 #include <stack>

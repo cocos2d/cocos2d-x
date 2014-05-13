@@ -188,6 +188,19 @@
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\external\ConvertUTF\ConvertUTF.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</CompileAsWinRT>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\external\ConvertUTF\ConvertUTFWrapper.cpp" />
     <ClCompile Include="..\..\external\edtaa3func\edtaa3func.cpp" />
     <ClCompile Include="..\..\external\tinyxml2\tinyxml2.cpp" />
     <ClCompile Include="..\..\external\unzip\ioapi.cpp" />
@@ -270,10 +283,16 @@
     <ClCompile Include="..\physics\chipmunk\CCPhysicsWorldInfo_chipmunk.cpp" />
     <ClCompile Include="..\renderer\CCBatchCommand.cpp" />
     <ClCompile Include="..\renderer\CCCustomCommand.cpp" />
+    <ClCompile Include="..\renderer\CCGLProgram.cpp" />
+    <ClCompile Include="..\renderer\CCGLProgramCache.cpp" />
+    <ClCompile Include="..\renderer\CCGLProgramState.cpp" />
+    <ClCompile Include="..\renderer\CCGLProgramStateCache.cpp" />
+    <ClCompile Include="..\renderer\ccGLStateCache.cpp" />
     <ClCompile Include="..\renderer\CCGroupCommand.cpp" />
     <ClCompile Include="..\renderer\CCQuadCommand.cpp" />
     <ClCompile Include="..\renderer\CCRenderCommand.cpp" />
     <ClCompile Include="..\renderer\CCRenderer.cpp" />
+    <ClCompile Include="..\renderer\ccShaders.cpp" />
     <ClCompile Include="CCAction.cpp" />
     <ClCompile Include="CCActionCamera.cpp" />
     <ClCompile Include="CCActionCatmullRom.cpp" />
@@ -320,8 +339,6 @@
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </ForcedIncludeFiles>
     </ClCompile>
-    <ClCompile Include="CCGLProgram.cpp" />
-    <ClCompile Include="ccGLStateCache.cpp" />
     <ClCompile Include="CCGrabber.cpp" />
     <ClCompile Include="CCGrid.cpp" />
     <ClCompile Include="CCNodeGrid.cpp" />
@@ -345,8 +362,6 @@
     <ClCompile Include="CCRenderTexture.cpp" />
     <ClCompile Include="CCScene.cpp" />
     <ClCompile Include="CCScriptSupport.cpp" />
-    <ClCompile Include="CCShaderCache.cpp" />
-    <ClCompile Include="ccShaders.cpp" />
     <ClCompile Include="CCSprite.cpp" />
     <ClCompile Include="CCSpriteBatchNode.cpp" />
     <ClCompile Include="CCSpriteFrame.cpp" />
@@ -414,6 +429,7 @@
     <ClCompile Include="TGAlib.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\external\ConvertUTF\ConvertUTF.h" />
     <ClInclude Include="..\..\external\edtaa3func\edtaa3func.h" />
     <ClInclude Include="..\..\external\tinyxml2\tinyxml2.h" />
     <ClInclude Include="..\..\external\unzip\ioapi.h" />
@@ -494,11 +510,17 @@
     <ClInclude Include="..\physics\chipmunk\CCPhysicsWorldInfo_chipmunk.h" />
     <ClInclude Include="..\renderer\CCBatchCommand.h" />
     <ClInclude Include="..\renderer\CCCustomCommand.h" />
+    <ClInclude Include="..\renderer\CCGLProgram.h" />
+    <ClInclude Include="..\renderer\CCGLProgramCache.h" />
+    <ClInclude Include="..\renderer\CCGLProgramState.h" />
+    <ClInclude Include="..\renderer\CCGLProgramStateCache.h" />
+    <ClInclude Include="..\renderer\ccGLStateCache.h" />
     <ClInclude Include="..\renderer\CCGroupCommand.h" />
     <ClInclude Include="..\renderer\CCQuadCommand.h" />
     <ClInclude Include="..\renderer\CCRenderCommand.h" />
     <ClInclude Include="..\renderer\CCRenderCommandPool.h" />
     <ClInclude Include="..\renderer\CCRenderer.h" />
+    <ClInclude Include="..\renderer\ccShaders.h" />
     <ClInclude Include="CCAction.h" />
     <ClInclude Include="CCActionCamera.h" />
     <ClInclude Include="CCActionCatmullRom.h" />
@@ -530,8 +552,6 @@
     <ClInclude Include="CCFontFNT.h" />
     <ClInclude Include="CCFontFreeType.h" />
     <ClInclude Include="ccFPSImages.h" />
-    <ClInclude Include="CCGLProgram.h" />
-    <ClInclude Include="ccGLStateCache.h" />
     <ClInclude Include="CCGrabber.h" />
     <ClInclude Include="CCGrid.h" />
     <ClInclude Include="CCNodeGrid.h" />
@@ -558,8 +578,6 @@
     <ClInclude Include="CCRenderTexture.h" />
     <ClInclude Include="CCScene.h" />
     <ClInclude Include="CCScriptSupport.h" />
-    <ClInclude Include="CCShaderCache.h" />
-    <ClInclude Include="ccShaders.h" />
     <ClInclude Include="CCSprite.h" />
     <ClInclude Include="CCSpriteBatchNode.h" />
     <ClInclude Include="CCSpriteFrame.h" />
@@ -619,6 +637,28 @@
     <None Include="..\math\Vector2.inl" />
     <None Include="..\math\Vector3.inl" />
     <None Include="..\math\Vector4.inl" />
+    <None Include="..\renderer\ccShader_Label.vert" />
+    <None Include="..\renderer\ccShader_Label_df.frag" />
+    <None Include="..\renderer\ccShader_Label_df_glow.frag" />
+    <None Include="..\renderer\ccShader_Label_normal.frag" />
+    <None Include="..\renderer\ccShader_Label_outline.frag" />
+    <None Include="..\renderer\ccShader_PositionColor.frag" />
+    <None Include="..\renderer\ccShader_PositionColor.vert" />
+    <None Include="..\renderer\ccShader_PositionColorLengthTexture.frag" />
+    <None Include="..\renderer\ccShader_PositionColorLengthTexture.vert" />
+    <None Include="..\renderer\ccShader_PositionTexture.frag" />
+    <None Include="..\renderer\ccShader_PositionTexture.vert" />
+    <None Include="..\renderer\ccShader_PositionTextureA8Color.frag" />
+    <None Include="..\renderer\ccShader_PositionTextureA8Color.vert" />
+    <None Include="..\renderer\ccShader_PositionTextureColor.frag" />
+    <None Include="..\renderer\ccShader_PositionTextureColor.vert" />
+    <None Include="..\renderer\ccShader_PositionTextureColorAlphaTest.frag" />
+    <None Include="..\renderer\ccShader_PositionTextureColor_noMVP.frag" />
+    <None Include="..\renderer\ccShader_PositionTextureColor_noMVP.vert" />
+    <None Include="..\renderer\ccShader_PositionTexture_uColor.frag" />
+    <None Include="..\renderer\ccShader_PositionTexture_uColor.vert" />
+    <None Include="..\renderer\ccShader_Position_uColor.frag" />
+    <None Include="..\renderer\ccShader_Position_uColor.vert" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\base\CMakeLists.txt" />

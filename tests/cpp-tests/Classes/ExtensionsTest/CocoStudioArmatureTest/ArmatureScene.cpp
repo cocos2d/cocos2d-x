@@ -185,7 +185,7 @@ void ArmatureTestLayer::onEnter()
 
     addChild(menu, 100);
 
-	setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
 }
 void ArmatureTestLayer::onExit()
@@ -1116,8 +1116,8 @@ void TestBoundingBox::draw(Renderer *renderer, const Matrix &transform, bool tra
 
 void TestBoundingBox::onDraw(const Matrix &transform, bool transformUpdated)
 {
-    getShaderProgram()->use();
-    getShaderProgram()->setUniformsForBuiltins(transform);
+    getGLProgram()->use();
+    getGLProgram()->setUniformsForBuiltins(transform);
     
     rect = armature->getBoundingBox();
     

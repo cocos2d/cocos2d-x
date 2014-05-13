@@ -30,18 +30,18 @@ bool UITextFieldTest_Editor::init()
         Layout* root = static_cast<Layout*>(_layout->getChildByName("root_Panel"));
         
         Text* back_label = static_cast<Text*>(Helper::seekWidgetByName(root, "back"));
-        back_label->addTouchEventListener(this, toucheventselector(UIScene_Editor::toGUIEditorTestScene));
+        back_label->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::toGUIEditorTestScene, this));
         
         _sceneTitle = static_cast<Text*>(Helper::seekWidgetByName(root, "UItest"));
         
         TextField* textField_normal = static_cast<TextField*>(Helper::seekWidgetByName(root, "TextField_1109"));
-        textField_normal->addEventListenerTextField(this, textfieldeventselector(UITextFieldTest_Editor::textFieldEvent));
+        textField_normal->addEventListener(CC_CALLBACK_2(UITextFieldTest_Editor::textFieldEvent, this));
         
         TextField* textField_max_character = static_cast<TextField*>(Helper::seekWidgetByName(root, "TextField_1110"));
-        textField_max_character->addEventListenerTextField(this, textfieldeventselector(UITextFieldTest_Editor::textFieldEvent));
+        textField_max_character->addEventListener(CC_CALLBACK_2(UITextFieldTest_Editor::textFieldEvent, this));
         
         TextField* textField_password = static_cast<TextField*>(Helper::seekWidgetByName(root, "TextField_1107"));
-        textField_password->addEventListenerTextField(this, textfieldeventselector(UITextFieldTest_Editor::textFieldEvent));
+        textField_password->addEventListener(CC_CALLBACK_2(UITextFieldTest_Editor::textFieldEvent, this));
         
         _displayValueLabel = Text::create();
         _displayValueLabel->setFontName("fonts/Marker Felt.ttf");
@@ -57,23 +57,23 @@ bool UITextFieldTest_Editor::init()
     return false;
 }
 
-void UITextFieldTest_Editor::textFieldEvent(Ref *pSender, TextFiledEventType type)
+void UITextFieldTest_Editor::textFieldEvent(Ref *pSender, TextField::EventType type)
 {
     switch (type)
     {
-        case TEXTFIELD_EVENT_ATTACH_WITH_IME:
+        case TextField::EventType::ATTACH_WITH_IME:
             _displayValueLabel->setText("attach with IME");
             break;
             
-        case TEXTFIELD_EVENT_DETACH_WITH_IME:
+        case TextField::EventType::DETACH_WITH_IME:
             _displayValueLabel->setText("detach with IME");
             break;
             
-        case TEXTFIELD_EVENT_INSERT_TEXT:
+        case TextField::EventType::INSERT_TEXT:
             _displayValueLabel->setText("insert words");
             break;
             
-        case TEXTFIELD_EVENT_DELETE_BACKWARD:
+        case TextField::EventType::DELETE_BACKWARD:
             _displayValueLabel->setText("delete word");
             break;
             

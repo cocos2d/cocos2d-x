@@ -58,9 +58,6 @@
     <Filter Include="script_support">
       <UniqueIdentifier>{5b082c5c-d396-43ca-b3b1-997d0f6247d0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="shaders">
-      <UniqueIdentifier>{163895ae-8a8e-46bf-bdf2-98bb2c1347fc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="draw_nodes">
       <UniqueIdentifier>{1179d205-d065-49f0-8457-bc4c3f1d0cb3}</UniqueIdentifier>
     </Filter>
@@ -102,6 +99,12 @@
     </Filter>
     <Filter Include="math">
       <UniqueIdentifier>{9bbf7050-757b-41b1-ab15-418db52c2023}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="renderer\Shaders">
+      <UniqueIdentifier>{3237780d-1154-4049-bf53-151c421f26e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ConvertUTF">
+      <UniqueIdentifier>{026f880b-7918-49f8-8f0d-00f7593ce326}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -275,18 +278,6 @@
     </ClCompile>
     <ClCompile Include="..\base\s3tc.cpp">
       <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="CCGLProgram.cpp">
-      <Filter>shaders</Filter>
-    </ClCompile>
-    <ClCompile Include="ccGLStateCache.cpp">
-      <Filter>shaders</Filter>
-    </ClCompile>
-    <ClCompile Include="CCShaderCache.cpp">
-      <Filter>shaders</Filter>
-    </ClCompile>
-    <ClCompile Include="ccShaders.cpp">
-      <Filter>shaders</Filter>
     </ClCompile>
     <ClCompile Include="CCSpriteBatchNode.cpp">
       <Filter>sprite_nodes</Filter>
@@ -600,6 +591,30 @@
     <ClCompile Include="..\base\CCEventListenerFocus.cpp">
       <Filter>base</Filter>
     </ClCompile>
+    <ClCompile Include="..\renderer\CCGLProgram.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCGLProgramState.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCGLProgramStateCache.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\ccGLStateCache.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\ccShaders.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCGLProgramCache.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\ConvertUTF\ConvertUTF.c">
+      <Filter>ConvertUTF</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\ConvertUTF\ConvertUTFWrapper.cpp">
+      <Filter>ConvertUTF</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -808,18 +823,6 @@
     </ClInclude>
     <ClInclude Include="..\base\s3tc.h">
       <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="CCGLProgram.h">
-      <Filter>shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="ccGLStateCache.h">
-      <Filter>shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="CCShaderCache.h">
-      <Filter>shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="ccShaders.h">
-      <Filter>shaders</Filter>
     </ClInclude>
     <ClInclude Include="CCSpriteBatchNode.h">
       <Filter>sprite_nodes</Filter>
@@ -1186,6 +1189,27 @@
     <ClInclude Include="..\base\CCEventListenerFocus.h">
       <Filter>base</Filter>
     </ClInclude>
+    <ClInclude Include="..\renderer\CCGLProgram.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCGLProgramState.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCGLProgramStateCache.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\ccGLStateCache.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\ccShaders.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCGLProgramCache.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\ConvertUTF\ConvertUTF.h">
+      <Filter>ConvertUTF</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\math\MathUtil.inl">
@@ -1208,6 +1232,72 @@
     </None>
     <None Include="..\math\Vector4.inl">
       <Filter>math</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_Label.vert">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_Label_df.frag">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_Label_df_glow.frag">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_Label_normal.frag">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_Label_outline.frag">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_Position_uColor.frag">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_Position_uColor.vert">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionColor.frag">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionColor.vert">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionColorLengthTexture.frag">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionColorLengthTexture.vert">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionTexture.frag">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionTexture.vert">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionTexture_uColor.frag">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionTexture_uColor.vert">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionTextureA8Color.frag">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionTextureA8Color.vert">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionTextureColor.frag">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionTextureColor.vert">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionTextureColor_noMVP.frag">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionTextureColor_noMVP.vert">
+      <Filter>renderer\Shaders</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionTextureColorAlphaTest.frag">
+      <Filter>renderer\Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

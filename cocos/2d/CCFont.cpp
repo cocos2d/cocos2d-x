@@ -100,47 +100,6 @@ const char * Font::getCurrentGlyphCollection() const
     }
 }
 
-unsigned short* Font::getUTF16Text(const char *text, int &outNumLetters) const
-{
-    unsigned short* utf16String = cc_utf8_to_utf16(text);
-    
-    if(!utf16String)
-        return 0;
-    
-    outNumLetters = cc_wcslen(utf16String);
-    return utf16String;
-}
-
-int Font::getUTF16TextLenght(unsigned short int *text) const
-{
-     return cc_wcslen(text);
-}
-
-unsigned short * Font::trimUTF16Text(unsigned short int *text, int newBegin, int newEnd) const
-{
-    if ( newBegin < 0 || newEnd <= 0 )
-        return 0;
-    
-    if ( newBegin >= newEnd )
-        return 0;
-    
-    if (newEnd >= cc_wcslen(text))
-        return 0;
-    
-    int newLenght = newEnd - newBegin + 2;
-    unsigned short* trimmedString = new unsigned short[newLenght];
-    
-    for(int c = 0; c < (newLenght - 1); ++c)
-    {
-        trimmedString[c] = text[newBegin + c];
-    }
-    
-    // last char
-    trimmedString[newLenght-1] = 0x0000;
-    
-    // done
-    return trimmedString;
-}
 
 NS_CC_END
 

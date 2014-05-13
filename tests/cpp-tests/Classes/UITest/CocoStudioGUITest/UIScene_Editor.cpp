@@ -32,11 +32,11 @@ bool UIScene_Editor::init()
     return false;
 }
 
-void UIScene_Editor::previousCallback(Ref *sender, TouchEventType type)
+void UIScene_Editor::previousCallback(Ref* sender, Widget::TouchEventType event)
 {
-    switch (type)
+    switch (event)
     {
-        case TOUCH_EVENT_ENDED:
+        case Widget::TouchEventType::ENDED:
             CCDirector::getInstance()->replaceScene(UISceneManager_Editor::sharedUISceneManager_Editor()->previousUIScene());
             break;
             
@@ -45,11 +45,11 @@ void UIScene_Editor::previousCallback(Ref *sender, TouchEventType type)
     }
 }
 
-void UIScene_Editor::nextCallback(Ref *sender, TouchEventType type)
+void UIScene_Editor::nextCallback(Ref* sender, Widget::TouchEventType event)
 {
-    switch (type)
+    switch (event)
     {
-        case TOUCH_EVENT_ENDED:
+        case Widget::TouchEventType::ENDED:
             CCDirector::getInstance()->replaceScene(UISceneManager_Editor::sharedUISceneManager_Editor()->nextUIScene());
             break;
             
@@ -58,11 +58,11 @@ void UIScene_Editor::nextCallback(Ref *sender, TouchEventType type)
     }
 }
 
-void UIScene_Editor::toGUIEditorTestScene(Ref *sender, TouchEventType type)
+void UIScene_Editor::toGUIEditorTestScene(Ref* sender, Widget::TouchEventType event)
 {
-    switch (type)
+    switch (event)
     {
-        case TOUCH_EVENT_ENDED:
+        case Widget::TouchEventType::ENDED:
         {
             UISceneManager_Editor::sharedUISceneManager_Editor()->purge();
             
