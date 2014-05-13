@@ -543,7 +543,7 @@ void Widget::didNotSelectSelf()
 bool Widget::onTouchBegan(Touch *touch, Event *unusedEvent)
 {
     _hitted = false;
-    if (isEnabled() && isTouchEnabled())
+    if (isVisible() && isEnabled() && isTouchEnabled())
     {
         _touchStartPos = touch->getLocation();
         if(hitTest(_touchStartPos) && clippingParentAreaContainPoint(_touchStartPos))
