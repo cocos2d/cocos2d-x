@@ -217,7 +217,7 @@ void Sprite3D::onDraw(const Matrix &transform, bool transformUpdated)
         {
             auto meshPart = _mesh->getMeshPart(i);
             auto programstate = _programState.at(i);
-            size_t offset = 0;//(size_t)_mesh->getVertexPointer();
+            //size_t offset = 0;//(size_t)_mesh->getVertexPointer();
             
             
             programstate->setUniformVec4("u_color", Vector4(color.r, color.g, color.b, color.a));
