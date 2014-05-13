@@ -197,6 +197,9 @@ public:
     virtual void onExit() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+    
+private:
+    EventListenerCustom* _frameDisplayedListener;
 };
 
 class ActionSequence : public ActionsDemo
