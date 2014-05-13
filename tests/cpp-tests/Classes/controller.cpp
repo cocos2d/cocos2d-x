@@ -409,6 +409,9 @@ void TestController::addConsoleAutoTest()
                         }
                     }
                 }
+                std::string  msg("autotest run successfully!");
+                send(fd, msg.c_str(), strlen(msg.c_str()),0);
+                send(fd, "\n",1,0);
                 return;
             }
 
@@ -451,6 +454,30 @@ void TestController::startAutoRun()
    
     std::thread t = std::thread( &TestController::autorun, this);
     t.detach();
+}
+
+ssize_t TestController::readline(int fd, char* ptr, size_t maxlen)
+{
+    size_t n, rc;
+    char c;
+
+    for( n = 0; n < maxlen - 1; n++ ) {
+        if( (rc = recv(fd, &c, 1, 0)) ==1 ) {
+            *ptr++ = c;
+            if(c == '\n') {
+                break;
+            }
+        } else if( rc == 0 ) {
+            return 0;
+        } else if( errno == EINTR ) {
+            continue;
+        } else {
+            return -1;
+        }
+    }
+
+    *ptr = 0;
+    return n;
 }
 
 void TestController::autorun()
@@ -515,8 +542,19 @@ void TestController::autorun()
     send(sfd,cmd,strlen(cmd),0);
     while(true)
     {
-        wait(1);
+        char resp[512];
+        readline(sfd, resp, 512);
+        if(strcmp(resp, "autotest run successfully!\n") == 0)
+        {
+            break;
+        }
+        wait(3);
     }
+    
+    tmp = "director end\n";
+    strcpy(cmd, tmp.c_str());
+    send(sfd,cmd,strlen(cmd),0);
+    wait(1);
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
         closesocket(sfd);
         WSACleanup();
