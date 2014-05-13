@@ -43,18 +43,18 @@ class Layout : public Widget
     DECLARE_CLASS_GUI_INFO
     
 public:
-    enum class ClippingType
-    {
-        STENCIL,
-        SCISSOR
-    };
-    
-    enum class LayoutType
+    enum class Type
     {
         ABSOLUTE,
         VERTICAL,
         HORIZONTAL,
         RELATIVE
+    };
+    
+    enum class ClippingType
+    {
+        STENCIL,
+        SCISSOR
     };
     
     enum class BackGroundColorType
@@ -63,6 +63,7 @@ public:
         SOLID,
         GRADIENT
     };
+    
     /**
      * Default constructor
      */
@@ -77,7 +78,7 @@ public:
      * Allocates and initializes a layout.
      */
     static Layout* create();
-        
+    
     //background
     /**
      * Sets a background image for layout
@@ -201,23 +202,10 @@ public:
      */
     virtual std::string getDescription() const override;
     
-    /**
-     * Sets LayoutType.
-     *
-     * @see LayoutType
-     *
-     * @param LayoutType
-     */
-    virtual void setLayoutType(LayoutType type);
+
+    virtual void setLayoutType(Type type);
     
-    /**
-     * Gets LayoutType.
-     *
-     * @see LayoutType
-     *
-     * @return LayoutType
-     */
-    virtual LayoutType getLayoutType() const;
+    virtual  Type getLayoutType() const;
 
     virtual void addChild(Node * child) override;
     /**
@@ -460,7 +448,7 @@ protected:
     Vector2 _alongVector;
     GLubyte _cOpacity;
     Size _backGroundImageTextureSize;
-    LayoutType _layoutType;
+    Type _layoutType;
     ClippingType _clippingType;
     DrawNode* _clippingStencil;
     bool _scissorRectDirty;
