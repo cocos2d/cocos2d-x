@@ -122,7 +122,7 @@ void Widget::onExit()
 
 void Widget::visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
 {
-    if (_enabled)
+    if (_visible)
     {
         adaptRenderers();
         ProtectedNode::visit(renderer, parentTransform, parentTransformUpdated);

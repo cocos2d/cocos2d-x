@@ -122,11 +122,12 @@ public:
 
     /**
      * Sets whether the widget is enabled
+     * 
+     * true if the widget is enabled, widget may be touched , false if the widget is disabled, widget cannot be touched.
      *
-     * Highest control of widget.
      * The default value is true, a widget is default to enabled
      *
-     * @param enabled   true if the widget is enabled, widget may be touched and visible, false if the widget is disabled, widget cannot be touched and hidden.
+     * @param enabled
      */
     virtual void setEnabled(bool enabled);
 
