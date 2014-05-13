@@ -812,6 +812,10 @@
 		29080DE4191B595E0066F8DF /* UIWidgetAddNodeTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29080D89191B595E0066F8DF /* UIWidgetAddNodeTest.cpp */; };
 		29080DE5191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29080D8B191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp */; };
 		29080DE6191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29080D8B191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp */; };
+		3E92EA821921A1400094CD21 /* Sprite3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E92EA801921A1400094CD21 /* Sprite3DTest.cpp */; };
+		3E92EA831921A1400094CD21 /* Sprite3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E92EA801921A1400094CD21 /* Sprite3DTest.cpp */; };
+		3E92EA851921A7720094CD21 /* Sprite3DTest in Resources */ = {isa = PBXBuildFile; fileRef = 3E92EA841921A7720094CD21 /* Sprite3DTest */; };
+		3E92EA861921A7720094CD21 /* Sprite3DTest in Resources */ = {isa = PBXBuildFile; fileRef = 3E92EA841921A7720094CD21 /* Sprite3DTest */; };
 		3EA0FB5E191B92F100B170C8 /* cocosvideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 3EA0FB5D191B92F100B170C8 /* cocosvideo.mp4 */; };
 		3EA0FB66191B933000B170C8 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EA0FB65191B933000B170C8 /* MediaPlayer.framework */; };
 		3EA0FB72191C844400B170C8 /* UIVideoPlayerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0FB70191C844400B170C8 /* UIVideoPlayerTest.cpp */; };
@@ -1847,6 +1851,9 @@
 		29080D8A191B595E0066F8DF /* UIWidgetAddNodeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWidgetAddNodeTest.h; sourceTree = "<group>"; };
 		29080D8B191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIWidgetAddNodeTest_Editor.cpp; sourceTree = "<group>"; };
 		29080D8C191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWidgetAddNodeTest_Editor.h; sourceTree = "<group>"; };
+		3E92EA801921A1400094CD21 /* Sprite3DTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Sprite3DTest.cpp; path = Sprite3DTest/Sprite3DTest.cpp; sourceTree = "<group>"; };
+		3E92EA811921A1400094CD21 /* Sprite3DTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Sprite3DTest.h; path = Sprite3DTest/Sprite3DTest.h; sourceTree = "<group>"; };
+		3E92EA841921A7720094CD21 /* Sprite3DTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sprite3DTest; path = "../tests/cpp-tests/Resources/Sprite3DTest"; sourceTree = "<group>"; };
 		3EA0FB5D191B92F100B170C8 /* cocosvideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = cocosvideo.mp4; path = "../tests/cpp-tests/Resources/cocosvideo.mp4"; sourceTree = "<group>"; };
 		3EA0FB65191B933000B170C8 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/MediaPlayer.framework; sourceTree = DEVELOPER_DIR; };
 		3EA0FB70191C844400B170C8 /* UIVideoPlayerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIVideoPlayerTest.cpp; sourceTree = "<group>"; };
@@ -2202,6 +2209,7 @@
 		1AC3592418CECF0A00F37B72 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				3E92EA7D1921A0C60094CD21 /* Sprite3DTest */,
 				1AC3592518CECF0A00F37B72 /* AccelerometerTest */,
 				1AC3592818CECF0A00F37B72 /* ActionManagerTest */,
 				1AC3592B18CECF0A00F37B72 /* ActionsEaseTest */,
@@ -3268,6 +3276,7 @@
 		1AC35CA818CED83500F37B72 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3E92EA841921A7720094CD21 /* Sprite3DTest */,
 				3EA0FB5D191B92F100B170C8 /* cocosvideo.mp4 */,
 				1AC35CA918CED84500F37B72 /* animations */,
 				1AC35CAE18CED84500F37B72 /* ccb */,
@@ -3782,6 +3791,15 @@
 				1ABCA28818CD91510087CE3A /* Other Frameworks */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3E92EA7D1921A0C60094CD21 /* Sprite3DTest */ = {
+			isa = PBXGroup;
+			children = (
+				3E92EA801921A1400094CD21 /* Sprite3DTest.cpp */,
+				3E92EA811921A1400094CD21 /* Sprite3DTest.h */,
+			);
+			name = Sprite3DTest;
 			sourceTree = "<group>";
 		};
 		3EA0FB6F191C844400B170C8 /* UIVideoPlayerTest */ = {
@@ -4427,6 +4445,7 @@
 				1AC35D0018CED84500F37B72 /* pew-pew-lei.wav in Resources */,
 				1AC35CD018CED84500F37B72 /* background.mp3 in Resources */,
 				1AC35CD618CED84500F37B72 /* CocosBuilderExample.ccbproj in Resources */,
+				3E92EA851921A7720094CD21 /* Sprite3DTest in Resources */,
 				1AC35CA318CECF1E00F37B72 /* InfoPlist.strings in Resources */,
 				1AC35CA418CECF1E00F37B72 /* MainMenu.xib in Resources */,
 				1AC35CD418CED84500F37B72 /* ccb in Resources */,
@@ -4465,6 +4484,7 @@
 				1AC35CD318CED84500F37B72 /* background.ogg in Resources */,
 				1AC35CCB18CED84500F37B72 /* animations in Resources */,
 				3EA0FB5E191B92F100B170C8 /* cocosvideo.mp4 in Resources */,
+				3E92EA861921A7720094CD21 /* Sprite3DTest in Resources */,
 				1AC35C8C18CECF1400F37B72 /* Icon-114.png in Resources */,
 				1AC35CF118CED84500F37B72 /* hd in Resources */,
 				1AC35C9318CECF1400F37B72 /* Icon-57.png in Resources */,
@@ -4568,6 +4588,7 @@
 				1AC35BE118CECF0C00F37B72 /* CCControlButtonTest.cpp in Sources */,
 				1AC35BEB18CECF0C00F37B72 /* CCControlSliderTest.cpp in Sources */,
 				1AC35C4D18CECF0C00F37B72 /* SpineTest.cpp in Sources */,
+				3E92EA821921A1400094CD21 /* Sprite3DTest.cpp in Sources */,
 				1AC35C1D18CECF0C00F37B72 /* NewRendererTest.cpp in Sources */,
 				1AC35B6718CECF0C00F37B72 /* AnimationsTestLayer.cpp in Sources */,
 				29080DB7191B595E0066F8DF /* UIListViewTest_Editor.cpp in Sources */,
@@ -4898,6 +4919,7 @@
 				1AC35B5418CECF0C00F37B72 /* CocosDenshionTest.cpp in Sources */,
 				1AC35B8018CECF0C00F37B72 /* ProjectileController.cpp in Sources */,
 				1AC35C2618CECF0C00F37B72 /* PerformanceAllocTest.cpp in Sources */,
+				3E92EA831921A1400094CD21 /* Sprite3DTest.cpp in Sources */,
 				1AC35B5A18CECF0C00F37B72 /* controller.cpp in Sources */,
 				1AC35C2A18CECF0C00F37B72 /* PerformanceEventDispatcherTest.cpp in Sources */,
 				1AC35BEA18CECF0C00F37B72 /* CCControlSceneManager.cpp in Sources */,

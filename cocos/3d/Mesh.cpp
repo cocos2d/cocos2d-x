@@ -313,6 +313,10 @@ void Mesh::addMeshPart(PrimitiveType primitiveType, IndexFormat indexformat,  vo
     }
 }
 
+void* Mesh::getVertexPointer()
+{
+    return &_renderdata._vertexs;
+}
 
 void Mesh::restore()
 {

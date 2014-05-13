@@ -1091,18 +1091,10 @@
 		3E92EA5E19215FA10094CD21 /* Sprite3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E92EA5519215FA10094CD21 /* Sprite3D.cpp */; };
 		3E92EA5F19215FA10094CD21 /* Sprite3D.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA5619215FA10094CD21 /* Sprite3D.h */; };
 		3E92EA6019215FA10094CD21 /* Sprite3D.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA5619215FA10094CD21 /* Sprite3D.h */; };
-		3E92EA6119215FA10094CD21 /* Sprite3DEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E92EA5719215FA10094CD21 /* Sprite3DEffect.cpp */; };
-		3E92EA6219215FA10094CD21 /* Sprite3DEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E92EA5719215FA10094CD21 /* Sprite3DEffect.cpp */; };
-		3E92EA6319215FA10094CD21 /* Sprite3DEffect.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA5819215FA10094CD21 /* Sprite3DEffect.h */; };
-		3E92EA6419215FA10094CD21 /* Sprite3DEffect.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA5819215FA10094CD21 /* Sprite3DEffect.h */; };
 		3E92EA6519215FA10094CD21 /* Textured.es2.frag.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA5919215FA10094CD21 /* Textured.es2.frag.h */; };
 		3E92EA6619215FA10094CD21 /* Textured.es2.frag.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA5919215FA10094CD21 /* Textured.es2.frag.h */; };
 		3E92EA6719215FA10094CD21 /* Textured.es2.vert.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA5A19215FA10094CD21 /* Textured.es2.vert.h */; };
 		3E92EA6819215FA10094CD21 /* Textured.es2.vert.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA5A19215FA10094CD21 /* Textured.es2.vert.h */; };
-		3E92EA6B19215FE70094CD21 /* MeshMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E92EA6919215FE70094CD21 /* MeshMaterial.cpp */; };
-		3E92EA6C19215FE70094CD21 /* MeshMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E92EA6919215FE70094CD21 /* MeshMaterial.cpp */; };
-		3E92EA6D19215FE70094CD21 /* MeshMaterial.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA6A19215FE70094CD21 /* MeshMaterial.h */; };
-		3E92EA6E19215FE70094CD21 /* MeshMaterial.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA6A19215FE70094CD21 /* MeshMaterial.h */; };
 		3EA0FB6B191C841D00B170C8 /* UIVideoPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EA0FB69191C841D00B170C8 /* UIVideoPlayer.h */; };
 		3EA0FB6C191C841D00B170C8 /* UIVideoPlayerIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0FB6A191C841D00B170C8 /* UIVideoPlayerIOS.mm */; };
 		460E468118080832000CDD6D /* cocos-ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A167D21807AF4D005B8026 /* cocos-ext.h */; };
@@ -2337,12 +2329,8 @@
 		3E92EA5419215FA10094CD21 /* Colored.es2.frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Colored.es2.frag.h; path = ../cocos/3d/Colored.es2.frag.h; sourceTree = "<group>"; };
 		3E92EA5519215FA10094CD21 /* Sprite3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Sprite3D.cpp; path = ../cocos/3d/Sprite3D.cpp; sourceTree = "<group>"; };
 		3E92EA5619215FA10094CD21 /* Sprite3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Sprite3D.h; path = ../cocos/3d/Sprite3D.h; sourceTree = "<group>"; };
-		3E92EA5719215FA10094CD21 /* Sprite3DEffect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Sprite3DEffect.cpp; path = ../cocos/3d/Sprite3DEffect.cpp; sourceTree = "<group>"; };
-		3E92EA5819215FA10094CD21 /* Sprite3DEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Sprite3DEffect.h; path = ../cocos/3d/Sprite3DEffect.h; sourceTree = "<group>"; };
 		3E92EA5919215FA10094CD21 /* Textured.es2.frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Textured.es2.frag.h; path = ../cocos/3d/Textured.es2.frag.h; sourceTree = "<group>"; };
 		3E92EA5A19215FA10094CD21 /* Textured.es2.vert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Textured.es2.vert.h; path = ../cocos/3d/Textured.es2.vert.h; sourceTree = "<group>"; };
-		3E92EA6919215FE70094CD21 /* MeshMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MeshMaterial.cpp; path = ../cocos/3d/MeshMaterial.cpp; sourceTree = "<group>"; };
-		3E92EA6A19215FE70094CD21 /* MeshMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MeshMaterial.h; path = ../cocos/3d/MeshMaterial.h; sourceTree = "<group>"; };
 		3EA0FB69191C841D00B170C8 /* UIVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIVideoPlayer.h; sourceTree = "<group>"; };
 		3EA0FB6A191C841D00B170C8 /* UIVideoPlayerIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UIVideoPlayerIOS.mm; sourceTree = "<group>"; };
 		46A15FCC1807A544005B8026 /* AUTHORS */ = {isa = PBXFileReference; lastKnownFileType = text; name = AUTHORS; path = ../AUTHORS; sourceTree = "<group>"; };
@@ -4079,13 +4067,9 @@
 		3E92EA3919212FB40094CD21 /* 3d */ = {
 			isa = PBXGroup;
 			children = (
-				3E92EA6919215FE70094CD21 /* MeshMaterial.cpp */,
-				3E92EA6A19215FE70094CD21 /* MeshMaterial.h */,
 				3E92EA5419215FA10094CD21 /* Colored.es2.frag.h */,
 				3E92EA5519215FA10094CD21 /* Sprite3D.cpp */,
 				3E92EA5619215FA10094CD21 /* Sprite3D.h */,
-				3E92EA5719215FA10094CD21 /* Sprite3DEffect.cpp */,
-				3E92EA5819215FA10094CD21 /* Sprite3DEffect.h */,
 				3E92EA5919215FA10094CD21 /* Textured.es2.frag.h */,
 				3E92EA5A19215FA10094CD21 /* Textured.es2.vert.h */,
 				3E92EA4C192130D70094CD21 /* MeshCache.cpp */,
@@ -5112,7 +5096,6 @@
 				1A5701E0180BCB8C0088DEC7 /* CCLayer.h in Headers */,
 				1A5701E4180BCB8C0088DEC7 /* CCScene.h in Headers */,
 				1A01C68818F57BE800EFE3A6 /* CCBool.h in Headers */,
-				3E92EA6319215FA10094CD21 /* Sprite3DEffect.h in Headers */,
 				1A087AEA1860400400196EF5 /* edtaa3func.h in Headers */,
 				1A5701E8180BCB8C0088DEC7 /* CCTransition.h in Headers */,
 				2905FA4C18CF08D100240AA3 /* UICheckBox.h in Headers */,
@@ -5297,7 +5280,6 @@
 				5034CA19191D591000CE6051 /* ccShaders.h in Headers */,
 				1A9DCA3B180E6955007A3AD4 /* firePngData.h in Headers */,
 				B37510721823AC9F00B3BA6A /* CCPhysicsBodyInfo_chipmunk.h in Headers */,
-				3E92EA6D19215FE70094CD21 /* MeshMaterial.h in Headers */,
 				50FCEBA518C72017004AD434 /* ListViewReader.h in Headers */,
 				1A8C598D180E930E00EF57C3 /* CCActionFrame.h in Headers */,
 				1A8C5991180E930E00EF57C3 /* CCActionFrameEasing.h in Headers */,
@@ -5673,7 +5655,6 @@
 				500DC9A119106300007B91BF /* CCVector.h in Headers */,
 				1A5702FD180BCE750088DEC7 /* CCTMXXMLParser.h in Headers */,
 				1A570303180BCE890088DEC7 /* CCParallaxNode.h in Headers */,
-				3E92EA6419215FA10094CD21 /* Sprite3DEffect.h in Headers */,
 				1A57030F180BCF190088DEC7 /* CCComponent.h in Headers */,
 				1A570313180BCF190088DEC7 /* CCComponentContainer.h in Headers */,
 				1A087AEB1860400400196EF5 /* edtaa3func.h in Headers */,
@@ -5686,7 +5667,6 @@
 				1A570320180BCF430088DEC7 /* utlist.h in Headers */,
 				50FCEBC618C72017004AD434 /* TextReader.h in Headers */,
 				2905FA7718CF08D100240AA3 /* UIScrollView.h in Headers */,
-				3E92EA6E19215FE70094CD21 /* MeshMaterial.h in Headers */,
 				B375107F1823ACA100B3BA6A /* CCPhysicsContactInfo_chipmunk.h in Headers */,
 				1A570327180BCF660088DEC7 /* TGAlib.h in Headers */,
 				1A570332180BCFD50088DEC7 /* CCUserDefault.h in Headers */,
@@ -6351,7 +6331,6 @@
 				1A5702FA180BCE750088DEC7 /* CCTMXXMLParser.cpp in Sources */,
 				1A570300180BCE890088DEC7 /* CCParallaxNode.cpp in Sources */,
 				1A570305180BCED90088DEC7 /* ccUtils.cpp in Sources */,
-				3E92EA6B19215FE70094CD21 /* MeshMaterial.cpp in Sources */,
 				1A57030C180BCF190088DEC7 /* CCComponent.cpp in Sources */,
 				500DC96019106300007B91BF /* CCEventListener.cpp in Sources */,
 				1A570310180BCF190088DEC7 /* CCComponentContainer.cpp in Sources */,
@@ -6472,7 +6451,6 @@
 				1A8C59CB180E930E00EF57C3 /* CCDataReaderHelper.cpp in Sources */,
 				1A8C59CF180E930E00EF57C3 /* CCDatas.cpp in Sources */,
 				1A8C59D3180E930E00EF57C3 /* CCDecorativeDisplay.cpp in Sources */,
-				3E92EA6119215FA10094CD21 /* Sprite3DEffect.cpp in Sources */,
 				500DC8B219105D41007B91BF /* CCGroupCommand.cpp in Sources */,
 				50FCEBB318C72017004AD434 /* SliderReader.cpp in Sources */,
 				1A8C59D7180E930E00EF57C3 /* CCDisplayFactory.cpp in Sources */,
@@ -6769,7 +6747,6 @@
 				1A5702B6180BCDF40088DEC7 /* CCVertex.cpp in Sources */,
 				1A5702C3180BCE2A0088DEC7 /* CCIMEDispatcher.cpp in Sources */,
 				1A5702C9180BCE370088DEC7 /* CCTextFieldTTF.cpp in Sources */,
-				3E92EA6C19215FE70094CD21 /* MeshMaterial.cpp in Sources */,
 				1A5702D4180BCE570088DEC7 /* CCTexture2D.cpp in Sources */,
 				1A5702D8180BCE570088DEC7 /* CCTextureAtlas.cpp in Sources */,
 				1A5702DC180BCE570088DEC7 /* CCTextureCache.cpp in Sources */,
@@ -6861,7 +6838,6 @@
 				1AD71ED2180E26E600808F54 /* SkeletonData.cpp in Sources */,
 				500DC97D19106300007B91BF /* CCEventTouch.cpp in Sources */,
 				1AD71ED6180E26E600808F54 /* SkeletonJson.cpp in Sources */,
-				3E92EA6219215FA10094CD21 /* Sprite3DEffect.cpp in Sources */,
 				2905FA6718CF08D100240AA3 /* UILoadingBar.cpp in Sources */,
 				2905FA5F18CF08D100240AA3 /* UILayoutParameter.cpp in Sources */,
 				1AD71EDA180E26E600808F54 /* Skin.cpp in Sources */,

@@ -16,16 +16,17 @@
 #define __SPRITE3D_H_
 
 #include <vector>
+#include "base/CCVector.h"
 
-#include "ccTypes.h"
-#include "CCNode.h"
+#include "base/ccTypes.h"
+#include "2d/CCNode.h"
 
 #include "renderer/CCCustomCommand.h"
 
 
 NS_CC_BEGIN
 
-class MeshMaterial;
+class GLProgramState;
 class Mesh;
 class Texture2D;
 class Sprite3DEffect;
@@ -34,15 +35,13 @@ class Sprite3D : public Node
 {
 public:
     static Sprite3D* create(const std::string &modelPath);
-   
-    MeshMaterial* getMeshMaterial(int idx) { return _partMaterials[idx]; }
     
     int           getMeshPartCount() const;
     
     
     Mesh* getMesh() { return _model; }
     
-    void setEffect(Sprite3DEffect* effect);
+    void setTexture(const std::string& texFile);
     
 
 protected:
@@ -56,18 +55,26 @@ protected:
     virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
 
     void onDraw(const Matrix &transform, bool transformUpdated);
+    
+    static GLProgram* getDefGLProgram(bool textured = true);
+    
 
     CustomCommand     _customCommand;
     Mesh              *_model;
     
     int               _partcount;
-    MeshMaterial**    _partMaterials;
     
-    Sprite3DEffect*     _effect;
+    GLProgramState**   _programState;
+    
+    Vector<Texture2D*>    _textures;
+    
+    //Sprite3DEffect*     _effect;
     
     std::string       _path;
     
 
+    static GLProgram* s_defGLProgramTex;
+    static GLProgram* s_defGLProgram;
 };
 
 NS_CC_END

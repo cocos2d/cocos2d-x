@@ -62,6 +62,8 @@ public:
     //get mesh part by index
     inline MeshPart* getMeshPart(int idx) { return _parts[idx]; }
     
+    void* getIndexPointer(int idx ) { return &_renderdata._partindices[idx]; }
+    
     //build vertex buffer from renderdata
     void restore();
     
@@ -69,6 +71,8 @@ public:
     int getAttribFlag() const { return _renderdata.attrFlag; }
     
     bool generateNormals();
+    
+    void* getVertexPointer();
 
 
 protected:
