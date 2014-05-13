@@ -724,7 +724,7 @@ void ActionAnimate::onEnter()
     _tamara->runAction(Sequence::create(action2, action2->reverse(), NULL));
 
     _frameDisplayedListener = EventListenerCustom::create(AnimationFrameDisplayedNotification, [](EventCustom * event){
-        auto userData = static_cast<AnimationFrame::DisplayedNotificationInfo*>(event->getUserData());
+        auto userData = static_cast<AnimationFrame::DisplayedEventInfo*>(event->getUserData());
         
          log("target %p with data %s", userData->target, Value(userData->userInfo).getDescription().c_str());
     });
