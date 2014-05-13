@@ -31,8 +31,6 @@ class b2Body;
 
 NS_CC_EXT_BEGIN
 
-USING_NS_CC_MATH;
-
 /** A Sprite subclass that is bound to a physics body.
  It works with:
  - Chipmunk: Preprocessor macro CC_ENABLE_CHIPMUNK_INTEGRATION should be defined
