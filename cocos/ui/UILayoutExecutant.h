@@ -25,7 +25,7 @@
 #ifndef __cocos2d_libs__CCLayoutExecutant__
 #define __cocos2d_libs__CCLayoutExecutant__
 
-#include "2d/CCNode.h"
+#include "UILayout.h"
 
 NS_CC_BEGIN
 
@@ -36,8 +36,8 @@ class LayoutExecutant : public Ref
 public:
     LayoutExecutant(){};
     virtual ~LayoutExecutant(){};
-    static LayoutExecutant* create();
-    virtual void doLayout(const Size& layoutSize, Vector<Node*> container){};
+    
+    virtual void doLayout(const Size& layoutSize, Vector<Node*> container) = 0;
 };
 
 class LinearVerticalLayoutExecutant : public LayoutExecutant
@@ -67,6 +67,18 @@ public:
     virtual void doLayout(const Size& layoutSize, Vector<Node*> container);
 };
 
+    
+class LayoutExecutantFactory
+{
+public:
+    static LayoutExecutantFactory* getInstance();
+    LayoutExecutant* createExecutant(Layout::Type type);
+private:
+    LayoutExecutantFactory(){}
+    CC_DISALLOW_COPY_AND_ASSIGN(LayoutExecutantFactory);
+    
+    static LayoutExecutantFactory *_instance;
+};
 
 }
 

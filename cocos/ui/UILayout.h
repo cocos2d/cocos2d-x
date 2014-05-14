@@ -35,7 +35,6 @@ namespace ui {
  *  @js NA
  *  @lua NA
  */
-class LayoutExecutant;
     
 class Layout : public Widget
 {
@@ -313,6 +312,7 @@ protected:
     
     void setStencilClippingSize(const Size& size);
     const Rect& getClippingRect();
+    
     virtual void doLayout();
     
     //clipping
@@ -325,7 +325,6 @@ protected:
     void updateBackGroundImageColor();
     void updateBackGroundImageOpacity();
     void updateBackGroundImageRGBA();
-    LayoutExecutant* createCurrentLayoutExecutant();
     
     /**
      *get the content size of the layout, it will accumulate all its children's content size
@@ -476,8 +475,6 @@ protected:
     
     Color3B _backGroundImageColor;
     GLubyte _backGroundImageOpacity;
-    
-    LayoutExecutant* _curLayoutExecutant;
     
     GLint _mask_layer_le;
     GroupCommand _groupCommand;

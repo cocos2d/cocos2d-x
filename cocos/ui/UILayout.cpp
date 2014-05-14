@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCCustomCommand.h"
+#include "ui/UILayoutExecutant.h"
 
 NS_CC_BEGIN
 
@@ -83,7 +84,6 @@ _currentAlphaTestFunc(GL_ALWAYS),
 _currentAlphaTestRef(1),
 _backGroundImageColor(Color3B::WHITE),
 _backGroundImageOpacity(255),
-_curLayoutExecutant(nullptr),
 _passFocusToChild(true),
 _loopFocus(false)
 {
@@ -94,7 +94,6 @@ _loopFocus(false)
 Layout::~Layout()
 {
     CC_SAFE_RELEASE(_clippingStencil);
-    CC_SAFE_RELEASE(_curLayoutExecutant);
 }
     
 void Layout::onEnter()
@@ -906,9 +905,7 @@ const Size& Layout::getBackGroundImageTextureSize() const
 void Layout::setLayoutType(Type type)
 {
     _layoutType = type;
-    CC_SAFE_RELEASE_NULL(_curLayoutExecutant);
-    _curLayoutExecutant = createCurrentLayoutExecutant();
-    CC_SAFE_RETAIN(_curLayoutExecutant);
+   
     for (auto& child : _children)
     {
         Widget* widgetChild = dynamic_cast<Widget*>(child);
@@ -920,25 +917,7 @@ void Layout::setLayoutType(Type type)
     _doLayoutDirty = true;
 }
     
-LayoutExecutant* Layout::createCurrentLayoutExecutant()
-{
-    LayoutExecutant* exe = nullptr;
-    switch (_layoutType)
-    {
-        case Type::VERTICAL:
-            exe = LinearVerticalLayoutExecutant::create();
-            break;
-        case Type::HORIZONTAL:
-            exe = LinearHorizontalLayoutExecutant::create();
-            break;
-        case Type::RELATIVE:
-            exe = RelativeLayoutExecutant::create();
-            break;
-        default:
-            break;
-    }
-    return exe;
-}
+
 
 Layout::Type Layout::getLayoutType() const
 {
@@ -956,10 +935,12 @@ void Layout::doLayout()
     {
         return;
     }
-    if (_curLayoutExecutant)
+    LayoutExecutant* executant = LayoutExecutantFactory::getInstance()->createExecutant(_layoutType);
+    if (executant)
     {
-        _curLayoutExecutant->doLayout(getSize(), getChildren());
+        executant->doLayout(getSize(), getChildren());
     }
+    
     _doLayoutDirty = false;
 }
 

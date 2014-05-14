@@ -22,24 +22,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCLayoutExecutant.h"
+#include "UILayoutExecutant.h"
 #include "UIWidget.h"
 
 NS_CC_BEGIN
 
 namespace ui {
-    
-LayoutExecutant* LayoutExecutant::create()
-{
-    LayoutExecutant* exe = new LayoutExecutant();
-    if (exe)
-    {
-        exe->autorelease();
-        return exe;
-    }
-    CC_SAFE_DELETE(exe);
-    return nullptr;
-}
 
 LinearVerticalLayoutExecutant* LinearVerticalLayoutExecutant::create()
 {
@@ -512,6 +500,37 @@ void RelativeLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Vector<c
         }
     }
     widgetChildren.clear();
+}
+
+////////////////////////////////////////////////////////////////////////////
+LayoutExecutantFactory* LayoutExecutantFactory::_instance = nullptr;
+
+LayoutExecutantFactory* LayoutExecutantFactory::getInstance()
+{
+    if (nullptr == _instance) {
+        _instance = new LayoutExecutantFactory;
+    }
+    return _instance;
+}
+    
+LayoutExecutant* LayoutExecutantFactory::createExecutant(Layout::Type type)
+{
+    LayoutExecutant* exe = nullptr;
+    switch (type)
+    {
+        case Layout::Type::VERTICAL:
+            exe = LinearVerticalLayoutExecutant::create();
+            break;
+        case Layout::Type::HORIZONTAL:
+            exe = LinearHorizontalLayoutExecutant::create();
+            break;
+        case Layout::Type::RELATIVE:
+            exe = RelativeLayoutExecutant::create();
+            break;
+        default:
+            break;
+    }
+    return exe;
 }
 
 }
