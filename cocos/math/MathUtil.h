@@ -33,7 +33,7 @@ NS_CC_MATH_BEGIN
 class MathUtil
 {
     friend class Matrix;
-    friend class Vector3;
+    friend class Vec3;
 
 public:
 

@@ -24,32 +24,32 @@
 
 NS_CC_MATH_BEGIN
 
-Vector3::Vector3()
+Vec3::Vec3()
     : x(0.0f), y(0.0f), z(0.0f)
 {
 }
 
-Vector3::Vector3(float xx, float yy, float zz)
+Vec3::Vec3(float xx, float yy, float zz)
     : x(xx), y(yy), z(zz)
 {
 }
 
-Vector3::Vector3(const float* array)
+Vec3::Vec3(const float* array)
 {
     set(array);
 }
 
-Vector3::Vector3(const Vector3& p1, const Vector3& p2)
+Vec3::Vec3(const Vec3& p1, const Vec3& p2)
 {
     set(p1, p2);
 }
 
-Vector3::Vector3(const Vector3& copy)
+Vec3::Vec3(const Vec3& copy)
 {
     set(copy);
 }
 
-Vector3 Vector3::fromColor(unsigned int color)
+Vec3 Vec3::fromColor(unsigned int color)
 {
     float components[3];
     int componentIndex = 0;
@@ -64,7 +64,7 @@ Vector3 Vector3::fromColor(unsigned int color)
     return value;
 }
 
-Vector3::~Vector3()
+Vec3::~Vec3()
 {
 }
 
