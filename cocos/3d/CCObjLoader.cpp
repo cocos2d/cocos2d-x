@@ -27,6 +27,7 @@
 #include <sstream>
 
 #include "CCObjLoader.h"
+#include "2d/platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 
@@ -510,10 +511,10 @@ ObjLoader::LoadObj(
   shapes.reset();
 
   std::stringstream err;
-    
+    std::istringstream ifs(FileUtils::getInstance()->getStringFromFile(filename));
   std::map<vertex_index, unsigned int> vertexCache;
-
-  std::ifstream ifs(filename);
+  //std::ifstream ifs(filename);
+  
   if (!ifs) {
     err << "Cannot open file [" << filename << "]" << std::endl;
     return err.str();
