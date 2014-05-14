@@ -170,7 +170,7 @@ protected:
     bool init(float blurSize);
 
     int       _blurRadius;
-    Vector2   _pixelSize;
+    Vec2   _pixelSize;
 
     int       _samplingRadius;
     float     _scale;
@@ -196,13 +196,13 @@ bool EffectBlur::init(float blurSize)
     auto s = Size(100,100);
 
     _blurRadius = 0;
-    _pixelSize = Vector2(1/s.width, 1/s.height);
+    _pixelSize = Vec2(1/s.width, 1/s.height);
     _samplingRadius = 0;
 
     setBlurSize(blurSize);
 
     _glprogramstate->setUniformVec2("onePixelSize", _pixelSize);
-    _glprogramstate->setUniformVec4("gaussianCoefficient", Vector4(_samplingRadius, _scale, _cons, _weightSum));
+    _glprogramstate->setUniformVec4("gaussianCoefficient", Vec4(_samplingRadius, _scale, _cons, _weightSum));
     return true;
 }
 
@@ -380,7 +380,7 @@ protected:
     virtual void setCustomUniforms() override;
 
     int       _blurRadius;
-    Vector2     _pixelSize;
+    Vec2     _pixelSize;
     
     int       _samplingRadius;
     float     _scale;
@@ -397,14 +397,14 @@ void BlurSprite::setCustomUniforms()
 {
     auto s = getTexture()->getContentSizeInPixels();
     _blurRadius = 0;
-    _pixelSize = Vector2(1/s.width, 1/s.height);
+    _pixelSize = Vec2(1/s.width, 1/s.height);
     _samplingRadius = 0;
 
     setBlurSize(3.0f);
 
     auto programState = getGLProgramState();
     programState->setUniformVec2("onePixelSize", _pixelSize);
-    programState->setUniformVec4("gaussianCoefficient", Vector4(_samplingRadius, _scale, _cons, _weightSum));
+    programState->setUniformVec4("gaussianCoefficient", Vec4(_samplingRadius, _scale, _cons, _weightSum));
 }
 
 void BlurSprite::setBlurSize(float f)
@@ -463,7 +463,7 @@ void NoiseSprite::setCustomUniforms()
 {
     _resolution[0] = getTexture()->getContentSizeInPixels().width;
     _resolution[1] = getTexture()->getContentSizeInPixels().height;
-    getGLProgramState()->setUniformVec2("resolution", Vector2(_resolution[0],_resolution[1]));
+    getGLProgramState()->setUniformVec2("resolution", Vec2(_resolution[0],_resolution[1]));
 }
 
 class EdgeDetectionSprite : public ShaderSprite, public ShaderSpriteCreator<EdgeDetectionSprite>
@@ -490,7 +490,7 @@ void EdgeDetectionSprite::setCustomUniforms()
     _resolution[0] = getContentSize().width;
     _resolution[1] = getContentSize().height;
 
-    programState->setUniformVec2("resolution", Vector2(_resolution[0], _resolution[1]));
+    programState->setUniformVec2("resolution", Vec2(_resolution[0], _resolution[1]));
 }
 
 class BloomSprite : public ShaderSprite, public ShaderSpriteCreator<BloomSprite>
@@ -538,7 +538,7 @@ void CelShadingSprite::setCustomUniforms()
     _resolution[0] = getContentSize().width;
     _resolution[1] = getContentSize().height;
 
-    programState->setUniformVec2("resolution", Vector2(_resolution[0], _resolution[1]));
+    programState->setUniformVec2("resolution", Vec2(_resolution[0], _resolution[1]));
 }
 
 class LensFlareSprite : public ShaderSprite, public ShaderSpriteCreator<LensFlareSprite>
@@ -568,8 +568,8 @@ void LensFlareSprite::setCustomUniforms()
     _resolution[0] = getContentSize().width;
     _resolution[1] = getContentSize().height;
 
-    programState->setUniformVec2("resolution", Vector2(_resolution[0], _resolution[1]));
-    programState->setUniformVec2("textureResolution", Vector2(_textureResolution[0], _textureResolution[1]));
+    programState->setUniformVec2("resolution", Vec2(_resolution[0], _resolution[1]));
+    programState->setUniformVec2("textureResolution", Vec2(_textureResolution[0], _textureResolution[1]));
 }
 
 NormalSpriteTest::NormalSpriteTest()
@@ -578,7 +578,7 @@ NormalSpriteTest::NormalSpriteTest()
     {
         auto s = Director::getInstance()->getWinSize();
         NormalSprite* sprite = NormalSprite::createSprite("Images/powered.png");
-        sprite->setPosition(Vector2(s.width/2, s.height/2));
+        sprite->setPosition(Vec2(s.width/2, s.height/2));
         addChild(sprite);
     }
     
@@ -590,9 +590,9 @@ GreyScaleSpriteTest::GreyScaleSpriteTest()
     {
         auto s = Director::getInstance()->getWinSize();
         GreyScaleSprite* sprite = GreyScaleSprite::createSprite("Images/powered.png");
-        sprite->setPosition(Vector2(s.width * 0.75, s.height/2));
+        sprite->setPosition(Vec2(s.width * 0.75, s.height/2));
         auto sprite2 = Sprite::create("Images/powered.png");
-        sprite2->setPosition(Vector2(s.width * 0.25, s.height/2));
+        sprite2->setPosition(Vec2(s.width * 0.25, s.height/2));
         addChild(sprite);
         addChild(sprite2);
     }
@@ -605,9 +605,9 @@ BlurSpriteTest::BlurSpriteTest()
     {
         auto s = Director::getInstance()->getWinSize();
         BlurSprite* sprite = BlurSprite::createSprite("Images/powered.png");
-        sprite->setPosition(Vector2(s.width * 0.75, s.height/2));
+        sprite->setPosition(Vec2(s.width * 0.75, s.height/2));
         auto sprite2 = Sprite::create("Images/powered.png");
-        sprite2->setPosition(Vector2(s.width * 0.25, s.height/2));
+        sprite2->setPosition(Vec2(s.width * 0.25, s.height/2));
         addChild(sprite);
         addChild(sprite2);
     }
@@ -620,9 +620,9 @@ NoiseSpriteTest::NoiseSpriteTest()
     {
         auto s = Director::getInstance()->getWinSize();
         NoiseSprite* sprite = NoiseSprite::createSprite("Images/powered.png");
-        sprite->setPosition(Vector2(s.width * 0.75, s.height/2));
+        sprite->setPosition(Vec2(s.width * 0.75, s.height/2));
         auto sprite2 = Sprite::create("Images/powered.png");
-        sprite2->setPosition(Vector2(s.width * 0.25, s.height/2));
+        sprite2->setPosition(Vec2(s.width * 0.25, s.height/2));
         addChild(sprite);
         addChild(sprite2);
     }
@@ -634,9 +634,9 @@ EdgeDetectionSpriteTest::EdgeDetectionSpriteTest()
     {
         auto s = Director::getInstance()->getWinSize();
         EdgeDetectionSprite* sprite = EdgeDetectionSprite::createSprite("Images/powered.png");
-        sprite->setPosition(Vector2(s.width * 0.75, s.height/2));
+        sprite->setPosition(Vec2(s.width * 0.75, s.height/2));
         auto sprite2 = Sprite::create("Images/powered.png");
-        sprite2->setPosition(Vector2(s.width * 0.25, s.height/2));
+        sprite2->setPosition(Vec2(s.width * 0.25, s.height/2));
         addChild(sprite);
         addChild(sprite2);
     }
@@ -648,9 +648,9 @@ BloomSpriteTest::BloomSpriteTest()
     {
         auto s = Director::getInstance()->getWinSize();
         BloomSprite* sprite = BloomSprite::createSprite("Images/stone.png");
-        sprite->setPosition(Vector2(s.width * 0.75, s.height/2));
+        sprite->setPosition(Vec2(s.width * 0.75, s.height/2));
         auto sprite2 = Sprite::create("Images/stone.png");
-        sprite2->setPosition(Vector2(s.width * 0.25, s.height/2));
+        sprite2->setPosition(Vec2(s.width * 0.25, s.height/2));
         addChild(sprite);
         addChild(sprite2);
     }
@@ -662,9 +662,9 @@ CelShadingSpriteTest::CelShadingSpriteTest()
     {
         auto s = Director::getInstance()->getWinSize();
         CelShadingSprite* sprite = CelShadingSprite::createSprite("Images/stone.png");
-        sprite->setPosition(Vector2(s.width * 0.75, s.height/2));
+        sprite->setPosition(Vec2(s.width * 0.75, s.height/2));
         auto sprite2 = Sprite::create("Images/stone.png");
-        sprite2->setPosition(Vector2(s.width * 0.25, s.height/2));
+        sprite2->setPosition(Vec2(s.width * 0.25, s.height/2));
         addChild(sprite);
         addChild(sprite2);
     }
@@ -678,7 +678,7 @@ LensFlareSpriteTest::LensFlareSpriteTest()
         LensFlareSprite* sprite = LensFlareSprite::createSprite("Images/noise.png");
         Rect rect = Rect::ZERO;
         rect.size = Size(480,320);
-        sprite->setPosition(Vector2(s.width * 0.5, s.height/2));
+        sprite->setPosition(Vec2(s.width * 0.5, s.height/2));
         addChild(sprite);
     }
 }
@@ -704,7 +704,7 @@ OutlineSprite::OutlineSprite()
 
 void OutlineSprite::setCustomUniforms()
 {
-    Vector3 color(1.0, 0.2, 0.3);
+    Vec3 color(1.0, 0.2, 0.3);
     GLfloat radius = 0.01;
     GLfloat threshold = 1.75;
 
@@ -721,9 +721,9 @@ OutlineShadingSpriteTest::OutlineShadingSpriteTest()
     if (ShaderTestDemo2::init()) {
         auto s = Director::getInstance()->getWinSize();
         OutlineSprite* sprite = OutlineSprite::createSprite("Images/grossini_dance_10.png");
-        sprite->setPosition(Vector2(s.width * 0.75, s.height/2));
+        sprite->setPosition(Vec2(s.width * 0.75, s.height/2));
         auto sprite2 = Sprite::create("Images/grossini_dance_10.png");
-        sprite2->setPosition(Vector2(s.width * 0.25, s.height/2));
+        sprite2->setPosition(Vec2(s.width * 0.25, s.height/2));
         addChild(sprite);
         addChild(sprite2);
     }
@@ -735,10 +735,10 @@ EffectSprite_Blur::EffectSprite_Blur()
     if (ShaderTestDemo2::init()) {
         auto s = Director::getInstance()->getWinSize();
         EffectSprite* sprite = EffectSprite::create("Images/grossini.png");
-        sprite->setPosition(Vector2(0, s.height/2));
+        sprite->setPosition(Vec2(0, s.height/2));
         addChild(sprite);
 
-        auto jump = JumpBy::create(4, Vector2(s.width,0), 100, 4);
+        auto jump = JumpBy::create(4, Vec2(s.width,0), 100, 4);
         auto rot = RotateBy::create(4, 720);
         auto spawn = Spawn::create(jump, rot, NULL);
         auto rev = spawn->reverse();

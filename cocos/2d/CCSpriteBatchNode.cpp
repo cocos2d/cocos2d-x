@@ -132,7 +132,7 @@ SpriteBatchNode::~SpriteBatchNode()
 
 // override visit
 // don't call visit on it's children
-void SpriteBatchNode::visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
+void SpriteBatchNode::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
 {
     CC_PROFILER_START_CATEGORY(kProfilerCategoryBatchSprite, "CCSpriteBatchNode - visit");
 
@@ -156,7 +156,7 @@ void SpriteBatchNode::visit(Renderer *renderer, const Matrix &parentTransform, b
     _transformUpdated = false;
 
     // IMPORTANT:
-    // To ease the migration to v3.0, we still support the Matrix stack,
+    // To ease the migration to v3.0, we still support the Mat4 stack,
     // but it is deprecated and your code should not rely on it
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -356,7 +356,7 @@ void SpriteBatchNode::reorderBatch(bool reorder)
     _reorderChildDirty=reorder;
 }
 
-void SpriteBatchNode::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void SpriteBatchNode::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     // Optimization: Fast Dispatch
     if( _textureAtlas->getTotalQuads() == 0 )

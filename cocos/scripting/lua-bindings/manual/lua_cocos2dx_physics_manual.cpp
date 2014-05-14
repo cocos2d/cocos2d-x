@@ -162,8 +162,8 @@ int lua_cocos2dx_physics_PhysicsWorld_rayCast(lua_State* tolua_S)
     if (argc == 3)
     {
         std::function<bool (cocos2d::PhysicsWorld &, const cocos2d::PhysicsRayCastInfo &, void *)> arg0;
-        cocos2d::Vector2 arg1;
-        cocos2d::Vector2 arg2;
+        cocos2d::Vec2 arg1;
+        cocos2d::Vec2 arg2;
         LUA_FUNCTION handler = toluafix_ref_function(tolua_S, 2, 0);
         do {
             arg0 = [handler, tolua_S](cocos2d::PhysicsWorld &world, const cocos2d::PhysicsRayCastInfo &info, void * data) -> bool
@@ -278,7 +278,7 @@ int lua_cocos2dx_physics_PhysicsWorld_queryPoint(lua_State* tolua_S)
     if (argc == 2)
     {
         std::function<bool (cocos2d::PhysicsWorld &, cocos2d::PhysicsShape &, void *)> arg0;
-        cocos2d::Vector2 arg1;
+        cocos2d::Vec2 arg1;
         LUA_FUNCTION handler = toluafix_ref_function(tolua_S, 2, 0);
         do {
             arg0 = [handler, tolua_S](cocos2d::PhysicsWorld &world, cocos2d::PhysicsShape &shape, void * data) -> bool
@@ -325,7 +325,7 @@ int lua_cocos2dx_physics_PhysicsBody_createPolygon(lua_State* tolua_S)
     
     if (argc == 1)
     {
-        cocos2d::Vector2* arg0 = nullptr;
+        cocos2d::Vec2* arg0 = nullptr;
         int arg1 = 0;
         do {
             ok = luaval_to_array_of_vector2(tolua_S, 2, &arg0, &arg1);
@@ -355,7 +355,7 @@ int lua_cocos2dx_physics_PhysicsBody_createPolygon(lua_State* tolua_S)
     }
     if (argc == 2)
     {
-        cocos2d::Vector2* arg0;
+        cocos2d::Vec2* arg0;
         int arg1 = 0;
         cocos2d::PhysicsMaterial arg2;
         do {
@@ -388,10 +388,10 @@ int lua_cocos2dx_physics_PhysicsBody_createPolygon(lua_State* tolua_S)
     }
     if (argc == 3)
     {
-        cocos2d::Vector2* arg0;
+        cocos2d::Vec2* arg0;
         int arg1 = 0;
         cocos2d::PhysicsMaterial arg2;
-        cocos2d::Vector2 arg3;
+        cocos2d::Vec2 arg3;
         do {
             ok = luaval_to_array_of_vector2(tolua_S, 2, &arg0, &arg1);
             if (nullptr == arg0){
@@ -446,7 +446,7 @@ int lua_cocos2dx_physics_PhysicsBody_createEdgePolygon(lua_State* tolua_S)
     
     if (argc == 1)
     {
-        cocos2d::Vector2* arg0;
+        cocos2d::Vec2* arg0;
         int arg1;
         do {
             ok = luaval_to_array_of_vector2(tolua_S, 2, &arg0, &arg1);
@@ -476,7 +476,7 @@ int lua_cocos2dx_physics_PhysicsBody_createEdgePolygon(lua_State* tolua_S)
     }
     if (argc == 2)
     {
-        cocos2d::Vector2* arg0;
+        cocos2d::Vec2* arg0;
         int arg1;
         cocos2d::PhysicsMaterial arg2;
         do {
@@ -508,7 +508,7 @@ int lua_cocos2dx_physics_PhysicsBody_createEdgePolygon(lua_State* tolua_S)
     }
     if (argc == 3)
     {
-        cocos2d::Vector2* arg0;
+        cocos2d::Vec2* arg0;
         int arg1;
         cocos2d::PhysicsMaterial arg2;
         double arg3;
@@ -566,7 +566,7 @@ int lua_cocos2dx_physics_PhysicsBody_createEdgeChain(lua_State* tolua_S)
     
     if (argc == 1)
     {
-        cocos2d::Vector2* arg0;
+        cocos2d::Vec2* arg0;
         int arg1;
         do {
             ok = luaval_to_array_of_vector2(tolua_S, 2, &arg0, &arg1);
@@ -596,7 +596,7 @@ int lua_cocos2dx_physics_PhysicsBody_createEdgeChain(lua_State* tolua_S)
     }
     if (argc == 2)
     {
-        cocos2d::Vector2* arg0;
+        cocos2d::Vec2* arg0;
         int arg1;
         cocos2d::PhysicsMaterial arg2;
         do {
@@ -628,7 +628,7 @@ int lua_cocos2dx_physics_PhysicsBody_createEdgeChain(lua_State* tolua_S)
     }
     if (argc == 3)
     {
-        cocos2d::Vector2* arg0;
+        cocos2d::Vec2* arg0;
         int arg1;
         cocos2d::PhysicsMaterial arg2;
         double arg3;
@@ -686,7 +686,7 @@ int lua_cocos2dx_physics_PhysicsShape_recenterPoints(lua_State* tolua_S)
     
     if (argc == 1)
     {
-        cocos2d::Vector2* arg0;
+        cocos2d::Vec2* arg0;
         int arg1 = 0;
         do {
             ok = luaval_to_array_of_vector2(tolua_S, 2, &arg0, &arg1);
@@ -706,9 +706,9 @@ int lua_cocos2dx_physics_PhysicsShape_recenterPoints(lua_State* tolua_S)
     }
     if (argc == 2)
     {
-        cocos2d::Vector2* arg0;
+        cocos2d::Vec2* arg0;
         int arg1 = 0;
-        cocos2d::Vector2 arg2;
+        cocos2d::Vec2 arg2;
         do {
             ok = luaval_to_array_of_vector2(tolua_S, 2, &arg0, &arg1);
             if (nullptr == arg0){
@@ -751,7 +751,7 @@ int lua_cocos2dx_physics_PhysicsShape_getPolyonCenter(lua_State* tolua_S)
     
     if (argc == 1)
     {
-        cocos2d::Vector2* arg0;
+        cocos2d::Vec2* arg0;
         int arg1 = 0;
         do {
             ok = luaval_to_array_of_vector2(tolua_S, 2, &arg0, &arg1);
@@ -763,7 +763,7 @@ int lua_cocos2dx_physics_PhysicsShape_getPolyonCenter(lua_State* tolua_S)
             CC_SAFE_FREE(arg0);
             return 0;
         }
-        cocos2d::Vector2 ret = cocos2d::PhysicsShape::getPolyonCenter(arg0, arg1);
+        cocos2d::Vec2 ret = cocos2d::PhysicsShape::getPolyonCenter(arg0, arg1);
         CC_SAFE_FREE(arg0);
         vector2_to_luaval(tolua_S, ret);
         return 1;
@@ -803,7 +803,7 @@ int lua_cocos2dx_physics_PhysicsShapeBox_getPoints(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0)
     {
-        cocos2d::Vector2 arg0[4];
+        cocos2d::Vec2 arg0[4];
         cobj->getPoints(arg0);
         vector2_array_to_luaval(tolua_S, arg0, 4);
         return 0;
@@ -846,7 +846,7 @@ int lua_cocos2dx_physics_PhysicsShapePolygon_getPoints(lua_State* tolua_S)
     if (argc == 0)
     {
         int count = cobj->getPointsCount();
-        cocos2d::Vector2* arg0 = new cocos2d::Vector2[count];
+        cocos2d::Vec2* arg0 = new cocos2d::Vec2[count];
         cobj->getPoints(arg0);
         vector2_array_to_luaval(tolua_S, arg0, count);
         CC_SAFE_FREE(arg0);
@@ -880,7 +880,7 @@ int lua_cocos2dx_physics_PhysicsShapePolygon_create(lua_State* tolua_S)
     
     if (argc == 1)
     {
-        cocos2d::Vector2* arg0;
+        cocos2d::Vec2* arg0;
         int arg1 = 0;
         do {
             ok = luaval_to_array_of_vector2(tolua_S, 2, &arg0, &arg1);
@@ -900,7 +900,7 @@ int lua_cocos2dx_physics_PhysicsShapePolygon_create(lua_State* tolua_S)
     }
     if (argc == 2)
     {
-        cocos2d::Vector2* arg0;
+        cocos2d::Vec2* arg0;
         int arg1 = 0;
         cocos2d::PhysicsMaterial arg2;
         do {
@@ -921,10 +921,10 @@ int lua_cocos2dx_physics_PhysicsShapePolygon_create(lua_State* tolua_S)
     }
     if (argc == 3)
     {
-        cocos2d::Vector2* arg0;
+        cocos2d::Vec2* arg0;
         int arg1 = 0;
         cocos2d::PhysicsMaterial arg2;
-        cocos2d::Vector2 arg3;
+        cocos2d::Vec2 arg3;
         do {
             ok = luaval_to_array_of_vector2(tolua_S, 2, &arg0, &arg1);
             if (nullptr == arg0){
@@ -967,7 +967,7 @@ int lua_cocos2dx_physics_PhysicsShapePolygon_calculateArea(lua_State* tolua_S)
     
     if (argc == 1)
     {
-        cocos2d::Vector2* arg0;
+        cocos2d::Vec2* arg0;
         int arg1 = 0;
         do {
             ok = luaval_to_array_of_vector2(tolua_S, 2, &arg0, &arg1);
@@ -1010,7 +1010,7 @@ int lua_cocos2dx_physics_PhysicsShapePolygon_calculateMoment(lua_State* tolua_S)
     if (argc == 2)
     {
         double arg0;
-        cocos2d::Vector2* arg1;
+        cocos2d::Vec2* arg1;
         int arg2 = 0;
         ok &= luaval_to_number(tolua_S, 2,&arg0);
         do {
@@ -1031,9 +1031,9 @@ int lua_cocos2dx_physics_PhysicsShapePolygon_calculateMoment(lua_State* tolua_S)
     if (argc == 2)
     {
         double arg0;
-        cocos2d::Vector2* arg1;
+        cocos2d::Vec2* arg1;
         int arg2 = 0;
-        cocos2d::Vector2 arg3;
+        cocos2d::Vec2 arg3;
         ok &= luaval_to_number(tolua_S, 2,&arg0);
         do {
             ok = luaval_to_array_of_vector2(tolua_S, 3, &arg1, &arg2);
@@ -1087,7 +1087,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgeBox_getPoints(lua_State* tolua_S)
     if (argc == 0)
     {
         int count = cobj->getPointsCount();
-        cocos2d::Vector2* arg0 = new cocos2d::Vector2[count];
+        cocos2d::Vec2* arg0 = new cocos2d::Vec2[count];
         cobj->getPoints(arg0);
         vector2_array_to_luaval(tolua_S, arg0, count);
         CC_SAFE_FREE(arg0);
@@ -1131,7 +1131,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgePolygon_getPoints(lua_State* tolua_S)
     if (argc == 0)
     {
         int count = cobj->getPointsCount();
-        cocos2d::Vector2* arg0 = new cocos2d::Vector2[count];
+        cocos2d::Vec2* arg0 = new cocos2d::Vec2[count];
         cobj->getPoints(arg0);
         vector2_array_to_luaval(tolua_S, arg0, count);
         CC_SAFE_FREE(arg0);
@@ -1175,7 +1175,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgeChain_getPoints(lua_State* tolua_S)
     if (argc == 0)
     {
         int count = cobj->getPointsCount();
-        cocos2d::Vector2* arg0 = new cocos2d::Vector2[count];
+        cocos2d::Vec2* arg0 = new cocos2d::Vec2[count];
         cobj->getPoints(arg0);
         vector2_array_to_luaval(tolua_S, arg0, count);
         CC_SAFE_FREE(arg0);
@@ -1313,7 +1313,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgePolygon_create(lua_State* tolua_S)
     
     if (argc == 1)
     {
-        cocos2d::Vector2* arg0;
+        cocos2d::Vec2* arg0;
         int arg1 = 0;
         do {
             ok = luaval_to_array_of_vector2(tolua_S, 2, &arg0, &arg1);
@@ -1332,7 +1332,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgePolygon_create(lua_State* tolua_S)
     }
     if (argc == 2)
     {
-        cocos2d::Vector2* arg0;
+        cocos2d::Vec2* arg0;
         int arg1 = 0;
         cocos2d::PhysicsMaterial arg2;
         do {
@@ -1353,7 +1353,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgePolygon_create(lua_State* tolua_S)
     }
     if (argc == 3)
     {
-        cocos2d::Vector2* arg0;
+        cocos2d::Vec2* arg0;
         int arg1 = 0;
         cocos2d::PhysicsMaterial arg2;
         double arg3;
@@ -1400,7 +1400,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgeChain_create(lua_State* tolua_S)
     
     if (argc == 1)
     {
-        cocos2d::Vector2* arg0;
+        cocos2d::Vec2* arg0;
         int arg1 = 0;
         do {
             ok = luaval_to_array_of_vector2(tolua_S, 2, &arg0, &arg1);
@@ -1419,7 +1419,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgeChain_create(lua_State* tolua_S)
     }
     if (argc == 2)
     {
-        cocos2d::Vector2* arg0;
+        cocos2d::Vec2* arg0;
         int arg1 = 0;
         cocos2d::PhysicsMaterial arg2;
         do {
@@ -1440,7 +1440,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgeChain_create(lua_State* tolua_S)
     }
     if (argc == 3)
     {
-        cocos2d::Vector2* arg0;
+        cocos2d::Vec2* arg0;
         int arg1 = 0;
         cocos2d::PhysicsMaterial arg2;
         double arg3;

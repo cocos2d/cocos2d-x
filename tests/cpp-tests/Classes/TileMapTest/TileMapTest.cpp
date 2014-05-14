@@ -190,7 +190,7 @@ TileMapTest::TileMapTest()
     
     addChild(map, 0, kTagTileMap);
     
-    map->setAnchorPoint( Vector2(0, 0.5f) );
+    map->setAnchorPoint( Vec2(0, 0.5f) );
 
     auto scale = ScaleBy::create(4, 0.8f);
     auto scaleBack = scale->reverse();
@@ -226,8 +226,8 @@ TileMapEditTest::TileMapEditTest()
     
     addChild(map, 0, kTagTileMap);
     
-    map->setAnchorPoint( Vector2(0, 0) );
-    map->setPosition( Vector2(-20,-200) );
+    map->setAnchorPoint( Vec2(0, 0) );
+    map->setPosition( Vec2(-20,-200) );
 }
 
 void TileMapEditTest::updateMap(float dt)
@@ -252,14 +252,14 @@ void TileMapEditTest::updateMap(float dt)
     //    }
     
     // NEW since v0.7
-    Color3B c = tilemap->getTileAt(Vector2(13,21));        
+    Color3B c = tilemap->getTileAt(Vec2(13,21));        
     c.r++;
     c.r %= 50;
     if( c.r==0)
         c.r=1;
     
     // NEW since v0.7
-    tilemap->setTile(c, Vector2(13,21) );             
+    tilemap->setTile(c, Vec2(13,21) );             
 }
 
 std::string TileMapEditTest::title() const
@@ -369,7 +369,7 @@ TMXOrthoTest3::TMXOrthoTest3()
     }
     
     map->setScale(0.2f);
-    map->setAnchorPoint( Vector2(0.5f, 0.5f) );
+    map->setAnchorPoint( Vec2(0.5f, 0.5f) );
 }
 
 std::string TMXOrthoTest3::title() const
@@ -399,19 +399,19 @@ TMXOrthoTest4::TMXOrthoTest4()
         child->getTexture()->setAntiAliasTexParameters();
     }
     
-    map->setAnchorPoint(Vector2(0, 0));
+    map->setAnchorPoint(Vec2(0, 0));
 
     auto layer = map->getLayer("Layer 0");
     auto s = layer->getLayerSize();
     
     Sprite* sprite;
-    sprite = layer->getTileAt(Vector2(0,0));
+    sprite = layer->getTileAt(Vec2(0,0));
     sprite->setScale(2);
-    sprite = layer->getTileAt(Vector2(s.width-1,0));
+    sprite = layer->getTileAt(Vec2(s.width-1,0));
     sprite->setScale(2);
-    sprite = layer->getTileAt(Vector2(0,s.height-1));
+    sprite = layer->getTileAt(Vec2(0,s.height-1));
     sprite->setScale(2);
-    sprite = layer->getTileAt(Vector2(s.width-1,s.height-1));
+    sprite = layer->getTileAt(Vec2(s.width-1,s.height-1));
     sprite->setScale(2);
 
     schedule( schedule_selector(TMXOrthoTest4::removeSprite), 2 );
@@ -426,10 +426,10 @@ void TMXOrthoTest4::removeSprite(float dt)
     auto layer = map->getLayer("Layer 0");
     auto s = layer->getLayerSize();
 
-    auto sprite = layer->getTileAt( Vector2(s.width-1,0) );
-    auto sprite2 = layer->getTileAt(Vector2(s.width-1, s.height-1));
+    auto sprite = layer->getTileAt( Vec2(s.width-1,0) );
+    auto sprite2 = layer->getTileAt(Vec2(s.width-1, s.height-1));
     layer->removeChild(sprite, true);
-    auto sprite3 = layer->getTileAt(Vector2(2, s.height-1));
+    auto sprite3 = layer->getTileAt(Vec2(2, s.height-1));
     layer->removeChild(sprite3, true);
     layer->removeChild(sprite2, true);
 }
@@ -467,16 +467,16 @@ TMXReadWriteTest::TMXReadWriteTest()
 
     map->setScale( 1 );
 
-    auto tile0 = layer->getTileAt(Vector2(1,63));
-    auto tile1 = layer->getTileAt(Vector2(2,63));
-    auto tile2 = layer->getTileAt(Vector2(3,62));//Vector2(1,62));
-    auto tile3 = layer->getTileAt(Vector2(2,62));
-    tile0->setAnchorPoint( Vector2(0.5f, 0.5f) );
-    tile1->setAnchorPoint( Vector2(0.5f, 0.5f) );
-    tile2->setAnchorPoint( Vector2(0.5f, 0.5f) );
-    tile3->setAnchorPoint( Vector2(0.5f, 0.5f) );
+    auto tile0 = layer->getTileAt(Vec2(1,63));
+    auto tile1 = layer->getTileAt(Vec2(2,63));
+    auto tile2 = layer->getTileAt(Vec2(3,62));//Vec2(1,62));
+    auto tile3 = layer->getTileAt(Vec2(2,62));
+    tile0->setAnchorPoint( Vec2(0.5f, 0.5f) );
+    tile1->setAnchorPoint( Vec2(0.5f, 0.5f) );
+    tile2->setAnchorPoint( Vec2(0.5f, 0.5f) );
+    tile3->setAnchorPoint( Vec2(0.5f, 0.5f) );
 
-    auto move = MoveBy::create(0.5f, Vector2(0,160));
+    auto move = MoveBy::create(0.5f, Vec2(0,160));
     auto rotate = RotateBy::create(2, 360);
     auto scale = ScaleBy::create(2, 5);
     auto opacity = FadeOut::create(2);
@@ -494,7 +494,7 @@ TMXReadWriteTest::TMXReadWriteTest()
     tile3->runAction(seq3);
     
     
-    _gid = layer->getTileGIDAt(Vector2(0,63));
+    _gid = layer->getTileGIDAt(Vec2(0,63));
     ////----CCLOG("Tile GID at:(0,63) is: %d", _gid);
 
     schedule(schedule_selector(TMXReadWriteTest::updateCol), 2.0f); 
@@ -533,7 +533,7 @@ void TMXReadWriteTest::updateCol(float dt)
 
     for( int y=0; y< s.height; y++ ) 
     {
-        layer->setTileGID(_gid2, Vector2((float)3, (float)y));
+        layer->setTileGID(_gid2, Vec2((float)3, (float)y));
     }
     
     _gid2 = (_gid2 + 1) % 80;
@@ -550,8 +550,8 @@ void TMXReadWriteTest::repaintWithGID(float dt)
     for( int x=0; x<s.width;x++) 
     {
         int y = (int)s.height-1;
-        unsigned int tmpgid = layer->getTileGIDAt( Vector2((float)x, (float)y) );
-        layer->setTileGID(tmpgid+1, Vector2((float)x, (float)y));
+        unsigned int tmpgid = layer->getTileGIDAt( Vec2((float)x, (float)y) );
+        layer->setTileGID(tmpgid+1, Vec2((float)x, (float)y));
     }
 }
 
@@ -565,7 +565,7 @@ void TMXReadWriteTest::removeTiles(float dt)
 
     for( int y=0; y< s.height; y++ ) 
     {
-        layer->removeTileAt( Vector2(5.0, (float)y) );
+        layer->removeTileAt( Vec2(5.0, (float)y) );
     }
 }
 
@@ -614,7 +614,7 @@ TMXIsoTest::TMXIsoTest()
     // move map to the center of the screen
     auto ms = map->getMapSize();
     auto ts = map->getTileSize();
-    map->runAction( MoveTo::create(1.0f, Vector2( -ms.width * ts.width/2, -ms.height * ts.height/2 )) ); 
+    map->runAction( MoveTo::create(1.0f, Vec2( -ms.width * ts.width/2, -ms.height * ts.height/2 )) ); 
 }
 
 std::string TMXIsoTest::title() const
@@ -638,7 +638,7 @@ TMXIsoTest1::TMXIsoTest1()
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
     
-    map->setAnchorPoint(Vector2(0.5f, 0.5f));
+    map->setAnchorPoint(Vec2(0.5f, 0.5f));
 }
 
 std::string TMXIsoTest1::title() const
@@ -665,7 +665,7 @@ TMXIsoTest2::TMXIsoTest2()
     // move map to the center of the screen
     auto ms = map->getMapSize();
     auto ts = map->getTileSize();
-    map->runAction( MoveTo::create(1.0f, Vector2( -ms.width * ts.width/2, -ms.height * ts.height/2 ) ));
+    map->runAction( MoveTo::create(1.0f, Vec2( -ms.width * ts.width/2, -ms.height * ts.height/2 ) ));
 }
 
 std::string TMXIsoTest2::title() const
@@ -692,7 +692,7 @@ TMXUncompressedTest::TMXUncompressedTest()
     // move map to the center of the screen
     auto ms = map->getMapSize();
     auto ts = map->getTileSize();
-    map->runAction(MoveTo::create(1.0f, Vector2( -ms.width * ts.width/2, -ms.height * ts.height/2 ) ));
+    map->runAction(MoveTo::create(1.0f, Vec2( -ms.width * ts.width/2, -ms.height * ts.height/2 ) ));
     
     // testing release map
     TMXLayer* layer;
@@ -759,14 +759,14 @@ TMXOrthoObjectsTest::TMXOrthoObjectsTest()
     CCLOG("%s", objectsVal.getDescription().c_str());
 }
 
-void TMXOrthoObjectsTest::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void TMXOrthoObjectsTest::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     _renderCmd.init(_globalZOrder);
     _renderCmd.func = CC_CALLBACK_0(TMXOrthoObjectsTest::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_renderCmd);
 }
 
-void TMXOrthoObjectsTest::onDraw(const Matrix &transform, bool transformUpdated)
+void TMXOrthoObjectsTest::onDraw(const Mat4 &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -790,10 +790,10 @@ void TMXOrthoObjectsTest::onDraw(const Matrix &transform, bool transformUpdated)
         
         glLineWidth(3);
         
-        DrawPrimitives::drawLine( pos + Vector2(x, y), pos + Vector2((x+width), y) );
-        DrawPrimitives::drawLine( pos + Vector2((x+width), y), pos + Vector2((x+width), (y+height)) );
-        DrawPrimitives::drawLine( pos + Vector2((x+width), (y+height)), pos + Vector2(x, (y+height)) );
-        DrawPrimitives::drawLine( pos + Vector2(x, (y+height)), pos + Vector2(x, y) );
+        DrawPrimitives::drawLine( pos + Vec2(x, y), pos + Vec2((x+width), y) );
+        DrawPrimitives::drawLine( pos + Vec2((x+width), y), pos + Vec2((x+width), (y+height)) );
+        DrawPrimitives::drawLine( pos + Vec2((x+width), (y+height)), pos + Vec2(x, (y+height)) );
+        DrawPrimitives::drawLine( pos + Vec2(x, (y+height)), pos + Vec2(x, y) );
         
         glLineWidth(1);
     }
@@ -834,14 +834,14 @@ TMXIsoObjectsTest::TMXIsoObjectsTest()
     CCLOG("%s", objectsVal.getDescription().c_str());
 }
 
-void TMXIsoObjectsTest::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void TMXIsoObjectsTest::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     _renderCmd.init(_globalZOrder);
     _renderCmd.func = CC_CALLBACK_0(TMXIsoObjectsTest::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_renderCmd);
 }
 
-void TMXIsoObjectsTest::onDraw(const Matrix &transform, bool transformUpdated)
+void TMXIsoObjectsTest::onDraw(const Mat4 &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -863,10 +863,10 @@ void TMXIsoObjectsTest::onDraw(const Matrix &transform, bool transformUpdated)
         
         glLineWidth(3);
         
-        DrawPrimitives::drawLine( pos + Vector2(x,y), pos + Vector2(x+width,y) );
-        DrawPrimitives::drawLine( pos + Vector2(x+width,y), pos + Vector2(x+width,y+height) );
-        DrawPrimitives::drawLine( pos + Vector2(x+width,y+height), pos + Vector2(x,y+height) );
-        DrawPrimitives::drawLine( pos + Vector2(x,y+height), pos + Vector2(x,y) );
+        DrawPrimitives::drawLine( pos + Vec2(x,y), pos + Vec2(x+width,y) );
+        DrawPrimitives::drawLine( pos + Vec2(x+width,y), pos + Vec2(x+width,y+height) );
+        DrawPrimitives::drawLine( pos + Vec2(x+width,y+height), pos + Vec2(x,y+height) );
+        DrawPrimitives::drawLine( pos + Vec2(x,y+height), pos + Vec2(x,y) );
         
         glLineWidth(1);
     }
@@ -907,7 +907,7 @@ TMXResizeTest::TMXResizeTest()
     {
         for (unsigned int x = 0; x < ls.width; x++) 
         {
-            layer->setTileGID(1, Vector2( x, y ) );
+            layer->setTileGID(1, Vec2( x, y ) );
         }
     }        
 }
@@ -935,17 +935,17 @@ TMXIsoZorder::TMXIsoZorder()
 
     auto s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
-    map->setPosition(Vector2(-s.width/2,0));
+    map->setPosition(Vec2(-s.width/2,0));
     
     _tamara = Sprite::create(s_pathSister1);
     map->addChild(_tamara, (int)map->getChildren().size() );
     _tamara->retain();
     int mapWidth = map->getMapSize().width * map->getTileSize().width;
-    _tamara->setPosition(CC_POINT_PIXELS_TO_POINTS(Vector2( mapWidth/2,0)));
-    _tamara->setAnchorPoint(Vector2(0.5f,0));
+    _tamara->setPosition(CC_POINT_PIXELS_TO_POINTS(Vec2( mapWidth/2,0)));
+    _tamara->setAnchorPoint(Vec2(0.5f,0));
 
     
-    auto move = MoveBy::create(10, Vector2(300,250));
+    auto move = MoveBy::create(10, Vec2(300,250));
     auto back = move->reverse();
     auto seq = Sequence::create(move, back,NULL);
     _tamara->runAction( RepeatForever::create(seq) );
@@ -1008,10 +1008,10 @@ TMXOrthoZorder::TMXOrthoZorder()
     _tamara = Sprite::create(s_pathSister1);
     map->addChild(_tamara,  (int)map->getChildren().size());
     _tamara->retain();
-    _tamara->setAnchorPoint(Vector2(0.5f,0));
+    _tamara->setAnchorPoint(Vec2(0.5f,0));
 
     
-    auto move = MoveBy::create(10, Vector2(400,450));
+    auto move = MoveBy::create(10, Vec2(400,450));
     auto back = move->reverse();
     auto seq = Sequence::create(move, back,NULL);
     _tamara->runAction( RepeatForever::create(seq));
@@ -1064,16 +1064,16 @@ TMXIsoVertexZ::TMXIsoVertexZ()
     addChild(map, 0, kTagTileMap);
     
     auto s = map->getContentSize();
-    map->setPosition( Vector2(-s.width/2,0) );
+    map->setPosition( Vec2(-s.width/2,0) );
     CCLOG("ContentSize: %f, %f", s.width,s.height);
     
     // because I'm lazy, I'm reusing a tile as an sprite, but since this method uses vertexZ, you
     // can use any Sprite and it will work OK.
     auto layer = map->getLayer("Trees");
-    _tamara = layer->getTileAt( Vector2(29,29) );
+    _tamara = layer->getTileAt( Vec2(29,29) );
     _tamara->retain();
     
-    auto move = MoveBy::create(10, Vector2(300,250) * (1/CC_CONTENT_SCALE_FACTOR()));
+    auto move = MoveBy::create(10, Vec2(300,250) * (1/CC_CONTENT_SCALE_FACTOR()));
     auto back = move->reverse();
     auto seq = Sequence::create(move, back,NULL);
     _tamara->runAction( RepeatForever::create(seq) );
@@ -1141,11 +1141,11 @@ TMXOrthoVertexZ::TMXOrthoVertexZ()
     // because I'm lazy, I'm reusing a tile as an sprite, but since this method uses vertexZ, you
     // can use any Sprite and it will work OK.
     auto layer = map->getLayer("trees");
-    _tamara = layer->getTileAt(Vector2(0,11));
+    _tamara = layer->getTileAt(Vec2(0,11));
     CCLOG("%p vertexZ: %f", _tamara, _tamara->getPositionZ());
     _tamara->retain();
 
-    auto move = MoveBy::create(10, Vector2(400,450) * (1/CC_CONTENT_SCALE_FACTOR()));
+    auto move = MoveBy::create(10, Vec2(400,450) * (1/CC_CONTENT_SCALE_FACTOR()));
     auto back = move->reverse();
     auto seq = Sequence::create(move, back,NULL);
     _tamara->runAction( RepeatForever::create(seq));
@@ -1206,7 +1206,7 @@ TMXIsoMoveLayer::TMXIsoMoveLayer()
     auto map = TMXTiledMap::create("TileMaps/iso-test-movelayer.tmx");
     addChild(map, 0, kTagTileMap);
     
-    map->setPosition(Vector2(-700,-50));
+    map->setPosition(Vec2(-700,-50));
 
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
@@ -1347,7 +1347,7 @@ void TMXOrthoFlipRunTimeTest::flipIt(float dt)
     auto layer = map->getLayer("Layer 0");
 
     //blue diamond 
-    auto tileCoord = Vector2(1,10);
+    auto tileCoord = Vec2(1,10);
     int flags;
     unsigned int GID = layer->getTileGIDAt(tileCoord, (TMXTileFlags*)&flags);
     // Vertical
@@ -1358,7 +1358,7 @@ void TMXOrthoFlipRunTimeTest::flipIt(float dt)
     layer->setTileGID(GID ,tileCoord, (TMXTileFlags)flags);
 
 
-    tileCoord = Vector2(1,8);    
+    tileCoord = Vec2(1,8);    
     GID = layer->getTileGIDAt(tileCoord, (TMXTileFlags*)&flags);
     // Vertical
     if( flags & kTMXTileVerticalFlag )
@@ -1368,7 +1368,7 @@ void TMXOrthoFlipRunTimeTest::flipIt(float dt)
     layer->setTileGID(GID ,tileCoord, (TMXTileFlags)flags);
 
 
-    tileCoord = Vector2(2,8);
+    tileCoord = Vec2(2,8);
     GID = layer->getTileGIDAt(tileCoord, (TMXTileFlags*)&flags);
     // Horizontal
     if( flags & kTMXTileHorizontalFlag )
@@ -1467,9 +1467,9 @@ TMXBug987::TMXBug987()
         node->getTexture()->setAntiAliasTexParameters();
     }
 
-    map->setAnchorPoint(Vector2(0, 0));
+    map->setAnchorPoint(Vec2(0, 0));
     auto layer = map->getLayer("Tile Layer 1");
-    layer->setTileGID(3, Vector2(2,2));
+    layer->setTileGID(3, Vec2(2,2));
 }
 
 std::string TMXBug987::title() const
@@ -1523,14 +1523,14 @@ TMXGIDObjectsTest::TMXGIDObjectsTest()
 
 }
 
-void TMXGIDObjectsTest::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void TMXGIDObjectsTest::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     _renderCmd.init(_globalZOrder);
     _renderCmd.func = CC_CALLBACK_0(TMXGIDObjectsTest::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_renderCmd);
 }
 
-void TMXGIDObjectsTest::onDraw(const Matrix &transform, bool transformUpdated)
+void TMXGIDObjectsTest::onDraw(const Mat4 &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -1553,10 +1553,10 @@ void TMXGIDObjectsTest::onDraw(const Matrix &transform, bool transformUpdated)
         
         glLineWidth(3);
         
-        DrawPrimitives::drawLine(pos + Vector2(x, y), pos + Vector2(x + width, y));
-        DrawPrimitives::drawLine(pos + Vector2(x + width, y), pos + Vector2(x + width, y + height));
-        DrawPrimitives::drawLine(pos + Vector2(x + width,y + height), pos + Vector2(x,y + height));
-        DrawPrimitives::drawLine(pos + Vector2(x,y + height), pos + Vector2(x,y));
+        DrawPrimitives::drawLine(pos + Vec2(x, y), pos + Vec2(x + width, y));
+        DrawPrimitives::drawLine(pos + Vec2(x + width, y), pos + Vec2(x + width, y + height));
+        DrawPrimitives::drawLine(pos + Vec2(x + width,y + height), pos + Vec2(x,y + height));
+        DrawPrimitives::drawLine(pos + Vec2(x,y + height), pos + Vec2(x,y));
         
         glLineWidth(1);
     }

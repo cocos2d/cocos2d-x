@@ -165,11 +165,11 @@ void WinRTWindow::ResizeWindow()
      GLView::sharedOpenGLView()->UpdateForWindowSizeChange();
 }
 
-cocos2d::Vector2 WinRTWindow::GetCCPoint(PointerEventArgs^ args) {
+cocos2d::Vec2 WinRTWindow::GetCCPoint(PointerEventArgs^ args) {
 	auto p = args->CurrentPoint;
 	float x = getScaledDPIValue(p->Position.X);
 	float y = getScaledDPIValue(p->Position.Y);
-    Vector2 pt(x, y);
+    Vec2 pt(x, y);
 
 	float zoomFactor = GLView::sharedOpenGLView()->getFrameZoomFactor();
 
@@ -264,7 +264,7 @@ void WinRTWindow::OnPointerWheelChanged(CoreWindow^ sender, PointerEventArgs^ ar
 {
     float direction = (float)args->CurrentPoint->Properties->MouseWheelDelta;
     int id = 0;
-    Vector2 p(0.0f,0.0f);
+    Vec2 p(0.0f,0.0f);
     GLView::sharedOpenGLView()->handleTouchesBegin(1, &id, &p.x, &p.y);
     p.y += direction;
     GLView::sharedOpenGLView()->handleTouchesMove(1, &id, &p.x, &p.y);
@@ -288,7 +288,7 @@ void GLView::OnPointerPressed(PointerEventArgs^ args)
 {
 #if 0
     int id = args->CurrentPoint->PointerId;
-    Vector2 pt = GetPoint(args);
+    Vec2 pt = GetPoint(args);
     handleTouchesBegin(1, &id, &pt.x, &pt.y);
 #endif
 }
@@ -302,7 +302,7 @@ void GLView::OnPointerMoved(PointerEventArgs^ args)
         if (m_lastPointValid)
         {
             int id = args->CurrentPoint->PointerId;
-            Vector2 p = GetPoint(args);
+            Vec2 p = GetPoint(args);
             handleTouchesMove(1, &id, &p.x, &p.y);
         }
         m_lastPoint = currentPoint->Position;
@@ -319,7 +319,7 @@ void GLView::OnPointerReleased(PointerEventArgs^ args)
 {
 #if 0
     int id = args->CurrentPoint->PointerId;
-    Vector2 pt = GetPoint(args);
+    Vec2 pt = GetPoint(args);
     handleTouchesEnd(1, &id, &pt.x, &pt.y);
 #endif // 0
 
@@ -330,7 +330,7 @@ void GLView::OnPointerReleased(PointerEventArgs^ args)
 void WinRTWindow::OnPointerPressed(CoreWindow^ sender, PointerEventArgs^ args)
 {
     int id = args->CurrentPoint->PointerId;
-    Vector2 pt = GetCCPoint(args);
+    Vec2 pt = GetCCPoint(args);
     GLView::sharedOpenGLView()->handleTouchesBegin(1, &id, &pt.x, &pt.y);
 }
 
@@ -342,7 +342,7 @@ void WinRTWindow::OnPointerMoved(CoreWindow^ sender, PointerEventArgs^ args)
 		if (m_lastPointValid)
 		{
 			int id = args->CurrentPoint->PointerId;
-			Vector2 p = GetCCPoint(args);
+			Vec2 p = GetCCPoint(args);
 			GLView::sharedOpenGLView()->handleTouchesMove(1, &id, &p.x, &p.y);
 		}
 		m_lastPoint = currentPoint->Position;
@@ -357,7 +357,7 @@ void WinRTWindow::OnPointerMoved(CoreWindow^ sender, PointerEventArgs^ args)
 void WinRTWindow::OnPointerReleased(CoreWindow^ sender, PointerEventArgs^ args)
 {
     int id = args->CurrentPoint->PointerId;
-    Vector2 pt = GetCCPoint(args);
+    Vec2 pt = GetCCPoint(args);
     GLView::sharedOpenGLView()->handleTouchesEnd(1, &id, &pt.x, &pt.y);
 }
 

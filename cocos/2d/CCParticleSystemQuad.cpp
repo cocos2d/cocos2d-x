@@ -239,7 +239,7 @@ void ParticleSystemQuad::setTexture(Texture2D* texture)
 
 void ParticleSystemQuad::setDisplayFrame(SpriteFrame *spriteFrame)
 {
-    CCASSERT(spriteFrame->getOffsetInPixels().equals(Vector2::ZERO), 
+    CCASSERT(spriteFrame->getOffsetInPixels().equals(Vec2::ZERO), 
              "QuadParticle only supports SpriteFrames with no offsets");
 
     // update texture before updating texture rect
@@ -265,7 +265,7 @@ void ParticleSystemQuad::initIndices()
     }
 }
 
-void ParticleSystemQuad::updateQuadWithParticle(tParticle* particle, const Vector2& newPosition)
+void ParticleSystemQuad::updateQuadWithParticle(tParticle* particle, const Vec2& newPosition)
 {
     V3F_C4B_T2F_Quad *quad;
 
@@ -368,7 +368,7 @@ void ParticleSystemQuad::postStep()
 }
 
 // overriding draw method
-void ParticleSystemQuad::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void ParticleSystemQuad::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     CCASSERT( _particleIdx == 0 || _particleIdx == _particleCount, "Abnormal error in particle quad");
     //quad command

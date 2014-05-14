@@ -2125,7 +2125,7 @@ int tolua_cocos2d_Node_setAnchorPoint(lua_State* tolua_S)
     
     if (1 == argc)
     {
-        cocos2d::Vector2 pt;
+        cocos2d::Vec2 pt;
         ok &= luaval_to_vector2(tolua_S, 2, &pt);
         if (!ok)
             return 0;
@@ -2147,7 +2147,7 @@ int tolua_cocos2d_Node_setAnchorPoint(lua_State* tolua_S)
         if (!ok)
             return 0;
         
-        cobj->setAnchorPoint(cocos2d::Vector2(x,y));
+        cobj->setAnchorPoint(cocos2d::Vec2(x,y));
         return 0;
     }
     
@@ -2291,7 +2291,7 @@ int lua_cocos2d_CardinalSplineBy_create(lua_State* tolua_S)
             return 0;
         
         int num = 0;
-        cocos2d::Vector2 *arr = NULL;
+        cocos2d::Vec2 *arr = NULL;
         ok &= luaval_to_array_of_vector2(tolua_S, 3, &arr, &num);
         if (!ok)
             return 0;
@@ -2363,7 +2363,7 @@ int tolua_cocos2d_CatmullRomBy_create(lua_State* tolua_S)
             return 0;
         
         int num = 0;
-        cocos2d::Vector2 *arr = NULL;
+        cocos2d::Vec2 *arr = NULL;
         ok &= luaval_to_array_of_vector2(tolua_S, 3, &arr, &num);
         if (!ok)
             return 0;
@@ -2427,7 +2427,7 @@ int tolua_cocos2d_CatmullRomTo_create(lua_State* tolua_S)
             return 0;
         
         int num = 0;
-        cocos2d::Vector2 *arr = NULL;
+        cocos2d::Vec2 *arr = NULL;
         ok &= luaval_to_array_of_vector2(tolua_S, 3, &arr, &num);
         if (!ok)
             return 0;
@@ -2491,7 +2491,7 @@ int tolua_cocos2d_BezierBy_create(lua_State* tolua_S)
             return 0;
         
         int num = 0;
-        cocos2d::Vector2 *arr = NULL;
+        cocos2d::Vec2 *arr = NULL;
         ok &= luaval_to_array_of_vector2(tolua_S, 3, &arr, &num);
         if (!ok)
             return 0;
@@ -2551,7 +2551,7 @@ int tolua_cocos2d_BezierTo_create(lua_State* tolua_S)
             return 0;
         
         int num = 0;
-        cocos2d::Vector2 *arr = NULL;
+        cocos2d::Vec2 *arr = NULL;
         ok &= luaval_to_array_of_vector2(tolua_S, 3, &arr, &num);
         if (!ok)
             return 0;
@@ -2626,7 +2626,7 @@ static int tolua_cocos2d_DrawNode_drawPolygon(lua_State* tolua_S)
         size_t size = lua_tonumber(tolua_S, 3);
         if ( size > 0 )
         {
-            cocos2d::Vector2* points = new cocos2d::Vector2[size];
+            cocos2d::Vec2* points = new cocos2d::Vec2[size];
             if (NULL == points)
                 return 0;
             

@@ -159,14 +159,14 @@ inline void MathUtil::transposeMatrix(const float* m, float* dst)
     memcpy(dst, t, MATRIX_SIZE);
 }
 
-inline void MathUtil::transformVector4(const float* m, float x, float y, float z, float w, float* dst)
+inline void MathUtil::transformVec4(const float* m, float x, float y, float z, float w, float* dst)
 {
     dst[0] = x * m[0] + y * m[4] + z * m[8] + w * m[12];
     dst[1] = x * m[1] + y * m[5] + z * m[9] + w * m[13];
     dst[2] = x * m[2] + y * m[6] + z * m[10] + w * m[14];
 }
 
-inline void MathUtil::transformVector4(const float* m, const float* v, float* dst)
+inline void MathUtil::transformVec4(const float* m, const float* v, float* dst)
 {
     // Handle case where v == dst.
     float x = v[0] * m[0] + v[1] * m[4] + v[2] * m[8] + v[3] * m[12];
@@ -180,7 +180,7 @@ inline void MathUtil::transformVector4(const float* m, const float* v, float* ds
     dst[3] = w;
 }
 
-inline void MathUtil::crossVector3(const float* v1, const float* v2, float* dst)
+inline void MathUtil::crossVec3(const float* v1, const float* v2, float* dst)
 {
     float x = (v1[1] * v2[2]) - (v1[2] * v2[1]);
     float y = (v1[2] * v2[0]) - (v1[0] * v2[2]);
