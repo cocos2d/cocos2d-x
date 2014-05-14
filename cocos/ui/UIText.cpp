@@ -89,7 +89,7 @@ bool Text::init(const std::string &textContent, const std::string &fontName, int
             ret = false;
             break;
         }
-        this->setText(textContent);
+        this->setString(textContent);
         this->setFontName(fontName);
         this->setFontSize(fontSize);
     } while (0);
@@ -102,21 +102,22 @@ void Text::initRenderer()
     addProtectedChild(_labelRenderer, LABEL_RENDERER_Z, -1);
 }
 
-void Text::setText(const std::string& text)
+    
+void Text::setString(const std::string &text)
 {
     _labelRenderer->setString(text);
     updateContentSizeWithTextureSize(_labelRenderer->getContentSize());
     _labelRendererAdaptDirty = true;
 }
-
-const std::string& Text::getStringValue()
+    
+const std::string& Text::getString() const
 {
     return _labelRenderer->getString();
 }
 
 ssize_t Text::getStringLength()
 {
-    return _labelRenderer->getString().size();
+    return _labelRenderer->getStringLength();
 }
 
 void Text::setFontSize(int size)
@@ -324,7 +325,7 @@ void Text::copySpecialProperties(Widget *widget)
     {
         setFontName(label->_fontName);
         setFontSize(label->_labelRenderer->getSystemFontSize());
-        setText(label->getStringValue());
+        setString(label->getString());
         setTouchScaleChangeEnabled(label->_touchScaleChangeEnabled);
         setTextHorizontalAlignment(label->_labelRenderer->getHorizontalAlignment());
         setTextVerticalAlignment(label->_labelRenderer->getVerticalAlignment());

@@ -632,7 +632,7 @@ void WidgetPropertiesReader0250::setPropsForLabelFromJsonDictionary(Widget*widge
     bool touchScaleChangeAble = DICTOOL->getBooleanValue_json(options, "touchScaleEnable");
     label->setTouchScaleChangeEnabled(touchScaleChangeAble);
     const char* text = DICTOOL->getStringValue_json(options, "text");
-    label->setText(text);
+    label->setString(text);
     bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
     if (fs)
     {
@@ -1571,7 +1571,7 @@ void WidgetPropertiesReader0300::setPropsForLabelFromJsonDictionary(Widget*widge
     bool touchScaleChangeAble = DICTOOL->getBooleanValue_json(options, "touchScaleEnable");
     label->setTouchScaleChangeEnabled(touchScaleChangeAble);
     const char* text = DICTOOL->getStringValue_json(options, "text");
-    label->setText(text);
+    label->setString(text);
     bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
     if (fs)
     {

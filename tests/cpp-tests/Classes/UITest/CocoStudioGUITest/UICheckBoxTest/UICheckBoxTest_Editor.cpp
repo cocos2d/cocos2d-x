@@ -40,7 +40,7 @@ bool UICheckBoxTest_Editor::init()
         _displayValueLabel = Text::create();
         _displayValueLabel->setFontName("fonts/Marker Felt.ttf");
         _displayValueLabel->setFontSize(30);
-        _displayValueLabel->setText("No event");
+        _displayValueLabel->setString("No event");
         _displayValueLabel->setPosition(Vector2(_layout->getSize().width / 2,
                                               _layout->getSize().height - _displayValueLabel->getSize().height * 1.75f));
         _touchGroup->addChild(_displayValueLabel);
@@ -56,11 +56,11 @@ void UICheckBoxTest_Editor::selectedStateEvent(Ref *pSender, CheckBox::EventType
     switch (type)
     {
         case CheckBox::EventType::UNSELECTED:
-            _displayValueLabel->setText("Unselected");
+            _displayValueLabel->setString("Unselected");
             break;
             
         case CheckBox::EventType::SELECTED:
-            _displayValueLabel->setText("Selected");
+            _displayValueLabel->setString("Selected");
             break;
             
         default:
