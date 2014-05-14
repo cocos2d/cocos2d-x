@@ -635,7 +635,7 @@ protected:
     Widget* getWidgetParent();
     void updateContentSizeWithTextureSize(const Size& size);
     virtual void adaptRenderers(){};
-    bool isAncestorsEnable();
+    bool isAncestorsEnabled();
     Widget* getAncensterWidget(Node* node);
     bool isAncestorsVisible(Node* node);
 

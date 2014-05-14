@@ -555,7 +555,7 @@ bool Widget::isAncestorsVisible(Node* node)
     return this->isAncestorsVisible(parent);
 }
     
-bool Widget::isAncestorsEnable()
+bool Widget::isAncestorsEnabled()
 {
     Widget* parentWidget = this->getAncensterWidget(this);
     if (parentWidget == nullptr)
@@ -567,13 +567,13 @@ bool Widget::isAncestorsEnable()
         return false;
     }
     
-    return parentWidget->isAncestorsEnable();
+    return parentWidget->isAncestorsEnabled();
 }
 
 bool Widget::onTouchBegan(Touch *touch, Event *unusedEvent)
 {
     _hitted = false;
-    if (isVisible() && isEnabled() && isAncestorsEnable() && isAncestorsVisible(this) )
+    if (isVisible() && isEnabled() && isAncestorsEnabled() && isAncestorsVisible(this) )
     {
         _touchStartPos = touch->getLocation();
         if(hitTest(_touchStartPos) && clippingParentAreaContainPoint(_touchStartPos))
