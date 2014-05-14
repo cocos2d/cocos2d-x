@@ -41,7 +41,7 @@ class PhysicsWorld;
 class PhysicsJoint;
 class PhysicsBodyInfo;
 
-typedef Vector2 Vect;
+typedef Vec2 Vect;
 
 
 const PhysicsMaterial PHYSICSBODY_MATERIAL_DEFAULT(0.1f, 0.5f, 0.5f);
@@ -63,23 +63,23 @@ public:
     /** create a body with mass and moment. */
     static PhysicsBody* create(float mass, float moment);
     /** Create a body contains a circle shape. */
-    static PhysicsBody* createCircle(float radius, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, const Vector2& offset = Vector2::ZERO);
+    static PhysicsBody* createCircle(float radius, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
     /** Create a body contains a box shape. */
-    static PhysicsBody* createBox(const Size& size, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, const Vector2& offset = Vector2::ZERO);
+    static PhysicsBody* createBox(const Size& size, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
     /**
      * @brief Create a body contains a polygon shape.
-     * points is an array of Vector2 structs defining a convex hull with a clockwise winding.
+     * points is an array of Vec2 structs defining a convex hull with a clockwise winding.
      */
-    static PhysicsBody* createPolygon(const Vector2* points, int count, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, const Vector2& offset = Vector2::ZERO);
+    static PhysicsBody* createPolygon(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
     
     /** Create a body contains a EdgeSegment shape. */
-    static PhysicsBody* createEdgeSegment(const Vector2& a, const Vector2& b, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
+    static PhysicsBody* createEdgeSegment(const Vec2& a, const Vec2& b, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
     /** Create a body contains a EdgeBox shape. */
-    static PhysicsBody* createEdgeBox(const Size& size, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1, const Vector2& offset = Vector2::ZERO);
+    static PhysicsBody* createEdgeBox(const Size& size, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1, const Vec2& offset = Vec2::ZERO);
     /** Create a body contains a EdgePolygon shape. */
-    static PhysicsBody* createEdgePolygon(const Vector2* points, int count, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
+    static PhysicsBody* createEdgePolygon(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
     /** Create a body contains a EdgeChain shape. */
-    static PhysicsBody* createEdgeChain(const Vector2* points, int count, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
+    static PhysicsBody* createEdgeChain(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
     
     /*
      * @brief add a shape to body
@@ -111,26 +111,26 @@ public:
     /** Applies a immediate force to body. */
     virtual void applyForce(const Vect& force);
     /** Applies a immediate force to body. */
-    virtual void applyForce(const Vect& force, const Vector2& offset);
+    virtual void applyForce(const Vect& force, const Vec2& offset);
     /** reset all the force applied to body. */
     virtual void resetForces();
     /** Applies a continuous force to body. */
     virtual void applyImpulse(const Vect& impulse);
     /** Applies a continuous force to body. */
-    virtual void applyImpulse(const Vect& impulse, const Vector2& offset);
+    virtual void applyImpulse(const Vect& impulse, const Vec2& offset);
     /** Applies a torque force to body. */
     virtual void applyTorque(float torque);
     
     /** set the velocity of a body */
     virtual void setVelocity(const Vect& velocity);
     /** get the velocity of a body */
-    virtual Vector2 getVelocity();
+    virtual Vec2 getVelocity();
     /** set the angular velocity of a body */
     virtual void setAngularVelocity(float velocity);
     /** get the angular velocity of a body at a local point */
-    virtual Vector2 getVelocityAtLocalPoint(const Vector2& point);
+    virtual Vec2 getVelocityAtLocalPoint(const Vec2& point);
     /** get the angular velocity of a body at a world point */
-    virtual Vector2 getVelocityAtWorldPoint(const Vector2& point);
+    virtual Vec2 getVelocityAtWorldPoint(const Vec2& point);
     /** get the angular velocity of a body */
     virtual float getAngularVelocity();
     /** set the max of velocity */
@@ -188,14 +188,14 @@ public:
     inline int getGroup() const { return _group; }
     
     /** get the body position. */
-    Vector2 getPosition() const;
+    Vec2 getPosition() const;
     /** get the body rotation. */
     float getRotation() const;
     
     /** set body position offset, it's the position witch relative to node */
-    void setPositionOffset(const Vector2& position);
+    void setPositionOffset(const Vec2& position);
     /** get body position offset. */
-    Vector2 getPositionOffset() const;
+    Vec2 getPositionOffset() const;
     /** set body rotation offset, it's the rotation witch relative to node */
     void setRotationOffset(float rotation);
     /** set the body rotation offset */
@@ -293,15 +293,15 @@ public:
     inline void setTag(int tag) { _tag = tag; }
     
     /** convert the world point to local */
-    Vector2 world2Local(const Vector2& point);
+    Vec2 world2Local(const Vec2& point);
     /** convert the local point to world */
-    Vector2 local2World(const Vector2& point);
+    Vec2 local2World(const Vec2& point);
     
 protected:
     
     bool init();
     
-    virtual void setPosition(Vector2 position);
+    virtual void setPosition(Vec2 position);
     virtual void setRotation(float rotation);
     
     void update(float delta);
@@ -342,7 +342,7 @@ protected:
     
     bool _positionResetTag;     /// To avoid reset the body position when body invoke Node::setPosition().
     bool _rotationResetTag;     /// To avoid reset the body rotation when body invoke Node::setRotation().
-    Vector2 _positionOffset;
+    Vec2 _positionOffset;
     float _rotationOffset;
     
     friend class PhysicsWorld;
