@@ -89,6 +89,12 @@ cocos2d.cpp \
 2d/platform/CCSAXParser.cpp \
 2d/platform/CCThread.cpp \
 2d/platform/CCImage.cpp \
+3d/CCMesh.cpp \
+3d/CCMeshCache.cpp \
+3d/CCMeshPart.cpp \
+3d/CCObjLoader.cpp \
+3d/CCSprite3D.cpp \
+3d/CCSprite3DEffect.cpp \
 math/CCAffineTransform.cpp \
 math/CCGeometry.cpp \
 math/MathUtil.cpp \

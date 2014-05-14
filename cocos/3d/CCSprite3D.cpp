@@ -117,6 +117,7 @@ Sprite3D::Sprite3D()
 : _partcount(0)
 , _mesh(nullptr)
 , _effect(nullptr)
+, _texture(nullptr)
 , _blend(BlendFunc::DISABLE)
 {
 }
