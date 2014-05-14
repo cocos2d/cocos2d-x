@@ -29,7 +29,7 @@ void ConfigParser::readConfig()
     string fileContent;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID && !defined(NDEBUG)) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS && defined(COCOS2D_DEBUG))
     string fullPathFile = FileUtils::getInstance()->getWritablePath();
-    fullPathFile.append("debugruntime/")
+    fullPathFile.append("debugruntime/");
     fullPathFile.append(filecfg.c_str());
     fileContent=FileUtils::getInstance()->getStringFromFile(fullPathFile.c_str());
 #endif
