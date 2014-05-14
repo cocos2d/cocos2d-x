@@ -69,8 +69,6 @@ Ref::~Ref()
     if (_referenceCount != 0)
         untrackRef(this);
 #endif
-    
-    //CCASSERT(0 == _referenceCount, "Ref class has to be deleted by Ref::release(), don't use 'delete pointer' directly.");
 }
 
 void Ref::retain()
