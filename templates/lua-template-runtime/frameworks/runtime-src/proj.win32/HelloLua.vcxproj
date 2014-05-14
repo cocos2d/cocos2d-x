@@ -112,6 +112,7 @@ mkdir "$(OutDir)\Resource\res"
 xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script" "$(OutDir)\Resource" /e /Y
 xcopy "$(ProjectDir)..\..\..\src" "$(OutDir)\Resource\src" /e /Y
 xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\Resource\res" /e /Y
+copy "$(ProjectDir)..\..\..\config.json" "$(OutDir)\Resource\config.json" /Y
 xcopy "$(ProjectDir)..\..\cocos2d-x\external\lua\luasocket\*.lua" "$(OutDir)\Resource" /e /Y</Command>
       <Message>copy files</Message>
     </PreBuildEvent>
@@ -167,6 +168,7 @@ mkdir "$(OutDir)\Resource\res"
 xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script" "$(OutDir)\Resource" /e /Y
 xcopy "$(ProjectDir)..\..\..\src" "$(OutDir)\Resource\src" /e /Y
 xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\Resource\res" /e /Y
+copy "$(ProjectDir)..\..\..\config.json" "$(OutDir)\Resource\config.json" /Y
 xcopy "$(ProjectDir)..\..\cocos2d-x\external\lua\luasocket\*.lua" "$(OutDir)\Resource" /e /Y</Command>
       <Message>copy files</Message>
     </PreBuildEvent>
