@@ -22,74 +22,74 @@
 
 NS_CC_MATH_BEGIN
 
-inline const Matrix Matrix::operator+(const Matrix& mat) const
+inline const Mat4 Mat4::operator+(const Mat4& mat) const
 {
-    Matrix result(*this);
+    Mat4 result(*this);
     result.add(mat);
     return result;
 }
 
-inline Matrix& Matrix::operator+=(const Matrix& mat)
+inline Mat4& Mat4::operator+=(const Mat4& mat)
 {
     add(mat);
     return *this;
 }
 
-inline const Matrix Matrix::operator-(const Matrix& mat) const
+inline const Mat4 Mat4::operator-(const Mat4& mat) const
 {
-    Matrix result(*this);
+    Mat4 result(*this);
     result.subtract(mat);
     return result;
 }
 
-inline Matrix& Matrix::operator-=(const Matrix& mat)
+inline Mat4& Mat4::operator-=(const Mat4& mat)
 {
     subtract(mat);
     return *this;
 }
 
-inline const Matrix Matrix::operator-() const
+inline const Mat4 Mat4::operator-() const
 {
-    Matrix mat(*this);
+    Mat4 mat(*this);
     mat.negate();
     return mat;
 }
 
-inline const Matrix Matrix::operator*(const Matrix& mat) const
+inline const Mat4 Mat4::operator*(const Mat4& mat) const
 {
-    Matrix result(*this);
+    Mat4 result(*this);
     result.multiply(mat);
     return result;
 }
 
-inline Matrix& Matrix::operator*=(const Matrix& mat)
+inline Mat4& Mat4::operator*=(const Mat4& mat)
 {
     multiply(mat);
     return *this;
 }
 
-inline Vector3& operator*=(Vector3& v, const Matrix& m)
+inline Vec3& operator*=(Vec3& v, const Mat4& m)
 {
     m.transformVector(&v);
     return v;
 }
 
-inline const Vector3 operator*(const Matrix& m, const Vector3& v)
+inline const Vec3 operator*(const Mat4& m, const Vec3& v)
 {
-    Vector3 x;
+    Vec3 x;
     m.transformVector(v, &x);
     return x;
 }
 
-inline Vector4& operator*=(Vector4& v, const Matrix& m)
+inline Vec4& operator*=(Vec4& v, const Mat4& m)
 {
     m.transformVector(&v);
     return v;
 }
 
-inline const Vector4 operator*(const Matrix& m, const Vector4& v)
+inline const Vec4 operator*(const Mat4& m, const Vec4& v)
 {
-    Vector4 x;
+    Vec4 x;
     m.transformVector(v, &x);
     return x;
 }

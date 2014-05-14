@@ -24,32 +24,32 @@
 
 NS_CC_MATH_BEGIN
 
-Vector4::Vector4()
+Vec4::Vec4()
     : x(0.0f), y(0.0f), z(0.0f), w(0.0f)
 {
 }
 
-Vector4::Vector4(float xx, float yy, float zz, float ww)
+Vec4::Vec4(float xx, float yy, float zz, float ww)
     : x(xx), y(yy), z(zz), w(ww)
 {
 }
 
-Vector4::Vector4(const float* src)
+Vec4::Vec4(const float* src)
 {
     set(src);
 }
 
-Vector4::Vector4(const Vector4& p1, const Vector4& p2)
+Vec4::Vec4(const Vec4& p1, const Vec4& p2)
 {
     set(p1, p2);
 }
 
-Vector4::Vector4(const Vector4& copy)
+Vec4::Vec4(const Vec4& copy)
 {
     set(copy);
 }
 
-Vector4 Vector4::fromColor(unsigned int color)
+Vec4 Vec4::fromColor(unsigned int color)
 {
     float components[4];
     int componentIndex = 0;
@@ -60,25 +60,25 @@ Vector4 Vector4::fromColor(unsigned int color)
         components[componentIndex++] = static_cast<float>(component) / 255.0f;
     }
 
-    Vector4 value(components);
+    Vec4 value(components);
     return value;
 }
 
-Vector4::~Vector4()
+Vec4::~Vec4()
 {
 }
 
-bool Vector4::isZero() const
+bool Vec4::isZero() const
 {
     return x == 0.0f && y == 0.0f && z == 0.0f && w == 0.0f;
 }
 
-bool Vector4::isOne() const
+bool Vec4::isOne() const
 {
     return x == 1.0f && y == 1.0f && z == 1.0f && w == 1.0f;
 }
 
-float Vector4::angle(const Vector4& v1, const Vector4& v2)
+float Vec4::angle(const Vec4& v1, const Vec4& v2)
 {
     float dx = v1.w * v2.x - v1.x * v2.w - v1.y * v2.z + v1.z * v2.y;
     float dy = v1.w * v2.y - v1.y * v2.w - v1.z * v2.x + v1.x * v2.z;
@@ -87,7 +87,7 @@ float Vector4::angle(const Vector4& v1, const Vector4& v2)
     return atan2f(sqrt(dx * dx + dy * dy + dz * dz) + MATH_FLOAT_SMALL, dot(v1, v2));
 }
 
-void Vector4::add(const Vector4& v)
+void Vec4::add(const Vec4& v)
 {
     x += v.x;
     y += v.y;
@@ -95,7 +95,7 @@ void Vector4::add(const Vector4& v)
     w += v.w;
 }
 
-void Vector4::add(const Vector4& v1, const Vector4& v2, Vector4* dst)
+void Vec4::add(const Vec4& v1, const Vec4& v2, Vec4* dst)
 {
     GP_ASSERT(dst);
 
@@ -105,7 +105,7 @@ void Vector4::add(const Vector4& v1, const Vector4& v2, Vector4* dst)
     dst->w = v1.w + v2.w;
 }
 
-void Vector4::clamp(const Vector4& min, const Vector4& max)
+void Vec4::clamp(const Vec4& min, const Vec4& max)
 {
     GP_ASSERT(!(min.x > max.x || min.y > max.y || min.z > max.z || min.w > max.w));
 
@@ -134,7 +134,7 @@ void Vector4::clamp(const Vector4& min, const Vector4& max)
         w = max.w;
 }
 
-void Vector4::clamp(const Vector4& v, const Vector4& min, const Vector4& max, Vector4* dst)
+void Vec4::clamp(const Vec4& v, const Vec4& min, const Vec4& max, Vec4* dst)
 {
     GP_ASSERT(dst);
     GP_ASSERT(!(min.x > max.x || min.y > max.y || min.z > max.z || min.w > max.w));
@@ -168,7 +168,7 @@ void Vector4::clamp(const Vector4& v, const Vector4& min, const Vector4& max, Ve
         dst->w = max.w;
 }
 
-float Vector4::distance(const Vector4& v) const
+float Vec4::distance(const Vec4& v) const
 {
     float dx = v.x - x;
     float dy = v.y - y;
@@ -178,7 +178,7 @@ float Vector4::distance(const Vector4& v) const
     return sqrt(dx * dx + dy * dy + dz * dz + dw * dw);
 }
 
-float Vector4::distanceSquared(const Vector4& v) const
+float Vec4::distanceSquared(const Vec4& v) const
 {
     float dx = v.x - x;
     float dy = v.y - y;
@@ -188,28 +188,28 @@ float Vector4::distanceSquared(const Vector4& v) const
     return (dx * dx + dy * dy + dz * dz + dw * dw);
 }
 
-float Vector4::dot(const Vector4& v) const
+float Vec4::dot(const Vec4& v) const
 {
     return (x * v.x + y * v.y + z * v.z + w * v.w);
 }
 
-float Vector4::dot(const Vector4& v1, const Vector4& v2)
+float Vec4::dot(const Vec4& v1, const Vec4& v2)
 {
     return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z + v1.w * v2.w);
 }
 
-float Vector4::length() const
+float Vec4::length() const
 {
     return sqrt(x * x + y * y + z * z + w * w);
 }
 
 
-float Vector4::lengthSquared() const
+float Vec4::lengthSquared() const
 {
     return (x * x + y * y + z * z + w * w);
 }
 
-void Vector4::negate()
+void Vec4::negate()
 {
     x = -x;
     y = -y;
@@ -217,7 +217,7 @@ void Vector4::negate()
     w = -w;
 }
 
-void Vector4::normalize()
+void Vec4::normalize()
 {
     float n = x * x + y * y + z * z + w * w;
     // Already normalized.
@@ -236,14 +236,14 @@ void Vector4::normalize()
     w *= n;
 }
 
-Vector4 Vector4::getNormalized() const
+Vec4 Vec4::getNormalized() const
 {
-    Vector4 v(*this);
+    Vec4 v(*this);
     v.normalize();
     return v;
 }
 
-void Vector4::scale(float scalar)
+void Vec4::scale(float scalar)
 {
     x *= scalar;
     y *= scalar;
@@ -251,7 +251,7 @@ void Vector4::scale(float scalar)
     w *= scalar;
 }
 
-void Vector4::set(float xx, float yy, float zz, float ww)
+void Vec4::set(float xx, float yy, float zz, float ww)
 {
     this->x = xx;
     this->y = yy;
@@ -259,7 +259,7 @@ void Vector4::set(float xx, float yy, float zz, float ww)
     this->w = ww;
 }
 
-void Vector4::set(const float* array)
+void Vec4::set(const float* array)
 {
     GP_ASSERT(array);
 
@@ -269,7 +269,7 @@ void Vector4::set(const float* array)
     w = array[3];
 }
 
-void Vector4::set(const Vector4& v)
+void Vec4::set(const Vec4& v)
 {
     this->x = v.x;
     this->y = v.y;
@@ -277,7 +277,7 @@ void Vector4::set(const Vector4& v)
     this->w = v.w;
 }
 
-void Vector4::set(const Vector4& p1, const Vector4& p2)
+void Vec4::set(const Vec4& p1, const Vec4& p2)
 {
     x = p2.x - p1.x;
     y = p2.y - p1.y;
@@ -285,7 +285,7 @@ void Vector4::set(const Vector4& p1, const Vector4& p2)
     w = p2.w - p1.w;
 }
 
-void Vector4::subtract(const Vector4& v)
+void Vec4::subtract(const Vec4& v)
 {
     x -= v.x;
     y -= v.y;
@@ -293,7 +293,7 @@ void Vector4::subtract(const Vector4& v)
     w -= v.w;
 }
 
-void Vector4::subtract(const Vector4& v1, const Vector4& v2, Vector4* dst)
+void Vec4::subtract(const Vec4& v1, const Vec4& v2, Vec4* dst)
 {
     GP_ASSERT(dst);
 
@@ -303,11 +303,11 @@ void Vector4::subtract(const Vector4& v1, const Vector4& v2, Vector4* dst)
     dst->w = v1.w - v2.w;
 }
 
-const Vector4 Vector4::ZERO = Vector4(0.0f, 0.0f, 0.0f, 0.0f);
-const Vector4 Vector4::ONE = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-const Vector4 Vector4::UNIT_X = Vector4(1.0f, 0.0f, 0.0f, 0.0f);
-const Vector4 Vector4::UNIT_Y = Vector4(0.0f, 1.0f, 0.0f, 0.0f);
-const Vector4 Vector4::UNIT_Z = Vector4(0.0f, 0.0f, 1.0f, 0.0f);
-const Vector4 Vector4::UNIT_W = Vector4(0.0f, 0.0f, 0.0f, 1.0f);
+const Vec4 Vec4::ZERO = Vec4(0.0f, 0.0f, 0.0f, 0.0f);
+const Vec4 Vec4::ONE = Vec4(1.0f, 1.0f, 1.0f, 1.0f);
+const Vec4 Vec4::UNIT_X = Vec4(1.0f, 0.0f, 0.0f, 0.0f);
+const Vec4 Vec4::UNIT_Y = Vec4(0.0f, 1.0f, 0.0f, 0.0f);
+const Vec4 Vec4::UNIT_Z = Vec4(0.0f, 0.0f, 1.0f, 0.0f);
+const Vec4 Vec4::UNIT_W = Vec4(0.0f, 0.0f, 0.0f, 1.0f);
 
 NS_CC_MATH_END

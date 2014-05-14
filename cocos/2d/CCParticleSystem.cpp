@@ -97,8 +97,8 @@ ParticleSystem::ParticleSystem()
 , _isActive(true)
 , _particleCount(0)
 , _duration(0)
-, _sourcePosition(Vector2::ZERO)
-, _posVar(Vector2::ZERO)
+, _sourcePosition(Vec2::ZERO)
+, _posVar(Vec2::ZERO)
 , _life(0)
 , _lifeVar(0)
 , _angle(0)
@@ -120,7 +120,7 @@ ParticleSystem::ParticleSystem()
 , _yCoordFlipped(1)
 , _positionType(PositionType::FREE)
 {
-    modeA.gravity = Vector2::ZERO;
+    modeA.gravity = Vec2::ZERO;
     modeA.speed = 0;
     modeA.speedVar = 0;
     modeA.tangentialAccel = 0;
@@ -257,7 +257,7 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
             // position
             float x = dictionary["sourcePositionx"].asFloat();
             float y = dictionary["sourcePositiony"].asFloat();
-            this->setPosition( Vector2(x,y) );            
+            this->setPosition( Vec2(x,y) );            
             _posVar.x = dictionary["sourcePositionVariancex"].asFloat();
             _posVar.y = dictionary["sourcePositionVariancey"].asFloat();
 
@@ -560,7 +560,7 @@ void ParticleSystem::initParticle(tParticle* particle)
     // position
     if (_positionType == PositionType::FREE)
     {
-        particle->startPos = this->convertToWorldSpace(Vector2::ZERO);
+        particle->startPos = this->convertToWorldSpace(Vec2::ZERO);
     }
     else if (_positionType == PositionType::RELATIVE)
     {
@@ -573,7 +573,7 @@ void ParticleSystem::initParticle(tParticle* particle)
     // Mode Gravity: A
     if (_emitterMode == Mode::GRAVITY)
     {
-        Vector2 v(cosf( a ), sinf( a ));
+        Vec2 v(cosf( a ), sinf( a ));
         float s = modeA.speed + modeA.speedVar * CCRANDOM_MINUS1_1();
 
         // direction
@@ -679,10 +679,10 @@ void ParticleSystem::update(float dt)
 
     _particleIdx = 0;
 
-    Vector2 currentPosition = Vector2::ZERO;
+    Vec2 currentPosition = Vec2::ZERO;
     if (_positionType == PositionType::FREE)
     {
-        currentPosition = this->convertToWorldSpace(Vector2::ZERO);
+        currentPosition = this->convertToWorldSpace(Vec2::ZERO);
     }
     else if (_positionType == PositionType::RELATIVE)
     {
@@ -702,9 +702,9 @@ void ParticleSystem::update(float dt)
                 // Mode A: gravity, direction, tangential accel & radial accel
                 if (_emitterMode == Mode::GRAVITY)
                 {
-                    Vector2 tmp, radial, tangential;
+                    Vec2 tmp, radial, tangential;
 
-                    radial = Vector2::ZERO;
+                    radial = Vec2::ZERO;
                     // radial acceleration
                     if (p->pos.x || p->pos.y)
                     {
@@ -761,11 +761,11 @@ void ParticleSystem::update(float dt)
                 // update values in quad
                 //
 
-                Vector2    newPos;
+                Vec2    newPos;
 
                 if (_positionType == PositionType::FREE || _positionType == PositionType::RELATIVE)
                 {
-                    Vector2 diff = currentPosition - p->startPos;
+                    Vec2 diff = currentPosition - p->startPos;
                     newPos = p->pos - diff;
                 } 
                 else
@@ -832,7 +832,7 @@ void ParticleSystem::updateWithNoTime(void)
     this->update(0.0f);
 }
 
-void ParticleSystem::updateQuadWithParticle(tParticle* particle, const Vector2& newPosition)
+void ParticleSystem::updateQuadWithParticle(tParticle* particle, const Vec2& newPosition)
 {
     CC_UNUSED_PARAM(particle);
     CC_UNUSED_PARAM(newPosition);
@@ -967,13 +967,13 @@ bool ParticleSystem::getRotationIsDir() const
     return modeA.rotationIsDir;
 }
 
-void ParticleSystem::setGravity(const Vector2& g)
+void ParticleSystem::setGravity(const Vec2& g)
 {
     CCASSERT(_emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
     modeA.gravity = g;
 }
 
-const Vector2& ParticleSystem::getGravity()
+const Vec2& ParticleSystem::getGravity()
 {
     CCASSERT(_emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
     return modeA.gravity;

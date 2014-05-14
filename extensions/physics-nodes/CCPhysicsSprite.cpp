@@ -165,7 +165,7 @@ void PhysicsSprite::setIgnoreBodyRotation(bool bIgnoreBodyRotation)
 }
 
 // Override the setters and getters to always reflect the body's properties.
-const Vector2& PhysicsSprite::getPosition() const
+const Vec2& PhysicsSprite::getPosition() const
 {
     return getPosFromPhysics();
 }
@@ -175,7 +175,7 @@ void PhysicsSprite::getPosition(float* x, float* y) const
     if (x == NULL || y == NULL) {
         return;
     }
-    const Vector2& pos = getPosFromPhysics();
+    const Vec2& pos = getPosFromPhysics();
     *x = pos.x;
     *y = pos.y;
 }
@@ -257,25 +257,25 @@ void PhysicsSprite::setPTMRatio(float fRatio)
 // Common to Box2d and Chipmunk
 //
 
-const Vector2& PhysicsSprite::getPosFromPhysics() const
+const Vec2& PhysicsSprite::getPosFromPhysics() const
 {
-    static Vector2 s_physicPosion;
+    static Vec2 s_physicPosion;
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
 
     cpVect cpPos = cpBodyGetPos(_CPBody);
-    s_physicPosion = Vector2(cpPos.x, cpPos.y);
+    s_physicPosion = Vec2(cpPos.x, cpPos.y);
 
 #elif CC_ENABLE_BOX2D_INTEGRATION
 
     b2Vec2 pos = _pB2Body->GetPosition();
     float x = pos.x * _PTMRatio;
     float y = pos.y * _PTMRatio;
-    s_physicPosion = Vector2(x,y);
+    s_physicPosion = Vec2(x,y);
 #endif
     return s_physicPosion;
 }
 
-void PhysicsSprite::setPosition(const Vector2 &pos)
+void PhysicsSprite::setPosition(const Vec2 &pos)
 {
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
 
@@ -372,7 +372,7 @@ void PhysicsSprite::syncPhysicsTransform() const
 	float c = cosf(radians);
 	float s = sinf(radians);
     
-	if (!_anchorPointInPoints.equals(Vector2::ZERO))
+	if (!_anchorPointInPoints.equals(Vec2::ZERO))
     {
 		x += ((c * -_anchorPointInPoints.x * _scaleX) + (-s * -_anchorPointInPoints.y * _scaleY));
 		y += ((s * -_anchorPointInPoints.x * _scaleX) + (c * -_anchorPointInPoints.y * _scaleY));
@@ -390,14 +390,14 @@ void PhysicsSprite::syncPhysicsTransform() const
 }
 
 // returns the transform matrix according the Chipmunk Body values
-const Matrix& PhysicsSprite::getNodeToParentTransform() const
+const Mat4& PhysicsSprite::getNodeToParentTransform() const
 {
     syncPhysicsTransform();
     
 	return _transform;
 }
 
-void PhysicsSprite::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void PhysicsSprite::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     if (isDirty())
     {

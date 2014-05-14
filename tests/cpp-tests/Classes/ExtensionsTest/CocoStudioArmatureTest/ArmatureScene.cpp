@@ -160,7 +160,7 @@ void ArmatureTestLayer::onEnter()
     auto label = Label::createWithTTF(pTitle, "fonts/arial.ttf", 18);
     label->setColor(Color3B::BLACK);
     addChild(label, 1, 10000);
-    label->setPosition( Vector2(VisibleRect::center().x, VisibleRect::top().y - 30) );
+    label->setPosition( Vec2(VisibleRect::center().x, VisibleRect::top().y - 30) );
 
     std::string strSubtitle = subtitle();
     if( ! strSubtitle.empty() )
@@ -168,7 +168,7 @@ void ArmatureTestLayer::onEnter()
         auto l = Label::createWithTTF(strSubtitle.c_str(), "fonts/arial.ttf", 18);
         l->setColor(Color3B::BLACK);
         addChild(l, 1, 10001);
-        l->setPosition( Vector2(VisibleRect::center().x, VisibleRect::top().y - 60) );
+        l->setPosition( Vec2(VisibleRect::center().x, VisibleRect::top().y - 60) );
     }
 
     // add menu
@@ -178,10 +178,10 @@ void ArmatureTestLayer::onEnter()
 
     Menu *menu = Menu::create(backItem, restartItem, nextItem, nullptr);
 
-    menu->setPosition(Vector2::ZERO);
-    backItem->setPosition(Vector2(VisibleRect::center().x - restartItem->getContentSize().width * 2, VisibleRect::bottom().y + restartItem->getContentSize().height / 2));
-    restartItem->setPosition(Vector2(VisibleRect::center().x, VisibleRect::bottom().y + restartItem->getContentSize().height / 2));
-    nextItem->setPosition(Vector2(VisibleRect::center().x + restartItem->getContentSize().width * 2, VisibleRect::bottom().y + restartItem->getContentSize().height / 2));
+    menu->setPosition(Vec2::ZERO);
+    backItem->setPosition(Vec2(VisibleRect::center().x - restartItem->getContentSize().width * 2, VisibleRect::bottom().y + restartItem->getContentSize().height / 2));
+    restartItem->setPosition(Vec2(VisibleRect::center().x, VisibleRect::bottom().y + restartItem->getContentSize().height / 2));
+    nextItem->setPosition(Vec2(VisibleRect::center().x + restartItem->getContentSize().width * 2, VisibleRect::bottom().y + restartItem->getContentSize().height / 2));
 
     addChild(menu, 100);
 
@@ -303,7 +303,7 @@ void TestDirectLoading::onEnter()
 
     Armature *armature = Armature::create("bear");
     armature->getAnimation()->playWithIndex(0);
-    armature->setPosition(Vector2(VisibleRect::center().x, VisibleRect::center().y));
+    armature->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y));
     addChild(armature);
 }
 std::string TestDirectLoading::title() const
@@ -320,7 +320,7 @@ void TestCSWithSkeleton::onEnter()
     armature->getAnimation()->playWithIndex(0);
     armature->setScale(0.2f);
 
-    armature->setPosition(Vector2(VisibleRect::center().x, VisibleRect::center().y/*-100*/));
+    armature->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y/*-100*/));
     addChild(armature);
 }
 
@@ -370,7 +370,7 @@ void TestPerformance::onEnter()
 
     Menu *menu = Menu::create(decrease, increase, nullptr);
     menu->alignItemsHorizontally();
-    menu->setPosition(Vector2(VisibleRect::getVisibleRect().size.width/2, VisibleRect::getVisibleRect().size.height-100));
+    menu->setPosition(Vec2(VisibleRect::getVisibleRect().size.width/2, VisibleRect::getVisibleRect().size.height-100));
     addChild(menu, 10000);
 
     armatureCount = frames = times = lastTimes = 0;
@@ -468,7 +468,7 @@ void TestChangeZorder::onEnter()
 
     armature = Armature::create("Knight_f/Knight");
     armature->getAnimation()->playWithIndex(0);
-    armature->setPosition(Vector2(VisibleRect::center().x, VisibleRect::center().y - 100));
+    armature->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y - 100));
     ++currentTag;
     armature->setScale(0.6f);
     addChild(armature, currentTag, currentTag);
@@ -476,13 +476,13 @@ void TestChangeZorder::onEnter()
     armature = Armature::create("Cowboy");
     armature->getAnimation()->playWithIndex(0);
     armature->setScale(0.24f);
-    armature->setPosition(Vector2(VisibleRect::center().x, VisibleRect::center().y - 100));
+    armature->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y - 100));
     ++currentTag;
     addChild(armature, currentTag, currentTag);
 
     armature = Armature::create("Dragon");
     armature->getAnimation()->playWithIndex(0);
-    armature->setPosition(Vector2(VisibleRect::center().x , VisibleRect::center().y - 100));
+    armature->setPosition(Vec2(VisibleRect::center().x , VisibleRect::center().y - 100));
     ++currentTag;
     armature->setScale(0.6f);
     addChild(armature, currentTag, currentTag);
@@ -516,7 +516,7 @@ void TestAnimationEvent::onEnter()
     armature->getAnimation()->play("Fire");
     armature->setScaleX(-0.24f);
     armature->setScaleY(0.24f);
-    armature->setPosition(Vector2(VisibleRect::left().x + 50, VisibleRect::left().y));
+    armature->setPosition(Vec2(VisibleRect::left().x + 50, VisibleRect::left().y));
 
     /*
     * Set armature's movement event callback function
@@ -535,14 +535,14 @@ void TestAnimationEvent::animationEvent(Armature *armature, MovementEventType mo
     {
         if (movementID == "Fire")
         {
-            ActionInterval *actionToRight = MoveTo::create(2, Vector2(VisibleRect::right().x - 50, VisibleRect::right().y));
+            ActionInterval *actionToRight = MoveTo::create(2, Vec2(VisibleRect::right().x - 50, VisibleRect::right().y));
             armature->stopAllActions();
             armature->runAction(Sequence::create(actionToRight,  CallFunc::create( CC_CALLBACK_0(TestAnimationEvent::callback1, this)), nullptr));
             armature->getAnimation()->play("Walk");
         }
         else if (movementID == "FireMax")
         {
-            ActionInterval *actionToLeft = MoveTo::create(2, Vector2(VisibleRect::left().x + 50, VisibleRect::left().y));
+            ActionInterval *actionToLeft = MoveTo::create(2, Vec2(VisibleRect::left().x + 50, VisibleRect::left().y));
             armature->stopAllActions();
             armature->runAction(Sequence::create(actionToLeft,  CallFunc::create( CC_CALLBACK_0(TestAnimationEvent::callback2, this)), nullptr));
             armature->getAnimation()->play("Walk");
@@ -571,7 +571,7 @@ void TestFrameEvent::onEnter()
     Armature *armature = Armature::create("HeroAnimation");
     armature->getAnimation()->play("attack");
     armature->getAnimation()->setSpeedScale(0.5);
-    armature->setPosition(Vector2(VisibleRect::center().x - 50, VisibleRect::center().y -100));
+    armature->setPosition(Vec2(VisibleRect::center().x - 50, VisibleRect::center().y -100));
 
     /*
      * Set armature's frame event callback function
@@ -681,7 +681,7 @@ void TestUseMutiplePicture::onEnter()
 
     armature = Armature::create("Knight_f/Knight");
     armature->getAnimation()->playWithIndex(0);
-    armature->setPosition(Vector2(VisibleRect::center().x, VisibleRect::left().y));
+    armature->setPosition(Vec2(VisibleRect::center().x, VisibleRect::left().y));
     armature->setScale(1.2f);
     addChild(armature);
 
@@ -701,7 +701,7 @@ void TestUseMutiplePicture::onEnter()
     // 	}
 
     auto l = Label::createWithTTF("This is a weapon!", "fonts/arial.ttf", 18);
-    l->setAnchorPoint(Vector2(0.2f, 0.5f));
+    l->setAnchorPoint(Vec2(0.2f, 0.5f));
     armature->getBone("weapon")->addDisplay(l, 7);
 }
 
@@ -741,7 +741,7 @@ void TestColliderDetector::onEnter()
     armature->getAnimation()->setSpeedScale(0.2f);
     armature->setScaleX(-0.2f);
     armature->setScaleY(0.2f);
-    armature->setPosition(Vector2(VisibleRect::left().x + 70, VisibleRect::left().y));
+    armature->setPosition(Vec2(VisibleRect::left().x + 70, VisibleRect::left().y));
 
     /*
     * Set armature's frame event callback function
@@ -754,7 +754,7 @@ void TestColliderDetector::onEnter()
     armature2->getAnimation()->play("Walk");
     armature2->setScaleX(-0.2f);
     armature2->setScaleY(0.2f);
-    armature2->setPosition(Vector2(VisibleRect::right().x - 60, VisibleRect::left().y));
+    armature2->setPosition(Vec2(VisibleRect::right().x - 60, VisibleRect::left().y));
     addChild(armature2);
 
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
@@ -780,11 +780,11 @@ void TestColliderDetector::onFrameEvent(Bone *bone, const std::string& evt, int 
     * frame event may be delay emit, so originFrameIndex may be different from currentFrameIndex.
     */
 
-    Vector2 p = armature->getBone("Layer126")->getDisplayRenderNode()->convertToWorldSpaceAR(Vector2(0, 0));
-    bullet->setPosition(Vector2(p.x + 60, p.y));
+    Vec2 p = armature->getBone("Layer126")->getDisplayRenderNode()->convertToWorldSpaceAR(Vec2(0, 0));
+    bullet->setPosition(Vec2(p.x + 60, p.y));
 
     bullet->stopAllActions();
-    bullet->runAction(CCMoveBy::create(1.5f, Vector2(350, 0)));
+    bullet->runAction(CCMoveBy::create(1.5f, Vec2(350, 0)));
 }
 
 
@@ -842,7 +842,7 @@ void TestColliderDetector::onExit()
 
     ArmatureTestLayer::onExit();
 }
-void TestColliderDetector::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void TestColliderDetector::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
     Director* director = Director::getInstance();
@@ -909,7 +909,7 @@ void TestColliderDetector::initWorld()
 
     bullet->setB2Body(body);
     bullet->setPTMRatio(PT_RATIO);
-    bullet->setPosition( Vector2( -100, -100) );
+    bullet->setPosition( Vec2( -100, -100) );
 
     body = world->CreateBody(&bodyDef);
     armature2->setBody(body);
@@ -1036,13 +1036,13 @@ void TestColliderDetector::update(float delta)
         for (const auto& object : bodyList)
         {
             ColliderBody *body = static_cast<ColliderBody*>(object);
-            const std::vector<Vector2> &vertexList = body->getCalculatedVertexList();
+            const std::vector<Vec2> &vertexList = body->getCalculatedVertexList();
 
             float minx = 0, miny = 0, maxx = 0, maxy = 0;
             size_t length = vertexList.size();
             for (size_t i = 0; i<length; i++)
             {
-                Vector2 vertex = vertexList.at(i);
+                Vec2 vertex = vertexList.at(i);
                 if (i == 0)
                 {
                     minx = maxx = vertex.x;
@@ -1065,14 +1065,14 @@ void TestColliderDetector::update(float delta)
         }
     }
 }
-void TestColliderDetector::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void TestColliderDetector::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(TestColliderDetector::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_customCommand);
 }
 
-void TestColliderDetector::onDraw(const Matrix &transform, bool transformUpdated)
+void TestColliderDetector::onDraw(const Mat4 &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -1106,7 +1106,7 @@ std::string TestBoundingBox::title() const
 {
     return "Test BoundingBox";
 }
-void TestBoundingBox::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void TestBoundingBox::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(TestBoundingBox::onDraw, this, transform, transformUpdated);
@@ -1114,7 +1114,7 @@ void TestBoundingBox::draw(Renderer *renderer, const Matrix &transform, bool tra
 
 }
 
-void TestBoundingBox::onDraw(const Matrix &transform, bool transformUpdated)
+void TestBoundingBox::onDraw(const Mat4 &transform, bool transformUpdated)
 {
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
@@ -1122,7 +1122,7 @@ void TestBoundingBox::onDraw(const Matrix &transform, bool transformUpdated)
     rect = armature->getBoundingBox();
     
     DrawPrimitives::setDrawColor4B(100, 100, 100, 255);
-    DrawPrimitives::drawRect(rect.origin, Vector2(rect.getMaxX(), rect.getMaxY()));
+    DrawPrimitives::drawRect(rect.origin, Vec2(rect.getMaxX(), rect.getMaxY()));
 }
 
 void TestAnchorPoint::onEnter()
@@ -1138,11 +1138,11 @@ void TestAnchorPoint::onEnter()
         addChild(armature, 0, i);
     }
 
-    getChildByTag(0)->setAnchorPoint(Vector2(0, 0));
-    getChildByTag(1)->setAnchorPoint(Vector2(0, 1));
-    getChildByTag(2)->setAnchorPoint(Vector2(1, 0));
-    getChildByTag(3)->setAnchorPoint(Vector2(1, 1));
-    getChildByTag(4)->setAnchorPoint(Vector2(0.5, 0.5));
+    getChildByTag(0)->setAnchorPoint(Vec2(0, 0));
+    getChildByTag(1)->setAnchorPoint(Vec2(0, 1));
+    getChildByTag(2)->setAnchorPoint(Vec2(1, 0));
+    getChildByTag(3)->setAnchorPoint(Vec2(1, 1));
+    getChildByTag(4)->setAnchorPoint(Vec2(0.5, 0.5));
 
 }
 std::string TestAnchorPoint::title() const
@@ -1247,7 +1247,7 @@ void Hero::changeMount(Armature *armature)
         bone->changeDisplayWithIndex(0, true);
         bone->setIgnoreMovementBoneData(true);
 
-        setPosition(Vector2(0,0));
+        setPosition(Vec2(0,0));
         //Change animation
         playWithIndex(1);
 
@@ -1282,8 +1282,8 @@ void TestArmatureNesting2::onEnter()
 
     Menu* pMenu =Menu::create(pMenuItem, nullptr);
 
-    pMenu->setPosition( Vector2() );
-    pMenuItem->setPosition( Vector2( VisibleRect::right().x - 67, VisibleRect::bottom().y + 50) );
+    pMenu->setPosition( Vec2() );
+    pMenuItem->setPosition( Vec2( VisibleRect::right().x - 67, VisibleRect::bottom().y + 50) );
 
     addChild(pMenu, 2);
 
@@ -1291,16 +1291,16 @@ void TestArmatureNesting2::onEnter()
     hero = Hero::create("hero");
     hero->setLayer(this);
     hero->playWithIndex(0);
-    hero->setPosition(Vector2(VisibleRect::left().x + 20, VisibleRect::left().y));
+    hero->setPosition(Vec2(VisibleRect::left().x + 20, VisibleRect::left().y));
     addChild(hero);
 
     //Create 3 mount
     horse = createMount("horse", VisibleRect::center());
 
-    horse2 = createMount("horse", Vector2(120, 200));
+    horse2 = createMount("horse", Vec2(120, 200));
     horse2->setOpacity(200);
 
-    bear = createMount("bear", Vector2(300,70));
+    bear = createMount("bear", Vec2(300,70));
 }
 void TestArmatureNesting2::onExit()
 {
@@ -1316,7 +1316,7 @@ std::string TestArmatureNesting2::subtitle() const
 }
 void TestArmatureNesting2::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
-    Vector2 point = touches[0]->getLocation();
+    Vec2 point = touches[0]->getLocation();
 
     Armature *armature = hero->getMount() == nullptr ? hero : hero->getMount();
 
@@ -1360,7 +1360,7 @@ void TestArmatureNesting2::changeMountCallback(Ref* pSender)
     }
 }
 
-Armature * TestArmatureNesting2::createMount(const char *name, Vector2 position)
+Armature * TestArmatureNesting2::createMount(const char *name, Vec2 position)
 {
     Armature *armature = Armature::create(name);
     armature->getAnimation()->playWithIndex(0);
@@ -1390,7 +1390,7 @@ void TestPlaySeveralMovement::onEnter()
 //    armature->getAnimation()->playWithIndexes(indexes);
     armature->setScale(0.2f);
 
-    armature->setPosition(Vector2(VisibleRect::center().x, VisibleRect::center().y/*-100*/));
+    armature->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y/*-100*/));
     addChild(armature);
 }
 std::string TestPlaySeveralMovement::title() const
@@ -1418,7 +1418,7 @@ void TestEasing::onEnter()
     armature->getAnimation()->playWithIndex(0);
     armature->setScale(0.8f);
 
-    armature->setPosition(Vector2(VisibleRect::center().x, VisibleRect::center().y));
+    armature->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y));
     addChild(armature);
 
     updateSubTitle();
@@ -1460,7 +1460,7 @@ void TestChangeAnimationInternal::onEnter()
     armature->getAnimation()->playWithIndex(0);
     armature->setScale(0.2f);
 
-    armature->setPosition(Vector2(VisibleRect::center().x, VisibleRect::center().y));
+    armature->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y));
     addChild(armature);
 }
 void TestChangeAnimationInternal::onExit()

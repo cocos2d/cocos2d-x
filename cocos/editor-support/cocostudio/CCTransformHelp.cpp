@@ -32,8 +32,8 @@ namespace cocostudio {
 AffineTransform TransformHelp::helpMatrix1;
 AffineTransform TransformHelp::helpMatrix2;
 
-Vector2 TransformHelp::helpPoint1;
-Vector2 TransformHelp::helpPoint2;
+Vec2 TransformHelp::helpPoint1;
+Vec2 TransformHelp::helpPoint2;
 
 BaseData helpParentNode;
 
@@ -118,9 +118,9 @@ void TransformHelp::nodeToMatrix(const BaseData &node, AffineTransform &matrix)
     matrix.ty = node.y;
 }
 
-void TransformHelp::nodeToMatrix(const BaseData &node, Matrix &matrix)
+void TransformHelp::nodeToMatrix(const BaseData &node, Mat4 &matrix)
 {
-    matrix = Matrix::IDENTITY;
+    matrix = Mat4::IDENTITY;
 
     if (node.skewX == -node.skewY)
     {
@@ -171,7 +171,7 @@ void TransformHelp::matrixToNode(const AffineTransform &matrix, BaseData &node)
     node.y = matrix.ty;
 }
 
-void TransformHelp::matrixToNode(const Matrix &matrix, BaseData &node)
+void TransformHelp::matrixToNode(const Mat4 &matrix, BaseData &node)
 {
     /*
      *  In as3 language, there is a function called "deltaTransformPoint", it calculate a point used give Transform

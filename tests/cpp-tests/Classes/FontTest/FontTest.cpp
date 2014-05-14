@@ -114,20 +114,20 @@ void FontTest::showFont(const char *pFont)
     rightColor->ignoreAnchorPointForPosition(false);
 
 
-    top->setAnchorPoint(Vector2(0.5, 1));
-    left->setAnchorPoint(Vector2(0,0.5));
-    leftColor->setAnchorPoint(Vector2(0,0.5));
-    center->setAnchorPoint(Vector2(0,0.5));
-    centerColor->setAnchorPoint(Vector2(0,0.5));
-    right->setAnchorPoint(Vector2(0,0.5));
-    rightColor->setAnchorPoint(Vector2(0,0.5));
+    top->setAnchorPoint(Vec2(0.5, 1));
+    left->setAnchorPoint(Vec2(0,0.5));
+    leftColor->setAnchorPoint(Vec2(0,0.5));
+    center->setAnchorPoint(Vec2(0,0.5));
+    centerColor->setAnchorPoint(Vec2(0,0.5));
+    right->setAnchorPoint(Vec2(0,0.5));
+    rightColor->setAnchorPoint(Vec2(0,0.5));
 
-    top->setPosition(Vector2(s.width/2,s.height-20));
-    left->setPosition(Vector2(0,s.height/2));
+    top->setPosition(Vec2(s.width/2,s.height-20));
+    left->setPosition(Vec2(0,s.height/2));
     leftColor->setPosition(left->getPosition());
-    center->setPosition(Vector2(blockSize.width, s.height/2));
+    center->setPosition(Vec2(blockSize.width, s.height/2));
     centerColor->setPosition(center->getPosition());
-    right->setPosition(Vector2(blockSize.width*2, s.height/2));
+    right->setPosition(Vec2(blockSize.width*2, s.height/2));
     rightColor->setPosition(right->getPosition());
 
     this->addChild(leftColor, -1, kTagColor1);

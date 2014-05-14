@@ -274,7 +274,7 @@ public:
     
     /** will update the builtin uniforms if they are different than the previous call for this same shader program. */
     void setUniformsForBuiltins();
-    void setUniformsForBuiltins(const Matrix &modelView);
+    void setUniformsForBuiltins(const Mat4 &modelView);
 
     // Attribute
 

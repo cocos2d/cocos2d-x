@@ -34,7 +34,7 @@
 
 NS_CC_BEGIN
 
-const Vector2 CCPointZero = Vector2::ZERO;
+const Vec2 CCPointZero = Vec2::ZERO;
 
 /* The "zero" size -- equivalent to Size(0, 0). */
 const Size CCSizeZero = Size::ZERO;
@@ -90,67 +90,67 @@ void ccDrawFree()
     DrawPrimitives::free();
 }
 
-void ccDrawPoint( const Vector2& point )
+void ccDrawPoint( const Vec2& point )
 {
     DrawPrimitives::drawPoint(point);
 }
 
-void ccDrawPoints( const Vector2 *points, unsigned int numberOfPoints )
+void ccDrawPoints( const Vec2 *points, unsigned int numberOfPoints )
 {
     DrawPrimitives::drawPoints(points, numberOfPoints);
 }
 
-void ccDrawLine( const Vector2& origin, const Vector2& destination )
+void ccDrawLine( const Vec2& origin, const Vec2& destination )
 {
     DrawPrimitives::drawLine(origin, destination);
 }
 
-void ccDrawRect( Vector2 origin, Vector2 destination )
+void ccDrawRect( Vec2 origin, Vec2 destination )
 {
     DrawPrimitives::drawRect(origin, destination);
 }
 
-void ccDrawSolidRect( Vector2 origin, Vector2 destination, Color4F color )
+void ccDrawSolidRect( Vec2 origin, Vec2 destination, Color4F color )
 {
     DrawPrimitives::drawSolidRect(origin, destination, color);
 }
 
-void ccDrawPoly( const Vector2 *vertices, unsigned int numOfVertices, bool closePolygon )
+void ccDrawPoly( const Vec2 *vertices, unsigned int numOfVertices, bool closePolygon )
 {
     DrawPrimitives::drawPoly(vertices, numOfVertices, closePolygon);
 }
 
-void ccDrawSolidPoly( const Vector2 *poli, unsigned int numberOfPoints, Color4F color )
+void ccDrawSolidPoly( const Vec2 *poli, unsigned int numberOfPoints, Color4F color )
 {
     DrawPrimitives::drawSolidPoly(poli, numberOfPoints, color);
 }
 
-void ccDrawCircle( const Vector2& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY)
+void ccDrawCircle( const Vec2& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY)
 {
     DrawPrimitives::drawCircle(center, radius, angle, segments, drawLineToCenter, scaleX, scaleY);
 }
 
-void ccDrawCircle( const Vector2& center, float radius, float angle, unsigned int segments, bool drawLineToCenter)
+void ccDrawCircle( const Vec2& center, float radius, float angle, unsigned int segments, bool drawLineToCenter)
 {
     DrawPrimitives::drawCircle(center, radius, angle, segments, drawLineToCenter);
 }
 
-void ccDrawSolidCircle( const Vector2& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY)
+void ccDrawSolidCircle( const Vec2& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY)
 {
     DrawPrimitives::drawSolidCircle(center, radius, angle, segments, scaleX, scaleY);
 }
 
-void ccDrawSolidCircle( const Vector2& center, float radius, float angle, unsigned int segments)
+void ccDrawSolidCircle( const Vec2& center, float radius, float angle, unsigned int segments)
 {
     DrawPrimitives::drawSolidCircle(center, radius, angle, segments);
 }
 
-void ccDrawQuadBezier(const Vector2& origin, const Vector2& control, const Vector2& destination, unsigned int segments)
+void ccDrawQuadBezier(const Vec2& origin, const Vec2& control, const Vec2& destination, unsigned int segments)
 {
     DrawPrimitives::drawQuadBezier(origin, control, destination, segments);
 }
 
-void ccDrawCubicBezier(const Vector2& origin, const Vector2& control1, const Vector2& control2, const Vector2& destination, unsigned int segments)
+void ccDrawCubicBezier(const Vec2& origin, const Vec2& control1, const Vec2& control2, const Vec2& destination, unsigned int segments)
 {
     DrawPrimitives::drawCubicBezier(origin, control1, control2, destination, segments);
 }
@@ -216,38 +216,38 @@ void CC_DLL kmGLLoadIdentity(void)
     Director::getInstance()->loadIdentityMatrix(currentActiveStackType);
 }
 
-void CC_DLL kmGLLoadMatrix(const Matrix* pIn)
+void CC_DLL kmGLLoadMatrix(const Mat4* pIn)
 {
     Director::getInstance()->loadMatrix(currentActiveStackType, *pIn);
 }
 
-void CC_DLL kmGLMultMatrix(const Matrix* pIn)
+void CC_DLL kmGLMultMatrix(const Mat4* pIn)
 {
     Director::getInstance()->multiplyMatrix(currentActiveStackType, *pIn);
 }
 
 void CC_DLL kmGLTranslatef(float x, float y, float z)
 {
-    Matrix mat;
-    Matrix::createTranslation(Vector3(x, y, z), &mat);
+    Mat4 mat;
+    Mat4::createTranslation(Vec3(x, y, z), &mat);
     Director::getInstance()->multiplyMatrix(currentActiveStackType, mat);
 }
 
 void CC_DLL kmGLRotatef(float angle, float x, float y, float z)
 {
-    Matrix mat;
-    Matrix::createRotation(Vector3(x, y, z), angle, &mat);
+    Mat4 mat;
+    Mat4::createRotation(Vec3(x, y, z), angle, &mat);
     Director::getInstance()->multiplyMatrix(currentActiveStackType, mat);
 }
 
 void CC_DLL kmGLScalef(float x, float y, float z)
 {
-    Matrix mat;
-    Matrix::createScale(x, y, z, &mat);
+    Mat4 mat;
+    Mat4::createScale(x, y, z, &mat);
     Director::getInstance()->multiplyMatrix(currentActiveStackType, mat);
 }
 
-void CC_DLL kmGLGetMatrix(unsigned int mode, Matrix* pOut)
+void CC_DLL kmGLGetMatrix(unsigned int mode, Mat4* pOut)
 {
     if(KM_GL_MODELVIEW == mode)
         *pOut = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
@@ -261,97 +261,97 @@ void CC_DLL kmGLGetMatrix(unsigned int mode, Matrix* pOut)
     }
 }
 
-Matrix* kmMat4Fill(Matrix* pOut, const float* pMat)
+Mat4* kmMat4Fill(Mat4* pOut, const float* pMat)
 {
     pOut->set(pMat);
     return pOut;
 }
 
-Matrix* kmMat4Assign(Matrix* pOut, const Matrix* pIn)
+Mat4* kmMat4Assign(Mat4* pOut, const Mat4* pIn)
 {
     pOut->set(pIn->m);
     return pOut;
 }
 
-Matrix* kmMat4Identity(Matrix* pOut)
+Mat4* kmMat4Identity(Mat4* pOut)
 {
-    *pOut = Matrix::IDENTITY;
+    *pOut = Mat4::IDENTITY;
     return pOut;
 }
 
-Matrix* kmMat4Inverse(Matrix* pOut, const Matrix* pM)
+Mat4* kmMat4Inverse(Mat4* pOut, const Mat4* pM)
 {
     *pOut = pM->getInversed();
     return pOut;
 }
 
-Matrix* kmMat4Transpose(Matrix* pOut, const Matrix* pIn)
+Mat4* kmMat4Transpose(Mat4* pOut, const Mat4* pIn)
 {
     *pOut = pIn->getTransposed();
     return pOut;
 }
 
-Matrix* kmMat4Multiply(Matrix* pOut, const Matrix* pM1, const Matrix* pM2)
+Mat4* kmMat4Multiply(Mat4* pOut, const Mat4* pM1, const Mat4* pM2)
 {
     *pOut = (*pM1) * (*pM2);
     return pOut;
 }
 
-Matrix* kmMat4Translation(Matrix* pOut, const float x, const float y, const float z)
+Mat4* kmMat4Translation(Mat4* pOut, const float x, const float y, const float z)
 {
-    Matrix::createTranslation(x, y, z, pOut);
+    Mat4::createTranslation(x, y, z, pOut);
     return pOut;
 }
 
-Matrix* kmMat4RotationX(Matrix* pOut, const float radians)
+Mat4* kmMat4RotationX(Mat4* pOut, const float radians)
 {
-    Matrix::createRotationX(radians, pOut);
+    Mat4::createRotationX(radians, pOut);
     return pOut;
 }
 
-Matrix* kmMat4RotationY(Matrix* pOut, const float radians)
+Mat4* kmMat4RotationY(Mat4* pOut, const float radians)
 {
-    Matrix::createRotationY(radians, pOut);
+    Mat4::createRotationY(radians, pOut);
     return pOut;
 }
 
-Matrix* kmMat4RotationZ(Matrix* pOut, const float radians)
+Mat4* kmMat4RotationZ(Mat4* pOut, const float radians)
 {
-    Matrix::createRotationZ(radians, pOut);
+    Mat4::createRotationZ(radians, pOut);
     return pOut;
 }
 
-Matrix* kmMat4RotationAxisAngle(Matrix* pOut, const Vector3* axis, float radians)
+Mat4* kmMat4RotationAxisAngle(Mat4* pOut, const Vec3* axis, float radians)
 {
-    Matrix::createRotation(*axis, radians, pOut);
+    Mat4::createRotation(*axis, radians, pOut);
     return pOut;
 }
 
-Matrix* kmMat4Scaling(Matrix* pOut, const float x, const float y, const float z)
+Mat4* kmMat4Scaling(Mat4* pOut, const float x, const float y, const float z)
 {
-    Matrix::createScale(x, y, z, pOut);
+    Mat4::createScale(x, y, z, pOut);
     return pOut;
 }
 
-Matrix* kmMat4PerspectiveProjection(Matrix* pOut, float fovY, float aspect, float zNear, float zFar)
+Mat4* kmMat4PerspectiveProjection(Mat4* pOut, float fovY, float aspect, float zNear, float zFar)
 {
-    Matrix::createPerspective(fovY, aspect, zNear, zFar, pOut);
+    Mat4::createPerspective(fovY, aspect, zNear, zFar, pOut);
     return pOut;
 }
 
-Matrix* kmMat4OrthographicProjection(Matrix* pOut, float left, float right, float bottom, float top, float nearVal, float farVal)
+Mat4* kmMat4OrthographicProjection(Mat4* pOut, float left, float right, float bottom, float top, float nearVal, float farVal)
 {
-    Matrix::createOrthographicOffCenter(left, right, bottom, top, nearVal, farVal, pOut);
+    Mat4::createOrthographicOffCenter(left, right, bottom, top, nearVal, farVal, pOut);
     return pOut;
 }
 
-Matrix* kmMat4LookAt(Matrix* pOut, const Vector3* pEye, const Vector3* pCenter, const Vector3* pUp)
+Mat4* kmMat4LookAt(Mat4* pOut, const Vec3* pEye, const Vec3* pCenter, const Vec3* pUp)
 {
-    Matrix::createLookAt(*pEye, *pCenter, *pUp, pOut);
+    Mat4::createLookAt(*pEye, *pCenter, *pUp, pOut);
     return pOut;
 }
 
-Vector3* kmVec3Fill(Vector3* pOut, float x, float y, float z)
+Vec3* kmVec3Fill(Vec3* pOut, float x, float y, float z)
 {
     pOut->x = x;
     pOut->y = y;
@@ -359,17 +359,17 @@ Vector3* kmVec3Fill(Vector3* pOut, float x, float y, float z)
     return pOut;
 }
 
-float kmVec3Length(const Vector3* pIn)
+float kmVec3Length(const Vec3* pIn)
 {
     return pIn->length();
 }
 
-float kmVec3LengthSq(const Vector3* pIn)
+float kmVec3LengthSq(const Vec3* pIn)
 {
     return pIn->lengthSquared();
 }
 
-CC_DLL Vector3* kmVec3Lerp(Vector3* pOut, const Vector3* pV1, const Vector3* pV2, float t)
+CC_DLL Vec3* kmVec3Lerp(Vec3* pOut, const Vec3* pV1, const Vec3* pV2, float t)
 {
     pOut->x = pV1->x + t * ( pV2->x - pV1->x );
     pOut->y = pV1->y + t * ( pV2->y - pV1->y );
@@ -377,160 +377,160 @@ CC_DLL Vector3* kmVec3Lerp(Vector3* pOut, const Vector3* pV1, const Vector3* pV2
     return pOut;
 }
 
-Vector3* kmVec3Normalize(Vector3* pOut, const Vector3* pIn)
+Vec3* kmVec3Normalize(Vec3* pOut, const Vec3* pIn)
 {
     *pOut = pIn->getNormalized();
     return pOut;
 }
 
-Vector3* kmVec3Cross(Vector3* pOut, const Vector3* pV1, const Vector3* pV2)
+Vec3* kmVec3Cross(Vec3* pOut, const Vec3* pV1, const Vec3* pV2)
 {
-    Vector3::cross(*pV1, *pV2, pOut);
+    Vec3::cross(*pV1, *pV2, pOut);
     return pOut;
 }
 
-float kmVec3Dot(const Vector3* pV1, const Vector3* pV2)
+float kmVec3Dot(const Vec3* pV1, const Vec3* pV2)
 {
-    return Vector3::dot(*pV1, *pV2);
+    return Vec3::dot(*pV1, *pV2);
 }
 
-Vector3* kmVec3Add(Vector3* pOut, const Vector3* pV1, const Vector3* pV2)
+Vec3* kmVec3Add(Vec3* pOut, const Vec3* pV1, const Vec3* pV2)
 {
-    Vector3::add(*pV1, *pV2, pOut);
+    Vec3::add(*pV1, *pV2, pOut);
     return pOut;
 }
 
-Vector3* kmVec3Subtract(Vector3* pOut, const Vector3* pV1, const Vector3* pV2)
+Vec3* kmVec3Subtract(Vec3* pOut, const Vec3* pV1, const Vec3* pV2)
 {
-    Vector3::subtract(*pV1, *pV2, pOut);
+    Vec3::subtract(*pV1, *pV2, pOut);
     return pOut;
 }
 
-Vector3* kmVec3Transform(Vector3* pOut, const Vector3* pV1, const Matrix* pM)
+Vec3* kmVec3Transform(Vec3* pOut, const Vec3* pV1, const Mat4* pM)
 {
     pM->transformPoint(*pV1, pOut);
     return pOut;
 }
 
-Vector3* kmVec3TransformNormal(Vector3* pOut, const Vector3* pV, const Matrix* pM)
+Vec3* kmVec3TransformNormal(Vec3* pOut, const Vec3* pV, const Mat4* pM)
 {
     pM->transformVector(*pV, pOut);
     return pOut;
 }
 
-Vector3* kmVec3TransformCoord(Vector3* pOut, const Vector3* pV, const Matrix* pM)
+Vec3* kmVec3TransformCoord(Vec3* pOut, const Vec3* pV, const Mat4* pM)
 {
-    Vector4 v(pV->x, pV->y, pV->z, 1);
+    Vec4 v(pV->x, pV->y, pV->z, 1);
     pM->transformVector(&v);
     v = v * (1/v.w);
     pOut->set(v.x, v.y, v.z);
     return pOut;
 }
 
-Vector3* kmVec3Scale(Vector3* pOut, const Vector3* pIn, const float s)
+Vec3* kmVec3Scale(Vec3* pOut, const Vec3* pIn, const float s)
 {
     *pOut = *pIn * s;
     return pOut;
 }
 
-Vector3* kmVec3Assign(Vector3* pOut, const Vector3* pIn)
+Vec3* kmVec3Assign(Vec3* pOut, const Vec3* pIn)
 {
     *pOut = *pIn;
     return pOut;
 }
 
-Vector3* kmVec3Zero(Vector3* pOut)
+Vec3* kmVec3Zero(Vec3* pOut)
 {
     pOut->set(0, 0, 0);
     return pOut;
 }
 
-Vector2* kmVec2Fill(Vector2* pOut, float x, float y)
+Vec2* kmVec2Fill(Vec2* pOut, float x, float y)
 {
     pOut->set(x, y);
     return pOut;
 }
 
-float kmVec2Length(const Vector2* pIn)
+float kmVec2Length(const Vec2* pIn)
 {
     return pIn->length();
 }
 
-float kmVec2LengthSq(const Vector2* pIn)
+float kmVec2LengthSq(const Vec2* pIn)
 {
     return pIn->lengthSquared();
 }
 
-Vector2* kmVec2Normalize(Vector2* pOut, const Vector2* pIn)
+Vec2* kmVec2Normalize(Vec2* pOut, const Vec2* pIn)
 {
     *pOut = pIn->getNormalized();
     return pOut;
 }
 
-Vector2* kmVec2Lerp(Vector2* pOut, const Vector2* pV1, const Vector2* pV2, float t)
+Vec2* kmVec2Lerp(Vec2* pOut, const Vec2* pV1, const Vec2* pV2, float t)
 {
     pOut->x = pV1->x + t * ( pV2->x - pV1->x );
     pOut->y = pV1->y + t * ( pV2->y - pV1->y );
     return pOut;
 }
 
-Vector2* kmVec2Add(Vector2* pOut, const Vector2* pV1, const Vector2* pV2)
+Vec2* kmVec2Add(Vec2* pOut, const Vec2* pV1, const Vec2* pV2)
 {
-    Vector2::add(*pV1, *pV2, pOut);
+    Vec2::add(*pV1, *pV2, pOut);
     return pOut;
 }
 
-float kmVec2Dot(const Vector2* pV1, const Vector2* pV2)
+float kmVec2Dot(const Vec2* pV1, const Vec2* pV2)
 {
-    return Vector2::dot(*pV1, *pV2);
+    return Vec2::dot(*pV1, *pV2);
 }
 
-Vector2* kmVec2Subtract(Vector2* pOut, const Vector2* pV1, const Vector2* pV2)
+Vec2* kmVec2Subtract(Vec2* pOut, const Vec2* pV1, const Vec2* pV2)
 {
-    Vector2::subtract(*pV1, *pV2, pOut);
+    Vec2::subtract(*pV1, *pV2, pOut);
     return pOut;
 }
 
-Vector2* kmVec2Scale(Vector2* pOut, const Vector2* pIn, const float s)
+Vec2* kmVec2Scale(Vec2* pOut, const Vec2* pIn, const float s)
 {
     *pOut = *pIn * s;
     return pOut;
 }
 
-Vector2* kmVec2Assign(Vector2* pOut, const Vector2* pIn)
+Vec2* kmVec2Assign(Vec2* pOut, const Vec2* pIn)
 {
     *pOut = *pIn;
     return pOut;
 }
 
-Vector4* kmVec4Fill(Vector4* pOut, float x, float y, float z, float w)
+Vec4* kmVec4Fill(Vec4* pOut, float x, float y, float z, float w)
 {
     pOut->set(x, y, z, w);
     return pOut;
 }
 
-Vector4* kmVec4Add(Vector4* pOut, const Vector4* pV1, const Vector4* pV2)
+Vec4* kmVec4Add(Vec4* pOut, const Vec4* pV1, const Vec4* pV2)
 {
-    Vector4::add(*pV1, *pV2, pOut);
+    Vec4::add(*pV1, *pV2, pOut);
     return pOut;
 }
 
-float kmVec4Dot(const Vector4* pV1, const Vector4* pV2)
+float kmVec4Dot(const Vec4* pV1, const Vec4* pV2)
 {
-    return Vector4::dot(*pV1, *pV2);
+    return Vec4::dot(*pV1, *pV2);
 }
 
-float kmVec4Length(const Vector4* pIn)
+float kmVec4Length(const Vec4* pIn)
 {
     return pIn->length();
 }
 
-float kmVec4LengthSq(const Vector4* pIn)
+float kmVec4LengthSq(const Vec4* pIn)
 {
     return pIn->lengthSquared();
 }
 
-Vector4* kmVec4Lerp(Vector4* pOut, const Vector4* pV1, const Vector4* pV2, float t)
+Vec4* kmVec4Lerp(Vec4* pOut, const Vec4* pV1, const Vec4* pV2, float t)
 {
     pOut->x = pV1->x + t * ( pV2->x - pV1->x );
     pOut->y = pV1->y + t * ( pV2->y - pV1->y );
@@ -539,55 +539,55 @@ Vector4* kmVec4Lerp(Vector4* pOut, const Vector4* pV1, const Vector4* pV2, float
     return pOut;
 }
 
-Vector4* kmVec4Normalize(Vector4* pOut, const Vector4* pIn)
+Vec4* kmVec4Normalize(Vec4* pOut, const Vec4* pIn)
 {
     *pOut = pIn->getNormalized();
     return pOut;
 }
 
-Vector4* kmVec4Scale(Vector4* pOut, const Vector4* pIn, const float s)
+Vec4* kmVec4Scale(Vec4* pOut, const Vec4* pIn, const float s)
 {
     *pOut = *pIn * s;
     return pOut;
 }
 
-Vector4* kmVec4Subtract(Vector4* pOut, const Vector4* pV1, const Vector4* pV2)
+Vec4* kmVec4Subtract(Vec4* pOut, const Vec4* pV1, const Vec4* pV2)
 {
-    Vector4::subtract(*pV1, *pV2, pOut);
+    Vec4::subtract(*pV1, *pV2, pOut);
     return pOut;
 }
 
-Vector4* kmVec4Assign(Vector4* pOut, const Vector4* pIn)
+Vec4* kmVec4Assign(Vec4* pOut, const Vec4* pIn)
 {
     *pOut = *pIn;
     return pOut;
 }
 
-Vector4* kmVec4MultiplyMat4(Vector4* pOut, const Vector4* pV, const Matrix* pM)
+Vec4* kmVec4MultiplyMat4(Vec4* pOut, const Vec4* pV, const Mat4* pM)
 {
     pM->transformVector(*pV, pOut);
     return pOut;
 }
 
-Vector4* kmVec4Transform(Vector4* pOut, const Vector4* pV, const Matrix* pM)
+Vec4* kmVec4Transform(Vec4* pOut, const Vec4* pV, const Mat4* pM)
 {
     pM->transformVector(*pV, pOut);
     return pOut;
 }
 
-const Vector3 KM_VEC3_NEG_Z = Vector3(0, 0, -1);
-const Vector3 KM_VEC3_POS_Z = Vector3(0, 0, 1);
-const Vector3 KM_VEC3_POS_Y = Vector3(0, 1, 0);
-const Vector3 KM_VEC3_NEG_Y = Vector3(0, -1, 0);
-const Vector3 KM_VEC3_NEG_X = Vector3(-1, 0, 0);
-const Vector3 KM_VEC3_POS_X = Vector3(1, 0, 0);
-const Vector3 KM_VEC3_ZERO = Vector3(0, 0, 0);
+const Vec3 KM_VEC3_NEG_Z = Vec3(0, 0, -1);
+const Vec3 KM_VEC3_POS_Z = Vec3(0, 0, 1);
+const Vec3 KM_VEC3_POS_Y = Vec3(0, 1, 0);
+const Vec3 KM_VEC3_NEG_Y = Vec3(0, -1, 0);
+const Vec3 KM_VEC3_NEG_X = Vec3(-1, 0, 0);
+const Vec3 KM_VEC3_POS_X = Vec3(1, 0, 0);
+const Vec3 KM_VEC3_ZERO = Vec3(0, 0, 0);
 
-const Vector2 KM_VEC2_POS_Y = Vector2(0, 1);
-const Vector2 KM_VEC2_NEG_Y = Vector2(0, -1);
-const Vector2 KM_VEC2_NEG_X = Vector2(-1, 0);
-const Vector2 KM_VEC2_POS_X = Vector2(1, 0);
-const Vector2 KM_VEC2_ZERO = Vector2(0, 0);
+const Vec2 KM_VEC2_POS_Y = Vec2(0, 1);
+const Vec2 KM_VEC2_NEG_Y = Vec2(0, -1);
+const Vec2 KM_VEC2_NEG_X = Vec2(-1, 0);
+const Vec2 KM_VEC2_POS_X = Vec2(1, 0);
+const Vec2 KM_VEC2_ZERO = Vec2(0, 0);
 
 NS_CC_END
 
