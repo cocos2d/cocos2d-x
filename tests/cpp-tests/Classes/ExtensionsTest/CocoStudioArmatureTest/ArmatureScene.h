@@ -346,7 +346,7 @@ public:
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 
     void changeMountCallback(Ref* pSender);
-    virtual cocostudio::Armature *createMount(const char *name, Vector2 position);
+    virtual cocostudio::Armature *createMount(const char *name, Vec2 position);
 
 private:
     Hero *hero;

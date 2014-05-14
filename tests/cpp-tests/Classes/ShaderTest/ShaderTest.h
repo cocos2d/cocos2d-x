@@ -116,7 +116,7 @@ public:
     static ShaderNode* shaderNodeWithVertex(const std::string &vert, const std::string &frag);
 
     virtual void update(float dt);
-    virtual void setPosition(const Vector2 &newPosition);
+    virtual void setPosition(const Vec2 &newPosition);
     virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
 
 protected:
@@ -128,8 +128,8 @@ protected:
 
     void onDraw(const Matrix &transform, bool transformUpdated);
 
-    Vector2 _center;
-    Vector2 _resolution;
+    Vec2 _center;
+    Vec2 _resolution;
     float      _time;
     std::string _vertFileName;
     std::string _fragFileName;

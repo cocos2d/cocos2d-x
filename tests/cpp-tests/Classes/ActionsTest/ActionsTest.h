@@ -416,7 +416,7 @@ public:
     virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void addNewSpriteWithCoords(Vector2 p);
+    virtual void addNewSpriteWithCoords(Vec2 p);
     virtual void runActionsInSprite(Sprite* sprite);
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 };

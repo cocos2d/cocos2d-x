@@ -21,7 +21,7 @@ public:
     void addConsoleAutoTest();
 
 private:
-    Vector2 _beginPos;
+    Vec2 _beginPos;
     Menu* _itemMenu;
 };
 

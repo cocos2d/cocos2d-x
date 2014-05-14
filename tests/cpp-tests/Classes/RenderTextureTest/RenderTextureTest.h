@@ -152,7 +152,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     
-    SimpleSprite* addNewSpriteWithCoords(const Vector2& p);
+    SimpleSprite* addNewSpriteWithCoords(const Vec2& p);
 };
 
 #endif

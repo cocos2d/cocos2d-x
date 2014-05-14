@@ -22,7 +22,7 @@ public:
     void touchEvent(Ref* pSender, Widget::TouchEventType type);
     
 private:
-    Vector2 _beginPos;
+    Vec2 _beginPos;
     Menu* _itemMenu;
 };
 

@@ -13,7 +13,7 @@ public:
     void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
     void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
 private:
-    Vector2 _beginPos;
+    Vec2 _beginPos;
     Menu* _itemMenu;
     
 	int _testcount;

@@ -19,7 +19,7 @@ public:
     void createResetButton();
     virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
 
-    void addNewSpriteAtPosition(Vector2 p);
+    void addNewSpriteAtPosition(Vec2 p);
     void update(float dt);
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 
