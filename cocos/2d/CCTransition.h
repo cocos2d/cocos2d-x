@@ -82,6 +82,12 @@ public:
     /** creates a base transition with duration and incoming scene */
     static TransitionScene * create(float t, Scene *scene);
 
+    /** getter for in scene */
+    Scene* getInScene() const;
+    
+    /** getter for out scene */
+    Scene* getOutScene() const;
+
     /** called after the transition finishes */
     void finish(void);
 

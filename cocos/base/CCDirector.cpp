@@ -819,13 +819,26 @@ void Director::replaceScene(Scene *scene)
     
     if (_nextScene)
     {
-        if (_nextScene->isRunning())
+        TransitionScene* transitionScene = dynamic_cast<TransitionScene*>(scene);
+
+        // scene is transition and check: are transition contains next scene as _inScene?
+        if (transitionScene != nullptr && transitionScene->getInScene() == _nextScene)
         {
-            _nextScene->onExitTransitionDidStart();
-            _nextScene->onExit();
+            // nothing to do, because scene contains current _nextScene
+            // example
+            // auto newScene = Director::getInstance()->popToRootScene();
+            // Director::getInstance()->pushScene(TransitionFade::create(0.5, newScene, Color3B(0,255,255)));
         }
-        _nextScene->cleanup();
-        _nextScene = nullptr;
+        else
+        {
+            if (_nextScene->isRunning())
+            {
+                _nextScene->onExitTransitionDidStart();
+                _nextScene->onExit();
+            }
+            _nextScene->cleanup();
+            _nextScene = nullptr;
+        }
     }
 
     ssize_t index = _scenesStack.size();
@@ -846,7 +859,7 @@ void Director::pushScene(Scene *scene)
     _nextScene = scene;
 }
 
-void Director::popScene(void)
+Scene* Director::popScene(void)
 {
     CCASSERT(_runningScene != nullptr, "running scene should not null");
 
@@ -856,53 +869,59 @@ void Director::popScene(void)
     if (c == 0)
     {
         end();
+        return nullptr;
     }
     else
     {
         _sendCleanupToScene = true;
         _nextScene = _scenesStack.at(c - 1);
+        return _nextScene;
     }
 }
 
-void Director::popToRootScene(void)
+Scene* Director::popToRootScene(void)
 {
-    popToSceneStackLevel(1);
+    return popToSceneStackLevel(1);
 }
 
-void Director::popToSceneStackLevel(int level)
+Scene* Director::popToSceneStackLevel(int level)
 {
     CCASSERT(_runningScene != nullptr, "A running Scene is needed");
-    ssize_t c = _scenesStack.size();
 
     // level 0? -> end
     if (level == 0)
     {
         end();
-        return;
+        return nullptr;
     }
 
+    ssize_t stackSize = _scenesStack.size();
+
     // current level or lower -> nothing
-    if (level >= c)
-        return;
+    if (level >= stackSize)
+        return nullptr;
+
+    // pop from stack running scene
+    auto currentRunningScene = _scenesStack.back();
+    _scenesStack.popBack();
+    CCASSERT(currentRunningScene == _runningScene, "Invalid state of scene stack.");
+
+    // current scene will be cleaned up 
+    _sendCleanupToScene = true;
+    --stackSize;
 
     // pop stack until reaching desired level
-    while (c > level)
+    while (stackSize > level)
     {
         auto current = _scenesStack.back();
-
-        if (current->isRunning())
-        {
-            current->onExitTransitionDidStart();
-            current->onExit();
-        }
-
         current->cleanup();
         _scenesStack.popBack();
-        --c;
+        --stackSize;
     }
 
     _nextScene = _scenesStack.back();
-    _sendCleanupToScene = false;
+
+    return _nextScene;
 }
 
 void Director::end()

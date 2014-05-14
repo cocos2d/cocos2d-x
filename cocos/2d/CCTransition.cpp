@@ -157,6 +157,15 @@ void TransitionScene::hideOutShowIn()
     _outScene->setVisible(false);
 }
 
+Scene* TransitionScene::getInScene() const
+{
+    return _inScene;
+}
+
+Scene* TransitionScene::getOutScene() const
+{
+    return _outScene;
+}
 
 // custom onEnter
 void TransitionScene::onEnter()

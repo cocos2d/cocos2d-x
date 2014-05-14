@@ -268,20 +268,20 @@ public:
      * The running scene will be deleted. If there are no more scenes in the stack the execution is terminated.
      * ONLY call it if there is a running scene.
      */
-    void popScene();
+    Scene* popScene();
 
     /** Pops out all scenes from the stack until the root scene in the queue.
      * This scene will replace the running one.
      * Internally it will call `popToSceneStackLevel(1)`
      */
-    void popToRootScene();
+    Scene* popToRootScene();
 
     /** Pops out all scenes from the stack until it reaches `level`.
      If level is 0, it will end the director.
      If level is 1, it will pop all scenes until it reaches to root scene.
      If level is <= than the current stack level, it won't do anything.
      */
- 	void popToSceneStackLevel(int level);
+    Scene* popToSceneStackLevel(int level);
 
     /** Replaces the running scene with a new one. The running scene is terminated.
      * ONLY call it if there is a running scene.
