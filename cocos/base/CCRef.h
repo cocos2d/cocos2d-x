@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "base/CCPlatformMacros.h"
 #include "base/ccConfig.h"
 
-#define CC_USE_MEM_LEAK_DETECTION 1
+#define CC_USE_MEM_LEAK_DETECTION 0
 
 NS_CC_BEGIN
 
