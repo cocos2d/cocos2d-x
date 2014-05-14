@@ -116,8 +116,8 @@ public:
      * @param offset    The new offset.
      * @param animated  If true, the view will scroll to the new offset.
      */
-    void setContentOffset(Vector2 offset, bool animated = false);
-    Vector2 getContentOffset();
+    void setContentOffset(Vec2 offset, bool animated = false);
+    Vec2 getContentOffset();
     /**
      * Sets a new content offset. It ignores max/min offset. It just sets what's given. (just like UIKit's UIScrollView)
      * You can override the animation duration with this method.
@@ -125,7 +125,7 @@ public:
      * @param offset    The new offset.
      * @param dt        The animation duration.
      */
-    void setContentOffsetInDuration(Vector2 offset, float dt); 
+    void setContentOffsetInDuration(Vec2 offset, float dt); 
 
     void setZoomScale(float s);
     /**
@@ -148,11 +148,11 @@ public:
     /**
      * Returns the current container's minimum offset. You may want this while you animate scrolling by yourself
      */
-    Vector2 minContainerOffset();
+    Vec2 minContainerOffset();
     /**
      * Returns the current container's maximum offset. You may want this while you animate scrolling by yourself
      */
-    Vector2 maxContainerOffset(); 
+    Vec2 maxContainerOffset(); 
     /**
      * Determines if a given node's bounding box is in visible bounds
      *
@@ -300,7 +300,7 @@ protected:
     /**
      * Content offset. Note that left-bottom point is the origin
      */
-    Vector2 _contentOffset;
+    Vec2 _contentOffset;
 
     /**
      * Container holds scroll view contents, Sets the scrollable container object of the scroll view
@@ -313,11 +313,11 @@ protected:
     /**
      * max inset point to limit scrolling by touch
      */
-    Vector2 _maxInset;
+    Vec2 _maxInset;
     /**
      * min inset point to limit scrolling by touch
      */
-    Vector2 _minInset;
+    Vec2 _minInset;
     /**
      * Determines whether the scroll view is allowed to bounce or not.
      */
@@ -328,11 +328,11 @@ protected:
     /**
      * scroll speed
      */
-    Vector2 _scrollDistance;
+    Vec2 _scrollDistance;
     /**
      * Touch point
      */
-    Vector2 _touchPoint;
+    Vec2 _touchPoint;
     /**
      * length between two fingers
      */

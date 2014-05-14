@@ -106,11 +106,11 @@ public:
     void setPTMRatio(float fPTMRatio);
 
     // overrides
-    virtual const Vector2& getPosition() const override;
+    virtual const Vec2& getPosition() const override;
     virtual void getPosition(float* x, float* y) const override;
     virtual float getPositionX() const override;
     virtual float getPositionY() const override;
-    virtual void setPosition(const Vector2 &position) override;
+    virtual void setPosition(const Vec2 &position) override;
     virtual float getRotation() const override;
     virtual void setRotation(float fRotation) override;
     virtual void syncPhysicsTransform() const;
@@ -119,7 +119,7 @@ public:
     virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
 
 protected:
-    const Vector2& getPosFromPhysics() const;
+    const Vec2& getPosFromPhysics() const;
 
 protected:
     bool    _ignoreBodyRotation;
