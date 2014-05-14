@@ -22,7 +22,7 @@ bool UIWidgetAddNodeTest::init()
         
         // Add the alert
         Text* alert = Text::create();
-        alert->setText("Widget Add Node");
+        alert->setString("Widget Add Node");
         alert->setFontName("fonts/Marker Felt.ttf");
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));

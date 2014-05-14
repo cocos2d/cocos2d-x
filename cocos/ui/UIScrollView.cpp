@@ -1655,7 +1655,7 @@ void ScrollView::addEventListenerScrollView(Ref *target, SEL_ScrollViewEvent sel
     _scrollViewEventSelector = selector;
 }
     
-void ScrollView::addEventListener(ccScrollViewCallback callback)
+void ScrollView::addEventListener(const ccScrollViewCallback& callback)
 {
     _eventCallback = callback;
 }

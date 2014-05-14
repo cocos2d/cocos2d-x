@@ -260,6 +260,7 @@ Label::Label(FontAtlas *atlas /* = nullptr */, TextHAlignment hAlignment /* = Te
 , _shadowDirty(false)
 , _compatibleMode(false)
 , _insideBounds(true)
+, _effectColorF(Color4F::BLACK)
 {
     setAnchorPoint(Vector2::ANCHOR_MIDDLE);
     reset();
@@ -426,6 +427,7 @@ bool Label::setTTFConfig(const TTFConfig& ttfConfig)
         reset();
         return false;
     }
+    _systemFontDirty = false;
 
     _currentLabelType = LabelType::TTF;
     setFontAtlas(newAtlas,ttfConfig.distanceFieldEnabled,true);
@@ -470,13 +472,16 @@ bool Label::setBMFontFilePath(const std::string& bmfontFilePath, const Vector2& 
 
 void Label::setString(const std::string& text)
 {
-    _originalUTF8String = text;
-    _contentDirty = true;
-
-    std::u16string utf16String;
-    if (StringUtils::UTF8ToUTF16(_originalUTF8String, utf16String))
+    if (text.compare(_originalUTF8String))
     {
-        _currentUTF16String  = utf16String;
+        _originalUTF8String = text;
+        _contentDirty = true;
+
+        std::u16string utf16String;
+        if (StringUtils::UTF8ToUTF16(_originalUTF8String, utf16String))
+        {
+            _currentUTF16String  = utf16String;
+        }
     }
 }
 

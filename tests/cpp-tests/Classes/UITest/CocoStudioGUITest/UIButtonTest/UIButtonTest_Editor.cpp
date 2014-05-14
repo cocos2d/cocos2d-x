@@ -50,7 +50,7 @@ bool UIButtonTest_Editor::init()
         _displayValueLabel = Text::create();
         _displayValueLabel->setFontName("fonts/Marker Felt.ttf");
         _displayValueLabel->setFontSize(30);
-        _displayValueLabel->setText("No event");
+        _displayValueLabel->setString("No event");
         _displayValueLabel->setPosition(Vector2(_layout->getSize().width / 2,
                                               _layout->getSize().height - _displayValueLabel->getSize().height * 1.75f));
         _touchGroup->addChild(_displayValueLabel);
@@ -66,19 +66,19 @@ void UIButtonTest_Editor::touchEvent(Ref *pSender, Widget::TouchEventType type)
     switch (type)
     {
         case Widget::TouchEventType::BEGAN:
-            _displayValueLabel->setText("Touch Down");
+            _displayValueLabel->setString("Touch Down");
             break;
             
         case Widget::TouchEventType::MOVED:
-            _displayValueLabel->setText("Touch Moved");
+            _displayValueLabel->setString("Touch Moved");
             break;
             
         case Widget::TouchEventType::ENDED:
-            _displayValueLabel->setText("Touch Ended");
+            _displayValueLabel->setString("Touch Ended");
             break;
             
         case Widget::TouchEventType::CANCELED:
-            _displayValueLabel->setText("Touch Canceled");
+            _displayValueLabel->setString("Touch Canceled");
             break;
             
         default:
