@@ -191,6 +191,7 @@ bool RenderMeshData::initFrom(std::vector<float>& posions, std::vector<float>& n
     meshvertexattrib.size = 3;
     meshvertexattrib.type = GL_FLOAT;
     meshvertexattrib.attribSizeBytes = meshvertexattrib.size * sizeof(float);
+    meshvertexattrib.vertexAttrib = GLProgram::VERTEX_ATTRIB_POSITION;
     _vertexAttribs.push_back(meshvertexattrib);
     
     //normal
@@ -198,6 +199,7 @@ bool RenderMeshData::initFrom(std::vector<float>& posions, std::vector<float>& n
     {
         //add normal flag
         vertexsizeBytes += 3;
+        meshvertexattrib.vertexAttrib = GLProgram::VERTEX_ATTRIB_NORMAL;
         _vertexAttribs.push_back(meshvertexattrib);
     }
     //
@@ -205,6 +207,7 @@ bool RenderMeshData::initFrom(std::vector<float>& posions, std::vector<float>& n
     {
         vertexsizeBytes += 2;
         meshvertexattrib.size = 2;
+        meshvertexattrib.vertexAttrib = GLProgram::VERTEX_ATTRIB_TEX_COORD;
         meshvertexattrib.attribSizeBytes = meshvertexattrib.size * sizeof(float);
         _vertexAttribs.push_back(meshvertexattrib);
     }

@@ -84,6 +84,15 @@ public:
     //get attribute flag
     int getAttribFlag() const { return 0; }
     
+    //get mesh vertex attribute count
+    int getMeshVertexAttribCount() const { return _renderdata._vertexAttribs.size(); }
+    
+    //get MeshVertexAttribute by index
+    const MeshVertexAttrib& getMeshVertexAttribute(int idx) const { return _renderdata._vertexAttribs[idx]; }
+    
+    //has vertex attribute?
+    bool hasVertexAttrib(int attrib) { return _renderdata.hasVertexAttrib(attrib); }
+    
     //get per vertex size in bytes
     int getVertexSizeInBytes() const { return _renderdata.vertexsizeBytes; }
     

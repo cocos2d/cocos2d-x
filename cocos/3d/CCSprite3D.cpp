@@ -19,6 +19,8 @@
 
 NS_CC_BEGIN
 
+static std::string s_attributeNames[] = {GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::ATTRIBUTE_NAME_NORMAL};
+
 std::map<std::string, std::vector<std::string> > __cachedSpriteTexNames;
 
 Sprite3D* Sprite3D::create(const std::string &modelPath)
@@ -111,7 +113,7 @@ bool Sprite3D::loadFromObj(const std::string& path)
         
     }
     
-    getGLProgramState();
+    genGLProgramState();
     
     //add to cache
     __cachedSpriteTexNames[fullPath] = matnames;
@@ -159,7 +161,7 @@ bool Sprite3D::initWithFile(const std::string &path)
             if (tex) _textures.pushBack(tex);
         }
         
-        getGLProgramState();
+        genGLProgramState();
         
         _path = fullPath;
         return true;
@@ -180,13 +182,19 @@ void Sprite3D::genGLProgramState()
 {
     _programState.clear();
     
+    auto attributeCount = _mesh->getMeshVertexAttribCount();
     for (int i = 0; i < _mesh->getMeshPartCount(); i++)
     {
-        auto programstate = GLProgramState::get(getDefGLProgram(_mesh->getAttribFlag() & GL::VERTEX_ATTRIB_FLAG_TEX_COORDS));
+        
+        auto programstate = GLProgramState::getOrCreate(getDefGLProgram(_mesh->hasVertexAttrib(i)));
         _programState.pushBack(programstate);
         
-        programstate->setVertexAttribPointer("a_position", 3, GL_FLOAT, GL_FALSE, _mesh->getVertexSizeInBytes(), (void*)0);
-        programstate->setVertexAttribPointer("a_texCoord", 2, GL_FLOAT, GL_FALSE, _mesh->getVertexSizeInBytes(), (void*)(6 * sizeof(float)));
+        int offset = 0;
+        for (auto k = 0; k < attributeCount; k++) {
+            auto meshattribute = _mesh->getMeshVertexAttribute(k);
+            programstate->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib], meshattribute.size, meshattribute.type, GL_FALSE, _mesh->getVertexSizeInBytes(), (void*)offset);
+            offset += meshattribute.attribSizeBytes;
+        }
     }
 }
 
