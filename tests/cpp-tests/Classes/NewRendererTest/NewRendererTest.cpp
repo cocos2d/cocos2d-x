@@ -611,10 +611,7 @@ void CaptureScreenTest::onCaptured(Ref*, const Rect& rect)
     Director::getInstance()->getTextureCache()->removeTextureForKey(_filename);
     removeChildByTag(ChildTag);
     _filename = "CaptureScreenTest.png";
-    Director::getInstance()->getRenderer()->captureScreen(
-            CC_CALLBACK_2(CaptureScreenTest::afterCaptured, this),
-	        _filename,
-	        rect);
+    UtilsHelper::getInstance()->captureScreen(CC_CALLBACK_2(CaptureScreenTest::afterCaptured, this), _filename, rect);
 }
 
 void CaptureScreenTest::afterCaptured(bool succeed, const std::string& outputFile)
@@ -630,6 +627,6 @@ void CaptureScreenTest::afterCaptured(bool succeed, const std::string& outputFil
     }
     else
     {
-	    log("Something went wrong");
+        log("Captrue screen failed.");
     }
 }

@@ -236,6 +236,7 @@ THE SOFTWARE.
 #include "2d/ccUTF8.h"
 #include "2d/CCUserDefault.h"
 #include "2d/CCVertex.h"
+#include "2d/ccUtils.h"
 
 // text_input_node
 #include "2d/CCIMEDelegate.h"
