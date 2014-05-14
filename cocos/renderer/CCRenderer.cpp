@@ -37,6 +37,9 @@
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventType.h"
+#include "2d/platform/CCImage.h"
+#include "2d/platform/CCFileUtils.h"
+#include "CCGLView.h"
 
 NS_CC_BEGIN
 
@@ -533,6 +536,83 @@ bool Renderer::checkVisibility(const Matrix &transform, const Size &size)
     bool ret = (tmpx < screen_half.width && tmpy < screen_half.height);
 
     return ret;
+}
+
+void Renderer::captureScreen(std::function<void(bool, const std::string&)> afterCaptured, const std::string& filename, const Rect& rect)
+{
+    _captureScreen.init(std::numeric_limits<float>::max());
+    _captureScreen.func = CC_CALLBACK_0(Renderer::onCaptureScreen, this, afterCaptured, filename, true, rect);
+    addCommand(&_captureScreen);
+}
+
+void Renderer::onCaptureScreen(std::function<void(bool, const std::string&)> afterCaptured, const std::string& filename, bool flipped, const Rect& rect)
+{
+    // Generally the user specifiy the rect with design resolution, thus we have to convert it
+    // into a significant value which is metered by pixel.
+    Size frameSize = Director::getInstance()->getOpenGLView()->getFrameSize();
+    int originx = 0;
+    int originy = 0;
+    int width = (int)frameSize.width;
+    int height = (int)frameSize.height;
+    bool succeed = false;
+    std::string outputFile = "";
+
+    if (!rect.equals(Rect::ZERO))
+    {
+        originx = (int)rect.origin.x;
+        originy = (int)rect.origin.y;
+        width = (int)rect.size.width * Director::getInstance()->getOpenGLView()->getScaleX();
+        height = (int)rect.size.height * Director::getInstance()->getOpenGLView()->getScaleY();
+        
+        auto clip = [](int in, int min, int max) { return std::max(std::min(in, max), min); };
+        originx = clip(originx, 0, (int)frameSize.width);
+        originy = clip(originy, 0, (int)frameSize.height);
+        width = clip(width, 0, frameSize.width - originx);
+        height = clip(height, 0, frameSize.height - originy);
+    }
+
+    do
+    {
+	    GLubyte* buffer = new GLubyte[width * height * 4];
+	    if (!buffer)
+	    {
+		    CC_SAFE_DELETE_ARRAY(buffer);
+		    break;
+	    }
+		
+	    glPixelStorei(GL_PACK_ALIGNMENT, 1);
+	    glReadPixels(originx, originy, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
+
+	    if (flipped)
+	    {
+            GLubyte* flippedBuffer = new GLubyte[width * height * 4];
+            if (!flippedBuffer)
+            {
+        	    CC_SAFE_DELETE(flippedBuffer);
+        	    break;
+            }
+
+            for (int row = 0; row < height; ++row)
+            {
+                memcpy(flippedBuffer + (height - row - 1) * width * 4, buffer + row * width * 4, width * 4);
+            }
+            memcpy(buffer, flippedBuffer, width * height * 4);
+            CC_SAFE_DELETE_ARRAY(flippedBuffer);
+        }
+
+        Image* image = new Image();
+	    if (image)
+        {
+            image->initWithRawData(buffer, width * height * 4, width, height, 8);
+            CC_SAFE_DELETE_ARRAY(buffer);
+            outputFile = FileUtils::getInstance()->getWritablePath() + filename;
+            image->saveToFile(outputFile);
+            succeed = true;
+        }
+        CC_SAFE_DELETE(image);
+    }while(0);
+    	
+    afterCaptured(succeed, outputFile);
 }
 
 NS_CC_END
