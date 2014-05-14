@@ -21,9 +21,12 @@ class Sprite3DEffect;
 class Sprite3D : public Node, public BlendProtocol
 {
 public:
+    //create sprite3D
     static Sprite3D* create(const std::string &modelPath);
+    //support only one texture, override texture using given texturePath
     static Sprite3D* create(const std::string &modelPath, const std::string &texturePath);
     
+    //set texture
     void setTexture(const std::string& texFile);
     //void setTexture(Texture2D* texture);
     
@@ -59,9 +62,8 @@ protected:
     
     int               _partcount;
     
-    Vector<GLProgramState*>   _programState;
-    
-    Vector<Texture2D*>    _textures;
+    Texture2D*        _texture;
+    //Vector<Texture2D*>    _textures;
     
     Sprite3DEffect*     _effect;
     

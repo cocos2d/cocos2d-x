@@ -15,7 +15,7 @@ class GLProgramState;
 class Mesh;
 class Sprite3D;
 
-class Sprite3DEffect: public Ref
+class Sprite3DEffect: public Node
 {
 public:
     enum EffectType
@@ -33,7 +33,6 @@ protected:
     Sprite3DEffect();
     virtual ~Sprite3DEffect();
     
-    GLProgramState* _glProgramState;
     Sprite3D*         _sprite;
 };
 

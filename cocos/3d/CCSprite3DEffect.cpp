@@ -30,13 +30,11 @@ Sprite3DEffect* Sprite3DEffect::create(Sprite3DEffect::EffectType type)
 }
 
 Sprite3DEffect::Sprite3DEffect()
-: _glProgramState(nullptr)
-, _sprite(nullptr)
+:_sprite(nullptr)
 {
 }
 Sprite3DEffect::~Sprite3DEffect()
 {
-    CC_SAFE_RELEASE(_glProgramState);
     CC_SAFE_RELEASE(_sprite);
 }
 
@@ -65,21 +63,21 @@ bool Sprite3DOutlineEffect::init(Sprite3D* sprite)
     
     GLProgram* program = GLProgram::createWithByteArrays(outLineShader, blackFrag);
     
-    _glProgramState = GLProgramState::getOrCreateWithGLProgram(program);
+    auto glProgramState = GLProgramState::getOrCreateWithGLProgram(program);
     
-    _glProgramState->retain();
+    setGLProgramState(glProgramState);
     
     auto mesh = _sprite->getMesh();
     int offset = 0;
     for (auto i = 0; i < mesh->getMeshVertexAttribCount(); i++) {
         auto meshvertexattrib = mesh->getMeshVertexAttribute(i);
         
-        _glProgramState->setVertexAttribPointer(s_attributeNames[meshvertexattrib.vertexAttrib], meshvertexattrib.size, meshvertexattrib.type, GL_FALSE, mesh->getVertexSizeInBytes(), (void*)offset);
+        glProgramState->setVertexAttribPointer(s_attributeNames[meshvertexattrib.vertexAttrib], meshvertexattrib.size, meshvertexattrib.type, GL_FALSE, mesh->getVertexSizeInBytes(), (void*)offset);
         offset += meshvertexattrib.attribSizeBytes;
     }
     
-    _glProgramState->setUniformVec3("OutLineColor", _outlineColor);
-    _glProgramState->setUniformFloat("OutlineWidth", _outlineWidth);
+    glProgramState->setUniformVec3("OutLineColor", _outlineColor);
+    glProgramState->setUniformFloat("OutlineWidth", _outlineWidth);
     
     return true;
 }

@@ -41,18 +41,13 @@ Sprite3D* Sprite3D::create(const std::string &modelPath)
 
 Sprite3D* Sprite3D::create(const std::string &modelPath, const std::string &texturePath)
 {
-    if (modelPath.length() < 4)
-        CCASSERT(false, "improper name specified when creating Sprite3D");
-    
-    auto sprite = new Sprite3D();
-    if (sprite && sprite->initWithFile(modelPath))
+    auto sprite = create(modelPath);
+    if (sprite)
     {
         sprite->setTexture(texturePath);
-        sprite->autorelease();
-        return sprite;
     }
-    CC_SAFE_DELETE(sprite);
-    return nullptr;
+    
+    return sprite;
 }
 
 // Sprite3D* Sprite3D::create(Mesh* mesh, const std::string& texturePath)
@@ -103,17 +98,10 @@ bool Sprite3D::loadFromObj(const std::string& path)
     
     _partcount = indices.size();
     
-    
-    for (auto it = 0; it != matnames.size(); it++)
+    if (matnames.size())
     {
-        if (!matnames[it].empty())
-        {
-            auto tex = Director::getInstance()->getTextureCache()->addImage(matnames[it]);
-            if (tex) _textures.pushBack(tex);
-        }
-        
+        setTexture(matnames[0]);
     }
-    
     genGLProgramState();
     
     //add to cache
@@ -144,8 +132,8 @@ bool Sprite3D::initWithFile(const std::string &path)
     _partcount = 0;
     
     CC_SAFE_RELEASE_NULL(_mesh);
-    _programState.clear();
-    _textures.clear();
+    
+    CC_SAFE_RELEASE_NULL(_texture);
     
     //find from the cache
     Mesh* mesh = MeshCache::getInstance()->getMesh(path);
@@ -158,11 +146,8 @@ bool Sprite3D::initWithFile(const std::string &path)
         _partcount = mesh->getMeshPartCount();
         
         auto matnames = __cachedSpriteTexNames[fullPath];
-        for (auto it = 0; it != matnames.size(); it++)
-        {
-            auto tex = Director::getInstance()->getTextureCache()->addImage(matnames[it]);
-            if (tex) _textures.pushBack(tex);
-        }
+        if (matnames.size())
+            setTexture(matnames[0]);
         
         genGLProgramState();
         
@@ -183,23 +168,16 @@ bool Sprite3D::initWithFile(const std::string &path)
 
 void Sprite3D::genGLProgramState()
 {
-    _programState.clear();
-    
+    auto programstate = GLProgramState::getOrCreateWithGLProgram(getDefGLProgram(_mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_TEX_COORD)));
+    int offset = 0;
     auto attributeCount = _mesh->getMeshVertexAttribCount();
-    for (int i = 0; i < _mesh->getMeshPartCount(); i++)
-    {
-        
-        auto programstate = GLProgramState::getOrCreateWithGLProgram(getDefGLProgram(_mesh->hasVertexAttrib(i)));
-
-        _programState.pushBack(programstate);
-        
-        int offset = 0;
-        for (auto k = 0; k < attributeCount; k++) {
-            auto meshattribute = _mesh->getMeshVertexAttribute(k);
-            programstate->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib], meshattribute.size, meshattribute.type, GL_FALSE, _mesh->getVertexSizeInBytes(), (void*)offset);
-            offset += meshattribute.attribSizeBytes;
-        }
+    for (auto k = 0; k < attributeCount; k++) {
+        auto meshattribute = _mesh->getMeshVertexAttribute(k);
+        programstate->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib], meshattribute.size, meshattribute.type, GL_FALSE, _mesh->getVertexSizeInBytes(), (void*)offset);
+        offset += meshattribute.attribSizeBytes;
     }
+    
+    setGLProgramState(programstate);
 }
 
 GLProgram* Sprite3D::getDefGLProgram(bool textured)
@@ -227,10 +205,9 @@ GLProgram* Sprite3D::getDefGLProgram(bool textured)
 void Sprite3D::setTexture(const std::string& texFile)
 {
     auto tex = Director::getInstance()->getTextureCache()->addImage(texFile);
-    if (_textures.empty())
-        _textures.pushBack(tex);
-    else
-        _textures.replace(0, tex);
+    CC_SAFE_RETAIN(tex);
+    CC_SAFE_RELEASE_NULL(_texture);
+    _texture = tex;
 }
 
 void Sprite3D::setEffect(Sprite3DEffect* effect)
@@ -263,63 +240,23 @@ void Sprite3D::onDraw(const Matrix &transform, bool transformUpdated)
         for (int i = 0; i < _mesh->getMeshPartCount(); i++)
         {
             auto meshPart = _mesh->getMeshPart(i);
-            auto programstate = _programState.at(i);
+            auto programstate = getGLProgramState();
             
             
             programstate->setUniformVec4("u_color", Vector4(color.r, color.g, color.b, color.a));
-            if (_textures.at(i))
-            {
-                GL::bindTexture2D(_textures.at(i)->getName());
-            }
+            GL::bindTexture2D(_texture->getName());
             
             glBindBuffer(GL_ARRAY_BUFFER, _mesh->getVertexBuffer());
             programstate->apply(transform);
             
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshPart->getIndexBuffer());
             glDrawElements(meshPart->getPrimitiveType(), meshPart->getIndexCount(), meshPart->getIndexFormat(), 0);
+            CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, meshPart->getIndexCount());
         }
         
         if (_effect)
             _effect->drawSpriteEffect(transform);
     }
-    
-//    if (_partMaterials && _mesh)
-//    {
-//        
-//        for (int i = 0; i < _mesh->getMeshPartCount(); i++) {
-//            auto material = getMeshMaterial(i);
-//            material->getProgram()->use();
-//            material->getProgram()->setUniformsForBuiltins(transform);
-//
-//            material->setColor(Vector4(color.r, color.g, color.b, color.a));
-//            material->bind();
-//            
-//            MeshPart* meshPart = _mesh->getMeshPart(i);
-//            
-//            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshPart->getIndexBuffer());
-//            glDrawElements(meshPart->getPrimitiveType(), meshPart->getIndexCount(), meshPart->getIndexFormat(), 0);
-//            
-//            material->unbind();
-//            
-//            //effect draw
-//            if (_effect) {
-//
-//                _effect->getProgram()->use();
-//                _effect->getProgram()->setUniformsForBuiltins(transform);
-//                
-//                _effect->setColor(Vector4(color.r, color.g, color.b, color.a));
-//                _effect->bind();
-//                
-//                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshPart->getIndexBuffer());
-//                glDrawElements(meshPart->getPrimitiveType(), meshPart->getIndexCount(), meshPart->getIndexFormat(), 0);
-//                
-//                _effect->unbind();
-//            }
-//            
-//            CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, meshPart->getIndexCount());
-//        }
-//        
-//    }
     
     glDisable(GL_DEPTH_TEST);
     
