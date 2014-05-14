@@ -35,8 +35,8 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 #if CC_USE_MEM_LEAK_DETECTION
-void trackRef(Ref* ref);
-void untrackRef(Ref* ref);
+static void trackRef(Ref* ref);
+static void untrackRef(Ref* ref);
 #endif
 
 Ref::Ref()
@@ -168,15 +168,15 @@ void Ref::printLeaks()
     }
 }
 
-void trackRef(Ref* ref)
+static void trackRef(Ref* ref)
 {
-    CC_ASSERT(ref);
+    CCASSERT(ref, "Invalid parameter, ref should not be null!");
 
     // Create memory allocation record.
     __refAllocationList.push_back(ref);
 }
 
-void untrackRef(Ref* ref)
+static void untrackRef(Ref* ref)
 {
     auto iter = std::find(__refAllocationList.begin(), __refAllocationList.end(), ref);
     if (iter == __refAllocationList.end())
