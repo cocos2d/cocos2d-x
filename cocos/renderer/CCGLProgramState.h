@@ -56,7 +56,7 @@ public:
 
     void setFloat(float value);
     void setInt(int value);
-    void setVec2(const Vector2& value);
+    void setVec2(const Vec2& value);
     void setVec3(const Vector3& value);
     void setVec4(const Vector4& value);
     void setMat4(const Matrix& value);
@@ -170,7 +170,7 @@ public:
     ssize_t getUniformCount() const { return _uniforms.size(); }
     void setUniformInt(const std::string &uniformName, int value);
     void setUniformFloat(const std::string &uniformName, float value);
-    void setUniformVec2(const std::string &uniformName, const Vector2& value);
+    void setUniformVec2(const std::string &uniformName, const Vec2& value);
     void setUniformVec3(const std::string &uniformName, const Vector3& value);
     void setUniformVec4(const std::string &uniformName, const Vector4& value);
     void setUniformMat4(const std::string &uniformName, const Matrix& value);

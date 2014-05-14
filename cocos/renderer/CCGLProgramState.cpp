@@ -141,7 +141,7 @@ void UniformValue::setInt(int value)
     _useCallback = false;
 }
 
-void UniformValue::setVec2(const Vector2& value)
+void UniformValue::setVec2(const Vec2& value)
 {
     CCASSERT (_uniform->type == GL_FLOAT_VEC2, "");
 	memcpy(_value.v2Value, &value, sizeof(_value.v2Value));
@@ -413,7 +413,7 @@ void GLProgramState::setUniformInt(const std::string &uniformName, int value)
         CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
 }
 
-void GLProgramState::setUniformVec2(const std::string &uniformName, const Vector2& value)
+void GLProgramState::setUniformVec2(const std::string &uniformName, const Vec2& value)
 {
     auto v = getUniformValue(uniformName);
     if (v)
