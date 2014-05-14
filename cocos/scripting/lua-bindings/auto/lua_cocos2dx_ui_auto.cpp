@@ -7971,6 +7971,52 @@ int lua_cocos2dx_ui_Text_getTextHorizontalAlignment(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_ui_Text_setTextVerticalAlignment(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::Text* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.Text",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::Text*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_Text_setTextVerticalAlignment'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::TextVAlignment arg0;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0);
+        if(!ok)
+            return 0;
+        cobj->setTextVerticalAlignment(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setTextVerticalAlignment",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Text_setTextVerticalAlignment'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_ui_Text_getTextAreaSize(lua_State* tolua_S)
 {
     int argc = 0;
@@ -8015,7 +8061,7 @@ int lua_cocos2dx_ui_Text_getTextAreaSize(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_ui_Text_setTextVerticalAlignment(lua_State* tolua_S)
+int lua_cocos2dx_ui_Text_setTextHorizontalAlignment(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ui::Text* cobj = nullptr;
@@ -8035,7 +8081,7 @@ int lua_cocos2dx_ui_Text_setTextVerticalAlignment(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_Text_setTextVerticalAlignment'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_Text_setTextHorizontalAlignment'", nullptr);
         return 0;
     }
 #endif
@@ -8043,20 +8089,20 @@ int lua_cocos2dx_ui_Text_setTextVerticalAlignment(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::TextVAlignment arg0;
+        cocos2d::TextHAlignment arg0;
 
         ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0);
         if(!ok)
             return 0;
-        cobj->setTextVerticalAlignment(arg0);
+        cobj->setTextHorizontalAlignment(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setTextVerticalAlignment",argc, 1);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setTextHorizontalAlignment",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Text_setTextVerticalAlignment'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Text_setTextHorizontalAlignment'.",&tolua_err);
 #endif
 
     return 0;
@@ -8151,7 +8197,7 @@ int lua_cocos2dx_ui_Text_isTouchScaleChangeEnabled(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_ui_Text_setTextHorizontalAlignment(lua_State* tolua_S)
+int lua_cocos2dx_ui_Text_getType(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ui::Text* cobj = nullptr;
@@ -8171,28 +8217,26 @@ int lua_cocos2dx_ui_Text_setTextHorizontalAlignment(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_Text_setTextHorizontalAlignment'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_Text_getType'", nullptr);
         return 0;
     }
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
+    if (argc == 0) 
     {
-        cocos2d::TextHAlignment arg0;
-
-        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0);
         if(!ok)
             return 0;
-        cobj->setTextHorizontalAlignment(arg0);
-        return 0;
+        int ret = (int)cobj->getType();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setTextHorizontalAlignment",argc, 1);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getType",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Text_setTextHorizontalAlignment'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Text_getType'.",&tolua_err);
 #endif
 
     return 0;
@@ -8423,11 +8467,12 @@ int lua_register_cocos2dx_ui_Text(lua_State* tolua_S)
         tolua_function(tolua_S,"getStringValue",lua_cocos2dx_ui_Text_getStringValue);
         tolua_function(tolua_S,"setText",lua_cocos2dx_ui_Text_setText);
         tolua_function(tolua_S,"getTextHorizontalAlignment",lua_cocos2dx_ui_Text_getTextHorizontalAlignment);
-        tolua_function(tolua_S,"getTextAreaSize",lua_cocos2dx_ui_Text_getTextAreaSize);
         tolua_function(tolua_S,"setTextVerticalAlignment",lua_cocos2dx_ui_Text_setTextVerticalAlignment);
+        tolua_function(tolua_S,"getTextAreaSize",lua_cocos2dx_ui_Text_getTextAreaSize);
+        tolua_function(tolua_S,"setTextHorizontalAlignment",lua_cocos2dx_ui_Text_setTextHorizontalAlignment);
         tolua_function(tolua_S,"setFontSize",lua_cocos2dx_ui_Text_setFontSize);
         tolua_function(tolua_S,"isTouchScaleChangeEnabled",lua_cocos2dx_ui_Text_isTouchScaleChangeEnabled);
-        tolua_function(tolua_S,"setTextHorizontalAlignment",lua_cocos2dx_ui_Text_setTextHorizontalAlignment);
+        tolua_function(tolua_S,"getType",lua_cocos2dx_ui_Text_getType);
         tolua_function(tolua_S,"getFontName",lua_cocos2dx_ui_Text_getFontName);
         tolua_function(tolua_S,"setTextAreaSize",lua_cocos2dx_ui_Text_setTextAreaSize);
         tolua_function(tolua_S,"new",lua_cocos2dx_ui_Text_constructor);
