@@ -135,7 +135,7 @@ void LinearVerticalLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Ve
             if (layoutParameter)
             {
                 LinearLayoutParameter::LinearGravity childGravity = layoutParameter->getGravity();
-                Vector2 ap = child->getAnchorPoint();
+                Vec2 ap = child->getAnchorPoint();
                 Size cs = child->getSize();
                 float finalPosX = ap.x * cs.width;
                 float finalPosY = topBoundary - ((1.0f-ap.y) * cs.height);
@@ -156,7 +156,7 @@ void LinearVerticalLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Ve
                 Margin mg = layoutParameter->getMargin();
                 finalPosX += mg.left;
                 finalPosY -= mg.top;
-                child->setPosition(Vector2(finalPosX, finalPosY));
+                child->setPosition(Vec2(finalPosX, finalPosY));
                 topBoundary = child->getBottomInParent() - mg.bottom;
             }
         }
@@ -175,7 +175,7 @@ void LinearHorizontalLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, 
             if (layoutParameter)
             {
                 LinearLayoutParameter::LinearGravity childGravity = layoutParameter->getGravity();
-                Vector2 ap = child->getAnchorPoint();
+                Vec2 ap = child->getAnchorPoint();
                 Size cs = child->getSize();
                 float finalPosX = leftBoundary + (ap.x * cs.width);
                 float finalPosY = layoutSize.height - (1.0f - ap.y) * cs.height;
@@ -196,7 +196,7 @@ void LinearHorizontalLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, 
                 Margin mg = layoutParameter->getMargin();
                 finalPosX += mg.left;
                 finalPosY -= mg.top;
-                child->setPosition(Vector2(finalPosX, finalPosY));
+                child->setPosition(Vec2(finalPosX, finalPosY));
                 leftBoundary = child->getRightInParent() + mg.right;
             }
         }
@@ -231,7 +231,7 @@ void RelativeLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Vector<c
                 {
                     continue;
                 }
-                Vector2 ap = child->getAnchorPoint();
+                Vec2 ap = child->getAnchorPoint();
                 Size cs = child->getSize();
                 RelativeLayoutParameter::RelativeAlign align = layoutParameter->getAlign();
                 const std::string relativeName = layoutParameter->getRelativeToWidgetName();
@@ -549,7 +549,7 @@ void RelativeLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Vector<c
                     default:
                         break;
                 }
-                child->setPosition(Vector2(finalPosX, finalPosY));
+                child->setPosition(Vec2(finalPosX, finalPosY));
                 layoutParameter->_put = true;
                 unlayoutChildCount--;
             }
@@ -579,7 +579,7 @@ _gradientRender(nullptr),
 _cColor(Color3B::WHITE),
 _gStartColor(Color3B::WHITE),
 _gEndColor(Color3B::WHITE),
-_alongVector(Vector2(0.0f, -1.0f)),
+_alongVector(Vec2(0.0f, -1.0f)),
 _cOpacity(255),
 _backGroundImageTextureSize(Size::ZERO),
 _layoutType(Type::ABSOLUTE),
@@ -609,7 +609,7 @@ _passFocusToChild(true),
 _loopFocus(false)
 {
     onPassFocusToChild = CC_CALLBACK_2(Layout::findNearestChildWidgetIndex, this);
-    this->setAnchorPoint(Vector2::ZERO);
+    this->setAnchorPoint(Vec2::ZERO);
 }
 
 Layout::~Layout()
@@ -658,7 +658,7 @@ bool Layout::init()
         setBright(true);
         ignoreContentAdaptWithSize(false);
         setSize(Size::ZERO);
-        setAnchorPoint(Vector2::ZERO);
+        setAnchorPoint(Vec2::ZERO);
         return true;
     }
     return false;
@@ -853,7 +853,7 @@ void Layout::onBeforeVisitStencil()
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     
-    DrawPrimitives::drawSolidRect(Vector2(-1,-1), Vector2(1,1), Color4F(1, 1, 1, 1));
+    DrawPrimitives::drawSolidRect(Vec2(-1,-1), Vec2(1,1), Color4F(1, 1, 1, 1));
     
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
@@ -973,11 +973,11 @@ void Layout::setStencilClippingSize(const Size &size)
 {
     if (_clippingEnabled && _clippingType == ClippingType::STENCIL)
     {
-        Vector2 rect[4];
-        rect[0] = Vector2::ZERO;
-        rect[1] = Vector2(_size.width, 0);
-        rect[2] = Vector2(_size.width, _size.height);
-        rect[3] = Vector2(0, _size.height);
+        Vec2 rect[4];
+        rect[0] = Vec2::ZERO;
+        rect[1] = Vec2(_size.width, 0);
+        rect[2] = Vec2(_size.width, _size.height);
+        rect[3] = Vec2(0, _size.height);
         Color4F green(0, 1, 0, 1);
         _clippingStencil->clear();
         _clippingStencil->drawPolygon(rect, 4, green, 0, green);
@@ -988,7 +988,7 @@ const Rect& Layout::getClippingRect()
 {
     if (_clippingRectDirty)
     {
-        Vector2 worldPos = convertToWorldSpace(Vector2::ZERO);
+        Vec2 worldPos = convertToWorldSpace(Vec2::ZERO);
         AffineTransform t = getNodeToWorldAffineTransform();
         float scissorWidth = _size.width*t.a;
         float scissorHeight = _size.height*t.d;
@@ -1071,7 +1071,7 @@ void Layout::onSizeChanged()
     _clippingRectDirty = true;
     if (_backGroundImage)
     {
-        _backGroundImage->setPosition(Vector2(_size.width/2.0f, _size.height/2.0f));
+        _backGroundImage->setPosition(Vec2(_size.width/2.0f, _size.height/2.0f));
         if (_backGroundScale9Enabled && _backGroundImage)
         {
             static_cast<extension::Scale9Sprite*>(_backGroundImage)->setPreferredSize(_size);
@@ -1149,7 +1149,7 @@ void Layout::setBackGroundImage(const std::string& fileName,TextureResType texTy
         }
     }
     _backGroundImageTextureSize = _backGroundImage->getContentSize();
-    _backGroundImage->setPosition(Vector2(_size.width/2.0f, _size.height/2.0f));
+    _backGroundImage->setPosition(Vec2(_size.width/2.0f, _size.height/2.0f));
     updateBackGroundImageRGBA();
 }
 
@@ -1214,7 +1214,7 @@ void Layout::addBackGroundImage()
         _backGroundImage = Sprite::create();
         addProtectedChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
     }
-    _backGroundImage->setPosition(Vector2(_size.width/2.0f, _size.height/2.0f));
+    _backGroundImage->setPosition(Vec2(_size.width/2.0f, _size.height/2.0f));
 }
 
 void Layout::removeBackGroundImage()
@@ -1358,7 +1358,7 @@ GLubyte Layout::getBackGroundColorOpacity()
     return _cOpacity;
 }
 
-void Layout::setBackGroundColorVector(const Vector2 &vector)
+void Layout::setBackGroundColorVector(const Vec2 &vector)
 {
     _alongVector = vector;
     if (_gradientRender)
@@ -1367,7 +1367,7 @@ void Layout::setBackGroundColorVector(const Vector2 &vector)
     }
 }
     
-const Vector2& Layout::getBackGroundColorVector()
+const Vec2& Layout::getBackGroundColorVector()
 {
     return _alongVector;
 }
@@ -1576,20 +1576,20 @@ Size Layout::getLayoutContentSize()const
     return layoutSize;
 }
 
-Vector2 Layout::getWorldCenterPoint(Widget* widget)
+Vec2 Layout::getWorldCenterPoint(Widget* widget)
 {
     Layout *layout = dynamic_cast<Layout*>(widget);
     //FIXEDME: we don't need to calculate the content size of layout anymore
     Size widgetSize = layout ? layout->getLayoutContentSize() :  widget->getSize();
 //    CCLOG("contnet size : width = %f, height = %f", widgetSize.width, widgetSize.height);
-    return widget->convertToWorldSpace(Vector2(widgetSize.width/2, widgetSize.height/2));
+    return widget->convertToWorldSpace(Vec2(widgetSize.width/2, widgetSize.height/2));
 }
 
 float Layout::caculateNearestDistance(Widget* baseWidget)
 {
     float distance = FLT_MAX;
     
-    Vector2 widgetPosition =  this->getWorldCenterPoint(baseWidget);
+    Vec2 widgetPosition =  this->getWorldCenterPoint(baseWidget);
     
     for (Node* node : _children) {
         Layout *layout = dynamic_cast<Layout*>(node);
@@ -1601,7 +1601,7 @@ float Layout::caculateNearestDistance(Widget* baseWidget)
         {
             Widget* w = dynamic_cast<Widget*>(node);
             if (w && w->isFocusEnabled()) {
-                Vector2 wPosition = this->getWorldCenterPoint(w);
+                Vec2 wPosition = this->getWorldCenterPoint(w);
                 length = (wPosition - widgetPosition).length();
             }
             else {
@@ -1622,7 +1622,7 @@ float Layout::caculateFarestDistance(cocos2d::ui::Widget *baseWidget)
 {
     float distance = -FLT_MAX;
     
-    Vector2 widgetPosition =  this->getWorldCenterPoint(baseWidget);
+    Vec2 widgetPosition =  this->getWorldCenterPoint(baseWidget);
     
     for (Node* node : _children) {
         Layout *layout = dynamic_cast<Layout*>(node);
@@ -1634,7 +1634,7 @@ float Layout::caculateFarestDistance(cocos2d::ui::Widget *baseWidget)
         {
             Widget* w = dynamic_cast<Widget*>(node);
             if (w && w->isFocusEnabled()) {
-                Vector2 wPosition = this->getWorldCenterPoint(w);
+                Vec2 wPosition = this->getWorldCenterPoint(w);
                 length = (wPosition - widgetPosition).length();
             }
             else {
@@ -1677,13 +1677,13 @@ int Layout::findNearestChildWidgetIndex(FocusDirection direction, Widget* baseWi
     int found = 0;
     if (direction == FocusDirection::LEFT || direction == FocusDirection::RIGHT)
     {
-        Vector2 widgetPosition =  this->getWorldCenterPoint(baseWidget);
+        Vec2 widgetPosition =  this->getWorldCenterPoint(baseWidget);
         while (index <  count)
         {
             Widget *w = dynamic_cast<Widget*>(this->getChildren().at(index));
             if (w && w->isFocusEnabled())
             {
-                Vector2 wPosition = this->getWorldCenterPoint(w);
+                Vec2 wPosition = this->getWorldCenterPoint(w);
                 float length;
                 Layout *layout = dynamic_cast<Layout*>(w);
                 if (layout)
@@ -1710,13 +1710,13 @@ int Layout::findNearestChildWidgetIndex(FocusDirection direction, Widget* baseWi
     found = 0;
     distance = FLT_MAX;
     if (direction == FocusDirection::DOWN || direction == FocusDirection::UP) {
-        Vector2 widgetPosition = this->getWorldCenterPoint(baseWidget);
+        Vec2 widgetPosition = this->getWorldCenterPoint(baseWidget);
         while (index < count)
         {
             Widget *w = dynamic_cast<Widget*>(this->getChildren().at(index));
             if (w && w->isFocusEnabled())
             {
-                Vector2 wPosition = this->getWorldCenterPoint(w);
+                Vec2 wPosition = this->getWorldCenterPoint(w);
                 float length;
                 Layout *layout = dynamic_cast<Layout*>(w);
                 if (layout)
@@ -1756,13 +1756,13 @@ int Layout::findFarestChildWidgetIndex(FocusDirection direction, cocos2d::ui::Wi
     int found = 0;
     if (direction == FocusDirection::LEFT || direction == FocusDirection::RIGHT)
     {
-        Vector2 widgetPosition =  this->getWorldCenterPoint(baseWidget);
+        Vec2 widgetPosition =  this->getWorldCenterPoint(baseWidget);
         while (index <  count)
         {
             Widget *w = dynamic_cast<Widget*>(this->getChildren().at(index));
             if (w && w->isFocusEnabled())
             {
-                Vector2 wPosition = this->getWorldCenterPoint(w);
+                Vec2 wPosition = this->getWorldCenterPoint(w);
                 float length;
                 Layout *layout = dynamic_cast<Layout*>(w);
                 if (layout)
@@ -1789,13 +1789,13 @@ int Layout::findFarestChildWidgetIndex(FocusDirection direction, cocos2d::ui::Wi
     found = 0;
     distance = -FLT_MAX;
     if (direction == FocusDirection::DOWN || direction == FocusDirection::UP) {
-        Vector2 widgetPosition = this->getWorldCenterPoint(baseWidget);
+        Vec2 widgetPosition = this->getWorldCenterPoint(baseWidget);
         while (index < count)
         {
             Widget *w = dynamic_cast<Widget*>(this->getChildren().at(index));
             if (w && w->isFocusEnabled())
             {
-                Vector2 wPosition = this->getWorldCenterPoint(w);
+                Vec2 wPosition = this->getWorldCenterPoint(w);
                 float length;
                 Layout *layout = dynamic_cast<Layout*>(w);
                 if (layout)
@@ -1869,9 +1869,9 @@ void Layout::findProperSearchingFunctor(FocusDirection dir, Widget* baseWidget)
         return;
     }
     
-    Vector2 previousWidgetPosition = this->getWorldCenterPoint(baseWidget);
+    Vec2 previousWidgetPosition = this->getWorldCenterPoint(baseWidget);
     
-    Vector2 layoutPosition = this->getWorldCenterPoint(this->findFirstNonLayoutWidget());
+    Vec2 layoutPosition = this->getWorldCenterPoint(this->findFirstNonLayoutWidget());
     
     if (dir == FocusDirection::LEFT) {
         if (previousWidgetPosition.x > layoutPosition.x) {

@@ -325,8 +325,8 @@ void VideoPlayer::draw(Renderer* renderer, const Matrix &transform, bool transfo
         
         auto winSize = directorInstance->getWinSize();
         
-        auto leftBottom = convertToWorldSpace(Vector2::ZERO);
-        auto rightTop = convertToWorldSpace(Vector2(_contentSize.width,_contentSize.height));
+        auto leftBottom = convertToWorldSpace(Vec2::ZERO);
+        auto rightTop = convertToWorldSpace(Vec2(_contentSize.width,_contentSize.height));
         
         auto uiLeft = (frameSize.width / 2 + (leftBottom.x - winSize.width / 2 ) * glView->getScaleX()) / scaleFactor;
         auto uiTop = (frameSize.height /2 - (rightTop.y - winSize.height / 2) * glView->getScaleY()) / scaleFactor;
