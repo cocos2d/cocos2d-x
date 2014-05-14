@@ -69,22 +69,20 @@ public:
     /**
      * Changes the progress direction of loadingbar.
      *
-     * @see LoadingBarType  LoadingBarTypeLeft means progress left to right, LoadingBarTypeRight otherwise.
+     * @see Direction  LEFT means progress left to right, RIGHT otherwise.
      *
-     * @param LoadingBarType
+     * @param Direction
      */
-    CC_DEPRECATED_ATTRIBUTE void setDirection(Direction direction);
-    void setBarDirection(Direction direction);
+    void setDirection(Direction direction);
     
     /**
      * Gets the progress direction of loadingbar.
      *
-     * @see LoadingBarType  LoadingBarTypeLeft means progress left to right, LoadingBarTypeRight otherwise.
+     * @see Direction  LEFT means progress left to right, RIGHT otherwise.
      *
-     * @param LoadingBarType
+     * @return Direction
      */
-    CC_DEPRECATED_ATTRIBUTE int getDirection();
-    Direction getBarDirection();
+    Direction getDirection();
     
     /**
      * Load texture for loadingbar.
