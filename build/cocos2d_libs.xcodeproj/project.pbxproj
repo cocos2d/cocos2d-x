@@ -1039,6 +1039,10 @@
 		2905FA8D18CF08D100240AA3 /* UIWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2905FA1318CF08D100240AA3 /* UIWidget.cpp */; };
 		2905FA8E18CF08D100240AA3 /* UIWidget.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA1418CF08D100240AA3 /* UIWidget.h */; };
 		2905FA8F18CF08D100240AA3 /* UIWidget.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA1418CF08D100240AA3 /* UIWidget.h */; };
+		2928C2001923756F00E77353 /* CCLayoutExecutant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2928C1FE1923756F00E77353 /* CCLayoutExecutant.cpp */; };
+		2928C2011923756F00E77353 /* CCLayoutExecutant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2928C1FE1923756F00E77353 /* CCLayoutExecutant.cpp */; };
+		2928C2021923756F00E77353 /* CCLayoutExecutant.h in Headers */ = {isa = PBXBuildFile; fileRef = 2928C1FF1923756F00E77353 /* CCLayoutExecutant.h */; };
+		2928C2031923756F00E77353 /* CCLayoutExecutant.h in Headers */ = {isa = PBXBuildFile; fileRef = 2928C1FF1923756F00E77353 /* CCLayoutExecutant.h */; };
 		296CAD221915EC8000C64FBF /* CCEventFocus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 296CAD201915EC8000C64FBF /* CCEventFocus.cpp */; };
 		296CAD231915EC8000C64FBF /* CCEventFocus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 296CAD201915EC8000C64FBF /* CCEventFocus.cpp */; };
 		296CAD241915EC8000C64FBF /* CCEventFocus.h in Headers */ = {isa = PBXBuildFile; fileRef = 296CAD211915EC8000C64FBF /* CCEventFocus.h */; };
@@ -2265,6 +2269,8 @@
 		2905FA1318CF08D100240AA3 /* UIWidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIWidget.cpp; sourceTree = "<group>"; };
 		2905FA1418CF08D100240AA3 /* UIWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWidget.h; sourceTree = "<group>"; };
 		29080DEB191B82CE0066F8DF /* UIDeprecated.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIDeprecated.h; sourceTree = "<group>"; };
+		2928C1FE1923756F00E77353 /* CCLayoutExecutant.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLayoutExecutant.cpp; sourceTree = "<group>"; };
+		2928C1FF1923756F00E77353 /* CCLayoutExecutant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLayoutExecutant.h; sourceTree = "<group>"; };
 		296CAD201915EC8000C64FBF /* CCEventFocus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCEventFocus.cpp; path = ../base/CCEventFocus.cpp; sourceTree = "<group>"; };
 		296CAD211915EC8000C64FBF /* CCEventFocus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEventFocus.h; path = ../base/CCEventFocus.h; sourceTree = "<group>"; };
 		296CAD261915EC9900C64FBF /* CCEventListenerFocus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCEventListenerFocus.cpp; path = ../base/CCEventListenerFocus.cpp; sourceTree = "<group>"; };
@@ -3960,6 +3966,7 @@
 		2905F9E618CF08D000240AA3 /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				2928C2041923757900E77353 /* Layout */,
 				3EA0FB69191C841D00B170C8 /* UIVideoPlayer.h */,
 				3EA0FB6A191C841D00B170C8 /* UIVideoPlayerIOS.mm */,
 				2905F9E918CF08D000240AA3 /* CocosGUI.cpp */,
@@ -3973,10 +3980,6 @@
 				2905F9F518CF08D000240AA3 /* UIHelper.h */,
 				2905F9F618CF08D000240AA3 /* UIImageView.cpp */,
 				2905F9F718CF08D000240AA3 /* UIImageView.h */,
-				2905F9F818CF08D000240AA3 /* UILayout.cpp */,
-				2905F9F918CF08D000240AA3 /* UILayout.h */,
-				2905F9FC18CF08D000240AA3 /* UILayoutParameter.cpp */,
-				2905F9FD18CF08D000240AA3 /* UILayoutParameter.h */,
 				2905F9FE18CF08D000240AA3 /* UIListView.cpp */,
 				2905F9FF18CF08D000240AA3 /* UIListView.h */,
 				2905FA0018CF08D000240AA3 /* UILoadingBar.cpp */,
@@ -4002,16 +4005,29 @@
 				2905FA1418CF08D100240AA3 /* UIWidget.h */,
 				50E6D30C18DADB5D0051CA34 /* CCProtectedNode.cpp */,
 				50E6D30D18DADB5D0051CA34 /* CCProtectedNode.h */,
+				29080DEB191B82CE0066F8DF /* UIDeprecated.h */,
+			);
+			name = ui;
+			path = ../cocos/ui;
+			sourceTree = "<group>";
+		};
+		2928C2041923757900E77353 /* Layout */ = {
+			isa = PBXGroup;
+			children = (
 				50E6D32E18E174130051CA34 /* UIHBox.cpp */,
 				50E6D32F18E174130051CA34 /* UIHBox.h */,
 				50E6D33018E174130051CA34 /* UIRelativeBox.cpp */,
 				50E6D33118E174130051CA34 /* UIRelativeBox.h */,
 				50E6D33218E174130051CA34 /* UIVBox.cpp */,
 				50E6D33318E174130051CA34 /* UIVBox.h */,
-				29080DEB191B82CE0066F8DF /* UIDeprecated.h */,
+				2905F9F818CF08D000240AA3 /* UILayout.cpp */,
+				2905F9F918CF08D000240AA3 /* UILayout.h */,
+				2905F9FC18CF08D000240AA3 /* UILayoutParameter.cpp */,
+				2905F9FD18CF08D000240AA3 /* UILayoutParameter.h */,
+				2928C1FE1923756F00E77353 /* CCLayoutExecutant.cpp */,
+				2928C1FF1923756F00E77353 /* CCLayoutExecutant.h */,
 			);
-			name = ui;
-			path = ../cocos/ui;
+			name = Layout;
 			sourceTree = "<group>";
 		};
 		37936A361869B76800E974DD /* internal */ = {
@@ -4931,6 +4947,7 @@
 				2905FA6018CF08D100240AA3 /* UILayoutParameter.h in Headers */,
 				1ABA68B01888D700007D1BB4 /* CCFontCharMap.h in Headers */,
 				5034CA3F191D591100CE6051 /* ccShader_Position_uColor.vert in Headers */,
+				2928C2021923756F00E77353 /* CCLayoutExecutant.h in Headers */,
 				500DC8B419105D41007B91BF /* CCGroupCommand.h in Headers */,
 				500DC8D319105F7D007B91BF /* CCAffineTransform.h in Headers */,
 				46A170191807CBFC005B8026 /* CCCommon.h in Headers */,
@@ -5529,6 +5546,7 @@
 				1A5701FE180BCBAD0088DEC7 /* CCMenuItem.h in Headers */,
 				1A570205180BCBD40088DEC7 /* CCClippingNode.h in Headers */,
 				5034CA34191D591100CE6051 /* ccShader_PositionTexture_uColor.frag in Headers */,
+				2928C2031923756F00E77353 /* CCLayoutExecutant.h in Headers */,
 				1A57020B180BCBDF0088DEC7 /* CCMotionStreak.h in Headers */,
 				1A570213180BCBF40088DEC7 /* CCProgressTimer.h in Headers */,
 				B37510821823ACA100B3BA6A /* CCPhysicsJointInfo_chipmunk.h in Headers */,
@@ -6336,6 +6354,7 @@
 				1AAF536A180E3374000584C8 /* HttpClient.cpp in Sources */,
 				1AAF5372180E3374000584C8 /* SocketIO.cpp in Sources */,
 				1AAF5376180E3374000584C8 /* WebSocket.cpp in Sources */,
+				2928C2001923756F00E77353 /* CCLayoutExecutant.cpp in Sources */,
 				1A01C69818F57BE800EFE3A6 /* CCSet.cpp in Sources */,
 				1AAF584F180E40B9000584C8 /* LocalStorage.cpp in Sources */,
 				1AAF5853180E40B9000584C8 /* LocalStorageAndroid.cpp in Sources */,
@@ -6538,6 +6557,7 @@
 				296CAD291915EC9900C64FBF /* CCEventListenerFocus.cpp in Sources */,
 				1A01C69918F57BE800EFE3A6 /* CCSet.cpp in Sources */,
 				1A01C69D18F57BE800EFE3A6 /* CCString.cpp in Sources */,
+				2928C2011923756F00E77353 /* CCLayoutExecutant.cpp in Sources */,
 				2986667F18B1B246000E39CA /* CCTweenFunction.cpp in Sources */,
 				2AC795E318628746005EC8E1 /* SkeletonBounds.cpp in Sources */,
 				2AC795E418628746005EC8E1 /* Event.cpp in Sources */,
