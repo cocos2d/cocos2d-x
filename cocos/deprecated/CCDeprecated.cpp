@@ -34,7 +34,7 @@
 
 NS_CC_BEGIN
 
-const Vector2 CCPointZero = Vector2::ZERO;
+const Vec2 CCPointZero = Vec2::ZERO;
 
 /* The "zero" size -- equivalent to Size(0, 0). */
 const Size CCSizeZero = Size::ZERO;
@@ -90,67 +90,67 @@ void ccDrawFree()
     DrawPrimitives::free();
 }
 
-void ccDrawPoint( const Vector2& point )
+void ccDrawPoint( const Vec2& point )
 {
     DrawPrimitives::drawPoint(point);
 }
 
-void ccDrawPoints( const Vector2 *points, unsigned int numberOfPoints )
+void ccDrawPoints( const Vec2 *points, unsigned int numberOfPoints )
 {
     DrawPrimitives::drawPoints(points, numberOfPoints);
 }
 
-void ccDrawLine( const Vector2& origin, const Vector2& destination )
+void ccDrawLine( const Vec2& origin, const Vec2& destination )
 {
     DrawPrimitives::drawLine(origin, destination);
 }
 
-void ccDrawRect( Vector2 origin, Vector2 destination )
+void ccDrawRect( Vec2 origin, Vec2 destination )
 {
     DrawPrimitives::drawRect(origin, destination);
 }
 
-void ccDrawSolidRect( Vector2 origin, Vector2 destination, Color4F color )
+void ccDrawSolidRect( Vec2 origin, Vec2 destination, Color4F color )
 {
     DrawPrimitives::drawSolidRect(origin, destination, color);
 }
 
-void ccDrawPoly( const Vector2 *vertices, unsigned int numOfVertices, bool closePolygon )
+void ccDrawPoly( const Vec2 *vertices, unsigned int numOfVertices, bool closePolygon )
 {
     DrawPrimitives::drawPoly(vertices, numOfVertices, closePolygon);
 }
 
-void ccDrawSolidPoly( const Vector2 *poli, unsigned int numberOfPoints, Color4F color )
+void ccDrawSolidPoly( const Vec2 *poli, unsigned int numberOfPoints, Color4F color )
 {
     DrawPrimitives::drawSolidPoly(poli, numberOfPoints, color);
 }
 
-void ccDrawCircle( const Vector2& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY)
+void ccDrawCircle( const Vec2& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY)
 {
     DrawPrimitives::drawCircle(center, radius, angle, segments, drawLineToCenter, scaleX, scaleY);
 }
 
-void ccDrawCircle( const Vector2& center, float radius, float angle, unsigned int segments, bool drawLineToCenter)
+void ccDrawCircle( const Vec2& center, float radius, float angle, unsigned int segments, bool drawLineToCenter)
 {
     DrawPrimitives::drawCircle(center, radius, angle, segments, drawLineToCenter);
 }
 
-void ccDrawSolidCircle( const Vector2& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY)
+void ccDrawSolidCircle( const Vec2& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY)
 {
     DrawPrimitives::drawSolidCircle(center, radius, angle, segments, scaleX, scaleY);
 }
 
-void ccDrawSolidCircle( const Vector2& center, float radius, float angle, unsigned int segments)
+void ccDrawSolidCircle( const Vec2& center, float radius, float angle, unsigned int segments)
 {
     DrawPrimitives::drawSolidCircle(center, radius, angle, segments);
 }
 
-void ccDrawQuadBezier(const Vector2& origin, const Vector2& control, const Vector2& destination, unsigned int segments)
+void ccDrawQuadBezier(const Vec2& origin, const Vec2& control, const Vec2& destination, unsigned int segments)
 {
     DrawPrimitives::drawQuadBezier(origin, control, destination, segments);
 }
 
-void ccDrawCubicBezier(const Vector2& origin, const Vector2& control1, const Vector2& control2, const Vector2& destination, unsigned int segments)
+void ccDrawCubicBezier(const Vec2& origin, const Vec2& control1, const Vec2& control2, const Vec2& destination, unsigned int segments)
 {
     DrawPrimitives::drawCubicBezier(origin, control1, control2, destination, segments);
 }
@@ -445,59 +445,59 @@ Vector3* kmVec3Zero(Vector3* pOut)
     return pOut;
 }
 
-Vector2* kmVec2Fill(Vector2* pOut, float x, float y)
+Vec2* kmVec2Fill(Vec2* pOut, float x, float y)
 {
     pOut->set(x, y);
     return pOut;
 }
 
-float kmVec2Length(const Vector2* pIn)
+float kmVec2Length(const Vec2* pIn)
 {
     return pIn->length();
 }
 
-float kmVec2LengthSq(const Vector2* pIn)
+float kmVec2LengthSq(const Vec2* pIn)
 {
     return pIn->lengthSquared();
 }
 
-Vector2* kmVec2Normalize(Vector2* pOut, const Vector2* pIn)
+Vec2* kmVec2Normalize(Vec2* pOut, const Vec2* pIn)
 {
     *pOut = pIn->getNormalized();
     return pOut;
 }
 
-Vector2* kmVec2Lerp(Vector2* pOut, const Vector2* pV1, const Vector2* pV2, float t)
+Vec2* kmVec2Lerp(Vec2* pOut, const Vec2* pV1, const Vec2* pV2, float t)
 {
     pOut->x = pV1->x + t * ( pV2->x - pV1->x );
     pOut->y = pV1->y + t * ( pV2->y - pV1->y );
     return pOut;
 }
 
-Vector2* kmVec2Add(Vector2* pOut, const Vector2* pV1, const Vector2* pV2)
+Vec2* kmVec2Add(Vec2* pOut, const Vec2* pV1, const Vec2* pV2)
 {
-    Vector2::add(*pV1, *pV2, pOut);
+    Vec2::add(*pV1, *pV2, pOut);
     return pOut;
 }
 
-float kmVec2Dot(const Vector2* pV1, const Vector2* pV2)
+float kmVec2Dot(const Vec2* pV1, const Vec2* pV2)
 {
-    return Vector2::dot(*pV1, *pV2);
+    return Vec2::dot(*pV1, *pV2);
 }
 
-Vector2* kmVec2Subtract(Vector2* pOut, const Vector2* pV1, const Vector2* pV2)
+Vec2* kmVec2Subtract(Vec2* pOut, const Vec2* pV1, const Vec2* pV2)
 {
-    Vector2::subtract(*pV1, *pV2, pOut);
+    Vec2::subtract(*pV1, *pV2, pOut);
     return pOut;
 }
 
-Vector2* kmVec2Scale(Vector2* pOut, const Vector2* pIn, const float s)
+Vec2* kmVec2Scale(Vec2* pOut, const Vec2* pIn, const float s)
 {
     *pOut = *pIn * s;
     return pOut;
 }
 
-Vector2* kmVec2Assign(Vector2* pOut, const Vector2* pIn)
+Vec2* kmVec2Assign(Vec2* pOut, const Vec2* pIn)
 {
     *pOut = *pIn;
     return pOut;
@@ -583,11 +583,11 @@ const Vector3 KM_VEC3_NEG_X = Vector3(-1, 0, 0);
 const Vector3 KM_VEC3_POS_X = Vector3(1, 0, 0);
 const Vector3 KM_VEC3_ZERO = Vector3(0, 0, 0);
 
-const Vector2 KM_VEC2_POS_Y = Vector2(0, 1);
-const Vector2 KM_VEC2_NEG_Y = Vector2(0, -1);
-const Vector2 KM_VEC2_NEG_X = Vector2(-1, 0);
-const Vector2 KM_VEC2_POS_X = Vector2(1, 0);
-const Vector2 KM_VEC2_ZERO = Vector2(0, 0);
+const Vec2 KM_VEC2_POS_Y = Vec2(0, 1);
+const Vec2 KM_VEC2_NEG_Y = Vec2(0, -1);
+const Vec2 KM_VEC2_NEG_X = Vec2(-1, 0);
+const Vec2 KM_VEC2_POS_X = Vec2(1, 0);
+const Vec2 KM_VEC2_ZERO = Vec2(0, 0);
 
 NS_CC_END
 
