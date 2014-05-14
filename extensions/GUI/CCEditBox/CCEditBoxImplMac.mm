@@ -315,7 +315,7 @@ void EditBoxImplMac::setPlaceholderFont(const char* pFontName, int fontSize)
         return;
     }
     
-    _sysEdit.placeholderAttributes[NSFontAttributeName] = font;
+    [_sysEdit.placeholderAttributes setObject:font forKey:NSFontAttributeName];
     
     /* reload placeholder */
     const char *placeholder = [_sysEdit.textField.cell placeholderAttributedString].string.UTF8String;
@@ -332,7 +332,7 @@ void EditBoxImplMac::setFontColor(const Color3B& color)
 void EditBoxImplMac::setPlaceholderFontColor(const Color3B& color)
 {
     NSColor *nsColor = [NSColor colorWithCalibratedRed:color.r/255.f green:color.g / 255.f blue:color.b / 255.f alpha:1.0f];
-    _sysEdit.placeholderAttributes[NSForegroundColorAttributeName] = nsColor;
+    [_sysEdit.placeholderAttributes setObject:nsColor forKey:NSForegroundColorAttributeName];
     
     /* reload placeholder */
     const char *placeholder = [_sysEdit.textField.cell placeholderAttributedString].string.UTF8String;
