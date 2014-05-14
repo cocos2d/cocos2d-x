@@ -128,10 +128,6 @@
 -- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
--- @function [parent=#Widget] didNotSelectSelf 
--- @param self
-        
---------------------------------
 -- @function [parent=#Widget] setFocused 
 -- @param self
 -- @param #bool bool
