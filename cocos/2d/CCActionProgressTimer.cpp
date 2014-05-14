@@ -72,13 +72,6 @@ void ProgressTo::startWithTarget(Node *target)
 {
     ActionInterval::startWithTarget(target);
     _from = ((kProgressTimerCast)(target))->getPercentage();
-
-    // XXX: Is this correct ?
-    // Adding it to support Repeat
-    if (_from == 100)
-    {
-        _from = 0;
-    }
 }
 
 void ProgressTo::update(float time)
