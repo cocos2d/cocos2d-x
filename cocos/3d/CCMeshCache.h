@@ -9,8 +9,9 @@
 NS_CC_BEGIN
 
 class Sprite3D;
-
 class Mesh;
+class EventListenerCustom;
+class EventCustom;
 
 class MeshCache
 {
@@ -25,9 +26,9 @@ public:
     void removeMesh(const std::string& fileName);
     void removeMesh(const Mesh* mesh);
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    void listenBackToForeground(EventCustom* event);
-#endif
+// #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+//     void listenBackToForeground(EventCustom* event);
+// #endif
     
 protected:
     MeshCache();
@@ -35,9 +36,9 @@ protected:
     static MeshCache* _cacheInstance;
     Map<std::string, Mesh*> _cachedMeshes; //cached meshes
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    EventListenerCustom* _backToForegroundlistener;
-#endif
+// #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+//     EventListenerCustom* _backToForegroundlistener;
+// #endif
 };
 
 

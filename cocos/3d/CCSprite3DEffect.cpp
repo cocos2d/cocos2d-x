@@ -1,7 +1,7 @@
 
 #include "cocos2d.h"
 #include "CCSprite3DEffect.h"
-#include "CCGLProgram.h"
+#include "renderer/CCGLProgram.h"
 
 #include "CCMesh.h"
 #include "CCSprite3D.h"
