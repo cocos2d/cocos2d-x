@@ -15,45 +15,45 @@ bool VideoPlayerTest::init()
     MenuItemFont::setFontSize(16);
 
     auto fullSwitch = MenuItemFont::create("FullScreenSwitch", CC_CALLBACK_1(VideoPlayerTest::menuFullScreenCallback, this));
-    fullSwitch->setAnchorPoint(Vector2::ANCHOR_BOTTOM_LEFT);
-    fullSwitch->setPosition(Vector2(_visibleRect.origin.x + 10,_visibleRect.origin.y + 50));
+    fullSwitch->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+    fullSwitch->setPosition(Vec2(_visibleRect.origin.x + 10,_visibleRect.origin.y + 50));
 
     auto pauseItem = MenuItemFont::create("Pause", CC_CALLBACK_1(VideoPlayerTest::menuPauseCallback, this));
-    pauseItem->setAnchorPoint(Vector2::ANCHOR_BOTTOM_LEFT);
-    pauseItem->setPosition(Vector2(_visibleRect.origin.x + 10,_visibleRect.origin.y + 100));
+    pauseItem->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+    pauseItem->setPosition(Vec2(_visibleRect.origin.x + 10,_visibleRect.origin.y + 100));
 
     auto resumeItem = MenuItemFont::create("Resume", CC_CALLBACK_1(VideoPlayerTest::menuResumeCallback, this));
-    resumeItem->setAnchorPoint(Vector2::ANCHOR_BOTTOM_LEFT);
-    resumeItem->setPosition(Vector2(_visibleRect.origin.x + 10,_visibleRect.origin.y + 150));
+    resumeItem->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+    resumeItem->setPosition(Vec2(_visibleRect.origin.x + 10,_visibleRect.origin.y + 150));
 
     auto stopItem = MenuItemFont::create("Stop", CC_CALLBACK_1(VideoPlayerTest::menuStopCallback, this));
-    stopItem->setAnchorPoint(Vector2::ANCHOR_BOTTOM_LEFT);
-    stopItem->setPosition(Vector2(_visibleRect.origin.x + 10,_visibleRect.origin.y + 200));
+    stopItem->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+    stopItem->setPosition(Vec2(_visibleRect.origin.x + 10,_visibleRect.origin.y + 200));
 
     auto hintItem = MenuItemFont::create("Hint", CC_CALLBACK_1(VideoPlayerTest::menuHintCallback, this));
-    hintItem->setAnchorPoint(Vector2::ANCHOR_BOTTOM_LEFT);
-    hintItem->setPosition(Vector2(_visibleRect.origin.x + 10,_visibleRect.origin.y + 250));
+    hintItem->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+    hintItem->setPosition(Vec2(_visibleRect.origin.x + 10,_visibleRect.origin.y + 250));
 
     //-------------------------------------------------------------------------------------------------------------------
     auto resourceVideo = MenuItemFont::create("Play resource video", CC_CALLBACK_1(VideoPlayerTest::menuResourceVideoCallback, this));
-    resourceVideo->setAnchorPoint(Vector2::ANCHOR_MIDDLE_RIGHT);
-    resourceVideo->setPosition(Vector2(_visibleRect.origin.x + _visibleRect.size.width - 10,_visibleRect.origin.y + 50));
+    resourceVideo->setAnchorPoint(Vec2::ANCHOR_MIDDLE_RIGHT);
+    resourceVideo->setPosition(Vec2(_visibleRect.origin.x + _visibleRect.size.width - 10,_visibleRect.origin.y + 50));
 
     auto onlineVideo = MenuItemFont::create("Play online video", CC_CALLBACK_1(VideoPlayerTest::menuOnlineVideoCallback, this));
-    onlineVideo->setAnchorPoint(Vector2::ANCHOR_MIDDLE_RIGHT);
-    onlineVideo->setPosition(Vector2(_visibleRect.origin.x + _visibleRect.size.width - 10,_visibleRect.origin.y + 100));
+    onlineVideo->setAnchorPoint(Vec2::ANCHOR_MIDDLE_RIGHT);
+    onlineVideo->setPosition(Vec2(_visibleRect.origin.x + _visibleRect.size.width - 10,_visibleRect.origin.y + 100));
 
     auto ratioSwitch = MenuItemFont::create("KeepRatioSwitch", CC_CALLBACK_1(VideoPlayerTest::menuRatioCallback, this));
-    ratioSwitch->setAnchorPoint(Vector2::ANCHOR_MIDDLE_RIGHT);
-    ratioSwitch->setPosition(Vector2(_visibleRect.origin.x + _visibleRect.size.width - 10,_visibleRect.origin.y + 150));
+    ratioSwitch->setAnchorPoint(Vec2::ANCHOR_MIDDLE_RIGHT);
+    ratioSwitch->setPosition(Vec2(_visibleRect.origin.x + _visibleRect.size.width - 10,_visibleRect.origin.y + 150));
 
     auto menu = Menu::create(resourceVideo,onlineVideo,ratioSwitch,fullSwitch,pauseItem,resumeItem,stopItem,hintItem,nullptr);
-    menu->setPosition(Vector2::ZERO);
+    menu->setPosition(Vec2::ZERO);
     _uiLayer->addChild(menu);
 
     _videoStateLabel = Label::createWithSystemFont("IDLE","Arial",16);
-    _videoStateLabel->setAnchorPoint(Vector2::ANCHOR_MIDDLE_RIGHT);
-    _videoStateLabel->setPosition(Vector2(_visibleRect.origin.x + _visibleRect.size.width - 10,_visibleRect.origin.y + 200));
+    _videoStateLabel->setAnchorPoint(Vec2::ANCHOR_MIDDLE_RIGHT);
+    _videoStateLabel->setPosition(Vec2(_visibleRect.origin.x + _visibleRect.size.width - 10,_visibleRect.origin.y + 200));
     _uiLayer->addChild(_videoStateLabel);
     createVideo();
 
@@ -137,13 +137,13 @@ void VideoPlayerTest::menuHintCallback(Ref* sender)
 
 void VideoPlayerTest::createVideo()
 {
-    auto centerPos = Vector2(_visibleRect.origin.x + _visibleRect.size.width / 2,_visibleRect.origin.y + _visibleRect.size.height /2);
+    auto centerPos = Vec2(_visibleRect.origin.x + _visibleRect.size.width / 2,_visibleRect.origin.y + _visibleRect.size.height /2);
 
     auto widgetSize = _widget->getSize();
 
     _videoPlayer = VideoPlayer::create();
     _videoPlayer->setPosition(centerPos);
-    _videoPlayer->setAnchorPoint(Vector2::ANCHOR_MIDDLE);
+    _videoPlayer->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     _videoPlayer->setContentSize(Size(widgetSize.width * 0.4f,widgetSize.height * 0.4f));
     _uiLayer->addChild(_videoPlayer);
     
@@ -152,14 +152,14 @@ void VideoPlayerTest::createVideo()
 
 void VideoPlayerTest::createSlider()
 {
-    auto centerPos = Vector2(_visibleRect.origin.x + _visibleRect.size.width / 2,_visibleRect.origin.y + _visibleRect.size.height /2);
+    auto centerPos = Vec2(_visibleRect.origin.x + _visibleRect.size.width / 2,_visibleRect.origin.y + _visibleRect.size.height /2);
 
     auto hSlider = ui::Slider::create();
     hSlider->setTouchEnabled(true);
     hSlider->loadBarTexture("cocosui/sliderTrack.png");
     hSlider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
     hSlider->loadProgressBarTexture("cocosui/sliderProgress.png");
-    hSlider->setPosition(Vector2(centerPos.x, _visibleRect.origin.y + _visibleRect.size.height * 0.15f));
+    hSlider->setPosition(Vec2(centerPos.x, _visibleRect.origin.y + _visibleRect.size.height * 0.15f));
     hSlider->setPercent(50);
     hSlider->addEventListener(CC_CALLBACK_2(VideoPlayerTest::sliderCallback, this));
     _uiLayer->addChild(hSlider,0,1);
@@ -169,7 +169,7 @@ void VideoPlayerTest::createSlider()
     vSlider->loadBarTexture("cocosui/sliderTrack.png");
     vSlider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
     vSlider->loadProgressBarTexture("cocosui/sliderProgress.png");
-    vSlider->setPosition(Vector2(_visibleRect.origin.x + _visibleRect.size.width * 0.15f, centerPos.y));
+    vSlider->setPosition(Vec2(_visibleRect.origin.x + _visibleRect.size.width * 0.15f, centerPos.y));
     vSlider->setRotation(90);
     vSlider->setPercent(50);
     vSlider->addEventListener(CC_CALLBACK_2(VideoPlayerTest::sliderCallback, this));
@@ -186,7 +186,7 @@ void VideoPlayerTest::sliderCallback(Ref *sender, ui::Slider::EventType eventTyp
         auto newPosX = _visibleRect.origin.x + _visibleRect.size.width / 2 + hSlider->getPercent() - 50;
         auto newPosY = _visibleRect.origin.y + _visibleRect.size.height / 2 + 50 - vSlider->getPercent();
 
-        _videoPlayer->setPosition(Vector2(newPosX,newPosY));
+        _videoPlayer->setPosition(Vec2(newPosX,newPosY));
     }
 }
 

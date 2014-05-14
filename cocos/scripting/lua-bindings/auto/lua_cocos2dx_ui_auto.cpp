@@ -841,7 +841,7 @@ int lua_cocos2dx_ui_Widget_setSizePercent(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Vector2 arg0;
+        cocos2d::Vec2 arg0;
 
         ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
@@ -1069,7 +1069,7 @@ int lua_cocos2dx_ui_Widget_getTouchEndPos(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const cocos2d::Vector2& ret = cobj->getTouchEndPos();
+        const cocos2d::Vec2& ret = cobj->getTouchEndPos();
         vector2_to_luaval(tolua_S, ret);
         return 1;
     }
@@ -1111,7 +1111,7 @@ int lua_cocos2dx_ui_Widget_setPositionPercent(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Vector2 arg0;
+        cocos2d::Vec2 arg0;
 
         ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
@@ -1879,7 +1879,7 @@ int lua_cocos2dx_ui_Widget_getWorldPosition(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        cocos2d::Vector2 ret = cobj->getWorldPosition();
+        cocos2d::Vec2 ret = cobj->getWorldPosition();
         vector2_to_luaval(tolua_S, ret);
         return 1;
     }
@@ -2059,7 +2059,7 @@ int lua_cocos2dx_ui_Widget_getTouchMovePos(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const cocos2d::Vector2& ret = cobj->getTouchMovePos();
+        const cocos2d::Vec2& ret = cobj->getTouchMovePos();
         vector2_to_luaval(tolua_S, ret);
         return 1;
     }
@@ -2331,7 +2331,7 @@ int lua_cocos2dx_ui_Widget_getSizePercent(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const cocos2d::Vector2& ret = cobj->getSizePercent();
+        const cocos2d::Vec2& ret = cobj->getSizePercent();
         vector2_to_luaval(tolua_S, ret);
         return 1;
     }
@@ -2375,7 +2375,7 @@ int lua_cocos2dx_ui_Widget_getTouchStartPos(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const cocos2d::Vector2& ret = cobj->getTouchStartPos();
+        const cocos2d::Vec2& ret = cobj->getTouchStartPos();
         vector2_to_luaval(tolua_S, ret);
         return 1;
     }
@@ -2553,7 +2553,7 @@ int lua_cocos2dx_ui_Widget_clippingParentAreaContainPoint(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Vector2 arg0;
+        cocos2d::Vec2 arg0;
 
         ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
@@ -3013,7 +3013,7 @@ int lua_cocos2dx_ui_Widget_getPositionPercent(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const cocos2d::Vector2& ret = cobj->getPositionPercent();
+        const cocos2d::Vec2& ret = cobj->getPositionPercent();
         vector2_to_luaval(tolua_S, ret);
         return 1;
     }
@@ -3055,7 +3055,7 @@ int lua_cocos2dx_ui_Widget_hitTest(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Vector2 arg0;
+        cocos2d::Vec2 arg0;
 
         ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
@@ -3238,7 +3238,7 @@ int lua_cocos2dx_ui_Widget_checkChildInfo(lua_State* tolua_S)
     {
         int arg0;
         cocos2d::ui::Widget* arg1;
-        cocos2d::Vector2 arg2;
+        cocos2d::Vec2 arg2;
 
         ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0);
 
@@ -3567,7 +3567,7 @@ int lua_cocos2dx_ui_Layout_setBackGroundColorVector(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Vector2 arg0;
+        cocos2d::Vec2 arg0;
 
         ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
@@ -3799,7 +3799,7 @@ int lua_cocos2dx_ui_Layout_getBackGroundColorVector(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const cocos2d::Vector2& ret = cobj->getBackGroundColorVector();
+        const cocos2d::Vec2& ret = cobj->getBackGroundColorVector();
         vector2_to_luaval(tolua_S, ret);
         return 1;
     }
@@ -9574,7 +9574,7 @@ int lua_cocos2dx_ui_ScrollView_scrollToPercentBothDirection(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 3) 
     {
-        cocos2d::Vector2 arg0;
+        cocos2d::Vec2 arg0;
         double arg1;
         bool arg2;
 
@@ -10533,7 +10533,7 @@ int lua_cocos2dx_ui_ScrollView_jumpToPercentBothDirection(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Vector2 arg0;
+        cocos2d::Vec2 arg0;
 
         ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
@@ -14325,7 +14325,7 @@ int lua_cocos2dx_ui_TextField_hitTest(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Vector2 arg0;
+        cocos2d::Vec2 arg0;
 
         ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)
@@ -16388,7 +16388,7 @@ int lua_cocos2dx_ui_RichText_setAnchorPoint(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Vector2 arg0;
+        cocos2d::Vec2 arg0;
 
         ok &= luaval_to_vector2(tolua_S, 2, &arg0);
         if(!ok)

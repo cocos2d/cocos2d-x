@@ -49,10 +49,10 @@ public:
     void backCallback(Ref* sender);
     void toggleDebugCallback(Ref* sender);
     
-    Sprite* addGrossiniAtPosition(Vector2 p, float scale = 1.0);
-    Sprite* makeBall(Vector2 point, float radius, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
-    Sprite* makeBox(Vector2 point, Size size, int color = 0, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
-    Sprite* makeTriangle(Vector2 point, Size size, int color = 0, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
+    Sprite* addGrossiniAtPosition(Vec2 p, float scale = 1.0);
+    Sprite* makeBall(Vec2 point, float radius, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
+    Sprite* makeBox(Vec2 point, Size size, int color = 0, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
+    Sprite* makeTriangle(Vec2 point, Size size, int color = 0, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
     
     bool onTouchBegan(Touch* touch, Event* event);
     void onTouchMoved(Touch* touch, Event* event);
@@ -177,7 +177,7 @@ public:
     virtual std::string subtitle() const override;
     
     bool slice(PhysicsWorld& world, const PhysicsRayCastInfo& info, void* data);
-    void clipPoly(PhysicsShapePolygon* shape, Vector2 normal, float distance);
+    void clipPoly(PhysicsShapePolygon* shape, Vec2 normal, float distance);
     
     void onTouchEnded(Touch *touch, Event *event);
     

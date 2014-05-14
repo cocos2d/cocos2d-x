@@ -310,7 +310,7 @@ bool LabelTextFormatter::createStringSprites(Label *theLabel)
     auto strWhole = theLabel->_currentUTF16String;
     auto fontAtlas = theLabel->_fontAtlas;
     FontLetterDefinition tempDefinition;
-    Vector2 letterPosition;
+    Vec2 letterPosition;
     const auto& kernings = theLabel->_horizontalKernings;
 
     float clipTop = 0;
