@@ -38,6 +38,7 @@ THE SOFTWARE.
 #include "2d/CCLabelAtlas.h"
 #include <stack>
 #include "math/CCMath.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
@@ -403,6 +404,11 @@ public:
      *  get Frame Rate
      */
     float getFrameRate() const { return _frameRate; }
+    
+    /**
+     * Capture screen
+     */
+    void captureScreen(const std::function<void(bool, const std::string&)>& afterCaptued, const std::string& filename, const Rect& rect = Rect::ZERO);
 
 protected:
     void purgeDirector();
@@ -421,6 +427,9 @@ protected:
     //textureCache creation or release
     void initTextureCache();
     void destroyTextureCache();
+    
+    /* Captrue screen implementation */
+    void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterCaptued, const std::string& fileanme, const Rect& rect);
 
     /** Scheduler associated with this director
      @since v2.0
@@ -502,6 +511,9 @@ protected:
 
     /* Renderer for the Director */
     Renderer *_renderer;
+    
+    /* Capture screen command */
+    CustomCommand _captureScreen;
 
 #if  (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     /* Console for the director */

@@ -24,9 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #ifndef __SUPPORT_CC_UTILS_H__
 #define __SUPPORT_CC_UTILS_H__
-#include <functional>
-#include "math/CCGeometry.h"
-#include "renderer/CCCustomCommand.h"
+#include "base/ccMacros.h"
 
 /** @file ccUtils.h
 Misc free functions
@@ -48,27 +46,6 @@ Examples:
 */
 
 int ccNextPOT(int value);
-    
-class CC_DLL UtilsHelper
-{
-public:
-    static UtilsHelper* getInstance();
-    static void destroyInstance();
-    
-    /** capture screen */
-    void captureScreen(const std::function<void(bool, const std::string&)>& afterCaptued, const std::string& filename, const Rect& rect = Rect::ZERO);
-    
-protected:
-    UtilsHelper();
-    virtual ~UtilsHelper();
-    
-    void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterCaptued, const std::string& fileanme, const Rect& rect);
-
-    
-    static UtilsHelper* s_sharedHelper;
-    
-    CustomCommand _captureScreen;
-};
 
 NS_CC_END
 
