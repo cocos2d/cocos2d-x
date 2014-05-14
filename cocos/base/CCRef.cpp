@@ -28,6 +28,10 @@ THE SOFTWARE.
 #include "base/ccMacros.h"
 #include "2d/CCScriptSupport.h"
 
+#if CC_USE_MEM_LEAK_DETECTION
+#include <algorithm>    // std::find
+#endif
+
 NS_CC_BEGIN
 
 #if CC_USE_MEM_LEAK_DETECTION
@@ -43,7 +47,10 @@ Ref::Ref()
     _luaID = 0;
     _ID = ++uObjectCount;
 #endif
+    
+#if CC_USE_MEM_LEAK_DETECTION
     trackRef(this);
+#endif
 }
 
 Ref::~Ref()
@@ -181,7 +188,7 @@ void untrackRef(Ref* ref)
     __refAllocationList.erase(iter);
 }
 
-#endif
+#endif // #if CC_USE_MEM_LEAK_DETECTION
 
 
 NS_CC_END
