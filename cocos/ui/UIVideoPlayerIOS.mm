@@ -287,14 +287,14 @@ VideoPlayer::VideoPlayer()
 , _keepAspectRatioEnabled(false)
 , _isPlaying(false)
 {
-    _videiView = [[UIVideoViewWrapperIos alloc] init:this];
+    _videoView = [[UIVideoViewWrapperIos alloc] init:this];
 }
 
 VideoPlayer::~VideoPlayer()
 {
-    if(_videiView)
+    if(_videoView)
     {
-        [((UIVideoViewWrapperIos*)_videiView) dealloc];
+        [((UIVideoViewWrapperIos*)_videoView) dealloc];
     }
 }
 
@@ -302,14 +302,14 @@ void VideoPlayer::setFileName(const std::string& fileName)
 {
     _videoURL = fileName;
     _videoSource = VideoPlayer::Source::FILENAME;
-    [((UIVideoViewWrapperIos*)_videiView) setURL:(int)_videoSource :_videoURL];
+    [((UIVideoViewWrapperIos*)_videoView) setURL:(int)_videoSource :_videoURL];
 }
 
 void VideoPlayer::setURL(const std::string& videoUrl)
 {
     _videoURL = videoUrl;
     _videoSource = VideoPlayer::Source::URL;
-    [((UIVideoViewWrapperIos*)_videiView) setURL:(int)_videoSource :_videoURL];
+    [((UIVideoViewWrapperIos*)_videoView) setURL:(int)_videoSource :_videoURL];
 }
 
 void VideoPlayer::draw(Renderer* renderer, const Matrix &transform, bool transformUpdated)
@@ -331,7 +331,7 @@ void VideoPlayer::draw(Renderer* renderer, const Matrix &transform, bool transfo
         auto uiLeft = (frameSize.width / 2 + (leftBottom.x - winSize.width / 2 ) * glView->getScaleX()) / scaleFactor;
         auto uiTop = (frameSize.height /2 - (rightTop.y - winSize.height / 2) * glView->getScaleY()) / scaleFactor;
         
-        [((UIVideoViewWrapperIos*)_videiView) setFrame :uiLeft :uiTop
+        [((UIVideoViewWrapperIos*)_videoView) setFrame :uiLeft :uiTop
                                                           :(rightTop.x - leftBottom.x) * glView->getScaleX() / scaleFactor
                                                           :( (rightTop.y - leftBottom.y) * glView->getScaleY()/scaleFactor)];
     }
@@ -345,12 +345,12 @@ void VideoPlayer::draw(Renderer* renderer, const Matrix &transform, bool transfo
 
 bool VideoPlayer::isFullScreenEnabled()
 {
-    return [((UIVideoViewWrapperIos*)_videiView) isFullScreenEnabled];
+    return [((UIVideoViewWrapperIos*)_videoView) isFullScreenEnabled];
 }
 
 void VideoPlayer::setFullScreenEnabled(bool enabled)
 {
-    [((UIVideoViewWrapperIos*)_videiView) setFullScreenEnabled:enabled];
+    [((UIVideoViewWrapperIos*)_videoView) setFullScreenEnabled:enabled];
 }
 
 void VideoPlayer::setKeepAspectRatioEnabled(bool enable)
@@ -358,7 +358,7 @@ void VideoPlayer::setKeepAspectRatioEnabled(bool enable)
     if (_keepAspectRatioEnabled != enable)
     {
         _keepAspectRatioEnabled = enable;
-        [((UIVideoViewWrapperIos*)_videiView) setKeepRatioEnabled:enable];
+        [((UIVideoViewWrapperIos*)_videoView) setKeepRatioEnabled:enable];
     }
 }
 
@@ -391,7 +391,7 @@ void VideoPlayer::play()
 {
     if (! _videoURL.empty())
     {
-        [((UIVideoViewWrapperIos*)_videiView) play];
+        [((UIVideoViewWrapperIos*)_videoView) play];
     }
 }
 
@@ -399,7 +399,7 @@ void VideoPlayer::pause()
 {
     if (! _videoURL.empty())
     {
-        [((UIVideoViewWrapperIos*)_videiView) pause];
+        [((UIVideoViewWrapperIos*)_videoView) pause];
     }
 }
 
@@ -407,7 +407,7 @@ void VideoPlayer::resume()
 {
     if (! _videoURL.empty())
     {
-        [((UIVideoViewWrapperIos*)_videiView) resume];
+        [((UIVideoViewWrapperIos*)_videoView) resume];
     }
 }
 
@@ -415,7 +415,7 @@ void VideoPlayer::stop()
 {
     if (! _videoURL.empty())
     {
-        [((UIVideoViewWrapperIos*)_videiView) stop];
+        [((UIVideoViewWrapperIos*)_videoView) stop];
     }
 }
 
@@ -423,7 +423,7 @@ void VideoPlayer::seekTo(float sec)
 {
     if (! _videoURL.empty())
     {
-        [((UIVideoViewWrapperIos*)_videiView) seekTo:sec];
+        [((UIVideoViewWrapperIos*)_videoView) seekTo:sec];
     }
 }
 
@@ -438,7 +438,7 @@ void VideoPlayer::setVisible(bool visible)
     
     if (! _videoURL.empty())
     {
-        [((UIVideoViewWrapperIos*)_videiView) setVisible:visible];
+        [((UIVideoViewWrapperIos*)_videoView) setVisible:visible];
     }
 }
 

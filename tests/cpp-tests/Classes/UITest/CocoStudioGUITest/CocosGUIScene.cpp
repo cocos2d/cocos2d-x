@@ -16,8 +16,22 @@ static struct
 }
 g_guisTests[] =
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     {
-        "gui focus test",
+        "VideoPlayerTest",
+        [](Ref* sender)
+        {
+            UISceneManager* pManager = UISceneManager::sharedUISceneManager();
+            pManager->setCurrentUISceneId(kUIVideoPlayerTest);
+            pManager->setMinUISceneId(kUIVideoPlayerTest);
+            pManager->setMaxUISceneId(kUIVideoPlayerTest);
+            Scene* pScene = pManager->currentUIScene();
+            Director::getInstance()->replaceScene(pScene);
+        }
+    },
+#endif
+    {
+        "focus test",
         [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
@@ -30,7 +44,7 @@ g_guisTests[] =
     },
 	{
         
-        "gui ButtonTest",
+        "ButtonTest",
         [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
@@ -42,7 +56,7 @@ g_guisTests[] =
         }
 	},
     {
-        "gui CheckBoxTest",
+        "CheckBoxTest",
         [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
@@ -54,7 +68,7 @@ g_guisTests[] =
         }
 	},
 	{
-        "gui SliderTest",
+        "SliderTest",
         [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
@@ -67,7 +81,7 @@ g_guisTests[] =
 	},
     /*
 	{
-        "gui PotentiometerTest",
+        "PotentiometerTest",
         [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
@@ -81,7 +95,7 @@ g_guisTests[] =
      */
     /*
     {
-        "gui SwitchTest",
+        "SwitchTest",
         [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
@@ -94,7 +108,7 @@ g_guisTests[] =
 	},
      */
     {
-        "gui ImageViewTest",
+        "ImageViewTest",
         [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
@@ -106,7 +120,7 @@ g_guisTests[] =
         }
 	},
     {
-        "gui LoadingBarTest",
+        "LoadingBarTest",
         [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
@@ -119,7 +133,7 @@ g_guisTests[] =
 	},
     /*
     {
-        "gui ProgressTimerTest",
+        "ProgressTimerTest",
         [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
@@ -132,7 +146,7 @@ g_guisTests[] =
 	},
      */
     {
-        "gui TextAtalsTest",
+        "TextAtalsTest",
         [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
@@ -144,7 +158,7 @@ g_guisTests[] =
         }
 	},
     {
-        "gui TextTest",
+        "TextTest",
         [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
@@ -156,7 +170,7 @@ g_guisTests[] =
         }
 	},
     {
-        "gui TextBMFontTest",
+        "TextBMFontTest",
         [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
@@ -168,7 +182,7 @@ g_guisTests[] =
         }
 	},
     {
-        "gui TextFieldTest",
+        "TextFieldTest",
         [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
@@ -180,7 +194,7 @@ g_guisTests[] =
         }
 	},
     {
-        "gui LayoutTest",
+        "LayoutTest",
         [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
@@ -192,7 +206,7 @@ g_guisTests[] =
         }
 	},
     {
-        "gui ScrollViewTest",
+        "ScrollViewTest",
         [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
@@ -204,7 +218,7 @@ g_guisTests[] =
         }
 	},
     {
-        "gui PageViewTest",
+        "PageViewTest",
         [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
@@ -216,7 +230,7 @@ g_guisTests[] =
         }
 	},
     {
-        "gui ListViewTest",
+        "ListViewTest",
         [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
@@ -229,7 +243,7 @@ g_guisTests[] =
 	},
     /*
     {
-        "gui GridViewTest",
+        "GridViewTest",
         [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
@@ -243,7 +257,7 @@ g_guisTests[] =
      */
     /*
     {
-        "gui PickerViewTest",
+        "PickerViewTest",
         [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
@@ -256,7 +270,7 @@ g_guisTests[] =
 	},
      */
     {
-        "gui WidgetAddNodeTest",
+        "WidgetAddNodeTest",
         [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
@@ -268,7 +282,7 @@ g_guisTests[] =
         }
 	},
     {
-        "gui RichTextTest",
+        "RichTextTest",
         [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
@@ -279,20 +293,7 @@ g_guisTests[] =
             Director::getInstance()->replaceScene(pScene);
         }
 	},
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    {
-        "gui VideoPlayerTest",
-            [](Ref* sender)
-        {
-            UISceneManager* pManager = UISceneManager::sharedUISceneManager();
-            pManager->setCurrentUISceneId(kUIVideoPlayerTest);
-            pManager->setMinUISceneId(kUIVideoPlayerTest);
-            pManager->setMaxUISceneId(kUIVideoPlayerTest);
-            Scene* pScene = pManager->currentUIScene();
-            Director::getInstance()->replaceScene(pScene);
-        }
-    }
-#endif
+
 };
 
 static const int g_maxTests = sizeof(g_guisTests) / sizeof(g_guisTests[0]);
