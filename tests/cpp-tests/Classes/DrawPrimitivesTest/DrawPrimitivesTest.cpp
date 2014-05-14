@@ -165,7 +165,7 @@ void DrawPrimitivesTest::onDraw(const Matrix &transform, bool transformUpdated)
     CHECK_GL_ERROR_DEBUG();
     
     // draw 4 small points
-    Vector2 points[] = { Vector2(60,60), Vector2(70,70), Vector2(60,70), Vector2(70,60) };
+    Vec2 points[] = { Vec2(60,60), Vec2(70,70), Vec2(60,70), Vec2(70,60) };
     DrawPrimitives::setPointSize(4);
     DrawPrimitives::setDrawColor4B(0,255,255,255);
     DrawPrimitives::drawPoints( points, 4);
@@ -189,28 +189,28 @@ void DrawPrimitivesTest::onDraw(const Matrix &transform, bool transformUpdated)
     // draw a pink solid circle with 50 segments
     glLineWidth(2);
     DrawPrimitives::setDrawColor4B(255, 0, 255, 255);
-    DrawPrimitives::drawSolidCircle( VisibleRect::center() + Vector2(140,0), 40, CC_DEGREES_TO_RADIANS(90), 50, 1.0f, 1.0f);
+    DrawPrimitives::drawSolidCircle( VisibleRect::center() + Vec2(140,0), 40, CC_DEGREES_TO_RADIANS(90), 50, 1.0f, 1.0f);
     
     CHECK_GL_ERROR_DEBUG();
     
     // open yellow poly
     DrawPrimitives::setDrawColor4B(255, 255, 0, 255);
     glLineWidth(10);
-    Vector2 vertices[] = { Vector2(0,0), Vector2(50,50), Vector2(100,50), Vector2(100,100), Vector2(50,100) };
+    Vec2 vertices[] = { Vec2(0,0), Vec2(50,50), Vec2(100,50), Vec2(100,100), Vec2(50,100) };
     DrawPrimitives::drawPoly( vertices, 5, false);
     
     CHECK_GL_ERROR_DEBUG();
     
     // filled poly
     glLineWidth(1);
-    Vector2 filledVertices[] = { Vector2(0,120), Vector2(50,120), Vector2(50,170), Vector2(25,200), Vector2(0,170) };
+    Vec2 filledVertices[] = { Vec2(0,120), Vec2(50,120), Vec2(50,170), Vec2(25,200), Vec2(0,170) };
     DrawPrimitives::drawSolidPoly(filledVertices, 5, Color4F(0.5f, 0.5f, 1, 1 ) );
     
     
     // closed purble poly
     DrawPrimitives::setDrawColor4B(255, 0, 255, 255);
     glLineWidth(2);
-    Vector2 vertices2[] = { Vector2(30,130), Vector2(30,230), Vector2(50,200) };
+    Vec2 vertices2[] = { Vec2(30,130), Vec2(30,230), Vec2(50,200) };
     DrawPrimitives::drawPoly( vertices2, 3, true);
     
     CHECK_GL_ERROR_DEBUG();
@@ -221,12 +221,12 @@ void DrawPrimitivesTest::onDraw(const Matrix &transform, bool transformUpdated)
     CHECK_GL_ERROR_DEBUG();
     
     // draw cubic bezier path
-    DrawPrimitives::drawCubicBezier(VisibleRect::center(), Vector2(VisibleRect::center().x+30,VisibleRect::center().y+50), Vector2(VisibleRect::center().x+60,VisibleRect::center().y-50),VisibleRect::right(),100);
+    DrawPrimitives::drawCubicBezier(VisibleRect::center(), Vec2(VisibleRect::center().x+30,VisibleRect::center().y+50), Vec2(VisibleRect::center().x+60,VisibleRect::center().y-50),VisibleRect::right(),100);
     
     CHECK_GL_ERROR_DEBUG();
     
     //draw a solid polygon
-    Vector2 vertices3[] = {Vector2(60,160), Vector2(70,190), Vector2(100,190), Vector2(90,160)};
+    Vec2 vertices3[] = {Vec2(60,160), Vec2(70,190), Vec2(100,190), Vec2(90,160)};
     DrawPrimitives::drawSolidPoly( vertices3, 4, Color4F(1,1,0,1) );
     
     // restore original values
@@ -261,11 +261,11 @@ DrawNodeTest::DrawNodeTest()
     // Draw 10 circles
     for( int i=0; i < 10; i++)
     {
-        draw->drawDot(Vector2(s.width/2, s.height/2), 10*(10-i), Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
+        draw->drawDot(Vec2(s.width/2, s.height/2), 10*(10-i), Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
     }
     
     // Draw polygons
-    Vector2 points[] = { Vector2(s.height/4,0), Vector2(s.width,s.height/5), Vector2(s.width/3*2,s.height) };
+    Vec2 points[] = { Vec2(s.height/4,0), Vec2(s.width,s.height/5), Vec2(s.width/3*2,s.height) };
     draw->drawPolygon(points, sizeof(points)/sizeof(points[0]), Color4F(1,0,0,0.5), 4, Color4F(0,0,1,1));
     
     // star poly (triggers buggs)
@@ -273,9 +273,9 @@ DrawNodeTest::DrawNodeTest()
         const float o=80;
         const float w=20;
         const float h=50;
-        Vector2 star[] = {
-            Vector2(o+w,o-h), Vector2(o+w*2, o),                        // lower spike
-            Vector2(o + w*2 + h, o+w ), Vector2(o + w*2, o+w*2),        // right spike
+        Vec2 star[] = {
+            Vec2(o+w,o-h), Vec2(o+w*2, o),                        // lower spike
+            Vec2(o + w*2 + h, o+w ), Vec2(o + w*2, o+w*2),        // right spike
             //              {o +w, o+w*2+h}, {o,o+w*2},                 // top spike
             //              {o -h, o+w}, {o,o},                         // left spike
         };
@@ -288,11 +288,11 @@ DrawNodeTest::DrawNodeTest()
         const float o=180;
         const float w=20;
         const float h=50;
-        Vector2 star[] = {
-            Vector2(o,o), Vector2(o+w,o-h), Vector2(o+w*2, o),        // lower spike
-            Vector2(o + w*2 + h, o+w ), Vector2(o + w*2, o+w*2),    // right spike
-            Vector2(o +w, o+w*2+h), Vector2(o,o+w*2),               // top spike
-            Vector2(o -h, o+w),                                     // left spike
+        Vec2 star[] = {
+            Vec2(o,o), Vec2(o+w,o-h), Vec2(o+w*2, o),        // lower spike
+            Vec2(o + w*2 + h, o+w ), Vec2(o + w*2, o+w*2),    // right spike
+            Vec2(o +w, o+w*2+h), Vec2(o,o+w*2),               // top spike
+            Vec2(o -h, o+w),                                     // left spike
         };
         
         draw->drawPolygon(star, sizeof(star)/sizeof(star[0]), Color4F(1,0,0,0.5), 1, Color4F(0,0,1,1));
@@ -300,17 +300,17 @@ DrawNodeTest::DrawNodeTest()
     
     
     // Draw segment
-    draw->drawSegment(Vector2(20,s.height), Vector2(20,s.height/2), 10, Color4F(0, 1, 0, 1));
+    draw->drawSegment(Vec2(20,s.height), Vec2(20,s.height/2), 10, Color4F(0, 1, 0, 1));
 
-    draw->drawSegment(Vector2(10,s.height/2), Vector2(s.width/2, s.height/2), 40, Color4F(1, 0, 1, 0.5));
+    draw->drawSegment(Vec2(10,s.height/2), Vec2(s.width/2, s.height/2), 40, Color4F(1, 0, 1, 0.5));
 
 	// Draw triangle
-    draw->drawTriangle(Vector2(10, 10), Vector2(70, 30), Vector2(100, 140), Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5));
+    draw->drawTriangle(Vec2(10, 10), Vec2(70, 30), Vec2(100, 140), Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5));
 	
 	// Draw some beziers
-    draw->drawQuadraticBezier(Vector2(s.width - 150, s.height - 150), Vector2(s.width - 70, s.height - 10), Vector2(s.width - 10, s.height - 10), 10, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5));
+    draw->drawQuadraticBezier(Vec2(s.width - 150, s.height - 150), Vec2(s.width - 70, s.height - 10), Vec2(s.width - 10, s.height - 10), 10, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5));
 
-    draw->drawCubicBezier(Vector2(s.width - 250, 40), Vector2(s.width - 70, 100), Vector2(s.width - 30, 250), Vector2(s.width - 10, s.height - 50), 10, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5));
+    draw->drawCubicBezier(Vec2(s.width - 250, 40), Vec2(s.width - 70, 100), Vec2(s.width - 30, 250), Vec2(s.width - 10, s.height - 50), 10, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5));
 }
 
 string DrawNodeTest::title() const

@@ -89,7 +89,7 @@ void PerformanceCallbackScene::onEnter()
     // Title
     auto label = Label::createWithTTF(title().c_str(), "fonts/arial.ttf", 32);
     addChild(label, 1);
-    label->setPosition(Vector2(s.width/2, s.height-50));
+    label->setPosition(Vec2(s.width/2, s.height-50));
     
     // Subtitle
     std::string strSubTitle = subtitle();
@@ -97,7 +97,7 @@ void PerformanceCallbackScene::onEnter()
     {
         auto l = Label::createWithTTF(strSubTitle.c_str(), "fonts/Thonburi.ttf", 16);
         addChild(l, 1);
-        l->setPosition(Vector2(s.width/2, s.height-80));
+        l->setPosition(Vec2(s.width/2, s.height-80));
     }
     
     getScheduler()->schedule(schedule_selector(PerformanceCallbackScene::onUpdate), this, 0.0f, false);
