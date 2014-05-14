@@ -10,7 +10,7 @@ class ShaderTestDemo2 : public BaseTest
 {
 public:
     ShaderTestDemo2(void);
-    virtual std::string title() const { return "Shader Sprite!";}
+    virtual std::string title() const { return "Effects on Sprites";}
     void restartCallback(Ref* sender);
     void nextCallback(Ref* sender);
     void backCallback(Ref* sender);
@@ -21,33 +21,6 @@ class ShaderTestScene2 : public TestScene
 public:
     CREATE_FUNC(ShaderTestScene2);
     virtual void runThisTest();
-};
-
-class BloomSpriteTest : public ShaderTestDemo2
-{
-public:
-    CREATE_FUNC(BloomSpriteTest);
-
-    BloomSpriteTest();
-    virtual std::string subtitle() const {return "BloomSpriteTest";}
-};
-
-class LensFlareSpriteTest : public ShaderTestDemo2
-{
-public:
-    CREATE_FUNC(LensFlareSpriteTest);
-
-    LensFlareSpriteTest();
-    virtual std::string subtitle() const {return "LensFlareSpriteTest";}
-};
-
-class CelShadingSpriteTest : public ShaderTestDemo2
-{
-public:
-    CREATE_FUNC(CelShadingSpriteTest);
-
-    CelShadingSpriteTest();
-    virtual std::string subtitle() const {return "CelShadingSpriteTest";}
 };
 
 
@@ -75,7 +48,7 @@ class EffectSpriteTest : public ShaderTestDemo2
 public:
     CREATE_FUNC(EffectSpriteTest);
     EffectSpriteTest();
-    virtual std::string subtitle() const {return "Cycle different effects on the sprite";}
+    virtual std::string subtitle() const {return "Different effects on Sprite";}
 
 protected:
     ssize_t _vectorIndex;

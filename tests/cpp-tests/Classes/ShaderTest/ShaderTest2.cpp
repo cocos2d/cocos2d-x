@@ -33,10 +33,6 @@ namespace ShaderTest2
     static std::function<Layer*()> createFunctions[] =
     {
         CL(EffectSpriteTest),
-
-        CL(BloomSpriteTest),
-        CL(CelShadingSpriteTest),
-        CL(LensFlareSpriteTest),
     };
     
     static unsigned int TEST_CASE_COUNT = sizeof(ShaderTest2::createFunctions) / sizeof(ShaderTest2::createFunctions[0]);
@@ -108,21 +104,6 @@ void ShaderTestScene2::runThisTest()
     addChild(layer);
     Director::getInstance()->replaceScene(this);
 }
-
-template <class spriteType>
-class ShaderSpriteCreator
-{
-public:
-    static spriteType* createSprite(const std::string& filename)
-    {
-        spriteType* ret = spriteType::create();
-        ret->setTexture(filename);
-        ret->initShader();
-        ret->setBackgroundNotification();
-        return ret;
-    }
-};
-
 
 //
 // EffectSprite
@@ -287,7 +268,7 @@ protected:
         return true;
     }
 
-    void setTarget(EffectSprite* sprite) override
+    virtual void setTarget(EffectSprite* sprite) override
     {
         auto s = sprite->getTexture()->getContentSizeInPixels();
         getGLProgramState()->setUniformVec2("resolution", Vec2(s.width, s.height));
@@ -306,7 +287,7 @@ protected:
         return true;
     }
 
-    void setTarget(EffectSprite* sprite) override
+    virtual void setTarget(EffectSprite* sprite) override
     {
         auto s = sprite->getTexture()->getContentSizeInPixels();
         getGLProgramState()->setUniformVec2("resolution", Vec2(s.width, s.height));
@@ -326,185 +307,80 @@ protected:
     }
 };
 
-//
-// ShaderSprite
-//
-class ShaderSprite : public Sprite
+// Sepia
+class EffectSepia : public Effect
 {
 public:
-    ShaderSprite();
-    ~ShaderSprite();
+    CREATE_FUNC(EffectSepia);
 
-    virtual void initShader();
-    void setBackgroundNotification();
-    void listenBackToForeground(Ref *obj);
-    
 protected:
-    virtual void setCustomUniforms() = 0;
-
-    std::string _fragSourceFile;
-    std::string _vertSourceFile;
+    bool init() {
+        initGLProgramState("Shaders/example_sepia.fsh");
+        return true;
+    }
 };
 
-ShaderSprite::ShaderSprite()
-:_vertSourceFile("")
+// bloom
+class EffectBloom : public Effect
 {
-}
+public:
+    CREATE_FUNC(EffectBloom);
 
-ShaderSprite::~ShaderSprite()
-{
-}
-
-void ShaderSprite::setBackgroundNotification()
-{
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
-            this->setGLProgramState(nullptr);
-            this->initShader();
-        });
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-#endif
-}
-
-void ShaderSprite::initShader()
-{
-    auto fileUtiles = FileUtils::getInstance();
-    auto fragmentFilePath = fileUtiles->fullPathForFilename(_fragSourceFile);
-    auto fragSource = fileUtiles->getStringFromFile(fragmentFilePath);
-    std::string vertSource;
-    if (_vertSourceFile.empty()) {
-        vertSource = ccPositionTextureColor_noMVP_vert;
-    }else{
-        std::string vertexFilePath = fileUtiles->fullPathForFilename(_vertSourceFile);
-        vertSource = fileUtiles->getStringFromFile(vertexFilePath);
+protected:
+    bool init() {
+        initGLProgramState("Shaders/example_bloom.fsh");
+        return true;
     }
 
-    auto glprogram = GLProgram::createWithByteArrays(vertSource.c_str(), fragSource.c_str());
-    auto glprogramState = GLProgramState::getOrCreateWithGLProgram(glprogram);
-    this->setGLProgramState(glprogramState);
-
-    setCustomUniforms();
-}
-
-class BloomSprite : public ShaderSprite, public ShaderSpriteCreator<BloomSprite>
-{
-public:
-    CREATE_FUNC(BloomSprite);
-    BloomSprite();
-    
-protected:
-    virtual void setCustomUniforms() override;
-
-    GLfloat _resolution[2];
-};
-
-BloomSprite::BloomSprite()
-{
-    _fragSourceFile = "Shaders/example_bloom.fsh";
-}
-
-void BloomSprite::setCustomUniforms()
-{
-}
-
-class CelShadingSprite : public ShaderSprite, public ShaderSpriteCreator<CelShadingSprite>
-{
-public:
-    CREATE_FUNC(CelShadingSprite);
-    CelShadingSprite();
-    
-protected:
-    virtual void setCustomUniforms() override;
-
-    GLfloat _resolution[2];
-};
-
-CelShadingSprite::CelShadingSprite()
-{
-    _fragSourceFile = "Shaders/example_celShading.fsh";
-}
-
-void CelShadingSprite::setCustomUniforms()
-{
-    auto programState = getGLProgramState();
-
-    _resolution[0] = getContentSize().width;
-    _resolution[1] = getContentSize().height;
-
-    programState->setUniformVec2("resolution", Vec2(_resolution[0], _resolution[1]));
-}
-
-class LensFlareSprite : public ShaderSprite, public ShaderSpriteCreator<LensFlareSprite>
-{
-public:
-    CREATE_FUNC(LensFlareSprite);
-    LensFlareSprite();
-
-protected:
-    virtual void setCustomUniforms() override;
-
-    GLfloat _resolution[2];
-    GLfloat _textureResolution[2];
-};
-
-LensFlareSprite::LensFlareSprite()
-{
-    _fragSourceFile = "Shaders/example_lensFlare.fsh";
-}
-
-void LensFlareSprite::setCustomUniforms()
-{
-    auto programState = getGLProgramState();
-
-    _textureResolution[0] = getTexture()->getContentSizeInPixels().width;
-    _textureResolution[1] = getTexture()->getContentSizeInPixels().height;
-    _resolution[0] = getContentSize().width;
-    _resolution[1] = getContentSize().height;
-
-    programState->setUniformVec2("resolution", Vec2(_resolution[0], _resolution[1]));
-    programState->setUniformVec2("textureResolution", Vec2(_textureResolution[0], _textureResolution[1]));
-}
-
-BloomSpriteTest::BloomSpriteTest()
-{
-    if (ShaderTestDemo2::init())
+    virtual void setTarget(EffectSprite* sprite) override
     {
-        auto s = Director::getInstance()->getWinSize();
-        BloomSprite* sprite = BloomSprite::createSprite("Images/stone.png");
-        sprite->setPosition(Vec2(s.width * 0.75, s.height/2));
-        auto sprite2 = Sprite::create("Images/stone.png");
-        sprite2->setPosition(Vec2(s.width * 0.25, s.height/2));
-        addChild(sprite);
-        addChild(sprite2);
+        auto s = sprite->getTexture()->getContentSizeInPixels();
+        getGLProgramState()->setUniformVec2("resolution", Vec2(s.width, s.height));
     }
-}
+};
 
-CelShadingSpriteTest::CelShadingSpriteTest()
+// cel shading
+class EffectCelShading : public Effect
 {
-    if (ShaderTestDemo2::init())
-    {
-        auto s = Director::getInstance()->getWinSize();
-        CelShadingSprite* sprite = CelShadingSprite::createSprite("Images/stone.png");
-        sprite->setPosition(Vec2(s.width * 0.75, s.height/2));
-        auto sprite2 = Sprite::create("Images/stone.png");
-        sprite2->setPosition(Vec2(s.width * 0.25, s.height/2));
-        addChild(sprite);
-        addChild(sprite2);
-    }
-}
+public:
+    CREATE_FUNC(EffectCelShading);
 
-LensFlareSpriteTest::LensFlareSpriteTest()
-{
-    if (ShaderTestDemo2::init())
-    {
-        auto s = Director::getInstance()->getWinSize();
-        LensFlareSprite* sprite = LensFlareSprite::createSprite("Images/noise.png");
-        Rect rect = Rect::ZERO;
-        rect.size = Size(480,320);
-        sprite->setPosition(Vec2(s.width * 0.5, s.height/2));
-        addChild(sprite);
+protected:
+    bool init() {
+        initGLProgramState("Shaders/example_celShading.fsh");
+        return true;
     }
-}
+
+    virtual void setTarget(EffectSprite* sprite) override
+    {
+        auto s = sprite->getTexture()->getContentSizeInPixels();
+        getGLProgramState()->setUniformVec2("resolution", Vec2(s.width, s.height));
+    }
+};
+
+// Lens Flare
+class EffectLensFlare : public Effect
+{
+public:
+    CREATE_FUNC(EffectLensFlare);
+
+protected:
+    bool init() {
+        initGLProgramState("Shaders/example_lensFlare.fsh");
+        return true;
+    }
+
+    virtual void setTarget(EffectSprite* sprite) override
+    {
+        auto s = sprite->getTexture()->getContentSizeInPixels();
+        getGLProgramState()->setUniformVec2("textureResolution", Vec2(s.width, s.height));
+
+        s = Director::getInstance()->getWinSize();
+        getGLProgramState()->setUniformVec2("resolution", Vec2(s.width, s.height));
+
+    }
+};
+
 
 EffectSpriteTest::EffectSpriteTest()
 {
@@ -512,18 +388,27 @@ EffectSpriteTest::EffectSpriteTest()
 
         auto s = Director::getInstance()->getWinSize();
 
-        auto item = MenuItemImage::create("Images/r1.png", "Images/r2.png",
+        auto itemPrev = MenuItemImage::create("Images/b1.png", "Images/b2.png",
+                                          [&](Ref *sender) {
+                                              _vectorIndex--;
+                                              if(_vectorIndex<0)
+                                                  _vectorIndex = _effects.size()-1;
+                                              _sprite->setEffect(_effects.at(_vectorIndex));
+                                          });
+
+        auto itemNext = MenuItemImage::create("Images/f1.png", "Images/f2.png",
                                           [&](Ref *sender) {
                                               _vectorIndex++;
                                               if(_vectorIndex>=_effects.size())
                                                   _vectorIndex = 0;
                                               _sprite->setEffect(_effects.at(_vectorIndex));
                                           });
-        item->setPosition(Vec2(40,40));
-        item->setScale(0.5);
 
-        auto menu = Menu::create(item, NULL);
-        menu->setPosition(Vec2(0,0));
+        auto menu = Menu::create(itemPrev, itemNext, NULL);
+        menu->alignItemsHorizontally();
+        menu->setScale(0.5);
+        menu->setAnchorPoint(Vec2(0,0));
+        menu->setPosition(Vec2(s.width/2,70));
         addChild(menu);
 
         _sprite = EffectSprite::create("Images/grossini.png");
@@ -544,6 +429,10 @@ EffectSpriteTest::EffectSpriteTest()
         _effects.pushBack(EffectNoise::create());
         _effects.pushBack(EffectEdgeDetect::create());
         _effects.pushBack(EffectGreyScale::create());
+        _effects.pushBack(EffectSepia::create());
+        _effects.pushBack(EffectBloom::create());
+        _effects.pushBack(EffectCelShading::create());
+        _effects.pushBack(EffectLensFlare::create());
 
         _vectorIndex = 0;
         _sprite->setEffect( _effects.at(_vectorIndex) );
