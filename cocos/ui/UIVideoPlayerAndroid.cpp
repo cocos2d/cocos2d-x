@@ -156,7 +156,7 @@ static std::unordered_map<int, VideoPlayer*> s_allVideoPlayers;
 
 VideoPlayer::VideoPlayer()
 : _videoPlayerIndex(-1)
-, _callback(nullptr)
+, _eventCallback(nullptr)
 , _fullScreenEnabled(false)
 , _fullScreenDirty(false)
 , _keepAspectRatioEnabled(false)
@@ -181,18 +181,18 @@ VideoPlayer::~VideoPlayer()
     removeVideoWidgetJNI(_videoPlayerIndex);
 }
 
-void VideoPlayer::setVideoFileName(const std::string& fileName)
+void VideoPlayer::setFileName(const std::string& fileName)
 {
-    _videoUrl = fileName;
-    _videoSource = VideoPlayer::VideoSource::FILENAME;
-    setVideoURLJNI(_videoPlayerIndex, (int)VideoSource::FILENAME,_videoUrl);
+    _videoURL = fileName;
+    _videoSource = VideoPlayer::Source::FILENAME;
+    setVideoURLJNI(_videoPlayerIndex, (int)Source::FILENAME,_videoURL);
 }
 
-void VideoPlayer::setVideoURL(const std::string& videoUrl)
+void VideoPlayer::setURL(const std::string& videoUrl)
 {
-    _videoUrl = videoUrl;
-    _videoSource = VideoPlayer::VideoSource::URL;
-    setVideoURLJNI(_videoPlayerIndex,(int)VideoSource::URL,_videoUrl);
+    _videoURL = videoUrl;
+    _videoSource = VideoPlayer::Source::URL;
+    setVideoURLJNI(_videoPlayerIndex,(int)Source::URL,_videoURL);
 }
 
 void VideoPlayer::draw(Renderer* renderer, const Matrix &transform, bool transformUpdated)
@@ -281,41 +281,41 @@ void VideoPlayer::drawDebugData()
 }
 #endif
 
-void VideoPlayer::startVideo()
+void VideoPlayer::play()
 {
-    if (! _videoUrl.empty())
+    if (! _videoURL.empty())
     {
         startVideoJNI(_videoPlayerIndex);
     }
 }
 
-void VideoPlayer::pauseVideo()
+void VideoPlayer::pause()
 {
-    if (! _videoUrl.empty())
+    if (! _videoURL.empty())
     {
         pauseVideoJNI(_videoPlayerIndex);
     }
 }
 
-void VideoPlayer::resumeVideo()
+void VideoPlayer::resume()
 {
-    if (! _videoUrl.empty())
+    if (! _videoURL.empty())
     {
         resumeVideoJNI(_videoPlayerIndex);
     }
 }
 
-void VideoPlayer::stopVideo()
+void VideoPlayer::stop()
 {
-    if (! _videoUrl.empty())
+    if (! _videoURL.empty())
     {
         stopVideoJNI(_videoPlayerIndex);
     }
 }
 
-void VideoPlayer::seekVideoTo(float sec)
+void VideoPlayer::seekTo(float sec)
 {
-    if (! _videoUrl.empty())
+    if (! _videoURL.empty())
     {
         seekVideoToJNI(_videoPlayerIndex,int(sec * 1000));
     }
@@ -330,18 +330,18 @@ void VideoPlayer::setVisible(bool visible)
 {
     cocos2d::ui::Widget::setVisible(visible);
 
-    if (! _videoUrl.empty())
+    if (! _videoURL.empty())
     {
         setVideoVisible(_videoPlayerIndex,visible);
     } 
 }
 
-void VideoPlayer::addEventListener(const VideoPlayer::EventCallback& callback)
+void VideoPlayer::addEventListener(const VideoPlayer::ccVideoPlayerCallback& callback)
 {
-    _callback = callback;
+    _eventCallback = callback;
 }
 
-void VideoPlayer::onVideoEvent(VideoPlayer::EventType event)
+void VideoPlayer::onPlayEvent(VideoPlayer::EventType event)
 {
     if (event == VideoPlayer::EventType::PLAYING) {
         _isPlaying = true;
@@ -349,9 +349,9 @@ void VideoPlayer::onVideoEvent(VideoPlayer::EventType event)
         _isPlaying = false;
     }
 
-    if (_callback)
+    if (_eventCallback)
     {
-        _callback(this,event);
+        _eventCallback(this,event);
     }
 }
 
@@ -360,7 +360,7 @@ void executeVideoCallback(int index,int event)
     auto it = s_allVideoPlayers.find(index);
     if (it != s_allVideoPlayers.end())
     {
-        s_allVideoPlayers[index]->onVideoEvent((VideoPlayer::EventType)event);
+        s_allVideoPlayers[index]->onPlayEvent((VideoPlayer::EventType)event);
     }
 }
 
