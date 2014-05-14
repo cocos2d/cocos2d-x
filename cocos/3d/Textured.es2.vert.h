@@ -13,6 +13,7 @@ void main(void)
 {
     gl_Position = CC_MVPMatrix * a_position;
     TextureCoordOut = a_texCoord;
+    TextureCoordOut.y = 1.0 - TextureCoordOut.y;
 }
 );
 
