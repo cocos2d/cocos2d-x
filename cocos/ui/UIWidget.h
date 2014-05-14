@@ -343,11 +343,6 @@ public:
     /** @deprecated Use setFlippedY() instead */
     CC_DEPRECATED_ATTRIBUTE void setFlipY(bool flipY) { setFlippedY(flipY); };
 
-    /**
-     * A call back function when widget lost of focus.
-     */
-    void didNotSelectSelf();
-
     /*
      * Checks a point if in parent's area.
      *

@@ -9,14 +9,19 @@
 -- @param #string str
         
 --------------------------------
--- @function [parent=#TextBMFont] getStringValue 
+-- @function [parent=#TextBMFont] getStringLength 
 -- @param self
--- @return string#string ret (return value: string)
+-- @return long#long ret (return value: long)
         
 --------------------------------
--- @function [parent=#TextBMFont] setText 
+-- @function [parent=#TextBMFont] setString 
 -- @param self
 -- @param #string str
+        
+--------------------------------
+-- @function [parent=#TextBMFont] getString 
+-- @param self
+-- @return string#string ret (return value: string)
         
 --------------------------------
 -- overload function: create(string, string)

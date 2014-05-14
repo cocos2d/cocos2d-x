@@ -182,7 +182,7 @@ void Sprite3D::genGLProgramState()
     
     for (int i = 0; i < _mesh->getMeshPartCount(); i++)
     {
-        auto programstate = GLProgramState::get(getDefGLProgram(_mesh->getAttribFlag() & GL::VERTEX_ATTRIB_FLAG_TEX_COORDS));
+        auto programstate = GLProgramState::getOrCreateWithGLProgram(getDefGLProgram(_mesh->getAttribFlag() & GL::VERTEX_ATTRIB_FLAG_TEX_COORD));
         _programState.pushBack(programstate);
         
         programstate->setVertexAttribPointer("a_position", 3, GL_FLOAT, GL_FALSE, _mesh->getVertexSizeInBytes(), (void*)0);

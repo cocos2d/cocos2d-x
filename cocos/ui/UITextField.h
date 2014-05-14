@@ -154,7 +154,7 @@ public:
     bool getDeleteBackward();
     void setDeleteBackward(bool deleteBackward);
     CC_DEPRECATED_ATTRIBUTE void addEventListenerTextField(Ref* target, SEL_TextFieldEvent selecor);
-    void addEventListener(ccTextFieldCallback callback);
+    void addEventListener(const ccTextFieldCallback& callback);
     
     /**
      * Returns the "class name" of widget.

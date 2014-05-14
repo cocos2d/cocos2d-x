@@ -100,8 +100,11 @@ public:
         UNIFORM_SIN_TIME,
         UNIFORM_COS_TIME,
         UNIFORM_RANDOM01,
-        UNIFORM_SAMPLER,
-        
+        UNIFORM_SAMPLER0,
+        UNIFORM_SAMPLER1,
+        UNIFORM_SAMPLER2,
+        UNIFORM_SAMPLER3,
+
         UNIFORM_MAX,
     };
     
@@ -132,7 +135,10 @@ public:
     static const char* UNIFORM_NAME_SIN_TIME;
     static const char* UNIFORM_NAME_COS_TIME;
     static const char* UNIFORM_NAME_RANDOM01;
-    static const char* UNIFORM_NAME_SAMPLER;
+    static const char* UNIFORM_NAME_SAMPLER0;
+    static const char* UNIFORM_NAME_SAMPLER1;
+    static const char* UNIFORM_NAME_SAMPLER2;
+    static const char* UNIFORM_NAME_SAMPLER3;
     static const char* UNIFORM_NAME_ALPHA_TEST_VALUE;
     
     // Attribute names
@@ -288,11 +294,11 @@ public:
     inline const GLuint getProgram() const { return _program; }
 
     // DEPRECATED
-    CC_DEPRECATED_ATTRIBUTE bool initWithVertexShaderByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
-    { return initWithByteArrays(vShaderByteArray, fShaderByteArray); }
-    CC_DEPRECATED_ATTRIBUTE bool initWithVertexShaderFilename(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
-    { return initWithFilenames(vShaderByteArray, fShaderByteArray); }
-    CC_DEPRECATED_ATTRIBUTE void addAttribute(const char* attributeName, GLuint index) const { return bindAttribLocation(attributeName, index); }
+    CC_DEPRECATED_ATTRIBUTE bool initWithVertexShaderByteArray(const GLchar* vertexByteArray, const GLchar* fragByteArray)
+    { return initWithByteArrays(vertexByteArray, fragByteArray); }
+    CC_DEPRECATED_ATTRIBUTE bool initWithVertexShaderFilename(const std::string &vertexFilename, const std::string& fragFilename)
+    { return initWithFilenames(vertexFilename, fragFilename); }
+    CC_DEPRECATED_ATTRIBUTE void addAttribute(const std::string &attributeName, GLuint index) const { return bindAttribLocation(attributeName, index); }
 
 
 protected:
@@ -307,10 +313,9 @@ protected:
     std::string logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc) const;
 
     GLuint            _program;
-
     GLuint            _vertShader;
     GLuint            _fragShader;
-    GLint             _uniforms[UNIFORM_MAX];
+    GLint             _builtInUniforms[UNIFORM_MAX];
     struct _hashUniformEntry* _hashForUniforms;
 	bool              _hasShaderCompiler;
         
@@ -329,8 +334,8 @@ protected:
         flag_struct() { memset(this, 0, sizeof(*this)); }
     } _flags;
 
-    std::unordered_map<std::string, Uniform> _uniformsDictionary;
-    std::unordered_map<std::string, VertexAttrib> _attributesDictionary;
+    std::unordered_map<std::string, Uniform> _userUniforms;
+    std::unordered_map<std::string, VertexAttrib> _vertexAttribs;
 };
 
 NS_CC_END

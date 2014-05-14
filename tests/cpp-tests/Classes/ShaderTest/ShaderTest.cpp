@@ -176,7 +176,7 @@ void ShaderNode::loadShaderVertex(const std::string &vert, const std::string &fr
     }
 
     auto glprogram = GLProgram::createWithByteArrays(vertSource.c_str(), fragSource.c_str());
-    auto glprogramstate = GLProgramState::getOrCreate(glprogram);
+    auto glprogramstate = GLProgramState::getOrCreateWithGLProgram(glprogram);
     setGLProgramState(glprogramstate);
 }
 
@@ -493,7 +493,7 @@ void SpriteBlur::initGLProgram()
                                 FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur.fsh").c_str())->getCString();  
     auto program = GLProgram::createWithByteArrays(ccPositionTextureColor_noMVP_vert, fragSource);
 
-    auto glProgramState = GLProgramState::getOrCreate(program);
+    auto glProgramState = GLProgramState::getOrCreateWithGLProgram(program);
     setGLProgramState(glProgramState);
 }
 
@@ -761,7 +761,7 @@ bool ShaderMultiTexture::init()
         sprite->setPosition(Vector2(s.width/2, s.height/2));
 
         auto glprogram = GLProgram::createWithFilenames("Shaders/example_MultiTexture.vsh", "Shaders/example_MultiTexture.fsh");
-        auto glprogramstate = GLProgramState::getOrCreate(glprogram);
+        auto glprogramstate = GLProgramState::getOrCreateWithGLProgram(glprogram);
         sprite->setGLProgramState(glprogramstate);
 
         glprogramstate->setUniformTexture("u_texture1", texture1);
