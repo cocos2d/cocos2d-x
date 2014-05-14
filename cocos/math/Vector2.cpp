@@ -62,7 +62,7 @@ bool isOneDimensionSegmentOverlap(float A, float B, float C, float D, float *S, 
 }
 
 // cross procuct of 2 vector. A->B X C->D
-float crossProduct2Vector(const Vector2& A, const Vector2& B, const Vector2& C, const Vector2& D)
+float crossProduct2Vector(const Vec2& A, const Vec2& B, const Vec2& C, const Vec2& D)
 {
     return (D.y - C.y) * (B.x - A.x) - (D.x - C.x) * (B.y - A.y);
 }
@@ -118,7 +118,7 @@ void Vec2::add(const Vec2& v)
     y += v.y;
 }
 
-void Vec2::add(const Vec2& v1, const Vector2& v2, Vector2* dst)
+void Vec2::add(const Vec2& v1, const Vec2& v2, Vec2* dst)
 {
     GP_ASSERT(dst);
 
@@ -126,7 +126,7 @@ void Vec2::add(const Vec2& v1, const Vector2& v2, Vector2* dst)
     dst->y = v1.y + v2.y;
 }
 
-void Vector2::clamp(const Vector2& min, const Vector2& max)
+void Vec2::clamp(const Vec2& min, const Vec2& max)
 {
     GP_ASSERT(!(min.x > max.x || min.y > max.y ));
 
@@ -143,7 +143,7 @@ void Vector2::clamp(const Vector2& min, const Vector2& max)
         y = max.y;
 }
 
-void Vector2::clamp(const Vector2& v, const Vector2& min, const Vector2& max, Vector2* dst)
+void Vec2::clamp(const Vec2& v, const Vec2& min, const Vec2& max, Vec2* dst)
 {
     GP_ASSERT(dst);
     GP_ASSERT(!(min.x > max.x || min.y > max.y ));
@@ -163,7 +163,7 @@ void Vector2::clamp(const Vector2& v, const Vector2& min, const Vector2& max, Ve
         dst->y = max.y;
 }
 
-float Vector2::distance(const Vector2& v) const
+float Vec2::distance(const Vec2& v) const
 {
     float dx = v.x - x;
     float dy = v.y - y;
@@ -171,40 +171,40 @@ float Vector2::distance(const Vector2& v) const
     return sqrt(dx * dx + dy * dy);
 }
 
-float Vector2::distanceSquared(const Vector2& v) const
+float Vec2::distanceSquared(const Vec2& v) const
 {
     float dx = v.x - x;
     float dy = v.y - y;
     return (dx * dx + dy * dy);
 }
 
-float Vector2::dot(const Vector2& v) const
+float Vec2::dot(const Vec2& v) const
 {
     return (x * v.x + y * v.y);
 }
 
-float Vector2::dot(const Vector2& v1, const Vector2& v2)
+float Vec2::dot(const Vec2& v1, const Vec2& v2)
 {
     return (v1.x * v2.x + v1.y * v2.y);
 }
 
-float Vector2::length() const
+float Vec2::length() const
 {
     return sqrt(x * x + y * y);
 }
 
-float Vector2::lengthSquared() const
+float Vec2::lengthSquared() const
 {
     return (x * x + y * y);
 }
 
-void Vector2::negate()
+void Vec2::negate()
 {
     x = -x;
     y = -y;
 }
 
-void Vector2::normalize()
+void Vec2::normalize()
 {
     float n = x * x + y * y;
     // Already normalized.
@@ -221,26 +221,26 @@ void Vector2::normalize()
     y *= n;
 }
 
-Vector2 Vector2::getNormalized() const
+Vec2 Vec2::getNormalized() const
 {
-    Vector2 v(*this);
+    Vec2 v(*this);
     v.normalize();
     return v;
 }
 
-void Vector2::scale(float scalar)
+void Vec2::scale(float scalar)
 {
     x *= scalar;
     y *= scalar;
 }
 
-void Vector2::scale(const Vector2& scale)
+void Vec2::scale(const Vec2& scale)
 {
     x *= scale.x;
     y *= scale.y;
 }
 
-void Vector2::rotate(const Vector2& point, float angle)
+void Vec2::rotate(const Vec2& point, float angle)
 {
     double sinAngle = sin(angle);
     double cosAngle = cos(angle);
@@ -261,13 +261,13 @@ void Vector2::rotate(const Vector2& point, float angle)
     }
 }
 
-void Vector2::set(float xx, float yy)
+void Vec2::set(float xx, float yy)
 {
     this->x = xx;
     this->y = yy;
 }
 
-void Vector2::set(const float* array)
+void Vec2::set(const float* array)
 {
     GP_ASSERT(array);
 
@@ -275,25 +275,25 @@ void Vector2::set(const float* array)
     y = array[1];
 }
 
-void Vector2::set(const Vector2& v)
+void Vec2::set(const Vec2& v)
 {
     this->x = v.x;
     this->y = v.y;
 }
 
-void Vector2::set(const Vector2& p1, const Vector2& p2)
+void Vec2::set(const Vec2& p1, const Vec2& p2)
 {
      x = p2.x - p1.x;
      y = p2.y - p1.y;
 }
 
-void Vector2::subtract(const Vector2& v)
+void Vec2::subtract(const Vec2& v)
 {
     x -= v.x;
     y -= v.y;
 }
 
-void Vector2::subtract(const Vector2& v1, const Vector2& v2, Vector2* dst)
+void Vec2::subtract(const Vec2& v1, const Vec2& v2, Vec2* dst)
 {
     GP_ASSERT(dst);
 
@@ -301,7 +301,7 @@ void Vector2::subtract(const Vector2& v1, const Vector2& v2, Vector2* dst)
     dst->y = v1.y - v2.y;
 }
 
-void Vector2::smooth(const Vector2& target, float elapsedTime, float responseTime)
+void Vec2::smooth(const Vec2& target, float elapsedTime, float responseTime)
 {
     if (elapsedTime > 0)
     {
@@ -309,19 +309,19 @@ void Vector2::smooth(const Vector2& target, float elapsedTime, float responseTim
     }
 }
 
-void Vector2::setPoint(float xx, float yy)
+void Vec2::setPoint(float xx, float yy)
 {
     this->x = xx;
     this->y = yy;
 }
 
-bool Vector2::equals(const Vector2& target) const
+bool Vec2::equals(const Vec2& target) const
 {
     return (fabs(this->x - target.x) < FLT_EPSILON)
         && (fabs(this->y - target.y) < FLT_EPSILON);
 }
 
-bool Vector2::fuzzyEquals(const Vector2& b, float var) const
+bool Vec2::fuzzyEquals(const Vec2& b, float var) const
 {
     if(x - var <= b.x && b.x <= x + var)
         if(y - var <= b.y && b.y <= y + var)
@@ -329,22 +329,22 @@ bool Vector2::fuzzyEquals(const Vector2& b, float var) const
     return false;
 }
 
-float Vector2::getAngle(const Vector2& other) const
+float Vec2::getAngle(const Vec2& other) const
 {
-    Vector2 a2 = getNormalized();
-    Vector2 b2 = other.getNormalized();
+    Vec2 a2 = getNormalized();
+    Vec2 b2 = other.getNormalized();
     float angle = atan2f(a2.cross(b2), a2.dot(b2));
     if( fabs(angle) < FLT_EPSILON ) return 0.f;
     return angle;
 }
 
-Vector2 Vector2::rotateByAngle(const Vector2& pivot, float angle) const
+Vec2 Vec2::rotateByAngle(const Vec2& pivot, float angle) const
 {
-    return pivot + (*this - pivot).rotate(Vector2::forAngle(angle));
+    return pivot + (*this - pivot).rotate(Vec2::forAngle(angle));
 }
 
-bool Vector2::isLineIntersect(const Vector2& A, const Vector2& B,
-                            const Vector2& C, const Vector2& D,
+bool Vec2::isLineIntersect(const Vec2& A, const Vec2& B,
+                            const Vec2& C, const Vec2& D,
                             float *S, float *T)
 {
     // FAIL: Line undefined
@@ -367,8 +367,8 @@ bool Vector2::isLineIntersect(const Vector2& A, const Vector2& B,
     return true;
 }
 
-bool Vector2::isLineParallel(const Vector2& A, const Vector2& B,
-                           const Vector2& C, const Vector2& D)
+bool Vec2::isLineParallel(const Vec2& A, const Vec2& B,
+                           const Vec2& C, const Vec2& D)
 {
     // FAIL: Line undefined
     if ( (A.x==B.x && A.y==B.y) || (C.x==D.x && C.y==D.y) )
@@ -390,8 +390,8 @@ bool Vector2::isLineParallel(const Vector2& A, const Vector2& B,
     return false;
 }
 
-bool Vector2::isLineOverlap(const Vector2& A, const Vector2& B,
-                            const Vector2& C, const Vector2& D)
+bool Vec2::isLineOverlap(const Vec2& A, const Vec2& B,
+                            const Vec2& C, const Vec2& D)
 {
     // FAIL: Line undefined
     if ( (A.x==B.x && A.y==B.y) || (C.x==D.x && C.y==D.y) )
@@ -408,7 +408,7 @@ bool Vector2::isLineOverlap(const Vector2& A, const Vector2& B,
     return false;
 }
 
-bool Vector2::isSegmentOverlap(const Vector2& A, const Vector2& B, const Vector2& C, const Vector2& D, Vector2* S, Vector2* E)
+bool Vec2::isSegmentOverlap(const Vec2& A, const Vec2& B, const Vec2& C, const Vec2& D, Vec2* S, Vec2* E)
 {
     
     if (isLineOverlap(A, B, C, D))
@@ -420,7 +420,7 @@ bool Vector2::isSegmentOverlap(const Vector2& A, const Vector2& B, const Vector2
     return false;
 }
 
-bool Vector2::isSegmentIntersect(const Vector2& A, const Vector2& B, const Vector2& C, const Vector2& D)
+bool Vec2::isSegmentIntersect(const Vec2& A, const Vec2& B, const Vec2& C, const Vec2& D)
 {
     float S, T;
     
@@ -433,34 +433,34 @@ bool Vector2::isSegmentIntersect(const Vector2& A, const Vector2& B, const Vecto
     return false;
 }
 
-Vector2 Vector2::getIntersectPoint(const Vector2& A, const Vector2& B, const Vector2& C, const Vector2& D)
+Vec2 Vec2::getIntersectPoint(const Vec2& A, const Vec2& B, const Vec2& C, const Vec2& D)
 {
     float S, T;
     
     if (isLineIntersect(A, B, C, D, &S, &T))
     {
-        // Vector2 of intersection
-        Vector2 P;
+        // Vec2 of intersection
+        Vec2 P;
         P.x = A.x + S * (B.x - A.x);
         P.y = A.y + S * (B.y - A.y);
         return P;
     }
     
-    return Vector2::ZERO;
+    return Vec2::ZERO;
 }
 
-const Vector2 Vector2::ZERO = Vector2(0.0f, 0.0f);
-const Vector2 Vector2::ONE = Vector2(1.0f, 1.0f);
-const Vector2 Vector2::UNIT_X = Vector2(1.0f, 0.0f);
-const Vector2 Vector2::UNIT_Y = Vector2(0.0f, 1.0f);
-const Vector2 Vector2::ANCHOR_MIDDLE = Vector2(0.5f, 0.5f);
-const Vector2 Vector2::ANCHOR_BOTTOM_LEFT = Vector2(0.0f, 0.0f);
-const Vector2 Vector2::ANCHOR_TOP_LEFT = Vector2(0.0f, 1.0f);
-const Vector2 Vector2::ANCHOR_BOTTOM_RIGHT = Vector2(1.0f, 0.0f);
-const Vector2 Vector2::ANCHOR_TOP_RIGHT = Vector2(1.0f, 1.0f);
-const Vector2 Vector2::ANCHOR_MIDDLE_RIGHT = Vector2(1.0f, 0.5f);
-const Vector2 Vector2::ANCHOR_MIDDLE_LEFT = Vector2(0.0f, 0.5f);
-const Vector2 Vector2::ANCHOR_MIDDLE_TOP = Vector2(0.5f, 1.0f);
-const Vector2 Vector2::ANCHOR_MIDDLE_BOTTOM = Vector2(0.5f, 0.0f);
+const Vec2 Vec2::ZERO = Vec2(0.0f, 0.0f);
+const Vec2 Vec2::ONE = Vec2(1.0f, 1.0f);
+const Vec2 Vec2::UNIT_X = Vec2(1.0f, 0.0f);
+const Vec2 Vec2::UNIT_Y = Vec2(0.0f, 1.0f);
+const Vec2 Vec2::ANCHOR_MIDDLE = Vec2(0.5f, 0.5f);
+const Vec2 Vec2::ANCHOR_BOTTOM_LEFT = Vec2(0.0f, 0.0f);
+const Vec2 Vec2::ANCHOR_TOP_LEFT = Vec2(0.0f, 1.0f);
+const Vec2 Vec2::ANCHOR_BOTTOM_RIGHT = Vec2(1.0f, 0.0f);
+const Vec2 Vec2::ANCHOR_TOP_RIGHT = Vec2(1.0f, 1.0f);
+const Vec2 Vec2::ANCHOR_MIDDLE_RIGHT = Vec2(1.0f, 0.5f);
+const Vec2 Vec2::ANCHOR_MIDDLE_LEFT = Vec2(0.0f, 0.5f);
+const Vec2 Vec2::ANCHOR_MIDDLE_TOP = Vec2(0.5f, 1.0f);
+const Vec2 Vec2::ANCHOR_MIDDLE_BOTTOM = Vec2(0.5f, 0.0f);
 
 NS_CC_MATH_END
