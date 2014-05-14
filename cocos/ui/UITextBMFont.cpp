@@ -108,7 +108,7 @@ const std::string& TextBMFont::getString()const
     return _stringValue;
 }
     
-ssize_t TextBMFont::getStringLength()
+ssize_t TextBMFont::getStringLength()const
 {
     return _labelBMFontRenderer->getStringLength();
 }

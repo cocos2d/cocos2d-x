@@ -76,7 +76,7 @@ public:
      *
      * @return  string length.
      */
-    ssize_t getStringLength();
+    ssize_t getStringLength()const;
 
     virtual const Size& getVirtualRendererSize() const override;
     virtual Node* getVirtualRenderer() override;
