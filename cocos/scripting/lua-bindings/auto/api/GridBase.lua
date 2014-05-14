@@ -34,7 +34,7 @@
 --------------------------------
 -- @function [parent=#GridBase] getStep 
 -- @param self
--- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#GridBase] set2DProjection 
@@ -43,7 +43,7 @@
 --------------------------------
 -- @function [parent=#GridBase] setStep 
 -- @param self
--- @param #cc.math::Vector2 array
+-- @param #vector2_table array
         
 --------------------------------
 -- @function [parent=#GridBase] setTextureFlipped 

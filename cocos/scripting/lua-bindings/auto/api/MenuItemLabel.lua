@@ -6,7 +6,7 @@
 --------------------------------
 -- @function [parent=#MenuItemLabel] getDisabledColor 
 -- @param self
--- @return color3B_table#color3B_table ret (return value: color3B_table)
+-- @return color3b_table#color3b_table ret (return value: color3b_table)
         
 --------------------------------
 -- @function [parent=#MenuItemLabel] setString 
@@ -21,7 +21,7 @@
 --------------------------------
 -- @function [parent=#MenuItemLabel] setDisabledColor 
 -- @param self
--- @param #color3B_table color3b
+-- @param #color3b_table color3b
         
 --------------------------------
 -- @function [parent=#MenuItemLabel] getLabel 

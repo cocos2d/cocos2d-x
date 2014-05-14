@@ -1,19 +1,19 @@
 /****************************************************************************
  Copyright (c) 2013      cocos2d-x.org
  Copyright (c) 2013-2014 Chukong Technologies Inc.
- 
+
  http://www.cocos2d-x.org
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -24,6 +24,13 @@
  ****************************************************************************/
 
 #include "cocos2d.h"
+
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (push)
+#pragma warning (disable: 4996)
+#endif
 
 NS_CC_BEGIN
 
@@ -65,7 +72,7 @@ const char* kCCUniformTime_s = GLProgram::UNIFORM_NAME_TIME;
 const char* kCCUniformSinTime_s = GLProgram::UNIFORM_NAME_SIN_TIME;
 const char* kCCUniformCosTime_s	= GLProgram::UNIFORM_NAME_COS_TIME;
 const char* kCCUniformRandom01_s = GLProgram::UNIFORM_NAME_RANDOM01;
-const char* kCCUniformSampler_s	= GLProgram::UNIFORM_NAME_SAMPLER;
+const char* kCCUniformSampler_s	= GLProgram::UNIFORM_NAME_SAMPLER0;
 const char* kCCUniformAlphaTestValue = GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE;
 
 // Attribute names
@@ -268,7 +275,7 @@ Matrix* kmMat4Assign(Matrix* pOut, const Matrix* pIn)
 
 Matrix* kmMat4Identity(Matrix* pOut)
 {
-    *pOut = Matrix::identity();
+    *pOut = Matrix::IDENTITY;
     return pOut;
 }
 
@@ -568,4 +575,24 @@ Vector4* kmVec4Transform(Vector4* pOut, const Vector4* pV, const Matrix* pM)
     return pOut;
 }
 
+const Vector3 KM_VEC3_NEG_Z = Vector3(0, 0, -1);
+const Vector3 KM_VEC3_POS_Z = Vector3(0, 0, 1);
+const Vector3 KM_VEC3_POS_Y = Vector3(0, 1, 0);
+const Vector3 KM_VEC3_NEG_Y = Vector3(0, -1, 0);
+const Vector3 KM_VEC3_NEG_X = Vector3(-1, 0, 0);
+const Vector3 KM_VEC3_POS_X = Vector3(1, 0, 0);
+const Vector3 KM_VEC3_ZERO = Vector3(0, 0, 0);
+
+const Vector2 KM_VEC2_POS_Y = Vector2(0, 1);
+const Vector2 KM_VEC2_NEG_Y = Vector2(0, -1);
+const Vector2 KM_VEC2_NEG_X = Vector2(-1, 0);
+const Vector2 KM_VEC2_POS_X = Vector2(1, 0);
+const Vector2 KM_VEC2_ZERO = Vector2(0, 0);
+
 NS_CC_END
+
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic warning "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (pop)
+#endif

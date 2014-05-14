@@ -6,12 +6,12 @@
 --------------------------------
 -- @function [parent=#PhysicsJointSpring] setAnchr2 
 -- @param self
--- @param #cc.math::Vector2 array
+-- @param #vector2_table array
         
 --------------------------------
 -- @function [parent=#PhysicsJointSpring] setAnchr1 
 -- @param self
--- @param #cc.math::Vector2 array
+-- @param #vector2_table array
         
 --------------------------------
 -- @function [parent=#PhysicsJointSpring] getDamping 
@@ -31,12 +31,12 @@
 --------------------------------
 -- @function [parent=#PhysicsJointSpring] getAnchr2 
 -- @param self
--- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#PhysicsJointSpring] getAnchr1 
 -- @param self
--- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#PhysicsJointSpring] getStiffness 
@@ -58,8 +58,8 @@
 -- @param self
 -- @param #cc.PhysicsBody physicsbody
 -- @param #cc.PhysicsBody physicsbody
--- @param #cc.math::Vector2 array
--- @param #cc.math::Vector2 array
+-- @param #vector2_table array
+-- @param #vector2_table array
 -- @param #float float
 -- @param #float float
 -- @return PhysicsJointSpring#PhysicsJointSpring ret (return value: cc.PhysicsJointSpring)

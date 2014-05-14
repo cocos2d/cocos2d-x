@@ -113,25 +113,24 @@ protected:
 class ShaderNode : public Node
 {
 public:
-    ShaderNode();
-    ~ShaderNode();
-
-    bool initWithVertex(const char *vert, const char *frag);
-    void loadShaderVertex(const char *vert, const char *frag);
+    static ShaderNode* shaderNodeWithVertex(const std::string &vert, const std::string &frag);
 
     virtual void update(float dt);
     virtual void setPosition(const Vector2 &newPosition);
     virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
 
-    static ShaderNode* shaderNodeWithVertex(const char *vert, const char *frag);
-
 protected:
+    ShaderNode();
+    ~ShaderNode();
+
+    bool initWithVertex(const std::string &vert, const std::string &frag);
+    void loadShaderVertex(const std::string &vert, const std::string &frag);
+
     void onDraw(const Matrix &transform, bool transformUpdated);
 
     Vector2 _center;
     Vector2 _resolution;
     float      _time;
-    GLuint     _uniformCenter, _uniformResolution, _uniformTime;
     std::string _vertFileName;
     std::string _fragFileName;
     CustomCommand _customCommand;
@@ -143,6 +142,34 @@ public:
     virtual void runThisTest();
 };
 
-//CCLayer* nextAction();
+class ShaderLensFlare : public ShaderTestDemo
+{
+public:
+    ShaderLensFlare();
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual bool init();
+};
+
+class ShaderGlow : public ShaderTestDemo
+{
+public:
+    ShaderGlow();
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual bool init();
+};
+
+class ShaderMultiTexture : public ShaderTestDemo
+{
+public:
+    ShaderMultiTexture();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual bool init();
+};
 
 #endif

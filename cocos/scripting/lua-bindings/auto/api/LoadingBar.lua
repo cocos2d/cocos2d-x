@@ -4,20 +4,20 @@
 -- @extend Widget
 
 --------------------------------
--- @function [parent=#LoadingBar] setPercent 
+-- @function [parent=#LoadingBar] setBarDirection 
 -- @param self
--- @param #int int
+-- @param #ccui.LoadingBar::Direction direction
         
 --------------------------------
 -- @function [parent=#LoadingBar] loadTexture 
 -- @param self
 -- @param #string str
--- @param #ccui.TextureResType texturerestype
+-- @param #ccui.Widget::TextureResType texturerestype
         
 --------------------------------
--- @function [parent=#LoadingBar] setDirection 
+-- @function [parent=#LoadingBar] setPercent 
 -- @param self
--- @param #ccui.LoadingBarType loadingbartype
+-- @param #float float
         
 --------------------------------
 -- @function [parent=#LoadingBar] setScale9Enabled 
@@ -30,14 +30,9 @@
 -- @param #rect_table rect
         
 --------------------------------
--- @function [parent=#LoadingBar] getDirection 
+-- @function [parent=#LoadingBar] getBarDirection 
 -- @param self
--- @return int#int ret (return value: int)
-        
---------------------------------
--- @function [parent=#LoadingBar] getCapInsets 
--- @param self
--- @return rect_table#rect_table ret (return value: rect_table)
+-- @return LoadingBar::Direction#LoadingBar::Direction ret (return value: ccui.LoadingBar::Direction)
         
 --------------------------------
 -- @function [parent=#LoadingBar] isScale9Enabled 
@@ -47,17 +42,22 @@
 --------------------------------
 -- @function [parent=#LoadingBar] getPercent 
 -- @param self
--- @return int#int ret (return value: int)
+-- @return float#float ret (return value: float)
         
 --------------------------------
--- overload function: create(string, int)
+-- @function [parent=#LoadingBar] getCapInsets 
+-- @param self
+-- @return rect_table#rect_table ret (return value: rect_table)
+        
+--------------------------------
+-- overload function: create(string, float)
 --          
 -- overload function: create()
 --          
 -- @function [parent=#LoadingBar] create
 -- @param self
 -- @param #string str
--- @param #int int
+-- @param #float float
 -- @return LoadingBar#LoadingBar ret (retunr value: ccui.LoadingBar)
 
 --------------------------------

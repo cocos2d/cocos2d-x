@@ -14,12 +14,12 @@
 -- @param #size_table size
 -- @param #cc.PhysicsMaterial physicsmaterial
 -- @param #float float
--- @param #cc.math::Vector2 array
+-- @param #vector2_table array
 -- @return PhysicsShapeEdgeBox#PhysicsShapeEdgeBox ret (return value: cc.PhysicsShapeEdgeBox)
         
 --------------------------------
 -- @function [parent=#PhysicsShapeEdgeBox] getOffset 
 -- @param self
--- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 return nil

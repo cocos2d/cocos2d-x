@@ -119,4 +119,4 @@ bool FileUtilsLinux::isFileExistInternal(const std::string& strFilePath) const
 
 NS_CC_END
 
-#endif CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_LINUX

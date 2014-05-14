@@ -38,14 +38,14 @@ using namespace cocos2d::extension;
 
 
     
-void GLNode::draw(Renderer *renderer, const cocos2d::math::Matrix& transform, bool transformUpdated)
+void GLNode::draw(Renderer *renderer, const cocos2d::Matrix& transform, bool transformUpdated)
 {
     _renderCmd.init(_globalZOrder);
     _renderCmd.func = CC_CALLBACK_0(GLNode::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_renderCmd);
 }
 
-void GLNode::onDraw(const cocos2d::math::Matrix &transform, bool transformUpdated)
+void GLNode::onDraw(const cocos2d::Matrix &transform, bool transformUpdated)
 {
     int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, ScriptHandlerMgr::HandlerType::GL_NODE_DRAW);
     if (0 != handler)
@@ -137,7 +137,7 @@ static int tolua_Cocos2d_GLNode_setShaderProgram00(lua_State* tolua_S)
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setShaderProgram'", NULL);
 #endif
         if(NULL != self)
-            self->setShaderProgram(pShaderProgram);
+            self->setGLProgram(pShaderProgram);
     }
     return 0;
 #ifndef TOLUA_RELEASE

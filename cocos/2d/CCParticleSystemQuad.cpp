@@ -29,15 +29,15 @@ THE SOFTWARE.
 #include "CCGL.h"
 #include "2d/CCParticleSystemQuad.h"
 #include "2d/CCSpriteFrame.h"
-#include "base/CCDirector.h"
-#include "CCParticleBatchNode.h"
+#include "2d/CCParticleBatchNode.h"
 #include "2d/CCTextureAtlas.h"
-#include "2d/CCShaderCache.h"
-#include "2d/ccGLStateCache.h"
-#include "2d/CCGLProgram.h"
-#include "math/TransformUtils.h"
+#include "base/CCDirector.h"
 #include "base/CCEventType.h"
 #include "base/CCConfiguration.h"
+#include "math/TransformUtils.h"
+#include "renderer/CCGLProgramState.h"
+#include "renderer/ccGLStateCache.h"
+#include "renderer/CCGLProgram.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCCustomCommand.h"
@@ -47,42 +47,6 @@ THE SOFTWARE.
 #include "base/CCEventDispatcher.h"
 
 NS_CC_BEGIN
-
-//implementation ParticleSystemQuad
-// overriding the init method
-bool ParticleSystemQuad::initWithTotalParticles(int numberOfParticles)
-{
-    // base initialization
-    if( ParticleSystem::initWithTotalParticles(numberOfParticles) ) 
-    {
-        // allocating data space
-        if( ! this->allocMemory() ) {
-            this->release();
-            return false;
-        }
-
-        initIndices();
-        if (Configuration::getInstance()->supportsShareableVAO())
-        {
-            setupVBOandVAO();
-        }
-        else
-        {
-            setupVBO();
-        }
-
-        setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
-        
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-        // Need to listen the event only when not use batchnode, because it will use VBO
-        auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, CC_CALLBACK_1(ParticleSystemQuad::listenBackToForeground, this));
-        _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-#endif
-
-        return true;
-    }
-    return false;
-}
 
 ParticleSystemQuad::ParticleSystemQuad()
 :_quads(nullptr)
@@ -132,6 +96,53 @@ ParticleSystemQuad * ParticleSystemQuad::createWithTotalParticles(int numberOfPa
     return ret;
 }
 
+ParticleSystemQuad * ParticleSystemQuad::create(ValueMap &dictionary)
+{
+    ParticleSystemQuad *ret = new (std::nothrow) ParticleSystemQuad();
+    if (ret && ret->initWithDictionary(dictionary))
+    {
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+    return ret;
+}
+
+//implementation ParticleSystemQuad
+// overriding the init method
+bool ParticleSystemQuad::initWithTotalParticles(int numberOfParticles)
+{
+    // base initialization
+    if( ParticleSystem::initWithTotalParticles(numberOfParticles) )
+    {
+        // allocating data space
+        if( ! this->allocMemory() ) {
+            this->release();
+            return false;
+        }
+
+        initIndices();
+        if (Configuration::getInstance()->supportsShareableVAO())
+        {
+            setupVBOandVAO();
+        }
+        else
+        {
+            setupVBO();
+        }
+
+        setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+        // Need to listen the event only when not use batchnode, because it will use VBO
+        auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, CC_CALLBACK_1(ParticleSystemQuad::listenBackToForeground, this));
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+#endif
+
+        return true;
+    }
+    return false;
+}
 
 // pointRect should be in Texture coordinates, not pixel coordinates
 void ParticleSystemQuad::initTexCoordsWithRect(const Rect& pointRect)
@@ -363,7 +374,7 @@ void ParticleSystemQuad::draw(Renderer *renderer, const Matrix &transform, bool 
     //quad command
     if(_particleIdx > 0)
     {
-        _quadCommand.init(_globalZOrder, _texture->getName(), _shaderProgram, _blendFunc, _quads, _particleIdx, transform);
+        _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, _quads, _particleIdx, transform);
         renderer->addCommand(&_quadCommand);
     }
 }
@@ -467,8 +478,8 @@ void ParticleSystemQuad::setupVBOandVAO()
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, colors));
 
     // tex coords
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORDS);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, texCoords));
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, texCoords));
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _totalParticles * 6, _indices, GL_STATIC_DRAW);

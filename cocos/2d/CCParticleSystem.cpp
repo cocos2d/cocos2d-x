@@ -117,7 +117,7 @@ ParticleSystem::ParticleSystem()
 , _texture(nullptr)
 , _blendFunc(BlendFunc::ALPHA_PREMULTIPLIED)
 , _opacityModifyRGB(false)
-, _yCoordFlipped(0)
+, _yCoordFlipped(1)
 , _positionType(PositionType::FREE)
 {
     modeA.gravity = Vector2::ZERO;
@@ -387,9 +387,9 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
                 {
                     setTexture(tex);
                 }
-                else
+                else if( dictionary.find("textureImageData") != dictionary.end() )
                 {                        
-                    std::string textureData = dictionary["textureImageData"].asString();
+                    std::string textureData = dictionary.at("textureImageData").asString();
                     CCASSERT(!textureData.empty(), "");
                     
                     auto dataLen = textureData.size();
@@ -416,12 +416,10 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
                     }
                 }
                 
-                if (!_configName.empty())
-                {
-                    _yCoordFlipped = dictionary["yCoordFlipped"].asInt();
-                }
-                
-                CCASSERT( this->_texture != nullptr, "CCParticleSystem: error loading the texture");
+                _yCoordFlipped = dictionary.find("yCoordFlipped") == dictionary.end() ? 1 : dictionary.at("yCoordFlipped").asInt();
+
+                if( !this->_texture)
+                    CCLOGWARN("cocos2d: Warning: ParticleSystemQuad system without a texture");
             }
             ret = true;
         }
@@ -725,14 +723,12 @@ void ParticleSystem::update(float dt)
                     tmp = radial + tangential + modeA.gravity;
                     tmp = tmp * dt;
                     p->modeA.dir = p->modeA.dir + tmp;
-                    if (_configName.length()>0 && _yCoordFlipped == -1)
-                    {
-                        tmp = p->modeA.dir * -dt;
-                    }
-                    else
-                    {
-                        tmp = p->modeA.dir * dt;
-                    }
+                    
+                    // this is cocos2d-x v3.0
+//                    if (_configName.length()>0 && _yCoordFlipped != -1)
+
+                    // this is cocos2d-x v3.0
+                    tmp = p->modeA.dir * dt * _yCoordFlipped;
                     p->pos = p->pos + tmp;
                 }
 
@@ -745,10 +741,7 @@ void ParticleSystem::update(float dt)
 
                     p->pos.x = - cosf(p->modeB.angle) * p->modeB.radius;
                     p->pos.y = - sinf(p->modeB.angle) * p->modeB.radius;
-                    if (_yCoordFlipped == 1)
-                    {
-                      p->pos.y = -p->pos.y;
-                    }
+                    p->pos.y *= _yCoordFlipped;
 				}
 
                 // color

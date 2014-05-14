@@ -6,7 +6,7 @@
 --------------------------------
 -- @function [parent=#ControlPotentiometer] setPreviousLocation 
 -- @param self
--- @param #cc.math::Vector2 array
+-- @param #vector2_table array
         
 --------------------------------
 -- @function [parent=#ControlPotentiometer] setValue 
@@ -26,16 +26,16 @@
 --------------------------------
 -- @function [parent=#ControlPotentiometer] angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint 
 -- @param self
--- @param #cc.math::Vector2 array
--- @param #cc.math::Vector2 array
--- @param #cc.math::Vector2 array
--- @param #cc.math::Vector2 array
+-- @param #vector2_table array
+-- @param #vector2_table array
+-- @param #vector2_table array
+-- @param #vector2_table array
 -- @return float#float ret (return value: float)
         
 --------------------------------
 -- @function [parent=#ControlPotentiometer] potentiometerBegan 
 -- @param self
--- @param #cc.math::Vector2 array
+-- @param #vector2_table array
         
 --------------------------------
 -- @function [parent=#ControlPotentiometer] setMaximumValue 
@@ -60,19 +60,19 @@
 --------------------------------
 -- @function [parent=#ControlPotentiometer] getPreviousLocation 
 -- @param self
--- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#ControlPotentiometer] distanceBetweenPointAndPoint 
 -- @param self
--- @param #cc.math::Vector2 array
--- @param #cc.math::Vector2 array
+-- @param #vector2_table array
+-- @param #vector2_table array
 -- @return float#float ret (return value: float)
         
 --------------------------------
 -- @function [parent=#ControlPotentiometer] potentiometerEnded 
 -- @param self
--- @param #cc.math::Vector2 array
+-- @param #vector2_table array
         
 --------------------------------
 -- @function [parent=#ControlPotentiometer] setProgressTimer 
@@ -100,7 +100,7 @@
 --------------------------------
 -- @function [parent=#ControlPotentiometer] potentiometerMoved 
 -- @param self
--- @param #cc.math::Vector2 array
+-- @param #vector2_table array
         
 --------------------------------
 -- @function [parent=#ControlPotentiometer] create 

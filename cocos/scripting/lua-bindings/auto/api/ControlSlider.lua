@@ -12,7 +12,7 @@
 -- @function [parent=#ControlSlider] locationFromTouch 
 -- @param self
 -- @param #cc.Touch touch
--- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#ControlSlider] setSelectedThumbSprite 

@@ -108,41 +108,6 @@ public:
     ~Vector3();
 
     /**
-     * Returns the zero vector.
-     *
-     * @return The 3-element vector of 0s.
-     */
-    static const Vector3& zero();
-
-    /**
-     * Returns the one vector.
-     *
-     * @return The 3-element vector of 1s.
-     */
-    static const Vector3& one();
-
-    /**
-     * Returns the unit x vector.
-     *
-     * @return The 3-element unit vector along the x axis.
-     */
-    static const Vector3& unitX();
-
-    /**
-     * Returns the unit y vector.
-     *
-     * @return The 3-element unit vector along the y axis.
-     */
-    static const Vector3& unitY();
-
-    /**
-     * Returns the unit z vector.
-     *
-     * @return The 3-element unit vector along the z axis.
-     */
-    static const Vector3& unitZ();
-
-    /**
      * Indicates whether this vector contains all zeros.
      *
      * @return true if this vector contains all zeros, false otherwise.
@@ -480,6 +445,17 @@ public:
      * @return True if this vector is not equal to the given vector, false otherwise.
      */
     inline bool operator!=(const Vector3& v) const;
+    
+    /** equals to Vector3(0,0,0) */
+    static const Vector3 ZERO;
+    /** equals to Vector3(1,1,1) */
+    static const Vector3 ONE;
+    /** equals to Vector3(1,0,0) */
+    static const Vector3 UNIT_X;
+    /** equals to Vector3(0,1,0) */
+    static const Vector3 UNIT_Y;
+    /** equals to Vector3(0,0,1) */
+    static const Vector3 UNIT_Z;
 };
 
 /**
@@ -490,6 +466,8 @@ public:
  * @return The scaled vector.
  */
 inline const Vector3 operator*(float x, const Vector3& v);
+
+typedef Vector3 Point3;
 
 NS_CC_MATH_END
 

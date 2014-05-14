@@ -31,20 +31,22 @@ THE SOFTWARE.
 * https://devforums.apple.com/message/37855#37855 by a1studmuffin
 */
 
+#include "CCGL.h"
 #include "2d/CCTexture2D.h"
+#include "2d/platform/CCImage.h"
+#include "2d/ccUtils.h"
+#include "2d/platform/CCDevice.h"
 #include "base/ccConfig.h"
 #include "base/ccMacros.h"
 #include "base/CCConfiguration.h"
-#include "2d/platform/CCImage.h"
-#include "CCGL.h"
-#include "2d/ccUtils.h"
 #include "base/CCPlatformMacros.h"
 #include "base/CCDirector.h"
-#include "2d/CCGLProgram.h"
-#include "2d/ccGLStateCache.h"
-#include "2d/CCShaderCache.h"
-#include "2d/platform/CCDevice.h"
+#include "renderer/CCGLProgram.h"
+#include "renderer/ccGLStateCache.h"
+#include "renderer/CCGLProgramCache.h"
+
 #include "deprecated/CCString.h"
+
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     #include "2d/CCTextureCache.h"
@@ -506,28 +508,16 @@ void Texture2D::setMaxT(GLfloat maxT)
     _maxT = maxT;
 }
 
-GLProgram* Texture2D::getShaderProgram() const
+GLProgram* Texture2D::getGLProgram() const
 {
     return _shaderProgram;
 }
 
-void Texture2D::setShaderProgram(GLProgram* shaderProgram)
+void Texture2D::setGLProgram(GLProgram* shaderProgram)
 {
     CC_SAFE_RETAIN(shaderProgram);
     CC_SAFE_RELEASE(_shaderProgram);
     _shaderProgram = shaderProgram;
-}
-
-void Texture2D::releaseData(void *data)
-{
-    free(data);
-}
-
-void* Texture2D::keepData(void *data, unsigned int length)
-{
-    CC_UNUSED_PARAM(length);
-    //The texture data mustn't be saved because it isn't a mutable texture.
-    return data;
 }
 
 bool Texture2D::hasPremultipliedAlpha() const
@@ -692,8 +682,8 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
     _hasPremultipliedAlpha = false;
     _hasMipmaps = mipmapsNum > 1;
 
-    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE));
-
+    // shader
+    setGLProgram(GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE));
     return true;
 }
 
@@ -1079,7 +1069,10 @@ bool Texture2D::initWithString(const char *text, const std::string& fontName, fl
 bool Texture2D::initWithString(const char *text, const FontDefinition& textDefinition)
 {
     if(!text || 0 == strlen(text))
+    {
         return false;
+    }
+
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // cache the texture data
     VolatileTextureMgr::addStringTexture(this, text, textDefinition);
@@ -1127,9 +1120,11 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
     textDef._stroke._strokeSize *= contentScaleFactor;
     textDef._shadow._shadowEnabled = false;
     
-    Data outData = Device::getTextureDataForText(text,textDef,align,imageWidth,imageHeight);
+    Data outData = Device::getTextureDataForText(text, textDef, align, imageWidth, imageHeight, _hasPremultipliedAlpha);
     if(outData.isNull())
+    {
         return false;
+    }
 
     Size  imageSize = Size((float)imageWidth, (float)imageHeight);
     pixelFormat = convertDataToFormat(outData.getBytes(), imageWidth*imageHeight*4, PixelFormat::RGBA8888, pixelFormat, &outTempData, &outTempDataLen);
@@ -1140,11 +1135,7 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
     {
         free(outTempData);
     }
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-    _hasPremultipliedAlpha = true;
-#else
-    _hasPremultipliedAlpha = false;
-#endif
+
     return ret;
 }
 
@@ -1168,7 +1159,7 @@ void Texture2D::drawAtPoint(const Vector2& point)
         point.x,            height  + point.y,
         width + point.x,    height  + point.y };
 
-    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORDS );
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORD );
     _shaderProgram->use();
     _shaderProgram->setUniformsForBuiltins();
 
@@ -1180,10 +1171,10 @@ void Texture2D::drawAtPoint(const Vector2& point)
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
     setGLBufferData(coordinates, 8 * sizeof(GLfloat), 1);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
 #endif // EMSCRIPTEN
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -1202,7 +1193,7 @@ void Texture2D::drawInRect(const Rect& rect)
         rect.origin.x,                            rect.origin.y + rect.size.height,        /*0.0f,*/
         rect.origin.x + rect.size.width,        rect.origin.y + rect.size.height,        /*0.0f*/ };
 
-    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORDS );
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORD );
     _shaderProgram->use();
     _shaderProgram->setUniformsForBuiltins();
 
@@ -1213,10 +1204,10 @@ void Texture2D::drawInRect(const Rect& rect)
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
     setGLBufferData(coordinates, 8 * sizeof(GLfloat), 1);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
 #endif // EMSCRIPTEN
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }

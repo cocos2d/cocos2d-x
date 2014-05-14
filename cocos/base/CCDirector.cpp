@@ -36,14 +36,15 @@ THE SOFTWARE.
 #include "2d/CCScene.h"
 #include "2d/CCSpriteFrameCache.h"
 #include "2d/platform/CCFileUtils.h"
-#include "2d/ccGLStateCache.h"
+#include "renderer/ccGLStateCache.h"
 #include "2d/platform/CCImage.h"
 #include "2d/CCActionManager.h"
 #include "2d/CCFontFNT.h"
 #include "2d/CCFontAtlasCache.h"
 #include "2d/CCAnimationCache.h"
 #include "2d/CCUserDefault.h"
-#include "2d/CCShaderCache.h"
+#include "renderer/CCGLProgramCache.h"
+#include "renderer/CCGLProgramStateCache.h"
 #include "2d/CCTransition.h"
 #include "2d/CCTextureCache.h"
 #include "2d/CCFontFreeType.h"
@@ -284,19 +285,17 @@ void Director::drawScene()
 
     pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
-    Matrix identity = Matrix::identity();
-
     // draw the scene
     if (_runningScene)
     {
-        _runningScene->visit(_renderer, identity, false);
+        _runningScene->visit(_renderer, Matrix::IDENTITY, false);
         _eventDispatcher->dispatchEvent(_eventAfterVisit);
     }
 
     // draw the notifications node
     if (_notificationNode)
     {
-        _notificationNode->visit(_renderer, identity, false);
+        _notificationNode->visit(_renderer, Matrix::IDENTITY, false);
     }
 
     if (_displayStats)
@@ -450,9 +449,9 @@ void Director::initMatrixStack()
         _textureMatrixStack.pop();
     }
     
-    _modelViewMatrixStack.push(Matrix::identity());
-    _projectionMatrixStack.push(Matrix::identity());
-    _textureMatrixStack.push(Matrix::identity());
+    _modelViewMatrixStack.push(Matrix::IDENTITY);
+    _projectionMatrixStack.push(Matrix::IDENTITY);
+    _textureMatrixStack.push(Matrix::IDENTITY);
 }
 
 void Director::resetMatrixStack()
@@ -484,15 +483,15 @@ void Director::loadIdentityMatrix(MATRIX_STACK_TYPE type)
 {
     if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
     {
-        _modelViewMatrixStack.top() = Matrix::identity();
+        _modelViewMatrixStack.top() = Matrix::IDENTITY;
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
     {
-        _projectionMatrixStack.top() = Matrix::identity();
+        _projectionMatrixStack.top() = Matrix::IDENTITY;
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
     {
-        _textureMatrixStack.top() = Matrix::identity();
+        _textureMatrixStack.top() = Matrix::IDENTITY;
     }
     else
     {
@@ -952,7 +951,8 @@ void Director::purgeDirector()
     DrawPrimitives::free();
     AnimationCache::destroyInstance();
     SpriteFrameCache::destroyInstance();
-    ShaderCache::destroyInstance();
+    GLProgramCache::destroyInstance();
+    GLProgramStateCache::destroyInstance();
     FileUtils::destroyInstance();
     Configuration::destroyInstance();
 
@@ -1080,7 +1080,7 @@ void Director::showStats()
             prevVerts = currentVerts;
         }
 
-        Matrix identity = Matrix::identity();
+        Matrix identity = Matrix::IDENTITY;
 
         _drawnVerticesLabel->visit(_renderer, identity, false);
         _drawnBatchesLabel->visit(_renderer, identity, false);

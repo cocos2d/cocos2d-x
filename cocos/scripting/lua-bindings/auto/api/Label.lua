@@ -33,9 +33,15 @@
 -- @param self
         
 --------------------------------
+-- @function [parent=#Label] setTTFConfig 
+-- @param self
+-- @param #cc._ttfConfig _ttfconfig
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- @function [parent=#Label] getTextColor 
 -- @param self
--- @return color4B_table#color4B_table ret (return value: color4B_table)
+-- @return color4b_table#color4b_table ret (return value: color4b_table)
         
 --------------------------------
 -- @function [parent=#Label] getCommonLineHeight 
@@ -76,7 +82,7 @@
 -- @function [parent=#Label] setBMFontFilePath 
 -- @param self
 -- @param #string str
--- @param #cc.math::Vector2 array
+-- @param #vector2_table array
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -111,7 +117,7 @@
 --------------------------------
 -- @function [parent=#Label] enableOutline 
 -- @param self
--- @param #color4B_table color4b
+-- @param #color4b_table color4b
 -- @param #int int
         
 --------------------------------
@@ -162,7 +168,7 @@
 --------------------------------
 -- @function [parent=#Label] setTextColor 
 -- @param self
--- @param #color4B_table color4b
+-- @param #color4b_table color4b
         
 --------------------------------
 -- @function [parent=#Label] setHeight 
@@ -177,7 +183,7 @@
 --------------------------------
 -- @function [parent=#Label] enableGlow 
 -- @param self
--- @param #color4B_table color4b
+-- @param #color4b_table color4b
         
 --------------------------------
 -- @function [parent=#Label] getLetter 
@@ -222,7 +228,7 @@
 -- @param #string str
 -- @param #cc.TextHAlignment texthalignment
 -- @param #int int
--- @param #cc.math::Vector2 array
+-- @param #vector2_table array
 -- @return Label#Label ret (return value: cc.Label)
         
 --------------------------------
@@ -260,7 +266,7 @@
 -- @function [parent=#Label] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #cc.math::Matrix matrix
+-- @param #matrix_table matrix
 -- @param #bool bool
         
 --------------------------------
@@ -337,6 +343,6 @@
 --------------------------------
 -- @function [parent=#Label] updateDisplayedColor 
 -- @param self
--- @param #color3B_table color3b
+-- @param #color3b_table color3b
         
 return nil

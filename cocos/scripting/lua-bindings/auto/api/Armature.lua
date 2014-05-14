@@ -141,19 +141,19 @@
 --------------------------------
 -- @function [parent=#Armature] setAnchorPoint 
 -- @param self
--- @param #cc.math::Vector2 array
+-- @param #vector2_table array
         
 --------------------------------
 -- @function [parent=#Armature] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #cc.math::Matrix matrix
+-- @param #matrix_table matrix
 -- @param #bool bool
         
 --------------------------------
 -- @function [parent=#Armature] getAnchorPointInPoints 
 -- @param self
--- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#Armature] update 
@@ -163,7 +163,7 @@
 --------------------------------
 -- @function [parent=#Armature] getNodeToParentTransform 
 -- @param self
--- @return math::Matrix#math::Matrix ret (return value: cc.math::Matrix)
+-- @return matrix_table#matrix_table ret (return value: matrix_table)
         
 --------------------------------
 -- @function [parent=#Armature] getBoundingBox 

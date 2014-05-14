@@ -33,10 +33,11 @@ THE SOFTWARE.
 #include "2d/CCSpriteFrameCache.h"
 #include "2d/CCTextureCache.h"
 #include "2d/CCDrawingPrimitives.h"
-#include "2d/CCShaderCache.h"
-#include "2d/ccGLStateCache.h"
-#include "2d/CCGLProgram.h"
 #include "2d/CCTexture2D.h"
+#include "renderer/CCGLProgramState.h"
+#include "renderer/ccGLStateCache.h"
+#include "renderer/CCGLProgram.h"
+#include "renderer/CCRenderer.h"
 #include "base/CCProfiling.h"
 #include "base/CCDirector.h"
 #include "base/CCDirector.h"
@@ -44,7 +45,6 @@ THE SOFTWARE.
 #include "math/CCGeometry.h"
 #include "math/CCAffineTransform.h"
 #include "math/TransformUtils.h"
-#include "renderer/CCRenderer.h"
 
 #include "deprecated/CCString.h"
 
@@ -61,8 +61,8 @@ NS_CC_BEGIN
 
 Sprite* Sprite::createWithTexture(Texture2D *texture)
 {
-    Sprite *sprite = new Sprite();
-    if (sprite->initWithTexture(texture))
+    Sprite *sprite = new (std::nothrow) Sprite();
+    if (sprite && sprite->initWithTexture(texture))
     {
         sprite->autorelease();
         return sprite;
@@ -73,8 +73,8 @@ Sprite* Sprite::createWithTexture(Texture2D *texture)
 
 Sprite* Sprite::createWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
 {
-    Sprite *sprite = new Sprite();
-    if (sprite->initWithTexture(texture, rect, rotated))
+    Sprite *sprite = new (std::nothrow) Sprite();
+    if (sprite && sprite->initWithTexture(texture, rect, rotated))
     {
         sprite->autorelease();
         return sprite;
@@ -85,8 +85,8 @@ Sprite* Sprite::createWithTexture(Texture2D *texture, const Rect& rect, bool rot
 
 Sprite* Sprite::create(const std::string& filename)
 {
-    Sprite *sprite = new Sprite();
-    if (sprite->initWithFile(filename))
+    Sprite *sprite = new (std::nothrow) Sprite();
+    if (sprite && sprite->initWithFile(filename))
     {
         sprite->autorelease();
         return sprite;
@@ -97,8 +97,8 @@ Sprite* Sprite::create(const std::string& filename)
 
 Sprite* Sprite::create(const std::string& filename, const Rect& rect)
 {
-    Sprite *sprite = new Sprite();
-    if (sprite->initWithFile(filename, rect))
+    Sprite *sprite = new (std::nothrow) Sprite();
+    if (sprite && sprite->initWithFile(filename, rect))
     {
         sprite->autorelease();
         return sprite;
@@ -109,8 +109,8 @@ Sprite* Sprite::create(const std::string& filename, const Rect& rect)
 
 Sprite* Sprite::createWithSpriteFrame(SpriteFrame *spriteFrame)
 {
-    Sprite *sprite = new Sprite();
-    if (spriteFrame && sprite->initWithSpriteFrame(spriteFrame))
+    Sprite *sprite = new (std::nothrow) Sprite();
+    if (sprite && spriteFrame && sprite->initWithSpriteFrame(spriteFrame))
     {
         sprite->autorelease();
         return sprite;
@@ -134,7 +134,7 @@ Sprite* Sprite::createWithSpriteFrameName(const std::string& spriteFrameName)
 
 Sprite* Sprite::create()
 {
-    Sprite *sprite = new Sprite();
+    Sprite *sprite = new (std::nothrow) Sprite();
     if (sprite && sprite->init())
     {
         sprite->autorelease();
@@ -248,9 +248,9 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         _quad.tl.colors = Color4B::WHITE;
         _quad.tr.colors = Color4B::WHITE;
         
-        // shader program
-        setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
-        
+        // shader state
+        setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
+
         // update texture (calls updateBlendFunc)
         setTexture(texture);
         setTextureRect(rect, rotated, rect.size);
@@ -590,7 +590,7 @@ void Sprite::draw(Renderer *renderer, const Matrix &transform, bool transformUpd
 
     if(_insideBounds)
     {
-        _quadCommand.init(_globalZOrder, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, transform);
+        _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, transform);
         renderer->addCommand(&_quadCommand);
 #if CC_SPRITE_DEBUG_DRAW
         _customDebugDrawCommand.init(_globalZOrder);
@@ -1004,7 +1004,7 @@ void Sprite::setBatchNode(SpriteBatchNode *spriteBatchNode)
     } else {
 
         // using batch
-        _transformToBatch = Matrix::identity();
+        _transformToBatch = Matrix::IDENTITY;
         setTextureAtlas(_batchNode->getTextureAtlas()); // weak ref
     }
 }

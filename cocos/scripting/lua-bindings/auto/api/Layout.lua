@@ -6,32 +6,42 @@
 --------------------------------
 -- @function [parent=#Layout] setBackGroundColorVector 
 -- @param self
--- @param #cc.math::Vector2 array
+-- @param #vector2_table array
         
 --------------------------------
 -- @function [parent=#Layout] setClippingType 
 -- @param self
--- @param #ccui.LayoutClippingType layoutclippingtype
+-- @param #ccui.Layout::ClippingType clippingtype
         
 --------------------------------
 -- @function [parent=#Layout] setBackGroundColorType 
 -- @param self
--- @param #ccui.LayoutBackGroundColorType layoutbackgroundcolortype
+-- @param #ccui.Layout::BackGroundColorType backgroundcolortype
+        
+--------------------------------
+-- @function [parent=#Layout] setLoopFocus 
+-- @param self
+-- @param #bool bool
         
 --------------------------------
 -- @function [parent=#Layout] setBackGroundImageColor 
 -- @param self
--- @param #color3B_table color3b
+-- @param #color3b_table color3b
         
 --------------------------------
 -- @function [parent=#Layout] getBackGroundColorVector 
 -- @param self
--- @return math::Vector2#math::Vector2 ret (return value: cc.math::Vector2)
+-- @return vector2_table#vector2_table ret (return value: vector2_table)
         
 --------------------------------
 -- @function [parent=#Layout] getClippingType 
 -- @param self
--- @return LayoutClippingType#LayoutClippingType ret (return value: ccui.LayoutClippingType)
+-- @return Layout::ClippingType#Layout::ClippingType ret (return value: ccui.Layout::ClippingType)
+        
+--------------------------------
+-- @function [parent=#Layout] isLoopFocus 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @function [parent=#Layout] removeBackGroundImage 
@@ -56,17 +66,17 @@
 -- @function [parent=#Layout] setBackGroundImage 
 -- @param self
 -- @param #string str
--- @param #ccui.TextureResType texturerestype
+-- @param #ccui.Widget::TextureResType texturerestype
         
 --------------------------------
--- overload function: setBackGroundColor(color3B_table, color3B_table)
+-- overload function: setBackGroundColor(color3b_table, color3b_table)
 --          
--- overload function: setBackGroundColor(color3B_table)
+-- overload function: setBackGroundColor(color3b_table)
 --          
 -- @function [parent=#Layout] setBackGroundColor
 -- @param self
--- @param #color3B_table color3b
--- @param #color3B_table color3b
+-- @param #color3b_table color3b
+-- @param #color3b_table color3b
 
 --------------------------------
 -- @function [parent=#Layout] requestDoLayout 
@@ -80,7 +90,7 @@
 --------------------------------
 -- @function [parent=#Layout] getBackGroundColor 
 -- @param self
--- @return color3B_table#color3B_table ret (return value: color3B_table)
+-- @return color3b_table#color3b_table ret (return value: color3b_table)
         
 --------------------------------
 -- @function [parent=#Layout] setClippingEnabled 
@@ -90,7 +100,7 @@
 --------------------------------
 -- @function [parent=#Layout] getBackGroundImageColor 
 -- @param self
--- @return color3B_table#color3B_table ret (return value: color3B_table)
+-- @return color3b_table#color3b_table ret (return value: color3b_table)
         
 --------------------------------
 -- @function [parent=#Layout] isBackGroundImageScale9Enabled 
@@ -100,12 +110,12 @@
 --------------------------------
 -- @function [parent=#Layout] getBackGroundColorType 
 -- @param self
--- @return LayoutBackGroundColorType#LayoutBackGroundColorType ret (return value: ccui.LayoutBackGroundColorType)
+-- @return Layout::BackGroundColorType#Layout::BackGroundColorType ret (return value: ccui.Layout::BackGroundColorType)
         
 --------------------------------
 -- @function [parent=#Layout] getBackGroundEndColor 
 -- @param self
--- @return color3B_table#color3B_table ret (return value: color3B_table)
+-- @return color3b_table#color3b_table ret (return value: color3b_table)
         
 --------------------------------
 -- @function [parent=#Layout] setBackGroundColorOpacity 
@@ -116,6 +126,11 @@
 -- @function [parent=#Layout] getBackGroundImageOpacity 
 -- @param self
 -- @return unsigned char#unsigned char ret (return value: unsigned char)
+        
+--------------------------------
+-- @function [parent=#Layout] isPassFocusToChild 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @function [parent=#Layout] setBackGroundImageCapInsets 
@@ -130,12 +145,17 @@
 --------------------------------
 -- @function [parent=#Layout] getLayoutType 
 -- @param self
--- @return LayoutType#LayoutType ret (return value: ccui.LayoutType)
+-- @return Layout::Type#Layout::Type ret (return value: ccui.Layout::Type)
+        
+--------------------------------
+-- @function [parent=#Layout] setPassFocusToChild 
+-- @param self
+-- @param #bool bool
         
 --------------------------------
 -- @function [parent=#Layout] getBackGroundStartColor 
 -- @param self
--- @return color3B_table#color3B_table ret (return value: color3B_table)
+-- @return color3b_table#color3b_table ret (return value: color3b_table)
         
 --------------------------------
 -- @function [parent=#Layout] setBackGroundImageScale9Enabled 
@@ -145,7 +165,7 @@
 --------------------------------
 -- @function [parent=#Layout] setLayoutType 
 -- @param self
--- @param #ccui.LayoutType layouttype
+-- @param #ccui.Layout::Type type
         
 --------------------------------
 -- @function [parent=#Layout] create 
@@ -187,6 +207,13 @@
 --------------------------------
 -- @function [parent=#Layout] sortAllChildren 
 -- @param self
+        
+--------------------------------
+-- @function [parent=#Layout] findNextFocusedWidget 
+-- @param self
+-- @param #ccui.Widget::FocusDirection focusdirection
+-- @param #ccui.Widget widget
+-- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
 -- @function [parent=#Layout] removeChild 

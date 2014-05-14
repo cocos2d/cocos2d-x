@@ -1,19 +1,19 @@
 /****************************************************************************
  Copyright (c) 2013      cocos2d-x.org
  Copyright (c) 2013-2014 Chukong Technologies Inc.
- 
+
  http://www.cocos2d-x.org
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -446,7 +446,7 @@ CC_DEPRECATED_ATTRIBUTE static inline Color4F ccc4FFromccc4B(Color4B c)
 
 CC_DEPRECATED_ATTRIBUTE static inline Color4B ccc4BFromccc4F(Color4F c)
 {
-	return Color4B((GLubyte)(c.r*255), (GLubyte)(c.g*255), (GLubyte)(c.b*255), (GLubyte)(c.a*255));
+        return Color4B((GLubyte)(c.r*255), (GLubyte)(c.g*255), (GLubyte)(c.b*255), (GLubyte)(c.a*255));
 }
 
 CC_DEPRECATED_ATTRIBUTE static inline bool ccc4FEqual(Color4F a, Color4F b)
@@ -751,7 +751,8 @@ CC_DEPRECATED_ATTRIBUTE typedef ParticleSnow CCParticleSnow;
 CC_DEPRECATED_ATTRIBUTE typedef ParticleRain CCParticleRain;
 CC_DEPRECATED_ATTRIBUTE typedef FileUtils CCFileUtils;
 CC_DEPRECATED_ATTRIBUTE typedef Application CCApplication;
-CC_DEPRECATED_ATTRIBUTE typedef ShaderCache CCShaderCache;
+CC_DEPRECATED_ATTRIBUTE typedef GLProgramCache CCShaderCache;
+CC_DEPRECATED_ATTRIBUTE typedef GLProgramCache ShaderCache;
 CC_DEPRECATED_ATTRIBUTE typedef AnimationCache CCAnimationCache;
 CC_DEPRECATED_ATTRIBUTE typedef SpriteFrameCache CCSpriteFrameCache;
 CC_DEPRECATED_ATTRIBUTE typedef TextureCache CCTextureCache;
@@ -770,6 +771,7 @@ CC_DEPRECATED_ATTRIBUTE typedef GLView CCEGLView;
 CC_DEPRECATED_ATTRIBUTE typedef Component CCComponent;
 CC_DEPRECATED_ATTRIBUTE typedef AffineTransform CCAffineTransform;
 CC_DEPRECATED_ATTRIBUTE typedef Vector2 CCPoint;
+CC_DEPRECATED_ATTRIBUTE typedef Vector2 Point;
 CC_DEPRECATED_ATTRIBUTE typedef Size CCSize;
 CC_DEPRECATED_ATTRIBUTE typedef Rect CCRect;
 CC_DEPRECATED_ATTRIBUTE typedef Color3B ccColor3B;
@@ -805,7 +807,7 @@ CC_DEPRECATED_ATTRIBUTE typedef void* CCZone;
 
 CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttrib_Position = GLProgram::VERTEX_ATTRIB_POSITION;
 CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttrib_Color = GLProgram::VERTEX_ATTRIB_COLOR;
-CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttrib_TexCoords = GLProgram::VERTEX_ATTRIB_TEX_COORDS;
+CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttrib_TexCoords = GLProgram::VERTEX_ATTRIB_TEX_COORD;
 CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttrib_MAX = GLProgram::VERTEX_ATTRIB_MAX;
 
 CC_DEPRECATED_ATTRIBUTE const int kCCUniformPMatrix = GLProgram::UNIFORM_P_MATRIX;
@@ -815,7 +817,7 @@ CC_DEPRECATED_ATTRIBUTE const int kCCUniformTime = GLProgram::UNIFORM_TIME;
 CC_DEPRECATED_ATTRIBUTE const int kCCUniformSinTime = GLProgram::UNIFORM_SIN_TIME;
 CC_DEPRECATED_ATTRIBUTE const int kCCUniformCosTime = GLProgram::UNIFORM_COS_TIME;
 CC_DEPRECATED_ATTRIBUTE const int kCCUniformRandom01 = GLProgram::UNIFORM_RANDOM01;
-CC_DEPRECATED_ATTRIBUTE const int kCCUniformSampler = GLProgram::UNIFORM_SAMPLER;
+CC_DEPRECATED_ATTRIBUTE const int kCCUniformSampler = GLProgram::UNIFORM_SAMPLER0;
 CC_DEPRECATED_ATTRIBUTE const int kCCUniform_MAX = GLProgram::UNIFORM_MAX;
 
 CC_DEPRECATED_ATTRIBUTE extern const char* kCCShader_PositionTextureColor;
@@ -846,7 +848,7 @@ CC_DEPRECATED_ATTRIBUTE extern const char*    kCCAttributeNameTexCoord;
 CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttribFlag_None = GL::VERTEX_ATTRIB_FLAG_NONE;
 CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttribFlag_Position = GL::VERTEX_ATTRIB_FLAG_POSITION;
 CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttribFlag_Color = GL::VERTEX_ATTRIB_FLAG_COLOR;
-CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttribFlag_TexCoords = GL::VERTEX_ATTRIB_FLAG_TEX_COORDS;
+CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttribFlag_TexCoords = GL::VERTEX_ATTRIB_FLAG_TEX_COORD;
 CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttribFlag_PosColorTex = GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX;
 
 CC_DEPRECATED_ATTRIBUTE const ProgressTimer::Type kCCProgressTimerTypeRadial = ProgressTimer::Type::RADIAL;
@@ -1108,13 +1110,13 @@ CC_DEPRECATED_ATTRIBUTE CC_DLL Vector3* kmVec3Scale(Vector3* pOut, const Vector3
 CC_DEPRECATED_ATTRIBUTE CC_DLL Vector3* kmVec3Assign(Vector3* pOut, const Vector3* pIn);
 CC_DEPRECATED_ATTRIBUTE CC_DLL Vector3* kmVec3Zero(Vector3* pOut);
 
-CC_DEPRECATED_ATTRIBUTE const Vector3 KM_VEC3_NEG_Z = Vector3(0, 0, -1);
-CC_DEPRECATED_ATTRIBUTE const Vector3 KM_VEC3_POS_Z = Vector3(0, 0, 1);
-CC_DEPRECATED_ATTRIBUTE const Vector3 KM_VEC3_POS_Y = Vector3(0, 1, 0);
-CC_DEPRECATED_ATTRIBUTE const Vector3 KM_VEC3_NEG_Y = Vector3(0, -1, 0);
-CC_DEPRECATED_ATTRIBUTE const Vector3 KM_VEC3_NEG_X = Vector3(-1, 0, 0);
-CC_DEPRECATED_ATTRIBUTE const Vector3 KM_VEC3_POS_X = Vector3(1, 0, 0);
-CC_DEPRECATED_ATTRIBUTE const Vector3 KM_VEC3_ZERO = Vector3(0, 0, 0);
+CC_DEPRECATED_ATTRIBUTE extern const Vector3 KM_VEC3_NEG_Z;
+CC_DEPRECATED_ATTRIBUTE extern const Vector3 KM_VEC3_POS_Z;
+CC_DEPRECATED_ATTRIBUTE extern const Vector3 KM_VEC3_POS_Y;
+CC_DEPRECATED_ATTRIBUTE extern const Vector3 KM_VEC3_NEG_Y;
+CC_DEPRECATED_ATTRIBUTE extern const Vector3 KM_VEC3_NEG_X;
+CC_DEPRECATED_ATTRIBUTE extern const Vector3 KM_VEC3_POS_X;
+CC_DEPRECATED_ATTRIBUTE extern const Vector3 KM_VEC3_ZERO;
 
 //kmVec2
 CC_DEPRECATED_ATTRIBUTE typedef Vector2 kmVec2;
@@ -1129,11 +1131,11 @@ CC_DEPRECATED_ATTRIBUTE CC_DLL Vector2* kmVec2Subtract(Vector2* pOut, const Vect
 CC_DEPRECATED_ATTRIBUTE CC_DLL Vector2* kmVec2Scale(Vector2* pOut, const Vector2* pIn, const float s);
 CC_DEPRECATED_ATTRIBUTE CC_DLL Vector2* kmVec2Assign(Vector2* pOut, const Vector2* pIn);
 
-CC_DEPRECATED_ATTRIBUTE const Vector2 KM_VEC2_POS_Y = Vector2(0, 1);
-CC_DEPRECATED_ATTRIBUTE const Vector2 KM_VEC2_NEG_Y = Vector2(0, -1);
-CC_DEPRECATED_ATTRIBUTE const Vector2 KM_VEC2_NEG_X = Vector2(-1, 0);
-CC_DEPRECATED_ATTRIBUTE const Vector2 KM_VEC2_POS_X = Vector2(1, 0);
-CC_DEPRECATED_ATTRIBUTE const Vector2 KM_VEC2_ZERO = Vector2(0, 0);
+CC_DEPRECATED_ATTRIBUTE extern const Vector2 KM_VEC2_POS_Y;
+CC_DEPRECATED_ATTRIBUTE extern const Vector2 KM_VEC2_NEG_Y;
+CC_DEPRECATED_ATTRIBUTE extern const Vector2 KM_VEC2_NEG_X;
+CC_DEPRECATED_ATTRIBUTE extern const Vector2 KM_VEC2_POS_X;
+CC_DEPRECATED_ATTRIBUTE extern const Vector2 KM_VEC2_ZERO;
 
 //kmVec4
 CC_DEPRECATED_ATTRIBUTE typedef Vector4 kmVec4;

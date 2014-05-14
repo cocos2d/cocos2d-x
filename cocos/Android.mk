@@ -8,9 +8,9 @@ LOCAL_MODULE_FILENAME := libcocos2d
 
 LOCAL_SRC_FILES := \
 cocos2d.cpp \
+2d/CCAction.cpp \
 2d/CCActionCamera.cpp \
 2d/CCActionCatmullRom.cpp \
-2d/CCAction.cpp \
 2d/CCActionEase.cpp \
 2d/CCActionGrid3D.cpp \
 2d/CCActionGrid.cpp \
@@ -37,8 +37,6 @@ cocos2d.cpp \
 2d/CCFontFNT.cpp \
 2d/CCFontFreeType.cpp \
 2d/CCGLBufferedNode.cpp \
-2d/CCGLProgram.cpp \
-2d/ccGLStateCache.cpp \
 2d/CCGrabber.cpp \
 2d/CCGrid.cpp \
 2d/CCIMEDispatcher.cpp \
@@ -62,8 +60,6 @@ cocos2d.cpp \
 2d/CCRenderTexture.cpp \
 2d/CCScene.cpp \
 2d/CCScriptSupport.cpp \
-2d/CCShaderCache.cpp \
-2d/ccShaders.cpp \
 2d/CCSpriteBatchNode.cpp \
 2d/CCSprite.cpp \
 2d/CCSpriteFrameCache.cpp \
@@ -121,6 +117,8 @@ base/CCEventListenerMouse.cpp \
 base/CCEventListenerTouch.cpp \
 base/CCEventMouse.cpp \
 base/CCEventTouch.cpp \
+base/CCEventFocus.cpp \
+base/CCEventListenerFocus.cpp \
 base/CCNS.cpp \
 base/CCProfiling.cpp \
 base/CCRef.cpp \
@@ -133,12 +131,18 @@ base/base64.cpp \
 base/ccTypes.cpp \
 base/etc1.cpp \
 base/s3tc.cpp \
+renderer/CCBatchCommand.cpp \
 renderer/CCCustomCommand.cpp \
+renderer/CCGLProgram.cpp \
+renderer/CCGLProgramState.cpp \
+renderer/CCGLProgramStateCache.cpp \
+renderer/ccGLStateCache.cpp \
 renderer/CCGroupCommand.cpp \
 renderer/CCQuadCommand.cpp \
-renderer/CCBatchCommand.cpp \
 renderer/CCRenderCommand.cpp \
 renderer/CCRenderer.cpp \
+renderer/CCGLProgramCache.cpp \
+renderer/ccShaders.cpp \
 deprecated/CCArray.cpp \
 deprecated/CCSet.cpp \
 deprecated/CCString.cpp \
@@ -155,6 +159,8 @@ physics/chipmunk/CCPhysicsContactInfo_chipmunk.cpp \
 physics/chipmunk/CCPhysicsJointInfo_chipmunk.cpp \
 physics/chipmunk/CCPhysicsShapeInfo_chipmunk.cpp \
 physics/chipmunk/CCPhysicsWorldInfo_chipmunk.cpp \
+../external/ConvertUTF/ConvertUTFWrapper.cpp \
+../external/ConvertUTF/ConvertUTF.c \
 ../external/tinyxml2/tinyxml2.cpp \
 ../external/unzip/ioapi.cpp \
 ../external/unzip/unzip.cpp \
@@ -164,6 +170,7 @@ physics/chipmunk/CCPhysicsWorldInfo_chipmunk.cpp \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/. \
+                    $(LOCAL_PATH)/2d \
                     $(LOCAL_PATH)/2d/platform/android \
                     $(LOCAL_PATH)/../external/tinyxml2 \
                     $(LOCAL_PATH)/../external/unzip \
@@ -177,7 +184,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/unzip \
                     $(LOCAL_PATH)/../external/chipmunk/include/chipmunk \
                     $(LOCAL_PATH)/../external/edtaa3func \
-                    $(LOCAL_PATH)/../external/xxhash
+                    $(LOCAL_PATH)/../external/xxhash \
+                    $(LOCAL_PATH)/../external/ConvertUTF
 
 
 LOCAL_LDLIBS := -lGLESv2 \

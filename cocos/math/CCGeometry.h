@@ -35,17 +35,10 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-USING_NS_CC_MATH;
-
 /**
  * @addtogroup data_structures
  * @{
  */
-
-// for Vector2 assignement operator and copy constructor
-class CC_DLL Size;
-
-CC_DEPRECATED_ATTRIBUTE typedef Vector2 Point;
 
 class CC_DLL Size
 {

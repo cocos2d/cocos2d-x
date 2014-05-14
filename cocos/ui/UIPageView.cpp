@@ -32,7 +32,7 @@ IMPLEMENT_CLASS_GUI_INFO(PageView)
 
 PageView::PageView():
 _curPageIdx(0),
-_touchMoveDir(PAGEVIEW_TOUCHLEFT),
+_touchMoveDir(TouchDirection::LEFT),
 _touchStartLocation(0.0f),
 _touchMoveStartLocation(0.0f),
 _movePagePoint(Vector2::ZERO),
@@ -46,7 +46,8 @@ _autoScrollSpeed(0.0f),
 _autoScrollDir(0),
 _childFocusCancelOffset(5.0f),
 _pageViewEventListener(nullptr),
-_pageViewEventSelector(nullptr)
+_pageViewEventSelector(nullptr),
+_eventCallback(nullptr)
 {
 }
 
@@ -130,10 +131,7 @@ void PageView::addPage(Layout* page)
     {
         return;
     }
-    if (page->getWidgetType() != WidgetTypeContainer)
-    {
-        return;
-    }
+    
     if (_pages.contains(page))
     {
         return;
@@ -161,10 +159,7 @@ void PageView::insertPage(Layout* page, int idx)
     {
         return;
     }
-    if (page->getWidgetType() != WidgetTypeContainer)
-    {
-        return;
-    }
+  
     if (_pages.contains(page))
     {
         return;
@@ -439,7 +434,7 @@ bool PageView::scrollPages(float touchOffset)
     
     switch (_touchMoveDir)
     {
-        case PAGEVIEW_TOUCHLEFT: // left
+        case TouchDirection::LEFT: // left
             if (_rightChild->getRightInParent() + touchOffset <= _rightBoundary)
             {
                 realOffset = _rightBoundary - _rightChild->getRightInParent();
@@ -448,7 +443,7 @@ bool PageView::scrollPages(float touchOffset)
             }
             break;
             
-        case PAGEVIEW_TOUCHRIGHT: // right
+        case TouchDirection::RIGHT: // right
             if (_leftChild->getLeftInParent() + touchOffset >= _leftBoundary)
             {
                 realOffset = _leftBoundary - _leftChild->getLeftInParent();
@@ -480,11 +475,11 @@ void PageView::handleMoveLogic(const Vector2 &touchPoint)
     _touchMoveStartLocation = moveX;
     if (offset < 0)
     {
-        _touchMoveDir = PAGEVIEW_TOUCHLEFT;
+        _touchMoveDir = TouchDirection::LEFT;
     }
     else if (offset > 0)
     {
-        _touchMoveDir = PAGEVIEW_TOUCHRIGHT;
+        _touchMoveDir = TouchDirection::RIGHT;
     }
     scrollPages(offset);
 }
@@ -550,7 +545,7 @@ void PageView::interceptTouchEvent(int handleState, Widget *sender, const Vector
             offset = fabs(sender->getTouchStartPos().x - touchPoint.x);
             if (offset > _childFocusCancelOffset)
             {
-                sender->setFocused(false);
+                sender->setHighlighted(false);
                 handleMoveLogic(touchPoint);
             }
         }
@@ -571,12 +566,20 @@ void PageView::pageTurningEvent()
     {
         (_pageViewEventListener->*_pageViewEventSelector)(this, PAGEVIEW_EVENT_TURNING);
     }
+    if (_eventCallback) {
+        _eventCallback(this,EventType::TURNING);
+    }
 }
 
 void PageView::addEventListenerPageView(Ref *target, SEL_PageViewEvent selector)
 {
     _pageViewEventListener = target;
     _pageViewEventSelector = selector;
+}
+    
+void PageView::addEventListener(ccPageViewCallback callback)
+{
+    _eventCallback = callback;
 }
 
 ssize_t PageView::getCurPageIndex() const

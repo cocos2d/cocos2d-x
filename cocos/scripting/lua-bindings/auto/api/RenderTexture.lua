@@ -6,7 +6,7 @@
 --------------------------------
 -- @function [parent=#RenderTexture] setVirtualViewport 
 -- @param self
--- @param #cc.math::Vector2 array
+-- @param #vector2_table array
 -- @param #rect_table rect
 -- @param #rect_table rect
         
@@ -82,7 +82,7 @@
 --------------------------------
 -- @function [parent=#RenderTexture] setClearColor 
 -- @param self
--- @param #color4F_table color4f
+-- @param #color4f_table color4f
         
 --------------------------------
 -- @function [parent=#RenderTexture] endToLua 
@@ -112,7 +112,7 @@
 --------------------------------
 -- @function [parent=#RenderTexture] getClearColor 
 -- @param self
--- @return color4F_table#color4F_table ret (return value: color4F_table)
+-- @return color4f_table#color4f_table ret (return value: color4f_table)
         
 --------------------------------
 -- @function [parent=#RenderTexture] clear 
@@ -169,7 +169,7 @@
 -- @function [parent=#RenderTexture] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #cc.math::Matrix matrix
+-- @param #matrix_table matrix
 -- @param #bool bool
         
 --------------------------------

@@ -340,6 +340,38 @@ bool luaval_to_vector3(lua_State* L,int lo,cocos2d::Vector3* outValue)
     return ok;
 }
 
+bool luaval_to_blendfunc(lua_State* L, int lo, cocos2d::BlendFunc* outValue)
+{
+    if (nullptr == L || nullptr == outValue)
+        return false;
+    
+    bool ok = true;
+    
+    tolua_Error tolua_err;
+    if (!tolua_istable(L, lo, 0, &tolua_err) )
+    {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
+        ok = false;
+    }
+    
+    
+    if (ok)
+    {
+        lua_pushstring(L, "src");
+        lua_gettable(L, lo);
+        outValue->src = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "dst");
+        lua_gettable(L, lo);
+        outValue->dst = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+    }
+    return ok;
+}
+
 bool luaval_to_physics_material(lua_State* L,int lo,PhysicsMaterial* outValue)
 {
     if (NULL == L || NULL == outValue)
@@ -817,7 +849,61 @@ bool luaval_to_fontdefinition(lua_State* L, int lo, FontDefinition* outValue )
     return ok;
 }
 
-bool luaval_to_matrix(lua_State* L, int lo, cocos2d::math::Matrix* outValue )
+bool luaval_to_ttfconfig(lua_State* L,int lo, cocos2d::TTFConfig* outValue)
+{
+    if (nullptr == L || nullptr == outValue)
+        return false;
+    
+    bool ok = true;
+    
+    tolua_Error tolua_err;
+    if (!tolua_istable(L, lo, 0, &tolua_err) )
+    {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
+        ok = false;
+    }
+    
+    if (ok)
+    {
+        lua_pushstring(L, "fontFilePath");         /* L: paramStack key */
+        lua_gettable(L,lo);                        /* L: paramStack paramStack[lo][key] */
+        outValue->fontFilePath = lua_isstring(L, -1)? lua_tostring(L, -1) : "";
+        lua_pop(L,1);                              /* L: paramStack*/
+        
+        lua_pushstring(L, "fontSize");
+        lua_gettable(L,lo);
+        outValue->fontSize = lua_isnumber(L, -1)?(int)lua_tointeger(L, -1) : 0;
+        lua_pop(L,1);
+        
+        lua_pushstring(L, "glyphs");
+        lua_gettable(L, lo);
+        outValue->glyphs = lua_isnumber(L, -1)?static_cast<GlyphCollection>(lua_tointeger(L, -1)) : GlyphCollection::NEHE;
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "customGlyphs");
+        lua_gettable(L, lo);
+        outValue->customGlyphs = lua_isstring(L, -1)?lua_tostring(L, -1) : "";
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "distanceFieldEnabled");
+        lua_gettable(L, lo);
+        outValue->distanceFieldEnabled = lua_isboolean(L, -1)?lua_toboolean(L, -1) : false;
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "outlineSize");
+        lua_gettable(L, lo);
+        outValue->outlineSize = lua_isnumber(L, -1)?(int)lua_tointeger(L, -1) : 0;
+        lua_pop(L, 1);
+        
+        return true;
+    }
+    
+    return false;
+}
+
+bool luaval_to_matrix(lua_State* L, int lo, cocos2d::Matrix* outValue )
 {
     if (nullptr == L || nullptr == outValue)
         return false;
@@ -2320,7 +2406,7 @@ void ccvaluevector_to_luaval(lua_State* L, const cocos2d::ValueVector& inValue)
     }
 }
 
-void matrix_to_luaval(lua_State* L, const cocos2d::math::Matrix& mat)
+void matrix_to_luaval(lua_State* L, const cocos2d::Matrix& mat)
 {
     if (nullptr  == L)
         return;
@@ -2335,4 +2421,58 @@ void matrix_to_luaval(lua_State* L, const cocos2d::math::Matrix& mat)
         lua_rawset(L, -3);
         ++indexTable;
     }
+}
+
+void blendfunc_to_luaval(lua_State* L, const cocos2d::BlendFunc& func)
+{
+    if (nullptr == L)
+        return;
+    
+    lua_newtable(L);                                    /* L: table */
+    
+    lua_pushstring(L, "src");                           /* L: table key */
+    lua_pushnumber(L, (lua_Number) func.src);           /* L: table key value*/
+    lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+    lua_pushstring(L, "dst");                           /* L: table key */
+    lua_pushnumber(L, (lua_Number) func.dst);           /* L: table key value*/
+    lua_rawset(L, -3);
+}
+
+void ttfconfig_to_luaval(lua_State* L, const cocos2d::TTFConfig& config)
+{
+    if (nullptr == L)
+        return;
+    
+    lua_newtable(L);
+    
+    lua_pushstring(L, "fontFilePath");
+    lua_pushstring(L, config.fontFilePath.c_str());
+    lua_rawset(L, -3);
+    
+    lua_pushstring(L, "fontSize");
+    lua_pushnumber(L, (lua_Number)config.fontSize);
+    lua_rawset(L, -3);
+    
+    lua_pushstring(L, "glyphs");
+    lua_pushnumber(L, (lua_Number)config.glyphs);
+    lua_rawset(L, -3);
+    
+    lua_pushstring(L, "customGlyphs");
+    if (nullptr != config.customGlyphs && strlen(config.customGlyphs) > 0)
+    {
+        lua_pushstring(L, config.customGlyphs);
+    }
+    else
+    {
+        lua_pushstring(L, "");
+    }
+    lua_rawset(L, -3);
+    
+    lua_pushstring(L, "distanceFieldEnabled");
+    lua_pushboolean(L, config.distanceFieldEnabled);
+    lua_rawset(L, -3);
+    
+    lua_pushstring(L, "outlineSize");
+    lua_pushnumber(L, (lua_Number)config.outlineSize);
+    lua_rawset(L, -3);
 }

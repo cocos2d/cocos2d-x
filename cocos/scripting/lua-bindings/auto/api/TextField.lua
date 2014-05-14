@@ -59,6 +59,11 @@
 -- @param #cc.TextVAlignment textvalignment
         
 --------------------------------
+-- @function [parent=#TextField] addEventListener 
+-- @param self
+-- @param #function func
+        
+--------------------------------
 -- @function [parent=#TextField] didNotSelectSelf 
 -- @param self
         
@@ -149,7 +154,7 @@
 --------------------------------
 -- @function [parent=#TextField] hitTest 
 -- @param self
--- @param #cc.math::Vector2 array
+-- @param #vector2_table array
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
