@@ -30,6 +30,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+#ifdef CC_USE_MEM_LEAK_DETECTION
+void trackRef(Ref* ref);
+void untrackRef(Ref* ref);
+#endif
+
 Ref::Ref()
 : _referenceCount(1) // when the Ref is created, the reference count of it is 1
 {
@@ -38,6 +43,7 @@ Ref::Ref()
     _luaID = 0;
     _ID = ++uObjectCount;
 #endif
+    trackRef(this);
 }
 
 Ref::~Ref()
@@ -57,6 +63,14 @@ Ref::~Ref()
         }
     }
 #endif
+    
+
+#ifdef CC_USE_MEM_LEAK_DETECTION
+    if (_referenceCount != 0)
+        untrackRef(this);
+#endif
+    
+    //CCASSERT(0 == _referenceCount, "Ref class has to be deleted by Ref::release(), don't use 'delete pointer' directly.");
 }
 
 void Ref::retain()
@@ -106,6 +120,10 @@ void Ref::release()
             CCASSERT(false, "The reference shouldn't be 0 because it is still in autorelease pool.");
         }
 #endif
+        
+#ifdef CC_USE_MEM_LEAK_DETECTION
+        untrackRef(this);
+#endif
         delete this;
     }
 }
@@ -120,5 +138,52 @@ unsigned int Ref::getReferenceCount() const
 {
     return _referenceCount;
 }
+
+#ifdef CC_USE_MEM_LEAK_DETECTION
+
+static std::list<Ref*> __refAllocationList;
+
+void Ref::printLeaks()
+{
+    // Dump Ref object memory leaks
+    if (__refAllocationList.empty())
+    {
+        log("[memory] All Ref objects successfully cleaned up (no leaks detected).\n");
+    }
+    else
+    {
+        log("[memory] WARNING: %d Ref objects still active in memory.\n", (int)__refAllocationList.size());
+        
+        for (const auto& ref : __refAllocationList)
+        {
+            CC_ASSERT(ref);
+            const char* type = typeid(*ref).name();
+            log("[memory] LEAK: Ref object '%s' still active with reference count %d.\n", (type ? type : ""), ref->getReferenceCount());
+        }
+    }
+}
+
+void trackRef(Ref* ref)
+{
+    CC_ASSERT(ref);
+    
+    // Create memory allocation record.
+    __refAllocationList.push_back(ref);
+}
+
+void untrackRef(Ref* ref)
+{
+    auto iter = std::find(__refAllocationList.begin(), __refAllocationList.end(), ref);
+    if (iter == __refAllocationList.end())
+    {
+        log("[memory] CORRUPTION: Attempting to free (%s) with invalid ref tracking record.\n", typeid(*ref).name());
+        return;
+    }
+    
+    __refAllocationList.erase(iter);
+}
+
+#endif
+
 
 NS_CC_END

@@ -29,6 +29,8 @@ THE SOFTWARE.
 #include "base/CCPlatformMacros.h"
 #include "base/ccConfig.h"
 
+#define CC_USE_MEM_LEAK_DETECTION 1
+
 NS_CC_BEGIN
 
 /**
@@ -140,6 +142,12 @@ public:
     unsigned int        _ID;
     /// Lua reference id
     int                 _luaID;
+#endif
+    
+    // Memory leak diagnostic data (only included when CC_USE_MEM_LEAK_DETECTION is defined)
+#ifdef CC_USE_MEM_LEAK_DETECTION
+public:
+	static void printLeaks();
 #endif
 };
 
