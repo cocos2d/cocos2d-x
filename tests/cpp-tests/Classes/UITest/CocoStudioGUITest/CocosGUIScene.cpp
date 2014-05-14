@@ -16,283 +16,214 @@ static struct
 }
 g_guisTests[] =
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     {
-        "gui focus test",
+        "VideoPlayerTest",
         [](Ref* sender)
         {
-            UISceneManager* pManager = UISceneManager::sharedUISceneManager();
-            pManager->setCurrentUISceneId(KUIFocusTest_HBox);
-            pManager->setMinUISceneId(KUIFocusTest_HBox);
-            pManager->setMaxUISceneId(KUIFocusTest_NestedLayout3);
-            Scene* pScene = pManager->currentUIScene();
-            Director::getInstance()->replaceScene(pScene);
+            UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
+            sceneManager->setCurrentUISceneId(kUIVideoPlayerTest);
+            sceneManager->setMinUISceneId(kUIVideoPlayerTest);
+            sceneManager->setMaxUISceneId(kUIVideoPlayerTest);
+            Scene* scene = sceneManager->currentUIScene();
+            Director::getInstance()->replaceScene(scene);
+        }
+    },
+#endif
+    {
+        "focus test",
+        [](Ref* sender)
+        {
+            UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
+            sceneManager->setCurrentUISceneId(KUIFocusTest_HBox);
+            sceneManager->setMinUISceneId(KUIFocusTest_HBox);
+            sceneManager->setMaxUISceneId(KUIFocusTest_NestedLayout3);
+            Scene* scene = sceneManager->currentUIScene();
+            Director::getInstance()->replaceScene(scene);
         }
     },
 	{
         
-        "gui ButtonTest",
+        "ButtonTest",
         [](Ref* sender)
         {
-            UISceneManager* pManager = UISceneManager::sharedUISceneManager();
-            pManager->setCurrentUISceneId(kUIButtonTest);
-            pManager->setMinUISceneId(kUIButtonTest);
-            pManager->setMaxUISceneId(kUIButtonTest_Title);
-            Scene* pScene = pManager->currentUIScene();
-            Director::getInstance()->replaceScene(pScene);
+            UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
+            sceneManager->setCurrentUISceneId(kUIButtonTest);
+            sceneManager->setMinUISceneId(kUIButtonTest);
+            sceneManager->setMaxUISceneId(kUIButtonTest_Title);
+            Scene* scene = sceneManager->currentUIScene();
+            Director::getInstance()->replaceScene(scene);
         }
 	},
     {
-        "gui CheckBoxTest",
+        "CheckBoxTest",
         [](Ref* sender)
         {
-            UISceneManager* pManager = UISceneManager::sharedUISceneManager();
-            pManager->setCurrentUISceneId(kUICheckBoxTest);
-            pManager->setMinUISceneId(kUICheckBoxTest);
-            pManager->setMaxUISceneId(kUICheckBoxTest);
-            Scene* pScene = pManager->currentUIScene();
-            Director::getInstance()->replaceScene(pScene);
+            UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
+            sceneManager->setCurrentUISceneId(kUICheckBoxTest);
+            sceneManager->setMinUISceneId(kUICheckBoxTest);
+            sceneManager->setMaxUISceneId(kUICheckBoxTest);
+            Scene* scene = sceneManager->currentUIScene();
+            Director::getInstance()->replaceScene(scene);
         }
 	},
 	{
-        "gui SliderTest",
+        "SliderTest",
         [](Ref* sender)
         {
-            UISceneManager* pManager = UISceneManager::sharedUISceneManager();
-            pManager->setCurrentUISceneId(kUISliderTest);
-            pManager->setMinUISceneId(kUISliderTest);
-            pManager->setMaxUISceneId(kUISliderTest_Scale9);
-            Scene* pScene = pManager->currentUIScene();
-            Director::getInstance()->replaceScene(pScene);
-        }
-	},
-    /*
-	{
-        "gui PotentiometerTest",
-        [](Ref* sender)
-        {
-            UISceneManager* pManager = UISceneManager::sharedUISceneManager();
-            pManager->setCurrentUISceneId(kUIPotentiometerTest);
-            pManager->setMinUISceneId(kUIPotentiometerTest);
-            pManager->setMaxUISceneId(kUIPotentiometerTest);
-            Scene* pScene = pManager->currentUIScene();
-            Director::getInstance()->replaceScene(pScene);
-        }
-	},
-     */
-    /*
-    {
-        "gui SwitchTest",
-        [](Ref* sender)
-        {
-            UISceneManager* pManager = UISceneManager::sharedUISceneManager();
-            pManager->setCurrentUISceneId(kUISwitchTest_Horizontal);
-            pManager->setMinUISceneId(kUISwitchTest_Horizontal);
-            pManager->setMaxUISceneId(kUISwitchTest_VerticalAndTitleVertical);
-            Scene* pScene = pManager->currentUIScene();
-            Director::getInstance()->replaceScene(pScene);
-        }
-	},
-     */
-    {
-        "gui ImageViewTest",
-        [](Ref* sender)
-        {
-            UISceneManager* pManager = UISceneManager::sharedUISceneManager();
-            pManager->setCurrentUISceneId(kUIImageViewTest);
-            pManager->setMinUISceneId(kUIImageViewTest);
-            pManager->setMaxUISceneId(kUIImageViewTest_Scale9);
-            Scene* pScene = pManager->currentUIScene();
-            Director::getInstance()->replaceScene(pScene);
+            UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
+            sceneManager->setCurrentUISceneId(kUISliderTest);
+            sceneManager->setMinUISceneId(kUISliderTest);
+            sceneManager->setMaxUISceneId(kUISliderTest_Scale9);
+            Scene* scene = sceneManager->currentUIScene();
+            Director::getInstance()->replaceScene(scene);
         }
 	},
     {
-        "gui LoadingBarTest",
+        "ImageViewTest",
         [](Ref* sender)
         {
-            UISceneManager* pManager = UISceneManager::sharedUISceneManager();
-            pManager->setCurrentUISceneId(kUILoadingBarTest_Left);
-            pManager->setMinUISceneId(kUILoadingBarTest_Left);
-            pManager->setMaxUISceneId(kUILoadingBarTest_Right_Scale9);
-            Scene* pScene = pManager->currentUIScene();
-            Director::getInstance()->replaceScene(pScene);
-        }
-	},
-    /*
-    {
-        "gui ProgressTimerTest",
-        [](Ref* sender)
-        {
-            UISceneManager* pManager = UISceneManager::sharedUISceneManager();
-            pManager->setCurrentUISceneId(kUIProgressTimerTest_Radial);
-            pManager->setMinUISceneId(kUIProgressTimerTest_Radial);
-            pManager->setMaxUISceneId(kUIProgressTimerTest_WithSpriteFrame);
-            Scene* pScene = pManager->currentUIScene();
-            Director::getInstance()->replaceScene(pScene);
-        }
-	},
-     */
-    {
-        "gui TextAtalsTest",
-        [](Ref* sender)
-        {
-            UISceneManager* pManager = UISceneManager::sharedUISceneManager();
-            pManager->setCurrentUISceneId(kUITextAtlasTest);
-            pManager->setMinUISceneId(kUITextAtlasTest);
-            pManager->setMaxUISceneId(kUITextAtlasTest);
-            Scene* pScene = pManager->currentUIScene();
-            Director::getInstance()->replaceScene(pScene);
+            UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
+            sceneManager->setCurrentUISceneId(kUIImageViewTest);
+            sceneManager->setMinUISceneId(kUIImageViewTest);
+            sceneManager->setMaxUISceneId(kUIImageViewTest_Scale9);
+            Scene* scene = sceneManager->currentUIScene();
+            Director::getInstance()->replaceScene(scene);
         }
 	},
     {
-        "gui TextTest",
+        "LoadingBarTest",
         [](Ref* sender)
         {
-            UISceneManager* pManager = UISceneManager::sharedUISceneManager();
-            pManager->setCurrentUISceneId(kUITextTest);
-            pManager->setMinUISceneId(kUITextTest);
-            pManager->setMaxUISceneId(kUITextTest_TTF);
-            Scene* pScene = pManager->currentUIScene();
-            Director::getInstance()->replaceScene(pScene);
+            UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
+            sceneManager->setCurrentUISceneId(kUILoadingBarTest_Left);
+            sceneManager->setMinUISceneId(kUILoadingBarTest_Left);
+            sceneManager->setMaxUISceneId(kUILoadingBarTest_Right_Scale9);
+            Scene* scene = sceneManager->currentUIScene();
+            Director::getInstance()->replaceScene(scene);
         }
 	},
     {
-        "gui TextBMFontTest",
+        "TextAtalsTest",
         [](Ref* sender)
         {
-            UISceneManager* pManager = UISceneManager::sharedUISceneManager();
-            pManager->setCurrentUISceneId(kUITextBMFontTest);
-            pManager->setMinUISceneId(kUITextBMFontTest);
-            pManager->setMaxUISceneId(kUITextBMFontTest);
-            Scene* pScene = pManager->currentUIScene();
-            Director::getInstance()->replaceScene(pScene);
+            UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
+            sceneManager->setCurrentUISceneId(kUITextAtlasTest);
+            sceneManager->setMinUISceneId(kUITextAtlasTest);
+            sceneManager->setMaxUISceneId(kUITextAtlasTest);
+            Scene* scene = sceneManager->currentUIScene();
+            Director::getInstance()->replaceScene(scene);
         }
 	},
     {
-        "gui TextFieldTest",
+        "TextTest",
         [](Ref* sender)
         {
-            UISceneManager* pManager = UISceneManager::sharedUISceneManager();
-            pManager->setCurrentUISceneId(kUITextFieldTest);
-            pManager->setMinUISceneId(kUITextFieldTest);
-            pManager->setMaxUISceneId(kUITextFieldTest_LineWrap);
-            Scene* pScene = pManager->currentUIScene();
-            Director::getInstance()->replaceScene(pScene);
+            UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
+            sceneManager->setCurrentUISceneId(kUITextTest);
+            sceneManager->setMinUISceneId(kUITextTest);
+            sceneManager->setMaxUISceneId(kUITextTest_TTF);
+            Scene* scene = sceneManager->currentUIScene();
+            Director::getInstance()->replaceScene(scene);
         }
 	},
     {
-        "gui LayoutTest",
+        "TextBMFontTest",
         [](Ref* sender)
         {
-            UISceneManager* pManager = UISceneManager::sharedUISceneManager();
-            pManager->setCurrentUISceneId(kUILayoutTest);
-            pManager->setMinUISceneId(kUILayoutTest);
-            pManager->setMaxUISceneId(kUILayoutTest_Layout_Relative_Location);
-            Scene* pScene = pManager->currentUIScene();
-            Director::getInstance()->replaceScene(pScene);
+            UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
+            sceneManager->setCurrentUISceneId(kUITextBMFontTest);
+            sceneManager->setMinUISceneId(kUITextBMFontTest);
+            sceneManager->setMaxUISceneId(kUITextBMFontTest);
+            Scene* scene = sceneManager->currentUIScene();
+            Director::getInstance()->replaceScene(scene);
         }
 	},
     {
-        "gui ScrollViewTest",
+        "TextFieldTest",
         [](Ref* sender)
         {
-            UISceneManager* pManager = UISceneManager::sharedUISceneManager();
-            pManager->setCurrentUISceneId(kUIScrollViewTest_Vertical);
-            pManager->setMinUISceneId(kUIScrollViewTest_Vertical);
-            pManager->setMaxUISceneId(kUIScrollViewTest_ScrollToPercentBothDirection_Bounce);
-            Scene* pScene = pManager->currentUIScene();
-            Director::getInstance()->replaceScene(pScene);
+            UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
+            sceneManager->setCurrentUISceneId(kUITextFieldTest);
+            sceneManager->setMinUISceneId(kUITextFieldTest);
+            sceneManager->setMaxUISceneId(kUITextFieldTest_LineWrap);
+            Scene* scene = sceneManager->currentUIScene();
+            Director::getInstance()->replaceScene(scene);
         }
 	},
     {
-        "gui PageViewTest",
+        "LayoutTest",
         [](Ref* sender)
         {
-            UISceneManager* pManager = UISceneManager::sharedUISceneManager();
-            pManager->setCurrentUISceneId(kUIPageViewTest);
-            pManager->setMinUISceneId(kUIPageViewTest);
-            pManager->setMaxUISceneId(kUIPageViewTest);
-            Scene* pScene = pManager->currentUIScene();
-            Director::getInstance()->replaceScene(pScene);
+            UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
+            sceneManager->setCurrentUISceneId(kUILayoutTest);
+            sceneManager->setMinUISceneId(kUILayoutTest);
+            sceneManager->setMaxUISceneId(kUILayoutTest_Layout_Relative_Location);
+            Scene* scene = sceneManager->currentUIScene();
+            Director::getInstance()->replaceScene(scene);
         }
 	},
     {
-        "gui ListViewTest",
+        "ScrollViewTest",
         [](Ref* sender)
         {
-            UISceneManager* pManager = UISceneManager::sharedUISceneManager();
-            pManager->setCurrentUISceneId(kUIListViewTest_Vertical);
-            pManager->setMinUISceneId(kUIListViewTest_Vertical);
-            pManager->setMaxUISceneId(kUIListViewTest_Horizontal);
-            Scene* pScene = pManager->currentUIScene();
-            Director::getInstance()->replaceScene(pScene);
-        }
-	},
-    /*
-    {
-        "gui GridViewTest",
-        [](Ref* sender)
-        {
-            UISceneManager* pManager = UISceneManager::sharedUISceneManager();
-            pManager->setCurrentUISceneId(kUIGridViewTest_Mode_Column);
-            pManager->setMinUISceneId(kUIGridViewTest_Mode_Column);
-            pManager->setMaxUISceneId(kUIGridViewTest_Mode_Row);
-            Scene* pScene = pManager->currentUIScene();
-            Director::getInstance()->replaceScene(pScene);
-        }
-	},
-     */
-    /*
-    {
-        "gui PickerViewTest",
-        [](Ref* sender)
-        {
-            UISceneManager* pManager = UISceneManager::sharedUISceneManager();
-            pManager->setCurrentUISceneId(kUIPickerViewTest_Vertical);
-            pManager->setMinUISceneId(kUIPickerViewTest_Vertical);
-            pManager->setMaxUISceneId(kUIPickerViewTest_Horizontal);
-            Scene* pScene = pManager->currentUIScene();
-            Director::getInstance()->replaceScene(pScene);
-        }
-	},
-     */
-    {
-        "gui WidgetAddNodeTest",
-        [](Ref* sender)
-        {
-            UISceneManager* pManager = UISceneManager::sharedUISceneManager();
-            pManager->setCurrentUISceneId(kUIWidgetAddNodeTest);
-            pManager->setMinUISceneId(kUIWidgetAddNodeTest);
-            pManager->setMaxUISceneId(kUIWidgetAddNodeTest);
-            Scene* pScene = pManager->currentUIScene();
-            Director::getInstance()->replaceScene(pScene);
+            UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
+            sceneManager->setCurrentUISceneId(kUIScrollViewTest_Vertical);
+            sceneManager->setMinUISceneId(kUIScrollViewTest_Vertical);
+            sceneManager->setMaxUISceneId(kUIScrollViewTest_ScrollToPercentBothDirection_Bounce);
+            Scene* scene = sceneManager->currentUIScene();
+            Director::getInstance()->replaceScene(scene);
         }
 	},
     {
-        "gui RichTextTest",
+        "PageViewTest",
         [](Ref* sender)
         {
-            UISceneManager* pManager = UISceneManager::sharedUISceneManager();
-            pManager->setCurrentUISceneId(kUIRichTextTest);
-            pManager->setMinUISceneId(kUIRichTextTest);
-            pManager->setMaxUISceneId(kUIRichTextTest);
-            Scene* pScene = pManager->currentUIScene();
-            Director::getInstance()->replaceScene(pScene);
+            UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
+            sceneManager->setCurrentUISceneId(kUIPageViewTest);
+            sceneManager->setMinUISceneId(kUIPageViewTest);
+            sceneManager->setMaxUISceneId(kUIPageViewTest);
+            Scene* scene = sceneManager->currentUIScene();
+            Director::getInstance()->replaceScene(scene);
         }
 	},
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     {
-        "gui VideoPlayerTest",
-            [](Ref* sender)
+        "ListViewTest",
+        [](Ref* sender)
         {
-            UISceneManager* pManager = UISceneManager::sharedUISceneManager();
-            pManager->setCurrentUISceneId(kUIVideoPlayerTest);
-            pManager->setMinUISceneId(kUIVideoPlayerTest);
-            pManager->setMaxUISceneId(kUIVideoPlayerTest);
-            Scene* pScene = pManager->currentUIScene();
-            Director::getInstance()->replaceScene(pScene);
+            UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
+            sceneManager->setCurrentUISceneId(kUIListViewTest_Vertical);
+            sceneManager->setMinUISceneId(kUIListViewTest_Vertical);
+            sceneManager->setMaxUISceneId(kUIListViewTest_Horizontal);
+            Scene* scene = sceneManager->currentUIScene();
+            Director::getInstance()->replaceScene(scene);
         }
-    }
-#endif
+	},
+    {
+        "WidgetAddNodeTest",
+        [](Ref* sender)
+        {
+            UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
+            sceneManager->setCurrentUISceneId(kUIWidgetAddNodeTest);
+            sceneManager->setMinUISceneId(kUIWidgetAddNodeTest);
+            sceneManager->setMaxUISceneId(kUIWidgetAddNodeTest);
+            Scene* scene = sceneManager->currentUIScene();
+            Director::getInstance()->replaceScene(scene);
+        }
+	},
+    {
+        "RichTextTest",
+        [](Ref* sender)
+        {
+            UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
+            sceneManager->setCurrentUISceneId(kUIRichTextTest);
+            sceneManager->setMinUISceneId(kUIRichTextTest);
+            sceneManager->setMaxUISceneId(kUIRichTextTest);
+            Scene* scene = sceneManager->currentUIScene();
+            Director::getInstance()->replaceScene(scene);
+        }
+	},
+
 };
 
 static const int g_maxTests = sizeof(g_guisTests) / sizeof(g_guisTests[0]);

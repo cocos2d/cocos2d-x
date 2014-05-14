@@ -409,7 +409,7 @@ void ListView::addEventListenerListView(Ref *target, SEL_ListViewEvent selector)
     _listViewEventSelector = selector;
 }
     
-void ListView::addEventListener(ccListViewCallback callback)
+void ListView::addEventListener(const ccListViewCallback& callback)
 {
     _eventCallback = callback;
 }

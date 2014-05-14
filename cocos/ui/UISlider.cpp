@@ -434,7 +434,7 @@ void Slider::addEventListenerSlider(Ref *target, SEL_SlidPercentChangedEvent sel
     _sliderEventSelector = selector;
 }
     
-void Slider::addEventListener(ccSliderCallback callback)
+void Slider::addEventListener(const ccSliderCallback& callback)
 {
     _eventCallback = callback;
 }

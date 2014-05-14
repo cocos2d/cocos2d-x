@@ -25,27 +25,27 @@ g_guisTests[] =
         "GUI Dynamic Create Test",
         [](Ref* sender)
         {
-            CocosGUITestScene *pScene = new CocosGUITestScene();
-			pScene->runThisTest();
-			pScene->release();
+            CocosGUITestScene *scene = new CocosGUITestScene();
+			scene->runThisTest();
+			scene->release();
         }
 	},
     {
         "GUI Editor Test",
         [](Ref* sender)
         {
-            GUIEditorTestScene* pScene = new GUIEditorTestScene();
-            pScene->runThisTest();
-            pScene->release();
+            GUIEditorTestScene* scene = new GUIEditorTestScene();
+            scene->runThisTest();
+            scene->release();
         }
 	},
     {
         "Custom GUI Test",
         [](Ref* sender)
         {
-            CustomGUITestScene* pScene = new CustomGUITestScene();
-            pScene->runThisTest();
-            pScene->release();
+            CustomGUITestScene* scene = new CustomGUITestScene();
+            scene->runThisTest();
+            scene->release();
         }
 	},
 };

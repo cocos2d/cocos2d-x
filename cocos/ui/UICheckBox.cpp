@@ -386,7 +386,7 @@ void CheckBox::addEventListenerCheckBox(Ref *target, SEL_SelectedStateEvent sele
     _checkBoxEventSelector = selector;
 }
 
-void CheckBox::addEventListener(ccCheckBoxCallback callback)
+void CheckBox::addEventListener(const ccCheckBoxCallback& callback)
 {
     _checkBoxEventCallback = callback;
 }

@@ -53,19 +53,19 @@ void UIButtonTest::touchEvent(Ref *pSender, Widget::TouchEventType type)
     switch (type)
     {
         case Widget::TouchEventType::BEGAN:
-            _displayValueLabel->setText(String::createWithFormat("Touch Down")->getCString());
+            _displayValueLabel->setString(String::createWithFormat("Touch Down")->getCString());
             break;
             
         case Widget::TouchEventType::MOVED:
-            _displayValueLabel->setText(String::createWithFormat("Touch Move")->getCString());
+            _displayValueLabel->setString(String::createWithFormat("Touch Move")->getCString());
             break;
             
         case Widget::TouchEventType::ENDED:
-            _displayValueLabel->setText(String::createWithFormat("Touch Up")->getCString());
+            _displayValueLabel->setString(String::createWithFormat("Touch Up")->getCString());
             break;
             
         case Widget::TouchEventType::CANCELED:
-            _displayValueLabel->setText(String::createWithFormat("Touch Cancelled")->getCString());
+            _displayValueLabel->setString(String::createWithFormat("Touch Cancelled")->getCString());
             break;
             
         default:
@@ -125,19 +125,19 @@ void UIButtonTest_Scale9::touchEvent(Ref *pSender, Widget::TouchEventType type)
     switch (type)
     {
         case Widget::TouchEventType::BEGAN:
-            _displayValueLabel->setText(String::createWithFormat("Touch Down")->getCString());
+            _displayValueLabel->setString(String::createWithFormat("Touch Down")->getCString());
             break;
             
         case Widget::TouchEventType::MOVED:
-            _displayValueLabel->setText(String::createWithFormat("Touch Move")->getCString());
+            _displayValueLabel->setString(String::createWithFormat("Touch Move")->getCString());
             break;
             
         case Widget::TouchEventType::ENDED:
-            _displayValueLabel->setText(String::createWithFormat("Touch Up")->getCString());
+            _displayValueLabel->setString(String::createWithFormat("Touch Up")->getCString());
             break;
             
         case Widget::TouchEventType::CANCELED:
-            _displayValueLabel->setText(String::createWithFormat("Touch Cancelled")->getCString());
+            _displayValueLabel->setString(String::createWithFormat("Touch Cancelled")->getCString());
             break;
             
         default:
@@ -194,19 +194,19 @@ void UIButtonTest_PressedAction::touchEvent(Ref *pSender, Widget::TouchEventType
     switch (type)
     {
         case Widget::TouchEventType::BEGAN:
-            _displayValueLabel->setText(String::createWithFormat("Touch Down")->getCString());
+            _displayValueLabel->setString(String::createWithFormat("Touch Down")->getCString());
             break;
             
         case Widget::TouchEventType::MOVED:
-            _displayValueLabel->setText(String::createWithFormat("Touch Move")->getCString());
+            _displayValueLabel->setString(String::createWithFormat("Touch Move")->getCString());
             break;
             
         case Widget::TouchEventType::ENDED:
-            _displayValueLabel->setText(String::createWithFormat("Touch Up")->getCString());
+            _displayValueLabel->setString(String::createWithFormat("Touch Up")->getCString());
             break;
             
         case Widget::TouchEventType::CANCELED:
-            _displayValueLabel->setText(String::createWithFormat("Touch Cancelled")->getCString());
+            _displayValueLabel->setString(String::createWithFormat("Touch Cancelled")->getCString());
             break;
             
         default:
@@ -264,19 +264,19 @@ void UIButtonTest_Title::touchEvent(Ref *pSender, Widget::TouchEventType type)
     switch (type)
     {
         case Widget::TouchEventType::BEGAN:
-            _displayValueLabel->setText(String::createWithFormat("Touch Down")->getCString());
+            _displayValueLabel->setString(String::createWithFormat("Touch Down")->getCString());
             break;
             
         case Widget::TouchEventType::MOVED:
-            _displayValueLabel->setText(String::createWithFormat("Touch Move")->getCString());
+            _displayValueLabel->setString(String::createWithFormat("Touch Move")->getCString());
             break;
             
         case Widget::TouchEventType::ENDED:
-            _displayValueLabel->setText(String::createWithFormat("Touch Up")->getCString());
+            _displayValueLabel->setString(String::createWithFormat("Touch Up")->getCString());
             break;
             
         case Widget::TouchEventType::CANCELED:
-            _displayValueLabel->setText(String::createWithFormat("Touch Cancelled")->getCString());
+            _displayValueLabel->setString(String::createWithFormat("Touch Cancelled")->getCString());
             break;
             
         default:

@@ -166,7 +166,7 @@ public:
     ssize_t getCurSelectedIndex() const;
     
     CC_DEPRECATED_ATTRIBUTE void addEventListenerListView(Ref* target, SEL_ListViewEvent selector);
-    void addEventListener(ccListViewCallback callback);
+    void addEventListener(const ccListViewCallback& callback);
     
     /**
      * Changes scroll direction of scrollview.

@@ -85,12 +85,8 @@ void LoadingBar::initRenderer()
     _barRenderer->setAnchorPoint(Vec2(0.0,0.5));
 }
 
-void LoadingBar::setDirection(Direction direction)
-{
-    this->setBarDirection(direction);
-}
     
-void LoadingBar::setBarDirection(cocos2d::ui::LoadingBar::Direction direction)
+void LoadingBar::setDirection(cocos2d::ui::LoadingBar::Direction direction)
 {
     if (_direction == direction)
     {
@@ -120,15 +116,11 @@ void LoadingBar::setBarDirection(cocos2d::ui::LoadingBar::Direction direction)
 
 }
 
-LoadingBar::Direction LoadingBar::getBarDirection()
+LoadingBar::Direction LoadingBar::getDirection()const
 {
     return _direction;
 }
     
-int LoadingBar::getDirection()
-{
-    return static_cast<int>(_direction);
-}
 
     void LoadingBar::loadTexture(const std::string& texture,TextureResType texType)
 {
@@ -396,7 +388,7 @@ void LoadingBar::copySpecialProperties(Widget *widget)
         loadTexture(loadingBar->_textureFile, loadingBar->_renderBarTexType);
         setCapInsets(loadingBar->_capInsets);
         setPercent(loadingBar->_percent);
-        setBarDirection(loadingBar->_direction);
+        setDirection(loadingBar->_direction);
     }
 }
 

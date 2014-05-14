@@ -523,7 +523,6 @@ void ParticleSystemQuad::listenBackToForeground(EventCustom* event)
 
 bool ParticleSystemQuad::allocMemory()
 {
-    CCASSERT( ( !_quads && !_indices), "Memory already alloced");
     CCASSERT( !_batchNode, "Memory should not be alloced when not using batchNode");
 
     CC_SAFE_FREE(_quads);

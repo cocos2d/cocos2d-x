@@ -259,7 +259,7 @@ public:
      * Add call back function called scrollview event triggered
      */
     CC_DEPRECATED_ATTRIBUTE void addEventListenerScrollView(Ref* target, SEL_ScrollViewEvent selector);
-    void addEventListener(ccScrollViewCallback callback);
+    void addEventListener(const ccScrollViewCallback& callback);
         
     virtual void addChild(Node * child) override;
     /**

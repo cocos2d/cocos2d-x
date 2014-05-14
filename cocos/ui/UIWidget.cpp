@@ -535,10 +535,6 @@ void Widget::onPressStateChangedToDisabled()
 
 }
 
-void Widget::didNotSelectSelf()
-{
-
-}
 
 bool Widget::onTouchBegan(Touch *touch, Event *unusedEvent)
 {
