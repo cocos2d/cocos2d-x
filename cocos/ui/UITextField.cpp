@@ -742,7 +742,7 @@ void TextField::addEventListenerTextField(Ref *target, SEL_TextFieldEvent seleco
     _textFieldEventSelector = selecor;
 }
     
-void TextField::addEventListener(ccTextFieldCallback callback)
+void TextField::addEventListener(const ccTextFieldCallback& callback)
 {
     _eventCallback = callback;
 }

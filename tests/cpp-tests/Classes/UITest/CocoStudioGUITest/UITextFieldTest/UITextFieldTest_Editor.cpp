@@ -46,7 +46,7 @@ bool UITextFieldTest_Editor::init()
         _displayValueLabel = Text::create();
         _displayValueLabel->setFontName("fonts/Marker Felt.ttf");
         _displayValueLabel->setFontSize(30);
-        _displayValueLabel->setText("No event");
+        _displayValueLabel->setString("No event");
         _displayValueLabel->setPosition(Vector2(_layout->getSize().width / 2,
                                               _layout->getSize().height - _displayValueLabel->getSize().height * 1.75f));
         _touchGroup->addChild(_displayValueLabel);
@@ -62,19 +62,19 @@ void UITextFieldTest_Editor::textFieldEvent(Ref *pSender, TextField::EventType t
     switch (type)
     {
         case TextField::EventType::ATTACH_WITH_IME:
-            _displayValueLabel->setText("attach with IME");
+            _displayValueLabel->setString("attach with IME");
             break;
             
         case TextField::EventType::DETACH_WITH_IME:
-            _displayValueLabel->setText("detach with IME");
+            _displayValueLabel->setString("detach with IME");
             break;
             
         case TextField::EventType::INSERT_TEXT:
-            _displayValueLabel->setText("insert words");
+            _displayValueLabel->setString("insert words");
             break;
             
         case TextField::EventType::DELETE_BACKWARD:
-            _displayValueLabel->setText("delete word");
+            _displayValueLabel->setString("delete word");
             break;
             
         default:
