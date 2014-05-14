@@ -26,19 +26,19 @@
 --------------------------------
 -- @function [parent=#Twirl] setPosition 
 -- @param self
--- @param #vector2_table array
+-- @param #cc.Vec2 vec2
         
 --------------------------------
 -- @function [parent=#Twirl] getPosition 
 -- @param self
--- @return vector2_table#vector2_table ret (return value: vector2_table)
+-- @return Vec2#Vec2 ret (return value: cc.Vec2)
         
 --------------------------------
 -- @function [parent=#Twirl] create 
 -- @param self
 -- @param #float float
 -- @param #size_table size
--- @param #vector2_table array
+-- @param #cc.Vec2 vec2
 -- @param #unsigned int int
 -- @param #float float
 -- @return Twirl#Twirl ret (return value: cc.Twirl)

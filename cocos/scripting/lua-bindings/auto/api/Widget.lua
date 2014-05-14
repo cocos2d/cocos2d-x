@@ -6,7 +6,7 @@
 --------------------------------
 -- @function [parent=#Widget] setSizePercent 
 -- @param self
--- @param #vector2_table array
+-- @param #cc.Vec2 vec2
         
 --------------------------------
 -- @function [parent=#Widget] getCustomSize 
@@ -31,12 +31,12 @@
 --------------------------------
 -- @function [parent=#Widget] getTouchEndPos 
 -- @param self
--- @return vector2_table#vector2_table ret (return value: vector2_table)
+-- @return Vec2#Vec2 ret (return value: cc.Vec2)
         
 --------------------------------
 -- @function [parent=#Widget] setPositionPercent 
 -- @param self
--- @param #vector2_table array
+-- @param #cc.Vec2 vec2
         
 --------------------------------
 -- @function [parent=#Widget] getLayoutSize 
@@ -125,7 +125,7 @@
 --------------------------------
 -- @function [parent=#Widget] getWorldPosition 
 -- @param self
--- @return vector2_table#vector2_table ret (return value: vector2_table)
+-- @return Vec2#Vec2 ret (return value: cc.Vec2)
         
 --------------------------------
 -- @function [parent=#Widget] setFocused 
@@ -145,7 +145,7 @@
 --------------------------------
 -- @function [parent=#Widget] getTouchMovePos 
 -- @param self
--- @return vector2_table#vector2_table ret (return value: vector2_table)
+-- @return Vec2#Vec2 ret (return value: cc.Vec2)
         
 --------------------------------
 -- @function [parent=#Widget] setEnabled 
@@ -175,12 +175,12 @@
 --------------------------------
 -- @function [parent=#Widget] getSizePercent 
 -- @param self
--- @return vector2_table#vector2_table ret (return value: vector2_table)
+-- @return Vec2#Vec2 ret (return value: cc.Vec2)
         
 --------------------------------
 -- @function [parent=#Widget] getTouchStartPos 
 -- @param self
--- @return vector2_table#vector2_table ret (return value: vector2_table)
+-- @return Vec2#Vec2 ret (return value: cc.Vec2)
         
 --------------------------------
 -- @function [parent=#Widget] setFocusEnabled 
@@ -200,7 +200,7 @@
 --------------------------------
 -- @function [parent=#Widget] clippingParentAreaContainPoint 
 -- @param self
--- @param #vector2_table array
+-- @param #cc.Vec2 vec2
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -255,12 +255,12 @@
 --------------------------------
 -- @function [parent=#Widget] getPositionPercent 
 -- @param self
--- @return vector2_table#vector2_table ret (return value: vector2_table)
+-- @return Vec2#Vec2 ret (return value: cc.Vec2)
         
 --------------------------------
 -- @function [parent=#Widget] hitTest 
 -- @param self
--- @param #vector2_table array
+-- @param #cc.Vec2 vec2
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -283,7 +283,7 @@
 -- @param self
 -- @param #int int
 -- @param #ccui.Widget widget
--- @param #vector2_table array
+-- @param #cc.Vec2 vec2
         
 --------------------------------
 -- @function [parent=#Widget] setSize 
@@ -328,7 +328,7 @@
 --------------------------------
 -- @function [parent=#Widget] setPosition 
 -- @param self
--- @param #vector2_table array
+-- @param #cc.Vec2 vec2
         
 --------------------------------
 -- @function [parent=#Widget] getDescription 
