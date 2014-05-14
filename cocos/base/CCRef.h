@@ -147,7 +147,7 @@ public:
     // Memory leak diagnostic data (only included when CC_USE_MEM_LEAK_DETECTION is defined)
 #ifdef CC_USE_MEM_LEAK_DETECTION
 public:
-	static void printLeaks();
+    static void printLeaks();
 #endif
 };
 
