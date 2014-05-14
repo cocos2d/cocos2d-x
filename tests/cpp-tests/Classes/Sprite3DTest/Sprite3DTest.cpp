@@ -24,7 +24,6 @@
  ****************************************************************************/
 
 #include "Sprite3DTest.h"
-#include "3d/CCSprite3DEffect.h"
 
 #include <algorithm>
 #include "../testResource.h"
