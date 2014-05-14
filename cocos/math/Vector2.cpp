@@ -67,58 +67,58 @@ float crossProduct2Vector(const Vector2& A, const Vector2& B, const Vector2& C, 
     return (D.y - C.y) * (B.x - A.x) - (D.x - C.x) * (B.y - A.y);
 }
 
-Vector2::Vector2()
+Vec2::Vec2()
     : x(0.0f), y(0.0f)
 {
 }
 
-Vector2::Vector2(float xx, float yy)
+Vec2::Vec2(float xx, float yy)
     : x(xx), y(yy)
 {
 }
 
-Vector2::Vector2(const float* array)
+Vec2::Vec2(const float* array)
 {
     set(array);
 }
 
-Vector2::Vector2(const Vector2& p1, const Vector2& p2)
+Vec2::Vec2(const Vec2& p1, const Vec2& p2)
 {
     set(p1, p2);
 }
 
-Vector2::Vector2(const Vector2& copy)
+Vec2::Vec2(const Vec2& copy)
 {
     set(copy);
 }
 
-Vector2::~Vector2()
+Vec2::~Vec2()
 {
 }
 
-bool Vector2::isZero() const
+bool Vec2::isZero() const
 {
     return x == 0.0f && y == 0.0f;
 }
 
-bool Vector2::isOne() const
+bool Vec2::isOne() const
 {
     return x == 1.0f && y == 1.0f;
 }
 
-float Vector2::angle(const Vector2& v1, const Vector2& v2)
+float Vec2::angle(const Vec2& v1, const Vec2& v2)
 {
     float dz = v1.x * v2.y - v1.y * v2.x;
     return atan2f(fabsf(dz) + MATH_FLOAT_SMALL, dot(v1, v2));
 }
 
-void Vector2::add(const Vector2& v)
+void Vec2::add(const Vec2& v)
 {
     x += v.x;
     y += v.y;
 }
 
-void Vector2::add(const Vector2& v1, const Vector2& v2, Vector2* dst)
+void Vec2::add(const Vec2& v1, const Vector2& v2, Vector2* dst)
 {
     GP_ASSERT(dst);
 
