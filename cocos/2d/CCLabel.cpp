@@ -129,7 +129,7 @@ Label* Label::createWithTTF(const TTFConfig& ttfConfig, const std::string& text,
     return nullptr;
 }
 
-Label* Label::createWithBMFont(const std::string& bmfontFilePath, const std::string& text,const TextHAlignment& alignment /* = TextHAlignment::LEFT */, int maxLineWidth /* = 0 */, const Vector2& imageOffset /* = Vector2::ZERO */)
+Label* Label::createWithBMFont(const std::string& bmfontFilePath, const std::string& text,const TextHAlignment& alignment /* = TextHAlignment::LEFT */, int maxLineWidth /* = 0 */, const Vec2& imageOffset /* = Vec2::ZERO */)
 {
     auto ret = new Label(nullptr,alignment);
 
@@ -261,7 +261,7 @@ Label::Label(FontAtlas *atlas /* = nullptr */, TextHAlignment hAlignment /* = Te
 , _compatibleMode(false)
 , _insideBounds(true)
 {
-    setAnchorPoint(Vector2::ANCHOR_MIDDLE);
+    setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     reset();
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
@@ -394,7 +394,7 @@ void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false *
         _reusedLetter = Sprite::createWithTexture(_fontAtlas->getTexture(0));
         _reusedLetter->setOpacityModifyRGB(_isOpacityModifyRGB);            
         _reusedLetter->retain();
-        _reusedLetter->setAnchorPoint(Vector2::ANCHOR_TOP_LEFT);
+        _reusedLetter->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
         _reusedLetter->setBatchNode(this);
     }
     else
@@ -452,7 +452,7 @@ bool Label::setTTFConfig(const TTFConfig& ttfConfig)
     return true;
 }
 
-bool Label::setBMFontFilePath(const std::string& bmfontFilePath, const Vector2& imageOffset /* = Vector2::ZERO */)
+bool Label::setBMFontFilePath(const std::string& bmfontFilePath, const Vec2& imageOffset /* = Vec2::ZERO */)
 {
     FontAtlas *newAtlas = FontAtlasCache::getFontAtlasFNT(bmfontFilePath,imageOffset);
 
@@ -592,8 +592,8 @@ void Label::alignText()
         for (auto index = _batchNodes.size(); index < textures.size(); ++index)
         {
             auto batchNode = SpriteBatchNode::createWithTexture(textures[index]);
-            batchNode->setAnchorPoint(Vector2::ANCHOR_TOP_LEFT);
-            batchNode->setPosition(Vector2::ZERO);
+            batchNode->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
+            batchNode->setPosition(Vec2::ZERO);
             Node::addChild(batchNode,0,Node::INVALID_TAG);
             _batchNodes.push_back(batchNode);
         }
@@ -675,7 +675,7 @@ void Label::updateQuads()
     }
 }
 
-bool Label::recordLetterInfo(const cocos2d::Vector2& point,const FontLetterDefinition& letterDef, int spriteIndex)
+bool Label::recordLetterInfo(const cocos2d::Vec2& point,const FontLetterDefinition& letterDef, int spriteIndex)
 {
     if (static_cast<std::size_t>(spriteIndex) >= _lettersInfo.size())
     {
@@ -892,7 +892,7 @@ void Label::createSpriteWithFontDefinition()
     texture->initWithString(_originalUTF8String.c_str(),_fontDefinition);
 
     _textSprite = Sprite::createWithTexture(texture);
-    _textSprite->setAnchorPoint(Vector2::ANCHOR_BOTTOM_LEFT);
+    _textSprite->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
     this->setContentSize(_textSprite->getContentSize());
     texture->release();
     if (_blendFuncDirty)
@@ -1030,7 +1030,7 @@ void Label::drawTextSprite(Renderer *renderer, bool parentTransformUpdated)
             {
                 _shadowNode->setBlendFunc(_blendFunc);
             }
-            _shadowNode->setAnchorPoint(Vector2::ANCHOR_BOTTOM_LEFT);
+            _shadowNode->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
             _shadowNode->setColor(_shadowColor);
             _shadowNode->setOpacity(_shadowOpacity * _displayedOpacity);
             _shadowNode->setPosition(_shadowOffset.width, _shadowOffset.height);
@@ -1156,7 +1156,7 @@ Sprite * Label::getLetter(int letterIndex)
 
             sp = Sprite::createWithTexture(_fontAtlas->getTexture(letter.def.textureID),uvRect);
             sp->setBatchNode(_batchNodes[letter.def.textureID]);
-            sp->setPosition(Vector2(letter.position.x + uvRect.size.width / 2, 
+            sp->setPosition(Vec2(letter.position.x + uvRect.size.width / 2, 
                 letter.position.y - uvRect.size.height / 2));
             sp->setOpacity(_realOpacity);
 

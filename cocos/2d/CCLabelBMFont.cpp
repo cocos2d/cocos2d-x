@@ -65,7 +65,7 @@ LabelBMFont * LabelBMFont::create()
 }
 
 //LabelBMFont - Creation & Init
-LabelBMFont *LabelBMFont::create(const std::string& str, const std::string& fntFile, float width /* = 0 */, TextHAlignment alignment /* = TextHAlignment::LEFT */,const Vector2& imageOffset /* = Vector2::ZERO */)
+LabelBMFont *LabelBMFont::create(const std::string& str, const std::string& fntFile, float width /* = 0 */, TextHAlignment alignment /* = TextHAlignment::LEFT */,const Vec2& imageOffset /* = Vec2::ZERO */)
 {
     LabelBMFont *ret = new LabelBMFont();
     if(ret && ret->initWithString(str, fntFile, width, alignment,imageOffset))
@@ -77,7 +77,7 @@ LabelBMFont *LabelBMFont::create(const std::string& str, const std::string& fntF
     return nullptr;
 }
 
-bool LabelBMFont::initWithString(const std::string& str, const std::string& fntFile, float width /* = 0 */, TextHAlignment alignment /* = TextHAlignment::LEFT */,const Vector2& imageOffset /* = Vector2::ZERO */)
+bool LabelBMFont::initWithString(const std::string& str, const std::string& fntFile, float width /* = 0 */, TextHAlignment alignment /* = TextHAlignment::LEFT */,const Vec2& imageOffset /* = Vec2::ZERO */)
 {
     if (_label->setBMFontFilePath(fntFile,imageOffset))
     {
@@ -95,9 +95,9 @@ bool LabelBMFont::initWithString(const std::string& str, const std::string& fntF
 LabelBMFont::LabelBMFont()
 {
     _label = Label::create();
-    _label->setAnchorPoint(Vector2::ANCHOR_BOTTOM_LEFT);
+    _label->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
     this->addChild(_label);
-    this->setAnchorPoint(Vector2::ANCHOR_MIDDLE);
+    this->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     _cascadeOpacityEnabled = true;
 }
 
@@ -152,7 +152,7 @@ void LabelBMFont::setLineBreakWithoutSpace( bool breakWithoutSpace )
 }
 
 // LabelBMFont - FntFile
-void LabelBMFont::setFntFile(const std::string& fntFile, const Vector2& imageOffset /* = Vector2::ZERO */)
+void LabelBMFont::setFntFile(const std::string& fntFile, const Vec2& imageOffset /* = Vec2::ZERO */)
 {
     if (_fntFile.compare(fntFile) != 0)
     {
@@ -224,12 +224,12 @@ void LabelBMFont::drawDebugData(const Matrix& transform, bool transformUpdated)
 
     auto size = getContentSize();
 
-    Vector2 vertices[4]=
+    Vec2 vertices[4]=
     {
-        Vector2::ZERO,
-        Vector2(size.width, 0),
-        Vector2(size.width, size.height),
-        Vector2(0, size.height)
+        Vec2::ZERO,
+        Vec2(size.width, 0),
+        Vec2(size.width, size.height),
+        Vec2(0, size.height)
     };
     
     DrawPrimitives::drawPoly(vertices, 4, true);

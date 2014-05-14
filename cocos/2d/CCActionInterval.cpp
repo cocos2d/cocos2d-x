@@ -973,7 +973,7 @@ RotateBy* RotateBy::reverse() const
 // MoveBy
 //
 
-MoveBy* MoveBy::create(float duration, const Vector2& deltaPosition)
+MoveBy* MoveBy::create(float duration, const Vec2& deltaPosition)
 {
     MoveBy *ret = new MoveBy();
     ret->initWithDuration(duration, deltaPosition);
@@ -982,7 +982,7 @@ MoveBy* MoveBy::create(float duration, const Vector2& deltaPosition)
     return ret;
 }
 
-bool MoveBy::initWithDuration(float duration, const Vector2& deltaPosition)
+bool MoveBy::initWithDuration(float duration, const Vec2& deltaPosition)
 {
     if (ActionInterval::initWithDuration(duration))
     {
@@ -1010,7 +1010,7 @@ void MoveBy::startWithTarget(Node *target)
 
 MoveBy* MoveBy::reverse() const
 {
-    return MoveBy::create(_duration, Vector2( -_positionDelta.x, -_positionDelta.y));
+    return MoveBy::create(_duration, Vec2( -_positionDelta.x, -_positionDelta.y));
 }
 
 
@@ -1019,10 +1019,10 @@ void MoveBy::update(float t)
     if (_target)
     {
 #if CC_ENABLE_STACKABLE_ACTIONS
-        Vector2 currentPos = _target->getPosition();
-        Vector2 diff = currentPos - _previousPosition;
+        Vec2 currentPos = _target->getPosition();
+        Vec2 diff = currentPos - _previousPosition;
         _startPosition = _startPosition + diff;
-        Vector2 newPos =  _startPosition + (_positionDelta * t);
+        Vec2 newPos =  _startPosition + (_positionDelta * t);
         _target->setPosition(newPos);
         _previousPosition = newPos;
 #else
@@ -1035,7 +1035,7 @@ void MoveBy::update(float t)
 // MoveTo
 //
 
-MoveTo* MoveTo::create(float duration, const Vector2& position)
+MoveTo* MoveTo::create(float duration, const Vec2& position)
 {
     MoveTo *ret = new MoveTo();
     ret->initWithDuration(duration, position);
@@ -1044,7 +1044,7 @@ MoveTo* MoveTo::create(float duration, const Vector2& position)
     return ret;
 }
 
-bool MoveTo::initWithDuration(float duration, const Vector2& position)
+bool MoveTo::initWithDuration(float duration, const Vec2& position)
 {
     if (ActionInterval::initWithDuration(duration))
     {
@@ -1252,7 +1252,7 @@ SkewBy* SkewBy::reverse() const
 // JumpBy
 //
 
-JumpBy* JumpBy::create(float duration, const Vector2& position, float height, int jumps)
+JumpBy* JumpBy::create(float duration, const Vec2& position, float height, int jumps)
 {
     JumpBy *jumpBy = new JumpBy();
     jumpBy->initWithDuration(duration, position, height, jumps);
@@ -1261,7 +1261,7 @@ JumpBy* JumpBy::create(float duration, const Vector2& position, float height, in
     return jumpBy;
 }
 
-bool JumpBy::initWithDuration(float duration, const Vector2& position, float height, int jumps)
+bool JumpBy::initWithDuration(float duration, const Vec2& position, float height, int jumps)
 {
     CCASSERT(jumps>=0, "Number of jumps must be >= 0");
     
@@ -1303,24 +1303,24 @@ void JumpBy::update(float t)
 
         float x = _delta.x * t;
 #if CC_ENABLE_STACKABLE_ACTIONS
-        Vector2 currentPos = _target->getPosition();
+        Vec2 currentPos = _target->getPosition();
 
-        Vector2 diff = currentPos - _previousPos;
+        Vec2 diff = currentPos - _previousPos;
         _startPosition = diff + _startPosition;
 
-        Vector2 newPos = _startPosition + Vector2(x,y);
+        Vec2 newPos = _startPosition + Vec2(x,y);
         _target->setPosition(newPos);
 
         _previousPos = newPos;
 #else
-        _target->setPosition(_startPosition + Vector2(x,y));
+        _target->setPosition(_startPosition + Vec2(x,y));
 #endif // !CC_ENABLE_STACKABLE_ACTIONS
     }
 }
 
 JumpBy* JumpBy::reverse() const
 {
-    return JumpBy::create(_duration, Vector2(-_delta.x, -_delta.y),
+    return JumpBy::create(_duration, Vec2(-_delta.x, -_delta.y),
         _height, _jumps);
 }
 
@@ -1328,7 +1328,7 @@ JumpBy* JumpBy::reverse() const
 // JumpTo
 //
 
-JumpTo* JumpTo::create(float duration, const Vector2& position, float height, int jumps)
+JumpTo* JumpTo::create(float duration, const Vec2& position, float height, int jumps)
 {
     JumpTo *jumpTo = new JumpTo();
     jumpTo->initWithDuration(duration, position, height, jumps);
@@ -1355,7 +1355,7 @@ JumpTo* JumpTo::reverse() const
 void JumpTo::startWithTarget(Node *target)
 {
     JumpBy::startWithTarget(target);
-    _delta = Vector2(_delta.x - _startPosition.x, _delta.y - _startPosition.y);
+    _delta = Vec2(_delta.x - _startPosition.x, _delta.y - _startPosition.y);
 }
 
 // Bezier cubic formula:
@@ -1427,16 +1427,16 @@ void BezierBy::update(float time)
         float y = bezierat(ya, yb, yc, yd, time);
 
 #if CC_ENABLE_STACKABLE_ACTIONS
-        Vector2 currentPos = _target->getPosition();
-        Vector2 diff = currentPos - _previousPosition;
+        Vec2 currentPos = _target->getPosition();
+        Vec2 diff = currentPos - _previousPosition;
         _startPosition = _startPosition + diff;
 
-        Vector2 newPos = _startPosition + Vector2(x,y);
+        Vec2 newPos = _startPosition + Vec2(x,y);
         _target->setPosition(newPos);
 
         _previousPosition = newPos;
 #else
-        _target->setPosition( _startPosition + Vector2(x,y));
+        _target->setPosition( _startPosition + Vec2(x,y));
 #endif // !CC_ENABLE_STACKABLE_ACTIONS
     }
 }

@@ -278,7 +278,7 @@ FlipY * FlipY::clone() const
 // Place
 //
 
-Place* Place::create(const Vector2& pos)
+Place* Place::create(const Vec2& pos)
 {
     Place *ret = new Place();
 
@@ -291,7 +291,7 @@ Place* Place::create(const Vector2& pos)
     return nullptr;
 }
 
-bool Place::initWithPosition(const Vector2& pos) {
+bool Place::initWithPosition(const Vec2& pos) {
     _position = pos;
     return true;
 }

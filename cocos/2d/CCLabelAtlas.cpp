@@ -266,12 +266,12 @@ void LabelAtlas::drawDebugData(const Matrix& transform, bool transformUpdated)
 
     auto size = getContentSize();
 
-    Vector2 vertices[4]=
+    Vec2 vertices[4]=
     {
-        Vector2::ZERO,
-        Vector2(size.width, 0),
-        Vector2(size.width, size.height),
-        Vector2(0, size.height)
+        Vec2::ZERO,
+        Vec2(size.width, 0),
+        Vec2(size.width, size.height),
+        Vec2(0, size.height)
     };
 
     DrawPrimitives::drawPoly(vertices, 4, true);
