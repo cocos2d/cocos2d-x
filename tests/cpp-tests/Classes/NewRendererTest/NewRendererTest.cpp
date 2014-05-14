@@ -561,7 +561,6 @@ std::string VBOFullTest::subtitle() const
     return "VBO full Test, everthing should render normally";
 }
 
-const int CaptureScreenTest::ChildTag;
 CaptureScreenTest::CaptureScreenTest()
 {
     Size s = Director::getInstance()->getWinSize();
