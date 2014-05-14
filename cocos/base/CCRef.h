@@ -44,16 +44,16 @@ class Ref;
 class CC_DLL Clonable
 {
 public:
-	/** returns a copy of the Ref */
+    /** returns a copy of the Ref */
     virtual Clonable* clone() const = 0;
     /**
      * @js NA
      * @lua NA
      */
-	virtual ~Clonable() {};
+    virtual ~Clonable() {};
 
     /** returns a copy of the Ref.
-     @deprecated Use clone() instead
+     * @deprecated Use clone() instead
      */
     CC_DEPRECATED_ATTRIBUTE Ref* copy() const
     {
@@ -75,9 +75,9 @@ public:
      * @js NA
      */
     void retain();
-    
+
     /**
-     * Release the ownership immediately.
+     * Releases the ownership immediately.
      *
      * This decrements the Ref's reference count.
      *
@@ -90,7 +90,7 @@ public:
     void release();
 
     /**
-     * Release the ownership sometime soon automatically.
+     * Releases the ownership sometime soon automatically.
      *
      * This descrements the Ref's reference count at the end of current
      * autorelease pool block.
@@ -113,7 +113,7 @@ public:
      * @js NA
      */
     unsigned int getReferenceCount() const;
-    
+
 protected:
     /**
      * Constructor
@@ -122,20 +122,20 @@ protected:
      * @js NA
      */
     Ref();
-    
+
 public:
     /**
      * @js NA
      * @lua NA
      */
     virtual ~Ref();
-    
+
 protected:
     /// count of references
     unsigned int _referenceCount;
-    
+
     friend class AutoreleasePool;
-    
+
 #if CC_ENABLE_SCRIPT_BINDING
 public:
     /// object id, ScriptSupport need public _ID
@@ -143,9 +143,9 @@ public:
     /// Lua reference id
     int                 _luaID;
 #endif
-    
-    // Memory leak diagnostic data (only included when CC_USE_MEM_LEAK_DETECTION is defined)
-#ifdef CC_USE_MEM_LEAK_DETECTION
+
+    // Memory leak diagnostic data (only included when CC_USE_MEM_LEAK_DETECTION is defined and its value isn't zero)
+#if CC_USE_MEM_LEAK_DETECTION
 public:
     static void printLeaks();
 #endif

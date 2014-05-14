@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-#ifdef CC_USE_MEM_LEAK_DETECTION
+#if CC_USE_MEM_LEAK_DETECTION
 void trackRef(Ref* ref);
 void untrackRef(Ref* ref);
 #endif
@@ -63,9 +63,9 @@ Ref::~Ref()
         }
     }
 #endif
-    
 
-#ifdef CC_USE_MEM_LEAK_DETECTION
+
+#if CC_USE_MEM_LEAK_DETECTION
     if (_referenceCount != 0)
         untrackRef(this);
 #endif
@@ -81,7 +81,7 @@ void Ref::release()
 {
     CCASSERT(_referenceCount > 0, "reference count should greater than 0");
     --_referenceCount;
-    
+
     if (_referenceCount == 0)
     {
 #if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
@@ -118,8 +118,8 @@ void Ref::release()
             CCASSERT(false, "The reference shouldn't be 0 because it is still in autorelease pool.");
         }
 #endif
-        
-#ifdef CC_USE_MEM_LEAK_DETECTION
+
+#if CC_USE_MEM_LEAK_DETECTION
         untrackRef(this);
 #endif
         delete this;
@@ -137,7 +137,7 @@ unsigned int Ref::getReferenceCount() const
     return _referenceCount;
 }
 
-#ifdef CC_USE_MEM_LEAK_DETECTION
+#if CC_USE_MEM_LEAK_DETECTION
 
 static std::list<Ref*> __refAllocationList;
 
@@ -151,7 +151,7 @@ void Ref::printLeaks()
     else
     {
         log("[memory] WARNING: %d Ref objects still active in memory.\n", (int)__refAllocationList.size());
-        
+
         for (const auto& ref : __refAllocationList)
         {
             CC_ASSERT(ref);
@@ -164,7 +164,7 @@ void Ref::printLeaks()
 void trackRef(Ref* ref)
 {
     CC_ASSERT(ref);
-    
+
     // Create memory allocation record.
     __refAllocationList.push_back(ref);
 }
@@ -177,7 +177,7 @@ void untrackRef(Ref* ref)
         log("[memory] CORRUPTION: Attempting to free (%s) with invalid ref tracking record.\n", typeid(*ref).name());
         return;
     }
-    
+
     __refAllocationList.erase(iter);
 }
 
