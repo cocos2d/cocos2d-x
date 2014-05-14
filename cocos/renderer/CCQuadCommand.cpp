@@ -72,9 +72,9 @@ QuadCommand::~QuadCommand()
 void QuadCommand::generateMaterialID()
 {
 
-    if( _glProgramState->getUniformCount() > 0 )
+    if(_glProgramState->getUniformCount() > 0)
     {
-        _materialID = QuadCommand::MATERIAL_ID_IGNORE;
+        _materialID = QuadCommand::MATERIAL_ID_DO_NOT_BATCH;
     }
     else
     {

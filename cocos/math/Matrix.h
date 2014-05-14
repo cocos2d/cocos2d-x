@@ -139,25 +139,6 @@ public:
     ~Matrix();
 
     /**
-     * Returns the identity matrix:
-     *
-     * 1  0  0  0
-     * 0  1  0  0
-     * 0  0  1  0
-     * 0  0  0  1
-     *
-     * @return The identity matrix.
-     */
-    static const Matrix& identity();
-
-    /**
-     * Returns the matrix with all zeros.
-     *
-     * @return The matrix with all zeros.
-     */
-    static const Matrix& zero();
-
-    /**
      * Creates a view matrix based on the specified input parameters.
      *
      * @param eyePosition The eye position.
@@ -940,7 +921,12 @@ public:
      * @return This matrix, after the multiplication occurs.
      */
     inline Matrix& operator*=(const Matrix& mat);
-    
+
+    /** equals to a matrix full of zeros */
+    static const Matrix ZERO;
+    /** equals to the identity matrix */
+    static const Matrix IDENTITY;
+
 private:
 
     static void createBillboardHelper(const Vector3& objectPosition, const Vector3& cameraPosition,

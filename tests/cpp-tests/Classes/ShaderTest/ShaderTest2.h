@@ -102,5 +102,13 @@ public:
     virtual std::string subtitle() const {return "OutlineShadingSpriteTest";}
 };
 
+class EffectSprite_Blur : public ShaderTestDemo2
+{
+public:
+    CREATE_FUNC(EffectSprite_Blur);
+    EffectSprite_Blur();
+    virtual std::string subtitle() const {return "Blur Effect on Sprite";}
+};
+
 
 #endif

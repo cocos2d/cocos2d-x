@@ -35,6 +35,7 @@ set(SAMPLE_SRC
   Classes/BugsTest/Bug-899.cpp
   Classes/BugsTest/Bug-914.cpp
   Classes/BugsTest/BugsTest.cpp
+  Classes/BugsTest/Bug-Child.cpp
   Classes/ChipmunkTest/ChipmunkTest.cpp
   Classes/ClickAndMoveTest/ClickAndMoveTest.cpp
   Classes/ClippingNodeTest/ClippingNodeTest.cpp

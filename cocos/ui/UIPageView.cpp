@@ -131,10 +131,7 @@ void PageView::addPage(Layout* page)
     {
         return;
     }
-    if (page->getWidgetType() != Widget::Type::CONTAINER)
-    {
-        return;
-    }
+    
     if (_pages.contains(page))
     {
         return;
@@ -162,10 +159,7 @@ void PageView::insertPage(Layout* page, int idx)
     {
         return;
     }
-    if (page->getWidgetType() != Widget::Type::CONTAINER)
-    {
-        return;
-    }
+  
     if (_pages.contains(page))
     {
         return;
