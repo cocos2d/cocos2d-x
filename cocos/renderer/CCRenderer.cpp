@@ -538,14 +538,14 @@ bool Renderer::checkVisibility(const Matrix &transform, const Size &size)
     return ret;
 }
 
-void Renderer::captureScreen(std::function<void(bool, const std::string&)> afterCaptured, const std::string& filename, const Rect& rect)
+void Renderer::captureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename, const Rect& rect)
 {
     _captureScreen.init(std::numeric_limits<float>::max());
     _captureScreen.func = CC_CALLBACK_0(Renderer::onCaptureScreen, this, afterCaptured, filename, true, rect);
     addCommand(&_captureScreen);
 }
 
-void Renderer::onCaptureScreen(std::function<void(bool, const std::string&)> afterCaptured, const std::string& filename, bool flipped, const Rect& rect)
+void Renderer::onCaptureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename, bool flipped, const Rect& rect)
 {
     // Generally the user specifiy the rect with design resolution, thus we have to convert it
     // into a significant value which is metered by pixel.
@@ -573,23 +573,23 @@ void Renderer::onCaptureScreen(std::function<void(bool, const std::string&)> aft
 
     do
     {
-	    GLubyte* buffer = new GLubyte[width * height * 4];
-	    if (!buffer)
-	    {
-		    CC_SAFE_DELETE_ARRAY(buffer);
-		    break;
-	    }
+        GLubyte* buffer = new GLubyte[width * height * 4];
+        if (!buffer)
+        {
+            CC_SAFE_DELETE_ARRAY(buffer);
+            break;
+        }
 		
-	    glPixelStorei(GL_PACK_ALIGNMENT, 1);
-	    glReadPixels(originx, originy, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
+        glPixelStorei(GL_PACK_ALIGNMENT, 1);
+        glReadPixels(originx, originy, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
 
-	    if (flipped)
-	    {
+        if (flipped)
+        {
             GLubyte* flippedBuffer = new GLubyte[width * height * 4];
             if (!flippedBuffer)
             {
-        	    CC_SAFE_DELETE(flippedBuffer);
-        	    break;
+                CC_SAFE_DELETE(flippedBuffer);
+                break;
             }
 
             for (int row = 0; row < height; ++row)
