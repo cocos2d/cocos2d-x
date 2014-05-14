@@ -111,14 +111,7 @@ bool Sprite3D::loadFromObj(const std::string& path)
         
     }
     
-    for (int i = 0; i < _mesh->getMeshPartCount(); i++)
-    {
-        auto programstate = GLProgramState::get(getDefGLProgram(_mesh->getAttribFlag() & GL::VERTEX_ATTRIB_FLAG_TEX_COORDS));
-        _programState.pushBack(programstate);
-        
-        programstate->setVertexAttribPointer("a_position", 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-        programstate->setVertexAttribPointer("a_texCoord", 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-    }
+    getGLProgramState();
     
     //add to cache
     __cachedSpriteTexNames[fullPath] = matnames;
@@ -163,14 +156,7 @@ bool Sprite3D::initWithFile(const std::string &path)
             if (tex) _textures.pushBack(tex);
         }
         
-        for (int i = 0; i < _mesh->getMeshPartCount(); i++)
-        {
-            auto programstate = GLProgramState::get(getDefGLProgram(mesh->getAttribFlag() & GL::VERTEX_ATTRIB_FLAG_TEX_COORDS));
-            _programState.pushBack(programstate);
-            
-            programstate->setVertexAttribPointer("a_position", 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-            programstate->setVertexAttribPointer("a_texCoord", 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-        }
+        getGLProgramState();
         
         _path = fullPath;
         return true;
@@ -184,6 +170,20 @@ bool Sprite3D::initWithFile(const std::string &path)
                 return false;
         }
         return true;
+    }
+}
+
+void Sprite3D::genGLProgramState()
+{
+    _programState.clear();
+    
+    for (int i = 0; i < _mesh->getMeshPartCount(); i++)
+    {
+        auto programstate = GLProgramState::get(getDefGLProgram(_mesh->getAttribFlag() & GL::VERTEX_ATTRIB_FLAG_TEX_COORDS));
+        _programState.pushBack(programstate);
+        
+        programstate->setVertexAttribPointer("a_position", 3, GL_FLOAT, GL_FALSE, _mesh->getVertexSizeInBytes(), (void*)0);
+        programstate->setVertexAttribPointer("a_texCoord", 2, GL_FLOAT, GL_FALSE, _mesh->getVertexSizeInBytes(), (void*)(6 * sizeof(float)));
     }
 }
 
@@ -249,7 +249,6 @@ void Sprite3D::onDraw(const Matrix &transform, bool transformUpdated)
         {
             auto meshPart = _mesh->getMeshPart(i);
             auto programstate = _programState.at(i);
-            //size_t offset = 0;//(size_t)_mesh->getVertexPointer();
             
             
             programstate->setUniformVec4("u_color", Vector4(color.r, color.g, color.b, color.a));

@@ -9,7 +9,8 @@
 #include "base/ccTypes.h"
 #include "CCMeshPart.h"
 #include "math/CCMath.h"
-#include "renderer/ccGLStateCache.h"
+#include "renderer/CCGLProgram.h"
+
 
 USING_NS_CC_MATH;
 
@@ -17,17 +18,36 @@ NS_CC_BEGIN
 
 class MeshPart;
 
-struct RenderMeshData
+//mesh vertex attribute
+struct MeshVertexAttrib
 {
-    int attrFlag;
-    int vertexsize;
+    //attribute size
+    GLint size;
+    //GL_FLOAT
+    GLenum type;
+    
+    //VERTEX_ATTRIB_POSITION,VERTEX_ATTRIB_COLOR,VERTEX_ATTRIB_TEX_COORD,VERTEX_ATTRIB_NORMAL, GLProgram for detail
+    int  vertexAttrib;
+    
+    //size in bytes
+    int attribSizeBytes;
+};
+
+class RenderMeshData
+{
+public:
+    int vertexsizeBytes;
+    int vertexNum;
     std::vector<float> _vertexs;
     std::vector<std::vector<unsigned short> > _partindices;
+    std::vector<MeshVertexAttrib> _vertexAttribs;
     
-    RenderMeshData(): attrFlag(0), vertexsize(0)
+    RenderMeshData(): vertexsizeBytes(0)
     {
         
     }
+    
+    bool hasVertexAttrib(int attrib);
     
     bool initFrom(std::vector<float>& posions, std::vector<float>& normals, std::vector<float>& texs, const std::vector<std::vector<unsigned short> >& partindices);
     
@@ -35,14 +55,6 @@ struct RenderMeshData
     
     bool generateNormals();
 };
-
-namespace GL
-{
-    enum
-    {
-         VERTEX_ATTRIB_FLAG_NORMAL = VERTEX_ATTRIB_FLAG_TEX_COORDS << 1,
-    };
-}
 
 
 class Mesh : public Ref
@@ -65,17 +77,17 @@ public:
     //get mesh part by index
     inline MeshPart* getMeshPart(int idx) { return _parts[idx]; }
     
-    void* getIndexPointer(int idx ) { return &_renderdata._partindices[idx]; }
-    
     //build vertex buffer from renderdata
     void restore();
     
+    
     //get attribute flag
-    int getAttribFlag() const { return _renderdata.attrFlag; }
+    int getAttribFlag() const { return 0; }
+    
+    //get per vertex size in bytes
+    int getVertexSizeInBytes() const { return _renderdata.vertexsizeBytes; }
     
     bool generateNormals();
-    
-    void* getVertexPointer();
 
 
 protected:

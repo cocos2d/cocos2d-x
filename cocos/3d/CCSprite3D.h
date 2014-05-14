@@ -46,6 +46,8 @@ protected:
     void onDraw(const Matrix &transform, bool transformUpdated);
     
     virtual GLProgram* getDefGLProgram(bool textured = true);
+    
+    void genGLProgramState();
 
     CustomCommand     _customCommand;
     Mesh              *_mesh;

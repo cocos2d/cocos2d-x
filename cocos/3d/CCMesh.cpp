@@ -7,6 +7,7 @@
 #include <sstream>
 
 #include "base/ccMacros.h"
+#include "renderer/ccGLStateCache.h"
 #include "CCMeshPart.h"
 #include "CCObjLoader.h"
 #include "CCMeshCache.h"
@@ -80,17 +81,25 @@ std::vector<float>& RenderMeshData::generateNormals(std::vector<float>& posions,
     return _normalVertexLists;
 }
 
+bool RenderMeshData::hasVertexAttrib(int attrib)
+{
+    for (auto itr = _vertexAttribs.begin(); itr != _vertexAttribs.end(); itr++) {
+        if ((*itr).vertexAttrib == GLProgram::VERTEX_ATTRIB_NORMAL)
+            return true; //already has normal
+    }
+    return false;
+}
+
 bool RenderMeshData::generateNormals()
 {
     if (_partindices.size() == 0)
         return false;
     
-    if (attrFlag) //if (attrFlag & NORMAL)
-    {
-        return true; //already has normal
-    }
+    if (hasVertexAttrib(GLProgram::VERTEX_ATTRIB_NORMAL))
+        return true;
+
     //generate normal using positions
-    int numVertex = _vertexs.size() / vertexsize;
+    int numVertex = _vertexs.size() / vertexNum;
     
     std::vector<Vector3> normals;
     normals.reserve(numVertex);
@@ -133,7 +142,7 @@ bool RenderMeshData::generateNormals()
     }
     
     //insert normals to _vertexs
-    
+    int vertexsize = vertexsizeBytes / sizeof(float);
     std::vector<float> vertexs((vertexsize + 3) * numVertex);
     
     for (int i = 0; i < numVertex; i++)
@@ -146,7 +155,7 @@ bool RenderMeshData::generateNormals()
         vertexs.push_back(_normalVertexLists[idx].x);
         vertexs.push_back(_normalVertexLists[idx].y);
         vertexs.push_back(_normalVertexLists[idx].z);
-        if (attrFlag & GL::VERTEX_ATTRIB_FLAG_TEX_COORDS)
+        if (hasVertexAttrib(GLProgram::VERTEX_ATTRIB_TEX_COORD))
         {
             idx = i * vertexsize;
             vertexs.push_back(_vertexs[idx + 3]);
@@ -162,53 +171,63 @@ bool RenderMeshData::generateNormals()
 bool RenderMeshData::initFrom(std::vector<float>& posions, std::vector<float>& normals, std::vector<float>& texs, const std::vector<std::vector<unsigned short> >& partindices)
 {
     CC_ASSERT(posions.size()<65536 * 3 && "index may out of bound");
-    attrFlag = 0;
-    vertexsize = 0;
     
-    int cnt = posions.size() / 3; //number of vertex
-    if (cnt == 0)
+    _vertexAttribs.clear();
+    vertexsizeBytes = 0;
+    
+    vertexNum = posions.size() / 3; //number of vertex
+    if (vertexNum == 0)
         return false;
     
     
-    if ((normals.size() != 0 && cnt != normals.size() / 3) || (texs.size() != 0 && texs.size() / 2 != cnt))
+    if ((normals.size() != 0 && vertexNum * 3 != normals.size()) || (texs.size() != 0 && vertexNum * 2 != texs.size()))
         return false;
     
     if (normals.size() == 0)
         normals = generateNormals(posions, texs, partindices);
     
-    vertexsize += 3;
-    attrFlag |= GL::VERTEX_ATTRIB_FLAG_POSITION;
+    vertexsizeBytes += 3;
+    MeshVertexAttrib meshvertexattrib;
+    meshvertexattrib.size = 3;
+    meshvertexattrib.type = GL_FLOAT;
+    meshvertexattrib.attribSizeBytes = meshvertexattrib.size * sizeof(float);
+    _vertexAttribs.push_back(meshvertexattrib);
     
     //normal
     if (normals.size())
     {
         //add normal flag
-        vertexsize += 3;
-        attrFlag |= GL::VERTEX_ATTRIB_FLAG_NORMAL;
+        vertexsizeBytes += 3;
+        _vertexAttribs.push_back(meshvertexattrib);
     }
     //
     if (texs.size())
     {
-        vertexsize += 2;
-        attrFlag |= GL::VERTEX_ATTRIB_FLAG_TEX_COORDS;
+        vertexsizeBytes += 2;
+        meshvertexattrib.size = 2;
+        meshvertexattrib.attribSizeBytes = meshvertexattrib.size * sizeof(float);
+        _vertexAttribs.push_back(meshvertexattrib);
     }
     
     _vertexs.clear();
-    _vertexs.reserve(cnt * vertexsize);
-    for(int i = 0; i < cnt; i++)
+    _vertexs.reserve(vertexNum * vertexsizeBytes);
+    vertexsizeBytes *= sizeof(float);
+    
+    //position, normal, texCoordinate into _vertexs
+    for(int i = 0; i < vertexNum; i++)
     {
         _vertexs.push_back(posions[i * 3]);
         _vertexs.push_back(posions[i * 3 + 1]);
         _vertexs.push_back(posions[i * 3 + 2]);
         
-        if (attrFlag & GL::VERTEX_ATTRIB_FLAG_NORMAL)
+        if (hasVertexAttrib(GLProgram::VERTEX_ATTRIB_NORMAL))
         {
             _vertexs.push_back(normals[i * 3]);
             _vertexs.push_back(normals[i * 3 + 1]);
             _vertexs.push_back(normals[i * 3 + 2]);
         }
         
-        if (attrFlag & GL::VERTEX_ATTRIB_FLAG_TEX_COORDS)
+        if (hasVertexAttrib(GLProgram::VERTEX_ATTRIB_TEX_COORD))
         {
             _vertexs.push_back(texs[i * 2]);
             _vertexs.push_back(texs[i * 2 + 1]);
@@ -313,11 +332,6 @@ void Mesh::addMeshPart(PrimitiveType primitiveType, IndexFormat indexformat,  vo
         // Delete old part array.
         delete[] (oldParts);
     }
-}
-
-void* Mesh::getVertexPointer()
-{
-    return &_renderdata._vertexs[0];
 }
 
 void Mesh::restore()
