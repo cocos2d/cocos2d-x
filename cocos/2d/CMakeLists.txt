@@ -26,6 +26,10 @@ set(COCOS_2D_PLATFORM_SRC
 
 endif()
 
+include_directories(
+  ../external/ConvertUTF
+)
+
 
 set(COCOS_2D_SRC
   2d/ccFPSImages.c
@@ -110,5 +114,7 @@ set(COCOS_2D_SRC
   2d/platform/CCFileUtils.cpp
   2d/platform/CCImage.cpp
   ../external/edtaa3func/edtaa3func.cpp
+  ../external/ConvertUTF/ConvertUTFWrapper.cpp
+  ../external/ConvertUTF/ConvertUTF.c
 )
 

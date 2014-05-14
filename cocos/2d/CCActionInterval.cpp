@@ -30,6 +30,9 @@ THE SOFTWARE.
 #include "2d/CCNode.h"
 #include "CCStdC.h"
 #include "2d/CCActionInstant.h"
+#include "base/CCDirector.h"
+#include "base/CCEventCustom.h"
+
 #include <stdarg.h>
 
 NS_CC_BEGIN
@@ -2137,6 +2140,7 @@ Animate::Animate()
 , _origFrame(nullptr)
 , _executedLoops(0)
 , _animation(nullptr)
+, _frameDisplayedEvent(nullptr)
 {
 
 }
@@ -2146,6 +2150,7 @@ Animate::~Animate()
     CC_SAFE_RELEASE(_animation);
     CC_SAFE_RELEASE(_origFrame);
     CC_SAFE_DELETE(_splitTimes);
+    CC_SAFE_RELEASE(_frameDisplayedEvent);
 }
 
 bool Animate::initWithAnimation(Animation* animation)
@@ -2256,7 +2261,13 @@ void Animate::update(float t)
             const ValueMap& dict = frame->getUserInfo();
             if ( !dict.empty() )
             {
-                //TODO: [[NSNotificationCenter defaultCenter] postNotificationName:AnimationFrameDisplayedNotification object:target_ userInfo:dict];
+                if (_frameDisplayedEvent == nullptr)
+                    _frameDisplayedEvent = new EventCustom(AnimationFrameDisplayedNotification);
+                
+                _frameDisplayedEventInfo.target = _target;
+                _frameDisplayedEventInfo.userInfo = &dict;
+                _frameDisplayedEvent->setUserData(&_frameDisplayedEventInfo);
+                Director::getInstance()->getEventDispatcher()->dispatchEvent(_frameDisplayedEvent);
             }
             _nextFrame = i+1;
         }

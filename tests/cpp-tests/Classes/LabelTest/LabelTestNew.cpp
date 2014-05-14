@@ -1339,7 +1339,7 @@ LabelShadowTest::LabelShadowTest()
     slider->loadProgressBarTexture("cocosui/sliderProgress.png");
     slider->setPosition(Vector2(size.width / 2.0f, size.height * 0.15f + slider->getSize().height * 2.0f));
     slider->setPercent(52);
-    slider->addEventListenerSlider(this, sliderpercentchangedselector(LabelShadowTest::sliderEvent));
+    slider->addEventListener(CC_CALLBACK_2(LabelShadowTest::sliderEvent, this));
     addChild(slider);
 
     auto slider2 = ui::Slider::create();
@@ -1351,13 +1351,13 @@ LabelShadowTest::LabelShadowTest()
     slider2->setPosition(Vector2(size.width * 0.15f, size.height / 2.0));
     slider2->setRotation(90);
     slider2->setPercent(52);
-    slider2->addEventListenerSlider(this, sliderpercentchangedselector(LabelShadowTest::sliderEvent));
+    slider2->addEventListener(CC_CALLBACK_2(LabelShadowTest::sliderEvent, this));
     addChild(slider2);
 }
 
-void LabelShadowTest::sliderEvent(Ref *pSender, ui::SliderEventType type)
+void LabelShadowTest::sliderEvent(Ref *pSender, ui::Slider::EventType type)
 {
-    if (type == SLIDER_PERCENTCHANGED)
+    if (type == Slider::EventType::ON_PERCENTAGE_CHANGED)
     {
         Slider*  slider = (Slider*)this->getChildByTag(1);
         Slider*  slider2 = (Slider*)this->getChildByTag(2);

@@ -31,6 +31,7 @@ Classes/BugsTest/Bug-886.cpp \
 Classes/BugsTest/Bug-899.cpp \
 Classes/BugsTest/Bug-914.cpp \
 Classes/BugsTest/BugsTest.cpp \
+Classes/BugsTest/Bug-Child.cpp \
 Classes/BugsTest/Bug-458/Bug-458.cpp \
 Classes/BugsTest/Bug-458/QuestionContainerSprite.cpp \
 Classes/ChipmunkTest/ChipmunkTest.cpp \

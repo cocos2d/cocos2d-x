@@ -72,7 +72,7 @@ const char* kCCUniformTime_s = GLProgram::UNIFORM_NAME_TIME;
 const char* kCCUniformSinTime_s = GLProgram::UNIFORM_NAME_SIN_TIME;
 const char* kCCUniformCosTime_s	= GLProgram::UNIFORM_NAME_COS_TIME;
 const char* kCCUniformRandom01_s = GLProgram::UNIFORM_NAME_RANDOM01;
-const char* kCCUniformSampler_s	= GLProgram::UNIFORM_NAME_SAMPLER;
+const char* kCCUniformSampler_s	= GLProgram::UNIFORM_NAME_SAMPLER0;
 const char* kCCUniformAlphaTestValue = GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE;
 
 // Attribute names
@@ -275,7 +275,7 @@ Matrix* kmMat4Assign(Matrix* pOut, const Matrix* pIn)
 
 Matrix* kmMat4Identity(Matrix* pOut)
 {
-    *pOut = Matrix::identity();
+    *pOut = Matrix::IDENTITY;
     return pOut;
 }
 

@@ -205,7 +205,7 @@ void TMXLayer::parseInternalProperties()
             _useAutomaticVertexZ = true;
             auto alphaFuncVal = getProperty("cc_alpha_func");
             float alphaFuncValue = alphaFuncVal.asFloat();
-            setGLProgramState(GLProgramState::getWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST));
+            setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST));
 
             GLint alphaValueLocation = glGetUniformLocation(getGLProgram()->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
 

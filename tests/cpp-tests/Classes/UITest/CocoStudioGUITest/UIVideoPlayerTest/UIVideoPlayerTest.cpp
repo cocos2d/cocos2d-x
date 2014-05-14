@@ -147,7 +147,7 @@ void VideoPlayerTest::createVideo()
     _videoPlayer->setContentSize(Size(widgetSize.width * 0.4f,widgetSize.height * 0.4f));
     _uiLayer->addChild(_videoPlayer);
     
-    _videoPlayer->setEventListener(CC_CALLBACK_2(VideoPlayerTest::videoEventCallback, this));
+    _videoPlayer->addEventListener(CC_CALLBACK_2(VideoPlayerTest::videoEventCallback, this));
 }
 
 void VideoPlayerTest::createSlider()
@@ -161,7 +161,7 @@ void VideoPlayerTest::createSlider()
     hSlider->loadProgressBarTexture("cocosui/sliderProgress.png");
     hSlider->setPosition(Vector2(centerPos.x, _visibleRect.origin.y + _visibleRect.size.height * 0.15f));
     hSlider->setPercent(50);
-    hSlider->addEventListenerSlider(this, sliderpercentchangedselector(VideoPlayerTest::sliderCallback));
+    hSlider->addEventListener(CC_CALLBACK_2(VideoPlayerTest::sliderCallback, this));
     _uiLayer->addChild(hSlider,0,1);
 
     auto vSlider = ui::Slider::create();
@@ -172,13 +172,13 @@ void VideoPlayerTest::createSlider()
     vSlider->setPosition(Vector2(_visibleRect.origin.x + _visibleRect.size.width * 0.15f, centerPos.y));
     vSlider->setRotation(90);
     vSlider->setPercent(50);
-    vSlider->addEventListenerSlider(this, sliderpercentchangedselector(VideoPlayerTest::sliderCallback));
+    vSlider->addEventListener(CC_CALLBACK_2(VideoPlayerTest::sliderCallback, this));
     _uiLayer->addChild(vSlider,0,2);
 }
 
-void VideoPlayerTest::sliderCallback(Ref *sender, ui::SliderEventType eventType)
+void VideoPlayerTest::sliderCallback(Ref *sender, ui::Slider::EventType eventType)
 {
-    if (eventType == SLIDER_PERCENTCHANGED && _videoPlayer)
+    if (eventType == Slider::EventType::ON_PERCENTAGE_CHANGED && _videoPlayer)
     {
         Slider*  hSlider = (Slider*)this->getChildByTag(1);
         Slider*  vSlider = (Slider*)this->getChildByTag(2);
@@ -190,19 +190,19 @@ void VideoPlayerTest::sliderCallback(Ref *sender, ui::SliderEventType eventType)
     }
 }
 
-void VideoPlayerTest::videoEventCallback(Ref* sender, VideoPlayer::Event eventType)
+void VideoPlayerTest::videoEventCallback(Ref* sender, VideoPlayer::EventType eventType)
 {
     switch (eventType) {
-        case VideoPlayer::Event::PLAYING:
+        case VideoPlayer::EventType::PLAYING:
             _videoStateLabel->setString("PLAYING");
             break;
-        case VideoPlayer::Event::PAUSED:
+        case VideoPlayer::EventType::PAUSED:
             _videoStateLabel->setString("PAUSED");
             break;
-        case VideoPlayer::Event::STOPPED:
+        case VideoPlayer::EventType::STOPPED:
             _videoStateLabel->setString("STOPPED");
             break;
-        case VideoPlayer::Event::COMPLETED:
+        case VideoPlayer::EventType::COMPLETED:
             _videoStateLabel->setString("COMPLETED");
             break;
         default:

@@ -31,7 +31,8 @@ bool UIRichTextTest::init()
         button->setTouchEnabled(true);
         button->setTitleText("switch");
         button->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + button->getSize().height * 2.5));
-        button->addTouchEventListener(this, toucheventselector(UIRichTextTest::touchEvent));
+//        button->addTouchEventListener(this, toucheventselector(UIRichTextTest::touchEvent));
+        button->addTouchEventListener(CC_CALLBACK_2(UIRichTextTest::touchEvent, this));
         button->setLocalZOrder(10);
         _widget->addChild(button);
         
@@ -75,11 +76,11 @@ bool UIRichTextTest::init()
     return false;
 }
 
-void UIRichTextTest::touchEvent(Ref *pSender, TouchEventType type)
+void UIRichTextTest::touchEvent(Ref *pSender, Widget::TouchEventType type)
 {
     switch (type)
     {
-        case TOUCH_EVENT_ENDED:
+        case Widget::TouchEventType::ENDED:
         {
             if (_richText->isIgnoreContentAdaptWithSize())
             {

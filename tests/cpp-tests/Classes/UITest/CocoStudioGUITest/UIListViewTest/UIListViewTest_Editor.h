@@ -33,7 +33,7 @@ public:
     UIListViewTest_Vertical_Editor();
     ~UIListViewTest_Vertical_Editor();
     bool init();
-    void selectedItemEvent(Ref* pSender, ListViewEventType type);
+    void selectedItemEvent(Ref* pSender, ListView::EventType type);
     
 protected:
     UI_SCENE_EDITOR_CREATE_FUNC(UIListViewTest_Vertical_Editor)
@@ -49,7 +49,7 @@ public:
     UIListViewTest_Horizontal_Editor();
     ~UIListViewTest_Horizontal_Editor();
     bool init();
-    void selectedItemEvent(Ref* pSender, ListViewEventType type);
+    void selectedItemEvent(Ref* pSender, ListView::EventType type);
     
 protected:
     UI_SCENE_EDITOR_CREATE_FUNC(UIListViewTest_Horizontal_Editor)

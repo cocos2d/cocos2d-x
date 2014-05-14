@@ -49,9 +49,9 @@ _scale9Enabled(false),
 _capInsetsNormal(Rect::ZERO),
 _capInsetsPressed(Rect::ZERO),
 _capInsetsDisabled(Rect::ZERO),
-_normalTexType(UI_TEX_TYPE_LOCAL),
-_pressedTexType(UI_TEX_TYPE_LOCAL),
-_disabledTexType(UI_TEX_TYPE_LOCAL),
+_normalTexType(TextureResType::LOCAL),
+_pressedTexType(TextureResType::LOCAL),
+_disabledTexType(TextureResType::LOCAL),
 _normalTextureSize(_size),
 _pressedTextureSize(_size),
 _disabledTextureSize(_size),
@@ -149,7 +149,7 @@ void Button::setScale9Enabled(bool able)
     {
         return;
     }
-    _brightStyle = BRIGHT_NONE;
+    _brightStyle = BrightStyle::NONE;
     _scale9Enabled = able;
     removeProtectedChild(_buttonNormalRenderer);
     removeProtectedChild(_buttonClickedRenderer);
@@ -229,10 +229,10 @@ void Button::loadTextureNormal(const std::string& normal,TextureResType texType)
         extension::Scale9Sprite* normalRendererScale9 = static_cast<extension::Scale9Sprite*>(_buttonNormalRenderer);
         switch (_normalTexType)
         {
-            case UI_TEX_TYPE_LOCAL:
+            case TextureResType::LOCAL:
                 normalRendererScale9->initWithFile(normal);
                 break;
-            case UI_TEX_TYPE_PLIST:
+            case TextureResType::PLIST:
                 normalRendererScale9->initWithSpriteFrameName(normal);
                 break;
             default:
@@ -245,10 +245,10 @@ void Button::loadTextureNormal(const std::string& normal,TextureResType texType)
         Sprite* normalRenderer = static_cast<Sprite*>(_buttonNormalRenderer);
         switch (_normalTexType)
         {
-            case UI_TEX_TYPE_LOCAL:
+            case TextureResType::LOCAL:
                 normalRenderer->setTexture(normal);
                 break;
-            case UI_TEX_TYPE_PLIST:
+            case TextureResType::PLIST:
                 normalRenderer->setSpriteFrame(normal);
                 break;
             default:
@@ -277,10 +277,10 @@ void Button::loadTexturePressed(const std::string& selected,TextureResType texTy
         extension::Scale9Sprite* clickedRendererScale9 = static_cast<extension::Scale9Sprite*>(_buttonClickedRenderer);
         switch (_pressedTexType)
         {
-            case UI_TEX_TYPE_LOCAL:
+            case TextureResType::LOCAL:
                 clickedRendererScale9->initWithFile(selected);
                 break;
-            case UI_TEX_TYPE_PLIST:
+            case TextureResType::PLIST:
                 clickedRendererScale9->initWithSpriteFrameName(selected);
                 break;
             default:
@@ -293,10 +293,10 @@ void Button::loadTexturePressed(const std::string& selected,TextureResType texTy
         Sprite* clickedRenderer = static_cast<Sprite*>(_buttonClickedRenderer);
         switch (_pressedTexType)
         {
-            case UI_TEX_TYPE_LOCAL:
+            case TextureResType::LOCAL:
                 clickedRenderer->setTexture(selected);
                 break;
-            case UI_TEX_TYPE_PLIST:
+            case TextureResType::PLIST:
                 clickedRenderer->setSpriteFrame(selected);
                 break;
             default:
@@ -324,10 +324,10 @@ void Button::loadTextureDisabled(const std::string& disabled,TextureResType texT
         extension::Scale9Sprite* disabledScale9 = static_cast<extension::Scale9Sprite*>(_buttonDisableRenderer);
         switch (_disabledTexType)
         {
-            case UI_TEX_TYPE_LOCAL:
+            case TextureResType::LOCAL:
                 disabledScale9->initWithFile(disabled);
                 break;
-            case UI_TEX_TYPE_PLIST:
+            case TextureResType::PLIST:
                 disabledScale9->initWithSpriteFrameName(disabled);
                 break;
             default:
@@ -340,10 +340,10 @@ void Button::loadTextureDisabled(const std::string& disabled,TextureResType texT
         Sprite* disabledRenderer = static_cast<Sprite*>(_buttonDisableRenderer);
         switch (_disabledTexType)
         {
-            case UI_TEX_TYPE_LOCAL:
+            case TextureResType::LOCAL:
                 disabledRenderer->setTexture(disabled);
                 break;
-            case UI_TEX_TYPE_PLIST:
+            case TextureResType::PLIST:
                 disabledRenderer->setSpriteFrame(disabled);
                 break;
             default:
@@ -562,9 +562,9 @@ Node* Button::getVirtualRenderer()
     {
         switch (_brightStyle)
         {
-            case BRIGHT_NORMAL:
+            case BrightStyle::NORMAL:
                 return _buttonNormalRenderer;
-            case BRIGHT_HIGHLIGHT:
+            case BrightStyle::HIGHLIGHT:
                 return _buttonClickedRenderer;
             default:
                 return nullptr;

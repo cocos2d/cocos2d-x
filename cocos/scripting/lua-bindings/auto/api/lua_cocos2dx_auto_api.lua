@@ -52,11 +52,6 @@
 
 
 --------------------------------------------------------
--- the cc GLProgram
--- @field [parent=#cc] GLProgram#GLProgram GLProgram preloaded module
-
-
---------------------------------------------------------
 -- the cc AtlasNode
 -- @field [parent=#cc] AtlasNode#AtlasNode AtlasNode preloaded module
 
@@ -734,6 +729,11 @@
 --------------------------------------------------------
 -- the cc LabelTTF
 -- @field [parent=#cc] LabelTTF#LabelTTF LabelTTF preloaded module
+
+
+--------------------------------------------------------
+-- the cc GLProgram
+-- @field [parent=#cc] GLProgram#GLProgram GLProgram preloaded module
 
 
 --------------------------------------------------------

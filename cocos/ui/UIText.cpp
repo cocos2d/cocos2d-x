@@ -40,7 +40,8 @@ _fontName("Thonburi"),
 _fontSize(10),
 _onSelectedScaleOffset(0.5),
 _labelRenderer(nullptr),
-_labelRendererAdaptDirty(true)
+_labelRendererAdaptDirty(true),
+_type(Type::SYSTEM)
 {
 }
 
@@ -121,8 +122,15 @@ ssize_t Text::getStringLength()
 
 void Text::setFontSize(int size)
 {
+    if (_type == Type::SYSTEM) {
+        _labelRenderer->setSystemFontSize(size);
+    }
+    else{
+        TTFConfig config = _labelRenderer->getTTFConfig();
+        config.fontSize = size;
+        _labelRenderer->setTTFConfig(config);
+    }
     _fontSize = size;
-    _labelRenderer->setSystemFontSize(size);
     updateContentSizeWithTextureSize(_labelRenderer->getContentSize());
     _labelRendererAdaptDirty = true;
 }
@@ -134,8 +142,18 @@ int Text::getFontSize()
 
 void Text::setFontName(const std::string& name)
 {
+    if(FileUtils::getInstance()->isFileExist(name))
+    {
+        TTFConfig config = _labelRenderer->getTTFConfig();
+        config.fontFilePath = name;
+        _labelRenderer->setTTFConfig(config);
+        _type = Type::TTF;
+    }
+    else{
+        _labelRenderer->setSystemFontName(name);
+        _type = Type::SYSTEM;
+    }
     _fontName = name;
-    _labelRenderer->setSystemFontName(name);
     updateContentSizeWithTextureSize(_labelRenderer->getContentSize());
     _labelRendererAdaptDirty = true;
 }
@@ -143,6 +161,11 @@ void Text::setFontName(const std::string& name)
 const std::string& Text::getFontName()
 {
     return _fontName;
+}
+    
+Text::Type Text::getType() const
+{
+    return _type;
 }
 
 void Text::setTextAreaSize(const Size &size)

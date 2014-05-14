@@ -520,18 +520,6 @@ void Texture2D::setGLProgram(GLProgram* shaderProgram)
     _shaderProgram = shaderProgram;
 }
 
-void Texture2D::releaseData(void *data)
-{
-    free(data);
-}
-
-void* Texture2D::keepData(void *data, unsigned int length)
-{
-    CC_UNUSED_PARAM(length);
-    //The texture data mustn't be saved because it isn't a mutable texture.
-    return data;
-}
-
 bool Texture2D::hasPremultipliedAlpha() const
 {
     return _hasPremultipliedAlpha;
@@ -1171,7 +1159,7 @@ void Texture2D::drawAtPoint(const Vector2& point)
         point.x,            height  + point.y,
         width + point.x,    height  + point.y };
 
-    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORDS );
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORD );
     _shaderProgram->use();
     _shaderProgram->setUniformsForBuiltins();
 
@@ -1205,7 +1193,7 @@ void Texture2D::drawInRect(const Rect& rect)
         rect.origin.x,                            rect.origin.y + rect.size.height,        /*0.0f,*/
         rect.origin.x + rect.size.width,        rect.origin.y + rect.size.height,        /*0.0f*/ };
 
-    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORDS );
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORD );
     _shaderProgram->use();
     _shaderProgram->setUniformsForBuiltins();
 

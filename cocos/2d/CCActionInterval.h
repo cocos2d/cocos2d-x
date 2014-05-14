@@ -1037,6 +1037,8 @@ protected:
     unsigned int    _executedLoops;
     Animation*      _animation;
 
+    EventCustom*    _frameDisplayedEvent;
+    AnimationFrame::DisplayedEventInfo _frameDisplayedEventInfo;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Animate);
 };

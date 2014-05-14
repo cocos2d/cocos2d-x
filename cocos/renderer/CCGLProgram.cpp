@@ -78,7 +78,10 @@ const char* GLProgram::UNIFORM_NAME_TIME = "CC_Time";
 const char* GLProgram::UNIFORM_NAME_SIN_TIME = "CC_SinTime";
 const char* GLProgram::UNIFORM_NAME_COS_TIME = "CC_CosTime";
 const char* GLProgram::UNIFORM_NAME_RANDOM01 = "CC_Random01";
-const char* GLProgram::UNIFORM_NAME_SAMPLER = "CC_Texture0";
+const char* GLProgram::UNIFORM_NAME_SAMPLER0 = "CC_Texture0";
+const char* GLProgram::UNIFORM_NAME_SAMPLER1 = "CC_Texture1";
+const char* GLProgram::UNIFORM_NAME_SAMPLER2 = "CC_Texture2";
+const char* GLProgram::UNIFORM_NAME_SAMPLER3 = "CC_Texture3";
 const char* GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE = "CC_alpha_value";
 
 // Attribute names
@@ -123,7 +126,7 @@ GLProgram::GLProgram()
 , _hashForUniforms(nullptr)
 , _flags()
 {
-    memset(_uniforms, 0, sizeof(_uniforms));
+    memset(_builtInUniforms, 0, sizeof(_builtInUniforms));
 }
 
 GLProgram::~GLProgram()
@@ -275,7 +278,7 @@ void GLProgram::bindPredefinedVertexAttribs()
 
 void GLProgram::parseVertexAttribs()
 {
-    _attributesDictionary.clear();
+    _vertexAttribs.clear();
 
 	// Query and store vertex attribute meta-data from the program.
 	GLint activeAttributes;
@@ -299,7 +302,7 @@ void GLProgram::parseVertexAttribs()
 
 				// Query the pre-assigned attribute location
 				attribute.index = glGetAttribLocation(_program, attribName);
-                _attributesDictionary[attribute.name] = attribute;
+                _vertexAttribs[attribute.name] = attribute;
 			}
 		}
 	}
@@ -307,7 +310,7 @@ void GLProgram::parseVertexAttribs()
 
 void GLProgram::parseUniforms()
 {
-    _uniformsDictionary.clear();
+    _userUniforms.clear();
 
 	// Query and store uniforms from the program.
 	GLint activeUniforms;
@@ -328,7 +331,7 @@ void GLProgram::parseUniforms()
 				glGetActiveUniform(_program, i, length, NULL, &uniform.size, &uniform.type, uniformName);
 				uniformName[length] = '\0';
 
-                // Only add uniforms that are not build-in.
+                // Only add uniforms that are not built-in.
                 // The ones that start with 'CC_' are built-ins
                 if(strncmp("CC_", uniformName, 3) != 0) {
 
@@ -344,7 +347,7 @@ void GLProgram::parseUniforms()
                     uniform.name = std::string(uniformName);
                     uniform.location = glGetUniformLocation(_program, uniformName);
                     
-                    _uniformsDictionary[uniform.name] = uniform;
+                    _userUniforms[uniform.name] = uniform;
                 }
 			}
 		}
@@ -353,16 +356,16 @@ void GLProgram::parseUniforms()
 
 Uniform* GLProgram::getUniform(const std::string &name)
 {
-    const auto itr = _uniformsDictionary.find(name);
-    if( itr != _uniformsDictionary.end())
+    const auto itr = _userUniforms.find(name);
+    if( itr != _userUniforms.end())
         return &itr->second;
     return nullptr;
 }
 
 VertexAttrib* GLProgram::getVertexAttrib(const std::string &name)
 {
-    const auto itr = _attributesDictionary.find(name);
-    if( itr != _attributesDictionary.end())
+    const auto itr = _vertexAttribs.find(name);
+    if( itr != _vertexAttribs.end())
         return &itr->second;
     return nullptr;
 }
@@ -446,32 +449,42 @@ void GLProgram::bindAttribLocation(const std::string &attributeName, GLuint inde
 
 void GLProgram::updateUniforms()
 {
-    _uniforms[UNIFORM_P_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_P_MATRIX);
-    _uniforms[UNIFORM_MV_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_MV_MATRIX);
-    _uniforms[UNIFORM_MVP_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_MVP_MATRIX);
+    _builtInUniforms[UNIFORM_P_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_P_MATRIX);
+    _builtInUniforms[UNIFORM_MV_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_MV_MATRIX);
+    _builtInUniforms[UNIFORM_MVP_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_MVP_MATRIX);
     
-    _uniforms[UNIFORM_TIME] = glGetUniformLocation(_program, UNIFORM_NAME_TIME);
-    _uniforms[UNIFORM_SIN_TIME] = glGetUniformLocation(_program, UNIFORM_NAME_SIN_TIME);
-    _uniforms[UNIFORM_COS_TIME] = glGetUniformLocation(_program, UNIFORM_NAME_COS_TIME);
+    _builtInUniforms[UNIFORM_TIME] = glGetUniformLocation(_program, UNIFORM_NAME_TIME);
+    _builtInUniforms[UNIFORM_SIN_TIME] = glGetUniformLocation(_program, UNIFORM_NAME_SIN_TIME);
+    _builtInUniforms[UNIFORM_COS_TIME] = glGetUniformLocation(_program, UNIFORM_NAME_COS_TIME);
 
-    _uniforms[UNIFORM_RANDOM01] = glGetUniformLocation(_program, UNIFORM_NAME_RANDOM01);
+    _builtInUniforms[UNIFORM_RANDOM01] = glGetUniformLocation(_program, UNIFORM_NAME_RANDOM01);
 
-    _uniforms[UNIFORM_SAMPLER] = glGetUniformLocation(_program, UNIFORM_NAME_SAMPLER);
+    _builtInUniforms[UNIFORM_SAMPLER0] = glGetUniformLocation(_program, UNIFORM_NAME_SAMPLER0);
+    _builtInUniforms[UNIFORM_SAMPLER1] = glGetUniformLocation(_program, UNIFORM_NAME_SAMPLER1);
+    _builtInUniforms[UNIFORM_SAMPLER2] = glGetUniformLocation(_program, UNIFORM_NAME_SAMPLER2);
+    _builtInUniforms[UNIFORM_SAMPLER3] = glGetUniformLocation(_program, UNIFORM_NAME_SAMPLER3);
 
-    _flags.usesP = _uniforms[UNIFORM_P_MATRIX] != -1;
-    _flags.usesMV = _uniforms[UNIFORM_MV_MATRIX] != -1;
-    _flags.usesMVP = _uniforms[UNIFORM_MVP_MATRIX] != -1;
+    _flags.usesP = _builtInUniforms[UNIFORM_P_MATRIX] != -1;
+    _flags.usesMV = _builtInUniforms[UNIFORM_MV_MATRIX] != -1;
+    _flags.usesMVP = _builtInUniforms[UNIFORM_MVP_MATRIX] != -1;
     _flags.usesTime = (
-                       _uniforms[UNIFORM_TIME] != -1 ||
-                       _uniforms[UNIFORM_SIN_TIME] != -1 ||
-                       _uniforms[UNIFORM_COS_TIME] != -1
+                       _builtInUniforms[UNIFORM_TIME] != -1 ||
+                       _builtInUniforms[UNIFORM_SIN_TIME] != -1 ||
+                       _builtInUniforms[UNIFORM_COS_TIME] != -1
                        );
-    _flags.usesRandom = _uniforms[UNIFORM_RANDOM01] != -1;
+    _flags.usesRandom = _builtInUniforms[UNIFORM_RANDOM01] != -1;
 
     this->use();
     
-    // Since sample most probably won't change, set it to 0 now.
-    this->setUniformLocationWith1i(_uniforms[UNIFORM_SAMPLER], 0);
+    // Since sample most probably won't change, set it to 0,1,2,3 now.
+    if(_builtInUniforms[UNIFORM_SAMPLER0] != -1)
+       setUniformLocationWith1i(_builtInUniforms[UNIFORM_SAMPLER0], 0);
+    if(_builtInUniforms[UNIFORM_SAMPLER1] != -1)
+        setUniformLocationWith1i(_builtInUniforms[UNIFORM_SAMPLER1], 1);
+    if(_builtInUniforms[UNIFORM_SAMPLER2] != -1)
+        setUniformLocationWith1i(_builtInUniforms[UNIFORM_SAMPLER2], 2);
+    if(_builtInUniforms[UNIFORM_SAMPLER3] != -1)
+        setUniformLocationWith1i(_builtInUniforms[UNIFORM_SAMPLER3], 3);
 }
 
 bool GLProgram::link()
@@ -617,7 +630,7 @@ GLint GLProgram::getUniformLocationForName(const char* name) const
 
 void GLProgram::setUniformLocationWith1i(GLint location, GLint i1)
 {
-    bool updated =  updateUniformLocation(location, &i1, sizeof(i1)*1);
+    bool updated = updateUniformLocation(location, &i1, sizeof(i1)*1);
     
     if( updated )
     {
@@ -628,7 +641,7 @@ void GLProgram::setUniformLocationWith1i(GLint location, GLint i1)
 void GLProgram::setUniformLocationWith2i(GLint location, GLint i1, GLint i2)
 {
     GLint ints[2] = {i1,i2};
-    bool updated =  updateUniformLocation(location, ints, sizeof(ints));
+    bool updated = updateUniformLocation(location, ints, sizeof(ints));
     
     if( updated )
     {
@@ -639,7 +652,7 @@ void GLProgram::setUniformLocationWith2i(GLint location, GLint i1, GLint i2)
 void GLProgram::setUniformLocationWith3i(GLint location, GLint i1, GLint i2, GLint i3)
 {
     GLint ints[3] = {i1,i2,i3};
-    bool updated =  updateUniformLocation(location, ints, sizeof(ints));
+    bool updated = updateUniformLocation(location, ints, sizeof(ints));
     
     if( updated )
     {
@@ -650,7 +663,7 @@ void GLProgram::setUniformLocationWith3i(GLint location, GLint i1, GLint i2, GLi
 void GLProgram::setUniformLocationWith4i(GLint location, GLint i1, GLint i2, GLint i3, GLint i4)
 {
     GLint ints[4] = {i1,i2,i3,i4};
-    bool updated =  updateUniformLocation(location, ints, sizeof(ints));
+    bool updated = updateUniformLocation(location, ints, sizeof(ints));
     
     if( updated )
     {
@@ -660,7 +673,7 @@ void GLProgram::setUniformLocationWith4i(GLint location, GLint i1, GLint i2, GLi
 
 void GLProgram::setUniformLocationWith2iv(GLint location, GLint* ints, unsigned int numberOfArrays)
 {
-    bool updated =  updateUniformLocation(location, ints, sizeof(int)*2*numberOfArrays);
+    bool updated = updateUniformLocation(location, ints, sizeof(int)*2*numberOfArrays);
     
     if( updated )
     {
@@ -670,7 +683,7 @@ void GLProgram::setUniformLocationWith2iv(GLint location, GLint* ints, unsigned 
 
 void GLProgram::setUniformLocationWith3iv(GLint location, GLint* ints, unsigned int numberOfArrays)
 {
-    bool updated =  updateUniformLocation(location, ints, sizeof(int)*3*numberOfArrays);
+    bool updated = updateUniformLocation(location, ints, sizeof(int)*3*numberOfArrays);
     
     if( updated )
     {
@@ -680,7 +693,7 @@ void GLProgram::setUniformLocationWith3iv(GLint location, GLint* ints, unsigned 
 
 void GLProgram::setUniformLocationWith4iv(GLint location, GLint* ints, unsigned int numberOfArrays)
 {
-    bool updated =  updateUniformLocation(location, ints, sizeof(int)*4*numberOfArrays);
+    bool updated = updateUniformLocation(location, ints, sizeof(int)*4*numberOfArrays);
     
     if( updated )
     {
@@ -690,7 +703,7 @@ void GLProgram::setUniformLocationWith4iv(GLint location, GLint* ints, unsigned 
 
 void GLProgram::setUniformLocationWith1f(GLint location, GLfloat f1)
 {
-    bool updated =  updateUniformLocation(location, &f1, sizeof(f1)*1);
+    bool updated = updateUniformLocation(location, &f1, sizeof(f1)*1);
 
     if( updated )
     {
@@ -712,7 +725,7 @@ void GLProgram::setUniformLocationWith2f(GLint location, GLfloat f1, GLfloat f2)
 void GLProgram::setUniformLocationWith3f(GLint location, GLfloat f1, GLfloat f2, GLfloat f3)
 {
     GLfloat floats[3] = {f1,f2,f3};
-    bool updated =  updateUniformLocation(location, floats, sizeof(floats));
+    bool updated = updateUniformLocation(location, floats, sizeof(floats));
 
     if( updated )
     {
@@ -723,7 +736,7 @@ void GLProgram::setUniformLocationWith3f(GLint location, GLfloat f1, GLfloat f2,
 void GLProgram::setUniformLocationWith4f(GLint location, GLfloat f1, GLfloat f2, GLfloat f3, GLfloat f4)
 {
     GLfloat floats[4] = {f1,f2,f3,f4};
-    bool updated =  updateUniformLocation(location, floats, sizeof(floats));
+    bool updated = updateUniformLocation(location, floats, sizeof(floats));
 
     if( updated )
     {
@@ -733,7 +746,7 @@ void GLProgram::setUniformLocationWith4f(GLint location, GLfloat f1, GLfloat f2,
 
 void GLProgram::setUniformLocationWith2fv(GLint location, const GLfloat* floats, unsigned int numberOfArrays)
 {
-    bool updated =  updateUniformLocation(location, floats, sizeof(float)*2*numberOfArrays);
+    bool updated = updateUniformLocation(location, floats, sizeof(float)*2*numberOfArrays);
 
     if( updated )
     {
@@ -743,7 +756,7 @@ void GLProgram::setUniformLocationWith2fv(GLint location, const GLfloat* floats,
 
 void GLProgram::setUniformLocationWith3fv(GLint location, const GLfloat* floats, unsigned int numberOfArrays)
 {
-    bool updated =  updateUniformLocation(location, floats, sizeof(float)*3*numberOfArrays);
+    bool updated = updateUniformLocation(location, floats, sizeof(float)*3*numberOfArrays);
 
     if( updated )
     {
@@ -753,7 +766,7 @@ void GLProgram::setUniformLocationWith3fv(GLint location, const GLfloat* floats,
 
 void GLProgram::setUniformLocationWith4fv(GLint location, const GLfloat* floats, unsigned int numberOfArrays)
 {
-    bool updated =  updateUniformLocation(location, floats, sizeof(float)*4*numberOfArrays);
+    bool updated = updateUniformLocation(location, floats, sizeof(float)*4*numberOfArrays);
 
     if( updated )
     {
@@ -762,7 +775,7 @@ void GLProgram::setUniformLocationWith4fv(GLint location, const GLfloat* floats,
 }
 
 void GLProgram::setUniformLocationWithMatrix2fv(GLint location, const GLfloat* matrixArray, unsigned int numberOfMatrices) {
-    bool updated =  updateUniformLocation(location, matrixArray, sizeof(float)*4*numberOfMatrices);
+    bool updated = updateUniformLocation(location, matrixArray, sizeof(float)*4*numberOfMatrices);
     
     if( updated )
     {
@@ -771,7 +784,7 @@ void GLProgram::setUniformLocationWithMatrix2fv(GLint location, const GLfloat* m
 }
 
 void GLProgram::setUniformLocationWithMatrix3fv(GLint location, const GLfloat* matrixArray, unsigned int numberOfMatrices) {
-    bool updated =  updateUniformLocation(location, matrixArray, sizeof(float)*9*numberOfMatrices);
+    bool updated = updateUniformLocation(location, matrixArray, sizeof(float)*9*numberOfMatrices);
     
     if( updated )
     {
@@ -782,7 +795,7 @@ void GLProgram::setUniformLocationWithMatrix3fv(GLint location, const GLfloat* m
 
 void GLProgram::setUniformLocationWithMatrix4fv(GLint location, const GLfloat* matrixArray, unsigned int numberOfMatrices)
 {
-    bool updated =  updateUniformLocation(location, matrixArray, sizeof(float)*16*numberOfMatrices);
+    bool updated = updateUniformLocation(location, matrixArray, sizeof(float)*16*numberOfMatrices);
 
     if( updated )
     {
@@ -806,14 +819,14 @@ void GLProgram::setUniformsForBuiltins(const Matrix &matrixMV)
     Matrix matrixP = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
     if(_flags.usesP)
-        setUniformLocationWithMatrix4fv(_uniforms[UNIFORM_P_MATRIX], matrixP.m, 1);
+        setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_P_MATRIX], matrixP.m, 1);
 
     if(_flags.usesMV)
-        setUniformLocationWithMatrix4fv(_uniforms[UNIFORM_MV_MATRIX], matrixMV.m, 1);
+        setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_MV_MATRIX], matrixMV.m, 1);
 
     if(_flags.usesMVP) {
         Matrix matrixMVP = matrixP * matrixMV;
-        setUniformLocationWithMatrix4fv(_uniforms[UNIFORM_MVP_MATRIX], matrixMVP.m, 1);
+        setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_MVP_MATRIX], matrixMVP.m, 1);
     }
 
     if(_flags.usesTime) {
@@ -823,19 +836,19 @@ void GLProgram::setUniformsForBuiltins(const Matrix &matrixMV)
         // Getting Mach time per frame per shader using time could be extremely expensive.
         float time = director->getTotalFrames() * director->getAnimationInterval();
         
-        setUniformLocationWith4f(_uniforms[GLProgram::UNIFORM_TIME], time/10.0, time, time*2, time*4);
-        setUniformLocationWith4f(_uniforms[GLProgram::UNIFORM_SIN_TIME], time/8.0, time/4.0, time/2.0, sinf(time));
-        setUniformLocationWith4f(_uniforms[GLProgram::UNIFORM_COS_TIME], time/8.0, time/4.0, time/2.0, cosf(time));
+        setUniformLocationWith4f(_builtInUniforms[GLProgram::UNIFORM_TIME], time/10.0, time, time*2, time*4);
+        setUniformLocationWith4f(_builtInUniforms[GLProgram::UNIFORM_SIN_TIME], time/8.0, time/4.0, time/2.0, sinf(time));
+        setUniformLocationWith4f(_builtInUniforms[GLProgram::UNIFORM_COS_TIME], time/8.0, time/4.0, time/2.0, cosf(time));
     }
     
     if(_flags.usesRandom)
-        setUniformLocationWith4f(_uniforms[GLProgram::UNIFORM_RANDOM01], CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1());
+        setUniformLocationWith4f(_builtInUniforms[GLProgram::UNIFORM_RANDOM01], CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1());
 }
 
 void GLProgram::reset()
 {
     _vertShader = _fragShader = 0;
-    memset(_uniforms, 0, sizeof(_uniforms));
+    memset(_builtInUniforms, 0, sizeof(_builtInUniforms));
     
 
     // it is already deallocated by android

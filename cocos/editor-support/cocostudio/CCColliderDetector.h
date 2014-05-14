@@ -42,8 +42,6 @@ THE SOFTWARE.
 
 namespace cocostudio {
 
-USING_NS_CC_MATH;
-
 class Bone;
 
 /**
@@ -157,7 +155,7 @@ public:
     void removeContourData(ContourData *contourData);
     void removeAll();
 
-    void updateTransform(Matrix &t);
+    void updateTransform(cocos2d::Matrix &t);
 
     void setActive(bool active);
     bool getActive();

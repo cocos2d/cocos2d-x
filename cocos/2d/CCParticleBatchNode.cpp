@@ -103,7 +103,7 @@ bool ParticleBatchNode::initWithTexture(Texture2D *tex, int capacity)
     
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 
-    setGLProgramState(GLProgramState::getWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
     return true;
 }

@@ -36,14 +36,14 @@ namespace experimental{
         class VideoPlayer : public cocos2d::ui::Widget
         {
         public:
-            enum class Event
+            enum class EventType
             {
                 PLAYING = 0,
                 PAUSED,
                 STOPPED,
                 COMPLETED
             };
-            typedef std::function<void(Ref*,VideoPlayer::Event)> EventCallback;
+            typedef std::function<void(Ref*,VideoPlayer::EventType)> EventCallback;
 
             CREATE_FUNC(VideoPlayer);
 
@@ -71,9 +71,9 @@ namespace experimental{
             virtual void setFullScreenEnabled(bool enabled);
             virtual bool isFullScreenEnabled();
 
-            virtual void setEventListener(const EventCallback& callback);
+            virtual void addEventListener(const VideoPlayer::EventCallback& callback);
 
-            virtual void onVideoEvent(VideoPlayer::Event event);
+            virtual void onVideoEvent(VideoPlayer::EventType event);
             virtual void draw(Renderer *renderer, const Matrix& transform, bool transformUpdated) override;
 
         protected:

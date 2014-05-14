@@ -372,7 +372,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
-    void sliderEvent(Ref *pSender, ui::SliderEventType type);
+    void sliderEvent(Ref *pSender, ui::Slider::EventType type);
 private:
     Label* shadowLabelOutline;
     Label* shadowLabelTTF;

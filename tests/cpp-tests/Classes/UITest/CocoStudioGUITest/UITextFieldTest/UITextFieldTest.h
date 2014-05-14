@@ -33,7 +33,7 @@ public:
     UITextFieldTest();
     ~UITextFieldTest();
     bool init();
-    void textFieldEvent(Ref* pSender, TextFiledEventType type);    
+    void textFieldEvent(Ref* pSender, ui::TextField::EventType type);
     
 protected:
     UI_SCENE_CREATE_FUNC(UITextFieldTest)
@@ -46,7 +46,7 @@ public:
     UITextFieldTest_MaxLength();
     ~UITextFieldTest_MaxLength();
     bool init();
-    void textFieldEvent(Ref* pSender, TextFiledEventType type);
+    void textFieldEvent(Ref* pSender, TextField::EventType type);
     
 protected:
     UI_SCENE_CREATE_FUNC(UITextFieldTest_MaxLength)
@@ -59,7 +59,7 @@ public:
     UITextFieldTest_Password();
     ~UITextFieldTest_Password();
     bool init();
-    void textFieldEvent(Ref* pSender, TextFiledEventType type);
+    void textFieldEvent(Ref* pSender, TextField::EventType type);
     
 protected:
     UI_SCENE_CREATE_FUNC(UITextFieldTest_Password)
@@ -72,7 +72,7 @@ public:
     UITextFieldTest_LineWrap();
     ~UITextFieldTest_LineWrap();
     bool init();
-    void textFieldEvent(Ref* pSender, TextFiledEventType type);
+    void textFieldEvent(Ref* pSender, TextField::EventType type);
     
 protected:
     UI_SCENE_CREATE_FUNC(UITextFieldTest_LineWrap)

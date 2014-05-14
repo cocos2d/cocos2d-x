@@ -150,7 +150,7 @@ void SceneEditorTestLayer::onEnter()
     
     addChild(menu, 100);
     
-    setGLProgramState(GLProgramState::getWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 }
 
 void SceneEditorTestLayer::onExit()
@@ -399,16 +399,17 @@ cocos2d::Node* UIComponentTest::createGameScene()
     ComRender *render = static_cast<ComRender*>(_node->getChildByTag(10025)->getComponent("GUIComponent"));
 	Widget* widget = static_cast<cocos2d::ui::Widget*>(render->getNode());
 	Button* button = static_cast<Button*>(widget->getChildByName("Button_156"));
-	button->addTouchEventListener(this, toucheventselector(UIComponentTest::touchEvent));
+//	button->addTouchEventListener(this, toucheventselector(UIComponentTest::touchEvent));
+    button->addTouchEventListener(CC_CALLBACK_2(UIComponentTest::touchEvent, this));
 
     return node;
 }
 
-void UIComponentTest::touchEvent(Ref *pSender, TouchEventType type)
+void UIComponentTest::touchEvent(Ref *pSender, ui::Widget::TouchEventType type)
 {
 	switch (type)
 	{
-	case TOUCH_EVENT_BEGAN:
+        case ui::Widget::TouchEventType::BEGAN:
 		{
 			ComRender *pBlowFish = static_cast<ComRender*>(_node->getChildByTag(10010)->getComponent("CCArmature"));
 			pBlowFish->getNode()->runAction(CCMoveBy::create(10.0f, Vector2(-1000.0f, 0)));

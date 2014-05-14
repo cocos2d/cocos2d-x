@@ -25,17 +25,9 @@
 
 NS_CC_MATH_BEGIN
 
-static const float MATRIX_IDENTITY[16] =
-{
-    1.0f, 0.0f, 0.0f, 0.0f,
-    0.0f, 1.0f, 0.0f, 0.0f,
-    0.0f, 0.0f, 1.0f, 0.0f,
-    0.0f, 0.0f, 0.0f, 1.0f
-};
-
 Matrix::Matrix()
 {
-    *this = Matrix::identity();
+    *this = IDENTITY;
 }
 
 Matrix::Matrix(float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24,
@@ -56,26 +48,6 @@ Matrix::Matrix(const Matrix& copy)
 
 Matrix::~Matrix()
 {
-}
-
-const Matrix& Matrix::identity()
-{
-    static Matrix m(
-        1, 0, 0, 0,
-        0, 1, 0, 0,
-        0, 0, 1, 0,
-        0, 0, 0, 1 );
-    return m;
-}
-
-const Matrix& Matrix::zero()
-{
-    static Matrix m(
-        0, 0, 0, 0,
-        0, 0, 0, 0,
-        0, 0, 0, 0,
-        0, 0, 0, 0 );
-    return m;
 }
 
 void Matrix::createLookAt(const Vector3& eyePosition, const Vector3& targetPosition, const Vector3& up, Matrix* dst)
@@ -250,7 +222,7 @@ void Matrix::createScale(const Vector3& scale, Matrix* dst)
 {
     GP_ASSERT(dst);
 
-    memcpy(dst, MATRIX_IDENTITY, MATRIX_SIZE);
+    memcpy(dst, &IDENTITY, MATRIX_SIZE);
 
     dst->m[0] = scale.x;
     dst->m[5] = scale.y;
@@ -261,7 +233,7 @@ void Matrix::createScale(float xScale, float yScale, float zScale, Matrix* dst)
 {
     GP_ASSERT(dst);
 
-    memcpy(dst, MATRIX_IDENTITY, MATRIX_SIZE);
+    memcpy(dst, &IDENTITY, MATRIX_SIZE);
 
     dst->m[0] = xScale;
     dst->m[5] = yScale;
@@ -371,7 +343,7 @@ void Matrix::createRotationX(float angle, Matrix* dst)
 {
     GP_ASSERT(dst);
 
-    memcpy(dst, MATRIX_IDENTITY, MATRIX_SIZE);
+    memcpy(dst, &IDENTITY, MATRIX_SIZE);
 
     float c = cos(angle);
     float s = sin(angle);
@@ -386,7 +358,7 @@ void Matrix::createRotationY(float angle, Matrix* dst)
 {
     GP_ASSERT(dst);
 
-    memcpy(dst, MATRIX_IDENTITY, MATRIX_SIZE);
+    memcpy(dst, &IDENTITY, MATRIX_SIZE);
 
     float c = cos(angle);
     float s = sin(angle);
@@ -401,7 +373,7 @@ void Matrix::createRotationZ(float angle, Matrix* dst)
 {
     GP_ASSERT(dst);
 
-    memcpy(dst, MATRIX_IDENTITY, MATRIX_SIZE);
+    memcpy(dst, &IDENTITY, MATRIX_SIZE);
 
     float c = cos(angle);
     float s = sin(angle);
@@ -416,7 +388,7 @@ void Matrix::createTranslation(const Vector3& translation, Matrix* dst)
 {
     GP_ASSERT(dst);
 
-    memcpy(dst, MATRIX_IDENTITY, MATRIX_SIZE);
+    memcpy(dst, &IDENTITY, MATRIX_SIZE);
 
     dst->m[12] = translation.x;
     dst->m[13] = translation.y;
@@ -427,7 +399,7 @@ void Matrix::createTranslation(float xTranslation, float yTranslation, float zTr
 {
     GP_ASSERT(dst);
 
-    memcpy(dst, MATRIX_IDENTITY, MATRIX_SIZE);
+    memcpy(dst, &IDENTITY, MATRIX_SIZE);
 
     dst->m[12] = xTranslation;
     dst->m[13] = yTranslation;
@@ -712,7 +684,7 @@ bool Matrix::inverse()
 
 bool Matrix::isIdentity() const
 {
-    return (memcmp(m, MATRIX_IDENTITY, MATRIX_SIZE) == 0);
+    return (memcmp(m, &IDENTITY, MATRIX_SIZE) == 0);
 }
 
 void Matrix::multiply(float scalar)
@@ -882,7 +854,7 @@ void Matrix::set(const Matrix& mat)
 
 void Matrix::setIdentity()
 {
-    memcpy(m, MATRIX_IDENTITY, MATRIX_SIZE);
+    memcpy(m, &IDENTITY, MATRIX_SIZE);
 }
 
 void Matrix::setZero()
@@ -977,5 +949,17 @@ Matrix Matrix::getTransposed() const
     mat.transpose();
     return mat;
 }
+
+const Matrix Matrix::IDENTITY = Matrix(
+                    1.0f, 0.0f, 0.0f, 0.0f,
+                    0.0f, 1.0f, 0.0f, 0.0f,
+                    0.0f, 0.0f, 1.0f, 0.0f,
+                    0.0f, 0.0f, 0.0f, 1.0f);
+
+const Matrix Matrix::ZERO = Matrix(
+                    0, 0, 0, 0,
+                    0, 0, 0, 0,
+                    0, 0, 0, 0,
+                    0, 0, 0, 0 );
 
 NS_CC_MATH_END

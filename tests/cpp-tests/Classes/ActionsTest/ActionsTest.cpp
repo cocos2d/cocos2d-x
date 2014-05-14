@@ -723,13 +723,13 @@ void ActionAnimate::onEnter()
     auto action2 = Animate::create(animation2);
     _tamara->runAction(Sequence::create(action2, action2->reverse(), NULL));
 
-// TODO:
-//     observer_ = [[NSNotificationCenter defaultCenter] addObserverForName:AnimationFrameDisplayedNotification object:nil queue:nil usingBlock:^(NSNotification* notification) {
-// 
-//         auto userInfo = [notification userInfo);
-//         NSLog(@"object %@ with data %@", [notification object), userInfo );
-//     });
+    _frameDisplayedListener = EventListenerCustom::create(AnimationFrameDisplayedNotification, [](EventCustom * event){
+        auto userData = static_cast<AnimationFrame::DisplayedEventInfo*>(event->getUserData());
+        
+         log("target %p with data %s", userData->target, Value(userData->userInfo).getDescription().c_str());
+    });
 
+    _eventDispatcher->addEventListenerWithFixedPriority(_frameDisplayedListener, -1);
 
     //
     // File animation
@@ -746,7 +746,7 @@ void ActionAnimate::onEnter()
 void ActionAnimate::onExit()
 {
     ActionsDemo::onExit();
-    //TODO:[[NSNotificationCenter defaultCenter] removeObserver:observer_);
+    _eventDispatcher->removeEventListener(_frameDisplayedListener);
 }
 
 std::string ActionAnimate::title() const
