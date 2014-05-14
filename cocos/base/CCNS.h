@@ -55,9 +55,9 @@ Rect CC_DLL RectFromString(const std::string& str);
                     An example of a valid string is "{3.0,2.5}".
                     The string is not localized, so items are always separated with a comma.
 @return A Core Graphics structure that represents a point.
-        If the string is not well-formed, the function returns Vector2::ZERO.
+        If the string is not well-formed, the function returns Vec2::ZERO.
 */
-Vector2 CC_DLL PointFromString(const std::string& str);
+Vec2 CC_DLL PointFromString(const std::string& str);
 
 /**
 @brief Returns a Core Graphics size structure corresponding to the data in a given string.

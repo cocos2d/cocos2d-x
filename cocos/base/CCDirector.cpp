@@ -732,7 +732,7 @@ static void GLToClipTransform(Matrix *transformOut)
     *transformOut = projection * modelview;
 }
 
-Vector2 Director::convertToGL(const Vector2& uiPoint)
+Vec2 Director::convertToGL(const Vec2& uiPoint)
 {
     Matrix transform;
     GLToClipTransform(&transform);
@@ -749,10 +749,10 @@ Vector2 Director::convertToGL(const Vector2& uiPoint)
     //transformInv.transformPoint(clipCoord, &glCoord);
     transformInv.transformVector(clipCoord, &glCoord);
     float factor = 1.0/glCoord.w;
-    return Vector2(glCoord.x * factor, glCoord.y * factor);
+    return Vec2(glCoord.x * factor, glCoord.y * factor);
 }
 
-Vector2 Director::convertToUI(const Vector2& glPoint)
+Vec2 Director::convertToUI(const Vec2& glPoint)
 {
     Matrix transform;
     GLToClipTransform(&transform);
@@ -764,7 +764,7 @@ Vector2 Director::convertToUI(const Vector2& glPoint)
 
     Size glSize = _openGLView->getDesignResolutionSize();
     float factor = 1.0/glCoord.w;
-    return Vector2(glSize.width*(clipCoord.x*0.5 + 0.5) * factor, glSize.height*(-clipCoord.y*0.5 + 0.5) * factor);
+    return Vec2(glSize.width*(clipCoord.x*0.5 + 0.5) * factor, glSize.height*(-clipCoord.y*0.5 + 0.5) * factor);
 }
 
 const Size& Director::getWinSize(void) const
@@ -789,7 +789,7 @@ Size Director::getVisibleSize() const
     }
 }
 
-Vector2 Director::getVisibleOrigin() const
+Vec2 Director::getVisibleOrigin() const
 {
     if (_openGLView)
     {
@@ -797,7 +797,7 @@ Vector2 Director::getVisibleOrigin() const
     }
     else
     {
-        return Vector2::ZERO;
+        return Vec2::ZERO;
     }
 }
 
@@ -1165,9 +1165,9 @@ void Director::createStatsLabel()
     Texture2D::setDefaultAlphaPixelFormat(currentFormat);
 
     const int height_spacing = 22 / CC_CONTENT_SCALE_FACTOR();
-    _drawnVerticesLabel->setPosition(Vector2(0, height_spacing*2) + CC_DIRECTOR_STATS_POSITION);
-    _drawnBatchesLabel->setPosition(Vector2(0, height_spacing*1) + CC_DIRECTOR_STATS_POSITION);
-    _FPSLabel->setPosition(Vector2(0, height_spacing*0)+CC_DIRECTOR_STATS_POSITION);
+    _drawnVerticesLabel->setPosition(Vec2(0, height_spacing*2) + CC_DIRECTOR_STATS_POSITION);
+    _drawnBatchesLabel->setPosition(Vec2(0, height_spacing*1) + CC_DIRECTOR_STATS_POSITION);
+    _FPSLabel->setPosition(Vec2(0, height_spacing*0)+CC_DIRECTOR_STATS_POSITION);
 }
 
 void Director::setContentScaleFactor(float scaleFactor)

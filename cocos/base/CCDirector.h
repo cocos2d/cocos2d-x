@@ -231,17 +231,17 @@ public:
     
     /** returns visible origin of the OpenGL view in points.
      */
-    Vector2 getVisibleOrigin() const;
+    Vec2 getVisibleOrigin() const;
 
     /** converts a UIKit coordinate to an OpenGL coordinate
      Useful to convert (multi) touch coordinates to the current layout (portrait or landscape)
      */
-    Vector2 convertToGL(const Vector2& point);
+    Vec2 convertToGL(const Vec2& point);
 
     /** converts an OpenGL coordinate to a UIKit coordinate
      Useful to convert node points to window points for calls such as glScissor
      */
-    Vector2 convertToUI(const Vector2& point);
+    Vec2 convertToUI(const Vec2& point);
 
     /// XXX: missing description 
     float getZEye() const;
