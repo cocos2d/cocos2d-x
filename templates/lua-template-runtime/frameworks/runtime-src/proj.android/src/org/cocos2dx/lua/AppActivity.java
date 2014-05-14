@@ -60,6 +60,12 @@ public class AppActivity extends Cocos2dxActivity{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		
+		if(nativeIsLandScape()) {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		} else {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		}
+		
 		//2.Set the format of window
 		
 		// Check the wifi is opened when the android:debuggable is "true".
@@ -114,5 +120,7 @@ public class AppActivity extends Cocos2dxActivity{
 		}
 		return null;
 	}
+	
+	private static native boolean nativeIsLandScape();
 	
 }
