@@ -63,6 +63,9 @@ public:
     
     /**
      *  create a Text object with textContent, fontName and fontSize
+     *  the fontName could be a system font name or a TTF file path.
+     *  Usage:  Text *text = Text::create("Hello", "Arial", 20);  //create a system font UIText
+     *          Text *text = Text::create("xxx\xxx.ttf", "Arial", 20); //create a TTF font UIText
      */
     static Text* create(const std::string& textContent,
                         const std::string& fontName,
@@ -100,9 +103,11 @@ public:
 
     /**
      * Sets the font name of label.
-     *  If you are trying to use a system font, you could just pass a font name, for example: Arial
-     * If you are trying to use a TTF, you should pass a file path to the TTF file, for example: resource/XXX.ttf
-     *
+     *  If you are trying to use a system font, you could just pass a font name
+     * If you are trying to use a TTF, you should pass a file path to the TTF file
+     * Usage:  Text *text = Text::create("Hello", "Arial", 20);  //create a system font UIText
+     *         text->setFontName("Marfelt");  // call this method will change the system font
+     *         text->setFontName("xxxx/xxx.ttf");
      * @param  font name.
      */
     void setFontName(const std::string& name);
