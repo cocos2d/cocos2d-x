@@ -32,17 +32,11 @@ namespace ShaderTest2
 {
     static std::function<Layer*()> createFunctions[] =
     {
-        CL(NormalSpriteTest),
-        CL(GreyScaleSpriteTest),
-        CL(BlurSpriteTest),
-        CL(NoiseSpriteTest),
-        CL(EdgeDetectionSpriteTest),
+        CL(EffectSpriteTest),
+
         CL(BloomSpriteTest),
         CL(CelShadingSpriteTest),
         CL(LensFlareSpriteTest),
-        CL(OutlineShadingSpriteTest),
-
-        CL(EffectSprite_Blur),
     };
     
     static unsigned int TEST_CASE_COUNT = sizeof(ShaderTest2::createFunctions) / sizeof(ShaderTest2::createFunctions[0]);
@@ -129,21 +123,42 @@ public:
     }
 };
 
+
+//
+// EffectSprite
+//
+class Effect;
+class EffectSprite : public Sprite
+{
+public:
+    static EffectSprite *create(const std::string& filename) {
+        auto ret = new (std::nothrow) EffectSprite;
+        if(ret && ret->initWithFile(filename)) {
+            ret->autorelease();
+            return ret;
+        }
+        CC_SAFE_RELEASE(ret);
+        return nullptr;
+    }
+
+    void setEffect(Effect *effect) {
+        if(_effect != effect) {
+            effect->setTarget(this);
+
+            CC_SAFE_RELEASE(_effect);
+            _effect = effect;
+            CC_SAFE_RETAIN(_effect);
+            setGLProgramState(_effect->getGLProgramState());
+        }
+    }
+protected:
+    EffectSprite() : _effect(nullptr) {}
+    Effect *_effect;
+};
+
 //
 // Effect
 //
-class Effect : public Ref
-{
-public:
-    GLProgramState* getGLProgramState() const { return _glprogramstate; }
-
-protected:
-    bool initGLProgramState(const std::string &fragmentFilename);
-    Effect() : _glprogramstate(nullptr)
-    {}
-    virtual ~Effect() {}
-    GLProgramState *_glprogramstate;
-};
 
 bool Effect::initGLProgramState(const std::string &fragmentFilename)
 {
@@ -158,16 +173,20 @@ bool Effect::initGLProgramState(const std::string &fragmentFilename)
     return _glprogramstate != nullptr;
 }
 
+// Blur
 class EffectBlur : public Effect
 {
 public:
-    static EffectBlur *create(float blurSize);
+    CREATE_FUNC(EffectBlur);
+
+    virtual void setTarget(EffectSprite *sprite) override;
+
     void setGaussian(float value);
     void setCustomUniforms();
     void setBlurSize(float f);
 
 protected:
-    bool init(float blurSize);
+    bool init(float blurSize=3.0);
 
     int       _blurRadius;
     Vec2   _pixelSize;
@@ -178,21 +197,16 @@ protected:
     float     _weightSum;
 };
 
-EffectBlur *EffectBlur::create(float blurSize)
+void EffectBlur::setTarget(EffectSprite *sprite)
 {
-    auto ret = new (std::nothrow) EffectBlur;
-    if(ret && ret->init(blurSize)) {
-        ret->autorelease();
-        return ret;
-    }
-    CC_SAFE_RELEASE(ret);
-    return nullptr;
+    Size s = sprite->getTexture()->getContentSizeInPixels();
+    _pixelSize = Vec2(1/s.width, 1/s.height);
+    _glprogramstate->setUniformVec2("onePixelSize", _pixelSize);
 }
 
 bool EffectBlur::init(float blurSize)
 {
     initGLProgramState("Shaders/example_Blur.fsh");
-//    auto s = getTexture()->getContentSizeInPixels();
     auto s = Size(100,100);
 
     _blurRadius = 0;
@@ -240,34 +254,76 @@ void EffectBlur::setBlurSize(float f)
     }
 }
 
-
-//
-// EffectSprite
-//
-class EffectSprite : public Sprite
+// Outline
+class EffectOutline : public Effect
 {
 public:
-    static EffectSprite *create(const std::string& filename) {
-        auto ret = new (std::nothrow) EffectSprite;
-        if(ret && ret->initWithFile(filename)) {
-            ret->autorelease();
-            return ret;
-        }
-        CC_SAFE_RELEASE(ret);
-        return nullptr;
+    CREATE_FUNC(EffectOutline);
+
+    bool init()
+    {
+        initGLProgramState("Shaders/example_outline.fsh");
+
+        Vec3 color(1.0, 0.2, 0.3);
+        GLfloat radius = 0.01;
+        GLfloat threshold = 1.75;
+
+        _glprogramstate->setUniformVec3("u_outlineColor", color);
+        _glprogramstate->setUniformFloat("u_radius", radius);
+        _glprogramstate->setUniformFloat("u_threshold", threshold);
+        return true;
+    }
+};
+
+// Noise
+class EffectNoise : public Effect
+{
+public:
+    CREATE_FUNC(EffectNoise);
+
+protected:
+    bool init() {
+        initGLProgramState("Shaders/example_Noisy.fsh");
+        return true;
     }
 
-    void setEffect(Effect *effect) {
-        if(_effect != effect) {
-            CC_SAFE_RELEASE(_effect);
-            _effect = effect;
-            CC_SAFE_RETAIN(_effect);
-            setGLProgramState(_effect->getGLProgramState());
-        }
+    void setTarget(EffectSprite* sprite) override
+    {
+        auto s = sprite->getTexture()->getContentSizeInPixels();
+        getGLProgramState()->setUniformVec2("resolution", Vec2(s.width, s.height));
     }
+};
+
+// Edge Detect
+class EffectEdgeDetect : public Effect
+{
+public:
+    CREATE_FUNC(EffectEdgeDetect);
+
 protected:
-    EffectSprite() : _effect(nullptr) {}
-    Effect *_effect;
+    bool init() {
+        initGLProgramState("Shaders/example_edgeDetection.fsh");
+        return true;
+    }
+
+    void setTarget(EffectSprite* sprite) override
+    {
+        auto s = sprite->getTexture()->getContentSizeInPixels();
+        getGLProgramState()->setUniformVec2("resolution", Vec2(s.width, s.height));
+    }
+};
+
+// Grey
+class EffectGreyScale : public Effect
+{
+public:
+    CREATE_FUNC(EffectGreyScale);
+
+protected:
+    bool init() {
+        initGLProgramState("Shaders/example_greyScale.fsh");
+        return true;
+    }
 };
 
 //
@@ -281,7 +337,6 @@ public:
 
     virtual void initShader();
     void setBackgroundNotification();
-
     void listenBackToForeground(Ref *obj);
     
 protected:
@@ -329,168 +384,6 @@ void ShaderSprite::initShader()
     this->setGLProgramState(glprogramState);
 
     setCustomUniforms();
-}
-
-class NormalSprite : public ShaderSprite, public ShaderSpriteCreator<NormalSprite>
-{
-public:
-    CREATE_FUNC(NormalSprite);
-    NormalSprite();
-
-protected:
-    virtual void setCustomUniforms() override;
-};
-
-NormalSprite::NormalSprite()
-{
-    _fragSourceFile = "Shaders/example_normal.fsh";
-}
-
-void NormalSprite::setCustomUniforms()
-{
-}
-
-class GreyScaleSprite : public ShaderSprite, public ShaderSpriteCreator<GreyScaleSprite>
-{
-public:
-    CREATE_FUNC(GreyScaleSprite);
-    GreyScaleSprite();
-
-protected:
-    virtual void setCustomUniforms() override;
-};
-
-GreyScaleSprite::GreyScaleSprite()
-{
-    _fragSourceFile = "Shaders/example_greyScale.fsh";
-}
-
-void GreyScaleSprite::setCustomUniforms()
-{
-}
-
-class BlurSprite : public ShaderSprite, public ShaderSpriteCreator<BlurSprite>
-{
-public:
-    CREATE_FUNC(BlurSprite);
-    BlurSprite();
-    void setBlurSize(float f);
-
-protected:
-    virtual void setCustomUniforms() override;
-
-    int       _blurRadius;
-    Vec2     _pixelSize;
-    
-    int       _samplingRadius;
-    float     _scale;
-    float     _cons;
-    float     _weightSum;
-};
-
-BlurSprite::BlurSprite()
-{
-    _fragSourceFile = "Shaders/example_Blur.fsh";
-}
-
-void BlurSprite::setCustomUniforms()
-{
-    auto s = getTexture()->getContentSizeInPixels();
-    _blurRadius = 0;
-    _pixelSize = Vec2(1/s.width, 1/s.height);
-    _samplingRadius = 0;
-
-    setBlurSize(3.0f);
-
-    auto programState = getGLProgramState();
-    programState->setUniformVec2("onePixelSize", _pixelSize);
-    programState->setUniformVec4("gaussianCoefficient", Vec4(_samplingRadius, _scale, _cons, _weightSum));
-}
-
-void BlurSprite::setBlurSize(float f)
-{
-    if(_blurRadius == (int)f)
-        return;
-    _blurRadius = (int)f;
-    
-    _samplingRadius = _blurRadius;
-    if (_samplingRadius > 10)
-    {
-        _samplingRadius = 10;
-    }
-    if (_blurRadius > 0)
-    {
-        float sigma = _blurRadius / 2.0f;
-        _scale = -0.5f / (sigma * sigma);
-        _cons = -1.0f * _scale / 3.141592f;
-        _weightSum = -_cons;
-        
-        float weight;
-        int squareX;
-        for(int dx = 0; dx <= _samplingRadius; ++dx)
-        {
-            squareX = dx * dx;
-            weight = _cons * exp(squareX * _scale);
-            _weightSum += 2.0 * weight;
-            for (int dy = 1; dy <= _samplingRadius; ++dy)
-            {
-                weight = _cons * exp((squareX + dy * dy) * _scale);
-                _weightSum += 4.0 * weight;
-            }
-        }
-    }
-    log("_blurRadius:%d",_blurRadius);
-}
-
-class NoiseSprite : public ShaderSprite, public ShaderSpriteCreator<NoiseSprite>
-{
-public:
-    CREATE_FUNC(NoiseSprite);
-    NoiseSprite();
-
-protected:
-    virtual void setCustomUniforms() override;
-
-    GLfloat _resolution[2];
-};
-
-NoiseSprite::NoiseSprite()
-{
-    _fragSourceFile = "Shaders/example_Noisy.fsh";
-}
-
-void NoiseSprite::setCustomUniforms()
-{
-    _resolution[0] = getTexture()->getContentSizeInPixels().width;
-    _resolution[1] = getTexture()->getContentSizeInPixels().height;
-    getGLProgramState()->setUniformVec2("resolution", Vec2(_resolution[0],_resolution[1]));
-}
-
-class EdgeDetectionSprite : public ShaderSprite, public ShaderSpriteCreator<EdgeDetectionSprite>
-{
-public:
-    CREATE_FUNC(EdgeDetectionSprite);
-    EdgeDetectionSprite();
-    
-protected:
-    virtual void setCustomUniforms() override;
-
-    GLfloat _resolution[2];
-};
-
-EdgeDetectionSprite::EdgeDetectionSprite()
-{
-    _fragSourceFile = "Shaders/example_edgeDetection.fsh";
-}
-
-void EdgeDetectionSprite::setCustomUniforms()
-{
-    auto programState = getGLProgramState();
-
-    _resolution[0] = getContentSize().width;
-    _resolution[1] = getContentSize().height;
-
-    programState->setUniformVec2("resolution", Vec2(_resolution[0], _resolution[1]));
 }
 
 class BloomSprite : public ShaderSprite, public ShaderSpriteCreator<BloomSprite>
@@ -572,76 +465,6 @@ void LensFlareSprite::setCustomUniforms()
     programState->setUniformVec2("textureResolution", Vec2(_textureResolution[0], _textureResolution[1]));
 }
 
-NormalSpriteTest::NormalSpriteTest()
-{
-    if (ShaderTestDemo2::init())
-    {
-        auto s = Director::getInstance()->getWinSize();
-        NormalSprite* sprite = NormalSprite::createSprite("Images/powered.png");
-        sprite->setPosition(Vec2(s.width/2, s.height/2));
-        addChild(sprite);
-    }
-    
-}
-
-GreyScaleSpriteTest::GreyScaleSpriteTest()
-{
-    if (ShaderTestDemo2::init())
-    {
-        auto s = Director::getInstance()->getWinSize();
-        GreyScaleSprite* sprite = GreyScaleSprite::createSprite("Images/powered.png");
-        sprite->setPosition(Vec2(s.width * 0.75, s.height/2));
-        auto sprite2 = Sprite::create("Images/powered.png");
-        sprite2->setPosition(Vec2(s.width * 0.25, s.height/2));
-        addChild(sprite);
-        addChild(sprite2);
-    }
-    
-}
-
-BlurSpriteTest::BlurSpriteTest()
-{
-    if (ShaderTestDemo2::init())
-    {
-        auto s = Director::getInstance()->getWinSize();
-        BlurSprite* sprite = BlurSprite::createSprite("Images/powered.png");
-        sprite->setPosition(Vec2(s.width * 0.75, s.height/2));
-        auto sprite2 = Sprite::create("Images/powered.png");
-        sprite2->setPosition(Vec2(s.width * 0.25, s.height/2));
-        addChild(sprite);
-        addChild(sprite2);
-    }
-    
-}
-
-NoiseSpriteTest::NoiseSpriteTest()
-{
-    if (ShaderTestDemo2::init())
-    {
-        auto s = Director::getInstance()->getWinSize();
-        NoiseSprite* sprite = NoiseSprite::createSprite("Images/powered.png");
-        sprite->setPosition(Vec2(s.width * 0.75, s.height/2));
-        auto sprite2 = Sprite::create("Images/powered.png");
-        sprite2->setPosition(Vec2(s.width * 0.25, s.height/2));
-        addChild(sprite);
-        addChild(sprite2);
-    }
-}
-
-EdgeDetectionSpriteTest::EdgeDetectionSpriteTest()
-{
-    if (ShaderTestDemo2::init())
-    {
-        auto s = Director::getInstance()->getWinSize();
-        EdgeDetectionSprite* sprite = EdgeDetectionSprite::createSprite("Images/powered.png");
-        sprite->setPosition(Vec2(s.width * 0.75, s.height/2));
-        auto sprite2 = Sprite::create("Images/powered.png");
-        sprite2->setPosition(Vec2(s.width * 0.25, s.height/2));
-        addChild(sprite);
-        addChild(sprite2);
-    }
-}
-
 BloomSpriteTest::BloomSpriteTest()
 {
     if (ShaderTestDemo2::init())
@@ -683,60 +506,29 @@ LensFlareSpriteTest::LensFlareSpriteTest()
     }
 }
 
-
-class OutlineSprite : public ShaderSprite, public ShaderSpriteCreator<OutlineSprite>
-{
-public:
-    CREATE_FUNC(OutlineSprite);
-    OutlineSprite();
-    
-protected:
-    virtual void setCustomUniforms() override;
-};
-
-
-OutlineSprite::OutlineSprite()
-{
-    _fragSourceFile = "Shaders/example_outline.fsh";
-    _vertSourceFile = ""; //"Shaders/example_outline.vsh";
-    _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
-}
-
-void OutlineSprite::setCustomUniforms()
-{
-    Vec3 color(1.0, 0.2, 0.3);
-    GLfloat radius = 0.01;
-    GLfloat threshold = 1.75;
-
-    auto programState = getGLProgramState();
-
-    programState->setUniformVec3("u_outlineColor", color);
-    programState->setUniformFloat("u_radius", radius);
-    programState->setUniformFloat("u_threshold", threshold);
-}
-
-
-OutlineShadingSpriteTest::OutlineShadingSpriteTest()
+EffectSpriteTest::EffectSpriteTest()
 {
     if (ShaderTestDemo2::init()) {
-        auto s = Director::getInstance()->getWinSize();
-        OutlineSprite* sprite = OutlineSprite::createSprite("Images/grossini_dance_10.png");
-        sprite->setPosition(Vec2(s.width * 0.75, s.height/2));
-        auto sprite2 = Sprite::create("Images/grossini_dance_10.png");
-        sprite2->setPosition(Vec2(s.width * 0.25, s.height/2));
-        addChild(sprite);
-        addChild(sprite2);
-    }
-}
 
-
-EffectSprite_Blur::EffectSprite_Blur()
-{
-    if (ShaderTestDemo2::init()) {
         auto s = Director::getInstance()->getWinSize();
-        EffectSprite* sprite = EffectSprite::create("Images/grossini.png");
-        sprite->setPosition(Vec2(0, s.height/2));
-        addChild(sprite);
+
+        auto item = MenuItemImage::create("Images/r1.png", "Images/r2.png",
+                                          [&](Ref *sender) {
+                                              _vectorIndex++;
+                                              if(_vectorIndex>=_effects.size())
+                                                  _vectorIndex = 0;
+                                              _sprite->setEffect(_effects.at(_vectorIndex));
+                                          });
+        item->setPosition(Vec2(40,40));
+        item->setScale(0.5);
+
+        auto menu = Menu::create(item, NULL);
+        menu->setPosition(Vec2(0,0));
+        addChild(menu);
+
+        _sprite = EffectSprite::create("Images/grossini.png");
+        _sprite->setPosition(Vec2(0, s.height/2));
+        addChild(_sprite);
 
         auto jump = JumpBy::create(4, Vec2(s.width,0), 100, 4);
         auto rot = RotateBy::create(4, 720);
@@ -744,10 +536,17 @@ EffectSprite_Blur::EffectSprite_Blur()
         auto rev = spawn->reverse();
         auto seq = Sequence::create(spawn, rev, NULL);
         auto repeat = RepeatForever::create(seq);
-        sprite->runAction(repeat);
+        _sprite->runAction(repeat);
 
-        auto effect = EffectBlur::create(3.0);
-        sprite->setEffect(effect);
+        // set the Effects
+        _effects.pushBack(EffectBlur::create());
+        _effects.pushBack(EffectOutline::create());
+        _effects.pushBack(EffectNoise::create());
+        _effects.pushBack(EffectEdgeDetect::create());
+        _effects.pushBack(EffectGreyScale::create());
+
+        _vectorIndex = 0;
+        _sprite->setEffect( _effects.at(_vectorIndex) );
     }
 }
 

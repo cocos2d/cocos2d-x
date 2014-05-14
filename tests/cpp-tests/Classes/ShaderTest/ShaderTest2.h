@@ -23,50 +23,6 @@ public:
     virtual void runThisTest();
 };
 
-class NormalSpriteTest : public ShaderTestDemo2
-{
-public:
-    CREATE_FUNC(NormalSpriteTest);
-    NormalSpriteTest();
-    
-    virtual std::string subtitle() const {return "NormalSpriteTest";}
-};
-
-class GreyScaleSpriteTest : public ShaderTestDemo2
-{
-public:
-    CREATE_FUNC(GreyScaleSpriteTest);
-    GreyScaleSpriteTest();
-    
-    virtual std::string subtitle() const {return "GreyScaleSpriteTest";}
-};
-
-class BlurSpriteTest : public ShaderTestDemo2
-{
-public:
-    CREATE_FUNC(BlurSpriteTest);
-    BlurSpriteTest();
-    
-    virtual std::string subtitle() const {return "BlurSpriteTest";}
-};
-
-class NoiseSpriteTest : public ShaderTestDemo2
-{
-public:
-    CREATE_FUNC(NoiseSpriteTest);
-    NoiseSpriteTest();
-    virtual std::string subtitle() const {return "NoiseSpriteTest";}
-};
-
-class EdgeDetectionSpriteTest : public ShaderTestDemo2
-{
-public:
-    CREATE_FUNC(EdgeDetectionSpriteTest);
-
-    EdgeDetectionSpriteTest();
-    virtual std::string subtitle() const {return "EdgeDetectionSpriteTest";}
-};
-
 class BloomSpriteTest : public ShaderTestDemo2
 {
 public:
@@ -94,20 +50,37 @@ public:
     virtual std::string subtitle() const {return "CelShadingSpriteTest";}
 };
 
-class OutlineShadingSpriteTest : public ShaderTestDemo2
+
+//
+// Effect
+//
+class EffectSprite;
+
+class Effect : public Ref
 {
 public:
-    CREATE_FUNC(OutlineShadingSpriteTest);
-    OutlineShadingSpriteTest();
-    virtual std::string subtitle() const {return "OutlineShadingSpriteTest";}
+    GLProgramState* getGLProgramState() const { return _glprogramstate; }
+    virtual void setTarget(EffectSprite *sprite){}
+
+protected:
+    bool initGLProgramState(const std::string &fragmentFilename);
+    Effect() : _glprogramstate(nullptr)
+    {}
+    virtual ~Effect() {}
+    GLProgramState *_glprogramstate;
 };
 
-class EffectSprite_Blur : public ShaderTestDemo2
+class EffectSpriteTest : public ShaderTestDemo2
 {
 public:
-    CREATE_FUNC(EffectSprite_Blur);
-    EffectSprite_Blur();
-    virtual std::string subtitle() const {return "Blur Effect on Sprite";}
+    CREATE_FUNC(EffectSpriteTest);
+    EffectSpriteTest();
+    virtual std::string subtitle() const {return "Cycle different effects on the sprite";}
+
+protected:
+    ssize_t _vectorIndex;
+    cocos2d::Vector<Effect*> _effects;
+    EffectSprite *_sprite;
 };
 
 
