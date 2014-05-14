@@ -24,43 +24,44 @@ bool ConfigParser::isInit()
 void ConfigParser::readConfig()
 {
     _isInit = true;
-    string filecfg = "res/config.json";
-    FILE * pFile = nullptr;
-
+    string filecfg = "config.json";
+    
+    string fileContent;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID && !defined(NDEBUG)) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS && defined(COCOS2D_DEBUG))
     string fullPathFile = FileUtils::getInstance()->getWritablePath();
+    fullPathFile.append("debugruntime/")
     fullPathFile.append(filecfg.c_str());
-    pFile = fopen (fullPathFile.c_str() , "r");
+    fileContent=FileUtils::getInstance()->getStringFromFile(fullPathFile.c_str());
 #endif
 
-    if (!pFile)
-    {
-        string fullPathFile = FileUtils::getInstance()->fullPathForFilename(filecfg);
-        pFile = fopen (fullPathFile.c_str() , "r");
+    if (fileContent.empty()) {
+        filecfg=FileUtils::getInstance()->fullPathForFilename(filecfg.c_str());
+        fileContent=FileUtils::getInstance()->getStringFromFile(filecfg.c_str());
     }
 
-    if(pFile)
+    if(!fileContent.empty())
     {
-        rapidjson::FileStream inputStream(pFile);
-        _docRootjson.ParseStream<0>(inputStream);
-        fclose(pFile);
-        if (_docRootjson.HasMember("init_cfg") && _docRootjson["init_cfg"].IsObject())
+        _docRootjson.Parse<0>(fileContent.c_str());
+        if (_docRootjson.HasMember("init_cfg"))
         {
-            const rapidjson::Value& objectInitView = _docRootjson["init_cfg"];
-            if (objectInitView.HasMember("width") && objectInitView.HasMember("height"))
+            if(_docRootjson["init_cfg"].IsObject())
             {
-                _initViewSize.width = objectInitView["width"].GetUint();
-                _initViewSize.height = objectInitView["height"].GetUint();
-            }
-            if (objectInitView.HasMember("name") && objectInitView["name"].IsString())
-            {
-                _viewName = objectInitView["name"].GetString();
-            }
-            if (objectInitView.HasMember("isLandscape") && objectInitView["isLandscape"].IsBool()) {
-                _isLandscape = objectInitView["isLandscape"].GetBool();
-            }
-            if (objectInitView.HasMember("entry") && objectInitView["entry"].IsString()) {
-                _entryfile = objectInitView["entry"].GetString();
+                const rapidjson::Value& objectInitView = _docRootjson["init_cfg"];
+                if (objectInitView.HasMember("width") && objectInitView.HasMember("height"))
+                {
+                    _initViewSize.width = objectInitView["width"].GetUint();
+                    _initViewSize.height = objectInitView["height"].GetUint();
+                }
+                if (objectInitView.HasMember("name") && objectInitView["name"].IsString())
+                {
+                    _viewName = objectInitView["name"].GetString();
+                }
+                if (objectInitView.HasMember("isLandscape") && objectInitView["isLandscape"].IsBool()) {
+                    _isLandscape = objectInitView["isLandscape"].GetBool();
+                }
+                if (objectInitView.HasMember("entry") && objectInitView["entry"].IsString()) {
+                    _entryfile = objectInitView["entry"].GetString();
+                }
             }
         }
         if (_docRootjson.HasMember("simulator_screen_size"))
