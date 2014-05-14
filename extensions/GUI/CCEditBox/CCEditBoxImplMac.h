@@ -47,6 +47,7 @@
     CCCustomNSTextField* textField_;
     void* editBox_;
     BOOL editState_;
+    NSMutableDictionary* placeholderAttributes_;
 }
 
 @property(nonatomic, retain) NSTextField* textField;
