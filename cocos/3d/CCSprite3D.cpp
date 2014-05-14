@@ -129,7 +129,10 @@ bool Sprite3D::loadFromObj(const std::string& path)
     return true;
 }
 
-Sprite3D::Sprite3D(): _partcount(0), _mesh(nullptr)
+Sprite3D::Sprite3D()
+: _partcount(0)
+, _mesh(nullptr)
+, _blend(BlendFunc::DISABLE)
 {
 }
 
@@ -237,9 +240,9 @@ void Sprite3D::onDraw(const Matrix &transform, bool transformUpdated)
 {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
+    GL::blendFunc(_blend.src, _blend.dst);
     // ********** Base Draw *************
 
-    
     Color4F color(getDisplayedColor());
     color.a = getDisplayedOpacity() / 255.0f;
     
@@ -306,6 +309,19 @@ void Sprite3D::onDraw(const Matrix &transform, bool transformUpdated)
     
     glDisable(GL_DEPTH_TEST);
     
+}
+
+void Sprite3D::setBlendFunc(const BlendFunc &blendFunc)
+{
+    if(_blend.src != blendFunc.src || _blend.dst != blendFunc.dst)
+    {
+        _blend = blendFunc;
+    }
+}
+
+const BlendFunc& Sprite3D::getBlendFunc() const
+{
+    return _blend;
 }
 
 

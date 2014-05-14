@@ -7,6 +7,7 @@
 
 #include "base/ccTypes.h"
 #include "2d/CCNode.h"
+#include "2d/CCProtocols.h"
 
 #include "renderer/CCCustomCommand.h"
 
@@ -16,23 +17,18 @@ class GLProgramState;
 class Mesh;
 class Texture2D;
 
-class Sprite3D : public Node
+class Sprite3D : public Node, public BlendProtocol
 {
 public:
     static Sprite3D* create(const std::string &modelPath);
     static Sprite3D* create(const std::string &modelPath, const std::string &texturePath);
-    //static Sprite3D* create(Mesh* mesh, const std::string& texturePath);
-    //todo add if we need multitexture in the sprite3d
-    //static Sprite3D* create(const std::string &modelPath, const std::vector<std::string> &texturePath);
-    //static Sprite3D* create(const std::string &modelPath, const std::vector<std::string> &texturePath);
-
-    int           getMeshPartCount() const;
-    
-    Mesh* getMesh() const { return _mesh; }
     
     void setTexture(const std::string& texFile);
     //void setTexture(Texture2D* texture);
-
+    
+    virtual void setBlendFunc(const BlendFunc &blendFunc) override;
+    virtual const BlendFunc &getBlendFunc() const override;
+    
 protected:
     Sprite3D();
     virtual ~Sprite3D();
@@ -47,6 +43,10 @@ protected:
     
     virtual GLProgram* getDefGLProgram(bool textured = true);
 
+    int           getMeshPartCount() const;
+    
+    Mesh* getMesh() const { return _mesh; }
+
     CustomCommand     _customCommand;
     Mesh              *_mesh;
     
@@ -59,7 +59,8 @@ protected:
     //Sprite3DEffect*     _effect;
     
     std::string       _path;
-
+    
+    BlendFunc _blend;
     
 };
 
