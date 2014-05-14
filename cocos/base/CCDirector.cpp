@@ -887,6 +887,13 @@ void Director::popToSceneStackLevel(int level)
     if (level >= c)
         return;
 
+    auto currentRunningScene = _scenesStack.back();
+    if (currentRunningScene == _runningScene)
+    {
+        _scenesStack.popBack();
+        --c;
+    }
+
     // pop stack until reaching desired level
     while (c > level)
     {
@@ -903,7 +910,7 @@ void Director::popToSceneStackLevel(int level)
     }
 
     _nextScene = _scenesStack.back();
-    _sendCleanupToScene = false;
+    _sendCleanupToScene = true;
 }
 
 void Director::end()
