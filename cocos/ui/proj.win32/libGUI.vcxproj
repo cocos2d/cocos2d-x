@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\CCLayoutParameterProtocol.h" />
+    <ClInclude Include="..\CCLayoutProtocol.h" />
     <ClInclude Include="..\CCProtectedNode.h" />
     <ClInclude Include="..\CocosGUI.h" />
     <ClInclude Include="..\UIButton.h" />
@@ -19,7 +21,6 @@
     <ClInclude Include="..\UIHelper.h" />
     <ClInclude Include="..\UIImageView.h" />
     <ClInclude Include="..\UILayout.h" />
-    <ClInclude Include="..\UILayoutParameter.h" />
     <ClInclude Include="..\UIListView.h" />
     <ClInclude Include="..\UILoadingBar.h" />
     <ClInclude Include="..\UIPageView.h" />
@@ -36,6 +37,8 @@
     <ClInclude Include="..\UIWidget.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\CCLayoutParameterProtocol.cpp" />
+    <ClCompile Include="..\CCLayoutProtocol.cpp" />
     <ClCompile Include="..\CCProtectedNode.cpp" />
     <ClCompile Include="..\CocosGUI.cpp" />
     <ClCompile Include="..\UIButton.cpp" />
@@ -44,7 +47,6 @@
     <ClCompile Include="..\UIHelper.cpp" />
     <ClCompile Include="..\UIImageView.cpp" />
     <ClCompile Include="..\UILayout.cpp" />
-    <ClCompile Include="..\UILayoutParameter.cpp" />
     <ClCompile Include="..\UIListView.cpp" />
     <ClCompile Include="..\UILoadingBar.cpp" />
     <ClCompile Include="..\UIPageView.cpp" />

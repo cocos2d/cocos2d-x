@@ -22,12 +22,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "ui/UILayoutParameter.h"
-#include "ui/UILayout.h"
+#include "ui/CCLayoutParameterProtocol.h"
 
 NS_CC_BEGIN
-
-namespace ui {
+namespace ui{
     
 Margin::Margin(void) : left(0), top(0), right(0), bottom(0)
 {
@@ -59,7 +57,7 @@ bool Margin::equals(const Margin &target) const
 {
     return (left == target.left && top == target.top && right == target.right && bottom == target.bottom);
 }
-    
+
 
 LayoutParameter* LayoutParameter::create()
 {
@@ -87,19 +85,19 @@ LayoutParameter::Type LayoutParameter::getLayoutType() const
 {
     return _layoutParameterType;
 }
-    
+
 LayoutParameter* LayoutParameter::clone()
 {
     LayoutParameter* clonedParameter = createCloneInstance();
     clonedParameter->copyProperties(this);
     return clonedParameter;
 }
-    
+
 LayoutParameter* LayoutParameter::createCloneInstance()
 {
     return LayoutParameter::create();
 }
-    
+
 void LayoutParameter::copyProperties(LayoutParameter *model)
 {
     _margin = model->_margin;
@@ -126,7 +124,7 @@ LinearLayoutParameter::LinearGravity LinearLayoutParameter::getGravity() const
 {
     return _linearGravity;
 }
-    
+
 LayoutParameter* LinearLayoutParameter::createCloneInstance()
 {
     return LinearLayoutParameter::create();
@@ -183,7 +181,7 @@ const std::string& RelativeLayoutParameter::getRelativeName() const
 {
     return _relativeLayoutName;
 }
-    
+
 LayoutParameter* RelativeLayoutParameter::createCloneInstance()
 {
     return RelativeLayoutParameter::create();
@@ -200,7 +198,16 @@ void RelativeLayoutParameter::copyProperties(LayoutParameter *model)
         setRelativeToWidgetName(parameter->_relativeWidgetName);
     }
 }
-
+    
+LayoutParameterProtocol::LayoutParameterProtocol()
+{
+    
 }
-
+    
+LayoutParameterProtocol::~LayoutParameterProtocol()
+{
+    
+}
+    
+}
 NS_CC_END

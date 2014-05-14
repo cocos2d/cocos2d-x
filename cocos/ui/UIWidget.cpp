@@ -830,21 +830,6 @@ const std::string& Widget::getName() const
     return _name;
 }
 
-
-void Widget::setLayoutParameter(LayoutParameter *parameter)
-{
-    if (!parameter)
-    {
-        return;
-    }
-    _layoutParameterDictionary.insert((int)parameter->getLayoutType(), parameter);
-}
-
-LayoutParameter* Widget::getLayoutParameter(LayoutParameter::Type type)
-{
-    return dynamic_cast<LayoutParameter*>(_layoutParameterDictionary.at((int)type));
-}
-
 std::string Widget::getDescription() const
 {
     return "Widget";
@@ -1097,7 +1082,20 @@ Widget* Widget::getCurrentFocusedWidget(bool isWidget)
     return _focusedWidget;
 }
 
+    
+void Widget::setLayoutParameter(LayoutParameter *parameter)
+{
+    if (!parameter)
+    {
+        return;
+    }
+    _layoutParameterDictionary.insert((int)parameter->getLayoutType(), parameter);
+}
 
+LayoutParameter* Widget::getLayoutParameter(LayoutParameter::Type type)
+{
+    return dynamic_cast<LayoutParameter*>(_layoutParameterDictionary.at((int)type));
+}
 
 }
 

@@ -26,8 +26,8 @@ THE SOFTWARE.
 #define __UIWIDGET_H__
 
 #include "ui/CCProtectedNode.h"
-#include "ui/UILayoutParameter.h"
 #include "ui/GUIDefine.h"
+#include "ui/CCLayoutParameterProtocol.h"
 
 NS_CC_BEGIN
 
@@ -57,7 +57,7 @@ CC_DEPRECATED_ATTRIBUTE typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType)
 #endif
 
 
-class Widget : public ProtectedNode
+class Widget : public ProtectedNode, public LayoutParameterProtocol
 {
 public:
     enum class FocusDirection
@@ -459,28 +459,6 @@ public:
     virtual void onTouchCancelled(Touch *touch, Event *unusedEvent);
 
     /**
-     * Sets a LayoutParameter to widget.
-     *
-     * @see LayoutParameter
-     *
-     * @param LayoutParameter pointer
-     *
-     * @param type  Relative or Linear
-     */
-    void setLayoutParameter(LayoutParameter* parameter);
-
-    /**
-     * Gets LayoutParameter of widget.
-     *
-     * @see LayoutParameter
-     *
-     * @param type  Relative or Linear
-     *
-     * @return LayoutParameter
-     */
-    LayoutParameter* getLayoutParameter(LayoutParameter::Type type);
-
-    /**
      * Ignore the widget size
      *
      * @param ignore, true that widget will ignore it's size, use texture size, false otherwise. Default value is true.
@@ -517,8 +495,30 @@ public:
 //     */
 //    virtual const Size& getContentSize() const;
     virtual const Size& getVirtualRendererSize() const;
-    
-    
+
+    /**
+     * Sets a LayoutParameter to widget.
+     *
+     * @see LayoutParameter
+     *
+     * @param LayoutParameter pointer
+     *
+     * @param type  Relative or Linear
+     */
+    virtual void setLayoutParameter(LayoutParameter* parameter);
+
+    /**
+     * Gets LayoutParameter of widget.
+     *
+     * @see LayoutParameter
+     *
+     * @param type  Relative or Linear
+     *
+     * @return LayoutParameter
+     */
+    virtual LayoutParameter* getLayoutParameter(LayoutParameter::Type type);
+
+
 
     /**
      * Returns the "class name" of widget.
@@ -675,7 +675,6 @@ protected:
     GLubyte _opacity;
     bool _flippedX;
     bool _flippedY;
-    Map<int, LayoutParameter*> _layoutParameterDictionary;
     
     bool _focused;
     bool _focusEnabled;
@@ -685,6 +684,7 @@ protected:
      */
     static Widget *_focusedWidget;  //both layout & widget will be stored in this variable
     static Widget *_realFocusedWidget; //only the widget class will be stored in this variable
+    Map<int, LayoutParameter*> _layoutParameterDictionary;
 public:
     /**
      * no matter what widget object you call this method on , it will return you the exact one focused widget

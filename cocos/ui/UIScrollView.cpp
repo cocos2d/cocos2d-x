@@ -28,6 +28,15 @@ NS_CC_BEGIN
 
 namespace ui {
     
+class ScrollInnerContainer : public Layout
+{
+public:
+    ScrollInnerContainer();
+    virtual ~ScrollInnerContainer();
+    static ScrollInnerContainer* create();
+    virtual const Size& getLayoutSize() override;
+};
+    
 ScrollInnerContainer::ScrollInnerContainer()
 {
     
@@ -1700,7 +1709,7 @@ void ScrollView::setLayoutType(Type type)
     _innerContainer->setLayoutType(type);
 }
 
-Layout::Type ScrollView::getLayoutType() const
+LayoutProtocol::Type ScrollView::getLayoutType() const
 {
     return _innerContainer->getLayoutType();
 }
