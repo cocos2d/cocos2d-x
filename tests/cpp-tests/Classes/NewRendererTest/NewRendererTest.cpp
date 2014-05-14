@@ -40,7 +40,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(NewDrawNodeTest),
     CL(NewCullingTest),
     CL(VBOFullTest),
-	CL(CaptureScreenTest)
+    CL(CaptureScreenTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -339,7 +339,7 @@ void NewSpriteBatchTest::addNewSpriteWithCoords(Vector2 p)
         action = FadeOut::create(2);
 
     auto action_back = action->reverse();
-    auto seq = Sequence::create(action, action_back, NULL);
+    auto seq = Sequence::create(action, action_back, nullptr);
 
     sprite->runAction( RepeatForever::create(seq));
 }
@@ -571,13 +571,13 @@ CaptureScreenTest::CaptureScreenTest()
     auto sp1 = Sprite::create("Images/grossini.png");
     sp1->setPosition(left);
     auto move1 = MoveBy::create(1, Vector2(s.width/2, 0));
-    auto seq1 = RepeatForever::create(Sequence::create(move1, move1->reverse(), NULL));
+    auto seq1 = RepeatForever::create(Sequence::create(move1, move1->reverse(), nullptr));
     addChild(sp1);
     sp1->runAction(seq1);
     auto sp2 = Sprite::create("Images/grossinis_sister1.png");
     sp2->setPosition(right);
     auto move2 = MoveBy::create(1, Vector2(-s.width/2, 0));
-    auto seq2 = RepeatForever::create(Sequence::create(move2, move2->reverse(), NULL));
+    auto seq2 = RepeatForever::create(Sequence::create(move2, move2->reverse(), nullptr));
     addChild(sp2);
     sp2->runAction(seq2);
 
@@ -586,7 +586,7 @@ CaptureScreenTest::CaptureScreenTest()
     auto label2 = Label::createWithTTF(TTFConfig("fonts/arial.ttf"), "capture half");
     auto mi2 = MenuItemLabel::create(label2, CC_CALLBACK_1(CaptureScreenTest::onCaptured, this, Rect(0, 0, s.width/2, s.height)));
     mi2->setPosition(0, -15);
-    auto menu = Menu::create(mi1, mi2, NULL);
+    auto menu = Menu::create(mi1, mi2, nullptr);
     addChild(menu);
     menu->setPosition(s.width / 2, s.height / 4);
 
@@ -610,23 +610,23 @@ std::string CaptureScreenTest::subtitle() const
 void CaptureScreenTest::onCaptured(Ref*, const Rect& rect)
 {
     Director::getInstance()->getTextureCache()->removeTextureForKey(_filename);
-	removeChildByTag(ChildTag);
+    removeChildByTag(ChildTag);
     _filename = "CaptureScreenTest.png";
     Director::getInstance()->getRenderer()->captureScreen(
-	    CC_CALLBACK_2(CaptureScreenTest::afterCaptured, this),
-	    _filename,
-	    rect);
+            CC_CALLBACK_2(CaptureScreenTest::afterCaptured, this),
+	        _filename,
+	        rect);
 }
 
 void CaptureScreenTest::afterCaptured(bool succeed, const std::string& outputFile)
 {
     if (succeed)
     {
-	    auto sp = Sprite::create(outputFile);
-	    addChild(sp, 0, ChildTag);
-	    Size s = Director::getInstance()->getWinSize();
-	    sp->setPosition(s.width / 2, s.height / 2);
-	    sp->setScale(0.25);
+        auto sp = Sprite::create(outputFile);
+        addChild(sp, 0, ChildTag);
+        Size s = Director::getInstance()->getWinSize();
+        sp->setPosition(s.width / 2, s.height / 2);
+        sp->setScale(0.25);
         _filename = outputFile;
     }
     else

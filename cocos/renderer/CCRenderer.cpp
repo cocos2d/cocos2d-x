@@ -601,7 +601,7 @@ void Renderer::onCaptureScreen(std::function<void(bool, const std::string&)> aft
         }
 
         Image* image = new Image();
-	    if (image)
+        if (image)
         {
             image->initWithRawData(buffer, width * height * 4, width, height, 8);
             CC_SAFE_DELETE_ARRAY(buffer);

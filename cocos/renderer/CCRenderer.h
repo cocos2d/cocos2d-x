@@ -166,7 +166,7 @@ protected:
     
     GroupCommandManager* _groupCommandManager;
 
-	CustomCommand _captureScreen;
+    CustomCommand _captureScreen;
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     EventListenerCustom* _cacheTextureListener;
