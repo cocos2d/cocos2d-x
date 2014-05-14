@@ -150,7 +150,7 @@ public:
     static GLProgramState* create(GLProgram* glprogram);
 
     /** gets-or-creates an instance of GLProgramState for a given GLProgram */
-    static GLProgramState* getOrCreate(GLProgram* glprogram);
+    static GLProgramState* getOrCreateWithGLProgram(GLProgram* glprogram);
 
     /** gets-or-creates an instance of GLProgramState for a given GLProgramName */
     static GLProgramState* getOrCreateWithGLProgramName(const std::string &glProgramName );

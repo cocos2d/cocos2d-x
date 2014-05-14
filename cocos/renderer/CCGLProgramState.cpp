@@ -251,14 +251,14 @@ GLProgramState* GLProgramState::getOrCreateWithGLProgramName(const std::string &
 {
     GLProgram *glProgram = GLProgramCache::getInstance()->getGLProgram(glProgramName);
     if( glProgram )
-        return getOrCreate(glProgram);
+        return getOrCreateWithGLProgram(glProgram);
 
     CCLOG("cocos2d: warning: GLProgram '%s' not found", glProgramName.c_str());
     return nullptr;
 }
 
 
-GLProgramState* GLProgramState::getOrCreate(GLProgram *glprogram)
+GLProgramState* GLProgramState::getOrCreateWithGLProgram(GLProgram *glprogram)
 {
     GLProgramState* ret = GLProgramStateCache::getInstance()->getGLProgramState(glprogram);
     return ret;
@@ -283,12 +283,12 @@ bool GLProgramState::init(GLProgram* glprogram)
     _glprogram = glprogram;
     _glprogram->retain();
 
-    for(auto &attrib : _glprogram->_attributesDictionary) {
+    for(auto &attrib : _glprogram->_vertexAttribs) {
         VertexAttribValue value(&attrib.second);
         _attributes[attrib.first] = value;
     }
 
-    for(auto &uniform : _glprogram->_uniformsDictionary) {
+    for(auto &uniform : _glprogram->_userUniforms) {
         UniformValue value(&uniform.second, _glprogram);
         _uniforms[uniform.first] = value;
     }

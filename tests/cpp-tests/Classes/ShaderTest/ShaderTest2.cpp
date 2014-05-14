@@ -41,6 +41,8 @@ namespace ShaderTest2
         CL(CelShadingSpriteTest),
         CL(LensFlareSpriteTest),
         CL(OutlineShadingSpriteTest),
+
+        CL(EffectSprite_Blur),
     };
     
     static unsigned int TEST_CASE_COUNT = sizeof(ShaderTest2::createFunctions) / sizeof(ShaderTest2::createFunctions[0]);
@@ -127,6 +129,150 @@ public:
     }
 };
 
+//
+// Effect
+//
+class Effect : public Ref
+{
+public:
+    GLProgramState* getGLProgramState() const { return _glprogramstate; }
+
+protected:
+    bool initGLProgramState(const std::string &fragmentFilename);
+    Effect() : _glprogramstate(nullptr)
+    {}
+    virtual ~Effect() {}
+    GLProgramState *_glprogramstate;
+};
+
+bool Effect::initGLProgramState(const std::string &fragmentFilename)
+{
+    auto fileUtiles = FileUtils::getInstance();
+    auto fragmentFullPath = fileUtiles->fullPathForFilename(fragmentFilename);
+    auto fragSource = fileUtiles->getStringFromFile(fragmentFullPath);
+    auto glprogram = GLProgram::createWithByteArrays(ccPositionTextureColor_noMVP_vert, fragSource.c_str());
+
+    _glprogramstate = GLProgramState::getOrCreateWithGLProgram(glprogram);
+    _glprogramstate->retain();
+
+    return _glprogramstate != nullptr;
+}
+
+class EffectBlur : public Effect
+{
+public:
+    static EffectBlur *create(float blurSize);
+    void setGaussian(float value);
+    void setCustomUniforms();
+    void setBlurSize(float f);
+
+protected:
+    bool init(float blurSize);
+
+    int       _blurRadius;
+    Vector2   _pixelSize;
+
+    int       _samplingRadius;
+    float     _scale;
+    float     _cons;
+    float     _weightSum;
+};
+
+EffectBlur *EffectBlur::create(float blurSize)
+{
+    auto ret = new (std::nothrow) EffectBlur;
+    if(ret && ret->init(blurSize)) {
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_RELEASE(ret);
+    return nullptr;
+}
+
+bool EffectBlur::init(float blurSize)
+{
+    initGLProgramState("Shaders/example_Blur.fsh");
+//    auto s = getTexture()->getContentSizeInPixels();
+    auto s = Size(100,100);
+
+    _blurRadius = 0;
+    _pixelSize = Vector2(1/s.width, 1/s.height);
+    _samplingRadius = 0;
+
+    setBlurSize(blurSize);
+
+    _glprogramstate->setUniformVec2("onePixelSize", _pixelSize);
+    _glprogramstate->setUniformVec4("gaussianCoefficient", Vector4(_samplingRadius, _scale, _cons, _weightSum));
+    return true;
+}
+
+void EffectBlur::setBlurSize(float f)
+{
+    if(_blurRadius == (int)f)
+        return;
+    _blurRadius = (int)f;
+
+    _samplingRadius = _blurRadius;
+    if (_samplingRadius > 10)
+    {
+        _samplingRadius = 10;
+    }
+    if (_blurRadius > 0)
+    {
+        float sigma = _blurRadius / 2.0f;
+        _scale = -0.5f / (sigma * sigma);
+        _cons = -1.0f * _scale / 3.141592f;
+        _weightSum = -_cons;
+
+        float weight;
+        int squareX;
+        for(int dx = 0; dx <= _samplingRadius; ++dx)
+        {
+            squareX = dx * dx;
+            weight = _cons * exp(squareX * _scale);
+            _weightSum += 2.0 * weight;
+            for (int dy = 1; dy <= _samplingRadius; ++dy)
+            {
+                weight = _cons * exp((squareX + dy * dy) * _scale);
+                _weightSum += 4.0 * weight;
+            }
+        }
+    }
+}
+
+
+//
+// EffectSprite
+//
+class EffectSprite : public Sprite
+{
+public:
+    static EffectSprite *create(const std::string& filename) {
+        auto ret = new (std::nothrow) EffectSprite;
+        if(ret && ret->initWithFile(filename)) {
+            ret->autorelease();
+            return ret;
+        }
+        CC_SAFE_RELEASE(ret);
+        return nullptr;
+    }
+
+    void setEffect(Effect *effect) {
+        if(_effect != effect) {
+            CC_SAFE_RELEASE(_effect);
+            _effect = effect;
+            CC_SAFE_RETAIN(_effect);
+            setGLProgramState(_effect->getGLProgramState());
+        }
+    }
+protected:
+    EffectSprite() : _effect(nullptr) {}
+    Effect *_effect;
+};
+
+//
+// ShaderSprite
+//
 class ShaderSprite : public Sprite
 {
 public:
@@ -179,7 +325,7 @@ void ShaderSprite::initShader()
     }
 
     auto glprogram = GLProgram::createWithByteArrays(vertSource.c_str(), fragSource.c_str());
-    auto glprogramState = GLProgramState::getOrCreate(glprogram);
+    auto glprogramState = GLProgramState::getOrCreateWithGLProgram(glprogram);
     this->setGLProgramState(glprogramState);
 
     setCustomUniforms();
@@ -580,6 +726,28 @@ OutlineShadingSpriteTest::OutlineShadingSpriteTest()
         sprite2->setPosition(Vector2(s.width * 0.25, s.height/2));
         addChild(sprite);
         addChild(sprite2);
+    }
+}
+
+
+EffectSprite_Blur::EffectSprite_Blur()
+{
+    if (ShaderTestDemo2::init()) {
+        auto s = Director::getInstance()->getWinSize();
+        EffectSprite* sprite = EffectSprite::create("Images/grossini.png");
+        sprite->setPosition(Vector2(0, s.height/2));
+        addChild(sprite);
+
+        auto jump = JumpBy::create(4, Vector2(s.width,0), 100, 4);
+        auto rot = RotateBy::create(4, 720);
+        auto spawn = Spawn::create(jump, rot, NULL);
+        auto rev = spawn->reverse();
+        auto seq = Sequence::create(spawn, rev, NULL);
+        auto repeat = RepeatForever::create(seq);
+        sprite->runAction(repeat);
+
+        auto effect = EffectBlur::create(3.0);
+        sprite->setEffect(effect);
     }
 }
 
