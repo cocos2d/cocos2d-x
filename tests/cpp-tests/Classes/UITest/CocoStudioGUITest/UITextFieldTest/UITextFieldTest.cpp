@@ -53,7 +53,7 @@ void UITextFieldTest::textFieldEvent(Ref *pSender, TextField::EventType type)
             TextField* textField = dynamic_cast<TextField*>(pSender);
             Size screenSize = CCDirector::getInstance()->getWinSize();
             textField->runAction(CCMoveTo::create(0.225f,
-                                                  Vector2(screenSize.width / 2.0f, screenSize.height / 2.0f + textField->getContentSize().height / 2.0f)));
+                                                  Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f + textField->getContentSize().height / 2.0f)));
             _displayValueLabel->setString(String::createWithFormat("attach with IME")->getCString());
         }
             break;
@@ -62,7 +62,7 @@ void UITextFieldTest::textFieldEvent(Ref *pSender, TextField::EventType type)
         {
             TextField* textField = dynamic_cast<TextField*>(pSender);
             Size screenSize = CCDirector::getInstance()->getWinSize();
-            textField->runAction(CCMoveTo::create(0.175f, Vector2(screenSize.width / 2.0f, screenSize.height / 2.0f)));
+            textField->runAction(CCMoveTo::create(0.175f, Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f)));
             _displayValueLabel->setString(String::createWithFormat("detach with IME")->getCString());
         }
             break;
@@ -131,7 +131,7 @@ void UITextFieldTest_MaxLength::textFieldEvent(Ref *pSender, TextField::EventTyp
             TextField* textField = dynamic_cast<TextField*>(pSender);
             Size screenSize = CCDirector::getInstance()->getWinSize();
             textField->runAction(CCMoveTo::create(0.225f,
-                                                  Vector2(screenSize.width / 2.0f, screenSize.height / 2.0f + textField->getContentSize().height / 2.0f)));
+                                                  Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f + textField->getContentSize().height / 2.0f)));
             _displayValueLabel->setString(String::createWithFormat("attach with IME max length %d", textField->getMaxLength())->getCString());
         }
             break;
@@ -140,7 +140,7 @@ void UITextFieldTest_MaxLength::textFieldEvent(Ref *pSender, TextField::EventTyp
         {
             TextField* textField = dynamic_cast<TextField*>(pSender);
             Size screenSize = CCDirector::getInstance()->getWinSize();
-            textField->runAction(CCMoveTo::create(0.175f, Vector2(screenSize.width / 2.0f, screenSize.height / 2.0f)));
+            textField->runAction(CCMoveTo::create(0.175f, Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f)));
             _displayValueLabel->setString(String::createWithFormat("detach with IME max length %d", textField->getMaxLength())->getCString());
         }
             break;
@@ -215,7 +215,7 @@ void UITextFieldTest_Password::textFieldEvent(Ref *pSender, TextField::EventType
             TextField* textField = dynamic_cast<TextField*>(pSender);
             Size screenSize = CCDirector::getInstance()->getWinSize();
             textField->runAction(CCMoveTo::create(0.225f,
-                                                  Vector2(screenSize.width / 2.0f, screenSize.height / 2.0f + textField->getContentSize().height / 2.0f)));
+                                                  Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f + textField->getContentSize().height / 2.0f)));
             _displayValueLabel->setString(String::createWithFormat("attach with IME password")->getCString());
         }
             break;
@@ -224,7 +224,7 @@ void UITextFieldTest_Password::textFieldEvent(Ref *pSender, TextField::EventType
         {
             TextField* textField = dynamic_cast<TextField*>(pSender);
             Size screenSize = CCDirector::getInstance()->getWinSize();
-            textField->runAction(CCMoveTo::create(0.175f, Vector2(screenSize.width / 2.0f, screenSize.height / 2.0f)));
+            textField->runAction(CCMoveTo::create(0.175f, Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f)));
             _displayValueLabel->setString(String::createWithFormat("detach with IME password")->getCString());
         }
             break;

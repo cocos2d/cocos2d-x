@@ -46,7 +46,7 @@ bool UISliderTest_Editor::init()
         _displayValueLabel->setFontName("fonts/Marker Felt.ttf");
         _displayValueLabel->setFontSize(30);
         _displayValueLabel->setString("No event");
-        _displayValueLabel->setPosition(Vector2(_layout->getSize().width / 2,
+        _displayValueLabel->setPosition(Vec2(_layout->getSize().width / 2,
                                               _layout->getSize().height - _displayValueLabel->getSize().height * 1.75f));
         _touchGroup->addChild(_displayValueLabel);
         
