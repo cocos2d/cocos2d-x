@@ -111,7 +111,7 @@ public:
     inline Vec2 getBarChangeRate() const { return _barChangeRate; }
 
     // Overrides
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
     virtual void setAnchorPoint(const Vec2& anchorPoint) override;
     virtual void setColor(const Color3B &color) override;
     virtual const Color3B& getColor() const override;
@@ -133,7 +133,7 @@ CC_CONSTRUCTOR_ACCESS:
     bool initWithSprite(Sprite* sp);
     
 protected:
-    void onDraw(const Matrix &transform, bool transformUpdated);
+    void onDraw(const Mat4 &transform, bool transformUpdated);
     
     Tex2F textureCoordFromAlphaPoint(Vec2 alpha);
     Vec2 vertexFromAlphaPoint(Vec2 alpha);

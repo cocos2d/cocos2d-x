@@ -1793,7 +1793,7 @@ std::string TextureDrawAtPoint::subtitle() const
     return "draws 2 textures using drawAtPoint";
 }
 
-void TextureDrawAtPoint::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void TextureDrawAtPoint::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     TextureDemo::draw(renderer, transform, transformUpdated);
     
@@ -1803,7 +1803,7 @@ void TextureDrawAtPoint::draw(Renderer *renderer, const Matrix &transform, bool 
 
 }
 
-void TextureDrawAtPoint::onDraw(const Matrix &transform, bool transformUpdated)
+void TextureDrawAtPoint::onDraw(const Mat4 &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -1836,7 +1836,7 @@ TextureDrawInRect::~TextureDrawInRect()
     _Tex2F->release();
 }
 
-void TextureDrawInRect::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void TextureDrawInRect::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     TextureDemo::draw(renderer, transform, transformUpdated);
 
@@ -1845,7 +1845,7 @@ void TextureDrawInRect::draw(Renderer *renderer, const Matrix &transform, bool t
     renderer->addCommand(&_renderCmd);
 }
 
-void TextureDrawInRect::onDraw(const Matrix &transform, bool transformUpdated)
+void TextureDrawInRect::onDraw(const Mat4 &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");

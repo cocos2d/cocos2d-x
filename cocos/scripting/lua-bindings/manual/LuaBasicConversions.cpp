@@ -271,7 +271,7 @@ bool luaval_to_std_string(lua_State* L, int lo, std::string* outValue)
     return ok;
 }
 
-bool luaval_to_vector2(lua_State* L,int lo,cocos2d::Vector2* outValue)
+bool luaval_to_vector2(lua_State* L,int lo,cocos2d::Vec2* outValue)
 {
     if (nullptr == L || nullptr == outValue)
         return false;
@@ -303,7 +303,7 @@ bool luaval_to_vector2(lua_State* L,int lo,cocos2d::Vector2* outValue)
     return ok;
 }
 
-bool luaval_to_vector3(lua_State* L,int lo,cocos2d::Vector3* outValue)
+bool luaval_to_Vec3(lua_State* L,int lo,cocos2d::Vec3* outValue)
 {
     if (nullptr == L || nullptr == outValue)
         return false;
@@ -903,7 +903,7 @@ bool luaval_to_ttfconfig(lua_State* L,int lo, cocos2d::TTFConfig* outValue)
     return false;
 }
 
-bool luaval_to_matrix(lua_State* L, int lo, cocos2d::Matrix* outValue )
+bool luaval_to_matrix(lua_State* L, int lo, cocos2d::Mat4* outValue )
 {
     if (nullptr == L || nullptr == outValue)
         return false;
@@ -1145,7 +1145,7 @@ bool luaval_to_dictionary(lua_State* L,int lo, __Dictionary** outValue)
     return ok;
 }
 
-bool luaval_to_array_of_vector2(lua_State* L,int lo,cocos2d::Vector2 **points, int *numPoints)
+bool luaval_to_array_of_vector2(lua_State* L,int lo,cocos2d::Vec2 **points, int *numPoints)
 {
     if (NULL == L)
         return false;
@@ -1167,7 +1167,7 @@ bool luaval_to_array_of_vector2(lua_State* L,int lo,cocos2d::Vector2 **points, i
         size_t len = lua_objlen(L, lo);
         if (len > 0)
         {
-            cocos2d::Vector2* array = (cocos2d::Vector2*) new Vector2[len];
+            cocos2d::Vec2* array = (cocos2d::Vec2*) new Vec2[len];
             if (NULL == array)
                 return false;
             for (uint32_t i = 0; i < len; ++i)
@@ -1697,7 +1697,7 @@ bool luaval_to_std_vector_int(lua_State* L, int lo, std::vector<int>* ret)
     return ok;
 }
 
-void vector2_array_to_luaval(lua_State* L,const cocos2d::Vector2* points, int count)
+void vector2_array_to_luaval(lua_State* L,const cocos2d::Vec2* points, int count)
 {
     if (NULL  == L)
         return;
@@ -1710,7 +1710,7 @@ void vector2_array_to_luaval(lua_State* L,const cocos2d::Vector2* points, int co
     }
 }
 
-void vector2_to_luaval(lua_State* L,const cocos2d::Vector2& vec2)
+void vector2_to_luaval(lua_State* L,const cocos2d::Vec2& vec2)
 {
     if (NULL  == L)
         return;
@@ -1724,7 +1724,7 @@ void vector2_to_luaval(lua_State* L,const cocos2d::Vector2& vec2)
     
 }
 
-void vector3_to_luaval(lua_State* L,const cocos2d::Vector3& vec3)
+void Vec3_to_luaval(lua_State* L,const cocos2d::Vec3& vec3)
 {
     if (NULL  == L)
         return;
@@ -2406,7 +2406,7 @@ void ccvaluevector_to_luaval(lua_State* L, const cocos2d::ValueVector& inValue)
     }
 }
 
-void matrix_to_luaval(lua_State* L, const cocos2d::Matrix& mat)
+void matrix_to_luaval(lua_State* L, const cocos2d::Mat4& mat)
 {
     if (nullptr  == L)
         return;

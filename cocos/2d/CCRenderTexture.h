@@ -153,8 +153,8 @@ public:
     };
     
     // Overrides
-    virtual void visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated) override;
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
+    virtual void visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
 
     //flag: use stack matrix computed from scene hierarchy or generate new modelView and projection matrix
     void setKeepMatrix(bool keepMatrix);
@@ -224,8 +224,8 @@ protected:
 
     void onSaveToFile(const std::string& fileName);
     
-    Matrix _oldTransMatrix, _oldProjMatrix;
-    Matrix _transformMatrix, _projectionMatrix;
+    Mat4 _oldTransMatrix, _oldProjMatrix;
+    Mat4 _transformMatrix, _projectionMatrix;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(RenderTexture);
 

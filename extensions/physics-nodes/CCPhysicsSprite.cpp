@@ -390,14 +390,14 @@ void PhysicsSprite::syncPhysicsTransform() const
 }
 
 // returns the transform matrix according the Chipmunk Body values
-const Matrix& PhysicsSprite::getNodeToParentTransform() const
+const Mat4& PhysicsSprite::getNodeToParentTransform() const
 {
     syncPhysicsTransform();
     
 	return _transform;
 }
 
-void PhysicsSprite::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void PhysicsSprite::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     if (isDirty())
     {

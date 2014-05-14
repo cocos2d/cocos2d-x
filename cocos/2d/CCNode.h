@@ -330,11 +330,11 @@ public:
     /**
      * Sets the position (X, Y, and Z) in its parent's coordinate system
      */
-    virtual void setPosition3D(const Vector3& position);
+    virtual void setPosition3D(const Vec3& position);
     /**
      * returns the position (X,Y,Z) in its parent's coordinate system
      */
-    virtual Vector3 getPosition3D() const;
+    virtual Vec3 getPosition3D() const;
 
     /**
      * Sets the 'z' coordinate in the position. It is the OpenGL Z vertex value.
@@ -498,11 +498,11 @@ public:
      * Sets the rotation (X,Y,Z) in degrees.
      * Useful for 3d rotations
      */
-    virtual void setRotation3D(const Vector3& rotation);
+    virtual void setRotation3D(const Vec3& rotation);
     /**
      * returns the rotation (X,Y,Z) in degrees.
      */
-    virtual Vector3 getRotation3D() const;
+    virtual Vec3 getRotation3D() const;
 
     /**
      * Sets the X rotation (angle) of the node in degrees which performs a horizontal rotational skew.
@@ -923,13 +923,13 @@ public:
      * AND YOU SHOULD NOT DISABLE THEM AFTER DRAWING YOUR NODE
      * But if you enable any other GL state, you should disable it after drawing your node.
      */
-    virtual void draw(Renderer *renderer, const Matrix& transform, bool transformUpdated);
+    virtual void draw(Renderer *renderer, const Mat4& transform, bool transformUpdated);
     virtual void draw() final;
 
     /**
      * Visits this node's children and draw them recursively.
      */
-    virtual void visit(Renderer *renderer, const Matrix& parentTransform, bool parentTransformUpdated);
+    virtual void visit(Renderer *renderer, const Mat4& parentTransform, bool parentTransformUpdated);
     virtual void visit() final;
 
 
@@ -1194,13 +1194,13 @@ public:
      * Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
      * The matrix is in Pixels.
      */
-    virtual const Matrix& getNodeToParentTransform() const;
+    virtual const Mat4& getNodeToParentTransform() const;
     virtual AffineTransform getNodeToParentAffineTransform() const;
 
     /** 
      * Sets the Transformation matrix manually.
      */
-    virtual void setNodeToParentTransform(const Matrix& transform);
+    virtual void setNodeToParentTransform(const Mat4& transform);
 
     /** @deprecated use getNodeToParentTransform() instead */
     CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform nodeToParentTransform() const { return getNodeToParentAffineTransform(); }
@@ -1209,7 +1209,7 @@ public:
      * Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.
      * The matrix is in Pixels.
      */
-    virtual const Matrix& getParentToNodeTransform() const;
+    virtual const Mat4& getParentToNodeTransform() const;
     virtual AffineTransform getParentToNodeAffineTransform() const;
 
     /** @deprecated Use getParentToNodeTransform() instead */
@@ -1218,7 +1218,7 @@ public:
     /**
      * Returns the world affine transform matrix. The matrix is in Pixels.
      */
-    virtual Matrix getNodeToWorldTransform() const;
+    virtual Mat4 getNodeToWorldTransform() const;
     virtual AffineTransform getNodeToWorldAffineTransform() const;
 
     /** @deprecated Use getNodeToWorldTransform() instead */
@@ -1227,7 +1227,7 @@ public:
     /**
      * Returns the inverse world affine transform matrix. The matrix is in Pixels.
      */
-    virtual Matrix getWorldToNodeTransform() const;
+    virtual Mat4 getWorldToNodeTransform() const;
     virtual AffineTransform getWorldToNodeAffineTransform() const;
 
 
@@ -1280,7 +1280,7 @@ public:
      *  @note The additional transform will be concatenated at the end of getNodeToParentTransform.
      *        It could be used to simulate `parent-child` relationship between two nodes (e.g. one is in BatchNode, another isn't).
      */
-    void setAdditionalTransform(Matrix* additionalTransform);
+    void setAdditionalTransform(Mat4* additionalTransform);
     void setAdditionalTransform(const AffineTransform& additionalTransform);
 
     /// @} end of Coordinate Converters
@@ -1361,7 +1361,7 @@ protected:
     /// Convert cocos2d coordinates to UI windows coordinate.
     Vec2 convertToWindowSpace(const Vec2& nodePoint) const;
 
-    Matrix transform(const Matrix &parentTransform);
+    Mat4 transform(const Mat4 &parentTransform);
 
     virtual void updateCascadeOpacity();
     virtual void disableCascadeOpacity();
@@ -1396,14 +1396,14 @@ protected:
 
     Size _contentSize;              ///< untransformed size of the node
 
-    Matrix  _modelViewTransform;    ///< ModelView transform of the Node.
+    Mat4 _modelViewTransform;    ///< ModelView transform of the Node.
 
     // "cache" variables are allowed to be mutable
-    mutable Matrix _transform;      ///< transform
+    mutable Mat4 _transform;      ///< transform
     mutable bool _transformDirty;   ///< transform dirty flag
-    mutable Matrix _inverse;        ///< inverse transform
+    mutable Mat4 _inverse;        ///< inverse transform
     mutable bool _inverseDirty;     ///< inverse transform dirty flag
-    mutable Matrix _additionalTransform; ///< transform
+    mutable Mat4 _additionalTransform; ///< transform
     bool _useAdditionalTransform;   ///< The flag to check whether the additional transform is dirty
     bool _transformUpdated;         ///< Whether or not the Transform object was updated since the last frame
 

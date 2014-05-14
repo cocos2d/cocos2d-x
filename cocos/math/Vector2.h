@@ -18,12 +18,13 @@
  This file was modified to fit the cocos2d-x project
  */
 
-#ifndef VECTOR2_H_
-#define VECTOR2_H_
+#ifndef MATH_VEC2_H
+#define MATH_VEC2_H
 
-#include "CCMathBase.h"
-#include "base/CCPlatformMacros.h"
-#include "base/ccMacros.h"
+#include <algorithm>
+#include <functional>
+#include <math.h>
+#include "math/CCMathBase.h"
 
 NS_CC_MATH_BEGIN
 
@@ -33,12 +34,12 @@ NS_CC_MATH_BEGIN
 inline float clampf(float value, float min_inclusive, float max_inclusive)
 {
     if (min_inclusive > max_inclusive) {
-        CC_SWAP(min_inclusive, max_inclusive, float);
+        std::swap(min_inclusive, max_inclusive);
     }
     return value < min_inclusive ? min_inclusive : value < max_inclusive? value : max_inclusive;
 }
 
-class Matrix;
+class Mat4;
 
 /**
  * Defines a 2-element floating point vector.
@@ -744,10 +745,8 @@ inline const Vec2 operator*(float x, const Vec2& v);
 
 typedef Vec2 Point2;
 
-CC_DEPRECATED_ATTRIBUTE typedef Vec2 Vector2;
-
 NS_CC_MATH_END
 
 #include "Vector2.inl"
 
-#endif
+#endif // MATH_VEC2_H

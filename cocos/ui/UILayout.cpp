@@ -703,7 +703,7 @@ bool Layout::isClippingEnabled()
     return _clippingEnabled;
 }
 
-void Layout::visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
+void Layout::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
 {
     if (!_enabled)
     {
@@ -736,7 +736,7 @@ void Layout::sortAllChildren()
     doLayout();
 }
     
-void Layout::stencilClippingVisit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
+void Layout::stencilClippingVisit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
 {
     if(!_visible)
         return;
@@ -747,7 +747,7 @@ void Layout::stencilClippingVisit(Renderer *renderer, const Matrix &parentTransf
     _transformUpdated = false;
 
     // IMPORTANT:
-    // To ease the migration to v3.0, we still support the Matrix stack,
+    // To ease the migration to v3.0, we still support the Mat4 stack,
     // but it is deprecated and your code should not rely on it
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -894,7 +894,7 @@ void Layout::onAfterVisitScissor()
     glDisable(GL_SCISSOR_TEST);
 }
     
-void Layout::scissorClippingVisit(Renderer *renderer, const Matrix& parentTransform, bool parentTransformUpdated)
+void Layout::scissorClippingVisit(Renderer *renderer, const Mat4& parentTransform, bool parentTransformUpdated)
 {
     _beforeVisitCmdScissor.init(_globalZOrder);
     _beforeVisitCmdScissor.func = CC_CALLBACK_0(Layout::onBeforeVisitScissor, this);

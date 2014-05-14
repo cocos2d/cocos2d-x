@@ -89,10 +89,10 @@ public:
     */
     void setBlendFunc(const BlendFunc &blendFunc);
 
-    void onDraw(const Matrix &transform, bool transformUpdated);
+    void onDraw(const Mat4 &transform, bool transformUpdated);
     
     // Overrides
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
     
 CC_CONSTRUCTOR_ACCESS:
     DrawNode();

@@ -86,7 +86,7 @@ Skin::Skin()
     , _armature(nullptr)
     , _displayName("")
 {
-    _skinTransform = Matrix::IDENTITY;
+    _skinTransform = Mat4::IDENTITY;
 }
 
 bool Skin::initWithSpriteFrameName(const std::string& spriteFrameName)
@@ -153,7 +153,7 @@ void Skin::updateTransform()
     // If it is not visible, or one of its ancestors is not visible, then do nothing:
     if( !_visible)
     {
-        _quad.br.vertices = _quad.tl.vertices = _quad.tr.vertices = _quad.bl.vertices = Vector3(0, 0, 0);
+        _quad.br.vertices = _quad.tl.vertices = _quad.tr.vertices = _quad.bl.vertices = Vec3(0, 0, 0);
     }
     else
     {
@@ -201,14 +201,14 @@ void Skin::updateTransform()
     }
 }
 
-Matrix Skin::getNodeToWorldTransform() const
+Mat4 Skin::getNodeToWorldTransform() const
 {
     return TransformConcat( _bone->getArmature()->getNodeToWorldTransform(), _transform);
 }
 
-Matrix Skin::getNodeToWorldTransformAR() const
+Mat4 Skin::getNodeToWorldTransformAR() const
 {
-    Matrix displayTransform = _transform;
+    Mat4 displayTransform = _transform;
     Vec2 anchorPoint =  _anchorPointInPoints;
 
     anchorPoint = PointApplyTransform(anchorPoint, displayTransform);
@@ -219,9 +219,9 @@ Matrix Skin::getNodeToWorldTransformAR() const
     return TransformConcat( _bone->getArmature()->getNodeToWorldTransform(),displayTransform);
 }
 
-void Skin::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void Skin::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
-    Matrix mv = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    Mat4 mv = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
     //TODO implement z order
     _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, mv);

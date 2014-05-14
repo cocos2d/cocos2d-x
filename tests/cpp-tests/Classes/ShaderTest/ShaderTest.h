@@ -117,7 +117,7 @@ public:
 
     virtual void update(float dt);
     virtual void setPosition(const Vec2 &newPosition);
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
 
 protected:
     ShaderNode();
@@ -126,7 +126,7 @@ protected:
     bool initWithVertex(const std::string &vert, const std::string &frag);
     void loadShaderVertex(const std::string &vert, const std::string &frag);
 
-    void onDraw(const Matrix &transform, bool transformUpdated);
+    void onDraw(const Mat4 &transform, bool transformUpdated);
 
     Vec2 _center;
     Vec2 _resolution;

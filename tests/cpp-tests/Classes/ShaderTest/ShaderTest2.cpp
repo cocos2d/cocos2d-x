@@ -202,7 +202,7 @@ bool EffectBlur::init(float blurSize)
     setBlurSize(blurSize);
 
     _glprogramstate->setUniformVec2("onePixelSize", _pixelSize);
-    _glprogramstate->setUniformVec4("gaussianCoefficient", Vector4(_samplingRadius, _scale, _cons, _weightSum));
+    _glprogramstate->setUniformVec4("gaussianCoefficient", Vec4(_samplingRadius, _scale, _cons, _weightSum));
     return true;
 }
 
@@ -404,7 +404,7 @@ void BlurSprite::setCustomUniforms()
 
     auto programState = getGLProgramState();
     programState->setUniformVec2("onePixelSize", _pixelSize);
-    programState->setUniformVec4("gaussianCoefficient", Vector4(_samplingRadius, _scale, _cons, _weightSum));
+    programState->setUniformVec4("gaussianCoefficient", Vec4(_samplingRadius, _scale, _cons, _weightSum));
 }
 
 void BlurSprite::setBlurSize(float f)
@@ -704,7 +704,7 @@ OutlineSprite::OutlineSprite()
 
 void OutlineSprite::setCustomUniforms()
 {
-    Vector3 color(1.0, 0.2, 0.3);
+    Vec3 color(1.0, 0.2, 0.3);
     GLfloat radius = 0.01;
     GLfloat threshold = 1.75;
 

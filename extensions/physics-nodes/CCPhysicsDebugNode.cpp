@@ -182,7 +182,7 @@ static void DrawConstraint(cpConstraint *constraint, DrawNode *renderer)
 
 // implementation of PhysicsDebugNode
 
-void PhysicsDebugNode::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void PhysicsDebugNode::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     if (! _spacePtr)
     {

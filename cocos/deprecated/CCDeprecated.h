@@ -460,9 +460,9 @@ CC_DEPRECATED_ATTRIBUTE static inline Vec2 vertex2(const float x, const float y)
     return c;
 }
 
-CC_DEPRECATED_ATTRIBUTE static inline Vector3 vertex3(const float x, const float y, const float z)
+CC_DEPRECATED_ATTRIBUTE static inline Vec3 vertex3(const float x, const float y, const float z)
 {
-    Vector3 c(x, y, z);
+    Vec3 c(x, y, z);
     return c;
 }
 
@@ -779,8 +779,8 @@ CC_DEPRECATED_ATTRIBUTE typedef Color4F ccColor4F;
 CC_DEPRECATED_ATTRIBUTE typedef Color4B ccColor4B;
 CC_DEPRECATED_ATTRIBUTE typedef Vec2 ccVertex2F;
 CC_DEPRECATED_ATTRIBUTE typedef Vec2 Vertex2F;
-CC_DEPRECATED_ATTRIBUTE typedef Vector3 ccVertex3F;
-CC_DEPRECATED_ATTRIBUTE typedef Vector3 Vertex3F;
+CC_DEPRECATED_ATTRIBUTE typedef Vec3 ccVertex3F;
+CC_DEPRECATED_ATTRIBUTE typedef Vec3 Vertex3F;
 CC_DEPRECATED_ATTRIBUTE typedef Tex2F ccTex2F;
 CC_DEPRECATED_ATTRIBUTE typedef PointSprite ccPointSprite;
 CC_DEPRECATED_ATTRIBUTE typedef Quad2 ccQuad2;
@@ -1057,7 +1057,7 @@ CC_DEPRECATED_ATTRIBUTE typedef __LayerRGBA LayerRGBA;
 CC_DEPRECATED_ATTRIBUTE typedef float kmScalar;
 
 //kmMat4 and kmMat4 stack
-CC_DEPRECATED_ATTRIBUTE typedef Matrix kmMat4;
+CC_DEPRECATED_ATTRIBUTE typedef Mat4 kmMat4;
 CC_DEPRECATED_ATTRIBUTE const unsigned int KM_GL_MODELVIEW = 0x1700;
 CC_DEPRECATED_ATTRIBUTE const unsigned int KM_GL_PROJECTION = 0x1701;
 CC_DEPRECATED_ATTRIBUTE const unsigned int KM_GL_TEXTURE = 0x1702;
@@ -1067,56 +1067,56 @@ CC_DEPRECATED_ATTRIBUTE void CC_DLL kmGLPushMatrix(void);
 CC_DEPRECATED_ATTRIBUTE void CC_DLL kmGLPopMatrix(void);
 CC_DEPRECATED_ATTRIBUTE void CC_DLL kmGLMatrixMode(unsigned int mode);
 CC_DEPRECATED_ATTRIBUTE void CC_DLL kmGLLoadIdentity(void);
-CC_DEPRECATED_ATTRIBUTE void CC_DLL kmGLLoadMatrix(const Matrix* pIn);
-CC_DEPRECATED_ATTRIBUTE void CC_DLL kmGLMultMatrix(const Matrix* pIn);
+CC_DEPRECATED_ATTRIBUTE void CC_DLL kmGLLoadMatrix(const Mat4* pIn);
+CC_DEPRECATED_ATTRIBUTE void CC_DLL kmGLMultMatrix(const Mat4* pIn);
 CC_DEPRECATED_ATTRIBUTE void CC_DLL kmGLTranslatef(float x, float y, float z);
 CC_DEPRECATED_ATTRIBUTE void CC_DLL kmGLRotatef(float angle, float x, float y, float z);
 CC_DEPRECATED_ATTRIBUTE void CC_DLL kmGLScalef(float x, float y, float z);
-CC_DEPRECATED_ATTRIBUTE void CC_DLL kmGLGetMatrix(unsigned int mode, Matrix* pOut);
+CC_DEPRECATED_ATTRIBUTE void CC_DLL kmGLGetMatrix(unsigned int mode, Mat4* pOut);
 
-CC_DEPRECATED_ATTRIBUTE CC_DLL Matrix* kmMat4Fill(Matrix* pOut, const float* pMat);
-CC_DEPRECATED_ATTRIBUTE CC_DLL Matrix* kmMat4Assign(Matrix* pOut, const Matrix* pIn);
-CC_DEPRECATED_ATTRIBUTE CC_DLL Matrix* kmMat4Identity(Matrix* pOut);
-CC_DEPRECATED_ATTRIBUTE CC_DLL Matrix* kmMat4Inverse(Matrix* pOut, const Matrix* pM);
-CC_DEPRECATED_ATTRIBUTE CC_DLL Matrix* kmMat4Transpose(Matrix* pOut, const Matrix* pIn);
-CC_DEPRECATED_ATTRIBUTE CC_DLL Matrix* kmMat4Multiply(Matrix* pOut, const Matrix* pM1, const Matrix* pM2);
-CC_DEPRECATED_ATTRIBUTE CC_DLL Matrix* kmMat4Translation(Matrix* pOut, const float x, const float y, const float z);
-CC_DEPRECATED_ATTRIBUTE CC_DLL Matrix* kmMat4RotationX(Matrix* pOut, const float radians);
-CC_DEPRECATED_ATTRIBUTE CC_DLL Matrix* kmMat4RotationY(Matrix* pOut, const float radians);
-CC_DEPRECATED_ATTRIBUTE CC_DLL Matrix* kmMat4RotationZ(Matrix* pOut, const float radians);
-CC_DEPRECATED_ATTRIBUTE CC_DLL Matrix* kmMat4RotationAxisAngle(Matrix* pOut, const Vector3* axis, float radians);
-CC_DEPRECATED_ATTRIBUTE CC_DLL Matrix* kmMat4Scaling(Matrix* pOut, const float x, const float y, const float z);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Mat4* kmMat4Fill(Mat4* pOut, const float* pMat);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Mat4* kmMat4Assign(Mat4* pOut, const Mat4* pIn);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Mat4* kmMat4Identity(Mat4* pOut);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Mat4* kmMat4Inverse(Mat4* pOut, const Mat4* pM);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Mat4* kmMat4Transpose(Mat4* pOut, const Mat4* pIn);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Mat4* kmMat4Multiply(Mat4* pOut, const Mat4* pM1, const Mat4* pM2);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Mat4* kmMat4Translation(Mat4* pOut, const float x, const float y, const float z);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Mat4* kmMat4RotationX(Mat4* pOut, const float radians);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Mat4* kmMat4RotationY(Mat4* pOut, const float radians);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Mat4* kmMat4RotationZ(Mat4* pOut, const float radians);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Mat4* kmMat4RotationAxisAngle(Mat4* pOut, const Vec3* axis, float radians);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Mat4* kmMat4Scaling(Mat4* pOut, const float x, const float y, const float z);
 
-CC_DEPRECATED_ATTRIBUTE CC_DLL Matrix* kmMat4PerspectiveProjection(Matrix* pOut, float fovY, float aspect, float zNear, float zFar);
-CC_DEPRECATED_ATTRIBUTE CC_DLL Matrix* kmMat4OrthographicProjection(Matrix* pOut, float left, float right, float bottom, float top, float nearVal, float farVal);
-CC_DEPRECATED_ATTRIBUTE CC_DLL Matrix* kmMat4LookAt(Matrix* pOut, const Vector3* pEye, const Vector3* pCenter, const Vector3* pUp);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Mat4* kmMat4PerspectiveProjection(Mat4* pOut, float fovY, float aspect, float zNear, float zFar);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Mat4* kmMat4OrthographicProjection(Mat4* pOut, float left, float right, float bottom, float top, float nearVal, float farVal);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Mat4* kmMat4LookAt(Mat4* pOut, const Vec3* pEye, const Vec3* pCenter, const Vec3* pUp);
 
 //kmVec3
-CC_DEPRECATED_ATTRIBUTE typedef Vector3 kmVec3;
-CC_DEPRECATED_ATTRIBUTE CC_DLL Vector3* kmVec3Fill(Vector3* pOut, float x, float y, float z);
-CC_DEPRECATED_ATTRIBUTE CC_DLL float kmVec3Length(const Vector3* pIn);
-CC_DEPRECATED_ATTRIBUTE CC_DLL float kmVec3LengthSq(const Vector3* pIn);
-CC_DEPRECATED_ATTRIBUTE CC_DLL Vector3* kmVec3Lerp(Vector3* pOut, const Vector3* pV1, const Vector3* pV2, float t);
-CC_DEPRECATED_ATTRIBUTE CC_DLL Vector3* kmVec3Normalize(Vector3* pOut, const Vector3* pIn);
-CC_DEPRECATED_ATTRIBUTE CC_DLL Vector3* kmVec3Cross(Vector3* pOut, const Vector3* pV1, const Vector3* pV2);
-CC_DEPRECATED_ATTRIBUTE CC_DLL float kmVec3Dot(const Vector3* pV1, const Vector3* pV2);
-CC_DEPRECATED_ATTRIBUTE CC_DLL Vector3* kmVec3Add(Vector3* pOut, const Vector3* pV1, const Vector3* pV2);
-CC_DEPRECATED_ATTRIBUTE CC_DLL Vector3* kmVec3Subtract(Vector3* pOut, const Vector3* pV1, const Vector3* pV2);
+CC_DEPRECATED_ATTRIBUTE typedef Vec3 kmVec3;
+CC_DEPRECATED_ATTRIBUTE CC_DLL Vec3* kmVec3Fill(Vec3* pOut, float x, float y, float z);
+CC_DEPRECATED_ATTRIBUTE CC_DLL float kmVec3Length(const Vec3* pIn);
+CC_DEPRECATED_ATTRIBUTE CC_DLL float kmVec3LengthSq(const Vec3* pIn);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Vec3* kmVec3Lerp(Vec3* pOut, const Vec3* pV1, const Vec3* pV2, float t);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Vec3* kmVec3Normalize(Vec3* pOut, const Vec3* pIn);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Vec3* kmVec3Cross(Vec3* pOut, const Vec3* pV1, const Vec3* pV2);
+CC_DEPRECATED_ATTRIBUTE CC_DLL float kmVec3Dot(const Vec3* pV1, const Vec3* pV2);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Vec3* kmVec3Add(Vec3* pOut, const Vec3* pV1, const Vec3* pV2);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Vec3* kmVec3Subtract(Vec3* pOut, const Vec3* pV1, const Vec3* pV2);
 
-CC_DEPRECATED_ATTRIBUTE CC_DLL Vector3* kmVec3Transform(Vector3* pOut, const Vector3* pV1, const Matrix* pM);
-CC_DEPRECATED_ATTRIBUTE CC_DLL Vector3* kmVec3TransformNormal(Vector3* pOut, const Vector3* pV, const Matrix* pM);
-CC_DEPRECATED_ATTRIBUTE CC_DLL Vector3* kmVec3TransformCoord(Vector3* pOut, const Vector3* pV, const Matrix* pM);
-CC_DEPRECATED_ATTRIBUTE CC_DLL Vector3* kmVec3Scale(Vector3* pOut, const Vector3* pIn, const float s);
-CC_DEPRECATED_ATTRIBUTE CC_DLL Vector3* kmVec3Assign(Vector3* pOut, const Vector3* pIn);
-CC_DEPRECATED_ATTRIBUTE CC_DLL Vector3* kmVec3Zero(Vector3* pOut);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Vec3* kmVec3Transform(Vec3* pOut, const Vec3* pV1, const Mat4* pM);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Vec3* kmVec3TransformNormal(Vec3* pOut, const Vec3* pV, const Mat4* pM);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Vec3* kmVec3TransformCoord(Vec3* pOut, const Vec3* pV, const Mat4* pM);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Vec3* kmVec3Scale(Vec3* pOut, const Vec3* pIn, const float s);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Vec3* kmVec3Assign(Vec3* pOut, const Vec3* pIn);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Vec3* kmVec3Zero(Vec3* pOut);
 
-CC_DEPRECATED_ATTRIBUTE extern const Vector3 KM_VEC3_NEG_Z;
-CC_DEPRECATED_ATTRIBUTE extern const Vector3 KM_VEC3_POS_Z;
-CC_DEPRECATED_ATTRIBUTE extern const Vector3 KM_VEC3_POS_Y;
-CC_DEPRECATED_ATTRIBUTE extern const Vector3 KM_VEC3_NEG_Y;
-CC_DEPRECATED_ATTRIBUTE extern const Vector3 KM_VEC3_NEG_X;
-CC_DEPRECATED_ATTRIBUTE extern const Vector3 KM_VEC3_POS_X;
-CC_DEPRECATED_ATTRIBUTE extern const Vector3 KM_VEC3_ZERO;
+CC_DEPRECATED_ATTRIBUTE extern const Vec3 KM_VEC3_NEG_Z;
+CC_DEPRECATED_ATTRIBUTE extern const Vec3 KM_VEC3_POS_Z;
+CC_DEPRECATED_ATTRIBUTE extern const Vec3 KM_VEC3_POS_Y;
+CC_DEPRECATED_ATTRIBUTE extern const Vec3 KM_VEC3_NEG_Y;
+CC_DEPRECATED_ATTRIBUTE extern const Vec3 KM_VEC3_NEG_X;
+CC_DEPRECATED_ATTRIBUTE extern const Vec3 KM_VEC3_POS_X;
+CC_DEPRECATED_ATTRIBUTE extern const Vec3 KM_VEC3_ZERO;
 
 //kmVec2
 CC_DEPRECATED_ATTRIBUTE typedef Vec2 kmVec2;
@@ -1138,19 +1138,19 @@ CC_DEPRECATED_ATTRIBUTE extern const Vec2 KM_VEC2_POS_X;
 CC_DEPRECATED_ATTRIBUTE extern const Vec2 KM_VEC2_ZERO;
 
 //kmVec4
-CC_DEPRECATED_ATTRIBUTE typedef Vector4 kmVec4;
-CC_DEPRECATED_ATTRIBUTE CC_DLL Vector4* kmVec4Fill(Vector4* pOut, float x, float y, float z, float w);
-CC_DEPRECATED_ATTRIBUTE CC_DLL Vector4* kmVec4Add(Vector4* pOut, const Vector4* pV1, const Vector4* pV2);
-CC_DEPRECATED_ATTRIBUTE CC_DLL float kmVec4Dot(const Vector4* pV1, const Vector4* pV2);
-CC_DEPRECATED_ATTRIBUTE CC_DLL float kmVec4Length(const Vector4* pIn);
-CC_DEPRECATED_ATTRIBUTE CC_DLL float kmVec4LengthSq(const Vector4* pIn);
-CC_DEPRECATED_ATTRIBUTE CC_DLL Vector4* kmVec4Lerp(Vector4* pOut, const Vector4* pV1, const Vector4* pV2, float t);
-CC_DEPRECATED_ATTRIBUTE CC_DLL Vector4* kmVec4Normalize(Vector4* pOut, const Vector4* pIn);
-CC_DEPRECATED_ATTRIBUTE CC_DLL Vector4* kmVec4Scale(Vector4* pOut, const Vector4* pIn, const float s);
-CC_DEPRECATED_ATTRIBUTE CC_DLL Vector4* kmVec4Subtract(Vector4* pOut, const Vector4* pV1, const Vector4* pV2);
-CC_DEPRECATED_ATTRIBUTE CC_DLL Vector4* kmVec4Assign(Vector4* pOut, const Vector4* pIn);
-CC_DEPRECATED_ATTRIBUTE CC_DLL Vector4* kmVec4MultiplyMat4(Vector4* pOut, const Vector4* pV, const Matrix* pM);
-CC_DEPRECATED_ATTRIBUTE CC_DLL Vector4* kmVec4Transform(Vector4* pOut, const Vector4* pV, const Matrix* pM);
+CC_DEPRECATED_ATTRIBUTE typedef Vec4 kmVec4;
+CC_DEPRECATED_ATTRIBUTE CC_DLL Vec4* kmVec4Fill(Vec4* pOut, float x, float y, float z, float w);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Vec4* kmVec4Add(Vec4* pOut, const Vec4* pV1, const Vec4* pV2);
+CC_DEPRECATED_ATTRIBUTE CC_DLL float kmVec4Dot(const Vec4* pV1, const Vec4* pV2);
+CC_DEPRECATED_ATTRIBUTE CC_DLL float kmVec4Length(const Vec4* pIn);
+CC_DEPRECATED_ATTRIBUTE CC_DLL float kmVec4LengthSq(const Vec4* pIn);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Vec4* kmVec4Lerp(Vec4* pOut, const Vec4* pV1, const Vec4* pV2, float t);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Vec4* kmVec4Normalize(Vec4* pOut, const Vec4* pIn);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Vec4* kmVec4Scale(Vec4* pOut, const Vec4* pIn, const float s);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Vec4* kmVec4Subtract(Vec4* pOut, const Vec4* pV1, const Vec4* pV2);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Vec4* kmVec4Assign(Vec4* pOut, const Vec4* pIn);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Vec4* kmVec4MultiplyMat4(Vec4* pOut, const Vec4* pV, const Mat4* pM);
+CC_DEPRECATED_ATTRIBUTE CC_DLL Vec4* kmVec4Transform(Vec4* pOut, const Vec4* pV, const Mat4* pM);
 
 //end of deprecated attributes and methods for kazMath
 

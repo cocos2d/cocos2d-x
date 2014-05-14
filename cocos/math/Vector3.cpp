@@ -60,7 +60,7 @@ Vec3 Vec3::fromColor(unsigned int color)
         components[componentIndex++] = static_cast<float>(component) / 255.0f;
     }
 
-    Vector3 value(components);
+    Vec3 value(components);
     return value;
 }
 
@@ -68,17 +68,17 @@ Vec3::~Vec3()
 {
 }
 
-bool Vector3::isZero() const
+bool Vec3::isZero() const
 {
     return x == 0.0f && y == 0.0f && z == 0.0f;
 }
 
-bool Vector3::isOne() const
+bool Vec3::isOne() const
 {
     return x == 1.0f && y == 1.0f && z == 1.0f;
 }
 
-float Vector3::angle(const Vector3& v1, const Vector3& v2)
+float Vec3::angle(const Vec3& v1, const Vec3& v2)
 {
     float dx = v1.y * v2.z - v1.z * v2.y;
     float dy = v1.z * v2.x - v1.x * v2.z;
@@ -87,14 +87,14 @@ float Vector3::angle(const Vector3& v1, const Vector3& v2)
     return atan2f(sqrt(dx * dx + dy * dy + dz * dz) + MATH_FLOAT_SMALL, dot(v1, v2));
 }
 
-void Vector3::add(const Vector3& v)
+void Vec3::add(const Vec3& v)
 {
     x += v.x;
     y += v.y;
     z += v.z;
 }
 
-void Vector3::add(const Vector3& v1, const Vector3& v2, Vector3* dst)
+void Vec3::add(const Vec3& v1, const Vec3& v2, Vec3* dst)
 {
     GP_ASSERT(dst);
 
@@ -103,7 +103,7 @@ void Vector3::add(const Vector3& v1, const Vector3& v2, Vector3* dst)
     dst->z = v1.z + v2.z;
 }
 
-void Vector3::clamp(const Vector3& min, const Vector3& max)
+void Vec3::clamp(const Vec3& min, const Vec3& max)
 {
     GP_ASSERT(!(min.x > max.x || min.y > max.y || min.z > max.z));
 
@@ -126,7 +126,7 @@ void Vector3::clamp(const Vector3& min, const Vector3& max)
         z = max.z;
 }
 
-void Vector3::clamp(const Vector3& v, const Vector3& min, const Vector3& max, Vector3* dst)
+void Vec3::clamp(const Vec3& v, const Vec3& min, const Vec3& max, Vec3* dst)
 {
     GP_ASSERT(dst);
     GP_ASSERT(!(min.x > max.x || min.y > max.y || min.z > max.z));
@@ -153,22 +153,22 @@ void Vector3::clamp(const Vector3& v, const Vector3& min, const Vector3& max, Ve
         dst->z = max.z;
 }
 
-void Vector3::cross(const Vector3& v)
+void Vec3::cross(const Vec3& v)
 {
     cross(*this, v, this);
 }
 
-void Vector3::cross(const Vector3& v1, const Vector3& v2, Vector3* dst)
+void Vec3::cross(const Vec3& v1, const Vec3& v2, Vec3* dst)
 {
     GP_ASSERT(dst);
 
-    // NOTE: This code assumes Vector3 struct members are contiguous floats in memory.
+    // NOTE: This code assumes Vec3 struct members are contiguous floats in memory.
     // We might want to revisit this (and other areas of code that make this assumption)
     // later to guarantee 100% safety/compatibility.
-    MathUtil::crossVector3(&v1.x, &v2.x, &dst->x);
+    MathUtil::crossVec3(&v1.x, &v2.x, &dst->x);
 }
 
-float Vector3::distance(const Vector3& v) const
+float Vec3::distance(const Vec3& v) const
 {
     float dx = v.x - x;
     float dy = v.y - y;
@@ -177,7 +177,7 @@ float Vector3::distance(const Vector3& v) const
     return sqrt(dx * dx + dy * dy + dz * dz);
 }
 
-float Vector3::distanceSquared(const Vector3& v) const
+float Vec3::distanceSquared(const Vec3& v) const
 {
     float dx = v.x - x;
     float dy = v.y - y;
@@ -186,34 +186,34 @@ float Vector3::distanceSquared(const Vector3& v) const
     return (dx * dx + dy * dy + dz * dz);
 }
 
-float Vector3::dot(const Vector3& v) const
+float Vec3::dot(const Vec3& v) const
 {
     return (x * v.x + y * v.y + z * v.z);
 }
 
-float Vector3::dot(const Vector3& v1, const Vector3& v2)
+float Vec3::dot(const Vec3& v1, const Vec3& v2)
 {
     return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
 }
 
-float Vector3::length() const
+float Vec3::length() const
 {
     return sqrt(x * x + y * y + z * z);
 }
 
-float Vector3::lengthSquared() const
+float Vec3::lengthSquared() const
 {
     return (x * x + y * y + z * z);
 }
 
-void Vector3::negate()
+void Vec3::negate()
 {
     x = -x;
     y = -y;
     z = -z;
 }
 
-void Vector3::normalize()
+void Vec3::normalize()
 {
     float n = x * x + y * y + z * z;
     // Already normalized.
@@ -231,28 +231,28 @@ void Vector3::normalize()
     z *= n;
 }
 
-Vector3 Vector3::getNormalized() const
+Vec3 Vec3::getNormalized() const
 {
-    Vector3 v(*this);
+    Vec3 v(*this);
     v.normalize();
     return v;
 }
 
-void Vector3::scale(float scalar)
+void Vec3::scale(float scalar)
 {
     x *= scalar;
     y *= scalar;
     z *= scalar;
 }
 
-void Vector3::set(float xx, float yy, float zz)
+void Vec3::set(float xx, float yy, float zz)
 {
     this->x = xx;
     this->y = yy;
     this->z = zz;
 }
 
-void Vector3::set(const float* array)
+void Vec3::set(const float* array)
 {
     GP_ASSERT(array);
 
@@ -261,28 +261,28 @@ void Vector3::set(const float* array)
     z = array[2];
 }
 
-void Vector3::set(const Vector3& v)
+void Vec3::set(const Vec3& v)
 {
     this->x = v.x;
     this->y = v.y;
     this->z = v.z;
 }
 
-void Vector3::set(const Vector3& p1, const Vector3& p2)
+void Vec3::set(const Vec3& p1, const Vec3& p2)
 {
     x = p2.x - p1.x;
     y = p2.y - p1.y;
     z = p2.z - p1.z;
 }
 
-void Vector3::subtract(const Vector3& v)
+void Vec3::subtract(const Vec3& v)
 {
     x -= v.x;
     y -= v.y;
     z -= v.z;
 }
 
-void Vector3::subtract(const Vector3& v1, const Vector3& v2, Vector3* dst)
+void Vec3::subtract(const Vec3& v1, const Vec3& v2, Vec3* dst)
 {
     GP_ASSERT(dst);
 
@@ -291,7 +291,7 @@ void Vector3::subtract(const Vector3& v1, const Vector3& v2, Vector3* dst)
     dst->z = v1.z - v2.z;
 }
 
-void Vector3::smooth(const Vector3& target, float elapsedTime, float responseTime)
+void Vec3::smooth(const Vec3& target, float elapsedTime, float responseTime)
 {
     if (elapsedTime > 0)
     {
@@ -299,10 +299,10 @@ void Vector3::smooth(const Vector3& target, float elapsedTime, float responseTim
     }
 }
 
-const Vector3 Vector3::ZERO = Vector3(0.0f, 0.0f, 0.0f);
-const Vector3 Vector3::ONE = Vector3(1.0f, 1.0f, 1.0f);
-const Vector3 Vector3::UNIT_X = Vector3(1.0f, 0.0f, 0.0f);
-const Vector3 Vector3::UNIT_Y = Vector3(0.0f, 1.0f, 0.0f);
-const Vector3 Vector3::UNIT_Z = Vector3(0.0f, 0.0f, 1.0f);
+const Vec3 Vec3::ZERO = Vec3(0.0f, 0.0f, 0.0f);
+const Vec3 Vec3::ONE = Vec3(1.0f, 1.0f, 1.0f);
+const Vec3 Vec3::UNIT_X = Vec3(1.0f, 0.0f, 0.0f);
+const Vec3 Vec3::UNIT_Y = Vec3(0.0f, 1.0f, 0.0f);
+const Vec3 Vec3::UNIT_Z = Vec3(0.0f, 0.0f, 1.0f);
 
 NS_CC_MATH_END

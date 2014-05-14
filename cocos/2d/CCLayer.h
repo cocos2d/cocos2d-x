@@ -270,7 +270,7 @@ public:
     //
     // Overrides
     //
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
 
     virtual void setContentSize(const Size & var) override;
     /** BlendFunction. Conforms to BlendProtocol protocol */
@@ -299,7 +299,7 @@ CC_CONSTRUCTOR_ACCESS:
     bool initWithColor(const Color4B& color);
 
 protected:
-    void onDraw(const Matrix& transform, bool transformUpdated);
+    void onDraw(const Mat4& transform, bool transformUpdated);
 
     virtual void updateColor() override;
 
@@ -307,7 +307,7 @@ protected:
     Vec2 _squareVertices[4];
     Color4F  _squareColors[4];
     CustomCommand _customCommand;
-    Vector3 _noMVPVertices[4];
+    Vec3 _noMVPVertices[4];
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(LayerColor);
 

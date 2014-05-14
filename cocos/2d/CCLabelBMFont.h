@@ -124,13 +124,13 @@ public:
 
     virtual std::string getDescription() const override;
 #if CC_LABELBMFONT_DEBUG_DRAW
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
 #endif
 
 private:
 #if CC_LABELBMFONT_DEBUG_DRAW
     CustomCommand   _customDebugDrawCommand;
-    void drawDebugData(const Matrix& transform, bool transformUpdated);
+    void drawDebugData(const Mat4& transform, bool transformUpdated);
 #endif
     
     // name of fntFile

@@ -114,14 +114,14 @@ DrawPrimitivesTest::DrawPrimitivesTest()
 {
 }
 
-void DrawPrimitivesTest::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void DrawPrimitivesTest::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(DrawPrimitivesTest::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_customCommand);
 }
 
-void DrawPrimitivesTest::onDraw(const Matrix &transform, bool transformUpdated)
+void DrawPrimitivesTest::onDraw(const Mat4 &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");

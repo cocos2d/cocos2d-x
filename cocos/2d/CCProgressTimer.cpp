@@ -500,7 +500,7 @@ Vec2 ProgressTimer::boundaryTexCoord(char index)
     return Vec2::ZERO;
 }
 
-void ProgressTimer::onDraw(const Matrix &transform, bool transformUpdated)
+void ProgressTimer::onDraw(const Mat4 &transform, bool transformUpdated)
 {
 
     getGLProgram()->use();
@@ -551,7 +551,7 @@ void ProgressTimer::onDraw(const Matrix &transform, bool transformUpdated)
     }
 }
 
-void ProgressTimer::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void ProgressTimer::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     if( ! _vertexData || ! _sprite)
         return;

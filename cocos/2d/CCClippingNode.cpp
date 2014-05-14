@@ -203,7 +203,7 @@ void ClippingNode::drawFullScreenQuadClearStencil()
     
 }
 
-void ClippingNode::visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
+void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
 {
     if(!_visible)
         return;
@@ -214,7 +214,7 @@ void ClippingNode::visit(Renderer *renderer, const Matrix &parentTransform, bool
     _transformUpdated = false;
 
     // IMPORTANT:
-    // To ease the migration to v3.0, we still support the Matrix stack,
+    // To ease the migration to v3.0, we still support the Mat4 stack,
     // but it is deprecated and your code should not rely on it
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");

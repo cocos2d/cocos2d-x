@@ -308,7 +308,7 @@ LabelFNTSpriteActions::LabelFNTSpriteActions()
     schedule( schedule_selector(LabelFNTSpriteActions::step), 0.1f);
 }
 
-void LabelFNTSpriteActions::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void LabelFNTSpriteActions::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     _renderCmd.init(_globalZOrder);
     _renderCmd.func = CC_CALLBACK_0(LabelFNTSpriteActions::onDraw, this, transform, transformUpdated);
@@ -316,7 +316,7 @@ void LabelFNTSpriteActions::draw(Renderer *renderer, const Matrix &transform, bo
 
 }
 
-void LabelFNTSpriteActions::onDraw(const Matrix &transform, bool transformUpdated)
+void LabelFNTSpriteActions::onDraw(const Mat4 &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -904,14 +904,14 @@ std::string LabelFNTBounds::subtitle() const
     return "You should see string enclosed by a box";
 }
 
-void LabelFNTBounds::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void LabelFNTBounds::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     _renderCmd.init(_globalZOrder);
     _renderCmd.func = CC_CALLBACK_0(LabelFNTBounds::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_renderCmd);
 }
 
-void LabelFNTBounds::onDraw(const Matrix &transform, bool transformUpdated)
+void LabelFNTBounds::onDraw(const Mat4 &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -1518,7 +1518,7 @@ LabelTTFOldNew::LabelTTFOldNew()
     label2->setPosition(Vec2(s.width/2, delta * 2));
 }
 
-void LabelTTFOldNew::onDraw(const Matrix &transform, bool transformUpdated)
+void LabelTTFOldNew::onDraw(const Mat4 &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -1562,7 +1562,7 @@ void LabelTTFOldNew::onDraw(const Matrix &transform, bool transformUpdated)
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
-void LabelTTFOldNew::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void LabelTTFOldNew::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     _renderCmd.init(_globalZOrder);
     _renderCmd.func = CC_CALLBACK_0(LabelTTFOldNew::onDraw, this, transform, transformUpdated);

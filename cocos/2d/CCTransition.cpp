@@ -103,7 +103,7 @@ void TransitionScene::sceneOrder()
     _isInSceneOnTop = true;
 }
 
-void TransitionScene::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void TransitionScene::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     Scene::draw(renderer, transform, transformUpdated);
 
@@ -1261,7 +1261,7 @@ TransitionCrossFade* TransitionCrossFade::create(float t, Scene* scene)
     return nullptr;
 }
 
-void TransitionCrossFade::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void TransitionCrossFade::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     // override draw since both scenes (textures) are rendered in 1 scene
 }
@@ -1410,7 +1410,7 @@ void TransitionTurnOffTiles::onExit()
     TransitionScene::onExit();
 }
 
-void TransitionTurnOffTiles::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void TransitionTurnOffTiles::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     Scene::draw(renderer, transform, transformUpdated);
     
@@ -1490,7 +1490,7 @@ void TransitionSplitCols::switchTargetToInscene()
     _gridProxy->setTarget(_inScene);
 }
 
-void TransitionSplitCols::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void TransitionSplitCols::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     Scene::draw(renderer, transform, transformUpdated);
     _gridProxy->visit(renderer, transform, transformUpdated);
@@ -1606,7 +1606,7 @@ void TransitionFadeTR::onExit()
     TransitionScene::onExit();
 }
 
-void TransitionFadeTR::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void TransitionFadeTR::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     Scene::draw(renderer, transform, transformUpdated);
     

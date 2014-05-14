@@ -155,7 +155,7 @@ public:
     void removeContourData(ContourData *contourData);
     void removeAll();
 
-    void updateTransform(cocos2d::Matrix &t);
+    void updateTransform(cocos2d::Mat4 &t);
 
     void setActive(bool active);
     bool getActive();

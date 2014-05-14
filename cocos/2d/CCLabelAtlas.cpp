@@ -249,7 +249,7 @@ void LabelAtlas::updateColor()
 
 //CCLabelAtlas - draw
 #if CC_LABELATLAS_DEBUG_DRAW
-void LabelAtlas::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void LabelAtlas::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     AtlasNode::draw(renderer, transform, transformUpdated);
 
@@ -258,7 +258,7 @@ void LabelAtlas::draw(Renderer *renderer, const Matrix &transform, bool transfor
     renderer->addCommand(&_customDebugDrawCommand);
 }
 
-void LabelAtlas::drawDebugData(const Matrix& transform, bool transformUpdated)
+void LabelAtlas::drawDebugData(const Mat4& transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);

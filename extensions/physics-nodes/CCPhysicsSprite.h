@@ -114,9 +114,9 @@ public:
     virtual float getRotation() const override;
     virtual void setRotation(float fRotation) override;
     virtual void syncPhysicsTransform() const;
-    virtual const Matrix& getNodeToParentTransform() const override;
+    virtual const Mat4& getNodeToParentTransform() const override;
     
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
 
 protected:
     const Vec2& getPosFromPhysics() const;

@@ -135,7 +135,7 @@ Node::Node(void)
     ScriptEngineProtocol* engine = ScriptEngineManager::getInstance()->getScriptEngine();
     _scriptType = engine != nullptr ? engine->getScriptType() : kScriptTypeNone;
 #endif
-    _transform = _inverse = _additionalTransform = Matrix::IDENTITY;
+    _transform = _inverse = _additionalTransform = Mat4::IDENTITY;
 }
 
 Node::~Node()
@@ -277,7 +277,7 @@ float Node::getRotationSkewX() const
     return _rotationZ_X;
 }
 
-void Node::setRotation3D(const Vector3& rotation)
+void Node::setRotation3D(const Vec3& rotation)
 {
     if (_rotationX == rotation.x &&
         _rotationY == rotation.y &&
@@ -301,12 +301,12 @@ void Node::setRotation3D(const Vector3& rotation)
 #endif
 }
 
-Vector3 Node::getRotation3D() const
+Vec3 Node::getRotation3D() const
 {
     // rotation Z is decomposed in 2 to simulate Skew for Flash animations
     CCASSERT(_rotationZ_X == _rotationZ_Y, "_rotationZ_X != _rotationZ_Y");
 
-    return Vector3(_rotationX,_rotationY,_rotationZ_X);
+    return Vec3(_rotationX,_rotationY,_rotationZ_X);
 }
 
 void Node::setRotationSkewX(float rotationX)
@@ -444,15 +444,15 @@ void Node::setPosition(float x, float y)
     setPosition(Vec2(x, y));
 }
 
-void Node::setPosition3D(const Vector3& position)
+void Node::setPosition3D(const Vec3& position)
 {
     _positionZ = position.z;
     setPosition(Vec2(position.x, position.y));
 }
 
-Vector3 Node::getPosition3D() const
+Vec3 Node::getPosition3D() const
 {
-    Vector3 ret;
+    Vec3 ret;
     ret.x = _position.x;
     ret.y = _position.y;
     ret.z = _positionZ;
@@ -943,18 +943,18 @@ void Node::draw()
     draw(renderer, _modelViewTransform, true);
 }
 
-void Node::draw(Renderer* renderer, const Matrix &transform, bool transformUpdated)
+void Node::draw(Renderer* renderer, const Mat4 &transform, bool transformUpdated)
 {
 }
 
 void Node::visit()
 {
     auto renderer = Director::getInstance()->getRenderer();
-    Matrix parentTransform = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    Mat4 parentTransform = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     visit(renderer, parentTransform, true);
 }
 
-void Node::visit(Renderer* renderer, const Matrix &parentTransform, bool parentTransformUpdated)
+void Node::visit(Renderer* renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
 {
     // quick return if not visible. children won't be drawn.
     if (!_visible)
@@ -969,7 +969,7 @@ void Node::visit(Renderer* renderer, const Matrix &parentTransform, bool parentT
 
 
     // IMPORTANT:
-    // To ease the migration to v3.0, we still support the Matrix stack,
+    // To ease the migration to v3.0, we still support the Mat4 stack,
     // but it is deprecated and your code should not rely on it
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -1008,9 +1008,9 @@ void Node::visit(Renderer* renderer, const Matrix &parentTransform, bool parentT
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
-Matrix Node::transform(const Matrix& parentTransform)
+Mat4 Node::transform(const Mat4& parentTransform)
 {
-    Matrix ret = this->getNodeToParentTransform();
+    Mat4 ret = this->getNodeToParentTransform();
     ret  = parentTransform * ret;
     return ret;
 }
@@ -1338,7 +1338,7 @@ AffineTransform Node::getNodeToParentAffineTransform() const
     return ret;
 }
 
-const Matrix& Node::getNodeToParentTransform() const
+const Mat4& Node::getNodeToParentTransform() const
 {
     if (_transformDirty)
     {
@@ -1394,13 +1394,13 @@ const Matrix& Node::getNodeToParentTransform() const
         // FIX ME: Expensive operation.
         // FIX ME: It should be done together with the rotationZ
         if(_rotationY) {
-            Matrix rotY;
-            Matrix::createRotationY(CC_DEGREES_TO_RADIANS(_rotationY), &rotY);
+            Mat4 rotY;
+            Mat4::createRotationY(CC_DEGREES_TO_RADIANS(_rotationY), &rotY);
             _transform = _transform * rotY;
         }
         if(_rotationX) {
-            Matrix rotX;
-            Matrix::createRotationX(CC_DEGREES_TO_RADIANS(_rotationX), &rotX);
+            Mat4 rotX;
+            Mat4::createRotationX(CC_DEGREES_TO_RADIANS(_rotationX), &rotX);
             _transform = _transform * rotX;
         }
 
@@ -1408,7 +1408,7 @@ const Matrix& Node::getNodeToParentTransform() const
         // If skew is needed, apply skew and then anchor point
         if (needsSkewMatrix)
         {
-            Matrix skewMatrix(1, (float)tanf(CC_DEGREES_TO_RADIANS(_skewY)), 0, 0,
+            Mat4 skewMatrix(1, (float)tanf(CC_DEGREES_TO_RADIANS(_skewY)), 0, 0,
                               (float)tanf(CC_DEGREES_TO_RADIANS(_skewX)), 1, 0, 0,
                               0,  0,  1, 0,
                               0,  0,  0, 1);
@@ -1418,7 +1418,7 @@ const Matrix& Node::getNodeToParentTransform() const
             // adjust anchor point
             if (!_anchorPointInPoints.equals(Vec2::ZERO))
             {
-                // XXX: Argh, Matrix needs a "translate" method.
+                // XXX: Argh, Mat4 needs a "translate" method.
                 // XXX: Although this is faster than multiplying a vec4 * mat4
                 _transform.m[12] += _transform.m[0] * -_anchorPointInPoints.x + _transform.m[4] * -_anchorPointInPoints.y;
                 _transform.m[13] += _transform.m[1] * -_anchorPointInPoints.x + _transform.m[5] * -_anchorPointInPoints.y;
@@ -1436,7 +1436,7 @@ const Matrix& Node::getNodeToParentTransform() const
     return _transform;
 }
 
-void Node::setNodeToParentTransform(const Matrix& transform)
+void Node::setNodeToParentTransform(const Mat4& transform)
 {
     _transform = transform;
     _transformDirty = false;
@@ -1445,12 +1445,12 @@ void Node::setNodeToParentTransform(const Matrix& transform)
 
 void Node::setAdditionalTransform(const AffineTransform& additionalTransform)
 {
-    Matrix tmp;
+    Mat4 tmp;
     CGAffineToGL(additionalTransform, tmp.m);
     setAdditionalTransform(&tmp);
 }
 
-void Node::setAdditionalTransform(Matrix* additionalTransform)
+void Node::setAdditionalTransform(Mat4* additionalTransform)
 {
     if(additionalTransform == nullptr) {
         _useAdditionalTransform = false;
@@ -1465,13 +1465,13 @@ void Node::setAdditionalTransform(Matrix* additionalTransform)
 AffineTransform Node::getParentToNodeAffineTransform() const
 {
     AffineTransform ret;
-    Matrix ret4 = getParentToNodeTransform();
+    Mat4 ret4 = getParentToNodeTransform();
 
     GLToCGAffine(ret4.m,&ret);
     return ret;
 }
 
-const Matrix& Node::getParentToNodeTransform() const
+const Mat4& Node::getParentToNodeTransform() const
 {
     if ( _inverseDirty ) {
         _inverse = _transform.getInversed();
@@ -1492,9 +1492,9 @@ AffineTransform Node::getNodeToWorldAffineTransform() const
     return t;
 }
 
-Matrix Node::getNodeToWorldTransform() const
+Mat4 Node::getNodeToWorldTransform() const
 {
-    Matrix t = this->getNodeToParentTransform();
+    Mat4 t = this->getNodeToParentTransform();
 
     for (Node *p = _parent; p != nullptr; p = p->getParent())
     {
@@ -1509,7 +1509,7 @@ AffineTransform Node::getWorldToNodeAffineTransform() const
     return AffineTransformInvert(this->getNodeToWorldAffineTransform());
 }
 
-Matrix Node::getWorldToNodeTransform() const
+Mat4 Node::getWorldToNodeTransform() const
 {
     return getNodeToWorldTransform().getInversed();
 }
@@ -1517,18 +1517,18 @@ Matrix Node::getWorldToNodeTransform() const
 
 Vec2 Node::convertToNodeSpace(const Vec2& worldPoint) const
 {
-    Matrix tmp = getWorldToNodeTransform();
-    Vector3 vec3(worldPoint.x, worldPoint.y, 0);
-    Vector3 ret;
+    Mat4 tmp = getWorldToNodeTransform();
+    Vec3 vec3(worldPoint.x, worldPoint.y, 0);
+    Vec3 ret;
     tmp.transformPoint(vec3,&ret);
     return Vec2(ret.x, ret.y);
 }
 
 Vec2 Node::convertToWorldSpace(const Vec2& nodePoint) const
 {
-    Matrix tmp = getNodeToWorldTransform();
-    Vector3 vec3(nodePoint.x, nodePoint.y, 0);
-    Vector3 ret;
+    Mat4 tmp = getNodeToWorldTransform();
+    Vec3 vec3(nodePoint.x, nodePoint.y, 0);
+    Vec3 ret;
     tmp.transformPoint(vec3,&ret);
     return Vec2(ret.x, ret.y);
 

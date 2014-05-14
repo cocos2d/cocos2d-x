@@ -180,23 +180,23 @@ Atlas1::Atlas1()
     V3F_C4B_T2F_Quad quads[] = 
     {
         {
-            {Vector3(0,0,0),Color4B(0,0,255,255),Tex2F(0.0f,1.0f),},                // bottom left
-            {Vector3(s.width,0,0),Color4B(0,0,255,0),Tex2F(1.0f,1.0f),},            // bottom right
-            {Vector3(0,s.height,0),Color4B(0,0,255,0),Tex2F(0.0f,0.0f),},            // top left
-            {Vector3(s.width,s.height,0),Color4B(0,0,255,255),Tex2F(1.0f,0.0f),},    // top right
+            {Vec3(0,0,0),Color4B(0,0,255,255),Tex2F(0.0f,1.0f),},                // bottom left
+            {Vec3(s.width,0,0),Color4B(0,0,255,0),Tex2F(1.0f,1.0f),},            // bottom right
+            {Vec3(0,s.height,0),Color4B(0,0,255,0),Tex2F(0.0f,0.0f),},            // top left
+            {Vec3(s.width,s.height,0),Color4B(0,0,255,255),Tex2F(1.0f,0.0f),},    // top right
         },        
         {
-            {Vector3(40,40,0),Color4B(255,255,255,255),Tex2F(0.0f,0.2f),},            // bottom left
-            {Vector3(120,80,0),Color4B(255,0,0,255),Tex2F(0.5f,0.2f),},            // bottom right
-            {Vector3(40,160,0),Color4B(255,255,255,255),Tex2F(0.0f,0.0f),},        // top left
-            {Vector3(160,160,0),Color4B(0,255,0,255),Tex2F(0.5f,0.0f),},            // top right
+            {Vec3(40,40,0),Color4B(255,255,255,255),Tex2F(0.0f,0.2f),},            // bottom left
+            {Vec3(120,80,0),Color4B(255,0,0,255),Tex2F(0.5f,0.2f),},            // bottom right
+            {Vec3(40,160,0),Color4B(255,255,255,255),Tex2F(0.0f,0.0f),},        // top left
+            {Vec3(160,160,0),Color4B(0,255,0,255),Tex2F(0.5f,0.0f),},            // top right
         },
 
         {
-            {Vector3(s.width/2,40,0),Color4B(255,0,0,255),Tex2F(0.0f,1.0f),},        // bottom left
-            {Vector3(s.width,40,0),Color4B(0,255,0,255),Tex2F(1.0f,1.0f),},        // bottom right
-            {Vector3(s.width/2-50,200,0),Color4B(0,0,255,255),Tex2F(0.0f,0.0f),},        // top left
-            {Vector3(s.width,100,0),Color4B(255,255,0,255),Tex2F(1.0f,0.0f),},        // top right
+            {Vec3(s.width/2,40,0),Color4B(255,0,0,255),Tex2F(0.0f,1.0f),},        // bottom left
+            {Vec3(s.width,40,0),Color4B(0,255,0,255),Tex2F(1.0f,1.0f),},        // bottom right
+            {Vec3(s.width/2-50,200,0),Color4B(0,0,255,255),Tex2F(0.0f,0.0f),},        // top left
+            {Vec3(s.width,100,0),Color4B(255,255,0,255),Tex2F(1.0f,0.0f),},        // top right
         },
         
     };
@@ -213,14 +213,14 @@ Atlas1::~Atlas1()
     _textureAtlas->release();
 }
 
-void Atlas1::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void Atlas1::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(Atlas1::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_customCommand);
 }
 
-void Atlas1::onDraw(const Matrix &transform, bool transformUpdated)
+void Atlas1::onDraw(const Mat4 &transform, bool transformUpdated)
 {
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
@@ -532,14 +532,14 @@ Atlas4::Atlas4()
     schedule( schedule_selector(Atlas4::step), 0.1f);
 }
 
-void Atlas4::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void Atlas4::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(Atlas4::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_customCommand);
 }
 
-void Atlas4::onDraw(const Matrix &transform, bool transformUpdated)
+void Atlas4::onDraw(const Mat4 &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -1660,14 +1660,14 @@ std::string LabelBMFontBounds::subtitle() const
     return "You should see string enclosed by a box";
 }
 
-void LabelBMFontBounds::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void LabelBMFontBounds::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(LabelBMFontBounds::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_customCommand);
 }
 
-void LabelBMFontBounds::onDraw(const Matrix &transform, bool transformUpdated)
+void LabelBMFontBounds::onDraw(const Mat4 &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");

@@ -17,7 +17,7 @@ public:
 
     void initPhysics();
     void createResetButton();
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
 
     void addNewSpriteAtPosition(Vec2 p);
     void update(float dt);
@@ -25,7 +25,7 @@ public:
 
 #if CC_ENABLE_BOX2D_INTEGRATION
 protected:
-    Matrix _modelViewMV;
+    Mat4 _modelViewMV;
     void onDraw();
     CustomCommand _customCommand;
 #endif

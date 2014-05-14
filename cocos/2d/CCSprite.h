@@ -420,7 +420,7 @@ public:
     virtual void setAnchorPoint(const Vec2& anchor) override;
     virtual void ignoreAnchorPointForPosition(bool value) override;
     virtual void setVisible(bool bVisible) override;
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
     virtual void setOpacityModifyRGB(bool modify) override;
     virtual bool isOpacityModifyRGB(void) const override;
     /// @}
@@ -535,7 +535,7 @@ protected:
     bool                _dirty;             /// Whether the sprite needs to be updated
     bool                _recursiveDirty;    /// Whether all of the sprite's children needs to be updated
     bool                _shouldBeHidden;    /// should not be drawn because one of the ancestors is not visible
-    Matrix              _transformToBatch;
+    Mat4              _transformToBatch;
 
     //
     // Data used when the sprite is self-rendered

@@ -93,7 +93,7 @@ void DisplayFactory::updateDisplay(Bone *bone, float dt, bool dirty)
         break;
     default:
     {
-        Matrix transform = bone->getNodeToArmatureTransform();
+        Mat4 transform = bone->getNodeToArmatureTransform();
         display->setAdditionalTransform(&transform);
     }
     break;
@@ -113,12 +113,12 @@ void DisplayFactory::updateDisplay(Bone *bone, float dt, bool dirty)
                 CC_BREAK_IF(!detector->getBody());
 #endif
 
-                Matrix displayTransform = display->getNodeToParentTransform();
+                Mat4 displayTransform = display->getNodeToParentTransform();
                 Vec2 anchorPoint =  display->getAnchorPointInPoints();
                 anchorPoint = PointApplyTransform(anchorPoint, displayTransform);
                 displayTransform.m[12] = anchorPoint.x;
                 displayTransform.m[13] = anchorPoint.y;
-                Matrix t = TransformConcat( bone->getArmature()->getNodeToParentTransform(),displayTransform);
+                Mat4 t = TransformConcat( bone->getArmature()->getNodeToParentTransform(),displayTransform);
                 detector->updateTransform(t);
             }
             while (0);

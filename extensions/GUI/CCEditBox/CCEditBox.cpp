@@ -318,7 +318,7 @@ void EditBox::setAnchorPoint(const Vec2& anchorPoint)
     }
 }
 
-void EditBox::visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
+void EditBox::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
 {
     ControlButton::visit(renderer, parentTransform, parentTransformUpdated);
     if (_editBoxImpl != NULL)

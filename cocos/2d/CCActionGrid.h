@@ -82,31 +82,31 @@ public:
      * @js NA
      * @lua NA
      */
-    Vector3 getVertex(const Vec2& position) const;
+    Vec3 getVertex(const Vec2& position) const;
 
     /** @deprecated Use getVertex() instead 
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE inline Vector3 vertex(const Vec2& position) { return getVertex(position); }
+    CC_DEPRECATED_ATTRIBUTE inline Vec3 vertex(const Vec2& position) { return getVertex(position); }
 
     /** returns the non-transformed vertex than belongs to certain position in the grid 
      * @js NA
      * @lua NA
      */
-    Vector3 getOriginalVertex(const Vec2& position) const;
+    Vec3 getOriginalVertex(const Vec2& position) const;
 
     /** @deprecated Use getOriginalVertex() instead 
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE inline Vector3 originalVertex(const Vec2& position) { return getOriginalVertex(position); }
+    CC_DEPRECATED_ATTRIBUTE inline Vec3 originalVertex(const Vec2& position) { return getOriginalVertex(position); }
 
     /** sets a new vertex to a certain position of the grid 
      * @js NA
      * @lua NA
      */
-    void setVertex(const Vec2& position, const Vector3& vertex);
+    void setVertex(const Vec2& position, const Vec3& vertex);
 
     // Overrides
 	virtual Grid3DAction * clone() const override = 0;

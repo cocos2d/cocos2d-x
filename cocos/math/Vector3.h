@@ -18,15 +18,14 @@
  This file was modified to fit the cocos2d-x project
  */
 
-#ifndef VECTOR3_H_
-#define VECTOR3_H_
+#ifndef MATH_VEC3_H
+#define MATH_VEC3_H
 
-#include "base/CCPlatformMacros.h"
-#include "CCMathBase.h"
+#include "math/CCMathBase.h"
 
 NS_CC_MATH_BEGIN
 
-class Matrix;
+class Mat4;
 class Quaternion;
 
 /**
@@ -260,7 +259,7 @@ public:
     /**
      * Normalizes this vector.
      *
-     * This method normalizes this Vector3 so that it is of
+     * This method normalizes this Vect3 so that it is of
      * unit length (in other words, the length of the vector
      * after calling this method will be 1.0f). If the vector
      * already has unit length or if the length of the vector
@@ -470,10 +469,8 @@ inline const Vec3 operator*(float x, const Vec3& v);
 
 typedef Vec3 Point3;
 
-CC_DEPRECATED_ATTRIBUTE typedef Vec3 Vector3;
-
 NS_CC_MATH_END
 
 #include "Vector3.inl"
 
-#endif
+#endif // MATH_VEC3_H

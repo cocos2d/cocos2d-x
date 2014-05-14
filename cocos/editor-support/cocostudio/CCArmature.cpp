@@ -316,7 +316,7 @@ const cocos2d::Map<std::string, Bone*>& Armature::getBoneDic() const
     return _boneDic;
 }
 
-const Matrix& Armature::getNodeToParentTransform() const
+const Mat4& Armature::getNodeToParentTransform() const
 {
     if (_transformDirty)
         _armatureTransformDirty = true;
@@ -378,7 +378,7 @@ void Armature::update(float dt)
     _armatureTransformDirty = false;
 }
 
-void Armature::draw(cocos2d::Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void Armature::draw(cocos2d::Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     if (_parentBone == nullptr && _batchNode == nullptr)
     {
@@ -445,7 +445,7 @@ void Armature::onExit()
 }
 
 
-void Armature::visit(cocos2d::Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
+void Armature::visit(cocos2d::Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
 {
     // quick return if not visible. children won't be drawn.
     if (!_visible)
@@ -459,7 +459,7 @@ void Armature::visit(cocos2d::Renderer *renderer, const Matrix &parentTransform,
     _transformUpdated = false;
 
     // IMPORTANT:
-    // To ease the migration to v3.0, we still support the Matrix stack,
+    // To ease the migration to v3.0, we still support the Mat4 stack,
     // but it is deprecated and your code should not rely on it
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");

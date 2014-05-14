@@ -157,14 +157,14 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void visit(cocos2d::Renderer *renderer, const cocos2d::Matrix &parentTransform, bool parentTransformUpdated) override;
-    virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Matrix &transform, bool transformUpdated) override;
+    virtual void visit(cocos2d::Renderer *renderer, const cocos2d::Mat4 &parentTransform, bool parentTransformUpdated) override;
+    virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, bool transformUpdated) override;
     virtual void update(float dt) override;
 
     virtual void onEnter() override;
     virtual void onExit() override; 
 
-    virtual const cocos2d::Matrix& getNodeToParentTransform() const override;
+    virtual const cocos2d::Mat4& getNodeToParentTransform() const override;
     /**
      *  @js NA
      *  @lua NA

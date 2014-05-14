@@ -137,7 +137,7 @@ void Box2DTestLayer::createResetButton()
 
 }
 
-void Box2DTestLayer::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void Box2DTestLayer::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     //
     // IMPORTANT:
@@ -168,7 +168,7 @@ void Box2DTestLayer::onDraw()
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     
-    Matrix oldMV;
+    Mat4 oldMV;
     oldMV = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV);
     world->DrawDebugData();

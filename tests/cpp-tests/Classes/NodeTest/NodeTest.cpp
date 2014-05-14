@@ -993,22 +993,22 @@ public:
         sprite->setGLProgramState(shaderState);
         return sprite;
     }
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
-    void onDraw(const Matrix &transform, bool transformUpdated);
+    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+    void onDraw(const Mat4 &transform, bool transformUpdated);
 
 protected:
     CustomCommand _customCommand;
 
 };
 
-void MySprite::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void MySprite::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(MySprite::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_customCommand);
 }
 
-void MySprite::onDraw(const Matrix &transform, bool transformUpdated)
+void MySprite::onDraw(const Mat4 &transform, bool transformUpdated)
 {
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
@@ -1121,12 +1121,12 @@ CameraTest2::CameraTest2()
     _sprite2->setPosition( Vec2(3*s.width/4, s.height/2) );
     _sprite2->setScale(0.5);
 
-    Vector3 eye(150, 0, 200), center(0, 0, 0), up(0, 1, 0);
+    Vec3 eye(150, 0, 200), center(0, 0, 0), up(0, 1, 0);
 
-    Matrix lookupMatrix;
-    Matrix::createLookAt(eye, center, up, &lookupMatrix);
+    Mat4 lookupMatrix;
+    Mat4::createLookAt(eye, center, up, &lookupMatrix);
 
-    Matrix lookupMatrix2 = lookupMatrix;
+    Mat4 lookupMatrix2 = lookupMatrix;
 
     _sprite1->setAdditionalTransform(&lookupMatrix2);
     _sprite2->setAdditionalTransform(&lookupMatrix2);

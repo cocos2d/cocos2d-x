@@ -553,7 +553,7 @@ void ScrollView::onAfterDraw()
     }
 }
 
-void ScrollView::visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
+void ScrollView::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
 {
 	// quick return if not visible
 	if (!isVisible())
@@ -567,7 +567,7 @@ void ScrollView::visit(Renderer *renderer, const Matrix &parentTransform, bool p
     _transformUpdated = false;
 
     // IMPORTANT:
-    // To ease the migration to v3.0, we still support the Matrix stack,
+    // To ease the migration to v3.0, we still support the Mat4 stack,
     // but it is deprecated and your code should not rely on it
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");

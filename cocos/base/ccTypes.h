@@ -212,10 +212,10 @@ struct Quad2
 
 //!    A 3D Quad. 4 * 3 floats
 struct Quad3 {
-    Vector3        bl;
-    Vector3        br;
-    Vector3        tl;
-    Vector3        tr;
+    Vec3        bl;
+    Vec3        br;
+    Vec3        tl;
+    Vec3        tr;
 };
 
 //! a Vec2 with a vertex point, a tex coord point and a color 4B
@@ -244,7 +244,7 @@ struct V2F_C4F_T2F
 struct V3F_C4B_T2F
 {
     //! vertices (3F)
-    Vector3     vertices;            // 12 bytes
+    Vec3     vertices;            // 12 bytes
 
     //! colors (4B)
     Color4B      colors;              // 4 bytes

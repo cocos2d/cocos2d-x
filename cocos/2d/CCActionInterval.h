@@ -370,7 +370,7 @@ public:
     /** creates the action */
     static RotateBy* create(float duration, float deltaAngle);
     static RotateBy* create(float duration, float deltaAngleZ_X, float deltaAngleZ_Y);
-    static RotateBy* create(float duration, const Vector3& deltaAngle3D);
+    static RotateBy* create(float duration, const Vec3& deltaAngle3D);
 
     //
     // Override
@@ -387,7 +387,7 @@ CC_CONSTRUCTOR_ACCESS:
     /** initializes the action */
     bool initWithDuration(float duration, float deltaAngle);
     bool initWithDuration(float duration, float deltaAngleZ_X, float deltaAngleZ_Y);
-    bool initWithDuration(float duration, const Vector3& deltaAngle3D);
+    bool initWithDuration(float duration, const Vec3& deltaAngle3D);
     
 protected:
     float _angleZ_X;
@@ -396,8 +396,8 @@ protected:
     float _startAngleZ_Y;
 
     bool _is3D;
-    Vector3 _angle3D;
-    Vector3 _startAngle3D;
+    Vec3 _angle3D;
+    Vec3 _startAngle3D;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(RotateBy);

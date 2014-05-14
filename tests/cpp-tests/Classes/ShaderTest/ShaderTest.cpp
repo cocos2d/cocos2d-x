@@ -193,14 +193,14 @@ void ShaderNode::setPosition(const Vec2 &newPosition)
     getGLProgramState()->setUniformVec2("center", _center);
 }
 
-void ShaderNode::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void ShaderNode::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(ShaderNode::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_customCommand);
 }
 
-void ShaderNode::onDraw(const Matrix &transform, bool transformUpdated)
+void ShaderNode::onDraw(const Mat4 &transform, bool transformUpdated)
 {
     float w = SIZE_X, h = SIZE_Y;
     GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
@@ -531,7 +531,7 @@ void SpriteBlur::setBlurSize(float f)
     }
     log("_blurRadius:%d",_blurRadius);
 
-    getGLProgramState()->setUniformVec4("gaussianCoefficient", Vector4(_samplingRadius, _scale, _cons, _weightSum));
+    getGLProgramState()->setUniformVec4("gaussianCoefficient", Vec4(_samplingRadius, _scale, _cons, _weightSum));
 }
 
 // ShaderBlur

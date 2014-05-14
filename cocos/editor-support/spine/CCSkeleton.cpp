@@ -125,7 +125,7 @@ void Skeleton::update (float deltaTime) {
 	spSkeleton_update(skeleton, deltaTime * timeScale);
 }
 
-void Skeleton::draw(cocos2d::Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void Skeleton::draw(cocos2d::Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
 
     _customCommand.init(_globalZOrder);
@@ -133,7 +133,7 @@ void Skeleton::draw(cocos2d::Renderer *renderer, const Matrix &transform, bool t
     renderer->addCommand(&_customCommand);
 }
     
-void Skeleton::onDraw(const Matrix &transform, bool transformUpdated)
+void Skeleton::onDraw(const Mat4 &transform, bool transformUpdated)
 {
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);

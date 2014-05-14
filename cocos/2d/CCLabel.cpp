@@ -809,7 +809,7 @@ void Label::setFontScale(float fontScale)
     Node::setScale(_fontScale);
 }
 
-void Label::onDraw(const Matrix& transform, bool transformUpdated)
+void Label::onDraw(const Mat4& transform, bool transformUpdated)
 {
     CC_PROFILER_START("Label - draw");
 
@@ -877,7 +877,7 @@ void Label::drawShadowWithoutBlur()
     setColor(oldColor);
 }
 
-void Label::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void Label::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     // Don't do calculate the culling if the transform was not updated
     _insideBounds = transformUpdated ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
@@ -1049,7 +1049,7 @@ void Label::drawTextSprite(Renderer *renderer, bool parentTransformUpdated)
     _textSprite->visit(renderer, _modelViewTransform, parentTransformUpdated);
 }
 
-void Label::visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
+void Label::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
 {
     if (! _visible || _originalUTF8String.empty())
     {
@@ -1088,7 +1088,7 @@ void Label::visit(Renderer *renderer, const Matrix &parentTransform, bool parent
     _transformUpdated = false;
 
     // IMPORTANT:
-    // To ease the migration to v3.0, we still support the Matrix stack,
+    // To ease the migration to v3.0, we still support the Mat4 stack,
     // but it is deprecated and your code should not rely on it
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");

@@ -76,7 +76,7 @@ void PageTurn3D::update(float time)
         for (int j = 0; j <= _gridSize.height; ++j)
         {
             // Get original vertex
-            Vector3 p = getOriginalVertex(Vec2(i ,j));
+            Vec3 p = getOriginalVertex(Vec2(i ,j));
             
             float R = sqrtf((p.x * p.x) + ((p.y - ay) * (p.y - ay)));
             float r = R * sinTheta;

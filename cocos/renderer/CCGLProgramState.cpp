@@ -148,21 +148,21 @@ void UniformValue::setVec2(const Vec2& value)
     _useCallback = false;
 }
 
-void UniformValue::setVec3(const Vector3& value)
+void UniformValue::setVec3(const Vec3& value)
 {
     CCASSERT (_uniform->type == GL_FLOAT_VEC3, "");
 	memcpy(_value.v3Value, &value, sizeof(_value.v3Value));
 	_useCallback = false;
 }
 
-void UniformValue::setVec4(const Vector4& value)
+void UniformValue::setVec4(const Vec4& value)
 {
     CCASSERT (_uniform->type == GL_FLOAT_VEC4, "");
 	memcpy(_value.v4Value, &value, sizeof(_value.v4Value));
 	_useCallback = false;
 }
 
-void UniformValue::setMat4(const Matrix& value)
+void UniformValue::setMat4(const Mat4& value)
 {
     CCASSERT(_uniform->type == GL_FLOAT_MAT4, "");
 	memcpy(_value.matrixValue, &value, sizeof(_value.matrixValue));
@@ -305,7 +305,7 @@ void GLProgramState::resetGLProgram()
     _textureUnitIndex = 1;
 }
 
-void GLProgramState::apply(const Matrix& modelView)
+void GLProgramState::apply(const Mat4& modelView)
 {
     CCASSERT(_glprogram, "invalid glprogram");
 
@@ -422,7 +422,7 @@ void GLProgramState::setUniformVec2(const std::string &uniformName, const Vec2& 
         CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
 }
 
-void GLProgramState::setUniformVec3(const std::string &uniformName, const Vector3& value)
+void GLProgramState::setUniformVec3(const std::string &uniformName, const Vec3& value)
 {
     auto v = getUniformValue(uniformName);
     if (v)
@@ -431,7 +431,7 @@ void GLProgramState::setUniformVec3(const std::string &uniformName, const Vector
         CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
 }
 
-void GLProgramState::setUniformVec4(const std::string &uniformName, const Vector4& value)
+void GLProgramState::setUniformVec4(const std::string &uniformName, const Vec4& value)
 {
     auto v = getUniformValue(uniformName);
     if (v)
@@ -440,7 +440,7 @@ void GLProgramState::setUniformVec4(const std::string &uniformName, const Vector
         CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
 }
 
-void GLProgramState::setUniformMat4(const std::string &uniformName, const Matrix& value)
+void GLProgramState::setUniformMat4(const std::string &uniformName, const Mat4& value)
 {
     auto v = getUniformValue(uniformName);
     if (v)

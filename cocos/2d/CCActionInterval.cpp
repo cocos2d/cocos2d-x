@@ -859,7 +859,7 @@ RotateBy* RotateBy::create(float duration, float deltaAngleX, float deltaAngleY)
     return rotateBy;
 }
 
-RotateBy* RotateBy::create(float duration, const Vector3& deltaAngle3D)
+RotateBy* RotateBy::create(float duration, const Vec3& deltaAngle3D)
 {
     RotateBy *rotateBy = new RotateBy();
     rotateBy->initWithDuration(duration, deltaAngle3D);
@@ -896,7 +896,7 @@ bool RotateBy::initWithDuration(float duration, float deltaAngleX, float deltaAn
     return false;
 }
 
-bool RotateBy::initWithDuration(float duration, const Vector3& deltaAngle3D)
+bool RotateBy::initWithDuration(float duration, const Vec3& deltaAngle3D)
 {
     if (ActionInterval::initWithDuration(duration))
     {
@@ -942,7 +942,7 @@ void RotateBy::update(float time)
     {
         if(_is3D)
         {
-            Vector3 v;
+            Vec3 v;
             v.x = _startAngle3D.x + _angle3D.x * time;
             v.y = _startAngle3D.y + _angle3D.y * time;
             v.z = _startAngle3D.z + _angle3D.z * time;
@@ -960,7 +960,7 @@ RotateBy* RotateBy::reverse() const
 {
     if(_is3D)
     {
-        Vector3 v;
+        Vec3 v;
         v.x = - _angle3D.x;
         v.y = - _angle3D.y;
         v.z = - _angle3D.z;

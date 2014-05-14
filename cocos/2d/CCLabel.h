@@ -237,8 +237,8 @@ public:
 
     virtual Rect getBoundingBox() const override;
 
-    virtual void visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated) override;
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
+    virtual void visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
 
     CC_DEPRECATED_ATTRIBUTE static Label* create(const std::string& text, const std::string& font, float fontSize,
         const Size& dimensions = Size::ZERO, TextHAlignment hAlignment = TextHAlignment::LEFT,
@@ -248,7 +248,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE const FontDefinition& getFontDefinition() const { return _fontDefinition; }
 
 protected:
-    void onDraw(const Matrix& transform, bool transformUpdated);
+    void onDraw(const Mat4& transform, bool transformUpdated);
 
     struct LetterInfo
     {
@@ -363,7 +363,7 @@ protected:
     bool    _shadowEnabled;
     Size    _shadowOffset;
     int     _shadowBlurRadius;
-    Matrix  _shadowTransform;
+    Mat4  _shadowTransform;
     Color3B _shadowColor;
     float   _shadowOpacity;
     Sprite*   _shadowNode;

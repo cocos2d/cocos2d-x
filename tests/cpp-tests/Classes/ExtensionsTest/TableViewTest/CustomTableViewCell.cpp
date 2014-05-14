@@ -2,7 +2,7 @@
 
 USING_NS_CC;
 
-void CustomTableViewCell::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void CustomTableViewCell::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
 	TableViewCell::draw(renderer, transform, transformUpdated);
 	// draw bounding box

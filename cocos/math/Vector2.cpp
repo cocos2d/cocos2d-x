@@ -18,9 +18,9 @@
  This file was modified to fit the cocos2d-x project
  */
 
-#include "Vector2.h"
+#include "math/Vector2.h"
+#include "math/MathUtil.h"
 #include "base/ccMacros.h"
-#include "MathUtil.h"
 
 NS_CC_MATH_BEGIN
 

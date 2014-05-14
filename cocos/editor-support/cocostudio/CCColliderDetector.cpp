@@ -334,7 +334,7 @@ ColliderFilter *ColliderDetector::getColliderFilter()
 
 Vec2 helpPoint;
 
-void ColliderDetector::updateTransform(Matrix &t)
+void ColliderDetector::updateTransform(Mat4 &t)
 {
     if (!_active)
     {

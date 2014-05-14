@@ -207,7 +207,7 @@ Rect LabelBMFont::getBoundingBox() const
     return _label->getBoundingBox();
 }
 #if CC_LABELBMFONT_DEBUG_DRAW
-void LabelBMFont::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void LabelBMFont::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     Node::draw(renderer, transform, transformUpdated);
 
@@ -216,7 +216,7 @@ void LabelBMFont::draw(Renderer *renderer, const Matrix &transform, bool transfo
     renderer->addCommand(&_customDebugDrawCommand);
 }
 
-void LabelBMFont::drawDebugData(const Matrix& transform, bool transformUpdated)
+void LabelBMFont::drawDebugData(const Mat4& transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);

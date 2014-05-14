@@ -94,18 +94,18 @@ enum class MATRIX_STACK_TYPE
 class CC_DLL Director : public Ref
 {
 private:
-    std::stack<Matrix> _modelViewMatrixStack;
-    std::stack<Matrix> _projectionMatrixStack;
-    std::stack<Matrix> _textureMatrixStack;
+    std::stack<Mat4> _modelViewMatrixStack;
+    std::stack<Mat4> _projectionMatrixStack;
+    std::stack<Mat4> _textureMatrixStack;
 protected:
     void initMatrixStack();
 public:
     void pushMatrix(MATRIX_STACK_TYPE type);
     void popMatrix(MATRIX_STACK_TYPE type);
     void loadIdentityMatrix(MATRIX_STACK_TYPE type);
-    void loadMatrix(MATRIX_STACK_TYPE type, const Matrix& mat);
-    void multiplyMatrix(MATRIX_STACK_TYPE type, const Matrix& mat);
-    Matrix getMatrix(MATRIX_STACK_TYPE type);
+    void loadMatrix(MATRIX_STACK_TYPE type, const Mat4& mat);
+    void multiplyMatrix(MATRIX_STACK_TYPE type, const Mat4& mat);
+    Mat4 getMatrix(MATRIX_STACK_TYPE type);
     void resetMatrixStack();
 public:
     static const char *EVENT_PROJECTION_CHANGED;
@@ -527,6 +527,7 @@ public:
     DisplayLinkDirector() 
         : _invalid(false)
     {}
+    virtual ~DisplayLinkDirector(){}
 
     //
     // Overrides

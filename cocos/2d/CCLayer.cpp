@@ -584,7 +584,7 @@ void LayerColor::updateColor()
     }
 }
 
-void LayerColor::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void LayerColor::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(LayerColor::onDraw, this, transform, transformUpdated);
@@ -592,15 +592,15 @@ void LayerColor::draw(Renderer *renderer, const Matrix &transform, bool transfor
     
     for(int i = 0; i < 4; ++i)
     {
-        Vector4 pos;
+        Vec4 pos;
         pos.x = _squareVertices[i].x; pos.y = _squareVertices[i].y; pos.z = _positionZ;
         pos.w = 1;
         _modelViewTransform.transformVector(&pos);
-        _noMVPVertices[i] = Vector3(pos.x,pos.y,pos.z)/pos.w;
+        _noMVPVertices[i] = Vec3(pos.x,pos.y,pos.z)/pos.w;
     }
 }
 
-void LayerColor::onDraw(const Matrix& transform, bool transformUpdated)
+void LayerColor::onDraw(const Mat4& transform, bool transformUpdated)
 {
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
@@ -610,7 +610,7 @@ void LayerColor::onDraw(const Matrix& transform, bool transformUpdated)
     // Attributes
     //
 #ifdef EMSCRIPTEN
-    setGLBufferData(_noMVPVertices, 4 * sizeof(Vector3), 0);
+    setGLBufferData(_noMVPVertices, 4 * sizeof(Vec3), 0);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
     setGLBufferData(_squareColors, 4 * sizeof(Color4F), 1);

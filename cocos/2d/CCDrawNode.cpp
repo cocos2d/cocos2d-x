@@ -205,14 +205,14 @@ bool DrawNode::init()
     return true;
 }
 
-void DrawNode::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void DrawNode::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(DrawNode::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_customCommand);
 }
 
-void DrawNode::onDraw(const Matrix &transform, bool transformUpdated)
+void DrawNode::onDraw(const Mat4 &transform, bool transformUpdated)
 {
     auto glProgram = getGLProgram();
     glProgram->use();

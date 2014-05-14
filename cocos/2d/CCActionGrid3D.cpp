@@ -79,7 +79,7 @@ void Waves3D::update(float time)
     {
         for (j = 0; j < _gridSize.height + 1; ++j)
         {
-            Vector3 v = getOriginalVertex(Vec2(i ,j));
+            Vec3 v = getOriginalVertex(Vec2(i ,j));
             v.z += (sinf((float)M_PI * time * _waves * 2 + (v.y+v.x) * 0.01f) * _amplitude * _amplitudeRate);
             //CCLOG("v.z offset is %f\n", (sinf((float)M_PI * time * _waves * 2 + (v.y+v.x) * .01f) * _amplitude * _amplitudeRate));
             setVertex(Vec2(i, j), v);
@@ -142,7 +142,7 @@ void FlipX3D::update(float time)
     angle = angle / 2.0f; // x calculates degrees from 0 to 90
     float mx = cosf(angle);
 
-    Vector3 v0, v1, v, diff;
+    Vec3 v0, v1, v, diff;
 
     v0 = getOriginalVertex(Vec2(1, 1));
     v1 = getOriginalVertex(Vec2(0, 0));
@@ -236,7 +236,7 @@ void FlipY3D::update(float time)
     angle = angle / 2.0f;     // x calculates degrees from 0 to 90
     float my = cosf(angle);
     
-    Vector3    v0, v1, v, diff;
+    Vec3    v0, v1, v, diff;
     
     v0 = getOriginalVertex(Vec2(1, 1));
     v1 = getOriginalVertex(Vec2(0, 0));
@@ -361,7 +361,7 @@ void Lens3D::update(float time)
         {
             for (j = 0; j < _gridSize.height + 1; ++j)
             {
-                Vector3 v = getOriginalVertex(Vec2(i, j));
+                Vec3 v = getOriginalVertex(Vec2(i, j));
                 Vec2 vect = _position - Vec2(v.x, v.y);
                 float r = vect.getLength();
                 
@@ -453,7 +453,7 @@ void Ripple3D::update(float time)
     {
         for (j = 0; j < (_gridSize.height+1); ++j)
         {
-            Vector3 v = getOriginalVertex(Vec2(i, j));
+            Vec3 v = getOriginalVertex(Vec2(i, j));
             Vec2 vect = _position - Vec2(v.x,v.y);
             float r = vect.getLength();
             
@@ -521,7 +521,7 @@ void Shaky3D::update(float time)
     {
         for (j = 0; j < (_gridSize.height+1); ++j)
         {
-            Vector3 v = getOriginalVertex(Vec2(i ,j));
+            Vec3 v = getOriginalVertex(Vec2(i ,j));
             v.x += (rand() % (_randrange*2)) - _randrange;
             v.y += (rand() % (_randrange*2)) - _randrange;
             if (_shakeZ)
@@ -586,7 +586,7 @@ void Liquid::update(float time)
     {
         for (j = 1; j < _gridSize.height; ++j)
         {
-            Vector3 v = getOriginalVertex(Vec2(i, j));
+            Vec3 v = getOriginalVertex(Vec2(i, j));
             v.x = (v.x + (sinf(time * (float)M_PI * _waves * 2 + v.x * .01f) * _amplitude * _amplitudeRate));
             v.y = (v.y + (sinf(time * (float)M_PI * _waves * 2 + v.y * .01f) * _amplitude * _amplitudeRate));
             setVertex(Vec2(i, j), v);
@@ -648,7 +648,7 @@ void Waves::update(float time)
     {
         for (j = 0; j < _gridSize.height + 1; ++j)
         {
-            Vector3 v = getOriginalVertex(Vec2(i, j));
+            Vec3 v = getOriginalVertex(Vec2(i, j));
 
             if (_vertical)
             {
@@ -724,7 +724,7 @@ void Twirl::update(float time)
     {
         for (j = 0; j < (_gridSize.height+1); ++j)
         {
-            Vector3 v = getOriginalVertex(Vec2(i ,j));
+            Vec3 v = getOriginalVertex(Vec2(i ,j));
             
             Vec2    avg = Vec2(i-(_gridSize.width/2.0f), j-(_gridSize.height/2.0f));
             float r = avg.getLength();

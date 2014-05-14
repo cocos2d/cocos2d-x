@@ -48,9 +48,9 @@ Vec2 __CCPointApplyAffineTransform(const Vec2& point, const AffineTransform& t)
   return p;
 }
 
-Vec2 PointApplyTransform(const Vec2& point, const Matrix& transform)
+Vec2 PointApplyTransform(const Vec2& point, const Mat4& transform)
 {
-    Vector3 vec(point.x, point.y, 0);
+    Vec3 vec(point.x, point.y, 0);
     transform.transformPoint(&vec);
     return Vec2(vec.x, vec.y);
 }
@@ -93,17 +93,17 @@ Rect RectApplyAffineTransform(const Rect& rect, const AffineTransform& anAffineT
     return Rect(minX, minY, (maxX - minX), (maxY - minY));
 }
 
-Rect RectApplyTransform(const Rect& rect, const Matrix& transform)
+Rect RectApplyTransform(const Rect& rect, const Mat4& transform)
 {
     float top    = rect.getMinY();
     float left   = rect.getMinX();
     float right  = rect.getMaxX();
     float bottom = rect.getMaxY();
     
-    Vector3 topLeft(left, top, 0);
-    Vector3 topRight(right, top, 0);
-    Vector3 bottomLeft(left, bottom, 0);
-    Vector3 bottomRight(right, bottom, 0);
+    Vec3 topLeft(left, top, 0);
+    Vec3 topRight(right, top, 0);
+    Vec3 bottomLeft(left, bottom, 0);
+    Vec3 bottomRight(right, bottom, 0);
     transform.transformPoint(&topLeft);
     transform.transformPoint(&topRight);
     transform.transformPoint(&bottomLeft);
@@ -151,7 +151,7 @@ AffineTransform AffineTransformConcat(const AffineTransform& t1, const AffineTra
                                     t1.tx * t2.b + t1.ty * t2.d + t2.ty);                  //ty
 }
 
-Matrix TransformConcat(const Matrix& t1, const Matrix& t2)
+Mat4 TransformConcat(const Mat4& t1, const Mat4& t2)
 {
     return t1 * t2;
 }
