@@ -32,9 +32,10 @@ NS_CC_BEGIN
 namespace ui {
 
 /**
-*   @js NA
-*   @lua NA
-*/
+ *  For creating a system font or a TTF font Text
+ *@js 
+ *@lua NA
+ */
 class Text : public Widget
 {
     
