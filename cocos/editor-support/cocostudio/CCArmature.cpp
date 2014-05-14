@@ -329,25 +329,25 @@ void Armature::updateOffsetPoint()
     // Set contentsize and Calculate anchor point.
     Rect rect = getBoundingBox();
     setContentSize(rect.size);
-    _offsetPoint = Vector2(-rect.origin.x,  -rect.origin.y);
+    _offsetPoint = Vec2(-rect.origin.x,  -rect.origin.y);
     if (rect.size.width != 0 && rect.size.height != 0)
     {
-        setAnchorPoint(Vector2(_offsetPoint.x / rect.size.width, _offsetPoint.y / rect.size.height));
+        setAnchorPoint(Vec2(_offsetPoint.x / rect.size.width, _offsetPoint.y / rect.size.height));
     }
 }
 
-void Armature::setAnchorPoint(const Vector2& point)
+void Armature::setAnchorPoint(const Vec2& point)
 {
     if( ! point.equals(_anchorPoint))
     {
         _anchorPoint = point;
-        _anchorPointInPoints = Vector2(_contentSize.width * _anchorPoint.x - _offsetPoint.x, _contentSize.height * _anchorPoint.y - _offsetPoint.y);
-        _realAnchorPointInPoints = Vector2(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y);
+        _anchorPointInPoints = Vec2(_contentSize.width * _anchorPoint.x - _offsetPoint.x, _contentSize.height * _anchorPoint.y - _offsetPoint.y);
+        _realAnchorPointInPoints = Vec2(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y);
         _transformDirty = _inverseDirty = true;
     }
 }
 
-const Vector2& Armature::getAnchorPointInPoints() const
+const Vec2& Armature::getAnchorPointInPoints() const
 {
     return _realAnchorPointInPoints;
 }
@@ -573,13 +573,13 @@ void CCArmature::drawContour()
         for (auto& object : bodyList)
         {
             ColliderBody *body = static_cast<ColliderBody*>(object);
-            const std::vector<Vector2> &vertexList = body->getCalculatedVertexList();
+            const std::vector<Vec2> &vertexList = body->getCalculatedVertexList();
 
             unsigned long length = vertexList.size();
-            Vector2 *points = new Vector2[length];
+            Vec2 *points = new Vec2[length];
             for (unsigned long i = 0; i<length; i++)
             {
-                Vector2 p = vertexList.at(i);
+                Vec2 p = vertexList.at(i);
                 points[i].x = p.x;
                 points[i].y = p.y;
             }

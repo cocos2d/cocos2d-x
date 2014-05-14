@@ -32,8 +32,8 @@ namespace cocostudio {
 AffineTransform TransformHelp::helpMatrix1;
 AffineTransform TransformHelp::helpMatrix2;
 
-Vector2 TransformHelp::helpPoint1;
-Vector2 TransformHelp::helpPoint2;
+Vec2 TransformHelp::helpPoint1;
+Vec2 TransformHelp::helpPoint2;
 
 BaseData helpParentNode;
 

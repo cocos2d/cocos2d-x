@@ -114,7 +114,7 @@ void DisplayFactory::updateDisplay(Bone *bone, float dt, bool dirty)
 #endif
 
                 Matrix displayTransform = display->getNodeToParentTransform();
-                Vector2 anchorPoint =  display->getAnchorPointInPoints();
+                Vec2 anchorPoint =  display->getAnchorPointInPoints();
                 anchorPoint = PointApplyTransform(anchorPoint, displayTransform);
                 displayTransform.m[12] = anchorPoint.x;
                 displayTransform.m[13] = anchorPoint.y;
@@ -202,7 +202,7 @@ void DisplayFactory::initSpriteDisplay(Bone *bone, DecorativeDisplay *decoDispla
     if(textureData)
     {
         //! Init display anchorPoint, every Texture have a anchor point
-        skin->setAnchorPoint(Vector2( textureData->pivotX, textureData->pivotY));
+        skin->setAnchorPoint(Vec2( textureData->pivotX, textureData->pivotY));
     }
 
 

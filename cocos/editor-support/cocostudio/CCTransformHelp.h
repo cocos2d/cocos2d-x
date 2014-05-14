@@ -57,8 +57,8 @@ public:
     static cocos2d::AffineTransform helpMatrix1;
     static cocos2d::AffineTransform helpMatrix2;
 
-    static cocos2d::Vector2 helpPoint1;
-    static cocos2d::Vector2 helpPoint2;
+    static cocos2d::Vec2 helpPoint1;
+    static cocos2d::Vec2 helpPoint2;
 };
 
 }
