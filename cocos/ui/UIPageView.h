@@ -134,7 +134,7 @@ public:
     
     // event
     CC_DEPRECATED_ATTRIBUTE void addEventListenerPageView(Ref *target, SEL_PageViewEvent selector);
-    void addEventListener(ccPageViewCallback callback);
+    void addEventListener(const ccPageViewCallback& callback);
     
 
     

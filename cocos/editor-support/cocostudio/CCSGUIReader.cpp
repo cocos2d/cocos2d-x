@@ -632,7 +632,7 @@ void WidgetPropertiesReader0250::setPropsForLabelFromJsonDictionary(Widget*widge
     bool touchScaleChangeAble = DICTOOL->getBooleanValue_json(options, "touchScaleEnable");
     label->setTouchScaleChangeEnabled(touchScaleChangeAble);
     const char* text = DICTOOL->getStringValue_json(options, "text");
-    label->setText(text);
+    label->setString(text);
     bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
     if (fs)
     {
@@ -912,7 +912,7 @@ void WidgetPropertiesReader0250::setPropsForLoadingBarFromJsonDictionary(Widget 
     {
         loadingBar->loadTexture(imageFileName_tp);
     }
-    loadingBar->setBarDirection(LoadingBar::Direction(DICTOOL->getIntValue_json(options, "direction")));
+    loadingBar->setDirection(LoadingBar::Direction(DICTOOL->getIntValue_json(options, "direction")));
     loadingBar->setPercent(DICTOOL->getIntValue_json(options, "percent"));
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
@@ -932,7 +932,7 @@ void WidgetPropertiesReader0250::setPropsForLabelBMFontFromJsonDictionary(Widget
     labelBMFont->setFntFile(cmf_tp);
     
     const char* text = DICTOOL->getStringValue_json(options, "text");
-    labelBMFont->setText(text);
+    labelBMFont->setString(text);
     
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
@@ -1571,7 +1571,7 @@ void WidgetPropertiesReader0300::setPropsForLabelFromJsonDictionary(Widget*widge
     bool touchScaleChangeAble = DICTOOL->getBooleanValue_json(options, "touchScaleEnable");
     label->setTouchScaleChangeEnabled(touchScaleChangeAble);
     const char* text = DICTOOL->getStringValue_json(options, "text");
-    label->setText(text);
+    label->setString(text);
     bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
     if (fs)
     {
@@ -1989,7 +1989,7 @@ void WidgetPropertiesReader0300::setPropsForLoadingBarFromJsonDictionary(Widget 
     }
     /**/
     
-    loadingBar->setBarDirection(LoadingBar::Direction(DICTOOL->getIntValue_json(options, "direction")));
+    loadingBar->setDirection(LoadingBar::Direction(DICTOOL->getIntValue_json(options, "direction")));
     loadingBar->setPercent(DICTOOL->getIntValue_json(options, "percent"));
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
@@ -2020,7 +2020,7 @@ void WidgetPropertiesReader0300::setPropsForLabelBMFontFromJsonDictionary(Widget
     }
     
     const char* text = DICTOOL->getStringValue_json(options, "text");
-    labelBMFont->setText(text);
+    labelBMFont->setString(text);
     
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }

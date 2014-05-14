@@ -174,7 +174,7 @@ public:
 
     //add a call back function would called when checkbox is selected or unselected.
     CC_DEPRECATED_ATTRIBUTE void addEventListenerCheckBox(Ref* target,SEL_SelectedStateEvent selector);
-    void addEventListener(ccCheckBoxCallback callback);
+    void addEventListener(const ccCheckBoxCallback& callback);
 
     //override "onTouchEnded" method of widget.
     virtual void onTouchEnded(Touch *touch, Event *unusedEvent);

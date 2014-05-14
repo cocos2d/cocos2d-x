@@ -186,7 +186,8 @@ void Sprite3D::genGLProgramState()
     for (int i = 0; i < _mesh->getMeshPartCount(); i++)
     {
         
-        auto programstate = GLProgramState::getOrCreate(getDefGLProgram(_mesh->hasVertexAttrib(i)));
+        auto programstate = GLProgramState::getOrCreateWithGLProgram(getDefGLProgram(_mesh->hasVertexAttrib(i)));
+
         _programState.pushBack(programstate);
         
         int offset = 0;

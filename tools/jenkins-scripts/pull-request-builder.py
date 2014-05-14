@@ -29,11 +29,15 @@ def set_description(desc, url):
     except:
         traceback.print_exc()
 
-def check_current_3rd_libs():
+def check_current_3rd_libs(branch):
     #get current_libs config
     backup_files = range(2)
     current_files = range(2)
     config_file_paths = ['external/config.json','templates/lua-template-runtime/runtime/config.json']
+    if (branch == 'v2'):
+        config_file_paths = ['external/config.json']
+        backup_files = range(1)
+        current_files = range(1)
     for i, config_file_path in enumerate(config_file_paths):
         if not os.path.isfile(config_file_path):
             raise Exception("Could not find 'external/config.json'")
@@ -133,7 +137,7 @@ def main():
         return(2)
 
     #copy check_current_3rd_libs
-    check_current_3rd_libs()
+    check_current_3rd_libs(branch)
 
     # Generate binding glue codes
     if(branch == 'v3'):

@@ -577,7 +577,7 @@ void PageView::addEventListenerPageView(Ref *target, SEL_PageViewEvent selector)
     _pageViewEventSelector = selector;
 }
     
-void PageView::addEventListener(ccPageViewCallback callback)
+void PageView::addEventListener(const ccPageViewCallback& callback)
 {
     _eventCallback = callback;
 }
