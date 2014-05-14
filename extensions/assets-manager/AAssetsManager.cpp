@@ -106,6 +106,8 @@ AAssetsManager::AAssetsManager(const std::string& manifestUrl, const std::string
         prependSearchPath(s_nWritableRoot);
     }
     
+    _eventDispatcher = Director::getInstance()->getEventDispatcher();
+    
     _downloader = new Downloader(this);
     setStoragePath(storagePath);
     loadManifest();
@@ -113,6 +115,12 @@ AAssetsManager::AAssetsManager(const std::string& manifestUrl, const std::string
 
 AAssetsManager::~AAssetsManager()
 {
+}
+
+std::string getLoadedEventName(const std::string& key)
+{
+    std::string eventName = "AM_" + key + "_Loaded";
+    return eventName;
 }
 
 const std::string& AAssetsManager::getStoragePath() const
@@ -330,20 +338,37 @@ Asset AAssetsManager::parseAsset(const rapidjson::Value& json) {
     return asset;
 }
 
+bool AAssetsManager::checkUpdate()
+{
+    if (_remoteVersionUrl.size() > 0)
+    {
+        // Download version file
+        _downloader->download(_remoteVersionUrl, _storagePath);
+    }
+    return true;
+}
+
 
 void AAssetsManager::onError(const Downloader::Error &error)
 {
     CCLOG("%d : %s\n", error.code, error.message.c_str());
 }
 
-void AAssetsManager::onProgress(int percent)
+void AAssetsManager::onProgress(double total, double downloaded, const std::string &url, const std::string &customId)
 {
+    int percent = (downloaded / total) * 100;
     CCLOG("Progress: %d\n", percent);
 }
 
-void AAssetsManager::onSuccess(const std::string &filename, const std::string &srcUrl)
+void AAssetsManager::onSuccess(const std::string &srcUrl, const std::string &customId, const std::string &filename)
 {
     CCLOG("SUCCEED: %s\n", filename.c_str());
+    
+    std::string eventName = getLoadedEventName(customId);
+    EventCustom event(eventName);
+    std::string cid = customId;
+    event.setUserData(&cid);
+    _eventDispatcher->dispatchEvent(&event);
     
     std::string content;
     FileUtils* fileUtils = FileUtils::getInstance();

@@ -91,13 +91,17 @@ public:
      *        You may use this method before updating, then let user determine whether
      *        he wants to update resources.
      */
-    //virtual bool checkUpdate();
+    virtual bool checkUpdate();
     
     //virtual void update();
     
     /* @brief Gets url of a asset for the given key.
      */
     const std::string& get(const std::string& key) const;
+    
+    /* @brief Gets loaded event name for the resource of the given key
+     */
+    std::string getLoadedEventName(const std::string& key);
     
     /* @brief Gets storage path.
      */
@@ -178,13 +182,13 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void onProgress(int percent);
+    virtual void onProgress(double total, double downloaded, const std::string &url, const std::string &customId);
     
     /** @brief Call back function for success
      * @js NA
      * @lua NA
      */
-    virtual void onSuccess(const std::string &filename, const std::string &srcUrl);
+    virtual void onSuccess(const std::string &srcUrl, const std::string &customId, const std::string &filename);
     
 protected:
     void loadManifest();
@@ -206,6 +210,8 @@ private:
     void destroyStoragePath();
     
 private:
+    
+    EventDispatcher *_eventDispatcher;
     
     //! The path to store downloaded resources.
     std::string _storagePath;
