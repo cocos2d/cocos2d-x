@@ -80,10 +80,6 @@ public:
     //build vertex buffer from renderdata
     void restore();
     
-    
-    //get attribute flag
-    int getAttribFlag() const { return 0; }
-    
     //get mesh vertex attribute count
     int getMeshVertexAttribCount() const { return _renderdata._vertexAttribs.size(); }
     
@@ -95,9 +91,6 @@ public:
     
     //get per vertex size in bytes
     int getVertexSizeInBytes() const { return _renderdata.vertexsizeBytes; }
-    
-    bool generateNormals();
-
 
 protected:
     Mesh();

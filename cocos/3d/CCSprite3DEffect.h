@@ -4,20 +4,18 @@
 
 #include <vector>
 
-#include "ccTypes.h"
-#include "CCNode.h"
-#include "MeshMaterial.h"
-#include "CCMath.h"
+#include "base/ccTypes.h"
+#include "2d/CCNode.h"
+#include "math/CCMath.h"
 
 
 NS_CC_BEGIN
 
-class GLProgram;
-class VertexDeclaration;
+class GLProgramState;
 class Mesh;
 class Sprite3D;
 
-class Sprite3DEffect : public MeshMaterial
+class Sprite3DEffect: public Ref
 {
 public:
     enum EffectType
@@ -29,10 +27,14 @@ public:
     
     virtual bool init(Sprite3D* sprite) = 0;
     
-protected:
-    Sprite3DEffect(){}
-    virtual ~Sprite3DEffect(){}
+    virtual void drawSpriteEffect(const Matrix &transform) = 0;
     
+protected:
+    Sprite3DEffect();
+    virtual ~Sprite3DEffect();
+    
+    GLProgramState* _glProgramState;
+    Sprite3D*         _sprite;
 };
 
 class Sprite3DOutlineEffect: public Sprite3DEffect
@@ -42,23 +44,19 @@ public:
     
     virtual bool init(Sprite3D* sprite);
     
-    virtual void bind();
-    
-    virtual void unbind();
-    
-    void setOutlineColor(const math::Vector3& color);
+    void setOutlineColor(const Vector3& color);
     
     void setOutlineWidth(float width);
     
+    virtual void drawSpriteEffect(const Matrix &transform);
     
 protected:
     
     Sprite3DOutlineEffect();
     virtual ~Sprite3DOutlineEffect();
-    
-    math::Vector3 _outlineColor;
+
+    Vector3 _outlineColor;
     float _outlineWidth;
-    
 };
 
 NS_CC_END

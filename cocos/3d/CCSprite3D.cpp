@@ -2,6 +2,7 @@
 #include "CCSprite3D.h"
 #include "CCMeshCache.h"
 #include "CCMesh.h"
+#include "CCSprite3DEffect.h"
 
 #include "CCObjLoader.h"
 #include "2d/platform/CCFileUtils.h"
@@ -19,7 +20,7 @@
 
 NS_CC_BEGIN
 
-static std::string s_attributeNames[] = {GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::ATTRIBUTE_NAME_NORMAL};
+std::string s_attributeNames[] = {GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::ATTRIBUTE_NAME_NORMAL};
 
 std::map<std::string, std::vector<std::string> > __cachedSpriteTexNames;
 
@@ -127,6 +128,7 @@ bool Sprite3D::loadFromObj(const std::string& path)
 Sprite3D::Sprite3D()
 : _partcount(0)
 , _mesh(nullptr)
+, _effect(nullptr)
 , _blend(BlendFunc::DISABLE)
 {
 }
@@ -134,6 +136,7 @@ Sprite3D::Sprite3D()
 Sprite3D::~Sprite3D()
 {
     CC_SAFE_RELEASE_NULL(_mesh);
+    CC_SAFE_RELEASE_NULL(_effect);
 }
 
 bool Sprite3D::initWithFile(const std::string &path)
@@ -229,14 +232,14 @@ void Sprite3D::setTexture(const std::string& texFile)
     else
         _textures.replace(0, tex);
 }
-//
-//void Sprite3D::setEffect(Sprite3DEffect* effect)
-//{
-//    CC_SAFE_RETAIN(effect);
-//    CC_SAFE_RELEASE_NULL(_effect);
-//    _effect = effect;
-//    _effect->init(this);
-//}
+
+void Sprite3D::setEffect(Sprite3DEffect* effect)
+{
+    CC_SAFE_RETAIN(effect);
+    CC_SAFE_RELEASE_NULL(_effect);
+    _effect = effect;
+    _effect->init(this);
+}
 
 void Sprite3D::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
@@ -275,6 +278,9 @@ void Sprite3D::onDraw(const Matrix &transform, bool transformUpdated)
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshPart->getIndexBuffer());
             glDrawElements(meshPart->getPrimitiveType(), meshPart->getIndexCount(), meshPart->getIndexFormat(), 0);
         }
+        
+        if (_effect)
+            _effect->drawSpriteEffect(transform);
     }
     
 //    if (_partMaterials && _mesh)
