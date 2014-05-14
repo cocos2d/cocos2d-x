@@ -500,8 +500,30 @@ public:
 //     */
 //    virtual const Size& getContentSize() const;
     virtual const Size& getVirtualRendererSize() const;
-    
-    
+
+    /**
+     * Sets a LayoutParameter to widget.
+     *
+     * @see LayoutParameter
+     *
+     * @param LayoutParameter pointer
+     *
+     * @param type  Relative or Linear
+     */
+    virtual void setLayoutParameter(LayoutParameter* parameter);
+
+    /**
+     * Gets LayoutParameter of widget.
+     *
+     * @see LayoutParameter
+     *
+     * @param type  Relative or Linear
+     *
+     * @return LayoutParameter
+     */
+    virtual LayoutParameter* getLayoutParameter(LayoutParameter::Type type);
+
+
 
     /**
      * Returns the "class name" of widget.
@@ -667,6 +689,7 @@ protected:
      */
     static Widget *_focusedWidget;  //both layout & widget will be stored in this variable
     static Widget *_realFocusedWidget; //only the widget class will be stored in this variable
+    Map<int, LayoutParameter*> _layoutParameterDictionary;
 public:
     /**
      * no matter what widget object you call this method on , it will return you the exact one focused widget

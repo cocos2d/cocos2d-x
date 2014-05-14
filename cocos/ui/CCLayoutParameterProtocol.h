@@ -320,7 +320,7 @@ namespace ui {
          *
          * @param type  Relative or Linear
          */
-        void setLayoutParameter(LayoutParameter* parameter);
+        virtual void setLayoutParameter(LayoutParameter* parameter) = 0;
         
         /**
          * Gets LayoutParameter of widget.
@@ -331,12 +331,7 @@ namespace ui {
          *
          * @return LayoutParameter
          */
-        LayoutParameter* getLayoutParameter(LayoutParameter::Type type);
-        
-        virtual Map<int, LayoutParameter*>& getLayoutParameters() { return _layoutParameterDictionary; }
-        virtual const Map<int, LayoutParameter*>& getLayoutParameters() const { return _layoutParameterDictionary; }
-    protected:
-        Map<int, LayoutParameter*> _layoutParameterDictionary;
+        virtual LayoutParameter* getLayoutParameter(LayoutParameter::Type type) = 0;
     };
 }
 NS_CC_END

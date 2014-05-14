@@ -209,19 +209,5 @@ LayoutParameterProtocol::~LayoutParameterProtocol()
     
 }
     
-void LayoutParameterProtocol::setLayoutParameter(LayoutParameter *parameter)
-{
-    if (!parameter)
-    {
-        return;
-    }
-    _layoutParameterDictionary.insert((int)parameter->getLayoutType(), parameter);
-}
-
-LayoutParameter* LayoutParameterProtocol::getLayoutParameter(LayoutParameter::Type type)
-{
-    return dynamic_cast<LayoutParameter*>(_layoutParameterDictionary.at((int)type));
-}
-    
 }
 NS_CC_END

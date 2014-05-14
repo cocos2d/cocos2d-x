@@ -1086,7 +1086,20 @@ Widget* Widget::getCurrentFocusedWidget(bool isWidget)
     return _focusedWidget;
 }
 
+    
+void Widget::setLayoutParameter(LayoutParameter *parameter)
+{
+    if (!parameter)
+    {
+        return;
+    }
+    _layoutParameterDictionary.insert((int)parameter->getLayoutType(), parameter);
+}
 
+LayoutParameter* Widget::getLayoutParameter(LayoutParameter::Type type)
+{
+    return dynamic_cast<LayoutParameter*>(_layoutParameterDictionary.at((int)type));
+}
 
 }
 
