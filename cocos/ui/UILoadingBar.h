@@ -82,7 +82,7 @@ public:
      *
      * @return Direction
      */
-    Direction getDirection();
+    Direction getDirection()const;
     
     /**
      * Load texture for loadingbar.

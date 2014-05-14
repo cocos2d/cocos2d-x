@@ -116,7 +116,7 @@ void LoadingBar::setDirection(cocos2d::ui::LoadingBar::Direction direction)
 
 }
 
-LoadingBar::Direction LoadingBar::getDirection()
+LoadingBar::Direction LoadingBar::getDirection()const
 {
     return _direction;
 }
