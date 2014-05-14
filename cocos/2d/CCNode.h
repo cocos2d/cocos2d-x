@@ -273,37 +273,37 @@ public:
     /**
      * Sets the position (x,y) of the node in its parent's coordinate system.
      *
-     * Usually we use `Vector2(x,y)` to compose Vector2 object.
+     * Usually we use `Vec2(x,y)` to compose Vec2 object.
      * This code snippet sets the node in the center of screen.
      @code
      Size size = Director::getInstance()->getWinSize();
-     node->setPosition( Vector2(size.width/2, size.height/2) )
+     node->setPosition( Vec2(size.width/2, size.height/2) )
      @endcode
      *
      * @param position  The position (x,y) of the node in OpenGL coordinates
      */
-    virtual void setPosition(const Vector2 &position);
+    virtual void setPosition(const Vec2 &position);
     /**
      * Gets the position (x,y) of the node in its parent's coordinate system.
      *
-     * @see setPosition(const Vector2&)
+     * @see setPosition(const Vec2&)
      *
      * @return The position (x,y) of the node in OpenGL coordinates
      * @code
      * In js and lua return value is table which contains x,y
      * @endcode
      */
-    virtual const Vector2& getPosition() const;
+    virtual const Vec2& getPosition() const;
     /**
      * Sets the position (x,y) of the node in its parent's coordinate system.
      *
-     * Passing two numbers (x,y) is much efficient than passing Vector2 object.
+     * Passing two numbers (x,y) is much efficient than passing Vec2 object.
      * This method is bound to Lua and JavaScript.
      * Passing a number is 10 times faster than passing a object from Lua to c++
      *
      @code
      // sample code in Lua
-     local pos  = node::getPosition()  -- returns Vector2 object from C++
+     local pos  = node::getPosition()  -- returns Vec2 object from C++
      node:setPosition(x, y)            -- pass x, y coordinate to C++
      @endcode
      *
@@ -312,7 +312,7 @@ public:
      */
     virtual void setPosition(float x, float y);
     /**
-     * Gets position in a more efficient way, returns two number instead of a Vector2 object
+     * Gets position in a more efficient way, returns two number instead of a Vec2 object
      *
      * @see `setPosition(float, float)`
      * In js,out value not return
@@ -419,15 +419,15 @@ public:
      *
      * @param anchorPoint   The anchor point of node.
      */
-    virtual void setAnchorPoint(const Vector2& anchorPoint);
+    virtual void setAnchorPoint(const Vec2& anchorPoint);
     /**
      * Returns the anchor point in percent.
      *
-     * @see `setAnchorPoint(const Vector2&)`
+     * @see `setAnchorPoint(const Vec2&)`
      *
      * @return The anchor point of node.
      */
-    virtual const Vector2& getAnchorPoint() const;
+    virtual const Vec2& getAnchorPoint() const;
     /**
      * Returns the anchorPoint in absolute pixels.
      *
@@ -436,7 +436,7 @@ public:
      *
      * @return The anchor point in absolute pixels.
      */
-    virtual const Vector2& getAnchorPointInPoints() const;
+    virtual const Vec2& getAnchorPointInPoints() const;
 
 
     /**
@@ -1241,36 +1241,36 @@ public:
     /// @name Coordinate Converters
 
     /**
-     * Converts a Vector2 to node (local) space coordinates. The result is in Points.
+     * Converts a Vec2 to node (local) space coordinates. The result is in Points.
      */
-    Vector2 convertToNodeSpace(const Vector2& worldPoint) const;
+    Vec2 convertToNodeSpace(const Vec2& worldPoint) const;
 
     /**
-     * Converts a Vector2 to world space coordinates. The result is in Points.
+     * Converts a Vec2 to world space coordinates. The result is in Points.
      */
-    Vector2 convertToWorldSpace(const Vector2& nodePoint) const;
+    Vec2 convertToWorldSpace(const Vec2& nodePoint) const;
 
     /**
-     * Converts a Vector2 to node (local) space coordinates. The result is in Points.
+     * Converts a Vec2 to node (local) space coordinates. The result is in Points.
      * treating the returned/received node point as anchor relative.
      */
-    Vector2 convertToNodeSpaceAR(const Vector2& worldPoint) const;
+    Vec2 convertToNodeSpaceAR(const Vec2& worldPoint) const;
 
     /**
-     * Converts a local Vector2 to world space coordinates.The result is in Points.
+     * Converts a local Vec2 to world space coordinates.The result is in Points.
      * treating the returned/received node point as anchor relative.
      */
-    Vector2 convertToWorldSpaceAR(const Vector2& nodePoint) const;
+    Vec2 convertToWorldSpaceAR(const Vec2& nodePoint) const;
 
     /**
-     * convenience methods which take a Touch instead of Vector2
+     * convenience methods which take a Touch instead of Vec2
      */
-    Vector2 convertTouchToNodeSpace(Touch * touch) const;
+    Vec2 convertTouchToNodeSpace(Touch * touch) const;
 
     /**
      * converts a Touch (world coordinates) into a local coordinate. This method is AR (Anchor Relative).
      */
-    Vector2 convertTouchToNodeSpaceAR(Touch * touch) const;
+    Vec2 convertTouchToNodeSpaceAR(Touch * touch) const;
 
 	/**
      *  Sets an additional transform matrix to the node.
@@ -1312,7 +1312,7 @@ public:
 #if CC_USE_PHYSICS
     /**
      *   set the PhysicsBody that let the sprite effect with physics
-     * @note This method will set anchor point to Vector2::ANCHOR_MIDDLE if body not null, and you cann't change anchor point if node has a physics body.
+     * @note This method will set anchor point to Vec2::ANCHOR_MIDDLE if body not null, and you cann't change anchor point if node has a physics body.
      */
     void setPhysicsBody(PhysicsBody* body);
 
@@ -1359,7 +1359,7 @@ protected:
     void detachChild(Node *child, ssize_t index, bool doCleanup);
 
     /// Convert cocos2d coordinates to UI windows coordinate.
-    Vector2 convertToWindowSpace(const Vector2& nodePoint) const;
+    Vec2 convertToWindowSpace(const Vec2& nodePoint) const;
 
     Matrix transform(const Matrix &parentTransform);
 
@@ -1385,14 +1385,14 @@ protected:
     float _scaleY;                  ///< scaling factor on y-axis
     float _scaleZ;                  ///< scaling factor on z-axis
 
-    Vector2 _position;                ///< position of the node
+    Vec2 _position;                ///< position of the node
     float _positionZ;               ///< OpenGL real Z position
 
     float _skewX;                   ///< skew angle on x-axis
     float _skewY;                   ///< skew angle on y-axis
 
-    Vector2 _anchorPointInPoints;     ///< anchor point in points
-    Vector2 _anchorPoint;             ///< anchor point normalized (NOT in points)
+    Vec2 _anchorPointInPoints;     ///< anchor point in points
+    Vec2 _anchorPoint;             ///< anchor point normalized (NOT in points)
 
     Size _contentSize;              ///< untransformed size of the node
 
@@ -1434,7 +1434,7 @@ protected:
 
     bool _visible;                  ///< is this node visible
 
-    bool _ignoreAnchorPointForPosition; ///< true if the Anchor Vector2 will be (0,0) when you position the Node, false otherwise.
+    bool _ignoreAnchorPointForPosition; ///< true if the Anchor Vec2 will be (0,0) when you position the Node, false otherwise.
                                           ///< Used by Layer and Scene.
 
     bool _reorderChildDirty;          ///< children order dirty flag
