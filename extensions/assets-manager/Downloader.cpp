@@ -47,21 +47,17 @@ static size_t curlWriteFunc(void *ptr, size_t size, size_t nmemb, void *userdata
     return written;
 }
 
-int downloadProgressFunc(void *ptr, double totalToDownload, double nowDownloaded, double totalToUpLoad, double nowUpLoaded)
+int downloadProgressFunc(Downloader::ProgressData *ptr, double totalToDownload, double nowDownloaded, double totalToUpLoad, double nowUpLoaded)
 {
-    static int percent = 0;
-    int tmp = (int)(nowDownloaded / totalToDownload * 100);
+    static int downloaded = 0;
     
-    if (percent != tmp)
+    if (downloaded != nowDownloaded)
     {
-        percent = tmp;
+        downloaded = nowDownloaded;
         Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
-            auto downloader = static_cast<Downloader*>(ptr);
-            DownloaderDelegateProtocol* delegate = downloader->getDelegate();
+            DownloaderDelegateProtocol* delegate = ptr->downloader->getDelegate();
             if (delegate)
-                delegate->onProgress(percent);
-            
-            CCLOG("downloading... %d%%", percent);
+                delegate->onProgress(totalToDownload, downloaded, ptr->url, ptr->customId);
         });
     }
     
@@ -89,11 +85,12 @@ bool Downloader::init()
     return true;
 }
 
-void Downloader::notifyError(ErrorCode code, const std::string &msg/* ="" */)
+void Downloader::notifyError(ErrorCode code, const std::string &msg/* ="" */, const std::string &customId/* ="" */)
 {
     Error err;
     err.code = code;
     err.message = msg;
+    err.customId = customId;
     Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
         if (this->_delegate)
             this->_delegate->onError(err);
@@ -110,9 +107,10 @@ bool Downloader::checkStoragePath(const std::string &storagePath)
     return true;
 }
 
-void Downloader::download(const std::string &srcUrl, const std::string &storagePath, const std::string &rename/* = ""*/)
+void Downloader::downloadAsync(const std::string &srcUrl, const std::string &storagePath, const std::string &customId/* = ""*/, const std::string &rename/* = ""*/)
 {
     Error err;
+    err.customId = customId;
     // Asserts
     if (!_curl)
     {
@@ -146,11 +144,11 @@ void Downloader::download(const std::string &srcUrl, const std::string &storageP
         //std::string filename = m.str();
     }
     
-    auto t = std::thread(&Downloader::downloadAsync, this, srcUrl, storagePath, filename);
+    auto t = std::thread(&Downloader::download, this, srcUrl, storagePath, filename, customId);
     t.detach();
 }
 
-void Downloader::downloadAsync(const std::string &srcUrl, const std::string &storagePath, const std::string &filename)
+void Downloader::download(const std::string &srcUrl, const std::string &storagePath, const std::string &filename, const std::string &customId)
 {
     // Create a file to save package.
     const std::string outFileName = storagePath + filename;
@@ -158,9 +156,14 @@ void Downloader::downloadAsync(const std::string &srcUrl, const std::string &sto
     if (!fp)
     {
         std::string msg = "Can not create file " + outFileName;
-        this->notifyError(ErrorCode::CREATE_FILE, msg);
+        this->notifyError(ErrorCode::CREATE_FILE, msg, customId);
         return;
     }
+    
+    ProgressData data;
+    data.customId = customId;
+    data.url = srcUrl;
+    data.downloader = this;
     
     // Download pacakge
     CURLcode res;
@@ -169,7 +172,7 @@ void Downloader::downloadAsync(const std::string &srcUrl, const std::string &sto
     curl_easy_setopt(_curl, CURLOPT_WRITEDATA, fp);
     curl_easy_setopt(_curl, CURLOPT_NOPROGRESS, false);
     curl_easy_setopt(_curl, CURLOPT_PROGRESSFUNCTION, downloadProgressFunc);
-    curl_easy_setopt(_curl, CURLOPT_PROGRESSDATA, this);
+    curl_easy_setopt(_curl, CURLOPT_PROGRESSDATA, &data);
     curl_easy_setopt(_curl, CURLOPT_NOSIGNAL, 1L);
     curl_easy_setopt(_curl, CURLOPT_LOW_SPEED_LIMIT, LOW_SPEED_LIMIT);
     curl_easy_setopt(_curl, CURLOPT_LOW_SPEED_TIME, LOW_SPEED_TIME);
@@ -178,14 +181,14 @@ void Downloader::downloadAsync(const std::string &srcUrl, const std::string &sto
     curl_easy_cleanup(_curl);
     if (res != 0)
     {
-        this->notifyError(ErrorCode::NETWORK, "Error when download file");
+        this->notifyError(ErrorCode::NETWORK, "Error when download file", customId);
         fclose(fp);
         return;
     }
     
-    Director::getInstance()->getScheduler()->performFunctionInCocosThread([filename, srcUrl, this]{
+    Director::getInstance()->getScheduler()->performFunctionInCocosThread([filename, srcUrl, customId, this]{
         if (this->_delegate)
-            this->_delegate->onSuccess(filename, srcUrl);
+            this->_delegate->onSuccess(srcUrl, customId, filename);
     });
     
     fclose(fp);

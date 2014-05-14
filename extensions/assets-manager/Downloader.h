@@ -68,6 +68,15 @@ public:
     {
         ErrorCode code;
         std::string message;
+        std::string customId;
+        std::string url;
+    };
+    
+    struct ProgressData
+    {
+        Downloader* downloader;
+        std::string customId;
+        std::string url;
     };
     
     /**
@@ -79,13 +88,13 @@ public:
     
     DownloaderDelegateProtocol* getDelegate() const { return _delegate ;}
     
-    void download(const std::string &srcUrl, const std::string &storagePath, const std::string &rename = "");
+    void downloadAsync(const std::string &srcUrl, const std::string &storagePath, const std::string &rename = "", const std::string &customId = "");
     
 protected:
     
-    void downloadAsync(const std::string &srcUrl, const std::string &storagePath, const std::string &filename);
+    void download(const std::string &srcUrl, const std::string &storagePath, const std::string &filename, const std::string &customId);
     
-    void notifyError(ErrorCode code, const std::string &msg = "");
+    void notifyError(ErrorCode code, const std::string &msg = "", const std::string &customId = "");
     
     bool checkStoragePath(const std::string& storagePath);
     
@@ -116,13 +125,13 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void onProgress(int percent) {};
+    virtual void onProgress(double total, double downloaded, const std::string &url, const std::string &customId) {};
     
     /** @brief Call back function for success
      * @js NA
      * @lua NA
      */
-    virtual void onSuccess(const std::string &filename, const std::string &srcUrl) {};
+    virtual void onSuccess(const std::string &srcUrl, const std::string &customId, const std::string &filename) {};
 };
 
 NS_CC_EXT_END;
