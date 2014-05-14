@@ -178,7 +178,6 @@ def unpack_zipfile(filename, extract_dir, progress_filter=default_filter):
         z.close()
         print("==> Extraction done!")
 
-
 def ask_to_delete_downloaded_zip_file(filename):
     ret = get_input_value("==> Whether to delete the downloaded zip file? It may be reused when you execute this script next time! (yes/no): ")
     ret = ret.strip()
@@ -236,7 +235,7 @@ def grab_config():
     global _extracted_folder_name
     global _zip_file_size
 
-    _current_3rd_libs_version = data["current_libs_version"]
+    _current_3rd_libs_version = data["version"]
     _repo_name = data["repo_name"]
     _filename = _current_3rd_libs_version + '.zip'
     _downloaded_file_url = data["repo_parent"] + _repo_name + '/archive/' + _filename
