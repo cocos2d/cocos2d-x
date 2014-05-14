@@ -8,6 +8,7 @@
 #include "Bug-914.h"
 #include "Bug-1159.h"
 #include "Bug-1174.h"
+#include "Bug-Child.h"
 
 #define TEST_BUG(__bug__)									\
 {															\
@@ -31,6 +32,7 @@ struct {
 	const char *test_name;
 	std::function<void(Ref*)> callback;
 } g_bugs[] = {
+    { "Bug-Child", [](Ref* sender){Director::getInstance()->replaceScene(BugChild::scene());} },
 	{ "Bug-350", [](Ref* sender){ TEST_BUG(350)} },
 	{ "Bug-422", [](Ref* sender){ TEST_BUG(422)} },
 	{ "Bug-458", [](Ref* sender){ TEST_BUG(458)} },

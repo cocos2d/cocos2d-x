@@ -135,7 +135,7 @@ Node::Node(void)
     ScriptEngineProtocol* engine = ScriptEngineManager::getInstance()->getScriptEngine();
     _scriptType = engine != nullptr ? engine->getScriptType() : kScriptTypeNone;
 #endif
-    _transform = _inverse = _additionalTransform = Matrix::identity();
+    _transform = _inverse = _additionalTransform = Matrix::IDENTITY;
 }
 
 Node::~Node()
@@ -647,7 +647,7 @@ void Node::setGLProgram(GLProgram *glProgram)
     if (_glProgramState == nullptr || (_glProgramState && _glProgramState->getGLProgram() != glProgram))
     {
         CC_SAFE_RELEASE(_glProgramState);
-        _glProgramState = GLProgramState::get(glProgram);
+        _glProgramState = GLProgramState::getOrCreate(glProgram);
         _glProgramState->retain();
     }
 }
@@ -915,6 +915,7 @@ void Node::detachChild(Node *child, ssize_t childIndex, bool doCleanup)
 // helper used by reorderChild & add
 void Node::insertChild(Node* child, int z)
 {
+    _transformUpdated = true;
     _reorderChildDirty = true;
     _children.pushBack(child);
     child->_setLocalZOrder(z);
