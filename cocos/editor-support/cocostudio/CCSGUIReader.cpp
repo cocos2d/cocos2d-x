@@ -932,7 +932,7 @@ void WidgetPropertiesReader0250::setPropsForLabelBMFontFromJsonDictionary(Widget
     labelBMFont->setFntFile(cmf_tp);
     
     const char* text = DICTOOL->getStringValue_json(options, "text");
-    labelBMFont->setText(text);
+    labelBMFont->setString(text);
     
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
@@ -2020,7 +2020,7 @@ void WidgetPropertiesReader0300::setPropsForLabelBMFontFromJsonDictionary(Widget
     }
     
     const char* text = DICTOOL->getStringValue_json(options, "text");
-    labelBMFont->setText(text);
+    labelBMFont->setString(text);
     
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
