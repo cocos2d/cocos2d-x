@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "UILayoutExecutant.h"
-#include "UIWidget.h"
+#include "UILayout.h"
 
 NS_CC_BEGIN
 
@@ -65,8 +65,10 @@ RelativeLayoutExecutant* RelativeLayoutExecutant::create()
     return nullptr;
 }
 
-void LinearVerticalLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Vector<cocos2d::Node *> container)
+void LinearVerticalLayoutExecutant::doLayout(LayoutProtocol* layout)
 {
+    Size layoutSize = layout->getLayoutSize();
+    Vector<Node*> container = layout->getLayoutChildren();
     float topBoundary = layoutSize.height;
     
     for (auto& subWidget : container)
@@ -107,8 +109,10 @@ void LinearVerticalLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Ve
     }
 }
 
-void LinearHorizontalLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Vector<cocos2d::Node *> container)
+void LinearHorizontalLayoutExecutant::doLayout(LayoutProtocol* layout)
 {
+    Size layoutSize = layout->getLayoutSize();
+    Vector<Node*> container = layout->getLayoutChildren();
     float leftBoundary = 0.0f;
     for (auto& subWidget : container)
     {
@@ -147,8 +151,10 @@ void LinearHorizontalLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, 
     }
 }
 
-void RelativeLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Vector<cocos2d::Node *> container)
+void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
 {
+    Size layoutSize = layout->getLayoutSize();
+    Vector<Node*> container = layout->getLayoutChildren();
     ssize_t unlayoutChildCount = 0;
     Vector<Widget*> widgetChildren;
     for (auto& subWidget : container)
@@ -500,37 +506,6 @@ void RelativeLayoutExecutant::doLayout(const cocos2d::Size &layoutSize, Vector<c
         }
     }
     widgetChildren.clear();
-}
-
-////////////////////////////////////////////////////////////////////////////
-LayoutExecutantFactory* LayoutExecutantFactory::_instance = nullptr;
-
-LayoutExecutantFactory* LayoutExecutantFactory::getInstance()
-{
-    if (nullptr == _instance) {
-        _instance = new LayoutExecutantFactory;
-    }
-    return _instance;
-}
-    
-LayoutExecutant* LayoutExecutantFactory::createExecutant(Layout::Type type)
-{
-    LayoutExecutant* exe = nullptr;
-    switch (type)
-    {
-        case Layout::Type::VERTICAL:
-            exe = LinearVerticalLayoutExecutant::create();
-            break;
-        case Layout::Type::HORIZONTAL:
-            exe = LinearHorizontalLayoutExecutant::create();
-            break;
-        case Layout::Type::RELATIVE:
-            exe = RelativeLayoutExecutant::create();
-            break;
-        default:
-            break;
-    }
-    return exe;
 }
 
 }

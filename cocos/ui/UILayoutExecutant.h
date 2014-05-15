@@ -25,11 +25,13 @@
 #ifndef __cocos2d_libs__CCLayoutExecutant__
 #define __cocos2d_libs__CCLayoutExecutant__
 
-#include "UILayout.h"
+#include "base/CCRef.h"
 
 NS_CC_BEGIN
 
 namespace ui {
+    
+class LayoutProtocol;
 
 class LayoutExecutant : public Ref
 {
@@ -37,7 +39,7 @@ public:
     LayoutExecutant(){};
     virtual ~LayoutExecutant(){};
     
-    virtual void doLayout(const Size& layoutSize, Vector<Node*> container) = 0;
+    virtual void doLayout(LayoutProtocol *layout) = 0;
 };
 
 class LinearVerticalLayoutExecutant : public LayoutExecutant
@@ -46,7 +48,7 @@ public:
     LinearVerticalLayoutExecutant(){};
     virtual ~LinearVerticalLayoutExecutant(){};
     static LinearVerticalLayoutExecutant* create();
-    virtual void doLayout(const Size& layoutSize, Vector<Node*> container);
+    virtual void doLayout(LayoutProtocol *layout) override;
 };
 
 class LinearHorizontalLayoutExecutant : public LayoutExecutant
@@ -55,7 +57,7 @@ public:
     LinearHorizontalLayoutExecutant(){};
     virtual ~LinearHorizontalLayoutExecutant(){};
     static LinearHorizontalLayoutExecutant* create();
-    virtual void doLayout(const Size& layoutSize, Vector<Node*> container);
+    virtual void doLayout(LayoutProtocol *layout) override;
 };
 
 class RelativeLayoutExecutant : public LayoutExecutant
@@ -64,20 +66,7 @@ public:
     RelativeLayoutExecutant(){};
     virtual ~RelativeLayoutExecutant(){};
     static RelativeLayoutExecutant* create();
-    virtual void doLayout(const Size& layoutSize, Vector<Node*> container);
-};
-
-    
-class LayoutExecutantFactory
-{
-public:
-    static LayoutExecutantFactory* getInstance();
-    LayoutExecutant* createExecutant(Layout::Type type);
-private:
-    LayoutExecutantFactory(){}
-    CC_DISALLOW_COPY_AND_ASSIGN(LayoutExecutantFactory);
-    
-    static LayoutExecutantFactory *_instance;
+    virtual void doLayout(LayoutProtocol *layout) override;
 };
 
 }

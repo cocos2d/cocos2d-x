@@ -928,6 +928,16 @@ void Layout::requestDoLayout()
 {
     _doLayoutDirty = true;
 }
+    
+const Size Layout::getLayoutSize()
+{
+    return this->getSize();
+}
+    
+const Vector<Node*>& Layout::getLayoutChildren()
+{
+    return this->getChildren();
+}
 
 void Layout::doLayout()
 {
@@ -935,10 +945,11 @@ void Layout::doLayout()
     {
         return;
     }
-    LayoutExecutant* executant = LayoutExecutantFactory::getInstance()->createExecutant(_layoutType);
+    LayoutExecutant* executant = this->createLayoutExecutant();
+    
     if (executant)
     {
-        executant->doLayout(getSize(), getChildren());
+        executant->doLayout(this);
     }
     
     _doLayoutDirty = false;

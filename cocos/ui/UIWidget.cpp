@@ -257,7 +257,7 @@ void Widget::updateSizeAndPosition()
     Size pSize;
     if (widgetParent)
     {
-        pSize = widgetParent->getLayoutSize();
+        pSize = widgetParent->getSize();
     }
     else
     {

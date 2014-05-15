@@ -30,13 +30,26 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 namespace ui {
+    
+class LayoutExecutant;
+    
+class LayoutProtocol
+{
+public:
+    LayoutProtocol(){}
+    virtual ~LayoutProtocol(){}
+    
+    virtual LayoutExecutant* createLayoutExecutant() = 0;
+    virtual const Size getLayoutSize() = 0;
+    virtual const Vector<Node*>& getLayoutChildren() = 0;
+};
 
 /**
  *  @js NA
  *  @lua NA
  */
     
-class Layout : public Widget
+class Layout : public Widget, public LayoutProtocol
 {
     
     DECLARE_CLASS_GUI_INFO
@@ -314,6 +327,9 @@ protected:
     const Rect& getClippingRect();
     
     virtual void doLayout();
+    virtual LayoutExecutant* createLayoutExecutant();
+    virtual const Size getLayoutSize();
+    virtual const Vector<Node*>& getLayoutChildren() ;
     
     //clipping
     void onBeforeVisitStencil();
