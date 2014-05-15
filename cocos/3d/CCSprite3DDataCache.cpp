@@ -4,6 +4,7 @@
 #include "2d/platform/CCFileUtils.h"
 #include "2d/CCTextureCache.h"
 #include "base/CCEventCustom.h"
+#include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventType.h"
 #include "base/CCDirector.h"
@@ -16,7 +17,7 @@ Sprite3DDataCache::Sprite3DDataCache()
 {
  #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
      // listen the event when app go to foreground
-     _backToForegroundlistener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, CC_CALLBACK_1(MeshCache::listenBackToForeground, this));
+     _backToForegroundlistener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, CC_CALLBACK_1(Sprite3DDataCache::listenBackToForeground, this));
      Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundlistener, -1);
  #endif
 }
@@ -112,6 +113,7 @@ void Sprite3DDataCache::listenBackToForeground(EventCustom* event)
     for (auto iter = _sprite3DDatas.begin(); iter != _sprite3DDatas.end(); ++iter)
     {
         auto mesh = iter->second.mesh;
+        mesh->restore();
     }
 }
 #endif
