@@ -114,7 +114,6 @@ bool Sprite3D::loadFromObj(const std::string& path)
 Sprite3D::Sprite3D()
 : _partcount(0)
 , _mesh(nullptr)
-, _effect(nullptr)
 , _texture(nullptr)
 , _blend(BlendFunc::DISABLE)
 {
@@ -123,7 +122,6 @@ Sprite3D::Sprite3D()
 Sprite3D::~Sprite3D()
 {
     CC_SAFE_RELEASE_NULL(_mesh);
-    CC_SAFE_RELEASE_NULL(_effect);
 }
 
 bool Sprite3D::initWithFile(const std::string &path)
@@ -219,13 +217,13 @@ void Sprite3D::setTexture(Texture2D* texture)
     _texture = texture;
 }
 
-void Sprite3D::setEffect(Sprite3DEffect* effect)
-{
-    CC_SAFE_RETAIN(effect);
-    CC_SAFE_RELEASE_NULL(_effect);
-    _effect = effect;
-    _effect->initEffect(this);
-}
+//void Sprite3D::setEffect(Sprite3DEffect* effect)
+//{
+//    CC_SAFE_RETAIN(effect);
+//    CC_SAFE_RELEASE_NULL(_effect);
+//    _effect = effect;
+//    _effect->initEffect(this);
+//}
 
 void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
@@ -258,8 +256,8 @@ void Sprite3D::onDraw(const Mat4 &transform, bool transformUpdated)
         glDrawElements(_mesh->getPrimitiveType(), _mesh->getIndexCount(), _mesh->getIndexFormat(), 0);
         CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _mesh->getIndexCount());
         
-        if (_effect)
-            _effect->drawSpriteEffect(transform);
+//        if (_effect)
+//            _effect->drawSpriteEffect(transform);
     }
     
     glDisable(GL_DEPTH_TEST);
