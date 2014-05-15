@@ -75,7 +75,8 @@ public:
         PREDOWNLOAD_MANIFEST,
         DOWNLOADING_MANIFEST,
         MANIFEST_LOADED,
-        CHECKED
+        NEED_UPDATE,
+        UP_TO_DATE
     };
     
     //! The root of writable path
