@@ -887,8 +887,8 @@ void Director::popToSceneStackLevel(int level)
     if (level >= c)
         return;
 
-    auto currentRunningScene = _scenesStack.back();
-    if (currentRunningScene == _runningScene)
+    auto fisrtOnStackScene = _scenesStack.back();
+    if (fisrtOnStackScene == _runningScene)
     {
         _scenesStack.popBack();
         --c;
@@ -910,6 +910,8 @@ void Director::popToSceneStackLevel(int level)
     }
 
     _nextScene = _scenesStack.back();
+
+    // cleanup running scene
     _sendCleanupToScene = true;
 }
 
