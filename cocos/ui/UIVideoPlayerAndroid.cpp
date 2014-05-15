@@ -195,7 +195,7 @@ void VideoPlayer::setURL(const std::string& videoUrl)
     setVideoURLJNI(_videoPlayerIndex,(int)Source::URL,_videoURL);
 }
 
-void VideoPlayer::draw(Renderer* renderer, const Matrix &transform, bool transformUpdated)
+void VideoPlayer::draw(Renderer* renderer, const Mat4 &transform, bool transformUpdated)
 {
     cocos2d::ui::Widget::draw(renderer,transform,transformUpdated);
 
