@@ -118,8 +118,20 @@ public:
     * @since v0.8
     */
     virtual void addImageAsync(const std::string &filepath, const std::function<void(Texture2D*)>& callback);
-    virtual void removeImageAsync(const std::string &filename, const std::function<void(Texture2D*)>& callback);
-    virtual void removeAllImageAsync();
+
+    /* Unbind the specified bound image asynchronous callback
+    *  In the case an object who bound an image ashnchronous callback was destroyed before the callback is invoked, 
+    *  the caller always need to unbind this callback manually.
+    *  Unless the callback was bound to a living object, make sure to call this method properly to prevent the callee
+    *  from accessing a dead object.
+    *  @since v3.1
+    */
+    virtual void unbindImageAsync(const std::string &filename);
+
+    /* Unbind all bound image asynchronous callback
+    *  @since v3.1
+    */
+    virtual void unbindAllImageAsync();
 
     /** Returns a Texture2D object given an Image.
     * If the image was not previously loaded, it will create a new Texture2D object and it will return it.
