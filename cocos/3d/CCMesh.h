@@ -7,7 +7,6 @@
 
 #include "base/CCRef.h"
 #include "base/ccTypes.h"
-#include "CCMeshPart.h"
 #include "math/CCMath.h"
 #include "renderer/CCGLProgram.h"
 
@@ -16,7 +15,26 @@ USING_NS_CC_MATH;
 
 NS_CC_BEGIN
 
-class MeshPart;
+/**
+ * Defines supported index formats.
+ */
+enum IndexFormat
+{
+    IndexFormat_INDEX8 = GL_UNSIGNED_BYTE,
+    IndexFormat_INDEX16 = GL_UNSIGNED_SHORT,
+};
+
+/**
+ * Defines supported primitive types.
+ */
+enum PrimitiveType
+{
+    PrimitiveType_TRIANGLES = GL_TRIANGLES,
+    PrimitiveType_TRIANGLE_STRIP = GL_TRIANGLE_STRIP,
+    PrimitiveType_LINES = GL_LINES,
+    PrimitiveType_LINE_STRIP = GL_LINE_STRIP,
+    PrimitiveType_POINTS = GL_POINTS
+};
 
 //mesh vertex attribute
 struct MeshVertexAttrib
@@ -67,10 +85,6 @@ public:
     //get vertex buffer
     inline GLuint getVertexBuffer() const { return _vertexBuffer; }
     
-    
-    //build vertex buffer from renderdata
-    void restore();
-    
     //get mesh vertex attribute count
     int getMeshVertexAttribCount() const { return _renderdata._vertexAttribs.size(); }
     
@@ -90,15 +104,18 @@ public:
     IndexFormat getIndexFormat() const { return _indexFormat; }
     
     GLuint getIndexBuffer() const {return _indexBuffer; }
+    
+    //build vertex buffer from renderdata
+    void restore();
 protected:
     Mesh();
-    
+
     //build buffer
     void buildBuffer();
 
-    void freeBuffers();
+    void cleanAndFreeBuffers();
     
-    void releaseMeshPart();
+    //void releaseMeshPart();
     
     //void addMeshPart(PrimitiveType primitiveType, IndexFormat indexformat,  void* indexData, unsigned int indexCount);
     
@@ -107,9 +124,6 @@ protected:
     std::string _name;
 
     GLuint _vertexBuffer;
-    
-    unsigned int _partCount;
-    MeshPart** _parts;
     
     PrimitiveType _primitiveType;
     IndexFormat _indexFormat;

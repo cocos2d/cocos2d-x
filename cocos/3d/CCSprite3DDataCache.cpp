@@ -112,7 +112,6 @@ void Sprite3DDataCache::listenBackToForeground(EventCustom* event)
     for (auto iter = _sprite3DDatas.begin(); iter != _sprite3DDatas.end(); ++iter)
     {
         auto mesh = iter->second.mesh;
-        mesh->restore();
     }
 }
 #endif
