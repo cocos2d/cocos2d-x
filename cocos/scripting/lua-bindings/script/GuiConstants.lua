@@ -7,12 +7,6 @@ ccui.BrightStyle =
     highlight = 1,
 }
 
-ccui.WidgetType = 
-{
-    widget = 0, --control
-    container = 1, --container
-}
-
 ccui.TextureResType = 
 {
     localType = 0,
@@ -59,12 +53,12 @@ ccui.LayoutBackGroundColorType =
     gradient = 2,
 }
 
-ccui.LayoutType = 
+ccui.Type = 
 {
-    absolute = 0,
-    linearVertical = 1,
-    linearHorizontal = 2,
-    relative = 3,
+    ABSOLUTE = 0,
+    VERTICAL = 1,
+    HORIZONTAL = 2,
+    RELATIVE = 3,
 }
 
 ccui.LayoutParameterType = 
@@ -113,7 +107,7 @@ ccui.RelativeAlign =
 
 ccui.SliderEventType = {percentChanged = 0}
 
-ccui.LoadingBarType = { left = 0, right = 1}
+ccui.LoadingBarDirection = { LEFT = 0, RIGHT = 1}
 
 ccui.ScrollViewDir = {
     none = 0,
