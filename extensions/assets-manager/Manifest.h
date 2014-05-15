@@ -48,6 +48,15 @@ class CC_DLL Manifest
 public:
     Manifest(const std::string& manifestUrl);
     
+    void parse(const std::string& manifestUrl);
+    
+    bool isVersionLoaded() const;
+    bool isLoaded() const;
+    
+    bool versionEquals(const Manifest *manifest) const;
+    
+    std::map<std::string, Asset> genDiff(const Manifest *manifest) const;
+    
     /* @brief Gets remote manifest file url.
      */
     const std::string& getManifestFileUrl() const;
@@ -71,6 +80,10 @@ public:
     /* @brief Gets all groups.
      */
     const std::vector<std::string>& getGroups() const;
+    
+    /* @brief Gets all groups version.
+     */
+    const std::map<std::string, std::string>& getGroupVerions() const;
     
     /* @brief Gets version for the given group.
      */

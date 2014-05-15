@@ -52,11 +52,63 @@ Manifest::Manifest(const std::string& manifestUrl)
 {
     // Init variables
     _fileUtils = FileUtils::getInstance();
+    if (manifestUrl.size() > 0)
+        parse(manifestUrl);
+}
+
+void Manifest::parse(const std::string& manifestUrl)
+{
     rapidjson::Document json = parseJSON(manifestUrl);
     if (json.MemberonBegin() != json.MemberonEnd())
     {
         loadManifest(json);
     }
+}
+
+bool Manifest::isVersionLoaded() const
+{
+    return _versionLoaded;
+}
+bool Manifest::isLoaded() const
+{
+    return _loaded;
+}
+
+bool Manifest::versionEquals(const Manifest *b) const
+{
+    // Check manifest version
+    if (_version != b->getManifestVersion())
+    {
+        return false;
+    }
+    // Check group versions
+    else
+    {
+        std::vector<std::string> bGroups = b->getGroups();
+        std::map<std::string, std::string> bGroupVer = b->getGroupVerions();
+        // Check group size
+        if (bGroups.size() != _groups.size())
+            return false;
+        
+        // Check groups version
+        for (int i = 0; i < _groups.size(); i++) {
+            std::string gid =_groups[i];
+            // Check group name
+            if (gid != bGroups[i])
+                return false;
+            // Check group version
+            if (_groupVer.at(gid) != bGroupVer.at(gid))
+                return false;
+        }
+    }
+    return true;
+}
+
+std::map<std::string, Asset> Manifest::genDiff(const Manifest *manifest) const
+{
+    std::map<std::string, Asset> diff;
+    
+    return diff;
 }
 
 const std::string& Manifest::getManifestFileUrl() const
@@ -87,6 +139,11 @@ const std::string& Manifest::getManifestVersion() const
 const std::vector<std::string>& Manifest::getGroups() const
 {
     return _groups;
+}
+
+const std::map<std::string, std::string>& Manifest::getGroupVerions() const
+{
+    return _groupVer;
 }
 
 const std::string& Manifest::getGroupVersion(const std::string &group) const

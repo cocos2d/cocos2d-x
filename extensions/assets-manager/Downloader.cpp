@@ -89,11 +89,11 @@ bool Downloader::init()
 
 void Downloader::notifyError(ErrorCode code, const std::string &msg/* ="" */, const std::string &customId/* ="" */)
 {
-    Error err;
-    err.code = code;
-    err.message = msg;
-    err.customId = customId;
     Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
+        Error err;
+        err.code = code;
+        err.message = msg;
+        err.customId = customId;
         if (this->_delegate)
             this->_delegate->onError(err);
     });
