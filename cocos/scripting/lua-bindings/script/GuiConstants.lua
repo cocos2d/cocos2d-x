@@ -53,7 +53,7 @@ ccui.LayoutBackGroundColorType =
     gradient = 2,
 }
 
-ccui.Type = 
+ccui.LayoutType = 
 {
     ABSOLUTE = 0,
     VERTICAL = 1,
@@ -170,4 +170,9 @@ ccui.ListViewGravity = {
     top = 3,
     bottom = 4 ,
     centerVertical = 5,
+}
+
+ccui.TextType = {
+    SYSTEM = 0,
+    TTF    = 1,
 }
