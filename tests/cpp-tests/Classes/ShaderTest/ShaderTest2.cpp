@@ -27,6 +27,7 @@
 #include "ShaderTest.h"
 #include "../testResource.h"
 #include "cocos2d.h"
+#include <tuple>
 
 namespace ShaderTest2
 {
@@ -108,6 +109,11 @@ void ShaderTestScene2::runThisTest()
 //
 // EffectSprite
 //
+static int tuple_sort( const std::tuple<ssize_t,Effect*,QuadCommand> &tuple1, const std::tuple<ssize_t,Effect*,QuadCommand> &tuple2 )
+{
+    return std::get<0>(tuple1) < std::get<0>(tuple2);
+}
+
 class Effect;
 class EffectSprite : public Sprite
 {
@@ -122,19 +128,73 @@ public:
         return nullptr;
     }
 
-    void setEffect(Effect *effect) {
-        if(_effect != effect) {
+    void setEffect(Effect* effect) {
+        if(_defaultEffect != effect) {
             effect->setTarget(this);
 
-            CC_SAFE_RELEASE(_effect);
-            _effect = effect;
-            CC_SAFE_RETAIN(_effect);
-            setGLProgramState(_effect->getGLProgramState());
+            CC_SAFE_RELEASE(_defaultEffect);
+            _defaultEffect = effect;
+            CC_SAFE_RETAIN(_defaultEffect);
+
+            setGLProgramState(_defaultEffect->getGLProgramState());
+        }
+    }
+    void addEffect(Effect *effect, ssize_t order) {
+        effect->retain();
+        effect->setTarget(this);
+
+        _effects.push_back(std::make_tuple(order,effect,QuadCommand()));
+
+        std::sort(std::begin(_effects), std::end(_effects), tuple_sort);
+    }
+
+    void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override
+    {
+        // Don't do calculate the culling if the transform was not updated
+        _insideBounds = transformUpdated ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
+
+        if(_insideBounds)
+        {
+            // negative effects: order < 0
+            int idx=0;
+            for(auto &effect : _effects) {
+
+                if(std::get<0>(effect) >=0)
+                    break;
+                QuadCommand &q = std::get<2>(effect);
+                q.init(_globalZOrder, _texture->getName(), std::get<1>(effect)->getGLProgramState(), _blendFunc, &_quad, 1, transform);
+                renderer->addCommand(&q);
+                idx++;
+
+            }
+
+            // normal effect: order == 0
+            _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, transform);
+            renderer->addCommand(&_quadCommand);
+
+            // postive effects: oder >= 0
+            for(auto it = std::begin(_effects)+idx; it != std::end(_effects); ++it) {
+                QuadCommand &q = std::get<2>(*it);
+                q.init(_globalZOrder, _texture->getName(), std::get<1>(*it)->getGLProgramState(), _blendFunc, &_quad, 1, transform);
+                renderer->addCommand(&q);
+                idx++;
+            }
         }
     }
 protected:
-    EffectSprite() : _effect(nullptr) {}
-    Effect *_effect;
+    EffectSprite() : _defaultEffect(nullptr)
+    {
+        _effects.reserve(2);
+    }
+    ~EffectSprite() {
+        for(auto &tuple : _effects) {
+            std::get<1>(tuple)->release();
+        }
+        CC_SAFE_RELEASE(_defaultEffect);
+    }
+
+    std::vector<std::tuple<ssize_t,Effect*,QuadCommand>> _effects;
+    Effect* _defaultEffect;
 };
 
 //
@@ -436,6 +496,10 @@ EffectSpriteTest::EffectSpriteTest()
 
         _vectorIndex = 0;
         _sprite->setEffect( _effects.at(_vectorIndex) );
+
+//        _sprite->addEffect( _effects.at(8), -10 );
+//        _sprite->addEffect( _effects.at(1), 1 );
+
     }
 }
 
