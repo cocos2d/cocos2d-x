@@ -131,7 +131,7 @@
         "project_replace_project_name": {
             "src_project_name": "HelloLua",
             "files": [
-                "res/config.json",
+                "config.json",
                 ".project",
                 "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj",
                 "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.filters",
