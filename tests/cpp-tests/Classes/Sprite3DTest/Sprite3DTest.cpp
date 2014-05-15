@@ -140,10 +140,10 @@ Sprite3D1::Sprite3D1()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     auto s = Director::getInstance()->getWinSize();
-    addNewSpriteWithCoords( Vector2(s.width/2, s.height/2) );
+    addNewSpriteWithCoords( Vec2(s.width/2, s.height/2) );
 }
 
-void Sprite3D1::addNewSpriteWithCoords(Vector2 p)
+void Sprite3D1::addNewSpriteWithCoords(Vec2 p)
 {
     //int idx = (int)(CCRANDOM_0_1() * 1400.0f / 100.0f);
     //int x = (idx%5) * 85;
@@ -161,7 +161,7 @@ void Sprite3D1::addNewSpriteWithCoords(Vector2 p)
     //create outline effect and set the parameter
     Sprite3DOutlineEffect* effect = Sprite3DOutlineEffect::create();
     sprite->setEffect(effect);
-    effect->setOutlineColor(Vector3(1.0f, 1.0f, 0.0f));
+    effect->setOutlineColor(Vec3(1.0f, 1.0f, 0.0f));
     effect->setOutlineWidth(0.3);
     
     
@@ -171,7 +171,7 @@ void Sprite3D1::addNewSpriteWithCoords(Vector2 p)
     //add to scene
     addChild( sprite );
     
-    sprite->setPosition( Vector2( p.x, p.y) );
+    sprite->setPosition( Vec2( p.x, p.y) );
     
     ActionInterval* action;
     float random = CCRANDOM_0_1();

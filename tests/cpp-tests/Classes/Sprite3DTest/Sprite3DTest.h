@@ -56,7 +56,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     
-    void addNewSpriteWithCoords(Vector2 p);
+    void addNewSpriteWithCoords(Vec2 p);
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 };
 
