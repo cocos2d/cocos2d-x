@@ -28,21 +28,14 @@
 #include <string>
 #include <map>
 #include <vector>
-#include <mutex>
 
 #include "cocos2d.h"
 #include "Downloader.h"
+#include "Manifest.h"
 #include "extensions/ExtensionMacros.h"
 #include "json/document.h"
 
 NS_CC_EXT_BEGIN
-
-struct Asset {
-    std::string md5;
-    std::string path;
-    std::string group;
-    bool updating;
-};
 
 /*
  *  This class is used to auto update resources, such as pictures or scripts.
@@ -73,6 +66,18 @@ public:
         UNCOMPRESS,
     };
     
+    enum CheckState
+    {
+        UNCHECKED,
+        PREDOWNLOAD_VERSION,
+        DOWNLOADING_VERSION,
+        VERSION_LOADED,
+        PREDOWNLOAD_MANIFEST,
+        DOWNLOADING_MANIFEST,
+        MANIFEST_LOADED,
+        CHECKED
+    };
+    
     //! The root of writable path
     static std::string s_nWritableRoot;
     
@@ -91,7 +96,7 @@ public:
      *        You may use this method before updating, then let user determine whether
      *        he wants to update resources.
      */
-    virtual bool checkUpdate();
+    void checkUpdate();
     
     //virtual void update();
     
@@ -192,8 +197,6 @@ public:
     
 protected:
     void loadManifest();
-    Asset parseAsset(const rapidjson::Value& json);
-    bool downLoad();
     void adjustStoragePath();
     bool uncompress();
     bool createDirectory(const std::string& path);
@@ -212,6 +215,9 @@ private:
 private:
     
     EventDispatcher *_eventDispatcher;
+    FileUtils *_fileUtils;
+    
+    CheckState _checkState;
     
     //! The path to store downloaded resources.
     std::string _storagePath;
@@ -219,38 +225,11 @@ private:
     //! The path of local manifest file
     std::string _manifestUrl;
     
-    //! The remote path of manifest file
-    std::string _remoteManifestUrl;
+    //! Local manifest
+    Manifest *_localManifest;
     
-    //! The remote path of version file [Optional]
-    std::string _remoteVersionUrl;
-    
-    //! The url of remote package's root
-    std::string _remoteUrl;
-    
-    //! The version of local manifest
-    std::string _currentVer;
-    
-    //! All groups exist in manifest
-    std::vector<std::string> _groups;
-    
-    //! The versions of all local group
-    std::map<std::string, std::string> _groupVer;
-    
-    //! The version of local engine
-    std::string _engineVer;
-    
-    //! The version of remote manifest
-    std::string _remoteManifestVer;
-    
-    //! The versions of all remote group
-    std::map<int, std::string> _remoteGroupVer;
-    
-    //! The version of remote engine
-    std::string _remoteEngineVer;
-    
-    //! Full assets list
-    std::map<std::string, Asset> _assets;
+    //! Remote manifest
+    Manifest *_remoteManifest;
     
     //! Indicate whether the manifest file have been parsed
     bool _manifestLoaded;

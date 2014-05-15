@@ -54,10 +54,12 @@ int downloadProgressFunc(Downloader::ProgressData *ptr, double totalToDownload, 
     if (downloaded != nowDownloaded)
     {
         downloaded = nowDownloaded;
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
-            DownloaderDelegateProtocol* delegate = ptr->downloader->getDelegate();
+        std::string url = ptr->url;
+        std::string customId = ptr->customId;
+        DownloaderDelegateProtocol* delegate = ptr->downloader->getDelegate();
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([url, customId, delegate, totalToDownload]{
             if (delegate)
-                delegate->onProgress(totalToDownload, downloaded, ptr->url, ptr->customId);
+                delegate->onProgress(totalToDownload, downloaded, url, customId);
         });
     }
     
