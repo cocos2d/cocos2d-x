@@ -944,13 +944,13 @@ LayoutExecutant* Layout::createLayoutExecutant()
     LayoutExecutant* exe = nullptr;
     switch (_layoutType)
     {
-        case Layout::Type::VERTICAL:
+        case Type::VERTICAL:
             exe = LinearVerticalLayoutExecutant::create();
             break;
-        case Layout::Type::HORIZONTAL:
+        case Type::HORIZONTAL:
             exe = LinearHorizontalLayoutExecutant::create();
             break;
-        case Layout::Type::RELATIVE:
+        case Type::RELATIVE:
             exe = RelativeLayoutExecutant::create();
             break;
         default:
