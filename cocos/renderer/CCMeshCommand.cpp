@@ -39,6 +39,7 @@ MeshCommand::MeshCommand()
 , _cullFace(GL_BACK)
 , _depthTestEnabled(false)
 , _depthWriteEnabled(false)
+, _displayColor(1.0f, 1.0f, 1.0f, 1.0f)
 {
     _type = RenderCommand::Type::MESH_COMMAND;
 }
@@ -78,6 +79,11 @@ void MeshCommand::setDepthTestEnabled(bool enable)
 void MeshCommand::setDepthWriteEnabled(bool enable)
 {
     _depthWriteEnabled = enable;
+}
+
+void MeshCommand::setDisplayColor(const Vector4& color)
+{
+    _displayColor = color;
 }
 
 MeshCommand::~MeshCommand()
@@ -127,6 +133,7 @@ void MeshCommand::execute()
     GL::blendFunc(_blendType.src, _blendType.dst);
 
     glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
+    _glProgramState->setUniformVec4("u_color", _displayColor);
     _glProgramState->apply(_mv);
     
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);

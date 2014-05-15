@@ -50,11 +50,13 @@ public:
     void setDepthTestEnabled(bool enable);
     
     void setDepthWriteEnabled(bool enable);
+    
+    void setDisplayColor(const Vector4& color);
 
     void execute();
 
 protected:
-    
+    // apply renderstate
     void applyRenderState();
     
     //restore to all false
@@ -65,6 +67,8 @@ protected:
     BlendFunc _blendType;
 
     GLuint _textrueID;
+    
+    Vector4 _displayColor; // in order to support tint and fade in fade out
     
     GLuint _vertexBuffer;
     GLuint _indexBuffer;

@@ -9,7 +9,7 @@
 #include "2d/CCNode.h"
 #include "2d/CCProtocols.h"
 
-#include "renderer/CCCustomCommand.h"
+#include "renderer/CCMeshCommand.h"
 
 NS_CC_BEGIN
 
@@ -46,19 +46,14 @@ protected:
     bool loadFromObj(const std::string& path);
 
     virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
-
-    void onDraw(const Matrix &transform, bool transformUpdated);
     
     virtual GLProgram* getDefGLProgram(bool textured = true);
     
     void genGLProgramState();
-
-    int           getMeshPartCount() const;
     
-    
-
-    CustomCommand     _customCommand;
     Mesh              *_mesh;
+    
+    MeshCommand        _meshCommand;
     
     int               _partcount;
     

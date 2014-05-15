@@ -116,7 +116,7 @@ Sprite3D::Sprite3D()
 , _mesh(nullptr)
 , _effect(nullptr)
 , _texture(nullptr)
-, _blend(BlendFunc::DISABLE)
+, _blend(BlendFunc::ALPHA_NON_PREMULTIPLIED)
 {
 }
 
@@ -221,42 +221,17 @@ void Sprite3D::setEffect(Sprite3DEffect* effect)
 
 void Sprite3D::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
-    _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(Sprite3D::onDraw, this, transform, transformUpdated);
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
-}
-
-void Sprite3D::onDraw(const Matrix &transform, bool transformUpdated)
-{
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
-    GL::blendFunc(_blend.src, _blend.dst);
-    // ********** Base Draw *************
-
+    auto programstate = getGLProgramState();
     Color4F color(getDisplayedColor());
     color.a = getDisplayedOpacity() / 255.0f;
     
-    if (_mesh)
-    {
-        
-        auto programstate = getGLProgramState();
-        
-        programstate->setUniformVec4("u_color", Vector4(color.r, color.g, color.b, color.a));
-        GL::bindTexture2D(_texture->getName());
-        
-        glBindBuffer(GL_ARRAY_BUFFER, _mesh->getVertexBuffer());
-        programstate->apply(transform);
-        
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _mesh->getIndexBuffer());
-        glDrawElements(_mesh->getPrimitiveType(), _mesh->getIndexCount(), _mesh->getIndexFormat(), 0);
-        CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _mesh->getIndexCount());
-        
-        if (_effect)
-            _effect->drawSpriteEffect(transform);
-    }
+    GLuint textureID = _texture ? _texture->getName() : 0;
+    _meshCommand.init(_globalZOrder, textureID, getGLProgramState(), _blend, _mesh->getVertexBuffer(), _mesh->getIndexBuffer(), _mesh->getPrimitiveType(), _mesh->getIndexFormat(), _mesh->getIndexCount(), transform);
     
-    glDisable(GL_DEPTH_TEST);
-    
+    _meshCommand.setCullFaceEnabled(true);
+    _meshCommand.setDepthTestEnabled(true);
+    _meshCommand.setDisplayColor(Vector4(color.r, color.g, color.b, color.a));
+    Director::getInstance()->getRenderer()->addCommand(&_meshCommand);
 }
 
 void Sprite3D::setBlendFunc(const BlendFunc &blendFunc)
