@@ -122,11 +122,12 @@ public:
 
     /**
      * Sets whether the widget is enabled
+     * 
+     * true if the widget is enabled, widget may be touched , false if the widget is disabled, widget cannot be touched.
      *
-     * Highest control of widget.
      * The default value is true, a widget is default to enabled
      *
-     * @param enabled   true if the widget is enabled, widget may be touched and visible, false if the widget is disabled, widget cannot be touched and hidden.
+     * @param enabled
      */
     virtual void setEnabled(bool enabled);
 
@@ -629,11 +630,14 @@ protected:
     Widget* getWidgetParent();
     void updateContentSizeWithTextureSize(const Size& size);
     virtual void adaptRenderers(){};
+    bool isAncestorsEnabled();
+    Widget* getAncensterWidget(Node* node);
+    bool isAncestorsVisible(Node* node);
+
 protected:
     bool _enabled;            ///< Highest control of widget
     bool _bright;             ///< is this widget bright
     bool _touchEnabled;       ///< is this widget touch endabled
-    bool _touchPassedEnabled; ///< is the touch event should be passed
     bool _highlight;              ///< is the widget on focus
     BrightStyle _brightStyle; ///< bright style
     Vec2 _touchStartPos;    ///< touch began point

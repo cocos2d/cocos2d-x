@@ -37,7 +37,6 @@ Widget::Widget():
 _enabled(true),
 _bright(true),
 _touchEnabled(false),
-_touchPassedEnabled(false),
 _highlight(false),
 _brightStyle(BrightStyle::NONE),
 _touchStartPos(Vec2::ZERO),
@@ -68,6 +67,7 @@ _focusEnabled(true)
     onFocusChanged = CC_CALLBACK_2(Widget::onFocusChange,this);
     onNextFocusedWidget = nullptr;
     this->setAnchorPoint(Vec2(0.5f, 0.5f));
+    this->setTouchEnabled(true);
 }
 
 Widget::~Widget()
@@ -122,7 +122,7 @@ void Widget::onExit()
 
 void Widget::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
 {
-    if (_enabled)
+    if (_visible)
     {
         adaptRenderers();
         ProtectedNode::visit(renderer, parentTransform, parentTransformUpdated);
@@ -137,29 +137,6 @@ Widget* Widget::getWidgetParent()
 void Widget::setEnabled(bool enabled)
 {
     _enabled = enabled;
-    for (auto& child : _children)
-    {
-        if (child)
-        {
-            Widget* widgetChild = dynamic_cast<Widget*>(child);
-            if (widgetChild)
-            {
-                widgetChild->setEnabled(enabled);
-            }
-        }
-    }
-    
-    for (auto& child : _protectedChildren)
-    {
-        if (child)
-        {
-            Widget* widgetChild = dynamic_cast<Widget*>(child);
-            if (widgetChild)
-            {
-                widgetChild->setEnabled(enabled);
-            }
-        }
-    }
 }
 
 Widget* Widget::getChildByName(const std::string& name)
@@ -535,11 +512,64 @@ void Widget::onPressStateChangedToDisabled()
 
 }
 
+    
+Widget* Widget::getAncensterWidget(Node* node)
+{
+    if (nullptr == node)
+    {
+        return nullptr;
+    }
+    
+    Node* parent = node->getParent();
+    if (nullptr == parent)
+    {
+        return nullptr;
+    }
+    Widget* parentWidget = dynamic_cast<Widget*>(parent);
+    if (parentWidget)
+    {
+        return parentWidget;
+    }
+    else
+    {
+        return this->getAncensterWidget(parent->getParent());
+    }
+}
+    
+bool Widget::isAncestorsVisible(Node* node)
+{
+    if (nullptr == node)
+    {
+        return true;
+    }
+    Node* parent = node->getParent();
+    
+    if (parent && !parent->isVisible())
+    {
+        return false;
+    }
+    return this->isAncestorsVisible(parent);
+}
+    
+bool Widget::isAncestorsEnabled()
+{
+    Widget* parentWidget = this->getAncensterWidget(this);
+    if (parentWidget == nullptr)
+    {
+        return true;
+    }
+    if (parentWidget && !parentWidget->isEnabled())
+    {
+        return false;
+    }
+    
+    return parentWidget->isAncestorsEnabled();
+}
 
 bool Widget::onTouchBegan(Touch *touch, Event *unusedEvent)
 {
     _hitted = false;
-    if (isEnabled() && isTouchEnabled())
+    if (isVisible() && isEnabled() && isAncestorsEnabled() && isAncestorsVisible(this) )
     {
         _touchStartPos = touch->getLocation();
         if(hitTest(_touchStartPos) && clippingParentAreaContainPoint(_touchStartPos))
@@ -558,7 +588,7 @@ bool Widget::onTouchBegan(Touch *touch, Event *unusedEvent)
         widgetParent->checkChildInfo(0,this,_touchStartPos);
     }
     pushDownEvent();
-    return !_touchPassedEnabled;
+    return true;
 }
 
 void Widget::onTouchMoved(Touch *touch, Event *unusedEvent)
@@ -888,7 +918,6 @@ void Widget::copyProperties(Widget *widget)
     setVisible(widget->isVisible());
     setBright(widget->isBright());
     setTouchEnabled(widget->isTouchEnabled());
-    _touchPassedEnabled = false;
     setLocalZOrder(widget->getLocalZOrder());
     setTag(widget->getTag());
     setName(widget->getName());
