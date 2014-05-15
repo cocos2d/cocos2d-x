@@ -1,5 +1,6 @@
 cocos2d-x-3.1-rc0 May.16 2014
     [FIX]           Math: Vector2->Vec2, Vector3->Vec3, Vector4->Vec4, Matrix->Mat4
+    [FIX]           GLProgram: uniform CC_Texture0 is pre-defined by cocos2d. MUST NOT be defined in shaders
     [FIX]           GLProgramState: Supports multitexturing
     [FIX]           Studio:ActionObject: correct TotalTime of ActionObject
 

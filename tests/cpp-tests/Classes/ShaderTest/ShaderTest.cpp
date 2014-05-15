@@ -747,24 +747,65 @@ std::string ShaderMultiTexture::subtitle() const
     return "MultiTexture";
 }
 
+ui::Slider* ShaderMultiTexture::createSliderCtl()
+{
+    auto screenSize = Director::getInstance()->getWinSize();
+
+    ui::Slider* slider = ui::Slider::create();
+    slider->loadBarTexture("cocosui/sliderTrack.png");
+    slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
+    slider->loadProgressBarTexture("cocosui/sliderProgress.png");
+
+    slider->setPosition(Vec2(screenSize.width / 2.0f, screenSize.height / 3.0f));
+    addChild(slider);
+
+    slider->addEventListener([&](Ref* sender, ui::Slider::EventType type) {
+
+        if (type == ui::Slider::EventType::ON_PERCENTAGE_CHANGED)
+        {
+            ui::Slider* slider = dynamic_cast<ui::Slider*>(sender);
+            float p = slider->getPercent() / 100.0f;
+            _sprite->getGLProgramState()->setUniformFloat("u_interpolate",p);
+        }
+    });
+    return slider;
+}
+
 bool ShaderMultiTexture::init()
 {
     if (ShaderTestDemo::init())
     {
         auto s = Director::getInstance()->getWinSize();
 
-        auto sprite = Sprite::create("Images/grossinis_sister1.png");
+        // Left: normal sprite
+        auto left = Sprite::create("Images/grossinis_sister1.png");
+        addChild(left);
+        left->setPosition(s.width*1/4, s.height/2);
+
+        // Right: normal sprite
+        auto right = Sprite::create("Images/grossinis_sister2.png");
+        addChild(right);
+        right->setPosition(s.width*3/4, s.height/2);
+
+
+        // Center: MultiTexture
+        _sprite = Sprite::create("Images/grossinis_sister1.png");
         Texture2D *texture1 = Director::getInstance()->getTextureCache()->addImage("Images/grossinis_sister2.png");
 
-        addChild(sprite);
+        addChild(_sprite);
 
-        sprite->setPosition(Vec2(s.width/2, s.height/2));
+        _sprite->setPosition(Vec2(s.width/2, s.height/2));
 
         auto glprogram = GLProgram::createWithFilenames("Shaders/example_MultiTexture.vsh", "Shaders/example_MultiTexture.fsh");
         auto glprogramstate = GLProgramState::getOrCreateWithGLProgram(glprogram);
-        sprite->setGLProgramState(glprogramstate);
+        _sprite->setGLProgramState(glprogramstate);
 
         glprogramstate->setUniformTexture("u_texture1", texture1);
+
+
+        // slider
+        createSliderCtl();
+
         return true;
     }
 
