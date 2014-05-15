@@ -850,6 +850,9 @@ Developers:
         
     myourys
         Make cpp template support Eclipse c++ project
+        
+    NatWeiss
+        Fix compilation error using arch i386
     
 Retired Core Developers:
     WenSheng Yang
