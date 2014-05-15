@@ -12,6 +12,7 @@ public:
 
     virtual void onEnter() override;
     virtual void onEnterTransitionDidFinish() override;
+    virtual void onExit() override;
 
     void testDealloc(float dt);
     void onPushScene(Ref* sender);
@@ -26,7 +27,7 @@ class SceneTestLayer2 : public Layer
     float    _timeCounter;
 public:
     SceneTestLayer2();
-
+    virtual void onExit() override;
     void testDealloc(float dt);
     void onGoBack(Ref* sender);
     void onReplaceScene(Ref* sender);
@@ -40,7 +41,10 @@ class SceneTestLayer3 : public LayerColor
 public:
     SceneTestLayer3();
     bool init();
+    virtual void onExit() override;
     virtual void testDealloc(float dt);
+    virtual void cleanup() override;
+
     void item0Clicked(Ref* sender);
     void item1Clicked(Ref* sender);
     void item2Clicked(Ref* sender);
