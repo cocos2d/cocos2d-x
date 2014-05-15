@@ -938,6 +938,27 @@ const Vector<Node*>& Layout::getLayoutChildren()
 {
     return this->getChildren();
 }
+    
+LayoutExecutant* Layout::createLayoutExecutant()
+{
+    LayoutExecutant* exe = nullptr;
+    switch (_layoutType)
+    {
+        case Layout::Type::VERTICAL:
+            exe = LinearVerticalLayoutExecutant::create();
+            break;
+        case Layout::Type::HORIZONTAL:
+            exe = LinearHorizontalLayoutExecutant::create();
+            break;
+        case Layout::Type::RELATIVE:
+            exe = RelativeLayoutExecutant::create();
+            break;
+        default:
+            break;
+    }
+    return exe;
+
+}
 
 void Layout::doLayout()
 {

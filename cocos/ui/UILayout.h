@@ -42,6 +42,7 @@ public:
     virtual LayoutExecutant* createLayoutExecutant() = 0;
     virtual const Size getLayoutSize() = 0;
     virtual const Vector<Node*>& getLayoutChildren() = 0;
+    virtual void doLayout() = 0;
 };
 
 /**
@@ -326,10 +327,10 @@ protected:
     void setStencilClippingSize(const Size& size);
     const Rect& getClippingRect();
     
-    virtual void doLayout();
-    virtual LayoutExecutant* createLayoutExecutant();
-    virtual const Size getLayoutSize();
-    virtual const Vector<Node*>& getLayoutChildren() ;
+    virtual void doLayout()override;
+    virtual LayoutExecutant* createLayoutExecutant()override;
+    virtual const Size getLayoutSize()override;
+    virtual const Vector<Node*>& getLayoutChildren() override;
     
     //clipping
     void onBeforeVisitStencil();
