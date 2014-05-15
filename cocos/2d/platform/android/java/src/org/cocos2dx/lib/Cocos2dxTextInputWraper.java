@@ -122,25 +122,30 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 	@Override
 	public boolean onEditorAction(final TextView pTextView, final int pActionID, final KeyEvent pKeyEvent) {
 		if (this.mCocos2dxGLSurfaceView.getCocos2dxEditText() == pTextView && this.isFullScreenEdit()) {
-			// user press the action button, delete all old text and insert new text
-			for (int i = this.mOriginText.length(); i > 0; i--) {
-				this.mCocos2dxGLSurfaceView.deleteBackward();
-				/*
-				if (BuildConfig.DEBUG) {
-					Log.d(TAG, "deleteBackward");
+			if (null != mOriginText) {
+				// user press the action button, delete all old text and insert new text
+				for (int i = this.mOriginText.length(); i > 0; i--) {
+					this.mCocos2dxGLSurfaceView.deleteBackward();
+					/*
+					if (BuildConfig.DEBUG) {
+						Log.d(TAG, "deleteBackward");
+					}
+					*/
 				}
-				*/
 			}
+			
 			String text = pTextView.getText().toString();
+			if (null != text) {
+				/* If user input nothing, translate "\n" to engine. */
+				if (text.compareTo("") == 0) {
+					text = "\n";
+				}
 
-			/* If user input nothing, translate "\n" to engine. */
-			if (text.compareTo("") == 0) {
-				text = "\n";
+				if ('\n' != text.charAt(text.length() - 1)) {
+					text += '\n';
+				}
 			}
-
-			if ('\n' != text.charAt(text.length() - 1)) {
-				text += '\n';
-			}
+		
 
 			final String insertText = text;
 			this.mCocos2dxGLSurfaceView.insertText(insertText);
