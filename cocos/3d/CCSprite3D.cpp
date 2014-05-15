@@ -83,11 +83,12 @@ bool Sprite3D::loadFromObj(const std::string& path)
         return false;
     
     //convert to mesh and material
-    std::vector<std::vector<unsigned short> > indices;
+    std::vector<unsigned short> indices;
     std::vector<std::string> matnames;
     for (auto it = shapes.shapes.begin(); it != shapes.shapes.end(); it++)
     {
-        indices.push_back((*it).mesh.indices);
+        indices.insert(indices.end(), (*it).mesh.indices.begin(),(*it).mesh.indices.end());
+        //indices.push_back((*it).mesh.indices);
         matnames.push_back(dir + (*it).material.diffuse_texname);
     }
     _mesh = Mesh::create(shapes.positions, shapes.normals, shapes.texcoords, indices);
@@ -139,8 +140,6 @@ bool Sprite3D::initWithFile(const std::string &path)
     {
         _mesh = mesh;
         _mesh->retain();
-        
-        _partcount = mesh->getMeshPartCount();
         
         auto tex = Sprite3DDataCache::getInstance()->getSprite3DTexture(path);
         setTexture(tex);
@@ -239,22 +238,18 @@ void Sprite3D::onDraw(const Matrix &transform, bool transformUpdated)
     
     if (_mesh)
     {
-        for (int i = 0; i < _mesh->getMeshPartCount(); i++)
-        {
-            auto meshPart = _mesh->getMeshPart(i);
-            auto programstate = getGLProgramState();
-            
-            
-            programstate->setUniformVec4("u_color", Vector4(color.r, color.g, color.b, color.a));
-            GL::bindTexture2D(_texture->getName());
-            
-            glBindBuffer(GL_ARRAY_BUFFER, _mesh->getVertexBuffer());
-            programstate->apply(transform);
-            
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshPart->getIndexBuffer());
-            glDrawElements(meshPart->getPrimitiveType(), meshPart->getIndexCount(), meshPart->getIndexFormat(), 0);
-            CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, meshPart->getIndexCount());
-        }
+        
+        auto programstate = getGLProgramState();
+        
+        programstate->setUniformVec4("u_color", Vector4(color.r, color.g, color.b, color.a));
+        GL::bindTexture2D(_texture->getName());
+        
+        glBindBuffer(GL_ARRAY_BUFFER, _mesh->getVertexBuffer());
+        programstate->apply(transform);
+        
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _mesh->getIndexBuffer());
+        glDrawElements(_mesh->getPrimitiveType(), _mesh->getIndexCount(), _mesh->getIndexFormat(), 0);
+        CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _mesh->getIndexCount());
         
         if (_effect)
             _effect->drawSpriteEffect(transform);

@@ -25,7 +25,7 @@ bool RenderMeshData::hasVertexAttrib(int attrib)
     return false;
 }
 
-bool RenderMeshData::initFrom(std::vector<float>& posions, std::vector<float>& normals, std::vector<float>& texs, const std::vector<std::vector<unsigned short> >& partindices)
+bool RenderMeshData::initFrom(std::vector<float>& posions, std::vector<float>& normals, std::vector<float>& texs, const std::vector<unsigned short>& indices)
 {
     CC_ASSERT(posions.size()<65536 * 3 && "index may out of bound");
     
@@ -35,7 +35,6 @@ bool RenderMeshData::initFrom(std::vector<float>& posions, std::vector<float>& n
     vertexNum = posions.size() / 3; //number of vertex
     if (vertexNum == 0)
         return false;
-    
     
     if ((normals.size() != 0 && vertexNum * 3 != normals.size()) || (texs.size() != 0 && vertexNum * 2 != texs.size()))
         return false;
@@ -90,7 +89,7 @@ bool RenderMeshData::initFrom(std::vector<float>& posions, std::vector<float>& n
             _vertexs.push_back(texs[i * 2 + 1]);
         }
     }
-    _partindices = partindices;
+    _indices = indices;
     
     return true;
 }
@@ -114,17 +113,17 @@ Mesh::~Mesh()
 
 void Mesh::releaseMeshPart()
 {
-    for (unsigned int i = 0; i < _partCount; ++i)
-    {
-        delete _parts[i];
-    }
-    delete _parts;
+//    for (unsigned int i = 0; i < _partCount; ++i)
+//    {
+//        delete _parts[i];
+//    }
+//    delete _parts;
 }
 
-Mesh* Mesh::create(std::vector<float>& posions, std::vector<float>& normals, std::vector<float>& texs, const std::vector<std::vector<unsigned short> >& partindices)
+Mesh* Mesh::create(std::vector<float>& posions, std::vector<float>& normals, std::vector<float>& texs, const std::vector<unsigned short>& indices)
 {
     auto mesh = new Mesh();
-    if(mesh && mesh->init(posions, normals, texs, partindices))
+    if(mesh && mesh->init(posions, normals, texs, indices))
     {
         mesh->autorelease();
         return mesh;
@@ -133,10 +132,10 @@ Mesh* Mesh::create(std::vector<float>& posions, std::vector<float>& normals, std
     return nullptr;
 }
 
-bool Mesh::init(std::vector<float>& posions, std::vector<float>& normals, std::vector<float>& texs, const std::vector<std::vector<unsigned short> >& partindices)
+bool Mesh::init(std::vector<float>& posions, std::vector<float>& normals, std::vector<float>& texs, const std::vector<unsigned short>& indices)
 {
     
-    bool bRet = _renderdata.initFrom(posions, normals, texs, partindices);
+    bool bRet = _renderdata.initFrom(posions, normals, texs, indices);
     if (!bRet)
         return false;
     
@@ -168,26 +167,26 @@ void Mesh::buildBuffer()
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void Mesh::addMeshPart(PrimitiveType primitiveType, IndexFormat indexformat,  void* indexData, unsigned int indexCount)
-{
-    MeshPart* part = MeshPart::create(this, _partCount, primitiveType, indexformat, indexData, indexCount);
-    if (part)
-    {
-        // Increase size of part array and copy old subets into it.
-        MeshPart** oldParts = _parts;
-        _parts = new MeshPart*[_partCount + 1];
-        for (unsigned int i = 0; i < _partCount; ++i)
-        {
-            _parts[i] = oldParts[i];
-        }
-        
-        // Add new part to array.
-        _parts[_partCount++] = part;
-        
-        // Delete old part array.
-        delete[] (oldParts);
-    }
-}
+//void Mesh::addMeshPart(PrimitiveType primitiveType, IndexFormat indexformat,  void* indexData, unsigned int indexCount)
+//{
+//    MeshPart* part = MeshPart::create(this, _partCount, primitiveType, indexformat, indexData, indexCount);
+//    if (part)
+//    {
+//        // Increase size of part array and copy old subets into it.
+//        MeshPart** oldParts = _parts;
+//        _parts = new MeshPart*[_partCount + 1];
+//        for (unsigned int i = 0; i < _partCount; ++i)
+//        {
+//            _parts[i] = oldParts[i];
+//        }
+//        
+//        // Add new part to array.
+//        _parts[_partCount++] = part;
+//        
+//        // Delete old part array.
+//        delete[] (oldParts);
+//    }
+//}
 
 void Mesh::restore()
 {
@@ -195,10 +194,23 @@ void Mesh::restore()
     
     buildBuffer();
     
-    for (auto i = 0; i < _renderdata._partindices.size(); i++) {
-        auto& idxs = _renderdata._partindices[i];
-        addMeshPart(PrimitiveType_TRIANGLES, IndexFormat_INDEX16, (void*)&idxs[0], idxs.size());
-    }
+    GLuint vbo;
+    glGenBuffers(1, &vbo);
+    
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo);
+    
+    unsigned int indexSize = 2;
+    IndexFormat indexformat = IndexFormat_INDEX16;
+    
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexSize * _renderdata._indices.size(), &_renderdata._indices[0], GL_STATIC_DRAW);
+    
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    
+    _primitiveType = PrimitiveType_TRIANGLES;
+    _indexFormat = indexformat;
+    _indexCount = _renderdata._indices.size();
+    _indexBuffer = vbo;
+    
 }
 
 NS_CC_END
