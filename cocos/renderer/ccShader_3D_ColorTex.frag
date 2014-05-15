@@ -1,5 +1,5 @@
 
-static const char* baseTexturedFrag = STRINGIFY(
+const char* cc3D_ColorTex_frag = STRINGIFY(
 
 #ifdef GL_ES
 varying mediump vec2 TextureCoordOut;

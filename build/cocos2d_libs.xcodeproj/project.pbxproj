@@ -1087,8 +1087,6 @@
 		3E92EA5E19215FA10094CD21 /* CCSprite3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E92EA5519215FA10094CD21 /* CCSprite3D.cpp */; };
 		3E92EA5F19215FA10094CD21 /* CCSprite3D.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA5619215FA10094CD21 /* CCSprite3D.h */; };
 		3E92EA6019215FA10094CD21 /* CCSprite3D.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA5619215FA10094CD21 /* CCSprite3D.h */; };
-		3E92EA6519215FA10094CD21 /* Textured.es2.frag.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA5919215FA10094CD21 /* Textured.es2.frag.h */; };
-		3E92EA6619215FA10094CD21 /* Textured.es2.frag.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA5919215FA10094CD21 /* Textured.es2.frag.h */; };
 		3E92EA6719215FA10094CD21 /* Textured.es2.vert.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA5A19215FA10094CD21 /* Textured.es2.vert.h */; };
 		3E92EA6819215FA10094CD21 /* Textured.es2.vert.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA5A19215FA10094CD21 /* Textured.es2.vert.h */; };
 		3EA0FB6B191C841D00B170C8 /* UIVideoPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EA0FB69191C841D00B170C8 /* UIVideoPlayer.h */; };
@@ -2327,7 +2325,6 @@
 		3E92EA5419215FA10094CD21 /* Colored.es2.frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Colored.es2.frag.h; path = ../cocos/3d/Colored.es2.frag.h; sourceTree = "<group>"; };
 		3E92EA5519215FA10094CD21 /* CCSprite3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCSprite3D.cpp; path = ../cocos/3d/CCSprite3D.cpp; sourceTree = "<group>"; };
 		3E92EA5619215FA10094CD21 /* CCSprite3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCSprite3D.h; path = ../cocos/3d/CCSprite3D.h; sourceTree = "<group>"; };
-		3E92EA5919215FA10094CD21 /* Textured.es2.frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Textured.es2.frag.h; path = ../cocos/3d/Textured.es2.frag.h; sourceTree = "<group>"; };
 		3E92EA5A19215FA10094CD21 /* Textured.es2.vert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Textured.es2.vert.h; path = ../cocos/3d/Textured.es2.vert.h; sourceTree = "<group>"; };
 		3EA0FB69191C841D00B170C8 /* UIVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIVideoPlayer.h; sourceTree = "<group>"; };
 		3EA0FB6A191C841D00B170C8 /* UIVideoPlayerIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UIVideoPlayerIOS.mm; sourceTree = "<group>"; };
@@ -2824,6 +2821,9 @@
 		A07A4F3B178387670073F6A7 /* libchipmunk iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libchipmunk iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A07A4F9E1783876B0073F6A7 /* libbox2d iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libbox2d iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A07A4FB4178387730073F6A7 /* libCocosDenshion iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libCocosDenshion iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2507B5B19255B9400FA4972 /* ccShader_3D_Color.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_Color.frag; sourceTree = "<group>"; };
+		B2507B5C19255B9400FA4972 /* ccShader_3D_ColorTex.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_ColorTex.frag; sourceTree = "<group>"; };
+		B2507B5D19255B9400FA4972 /* ccShader_3D_PositionTex.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_PositionTex.vert; sourceTree = "<group>"; };
 		B2AF2F8218EBAEAE00C5807C /* MathUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MathUtil.cpp; sourceTree = "<group>"; };
 		B2AF2F8318EBAEAE00C5807C /* MathUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathUtil.h; sourceTree = "<group>"; };
 		B2AF2F8418EBAEAE00C5807C /* MathUtil.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MathUtil.inl; sourceTree = "<group>"; };
@@ -4072,7 +4072,6 @@
 				3E92EA5419215FA10094CD21 /* Colored.es2.frag.h */,
 				3E92EA5519215FA10094CD21 /* CCSprite3D.cpp */,
 				3E92EA5619215FA10094CD21 /* CCSprite3D.h */,
-				3E92EA5919215FA10094CD21 /* Textured.es2.frag.h */,
 				3E92EA5A19215FA10094CD21 /* Textured.es2.vert.h */,
 				3E92EA4C192130D70094CD21 /* CCSprite3DDataCache.cpp */,
 				3E92EA4D192130D70094CD21 /* CCSprite3DDataCache.h */,
@@ -4716,6 +4715,9 @@
 		5034CA5D191D591900CE6051 /* shaders */ = {
 			isa = PBXGroup;
 			children = (
+				B2507B5B19255B9400FA4972 /* ccShader_3D_Color.frag */,
+				B2507B5C19255B9400FA4972 /* ccShader_3D_ColorTex.frag */,
+				B2507B5D19255B9400FA4972 /* ccShader_3D_PositionTex.vert */,
 				5034CA60191D91CF00CE6051 /* ccShader_PositionTextureColor.vert */,
 				5034CA61191D91CF00CE6051 /* ccShader_PositionTextureColor.frag */,
 				5034CA62191D91CF00CE6051 /* ccShader_PositionTextureColor_noMVP.vert */,
@@ -5261,7 +5263,6 @@
 				1AD71EE7180E26E600808F54 /* spine-cocos2dx.h in Headers */,
 				1AD71EE9180E26E600808F54 /* spine.h in Headers */,
 				1AAF536C180E3374000584C8 /* HttpClient.h in Headers */,
-				3E92EA6519215FA10094CD21 /* Textured.es2.frag.h in Headers */,
 				1AAF536E180E3374000584C8 /* HttpRequest.h in Headers */,
 				500DC99019106300007B91BF /* CCRef.h in Headers */,
 				1AAF5370180E3374000584C8 /* HttpResponse.h in Headers */,
@@ -5798,7 +5799,6 @@
 				1A8C59CA180E930E00EF57C3 /* CCComRender.h in Headers */,
 				1A8C59CE180E930E00EF57C3 /* CCDataReaderHelper.h in Headers */,
 				1A8C59D2180E930E00EF57C3 /* CCDatas.h in Headers */,
-				3E92EA6619215FA10094CD21 /* Textured.es2.frag.h in Headers */,
 				ED9C6A9718599AD8000A5232 /* CCNodeGrid.h in Headers */,
 				1A8C59D6180E930E00EF57C3 /* CCDecorativeDisplay.h in Headers */,
 				1A01C69318F57BE800EFE3A6 /* CCDouble.h in Headers */,

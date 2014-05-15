@@ -10,11 +10,11 @@
 #include "2d/CCTextureCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGLProgramState.h"
+#include "renderer/CCGLProgramCache.h"
 
 //begin include shader file
 #define STRINGIFY(A)  #A
 #include "Textured.es2.vert.h"
-#include "Textured.es2.frag.h"
 #include "Colored.es2.frag.h"
 //end include shader file
 
@@ -176,23 +176,31 @@ void Sprite3D::genGLProgramState()
 
 GLProgram* Sprite3D::getDefGLProgram(bool textured)
 {
-    static GLProgram s_defGLProgramTex;
-    static GLProgram s_defGLProgram;
-    if(textured && s_defGLProgramTex.getProgram() == 0)
+    if(textured)
     {
-        s_defGLProgramTex.initWithByteArrays(baseVertexShader, baseTexturedFrag);
-        s_defGLProgramTex.link();
-        s_defGLProgramTex.updateUniforms();
+        return GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION_TEXTURE);
     }
-    
-    if(!textured && s_defGLProgram.getProgram() == 0)
+    else
     {
-        s_defGLProgram.initWithByteArrays(baseVertexShader, baseTexturedFrag);
-        s_defGLProgram.link();
-        s_defGLProgram.updateUniforms();
+        return GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION);
     }
-    
-    return textured ? &s_defGLProgramTex : &s_defGLProgram;
+//    static GLProgram s_defGLProgramTex;
+//    static GLProgram s_defGLProgram;
+//    if(textured && s_defGLProgramTex.getProgram() == 0)
+//    {
+//        s_defGLProgramTex.initWithByteArrays(baseVertexShader, baseTexturedFrag);
+//        s_defGLProgramTex.link();
+//        s_defGLProgramTex.updateUniforms();
+//    }
+//    
+//    if(!textured && s_defGLProgram.getProgram() == 0)
+//    {
+//        s_defGLProgram.initWithByteArrays(baseVertexShader, baseTexturedFrag);
+//        s_defGLProgram.link();
+//        s_defGLProgram.updateUniforms();
+//    }
+//    
+//    return textured ? &s_defGLProgramTex : &s_defGLProgram;
 }
 
 
@@ -238,7 +246,6 @@ void Sprite3D::onDraw(const Matrix &transform, bool transformUpdated)
     
     if (_mesh)
     {
-        
         auto programstate = getGLProgramState();
         
         programstate->setUniformVec4("u_color", Vector4(color.r, color.g, color.b, color.a));
