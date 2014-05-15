@@ -16,71 +16,6 @@ using namespace std;
 
 NS_CC_BEGIN
 
-std::vector<float>& RenderMeshData::generateNormals(std::vector<float>& posions, std::vector<float>& texs, const std::vector<std::vector<unsigned short> >& partindices)
-{
-    static std::vector<float> _normalVertexLists;
-    
-    _normalVertexLists.clear();
-    
-    if (partindices.size() == 0)
-        return _normalVertexLists;
-    
-    
-    //generate normal using positions
-    int numVertex = posions.size() / 3;
-    
-    std::vector<Vector3> normals;
-    normals.reserve(numVertex);
-    
-    Vector3 v1, v2, v3, fn;
-    
-    std::vector<std::vector<Vector3>> faceVertexNormalList;
-    faceVertexNormalList.resize(numVertex);
-    
-    for (const auto& partIndex : partindices)
-    {
-        int triangles = partIndex.size() / 3;
-        for (int i = 0; i < triangles; i++)
-        {
-            int triangleIdx = i * 3;
-            v1.set(posions[partIndex[triangleIdx] ], posions[partIndex[triangleIdx]+1 ], posions[partIndex[triangleIdx] + 2 ]);
-            v2.set(posions[partIndex[triangleIdx + 1] ], posions[partIndex[triangleIdx + 1] + 1 ], posions[partIndex[triangleIdx + 1] + 2 ]);
-            v3.set(posions[partIndex[triangleIdx + 2] ], posions[partIndex[triangleIdx + 2] + 1 ], posions[partIndex[triangleIdx + 2] + 2 ]);
-            
-            Vector3::cross(v2 - v1, v3 - v2, &fn);
-            fn.normalize();
-            faceVertexNormalList[partIndex[triangleIdx] ].push_back(fn);
-            faceVertexNormalList[partIndex[triangleIdx + 1] ].push_back(fn);
-            faceVertexNormalList[partIndex[triangleIdx + 2] ].push_back(fn);
-        }
-    }
-    
-    
-    _normalVertexLists.resize(faceVertexNormalList.size() * 3);
-    for (int index = 0; index < faceVertexNormalList.size(); ++index)
-    {
-        int idx = 3 * index;
-        _normalVertexLists[idx] = 0;
-        _normalVertexLists[idx + 1] = 0;
-        _normalVertexLists[idx + 2] = 0;
-        
-        for (const auto& facenormal : faceVertexNormalList[index])
-        {
-            _normalVertexLists[idx] += facenormal.x;
-            _normalVertexLists[idx + 1] += facenormal.y;
-            _normalVertexLists[idx + 2] += facenormal.z;
-        }
-        
-        float len = _normalVertexLists[idx] * _normalVertexLists[idx] + _normalVertexLists[idx + 1] * _normalVertexLists[idx + 1] + _normalVertexLists[idx + 2] * _normalVertexLists[idx + 2];
-        len = sqrtf(len) * faceVertexNormalList[index].size();
-        
-        _normalVertexLists[idx] /= len;
-        _normalVertexLists[idx + 1] /= len;
-        _normalVertexLists[idx + 2] /= len;
-    }
-    return _normalVertexLists;
-}
-
 bool RenderMeshData::hasVertexAttrib(int attrib)
 {
     for (auto itr = _vertexAttribs.begin(); itr != _vertexAttribs.end(); itr++) {
@@ -88,84 +23,6 @@ bool RenderMeshData::hasVertexAttrib(int attrib)
             return true; //already has normal
     }
     return false;
-}
-
-bool RenderMeshData::generateNormals()
-{
-    if (_partindices.size() == 0)
-        return false;
-    
-    if (hasVertexAttrib(GLProgram::VERTEX_ATTRIB_NORMAL))
-        return true;
-
-    //generate normal using positions
-    int numVertex = _vertexs.size() / vertexNum;
-    
-    std::vector<Vector3> normals;
-    normals.reserve(numVertex);
-    
-    Vector3 v1, v2, v3, fn;
-    
-    std::vector<std::vector<Vector3>> faceVertexNormalList;
-    faceVertexNormalList.resize(numVertex);
-    
-    for (const auto& partIndex : _partindices)
-    {
-        int triangles = partIndex.size() / 3;
-        for (int i = 0; i < triangles; i++)
-        {
-            int triangleIdx = i * 3;
-            v1.set(_vertexs[partIndex[triangleIdx] ], _vertexs[partIndex[triangleIdx]+1 ], _vertexs[partIndex[triangleIdx] + 2 ]);
-            v2.set(_vertexs[partIndex[triangleIdx + 1] ], _vertexs[partIndex[triangleIdx + 1] + 1 ], _vertexs[partIndex[triangleIdx + 1] + 2 ]);
-            v3.set(_vertexs[partIndex[triangleIdx + 2] ], _vertexs[partIndex[triangleIdx + 2] + 1 ], _vertexs[partIndex[triangleIdx + 2] + 2 ]);
-            
-            Vector3::cross(v2 - v1, v3 - v2, &fn);
-            fn.normalize();
-            faceVertexNormalList[partIndex[triangleIdx] ].push_back(fn);
-            faceVertexNormalList[partIndex[triangleIdx + 1] ].push_back(fn);
-            faceVertexNormalList[partIndex[triangleIdx + 2] ].push_back(fn);
-        }
-    }
-    
-    std::vector<Vector3> _normalVertexLists;
-    _normalVertexLists.resize(faceVertexNormalList.size());
-    for (int index = 0; index < _normalVertexLists.size(); ++index)
-    {
-        _normalVertexLists[index] = Vector3(0,0,0);
-        for (const auto& facenormal : faceVertexNormalList[index])
-        {
-            _normalVertexLists[index] += facenormal;
-        }
-        
-        _normalVertexLists[index] *= 1.0f / faceVertexNormalList[index].size();
-        _normalVertexLists[index].normalize();
-    }
-    
-    //insert normals to _vertexs
-    int vertexsize = vertexsizeBytes / sizeof(float);
-    std::vector<float> vertexs((vertexsize + 3) * numVertex);
-    
-    for (int i = 0; i < numVertex; i++)
-    {
-        int idx = i * vertexsize;
-        vertexs.push_back(_vertexs[idx]);
-        vertexs.push_back(_vertexs[idx + 1]);
-        vertexs.push_back(_vertexs[idx + 2]);
-        idx = i * 3;
-        vertexs.push_back(_normalVertexLists[idx].x);
-        vertexs.push_back(_normalVertexLists[idx].y);
-        vertexs.push_back(_normalVertexLists[idx].z);
-        if (hasVertexAttrib(GLProgram::VERTEX_ATTRIB_TEX_COORD))
-        {
-            idx = i * vertexsize;
-            vertexs.push_back(_vertexs[idx + 3]);
-            vertexs.push_back(_vertexs[idx + 4]);
-        }
-        
-    }
-    _vertexs = vertexs;
-    
-    return true;
 }
 
 bool RenderMeshData::initFrom(std::vector<float>& posions, std::vector<float>& normals, std::vector<float>& texs, const std::vector<std::vector<unsigned short> >& partindices)
@@ -182,9 +39,6 @@ bool RenderMeshData::initFrom(std::vector<float>& posions, std::vector<float>& n
     
     if ((normals.size() != 0 && vertexNum * 3 != normals.size()) || (texs.size() != 0 && vertexNum * 2 != texs.size()))
         return false;
-    
-    if (normals.size() == 0)
-        normals = generateNormals(posions, texs, partindices);
     
     vertexsizeBytes += 3;
     MeshVertexAttrib meshvertexattrib;

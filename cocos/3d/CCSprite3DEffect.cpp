@@ -46,7 +46,10 @@ Sprite3DOutlineEffect* Sprite3DOutlineEffect::create()
     return effect;
 }
 
-Sprite3DOutlineEffect::Sprite3DOutlineEffect(): _outlineWidth(0.1), _outlineColor(1.f, 1.f, 1.f)
+Sprite3DOutlineEffect::Sprite3DOutlineEffect()
+: _outlineWidth(0.1)
+, _outlineColor(1.f, 1.f, 1.f)
+, _hasNormal(false)
 {
     
 }
@@ -61,9 +64,17 @@ bool Sprite3DOutlineEffect::initEffect(Sprite3D* sprite)
     CC_SAFE_RETAIN(sprite);
     _sprite = sprite;
     
-    GLProgram* program = GLProgram::createWithByteArrays(outLineShader, blackFrag);
+    _hasNormal = _sprite->getMesh()->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_NORMAL);
     
-    auto glProgramState = GLProgramState::getOrCreateWithGLProgram(program);
+    static GLProgram s_defGLProgram;
+    if(s_defGLProgram.getProgram() == 0)
+    {
+        s_defGLProgram.initWithByteArrays(baseVertexShader, baseTexturedFrag);
+        s_defGLProgram.link();
+        s_defGLProgram.updateUniforms();
+    }
+    
+    auto glProgramState = GLProgramState::getOrCreateWithGLProgram(&s_defGLProgram);
     
     setGLProgramState(glProgramState);
     
@@ -116,24 +127,31 @@ void Sprite3DOutlineEffect::setOutlineWidth(float width)
 
 void Sprite3DOutlineEffect::drawSpriteEffect(const Matrix &transform)
 {
-    glCullFace(GL_FRONT);
-    
-    Color4F color(_sprite->getDisplayedColor());
-    color.a = _sprite->getDisplayedOpacity() / 255.0f;
-    
-    _glProgramState->setUniformVec4("u_color", Vector4(color.r, color.g, color.b, color.a));
-    
-    auto mesh = _sprite->getMesh();
-    for (int i = 0; i < mesh->getMeshPartCount(); i++)
+    if (_hasNormal)
     {
-        auto meshPart = mesh->getMeshPart(i);
-        glBindBuffer(GL_ARRAY_BUFFER, mesh->getVertexBuffer());
-        _glProgramState->apply(transform);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshPart->getIndexBuffer());
-        glDrawElements(meshPart->getPrimitiveType(), meshPart->getIndexCount(), meshPart->getIndexFormat(), 0);
+        glCullFace(GL_FRONT);
+        
+        Color4F color(_sprite->getDisplayedColor());
+        color.a = _sprite->getDisplayedOpacity() / 255.0f;
+        
+        _glProgramState->setUniformVec4("u_color", Vector4(color.r, color.g, color.b, color.a));
+        
+        auto mesh = _sprite->getMesh();
+        for (int i = 0; i < mesh->getMeshPartCount(); i++)
+        {
+            auto meshPart = mesh->getMeshPart(i);
+            glBindBuffer(GL_ARRAY_BUFFER, mesh->getVertexBuffer());
+            _glProgramState->apply(transform);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshPart->getIndexBuffer());
+            glDrawElements(meshPart->getPrimitiveType(), meshPart->getIndexCount(), meshPart->getIndexFormat(), 0);
+        }
+        
+        glCullFace(GL_BACK);
     }
-    
-    glCullFace(GL_BACK);
+    else
+    {
+        CCLOGWARN("normal not exist, outline effect is not avaliable");
+    }
 }
 
 NS_CC_END

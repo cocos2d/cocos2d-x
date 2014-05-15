@@ -50,10 +50,6 @@ public:
     bool hasVertexAttrib(int attrib);
     
     bool initFrom(std::vector<float>& posions, std::vector<float>& normals, std::vector<float>& texs, const std::vector<std::vector<unsigned short> >& partindices);
-    
-    static std::vector<float>& generateNormals(std::vector<float>& posions, std::vector<float>& texs, const std::vector<std::vector<unsigned short> >& partindices);
-    
-    bool generateNormals();
 };
 
 

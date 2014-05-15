@@ -56,6 +56,7 @@ protected:
 
     Vector3 _outlineColor;
     float _outlineWidth;
+    bool _hasNormal;
 };
 
 NS_CC_END
