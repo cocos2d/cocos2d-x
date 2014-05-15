@@ -755,6 +755,7 @@ ui::Slider* ShaderMultiTexture::createSliderCtl()
     slider->loadBarTexture("cocosui/sliderTrack.png");
     slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
     slider->loadProgressBarTexture("cocosui/sliderProgress.png");
+    slider->setPercent(50);
 
     slider->setPosition(Vec2(screenSize.width / 2.0f, screenSize.height / 3.0f));
     addChild(slider);
@@ -801,7 +802,7 @@ bool ShaderMultiTexture::init()
         _sprite->setGLProgramState(glprogramstate);
 
         glprogramstate->setUniformTexture("u_texture1", texture1);
-
+        glprogramstate->setUniformFloat("u_interpolate",0.5);
 
         // slider
         createSliderCtl();
