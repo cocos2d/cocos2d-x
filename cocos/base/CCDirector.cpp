@@ -288,14 +288,14 @@ void Director::drawScene()
     // draw the scene
     if (_runningScene)
     {
-        _runningScene->visit(_renderer, Matrix::IDENTITY, false);
+        _runningScene->visit(_renderer, Mat4::IDENTITY, false);
         _eventDispatcher->dispatchEvent(_eventAfterVisit);
     }
 
     // draw the notifications node
     if (_notificationNode)
     {
-        _notificationNode->visit(_renderer, Matrix::IDENTITY, false);
+        _notificationNode->visit(_renderer, Mat4::IDENTITY, false);
     }
 
     if (_displayStats)
@@ -449,9 +449,9 @@ void Director::initMatrixStack()
         _textureMatrixStack.pop();
     }
     
-    _modelViewMatrixStack.push(Matrix::IDENTITY);
-    _projectionMatrixStack.push(Matrix::IDENTITY);
-    _textureMatrixStack.push(Matrix::IDENTITY);
+    _modelViewMatrixStack.push(Mat4::IDENTITY);
+    _projectionMatrixStack.push(Mat4::IDENTITY);
+    _textureMatrixStack.push(Mat4::IDENTITY);
 }
 
 void Director::resetMatrixStack()
@@ -483,15 +483,15 @@ void Director::loadIdentityMatrix(MATRIX_STACK_TYPE type)
 {
     if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
     {
-        _modelViewMatrixStack.top() = Matrix::IDENTITY;
+        _modelViewMatrixStack.top() = Mat4::IDENTITY;
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
     {
-        _projectionMatrixStack.top() = Matrix::IDENTITY;
+        _projectionMatrixStack.top() = Mat4::IDENTITY;
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
     {
-        _textureMatrixStack.top() = Matrix::IDENTITY;
+        _textureMatrixStack.top() = Mat4::IDENTITY;
     }
     else
     {
@@ -499,7 +499,7 @@ void Director::loadIdentityMatrix(MATRIX_STACK_TYPE type)
     }
 }
 
-void Director::loadMatrix(MATRIX_STACK_TYPE type, const Matrix& mat)
+void Director::loadMatrix(MATRIX_STACK_TYPE type, const Mat4& mat)
 {
     if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
     {
@@ -519,7 +519,7 @@ void Director::loadMatrix(MATRIX_STACK_TYPE type, const Matrix& mat)
     }
 }
 
-void Director::multiplyMatrix(MATRIX_STACK_TYPE type, const Matrix& mat)
+void Director::multiplyMatrix(MATRIX_STACK_TYPE type, const Mat4& mat)
 {
     if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
     {
@@ -559,9 +559,9 @@ void Director::pushMatrix(MATRIX_STACK_TYPE type)
     }
 }
 
-Matrix Director::getMatrix(MATRIX_STACK_TYPE type)
+Mat4 Director::getMatrix(MATRIX_STACK_TYPE type)
 {
-    Matrix result;
+    Mat4 result;
     if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
     {
         result = _modelViewMatrixStack.top();
@@ -608,8 +608,8 @@ void Director::setProjection(Projection projection)
                 multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, getOpenGLView()->getOrientationMatrix());
             }
 #endif
-            Matrix orthoMatrix;
-            Matrix::createOrthographicOffCenter(0, size.width, 0, size.height, -1024, 1024, &orthoMatrix);
+            Mat4 orthoMatrix;
+            Mat4::createOrthographicOffCenter(0, size.width, 0, size.height, -1024, 1024, &orthoMatrix);
             multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
             loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
             break;
@@ -619,7 +619,7 @@ void Director::setProjection(Projection projection)
         {
             float zeye = this->getZEye();
 
-            Matrix matrixPerspective, matrixLookup;
+            Mat4 matrixPerspective, matrixLookup;
 
             loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
             
@@ -632,12 +632,12 @@ void Director::setProjection(Projection projection)
             }
 #endif
             // issue #1334
-            Matrix::createPerspective(60, (GLfloat)size.width/size.height, 10, zeye+size.height/2, &matrixPerspective);
+            Mat4::createPerspective(60, (GLfloat)size.width/size.height, 10, zeye+size.height/2, &matrixPerspective);
 
             multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, matrixPerspective);
 
-            Vector3 eye(size.width/2, size.height/2, zeye), center(size.width/2, size.height/2, 0.0f), up(0.0f, 1.0f, 0.0f);
-            Matrix::createLookAt(eye, center, up, &matrixLookup);
+            Vec3 eye(size.width/2, size.height/2, zeye), center(size.width/2, size.height/2, 0.0f), up(0.0f, 1.0f, 0.0f);
+            Mat4::createLookAt(eye, center, up, &matrixLookup);
             multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, matrixLookup);
             
             loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
@@ -712,14 +712,14 @@ void Director::setDepthTest(bool on)
     CHECK_GL_ERROR_DEBUG();
 }
 
-static void GLToClipTransform(Matrix *transformOut)
+static void GLToClipTransform(Mat4 *transformOut)
 {
     if(nullptr == transformOut) return;
     
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     
-    Matrix projection;
+    Mat4 projection;
     projection = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
@@ -727,44 +727,44 @@ static void GLToClipTransform(Matrix *transformOut)
     projection = Director::getInstance()->getOpenGLView()->getReverseOrientationMatrix() * projection;
 #endif
 
-    Matrix modelview;
+    Mat4 modelview;
     modelview = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     *transformOut = projection * modelview;
 }
 
-Vector2 Director::convertToGL(const Vector2& uiPoint)
+Vec2 Director::convertToGL(const Vec2& uiPoint)
 {
-    Matrix transform;
+    Mat4 transform;
     GLToClipTransform(&transform);
 
-    Matrix transformInv = transform.getInversed();
+    Mat4 transformInv = transform.getInversed();
 
     // Calculate z=0 using -> transform*[0, 0, 0, 1]/w
     float zClip = transform.m[14]/transform.m[15];
 
     Size glSize = _openGLView->getDesignResolutionSize();
-    Vector4 clipCoord(2.0f*uiPoint.x/glSize.width - 1.0f, 1.0f - 2.0f*uiPoint.y/glSize.height, zClip, 1);
+    Vec4 clipCoord(2.0f*uiPoint.x/glSize.width - 1.0f, 1.0f - 2.0f*uiPoint.y/glSize.height, zClip, 1);
 
-    Vector4 glCoord;
+    Vec4 glCoord;
     //transformInv.transformPoint(clipCoord, &glCoord);
     transformInv.transformVector(clipCoord, &glCoord);
     float factor = 1.0/glCoord.w;
-    return Vector2(glCoord.x * factor, glCoord.y * factor);
+    return Vec2(glCoord.x * factor, glCoord.y * factor);
 }
 
-Vector2 Director::convertToUI(const Vector2& glPoint)
+Vec2 Director::convertToUI(const Vec2& glPoint)
 {
-    Matrix transform;
+    Mat4 transform;
     GLToClipTransform(&transform);
 
-    Vector4 clipCoord;
+    Vec4 clipCoord;
     // Need to calculate the zero depth from the transform.
-    Vector4 glCoord(glPoint.x, glPoint.y, 0.0, 1);
+    Vec4 glCoord(glPoint.x, glPoint.y, 0.0, 1);
     transform.transformVector(glCoord, &clipCoord);
 
     Size glSize = _openGLView->getDesignResolutionSize();
     float factor = 1.0/glCoord.w;
-    return Vector2(glSize.width*(clipCoord.x*0.5 + 0.5) * factor, glSize.height*(-clipCoord.y*0.5 + 0.5) * factor);
+    return Vec2(glSize.width*(clipCoord.x*0.5 + 0.5) * factor, glSize.height*(-clipCoord.y*0.5 + 0.5) * factor);
 }
 
 const Size& Director::getWinSize(void) const
@@ -789,7 +789,7 @@ Size Director::getVisibleSize() const
     }
 }
 
-Vector2 Director::getVisibleOrigin() const
+Vec2 Director::getVisibleOrigin() const
 {
     if (_openGLView)
     {
@@ -797,7 +797,7 @@ Vector2 Director::getVisibleOrigin() const
     }
     else
     {
-        return Vector2::ZERO;
+        return Vec2::ZERO;
     }
 }
 
@@ -1080,7 +1080,7 @@ void Director::showStats()
             prevVerts = currentVerts;
         }
 
-        Matrix identity = Matrix::IDENTITY;
+        Mat4 identity = Mat4::IDENTITY;
 
         _drawnVerticesLabel->visit(_renderer, identity, false);
         _drawnBatchesLabel->visit(_renderer, identity, false);
@@ -1165,9 +1165,9 @@ void Director::createStatsLabel()
     Texture2D::setDefaultAlphaPixelFormat(currentFormat);
 
     const int height_spacing = 22 / CC_CONTENT_SCALE_FACTOR();
-    _drawnVerticesLabel->setPosition(Vector2(0, height_spacing*2) + CC_DIRECTOR_STATS_POSITION);
-    _drawnBatchesLabel->setPosition(Vector2(0, height_spacing*1) + CC_DIRECTOR_STATS_POSITION);
-    _FPSLabel->setPosition(Vector2(0, height_spacing*0)+CC_DIRECTOR_STATS_POSITION);
+    _drawnVerticesLabel->setPosition(Vec2(0, height_spacing*2) + CC_DIRECTOR_STATS_POSITION);
+    _drawnBatchesLabel->setPosition(Vec2(0, height_spacing*1) + CC_DIRECTOR_STATS_POSITION);
+    _FPSLabel->setPosition(Vec2(0, height_spacing*0)+CC_DIRECTOR_STATS_POSITION);
 }
 
 void Director::setContentScaleFactor(float scaleFactor)

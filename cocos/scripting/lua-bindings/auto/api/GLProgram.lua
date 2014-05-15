@@ -51,13 +51,13 @@
 -- @return Uniform#Uniform ret (return value: cc.Uniform)
         
 --------------------------------
--- overload function: setUniformsForBuiltins(matrix_table)
+-- overload function: setUniformsForBuiltins(cc.Mat4)
 --          
 -- overload function: setUniformsForBuiltins()
 --          
 -- @function [parent=#GLProgram] setUniformsForBuiltins
 -- @param self
--- @param #matrix_table matrix
+-- @param #cc.Mat4 mat4
 
 --------------------------------
 -- @function [parent=#GLProgram] setUniformLocationWith3i 

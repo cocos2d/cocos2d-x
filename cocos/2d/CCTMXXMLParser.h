@@ -112,7 +112,7 @@ public:
     bool                _visible;
     unsigned char       _opacity;
     bool                _ownTiles;
-    Vector2               _offset;
+    Vec2               _offset;
 };
 
 /** @brief TMXTilesetInfo contains the information about the tilesets like:

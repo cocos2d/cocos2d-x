@@ -102,16 +102,16 @@ public:
     The Sprite can be treated like any other Sprite: rotated, scaled, translated, opacity, color, etc.
     You can remove either by calling:
     - layer->removeChild(sprite, cleanup);
-    - or layer->removeTileAt(Vector2(x,y));
+    - or layer->removeTileAt(Vec2(x,y));
     */
-    Sprite* getTileAt(const Vector2& tileCoordinate);
-    CC_DEPRECATED_ATTRIBUTE Sprite* tileAt(const Vector2& tileCoordinate) { return getTileAt(tileCoordinate); };
+    Sprite* getTileAt(const Vec2& tileCoordinate);
+    CC_DEPRECATED_ATTRIBUTE Sprite* tileAt(const Vec2& tileCoordinate) { return getTileAt(tileCoordinate); };
     
     /** returns the tile gid at a given tile coordinate. It also returns the tile flags.
      This method requires the the tile map has not been previously released (eg. don't call [layer releaseMap])
      */
-    uint32_t getTileGIDAt(const Vector2& tileCoordinate, TMXTileFlags* flags = nullptr);
-    CC_DEPRECATED_ATTRIBUTE uint32_t tileGIDAt(const Vector2& tileCoordinate, TMXTileFlags* flags = nullptr){
+    uint32_t getTileGIDAt(const Vec2& tileCoordinate, TMXTileFlags* flags = nullptr);
+    CC_DEPRECATED_ATTRIBUTE uint32_t tileGIDAt(const Vec2& tileCoordinate, TMXTileFlags* flags = nullptr){
         return getTileGIDAt(tileCoordinate, flags);
     };
 
@@ -119,7 +119,7 @@ public:
     The Tile GID can be obtained by using the method "tileGIDAt" or by using the TMX editor -> Tileset Mgr +1.
     If a tile is already placed at that position, then it will be removed.
     */
-    void setTileGID(uint32_t gid, const Vector2& tileCoordinate);
+    void setTileGID(uint32_t gid, const Vec2& tileCoordinate);
 
     /** sets the tile gid (gid = tile global id) at a given tile coordinate.
      The Tile GID can be obtained by using the method "tileGIDAt" or by using the TMX editor -> Tileset Mgr +1.
@@ -128,14 +128,14 @@ public:
      Use withFlags if the tile flags need to be changed as well
      */
 
-    void setTileGID(uint32_t gid, const Vector2& tileCoordinate, TMXTileFlags flags);
+    void setTileGID(uint32_t gid, const Vec2& tileCoordinate, TMXTileFlags flags);
 
     /** removes a tile at given tile coordinate */
-    void removeTileAt(const Vector2& tileCoordinate);
+    void removeTileAt(const Vec2& tileCoordinate);
 
     /** returns the position in points of a given tile coordinate */
-    Vector2 getPositionAt(const Vector2& tileCoordinate);
-    CC_DEPRECATED_ATTRIBUTE Vector2 positionAt(const Vector2& tileCoordinate) { return getPositionAt(tileCoordinate); };
+    Vec2 getPositionAt(const Vec2& tileCoordinate);
+    CC_DEPRECATED_ATTRIBUTE Vec2 positionAt(const Vec2& tileCoordinate) { return getPositionAt(tileCoordinate); };
 
     /** return the value for the specific property name */
     Value getProperty(const std::string& propertyName) const;
@@ -193,22 +193,22 @@ public:
     virtual std::string getDescription() const override;
 
 private:
-    Vector2 getPositionForIsoAt(const Vector2& pos);
-    Vector2 getPositionForOrthoAt(const Vector2& pos);
-    Vector2 getPositionForHexAt(const Vector2& pos);
+    Vec2 getPositionForIsoAt(const Vec2& pos);
+    Vec2 getPositionForOrthoAt(const Vec2& pos);
+    Vec2 getPositionForHexAt(const Vec2& pos);
 
-    Vector2 calculateLayerOffset(const Vector2& offset);
+    Vec2 calculateLayerOffset(const Vec2& offset);
 
     /* optimization methods */
-    Sprite* appendTileForGID(uint32_t gid, const Vector2& pos);
-    Sprite* insertTileForGID(uint32_t gid, const Vector2& pos);
-    Sprite* updateTileForGID(uint32_t gid, const Vector2& pos);
+    Sprite* appendTileForGID(uint32_t gid, const Vec2& pos);
+    Sprite* insertTileForGID(uint32_t gid, const Vec2& pos);
+    Sprite* updateTileForGID(uint32_t gid, const Vec2& pos);
 
     /* The layer recognizes some special properties, like cc_vertez */
     void parseInternalProperties();
-    void setupTileSprite(Sprite* sprite, Vector2 pos, int gid);
+    void setupTileSprite(Sprite* sprite, Vec2 pos, int gid);
     Sprite* reusedTileWithRect(Rect rect);
-    int getVertexZForPos(const Vector2& pos);
+    int getVertexZForPos(const Vec2& pos);
 
     // index
     ssize_t atlasIndexForExistantZ(int z);

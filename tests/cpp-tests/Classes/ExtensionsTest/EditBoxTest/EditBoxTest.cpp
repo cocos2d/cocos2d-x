@@ -20,25 +20,25 @@ EditBoxTest::EditBoxTest()
     auto visibleSize = glview->getVisibleSize();
     
     auto pBg = Sprite::create("Images/HelloWorld.png");
-    pBg->setPosition(Vector2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2));
+    pBg->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2));
     addChild(pBg);
     
     _TTFShowEditReturn = Label::createWithSystemFont("No edit control return!", "", 30);
-    _TTFShowEditReturn->setPosition(Vector2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y + visibleSize.height - 50));
+    _TTFShowEditReturn->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y + visibleSize.height - 50));
     addChild(_TTFShowEditReturn);
     
     // Back Menu
     auto itemBack = MenuItemFont::create("Back", CC_CALLBACK_1(EditBoxTest::toExtensionsMainLayer, this));
-    itemBack->setPosition(Vector2(visibleOrigin.x+visibleSize.width - 50, visibleOrigin.y+25));
+    itemBack->setPosition(Vec2(visibleOrigin.x+visibleSize.width - 50, visibleOrigin.y+25));
     auto menuBack = Menu::create(itemBack, NULL);
-    menuBack->setPosition(Vector2::ZERO);
+    menuBack->setPosition(Vec2::ZERO);
     addChild(menuBack);
     
     auto editBoxSize = Size(visibleSize.width - 100, 60);
 
     // top
     _editName = EditBox::create(editBoxSize, Scale9Sprite::create("extensions/green_edit.png"));
-    _editName->setPosition(Vector2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height*3/4));
+    _editName->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height*3/4));
     _editName->setFontName("Paint Boy");
     _editName->setFontSize(25);
     _editName->setFontColor(Color3B::RED);
@@ -51,7 +51,7 @@ EditBoxTest::EditBoxTest()
     
     // middle
     _editPassword = EditBox::create(editBoxSize, Scale9Sprite::create("extensions/orange_edit.png"));
-    _editPassword->setPosition(Vector2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2));
+    _editPassword->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2));
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	_editPassword->setFont("American Typewriter", 30);
 #else
@@ -68,14 +68,14 @@ EditBoxTest::EditBoxTest()
     
     // bottom
     _editEmail = EditBox::create(Size(editBoxSize.width, editBoxSize.height), Scale9Sprite::create("extensions/yellow_edit.png"));
-    _editEmail->setPosition(Vector2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/4));
-    _editEmail->setAnchorPoint(Vector2(0.5, 1.0f));
+    _editEmail->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/4));
+    _editEmail->setAnchorPoint(Vec2(0.5, 1.0f));
     _editEmail->setPlaceHolder("Email:");
     _editEmail->setInputMode(EditBox::InputMode::EMAIL_ADDRESS);
     _editEmail->setDelegate(this);
     addChild(_editEmail);
     
-    this->setPosition(Vector2(10, 20));
+    this->setPosition(Vec2(10, 20));
 }
 
 EditBoxTest::~EditBoxTest()

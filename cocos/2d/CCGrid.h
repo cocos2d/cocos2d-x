@@ -77,8 +77,8 @@ public:
     inline void setGridSize(const Size& gridSize) { _gridSize = gridSize; }
 
     /** pixels between the grids */
-    inline const Vector2& getStep(void) const { return _step; }
-    inline void setStep(const Vector2& step) { _step = step; }
+    inline const Vec2& getStep(void) const { return _step; }
+    inline void setStep(const Vec2& step) { _step = step; }
 
     /** is texture flipped */
     inline bool isTextureFlipped(void) const { return _isTextureFlipped; }
@@ -97,7 +97,7 @@ protected:
     int  _reuseGrid;
     Size _gridSize;
     Texture2D *_texture;
-    Vector2 _step;
+    Vec2 _step;
     Grabber *_grabber;
     bool _isTextureFlipped;
     GLProgram* _shaderProgram;
@@ -131,28 +131,28 @@ public:
      * @js NA
      * @lua NA
      */
-    Vector3 getVertex(const Vector2& pos) const;
+    Vec3 getVertex(const Vec2& pos) const;
     /** @deprecated Use getVertex() instead 
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE Vector3 vertex(const Vector2& pos) const { return getVertex(pos); }
+    CC_DEPRECATED_ATTRIBUTE Vec3 vertex(const Vec2& pos) const { return getVertex(pos); }
     /** returns the original (non-transformed) vertex at a given position
      * @js NA
      * @lua NA
      */
-    Vector3 getOriginalVertex(const Vector2& pos) const;
+    Vec3 getOriginalVertex(const Vec2& pos) const;
     /** @deprecated Use getOriginalVertex() instead 
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE Vector3 originalVertex(const Vector2& pos) const { return getOriginalVertex(pos); }
+    CC_DEPRECATED_ATTRIBUTE Vec3 originalVertex(const Vec2& pos) const { return getOriginalVertex(pos); }
 
     /** sets a new vertex at a given position 
      * @js NA
      * @lua NA
      */
-    void setVertex(const Vector2& pos, const Vector3& vertex);
+    void setVertex(const Vec2& pos, const Vec3& vertex);
 
     // Overrides
     virtual void blit() override;
@@ -194,28 +194,28 @@ public:
      * @js NA
      * @lua NA
      */
-    Quad3 getTile(const Vector2& pos) const;
+    Quad3 getTile(const Vec2& pos) const;
     /** returns the tile at the given position 
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE Quad3 tile(const Vector2& pos) const { return getTile(pos); }
+    CC_DEPRECATED_ATTRIBUTE Quad3 tile(const Vec2& pos) const { return getTile(pos); }
     /** returns the original tile (untransformed) at the given position 
      * @js NA
      * @lua NA
      */
-    Quad3 getOriginalTile(const Vector2& pos) const;
+    Quad3 getOriginalTile(const Vec2& pos) const;
     /** returns the original tile (untransformed) at the given position 
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE Quad3 originalTile(const Vector2& pos) const { return getOriginalTile(pos); }
+    CC_DEPRECATED_ATTRIBUTE Quad3 originalTile(const Vec2& pos) const { return getOriginalTile(pos); }
 
     /** sets a new tile 
      * @js NA
      * @lua NA
      */
-    void setTile(const Vector2& pos, const Quad3& coords);
+    void setTile(const Vec2& pos, const Quad3& coords);
 
     // Overrides
     virtual void blit() override;

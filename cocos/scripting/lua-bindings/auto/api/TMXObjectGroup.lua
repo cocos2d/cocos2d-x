@@ -6,7 +6,7 @@
 --------------------------------
 -- @function [parent=#TMXObjectGroup] setPositionOffset 
 -- @param self
--- @param #vector2_table array
+-- @param #cc.Vec2 vec2
         
 --------------------------------
 -- @function [parent=#TMXObjectGroup] getProperty 
@@ -17,7 +17,7 @@
 --------------------------------
 -- @function [parent=#TMXObjectGroup] getPositionOffset 
 -- @param self
--- @return vector2_table#vector2_table ret (return value: vector2_table)
+-- @return Vec2#Vec2 ret (return value: cc.Vec2)
         
 --------------------------------
 -- @function [parent=#TMXObjectGroup] getObject 

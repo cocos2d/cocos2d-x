@@ -18,19 +18,19 @@
  This file was modified to fit the cocos2d-x project
  */
 
-#ifndef VECTOR4_H_
-#define VECTOR4_H_
+#ifndef MATH_VEC4_H
+#define MATH_VEC4_H
 
-#include "CCMathBase.h"
+#include "math/CCMathBase.h"
 
 NS_CC_MATH_BEGIN
 
-class Matrix;
+class Mat4;
 
 /**
  * Defines 4-element floating point vector.
  */
-class Vector4
+class Vec4
 {
 public:
 
@@ -57,7 +57,7 @@ public:
     /**
      * Constructs a new vector initialized to all zeros.
      */
-    Vector4();
+    Vec4();
 
     /**
      * Constructs a new vector initialized to the specified values.
@@ -67,14 +67,14 @@ public:
      * @param zz The z coordinate.
      * @param ww The w coordinate.
      */
-    Vector4(float xx, float yy, float zz, float ww);
+    Vec4(float xx, float yy, float zz, float ww);
 
     /**
      * Constructs a new vector from the values in the specified array.
      *
      * @param array An array containing the elements of the vector in the order x, y, z, w.
      */
-    Vector4(const float* array);
+    Vec4(const float* array);
 
     /**
      * Constructs a vector that describes the direction between the specified points.
@@ -82,7 +82,7 @@ public:
      * @param p1 The first point.
      * @param p2 The second point.
      */
-    Vector4(const Vector4& p1, const Vector4& p2);
+    Vec4(const Vec4& p1, const Vec4& p2);
 
     /**
      * Constructor.
@@ -91,7 +91,7 @@ public:
      *
      * @param copy The vector to copy.
      */
-    Vector4(const Vector4& copy);
+    Vec4(const Vec4& copy);
 
     /**
      * Creates a new vector from an integer interpreted as an RGBA value.
@@ -101,12 +101,12 @@ public:
      *
      * @return A vector corresponding to the interpreted RGBA color.
      */
-    static Vector4 fromColor(unsigned int color);
+    static Vec4 fromColor(unsigned int color);
 
     /**
      * Destructor.
      */
-    ~Vector4();
+    ~Vec4();
 
     /**
      * Indicates whether this vector contains all zeros.
@@ -130,14 +130,14 @@ public:
      * 
      * @return The angle between the two vectors (in radians).
      */
-    static float angle(const Vector4& v1, const Vector4& v2);
+    static float angle(const Vec4& v1, const Vec4& v2);
 
     /**
      * Adds the elements of the specified vector to this one.
      *
      * @param v The vector to add.
      */
-    void add(const Vector4& v);
+    void add(const Vec4& v);
 
     /**
      * Adds the specified vectors and stores the result in dst.
@@ -146,7 +146,7 @@ public:
      * @param v2 The second vector.
      * @param dst A vector to store the result in.
      */
-    static void add(const Vector4& v1, const Vector4& v2, Vector4* dst);
+    static void add(const Vec4& v1, const Vec4& v2, Vec4* dst);
 
     /**
      * Clamps this vector within the specified range.
@@ -154,7 +154,7 @@ public:
      * @param min The minimum value.
      * @param max The maximum value.
      */
-    void clamp(const Vector4& min, const Vector4& max);
+    void clamp(const Vec4& min, const Vec4& max);
 
     /**
      * Clamps the specified vector within the specified range and returns it in dst.
@@ -164,7 +164,7 @@ public:
      * @param max The maximum value.
      * @param dst A vector to store the result in.
      */
-    static void clamp(const Vector4& v, const Vector4& min, const Vector4& max, Vector4* dst);
+    static void clamp(const Vec4& v, const Vec4& min, const Vec4& max, Vec4* dst);
 
     /**
      * Returns the distance between this vector and v.
@@ -175,7 +175,7 @@ public:
      * 
      * @see distanceSquared
      */
-    float distance(const Vector4& v) const;
+    float distance(const Vec4& v) const;
 
     /**
      * Returns the squared distance between this vector and v.
@@ -191,7 +191,7 @@ public:
      * 
      * @see distance
      */
-    float distanceSquared(const Vector4& v) const;
+    float distanceSquared(const Vec4& v) const;
 
     /**
      * Returns the dot product of this vector and the specified vector.
@@ -200,7 +200,7 @@ public:
      * 
      * @return The dot product.
      */
-    float dot(const Vector4& v) const;
+    float dot(const Vec4& v) const;
 
     /**
      * Returns the dot product between the specified vectors.
@@ -210,7 +210,7 @@ public:
      * 
      * @return The dot product between the vectors.
      */
-    static float dot(const Vector4& v1, const Vector4& v2);
+    static float dot(const Vec4& v1, const Vec4& v2);
 
     /**
      * Computes the length of this vector.
@@ -243,7 +243,7 @@ public:
     /**
      * Normalizes this vector.
      *
-     * This method normalizes this Vector4 so that it is of
+     * This method normalizes this Vec4 so that it is of
      * unit length (in other words, the length of the vector
      * after calling this method will be 1.0f). If the vector
      * already has unit length or if the length of the vector
@@ -262,7 +262,7 @@ public:
      *
      * @param dst The destination vector.
      */
-    Vector4 getNormalized() const;
+    Vec4 getNormalized() const;
 
     /**
      * Scales all elements of this vector by the specified value.
@@ -293,7 +293,7 @@ public:
      *
      * @param v The vector to copy.
      */
-    void set(const Vector4& v);
+    void set(const Vec4& v);
 
     /**
      * Sets this vector to the directional vector between the specified points.
@@ -301,7 +301,7 @@ public:
      * @param p1 The first point.
      * @param p2 The second point.
      */
-    void set(const Vector4& p1, const Vector4& p2);
+    void set(const Vec4& p1, const Vec4& p2);
 
     /**
      * Subtracts this vector and the specified vector as (this - v)
@@ -309,7 +309,7 @@ public:
      *
      * @param v The vector to subtract.
      */
-    void subtract(const Vector4& v);
+    void subtract(const Vec4& v);
 
     /**
      * Subtracts the specified vectors and stores the result in dst.
@@ -319,7 +319,7 @@ public:
      * @param v2 The second vector.
      * @param dst The destination vector.
      */
-    static void subtract(const Vector4& v1, const Vector4& v2, Vector4* dst);
+    static void subtract(const Vec4& v1, const Vec4& v2, Vec4* dst);
 
     /**
      * Calculates the sum of this vector with the given vector.
@@ -329,7 +329,7 @@ public:
      * @param v The vector to add.
      * @return The vector sum.
      */
-    inline const Vector4 operator+(const Vector4& v) const;
+    inline const Vec4 operator+(const Vec4& v) const;
 
     /**
      * Adds the given vector to this vector.
@@ -337,7 +337,7 @@ public:
      * @param v The vector to add.
      * @return This vector, after the addition occurs.
      */
-    inline Vector4& operator+=(const Vector4& v);
+    inline Vec4& operator+=(const Vec4& v);
 
     /**
      * Calculates the sum of this vector with the given vector.
@@ -347,7 +347,7 @@ public:
      * @param v The vector to add.
      * @return The vector sum.
      */
-    inline const Vector4 operator-(const Vector4& v) const;
+    inline const Vec4 operator-(const Vec4& v) const;
 
     /**
      * Subtracts the given vector from this vector.
@@ -355,7 +355,7 @@ public:
      * @param v The vector to subtract.
      * @return This vector, after the subtraction occurs.
      */
-    inline Vector4& operator-=(const Vector4& v);
+    inline Vec4& operator-=(const Vec4& v);
 
     /**
      * Calculates the negation of this vector.
@@ -364,7 +364,7 @@ public:
      * 
      * @return The negation of this vector.
      */
-    inline const Vector4 operator-() const;
+    inline const Vec4 operator-() const;
 
     /**
      * Calculates the scalar product of this vector with the given value.
@@ -374,7 +374,7 @@ public:
      * @param s The value to scale by.
      * @return The scaled vector.
      */
-    inline const Vector4 operator*(float s) const;
+    inline const Vec4 operator*(float s) const;
 
     /**
      * Scales this vector by the given value.
@@ -382,7 +382,7 @@ public:
      * @param s The value to scale by.
      * @return This vector, after the scale occurs.
      */
-    inline Vector4& operator*=(float s);
+    inline Vec4& operator*=(float s);
     
     /**
      * Returns the components of this vector divided by the given constant
@@ -392,7 +392,7 @@ public:
      * @param s the constant to divide this vector with
      * @return a smaller vector
      */
-    inline const Vector4 operator/(float s) const;
+    inline const Vec4 operator/(float s) const;
 
     /**
      * Determines if this vector is less than the given vector.
@@ -401,7 +401,7 @@ public:
      * 
      * @return True if this vector is less than the given vector, false otherwise.
      */
-    inline bool operator<(const Vector4& v) const;
+    inline bool operator<(const Vec4& v) const;
 
     /**
      * Determines if this vector is equal to the given vector.
@@ -410,7 +410,7 @@ public:
      * 
      * @return True if this vector is equal to the given vector, false otherwise.
      */
-    inline bool operator==(const Vector4& v) const;
+    inline bool operator==(const Vec4& v) const;
 
     /**
      * Determines if this vector is not equal to the given vector.
@@ -419,20 +419,20 @@ public:
      * 
      * @return True if this vector is not equal to the given vector, false otherwise.
      */
-    inline bool operator!=(const Vector4& v) const;
+    inline bool operator!=(const Vec4& v) const;
     
-    /** equals to Vector4(0,0,0,0) */
-    static const Vector4 ZERO;
-    /** equals to Vector4(1,1,1,1) */
-    static const Vector4 ONE;
-    /** equals to Vector4(1,0,0,0) */
-    static const Vector4 UNIT_X;
-    /** equals to Vector4(0,1,0,0) */
-    static const Vector4 UNIT_Y;
-    /** equals to Vector4(0,0,1,0) */
-    static const Vector4 UNIT_Z;
-    /** equals to Vector4(0,0,0,1) */
-    static const Vector4 UNIT_W;
+    /** equals to Vec4(0,0,0,0) */
+    static const Vec4 ZERO;
+    /** equals to Vec4(1,1,1,1) */
+    static const Vec4 ONE;
+    /** equals to Vec4(1,0,0,0) */
+    static const Vec4 UNIT_X;
+    /** equals to Vec4(0,1,0,0) */
+    static const Vec4 UNIT_Y;
+    /** equals to Vec4(0,0,1,0) */
+    static const Vec4 UNIT_Z;
+    /** equals to Vec4(0,0,0,1) */
+    static const Vec4 UNIT_W;
 };
 
 /**
@@ -442,10 +442,10 @@ public:
  * @param v The vector to scale.
  * @return The scaled vector.
  */
-inline const Vector4 operator*(float x, const Vector4& v);
+inline const Vec4 operator*(float x, const Vec4& v);
 
 NS_CC_MATH_END
 
 #include "Vector4.inl"
 
-#endif
+#endif // MATH_VEC4_H

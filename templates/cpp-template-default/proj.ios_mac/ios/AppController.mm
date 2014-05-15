@@ -45,7 +45,7 @@ static AppDelegate s_sharedApplication;
 
     // Init the CCEAGLView
     CCEAGLView *eaglView = [CCEAGLView viewWithFrame: [window bounds]
-                                     pixelFormat: kEAGLColorFormatRGB565
+                                     pixelFormat: kEAGLColorFormatRGBA8
                                      depthFormat: GL_DEPTH24_STENCIL8_OES
                               preserveBackbuffer: NO
                                       sharegroup: nil

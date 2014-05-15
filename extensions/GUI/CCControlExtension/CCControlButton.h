@@ -231,7 +231,7 @@ protected:
     /** Scale ratio button on touchdown. Default value 1.1f */
     CC_SYNTHESIZE(float, _scaleRatio, ScaleRatio);
 
-    CC_PROPERTY_PASS_BY_REF(Vector2, _labelAnchorPoint, LabelAnchorPoint);
+    CC_PROPERTY_PASS_BY_REF(Vec2, _labelAnchorPoint, LabelAnchorPoint);
 
     std::unordered_map<int, std::string> _titleDispatchTable;
     std::unordered_map<int, Color3B> _titleColorDispatchTable;

@@ -113,7 +113,7 @@ static int g_testCount = sizeof(g_aTestNames) / sizeof(g_aTestNames[0]);
 static Controller *currentController = nullptr;
 #define LINE_SPACE          40
 
-static Vector2 s_tCurPos = Vector2::ZERO;
+static Vec2 s_tCurPos = Vec2::ZERO;
 
 //sleep for t seconds
 static void wait(int t)
@@ -123,14 +123,14 @@ static void wait(int t)
 }
 
 TestController::TestController()
-: _beginPos(Vector2::ZERO)
+: _beginPos(Vec2::ZERO)
 {
     // add close menu
     auto closeItem = MenuItemImage::create(s_pathClose, s_pathClose, CC_CALLBACK_1(TestController::closeCallback, this) );
     auto menu =Menu::create(closeItem, NULL);
 
-    menu->setPosition( Vector2::ZERO );
-    closeItem->setPosition(Vector2( VisibleRect::right().x - 30, VisibleRect::top().y - 30));
+    menu->setPosition( Vec2::ZERO );
+    closeItem->setPosition(Vec2( VisibleRect::right().x - 30, VisibleRect::top().y - 30));
 
     // add menu items for tests
     TTFConfig ttfConfig("fonts/arial.ttf", 24);
@@ -141,7 +141,7 @@ TestController::TestController()
         auto menuItem = MenuItemLabel::create(label, CC_CALLBACK_1(TestController::menuCallback, this));
 
         _itemMenu->addChild(menuItem, i + 10000);
-        menuItem->setPosition( Vector2( VisibleRect::center().x, (VisibleRect::top().y - (i + 1) * LINE_SPACE) ));
+        menuItem->setPosition( Vec2( VisibleRect::center().x, (VisibleRect::top().y - (i + 1) * LINE_SPACE) ));
     }
 
     _itemMenu->setContentSize(Size(VisibleRect::getVisibleRect().size.width, (g_testCount + 1) * (LINE_SPACE)));
@@ -211,17 +211,17 @@ void TestController::onTouchMoved(Touch* touch, Event  *event)
     float nMoveY = touchLocation.y - _beginPos.y;
 
     auto curPos  = _itemMenu->getPosition();
-    auto nextPos = Vector2(curPos.x, curPos.y + nMoveY);
+    auto nextPos = Vec2(curPos.x, curPos.y + nMoveY);
 
     if (nextPos.y < 0.0f)
     {
-        _itemMenu->setPosition(Vector2::ZERO);
+        _itemMenu->setPosition(Vec2::ZERO);
         return;
     }
 
     if (nextPos.y > ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
     {
-        _itemMenu->setPosition(Vector2(0, ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        _itemMenu->setPosition(Vec2(0, ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
         return;
     }
 
@@ -236,17 +236,17 @@ void TestController::onMouseScroll(Event *event)
     float nMoveY = mouseEvent->getScrollY() * 6;
 
     auto curPos  = _itemMenu->getPosition();
-    auto nextPos = Vector2(curPos.x, curPos.y + nMoveY);
+    auto nextPos = Vec2(curPos.x, curPos.y + nMoveY);
 
     if (nextPos.y < 0.0f)
     {
-        _itemMenu->setPosition(Vector2::ZERO);
+        _itemMenu->setPosition(Vec2::ZERO);
         return;
     }
 
     if (nextPos.y > ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
     {
-        _itemMenu->setPosition(Vector2(0, ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        _itemMenu->setPosition(Vec2(0, ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
         return;
     }
 

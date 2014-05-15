@@ -29,7 +29,7 @@
 
 NS_CC_BEGIN
 
-void ccVertexLineToPolygon(Vector2 *points, float stroke, Vector2 *vertices, unsigned int offset, unsigned int nuPoints)
+void ccVertexLineToPolygon(Vec2 *points, float stroke, Vec2 *vertices, unsigned int offset, unsigned int nuPoints)
 {
     nuPoints += offset;
     if(nuPoints<=1) return;
@@ -42,8 +42,8 @@ void ccVertexLineToPolygon(Vector2 *points, float stroke, Vector2 *vertices, uns
     for(unsigned int i = offset; i<nuPoints; i++)
     {
         idx = i*2;
-        Vector2 p1 = points[i];
-        Vector2 perpVector;
+        Vec2 p1 = points[i];
+        Vec2 perpVector;
 
         if(i == 0)
             perpVector = (p1 - points[i+1]).getNormalized().getPerp();
@@ -51,11 +51,11 @@ void ccVertexLineToPolygon(Vector2 *points, float stroke, Vector2 *vertices, uns
             perpVector = (points[i-1] - p1).getNormalized().getPerp();
         else
         {
-            Vector2 p2 = points[i+1];
-            Vector2 p0 = points[i-1];
+            Vec2 p2 = points[i+1];
+            Vec2 p0 = points[i-1];
 
-            Vector2 p2p1 = (p2 - p1).getNormalized();
-            Vector2 p0p1 = (p0 - p1).getNormalized();
+            Vec2 p2p1 = (p2 - p1).getNormalized();
+            Vec2 p0p1 = (p0 - p1).getNormalized();
 
             // Calculate angle between vectors
             float angle = acosf(p2p1.dot(p0p1));
@@ -69,8 +69,8 @@ void ccVertexLineToPolygon(Vector2 *points, float stroke, Vector2 *vertices, uns
         }
         perpVector = perpVector * stroke;
 
-        vertices[idx] = Vector2(p1.x+perpVector.x, p1.y+perpVector.y);
-        vertices[idx+1] = Vector2(p1.x-perpVector.x, p1.y-perpVector.y);
+        vertices[idx] = Vec2(p1.x+perpVector.x, p1.y+perpVector.y);
+        vertices[idx+1] = Vec2(p1.x-perpVector.x, p1.y-perpVector.y);
 
     }
 
@@ -81,13 +81,13 @@ void ccVertexLineToPolygon(Vector2 *points, float stroke, Vector2 *vertices, uns
         idx = i*2;
         const unsigned int idx1 = idx+2;
 
-        Vector2 p1 = vertices[idx];
-        Vector2 p2 = vertices[idx+1];
-        Vector2 p3 = vertices[idx1];
-        Vector2 p4 = vertices[idx1+1];
+        Vec2 p1 = vertices[idx];
+        Vec2 p2 = vertices[idx+1];
+        Vec2 p3 = vertices[idx1];
+        Vec2 p4 = vertices[idx1+1];
 
         float s;
-        //BOOL fixVertex = !ccpLineIntersect(Vector2(p1.x, p1.y), Vector2(p4.x, p4.y), Vector2(p2.x, p2.y), Vector2(p3.x, p3.y), &s, &t);
+        //BOOL fixVertex = !ccpLineIntersect(Vec2(p1.x, p1.y), Vec2(p4.x, p4.y), Vec2(p2.x, p2.y), Vec2(p3.x, p3.y), &s, &t);
         bool fixVertex = !ccVertexLineIntersect(p1.x, p1.y, p4.x, p4.y, p2.x, p2.y, p3.x, p3.y, &s);
         if(!fixVertex)
             if (s<0.0f || s>1.0f)

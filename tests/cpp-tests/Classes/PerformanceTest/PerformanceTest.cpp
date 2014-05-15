@@ -40,7 +40,7 @@ struct {
 
 static const int g_testMax = sizeof(g_testsName)/sizeof(g_testsName[0]);
 
-Vector2 PerformanceMainLayer::_CurrentPos = Vector2::ZERO;
+Vec2 PerformanceMainLayer::_CurrentPos = Vec2::ZERO;
 
 ////////////////////////////////////////////////////////
 //
@@ -60,7 +60,7 @@ void PerformanceMainLayer::onEnter()
     for (int i = 0; i < g_testMax; ++i)
     {
         auto pItem = MenuItemFont::create(g_testsName[i].name, g_testsName[i].callback);
-        pItem->setPosition(Vector2(s.width / 2, s.height - (i + 1) * LINE_SPACE));
+        pItem->setPosition(Vec2(s.width / 2, s.height - (i + 1) * LINE_SPACE));
         _itemMenu->addChild(pItem, kItemTagBasic + i);
     }
 
@@ -91,17 +91,17 @@ void PerformanceMainLayer::onTouchMoved(Touch* touches, Event  *event)
     float nMoveY = touchLocation.y - _beginPos.y;
     
     auto curPos  = _itemMenu->getPosition();
-    auto nextPos = Vector2(curPos.x, curPos.y + nMoveY);
+    auto nextPos = Vec2(curPos.x, curPos.y + nMoveY);
     
     if (nextPos.y < 0.0f)
     {
-        _itemMenu->setPosition(Vector2::ZERO);
+        _itemMenu->setPosition(Vec2::ZERO);
         return;
     }
     
     if (nextPos.y > ((g_testMax + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
     {
-        _itemMenu->setPosition(Vector2(0, ((g_testMax + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        _itemMenu->setPosition(Vec2(0, ((g_testMax + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
         return;
     }
     
@@ -116,17 +116,17 @@ void PerformanceMainLayer::onMouseScroll(Event *event)
     float nMoveY = mouseEvent->getScrollY() * 6;
     
     auto curPos  = _itemMenu->getPosition();
-    auto nextPos = Vector2(curPos.x, curPos.y + nMoveY);
+    auto nextPos = Vec2(curPos.x, curPos.y + nMoveY);
     
     if (nextPos.y < 0.0f)
     {
-        _itemMenu->setPosition(Vector2::ZERO);
+        _itemMenu->setPosition(Vec2::ZERO);
         return;
     }
     
     if (nextPos.y > ((g_testMax + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
     {
-        _itemMenu->setPosition(Vector2(0, ((g_testMax + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        _itemMenu->setPosition(Vec2(0, ((g_testMax + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
         return;
     }
     
@@ -154,18 +154,18 @@ void PerformBasicLayer::onEnter()
     MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(24);
     auto pMainItem = MenuItemFont::create("Back", CC_CALLBACK_1(PerformBasicLayer::toMainLayer, this));
-    pMainItem->setPosition(Vector2(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
+    pMainItem->setPosition(Vec2(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
     auto menu = Menu::create(pMainItem, NULL);
-    menu->setPosition( Vector2::ZERO );
+    menu->setPosition( Vec2::ZERO );
 
     if (_controlMenuVisible)
     {
         auto item1 = MenuItemImage::create(s_pathB1, s_pathB2, CC_CALLBACK_1(PerformBasicLayer::backCallback, this));
         auto item2 = MenuItemImage::create(s_pathR1, s_pathR2, CC_CALLBACK_1(PerformBasicLayer::restartCallback, this));
         auto item3 = MenuItemImage::create(s_pathF1, s_pathF2, CC_CALLBACK_1(PerformBasicLayer::nextCallback, this));
-        item1->setPosition(Vector2(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-        item2->setPosition(Vector2(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
-        item3->setPosition(Vector2(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+        item1->setPosition(Vec2(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+        item2->setPosition(Vec2(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
+        item3->setPosition(Vec2(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
 
         menu->addChild(item1, kItemTagBasic);
         menu->addChild(item2, kItemTagBasic);

@@ -80,7 +80,7 @@ public:
      * @js NA
      * @lua NA
      */
-    static Sprite* addSpriteToTargetWithPosAndAnchor(const char* spriteName, Node * target, Vector2 pos, Vector2 anchor);
+    static Sprite* addSpriteToTargetWithPosAndAnchor(const char* spriteName, Node * target, Vec2 pos, Vec2 anchor);
     /**
      * @js NA
      * @lua NA

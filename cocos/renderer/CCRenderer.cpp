@@ -371,7 +371,7 @@ void Renderer::clean()
     _lastMaterialID = 0;
 }
 
-void Renderer::convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const Matrix& modelView)
+void Renderer::convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const Mat4& modelView)
 {
 //    kmMat4 matrixP, mvp;
 //    kmGLGetMatrix(KM_GL_PROJECTION, &matrixP);
@@ -379,16 +379,16 @@ void Renderer::convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quanti
     for(ssize_t i=0; i<quantity; ++i)
     {
         V3F_C4B_T2F_Quad *q = &quads[i];
-        Vector3 *vec1 = (Vector3*)&q->bl.vertices;
+        Vec3 *vec1 = (Vec3*)&q->bl.vertices;
         modelView.transformPoint(vec1);
 
-        Vector3 *vec2 = (Vector3*)&q->br.vertices;
+        Vec3 *vec2 = (Vec3*)&q->br.vertices;
         modelView.transformPoint(vec2);
 
-        Vector3 *vec3 = (Vector3*)&q->tr.vertices;
+        Vec3 *vec3 = (Vec3*)&q->tr.vertices;
         modelView.transformPoint(vec3);
 
-        Vector3 *vec4 = (Vector3*)&q->tl.vertices;
+        Vec3 *vec4 = (Vec3*)&q->tl.vertices;
         modelView.transformPoint(vec4);
     }
 }
@@ -505,7 +505,7 @@ void Renderer::flush()
 
 // helpers
 
-bool Renderer::checkVisibility(const Matrix &transform, const Size &size)
+bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
 {
     // half size of the screen
     Size screen_half = Director::getInstance()->getWinSize();
@@ -515,7 +515,7 @@ bool Renderer::checkVisibility(const Matrix &transform, const Size &size)
     float hSizeX = size.width/2;
     float hSizeY = size.height/2;
 
-    Vector4 v4world, v4local;
+    Vec4 v4world, v4local;
     v4local.set(hSizeX, hSizeY, 0, 1);
     transform.transformVector(v4local, &v4world);
 

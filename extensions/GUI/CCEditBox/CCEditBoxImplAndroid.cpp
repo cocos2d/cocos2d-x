@@ -71,16 +71,16 @@ bool EditBoxImplAndroid::initWithSize(const Size& size)
     _label = Label::create();
     _label->setSystemFontSize(size.height-12);
 	// align the text vertically center
-    _label->setAnchorPoint(Vector2(0, 0.5f));
-    _label->setPosition(Vector2(CC_EDIT_BOX_PADDING, size.height / 2.0f));
+    _label->setAnchorPoint(Vec2(0, 0.5f));
+    _label->setPosition(Vec2(CC_EDIT_BOX_PADDING, size.height / 2.0f));
     _label->setColor(_colText);
     _editBox->addChild(_label);
 	
     _labelPlaceHolder = Label::create();
     _labelPlaceHolder->setSystemFontSize(size.height-12);
 	// align the text vertically center
-    _labelPlaceHolder->setAnchorPoint(Vector2(0, 0.5f));
-    _labelPlaceHolder->setPosition(Vector2(CC_EDIT_BOX_PADDING, size.height / 2.0f));
+    _labelPlaceHolder->setAnchorPoint(Vec2(0, 0.5f));
+    _labelPlaceHolder->setPosition(Vec2(CC_EDIT_BOX_PADDING, size.height / 2.0f));
     _labelPlaceHolder->setVisible(false);
     _labelPlaceHolder->setColor(_colPlaceHolder);
     _editBox->addChild(_labelPlaceHolder);
@@ -215,7 +215,7 @@ void EditBoxImplAndroid::setPlaceHolder(const char* pText)
     }
 }
 
-void EditBoxImplAndroid::setPosition(const Vector2& pos)
+void EditBoxImplAndroid::setPosition(const Vec2& pos)
 { // don't need to be implemented on android platform.
 	
 }
@@ -230,7 +230,7 @@ void EditBoxImplAndroid::setContentSize(const Size& size)
 	
 }
 
-void EditBoxImplAndroid::setAnchorPoint(const Vector2& anchorPoint)
+void EditBoxImplAndroid::setAnchorPoint(const Vec2& anchorPoint)
 { // don't need to be implemented on android platform.
 	
 }
