@@ -293,11 +293,11 @@ void EventDispatcher::pauseEventListenersForTarget(Node* target, bool recursive/
         }
     }
 
-    for (auto addedListenerIter : _toAddedListeners)
+    for (auto& listener : _toAddedListeners)
     {
-        if (addedListenerIter->getAssociatedNode() == target)
+        if (listener->getAssociatedNode() == target)
         {
-            addedListenerIter->setPaused(true);
+            listener->setPaused(true);
         }
     }
     
@@ -323,11 +323,11 @@ void EventDispatcher::resumeEventListenersForTarget(Node* target, bool recursive
         }
     }
     
-    for (auto addedListenerIter : _toAddedListeners)
+    for (auto& listener : _toAddedListeners)
     {
-        if (addedListenerIter->getAssociatedNode() == target)
+        if (listener->getAssociatedNode() == target)
         {
-            addedListenerIter->setPaused(false);
+            listener->setPaused(false);
         }
     }
 
