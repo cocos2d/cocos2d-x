@@ -41,20 +41,6 @@ using namespace cocos2d;
 
 NS_CC_EXT_BEGIN;
 
-#define KEY_VERSION             "version"
-#define KEY_MANIFEST_URL        "remoteManifestUrl"
-#define KEY_VERSION_URL         "remoteVersionUrl"
-#define KEY_GROUP_VERSIONS      "groupVersions"
-#define KEY_ENGINE_VERSION      "engineVersion"
-#define KEY_ASSETS              "assets"
-#define KEY_COMPRESSED_FILES    "compressedFiles"
-
-#define KEY_PATH                "path"
-#define KEY_MD5                 "md5"
-#define KEY_GROUP               "group"
-#define KEY_COMPRESSED          "compressed"
-#define KEY_COMPRESSED_FILE     "compressedFile"
-
 #define VERSION_FILENAME        "version.manifest"
 #define MANIFEST_FILENAME       "project.manifest"
 
@@ -110,10 +96,14 @@ AAssetsManager::AAssetsManager(const std::string& manifestUrl, const std::string
     _downloader = new Downloader(this);
     setStoragePath(storagePath);
     
-    _localManifest = new Manifest(_manifestUrl);
+    // Prefer to use the cached manifest file, if not found use user configured manifest file
+    // Prepend storage path to avoid multi package conflict issue
+    if (_fileUtils->isFileExist(storagePath + MANIFEST_FILENAME))
+        _localManifest = new Manifest(storagePath + MANIFEST_FILENAME);
+    else _localManifest = new Manifest(_manifestUrl);
     
     // Download version file
-    _downloader->downloadAsync(_localManifest->getVersionFileUrl(), _storagePath);
+    checkUpdate();
 }
 
 AAssetsManager::~AAssetsManager()
@@ -238,35 +228,69 @@ void AAssetsManager::checkUpdate()
             {
                 // Download version file asynchronously
                 _downloader->downloadAsync(versionUrl, _storagePath, "@version", VERSION_FILENAME);
-                _checkState = PREDOWNLOAD_VERSION;
-                return;
+                _checkState = DOWNLOADING_VERSION;
+            }
+            // No version file found
+            else
+            {
+                CCLOG("No version file found, step skipped\n");
+                _checkState = PREDOWNLOAD_MANIFEST;
             }
         }
         break;
         case VERSION_LOADED:
         {
-            std::string content;
-            if (_fileUtils->isFileExist(VERSION_FILENAME))
+            if (!_remoteManifest)
+                _remoteManifest = new Manifest(VERSION_FILENAME);
+            else
+                _remoteManifest->parse(VERSION_FILENAME);
+            
+            if (!_remoteManifest->isVersionLoaded())
             {
-                // Load version file content
-                content = _fileUtils->getStringFromFile(VERSION_FILENAME);
-                
-                // Parse version file with rapid json
-                rapidjson::Document json;
-                
-                json.Parse<0>(content.c_str());
-                // Print error, roll back state and exit
-                if (json.HasParseError()) {
-                    std::string errorSnippet = content.substr(json.GetErrorOffset()-1, 10);
-                    CCLOG("Version file parse error %s at <%s>\n", json.GetParseError(), errorSnippet.c_str());
-                    _checkState = PREDOWNLOAD_VERSION;
-                    return;
-                }
-                
-                
+                CCLOG("Error parsing version file, step skipped\n");
+                _checkState = PREDOWNLOAD_MANIFEST;
             }
-            // File not found, roll back state
-            else _checkState = PREDOWNLOAD_VERSION;
+            else
+            {
+                if (_localManifest->versionEquals(_remoteManifest))
+                    _checkState = UP_TO_DATE;
+                else _checkState = PREDOWNLOAD_MANIFEST;
+            }
+        }
+        break;
+        case PREDOWNLOAD_MANIFEST:
+        {
+            std::string manifestUrl = _localManifest->getManifestFileUrl();
+            if (manifestUrl.size() > 0)
+            {
+                // Download version file asynchronously
+                _downloader->downloadAsync(manifestUrl, _storagePath, "@manifest", MANIFEST_FILENAME);
+                _checkState = DOWNLOADING_MANIFEST;
+            }
+            // No version file found
+            else
+            {
+                CCLOG("No manifest file found, check update failed\n");
+                _checkState = UNCHECKED;
+            }
+        }
+        break;
+        case MANIFEST_LOADED:
+        {
+            if (!_remoteManifest)
+                _remoteManifest = new Manifest(MANIFEST_FILENAME);
+            else
+                _remoteManifest->parse(MANIFEST_FILENAME);
+            
+            if (!_remoteManifest->isLoaded())
+            {
+                CCLOG("Error parsing manifest file\n");
+                _checkState = UNCHECKED;
+            }
+            else
+            {
+                // CHECK ASSETS
+            }
         }
         break;
         default:
@@ -299,7 +323,12 @@ void AAssetsManager::onSuccess(const std::string &srcUrl, const std::string &cus
     if (customId == "@version")
     {
         _checkState = VERSION_LOADED;
-        //checkUpdate();
+        checkUpdate();
+    }
+    else if (customId == "@manifest")
+    {
+        _checkState = MANIFEST_LOADED;
+        checkUpdate();
     }
     else
     {
@@ -308,29 +337,6 @@ void AAssetsManager::onSuccess(const std::string &srcUrl, const std::string &cus
         std::string cid = customId;
         event.setUserData(&cid);
         _eventDispatcher->dispatchEvent(&event);
-    }
-    
-    
-    
-    std::string content;
-    FileUtils* fileUtils = FileUtils::getInstance();
-    if (fileUtils->isFileExist(filename))
-    {
-        // Load manifest file content
-        content = fileUtils->getStringFromFile(filename);
-        
-        CCLOG("%s", content.c_str());
-        
-        // Parse manifest file with rapid json
-        rapidjson::Document json;
-        
-        json.Parse<0>(content.c_str());
-        // Print error and exit
-        if (json.HasParseError()) {
-            std::string errorSnippet = content.substr(json.GetErrorOffset()-1, 10);
-            CCLOG("Manifest file parse error %s at <%s>\n", json.GetParseError(), errorSnippet.c_str());
-            return;
-        }
     }
 }
 
