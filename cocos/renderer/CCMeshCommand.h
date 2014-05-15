@@ -22,53 +22,65 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#ifndef _CC_MESHCOMMAND_H_
+#define _CC_MESHCOMMAND_H_
 
-#ifndef __CCRENDERCOMMAND_H_
-#define __CCRENDERCOMMAND_H_
-
-#include "base/CCPlatformMacros.h"
-#include <stdint.h>
-#include "base/ccTypes.h"
+#include "CCRenderCommand.h"
+#include "renderer/CCGLProgram.h"
+#include "CCRenderCommandPool.h"
 
 NS_CC_BEGIN
 
-/** Base class of the `RenderCommand` hierarchy.
-*
- The `Renderer` knows how to render `RenderCommands` objects.
- */
-class RenderCommand
+class GLProgramState;
+
+//it is a common mesh
+class MeshCommand : public RenderCommand
 {
 public:
 
-    enum class Type
-    {
-        UNKNOWN_COMMAND,
-        QUAD_COMMAND,
-        CUSTOM_COMMAND,
-        BATCH_COMMAND,
-        GROUP_COMMAND,
-        MESH_COMMAND,
-    };
+    MeshCommand();
+    ~MeshCommand();
 
-    /** Get Render Command Id */
-    inline float getGlobalOrder() const { return _globalOrder; }
+    void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, GLuint vertexBuffer, GLuint indexBuffer, GLenum primitive, GLenum indexType, GLenum indexCount, const Matrix &mv);
+    
+    void setCullFaceEnabled(bool enable);
+    
+    void setCullFace(GLenum cullFace);
+    
+    void setDepthTestEnabled(bool enable);
+    
+    void setDepthWriteEnabled(bool enable);
 
-    /** Returns the Command type */
-    inline Type getType() const { return _type; }
+    void execute();
 
 protected:
-    RenderCommand();
-    virtual ~RenderCommand();
+    
+    void applyRenderState();
+    
+    //restore to all false
+    void restoreRenderState();
 
-    void printID();
+    GLuint _textureID;
+    GLProgramState* _glProgramState;
+    BlendFunc _blendType;
 
-    // Type used in order to avoid dynamic cast, faster
-    Type _type;
+    GLuint _textrueID;
+    
+    GLuint _vertexBuffer;
+    GLuint _indexBuffer;
+    GLenum _primitive;
+    GLenum _indexFormat;
+    int    _indexCount;
+    
+    // States, default value all false
+    bool _cullFaceEnabled;
+    GLenum _cullFace;
+    bool _depthTestEnabled;
+    bool _depthWriteEnabled;
 
-    // commands are sort by depth
-    float _globalOrder;
+    // ModelView transform
+    Matrix _mv;
 };
-
 NS_CC_END
 
-#endif //__CCRENDERCOMMAND_H_
+#endif //_CC_MESHCOMMAND_H_

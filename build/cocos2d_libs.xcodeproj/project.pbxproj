@@ -1095,6 +1095,10 @@
 		3E92EA6619215FA10094CD21 /* Textured.es2.frag.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA5919215FA10094CD21 /* Textured.es2.frag.h */; };
 		3E92EA6719215FA10094CD21 /* Textured.es2.vert.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA5A19215FA10094CD21 /* Textured.es2.vert.h */; };
 		3E92EA6819215FA10094CD21 /* Textured.es2.vert.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA5A19215FA10094CD21 /* Textured.es2.vert.h */; };
+		3E9B5E1119254D2C00BB28BC /* CCMeshCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E9B5E0F19254D2C00BB28BC /* CCMeshCommand.cpp */; };
+		3E9B5E1219254D2C00BB28BC /* CCMeshCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E9B5E0F19254D2C00BB28BC /* CCMeshCommand.cpp */; };
+		3E9B5E1319254D2C00BB28BC /* CCMeshCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E9B5E1019254D2C00BB28BC /* CCMeshCommand.h */; };
+		3E9B5E1419254D2C00BB28BC /* CCMeshCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E9B5E1019254D2C00BB28BC /* CCMeshCommand.h */; };
 		3EA0FB6B191C841D00B170C8 /* UIVideoPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EA0FB69191C841D00B170C8 /* UIVideoPlayer.h */; };
 		3EA0FB6C191C841D00B170C8 /* UIVideoPlayerIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0FB6A191C841D00B170C8 /* UIVideoPlayerIOS.mm */; };
 		3EA2C2D01923EE8C000A7CAA /* CCSprite3DEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2C2CE1923EE8C000A7CAA /* CCSprite3DEffect.cpp */; };
@@ -2335,6 +2339,8 @@
 		3E92EA5619215FA10094CD21 /* CCSprite3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCSprite3D.h; path = ../cocos/3d/CCSprite3D.h; sourceTree = "<group>"; };
 		3E92EA5919215FA10094CD21 /* Textured.es2.frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Textured.es2.frag.h; path = ../cocos/3d/Textured.es2.frag.h; sourceTree = "<group>"; };
 		3E92EA5A19215FA10094CD21 /* Textured.es2.vert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Textured.es2.vert.h; path = ../cocos/3d/Textured.es2.vert.h; sourceTree = "<group>"; };
+		3E9B5E0F19254D2C00BB28BC /* CCMeshCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMeshCommand.cpp; sourceTree = "<group>"; };
+		3E9B5E1019254D2C00BB28BC /* CCMeshCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMeshCommand.h; sourceTree = "<group>"; };
 		3EA0FB69191C841D00B170C8 /* UIVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIVideoPlayer.h; sourceTree = "<group>"; };
 		3EA0FB6A191C841D00B170C8 /* UIVideoPlayerIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UIVideoPlayerIOS.mm; sourceTree = "<group>"; };
 		3EA2C2CE1923EE8C000A7CAA /* CCSprite3DEffect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCSprite3DEffect.cpp; path = ../cocos/3d/CCSprite3DEffect.cpp; sourceTree = "<group>"; };
@@ -4690,6 +4696,8 @@
 		500DC89819105D41007B91BF /* renderer */ = {
 			isa = PBXGroup;
 			children = (
+				3E9B5E0F19254D2C00BB28BC /* CCMeshCommand.cpp */,
+				3E9B5E1019254D2C00BB28BC /* CCMeshCommand.h */,
 				5034CA5D191D591900CE6051 /* shaders */,
 				5034C9F7191D591000CE6051 /* ccShaders.h */,
 				5034C9F8191D591000CE6051 /* ccShaders.cpp */,
@@ -5134,6 +5142,7 @@
 				500DC95A19106300007B91BF /* CCEventDispatcher.h in Headers */,
 				5034CA49191D591100CE6051 /* ccShader_Label_df.frag in Headers */,
 				500DC9A019106300007B91BF /* CCVector.h in Headers */,
+				3E9B5E1319254D2C00BB28BC /* CCMeshCommand.h in Headers */,
 				500DC92C19106300007B91BF /* atitc.h in Headers */,
 				1A01C68C18F57BE800EFE3A6 /* CCDeprecated.h in Headers */,
 				500DC98419106300007B91BF /* CCMap.h in Headers */,
@@ -5537,6 +5546,7 @@
 				1A57006C180BC5A10088DEC7 /* CCActionCatmullRom.h in Headers */,
 				5034CA3A191D591100CE6051 /* ccShader_PositionColorLengthTexture.frag in Headers */,
 				1A570070180BC5A10088DEC7 /* CCActionEase.h in Headers */,
+				3E9B5E1419254D2C00BB28BC /* CCMeshCommand.h in Headers */,
 				1A570074180BC5A10088DEC7 /* CCActionGrid.h in Headers */,
 				B37510841823ACA100B3BA6A /* CCPhysicsShapeInfo_chipmunk.h in Headers */,
 				5034CA46191D591100CE6051 /* ccShader_Label_outline.frag in Headers */,
@@ -6470,6 +6480,7 @@
 				1A8C59DF180E930E00EF57C3 /* CCInputDelegate.cpp in Sources */,
 				500DC92E19106300007B91BF /* base64.cpp in Sources */,
 				500DC99419106300007B91BF /* CCScheduler.cpp in Sources */,
+				3E9B5E1119254D2C00BB28BC /* CCMeshCommand.cpp in Sources */,
 				1A8C59E3180E930E00EF57C3 /* CCProcessBase.cpp in Sources */,
 				500DC98E19106300007B91BF /* CCRef.cpp in Sources */,
 				1A8C59E7180E930E00EF57C3 /* CCSGUIReader.cpp in Sources */,
@@ -6697,6 +6708,7 @@
 				1A57010F180BC8EE0088DEC7 /* CCDrawingPrimitives.cpp in Sources */,
 				1A570113180BC8EE0088DEC7 /* CCDrawNode.cpp in Sources */,
 				1A57011C180BC90D0088DEC7 /* CCGrabber.cpp in Sources */,
+				3E9B5E1219254D2C00BB28BC /* CCMeshCommand.cpp in Sources */,
 				1A570120180BC90D0088DEC7 /* CCGrid.cpp in Sources */,
 				500DC96919106300007B91BF /* CCEventListenerCustom.cpp in Sources */,
 				06C0F2F0186AD824003594D5 /* ObjectFactory.cpp in Sources */,
