@@ -129,7 +129,7 @@ Label* Label::createWithTTF(const TTFConfig& ttfConfig, const std::string& text,
     return nullptr;
 }
 
-Label* Label::createWithBMFont(const std::string& bmfontFilePath, const std::string& text,const TextHAlignment& alignment /* = TextHAlignment::LEFT */, int maxLineWidth /* = 0 */, const Vector2& imageOffset /* = Vector2::ZERO */)
+Label* Label::createWithBMFont(const std::string& bmfontFilePath, const std::string& text,const TextHAlignment& alignment /* = TextHAlignment::LEFT */, int maxLineWidth /* = 0 */, const Vec2& imageOffset /* = Vec2::ZERO */)
 {
     auto ret = new Label(nullptr,alignment);
 
@@ -260,8 +260,9 @@ Label::Label(FontAtlas *atlas /* = nullptr */, TextHAlignment hAlignment /* = Te
 , _shadowDirty(false)
 , _compatibleMode(false)
 , _insideBounds(true)
+, _effectColorF(Color4F::BLACK)
 {
-    setAnchorPoint(Vector2::ANCHOR_MIDDLE);
+    setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     reset();
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
@@ -394,7 +395,7 @@ void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false *
         _reusedLetter = Sprite::createWithTexture(_fontAtlas->getTexture(0));
         _reusedLetter->setOpacityModifyRGB(_isOpacityModifyRGB);            
         _reusedLetter->retain();
-        _reusedLetter->setAnchorPoint(Vector2::ANCHOR_TOP_LEFT);
+        _reusedLetter->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
         _reusedLetter->setBatchNode(this);
     }
     else
@@ -426,6 +427,7 @@ bool Label::setTTFConfig(const TTFConfig& ttfConfig)
         reset();
         return false;
     }
+    _systemFontDirty = false;
 
     _currentLabelType = LabelType::TTF;
     setFontAtlas(newAtlas,ttfConfig.distanceFieldEnabled,true);
@@ -452,7 +454,7 @@ bool Label::setTTFConfig(const TTFConfig& ttfConfig)
     return true;
 }
 
-bool Label::setBMFontFilePath(const std::string& bmfontFilePath, const Vector2& imageOffset /* = Vector2::ZERO */)
+bool Label::setBMFontFilePath(const std::string& bmfontFilePath, const Vec2& imageOffset /* = Vec2::ZERO */)
 {
     FontAtlas *newAtlas = FontAtlasCache::getFontAtlasFNT(bmfontFilePath,imageOffset);
 
@@ -470,13 +472,16 @@ bool Label::setBMFontFilePath(const std::string& bmfontFilePath, const Vector2& 
 
 void Label::setString(const std::string& text)
 {
-    _originalUTF8String = text;
-    _contentDirty = true;
-
-    std::u16string utf16String;
-    if (StringUtils::UTF8ToUTF16(_originalUTF8String, utf16String))
+    if (text.compare(_originalUTF8String))
     {
-        _currentUTF16String  = utf16String;
+        _originalUTF8String = text;
+        _contentDirty = true;
+
+        std::u16string utf16String;
+        if (StringUtils::UTF8ToUTF16(_originalUTF8String, utf16String))
+        {
+            _currentUTF16String  = utf16String;
+        }
     }
 }
 
@@ -592,8 +597,8 @@ void Label::alignText()
         for (auto index = _batchNodes.size(); index < textures.size(); ++index)
         {
             auto batchNode = SpriteBatchNode::createWithTexture(textures[index]);
-            batchNode->setAnchorPoint(Vector2::ANCHOR_TOP_LEFT);
-            batchNode->setPosition(Vector2::ZERO);
+            batchNode->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
+            batchNode->setPosition(Vec2::ZERO);
             Node::addChild(batchNode,0,Node::INVALID_TAG);
             _batchNodes.push_back(batchNode);
         }
@@ -675,7 +680,7 @@ void Label::updateQuads()
     }
 }
 
-bool Label::recordLetterInfo(const cocos2d::Vector2& point,const FontLetterDefinition& letterDef, int spriteIndex)
+bool Label::recordLetterInfo(const cocos2d::Vec2& point,const FontLetterDefinition& letterDef, int spriteIndex)
 {
     if (static_cast<std::size_t>(spriteIndex) >= _lettersInfo.size())
     {
@@ -804,7 +809,7 @@ void Label::setFontScale(float fontScale)
     Node::setScale(_fontScale);
 }
 
-void Label::onDraw(const Matrix& transform, bool transformUpdated)
+void Label::onDraw(const Mat4& transform, bool transformUpdated)
 {
     CC_PROFILER_START("Label - draw");
 
@@ -872,7 +877,7 @@ void Label::drawShadowWithoutBlur()
     setColor(oldColor);
 }
 
-void Label::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void Label::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     // Don't do calculate the culling if the transform was not updated
     _insideBounds = transformUpdated ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
@@ -892,7 +897,7 @@ void Label::createSpriteWithFontDefinition()
     texture->initWithString(_originalUTF8String.c_str(),_fontDefinition);
 
     _textSprite = Sprite::createWithTexture(texture);
-    _textSprite->setAnchorPoint(Vector2::ANCHOR_BOTTOM_LEFT);
+    _textSprite->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
     this->setContentSize(_textSprite->getContentSize());
     texture->release();
     if (_blendFuncDirty)
@@ -1030,7 +1035,7 @@ void Label::drawTextSprite(Renderer *renderer, bool parentTransformUpdated)
             {
                 _shadowNode->setBlendFunc(_blendFunc);
             }
-            _shadowNode->setAnchorPoint(Vector2::ANCHOR_BOTTOM_LEFT);
+            _shadowNode->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
             _shadowNode->setColor(_shadowColor);
             _shadowNode->setOpacity(_shadowOpacity * _displayedOpacity);
             _shadowNode->setPosition(_shadowOffset.width, _shadowOffset.height);
@@ -1044,7 +1049,7 @@ void Label::drawTextSprite(Renderer *renderer, bool parentTransformUpdated)
     _textSprite->visit(renderer, _modelViewTransform, parentTransformUpdated);
 }
 
-void Label::visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
+void Label::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
 {
     if (! _visible || _originalUTF8String.empty())
     {
@@ -1083,7 +1088,7 @@ void Label::visit(Renderer *renderer, const Matrix &parentTransform, bool parent
     _transformUpdated = false;
 
     // IMPORTANT:
-    // To ease the migration to v3.0, we still support the Matrix stack,
+    // To ease the migration to v3.0, we still support the Mat4 stack,
     // but it is deprecated and your code should not rely on it
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -1156,7 +1161,7 @@ Sprite * Label::getLetter(int letterIndex)
 
             sp = Sprite::createWithTexture(_fontAtlas->getTexture(letter.def.textureID),uvRect);
             sp->setBatchNode(_batchNodes[letter.def.textureID]);
-            sp->setPosition(Vector2(letter.position.x + uvRect.size.width / 2, 
+            sp->setPosition(Vec2(letter.position.x + uvRect.size.width / 2, 
                 letter.position.y - uvRect.size.height / 2));
             sp->setOpacity(_realOpacity);
 

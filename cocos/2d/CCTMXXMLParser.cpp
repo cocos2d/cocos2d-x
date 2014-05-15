@@ -45,7 +45,7 @@ TMXLayerInfo::TMXLayerInfo()
 : _name("")
 , _tiles(nullptr)
 , _ownTiles(true)
-, _offset(Vector2::ZERO)
+, _offset(Vec2::ZERO)
 {
 }
 
@@ -348,7 +348,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
 
         float x = attributeDict["x"].asFloat();
         float y = attributeDict["y"].asFloat();
-        layer->_offset = Vector2(x,y);
+        layer->_offset = Vec2(x,y);
 
         tmxMapInfo->getLayers().pushBack(layer);
         layer->release();
@@ -361,7 +361,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
     {
         TMXObjectGroup *objectGroup = new TMXObjectGroup();
         objectGroup->setGroupName(attributeDict["name"].asString());
-        Vector2 positionOffset;
+        Vec2 positionOffset;
         positionOffset.x = attributeDict["x"].asFloat() * tmxMapInfo->getTileSize().width;
         positionOffset.y = attributeDict["y"].asFloat() * tmxMapInfo->getTileSize().height;
         objectGroup->setPositionOffset(positionOffset);
@@ -452,7 +452,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         // Y
         int y = attributeDict["y"].asInt();
         
-        Vector2 p(x + objectGroup->getPositionOffset().x, _mapSize.height * _tileSize.height - y  - objectGroup->getPositionOffset().x - attributeDict["height"].asInt());
+        Vec2 p(x + objectGroup->getPositionOffset().x, _mapSize.height * _tileSize.height - y  - objectGroup->getPositionOffset().x - attributeDict["height"].asInt());
         p = CC_POINT_PIXELS_TO_POINTS(p);
         dict["x"] = Value(p.x);
         dict["y"] = Value(p.y);

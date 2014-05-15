@@ -53,7 +53,7 @@ public:
     // prevents compiler warning: "Included function hides overloaded virtual functions"
     using Node::addChild;
 
-    void addChild(Node * child, int z, const Vector2& parallaxRatio, const Vector2& positionOffset);
+    void addChild(Node * child, int z, const Vec2& parallaxRatio, const Vec2& positionOffset);
 
     /** Sets an array of layers for the Parallax node */
     void setParallaxArray( struct _ccArray *parallaxArray) { _parallaxArray = parallaxArray; }
@@ -67,7 +67,7 @@ public:
     virtual void addChild(Node * child, int zOrder, int tag) override;
     virtual void removeChild(Node* child, bool cleanup) override;
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
-    virtual void visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated) override;
+    virtual void visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated) override;
 
 protected:
     /** Adds a child to the container with a z-order, a parallax ratio and a position offset
@@ -82,9 +82,9 @@ protected:
      */
     virtual ~ParallaxNode();
 
-    Vector2 absolutePosition();
+    Vec2 absolutePosition();
 
-    Vector2    _lastPosition;
+    Vec2    _lastPosition;
     struct _ccArray* _parallaxArray;
 
 private:

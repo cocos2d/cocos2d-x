@@ -35,8 +35,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-USING_NS_CC_MATH;
-
 struct Color4B;
 struct Color4F;
 
@@ -194,10 +192,10 @@ struct Tex2F {
 };
 
  
-//! Vector2 Sprite component
+//! Vec2 Sprite component
 struct PointSprite
 {
-    Vector2   pos;        // 8 bytes
+    Vec2   pos;        // 8 bytes
     Color4B    color;      // 4 bytes
     GLfloat    size;       // 4 bytes
 };
@@ -205,48 +203,48 @@ struct PointSprite
 //!    A 2D Quad. 4 * 2 floats
 struct Quad2
 {
-    Vector2        tl;
-    Vector2        tr;
-    Vector2        bl;
-    Vector2        br;
+    Vec2        tl;
+    Vec2        tr;
+    Vec2        bl;
+    Vec2        br;
 };
 
 
 //!    A 3D Quad. 4 * 3 floats
 struct Quad3 {
-    Vector3        bl;
-    Vector3        br;
-    Vector3        tl;
-    Vector3        tr;
+    Vec3        bl;
+    Vec3        br;
+    Vec3        tl;
+    Vec3        tr;
 };
 
-//! a Vector2 with a vertex point, a tex coord point and a color 4B
+//! a Vec2 with a vertex point, a tex coord point and a color 4B
 struct V2F_C4B_T2F
 {
     //! vertices (2F)
-    Vector2       vertices;
+    Vec2       vertices;
     //! colors (4B)
     Color4B        colors;
     //! tex coords (2F)
     Tex2F          texCoords;
 };
 
-//! a Vector2 with a vertex point, a tex coord point and a color 4F
+//! a Vec2 with a vertex point, a tex coord point and a color 4F
 struct V2F_C4F_T2F
 {
     //! vertices (2F)
-    Vector2       vertices;
+    Vec2       vertices;
     //! colors (4F)
     Color4F        colors;
     //! tex coords (2F)
     Tex2F          texCoords;
 };
 
-//! a Vector2 with a vertex point, a tex coord point and a color 4B
+//! a Vec2 with a vertex point, a tex coord point and a color 4B
 struct V3F_C4B_T2F
 {
     //! vertices (3F)
-    Vector3     vertices;            // 12 bytes
+    Vec3     vertices;            // 12 bytes
 
     //! colors (4B)
     Color4B      colors;              // 4 bytes
@@ -258,11 +256,11 @@ struct V3F_C4B_T2F
 //! A Triangle of V2F_C4B_T2F
 struct V2F_C4B_T2F_Triangle
 {
-	//! Vector2 A
+	//! Vec2 A
 	V2F_C4B_T2F a;
-	//! Vector2 B
+	//! Vec2 B
 	V2F_C4B_T2F b;
-	//! Vector2 B
+	//! Vec2 B
 	V2F_C4B_T2F c;
 };
 

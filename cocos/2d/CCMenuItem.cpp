@@ -90,7 +90,7 @@ bool MenuItem::initWithTarget(cocos2d::Ref *target, SEL_MenuHandler selector )
 
 bool MenuItem::initWithCallback(const ccMenuCallback& callback)
 {
-    setAnchorPoint(Vector2(0.5f, 0.5f));
+    setAnchorPoint(Vec2(0.5f, 0.5f));
 	_callback = callback;
     _enabled = true;
     _selected = false;
@@ -179,7 +179,7 @@ void MenuItemLabel::setLabel(Node* var)
 {
     if (var)
     {
-        var->setAnchorPoint(Vector2::ANCHOR_BOTTOM_LEFT);
+        var->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
         setContentSize(var->getContentSize()); 
         addChild(var);
     }
@@ -483,7 +483,7 @@ void MenuItemSprite::setNormalImage(Node* image)
         if (image)
         {
             addChild(image, 0, kNormalTag);
-            image->setAnchorPoint(Vector2(0, 0));
+            image->setAnchorPoint(Vec2(0, 0));
         }
 
         if (_normalImage)
@@ -504,7 +504,7 @@ void MenuItemSprite::setSelectedImage(Node* image)
         if (image)
         {
             addChild(image, 0, kSelectedTag);
-            image->setAnchorPoint(Vector2(0, 0));
+            image->setAnchorPoint(Vec2(0, 0));
         }
 
         if (_selectedImage)
@@ -524,7 +524,7 @@ void MenuItemSprite::setDisabledImage(Node* image)
         if (image)
         {
             addChild(image, 0, kDisableTag);
-            image->setAnchorPoint(Vector2(0, 0));
+            image->setAnchorPoint(Vec2(0, 0));
         }
 
         if (_disabledImage)
@@ -935,7 +935,7 @@ void MenuItemToggle::setSelectedIndex(unsigned int index)
         this->addChild(item, 0, kCurrentItem);
         Size s = item->getContentSize();
         this->setContentSize(s);
-        item->setPosition( Vector2( s.width/2, s.height/2 ) );
+        item->setPosition( Vec2( s.width/2, s.height/2 ) );
     }
 }
 

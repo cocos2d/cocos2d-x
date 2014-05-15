@@ -116,8 +116,8 @@ public:
     static ShaderNode* shaderNodeWithVertex(const std::string &vert, const std::string &frag);
 
     virtual void update(float dt);
-    virtual void setPosition(const Vector2 &newPosition);
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
+    virtual void setPosition(const Vec2 &newPosition);
+    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
 
 protected:
     ShaderNode();
@@ -126,10 +126,10 @@ protected:
     bool initWithVertex(const std::string &vert, const std::string &frag);
     void loadShaderVertex(const std::string &vert, const std::string &frag);
 
-    void onDraw(const Matrix &transform, bool transformUpdated);
+    void onDraw(const Mat4 &transform, bool transformUpdated);
 
-    Vector2 _center;
-    Vector2 _resolution;
+    Vec2 _center;
+    Vec2 _resolution;
     float      _time;
     std::string _vertFileName;
     std::string _fragFileName;
@@ -152,16 +152,6 @@ public:
     virtual bool init();
 };
 
-class ShaderFireBall : public ShaderTestDemo
-{
-public:
-    ShaderFireBall();
-    
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-    virtual bool init();
-};
-
 class ShaderGlow : public ShaderTestDemo
 {
 public:
@@ -172,8 +162,14 @@ public:
     virtual bool init();
 };
 
+class ShaderMultiTexture : public ShaderTestDemo
+{
+public:
+    ShaderMultiTexture();
 
-
-//CCLayer* nextAction();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual bool init();
+};
 
 #endif

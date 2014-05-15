@@ -31,8 +31,6 @@ class b2Body;
 
 NS_CC_EXT_BEGIN
 
-USING_NS_CC_MATH;
-
 /** A Sprite subclass that is bound to a physics body.
  It works with:
  - Chipmunk: Preprocessor macro CC_ENABLE_CHIPMUNK_INTEGRATION should be defined
@@ -108,20 +106,20 @@ public:
     void setPTMRatio(float fPTMRatio);
 
     // overrides
-    virtual const Vector2& getPosition() const override;
+    virtual const Vec2& getPosition() const override;
     virtual void getPosition(float* x, float* y) const override;
     virtual float getPositionX() const override;
     virtual float getPositionY() const override;
-    virtual void setPosition(const Vector2 &position) override;
+    virtual void setPosition(const Vec2 &position) override;
     virtual float getRotation() const override;
     virtual void setRotation(float fRotation) override;
     virtual void syncPhysicsTransform() const;
-    virtual const Matrix& getNodeToParentTransform() const override;
+    virtual const Mat4& getNodeToParentTransform() const override;
     
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
 
 protected:
-    const Vector2& getPosFromPhysics() const;
+    const Vec2& getPosFromPhysics() const;
 
 protected:
     bool    _ignoreBodyRotation;

@@ -29,12 +29,12 @@
 -- @return TextVAlignment#TextVAlignment ret (return value: cc.TextVAlignment)
         
 --------------------------------
--- @function [parent=#Text] getStringValue 
+-- @function [parent=#Text] getString 
 -- @param self
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- @function [parent=#Text] setText 
+-- @function [parent=#Text] setString 
 -- @param self
 -- @param #string str
         
@@ -44,14 +44,19 @@
 -- @return TextHAlignment#TextHAlignment ret (return value: cc.TextHAlignment)
         
 --------------------------------
+-- @function [parent=#Text] setTextVerticalAlignment 
+-- @param self
+-- @param #cc.TextVAlignment textvalignment
+        
+--------------------------------
 -- @function [parent=#Text] getTextAreaSize 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
--- @function [parent=#Text] setTextVerticalAlignment 
+-- @function [parent=#Text] setTextHorizontalAlignment 
 -- @param self
--- @param #cc.TextVAlignment textvalignment
+-- @param #cc.TextHAlignment texthalignment
         
 --------------------------------
 -- @function [parent=#Text] setFontSize 
@@ -64,9 +69,9 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- @function [parent=#Text] setTextHorizontalAlignment 
+-- @function [parent=#Text] getType 
 -- @param self
--- @param #cc.TextHAlignment texthalignment
+-- @return Text::Type#Text::Type ret (return value: ccui.Text::Type)
         
 --------------------------------
 -- @function [parent=#Text] getFontName 

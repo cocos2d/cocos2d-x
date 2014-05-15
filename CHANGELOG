@@ -1,4 +1,9 @@
+cocos2d-x-3.1-rc0 May.16 2014
+    [FIX]           Math: Vector2->Vec2, Vector3->Vec3, Vector4->Vec4, Matrix->Mat4
+    [FIX]           GLProgramState: Supports multitexturing
+
 cocos2d-x-3.1-alpha1 May.9 2014
+    [NEW]           Animate: Dispatch a custom event after an animation frame is displayed
     [NEW]           GLProgram: Easy to customize uniforms and attributes by using the new class GLProgramState
     [NEW]           Template: cpp project support Eclipse c++ project
     [NEW]           UI: add navigation support
@@ -16,6 +21,7 @@ cocos2d-x-3.1-alpha1 May.9 2014
     [FIX]           ParticleSystem: yFlippedCoord behavior fixed.
                       Added cocos2d/tools/particle to fix particles that were based on the old (broken) behaviour
     [FIX]           Setup.py: Added SDK / NDK detection based on PATH
+    [FIX]           UIText: support TTF
     [FIX]           Value: all types share the same union to reduce memory usage
 
 cocos2d-x-3.1-alpha0 May.1 2014

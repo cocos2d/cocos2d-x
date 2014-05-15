@@ -35,7 +35,7 @@ NS_CC_BEGIN
 class QuadCommand : public RenderCommand
 {
 public:
-    static const int MATERIAL_ID_IGNORE = 0;
+    static const int MATERIAL_ID_DO_NOT_BATCH = 0;
 
     QuadCommand();
     ~QuadCommand();
@@ -43,7 +43,7 @@ public:
     /** Initializes the command with a globalZOrder, a texture ID, a `GLProgram`, a blending function, a pointer to quads,
      * quantity of quads, and the Model View transform to be used for the quads */
     void init(float globalOrder, GLuint texutreID, GLProgramState* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
-              const Matrix& mv);
+              const Mat4& mv);
 
     void useMaterial() const;
 
@@ -54,7 +54,7 @@ public:
     inline ssize_t getQuadCount() const { return _quadsCount; }
     inline GLProgramState* getGLProgramState() const { return _glProgramState; }
     inline BlendFunc getBlendType() const { return _blendType; }
-    inline const Matrix& getModelView() const { return _mv; }
+    inline const Mat4& getModelView() const { return _mv; }
     
 
 protected:
@@ -66,7 +66,7 @@ protected:
     BlendFunc _blendType;
     V3F_C4B_T2F_Quad* _quads;
     ssize_t _quadsCount;
-    Matrix _mv;
+    Mat4 _mv;
 };
 NS_CC_END
 

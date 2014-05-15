@@ -25,86 +25,58 @@
 
 NS_CC_MATH_BEGIN
 
-static const float MATRIX_IDENTITY[16] =
+Mat4::Mat4()
 {
-    1.0f, 0.0f, 0.0f, 0.0f,
-    0.0f, 1.0f, 0.0f, 0.0f,
-    0.0f, 0.0f, 1.0f, 0.0f,
-    0.0f, 0.0f, 0.0f, 1.0f
-};
-
-Matrix::Matrix()
-{
-    *this = Matrix::identity();
+    *this = IDENTITY;
 }
 
-Matrix::Matrix(float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24,
+Mat4::Mat4(float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24,
                float m31, float m32, float m33, float m34, float m41, float m42, float m43, float m44)
 {
     set(m11, m12, m13, m14, m21, m22, m23, m24, m31, m32, m33, m34, m41, m42, m43, m44);
 }
 
-Matrix::Matrix(const float* mat)
+Mat4::Mat4(const float* mat)
 {
     set(mat);
 }
 
-Matrix::Matrix(const Matrix& copy)
+Mat4::Mat4(const Mat4& copy)
 {
     memcpy(m, copy.m, MATRIX_SIZE);
 }
 
-Matrix::~Matrix()
+Mat4::~Mat4()
 {
 }
 
-const Matrix& Matrix::identity()
-{
-    static Matrix m(
-        1, 0, 0, 0,
-        0, 1, 0, 0,
-        0, 0, 1, 0,
-        0, 0, 0, 1 );
-    return m;
-}
-
-const Matrix& Matrix::zero()
-{
-    static Matrix m(
-        0, 0, 0, 0,
-        0, 0, 0, 0,
-        0, 0, 0, 0,
-        0, 0, 0, 0 );
-    return m;
-}
-
-void Matrix::createLookAt(const Vector3& eyePosition, const Vector3& targetPosition, const Vector3& up, Matrix* dst)
+void Mat4::createLookAt(const Vec3& eyePosition, const Vec3& targetPosition, const Vec3& up, Mat4* dst)
 {
     createLookAt(eyePosition.x, eyePosition.y, eyePosition.z, targetPosition.x, targetPosition.y, targetPosition.z,
                  up.x, up.y, up.z, dst);
 }
 
-void Matrix::createLookAt(float eyePositionX, float eyePositionY, float eyePositionZ,
+void Mat4::createLookAt(float eyePositionX, float eyePositionY, float eyePositionZ,
                           float targetPositionX, float targetPositionY, float targetPositionZ,
-                          float upX, float upY, float upZ, Matrix* dst)
+                          float upX, float upY, float upZ, Mat4* dst)
 {
     GP_ASSERT(dst);
 
-    Vector3 eye(eyePositionX, eyePositionY, eyePositionZ);
-    Vector3 target(targetPositionX, targetPositionY, targetPositionZ);
-    Vector3 up(upX, upY, upZ);
+    Vec3 eye(eyePositionX, eyePositionY, eyePositionZ);
+    Vec3 target(targetPositionX, targetPositionY, targetPositionZ);
+    Vec3 up(upX, upY, upZ);
     up.normalize();
 
-    Vector3 zaxis;
-    Vector3::subtract(eye, target, &zaxis);
+    Vec3 zaxis;
+    Vec3::subtract(eye, target, &zaxis);
     zaxis.normalize();
 
-    Vector3 xaxis;
-    Vector3::cross(up, zaxis, &xaxis);
+    Vec3 xaxis;
+    Vec3::cross(up, zaxis, &xaxis);
     xaxis.normalize();
 
-    Vector3 yaxis;
-    Vector3::cross(zaxis, xaxis, &yaxis);
+    Vec3 yaxis;
+    Vec3::cross(zaxis, xaxis, &yaxis);
     yaxis.normalize();
 
     dst->m[0] = xaxis.x;
@@ -122,14 +94,14 @@ void Matrix::createLookAt(float eyePositionX, float eyePositionY, float eyePosit
     dst->m[10] = zaxis.z;
     dst->m[11] = 0.0f;
 
-    dst->m[12] = -Vector3::dot(xaxis, eye);
-    dst->m[13] = -Vector3::dot(yaxis, eye);
-    dst->m[14] = -Vector3::dot(zaxis, eye);
+    dst->m[12] = -Vec3::dot(xaxis, eye);
+    dst->m[13] = -Vec3::dot(yaxis, eye);
+    dst->m[14] = -Vec3::dot(zaxis, eye);
     dst->m[15] = 1.0f;
 }
 
-void Matrix::createPerspective(float fieldOfView, float aspectRatio,
-                                     float zNearPlane, float zFarPlane, Matrix* dst)
+void Mat4::createPerspective(float fieldOfView, float aspectRatio,
+                                     float zNearPlane, float zFarPlane, Mat4* dst)
 {
     GP_ASSERT(dst);
     GP_ASSERT(zFarPlane != zNearPlane);
@@ -155,15 +127,15 @@ void Matrix::createPerspective(float fieldOfView, float aspectRatio,
     dst->m[14] = -2.0f * zFarPlane * zNearPlane * f_n;
 }
 
-void Matrix::createOrthographic(float width, float height, float zNearPlane, float zFarPlane, Matrix* dst)
+void Mat4::createOrthographic(float width, float height, float zNearPlane, float zFarPlane, Mat4* dst)
 {
     float halfWidth = width / 2.0f;
     float halfHeight = height / 2.0f;
     createOrthographicOffCenter(-halfWidth, halfWidth, -halfHeight, halfHeight, zNearPlane, zFarPlane, dst);
 }
 
-void Matrix::createOrthographicOffCenter(float left, float right, float bottom, float top,
-                                         float zNearPlane, float zFarPlane, Matrix* dst)
+void Mat4::createOrthographicOffCenter(float left, float right, float bottom, float top,
+                                         float zNearPlane, float zFarPlane, Mat4* dst)
 {
     GP_ASSERT(dst);
     GP_ASSERT(right != left);
@@ -181,24 +153,24 @@ void Matrix::createOrthographicOffCenter(float left, float right, float bottom, 
     dst->m[15] = 1;
 }
     
-void Matrix::createBillboard(const Vector3& objectPosition, const Vector3& cameraPosition,
-                             const Vector3& cameraUpVector, Matrix* dst)
+void Mat4::createBillboard(const Vec3& objectPosition, const Vec3& cameraPosition,
+                             const Vec3& cameraUpVector, Mat4* dst)
 {
     createBillboardHelper(objectPosition, cameraPosition, cameraUpVector, NULL, dst);
 }
 
-void Matrix::createBillboard(const Vector3& objectPosition, const Vector3& cameraPosition,
-                             const Vector3& cameraUpVector, const Vector3& cameraForwardVector,
-                             Matrix* dst)
+void Mat4::createBillboard(const Vec3& objectPosition, const Vec3& cameraPosition,
+                             const Vec3& cameraUpVector, const Vec3& cameraForwardVector,
+                             Mat4* dst)
 {
     createBillboardHelper(objectPosition, cameraPosition, cameraUpVector, &cameraForwardVector, dst);
 }
 
-void Matrix::createBillboardHelper(const Vector3& objectPosition, const Vector3& cameraPosition,
-                                   const Vector3& cameraUpVector, const Vector3* cameraForwardVector,
-                                   Matrix* dst)
+void Mat4::createBillboardHelper(const Vec3& objectPosition, const Vec3& cameraPosition,
+                                   const Vec3& cameraUpVector, const Vec3* cameraForwardVector,
+                                   Mat4* dst)
 {
-    Vector3 delta(objectPosition, cameraPosition);
+    Vec3 delta(objectPosition, cameraPosition);
     bool isSufficientDelta = delta.lengthSquared() > MATH_EPSILON;
 
     dst->setIdentity();
@@ -210,10 +182,10 @@ void Matrix::createBillboardHelper(const Vector3& objectPosition, const Vector3&
     // either a safe default or a sufficient distance between object and camera.
     if (cameraForwardVector || isSufficientDelta)
     {
-        Vector3 target = isSufficientDelta ? cameraPosition : (objectPosition - *cameraForwardVector);
+        Vec3 target = isSufficientDelta ? cameraPosition : (objectPosition - *cameraForwardVector);
 
         // A billboard is the inverse of a lookAt rotation
-        Matrix lookAt;
+        Mat4 lookAt;
         createLookAt(objectPosition, target, cameraUpVector, &lookAt);
         dst->m[0] = lookAt.m[0];
         dst->m[1] = lookAt.m[4];
@@ -227,9 +199,9 @@ void Matrix::createBillboardHelper(const Vector3& objectPosition, const Vector3&
     }
 }
     
-// void Matrix::createReflection(const Plane& plane, Matrix* dst)
+// void Mat4::createReflection(const Plane& plane, Mat4* dst)
 // {
-//     Vector3 normal(plane.getNormal());
+//     Vec3 normal(plane.getNormal());
 //     float k = -2.0f * plane.getDistance();
 
 //     dst->setIdentity();
@@ -246,22 +218,22 @@ void Matrix::createBillboardHelper(const Vector3& objectPosition, const Vector3&
 //     dst->m[11] = k * normal.z;
 // }
 
-void Matrix::createScale(const Vector3& scale, Matrix* dst)
+void Mat4::createScale(const Vec3& scale, Mat4* dst)
 {
     GP_ASSERT(dst);
 
-    memcpy(dst, MATRIX_IDENTITY, MATRIX_SIZE);
+    memcpy(dst, &IDENTITY, MATRIX_SIZE);
 
     dst->m[0] = scale.x;
     dst->m[5] = scale.y;
     dst->m[10] = scale.z;
 }
 
-void Matrix::createScale(float xScale, float yScale, float zScale, Matrix* dst)
+void Mat4::createScale(float xScale, float yScale, float zScale, Mat4* dst)
 {
     GP_ASSERT(dst);
 
-    memcpy(dst, MATRIX_IDENTITY, MATRIX_SIZE);
+    memcpy(dst, &IDENTITY, MATRIX_SIZE);
 
     dst->m[0] = xScale;
     dst->m[5] = yScale;
@@ -269,7 +241,7 @@ void Matrix::createScale(float xScale, float yScale, float zScale, Matrix* dst)
 }
 
 
-void Matrix::createRotation(const Quaternion& q, Matrix* dst)
+void Mat4::createRotation(const Quaternion& q, Mat4* dst)
 {
     GP_ASSERT(dst);
 
@@ -308,7 +280,7 @@ void Matrix::createRotation(const Quaternion& q, Matrix* dst)
     dst->m[15] = 1.0f;
 }
 
-void Matrix::createRotation(const Vector3& axis, float angle, Matrix* dst)
+void Mat4::createRotation(const Vec3& axis, float angle, Mat4* dst)
 {
     GP_ASSERT(dst);
 
@@ -367,11 +339,11 @@ void Matrix::createRotation(const Vector3& axis, float angle, Matrix* dst)
     dst->m[15] = 1.0f;
 }
 
-void Matrix::createRotationX(float angle, Matrix* dst)
+void Mat4::createRotationX(float angle, Mat4* dst)
 {
     GP_ASSERT(dst);
 
-    memcpy(dst, MATRIX_IDENTITY, MATRIX_SIZE);
+    memcpy(dst, &IDENTITY, MATRIX_SIZE);
 
     float c = cos(angle);
     float s = sin(angle);
@@ -382,11 +354,11 @@ void Matrix::createRotationX(float angle, Matrix* dst)
     dst->m[10] = c;
 }
 
-void Matrix::createRotationY(float angle, Matrix* dst)
+void Mat4::createRotationY(float angle, Mat4* dst)
 {
     GP_ASSERT(dst);
 
-    memcpy(dst, MATRIX_IDENTITY, MATRIX_SIZE);
+    memcpy(dst, &IDENTITY, MATRIX_SIZE);
 
     float c = cos(angle);
     float s = sin(angle);
@@ -397,11 +369,11 @@ void Matrix::createRotationY(float angle, Matrix* dst)
     dst->m[10] = c;
 }
 
-void Matrix::createRotationZ(float angle, Matrix* dst)
+void Mat4::createRotationZ(float angle, Mat4* dst)
 {
     GP_ASSERT(dst);
 
-    memcpy(dst, MATRIX_IDENTITY, MATRIX_SIZE);
+    memcpy(dst, &IDENTITY, MATRIX_SIZE);
 
     float c = cos(angle);
     float s = sin(angle);
@@ -412,53 +384,53 @@ void Matrix::createRotationZ(float angle, Matrix* dst)
     dst->m[5] = c;
 }
 
-void Matrix::createTranslation(const Vector3& translation, Matrix* dst)
+void Mat4::createTranslation(const Vec3& translation, Mat4* dst)
 {
     GP_ASSERT(dst);
 
-    memcpy(dst, MATRIX_IDENTITY, MATRIX_SIZE);
+    memcpy(dst, &IDENTITY, MATRIX_SIZE);
 
     dst->m[12] = translation.x;
     dst->m[13] = translation.y;
     dst->m[14] = translation.z;
 }
 
-void Matrix::createTranslation(float xTranslation, float yTranslation, float zTranslation, Matrix* dst)
+void Mat4::createTranslation(float xTranslation, float yTranslation, float zTranslation, Mat4* dst)
 {
     GP_ASSERT(dst);
 
-    memcpy(dst, MATRIX_IDENTITY, MATRIX_SIZE);
+    memcpy(dst, &IDENTITY, MATRIX_SIZE);
 
     dst->m[12] = xTranslation;
     dst->m[13] = yTranslation;
     dst->m[14] = zTranslation;
 }
 
-void Matrix::add(float scalar)
+void Mat4::add(float scalar)
 {
     add(scalar, this);
 }
 
-void Matrix::add(float scalar, Matrix* dst)
+void Mat4::add(float scalar, Mat4* dst)
 {
     GP_ASSERT(dst);
 
     MathUtil::addMatrix(m, scalar, dst->m);
 }
 
-void Matrix::add(const Matrix& mat)
+void Mat4::add(const Mat4& mat)
 {
     add(*this, mat, this);
 }
 
-void Matrix::add(const Matrix& m1, const Matrix& m2, Matrix* dst)
+void Mat4::add(const Mat4& m1, const Mat4& m2, Mat4* dst)
 {
     GP_ASSERT(dst);
 
     MathUtil::addMatrix(m1.m, m2.m, dst->m);
 }
 
-bool Matrix::decompose(Vector3* scale, Quaternion* rotation, Vector3* translation) const
+bool Mat4::decompose(Vec3* scale, Quaternion* rotation, Vec3* translation) const
 {
     if (translation)
     {
@@ -474,13 +446,13 @@ bool Matrix::decompose(Vector3* scale, Quaternion* rotation, Vector3* translatio
 
     // Extract the scale.
     // This is simply the length of each axis (row/column) in the matrix.
-    Vector3 xaxis(m[0], m[1], m[2]);
+    Vec3 xaxis(m[0], m[1], m[2]);
     float scaleX = xaxis.length();
 
-    Vector3 yaxis(m[4], m[5], m[6]);
+    Vec3 yaxis(m[4], m[5], m[6]);
     float scaleY = yaxis.length();
 
-    Vector3 zaxis(m[8], m[9], m[10]);
+    Vec3 zaxis(m[8], m[9], m[10]);
     float scaleZ = zaxis.length();
 
     // Determine if we have a negative scale (true if determinant is less than zero).
@@ -566,7 +538,7 @@ bool Matrix::decompose(Vector3* scale, Quaternion* rotation, Vector3* translatio
     return true;
 }
 
-float Matrix::determinant() const
+float Mat4::determinant() const
 {
     float a0 = m[0] * m[5] - m[1] * m[4];
     float a1 = m[0] * m[6] - m[2] * m[4];
@@ -585,22 +557,22 @@ float Matrix::determinant() const
     return (a0 * b5 - a1 * b4 + a2 * b3 + a3 * b2 - a4 * b1 + a5 * b0);
 }
 
-void Matrix::getScale(Vector3* scale) const
+void Mat4::getScale(Vec3* scale) const
 {
     decompose(scale, NULL, NULL);
 }
 
-bool Matrix::getRotation(Quaternion* rotation) const
+bool Mat4::getRotation(Quaternion* rotation) const
 {
     return decompose(NULL, rotation, NULL);
 }
 
-void Matrix::getTranslation(Vector3* translation) const
+void Mat4::getTranslation(Vec3* translation) const
 {
     decompose(NULL, NULL, translation);
 }
 
-void Matrix::getUpVector(Vector3* dst) const
+void Mat4::getUpVector(Vec3* dst) const
 {
     GP_ASSERT(dst);
 
@@ -609,7 +581,7 @@ void Matrix::getUpVector(Vector3* dst) const
     dst->z = m[6];
 }
 
-void Matrix::getDownVector(Vector3* dst) const
+void Mat4::getDownVector(Vec3* dst) const
 {
     GP_ASSERT(dst);
     
@@ -618,7 +590,7 @@ void Matrix::getDownVector(Vector3* dst) const
     dst->z = -m[6];
 }
 
-void Matrix::getLeftVector(Vector3* dst) const
+void Mat4::getLeftVector(Vec3* dst) const
 {
     GP_ASSERT(dst);
 
@@ -627,7 +599,7 @@ void Matrix::getLeftVector(Vector3* dst) const
     dst->z = -m[2];
 }
 
-void Matrix::getRightVector(Vector3* dst) const
+void Mat4::getRightVector(Vec3* dst) const
 {
     GP_ASSERT(dst);
 
@@ -636,7 +608,7 @@ void Matrix::getRightVector(Vector3* dst) const
     dst->z = m[2];
 }
 
-void Matrix::getForwardVector(Vector3* dst) const
+void Mat4::getForwardVector(Vec3* dst) const
 {
     GP_ASSERT(dst);
 
@@ -645,7 +617,7 @@ void Matrix::getForwardVector(Vector3* dst) const
     dst->z = -m[10];
 }
 
-void Matrix::getBackVector(Vector3* dst) const
+void Mat4::getBackVector(Vec3* dst) const
 {
     GP_ASSERT(dst);
 
@@ -654,14 +626,14 @@ void Matrix::getBackVector(Vector3* dst) const
     dst->z = m[10];
 }
 
-Matrix Matrix::getInversed() const
+Mat4 Mat4::getInversed() const
 {
-    Matrix mat(*this);
+    Mat4 mat(*this);
     mat.inverse();
     return mat;
 }
 
-bool Matrix::inverse()
+bool Mat4::inverse()
 {
     float a0 = m[0] * m[5] - m[1] * m[4];
     float a1 = m[0] * m[6] - m[2] * m[4];
@@ -684,7 +656,7 @@ bool Matrix::inverse()
         return false;
 
     // Support the case where m == dst.
-    Matrix inverse;
+    Mat4 inverse;
     inverse.m[0]  = m[5] * b5 - m[6] * b4 + m[7] * b3;
     inverse.m[1]  = -m[1] * b5 + m[2] * b4 - m[3] * b3;
     inverse.m[2]  = m[13] * a5 - m[14] * a4 + m[15] * a3;
@@ -710,145 +682,145 @@ bool Matrix::inverse()
     return true;
 }
 
-bool Matrix::isIdentity() const
+bool Mat4::isIdentity() const
 {
-    return (memcmp(m, MATRIX_IDENTITY, MATRIX_SIZE) == 0);
+    return (memcmp(m, &IDENTITY, MATRIX_SIZE) == 0);
 }
 
-void Matrix::multiply(float scalar)
+void Mat4::multiply(float scalar)
 {
     multiply(scalar, this);
 }
 
-void Matrix::multiply(float scalar, Matrix* dst) const
+void Mat4::multiply(float scalar, Mat4* dst) const
 {
     multiply(*this, scalar, dst);
 }
 
-void Matrix::multiply(const Matrix& m, float scalar, Matrix* dst)
+void Mat4::multiply(const Mat4& m, float scalar, Mat4* dst)
 {
     GP_ASSERT(dst);
 
     MathUtil::multiplyMatrix(m.m, scalar, dst->m);
 }
 
-void Matrix::multiply(const Matrix& mat)
+void Mat4::multiply(const Mat4& mat)
 {
     multiply(*this, mat, this);
 }
 
-void Matrix::multiply(const Matrix& m1, const Matrix& m2, Matrix* dst)
+void Mat4::multiply(const Mat4& m1, const Mat4& m2, Mat4* dst)
 {
     GP_ASSERT(dst);
 
     MathUtil::multiplyMatrix(m1.m, m2.m, dst->m);
 }
 
-void Matrix::negate()
+void Mat4::negate()
 {
     MathUtil::negateMatrix(m, m);
 }
 
-Matrix Matrix::getNegated() const
+Mat4 Mat4::getNegated() const
 {
-    Matrix mat(*this);
+    Mat4 mat(*this);
     mat.negate();
     return mat;
 }
 
-void Matrix::rotate(const Quaternion& q)
+void Mat4::rotate(const Quaternion& q)
 {
     rotate(q, this);
 }
 
-void Matrix::rotate(const Quaternion& q, Matrix* dst) const
+void Mat4::rotate(const Quaternion& q, Mat4* dst) const
 {
-    Matrix r;
+    Mat4 r;
     createRotation(q, &r);
     multiply(*this, r, dst);
 }
 
-void Matrix::rotate(const Vector3& axis, float angle)
+void Mat4::rotate(const Vec3& axis, float angle)
 {
     rotate(axis, angle, this);
 }
 
-void Matrix::rotate(const Vector3& axis, float angle, Matrix* dst) const
+void Mat4::rotate(const Vec3& axis, float angle, Mat4* dst) const
 {
-    Matrix r;
+    Mat4 r;
     createRotation(axis, angle, &r);
     multiply(*this, r, dst);
 }
 
-void Matrix::rotateX(float angle)
+void Mat4::rotateX(float angle)
 {
     rotateX(angle, this);
 }
 
-void Matrix::rotateX(float angle, Matrix* dst) const
+void Mat4::rotateX(float angle, Mat4* dst) const
 {
-    Matrix r;
+    Mat4 r;
     createRotationX(angle, &r);
     multiply(*this, r, dst);
 }
 
-void Matrix::rotateY(float angle)
+void Mat4::rotateY(float angle)
 {
     rotateY(angle, this);
 }
 
-void Matrix::rotateY(float angle, Matrix* dst) const
+void Mat4::rotateY(float angle, Mat4* dst) const
 {
-    Matrix r;
+    Mat4 r;
     createRotationY(angle, &r);
     multiply(*this, r, dst);
 }
 
-void Matrix::rotateZ(float angle)
+void Mat4::rotateZ(float angle)
 {
     rotateZ(angle, this);
 }
 
-void Matrix::rotateZ(float angle, Matrix* dst) const
+void Mat4::rotateZ(float angle, Mat4* dst) const
 {
-    Matrix r;
+    Mat4 r;
     createRotationZ(angle, &r);
     multiply(*this, r, dst);
 }
 
-void Matrix::scale(float value)
+void Mat4::scale(float value)
 {
     scale(value, this);
 }
 
-void Matrix::scale(float value, Matrix* dst) const
+void Mat4::scale(float value, Mat4* dst) const
 {
     scale(value, value, value, dst);
 }
 
-void Matrix::scale(float xScale, float yScale, float zScale)
+void Mat4::scale(float xScale, float yScale, float zScale)
 {
     scale(xScale, yScale, zScale, this);
 }
 
-void Matrix::scale(float xScale, float yScale, float zScale, Matrix* dst) const
+void Mat4::scale(float xScale, float yScale, float zScale, Mat4* dst) const
 {
-    Matrix s;
+    Mat4 s;
     createScale(xScale, yScale, zScale, &s);
     multiply(*this, s, dst);
 }
 
-void Matrix::scale(const Vector3& s)
+void Mat4::scale(const Vec3& s)
 {
     scale(s.x, s.y, s.z, this);
 }
 
-void Matrix::scale(const Vector3& s, Matrix* dst) const
+void Mat4::scale(const Vec3& s, Mat4* dst) const
 {
     scale(s.x, s.y, s.z, dst);
 }
 
-void Matrix::set(float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24,
+void Mat4::set(float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24,
                  float m31, float m32, float m33, float m34, float m41, float m42, float m43, float m44)
 {
     m[0]  = m11;
@@ -869,113 +841,125 @@ void Matrix::set(float m11, float m12, float m13, float m14, float m21, float m2
     m[15] = m44;
 }
 
-void Matrix::set(const float* mat)
+void Mat4::set(const float* mat)
 {
     GP_ASSERT(mat);
     memcpy(this->m, mat, MATRIX_SIZE);
 }
 
-void Matrix::set(const Matrix& mat)
+void Mat4::set(const Mat4& mat)
 {
     memcpy(this->m, mat.m, MATRIX_SIZE);
 }
 
-void Matrix::setIdentity()
+void Mat4::setIdentity()
 {
-    memcpy(m, MATRIX_IDENTITY, MATRIX_SIZE);
+    memcpy(m, &IDENTITY, MATRIX_SIZE);
 }
 
-void Matrix::setZero()
+void Mat4::setZero()
 {
     memset(m, 0, MATRIX_SIZE);
 }
 
-void Matrix::subtract(const Matrix& mat)
+void Mat4::subtract(const Mat4& mat)
 {
     subtract(*this, mat, this);
 }
 
-void Matrix::subtract(const Matrix& m1, const Matrix& m2, Matrix* dst)
+void Mat4::subtract(const Mat4& m1, const Mat4& m2, Mat4* dst)
 {
     GP_ASSERT(dst);
 
     MathUtil::subtractMatrix(m1.m, m2.m, dst->m);
 }
 
-void Matrix::transformPoint(Vector3* point) const
+void Mat4::transformPoint(Vec3* point) const
 {
     GP_ASSERT(point);
     transformVector(point->x, point->y, point->z, 1.0f, point);
 }
 
-void Matrix::transformPoint(const Vector3& point, Vector3* dst) const
+void Mat4::transformPoint(const Vec3& point, Vec3* dst) const
 {
     transformVector(point.x, point.y, point.z, 1.0f, dst);
 }
 
-void Matrix::transformVector(Vector3* vector) const
+void Mat4::transformVector(Vec3* vector) const
 {
     GP_ASSERT(vector);
     transformVector(vector->x, vector->y, vector->z, 0.0f, vector);
 }
 
-void Matrix::transformVector(const Vector3& vector, Vector3* dst) const
+void Mat4::transformVector(const Vec3& vector, Vec3* dst) const
 {
     transformVector(vector.x, vector.y, vector.z, 0.0f, dst);
 }
 
-void Matrix::transformVector(float x, float y, float z, float w, Vector3* dst) const
+void Mat4::transformVector(float x, float y, float z, float w, Vec3* dst) const
 {
     GP_ASSERT(dst);
 
-    MathUtil::transformVector4(m, x, y, z, w, (float*)dst);
+    MathUtil::transformVec4(m, x, y, z, w, (float*)dst);
 }
 
-void Matrix::transformVector(Vector4* vector) const
+void Mat4::transformVector(Vec4* vector) const
 {
     GP_ASSERT(vector);
     transformVector(*vector, vector);
 }
 
-void Matrix::transformVector(const Vector4& vector, Vector4* dst) const
+void Mat4::transformVector(const Vec4& vector, Vec4* dst) const
 {
     GP_ASSERT(dst);
 
-    MathUtil::transformVector4(m, (const float*) &vector, (float*)dst);
+    MathUtil::transformVec4(m, (const float*) &vector, (float*)dst);
 }
 
-void Matrix::translate(float x, float y, float z)
+void Mat4::translate(float x, float y, float z)
 {
     translate(x, y, z, this);
 }
 
-void Matrix::translate(float x, float y, float z, Matrix* dst) const
+void Mat4::translate(float x, float y, float z, Mat4* dst) const
 {
-    Matrix t;
+    Mat4 t;
     createTranslation(x, y, z, &t);
     multiply(*this, t, dst);
 }
 
-void Matrix::translate(const Vector3& t)
+void Mat4::translate(const Vec3& t)
 {
     translate(t.x, t.y, t.z, this);
 }
 
-void Matrix::translate(const Vector3& t, Matrix* dst) const
+void Mat4::translate(const Vec3& t, Mat4* dst) const
 {
     translate(t.x, t.y, t.z, dst);
 }
 
-void Matrix::transpose()
+void Mat4::transpose()
 {
     MathUtil::transposeMatrix(m, m);
 }
 
-Matrix Matrix::getTransposed() const
+Mat4 Mat4::getTransposed() const
 {
-    Matrix mat(*this);
+    Mat4 mat(*this);
     mat.transpose();
     return mat;
 }
+
+const Mat4 Mat4::IDENTITY = Mat4(
+                    1.0f, 0.0f, 0.0f, 0.0f,
+                    0.0f, 1.0f, 0.0f, 0.0f,
+                    0.0f, 0.0f, 1.0f, 0.0f,
+                    0.0f, 0.0f, 0.0f, 1.0f);
+
+const Mat4 Mat4::ZERO = Mat4(
+                    0, 0, 0, 0,
+                    0, 0, 0, 0,
+                    0, 0, 0, 0,
+                    0, 0, 0, 0 );
 
 NS_CC_MATH_END

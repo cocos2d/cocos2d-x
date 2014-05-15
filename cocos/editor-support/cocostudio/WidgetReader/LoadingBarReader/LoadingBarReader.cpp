@@ -63,7 +63,7 @@ namespace cocostudio
         }
         /**/
         
-        loadingBar->setBarDirection(LoadingBar::Direction(DICTOOL->getIntValue_json(options, "direction")));
+        loadingBar->setDirection(LoadingBar::Direction(DICTOOL->getIntValue_json(options, "direction")));
         loadingBar->setPercent(DICTOOL->getIntValue_json(options, "percent"));
         
         
