@@ -1982,7 +1982,7 @@ function UIPanelLayoutLinearVerticalTest:initExtend()
     local background = root:getChildByName("background_Panel")
     
     local layout = ccui.Layout:create()
-    layout:setLayoutType(ccui.Type.VERTICAL)
+    layout:setLayoutType(ccui.LayoutType.VERTICAL)
     layout:setSize(cc.size(280, 150))
     local backgroundSize = background:getContentSize()
     layout:setPosition(cc.p((widgetSize.width - backgroundSize.width) / 2 +
@@ -2065,7 +2065,7 @@ function UIPanelLayoutLinearHorizontalTest:initExtend()
     local background = root:getChildByName("background_Panel")
     
     local layout = ccui.Layout:create()
-    layout:setLayoutType(ccui.Type.HORIZONTAL)
+    layout:setLayoutType(ccui.LayoutType.HORIZONTAL)
     layout:setClippingEnabled(true)
     layout:setSize(cc.size(280, 150))
     local backgroundSize = background:getContentSize()
