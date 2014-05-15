@@ -1077,10 +1077,6 @@
 		3E92EA4319212FD40094CD21 /* CCObjLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E92EA3C19212FD40094CD21 /* CCObjLoader.cpp */; };
 		3E92EA4419212FD40094CD21 /* CCObjLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA3D19212FD40094CD21 /* CCObjLoader.h */; };
 		3E92EA4519212FD40094CD21 /* CCObjLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA3D19212FD40094CD21 /* CCObjLoader.h */; };
-		3E92EA481921304E0094CD21 /* CCMeshPart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E92EA461921304E0094CD21 /* CCMeshPart.cpp */; };
-		3E92EA491921304E0094CD21 /* CCMeshPart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E92EA461921304E0094CD21 /* CCMeshPart.cpp */; };
-		3E92EA4A1921304E0094CD21 /* CCMeshPart.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA471921304E0094CD21 /* CCMeshPart.h */; };
-		3E92EA4B1921304E0094CD21 /* CCMeshPart.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA471921304E0094CD21 /* CCMeshPart.h */; };
 		3E92EA4E192130D70094CD21 /* CCSprite3DDataCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E92EA4C192130D70094CD21 /* CCSprite3DDataCache.cpp */; };
 		3E92EA4F192130D70094CD21 /* CCSprite3DDataCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E92EA4C192130D70094CD21 /* CCSprite3DDataCache.cpp */; };
 		3E92EA50192130D70094CD21 /* CCSprite3DDataCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA4D192130D70094CD21 /* CCSprite3DDataCache.h */; };
@@ -2330,8 +2326,6 @@
 		3E92EA3B19212FD40094CD21 /* CCMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCMesh.h; path = ../cocos/3d/CCMesh.h; sourceTree = "<group>"; };
 		3E92EA3C19212FD40094CD21 /* CCObjLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCObjLoader.cpp; path = ../cocos/3d/CCObjLoader.cpp; sourceTree = "<group>"; };
 		3E92EA3D19212FD40094CD21 /* CCObjLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCObjLoader.h; path = ../cocos/3d/CCObjLoader.h; sourceTree = "<group>"; };
-		3E92EA461921304E0094CD21 /* CCMeshPart.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCMeshPart.cpp; path = ../cocos/3d/CCMeshPart.cpp; sourceTree = "<group>"; };
-		3E92EA471921304E0094CD21 /* CCMeshPart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCMeshPart.h; path = ../cocos/3d/CCMeshPart.h; sourceTree = "<group>"; };
 		3E92EA4C192130D70094CD21 /* CCSprite3DDataCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCSprite3DDataCache.cpp; path = ../cocos/3d/CCSprite3DDataCache.cpp; sourceTree = "<group>"; };
 		3E92EA4D192130D70094CD21 /* CCSprite3DDataCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCSprite3DDataCache.h; path = ../cocos/3d/CCSprite3DDataCache.h; sourceTree = "<group>"; };
 		3E92EA5419215FA10094CD21 /* Colored.es2.frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Colored.es2.frag.h; path = ../cocos/3d/Colored.es2.frag.h; sourceTree = "<group>"; };
@@ -4088,8 +4082,6 @@
 				3E92EA5A19215FA10094CD21 /* Textured.es2.vert.h */,
 				3E92EA4C192130D70094CD21 /* CCSprite3DDataCache.cpp */,
 				3E92EA4D192130D70094CD21 /* CCSprite3DDataCache.h */,
-				3E92EA461921304E0094CD21 /* CCMeshPart.cpp */,
-				3E92EA471921304E0094CD21 /* CCMeshPart.h */,
 				3E92EA3A19212FD40094CD21 /* CCMesh.cpp */,
 				3E92EA3B19212FD40094CD21 /* CCMesh.h */,
 				3E92EA3C19212FD40094CD21 /* CCObjLoader.cpp */,
@@ -5040,7 +5032,6 @@
 				46A1701F1807CBFC005B8026 /* CCImage.h in Headers */,
 				46A170181807CBFC005B8026 /* CCApplicationProtocol.h in Headers */,
 				1A570063180BC5A10088DEC7 /* CCAction.h in Headers */,
-				3E92EA4A1921304E0094CD21 /* CCMeshPart.h in Headers */,
 				1A570067180BC5A10088DEC7 /* CCActionCamera.h in Headers */,
 				1A57006B180BC5A10088DEC7 /* CCActionCatmullRom.h in Headers */,
 				3E92EA4419212FD40094CD21 /* CCObjLoader.h in Headers */,
@@ -5606,7 +5597,6 @@
 				1A5701CE180BCB5A0088DEC7 /* CCLabelTTF.h in Headers */,
 				296CAD251915EC8000C64FBF /* CCEventFocus.h in Headers */,
 				50FCEBCA18C72017004AD434 /* WidgetReader.h in Headers */,
-				3E92EA4B1921304E0094CD21 /* CCMeshPart.h in Headers */,
 				1A5701E1180BCB8C0088DEC7 /* CCLayer.h in Headers */,
 				1A5701E5180BCB8C0088DEC7 /* CCScene.h in Headers */,
 				500DC92D19106300007B91BF /* atitc.h in Headers */,
@@ -6410,7 +6400,6 @@
 				500DC8D119105F7D007B91BF /* CCAffineTransform.cpp in Sources */,
 				1AD71EA9180E26E600808F54 /* Attachment.cpp in Sources */,
 				1AD71EAD180E26E600808F54 /* AttachmentLoader.cpp in Sources */,
-				3E92EA481921304E0094CD21 /* CCMeshPart.cpp in Sources */,
 				1AD71EB1180E26E600808F54 /* Bone.cpp in Sources */,
 				1AD71EB5180E26E600808F54 /* BoneData.cpp in Sources */,
 				1AD71EB9180E26E600808F54 /* CCSkeleton.cpp in Sources */,
@@ -6905,7 +6894,6 @@
 				1A8C59B4180E930E00EF57C3 /* CCBone.cpp in Sources */,
 				1A8C59B8180E930E00EF57C3 /* CCColliderDetector.cpp in Sources */,
 				1A8C59BC180E930E00EF57C3 /* CCComAttribute.cpp in Sources */,
-				3E92EA491921304E0094CD21 /* CCMeshPart.cpp in Sources */,
 				500DC8BF19105D41007B91BF /* CCRenderCommand.cpp in Sources */,
 				1A8C59C0180E930E00EF57C3 /* CCComAudio.cpp in Sources */,
 				B2AF2F9E18EBAEAE00C5807C /* Quaternion.cpp in Sources */,

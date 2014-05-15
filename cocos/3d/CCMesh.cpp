@@ -8,7 +8,6 @@
 
 #include "base/ccMacros.h"
 #include "renderer/ccGLStateCache.h"
-#include "CCMeshPart.h"
 #include "CCObjLoader.h"
 #include "CCSprite3DDataCache.h"
 
@@ -97,8 +96,10 @@ bool RenderMeshData::initFrom(std::vector<float>& posions, std::vector<float>& n
 
 Mesh::Mesh()
 :_vertexBuffer(0)
-, _parts(nullptr)
-, _partCount(0)
+, _indexBuffer(0)
+, _primitiveType(PrimitiveType_TRIANGLES)
+, _indexFormat(IndexFormat_INDEX16)
+, _indexCount(0)
 {
     
 
@@ -106,19 +107,17 @@ Mesh::Mesh()
 
 Mesh::~Mesh()
 {
-    releaseMeshPart();
-    
-    freeBuffers();
+    cleanAndFreeBuffers();
 }
 
-void Mesh::releaseMeshPart()
-{
-//    for (unsigned int i = 0; i < _partCount; ++i)
-//    {
-//        delete _parts[i];
-//    }
-//    delete _parts;
-}
+//void Mesh::releaseMeshPart()
+//{
+//    glDeleteBuffers(1, &_indexBuffer);
+//    _primitiveType = PrimitiveType_TRIANGLES;
+//    _indexFormat = IndexFormat_INDEX16;
+//    _indexCount = 0;
+//    _indexBuffer = 0;
+//}
 
 Mesh* Mesh::create(std::vector<float>& posions, std::vector<float>& normals, std::vector<float>& texs, const std::vector<unsigned short>& indices)
 {
@@ -144,18 +143,27 @@ bool Mesh::init(std::vector<float>& posions, std::vector<float>& normals, std::v
     return true;
 }
 
-void Mesh::freeBuffers()
+void Mesh::cleanAndFreeBuffers()
 {
     if(glIsBuffer(_vertexBuffer))
     {
         glDeleteBuffers(1, &_vertexBuffer);
         _vertexBuffer = 0;
     }
+    
+    if(glIsBuffer(_indexBuffer))
+    {
+        glDeleteBuffers(1, &_indexBuffer);
+        _indexBuffer = 0;
+    }
+    _primitiveType = PrimitiveType_TRIANGLES;
+    _indexFormat = IndexFormat_INDEX16;
+    _indexCount = 0;
 }
 
 void Mesh::buildBuffer()
 {
-    freeBuffers();
+    cleanAndFreeBuffers();
 
     glGenBuffers(1, &_vertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
@@ -165,39 +173,10 @@ void Mesh::buildBuffer()
                  &_renderdata._vertexs[0],
                  GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-}
-
-//void Mesh::addMeshPart(PrimitiveType primitiveType, IndexFormat indexformat,  void* indexData, unsigned int indexCount)
-//{
-//    MeshPart* part = MeshPart::create(this, _partCount, primitiveType, indexformat, indexData, indexCount);
-//    if (part)
-//    {
-//        // Increase size of part array and copy old subets into it.
-//        MeshPart** oldParts = _parts;
-//        _parts = new MeshPart*[_partCount + 1];
-//        for (unsigned int i = 0; i < _partCount; ++i)
-//        {
-//            _parts[i] = oldParts[i];
-//        }
-//        
-//        // Add new part to array.
-//        _parts[_partCount++] = part;
-//        
-//        // Delete old part array.
-//        delete[] (oldParts);
-//    }
-//}
-
-void Mesh::restore()
-{
-    releaseMeshPart();
     
-    buildBuffer();
+    glGenBuffers(1, &_indexBuffer);
     
-    GLuint vbo;
-    glGenBuffers(1, &vbo);
-    
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
     
     unsigned int indexSize = 2;
     IndexFormat indexformat = IndexFormat_INDEX16;
@@ -209,7 +188,13 @@ void Mesh::restore()
     _primitiveType = PrimitiveType_TRIANGLES;
     _indexFormat = indexformat;
     _indexCount = _renderdata._indices.size();
-    _indexBuffer = vbo;
+}
+
+void Mesh::restore()
+{
+    cleanAndFreeBuffers();
+    
+    buildBuffer();
     
 }
 
