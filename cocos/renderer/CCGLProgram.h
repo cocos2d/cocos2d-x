@@ -126,6 +126,9 @@ public:
     static const char* SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL;
     static const char* SHADER_NAME_LABEL_DISTANCEFIELD_GLOW;
     
+    //3D
+    static const char* SHADER_3D_POSITION;
+    static const char* SHADER_3D_POSITION_TEXTURE;
     
     // uniform names
     static const char* UNIFORM_NAME_P_MATRIX;
@@ -274,7 +277,7 @@ public:
     
     /** will update the builtin uniforms if they are different than the previous call for this same shader program. */
     void setUniformsForBuiltins();
-    void setUniformsForBuiltins(const Matrix &modelView);
+    void setUniformsForBuiltins(const Mat4 &modelView);
 
     // Attribute
 

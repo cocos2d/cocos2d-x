@@ -86,25 +86,25 @@ bool ControlStepper::initWithMinusSpriteAndPlusSprite(Sprite *minusSprite, Sprit
     
         // Add the minus components
         this->setMinusSprite(minusSprite);
-		_minusSprite->setPosition( Vector2(minusSprite->getContentSize().width / 2, minusSprite->getContentSize().height / 2) );
+		_minusSprite->setPosition( Vec2(minusSprite->getContentSize().width / 2, minusSprite->getContentSize().height / 2) );
 		this->addChild(_minusSprite);
         
         this->setMinusLabel( Label::createWithSystemFont("-", ControlStepperLabelFont, 40));
         _minusLabel->setColor(ControlStepperLabelColorDisabled);
-        _minusLabel->setAnchorPoint(Vector2::ANCHOR_MIDDLE);
-        _minusLabel->setPosition(Vector2(_minusSprite->getContentSize().width / 2, _minusSprite->getContentSize().height / 2) );
+        _minusLabel->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+        _minusLabel->setPosition(Vec2(_minusSprite->getContentSize().width / 2, _minusSprite->getContentSize().height / 2) );
         _minusSprite->addChild(_minusLabel);
         
         // Add the plus components 
         this->setPlusSprite( plusSprite );
-		_plusSprite->setPosition( Vector2(minusSprite->getContentSize().width + plusSprite->getContentSize().width / 2, 
+		_plusSprite->setPosition( Vec2(minusSprite->getContentSize().width + plusSprite->getContentSize().width / 2, 
                                                   minusSprite->getContentSize().height / 2) );
 		this->addChild(_plusSprite);
         
         this->setPlusLabel( Label::createWithSystemFont("+", ControlStepperLabelFont, 40 ));
         _plusLabel->setColor( ControlStepperLabelColorEnabled );
-        _plusLabel->setAnchorPoint(Vector2::ANCHOR_MIDDLE);
-        _plusLabel->setPosition( Vector2(_plusSprite->getContentSize().width / 2, _plusSprite->getContentSize().height / 2) );
+        _plusLabel->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+        _plusLabel->setPosition( Vec2(_plusSprite->getContentSize().width / 2, _plusSprite->getContentSize().height / 2) );
         _plusSprite->addChild(_plusLabel);
         
         // Defines the content size
@@ -248,7 +248,7 @@ void ControlStepper::update(float dt)
 
 //// ControlStepper Private Methods
 
-void ControlStepper::updateLayoutUsingTouchLocation(Vector2 location)
+void ControlStepper::updateLayoutUsingTouchLocation(Vec2 location)
 {
     if (location.x < _minusSprite->getContentSize().width
         && _value > _minimumValue)
@@ -281,7 +281,7 @@ bool ControlStepper::onTouchBegan(Touch *pTouch, Event *pEvent)
         return false;
     }
     
-    Vector2 location    = this->getTouchLocation(pTouch);
+    Vec2 location    = this->getTouchLocation(pTouch);
     this->updateLayoutUsingTouchLocation(location);
     
     _touchInsideFlag = true;
@@ -298,7 +298,7 @@ void ControlStepper::onTouchMoved(Touch *pTouch, Event *pEvent)
 {
     if (this->isTouchInside(pTouch))
     {
-        Vector2 location    = this->getTouchLocation(pTouch);
+        Vec2 location    = this->getTouchLocation(pTouch);
         this->updateLayoutUsingTouchLocation(location);
         
         if (!_touchInsideFlag)
@@ -339,7 +339,7 @@ void ControlStepper::onTouchEnded(Touch *pTouch, Event *pEvent)
     
     if (this->isTouchInside(pTouch))
     {
-        Vector2 location    = this->getTouchLocation(pTouch);
+        Vec2 location    = this->getTouchLocation(pTouch);
         
         this->setValue(_value + ((location.x < _minusSprite->getContentSize().width) ? (0.0-_stepValue) : _stepValue));
     }

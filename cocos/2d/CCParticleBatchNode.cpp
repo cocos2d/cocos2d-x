@@ -121,7 +121,7 @@ bool ParticleBatchNode::initWithFile(const std::string& fileImage, int capacity)
 
 // override visit.
 // Don't call visit on it's children
-void ParticleBatchNode::visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
+void ParticleBatchNode::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
 {
     // CAREFUL:
     // This visit is almost identical to Node#visit
@@ -141,7 +141,7 @@ void ParticleBatchNode::visit(Renderer *renderer, const Matrix &parentTransform,
     _transformUpdated = false;
 
     // IMPORTANT:
-    // To ease the migration to v3.0, we still support the Matrix stack,
+    // To ease the migration to v3.0, we still support the Mat4 stack,
     // but it is deprecated and your code should not rely on it
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -383,7 +383,7 @@ void ParticleBatchNode::removeAllChildrenWithCleanup(bool doCleanup)
     _textureAtlas->removeAllQuads();
 }
 
-void ParticleBatchNode::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void ParticleBatchNode::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     CC_PROFILER_START("CCParticleBatchNode - draw");
 

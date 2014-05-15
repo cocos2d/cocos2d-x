@@ -119,13 +119,13 @@ public:
     cocos2d::Size getContentSize() const;
     cocos2d::Rect getBoundingBox() const;
 
-    cocos2d::Vector2 getAnchorPoint() const;
-    cocos2d::Vector2 getAnchorPointInPoints() const;
+    cocos2d::Vec2 getAnchorPoint() const;
+    cocos2d::Vec2 getAnchorPointInPoints() const;
 
     /**
      * Check if the position is inside the bone.
      */
-    virtual bool containPoint(cocos2d::Vector2 &_point);
+    virtual bool containPoint(cocos2d::Vec2 &_point);
 
     /**
      * Check if the position is inside the bone.

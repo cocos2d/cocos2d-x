@@ -44,7 +44,7 @@ MeshCommand::MeshCommand()
     _type = RenderCommand::Type::MESH_COMMAND;
 }
 
-void MeshCommand::init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, GLuint vertexBuffer, GLuint indexBuffer, GLenum primitive, GLenum indexFormat, GLenum indexCount, const Matrix &mv)
+void MeshCommand::init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, GLuint vertexBuffer, GLuint indexBuffer, GLenum primitive, GLenum indexFormat, GLenum indexCount, const Mat4 &mv)
 {
     CCASSERT(glProgramState, "GLProgramState cannot be nill");
     
@@ -81,7 +81,7 @@ void MeshCommand::setDepthWriteEnabled(bool enable)
     _depthWriteEnabled = enable;
 }
 
-void MeshCommand::setDisplayColor(const Vector4& color)
+void MeshCommand::setDisplayColor(const Vec4& color)
 {
     _displayColor = color;
 }

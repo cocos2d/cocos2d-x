@@ -5,16 +5,16 @@ MouseTest::MouseTest()
     auto s = Director::getInstance()->getWinSize();
     auto title = Label::createWithTTF("Mouse Test", "fonts/arial.ttf", 28);
     addChild(title, 0);
-    title->setPosition( Vector2(s.width/2, s.height-50) );
+    title->setPosition( Vec2(s.width/2, s.height-50) );
 
     //Create a label to display the mouse action
     _labelAction = Label::createWithTTF("Click mouse button and see this change", "fonts/arial.ttf", 22);
-    _labelAction->setPosition(Vector2(s.width/2, s.height*2/3));
+    _labelAction->setPosition(Vec2(s.width/2, s.height*2/3));
     addChild(_labelAction, 0);
 
     //Create a label to display the mouse position
     _labelPosition = Label::createWithTTF("Mouse not supported on this device", "fonts/arial.ttf", 22);
-    _labelPosition->setPosition(Vector2(s.width/2, s.height/3));
+    _labelPosition->setPosition(Vec2(s.width/2, s.height/3));
     addChild(_labelPosition);
 
 

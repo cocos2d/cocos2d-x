@@ -27,6 +27,7 @@
 
 #include "CCRenderCommand.h"
 #include "renderer/CCGLProgram.h"
+#include "math/CCMath.h"
 #include "CCRenderCommandPool.h"
 
 NS_CC_BEGIN
@@ -41,7 +42,7 @@ public:
     MeshCommand();
     ~MeshCommand();
 
-    void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, GLuint vertexBuffer, GLuint indexBuffer, GLenum primitive, GLenum indexType, GLenum indexCount, const Matrix &mv);
+    void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, GLuint vertexBuffer, GLuint indexBuffer, GLenum primitive, GLenum indexType, GLenum indexCount, const Mat4 &mv);
     
     void setCullFaceEnabled(bool enable);
     
@@ -51,7 +52,7 @@ public:
     
     void setDepthWriteEnabled(bool enable);
     
-    void setDisplayColor(const Vector4& color);
+    void setDisplayColor(const Vec4& color);
 
     void execute();
 
@@ -68,7 +69,7 @@ protected:
 
     GLuint _textrueID;
     
-    Vector4 _displayColor; // in order to support tint and fade in fade out
+    Vec4 _displayColor; // in order to support tint and fade in fade out
     
     GLuint _vertexBuffer;
     GLuint _indexBuffer;
@@ -83,7 +84,7 @@ protected:
     bool _depthWriteEnabled;
 
     // ModelView transform
-    Matrix _mv;
+    Mat4 _mv;
 };
 NS_CC_END
 

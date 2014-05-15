@@ -69,6 +69,9 @@ const char* GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_GLOW = "ShaderLabelDFGlow
 const char* GLProgram::SHADER_NAME_LABEL_NORMAL = "ShaderLabelNormal";
 const char* GLProgram::SHADER_NAME_LABEL_OUTLINE = "ShaderLabelOutline";
 
+const char* GLProgram::SHADER_3D_POSITION = "Shader3DPosition";
+const char* GLProgram::SHADER_3D_POSITION_TEXTURE = "Shader3DPositionTexture";
+
 
 // uniform names
 const char* GLProgram::UNIFORM_NAME_P_MATRIX = "CC_PMatrix";
@@ -808,15 +811,15 @@ void GLProgram::setUniformsForBuiltins()
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     
-    Matrix matrixMV;
+    Mat4 matrixMV;
     matrixMV = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
     setUniformsForBuiltins(matrixMV);
 }
 
-void GLProgram::setUniformsForBuiltins(const Matrix &matrixMV)
+void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
 {
-    Matrix matrixP = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    Mat4 matrixP = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
     if(_flags.usesP)
         setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_P_MATRIX], matrixP.m, 1);
@@ -825,7 +828,7 @@ void GLProgram::setUniformsForBuiltins(const Matrix &matrixMV)
         setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_MV_MATRIX], matrixMV.m, 1);
 
     if(_flags.usesMVP) {
-        Matrix matrixMVP = matrixP * matrixMV;
+        Mat4 matrixMVP = matrixP * matrixMV;
         setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_MVP_MATRIX], matrixMVP.m, 1);
     }
 

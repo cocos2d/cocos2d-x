@@ -32,8 +32,8 @@ NS_CC_MATH_BEGIN
  */
 class MathUtil
 {
-    friend class Matrix;
-    friend class Vector3;
+    friend class Mat4;
+    friend class Vec3;
 
 public:
 
@@ -82,11 +82,11 @@ private:
 
     inline static void transposeMatrix(const float* m, float* dst);
 
-    inline static void transformVector4(const float* m, float x, float y, float z, float w, float* dst);
+    inline static void transformVec4(const float* m, float x, float y, float z, float w, float* dst);
 
-    inline static void transformVector4(const float* m, const float* v, float* dst);
+    inline static void transformVec4(const float* m, const float* v, float* dst);
 
-    inline static void crossVector3(const float* v1, const float* v2, float* dst);
+    inline static void crossVec3(const float* v1, const float* v2, float* dst);
 
     MathUtil();
 };
