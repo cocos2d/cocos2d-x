@@ -139,6 +139,28 @@ void TextureCache::addImageAsync(const std::string &path, const std::function<vo
     _sleepCondition.notify_one();
 }
 
+void TextureCache::unbindImageAsync(const std::string& filename)
+{
+    std::string fullpath = FileUtils::getInstance()->fullPathForFilename(filename);
+    auto found = std::find_if(_imageInfoQueue->begin(), _imageInfoQueue->end(), [&](ImageInfo* ptr)->bool{ return ptr->asyncStruct->filename == fullpath; });
+    if (found != _imageInfoQueue->end())
+    {
+        _imageInfoMutex.lock();
+        (*found)->asyncStruct->callback = nullptr;
+        _imageInfoMutex.unlock();
+    }
+}
+
+void TextureCache::unbindAllImageAsync()
+{
+    if (_imageInfoQueue && !_imageInfoQueue->empty())
+    {
+        _imageInfoMutex.lock();
+        std::for_each(_imageInfoQueue->begin(), _imageInfoQueue->end(), [](ImageInfo* ptr) { ptr->asyncStruct->callback = nullptr; });
+        _imageInfoMutex.unlock();
+    }
+}
+
 void TextureCache::loadImage()
 {
     AsyncStruct *asyncStruct = nullptr;
@@ -265,8 +287,12 @@ void TextureCache::addImageAsyncCallBack(float dt)
             if(it != _textures.end())
                 texture = it->second;
         }
-        
-        asyncStruct->callback(texture);
+
+        if (asyncStruct->callback)
+        {
+            asyncStruct->callback(texture);
+        }
+
         if(image)
         {
             image->release();
