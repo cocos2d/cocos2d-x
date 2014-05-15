@@ -174,8 +174,8 @@ int lua_cocos2dx_physics_PhysicsWorld_rayCast(lua_State* tolua_S)
             };
         } while(0);
         
-        ok &= luaval_to_vector2(tolua_S, 3, &arg1);
-        ok &= luaval_to_vector2(tolua_S, 4, &arg2);
+        ok &= luaval_to_vec2(tolua_S, 3, &arg1);
+        ok &= luaval_to_vec2(tolua_S, 4, &arg2);
         if(!ok)
             return 0;
         cobj->rayCast(arg0, arg1, arg2, nullptr);
@@ -290,7 +290,7 @@ int lua_cocos2dx_physics_PhysicsWorld_queryPoint(lua_State* tolua_S)
             assert(false);
         } while(0)
             ;
-        ok &= luaval_to_vector2(tolua_S, 3, &arg1);
+        ok &= luaval_to_vec2(tolua_S, 3, &arg1);
         if(!ok)
             return 0;
         cobj->queryPoint(arg0, arg1, nullptr);
@@ -328,7 +328,7 @@ int lua_cocos2dx_physics_PhysicsBody_createPolygon(lua_State* tolua_S)
         cocos2d::Vec2* arg0 = nullptr;
         int arg1 = 0;
         do {
-            ok = luaval_to_array_of_vector2(tolua_S, 2, &arg0, &arg1);
+            ok = luaval_to_array_of_vec2(tolua_S, 2, &arg0, &arg1);
             if (nullptr == arg0){
                 LUA_PRECONDITION( arg0, "Invalid Native Object");
             }} while (0);
@@ -359,7 +359,7 @@ int lua_cocos2dx_physics_PhysicsBody_createPolygon(lua_State* tolua_S)
         int arg1 = 0;
         cocos2d::PhysicsMaterial arg2;
         do {
-            ok = luaval_to_array_of_vector2(tolua_S, 2, &arg0, &arg1);
+            ok = luaval_to_array_of_vec2(tolua_S, 2, &arg0, &arg1);
             if (nullptr == arg0){
                 LUA_PRECONDITION( arg0, "Invalid Native Object");
             }} while (0);
@@ -393,12 +393,12 @@ int lua_cocos2dx_physics_PhysicsBody_createPolygon(lua_State* tolua_S)
         cocos2d::PhysicsMaterial arg2;
         cocos2d::Vec2 arg3;
         do {
-            ok = luaval_to_array_of_vector2(tolua_S, 2, &arg0, &arg1);
+            ok = luaval_to_array_of_vec2(tolua_S, 2, &arg0, &arg1);
             if (nullptr == arg0){
                 LUA_PRECONDITION( arg0, "Invalid Native Object");
             }} while (0);
         ok &= luaval_to_physics_material(tolua_S, 3, &arg2);
-        ok &= luaval_to_vector2(tolua_S, 4, &arg3);
+        ok &= luaval_to_vec2(tolua_S, 4, &arg3);
         if(!ok)
         {
             CC_SAFE_FREE(arg0);
@@ -449,7 +449,7 @@ int lua_cocos2dx_physics_PhysicsBody_createEdgePolygon(lua_State* tolua_S)
         cocos2d::Vec2* arg0;
         int arg1;
         do {
-            ok = luaval_to_array_of_vector2(tolua_S, 2, &arg0, &arg1);
+            ok = luaval_to_array_of_vec2(tolua_S, 2, &arg0, &arg1);
             if (nullptr == arg0){
                 LUA_PRECONDITION( arg0, "Invalid Native Object");
             }} while (0);
@@ -480,7 +480,7 @@ int lua_cocos2dx_physics_PhysicsBody_createEdgePolygon(lua_State* tolua_S)
         int arg1;
         cocos2d::PhysicsMaterial arg2;
         do {
-            ok = luaval_to_array_of_vector2(tolua_S, 2, &arg0, &arg1);
+            ok = luaval_to_array_of_vec2(tolua_S, 2, &arg0, &arg1);
             if (nullptr == arg0){
                 LUA_PRECONDITION( arg0, "Invalid Native Object");
             }} while (0);
@@ -513,7 +513,7 @@ int lua_cocos2dx_physics_PhysicsBody_createEdgePolygon(lua_State* tolua_S)
         cocos2d::PhysicsMaterial arg2;
         double arg3;
         do {
-            ok = luaval_to_array_of_vector2(tolua_S, 2, &arg0, &arg1);
+            ok = luaval_to_array_of_vec2(tolua_S, 2, &arg0, &arg1);
             if (nullptr == arg0){
                 LUA_PRECONDITION( arg0, "Invalid Native Object");
             }} while (0);
@@ -569,7 +569,7 @@ int lua_cocos2dx_physics_PhysicsBody_createEdgeChain(lua_State* tolua_S)
         cocos2d::Vec2* arg0;
         int arg1;
         do {
-            ok = luaval_to_array_of_vector2(tolua_S, 2, &arg0, &arg1);
+            ok = luaval_to_array_of_vec2(tolua_S, 2, &arg0, &arg1);
             if (nullptr == arg0){
                 LUA_PRECONDITION( arg0, "Invalid Native Object");
             }} while (0);
@@ -600,7 +600,7 @@ int lua_cocos2dx_physics_PhysicsBody_createEdgeChain(lua_State* tolua_S)
         int arg1;
         cocos2d::PhysicsMaterial arg2;
         do {
-            ok = luaval_to_array_of_vector2(tolua_S, 2, &arg0, &arg1);
+            ok = luaval_to_array_of_vec2(tolua_S, 2, &arg0, &arg1);
             if (nullptr == arg0){
                 LUA_PRECONDITION( arg0, "Invalid Native Object");
             }} while (0);
@@ -633,7 +633,7 @@ int lua_cocos2dx_physics_PhysicsBody_createEdgeChain(lua_State* tolua_S)
         cocos2d::PhysicsMaterial arg2;
         double arg3;
         do {
-            ok = luaval_to_array_of_vector2(tolua_S, 2, &arg0, &arg1);
+            ok = luaval_to_array_of_vec2(tolua_S, 2, &arg0, &arg1);
             if (nullptr == arg0){
                 LUA_PRECONDITION( arg0, "Invalid Native Object");
             }} while (0);
@@ -689,7 +689,7 @@ int lua_cocos2dx_physics_PhysicsShape_recenterPoints(lua_State* tolua_S)
         cocos2d::Vec2* arg0;
         int arg1 = 0;
         do {
-            ok = luaval_to_array_of_vector2(tolua_S, 2, &arg0, &arg1);
+            ok = luaval_to_array_of_vec2(tolua_S, 2, &arg0, &arg1);
             if (nullptr == arg0){
                 LUA_PRECONDITION( arg0, "Invalid Native Object");
             }} while (0);
@@ -699,7 +699,7 @@ int lua_cocos2dx_physics_PhysicsShape_recenterPoints(lua_State* tolua_S)
             return 0;
         }
         cocos2d::PhysicsShape::recenterPoints(arg0, arg1);
-        vector2_array_to_luaval(tolua_S, arg0, arg1);
+        vec2_array_to_luaval(tolua_S, arg0, arg1);
         CC_SAFE_FREE(arg0);
         
         return 0;
@@ -710,18 +710,18 @@ int lua_cocos2dx_physics_PhysicsShape_recenterPoints(lua_State* tolua_S)
         int arg1 = 0;
         cocos2d::Vec2 arg2;
         do {
-            ok = luaval_to_array_of_vector2(tolua_S, 2, &arg0, &arg1);
+            ok = luaval_to_array_of_vec2(tolua_S, 2, &arg0, &arg1);
             if (nullptr == arg0){
                 LUA_PRECONDITION( arg0, "Invalid Native Object");
             }} while (0);
-        ok &= luaval_to_vector2(tolua_S, 3, &arg2);
+        ok &= luaval_to_vec2(tolua_S, 3, &arg2);
         if(!ok)
         {
             CC_SAFE_FREE(arg0);
             return 0;
         }
         cocos2d::PhysicsShape::recenterPoints(arg0, arg1, arg2);
-        vector2_array_to_luaval(tolua_S, arg0, arg1);
+        vec2_array_to_luaval(tolua_S, arg0, arg1);
         CC_SAFE_FREE(arg0);
         return 0;
     }
@@ -754,7 +754,7 @@ int lua_cocos2dx_physics_PhysicsShape_getPolyonCenter(lua_State* tolua_S)
         cocos2d::Vec2* arg0;
         int arg1 = 0;
         do {
-            ok = luaval_to_array_of_vector2(tolua_S, 2, &arg0, &arg1);
+            ok = luaval_to_array_of_vec2(tolua_S, 2, &arg0, &arg1);
             if (nullptr == arg0){
                 LUA_PRECONDITION( arg0, "Invalid Native Object");
             }} while (0);
@@ -765,7 +765,7 @@ int lua_cocos2dx_physics_PhysicsShape_getPolyonCenter(lua_State* tolua_S)
         }
         cocos2d::Vec2 ret = cocos2d::PhysicsShape::getPolyonCenter(arg0, arg1);
         CC_SAFE_FREE(arg0);
-        vector2_to_luaval(tolua_S, ret);
+        vec2_to_luaval(tolua_S, ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "getPolyonCenter",argc, 2);
@@ -805,7 +805,7 @@ int lua_cocos2dx_physics_PhysicsShapeBox_getPoints(lua_State* tolua_S)
     {
         cocos2d::Vec2 arg0[4];
         cobj->getPoints(arg0);
-        vector2_array_to_luaval(tolua_S, arg0, 4);
+        vec2_array_to_luaval(tolua_S, arg0, 4);
         return 0;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getPoints",argc, 1);
@@ -848,7 +848,7 @@ int lua_cocos2dx_physics_PhysicsShapePolygon_getPoints(lua_State* tolua_S)
         int count = cobj->getPointsCount();
         cocos2d::Vec2* arg0 = new cocos2d::Vec2[count];
         cobj->getPoints(arg0);
-        vector2_array_to_luaval(tolua_S, arg0, count);
+        vec2_array_to_luaval(tolua_S, arg0, count);
         CC_SAFE_FREE(arg0);
         return 0;
     }
@@ -883,7 +883,7 @@ int lua_cocos2dx_physics_PhysicsShapePolygon_create(lua_State* tolua_S)
         cocos2d::Vec2* arg0;
         int arg1 = 0;
         do {
-            ok = luaval_to_array_of_vector2(tolua_S, 2, &arg0, &arg1);
+            ok = luaval_to_array_of_vec2(tolua_S, 2, &arg0, &arg1);
             if (nullptr == arg0){
                 LUA_PRECONDITION( arg0, "Invalid Native Object");
             }} while (0);
@@ -904,7 +904,7 @@ int lua_cocos2dx_physics_PhysicsShapePolygon_create(lua_State* tolua_S)
         int arg1 = 0;
         cocos2d::PhysicsMaterial arg2;
         do {
-            ok = luaval_to_array_of_vector2(tolua_S, 2, &arg0, &arg1);
+            ok = luaval_to_array_of_vec2(tolua_S, 2, &arg0, &arg1);
             if (nullptr == arg0){
                 LUA_PRECONDITION( arg0, "Invalid Native Object");
             }} while (0);
@@ -926,12 +926,12 @@ int lua_cocos2dx_physics_PhysicsShapePolygon_create(lua_State* tolua_S)
         cocos2d::PhysicsMaterial arg2;
         cocos2d::Vec2 arg3;
         do {
-            ok = luaval_to_array_of_vector2(tolua_S, 2, &arg0, &arg1);
+            ok = luaval_to_array_of_vec2(tolua_S, 2, &arg0, &arg1);
             if (nullptr == arg0){
                 LUA_PRECONDITION( arg0, "Invalid Native Object");
             }} while (0);
         ok &= luaval_to_physics_material(tolua_S, 3, &arg2);
-        ok &= luaval_to_vector2(tolua_S, 4, &arg3);
+        ok &= luaval_to_vec2(tolua_S, 4, &arg3);
         if(!ok)
         {
             CC_SAFE_FREE(arg0);
@@ -970,7 +970,7 @@ int lua_cocos2dx_physics_PhysicsShapePolygon_calculateArea(lua_State* tolua_S)
         cocos2d::Vec2* arg0;
         int arg1 = 0;
         do {
-            ok = luaval_to_array_of_vector2(tolua_S, 2, &arg0, &arg1);
+            ok = luaval_to_array_of_vec2(tolua_S, 2, &arg0, &arg1);
             if (nullptr == arg0){
                 LUA_PRECONDITION( arg0, "Invalid Native Object");
             }} while (0);
@@ -1014,7 +1014,7 @@ int lua_cocos2dx_physics_PhysicsShapePolygon_calculateMoment(lua_State* tolua_S)
         int arg2 = 0;
         ok &= luaval_to_number(tolua_S, 2,&arg0);
         do {
-            ok = luaval_to_array_of_vector2(tolua_S, 3, &arg1, &arg2);
+            ok = luaval_to_array_of_vec2(tolua_S, 3, &arg1, &arg2);
             if (nullptr == arg1){
                 LUA_PRECONDITION( arg1, "Invalid Native Object");
             }} while (0);
@@ -1036,11 +1036,11 @@ int lua_cocos2dx_physics_PhysicsShapePolygon_calculateMoment(lua_State* tolua_S)
         cocos2d::Vec2 arg3;
         ok &= luaval_to_number(tolua_S, 2,&arg0);
         do {
-            ok = luaval_to_array_of_vector2(tolua_S, 3, &arg1, &arg2);
+            ok = luaval_to_array_of_vec2(tolua_S, 3, &arg1, &arg2);
             if (nullptr == arg1){
                 LUA_PRECONDITION( arg1, "Invalid Native Object");
             }} while (0);
-        ok &= luaval_to_vector2(tolua_S, 4, &arg3);
+        ok &= luaval_to_vec2(tolua_S, 4, &arg3);
         if(!ok)
         {
             CC_SAFE_FREE(arg1);
@@ -1089,7 +1089,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgeBox_getPoints(lua_State* tolua_S)
         int count = cobj->getPointsCount();
         cocos2d::Vec2* arg0 = new cocos2d::Vec2[count];
         cobj->getPoints(arg0);
-        vector2_array_to_luaval(tolua_S, arg0, count);
+        vec2_array_to_luaval(tolua_S, arg0, count);
         CC_SAFE_FREE(arg0);
         return 0;
     }
@@ -1133,7 +1133,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgePolygon_getPoints(lua_State* tolua_S)
         int count = cobj->getPointsCount();
         cocos2d::Vec2* arg0 = new cocos2d::Vec2[count];
         cobj->getPoints(arg0);
-        vector2_array_to_luaval(tolua_S, arg0, count);
+        vec2_array_to_luaval(tolua_S, arg0, count);
         CC_SAFE_FREE(arg0);
         return 0;
     }
@@ -1177,7 +1177,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgeChain_getPoints(lua_State* tolua_S)
         int count = cobj->getPointsCount();
         cocos2d::Vec2* arg0 = new cocos2d::Vec2[count];
         cobj->getPoints(arg0);
-        vector2_array_to_luaval(tolua_S, arg0, count);
+        vec2_array_to_luaval(tolua_S, arg0, count);
         CC_SAFE_FREE(arg0);
         return 0;
     }
@@ -1316,7 +1316,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgePolygon_create(lua_State* tolua_S)
         cocos2d::Vec2* arg0;
         int arg1 = 0;
         do {
-            ok = luaval_to_array_of_vector2(tolua_S, 2, &arg0, &arg1);
+            ok = luaval_to_array_of_vec2(tolua_S, 2, &arg0, &arg1);
             if (nullptr == arg0){
                 LUA_PRECONDITION( arg0, "Invalid Native Object");
             }} while (0);
@@ -1336,7 +1336,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgePolygon_create(lua_State* tolua_S)
         int arg1 = 0;
         cocos2d::PhysicsMaterial arg2;
         do {
-            ok = luaval_to_array_of_vector2(tolua_S, 2, &arg0, &arg1);
+            ok = luaval_to_array_of_vec2(tolua_S, 2, &arg0, &arg1);
             if (nullptr == arg0){
                 LUA_PRECONDITION( arg0, "Invalid Native Object");
             }} while (0);
@@ -1358,7 +1358,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgePolygon_create(lua_State* tolua_S)
         cocos2d::PhysicsMaterial arg2;
         double arg3;
         do {
-            ok = luaval_to_array_of_vector2(tolua_S, 2, &arg0, &arg1);
+            ok = luaval_to_array_of_vec2(tolua_S, 2, &arg0, &arg1);
             if (nullptr == arg0){
                 LUA_PRECONDITION( arg0, "Invalid Native Object");
             }} while (0);
@@ -1403,7 +1403,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgeChain_create(lua_State* tolua_S)
         cocos2d::Vec2* arg0;
         int arg1 = 0;
         do {
-            ok = luaval_to_array_of_vector2(tolua_S, 2, &arg0, &arg1);
+            ok = luaval_to_array_of_vec2(tolua_S, 2, &arg0, &arg1);
             if (nullptr == arg0){
                 LUA_PRECONDITION( arg0, "Invalid Native Object");
             }} while (0);
@@ -1423,7 +1423,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgeChain_create(lua_State* tolua_S)
         int arg1 = 0;
         cocos2d::PhysicsMaterial arg2;
         do {
-            ok = luaval_to_array_of_vector2(tolua_S, 2, &arg0, &arg1);
+            ok = luaval_to_array_of_vec2(tolua_S, 2, &arg0, &arg1);
             if (nullptr == arg0){
                 LUA_PRECONDITION( arg0, "Invalid Native Object");
             }} while (0);
@@ -1445,7 +1445,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgeChain_create(lua_State* tolua_S)
         cocos2d::PhysicsMaterial arg2;
         double arg3;
         do {
-            ok = luaval_to_array_of_vector2(tolua_S, 2, &arg0, &arg1);
+            ok = luaval_to_array_of_vec2(tolua_S, 2, &arg0, &arg1);
             if (nullptr == arg0){
                 LUA_PRECONDITION( arg0, "Invalid Native Object");
             }} while (0);
