@@ -69,7 +69,7 @@ bool Sprite3DOutlineEffect::initEffect(Sprite3D* sprite)
     static GLProgram s_defGLProgram;
     if(s_defGLProgram.getProgram() == 0)
     {
-        s_defGLProgram.initWithByteArrays(baseVertexShader, baseTexturedFrag);
+        s_defGLProgram.initWithByteArrays(outLineShader, blackFrag);
         s_defGLProgram.link();
         s_defGLProgram.updateUniforms();
     }

@@ -19,8 +19,8 @@ NS_CC_BEGIN
 bool RenderMeshData::hasVertexAttrib(int attrib)
 {
     for (auto itr = _vertexAttribs.begin(); itr != _vertexAttribs.end(); itr++) {
-        if ((*itr).vertexAttrib == GLProgram::VERTEX_ATTRIB_NORMAL)
-            return true; //already has normal
+        if ((*itr).vertexAttrib == attrib)
+            return true; //already has
     }
     return false;
 }
