@@ -4,6 +4,13 @@ import sys
 import time
 import os
 
+def interval_time(time1, time2):
+    arr1 = str(time1).split(':')
+    arr2 = str(time2).split(':')
+    hour = int(arr1[0]) - int(arr2[0])
+    minute = int(arr1[1]) - int(arr2[1])
+    return hour*60+minute
+
 #check & kill dead buid
 def build_time(_job,_threshold):
     #get jenkins-job-watchdog-threshold
@@ -18,17 +25,15 @@ def build_time(_job,_threshold):
     buildnu = _job.get_last_buildnumber()
     print "buildnumber:#",buildnu
     #get nowtime
-    nowtime = time.strftime('%M',time.localtime(time.time()))
-    #print 'nowtime:',nowtime
+    nowtime = time.strftime('%H:%M',time.localtime(time.time()))
+    print 'nowtime:', nowtime
     #get build start time
-    timeb = build.get_timestamp()
-    #print 'buildtime:',str(timeb)[14:16]
-    buildtime = int(str(timeb)[14:16])
-    subtime = 0
-    if int(nowtime) >= buildtime:
-        subtime = int(nowtime)-buildtime
-    else:
-        subtime = 60-buildtime+int(nowtime)
+    timestamp = build._poll()['timestamp']
+    timeb = time.ctime(timestamp/1000)
+    buildtime = str(timeb)[11:16]
+    print 'buildtime:', buildtime
+    subtime = interval_time(nowtime, buildtime)
+    print 'subtime:', subtime, _threshold
     if subtime > _threshold:
         #print 'subtime',subtime
         #kill dead buid
