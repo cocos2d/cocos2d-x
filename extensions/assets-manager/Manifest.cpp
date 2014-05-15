@@ -29,6 +29,7 @@ using namespace cocos2d;
 NS_CC_EXT_BEGIN;
 
 #define KEY_VERSION             "version"
+#define KEY_PACKAGE_URL         "packageUrl"
 #define KEY_MANIFEST_URL        "remoteManifestUrl"
 #define KEY_VERSION_URL         "remoteVersionUrl"
 #define KEY_GROUP_VERSIONS      "groupVersions"
@@ -104,11 +105,66 @@ bool Manifest::versionEquals(const Manifest *b) const
     return true;
 }
 
-std::map<std::string, Asset> Manifest::genDiff(const Manifest *manifest) const
+std::map<std::string, Manifest::AssetDiff> Manifest::genDiff(const Manifest *b) const
 {
-    std::map<std::string, Asset> diff;
+    std::map<std::string, AssetDiff> diff_map;
+    std::map<std::string, Asset> bAssets = b->getAssets();
     
-    return diff;
+    std::string key;
+    Asset valueA;
+    Asset valueB;
+    std::map<std::string, Asset>::const_iterator valueIt, it;
+    for (it = _assets.begin(); it != _assets.end(); it++)
+    {
+        key = it->first;
+        valueA = it->second;
+        
+        // Deleted
+        valueIt = bAssets.find(key);
+        if (valueIt == bAssets.cend()) {
+            AssetDiff diff;
+            diff.asset = &valueA;
+            diff.type = DELETED;
+            diff_map.emplace(key, diff);
+        }
+        
+        // Modified
+        valueB = valueIt->second;
+        if (valueA.md5 != valueB.md5) {
+            AssetDiff diff;
+            diff.asset = &valueB;
+            diff.type = MODIFIED;
+            diff_map.emplace(key, diff);
+        }
+    }
+    
+    for (it = bAssets.begin(); it != bAssets.end(); it++)
+    {
+        key = it->first;
+        valueB = it->second;
+        
+        // Added
+        valueIt = _assets.find(key);
+        if (valueIt == _assets.cend()) {
+            AssetDiff diff;
+            diff.asset = &valueB;
+            diff.type = ADDED;
+            diff_map.emplace(key, diff);
+        }
+    }
+    
+    return diff_map;
+}
+
+
+const std::string& Manifest::getPackageUrl() const
+{
+    return _packageUrl;
+}
+
+void Manifest::setPackageUrl(const std::string& packageUrl)
+{
+    _packageUrl = packageUrl;
 }
 
 const std::string& Manifest::getManifestFileUrl() const
@@ -156,12 +212,12 @@ const std::string& Manifest::getEngineVersion() const
     return _engineVer;
 }
 
-const std::map<std::string, Asset>& Manifest::getAssets() const
+const std::map<std::string, Manifest::Asset>& Manifest::getAssets() const
 {
     return _assets;
 }
 
-const Asset& Manifest::getAsset(const std::string &key) const
+const Manifest::Asset& Manifest::getAsset(const std::string &key) const
 {
     return _assets.at(key);
 }
@@ -208,7 +264,7 @@ void Manifest::clear()
     }
 }
 
-Asset Manifest::parseAsset(const rapidjson::Value& json)
+Manifest::Asset Manifest::parseAsset(const rapidjson::Value& json)
 {
     Asset asset;
     asset.updating = false;
@@ -288,6 +344,12 @@ void Manifest::loadManifest(const rapidjson::Document &json)
     clear();
     
     loadVersion(json);
+    
+    // Retrieve package url
+    if( json.HasMember(KEY_PACKAGE_URL) && json[KEY_PACKAGE_URL].IsString() )
+    {
+        _packageUrl = json[KEY_PACKAGE_URL].GetString();
+    }
     
     // Retrieve all compressed files
 // TODO
