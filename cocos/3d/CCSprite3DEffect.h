@@ -27,7 +27,7 @@ public:
     
     virtual bool initEffect(Sprite3D* sprite) = 0;
     
-    virtual void drawSpriteEffect(const Matrix &transform) = 0;
+    virtual void drawSpriteEffect(const Mat4 &transform) = 0;
     
 protected:
     Sprite3DEffect();
@@ -43,18 +43,18 @@ public:
     
     virtual bool initEffect(Sprite3D* sprite) override;
     
-    void setOutlineColor(const Vector3& color);
+    void setOutlineColor(const Vec3& color);
     
     void setOutlineWidth(float width);
     
-    virtual void drawSpriteEffect(const Matrix &transform) override;
+    virtual void drawSpriteEffect(const Mat4 &transform) override;
     
 protected:
     
     Sprite3DOutlineEffect();
     virtual ~Sprite3DOutlineEffect();
 
-    Vector3 _outlineColor;
+    Vec3 _outlineColor;
     float _outlineWidth;
     bool _hasNormal;
 };

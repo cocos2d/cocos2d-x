@@ -227,14 +227,14 @@ void Sprite3D::setEffect(Sprite3DEffect* effect)
     _effect->initEffect(this);
 }
 
-void Sprite3D::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(Sprite3D::onDraw, this, transform, transformUpdated);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
 
-void Sprite3D::onDraw(const Matrix &transform, bool transformUpdated)
+void Sprite3D::onDraw(const Mat4 &transform, bool transformUpdated)
 {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
@@ -248,7 +248,7 @@ void Sprite3D::onDraw(const Matrix &transform, bool transformUpdated)
     {
         auto programstate = getGLProgramState();
         
-        programstate->setUniformVec4("u_color", Vector4(color.r, color.g, color.b, color.a));
+        programstate->setUniformVec4("u_color", Vec4(color.r, color.g, color.b, color.a));
         GL::bindTexture2D(_texture->getName());
         
         glBindBuffer(GL_ARRAY_BUFFER, _mesh->getVertexBuffer());
