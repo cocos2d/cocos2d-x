@@ -48,16 +48,79 @@ public:
     virtual void onEnter() override;
 };
 
-class Sprite3D1 : public Sprite3DTestDemo
+class Sprite3DBasicTest : public Sprite3DTestDemo
 {
 public:
-    CREATE_FUNC(Sprite3D1);
-    Sprite3D1();
+    CREATE_FUNC(Sprite3DBasicTest);
+    Sprite3DBasicTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     
     void addNewSpriteWithCoords(Vec2 p);
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+};
+
+//class Effect3D : public Ref
+//{
+//public:
+//    static Effect3D* createWithShaderFile(const std::string& vertexShaderFile, const std::string& fragShaderFile);
+//    
+//    virtual void drawSpriteEffect(const Mat4 &transform) = 0;
+//    
+//protected:
+//    Effect3D();
+//    virtual ~Effect3D();
+//    
+//    GLProgramState* _glProgramState;
+//};
+
+//class Effect3DOutline: public Ref
+//{
+//public:
+//    static Effect3DOutline* create();
+//    
+//    void setOutlineColor(const Vec3& color);
+//    
+//    void setOutlineWidth(float width);
+//    
+//    void drawSpriteEffect(const Mat4 &transform);
+//    
+//protected:
+//    
+//    Effect3DOutline();
+//    virtual ~Effect3DOutline();
+//    
+//    Vec3 _outlineColor;
+//    float _outlineWidth;
+//    bool _hasNormal;
+//    
+//protected:
+//    GLProgramState* _glProgramState;
+//};
+
+class EffectSprite3D : public Sprite3D
+{
+public:
+    static EffectSprite3D* createFromObjFileAndTexture(const std::string& objFilePath, const std::string& textureFilePath);
+    //void setEffect3DOutline(Effect3DOutline* effect);
+    //void addEffect(Effect3DOutline* effect, ssize_t order);
+    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+protected:
+    EffectSprite3D();
+    virtual ~EffectSprite3D();
+    
+    //Effect3DOutline* _defaultEffect;
+};
+
+class Sprite3DEffectTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DEffectTest);
+    Sprite3DEffectTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void addNewSpriteWithCoords(Vec2 p);
 };
 
 class Sprite3DTestScene : public TestScene

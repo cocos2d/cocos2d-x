@@ -40,7 +40,8 @@ static int sceneIdx = -1;
 
 static std::function<Layer*()> createFunctions[] =
 {
-	CL(Sprite3D1),
+	CL(Sprite3DBasicTest),
+    CL(Sprite3DEffectTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -129,21 +130,21 @@ void Sprite3DTestDemo::backCallback(Ref* sender)
 
 //------------------------------------------------------------------
 //
-// Sprite1
+// Sprite3DBasicTest
 //
 //------------------------------------------------------------------
 
-Sprite3D1::Sprite3D1()
+Sprite3DBasicTest::Sprite3DBasicTest()
 {
     auto listener = EventListenerTouchAllAtOnce::create();
-    listener->onTouchesEnded = CC_CALLBACK_2(Sprite3D1::onTouchesEnded, this);
+    listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DBasicTest::onTouchesEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     auto s = Director::getInstance()->getWinSize();
     addNewSpriteWithCoords( Vec2(s.width/2, s.height/2) );
 }
 
-void Sprite3D1::addNewSpriteWithCoords(Vec2 p)
+void Sprite3DBasicTest::addNewSpriteWithCoords(Vec2 p)
 {
     //int idx = (int)(CCRANDOM_0_1() * 1400.0f / 100.0f);
     //int x = (idx%5) * 85;
@@ -192,7 +193,7 @@ void Sprite3D1::addNewSpriteWithCoords(Vec2 p)
     sprite->runAction( RepeatForever::create(seq) );
 }
 
-void Sprite3D1::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+void Sprite3DBasicTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
     for (auto touch: touches)
     {
@@ -202,12 +203,12 @@ void Sprite3D1::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
     }
 }
 
-std::string Sprite3D1::title() const
+std::string Sprite3DBasicTest::title() const
 {
     return "Testing Sprite3D";
 }
 
-std::string Sprite3D1::subtitle() const
+std::string Sprite3DBasicTest::subtitle() const
 {
     return "Tap screen to add more sprites";
 }
@@ -218,4 +219,78 @@ void Sprite3DTestScene::runThisTest()
     addChild(layer);
     
     Director::getInstance()->replaceScene(this);
+}
+
+EffectSprite3D* EffectSprite3D::createFromObjFileAndTexture(const std::string &objFilePath, const std::string &textureFilePath)
+{
+    auto sprite = new EffectSprite3D();
+    if (sprite && sprite->initWithFile(objFilePath))
+    {
+        sprite->autorelease();
+        sprite->setTexture(textureFilePath);
+        return sprite;
+    }
+    CC_SAFE_DELETE(sprite);
+    return nullptr;
+}
+
+EffectSprite3D::EffectSprite3D()
+{
+    
+}
+
+EffectSprite3D::~EffectSprite3D()
+{
+    
+}
+
+void EffectSprite3D::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, bool transformUpdated)
+{
+    return Sprite3D::draw(renderer, transform, transformUpdated);
+}
+
+Sprite3DEffectTest::Sprite3DEffectTest()
+{
+    auto s = Director::getInstance()->getWinSize();
+    addNewSpriteWithCoords( Vec2(s.width/2, s.height/2) );
+}
+
+std::string Sprite3DEffectTest::title() const
+{
+    return "Testing Sprite3D";
+}
+std::string Sprite3DEffectTest::subtitle() const
+{
+    return "Sprite3d with effects";
+}
+
+void Sprite3DEffectTest::addNewSpriteWithCoords(Vec2 p)
+{
+    
+    //option 2: load obj and assign the texture
+    auto sprite = EffectSprite3D::createFromObjFileAndTexture("Sprite3DTest/boss1.obj", "Sprite3DTest/boss.png");
+    sprite->setScale(6.f);
+    
+    //add to scene
+    addChild( sprite );
+    
+    sprite->setPosition( Vec2( p.x, p.y) );
+    
+    ActionInterval* action;
+    float random = CCRANDOM_0_1();
+    
+    if( random < 0.20 )
+        action = ScaleBy::create(3, 2);
+    else if(random < 0.40)
+        action = RotateBy::create(3, 360);
+    else if( random < 0.60)
+        action = Blink::create(1, 3);
+    else if( random < 0.8 )
+        action = TintBy::create(2, 0, -255, -255);
+    else
+        action = FadeOut::create(2);
+    auto action_back = action->reverse();
+    auto seq = Sequence::create( action, action_back, NULL );
+    
+    sprite->runAction( RepeatForever::create(seq) );
 }
