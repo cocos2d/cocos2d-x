@@ -10,7 +10,7 @@
 #include "renderer/ccGLStateCache.h"
 #include "CCMeshPart.h"
 #include "CCObjLoader.h"
-#include "CCMeshCache.h"
+#include "CCSprite3DDataCache.h"
 
 using namespace std;
 
@@ -256,8 +256,6 @@ Mesh::~Mesh()
     releaseMeshPart();
     
     freeBuffers();
-    
-    MeshCache::getInstance()->removeMesh(this);
 }
 
 void Mesh::releaseMeshPart()

@@ -28,7 +28,7 @@ public:
     
     //set texture
     void setTexture(const std::string& texFile);
-    //void setTexture(Texture2D* texture);
+    void setTexture(Texture2D* texture);
     
     void setEffect(Sprite3DEffect* effect);
     
@@ -66,8 +66,6 @@ protected:
     //Vector<Texture2D*>    _textures;
     
     Sprite3DEffect*     _effect;
-    
-    std::string       _path;
     
     BlendFunc _blend;
     

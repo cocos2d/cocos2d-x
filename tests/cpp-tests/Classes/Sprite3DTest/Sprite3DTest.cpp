@@ -153,7 +153,7 @@ void Sprite3D1::addNewSpriteWithCoords(Vector2 p)
 //    auto sprite = Sprite3D::create("sprite3dTest/scene01.obj");
     
     //option 2: load obj and assign the texture
-    auto sprite = Sprite3D::create("Sprite3DTest/boss.obj");
+    auto sprite = Sprite3D::create("Sprite3DTest/boo1.obj");
     sprite->setScale(3.f);
     sprite->setTexture("Sprite3DTest/boss.png");
     
@@ -162,7 +162,7 @@ void Sprite3D1::addNewSpriteWithCoords(Vector2 p)
     Sprite3DOutlineEffect* effect = Sprite3DOutlineEffect::create();
     sprite->setEffect(effect);
     effect->setOutlineColor(Vector3(1.0f, 1.0f, 0.0f));
-    effect->setOutlineWidth(0.3);
+    effect->setOutlineWidth(0.2);
     
     
     //

@@ -54,7 +54,7 @@ Sprite3DOutlineEffect::~Sprite3DOutlineEffect()
 {
 }
 
-bool Sprite3DOutlineEffect::init(Sprite3D* sprite)
+bool Sprite3DOutlineEffect::initEffect(Sprite3D* sprite)
 {
     CC_ASSERT(_sprite == nullptr && sprite != nullptr);
     

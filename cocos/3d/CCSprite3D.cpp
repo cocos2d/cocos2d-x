@@ -1,6 +1,6 @@
 
 #include "CCSprite3D.h"
-#include "CCMeshCache.h"
+#include "CCSprite3DDataCache.h"
 #include "CCMesh.h"
 #include "CCSprite3DEffect.h"
 
@@ -22,7 +22,7 @@ NS_CC_BEGIN
 
 std::string s_attributeNames[] = {GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::ATTRIBUTE_NAME_NORMAL};
 
-std::map<std::string, std::vector<std::string> > __cachedSpriteTexNames;
+//std::map<std::string, std::vector<std::string> > __cachedSpriteTexNames;
 
 Sprite3D* Sprite3D::create(const std::string &modelPath)
 {
@@ -105,10 +105,7 @@ bool Sprite3D::loadFromObj(const std::string& path)
     genGLProgramState();
     
     //add to cache
-    __cachedSpriteTexNames[fullPath] = matnames;
-    MeshCache::getInstance()->addMesh(fullPath, _mesh);
-    
-    _path = fullPath;
+    Sprite3DDataCache::getInstance()->addSprite3D(fullPath, _mesh, matnames.size() > 0 ? matnames[0] : "");
 
     return true;
 }
@@ -137,22 +134,19 @@ bool Sprite3D::initWithFile(const std::string &path)
     CC_SAFE_RELEASE_NULL(_texture);
     
     //find from the cache
-    Mesh* mesh = MeshCache::getInstance()->getMesh(path);
+    Mesh* mesh = Sprite3DDataCache::getInstance()->getSprite3DMesh(path);
     if (mesh)
     {
         _mesh = mesh;
         _mesh->retain();
-        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
-
+        
         _partcount = mesh->getMeshPartCount();
         
-        auto matnames = __cachedSpriteTexNames[fullPath];
-        if (matnames.size())
-            setTexture(matnames[0]);
-        
+        auto tex = Sprite3DDataCache::getInstance()->getSprite3DTexture(path);
+        setTexture(tex);
+
         genGLProgramState();
         
-        _path = fullPath;
         return true;
     }
     else
@@ -211,12 +205,19 @@ void Sprite3D::setTexture(const std::string& texFile)
     _texture = tex;
 }
 
+void Sprite3D::setTexture(Texture2D* texture)
+{
+    CC_SAFE_RETAIN(texture);
+    CC_SAFE_RELEASE_NULL(_texture);
+    _texture = texture;
+}
+
 void Sprite3D::setEffect(Sprite3DEffect* effect)
 {
     CC_SAFE_RETAIN(effect);
     CC_SAFE_RELEASE_NULL(_effect);
     _effect = effect;
-    _effect->init(this);
+    _effect->initEffect(this);
 }
 
 void Sprite3D::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)

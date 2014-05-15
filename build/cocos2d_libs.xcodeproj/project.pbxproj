@@ -1081,10 +1081,10 @@
 		3E92EA491921304E0094CD21 /* CCMeshPart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E92EA461921304E0094CD21 /* CCMeshPart.cpp */; };
 		3E92EA4A1921304E0094CD21 /* CCMeshPart.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA471921304E0094CD21 /* CCMeshPart.h */; };
 		3E92EA4B1921304E0094CD21 /* CCMeshPart.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA471921304E0094CD21 /* CCMeshPart.h */; };
-		3E92EA4E192130D70094CD21 /* CCMeshCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E92EA4C192130D70094CD21 /* CCMeshCache.cpp */; };
-		3E92EA4F192130D70094CD21 /* CCMeshCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E92EA4C192130D70094CD21 /* CCMeshCache.cpp */; };
-		3E92EA50192130D70094CD21 /* CCMeshCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA4D192130D70094CD21 /* CCMeshCache.h */; };
-		3E92EA51192130D70094CD21 /* CCMeshCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA4D192130D70094CD21 /* CCMeshCache.h */; };
+		3E92EA4E192130D70094CD21 /* CCSprite3DDataCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E92EA4C192130D70094CD21 /* CCSprite3DDataCache.cpp */; };
+		3E92EA4F192130D70094CD21 /* CCSprite3DDataCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E92EA4C192130D70094CD21 /* CCSprite3DDataCache.cpp */; };
+		3E92EA50192130D70094CD21 /* CCSprite3DDataCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA4D192130D70094CD21 /* CCSprite3DDataCache.h */; };
+		3E92EA51192130D70094CD21 /* CCSprite3DDataCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA4D192130D70094CD21 /* CCSprite3DDataCache.h */; };
 		3E92EA5B19215FA10094CD21 /* Colored.es2.frag.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA5419215FA10094CD21 /* Colored.es2.frag.h */; };
 		3E92EA5C19215FA10094CD21 /* Colored.es2.frag.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA5419215FA10094CD21 /* Colored.es2.frag.h */; };
 		3E92EA5D19215FA10094CD21 /* CCSprite3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E92EA5519215FA10094CD21 /* CCSprite3D.cpp */; };
@@ -2328,8 +2328,8 @@
 		3E92EA3D19212FD40094CD21 /* CCObjLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCObjLoader.h; path = ../cocos/3d/CCObjLoader.h; sourceTree = "<group>"; };
 		3E92EA461921304E0094CD21 /* CCMeshPart.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCMeshPart.cpp; path = ../cocos/3d/CCMeshPart.cpp; sourceTree = "<group>"; };
 		3E92EA471921304E0094CD21 /* CCMeshPart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCMeshPart.h; path = ../cocos/3d/CCMeshPart.h; sourceTree = "<group>"; };
-		3E92EA4C192130D70094CD21 /* CCMeshCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCMeshCache.cpp; path = ../cocos/3d/CCMeshCache.cpp; sourceTree = "<group>"; };
-		3E92EA4D192130D70094CD21 /* CCMeshCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCMeshCache.h; path = ../cocos/3d/CCMeshCache.h; sourceTree = "<group>"; };
+		3E92EA4C192130D70094CD21 /* CCSprite3DDataCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCSprite3DDataCache.cpp; path = ../cocos/3d/CCSprite3DDataCache.cpp; sourceTree = "<group>"; };
+		3E92EA4D192130D70094CD21 /* CCSprite3DDataCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCSprite3DDataCache.h; path = ../cocos/3d/CCSprite3DDataCache.h; sourceTree = "<group>"; };
 		3E92EA5419215FA10094CD21 /* Colored.es2.frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Colored.es2.frag.h; path = ../cocos/3d/Colored.es2.frag.h; sourceTree = "<group>"; };
 		3E92EA5519215FA10094CD21 /* CCSprite3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCSprite3D.cpp; path = ../cocos/3d/CCSprite3D.cpp; sourceTree = "<group>"; };
 		3E92EA5619215FA10094CD21 /* CCSprite3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCSprite3D.h; path = ../cocos/3d/CCSprite3D.h; sourceTree = "<group>"; };
@@ -4080,8 +4080,8 @@
 				3E92EA5619215FA10094CD21 /* CCSprite3D.h */,
 				3E92EA5919215FA10094CD21 /* Textured.es2.frag.h */,
 				3E92EA5A19215FA10094CD21 /* Textured.es2.vert.h */,
-				3E92EA4C192130D70094CD21 /* CCMeshCache.cpp */,
-				3E92EA4D192130D70094CD21 /* CCMeshCache.h */,
+				3E92EA4C192130D70094CD21 /* CCSprite3DDataCache.cpp */,
+				3E92EA4D192130D70094CD21 /* CCSprite3DDataCache.h */,
 				3E92EA461921304E0094CD21 /* CCMeshPart.cpp */,
 				3E92EA471921304E0094CD21 /* CCMeshPart.h */,
 				3E92EA3A19212FD40094CD21 /* CCMesh.cpp */,
@@ -5000,7 +5000,7 @@
 				1ABA68B01888D700007D1BB4 /* CCFontCharMap.h in Headers */,
 				5034CA3F191D591100CE6051 /* ccShader_Position_uColor.vert in Headers */,
 				500DC8B419105D41007B91BF /* CCGroupCommand.h in Headers */,
-				3E92EA50192130D70094CD21 /* CCMeshCache.h in Headers */,
+				3E92EA50192130D70094CD21 /* CCSprite3DDataCache.h in Headers */,
 				500DC8D319105F7D007B91BF /* CCAffineTransform.h in Headers */,
 				46A170191807CBFC005B8026 /* CCCommon.h in Headers */,
 				46A170E71807CECA005B8026 /* CCPhysicsBody.h in Headers */,
@@ -5658,7 +5658,7 @@
 				500DC99F19106300007B91BF /* CCValue.h in Headers */,
 				1A5702F1180BCE750088DEC7 /* CCTMXLayer.h in Headers */,
 				5034CA44191D591100CE6051 /* ccShader_Label.vert in Headers */,
-				3E92EA51192130D70094CD21 /* CCMeshCache.h in Headers */,
+				3E92EA51192130D70094CD21 /* CCSprite3DDataCache.h in Headers */,
 				1A5702F5180BCE750088DEC7 /* CCTMXObjectGroup.h in Headers */,
 				1A5702F9180BCE750088DEC7 /* CCTMXTiledMap.h in Headers */,
 				1AC0269D1914068200FA920D /* ConvertUTF.h in Headers */,
@@ -6194,7 +6194,7 @@
 				2AC795DB1862870F005EC8E1 /* SkeletonBounds.cpp in Sources */,
 				2AC795DC1862870F005EC8E1 /* Event.cpp in Sources */,
 				1A01C68A18F57BE800EFE3A6 /* CCDeprecated.cpp in Sources */,
-				3E92EA4E192130D70094CD21 /* CCMeshCache.cpp in Sources */,
+				3E92EA4E192130D70094CD21 /* CCSprite3DDataCache.cpp in Sources */,
 				1A1645B0191B726C008C7C7F /* ConvertUTF.c in Sources */,
 				500DC93219106300007B91BF /* CCAutoreleasePool.cpp in Sources */,
 				2905FA5618CF08D100240AA3 /* UILayout.cpp in Sources */,
@@ -6813,7 +6813,7 @@
 				06CAAAC8186AD7EB0012A414 /* TriggerObj.cpp in Sources */,
 				1AD71DF0180E26E600808F54 /* CCNode+CCBRelativePositioning.cpp in Sources */,
 				5027253D190BF1B900AAF4ED /* cocos2d.cpp in Sources */,
-				3E92EA4F192130D70094CD21 /* CCMeshCache.cpp in Sources */,
+				3E92EA4F192130D70094CD21 /* CCSprite3DDataCache.cpp in Sources */,
 				5034CA50191D591100CE6051 /* ccGLStateCache.cpp in Sources */,
 				1AD71DF4180E26E600808F54 /* CCNodeLoader.cpp in Sources */,
 				1AD71DF8180E26E600808F54 /* CCNodeLoaderLibrary.cpp in Sources */,

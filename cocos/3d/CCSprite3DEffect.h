@@ -25,7 +25,7 @@ public:
     };
     static Sprite3DEffect* create(EffectType type);
     
-    virtual bool init(Sprite3D* sprite) = 0;
+    virtual bool initEffect(Sprite3D* sprite) = 0;
     
     virtual void drawSpriteEffect(const Matrix &transform) = 0;
     
@@ -41,13 +41,13 @@ class Sprite3DOutlineEffect: public Sprite3DEffect
 public:
     static Sprite3DOutlineEffect* create();
     
-    virtual bool init(Sprite3D* sprite);
+    virtual bool initEffect(Sprite3D* sprite) override;
     
     void setOutlineColor(const Vector3& color);
     
     void setOutlineWidth(float width);
     
-    virtual void drawSpriteEffect(const Matrix &transform);
+    virtual void drawSpriteEffect(const Matrix &transform) override;
     
 protected:
     
