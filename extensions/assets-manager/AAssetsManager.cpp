@@ -75,7 +75,8 @@ std::string AAssetsManager::s_nWritableRoot = "";
 // Implementation of AssetsManager
 
 AAssetsManager::AAssetsManager(const std::string& manifestUrl, const std::string& storagePath/* = "" */)
-: _manifestUrl(manifestUrl)
+: _waitToUpdate(false)
+, _manifestUrl(manifestUrl)
 , _manifestLoaded(false)
 , _curl(nullptr)
 , _connectionTimeout(0)
@@ -91,7 +92,7 @@ AAssetsManager::AAssetsManager(const std::string& manifestUrl, const std::string
     // Init variables
     _eventDispatcher = Director::getInstance()->getEventDispatcher();
     _fileUtils = FileUtils::getInstance();
-    _checkState = UNCHECKED;
+    _updateState = UNKNOWN;
     
     _downloader = new Downloader(this);
     setStoragePath(storagePath);
@@ -217,10 +218,18 @@ void AAssetsManager::destroyStoragePath()
 #endif
 }
 
+AAssetsManager::UpdateState AAssetsManager::updateState()
+{
+    if (_updateState == UNKNOWN || _updateState == NEED_UPDATE || _updateState == UP_TO_DATE || _updateState == UPDATING) {
+        return _updateState;
+    }
+    else return CHECKING;
+}
+
 void AAssetsManager::checkUpdate()
 {
-    switch (_checkState) {
-        case UNCHECKED:
+    switch (_updateState) {
+        case UNKNOWN:
         case PREDOWNLOAD_VERSION:
         {
             std::string versionUrl = _localManifest->getVersionFileUrl();
@@ -228,13 +237,13 @@ void AAssetsManager::checkUpdate()
             {
                 // Download version file asynchronously
                 _downloader->downloadAsync(versionUrl, _storagePath, "@version", VERSION_FILENAME);
-                _checkState = DOWNLOADING_VERSION;
+                _updateState = DOWNLOADING_VERSION;
             }
             // No version file found
             else
             {
                 CCLOG("No version file found, step skipped\n");
-                _checkState = PREDOWNLOAD_MANIFEST;
+                _updateState = PREDOWNLOAD_MANIFEST;
             }
         }
         break;
@@ -248,13 +257,13 @@ void AAssetsManager::checkUpdate()
             if (!_remoteManifest->isVersionLoaded())
             {
                 CCLOG("Error parsing version file, step skipped\n");
-                _checkState = PREDOWNLOAD_MANIFEST;
+                _updateState = PREDOWNLOAD_MANIFEST;
             }
             else
             {
                 if (_localManifest->versionEquals(_remoteManifest))
-                    _checkState = UP_TO_DATE;
-                else _checkState = PREDOWNLOAD_MANIFEST;
+                    _updateState = UP_TO_DATE;
+                else _updateState = NEED_UPDATE;
             }
         }
         break;
@@ -265,13 +274,13 @@ void AAssetsManager::checkUpdate()
             {
                 // Download version file asynchronously
                 _downloader->downloadAsync(manifestUrl, _storagePath, "@manifest", MANIFEST_FILENAME);
-                _checkState = DOWNLOADING_MANIFEST;
+                _updateState = DOWNLOADING_MANIFEST;
             }
             // No version file found
             else
             {
                 CCLOG("No manifest file found, check update failed\n");
-                _checkState = UNCHECKED;
+                _updateState = UNKNOWN;
             }
         }
         break;
@@ -285,15 +294,59 @@ void AAssetsManager::checkUpdate()
             if (!_remoteManifest->isLoaded())
             {
                 CCLOG("Error parsing manifest file\n");
-                _checkState = UNCHECKED;
+                _updateState = UNKNOWN;
             }
             else
             {
-                // CHECK ASSETS
+                if (_localManifest->versionEquals(_remoteManifest))
+                    _updateState = UP_TO_DATE;
+                else
+                {
+                    _updateState = NEED_UPDATE;
+                    if (_waitToUpdate)
+                    {
+                        update();
+                    }
+                }
             }
         }
         break;
         default:
+        break;
+    }
+}
+
+void AAssetsManager::update()
+{
+    switch (_updateState) {
+        case NEED_UPDATE:
+        {
+            // Check difference
+            if (_localManifest && _remoteManifest)
+            {
+                std::map<std::string, Manifest::AssetDiff> diff_map = _localManifest->genDiff(_remoteManifest);
+                if (diff_map.size() == 0)
+                {
+                    _updateState = UP_TO_DATE;
+                }
+                else
+                {
+                    _updateState = UPDATING;
+// UPDATE
+                }
+            }
+            
+            _updateState = UPDATING;
+        }
+        break;
+        case UP_TO_DATE:
+        case UPDATING:
+        break;
+        default:
+        {
+            _waitToUpdate = true;
+            checkUpdate();
+        }
         break;
     }
 }
@@ -304,7 +357,7 @@ void AAssetsManager::onError(const Downloader::Error &error)
     // Rollback check states when error occured
     if (error.customId == "@version")
     {
-        _checkState = PREDOWNLOAD_VERSION;
+        _updateState = PREDOWNLOAD_VERSION;
     }
     
     CCLOG("%d : %s\n", error.code, error.message.c_str());
@@ -322,12 +375,12 @@ void AAssetsManager::onSuccess(const std::string &srcUrl, const std::string &cus
     
     if (customId == "@version")
     {
-        _checkState = VERSION_LOADED;
+        _updateState = VERSION_LOADED;
         checkUpdate();
     }
     else if (customId == "@manifest")
     {
-        _checkState = MANIFEST_LOADED;
+        _updateState = MANIFEST_LOADED;
         checkUpdate();
     }
     else

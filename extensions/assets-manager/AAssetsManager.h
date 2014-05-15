@@ -66,9 +66,10 @@ public:
         UNCOMPRESS,
     };
     
-    enum CheckState
+    enum UpdateState
     {
-        UNCHECKED,
+        UNKNOWN,
+        CHECKING,
         PREDOWNLOAD_VERSION,
         DOWNLOADING_VERSION,
         VERSION_LOADED,
@@ -76,6 +77,7 @@ public:
         DOWNLOADING_MANIFEST,
         MANIFEST_LOADED,
         NEED_UPDATE,
+        UPDATING,
         UP_TO_DATE
     };
     
@@ -99,7 +101,9 @@ public:
      */
     void checkUpdate();
     
-    //virtual void update();
+    void update();
+    
+    UpdateState updateState();
     
     /* @brief Gets url of a asset for the given key.
      */
@@ -218,7 +222,12 @@ private:
     EventDispatcher *_eventDispatcher;
     FileUtils *_fileUtils;
     
-    CheckState _checkState;
+    UpdateState _updateState;
+    
+    bool _waitToUpdate;
+    
+    //! The url of the package
+    std::string _packageUrl;
     
     //! The path to store downloaded resources.
     std::string _storagePath;
