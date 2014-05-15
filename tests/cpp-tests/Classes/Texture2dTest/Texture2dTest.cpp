@@ -1533,6 +1533,7 @@ void TextureAsync::onEnter()
 
 TextureAsync::~TextureAsync()
 {
+    Director::getInstance()->getTextureCache()->removeAllImageAsync();
     Director::getInstance()->getTextureCache()->removeAllTextures();
 }
 

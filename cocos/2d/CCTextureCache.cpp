@@ -139,6 +139,21 @@ void TextureCache::addImageAsync(const std::string &path, const std::function<vo
     _sleepCondition.notify_one();
 }
 
+void TextureCache::removeImageAsync(const std::string& filename, const std::function<void(Texture2D*)>& callback)
+{
+}
+
+// unbind all the bound callbacks
+void TextureCache::removeAllImageAsync()
+{
+    if (_imageInfoQueue && !_imageInfoQueue->empty())
+    {
+        _imageInfoMutex.lock();
+        std::for_each(_imageInfoQueue->begin(), _imageInfoQueue->end(), [](ImageInfo* ptr) { ptr->asyncStruct->callback = nullptr; });
+        _imageInfoMutex.unlock();
+    }
+}
+
 void TextureCache::loadImage()
 {
     AsyncStruct *asyncStruct = nullptr;
@@ -265,8 +280,12 @@ void TextureCache::addImageAsyncCallBack(float dt)
             if(it != _textures.end())
                 texture = it->second;
         }
-        
-        asyncStruct->callback(texture);
+
+        if (asyncStruct->callback)
+        {
+            asyncStruct->callback(texture);
+        }
+
         if(image)
         {
             image->release();
