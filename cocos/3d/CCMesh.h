@@ -39,7 +39,7 @@ public:
     int vertexsizeBytes;
     int vertexNum;
     std::vector<float> _vertexs;
-    std::vector<std::vector<unsigned short> > _partindices;
+    std::vector<unsigned short> _indices;
     std::vector<MeshVertexAttrib> _vertexAttribs;
     
     RenderMeshData(): vertexsizeBytes(0)
@@ -49,7 +49,7 @@ public:
     
     bool hasVertexAttrib(int attrib);
     
-    bool initFrom(std::vector<float>& posions, std::vector<float>& normals, std::vector<float>& texs, const std::vector<std::vector<unsigned short> >& partindices);
+    bool initFrom(std::vector<float>& posions, std::vector<float>& normals, std::vector<float>& texs, const std::vector<unsigned short>& indices);
 };
 
 
@@ -60,18 +60,13 @@ public:
     virtual ~Mesh();
     
     //create
-    static Mesh* create(std::vector<float>& posions, std::vector<float>& normals, std::vector<float>& texs, const std::vector<std::vector<unsigned short> >& partindices);
+    static Mesh* create(std::vector<float>& posions, std::vector<float>& normals, std::vector<float>& texs, const std::vector<unsigned short>& indices);
     
-    bool init(std::vector<float>& posions, std::vector<float>& normals, std::vector<float>& texs, const std::vector<std::vector<unsigned short> >& partindices);
+    bool init(std::vector<float>& posions, std::vector<float>& normals, std::vector<float>& texs, const std::vector<unsigned short>& indices);
 
     //get vertex buffer
     inline GLuint getVertexBuffer() const { return _vertexBuffer; }
     
-    //get mesh part count
-    inline ssize_t getMeshPartCount() const { return _partCount; }
-    
-    //get mesh part by index
-    inline MeshPart* getMeshPart(int idx) { return _parts[idx]; }
     
     //build vertex buffer from renderdata
     void restore();
@@ -87,21 +82,26 @@ public:
     
     //get per vertex size in bytes
     int getVertexSizeInBytes() const { return _renderdata.vertexsizeBytes; }
-
+    
+    PrimitiveType getPrimitiveType() const { return _primitiveType; }
+    
+    unsigned int getIndexCount() const { return _indexCount; }
+    
+    IndexFormat getIndexFormat() const { return _indexFormat; }
+    
+    GLuint getIndexBuffer() const {return _indexBuffer; }
 protected:
     Mesh();
     
     //build buffer
     void buildBuffer();
 
-
     void freeBuffers();
     
     void releaseMeshPart();
     
-    void addMeshPart(PrimitiveType primitiveType, IndexFormat indexformat,  void* indexData, unsigned int indexCount);
+    //void addMeshPart(PrimitiveType primitiveType, IndexFormat indexformat,  void* indexData, unsigned int indexCount);
     
-
 protected:
     void countVertexData() const;
     std::string _name;
@@ -110,7 +110,12 @@ protected:
     
     unsigned int _partCount;
     MeshPart** _parts;
-
+    
+    PrimitiveType _primitiveType;
+    IndexFormat _indexFormat;
+    unsigned int _indexCount;
+    GLuint _indexBuffer;
+    
 private:
     
     RenderMeshData _renderdata;

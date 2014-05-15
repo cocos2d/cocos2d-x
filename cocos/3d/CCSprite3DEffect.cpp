@@ -137,14 +137,10 @@ void Sprite3DOutlineEffect::drawSpriteEffect(const Matrix &transform)
         _glProgramState->setUniformVec4("u_color", Vector4(color.r, color.g, color.b, color.a));
         
         auto mesh = _sprite->getMesh();
-        for (int i = 0; i < mesh->getMeshPartCount(); i++)
-        {
-            auto meshPart = mesh->getMeshPart(i);
-            glBindBuffer(GL_ARRAY_BUFFER, mesh->getVertexBuffer());
-            _glProgramState->apply(transform);
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshPart->getIndexBuffer());
-            glDrawElements(meshPart->getPrimitiveType(), meshPart->getIndexCount(), meshPart->getIndexFormat(), 0);
-        }
+        glBindBuffer(GL_ARRAY_BUFFER, mesh->getVertexBuffer());
+        _glProgramState->apply(transform);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->getIndexBuffer());
+        glDrawElements(mesh->getPrimitiveType(), mesh->getIndexCount(), mesh->getIndexFormat(), 0);
         
         glCullFace(GL_BACK);
     }
