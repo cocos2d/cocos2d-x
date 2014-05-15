@@ -63,7 +63,8 @@ _opacity(255),
 _flippedX(false),
 _flippedY(false),
 _focused(false),
-_focusEnabled(true)
+_focusEnabled(true),
+_layoutParameter(nullptr)
 {
     onFocusChanged = CC_CALLBACK_2(Widget::onFocusChange,this);
     onNextFocusedWidget = nullptr;
@@ -73,6 +74,8 @@ _focusEnabled(true)
 Widget::~Widget()
 {
     setTouchEnabled(false);
+    
+    CC_SAFE_RELEASE_NULL(_layoutParameter);
     
     //cleanup focused widget
     if (_focusedWidget == this) {
@@ -791,12 +794,12 @@ bool Widget::isEnabled() const
 
 float Widget::getLeftInParent()
 {
-    return getPosition().x - getAnchorPoint().x * _size.width;;
+    return getPosition().x - getAnchorPoint().x * _size.width;
 }
 
 float Widget::getBottomInParent()
 {
-    return getPosition().y - getAnchorPoint().y * _size.height;;
+    return getPosition().y - getAnchorPoint().y * _size.height;
 }
 
 float Widget::getRightInParent()
@@ -841,12 +844,14 @@ void Widget::setLayoutParameter(LayoutParameter *parameter)
     {
         return;
     }
-    _layoutParameterDictionary.insert((int)parameter->getLayoutType(), parameter);
+    CC_SAFE_RELEASE_NULL(_layoutParameter);
+    _layoutParameter = parameter;
+    CC_SAFE_RETAIN(_layoutParameter);
 }
 
-LayoutParameter* Widget::getLayoutParameter(LayoutParameter::Type type)
+LayoutParameter* Widget::getLayoutParameter()
 {
-    return dynamic_cast<LayoutParameter*>(_layoutParameterDictionary.at((int)type));
+    return _layoutParameter;
 }
 
 std::string Widget::getDescription() const
@@ -917,11 +922,7 @@ void Widget::copyProperties(Widget *widget)
     setColor(widget->getColor());
     setOpacity(widget->getOpacity());
     //FIXME:copy focus properties, also make sure all the subclass the copy behavior is correct
-    Map<int, LayoutParameter*>& layoutParameterDic = widget->_layoutParameterDictionary;
-    for (auto iter = layoutParameterDic.begin(); iter != layoutParameterDic.end(); ++iter)
-    {
-        setLayoutParameter(iter->second->clone());
-    }
+    setLayoutParameter(_layoutParameter);
     onSizeChanged();
 }
     

@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "ui/CCProtectedNode.h"
 #include "ui/UILayoutParameter.h"
 #include "ui/GUIDefine.h"
+#include "ui/UILayoutParameter.h"
 
 NS_CC_BEGIN
 
@@ -57,7 +58,7 @@ CC_DEPRECATED_ATTRIBUTE typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType)
 #endif
 
 
-class Widget : public ProtectedNode
+class Widget : public ProtectedNode, public LayoutParameterProtocol
 {
 public:
     enum class FocusDirection
@@ -483,7 +484,7 @@ public:
      *
      * @return LayoutParameter
      */
-    LayoutParameter* getLayoutParameter(LayoutParameter::Type type);
+    LayoutParameter* getLayoutParameter() override;
 
     /**
      * Ignore the widget size
@@ -680,7 +681,7 @@ protected:
     GLubyte _opacity;
     bool _flippedX;
     bool _flippedY;
-    Map<int, LayoutParameter*> _layoutParameterDictionary;
+    LayoutParameter* _layoutParameter;
     
     bool _focused;
     bool _focusEnabled;

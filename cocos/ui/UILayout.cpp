@@ -658,7 +658,7 @@ void Layout::supplyTheLayoutParameterLackToChild(Widget *child)
         case Type::HORIZONTAL:
         case Type::VERTICAL:
         {
-            LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LayoutParameter::Type::LINEAR));
+            LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter());
             if (!layoutParameter)
             {
                 child->setLayoutParameter(LinearLayoutParameter::create());
@@ -667,7 +667,7 @@ void Layout::supplyTheLayoutParameterLackToChild(Widget *child)
         }
         case Type::RELATIVE:
         {
-            RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LayoutParameter::Type::RELATIVE));
+            RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter());
             if (!layoutParameter)
             {
                 child->setLayoutParameter(RelativeLayoutParameter::create());
@@ -1049,7 +1049,7 @@ Size Layout::getLayoutContentSize()const
             if (w)
             {
                 widgetCount++;
-                Margin m = w->getLayoutParameter(LayoutParameter::Type::LINEAR)->getMargin();
+                Margin m = w->getLayoutParameter()->getMargin();
                 layoutSize = layoutSize + w->getSize() + Size(m.right + m.left,  m.top + m.bottom) * 0.5;
             }
         }

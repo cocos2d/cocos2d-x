@@ -73,16 +73,16 @@ void LinearVerticalLayoutExecutant::doLayout(LayoutProtocol* layout)
     
     for (auto& subWidget : container)
     {
-        Widget* child = dynamic_cast<Widget*>(subWidget);
+        LayoutParameterProtocol* child = dynamic_cast<LayoutParameterProtocol*>(subWidget);
         if (child)
         {
-            LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LayoutParameter::Type::LINEAR));
+            LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter());
             
             if (layoutParameter)
             {
                 LinearLayoutParameter::LinearGravity childGravity = layoutParameter->getGravity();
-                Vector2 ap = child->getAnchorPoint();
-                Size cs = child->getSize();
+                Vector2 ap = subWidget->getAnchorPoint();
+                Size cs = subWidget->getContentSize();
                 float finalPosX = ap.x * cs.width;
                 float finalPosY = topBoundary - ((1.0f-ap.y) * cs.height);
                 switch (childGravity)
@@ -102,8 +102,8 @@ void LinearVerticalLayoutExecutant::doLayout(LayoutProtocol* layout)
                 Margin mg = layoutParameter->getMargin();
                 finalPosX += mg.left;
                 finalPosY -= mg.top;
-                child->setPosition(Vector2(finalPosX, finalPosY));
-                topBoundary = child->getBottomInParent() - mg.bottom;
+                subWidget->setPosition(Vector2(finalPosX, finalPosY));
+                topBoundary = subWidget->getPosition().y - subWidget->getAnchorPoint().y * subWidget->getContentSize().height - mg.bottom;
             }
         }
     }
@@ -119,7 +119,7 @@ void LinearHorizontalLayoutExecutant::doLayout(LayoutProtocol* layout)
         Widget* child = dynamic_cast<Widget*>(subWidget);
         if (child)
         {
-            LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LayoutParameter::Type::LINEAR));
+            LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter());
             if (layoutParameter)
             {
                 LinearLayoutParameter::LinearGravity childGravity = layoutParameter->getGravity();
@@ -162,7 +162,7 @@ void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
         Widget* child = dynamic_cast<Widget*>(subWidget);
         if (child)
         {
-            RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LayoutParameter::Type::RELATIVE));
+            RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter());
             layoutParameter->_put = false;
             unlayoutChildCount++;
             widgetChildren.pushBack(child);
@@ -173,7 +173,7 @@ void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
         for (auto& subWidget : widgetChildren)
         {
             Widget* child = static_cast<Widget*>(subWidget);
-            RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LayoutParameter::Type::RELATIVE));
+            RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter());
             
             if (layoutParameter)
             {
@@ -195,7 +195,7 @@ void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
                     {
                         if (sWidget)
                         {
-                            RelativeLayoutParameter* rlayoutParameter = dynamic_cast<RelativeLayoutParameter*>(sWidget->getLayoutParameter(LayoutParameter::Type::RELATIVE));
+                            RelativeLayoutParameter* rlayoutParameter = dynamic_cast<RelativeLayoutParameter*>(sWidget->getLayoutParameter());
                             if (rlayoutParameter &&  rlayoutParameter->getRelativeName() == relativeName)
                             {
                                 relativeWidget = sWidget;
