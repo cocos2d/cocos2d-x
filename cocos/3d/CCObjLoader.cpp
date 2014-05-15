@@ -635,7 +635,7 @@ ObjLoader::LoadObj(
       std::string err_mtl = LoadMtl(material_map, namebuf, mtl_basepath);
       if (!err_mtl.empty()) {
         faceGroup.clear();  // for safety
-        return err_mtl;
+        //return err_mtl;
       }
       continue;
     }
