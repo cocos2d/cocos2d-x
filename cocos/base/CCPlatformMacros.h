@@ -164,6 +164,10 @@ public: virtual varType get##funName(void) const { return varName; }
 protected: varType varName;\
 public: virtual const varType& get##funName(void) const { return varName; }
 
+#define CC_SYNTHESIZE_READONLY_PURE_REF(varType, varName, funName)\
+protected: varType varName;\
+public: virtual varType& get##funName(void) { return varName; }
+
 /** CC_SYNTHESIZE is used to declare a protected variable.
  We can use getter to read the variable, and use the setter to change the variable.
  @param varType     the type of variable.
