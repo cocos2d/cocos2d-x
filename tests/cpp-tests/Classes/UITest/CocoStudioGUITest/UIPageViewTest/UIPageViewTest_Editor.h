@@ -34,7 +34,7 @@ public:
     ~UIPageViewTest_Editor();
     bool init();
     
-    void pageViewEvent(Ref* pSender, PageViewEventType type);
+    void pageViewEvent(Ref* pSender, PageView::EventType type);
     
 protected:
     UI_SCENE_EDITOR_CREATE_FUNC(UIPageViewTest_Editor)

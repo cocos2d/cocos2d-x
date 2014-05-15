@@ -12,18 +12,23 @@
 
 
 --------------------------------------------------------
--- the cc GLProgram
--- @field [parent=#cc] GLProgram#GLProgram GLProgram preloaded module
-
-
---------------------------------------------------------
--- the cc Touch
--- @field [parent=#cc] Touch#Touch Touch preloaded module
+-- the cc EventListener
+-- @field [parent=#cc] EventListener#EventListener EventListener preloaded module
 
 
 --------------------------------------------------------
 -- the cc Event
 -- @field [parent=#cc] Event#Event Event preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventDispatcher
+-- @field [parent=#cc] EventDispatcher#EventDispatcher EventDispatcher preloaded module
+
+
+--------------------------------------------------------
+-- the cc Touch
+-- @field [parent=#cc] Touch#Touch Touch preloaded module
 
 
 --------------------------------------------------------
@@ -39,16 +44,6 @@
 --------------------------------------------------------
 -- the cc Texture2D
 -- @field [parent=#cc] Texture2D#Texture2D Texture2D preloaded module
-
-
---------------------------------------------------------
--- the cc EventListener
--- @field [parent=#cc] EventListener#EventListener EventListener preloaded module
-
-
---------------------------------------------------------
--- the cc EventDispatcher
--- @field [parent=#cc] EventDispatcher#EventDispatcher EventDispatcher preloaded module
 
 
 --------------------------------------------------------
@@ -737,6 +732,11 @@
 
 
 --------------------------------------------------------
+-- the cc GLProgram
+-- @field [parent=#cc] GLProgram#GLProgram GLProgram preloaded module
+
+
+--------------------------------------------------------
 -- the cc SpriteBatchNode
 -- @field [parent=#cc] SpriteBatchNode#SpriteBatchNode SpriteBatchNode preloaded module
 
@@ -1134,11 +1134,6 @@
 --------------------------------------------------------
 -- the cc GLView
 -- @field [parent=#cc] GLView#GLView GLView preloaded module
-
-
---------------------------------------------------------
--- the cc ShaderCache
--- @field [parent=#cc] ShaderCache#ShaderCache ShaderCache preloaded module
 
 
 --------------------------------------------------------

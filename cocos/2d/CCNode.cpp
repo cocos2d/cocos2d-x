@@ -30,29 +30,28 @@ THE SOFTWARE.
 
 #include <algorithm>
 
-#include "deprecated/CCString.h"
-#include "2d/ccCArray.h"
-#include "math/TransformUtils.h"
-#include "2d/CCGrid.h"
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 #include "base/CCTouch.h"
-#include "2d/CCActionManager.h"
-#include "2d/CCScriptSupport.h"
-#include "2d/CCGLProgram.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEvent.h"
 #include "base/CCEventTouch.h"
+#include "2d/ccCArray.h"
+#include "2d/CCGrid.h"
+#include "2d/CCActionManager.h"
+#include "2d/CCScriptSupport.h"
 #include "2d/CCScene.h"
+#include "2d/CCComponent.h"
+#include "2d/CCComponentContainer.h"
+#include "renderer/CCGLProgram.h"
+#include "renderer/CCGLProgramState.h"
+#include "math/TransformUtils.h"
+
+#include "deprecated/CCString.h"
 
 #if CC_USE_PHYSICS
 #include "physics/CCPhysicsBody.h"
 #endif
-
-// externals
-#include "2d/CCComponent.h"
-#include "2d/CCComponentContainer.h"
-
 
 
 #if CC_NODE_RENDER_SUBPIXEL
@@ -102,7 +101,7 @@ Node::Node(void)
 // userData is always inited as nil
 , _userData(nullptr)
 , _userObject(nullptr)
-, _shaderProgram(nullptr)
+, _glProgramState(nullptr)
 , _orderOfArrival(0)
 , _running(false)
 , _visible(true)
@@ -155,7 +154,7 @@ Node::~Node()
     CC_SAFE_RELEASE_NULL(_userObject);
     
     // attributes
-    CC_SAFE_RELEASE_NULL(_shaderProgram);
+    CC_SAFE_RELEASE_NULL(_glProgramState);
 
     for (auto& child : _children)
     {
@@ -629,11 +628,33 @@ void Node::setUserObject(Ref *pUserObject)
     _userObject = pUserObject;
 }
 
-void Node::setShaderProgram(GLProgram *pShaderProgram)
+GLProgramState* Node::getGLProgramState()
 {
-    CC_SAFE_RETAIN(pShaderProgram);
-    CC_SAFE_RELEASE(_shaderProgram);
-    _shaderProgram = pShaderProgram;
+    return _glProgramState;
+}
+
+void Node::setGLProgramState(cocos2d::GLProgramState *glProgramState)
+{
+    if(glProgramState != _glProgramState) {
+        CC_SAFE_RELEASE(_glProgramState);
+        _glProgramState = glProgramState;
+        CC_SAFE_RETAIN(_glProgramState);
+    }
+}
+
+void Node::setGLProgram(GLProgram *glProgram)
+{
+    if (_glProgramState == nullptr || (_glProgramState && _glProgramState->getGLProgram() != glProgram))
+    {
+        CC_SAFE_RELEASE(_glProgramState);
+        _glProgramState = GLProgramState::getOrCreate(glProgram);
+        _glProgramState->retain();
+    }
+}
+
+GLProgram * Node::getGLProgram()
+{
+    return _glProgramState ? _glProgramState->getGLProgram() : nullptr;
 }
 
 Scene* Node::getScene()

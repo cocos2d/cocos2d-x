@@ -74,7 +74,7 @@ IMPLEMENT_CLASS_GUI_INFO(ScrollView)
 
 ScrollView::ScrollView():
 _innerContainer(nullptr),
-_direction(SCROLLVIEW_DIR_VERTICAL),
+_direction(Direction::VERTICAL),
 _touchBeganPoint(Vector2::ZERO),
 _touchMovedPoint(Vector2::ZERO),
 _touchEndedPoint(Vector2::ZERO),
@@ -109,7 +109,8 @@ _bounceDir(Vector2::ZERO),
 _bounceOriginalSpeed(0.0f),
 _inertiaScrollEnabled(true),
 _scrollViewEventListener(nullptr),
-_scrollViewEventSelector(nullptr)
+_scrollViewEventSelector(nullptr),
+_eventCallback(nullptr)
 {
 }
 
@@ -201,14 +202,14 @@ void ScrollView::setInnerContainerSize(const Size &size)
 
     switch (_direction)
     {
-        case SCROLLVIEW_DIR_VERTICAL:
+        case Direction::VERTICAL:
         {
             Size newInnerSize = _innerContainer->getSize();
             float offset = originalInnerSize.height - newInnerSize.height;
             scrollChildren(0.0f, offset);
             break;
         }
-        case SCROLLVIEW_DIR_HORIZONTAL:
+        case Direction::HORIZONTAL:
         {
             if (_innerContainer->getRightInParent() <= _size.width)
             {
@@ -218,7 +219,7 @@ void ScrollView::setInnerContainerSize(const Size &size)
             }
             break;
         }
-        case SCROLLVIEW_DIR_BOTH:
+        case Direction::BOTH:
         {
             Size newInnerSize = _innerContainer->getSize();
             float offsetY = originalInnerSize.height - newInnerSize.height;
@@ -306,7 +307,7 @@ Node* ScrollView::getChildByTag(int tag)
     return _innerContainer->getChildByTag(tag);
 }
     
-Widget* ScrollView::getChildByName(const char *name)
+Widget* ScrollView::getChildByName(const std::string& name)
 {
     return _innerContainer->getChildByName(name);
 }
@@ -546,19 +547,19 @@ void ScrollView::jumpToDestination(const Vector2 &des)
     float finalOffsetY = des.y;
     switch (_direction)
     {
-        case SCROLLVIEW_DIR_VERTICAL:
+        case Direction::VERTICAL:
             if (des.y <= 0)
             {
                 finalOffsetY = MAX(des.y, _size.height - _innerContainer->getSize().height);
             }
             break;
-        case SCROLLVIEW_DIR_HORIZONTAL:
+        case Direction::HORIZONTAL:
             if (des.x <= 0)
             {
                 finalOffsetX = MAX(des.x, _size.width - _innerContainer->getSize().width);
             }
             break;
-        case SCROLLVIEW_DIR_BOTH:
+        case Direction::BOTH:
             if (des.y <= 0)
             {
                 finalOffsetY = MAX(des.y, _size.height - _innerContainer->getSize().height);
@@ -720,7 +721,7 @@ bool ScrollView::checkCustomScrollDestination(float* touchOffsetX, float* touchO
     bool scrollenabled = true;
     switch (_direction)
     {
-        case SCROLLVIEW_DIR_VERTICAL: // vertical
+        case Direction::VERTICAL: // vertical
         {
             if (_autoScrollDir.y > 0)
             {
@@ -742,7 +743,7 @@ bool ScrollView::checkCustomScrollDestination(float* touchOffsetX, float* touchO
             }
             break;
         }
-        case SCROLLVIEW_DIR_HORIZONTAL: // horizontal
+        case Direction::HORIZONTAL: // horizontal
         {
             if (_autoScrollDir.x > 0)
             {
@@ -764,7 +765,7 @@ bool ScrollView::checkCustomScrollDestination(float* touchOffsetX, float* touchO
             }
             break;
         }
-        case SCROLLVIEW_DIR_BOTH:
+        case Direction::BOTH:
         {
             if (*touchOffsetX > 0.0f && *touchOffsetY > 0.0f) // up right
             {
@@ -876,7 +877,7 @@ bool ScrollView::scrollChildren(float touchOffsetX, float touchOffsetY)
     scrollingEvent();
     switch (_direction)
     {
-        case SCROLLVIEW_DIR_VERTICAL: // vertical
+        case Direction::VERTICAL: // vertical
         {
             float realOffset = touchOffsetY;
             if (_bounceEnabled)
@@ -916,7 +917,7 @@ bool ScrollView::scrollChildren(float touchOffsetX, float touchOffsetY)
             moveChildren(0.0f, realOffset);
             break;
         }
-        case SCROLLVIEW_DIR_HORIZONTAL: // horizontal
+        case Direction::HORIZONTAL: // horizontal
         {
             float realOffset = touchOffsetX;
             if (_bounceEnabled)
@@ -956,7 +957,7 @@ bool ScrollView::scrollChildren(float touchOffsetX, float touchOffsetY)
             moveChildren(realOffset, 0.0f);
             break;
         }
-        case SCROLLVIEW_DIR_BOTH:
+        case Direction::BOTH:
         {
             float realOffsetX = touchOffsetX;
             float realOffsetY = touchOffsetY;
@@ -1213,7 +1214,7 @@ void ScrollView::scrollToRight(float time, bool attenuated)
 
 void ScrollView::scrollToTopLeft(float time, bool attenuated)
 {
-    if (_direction != SCROLLVIEW_DIR_BOTH)
+    if (_direction != Direction::BOTH)
     {
         CCLOG("Scroll diretion is not both!");
         return;
@@ -1223,7 +1224,7 @@ void ScrollView::scrollToTopLeft(float time, bool attenuated)
 
 void ScrollView::scrollToTopRight(float time, bool attenuated)
 {
-    if (_direction != SCROLLVIEW_DIR_BOTH)
+    if (_direction != Direction::BOTH)
     {
         CCLOG("Scroll diretion is not both!");
         return;
@@ -1233,7 +1234,7 @@ void ScrollView::scrollToTopRight(float time, bool attenuated)
 
 void ScrollView::scrollToBottomLeft(float time, bool attenuated)
 {
-    if (_direction != SCROLLVIEW_DIR_BOTH)
+    if (_direction != Direction::BOTH)
     {
         CCLOG("Scroll diretion is not both!");
         return;
@@ -1243,7 +1244,7 @@ void ScrollView::scrollToBottomLeft(float time, bool attenuated)
 
 void ScrollView::scrollToBottomRight(float time, bool attenuated)
 {
-    if (_direction != SCROLLVIEW_DIR_BOTH)
+    if (_direction != Direction::BOTH)
     {
         CCLOG("Scroll diretion is not both!");
         return;
@@ -1266,7 +1267,7 @@ void ScrollView::scrollToPercentHorizontal(float percent, float time, bool atten
 
 void ScrollView::scrollToPercentBothDirection(const Vector2& percent, float time, bool attenuated)
 {
-    if (_direction != SCROLLVIEW_DIR_BOTH)
+    if (_direction != Direction::BOTH)
     {
         return;
     }
@@ -1298,7 +1299,7 @@ void ScrollView::jumpToRight()
 
 void ScrollView::jumpToTopLeft()
 {
-    if (_direction != SCROLLVIEW_DIR_BOTH)
+    if (_direction != Direction::BOTH)
     {
         CCLOG("Scroll diretion is not both!");
         return;
@@ -1308,7 +1309,7 @@ void ScrollView::jumpToTopLeft()
 
 void ScrollView::jumpToTopRight()
 {
-    if (_direction != SCROLLVIEW_DIR_BOTH)
+    if (_direction != Direction::BOTH)
     {
         CCLOG("Scroll diretion is not both!");
         return;
@@ -1318,7 +1319,7 @@ void ScrollView::jumpToTopRight()
 
 void ScrollView::jumpToBottomLeft()
 {
-    if (_direction != SCROLLVIEW_DIR_BOTH)
+    if (_direction != Direction::BOTH)
     {
         CCLOG("Scroll diretion is not both!");
         return;
@@ -1328,7 +1329,7 @@ void ScrollView::jumpToBottomLeft()
 
 void ScrollView::jumpToBottomRight()
 {
-    if (_direction != SCROLLVIEW_DIR_BOTH)
+    if (_direction != Direction::BOTH)
     {
         CCLOG("Scroll diretion is not both!");
         return;
@@ -1351,7 +1352,7 @@ void ScrollView::jumpToPercentHorizontal(float percent)
 
 void ScrollView::jumpToPercentBothDirection(const Vector2& percent)
 {
-    if (_direction != SCROLLVIEW_DIR_BOTH)
+    if (_direction != Direction::BOTH)
     {
         return;
     }
@@ -1386,7 +1387,7 @@ void ScrollView::endRecordSlidAction()
         Vector2 dir;
         switch (_direction)
         {
-            case SCROLLVIEW_DIR_VERTICAL:
+            case Direction::VERTICAL:
                 totalDis = _touchEndedPoint.y - _touchBeganPoint.y;
                 if (totalDis < 0.0f)
                 {
@@ -1397,7 +1398,7 @@ void ScrollView::endRecordSlidAction()
                     dir = SCROLLDIR_UP;
                 }
                 break;
-            case SCROLLVIEW_DIR_HORIZONTAL:
+            case Direction::HORIZONTAL:
                 totalDis = _touchEndedPoint.x - _touchBeganPoint.x;
                 if (totalDis < 0.0f)
                 {
@@ -1408,7 +1409,7 @@ void ScrollView::endRecordSlidAction()
                     dir = SCROLLDIR_RIGHT;
                 }
                 break;
-            case SCROLLVIEW_DIR_BOTH:
+            case Direction::BOTH:
             {
                 Vector2 subVector = _touchEndedPoint - _touchBeganPoint;
                 totalDis = subVector.getLength();
@@ -1439,17 +1440,17 @@ void ScrollView::handleMoveLogic(const Vector2 &touchPoint)
     _touchMovingPoint = _touchMovedPoint;
     switch (_direction)
     {
-        case SCROLLVIEW_DIR_VERTICAL: // vertical
+        case Direction::VERTICAL: // vertical
         {
             scrollChildren(0.0f, delta.y);
             break;
         }
-        case SCROLLVIEW_DIR_HORIZONTAL: // horizontal
+        case Direction::HORIZONTAL: // horizontal
         {
             scrollChildren(delta.x, 0.0f);
             break;
         }
-        case SCROLLVIEW_DIR_BOTH: // both
+        case Direction::BOTH: // both
         {
             scrollChildren(delta.x, delta.y);
             break;
@@ -1555,6 +1556,9 @@ void ScrollView::scrollToTopEvent()
     {
         (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_TOP);
     }
+    if (_eventCallback) {
+        _eventCallback(this,EventType::SCROLL_TO_TOP);
+    }
 }
 
 void ScrollView::scrollToBottomEvent()
@@ -1562,6 +1566,9 @@ void ScrollView::scrollToBottomEvent()
     if (_scrollViewEventListener && _scrollViewEventSelector)
     {
         (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_BOTTOM);
+    }
+    if (_eventCallback) {
+        _eventCallback(this,EventType::SCROLL_TO_BOTTOM);
     }
 }
 
@@ -1571,6 +1578,9 @@ void ScrollView::scrollToLeftEvent()
     {
         (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_LEFT);
     }
+    if (_eventCallback) {
+        _eventCallback(this,EventType::SCROLL_TO_LEFT);
+    }
 }
 
 void ScrollView::scrollToRightEvent()
@@ -1578,6 +1588,9 @@ void ScrollView::scrollToRightEvent()
     if (_scrollViewEventListener && _scrollViewEventSelector)
     {
         (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_RIGHT);
+    }
+    if (_eventCallback) {
+        _eventCallback(this,EventType::SCROLL_TO_RIGHT);
     }
 }
 
@@ -1587,6 +1600,9 @@ void ScrollView::scrollingEvent()
     {
         (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_SCROLLING);
     }
+    if (_eventCallback) {
+        _eventCallback(this,EventType::SCROLLING);
+    }
 }
 
 void ScrollView::bounceTopEvent()
@@ -1594,6 +1610,9 @@ void ScrollView::bounceTopEvent()
     if (_scrollViewEventListener && _scrollViewEventSelector)
     {
         (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_TOP);
+    }
+    if (_eventCallback) {
+        _eventCallback(this,EventType::BOUNCE_TOP);
     }
 }
 
@@ -1603,6 +1622,9 @@ void ScrollView::bounceBottomEvent()
     {
         (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_BOTTOM);
     }
+    if (_eventCallback) {
+        _eventCallback(this,EventType::BOUNCE_BOTTOM);
+    }
 }
 
 void ScrollView::bounceLeftEvent()
@@ -1610,6 +1632,9 @@ void ScrollView::bounceLeftEvent()
     if (_scrollViewEventListener && _scrollViewEventSelector)
     {
         (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_LEFT);
+    }
+    if (_eventCallback) {
+        _eventCallback(this,EventType::BOUNCE_LEFT);
     }
 }
 
@@ -1619,6 +1644,9 @@ void ScrollView::bounceRightEvent()
     {
         (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_RIGHT);
     }
+    if (_eventCallback) {
+        _eventCallback(this,EventType::BOUNCE_RIGHT);
+    }
 }
 
 void ScrollView::addEventListenerScrollView(Ref *target, SEL_ScrollViewEvent selector)
@@ -1626,13 +1654,18 @@ void ScrollView::addEventListenerScrollView(Ref *target, SEL_ScrollViewEvent sel
     _scrollViewEventListener = target;
     _scrollViewEventSelector = selector;
 }
+    
+void ScrollView::addEventListener(ccScrollViewCallback callback)
+{
+    _eventCallback = callback;
+}
 
-void ScrollView::setDirection(SCROLLVIEW_DIR dir)
+void ScrollView::setDirection(Direction dir)
 {
     _direction = dir;
 }
 
-SCROLLVIEW_DIR ScrollView::getDirection()
+ScrollView::Direction ScrollView::getDirection()
 {
     return _direction;
 }
@@ -1662,12 +1695,12 @@ Layout* ScrollView::getInnerContainer()
     return _innerContainer;
 }
 
-void ScrollView::setLayoutType(LayoutType type)
+void ScrollView::setLayoutType(Type type)
 {
     _innerContainer->setLayoutType(type);
 }
 
-LayoutType ScrollView::getLayoutType() const
+Layout::Type ScrollView::getLayoutType() const
 {
     return _innerContainer->getLayoutType();
 }
