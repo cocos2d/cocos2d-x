@@ -14,19 +14,19 @@ Sprite3DDataCache* Sprite3DDataCache::_cacheInstance = nullptr;
 
 Sprite3DDataCache::Sprite3DDataCache()
 {
-// #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-//     // listen the event when app go to foreground
-//     _backToForegroundlistener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, CC_CALLBACK_1(MeshCache::listenBackToForeground, this));
-//     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundlistener, -1);
-// #endif
+ #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+     // listen the event when app go to foreground
+     _backToForegroundlistener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, CC_CALLBACK_1(MeshCache::listenBackToForeground, this));
+     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundlistener, -1);
+ #endif
 }
 
 Sprite3DDataCache::~Sprite3DDataCache()
 {
     removeAllSprite3DData();
-// #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-//     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundlistener);
-// #endif
+ #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundlistener);
+ #endif
 }
 
 Sprite3DDataCache* Sprite3DDataCache::getInstance()
@@ -106,17 +106,15 @@ void Sprite3DDataCache::removeUnusedSprite3DData()
     }
 }
 
-// #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-// void MeshCache::listenBackToForeground(EventCustom* event)
-// {
-//     for (auto iter = _cachedMeshes.begin(); iter != _cachedMeshes.end(); ++iter)
-//     {
-//         Mesh* mesh = iter->second;
-//         mesh->restore();
-//     }
-    
-//     VertexDeclaration::restoreAllVertexDecl();
-// }
-// #endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+void Sprite3DDataCache::listenBackToForeground(EventCustom* event)
+{
+    for (auto iter = _sprite3DDatas.begin(); iter != _sprite3DDatas.end(); ++iter)
+    {
+        auto mesh = iter->second.mesh;
+        mesh->restore();
+    }
+}
+#endif
 
 NS_CC_END

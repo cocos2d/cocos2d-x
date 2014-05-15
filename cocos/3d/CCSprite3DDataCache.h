@@ -37,9 +37,9 @@ public:
     void removeUnusedSprite3DData();
 
     
-// #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-//     void listenBackToForeground(EventCustom* event);
-// #endif
+ #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+     void listenBackToForeground(EventCustom* event);
+ #endif
     
 protected:
     Sprite3DDataCache();
@@ -50,9 +50,9 @@ protected:
 
     std::unordered_map<std::string, Sprite3DData> _sprite3DDatas; //sprites 
     
-// #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-//     EventListenerCustom* _backToForegroundlistener;
-// #endif
+ #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+     EventListenerCustom* _backToForegroundlistener;
+ #endif
 };
 
 
