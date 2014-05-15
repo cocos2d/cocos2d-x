@@ -106,7 +106,7 @@ bool Sprite3DOutlineEffect::initEffect(Sprite3D* sprite)
 //    glCullFace(GL_BACK);
 //}
 
-void Sprite3DOutlineEffect::setOutlineColor(const Vector3& color)
+void Sprite3DOutlineEffect::setOutlineColor(const Vec3& color)
 {
     if (_outlineColor != color)
     {
@@ -124,7 +124,7 @@ void Sprite3DOutlineEffect::setOutlineWidth(float width)
     }
 }
 
-void Sprite3DOutlineEffect::drawSpriteEffect(const Matrix &transform)
+void Sprite3DOutlineEffect::drawSpriteEffect(const Mat4 &transform)
 {
     if (_hasNormal)
     {
@@ -133,7 +133,7 @@ void Sprite3DOutlineEffect::drawSpriteEffect(const Matrix &transform)
         Color4F color(_sprite->getDisplayedColor());
         color.a = _sprite->getDisplayedOpacity() / 255.0f;
         
-        _glProgramState->setUniformVec4("u_color", Vector4(color.r, color.g, color.b, color.a));
+        _glProgramState->setUniformVec4("u_color", Vec4(color.r, color.g, color.b, color.a));
         
         auto mesh = _sprite->getMesh();
         glBindBuffer(GL_ARRAY_BUFFER, mesh->getVertexBuffer());

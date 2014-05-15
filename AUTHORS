@@ -673,6 +673,7 @@ Developers:
     xhcnb
         Device::setAccelerometerEnabled needs to be invoked before adding ACC listener.
         Fixed a bug that it will get wrong custom properties when use different count custom properties in CocosBuilder.
+        Correct TotalTime of ActionObject
         
     bopohaa
         Fixed a bug that Webp test crashes.
@@ -849,6 +850,9 @@ Developers:
         
     myourys
         Make cpp template support Eclipse c++ project
+        
+    NatWeiss
+        Fix compilation error using arch i386
     
 Retired Core Developers:
     WenSheng Yang

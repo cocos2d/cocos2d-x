@@ -146,8 +146,8 @@ private:
 	void UpdateWindowSize();
     void UpdateOrientationMatrix();
 
-    cocos2d::Vector2 TransformToOrientation(Windows::Foundation::Point point);
- 	cocos2d::Vector2  GetPoint(Windows::UI::Core::PointerEventArgs^ args);
+    cocos2d::Vec2 TransformToOrientation(Windows::Foundation::Point point);
+ 	cocos2d::Vec2  GetPoint(Windows::UI::Core::PointerEventArgs^ args);
        
     Windows::Foundation::Rect m_windowBounds;
 	Windows::Foundation::EventRegistrationToken m_eventToken;

@@ -96,7 +96,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void updateQuadWithParticle(tParticle* particle, const Vector2& newPosition) override;
+    virtual void updateQuadWithParticle(tParticle* particle, const Vec2& newPosition) override;
     /**
      * @js NA
      * @lua NA
@@ -106,7 +106,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
 
     /**
      * @js NA

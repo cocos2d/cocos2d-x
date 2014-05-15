@@ -238,7 +238,7 @@ void WidgetPropertiesReader::setAnchorPointForWidget(cocos2d::ui::Widget *widget
     }
     
     if (isAnchorPointXExists || isAnchorPointYExists) {
-        widget->setAnchorPoint(Vector2(anchorPointXInFile, anchorPointYInFile));
+        widget->setAnchorPoint(Vec2(anchorPointXInFile, anchorPointYInFile));
     }
 }
 
@@ -396,7 +396,7 @@ void WidgetPropertiesReader0250::setPropsForWidgetFromJsonDictionary(Widget*widg
     widget->setName(widgetName);
     float x = DICTOOL->getFloatValue_json(options, "x");
     float y = DICTOOL->getFloatValue_json(options, "y");
-    widget->setPosition(Vector2(x,y));
+    widget->setPosition(Vec2(x,y));
     bool sx = DICTOOL->checkObjectExist_json(options, "scaleX");
     if (sx)
     {
@@ -711,7 +711,7 @@ void WidgetPropertiesReader0250::setPropsForLayoutFromJsonDictionary(Widget*widg
     
     float bgcv1 = DICTOOL->getFloatValue_json(options, "vectorX");
     float bgcv2 = DICTOOL->getFloatValue_json(options, "vectorY");
-    panel->setBackGroundColorVector(Vector2(bgcv1, bgcv2));
+    panel->setBackGroundColorVector(Vec2(bgcv1, bgcv2));
     
     int co = DICTOOL->getIntValue_json(options, "bgColorOpacity");
     
@@ -1135,9 +1135,9 @@ Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Va
                     {
                         if (child->getPositionType() == ui::Widget::PositionType::PERCENT)
                         {
-                            child->setPositionPercent(Vector2(child->getPositionPercent().x + widget->getAnchorPoint().x, child->getPositionPercent().y + widget->getAnchorPoint().y));
+                            child->setPositionPercent(Vec2(child->getPositionPercent().x + widget->getAnchorPoint().x, child->getPositionPercent().y + widget->getAnchorPoint().y));
                         }
-                        child->setPosition(Vector2(child->getPositionX() + widget->getAnchorPointInPoints().x, child->getPositionY() + widget->getAnchorPointInPoints().y));
+                        child->setPosition(Vec2(child->getPositionX() + widget->getAnchorPointInPoints().x, child->getPositionY() + widget->getAnchorPointInPoints().y));
                     }
                     widget->addChild(child);
                 }
@@ -1158,8 +1158,8 @@ void WidgetPropertiesReader0300::setPropsForWidgetFromJsonDictionary(Widget*widg
     widget->setSizeType((Widget::SizeType)DICTOOL->getIntValue_json(options, "sizeType"));
     widget->setPositionType((Widget::PositionType)DICTOOL->getIntValue_json(options, "positionType"));
     
-    widget->setSizePercent(Vector2(DICTOOL->getFloatValue_json(options, "sizePercentX"), DICTOOL->getFloatValue_json(options, "sizePercentY")));
-    widget->setPositionPercent(Vector2(DICTOOL->getFloatValue_json(options, "positionPercentX"), DICTOOL->getFloatValue_json(options, "positionPercentY")));
+    widget->setSizePercent(Vec2(DICTOOL->getFloatValue_json(options, "sizePercentX"), DICTOOL->getFloatValue_json(options, "sizePercentY")));
+    widget->setPositionPercent(Vec2(DICTOOL->getFloatValue_json(options, "positionPercentX"), DICTOOL->getFloatValue_json(options, "positionPercentY")));
     
     float w = DICTOOL->getFloatValue_json(options, "width");
     float h = DICTOOL->getFloatValue_json(options, "height");
@@ -1173,7 +1173,7 @@ void WidgetPropertiesReader0300::setPropsForWidgetFromJsonDictionary(Widget*widg
     widget->setName(widgetName);
     float x = DICTOOL->getFloatValue_json(options, "x");
     float y = DICTOOL->getFloatValue_json(options, "y");
-    widget->setPosition(Vector2(x,y));
+    widget->setPosition(Vec2(x,y));
     bool sx = DICTOOL->checkObjectExist_json(options, "scaleX");
     if (sx)
     {
@@ -1675,7 +1675,7 @@ void WidgetPropertiesReader0300::setPropsForLayoutFromJsonDictionary(Widget*widg
     
     float bgcv1 = DICTOOL->getFloatValue_json(options, "vectorX");
     float bgcv2 = DICTOOL->getFloatValue_json(options, "vectorY");
-    panel->setBackGroundColorVector(Vector2(bgcv1, bgcv2));
+    panel->setBackGroundColorVector(Vec2(bgcv1, bgcv2));
     
     int co = DICTOOL->getIntValue_json(options, "bgColorOpacity");
     

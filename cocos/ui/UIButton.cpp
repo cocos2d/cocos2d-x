@@ -113,7 +113,6 @@ bool Button::init(const std::string &normalImage,
             break;
         }
         
-        setTouchEnabled(true);
         this->loadTextures(normalImage, selectedImage, disableImage,texType);
     } while (0);
     return ret;
@@ -135,7 +134,7 @@ void Button::initRenderer()
     _buttonClickedRenderer = Sprite::create();
     _buttonDisableRenderer = Sprite::create();
     _titleRenderer = Label::create();
-    _titleRenderer->setAnchorPoint(Vector2::ANCHOR_MIDDLE);
+    _titleRenderer->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
 
     addProtectedChild(_buttonNormalRenderer, NORMAL_RENDERER_Z, -1);
     addProtectedChild(_buttonClickedRenderer, PRESSED_RENDERER_Z, -1);
@@ -520,7 +519,7 @@ void Button::updateFlippedY()
     
 void Button::updateTitleLocation()
 {
-    _titleRenderer->setPosition(Vector2(_contentSize.width * 0.5f, _contentSize.height * 0.5f));
+    _titleRenderer->setPosition(Vec2(_contentSize.width * 0.5f, _contentSize.height * 0.5f));
 }
 
 void Button::onSizeChanged()

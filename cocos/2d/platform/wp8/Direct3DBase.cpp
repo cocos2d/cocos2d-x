@@ -330,9 +330,9 @@ void Direct3DBase::ComputeOrientationMatrices()
     }
 }
 
-Vector2 Direct3DBase::TransformToOrientation(Vector2 point, bool dipsToPixels)
+Vec2 Direct3DBase::TransformToOrientation(Vec2 point, bool dipsToPixels)
 {
-    Vector2 returnValue;
+    Vec2 returnValue;
 
     switch (m_orientation)
     {
@@ -340,20 +340,20 @@ Vector2 Direct3DBase::TransformToOrientation(Vector2 point, bool dipsToPixels)
         returnValue = point;
         break;
     case DisplayOrientations::Landscape:
-        returnValue = Vector2(point.Y, m_windowBounds.Width - point.X);
+        returnValue = Vec2(point.Y, m_windowBounds.Width - point.X);
         break;
     case DisplayOrientations::PortraitFlipped:
-        returnValue = Vector2(m_windowBounds.Width - point.X, m_windowBounds.Height - point.Y);
+        returnValue = Vec2(m_windowBounds.Width - point.X, m_windowBounds.Height - point.Y);
         break;
     case DisplayOrientations::LandscapeFlipped:
-        returnValue = Vector2(m_windowBounds.Height -point.Y, point.X);
+        returnValue = Vec2(m_windowBounds.Height -point.Y, point.X);
         break;
     default:
         throw ref new Platform::FailureException();
         break;
     }
 
-    return dipsToPixels ? Vector2(ConvertDipsToPixels(returnValue.X),
+    return dipsToPixels ? Vec2(ConvertDipsToPixels(returnValue.X),
                                 ConvertDipsToPixels(returnValue.Y)) 
                         : returnValue;
 }

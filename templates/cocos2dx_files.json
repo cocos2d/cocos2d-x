@@ -3474,9 +3474,7 @@
         "plugin/tools/toolsForPublish/checkEnvironment.sh", 
         "plugin/tools/toolsForPublish/genPrebuildMK.sh", 
         "plugin/tools/toolsForPublish/publishPlugin.sh", 
-        "tools/particle/convert_YCoordFlipped.py", 
-        "v3-deps-1.zip", 
-        "v3-lua-runtime-1.zip"
+        "tools/particle/convert_YCoordFlipped.py"
     ], 
     "lua": [
         "cocos/scripting/lua-bindings/Android.mk", 

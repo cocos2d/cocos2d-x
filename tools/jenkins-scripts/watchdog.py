@@ -18,17 +18,14 @@ def build_time(_job,_threshold):
     buildnu = _job.get_last_buildnumber()
     print "buildnumber:#",buildnu
     #get nowtime
-    nowtime = time.strftime('%M',time.localtime(time.time()))
-    #print 'nowtime:',nowtime
+    nowtime = int(time.time())
+    print 'nowtime:', time.ctime(nowtime)
     #get build start time
-    timeb = build.get_timestamp()
-    #print 'buildtime:',str(timeb)[14:16]
-    buildtime = int(str(timeb)[14:16])
-    subtime = 0
-    if int(nowtime) >= buildtime:
-        subtime = int(nowtime)-buildtime
-    else:
-        subtime = 60-buildtime+int(nowtime)
+    timestamp = build._poll()['timestamp']
+    buildtime = int(timestamp)/1000
+    print 'buildtime:', time.ctime(buildtime)
+    subtime = (nowtime - buildtime)/60
+    print 'subtime:', subtime, _threshold
     if subtime > _threshold:
         #print 'subtime',subtime
         #kill dead buid

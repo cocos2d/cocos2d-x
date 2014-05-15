@@ -190,7 +190,7 @@ void GLView::OnPointerPressed(CoreWindow^ sender, PointerEventArgs^ args)
 void GLView::OnPointerPressed(PointerEventArgs^ args)
 {
     int id = args->CurrentPoint->PointerId;
-    Vector2 pt = GetPoint(args);
+    Vec2 pt = GetPoint(args);
     handleTouchesBegin(1, &id, &pt.x, &pt.y);
 }
 
@@ -199,7 +199,7 @@ void GLView::OnPointerWheelChanged(CoreWindow^ sender, PointerEventArgs^ args)
 {
     float direction = (float)args->CurrentPoint->Properties->MouseWheelDelta;
     int id = 0;
-    Vector2 p(0.0f,0.0f);
+    Vec2 p(0.0f,0.0f);
     handleTouchesBegin(1, &id, &p.x, &p.y);
     p.y += direction;
     handleTouchesMove(1, &id, &p.x, &p.y);
@@ -229,7 +229,7 @@ void GLView::OnPointerMoved( PointerEventArgs^ args)
 		if (m_lastPointValid)
 		{
 			int id = args->CurrentPoint->PointerId;
-			Vector2 p = GetPoint(args);
+			Vec2 p = GetPoint(args);
 			handleTouchesMove(1, &id, &p.x, &p.y);
 		}
 		m_lastPoint = currentPoint->Position;
@@ -249,7 +249,7 @@ void GLView::OnPointerReleased(CoreWindow^ sender, PointerEventArgs^ args)
 void GLView::OnPointerReleased(PointerEventArgs^ args)
 {
     int id = args->CurrentPoint->PointerId;
-    Vector2 pt = GetPoint(args);
+    Vec2 pt = GetPoint(args);
     handleTouchesEnd(1, &id, &pt.x, &pt.y);
 }
 
@@ -429,9 +429,9 @@ void GLView::UpdateOrientationMatrix()
 	}
 }
 
-cocos2d::Vector2 GLView::TransformToOrientation(Windows::Foundation::Point p)
+cocos2d::Vec2 GLView::TransformToOrientation(Windows::Foundation::Point p)
 {
-    cocos2d::Vector2 returnValue;
+    cocos2d::Vec2 returnValue;
 
     float x = p.X;
     float y = p.Y;  
@@ -440,16 +440,16 @@ cocos2d::Vector2 GLView::TransformToOrientation(Windows::Foundation::Point p)
     {
         case DisplayOrientations::Portrait:
         default:
-            returnValue = Vector2(x, y);
+            returnValue = Vec2(x, y);
             break;
         case DisplayOrientations::Landscape:
-            returnValue = Vector2(y, m_width - x);
+            returnValue = Vec2(y, m_width - x);
             break;
         case DisplayOrientations::PortraitFlipped:
-            returnValue = Vector2(m_width - x, m_height - y);
+            returnValue = Vec2(m_width - x, m_height - y);
             break;
         case DisplayOrientations::LandscapeFlipped:
-            returnValue = Vector2(m_height - y, x);
+            returnValue = Vec2(m_height - y, x);
             break;
     }
 
@@ -464,7 +464,7 @@ cocos2d::Vector2 GLView::TransformToOrientation(Windows::Foundation::Point p)
     return returnValue;
 }
 
-Vector2 GLView::GetPoint(PointerEventArgs^ args) {
+Vec2 GLView::GetPoint(PointerEventArgs^ args) {
 
 	return TransformToOrientation(args->CurrentPoint->Position);
 

@@ -125,7 +125,7 @@ void Skeleton::update (float deltaTime) {
 	spSkeleton_update(skeleton, deltaTime * timeScale);
 }
 
-void Skeleton::draw(cocos2d::Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void Skeleton::draw(cocos2d::Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
 
     _customCommand.init(_globalZOrder);
@@ -133,7 +133,7 @@ void Skeleton::draw(cocos2d::Renderer *renderer, const Matrix &transform, bool t
     renderer->addCommand(&_customCommand);
 }
     
-void Skeleton::onDraw(const Matrix &transform, bool transformUpdated)
+void Skeleton::onDraw(const Mat4 &transform, bool transformUpdated)
 {
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
@@ -202,17 +202,17 @@ void Skeleton::onDraw(const Matrix &transform, bool transformUpdated)
             // Slots.
             DrawPrimitives::setDrawColor4B(0, 0, 255, 255);
             glLineWidth(1);
-            Vector2 points[4];
+            Vec2 points[4];
             V3F_C4B_T2F_Quad tmpQuad;
             for (int i = 0, n = skeleton->slotCount; i < n; i++) {
                 spSlot* slot = skeleton->drawOrder[i];
                 if (!slot->attachment || slot->attachment->type != ATTACHMENT_REGION) continue;
                 spRegionAttachment* attachment = (spRegionAttachment*)slot->attachment;
                 spRegionAttachment_updateQuad(attachment, slot, &tmpQuad);
-                points[0] = Vector2(tmpQuad.bl.vertices.x, tmpQuad.bl.vertices.y);
-                points[1] = Vector2(tmpQuad.br.vertices.x, tmpQuad.br.vertices.y);
-                points[2] = Vector2(tmpQuad.tr.vertices.x, tmpQuad.tr.vertices.y);
-                points[3] = Vector2(tmpQuad.tl.vertices.x, tmpQuad.tl.vertices.y);
+                points[0] = Vec2(tmpQuad.bl.vertices.x, tmpQuad.bl.vertices.y);
+                points[1] = Vec2(tmpQuad.br.vertices.x, tmpQuad.br.vertices.y);
+                points[2] = Vec2(tmpQuad.tr.vertices.x, tmpQuad.tr.vertices.y);
+                points[3] = Vec2(tmpQuad.tl.vertices.x, tmpQuad.tl.vertices.y);
                 DrawPrimitives::drawPoly(points, 4, true);
             }
         }
@@ -224,14 +224,14 @@ void Skeleton::onDraw(const Matrix &transform, bool transformUpdated)
                 spBone *bone = skeleton->bones[i];
                 float x = bone->data->length * bone->m00 + bone->worldX;
                 float y = bone->data->length * bone->m10 + bone->worldY;
-                DrawPrimitives::drawLine(Vector2(bone->worldX, bone->worldY), Vector2(x, y));
+                DrawPrimitives::drawLine(Vec2(bone->worldX, bone->worldY), Vec2(x, y));
             }
             // Bone origins.
             DrawPrimitives::setPointSize(4);
             DrawPrimitives::setDrawColor4B(0, 0, 255, 255); // Root bone is blue.
             for (int i = 0, n = skeleton->boneCount; i < n; i++) {
                 spBone *bone = skeleton->bones[i];
-                DrawPrimitives::drawPoint(Vector2(bone->worldX, bone->worldY));
+                DrawPrimitives::drawPoint(Vec2(bone->worldX, bone->worldY));
                 if (i == 0) DrawPrimitives::setDrawColor4B(0, 255, 0, 255);
             }
         }
@@ -271,7 +271,7 @@ Rect Skeleton::getBoundingBox () const {
 		maxX = max(maxX, vertices[VERTEX_X3] * scaleX);
 		maxY = max(maxY, vertices[VERTEX_Y3] * scaleY);
 	}
-	Vector2 position = getPosition();
+	Vec2 position = getPosition();
 	return Rect(position.x + minX, position.y + minY, maxX - minX, maxY - minY);
 }
 

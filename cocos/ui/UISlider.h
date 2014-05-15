@@ -199,7 +199,7 @@ public:
     virtual void ignoreContentAdaptWithSize(bool ignore) override;
     
     //override the widget's hitTest function to perfom its own
-    virtual bool hitTest(const Vector2 &pt) override;
+    virtual bool hitTest(const Vec2 &pt) override;
     /**
      * Returns the "class name" of widget.
      */

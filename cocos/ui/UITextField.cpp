@@ -393,7 +393,6 @@ TextField* TextField::create(const std::string &placeholder, const std::string &
     TextField* widget = new TextField();
     if (widget && widget->init())
     {
-        widget->setTouchEnabled(true);
         widget->setPlaceHolder(placeholder);
         widget->setFontName(fontName);
         widget->setFontSize(fontSize);
@@ -437,11 +436,11 @@ void TextField::setTouchAreaEnabled(bool enable)
     _useTouchArea = enable;
 }
     
-bool TextField::hitTest(const Vector2 &pt)
+bool TextField::hitTest(const Vec2 &pt)
 {
     if (_useTouchArea)
     {
-        Vector2 nsp = convertToNodeSpace(pt);
+        Vec2 nsp = convertToNodeSpace(pt);
         Rect bb = Rect(-_touchWidth * _anchorPoint.x, -_touchHeight * _anchorPoint.y, _touchWidth, _touchHeight);
         if (nsp.x >= bb.origin.x && nsp.x <= bb.origin.x + bb.size.width && nsp.y >= bb.origin.y && nsp.y <= bb.origin.y + bb.size.height)
         {

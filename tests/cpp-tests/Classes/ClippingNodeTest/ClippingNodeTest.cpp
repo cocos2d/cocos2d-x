@@ -75,8 +75,8 @@ bool BaseClippingNodeTest::init()
 	if (BaseTest::init()) {
         
         auto background = Sprite::create(s_back3);
-        background->setAnchorPoint( Vector2::ZERO );
-        background->setPosition( Vector2::ZERO );
+        background->setAnchorPoint( Vec2::ZERO );
+        background->setPosition( Vec2::ZERO );
         this->addChild(background, -1);
 
         this->setup();
@@ -148,17 +148,17 @@ void BasicTest::setup()
     
     auto stencil = this->stencil();
     stencil->setTag( kTagStencilNode );
-    stencil->setPosition( Vector2(50, 50) );
+    stencil->setPosition( Vec2(50, 50) );
     
     auto clipper = this->clipper();
     clipper->setTag( kTagClipperNode );
-    clipper->setAnchorPoint(Vector2(0.5, 0.5));
-    clipper->setPosition( Vector2(s.width / 2 - 50, s.height / 2 - 50) );
+    clipper->setAnchorPoint(Vec2(0.5, 0.5));
+    clipper->setPosition( Vec2(s.width / 2 - 50, s.height / 2 - 50) );
     clipper->setStencil(stencil);
     this->addChild(clipper);
     
     auto content = this->content();
-    content->setPosition( Vector2(50, 50) );
+    content->setPosition( Vec2(50, 50) );
     clipper->addChild(content);
 }
 
@@ -176,10 +176,10 @@ Action* BasicTest::actionScale()
 DrawNode* BasicTest::shape()
 {
     auto shape = DrawNode::create();
-    static Vector2 triangle[3];
-    triangle[0] = Vector2(-100, -100);
-    triangle[1] = Vector2(100, -100);
-    triangle[2] = Vector2(0, 100);
+    static Vec2 triangle[3];
+    triangle[0] = Vec2(-100, -100);
+    triangle[1] = Vec2(100, -100);
+    triangle[2] = Vec2(0, 100);
 
     static Color4F green(0, 1, 0, 1);
     shape->drawPolygon(triangle, 3, green, 0, green);
@@ -351,16 +351,16 @@ void NestedTest::setup()
 
         auto clipper = ClippingNode::create();
         clipper->setContentSize(Size(size, size));
-        clipper->setAnchorPoint(Vector2(0.5, 0.5));
-        clipper->setPosition( Vector2(parent->getContentSize().width / 2, parent->getContentSize().height / 2) );
+        clipper->setAnchorPoint(Vec2(0.5, 0.5));
+        clipper->setPosition( Vec2(parent->getContentSize().width / 2, parent->getContentSize().height / 2) );
         clipper->setAlphaThreshold(0.05f);
         clipper->runAction(RepeatForever::create(RotateBy::create(i % 3 ? 1.33 : 1.66, i % 2 ? 90 : -90)));
         parent->addChild(clipper);
         
         auto stencil = Sprite::create(s_pathGrossini);
         stencil->setScale( 2.5 - (i * (2.5 / depth)) );
-        stencil->setAnchorPoint( Vector2(0.5, 0.5) );
-        stencil->setPosition( Vector2(clipper->getContentSize().width / 2, clipper->getContentSize().height / 2) );
+        stencil->setAnchorPoint( Vec2(0.5, 0.5) );
+        stencil->setPosition( Vec2(clipper->getContentSize().width / 2, clipper->getContentSize().height / 2) );
         stencil->setVisible(false);
         stencil->runAction(Sequence::createWithTwoActions(DelayTime::create(i), Show::create()));
         clipper->setStencil(stencil);
@@ -394,7 +394,7 @@ std::string HoleDemo::subtitle() const
 void HoleDemo::setup()
 {
     auto target = Sprite::create(s_pathBlock);
-    target->setAnchorPoint(Vector2::ZERO);
+    target->setAnchorPoint(Vec2::ZERO);
     target->setScale(3);
     
     _outerClipper = ClippingNode::create();
@@ -403,8 +403,8 @@ void HoleDemo::setup()
     tranform = AffineTransformScale(tranform, target->getScale(), target->getScale());
 
     _outerClipper->setContentSize( SizeApplyAffineTransform(target->getContentSize(), tranform));
-    _outerClipper->setAnchorPoint( Vector2(0.5, 0.5) );
-    _outerClipper->setPosition(Vector2(this->getContentSize()) * 0.5f);
+    _outerClipper->setAnchorPoint( Vec2(0.5, 0.5) );
+    _outerClipper->setPosition(Vec2(this->getContentSize()) * 0.5f);
     _outerClipper->runAction(RepeatForever::create(RotateBy::create(1, 45)));
     
     _outerClipper->setStencil( target );
@@ -434,7 +434,7 @@ void HoleDemo::setup()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
-void HoleDemo::pokeHoleAtPoint(Vector2 point)
+void HoleDemo::pokeHoleAtPoint(Vec2 point)
 {
     float scale = CCRANDOM_0_1() * 0.2 + 0.9;
     float rotation = CCRANDOM_0_1() * 360;
@@ -461,7 +461,7 @@ void HoleDemo::pokeHoleAtPoint(Vector2 point)
 void HoleDemo::onTouchesBegan(const std::vector<Touch*>& touches, Event* event)
 {
 	Touch *touch = (Touch *)touches[0];
-	Vector2 point = _outerClipper->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
+	Vec2 point = _outerClipper->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
     auto rect = Rect(0, 0, _outerClipper->getContentSize().width, _outerClipper->getContentSize().height);
     if (!rect.containsPoint(point)) return;
     this->pokeHoleAtPoint(point);
@@ -484,17 +484,17 @@ void ScrollViewDemo::setup()
     auto clipper = ClippingNode::create();
     clipper->setTag( kTagClipperNode );
     clipper->setContentSize(  Size(200, 200) );
-    clipper->setAnchorPoint(  Vector2(0.5, 0.5) );
-    clipper->setPosition( Vector2(this->getContentSize().width / 2, this->getContentSize().height / 2) );
+    clipper->setAnchorPoint(  Vec2(0.5, 0.5) );
+    clipper->setPosition( Vec2(this->getContentSize().width / 2, this->getContentSize().height / 2) );
     clipper->runAction(RepeatForever::create(RotateBy::create(1, 45)));
     this->addChild(clipper);
 
     auto stencil = DrawNode::create();
-    Vector2 rectangle[4];
-    rectangle[0] = Vector2(0, 0);
-    rectangle[1] = Vector2(clipper->getContentSize().width, 0);
-    rectangle[2] = Vector2(clipper->getContentSize().width, clipper->getContentSize().height);
-    rectangle[3] = Vector2(0, clipper->getContentSize().height);
+    Vec2 rectangle[4];
+    rectangle[0] = Vec2(0, 0);
+    rectangle[1] = Vec2(clipper->getContentSize().width, 0);
+    rectangle[2] = Vec2(clipper->getContentSize().width, clipper->getContentSize().height);
+    rectangle[3] = Vec2(0, clipper->getContentSize().height);
     
     Color4F white(1, 1, 1, 1);
     stencil->drawPolygon(rectangle, 4, white, 1, white);
@@ -502,8 +502,8 @@ void ScrollViewDemo::setup()
 
     auto content = Sprite::create(s_back2);
     content->setTag( kTagContentNode );
-    content->setAnchorPoint(  Vector2(0.5, 0.5) );
-    content->setPosition( Vector2(clipper->getContentSize().width / 2, clipper->getContentSize().height / 2) );
+    content->setAnchorPoint(  Vec2(0.5, 0.5) );
+    content->setPosition( Vec2(clipper->getContentSize().width / 2, clipper->getContentSize().height / 2) );
     clipper->addChild(content);
     
     _scrolling = false;
@@ -519,7 +519,7 @@ void ScrollViewDemo::onTouchesBegan(const std::vector<Touch*>& touches, Event  *
 {
 	Touch *touch = touches[0];
     auto clipper = this->getChildByTag(kTagClipperNode);
-	Vector2 point = clipper->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
+	Vec2 point = clipper->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
     auto rect = Rect(0, 0, clipper->getContentSize().width, clipper->getContentSize().height);
     _scrolling = rect.containsPoint(point);
     _lastPoint = point;
@@ -531,7 +531,7 @@ void ScrollViewDemo::onTouchesMoved(const std::vector<Touch*>& touches, Event  *
 	Touch *touch = touches[0];
     auto clipper = this->getChildByTag(kTagClipperNode);
     auto point = clipper->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
-	Vector2 diff = point - _lastPoint;
+	Vec2 diff = point - _lastPoint;
     auto content = clipper->getChildByTag(kTagContentNode);
     content->setPosition(content->getPosition() + diff);
     _lastPoint = point;
@@ -588,12 +588,12 @@ void RawStencilBufferTest::setup()
     for(int i = 0; i < _planeCount; ++i)
     {
         Sprite* sprite = Sprite::create(s_pathGrossini);
-        sprite->setAnchorPoint(  Vector2(0.5, 0) );
+        sprite->setAnchorPoint(  Vec2(0.5, 0) );
         sprite->setScale( 2.5f );
         _sprites.pushBack(sprite);
 
         Sprite* sprite2 = Sprite::create(s_pathGrossini);
-        sprite2->setAnchorPoint(  Vector2(0.5, 0) );
+        sprite2->setAnchorPoint(  Vec2(0.5, 0) );
         sprite2->setScale( 2.5f );
         _spritesStencil.pushBack(sprite2);
     }
@@ -601,9 +601,9 @@ void RawStencilBufferTest::setup()
     Director::getInstance()->setAlphaBlending(true);
 }
 
-void RawStencilBufferTest::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void RawStencilBufferTest::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {    
-    auto winPoint = Vector2(Director::getInstance()->getWinSize());
+    auto winPoint = Vec2(Director::getInstance()->getWinSize());
     
     auto planeSize = winPoint * (1.0 / _planeCount);
     
@@ -672,19 +672,19 @@ void RawStencilBufferTest::onDisableStencil()
     CHECK_GL_ERROR_DEBUG();
 }
 
-void RawStencilBufferTest::onBeforeDrawClip(int planeIndex, const Vector2& pt)
+void RawStencilBufferTest::onBeforeDrawClip(int planeIndex, const Vec2& pt)
 {
     this->setupStencilForClippingOnPlane(planeIndex);
     CHECK_GL_ERROR_DEBUG();
-    DrawPrimitives::drawSolidRect(Vector2::ZERO, pt, Color4F(1, 1, 1, 1));
+    DrawPrimitives::drawSolidRect(Vec2::ZERO, pt, Color4F(1, 1, 1, 1));
 }
 
-void RawStencilBufferTest::onBeforeDrawSprite(int planeIndex, const Vector2& pt)
+void RawStencilBufferTest::onBeforeDrawSprite(int planeIndex, const Vec2& pt)
 {
     this->setupStencilForDrawingOnPlane(planeIndex);
     CHECK_GL_ERROR_DEBUG();
     
-    DrawPrimitives::drawSolidRect(Vector2::ZERO, pt, _planeColor[planeIndex]);
+    DrawPrimitives::drawSolidRect(Vec2::ZERO, pt, _planeColor[planeIndex]);
 }
 
 void RawStencilBufferTest::setupStencilForClippingOnPlane(GLint plane)
@@ -831,7 +831,7 @@ void RawStencilBufferTest6::setup()
 {
     RawStencilBufferTestAlphaTest::setup();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    auto winPoint = Vector2(Director::getInstance()->getWinSize());
+    auto winPoint = Vec2(Director::getInstance()->getWinSize());
     //by default, glReadPixels will pack data with 4 bytes allignment
     unsigned char bits[4] = {0,0,0,0};
     glStencilMask(~0);
@@ -840,7 +840,7 @@ void RawStencilBufferTest6::setup()
     glFlush();
     glReadPixels(0, 0, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_BYTE, &bits);
     auto clearToZeroLabel = Label::createWithTTF(String::createWithFormat("00=%02x", bits[0])->getCString(), "fonts/arial.ttf", 20);
-    clearToZeroLabel->setPosition( Vector2((winPoint.x / 3) * 1, winPoint.y - 10) );
+    clearToZeroLabel->setPosition( Vec2((winPoint.x / 3) * 1, winPoint.y - 10) );
     this->addChild(clearToZeroLabel);
     glStencilMask(0x0F);
     glClearStencil(0xAA);
@@ -848,7 +848,7 @@ void RawStencilBufferTest6::setup()
     glFlush();
     glReadPixels(0, 0, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_BYTE, &bits);
     auto clearToMaskLabel = Label::createWithTTF(String::createWithFormat("0a=%02x", bits[0])->getCString(), "fonts/arial.ttf", 20);
-    clearToMaskLabel->setPosition( Vector2((winPoint.x / 3) * 2, winPoint.y - 10) );
+    clearToMaskLabel->setPosition( Vec2((winPoint.x / 3) * 2, winPoint.y - 10) );
     this->addChild(clearToMaskLabel);
 #endif
     glStencilMask(~0);
@@ -860,7 +860,7 @@ void RawStencilBufferTest6::setupStencilForClippingOnPlane(GLint plane)
     glStencilMask(planeMask);
     glStencilFunc(GL_NEVER, 0, planeMask);
     glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
-    DrawPrimitives::drawSolidRect(Vector2::ZERO, Vector2(Director::getInstance()->getWinSize()), Color4F(1, 1, 1, 1));
+    DrawPrimitives::drawSolidRect(Vec2::ZERO, Vec2(Director::getInstance()->getWinSize()), Color4F(1, 1, 1, 1));
     glStencilFunc(GL_NEVER, planeMask, planeMask);
     glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
     glDisable(GL_DEPTH_TEST);
