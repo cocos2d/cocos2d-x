@@ -158,11 +158,11 @@ void Sprite3D1::addNewSpriteWithCoords(Vec2 p)
     sprite->setTexture("Sprite3DTest/boss.png");
     
     
-    //create outline effect and set the parameter
-    Sprite3DOutlineEffect* effect = Sprite3DOutlineEffect::create();
-    sprite->setEffect(effect);
-    effect->setOutlineColor(Vec3(1.0f, 1.0f, 0.0f));
-    effect->setOutlineWidth(0.3);
+//    //create outline effect and set the parameter
+//    Sprite3DOutlineEffect* effect = Sprite3DOutlineEffect::create();
+//    sprite->setEffect(effect);
+//    effect->setOutlineColor(Vec3(1.0f, 1.0f, 0.0f));
+//    effect->setOutlineWidth(0.3);
     
     
     //

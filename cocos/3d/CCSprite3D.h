@@ -30,8 +30,6 @@ public:
     void setTexture(const std::string& texFile);
     void setTexture(Texture2D* texture);
     
-    void setEffect(Sprite3DEffect* effect);
-    
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
     virtual const BlendFunc &getBlendFunc() const override;
     
@@ -59,8 +57,6 @@ protected:
     
     Texture2D*        _texture;
     //Vector<Texture2D*>    _textures;
-    
-    Sprite3DEffect*     _effect;
     
     BlendFunc _blend;
     

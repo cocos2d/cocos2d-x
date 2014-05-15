@@ -114,7 +114,6 @@ bool Sprite3D::loadFromObj(const std::string& path)
 Sprite3D::Sprite3D()
 : _partcount(0)
 , _mesh(nullptr)
-, _effect(nullptr)
 , _texture(nullptr)
 , _blend(BlendFunc::ALPHA_NON_PREMULTIPLIED)
 {
@@ -123,7 +122,6 @@ Sprite3D::Sprite3D()
 Sprite3D::~Sprite3D()
 {
     CC_SAFE_RELEASE_NULL(_mesh);
-    CC_SAFE_RELEASE_NULL(_effect);
 }
 
 bool Sprite3D::initWithFile(const std::string &path)
@@ -219,14 +217,6 @@ void Sprite3D::setTexture(Texture2D* texture)
     _texture = texture;
 }
 
-void Sprite3D::setEffect(Sprite3DEffect* effect)
-{
-    CC_SAFE_RETAIN(effect);
-    CC_SAFE_RELEASE_NULL(_effect);
-    _effect = effect;
-    _effect->initEffect(this);
-}
-
 void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     GLProgramState* programstate = getGLProgramState();
@@ -234,7 +224,7 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, bool transformUpd
     color.a = getDisplayedOpacity() / 255.0f;
     
     GLuint textureID = _texture ? _texture->getName() : 0;
-    _meshCommand.init(_globalZOrder, textureID, getGLProgramState(), _blend, _mesh->getVertexBuffer(), _mesh->getIndexBuffer(), _mesh->getPrimitiveType(), _mesh->getIndexFormat(), _mesh->getIndexCount(), transform);
+    _meshCommand.init(_globalZOrder, textureID, programstate, _blend, _mesh->getVertexBuffer(), _mesh->getIndexBuffer(), _mesh->getPrimitiveType(), _mesh->getIndexFormat(), _mesh->getIndexCount(), transform);
     
     _meshCommand.setCullFaceEnabled(true);
     _meshCommand.setDepthTestEnabled(true);
