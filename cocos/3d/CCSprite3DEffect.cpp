@@ -10,7 +10,6 @@
 #define STRINGIFY(A)  #A
 //#include "../Shaders/TexturedLighting.es2.vert.h"
 #include "Textured.es2.vert.h"
-#include "Textured.es2.frag.h"
 #include "Colored.es2.frag.h"
 
 
