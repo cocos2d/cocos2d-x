@@ -2205,6 +2205,7 @@
         "licenses/LICENSE_zlib.txt", 
         "plugin/AUTHORS", 
         "plugin/README.md", 
+        "plugin/jsbindings/Android.mk", 
         "plugin/jsbindings/auto/api/jsb_cocos2dx_pluginx_auto_api.js", 
         "plugin/jsbindings/auto/jsb_cocos2dx_pluginx_auto.cpp", 
         "plugin/jsbindings/auto/jsb_cocos2dx_pluginx_auto.hpp", 
