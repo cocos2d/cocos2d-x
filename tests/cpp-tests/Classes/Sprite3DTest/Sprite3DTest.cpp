@@ -264,6 +264,13 @@ void EffectSprite3D::addEffect(Effect3DOutline* effect, ssize_t order)
     std::sort(std::begin(_effects), std::end(_effects), tuple_sort);
 }
 
+const std::string Effect3DOutline::_vertShaderFile = "Shaders3D/OutLine.vert";
+const std::string Effect3DOutline::_fragShaderFile = "Shaders3D/OutLine.frag";
+//GLProgram* Effect3DOutline::getorCreateProgram()
+//{
+//    return nullptr;
+//}
+
 Effect3DOutline* Effect3DOutline::create()
 {
     Effect3DOutline* effect = new Effect3DOutline();
@@ -282,7 +289,7 @@ Effect3DOutline* Effect3DOutline::create()
 bool Effect3DOutline::init()
 {
 
-    GLProgram* glprogram = GLProgram::createWithFilenames("Shaders3D/OutLine.vert", "Shaders3D/OutLine.frag");
+    GLProgram* glprogram = GLProgram::createWithFilenames(_vertShaderFile, _fragShaderFile);
     if(nullptr == glprogram)
     {
         CC_SAFE_DELETE(glprogram);

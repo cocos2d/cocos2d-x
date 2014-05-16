@@ -97,6 +97,10 @@ protected:
     Vec3 _outlineColor;
     float _outlineWidth;
     
+public:
+    static const std::string _vertShaderFile;
+    static const std::string _fragShaderFile;
+    //static GLProgram* getorCreateProgram();
 };
 
 class EffectSprite3D : public Sprite3D
