@@ -68,22 +68,7 @@ int downloadProgressFunc(Downloader::ProgressData *ptr, double totalToDownload, 
 
 Downloader::Downloader(DownloaderDelegateProtocol* delegate)
 : _delegate(delegate)
-, _curl(nullptr)
 {
-    init();
-}
-
-bool Downloader::init()
-{
-    if (!_curl) {
-        _curl = curl_easy_init();
-        if (!_curl)
-        {
-            CCLOG("can not init curl");
-            return false;
-        }
-    }
-    return true;
 }
 
 void Downloader::notifyError(ErrorCode code, const std::string &msg/* ="" */, const std::string &customId/* ="" */)
@@ -96,16 +81,6 @@ void Downloader::notifyError(ErrorCode code, const std::string &msg/* ="" */, co
         if (this->_delegate)
             this->_delegate->onError(err);
     });
-}
-
-bool Downloader::checkStoragePath(const std::string &storagePath)
-{
-    size_t l = storagePath.size();
-    if (l > 0 && storagePath[l - 1] != '/')
-    {
-        return false;
-    }
-    return true;
 }
 
 std::string Downloader::getFileNameFormUrl(const std::string &srcUrl)
@@ -125,18 +100,6 @@ FILE *Downloader::prepareDownload(const std::string &srcUrl, const std::string &
     Error err;
     err.customId = customId;
     // Asserts
-    if (!_curl)
-    {
-        err.code = ErrorCode::CURL_UNINIT;
-        if (this->_delegate) this->_delegate->onError(err);
-        return fp;
-    }
-    if (!checkStoragePath(storagePath))
-    {
-        err.code = ErrorCode::INVALID_STORAGE_PATH;
-        if (this->_delegate) this->_delegate->onError(err);
-        return fp;
-    }
     std::string filename = getFileNameFormUrl(srcUrl);
     if (filename.size() == 0)
     {
@@ -178,12 +141,13 @@ void Downloader::downloadSync(const std::string &srcUrl, const std::string &stor
     }
 }
 
-void Downloader::batchDownload(const std::vector<Downloader::DownloadUnit> &units)
+void Downloader::batchDownload(const std::map<std::string, Downloader::DownloadUnit> &units)
 {
     for (auto it = units.cbegin(); it != units.cend(); it++) {
-        std::string srcUrl = it->srcUrl;
-        std::string storagePath = it->storagePath;
-        std::string customId = it->customId;
+        DownloadUnit unit = it->second;
+        std::string srcUrl = unit.srcUrl;
+        std::string storagePath = unit.storagePath;
+        std::string customId = unit.customId;
         
         auto future = std::async(&Downloader::downloadSync, this, srcUrl, storagePath, customId);
     }
@@ -196,20 +160,27 @@ void Downloader::download(const std::string &srcUrl, FILE *fp, const std::string
     data.url = srcUrl;
     data.downloader = this;
     
+    void *curl = curl_easy_init();
+    if (!curl)
+    {
+        this->notifyError(ErrorCode::CURL_UNINIT, "Can not init curl");
+        return;
+    }
+    
     // Download pacakge
     CURLcode res;
-    curl_easy_setopt(_curl, CURLOPT_URL, srcUrl.c_str());
-    curl_easy_setopt(_curl, CURLOPT_WRITEFUNCTION, curlWriteFunc);
-    curl_easy_setopt(_curl, CURLOPT_WRITEDATA, fp);
-    curl_easy_setopt(_curl, CURLOPT_NOPROGRESS, false);
-    curl_easy_setopt(_curl, CURLOPT_PROGRESSFUNCTION, downloadProgressFunc);
-    curl_easy_setopt(_curl, CURLOPT_PROGRESSDATA, &data);
-    curl_easy_setopt(_curl, CURLOPT_NOSIGNAL, 1L);
-    curl_easy_setopt(_curl, CURLOPT_LOW_SPEED_LIMIT, LOW_SPEED_LIMIT);
-    curl_easy_setopt(_curl, CURLOPT_LOW_SPEED_TIME, LOW_SPEED_TIME);
+    curl_easy_setopt(curl, CURLOPT_URL, srcUrl.c_str());
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curlWriteFunc);
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
+    curl_easy_setopt(curl, CURLOPT_NOPROGRESS, false);
+    curl_easy_setopt(curl, CURLOPT_PROGRESSFUNCTION, downloadProgressFunc);
+    curl_easy_setopt(curl, CURLOPT_PROGRESSDATA, &data);
+    curl_easy_setopt(curl, CURLOPT_NOSIGNAL, 1L);
+    curl_easy_setopt(curl, CURLOPT_LOW_SPEED_LIMIT, LOW_SPEED_LIMIT);
+    curl_easy_setopt(curl, CURLOPT_LOW_SPEED_TIME, LOW_SPEED_TIME);
     
-    res = curl_easy_perform(_curl);
-    curl_easy_cleanup(_curl);
+    res = curl_easy_perform(curl);
+    curl_easy_cleanup(curl);
     if (res != 0)
     {
         this->notifyError(ErrorCode::NETWORK, "Error when download file", customId);

@@ -91,15 +91,13 @@ public:
      */
     Downloader(DownloaderDelegateProtocol* delegate);
     
-    bool init();
-    
     DownloaderDelegateProtocol* getDelegate() const { return _delegate ;}
     
     void downloadAsync(const std::string &srcUrl, const std::string &storagePath, const std::string &customId = "");
     
     void downloadSync(const std::string &srcUrl, const std::string &storagePath, const std::string &customId = "");
     
-    void batchDownload(const std::vector<DownloadUnit> &units);
+    void batchDownload(const std::map<std::string, DownloadUnit> &units);
     
 protected:
     
@@ -109,13 +107,9 @@ protected:
     
     void notifyError(ErrorCode code, const std::string &msg = "", const std::string &customId = "");
     
-    bool checkStoragePath(const std::string& storagePath);
-    
 private:
     
     DownloaderDelegateProtocol* _delegate;
-    
-    void *_curl;
     
     std::string getFileNameFormUrl(const std::string &srcUrl);
 };
