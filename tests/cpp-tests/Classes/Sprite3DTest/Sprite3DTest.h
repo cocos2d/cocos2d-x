@@ -27,6 +27,7 @@
 
 #include "../testBasic.h"
 #include "../BaseTest.h"
+#include "3d/CCMesh.h"
 #include <string>
 
 class Sprite3DTestDemo : public BaseTest
@@ -74,42 +75,45 @@ public:
 //    GLProgramState* _glProgramState;
 //};
 
-//class Effect3DOutline: public Ref
-//{
-//public:
-//    static Effect3DOutline* create();
-//    
-//    void setOutlineColor(const Vec3& color);
-//    
-//    void setOutlineWidth(float width);
-//    
-//    void drawSpriteEffect(const Mat4 &transform);
-//    
-//protected:
-//    
-//    Effect3DOutline();
-//    virtual ~Effect3DOutline();
-//    
-//    Vec3 _outlineColor;
-//    float _outlineWidth;
-//    bool _hasNormal;
-//    
-//protected:
-//    GLProgramState* _glProgramState;
-//};
+class EffectSprite3D;
+class Effect3DOutline: public Ref
+{
+public:
+    static Effect3DOutline* create();
+    
+    void setOutlineColor(const Vec3& color);
+    
+    void setOutlineWidth(float width);
+    
+    void drawWithSprite(EffectSprite3D* sprite, const Mat4 &transform);
+    
+protected:
+    
+    Effect3DOutline();
+    virtual ~Effect3DOutline();
+    
+    bool init();
+    
+    Vec3 _outlineColor;
+    float _outlineWidth;
+    
+protected:
+    GLProgramState* _glProgramState;
+};
 
 class EffectSprite3D : public Sprite3D
 {
 public:
     static EffectSprite3D* createFromObjFileAndTexture(const std::string& objFilePath, const std::string& textureFilePath);
-    //void setEffect3DOutline(Effect3DOutline* effect);
+    void setEffect3DOutline(Effect3DOutline* effect);
     //void addEffect(Effect3DOutline* effect, ssize_t order);
     virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
 protected:
     EffectSprite3D();
     virtual ~EffectSprite3D();
     
-    //Effect3DOutline* _defaultEffect;
+    Effect3DOutline* _effectOutline;
+    CustomCommand _command;
 };
 
 class Sprite3DEffectTest : public Sprite3DTestDemo

@@ -235,18 +235,132 @@ EffectSprite3D* EffectSprite3D::createFromObjFileAndTexture(const std::string &o
 }
 
 EffectSprite3D::EffectSprite3D()
+: _effectOutline(nullptr)
 {
     
 }
 
 EffectSprite3D::~EffectSprite3D()
 {
+    CC_SAFE_RELEASE(_effectOutline);
+}
+
+void EffectSprite3D::setEffect3DOutline(Effect3DOutline *effect)
+{
+    if(_effectOutline == effect) return;
+    CC_SAFE_RETAIN(effect);
+    CC_SAFE_RELEASE(_effectOutline);
+    _effectOutline = effect;
+}
+
+Effect3DOutline* Effect3DOutline::create()
+{
+    Effect3DOutline* effect = new Effect3DOutline();
+    if(effect && effect->init())
+    {
+        effect->autorelease();
+        return effect;
+    }
+    else
+    {
+        CC_SAFE_DELETE(effect);
+        return nullptr;
+    }
+}
+
+bool Effect3DOutline::init()
+{
+    GLProgram* glprogram = GLProgram::createWithFilenames("Shaders3D/Outline.vert", "Shaders3D/Outline.frag");
+    if(nullptr == glprogram)
+    {
+        CC_SAFE_DELETE(glprogram);
+        return false;
+    }
+    _glProgramState = GLProgramState::getOrCreateWithGLProgram(glprogram);
+    if(nullptr == _glProgramState)
+    {
+        return false;
+    }
+    _glProgramState->retain();
+    _glProgramState->setUniformVec3("OutLineColor", _outlineColor);
+    _glProgramState->setUniformFloat("OutlineWidth", _outlineWidth);
     
+    return true;
+}
+
+Effect3DOutline::Effect3DOutline()
+: _outlineWidth(1.0f)
+, _outlineColor(1, 1, 1)
+, _glProgramState(nullptr)
+{
+    
+}
+
+Effect3DOutline::~Effect3DOutline()
+{
+    CC_SAFE_RELEASE_NULL(_glProgramState);
+}
+
+void Effect3DOutline::setOutlineColor(const Vec3& color)
+{
+    if(_outlineColor != color)
+    {
+        _outlineColor = color;
+        _glProgramState->setUniformVec3("OutLineColor", _outlineColor);
+    }
+}
+
+void Effect3DOutline::setOutlineWidth(float width)
+{
+    if(_outlineWidth != width)
+    {
+        _outlineWidth = width;
+        _glProgramState->setUniformFloat("OutlineWidth", _outlineWidth);
+    }
+}
+
+void Effect3DOutline::drawWithSprite(EffectSprite3D* sprite, const Mat4 &transform)
+{
+    auto mesh = sprite->getMesh();
+    int offset = 0;
+    for (auto i = 0; i < mesh->getMeshVertexAttribCount(); i++)
+    {
+        auto meshvertexattrib = mesh->getMeshVertexAttribute(i);
+        
+        _glProgramState->setVertexAttribPointer(s_attributeNames[meshvertexattrib.vertexAttrib], meshvertexattrib.size, meshvertexattrib.type, GL_FALSE, mesh->getVertexSizeInBytes(), (void*)offset);
+        offset += meshvertexattrib.attribSizeBytes;
+    }
+    //draw
+    {
+        glCullFace(GL_FRONT);
+        
+        Color4F color(sprite->getDisplayedColor());
+        color.a = sprite->getDisplayedOpacity() / 255.0f;
+        
+        _glProgramState->setUniformVec4("u_color", Vec4(color.r, color.g, color.b, color.a));
+        
+        auto mesh = sprite->getMesh();
+        glBindBuffer(GL_ARRAY_BUFFER, mesh->getVertexBuffer());
+        _glProgramState->apply(transform);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->getIndexBuffer());
+        glDrawElements(mesh->getPrimitiveType(), mesh->getIndexCount(), mesh->getIndexFormat(), 0);
+        
+        glCullFace(GL_BACK);
+    }
 }
 
 void EffectSprite3D::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, bool transformUpdated)
 {
-    return Sprite3D::draw(renderer, transform, transformUpdated);
+    if(!_effectOutline)
+    {
+        Sprite3D::draw(renderer, transform, transformUpdated);
+    }
+    else
+    {
+        _command.init(_globalZOrder);
+        _command.func = CC_CALLBACK_0(Effect3DOutline::drawWithSprite, _effectOutline, this, transform);
+        renderer->addCommand(&_command);
+    }
 }
 
 Sprite3DEffectTest::Sprite3DEffectTest()
@@ -266,9 +380,11 @@ std::string Sprite3DEffectTest::subtitle() const
 
 void Sprite3DEffectTest::addNewSpriteWithCoords(Vec2 p)
 {
-    
     //option 2: load obj and assign the texture
     auto sprite = EffectSprite3D::createFromObjFileAndTexture("Sprite3DTest/boss1.obj", "Sprite3DTest/boss.png");
+    Effect3DOutline* effect = Effect3DOutline::create();
+    effect->setOutlineWidth(0.1);
+    sprite->setEffect3DOutline(effect);
     sprite->setScale(6.f);
     
     //add to scene

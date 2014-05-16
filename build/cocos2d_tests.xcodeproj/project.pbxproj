@@ -831,6 +831,8 @@
 		A07A52BF1783AF210073F6A7 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52B91783AE900073F6A7 /* OpenGLES.framework */; };
 		A07A52C01783AF250073F6A7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52B71783AE6D0073F6A7 /* UIKit.framework */; };
 		A07A52C31783B02C0073F6A7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52C11783B01F0073F6A7 /* AVFoundation.framework */; };
+		B2507B6B192589AF00FA4972 /* Shaders3D in Resources */ = {isa = PBXBuildFile; fileRef = B2507B6A192589AF00FA4972 /* Shaders3D */; };
+		B2507B6C192589AF00FA4972 /* Shaders3D in Resources */ = {isa = PBXBuildFile; fileRef = B2507B6A192589AF00FA4972 /* Shaders3D */; };
 		C08689C118D370C90093E810 /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
 		C08689C218D370C90093E810 /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
 		C08689C318D370C90093E810 /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
@@ -1871,6 +1873,7 @@
 		A07A52B91783AE900073F6A7 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
 		A07A52BB1783AEB80073F6A7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		A07A52C11783B01F0073F6A7 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
+		B2507B6A192589AF00FA4972 /* Shaders3D */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Shaders3D; path = "../tests/cpp-tests/Resources/Shaders3D"; sourceTree = "<group>"; };
 		C08689C018D370C90093E810 /* background.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = background.caf; path = "../tests/cpp-tests/Resources/background.caf"; sourceTree = "<group>"; };
 		D60AE43317F7FFE100757E4B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
 		EDCC747E17C455FD007B692C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
@@ -2213,7 +2216,6 @@
 		1AC3592418CECF0A00F37B72 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				3E92EA7D1921A0C60094CD21 /* Sprite3DTest */,
 				1AC3592518CECF0A00F37B72 /* AccelerometerTest */,
 				1AC3592818CECF0A00F37B72 /* ActionManagerTest */,
 				1AC3592B18CECF0A00F37B72 /* ActionsEaseTest */,
@@ -2266,6 +2268,7 @@
 				1AC35AE918CECF0C00F37B72 /* SchedulerTest */,
 				1AC35AEC18CECF0C00F37B72 /* ShaderTest */,
 				1AC35AF118CECF0C00F37B72 /* SpineTest */,
+				3E92EA7D1921A0C60094CD21 /* Sprite3DTest */,
 				1AC35AF418CECF0C00F37B72 /* SpriteTest */,
 				1AC35AF718CECF0C00F37B72 /* testBasic.cpp */,
 				1AC35AF818CECF0C00F37B72 /* testBasic.h */,
@@ -3282,6 +3285,7 @@
 		1AC35CA818CED83500F37B72 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B2507B6A192589AF00FA4972 /* Shaders3D */,
 				3E92EA841921A7720094CD21 /* Sprite3DTest */,
 				3EA0FB5D191B92F100B170C8 /* cocosvideo.mp4 */,
 				1AC35CA918CED84500F37B72 /* animations */,
@@ -4433,6 +4437,7 @@
 				1AC35D0418CED84500F37B72 /* Shaders in Resources */,
 				1AC35CD818CED84500F37B72 /* CocosBuilderExample.ccbresourcelog in Resources */,
 				1AC35CDC18CED84500F37B72 /* commonly_used_words.txt in Resources */,
+				B2507B6B192589AF00FA4972 /* Shaders3D in Resources */,
 				1AC35D0618CED84500F37B72 /* spine in Resources */,
 				1AC35CE818CED84500F37B72 /* extensions in Resources */,
 				1AC35CDE18CED84500F37B72 /* components in Resources */,
@@ -4506,6 +4511,7 @@
 				1AC35C9418CECF1400F37B72 /* Icon-58.png in Resources */,
 				1AC35CD118CED84500F37B72 /* background.mp3 in Resources */,
 				1AC35CD918CED84500F37B72 /* CocosBuilderExample.ccbresourcelog in Resources */,
+				B2507B6C192589AF00FA4972 /* Shaders3D in Resources */,
 				1AC35CED18CED84500F37B72 /* fonts in Resources */,
 				1AC35CD718CED84500F37B72 /* CocosBuilderExample.ccbproj in Resources */,
 				1AC35CDD18CED84500F37B72 /* commonly_used_words.txt in Resources */,
