@@ -356,8 +356,9 @@ void Effect3DOutline::drawWithSprite(EffectSprite3D* sprite, const Mat4 &transfo
     }
     //draw
     {
+        glEnable(GL_CULL_FACE);
         glCullFace(GL_FRONT);
-        
+        glEnable(GL_DEPTH_TEST);
         Color4F color(sprite->getDisplayedColor());
         color.a = sprite->getDisplayedOpacity() / 255.0f;
         
@@ -368,8 +369,9 @@ void Effect3DOutline::drawWithSprite(EffectSprite3D* sprite, const Mat4 &transfo
         _glProgramState->apply(transform);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->getIndexBuffer());
         glDrawElements(mesh->getPrimitiveType(), mesh->getIndexCount(), mesh->getIndexFormat(), 0);
-        
+        glDisable(GL_DEPTH_TEST);
         glCullFace(GL_BACK);
+        glDisable(GL_CULL_FACE);
     }
 }
 
