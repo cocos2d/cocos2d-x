@@ -74,7 +74,7 @@ protected:
     bool _enabled;
     
 #if CC_ENABLE_SCRIPT_BINDING
-    ccScriptType _scriptType;         ///< type of script binding, lua or javascript
+    ccScriptType _scriptType;         ///< 脚本绑定，lua或者javascript
 #endif
 };
 
