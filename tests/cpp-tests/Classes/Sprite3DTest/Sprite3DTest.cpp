@@ -235,22 +235,22 @@ EffectSprite3D* EffectSprite3D::createFromObjFileAndTexture(const std::string &o
 }
 
 EffectSprite3D::EffectSprite3D()
-: _effectOutline(nullptr)
+: _defaultEffect(nullptr)
 {
     
 }
 
 EffectSprite3D::~EffectSprite3D()
 {
-    CC_SAFE_RELEASE(_effectOutline);
+    CC_SAFE_RELEASE(_defaultEffect);
 }
 
-void EffectSprite3D::setEffect3DOutline(Effect3DOutline *effect)
+void EffectSprite3D::setEffect3D(Effect3D *effect)
 {
-    if(_effectOutline == effect) return;
+    if(_defaultEffect == effect) return;
     CC_SAFE_RETAIN(effect);
-    CC_SAFE_RELEASE(_effectOutline);
-    _effectOutline = effect;
+    CC_SAFE_RELEASE(_defaultEffect);
+    _defaultEffect = effect;
 }
 
 Effect3DOutline* Effect3DOutline::create()
@@ -291,14 +291,12 @@ bool Effect3DOutline::init()
 Effect3DOutline::Effect3DOutline()
 : _outlineWidth(1.0f)
 , _outlineColor(1, 1, 1)
-, _glProgramState(nullptr)
 {
     
 }
 
 Effect3DOutline::~Effect3DOutline()
 {
-    CC_SAFE_RELEASE_NULL(_glProgramState);
 }
 
 void Effect3DOutline::setOutlineColor(const Vec3& color)
@@ -351,14 +349,14 @@ void Effect3DOutline::drawWithSprite(EffectSprite3D* sprite, const Mat4 &transfo
 
 void EffectSprite3D::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, bool transformUpdated)
 {
-    if(!_effectOutline)
+    if(!_defaultEffect)
     {
         Sprite3D::draw(renderer, transform, transformUpdated);
     }
     else
     {
         _command.init(_globalZOrder);
-        _command.func = CC_CALLBACK_0(Effect3DOutline::drawWithSprite, _effectOutline, this, transform);
+        _command.func = CC_CALLBACK_0(Effect3D::drawWithSprite, _defaultEffect, this, transform);
         renderer->addCommand(&_command);
     }
 }
@@ -384,7 +382,7 @@ void Sprite3DEffectTest::addNewSpriteWithCoords(Vec2 p)
     auto sprite = EffectSprite3D::createFromObjFileAndTexture("Sprite3DTest/boss1.obj", "Sprite3DTest/boss.png");
     Effect3DOutline* effect = Effect3DOutline::create();
     effect->setOutlineWidth(0.1);
-    sprite->setEffect3DOutline(effect);
+    sprite->setEffect3D(effect);
     sprite->setScale(6.f);
     
     //add to scene

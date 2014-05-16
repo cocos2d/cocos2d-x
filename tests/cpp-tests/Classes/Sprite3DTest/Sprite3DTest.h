@@ -76,7 +76,22 @@ public:
 //};
 
 class EffectSprite3D;
-class Effect3DOutline: public Ref
+
+class Effect3D : public Ref
+{
+public:
+    virtual void drawWithSprite(EffectSprite3D* sprite, const Mat4 &transform) = 0;
+protected:
+    Effect3D() : _glProgramState(nullptr) {}
+    virtual ~Effect3D()
+    {
+        CC_SAFE_RELEASE(_glProgramState);
+    }
+protected:
+    GLProgramState* _glProgramState;
+};
+
+class Effect3DOutline: public Effect3D
 {
 public:
     static Effect3DOutline* create();
@@ -97,22 +112,20 @@ protected:
     Vec3 _outlineColor;
     float _outlineWidth;
     
-protected:
-    GLProgramState* _glProgramState;
 };
 
 class EffectSprite3D : public Sprite3D
 {
 public:
     static EffectSprite3D* createFromObjFileAndTexture(const std::string& objFilePath, const std::string& textureFilePath);
-    void setEffect3DOutline(Effect3DOutline* effect);
+    void setEffect3D(Effect3D* effect);
     //void addEffect(Effect3DOutline* effect, ssize_t order);
     virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
 protected:
     EffectSprite3D();
     virtual ~EffectSprite3D();
     
-    Effect3DOutline* _effectOutline;
+    Effect3D* _defaultEffect;
     CustomCommand _command;
 };
 
