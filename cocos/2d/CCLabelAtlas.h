@@ -40,43 +40,45 @@ NS_CC_BEGIN
  * @{
  */
 
-/** @brief LabelAtlas is a subclass of AtlasNode.
+/** @brief LabelAtlas 是 AtlasNode 的子类.
 
-It can be as a replacement of Label since it is MUCH faster.
-
-LabelAtlas versus Label:
-- LabelAtlas is MUCH faster than Label
-- LabelAtlas "characters" have a fixed height and width
-- LabelAtlas "characters" can be anything you want since they are taken from an image file
-
-A more flexible class is LabelBMFont. It supports variable width characters and it also has a nice editor.
+可以作为Label的一个替代品，因为LabelAtlas要快得多
+ 
+LabelAtlas 与 Label:
+- LabelAtlas 比 Label 要快非常多
+- LabelAtlas "字符" 有固定的高度和宽度
+- LabelAtlas "字符" 可以是任何你想要的字体效果，因为它们都是图片
+ 
+还有一个更灵活的类是LabelBMFont. 它支持可变宽度的字符，而且他还有一个好用的编辑器
 */
 class CC_DLL LabelAtlas : public AtlasNode, public LabelProtocol
 {
 public:
-    /** creates an empty LabelAtlas, user need to call initWithString(...) later to make this object work properly **/
+    /** 创建一个空的LabelAtlas, 用户需要在之后调用 initWithString(...) 方法使这个实例正常工作 **/
     static LabelAtlas* create();
     
-    /** creates the LabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
+    /** 使用字符串，字符映射文件（atlas），每个元素的宽度，高度和atlas起始字符创建LabelAtlas*/
     static LabelAtlas* create(const std::string& string, const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
     
-    /** creates the LabelAtlas with a string and a configuration file
+    /** 使用字符串和配置文件创建LabelAtlas
      @since v2.0
      */
     static LabelAtlas* create(const std::string& string, const std::string& fntFile);
 
-    /** initializes the LabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
+    /** 使用字符串，字符映射文件（atlas），每个元素的宽度，高度和altas起始字符初始化LabelAtlas
+     */
     bool initWithString(const std::string& string, const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
     
-    /** initializes the LabelAtlas with a string and a configuration file
+    /** 使用字符串和配置文件初始化LabelAtlas
      @since v2.0
      */
     bool initWithString(const std::string& string, const std::string& fntFile);
     
-    /** initializes the LabelAtlas with a string, a texture, the width and height in points of each element and the starting char of the atlas */
+    /** 使用字符串，纹理，每个元素的宽度，高度和atlas起始字符初始化LabelAtlas
+     */
     bool initWithString(const std::string& string, Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
     
-    // super methods
+    // 父类方法
     virtual void updateAtlasValues();
 
     virtual void setString(const std::string &label) override;
@@ -103,9 +105,9 @@ protected:
     void drawDebugData(const Mat4& transform, bool transformUpdated);
 #endif
 
-    // string to render
+    // 渲染文字
     std::string _string;
-    // the first char in the charmap
+    // 字符映射中的第一个字符
     int _mapStartChar;
 };
 
