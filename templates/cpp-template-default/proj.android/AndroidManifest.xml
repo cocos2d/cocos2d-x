@@ -9,17 +9,16 @@
 
     <application android:label="@string/app_name"
                  android:icon="@drawable/icon">
-
+					 
+        <!-- Tell Cocos2dxActivity the name of our .so -->
+        <meta-data android:name="android.app.lib_name"
+	              android:value="cocos2dcpp" />
 
         <activity android:name="org.cocos2dx.cpp.AppActivity"
                   android:label="@string/app_name"
                   android:screenOrientation="landscape"
                   android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
                   android:configChanges="orientation">
-
-            <!-- Tell NativeActivity the name of our .so -->
-            <meta-data android:name="android.app.lib_name"
-                       android:value="cocos2dcpp" />
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
