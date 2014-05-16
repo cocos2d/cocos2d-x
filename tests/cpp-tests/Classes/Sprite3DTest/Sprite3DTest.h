@@ -97,7 +97,7 @@ protected:
     Vec3 _outlineColor;
     float _outlineWidth;
     
-public:
+protected:
     static const std::string _vertShaderFile;
     static const std::string _fragShaderFile;
     static const std::string _keyInGLProgramCache;

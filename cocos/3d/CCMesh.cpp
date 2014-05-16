@@ -69,6 +69,8 @@ bool RenderMeshData::initFrom(std::vector<float>& posions, std::vector<float>& n
     _vertexs.reserve(_vertexNum * _vertexsizeBytes);
     _vertexsizeBytes *= sizeof(float);
     
+    bool hasNormal = hasVertexAttrib(GLProgram::VERTEX_ATTRIB_NORMAL);
+    bool hasTexCoord = hasVertexAttrib(GLProgram::VERTEX_ATTRIB_TEX_COORD);
     //position, normal, texCoordinate into _vertexs
     for(int i = 0; i < _vertexNum; i++)
     {
@@ -76,14 +78,14 @@ bool RenderMeshData::initFrom(std::vector<float>& posions, std::vector<float>& n
         _vertexs.push_back(posions[i * 3 + 1]);
         _vertexs.push_back(posions[i * 3 + 2]);
         
-        if (hasVertexAttrib(GLProgram::VERTEX_ATTRIB_NORMAL))
+        if (hasNormal)
         {
             _vertexs.push_back(normals[i * 3]);
             _vertexs.push_back(normals[i * 3 + 1]);
             _vertexs.push_back(normals[i * 3 + 2]);
         }
         
-        if (hasVertexAttrib(GLProgram::VERTEX_ATTRIB_TEX_COORD))
+        if (hasTexCoord)
         {
             _vertexs.push_back(texs[i * 2]);
             _vertexs.push_back(texs[i * 2 + 1]);

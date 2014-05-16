@@ -152,7 +152,7 @@ bool Sprite3D::initWithFile(const std::string &path)
         std::string ext = path.substr(path.length() - 4, 4);
         if (ext != ".obj" || !loadFromObj(path))
         {
-                return false;
+            return false;
         }
         return true;
     }
@@ -182,23 +182,6 @@ GLProgram* Sprite3D::getDefGLProgram(bool textured)
     {
         return GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION);
     }
-//    static GLProgram s_defGLProgramTex;
-//    static GLProgram s_defGLProgram;
-//    if(textured && s_defGLProgramTex.getProgram() == 0)
-//    {
-//        s_defGLProgramTex.initWithByteArrays(baseVertexShader, baseTexturedFrag);
-//        s_defGLProgramTex.link();
-//        s_defGLProgramTex.updateUniforms();
-//    }
-//    
-//    if(!textured && s_defGLProgram.getProgram() == 0)
-//    {
-//        s_defGLProgram.initWithByteArrays(baseVertexShader, baseTexturedFrag);
-//        s_defGLProgram.link();
-//        s_defGLProgram.updateUniforms();
-//    }
-//    
-//    return textured ? &s_defGLProgramTex : &s_defGLProgram;
 }
 
 

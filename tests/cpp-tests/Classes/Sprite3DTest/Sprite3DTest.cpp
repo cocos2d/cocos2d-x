@@ -374,6 +374,7 @@ void Effect3DOutline::drawWithSprite(EffectSprite3D* sprite, const Mat4 &transfo
         glDisable(GL_DEPTH_TEST);
         glCullFace(GL_BACK);
         glDisable(GL_CULL_FACE);
+        CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, mesh->getIndexCount());
     }
 }
 
@@ -436,10 +437,10 @@ void Sprite3DEffectTest::addNewSpriteWithCoords(Vec2 p)
     auto sprite = EffectSprite3D::createFromObjFileAndTexture("Sprite3DTest/boss1.obj", "Sprite3DTest/boss.png");
     Effect3DOutline* effect = Effect3DOutline::create();
     effect->setOutlineColor(Vec3(1,0,0));
-    effect->setOutlineWidth(0.001);
+    effect->setOutlineWidth(0.01);
     sprite->addEffect(effect, -1);
     Effect3DOutline* effect2 = Effect3DOutline::create();
-    effect2->setOutlineWidth(0.002);
+    effect2->setOutlineWidth(0.02);
     effect2->setOutlineColor(Vec3(1,1,0));
     sprite->addEffect(effect2, -2);
     //sprite->setEffect3D(effect);

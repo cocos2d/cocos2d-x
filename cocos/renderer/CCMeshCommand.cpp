@@ -22,10 +22,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-
+#include "base/ccMacros.h"
+#include "base/CCDirector.h"
 #include "renderer/CCMeshCommand.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgramState.h"
+#include "renderer/CCRenderer.h"
 #include "2d/CCTextureAtlas.h"
 #include "2d/CCTexture2D.h"
 
@@ -141,8 +143,13 @@ void MeshCommand::execute()
     // Draw
     glDrawElements(_primitive, _indexCount, _indexFormat, 0);
     
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
+    
     //restore render state
     restoreRenderState();
+    
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 NS_CC_END

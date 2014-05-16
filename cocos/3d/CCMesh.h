@@ -99,12 +99,11 @@ protected:
     void cleanAndFreeBuffers();
     
 protected:
-    std::string _name;
-    GLuint _vertexBuffer;
     PrimitiveType _primitiveType;
     IndexFormat _indexFormat;
-    unsigned int _indexCount;
+    GLuint _vertexBuffer;
     GLuint _indexBuffer;
+    unsigned int _indexCount;
     
 private:
     RenderMeshData _renderdata;
