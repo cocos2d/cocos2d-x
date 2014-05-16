@@ -11,8 +11,6 @@
 #include "renderer/CCGLProgram.h"
 
 
-USING_NS_CC_MATH;
-
 NS_CC_BEGIN
 
 /**
