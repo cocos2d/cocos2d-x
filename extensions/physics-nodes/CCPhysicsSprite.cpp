@@ -288,6 +288,7 @@ void PhysicsSprite::setPosition(const Vec2 &pos)
     _pB2Body->SetTransform(b2Vec2(pos.x / _PTMRatio, pos.y / _PTMRatio), angle);
 #endif
 
+    Sprite::setPosition(pos);
 }
 
 float PhysicsSprite::getRotation() const
