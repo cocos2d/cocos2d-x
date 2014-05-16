@@ -119,12 +119,13 @@ class EffectSprite3D : public Sprite3D
 public:
     static EffectSprite3D* createFromObjFileAndTexture(const std::string& objFilePath, const std::string& textureFilePath);
     void setEffect3D(Effect3D* effect);
-    //void addEffect(Effect3DOutline* effect, ssize_t order);
+    void addEffect(Effect3DOutline* effect, ssize_t order);
     virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
 protected:
     EffectSprite3D();
     virtual ~EffectSprite3D();
     
+    std::vector<std::tuple<ssize_t,Effect3D*,CustomCommand>> _effects;
     Effect3D* _defaultEffect;
     CustomCommand _command;
 };

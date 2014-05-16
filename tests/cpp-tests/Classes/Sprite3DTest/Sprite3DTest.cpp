@@ -221,6 +221,11 @@ void Sprite3DTestScene::runThisTest()
     Director::getInstance()->replaceScene(this);
 }
 
+static int tuple_sort( const std::tuple<ssize_t,Effect3D*,CustomCommand> &tuple1, const std::tuple<ssize_t,Effect3D*,CustomCommand> &tuple2 )
+{
+    return std::get<0>(tuple1) < std::get<0>(tuple2);
+}
+
 EffectSprite3D* EffectSprite3D::createFromObjFileAndTexture(const std::string &objFilePath, const std::string &textureFilePath)
 {
     auto sprite = new EffectSprite3D();
@@ -251,6 +256,16 @@ void EffectSprite3D::setEffect3D(Effect3D *effect)
     CC_SAFE_RETAIN(effect);
     CC_SAFE_RELEASE(_defaultEffect);
     _defaultEffect = effect;
+}
+
+void EffectSprite3D::addEffect(Effect3DOutline* effect, ssize_t order)
+{
+    if(nullptr == effect) return;
+    effect->retain();
+    
+    _effects.push_back(std::make_tuple(order,effect,CustomCommand()));
+    
+    std::sort(std::begin(_effects), std::end(_effects), tuple_sort);
 }
 
 Effect3DOutline* Effect3DOutline::create()
@@ -349,6 +364,16 @@ void Effect3DOutline::drawWithSprite(EffectSprite3D* sprite, const Mat4 &transfo
 
 void EffectSprite3D::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, bool transformUpdated)
 {
+    for(auto &effect : _effects)
+    {
+        if(std::get<0>(effect) >=0)
+            break;
+        CustomCommand &cc = std::get<2>(effect);
+        cc.func = CC_CALLBACK_0(Effect3D::drawWithSprite,std::get<1>(effect),this,transform);
+        renderer->addCommand(&cc);
+        
+    }
+    
     if(!_defaultEffect)
     {
         Sprite3D::draw(renderer, transform, transformUpdated);
@@ -358,6 +383,16 @@ void EffectSprite3D::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &tran
         _command.init(_globalZOrder);
         _command.func = CC_CALLBACK_0(Effect3D::drawWithSprite, _defaultEffect, this, transform);
         renderer->addCommand(&_command);
+    }
+    
+    for(auto &effect : _effects)
+    {
+        if(std::get<0>(effect) <=0)
+            continue;
+        CustomCommand &cc = std::get<2>(effect);
+        cc.func = CC_CALLBACK_0(Effect3D::drawWithSprite,std::get<1>(effect),this,transform);
+        renderer->addCommand(&cc);
+        
     }
 }
 
@@ -381,8 +416,13 @@ void Sprite3DEffectTest::addNewSpriteWithCoords(Vec2 p)
     //option 2: load obj and assign the texture
     auto sprite = EffectSprite3D::createFromObjFileAndTexture("Sprite3DTest/boss1.obj", "Sprite3DTest/boss.png");
     Effect3DOutline* effect = Effect3DOutline::create();
+    effect->setOutlineColor(Vec3(1,0,0));
     effect->setOutlineWidth(0.1);
-    sprite->setEffect3D(effect);
+    sprite->addEffect(effect, -1);
+    Effect3DOutline* effect2 = Effect3DOutline::create();
+    effect->setOutlineWidth(0.3);
+    sprite->addEffect(effect2, -2);
+    //sprite->setEffect3D(effect);
     sprite->setScale(6.f);
     
     //add to scene
