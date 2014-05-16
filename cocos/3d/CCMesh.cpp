@@ -17,7 +17,8 @@ NS_CC_BEGIN
 
 bool RenderMeshData::hasVertexAttrib(int attrib)
 {
-    for (auto itr = _vertexAttribs.begin(); itr != _vertexAttribs.end(); itr++) {
+    for (auto itr = _vertexAttribs.begin(); itr != _vertexAttribs.end(); itr++)
+    {
         if ((*itr).vertexAttrib == attrib)
             return true; //already has
     }
@@ -93,7 +94,6 @@ bool RenderMeshData::initFrom(std::vector<float>& posions, std::vector<float>& n
     return true;
 }
 
-
 Mesh::Mesh()
 :_vertexBuffer(0)
 , _indexBuffer(0)
@@ -102,22 +102,12 @@ Mesh::Mesh()
 , _indexCount(0)
 {
     
-
 }
 
 Mesh::~Mesh()
 {
     cleanAndFreeBuffers();
 }
-
-//void Mesh::releaseMeshPart()
-//{
-//    glDeleteBuffers(1, &_indexBuffer);
-//    _primitiveType = PrimitiveType_TRIANGLES;
-//    _indexFormat = IndexFormat_INDEX16;
-//    _indexCount = 0;
-//    _indexBuffer = 0;
-//}
 
 Mesh* Mesh::create(std::vector<float>& posions, std::vector<float>& normals, std::vector<float>& texs, const std::vector<unsigned short>& indices)
 {
@@ -133,13 +123,11 @@ Mesh* Mesh::create(std::vector<float>& posions, std::vector<float>& normals, std
 
 bool Mesh::init(std::vector<float>& posions, std::vector<float>& normals, std::vector<float>& texs, const std::vector<unsigned short>& indices)
 {
-    
     bool bRet = _renderdata.initFrom(posions, normals, texs, indices);
     if (!bRet)
         return false;
     
     restore();
-    
     return true;
 }
 
@@ -193,9 +181,7 @@ void Mesh::buildBuffer()
 void Mesh::restore()
 {
     cleanAndFreeBuffers();
-    
     buildBuffer();
-    
 }
 
 NS_CC_END
