@@ -100,7 +100,8 @@ protected:
 public:
     static const std::string _vertShaderFile;
     static const std::string _fragShaderFile;
-    //static GLProgram* getorCreateProgram();
+    static const std::string _keyInGLProgramCache;
+    static GLProgram* getOrCreateProgram();
 };
 
 class EffectSprite3D : public Sprite3D

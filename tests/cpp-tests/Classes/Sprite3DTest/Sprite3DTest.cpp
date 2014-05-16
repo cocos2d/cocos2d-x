@@ -266,10 +266,17 @@ void EffectSprite3D::addEffect(Effect3DOutline* effect, ssize_t order)
 
 const std::string Effect3DOutline::_vertShaderFile = "Shaders3D/OutLine.vert";
 const std::string Effect3DOutline::_fragShaderFile = "Shaders3D/OutLine.frag";
-//GLProgram* Effect3DOutline::getorCreateProgram()
-//{
-//    return nullptr;
-//}
+const std::string Effect3DOutline::_keyInGLProgramCache = "Effect3DLibrary_Outline";
+GLProgram* Effect3DOutline::getOrCreateProgram()
+{
+    auto program = GLProgramCache::getInstance()->getGLProgram(_keyInGLProgramCache);
+    if(program == nullptr)
+    {
+        program = GLProgram::createWithFilenames(_vertShaderFile, _fragShaderFile);
+        GLProgramCache::getInstance()->addGLProgram(program, _keyInGLProgramCache);
+    }
+    return program;
+}
 
 Effect3DOutline* Effect3DOutline::create()
 {
@@ -289,13 +296,13 @@ Effect3DOutline* Effect3DOutline::create()
 bool Effect3DOutline::init()
 {
 
-    GLProgram* glprogram = GLProgram::createWithFilenames(_vertShaderFile, _fragShaderFile);
+    GLProgram* glprogram = Effect3DOutline::getOrCreateProgram();
     if(nullptr == glprogram)
     {
         CC_SAFE_DELETE(glprogram);
         return false;
     }
-    _glProgramState = GLProgramState::getOrCreateWithGLProgram(glprogram);
+    _glProgramState = GLProgramState::create(glprogram);
     if(nullptr == _glProgramState)
     {
         return false;
