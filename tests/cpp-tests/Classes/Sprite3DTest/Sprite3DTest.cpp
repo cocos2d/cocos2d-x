@@ -277,7 +277,8 @@ Effect3DOutline* Effect3DOutline::create()
 
 bool Effect3DOutline::init()
 {
-    GLProgram* glprogram = GLProgram::createWithFilenames("Shaders3D/Outline.vert", "Shaders3D/Outline.frag");
+
+    GLProgram* glprogram = GLProgram::createWithFilenames("Shaders3D/OutLine.vert", "Shaders3D/OutLine.frag");
     if(nullptr == glprogram)
     {
         CC_SAFE_DELETE(glprogram);
