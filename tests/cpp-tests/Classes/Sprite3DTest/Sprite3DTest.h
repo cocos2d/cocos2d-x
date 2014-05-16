@@ -27,7 +27,6 @@
 
 #include "../testBasic.h"
 #include "../BaseTest.h"
-#include "3d/CCMesh.h"
 #include <string>
 
 class Sprite3DTestDemo : public BaseTest
