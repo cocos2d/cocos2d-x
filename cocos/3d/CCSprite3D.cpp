@@ -90,8 +90,6 @@ bool Sprite3D::loadFromObj(const std::string& path)
     if (_mesh == nullptr)
         return false;
     
-    _partcount = indices.size();
-    
     if (matnames.size())
     {
         setTexture(matnames[0]);
@@ -105,8 +103,7 @@ bool Sprite3D::loadFromObj(const std::string& path)
 }
 
 Sprite3D::Sprite3D()
-: _partcount(0)
-, _mesh(nullptr)
+: _mesh(nullptr)
 , _texture(nullptr)
 , _blend(BlendFunc::ALPHA_NON_PREMULTIPLIED)
 {
@@ -119,8 +116,6 @@ Sprite3D::~Sprite3D()
 
 bool Sprite3D::initWithFile(const std::string &path)
 {
-    _partcount = 0;
-    
     CC_SAFE_RELEASE_NULL(_mesh);
     
     CC_SAFE_RELEASE_NULL(_texture);
