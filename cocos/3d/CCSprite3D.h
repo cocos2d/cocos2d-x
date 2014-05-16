@@ -4,11 +4,9 @@
 
 #include <vector>
 #include "base/CCVector.h"
-
 #include "base/ccTypes.h"
 #include "2d/CCNode.h"
 #include "2d/CCProtocols.h"
-
 #include "renderer/CCMeshCommand.h"
 
 NS_CC_BEGIN
@@ -16,7 +14,6 @@ NS_CC_BEGIN
 class GLProgramState;
 class Mesh;
 class Texture2D;
-//class Sprite3DEffect;
 
 class Sprite3D : public Node, public BlendProtocol
 {
@@ -54,7 +51,6 @@ protected:
     MeshCommand        _meshCommand;
     
     Texture2D*        _texture;
-    //Vector<Texture2D*>    _textures;
     
     BlendFunc _blend;
     
