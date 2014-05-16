@@ -1081,14 +1081,10 @@
 		3E92EA4F192130D70094CD21 /* CCSprite3DDataCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E92EA4C192130D70094CD21 /* CCSprite3DDataCache.cpp */; };
 		3E92EA50192130D70094CD21 /* CCSprite3DDataCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA4D192130D70094CD21 /* CCSprite3DDataCache.h */; };
 		3E92EA51192130D70094CD21 /* CCSprite3DDataCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA4D192130D70094CD21 /* CCSprite3DDataCache.h */; };
-		3E92EA5B19215FA10094CD21 /* Colored.es2.frag.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA5419215FA10094CD21 /* Colored.es2.frag.h */; };
-		3E92EA5C19215FA10094CD21 /* Colored.es2.frag.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA5419215FA10094CD21 /* Colored.es2.frag.h */; };
 		3E92EA5D19215FA10094CD21 /* CCSprite3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E92EA5519215FA10094CD21 /* CCSprite3D.cpp */; };
 		3E92EA5E19215FA10094CD21 /* CCSprite3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E92EA5519215FA10094CD21 /* CCSprite3D.cpp */; };
 		3E92EA5F19215FA10094CD21 /* CCSprite3D.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA5619215FA10094CD21 /* CCSprite3D.h */; };
 		3E92EA6019215FA10094CD21 /* CCSprite3D.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA5619215FA10094CD21 /* CCSprite3D.h */; };
-		3E92EA6719215FA10094CD21 /* Textured.es2.vert.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA5A19215FA10094CD21 /* Textured.es2.vert.h */; };
-		3E92EA6819215FA10094CD21 /* Textured.es2.vert.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E92EA5A19215FA10094CD21 /* Textured.es2.vert.h */; };
 		3E9B5E1119254D2C00BB28BC /* CCMeshCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E9B5E0F19254D2C00BB28BC /* CCMeshCommand.cpp */; };
 		3E9B5E1219254D2C00BB28BC /* CCMeshCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E9B5E0F19254D2C00BB28BC /* CCMeshCommand.cpp */; };
 		3E9B5E1319254D2C00BB28BC /* CCMeshCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E9B5E1019254D2C00BB28BC /* CCMeshCommand.h */; };
@@ -2322,10 +2318,8 @@
 		3E92EA3D19212FD40094CD21 /* CCObjLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCObjLoader.h; path = ../cocos/3d/CCObjLoader.h; sourceTree = "<group>"; };
 		3E92EA4C192130D70094CD21 /* CCSprite3DDataCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCSprite3DDataCache.cpp; path = ../cocos/3d/CCSprite3DDataCache.cpp; sourceTree = "<group>"; };
 		3E92EA4D192130D70094CD21 /* CCSprite3DDataCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCSprite3DDataCache.h; path = ../cocos/3d/CCSprite3DDataCache.h; sourceTree = "<group>"; };
-		3E92EA5419215FA10094CD21 /* Colored.es2.frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Colored.es2.frag.h; path = ../cocos/3d/Colored.es2.frag.h; sourceTree = "<group>"; };
 		3E92EA5519215FA10094CD21 /* CCSprite3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCSprite3D.cpp; path = ../cocos/3d/CCSprite3D.cpp; sourceTree = "<group>"; };
 		3E92EA5619215FA10094CD21 /* CCSprite3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCSprite3D.h; path = ../cocos/3d/CCSprite3D.h; sourceTree = "<group>"; };
-		3E92EA5A19215FA10094CD21 /* Textured.es2.vert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Textured.es2.vert.h; path = ../cocos/3d/Textured.es2.vert.h; sourceTree = "<group>"; };
 		3E9B5E0F19254D2C00BB28BC /* CCMeshCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMeshCommand.cpp; sourceTree = "<group>"; };
 		3E9B5E1019254D2C00BB28BC /* CCMeshCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMeshCommand.h; sourceTree = "<group>"; };
 		3EA0FB69191C841D00B170C8 /* UIVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIVideoPlayer.h; sourceTree = "<group>"; };
@@ -4067,10 +4061,8 @@
 		3E92EA3919212FB40094CD21 /* 3d */ = {
 			isa = PBXGroup;
 			children = (
-				3E92EA5419215FA10094CD21 /* Colored.es2.frag.h */,
 				3E92EA5519215FA10094CD21 /* CCSprite3D.cpp */,
 				3E92EA5619215FA10094CD21 /* CCSprite3D.h */,
-				3E92EA5A19215FA10094CD21 /* Textured.es2.vert.h */,
 				3E92EA4C192130D70094CD21 /* CCSprite3DDataCache.cpp */,
 				3E92EA4D192130D70094CD21 /* CCSprite3DDataCache.h */,
 				3E92EA3A19212FD40094CD21 /* CCMesh.cpp */,
@@ -5080,7 +5072,6 @@
 				1AC0269C1914068200FA920D /* ConvertUTF.h in Headers */,
 				1A57019F180BCB590088DEC7 /* CCFont.h in Headers */,
 				1A5701A3180BCB590088DEC7 /* CCFontAtlas.h in Headers */,
-				3E92EA5B19215FA10094CD21 /* Colored.es2.frag.h in Headers */,
 				1A01C68618F57BE800EFE3A6 /* CCArray.h in Headers */,
 				1A5701A7180BCB590088DEC7 /* CCFontAtlasCache.h in Headers */,
 				1A5701B3180BCB590088DEC7 /* CCFontFNT.h in Headers */,
@@ -5185,7 +5176,6 @@
 				500DC99619106300007B91BF /* CCScheduler.h in Headers */,
 				1A57035A180BD0B00088DEC7 /* unzip.h in Headers */,
 				296CAD241915EC8000C64FBF /* CCEventFocus.h in Headers */,
-				3E92EA6719215FA10094CD21 /* Textured.es2.vert.h in Headers */,
 				500DC98819106300007B91BF /* CCNS.h in Headers */,
 				1AD71DAB180E26E600808F54 /* CCBAnimationManager.h in Headers */,
 				1AD71DAF180E26E600808F54 /* CCBFileLoader.h in Headers */,
@@ -5525,7 +5515,6 @@
 				500DC9AD19106300007B91BF /* ZipUtils.h in Headers */,
 				50FCEBC218C72017004AD434 /* TextFieldReader.h in Headers */,
 				1A570068180BC5A10088DEC7 /* CCActionCamera.h in Headers */,
-				3E92EA6819215FA10094CD21 /* Textured.es2.vert.h in Headers */,
 				1A57006C180BC5A10088DEC7 /* CCActionCatmullRom.h in Headers */,
 				5034CA3A191D591100CE6051 /* ccShader_PositionColorLengthTexture.frag in Headers */,
 				1A570070180BC5A10088DEC7 /* CCActionEase.h in Headers */,
@@ -5720,7 +5709,6 @@
 				1AD71E9C180E26E600808F54 /* AnimationState.h in Headers */,
 				1AD71EA0180E26E600808F54 /* AnimationStateData.h in Headers */,
 				50FCEB9E18C72017004AD434 /* ImageViewReader.h in Headers */,
-				3E92EA5C19215FA10094CD21 /* Colored.es2.frag.h in Headers */,
 				500DC98119106300007B91BF /* CCEventType.h in Headers */,
 				1AD71EA4180E26E600808F54 /* Atlas.h in Headers */,
 				1AD71EA8180E26E600808F54 /* AtlasAttachmentLoader.h in Headers */,

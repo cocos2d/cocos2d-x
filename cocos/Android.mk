@@ -93,7 +93,6 @@ cocos2d.cpp \
 3d/CCSprite3DDataCache.cpp \
 3d/CCObjLoader.cpp \
 3d/CCSprite3D.cpp \
-3d/CCSprite3DEffect.cpp \
 math/CCAffineTransform.cpp \
 math/CCGeometry.cpp \
 math/MathUtil.cpp \

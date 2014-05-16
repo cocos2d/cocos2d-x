@@ -2,7 +2,6 @@
 #include "CCSprite3D.h"
 #include "CCSprite3DDataCache.h"
 #include "CCMesh.h"
-#include "CCSprite3DEffect.h"
 
 #include "CCObjLoader.h"
 #include "2d/platform/CCFileUtils.h"
@@ -11,12 +10,6 @@
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCGLProgramCache.h"
-
-//begin include shader file
-#define STRINGIFY(A)  #A
-#include "Textured.es2.vert.h"
-#include "Colored.es2.frag.h"
-//end include shader file
 
 NS_CC_BEGIN
 

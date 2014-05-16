@@ -261,7 +261,6 @@ THE SOFTWARE.
 
 //3d
 #include "3d/CCSprite3D.h"
-#include "3d/CCSprite3DEffect.h"
 
 // Audio
 #include "audio/include/SimpleAudioEngine.h"
