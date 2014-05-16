@@ -44,6 +44,8 @@ NS_CC_EXT_BEGIN;
 #define VERSION_FILENAME        "version.manifest"
 #define MANIFEST_FILENAME       "project.manifest"
 
+#define FINISH_UPDATE_EVENT     "AM_Loaded"
+
 #define BUFFER_SIZE         8192
 #define MAX_FILENAME        512
 #define LOW_SPEED_LIMIT     1L
@@ -97,14 +99,24 @@ AAssetsManager::AAssetsManager(const std::string& manifestUrl, const std::string
     _downloader = new Downloader(this);
     setStoragePath(storagePath);
     
+    std::string cachedManifest = _storagePath + MANIFEST_FILENAME;
     // Prefer to use the cached manifest file, if not found use user configured manifest file
     // Prepend storage path to avoid multi package conflict issue
-    if (_fileUtils->isFileExist(storagePath + MANIFEST_FILENAME))
-        _localManifest = new Manifest(storagePath + MANIFEST_FILENAME);
-    else _localManifest = new Manifest(_manifestUrl);
+    if (_fileUtils->isFileExist(cachedManifest))
+        _localManifest = new Manifest(cachedManifest);
+    
+    // Fail to found cached manifest file
+    if (!_localManifest) {
+        _localManifest = new Manifest(_manifestUrl);
+    }
+    // Fail to load cached manifest file
+    else if (!_localManifest->isLoaded()) {
+        destroyFile(cachedManifest);
+        _localManifest->parse(_manifestUrl);
+    }
     
     // Download version file
-    checkUpdate();
+    update();
 }
 
 AAssetsManager::~AAssetsManager()
@@ -129,18 +141,19 @@ void AAssetsManager::setStoragePath(const std::string& storagePath)
         //destroyStoragePath();
     
     _storagePath = storagePath;
-    createStoragePath();
+    adjustPath(_storagePath);
+    createDirectory(_storagePath);
     if (_storagePath.size() > 0)
         prependSearchPath(_storagePath);
 }
 
-void AAssetsManager::adjustStoragePath()
+void AAssetsManager::adjustPath(std::string &path)
 {
-    if (_storagePath.size() > 0 && _storagePath[_storagePath.size() - 1] != '/')
+    if (path.size() > 0 && path[path.size() - 1] != '/')
     {
-        _storagePath.append("/");
+        path.append("/");
     }
-    _storagePath.insert(0, s_nWritableRoot);
+    path.insert(0, s_nWritableRoot);
 }
 
 void AAssetsManager::prependSearchPath(const std::string& path)
@@ -151,27 +164,26 @@ void AAssetsManager::prependSearchPath(const std::string& path)
     FileUtils::getInstance()->setSearchPaths(searchPaths);
 }
 
-void AAssetsManager::createStoragePath()
+void AAssetsManager::createDirectory(const std::string& path)
 {
-    adjustStoragePath();
     // Check writable path existance
-    if (_storagePath.find(s_nWritableRoot) == std::string::npos)
+    if (path.find(s_nWritableRoot) == std::string::npos)
     {
-        CCLOG("Storage path which isn't under system writable path cannot be created.");
+        CCLOG("Path which isn't under system's writable path cannot be created.");
         return;
     }
     
     // Split the path
     size_t start = s_nWritableRoot.size();
-    size_t found = _storagePath.find_first_of("/\\", start);
+    size_t found = path.find_first_of("/\\", start);
     std::string subpath;
     std::vector<std::string> dirs;
     while (found != std::string::npos)
     {
-        subpath = _storagePath.substr(start, found - start + 1);
+        subpath = path.substr(start, found - start + 1);
         if (subpath.size() > 0) dirs.push_back(subpath);
         start = found+1;
-        found = _storagePath.find_first_of("/\\", start);
+        found = path.find_first_of("/\\", start);
     }
     
     // Remove downloaded files
@@ -189,33 +201,61 @@ void AAssetsManager::createStoragePath()
         }
     }
 #else
-    if ((GetFileAttributesA(_storagePath.c_str())) == INVALID_FILE_ATTRIBUTES)
+    if ((GetFileAttributesA(path.c_str())) == INVALID_FILE_ATTRIBUTES)
     {
-// TODO: create recursively the path on windows
-        CreateDirectoryA(_storagePath.c_str(), 0);
+        // TODO: create recursively the path on windows
+        CreateDirectoryA(path.c_str(), 0);
     }
 #endif
 }
 
-void AAssetsManager::destroyStoragePath()
+void AAssetsManager::destroyDirectory(const std::string& path)
 {
-    // Delete recorded version codes.
-// TODO: deleteVersion();
+    // Check writable path existance
+    if (path.find(s_nWritableRoot) == std::string::npos)
+    {
+        CCLOG("Path which isn't under system's writable path cannot be destroyed.");
+        return;
+    }
     
-// TODO: Delete recursively
+    if (path.size() > 0 && path[path.size() - 1] != '/')
+    {
+        CCLOG("Invalid path.");
+        return;
+    }
     
     // Remove downloaded files
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
     std::string command = "rm -r ";
     // Path may include space.
-    command += "\"" + _storagePath + "\"";
+    command += "\"" + path + "\"";
     system(command.c_str());
 #else
     string command = "rd /s /q ";
     // Path may include space.
-    command += "\"" + _storagePath + "\"";
+    command += "\"" + path + "\"";
     system(command.c_str());
 #endif
+}
+
+void AAssetsManager::destroyFile(const std::string &path)
+{
+    if (path.find(s_nWritableRoot) != std::string::npos)
+    {
+        // Remove downloaded file
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+        std::string command = "rm ";
+        // Path may include space.
+        command += "\"" + path + "\"";
+        system(command.c_str());
+#else
+        string command = "del /q ";
+        // Path may include space.
+        command += "\"" + path + "\"";
+        system(command.c_str());
+#endif
+    }
+
 }
 
 AAssetsManager::UpdateState AAssetsManager::updateState()
@@ -244,6 +284,7 @@ void AAssetsManager::checkUpdate()
             {
                 CCLOG("No version file found, step skipped\n");
                 _updateState = PREDOWNLOAD_MANIFEST;
+                checkUpdate();
             }
         }
         break;
@@ -258,12 +299,23 @@ void AAssetsManager::checkUpdate()
             {
                 CCLOG("Error parsing version file, step skipped\n");
                 _updateState = PREDOWNLOAD_MANIFEST;
+                checkUpdate();
             }
             else
             {
                 if (_localManifest->versionEquals(_remoteManifest))
                     _updateState = UP_TO_DATE;
-                else _updateState = NEED_UPDATE;
+                else
+                {
+                    // Wait to update so continue the process
+                    if (_waitToUpdate)
+                    {
+                        _updateState = PREDOWNLOAD_MANIFEST;
+                        checkUpdate();
+                    }
+                    // Otherwise just setup the state
+                    else _updateState = NEED_UPDATE;
+                }
             }
         }
         break;
@@ -321,6 +373,15 @@ void AAssetsManager::update()
     switch (_updateState) {
         case NEED_UPDATE:
         {
+            // Manifest not loaded yet
+            if (!_remoteManifest->isLoaded())
+            {
+                _waitToUpdate = true;
+                _updateState = PREDOWNLOAD_MANIFEST;
+                checkUpdate();
+                break;
+            }
+            
             // Check difference
             if (_localManifest && _remoteManifest)
             {
@@ -332,9 +393,9 @@ void AAssetsManager::update()
                 else
                 {
                     _updateState = UPDATING;
-// UPDATE
+                    // UPDATE
+                    _downloadUnits.clear();
                     std::string packageUrl = _remoteManifest->getPackageUrl();
-                    std::vector<Downloader::DownloadUnit> update_units;
                     for (auto it = diff_map.begin(); it != diff_map.end(); it++) {
                         Manifest::AssetDiff diff = it->second;
                         
@@ -343,19 +404,23 @@ void AAssetsManager::update()
                         }
                         else
                         {
-                            std::string path = diff.asset->path;
+                            std::string path = diff.asset.path;
+                            // Create path
+                            createDirectory(_storagePath + path);
+                            
                             Downloader::DownloadUnit unit;
                             unit.customId = it->first;
                             unit.srcUrl = packageUrl + path;
                             unit.storagePath = _storagePath + path;
-                            update_units.push_back(unit);
+                            _downloadUnits.emplace(unit.customId, unit);
                         }
                     }
-                    _downloader->batchDownload(update_units);
+                    _downloader->batchDownload(_downloadUnits);
                 }
             }
             
             _updateState = UPDATING;
+            _waitToUpdate = false;
         }
         break;
         case UP_TO_DATE:
@@ -409,6 +474,20 @@ void AAssetsManager::onSuccess(const std::string &srcUrl, const std::string &cus
         std::string cid = customId;
         event.setUserData(&cid);
         _eventDispatcher->dispatchEvent(&event);
+        
+        auto unitIt = _downloadUnits.find(customId);
+        // Found unit and delete it
+        if (unitIt != _downloadUnits.end())
+        {
+            _downloadUnits.erase(unitIt);
+        }
+        // Finish check
+        if (_downloadUnits.size() == 0)
+        {
+            EventCustom finishEvent(FINISH_UPDATE_EVENT);
+            event.setUserData(this);
+            _eventDispatcher->dispatchEvent(&finishEvent);
+        }
     }
 }
 

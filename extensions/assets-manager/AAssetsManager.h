@@ -202,20 +202,18 @@ public:
     
 protected:
     void loadManifest();
-    void adjustStoragePath();
     bool uncompress();
-    bool createDirectory(const std::string& path);
-    void prependSearchPath(const std::string& path);
+    void adjustPath(std::string &path);
+    void prependSearchPath(const std::string &path);
     void downloadAndUncompress();
     
 private:
-    /** @brief Initializes storage path.
-     */
-    void createStoragePath();
     
-    /** @brief Destroys storage path.
-     */
-    void destroyStoragePath();
+    void createDirectory(const std::string &path);
+    
+    void destroyDirectory(const std::string &path);
+    
+    void destroyFile(const std::string &path);
     
 private:
     
@@ -225,6 +223,8 @@ private:
     UpdateState _updateState;
     
     bool _waitToUpdate;
+    
+    std::map<std::string, Downloader::DownloadUnit> _downloadUnits;
     
     //! The url of the package
     std::string _packageUrl;
