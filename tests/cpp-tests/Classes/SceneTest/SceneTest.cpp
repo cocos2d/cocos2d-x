@@ -93,6 +93,16 @@ void SceneTestLayer1::onQuit(Ref* sender)
     //    [[UIApplication sharedApplication] performSelector:@selector(terminate)];
 }
 
+void SceneTestLayer1::onExit()
+{
+    Layer::onExit();
+
+    struct timeval now;
+    gettimeofday(&now, nullptr);
+
+    CCLOG("1 - onExit: this - %d, time - %d", this, now.tv_sec);
+}
+
 //------------------------------------------------------------------
 //
 // SceneTestLayer2
@@ -154,6 +164,16 @@ void SceneTestLayer2::onReplaceSceneTran(Ref* sender)
     scene->release();
 }
 
+void SceneTestLayer2::onExit()
+{
+    Layer::onExit();
+
+    struct timeval now;
+    gettimeofday(&now, nullptr);
+
+    CCLOG("2 - onExit: this - %d, time - %d", this, now.tv_sec);
+}
+
 //------------------------------------------------------------------
 //
 // SceneTestLayer3
@@ -195,7 +215,7 @@ bool SceneTestLayer3::init()
 
 void SceneTestLayer3::testDealloc(float dt)
 {
-    log("Layer3:testDealloc");
+    //log("Layer3:testDealloc");
 }
 
 void SceneTestLayer3::item0Clicked(Ref* sender)
@@ -218,6 +238,25 @@ void SceneTestLayer3::item2Clicked(Ref* sender)
 void SceneTestLayer3::item3Clicked(Ref* sender)
 {
     Director::getInstance()->popToSceneStackLevel(2);
+}
+//----------------------------------------------------------------------------------------------------------------------
+void SceneTestLayer3::onExit()
+{
+    Layer::onExit();
+
+    struct timeval now;
+    gettimeofday(&now, nullptr);
+
+    CCLOG("3 - onExit: this - %d, time - %d", this, now.tv_sec);
+}
+
+void SceneTestLayer3::cleanup()
+{
+    Layer::cleanup();
+    
+    struct timeval now;
+    gettimeofday(&now, nullptr);
+    CCLOG("3 - Cleanup: this - %d, time - %d", this, now.tv_sec);
 }
 
 void SceneTestScene::runThisTest()
