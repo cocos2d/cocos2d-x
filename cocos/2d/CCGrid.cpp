@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "base/ccMacros.h"
 #include "base/CCDirector.h"
 #include "2d/CCGrabber.h"
-#include "2d/ccUtils.h"
+#include "base/ccUtils.h"
 #include "2d/CCGrid.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramCache.h"

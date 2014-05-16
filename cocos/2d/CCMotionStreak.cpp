@@ -23,16 +23,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+
 #include "2d/CCMotionStreak.h"
-#include "2d/CCTextureCache.h"
-#include "2d/CCVertex.h"
+#include "math/CCVertex.h"
+#include "base/ccMacros.h"
+#include "base/CCDirector.h"
+#include "renderer/CCTextureCache.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCRenderer.h"
-#include "base/ccMacros.h"
-#include "base/CCDirector.h"
 
 NS_CC_BEGIN
 

@@ -28,7 +28,9 @@
 
 #include <set>
 #include <list>
+
 #include "base/CCPlatformMacros.h"
+
 NS_CC_BEGIN
 
 template <class T>

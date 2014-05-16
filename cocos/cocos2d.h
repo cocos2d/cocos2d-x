@@ -56,8 +56,13 @@ THE SOFTWARE.
 #include "base/ZipUtils.h"
 #include "base/CCProfiling.h"
 #include "base/CCConsole.h"
+#include "base/ccUTF8.h"
+#include "base/CCUserDefault.h"
+#include "base/CCIMEDelegate.h"
+#include "base/CCIMEDispatcher.h"
 
 // EventDispatcher
+#include "base/CCEventType.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventListenerTouch.h"
 #include "base/CCEventTouch.h"
@@ -75,12 +80,13 @@ THE SOFTWARE.
 // math
 #include "math/CCAffineTransform.h"
 #include "math/CCGeometry.h"
-#include "math/Vector2.h"
-#include "math/Vector3.h"
-#include "math/Vector4.h"
-#include "math/Matrix.h"
+#include "math/Vec2.h"
+#include "math/Vec3.h"
+#include "math/Vec4.h"
+#include "math/Mat4.h"
 #include "math/Quaternion.h"
 #include "math/MathUtil.h"
+#include "math/CCVertex.h"
 
 // actions
 #include "2d/CCAction.h"
@@ -130,10 +136,9 @@ THE SOFTWARE.
 #include "2d/CCGrid.h"
 
 // include
-#include "base/CCEventType.h"
-#include "2d/CCProtocols.h"
+#include "base/CCProtocols.h"
 
-// new renderer
+// renderer
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCQuadCommand.h"
@@ -145,6 +150,8 @@ THE SOFTWARE.
 #include "renderer/CCGLProgramState.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/ccShaders.h"
+#include "renderer/CCTexture2D.h"
+#include "renderer/CCTextureCache.h"
 
 // physics
 #include "physics/CCPhysicsBody.h"
@@ -154,75 +161,75 @@ THE SOFTWARE.
 #include "physics/CCPhysicsWorld.h"
 
 // platform
-#include "2d/platform/CCDevice.h"
-#include "2d/platform/CCCommon.h"
-#include "2d/platform/CCFileUtils.h"
-#include "2d/platform/CCImage.h"
-#include "2d/platform/CCSAXParser.h"
-#include "2d/platform/CCThread.h"
+#include "platform/CCDevice.h"
+#include "platform/CCCommon.h"
+#include "platform/CCFileUtils.h"
+#include "platform/CCImage.h"
+#include "platform/CCSAXParser.h"
+#include "platform/CCThread.h"
 #include "base/CCPlatformConfig.h"
 #include "base/CCPlatformMacros.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    #include "2d/platform/ios/CCApplication.h"
-    #include "2d/platform/ios/CCGLView.h"
-    #include "2d/platform/ios/CCGL.h"
-    #include "2d/platform/ios/CCStdC.h"
+    #include "platform/ios/CCApplication.h"
+    #include "platform/ios/CCGLView.h"
+    #include "platform/ios/CCGL.h"
+    #include "platform/ios/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    #include "2d/platform/android/CCApplication.h"
-    #include "2d/platform/android/CCGLView.h"
-    #include "2d/platform/android/CCGL.h"
-    #include "2d/platform/android/CCStdC.h"
+    #include "platform/android/CCApplication.h"
+    #include "platform/android/CCGLView.h"
+    #include "platform/android/CCGL.h"
+    #include "platform/android/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY)
-    #include "2d/platform/blackberry/CCApplication.h"
-    #include "2d/platform/blackberry/CCGLView.h"
-    #include "2d/platform/blackberry/CCGL.h"
-    #include "2d/platform/blackberry/CCStdC.h"
+    #include "platform/blackberry/CCApplication.h"
+    #include "platform/blackberry/CCGLView.h"
+    #include "platform/blackberry/CCGL.h"
+    #include "platform/blackberry/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    #include "2d/platform/win32/CCApplication.h"
-    #include "2d/platform/desktop/CCGLView.h"
-    #include "2d/platform/win32/CCGL.h"
-    #include "2d/platform/win32/CCStdC.h"
+    #include "platform/win32/CCApplication.h"
+    #include "platform/desktop/CCGLView.h"
+    #include "platform/win32/CCGL.h"
+    #include "platform/win32/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    #include "2d/platform/mac/CCApplication.h"
-    #include "2d/platform/desktop/CCGLView.h"
-    #include "2d/platform/mac/CCGL.h"
-    #include "2d/platform/mac/CCStdC.h"
+    #include "platform/mac/CCApplication.h"
+    #include "platform/desktop/CCGLView.h"
+    #include "platform/mac/CCGL.h"
+    #include "platform/mac/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-    #include "2d/platform/linux/CCApplication.h"
-    #include "2d/platform/desktop/CCGLView.h"
-    #include "2d/platform/linux/CCGL.h"
-    #include "2d/platform/linux/CCStdC.h"
+    #include "platform/linux/CCApplication.h"
+    #include "platform/desktop/CCGLView.h"
+    #include "platform/linux/CCGL.h"
+    #include "platform/linux/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-	#include "2d/platform/winrt/CCApplication.h"
-	#include "2d/platform/winrt/CCGLView.h"
-	#include "2d/platform/winrt/CCGL.h"
-	#include "2d/platform/winrt/CCStdC.h"
-	#include "2d/platform/winrt/CCPrecompiledShaders.h"
+	#include "platform/winrt/CCApplication.h"
+	#include "platform/winrt/CCGLView.h"
+	#include "platform/winrt/CCGL.h"
+	#include "platform/winrt/CCStdC.h"
+	#include "platform/winrt/CCPrecompiledShaders.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-	#include "2d/platform/winrt/CCApplication.h"
-	#include "2d/platform/wp8/CCGLView.h"
-	#include "2d/platform/winrt/CCGL.h"
-	#include "2d/platform/winrt/CCStdC.h"
-	#include "2d/platform/winrt/CCPrecompiledShaders.h"
+	#include "platform/winrt/CCApplication.h"
+	#include "platform/wp8/CCGLView.h"
+	#include "platform/winrt/CCGL.h"
+	#include "platform/winrt/CCStdC.h"
+	#include "platform/winrt/CCPrecompiledShaders.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_WP8
 
 // script_support
-#include "2d/CCScriptSupport.h"
+#include "base/CCScriptSupport.h"
 
 // sprite_nodes
 #include "2d/CCAnimation.h"
@@ -232,20 +239,11 @@ THE SOFTWARE.
 #include "2d/CCSpriteFrame.h"
 #include "2d/CCSpriteFrameCache.h"
 
-// support
-#include "2d/ccUTF8.h"
-#include "2d/CCUserDefault.h"
-#include "2d/CCVertex.h"
-
 // text_input_node
-#include "2d/CCIMEDelegate.h"
-#include "2d/CCIMEDispatcher.h"
 #include "2d/CCTextFieldTTF.h"
 
 // textures
-#include "2d/CCTexture2D.h"
-#include "2d/CCTextureAtlas.h"
-#include "2d/CCTextureCache.h"
+#include "renderer/CCTextureAtlas.h"
 
 // tilemap_parallax_nodes
 #include "2d/CCParallaxNode.h"

@@ -59,8 +59,8 @@
 #include "base/CCPlatformConfig.h"
 #include "base/CCConfiguration.h"
 #include "2d/CCScene.h"
-#include "2d/platform/CCFileUtils.h"
-#include "2d/CCTextureCache.h"
+#include "platform/CCFileUtils.h"
+#include "renderer/CCTextureCache.h"
 #include "CCGLView.h"
 #include "base/base64.h"
 NS_CC_BEGIN

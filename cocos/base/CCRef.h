@@ -23,8 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCREF_H__
-#define __CCREF_H__
+#ifndef __BASE_CCREF_H__
+#define __BASE_CCREF_H__
 
 #include "base/CCPlatformMacros.h"
 #include "base/ccConfig.h"
@@ -172,4 +172,4 @@ typedef void (Ref::*SEL_SCHEDULE)(float);
 
 NS_CC_END
 
-#endif // __CCREF_H__
+#endif // __BASE_CCREF_H__

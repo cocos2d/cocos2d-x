@@ -29,7 +29,7 @@
 #include "base/ZipUtils.h"
 #include "base/CCData.h"
 #include "base/ccMacros.h"
-#include "2d/platform/CCFileUtils.h"
+#include "platform/CCFileUtils.h"
 #include "unzip.h"
 #include <map>
 
