@@ -401,6 +401,10 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
         "uniform vec4 CC_SinTime;\n"
         "uniform vec4 CC_CosTime;\n"
         "uniform vec4 CC_Random01;\n"
+        "uniform sampler2D CC_Texture0;\n"
+        "uniform sampler2D CC_Texture1;\n"
+        "uniform sampler2D CC_Texture2;\n"
+        "uniform sampler2D CC_Texture3;\n"
         "//CC INCLUDES END\n\n",
         source,
     };
