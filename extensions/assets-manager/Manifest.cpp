@@ -60,7 +60,7 @@ Manifest::Manifest(const std::string& manifestUrl)
 void Manifest::parse(const std::string& manifestUrl)
 {
     rapidjson::Document json = parseJSON(manifestUrl);
-    if (json.MemberonBegin() != json.MemberonEnd())
+    if (json.IsObject())
     {
         loadManifest(json);
     }
@@ -123,7 +123,7 @@ std::map<std::string, Manifest::AssetDiff> Manifest::genDiff(const Manifest *b) 
         valueIt = bAssets.find(key);
         if (valueIt == bAssets.cend()) {
             AssetDiff diff;
-            diff.asset = &valueA;
+            diff.asset = valueA;
             diff.type = DELETED;
             diff_map.emplace(key, diff);
         }
@@ -132,7 +132,7 @@ std::map<std::string, Manifest::AssetDiff> Manifest::genDiff(const Manifest *b) 
         valueB = valueIt->second;
         if (valueA.md5 != valueB.md5) {
             AssetDiff diff;
-            diff.asset = &valueB;
+            diff.asset = valueB;
             diff.type = MODIFIED;
             diff_map.emplace(key, diff);
         }
@@ -147,7 +147,7 @@ std::map<std::string, Manifest::AssetDiff> Manifest::genDiff(const Manifest *b) 
         valueIt = _assets.find(key);
         if (valueIt == _assets.cend()) {
             AssetDiff diff;
-            diff.asset = &valueB;
+            diff.asset = valueB;
             diff.type = ADDED;
             diff_map.emplace(key, diff);
         }
@@ -231,12 +231,19 @@ rapidjson::Document Manifest::parseJSON(const std::string &url)
         // Load file content
         content = _fileUtils->getStringFromFile(url);
         
-        // Parse file with rapid json
-        json.Parse<0>(content.c_str());
-        // Print error
-        if (json.HasParseError()) {
-            std::string errorSnippet = content.substr(json.GetErrorOffset()-1, 10);
-            CCLOG("Version file parse error %s at <%s>\n", json.GetParseError(), errorSnippet.c_str());
+        if (content.size() == 0)
+        {
+            CCLOG("Fail to retrieve local file content: %s\n", url.c_str());
+        }
+        else
+        {
+            // Parse file with rapid json
+            json.Parse<0>(content.c_str());
+            // Print error
+            if (json.HasParseError()) {
+                std::string errorSnippet = content.substr(json.GetErrorOffset()-1, 10);
+                CCLOG("File parse error %s at <%s>\n", json.GetParseError(), errorSnippet.c_str());
+            }
         }
     }
     return json;

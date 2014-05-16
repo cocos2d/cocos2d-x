@@ -54,7 +54,7 @@ public:
     };
     
     struct AssetDiff {
-        Asset *asset;
+        Asset asset;
         DiffType type;
     };
     
