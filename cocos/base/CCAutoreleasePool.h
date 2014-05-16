@@ -164,7 +164,6 @@ private:
     static PoolManager* s_singleInstance;
     
     std::deque<AutoreleasePool*> _releasePoolStack;
-    AutoreleasePool *_curReleasePool;
 };
 
 // end of base_nodes group

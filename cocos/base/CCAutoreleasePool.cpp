@@ -111,7 +111,6 @@ PoolManager* PoolManager::getInstance()
     {
         s_singleInstance = new PoolManager();
     }
-    CC_ASSERT(s_singleInstance->getCurrentPool() != nullptr);
     return s_singleInstance;
 }
 
@@ -143,7 +142,8 @@ PoolManager::~PoolManager()
 
 AutoreleasePool* PoolManager::getCurrentPool() const
 {
-    return _curReleasePool;
+    CC_ASSERT(!_releasePoolStack.empty());
+    return _releasePoolStack.back();
 }
 
 bool PoolManager::isObjectInPools(Ref* obj) const
@@ -159,7 +159,6 @@ bool PoolManager::isObjectInPools(Ref* obj) const
 void PoolManager::push(AutoreleasePool *pool)
 {
     _releasePoolStack.push_back(pool);
-    _curReleasePool = pool;
 }
 
 void PoolManager::pop()
@@ -168,7 +167,6 @@ void PoolManager::pop()
     CC_ASSERT(_releasePoolStack.size() > 1);
 
     _releasePoolStack.pop_back();
-    _curReleasePool = _releasePoolStack.back();
 }
 
 NS_CC_END
