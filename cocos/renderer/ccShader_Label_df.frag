@@ -5,8 +5,9 @@ precision lowp float;
 \n#endif\n
  
 varying vec4 v_fragmentColor; 
-varying vec2 v_texCoord; 
-uniform vec4 v_textColor;
+varying vec2 v_texCoord;
+
+uniform vec4 u_textColor;
  
 void main() 
 {
@@ -19,7 +20,7 @@ void main()
     //float width = fwidth(dist); \n
     //assign width for constant will lead to a little bit fuzzy,it's temporary measure.\n
     float width = 0.04; 
-    float alpha = smoothstep(0.5-width, 0.5+width, dist) * v_textColor.a; 
-    gl_FragColor = v_fragmentColor * vec4(v_textColor.rgb,alpha); 
+    float alpha = smoothstep(0.5-width, 0.5+width, dist) * u_textColor.a; 
+    gl_FragColor = v_fragmentColor * vec4(u_textColor.rgb,alpha);
 }
 );
