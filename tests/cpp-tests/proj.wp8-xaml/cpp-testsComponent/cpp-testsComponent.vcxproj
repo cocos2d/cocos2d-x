@@ -184,6 +184,7 @@
     <ClCompile Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\DirectXBase.cpp" />
     <ClCompile Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\EditBoxEvent.cpp" />
     <ClCompile Include="..\..\Classes\BaseTest.cpp" />
+    <ClCompile Include="..\..\Classes\BugsTest\Bug-Child.cpp" />
     <ClCompile Include="..\..\Classes\ChipmunkTest\ChipmunkTest.cpp" />
     <ClCompile Include="..\..\Classes\ClippingNodeTest\ClippingNodeTest.cpp" />
     <ClCompile Include="..\..\Classes\ConfigurationTest\ConfigurationTest.cpp" />
@@ -378,6 +379,7 @@
     <ClInclude Include="..\..\Classes\Box2DTestBed\Tests\Mobile.h" />
     <ClInclude Include="..\..\Classes\Box2DTestBed\Tests\MobileBalanced.h" />
     <ClInclude Include="..\..\Classes\Box2DTestBed\Tests\MotorJoint.h" />
+    <ClInclude Include="..\..\Classes\BugsTest\Bug-Child.h" />
     <ClInclude Include="..\..\Classes\ChipmunkTest\ChipmunkTest.h" />
     <ClInclude Include="..\..\Classes\ClippingNodeTest\ClippingNodeTest.h" />
     <ClInclude Include="..\..\Classes\ConfigurationTest\ConfigurationTest.h" />

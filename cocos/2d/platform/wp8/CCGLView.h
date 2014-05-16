@@ -61,8 +61,8 @@ public:
     virtual void swapBuffers();
     virtual void setViewPortInPoints(float x , float y , float w , float h);
     virtual void setScissorInPoints(float x , float y , float w , float h);
-    const Matrix& getOrientationMatrix() const;
-    const Matrix& getReverseOrientationMatrix () const {return m_reverseOrientationMatrix;};
+    const Mat4& getOrientationMatrix() const;
+    const Mat4& getReverseOrientationMatrix () const {return m_reverseOrientationMatrix;};
 
     Windows::Graphics::Display::DisplayOrientations getDeviceOrientation() {return m_orientation;};
 
@@ -162,8 +162,8 @@ private:
 	bool m_lastPointValid;
 	bool m_windowClosed;
 	bool m_windowVisible;
-    Matrix m_orientationMatrix;
-    Matrix m_reverseOrientationMatrix;
+    Mat4 m_orientationMatrix;
+    Mat4 m_reverseOrientationMatrix;
 
 
     bool m_running;
