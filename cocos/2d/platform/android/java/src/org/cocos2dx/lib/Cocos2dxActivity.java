@@ -58,14 +58,8 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		return sContext;
 	}
 	
-	// ===========================================================
-	// Constructors
-	// ===========================================================
 	
-	@Override
-	protected void onCreate(final Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
+	protected void onLoadNativeLibraries() {
 		try {
 			ApplicationInfo ai = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
 			Bundle bundle = ai.metaData;
@@ -74,10 +68,23 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         		System.loadLibrary(libName);
 			} catch (Exception e) {
 		 		// ERROR
+				e.printStackTrace();
 			}
 		} catch (PackageManager.NameNotFoundException e) {
 		 	// ERROR
+			e.printStackTrace();
 		}
+	}
+	
+	// ===========================================================
+	// Constructors
+	// ===========================================================
+	
+	@Override
+	protected void onCreate(final Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		onLoadNativeLibraries();
 
 		sContext = this;
     	this.mHandler = new Cocos2dxHandler(this);
