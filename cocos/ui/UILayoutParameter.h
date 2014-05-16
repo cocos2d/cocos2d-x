@@ -136,7 +136,7 @@ public:
     LayoutParameterProtocol(){}
     virtual ~LayoutParameterProtocol(){}
     
-    virtual LayoutParameter* getLayoutParameter(LayoutParameter::Type type) = 0;
+    virtual LayoutParameter* getLayoutParameter() = 0;
 };
 
     

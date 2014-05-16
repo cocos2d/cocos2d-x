@@ -480,7 +480,7 @@ public:
      *
      * @return LayoutParameter
      */
-    LayoutParameter* getLayoutParameter(LayoutParameter::Type type) override;
+    LayoutParameter* getLayoutParameter() override;
 
     /**
      * Ignore the widget size
@@ -680,8 +680,10 @@ protected:
     GLubyte _opacity;
     bool _flippedX;
     bool _flippedY;
+    //use map to enble switch back and forth for user layout parameters
     Map<int,LayoutParameter*> _layoutParameterDictionary;
-    
+    LayoutParameter::Type _layoutParameterType;
+
     bool _focused;
     bool _focusEnabled;
     

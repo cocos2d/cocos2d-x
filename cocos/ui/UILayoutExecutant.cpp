@@ -76,7 +76,7 @@ void LinearVerticalLayoutExecutant::doLayout(LayoutProtocol* layout)
         LayoutParameterProtocol* child = dynamic_cast<LayoutParameterProtocol*>(subWidget);
         if (child)
         {
-            LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LayoutParameter::Type::LINEAR));
+            LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter());
             
             if (layoutParameter)
             {
@@ -119,7 +119,7 @@ void LinearHorizontalLayoutExecutant::doLayout(LayoutProtocol* layout)
         Widget* child = dynamic_cast<Widget*>(subWidget);
         if (child)
         {
-            LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LayoutParameter::Type::LINEAR));
+            LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter());
             if (layoutParameter)
             {
                 LinearLayoutParameter::LinearGravity childGravity = layoutParameter->getGravity();
@@ -162,7 +162,7 @@ void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
         Widget* child = dynamic_cast<Widget*>(subWidget);
         if (child)
         {
-            RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LayoutParameter::Type::RELATIVE));
+            RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter());
             layoutParameter->_put = false;
             unlayoutChildCount++;
             widgetChildren.pushBack(child);
@@ -173,7 +173,7 @@ void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
         for (auto& subWidget : widgetChildren)
         {
             Widget* child = static_cast<Widget*>(subWidget);
-            RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LayoutParameter::Type::RELATIVE));
+            RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter());
             
             if (layoutParameter)
             {
@@ -195,7 +195,7 @@ void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
                     {
                         if (sWidget)
                         {
-                            RelativeLayoutParameter* rlayoutParameter = dynamic_cast<RelativeLayoutParameter*>(sWidget->getLayoutParameter(LayoutParameter::Type::RELATIVE));
+                            RelativeLayoutParameter* rlayoutParameter = dynamic_cast<RelativeLayoutParameter*>(sWidget->getLayoutParameter());
                             if (rlayoutParameter &&  rlayoutParameter->getRelativeName() == relativeName)
                             {
                                 relativeWidget = sWidget;

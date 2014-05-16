@@ -62,7 +62,8 @@ _opacity(255),
 _flippedX(false),
 _flippedY(false),
 _focused(false),
-_focusEnabled(true)
+_focusEnabled(true),
+_layoutParameterType(LayoutParameter::Type::NONE)
 {
     onFocusChanged = CC_CALLBACK_2(Widget::onFocusChange,this);
     onNextFocusedWidget = nullptr;
@@ -868,12 +869,12 @@ void Widget::setLayoutParameter(LayoutParameter *parameter)
         return;
     }
     _layoutParameterDictionary.insert((int)parameter->getLayoutType(), parameter);
-
+    _layoutParameterType = parameter->getLayoutType();
 }
 
-LayoutParameter* Widget::getLayoutParameter(LayoutParameter::Type type)
+LayoutParameter* Widget::getLayoutParameter()
 {
-    return dynamic_cast<LayoutParameter*>(_layoutParameterDictionary.at((int)type));;
+    return dynamic_cast<LayoutParameter*>(_layoutParameterDictionary.at((int)_layoutParameterType));
 }
 
 std::string Widget::getDescription() const
