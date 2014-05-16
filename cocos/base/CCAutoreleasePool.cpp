@@ -122,6 +122,7 @@ void PoolManager::destroyInstance()
 
 PoolManager::PoolManager()
 {
+    _releasePoolStack.reserve(16);
     // Add the first auto release pool
     push(new AutoreleasePool("cocos2d autorelease pool"));
 }
