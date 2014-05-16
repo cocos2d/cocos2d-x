@@ -7,7 +7,6 @@ varying vec2 v_texCoord;
 
 uniform vec2 resolution;
 uniform vec2 textureResolution;
-uniform sampler2D CC_Texture0;
 
 /*by musk License Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
  

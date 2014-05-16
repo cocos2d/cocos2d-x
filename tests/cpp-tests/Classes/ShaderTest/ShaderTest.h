@@ -1,6 +1,8 @@
 #ifndef _SHADER_TEST_H_
 #define _SHADER_TEST_H_
 
+#include "ui/CocosGUI.h"
+
 #include "../testBasic.h"
 #include "extensions/cocos-ext.h"
 #include "../BaseTest.h"
@@ -166,6 +168,8 @@ class ShaderMultiTexture : public ShaderTestDemo
 {
 public:
     ShaderMultiTexture();
+    ui::Slider* createSliderCtl();
+    Sprite *_sprite;
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;

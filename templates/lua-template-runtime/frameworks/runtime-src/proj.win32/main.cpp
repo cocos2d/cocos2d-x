@@ -1,12 +1,11 @@
 #include "main.h"
 #include "AppDelegate.h"
 #include "cocos2d.h"
-#include "SimulatorWindow.h"
 #include <shellapi.h>
 USING_NS_CC;
 
 // uncomment below line, open debug console
-#define USE_WIN32_CONSOLE
+//#define USE_WIN32_CONSOLE
 
 int APIENTRY _tWinMain(HINSTANCE hInstance,
                        HINSTANCE hPrevInstance,
@@ -40,7 +39,6 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
     // create the application instance
     AppDelegate app;
-    createSimulator("HelloLua",960,640);
 
     int ret = Application::getInstance()->run();
 

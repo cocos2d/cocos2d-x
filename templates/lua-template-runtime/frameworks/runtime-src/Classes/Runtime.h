@@ -26,43 +26,12 @@ THE SOFTWARE.
 #define  _RUNTIME__H_
 
 #include <string>
-#include <vector>
 using namespace std;
 
-
+bool initRuntime();
 bool startRuntime();
 
 bool reloadScript(const string& modulefile);
-
-// SimulatorConfig
-typedef struct _SimulatorScreenSize {
-	string title;
-	int width;
-	int height;
-
-	_SimulatorScreenSize(const string title_, int width_, int height_)
-	{
-		title  = title_;
-		width  = width_;
-		height = height_;
-	}
-} SimulatorScreenSize;
-
-typedef vector<SimulatorScreenSize> ScreenSizeArray;
-class SimulatorConfig
-{
-public:
-	static SimulatorConfig *getInstance(void);
-
-	// predefined screen size
-	int getScreenSizeCount(void);
-	const SimulatorScreenSize getScreenSize(int index);
-
-private:
-	SimulatorConfig(void);
-	static SimulatorConfig *s_sharedInstance;
-	ScreenSizeArray m_screenSizeArray;
-};
 
 #endif // _RUNTIME__H_
 

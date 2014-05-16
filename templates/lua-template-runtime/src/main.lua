@@ -20,6 +20,7 @@ local function main()
     -- avoid memory leak
     collectgarbage("setpause", 100)
     collectgarbage("setstepmul", 5000)
+    cc.Director:getInstance():getOpenGLView():setDesignResolutionSize(480, 320, 0)
 	cc.FileUtils:getInstance():addSearchResolutionsOrder("src");
 	cc.FileUtils:getInstance():addSearchResolutionsOrder("res");
 	local schedulerID = 0
