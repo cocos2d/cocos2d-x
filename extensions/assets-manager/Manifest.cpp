@@ -349,6 +349,11 @@ void Manifest::loadManifest(const rapidjson::Document &json)
     if( json.HasMember(KEY_PACKAGE_URL) && json[KEY_PACKAGE_URL].IsString() )
     {
         _packageUrl = json[KEY_PACKAGE_URL].GetString();
+        // Append automatically "/"
+        if (_packageUrl.size() > 0 && _packageUrl[_packageUrl.size() - 1] != '/')
+        {
+            _packageUrl.append("/");
+        }
     }
     
     // Retrieve all compressed files
