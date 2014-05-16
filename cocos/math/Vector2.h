@@ -18,12 +18,13 @@
  This file was modified to fit the cocos2d-x project
  */
 
-#ifndef VECTOR2_H_
-#define VECTOR2_H_
+#ifndef MATH_VEC2_H
+#define MATH_VEC2_H
 
-#include "CCMathBase.h"
-#include "base/CCPlatformMacros.h"
-#include "base/ccMacros.h"
+#include <algorithm>
+#include <functional>
+#include <math.h>
+#include "math/CCMathBase.h"
 
 NS_CC_MATH_BEGIN
 
@@ -33,17 +34,17 @@ NS_CC_MATH_BEGIN
 inline float clampf(float value, float min_inclusive, float max_inclusive)
 {
     if (min_inclusive > max_inclusive) {
-        CC_SWAP(min_inclusive, max_inclusive, float);
+        std::swap(min_inclusive, max_inclusive);
     }
     return value < min_inclusive ? min_inclusive : value < max_inclusive? value : max_inclusive;
 }
 
-class Matrix;
+class Mat4;
 
 /**
  * Defines a 2-element floating point vector.
  */
-class Vector2
+class Vec2
 {
 public:
 
@@ -60,7 +61,7 @@ public:
     /**
      * Constructs a new vector initialized to all zeros.
      */
-    Vector2();
+    Vec2();
 
     /**
      * Constructs a new vector initialized to the specified values.
@@ -68,14 +69,14 @@ public:
      * @param xx The x coordinate.
      * @param yy The y coordinate.
      */
-    Vector2(float xx, float yy);
+    Vec2(float xx, float yy);
 
     /**
      * Constructs a new vector from the values in the specified array.
      *
      * @param array An array containing the elements of the vector in the order x, y.
      */
-    Vector2(const float* array);
+    Vec2(const float* array);
 
     /**
      * Constructs a vector that describes the direction between the specified points.
@@ -83,19 +84,19 @@ public:
      * @param p1 The first point.
      * @param p2 The second point.
      */
-    Vector2(const Vector2& p1, const Vector2& p2);
+    Vec2(const Vec2& p1, const Vec2& p2);
 
     /**
      * Constructs a new vector that is a copy of the specified vector.
      *
      * @param copy The vector to copy.
      */
-    Vector2(const Vector2& copy);
+    Vec2(const Vec2& copy);
 
     /**
      * Destructor.
      */
-    ~Vector2();
+    ~Vec2();
 
     /**
      * Indicates whether this vector contains all zeros.
@@ -119,14 +120,14 @@ public:
      * 
      * @return The angle between the two vectors (in radians).
      */
-    static float angle(const Vector2& v1, const Vector2& v2);
+    static float angle(const Vec2& v1, const Vec2& v2);
 
     /**
      * Adds the elements of the specified vector to this one.
      *
      * @param v The vector to add.
      */
-    void add(const Vector2& v);
+    void add(const Vec2& v);
 
     /**
      * Adds the specified vectors and stores the result in dst.
@@ -135,7 +136,7 @@ public:
      * @param v2 The second vector.
      * @param dst A vector to store the result in.
      */
-    static void add(const Vector2& v1, const Vector2& v2, Vector2* dst);
+    static void add(const Vec2& v1, const Vec2& v2, Vec2* dst);
 
     /**
      * Clamps this vector within the specified range.
@@ -143,7 +144,7 @@ public:
      * @param min The minimum value.
      * @param max The maximum value.
      */
-    void clamp(const Vector2& min, const Vector2& max);
+    void clamp(const Vec2& min, const Vec2& max);
 
     /**
      * Clamps the specified vector within the specified range and returns it in dst.
@@ -153,7 +154,7 @@ public:
      * @param max The maximum value.
      * @param dst A vector to store the result in.
      */
-    static void clamp(const Vector2& v, const Vector2& min, const Vector2& max, Vector2* dst);
+    static void clamp(const Vec2& v, const Vec2& min, const Vec2& max, Vec2* dst);
 
     /**
      * Returns the distance between this vector and v.
@@ -164,7 +165,7 @@ public:
      * 
      * @see distanceSquared
      */
-    float distance(const Vector2& v) const;
+    float distance(const Vec2& v) const;
 
     /**
      * Returns the squared distance between this vector and v.
@@ -180,7 +181,7 @@ public:
      * 
      * @see distance
      */
-    float distanceSquared(const Vector2& v) const;
+    float distanceSquared(const Vec2& v) const;
 
     /**
      * Returns the dot product of this vector and the specified vector.
@@ -189,7 +190,7 @@ public:
      * 
      * @return The dot product.
      */
-    float dot(const Vector2& v) const;
+    float dot(const Vec2& v) const;
 
     /**
      * Returns the dot product between the specified vectors.
@@ -199,7 +200,7 @@ public:
      * 
      * @return The dot product between the vectors.
      */
-    static float dot(const Vector2& v1, const Vector2& v2);
+    static float dot(const Vec2& v1, const Vec2& v2);
 
     /**
      * Computes the length of this vector.
@@ -232,7 +233,7 @@ public:
     /**
      * Normalizes this vector.
      *
-     * This method normalizes this Vector2 so that it is of
+     * This method normalizes this Vec2 so that it is of
      * unit length (in other words, the length of the vector
      * after calling this method will be 1.0f). If the vector
      * already has unit length or if the length of the vector
@@ -251,7 +252,7 @@ public:
      *
      * @param dst The destination vector.
      */
-    Vector2 getNormalized() const;
+    Vec2 getNormalized() const;
 
     /**
      * Scales all elements of this vector by the specified value.
@@ -265,7 +266,7 @@ public:
      *
      * @param scale The vector to scale by.
      */
-    void scale(const Vector2& scale);
+    void scale(const Vec2& scale);
 
     /**
      * Rotates this vector by angle (specified in radians) around the given point.
@@ -273,7 +274,7 @@ public:
      * @param point The point to rotate around.
      * @param angle The angle to rotate by (in radians).
      */
-    void rotate(const Vector2& point, float angle);
+    void rotate(const Vec2& point, float angle);
 
     /**
      * Sets the elements of this vector to the specified values.
@@ -295,7 +296,7 @@ public:
      *
      * @param v The vector to copy.
      */
-    void set(const Vector2& v);
+    void set(const Vec2& v);
 
     /**
      * Sets this vector to the directional vector between the specified points.
@@ -303,7 +304,7 @@ public:
      * @param p1 The first point.
      * @param p2 The second point.
      */
-    void set(const Vector2& p1, const Vector2& p2);
+    void set(const Vec2& p1, const Vec2& p2);
 
     /**
      * Subtracts this vector and the specified vector as (this - v)
@@ -311,7 +312,7 @@ public:
      *
      * @param v The vector to subtract.
      */
-    void subtract(const Vector2& v);
+    void subtract(const Vec2& v);
 
     /**
      * Subtracts the specified vectors and stores the result in dst.
@@ -321,7 +322,7 @@ public:
      * @param v2 The second vector.
      * @param dst The destination vector.
      */
-    static void subtract(const Vector2& v1, const Vector2& v2, Vector2* dst);
+    static void subtract(const Vec2& v1, const Vec2& v2, Vec2* dst);
 
     /**
      * Updates this vector towards the given target using a smoothing function.
@@ -334,7 +335,7 @@ public:
      * @param elapsedTime elapsed time between calls.
      * @param responseTime response time (in the same units as elapsedTime).
      */
-    void smooth(const Vector2& target, float elapsedTime, float responseTime);
+    void smooth(const Vec2& target, float elapsedTime, float responseTime);
 
     /**
      * Calculates the sum of this vector with the given vector.
@@ -344,7 +345,7 @@ public:
      * @param v The vector to add.
      * @return The vector sum.
      */
-    inline const Vector2 operator+(const Vector2& v) const;
+    inline const Vec2 operator+(const Vec2& v) const;
 
     /**
      * Adds the given vector to this vector.
@@ -352,7 +353,7 @@ public:
      * @param v The vector to add.
      * @return This vector, after the addition occurs.
      */
-    inline Vector2& operator+=(const Vector2& v);
+    inline Vec2& operator+=(const Vec2& v);
 
     /**
      * Calculates the sum of this vector with the given vector.
@@ -362,7 +363,7 @@ public:
      * @param v The vector to add.
      * @return The vector sum.
      */
-    inline const Vector2 operator-(const Vector2& v) const;
+    inline const Vec2 operator-(const Vec2& v) const;
 
     /**
      * Subtracts the given vector from this vector.
@@ -370,7 +371,7 @@ public:
      * @param v The vector to subtract.
      * @return This vector, after the subtraction occurs.
      */
-    inline Vector2& operator-=(const Vector2& v);
+    inline Vec2& operator-=(const Vec2& v);
 
     /**
      * Calculates the negation of this vector.
@@ -379,7 +380,7 @@ public:
      * 
      * @return The negation of this vector.
      */
-    inline const Vector2 operator-() const;
+    inline const Vec2 operator-() const;
 
     /**
      * Calculates the scalar product of this vector with the given value.
@@ -389,7 +390,7 @@ public:
      * @param s The value to scale by.
      * @return The scaled vector.
      */
-    inline const Vector2 operator*(float s) const;
+    inline const Vec2 operator*(float s) const;
 
     /**
      * Scales this vector by the given value.
@@ -397,7 +398,7 @@ public:
      * @param s The value to scale by.
      * @return This vector, after the scale occurs.
      */
-    inline Vector2& operator*=(float s);
+    inline Vec2& operator*=(float s);
     
     /**
      * Returns the components of this vector divided by the given constant
@@ -407,7 +408,7 @@ public:
      * @param s the constant to divide this vector with
      * @return a smaller vector
      */
-    inline const Vector2 operator/(float s) const;
+    inline const Vec2 operator/(float s) const;
 
     /**
      * Determines if this vector is less than the given vector.
@@ -416,7 +417,7 @@ public:
      * 
      * @return True if this vector is less than the given vector, false otherwise.
      */
-    inline bool operator<(const Vector2& v) const;
+    inline bool operator<(const Vec2& v) const;
 
     /**
      * Determines if this vector is equal to the given vector.
@@ -425,7 +426,7 @@ public:
      * 
      * @return True if this vector is equal to the given vector, false otherwise.
      */
-    inline bool operator==(const Vector2& v) const;
+    inline bool operator==(const Vec2& v) const;
 
     /**
      * Determines if this vector is not equal to the given vector.
@@ -434,7 +435,7 @@ public:
      * 
      * @return True if this vector is not equal to the given vector, false otherwise.
      */
-    inline bool operator!=(const Vector2& v) const;
+    inline bool operator!=(const Vec2& v) const;
 
     //code added compatible for Point
 public:
@@ -446,14 +447,14 @@ public:
     /**
      * @js NA
      */
-    bool equals(const Vector2& target) const;
+    bool equals(const Vec2& target) const;
     
     /** @returns if points have fuzzy equality which means equal with some degree of variance.
      @since v2.1.4
      * @js NA
      * @lua NA
      */
-    bool fuzzyEquals(const Vector2& target, float variance) const;
+    bool fuzzyEquals(const Vec2& target, float variance) const;
 
     /** Calculates distance between point an origin
      @return float
@@ -465,7 +466,7 @@ public:
         return sqrtf(x*x + y*y);
     };
 
-    /** Calculates the square length of a Vector2 (not calling sqrt() )
+    /** Calculates the square length of a Vec2 (not calling sqrt() )
      @return float
      @since v2.1.4
      * @js NA
@@ -481,7 +482,7 @@ public:
      * @js NA
      * @lua NA
      */
-    inline float getDistanceSq(const Vector2& other) const {
+    inline float getDistanceSq(const Vec2& other) const {
         return (*this - other).getLengthSq();
     };
 
@@ -491,7 +492,7 @@ public:
      * @js NA
      * @lua NA
      */
-    inline float getDistance(const Vector2& other) const {
+    inline float getDistance(const Vec2& other) const {
         return (*this - other).getLength();
     };
 
@@ -509,7 +510,7 @@ public:
      * @js NA
      * @lua NA
      */
-    float getAngle(const Vector2& other) const;
+    float getAngle(const Vec2& other) const;
 
     /** Calculates cross product of two points.
      @return float
@@ -517,29 +518,29 @@ public:
      * @js NA
      * @lua NA
      */
-    inline float cross(const Vector2& other) const {
+    inline float cross(const Vec2& other) const {
         return x*other.y - y*other.x;
     };
 
     /** Calculates perpendicular of v, rotated 90 degrees counter-clockwise -- cross(v, perp(v)) >= 0
-     @return Vector2
+     @return Vec2
      @since v2.1.4
      * @js NA
      * @lua NA
      */
-    inline Vector2 getPerp() const {
-        return Vector2(-y, x);
+    inline Vec2 getPerp() const {
+        return Vec2(-y, x);
     };
     
     /** Calculates midpoint between two points.
-     @return Vector2
+     @return Vec2
      @since v3.0
      * @js NA
      * @lua NA
      */
-    inline Vector2 getMidpoint(const Vector2& other) const
+    inline Vec2 getMidpoint(const Vec2& other) const
     {
-        return Vector2((x + other.x) / 2.0f, (y + other.y) / 2.0f);
+        return Vec2((x + other.x) / 2.0f, (y + other.y) / 2.0f);
     }
     
     /** Clamp a point between from and to.
@@ -547,9 +548,9 @@ public:
      * @js NA
      * @lua NA
      */
-    inline Vector2 getClampPoint(const Vector2& min_inclusive, const Vector2& max_inclusive) const
+    inline Vec2 getClampPoint(const Vec2& min_inclusive, const Vec2& max_inclusive) const
     {
-        return Vector2(clampf(x,min_inclusive.x,max_inclusive.x), clampf(y, min_inclusive.y, max_inclusive.y));
+        return Vec2(clampf(x,min_inclusive.x,max_inclusive.x), clampf(y, min_inclusive.y, max_inclusive.y));
     }
     
     /** Run a math operation function on each point component
@@ -561,51 +562,51 @@ public:
      * @js NA
      * @lua NA
      */
-    inline Vector2 compOp(std::function<float(float)> function) const
+    inline Vec2 compOp(std::function<float(float)> function) const
     {
-        return Vector2(function(x), function(y));
+        return Vec2(function(x), function(y));
     }
 
     /** Calculates perpendicular of v, rotated 90 degrees clockwise -- cross(v, rperp(v)) <= 0
-     @return Vector2
+     @return Vec2
      @since v2.1.4
      * @js NA
      * @lua NA
      */
-    inline Vector2 getRPerp() const {
-        return Vector2(y, -x);
+    inline Vec2 getRPerp() const {
+        return Vec2(y, -x);
     };
 
     /** Calculates the projection of this over other.
-     @return Vector2
+     @return Vec2
      @since v2.1.4
      * @js NA
      * @lua NA
      */
-    inline Vector2 project(const Vector2& other) const {
+    inline Vec2 project(const Vec2& other) const {
         return other * (dot(other)/other.dot(other));
     };
 
     /** Complex multiplication of two points ("rotates" two points).
-     @return Vector2 vector with an angle of this.getAngle() + other.getAngle(),
+     @return Vec2 vector with an angle of this.getAngle() + other.getAngle(),
      and a length of this.getLength() * other.getLength().
      @since v2.1.4
      * @js NA
      * @lua NA
      */
-    inline Vector2 rotate(const Vector2& other) const {
-        return Vector2(x*other.x - y*other.y, x*other.y + y*other.x);
+    inline Vec2 rotate(const Vec2& other) const {
+        return Vec2(x*other.x - y*other.y, x*other.y + y*other.x);
     };
 
     /** Unrotates two points.
-     @return Vector2 vector with an angle of this.getAngle() - other.getAngle(),
+     @return Vec2 vector with an angle of this.getAngle() - other.getAngle(),
      and a length of this.getLength() * other.getLength().
      @since v2.1.4
      * @js NA
      * @lua NA
      */
-    inline Vector2 unrotate(const Vector2& other) const {
-        return Vector2(x*other.x + y*other.y, y*other.x - x*other.y);
+    inline Vec2 unrotate(const Vec2& other) const {
+        return Vec2(x*other.x + y*other.y, y*other.x - x*other.y);
     };
 
     /** Linear Interpolation between two points a and b
@@ -617,7 +618,7 @@ public:
      * @js NA
      * @lua NA
      */
-    inline Vector2 lerp(const Vector2& other, float alpha) const {
+    inline Vec2 lerp(const Vec2& other, float alpha) const {
         return *this * (1.f - alpha) + other * alpha;
     };
 
@@ -629,15 +630,15 @@ public:
      * @js NA
      * @lua NA
      */
-    Vector2 rotateByAngle(const Vector2& pivot, float angle) const;
+    Vec2 rotateByAngle(const Vec2& pivot, float angle) const;
 
     /**
      * @js NA
      * @lua NA
      */
-    static inline Vector2 forAngle(const float a)
+    static inline Vec2 forAngle(const float a)
     {
-        return Vector2(cosf(a), sinf(a));
+        return Vec2(cosf(a), sinf(a));
     }
     
     /** A general line-line intersection test
@@ -657,8 +658,8 @@ public:
      * @js NA
      * @lua NA
      */
-    static bool isLineIntersect(const Vector2& A, const Vector2& B,
-                                 const Vector2& C, const Vector2& D,
+    static bool isLineIntersect(const Vec2& A, const Vec2& B,
+                                 const Vec2& C, const Vec2& D,
                                  float *S = nullptr, float *T = nullptr);
     
     /**
@@ -667,8 +668,8 @@ public:
      * @js NA
      * @lua NA
      */
-    static bool isLineOverlap(const Vector2& A, const Vector2& B,
-                                const Vector2& C, const Vector2& D);
+    static bool isLineOverlap(const Vec2& A, const Vec2& B,
+                                const Vec2& C, const Vec2& D);
     
     /**
      returns true if Line A-B parallel with segment C-D
@@ -676,8 +677,8 @@ public:
      * @js NA
      * @lua NA
      */
-    static bool isLineParallel(const Vector2& A, const Vector2& B,
-                   const Vector2& C, const Vector2& D);
+    static bool isLineParallel(const Vec2& A, const Vec2& B,
+                   const Vec2& C, const Vec2& D);
     
     /**
      returns true if Segment A-B overlap with segment C-D
@@ -685,9 +686,9 @@ public:
      * @js NA
      * @lua NA
      */
-    static bool isSegmentOverlap(const Vector2& A, const Vector2& B,
-                                 const Vector2& C, const Vector2& D,
-                                 Vector2* S = nullptr, Vector2* E = nullptr);
+    static bool isSegmentOverlap(const Vec2& A, const Vec2& B,
+                                 const Vec2& C, const Vec2& D,
+                                 Vec2* S = nullptr, Vec2* E = nullptr);
     
     /**
      returns true if Segment A-B intersects with segment C-D
@@ -695,7 +696,7 @@ public:
      * @js NA
      * @lua NA
      */
-    static bool isSegmentIntersect(const Vector2& A, const Vector2& B, const Vector2& C, const Vector2& D);
+    static bool isSegmentIntersect(const Vec2& A, const Vec2& B, const Vec2& C, const Vec2& D);
     
     /**
      returns the intersection point of line A-B, C-D
@@ -703,34 +704,34 @@ public:
      * @js NA
      * @lua NA
      */
-    static Vector2 getIntersectPoint(const Vector2& A, const Vector2& B, const Vector2& C, const Vector2& D);
+    static Vec2 getIntersectPoint(const Vec2& A, const Vec2& B, const Vec2& C, const Vec2& D);
     
-    /** equals to Vector2(0,0) */
-    static const Vector2 ZERO;
-    /** equals to Vector2(1,1) */
-    static const Vector2 ONE;
-    /** equals to Vector2(1,0) */
-    static const Vector2 UNIT_X;
-    /** equals to Vector2(0,1) */
-    static const Vector2 UNIT_Y;
-    /** equals to Vector2(0.5, 0.5) */
-    static const Vector2 ANCHOR_MIDDLE;
-    /** equals to Vector2(0, 0) */
-    static const Vector2 ANCHOR_BOTTOM_LEFT;
-    /** equals to Vector2(0, 1) */
-    static const Vector2 ANCHOR_TOP_LEFT;
-    /** equals to Vector2(1, 0) */
-    static const Vector2 ANCHOR_BOTTOM_RIGHT;
-    /** equals to Vector2(1, 1) */
-    static const Vector2 ANCHOR_TOP_RIGHT;
-    /** equals to Vector2(1, 0.5) */
-    static const Vector2 ANCHOR_MIDDLE_RIGHT;
-    /** equals to Vector2(0, 0.5) */
-    static const Vector2 ANCHOR_MIDDLE_LEFT;
-    /** equals to Vector2(0.5, 1) */
-    static const Vector2 ANCHOR_MIDDLE_TOP;
-    /** equals to Vector2(0.5, 0) */
-    static const Vector2 ANCHOR_MIDDLE_BOTTOM;
+    /** equals to Vec2(0,0) */
+    static const Vec2 ZERO;
+    /** equals to Vec2(1,1) */
+    static const Vec2 ONE;
+    /** equals to Vec2(1,0) */
+    static const Vec2 UNIT_X;
+    /** equals to Vec2(0,1) */
+    static const Vec2 UNIT_Y;
+    /** equals to Vec2(0.5, 0.5) */
+    static const Vec2 ANCHOR_MIDDLE;
+    /** equals to Vec2(0, 0) */
+    static const Vec2 ANCHOR_BOTTOM_LEFT;
+    /** equals to Vec2(0, 1) */
+    static const Vec2 ANCHOR_TOP_LEFT;
+    /** equals to Vec2(1, 0) */
+    static const Vec2 ANCHOR_BOTTOM_RIGHT;
+    /** equals to Vec2(1, 1) */
+    static const Vec2 ANCHOR_TOP_RIGHT;
+    /** equals to Vec2(1, 0.5) */
+    static const Vec2 ANCHOR_MIDDLE_RIGHT;
+    /** equals to Vec2(0, 0.5) */
+    static const Vec2 ANCHOR_MIDDLE_LEFT;
+    /** equals to Vec2(0.5, 1) */
+    static const Vec2 ANCHOR_MIDDLE_TOP;
+    /** equals to Vec2(0.5, 0) */
+    static const Vec2 ANCHOR_MIDDLE_BOTTOM;
 };
 
 /**
@@ -740,12 +741,12 @@ public:
  * @param v The vector to scale.
  * @return The scaled vector.
  */
-inline const Vector2 operator*(float x, const Vector2& v);
+inline const Vec2 operator*(float x, const Vec2& v);
 
-typedef Vector2 Point2;
+typedef Vec2 Point2;
 
 NS_CC_MATH_END
 
 #include "Vector2.inl"
 
-#endif
+#endif // MATH_VEC2_H

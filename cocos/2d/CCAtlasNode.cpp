@@ -133,7 +133,7 @@ void AtlasNode::updateAtlasValues()
 }
 
 // AtlasNode - draw
-void AtlasNode::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void AtlasNode::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     _quadCommand.init(
               _globalZOrder,

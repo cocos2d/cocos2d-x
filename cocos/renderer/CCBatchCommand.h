@@ -40,7 +40,7 @@ public:
     BatchCommand();
     ~BatchCommand();
 
-    void init(float depth, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Matrix& modelViewTransform);
+    void init(float depth, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Mat4& modelViewTransform);
 
     void execute();
 
@@ -54,7 +54,7 @@ protected:
     TextureAtlas *_textureAtlas;
 
     // ModelView transform
-    Matrix _mv;
+    Mat4 _mv;
 };
 NS_CC_END
 

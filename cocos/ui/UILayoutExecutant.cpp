@@ -76,12 +76,12 @@ void LinearVerticalLayoutExecutant::doLayout(LayoutProtocol* layout)
         LayoutParameterProtocol* child = dynamic_cast<LayoutParameterProtocol*>(subWidget);
         if (child)
         {
-            LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter());
+            LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LayoutParameter::Type::LINEAR));
             
             if (layoutParameter)
             {
                 LinearLayoutParameter::LinearGravity childGravity = layoutParameter->getGravity();
-                Vector2 ap = subWidget->getAnchorPoint();
+                Vec2 ap = subWidget->getAnchorPoint();
                 Size cs = subWidget->getContentSize();
                 float finalPosX = ap.x * cs.width;
                 float finalPosY = topBoundary - ((1.0f-ap.y) * cs.height);
@@ -102,7 +102,7 @@ void LinearVerticalLayoutExecutant::doLayout(LayoutProtocol* layout)
                 Margin mg = layoutParameter->getMargin();
                 finalPosX += mg.left;
                 finalPosY -= mg.top;
-                subWidget->setPosition(Vector2(finalPosX, finalPosY));
+                subWidget->setPosition(Vec2(finalPosX, finalPosY));
                 topBoundary = subWidget->getPosition().y - subWidget->getAnchorPoint().y * subWidget->getContentSize().height - mg.bottom;
             }
         }
@@ -119,11 +119,11 @@ void LinearHorizontalLayoutExecutant::doLayout(LayoutProtocol* layout)
         Widget* child = dynamic_cast<Widget*>(subWidget);
         if (child)
         {
-            LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter());
+            LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LayoutParameter::Type::LINEAR));
             if (layoutParameter)
             {
                 LinearLayoutParameter::LinearGravity childGravity = layoutParameter->getGravity();
-                Vector2 ap = child->getAnchorPoint();
+                Vec2 ap = child->getAnchorPoint();
                 Size cs = child->getSize();
                 float finalPosX = leftBoundary + (ap.x * cs.width);
                 float finalPosY = layoutSize.height - (1.0f - ap.y) * cs.height;
@@ -144,7 +144,7 @@ void LinearHorizontalLayoutExecutant::doLayout(LayoutProtocol* layout)
                 Margin mg = layoutParameter->getMargin();
                 finalPosX += mg.left;
                 finalPosY -= mg.top;
-                child->setPosition(Vector2(finalPosX, finalPosY));
+                child->setPosition(Vec2(finalPosX, finalPosY));
                 leftBoundary = child->getRightInParent() + mg.right;
             }
         }
@@ -162,7 +162,7 @@ void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
         Widget* child = dynamic_cast<Widget*>(subWidget);
         if (child)
         {
-            RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter());
+            RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LayoutParameter::Type::RELATIVE));
             layoutParameter->_put = false;
             unlayoutChildCount++;
             widgetChildren.pushBack(child);
@@ -173,7 +173,7 @@ void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
         for (auto& subWidget : widgetChildren)
         {
             Widget* child = static_cast<Widget*>(subWidget);
-            RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter());
+            RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LayoutParameter::Type::RELATIVE));
             
             if (layoutParameter)
             {
@@ -181,7 +181,7 @@ void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
                 {
                     continue;
                 }
-                Vector2 ap = child->getAnchorPoint();
+                Vec2 ap = child->getAnchorPoint();
                 Size cs = child->getSize();
                 RelativeLayoutParameter::RelativeAlign align = layoutParameter->getAlign();
                 const std::string relativeName = layoutParameter->getRelativeToWidgetName();
@@ -195,7 +195,7 @@ void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
                     {
                         if (sWidget)
                         {
-                            RelativeLayoutParameter* rlayoutParameter = dynamic_cast<RelativeLayoutParameter*>(sWidget->getLayoutParameter());
+                            RelativeLayoutParameter* rlayoutParameter = dynamic_cast<RelativeLayoutParameter*>(sWidget->getLayoutParameter(LayoutParameter::Type::RELATIVE));
                             if (rlayoutParameter &&  rlayoutParameter->getRelativeName() == relativeName)
                             {
                                 relativeWidget = sWidget;
@@ -499,7 +499,7 @@ void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
                     default:
                         break;
                 }
-                child->setPosition(Vector2(finalPosX, finalPosY));
+                child->setPosition(Vec2(finalPosX, finalPosY));
                 layoutParameter->_put = true;
                 unlayoutChildCount--;
             }

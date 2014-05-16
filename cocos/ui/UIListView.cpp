@@ -130,7 +130,7 @@ void ListView::remedyLayoutParameter(Widget *item)
     switch (_direction) {
         case Direction::VERTICAL:
         {
-            LinearLayoutParameter* llp = (LinearLayoutParameter*)(item->getLayoutParameter());
+            LinearLayoutParameter* llp = (LinearLayoutParameter*)(item->getLayoutParameter(LayoutParameter::Type::LINEAR));
             if (!llp)
             {
                 LinearLayoutParameter* defaultLp = LinearLayoutParameter::create();
@@ -185,7 +185,7 @@ void ListView::remedyLayoutParameter(Widget *item)
         }
         case Direction::HORIZONTAL:
         {
-            LinearLayoutParameter* llp = (LinearLayoutParameter*)(item->getLayoutParameter());
+            LinearLayoutParameter* llp = (LinearLayoutParameter*)(item->getLayoutParameter(LayoutParameter::Type::LINEAR));
             if (!llp)
             {
                 LinearLayoutParameter* defaultLp = LinearLayoutParameter::create();
@@ -409,7 +409,7 @@ void ListView::addEventListenerListView(Ref *target, SEL_ListViewEvent selector)
     _listViewEventSelector = selector;
 }
     
-void ListView::addEventListener(ccListViewCallback callback)
+void ListView::addEventListener(const ccListViewCallback& callback)
 {
     _eventCallback = callback;
 }
@@ -444,7 +444,7 @@ void ListView::selectedItemEvent(int state)
 
 }
     
-void ListView::interceptTouchEvent(int handleState, Widget *sender, const Vector2 &touchPoint)
+void ListView::interceptTouchEvent(int handleState, Widget *sender, const Vec2 &touchPoint)
 {
     ScrollView::interceptTouchEvent(handleState, sender, touchPoint);
     if (handleState != 1)

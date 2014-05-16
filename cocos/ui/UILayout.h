@@ -166,9 +166,9 @@ public:
      *
      * @param vector
      */
-    void setBackGroundColorVector(const Vector2 &vector);
+    void setBackGroundColorVector(const Vec2 &vector);
     
-    const Vector2& getBackGroundColorVector();
+    const Vec2& getBackGroundColorVector();
     
     void setBackGroundImageColor(const Color3B& color);
     
@@ -241,7 +241,7 @@ public:
      */
     virtual void addChild(Node* child, int zOrder, int tag) override;
     
-    virtual void visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated) override;
+    virtual void visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated) override;
 
     virtual void removeChild(Node* child, bool cleanup = true) override;
     
@@ -321,8 +321,8 @@ protected:
     virtual void copySpecialProperties(Widget* model) override;
     virtual void copyClonedWidgetChildren(Widget* model) override;
     
-    void stencilClippingVisit(Renderer *renderer, const Matrix& parentTransform, bool parentTransformUpdated);
-    void scissorClippingVisit(Renderer *renderer, const Matrix& parentTransform, bool parentTransformUpdated);
+    void stencilClippingVisit(Renderer *renderer, const Mat4& parentTransform, bool parentTransformUpdated);
+    void scissorClippingVisit(Renderer *renderer, const Mat4& parentTransform, bool parentTransformUpdated);
     
     void setStencilClippingSize(const Size& size);
     const Rect& getClippingRect();
@@ -402,7 +402,7 @@ protected:
     /**
      * get the center point of a widget in world space
      */
-    Vector2 getWorldCenterPoint(Widget* node);
+    Vec2 getWorldCenterPoint(Widget* node);
     
     /**
      * this method is called internally by nextFocusedWidget. When the dir is Right/Down, then this method will be called
@@ -461,7 +461,7 @@ protected:
     Color3B _cColor;
     Color3B _gStartColor;
     Color3B _gEndColor;
-    Vector2 _alongVector;
+    Vec2 _alongVector;
     GLubyte _cOpacity;
     Size _backGroundImageTextureSize;
     Type _layoutType;

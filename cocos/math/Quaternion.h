@@ -27,7 +27,7 @@
 
 NS_CC_MATH_BEGIN
 
-class Matrix;
+class Mat4;
 
 /**
  * Defines a 4-element quaternion that represents the orientation of an object in space.
@@ -108,7 +108,7 @@ public:
      *
      * @param m The matrix.
      */
-    Quaternion(const Matrix& m);
+    Quaternion(const Mat4& m);
 
     /**
      * Constructs a quaternion equal to the rotation from the specified axis and angle.
@@ -116,7 +116,7 @@ public:
      * @param axis A vector describing the axis of rotation.
      * @param angle The angle of rotation (in radians).
      */
-    Quaternion(const Vector3& axis, float angle);
+    Quaternion(const Vec3& axis, float angle);
 
     /**
      * Constructs a new quaternion that is a copy of the specified one.
@@ -165,7 +165,7 @@ public:
      * @param m The matrix.
      * @param dst A quaternion to store the conjugate in.
      */
-    static void createFromRotationMatrix(const Matrix& m, Quaternion* dst);
+    static void createFromRotationMatrix(const Mat4& m, Quaternion* dst);
 
     /**
      * Creates this quaternion equal to the rotation from the specified axis and angle
@@ -175,7 +175,7 @@ public:
      * @param angle The angle of rotation (in radians).
      * @param dst A quaternion to store the conjugate in.
      */
-    static void createFromAxisAngle(const Vector3& axis, float angle, Quaternion* dst);
+    static void createFromAxisAngle(const Vec3& axis, float angle, Quaternion* dst);
 
     /**
      * Sets this quaternion to the conjugate of itself.
@@ -272,7 +272,7 @@ public:
      *
      * @param m The matrix.
      */
-    void set(const Matrix& m);
+    void set(const Mat4& m);
 
     /**
      * Sets the quaternion equal to the rotation from the specified axis and angle.
@@ -280,7 +280,7 @@ public:
      * @param axis The axis of rotation.
      * @param angle The angle of rotation (in radians).
      */
-    void set(const Vector3& axis, float angle);
+    void set(const Vec3& axis, float angle);
 
     /**
      * Sets the elements of this quaternion to a copy of the specified quaternion.
@@ -297,11 +297,11 @@ public:
     /**
      * Converts this Quaternion4f to axis-angle notation. The axis is normalized.
      *
-     * @param e The Vector3f which stores the axis.
+     * @param e The Vec3f which stores the axis.
      * 
      * @return The angle (in radians).
      */
-    float toAxisAngle(Vector3* e) const;
+    float toAxisAngle(Vec3* e) const;
 
     /**
      * Interpolates between two quaternions using linear interpolation.

@@ -4,9 +4,9 @@
 -- @extend Widget
 
 --------------------------------
--- @function [parent=#LoadingBar] setBarDirection 
+-- @function [parent=#LoadingBar] setPercent 
 -- @param self
--- @param #ccui.LoadingBar::Direction direction
+-- @param #float float
         
 --------------------------------
 -- @function [parent=#LoadingBar] loadTexture 
@@ -15,9 +15,9 @@
 -- @param #ccui.Widget::TextureResType texturerestype
         
 --------------------------------
--- @function [parent=#LoadingBar] setPercent 
+-- @function [parent=#LoadingBar] setDirection 
 -- @param self
--- @param #float float
+-- @param #ccui.LoadingBar::Direction direction
         
 --------------------------------
 -- @function [parent=#LoadingBar] setScale9Enabled 
@@ -30,9 +30,14 @@
 -- @param #rect_table rect
         
 --------------------------------
--- @function [parent=#LoadingBar] getBarDirection 
+-- @function [parent=#LoadingBar] getDirection 
 -- @param self
 -- @return LoadingBar::Direction#LoadingBar::Direction ret (return value: ccui.LoadingBar::Direction)
+        
+--------------------------------
+-- @function [parent=#LoadingBar] getCapInsets 
+-- @param self
+-- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
 -- @function [parent=#LoadingBar] isScale9Enabled 
@@ -43,11 +48,6 @@
 -- @function [parent=#LoadingBar] getPercent 
 -- @param self
 -- @return float#float ret (return value: float)
-        
---------------------------------
--- @function [parent=#LoadingBar] getCapInsets 
--- @param self
--- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
 -- overload function: create(string, float)

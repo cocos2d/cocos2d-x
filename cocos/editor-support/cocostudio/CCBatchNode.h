@@ -56,8 +56,8 @@ public:
     virtual void addChild(cocos2d::Node *pChild, int zOrder) override;
     virtual void addChild(cocos2d::Node *pChild, int zOrder, int tag) override;
     virtual void removeChild(cocos2d::Node* child, bool cleanup) override;
-    virtual void visit(cocos2d::Renderer *renderer, const cocos2d::Matrix &parentTransform, bool parentTransformUpdated) override;
-    virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Matrix &transform, bool transformUpdated) override;
+    virtual void visit(cocos2d::Renderer *renderer, const cocos2d::Mat4 &parentTransform, bool parentTransformUpdated) override;
+    virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, bool transformUpdated) override;
     
 protected:
     void generateGroupCommand();

@@ -110,8 +110,8 @@ enum
 };
 
 ShaderNode::ShaderNode()
-:_center(Vector2(0.0f, 0.0f))
-,_resolution(Vector2(0.0f, 0.0f))
+:_center(Vec2(0.0f, 0.0f))
+,_resolution(Vec2(0.0f, 0.0f))
 ,_time(0.0f)
 {
 }
@@ -146,13 +146,13 @@ bool ShaderNode::initWithVertex(const std::string &vert, const std::string &frag
     loadShaderVertex(vert, frag);
 
     _time = 0;
-    _resolution = Vector2(SIZE_X, SIZE_Y);
+    _resolution = Vec2(SIZE_X, SIZE_Y);
     getGLProgramState()->setUniformVec2("resolution", _resolution);
 
     scheduleUpdate();
 
     setContentSize(Size(SIZE_X, SIZE_Y));
-    setAnchorPoint(Vector2(0.5f, 0.5f));
+    setAnchorPoint(Vec2(0.5f, 0.5f));
     
 
     return true;
@@ -185,22 +185,22 @@ void ShaderNode::update(float dt)
     _time += dt;
 }
 
-void ShaderNode::setPosition(const Vector2 &newPosition)
+void ShaderNode::setPosition(const Vec2 &newPosition)
 {
     Node::setPosition(newPosition);
     auto position = getPosition();
-    _center = Vector2(position.x * CC_CONTENT_SCALE_FACTOR(), position.y * CC_CONTENT_SCALE_FACTOR());
+    _center = Vec2(position.x * CC_CONTENT_SCALE_FACTOR(), position.y * CC_CONTENT_SCALE_FACTOR());
     getGLProgramState()->setUniformVec2("center", _center);
 }
 
-void ShaderNode::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void ShaderNode::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(ShaderNode::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_customCommand);
 }
 
-void ShaderNode::onDraw(const Matrix &transform, bool transformUpdated)
+void ShaderNode::onDraw(const Mat4 &transform, bool transformUpdated)
 {
     float w = SIZE_X, h = SIZE_Y;
     GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
@@ -228,7 +228,7 @@ bool ShaderMonjori::init()
         auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/example_Monjori.fsh");
 
         auto s = Director::getInstance()->getWinSize();
-        sn->setPosition(Vector2(s.width/2, s.height/2));
+        sn->setPosition(Vec2(s.width/2, s.height/2));
 
         addChild(sn);
 
@@ -262,7 +262,7 @@ bool ShaderMandelbrot::init()
         auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/example_Mandelbrot.fsh");
 
         auto s = Director::getInstance()->getWinSize();
-        sn->setPosition(Vector2(s.width/2, s.height/2));
+        sn->setPosition(Vec2(s.width/2, s.height/2));
 
         addChild(sn);
 
@@ -295,7 +295,7 @@ bool ShaderJulia::init()
         auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/example_Julia.fsh");
 
         auto s = Director::getInstance()->getWinSize();
-        sn->setPosition(Vector2(s.width/2, s.height/2));
+        sn->setPosition(Vec2(s.width/2, s.height/2));
 
         addChild(sn);
 
@@ -329,7 +329,7 @@ bool ShaderHeart::init()
         auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/example_Heart.fsh");
 
         auto s = Director::getInstance()->getWinSize();
-        sn->setPosition(Vector2(s.width/2, s.height/2));
+        sn->setPosition(Vec2(s.width/2, s.height/2));
 
         addChild(sn);
 
@@ -362,7 +362,7 @@ bool ShaderFlower::init()
         auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/example_Flower.fsh");
 
         auto s = Director::getInstance()->getWinSize();
-        sn->setPosition(Vector2(s.width/2, s.height/2));
+        sn->setPosition(Vec2(s.width/2, s.height/2));
 
         addChild(sn);
 
@@ -395,7 +395,7 @@ bool ShaderPlasma::init()
         auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/example_Plasma.fsh");
 
         auto s = Director::getInstance()->getWinSize();
-        sn->setPosition(Vector2(s.width/2, s.height/2));
+        sn->setPosition(Vec2(s.width/2, s.height/2));
 
         addChild(sn);
 
@@ -430,7 +430,7 @@ public:
 protected:
 
     int         _blurRadius;
-    Vector2     _pixelSize;
+    Vec2     _pixelSize;
 
     int       _samplingRadius;
     //gaussian = cons * exp( (dx*dx + dy*dy) * scale);
@@ -474,7 +474,7 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
         
         auto s = getTexture()->getContentSizeInPixels();
 
-        _pixelSize = Vector2(1/s.width, 1/s.height);
+        _pixelSize = Vec2(1/s.width, 1/s.height);
 
         _samplingRadius = 0;
         this->initGLProgram();
@@ -531,7 +531,7 @@ void SpriteBlur::setBlurSize(float f)
     }
     log("_blurRadius:%d",_blurRadius);
 
-    getGLProgramState()->setUniformVec4("gaussianCoefficient", Vector4(_samplingRadius, _scale, _cons, _weightSum));
+    getGLProgramState()->setUniformVec4("gaussianCoefficient", Vec4(_samplingRadius, _scale, _cons, _weightSum));
 }
 
 // ShaderBlur
@@ -556,11 +556,11 @@ ControlSlider* ShaderBlur::createSliderCtl()
     auto screenSize = Director::getInstance()->getWinSize();
     
     ControlSlider *slider = ControlSlider::create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
-    slider->setAnchorPoint(Vector2(0.5f, 1.0f));
+    slider->setAnchorPoint(Vec2(0.5f, 1.0f));
     slider->setMinimumValue(0.0f); // Sets the min value of range
     slider->setMaximumValue(25.0f); // Sets the max value of range
     
-    slider->setPosition(Vector2(screenSize.width / 2.0f, screenSize.height / 3.0f));
+    slider->setPosition(Vec2(screenSize.width / 2.0f, screenSize.height / 3.0f));
 
     // When the value of the slider will change, the given selector will be call
     slider->addTargetWithActionForControlEvents(this, cccontrol_selector(ShaderBlur::sliderAction), Control::EventType::VALUE_CHANGED);
@@ -579,8 +579,8 @@ bool ShaderBlur::init()
         auto sprite = Sprite::create("Images/grossini.png");
 
         auto s = Director::getInstance()->getWinSize();
-        _blurSprite->setPosition(Vector2(s.width/3, s.height/2));
-        sprite->setPosition(Vector2(2*s.width/3, s.height/2));
+        _blurSprite->setPosition(Vec2(s.width/3, s.height/2));
+        sprite->setPosition(Vec2(2*s.width/3, s.height/2));
 
         addChild(_blurSprite);
         addChild(sprite);
@@ -620,10 +620,10 @@ bool ShaderRetroEffect::init()
         auto s = director->getWinSize();
 
         _label = Label::createWithBMFont("fonts/west_england-64.fnt","RETRO EFFECT");
-        _label->setAnchorPoint(Vector2::ANCHOR_MIDDLE);
+        _label->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
         _label->setGLProgram(p);
 
-        _label->setPosition(Vector2(s.width/2,s.height/2));
+        _label->setPosition(Vec2(s.width/2,s.height/2));
 
         addChild(_label);
 
@@ -642,7 +642,7 @@ void ShaderRetroEffect::update(float dt)
     {
         auto sprite = _label->getLetter(i);
         auto oldPosition = sprite->getPosition();
-        sprite->setPosition(Vector2( oldPosition.x, sinf( _accum * 2 + i/2.0) * 20  ));
+        sprite->setPosition(Vec2( oldPosition.x, sinf( _accum * 2 + i/2.0) * 20  ));
         
         // add fabs() to prevent negative scaling
         float scaleY = ( sinf( _accum * 2 + i/2.0 + 0.707) );
@@ -684,7 +684,7 @@ bool ShaderLensFlare::init()
         auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/shadertoy_LensFlare.fsh");
         
         auto s = Director::getInstance()->getWinSize();
-        sn->setPosition(Vector2(s.width/2, s.height/2));
+        sn->setPosition(Vec2(s.width/2, s.height/2));
         sn->setContentSize(Size(s.width/2,s.height/2));
         addChild(sn);
         
@@ -719,7 +719,7 @@ bool ShaderGlow::init()
         auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/shadertoy_Glow.fsh");
         
         auto s = Director::getInstance()->getWinSize();
-        sn->setPosition(Vector2(s.width/2, s.height/2));
+        sn->setPosition(Vec2(s.width/2, s.height/2));
         sn->setContentSize(Size(s.width/2,s.height/2));
         addChild(sn);
         
@@ -747,24 +747,66 @@ std::string ShaderMultiTexture::subtitle() const
     return "MultiTexture";
 }
 
+ui::Slider* ShaderMultiTexture::createSliderCtl()
+{
+    auto screenSize = Director::getInstance()->getWinSize();
+
+    ui::Slider* slider = ui::Slider::create();
+    slider->loadBarTexture("cocosui/sliderTrack.png");
+    slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
+    slider->loadProgressBarTexture("cocosui/sliderProgress.png");
+    slider->setPercent(50);
+
+    slider->setPosition(Vec2(screenSize.width / 2.0f, screenSize.height / 3.0f));
+    addChild(slider);
+
+    slider->addEventListener([&](Ref* sender, ui::Slider::EventType type) {
+
+        if (type == ui::Slider::EventType::ON_PERCENTAGE_CHANGED)
+        {
+            ui::Slider* slider = dynamic_cast<ui::Slider*>(sender);
+            float p = slider->getPercent() / 100.0f;
+            _sprite->getGLProgramState()->setUniformFloat("u_interpolate",p);
+        }
+    });
+    return slider;
+}
+
 bool ShaderMultiTexture::init()
 {
     if (ShaderTestDemo::init())
     {
         auto s = Director::getInstance()->getWinSize();
 
-        auto sprite = Sprite::create("Images/grossinis_sister1.png");
+        // Left: normal sprite
+        auto left = Sprite::create("Images/grossinis_sister1.png");
+        addChild(left);
+        left->setPosition(s.width*1/4, s.height/2);
+
+        // Right: normal sprite
+        auto right = Sprite::create("Images/grossinis_sister2.png");
+        addChild(right);
+        right->setPosition(s.width*3/4, s.height/2);
+
+
+        // Center: MultiTexture
+        _sprite = Sprite::create("Images/grossinis_sister1.png");
         Texture2D *texture1 = Director::getInstance()->getTextureCache()->addImage("Images/grossinis_sister2.png");
 
-        addChild(sprite);
+        addChild(_sprite);
 
-        sprite->setPosition(Vector2(s.width/2, s.height/2));
+        _sprite->setPosition(Vec2(s.width/2, s.height/2));
 
         auto glprogram = GLProgram::createWithFilenames("Shaders/example_MultiTexture.vsh", "Shaders/example_MultiTexture.fsh");
         auto glprogramstate = GLProgramState::getOrCreateWithGLProgram(glprogram);
-        sprite->setGLProgramState(glprogramstate);
+        _sprite->setGLProgramState(glprogramstate);
 
         glprogramstate->setUniformTexture("u_texture1", texture1);
+        glprogramstate->setUniformFloat("u_interpolate",0.5);
+
+        // slider
+        createSliderCtl();
+
         return true;
     }
 

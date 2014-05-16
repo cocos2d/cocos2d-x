@@ -132,7 +132,7 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
             spriteFrame->initWithTexture(texture,
                                         Rect(x, y, w, h), 
                                         false,
-                                        Vector2(ox, oy),
+                                        Vec2(ox, oy),
                                         Size((float)ow, (float)oh)
                                         );
         } 
@@ -147,7 +147,7 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
                 rotated = frameDict["rotated"].asBool();
             }
 
-            Vector2 offset = PointFromString(frameDict["offset"].asString());
+            Vec2 offset = PointFromString(frameDict["offset"].asString());
             Size sourceSize = SizeFromString(frameDict["sourceSize"].asString());
 
             // create frame
@@ -163,7 +163,7 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
         {
             // get values
             Size spriteSize = SizeFromString(frameDict["spriteSize"].asString());
-            Vector2 spriteOffset = PointFromString(frameDict["spriteOffset"].asString());
+            Vec2 spriteOffset = PointFromString(frameDict["spriteOffset"].asString());
             Size spriteSourceSize = SizeFromString(frameDict["spriteSourceSize"].asString());
             Rect textureRect = RectFromString(frameDict["textureRect"].asString());
             bool textureRotated = frameDict["textureRotated"].asBool();

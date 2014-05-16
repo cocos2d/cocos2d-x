@@ -398,6 +398,10 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
         "uniform vec4 CC_SinTime;\n"
         "uniform vec4 CC_CosTime;\n"
         "uniform vec4 CC_Random01;\n"
+        "uniform sampler2D CC_Texture0;\n"
+        "uniform sampler2D CC_Texture1;\n"
+        "uniform sampler2D CC_Texture2;\n"
+        "uniform sampler2D CC_Texture3;\n"
         "//CC INCLUDES END\n\n",
         source,
     };
@@ -808,15 +812,15 @@ void GLProgram::setUniformsForBuiltins()
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     
-    Matrix matrixMV;
+    Mat4 matrixMV;
     matrixMV = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
     setUniformsForBuiltins(matrixMV);
 }
 
-void GLProgram::setUniformsForBuiltins(const Matrix &matrixMV)
+void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
 {
-    Matrix matrixP = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    Mat4 matrixP = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
     if(_flags.usesP)
         setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_P_MATRIX], matrixP.m, 1);
@@ -825,7 +829,7 @@ void GLProgram::setUniformsForBuiltins(const Matrix &matrixMV)
         setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_MV_MATRIX], matrixMV.m, 1);
 
     if(_flags.usesMVP) {
-        Matrix matrixMVP = matrixP * matrixMV;
+        Mat4 matrixMVP = matrixP * matrixMV;
         setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_MVP_MATRIX], matrixMVP.m, 1);
     }
 

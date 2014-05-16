@@ -72,7 +72,7 @@ function UIScene:init()
     end
 
     local backMenuLabel = ccui.Text:create()
-    backMenuLabel:setText("Back")
+    backMenuLabel:setString("Back")
     backMenuLabel:setFontSize(20)
     backMenuLabel:setTouchScaleChangeEnabled(true)
     backMenuLabel:setPosition(cc.p(430,30))
@@ -109,7 +109,7 @@ function UIButtonTest:initExtend()
     local widgetSize = self._widget:getSize()
         
     self._displayValueLabel = ccui.Text:create()
-    self._displayValueLabel:setText("No Event")
+    self._displayValueLabel:setString("No Event")
     self._displayValueLabel:setFontName(font_UIButtonTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
@@ -117,7 +117,7 @@ function UIButtonTest:initExtend()
     self._uiLayer:addChild(self._displayValueLabel)        
         
     local alert = ccui.Text:create()
-    alert:setText("Button")
+    alert:setString("Button")
     alert:setFontName(font_UIButtonTest)
     alert:setFontSize(30)        
     alert:setColor(cc.c3b(159, 168, 176))                
@@ -127,13 +127,13 @@ function UIButtonTest:initExtend()
     
     local function touchEvent(sender,eventType)
         if eventType == ccui.TouchEventType.began then
-            self._displayValueLabel:setText("Touch Down")
+            self._displayValueLabel:setString("Touch Down")
         elseif eventType == ccui.TouchEventType.moved then
-            self._displayValueLabel:setText("Touch Move")
+            self._displayValueLabel:setString("Touch Move")
         elseif eventType == ccui.TouchEventType.ended then
-            self._displayValueLabel:setText("Touch Up")
+            self._displayValueLabel:setString("Touch Up")
         elseif eventType == ccui.TouchEventType.canceled then
-            self._displayValueLabel:setText("Touch Cancelled")
+            self._displayValueLabel:setString("Touch Cancelled")
         end
     end    
     local button = ccui.Button:create()
@@ -173,7 +173,7 @@ function UIButtonScale9Test:initExtend()
     local widgetSize = self._widget:getSize()
         
     self._displayValueLabel = ccui.Text:create()
-    self._displayValueLabel:setText("No Event")
+    self._displayValueLabel:setString("No Event")
     self._displayValueLabel:setFontName(font_UIButtonTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
@@ -181,7 +181,7 @@ function UIButtonScale9Test:initExtend()
     self._uiLayer:addChild(self._displayValueLabel)
         
     local alert = ccui.Text:create()
-    alert:setText("Button scale9 render")
+    alert:setString("Button scale9 render")
     alert:setFontName(font_UIButtonTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
@@ -190,13 +190,13 @@ function UIButtonScale9Test:initExtend()
 
     local function touchEvent(sender,eventType)
         if eventType == ccui.TouchEventType.began then
-            self._displayValueLabel:setText("Touch Down")
+            self._displayValueLabel:setString("Touch Down")
         elseif eventType == ccui.TouchEventType.moved then
-            self._displayValueLabel:setText("Touch Move")
+            self._displayValueLabel:setString("Touch Move")
         elseif eventType == ccui.TouchEventType.ended then
-            self._displayValueLabel:setText("Touch Up")
+            self._displayValueLabel:setString("Touch Up")
         elseif eventType == ccui.TouchEventType.canceled then
-            self._displayValueLabel:setText("Touch Cancelled")
+            self._displayValueLabel:setString("Touch Cancelled")
         end
     end         
         
@@ -239,7 +239,7 @@ function UIButtonPressedActionTest:initExtend()
         
     
     self._displayValueLabel = ccui.Text:create()
-    self._displayValueLabel:setText("No Event")
+    self._displayValueLabel:setString("No Event")
     self._displayValueLabel:setFontName(font_UIButtonTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
@@ -247,7 +247,7 @@ function UIButtonPressedActionTest:initExtend()
     self._uiLayer:addChild(self._displayValueLabel)
         
     local alert = ccui.Text:create()
-    alert:setText("Button Pressed Action")
+    alert:setString("Button Pressed Action")
     alert:setFontName(font_UIButtonTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
@@ -256,13 +256,13 @@ function UIButtonPressedActionTest:initExtend()
 
     local function touchEvent(sender,eventType)
         if eventType == ccui.TouchEventType.began then
-            self._displayValueLabel:setText("Touch Down")
+            self._displayValueLabel:setString("Touch Down")
         elseif eventType == ccui.TouchEventType.moved then
-            self._displayValueLabel:setText("Touch Move")
+            self._displayValueLabel:setString("Touch Move")
         elseif eventType == ccui.TouchEventType.ended then
-            self._displayValueLabel:setText("Touch Up")
+            self._displayValueLabel:setString("Touch Up")
         elseif eventType == ccui.TouchEventType.canceled then
-            self._displayValueLabel:setText("Touch Cancelled")
+            self._displayValueLabel:setString("Touch Cancelled")
         end
     end  
         
@@ -304,7 +304,7 @@ function UITextButtonTest:initExtend()
         
     
     self._displayValueLabel = ccui.Text:create()
-    self._displayValueLabel:setText("No Event")
+    self._displayValueLabel:setString("No Event")
     self._displayValueLabel:setFontName(font_UIButtonTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
@@ -312,7 +312,7 @@ function UITextButtonTest:initExtend()
     self._uiLayer:addChild(self._displayValueLabel)
         
     local alert = ccui.Text:create()
-    alert:setText("TextButton")
+    alert:setString("TextButton")
     alert:setFontName(font_UIButtonTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
@@ -321,13 +321,13 @@ function UITextButtonTest:initExtend()
 
     local function touchEvent(sender,eventType)
         if eventType == ccui.TouchEventType.began then
-            self._displayValueLabel:setText("Touch Down")
+            self._displayValueLabel:setString("Touch Down")
         elseif eventType == ccui.TouchEventType.moved then
-            self._displayValueLabel:setText("Touch Move")
+            self._displayValueLabel:setString("Touch Move")
         elseif eventType == ccui.TouchEventType.ended then
-            self._displayValueLabel:setText("Touch Up")
+            self._displayValueLabel:setString("Touch Up")
         elseif eventType == ccui.TouchEventType.canceled then
-            self._displayValueLabel:setText("Touch Cancelled")
+            self._displayValueLabel:setString("Touch Cancelled")
         end
     end  
         
@@ -368,7 +368,7 @@ function UITextButtonScale9Test:initExtend()
     local widgetSize = self._widget:getSize()
           
     self._displayValueLabel = ccui.Text:create()
-    self._displayValueLabel:setText("No Event")
+    self._displayValueLabel:setString("No Event")
     self._displayValueLabel:setFontName(font_UIButtonTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
@@ -376,7 +376,7 @@ function UITextButtonScale9Test:initExtend()
     self._uiLayer:addChild(self._displayValueLabel)
         
     local alert = ccui.Text:create()
-    alert:setText("TextButton scale9 render")
+    alert:setString("TextButton scale9 render")
     alert:setFontName(font_UIButtonTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
@@ -385,13 +385,13 @@ function UITextButtonScale9Test:initExtend()
 
     local function touchEvent(sender,eventType)
         if eventType == ccui.TouchEventType.began then
-            self._displayValueLabel:setText("Touch Down")
+            self._displayValueLabel:setString("Touch Down")
         elseif eventType == ccui.TouchEventType.moved then
-            self._displayValueLabel:setText("Touch Move")
+            self._displayValueLabel:setString("Touch Move")
         elseif eventType == ccui.TouchEventType.ended then
-            self._displayValueLabel:setText("Touch Up")
+            self._displayValueLabel:setString("Touch Up")
         elseif eventType == ccui.TouchEventType.canceled then
-            self._displayValueLabel:setText("Touch Cancelled")
+            self._displayValueLabel:setString("Touch Cancelled")
         end
     end  
         
@@ -434,7 +434,7 @@ function UICheckBoxTest:initExtend()
     local widgetSize = self._widget:getSize()
           
     self._displayValueLabel = ccui.Text:create()
-    self._displayValueLabel:setText("No Event")
+    self._displayValueLabel:setString("No Event")
     self._displayValueLabel:setFontName(font_UIButtonTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
@@ -442,7 +442,7 @@ function UICheckBoxTest:initExtend()
     self._uiLayer:addChild(self._displayValueLabel)
         
     local alert = ccui.Text:create()
-    alert:setText("CheckBox")
+    alert:setString("CheckBox")
     alert:setFontName(font_UICheckBoxTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
@@ -451,9 +451,9 @@ function UICheckBoxTest:initExtend()
 
     local function selectedEvent(sender,eventType)
         if eventType == ccui.CheckBoxEventType.selected then
-            self._displayValueLabel:setText("Selected")
+            self._displayValueLabel:setString("Selected")
         elseif eventType == ccui.CheckBoxEventType.unselected then
-            self._displayValueLabel:setText("Unselected")
+            self._displayValueLabel:setString("Unselected")
         end
     end  
         
@@ -499,7 +499,7 @@ function UISliderTest:initExtend()
     local widgetSize = self._widget:getSize()
           
     self._displayValueLabel = ccui.Text:create()
-    self._displayValueLabel:setText("Move the slider thumb")
+    self._displayValueLabel:setString("Move the slider thumb")
     self._displayValueLabel:setFontName(font_UISliderTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
@@ -507,7 +507,7 @@ function UISliderTest:initExtend()
     self._uiLayer:addChild(self._displayValueLabel)
         
     local alert = ccui.Text:create()
-    alert:setText("Slider")
+    alert:setString("Slider")
     alert:setFontName(font_UISliderTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
@@ -518,7 +518,7 @@ function UISliderTest:initExtend()
         if eventType == ccui.SliderEventType.percentChanged then
             local slider = sender
             local percent = "Percent " .. slider:getPercent()
-            self._displayValueLabel:setText(percent)
+            self._displayValueLabel:setString(percent)
         end
     end  
         
@@ -561,7 +561,7 @@ function UISliderScale9Test:initExtend()
     local widgetSize = self._widget:getSize()
           
     self._displayValueLabel = ccui.Text:create()
-    self._displayValueLabel:setText("Move the slider thumb")
+    self._displayValueLabel:setString("Move the slider thumb")
     self._displayValueLabel:setFontName(font_UISliderTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
@@ -569,7 +569,7 @@ function UISliderScale9Test:initExtend()
     self._uiLayer:addChild(self._displayValueLabel)
         
     local alert = ccui.Text:create()
-    alert:setText("Slider scale9 render")
+    alert:setString("Slider scale9 render")
     alert:setFontName(font_UISliderTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
@@ -580,7 +580,7 @@ function UISliderScale9Test:initExtend()
         if eventType == ccui.SliderEventType.percentChanged then
             local slider = sender
             local percent = "Percent " .. slider:getPercent()
-            self._displayValueLabel:setText(percent)
+            self._displayValueLabel:setString(percent)
         end
     end  
         
@@ -625,7 +625,7 @@ function UIImageViewTest:initExtend()
     local widgetSize = self._widget:getSize()
         
     local alert = ccui.Text:create()
-    alert:setText("ImageView")
+    alert:setString("ImageView")
     alert:setFontName(font_UIImageViewTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
@@ -666,7 +666,7 @@ function UIImageViewScale9Test:initExtend()
     local widgetSize = self._widget:getSize()
         
     local alert = ccui.Text:create()
-    alert:setText("ImageView scale9 render")
+    alert:setString("ImageView scale9 render")
     alert:setFontName(font_UIImageViewTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
@@ -719,7 +719,7 @@ function UILoadingBarLeftTest:initExtend()
     local widgetSize = self._widget:getSize()
         
     local alert = ccui.Text:create()
-    alert:setText("LoadingBar")
+    alert:setString("LoadingBar")
     alert:setFontName(font_UILoadingBarTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
@@ -802,7 +802,7 @@ function UILoadingBarLeftTest:initExtend()
     end
 
     local mainMenuLabel = ccui.Text:create()
-    mainMenuLabel:setText("Back")
+    mainMenuLabel:setString("Back")
     mainMenuLabel:setFontSize(20)
     mainMenuLabel:setTouchScaleChangeEnabled(true)
     mainMenuLabel:setPosition(cc.p(430,30))
@@ -849,7 +849,7 @@ function UILoadingBarRightTest:initExtend()
     local widgetSize = self._widget:getSize()
         
     local alert = ccui.Text:create()
-    alert:setText("LoadingBar")
+    alert:setString("LoadingBar")
     alert:setFontName(font_UILoadingBarTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
@@ -860,7 +860,7 @@ function UILoadingBarRightTest:initExtend()
     loadingBar:setTag(0)
     loadingBar:setName("LoadingBar")
     loadingBar:loadTexture("cocosui/sliderProgress.png")
-    loadingBar:setDirection(ccui.LoadingBarType.right)
+    loadingBar:setDirection(ccui.LoadingBarDirection.RIGHT)
     loadingBar:setPercent(0)
         
     loadingBar:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + loadingBar:getSize().height / 4.0))
@@ -933,7 +933,7 @@ function UILoadingBarRightTest:initExtend()
     end
 
     local mainMenuLabel = ccui.Text:create()
-    mainMenuLabel:setText("Back")
+    mainMenuLabel:setString("Back")
     mainMenuLabel:setFontSize(20)
     mainMenuLabel:setTouchScaleChangeEnabled(true)
     mainMenuLabel:setPosition(cc.p(430,30))
@@ -980,7 +980,7 @@ function UILoadingBarLeftScale9Test:initExtend()
     local widgetSize = self._widget:getSize()
         
     local alert = ccui.Text:create()
-    alert:setText("LoadingBar Scale9 Render")
+    alert:setString("LoadingBar Scale9 Render")
     alert:setFontName(font_UILoadingBarTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
@@ -1066,7 +1066,7 @@ function UILoadingBarLeftScale9Test:initExtend()
     end
 
     local mainMenuLabel = ccui.Text:create()
-    mainMenuLabel:setText("Back")
+    mainMenuLabel:setString("Back")
     mainMenuLabel:setFontSize(20)
     mainMenuLabel:setTouchScaleChangeEnabled(true)
     mainMenuLabel:setPosition(cc.p(430,30))
@@ -1113,7 +1113,7 @@ function UILoadingBarRightScale9Test:initExtend()
     local widgetSize = self._widget:getSize()
         
     local alert = ccui.Text:create()
-    alert:setText("LoadingBar Scale9 Render")
+    alert:setString("LoadingBar Scale9 Render")
     alert:setFontName(font_UILoadingBarTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
@@ -1127,7 +1127,7 @@ function UILoadingBarRightScale9Test:initExtend()
     loadingBar:setScale9Enabled(true)
     loadingBar:setCapInsets(cc.rect(0, 0, 0, 0))
     loadingBar:setSize(cc.size(300, 30))
-    loadingBar:setDirection(ccui.LoadingBarType.right)
+    loadingBar:setDirection(ccui.LoadingBarDirection.LEFT)
     loadingBar:setPercent(0)
         
     loadingBar:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + loadingBar:getSize().height / 4.0))
@@ -1200,7 +1200,7 @@ function UILoadingBarRightScale9Test:initExtend()
     end
 
     local mainMenuLabel = ccui.Text:create()
-    mainMenuLabel:setText("Back")
+    mainMenuLabel:setString("Back")
     mainMenuLabel:setFontSize(20)
     mainMenuLabel:setTouchScaleChangeEnabled(true)
     mainMenuLabel:setPosition(cc.p(430,30))
@@ -1235,7 +1235,7 @@ function UILabelAtlasTest:initExtend()
     local widgetSize = self._widget:getSize()
         
     local alert = ccui.Text:create()
-    alert:setText("LabelAtlas")
+    alert:setString("LabelAtlas")
     alert:setFontName(font_UILabelAtlasTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
@@ -1276,7 +1276,7 @@ function UILabelBMFontTest:initExtend()
     local widgetSize = self._widget:getSize()
         
     local alert = ccui.Text:create()
-    alert:setText("LabelBMFont")
+    alert:setString("LabelBMFont")
     alert:setFontName(font_UILabelBMFontTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
@@ -1286,7 +1286,7 @@ function UILabelBMFontTest:initExtend()
 
     local labelBMFont = ccui.TextBMFont:create()
     labelBMFont:setFntFile("cocosui/bitmapFontTest2.fnt")
-    labelBMFont:setText("BMFont")
+    labelBMFont:setString("BMFont")
     labelBMFont:setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2.0 + labelBMFont:getSize().height / 8.0))        
         
     self._uiLayer:addChild(labelBMFont) 
@@ -1318,7 +1318,7 @@ function UILabelTest:initExtend()
     local widgetSize = self._widget:getSize()
         
     local alert = ccui.Text:create()
-    alert:setText("Label")
+    alert:setString("Label")
     alert:setFontName(font_UILabelTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
@@ -1326,7 +1326,7 @@ function UILabelTest:initExtend()
     self._uiLayer:addChild(alert)
         
     local label = ccui.Text:create()
-    label:setText("Label")
+    label:setString("Label")
     label:setFontName("AmericanTypewriter")
     label:setFontSize(30)
     label:setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + label:getSize().height / 4))    
@@ -1359,7 +1359,7 @@ function UITextAreaTest:initExtend()
     local widgetSize = self._widget:getSize()
         
     local alert = ccui.Text:create()
-    alert:setText("TextArea")
+    alert:setString("TextArea")
     alert:setFontName(font_UITextAreaTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
@@ -1369,7 +1369,7 @@ function UITextAreaTest:initExtend()
     local textArea = ccui.Text:create()
     textArea:setTextAreaSize(cc.size(280, 150))
     textArea:setTextHorizontalAlignment(cc.TEXT_ALIGNMENT_CENTER)
-    textArea:setText("TextArea widget can line wrap")
+    textArea:setString("TextArea widget can line wrap")
     textArea:setFontName("AmericanTypewriter")
     textArea:setFontSize(32)
     textArea:setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - textArea:getSize().height / 8))  
@@ -1403,7 +1403,7 @@ function UITextFieldTest:initExtend()
     local widgetSize = self._widget:getSize()
 
     self._displayValueLabel = ccui.Text:create()
-    self._displayValueLabel:setText("No Event")
+    self._displayValueLabel:setString("No Event")
     self._displayValueLabel:setFontName(font_UITextFieldTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
@@ -1411,7 +1411,7 @@ function UITextFieldTest:initExtend()
     self._uiLayer:addChild(self._displayValueLabel)  
         
     local alert = ccui.Text:create()
-    alert:setText("TextField")
+    alert:setString("TextField")
     alert:setFontName(font_UITextFieldTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
@@ -1423,16 +1423,16 @@ function UITextFieldTest:initExtend()
             local textField = sender
             local screenSize = cc.Director:getInstance():getWinSize()
             textField:runAction(cc.MoveTo:create(0.225,cc.p(screenSize.width / 2.0, screenSize.height / 2.0 + textField:getContentSize().height / 2.0)))
-            self._displayValueLabel:setText("attach with IME")
+            self._displayValueLabel:setString("attach with IME")
         elseif eventType == ccui.TextFiledEventType.detach_with_ime then
             local textField = sender
             local screenSize = cc.Director:getInstance():getWinSize()
             textField:runAction(cc.MoveTo:create(0.175, cc.p(screenSize.width / 2.0, screenSize.height / 2.0)))
-            self._displayValueLabel:setText("detach with IME")
+            self._displayValueLabel:setString("detach with IME")
         elseif eventType == ccui.TextFiledEventType.insert_text then
-            self._displayValueLabel:setText("insert words")
+            self._displayValueLabel:setString("insert words")
         elseif eventType == ccui.TextFiledEventType.delete_backward then
-            self._displayValueLabel:setText("delete word")
+            self._displayValueLabel:setString("delete word")
         end
     end
         
@@ -1473,7 +1473,7 @@ function UITextFieldMaxLengthTest:initExtend()
     local widgetSize = self._widget:getSize()
 
     self._displayValueLabel = ccui.Text:create()
-    self._displayValueLabel:setText("No Event")
+    self._displayValueLabel:setString("No Event")
     self._displayValueLabel:setFontName(font_UITextFieldTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
@@ -1481,7 +1481,7 @@ function UITextFieldMaxLengthTest:initExtend()
     self._uiLayer:addChild(self._displayValueLabel)  
         
     local alert = ccui.Text:create()
-    alert:setText("TextField max length")
+    alert:setString("TextField max length")
     alert:setFontName(font_UITextFieldTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
@@ -1494,21 +1494,21 @@ function UITextFieldMaxLengthTest:initExtend()
             local screenSize = cc.Director:getInstance():getWinSize()
             textField:runAction(cc.MoveTo:create(0.225,cc.p(screenSize.width / 2.0, screenSize.height / 2.0 + textField:getContentSize().height / 2.0)))
             local info = string.format("attach with IME max length %d",textField:getMaxLength())
-            self._displayValueLabel:setText(info)
+            self._displayValueLabel:setString(info)
         elseif eventType == ccui.TextFiledEventType.detach_with_ime then
             local textField = sender
             local screenSize = cc.Director:getInstance():getWinSize()
             textField:runAction(cc.MoveTo:create(0.175, cc.p(screenSize.width / 2.0, screenSize.height / 2.0)))
             local info = string.format("detach with IME max length %d",textField:getMaxLength())
-            self._displayValueLabel:setText(info)
+            self._displayValueLabel:setString(info)
         elseif eventType == ccui.TextFiledEventType.insert_text then
             local textField = sender
             local info = string.format("insert words max length %d",textField:getMaxLength())
-            self._displayValueLabel:setText(info)
+            self._displayValueLabel:setString(info)
         elseif eventType == ccui.TextFiledEventType.delete_backward then
             local textField = sender
             local info = string.format("delete word max length %d",textField:getMaxLength())
-            self._displayValueLabel:setText(info)
+            self._displayValueLabel:setString(info)
         end
     end
         
@@ -1551,7 +1551,7 @@ function UITextFieldPasswordTest:initExtend()
     local widgetSize = self._widget:getSize()
 
     self._displayValueLabel = ccui.Text:create()
-    self._displayValueLabel:setText("No Event")
+    self._displayValueLabel:setString("No Event")
     self._displayValueLabel:setFontName(font_UITextFieldTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
@@ -1559,7 +1559,7 @@ function UITextFieldPasswordTest:initExtend()
     self._uiLayer:addChild(self._displayValueLabel)  
         
     local alert = ccui.Text:create()
-    alert:setText("TextField password")
+    alert:setString("TextField password")
     alert:setFontName(font_UITextFieldTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
@@ -1571,16 +1571,16 @@ function UITextFieldPasswordTest:initExtend()
             local textField = sender
             local screenSize = cc.Director:getInstance():getWinSize()
             textField:runAction(cc.MoveTo:create(0.175, cc.p(screenSize.width / 2.0, screenSize.height / 2.0)))
-            self._displayValueLabel:setText("detach with IME password")
+            self._displayValueLabel:setString("detach with IME password")
         elseif eventType == ccui.TextFiledEventType.detach_with_ime then
             local textField = sender
             local screenSize = cc.Director:getInstance():getWinSize()
             textField:runAction(cc.MoveTo:create(0.175, cc.p(screenSize.width / 2.0, screenSize.height / 2.0)))
-            self._displayValueLabel:setText("detach with IME password")
+            self._displayValueLabel:setString("detach with IME password")
         elseif eventType == ccui.TextFiledEventType.insert_text then
-            self._displayValueLabel:setText("insert words password")
+            self._displayValueLabel:setString("insert words password")
         elseif eventType == ccui.TextFiledEventType.delete_backward then
-            self._displayValueLabel:setText("delete word password")
+            self._displayValueLabel:setString("delete word password")
         end
     end
         
@@ -1623,7 +1623,7 @@ function UIPanelTest:initExtend()
     local widgetSize = self._widget:getSize()
         
     local alert = ccui.Text:create()
-    alert:setText("Panel")
+    alert:setString("Panel")
     alert:setFontName(font_UIPanelTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
@@ -1691,7 +1691,7 @@ function UIPanelColorTest:initExtend()
     local widgetSize = self._widget:getSize()
         
     local alert = ccui.Text:create()
-    alert:setText("Panel color render")
+    alert:setString("Panel color render")
     alert:setFontName(font_UIPanelTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
@@ -1761,7 +1761,7 @@ function UIPanelGradientTest:initExtend()
     local widgetSize = self._widget:getSize()
         
     local alert = ccui.Text:create()
-    alert:setText("Panel color Gradient")
+    alert:setString("Panel color Gradient")
     alert:setFontName(font_UIPanelTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
@@ -1831,7 +1831,7 @@ function UIPanelBackGroundImageTest:initExtend()
     local widgetSize = self._widget:getSize()
         
     local alert = ccui.Text:create()
-    alert:setText("Panel background image")
+    alert:setString("Panel background image")
     alert:setFontName(font_UIPanelTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
@@ -1901,7 +1901,7 @@ function UIPanelBackGroundImageScale9Test:initExtend()
     local widgetSize = self._widget:getSize()
         
     local alert = ccui.Text:create()
-    alert:setText("Panel background image scale9")
+    alert:setString("Panel background image scale9")
     alert:setFontName(font_UIPanelTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
@@ -1971,7 +1971,7 @@ function UIPanelLayoutLinearVerticalTest:initExtend()
     local widgetSize = self._widget:getSize()
         
     local alert = ccui.Text:create()
-    alert:setText("Panel Layout Linear Vertical")
+    alert:setString("Panel Layout Linear Vertical")
     alert:setFontName(font_UIPanelTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
@@ -1982,7 +1982,7 @@ function UIPanelLayoutLinearVerticalTest:initExtend()
     local background = root:getChildByName("background_Panel")
     
     local layout = ccui.Layout:create()
-    layout:setLayoutType(ccui.LayoutType.linearVertical)
+    layout:setLayoutType(ccui.LayoutType.VERTICAL)
     layout:setSize(cc.size(280, 150))
     local backgroundSize = background:getContentSize()
     layout:setPosition(cc.p((widgetSize.width - backgroundSize.width) / 2 +
@@ -2054,7 +2054,7 @@ function UIPanelLayoutLinearHorizontalTest:initExtend()
     local widgetSize = self._widget:getSize()
         
     local alert = ccui.Text:create()
-    alert:setText("Panel Layout Linear Horizontal")
+    alert:setString("Panel Layout Linear Horizontal")
     alert:setFontName(font_UIPanelTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
@@ -2065,7 +2065,7 @@ function UIPanelLayoutLinearHorizontalTest:initExtend()
     local background = root:getChildByName("background_Panel")
     
     local layout = ccui.Layout:create()
-    layout:setLayoutType(ccui.LayoutType.linearHorizontal)
+    layout:setLayoutType(ccui.LayoutType.HORIZONTAL)
     layout:setClippingEnabled(true)
     layout:setSize(cc.size(280, 150))
     local backgroundSize = background:getContentSize()
@@ -2139,7 +2139,7 @@ function UIScrollViewVerticalTest:initExtend()
     local widgetSize = self._widget:getSize()
         
     self._displayValueLabel = ccui.Text:create()
-    self._displayValueLabel:setText("Move by vertical direction")
+    self._displayValueLabel:setString("Move by vertical direction")
     self._displayValueLabel:setFontName(font_UIScrollViewTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
@@ -2147,7 +2147,7 @@ function UIScrollViewVerticalTest:initExtend()
     self._uiLayer:addChild(self._displayValueLabel)
         
     local alert = ccui.Text:create()
-    alert:setText("ScrollView")
+    alert:setString("ScrollView")
     alert:setFontName(font_UIScrollViewTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
@@ -2228,7 +2228,7 @@ function UIScrollViewHorizontalTest:initExtend()
     local widgetSize = self._widget:getSize()
         
     self._displayValueLabel = ccui.Text:create()
-    self._displayValueLabel:setText("Move by horizontal direction")
+    self._displayValueLabel:setString("Move by horizontal direction")
     self._displayValueLabel:setFontName(font_UIScrollViewTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
@@ -2236,7 +2236,7 @@ function UIScrollViewHorizontalTest:initExtend()
     self._uiLayer:addChild(self._displayValueLabel)            
         
     local alert = ccui.Text:create()
-    alert:setText("ScrollView")
+    alert:setString("ScrollView")
     alert:setFontName(font_UIScrollViewTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
@@ -2324,7 +2324,7 @@ function UIPageViewTest:initExtend()
     local widgetSize = self._widget:getSize()
         
     self._displayValueLabel = ccui.Text:create()
-    self._displayValueLabel:setText("Move by horizontal direction")
+    self._displayValueLabel:setString("Move by horizontal direction")
     self._displayValueLabel:setFontName(font_UIPageViewTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
@@ -2332,7 +2332,7 @@ function UIPageViewTest:initExtend()
     self._uiLayer:addChild(self._displayValueLabel)
         
     local alert = ccui.Text:create()
-    alert:setText("PageView")
+    alert:setString("PageView")
     alert:setFontName(font_UIPageViewTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
@@ -2365,7 +2365,7 @@ function UIPageViewTest:initExtend()
             
         local label = ccui.Text:create()
         local pageInfo = string.format("page %d", i)
-        label:setText(pageInfo)
+        label:setString(pageInfo)
         label:setFontName(font_UIPageViewTest)
         label:setFontSize(30)
         label:setColor(cc.c3b(192, 192, 192))
@@ -2380,7 +2380,7 @@ function UIPageViewTest:initExtend()
         if eventType == ccui.PageViewEventType.turning then
             local pageView = sender
             local pageInfo = string.format("page %d " , pageView:getCurPageIndex() + 1)
-            self._displayValueLabel:setText(pageInfo)
+            self._displayValueLabel:setString(pageInfo)
         end
     end 
 
@@ -2418,7 +2418,7 @@ function UIListViewVerticalTest:initExtend()
     local widgetSize = self._widget:getSize()
         
     self._displayValueLabel = ccui.Text:create()
-    self._displayValueLabel:setText("Move by vertical direction")
+    self._displayValueLabel:setString("Move by vertical direction")
     self._displayValueLabel:setFontName(font_UIListViewTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
@@ -2426,7 +2426,7 @@ function UIListViewVerticalTest:initExtend()
     self._uiLayer:addChild(self._displayValueLabel)
         
     local alert = ccui.Text:create()
-    alert:setText("ListView")
+    alert:setString("ListView")
     alert:setFontName(font_UIListViewTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
@@ -2578,7 +2578,7 @@ function UIListViewHorizontalTest:initExtend()
     local widgetSize = self._widget:getSize()
         
     self._displayValueLabel = ccui.Text:create()
-    self._displayValueLabel:setText("Move by vertical direction")
+    self._displayValueLabel:setString("Move by vertical direction")
     self._displayValueLabel:setFontName(font_UIListViewTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
@@ -2586,7 +2586,7 @@ function UIListViewHorizontalTest:initExtend()
     self._uiLayer:addChild(self._displayValueLabel)
         
     local alert = ccui.Text:create()
-    alert:setText("ListView")
+    alert:setString("ListView")
     alert:setFontName(font_UIListViewTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
@@ -2738,7 +2738,7 @@ function UIDragPanelTest:initExtend()
     local widgetSize = self._widget:getSize()
         
     self._displayValueLabel = ccui.Text:create()
-    self._displayValueLabel:setText("No Event")
+    self._displayValueLabel:setString("No Event")
     self._displayValueLabel:setFontName(font_UIDragPanelTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
@@ -2746,7 +2746,7 @@ function UIDragPanelTest:initExtend()
     self._uiLayer:addChild(self._displayValueLabel)
         
     local alert = ccui.Text:create()
-    alert:setText("DragPanel")
+    alert:setString("DragPanel")
     alert:setFontName(font_UIDragPanelTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
@@ -2797,7 +2797,7 @@ function UIDragPanelBounceTest:initExtend()
     local widgetSize = self._widget:getSize()
 
     self._displayValueLabel = ccui.Text:create()
-    self._displayValueLabel:setText("No Event")
+    self._displayValueLabel:setString("No Event")
     self._displayValueLabel:setFontName(font_UIDragPanelTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
@@ -2806,7 +2806,7 @@ function UIDragPanelBounceTest:initExtend()
         
 
     local alert = ccui.Text:create()
-    alert:setText("DragPanel Bounce")
+    alert:setString("DragPanel Bounce")
     alert:setFontName(font_UIDragPanelTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
@@ -2857,7 +2857,7 @@ function UINodeContainerTest:initExtend()
     local widgetSize = self._widget:getSize()
 
     self._displayValueLabel = ccui.Text:create()
-    self._displayValueLabel:setText("NodeContainer Add CCNode")
+    self._displayValueLabel:setString("NodeContainer Add CCNode")
     self._displayValueLabel:setFontName(font_UINodeContainerTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
@@ -2865,7 +2865,7 @@ function UINodeContainerTest:initExtend()
     self._uiLayer:addChild(self._displayValueLabel)
         
     local alert = ccui.Text:create()
-    alert:setText("NodeContainer")
+    alert:setString("NodeContainer")
     alert:setFontName(font_UINodeContainerTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))

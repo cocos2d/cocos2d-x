@@ -182,7 +182,7 @@ public:
      * Add call back function called when slider's percent has changed to slider.
      */
     CC_DEPRECATED_ATTRIBUTE void addEventListenerSlider(Ref* target,SEL_SlidPercentChangedEvent selector);
-    void addEventListener(ccSliderCallback callback);
+    void addEventListener(const ccSliderCallback& callback);
     
     virtual bool onTouchBegan(Touch *touch, Event *unusedEvent) override;
     virtual void onTouchMoved(Touch *touch, Event *unusedEvent) override;
@@ -199,7 +199,7 @@ public:
     virtual void ignoreContentAdaptWithSize(bool ignore) override;
     
     //override the widget's hitTest function to perfom its own
-    virtual bool hitTest(const Vector2 &pt) override;
+    virtual bool hitTest(const Vec2 &pt) override;
     /**
      * Returns the "class name" of widget.
      */

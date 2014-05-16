@@ -93,7 +93,7 @@ void DisplayFactory::updateDisplay(Bone *bone, float dt, bool dirty)
         break;
     default:
     {
-        Matrix transform = bone->getNodeToArmatureTransform();
+        Mat4 transform = bone->getNodeToArmatureTransform();
         display->setAdditionalTransform(&transform);
     }
     break;
@@ -113,12 +113,12 @@ void DisplayFactory::updateDisplay(Bone *bone, float dt, bool dirty)
                 CC_BREAK_IF(!detector->getBody());
 #endif
 
-                Matrix displayTransform = display->getNodeToParentTransform();
-                Vector2 anchorPoint =  display->getAnchorPointInPoints();
+                Mat4 displayTransform = display->getNodeToParentTransform();
+                Vec2 anchorPoint =  display->getAnchorPointInPoints();
                 anchorPoint = PointApplyTransform(anchorPoint, displayTransform);
                 displayTransform.m[12] = anchorPoint.x;
                 displayTransform.m[13] = anchorPoint.y;
-                Matrix t = TransformConcat( bone->getArmature()->getNodeToParentTransform(),displayTransform);
+                Mat4 t = TransformConcat( bone->getArmature()->getNodeToParentTransform(),displayTransform);
                 detector->updateTransform(t);
             }
             while (0);
@@ -202,7 +202,7 @@ void DisplayFactory::initSpriteDisplay(Bone *bone, DecorativeDisplay *decoDispla
     if(textureData)
     {
         //! Init display anchorPoint, every Texture have a anchor point
-        skin->setAnchorPoint(Vector2( textureData->pivotX, textureData->pivotY));
+        skin->setAnchorPoint(Vec2( textureData->pivotX, textureData->pivotY));
     }
 
 

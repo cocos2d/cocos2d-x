@@ -56,7 +56,7 @@ public:
 
 
 private:
-	cocos2d::Vector2 GetCCPoint(Windows::UI::Core::PointerEventArgs^ args);
+	cocos2d::Vec2 GetCCPoint(Windows::UI::Core::PointerEventArgs^ args);
 
 	void OnTextKeyDown(Object^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs^ e); 
 	void OnTextKeyUp(Object^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs^ e); 
