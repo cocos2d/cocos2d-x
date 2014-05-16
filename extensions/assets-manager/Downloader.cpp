@@ -66,7 +66,19 @@ int downloadProgressFunc(Downloader::ProgressData *ptr, double totalToDownload, 
 
 Downloader::Downloader(DownloaderDelegateProtocol* delegate)
 : _delegate(delegate)
+, _connectionTimeout(0)
 {
+}
+
+int Downloader::getConnectionTimeout()
+{
+    return _connectionTimeout;
+}
+
+void Downloader::setConnectionTimeout(int timeout)
+{
+    if (timeout >= 0)
+        _connectionTimeout = timeout;
 }
 
 void Downloader::notifyError(ErrorCode code, const std::string &msg/* ="" */, const std::string &customId/* ="" */)
@@ -174,6 +186,7 @@ void Downloader::download(const std::string &srcUrl, FILE *fp, const std::string
     curl_easy_setopt(curl, CURLOPT_NOPROGRESS, false);
     curl_easy_setopt(curl, CURLOPT_PROGRESSFUNCTION, downloadProgressFunc);
     curl_easy_setopt(curl, CURLOPT_PROGRESSDATA, &data);
+    if (_connectionTimeout) curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, _connectionTimeout);
     curl_easy_setopt(curl, CURLOPT_NOSIGNAL, 1L);
     curl_easy_setopt(curl, CURLOPT_LOW_SPEED_LIMIT, LOW_SPEED_LIMIT);
     curl_easy_setopt(curl, CURLOPT_LOW_SPEED_TIME, LOW_SPEED_TIME);

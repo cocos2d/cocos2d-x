@@ -94,6 +94,10 @@ public:
     
     DownloaderDelegateProtocol* getDelegate() const { return _delegate ;}
     
+    int getConnectionTimeout();
+    
+    void setConnectionTimeout(int timeout);
+    
     void downloadAsync(const std::string &srcUrl, const std::string &storagePath, const std::string &customId = "");
     
     void downloadSync(const std::string &srcUrl, const std::string &storagePath, const std::string &customId = "");
@@ -109,6 +113,8 @@ protected:
     void notifyError(ErrorCode code, const std::string &msg = "", const std::string &customId = "");
     
 private:
+    
+    int _connectionTimeout;
     
     DownloaderDelegateProtocol* _delegate;
     
