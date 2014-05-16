@@ -369,6 +369,8 @@ void Effect3DOutline::drawWithSprite(EffectSprite3D* sprite, const Mat4 &transfo
         _glProgramState->apply(transform);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->getIndexBuffer());
         glDrawElements(mesh->getPrimitiveType(), mesh->getIndexCount(), mesh->getIndexFormat(), 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
         glDisable(GL_DEPTH_TEST);
         glCullFace(GL_BACK);
         glDisable(GL_CULL_FACE);
