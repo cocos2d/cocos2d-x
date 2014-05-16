@@ -372,6 +372,7 @@ void Effect3DOutline::drawWithSprite(EffectSprite3D* sprite, const Mat4 &transfo
         glDisable(GL_DEPTH_TEST);
         glCullFace(GL_BACK);
         glDisable(GL_CULL_FACE);
+        CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, mesh->getIndexCount());
     }
 }
 
