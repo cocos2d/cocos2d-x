@@ -6,7 +6,7 @@
 #include "base/CCVector.h"
 #include "base/ccTypes.h"
 #include "2d/CCNode.h"
-#include "2d/CCProtocols.h"
+#include "base/CCProtocols.h"
 #include "renderer/CCMeshCommand.h"
 
 NS_CC_BEGIN

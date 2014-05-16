@@ -27,7 +27,7 @@
 #include <sstream>
 
 #include "CCObjLoader.h"
-#include "2d/platform/CCFileUtils.h"
+#include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 

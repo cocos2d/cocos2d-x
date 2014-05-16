@@ -1,8 +1,8 @@
 
 #include "CCSprite3DDataCache.h"
 #include "CCMesh.h"
-#include "2d/platform/CCFileUtils.h"
-#include "2d/CCTextureCache.h"
+#include "platform/CCFileUtils.h"
+#include "renderer/CCTextureCache.h"
 #include "base/CCEventCustom.h"
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
