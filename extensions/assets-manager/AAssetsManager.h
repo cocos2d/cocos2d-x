@@ -226,6 +226,8 @@ private:
     
     std::map<std::string, Downloader::DownloadUnit> _downloadUnits;
     
+    int _totalToDownload;
+    
     //! The url of the package
     std::string _packageUrl;
     

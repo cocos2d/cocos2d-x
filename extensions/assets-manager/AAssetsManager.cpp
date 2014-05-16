@@ -45,9 +45,10 @@ NS_CC_EXT_BEGIN;
 #define MANIFEST_FILENAME       "project.manifest"
 
 // Events
-#define FINISH_UPDATE_EVENT     "AM_Update_Finished"
-#define NEW_VERSION_EVENT       "AM_New_Version_Found"
-#define UPDATING_PERCENT_EVENT  "AM_Updating"
+#define ALREADY_UP_TO_DATE_EVENT    "AM_Already_Up_To_Date"
+#define FINISH_UPDATE_EVENT         "AM_Update_Finished"
+#define NEW_VERSION_EVENT           "AM_New_Version_Found"
+#define UPDATING_PERCENT_EVENT      "AM_Updating"
 
 #define BUFFER_SIZE         8192
 #define MAX_FILENAME        512
@@ -313,7 +314,12 @@ void AAssetsManager::checkUpdate()
             else
             {
                 if (_localManifest->versionEquals(_remoteManifest))
+                {
                     _updateState = UP_TO_DATE;
+                    EventCustom event(ALREADY_UP_TO_DATE_EVENT);
+                    event.setUserData(this);
+                    _eventDispatcher->dispatchEvent(&event);
+                }
                 else
                 {
                     _updateState = NEED_UPDATE;
@@ -363,7 +369,12 @@ void AAssetsManager::checkUpdate()
             else
             {
                 if (_localManifest->versionEquals(_remoteManifest))
+                {
                     _updateState = UP_TO_DATE;
+                    EventCustom event(ALREADY_UP_TO_DATE_EVENT);
+                    event.setUserData(this);
+                    _eventDispatcher->dispatchEvent(&event);
+                }
                 else
                 {
                     _updateState = NEED_UPDATE;
@@ -405,12 +416,16 @@ void AAssetsManager::update()
                 if (diff_map.size() == 0)
                 {
                     _updateState = UP_TO_DATE;
+                    EventCustom event(ALREADY_UP_TO_DATE_EVENT);
+                    event.setUserData(this);
+                    _eventDispatcher->dispatchEvent(&event);
                 }
                 else
                 {
                     _updateState = UPDATING;
                     // UPDATE
                     _downloadUnits.clear();
+                    _totalToDownload = 0;
                     std::string packageUrl = _remoteManifest->getPackageUrl();
                     for (auto it = diff_map.begin(); it != diff_map.end(); it++) {
                         Manifest::AssetDiff diff = it->second;
@@ -431,7 +446,9 @@ void AAssetsManager::update()
                             _downloadUnits.emplace(unit.customId, unit);
                         }
                     }
-                    _downloader->batchDownload(_downloadUnits);
+                    _totalToDownload = (int)_downloadUnits.size();
+                    auto t = std::thread(&Downloader::batchDownload, _downloader, _downloadUnits);
+                    t.detach();
                 }
             }
             
@@ -495,7 +512,15 @@ void AAssetsManager::onSuccess(const std::string &srcUrl, const std::string &cus
         // Found unit and delete it
         if (unitIt != _downloadUnits.end())
         {
+            // Remove from download unit list
             _downloadUnits.erase(unitIt);
+            
+            EventCustom updateEvent(UPDATING_PERCENT_EVENT);
+            double percent = 100 * (_totalToDownload - _downloadUnits.size()) / _totalToDownload;
+            updateEvent.setUserData(&percent);
+            time_t t = time(0);
+            CCLOG("TOTAL DOWNLOAD PROCESS (%ld) : %f", t, percent);
+            _eventDispatcher->dispatchEvent(&updateEvent);
         }
         // Finish check
         if (_downloadUnits.size() == 0)
