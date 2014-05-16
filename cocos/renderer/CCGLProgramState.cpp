@@ -240,11 +240,14 @@ void VertexAttribValue::setPointer(GLint size, GLenum type, GLboolean normalized
 GLProgramState* GLProgramState::create(GLProgram *glprogram)
 {
     GLProgramState* ret = nullptr;
-    ret = new (std::nothrow) GLProgramState;
-    if(!ret || !ret->init(glprogram))
-        CC_SAFE_RELEASE(ret);
-
-    return ret;
+    ret = new (std::nothrow) GLProgramState();
+    if(ret && ret->init(glprogram))
+    {
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+    return nullptr;
 }
 
 GLProgramState* GLProgramState::getOrCreateWithGLProgramName(const std::string &glProgramName )
