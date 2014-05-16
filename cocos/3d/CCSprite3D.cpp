@@ -2,7 +2,6 @@
 #include "CCSprite3D.h"
 #include "CCSprite3DDataCache.h"
 #include "CCMesh.h"
-#include "CCSprite3DEffect.h"
 
 #include "CCObjLoader.h"
 #include "2d/platform/CCFileUtils.h"
