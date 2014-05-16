@@ -111,6 +111,7 @@ Sprite3D::Sprite3D()
 
 Sprite3D::~Sprite3D()
 {
+    CC_SAFE_RELEASE_NULL(_texture);
     CC_SAFE_RELEASE_NULL(_mesh);
 }
 
