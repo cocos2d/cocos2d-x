@@ -66,13 +66,6 @@ public class Cocos2dxHelper {
 	private static Cocos2dxHelperListener sCocos2dxHelperListener;
 	private static Set<OnActivityResultListener> onActivityResultListeners = new LinkedHashSet<OnActivityResultListener>();
 
-    /**
-     * Optional meta-that can be in the manifest for this component, specifying
-     * the name of the native shared library to load.  If not specified,
-     * "main" is used.
-     */
-    private static final String META_DATA_LIB_NAME = "android.app.lib_name";
-    private static final String DEFAULT_LIB_NAME = "main";
 
 	// ===========================================================
 	// Constructors
@@ -88,23 +81,7 @@ public class Cocos2dxHelper {
     		final ApplicationInfo applicationInfo = activity.getApplicationInfo();
     		
             Cocos2dxHelper.sCocos2dxHelperListener = (Cocos2dxHelperListener)activity;
-                
-            try {
-            // Get the lib_name from AndroidManifest.xml metadata
-                ActivityInfo ai =
-                    activity.getPackageManager().getActivityInfo(activity.getIntent().getComponent(), PackageManager.GET_META_DATA);
-                if (null != ai.metaData) {
-                    String lib_name = ai.metaData.getString(META_DATA_LIB_NAME);
-                    if (null != lib_name) {
-                        System.loadLibrary(lib_name);
-                    } else {
-                        System.loadLibrary(DEFAULT_LIB_NAME);
-                    }
-                }
-            } catch (PackageManager.NameNotFoundException e) {
-                throw new RuntimeException("Error getting activity info", e);
-            }
-    
+                    
     		Cocos2dxHelper.sPackageName = applicationInfo.packageName;
     		Cocos2dxHelper.sFileDirectory = activity.getFilesDir().getAbsolutePath();
             Cocos2dxHelper.nativeSetApkPath(applicationInfo.sourceDir);
