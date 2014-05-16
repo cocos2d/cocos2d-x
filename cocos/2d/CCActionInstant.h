@@ -49,7 +49,7 @@ class CC_DLL ActionInstant : public FiniteTimeAction //<NSCopying>
 {
 public:
     //
-    // Overrides
+    // 重载
     //
 	virtual ActionInstant* clone() const override = 0;
     virtual ActionInstant * reverse() const override = 0;
@@ -63,12 +63,12 @@ public:
 class CC_DLL Show : public ActionInstant
 {
 public:
-    /** Allocates and initializes the action */
+    /** 配置和初始化动作*/
     static Show * create();
 
 
     //
-    // Overrides
+    // 重载
     //
     virtual void update(float time) override;
     virtual ActionInstant* reverse() const override;
@@ -88,11 +88,11 @@ private:
 class CC_DLL Hide : public ActionInstant
 {
 public:
-    /** Allocates and initializes the action */
+    /** 配置和初始化动作 */
     static Hide * create();
 
     //
-    // Overrides
+    // 重载
     //
     virtual void update(float time) override;
 	virtual ActionInstant* reverse() const override;
@@ -111,11 +111,11 @@ private:
 class CC_DLL ToggleVisibility : public ActionInstant
 {
 public:
-    /** Allocates and initializes the action */
+    /** 配置和初始化动作 */
     static ToggleVisibility * create();
 
     //
-    // Overrides
+    // 重载
     //
     virtual void update(float time) override;
 	virtual ToggleVisibility* reverse() const override;
@@ -135,11 +135,11 @@ private:
 class CC_DLL RemoveSelf : public ActionInstant
 {
 public:
-	/** create the action */
+	/** 创建动作 */
 	static RemoveSelf * create(bool isNeedCleanUp = true);
 
 	//
-    // Override
+    // 重载
     //
 	virtual void update(float time) override;
 	virtual RemoveSelf* clone() const override;
@@ -149,7 +149,7 @@ CC_CONSTRUCTOR_ACCESS:
     RemoveSelf() : _isNeedCleanUp(true){}
     virtual ~RemoveSelf(){}
 
-	/** init the action */
+	/** 初始化动作 */
 	bool init(bool isNeedCleanUp);
 
 protected:
@@ -166,11 +166,11 @@ private:
 class CC_DLL FlipX : public ActionInstant
 {
 public:
-    /** create the action */
+    /** 创建动作 */
     static FlipX * create(bool x);
 
     //
-    // Overrides
+    //重载
     //
     virtual void update(float time) override;
 	virtual FlipX* reverse() const override;
@@ -180,7 +180,7 @@ CC_CONSTRUCTOR_ACCESS:
     FlipX() :_flipX(false) {}
     virtual ~FlipX() {}
 
-    /** init the action */
+    /** 初始化动作 */
     bool initWithFlipX(bool x);
 
 protected:
@@ -197,11 +197,11 @@ private:
 class CC_DLL FlipY : public ActionInstant
 {
 public:
-    /** create the action */
+    /*创建动作 */
     static FlipY * create(bool y);
 
     //
-    // Overrides
+    // 重载
     //
     virtual void update(float time) override;
 	virtual FlipY* reverse() const override;
@@ -211,7 +211,7 @@ CC_CONSTRUCTOR_ACCESS:
     FlipY() :_flipY(false) {}
     virtual ~FlipY() {}
 
-    /** init the action */
+    /** 初始化动作 */
     bool initWithFlipY(bool y);
 
 protected:
@@ -227,11 +227,11 @@ class CC_DLL Place : public ActionInstant //<NSCopying>
 {
 public:
 
-    /** creates a Place action with a position */
+    /** 用一个点创建位置动作 */
     static Place * create(const Vec2& pos);
 
     //
-    // Overrides
+    // 重载
     //
     virtual void update(float time) override;
 	virtual Place* reverse() const override;
@@ -241,7 +241,7 @@ CC_CONSTRUCTOR_ACCESS:
     Place(){}
     virtual ~Place(){}
 
-    /** Initializes a Place action with a position */
+    /** 用一个点初始化位置动作 */
     bool initWithPosition(const Vec2& pos);
 
 protected:
@@ -257,15 +257,15 @@ private:
 class CC_DLL CallFunc : public ActionInstant //<NSCopying>
 {
 public:
-	/** creates the action with the callback of type std::function<void()>.
-	 This is the preferred way to create the callback.
-     * When this funtion bound in js or lua ,the input param will be changed
-     * In js: var create(var func, var this, var [data]) or var create(var func)
-     * In lua:local create(local funcID)
+	/** 用std::function<void()>类型的回调函数为参数创建动作。
+	 这是创建回调函数的首选方式。
+     * 当这个函数局限于js或者lua语言的时候，输入参数将会被改变
+     * 在 js中: var create(var func, var this, var [data]) or var create(var func)
+     * 在lua中:local create(local funcID)
 	 */
     static CallFunc * create(const std::function<void()>& func);
 
-    /** creates the action with the callback
+    /** 用回调函数为参数创建动作
 
      typedef void (Ref::*SEL_CallFunc)();
 	 @deprecated Use the std::function API instead.
@@ -275,7 +275,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE static CallFunc * create(Ref* target, SEL_CallFunc selector);
 
 public:
-    /** executes the callback */
+    /** 执行回调函数 */
     virtual void execute();
 
     inline Ref* getTargetCallback()
@@ -293,7 +293,7 @@ public:
         }
     }
     //
-    // Overrides
+    // 重载
     //
     virtual void update(float time) override;
 	virtual CallFunc* reverse() const override;
@@ -308,20 +308,20 @@ CC_CONSTRUCTOR_ACCESS:
     }
     virtual ~CallFunc();
 
-	/** initializes the action with the callback
+	/** 用回调函数初始化动作
      typedef void (Ref::*SEL_CallFunc)();
      @deprecated Use the std::function API instead.
      */
     CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Ref* target);
     
-	/** initializes the action with the std::function<void()>
+	/** 以std::function<void()>为参数，初始化动作
      * @js NA
      * @lua NA
 	 */
     bool initWithFunction(const std::function<void()>& func);
 
 protected:
-    /** Target that will be called */
+    /** 讲被调用的目标变量*/
     Ref*   _selectorTarget;
 
     union
@@ -330,7 +330,7 @@ protected:
         SEL_CallFuncN    _callFuncN;
     };
     
-    /** function that will be called */
+    /** 将被调用的函数 */
 	std::function<void()> _function;
 
 private:
@@ -344,12 +344,12 @@ N means Node
 class CC_DLL CallFuncN : public CallFunc
 {
 public:
-    /** creates the action with the callback of type std::function<void()>.
-	 This is the preferred way to create the callback.
+    /** 用std::function<void()>类型的回调函数为参数创建动作。
+	 这是创建回调函数的首选方式。
 	 */
     static CallFuncN * create(const std::function<void(Node*)>& func);
 
-    /** creates the action with the callback 
+    /** 以回调函数为参数创建动作 
 
     typedef void (Ref::*SEL_CallFuncN)(Node*);
      @deprecated Use the std::function API instead.
@@ -357,7 +357,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE static CallFuncN * create(Ref* target, SEL_CallFuncN selector);
 
     //
-    // Overrides
+    // 重载
     //
 	virtual CallFuncN* clone() const override;
     virtual void execute() override;
@@ -366,10 +366,10 @@ CC_CONSTRUCTOR_ACCESS:
     CallFuncN():_functionN(nullptr){}
     virtual ~CallFuncN(){}
 
-    /** initializes the action with the std::function<void(Node*)> */
+    /** 以std::function<void(Node*)> 为参数初始化*/
     bool initWithFunction(const std::function<void(Node*)>& func);
     
-    /** initializes the action with the callback
+    /** 以回调函数为参数初始化动作
      
      typedef void (Ref::*SEL_CallFuncN)(Node*);
      @deprecated Use the std::function API instead.
@@ -377,7 +377,7 @@ CC_CONSTRUCTOR_ACCESS:
     CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Ref* target, SEL_CallFuncN selector);
 
 protected:
-    /** function that will be called with the "sender" as the 1st argument */
+    /** 将被调用并以“sneder作为第一参数的函数” */
     std::function<void(Node*)> _functionN;
 
 private:
@@ -393,11 +393,11 @@ private:
 class CC_DLL  __CCCallFuncND : public CallFunc
 {
 public:
-    /** creates the action with the callback and the data to pass as an argument */
+    /**以回调函数为参数创建动作并将数据作为参数传递进去*/
     CC_DEPRECATED_ATTRIBUTE static __CCCallFuncND * create(Ref* target, SEL_CallFuncND selector, void* d);
     
     //
-    // Overrides
+    // 重载
     //
 	virtual __CCCallFuncND* clone() const override;
     virtual void execute() override;
@@ -406,7 +406,7 @@ protected:
     __CCCallFuncND() {}
     virtual ~__CCCallFuncND() {}
     
-    /** initializes the action with the callback and the data to pass as an argument */
+    /**以回调函数为参数创建动作并将数据作为参数传递进去*/
     bool initWithTarget(Ref* target, SEL_CallFuncND selector, void* d);
 
     SEL_CallFuncND _callFuncND;
@@ -427,13 +427,13 @@ private:
 class CC_DLL __CCCallFuncO : public CallFunc
 {
 public:
-    /** creates the action with the callback
+    /** 以回调函数为参数创建动作
      
      typedef void (Ref::*SEL_CallFuncO)(Ref*);
      */
     CC_DEPRECATED_ATTRIBUTE static __CCCallFuncO * create(Ref* target, SEL_CallFuncO selector, Ref* object);
     //
-    // Overrides
+    // 重载
     //
 	virtual __CCCallFuncO* clone() const override;
     virtual void execute() override;
@@ -444,14 +444,14 @@ public:
 protected:
     __CCCallFuncO();
     virtual ~__CCCallFuncO();
-    /** initializes the action with the callback
+    /** 以回调函数为参数初始化动作
 
      typedef void (Ref::*SEL_CallFuncO)(Ref*);
      */
     bool initWithTarget(Ref* target, SEL_CallFuncO selector, Ref* object);
     
 
-    /** object to be passed as argument */
+    /** 作为参数传递进去的对象 */
     Ref* _object;
     SEL_CallFuncO _callFuncO;
 
