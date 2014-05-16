@@ -110,10 +110,8 @@ PoolManager* PoolManager::getInstance()
     if (s_singleInstance == nullptr)
     {
         s_singleInstance = new PoolManager();
-        // Add the first auto release pool
-        s_singleInstance->_curReleasePool = new AutoreleasePool("cocos2d autorelease pool");
-        s_singleInstance->_releasePoolStack.push_back(s_singleInstance->_curReleasePool);
     }
+    CC_ASSERT(s_singleInstance->getCurrentPool() != nullptr);
     return s_singleInstance;
 }
 
@@ -125,6 +123,8 @@ void PoolManager::destroyInstance()
 
 PoolManager::PoolManager()
 {
+    // Add the first auto release pool
+    push(new AutoreleasePool("cocos2d autorelease pool"));
 }
 
 PoolManager::~PoolManager()
