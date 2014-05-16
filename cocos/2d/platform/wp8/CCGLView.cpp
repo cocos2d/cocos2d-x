@@ -397,7 +397,7 @@ void GLView::UpdateWindowSize()
 	}
 }
 
-const Matrix& GLView::getOrientationMatrix() const 
+const Mat4& GLView::getOrientationMatrix() const 
 {
     return m_orientationMatrix;
 };
