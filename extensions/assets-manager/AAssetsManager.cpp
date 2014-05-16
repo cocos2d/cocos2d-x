@@ -83,10 +83,6 @@ std::string AAssetsManager::s_nWritableRoot = "";
 AAssetsManager::AAssetsManager(const std::string& manifestUrl, const std::string& storagePath/* = "" */)
 : _waitToUpdate(false)
 , _manifestUrl(manifestUrl)
-, _manifestLoaded(false)
-, _curl(nullptr)
-, _connectionTimeout(0)
-, _isDownloading(false)
 {
     // Init writable path
     if (s_nWritableRoot.size() == 0) {
@@ -519,7 +515,7 @@ void AAssetsManager::onSuccess(const std::string &srcUrl, const std::string &cus
             double percent = 100 * (_totalToDownload - _downloadUnits.size()) / _totalToDownload;
             updateEvent.setUserData(&percent);
             time_t t = time(0);
-            CCLOG("TOTAL DOWNLOAD PROCESS (%ld) : %f", t, percent);
+            CCLOG("TOTAL DOWNLOAD PROCESS (%ld) : %f\n", t, percent);
             _eventDispatcher->dispatchEvent(&updateEvent);
         }
         // Finish check

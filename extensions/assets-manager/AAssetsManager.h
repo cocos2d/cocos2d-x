@@ -228,9 +228,6 @@ private:
     
     int _totalToDownload;
     
-    //! The url of the package
-    std::string _packageUrl;
-    
     //! The path to store downloaded resources.
     std::string _storagePath;
     
@@ -243,20 +240,8 @@ private:
     //! Remote manifest
     Manifest *_remoteManifest;
     
-    //! Indicate whether the manifest file have been parsed
-    bool _manifestLoaded;
-    
-    //! Time out configuration for connection
-    unsigned int _connectionTimeout;
-    
-    //! CURL ref
-    void*_curl;
-    
     //! Downloader
     Downloader* _downloader;
-    
-    //! Indicate whether AssetsManager is downloading assets
-    bool _isDownloading;
 };
 
 NS_CC_EXT_END;
