@@ -12,12 +12,6 @@
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCGLProgramCache.h"
 
-//begin include shader file
-#define STRINGIFY(A)  #A
-#include "Textured.es2.vert.h"
-#include "Colored.es2.frag.h"
-//end include shader file
-
 NS_CC_BEGIN
 
 std::string s_attributeNames[] = {GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::ATTRIBUTE_NAME_NORMAL};
