@@ -239,6 +239,10 @@ EffectSprite3D::EffectSprite3D()
 
 EffectSprite3D::~EffectSprite3D()
 {
+    for(auto effect : _effects)
+    {
+        CC_SAFE_RELEASE_NULL(std::get<1>(effect));
+    }
     CC_SAFE_RELEASE(_defaultEffect);
 }
 
