@@ -25,6 +25,9 @@ THE SOFTWARE.
 #include "base/CCAutoreleasePool.h"
 #include "base/ccMacros.h"
 
+#include <algorithm>
+#include <memory>
+
 NS_CC_BEGIN
 
 AutoreleasePool::AutoreleasePool()
@@ -130,14 +133,8 @@ PoolManager::PoolManager()
 PoolManager::~PoolManager()
 {
     CCLOGINFO("deallocing PoolManager: %p", this);
-    
-    while (!_releasePoolStack.empty())
-    {
-        AutoreleasePool* pool = _releasePoolStack.back();
-        _releasePoolStack.pop_back();
-        
-        delete pool;
-    }
+
+    std::for_each(_releasePoolStack.begin(), _releasePoolStack.end(), std::default_delete<AutoreleasePool>());
 }
 
 
@@ -149,12 +146,8 @@ AutoreleasePool* PoolManager::getCurrentPool() const
 
 bool PoolManager::isObjectInPools(Ref* obj) const
 {
-    for (const auto& pool : _releasePoolStack)
-    {
-        if (pool->contains(obj))
-            return true;
-    }
-    return false;
+    auto end = _releasePoolStack.end();
+    return end != std::find_if(_releasePoolStack.begin(), end, [obj] (AutoreleasePool *pool) { return pool->contains(obj); });
 }
 
 void PoolManager::push(AutoreleasePool *pool)
