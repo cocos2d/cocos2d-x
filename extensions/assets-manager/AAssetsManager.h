@@ -198,7 +198,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void onSuccess(const std::string &srcUrl, const std::string &customId, const std::string &filename);
+    virtual void onSuccess(const std::string &srcUrl, const std::string &customId);
     
 protected:
     void loadManifest();

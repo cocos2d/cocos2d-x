@@ -236,7 +236,7 @@ void AAssetsManager::checkUpdate()
             if (versionUrl.size() > 0)
             {
                 // Download version file asynchronously
-                _downloader->downloadAsync(versionUrl, _storagePath, "@version", VERSION_FILENAME);
+                _downloader->downloadAsync(versionUrl, _storagePath + VERSION_FILENAME, "@version");
                 _updateState = DOWNLOADING_VERSION;
             }
             // No version file found
@@ -273,7 +273,7 @@ void AAssetsManager::checkUpdate()
             if (manifestUrl.size() > 0)
             {
                 // Download version file asynchronously
-                _downloader->downloadAsync(manifestUrl, _storagePath, "@manifest", MANIFEST_FILENAME);
+                _downloader->downloadAsync(manifestUrl, _storagePath + MANIFEST_FILENAME, "@manifest");
                 _updateState = DOWNLOADING_MANIFEST;
             }
             // No version file found
@@ -333,6 +333,25 @@ void AAssetsManager::update()
                 {
                     _updateState = UPDATING;
 // UPDATE
+                    std::string packageUrl = _remoteManifest->getPackageUrl();
+                    std::vector<Downloader::DownloadUnit> update_units;
+                    for (auto it = diff_map.begin(); it != diff_map.end(); it++) {
+                        Manifest::AssetDiff diff = it->second;
+                        
+                        if (diff.type == Manifest::DELETED) {
+// DELETE
+                        }
+                        else
+                        {
+                            std::string path = diff.asset->path;
+                            Downloader::DownloadUnit unit;
+                            unit.customId = it->first;
+                            unit.srcUrl = packageUrl + path;
+                            unit.storagePath = _storagePath + path;
+                            update_units.push_back(unit);
+                        }
+                    }
+                    _downloader->batchDownload(update_units);
                 }
             }
             
@@ -369,9 +388,9 @@ void AAssetsManager::onProgress(double total, double downloaded, const std::stri
     CCLOG("Progress: %d\n", percent);
 }
 
-void AAssetsManager::onSuccess(const std::string &srcUrl, const std::string &customId, const std::string &filename)
+void AAssetsManager::onSuccess(const std::string &srcUrl, const std::string &customId)
 {
-    CCLOG("SUCCEED: %s\n", filename.c_str());
+    CCLOG("SUCCEED: %s\n", customId.c_str());
     
     if (customId == "@version")
     {
