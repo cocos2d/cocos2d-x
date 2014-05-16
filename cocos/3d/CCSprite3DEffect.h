@@ -5,7 +5,7 @@
 #include <vector>
 
 #include "base/ccTypes.h"
-#include "2d/CCNode.h"
+#include "base/CCRef.h"
 #include "math/CCMath.h"
 
 
@@ -15,7 +15,7 @@ class GLProgramState;
 class Mesh;
 class Sprite3D;
 
-class Sprite3DEffect: public Node
+class Sprite3DEffect: public Ref
 {
 public:
     enum EffectType
@@ -34,6 +34,7 @@ protected:
     virtual ~Sprite3DEffect();
     
     Sprite3D*         _sprite;
+    GLProgramState*   _glProgramState;
 };
 
 class Sprite3DOutlineEffect: public Sprite3DEffect

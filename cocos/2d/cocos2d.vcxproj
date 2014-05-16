@@ -175,6 +175,11 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="..\..\external\unzip\ioapi.cpp" />
     <ClCompile Include="..\..\external\unzip\unzip.cpp" />
     <ClCompile Include="..\..\external\xxhash\xxhash.c" />
+    <ClCompile Include="..\3d\CCMesh.cpp" />
+    <ClCompile Include="..\3d\CCObjLoader.cpp" />
+    <ClCompile Include="..\3d\CCSprite3D.cpp" />
+    <ClCompile Include="..\3d\CCSprite3DDataCache.cpp" />
+    <ClCompile Include="..\3d\CCSprite3DEffect.cpp" />
     <ClCompile Include="..\base\atitc.cpp" />
     <ClCompile Include="..\base\base64.cpp" />
     <ClCompile Include="..\base\CCAutoreleasePool.cpp" />
@@ -242,6 +247,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="..\renderer\CCGLProgramStateCache.cpp" />
     <ClCompile Include="..\renderer\ccGLStateCache.cpp" />
     <ClCompile Include="..\renderer\CCGroupCommand.cpp" />
+    <ClCompile Include="..\renderer\CCMeshCommand.cpp" />
     <ClCompile Include="..\renderer\CCQuadCommand.cpp" />
     <ClCompile Include="..\renderer\CCRenderCommand.cpp" />
     <ClCompile Include="..\renderer\CCRenderer.cpp" />
@@ -339,6 +345,13 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="..\..\external\unzip\ioapi.h" />
     <ClInclude Include="..\..\external\unzip\unzip.h" />
     <ClInclude Include="..\..\external\xxhash\xxhash.h" />
+    <ClInclude Include="..\3d\CCMesh.h" />
+    <ClInclude Include="..\3d\CCObjLoader.h" />
+    <ClInclude Include="..\3d\CCSprite3D.h" />
+    <ClInclude Include="..\3d\CCSprite3DDataCache.h" />
+    <ClInclude Include="..\3d\CCSprite3DEffect.h" />
+    <ClInclude Include="..\3d\Colored.es2.frag.h" />
+    <ClInclude Include="..\3d\Textured.es2.vert.h" />
     <ClInclude Include="..\base\atitc.h" />
     <ClInclude Include="..\base\base64.h" />
     <ClInclude Include="..\base\CCAutoreleasePool.h" />
@@ -421,6 +434,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="..\renderer\CCGLProgramStateCache.h" />
     <ClInclude Include="..\renderer\ccGLStateCache.h" />
     <ClInclude Include="..\renderer\CCGroupCommand.h" />
+    <ClInclude Include="..\renderer\CCMeshCommand.h" />
     <ClInclude Include="..\renderer\CCQuadCommand.h" />
     <ClInclude Include="..\renderer\CCRenderCommand.h" />
     <ClInclude Include="..\renderer\CCRenderCommandPool.h" />
@@ -530,6 +544,9 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <None Include="..\math\Vector2.inl" />
     <None Include="..\math\Vector3.inl" />
     <None Include="..\math\Vector4.inl" />
+    <None Include="..\renderer\ccShader_3D_Color.frag" />
+    <None Include="..\renderer\ccShader_3D_ColorTex.frag" />
+    <None Include="..\renderer\ccShader_3D_PositionTex.vert" />
     <None Include="..\renderer\ccShader_Label.vert" />
     <None Include="..\renderer\ccShader_Label_df.frag" />
     <None Include="..\renderer\ccShader_Label_df_glow.frag" />

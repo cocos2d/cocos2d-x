@@ -144,6 +144,7 @@ renderer/CCGLProgramStateCache.cpp \
 renderer/ccGLStateCache.cpp \
 renderer/CCGroupCommand.cpp \
 renderer/CCQuadCommand.cpp \
+renderer/CCMeshCommand.cpp \
 renderer/CCRenderCommand.cpp \
 renderer/CCRenderer.cpp \
 renderer/CCGLProgramCache.cpp \

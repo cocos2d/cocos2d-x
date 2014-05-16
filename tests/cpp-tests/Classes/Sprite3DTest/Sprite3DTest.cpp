@@ -158,14 +158,6 @@ void Sprite3DBasicTest::addNewSpriteWithCoords(Vec2 p)
     sprite->setScale(3.f);
     sprite->setTexture("Sprite3DTest/boss.png");
     
-    
-    //create outline effect and set the parameter
-    //Sprite3DOutlineEffect* effect = Sprite3DOutlineEffect::create();
-    //sprite->setEffect(effect);
-    //effect->setOutlineColor(Vec3(1.0f, 1.0f, 0.0f));
-    //effect->setOutlineWidth(0.3);
-    
-    
     //
     //sprite->setEffect(cocos2d::EFFECT_OUTLINE);
     

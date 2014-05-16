@@ -53,21 +53,22 @@ struct MeshVertexAttrib
 
 class RenderMeshData
 {
+    friend class Mesh;
 public:
-    int vertexsizeBytes;
-    int vertexNum;
-    std::vector<float> _vertexs;
-    std::vector<unsigned short> _indices;
-    std::vector<MeshVertexAttrib> _vertexAttribs;
-    
-    RenderMeshData(): vertexsizeBytes(0)
+    RenderMeshData(): _vertexsizeBytes(0)
     {
-        
     }
     
     bool hasVertexAttrib(int attrib);
     
     bool initFrom(std::vector<float>& posions, std::vector<float>& normals, std::vector<float>& texs, const std::vector<unsigned short>& indices);
+    
+protected:
+    int _vertexsizeBytes;
+    int _vertexNum;
+    std::vector<float> _vertexs;
+    std::vector<unsigned short> _indices;
+    std::vector<MeshVertexAttrib> _vertexAttribs;
 };
 
 
@@ -95,7 +96,7 @@ public:
     bool hasVertexAttrib(int attrib) { return _renderdata.hasVertexAttrib(attrib); }
     
     //get per vertex size in bytes
-    int getVertexSizeInBytes() const { return _renderdata.vertexsizeBytes; }
+    int getVertexSizeInBytes() const { return _renderdata._vertexsizeBytes; }
     
     PrimitiveType getPrimitiveType() const { return _primitiveType; }
     

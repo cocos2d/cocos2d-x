@@ -9,7 +9,7 @@
 #include "2d/CCNode.h"
 #include "2d/CCProtocols.h"
 
-#include "renderer/CCCustomCommand.h"
+#include "renderer/CCMeshCommand.h"
 
 NS_CC_BEGIN
 
@@ -29,9 +29,7 @@ public:
     //set texture
     void setTexture(const std::string& texFile);
     void setTexture(Texture2D* texture);
-    
-    //void setEffect(Sprite3DEffect* effect);
-    
+
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
     virtual const BlendFunc &getBlendFunc() const override;
     
@@ -46,24 +44,19 @@ protected:
     bool loadFromObj(const std::string& path);
 
     virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
-
-    void onDraw(const Mat4 &transform, bool transformUpdated);
     
     virtual GLProgram* getDefGLProgram(bool textured = true);
     
     void genGLProgramState();
 
-    int           getMeshPartCount() const;
-    
-    CustomCommand     _customCommand;
     Mesh              *_mesh;
+    
+    MeshCommand        _meshCommand;
     
     int               _partcount;
     
     Texture2D*        _texture;
     //Vector<Texture2D*>    _textures;
-    
-    //Sprite3DEffect*     _effect;
     
     BlendFunc _blend;
     
