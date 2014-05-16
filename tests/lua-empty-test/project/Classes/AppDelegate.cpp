@@ -1,7 +1,7 @@
 #include "cocos2d.h"
 #include "AppDelegate.h"
 #include "audio/include/SimpleAudioEngine.h"
-#include "2d/CCScriptSupport.h"
+#include "base/CCScriptSupport.h"
 #include "CCLuaEngine.h"
 
 USING_NS_CC;

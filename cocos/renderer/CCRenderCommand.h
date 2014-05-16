@@ -26,8 +26,9 @@
 #ifndef __CCRENDERCOMMAND_H_
 #define __CCRENDERCOMMAND_H_
 
-#include "base/CCPlatformMacros.h"
 #include <stdint.h>
+
+#include "base/CCPlatformMacros.h"
 #include "base/ccTypes.h"
 
 NS_CC_BEGIN

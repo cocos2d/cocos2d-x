@@ -30,12 +30,13 @@ THE SOFTWARE.
 #ifndef __CCGLPROGRAM_H__
 #define __CCGLPROGRAM_H__
 
+#include <unordered_map>
+
 #include "base/ccMacros.h"
 #include "base/CCRef.h"
 #include "base/ccTypes.h"
 #include "CCGL.h"
 #include "math/CCMath.h"
-#include <unordered_map>
 
 NS_CC_BEGIN
 

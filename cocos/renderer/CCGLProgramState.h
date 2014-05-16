@@ -25,13 +25,13 @@ THE SOFTWARE.
 #ifndef __CCGLPROGRAMSTATE_H__
 #define __CCGLPROGRAMSTATE_H__
 
+#include <unordered_map>
+
 #include "base/ccTypes.h"
 #include "base/CCVector.h"
-#include "math/Vector2.h"
-#include "math/Vector3.h"
-#include "math/Vector4.h"
-
-#include <unordered_map>
+#include "math/Vec2.h"
+#include "math/Vec3.h"
+#include "math/Vec4.h"
 
 NS_CC_BEGIN
 

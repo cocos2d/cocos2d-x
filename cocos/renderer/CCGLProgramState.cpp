@@ -27,11 +27,12 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "renderer/CCGLProgramState.h"
+
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramStateCache.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/ccGLStateCache.h"
-#include "2d/CCTexture2D.h"
+#include "renderer/CCTexture2D.h"
 
 NS_CC_BEGIN
 
