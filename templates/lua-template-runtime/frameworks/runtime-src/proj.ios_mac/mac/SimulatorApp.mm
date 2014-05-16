@@ -36,6 +36,7 @@
 #include "glfw3.h"
 #include "glfw3native.h"
 #include "Runtime.h"
+#include "ConfigParser.h"
 
 #include "cocos2d.h"
 
@@ -44,6 +45,8 @@ using namespace cocos2d;
 bool g_landscape = false;
 cocos2d::Size g_screenSize;
 GLView* g_eglView = nullptr;
+
+static AppController* g_nsAppDelegate=nullptr;
 
 using namespace std;
 using namespace cocos2d;
@@ -74,9 +77,8 @@ std::string getCurAppPath(void)
         extern std::string g_resourcePath;
         g_resourcePath = [[args objectAtIndex:1]UTF8String];
     }
-
+    g_nsAppDelegate =self;
     AppDelegate app;
-    [self createSimulator:[NSString stringWithUTF8String:"HelloLua"] viewWidth:960 viewHeight:640 factor:1.0];
     Application::getInstance()->run();
     // After run, application needs to be terminated immediately.
     [NSApp terminate: self];
@@ -115,15 +117,30 @@ std::string getCurAppPath(void)
     [window makeKeyAndOrderFront:self];
 }
 
+void createSimulator(const char* viewName, float width, float height,bool isLandscape,float frameZoomFactor)
+{
+    if(g_nsAppDelegate)
+    {
+        if((isLandscape && height > width) ||  (!isLandscape && width > height))
+        {
+            float tmpvalue =width;
+            width = height;
+            height = width;
+        }
+        
+        [g_nsAppDelegate createSimulator:[NSString stringWithUTF8String:viewName] viewWidth:width viewHeight:height factor:frameZoomFactor];
+    }
+    
+}
 
 - (void) createViewMenu
 {
     
     NSMenu *submenu = [[[window menu] itemWithTitle:@"View"] submenu];
 
-    for (int i = SimulatorConfig::getInstance()->getScreenSizeCount() - 1; i >= 0; --i)
+    for (int i = ConfigParser::getInstance()->getScreenSizeCount() - 1; i >= 0; --i)
     {
-        SimulatorScreenSize size = SimulatorConfig::getInstance()->getScreenSize(i);
+        SimulatorScreenSize size = ConfigParser::getInstance()->getScreenSize(i);
         NSMenuItem *item = [[[NSMenuItem alloc] initWithTitle:[NSString stringWithCString:size.title.c_str() encoding:NSUTF8StringEncoding]
                                                        action:@selector(onViewChangeFrameSize:)
                                                 keyEquivalent:@""] autorelease];
@@ -186,11 +203,11 @@ std::string getCurAppPath(void)
         height = w;
     }
     
-    int count = SimulatorConfig::getInstance()->getScreenSizeCount();
+    int count = ConfigParser::getInstance()->getScreenSizeCount();
     for (int i = 0; i < count; ++i)
     {
         bool bSel = false;
-        SimulatorScreenSize size = SimulatorConfig::getInstance()->getScreenSize(i);
+        SimulatorScreenSize size = ConfigParser::getInstance()->getScreenSize(i);
         if (size.width == width && size.height == height)
         {
             bSel = true;
@@ -271,18 +288,35 @@ std::string getCurAppPath(void)
     [self updateView];
 }
 
-- (IBAction) onReloadScript:(id)sender
+- (void) launch:(NSArray*)args
 {
-    reloadScript("");
+    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
+    NSMutableDictionary *configuration = [NSMutableDictionary dictionaryWithObject:args forKey:NSWorkspaceLaunchConfigurationArguments];
+    NSError *error = [[[NSError alloc] init] autorelease];
+    [[NSWorkspace sharedWorkspace] launchApplicationAtURL:url
+                                                  options:NSWorkspaceLaunchNewInstance
+                                            configuration:configuration error:&error];
+}
+
+- (void) relaunch:(NSArray*)args
+{
+    [self launch:args];
+    [[NSApplication sharedApplication] terminate:self];
+}
+
+- (IBAction) onRelaunch:(id)sender
+{
+    NSArray* args=[[NSArray alloc] initWithObjects:@" ", nil];
+    [self relaunch:args];
 }
 
 
 - (IBAction) onViewChangeFrameSize:(id)sender
 {
     NSInteger index = [sender tag];
-    if (index >= 0 && index < SimulatorConfig::getInstance()->getScreenSizeCount())
+    if (index >= 0 && index < ConfigParser::getInstance()->getScreenSizeCount())
     {
-        SimulatorScreenSize size = SimulatorConfig::getInstance()->getScreenSize(index);
+        SimulatorScreenSize size = ConfigParser::getInstance()->getScreenSize(index);
         g_screenSize.width = size.width;
         g_screenSize.height = size.height;
         [self updateView];
