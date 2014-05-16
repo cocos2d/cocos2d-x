@@ -1095,10 +1095,6 @@
 		3E9B5E1419254D2C00BB28BC /* CCMeshCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E9B5E1019254D2C00BB28BC /* CCMeshCommand.h */; };
 		3EA0FB6B191C841D00B170C8 /* UIVideoPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EA0FB69191C841D00B170C8 /* UIVideoPlayer.h */; };
 		3EA0FB6C191C841D00B170C8 /* UIVideoPlayerIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0FB6A191C841D00B170C8 /* UIVideoPlayerIOS.mm */; };
-		3EA2C2D01923EE8C000A7CAA /* CCSprite3DEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2C2CE1923EE8C000A7CAA /* CCSprite3DEffect.cpp */; };
-		3EA2C2D11923EE8C000A7CAA /* CCSprite3DEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2C2CE1923EE8C000A7CAA /* CCSprite3DEffect.cpp */; };
-		3EA2C2D21923EE8C000A7CAA /* CCSprite3DEffect.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EA2C2CF1923EE8C000A7CAA /* CCSprite3DEffect.h */; };
-		3EA2C2D31923EE8C000A7CAA /* CCSprite3DEffect.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EA2C2CF1923EE8C000A7CAA /* CCSprite3DEffect.h */; };
 		460E468118080832000CDD6D /* cocos-ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A167D21807AF4D005B8026 /* cocos-ext.h */; };
 		460E468218080836000CDD6D /* cocos-ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A167D21807AF4D005B8026 /* cocos-ext.h */; };
 		460E477B180808F5000CDD6D /* ExtensionMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168321807AF4E005B8026 /* ExtensionMacros.h */; };
@@ -2334,8 +2330,6 @@
 		3E9B5E1019254D2C00BB28BC /* CCMeshCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMeshCommand.h; sourceTree = "<group>"; };
 		3EA0FB69191C841D00B170C8 /* UIVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIVideoPlayer.h; sourceTree = "<group>"; };
 		3EA0FB6A191C841D00B170C8 /* UIVideoPlayerIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UIVideoPlayerIOS.mm; sourceTree = "<group>"; };
-		3EA2C2CE1923EE8C000A7CAA /* CCSprite3DEffect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCSprite3DEffect.cpp; path = ../cocos/3d/CCSprite3DEffect.cpp; sourceTree = "<group>"; };
-		3EA2C2CF1923EE8C000A7CAA /* CCSprite3DEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCSprite3DEffect.h; path = ../cocos/3d/CCSprite3DEffect.h; sourceTree = "<group>"; };
 		46A15FCC1807A544005B8026 /* AUTHORS */ = {isa = PBXFileReference; lastKnownFileType = text; name = AUTHORS; path = ../AUTHORS; sourceTree = "<group>"; };
 		46A15FCE1807A544005B8026 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		46A15FE11807A56F005B8026 /* Export.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Export.h; sourceTree = "<group>"; };
@@ -4073,8 +4067,6 @@
 		3E92EA3919212FB40094CD21 /* 3d */ = {
 			isa = PBXGroup;
 			children = (
-				3EA2C2CE1923EE8C000A7CAA /* CCSprite3DEffect.cpp */,
-				3EA2C2CF1923EE8C000A7CAA /* CCSprite3DEffect.h */,
 				3E92EA5419215FA10094CD21 /* Colored.es2.frag.h */,
 				3E92EA5519215FA10094CD21 /* CCSprite3D.cpp */,
 				3E92EA5619215FA10094CD21 /* CCSprite3D.h */,
@@ -5331,7 +5323,6 @@
 				1A8C59FD180E930E00EF57C3 /* CCTween.h in Headers */,
 				1A8C5A05180E930E00EF57C3 /* CCUtilMath.h in Headers */,
 				1A8C5A07180E930E00EF57C3 /* CocoStudio.h in Headers */,
-				3EA2C2D21923EE8C000A7CAA /* CCSprite3DEffect.h in Headers */,
 				500DC93619106300007B91BF /* ccConfig.h in Headers */,
 				500DC93019106300007B91BF /* base64.h in Headers */,
 				1A8C5A0F180E930E00EF57C3 /* DictionaryHelper.h in Headers */,
@@ -5638,7 +5629,6 @@
 				1A57028D180BCC900088DEC7 /* CCSpriteFrameCache.h in Headers */,
 				1A570295180BCCAB0088DEC7 /* CCAnimation.h in Headers */,
 				1A570299180BCCAB0088DEC7 /* CCAnimationCache.h in Headers */,
-				3EA2C2D31923EE8C000A7CAA /* CCSprite3DEffect.h in Headers */,
 				1A5702B2180BCDBC0088DEC7 /* ccUTF8.h in Headers */,
 				1A5702B8180BCDF40088DEC7 /* CCVertex.h in Headers */,
 				06CAAAD2186AD8030012A414 /* ObjectFactory.h in Headers */,
@@ -6460,7 +6450,6 @@
 				1A8C59CB180E930E00EF57C3 /* CCDataReaderHelper.cpp in Sources */,
 				1A8C59CF180E930E00EF57C3 /* CCDatas.cpp in Sources */,
 				1A8C59D3180E930E00EF57C3 /* CCDecorativeDisplay.cpp in Sources */,
-				3EA2C2D01923EE8C000A7CAA /* CCSprite3DEffect.cpp in Sources */,
 				500DC8B219105D41007B91BF /* CCGroupCommand.cpp in Sources */,
 				50FCEBB318C72017004AD434 /* SliderReader.cpp in Sources */,
 				1A8C59D7180E930E00EF57C3 /* CCDisplayFactory.cpp in Sources */,
@@ -6850,7 +6839,6 @@
 				1AD71ED2180E26E600808F54 /* SkeletonData.cpp in Sources */,
 				500DC97D19106300007B91BF /* CCEventTouch.cpp in Sources */,
 				1AD71ED6180E26E600808F54 /* SkeletonJson.cpp in Sources */,
-				3EA2C2D11923EE8C000A7CAA /* CCSprite3DEffect.cpp in Sources */,
 				2905FA6718CF08D100240AA3 /* UILoadingBar.cpp in Sources */,
 				2905FA5F18CF08D100240AA3 /* UILayoutParameter.cpp in Sources */,
 				1AD71EDA180E26E600808F54 /* Skin.cpp in Sources */,

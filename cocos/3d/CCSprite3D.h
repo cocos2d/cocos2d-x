@@ -16,7 +16,7 @@ NS_CC_BEGIN
 class GLProgramState;
 class Mesh;
 class Texture2D;
-class Sprite3DEffect;
+//class Sprite3DEffect;
 
 class Sprite3D : public Node, public BlendProtocol
 {
@@ -29,7 +29,7 @@ public:
     //set texture
     void setTexture(const std::string& texFile);
     void setTexture(Texture2D* texture);
-    
+
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
     virtual const BlendFunc &getBlendFunc() const override;
     
@@ -48,7 +48,7 @@ protected:
     virtual GLProgram* getDefGLProgram(bool textured = true);
     
     void genGLProgramState();
-    
+
     Mesh              *_mesh;
     
     MeshCommand        _meshCommand;
