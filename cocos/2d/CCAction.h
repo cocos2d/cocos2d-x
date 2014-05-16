@@ -40,12 +40,12 @@ class Node;
  */
 
 /** 
-@brief Base class for Action objects.
+@brief Action类是所有动作对象的基类.
  */
 class CC_DLL Action : public Ref, public Clonable
 {
 public:
-    /// Default tag used for all the actions
+    /// 所有Action对象的缺省tag值
     static const int INVALID_TAG = -1;
     /**
      * @js NA
@@ -53,45 +53,45 @@ public:
      */
     virtual std::string description() const;
 
-	/** returns a clone of action */
+	/** 返回action的克隆 */
 	virtual Action* clone() const = 0;
 
-    /** returns a new action that performs the exactly the reverse action */
+    /** 返回执行与本Action对象相反操作的新Action对象 */
 	virtual Action* reverse() const = 0;
 
-    //! return true if the action has finished
+    //! 当action完成时返回true
     virtual bool isDone() const;
 
-    //! called before the action start. It will also set the target.
+    //! 方法在action开始前调用, 操作会设置执行Action的目标对象为target.
     virtual void startWithTarget(Node *target);
 
     /** 
-    called after the action has finished. It will set the 'target' to nil.
-    IMPORTANT: You should never call "[action stop]" manually. Instead, use: "target->stopAction(action);"
+    方法在action完成之后调用，它将执行Action的target对象设置为nil.
+    IMPORTANT: 你不应该直接去调用 "action->stop()" 方法, 而应该调用 "target->stopAction(action);"
     */
     virtual void stop();
 
-    //! called every frame with it's delta time. DON'T override unless you know what you are doing.
+    //! 这个方法每一帧都会被调用, 参数dt为两帧之间的时间间隔(单位秒). 除非你知道正在做什么否则不要重载这个方法.
     virtual void step(float dt);
 
     /** 
-    called once per frame. time a value between 0 and 1
+    每一帧都会调用这个方法，参数time是一个在0和1之间的值
 
-    For example: 
-    - 0 means that the action just started
-    - 0.5 means that the action is in the middle
-    - 1 means that the action is over
+    time的含义举例: 
+    - 0 表示action刚刚开始
+    - 0.5 表示action执行到正中间
+    - 1 表示action已经执行完毕
     */
     virtual void update(float time);
     
     inline Node* getTarget() const { return _target; }
-    /** The action will modify the target properties. */
+    /** 这个方法更改action的target属性. */
     inline void setTarget(Node *target) { _target = target; }
     
     inline Node* getOriginalTarget() const { return _originalTarget; }
-    /** Set the original target, since target can be nil.
-    Is the target that were used to run the action. Unless you are doing something complex, like ActionManager, you should NOT call this method.
-    The target is 'assigned', it is not 'retained'.
+    /** 设置action的原始目标对象target, 当target为nil时setOriginalTarget设置的对象会运行这个action
+    除非你要像ActionManager类那样做一些很复杂的操作，否则不要调用这个方法
+    本方法只是对originalTarget的弱引用（assigned），没有进行retain操作。
     @since v0.8.2
     */
     inline void setOriginalTarget(Node *originalTarget) { _originalTarget = originalTarget; }
@@ -104,13 +104,13 @@ protected:
     virtual ~Action();
 
     Node    *_originalTarget;
-    /** The "target".
-    The target will be set with the 'startWithTarget' method.
-    When the 'stop' method is called, target will be set to nil.
-    The target is 'assigned', it is not 'retained'.
+    /** action动作的执行目标target.
+    在 'startWithTarget' 方法中会对target进行设置.
+    当 'stop' 方法被调用时, target会被设置为nil.
+    target 是弱引用（assigned），没有进行retain操作.
     */
     Node    *_target;
-    /** The action tag. An identifier of the action */
+    /** action的tag属性. 是action的一个标识 */
     int     _tag;
 
 private:
@@ -119,19 +119,19 @@ private:
 
 /** 
 @brief 
- Base class actions that do have a finite time duration.
- Possible actions:
-   - An action with a duration of 0 seconds
-   - An action with a duration of 35.5 seconds
+ FiniteTimeAction类是所有在限时间能够完成的动作（action）的基类
+ 可以是下列动作:
+   - 持续时间为0秒的action
+   - 持续时间为35.5秒的action
 
- Infinite time actions are valid
+ 持续无限时间的action是有效地
  */
 class CC_DLL FiniteTimeAction : public Action
 {
 public:
-    //! get duration in seconds of the action
+    //! 返回action的持续时间（单位：秒）
     inline float getDuration() const { return _duration; }
-    //! set duration in seconds of the action
+    //! 设置action的持续时间（单位：秒）
     inline void setDuration(float duration) { _duration = duration; }
 
     //
@@ -146,7 +146,7 @@ protected:
     {}
     virtual ~FiniteTimeAction(){}
 
-    //! duration in seconds
+    //! 以秒单位的持续时间
     float _duration;
 
 private:
@@ -157,19 +157,19 @@ class ActionInterval;
 class RepeatForever;
 
 /** 
- @brief Changes the speed of an action, making it take longer (speed>1)
- or less (speed<1) time.
- Useful to simulate 'slow motion' or 'fast forward' effect.
- @warning This action can't be Sequenceable because it is not an IntervalAction
+ @brief Speed类改变一个action的运行速度, 使他持续更长时间 (speed>1)或者更短的时间(speed<1).
+ 可以用来模拟慢速动作（'slow motion'）或者快进动作（'fast forward')的效果.
+
+ @warning Speed对象不能作为一个动作序列的一部分, 因为它不是一个IntervalAction对象
  */
 class CC_DLL Speed : public Action
 {
 public:
-    /** create the action */
+    /** 创建action对象 */
     static Speed* create(ActionInterval* action, float speed);
 
     inline float getSpeed(void) const { return _speed; }
-    /** alter the speed of the inner function in runtime */
+    /** 在运行时改变内部action的速度 */
     inline void setSpeed(float speed) { _speed = speed; }
 
 
@@ -190,7 +190,7 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     Speed();
     virtual ~Speed(void);
-    /** initializes the action */
+    /** 初始化action */
     bool initWithAction(ActionInterval *action, float speed);
 
 protected:
@@ -202,30 +202,29 @@ private:
 };
 
 /** 
-@brief Follow is an action that "follows" a node.
+@brief Follow是一种“跟随”某一个节点的动作.
 
-Eg:
+示例代码:
 @code
 layer->runAction(Follow::actionWithTarget(hero));
 @endcode
 
-Instead of using Camera as a "follower", use this action instead.
+不要使用Camera作为一个跟随者，使用这个类
 @since v0.99.2
 */
 class CC_DLL Follow : public Action
 {
 public:
     /**
-     * Creates the action with a set boundary or with no boundary.
+     * 创建action 可以有边界，也可以没有.
      *
-     * @param followedNode  The node to be followed.
-     * @param rect  The boundary. If \p rect is equal to Rect::ZERO, it'll work
-     *              with no boundary.
+     * @param followedNode  要跟随的Node.
+     * @param rect  边界. 当 \p rect 为 Rect::ZERO时 表示没有边界.
      */
     static Follow* create(Node *followedNode, const Rect& rect = Rect::ZERO);
 
     inline bool isBoundarySet() const { return _boundarySet; }
-    /** alter behavior - turn on/off boundary */
+    /** 调用这个方法打开或关闭边界 */
     inline void setBoudarySet(bool value) { _boundarySet = value; }
 
     //
@@ -258,7 +257,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~Follow();
     
     /**
-     * Initializes the action with a set boundary or with no boundary.
+     * 初始化action 可以提供边界，也可以比提供
      *
      * @param followedNode  The node to be followed.
      * @param rect  The boundary. If \p rect is equal to Rect::ZERO, it'll work
@@ -267,20 +266,20 @@ CC_CONSTRUCTOR_ACCESS:
     bool initWithTarget(Node *followedNode, const Rect& rect = Rect::ZERO);
 
 protected:
-    // node to follow
+    // 要跟随的node
     Node *_followedNode;
 
-    // whether camera should be limited to certain area
+    // 是否相机要被限制在中心
     bool _boundarySet;
 
-    // if screen size is bigger than the boundary - update not needed
+    // 当屏幕尺寸比边界大时 不需要进行更新
     bool _boundaryFullyCovered;
 
-    // fast access to the screen dimensions
+    // 保存屏幕尺寸用来快速访问
     Vec2 _halfScreenSize;
     Vec2 _fullScreenSize;
 
-    // world boundaries
+    // 世界坐标的边界范围
     float _leftBoundary;
     float _rightBoundary;
     float _topBoundary;
