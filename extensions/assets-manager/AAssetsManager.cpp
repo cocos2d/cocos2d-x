@@ -44,7 +44,10 @@ NS_CC_EXT_BEGIN;
 #define VERSION_FILENAME        "version.manifest"
 #define MANIFEST_FILENAME       "project.manifest"
 
-#define FINISH_UPDATE_EVENT     "AM_Loaded"
+// Events
+#define FINISH_UPDATE_EVENT     "AM_Update_Finished"
+#define NEW_VERSION_EVENT       "AM_New_Version_Found"
+#define UPDATING_PERCENT_EVENT  "AM_Updating"
 
 #define BUFFER_SIZE         8192
 #define MAX_FILENAME        512
@@ -260,8 +263,14 @@ void AAssetsManager::destroyFile(const std::string &path)
 
 AAssetsManager::UpdateState AAssetsManager::updateState()
 {
-    if (_updateState == UNKNOWN || _updateState == NEED_UPDATE || _updateState == UP_TO_DATE || _updateState == UPDATING) {
+    if (_updateState == UNKNOWN || _updateState == NEED_UPDATE || _updateState == UP_TO_DATE || _updateState == UPDATING)
+    {
         return _updateState;
+    }
+    // A special case
+    else if (_remoteManifest && _remoteManifest->isVersionLoaded())
+    {
+        return UPDATING;
     }
     else return CHECKING;
 }
@@ -307,14 +316,17 @@ void AAssetsManager::checkUpdate()
                     _updateState = UP_TO_DATE;
                 else
                 {
+                    _updateState = NEED_UPDATE;
+                    EventCustom newVerEvent(NEW_VERSION_EVENT);
+                    newVerEvent.setUserData(this);
+                    _eventDispatcher->dispatchEvent(&newVerEvent);
+                    
                     // Wait to update so continue the process
                     if (_waitToUpdate)
                     {
                         _updateState = PREDOWNLOAD_MANIFEST;
                         checkUpdate();
                     }
-                    // Otherwise just setup the state
-                    else _updateState = NEED_UPDATE;
                 }
             }
         }
@@ -355,6 +367,10 @@ void AAssetsManager::checkUpdate()
                 else
                 {
                     _updateState = NEED_UPDATE;
+                    EventCustom newVerEvent(NEW_VERSION_EVENT);
+                    newVerEvent.setUserData(this);
+                    _eventDispatcher->dispatchEvent(&newVerEvent);
+                    
                     if (_waitToUpdate)
                     {
                         update();
@@ -485,7 +501,7 @@ void AAssetsManager::onSuccess(const std::string &srcUrl, const std::string &cus
         if (_downloadUnits.size() == 0)
         {
             EventCustom finishEvent(FINISH_UPDATE_EVENT);
-            event.setUserData(this);
+            finishEvent.setUserData(this);
             _eventDispatcher->dispatchEvent(&finishEvent);
         }
     }
