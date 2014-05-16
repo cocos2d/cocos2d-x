@@ -607,8 +607,11 @@ LabelTTFUnicodeChinese::LabelTTFUnicodeChinese()
     // like "Error 3 error C2146: syntax error : missing ')' before identifier 'label'"; 
     TTFConfig ttfConfig("fonts/wt021.ttf",28,GlyphCollection::CUSTOM, "美好的一天啊");
     auto label = Label::createWithTTF(ttfConfig,"美好的一天啊", TextHAlignment::CENTER, size.width);
-    label->setPosition(Vec2(size.width / 2, size.height /2));
-    this->addChild(label);
+
+    if(label) {
+        label->setPosition(Vec2(size.width / 2, size.height /2));
+        this->addChild(label);
+    }
 }
 
 std::string LabelTTFUnicodeChinese::title() const
@@ -966,8 +969,10 @@ LabelTTFLargeText::LabelTTFLargeText()
     TTFConfig ttfConfig("fonts/wt021.ttf",18,GlyphCollection::DYNAMIC);
     std::string text = FileUtils::getInstance()->getStringFromFile("commonly_used_words.txt");
     auto label = Label::createWithTTF(ttfConfig,text, TextHAlignment::CENTER, size.width);
-    label->setPosition( Vec2(size.width/2, size.height/2) );
-    addChild(label);
+    if(label) {
+        label->setPosition( Vec2(size.width/2, size.height/2) );
+        addChild(label);
+    }
 }
 
 std::string LabelTTFLargeText::title() const
@@ -1090,23 +1095,30 @@ LabelTTFCJKWrappingTest::LabelTTFCJKWrappingTest()
     TTFConfig ttfConfig("fonts/wt021.ttf", 25, GlyphCollection::DYNAMIC);
     auto label1 = Label::createWithTTF(ttfConfig,
         "你好，Cocos2d-x v3的New Label.", TextHAlignment::LEFT, size.width * 0.75);
-    label1->setTextColor(Color4B(128, 255, 255, 255));
-    label1->setPosition(Vec2(size.width * 0.1, size.height * 0.6));
-    label1->setAnchorPoint(Vec2(0, 0.5));
-    this->addChild(label1);
-    
+    if(label1) {
+        label1->setTextColor(Color4B(128, 255, 255, 255));
+        label1->setPosition(Vec2(size.width * 0.1, size.height * 0.6));
+        label1->setAnchorPoint(Vec2(0, 0.5));
+        this->addChild(label1);
+    }
+
     auto label2 = Label::createWithTTF(ttfConfig,
         "早上好，Cocos2d-x v3的New Label.", TextHAlignment::LEFT, size.width * 0.75);
-    label2->setTextColor(Color4B(255, 128, 255, 255));
-    label2->setPosition(Vec2(size.width * 0.1, size.height * 0.4));
-    label2->setAnchorPoint(Vec2(0, 0.5));
-    this->addChild(label2);
+    if(label2) {
+        label2->setTextColor(Color4B(255, 128, 255, 255));
+        label2->setPosition(Vec2(size.width * 0.1, size.height * 0.4));
+        label2->setAnchorPoint(Vec2(0, 0.5));
+        this->addChild(label2);
+    }
+
     auto label3 = Label::createWithTTF(ttfConfig,
         "美好的一天啊美好的一天啊美好的一天啊", TextHAlignment::LEFT, size.width * 0.75);
-    label3->setTextColor(Color4B(255, 255, 128, 255));
-    label3->setPosition(Vec2(size.width * 0.1, size.height * 0.2));
-    label3->setAnchorPoint(Vec2(0, 0.5));
-    this->addChild(label3);
+    if(label3) {
+        label3->setTextColor(Color4B(255, 255, 128, 255));
+        label3->setPosition(Vec2(size.width * 0.1, size.height * 0.2));
+        label3->setAnchorPoint(Vec2(0, 0.5));
+        this->addChild(label3);
+    }
 }
 
 std::string LabelTTFCJKWrappingTest::title() const
@@ -1153,8 +1165,10 @@ LabelTTFUnicodeNew::LabelTTFUnicodeNew()
     ttfConfig.glyphs = GlyphCollection::CUSTOM;
     ttfConfig.customGlyphs = chinese.c_str();
     auto label3 = Label::createWithTTF(ttfConfig,chinese, TextHAlignment::CENTER,size.width);
-    label3->setPosition( Vec2(size.width/2, vSize - (vStep * 6.5)) );
-    addChild(label3);
+    if(label3) {
+        label3->setPosition( Vec2(size.width/2, vSize - (vStep * 6.5)) );
+        addChild(label3);
+    }
 }
 
 std::string LabelTTFUnicodeNew::title() const
