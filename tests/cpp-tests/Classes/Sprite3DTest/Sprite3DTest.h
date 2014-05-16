@@ -27,7 +27,6 @@
 
 #include "../testBasic.h"
 #include "../BaseTest.h"
-#include "3d/CCMesh.h"
 #include <string>
 
 class Sprite3DTestDemo : public BaseTest
@@ -98,6 +97,11 @@ protected:
     Vec3 _outlineColor;
     float _outlineWidth;
     
+public:
+    static const std::string _vertShaderFile;
+    static const std::string _fragShaderFile;
+    static const std::string _keyInGLProgramCache;
+    static GLProgram* getOrCreateProgram();
 };
 
 class EffectSprite3D : public Sprite3D
