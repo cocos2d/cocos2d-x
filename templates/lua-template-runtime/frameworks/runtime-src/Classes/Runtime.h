@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include <string>
 using namespace std;
 
+void showCurRcvFile(string fileName);
 bool initRuntime();
 bool startRuntime();
 

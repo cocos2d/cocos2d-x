@@ -91,6 +91,8 @@ bool reloadScript(const string& modulefile)
 
 class ConnectWaitLayer: public Layer
 {
+private:
+    LabelTTF* pLabelUploadFile;
 public:
 
     ConnectWaitLayer()
@@ -113,8 +115,11 @@ public:
         auto labelwait = LabelTTF::create(strShowMsg.c_str(), "Arial", 22);
         addChild(labelwait, 10000);
         labelwait->setPosition( Point(VisibleRect::center().x, VisibleRect::center().y) );
-        
-        
+
+        pLabelUploadFile  = LabelTTF::create("", "Arial", 22);
+        addChild(pLabelUploadFile, 10000);
+        pLabelUploadFile->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 60) );
+
         auto labelPlay = LabelTTF::create("play", "Arial", 36);
         auto menuItem = MenuItemLabel::create(labelPlay, CC_CALLBACK_1(ConnectWaitLayer::playerCallback, this));
         auto menu = Menu::create(menuItem, NULL);
@@ -129,7 +134,20 @@ public:
         startScript("");
     }
 
+    void showCurRcvFile(string fileName) {
+        pLabelUploadFile->setString(fileName);
+    }
+
+    void clearRcvFile() {
+        if(NULL != pLabelUploadFile) {
+            this->removeChild(pLabelUploadFile);
+            pLabelUploadFile = NULL;
+        }
+    }
+
 };
+
+ConnectWaitLayer* g_pConnectLayer;
 
 
 #if defined(_MSC_VER) || defined(__MINGW32__)
@@ -362,6 +380,7 @@ bool FileServer::receiveFile(int fd)
         string file(fullfilename);
         file=replaceAll(file,"\\","/");
         sprintf(fullfilename, "%s", file.c_str());
+        showCurRcvFile(fullfilename);
         cocos2d::log("recv fullfilename = %s",fullfilename);
         CreateDir(file.substr(0,file.find_last_of("/")).c_str());
         FILE *fp =fopen(fullfilename, "wb");
@@ -808,11 +827,15 @@ bool startRuntime()
     
     readResFileFinfo();
     auto scene = Scene::create();
-    auto layer = new ConnectWaitLayer();
-    layer->autorelease();
+    g_pConnectLayer = new ConnectWaitLayer();
+    g_pConnectLayer->autorelease();
     auto director = Director::getInstance();
-    scene->addChild(layer);
+    scene->addChild(g_pConnectLayer);
     director->runWithScene(scene);
     return true;
 }
 
+void showCurRcvFile(string fileName) {
+    if (NULL == g_pConnectLayer) return;
+    g_pConnectLayer->showCurRcvFile(fileName);
+}
