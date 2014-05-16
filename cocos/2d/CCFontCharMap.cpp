@@ -25,10 +25,10 @@
 
 #include "CCFontCharMap.h"
 #include "2d/CCFontAtlas.h"
-#include "2d/platform/CCFileUtils.h"
+#include "platform/CCFileUtils.h"
+#include "base/ccUTF8.h"
 #include "base/CCDirector.h"
-#include "2d/CCTextureCache.h"
-#include "ccUTF8.h"
+#include "renderer/CCTextureCache.h"
 
 NS_CC_BEGIN
 

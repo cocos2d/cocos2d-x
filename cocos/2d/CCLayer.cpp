@@ -27,8 +27,8 @@ THE SOFTWARE.
 
 #include <stdarg.h>
 #include "2d/CCLayer.h"
-#include "2d/CCScriptSupport.h"
-#include "2d/platform/CCDevice.h"
+#include "base/CCScriptSupport.h"
+#include "platform/CCDevice.h"
 #include "2d/CCScene.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCGLProgram.h"

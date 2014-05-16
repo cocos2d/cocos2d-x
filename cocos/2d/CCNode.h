@@ -32,11 +32,11 @@
 #include "base/ccMacros.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCVector.h"
+#include "base/CCScriptSupport.h"
+#include "base/CCProtocols.h"
 #include "math/CCAffineTransform.h"
 #include "math/CCMath.h"
 #include "renderer/ccGLStateCache.h"
-#include "2d/CCScriptSupport.h"
-#include "2d/CCProtocols.h"
 #include "CCGL.h"
 
 NS_CC_BEGIN
