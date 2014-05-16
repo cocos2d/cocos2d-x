@@ -109,10 +109,6 @@ public:
      */
     const std::string& get(const std::string& key) const;
     
-    /* @brief Gets loaded event name for the resource of the given key
-     */
-    std::string getLoadedEventName(const std::string& key);
-    
     /* @brief Gets storage path.
      */
     const std::string& getStoragePath() const;
@@ -128,53 +124,9 @@ public:
      */
     const std::string& getManifestUrl() const;
     
-    /* @brief Sets package url.
+    /* @brief Sets manifest url.
      */
     void setManifestUrl(const std::string& manifestUrl);
-    
-    /* @brief Gets version file url.
-     */
-    const std::string& getVersionFileUrl() const;
-    
-    /* @brief Sets version file url.
-     */
-    void setVersionFileUrl(const std::string& versionFileUrl);
-    
-    /* @brief Gets remote package url.
-     */
-    const std::string& getRemoteRootUrl() const;
-    
-    /* @brief Gets local manifest version.
-     */
-    const std::string& getLocalManifestVersion() const;
-    
-    /* @brief Gets local version for the given group.
-     */
-    const std::string& getLocalGroupVersion(int group) const;
-    
-    /* @brief Gets local engine version.
-     */
-    const std::string& getLocalEngineVersion() const;
-    
-    /* @brief Gets remote manifest version.
-     */
-    const std::string& getRemoteManifestVersion() const;
-    
-    /* @brief Gets remote version for the given group.
-     */
-    const std::string& getRemoteGroupVersion(int group) const;
-    
-    /* @brief Gets remote engine version.
-     */
-    const std::string& getRemoteEngineVersion() const;
-    
-    /** @brief Sets connection time out in seconds
-     */
-    void setConnectionTimeout(unsigned int timeout);
-    
-    /** @brief Gets connection time out in secondes
-     */
-    unsigned int getConnectionTimeout();
     
     
     /* @brief Call back function for error
@@ -202,10 +154,11 @@ public:
     
 protected:
     void loadManifest();
-    bool uncompress();
     void adjustPath(std::string &path);
     void prependSearchPath(const std::string &path);
-    void downloadAndUncompress();
+    std::string getLoadedEventName(const std::string& key);
+    //bool uncompress();
+    //void downloadAndUncompress();
     
 private:
     
