@@ -61,20 +61,6 @@ public:
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 };
 
-//class Effect3D : public Ref
-//{
-//public:
-//    static Effect3D* createWithShaderFile(const std::string& vertexShaderFile, const std::string& fragShaderFile);
-//    
-//    virtual void drawSpriteEffect(const Mat4 &transform) = 0;
-//    
-//protected:
-//    Effect3D();
-//    virtual ~Effect3D();
-//    
-//    GLProgramState* _glProgramState;
-//};
-
 class EffectSprite3D;
 
 class Effect3D : public Ref

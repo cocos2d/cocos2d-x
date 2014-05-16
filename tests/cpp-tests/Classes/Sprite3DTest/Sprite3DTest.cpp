@@ -40,7 +40,7 @@ static int sceneIdx = -1;
 
 static std::function<Layer*()> createFunctions[] =
 {
-	CL(Sprite3DBasicTest),
+    CL(Sprite3DBasicTest),
     CL(Sprite3DEffectTest)
 };
 
