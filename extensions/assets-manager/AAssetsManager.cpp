@@ -45,6 +45,7 @@ NS_CC_EXT_BEGIN;
 #define MANIFEST_FILENAME       "project.manifest"
 
 // Events
+#define NO_LOCAL_MANIFEST           "AM_No_Local_Manifest"
 #define ALREADY_UP_TO_DATE_EVENT    "AM_Already_Up_To_Date"
 #define FINISH_UPDATE_EVENT         "AM_Update_Finished"
 #define NEW_VERSION_EVENT           "AM_New_Version_Found"
@@ -83,6 +84,7 @@ std::string AAssetsManager::s_nWritableRoot = "";
 AAssetsManager::AAssetsManager(const std::string& manifestUrl, const std::string& storagePath/* = "" */)
 : _waitToUpdate(false)
 , _manifestUrl(manifestUrl)
+, _assets(nullptr)
 {
     // Init writable path
     if (s_nWritableRoot.size() == 0) {
@@ -99,6 +101,18 @@ AAssetsManager::AAssetsManager(const std::string& manifestUrl, const std::string
     _downloader = new Downloader(this);
     setStoragePath(storagePath);
     
+    loadManifest(manifestUrl);
+    
+    // Download version file
+    update();
+}
+
+AAssetsManager::~AAssetsManager()
+{
+}
+
+void AAssetsManager::loadManifest(const std::string& manifestUrl)
+{
     std::string cachedManifest = _storagePath + MANIFEST_FILENAME;
     // Prefer to use the cached manifest file, if not found use user configured manifest file
     // Prepend storage path to avoid multi package conflict issue
@@ -115,12 +129,26 @@ AAssetsManager::AAssetsManager(const std::string& manifestUrl, const std::string
         _localManifest->parse(_manifestUrl);
     }
     
-    // Download version file
-    update();
+    // Fail to load local manifest
+    if (!_localManifest->isLoaded())
+    {
+        EventCustom event(NO_LOCAL_MANIFEST);
+        std::string url = _manifestUrl;
+        event.setUserData(&url);
+        _eventDispatcher->dispatchEvent(&event);
+    }
+    
+    // An alias to assets
+    _assets = &(_localManifest->getAssets());
 }
 
-AAssetsManager::~AAssetsManager()
+std::string AAssetsManager::get(const std::string& key) const
 {
+    auto it = _assets->find(key);
+    if (it != _assets->cend()) {
+        return _storagePath + it->second.path;
+    }
+    else return "";
 }
 
 std::string AAssetsManager::getLoadedEventName(const std::string& key)
@@ -136,9 +164,8 @@ const std::string& AAssetsManager::getStoragePath() const
 
 void AAssetsManager::setStoragePath(const std::string& storagePath)
 {
-// TODO Check if need to destroy old path
-    //if (_storagePath.size() > 0)
-        //destroyStoragePath();
+    if (_storagePath.size() > 0)
+        destroyDirectory(_storagePath);
     
     _storagePath = storagePath;
     adjustPath(_storagePath);
@@ -274,6 +301,15 @@ AAssetsManager::UpdateState AAssetsManager::updateState()
 
 void AAssetsManager::checkUpdate()
 {
+    if (!_localManifest->isLoaded())
+    {
+        EventCustom event(NO_LOCAL_MANIFEST);
+        std::string url = _manifestUrl;
+        event.setUserData(&url);
+        _eventDispatcher->dispatchEvent(&event);
+        return;
+    }
+    
     switch (_updateState) {
         case UNKNOWN:
         case PREDOWNLOAD_VERSION:
@@ -393,6 +429,15 @@ void AAssetsManager::checkUpdate()
 
 void AAssetsManager::update()
 {
+    if (!_localManifest->isLoaded())
+    {
+        EventCustom event(NO_LOCAL_MANIFEST);
+        std::string url = _manifestUrl;
+        event.setUserData(&url);
+        _eventDispatcher->dispatchEvent(&event);
+        return;
+    }
+    
     switch (_updateState) {
         case NEED_UPDATE:
         {
@@ -521,6 +566,11 @@ void AAssetsManager::onSuccess(const std::string &srcUrl, const std::string &cus
         // Finish check
         if (_downloadUnits.size() == 0)
         {
+            // Every thing is correctly downloaded, swap the localManifest
+            _localManifest = _remoteManifest;
+            // An alias to assets
+            _assets = &(_localManifest->getAssets());
+            
             EventCustom finishEvent(FINISH_UPDATE_EVENT);
             finishEvent.setUserData(this);
             _eventDispatcher->dispatchEvent(&finishEvent);

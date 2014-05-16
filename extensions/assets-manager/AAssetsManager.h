@@ -95,6 +95,9 @@ public:
      */
     static AAssetsManager* create(const std::string& manifestUrl, const std::string& storagePath = "");
     
+    
+    static std::string getLoadedEventName(const std::string& key);
+    
     /* @brief Check out if there is a new version of manifest.
      *        You may use this method before updating, then let user determine whether
      *        he wants to update resources.
@@ -107,7 +110,7 @@ public:
     
     /* @brief Gets url of a asset for the given key.
      */
-    const std::string& get(const std::string& key) const;
+    std::string get(const std::string& key) const;
     
     /* @brief Gets storage path.
      */
@@ -119,14 +122,6 @@ public:
      * @warm The path should be a valid path.
      */
     void setStoragePath(const std::string& storagePath);
-    
-    /* @brief Gets url of manifest.
-     */
-    const std::string& getManifestUrl() const;
-    
-    /* @brief Sets manifest url.
-     */
-    void setManifestUrl(const std::string& manifestUrl);
     
     
     /* @brief Call back function for error
@@ -153,10 +148,9 @@ public:
     virtual void onSuccess(const std::string &srcUrl, const std::string &customId);
     
 protected:
-    void loadManifest();
+    void loadManifest(const std::string& manifestUrl);
     void adjustPath(std::string &path);
     void prependSearchPath(const std::string &path);
-    std::string getLoadedEventName(const std::string& key);
     //bool uncompress();
     //void downloadAndUncompress();
     
@@ -180,6 +174,8 @@ private:
     std::map<std::string, Downloader::DownloadUnit> _downloadUnits;
     
     int _totalToDownload;
+    
+    const std::map<std::string, Manifest::Asset> *_assets;
     
     //! The path to store downloaded resources.
     std::string _storagePath;
