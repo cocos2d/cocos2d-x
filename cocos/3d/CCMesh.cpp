@@ -29,16 +29,16 @@ bool RenderMeshData::initFrom(std::vector<float>& posions, std::vector<float>& n
     CC_ASSERT(posions.size()<65536 * 3 && "index may out of bound");
     
     _vertexAttribs.clear();
-    vertexsizeBytes = 0;
+    _vertexsizeBytes = 0;
     
-    vertexNum = posions.size() / 3; //number of vertex
-    if (vertexNum == 0)
+    _vertexNum = posions.size() / 3; //number of vertex
+    if (_vertexNum == 0)
         return false;
     
-    if ((normals.size() != 0 && vertexNum * 3 != normals.size()) || (texs.size() != 0 && vertexNum * 2 != texs.size()))
+    if ((normals.size() != 0 && _vertexNum * 3 != normals.size()) || (texs.size() != 0 && _vertexNum * 2 != texs.size()))
         return false;
     
-    vertexsizeBytes += 3;
+    _vertexsizeBytes += 3;
     MeshVertexAttrib meshvertexattrib;
     meshvertexattrib.size = 3;
     meshvertexattrib.type = GL_FLOAT;
@@ -50,14 +50,14 @@ bool RenderMeshData::initFrom(std::vector<float>& posions, std::vector<float>& n
     if (normals.size())
     {
         //add normal flag
-        vertexsizeBytes += 3;
+        _vertexsizeBytes += 3;
         meshvertexattrib.vertexAttrib = GLProgram::VERTEX_ATTRIB_NORMAL;
         _vertexAttribs.push_back(meshvertexattrib);
     }
     //
     if (texs.size())
     {
-        vertexsizeBytes += 2;
+        _vertexsizeBytes += 2;
         meshvertexattrib.size = 2;
         meshvertexattrib.vertexAttrib = GLProgram::VERTEX_ATTRIB_TEX_COORD;
         meshvertexattrib.attribSizeBytes = meshvertexattrib.size * sizeof(float);
@@ -65,11 +65,11 @@ bool RenderMeshData::initFrom(std::vector<float>& posions, std::vector<float>& n
     }
     
     _vertexs.clear();
-    _vertexs.reserve(vertexNum * vertexsizeBytes);
-    vertexsizeBytes *= sizeof(float);
+    _vertexs.reserve(_vertexNum * _vertexsizeBytes);
+    _vertexsizeBytes *= sizeof(float);
     
     //position, normal, texCoordinate into _vertexs
-    for(int i = 0; i < vertexNum; i++)
+    for(int i = 0; i < _vertexNum; i++)
     {
         _vertexs.push_back(posions[i * 3]);
         _vertexs.push_back(posions[i * 3 + 1]);
