@@ -53,8 +53,6 @@ protected:
     
     MeshCommand        _meshCommand;
     
-    int               _partcount;
-    
     Texture2D*        _texture;
     //Vector<Texture2D*>    _textures;
     
