@@ -125,6 +125,8 @@ public:
     virtual std::string subtitle() const override;
     
     void addNewSpriteWithCoords(Vec2 p);
+    
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 };
 
 class Sprite3DTestScene : public TestScene

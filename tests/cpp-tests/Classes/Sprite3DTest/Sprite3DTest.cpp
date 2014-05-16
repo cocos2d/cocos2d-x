@@ -397,6 +397,10 @@ Sprite3DEffectTest::Sprite3DEffectTest()
 {
     auto s = Director::getInstance()->getWinSize();
     addNewSpriteWithCoords( Vec2(s.width/2, s.height/2) );
+    
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DEffectTest::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
 std::string Sprite3DEffectTest::title() const
@@ -414,10 +418,11 @@ void Sprite3DEffectTest::addNewSpriteWithCoords(Vec2 p)
     auto sprite = EffectSprite3D::createFromObjFileAndTexture("Sprite3DTest/boss1.obj", "Sprite3DTest/boss.png");
     Effect3DOutline* effect = Effect3DOutline::create();
     effect->setOutlineColor(Vec3(1,0,0));
-    effect->setOutlineWidth(0.1);
+    effect->setOutlineWidth(0.001);
     sprite->addEffect(effect, -1);
     Effect3DOutline* effect2 = Effect3DOutline::create();
-    effect->setOutlineWidth(0.3);
+    effect2->setOutlineWidth(0.002);
+    effect2->setOutlineColor(Vec3(1,1,0));
     sprite->addEffect(effect2, -2);
     //sprite->setEffect3D(effect);
     sprite->setScale(6.f);
@@ -444,4 +449,14 @@ void Sprite3DEffectTest::addNewSpriteWithCoords(Vec2 p)
     auto seq = Sequence::create( action, action_back, NULL );
     
     sprite->runAction( RepeatForever::create(seq) );
+}
+
+void Sprite3DEffectTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
+    for (auto touch: touches)
+    {
+        auto location = touch->getLocation();
+        
+        addNewSpriteWithCoords( location );
+    }
 }

@@ -4,8 +4,9 @@ uniform float OutlineWidth;
 
 void main(void)
 {
-    vec4 pos = a_position;
-    vec3 normal = a_normal;
-    pos.xyz += a_normal * OutlineWidth;
-    gl_Position = CC_MVPMatrix * pos;
+    vec4 pos = CC_MVPMatrix * a_position;
+    vec4 normalproj = CC_MVPMatrix * vec4(a_normal, 0);
+    pos.xy += normalproj.xy * (OutlineWidth * (pos.z * 0.5 + 0.5));
+    
+    gl_Position = pos;
 }
