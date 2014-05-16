@@ -79,6 +79,13 @@ public:
         std::string url;
     };
     
+    struct DownloadUnit
+    {
+        std::string srcUrl;
+        std::string storagePath;
+        std::string customId;
+    };
+    
     /**
      *  The default constructor.
      */
@@ -88,21 +95,29 @@ public:
     
     DownloaderDelegateProtocol* getDelegate() const { return _delegate ;}
     
-    void downloadAsync(const std::string &srcUrl, const std::string &storagePath, const std::string &rename = "", const std::string &customId = "");
+    void downloadAsync(const std::string &srcUrl, const std::string &storagePath, const std::string &customId = "");
+    
+    void downloadSync(const std::string &srcUrl, const std::string &storagePath, const std::string &customId = "");
+    
+    void batchDownload(const std::vector<DownloadUnit> &units);
     
 protected:
     
-    void download(const std::string &srcUrl, const std::string &storagePath, const std::string &filename, const std::string &customId);
+    FILE *prepareDownload(const std::string &srcUrl, const std::string &storagePath, const std::string &customId);
+    
+    void download(const std::string &srcUrl, FILE *fp, const std::string &customId);
     
     void notifyError(ErrorCode code, const std::string &msg = "", const std::string &customId = "");
     
     bool checkStoragePath(const std::string& storagePath);
     
-protected:
+private:
     
     DownloaderDelegateProtocol* _delegate;
     
     void *_curl;
+    
+    std::string getFileNameFormUrl(const std::string &srcUrl);
 };
 
 class DownloaderDelegateProtocol
@@ -131,7 +146,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void onSuccess(const std::string &srcUrl, const std::string &customId, const std::string &filename) {};
+    virtual void onSuccess(const std::string &srcUrl, const std::string &customId) {};
 };
 
 NS_CC_EXT_END;
