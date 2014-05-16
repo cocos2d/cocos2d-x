@@ -48,14 +48,21 @@ using namespace cocos2d;
 
 std::string g_resourcePath;
 static rapidjson::Document g_filecfgjson; 
+class ConnectWaitLayer;
+static ConnectWaitLayer* s_pConnectLayer;
 extern string getIPAddress();
 const char* getRuntimeVersion()
 {
     return "1.1";
 }
 
+void hideRcvFile() {
+    s_pConnectLayer = nullptr;
+}
+
 void startScript(string strDebugArg)
 {
+    hideRcvFile();
     // register lua engine
     auto engine = LuaEngine::getInstance();
     if (!strDebugArg.empty())
@@ -139,8 +146,10 @@ public:
     }
 };
 
-static ConnectWaitLayer* s_pConnectLayer;
-
+void showCurRcvFile(string fileName) {
+    if (NULL == s_pConnectLayer) return;
+    s_pConnectLayer->showCurRcvFile(fileName);
+}
 
 #if defined(_MSC_VER) || defined(__MINGW32__)
 #include <io.h>
@@ -825,13 +834,4 @@ bool startRuntime()
     scene->addChild(s_pConnectLayer);
     director->runWithScene(scene);
     return true;
-}
-
-void showCurRcvFile(string fileName) {
-    if (NULL == s_pConnectLayer) return;
-    s_pConnectLayer->showCurRcvFile(fileName);
-}
-
-void hideRcvFile() {
-    s_pConnectLayer = nullptr;
 }
