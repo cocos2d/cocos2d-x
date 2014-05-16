@@ -841,6 +841,7 @@ Developers:
         
     zifter
         Fixed a bug that the effect of particle loaded from CocosBuilder is incorrectly
+        Fix twice calling onExit
         
     twhittock
         Fixed a bug that Application::run returns wrong value on Mac platform
