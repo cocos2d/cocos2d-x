@@ -5,11 +5,15 @@
 #include "CCObjLoader.h"
 
 #include "base/CCDirector.h"
+#include "base/CCPlatformMacros.h"
+#include "base/ccMacros.h"
 #include "2d/CCTextureCache.h"
 #include "2d/platform/CCFileUtils.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCGLProgramCache.h"
+
+#include "deprecated/CCString.h" // For StringUtils::format
 
 NS_CC_BEGIN
 
@@ -77,10 +81,18 @@ bool Sprite3D::loadFromObj(const std::string& path)
     //convert to mesh and material
     std::vector<unsigned short> indices;
     std::vector<std::string> matnames;
+    std::string texname;
     for (auto it = shapes.shapes.begin(); it != shapes.shapes.end(); it++)
     {
         indices.insert(indices.end(), (*it).mesh.indices.begin(),(*it).mesh.indices.end());
         //indices.push_back((*it).mesh.indices);
+        if (texname.empty())
+            texname = (*it).material.diffuse_texname;
+        else if (texname != (*it).material.diffuse_texname)
+        {
+            CCLOGWARN("cocos2d:WARNING: more than one texture in %s", path.c_str());
+        }
+            
         matnames.push_back(dir + (*it).material.diffuse_texname);
     }
     _mesh = Mesh::create(shapes.positions, shapes.normals, shapes.texcoords, indices);
