@@ -77,6 +77,7 @@ public:
         Downloader* downloader;
         std::string customId;
         std::string url;
+        double downloaded;
     };
     
     struct DownloadUnit
