@@ -1,11 +1,11 @@
 
 const char* cc3D_ColorTex_frag = STRINGIFY(
 
-#ifdef GL_ES
+\n#ifdef GL_ES\n
 varying mediump vec2 TextureCoordOut;
-#else
+\n#else\n
 varying vec2 TextureCoordOut;
-#endif
+\n#endif\n
 uniform vec4 u_color;
 
 uniform sampler2D CC_Texture0;

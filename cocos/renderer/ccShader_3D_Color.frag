@@ -1,11 +1,11 @@
 
 const char* cc3D_Color_frag = STRINGIFY(
 
-#ifdef GL_ES
+\n#ifdef GL_ES\n
 varying lowp vec4 DestinationColor;
-#else
+\n#else\n
 varying vec4 DestinationColor;
-#endif
+\n#endif\n
 uniform vec4 u_color;
 
 void main(void)
