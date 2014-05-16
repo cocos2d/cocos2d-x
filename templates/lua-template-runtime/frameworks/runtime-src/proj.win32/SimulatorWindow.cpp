@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "glfw3native.h"
 #include "resource.h"
 #include "Runtime.h"
+#include "ConfigParser.h"
 
 #include <string>
 #include <vector>
@@ -44,12 +45,11 @@ INT_PTR CALLBACK AboutDialogCallback(HWND hDlg, UINT message, WPARAM wParam, LPA
 
 void createViewMenu()
 {
-    HMENU menu = GetMenu(glfwGetWin32Window(g_eglView->getWindow()));
-    HMENU viewMenu = GetSubMenu(menu, 1);
-
-    for (int i = SimulatorConfig::getInstance()->getScreenSizeCount() - 1; i >= 0; --i)
+    HMENU hSysMenu = GetSystemMenu(glfwGetWin32Window(g_eglView->getWindow()), FALSE);
+    HMENU viewMenu = GetSubMenu(hSysMenu, 8);
+    for (int i = ConfigParser::getInstance()->getScreenSizeCount() - 1; i >= 0; --i)
     {
-        SimulatorScreenSize size = SimulatorConfig::getInstance()->getScreenSize(i);
+        SimulatorScreenSize size = ConfigParser::getInstance()->getScreenSize(i);
         wstring menuName;
         menuName.assign(size.title.begin(), size.title.end());
 
@@ -68,8 +68,8 @@ void createViewMenu()
 
 void updateMenu()
 {
-    HMENU menu = GetMenu(glfwGetWin32Window(g_eglView->getWindow()));
-    HMENU viewMenu = GetSubMenu(menu, 1);
+    HMENU hSysMenu = GetSystemMenu(glfwGetWin32Window(g_eglView->getWindow()), FALSE);
+    HMENU viewMenu = GetSubMenu(hSysMenu, 8);
 
     if (g_landscape)
     {
@@ -91,12 +91,12 @@ void updateMenu()
         height = w;
     }
 
-    int count = SimulatorConfig::getInstance()->getScreenSizeCount();
+    int count = ConfigParser::getInstance()->getScreenSizeCount();
     for (int i = 0; i < count; ++i)
     {
         bool bSel = false;
 
-        SimulatorScreenSize size = SimulatorConfig::getInstance()->getScreenSize(i);
+        SimulatorScreenSize size = ConfigParser::getInstance()->getScreenSize(i);
         if (size.width == width && size.height == height)
         {
             bSel = true;
@@ -190,9 +190,9 @@ void onViewZoomOut(int viewMenuID)
 void onViewChangeFrameSize(int viewMenuID)
 {
     int index = viewMenuID - ID_VIEW_SIZE;
-    if (index >= 0 && index < SimulatorConfig::getInstance()->getScreenSizeCount())
+    if (index >= 0 && index < ConfigParser::getInstance()->getScreenSizeCount())
     {
-        SimulatorScreenSize size = SimulatorConfig::getInstance()->getScreenSize(index);
+        SimulatorScreenSize size = ConfigParser::getInstance()->getScreenSize(index);
         g_screenSize.width = size.width;
         g_screenSize.height = size.height;
         updateView();	
@@ -210,13 +210,34 @@ void shutDownApp()
     ::SendMessage(hWnd,WM_CLOSE,NULL,NULL);
 }
 
+void reStart()
+{
+    PROCESS_INFORMATION info;
+    STARTUPINFO startup;
+    TCHAR szPath[128]={0};
+    TCHAR *szCmdLine=NULL;
+    GetModuleFileName(NULL, szPath, sizeof(szPath));
+    szCmdLine = GetCommandLine();
+    GetStartupInfo(&startup);
+    BOOL bSucc = CreateProcess(szPath, szCmdLine, NULL, NULL, FALSE, NORMAL_PRIORITY_CLASS, NULL, NULL, &startup, &info);
+    if(bSucc)
+    {
+        ExitProcess(-1);
+    }
+}
 /*@brief new windows process*/
 LRESULT CALLBACK SNewWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     int wmId, wmEvent;
     switch (message)
     {
-    case WM_COMMAND:
+    case WM_KEYDOWN:
+        if (wParam == VK_F5)
+        {
+            reStart();
+             break;
+        }
+    case WM_SYSCOMMAND:
         {
             wmId    = LOWORD(wParam);
             wmEvent = HIWORD(wParam);
@@ -240,19 +261,19 @@ LRESULT CALLBACK SNewWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
                 break;
 
             case ID_CONTROL_RELOAD:
-                reloadScript("");
+                reStart();
                 break;
 
             case ID_HELP_ABOUT:
                 onHelpAbout();
-
+                break;
             default:
-                if (wmId >= ID_VIEW_SIZE && wmId <= ID_VIEW_SIZE + SimulatorConfig::getInstance()->getScreenSizeCount() - 1)
+                if (wmId >= ID_VIEW_SIZE && wmId <= ID_VIEW_SIZE + ConfigParser::getInstance()->getScreenSizeCount() - 1)
                 {
                     onViewChangeFrameSize(wmId);
                     break;
                 }
-                return 0;
+                //return 0;
             }
         }
         break;
@@ -280,13 +301,20 @@ INT_PTR CALLBACK AboutDialogCallback(HWND hDlg, UINT message, WPARAM wParam, LPA
     return (INT_PTR)FALSE;
 }
 
-void createSimulator(const char* viewName, float width, float height, float frameZoomFactor)
+void createSimulator(const char* viewName, float width, float height, bool isLandscape, float frameZoomFactor)
 {
     if (g_eglView)
     {
         return;
     }
 
+    if((isLandscape && height > width) ||  (!isLandscape && width > height))
+    {
+        float tmpvalue =width;
+        width = height;
+        height = width;
+    }
+    
     g_eglView = GLView::createWithRect(viewName,Rect(0,0,width,height),frameZoomFactor);
     auto director = Director::getInstance();
     director->setOpenGLView(g_eglView);
@@ -300,7 +328,16 @@ void createSimulator(const char* viewName, float width, float height, float fram
 
     HWND hWnd=glfwGetWin32Window(g_eglView->getWindow());
     HMENU hMenu = LoadMenu(GetModuleHandle(NULL), MAKEINTRESOURCE(IDR_MENU_COCOS));
-    SetMenu(hWnd, hMenu);
+    HMENU hSysMenu = GetSystemMenu(hWnd, FALSE);
+    HMENU hviewMenu = GetSubMenu(hMenu,1);
+    HMENU hcontrolMenu = GetSubMenu(hMenu,2);
+    AppendMenu(hSysMenu,MF_SEPARATOR,0,NULL);
+    if (hSysMenu != INVALID_HANDLE_VALUE && hMenu != INVALID_HANDLE_VALUE)
+    {
+        AppendMenu(hSysMenu, MF_POPUP, (UINT)hviewMenu, TEXT("view"));
+        AppendMenu(hSysMenu, MF_POPUP, (UINT)hcontrolMenu, TEXT("control"));
+    }
+    //SetMenu(hWnd, hMenu);
     createViewMenu();
     updateMenu();
 

@@ -26,6 +26,8 @@
 #include <string>
 #include "AppDelegate.h"
 
+void createSimulator(const char* viewName, float width, float height,bool isLandscape = true,float frameZoomFactor = 1.0f);
+
 @interface AppController : NSObject <NSApplicationDelegate, NSWindowDelegate>
 {
     NSWindow *window;
@@ -44,7 +46,7 @@
 - (IBAction) onScreenPortait:(id)sender;
 - (IBAction) onScreenLandscape:(id)sender;
 - (IBAction) onScreenZoomOut:(id)sender;
-- (IBAction) onReloadScript:(id)sender;
+- (IBAction) onRelaunch:(id)sender;
 
 
 @end

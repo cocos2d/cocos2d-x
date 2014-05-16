@@ -292,6 +292,14 @@ void EventDispatcher::pauseEventListenersForTarget(Node* target, bool recursive/
             l->setPaused(true);
         }
     }
+
+    for (auto& listener : _toAddedListeners)
+    {
+        if (listener->getAssociatedNode() == target)
+        {
+            listener->setPaused(true);
+        }
+    }
     
     if (recursive)
     {
@@ -314,6 +322,15 @@ void EventDispatcher::resumeEventListenersForTarget(Node* target, bool recursive
             l->setPaused(false);
         }
     }
+    
+    for (auto& listener : _toAddedListeners)
+    {
+        if (listener->getAssociatedNode() == target)
+        {
+            listener->setPaused(false);
+        }
+    }
+
     setDirtyForNode(target);
     
     if (recursive)
