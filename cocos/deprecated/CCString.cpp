@@ -24,7 +24,7 @@ Copyright (c) 2013-2014 Chukong Technologies
  ****************************************************************************/
 
 #include "deprecated/CCString.h"
-#include "2d/platform/CCFileUtils.h"
+#include "platform/CCFileUtils.h"
 #include "base/ccMacros.h"
 #include <stdlib.h>
 #include <stdio.h>

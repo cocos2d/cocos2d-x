@@ -25,10 +25,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCTYPES_H__
-#define __CCTYPES_H__
+#ifndef __BASE_CCTYPES_H__
+#define __BASE_CCTYPES_H__
 
 #include <string>
+
 #include "math/CCGeometry.h"
 #include "math/CCMath.h"
 #include "CCGL.h"
@@ -478,4 +479,4 @@ extern const ssize_t CC_INVALID_INDEX;
 
 NS_CC_END
 
-#endif //__CCTYPES_H__
+#endif //__BASE_CCTYPES_H__

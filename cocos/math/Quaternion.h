@@ -21,8 +21,8 @@
 #ifndef QUATERNION_H_
 #define QUATERNION_H_
 
-#include "Vector3.h"
-#include "Matrix.h"
+#include "math/Vec3.h"
+#include "math/Mat4.h"
 //#include "Plane.h"
 
 NS_CC_MATH_BEGIN

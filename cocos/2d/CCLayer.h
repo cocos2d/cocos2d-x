@@ -29,7 +29,7 @@ THE SOFTWARE.
 #define __CCLAYER_H__
 
 #include "2d/CCNode.h"
-#include "2d/CCProtocols.h"
+#include "base/CCProtocols.h"
 #include "base/CCEventTouch.h"
 #ifdef EMSCRIPTEN
 #include "CCGLBufferedNode.h"
