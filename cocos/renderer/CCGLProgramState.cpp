@@ -27,11 +27,12 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "renderer/CCGLProgramState.h"
+
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramStateCache.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/ccGLStateCache.h"
-#include "2d/CCTexture2D.h"
+#include "renderer/CCTexture2D.h"
 
 NS_CC_BEGIN
 
@@ -240,11 +241,14 @@ void VertexAttribValue::setPointer(GLint size, GLenum type, GLboolean normalized
 GLProgramState* GLProgramState::create(GLProgram *glprogram)
 {
     GLProgramState* ret = nullptr;
-    ret = new (std::nothrow) GLProgramState;
-    if(!ret || !ret->init(glprogram))
-        CC_SAFE_RELEASE(ret);
-
-    return ret;
+    ret = new (std::nothrow) GLProgramState();
+    if(ret && ret->init(glprogram))
+    {
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+    return nullptr;
 }
 
 GLProgramState* GLProgramState::getOrCreateWithGLProgramName(const std::string &glProgramName )

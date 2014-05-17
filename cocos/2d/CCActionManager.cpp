@@ -30,8 +30,8 @@ THE SOFTWARE.
 #include "2d/CCNode.h"
 #include "base/CCScheduler.h"
 #include "base/ccMacros.h"
-#include "2d/ccCArray.h"
-#include "2d/uthash.h"
+#include "base/ccCArray.h"
+#include "base/uthash.h"
 
 NS_CC_BEGIN
 //

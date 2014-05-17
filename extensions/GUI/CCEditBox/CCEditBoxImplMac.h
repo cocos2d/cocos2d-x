@@ -36,21 +36,16 @@
 #include "extensions/ExtensionMacros.h"
 #include "CCEditBoxImpl.h"
 
-@interface CCCustomNSTextField : NSTextField
-{
-}
-
-@end
 
 @interface CCEditBoxImplMac : NSObject <NSTextFieldDelegate>
 {
-    CCCustomNSTextField* textField_;
     void* editBox_;
     BOOL editState_;
     NSMutableDictionary* placeholderAttributes_;
 }
 
 @property(nonatomic, retain) NSTextField* textField;
+@property(nonatomic, retain) NSSecureTextField* secureTextField;
 @property(nonatomic, retain) NSMutableDictionary* placeholderAttributes;
 @property(nonatomic, readonly, getter = isEditState) BOOL editState;
 @property(nonatomic, assign) void* editBox;

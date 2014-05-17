@@ -34,7 +34,7 @@ THE SOFTWARE.
 
 #include "base/CCRef.h"
 #include "base/CCVector.h"
-#include "2d/uthash.h"
+#include "base/uthash.h"
 
 NS_CC_BEGIN
 

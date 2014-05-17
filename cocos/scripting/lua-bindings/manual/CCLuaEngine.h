@@ -31,7 +31,7 @@ extern "C" {
 }
 
 #include "cocos2d.h"
-#include "2d/CCScriptSupport.h"
+#include "base/CCScriptSupport.h"
 #include "CCLuaStack.h"
 #include "CCLuaValue.h"
 #include "LuaScriptHandlerMgr.h"

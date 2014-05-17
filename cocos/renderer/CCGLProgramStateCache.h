@@ -27,11 +27,10 @@ THE SOFTWARE.
 
 #include "base/ccTypes.h"
 #include "base/CCVector.h"
-#include "math/Vector2.h"
-#include "math/Vector3.h"
-#include "math/Vector4.h"
-
 #include "base/CCMap.h"
+#include "math/Vec2.h"
+#include "math/Vec3.h"
+#include "math/Vec4.h"
 
 NS_CC_BEGIN
 

@@ -24,27 +24,27 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "base/CCConfiguration.h"
 #include "2d/CCRenderTexture.h"
+
+#include "base/ccUtils.h"
+#include "platform/CCImage.h"
+#include "platform/CCFileUtils.h"
+#include "2d/CCGrid.h"
+#include "base/CCEventType.h"
+#include "base/CCConfiguration.h"
+#include "base/CCConfiguration.h"
 #include "base/CCDirector.h"
-#include "2d/platform/CCImage.h"
+#include "base/CCEventListenerCustom.h"
+#include "base/CCEventDispatcher.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/ccGLStateCache.h"
-#include "base/CCConfiguration.h"
-#include "2d/ccUtils.h"
-#include "2d/CCTextureCache.h"
-#include "2d/platform/CCFileUtils.h"
-#include "CCGL.h"
-#include "base/CCEventType.h"
-#include "2d/CCGrid.h"
-
+#include "renderer/CCTextureCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCCustomCommand.h"
 
-// extern
-#include "base/CCEventListenerCustom.h"
-#include "base/CCEventDispatcher.h"
+#include "CCGL.h"
+
 
 NS_CC_BEGIN
 
