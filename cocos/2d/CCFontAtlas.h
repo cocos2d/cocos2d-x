@@ -84,12 +84,12 @@ public:
     Texture2D* getTexture(int slot);
     const Font* getFont() const;
 
-    /** 监听程序进入后台状态消息并清除纹理集。
+    /** 监听"come to background"消息并清除纹理集。
      仅在Android系统有效。
      */
     void listenToBackground(EventCustom *event);
 
-    /** 监听程序回到前台状态消息并恢复纹理集。
+    /** 监听"come to foreground"消息并恢复纹理集。
      仅在Android系统有效。
      */
     void listenToForeground(EventCustom *event);
