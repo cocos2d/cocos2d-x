@@ -48,40 +48,40 @@ public:
     ~IMEDispatcher();
 
     /**
-     @brief Returns the shared IMEDispatcher object for the system.
+     @brief 返回系统共享的IMEDispatcher对象
      * @js NA
      * @lua NA
      */
     static IMEDispatcher* sharedDispatcher();
 
 //     /**
-//     @brief Releases all IMEDelegates from the shared dispatcher.
+//     @brief 从共享dispatcher释放所有IMEDelegate
 //     */
 //     static void purgeSharedDispatcher();
 
     /**
-     @brief Dispatches the input text from IME.
+     @brief 分派从IME得到的输入文本
      * @js NA
      * @lua NA
      */
     void dispatchInsertText(const char * text, size_t len);
 
     /**
-     @brief Dispatches the delete-backward operation.
+     @brief 分派对文本的删除回退操作
      * @js NA
      * @lua NA
      */
     void dispatchDeleteBackward();
 
     /**
-     @brief Get the content text from IMEDelegate, retrieved previously from IME.
+     @brief 从IMEDelegate得到之前保存在IME的文本
      * @js NA
      * @lua NA
      */
     const std::string& getContentText();
 
     //////////////////////////////////////////////////////////////////////////
-    // dispatch keyboard notification
+    // 分发键盘相关事件的notification
     //////////////////////////////////////////////////////////////////////////
     /**
      * @js NA
@@ -108,20 +108,20 @@ protected:
     friend class IMEDelegate;
 
     /**
-    @brief Add delegate to receive IME messages.
+    @brief 添加delegate接收IME消息
     */
     void addDelegate(IMEDelegate * delegate);
 
     /**
-    @brief Attach the pDelegate to the IME.
-    @return If the old delegate can detach from the IME, and the new delegate 
-            can attach to the IME, return true, otherwise false.
+    @brief 将pDelegate分配到IME
+    @return 如果成功解除旧的delegate,返回true，否则返回false
+             如果成功附加新的delegate，返回true,否则返回false
     */
     bool attachDelegateWithIME(IMEDelegate * delegate);
     bool detachDelegateWithIME(IMEDelegate * delegate);
 
     /**
-    @brief Remove the delegate from the delegates which receive IME messages.
+    @brief 从delegate队列里移除某一从IME消息获取的delegate
     */
     void removeDelegate(IMEDelegate * delegate);
 
