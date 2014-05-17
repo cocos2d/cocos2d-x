@@ -68,11 +68,7 @@ public:
 
     // actions
     
-    /** Adds an action with a target. 
-     If the target is already present, then the action will be added to the existing target.
-     If the target is not present, a new instance of this target will be created either paused or not, and the action will be added to the newly created target.
-     When the target is paused, the queued actions won't be 'ticked'.
-     */
+    
      
      /** 为一个目标添加动作。
 	     如果目标已经存在，动作将被加在已经存在的目标上。
@@ -81,48 +77,36 @@ public:
 	    */
     void addAction(Action *action, Node *target, bool paused);
 
-    /** Removes all actions from all the targets.
-    */
+    
     
     /** 从所有目标上移除所有动作。
 	   */
     void removeAllActions();
 
-    /** Removes all actions from a certain target.
-     All the actions that belongs to the target will be removed.
-     */
-     
+   
      /** 移除某一个目标身上的所有动作。
 	    所有属于这个目标身上的动作都将被移除。
     	*/
     void removeAllActionsFromTarget(Node *target);
 
-    /** Removes an action given an action reference.
-    */
-    
+  
     /** 移除一个指定的动作
 	   */
     void removeAction(Action *action);
 
-    /** Removes an action given its tag and the target */
+   
     
     	/** 移除指定目标身上指定标记的动作 */
     void removeActionByTag(int tag, Node *target);
 
-    /** Gets an action given its tag an a target
-     @return the Action the with the given tag
-     */
+ 
      
      /** 得到指定目标身上指定标记的动作
 	    @返回指定标记的动作
     	*/
     Action* getActionByTag(int tag, const Node *target) const;
 
-    /** Returns the numbers of actions that are running in a certain target. 
-     * Composable actions are counted as 1 action. Example:
-     * - If you are running 1 Sequence of 7 actions, it will return 1.
-     * - If you are running 7 Sequences of 2 actions, it will return 7.
-     */
+ 
      
      	/** 返回某一目标执行的动作的个数
       	* 组合动作算1个动作。例如：
@@ -131,34 +115,29 @@ public:
      	*/
     ssize_t getNumberOfRunningActionsInTarget(const Node *target) const;
 
-    /** @deprecated use getNumberOfRunningActionsInTarget() instead */
+   
     
     /** 已被弃用 用getNumberOfRunningActionsInTarget() 代替*/
     CC_DEPRECATED_ATTRIBUTE inline ssize_t numberOfRunningActionsInTarget(Node *target) const { return getNumberOfRunningActionsInTarget(target); }
 
-    /** Pauses the target: all running actions and newly added actions will be paused.
-    */
+ 
     
     /** 暂停目标动作：所有正在该目标执行的动作或者新加入的动作都将被暂停。
    	*/
     void pauseTarget(Node *target);
 
-    /** Resumes the target. All queued actions will be resumed.
-    */
+   
     
     /** 恢复目标动作。所有的动作队列都将被恢复。
     	*/
     void resumeTarget(Node *target);
     
-    /** Pauses all running actions, returning a list of targets whose actions were paused.
-     */
-     
+ 
      /** 暂停所有正在执行的动作，返回所有被暂停动作的Node的Vector。
 	     */
     Vector<Node*> pauseAllRunningActions();
     
-    /** Resume a set of targets (convenience function to reverse a pauseAllRunningActions call)
-     */
+   
      
      /** 恢复一个目标的动作（这个目标是pauseAllRunningActions返回值里的一个Node）
 	    */
