@@ -36,7 +36,7 @@ NS_CC_BEGIN
  */
 
 /** 
-@brief Waves3D action 
+@brief Waves3D 动作
 */
 class CC_DLL Waves3D : public Grid3DAction
 {
@@ -74,7 +74,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(Waves3D);
 };
 
-/** @brief FlipX3D action */
+/** @brief FlipX3D 动作 */
 class CC_DLL FlipX3D : public Grid3DAction
 {
 public:
@@ -97,7 +97,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(FlipX3D);
 };
 
-/** @brief FlipY3D action */
+/** @brief FlipY3D 动作 */
 class CC_DLL FlipY3D : public FlipX3D
 {
 public:
@@ -115,7 +115,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(FlipY3D);
 };
 
-/** @brief Lens3D action */
+/** @brief Lens3D 动作 */
 class CC_DLL Lens3D : public Grid3DAction
 {
 public:
@@ -150,7 +150,7 @@ protected:
     /** 透镜特效。默认 0.7。 0 代表没有特效，1代表非常强烈特效。*/
     float _lensEffect;
     /** 透镜是否凹的。（true 代表 凹的，false代表凸的） 默认是凸的，也就是false。
-     lens is concave. (true = concave, false = convex) default is convex i.e. false */
+      */
     bool _concave;
 
     bool _dirty;
@@ -159,7 +159,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(Lens3D);
 };
 
-/** @brief Ripple3D action */
+/** @brief Ripple3D 动作 */
 class CC_DLL Ripple3D : public Grid3DAction
 {
 public:
@@ -200,7 +200,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(Ripple3D);
 };
 
-/** @brief Shaky3D action */
+/** @brief Shaky3D 动作 */
 class CC_DLL Shaky3D : public Grid3DAction
 {
 public:
@@ -226,7 +226,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(Shaky3D);
 };
 
-/** @brief Liquid action */
+/** @brief Liquid 动作 */
 class CC_DLL Liquid : public Grid3DAction
 {
 public:
@@ -259,7 +259,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(Liquid);
 };
 
-/** @brief Waves action */
+/** @brief Waves 动作 */
 class CC_DLL Waves : public Grid3DAction
 {
 public:
@@ -294,7 +294,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(Waves);
 };
 
-/** @brief Twirl action */
+/** @brief Twirl 动作 */
 class CC_DLL Twirl : public Grid3DAction
 {
 public:

@@ -69,9 +69,9 @@ private:
 };
 
 /** 
- @brief Base class for Grid3D actions.
- Grid3D actions can modify a non-tiled grid.
- */
+ @brief 
+ 3D网格动作的基类
+ 3D网格动作可以修改一个非平铺的网格 */
 class CC_DLL Grid3DAction : public GridAction
 {
 public:
@@ -84,7 +84,7 @@ public:
      */
     Vec3 getVertex(const Vec2& position) const;
 
-    /** @deprecated Use getVertex() instead 
+    /** @deprecated 适应getVertex()代替
      * @js NA
      * @lua NA
      */
@@ -96,7 +96,7 @@ public:
      */
     Vec3 getOriginalVertex(const Vec2& position) const;
 
-    /** @deprecated Use getOriginalVertex() instead 
+    /** @deprecated 使用getOriginalVertex()代替
      * @js NA
      * @lua NA
      */
@@ -112,7 +112,7 @@ public:
 	virtual Grid3DAction * clone() const override = 0;
 };
 
-/** @brief Base class for TiledGrid3D actions */
+/** @brief 平铺的3Dgrid动作的基类 */
 class CC_DLL TiledGrid3DAction : public GridAction
 {
 public:
@@ -128,7 +128,7 @@ public:
      */
     Quad3 getTile(const Vec2& position) const;
 
-    /** @deprecated Use getTile() instead 
+    /** @deprecated 使用getTile() 代替
      * @js NA
      * @lua NA
      */
@@ -140,7 +140,7 @@ public:
      */
     Quad3 getOriginalTile(const Vec2& position) const;
 
-    /** @deprecated Use getOriginalTile() instead 
+    /** @deprecated 视同getOriginalTile()代替
      * @js NA
      * @lua NA
      */
@@ -159,7 +159,7 @@ public:
     virtual TiledGrid3DAction * clone() const override = 0;
 };
 
-/** @brief AccelDeccelAmplitude action */
+/** @brief AccelDeccelAmplitude 动作 */
 class CC_DLL AccelDeccelAmplitude : public ActionInterval
 {
 public:
@@ -192,16 +192,16 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(AccelDeccelAmplitude);
 };
 
-/** @brief AccelAmplitude action */
+/** @brief AccelAmplitude 动作 */
 class CC_DLL AccelAmplitude : public ActionInterval
 {
 public:
-    /** creates the action with an inner action that has the amplitude property, and a duration time */
+    /** 用一个包含振幅属性的内部动作和持续时间创建动作 */
     static AccelAmplitude* create(Action *action, float duration);
 
-    /** get amplitude rate */
+    /** 获取振幅率 */
     inline float getRate() const { return _rate; }
-    /** set amplitude rate */
+    /** 设置振幅率 */
     inline void setRate(float rate) { _rate = rate; }
 
     // Overrides
@@ -224,7 +224,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(AccelAmplitude);
 };
 
-/** @brief DeccelAmplitude action */
+/** @brief DeccelAmplitude 动作 */
 class CC_DLL DeccelAmplitude : public ActionInterval
 {
 public:
@@ -258,9 +258,8 @@ private:
 };
 
 /** @brief StopGrid action.
- @warning Don't call this action if another grid action is active.
- Call if you want to remove the the grid effect. Example:
- Sequence::actions(Lens::action(...), StopGrid::action(...), nullptr);
+ @warning 如果另一个网格动作激活了，不要调用这个动作。
+ 如果你想要移除网格特效，则调用。如： Sequence::actions(Lens::action(...), StopGrid::action(...), nullptr);
  */
 class CC_DLL StopGrid : public ActionInstant
 {
@@ -285,7 +284,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(StopGrid);
 };
 
-/** @brief ReuseGrid action */
+/** @brief ReuseGrid 动作 */
 class CC_DLL ReuseGrid : public ActionInstant
 {
 public:
