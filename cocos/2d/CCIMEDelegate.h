@@ -39,13 +39,13 @@ extern const std::string STD_STRING_EMPTY;
 
 typedef struct
 {
-    Rect  begin;              // the soft keyboard rectangle when animation begins
-    Rect  end;                // the soft keyboard rectangle when animation ends
-    float     duration;           // the soft keyboard animation duration
+    Rect  begin;              // 键盘动画开始时，软键盘所在矩形区域
+    Rect  end;                // 键盘动画结束时，软键盘所在矩形区域
+    float     duration;           // 软键盘动画时长
 } IMEKeyboardNotificationInfo;
 
 /**
-@brief    Input method editor delegate.
+@brief    输入编辑器的delegate
 */
 class CC_DLL IMEDelegate
 {
@@ -70,7 +70,7 @@ protected:
     friend class IMEDispatcher;
 
     /**
-    @brief    Decide if the delegate instance is ready to receive an IME message.
+    @brief     分辨delegate实例是否准备接收一条IME消息
 
     Called by IMEDispatcher.
     * @js NA
@@ -78,49 +78,49 @@ protected:
     */
     virtual bool canAttachWithIME() { return false; }
     /**
-    @brief    When the delegate detaches from the IME, this method is called by IMEDispatcher.
+    @brief    当IME分派delegate，这个方法将被IMEDispatcher调用
     * @js NA
     * @lua NA
     */
     virtual void didAttachWithIME() {}
 
     /**
-    @brief    Decide if the delegate instance can stop receiving IME messages.
+    @brief    决定delegate实例是否停止接收IME发送的消息
     * @js NA
     * @lua NA
     */
     virtual bool canDetachWithIME() { return false; }
 
     /**
-    @brief    When the delegate detaches from the IME, this method is called by IMEDispatcher.
+    @brief    当IME分派delegate，这个方法将被IMEDispatcher调用
     * @js NA
     * @lua NA
     */
     virtual void didDetachWithIME() {}
 
     /**
-    @brief    Called by IMEDispatcher when text input received from the IME.
+    @brief    当文本输入从IME传递过来，这个方法被IMEDispatcher调用
     * @js NA
     * @lua NA
     */
     virtual void insertText(const char * text, size_t len) {CC_UNUSED_PARAM(text);CC_UNUSED_PARAM(len);}
 
     /**
-    @brief    Called by IMEDispatcher after the user clicks the backward key.
+    @brief    当user点击回退键，这个方法被IMEDispatcher调用
     * @js NA
     * @lua NA
     */
     virtual void deleteBackward() {}
 
     /**
-    @brief    Called by IMEDispatcher for text stored in delegate.
+    @brief    IMEDispatcher调用该方法获得保存在delegate中的文本
     * @js NA
     * @lua NA
     */
     virtual const std::string& getContentText() { return STD_STRING_EMPTY; }
 
     //////////////////////////////////////////////////////////////////////////
-    // keyboard show/hide notification
+    // 键盘弹出或者隐藏的notification
     //////////////////////////////////////////////////////////////////////////
     /**
      * @js NA
