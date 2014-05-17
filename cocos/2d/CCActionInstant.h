@@ -88,7 +88,7 @@ private:
 class CC_DLL Hide : public ActionInstant
 {
 public:
-    /** 配置和初始化动作 */
+    /** 分配内存和初始化动作 */
     static Hide * create();
 
     //
@@ -111,7 +111,7 @@ private:
 class CC_DLL ToggleVisibility : public ActionInstant
 {
 public:
-    /** 配置和初始化动作 */
+    /** 分配内存和初始化动作 */
     static ToggleVisibility * create();
 
     //
@@ -321,7 +321,7 @@ CC_CONSTRUCTOR_ACCESS:
     bool initWithFunction(const std::function<void()>& func);
 
 protected:
-    /** 讲被调用的目标变量*/
+    /** 将被调用的目标变量*/
     Ref*   _selectorTarget;
 
     union
