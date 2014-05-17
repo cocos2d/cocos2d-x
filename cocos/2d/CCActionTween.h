@@ -48,18 +48,21 @@ public:
 
 /** ActionTween
 
- ActionTween is an action that lets you update any property of an object.
- For example, if you want to modify the "width" property of a target from 200 to 300 in 2 seconds, then:
-
+ ActionTween 是一个可以让你更新的某个对象(Object)属性的动作.
+ 例如, 如果你想要让某个目标对象(target)的宽度属性(width)在2秒内从200变成300, 代码可以这样写: 
+ 
  @code
      auto modifyWidth = ActionTween::create(2, "width", 200, 300);
      target->runAction(modifyWidth);
  @endcode
 
- Another example: ScaleTo action could be rewritten using PropertyAction:
-
+ 再一个例子: ScaleTo 动作(一个改变对象大小的动作)可以通过 ActionTween 重写.
+ 注: 原注释中 ActionTween 为 PropertyAction, 但 PropertyAction 在整个cocos2d-x中仅在此处注释中
+ 出现了一次, 个人翻译为ActionTween.
+ 
  @code
-     // scaleA and scaleB are equivalents
+     // scaleA 和 scaleB 是等价的动作实现
+     // 以下两行注释为相应动作的构造参数说明, 不翻译. 
      auto scaleA = ScaleTo::create(2, 3);                 // (duration, to)
      auto scaleB = ActionTween::create(2, "scale", 1, 3); // (duration, key, from, to)
  @endcode
@@ -69,17 +72,18 @@ public:
 class CC_DLL ActionTween : public ActionInterval
 {
 public:
-    /** creates an initializes the action with the property name (key), and the from and to parameters. */
+    /** 用持续时间(duration), 属性名称(key), from 和 to 参数创建并初始化动作(指ActionTween).
+    */
     static ActionTween* create(float duration, const std::string& key, float from, float to);
 
-    // Overrides
+    // 重写的四个方法.
     void startWithTarget(Node *target) override;
     void update(float dt) override;
     ActionTween* reverse() const override;
 	ActionTween *clone() const override;
     
 CC_CONSTRUCTOR_ACCESS:
-    /** initializes the action with the property name (key), and the from and to parameters. */
+    /** 用持续时间(duration), 属性名称(key), from 和 to 参数初始化动作(指ActionTween). */
     bool initWithDuration(float duration, const std::string& key, float from, float to);
 
 protected:
