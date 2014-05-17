@@ -71,10 +71,10 @@ public:
     CC_DEPRECATED_ATTRIBUTE ValueMap objectNamed(const std::string& objectName) const { return getObject(objectName); };
     
     /** Gets the offset position of child objects */
-    inline const Vector2& getPositionOffset() const { return _positionOffset; };
+    inline const Vec2& getPositionOffset() const { return _positionOffset; };
     
     /** Sets the offset position of child objects */
-    inline void setPositionOffset(const Vector2& offset) { _positionOffset = offset; };
+    inline void setPositionOffset(const Vec2& offset) { _positionOffset = offset; };
     
     /** Gets the list of properties stored in a dictionary */
     inline const ValueMap& getProperties() const { return _properties; };
@@ -98,7 +98,7 @@ protected:
     /** name of the group */
     std::string _groupName;
     /** offset position of child objects */
-    Vector2 _positionOffset;
+    Vec2 _positionOffset;
     /** list of properties stored in a dictionary */
     ValueMap _properties;
     /** array of the objects */

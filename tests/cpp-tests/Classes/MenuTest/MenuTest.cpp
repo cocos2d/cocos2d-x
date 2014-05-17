@@ -119,9 +119,9 @@ MenuLayerMainMenu::MenuLayerMainMenu()
         if( i % 2 == 0)
             offset = -offset;
         
-        child->setPosition( Vector2( dstPoint.x + offset, dstPoint.y) );
+        child->setPosition( Vec2( dstPoint.x + offset, dstPoint.y) );
         child->runAction(
-                         EaseElasticOut::create(MoveBy::create(2, Vector2(dstPoint.x - offset,0)), 0.35f)
+                         EaseElasticOut::create(MoveBy::create(2, Vec2(dstPoint.x - offset,0)), 0.35f)
                          );
         i++;
     }
@@ -130,7 +130,7 @@ MenuLayerMainMenu::MenuLayerMainMenu()
     _disabledItem->setEnabled( false );
 
     addChild(menu);
-    menu->setPosition(Vector2(s.width/2, s.height/2));
+    menu->setPosition(Vec2(s.width/2, s.height/2));
     menu->setScale(0);
     menu->runAction(ScaleTo::create(1,1));
 }
@@ -224,7 +224,7 @@ MenuLayer2::MenuLayer2()
         auto menu = Menu::create(item1, item2, item3, NULL);
         
         auto s = Director::getInstance()->getWinSize();
-        menu->setPosition(Vector2(s.width/2, s.height/2));
+        menu->setPosition(Vec2(s.width/2, s.height/2));
 
         menu->setTag( kTagMenu );
         
@@ -252,7 +252,7 @@ void MenuLayer2::alignMenusH()
             // TIP: if no padding, padding = 5
             menu->alignItemsHorizontally();            
             auto p = menu->getPosition();
-            menu->setPosition(p + Vector2(0,30));
+            menu->setPosition(p + Vec2(0,30));
             
         } 
         else 
@@ -260,7 +260,7 @@ void MenuLayer2::alignMenusH()
             // TIP: but padding is configurable
             menu->alignItemsHorizontallyWithPadding(40);
             auto p = menu->getPosition();
-            menu->setPosition(p - Vector2(0,30));
+            menu->setPosition(p - Vec2(0,30));
         }        
     }
 }
@@ -276,14 +276,14 @@ void MenuLayer2::alignMenusV()
             // TIP: if no padding, padding = 5
             menu->alignItemsVertically();            
             auto p = menu->getPosition();
-            menu->setPosition(p + Vector2(100,0));
+            menu->setPosition(p + Vec2(100,0));
         } 
         else 
         {
             // TIP: but padding is configurable
             menu->alignItemsVerticallyWithPadding(40);    
             auto p = menu->getPosition();
-            menu->setPosition(p - Vector2(100,0));
+            menu->setPosition(p - Vec2(100,0));
         }        
     }
 }
@@ -345,15 +345,15 @@ MenuLayer3::MenuLayer3()
     _disabledItem->setEnabled( false );
     
     auto menu = Menu::create( item1, item2, item3, NULL);    
-    menu->setPosition( Vector2(0,0) );
+    menu->setPosition( Vec2(0,0) );
 
     auto s = Director::getInstance()->getWinSize();
     
-    item1->setPosition( Vector2(s.width/2 - 150, s.height/2) );
-    item2->setPosition( Vector2(s.width/2 - 200, s.height/2) );
-    item3->setPosition( Vector2(s.width/2, s.height/2 - 100) );
+    item1->setPosition( Vec2(s.width/2 - 150, s.height/2) );
+    item2->setPosition( Vec2(s.width/2 - 200, s.height/2) );
+    item3->setPosition( Vec2(s.width/2, s.height/2 - 100) );
     
-    auto jump = JumpBy::create(3, Vector2(400,0), 50, 4);
+    auto jump = JumpBy::create(3, Vec2(400,0), 50, 4);
     item2->runAction( RepeatForever::create(Sequence::create( jump, jump->reverse(), NULL)));
 
     auto spin1 = RotateBy::create(3, 360);
@@ -366,7 +366,7 @@ MenuLayer3::MenuLayer3()
     
     addChild( menu ); 
 
-    menu->setPosition(Vector2(0,0));
+    menu->setPosition(Vec2(0,0));
 }
 
 MenuLayer3::~MenuLayer3()
@@ -450,7 +450,7 @@ MenuLayer4::MenuLayer4()
     addChild( menu );
 
     auto s = Director::getInstance()->getWinSize();
-    menu->setPosition(Vector2(s.width/2, s.height/2));
+    menu->setPosition(Vec2(s.width/2, s.height/2));
 }
 
 MenuLayer4::~MenuLayer4()
@@ -479,7 +479,7 @@ BugsTest::BugsTest()
     menu->alignItemsVertically();
     
     auto s = Director::getInstance()->getWinSize();
-    menu->setPosition(Vector2(s.width/2, s.height/2));
+    menu->setPosition(Vec2(s.width/2, s.height/2));
 }
 
 void BugsTest::issue1410MenuCallback(Ref *sender)
@@ -510,7 +510,7 @@ RemoveMenuItemWhenMove::RemoveMenuItemWhenMove()
     auto s = Director::getInstance()->getWinSize();
     
     auto label = Label::createWithTTF("click item and move, should not crash", "fonts/arial.ttf", 20);
-    label->setPosition(Vector2(s.width/2, s.height - 30));
+    label->setPosition(Vec2(s.width/2, s.height - 30));
     addChild(label);
     
     item = MenuItemFont::create("item 1");
@@ -522,7 +522,7 @@ RemoveMenuItemWhenMove::RemoveMenuItemWhenMove()
     addChild(menu);
     menu->alignItemsVertically();
     
-    menu->setPosition(Vector2(s.width/2, s.height/2));
+    menu->setPosition(Vec2(s.width/2, s.height/2));
     
     // Register Touch Event
     _touchListener = EventListenerTouchOneByOne::create();

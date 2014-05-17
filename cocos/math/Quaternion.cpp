@@ -38,12 +38,12 @@ Quaternion::Quaternion(float* array)
     set(array);
 }
 
-Quaternion::Quaternion(const Matrix& m)
+Quaternion::Quaternion(const Mat4& m)
 {
     set(m);
 }
 
-Quaternion::Quaternion(const Vector3& axis, float angle)
+Quaternion::Quaternion(const Vec3& axis, float angle)
 {
     set(axis, angle);
 }
@@ -79,19 +79,19 @@ bool Quaternion::isZero() const
     return x == 0.0f && y == 0.0f && z == 0.0f && w == 0.0f;
 }
 
-void Quaternion::createFromRotationMatrix(const Matrix& m, Quaternion* dst)
+void Quaternion::createFromRotationMatrix(const Mat4& m, Quaternion* dst)
 {
     m.getRotation(dst);
 }
 
-void Quaternion::createFromAxisAngle(const Vector3& axis, float angle, Quaternion* dst)
+void Quaternion::createFromAxisAngle(const Vec3& axis, float angle, Quaternion* dst)
 {
     GP_ASSERT(dst);
 
     float halfAngle = angle * 0.5f;
     float sinHalfAngle = sinf(halfAngle);
 
-    Vector3 normal(axis);
+    Vec3 normal(axis);
     normal.normalize();
     dst->x = normal.x * sinHalfAngle;
     dst->y = normal.y * sinHalfAngle;
@@ -212,12 +212,12 @@ void Quaternion::set(float* array)
     w = array[3];
 }
 
-void Quaternion::set(const Matrix& m)
+void Quaternion::set(const Mat4& m)
 {
     Quaternion::createFromRotationMatrix(m, this);
 }
 
-void Quaternion::set(const Vector3& axis, float angle)
+void Quaternion::set(const Vec3& axis, float angle)
 {
     Quaternion::createFromAxisAngle(axis, angle, this);
 }
@@ -238,7 +238,7 @@ void Quaternion::setIdentity()
     w = 1.0f;
 }
 
-float Quaternion::toAxisAngle(Vector3* axis) const
+float Quaternion::toAxisAngle(Vec3* axis) const
 {
     GP_ASSERT(axis);
 

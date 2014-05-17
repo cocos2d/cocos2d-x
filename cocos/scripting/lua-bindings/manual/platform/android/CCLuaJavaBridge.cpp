@@ -1,6 +1,6 @@
 
 #include "CCLuaJavaBridge.h"
-#include "2d/platform/android/jni/JniHelper.h"
+#include "platform/android/jni/JniHelper.h"
 #include <android/log.h>
 
 #define  LOG_TAG    "luajc"

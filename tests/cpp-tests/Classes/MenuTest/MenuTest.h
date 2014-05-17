@@ -61,7 +61,7 @@ public:
 class MenuLayer2 : public Layer
 {
 protected:
-    Vector2        _centeredMenu;
+    Vec2        _centeredMenu;
     bool                _alignedH; 
 
     void alignMenusH();

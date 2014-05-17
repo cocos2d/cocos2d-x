@@ -61,7 +61,7 @@ public:
     void setSpace(cpSpace *space);
     
     // Overrides
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
 
 protected:
     cpSpace *_spacePtr;

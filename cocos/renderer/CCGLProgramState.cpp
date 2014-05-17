@@ -27,11 +27,12 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "renderer/CCGLProgramState.h"
+
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramStateCache.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/ccGLStateCache.h"
-#include "2d/CCTexture2D.h"
+#include "renderer/CCTexture2D.h"
 
 NS_CC_BEGIN
 
@@ -71,7 +72,6 @@ void UniformValue::apply()
         switch (_uniform->type) {
             case GL_SAMPLER_2D:
                 _glprogram->setUniformLocationWith1i(_uniform->location, _value.tex.textureUnit);
-                GL::activeTexture(_value.tex.textureUnit);
                 GL::bindTexture2DN(_value.tex.textureUnit, _value.tex.textureId);
                 break;
 
@@ -142,28 +142,28 @@ void UniformValue::setInt(int value)
     _useCallback = false;
 }
 
-void UniformValue::setVec2(const Vector2& value)
+void UniformValue::setVec2(const Vec2& value)
 {
     CCASSERT (_uniform->type == GL_FLOAT_VEC2, "");
 	memcpy(_value.v2Value, &value, sizeof(_value.v2Value));
     _useCallback = false;
 }
 
-void UniformValue::setVec3(const Vector3& value)
+void UniformValue::setVec3(const Vec3& value)
 {
     CCASSERT (_uniform->type == GL_FLOAT_VEC3, "");
 	memcpy(_value.v3Value, &value, sizeof(_value.v3Value));
 	_useCallback = false;
 }
 
-void UniformValue::setVec4(const Vector4& value)
+void UniformValue::setVec4(const Vec4& value)
 {
     CCASSERT (_uniform->type == GL_FLOAT_VEC4, "");
 	memcpy(_value.v4Value, &value, sizeof(_value.v4Value));
 	_useCallback = false;
 }
 
-void UniformValue::setMat4(const Matrix& value)
+void UniformValue::setMat4(const Mat4& value)
 {
     CCASSERT(_uniform->type == GL_FLOAT_MAT4, "");
 	memcpy(_value.matrixValue, &value, sizeof(_value.matrixValue));
@@ -241,25 +241,28 @@ void VertexAttribValue::setPointer(GLint size, GLenum type, GLboolean normalized
 GLProgramState* GLProgramState::create(GLProgram *glprogram)
 {
     GLProgramState* ret = nullptr;
-    ret = new (std::nothrow) GLProgramState;
-    if(!ret || !ret->init(glprogram))
-        CC_SAFE_RELEASE(ret);
-
-    return ret;
+    ret = new (std::nothrow) GLProgramState();
+    if(ret && ret->init(glprogram))
+    {
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+    return nullptr;
 }
 
 GLProgramState* GLProgramState::getOrCreateWithGLProgramName(const std::string &glProgramName )
 {
     GLProgram *glProgram = GLProgramCache::getInstance()->getGLProgram(glProgramName);
     if( glProgram )
-        return getOrCreate(glProgram);
+        return getOrCreateWithGLProgram(glProgram);
 
     CCLOG("cocos2d: warning: GLProgram '%s' not found", glProgramName.c_str());
     return nullptr;
 }
 
 
-GLProgramState* GLProgramState::getOrCreate(GLProgram *glprogram)
+GLProgramState* GLProgramState::getOrCreateWithGLProgram(GLProgram *glprogram)
 {
     GLProgramState* ret = GLProgramStateCache::getInstance()->getGLProgramState(glprogram);
     return ret;
@@ -284,12 +287,12 @@ bool GLProgramState::init(GLProgram* glprogram)
     _glprogram = glprogram;
     _glprogram->retain();
 
-    for(auto &attrib : _glprogram->_attributesDictionary) {
+    for(auto &attrib : _glprogram->_vertexAttribs) {
         VertexAttribValue value(&attrib.second);
         _attributes[attrib.first] = value;
     }
 
-    for(auto &uniform : _glprogram->_uniformsDictionary) {
+    for(auto &uniform : _glprogram->_userUniforms) {
         UniformValue value(&uniform.second, _glprogram);
         _uniforms[uniform.first] = value;
     }
@@ -306,7 +309,7 @@ void GLProgramState::resetGLProgram()
     _textureUnitIndex = 1;
 }
 
-void GLProgramState::apply(const Matrix& modelView)
+void GLProgramState::apply(const Mat4& modelView)
 {
     CCASSERT(_glprogram, "invalid glprogram");
 
@@ -414,7 +417,7 @@ void GLProgramState::setUniformInt(const std::string &uniformName, int value)
         CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
 }
 
-void GLProgramState::setUniformVec2(const std::string &uniformName, const Vector2& value)
+void GLProgramState::setUniformVec2(const std::string &uniformName, const Vec2& value)
 {
     auto v = getUniformValue(uniformName);
     if (v)
@@ -423,7 +426,7 @@ void GLProgramState::setUniformVec2(const std::string &uniformName, const Vector
         CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
 }
 
-void GLProgramState::setUniformVec3(const std::string &uniformName, const Vector3& value)
+void GLProgramState::setUniformVec3(const std::string &uniformName, const Vec3& value)
 {
     auto v = getUniformValue(uniformName);
     if (v)
@@ -432,7 +435,7 @@ void GLProgramState::setUniformVec3(const std::string &uniformName, const Vector
         CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
 }
 
-void GLProgramState::setUniformVec4(const std::string &uniformName, const Vector4& value)
+void GLProgramState::setUniformVec4(const std::string &uniformName, const Vec4& value)
 {
     auto v = getUniformValue(uniformName);
     if (v)
@@ -441,7 +444,7 @@ void GLProgramState::setUniformVec4(const std::string &uniformName, const Vector
         CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
 }
 
-void GLProgramState::setUniformMat4(const std::string &uniformName, const Matrix& value)
+void GLProgramState::setUniformMat4(const std::string &uniformName, const Mat4& value)
 {
     auto v = getUniformValue(uniformName);
     if (v)

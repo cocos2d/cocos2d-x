@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 
-#include "CCRenderCommand.h"
+#include "renderer/CCRenderCommand.h"
 
 NS_CC_BEGIN
 

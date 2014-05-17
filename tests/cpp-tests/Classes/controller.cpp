@@ -14,9 +14,12 @@
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 #include <unistd.h>
+#include <sys/types.h>
 #include <sys/socket.h>
+#include <netdb.h>
 #else
 #include <io.h>
+#include <WS2tcpip.h>
 #endif
 #include "cocostudio/CocoStudio.h"
 #include "UITest/UITest.h"
@@ -109,7 +112,7 @@ static int g_testCount = sizeof(g_aTestNames) / sizeof(g_aTestNames[0]);
 static Controller *currentController = nullptr;
 #define LINE_SPACE          40
 
-static Vector2 s_tCurPos = Vector2::ZERO;
+static Vec2 s_tCurPos = Vec2::ZERO;
 
 //sleep for t seconds
 static void wait(int t)
@@ -119,14 +122,14 @@ static void wait(int t)
 }
 
 TestController::TestController()
-: _beginPos(Vector2::ZERO)
+: _beginPos(Vec2::ZERO)
 {
     // add close menu
     auto closeItem = MenuItemImage::create(s_pathClose, s_pathClose, CC_CALLBACK_1(TestController::closeCallback, this) );
     auto menu =Menu::create(closeItem, NULL);
 
-    menu->setPosition( Vector2::ZERO );
-    closeItem->setPosition(Vector2( VisibleRect::right().x - 30, VisibleRect::top().y - 30));
+    menu->setPosition( Vec2::ZERO );
+    closeItem->setPosition(Vec2( VisibleRect::right().x - 30, VisibleRect::top().y - 30));
 
     // add menu items for tests
     TTFConfig ttfConfig("fonts/arial.ttf", 24);
@@ -137,7 +140,7 @@ TestController::TestController()
         auto menuItem = MenuItemLabel::create(label, CC_CALLBACK_1(TestController::menuCallback, this));
 
         _itemMenu->addChild(menuItem, i + 10000);
-        menuItem->setPosition( Vector2( VisibleRect::center().x, (VisibleRect::top().y - (i + 1) * LINE_SPACE) ));
+        menuItem->setPosition( Vec2( VisibleRect::center().x, (VisibleRect::top().y - (i + 1) * LINE_SPACE) ));
     }
 
     _itemMenu->setContentSize(Size(VisibleRect::getVisibleRect().size.width, (g_testCount + 1) * (LINE_SPACE)));
@@ -207,17 +210,17 @@ void TestController::onTouchMoved(Touch* touch, Event  *event)
     float nMoveY = touchLocation.y - _beginPos.y;
 
     auto curPos  = _itemMenu->getPosition();
-    auto nextPos = Vector2(curPos.x, curPos.y + nMoveY);
+    auto nextPos = Vec2(curPos.x, curPos.y + nMoveY);
 
     if (nextPos.y < 0.0f)
     {
-        _itemMenu->setPosition(Vector2::ZERO);
+        _itemMenu->setPosition(Vec2::ZERO);
         return;
     }
 
     if (nextPos.y > ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
     {
-        _itemMenu->setPosition(Vector2(0, ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        _itemMenu->setPosition(Vec2(0, ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
         return;
     }
 
@@ -232,17 +235,17 @@ void TestController::onMouseScroll(Event *event)
     float nMoveY = mouseEvent->getScrollY() * 6;
 
     auto curPos  = _itemMenu->getPosition();
-    auto nextPos = Vector2(curPos.x, curPos.y + nMoveY);
+    auto nextPos = Vec2(curPos.x, curPos.y + nMoveY);
 
     if (nextPos.y < 0.0f)
     {
-        _itemMenu->setPosition(Vector2::ZERO);
+        _itemMenu->setPosition(Vec2::ZERO);
         return;
     }
 
     if (nextPos.y > ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
     {
-        _itemMenu->setPosition(Vector2(0, ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        _itemMenu->setPosition(Vec2(0, ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
         return;
     }
 
@@ -406,6 +409,9 @@ void TestController::addConsoleAutoTest()
                         }
                     }
                 }
+                std::string  msg("autotest run successfully!");
+                send(fd, msg.c_str(), strlen(msg.c_str()),0);
+                send(fd, "\n",1,0);
                 return;
             }
 
@@ -442,5 +448,121 @@ void TestController::addConsoleAutoTest()
     };
     console->addCommand(autotest);
 }
+
+void TestController::startAutoRun()
+{
+   
+    std::thread t = std::thread( &TestController::autorun, this);
+    t.detach();
+}
+
+ssize_t TestController::readline(int fd, char* ptr, size_t maxlen)
+{
+    size_t n, rc;
+    char c;
+
+    for( n = 0; n < maxlen - 1; n++ ) {
+        if( (rc = recv(fd, &c, 1, 0)) ==1 ) {
+            *ptr++ = c;
+            if(c == '\n') {
+                break;
+            }
+        } else if( rc == 0 ) {
+            return 0;
+        } else if( errno == EINTR ) {
+            continue;
+        } else {
+            return -1;
+        }
+    }
+
+    *ptr = 0;
+    return n;
+}
+
+void TestController::autorun()
+{
+    struct addrinfo hints;
+    struct addrinfo *result, *rp;
+    int sfd, s;
+
+    /* Obtain address(es) matching host/port */
+    memset(&hints, 0, sizeof(struct addrinfo));
+    hints.ai_family = AF_INET;    /* Allow IPv4 or IPv6 */
+    hints.ai_socktype = SOCK_STREAM; /* stream socket */
+    hints.ai_flags = 0;
+    hints.ai_protocol = 0;          /* Any protocol */
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    WSADATA wsaData;
+    WSAStartup(MAKEWORD(2, 2),&wsaData);
+#endif
+
+    s = getaddrinfo("localhost", "5678", &hints, &result);
+    if (s != 0) 
+    {
+       CCLOG("autotest: getaddrinfo error");
+        return;
+    }
+
+    /* getaddrinfo() returns a list of address structures.
+      Try each address until we successfully connect(2).
+      If socket(2) (or connect(2)) fails, we (close the socket
+      and) try the next address. */
+
+    for (rp = result; rp != NULL; rp = rp->ai_next) {
+        sfd = socket(rp->ai_family, rp->ai_socktype,
+                    rp->ai_protocol);
+        if (sfd == -1)
+            continue;
+
+        if (connect(sfd, rp->ai_addr, rp->ai_addrlen) != -1)
+            break;                  /* Success */
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+        closesocket(sfd);
+#else
+        close(sfd);
+#endif
+    }
+
+    if (rp == NULL) {               /* No address succeeded */
+        CCLOG("autotest: could not connect!");
+        return;
+    }
+
+    freeaddrinfo(result);           /* No longer needed */
+    
+    std::string tmp = "autotest run\n";
+
+    char cmd[512];
+
+    strcpy(cmd, tmp.c_str());
+    wait(3);
+    send(sfd,cmd,strlen(cmd),0);
+    while(true)
+    {
+        char resp[512];
+        readline(sfd, resp, 512);
+        if(strcmp(resp, "autotest run successfully!\n") == 0)
+        {
+            break;
+        }
+        wait(3);
+    }
+    
+    tmp = "director end\n";
+    strcpy(cmd, tmp.c_str());
+    send(sfd,cmd,strlen(cmd),0);
+    wait(1);
+    #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+        closesocket(sfd);
+        WSACleanup();
+#else
+        close(sfd);
+#endif
+    return;
+}
+
 #endif
 

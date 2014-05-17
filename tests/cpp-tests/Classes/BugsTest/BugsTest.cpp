@@ -8,6 +8,7 @@
 #include "Bug-914.h"
 #include "Bug-1159.h"
 #include "Bug-1174.h"
+#include "Bug-Child.h"
 
 #define TEST_BUG(__bug__)									\
 {															\
@@ -25,12 +26,13 @@ enum
     kItemTagBasic = 5432,
 };
 
-static Vector2 s_tCurPos = Vector2::ZERO;
+static Vec2 s_tCurPos = Vec2::ZERO;
 
 struct {
 	const char *test_name;
 	std::function<void(Ref*)> callback;
 } g_bugs[] = {
+    { "Bug-Child", [](Ref* sender){Director::getInstance()->replaceScene(BugChild::scene());} },
 	{ "Bug-350", [](Ref* sender){ TEST_BUG(350)} },
 	{ "Bug-422", [](Ref* sender){ TEST_BUG(422)} },
 	{ "Bug-458", [](Ref* sender){ TEST_BUG(458)} },
@@ -61,7 +63,7 @@ void BugsTestMainLayer::onEnter()
     for (int i = 0; i < g_maxitems; ++i)
     {
         auto pItem = MenuItemFont::create(g_bugs[i].test_name, g_bugs[i].callback);
-        pItem->setPosition(Vector2(s.width / 2, s.height - (i + 1) * LINE_SPACE));
+        pItem->setPosition(Vec2(s.width / 2, s.height - (i + 1) * LINE_SPACE));
         _itmeMenu->addChild(pItem, kItemTagBasic + i);
     }
 
@@ -86,17 +88,17 @@ void BugsTestMainLayer::onTouchesMoved(const std::vector<Touch*>& touches, Event
     float nMoveY = touchLocation.y - _beginPos.y;
 
     auto curPos  = _itmeMenu->getPosition();
-    auto nextPos = Vector2(curPos.x, curPos.y + nMoveY);
+    auto nextPos = Vec2(curPos.x, curPos.y + nMoveY);
     auto winSize = Director::getInstance()->getWinSize();
     if (nextPos.y < 0.0f)
     {
-        _itmeMenu->setPosition(Vector2::ZERO);
+        _itmeMenu->setPosition(Vec2::ZERO);
         return;
     }
 
     if (nextPos.y > ((g_maxitems + 1)* LINE_SPACE - winSize.height))
     {
-        _itmeMenu->setPosition(Vector2(0, ((g_maxitems + 1)* LINE_SPACE - winSize.height)));
+        _itmeMenu->setPosition(Vec2(0, ((g_maxitems + 1)* LINE_SPACE - winSize.height)));
         return;
     }
 
@@ -117,9 +119,9 @@ void BugsTestBaseLayer::onEnter()
     MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(24);
     auto pMainItem = MenuItemFont::create("Back", CC_CALLBACK_1(BugsTestBaseLayer::backCallback, this));
-    pMainItem->setPosition(Vector2(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
+    pMainItem->setPosition(Vec2(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
     auto menu = Menu::create(pMainItem, NULL);
-    menu->setPosition( Vector2::ZERO );
+    menu->setPosition( Vec2::ZERO );
     addChild(menu);
 }
 

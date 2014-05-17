@@ -25,13 +25,13 @@ THE SOFTWARE.
 #ifndef __CCGLPROGRAMSTATE_H__
 #define __CCGLPROGRAMSTATE_H__
 
+#include <unordered_map>
+
 #include "base/ccTypes.h"
 #include "base/CCVector.h"
-#include "math/Vector2.h"
-#include "math/Vector3.h"
-#include "math/Vector4.h"
-
-#include <unordered_map>
+#include "math/Vec2.h"
+#include "math/Vec3.h"
+#include "math/Vec4.h"
 
 NS_CC_BEGIN
 
@@ -56,10 +56,10 @@ public:
 
     void setFloat(float value);
     void setInt(int value);
-    void setVec2(const Vector2& value);
-    void setVec3(const Vector3& value);
-    void setVec4(const Vector4& value);
-    void setMat4(const Matrix& value);
+    void setVec2(const Vec2& value);
+    void setVec3(const Vec3& value);
+    void setVec4(const Vec4& value);
+    void setMat4(const Mat4& value);
     void setCallback(const std::function<void(Uniform*)> &callback);
     void setTexture(GLuint textureId, GLuint activeTexture);
 
@@ -150,12 +150,12 @@ public:
     static GLProgramState* create(GLProgram* glprogram);
 
     /** gets-or-creates an instance of GLProgramState for a given GLProgram */
-    static GLProgramState* getOrCreate(GLProgram* glprogram);
+    static GLProgramState* getOrCreateWithGLProgram(GLProgram* glprogram);
 
     /** gets-or-creates an instance of GLProgramState for a given GLProgramName */
     static GLProgramState* getOrCreateWithGLProgramName(const std::string &glProgramName );
 
-    void apply(const Matrix& modelView);
+    void apply(const Mat4& modelView);
 
     void setGLProgram(GLProgram* glprogram);
     GLProgram* getGLProgram() const { return _glprogram; }
@@ -170,10 +170,10 @@ public:
     ssize_t getUniformCount() const { return _uniforms.size(); }
     void setUniformInt(const std::string &uniformName, int value);
     void setUniformFloat(const std::string &uniformName, float value);
-    void setUniformVec2(const std::string &uniformName, const Vector2& value);
-    void setUniformVec3(const std::string &uniformName, const Vector3& value);
-    void setUniformVec4(const std::string &uniformName, const Vector4& value);
-    void setUniformMat4(const std::string &uniformName, const Matrix& value);
+    void setUniformVec2(const std::string &uniformName, const Vec2& value);
+    void setUniformVec3(const std::string &uniformName, const Vec3& value);
+    void setUniformVec4(const std::string &uniformName, const Vec4& value);
+    void setUniformMat4(const std::string &uniformName, const Mat4& value);
     void setUniformCallback(const std::string &uniformName, const std::function<void(Uniform*)> &callback);
     void setUniformTexture(const std::string &uniformName, Texture2D *texture);
     void setUniformTexture(const std::string &uniformName, GLuint textureId);

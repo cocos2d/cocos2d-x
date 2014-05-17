@@ -122,11 +122,12 @@ public:
 
     /**
      * Sets whether the widget is enabled
+     * 
+     * true if the widget is enabled, widget may be touched , false if the widget is disabled, widget cannot be touched.
      *
-     * Highest control of widget.
      * The default value is true, a widget is default to enabled
      *
-     * @param enabled   true if the widget is enabled, widget may be touched and visible, false if the widget is disabled, widget cannot be touched and hidden.
+     * @param enabled
      */
     virtual void setEnabled(bool enabled);
 
@@ -231,7 +232,7 @@ public:
      */
     virtual Widget* getChildByName(const std::string& name);
 
-    virtual void visit(cocos2d::Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated) override;
+    virtual void visit(cocos2d::Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated) override;
 
     /**
      * Sets the touch event target/selector of the menu item
@@ -244,31 +245,31 @@ public:
     /**
      * Changes the position (x,y) of the widget in OpenGL coordinates
      *
-     * Usually we use p(x,y) to compose Vector2 object.
+     * Usually we use p(x,y) to compose Vec2 object.
      * The original point (0,0) is at the left-bottom corner of screen.
      *
      * @param position  The position (x,y) of the widget in OpenGL coordinates
      */
-    virtual void setPosition(const Vector2 &pos) override;
+    virtual void setPosition(const Vec2 &pos) override;
 
     /**
      * Changes the position (x,y) of the widget in OpenGL coordinates
      *
-     * Usually we use p(x,y) to compose Vector2 object.
+     * Usually we use p(x,y) to compose Vec2 object.
      * The original point (0,0) is at the left-bottom corner of screen.
      *
      * @param percent  The percent (x,y) of the widget in OpenGL coordinates
      */
-    void setPositionPercent(const Vector2 &percent);
+    void setPositionPercent(const Vec2 &percent);
 
     /**
      * Gets the percent (x,y) of the widget in OpenGL coordinates
      *
-     * @see setPosition(const Vector2&)
+     * @see setPosition(const Vec2&)
      *
      * @return The percent (x,y) of the widget in OpenGL coordinates
      */
-    const Vector2& getPositionPercent();
+    const Vec2& getPositionPercent();
 
     /**
      * Changes the position type of the widget
@@ -343,11 +344,6 @@ public:
     /** @deprecated Use setFlippedY() instead */
     CC_DEPRECATED_ATTRIBUTE void setFlipY(bool flipY) { setFlippedY(flipY); };
 
-    /**
-     * A call back function when widget lost of focus.
-     */
-    void didNotSelectSelf();
-
     /*
      * Checks a point if in parent's area.
      *
@@ -355,33 +351,33 @@ public:
      *
      * @return true if the point is in parent's area, flase otherwise.
      */
-    bool clippingParentAreaContainPoint(const Vector2 &pt);
+    bool clippingParentAreaContainPoint(const Vec2 &pt);
 
     /*
      * Sends the touch event to widget's parent
      */
-    virtual void checkChildInfo(int handleState,Widget* sender,const Vector2 &touchPoint);
+    virtual void checkChildInfo(int handleState,Widget* sender,const Vec2 &touchPoint);
 
     /*
      * Gets the touch began point of widget when widget is selected.
      *
      * @return the touch began point.
      */
-    const Vector2& getTouchStartPos();
+    const Vec2& getTouchStartPos();
 
     /*
      * Gets the touch move point of widget when widget is selected.
      *
      * @return the touch move point.
      */
-    const Vector2& getTouchMovePos();
+    const Vec2& getTouchMovePos();
 
     /*
      * Gets the touch end point of widget when widget is selected.
      *
      * @return the touch end point.
      */
-    const Vector2& getTouchEndPos();
+    const Vec2& getTouchEndPos();
 
     /**
      * Changes the name that is used to identify the widget easily.
@@ -411,7 +407,7 @@ public:
      *
      * @param percent that is widget's percent size
      */
-    virtual void setSizePercent(const Vector2 &percent);
+    virtual void setSizePercent(const Vec2 &percent);
 
     /**
      * Changes the size type of widget.
@@ -447,7 +443,7 @@ public:
      *
      * @return size percent
      */
-    const Vector2& getSizePercent() const;
+    const Vec2& getSizePercent() const;
 
     /**
      * Checks a point if is in widget's space
@@ -456,7 +452,7 @@ public:
      *
      * @return true if the point is in widget's space, flase otherwise.
      */
-    virtual bool hitTest(const Vector2 &pt);
+    virtual bool hitTest(const Vec2 &pt);
 
     virtual bool onTouchBegan(Touch *touch, Event *unusedEvent);
     virtual void onTouchMoved(Touch *touch, Event *unusedEvent);
@@ -504,7 +500,7 @@ public:
      *
      * @return world position of widget.
      */
-    Vector2 getWorldPosition();
+    Vec2 getWorldPosition();
 
     /**
      * Gets the Virtual Renderer of widget.
@@ -634,16 +630,19 @@ protected:
     Widget* getWidgetParent();
     void updateContentSizeWithTextureSize(const Size& size);
     virtual void adaptRenderers(){};
+    bool isAncestorsEnabled();
+    Widget* getAncensterWidget(Node* node);
+    bool isAncestorsVisible(Node* node);
+
 protected:
     bool _enabled;            ///< Highest control of widget
     bool _bright;             ///< is this widget bright
     bool _touchEnabled;       ///< is this widget touch endabled
-    bool _touchPassedEnabled; ///< is the touch event should be passed
     bool _highlight;              ///< is the widget on focus
     BrightStyle _brightStyle; ///< bright style
-    Vector2 _touchStartPos;    ///< touch began point
-    Vector2 _touchMovePos;     ///< touch moved point
-    Vector2 _touchEndPos;      ///< touch ended point
+    Vec2 _touchStartPos;    ///< touch began point
+    Vec2 _touchMovePos;     ///< touch moved point
+    Vec2 _touchEndPos;      ///< touch ended point
     
     //if use the old API, we must retain the _touchEventListener
     Ref*       _touchEventListener;
@@ -670,9 +669,9 @@ protected:
     bool _ignoreSize;
     bool _affectByClipping;
     SizeType _sizeType;
-    Vector2 _sizePercent;
+    Vec2 _sizePercent;
     PositionType _positionType;
-    Vector2 _positionPercent;
+    Vec2 _positionPercent;
     bool _reorderWidgetChildDirty;
     bool _hitted;
     EventListenerTouchOneByOne* _touchListener;

@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __CC_FRAMEWORK_COMPONENT_H__
 
 #include "base/CCRef.h"
-#include "2d/CCScriptSupport.h"
+#include "base/CCScriptSupport.h"
 #include <string>
 
 NS_CC_BEGIN

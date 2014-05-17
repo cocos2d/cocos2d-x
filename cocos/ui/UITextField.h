@@ -125,7 +125,7 @@ public:
     void setTouchSize(const Size &size);
     Size getTouchSize();
     void setTouchAreaEnabled(bool enable);
-    virtual bool hitTest(const Vector2 &pt);
+    virtual bool hitTest(const Vec2 &pt);
     void setText(const std::string& text);
     void setPlaceHolder(const std::string& value);
     const std::string& getPlaceHolder();
@@ -154,7 +154,7 @@ public:
     bool getDeleteBackward();
     void setDeleteBackward(bool deleteBackward);
     CC_DEPRECATED_ATTRIBUTE void addEventListenerTextField(Ref* target, SEL_TextFieldEvent selecor);
-    void addEventListener(ccTextFieldCallback callback);
+    void addEventListener(const ccTextFieldCallback& callback);
     
     /**
      * Returns the "class name" of widget.

@@ -849,6 +849,9 @@
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIWidgetAddNodeTest\UIWidgetAddNodeTest_Editor.cpp">
       <Filter>Classes\UITest\CocostudioGUISceneTest\UIWidgetAddNodeTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\BugsTest\Bug-Child.cpp">
+      <Filter>Classes\BugsTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -1564,6 +1567,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIWidgetAddNodeTest\UIWidgetAddNodeTest_Editor.h">
       <Filter>Classes\UITest\CocostudioGUISceneTest\UIWidgetAddNodeTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BugsTest\Bug-Child.h">
+      <Filter>Classes\BugsTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

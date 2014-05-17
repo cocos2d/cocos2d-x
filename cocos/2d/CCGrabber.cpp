@@ -25,7 +25,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "CCGrabber.h"
 #include "base/ccMacros.h"
-#include "2d/CCTexture2D.h"
+#include "renderer/CCTexture2D.h"
 
 NS_CC_BEGIN
 

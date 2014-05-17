@@ -6,8 +6,6 @@ varying vec4 v_fragmentColor;
 varying vec2 v_texCoord;
 
 uniform vec2 resolution;
-uniform sampler2D CC_Texture0;
-
 
 #define FILTER_SIZE 3
 #define COLOR_LEVELS 7.0

@@ -17,7 +17,7 @@ IntervalLayer::IntervalLayer()
     // sun
     auto sun = ParticleSun::create();
     sun->setTexture(Director::getInstance()->getTextureCache()->addImage("Images/fire.png"));
-    sun->setPosition( Vector2(VisibleRect::rightTop().x-32,VisibleRect::rightTop().y-32) );
+    sun->setPosition( Vec2(VisibleRect::rightTop().x-32,VisibleRect::rightTop().y-32) );
 
     sun->setTotalParticles(130);
     sun->setLife(0.6f);
@@ -36,11 +36,11 @@ IntervalLayer::IntervalLayer()
     schedule(schedule_selector(IntervalLayer::step3), 1.0f);
     schedule(schedule_selector(IntervalLayer::step4), 2.0f);
 
-    _label0->setPosition(Vector2(s.width*1/6, s.height/2));
-    _label1->setPosition(Vector2(s.width*2/6, s.height/2));
-    _label2->setPosition(Vector2(s.width*3/6, s.height/2));
-    _label3->setPosition(Vector2(s.width*4/6, s.height/2));
-    _label4->setPosition(Vector2(s.width*5/6, s.height/2));
+    _label0->setPosition(Vec2(s.width*1/6, s.height/2));
+    _label1->setPosition(Vec2(s.width*2/6, s.height/2));
+    _label2->setPosition(Vec2(s.width*3/6, s.height/2));
+    _label3->setPosition(Vec2(s.width*4/6, s.height/2));
+    _label4->setPosition(Vec2(s.width*5/6, s.height/2));
 
     addChild(_label0);
     addChild(_label1);
@@ -50,9 +50,9 @@ IntervalLayer::IntervalLayer()
 
     // Sprite
     auto sprite = Sprite::create(s_pathGrossini);
-    sprite->setPosition( Vector2(VisibleRect::left().x + 40, VisibleRect::bottom().y + 50) );
+    sprite->setPosition( Vec2(VisibleRect::left().x + 40, VisibleRect::bottom().y + 50) );
     
-    auto jump = JumpBy::create(3, Vector2(s.width-80,0), 50, 4);
+    auto jump = JumpBy::create(3, Vec2(s.width-80,0), 50, 4);
     
     addChild(sprite);
     sprite->runAction( RepeatForever::create(Sequence::create(jump, jump->reverse(), NULL) ));
@@ -64,7 +64,7 @@ IntervalLayer::IntervalLayer()
 			Director::getInstance()->pause();
 	});
     auto menu = Menu::create(item1, NULL);
-    menu->setPosition( Vector2(s.width/2, s.height-50) );
+    menu->setPosition( Vec2(s.width/2, s.height-50) );
 
     addChild( menu );
 }

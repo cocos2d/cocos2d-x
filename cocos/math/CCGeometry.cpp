@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include <algorithm>
 #include "base/ccMacros.h"
 
-// implementation of Vector2
+// implementation of Vec2
 NS_CC_BEGIN
 
 // implementation of Size
@@ -45,7 +45,7 @@ Size::Size(const Size& other) : width(other.width), height(other.height)
 {
 }
 
-Size::Size(const Vector2& point) : width(point.x), height(point.y)
+Size::Size(const Vec2& point) : width(point.x), height(point.y)
 {
 }
 
@@ -55,7 +55,7 @@ Size& Size::operator= (const Size& other)
     return *this;
 }
 
-Size& Size::operator= (const Vector2& point)
+Size& Size::operator= (const Vec2& point)
 {
     setSize(point.x, point.y);
     return *this;
@@ -167,7 +167,7 @@ float Rect::getMinY() const
     return origin.y;
 }
 
-bool Rect::containsPoint(const Vector2& point) const
+bool Rect::containsPoint(const Vec2& point) const
 {
     bool bRet = false;
 

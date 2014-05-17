@@ -99,7 +99,7 @@ bool Scale9Sprite::initWithBatchNode(SpriteBatchNode* batchnode, const Rect& rec
         this->updateWithBatchNode(batchnode, rect, rotated, capInsets);
     }
     
-    this->setAnchorPoint(Vector2(0.5f, 0.5f));
+    this->setAnchorPoint(Vec2(0.5f, 0.5f));
     this->_positionsAreDirty = true;
     
     return true;
@@ -428,34 +428,34 @@ void Scale9Sprite::updatePositions()
     float leftWidth = _bottomLeft->getContentSize().width;
     float bottomHeight = _bottomLeft->getContentSize().height;
 
-    _bottomLeft->setAnchorPoint(Vector2(0,0));
-    _bottomRight->setAnchorPoint(Vector2(0,0));
-    _topLeft->setAnchorPoint(Vector2(0,0));
-    _topRight->setAnchorPoint(Vector2(0,0));
-    _left->setAnchorPoint(Vector2(0,0));
-    _right->setAnchorPoint(Vector2(0,0));
-    _top->setAnchorPoint(Vector2(0,0));
-    _bottom->setAnchorPoint(Vector2(0,0));
-    _centre->setAnchorPoint(Vector2(0,0));
+    _bottomLeft->setAnchorPoint(Vec2(0,0));
+    _bottomRight->setAnchorPoint(Vec2(0,0));
+    _topLeft->setAnchorPoint(Vec2(0,0));
+    _topRight->setAnchorPoint(Vec2(0,0));
+    _left->setAnchorPoint(Vec2(0,0));
+    _right->setAnchorPoint(Vec2(0,0));
+    _top->setAnchorPoint(Vec2(0,0));
+    _bottom->setAnchorPoint(Vec2(0,0));
+    _centre->setAnchorPoint(Vec2(0,0));
 
     // Position corners
-    _bottomLeft->setPosition(Vector2(0,0));
-    _bottomRight->setPosition(Vector2(leftWidth+rescaledWidth,0));
-    _topLeft->setPosition(Vector2(0, bottomHeight+rescaledHeight));
-    _topRight->setPosition(Vector2(leftWidth+rescaledWidth, bottomHeight+rescaledHeight));
+    _bottomLeft->setPosition(Vec2(0,0));
+    _bottomRight->setPosition(Vec2(leftWidth+rescaledWidth,0));
+    _topLeft->setPosition(Vec2(0, bottomHeight+rescaledHeight));
+    _topRight->setPosition(Vec2(leftWidth+rescaledWidth, bottomHeight+rescaledHeight));
 
     // Scale and position borders
-    _left->setPosition(Vector2(0, bottomHeight));
+    _left->setPosition(Vec2(0, bottomHeight));
     _left->setScaleY(verticalScale);
-    _right->setPosition(Vector2(leftWidth+rescaledWidth,bottomHeight));
+    _right->setPosition(Vec2(leftWidth+rescaledWidth,bottomHeight));
     _right->setScaleY(verticalScale);
-    _bottom->setPosition(Vector2(leftWidth,0));
+    _bottom->setPosition(Vec2(leftWidth,0));
     _bottom->setScaleX(horizontalScale);
-    _top->setPosition(Vector2(leftWidth,bottomHeight+rescaledHeight));
+    _top->setPosition(Vec2(leftWidth,bottomHeight+rescaledHeight));
     _top->setScaleX(horizontalScale);
 
     // Position centre
-    _centre->setPosition(Vector2(leftWidth, bottomHeight));
+    _centre->setPosition(Vec2(leftWidth, bottomHeight));
 }
 
 bool Scale9Sprite::initWithFile(const std::string& file, const Rect& rect,  const Rect& capInsets)
@@ -764,7 +764,7 @@ void Scale9Sprite::setInsetBottom(float insetBottom)
     this->updateCapInset();
 }
 
-void Scale9Sprite::visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
+void Scale9Sprite::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
 {
     if(this->_positionsAreDirty)
     {
