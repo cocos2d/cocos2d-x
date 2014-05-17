@@ -1,15 +1,18 @@
 set(COCOS_RENDERER_SRC
-  renderer/CCBatchCommand.cpp
-  renderer/CCCustomCommand.cpp
-  renderer/CCGLProgram.cpp
-  renderer/CCGLProgramState.cpp
-  renderer/CCGLProgramStateCache.cpp
-  renderer/CCGroupCommand.cpp
-  renderer/CCQuadCommand.cpp
-  renderer/CCRenderCommand.cpp
-  renderer/CCRenderer.cpp
-  renderer/CCGLProgramCache.cpp
-  renderer/ccGLStateCache.cpp
-  renderer/ccShaders.cpp
+	renderer/CCBatchCommand.cpp
+	renderer/CCCustomCommand.cpp
+	renderer/CCGLProgramCache.cpp
+	renderer/CCGLProgram.cpp
+	renderer/CCGLProgramStateCache.cpp
+	renderer/CCGLProgramState.cpp
+	renderer/ccGLStateCache.cpp
+	renderer/CCGroupCommand.cpp
+	renderer/CCQuadCommand.cpp
+	renderer/CCRenderCommand.cpp
+	renderer/CCRenderer.cpp
+	renderer/ccShaders.cpp
+	renderer/CCTexture2D.cpp
+	renderer/CCTextureAtlas.cpp
+	renderer/CCTextureCache.cpp
 )
 

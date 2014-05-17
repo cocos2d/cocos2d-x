@@ -277,8 +277,8 @@ protected:
     bool _boundaryFullyCovered;
 
     // fast access to the screen dimensions
-    Vector2 _halfScreenSize;
-    Vector2 _fullScreenSize;
+    Vec2 _halfScreenSize;
+    Vec2 _fullScreenSize;
 
     // world boundaries
     float _leftBoundary;

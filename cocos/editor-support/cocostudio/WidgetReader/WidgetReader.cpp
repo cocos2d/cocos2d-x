@@ -46,8 +46,8 @@ namespace cocostudio
         widget->setSizeType((Widget::SizeType)DICTOOL->getIntValue_json(options, "sizeType"));
         widget->setPositionType((Widget::PositionType)DICTOOL->getIntValue_json(options, "positionType"));
         
-        widget->setSizePercent(Vector2(DICTOOL->getFloatValue_json(options, "sizePercentX"), DICTOOL->getFloatValue_json(options, "sizePercentY")));
-        widget->setPositionPercent(Vector2(DICTOOL->getFloatValue_json(options, "positionPercentX"), DICTOOL->getFloatValue_json(options, "positionPercentY")));
+        widget->setSizePercent(Vec2(DICTOOL->getFloatValue_json(options, "sizePercentX"), DICTOOL->getFloatValue_json(options, "sizePercentY")));
+        widget->setPositionPercent(Vec2(DICTOOL->getFloatValue_json(options, "positionPercentX"), DICTOOL->getFloatValue_json(options, "positionPercentY")));
         
         /* adapt screen */
         float w = 0, h = 0;
@@ -80,7 +80,7 @@ namespace cocostudio
         widget->setName(widgetName);
         float x = DICTOOL->getFloatValue_json(options, "x");
         float y = DICTOOL->getFloatValue_json(options, "y");
-        widget->setPosition(Vector2(x,y));
+        widget->setPosition(Vec2(x,y));
         bool sx = DICTOOL->checkObjectExist_json(options, "scaleX");
         if (sx)
         {
@@ -213,7 +213,7 @@ namespace cocostudio
         }
         
         if (isAnchorPointXExists || isAnchorPointYExists) {
-            widget->setAnchorPoint(Vector2(anchorPointXInFile, anchorPointYInFile));
+            widget->setAnchorPoint(Vec2(anchorPointXInFile, anchorPointYInFile));
         }
     }
 }

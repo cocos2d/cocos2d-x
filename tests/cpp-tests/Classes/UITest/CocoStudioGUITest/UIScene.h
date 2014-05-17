@@ -42,7 +42,7 @@ static Scene* sceneWithTitle(const char * title) \
     if (uiLayer && uiLayer->init()) \
     { \
         uiLayer->autorelease(); \
-        uiLayer->getSceneTitle()->setText(title); \
+        uiLayer->getSceneTitle()->setString(title); \
         pScene->addChild(uiLayer); \
     } \
     else \

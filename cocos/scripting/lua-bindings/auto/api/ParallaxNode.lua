@@ -8,8 +8,8 @@
 -- @param self
 -- @param #cc.Node node
 -- @param #int int
--- @param #vector2_table array
--- @param #vector2_table array
+-- @param #cc.Vec2 vec2
+-- @param #cc.Vec2 vec2
         
 --------------------------------
 -- @function [parent=#ParallaxNode] removeAllChildrenWithCleanup 

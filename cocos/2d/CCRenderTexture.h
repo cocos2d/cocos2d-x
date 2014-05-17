@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 #include "2d/CCNode.h"
 #include "2d/CCSprite.h"
-#include "2d/platform/CCImage.h"
+#include "platform/CCImage.h"
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCCustomCommand.h"
 
@@ -153,8 +153,8 @@ public:
     };
     
     // Overrides
-    virtual void visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated) override;
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
+    virtual void visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
 
     //flag: use stack matrix computed from scene hierarchy or generate new modelView and projection matrix
     void setKeepMatrix(bool keepMatrix);
@@ -163,7 +163,7 @@ public:
     //fullRect: the total size of screen
     //fullViewport: the total viewportSize
     */
-    void setVirtualViewport(const Vector2& rtBegin, const Rect& fullRect, const Rect& fullViewport);
+    void setVirtualViewport(const Vec2& rtBegin, const Rect& fullRect, const Rect& fullViewport);
 
 public:
     // XXX should be procted.
@@ -224,8 +224,8 @@ protected:
 
     void onSaveToFile(const std::string& fileName);
     
-    Matrix _oldTransMatrix, _oldProjMatrix;
-    Matrix _transformMatrix, _projectionMatrix;
+    Mat4 _oldTransMatrix, _oldProjMatrix;
+    Mat4 _transformMatrix, _projectionMatrix;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(RenderTexture);
 

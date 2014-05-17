@@ -91,28 +91,28 @@ public:
      *    If you're using radials type then the midpoint changes the center point
      *    If you're using bar type the the midpoint changes the bar growth
      *        it expands from the center but clamps to the sprites edge so:
-     *        you want a left to right then set the midpoint all the way to Vector2(0,y)
-     *        you want a right to left then set the midpoint all the way to Vector2(1,y)
-     *        you want a bottom to top then set the midpoint all the way to Vector2(x,0)
-     *        you want a top to bottom then set the midpoint all the way to Vector2(x,1)
+     *        you want a left to right then set the midpoint all the way to Vec2(0,y)
+     *        you want a right to left then set the midpoint all the way to Vec2(1,y)
+     *        you want a bottom to top then set the midpoint all the way to Vec2(x,0)
+     *        you want a top to bottom then set the midpoint all the way to Vec2(x,1)
      */
-    void setMidpoint(const Vector2& point);
+    void setMidpoint(const Vec2& point);
     /** Returns the Midpoint */
-    Vector2 getMidpoint() const;
+    Vec2 getMidpoint() const;
 
     /**
      *    This allows the bar type to move the component at a specific rate
      *    Set the component to 0 to make sure it stays at 100%.
      *    For example you want a left to right bar but not have the height stay 100%
-     *    Set the rate to be Vector2(0,1); and set the midpoint to = Vector2(0,.5f);
+     *    Set the rate to be Vec2(0,1); and set the midpoint to = Vec2(0,.5f);
      */
-    inline void setBarChangeRate(const Vector2& barChangeRate ) { _barChangeRate = barChangeRate; }
+    inline void setBarChangeRate(const Vec2& barChangeRate ) { _barChangeRate = barChangeRate; }
     /** Returns the BarChangeRate */
-    inline Vector2 getBarChangeRate() const { return _barChangeRate; }
+    inline Vec2 getBarChangeRate() const { return _barChangeRate; }
 
     // Overrides
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
-    virtual void setAnchorPoint(const Vector2& anchorPoint) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+    virtual void setAnchorPoint(const Vec2& anchorPoint) override;
     virtual void setColor(const Color3B &color) override;
     virtual const Color3B& getColor() const override;
     virtual void setOpacity(GLubyte opacity) override;
@@ -133,19 +133,19 @@ CC_CONSTRUCTOR_ACCESS:
     bool initWithSprite(Sprite* sp);
     
 protected:
-    void onDraw(const Matrix &transform, bool transformUpdated);
+    void onDraw(const Mat4 &transform, bool transformUpdated);
     
-    Tex2F textureCoordFromAlphaPoint(Vector2 alpha);
-    Vector2 vertexFromAlphaPoint(Vector2 alpha);
+    Tex2F textureCoordFromAlphaPoint(Vec2 alpha);
+    Vec2 vertexFromAlphaPoint(Vec2 alpha);
     void updateProgress(void);
     void updateBar(void);
     void updateRadial(void);
     virtual void updateColor(void) override;
-    Vector2 boundaryTexCoord(char index);
+    Vec2 boundaryTexCoord(char index);
 
     Type _type;
-    Vector2 _midpoint;
-    Vector2 _barChangeRate;
+    Vec2 _midpoint;
+    Vec2 _barChangeRate;
     float _percentage;
     Sprite *_sprite;
     int _vertexDataCount;

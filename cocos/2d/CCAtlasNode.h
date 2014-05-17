@@ -29,7 +29,7 @@ THE SOFTWARE.
 #define __CCATLAS_NODE_H__
 
 #include "2d/CCNode.h"
-#include "2d/CCProtocols.h"
+#include "base/CCProtocols.h"
 #include "base/ccTypes.h"
 #include "renderer/CCQuadCommand.h"
 
@@ -69,7 +69,7 @@ public:
 
     
     // Overrides
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
     virtual Texture2D* getTexture() const override;
     virtual void setTexture(Texture2D *texture) override;
     virtual bool isOpacityModifyRGB() const override;

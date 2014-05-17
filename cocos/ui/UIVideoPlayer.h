@@ -43,24 +43,24 @@ namespace experimental{
                 STOPPED,
                 COMPLETED
             };
-            typedef std::function<void(Ref*,VideoPlayer::EventType)> EventCallback;
+            typedef std::function<void(Ref*,VideoPlayer::EventType)> ccVideoPlayerCallback;
 
             CREATE_FUNC(VideoPlayer);
 
             //Sets local file[support assets' file on android] as a video source for VideoPlayer
-            virtual void setVideoFileName(const std::string& videoPath);
-            virtual const std::string& getVideoFileName() const { return _videoUrl;}
+            virtual void setFileName(const std::string& videoPath);
+            virtual const std::string& getFileName() const { return _videoURL;}
 
             //Sets network link as a video source for VideoPlayer 
-            virtual void setVideoURL(const std::string& videoUrl);
-            virtual const std::string& getVideoURL() const { return _videoUrl;}
+            virtual void setURL(const std::string& _videoURL);
+            virtual const std::string& getURL() const { return _videoURL;}
 
-            virtual void startVideo();
-            virtual void pauseVideo();
-            virtual void resumeVideo();
-            virtual void stopVideo();
+            virtual void play();
+            virtual void pause();
+            virtual void resume();
+            virtual void stop();
 
-            virtual void seekVideoTo(float sec);
+            virtual void seekTo(float sec);
             virtual bool isPlaying() const;
 
             virtual void setVisible(bool visible) override;
@@ -71,10 +71,10 @@ namespace experimental{
             virtual void setFullScreenEnabled(bool enabled);
             virtual bool isFullScreenEnabled();
 
-            virtual void addEventListener(const VideoPlayer::EventCallback& callback);
+            virtual void addEventListener(const VideoPlayer::ccVideoPlayerCallback& callback);
 
-            virtual void onVideoEvent(VideoPlayer::EventType event);
-            virtual void draw(Renderer *renderer, const Matrix& transform, bool transformUpdated) override;
+            virtual void onPlayEvent(VideoPlayer::EventType event);
+            virtual void draw(Renderer *renderer, const Mat4& transform, bool transformUpdated) override;
 
         protected:
             VideoPlayer();
@@ -85,7 +85,7 @@ namespace experimental{
             void VideoPlayer::drawDebugData();
 #endif
 
-            enum class VideoSource
+            enum class Source
             {
                 FILENAME = 0,
                 URL
@@ -96,13 +96,13 @@ namespace experimental{
             bool _fullScreenEnabled;
             bool _keepAspectRatioEnabled;
 
-            std::string _videoUrl;
-            VideoSource _videoSource;
+            std::string _videoURL;
+            Source _videoSource;
 
             int _videoPlayerIndex;
-            EventCallback _callback;
+            ccVideoPlayerCallback _eventCallback;
 
-            void* _videiView;
+            void* _videoView;
         };
     }
 }

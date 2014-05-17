@@ -673,6 +673,7 @@ Developers:
     xhcnb
         Device::setAccelerometerEnabled needs to be invoked before adding ACC listener.
         Fixed a bug that it will get wrong custom properties when use different count custom properties in CocosBuilder.
+        Correct TotalTime of ActionObject
         
     bopohaa
         Fixed a bug that Webp test crashes.
@@ -818,6 +819,7 @@ Developers:
         Fixed a bug that HTTPClient reports 2xx status codes as errors
         Added missing Text Font and Placeholder feature of EditBox for Mac platform
         HttpRequest uses std::function as callback
+        EditBox: mac secure input
         
     iSevenDays
         Fixed a bug that the result of 'malloc' is incompatible with type 'unsigned char *' in Image::saveImageToPNG
@@ -840,6 +842,7 @@ Developers:
         
     zifter
         Fixed a bug that the effect of particle loaded from CocosBuilder is incorrectly
+        Fix twice calling onExit
         
     twhittock
         Fixed a bug that Application::run returns wrong value on Mac platform
@@ -849,6 +852,9 @@ Developers:
         
     myourys
         Make cpp template support Eclipse c++ project
+        
+    NatWeiss
+        Fix compilation error using arch i386
     
 Retired Core Developers:
     WenSheng Yang

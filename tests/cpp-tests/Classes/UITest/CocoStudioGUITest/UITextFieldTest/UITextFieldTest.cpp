@@ -21,20 +21,20 @@ bool UITextFieldTest::init()
         
         // Add a label in which the textfield events will be displayed
         _displayValueLabel = Text::create("No Event","fonts/Marker Felt.ttf",32);
-        _displayValueLabel->setAnchorPoint(Vector2(0.5f, -1.0f));
-        _displayValueLabel->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + _displayValueLabel->getSize().height * 1.5f));
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + _displayValueLabel->getSize().height * 1.5f));
         _uiLayer->addChild(_displayValueLabel);        
         
         // Add the alert
         Text* alert = Text::create("TextField","fonts/Marker Felt.ttf",30);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.075f));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.075f));
         _uiLayer->addChild(alert);
         
         // Create the textfield
         TextField* textField = TextField::create("input words here","fonts/Marker Felt.ttf",30);
 
-        textField->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        textField->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         textField->addEventListener(CC_CALLBACK_2(UITextFieldTest::textFieldEvent, this));
         _uiLayer->addChild(textField);
         
@@ -53,8 +53,8 @@ void UITextFieldTest::textFieldEvent(Ref *pSender, TextField::EventType type)
             TextField* textField = dynamic_cast<TextField*>(pSender);
             Size screenSize = CCDirector::getInstance()->getWinSize();
             textField->runAction(CCMoveTo::create(0.225f,
-                                                  Vector2(screenSize.width / 2.0f, screenSize.height / 2.0f + textField->getContentSize().height / 2.0f)));
-            _displayValueLabel->setText(String::createWithFormat("attach with IME")->getCString());
+                                                  Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f + textField->getContentSize().height / 2.0f)));
+            _displayValueLabel->setString(String::createWithFormat("attach with IME")->getCString());
         }
             break;
             
@@ -62,17 +62,17 @@ void UITextFieldTest::textFieldEvent(Ref *pSender, TextField::EventType type)
         {
             TextField* textField = dynamic_cast<TextField*>(pSender);
             Size screenSize = CCDirector::getInstance()->getWinSize();
-            textField->runAction(CCMoveTo::create(0.175f, Vector2(screenSize.width / 2.0f, screenSize.height / 2.0f)));
-            _displayValueLabel->setText(String::createWithFormat("detach with IME")->getCString());
+            textField->runAction(CCMoveTo::create(0.175f, Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f)));
+            _displayValueLabel->setString(String::createWithFormat("detach with IME")->getCString());
         }
             break;
             
         case TextField::EventType::INSERT_TEXT:
-            _displayValueLabel->setText(String::createWithFormat("insert words")->getCString());
+            _displayValueLabel->setString(String::createWithFormat("insert words")->getCString());
             break;
             
         case TextField::EventType::DELETE_BACKWARD:
-            _displayValueLabel->setText(String::createWithFormat("delete word")->getCString());
+            _displayValueLabel->setString(String::createWithFormat("delete word")->getCString());
             break;
             
         default:
@@ -99,21 +99,21 @@ bool UITextFieldTest_MaxLength::init()
         
         // Add a label in which the textfield events will be displayed
         _displayValueLabel = Text::create("No Event","fonts/Marker Felt.ttf",32);
-        _displayValueLabel->setAnchorPoint(Vector2(0.5f, -1.0f));
-        _displayValueLabel->setPosition(Vector2(screenSize.width / 2.0f, screenSize.height / 2.0f + _displayValueLabel->getSize().height * 1.5f));
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f + _displayValueLabel->getSize().height * 1.5f));
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
         Text *alert = Text::create("TextField max length","fonts/Marker Felt.ttf",30);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Vector2(screenSize.width / 2.0f, screenSize.height / 2.0f - alert->getSize().height * 3.075f));
+        alert->setPosition(Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f - alert->getSize().height * 3.075f));
         _uiLayer->addChild(alert);
         
         // Create the textfield
         TextField* textField = TextField::create("input words here","fonts/Marker Felt.ttf",30);
         textField->setMaxLengthEnabled(true);
         textField->setMaxLength(3);
-        textField->setPosition(Vector2(screenSize.width / 2.0f, screenSize.height / 2.0f));
+        textField->setPosition(Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f));
         textField->addEventListener(CC_CALLBACK_2(UITextFieldTest_MaxLength::textFieldEvent, this));
         _uiLayer->addChild(textField);
         
@@ -131,8 +131,8 @@ void UITextFieldTest_MaxLength::textFieldEvent(Ref *pSender, TextField::EventTyp
             TextField* textField = dynamic_cast<TextField*>(pSender);
             Size screenSize = CCDirector::getInstance()->getWinSize();
             textField->runAction(CCMoveTo::create(0.225f,
-                                                  Vector2(screenSize.width / 2.0f, screenSize.height / 2.0f + textField->getContentSize().height / 2.0f)));
-            _displayValueLabel->setText(String::createWithFormat("attach with IME max length %d", textField->getMaxLength())->getCString());
+                                                  Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f + textField->getContentSize().height / 2.0f)));
+            _displayValueLabel->setString(String::createWithFormat("attach with IME max length %d", textField->getMaxLength())->getCString());
         }
             break;
             
@@ -140,22 +140,22 @@ void UITextFieldTest_MaxLength::textFieldEvent(Ref *pSender, TextField::EventTyp
         {
             TextField* textField = dynamic_cast<TextField*>(pSender);
             Size screenSize = CCDirector::getInstance()->getWinSize();
-            textField->runAction(CCMoveTo::create(0.175f, Vector2(screenSize.width / 2.0f, screenSize.height / 2.0f)));
-            _displayValueLabel->setText(String::createWithFormat("detach with IME max length %d", textField->getMaxLength())->getCString());
+            textField->runAction(CCMoveTo::create(0.175f, Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f)));
+            _displayValueLabel->setString(String::createWithFormat("detach with IME max length %d", textField->getMaxLength())->getCString());
         }
             break;
             
         case TextField::EventType::INSERT_TEXT:
         {
             TextField* textField = dynamic_cast<TextField*>(pSender);
-            _displayValueLabel->setText(String::createWithFormat("insert words max length %d", textField->getMaxLength())->getCString());
+            _displayValueLabel->setString(String::createWithFormat("insert words max length %d", textField->getMaxLength())->getCString());
         }
             break;
             
         case TextField::EventType::DELETE_BACKWARD:
         {
             TextField* textField = dynamic_cast<TextField*>(pSender);
-            _displayValueLabel->setText(String::createWithFormat("delete word max length %d", textField->getMaxLength())->getCString());
+            _displayValueLabel->setString(String::createWithFormat("delete word max length %d", textField->getMaxLength())->getCString());
         }
             break;
             
@@ -183,21 +183,21 @@ bool UITextFieldTest_Password::init()
         
         // Add a label in which the textfield events will be displayed
         _displayValueLabel = Text::create("No Event","fonts/Marker Felt.ttf",32);
-        _displayValueLabel->setAnchorPoint(Vector2(0.5f, -1.0f));
-        _displayValueLabel->setPosition(Vector2(screenSize.width / 2.0f, screenSize.height / 2.0f + _displayValueLabel->getSize().height * 1.5f));
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f + _displayValueLabel->getSize().height * 1.5f));
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
         Text *alert = Text::create("TextField password","fonts/Marker Felt.ttf",30);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Vector2(screenSize.width / 2.0f, screenSize.height / 2.0f - alert->getSize().height * 3.075f));
+        alert->setPosition(Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f - alert->getSize().height * 3.075f));
         _uiLayer->addChild(alert);
         
         // Create the textfield
         TextField* textField = TextField::create("input password here","fonts/Marker Felt.ttf",30);
         textField->setPasswordEnabled(true);
         textField->setPasswordStyleText("*");
-        textField->setPosition(Vector2(screenSize.width / 2.0f, screenSize.height / 2.0f));
+        textField->setPosition(Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f));
         textField->addEventListener(CC_CALLBACK_2(UITextFieldTest_Password::textFieldEvent, this));
         _uiLayer->addChild(textField);
         
@@ -215,8 +215,8 @@ void UITextFieldTest_Password::textFieldEvent(Ref *pSender, TextField::EventType
             TextField* textField = dynamic_cast<TextField*>(pSender);
             Size screenSize = CCDirector::getInstance()->getWinSize();
             textField->runAction(CCMoveTo::create(0.225f,
-                                                  Vector2(screenSize.width / 2.0f, screenSize.height / 2.0f + textField->getContentSize().height / 2.0f)));
-            _displayValueLabel->setText(String::createWithFormat("attach with IME password")->getCString());
+                                                  Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f + textField->getContentSize().height / 2.0f)));
+            _displayValueLabel->setString(String::createWithFormat("attach with IME password")->getCString());
         }
             break;
             
@@ -224,17 +224,17 @@ void UITextFieldTest_Password::textFieldEvent(Ref *pSender, TextField::EventType
         {
             TextField* textField = dynamic_cast<TextField*>(pSender);
             Size screenSize = CCDirector::getInstance()->getWinSize();
-            textField->runAction(CCMoveTo::create(0.175f, Vector2(screenSize.width / 2.0f, screenSize.height / 2.0f)));
-            _displayValueLabel->setText(String::createWithFormat("detach with IME password")->getCString());
+            textField->runAction(CCMoveTo::create(0.175f, Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f)));
+            _displayValueLabel->setString(String::createWithFormat("detach with IME password")->getCString());
         }
             break;
             
         case TextField::EventType::INSERT_TEXT:
-            _displayValueLabel->setText(String::createWithFormat("insert words password")->getCString());
+            _displayValueLabel->setString(String::createWithFormat("insert words password")->getCString());
             break;
             
         case TextField::EventType::DELETE_BACKWARD:
-            _displayValueLabel->setText(String::createWithFormat("delete word password")->getCString());
+            _displayValueLabel->setString(String::createWithFormat("delete word password")->getCString());
             break;
             
         default:
@@ -262,14 +262,14 @@ bool UITextFieldTest_LineWrap::init()
         
         // Add a label in which the textfield events will be displayed
         _displayValueLabel = Text::create("No Event","fonts/Marker Felt.ttf",30);
-        _displayValueLabel->setAnchorPoint(Vector2(0.5f, -1));
-        _displayValueLabel->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + _displayValueLabel->getSize().height * 1.5));
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1));
+        _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + _displayValueLabel->getSize().height * 1.5));
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
         Text *alert = Text::create("TextField line wrap","fonts/Marker Felt.ttf",30);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.075));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.075));
         _uiLayer->addChild(alert);
         
         // Create the textfield
@@ -278,7 +278,7 @@ bool UITextFieldTest_LineWrap::init()
         textField->setSize(Size(240, 160));
         textField->setTextHorizontalAlignment(TextHAlignment::CENTER);
         textField->setTextVerticalAlignment(TextVAlignment::CENTER);
-        textField->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        textField->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         textField->addEventListener(CC_CALLBACK_2(UITextFieldTest_LineWrap::textFieldEvent, this));
         _uiLayer->addChild(textField);
         
@@ -296,11 +296,11 @@ void UITextFieldTest_LineWrap::textFieldEvent(Ref *pSender, TextField::EventType
             TextField* textField = dynamic_cast<TextField*>(pSender);
             Size widgetSize = _widget->getSize();
             textField->runAction(CCMoveTo::create(0.225f,
-                                                  Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + textField->getContentSize().height / 2)));
+                                                  Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + textField->getContentSize().height / 2)));
             textField->setTextHorizontalAlignment(TextHAlignment::LEFT);
             textField->setTextVerticalAlignment(TextVAlignment::TOP);
             
-            _displayValueLabel->setText(CCString::createWithFormat("attach with IME")->getCString());
+            _displayValueLabel->setString(CCString::createWithFormat("attach with IME")->getCString());
         }
             break;
             
@@ -308,20 +308,20 @@ void UITextFieldTest_LineWrap::textFieldEvent(Ref *pSender, TextField::EventType
         {
             TextField* textField = dynamic_cast<TextField*>(pSender);
             Size widgetSize = _widget->getSize();
-            textField->runAction(CCMoveTo::create(0.175f, Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f)));
+            textField->runAction(CCMoveTo::create(0.175f, Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f)));
             textField->setTextHorizontalAlignment(TextHAlignment::CENTER);
             textField->setTextVerticalAlignment(TextVAlignment::CENTER);
             
-            _displayValueLabel->setText(CCString::createWithFormat("detach with IME")->getCString());
+            _displayValueLabel->setString(CCString::createWithFormat("detach with IME")->getCString());
         }
             break;
             
         case TextField::EventType::INSERT_TEXT:
-            _displayValueLabel->setText(CCString::createWithFormat("insert words")->getCString());
+            _displayValueLabel->setString(CCString::createWithFormat("insert words")->getCString());
             break;
             
         case TextField::EventType::DELETE_BACKWARD:
-            _displayValueLabel->setText(CCString::createWithFormat("delete word")->getCString());
+            _displayValueLabel->setString(CCString::createWithFormat("delete word")->getCString());
             break;
             
         default:

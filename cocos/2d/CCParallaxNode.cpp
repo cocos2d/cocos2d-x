@@ -25,14 +25,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCParallaxNode.h"
-#include "2d/ccCArray.h"
+#include "base/ccCArray.h"
 
 NS_CC_BEGIN
 
 class PointObject : public Ref
 {
 public:
-    static PointObject * create(Vector2 ratio, Vector2 offset)
+    static PointObject * create(Vec2 ratio, Vec2 offset)
     {
         PointObject *ret = new PointObject();
         ret->initWithPoint(ratio, offset);
@@ -40,7 +40,7 @@ public:
         return ret;
     }
     
-    bool initWithPoint(Vector2 ratio, Vector2 offset)
+    bool initWithPoint(Vec2 ratio, Vec2 offset)
     {
         _ratio = ratio;
         _offset = offset;
@@ -48,25 +48,25 @@ public:
         return true;
     }
     
-    inline const Vector2& getRatio() const { return _ratio; };
-    inline void setRatio(const Vector2& ratio) { _ratio = ratio; };
+    inline const Vec2& getRatio() const { return _ratio; };
+    inline void setRatio(const Vec2& ratio) { _ratio = ratio; };
 
-    inline const Vector2& getOffset() const { return _offset; };
-    inline void setOffset(const Vector2& offset) { _offset = offset; };
+    inline const Vec2& getOffset() const { return _offset; };
+    inline void setOffset(const Vec2& offset) { _offset = offset; };
     
     inline Node* getChild() const { return _child; };
     inline void setChild(Node* child) { _child = child; };
     
 private:
-    Vector2 _ratio;
-    Vector2 _offset;
+    Vec2 _ratio;
+    Vec2 _offset;
     Node *_child; // weak ref
 };
 
 ParallaxNode::ParallaxNode()
 {
     _parallaxArray = ccArrayNew(5);        
-    _lastPosition = Vector2(-100,-100);
+    _lastPosition = Vec2(-100,-100);
 }
 
 ParallaxNode::~ParallaxNode()
@@ -93,14 +93,14 @@ void ParallaxNode::addChild(Node * child, int zOrder, int tag)
     CCASSERT(0,"ParallaxNode: use addChild:z:parallaxRatio:positionOffset instead");
 }
 
-void ParallaxNode::addChild(Node *child, int z, const Vector2& ratio, const Vector2& offset)
+void ParallaxNode::addChild(Node *child, int z, const Vec2& ratio, const Vec2& offset)
 {
     CCASSERT( child != nullptr, "Argument must be non-nil");
     PointObject *obj = PointObject::create(ratio, offset);
     obj->setChild(child);
     ccArrayAppendObjectWithResize(_parallaxArray, (Ref*)obj);
 
-    Vector2 pos = this->absolutePosition();
+    Vec2 pos = this->absolutePosition();
     pos.x = -pos.x + pos.x * ratio.x + offset.x;
     pos.y = -pos.y + pos.y * ratio.y + offset.y;
     child->setPosition(pos);
@@ -128,9 +128,9 @@ void ParallaxNode::removeAllChildrenWithCleanup(bool cleanup)
     Node::removeAllChildrenWithCleanup(cleanup);
 }
 
-Vector2 ParallaxNode::absolutePosition()
+Vec2 ParallaxNode::absolutePosition()
 {
-    Vector2 ret = _position;
+    Vec2 ret = _position;
     Node *cn = this;
     while (cn->getParent() != nullptr)
     {
@@ -145,11 +145,11 @@ The positions are updated at visit because:
 - using a timer is not guaranteed that it will called after all the positions were updated
 - overriding "draw" will only precise if the children have a z > 0
 */
-void ParallaxNode::visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
+void ParallaxNode::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
 {
-    //    Vector2 pos = position_;
-    //    Vector2    pos = [self convertToWorldSpace:Vector2::ZERO];
-    Vector2 pos = this->absolutePosition();
+    //    Vec2 pos = position_;
+    //    Vec2    pos = [self convertToWorldSpace:Vec2::ZERO];
+    Vec2 pos = this->absolutePosition();
     if( ! pos.equals(_lastPosition) )
     {
         for( int i=0; i < _parallaxArray->num; i++ ) 
@@ -157,7 +157,7 @@ void ParallaxNode::visit(Renderer *renderer, const Matrix &parentTransform, bool
             PointObject *point = (PointObject*)_parallaxArray->arr[i];
             float x = -pos.x + pos.x * point->getRatio().x + point->getOffset().x;
             float y = -pos.y + pos.y * point->getRatio().y + point->getOffset().y;            
-            point->getChild()->setPosition(Vector2(x,y));
+            point->getChild()->setPosition(Vec2(x,y));
         }
         _lastPosition = pos;
     }

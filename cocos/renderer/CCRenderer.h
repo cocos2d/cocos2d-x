@@ -26,12 +26,13 @@
 #ifndef __CC_RENDERER_H_
 #define __CC_RENDERER_H_
 
-#include "base/CCPlatformMacros.h"
-#include "CCRenderCommand.h"
-#include "renderer/CCGLProgram.h"
-#include "CCGL.h"
 #include <vector>
 #include <stack>
+
+#include "base/CCPlatformMacros.h"
+#include "renderer/CCRenderCommand.h"
+#include "renderer/CCGLProgram.h"
+#include "CCGL.h"
 
 NS_CC_BEGIN
 
@@ -115,7 +116,7 @@ public:
     inline GroupCommandManager* getGroupCommandManager() const { return _groupCommandManager; };
 
     /** returns whether or not a rectangle is visible or not */
-    bool checkVisibility(const Matrix& transform, const Size& size);
+    bool checkVisibility(const Mat4& transform, const Size& size);
 
 protected:
 
@@ -133,7 +134,7 @@ protected:
     
     void visitRenderQueue(const RenderQueue& queue);
 
-    void convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const Matrix& modelView);
+    void convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const Mat4& modelView);
 
     std::stack<int> _commandGroupStack;
     

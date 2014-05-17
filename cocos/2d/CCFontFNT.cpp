@@ -24,15 +24,16 @@
  ****************************************************************************/
 
 #include "2d/CCFontFNT.h"
-#include "2d/uthash.h"
+#include "base/uthash.h"
+#include "2d/CCFontAtlas.h"
+#include "base/ccUTF8.h"
+#include "platform/CCFileUtils.h"
 #include "base/CCConfiguration.h"
 #include "base/CCDirector.h"
-#include "2d/CCFontAtlas.h"
 #include "base/CCMap.h"
+#include "renderer/CCTextureCache.h"
+
 #include "deprecated/CCString.h"
-#include "2d/CCTextureCache.h"
-#include "ccUTF8.h"
-#include "2d/platform/CCFileUtils.h"
 
 using namespace std;
 NS_CC_BEGIN
@@ -665,7 +666,7 @@ void BMFontConfiguration::parseKerningEntry(std::string line)
     HASH_ADD_INT(_kerningDictionary,key, element);
 }
 
-FontFNT * FontFNT::create(const std::string& fntFilePath, const Vector2& imageOffset /* = Vector2::ZERO */)
+FontFNT * FontFNT::create(const std::string& fntFilePath, const Vec2& imageOffset /* = Vec2::ZERO */)
 {
     BMFontConfiguration *newConf = FNTConfigLoadFile(fntFilePath);
     if (!newConf)
@@ -690,7 +691,7 @@ FontFNT * FontFNT::create(const std::string& fntFilePath, const Vector2& imageOf
     return tempFont;
 }
 
-FontFNT::FontFNT(BMFontConfiguration *theContfig, const Vector2& imageOffset /* = Vector2::ZERO */)
+FontFNT::FontFNT(BMFontConfiguration *theContfig, const Vec2& imageOffset /* = Vec2::ZERO */)
 :_configuration(theContfig)
 ,_imageOffset(CC_POINT_PIXELS_TO_POINTS(imageOffset))
 {

@@ -161,8 +161,8 @@ public:
     virtual std::string subtitle() const override;
     
 protected:
-    bool isPointInNode(Vector2 pt, Node* node);
-    bool isPointInTopHalfAreaOfScreen(Vector2 pt);
+    bool isPointInNode(Vec2 pt, Node* node);
+    bool isPointInTopHalfAreaOfScreen(Vec2 pt);
 };
 
 class PauseResumeTargetTest : public EventDispatcherTestDemo

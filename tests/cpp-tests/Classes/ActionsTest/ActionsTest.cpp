@@ -150,9 +150,9 @@ void ActionsDemo::onEnter()
     addChild(_tamara, 2);
     addChild(_kathia, 3);
 
-    _grossini->setPosition(Vector2(VisibleRect::center().x, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height/3));
-    _tamara->setPosition(Vector2(VisibleRect::center().x, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height*2/3));
-    _kathia->setPosition(Vector2(VisibleRect::center().x, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height/2)); 
+    _grossini->setPosition(Vec2(VisibleRect::center().x, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height/3));
+    _tamara->setPosition(Vec2(VisibleRect::center().x, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height*2/3));
+    _kathia->setPosition(Vec2(VisibleRect::center().x, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height/2)); 
 }
 
 void ActionsDemo::onExit()
@@ -202,19 +202,19 @@ void ActionsDemo::centerSprites(unsigned int numberOfSprites)
     {
         _tamara->setVisible(false);
         _kathia->setVisible(false);
-        _grossini->setPosition(Vector2(s.width/2, s.height/2));
+        _grossini->setPosition(Vec2(s.width/2, s.height/2));
     }
     else if( numberOfSprites == 2 ) 
     {        
-        _kathia->setPosition( Vector2(s.width/3, s.height/2));
-        _tamara->setPosition( Vector2(2*s.width/3, s.height/2));
+        _kathia->setPosition( Vec2(s.width/3, s.height/2));
+        _tamara->setPosition( Vec2(2*s.width/3, s.height/2));
         _grossini->setVisible(false);
     } 
     else if( numberOfSprites == 3 ) 
     {
-        _grossini->setPosition( Vector2(s.width/2, s.height/2));
-        _tamara->setPosition( Vector2(s.width/4, s.height/2));
-        _kathia->setPosition( Vector2(3 * s.width/4, s.height/2));
+        _grossini->setPosition( Vec2(s.width/2, s.height/2));
+        _tamara->setPosition( Vec2(s.width/4, s.height/2));
+        _kathia->setPosition( Vec2(3 * s.width/4, s.height/2));
     }
 }
 
@@ -226,19 +226,19 @@ void ActionsDemo::alignSpritesLeft(unsigned int numberOfSprites)
     {
         _tamara->setVisible(false);
         _kathia->setVisible(false);
-        _grossini->setPosition(Vector2(60, s.height/2));
+        _grossini->setPosition(Vec2(60, s.height/2));
     } 
     else if( numberOfSprites == 2 ) 
     {        
-        _kathia->setPosition( Vector2(60, s.height/3));
-        _tamara->setPosition( Vector2(60, 2*s.height/3));
+        _kathia->setPosition( Vec2(60, s.height/3));
+        _tamara->setPosition( Vec2(60, 2*s.height/3));
         _grossini->setVisible( false );
     } 
     else if( numberOfSprites == 3 ) 
     {
-        _grossini->setPosition( Vector2(60, s.height/2));
-        _tamara->setPosition( Vector2(60, 2*s.height/3));
-        _kathia->setPosition( Vector2(60, s.height/3));
+        _grossini->setPosition( Vec2(60, s.height/2));
+        _tamara->setPosition( Vec2(60, 2*s.height/3));
+        _kathia->setPosition( Vec2(60, s.height/3));
     }
 }
 
@@ -255,14 +255,14 @@ void ActionManual::onEnter()
 
     _tamara->setScaleX( 2.5f);
     _tamara->setScaleY( -1.0f);
-    _tamara->setPosition( Vector2(100,70) );
+    _tamara->setPosition( Vec2(100,70) );
     _tamara->setOpacity( 128);
 
     _grossini->setRotation( 120);
-    _grossini->setPosition( Vector2(s.width/2, s.height/2));
+    _grossini->setPosition( Vec2(s.width/2, s.height/2));
     _grossini->setColor( Color3B( 255,0,0));
 
-    _kathia->setPosition( Vector2(s.width-100, s.height/2));
+    _kathia->setPosition( Vec2(s.width-100, s.height/2));
     _kathia->setColor( Color3B::BLUE);
 }
 
@@ -284,13 +284,13 @@ void ActionMove::onEnter()
 
     auto s = Director::getInstance()->getWinSize();
 
-    auto actionTo = MoveTo::create(2, Vector2(s.width-40, s.height-40));
-    auto actionBy = MoveBy::create(2, Vector2(80,80));
+    auto actionTo = MoveTo::create(2, Vec2(s.width-40, s.height-40));
+    auto actionBy = MoveBy::create(2, Vec2(80,80));
     auto actionByBack = actionBy->reverse();
 
     _tamara->runAction( actionTo);
     _grossini->runAction( Sequence::create(actionBy, actionByBack, NULL));
-    _kathia->runAction(MoveTo::create(1, Vector2(40,40)));
+    _kathia->runAction(MoveTo::create(1, Vec2(40,40)));
 }
 
 std::string ActionMove::subtitle() const
@@ -392,14 +392,14 @@ void ActionRotationalSkewVSStandardSkew::onEnter()
     Size boxSize(100.0f, 100.0f);
 
     auto box = LayerColor::create(Color4B(255,255,0,255));
-    box->setAnchorPoint(Vector2(0.5,0.5));
+    box->setAnchorPoint(Vec2(0.5,0.5));
     box->setContentSize( boxSize );
     box->ignoreAnchorPointForPosition(false);
-    box->setPosition(Vector2(s.width/2, s.height - 100 - box->getContentSize().height/2));
+    box->setPosition(Vec2(s.width/2, s.height - 100 - box->getContentSize().height/2));
     this->addChild(box);
 
     auto label = Label::createWithTTF("Standard cocos2d Skew", "fonts/Marker Felt.ttf", 16.0f);
-    label->setPosition(Vector2(s.width/2, s.height - 100 + label->getContentSize().height));
+    label->setPosition(Vec2(s.width/2, s.height - 100 + label->getContentSize().height));
     this->addChild(label);
 
     auto actionTo = SkewBy::create(2, 360, 0);
@@ -408,14 +408,14 @@ void ActionRotationalSkewVSStandardSkew::onEnter()
     box->runAction(Sequence::create(actionTo, actionToBack, NULL));
 
     box = LayerColor::create(Color4B(255,255,0,255));
-    box->setAnchorPoint(Vector2(0.5,0.5));
+    box->setAnchorPoint(Vec2(0.5,0.5));
     box->setContentSize(boxSize);
     box->ignoreAnchorPointForPosition(false);
-    box->setPosition(Vector2(s.width/2, s.height - 250 - box->getContentSize().height/2));
+    box->setPosition(Vec2(s.width/2, s.height - 250 - box->getContentSize().height/2));
     this->addChild(box);
 
     label = Label::createWithTTF("Rotational Skew", "fonts/Marker Felt.ttf", 16.0f);
-    label->setPosition(Vector2(s.width/2, s.height - 250 + label->getContentSize().height/2));
+    label->setPosition(Vec2(s.width/2, s.height - 250 + label->getContentSize().height/2));
     this->addChild(label);
     auto actionTo2 = RotateBy::create(2, 360, 0);
     auto actionToBack2 = RotateBy::create(2, -360, 0);
@@ -438,22 +438,22 @@ void ActionSkewRotateScale::onEnter()
     Size boxSize(100.0f, 100.0f);
 
     auto box = LayerColor::create(Color4B(255, 255, 0, 255));
-    box->setAnchorPoint(Vector2(0, 0));
-    box->setPosition(Vector2(190, 110));
+    box->setAnchorPoint(Vec2(0, 0));
+    box->setPosition(Vec2(190, 110));
     box->setContentSize(boxSize);
 
     static float markrside = 10.0f;
     auto uL = LayerColor::create(Color4B(255, 0, 0, 255));
     box->addChild(uL);
     uL->setContentSize(Size(markrside, markrside));
-    uL->setPosition(Vector2(0.f, boxSize.height - markrside));
-    uL->setAnchorPoint(Vector2(0, 0));
+    uL->setPosition(Vec2(0.f, boxSize.height - markrside));
+    uL->setAnchorPoint(Vec2(0, 0));
 
     auto uR = LayerColor::create(Color4B(0, 0, 255, 255));
     box->addChild(uR);
     uR->setContentSize(Size(markrside, markrside));
-    uR->setPosition(Vector2(boxSize.width - markrside, boxSize.height - markrside));
-    uR->setAnchorPoint(Vector2(0, 0));
+    uR->setPosition(Vec2(boxSize.width - markrside, boxSize.height - markrside));
+    uR->setAnchorPoint(Vec2(0, 0));
     addChild(box);
 
     auto actionTo = SkewTo::create(2, 0.f, 2.f);
@@ -513,9 +513,9 @@ void ActionRotateBy3D::onEnter()
 
     centerSprites(3);
 
-    auto actionBy1 = RotateBy::create(4, Vector3(360, 0, 0));
-    auto actionBy2 = RotateBy::create(4, Vector3(0, 360, 0));
-    auto actionBy3 = RotateBy::create(4 ,Vector3(0, 0, 360));
+    auto actionBy1 = RotateBy::create(4, Vec3(360, 0, 0));
+    auto actionBy2 = RotateBy::create(4, Vec3(0, 360, 0));
+    auto actionBy3 = RotateBy::create(4 ,Vec3(0, 0, 360));
 
     _tamara->runAction( Sequence::create(actionBy1, actionBy1->reverse(), nullptr));
     _grossini->runAction( Sequence::create(actionBy2, actionBy2->reverse(), nullptr));
@@ -538,9 +538,9 @@ void ActionJump::onEnter()
 
     centerSprites(3);
 
-    auto actionTo = JumpTo::create(2, Vector2(300,300), 50, 4);
-    auto actionBy = JumpBy::create(2, Vector2(300,0), 50, 4);
-    auto actionUp = JumpBy::create(2, Vector2(0,0), 80, 4);
+    auto actionTo = JumpTo::create(2, Vec2(300,300), 50, 4);
+    auto actionBy = JumpBy::create(2, Vec2(300,0), 50, 4);
+    auto actionUp = JumpBy::create(2, Vec2(0,0), 80, 4);
     auto actionByBack = actionBy->reverse();
 
     _tamara->runAction( actionTo);
@@ -572,9 +572,9 @@ void ActionBezier::onEnter()
 
     // sprite 1
     ccBezierConfig bezier;
-    bezier.controlPoint_1 = Vector2(0, s.height/2);
-    bezier.controlPoint_2 = Vector2(300, -s.height/2);
-    bezier.endPosition = Vector2(300,100);
+    bezier.controlPoint_1 = Vec2(0, s.height/2);
+    bezier.controlPoint_2 = Vec2(300, -s.height/2);
+    bezier.endPosition = Vec2(300,100);
 
     auto bezierForward = BezierBy::create(3, bezier);
     auto bezierBack = bezierForward->reverse();
@@ -582,16 +582,16 @@ void ActionBezier::onEnter()
 
 
     // sprite 2
-    _tamara->setPosition(Vector2(80,160));
+    _tamara->setPosition(Vec2(80,160));
 	ccBezierConfig bezier2;
-    bezier2.controlPoint_1 = Vector2(100, s.height/2);
-    bezier2.controlPoint_2 = Vector2(200, -s.height/2);
-    bezier2.endPosition = Vector2(240,160);
+    bezier2.controlPoint_1 = Vec2(100, s.height/2);
+    bezier2.controlPoint_2 = Vec2(200, -s.height/2);
+    bezier2.endPosition = Vec2(240,160);
 
     auto bezierTo1 = BezierTo::create(2, bezier2);    
 
     // sprite 3
-    _kathia->setPosition(Vector2(400,160));
+    _kathia->setPosition(Vec2(400,160));
     auto bezierTo2 = BezierTo::create(2, bezier2);
 
     _grossini->runAction( rep);
@@ -723,13 +723,13 @@ void ActionAnimate::onEnter()
     auto action2 = Animate::create(animation2);
     _tamara->runAction(Sequence::create(action2, action2->reverse(), NULL));
 
-// TODO:
-//     observer_ = [[NSNotificationCenter defaultCenter] addObserverForName:AnimationFrameDisplayedNotification object:nil queue:nil usingBlock:^(NSNotification* notification) {
-// 
-//         auto userInfo = [notification userInfo);
-//         NSLog(@"object %@ with data %@", [notification object), userInfo );
-//     });
+    _frameDisplayedListener = EventListenerCustom::create(AnimationFrameDisplayedNotification, [](EventCustom * event){
+        auto userData = static_cast<AnimationFrame::DisplayedEventInfo*>(event->getUserData());
+        
+         log("target %p with data %s", userData->target, Value(userData->userInfo).getDescription().c_str());
+    });
 
+    _eventDispatcher->addEventListenerWithFixedPriority(_frameDisplayedListener, -1);
 
     //
     // File animation
@@ -746,7 +746,7 @@ void ActionAnimate::onEnter()
 void ActionAnimate::onExit()
 {
     ActionsDemo::onExit();
-    //TODO:[[NSNotificationCenter defaultCenter] removeObserver:observer_);
+    _eventDispatcher->removeEventListener(_frameDisplayedListener);
 }
 
 std::string ActionAnimate::title() const
@@ -771,7 +771,7 @@ void ActionSequence::onEnter()
     alignSpritesLeft(1);
 
     auto action = Sequence::create(
-        MoveBy::create( 2, Vector2(240,0)),
+        MoveBy::create( 2, Vec2(240,0)),
         RotateBy::create( 2,  540),
         NULL);
 
@@ -797,9 +797,9 @@ void ActionSequence2::onEnter()
     _grossini->setVisible(false);
 
     auto action = Sequence::create(
-		Place::create(Vector2(200,200)),
+		Place::create(Vec2(200,200)),
 		Show::create(),
-		MoveBy::create(1, Vector2(100,0)),
+		MoveBy::create(1, Vec2(100,0)),
 		CallFunc::create( CC_CALLBACK_0(ActionSequence2::callback1,this)),
 		CallFunc::create( CC_CALLBACK_0(ActionSequence2::callback2,this,_grossini)),
 		CallFunc::create( CC_CALLBACK_0(ActionSequence2::callback3,this,_grossini,0xbebabeba)),
@@ -812,7 +812,7 @@ void ActionSequence2::callback1()
 {
     auto s = Director::getInstance()->getWinSize();
     auto label = Label::createWithTTF("callback 1 called", "fonts/Marker Felt.ttf", 16.0f);
-    label->setPosition(Vector2( s.width/4*1,s.height/2));
+    label->setPosition(Vec2( s.width/4*1,s.height/2));
 
     addChild(label);
 }
@@ -821,7 +821,7 @@ void ActionSequence2::callback2(Node* sender)
 {
     auto s = Director::getInstance()->getWinSize();
     auto label = Label::createWithTTF("callback 2 called", "fonts/Marker Felt.ttf", 16.0f);
-    label->setPosition(Vector2( s.width/4*2,s.height/2));
+    label->setPosition(Vec2( s.width/4*2,s.height/2));
 
     addChild(label);
 }
@@ -830,7 +830,7 @@ void ActionSequence2::callback3(Node* sender, long data)
 {
     auto s = Director::getInstance()->getWinSize();
     auto label = Label::createWithTTF("callback 3 called", "fonts/Marker Felt.ttf", 16.0f);
-    label->setPosition(Vector2( s.width/4*3,s.height/2));
+    label->setPosition(Vec2( s.width/4*3,s.height/2));
 
     addChild(label);
 }
@@ -852,7 +852,7 @@ void ActionCallFuncN::onEnter()
     centerSprites(1);
 
     auto action = Sequence::create(
-        MoveBy::create(2.0f, Vector2(150,0)),
+        MoveBy::create(2.0f, Vec2(150,0)),
         CallFuncN::create( CC_CALLBACK_1(ActionCallFuncN::callback, this)),
         NULL);
 
@@ -871,7 +871,7 @@ std::string ActionCallFuncN::subtitle() const
 
 void ActionCallFuncN::callback(Node* sender )
 {
-    auto a = JumpBy::create(5, Vector2(0,0), 100, 5);
+    auto a = JumpBy::create(5, Vec2(0,0), 100, 5);
     sender->runAction(a);
 }
 //------------------------------------------------------------------
@@ -887,7 +887,7 @@ void ActionCallFuncND::onEnter()
     centerSprites(1);
 
     auto action = Sequence::create(
-        MoveBy::create(2.0f, Vector2(200,0)),
+        MoveBy::create(2.0f, Vec2(200,0)),
         CallFuncN::create( CC_CALLBACK_1(ActionCallFuncND::doRemoveFromParentAndCleanup, this, true)),
         NULL);
 
@@ -922,7 +922,7 @@ void ActionCallFuncO::onEnter()
     centerSprites(1);
 
     auto action = Sequence::create(
-        MoveBy::create(2.0f, Vector2(200,0)),
+        MoveBy::create(2.0f, Vec2(200,0)),
         CallFunc::create( CC_CALLBACK_0(ActionCallFuncO::callback, this, _grossini, true)),
         NULL);
     _grossini->runAction(action);
@@ -956,14 +956,14 @@ void ActionCallFunction::onEnter()
 
 
 	auto action1 = Sequence::create(
-                        MoveBy::create(2, Vector2(200,0)),
+                        MoveBy::create(2, Vec2(200,0)),
                         CallFunc::create( std::bind(&ActionCallFunction::callback1, this) ),
                         CallFunc::create(
                              // lambda
                              [&](){
                                  auto s = Director::getInstance()->getWinSize();
                                  auto label = Label::createWithTTF("called:lambda callback", "fonts/Marker Felt.ttf", 16.0f);
-                                 label->setPosition(Vector2( s.width/4*1,s.height/2-40));
+                                 label->setPosition(Vec2( s.width/4*1,s.height/2-40));
                                  this->addChild(label);
                              }  ),
                         NULL);
@@ -990,7 +990,7 @@ void ActionCallFunction::callback1()
 {
     auto s = Director::getInstance()->getWinSize();
     auto label = Label::createWithTTF("callback 1 called", "fonts/Marker Felt.ttf", 16.0f);
-    label->setPosition(Vector2( s.width/4*1,s.height/2));
+    label->setPosition(Vec2( s.width/4*1,s.height/2));
 
     addChild(label);
 }
@@ -999,7 +999,7 @@ void ActionCallFunction::callback2(Node* sender)
 {
     auto s = Director::getInstance()->getWinSize();
     auto label = Label::createWithTTF("callback 2 called", "fonts/Marker Felt.ttf", 16.0f);
-    label->setPosition(Vector2( s.width/4*2,s.height/2));
+    label->setPosition(Vec2( s.width/4*2,s.height/2));
 
     addChild(label);
 
@@ -1010,7 +1010,7 @@ void ActionCallFunction::callback3(Node* sender, long data)
 {
     auto s = Director::getInstance()->getWinSize();
     auto label = Label::createWithTTF("callback 3 called", "fonts/Marker Felt.ttf", 16.0f);
-    label->setPosition(Vector2( s.width/4*3,s.height/2));
+    label->setPosition(Vec2( s.width/4*3,s.height/2));
     addChild(label);
 
 	CCLOG("target is: %p, data is: %ld", sender, data);
@@ -1033,7 +1033,7 @@ void ActionSpawn::onEnter()
     alignSpritesLeft(1);
 
     auto action = Spawn::create(
-        JumpBy::create(2, Vector2(300,0), 50, 4),
+        JumpBy::create(2, Vec2(300,0), 50, 4),
         RotateBy::create( 2,  720),
         NULL);
 
@@ -1144,7 +1144,7 @@ void ActionReverse::onEnter()
 
     alignSpritesLeft(1);
 
-    auto jump = JumpBy::create(2, Vector2(300,0), 50, 4);
+    auto jump = JumpBy::create(2, Vec2(300,0), 50, 4);
     auto action = Sequence::create( jump, jump->reverse(), NULL);
 
     _grossini->runAction(action);
@@ -1167,7 +1167,7 @@ void ActionDelayTime::onEnter()
 
     alignSpritesLeft(1);
 
-    auto move = MoveBy::create(1, Vector2(150,0));
+    auto move = MoveBy::create(1, Vec2(150,0));
     auto action = Sequence::create( move, DelayTime::create(2), move, NULL);
 
     _grossini->runAction(action);
@@ -1190,8 +1190,8 @@ void ActionReverseSequence::onEnter()
 
     alignSpritesLeft(1);
 
-    auto move1 = MoveBy::create(1, Vector2(250,0));
-    auto move2 = MoveBy::create(1, Vector2(0,50));
+    auto move1 = MoveBy::create(1, Vec2(250,0));
+    auto move2 = MoveBy::create(1, Vec2(0,50));
     auto seq = Sequence::create( move1, move2, move1->reverse(), NULL);
     auto action = Sequence::create( seq, seq->reverse(), NULL);
 
@@ -1218,8 +1218,8 @@ void ActionReverseSequence2::onEnter()
 
     // Test:
     //   Sequence should work both with IntervalAction and InstantActions
-	auto move1 = MoveBy::create(1, Vector2(250,0));
-	auto move2 = MoveBy::create(1, Vector2(0,50));
+	auto move1 = MoveBy::create(1, Vec2(250,0));
+	auto move2 = MoveBy::create(1, Vec2(0,50));
 	auto tog1 = ToggleVisibility::create();
 	auto tog2 = ToggleVisibility::create();
 	auto seq = Sequence::create( move1, tog1, move2, tog2, move1->reverse(), NULL);
@@ -1230,8 +1230,8 @@ void ActionReverseSequence2::onEnter()
     //   Also test that the reverse of Hide is Show, and vice-versa
     _kathia->runAction(action);
 
-	auto move_tamara = MoveBy::create(1, Vector2(100,0));
-	auto move_tamara2 = MoveBy::create(1, Vector2(50,0));
+	auto move_tamara = MoveBy::create(1, Vec2(100,0));
+	auto move_tamara2 = MoveBy::create(1, Vec2(50,0));
 	auto hide = Hide::create();
 	auto seq_tamara = Sequence::create( move_tamara, hide, move_tamara2, NULL);
 	auto seq_back = seq_tamara->reverse();
@@ -1254,9 +1254,9 @@ void ActionRepeat::onEnter()
     alignSpritesLeft(2);
 
 
-    auto a1 = MoveBy::create(1, Vector2(150,0));
+    auto a1 = MoveBy::create(1, Vec2(150,0));
     auto action1 = Repeat::create(
-        Sequence::create( Place::create(Vector2(60,60)), a1, NULL) , 
+        Sequence::create( Place::create(Vec2(60,60)), a1, NULL) , 
         3); 
     auto  action2 = RepeatForever::create(
         Sequence::create(a1->clone(), a1->reverse(), NULL)
@@ -1305,7 +1305,7 @@ void ActionOrbit::onEnter()
     _tamara->runAction(RepeatForever::create(action2));
     _grossini->runAction(RepeatForever::create(action3));
 
-    auto move = MoveBy::create(3, Vector2(100,-100));
+    auto move = MoveBy::create(3, Vec2(100,-100));
     auto move_back = move->reverse();
     auto seq = Sequence::create(move, move_back, NULL);
     auto rfe = RepeatForever::create(seq);
@@ -1338,8 +1338,8 @@ void ActionFollow::onEnter()
     centerSprites(1);
     auto s = Director::getInstance()->getWinSize();
 
-    _grossini->setPosition(Vector2(-200, s.height / 2));
-    auto move = MoveBy::create(2, Vector2(s.width * 3, 0));
+    _grossini->setPosition(Vec2(-200, s.height / 2));
+    auto move = MoveBy::create(2, Vec2(s.width * 3, 0));
     auto move_back = move->reverse();
     auto seq = Sequence::create(move, move_back, NULL);
     auto rep = RepeatForever::create(seq);
@@ -1349,7 +1349,7 @@ void ActionFollow::onEnter()
     this->runAction(Follow::create(_grossini, Rect(0, 0, s.width * 2 - 100, s.height)));
 }
 
-void ActionFollow::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void ActionFollow::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(ActionFollow::onDraw, this, transform, transformUpdated);
@@ -1357,7 +1357,7 @@ void ActionFollow::draw(Renderer *renderer, const Matrix &transform, bool transf
     renderer->addCommand(&_customCommand);
 }
 
-void ActionFollow::onDraw(const Matrix &transform, bool transformUpdated)
+void ActionFollow::onDraw(const Mat4 &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -1369,7 +1369,7 @@ void ActionFollow::onDraw(const Matrix &transform, bool transformUpdated)
     float x = winSize.width*2 - 100;
     float y = winSize.height;
     
-    Vector2 vertices[] = { Vector2(5,5), Vector2(x-5,5), Vector2(x-5,y-5), Vector2(5,y-5) };
+    Vec2 vertices[] = { Vec2(5,5), Vec2(x-5,5), Vec2(x-5,y-5), Vec2(5,y-5) };
     DrawPrimitives::drawPoly(vertices, 4, true);
 
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
@@ -1386,7 +1386,7 @@ void ActionTargeted::onEnter()
     centerSprites(2);
 
 
-    auto jump1 = JumpBy::create(2,Vector2::ZERO,100,3);
+    auto jump1 = JumpBy::create(2,Vec2::ZERO,100,3);
     auto jump2 = jump1->clone();
     auto rot1 = RotateBy::create(1, 360);
     auto rot2 = rot1->clone();
@@ -1417,7 +1417,7 @@ void ActionTargetedReverse::onEnter()
     centerSprites(2);
     
     
-    auto jump1 = JumpBy::create(2,Vector2::ZERO,100,3);
+    auto jump1 = JumpBy::create(2,Vec2::ZERO,100,3);
     auto jump2 = jump1->clone();
     auto rot1 = RotateBy::create(1, 360);
     auto rot2 = rot1->clone();
@@ -1454,10 +1454,10 @@ void ActionStacked::onEnter()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     auto s = Director::getInstance()->getWinSize();
-    this->addNewSpriteWithCoords(Vector2(s.width/2, s.height/2));
+    this->addNewSpriteWithCoords(Vec2(s.width/2, s.height/2));
 }
 
-void ActionStacked::addNewSpriteWithCoords(Vector2 p)
+void ActionStacked::addNewSpriteWithCoords(Vec2 p)
 {
     int idx = CCRANDOM_0_1() * 1400 / 100;
     int x = (idx%5) * 85;
@@ -1503,11 +1503,11 @@ void ActionMoveStacked::runActionsInSprite(Sprite *sprite)
     sprite->runAction(
         RepeatForever::create(
                 Sequence::create(
-                MoveBy::create(0.05f, Vector2(10,10)),
-                MoveBy::create(0.05f, Vector2(-10,-10)),
+                MoveBy::create(0.05f, Vec2(10,10)),
+                MoveBy::create(0.05f, Vec2(-10,-10)),
        NULL)));
     
-    auto action = MoveBy::create(2.0f, Vector2(400,0));
+    auto action = MoveBy::create(2.0f, Vec2(400,0));
     auto action_back = action->reverse();
     
     sprite->runAction(
@@ -1529,11 +1529,11 @@ void ActionMoveJumpStacked::runActionsInSprite(Sprite *sprite)
     sprite->runAction(
           RepeatForever::create(
             Sequence::create(
-             MoveBy::create(0.05f, Vector2(10,2)),
-             MoveBy::create(0.05f, Vector2(-10,-2)),
+             MoveBy::create(0.05f, Vec2(10,2)),
+             MoveBy::create(0.05f, Vec2(-10,-2)),
              NULL)));
     
-    auto jump = JumpBy::create(2.0f, Vector2(400,0), 100, 5);
+    auto jump = JumpBy::create(2.0f, Vec2(400,0), 100, 5);
     auto jump_back = jump->reverse();
     
     sprite->runAction(
@@ -1555,9 +1555,9 @@ void ActionMoveBezierStacked::runActionsInSprite(Sprite *sprite)
     
     // sprite 1
     ccBezierConfig bezier;
-    bezier.controlPoint_1 = Vector2(0, s.height/2);
-    bezier.controlPoint_2 = Vector2(300, -s.height/2);
-    bezier.endPosition = Vector2(300,100);
+    bezier.controlPoint_1 = Vec2(0, s.height/2);
+    bezier.controlPoint_2 = Vec2(300, -s.height/2);
+    bezier.endPosition = Vec2(300,100);
     
     auto bezierForward = BezierBy::create(3, bezier);
     auto bezierBack = bezierForward->reverse();
@@ -1568,8 +1568,8 @@ void ActionMoveBezierStacked::runActionsInSprite(Sprite *sprite)
     sprite->runAction(
      RepeatForever::create(
       Sequence::create(
-       MoveBy::create(0.05f, Vector2(10,0)),
-       MoveBy::create(0.05f, Vector2(-10,0)),
+       MoveBy::create(0.05f, Vec2(10,0)),
+       MoveBy::create(0.05f, Vec2(-10,0)),
        NULL)));
 }
 
@@ -1596,17 +1596,17 @@ void ActionCatmullRomStacked::onEnter()
     // is relative to the Catmull Rom curve, it is better to start with (0,0).
     //
     
-    _tamara->setPosition(Vector2(50,50));
+    _tamara->setPosition(Vec2(50,50));
     
     auto array = PointArray::create(20);
     
-    array->addControlPoint(Vector2(0,0));
-    array->addControlPoint(Vector2(80,80));
-    array->addControlPoint(Vector2(s.width-80,80));
-    array->addControlPoint(Vector2(s.width-80,s.height-80));
-    array->addControlPoint(Vector2(80,s.height-80));
-    array->addControlPoint(Vector2(80,80));
-    array->addControlPoint(Vector2(s.width/2, s.height/2));
+    array->addControlPoint(Vec2(0,0));
+    array->addControlPoint(Vec2(80,80));
+    array->addControlPoint(Vec2(s.width-80,80));
+    array->addControlPoint(Vec2(s.width-80,s.height-80));
+    array->addControlPoint(Vec2(80,s.height-80));
+    array->addControlPoint(Vec2(80,80));
+    array->addControlPoint(Vec2(s.width/2, s.height/2));
     
     auto action = CatmullRomBy::create(3, array);
     auto reverse = action->reverse();
@@ -1618,8 +1618,8 @@ void ActionCatmullRomStacked::onEnter()
     _tamara->runAction(
         RepeatForever::create(
             Sequence::create(
-                MoveBy::create(0.05f, Vector2(10,0)),
-                MoveBy::create(0.05f, Vector2(-10,0)),
+                MoveBy::create(0.05f, Vec2(10,0)),
+                MoveBy::create(0.05f, Vec2(-10,0)),
                 NULL)));
     
     //
@@ -1631,11 +1631,11 @@ void ActionCatmullRomStacked::onEnter()
     
     auto array2 = PointArray::create(20);
     
-    array2->addControlPoint(Vector2(s.width/2, 30));
-    array2->addControlPoint(Vector2(s.width-80,30));
-    array2->addControlPoint(Vector2(s.width-80,s.height-80));
-    array2->addControlPoint(Vector2(s.width/2,s.height-80));
-    array2->addControlPoint(Vector2(s.width/2, 30));
+    array2->addControlPoint(Vec2(s.width/2, 30));
+    array2->addControlPoint(Vec2(s.width-80,30));
+    array2->addControlPoint(Vec2(s.width-80,s.height-80));
+    array2->addControlPoint(Vec2(s.width/2,s.height-80));
+    array2->addControlPoint(Vec2(s.width/2, 30));
     
     auto action2 = CatmullRomTo::create(3, array2);
     auto reverse2 = action2->reverse();
@@ -1647,8 +1647,8 @@ void ActionCatmullRomStacked::onEnter()
     _kathia->runAction(
         RepeatForever::create(
             Sequence::create(
-                MoveBy::create(0.05f, Vector2(10,0)),
-                MoveBy::create(0.05f, Vector2(-10,0)),
+                MoveBy::create(0.05f, Vec2(10,0)),
+                MoveBy::create(0.05f, Vec2(-10,0)),
                 NULL)));
     
     array->retain();
@@ -1663,7 +1663,7 @@ ActionCatmullRomStacked::~ActionCatmullRomStacked()
     CC_SAFE_RELEASE(_array2);
 }
 
-void ActionCatmullRomStacked::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void ActionCatmullRomStacked::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     ActionsDemo::draw(renderer, transform, transformUpdated);
     
@@ -1672,10 +1672,10 @@ void ActionCatmullRomStacked::draw(Renderer *renderer, const Matrix &transform, 
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     
-    Matrix translation;
+    Mat4 translation;
     
     //Create a rotation matrix using the axis and the angle
-    Matrix::createTranslation(50, 50, 0, &translation);
+    Mat4::createTranslation(50, 50, 0, &translation);
     director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, translation);
     
     _modelViewMV1 = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
@@ -1687,12 +1687,12 @@ void ActionCatmullRomStacked::draw(Renderer *renderer, const Matrix &transform, 
     renderer->addCommand(&_customCommand);
 }
 
-void ActionCatmullRomStacked::onDraw(const Matrix &transform, bool transformUpdated)
+void ActionCatmullRomStacked::onDraw(const Mat4 &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     
-    Matrix oldMat;
+    Mat4 oldMat;
     oldMat = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV1);
     DrawPrimitives::drawCatmullRom(_array1,50);
@@ -1724,11 +1724,11 @@ void ActionCardinalSplineStacked::onEnter()
     
     auto array = PointArray::create(20);
     
-    array->addControlPoint(Vector2(0, 0));
-    array->addControlPoint(Vector2(s.width/2-30,0));
-    array->addControlPoint(Vector2(s.width/2-30,s.height-80));
-    array->addControlPoint(Vector2(0, s.height-80));
-    array->addControlPoint(Vector2(0, 0));
+    array->addControlPoint(Vec2(0, 0));
+    array->addControlPoint(Vec2(s.width/2-30,0));
+    array->addControlPoint(Vec2(s.width/2-30,s.height-80));
+    array->addControlPoint(Vec2(0, s.height-80));
+    array->addControlPoint(Vec2(0, 0));
     
     
     //
@@ -1742,14 +1742,14 @@ void ActionCardinalSplineStacked::onEnter()
     
     auto seq = Sequence::create(action, reverse, NULL);
     
-    _tamara->setPosition(Vector2(50,50));
+    _tamara->setPosition(Vec2(50,50));
     _tamara->runAction(seq);
     
     _tamara->runAction(
         RepeatForever::create(
             Sequence::create(
-                MoveBy::create(0.05f, Vector2(10,0)),
-                MoveBy::create(0.05f, Vector2(-10,0)),
+                MoveBy::create(0.05f, Vec2(10,0)),
+                MoveBy::create(0.05f, Vec2(-10,0)),
                 NULL)));
     
     //
@@ -1763,15 +1763,15 @@ void ActionCardinalSplineStacked::onEnter()
     
     auto seq2 = Sequence::create(action2, reverse2, NULL);
     
-    _kathia->setPosition(Vector2(s.width/2,50));
+    _kathia->setPosition(Vec2(s.width/2,50));
     
     _kathia->runAction(seq2);
     
     _kathia->runAction(
         RepeatForever::create(
             Sequence::create(
-                MoveBy::create(0.05f, Vector2(10,0)),
-                MoveBy::create(0.05f, Vector2(-10,0)),
+                MoveBy::create(0.05f, Vec2(10,0)),
+                MoveBy::create(0.05f, Vec2(-10,0)),
                 NULL)));
     
     array->retain();
@@ -1783,7 +1783,7 @@ ActionCardinalSplineStacked::~ActionCardinalSplineStacked()
     CC_SAFE_RELEASE(_array);
 }
 
-void ActionCardinalSplineStacked::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void ActionCardinalSplineStacked::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     ActionsDemo::draw(renderer, transform, transformUpdated);
     
@@ -1792,10 +1792,10 @@ void ActionCardinalSplineStacked::draw(Renderer *renderer, const Matrix &transfo
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     
-    Matrix translation;
+    Mat4 translation;
     
     //Create a rotation matrix using the axis and the angle
-    Matrix::createTranslation(50, 50, 0, &translation);
+    Mat4::createTranslation(50, 50, 0, &translation);
     director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, translation);
 
     _modelViewMV1 = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
@@ -1806,7 +1806,7 @@ void ActionCardinalSplineStacked::draw(Renderer *renderer, const Matrix &transfo
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     
     //Create a rotation matrix using the axis and the angle
-    Matrix::createTranslation(s.width/2, 50, 0, &translation);
+    Mat4::createTranslation(s.width/2, 50, 0, &translation);
     director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, translation);
 
     _modelViewMV2 = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
@@ -1817,12 +1817,12 @@ void ActionCardinalSplineStacked::draw(Renderer *renderer, const Matrix &transfo
     renderer->addCommand(&_customCommand);
 }
 
-void ActionCardinalSplineStacked::onDraw(const Matrix &transform, bool transformUpdated)
+void ActionCardinalSplineStacked::onDraw(const Mat4 &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     
-    Matrix oldMat;
+    Mat4 oldMat;
     oldMat = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV1);
     DrawPrimitives::drawCardinalSpline(_array, 0, 100);
@@ -1874,7 +1874,7 @@ void Issue1305::onExit()
 
 void Issue1305::addSprite(float dt)
 {
-    _spriteTmp->setPosition(Vector2(250,250));
+    _spriteTmp->setPosition(Vec2(250,250));
     addChild(_spriteTmp);
 }
 
@@ -1894,34 +1894,34 @@ void Issue1305_2::onEnter()
     centerSprites(0);
 
     auto spr = Sprite::create("Images/grossini.png");
-    spr->setPosition(Vector2(200,200));
+    spr->setPosition(Vec2(200,200));
     addChild(spr);
 
-    auto act1 = MoveBy::create(2 ,Vector2(0, 100));
+    auto act1 = MoveBy::create(2 ,Vec2(0, 100));
     /* c++ can't support block, so we use CallFuncN instead.
     id act2 = [CallBlock actionWithBlock:^{
         NSLog(@"1st block");
     });
-    id act3 = [MoveBy create:2, Vector2(0, -100));
+    id act3 = [MoveBy create:2, Vec2(0, -100));
     id act4 = [CallBlock actionWithBlock:^{
         NSLog(@"2nd block");
     });
-    id act5 = [MoveBy create:2, Vector2(100, -100));
+    id act5 = [MoveBy create:2, Vec2(100, -100));
     id act6 = [CallBlock actionWithBlock:^{
         NSLog(@"3rd block");
     });
-    id act7 = [MoveBy create:2, Vector2(-100, 0));
+    id act7 = [MoveBy create:2, Vec2(-100, 0));
     id act8 = [CallBlock actionWithBlock:^{
         NSLog(@"4th block");
     });
     */
 
     auto act2 = CallFunc::create( std::bind( &Issue1305_2::printLog1, this));
-    auto act3 = MoveBy::create(2, Vector2(0, -100));
+    auto act3 = MoveBy::create(2, Vec2(0, -100));
     auto act4 = CallFunc::create( std::bind( &Issue1305_2::printLog2, this));
-    auto act5 = MoveBy::create(2, Vector2(100, -100));
+    auto act5 = MoveBy::create(2, Vec2(100, -100));
     auto act6 = CallFunc::create( std::bind( &Issue1305_2::printLog3, this));
-    auto act7 = MoveBy::create(2, Vector2(-100, 0));
+    auto act7 = MoveBy::create(2, Vec2(-100, 0));
     auto act8 = CallFunc::create( std::bind( &Issue1305_2::printLog4, this));
 
     auto actF = Sequence::create(act1, act2, act3, act4, act5, act6, act7, act8, NULL);
@@ -1967,10 +1967,10 @@ void Issue1288::onEnter()
     centerSprites(0);
 
     auto spr = Sprite::create("Images/grossini.png");
-    spr->setPosition(Vector2(100, 100));
+    spr->setPosition(Vec2(100, 100));
     addChild(spr);
 
-    auto act1 = MoveBy::create(0.5, Vector2(100, 0));
+    auto act1 = MoveBy::create(0.5, Vec2(100, 0));
     auto act2 = act1->reverse();
     auto act3 = Sequence::create(act1, act2, NULL);
     auto act4 = Repeat::create(act3, 2);
@@ -1994,10 +1994,10 @@ void Issue1288_2::onEnter()
     centerSprites(0);
 
     auto spr = Sprite::create("Images/grossini.png");
-    spr->setPosition(Vector2(100, 100));
+    spr->setPosition(Vec2(100, 100));
     addChild(spr);
 
-    auto act1 = MoveBy::create(0.5, Vector2(100, 0));
+    auto act1 = MoveBy::create(0.5, Vec2(100, 0));
     spr->runAction(Repeat::create(act1, 1));
 }
 
@@ -2018,7 +2018,7 @@ void Issue1327::onEnter()
     centerSprites(0);
 
     auto spr = Sprite::create("Images/grossini.png");
-    spr->setPosition(Vector2(100, 100));
+    spr->setPosition(Vec2(100, 100));
     addChild(spr);
 
     auto act1 = CallFunc::create( std::bind(&Issue1327::logSprRotation, this, spr));
@@ -2111,17 +2111,17 @@ void ActionCatmullRom::onEnter()
     // is relative to the Catmull Rom curve, it is better to start with (0,0).
     //
     
-    _tamara->setPosition(Vector2(50, 50));
+    _tamara->setPosition(Vec2(50, 50));
     
     auto array = PointArray::create(20);
     
-    array->addControlPoint(Vector2(0, 0));
-    array->addControlPoint(Vector2(80, 80));
-    array->addControlPoint(Vector2(s.width - 80, 80));
-    array->addControlPoint(Vector2(s.width - 80, s.height - 80));
-    array->addControlPoint(Vector2(80, s.height - 80));
-    array->addControlPoint(Vector2(80, 80));
-    array->addControlPoint(Vector2(s.width / 2, s.height / 2));
+    array->addControlPoint(Vec2(0, 0));
+    array->addControlPoint(Vec2(80, 80));
+    array->addControlPoint(Vec2(s.width - 80, 80));
+    array->addControlPoint(Vec2(s.width - 80, s.height - 80));
+    array->addControlPoint(Vec2(80, s.height - 80));
+    array->addControlPoint(Vec2(80, 80));
+    array->addControlPoint(Vec2(s.width / 2, s.height / 2));
     
     auto action = CatmullRomBy::create(3, array);
     auto reverse = action->reverse();
@@ -2140,11 +2140,11 @@ void ActionCatmullRom::onEnter()
     
     auto array2 = PointArray::create(20);
     
-    array2->addControlPoint(Vector2(s.width / 2, 30));
-    array2->addControlPoint(Vector2(s.width  -80, 30));
-    array2->addControlPoint(Vector2(s.width - 80, s.height - 80));
-    array2->addControlPoint(Vector2(s.width / 2, s.height - 80));
-    array2->addControlPoint(Vector2(s.width / 2, 30));
+    array2->addControlPoint(Vec2(s.width / 2, 30));
+    array2->addControlPoint(Vec2(s.width  -80, 30));
+    array2->addControlPoint(Vec2(s.width - 80, s.height - 80));
+    array2->addControlPoint(Vec2(s.width / 2, s.height - 80));
+    array2->addControlPoint(Vec2(s.width / 2, 30));
     
     auto action2 = CatmullRomTo::create(3, array2);
     auto reverse2 = action2->reverse();
@@ -2165,7 +2165,7 @@ ActionCatmullRom::~ActionCatmullRom()
     _array2->release();
 }
 
-void ActionCatmullRom::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void ActionCatmullRom::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     ActionsDemo::draw(renderer, transform, transformUpdated);
     
@@ -2174,10 +2174,10 @@ void ActionCatmullRom::draw(Renderer *renderer, const Matrix &transform, bool tr
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     
-    Matrix translation;
+    Mat4 translation;
     
     //Create a rotation matrix using the axis and the angle
-    Matrix::createTranslation(50, 50, 0, &translation);
+    Mat4::createTranslation(50, 50, 0, &translation);
     director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, translation);
     _modelViewMV1 = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
@@ -2190,12 +2190,12 @@ void ActionCatmullRom::draw(Renderer *renderer, const Matrix &transform, bool tr
 }
 
 
-void ActionCatmullRom::onDraw(const Matrix &transform, bool transformUpdated)
+void ActionCatmullRom::onDraw(const Mat4 &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     
-    Matrix oldMat;
+    Mat4 oldMat;
     oldMat = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV1);
     DrawPrimitives::drawCatmullRom(_array1, 50);
@@ -2227,11 +2227,11 @@ void ActionCardinalSpline::onEnter()
     
     auto array = PointArray::create(20);
     
-    array->addControlPoint(Vector2(0, 0));
-    array->addControlPoint(Vector2(s.width/2-30, 0));
-    array->addControlPoint(Vector2(s.width/2-30, s.height-80));
-    array->addControlPoint(Vector2(0, s.height-80));
-    array->addControlPoint(Vector2(0, 0));
+    array->addControlPoint(Vec2(0, 0));
+    array->addControlPoint(Vec2(s.width/2-30, 0));
+    array->addControlPoint(Vec2(s.width/2-30, s.height-80));
+    array->addControlPoint(Vec2(0, s.height-80));
+    array->addControlPoint(Vec2(0, 0));
     
     //
     // sprite 1 (By)
@@ -2244,7 +2244,7 @@ void ActionCardinalSpline::onEnter()
     
     auto seq = Sequence::create(action, reverse, NULL);
     
-    _tamara->setPosition(Vector2(50, 50));
+    _tamara->setPosition(Vec2(50, 50));
     _tamara->runAction(seq);
     
     //
@@ -2258,7 +2258,7 @@ void ActionCardinalSpline::onEnter()
     
     auto seq2 = Sequence::create(action2, reverse2, NULL);
     
-    _kathia->setPosition(Vector2(s.width/2, 50));
+    _kathia->setPosition(Vec2(s.width/2, 50));
     _kathia->runAction(seq2);
     
     _array = array;
@@ -2270,7 +2270,7 @@ ActionCardinalSpline::~ActionCardinalSpline()
     _array->release();
 }
 
-void ActionCardinalSpline::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void ActionCardinalSpline::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     ActionsDemo::draw(renderer, transform, transformUpdated);
     
@@ -2279,10 +2279,10 @@ void ActionCardinalSpline::draw(Renderer *renderer, const Matrix &transform, boo
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     
-    Matrix translation;
+    Mat4 translation;
     
     //Create a rotation matrix using the axis and the angle
-    Matrix::createTranslation(50, 50, 0, &translation);
+    Mat4::createTranslation(50, 50, 0, &translation);
     director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, translation);
     _modelViewMV1 = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
@@ -2292,7 +2292,7 @@ void ActionCardinalSpline::draw(Renderer *renderer, const Matrix &transform, boo
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     
     //Create a rotation matrix using the axis and the angle
-    Matrix::createTranslation(s.width/2, 50, 0, &translation);
+    Mat4::createTranslation(s.width/2, 50, 0, &translation);
     director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, translation);
     _modelViewMV2 = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
@@ -2302,12 +2302,12 @@ void ActionCardinalSpline::draw(Renderer *renderer, const Matrix &transform, boo
     renderer->addCommand(&_customCommand);
 }
 
-void ActionCardinalSpline::onDraw(const Matrix &transform, bool transformUpdated)
+void ActionCardinalSpline::onDraw(const Mat4 &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
 
-    Matrix oldMat;
+    Mat4 oldMat;
     oldMat = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV1);
     DrawPrimitives::drawCardinalSpline(_array, 0, 100);
@@ -2391,7 +2391,7 @@ void ActionRemoveSelf::onEnter()
 	alignSpritesLeft(1);
 
 	auto action = Sequence::create(
-		MoveBy::create( 2, Vector2(240,0)),
+		MoveBy::create( 2, Vec2(240,0)),
 		RotateBy::create( 2,  540),
 		ScaleTo::create(1,0.1f),
 		RemoveSelf::create(),
