@@ -25,12 +25,8 @@ jni/TouchesJni.cpp
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
+                    $(LOCAL_PATH)/.. \
                     $(LOCAL_PATH)/../.. \
-                    $(LOCAL_PATH)/../../.. \
-                    $(LOCAL_PATH)/../../../base \
-                    $(LOCAL_PATH)/../../../math \
-                    $(LOCAL_PATH)/../../../physics \
-                    $(LOCAL_PATH)/../../../renderer
 
 LOCAL_LDLIBS := -lGLESv1_CM \
                 -lGLESv2 \
