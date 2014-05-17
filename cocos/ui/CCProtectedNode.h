@@ -72,7 +72,7 @@ public:
     /**
      * 从容器中获取child及其tag
      *
-     * @param tag   tag指定子节点(child)的id
+     * @param tag   tag指定子节点(child node)的id
      *
      * @返回一个Node对象，此Node的tag等于键入的参数。
      */
@@ -83,16 +83,16 @@ public:
     /**
      * 从容器中删除一个child。它也将清除所有运行中的动作(取决于cleanup的参数)。
      *
-     * @param child     将被删除的子节点(child)。
-     * @param cleanup   参数为true 子节点(child)上所有运行的动作及回调函数将被清理，为false 时则不会。
+     * @param child     将被删除的子节点(child node)。
+     * @param cleanup   参数为true 子节点(child node)上所有运行的动作及回调函数将被清理，为false 时则不会。
      */
     virtual void removeProtectedChild(Node* child, bool cleanup = true);
     
     /**
      * 根据tag的值(value)来删除child。它也将清除所有运行中的动作(取决于cleanup的参数)。
      *
-     * @param tag       tag指定子节点(child)的id，一般为整数。
-     * @param cleanup   参数为true 子节点(child)上所有运行的动作及回调函数将被清理，为false 时则不会。
+     * @param tag       tag指定子节点(child node)的id，一般为整数。
+     * @param cleanup   参数为true 子节点(child node)上所有运行的动作及回调函数将被清理，为false 时则不会。
      */
     virtual void removeProtectedChildByTag(int tag, bool cleanup = true);
     /**
@@ -104,22 +104,22 @@ public:
     /**
      * 删除容器中所有child，并清理所有运行中的动作(取决于cleanup的参数)。
      *
-     * @param cleanup   参数为true 子节点(child)上所有运行的动作及回调函数将被清理，为false 时则不会。
+     * @param cleanup   参数为true 子节点(child node)上所有运行的动作及回调函数将被清理，为false 时则不会。
      * @js removeAllChildren
      * @lua removeAllChildren
      */
     virtual void removeAllProtectedChildrenWithCleanup(bool cleanup);
     
     /**
-     * 重新赋予一个child新z值(z vlaue)。(此z值应为localZOrder的值，原文简写为z value。译者注)
+     * 重新排序(reorders)一个child依据其新z值(z vlaue)。(此z值应为localZOrder的值，原文简写为z value。译者注)
      *
-     * @param child     一个已经添加的子节点(child)。必须是已经被添加的。
+     * @param child     一个已经添加的子节点(child node)。必须是已经被添加的。
      * @param localZOrder  z-order决定绘制的优先级。 请参照 `setLocalZOrder(int)`
      */
     virtual void reorderProtectedChild(Node * child, int localZOrder);
     
     /**
-     * 在绘制之前整理子节点数组(children array)，而不是每次子节点(child)被添加或重新排序(reordered)时。
+     * 在绘制之前整理子节点数组(children array)，而不是每次子节点(child node)被添加或重新排序(reordered)时。
      * 此方法可以大大提高性能。
      * @note 不要手动调用此方法，除非一个已被添加的child需要从同一帧(frame)中删除。
      */
