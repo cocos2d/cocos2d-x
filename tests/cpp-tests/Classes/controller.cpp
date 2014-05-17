@@ -34,6 +34,7 @@ Controller g_aTestNames[] = {
     // TESTS MUST BE ORDERED ALPHABETICALLY
     //     violators will be prosecuted
     //
+    { "Sprite3D", [](){  return new Sprite3DTestScene(); }},
     { "A new UI", [](){  return new UITestScene(); }},
 	{ "Accelerometer", []() { return new AccelerometerTestScene(); } },
 	{ "ActionManager", [](){return new ActionManagerTestScene(); } },
