@@ -47,24 +47,27 @@ typedef Vec2 Vect;
 const PhysicsMaterial PHYSICSBODY_MATERIAL_DEFAULT(0.1f, 0.5f, 0.5f);
 
 /**
- * A body affect by physics.
- * it can attach one or more shapes.
+ * 一个被物理反应影响的body
+ * 可以跟一个或多个形状关联
+ * 如果你使用createXXX的函数创建body,它会使用你指定的密度(默认由PHYSICSBODY_MATERIAL_DEFAULT指定，默认值为0.1f)自动计算质量和力矩，基于计算公式：质量 = 密度 x 体积。
  * if you create body with createXXX, it will automatically compute mass and moment with density your specified(which is PHYSICSBODY_MATERIAL_DEFAULT by default, and the density value is 0.1f), and it based on the formular: mass = density * area.
+ * 如果你使用createEdgeXXX创建body，质量和力矩将默认为PHYSICS_INFINITY的值，body将成为一个静态的body。
  * if you create body with createEdgeXXX, the mass and moment will be PHYSICS_INFINITY by default. and it's a static body.
+ * 你可以改变质量和力矩 使用setMass 和 setMoment 函数，你可以通过setDynamic改变body使其成为静态的或是动态的。
  * you can change mass and moment with setMass() and setMoment(). and you can change the body to be dynamic or static by use function setDynamic().
  */
 class PhysicsBody : public Ref
 {
 public:
-    /** create a body with defult mass and moment. */
+    /** 使用默认的质量和力矩创建body */
     static PhysicsBody* create();
-    /** create a body with mass and defult moment. */
+    /** 指定质量、使用默认的力矩创建body */
     static PhysicsBody* create(float mass);
-    /** create a body with mass and moment. */
+    /** 指定质量、力矩创建body */
     static PhysicsBody* create(float mass, float moment);
-    /** Create a body contains a circle shape. */
+    /** 创建一个包含圆形形状的body */
     static PhysicsBody* createCircle(float radius, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
-    /** Create a body contains a box shape. */
+    /** 创建一个包含box形状的body */
     static PhysicsBody* createBox(const Size& size, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
     /**
      * @brief Create a body contains a polygon shape.
@@ -72,13 +75,13 @@ public:
      */
     static PhysicsBody* createPolygon(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
     
-    /** Create a body contains a EdgeSegment shape. */
+    /** 创建一个包含边缘片段形状的body */
     static PhysicsBody* createEdgeSegment(const Vec2& a, const Vec2& b, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
-    /** Create a body contains a EdgeBox shape. */
+    /** 创建一个包含边缘box形状的body */
     static PhysicsBody* createEdgeBox(const Size& size, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1, const Vec2& offset = Vec2::ZERO);
-    /** Create a body contains a EdgePolygon shape. */
+    /** 创建一个包含边缘五边形形状的body */
     static PhysicsBody* createEdgePolygon(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
-    /** Create a body contains a EdgeChain shape. */
+    /** 创建一个包含边缘链形状的body */
     static PhysicsBody* createEdgeChain(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
     
     /*
@@ -99,106 +102,106 @@ public:
      * @param reduceMassAndMoment if this is true, the body mass and moment will be reduced by shape. the default is true
      */
     void removeShape(int tag, bool reduceMassAndMoment = true);
-    /* remove all shapes */
+    /* 移除所有形状 */
     void removeAllShapes(bool reduceMassAndMoment = true);
-    /* get the body shapes. */
+    /* 获取body的形状 */
     inline const Vector<PhysicsShape*>& getShapes() const { return _shapes; }
-    /* get the first shape of the body shapes. */
+    /* 获取body的第一个形状 */
     inline PhysicsShape* getFirstShape() const { return _shapes.size() >= 1 ? _shapes.at(0) : nullptr; }
-    /* get the shape of the body. */
+    /* 根据tag获取body的形状 */
     PhysicsShape* getShape(int tag) const;
     
-    /** Applies a immediate force to body. */
+    /** 对body应用一个瞬时力 */
     virtual void applyForce(const Vect& force);
-    /** Applies a immediate force to body. */
+    /** 对body应用一个瞬时力 */
     virtual void applyForce(const Vect& force, const Vec2& offset);
-    /** reset all the force applied to body. */
+    /** 重置对body应用的瞬时力 */
     virtual void resetForces();
-    /** Applies a continuous force to body. */
+    /** 对body应用一个持久力 */
     virtual void applyImpulse(const Vect& impulse);
-    /** Applies a continuous force to body. */
+    /** 对body应用一个持久力 */
     virtual void applyImpulse(const Vect& impulse, const Vec2& offset);
-    /** Applies a torque force to body. */
+    /** 对body应用一个转矩 */
     virtual void applyTorque(float torque);
     
-    /** set the velocity of a body */
+    /** 设置body的速度 */
     virtual void setVelocity(const Vect& velocity);
-    /** get the velocity of a body */
+    /** 获取body的速度 */
     virtual Vec2 getVelocity();
-    /** set the angular velocity of a body */
+    /** 设置body的角速率 */
     virtual void setAngularVelocity(float velocity);
-    /** get the angular velocity of a body at a local point */
+    /** 基于局部坐标获取body的角速度 */
     virtual Vec2 getVelocityAtLocalPoint(const Vec2& point);
-    /** get the angular velocity of a body at a world point */
+    /** 基于世界坐标获取body的角速度 */
     virtual Vec2 getVelocityAtWorldPoint(const Vec2& point);
-    /** get the angular velocity of a body */
+    /**获取body的角速率 */
     virtual float getAngularVelocity();
-    /** set the max of velocity */
+    /** 设置body的最大速率 */
     virtual void setVelocityLimit(float limit);
-    /** get the max of velocity */
+    /**  获取body的最大速率 */
     virtual float getVelocityLimit();
-    /** set the max of angular velocity */
+    /** 设置body的最大角速率 */
     virtual void setAngularVelocityLimit(float limit);
-    /** get the max of angular velocity */
+    /** 获取body的最大角速率 */
     virtual float getAngularVelocityLimit();
     
-    /** remove the body from the world it added to */
+    /** 从body添加到的世界中移除这个body */
     void removeFromWorld();
     
-    /** get the world body added to. */
+    /** 获取body添加到的世界 */
     inline PhysicsWorld* getWorld() const { return _world; }
-    /** get all joints the body have */
+    /** 获取body所拥有的关节点 */
     inline const std::vector<PhysicsJoint*>& getJoints() const { return _joints; }
     
-    /** get the sprite the body set to. */
+    /** 获取body被设置的对应的sprite */
     inline Node* getNode() const { return _node; }
     
     /**
-     * A mask that defines which categories this physics body belongs to.
-     * Every physics body in a scene can be assigned to up to 32 different categories, each corresponding to a bit in the bit mask. You define the mask values used in your game. In conjunction with the collisionBitMask and contactTestBitMask properties, you define which physics bodies interact with each other and when your game is notified of these interactions.
-     * The default value is 0xFFFFFFFF (all bits set).
+     * 定义物理body属于哪种分类的一个mask
+     * 在一个场景内的每一个物理body可以被分配到最多32个分类,每个对应1个bit在bit mask中。你定义你游戏中使用的mask值。和属性collisionBitMask、contactTestBitMask互相协调，你定义哪种物理body互相之间的交互和什么时候你的游戏会被这些交互通知。
+     * 默认值是0xFFFFFFFF (所有位被设成1)。
      */
     void setCategoryBitmask(int bitmask);
     /** 
-     * A mask that defines which categories of bodies cause intersection notifications with this physics body.
-     * When two bodies share the same space, each body’s category mask is tested against the other body’s contact mask by performing a logical AND operation. If either comparison results in a non-zero value, an PhysicsContact object is created and passed to the physics world’s delegate. For best performance, only set bits in the contacts mask for interactions you are interested in.
-     * The default value is 0x00000000 (all bits cleared).
+     * 定义哪种分类的body导致和这个物理body发生交叉通知的一个mask
+     * 当两个body共享同一片控件，每个body的分类mask会跟对方的contact mask通过“逻辑和”（即&&）操作。如果任意一个的结果是一个非0值，一个PhysicsContact的对象会被生成和传送到物理世界的委托。为了最好的表现，仅设置在contact mask里设置 你感兴趣的交互 所对应的bit。
+     * 默认值是0x00000000 (所有位被设成0)。
      */
     void setContactTestBitmask(int bitmask);
     /**
-     * A mask that defines which categories of physics bodies can collide with this physics body.
-     * When two physics bodies contact each other, a collision may occur. This body’s collision mask is compared to the other body’s category mask by performing a logical AND operation. If the result is a non-zero value, then this body is affected by the collision. Each body independently chooses whether it wants to be affected by the other body. For example, you might use this to avoid collision calculations that would make negligible changes to a body’s velocity.
-     * The default value is 0xFFFFFFFF (all bits set).
+     * 定义物理body可以跟那些分类的物理body发生冲突的一个mask
+     * 当两个物理body彼此碰撞时，一个冲突可能会发生。这个body的冲突mask 会跟另一个body的分类mask 通过逻辑和的操作比较。如果结果是个非0值，那么这个body会被这个冲突影响。每个body独立的选择它是否会被另一个body影响。比如说ini可能会使用这个mask 去避免会发生对一个body的速率发生微小的变化的冲突计算。
+     * 默认值是0xFFFFFFFF (所有位被设成1)。
      */
     void setCollisionBitmask(int bitmask);
-    /** get the category bit mask */
+    /** 获取 分类（category） mask bit*/
     inline int getCategoryBitmask() const { return _categoryBitmask; }
-    /** get the contact test bit mask */
+    /** 获取 碰撞（contact）  mask  bit */
     inline int getContactTestBitmask() const { return _contactTestBitmask; }
-    /** get the collision bit mask */
+    /** 获取 冲突（collsion） mask bit */
     inline int getCollisionBitmask() const { return _collisionBitmask; }
     
     /** 
-     * set the group of body
-     * Collision groups let you specify an integral group index. You can have all fixtures with the same group index always collide (positive index) or never collide (negative index)
-     * it have high priority than bit masks
+     * 设置body的分组
+     * 冲突分组让你可以指定一个整数的分组的索引。你可以通过指定相同的index，（正数代表总是冲突，负数代表从不冲突）完成上述的操作。
+     * 它比bit masks有更多的优先度
      */
     void setGroup(int group);
-    /** get the group of body */
+    /** 获取body的分组*/
     inline int getGroup() const { return _group; }
     
-    /** get the body position. */
+    /** 获取body的坐标 */
     Vec2 getPosition() const;
-    /** get the body rotation. */
+    /** 获取body的旋转角度 */
     float getRotation() const;
     
-    /** set body position offset, it's the position witch relative to node */
+    /** 设置body的坐标偏移（相对于node的坐标来说） */
     void setPositionOffset(const Vec2& position);
-    /** get body position offset. */
+    /** 获取body的坐标偏移 */
     Vec2 getPositionOffset() const;
-    /** set body rotation offset, it's the rotation witch relative to node */
+    /** 设置body的旋转偏移（相对于node的旋转角度来说）*/
     void setRotationOffset(float rotation);
-    /** set the body rotation offset */
+    /** 获取body的旋转偏移 */
     float getRotationOffset() const;
     
     /**
@@ -217,7 +220,7 @@ public:
      * @note if you need add/subtract mass to body, don't use setMass(getMass() +/- mass), because the mass of body may be equal to PHYSICS_INFINITY, it will cause some unexpected result, please use addMass() instead.
      */
     void setMass(float mass);
-    /** get the body mass. */
+    /** 获取body的质量 */
     inline float getMass() const { return _mass; }
     /**
      * @brief add mass to body.
@@ -234,7 +237,7 @@ public:
      * @note if you need add/subtract moment to body, don't use setMoment(getMoment() +/- moment), because the moment of body may be equal to PHYSICS_INFINITY, it will cause some unexpected result, please use addMoment() instead.
      */
     void setMoment(float moment);
-    /** get the body moment of inertia. */
+    /** 获取body惯性的力矩 */
     inline float getMoment() const { return _moment; }
     /**
      * @brief add moment of inertia to body.
@@ -245,56 +248,56 @@ public:
      * other wise, moment = moment + _moment;
      */
     void addMoment(float moment);
-    /** get linear damping. */
+    /** 获取线性阻尼 */
     inline float getLinearDamping() const { return _linearDamping; }
     /** 
-     * set linear damping.
-     * it is used to simulate fluid or air friction forces on the body. 
-     * the value is 0.0f to 1.0f. 
+     * 设置线性阻尼
+     * 被用作模拟作用在body上德流体或是空气摩擦力
+     * 值的范围是0.0f到1.0f
      */
     inline void setLinearDamping(float damping) { _linearDamping = damping; updateDamping(); }
-    /** get angular damping. */
+    /** 获取角阻尼 */
     inline float getAngularDamping() const { return _angularDamping; }
     /**
-     * set angular damping.
-     * it is used to simulate fluid or air friction forces on the body.
-     * the value is 0.0f to 1.0f.
+     * 设置角阻尼。
+     * 被用作模拟作用在body上德流体或是空气摩擦力
+     * 值的范围是0.0f到1.0f
      */
     inline void setAngularDamping(float damping) { _angularDamping = damping; updateDamping(); }
     
     /** whether the body is at rest */
     bool isResting() const;
-    /** set body to rest */
+    /** 设置body休止 */
     void setResting(bool rest) const;
     /** 
-     * whether the body is enabled
-     * if the body it isn't enabled, it will not has simulation by world
+     * 获取body是否激活的
+     * 如果body没有被激活，它不会被世界模拟。
      */
     inline bool isEnabled() const { return _enabled; }
     /**
-     * set the enable value.
-     * if the body it isn't enabled, it will not has simulation by world
+     * 设置是否激活
+     * 如果body没有被激活，它不会被世界模拟。
      */
     void setEnable(bool enable);
     
-    /** whether the body can rotation */
+    /** 获取这个body 是否能被旋转 */
     inline bool isRotationEnabled() const { return _rotationEnabled; }
-    /** set the body is allow rotation or not */
+    /** 设置body是否能被旋转 */
     void setRotationEnable(bool enable);
     
-    /** whether this physics body is affected by the physics world’s gravitational force. */
+    /** 获取body是否会被物理世界重力影响 */
     inline bool isGravityEnabled() const { return _gravityEnabled; }
-    /** set the body is affected by the physics world's gravitational force or not. */
+    /** 设置body是否会被物理世界重力影响 */
     void setGravityEnable(bool enable);
     
-    /** get the body's tag */
+    /** 获取body的tag */
     inline int getTag() const { return _tag; }
-    /** set the body's tag */
+    /** 设置body的tag */
     inline void setTag(int tag) { _tag = tag; }
     
-    /** convert the world point to local */
+    /** 将世界坐标转化成本地坐标 */
     Vec2 world2Local(const Vec2& point);
-    /** convert the local point to world */
+    /** 将本地坐标转化为世界坐标 */
     Vec2 local2World(const Vec2& point);
     
 protected:
@@ -340,8 +343,8 @@ protected:
     int _contactTestBitmask;
     int _group;
     
-    bool _positionResetTag;     /// To avoid reset the body position when body invoke Node::setPosition().
-    bool _rotationResetTag;     /// To avoid reset the body rotation when body invoke Node::setRotation().
+    bool _positionResetTag;     /// 当body调用Node::setPosition()函数的时候避免重置body的坐标
+    bool _rotationResetTag;     /// 当body调用Node::setRotation()函数的时候避免重置body的旋转角度
     Vec2 _positionOffset;
     float _rotationOffset;
     
