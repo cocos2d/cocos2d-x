@@ -14172,6 +14172,714 @@ int lua_register_cocos2dx_FileUtils(lua_State* tolua_S)
     return 1;
 }
 
+int lua_cocos2dx_UserDefault_setIntegerForKey(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::UserDefault* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.UserDefault",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::UserDefault*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_setIntegerForKey'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 2) 
+    {
+        const char* arg0;
+        int arg1;
+
+        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
+
+        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
+        if(!ok)
+            return 0;
+        cobj->setIntegerForKey(arg0, arg1);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setIntegerForKey",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_UserDefault_setIntegerForKey'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_UserDefault_getFloatForKey(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::UserDefault* cobj = nullptr;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.UserDefault",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocos2d::UserDefault*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_getFloatForKey'", nullptr);
+        return 0;
+    }
+#endif
+    argc = lua_gettop(tolua_S)-1;
+    do{
+        if (argc == 2) {
+            const char* arg0;
+            std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
+
+            if (!ok) { break; }
+            double arg1;
+            ok &= luaval_to_number(tolua_S, 3,&arg1);
+
+            if (!ok) { break; }
+            double ret = cobj->getFloatForKey(arg0, arg1);
+            tolua_pushnumber(tolua_S,(lua_Number)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 1) {
+            const char* arg0;
+            std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
+
+            if (!ok) { break; }
+            double ret = cobj->getFloatForKey(arg0);
+            tolua_pushnumber(tolua_S,(lua_Number)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getFloatForKey",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_UserDefault_getFloatForKey'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_UserDefault_getBoolForKey(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::UserDefault* cobj = nullptr;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.UserDefault",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocos2d::UserDefault*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_getBoolForKey'", nullptr);
+        return 0;
+    }
+#endif
+    argc = lua_gettop(tolua_S)-1;
+    do{
+        if (argc == 2) {
+            const char* arg0;
+            std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
+
+            if (!ok) { break; }
+            bool arg1;
+            ok &= luaval_to_boolean(tolua_S, 3,&arg1);
+
+            if (!ok) { break; }
+            bool ret = cobj->getBoolForKey(arg0, arg1);
+            tolua_pushboolean(tolua_S,(bool)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 1) {
+            const char* arg0;
+            std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
+
+            if (!ok) { break; }
+            bool ret = cobj->getBoolForKey(arg0);
+            tolua_pushboolean(tolua_S,(bool)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getBoolForKey",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_UserDefault_getBoolForKey'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_UserDefault_setDoubleForKey(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::UserDefault* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.UserDefault",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::UserDefault*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_setDoubleForKey'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 2) 
+    {
+        const char* arg0;
+        double arg1;
+
+        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
+
+        ok &= luaval_to_number(tolua_S, 3,&arg1);
+        if(!ok)
+            return 0;
+        cobj->setDoubleForKey(arg0, arg1);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setDoubleForKey",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_UserDefault_setDoubleForKey'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_UserDefault_setFloatForKey(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::UserDefault* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.UserDefault",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::UserDefault*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_setFloatForKey'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 2) 
+    {
+        const char* arg0;
+        double arg1;
+
+        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
+
+        ok &= luaval_to_number(tolua_S, 3,&arg1);
+        if(!ok)
+            return 0;
+        cobj->setFloatForKey(arg0, arg1);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setFloatForKey",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_UserDefault_setFloatForKey'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_UserDefault_getStringForKey(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::UserDefault* cobj = nullptr;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.UserDefault",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocos2d::UserDefault*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_getStringForKey'", nullptr);
+        return 0;
+    }
+#endif
+    argc = lua_gettop(tolua_S)-1;
+    do{
+        if (argc == 2) {
+            const char* arg0;
+            std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
+
+            if (!ok) { break; }
+            std::string arg1;
+            ok &= luaval_to_std_string(tolua_S, 3,&arg1);
+
+            if (!ok) { break; }
+            std::string ret = cobj->getStringForKey(arg0, arg1);
+            tolua_pushcppstring(tolua_S,ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 1) {
+            const char* arg0;
+            std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
+
+            if (!ok) { break; }
+            std::string ret = cobj->getStringForKey(arg0);
+            tolua_pushcppstring(tolua_S,ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getStringForKey",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_UserDefault_getStringForKey'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_UserDefault_setStringForKey(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::UserDefault* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.UserDefault",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::UserDefault*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_setStringForKey'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 2) 
+    {
+        const char* arg0;
+        std::string arg1;
+
+        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
+
+        ok &= luaval_to_std_string(tolua_S, 3,&arg1);
+        if(!ok)
+            return 0;
+        cobj->setStringForKey(arg0, arg1);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setStringForKey",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_UserDefault_setStringForKey'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_UserDefault_flush(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::UserDefault* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.UserDefault",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::UserDefault*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_flush'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cobj->flush();
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "flush",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_UserDefault_flush'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_UserDefault_getIntegerForKey(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::UserDefault* cobj = nullptr;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.UserDefault",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocos2d::UserDefault*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_getIntegerForKey'", nullptr);
+        return 0;
+    }
+#endif
+    argc = lua_gettop(tolua_S)-1;
+    do{
+        if (argc == 2) {
+            const char* arg0;
+            std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
+
+            if (!ok) { break; }
+            int arg1;
+            ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
+
+            if (!ok) { break; }
+            int ret = cobj->getIntegerForKey(arg0, arg1);
+            tolua_pushnumber(tolua_S,(lua_Number)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 1) {
+            const char* arg0;
+            std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
+
+            if (!ok) { break; }
+            int ret = cobj->getIntegerForKey(arg0);
+            tolua_pushnumber(tolua_S,(lua_Number)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getIntegerForKey",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_UserDefault_getIntegerForKey'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_UserDefault_getDoubleForKey(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::UserDefault* cobj = nullptr;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.UserDefault",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocos2d::UserDefault*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_getDoubleForKey'", nullptr);
+        return 0;
+    }
+#endif
+    argc = lua_gettop(tolua_S)-1;
+    do{
+        if (argc == 2) {
+            const char* arg0;
+            std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
+
+            if (!ok) { break; }
+            double arg1;
+            ok &= luaval_to_number(tolua_S, 3,&arg1);
+
+            if (!ok) { break; }
+            double ret = cobj->getDoubleForKey(arg0, arg1);
+            tolua_pushnumber(tolua_S,(lua_Number)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 1) {
+            const char* arg0;
+            std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
+
+            if (!ok) { break; }
+            double ret = cobj->getDoubleForKey(arg0);
+            tolua_pushnumber(tolua_S,(lua_Number)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getDoubleForKey",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_UserDefault_getDoubleForKey'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_UserDefault_setBoolForKey(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::UserDefault* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.UserDefault",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::UserDefault*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_setBoolForKey'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 2) 
+    {
+        const char* arg0;
+        bool arg1;
+
+        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
+
+        ok &= luaval_to_boolean(tolua_S, 3,&arg1);
+        if(!ok)
+            return 0;
+        cobj->setBoolForKey(arg0, arg1);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setBoolForKey",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_UserDefault_setBoolForKey'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_UserDefault_destroyInstance(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.UserDefault",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+            return 0;
+        cocos2d::UserDefault::destroyInstance();
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "destroyInstance",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_UserDefault_destroyInstance'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_UserDefault_getXMLFilePath(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.UserDefault",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+            return 0;
+        const std::string& ret = cocos2d::UserDefault::getXMLFilePath();
+        tolua_pushcppstring(tolua_S,ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "getXMLFilePath",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_UserDefault_getXMLFilePath'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_UserDefault_isXMLFileExist(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.UserDefault",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+            return 0;
+        bool ret = cocos2d::UserDefault::isXMLFileExist();
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "isXMLFileExist",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_UserDefault_isXMLFileExist'.",&tolua_err);
+#endif
+    return 0;
+}
+static int lua_cocos2dx_UserDefault_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (UserDefault)");
+    return 0;
+}
+
+int lua_register_cocos2dx_UserDefault(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"cc.UserDefault");
+    tolua_cclass(tolua_S,"UserDefault","cc.UserDefault","",nullptr);
+
+    tolua_beginmodule(tolua_S,"UserDefault");
+        tolua_function(tolua_S,"setIntegerForKey",lua_cocos2dx_UserDefault_setIntegerForKey);
+        tolua_function(tolua_S,"getFloatForKey",lua_cocos2dx_UserDefault_getFloatForKey);
+        tolua_function(tolua_S,"getBoolForKey",lua_cocos2dx_UserDefault_getBoolForKey);
+        tolua_function(tolua_S,"setDoubleForKey",lua_cocos2dx_UserDefault_setDoubleForKey);
+        tolua_function(tolua_S,"setFloatForKey",lua_cocos2dx_UserDefault_setFloatForKey);
+        tolua_function(tolua_S,"getStringForKey",lua_cocos2dx_UserDefault_getStringForKey);
+        tolua_function(tolua_S,"setStringForKey",lua_cocos2dx_UserDefault_setStringForKey);
+        tolua_function(tolua_S,"flush",lua_cocos2dx_UserDefault_flush);
+        tolua_function(tolua_S,"getIntegerForKey",lua_cocos2dx_UserDefault_getIntegerForKey);
+        tolua_function(tolua_S,"getDoubleForKey",lua_cocos2dx_UserDefault_getDoubleForKey);
+        tolua_function(tolua_S,"setBoolForKey",lua_cocos2dx_UserDefault_setBoolForKey);
+        tolua_function(tolua_S,"destroyInstance", lua_cocos2dx_UserDefault_destroyInstance);
+        tolua_function(tolua_S,"getXMLFilePath", lua_cocos2dx_UserDefault_getXMLFilePath);
+        tolua_function(tolua_S,"isXMLFileExist", lua_cocos2dx_UserDefault_isXMLFileExist);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::UserDefault).name();
+    g_luaType[typeName] = "cc.UserDefault";
+    g_typeCast["UserDefault"] = "cc.UserDefault";
+    return 1;
+}
+
 int lua_cocos2dx_EventListenerTouchOneByOne_isSwallowTouches(lua_State* tolua_S)
 {
     int argc = 0;
@@ -54705,6 +55413,532 @@ int lua_register_cocos2dx_TiledGrid3D(lua_State* tolua_S)
     return 1;
 }
 
+int lua_cocos2dx_TextureCache_reloadTexture(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::TextureCache* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.TextureCache",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::TextureCache*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_reloadTexture'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        std::string arg0;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0);
+        if(!ok)
+            return 0;
+        bool ret = cobj->reloadTexture(arg0);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "reloadTexture",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_TextureCache_reloadTexture'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_TextureCache_removeTextureForKey(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::TextureCache* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.TextureCache",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::TextureCache*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_removeTextureForKey'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        std::string arg0;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0);
+        if(!ok)
+            return 0;
+        cobj->removeTextureForKey(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "removeTextureForKey",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_TextureCache_removeTextureForKey'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_TextureCache_removeAllTextures(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::TextureCache* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.TextureCache",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::TextureCache*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_removeAllTextures'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cobj->removeAllTextures();
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "removeAllTextures",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_TextureCache_removeAllTextures'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_TextureCache_getDescription(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::TextureCache* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.TextureCache",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::TextureCache*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_getDescription'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        std::string ret = cobj->getDescription();
+        tolua_pushcppstring(tolua_S,ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getDescription",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_TextureCache_getDescription'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_TextureCache_getCachedTextureInfo(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::TextureCache* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.TextureCache",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::TextureCache*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_getCachedTextureInfo'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        std::string ret = cobj->getCachedTextureInfo();
+        tolua_pushcppstring(tolua_S,ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getCachedTextureInfo",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_TextureCache_getCachedTextureInfo'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_TextureCache_addImage(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::TextureCache* cobj = nullptr;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.TextureCache",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocos2d::TextureCache*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_addImage'", nullptr);
+        return 0;
+    }
+#endif
+    argc = lua_gettop(tolua_S)-1;
+    do{
+        if (argc == 2) {
+            cocos2d::Image* arg0;
+            ok &= luaval_to_object<cocos2d::Image>(tolua_S, 2, "cc.Image",&arg0);
+
+            if (!ok) { break; }
+            std::string arg1;
+            ok &= luaval_to_std_string(tolua_S, 3,&arg1);
+
+            if (!ok) { break; }
+            cocos2d::Texture2D* ret = cobj->addImage(arg0, arg1);
+            object_to_luaval<cocos2d::Texture2D>(tolua_S, "cc.Texture2D",(cocos2d::Texture2D*)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 1) {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0);
+
+            if (!ok) { break; }
+            cocos2d::Texture2D* ret = cobj->addImage(arg0);
+            object_to_luaval<cocos2d::Texture2D>(tolua_S, "cc.Texture2D",(cocos2d::Texture2D*)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "addImage",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_TextureCache_addImage'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_TextureCache_getTextureForKey(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::TextureCache* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.TextureCache",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::TextureCache*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_getTextureForKey'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        std::string arg0;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0);
+        if(!ok)
+            return 0;
+        cocos2d::Texture2D* ret = cobj->getTextureForKey(arg0);
+        object_to_luaval<cocos2d::Texture2D>(tolua_S, "cc.Texture2D",(cocos2d::Texture2D*)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getTextureForKey",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_TextureCache_getTextureForKey'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_TextureCache_removeUnusedTextures(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::TextureCache* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.TextureCache",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::TextureCache*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_removeUnusedTextures'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cobj->removeUnusedTextures();
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "removeUnusedTextures",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_TextureCache_removeUnusedTextures'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_TextureCache_removeTexture(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::TextureCache* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.TextureCache",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::TextureCache*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_removeTexture'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::Texture2D* arg0;
+
+        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+        if(!ok)
+            return 0;
+        cobj->removeTexture(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "removeTexture",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_TextureCache_removeTexture'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_TextureCache_waitForQuit(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::TextureCache* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.TextureCache",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::TextureCache*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_waitForQuit'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cobj->waitForQuit();
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "waitForQuit",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_TextureCache_waitForQuit'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_TextureCache_constructor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::TextureCache* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cobj = new cocos2d::TextureCache();
+        cobj->autorelease();
+        int ID =  (int)cobj->_ID ;
+        int* luaID =  &cobj->_luaID ;
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.TextureCache");
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "TextureCache",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_TextureCache_constructor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+
+static int lua_cocos2dx_TextureCache_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (TextureCache)");
+    return 0;
+}
+
+int lua_register_cocos2dx_TextureCache(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"cc.TextureCache");
+    tolua_cclass(tolua_S,"TextureCache","cc.TextureCache","cc.Ref",nullptr);
+
+    tolua_beginmodule(tolua_S,"TextureCache");
+        tolua_function(tolua_S,"reloadTexture",lua_cocos2dx_TextureCache_reloadTexture);
+        tolua_function(tolua_S,"removeTextureForKey",lua_cocos2dx_TextureCache_removeTextureForKey);
+        tolua_function(tolua_S,"removeAllTextures",lua_cocos2dx_TextureCache_removeAllTextures);
+        tolua_function(tolua_S,"getDescription",lua_cocos2dx_TextureCache_getDescription);
+        tolua_function(tolua_S,"getCachedTextureInfo",lua_cocos2dx_TextureCache_getCachedTextureInfo);
+        tolua_function(tolua_S,"addImage",lua_cocos2dx_TextureCache_addImage);
+        tolua_function(tolua_S,"getTextureForKey",lua_cocos2dx_TextureCache_getTextureForKey);
+        tolua_function(tolua_S,"removeUnusedTextures",lua_cocos2dx_TextureCache_removeUnusedTextures);
+        tolua_function(tolua_S,"removeTexture",lua_cocos2dx_TextureCache_removeTexture);
+        tolua_function(tolua_S,"waitForQuit",lua_cocos2dx_TextureCache_waitForQuit);
+        tolua_function(tolua_S,"new",lua_cocos2dx_TextureCache_constructor);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::TextureCache).name();
+    g_luaType[typeName] = "cc.TextureCache";
+    g_typeCast["TextureCache"] = "cc.TextureCache";
+    return 1;
+}
+
 int lua_cocos2dx_Application_getTargetPlatform(lua_State* tolua_S)
 {
     int argc = 0;
@@ -57048,1240 +58282,6 @@ int lua_register_cocos2dx_SpriteFrameCache(lua_State* tolua_S)
     std::string typeName = typeid(cocos2d::SpriteFrameCache).name();
     g_luaType[typeName] = "cc.SpriteFrameCache";
     g_typeCast["SpriteFrameCache"] = "cc.SpriteFrameCache";
-    return 1;
-}
-
-int lua_cocos2dx_UserDefault_setIntegerForKey(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::UserDefault* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.UserDefault",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::UserDefault*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_setIntegerForKey'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 2) 
-    {
-        const char* arg0;
-        int arg1;
-
-        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
-
-        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
-        if(!ok)
-            return 0;
-        cobj->setIntegerForKey(arg0, arg1);
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setIntegerForKey",argc, 2);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_UserDefault_setIntegerForKey'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_UserDefault_getFloatForKey(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::UserDefault* cobj = nullptr;
-    bool ok  = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.UserDefault",0,&tolua_err)) goto tolua_lerror;
-#endif
-    cobj = (cocos2d::UserDefault*)tolua_tousertype(tolua_S,1,0);
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_getFloatForKey'", nullptr);
-        return 0;
-    }
-#endif
-    argc = lua_gettop(tolua_S)-1;
-    do{
-        if (argc == 2) {
-            const char* arg0;
-            std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
-
-            if (!ok) { break; }
-            double arg1;
-            ok &= luaval_to_number(tolua_S, 3,&arg1);
-
-            if (!ok) { break; }
-            double ret = cobj->getFloatForKey(arg0, arg1);
-            tolua_pushnumber(tolua_S,(lua_Number)ret);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    do{
-        if (argc == 1) {
-            const char* arg0;
-            std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
-
-            if (!ok) { break; }
-            double ret = cobj->getFloatForKey(arg0);
-            tolua_pushnumber(tolua_S,(lua_Number)ret);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getFloatForKey",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_UserDefault_getFloatForKey'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_UserDefault_getBoolForKey(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::UserDefault* cobj = nullptr;
-    bool ok  = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.UserDefault",0,&tolua_err)) goto tolua_lerror;
-#endif
-    cobj = (cocos2d::UserDefault*)tolua_tousertype(tolua_S,1,0);
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_getBoolForKey'", nullptr);
-        return 0;
-    }
-#endif
-    argc = lua_gettop(tolua_S)-1;
-    do{
-        if (argc == 2) {
-            const char* arg0;
-            std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
-
-            if (!ok) { break; }
-            bool arg1;
-            ok &= luaval_to_boolean(tolua_S, 3,&arg1);
-
-            if (!ok) { break; }
-            bool ret = cobj->getBoolForKey(arg0, arg1);
-            tolua_pushboolean(tolua_S,(bool)ret);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    do{
-        if (argc == 1) {
-            const char* arg0;
-            std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
-
-            if (!ok) { break; }
-            bool ret = cobj->getBoolForKey(arg0);
-            tolua_pushboolean(tolua_S,(bool)ret);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getBoolForKey",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_UserDefault_getBoolForKey'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_UserDefault_setDoubleForKey(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::UserDefault* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.UserDefault",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::UserDefault*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_setDoubleForKey'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 2) 
-    {
-        const char* arg0;
-        double arg1;
-
-        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
-
-        ok &= luaval_to_number(tolua_S, 3,&arg1);
-        if(!ok)
-            return 0;
-        cobj->setDoubleForKey(arg0, arg1);
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setDoubleForKey",argc, 2);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_UserDefault_setDoubleForKey'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_UserDefault_setFloatForKey(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::UserDefault* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.UserDefault",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::UserDefault*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_setFloatForKey'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 2) 
-    {
-        const char* arg0;
-        double arg1;
-
-        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
-
-        ok &= luaval_to_number(tolua_S, 3,&arg1);
-        if(!ok)
-            return 0;
-        cobj->setFloatForKey(arg0, arg1);
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setFloatForKey",argc, 2);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_UserDefault_setFloatForKey'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_UserDefault_getStringForKey(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::UserDefault* cobj = nullptr;
-    bool ok  = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.UserDefault",0,&tolua_err)) goto tolua_lerror;
-#endif
-    cobj = (cocos2d::UserDefault*)tolua_tousertype(tolua_S,1,0);
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_getStringForKey'", nullptr);
-        return 0;
-    }
-#endif
-    argc = lua_gettop(tolua_S)-1;
-    do{
-        if (argc == 2) {
-            const char* arg0;
-            std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
-
-            if (!ok) { break; }
-            std::string arg1;
-            ok &= luaval_to_std_string(tolua_S, 3,&arg1);
-
-            if (!ok) { break; }
-            std::string ret = cobj->getStringForKey(arg0, arg1);
-            tolua_pushcppstring(tolua_S,ret);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    do{
-        if (argc == 1) {
-            const char* arg0;
-            std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
-
-            if (!ok) { break; }
-            std::string ret = cobj->getStringForKey(arg0);
-            tolua_pushcppstring(tolua_S,ret);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getStringForKey",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_UserDefault_getStringForKey'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_UserDefault_setStringForKey(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::UserDefault* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.UserDefault",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::UserDefault*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_setStringForKey'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 2) 
-    {
-        const char* arg0;
-        std::string arg1;
-
-        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
-
-        ok &= luaval_to_std_string(tolua_S, 3,&arg1);
-        if(!ok)
-            return 0;
-        cobj->setStringForKey(arg0, arg1);
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setStringForKey",argc, 2);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_UserDefault_setStringForKey'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_UserDefault_flush(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::UserDefault* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.UserDefault",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::UserDefault*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_flush'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        cobj->flush();
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "flush",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_UserDefault_flush'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_UserDefault_getIntegerForKey(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::UserDefault* cobj = nullptr;
-    bool ok  = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.UserDefault",0,&tolua_err)) goto tolua_lerror;
-#endif
-    cobj = (cocos2d::UserDefault*)tolua_tousertype(tolua_S,1,0);
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_getIntegerForKey'", nullptr);
-        return 0;
-    }
-#endif
-    argc = lua_gettop(tolua_S)-1;
-    do{
-        if (argc == 2) {
-            const char* arg0;
-            std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
-
-            if (!ok) { break; }
-            int arg1;
-            ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
-
-            if (!ok) { break; }
-            int ret = cobj->getIntegerForKey(arg0, arg1);
-            tolua_pushnumber(tolua_S,(lua_Number)ret);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    do{
-        if (argc == 1) {
-            const char* arg0;
-            std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
-
-            if (!ok) { break; }
-            int ret = cobj->getIntegerForKey(arg0);
-            tolua_pushnumber(tolua_S,(lua_Number)ret);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getIntegerForKey",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_UserDefault_getIntegerForKey'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_UserDefault_getDoubleForKey(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::UserDefault* cobj = nullptr;
-    bool ok  = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.UserDefault",0,&tolua_err)) goto tolua_lerror;
-#endif
-    cobj = (cocos2d::UserDefault*)tolua_tousertype(tolua_S,1,0);
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_getDoubleForKey'", nullptr);
-        return 0;
-    }
-#endif
-    argc = lua_gettop(tolua_S)-1;
-    do{
-        if (argc == 2) {
-            const char* arg0;
-            std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
-
-            if (!ok) { break; }
-            double arg1;
-            ok &= luaval_to_number(tolua_S, 3,&arg1);
-
-            if (!ok) { break; }
-            double ret = cobj->getDoubleForKey(arg0, arg1);
-            tolua_pushnumber(tolua_S,(lua_Number)ret);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    do{
-        if (argc == 1) {
-            const char* arg0;
-            std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
-
-            if (!ok) { break; }
-            double ret = cobj->getDoubleForKey(arg0);
-            tolua_pushnumber(tolua_S,(lua_Number)ret);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getDoubleForKey",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_UserDefault_getDoubleForKey'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_UserDefault_setBoolForKey(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::UserDefault* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.UserDefault",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::UserDefault*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_setBoolForKey'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 2) 
-    {
-        const char* arg0;
-        bool arg1;
-
-        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
-
-        ok &= luaval_to_boolean(tolua_S, 3,&arg1);
-        if(!ok)
-            return 0;
-        cobj->setBoolForKey(arg0, arg1);
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setBoolForKey",argc, 2);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_UserDefault_setBoolForKey'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_UserDefault_destroyInstance(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"cc.UserDefault",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    argc = lua_gettop(tolua_S) - 1;
-
-    if (argc == 0)
-    {
-        if(!ok)
-            return 0;
-        cocos2d::UserDefault::destroyInstance();
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "destroyInstance",argc, 0);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_UserDefault_destroyInstance'.",&tolua_err);
-#endif
-    return 0;
-}
-int lua_cocos2dx_UserDefault_getXMLFilePath(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"cc.UserDefault",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    argc = lua_gettop(tolua_S) - 1;
-
-    if (argc == 0)
-    {
-        if(!ok)
-            return 0;
-        const std::string& ret = cocos2d::UserDefault::getXMLFilePath();
-        tolua_pushcppstring(tolua_S,ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "getXMLFilePath",argc, 0);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_UserDefault_getXMLFilePath'.",&tolua_err);
-#endif
-    return 0;
-}
-int lua_cocos2dx_UserDefault_isXMLFileExist(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"cc.UserDefault",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    argc = lua_gettop(tolua_S) - 1;
-
-    if (argc == 0)
-    {
-        if(!ok)
-            return 0;
-        bool ret = cocos2d::UserDefault::isXMLFileExist();
-        tolua_pushboolean(tolua_S,(bool)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "isXMLFileExist",argc, 0);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_UserDefault_isXMLFileExist'.",&tolua_err);
-#endif
-    return 0;
-}
-static int lua_cocos2dx_UserDefault_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (UserDefault)");
-    return 0;
-}
-
-int lua_register_cocos2dx_UserDefault(lua_State* tolua_S)
-{
-    tolua_usertype(tolua_S,"cc.UserDefault");
-    tolua_cclass(tolua_S,"UserDefault","cc.UserDefault","",nullptr);
-
-    tolua_beginmodule(tolua_S,"UserDefault");
-        tolua_function(tolua_S,"setIntegerForKey",lua_cocos2dx_UserDefault_setIntegerForKey);
-        tolua_function(tolua_S,"getFloatForKey",lua_cocos2dx_UserDefault_getFloatForKey);
-        tolua_function(tolua_S,"getBoolForKey",lua_cocos2dx_UserDefault_getBoolForKey);
-        tolua_function(tolua_S,"setDoubleForKey",lua_cocos2dx_UserDefault_setDoubleForKey);
-        tolua_function(tolua_S,"setFloatForKey",lua_cocos2dx_UserDefault_setFloatForKey);
-        tolua_function(tolua_S,"getStringForKey",lua_cocos2dx_UserDefault_getStringForKey);
-        tolua_function(tolua_S,"setStringForKey",lua_cocos2dx_UserDefault_setStringForKey);
-        tolua_function(tolua_S,"flush",lua_cocos2dx_UserDefault_flush);
-        tolua_function(tolua_S,"getIntegerForKey",lua_cocos2dx_UserDefault_getIntegerForKey);
-        tolua_function(tolua_S,"getDoubleForKey",lua_cocos2dx_UserDefault_getDoubleForKey);
-        tolua_function(tolua_S,"setBoolForKey",lua_cocos2dx_UserDefault_setBoolForKey);
-        tolua_function(tolua_S,"destroyInstance", lua_cocos2dx_UserDefault_destroyInstance);
-        tolua_function(tolua_S,"getXMLFilePath", lua_cocos2dx_UserDefault_getXMLFilePath);
-        tolua_function(tolua_S,"isXMLFileExist", lua_cocos2dx_UserDefault_isXMLFileExist);
-    tolua_endmodule(tolua_S);
-    std::string typeName = typeid(cocos2d::UserDefault).name();
-    g_luaType[typeName] = "cc.UserDefault";
-    g_typeCast["UserDefault"] = "cc.UserDefault";
-    return 1;
-}
-
-int lua_cocos2dx_TextureCache_reloadTexture(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::TextureCache* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.TextureCache",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::TextureCache*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_reloadTexture'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        std::string arg0;
-
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0);
-        if(!ok)
-            return 0;
-        bool ret = cobj->reloadTexture(arg0);
-        tolua_pushboolean(tolua_S,(bool)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "reloadTexture",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_TextureCache_reloadTexture'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_TextureCache_removeTextureForKey(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::TextureCache* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.TextureCache",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::TextureCache*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_removeTextureForKey'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        std::string arg0;
-
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0);
-        if(!ok)
-            return 0;
-        cobj->removeTextureForKey(arg0);
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "removeTextureForKey",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_TextureCache_removeTextureForKey'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_TextureCache_removeAllTextures(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::TextureCache* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.TextureCache",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::TextureCache*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_removeAllTextures'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        cobj->removeAllTextures();
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "removeAllTextures",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_TextureCache_removeAllTextures'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_TextureCache_getDescription(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::TextureCache* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.TextureCache",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::TextureCache*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_getDescription'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        std::string ret = cobj->getDescription();
-        tolua_pushcppstring(tolua_S,ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getDescription",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_TextureCache_getDescription'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_TextureCache_getCachedTextureInfo(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::TextureCache* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.TextureCache",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::TextureCache*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_getCachedTextureInfo'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        std::string ret = cobj->getCachedTextureInfo();
-        tolua_pushcppstring(tolua_S,ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getCachedTextureInfo",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_TextureCache_getCachedTextureInfo'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_TextureCache_addImage(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::TextureCache* cobj = nullptr;
-    bool ok  = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.TextureCache",0,&tolua_err)) goto tolua_lerror;
-#endif
-    cobj = (cocos2d::TextureCache*)tolua_tousertype(tolua_S,1,0);
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_addImage'", nullptr);
-        return 0;
-    }
-#endif
-    argc = lua_gettop(tolua_S)-1;
-    do{
-        if (argc == 2) {
-            cocos2d::Image* arg0;
-            ok &= luaval_to_object<cocos2d::Image>(tolua_S, 2, "cc.Image",&arg0);
-
-            if (!ok) { break; }
-            std::string arg1;
-            ok &= luaval_to_std_string(tolua_S, 3,&arg1);
-
-            if (!ok) { break; }
-            cocos2d::Texture2D* ret = cobj->addImage(arg0, arg1);
-            object_to_luaval<cocos2d::Texture2D>(tolua_S, "cc.Texture2D",(cocos2d::Texture2D*)ret);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    do{
-        if (argc == 1) {
-            std::string arg0;
-            ok &= luaval_to_std_string(tolua_S, 2,&arg0);
-
-            if (!ok) { break; }
-            cocos2d::Texture2D* ret = cobj->addImage(arg0);
-            object_to_luaval<cocos2d::Texture2D>(tolua_S, "cc.Texture2D",(cocos2d::Texture2D*)ret);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "addImage",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_TextureCache_addImage'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_TextureCache_getTextureForKey(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::TextureCache* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.TextureCache",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::TextureCache*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_getTextureForKey'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        std::string arg0;
-
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0);
-        if(!ok)
-            return 0;
-        cocos2d::Texture2D* ret = cobj->getTextureForKey(arg0);
-        object_to_luaval<cocos2d::Texture2D>(tolua_S, "cc.Texture2D",(cocos2d::Texture2D*)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getTextureForKey",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_TextureCache_getTextureForKey'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_TextureCache_removeUnusedTextures(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::TextureCache* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.TextureCache",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::TextureCache*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_removeUnusedTextures'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        cobj->removeUnusedTextures();
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "removeUnusedTextures",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_TextureCache_removeUnusedTextures'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_TextureCache_removeTexture(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::TextureCache* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.TextureCache",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::TextureCache*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_removeTexture'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        cocos2d::Texture2D* arg0;
-
-        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
-        if(!ok)
-            return 0;
-        cobj->removeTexture(arg0);
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "removeTexture",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_TextureCache_removeTexture'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_TextureCache_waitForQuit(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::TextureCache* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.TextureCache",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::TextureCache*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_waitForQuit'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        cobj->waitForQuit();
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "waitForQuit",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_TextureCache_waitForQuit'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_TextureCache_constructor(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::TextureCache* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        cobj = new cocos2d::TextureCache();
-        cobj->autorelease();
-        int ID =  (int)cobj->_ID ;
-        int* luaID =  &cobj->_luaID ;
-        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.TextureCache");
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "TextureCache",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_TextureCache_constructor'.",&tolua_err);
-#endif
-
-    return 0;
-}
-
-static int lua_cocos2dx_TextureCache_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (TextureCache)");
-    return 0;
-}
-
-int lua_register_cocos2dx_TextureCache(lua_State* tolua_S)
-{
-    tolua_usertype(tolua_S,"cc.TextureCache");
-    tolua_cclass(tolua_S,"TextureCache","cc.TextureCache","cc.Ref",nullptr);
-
-    tolua_beginmodule(tolua_S,"TextureCache");
-        tolua_function(tolua_S,"reloadTexture",lua_cocos2dx_TextureCache_reloadTexture);
-        tolua_function(tolua_S,"removeTextureForKey",lua_cocos2dx_TextureCache_removeTextureForKey);
-        tolua_function(tolua_S,"removeAllTextures",lua_cocos2dx_TextureCache_removeAllTextures);
-        tolua_function(tolua_S,"getDescription",lua_cocos2dx_TextureCache_getDescription);
-        tolua_function(tolua_S,"getCachedTextureInfo",lua_cocos2dx_TextureCache_getCachedTextureInfo);
-        tolua_function(tolua_S,"addImage",lua_cocos2dx_TextureCache_addImage);
-        tolua_function(tolua_S,"getTextureForKey",lua_cocos2dx_TextureCache_getTextureForKey);
-        tolua_function(tolua_S,"removeUnusedTextures",lua_cocos2dx_TextureCache_removeUnusedTextures);
-        tolua_function(tolua_S,"removeTexture",lua_cocos2dx_TextureCache_removeTexture);
-        tolua_function(tolua_S,"waitForQuit",lua_cocos2dx_TextureCache_waitForQuit);
-        tolua_function(tolua_S,"new",lua_cocos2dx_TextureCache_constructor);
-    tolua_endmodule(tolua_S);
-    std::string typeName = typeid(cocos2d::TextureCache).name();
-    g_luaType[typeName] = "cc.TextureCache";
-    g_typeCast["TextureCache"] = "cc.TextureCache";
     return 1;
 }
 
@@ -65323,7 +65323,7 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	lua_register_cocos2dx_Menu(tolua_S);
 	lua_register_cocos2dx_SpriteFrame(tolua_S);
 	lua_register_cocos2dx_ActionManager(tolua_S);
-	lua_register_cocos2dx_TransitionFade(tolua_S);
+	lua_register_cocos2dx_UserDefault(tolua_S);
 	lua_register_cocos2dx_TransitionZoomFlipX(tolua_S);
 	lua_register_cocos2dx_EventFocus(tolua_S);
 	lua_register_cocos2dx_EaseQuinticActionInOut(tolua_S);
@@ -65358,6 +65358,7 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	lua_register_cocos2dx_TMXMapInfo(tolua_S);
 	lua_register_cocos2dx_EaseExponentialIn(tolua_S);
 	lua_register_cocos2dx_ReuseGrid(tolua_S);
+	lua_register_cocos2dx_ProtectedNode(tolua_S);
 	lua_register_cocos2dx_EaseQuinticActionOut(tolua_S);
 	lua_register_cocos2dx_EventDispatcher(tolua_S);
 	lua_register_cocos2dx_MenuItemAtlasFont(tolua_S);
@@ -65378,7 +65379,7 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	lua_register_cocos2dx_MenuItemToggle(tolua_S);
 	lua_register_cocos2dx_RemoveSelf(tolua_S);
 	lua_register_cocos2dx_SplitCols(tolua_S);
-	lua_register_cocos2dx_ProtectedNode(tolua_S);
+	lua_register_cocos2dx_TransitionFade(tolua_S);
 	lua_register_cocos2dx_MotionStreak(tolua_S);
 	lua_register_cocos2dx_RotateBy(tolua_S);
 	lua_register_cocos2dx_FileUtils(tolua_S);
@@ -65392,7 +65393,6 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	lua_register_cocos2dx_EaseBounceInOut(tolua_S);
 	lua_register_cocos2dx_TransitionSlideInR(tolua_S);
 	lua_register_cocos2dx_ParallaxNode(tolua_S);
-	lua_register_cocos2dx_UserDefault(tolua_S);
 	lua_register_cocos2dx_EaseQuadraticActionIn(tolua_S);
 	lua_register_cocos2dx_WavesTiles3D(tolua_S);
 	lua_register_cocos2dx_TransitionSlideInB(tolua_S);
