@@ -41,17 +41,17 @@ NS_CC_BEGIN
 class CC_DLL Waves3D : public Grid3DAction
 {
 public:
-    /** creates an action with duration, grid size, waves and amplitude */
+    /** 用持续时间、网格大小、波的数目和振幅创建一个动作 */
     static Waves3D* create(float duration, const Size& gridSize, unsigned int waves, float amplitude);
 
-    /** returns the amplitude of the effect */
+    /** 获取特效的振幅 */
     inline float getAmplitude() const { return _amplitude; }
-    /** sets the amplitude to the effect */
+    /** 设置特效的振幅  */
     inline void setAmplitude(float amplitude) { _amplitude = amplitude; }
 
-    /** returns the amplitude rate */
+    /** 获取振幅率 */
     inline float getAmplitudeRate() const { return _amplitudeRate; }
-    /** sets the ampliture rate */
+    /** 设置振幅率 */
     inline void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
 
 	// Overrides
@@ -62,7 +62,7 @@ CC_CONSTRUCTOR_ACCESS:
     Waves3D() {}
     virtual ~Waves3D() {}
 
-    /** initializes an action with duration, grid size, waves and amplitude */
+    /** 用持续时间、网格大小、波的数目和振幅初始化一个动作 */
     bool initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude);
 
 protected:
@@ -78,7 +78,7 @@ private:
 class CC_DLL FlipX3D : public Grid3DAction
 {
 public:
-    /** creates the action with duration */
+    /** 用持续时间创建动作 */
     static FlipX3D* create(float duration);
 
     // Override
@@ -89,7 +89,7 @@ CC_CONSTRUCTOR_ACCESS:
     FlipX3D() {}
     virtual ~FlipX3D() {}
 
-    /** initializes the action with duration */
+    /** 用持续时间初始化动作 */
     bool initWithDuration(float duration);
     virtual bool initWithSize(const Size& gridSize, float duration);
 
@@ -101,7 +101,7 @@ private:
 class CC_DLL FlipY3D : public FlipX3D
 {
 public:
-    /** creates the action with duration */
+    /** 用持续时间创建动作 */
     static FlipY3D* create(float duration);
 
     // Overrides
@@ -119,14 +119,14 @@ private:
 class CC_DLL Lens3D : public Grid3DAction
 {
 public:
-    /** creates the action with center position, radius, a grid size and duration */
+    /** 用中心坐标、半径、网格大小和持续时间创建动作 */
     static Lens3D* create(float duration, const Size& gridSize, const Vec2& position, float radius);
 
-    /** Get lens center position */
+    /** 获取透镜的中心坐标 */
     inline float getLensEffect() const { return _lensEffect; }
-    /** Set lens center position */
+    /** 设置透镜的中心坐标 */
     inline void setLensEffect(float lensEffect) { _lensEffect = lensEffect; }
-    /** Set whether lens is concave */
+    /** 设置透镜是否凹的 */
     inline void setConcave(bool concave) { _concave = concave; }
   
     inline const Vec2& getPosition() const { return _position; }
@@ -140,16 +140,17 @@ CC_CONSTRUCTOR_ACCESS:
     Lens3D() {}
     virtual ~Lens3D() {}
 
-    /** initializes the action with center position, radius, a grid size and duration */
+    /** 用中心坐标、半径、网格大小和持续时间初始化动作 */
     bool initWithDuration(float duration, const Size& gridSize, const Vec2& position, float radius);
 
 protected:
-    /* lens center position */
+    /* 透镜中心坐标 */
     Vec2 _position;
     float _radius;
-    /** lens effect. Defaults to 0.7 - 0 means no effect, 1 is very strong effect */
+    /** 透镜特效。默认 0.7。 0 代表没有特效，1代表非常强烈特效。*/
     float _lensEffect;
-    /** lens is concave. (true = concave, false = convex) default is convex i.e. false */
+    /** 透镜是否凹的。（true 代表 凹的，false代表凸的） 默认是凸的，也就是false。
+     lens is concave. (true = concave, false = convex) default is convex i.e. false */
     bool _concave;
 
     bool _dirty;
@@ -162,12 +163,12 @@ private:
 class CC_DLL Ripple3D : public Grid3DAction
 {
 public:
-    /** creates the action with radius, number of waves, amplitude, a grid size and duration */
+    /** 用半径、波浪的数量、振幅、网格大小和持续时间创建动作 */
     static Ripple3D* create(float duration, const Size& gridSize, const Vec2& position, float radius, unsigned int waves, float amplitude);
-
-    /** get center position */
+ 
+    /** 获取中心坐标 */
     inline const Vec2& getPosition() const { return _position; }
-    /** set center position */
+    /** 设置中心坐标 */
     void setPosition(const Vec2& position);
 
     inline float getAmplitude() const { return _amplitude; }
@@ -184,11 +185,11 @@ CC_CONSTRUCTOR_ACCESS:
     Ripple3D() {}
     virtual ~Ripple3D() {}
 
-    /** initializes the action with radius, number of waves, amplitude, a grid size and duration */
+    /** 用半径、波浪的数目、振幅、网格大小和持续时间初始化动作 */
     bool initWithDuration(float duration, const Size& gridSize, const Vec2& position, float radius, unsigned int waves, float amplitude);
 
 protected:
-    /* center position */
+    /* 中心位置 */
     Vec2 _position;
     float _radius;
     unsigned int _waves;
@@ -203,7 +204,7 @@ private:
 class CC_DLL Shaky3D : public Grid3DAction
 {
 public:
-    /** creates the action with a range, shake Z vertices, a grid and duration */
+    /** 用一个范围、是否晃动的z轴顶点、网格大小和持续时间创建动作 */
     static Shaky3D* create(float duration, const Size& gridSize, int range, bool shakeZ);
 
     // Overrides
@@ -214,7 +215,7 @@ CC_CONSTRUCTOR_ACCESS:
     Shaky3D() {}
     virtual ~Shaky3D() {}
     
-    /** initializes the action with a range, shake Z vertices, a grid and duration */
+    /** 用一个范围、是否晃动的z轴顶点、网格大小和持续时间初始化动作 */
     bool initWithDuration(float duration, const Size& gridSize, int range, bool shakeZ);
 
 protected:
@@ -229,9 +230,9 @@ private:
 class CC_DLL Liquid : public Grid3DAction
 {
 public:
-    /** creates the action with amplitude, a grid and duration */
+    /** 用振幅、网格大小和持续时间创建动作 */
     static Liquid* create(float duration, const Size& gridSize, unsigned int waves, float amplitude);
-
+    
     inline float getAmplitude() const { return _amplitude; }
     inline void setAmplitude(float amplitude) { _amplitude = amplitude; }
 
@@ -246,7 +247,7 @@ CC_CONSTRUCTOR_ACCESS:
     Liquid() {}
     virtual ~Liquid() {}
     
-    /** initializes the action with amplitude, a grid and duration */
+    /** 用振幅、网格大小和持续时间初始化动作 */
     bool initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude);
 
 protected:
@@ -262,7 +263,7 @@ private:
 class CC_DLL Waves : public Grid3DAction
 {
 public:
-    /** initializes the action with amplitude, horizontal sin, vertical sin, a grid and duration */
+    /** 用振幅、水平正弦、垂直正弦、网格大小和持续时间创建动作 */
     static Waves* create(float duration, const Size& gridSize, unsigned int waves, float amplitude, bool horizontal, bool vertical);
 
     inline float getAmplitude() const { return _amplitude; }
@@ -279,7 +280,7 @@ CC_CONSTRUCTOR_ACCESS:
     Waves() {}
     virtual ~Waves() {}
     
-    /** initializes the action with amplitude, horizontal sin, vertical sin, a grid and duration */
+    /** 用振幅、水平正弦、垂直正弦、网格大小和持续时间初始化动作 */
     bool initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude, bool horizontal, bool vertical);
 
 protected:
@@ -297,12 +298,12 @@ private:
 class CC_DLL Twirl : public Grid3DAction
 {
 public:
-    /** creates the action with center position, number of twirls, amplitude, a grid size and duration */
+    /** 用中心坐标、螺旋数、振幅、网格大小和持续时间创建动作 */
     static Twirl* create(float duration, const Size& gridSize, Vec2 position, unsigned int twirls, float amplitude);
 
-    /** get twirl center */
+    /** 获取螺旋坐标 */
     inline const Vec2& getPosition() const { return _position; }
-    /** set twirl center */
+    /**设置螺旋坐标 */
     void setPosition(const Vec2& position);
 
     inline float getAmplitude() const { return _amplitude; }
@@ -320,11 +321,11 @@ CC_CONSTRUCTOR_ACCESS:
     Twirl() {}
     virtual ~Twirl() {}
     
-    /** initializes the action with center position, number of twirls, amplitude, a grid size and duration */
+    /** 用中心坐标、螺旋数、振幅、网格大小和持续时间初始化动作 */
     bool initWithDuration(float duration, const Size& gridSize, Vec2 position, unsigned int twirls, float amplitude);
 
 protected:
-    /* twirl center */
+    /* 螺旋中心 */
     Vec2 _position;
     unsigned int _twirls;
     float _amplitude;

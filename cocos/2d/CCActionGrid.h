@@ -44,7 +44,7 @@ class CC_DLL GridAction : public ActionInterval
 {
 public:
 
-    /** returns the grid */
+    /** 返回网格 */
     virtual GridBase* getGrid();
 
     // overrides
@@ -55,7 +55,7 @@ public:
 protected:
     GridAction() {}
     virtual ~GridAction() {}
-    /** initializes the action with size and duration */
+    /** 用大小和持续时间初始化动作 */
     bool initWithDuration(float duration, const Size& gridSize);
 
     Size _gridSize;
@@ -76,9 +76,9 @@ class CC_DLL Grid3DAction : public GridAction
 {
 public:
 
-    /** returns the grid */
+    /** 返回网格 */
     virtual GridBase* getGrid();
-    /** returns the vertex than belongs to certain position in the grid 
+    /** 返回网格中属于某个位置的顶点
      * @js NA
      * @lua NA
      */
@@ -90,7 +90,7 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE inline Vec3 vertex(const Vec2& position) { return getVertex(position); }
 
-    /** returns the non-transformed vertex than belongs to certain position in the grid 
+    /** 返回网格中属于某个位置的原始顶点（未经过变换）
      * @js NA
      * @lua NA
      */
@@ -102,7 +102,7 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE inline Vec3 originalVertex(const Vec2& position) { return getOriginalVertex(position); }
 
-    /** sets a new vertex to a certain position of the grid 
+    /** 设置一个新的顶点到网格中的一定位置
      * @js NA
      * @lua NA
      */
@@ -116,13 +116,13 @@ public:
 class CC_DLL TiledGrid3DAction : public GridAction
 {
 public:
-    /** creates the action with size and duration 
+    /** 用大小和持续时间来创建动作
      * @js NA
      * @lua NA
      */
     static TiledGrid3DAction* create(float duration, const Size& gridSize);
 
-    /** returns the tile that belongs to a certain position of the grid 
+    /** 返回网格中某个位置的格子
      * @js NA
      * @lua NA
      */
@@ -134,7 +134,7 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE Quad3 tile(const Vec2& position) { return getTile(position); }
 
-    /** returns the non-transformed tile that belongs to a certain position of the grid 
+    /**  返回网格中某个位置的原始格子（未经过变换）
      * @js NA
      * @lua NA
      */
@@ -146,13 +146,13 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE Quad3 originalTile(const Vec2& position) { return getOriginalTile(position); }
 
-    /** sets a new tile to a certain position of the grid 
+    /**  设置网格中某个位置的格子
      * @js NA
      * @lua NA
      */
     void setTile(const Vec2& position, const Quad3& coords);
 
-    /** returns the grid */
+    /** 返回网格 */
     virtual GridBase* getGrid();
 
     // Override
@@ -163,12 +163,12 @@ public:
 class CC_DLL AccelDeccelAmplitude : public ActionInterval
 {
 public:
-    /** creates the action with an inner action that has the amplitude property, and a duration time */
+    /** 使用一个包含振幅属性的内部动作和持续时间创建动作 */
     static AccelDeccelAmplitude* create(Action *action, float duration);
 
-    /** get amplitude rate */
+    /** 获取振幅率 */
     inline float getRate(void) const { return _rate; }
-    /** set amplitude rate */
+    /** 设置振幅率 */
     inline void setRate(float fRate) { _rate = fRate; }
 
     // Overrides
@@ -181,7 +181,7 @@ CC_CONSTRUCTOR_ACCESS:
     AccelDeccelAmplitude() {}
     virtual ~AccelDeccelAmplitude();
     
-    /** initializes the action with an inner action that has the amplitude property, and a duration time */
+    /** 用一个包含振幅属性的内部动作和持续时间来初始化该动作 */
     bool initWithAction(Action *pAction, float duration);
 
 protected:
@@ -228,12 +228,12 @@ private:
 class CC_DLL DeccelAmplitude : public ActionInterval
 {
 public:
-    /** creates the action with an inner action that has the amplitude property, and a duration time */
+    /** 用一个包含振幅属性的内部动作和持续时间来创建动作 */
     static DeccelAmplitude* create(Action *action, float duration);
 
-    /** get amplitude rate */
+    /** 获取振幅率 */
     inline float getRate(void) const { return _rate; }
-    /** set amplitude rate */
+    /** 设置振幅率 */
     inline void setRate(float rate) { _rate = rate; }
 
     // overrides
@@ -246,7 +246,7 @@ CC_CONSTRUCTOR_ACCESS:
     DeccelAmplitude() {}
     virtual ~DeccelAmplitude();
 
-    /** initializes the action with an inner action that has the amplitude property, and a duration time */
+    /** 用一个包含振幅属性的内部动作和持续时间初始化该动作 */
     bool initWithAction(Action *action, float duration);
 
 protected:
@@ -265,7 +265,7 @@ private:
 class CC_DLL StopGrid : public ActionInstant
 {
 public:
-    /** Allocates and initializes the action */
+    /** 分配空间和初始化动作 */
     static StopGrid* create();
 
     // Overrides
@@ -289,7 +289,7 @@ private:
 class CC_DLL ReuseGrid : public ActionInstant
 {
 public:
-    /** creates an action with the number of times that the current grid will be reused */
+    /** 用当前网格将被使用的次数来创建一个动作 */
     static ReuseGrid* create(int times);
 
     // Override
@@ -301,7 +301,7 @@ CC_CONSTRUCTOR_ACCESS:
     ReuseGrid() {}
     virtual ~ReuseGrid() {}
     
-    /** initializes an action with the number of times that the current grid will be reused */
+    /** 用当前网格将被使用的次数创建一个动作 */
     bool initWithTimes(int times);
 
 protected:
