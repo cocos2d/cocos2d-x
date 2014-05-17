@@ -312,7 +312,7 @@ void createSimulator(const char* viewName, float width, float height, bool isLan
     {
         float tmpvalue =width;
         width = height;
-        height = width;
+        height = tmpvalue;
     }
     
     g_eglView = GLView::createWithRect(viewName,Rect(0,0,width,height),frameZoomFactor);
