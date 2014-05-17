@@ -459,7 +459,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(__CCCallFuncO);
 };
 
-// end of actions group
+// 结束
 /// @}
 
 NS_CC_END
