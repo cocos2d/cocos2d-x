@@ -48,6 +48,8 @@ class CC_DLL PageTurn3D : public Grid3DAction
 {
 public:
     /** create the action */
+    
+    /** 创建一个PageTurn3D动画 */
     static PageTurn3D* create(float duration, const Size& gridSize);
 
     // Overrides
