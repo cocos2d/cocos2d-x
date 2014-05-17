@@ -82,26 +82,27 @@ public:
 
     static Label* create();
 
-    /** Creates a label with an initial string,font[font name or font file],font size, dimension in points, horizontal alignment and vertical alignment.
-     * @warning It will generate texture by the platform-dependent code
+    /** 使用初始字符串，字体（字体名称或字体文件），字号，尺寸，水平对齐方式和
+        垂直对齐方式创建一个Label
+     * @warning 会根据不同平台生成Texture
      */
     static Label* createWithSystemFont(const std::string& text, const std::string& font, float fontSize,
         const Size& dimensions = Size::ZERO, TextHAlignment hAlignment = TextHAlignment::LEFT,
         TextVAlignment vAlignment = TextVAlignment::TOP);
 
-    /** Creates a label with an initial string,font file,font size, dimension in points, horizontal alignment and vertical alignment.
-     * @warning Not support font name.
+    /** 使用初始字符串，字体文件，字号，尺寸，水平对齐方式和垂直对齐方式创建一个Label
+     * @warning 不支持使用字体名称创建
      */
     static Label * createWithTTF(const std::string& text, const std::string& fontFile, float fontSize,
         const Size& dimensions = Size::ZERO, TextHAlignment hAlignment = TextHAlignment::LEFT,
         TextVAlignment vAlignment = TextVAlignment::TOP);
 
-    /** Create a label with TTF configuration
-     * @warning Not support font name.
+    /** 使用TTFConfig创建Label
+     * @warning 不支持使用字体名称创建
      */
     static Label* createWithTTF(const TTFConfig& ttfConfig, const std::string& text, TextHAlignment alignment = TextHAlignment::LEFT, int maxLineWidth = 0);
     
-    /* Creates a label with an FNT file,an initial string,horizontal alignment,max line width and the offset of image*/
+    /* 使用FNT文件，初始字符串，水平对齐方式，最大行数和图片偏移量创建Label*/
     static Label* createWithBMFont(const std::string& bmfontFilePath, const std::string& text,
         const TextHAlignment& alignment = TextHAlignment::LEFT, int maxLineWidth = 0, 
         const Vec2& imageOffset = Vec2::ZERO);
@@ -110,7 +111,7 @@ public:
     static Label * createWithCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
     static Label * createWithCharMap(const std::string& plistFile);
 
-    /** set TTF configuration for Label */
+    /** 设置Label的TTFConfig */
     virtual bool setTTFConfig(const TTFConfig& ttfConfig);
     virtual const TTFConfig& getTTFConfig() const { return _fontConfig;}
 
@@ -121,35 +122,35 @@ public:
     virtual bool setCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
     virtual bool setCharMap(const std::string& plistFile);
 
-    /* Sets the system font[font name or font file] of label*/
+    /* 设置Label的系统字体（字体名称或字体文件）*/
     virtual void setSystemFontName(const std::string& systemFont);
     virtual const std::string& getSystemFontName() const { return _systemFont;}
 
-    /* Sets the system font size of label.*/
+    /* 设置Label的系统字体大小*/
     virtual void setSystemFontSize(float fontSize);
     virtual float getSystemFontSize() const { return _systemFontSize;}
 
-    /** changes the string to render
-    * @warning It is as expensive as changing the string if you haven't set up TTF/BMFont/CharMap for the label.
-    */
+    /** 改变字符串内容并重新渲染
+     * @warning 如果你没有为Label设置TTF/BMFont/CharMap，会产生很大的开销
+     */
     virtual void setString(const std::string& text) override;
 
     virtual const std::string& getString() const override {  return _originalUTF8String; }
 
     /**
-     * Enable shadow for the label
+     * 显示阴影
      *
-     * @todo support blur for shadow effect
+     * @todo 支持模糊阴影效果
      */
     virtual void enableShadow(const Color4B& shadowColor = Color4B::BLACK,const Size &offset = Size(2,-2), int blurRadius = 0);
 
-    /** only support for TTF */
+    /** 只支持TTF */
     virtual void enableOutline(const Color4B& outlineColor,int outlineSize = -1);
 
-    /** only support for TTF */
+    /** 只支持TTF */
     virtual void enableGlow(const Color4B& glowColor);
 
-    /** disable shadow/outline/glow rendering */
+    /** 取消阴影/描边/发光渲染效果 */
     virtual void disableEffect();
 
     void setAlignment(TextHAlignment hAlignment) { setAlignment(hAlignment,_vAlignment);}
@@ -165,35 +166,35 @@ public:
 
     void setLineBreakWithoutSpace(bool breakWithoutSpace);
 
-    /** Sets the max line width of the label.
-     * The label's max line width be used for force line breaks if the set value not equal zero.
-     * The label's width and max line width has not always to be equal.
+    /** 设置Label的最大列数
+     * 在不等于0的情况下，Label的最大列数用于强制断行
+     * Label的宽度和最大列数不总是相等的
      */
     void setMaxLineWidth(unsigned int maxLineWidth);
     unsigned int getMaxLineWidth() { return _maxLineWidth;}
 
-    /** Sets the untransformed size of the label.
-     * The label's width be used for text align if the set value not equal zero.
-     * The label's max line width will be equal to the same value.
+    /** 设置Label的原始宽度.
+     * 在不等于0的情况下，Label的宽度被用于文字对齐
+     * Label的最大列数也会被赋值为宽度的值
      */
     void setWidth(unsigned int width) { setDimensions(width,_labelHeight);}
     unsigned int getWidth() const { return _labelWidth; }  
 
-    /** Sets the untransformed size of the label.
-     * The label's height be used for text align if the set value not equal zero.
-     * The text will display of incomplete when the size of label not enough to support display all text.
+    /** 设置Label的原始高度
+     * 在不等于0的情况下，Label的高度被用于文字对齐
+     * 如果Label的大小过小，文本内容会显示不完整
      */
     void setHeight(unsigned int height){ setDimensions(_labelWidth,height);}
     unsigned int getHeight() const { return _labelHeight;}   
 
-    /** Sets the untransformed size of the label in a more efficient way. */
+    /** 一种更有效设置Label大小的方法 */
     void setDimensions(unsigned int width,unsigned int height);
     const Size& getDimensions() const{ return _labelDimensions;}
 
-    /** update content immediately.*/
+    /** 立即刷新内容 */
     virtual void updateContent();
 
-    /** Sets the text color
+    /** 设置文字颜色
      *
      */
     virtual void setTextColor(const Color4B &color);
@@ -202,14 +203,14 @@ public:
 
     virtual Sprite * getLetter(int lettetIndex);
 
-    /** clip upper and lower margin for reduce height of label.
+    /** 剪裁上下边距以减少Label的高度
      */
     void setClipMarginEnabled(bool clipEnabled) { _clipEnabled = clipEnabled; }
     bool isClipMarginEnabled() const { return _clipEnabled; }
-    // font related stuff
+    // 字体相关
     int getCommonLineHeight() const;
     
-    // string related stuff
+    // 字符串相关
     int getStringNumLines() const { return _currNumLines;}
     int getStringLength() const;
 
@@ -321,12 +322,12 @@ protected:
 
     TTFConfig _fontConfig;
 
-    //compatibility with older LabelTTF
+    // 兼容旧的LabelTTF
     Sprite* _textSprite;
     FontDefinition _fontDefinition;
     bool  _compatibleMode;
 
-    //! used for optimization
+    //! 用于优化
     Sprite *_reusedLetter;
     Rect _reusedRect;
     int _limitShowCount;
@@ -375,7 +376,7 @@ protected:
 
     bool _clipEnabled;
     bool _blendFuncDirty;
-    bool _insideBounds;                     /// whether or not the sprite was inside bounds the previous frame
+    bool _insideBounds;                     /// 记录前一帧精灵是否在边界内
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Label);
