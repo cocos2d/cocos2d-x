@@ -76,6 +76,9 @@ std::string getCurAppPath(void)
     if (args!=nullptr && [args count]>=2) {
         extern std::string g_resourcePath;
         g_resourcePath = [[args objectAtIndex:1]UTF8String];
+        if (g_resourcePath.at(0) != '/') {
+            g_resourcePath="";
+        }
     }
     g_nsAppDelegate =self;
     AppDelegate app;
