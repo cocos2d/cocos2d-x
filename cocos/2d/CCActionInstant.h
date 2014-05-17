@@ -63,7 +63,7 @@ public:
 class CC_DLL Show : public ActionInstant
 {
 public:
-    /** 配置和初始化动作*/
+    /** 分配内存和初始化动作*/
     static Show * create();
 
 
