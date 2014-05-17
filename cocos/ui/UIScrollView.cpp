@@ -301,7 +301,7 @@ ssize_t ScrollView::getChildrenCount() const
     return _innerContainer->getChildrenCount();
 }
     
-Node* ScrollView::getChildByTag(int tag)
+Node* ScrollView::getChildByTag(int tag) const
 {
     return _innerContainer->getChildByTag(tag);
 }

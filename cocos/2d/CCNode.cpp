@@ -718,7 +718,7 @@ void Node::childrenAlloc(void)
     _children.reserve(4);
 }
 
-Node* Node::getChildByTag(int tag)
+Node* Node::getChildByTag(int tag) const
 {
     CCASSERT( tag != Node::INVALID_TAG, "Invalid tag");
 
