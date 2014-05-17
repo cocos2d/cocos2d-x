@@ -43,85 +43,85 @@ public:
     /// @name Children and Parent
     
     /**
-     * Adds a child to the container with z-order as 0.
+     * 添加一个z-order为0的child到容器中。
      *
-     * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
+     * 如果child被添加到一个“运行中(running)”的node，那么"onEnter"和"onEnterTransitionDidFinish"将被立即调用。
      *
-     * @param child A child node
+     * @param child  一个子节点(child node)。
      */
     virtual void addProtectedChild(Node * child);
     /**
-     * Adds a child to the container with a local z-order
+     * 添加一个child(定义localZOrder)到容器中。
      *
-     * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
+     * 如果child被添加到一个“运行中(running)”的node，那么"onEnter"和"onEnterTransitionDidFinish"将被立即调用。
      *
-     * @param child     A child node
-     * @param zOrder    Z order for drawing priority. Please refer to `setLocalZOrder(int)`
+     * @param child     一个子节点(child node)。
+     * @param zOrder    z-order决定绘制的优先级。 请参照 `setLocalZOrder(int)`
      */
     virtual void addProtectedChild(Node * child, int localZOrder);
     /**
-     * Adds a child to the container with z order and tag
+     * 添加一个child(定义localZOrder，定义tag)到容器中。
      *
-     * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
+     * 如果child被添加到一个“运行中(running)”的node，那么"onEnter"和"onEnterTransitionDidFinish"将被立即调用。
      *
-     * @param child     A child node
-     * @param zOrder    Z order for drawing priority. Please refer to `setLocalZOrder(int)`
-     * @param tag       An integer to identify the node easily. Please refer to `setTag(int)`
+     * @param child     一个子节点(child node)。
+     * @param zOrder    z-order决定绘制的优先级。 请参照 `setLocalZOrder(int)`
+     * @param tag       tag指定node的id。一般为整数。 请参照 `setTag(int)`
      */
     virtual void addProtectedChild(Node* child, int localZOrder, int tag);
     /**
-     * Gets a child from the container with its tag
+     * 从容器中获取child及其tag
      *
-     * @param tag   An identifier to find the child node.
+     * @param tag   tag指定子节点(child)的id
      *
-     * @return a Node object whose tag equals to the input parameter
+     * @返回一个Node对象，此Node的tag等于键入的参数。
      */
     virtual Node * getProtectedChildByTag(int tag);
     
     ////// REMOVES //////
     
     /**
-     * Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter.
+     * 从容器中删除一个child。它也将清除所有运行中的动作(取决于cleanup的参数)。
      *
-     * @param child     The child node which will be removed.
-     * @param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
+     * @param child     将被删除的子节点(child)。
+     * @param cleanup   参数为true 子节点(child)上所有运行的动作及回调函数将被清理，为false 时则不会。
      */
     virtual void removeProtectedChild(Node* child, bool cleanup = true);
     
     /**
-     * Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
+     * 根据tag的值(value)来删除child。它也将清除所有运行中的动作(取决于cleanup的参数)。
      *
-     * @param tag       An interger number that identifies a child node
-     * @param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
+     * @param tag       tag指定子节点(child)的id，一般为整数。
+     * @param cleanup   参数为true 子节点(child)上所有运行的动作及回调函数将被清理，为false 时则不会。
      */
     virtual void removeProtectedChildByTag(int tag, bool cleanup = true);
     /**
-     * Removes all children from the container with a cleanup.
+     * 删除容器中所有child。
      *
      * @see `removeAllChildrenWithCleanup(bool)`
      */
     virtual void removeAllProtectedChildren();
     /**
-     * Removes all children from the container, and do a cleanup to all running actions depending on the cleanup parameter.
+     * 删除容器中所有child，并清理所有运行中的动作(取决于cleanup的参数)。
      *
-     * @param cleanup   true if all running actions on all children nodes should be cleanup, false oterwise.
+     * @param cleanup   参数为true 子节点(child)上所有运行的动作及回调函数将被清理，为false 时则不会。
      * @js removeAllChildren
      * @lua removeAllChildren
      */
     virtual void removeAllProtectedChildrenWithCleanup(bool cleanup);
     
     /**
-     * Reorders a child according to a new z value.
+     * 重新赋予一个child新z值(z vlaue)。(此z值应为localZOrder的值，原文简写为z value。译者注)
      *
-     * @param child     An already added child node. It MUST be already added.
-     * @param localZOrder Z order for drawing priority. Please refer to setLocalZOrder(int)
+     * @param child     一个已经添加的子节点(child)。必须是已经被添加的。
+     * @param localZOrder  z-order决定绘制的优先级。 请参照 `setLocalZOrder(int)`
      */
     virtual void reorderProtectedChild(Node * child, int localZOrder);
     
     /**
-     * Sorts the children array once before drawing, instead of every time when a child is added or reordered.
-     * This appraoch can improves the performance massively.
-     * @note Don't call this manually unless a child added needs to be removed in the same frame
+     * 在绘制之前整理子节点数组(children array)，而不是每次子节点(child)被添加或重新排序(reordered)时。
+     * 此方法可以大大提高性能。
+     * @note 不要手动调用此方法，除非一个已被添加的child需要从同一帧(frame)中删除。
      */
     virtual void sortAllProtectedChildren();
     
@@ -133,27 +133,28 @@ public:
     
     virtual void onEnter() override;
     
-    /** Event callback that is invoked when the Node enters in the 'stage'.
-     * If the Node enters the 'stage' with a transition, this event is called when the transition finishes.
-     * If you override onEnterTransitionDidFinish, you shall call its parent's one, e.g. Node::onEnterTransitionDidFinish()
+    /**
+     * 当Node进入“stage”时，事件回调被调用。
+     * 如果Node进入‘stage’并开始变换(transition)，此事件将在变换(transition)完成后被调用。
+     * 如果你 override onEnterTransitionDidFinish, 你应该调用其父节点的此方法, 例如： Node::onEnterTransitionDidFinish()
      * @js NA
      * @lua NA
      */
     virtual void onEnterTransitionDidFinish() override;
     
     /**
-     * Event callback that is invoked every time the Node leaves the 'stage'.
-     * If the Node leaves the 'stage' with a transition, this event is called when the transition finishes.
-     * During onExit you can't access a sibling node.
-     * If you override onExit, you shall call its parent's one, e.g., Node::onExit().
+     * 事件回调在每次Node离开“stage”时被调用。
+     * 如果Node离开‘stage’并开始变换(transition)，此事件将在变换(transition)完成后被调用。
+     * 在 onExit执行期间你不能访问兄弟节点(sibling node)。
+     * 如果你 override onExit, 你应该调用其父节点的此方法， 例如, Node::onExit().
      * @js NA
      * @lua NA
      */
     virtual void onExit() override;
     
     /**
-     * Event callback that is called every time the Node leaves the 'stage'.
-     * If the Node leaves the 'stage' with a transition, this callback is called when the transition starts.
+     * 事件回调在每次Node离开“stage”时被调用。
+     * 如果Node离开‘stage’并开始变换(transition)，此事件将在变换(transition)开始时被调用。
      * @js NA
      * @lua NA
      */
@@ -168,10 +169,10 @@ CC_CONSTRUCTOR_ACCESS:
     
 protected:
     
-    /// helper that reorder a child
+    /// helper重新排序一个child
     void insertProtectedChild(Node* child, int z);
     
-    Vector<Node*> _protectedChildren;        ///< array of children nodes
+    Vector<Node*> _protectedChildren;        ///< 子节点(children nodes)数组
     bool _reorderProtectedChildDirty;
     
 private:
