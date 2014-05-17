@@ -54,7 +54,7 @@ public:
     {
     }
     bool hasVertexAttrib(int attrib);
-    bool initFrom(std::vector<float>& posions, std::vector<float>& normals, std::vector<float>& texs, const std::vector<unsigned short>& indices);
+    bool initFrom(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices);
     
 protected:
     int _vertexsizeBytes;
@@ -68,7 +68,7 @@ class Mesh : public Ref
 {
 public:
     //create
-    static Mesh* create(std::vector<float>& posions, std::vector<float>& normals, std::vector<float>& texs, const std::vector<unsigned short>& indices);
+    static Mesh* create(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices);
 
     //get vertex buffer
     inline GLuint getVertexBuffer() const { return _vertexBuffer; }
@@ -92,7 +92,7 @@ public:
 protected:
     Mesh();
     virtual ~Mesh();
-    bool init(std::vector<float>& posions, std::vector<float>& normals, std::vector<float>& texs, const std::vector<unsigned short>& indices);
+    bool init(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices);
 
     //build buffer
     void buildBuffer();

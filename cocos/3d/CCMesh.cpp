@@ -25,14 +25,14 @@ bool RenderMeshData::hasVertexAttrib(int attrib)
     return false;
 }
 
-bool RenderMeshData::initFrom(std::vector<float>& posions, std::vector<float>& normals, std::vector<float>& texs, const std::vector<unsigned short>& indices)
+bool RenderMeshData::initFrom(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices)
 {
-    CC_ASSERT(posions.size()<65536 * 3 && "index may out of bound");
+    CC_ASSERT(positions.size()<65536 * 3 && "index may out of bound");
     
     _vertexAttribs.clear();
     _vertexsizeBytes = 0;
     
-    _vertexNum = posions.size() / 3; //number of vertex
+    _vertexNum = positions.size() / 3; //number of vertex
     if (_vertexNum == 0)
         return false;
     
@@ -74,9 +74,9 @@ bool RenderMeshData::initFrom(std::vector<float>& posions, std::vector<float>& n
     //position, normal, texCoordinate into _vertexs
     for(int i = 0; i < _vertexNum; i++)
     {
-        _vertexs.push_back(posions[i * 3]);
-        _vertexs.push_back(posions[i * 3 + 1]);
-        _vertexs.push_back(posions[i * 3 + 2]);
+        _vertexs.push_back(positions[i * 3]);
+        _vertexs.push_back(positions[i * 3 + 1]);
+        _vertexs.push_back(positions[i * 3 + 2]);
         
         if (hasNormal)
         {
@@ -111,10 +111,10 @@ Mesh::~Mesh()
     cleanAndFreeBuffers();
 }
 
-Mesh* Mesh::create(std::vector<float>& posions, std::vector<float>& normals, std::vector<float>& texs, const std::vector<unsigned short>& indices)
+Mesh* Mesh::create(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices)
 {
     auto mesh = new Mesh();
-    if(mesh && mesh->init(posions, normals, texs, indices))
+    if(mesh && mesh->init(positions, normals, texs, indices))
     {
         mesh->autorelease();
         return mesh;
@@ -123,9 +123,9 @@ Mesh* Mesh::create(std::vector<float>& posions, std::vector<float>& normals, std
     return nullptr;
 }
 
-bool Mesh::init(std::vector<float>& posions, std::vector<float>& normals, std::vector<float>& texs, const std::vector<unsigned short>& indices)
+bool Mesh::init(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices)
 {
-    bool bRet = _renderdata.initFrom(posions, normals, texs, indices);
+    bool bRet = _renderdata.initFrom(positions, normals, texs, indices);
     if (!bRet)
         return false;
     
