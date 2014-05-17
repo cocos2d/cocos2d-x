@@ -125,7 +125,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
       <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <AdditionalIncludeDirectories>$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\wp8;$(EngineRoot)external\jpeg\include\wp8;$(EngineRoot)external\curl\include\wp8;$(EngineRoot)external\curl\include\wp8\curl;$(EngineRoot)external\tiff\include\wp8;$(EngineRoot)external\freetype2\include\wp8;$(EngineRoot)external\wp8-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\xxhash;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -151,7 +151,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
       <PreprocessorDefinitions>_LIB;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <AdditionalIncludeDirectories>$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\wp8;$(EngineRoot)external\jpeg\include\wp8;$(EngineRoot)external\curl\include\wp8;$(EngineRoot)external\curl\include\wp8\curl;$(EngineRoot)external\tiff\include\wp8;$(EngineRoot)external\freetype2\include\wp8;$(EngineRoot)external\wp8-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\xxhash;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -312,12 +312,10 @@
     <ClCompile Include="..\platform\winrt\CCDevice.cpp" />
     <ClCompile Include="..\platform\winrt\CCFileUtilsWinRT.cpp" />
     <ClCompile Include="..\platform\winrt\CCFreeTypeFont.cpp" />
-    <ClCompile Include="..\platform\winrt\CCGLView.cpp" />
     <ClCompile Include="..\platform\winrt\CCPrecompiledShaders.cpp" />
     <ClCompile Include="..\platform\winrt\CCPThreadWinRT.cpp" />
     <ClCompile Include="..\platform\winrt\CCStdC.cpp" />
     <ClCompile Include="..\platform\winrt\CCWinRTUtils.cpp" />
-    <ClCompile Include="..\platform\winrt\DirectXBase.cpp" />
     <ClCompile Include="..\platform\winrt\inet_ntop_winrt.cpp" />
     <ClCompile Include="..\platform\winrt\InputEvent.cpp" />
     <ClCompile Include="..\platform\winrt\pch.cpp" />
@@ -510,14 +508,12 @@
     <ClInclude Include="..\platform\winrt\CCFileUtilsWinRT.h" />
     <ClInclude Include="..\platform\winrt\CCFreeTypeFont.h" />
     <ClInclude Include="..\platform\winrt\CCGL.h" />
-    <ClInclude Include="..\platform\winrt\CCGLView.h" />
     <ClInclude Include="..\platform\winrt\CCGL_Angle.h" />
     <ClInclude Include="..\platform\winrt\CCPlatformDefine.h" />
     <ClInclude Include="..\platform\winrt\CCPrecompiledShaders.h" />
     <ClInclude Include="..\platform\winrt\CCPThreadWinRT.h" />
     <ClInclude Include="..\platform\winrt\CCStdC.h" />
     <ClInclude Include="..\platform\winrt\CCWinRTUtils.h" />
-    <ClInclude Include="..\platform\winrt\DirectXBase.h" />
     <ClInclude Include="..\platform\winrt\DirectXHelper.h" />
     <ClInclude Include="..\platform\winrt\inet_ntop_winrt.h" />
     <ClInclude Include="..\platform\winrt\InputEvent.h" />
