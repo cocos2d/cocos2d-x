@@ -26,18 +26,18 @@ THE SOFTWARE.
 
 /**
  @file
- based on Chipmunk cpArray.
- ccArray is a faster alternative to NSMutableArray, it does pretty much the
- same thing (stores NSObjects and retains/releases them appropriately). It's
- faster because:
- - it uses a plain C interface so it doesn't incur Objective-c messaging overhead
- - it assumes you know what you're doing, so it doesn't spend time on safety checks
- (index out of bounds, required capacity etc.)
- - comparisons are done using pointer equality instead of isEqual
+ 基于Chipmunk的cpArray。
+ ccArray是一个更快的NSMutableArray。
+ 它和NSMutableArray几乎一样 (适当的存储、保持和释放NSObjects)。
+ 它比NSMutableArray快是因为:
+ - 它用原生C接口所以它没有Objective-c的消息机制开销
+ - 它假定你知道你在做什么，所以它没有在安全检查上花时间
+   （数组越界, 需要的容量等）
+ - 对象比较时用指针比较代替了isEqual函数
 
- There are 2 kind of functions:
- - ccArray functions that manipulates objective-c objects (retain and release are performed)
- - ccCArray functions that manipulates values like if they were standard C structures (no retain/release is performed)
+ 它有两种用法：
+ - ccArray函数操纵objective-c对象(进行保留和释放操作)
+ - ccCArray函数像标准的C结构体一样操纵值(不进行保留和释放操作)
  */
 
 #ifndef CC_ARRAY_H
