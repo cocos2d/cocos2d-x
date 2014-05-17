@@ -1083,7 +1083,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(TargetedAction);
 };
 
-// end of actions group
+// 结束
 /// @}
 
 NS_CC_END
