@@ -46,8 +46,8 @@ public:
     
     static bool releaseFontAtlas(FontAtlas *atlas);
 
-    /** Removes cached data.
-     It will purge the textures atlas and if multiple texture exist in one FontAtlas.
+    /** 清空缓存数据。
+     如果多种纹理贴图(multiple texture)存在于一个FontAtlas中，它亦将清空纹理贴图集（textures atlas）。
      */
     static void purgeCachedData();
     
