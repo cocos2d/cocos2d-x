@@ -55,7 +55,6 @@ protected:
  #endif
 };
 
-
 NS_CC_END
 
 #endif // __CCSPRIT3DDATA_CACHE_H__

@@ -47,11 +47,8 @@ protected:
     void genGLProgramState();
 
     Mesh              *_mesh;
-    
     MeshCommand        _meshCommand;
-    
     Texture2D*        _texture;
-    
     BlendFunc _blend;
     
 };

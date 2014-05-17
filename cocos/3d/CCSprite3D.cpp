@@ -19,7 +19,6 @@ NS_CC_BEGIN
 
 std::string s_attributeNames[] = {GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::ATTRIBUTE_NAME_NORMAL};
 
-
 Sprite3D* Sprite3D::create(const std::string &modelPath)
 {
     if (modelPath.length() < 4)
@@ -184,7 +183,6 @@ GLProgram* Sprite3D::getDefGLProgram(bool textured)
     }
 }
 
-
 void Sprite3D::setTexture(const std::string& texFile)
 {
     auto tex = Director::getInstance()->getTextureCache()->addImage(texFile);
@@ -228,6 +226,5 @@ const BlendFunc& Sprite3D::getBlendFunc() const
 {
     return _blend;
 }
-
 
 NS_CC_END

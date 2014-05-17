@@ -82,7 +82,6 @@ public:
 
 };
 
-
 NS_CC_END
 
 #endif  // _TINY_OBJ_LOADER_H
