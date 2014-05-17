@@ -82,6 +82,11 @@
 
 
 --------------------------------------------------------
+-- the cc UserDefault
+-- @field [parent=#cc] UserDefault#UserDefault UserDefault preloaded module
+
+
+--------------------------------------------------------
 -- the cc EventListenerTouchOneByOne
 -- @field [parent=#cc] EventListenerTouchOneByOne#EventListenerTouchOneByOne EventListenerTouchOneByOne preloaded module
 
@@ -1122,6 +1127,11 @@
 
 
 --------------------------------------------------------
+-- the cc TextureCache
+-- @field [parent=#cc] TextureCache#TextureCache TextureCache preloaded module
+
+
+--------------------------------------------------------
 -- the cc Application
 -- @field [parent=#cc] Application#Application Application preloaded module
 
@@ -1144,16 +1154,6 @@
 --------------------------------------------------------
 -- the cc SpriteFrameCache
 -- @field [parent=#cc] SpriteFrameCache#SpriteFrameCache SpriteFrameCache preloaded module
-
-
---------------------------------------------------------
--- the cc UserDefault
--- @field [parent=#cc] UserDefault#UserDefault UserDefault preloaded module
-
-
---------------------------------------------------------
--- the cc TextureCache
--- @field [parent=#cc] TextureCache#TextureCache TextureCache preloaded module
 
 
 --------------------------------------------------------
