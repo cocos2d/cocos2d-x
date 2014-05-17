@@ -57,7 +57,7 @@ typedef struct PhysicsContactData
 }PhysicsContactData;
 
 /**
- * @brief Contact infomation. it will created automatically when two shape contact with each other. and it will destoried automatically when two shape separated.
+ * @brief 碰撞信息。当两个形状彼此发生接触的时候会自动创建，当两个形状彼此分离的时候自动销毁。
  */
 class PhysicsContact : public EventCustom
 {
@@ -72,21 +72,21 @@ public:
         SEPERATE
     };
     
-    /** get contact shape A. */
+    /** 获取碰撞形状A. */
     inline PhysicsShape* getShapeA() const { return _shapeA; }
-    /** get contact shape B. */
+    /** 获取碰撞形状B. */
     inline PhysicsShape* getShapeB() const { return _shapeB; }
-    /** get contact data */
+    /** 获取碰撞信息 */
     inline const PhysicsContactData* getContactData() const { return _contactData; }
-    /** get previous contact data */
+    /** 获取之前碰撞信息 */
     inline const PhysicsContactData* getPreContactData() const { return _preContactData; }
-    /** get data. */
+    /** 获取data. */
     inline void* getData() const { return _data; }
     /**
-     * @brief set data to contact. you must manage the memory yourself, Generally you can set data at contact begin, and distory it at contact seperate.
+     * @brief 设置碰撞信息。你必须自己管理内存，总体来说你可以在碰撞开始设置信息，在碰撞结束后销毁信息。
      */
     inline void setData(void* data) { _data = data; }
-    /** get the event code */
+    /** 获取事件码 */
     EventCode getEventCode() const { return _eventCode; };
 
 private:
@@ -127,24 +127,25 @@ private:
 };
 
 /*
- * @brief presolve value generated when onContactPreSolve called.
+ * @brief 当 onContactPreSolve 被调用时生成presovle value
  */
 class PhysicsContactPreSolve
 {
 public:
-    /** get restitution between two bodies*/
+    /** 获取两个body间的恢复系数 */
     float getRestitution() const;
-    /** get friction between two bodies*/
+    /** 获取两个body间的摩擦系数 */
     float getFriction() const;
-    /** get surface velocity between two bodies*/
+    /** 获取两个body间的表面速度 */
     Vec2 getSurfaceVelocity() const;
-    /** set the restitution*/
+    /** 设置恢复系数 */
     void setRestitution(float restitution);
-    /** set the friction*/
+    /** 设置摩擦力 */
     void setFriction(float friction);
-    /** set the surface velocity*/
+    /** 设置表面速度 */
     void setSurfaceVelocity(const Vect& velocity);
-    /** ignore the rest of the contact presolve and postsolve callbacks */
+    /** 忽视碰撞的其他presolve 和 postsolve 回调。
+     ignore the rest of the contact presolve and postsolve callbacks */
     void ignore();
     
 private:
@@ -158,16 +159,17 @@ private:
 };
 
 /*
- * @brief postsolve value generated when onContactPostSolve called.
+ * @brief 当onContactPostSolve被调用时生成postsolve value
+ postsolve value generated when onContactPostSolve called.
  */
 class PhysicsContactPostSolve
 {
 public:
-    /** get restitution between two bodies*/
+    /** 获取两个body间恢复系数 */
     float getRestitution() const;
-    /** get friction between two bodies*/
+    /** 获取两个body间摩擦系数 */
     float getFriction() const;
-    /** get surface velocity between two bodies*/
+    /** 获取两个body间表面速度 */
     Vec2 getSurfaceVelocity() const;
     
 private:
@@ -180,38 +182,38 @@ private:
     friend class EventListenerPhysicsContact;
 };
 
-/* contact listener. it will recive all the contact callbacks. */
+/* 碰撞监听器。它会收到所有的碰撞回调。 */
 class EventListenerPhysicsContact : public EventListenerCustom
 {
 public:
-    /** create the listener */
+    /** 创建监听器 */
     static EventListenerPhysicsContact* create();
     virtual bool checkAvailable() override;
     virtual EventListenerPhysicsContact* clone() override;
     
 protected:
     /**
-     * it will be call when two body have contact.
-     * if return false, it will not invoke callbacks
+     * 当两个body有碰撞时会被调用。
+     * 如果返回false,它不会调用回调。
      */
     virtual bool hitTest(PhysicsShape* shapeA, PhysicsShape* shapeB);
     
 public:
     /*
-     * @brief it will called at two shapes start to contact, and only call it once.
+     * @brief 当两个形状开始碰撞时被调用，只会被调用一次。
      */
     std::function<bool(PhysicsContact& contact)> onContactBegin;
     /*
-     * @brief Two shapes are touching during this step. Return false from the callback to make world ignore the collision this step or true to process it normally. Additionally, you may override collision values, restitution, or surface velocity values.
+     * @brief 在这个step中两个形状正在接触。从回调函数返回false使得物理世界在该step忽视这次冲突，返回true让物理世界正常地处理它。另外，你也许会重写冲突值,恢复系数，或是表面速度值。
      */
     std::function<bool(PhysicsContact& contact, PhysicsContactPreSolve& solve)> onContactPreSolve;
     /*
-     * @brief Two shapes are touching and their collision response has been processed. You can retrieve the collision impulse or kinetic energy at this time if you want to use it to calculate sound volumes or damage amounts. See cpArbiter for more info
+     * @brief 两个形状正在接触，她们的冲突响应已被处理。如果你想使用它去计算音量大小或是伤害值，在这个时候你可以检索这个冲突推动力或是动能。通过cpArbiter了解更多。
      */
     std::function<void(PhysicsContact& contact, const PhysicsContactPostSolve& solve)> onContactPostSolve;
     /*
-     * @brief it will called at two shapes separated, and only call it once.
-     * onContactBegin and onContactSeperate will called in pairs.
+     * @brief 当两个形状分离会被调用，只会被调用一次。
+     * onContactBegin 和 onContactSeperate会被成对调用。
      */
     std::function<void(PhysicsContact& contact)> onContactSeperate;
     
@@ -226,7 +228,7 @@ protected:
     friend class PhysicsWorld;
 };
 
-/** this event listener only be called when bodyA and bodyB have contacts */
+/** 这个时间监听器只会在bodyA和bodyB发生碰撞时被调用。 */
 class EventListenerPhysicsContactWithBodies : public EventListenerPhysicsContact
 {
 public:
@@ -244,7 +246,7 @@ protected:
     virtual ~EventListenerPhysicsContactWithBodies();
 };
 
-/** this event listener only be called when shapeA and shapeB have contacts */
+/** 这个事件监听器只会在shapeA和shapeB发生碰撞时会被调用。 */
 class EventListenerPhysicsContactWithShapes : public EventListenerPhysicsContact
 {
 public:
@@ -262,7 +264,7 @@ protected:
     virtual ~EventListenerPhysicsContactWithShapes();
 };
 
-/** this event listener only be called when shapeA or shapeB is in the group your specified */
+/** 这个事件监听器只会在shapeA和shapeB是在你指定的分组下才会被调用。 */
 class EventListenerPhysicsContactWithGroup : public EventListenerPhysicsContact
 {
 public:
