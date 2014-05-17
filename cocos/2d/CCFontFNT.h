@@ -38,8 +38,8 @@ class FontFNT : public Font
 public:
     
     static FontFNT * create(const std::string& fntFilePath, const Vec2& imageOffset = Vec2::ZERO);
-    /** Purges the cached data.
-    Removes from memory the cached configurations and the atlas name dictionary.
+    /** 清理缓存的数据
+    将缓存的字体配置数据和字体文件名称清理出内存
     */
     static void purgeCachedData();
     virtual int* getHorizontalKerningForTextUTF16(const std::u16string& text, int &outNumLetters) const override;
