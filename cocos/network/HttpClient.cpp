@@ -60,7 +60,7 @@ static bool s_need_quit = false;
 static Vector<HttpRequest*>*  s_requestQueue = nullptr;
 static Vector<HttpResponse*>* s_responseQueue = nullptr;
 
-static HttpClient *s_pHttpClient = nullptr; // pointer to singleton
+static HttpClient *s_pHttpClient = nullptr; // 单例的指针
 
 static char s_errorBuffer[CURL_ERROR_SIZE] = {0};
 
@@ -68,27 +68,27 @@ typedef size_t (*write_callback)(void *ptr, size_t size, size_t nmemb, void *str
 
 static std::string s_cookieFilename = "";
 
-// Callback function used by libcurl for collect response data
+// 被libcurl用来收集响应数据的回调函数
 static size_t writeData(void *ptr, size_t size, size_t nmemb, void *stream)
 {
     std::vector<char> *recvBuffer = (std::vector<char>*)stream;
     size_t sizes = size * nmemb;
     
-    // add data to the end of recvBuffer
-    // write data maybe called more than once in a single request
+    // 添加数据到recvBuffer的尾部
+    // 写数据在单个请求中可能会被不止一次调用
     recvBuffer->insert(recvBuffer->end(), (char*)ptr, (char*)ptr+sizes);
     
     return sizes;
 }
 
-// Callback function used by libcurl for collect header data
+// 被libcurl用来收集报头数据
 static size_t writeHeaderData(void *ptr, size_t size, size_t nmemb, void *stream)
 {
     std::vector<char> *recvBuffer = (std::vector<char>*)stream;
     size_t sizes = size * nmemb;
     
-    // add data to the end of recvBuffer
-    // write data maybe called more than once in a single request
+    // 添加数据到recvBuffer的尾部
+    // 写数据在单个请求中可能会被不止一次调用
     recvBuffer->insert(recvBuffer->end(), (char*)ptr, (char*)ptr+sizes);
     
     return sizes;
@@ -102,7 +102,7 @@ static int processDeleteTask(HttpRequest *request, write_callback callback, void
 // int processDownloadTask(HttpRequest *task, write_callback callback, void *stream, int32_t *errorCode);
 
 
-// Worker thread
+// 工作线程
 void HttpClient::networkThread()
 {    
     HttpRequest *request = nullptr;
@@ -116,12 +116,12 @@ void HttpClient::networkThread()
             break;
         }
         
-        // step 1: send http request if the requestQueue isn't empty
+        // 第一步：如果请求队列不为空，则发送http请求
         request = nullptr;
         
         s_requestQueueMutex.lock();
         
-        //Get request task from queue
+        //从队列中获取请求任务
         
         if (!s_requestQueue->empty())
         {
@@ -133,25 +133,25 @@ void HttpClient::networkThread()
         
         if (nullptr == request)
         {
-            // Wait for http request tasks from main thread
+            // 等待来自主线程中http请求任务
             std::unique_lock<std::mutex> lk(s_SleepMutex); 
             s_SleepCondition.wait(lk);
             continue;
         }
         
-        // step 2: libcurl sync access
+        // 第二步：libcurl 同步访问
         
-        // Create a HttpResponse object, the default setting is http access failed
+        // 创建一个 HttpResponse 对象，默认的设置是http访问失败
         HttpResponse *response = new HttpResponse(request);
         
-        // request's refcount = 2 here, it's retained by HttpRespose constructor
+        // 这里请求的 refcount = 2, 被HttpRespose的构造器保留
         request->release();
-        // ok, refcount = 1 now, only HttpResponse hold it.
+        // 好的，现在refcount = 1了，只有HttpResponse保持着它
         
         long responseCode = -1;
         int retValue = 0;
 
-        // Process the request -> get response packet
+        // 处理请求 -> 获取响应包
         switch (request->getRequestType())
         {
             case HttpRequest::Type::GET: // HTTP GET
@@ -195,7 +195,7 @@ void HttpClient::networkThread()
                 break;
         }
                 
-        // write data to HttpResponse
+        // 写入数据到 HttpResponse
         response->setResponseCode(responseCode);
         
         if (retValue != 0) 
@@ -209,7 +209,7 @@ void HttpClient::networkThread()
         }
 
         
-        // add response packet into queue
+        // 添加响应包到队列中
         s_responseQueueMutex.lock();
         s_responseQueue->pushBack(response);
         s_responseQueueMutex.unlock();
@@ -219,7 +219,7 @@ void HttpClient::networkThread()
         }
     }
     
-    // cleanup: if worker thread received quit signal, clean up un-completed request queue
+    // 清除：如果工作线程接收到退出信号，则清除没有完成的请求队列
     s_requestQueueMutex.lock();
     s_requestQueue->clear();
     s_requestQueueMutex.unlock();
@@ -234,7 +234,7 @@ void HttpClient::networkThread()
     
 }
 
-//Configure curl's timeout property
+// 配置curl的超时属性
 static bool configureCURL(CURL *handle)
 {
     if (!handle) {
@@ -257,8 +257,8 @@ static bool configureCURL(CURL *handle)
     curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0L);
     curl_easy_setopt(handle, CURLOPT_SSL_VERIFYHOST, 0L);
     
-    // FIXED #3224: The subthread of CCHttpClient interrupts main thread if timeout comes.
-    // Document is here: http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTNOSIGNAL 
+    // 修复#3224：如果发生超时，子线程中的CCHttpClient会中断主线程
+    // 文档在：http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTNOSIGNAL 
     curl_easy_setopt(handle, CURLOPT_NOSIGNAL, 1L);
 
     return true;
@@ -266,9 +266,9 @@ static bool configureCURL(CURL *handle)
 
 class CURLRaii
 {
-    /// Instance of CURL
+    /// CURL的实例
     CURL *_curl;
-    /// Keeps custom header data
+    /// 保存自定义报头数据
     curl_slist *_headers;
 public:
     CURLRaii()
@@ -281,7 +281,7 @@ public:
     {
         if (_curl)
             curl_easy_cleanup(_curl);
-        /* free the linked list for header data */
+        /* 释放报头数据的链表 */
         if (_headers)
             curl_slist_free_all(_headers);
     }
@@ -293,10 +293,10 @@ public:
     }
 
     /**
-     * @brief Inits CURL instance for common usage
-     * @param request Null not allowed
-     * @param callback Response write callback
-     * @param stream Response write stream
+     * @brief 为常见用法初始化CURL实例
+     * @param 空的请求不被允许
+     * @param 响应回调写入回调
+     * @param 响应流写入流
      */
     bool init(HttpRequest *request, write_callback callback, void *stream, write_callback headerCallback, void *headerStream)
     {
@@ -305,14 +305,14 @@ public:
         if (!configureCURL(_curl))
             return false;
 
-        /* get custom header data (if set) */
+        /* 获取自定义的报头数据（如果设置了） */
        	std::vector<std::string> headers=request->getHeaders();
         if(!headers.empty())
         {
-            /* append custom headers one by one */
+            /* 一个一个的附加自定义报头 */
             for (std::vector<std::string>::iterator it = headers.begin(); it != headers.end(); ++it)
                 _headers = curl_slist_append(_headers,it->c_str());
-            /* set custom headers for curl */
+            /* 设置curl的自定义报头 */
             if (!setOption(CURLOPT_HTTPHEADER, _headers))
                 return false;
         }
@@ -333,7 +333,7 @@ public:
         
     }
 
-    /// @param responseCode Null not allowed
+    /// @param 响应码为空不被允许
     bool perform(long *responseCode)
     {
         if (CURLE_OK != curl_easy_perform(_curl))
@@ -343,13 +343,13 @@ public:
             CCLOGERROR("Curl curl_easy_getinfo failed: %s", curl_easy_strerror(code));
             return false;
         }
-        // Get some mor data.
+        // 获取更多数据
         
         return true;
     }
 };
 
-//Process Get Request
+//处理Get请求
 static int processGetTask(HttpRequest *request, write_callback callback, void *stream, long *responseCode, write_callback headerCallback, void *headerStream)
 {
     CURLRaii curl;
@@ -359,7 +359,7 @@ static int processGetTask(HttpRequest *request, write_callback callback, void *s
     return ok ? 0 : 1;
 }
 
-//Process POST Request
+//处理POST请求
 static int processPostTask(HttpRequest *request, write_callback callback, void *stream, long *responseCode, write_callback headerCallback, void *headerStream)
 {
     CURLRaii curl;
@@ -371,7 +371,7 @@ static int processPostTask(HttpRequest *request, write_callback callback, void *
     return ok ? 0 : 1;
 }
 
-//Process PUT Request
+//处理PUT请求
 static int processPutTask(HttpRequest *request, write_callback callback, void *stream, long *responseCode, write_callback headerCallback, void *headerStream)
 {
     CURLRaii curl;
@@ -383,7 +383,7 @@ static int processPutTask(HttpRequest *request, write_callback callback, void *s
     return ok ? 0 : 1;
 }
 
-//Process DELETE Request
+//处理DELETE请求
 static int processDeleteTask(HttpRequest *request, write_callback callback, void *stream, long *responseCode, write_callback headerCallback, void *headerStream)
 {
     CURLRaii curl;
@@ -394,7 +394,7 @@ static int processDeleteTask(HttpRequest *request, write_callback callback, void
     return ok ? 0 : 1;
 }
 
-// HttpClient implementation
+// 实现HttpClient 
 HttpClient* HttpClient::getInstance()
 {
     if (s_pHttpClient == nullptr) {
@@ -435,7 +435,7 @@ HttpClient::~HttpClient()
     s_pHttpClient = nullptr;
 }
 
-//Lazy create semaphore & mutex & thread
+//懒创建信号量、互斥和线程
 bool HttpClient::lazyInitThreadSemphore()
 {
     if (s_requestQueue != nullptr) {
@@ -454,7 +454,7 @@ bool HttpClient::lazyInitThreadSemphore()
     return true;
 }
 
-//Add a get task to queue
+//添加一个get任务到队列中
 void HttpClient::send(HttpRequest* request)
 {    
     if (false == lazyInitThreadSemphore()) 
@@ -474,16 +474,16 @@ void HttpClient::send(HttpRequest* request)
         s_requestQueue->pushBack(request);
         s_requestQueueMutex.unlock();
         
-        // Notify thread start to work
+        // 通知线程开始执行任务
         s_SleepCondition.notify_one();
     }
 }
 
-// Poll and notify main thread if responses exists in queue
+// 如果队列中有响应则会Poll并通知主线程
 void HttpClient::dispatchResponseCallbacks()
 {
     // log("CCHttpClient::dispatchResponseCallbacks is running");
-    //occurs when cocos thread fires but the network thread has already quited
+    // 当cocos线程崩溃但是网络线程已经退出的时候发生
     if (nullptr == s_responseQueue) {
         return;
     }
