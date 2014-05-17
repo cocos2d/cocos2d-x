@@ -41,12 +41,12 @@ public:
     virtual ~GLBufferedNode();
 
     /**
-     * Load the given data into this Node's GL Buffer. Needed for WebGL, as it does not support client-side arrays.
+     * 将传入数据载入当前Node的GL缓存。WebGL因为不支持客户端数组，需要用到此方法。
      */
     void setGLBufferData(void *buf, GLuint bufSize, int slot);
     void setGLIndexData(void *buf, GLuint bufSize, int slot);
 
-    // We allocate 4 buffer objs per node, and index into them as slots.
+    // 给每个Node分配4个缓存对象，并以槽的形式索引管理。
 #define BUFFER_SLOTS 4
     GLuint _bufferObject[BUFFER_SLOTS];
     GLuint _bufferSize[BUFFER_SLOTS];
