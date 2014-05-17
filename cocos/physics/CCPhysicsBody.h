@@ -1,4 +1,4 @@
-/****************************************************************************
+    /****************************************************************************
  Copyright (c) 2013 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
@@ -70,8 +70,8 @@ public:
     /** 创建一个包含box形状的body */
     static PhysicsBody* createBox(const Size& size, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
     /**
-     * @brief Create a body contains a polygon shape.
-     * points is an array of Vec2 structs defining a convex hull with a clockwise winding.
+     * @brief 创建一个包含多边形的body。
+     * points 是一个包含Vec2结构的数组，用顺时针的顶点定义凸多边形。
      */
     static PhysicsBody* createPolygon(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
     
@@ -85,21 +85,21 @@ public:
     static PhysicsBody* createEdgeChain(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
     
     /*
-     * @brief add a shape to body
-     * @param shape the shape to be added
-     * @param addMassAndMoment if this is true, the shape's mass and moment will be added to body. the default is true
+     * @brief 给body增加一个形状
+     * @param shape 增加的形状
+     * @param addMassAndMoment 如果true，这个形状的质量和力矩也将添加到body去
      */
     virtual PhysicsShape* addShape(PhysicsShape* shape, bool addMassAndMoment = true);
     /*
-     * @brief remove a shape from body
-     * @param shape the shape to be removed
-     * @param reduceMassAndMoment if this is true, the body mass and moment will be reduced by shape. the default is true
+     * @brief 在body中移除一个形状
+     * @param shape 移除的形状
+     * @param reduceMassAndMoment 如果true，body的质量和力矩将被这个形状减少。默认是true。
      */
     void removeShape(PhysicsShape* shape, bool reduceMassAndMoment = true);
     /*
-     * @brief remove a shape from body
-     * @param tag the tag of the shape to be removed
-     * @param reduceMassAndMoment if this is true, the body mass and moment will be reduced by shape. the default is true
+     * @brief 在body中移除一个形状
+     * @param tag 移除的形状的tag
+     * @param reduceMassAndMoment 如果true，body的质量和力矩将被这个形状减少。默认是true。
      */
     void removeShape(int tag, bool reduceMassAndMoment = true);
     /* 移除所有形状 */
@@ -205,47 +205,48 @@ public:
     float getRotationOffset() const;
     
     /**
-     * @brief test the body is dynamic or not.
-     * a dynamic body will effect with gravity.
+     * @brief 获取这个body是否动态的
+     * 一个动态的body会受重力影响。
      */
     inline bool isDynamic() const { return _dynamic; }
     /**
-     * @brief set dynamic to body.
-     * a dynamic body will effect with gravity.
+     * @brief 设置body是否动态的
+     *一个动态的body会受重力影响。
      */
     void setDynamic(bool dynamic);
     
     /**
-     * @brief set the body mass.
-     * @note if you need add/subtract mass to body, don't use setMass(getMass() +/- mass), because the mass of body may be equal to PHYSICS_INFINITY, it will cause some unexpected result, please use addMass() instead.
+     * @brief 设置body的质量
+     * @note 如果你需要增加/减少 body 的质量，不要使用setMass(getMass() +/- mass),因为body的质量可能会等于PHYSICS_INFINITY，这样会导致一些不可预期的结果，请使用addMass()代替。
      */
     void setMass(float mass);
     /** 获取body的质量 */
     inline float getMass() const { return _mass; }
     /**
-     * @brief add mass to body.
-     * if _mass(mass of the body) == PHYSICS_INFINITY, it remains.
-     * if mass == PHYSICS_INFINITY, _mass will be PHYSICS_INFINITY.
-     * if mass == -PHYSICS_INFINITY, _mass will not change.
-     * if mass + _mass <= 0, _mass will equal to MASS_DEFAULT(1.0)
-     * other wise, mass = mass + _mass;
+     * @brief 增加body的质量
+     * 如果_mass 等于PHYSICS_INFINITY，它会保持原样。
+     * 如果mass等于PHYSICS_INFINITY,_mass会变成PHYSICS_INFINITY.
+     * 如果mass等于-PHYSICS_INFINITY,_mass不会改变。
+     * 如果mass+_mass() <= 0,_mass会等于MASS_DEFAULT（1.0）
+     * 否则，_mass = mass + _mass;
      */
     void addMass(float mass);
     
     /**
-     * @brief set the body moment of inertia.
-     * @note if you need add/subtract moment to body, don't use setMoment(getMoment() +/- moment), because the moment of body may be equal to PHYSICS_INFINITY, it will cause some unexpected result, please use addMoment() instead.
+     * @brief 设置body的惯性力矩
+     * @note 如果你需要增加/减少 body 的力矩，不要使用setMoment(getMoment() +/- moment),因为body的力矩可能会等于PHYSICS_INFINITY，这样会导致一些不可预期的结果，请使用addMoment()代替。
+     if you need add/subtract moment to body, don't use setMoment(getMoment() +/- moment), because the moment of body may be equal to PHYSICS_INFINITY, it will cause some unexpected result, please use addMoment() instead.
      */
     void setMoment(float moment);
     /** 获取body惯性的力矩 */
     inline float getMoment() const { return _moment; }
     /**
-     * @brief add moment of inertia to body.
-     * if _moment(moment of the body) == PHYSICS_INFINITY, it remains.
-     * if moment == PHYSICS_INFINITY, _moment will be PHYSICS_INFINITY.
-     * if moment == -PHYSICS_INFINITY, _moment will not change.
-     * if moment + _moment <= 0, _moment will equal to MASS_DEFAULT(1.0)
-     * other wise, moment = moment + _moment;
+     * @brief 增加body的力矩
+     * 如果_moment == PHYSICS_INFINITY，它会保持。
+     * 如果 moment == PHYSICS_INFINITY, _moment 会变成 PHYSICS_INFINITY.
+     * 如果 moment == -PHYSICS_INFINITY, _moment 不会改变.
+     * 如果 moment + _moment <= 0, _moment 会等于 MASS_DEFAULT(1.0)
+     * 否则，moment = moment + _moment;
      */
     void addMoment(float moment);
     /** 获取线性阻尼 */
@@ -265,7 +266,7 @@ public:
      */
     inline void setAngularDamping(float damping) { _angularDamping = damping; updateDamping(); }
     
-    /** whether the body is at rest */
+    /** 获取body是否休眠 */
     bool isResting() const;
     /** 设置body休止 */
     void setResting(bool rest) const;
