@@ -192,81 +192,81 @@ public:
     /**
      * 设置节点的缩放（x）。
      *
-     * It is a scaling factor that multiplies the width of the node and its children.
+     * 它是一个缩放因子，将会乘以节点的宽以及它的子节点。
      *
-     * @param scaleX   The scale factor on X axis.
+     * @参数 scaleX   X轴的缩放因子.
      */
     virtual void setScaleX(float scaleX);
     /**
-     * Returns the scale factor on X axis of this node
+     * 返回该节点的X轴的缩放因子。
      *
-     * @see setScaleX(float)
+     * @见 setScaleX(float)。
      *
-     * @return The scale factor on X axis.
+     * @返回 X轴的缩放因子。
      */
     virtual float getScaleX() const;
 
 
     /**
-     * Sets the scale (y) of the node.
+     * 设置节点的缩放（y）。
      *
-     * It is a scaling factor that multiplies the height of the node and its children.
+     * 它是一个缩放因子，将会乘以节点的宽以及它的子节点。
      *
-     * @param scaleY   The scale factor on Y axis.
+     * @参数 scaleY   Y轴的缩放因子
      */
     virtual void setScaleY(float scaleY);
     /**
-     * Returns the scale factor on Y axis of this node
+     * 返回该节点的Y轴的缩放因子。
      *
-     * @see `setScaleY(float)`
+     * @见 `setScaleY(float)`
      *
-     * @return The scale factor on Y axis.
+     * @返回 Y轴的缩放因子
      */
     virtual float getScaleY() const;
 
     /**
-     * Changes the scale factor on Z axis of this node
+     * 改变该节点的Z轴的缩放因子。
      *
-     * The Default value is 1.0 if you haven't changed it before.
+     * 如果你之前没有改变过它，那么它的默认值是1.0。
      *
-     * @param scaleY   The scale factor on Y axis.
+     * @参数 scaleY   Z轴的缩放因子
      */
     virtual void setScaleZ(float scaleZ);
     /**
-     * Returns the scale factor on Z axis of this node
+     * 返回该节点的梓州的缩放因子。
      *
-     * @see `setScaleZ(float)`
+     * @见 `setScaleZ(float)`
      *
-     * @return The scale factor on Z axis.
+     * @返回 Z轴的缩放因子。
      */
     virtual float getScaleZ() const;
 
 
     /**
-     * Sets the scale (x,y,z) of the node.
+     * 设置几点的缩放（x,y,z）.
      *
-     * It is a scaling factor that multiplies the width, height and depth of the node and its children.
+     * 缩放因子将会乘以该节点和它子节点的宽，高和深度。
      *
-     * @param scale     The scale factor for both X and Y axis.
+     * @参数 scale    X轴和Y轴的缩放因子
      */
     virtual void setScale(float scale);
     /**
-     * Gets the scale factor of the node,  when X and Y have the same scale factor.
+     * 得到该节点的缩放因子，当X轴和Y轴有相同的缩放因子时。
      *
-     * @warning Assert when `_scaleX != _scaleY`
-     * @see setScale(float)
+     * @警告 判断 当 `_scaleX != _scaleY`
+     * @见 setScale(float)
      *
-     * @return The scale factor of the node.
+     * @返回 该节点的缩放因子
      */
     virtual float getScale() const;
 
      /**
-     * Sets the scale (x,y) of the node.
+     * 设置节点的缩放（x,y）.
      *
-     * It is a scaling factor that multiplies the width and height of the node and its children.
+     * 缩放因子乘以该节点和它子节点的宽与高。
      *
-     * @param scaleX     The scale factor on X axis.
-     * @param scaleY     The scale factor on Y axis.
+     * @参数 scaleX     X轴的缩放因子。
+     * @参数 scaleY     Y轴的缩放因子。
      */
     virtual void setScale(float scaleX, float scaleY);
 
