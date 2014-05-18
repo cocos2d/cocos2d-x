@@ -43,7 +43,7 @@ NS_CC_BEGIN
  */
 
 /** MotionStreak.
- 创建一个精灵尾巴的路劲
+ 创建一个精灵尾巴的路径
  */
 class CC_DLL MotionStreak : public Node, public TextureProtocol
 #ifdef EMSCRIPTEN
@@ -51,15 +51,15 @@ class CC_DLL MotionStreak : public Node, public TextureProtocol
 #endif // EMSCRIPTEN
 {
 public:
-    /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture filename */
+    /** 创建并且初始化一个拖动渐隐效果包含参数fade:渐隐时间（以秒为单位），minSeg:最小的片段（渐隐片段的大小）, stroke:渐隐条带的宽度，color：顶点颜色值, path:纹理文件名 */
     static MotionStreak* create(float fade, float minSeg, float stroke, const Color3B& color, const std::string& path);
-    /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture */
+    /** 创建并且初始化一个拖动渐隐效果包含参数fade:渐隐时间（以秒为单位），minSeg:最小的片段（渐隐片段的大小）, stroke:渐隐条带的宽度，color：顶点颜色值, texture:纹理对象指针 */
     static MotionStreak* create(float fade, float minSeg, float stroke, const Color3B& color, Texture2D* texture);
 
-    /** color used for the tint */
+    /** 色彩使用的颜色 */
     void tintWithColor(const Color3B& colors);
 
-    /** Remove all living segments of the ribbon */
+    /** 删除所有活动的条带段 */
     void reset();
 
     /** When fast mode is enabled, new points are added faster but with lower precision */
