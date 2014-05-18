@@ -36,56 +36,56 @@ NS_CC_BEGIN
 namespace network {
 
 /**
- * @addtogroup Network
+ * @addtogroup 网络
  * @{
  */
 
 
-/** @brief Singleton that handles asynchrounous http requests
- * Once the request completed, a callback will issued in main thread when it provided during make request
+/** @brief 处理异步http请求的单例模式
+ * 一旦请求完成，一个在生成请求时被提供的回调函数，会被发到主线程中
  */
 class HttpClient
 {
 public:
-    /** Return the shared instance **/
+    /** 返回共享的实例 **/
     static HttpClient *getInstance();
     
-    /** Relase the shared instance **/
+    /** 释放共享的实例 **/
     static void destroyInstance();
 
-    /** Enable cookie support. **/
+    /** 启用cookie支持 **/
     void enableCookies(const char* cookieFile);
         
     /**
-     * Add a get request to task queue
-     * @param request a HttpRequest object, which includes url, response callback etc.
-                      please make sure request->_requestData is clear before calling "send" here.
+     * 增加一个get请求到任务队列
+     * @param 请求一个HttpRequest对象，这个对象包含了url、相应回调等。
+                    请确保在request->_requestData在被"send"调用之前是清晰的
      */
     void send(HttpRequest* request);
   
     
     /**
-     * Change the connect timeout
-     * @param value The desired timeout.
+     * 改变连接的超时
+     * @param value 期望的超时
      */
     inline void setTimeoutForConnect(int value) {_timeoutForConnect = value;};
     
     /**
-     * Get connect timeout
+     * 获取连接超时
      * @return int
      */
     inline int getTimeoutForConnect() {return _timeoutForConnect;}
     
     
     /**
-     * Change the download timeout
+     * 改变下载的超时
      * @param value
      */
     inline void setTimeoutForRead(int value) {_timeoutForRead = value;};
     
 
     /**
-     * Get download timeout
+     * 获取下载超时
      * @return int
      */
     inline int getTimeoutForRead() {return _timeoutForRead;};
@@ -96,12 +96,12 @@ private:
     bool init(void);
     
     /**
-     * Init pthread mutex, semaphore, and create new thread for http requests
+     * 初始化线程互斥、信号并为http请求创建新的线程
      * @return bool
      */
     bool lazyInitThreadSemphore();
     void networkThread();
-    /** Poll function called from main thread to dispatch callbacks when http requests finished **/
+    /** 从主线程中调用的poll函数，当http请求完成时分发回调 **/
     void dispatchResponseCallbacks();
     
 private:
@@ -109,7 +109,7 @@ private:
     int _timeoutForRead;
 };
 
-// end of Network group
+// end of 网络 group
 /// @}
 
 }

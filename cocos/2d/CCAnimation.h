@@ -47,10 +47,11 @@ class SpriteFrame;
  */
 
 /** AnimationFrame
- A frame of the animation. It contains information like:
-    - sprite frame name
-    - # of delay units.
-    - offset
+ 动画帧
+ 动画的一帧. 它包含以下信息:
+    - 精灵帧的名称
+    - # 延迟时间长度(单位: 秒).
+    - 偏移量
  
  @since v2.0
  */
@@ -65,7 +66,7 @@ public:
     };
     
     /**
-     * Creates the animation frame with a spriteframe, number of delay units and a notification user info
+     * 用一个精灵帧(spriteframe), 延迟时间长度(delay units) 和 将通知的用户信息(user info)创建并初始化动画帧.  
      * @since 3.0
      */
     static AnimationFrame* create(SpriteFrame* spriteFrame, float delayUnits, const ValueMap& userInfo);
@@ -79,25 +80,26 @@ public:
         _spriteFrame = frame;
     }
 
-    /** Gets the units of time the frame takes */
+    /** 获取这些帧将要使用的时间长度 */
     float getDelayUnits() const { return _delayUnits; };
     
-    /** Sets the units of time the frame takes */ 
+    /** 设置这些帧将要使用的时间长度 */ 
     void setDelayUnits(float delayUnits) { _delayUnits = delayUnits; };
     
-    /** @brief Gets user infomation
-        A AnimationFrameDisplayedNotification notification will be broadcast when the frame is displayed with this dictionary as UserInfo. If UserInfo is nil, then no notification will be broadcast.
+    /** @brief 获取用户信息
+        一个通知(AnimationFrameDisplayedNotification 的实例 notification)将被传播, 当这些以字典(Map)方式存储
+        用户信息的帧显示时. 如果用户信息是空值(nil), 不会有通知(同上)被广播.
      */
     const ValueMap& getUserInfo() const { return _userInfo; };
     ValueMap& getUserInfo() { return _userInfo; };
     
-    /** Sets user infomation */
+    /** 设置用户信息 */
     void setUserInfo(const ValueMap& userInfo)
     {
         _userInfo = userInfo;
     }
     
-    // Overrides
+    // 重写方法
 	virtual AnimationFrame *clone() const override;
     
 CC_CONSTRUCTOR_ACCESS:
@@ -111,18 +113,20 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual ~AnimationFrame();
     
-    /** initializes the animation frame with a spriteframe, number of delay units and a notification user info */
+    /** 用一个精灵帧(spriteframe), 延迟时间长度(delay units) 和 将通知的用户信息(user info)初始化动画帧 */
     bool initWithSpriteFrame(SpriteFrame* spriteFrame, float delayUnits, const ValueMap& userInfo);
 
 protected:
     
-    /** SpriteFrameName to be used */
+    /** 待使用的精灵帧名称 */
     SpriteFrame* _spriteFrame;
 
-    /**  how many units of time the frame takes */
+    /** 这些帧播放结束使用的时间长度*/
     float _delayUnits;
 
-    /**  A AnimationFrameDisplayedNotification notification will be broadcast when the frame is displayed with this dictionary as UserInfo. If UserInfo is nil, then no notification will be broadcast. */
+    /** 一个通知(AnimationFrameDisplayedNotification 的实例 notification)将被传播, 当这些以字典(Map)方式存储
+        用户信息的帧显示时. 如果用户信息是空值(nil), 不会有通知(同上)被广播.
+     */
     ValueMap _userInfo;
     
 private:
@@ -132,10 +136,10 @@ private:
 
 
 
-/** A Animation object is used to perform animations on the Sprite objects.
+/** 一个用来在精灵对象上表现动画的动画对象. 
 
-The Animation object contains AnimationFrame objects, and a possible delay between the frames.
-You can animate a Animation object by using the Animate action. Example:
+动画对象包含动画帧对象, 还可能有一个设定这些帧之间延迟的参数. 
+你可以用动画动作(Animate action)来创建一个动画对象(Animation object):
 
 @code
     sprite->runAction(Animate::create(animation));
@@ -145,115 +149,117 @@ You can animate a Animation object by using the Animate action. Example:
 class CC_DLL Animation : public Ref, public Clonable
 {
 public:
-    /** Creates an animation
+    /** 创建并初始化一个动画
      @since v0.99.5
      */
     static Animation* create(void);
 
-    /* Creates an animation with an array of SpriteFrame and a delay between frames in seconds.
-     The frames will be added with one "delay unit".
+    /* 用一组(vector)精灵帧(SpriteFrame), 这组精灵帧之间延迟的时间创建并初始化一个动画对象(Animation). 
+     这些帧会被添加到一个时间单位(delay unit).
      @since v0.99.5
      */
     static Animation* createWithSpriteFrames(const Vector<SpriteFrame*>& arrayOfSpriteFrameNames, float delay = 0.0f, unsigned int loops = 1);
 
-    /* Creates an animation with an array of AnimationFrame, the delay per units in seconds and and how many times it should be executed.
+    /* 用一组(vector)精灵帧(SpriteFrame), 每单位时间的延迟和执行次数创建并初始化一个动画对象(Animation).
      @since v2.0
      * @js NA
      */
     static Animation* create(const Vector<AnimationFrame*>& arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops = 1);
 
-    /** Adds a SpriteFrame to a Animation.
-     The frame will be added with one "delay unit".
+    /** 添加一个精灵帧到动画中.
+     这个帧会以一个单位时间延迟(delay unit)添加.
      */
     void addSpriteFrame(SpriteFrame *frame);
 
-    /** Adds a frame with an image filename. Internally it will create a SpriteFrame and it will add it.
-     The frame will be added with one "delay unit".
-     Added to facilitate the migration from v0.8 to v0.9.
+    /** 用图片名称加一个精灵帧到动画中. 此方法内部会创建一个精灵帧然后添加它.
+     这个帧会以一个单位时间延迟(delay unit)添加.
+     添加这个方法使移植更容易了. from v0.8 to v0.9.
      */
     void addSpriteFrameWithFile(const std::string& filename);
     /**
-     @deprecated. Use addSpriteFrameWithFile() instead
+     @deprecated. 使用 addSpriteFrameWithFile() 替代此方法.
+     CC_DEPRECATED_ATTRIBUTE 标记此方法不建议使用. 
+     在将来的cocos2d-x中,此方法很有可能会被抛弃,现在保留这个方法只为了向下兼容.
      */
     CC_DEPRECATED_ATTRIBUTE void addSpriteFrameWithFileName(const std::string& filename){ addSpriteFrameWithFile(filename);}
 
-    /** Adds a frame with a texture and a rect. Internally it will create a SpriteFrame and it will add it.
-     The frame will be added with one "delay unit".
-     Added to facilitate the migration from v0.8 to v0.9.
+    /** 用一个2D纹理(Texture2D)和矩形添加一个帧. 此方法内部会创建一个精灵帧然后添加它.
+     这个帧会以一个单位时间延迟(delay unit)添加.
+     添加这个方法使移植更容易了. from v0.8 to v0.9.
      */
     void addSpriteFrameWithTexture(Texture2D* pobTexture, const Rect& rect);
 
-    /** Gets the total Delay units of the Animation. */
+    /** 获取动画的延迟单位时间总数目. */
     float getTotalDelayUnits() const { return _totalDelayUnits; };
     
-    /** Sets the delay in seconds of the "delay unit" */
+    /** 设置每单位时间延迟(delay unit). 单位: 秒 */
     void setDelayPerUnit(float delayPerUnit) { _delayPerUnit = delayPerUnit; };
     
-    /** Gets the delay in seconds of the "delay unit" */
+    /** 获取每单位时间延迟(delay unit). 单位: 秒*/
     float getDelayPerUnit() const { return _delayPerUnit; };
 
     
-    /** Gets the duration in seconds of the whole animation. It is the result of totalDelayUnits * delayPerUnit */
+    /** 获取整个动画的持续时间, 单位: 秒.它是总延迟时间单位(totalDelayUnits)的结果. */
     float getDuration() const;
     
-    /** Gets the array of AnimationFrames */
+    /** 获取一组(vector)动画帧(AnimationFrame) */
     const Vector<AnimationFrame*>& getFrames() const { return _frames; };
     
-    /** Sets the array of AnimationFrames */
+    /** 设置一组(vector)动画帧(AnimationFrame) */
     void setFrames(const Vector<AnimationFrame*>& frames)
     {
         _frames = frames;
     }
     
-    /** Checks whether to restore the original frame when animation finishes. */
+    /** 检查当动画结束时,是否要存储这些原始帧. */
     bool getRestoreOriginalFrame() const { return _restoreOriginalFrame; };
     
-    /** Sets whether to restore the original frame when animation finishes */
+    /** 设置"当动画结束时,是否要存储这些原始帧". */
     void setRestoreOriginalFrame(bool restoreOriginalFrame) { _restoreOriginalFrame = restoreOriginalFrame; };
     
-    /** Gets the times the animation is going to loop. 0 means animation is not animated. 1, animation is executed one time, ... */
+    /** 获取动画将要循环执行的次数. 0 表示动画不执行. 1 表示动画执行一次, ... */
     unsigned int getLoops() const { return _loops; };
     
-    /** Sets the times the animation is going to loop. 0 means animation is not animated. 1, animation is executed one time, ... */
+    /** 设置动画将要循环执行的次数. 0 表示动画不执行. 1 表示动画执行一次, ... */
     void setLoops(unsigned int loops) { _loops = loops; };
     
-    // overrides
+    // 重写方法
 	virtual Animation *clone() const override;
     
 CC_CONSTRUCTOR_ACCESS:
     Animation();
     virtual ~Animation(void);
     
-    /** Initializes a Animation */
+    /** 初始化一个动画 */
     bool init();
     
-    /** Initializes a Animation with frames and a delay between frames
+    /** 用一组(vector)精灵帧(SpriteFrame), 这组精灵帧之间延迟的时间初始化一个动画对象(Animation).
      @since v0.99.5
      */
     bool initWithSpriteFrames(const Vector<SpriteFrame*>& arrayOfSpriteFrameNames, float delay = 0.0f, unsigned int loops = 1);
     
-    /** Initializes a Animation with AnimationFrame
+    /** 用一组(vector)动画帧(AnimationFrame)初始化动画帧. 
      @since v2.0
      */
     bool initWithAnimationFrames(const Vector<AnimationFrame*>& arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops);
 
 protected:
-    /** total Delay units of the Animation. */
+    /** 动画延迟时间单位的总数. */
     float _totalDelayUnits;
 
-    /** Delay in seconds of the "delay unit" */
+    /** 单位延迟(delay unit)的延迟时间, 单位: 秒. */
     float _delayPerUnit;
 
-    /** duration in seconds of the whole animation. It is the result of totalDelayUnits * delayPerUnit */
+    /** 整个动画的持续时间, 单位: 秒.它是总延迟时间单位(totalDelayUnits)的结果. */
     float _duration;
 
-    /** array of AnimationFrames */
+    /** 一组(vector)动画帧(AnimationFrame) */
     Vector<AnimationFrame*> _frames;
 
-    /** whether or not it shall restore the original frame when the animation finishes */
+    /** 当动画结束时,是否要存储这些原始帧 */
     bool _restoreOriginalFrame;
 
-    /** how many times the animation is going to loop. 0 means animation is not animated. 1, animation is executed one time, ... */
+    /** 动画将要循环执行的次数. 0 表示动画不执行. 1 表示动画执行一次, ... */
     unsigned int _loops;
     
 private:
