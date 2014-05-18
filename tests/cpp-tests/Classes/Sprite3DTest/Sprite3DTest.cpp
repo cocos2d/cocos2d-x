@@ -373,7 +373,7 @@ void Effect3DOutline::drawWithSprite(EffectSprite3D* sprite, const Mat4 &transfo
         glBindBuffer(GL_ARRAY_BUFFER, mesh->getVertexBuffer());
         _glProgramState->apply(transform);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->getIndexBuffer());
-        glDrawElements(mesh->getPrimitiveType(), mesh->getIndexCount(), mesh->getIndexFormat(), 0);
+        glDrawElements((GLenum)mesh->getPrimitiveType(), mesh->getIndexCount(), (GLenum)mesh->getIndexFormat(), 0);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glDisable(GL_DEPTH_TEST);
@@ -442,10 +442,10 @@ void Sprite3DEffectTest::addNewSpriteWithCoords(Vec2 p)
     auto sprite = EffectSprite3D::createFromObjFileAndTexture("Sprite3DTest/boss1.obj", "Sprite3DTest/boss.png");
     Effect3DOutline* effect = Effect3DOutline::create();
     effect->setOutlineColor(Vec3(1,0,0));
-    effect->setOutlineWidth(0.01);
+    effect->setOutlineWidth(0.01f);
     sprite->addEffect(effect, -1);
     Effect3DOutline* effect2 = Effect3DOutline::create();
-    effect2->setOutlineWidth(0.02);
+    effect2->setOutlineWidth(0.02f);
     effect2->setOutlineColor(Vec3(1,1,0));
     sprite->addEffect(effect2, -2);
     //sprite->setEffect3D(effect);
