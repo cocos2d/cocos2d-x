@@ -124,30 +124,30 @@ public:
      */
     virtual std::string getDescription() const;
 
-    /// @} end of initializers
+    /// @} 初始化的结束
 
 
 
     /// @{
-    /// @name Setters & Getters for Graphic Peroperties
+    /// @命名 图形属性的设值函数和得值函数
 
     /**
-     LocalZOrder is the 'key' used to sort the node relative to its siblings.
+     LocalZOrder是“key”(关键)来分辨节点和它兄弟节点的相关性。
 
-     The Node's parent will sort all its children based ont the LocalZOrder value.
-     If two nodes have the same LocalZOrder, then the node that was added first to the children's array will be in front of the other node in the array.
+     父节点将会通过LocalZOrder的值来分辨所有的子节点。
+     如果两个节点有同样的LocalZOrder,那么先加入子节点数组的节点将会显示在后加入的节点的前面。
      
-     Also, the Scene Graph is traversed using the "In-Order" tree traversal algorithm ( http://en.wikipedia.org/wiki/Tree_traversal#In-order )
-     And Nodes that have LocalZOder values < 0 are the "left" subtree
-     While Nodes with LocalZOder >=0 are the "right" subtree.
+     同样的，场景图使用“In-Order（按顺序）”遍历数算法来遍历 ( http://en.wikipedia.org/wiki/Tree_traversal#In-order )
+     并且拥有小于0的LocalZOrder的值的节点是“left”子树（左子树）
+     所以拥有大于0的LocalZOrder的值得节点是“right”子树（右子树）
      
-     @see `setGlobalZOrder`
-     @see `setVertexZ`
+     @见 `setGlobalZOrder`
+     @见 `setVertexZ`
      */
     virtual void setLocalZOrder(int localZOrder);
 
     CC_DEPRECATED_ATTRIBUTE virtual void setZOrder(int localZOrder) { setLocalZOrder(localZOrder); }
-    /* Helper function used by `setLocalZOrder`. Don't use it unless you know what you are doing.
+    /* `setLocalZOrder`使用的辅助函数。不要使用它除非你知道你在干什么。 
      */
     virtual void _setLocalZOrder(int z);
     /**
