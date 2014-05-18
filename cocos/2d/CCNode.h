@@ -271,56 +271,56 @@ public:
     virtual void setScale(float scaleX, float scaleY);
 
     /**
-     * Sets the position (x,y) of the node in its parent's coordinate system.
+     * 设置节点的位置在父节点的坐标系系统中。
      *
-     * Usually we use `Vec2(x,y)` to compose Vec2 object.
-     * This code snippet sets the node in the center of screen.
-     @code
+     * 通常我们使用`Vec2(x,y)` 来组成 Vec2 对象。
+     * 这一段代码设置节点在屏幕中间。
+     @代码
      Size size = Director::getInstance()->getWinSize();
      node->setPosition( Vec2(size.width/2, size.height/2) )
-     @endcode
+     @代码结束
      *
-     * @param position  The position (x,y) of the node in OpenGL coordinates
+     * @参数 position  这个节点的位置（x,y）在OpenGL坐标系中。
      */
     virtual void setPosition(const Vec2 &position);
     /**
-     * Gets the position (x,y) of the node in its parent's coordinate system.
+     * 得到在父节点坐标系中节点的位置（x,y）。
      *
-     * @see setPosition(const Vec2&)
+     * @见 setPosition(const Vec2&)
      *
-     * @return The position (x,y) of the node in OpenGL coordinates
-     * @code
+     * @返回 节点在OpenGL坐标系中的位置（x,y)。
+     * @代码
      * In js and lua return value is table which contains x,y
-     * @endcode
+     * @代码结束
      */
     virtual const Vec2& getPosition() const;
     /**
-     * Sets the position (x,y) of the node in its parent's coordinate system.
+     * 设置节点在它父节点坐标系中的位置（x,y）。
      *
-     * Passing two numbers (x,y) is much efficient than passing Vec2 object.
-     * This method is bound to Lua and JavaScript.
-     * Passing a number is 10 times faster than passing a object from Lua to c++
+     * 传递两个数字（x,y）比传递Vec2对象更有效率。
+     * 这个方法要在Lua和JavaScript下。
+     * 从Lua到C++传递一个数字比传递一个对象快10倍。
      *
-     @code
+     @代码
      // sample code in Lua
      local pos  = node::getPosition()  -- returns Vec2 object from C++
      node:setPosition(x, y)            -- pass x, y coordinate to C++
-     @endcode
+     @代码结束
      *
-     * @param x     X coordinate for position
-     * @param y     Y coordinate for position
+     * @参数 x     位置的X轴坐标系
+     * @参数 y     位置的Y轴坐标系
      */
     virtual void setPosition(float x, float y);
     /**
-     * Gets position in a more efficient way, returns two number instead of a Vec2 object
+     * 用一个更有效率的方法设置位置，返回两个数字而不是Vec2对象。
      *
-     * @see `setPosition(float, float)`
+     * @见 `setPosition(float, float)`
      * In js,out value not return
      */
     virtual void getPosition(float* x, float* y) const;
     /**
-     * Gets/Sets x or y coordinate individually for position.
-     * These methods are used in Lua and Javascript Bindings
+     * 分别得到或者设置位置的X或者Y轴坐标系
+     * 这些方法被绑定使用在在Lua和JavaScript。
      */
     virtual void  setPositionX(float x);
     virtual float getPositionX(void) const;
@@ -328,44 +328,44 @@ public:
     virtual float getPositionY(void) const;
 
     /**
-     * Sets the position (X, Y, and Z) in its parent's coordinate system
+     * 设置在父节点坐标系中的位置（x,y,z）。
      */
     virtual void setPosition3D(const Vec3& position);
     /**
-     * returns the position (X,Y,Z) in its parent's coordinate system
+     * 返回父坐标系的位置（X,Y,Z）。
      */
     virtual Vec3 getPosition3D() const;
 
     /**
-     * Sets the 'z' coordinate in the position. It is the OpenGL Z vertex value.
+     * 设置位置的“z”轴坐标系，是OpneGL Z 定点值。
      *
-     * The OpenGL depth buffer and depth testing are disabled by default. You need to turn them on
-     * in order to use this property correctly.
+     * OpenGL深度缓存和深度测试默认值是关闭的，你需要打开它们
+     * 来正确的使用这个属性。
      *
-     * `setPositionZ()` also sets the `setGlobalZValue()` with the positionZ as value.
+     * `setPositionZ()` 同样设置 `setGlobalZValue()` 用“positionZ” 作为值。
      *
-     * @see `setGlobalZValue()`
+     * @见 `setGlobalZValue()`
      *
-     * @param vertexZ  OpenGL Z vertex of this node.
+     * @参数 vertexZ  该节点的penGL Z 定点。
      */
     virtual void setPositionZ(float positionZ);
     CC_DEPRECATED_ATTRIBUTE virtual void setVertexZ(float vertexZ) { setPositionZ(vertexZ); }
 
     /**
-     * Gets position Z coordinate of this node.
+     * 得到该节点的Z轴坐标系的位置。
      *
-     * @see setPositionZ(float)
+     * @见 setPositionZ(float)
      *
-     * @return the position Z coordinate of this node.
+     * @返回 该节点的Z轴坐标系。
      */
     virtual float getPositionZ() const;
     CC_DEPRECATED_ATTRIBUTE virtual float getVertexZ() const { return getPositionZ(); }
 
     /**
-     * Changes the X skew angle of the node in degrees.
+     * 改变该节点X轴的倾斜角，单位是度。
      *
-     * The difference between `setRotationalSkew()` and `setSkew()` is that the first one simulate Flash's skew functionality
-     * while the second one uses the real skew function.
+     * `setRotationalSkew()`和 `setSkew()` 的不同时是前一个模拟Flash的倾斜功能。
+     * 然而后一个使用真正的倾斜功能。
      *
      * This angle describes the shear distortion in the X direction.
      * Thus, it is the angle between the Y coordinate and the left edge of the shape
