@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -22,54 +22,62 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#ifndef __CCSPRIT3DDATA_CACHE_H__
+#define __CCSPRIT3DDATA_CACHE_H__
 
-#ifndef __CCRENDERCOMMAND_H_
-#define __CCRENDERCOMMAND_H_
-
-#include <stdint.h>
-
-#include "base/CCPlatformMacros.h"
+#include <string>
+#include <unordered_map>
 #include "base/ccTypes.h"
+#include "base/CCMap.h"
 
 NS_CC_BEGIN
 
-/** Base class of the `RenderCommand` hierarchy.
-*
- The `Renderer` knows how to render `RenderCommands` objects.
- */
-class RenderCommand
+class Sprite3D;
+class Mesh;
+class EventListenerCustom;
+class EventCustom;
+class Texture2D;
+
+class Sprite3DDataCache
 {
 public:
-
-    enum class Type
+    struct Sprite3DData
     {
-        UNKNOWN_COMMAND,
-        QUAD_COMMAND,
-        CUSTOM_COMMAND,
-        BATCH_COMMAND,
-        GROUP_COMMAND,
-        MESH_COMMAND,
+        Mesh* mesh;
+        std::string texture;
     };
+    
+    static Sprite3DDataCache* getInstance();
+    static void purgeMeshCache();
+    
+    bool addSprite3D(const std::string& fileName, Mesh* mesh, const std::string& texture);
+    
+    Mesh* getSprite3DMesh(const std::string& fileName);
+    
+    Texture2D* getSprite3DTexture(const std::string& fileName);
+    
+    void removeAllSprite3DData();
+    void removeUnusedSprite3DData();
 
-    /** Get Render Command Id */
-    inline float getGlobalOrder() const { return _globalOrder; }
-
-    /** Returns the Command type */
-    inline Type getType() const { return _type; }
-
+    
+ #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+     void listenBackToForeground(EventCustom* event);
+ #endif
+    
 protected:
-    RenderCommand();
-    virtual ~RenderCommand();
+    Sprite3DDataCache();
+    
+    ~Sprite3DDataCache();
+    
+    static Sprite3DDataCache* _cacheInstance;
 
-    void printID();
-
-    // Type used in order to avoid dynamic cast, faster
-    Type _type;
-
-    // commands are sort by depth
-    float _globalOrder;
+    std::unordered_map<std::string, Sprite3DData> _sprite3DDatas; //sprites 
+    
+ #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+     EventListenerCustom* _backToForegroundlistener;
+ #endif
 };
 
 NS_CC_END
 
-#endif //__CCRENDERCOMMAND_H_
+#endif // __CCSPRIT3DDATA_CACHE_H__
