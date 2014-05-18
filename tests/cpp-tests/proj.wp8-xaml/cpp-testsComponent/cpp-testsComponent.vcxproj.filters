@@ -328,6 +328,9 @@
     <Filter Include="Classes\UITest\CocosStudioGUITest\UIWidgetAddNodeTest">
       <UniqueIdentifier>{085acc82-08d1-46c1-affe-74af030ce284}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\Sprite3DTest">
+      <UniqueIdentifier>{8c7572e8-5643-4301-b902-ff71f0cfca2d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Classes\AppDelegate.cpp">
@@ -851,6 +854,9 @@
     <ClCompile Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\EditBoxEvent.cpp" />
     <ClCompile Include="..\..\Classes\BugsTest\Bug-Child.cpp">
       <Filter>Classes\BugsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\Sprite3DTest\Sprite3DTest.cpp">
+      <Filter>Classes\Sprite3DTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1574,6 +1580,9 @@
     <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\EditBoxEvent.h" />
     <ClInclude Include="..\..\Classes\BugsTest\Bug-Child.h">
       <Filter>Classes\BugsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\Sprite3DTest\Sprite3DTest.h">
+      <Filter>Classes\Sprite3DTest</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
