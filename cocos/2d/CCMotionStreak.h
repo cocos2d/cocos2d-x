@@ -62,7 +62,7 @@ public:
     /** 删除所有活动的条带段 */
     void reset();
 
-    /** When fast mode is enabled, new points are added faster but with lower precision */
+    /** 当是快速模式时,新的顶点被更快速的加入，但是新的顶点具有更小的精确值 */
     inline bool isFastMode() const { return _fastMode; }
     inline void setFastMode(bool bFastMode) { _fastMode = bFastMode; }
 
@@ -112,20 +112,20 @@ CC_CONSTRUCTOR_ACCESS:
     MotionStreak();
     virtual ~MotionStreak();
     
-    /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture filename */
+    /** 创建并且初始化一个拖动渐隐效果包含参数fade:渐隐时间（以秒为单位），minSeg:最小的片段（渐隐片段的大小）, stroke:渐隐条带的宽度，color：顶点颜色值, path:纹理文件名 */
     bool initWithFade(float fade, float minSeg, float stroke, const Color3B& color, const std::string& path);
     
-    /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture  */
+    /** 创建并且初始化一个拖动渐隐效果包含参数fade:渐隐时间（以秒为单位），minSeg:最小的片段（渐隐片段的大小）, stroke:渐隐条带的宽度，color：顶点颜色值, texture:纹理对象指针  */
     bool initWithFade(float fade, float minSeg, float stroke, const Color3B& color, Texture2D* texture);
 
 protected:
-    //renderer callback
+    //渲染器回调
     void onDraw(const Mat4 &transform, bool transformUpdated);
 
     bool _fastMode;
     bool _startingPositionInitialized;
 
-    /** texture used for the motion streak */
+    /** 拖尾渐隐效果使用的纹理 */
     Texture2D* _texture;
     BlendFunc _blendFunc;
     Vec2 _positionR;
@@ -138,7 +138,7 @@ protected:
     unsigned int _nuPoints;
     unsigned int _previousNuPoints;
 
-    /** Pointers */
+    /** 指针 */
     Vec2* _pointVertexes;
     float* _pointState;
 
