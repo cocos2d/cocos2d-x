@@ -1225,29 +1225,40 @@ void Director::captureScreen(const std::function<void(bool, const std::string&)>
 
 void Director::onCaptureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename, const Rect& rect)
 {
-    // Generally the user specifiy the rect with design resolution, thus we have to convert it
-    // into a significant value which is metered by pixel.
-    Size frameSize = Director::getInstance()->getOpenGLView()->getFrameSize();
+    // the rect is specified based on the design resolution
+    auto glView = Director::getInstance()->getOpenGLView();
+    Size designSize = glView->getDesignResolutionSize();
     int originx = 0;
     int originy = 0;
-    int width = (int)frameSize.width;
-    int height = (int)frameSize.height;
-    bool succeed = false;
-    std::string outputFile = "";
-    
+    int width = designSize.width;
+    int height = designSize.height;
     if (!rect.equals(Rect::ZERO))
     {
         originx = (int)rect.origin.x;
         originy = (int)rect.origin.y;
-        width = (int)rect.size.width * Director::getInstance()->getOpenGLView()->getScaleX();
-        height = (int)rect.size.height * Director::getInstance()->getOpenGLView()->getScaleY();
+        width = (int)rect.size.width;
+        height = (int)rect.size.height;
         
         auto clip = [](int in, int min, int max) { return std::max(std::min(in, max), min); };
-        originx = clip(originx, 0, (int)frameSize.width);
-        originy = clip(originy, 0, (int)frameSize.height);
-        width = clip(width, 0, frameSize.width - originx);
-        height = clip(height, 0, frameSize.height - originy);
+        originx = clip(originx, 0, (int)designSize.width);
+        originy = clip(originy, 0, (int)designSize.height);
+        width = clip(width, 0, designSize.width - originx);
+        height = clip(height, 0, designSize.height - originy);
     }
+    
+    // the frame buffer size is based on the device pixel resolution
+    Size frameSize = glView->getFrameSize();
+#if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+    frameSize = frameSize * glView->getFrameZoomFactor() * glView->getRetinaFactor();
+#endif
+    
+    originx = static_cast<int>(float(originx) / designSize.width * frameSize.width);
+    originy = static_cast<int>(float(originy) / designSize.height * frameSize.height);
+    width = static_cast<int>(float(width) / designSize.width * frameSize.width);
+    height = static_cast<int>(float(height) / designSize.height * frameSize.height);
+    
+    bool succeed = false;
+    std::string outputFile = "";
     
     do
     {
@@ -1282,10 +1293,10 @@ void Director::onCaptureScreen(const std::function<void(bool, const std::string&
             }
             else
             {
+                CCASSERT(filename.find("/") == std::string::npos, "The existence of a relative path is not guaranteed!");
                 outputFile = FileUtils::getInstance()->getWritablePath() + filename;
             }
-            image->saveToFile(outputFile);
-            succeed = true;
+            succeed = image->saveToFile(outputFile);
         }
         CC_SAFE_DELETE_ARRAY(flippedBuffer);
         CC_SAFE_DELETE(image);

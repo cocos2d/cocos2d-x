@@ -594,6 +594,7 @@ CaptureScreenTest::CaptureScreenTest()
 
 CaptureScreenTest::~CaptureScreenTest()
 {
+    Director::getInstance()->getTextureCache()->removeTextureForKey(_filename);
 }
 
 std::string CaptureScreenTest::title() const
