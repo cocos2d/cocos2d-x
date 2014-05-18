@@ -367,27 +367,27 @@ public:
      * `setRotationalSkew()`和 `setSkew()` 的不同时是前一个模拟Flash的倾斜功能。
      * 然而后一个使用真正的倾斜功能。
      *
-     * This angle describes the shear distortion in the X direction.
-     * Thus, it is the angle between the Y coordinate and the left edge of the shape
-     * The default skewX angle is 0. Positive values distort the node in a CW direction.
+     * 这个角度描述了在X轴方向的切形变（shear distortion）。
+     * 因此，这个角度在Y轴和图形左边之间。
+     * 默认值skewX角度是0，负值使该节点按顺时针变形。
      *
-     * @param skewX The X skew angle of the node in degrees.
+     * @参数 skewX 该节点的X轴的倾斜角。
      */
     virtual void setSkewX(float skewX);
     /**
-     * Returns the X skew angle of the node in degrees.
+     * 返回该节点的X轴倾斜角，单位是度。
      *
-     * @see `setSkewX(float)`
+     * @见 `setSkewX(float)`
      *
-     * @return The X skew angle of the node in degrees.
+     * @返回 该节点的X轴倾斜角。
      */
     virtual float getSkewX() const;
 
 
     /**
-     * Changes the Y skew angle of the node in degrees.
+     * 改变该节点Y轴的倾斜角，单位是度。
      *
-     * The difference between `setRotationalSkew()` and `setSkew()` is that the first one simulate Flash's skew functionality
+     * `setRotationalSkew()`和 `setSkew()` 的不同时是前一个模拟Flash的倾斜功能。
      * while the second one uses the real skew function.
      *
      * This angle describes the shear distortion in the Y direction.
