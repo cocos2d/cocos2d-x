@@ -1202,6 +1202,11 @@
 
 
 --------------------------------------------------------
+-- the cc Sprite3D
+-- @field [parent=#cc] Sprite3D#Sprite3D Sprite3D preloaded module
+
+
+--------------------------------------------------------
 -- the cc SimpleAudioEngine
 -- @field [parent=#cc] SimpleAudioEngine#SimpleAudioEngine SimpleAudioEngine preloaded module
 

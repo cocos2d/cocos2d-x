@@ -63487,6 +63487,223 @@ int lua_register_cocos2dx_Component(lua_State* tolua_S)
     return 1;
 }
 
+int lua_cocos2dx_Sprite3D_setTexture(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Sprite3D* cobj = nullptr;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Sprite3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocos2d::Sprite3D*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite3D_setTexture'", nullptr);
+        return 0;
+    }
+#endif
+    argc = lua_gettop(tolua_S)-1;
+    do{
+        if (argc == 1) {
+            cocos2d::Texture2D* arg0;
+            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+
+            if (!ok) { break; }
+            cobj->setTexture(arg0);
+            return 0;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 1) {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0);
+
+            if (!ok) { break; }
+            cobj->setTexture(arg0);
+            return 0;
+        }
+    }while(0);
+    ok  = true;
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setTexture",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Sprite3D_setTexture'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Sprite3D_getBlendFunc(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Sprite3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Sprite3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Sprite3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite3D_getBlendFunc'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        const cocos2d::BlendFunc& ret = cobj->getBlendFunc();
+        blendfunc_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getBlendFunc",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Sprite3D_getBlendFunc'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Sprite3D_setBlendFunc(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Sprite3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Sprite3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Sprite3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite3D_setBlendFunc'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::BlendFunc arg0;
+
+        #pragma warning NO CONVERSION TO NATIVE FOR BlendFunc;
+        if(!ok)
+            return 0;
+        cobj->setBlendFunc(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setBlendFunc",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Sprite3D_setBlendFunc'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Sprite3D_create(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.Sprite3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+
+    do 
+    {
+        if (argc == 2)
+        {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0);
+            if (!ok) { break; }
+            std::string arg1;
+            ok &= luaval_to_std_string(tolua_S, 3,&arg1);
+            if (!ok) { break; }
+            cocos2d::Sprite3D* ret = cocos2d::Sprite3D::create(arg0, arg1);
+            object_to_luaval<cocos2d::Sprite3D>(tolua_S, "cc.Sprite3D",(cocos2d::Sprite3D*)ret);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    do 
+    {
+        if (argc == 1)
+        {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0);
+            if (!ok) { break; }
+            cocos2d::Sprite3D* ret = cocos2d::Sprite3D::create(arg0);
+            object_to_luaval<cocos2d::Sprite3D>(tolua_S, "cc.Sprite3D",(cocos2d::Sprite3D*)ret);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d", "create",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Sprite3D_create'.",&tolua_err);
+#endif
+    return 0;
+}
+static int lua_cocos2dx_Sprite3D_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (Sprite3D)");
+    return 0;
+}
+
+int lua_register_cocos2dx_Sprite3D(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"cc.Sprite3D");
+    tolua_cclass(tolua_S,"Sprite3D","cc.Sprite3D","cc.Node",nullptr);
+
+    tolua_beginmodule(tolua_S,"Sprite3D");
+        tolua_function(tolua_S,"setTexture",lua_cocos2dx_Sprite3D_setTexture);
+        tolua_function(tolua_S,"getBlendFunc",lua_cocos2dx_Sprite3D_getBlendFunc);
+        tolua_function(tolua_S,"setBlendFunc",lua_cocos2dx_Sprite3D_setBlendFunc);
+        tolua_function(tolua_S,"create", lua_cocos2dx_Sprite3D_create);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::Sprite3D).name();
+    g_luaType[typeName] = "cc.Sprite3D";
+    g_typeCast["Sprite3D"] = "cc.Sprite3D";
+    return 1;
+}
+
 int lua_cocos2dx_SimpleAudioEngine_preloadBackgroundMusic(lua_State* tolua_S)
 {
     int argc = 0;
@@ -65291,6 +65508,7 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	lua_register_cocos2dx_NodeGrid(tolua_S);
 	lua_register_cocos2dx_TMXLayerInfo(tolua_S);
 	lua_register_cocos2dx_EaseSineIn(tolua_S);
+	lua_register_cocos2dx_Sprite3D(tolua_S);
 	lua_register_cocos2dx_EventListenerMouse(tolua_S);
 	lua_register_cocos2dx_TiledGrid3D(tolua_S);
 	lua_register_cocos2dx_ParticleGalaxy(tolua_S);
