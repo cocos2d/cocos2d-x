@@ -42,7 +42,6 @@ NS_CC_BEGIN
 /**
  @brief ProgressTimer是Node的子类。
  该类根据百分比来渲染显示内部的Sprite对象。
- 
  变化方向包括径向，水平或者垂直方向。
  @since v0.99.1
  */

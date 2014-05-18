@@ -123,7 +123,7 @@ private:
 };
 
 /** @brief FadeOutTRTiles动作
- 以左下角向右上角依次淡出所有瓦片
+ 从左下角向右上角依次淡出所有瓦片
  */
 class CC_DLL FadeOutTRTiles : public TiledGrid3DAction
 {
@@ -149,7 +149,7 @@ private:
 };
 
 /** @brief FadeOutBLTiles动作
- 以右上角向左下角依次淡出所有瓦片
+ 从右上角向左下角依次淡出所有瓦片
  */
 class CC_DLL FadeOutBLTiles : public FadeOutTRTiles
 {
@@ -170,7 +170,7 @@ private:
 };
 
 /** @brief FadeOutUpTiles动作
- 以从下往上的次序依次淡出所有瓦片
+ 从下往上依次淡出所有瓦片
  */
 class CC_DLL FadeOutUpTiles : public FadeOutTRTiles
 {
@@ -193,7 +193,7 @@ private:
 };
 
 /** @brief FadeOutDownTiles动作。
- 以从上往下的次序依次淡出所有瓦片
+ 从上往下依次淡出所有瓦片
  */
 class CC_DLL FadeOutDownTiles : public FadeOutUpTiles
 {
