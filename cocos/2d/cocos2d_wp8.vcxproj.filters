@@ -592,6 +592,9 @@
     <ClCompile Include="..\3d\CCSprite3DDataCache.cpp">
       <Filter>3d</Filter>
     </ClCompile>
+    <ClCompile Include="..\renderer\CCMeshCommand.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -1202,6 +1205,9 @@
     </ClInclude>
     <ClInclude Include="..\3d\CCSprite3DDataCache.h">
       <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCMeshCommand.h">
+      <Filter>renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
