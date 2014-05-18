@@ -56,7 +56,7 @@ typedef struct PhysicsRayCastInfo
 {
     PhysicsShape* shape;
     Vec2 start;
-    Vec2 end;              //< in lua, it's name is "ended"
+    Vec2 end;              //< 在lua 中，它的名字是"ended"
     Vec2 contact;
     Vect normal;
     float fraction;
@@ -64,83 +64,83 @@ typedef struct PhysicsRayCastInfo
 }PhysicsRayCastInfo;
 
 /**
- * @brief Called for each fixture found in the query. You control how the ray cast
- * proceeds by returning a float:
- * return true: continue
- * return false: terminate the ray cast
- * @param fixture the fixture hit by the ray
- * @param point the point of initial intersection
- * @param normal the normal vector at the point of intersection
- * @return true to continue, false to terminate
+ * @brief  当被查询中找到时被调用。你通过返回一个float控制光线投射怎么被处理。
+ * 返回true: 继续
+ * 返回false: 终止光线投射
+ * @param fixture 被光线投射的设备
+ * @param point 初始的交叉点
+ * @param normal 交叉点的方向矢量
+ * @return true to continue, false to terminate 返回true继续，返回false终止。
+ 
  */
 typedef std::function<bool(PhysicsWorld& world, const PhysicsRayCastInfo& info, void* data)> PhysicsRayCastCallbackFunc;
 typedef std::function<bool(PhysicsWorld&, PhysicsShape&, void*)> PhysicsQueryRectCallbackFunc;
 typedef PhysicsQueryRectCallbackFunc PhysicsQueryPointCallbackFunc;
 
 /**
- * @brief An PhysicsWorld object simulates collisions and other physical properties. You do not create PhysicsWorld objects directly; instead, you can get it from an Scene object.
+ * @brief 一个PhysicsWorld对象模拟冲突和其他物理属性。你可以不直接创建PhysicsWorld对象，以之代替的，你可以从一个Scene对象获取它。
  */
 class PhysicsWorld
 {
 public:
-    static const int DEBUGDRAW_NONE;        ///< draw nothing
-    static const int DEBUGDRAW_SHAPE;       ///< draw shapes
-    static const int DEBUGDRAW_JOINT;       ///< draw joints
-    static const int DEBUGDRAW_CONTACT;     ///< draw contact
-    static const int DEBUGDRAW_ALL;         ///< draw all
+    static const int DEBUGDRAW_NONE;        ///< 什么都不画
+    static const int DEBUGDRAW_SHAPE;       ///< 画形状
+    static const int DEBUGDRAW_JOINT;       ///< 画关节点
+    static const int DEBUGDRAW_CONTACT;     ///< 画接触
+    static const int DEBUGDRAW_ALL;         ///< 画所有东西
     
 public:
-    /** Adds a joint to the physics world.*/
+    /** 向PhysicsWorld增加一个关节点 */
     virtual void addJoint(PhysicsJoint* joint);
-    /** Remove a joint from physics world.*/
+    /** 从PhysicsWorld删除一个节点 */
     virtual void removeJoint(PhysicsJoint* joint, bool destroy = true);
-    /** Remove all joints from physics world.*/
+    /** 从PhysicsWorld删除所有的关节点*/
     virtual void removeAllJoints(bool destroy = true);
     
-    /** Remove a body from physics world. */
+    /** 从PhysicsWorld移除body */
     virtual void removeBody(PhysicsBody* body);
-    /** Remove body by tag. */
+    /** 通过tag移除body */
     virtual void removeBody(int tag);
-    /** Remove all bodies from physics world. */
+    /** 从PhysicsWorld移除所有body */
     virtual void removeAllBodies();
     
-    /** Searches for physics shapes that intersects the ray. */
+    /** 寻找和光线相交的物理形状 */
     void rayCast(PhysicsRayCastCallbackFunc func, const Vec2& start, const Vec2& end, void* data);
-    /** Searches for physics shapes that contains in the rect. */
+    /** 寻找包含在矩形中的物理形状 */
     void queryRect(PhysicsQueryRectCallbackFunc func, const Rect& rect, void* data);
-    /** Searches for physics shapes that contains the point. */
+    /** 寻找包含某个点的物理形状 */
     void queryPoint(PhysicsQueryPointCallbackFunc func, const Vec2& point, void* data);
-    /** Get phsyics shapes that contains the point. */
+    /** 寻找包含某个点的物理形状 */
     Vector<PhysicsShape*> getShapes(const Vec2& point) const;
-    /** return physics shape that contains the point. */
+    /** 寻找包含某个点的物理形状 */
     PhysicsShape* getShape(const Vec2& point) const;
-    /** Get all the bodys that in the physics world. */
+    /** 获取所有在物理世界的body */
     const Vector<PhysicsBody*>& getAllBodies() const;
-    /** Get body by tag */
+    /** 通过tag获取body */
     PhysicsBody* getBody(int tag) const;
     
-    /** Get scene contain this physics world */
+    /** 获取被物理世界包含的场景 */
     inline Scene& getScene() const { return *_scene; }
-    /** get the gravity value */
+    /** 获取重力值 */
     inline Vect getGravity() const { return _gravity; }
-    /** set the gravity value */
+    /** 设置重力值 */
     void setGravity(const Vect& gravity);
-    /** Set the speed of physics world, speed is the rate at which the simulation executes. default value is 1.0 */
+    /** 设置物理世界的速度，速度是模拟执行的速率，默认值是1.0  */
     inline void setSpeed(float speed) { if(speed >= 0.0f) { _speed = speed; } }
-    /** get the speed of physics world */
+    /** 获取物理世界的速度。 */
     inline float getSpeed() { return _speed; }
     /** 
-     * set the update rate of physics world, update rate is the value of EngineUpdateTimes/PhysicsWorldUpdateTimes.
-     * set it higher can improve performance, set it lower can improve accuracy of physics world simulation.
-     * default value is 1.0
+     * 设置物理世界的更新速率，更新速率是EngineUpdateTimes/PhysicsWorldUpdateTimes的值
+     * 把它设置高点可以提高表现，把它设置低点能提高物理世界模拟的准确性。
+     * 默认值是1.0
      */
     inline void setUpdateRate(int rate) { if(rate > 0) { _updateRate = rate; } }
-    /** get the update rate */
+    /** 获取更新速率 */
     inline int getUpdateRate() { return _updateRate; }
     
-    /** set the debug draw mask */
+    /** 设置debug draw mask */
     void setDebugDrawMask(int mask);
-    /** get the bebug draw mask */
+    /** 获取debug draw mask */
     inline int getDebugDrawMask() { return _debugDrawMask; }
     
 protected:

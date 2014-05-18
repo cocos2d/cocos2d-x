@@ -40,9 +40,9 @@ class PhysicsBodyInfo;
 
 typedef struct PhysicsMaterial
 {
-    float density;          ///< The density of the object.
-    float restitution;      ///< The bounciness of the physics body.
-    float friction;         ///< The roughness of the surface of a shape.
+    float density;          ///< 对象的密度
+    float restitution;      ///< 物理body的恢复系数
+    float friction;         ///< body的表面粗糙程度
     
     PhysicsMaterial()
     : density(0.0f)
@@ -60,7 +60,7 @@ typedef struct PhysicsMaterial
 const PhysicsMaterial PHYSICSSHAPE_MATERIAL_DEFAULT(0.0f, 0.5f, 0.5f);
 
 /**
- * @brief A shape for body. You do not create PhysicsWorld objects directly, instead, you can view PhysicsBody to see how to create it.
+ * @brief 给body的一个形状。你不会直接创建PhysicsWorld 对象，与之代替的，你可以查看PhysicsBody去了解怎么创建它。
  */
 class PhysicsShape : public Ref
 {
@@ -78,22 +78,22 @@ public:
     };
     
 public:
-    /** Get the body that this shape attaches */
+    /** 获取这个形状连接到的body */
     inline PhysicsBody* getBody() const { return _body; }
-    /** Return the type of this shape */
+    /** 返回形状的类型 */
     inline Type getType() const { return _type; }
-    /** return the area of this shape */
+    /** 返回形状所占的面积 */
     inline float getArea() const { return _area; }
-    /** get moment */
+    /** 获取力矩 */
     inline float getMoment() const { return _moment; }
-    /** Set moment, it will change the body's moment this shape attaches */
+    /** 设置力矩，它会更改这个形状关联的body的力矩 */
     void setMoment(float moment);
     inline void setTag(int tag) { _tag = tag; }
     inline int getTag() const { return _tag; }
     
-    /** get mass */
+    /** 获取质量 */
     inline float getMass() const { return _mass; }
-    /** Set mass, it will change the body's mass this shape attaches */
+    /** 设置质量，它会改变这个形状关联的body的质量 */
     void setMass(float mass);
     inline float getDensity() const { return _material.density; }
     void setDensity(float density);
@@ -104,38 +104,38 @@ public:
     const PhysicsMaterial& getMaterial() const { return _material; }
     void setMaterial(const PhysicsMaterial& material);
     
-    /** Calculate the default moment value */
+    /** 计算默认的力矩值 */
     virtual float calculateDefaultMoment() { return 0.0f; }
-    /** Get offset */
+    /** 获取偏移值 */
     virtual Vec2 getOffset() { return Vec2::ZERO; }
-    /** Get center of this shape */
+    /** 获取这个形状的中心 */
     virtual Vec2 getCenter() { return getOffset(); }
-    /** Test point is in shape or not */
+    /** 检测某个点是否在这个形状里 */
     bool containsPoint(const Vec2& point) const;
     
-    /** move the points to the center */
+    /** 把那个点移动到中心点 */
     static void recenterPoints(Vec2* points, int count, const Vec2& center = Vec2::ZERO);
-    /** get center of the polyon points */
+    /** 获取多边形的中心 */
     static Vec2 getPolyonCenter(const Vec2* points, int count);
     
     /**
-     * A mask that defines which categories this physics body belongs to.
-     * Every physics body in a scene can be assigned to up to 32 different categories, each corresponding to a bit in the bit mask. You define the mask values used in your game. In conjunction with the collisionBitMask and contactTestBitMask properties, you define which physics bodies interact with each other and when your game is notified of these interactions.
-     * The default value is 0xFFFFFFFF (all bits set).
+     * 定义物理body属于哪种分类的一个mask
+     * 在一个场景内的每一个物理body可以被分配到最多32个分类,每个对应1个bit在bit mask中。你定义你游戏中使用的mask值。和属性collisionBitMask、contactTestBitMask互相协调，你定义哪种物理body互相之间的交互和什么时候你的游戏会被这些交互通知。
+     * 默认值是0xFFFFFFFF (所有位被设成1)。
      */
     inline void setCategoryBitmask(int bitmask) { _categoryBitmask = bitmask; }
     inline int getCategoryBitmask() const { return _categoryBitmask; }
     /**
-     * A mask that defines which categories of bodies cause intersection notifications with this physics body.
-     * When two bodies share the same space, each body’s category mask is tested against the other body’s contact mask by performing a logical AND operation. If either comparison results in a non-zero value, an PhysicsContact object is created and passed to the physics world’s delegate. For best performance, only set bits in the contacts mask for interactions you are interested in.
-     * The default value is 0x00000000 (all bits cleared).
+     * 定义哪种分类的body导致和这个物理body发生交叉通知的一个mask
+     * 当两个body共享同一片控件，每个body的分类mask会跟对方的contact mask通过“逻辑和”（即&&）操作。如果任意一个的结果是一个非0值，一个PhysicsContact的对象会被生成和传送到物理世界的委托。为了最好的表现，仅设置在contact mask里设置 你感兴趣的交互 所对应的bit。
+     * 默认值是0x00000000 (所有位被设成0)。
      */
     inline void setContactTestBitmask(int bitmask) { _contactTestBitmask = bitmask; }
     inline int getContactTestBitmask() const { return _contactTestBitmask; }
     /**
-     * A mask that defines which categories of physics bodies can collide with this physics body.
-     * When two physics bodies contact each other, a collision may occur. This body’s collision mask is compared to the other body’s category mask by performing a logical AND operation. If the result is a non-zero value, then this body is affected by the collision. Each body independently chooses whether it wants to be affected by the other body. For example, you might use this to avoid collision calculations that would make negligible changes to a body’s velocity.
-     * The default value is 0xFFFFFFFF (all bits set).
+     * 定义物理body可以跟那些分类的物理body发生冲突的一个mask
+     * 当两个物理body彼此碰撞时，一个冲突可能会发生。这个body的冲突mask 会跟另一个body的分类mask 通过逻辑和的操作比较。如果结果是个非0值，那么这个body会被这个冲突影响。每个body独立的选择它是否会被另一个body影响。比如说ini可能会使用这个mask 去避免会发生对一个body的速率发生微小的变化的冲突计算。
+     * 默认值是0xFFFFFFFF (所有位被设成1)。
      */
     inline void setCollisionBitmask(int bitmask) { _collisionBitmask = bitmask; }
     inline int getCollisionBitmask() const { return _collisionBitmask; }
@@ -147,13 +147,13 @@ protected:
     bool init(Type type);
     
     /**
-     * @brief PhysicsShape is PhysicsBody's friend class, but all the subclasses isn't. so this method is use for subclasses to catch the bodyInfo from PhysicsBody.
+     * @brief PhysicsShape是PhysicsBody's 友元类，但它的友元类不是。所以这个方法是让子类们能够从PhysicsBody获取信息。
      */
     PhysicsBodyInfo* bodyInfo() const;
     
     void setBody(PhysicsBody* body);
     
-    /** calculate the area of this shape */
+    /** 计算这个形状所占的面积 */
     virtual float calculateArea() { return 0.0f; }
     
 protected:
@@ -180,7 +180,7 @@ protected:
     friend class PhysicsDebugDraw;
 };
 
-/** A circle shape */
+/** 圆形形状 */
 class PhysicsShapeCircle : public PhysicsShape
 {
 public:
@@ -201,7 +201,7 @@ protected:
     virtual ~PhysicsShapeCircle();
 };
 
-/** A box shape */
+/** Box形状 */
 class PhysicsShapeBox : public PhysicsShape
 {
 public:
@@ -228,7 +228,7 @@ protected:
     Vec2 _offset;
 };
 
-/** A polygon shape */
+/** 多边形形状 */
 class PhysicsShapePolygon : public PhysicsShape
 {
 public:
@@ -254,7 +254,7 @@ protected:
     Vec2 _center;
 };
 
-/** A segment shape */
+/** 线段形状 */
 class PhysicsShapeEdgeSegment : public PhysicsShape
 {
 public:
@@ -277,7 +277,7 @@ protected:
     friend class PhysicsBody;
 };
 
-/** An edge box shape */
+/** 获取一个边缘box形状 */
 class PhysicsShapeEdgeBox : public PhysicsShape
 {
 public:
@@ -299,7 +299,7 @@ protected:
     friend class PhysicsBody;
 };
 
-/** An edge polygon shape */
+/** 边缘多边形的形状 */
 class PhysicsShapeEdgePolygon : public PhysicsShape
 {
 public:
@@ -321,7 +321,7 @@ protected:
     Vec2 _center;
 };
 
-/** a chain shape */
+/** 链形状 */
 class PhysicsShapeEdgeChain : public PhysicsShape
 {
 public:
