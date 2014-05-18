@@ -104,21 +104,21 @@ class EventListener;
 class CC_DLL Node : public Ref
 {
 public:
-    /// Default tag used for all the nodes
+    /// 默认的标记用于所有的节点
     static const int INVALID_TAG = -1;
 
     /// @{
-    /// @name Constructor, Destructor and Initializers
+    /// @命名 构造函数，析构函数和一些初始化
 
     /**
-     * Allocates and initializes a node.
-     * @return A initialized node which is marked as "autorelease".
+     * 分配并且初始化一个节点.
+     * @返回 一个初始化的节点，该节点被标记为“autorelease”(自动释放).
      */
     static Node * create(void);
 
     /**
-     * Gets the description string. It makes debugging easier.
-     * @return A string
+     * 得到描述性的字符串。这将会使得调试更加简单。
+     * @返回 一个字符串
      * @js NA
      * @lua NA
      */
