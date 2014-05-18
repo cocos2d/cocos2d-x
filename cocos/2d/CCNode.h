@@ -151,46 +151,46 @@ public:
      */
     virtual void _setLocalZOrder(int z);
     /**
-     * Gets the local Z order of this node.
+     * 得到这个节点的局部Z顺序
      *
-     * @see `setLocalZOrder(int)`
+     * @见 `setLocalZOrder(int)`
      *
-     * @return The local (relative to its siblings) Z order.
+     * @返回 局部Z顺序(相对于兄弟节点)。
      */
     virtual int getLocalZOrder() const { return _localZOrder; }
     CC_DEPRECATED_ATTRIBUTE virtual int getZOrder() const { return getLocalZOrder(); }
 
     /**
-     Defines the oder in which the nodes are renderer.
-     Nodes that have a Global Z Order lower, are renderer first.
+     定义渲染节点的顺序
+     拥有全局Z顺序越小的节点，最先渲染
      
-     In case two or more nodes have the same Global Z Order, the oder is not guaranteed.
-     The only exception if the Nodes have a Global Z Order == 0. In that case, the Scene Graph order is used.
+     假设两个或者更多的节点拥有相同的全局Z顺序，那么渲染顺序无法保证。
+     唯一的例外是如果节点的全局Z顺序为零，那么场景图顺序是可以使用的。 
      
-     By default, all nodes have a Global Z Order = 0. That means that by default, the Scene Graph order is used to render the nodes.
+     默认的，所有的节点全局Z顺序都是零。这就是说，默认使用场景图顺序来渲染节点。
      
-     Global Z Order is useful when you need to render nodes in an order different than the Scene Graph order.
+     全局Z顺序是非常有用的当你需要渲染节点按照不同的顺序而不是场景图顺序。
      
-     Limitations: Global Z Order can't be used used by Nodes that have SpriteBatchNode as one of their acenstors.
-     And if ClippingNode is one of the ancestors, then "global Z order" will be relative to the ClippingNode.
+     局限性: 全局Z顺序不能够被拥有继承“SpriteBatchNode”的节点使用。
+     并且如果“ClippingNode”是其中之一的上代，那么“global Z order” 将会和“ClippingNode”有关。
+     
+     @见 `setLocalZOrder()`
+     @见 `setVertexZ()`
 
-     @see `setLocalZOrder()`
-     @see `setVertexZ()`
-
-     @since v3.0
+     @自从 v3.0
      */
     virtual void setGlobalZOrder(float globalZOrder);
     /**
-     * Returns the Node's Global Z Order.
+     * 返回节点的全局Z顺序。
      *
-     * @see `setGlobalZOrder(int)`
+     * @见 `setGlobalZOrder(int)`
      *
-     * @return The node's global Z order
+     * @返回 节点的全局Z顺序
      */
     virtual float getGlobalZOrder() const { return _globalZOrder; }
 
     /**
-     * Sets the scale (x) of the node.
+     * 设置节点的缩放（x）。
      *
      * It is a scaling factor that multiplies the width of the node and its children.
      *
