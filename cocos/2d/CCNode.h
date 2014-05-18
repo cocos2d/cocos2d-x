@@ -75,29 +75,29 @@ bool nodeComparisonLess(Node* n1, Node* n2);
 
 class EventListener;
 
-/** @brief Node is the base element of the Scene Graph. Elements of the Scene Graph must be Node objects or subclasses of it.
- The most common Node objects are: Scene, Layer, Sprite, Menu, Label.
+/** @概要:节点是场景图的基本元素。场景图的基本元素必须是节点对象或者是节点对象的子类。
+ 一些常用的节点对象：Scene, Layer, Sprite, Menu, Label.
 
- The main features of a Node are:
- - They can contain other Node objects (`addChild`, `getChildByTag`, `removeChild`, etc)
- - They can schedule periodic callback (`schedule`, `unschedule`, etc)
- - They can execute actions (`runAction`, `stopAction`, etc)
+ 一个节点的主要特点:
+ - 他们可以包含其他的节点对象(`addChild`, `getChildByTag`, `removeChild`, etc)
+ - 他们可以安排定期的回调(`schedule`, `unschedule`, etc)
+ - 他们可以执行一些动作(`runAction`, `stopAction`, etc)
 
- Subclassing a Node usually means (one/all) of:
- - overriding init to initialize resources and schedule callbacks
- - create callbacks to handle the advancement of time
- - overriding `draw` to render the node
+ 子类节点通常意味着(单一的/所有的):
+ - 重写初始化资源并且可以安排回调
+ - 创建回调来操作进行的时间
+ - 重写“draw”来渲染节点
 
- Properties of Node:
- - position (default: x=0, y=0)
- - scale (default: x=1, y=1)
- - rotation (in degrees, clockwise) (default: 0)
- - anchor point (default: x=0, y=0)
- - contentSize (default: width=0, height=0)
- - visible (default: true)
+ 节点的属性:
+ - 位置（默认值：x=0,y=0）
+ - 缩放（默认值：x=1,y=1）
+ - 旋转（以角度为单位，按顺时针方向）（默认值：0）
+ - 锚点（默认值：x=0,y=0）
+ - 内容大小（默认值：width=0,heigh=0）
+ - 可见性（默认值：true）
 
- Limitations:
- - A Node is a "void" object. If you want to draw something on the screen, you should use a Sprite instead. Or subclass Node and override `draw`.
+ 局限性：Limitations:
+ - 一个节点类是一个“void”对象。如果你想要在场景中画一些东西，你应该使用精灵类来代替。或者是节点的子类并且重写“draw”.
 
  */
 
