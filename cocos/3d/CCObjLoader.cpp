@@ -83,8 +83,8 @@ static inline int fixIndex(int idx, int n)
 static inline std::string parseString(const char*& token)
 {
     std::string s;
-    int b = strspn(token, " \t");
-    int e = strcspn(token, " \t\r");
+    auto b = strspn(token, " \t");
+    auto e = strcspn(token, " \t\r");
     s = std::string(&token[b], &token[e]);
     
     token += (e - b);
@@ -154,11 +154,11 @@ static vertex_index parseTriple(const char* &token, int vsize, int vnsize, int v
     return vi;
 }
 
-static unsigned int updateVertex( std::map<vertex_index, unsigned int>& vertexCache, std::vector<float>& positions, std::vector<float>& normals,
+static ssize_t updateVertex( std::map<vertex_index, ssize_t>& vertexCache, std::vector<float>& positions, std::vector<float>& normals,
              std::vector<float>& texcoords, const std::vector<float>& in_positions, const std::vector<float>& in_normals, const std::vector<float>& in_texcoords,
              const vertex_index& i)
 {
-    const std::map<vertex_index, unsigned int>::iterator it = vertexCache.find(i);
+    const auto it = vertexCache.find(i);
     
     if (it != vertexCache.end()) 
     {
@@ -185,13 +185,13 @@ static unsigned int updateVertex( std::map<vertex_index, unsigned int>& vertexCa
         texcoords.push_back(in_texcoords[2*i.vt_idx+1]);
     }
     
-    unsigned int idx = positions.size() / 3 - 1;
+    auto idx = positions.size() / 3 - 1;
     vertexCache[i] = idx;
     
     return idx;
 }
 
-static bool exportFaceGroupToShape( std::map<vertex_index, unsigned int>& vertexCache, ObjLoader::shapes_t& shapes, const std::vector<float> &in_positions,
+static bool exportFaceGroupToShape( std::map<vertex_index, ssize_t>& vertexCache, ObjLoader::shapes_t& shapes, const std::vector<float> &in_positions,
                        const std::vector<float> &in_normals, const std::vector<float> &in_texcoords, const std::vector<std::vector<vertex_index> >& faceGroup,
                        const ObjLoader::material_t &material, const std::string &name)
 {
@@ -247,7 +247,7 @@ std::string trim(const std::string& str)
 {
     if (str.empty())
         return str;
-    int len = str.length();
+    auto len = str.length();
     char c = str[len - 1];
     while (c == '\r' || c == '\n') 
     {
@@ -491,7 +491,7 @@ std::string LoadMtl ( std::map<std::string, ObjLoader::material_t>& material_map
         }
         if(_space)
         {
-            int len = _space - token;
+            auto len = _space - token;
             std::string key(token, len);
             std::string value = _space + 1;
             material.unknown_parameter.insert(std::pair<std::string, std::string>(key, value));
@@ -508,7 +508,7 @@ std::string ObjLoader::LoadObj(shapes_t& shapes, const char* filename, const cha
     
     std::stringstream err;
     std::istringstream ifs(FileUtils::getInstance()->getStringFromFile(filename));
-    std::map<vertex_index, unsigned int> vertexCache;
+    std::map<vertex_index, ssize_t> vertexCache;
     //std::ifstream ifs(filename);
     
     if (!ifs)
@@ -605,7 +605,7 @@ std::string ObjLoader::LoadObj(shapes_t& shapes, const char* filename, const cha
             while (!isNewLine(token[0])) {
                 vertex_index vi = parseTriple(token, v.size() / 3, vn.size() / 3, vt.size() / 2);
                 face.push_back(vi);
-                int n = strspn(token, " \t\r");
+                auto n = strspn(token, " \t\r");
                 token += n;
             }
             

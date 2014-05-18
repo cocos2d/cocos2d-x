@@ -1,12 +1,36 @@
+/****************************************************************************
+ Copyright (c) 2014 Chukong Technologies Inc.
+
+ http://www.cocos2d-x.org
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 
 #ifndef __CCSPRITE3D_H__
 #define __CCSPRITE3D_H__
 
 #include <vector>
+
 #include "base/CCVector.h"
 #include "base/ccTypes.h"
-#include "2d/CCNode.h"
 #include "base/CCProtocols.h"
+#include "2d/CCNode.h"
 #include "renderer/CCMeshCommand.h"
 
 NS_CC_BEGIN
@@ -15,23 +39,26 @@ class GLProgramState;
 class Mesh;
 class Texture2D;
 
+/** Sprite3D: TODO add description */
 class Sprite3D : public Node, public BlendProtocol
 {
 public:
-    //create sprite3D
+    /// creates a Sprite3D
     static Sprite3D* create(const std::string &modelPath);
-    //support only one texture, override texture using given texturePath
+
+    // creates a Sprite3D. It only supports one texture, and overrides the internal texture with 'texturePath'
     static Sprite3D* create(const std::string &modelPath, const std::string &texturePath);
     
     //set texture
     void setTexture(const std::string& texFile);
     void setTexture(Texture2D* texture);
 
+    Mesh* getMesh() const { return _mesh; }
+
+    // overrides
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
     virtual const BlendFunc &getBlendFunc() const override;
-    
-    Mesh* getMesh() const { return _mesh; }
-    
+
 protected:
     Sprite3D();
     virtual ~Sprite3D();
@@ -42,7 +69,7 @@ protected:
 
     virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
     
-    virtual GLProgram* getDefGLProgram(bool textured = true);
+    virtual GLProgram* getDefaultGLProgram(bool textured = true);
     
     void genGLProgramState();
 
@@ -50,7 +77,6 @@ protected:
     MeshCommand        _meshCommand;
     Texture2D*        _texture;
     BlendFunc _blend;
-    
 };
 
 extern std::string s_attributeNames[];

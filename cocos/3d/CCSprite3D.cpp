@@ -1,8 +1,31 @@
+/****************************************************************************
+ Copyright (c) 2014 Chukong Technologies Inc.
 
-#include "CCSprite3D.h"
-#include "CCSprite3DDataCache.h"
-#include "CCMesh.h"
-#include "CCObjLoader.h"
+ http://www.cocos2d-x.org
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
+#include "3d/CCSprite3D.h"
+#include "3d/CCSprite3DDataCache.h"
+#include "3d/CCMesh.h"
+#include "3d/CCObjLoader.h"
 
 #include "base/CCDirector.h"
 #include "base/CCPlatformMacros.h"
@@ -68,7 +91,7 @@ bool Sprite3D::loadFromObj(const std::string& path)
     
     //.mtl file directory
     std::string dir = "";
-    int last = fullPath.rfind("/");
+    auto last = fullPath.rfind("/");
     if (last != -1)
         dir = fullPath.substr(0, last + 1);
     
@@ -159,19 +182,24 @@ bool Sprite3D::initWithFile(const std::string &path)
 
 void Sprite3D::genGLProgramState()
 {
-    auto programstate = GLProgramState::getOrCreateWithGLProgram(getDefGLProgram(_mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_TEX_COORD)));
-    int offset = 0;
+    auto programstate = GLProgramState::getOrCreateWithGLProgram(getDefaultGLProgram(_mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_TEX_COORD)));
+    long offset = 0;
     auto attributeCount = _mesh->getMeshVertexAttribCount();
     for (auto k = 0; k < attributeCount; k++) {
         auto meshattribute = _mesh->getMeshVertexAttribute(k);
-        programstate->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib], meshattribute.size, meshattribute.type, GL_FALSE, _mesh->getVertexSizeInBytes(), (void*)offset);
+        programstate->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
+                                             meshattribute.size,
+                                             meshattribute.type,
+                                             GL_FALSE,
+                                             _mesh->getVertexSizeInBytes(),
+                                             (GLvoid*)offset);
         offset += meshattribute.attribSizeBytes;
     }
     
     setGLProgramState(programstate);
 }
 
-GLProgram* Sprite3D::getDefGLProgram(bool textured)
+GLProgram* Sprite3D::getDefaultGLProgram(bool textured)
 {
     if(textured)
     {
@@ -186,16 +214,20 @@ GLProgram* Sprite3D::getDefGLProgram(bool textured)
 void Sprite3D::setTexture(const std::string& texFile)
 {
     auto tex = Director::getInstance()->getTextureCache()->addImage(texFile);
-    CC_SAFE_RETAIN(tex);
-    CC_SAFE_RELEASE_NULL(_texture);
-    _texture = tex;
+    if( tex && _texture != tex ) {
+        CC_SAFE_RETAIN(tex);
+        CC_SAFE_RELEASE_NULL(_texture);
+        _texture = tex;
+    }
 }
 
 void Sprite3D::setTexture(Texture2D* texture)
 {
-    CC_SAFE_RETAIN(texture);
-    CC_SAFE_RELEASE_NULL(_texture);
-    _texture = texture;
+    if(_texture != texture) {
+        CC_SAFE_RETAIN(texture);
+        CC_SAFE_RELEASE_NULL(_texture);
+        _texture = texture;
+    }
 }
 
 void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
@@ -205,7 +237,16 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, bool transformUpd
     color.a = getDisplayedOpacity() / 255.0f;
     
     GLuint textureID = _texture ? _texture->getName() : 0;
-    _meshCommand.init(_globalZOrder, textureID, programstate, _blend, _mesh->getVertexBuffer(), _mesh->getIndexBuffer(), _mesh->getPrimitiveType(), _mesh->getIndexFormat(), _mesh->getIndexCount(), transform);
+    _meshCommand.init(_globalZOrder,
+                      textureID,
+                      programstate,
+                      _blend,
+                      _mesh->getVertexBuffer(),
+                      _mesh->getIndexBuffer(),
+                      (GLenum)_mesh->getPrimitiveType(),
+                      (GLenum)_mesh->getIndexFormat(),
+                      _mesh->getIndexCount(),
+                      transform);
     
     _meshCommand.setCullFaceEnabled(true);
     _meshCommand.setDepthTestEnabled(true);

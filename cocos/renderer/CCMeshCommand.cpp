@@ -46,7 +46,16 @@ MeshCommand::MeshCommand()
     _type = RenderCommand::Type::MESH_COMMAND;
 }
 
-void MeshCommand::init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, GLuint vertexBuffer, GLuint indexBuffer, GLenum primitive, GLenum indexFormat, GLenum indexCount, const Mat4 &mv)
+void MeshCommand::init(float globalOrder,
+                       GLuint textureID,
+                       GLProgramState* glProgramState,
+                       BlendFunc blendType,
+                       GLuint vertexBuffer,
+                       GLuint indexBuffer,
+                       GLenum primitive,
+                       GLenum indexFormat,
+                       ssize_t indexCount,
+                       const Mat4 &mv)
 {
     CCASSERT(glProgramState, "GLProgramState cannot be nill");
     
@@ -141,7 +150,7 @@ void MeshCommand::execute()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
     
     // Draw
-    glDrawElements(_primitive, _indexCount, _indexFormat, 0);
+    glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
     
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
     

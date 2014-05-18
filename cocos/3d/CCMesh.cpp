@@ -1,3 +1,26 @@
+/****************************************************************************
+ Copyright (c) 2014 Chukong Technologies Inc.
+
+ http://www.cocos2d-x.org
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 
 #include "CCMesh.h"
 
@@ -25,7 +48,10 @@ bool RenderMeshData::hasVertexAttrib(int attrib)
     return false;
 }
 
-bool RenderMeshData::initFrom(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices)
+bool RenderMeshData::initFrom(const std::vector<float>& positions,
+                              const std::vector<float>& normals,
+                              const std::vector<float>& texs,
+                              const std::vector<unsigned short>& indices)
 {
     CC_ASSERT(positions.size()<65536 * 3 && "index may out of bound");
     
@@ -99,11 +125,10 @@ bool RenderMeshData::initFrom(const std::vector<float>& positions, const std::ve
 Mesh::Mesh()
 :_vertexBuffer(0)
 , _indexBuffer(0)
-, _primitiveType(PrimitiveType_TRIANGLES)
-, _indexFormat(IndexFormat_INDEX16)
+, _primitiveType(PrimitiveType::TRIANGLES)
+, _indexFormat(IndexFormat::INDEX16)
 , _indexCount(0)
 {
-    
 }
 
 Mesh::~Mesh()
@@ -146,8 +171,8 @@ void Mesh::cleanAndFreeBuffers()
         glDeleteBuffers(1, &_indexBuffer);
         _indexBuffer = 0;
     }
-    _primitiveType = PrimitiveType_TRIANGLES;
-    _indexFormat = IndexFormat_INDEX16;
+    _primitiveType = PrimitiveType::TRIANGLES;
+    _indexFormat = IndexFormat::INDEX16;
     _indexCount = 0;
 }
 
@@ -169,13 +194,13 @@ void Mesh::buildBuffer()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
     
     unsigned int indexSize = 2;
-    IndexFormat indexformat = IndexFormat_INDEX16;
+    IndexFormat indexformat = IndexFormat::INDEX16;
     
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexSize * _renderdata._indices.size(), &_renderdata._indices[0], GL_STATIC_DRAW);
     
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     
-    _primitiveType = PrimitiveType_TRIANGLES;
+    _primitiveType = PrimitiveType::TRIANGLES;
     _indexFormat = indexformat;
     _indexCount = _renderdata._indices.size();
 }

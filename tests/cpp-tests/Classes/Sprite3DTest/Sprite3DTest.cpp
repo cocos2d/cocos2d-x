@@ -346,12 +346,17 @@ void Effect3DOutline::setOutlineWidth(float width)
 void Effect3DOutline::drawWithSprite(EffectSprite3D* sprite, const Mat4 &transform)
 {
     auto mesh = sprite->getMesh();
-    int offset = 0;
+    long offset = 0;
     for (auto i = 0; i < mesh->getMeshVertexAttribCount(); i++)
     {
         auto meshvertexattrib = mesh->getMeshVertexAttribute(i);
         
-        _glProgramState->setVertexAttribPointer(s_attributeNames[meshvertexattrib.vertexAttrib], meshvertexattrib.size, meshvertexattrib.type, GL_FALSE, mesh->getVertexSizeInBytes(), (void*)offset);
+        _glProgramState->setVertexAttribPointer(s_attributeNames[meshvertexattrib.vertexAttrib],
+                                                meshvertexattrib.size,
+                                                meshvertexattrib.type,
+                                                GL_FALSE,
+                                                mesh->getVertexSizeInBytes(),
+                                                (void*)offset);
         offset += meshvertexattrib.attribSizeBytes;
     }
     //draw

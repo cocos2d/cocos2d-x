@@ -31,9 +31,6 @@
 
 class Sprite3DTestDemo : public BaseTest
 {
-protected:
-    std::string    _title;
-    
 public:
     Sprite3DTestDemo(void);
     virtual ~Sprite3DTestDemo(void);
@@ -46,6 +43,9 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     virtual void onEnter() override;
+
+protected:
+    std::string    _title;
 };
 
 class Sprite3DBasicTest : public Sprite3DTestDemo

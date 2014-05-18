@@ -1,3 +1,26 @@
+/****************************************************************************
+ Copyright (c) 2014 Chukong Technologies Inc.
+
+ http://www.cocos2d-x.org
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 
 #ifndef __CCMESH_H__
 #define __CCMESH_H__
@@ -11,27 +34,6 @@
 #include "renderer/CCGLProgram.h"
 
 NS_CC_BEGIN
-
-/**
- * Defines supported index formats.
- */
-enum IndexFormat
-{
-    IndexFormat_INDEX8 = GL_UNSIGNED_BYTE,
-    IndexFormat_INDEX16 = GL_UNSIGNED_SHORT,
-};
-
-/**
- * Defines supported primitive types.
- */
-enum PrimitiveType
-{
-    PrimitiveType_TRIANGLES = GL_TRIANGLES,
-    PrimitiveType_TRIANGLE_STRIP = GL_TRIANGLE_STRIP,
-    PrimitiveType_LINES = GL_LINES,
-    PrimitiveType_LINE_STRIP = GL_LINE_STRIP,
-    PrimitiveType_POINTS = GL_POINTS
-};
 
 //mesh vertex attribute
 struct MeshVertexAttrib
@@ -58,15 +60,33 @@ public:
     
 protected:
     int _vertexsizeBytes;
-    int _vertexNum;
+    ssize_t _vertexNum;
     std::vector<float> _vertexs;
     std::vector<unsigned short> _indices;
     std::vector<MeshVertexAttrib> _vertexAttribs;
 };
 
+/** Mesh: TODO, add description of Mesh */
 class Mesh : public Ref
 {
 public:
+    /** Defines supported index formats. */
+    enum class IndexFormat
+    {
+        INDEX8 = GL_UNSIGNED_BYTE,
+        INDEX16 = GL_UNSIGNED_SHORT,
+    };
+
+    /** Defines supported primitive types. */
+    enum class PrimitiveType
+    {
+        TRIANGLES = GL_TRIANGLES,
+        TRIANGLE_STRIP = GL_TRIANGLE_STRIP,
+        LINES = GL_LINES,
+        LINE_STRIP = GL_LINE_STRIP,
+        POINTS = GL_POINTS
+    };
+
     //create
     static Mesh* create(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices);
 
@@ -74,7 +94,7 @@ public:
     inline GLuint getVertexBuffer() const { return _vertexBuffer; }
     
     //get mesh vertex attribute count
-    int getMeshVertexAttribCount() const { return _renderdata._vertexAttribs.size(); }
+    ssize_t getMeshVertexAttribCount() const { return _renderdata._vertexAttribs.size(); }
     //get MeshVertexAttribute by index
     const MeshVertexAttrib& getMeshVertexAttribute(int idx) const { return _renderdata._vertexAttribs[idx]; }
     //has vertex attribute?
@@ -83,12 +103,13 @@ public:
     int getVertexSizeInBytes() const { return _renderdata._vertexsizeBytes; }
     
     PrimitiveType getPrimitiveType() const { return _primitiveType; }
-    unsigned int getIndexCount() const { return _indexCount; }
+    ssize_t getIndexCount() const { return _indexCount; }
     IndexFormat getIndexFormat() const { return _indexFormat; }
     GLuint getIndexBuffer() const {return _indexBuffer; }
     
     //build vertex buffer from renderdata
     void restore();
+
 protected:
     Mesh();
     virtual ~Mesh();
@@ -97,17 +118,16 @@ protected:
     //build buffer
     void buildBuffer();
     void cleanAndFreeBuffers();
-    
-protected:
+
     PrimitiveType _primitiveType;
     IndexFormat _indexFormat;
     GLuint _vertexBuffer;
     GLuint _indexBuffer;
-    unsigned int _indexCount;
-    
-private:
+    ssize_t _indexCount;
+
     RenderMeshData _renderdata;
 };
 
 NS_CC_END
+
 #endif // __CCMESH_H_

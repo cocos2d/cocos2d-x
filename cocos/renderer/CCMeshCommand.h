@@ -42,7 +42,7 @@ public:
     MeshCommand();
     ~MeshCommand();
 
-    void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, GLuint vertexBuffer, GLuint indexBuffer, GLenum primitive, GLenum indexType, GLenum indexCount, const Mat4 &mv);
+    void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, GLuint vertexBuffer, GLuint indexBuffer, GLenum primitive, GLenum indexType, ssize_t indexCount, const Mat4 &mv);
     
     void setCullFaceEnabled(bool enable);
     
@@ -75,7 +75,7 @@ protected:
     GLuint _indexBuffer;
     GLenum _primitive;
     GLenum _indexFormat;
-    int    _indexCount;
+    ssize_t _indexCount;
     
     // States, default value all false
     bool _cullFaceEnabled;
