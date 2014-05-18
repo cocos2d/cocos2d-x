@@ -43,7 +43,7 @@ NS_CC_BEGIN
  */
 
 /** MotionStreak.
- Creates a trailing path.
+ 创建一个精灵尾巴的路劲
  */
 class CC_DLL MotionStreak : public Node, public TextureProtocol
 #ifdef EMSCRIPTEN
