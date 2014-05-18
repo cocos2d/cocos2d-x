@@ -40,7 +40,7 @@ class PhysicsJointInfo;
 class PhysicsBodyInfo;
 
 /*
- * @brief An PhysicsJoint object connects two physics bodies together.
+ * @brief 一个PhysicsJoint 对象把两个物理body连接在一起。
  */
 class PhysicsJoint
 {
@@ -55,26 +55,26 @@ public:
     inline int getTag() const { return _tag; }
     inline void setTag(int tag) { _tag = tag; }
     inline bool isEnabled() const { return _enable; }
-    /** Enable/Disable the joint */
+    /** 设置关节点是否激活 */
     void setEnable(bool enable);
     inline bool isCollisionEnabled() const { return _collisionEnable; }
-    /** Enable/disable the collision between two bodies */
+    /** 设置两个连接的body间是否发生冲突 */
     void setCollisionEnable(bool enable);
-    /** Remove the joint from the world */
+    /** 从物理世界移除这个关节点 */
     void removeFormWorld();
-    /** Distory the joint*/
+    /** 销毁某个关节点 */
     static void destroy(PhysicsJoint* joint);
     
-    /** Set the max force between two bodies */
+    /** 设置两个连接的body相互间最大的作用力 */
     void setMaxForce(float force);
-    /** Get the max force setting */
+    /** 获取两个连接的body相互间最大的作用力 */
     float getMaxForce() const;
     
 protected:
     bool init(PhysicsBody* a, PhysicsBody* b);
     
     /**
-     * PhysicsShape is PhysicsBody's friend class, but all the subclasses isn't. so this method is use for subclasses to catch the bodyInfo from PhysicsBody.
+     * PhysicsShape 是 PhsicsBody的友元类，但是它的子类们不是。所以这个方法是让它的子类们能够从physicsBody中获取信息。
      */
     PhysicsBodyInfo* getBodyInfo(PhysicsBody* body) const;
     Node* getBodyNode(PhysicsBody* body) const;
@@ -95,7 +95,7 @@ protected:
 };
 
 /*
- * @brief A fixed joint fuses the two bodies together at a reference point. Fixed joints are useful for creating complex shapes that can be broken apart later.
+ * @brief 一个固定的关节点在某一个参考点把两个body融合在一起。固定的关节点对于创建复杂的、可以在之后断裂的形状很有用。
  */
 class PhysicsJointFixed : public PhysicsJoint
 {
@@ -111,7 +111,7 @@ protected:
 };
 
 /*
- * @brief A limit joint imposes a maximum distance between the two bodies, as if they were connected by a rope.
+ * @brief 一个有限的关节限定了两个body间最大的距离，就像他们之间被一条绳子连接一样。
  */
 class PhysicsJointLimit : public PhysicsJoint
 {
@@ -137,7 +137,7 @@ protected:
 };
 
 /*
- * @brief A pin joint allows the two bodies to independently rotate around the anchor point as if pinned together.
+ * @brief 一个pin 关节点允许两个body独立地以锚点为轴旋转如果pinned在一起。
  */
 class PhysicsJointPin : public PhysicsJoint
 {
@@ -152,7 +152,7 @@ protected:
     virtual ~PhysicsJointPin() {}
 };
 
-/** Set the fixed distance with two bodies */
+/** 设置两个body之间固定的距离。 */
 class PhysicsJointDistance : public PhysicsJoint
 {
 public:
@@ -169,7 +169,7 @@ protected:
     virtual ~PhysicsJointDistance() {}
 };
 
-/** Connecting two physics bodies together with a spring. */
+/** 用一个弹簧连接两个物理body */
 class PhysicsJointSpring : public PhysicsJoint
 {
 public:
@@ -193,7 +193,7 @@ protected:
     virtual ~PhysicsJointSpring() {}
 };
 
-/** Attach body a to a line, and attach body b to a dot */
+/** 连接一个body a到一条线、连接一个body b到一个点 */
 class PhysicsJointGroove : public PhysicsJoint
 {
 public:
@@ -214,7 +214,7 @@ protected:
     virtual ~PhysicsJointGroove() {}
 };
 
-/** Likes a spring joint, but works with rotary */
+/** 像一个弹簧关节点，但是能够可以旋转 */
 class PhysicsJointRotarySpring : public PhysicsJoint
 {
 public:
@@ -235,7 +235,7 @@ protected:
     virtual ~PhysicsJointRotarySpring() {}
 };
 
-/** Likes a limit joint, but works with rotary */
+/** 跟有限关节点差不多,不过能够旋转 */
 class PhysicsJointRotaryLimit : public PhysicsJoint
 {
 public:
@@ -255,7 +255,7 @@ protected:
     virtual ~PhysicsJointRotaryLimit() {}
 };
 
-/** Works like a socket wrench. */
+/** 跟插座扳手关节点差不多 */
 class PhysicsJointRatchet : public PhysicsJoint
 {
 public:
@@ -276,7 +276,7 @@ protected:
     virtual ~PhysicsJointRatchet() {}
 };
 
-/** Keeps the angular velocity ratio of a pair of bodies constant. */
+/** 保持一对body的恒定角速率. */
 class PhysicsJointGear : public PhysicsJoint
 {
 public:
@@ -295,7 +295,7 @@ protected:
     virtual ~PhysicsJointGear() {}
 };
 
-/** Keeps the relative angular velocity of a pair of bodies constant */
+/** 保持一对body的恒定相对角速率 */
 class PhysicsJointMotor : public PhysicsJoint
 {
 public:
