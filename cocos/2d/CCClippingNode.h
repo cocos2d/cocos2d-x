@@ -35,41 +35,41 @@
 
 NS_CC_BEGIN
 
-/** ClippingNode is a subclass of Node.
- It draws its content (childs) clipped using a stencil.
- The stencil is an other Node that will not be drawn.
- The clipping is done using the alpha part of the stencil (adjusted with an alphaThreshold).
+/** ClippingNode是Node的子类。
+ 使用模板（stencil）绘制它裁剪的内容（子节点）。
+ 模板（stencil）是另一个节点（Node），它不会被绘制。
+ 裁剪是通过使用模板的（alphaThreshold调节的）alpha部分完成的。
  */
 class CC_DLL ClippingNode : public Node
 {
 public:
-    /** Creates and initializes a clipping node without a stencil.
+    /** 创建并初始化不含模板（stencil）的裁剪节点（clipping node）
      */
     static ClippingNode* create();
     
-    /** Creates and initializes a clipping node with an other node as its stencil.
-     The stencil node will be retained.
+    /** 使用其他节点（Node）作为模板（stencil）创建并初始化一个裁剪节点（clipping node）。
+	模板（stencil）对象将会被retain
      */
     static ClippingNode* create(Node *stencil);
 
-    /** The Node to use as a stencil to do the clipping.
-     The stencil node will be retained.
-     This default to nil.
+    /** 用来做裁剪的模板（stencil）节点（Node）
+	模板（stencil）将会被retain
+	模板（stencil）对象默认为空（nil）。
      */
     Node* getStencil() const;
     void setStencil(Node *stencil);
     
-    /** The alpha threshold.
-     The content is drawn only where the stencil have pixel with alpha greater than the alphaThreshold.
-     Should be a float between 0 and 1.
-     This default to 1 (so alpha test is disabled).
+    /** alpha阈值（threshold）
+	 只有模板（stencil）的alpha像素大于alpha阈值（alphaThreshold）时内容才会被绘制。
+	 alpha阈值（threshold）范围应是0到1之间的浮点数。
+	 alpha阈值（threshold）默认为1（alpha测试默认关闭）
      */
     GLfloat getAlphaThreshold() const;
     void setAlphaThreshold(GLfloat alphaThreshold);
     
-    /** Inverted. If this is set to true,
-     the stencil is inverted, so the content is drawn where the stencil is NOT drawn.
-     This default to false.
+    /** 倒置（Inverted）
+	 如果设置为真（true），模板（stencil）会被反转，此时会绘制内容而不绘制模板（stencil）。
+	 默认设置为假（false）。
      */
     bool isInverted() const;
     void setInverted(bool inverted);
@@ -106,17 +106,17 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual ~ClippingNode();
 
-    /** Initializes a clipping node without a stencil.
+    /** 初始化一个不含模板（stencil）的裁剪节点（clipping node）
      */
     virtual bool init();
     
-    /** Initializes a clipping node with an other node as its stencil.
-     The stencil node will be retained, and its parent will be set to this clipping node.
+    /** 用另一个模板（stencil）节点（Node）初始化一个裁剪节点（clipping node）。
+	 模板（stencil）将会被retain，它的父节点会被设置为此裁剪节点（clipping node）。
      */
     virtual bool init(Node *stencil);
 
 protected:
-    /**draw fullscreen quad to clear stencil bits
+    /**全屏绘制来清除模版bits
     */
     void drawFullScreenQuadClearStencil();
 

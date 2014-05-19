@@ -40,9 +40,9 @@ NS_CC_BEGIN
  */
 
 /**
- @brief ProgressTimer is a subclass of Node.
- It renders the inner sprite according to the percentage.
- The progress can be Radial, Horizontal or vertical.
+ @brief ProgressTimer是Node的子类。
+ 该类根据百分比来渲染显示内部的Sprite对象。
+ 变化方向包括径向，水平或者垂直方向。
  @since v0.99.1
  */
 class CC_DLL ProgressTimer : public Node
@@ -51,29 +51,29 @@ class CC_DLL ProgressTimer : public Node
 #endif // EMSCRIPTEN
 {
 public:
-    /** Types of progress
+    /** 进度条类型
      @since v0.99.1
      */
     enum class Type
     {
-        /// Radial Counter-Clockwise
+        /// 逆时针径向
         RADIAL,
-        /// Bar
+        /// 条形
         BAR,
     };
     
-    /** Creates a progress timer with the sprite as the shape the timer goes through */
+	/** 以Sprite对象作为进度条的图形，创建一个ProgressTimer对象 */
     static ProgressTimer* create(Sprite* sp);
 
-    /** Change the percentage to change progress. */
     inline Type getType() const { return _type; }
 
-    /** Percentages are from 0 to 100 */
+	/** 百分比范围为0到100，包含0，100 */
     inline float getPercentage() const {return _percentage; }
 
-    /** The image to show the progress percentage, retain */
+	/** 获取用来显示进度条比例的Sprite对象，已retain*/
     inline Sprite* getSprite() const { return _sprite; }
 
+	/** 设置进度条显示的百分比*/
     void setPercentage(float percentage);
     void setSprite(Sprite *sprite);
     void setType(Type type);
@@ -87,27 +87,27 @@ public:
     inline void setReverseDirection(bool value) { _reverseDirection = value; };
 
     /**
-     *    Midpoint is used to modify the progress start position.
-     *    If you're using radials type then the midpoint changes the center point
-     *    If you're using bar type the the midpoint changes the bar growth
-     *        it expands from the center but clamps to the sprites edge so:
-     *        you want a left to right then set the midpoint all the way to Vec2(0,y)
-     *        you want a right to left then set the midpoint all the way to Vec2(1,y)
-     *        you want a bottom to top then set the midpoint all the way to Vec2(x,0)
-     *        you want a top to bottom then set the midpoint all the way to Vec2(x,1)
+	 *    中点（Midpoint）表示进度条变化的起始位置。
+	 *    如果进度条是径向模式，中点代表圆心位置
+	 *    如果进度条是条形模式，中点代表着进度条展开的方向。
+	 *        进度条从中心位置向两边展开，因此：
+	 *        进度条是从左往右展开时，设置中点（Midpoint）为Vec2(0,y);
+	 *        进度条是从右往左展开时，设置中点（Midpoint）为Vec2(1,y);
+	 *        进度条是从下往上展开时，设置中点（Midpoint）为Vec2(x,0);
+	 *        进度条是从上往下展开时，设置中点（Midpoint）为Vec2(x,1);
      */
     void setMidpoint(const Vec2& point);
-    /** Returns the Midpoint */
+	/** 返回中点(Midpoint) */
     Vec2 getMidpoint() const;
 
     /**
-     *    This allows the bar type to move the component at a specific rate
-     *    Set the component to 0 to make sure it stays at 100%.
-     *    For example you want a left to right bar but not have the height stay 100%
-     *    Set the rate to be Vec2(0,1); and set the midpoint to = Vec2(0,.5f);
+	 *    通过本方法设置条形模式进度条非变化方向显示的比例（barChangeRate）
+	 *    设置为0可以保证进度条非变化方向100%显示。
+	 *    例如，如果你需要一个从左往右的进度条，但是上下方向不需要100%显示，
+	 *    那么设置barChangeRate为Vec2(0,1),设置中点（Midpoint）为Vec2(0,.5f)。
      */
     inline void setBarChangeRate(const Vec2& barChangeRate ) { _barChangeRate = barChangeRate; }
-    /** Returns the BarChangeRate */
+	/** 返回BarChangeRate */
     inline Vec2 getBarChangeRate() const { return _barChangeRate; }
 
     // Overrides
@@ -128,8 +128,7 @@ CC_CONSTRUCTOR_ACCESS:
      * @lua NA
      */
     virtual ~ProgressTimer();
-    
-    /** Initializes a progress timer with the sprite as the shape the timer goes through */
+    /** 以Sprite对象作为进度条的图形来初始化进度条 */
     bool initWithSprite(Sprite* sp);
     
 protected:

@@ -47,7 +47,7 @@ THE SOFTWARE.
 
 /**
  @file
- Drawing OpenGL ES primitives.
+ 绘制OpenGL ES原语。
  - drawPoint, drawPoints
  - drawLine
  - drawRect, drawSolidRect
@@ -58,12 +58,12 @@ THE SOFTWARE.
  - drawCatmullRom
  - drawCardinalSpline
  
- You can change the color, point size, width by calling:
+ 你可以通过以下函数来改变颜色点的大小：
  - drawColor4B(), drawColor4F()
  - ccPointSize()
  - glLineWidth()
  
- @warning These functions draws the Line, Vec2, Polygon, immediately. They aren't batched. If you are going to make a game that depends on these primitives, I suggest creating a batch. Instead you should use DrawNode
+ @警告 这些函数在绘制线、Vec2、多边形的时候是立即执行的。他们并不是批处理的。如果你要用这些原语函数来做游戏，我建议你建立一个批处理来完成。你应该使用DrawNode来代替。
  
  */
 
@@ -78,83 +78,83 @@ class PointArray;
 
 namespace DrawPrimitives
 {
-    /** Initializes the drawing primitives */
+    /** 初始化绘图原语 */
     void init();
 
-    /** Frees allocated resources by the drawing primitives */
+    /** 释放绘制原语时所分配的资源 */
     void free();
 
-    /** draws a point given x and y coordinate measured in points */
+    /** 给定x、y值绘制一个点。其中x、y使用像素来度量*/
     void drawPoint( const Vec2& point );
 
-    /** draws an array of points.
+    /** 绘制一组点s.
      @since v0.7.2
      */
     void drawPoints( const Vec2 *points, unsigned int numberOfPoints );
 
-    /** draws a line given the origin and destination point measured in points */
+    /** 给定起始点与终止点绘制一条线，其中起始点与终止点坐标使用像素来度量 */
     void drawLine( const Vec2& origin, const Vec2& destination );
 
-    /** draws a rectangle given the origin and destination point measured in points. */
+    /** 给定起始点与终止点绘制一个矩形，其中起始点与终止点坐标使用像素来度量  */
     void drawRect( Vec2 origin, Vec2 destination );
 
-    /** draws a solid rectangle given the origin and destination point measured in points.
+    /** 给定起始点与终止点绘制一个实体矩形，其中起始点与终止点坐标使用像素来度量。
         @since 1.1
      */
     void drawSolidRect( Vec2 origin, Vec2 destination, Color4F color );
 
-    /** draws a polygon given a pointer to point coordinates and the number of vertices measured in points.
-    The polygon can be closed or open
+    /** 给定一个指向点坐标的指针以及顶点数目绘制一个多边形。其中每个点的坐标使用像素来度量。
+    这个多边形可以是封闭的也可以是打开的。
     */
     void drawPoly( const Vec2 *vertices, unsigned int numOfVertices, bool closePolygon );
 
-    /** draws a solid polygon given a pointer to CGPoint coordinates, the number of vertices measured in points, and a color.
+    /** 给定一个指向点坐标的指针以及顶点数目以及颜色绘制一个实体多边形。其中每个点的坐标使用像素来度量。
      */
     void drawSolidPoly( const Vec2 *poli, unsigned int numberOfPoints, Color4F color );
 
-    /** draws a circle given the center, radius and number of segments. */
+    /** 给定中心点、半径、分段数来绘制一个圆。 */
     void drawCircle( const Vec2& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY);
     void drawCircle( const Vec2& center, float radius, float angle, unsigned int segments, bool drawLineToCenter);
 
-    /** draws a solid circle given the center, radius and number of segments. */
+    /** 给定中心点、半径、分段数来绘制一个实体圆。 */
     void drawSolidCircle( const Vec2& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY);
     void drawSolidCircle( const Vec2& center, float radius, float angle, unsigned int segments);
 
-    /** draws a quad bezier path
-     @warning This function could be pretty slow. Use it only for debugging purposes.
+    /** 绘制一个quad贝塞尔曲线
+     @warning 这个函数使用起来可能非常慢。一般只用来做调试使用.
      @since v0.8
      */
     void drawQuadBezier(const Vec2& origin, const Vec2& control, const Vec2& destination, unsigned int segments);
 
-    /** draws a cubic bezier path
-     @warning This function could be pretty slow. Use it only for debugging purposes.
+    /** 绘制一个cubic贝塞尔曲线
+     @warning 这个函数使用起来可能非常慢。一般只用来做调试使用.
      @since v0.8
      */
     void drawCubicBezier(const Vec2& origin, const Vec2& control1, const Vec2& control2, const Vec2& destination, unsigned int segments);
 
-    /** draws a Catmull Rom path.
+    /** 绘制一个Catmull-Rom样条曲线.
      @warning This function could be pretty slow. Use it only for debugging purposes.
      @since v2.0
      */
     void drawCatmullRom( PointArray *arrayOfControlPoints, unsigned int segments );
 
-    /** draws a Cardinal Spline path.
-     @warning This function could be pretty slow. Use it only for debugging purposes.
+    /** 绘制一个Cardinal样条曲线.
+     @warning 这个函数使用起来可能非常慢。一般只用来做调试使用.
      @since v2.0
      */
     void drawCardinalSpline( PointArray *config, float tension,  unsigned int segments );
 
-    /** set the drawing color with 4 unsigned bytes
+    /** 用4个无符号比特值来设置绘图颜色
      @since v2.0
      */
     void setDrawColor4B( GLubyte r, GLubyte g, GLubyte b, GLubyte a );
 
-    /** set the drawing color with 4 floats
+    /** 用4个浮点值来设置绘图颜色
      @since v2.0
      */
     void setDrawColor4F( GLfloat r, GLfloat g, GLfloat b, GLfloat a );
 
-    /** set the point size in points. Default 1.
+    /** 设置点的像素大小。默认为 1。
      @since v2.0
      */
     void setPointSize( GLfloat pointSize );

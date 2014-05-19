@@ -39,7 +39,7 @@ class Texture2D;
  * @{
  */
 
-/** FBO class that grabs the the contents of the screen */
+/** FBO类抓取屏幕的内容 */
 class Grabber : public Ref
 {
 public:

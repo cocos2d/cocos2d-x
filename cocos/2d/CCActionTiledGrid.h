@@ -34,12 +34,11 @@ NS_CC_BEGIN
  * @addtogroup actions
  * @{
  */
-
-/** @brief ShakyTiles3D action */
+/** @brief ShakeTiels3D动作 */
 class CC_DLL ShakyTiles3D : public TiledGrid3DAction
 {
 public:
-    /** creates the action with a range, whether or not to shake Z vertices, a grid size, and duration */
+	/** 根据抖动范围、Z顶点是否抖动、网格大小和持续时间创建ShakyTiles3D动作 */
     static ShakyTiles3D* create(float duration, const Size& gridSize, int range, bool shakeZ);
 
     // Override
@@ -49,8 +48,7 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     ShakyTiles3D() {}
     virtual ~ShakyTiles3D() {}
-
-    /** initializes the action with a range, whether or not to shake Z vertices, a grid size, and duration */
+    /** 根据抖动范围、Z顶点是否抖动、网格大小和持续时间初始化ShakyTiles3D动作 */
     bool initWithDuration(float duration, const Size& gridSize, int range, bool shakeZ);
 
 protected:
@@ -61,11 +59,11 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(ShakyTiles3D);
 };
 
-/** @brief ShatteredTiles3D action */
+/** @brief ShatteredTiles3D动作 */
 class CC_DLL ShatteredTiles3D : public TiledGrid3DAction
 {
 public:
-    /** creates the action with a range, whether of not to shatter Z vertices, a grid size and duration */
+	/** 根据范围、Z顶点是否打碎、网格大小和持续时间创建ShatteredTiles3D动作 */
     static ShatteredTiles3D* create(float duration, const Size& gridSize, int range, bool shatterZ);
 
     // Override
@@ -76,7 +74,7 @@ CC_CONSTRUCTOR_ACCESS:
     ShatteredTiles3D() {}
     virtual ~ShatteredTiles3D() {}
 
-    /** initializes the action with a range, whether or not to shatter Z vertices, a grid size and duration */
+	/** 根据范围、Z顶点是否打碎、网格大小和持续时间初始化ShatteredTiles3D动作 */
     bool initWithDuration(float duration, const Size& gridSize, int range, bool shatterZ);
 
 protected:
@@ -89,13 +87,13 @@ private:
 };
 
 struct Tile;
-/** @brief ShuffleTiles action
- Shuffle the tiles in random order
+/** @brief ShuffleTiles动作
+ 随机排列瓦片
  */
 class CC_DLL ShuffleTiles : public TiledGrid3DAction
 {
 public:
-    /** creates the action with a random seed, the grid size and the duration */
+	/** 根据随机种子、网格大小和持续时间创建ShuffleTiles动作 */
     static ShuffleTiles* create(float duration, const Size& gridSize, unsigned int seed);
 
     void shuffle(unsigned int *array, unsigned int len);
@@ -111,7 +109,7 @@ CC_CONSTRUCTOR_ACCESS:
     ShuffleTiles() {}
     virtual ~ShuffleTiles();
 
-    /** initializes the action with a random seed, the grid size and the duration */
+	/** 根据随机种子、网格大小和持续时间初始化ShuffleTiles动作 */
     bool initWithDuration(float duration, const Size& gridSize, unsigned int seed);
 
 protected:
@@ -124,13 +122,13 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(ShuffleTiles);
 };
 
-/** @brief FadeOutTRTiles action
- Fades out the tiles in a Top-Right direction
+/** @brief FadeOutTRTiles动作
+ 从左下角向右上角依次淡出所有瓦片
  */
 class CC_DLL FadeOutTRTiles : public TiledGrid3DAction
 {
 public:
-    /** creates the action with the grid size and the duration */
+	/** 根据网格大小和持续时间创建FadeOutTRTiles动作 */
     static FadeOutTRTiles* create(float duration, const Size& gridSize);
 
     virtual float testFunc(const Size& pos, float time);
@@ -150,13 +148,13 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(FadeOutTRTiles);
 };
 
-/** @brief FadeOutBLTiles action.
- Fades out the tiles in a Bottom-Left direction
+/** @brief FadeOutBLTiles动作
+ 从右上角向左下角依次淡出所有瓦片
  */
 class CC_DLL FadeOutBLTiles : public FadeOutTRTiles
 {
 public:
-    /** creates the action with the grid size and the duration */
+	/** 根据网格大小和持续时间创建FadeOutTRTiles动作 */
     static FadeOutBLTiles* create(float duration, const Size& gridSize);
 
     // Overrides
@@ -171,13 +169,13 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(FadeOutBLTiles);
 };
 
-/** @brief FadeOutUpTiles action.
- Fades out the tiles in upwards direction
+/** @brief FadeOutUpTiles动作
+ 从下往上依次淡出所有瓦片
  */
 class CC_DLL FadeOutUpTiles : public FadeOutTRTiles
 {
 public:
-    /** creates the action with the grid size and the duration */
+	/** 根据网格大小和持续时间创建FadeOutTRTiles动作 */
     static FadeOutUpTiles* create(float duration, const Size& gridSize);
 
     virtual void transformTile(const Vec2& pos, float distance);
@@ -194,13 +192,13 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(FadeOutUpTiles);
 };
 
-/** @brief FadeOutDownTiles action.
- Fades out the tiles in downwards direction
+/** @brief FadeOutDownTiles动作。
+ 从上往下依次淡出所有瓦片
  */
 class CC_DLL FadeOutDownTiles : public FadeOutUpTiles
 {
 public:
-    /** creates the action with the grid size and the duration */
+	/** 根据网格大小和持续时间创建FadeOutTRTiles动作 */
     static FadeOutDownTiles* create(float duration, const Size& gridSize);
 
     // Overrides
@@ -215,15 +213,15 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(FadeOutDownTiles);
 };
 
-/** @brief TurnOffTiles action.
- Turn off the files in random order
+/** @brief TurnOffTiles动作。
+ 随机关闭瓦片。
  */
 class CC_DLL TurnOffTiles : public TiledGrid3DAction
 {
 public:
-    /** creates the action with the grid size and the duration */
+	/** 根据网格大小和持续时间创建FadeOutTRTiles动作 */
     static TurnOffTiles* create(float duration, const Size& gridSize);
-    /** creates the action with a random seed, the grid size and the duration */
+	/** 根据随机种子、网格大小和持续时间创建FadeOutTRTiles动作 */
     static TurnOffTiles* create(float duration, const Size& gridSize, unsigned int seed);
 
     void shuffle(unsigned int *array, unsigned int len);
@@ -239,7 +237,7 @@ CC_CONSTRUCTOR_ACCESS:
     TurnOffTiles() {}
     virtual ~TurnOffTiles();
 
-    /** initializes the action with a random seed, the grid size and the duration */
+	/** 根据随机种子、网格大小和持续时间初始化FadeOutTRTiles动作 */
     bool initWithDuration(float duration, const Size& gridSize, unsigned int seed);
 
 protected:
@@ -251,18 +249,19 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(TurnOffTiles);
 };
 
-/** @brief WavesTiles3D action. */
+/** @brief WavesTiles3D动作。 */
 class CC_DLL WavesTiles3D : public TiledGrid3DAction
 {
 public:
+	/** 根据波动次数、振幅、网格大小和持续时间创建WavesTiles3D动作 */
     /** creates the action with a number of waves, the waves amplitude, the grid size and the duration */
     static WavesTiles3D* create(float duration, const Size& gridSize, unsigned int waves, float amplitude);
 
-    /** waves amplitude */
+	/** 振幅 */
     inline float getAmplitude(void) const { return _amplitude; }
     inline void setAmplitude(float amplitude) { _amplitude = amplitude; }
 
-    /** waves amplitude rate */
+	/** 振幅系数 */ 
     inline float getAmplitudeRate(void) const { return _amplitudeRate; }
     inline void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
 
@@ -274,7 +273,7 @@ CC_CONSTRUCTOR_ACCESS:
     WavesTiles3D() {}
     virtual ~WavesTiles3D() {}
 
-    /** initializes the action with a number of waves, the waves amplitude, the grid size and the duration */
+	/** 根据波动次数、振幅、网格大小和持续时间初始化WavesTiles3D动作 */
     bool initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude);
 
 protected:
@@ -286,20 +285,20 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(WavesTiles3D);
 };
 
-/** @brief JumpTiles3D action.
- A sin function is executed to move the tiles across the Z axis
+/** @brief JumpTiles3D动作。
+ 以Z轴为轴，根据正弦函数曲线移动瓦片。
  */
 class CC_DLL JumpTiles3D : public TiledGrid3DAction
 {
 public:
-    /** creates the action with the number of jumps, the sin amplitude, the grid size and the duration */
+	/** 根据跳跃次数、正弦曲线振幅、网格大小以及持续时间创建JumpTiles3D动作 */
     static JumpTiles3D* create(float duration, const Size& gridSize, unsigned int numberOfJumps, float amplitude);
 
-    /** amplitude of the sin*/
+	/** 正弦曲线振幅 */
     inline float getAmplitude(void) const { return _amplitude; }
     inline void setAmplitude(float amplitude) { _amplitude = amplitude; }
 
-    /** amplitude rate */
+	/** 振幅系数 */
     inline float getAmplitudeRate(void) const { return _amplitudeRate; }
     inline void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
 
@@ -311,7 +310,7 @@ CC_CONSTRUCTOR_ACCESS:
     JumpTiles3D() {}
     virtual ~JumpTiles3D() {}
 
-    /** initializes the action with the number of jumps, the sin amplitude, the grid size and the duration */
+	/** 根据跳跃次数、正弦曲线振幅、网格大小以及持续时间初始化JumpTiles3D动作 */
     bool initWithDuration(float duration, const Size& gridSize, unsigned int numberOfJumps, float amplitude);
 
 protected:
@@ -323,11 +322,11 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(JumpTiles3D);
 };
 
-/** @brief SplitRows action */
+/** @brief SplitRows动作*/
 class CC_DLL SplitRows : public TiledGrid3DAction
 {
 public :
-    /** creates the action with the number of rows to split and the duration */
+	/** 根据分割的行数和持续时间创建SplitRows动作 */
     static SplitRows* create(float duration, unsigned int rows);
 
     // Overrides
@@ -339,7 +338,7 @@ CC_CONSTRUCTOR_ACCESS:
     SplitRows() {}
     virtual ~SplitRows() {}
 
-    /** initializes the action with the number of rows to split and the duration */
+	/** 根据分割的行数和持续时间初始化SplitRows动作 */
     bool initWithDuration(float duration, unsigned int rows);
 
 protected:
@@ -350,11 +349,11 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(SplitRows);
 };
 
-/** @brief SplitCols action */
+/** @brief SplitCols动作 */
 class CC_DLL SplitCols : public TiledGrid3DAction
 {
 public:
-    /** creates the action with the number of columns to split and the duration */
+	/** 根据分割的列数和持续时间创建SplitCols动作 */
     static SplitCols* create(float duration, unsigned int cols);
 
     // Overrides
@@ -366,7 +365,7 @@ CC_CONSTRUCTOR_ACCESS:
     SplitCols() {}
     virtual ~SplitCols() {}
 
-    /** initializes the action with the number of columns to split and the duration */
+	/** 根据分割的列数和持续时间初始化SplitCols动作 */
     bool initWithDuration(float duration, unsigned int cols);
 
 protected:

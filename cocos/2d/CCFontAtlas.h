@@ -84,31 +84,33 @@ public:
     Texture2D* getTexture(int slot);
     const Font* getFont() const;
 
-    /** Listen "come to background" message, and clear the texture atlas.
-     It only has effect on Android.
+    /** 监听"come to background"消息并清除纹理集。
+     仅在Android系统有效。
      */
     void listenToBackground(EventCustom *event);
 
-    /** Listen "come to foreground" message and restore the texture atlas.
-     It only has effect on Android.
+    /** 监听"come to foreground"消息并恢复纹理集。
+     仅在Android系统有效。
      */
     void listenToForeground(EventCustom *event);
     
-    /** Removes textures atlas.
-     It will purge the textures atlas and if multiple texture exist in the FontAtlas.
+    /** 删除纹理集。
+     如果FontAtlas存在多个纹理集会一并清除。
      */
     void purgeTexturesAtlas();
 
-    /** sets font texture parameters:
+    /** 设置字体文理参数：
      - GL_TEXTURE_MIN_FILTER = GL_LINEAR
      - GL_TEXTURE_MAG_FILTER = GL_LINEAR
+     译者注：线性缩放，无锯齿但可能会有模糊感。
      */
      void setAntiAliasTexParameters();
 
-     /** sets font texture parameters:
-     - GL_TEXTURE_MIN_FILTER = GL_NEAREST
-     - GL_TEXTURE_MAG_FILTER = GL_NEAREST
-     */
+     /** 设置字体文理参数：
+      - GL_TEXTURE_MIN_FILTER = GL_NEAREST
+      - GL_TEXTURE_MAG_FILTER = GL_NEAREST
+      译者注：最近像素插值缩放，可能会有锯齿感。
+      */
      void setAliasTexParameters();
 
 private:
