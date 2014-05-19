@@ -505,101 +505,101 @@ public:
     virtual Vec3 getRotation3D() const;
 
     /**
-     * Sets the X rotation (angle) of the node in degrees which performs a horizontal rotational skew.
+     * 设置节点X轴的旋转角度，表现为水平旋转倾斜。
      *
-     * The difference between `setRotationalSkew()` and `setSkew()` is that the first one simulate Flash's skew functionality
-     * while the second one uses the real skew function.
+     * `setRotationalSkew()` 和 `setSkew()`的不同是前一个是模拟Flash的倾斜功能
+     * 然而后一个使用真正的倾斜功能。
      *
-     * 0 is the default rotation angle.
-     * Positive values rotate node clockwise, and negative values for anti-clockwise.
+     * 0 是默认的旋转角度。
+     * 负数节点顺时针旋转，正数节点逆时针旋转。
      *
-     * @param rotationX    The X rotation in degrees which performs a horizontal rotational skew.
+     * @param rotationX    X轴的旋转角度表现为水平旋转倾斜。
      */
     virtual void setRotationSkewX(float rotationX);
     CC_DEPRECATED_ATTRIBUTE virtual void setRotationX(float rotationX) { return setRotationSkewX(rotationX); }
 
     /**
-     * Gets the X rotation (angle) of the node in degrees which performs a horizontal rotation skew.
+     * 得到X轴节点的旋转角度，表现为水平旋转倾斜（horizontal rotation skew）.
      *
      * @see `setRotationSkewX(float)`
      *
-     * @return The X rotation in degrees.
+     * @return X轴的旋转角度。
      */
     virtual float getRotationSkewX() const;
     CC_DEPRECATED_ATTRIBUTE virtual float getRotationX() const { return getRotationSkewX(); }
 
     /**
-     * Sets the Y rotation (angle) of the node in degrees which performs a vertical rotational skew.
+     * 设置Y轴节点的旋转角度，表现为垂直旋转倾斜。
      *
-     * The difference between `setRotationalSkew()` and `setSkew()` is that the first one simulate Flash's skew functionality
-     * while the second one uses the real skew function.
+     * `setRotationalSkew()` 和`setSkew()` 的不同是前一个使用Flash倾斜功能
+     * 后一个使用了真正的倾斜功能。
      *
-     * 0 is the default rotation angle.
-     * Positive values rotate node clockwise, and negative values for anti-clockwise.
+     * 0 默认的旋转角度。
+     * 负数表示顺时针旋转，正数表示逆时针旋转。
      *
-     * @param rotationY    The Y rotation in degrees.
+     * @param rotationY    Y轴的旋转角度。
      */
     virtual void setRotationSkewY(float rotationY);
     CC_DEPRECATED_ATTRIBUTE virtual void setRotationY(float rotationY) { return setRotationSkewY(rotationY); }
 
     /**
-     * Gets the Y rotation (angle) of the node in degrees which performs a vertical rotational skew.
+     * 得到节点Y轴的旋转角度，表现为垂直旋转倾斜（vertical rotational skew.）
      *
      * @see `setRotationSkewY(float)`
      *
-     * @return The Y rotation in degrees.
+     * @return Y轴旋转角度。
      */
     virtual float getRotationSkewY() const;
     CC_DEPRECATED_ATTRIBUTE virtual float getRotationY() const { return getRotationSkewY(); }
 
     /**
-     * Sets the arrival order when this node has a same ZOrder with other children.
+     * 设置到达顺序，当这个节点和其他子节点有相同的ZOrder时。
      *
-     * A node which called addChild subsequently will take a larger arrival order,
-     * If two children have the same Z order, the child with larger arrival order will be drawn later.
+     * 一个调用了之后调用了addChild函数的节点将会有更大的到达顺序值，
+     * 如果两个子对象有相同的Z轴顺序，这个有更大到达顺序的子类将会后画。
      *
-     * @warning This method is used internally for localZOrder sorting, don't change this manually
+     * @warning 这个方法在内部被用于localZOrder排序，不能手动的改变。
      *
-     * @param orderOfArrival   The arrival order.
+     * @param orderOfArrival   到达顺序。
      */
     void setOrderOfArrival(int orderOfArrival);
     /**
-     * Returns the arrival order, indicates which children is added previously.
+     * 返回到达顺序，指出哪一个子类先被添加。
      *
      * @see `setOrderOfArrival(unsigned int)`
      *
-     * @return The arrival order.
+     * @return 到达顺序。
      */
     int getOrderOfArrival() const;
 
 
-    /** @deprecated No longer needed
+    /** @deprecated 不再需要
     * @js NA
     * @lua NA
     */
     CC_DEPRECATED_ATTRIBUTE void setGLServerState(int serverState) { /* ignore */ };
-    /** @deprecated No longer needed
+    /** @deprecated 不再需要。
     * @js NA
     * @lua NA
     */
     CC_DEPRECATED_ATTRIBUTE int getGLServerState() const { return 0; }
 
     /**
-     * Sets whether the anchor point will be (0,0) when you position this node.
+     * 设置抹点为（0,0）当你摆放这个节点的时候。
      *
-     * This is an internal method, only used by Layer and Scene. Don't call it outside framework.
-     * The default value is false, while in Layer and Scene are true
+     * 这是一个内部方法，仅仅被Layer和Scene使用。不要在框架外调用。
+     * 默认值是false,但是在Layer和Scene中是true.
      *
-     * @param ignore    true if anchor point will be (0,0) when you position this node
-     * @todo This method should be renamed as setIgnoreAnchorPointForPosition(bool) or something with "set"
+     * @param ignore    true 如果锚点是（0,0）当你摆放这个节点的时候。
+     * @todo 这个方法应该被命名为setIgnoreAnchorPointForPosition(bool) 或者其他的有“set”的名称。
      */
     virtual void ignoreAnchorPointForPosition(bool ignore);
     /**
-     * Gets whether the anchor point will be (0,0) when you position this node.
+     * 得到节点的锚点是否为（0,0），当你摆放这个节点时。
      *
      * @see `ignoreAnchorPointForPosition(bool)`
      *
-     * @return true if the anchor point will be (0,0) when you position this node.
+     * @return true 如果锚点是 (0,0) 当你摆放这个节点时。
      */
     virtual bool isIgnoreAnchorPointForPosition() const;
 
@@ -610,67 +610,67 @@ public:
     /// @name Children and Parent
 
     /**
-     * Adds a child to the container with z-order as 0.
+     * 添加一个子节点到容器内，z-order是0.
      *
-     * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
+     * 如果子节点被添加到了一个“running（活动着的）”节点，那么'onEnter'喝 'onEnterTransitionDidFinish' 将会立即调用。
      *
-     * @param child A child node
+     * @param child 一个子节点。
      */
     virtual void addChild(Node * child);
     /**
-     * Adds a child to the container with a local z-order
+     * 添加一个子节点到容器中，参数有一个局部Z轴顺序。
      *
-     * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
+     * 如果子节点被添加到了一个“running（活动着的）”节点，那么'onEnter'喝 'onEnterTransitionDidFinish' 将会立即调用。
      *
-     * @param child     A child node
-     * @param zOrder    Z order for drawing priority. Please refer to `setLocalZOrder(int)`
+     * @param child     一个子节点。
+     * @param zOrder    Z轴顺序为了绘画的优先权。 请参考 `setLocalZOrder(int)`
      */
     virtual void addChild(Node * child, int localZOrder);
     /**
-     * Adds a child to the container with z order and tag
+     * 添加一个子节点到容器中，有Z轴顺序和一个标记。
      *
-     * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
+     * 如果子节点被添加到了一个“running（活动着的）”节点，那么'onEnter'喝 'onEnterTransitionDidFinish' 将会立即调用。
      *
-     * @param child     A child node
-     * @param zOrder    Z order for drawing priority. Please refer to `setLocalZOrder(int)`
-     * @param tag       An integer to identify the node easily. Please refer to `setTag(int)`
+     * @param child    一个子节点
+     * @param zOrder    Z轴顺序为了绘画的优先权。 请参考 `setLocalZOrder(int)`
+     * @param tag       一个用来更容易分辨节点的整数。请参考 `setTag(int)`
      */
     virtual void addChild(Node* child, int localZOrder, int tag);
     /**
-     * Gets a child from the container with its tag
+     * 从容器中得到一个子节点通过它的标记。
      *
-     * @param tag   An identifier to find the child node.
+     * @param tag   一个标识符用于找到子节点。
      *
-     * @return a Node object whose tag equals to the input parameter
+     * @return 一个标记与输入的参数相同的节点对象。
      */
     virtual Node * getChildByTag(int tag);
     /**
-     * Returns the array of the node's children
+     * 返回子节点数组。
      *
-     * @return the array the node's children
+     * @return 子节点数组。
      */
     virtual Vector<Node*>& getChildren() { return _children; }
     virtual const Vector<Node*>& getChildren() const { return _children; }
     
     /** 
-     * Returns the amount of children
+     * 返回子节点的总数
      *
-     * @return The amount of children.
+     * @return 子节点的总数
      */
     virtual ssize_t getChildrenCount() const;
 
     /**
-     * Sets the parent node
+     * 设置父节点Sets the parent node
      *
-     * @param parent    A pointer to the parent node
+     * @param parent    指向父节点的指针。
      */
     virtual void setParent(Node* parent);
     /**
-     * Returns a pointer to the parent node
+     * 返回指向父节点的指针。
      *
      * @see `setParent(Node*)`
      *
-     * @returns A pointer to the parent node
+     * @returns 指向父节点的指针。
      */
     virtual Node* getParent() { return _parent; }
     virtual const Node* getParent() const { return _parent; }
@@ -679,33 +679,33 @@ public:
     ////// REMOVES //////
 
     /**
-     * Removes this node itself from its parent node with a cleanup.
-     * If the node orphan, then nothing happens.
+     * 从父节点中删除一个节点，有一个cleanup参数。
+     * 如果这个节点是一个孤节点，那么什么都不会发生。
      * @see `removeFromParentAndCleanup(bool)`
      */
     virtual void removeFromParent();
     /**
-     * Removes this node itself from its parent node.
-     * If the node orphan, then nothing happens.
-     * @param cleanup   true if all actions and callbacks on this node should be removed, false otherwise.
+     * 从父节点中删除一个节点
+     * 如果这个节点是一个孤节点，那么什么都不会发生。
+     * @param cleanup   true 在这个节点上所有的动作和回调都会被删除, false 就不会删除。
      * @js removeFromParent
      * @lua removeFromParent
      */
     virtual void removeFromParentAndCleanup(bool cleanup);
 
     /**
-     * Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter.
+     * 从容器中删除一个孩子，取决于cleanup参数同时会清除所有的活动的动作。
      *
-     * @param child     The child node which will be removed.
-     * @param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
+     * @param child     被删除的子节点。
+     * @param cleanup   true 在这个节点上所有的动作和回调都会被删除, false 就不会删除。
      */
     virtual void removeChild(Node* child, bool cleanup = true);
 
     /**
-     * Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
+     * 从一个容器中删除一个孩子通过标记值。取决于cleanup参数同时会清除所有的活动的动作。
      *
-     * @param tag       An interger number that identifies a child node
-     * @param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
+     * @param tag       一个用于识别子节点的整数。
+     * @param cleanup   true 在这个节点上所有的动作和回调都会被删除， false 就不会删除。
      */
     virtual void removeChildByTag(int tag, bool cleanup = true);
     /**
