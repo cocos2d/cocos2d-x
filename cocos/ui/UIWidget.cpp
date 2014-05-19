@@ -876,6 +876,11 @@ LayoutParameter* Widget::getLayoutParameter()
 {
     return dynamic_cast<LayoutParameter*>(_layoutParameterDictionary.at((int)_layoutParameterType));
 }
+    
+LayoutParameter* Widget::getLayoutParameter(LayoutParameter::Type type)
+{
+    return dynamic_cast<LayoutParameter*>(_layoutParameterDictionary.at((int)type));
+}
 
 std::string Widget::getDescription() const
 {

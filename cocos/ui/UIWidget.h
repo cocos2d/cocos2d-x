@@ -485,6 +485,8 @@ public:
      * @return LayoutParameter
      */
     LayoutParameter* getLayoutParameter() override;
+    CC_DEPRECATED_ATTRIBUTE LayoutParameter* getLayoutParameter(LayoutParameter::Type type);
+
 
     /**
      * Ignore the widget size
@@ -672,9 +674,12 @@ protected:
     Size _size;
     Size _customSize;
     bool _ignoreSize;
-    bool _affectByClipping;
+
     SizeType _sizeType;
     Vec2 _sizePercent;
+
+    bool _affectByClipping;
+
     PositionType _positionType;
     Vec2 _positionPercent;
     bool _reorderWidgetChildDirty;
