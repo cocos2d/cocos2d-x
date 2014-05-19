@@ -145,7 +145,7 @@ void LinearHorizontalLayoutExecutant::doLayout(LayoutProtocol* layout)
                 finalPosX += mg.left;
                 finalPosY -= mg.top;
                 child->setPosition(Vec2(finalPosX, finalPosY));
-                leftBoundary = child->getRightInParent() + mg.right;
+                leftBoundary = child->getRightBoundary() + mg.right;
             }
         }
     }
@@ -253,7 +253,7 @@ void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
                                 continue;
                             }
                             float locationBottom = relativeWidget->getTopInParent();
-                            float locationLeft = relativeWidget->getLeftInParent();
+                            float locationLeft = relativeWidget->getLeftBoundary();
                             finalPosY = locationBottom + ap.y * cs.height;
                             finalPosX = locationLeft + ap.x * cs.width;
                         }
@@ -269,7 +269,7 @@ void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
                             float locationBottom = relativeWidget->getTopInParent();
                             
                             finalPosY = locationBottom + ap.y * cs.height;
-                            finalPosX = relativeWidget->getLeftInParent() + rbs.width * 0.5f + ap.x * cs.width - cs.width * 0.5f;
+                            finalPosX = relativeWidget->getLeftBoundary() + rbs.width * 0.5f + ap.x * cs.width - cs.width * 0.5f;
                         }
                         break;
                     case RelativeLayoutParameter::RelativeAlign::LOCATION_ABOVE_RIGHTALIGN:
@@ -280,7 +280,7 @@ void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
                                 continue;
                             }
                             float locationBottom = relativeWidget->getTopInParent();
-                            float locationRight = relativeWidget->getRightInParent();
+                            float locationRight = relativeWidget->getRightBoundary();
                             finalPosY = locationBottom + ap.y * cs.height;
                             finalPosX = locationRight - (1.0f - ap.x) * cs.width;
                         }
@@ -292,8 +292,8 @@ void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
                             {
                                 continue;
                             }
-                            float locationTop = relativeWidget->getTopInParent();
-                            float locationRight = relativeWidget->getLeftInParent();
+                            float locationTop = relativeWidget->getTopBoundary();
+                            float locationRight = relativeWidget->getLeftBoundary();
                             finalPosY = locationTop - (1.0f - ap.y) * cs.height;
                             finalPosX = locationRight - (1.0f - ap.x) * cs.width;
                         }
@@ -319,7 +319,7 @@ void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
                             {
                                 continue;
                             }
-                            float locationBottom = relativeWidget->getBottomInParent();
+                            float locationBottom = relativeWidget->getBottomBoundary();
                             float locationRight = relativeWidget->getLeftInParent();
                             finalPosY = locationBottom + ap.y * cs.height;
                             finalPosX = locationRight - (1.0f - ap.x) * cs.width;
@@ -332,7 +332,7 @@ void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
                             {
                                 continue;
                             }
-                            float locationTop = relativeWidget->getTopInParent();
+                            float locationTop = relativeWidget->getTopBoundary();
                             float locationLeft = relativeWidget->getRightInParent();
                             finalPosY = locationTop - (1.0f - ap.y) * cs.height;
                             finalPosX = locationLeft + ap.x * cs.width;
@@ -349,7 +349,7 @@ void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
                             float locationLeft = relativeWidget->getRightInParent();
                             finalPosX = locationLeft + ap.x * cs.width;
                             
-                            finalPosY = relativeWidget->getBottomInParent() + rbs.height * 0.5f + ap.y * cs.height - cs.height * 0.5f;
+                            finalPosY = relativeWidget->getBottomBoundary() + rbs.height * 0.5f + ap.y * cs.height - cs.height * 0.5f;
                         }
                         break;
                     case RelativeLayoutParameter::RelativeAlign::LOCATION_RIGHT_OF_BOTTOMALIGN:
@@ -373,7 +373,7 @@ void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
                                 continue;
                             }
                             float locationTop = relativeWidget->getBottomInParent();
-                            float locationLeft = relativeWidget->getLeftInParent();
+                            float locationLeft = relativeWidget->getLeftBoundary();
                             finalPosY = locationTop - (1.0f - ap.y) * cs.height;
                             finalPosX = locationLeft + ap.x * cs.width;
                         }
@@ -389,7 +389,7 @@ void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
                             float locationTop = relativeWidget->getBottomInParent();
                             
                             finalPosY = locationTop - (1.0f - ap.y) * cs.height;
-                            finalPosX = relativeWidget->getLeftInParent() + rbs.width * 0.5f + ap.x * cs.width - cs.width * 0.5f;
+                            finalPosX = relativeWidget->getLeftBoundary() + rbs.width * 0.5f + ap.x * cs.width - cs.width * 0.5f;
                         }
                         break;
                     case RelativeLayoutParameter::RelativeAlign::LOCATION_BELOW_RIGHTALIGN:
@@ -400,7 +400,7 @@ void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
                                 continue;
                             }
                             float locationTop = relativeWidget->getBottomInParent();
-                            float locationRight = relativeWidget->getRightInParent();
+                            float locationRight = relativeWidget->getRightBoundary();
                             finalPosY = locationTop - (1.0f - ap.y) * cs.height;
                             finalPosX = locationRight - (1.0f - ap.x) * cs.width;
                         }

@@ -66,7 +66,7 @@ bool UIScrollViewTest_Vertical::init()
         Button* button_scale9 = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
         button_scale9->setScale9Enabled(true);
         button_scale9->setSize(Size(100.0f, button_scale9->getVirtualRendererSize().height));
-        button_scale9->setPosition(Vec2(innerWidth / 2.0f, titleButton->getBottomInParent() - titleButton->getSize().height));
+        button_scale9->setPosition(Vec2(innerWidth / 2.0f, titleButton->getBottomBoundary() - titleButton->getSize().height));
         scrollView->addChild(button_scale9);
         
         imageView->setPosition(Vec2(innerWidth / 2.0f, imageView->getSize().height / 2.0f));

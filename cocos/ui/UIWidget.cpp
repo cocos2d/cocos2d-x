@@ -816,24 +816,24 @@ bool Widget::isEnabled() const
     return _enabled;
 }
 
-float Widget::getLeftInParent()
+float Widget::getLeftBoundary() const
 {
     return getPosition().x - getAnchorPoint().x * _size.width;
 }
 
-float Widget::getBottomInParent()
+float Widget::getBottomBoundary() const
 {
     return getPosition().y - getAnchorPoint().y * _size.height;
 }
 
-float Widget::getRightInParent()
+float Widget::getRightBoundary() const
 {
-    return getLeftInParent() + _size.width;
+    return getLeftBoundary() + _size.width;
 }
 
-float Widget::getTopInParent()
+float Widget::getTopBoundary() const
 {
-    return getBottomInParent() + _size.height;
+    return getBottomBoundary() + _size.height;
 }
 
 const Vec2& Widget::getTouchStartPos()

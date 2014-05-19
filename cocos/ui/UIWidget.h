@@ -201,28 +201,32 @@ public:
      *
      * @return The left boundary position of this widget.
      */
-    float getLeftInParent();
+    CC_DEPRECATED_ATTRIBUTE float getLeftInParent(){return this->getLeftBoundary();}
+    float getLeftBoundary() const;
 
     /**
      * Gets the bottom boundary position of this widget.
      *
      * @return The bottom boundary position of this widget.
      */
-    float getBottomInParent();
+    CC_DEPRECATED_ATTRIBUTE float getBottomInParent(){return this->getBottomBoundary();}
+    float getBottomBoundary() const;
 
     /**
      * Gets the right boundary position of this widget.
      *
      * @return The right boundary position of this widget.
      */
-    float getRightInParent();
+    CC_DEPRECATED_ATTRIBUTE float getRightInParent(){return this->getRightBoundary();}
+    float getRightBoundary() const;
 
     /**
      * Gets the top boundary position of this widget.
      *
      * @return The top boundary position of this widget.
      */
-    float getTopInParent();
+    CC_DEPRECATED_ATTRIBUTE float getTopInParent(){return this->getTopBoundary();}
+    float getTopBoundary() const;
 
     /**
      * Gets a child from the container with its name
