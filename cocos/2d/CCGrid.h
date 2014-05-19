@@ -46,7 +46,7 @@ class GLProgram;
  * @{
  */
 
-/** 其它类的基类
+/** 其它网格(grid)类的基类
 */
 class CC_DLL GridBase : public Ref
 {
