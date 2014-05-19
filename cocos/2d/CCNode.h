@@ -709,62 +709,62 @@ public:
      */
     virtual void removeChildByTag(int tag, bool cleanup = true);
     /**
-     * Removes all children from the container with a cleanup.
+     * 从容器中删除所有的孩子，with a cleanup。
      *
      * @see `removeAllChildrenWithCleanup(bool)`
      */
     virtual void removeAllChildren();
     /**
-     * Removes all children from the container, and do a cleanup to all running actions depending on the cleanup parameter.
+     * 从容器中删除所有的孩子, 取决于cleanup参数同时会清除所有的活动的动作。
      *
-     * @param cleanup   true if all running actions on all children nodes should be cleanup, false oterwise.
+     * @param cleanup   true 在这个节点上所有的动作和回调都会被删除, false 就不会删除。
      * @js removeAllChildren
      * @lua removeAllChildren
      */
     virtual void removeAllChildrenWithCleanup(bool cleanup);
 
     /**
-     * Reorders a child according to a new z value.
+     * 对一个孩子重新排序，设定一个新的z轴的值。
      *
-     * @param child     An already added child node. It MUST be already added.
-     * @param localZOrder Z order for drawing priority. Please refer to setLocalZOrder(int)
+     * @param child     一个已经被添加的子节点，它必须是已经添加的。
+     * @param localZOrder Z轴顺序为了绘画优先级，请参考setLocalZOrder(int)
      */
     virtual void reorderChild(Node * child, int localZOrder);
 
     /**
-     * Sorts the children array once before drawing, instead of every time when a child is added or reordered.
-     * This appraoch can improves the performance massively.
-     * @note Don't call this manually unless a child added needs to be removed in the same frame
+     * 在绘画之前，排列所有的孩子数组一次，而不是每次添加或者删除子节点时都排序。
+     * 这个方法可以大量地提高性能。
+     * @note 不要手动调用这个方法，除非一个添加过的子节点将要被删除在这个结构内。
      */
     virtual void sortAllChildren();
 
     /// @} end of Children and Parent
     
     /// @{
-    /// @name Tag & User data
+    /// @name Tag & User 数据
 
     /**
-     * Returns a tag that is used to identify the node easily.
+     * 返回一个用来更简单分辨节点的标记。
      *
-     * @return An integer that identifies the node.
+     * @return 一个分辨节点的整数。
      */
     virtual int getTag() const;
     /**
-     * Changes the tag that is used to identify the node easily.
+     * 改变这个用来更容易分辨节点的标记。
      *
-     * Please refer to getTag for the sample code.
+     * 请参考 getTag 的相同代码。
      *
-     * @param tag   A integer that identifies the node.
+     * @param tag   一个分辨节点的整数。
      */
     virtual void setTag(int tag);
 
     
     /**
-     * Returns a custom user data pointer
+     * 返回一个自定义用户数据的指针。
      *
-     * You can set everything in UserData pointer, a data block, a structure or an object.
+     * 你可以随意设置UserData 指针为, 一个数据块, 结构体或者一个对象。
      *
-     * @return A custom user data pointer
+     * @return 自定义用户数据的指针。
      * @js NA
      * @lua NA
      */
@@ -776,24 +776,24 @@ public:
     virtual const void* getUserData() const { return _userData; }
 
     /**
-     * Sets a custom user data pointer
+     * 设置一个自定义用户数据的指针。
      *
-     * You can set everything in UserData pointer, a data block, a structure or an object, etc.
-     * @warning Don't forget to release the memory manually,
-     *          especially before you change this data pointer, and before this node is autoreleased.
+     * 你可以随意设置UserData 指针为, 一个数据块, 结构体或者一个对象，等等。
+     * @warning 不要忘记要手动释放内存，Don't forget to release the memory manually,
+     *          特别是在你改变这个数据指针之前，和这个节点被自动释放之前。
      *
-     * @param userData  A custom user data pointer
+     * @param userData  一个自定义用户数据指针。
      * @js NA
      * @lua NA
      */
     virtual void setUserData(void *userData);
 
     /**
-     * Returns a user assigned Object
+     * 返回一个用户分配的对象
      *
-     * Similar to userData, but instead of holding a void* it holds an object
+     * 和userData类似, 但它拥有的是一个对象而不是void*
      *
-     * @return A user assigned Object
+     * @return 一个用户分配的对象。
      * @js NA
      * @lua NA
      */
@@ -805,14 +805,14 @@ public:
     virtual const Ref* getUserObject() const { return _userObject; }
 
     /**
-     * Returns a user assigned Object
+     * 返回一个用户分配的对象
      *
-     * Similar to UserData, but instead of holding a void* it holds an object.
-     * The UserObject will be retained once in this method,
-     * and the previous UserObject (if existed) will be released.
-     * The UserObject will be released in Node's destructor.
+     * 和userData类似, 但它拥有的是一个对象而不是void*
+     * UserObject将会在这个方法中留存一次
+     * 然后之前的UserObject （如果存在的话）将会被释放。
+     * UserObject 将会在节点的析构函数中释放。
      *
-     * @param userObject    A user assigned Object
+     * @param userObject    一个用户分配的对象
      */
     virtual void setUserObject(Ref *userObject);
 
@@ -822,9 +822,9 @@ public:
     /// @{
     /// @name GLProgram
     /**
-     * Return the GLProgram (shader) currently used for this node
+     * 返回当前用于这个节点的GLProgram (shader) 
      *
-     * @return The GLProgram (shader) currently used for this node
+     * @return 当前用于这个节点的GLProgram (shader)
      */
     GLProgram* getGLProgram();
     CC_DEPRECATED_ATTRIBUTE GLProgram* getShaderProgram() { return getGLProgram(); }
@@ -833,15 +833,15 @@ public:
     void setGLProgramState(GLProgramState *glProgramState);
 
     /**
-     * Sets the shader program for this node
+     * 为这个节点设置着色器程序
      *
-     * Since v2.0, each rendering node must set its shader program.
-     * It should be set in initialize phase.
+     * 自从 v2.0, 每一个渲染的节点必须设置它自己的着色器程序。
+     * 它应该在初始化阶段被设置。
      @code
      node->setGLrProgram(GLProgramCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
      @endcode
      *
-     * @param shaderProgram The shader program
+     * @param shaderProgram 着色器程序
      */
     void setGLProgram(GLProgram *glprogram);
     CC_DEPRECATED_ATTRIBUTE void setShaderProgram(GLProgram *glprogram) { setGLProgram(glprogram); }
@@ -849,16 +849,16 @@ public:
 
 
     /**
-     * Returns whether or not the node is "running".
+     * 返回节点是否是“running(活动的)”。
      *
-     * If the node is running it will accept event callbacks like onEnter(), onExit(), update()
+     * 如果节点是活动的，它将会允许事件回调就像onEnter(), onExit(), update()
      *
-     * @return Whether or not the node is running.
+     * @return 节点是否是“running(活动的)”。
      */
     virtual bool isRunning() const;
 
     /**
-     * Schedules for lua script.
+     * lua script的时间表
      * @js NA
      */
     void scheduleUpdateWithPriorityLua(int handler, int priority);
