@@ -75,7 +75,7 @@ bool nodeComparisonLess(Node* n1, Node* n2);
 
 class EventListener;
 
-/** @概要:节点是场景图的基本元素。场景图的基本元素必须是节点对象或者是节点对象的子类。
+/** @brief:节点是场景图的基本元素。场景图的基本元素必须是节点对象或者是节点对象的子类。
  一些常用的节点对象：Scene, Layer, Sprite, Menu, Label.
 
  一个节点的主要特点:
@@ -108,11 +108,11 @@ public:
     static const int INVALID_TAG = -1;
 
     /// @{
-    /// @命名 构造函数，析构函数和一些初始化
+    /// @name 构造函数，析构函数和一些初始化
 
     /**
      * 分配并且初始化一个节点.
-     * @返回 一个初始化的节点，该节点被标记为“autorelease”(自动释放).
+     * @return 一个初始化的节点，该节点被标记为“autorelease”(自动释放).
      */
     static Node * create(void);
 
@@ -129,7 +129,7 @@ public:
 
 
     /// @{
-    /// @命名 图形属性的设值函数和得值函数
+    /// @name 图形属性的设值函数和得值函数
 
     /**
      LocalZOrder是“key”(关键)来分辨节点和它兄弟节点的相关性。
@@ -141,8 +141,8 @@ public:
      并且拥有小于0的LocalZOrder的值的节点是“left”子树（左子树）
      所以拥有大于0的LocalZOrder的值得节点是“right”子树（右子树）
      
-     @见 `setGlobalZOrder`
-     @见 `setVertexZ`
+     @see `setGlobalZOrder`
+     @see `setVertexZ`
      */
     virtual void setLocalZOrder(int localZOrder);
 
@@ -153,9 +153,9 @@ public:
     /**
      * 得到这个节点的局部Z顺序
      *
-     * @见 `setLocalZOrder(int)`
+     * @see `setLocalZOrder(int)`
      *
-     * @返回 局部Z顺序(相对于兄弟节点)。
+     * @return 局部Z顺序(相对于兄弟节点)。
      */
     virtual int getLocalZOrder() const { return _localZOrder; }
     CC_DEPRECATED_ATTRIBUTE virtual int getZOrder() const { return getLocalZOrder(); }
@@ -174,18 +174,18 @@ public:
      局限性: 全局Z顺序不能够被拥有继承“SpriteBatchNode”的节点使用。
      并且如果“ClippingNode”是其中之一的上代，那么“global Z order” 将会和“ClippingNode”有关。
      
-     @见 `setLocalZOrder()`
-     @见 `setVertexZ()`
+     @see `setLocalZOrder()`
+     @see `setVertexZ()`
 
-     @自从 v3.0
+     @since v3.0
      */
     virtual void setGlobalZOrder(float globalZOrder);
     /**
      * 返回节点的全局Z顺序。
      *
-     * @见 `setGlobalZOrder(int)`
+     * @see `setGlobalZOrder(int)`
      *
-     * @返回 节点的全局Z顺序
+     * @see 节点的全局Z顺序
      */
     virtual float getGlobalZOrder() const { return _globalZOrder; }
 
@@ -194,15 +194,15 @@ public:
      *
      * 它是一个缩放因子，将会乘以节点的宽以及它的子节点。
      *
-     * @参数 scaleX   X轴的缩放因子.
+     * @param scaleX   X轴的缩放因子.
      */
     virtual void setScaleX(float scaleX);
     /**
      * 返回该节点的X轴的缩放因子。
      *
-     * @见 setScaleX(float)。
+     * @see setScaleX(float)。
      *
-     * @返回 X轴的缩放因子。
+     * @return X轴的缩放因子。
      */
     virtual float getScaleX() const;
 
@@ -212,15 +212,15 @@ public:
      *
      * 它是一个缩放因子，将会乘以节点的宽以及它的子节点。
      *
-     * @参数 scaleY   Y轴的缩放因子
+     * @param scaleY   Y轴的缩放因子
      */
     virtual void setScaleY(float scaleY);
     /**
      * 返回该节点的Y轴的缩放因子。
      *
-     * @见 `setScaleY(float)`
+     * @see `setScaleY(float)`
      *
-     * @返回 Y轴的缩放因子
+     * @return Y轴的缩放因子
      */
     virtual float getScaleY() const;
 
@@ -229,15 +229,15 @@ public:
      *
      * 如果你之前没有改变过它，那么它的默认值是1.0。
      *
-     * @参数 scaleY   Z轴的缩放因子
+     * @param scaleY   Z轴的缩放因子
      */
     virtual void setScaleZ(float scaleZ);
     /**
      * 返回该节点的梓州的缩放因子。
      *
-     * @见 `setScaleZ(float)`
+     * @see `setScaleZ(float)`
      *
-     * @返回 Z轴的缩放因子。
+     * @return Z轴的缩放因子。
      */
     virtual float getScaleZ() const;
 
@@ -247,16 +247,16 @@ public:
      *
      * 缩放因子将会乘以该节点和它子节点的宽，高和深度。
      *
-     * @参数 scale    X轴和Y轴的缩放因子
+     * @param scale    X轴和Y轴的缩放因子
      */
     virtual void setScale(float scale);
     /**
      * 得到该节点的缩放因子，当X轴和Y轴有相同的缩放因子时。
      *
-     * @警告 判断 当 `_scaleX != _scaleY`
-     * @见 setScale(float)
+     * @warning 判断 当 `_scaleX != _scaleY`
+     * @see setScale(float)
      *
-     * @返回 该节点的缩放因子
+     * @return 该节点的缩放因子
      */
     virtual float getScale() const;
 
@@ -265,8 +265,8 @@ public:
      *
      * 缩放因子乘以该节点和它子节点的宽与高。
      *
-     * @参数 scaleX     X轴的缩放因子。
-     * @参数 scaleY     Y轴的缩放因子。
+     * @param scaleX     X轴的缩放因子。
+     * @param scaleY     Y轴的缩放因子。
      */
     virtual void setScale(float scaleX, float scaleY);
 
@@ -275,23 +275,23 @@ public:
      *
      * 通常我们使用`Vec2(x,y)` 来组成 Vec2 对象。
      * 这一段代码设置节点在屏幕中间。
-     @代码
+     @code
      Size size = Director::getInstance()->getWinSize();
      node->setPosition( Vec2(size.width/2, size.height/2) )
-     @代码结束
+     @endcode
      *
-     * @参数 position  这个节点的位置（x,y）在OpenGL坐标系中。
+     * @param position  这个节点的位置（x,y）在OpenGL坐标系中。
      */
     virtual void setPosition(const Vec2 &position);
     /**
      * 得到在父节点坐标系中节点的位置（x,y）。
      *
-     * @见 setPosition(const Vec2&)
+     * @see setPosition(const Vec2&)
      *
-     * @返回 节点在OpenGL坐标系中的位置（x,y)。
-     * @代码
+     * @return 节点在OpenGL坐标系中的位置（x,y)。
+     * @code
      * In js and lua return value is table which contains x,y
-     * @代码结束
+     * @endcode
      */
     virtual const Vec2& getPosition() const;
     /**
@@ -301,20 +301,20 @@ public:
      * 这个方法要在Lua和JavaScript下。
      * 从Lua到C++传递一个数字比传递一个对象快10倍。
      *
-     @代码
+     @code
      // sample code in Lua
      local pos  = node::getPosition()  -- returns Vec2 object from C++
      node:setPosition(x, y)            -- pass x, y coordinate to C++
-     @代码结束
+     @endcode
      *
-     * @参数 x     位置的X轴坐标系
-     * @参数 y     位置的Y轴坐标系
+     * @param x     位置的X轴坐标系
+     * @param y     位置的Y轴坐标系
      */
     virtual void setPosition(float x, float y);
     /**
      * 用一个更有效率的方法设置位置，返回两个数字而不是Vec2对象。
      *
-     * @见 `setPosition(float, float)`
+     * @see `setPosition(float, float)`
      * In js,out value not return
      */
     virtual void getPosition(float* x, float* y) const;
@@ -344,9 +344,9 @@ public:
      *
      * `setPositionZ()` 同样设置 `setGlobalZValue()` 用“positionZ” 作为值。
      *
-     * @见 `setGlobalZValue()`
+     * @see `setGlobalZValue()`
      *
-     * @参数 vertexZ  该节点的penGL Z 定点。
+     * @param vertexZ  该节点的penGL Z 定点。
      */
     virtual void setPositionZ(float positionZ);
     CC_DEPRECATED_ATTRIBUTE virtual void setVertexZ(float vertexZ) { setPositionZ(vertexZ); }
@@ -354,9 +354,9 @@ public:
     /**
      * 得到该节点的Z轴坐标系的位置。
      *
-     * @见 setPositionZ(float)
+     * @see setPositionZ(float)
      *
-     * @返回 该节点的Z轴坐标系。
+     * @return 该节点的Z轴坐标系。
      */
     virtual float getPositionZ() const;
     CC_DEPRECATED_ATTRIBUTE virtual float getVertexZ() const { return getPositionZ(); }
@@ -371,15 +371,15 @@ public:
      * 因此，这个角度在Y轴和图形左边之间。
      * 默认值skewX角度是0，负值使该节点按顺时针变形。
      *
-     * @参数 skewX 该节点的X轴的倾斜角。
+     * @param skewX 该节点的X轴的倾斜角。
      */
     virtual void setSkewX(float skewX);
     /**
      * 返回该节点的X轴倾斜角，单位是度。
      *
-     * @见 `setSkewX(float)`
+     * @see `setSkewX(float)`
      *
-     * @返回 该节点的X轴倾斜角。
+     * @return 该节点的X轴倾斜角。
      */
     virtual float getSkewX() const;
 
@@ -394,13 +394,13 @@ public:
      *  因此，这个角度在X轴和图形底边之间。
      * 默认值skewY角度是0，负值使该节点按顺时针变形。
      *
-     * @参数 skewY    该节点的Y轴的倾斜角。
+     * @param skewY    该节点的Y轴的倾斜角。
      */
     virtual void setSkewY(float skewY);
     /**
      * 返回该节点的Y轴倾斜角，单位是度。
      *
-     * @见 `setSkewY(float)`
+     * @see `setSkewY(float)`
      *
      * @return 该节点的Y轴倾斜角。
      */
