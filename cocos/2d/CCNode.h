@@ -410,97 +410,97 @@ public:
     /**
      * 设置锚点，用百分比表示。
      *
-     * anchorPoint is the point around which all transformations and positioning manipulations take place.
-     * It's like a pin in the node where it is "attached" to its parent.
-     * The anchorPoint is normalized, like a percentage. (0,0) means the bottom-left corner and (1,1) means the top-right corner.
-     * But you can use values higher than (1,1) and lower than (0,0) too.
-     * The default anchorPoint is (0.5,0.5), so it starts in the center of the node.
-     * @note If node has a physics body, the anchor must be in the middle, you cann't change this to other value.
+     * 一个锚点是所有的转换和定位操作发生的点。
+     * 它就像在节点上连接其父类的大头针。
+     * 锚点是标准化的，就像百分比一样。(0,0)表示左下角，(1,1)表示右上角。
+     * 但是你可以使用比（1,1,）更高的值或者比（0,0）更低的值。
+     * 默认的锚点是（0.5,0.5），因此它开始于节点的中心位置。
+     * @note 如果节点有物理体，锚点必须在中心，你不能够这个值。
      *
-     * @param anchorPoint   The anchor point of node.
+     * @param anchorPoint   节点的锚点。
      */
     virtual void setAnchorPoint(const Vec2& anchorPoint);
     /**
-     * Returns the anchor point in percent.
+     * 返回用百分比表示的锚点。
      *
      * @see `setAnchorPoint(const Vec2&)`
      *
-     * @return The anchor point of node.
+     * @return 节点的锚点
      */
     virtual const Vec2& getAnchorPoint() const;
     /**
-     * Returns the anchorPoint in absolute pixels.
+     * 返回绝对像素的锚点
      *
-     * @warning You can only read it. If you wish to modify it, use anchorPoint instead.
+     * @warning 你只能够读取它，如果你想修改它，使用setAnchoPoint。
      * @see `getAnchorPoint()`
      *
-     * @return The anchor point in absolute pixels.
+     * @return 绝对像素的锚点。
      */
     virtual const Vec2& getAnchorPointInPoints() const;
 
 
     /**
-     * Sets the untransformed size of the node.
+     * 设置不转换节点的大小。
      *
-     * The contentSize remains the same no matter the node is scaled or rotated.
-     * All nodes has a size. Layer and Scene has the same size of the screen.
+     * contentSize依然是相同的，无论节点是缩放或者旋转。
+     * 所有的节点都有大小。图层和场景有相同的屏幕大小。
      *
-     * @param contentSize   The untransformed size of the node.
+     * @param contentSize   未转换节点的大小
      */
     virtual void setContentSize(const Size& contentSize);
     /**
-     * Returns the untransformed size of the node.
+     * 返回未转换节点的大小。
      *
      * @see `setContentSize(const Size&)`
      *
-     * @return The untransformed size of the node.
+     * @return 未转换节点的大小
      */
     virtual const Size& getContentSize() const;
 
 
     /**
-     * Sets whether the node is visible
+     * 设置节点是否可见。
      *
-     * The default value is true, a node is default to visible
+     * 默认值是true,一个节点默认是可见的。
      *
-     * @param visible   true if the node is visible, false if the node is hidden.
+     * @param visible   true 如果节点是可见的，false 如果节点是隐藏的。
      */
     virtual void setVisible(bool visible);
     /**
-     * Determines if the node is visible
+     * 决定节点是否可见。
      *
      * @see `setVisible(bool)`
      *
-     * @return true if the node is visible, false if the node is hidden.
+     * @return true 如果节点是可见的, false 如果节点是隐藏的。
      */
     virtual bool isVisible() const;
 
 
     /**
-     * Sets the rotation (angle) of the node in degrees.
+     * 设置节点的旋转（angle）角度。
      *
-     * 0 is the default rotation angle.
-     * Positive values rotate node clockwise, and negative values for anti-clockwise.
+     * 0 是默认的旋转角度。
+     * 负数顺时针旋转节点，正数逆时针旋转节点。
      *
-     * @param rotation     The rotation of the node in degrees.
+     * @param rotation     节点的旋转角度。
      */
     virtual void setRotation(float rotation);
     /**
-     * Returns the rotation of the node in degrees.
+     * 返回节点的旋转角度。
      *
      * @see `setRotation(float)`
      *
-     * @return The rotation of the node in degrees.
+     * @return 节点的旋转角度。
      */
     virtual float getRotation() const;
 
     /**
-     * Sets the rotation (X,Y,Z) in degrees.
-     * Useful for 3d rotations
+     * 设置（X,Y,Z）旋转角度。
+     * 对3d旋转非常有用。
      */
     virtual void setRotation3D(const Vec3& rotation);
     /**
-     * returns the rotation (X,Y,Z) in degrees.
+     * 返回（X,Y,Z）的旋转角度。
      */
     virtual Vec3 getRotation3D() const;
 
