@@ -46,14 +46,14 @@ class GLProgram;
  * @{
  */
 
-/** Base class for other
+/** 其它网格(grid)类的基类
 */
 class CC_DLL GridBase : public Ref
 {
 public:
-    /** create one Grid */
+    /** 创建一个网格（grid） */
     static GridBase* create(const Size& gridSize, Texture2D *texture, bool flipped);
-    /** create one Grid */
+    /** 创建一个网格（grid） */
     static GridBase* create(const Size& gridSize);
     /**
      * @js NA
@@ -64,23 +64,23 @@ public:
     bool initWithSize(const Size& gridSize, Texture2D *texture, bool flipped);
     bool initWithSize(const Size& gridSize);
 
-    /** whether or not the grid is active */
+    /** 判断网格（grid）状态是否活动的*/
     inline bool isActive(void) const { return _active; }
     void setActive(bool active);
 
-    /** number of times that the grid will be reused */
+    /** 获取网格（grid）的重用次数 */
     inline int getReuseGrid(void) const { return _reuseGrid; }
     inline void setReuseGrid(int reuseGrid) { _reuseGrid = reuseGrid; }
 
-    /** size of the grid */
+    /** 获取网格（grid）的大小 */
     inline const Size& getGridSize(void) const { return _gridSize; }
     inline void setGridSize(const Size& gridSize) { _gridSize = gridSize; }
 
-    /** pixels between the grids */
+    /** 获取网格（grid）之间的像素大小 */
     inline const Vec2& getStep(void) const { return _step; }
     inline void setStep(const Vec2& step) { _step = step; }
 
-    /** is texture flipped */
+    /** 纹理是否翻转 */
     inline bool isTextureFlipped(void) const { return _isTextureFlipped; }
     void setTextureFlipped(bool flipped);
 
@@ -104,8 +104,8 @@ protected:
     Director::Projection _directorProjection;
 };
 
-/**
- Grid3D is a 3D grid implementation. Each vertex has 3 dimensions: x,y,z
+/** 
+ Grid3D类是3D网格（3D grid）的一个实现类。每个顶点都有三个维度:x,y,z 
  */
 class CC_DLL Grid3D : public GridBase
 #ifdef EMSCRIPTEN
@@ -113,9 +113,9 @@ class CC_DLL Grid3D : public GridBase
 #endif // EMSCRIPTEN
 {
 public:
-    /** create one Grid */
+    /** 创建一个网格（grid） */
     static Grid3D* create(const Size& gridSize, Texture2D *texture, bool flipped);
-    /** create one Grid */
+    /** 创建一个网格（grid） */
     static Grid3D* create(const Size& gridSize);
     /**
      * @js ctor
@@ -127,28 +127,28 @@ public:
      */
     ~Grid3D(void);
 
-    /** returns the vertex at a given position 
+    /** 返回指定位置的顶点
      * @js NA
      * @lua NA
      */
     Vec3 getVertex(const Vec2& pos) const;
-    /** @deprecated Use getVertex() instead 
+    /** @deprecated 使用方法getVertex()替代
      * @js NA
      * @lua NA
      */
     CC_DEPRECATED_ATTRIBUTE Vec3 vertex(const Vec2& pos) const { return getVertex(pos); }
-    /** returns the original (non-transformed) vertex at a given position
+    /** 返回指定位置的原始顶点(非转换)
      * @js NA
      * @lua NA
      */
     Vec3 getOriginalVertex(const Vec2& pos) const;
-    /** @deprecated Use getOriginalVertex() instead 
+    /** @deprecated 使用方法getOriginalVertex()替代
      * @js NA
      * @lua NA
      */
     CC_DEPRECATED_ATTRIBUTE Vec3 originalVertex(const Vec2& pos) const { return getOriginalVertex(pos); }
 
-    /** sets a new vertex at a given position 
+   /** 在指定的位置设置一个新的顶点
      * @js NA
      * @lua NA
      */
@@ -167,8 +167,7 @@ protected:
 };
 
 /**
- TiledGrid3D is a 3D grid implementation. It differs from Grid3D in that
- the tiles can be separated from the grid.
+ TiledGrid3D类是3D网格（3D grid）的一个实现类，和Grid3D类相比，不同的是TiledGrid3D类的格子是可以从网格（grid）中分离出来
 */
 class CC_DLL TiledGrid3D : public GridBase
 #ifdef EMSCRIPTEN
@@ -176,9 +175,9 @@ class CC_DLL TiledGrid3D : public GridBase
 #endif // EMSCRIPTEN
 {
 public:
-    /** create one Grid */
+    /** 创建一个网格（grid） */
     static TiledGrid3D* create(const Size& gridSize, Texture2D *texture, bool flipped);
-    /** create one Grid */
+    /** 创建一个网格（grid） */
     static TiledGrid3D* create(const Size& gridSize);
     /**
      * @js ctor
@@ -190,28 +189,28 @@ public:
      */
     ~TiledGrid3D();
 
-    /** returns the tile at the given position 
+    /** 返回指定位置的瓦片（tile）
      * @js NA
      * @lua NA
      */
     Quad3 getTile(const Vec2& pos) const;
-    /** returns the tile at the given position 
+    /** 返回指定位置的瓦片（tile）
      * @js NA
      * @lua NA
      */
     CC_DEPRECATED_ATTRIBUTE Quad3 tile(const Vec2& pos) const { return getTile(pos); }
-    /** returns the original tile (untransformed) at the given position 
+    /** 返回指定位置的原始瓦片（tile）（非转换)
      * @js NA
      * @lua NA
      */
     Quad3 getOriginalTile(const Vec2& pos) const;
-    /** returns the original tile (untransformed) at the given position 
+    /** 返回指定位置的原始瓦片（tile）（非转换)
      * @js NA
      * @lua NA
      */
     CC_DEPRECATED_ATTRIBUTE Quad3 originalTile(const Vec2& pos) const { return getOriginalTile(pos); }
 
-    /** sets a new tile 
+    /** 设置一个新的瓦片（tile）
      * @js NA
      * @lua NA
      */
