@@ -843,6 +843,7 @@ Developers:
     zifter
         Fixed a bug that the effect of particle loaded from CocosBuilder is incorrectly
         Fix twice calling onExit
+        Fixed bug with cascade opacity and color for control button
         
     twhittock
         Fixed a bug that Application::run returns wrong value on Mac platform
