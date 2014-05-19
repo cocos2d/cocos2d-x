@@ -51,9 +51,9 @@ class GLProgram;
 class CC_DLL GridBase : public Ref
 {
 public:
-    /** 创建一个网格 */
+    /** 创建一个网格（grid） */
     static GridBase* create(const Size& gridSize, Texture2D *texture, bool flipped);
-    /** 创建一个网格 */
+    /** 创建一个网格（grid） */
     static GridBase* create(const Size& gridSize);
     /**
      * @js NA
@@ -64,19 +64,19 @@ public:
     bool initWithSize(const Size& gridSize, Texture2D *texture, bool flipped);
     bool initWithSize(const Size& gridSize);
 
-    /** 判断网格状态是否活动的*/
+    /** 判断网格（grid）状态是否活动的*/
     inline bool isActive(void) const { return _active; }
     void setActive(bool active);
 
-    /** 获取网格的重用次数 */
+    /** 获取网格（grid）的重用次数 */
     inline int getReuseGrid(void) const { return _reuseGrid; }
     inline void setReuseGrid(int reuseGrid) { _reuseGrid = reuseGrid; }
 
-    /** 获取网格的大小 */
+    /** 获取网格（grid）的大小 */
     inline const Size& getGridSize(void) const { return _gridSize; }
     inline void setGridSize(const Size& gridSize) { _gridSize = gridSize; }
 
-    /** 获取网格之间的像素大小 */
+    /** 获取网格（grid）之间的像素大小 */
     inline const Vec2& getStep(void) const { return _step; }
     inline void setStep(const Vec2& step) { _step = step; }
 
@@ -105,7 +105,7 @@ protected:
 };
 
 /** 
- Grid3D类是3D网格的一个实现类。每个顶点都有三个维度:x,y,z 
+ Grid3D类是3D网格（3D grid）的一个实现类。每个顶点都有三个维度:x,y,z 
  */
 class CC_DLL Grid3D : public GridBase
 #ifdef EMSCRIPTEN
@@ -113,9 +113,9 @@ class CC_DLL Grid3D : public GridBase
 #endif // EMSCRIPTEN
 {
 public:
-    /** 创建一个网格 */
+    /** 创建一个网格（grid） */
     static Grid3D* create(const Size& gridSize, Texture2D *texture, bool flipped);
-    /** 创建一个网格 */
+    /** 创建一个网格（grid） */
     static Grid3D* create(const Size& gridSize);
     /**
      * @js ctor
@@ -167,7 +167,7 @@ protected:
 };
 
 /**
- TiledGrid3D类是3D网格的一个实现类，和Grid3D类相比，不同的是TiledGrid3D类的格子是可以从网格中分离出来
+ TiledGrid3D类是3D网格（3D grid）的一个实现类，和Grid3D类相比，不同的是TiledGrid3D类的格子是可以从网格（grid）中分离出来
 */
 class CC_DLL TiledGrid3D : public GridBase
 #ifdef EMSCRIPTEN
@@ -175,9 +175,9 @@ class CC_DLL TiledGrid3D : public GridBase
 #endif // EMSCRIPTEN
 {
 public:
-    /** 创建一个网格 */
+    /** 创建一个网格（grid） */
     static TiledGrid3D* create(const Size& gridSize, Texture2D *texture, bool flipped);
-    /** 创建一个网格 */
+    /** 创建一个网格（grid） */
     static TiledGrid3D* create(const Size& gridSize);
     /**
      * @js ctor
@@ -189,28 +189,28 @@ public:
      */
     ~TiledGrid3D();
 
-    /** 返回指定位置的瓦片格子
+    /** 返回指定位置的瓦片（tile）
      * @js NA
      * @lua NA
      */
     Quad3 getTile(const Vec2& pos) const;
-    /** 返回指定位置的瓦片格子
+    /** 返回指定位置的瓦片（tile）
      * @js NA
      * @lua NA
      */
     CC_DEPRECATED_ATTRIBUTE Quad3 tile(const Vec2& pos) const { return getTile(pos); }
-    /** 返回指定位置的原始瓦片格子（非转换)
+    /** 返回指定位置的原始瓦片（tile）（非转换)
      * @js NA
      * @lua NA
      */
     Quad3 getOriginalTile(const Vec2& pos) const;
-    /** 返回指定位置的原始瓦片格子（非转换)
+    /** 返回指定位置的原始瓦片（tile）（非转换)
      * @js NA
      * @lua NA
      */
     CC_DEPRECATED_ATTRIBUTE Quad3 originalTile(const Vec2& pos) const { return getOriginalTile(pos); }
 
-    /** 设置一个新的瓦片格子
+    /** 设置一个新的瓦片（tile）
      * @js NA
      * @lua NA
      */
