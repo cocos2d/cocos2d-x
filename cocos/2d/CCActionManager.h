@@ -96,19 +96,19 @@ public:
 
    
     
-    	/** 移除指定目标身上指定标记的动作 */
+    	/** 通过指定tag移除目标动作 */
     void removeActionByTag(int tag, Node *target);
 
  
      
-     /** 得到指定目标身上指定标记的动作
-	    @返回指定标记的动作
+     /** 通过指定tag得到目标动作
+	    @返回指定tag的动作
     	*/
     Action* getActionByTag(int tag, const Node *target) const;
 
  
      
-     	/** 返回某一目标执行的动作的个数
+     	/** 返回指定目标执行动作的个数
       	* 组合动作算1个动作。例如：
 	      * - 如果你执行一个包含7个动作的序列，返回值为1。
       	* - 如果你执行7个动作序列，每个包含2个动作，返回值为7。
