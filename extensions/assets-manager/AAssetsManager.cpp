@@ -111,17 +111,27 @@ AAssetsManager::~AAssetsManager()
 {
 }
 
+void AAssetsManager::setLocalManifest(Manifest *manifest)
+{
+    _localManifest = manifest;
+    // An alias to assets
+    _assets = &(_localManifest->getAssets());
+    
+    // Add search paths
+    _localManifest->prependSearchPaths();
+}
+
 void AAssetsManager::loadManifest(const std::string& manifestUrl)
 {
     std::string cachedManifest = _storagePath + MANIFEST_FILENAME;
     // Prefer to use the cached manifest file, if not found use user configured manifest file
     // Prepend storage path to avoid multi package conflict issue
     if (_fileUtils->isFileExist(cachedManifest))
-        _localManifest = new Manifest(cachedManifest);
+        setLocalManifest(new Manifest(cachedManifest));
     
     // Fail to found cached manifest file
     if (!_localManifest) {
-        _localManifest = new Manifest(_manifestUrl);
+        setLocalManifest(new Manifest(_manifestUrl));
     }
     // Fail to load cached manifest file
     else if (!_localManifest->isLoaded()) {
@@ -137,9 +147,6 @@ void AAssetsManager::loadManifest(const std::string& manifestUrl)
         event.setUserData(&url);
         _eventDispatcher->dispatchEvent(&event);
     }
-    
-    // An alias to assets
-    _assets = &(_localManifest->getAssets());
 }
 
 std::string AAssetsManager::get(const std::string& key) const
@@ -170,8 +177,8 @@ void AAssetsManager::setStoragePath(const std::string& storagePath)
     _storagePath = storagePath;
     adjustPath(_storagePath);
     createDirectory(_storagePath);
-    if (_storagePath.size() > 0)
-        prependSearchPath(_storagePath);
+    //if (_storagePath.size() > 0)
+        //prependSearchPath(_storagePath);
 }
 
 void AAssetsManager::adjustPath(std::string &path)
@@ -333,9 +340,9 @@ void AAssetsManager::checkUpdate()
         case VERSION_LOADED:
         {
             if (!_remoteManifest)
-                _remoteManifest = new Manifest(VERSION_FILENAME);
+                _remoteManifest = new Manifest(_storagePath + VERSION_FILENAME);
             else
-                _remoteManifest->parse(VERSION_FILENAME);
+                _remoteManifest->parse(_storagePath + VERSION_FILENAME);
             
             if (!_remoteManifest->isVersionLoaded())
             {
@@ -389,9 +396,9 @@ void AAssetsManager::checkUpdate()
         case MANIFEST_LOADED:
         {
             if (!_remoteManifest)
-                _remoteManifest = new Manifest(MANIFEST_FILENAME);
+                _remoteManifest = new Manifest(_storagePath + MANIFEST_FILENAME);
             else
-                _remoteManifest->parse(MANIFEST_FILENAME);
+                _remoteManifest->parse(_storagePath + MANIFEST_FILENAME);
             
             if (!_remoteManifest->isLoaded())
             {
@@ -567,9 +574,7 @@ void AAssetsManager::onSuccess(const std::string &srcUrl, const std::string &cus
         if (_downloadUnits.size() == 0)
         {
             // Every thing is correctly downloaded, swap the localManifest
-            _localManifest = _remoteManifest;
-            // An alias to assets
-            _assets = &(_localManifest->getAssets());
+            setLocalManifest(_remoteManifest);
             
             EventCustom finishEvent(FINISH_UPDATE_EVENT);
             finishEvent.setUserData(this);

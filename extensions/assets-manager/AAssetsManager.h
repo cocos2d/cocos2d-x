@@ -149,6 +149,7 @@ public:
     
 protected:
     void loadManifest(const std::string& manifestUrl);
+    void setLocalManifest(Manifest *manifest);
     void adjustPath(std::string &path);
     void prependSearchPath(const std::string &path);
     //bool uncompress();

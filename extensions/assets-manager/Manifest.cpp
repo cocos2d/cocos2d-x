@@ -36,6 +36,7 @@ NS_CC_EXT_BEGIN;
 #define KEY_ENGINE_VERSION      "engineVersion"
 #define KEY_ASSETS              "assets"
 #define KEY_COMPRESSED_FILES    "compressedFiles"
+#define KEY_SEARCH_PATHS        "searchPaths"
 
 #define KEY_PATH                "path"
 #define KEY_MD5                 "md5"
@@ -46,6 +47,7 @@ NS_CC_EXT_BEGIN;
 Manifest::Manifest(const std::string& manifestUrl)
 : _versionLoaded(false)
 , _loaded(false)
+, _manifestRoot("")
 , _remoteManifestUrl("")
 , _remoteVersionUrl("")
 , _version("")
@@ -62,6 +64,12 @@ void Manifest::parse(const std::string& manifestUrl)
     rapidjson::Document json = parseJSON(manifestUrl);
     if (json.IsObject())
     {
+        // Register the local manifest root
+        size_t found = manifestUrl.find_last_of("/\\");
+        if (found != std::string::npos)
+        {
+            _manifestRoot = manifestUrl.substr(0, found+1);
+        }
         loadManifest(json);
     }
 }
@@ -154,6 +162,25 @@ std::map<std::string, Manifest::AssetDiff> Manifest::genDiff(const Manifest *b) 
     }
     
     return diff_map;
+}
+
+
+void Manifest::prependSearchPaths()
+{
+    std::vector<std::string> searchPaths = FileUtils::getInstance()->getSearchPaths();
+    std::vector<std::string>::iterator iter = searchPaths.begin();
+    searchPaths.insert(iter, _manifestRoot);
+    
+    for (int i = (int)_searchPaths.size()-1; i >= 0; i--)
+    {
+        std::string path = _searchPaths[i];
+        if (path.size() > 0 && path[path.size() - 1] != '/')
+            path.append("/");
+        path = _manifestRoot + path;
+        iter = searchPaths.begin();
+        searchPaths.insert(iter, path);
+    }
+    FileUtils::getInstance()->setSearchPaths(searchPaths);
 }
 
 
@@ -267,6 +294,7 @@ void Manifest::clear()
     if (_loaded)
     {
         _assets.clear();
+        _searchPaths.clear();
         _loaded = false;
     }
 }
@@ -377,6 +405,21 @@ void Manifest::loadManifest(const rapidjson::Document &json)
                 std::string key = itr->name.GetString();
                 Asset asset = parseAsset(itr->value);
                 _assets.emplace(key, asset);
+            }
+        }
+    }
+    
+    // Retrieve all search paths
+    if( json.HasMember(KEY_SEARCH_PATHS) )
+    {
+        const rapidjson::Value& paths = json[KEY_SEARCH_PATHS];
+        if (paths.IsArray())
+        {
+            for (rapidjson::SizeType i = 0; i < paths.Size(); i++)
+            {
+                if (paths[i].IsString()) {
+                    _searchPaths.push_back(paths[i].GetString());
+                }
             }
         }
     }

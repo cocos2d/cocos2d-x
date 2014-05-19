@@ -69,6 +69,8 @@ public:
     
     std::map<std::string, AssetDiff> genDiff(const Manifest *b) const;
     
+    void prependSearchPaths();
+    
     /* @brief Gets remote package url.
      */
     const std::string& getPackageUrl() const;
@@ -134,6 +136,9 @@ private:
     
     FileUtils *_fileUtils;
     
+    //! The local manifest root
+    std::string _manifestRoot;
+    
     //! The remote package url
     std::string _packageUrl;
     
@@ -157,6 +162,9 @@ private:
     
     //! Full assets list
     std::map<std::string, Asset> _assets;
+    
+    //! All search paths
+    std::vector<std::string> _searchPaths;
     
     rapidjson::Document parseJSON(const std::string &url);
     
