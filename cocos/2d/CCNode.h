@@ -388,19 +388,19 @@ public:
      * 改变该节点Y轴的倾斜角，单位是度。
      *
      * `setRotationalSkew()`和 `setSkew()` 的不同时是前一个模拟Flash的倾斜功能。
-     * while the second one uses the real skew function.
+     * 然而后一个使用真正的倾斜功能。
      *
-     * This angle describes the shear distortion in the Y direction.
-     * Thus, it is the angle between the X coordinate and the bottom edge of the shape
-     * The default skewY angle is 0. Positive values distort the node in a CCW direction.
+     * 这个角度描述了在Y轴方向的切形变（shear distortion）。
+     *  因此，这个角度在X轴和图形底边之间。
+     * 默认值skewY角度是0，负值使该节点按顺时针变形。
      *
-     * @param skewY    The Y skew angle of the node in degrees.
+     * @参数 skewY    该节点的Y轴的倾斜角。
      */
     virtual void setSkewY(float skewY);
     /**
-     * Returns the Y skew angle of the node in degrees.
+     * 返回该节点的Y轴倾斜角，单位是度。
      *
-     * @see `setSkewY(float)`
+     * @见 `setSkewY(float)`
      *
      * @return The Y skew angle of the node in degrees.
      */
