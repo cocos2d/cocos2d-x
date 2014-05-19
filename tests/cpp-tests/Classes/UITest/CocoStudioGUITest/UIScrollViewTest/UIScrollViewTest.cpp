@@ -60,7 +60,7 @@ bool UIScrollViewTest_Vertical::init()
         
         Button* titleButton = Button::create("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png");
         titleButton->setTitleText("Title Button");
-        titleButton->setPosition(Vec2(innerWidth / 2.0f, button->getBottomInParent() - button->getSize().height));
+        titleButton->setPosition(Vec2(innerWidth / 2.0f, button->getBottomBoundary() - button->getSize().height));
         scrollView->addChild(titleButton);
         
         Button* button_scale9 = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
@@ -137,19 +137,19 @@ bool UIScrollViewTest_Horizontal::init()
         
         Button* titleButton = Button::create("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png");
         titleButton->setTitleText("Title Button");
-        titleButton->setPosition(Vec2(button->getRightInParent() + button->getSize().width / 2.0f,
-                                    button->getBottomInParent() - button->getSize().height / 2.0f));
+        titleButton->setPosition(Vec2(button->getRightBoundary() + button->getSize().width / 2.0f,
+                                    button->getBottomBoundary() - button->getSize().height / 2.0f));
         scrollView->addChild(titleButton);
         
         Button* button_scale9 = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
         button_scale9->setScale9Enabled(true);
         button_scale9->setSize(Size(100.0f, button_scale9->getVirtualRendererSize().height));
-        button_scale9->setPosition(Vec2(titleButton->getRightInParent() + titleButton->getSize().width / 2.0f,
-                                       titleButton->getBottomInParent() - titleButton->getSize().height / 2.0f));
+        button_scale9->setPosition(Vec2(titleButton->getRightBoundary() + titleButton->getSize().width / 2.0f,
+                                       titleButton->getBottomBoundary() - titleButton->getSize().height / 2.0f));
         scrollView->addChild(button_scale9);                
                 
         imageView->setPosition(Vec2(innerWidth - imageView->getSize().width / 2.0f,
-                                   button_scale9->getBottomInParent() - button_scale9->getSize().height / 2.0f));
+                                   button_scale9->getBottomBoundary() - button_scale9->getSize().height / 2.0f));
         scrollView->addChild(imageView);                
         
         return true;

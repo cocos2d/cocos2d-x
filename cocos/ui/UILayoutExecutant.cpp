@@ -252,7 +252,7 @@ void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
                             {
                                 continue;
                             }
-                            float locationBottom = relativeWidget->getTopInParent();
+                            float locationBottom = relativeWidget->getTopBoundary();
                             float locationLeft = relativeWidget->getLeftBoundary();
                             finalPosY = locationBottom + ap.y * cs.height;
                             finalPosX = locationLeft + ap.x * cs.width;
@@ -266,7 +266,7 @@ void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
                                 continue;
                             }
                             Size rbs = relativeWidget->getSize();
-                            float locationBottom = relativeWidget->getTopInParent();
+                            float locationBottom = relativeWidget->getTopBoundary();
                             
                             finalPosY = locationBottom + ap.y * cs.height;
                             finalPosX = relativeWidget->getLeftBoundary() + rbs.width * 0.5f + ap.x * cs.width - cs.width * 0.5f;
@@ -279,7 +279,7 @@ void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
                             {
                                 continue;
                             }
-                            float locationBottom = relativeWidget->getTopInParent();
+                            float locationBottom = relativeWidget->getTopBoundary();
                             float locationRight = relativeWidget->getRightBoundary();
                             finalPosY = locationBottom + ap.y * cs.height;
                             finalPosX = locationRight - (1.0f - ap.x) * cs.width;
@@ -306,10 +306,10 @@ void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
                                 continue;
                             }
                             Size rbs = relativeWidget->getSize();
-                            float locationRight = relativeWidget->getLeftInParent();
+                            float locationRight = relativeWidget->getLeftBoundary();
                             finalPosX = locationRight - (1.0f - ap.x) * cs.width;
                             
-                            finalPosY = relativeWidget->getBottomInParent() + rbs.height * 0.5f + ap.y * cs.height - cs.height * 0.5f;
+                            finalPosY = relativeWidget->getBottomBoundary() + rbs.height * 0.5f + ap.y * cs.height - cs.height * 0.5f;
                         }
                         break;
                     case RelativeLayoutParameter::RelativeAlign::LOCATION_LEFT_OF_BOTTOMALIGN:
@@ -320,7 +320,7 @@ void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
                                 continue;
                             }
                             float locationBottom = relativeWidget->getBottomBoundary();
-                            float locationRight = relativeWidget->getLeftInParent();
+                            float locationRight = relativeWidget->getLeftBoundary();
                             finalPosY = locationBottom + ap.y * cs.height;
                             finalPosX = locationRight - (1.0f - ap.x) * cs.width;
                         }
@@ -333,7 +333,7 @@ void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
                                 continue;
                             }
                             float locationTop = relativeWidget->getTopBoundary();
-                            float locationLeft = relativeWidget->getRightInParent();
+                            float locationLeft = relativeWidget->getRightBoundary();
                             finalPosY = locationTop - (1.0f - ap.y) * cs.height;
                             finalPosX = locationLeft + ap.x * cs.width;
                         }
@@ -346,7 +346,7 @@ void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
                                 continue;
                             }
                             Size rbs = relativeWidget->getSize();
-                            float locationLeft = relativeWidget->getRightInParent();
+                            float locationLeft = relativeWidget->getRightBoundary();
                             finalPosX = locationLeft + ap.x * cs.width;
                             
                             finalPosY = relativeWidget->getBottomBoundary() + rbs.height * 0.5f + ap.y * cs.height - cs.height * 0.5f;
@@ -359,8 +359,8 @@ void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
                             {
                                 continue;
                             }
-                            float locationBottom = relativeWidget->getBottomInParent();
-                            float locationLeft = relativeWidget->getRightInParent();
+                            float locationBottom = relativeWidget->getBottomBoundary();
+                            float locationLeft = relativeWidget->getRightBoundary();
                             finalPosY = locationBottom + ap.y * cs.height;
                             finalPosX = locationLeft + ap.x * cs.width;
                         }
@@ -372,7 +372,7 @@ void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
                             {
                                 continue;
                             }
-                            float locationTop = relativeWidget->getBottomInParent();
+                            float locationTop = relativeWidget->getBottomBoundary();
                             float locationLeft = relativeWidget->getLeftBoundary();
                             finalPosY = locationTop - (1.0f - ap.y) * cs.height;
                             finalPosX = locationLeft + ap.x * cs.width;
@@ -386,7 +386,7 @@ void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
                                 continue;
                             }
                             Size rbs = relativeWidget->getSize();
-                            float locationTop = relativeWidget->getBottomInParent();
+                            float locationTop = relativeWidget->getBottomBoundary();
                             
                             finalPosY = locationTop - (1.0f - ap.y) * cs.height;
                             finalPosX = relativeWidget->getLeftBoundary() + rbs.width * 0.5f + ap.x * cs.width - cs.width * 0.5f;
@@ -399,7 +399,7 @@ void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
                             {
                                 continue;
                             }
-                            float locationTop = relativeWidget->getBottomInParent();
+                            float locationTop = relativeWidget->getBottomBoundary();
                             float locationRight = relativeWidget->getRightBoundary();
                             finalPosY = locationTop - (1.0f - ap.y) * cs.height;
                             finalPosX = locationRight - (1.0f - ap.x) * cs.width;
