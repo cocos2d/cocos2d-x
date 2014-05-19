@@ -268,7 +268,10 @@ rapidjson::Document Manifest::parseJSON(const std::string &url)
             json.Parse<0>(content.c_str());
             // Print error
             if (json.HasParseError()) {
-                std::string errorSnippet = content.substr(json.GetErrorOffset()-1, 10);
+                size_t offset = json.GetErrorOffset();
+                if(offset > 0)
+                    offset--;
+                std::string errorSnippet = content.substr(offset, 10);
                 CCLOG("File parse error %s at <%s>\n", json.GetParseError(), errorSnippet.c_str());
             }
         }
