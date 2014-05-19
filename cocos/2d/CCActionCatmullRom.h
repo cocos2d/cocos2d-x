@@ -48,15 +48,15 @@ NS_CC_BEGIN;
  * @{
  */
 
-/** An Array that contain control points.
- Used by CardinalSplineTo and (By) and CatmullRomTo (and By) actions.
+/** 一个包含控制坐标的数组.
+ 它所使用的是笛卡尔曲线和CatmullRom线曲线动作 .
 @ingroup Actions
  */
 class CC_DLL PointArray : public Ref, public Clonable
 {
 public:
     
-    /** creates and initializes a Points array with capacity 
+    /** 创建或初始化这个数组集合的容量大小
      * @js NA
      */
     static PointArray* create(ssize_t capacity);
@@ -72,47 +72,47 @@ public:
      */
     PointArray();
     
-    /** initializes a Catmull Rom config with a capacity hint 
+    /** 初始化一条指定大小的曲线 
      * @js NA
      */
     bool initWithCapacity(ssize_t capacity);
     
-    /** appends a control point 
+    /** 添加一个控制点 
      * @js NA
      */
     void addControlPoint(Vec2 controlPoint);
     
-    /** inserts a controlPoint at index 
+    /** 插入一个控制点
      * @js NA
      */
     void insertControlPoint(Vec2 &controlPoint, ssize_t index);
     
-    /** replaces an existing controlPoint at index 
+    /** 替换现有的控制点
      * @js NA
      */
     void replaceControlPoint(Vec2 &controlPoint, ssize_t index);
     
-    /** get the value of a controlPoint at a given index 
+    /** 获得一个指定索引的控制点的值
      * @js NA
      */
     Vec2 getControlPointAtIndex(ssize_t index);
     
-    /** deletes a control point at a given index 
+    /** 删除指定索引的控制点deletes a control point at a given index 
      * @js NA
      */
     void removeControlPointAtIndex(ssize_t index);
     
-    /** returns the number of objects of the control point array 
+    /** 返回这个控制点数组里面的所有节点的总数 
      * @js NA
      */
     ssize_t count() const;
     
-    /** returns a new copy of the array reversed. User is responsible for releasing this copy 
+    /** 返回一个新的逆向的数组集合. 用户必须主动释放这个副本 
      * @js NA
      */
     PointArray* reverse() const;
     
-    /** reverse the current control point array inline, without generating a new one 
+    /** 将这个内联的数组的控制点逆向化, 他不会产生一个新的数组
      * @js NA
      */
     void reverseInline();
@@ -130,11 +130,11 @@ public:
      */
     void setControlPoints(std::vector<Vec2*> *controlPoints);
 private:
-    /** Array that contains the control points */
+    /** 这个包含控制点的数组集合 */
     std::vector<Vec2*> *_controlPoints;
 };
 
-/** Cardinal Spline path.
+/** 基础曲线路径.
  http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline
 @ingroup Actions
  */
@@ -142,9 +142,9 @@ class CC_DLL CardinalSplineTo : public ActionInterval
 {
 public:
 
-    /** creates an action with a Cardinal Spline array of points and tension 
+    /** 创建一个连续的基础曲线动作的点数组集合
      * @code
-     * when this function bound to js or lua,the input params are changed
+     * 当这个函数绑定到js或lua,输入参数会发生变化
      * in js: var create(var t,var table)
      * in lua: lcaol create(local t, local table)
      * @endcode
@@ -161,7 +161,7 @@ public:
      */
     CardinalSplineTo();
     
-    /** initializes the action with a duration and an array of points */
+    /** 初始化一个持续动作的点的数组集合 */
     bool initWithDuration(float duration, PointArray* points, float tension);
 
     virtual void updatePosition(Vec2 &newPos);
@@ -178,14 +178,14 @@ public:
         _points = points;
     }
 
-    // Overrides
+    // 可重载
 	virtual CardinalSplineTo *clone() const override;
     virtual CardinalSplineTo* reverse() const override;
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
 
 protected:
-    /** Array of control points */
+    /** 这个控制点的数组实体 */
     PointArray *_points;
     float _deltaT;
     float _tension;
@@ -193,7 +193,7 @@ protected:
     Vec2	_accumulatedDiff;
 };
 
-/** Cardinal Spline path.
+/** 基础曲线路径..
  http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline
  @ingroup Actions
  */
@@ -201,9 +201,9 @@ class CC_DLL CardinalSplineBy : public CardinalSplineTo
 {
 public:
     
-    /** creates an action with a Cardinal Spline array of points and tension 
+    /** 创建一个连续的基础曲线动作的点数组集合
      * @code
-     * when this function bound to js or lua,the input params are changed
+     * 当这个函数绑定到js或lua,输入参数会发生变化
      * in js: var create(var t,var table)
      * in lua: lcaol create(local t, local table)
      * @endcode
@@ -212,7 +212,7 @@ public:
 
     CardinalSplineBy();
     
-    // Overrides
+    // 可重载
     virtual void startWithTarget(Node *target) override;
     virtual void updatePosition(Vec2 &newPos) override;
 	virtual CardinalSplineBy *clone() const override;
@@ -222,8 +222,8 @@ protected:
     Vec2 _startPosition;
 };
 
-/** An action that moves the target with a CatmullRom curve to a destination point.
- A Catmull Rom is a Cardinal Spline with a tension of 0.5.
+/** 这是一个按照CatmullRom曲线移动目标点的动作.
+ 这个Catmull Rom曲线路径的弧度为0.5.
  http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Catmull.E2.80.93Rom_spline
  @ingroup Actions
  */
@@ -231,16 +231,16 @@ class CC_DLL CatmullRomTo : public CardinalSplineTo
 {
 public:
     
-    /** creates an action with a Cardinal Spline array of points and tension 
+    /** 这个方法创建了一个连续的笛卡尔曲线的数组
      * @code
-     * when this function bound to js or lua,the input params are changed
+     * 当这个函数绑定到js或lua,输入参数会发生变化
      * in js: var create(var dt,var table)
      * in lua: lcaol create(local dt, local table)
      * @endcode
      */
     static CatmullRomTo* create(float dt, PointArray* points);
 
-    /** initializes the action with a duration and an array of points */
+    /** 这个方法初始化了一个可持续的点的数组集合 */
     bool initWithDuration(float dt, PointArray* points);
 
     // Override
@@ -248,27 +248,28 @@ public:
 	virtual CatmullRomTo *reverse() const override;
 };
 
-/** An action that moves the target with a CatmullRom curve by a certain distance.
- A Catmull Rom is a Cardinal Spline with a tension of 0.5.
+/**
+    这是一个按照笛卡尔曲线移动目标点的动作.
+    这个笛卡尔曲线路径的弧度为0.5.
  http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Catmull.E2.80.93Rom_spline
  @ingroup Actions
  */
 class CC_DLL CatmullRomBy : public CardinalSplineBy
 {
 public:
-    /** creates an action with a Cardinal Spline array of points and tension 
+    /** 这个方法创建了一个连续的笛卡尔曲线的数组
      * @code
-     * when this function bound to js or lua,the input params are changed
+     * 当这个函数绑定到js或lua,输入参数会发生变化
      * in js: var create(var dt,var table)
      * in lua: lcaol create(local dt, local table)
      * @endcode
      */
     static CatmullRomBy* create(float dt, PointArray* points);
 
-    /** initializes the action with a duration and an array of points */
+    /** 这个方法初始化了一个可持续的点的数组集合 */
     bool initWithDuration(float dt, PointArray* points);
 
-    // Override
+    // 可重载方法
 	virtual CatmullRomBy *clone() const override;
 	virtual CatmullRomBy *reverse() const override;
 

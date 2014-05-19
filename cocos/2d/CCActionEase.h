@@ -47,7 +47,7 @@ public:
     virtual ActionInterval* getInnerAction();
 
     //
-    // Overrides
+    // 可重载
     //
 	virtual ActionEase* clone() const override = 0;
     virtual ActionEase* reverse() const override = 0;
@@ -58,11 +58,11 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     ActionEase() {}
     virtual ~ActionEase();
-    /** initializes the action */
+    /** 初始化这个延时动作 */
     bool initWithAction(ActionInterval *action);
 
 protected:
-    /** The inner action */
+    /** 这是延时动作实体 */
     ActionInterval *_inner;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ActionEase);
@@ -75,13 +75,13 @@ private:
 class CC_DLL EaseRateAction : public ActionEase
 {
 public:
-    /** set rate value for the actions */
+    /** 设置这个动作的频率值 */
     inline void setRate(float rate) { _rate = rate; }
-    /** get rate value for the actions */
+    /** 获取这个动作频率值 */
     inline float getRate() const { return _rate; }
 
     //
-    // Overrides
+    // 可重载
     //
 	virtual EaseRateAction* clone() const override = 0;
     virtual EaseRateAction* reverse() const override = 0;
@@ -89,7 +89,7 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     EaseRateAction() {}
     virtual ~EaseRateAction();
-    /** Initializes the action with the inner action and the rate parameter */
+    /** 初始化这个延时动作并且设置频率参数值 */
     bool initWithAction(ActionInterval *pAction, float fRate);
 
 protected:
@@ -106,10 +106,10 @@ private:
 class CC_DLL EaseIn : public EaseRateAction
 {
 public:
-    /** Creates the action with the inner action and the rate parameter */
+    /** 创建这个延时动作并且设置频率参数值 */
     static EaseIn* create(ActionInterval* action, float rate);
 
-    // Overrides
+    // 可重载
     virtual void update(float time) override;
 	virtual EaseIn* clone() const override;
 	virtual EaseIn* reverse() const override;
@@ -129,7 +129,7 @@ private:
 class CC_DLL EaseOut : public EaseRateAction
 {
 public:
-    /** Creates the action with the inner action and the rate parameter */
+    /** 创建这个延时动作并且设置频率参数值 */
     static EaseOut* create(ActionInterval* action, float rate);
 
     // Overrides
@@ -152,10 +152,10 @@ private:
 class CC_DLL EaseInOut : public EaseRateAction
 {
 public:
-    /** Creates the action with the inner action and the rate parameter */
+    /** 创建这个延时动作并且设置频率参数值 */
     static EaseInOut* create(ActionInterval* action, float rate);
 
-    // Overrides
+    // 可重载
     virtual void update(float time) override;
 	virtual EaseInOut* clone() const  override;
 	virtual EaseInOut* reverse() const  override;
@@ -175,10 +175,10 @@ private:
 class CC_DLL EaseExponentialIn : public ActionEase
 {
 public:
-    /** creates the action */
+    /** 创建这个延时动作 */
     static EaseExponentialIn* create(ActionInterval* action);
 
-    // Overrides
+    // 可重载
     virtual void update(float time) override;
 	virtual EaseExponentialIn* clone() const override;
 	virtual ActionEase* reverse() const override;
@@ -198,10 +198,10 @@ private:
 class CC_DLL EaseExponentialOut : public ActionEase
 {
 public:
-    /** creates the action */
+    /** 创建这个延时动作 */
     static EaseExponentialOut* create(ActionInterval* action);
 
-    // Overrides
+    // 可重载
     virtual void update(float time) override;
 	virtual EaseExponentialOut* clone() const override;
 	virtual ActionEase* reverse() const override;
@@ -221,10 +221,10 @@ private:
 class CC_DLL EaseExponentialInOut : public ActionEase
 {
 public:
-    /** creates the action */
+    /** 创建这个延时动作 */
     static EaseExponentialInOut* create(ActionInterval* action);
 
-    // Overrides
+    // 可重载
     virtual void update(float time) override;
 	virtual EaseExponentialInOut* clone() const override;
 	virtual EaseExponentialInOut* reverse() const override;
@@ -244,10 +244,10 @@ private:
 class CC_DLL EaseSineIn : public ActionEase
 {
 public:
-    /** creates the action */
+    /** 创建这个延时动作 */
     static EaseSineIn* create(ActionInterval* action);
 
-    // Overrides
+    // 可重载
     virtual void update(float time) override;
 	virtual EaseSineIn* clone() const override;
 	virtual ActionEase* reverse() const override;
@@ -267,10 +267,10 @@ private:
 class CC_DLL EaseSineOut : public ActionEase
 {
 public:
-    /** creates the action */
+    /** 创建这个延时动作 */
     static EaseSineOut* create(ActionInterval* action);
 
-    // Overrides
+    // 可重载
     virtual void update(float time) override;
 	virtual EaseSineOut* clone() const override;
 	virtual ActionEase* reverse() const override;
@@ -290,10 +290,10 @@ private:
 class CC_DLL EaseSineInOut : public ActionEase
 {
 public:
-    /** creates the action */
+    /** 创建这个延时动作 */
     static EaseSineInOut* create(ActionInterval* action);
 
-    // Overrides
+    // 可重载
     virtual void update(float time) override;
 	virtual EaseSineInOut* clone() const override;
 	virtual EaseSineInOut* reverse() const override;
@@ -315,9 +315,9 @@ class CC_DLL EaseElastic : public ActionEase
 {
 public:
 
-    /** get period of the wave in radians. default is 0.3 */
+    /** 获得周期波的弧度值. 默认值为0.3 */
     inline float getPeriod() const { return _period; }
-    /** set period of the wave in radians. */
+    /** 设置周期波的弧度值. */
     inline void setPeriod(float fPeriod) { _period = fPeriod; }
 
     //
@@ -329,7 +329,7 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     EaseElastic() {}
     virtual ~EaseElastic() {}
-    /** Initializes the action with the inner action and the period in radians (default is 0.3) */
+    /** 初始化这个延时动作并且其初始化周期波弧度值默认值为0.3f */
     bool initWithAction(ActionInterval *action, float period = 0.3f);
 
 protected:
@@ -349,11 +349,11 @@ private:
 class CC_DLL EaseElasticIn : public EaseElastic
 {
 public:
-    /** Creates the action with the inner action and the period in radians (default is 0.3) */
+    /** 创建这个延时动作并且其初始化周期波弧度值默认值为0.3f */
     static EaseElasticIn* create(ActionInterval *action, float period);
     static EaseElasticIn* create(ActionInterval *action);
 
-    // Overrides
+    // 可重载
     virtual void update(float time) override;
 	virtual EaseElasticIn* clone() const override;
 	virtual EaseElastic* reverse() const override;
@@ -375,11 +375,11 @@ private:
 class CC_DLL EaseElasticOut : public EaseElastic
 {
 public:
-    /** Creates the action with the inner action and the period in radians (default is 0.3) */
+    /** 创建这个延时动作并且其初始化周期波弧度值默认值为0.3f */
     static EaseElasticOut* create(ActionInterval *action, float period);
     static EaseElasticOut* create(ActionInterval *action);
 
-    // Overrides
+    // 可重载
     virtual void update(float time) override;
 	virtual EaseElasticOut* clone() const override;
 	virtual EaseElastic* reverse() const override;
@@ -401,11 +401,11 @@ private:
 class CC_DLL EaseElasticInOut : public EaseElastic
 {
 public:
-    /** Creates the action with the inner action and the period in radians (default is 0.3) */
+    /** 创建这个延时动作并且其初始化周期波弧度值默认值为0.3f */
     static EaseElasticInOut* create(ActionInterval *action, float period);
     static EaseElasticInOut* create(ActionInterval *action);
 
-    // Overrides
+    // 可重载
     virtual void update(float time) override;
 	virtual EaseElasticInOut* clone() const override;
 	virtual EaseElasticInOut* reverse() const override;
@@ -427,7 +427,7 @@ class CC_DLL EaseBounce : public ActionEase
 {
 public:
 
-    // Overrides
+    // 可重载
 	virtual EaseBounce* clone() const override = 0;
 	virtual EaseBounce* reverse() const override = 0;
 
@@ -448,10 +448,10 @@ private:
 class CC_DLL EaseBounceIn : public EaseBounce
 {
 public:
-    /** creates the action */
+    /** 创建这个延时动作 */
     static EaseBounceIn* create(ActionInterval* action);
 
-    // Overrides
+    // 可重载
     virtual void update(float time) override;
 	virtual EaseBounceIn* clone() const override;
 	virtual EaseBounce* reverse() const override;
@@ -473,10 +473,10 @@ private:
 class CC_DLL EaseBounceOut : public EaseBounce
 {
 public:
-    /** creates the action */
+    /** 创建这个延时动作 */
     static EaseBounceOut* create(ActionInterval* action);
 
-    // Overrides
+    // 可重载
     virtual void update(float time) override;
 	virtual EaseBounceOut* clone() const override;
 	virtual EaseBounce* reverse() const override;
@@ -498,10 +498,10 @@ private:
 class CC_DLL EaseBounceInOut : public EaseBounce
 {
 public:
-    /** creates the action */
+    /** 创建这个延时动作 */
     static EaseBounceInOut* create(ActionInterval* action);
 
-    // Overrides
+    // 可重载
     virtual void update(float time) override;
 	virtual EaseBounceInOut* clone() const override;
 	virtual EaseBounceInOut* reverse() const override;
@@ -523,10 +523,10 @@ private:
 class CC_DLL EaseBackIn : public ActionEase
 {
 public:
-    /** creates the action */
+    /** 创建这个延时动作 */
     static EaseBackIn* create(ActionInterval* action);
 
-    // Overrides
+    // 可重载
     virtual void update(float time) override;
 	virtual EaseBackIn* clone() const override;
 	virtual ActionEase* reverse() const override;
@@ -548,10 +548,10 @@ private:
 class CC_DLL EaseBackOut : public ActionEase
 {
 public:
-    /** creates the action */
+    /** 创建这个延时动作 */
     static EaseBackOut* create(ActionInterval* action);
 
-    // Overrides
+    // 可重载
     virtual void update(float time) override;
 	virtual EaseBackOut* clone() const override;
 	virtual ActionEase* reverse() const override;
@@ -573,10 +573,10 @@ private:
 class CC_DLL EaseBackInOut : public ActionEase
 {
 public:
-    /** creates the action */
+    /** 创建这个延时动作 */
     static EaseBackInOut* create(ActionInterval* action);
 
-    // Overrides
+    // 可重载
     virtual void update(float time) override;
 	virtual EaseBackInOut* clone() const override;
 	virtual EaseBackInOut* reverse() const override;
@@ -597,7 +597,7 @@ private:
 class EaseBezierAction : public cocos2d::ActionEase
 {
 public:
-	/** creates the action */
+	/** 创建这个延时动作 */
 	static EaseBezierAction* create(cocos2d::ActionInterval* action);
 
 	virtual void update(float time) override;
@@ -627,7 +627,7 @@ private:
 class EaseQuadraticActionIn:public cocos2d::ActionEase
 {
 public:
-	/** creates the action */
+	/** 创建这个延时动作 */
 	static EaseQuadraticActionIn* create(cocos2d::ActionInterval* action);
 
 	virtual void update(float time) override;
@@ -650,7 +650,7 @@ private:
 class EaseQuadraticActionOut:public cocos2d::ActionEase
 {
 public:
-	/** creates the action */
+	/** 创建这个延时动作 */
 	static EaseQuadraticActionOut* create(cocos2d::ActionInterval* action);
 
 	virtual void update(float time) override;
@@ -673,7 +673,7 @@ private:
 class EaseQuadraticActionInOut:public cocos2d::ActionEase
 {
 public:
-	/** creates the action */
+	/** 创建这个延时动作 */
 	static EaseQuadraticActionInOut* create(cocos2d::ActionInterval* action);
 
 	virtual void update(float time) override;
@@ -695,7 +695,7 @@ private:
 class EaseQuarticActionIn:public cocos2d::ActionEase
 {
 public:
-	/** creates the action */
+	/** 创建这个延时动作 */
 	static EaseQuarticActionIn* create(cocos2d::ActionInterval* action);
 
 	virtual void update(float time) override;
@@ -717,7 +717,7 @@ private:
 class EaseQuarticActionOut:public cocos2d::ActionEase
 {
 public:
-	/** creates the action */
+	/** 创建这个延时动作 */
 	static EaseQuarticActionOut* create(cocos2d::ActionInterval* action);
 
 	virtual void update(float time) override;
@@ -739,7 +739,7 @@ private:
 class EaseQuarticActionInOut:public cocos2d::ActionEase
 {
 public:
-	/** creates the action */
+	/** 创建这个延时动作 */
 	static EaseQuarticActionInOut* create(cocos2d::ActionInterval* action);
 
 	virtual void update(float time) override;
@@ -762,7 +762,7 @@ private:
 class EaseQuinticActionIn:public cocos2d::ActionEase
 {
 public:
-	/** creates the action */
+	/** 创建这个延时动作 */
 	static EaseQuinticActionIn* create(cocos2d::ActionInterval* action);
 
 	virtual void update(float time) override;
@@ -784,7 +784,7 @@ private:
 class EaseQuinticActionOut:public cocos2d::ActionEase
 {
 public:
-	/** creates the action */
+	/** 创建这个延时动作 */
 	static EaseQuinticActionOut* create(cocos2d::ActionInterval* action);
 
 	virtual void update(float time) override;
@@ -806,7 +806,7 @@ private:
 class EaseQuinticActionInOut:public cocos2d::ActionEase
 {
 public:
-	/** creates the action */
+	/** 创建这个延时动作 */
 	static EaseQuinticActionInOut* create(cocos2d::ActionInterval* action);
 
 	virtual void update(float time) override;
@@ -828,7 +828,7 @@ private:
 class EaseCircleActionIn:public cocos2d::ActionEase
 {
 public:
-	/** creates the action */
+	/** 创建这个延时动作 */
 	static EaseCircleActionIn* create(cocos2d::ActionInterval* action);
 
 	virtual void update(float time) override;
@@ -850,7 +850,7 @@ private:
 class EaseCircleActionOut:public cocos2d::ActionEase
 {
 public:
-	/** creates the action */
+	/** 创建这个延时动作 */
 	static EaseCircleActionOut* create(cocos2d::ActionInterval* action);
 
 	virtual void update(float time) override;
@@ -872,7 +872,7 @@ private:
 class EaseCircleActionInOut:public cocos2d::ActionEase
 {
 public:
-	/** creates the action */
+	/** 创建这个延时动作 */
 	static EaseCircleActionInOut* create(cocos2d::ActionInterval* action);
 
 	virtual void update(float time) override;
@@ -894,7 +894,7 @@ private:
 class EaseCubicActionIn:public cocos2d::ActionEase
 {
 public:
-	/** creates the action */
+	/** 创建这个延时动作 */
 	static EaseCubicActionIn* create(cocos2d::ActionInterval* action);
 
 	virtual void update(float time) override;
@@ -916,7 +916,7 @@ private:
 class EaseCubicActionOut:public cocos2d::ActionEase
 {
 public:
-	/** creates the action */
+	/** 创建这个延时动作 */
 	static EaseCubicActionOut* create(cocos2d::ActionInterval* action);
 
 	virtual void update(float time) override;
@@ -938,7 +938,7 @@ private:
 class EaseCubicActionInOut:public cocos2d::ActionEase
 {
 public:
-	/** creates the action */
+	/** 创建这个延时动作 */
 	static EaseCubicActionInOut* create(cocos2d::ActionInterval* action);
 
 	virtual void update(float time) override;
