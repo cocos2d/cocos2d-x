@@ -38,42 +38,41 @@
 NS_CC_BEGIN
 
 /** DrawNode
- Node that draws dots, segments and polygons.
- Faster than the "drawing primitives" since they it draws everything in one single batch.
+ Node由于在一个单独的批处理中绘制了所以元素，因此它绘制点、线段、多边形都要比“drawing primitives”快。
  
  @since v2.1
  */
 class CC_DLL DrawNode : public Node
 {
 public:
-    /** creates and initialize a DrawNode node */
+    /** 创建并初始化DrawNode节点 */
     static DrawNode* create();
 
-    /** draw a dot at a position, with a given radius and color */
+    /** 给定半径以及颜色，绘制预定位置的点 */
     void drawDot(const Vec2 &pos, float radius, const Color4F &color);
     
-    /** draw a segment with a radius and color */
+    /** 给定半径以及颜色绘制一条线段 */
     void drawSegment(const Vec2 &from, const Vec2 &to, float radius, const Color4F &color);
     
-    /** draw a polygon with a fill color and line color
+    /** 给定填充颜色以及线条颜色绘制一个多边形
     * @code
-    * When this function bound into js or lua,the parameter will be changed
-    * In js: var drawPolygon(var Arrayofpoints, var fillColor, var width, var borderColor)
-    * In lua:local drawPolygon(local pointTable,local tableCount,local fillColor,local width,local borderColor)
+    * 在lua和js版本中这个函数的参数将会发生改变
+    * 在 js版本中: var drawPolygon(var Arrayofpoints, var fillColor, var width, var borderColor)
+    * 在lua版本中:local drawPolygon(local pointTable,local tableCount,local fillColor,local width,local borderColor)
     * @endcode
     */
     void drawPolygon(Vec2 *verts, int count, const Color4F &fillColor, float borderWidth, const Color4F &borderColor);
 	
-    /** draw a triangle with color */
+    /** 给定颜色绘制三角形 */
     void drawTriangle(const Vec2 &p1, const Vec2 &p2, const Vec2 &p3, const Color4F &color);
 
-    /** draw a cubic bezier curve with color and number of segments */
+    /** 给定颜色以及线段总数绘制一个cubic贝塞尔曲线 */
     void drawCubicBezier(const Vec2& from, const Vec2& control1, const Vec2& control2, const Vec2& to, unsigned int segments, const Color4F &color);
 
-    /** draw a quadratic bezier curve with color and number of segments */
+    /** 给定颜色以及线段总数绘制一个quadratic贝塞尔曲线 */
     void drawQuadraticBezier(const Vec2& from, const Vec2& control, const Vec2& to, unsigned int segments, const Color4F &color);
     
-    /** Clear the geometry in the node's buffer. */
+    /** 清除节点缓冲区中的几何结构数据。 */
     void clear();
     /**
     * @js NA
@@ -82,8 +81,8 @@ public:
     const BlendFunc& getBlendFunc() const;
     /**
     * @code
-    * When this function bound into js or lua,the parameter will be changed
-    * In js: var setBlendFunc(var src, var dst)
+    * 在js和lua版本中，这个函数的参数将会发生变化
+    * 在js版本: var setBlendFunc(var src, var dst)
     * @endcode
     * @lua NA
     */
@@ -91,7 +90,7 @@ public:
 
     void onDraw(const Mat4 &transform, bool transformUpdated);
     
-    // Overrides
+    // 重载函数
     virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
     
 CC_CONSTRUCTOR_ACCESS:
