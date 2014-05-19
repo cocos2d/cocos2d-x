@@ -818,6 +818,10 @@
 		A07A52BF1783AF210073F6A7 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52B91783AE900073F6A7 /* OpenGLES.framework */; };
 		A07A52C01783AF250073F6A7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52B71783AE6D0073F6A7 /* UIKit.framework */; };
 		A07A52C31783B02C0073F6A7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52C11783B01F0073F6A7 /* AVFoundation.framework */; };
+		BA53B13A1929D4B8002E0804 /* AssetsManagerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA53B1381929D4B8002E0804 /* AssetsManagerTest.cpp */; };
+		BA53B13B1929D4B8002E0804 /* AssetsManagerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA53B1381929D4B8002E0804 /* AssetsManagerTest.cpp */; };
+		BA53B14D192A0211002E0804 /* Manifests in Resources */ = {isa = PBXBuildFile; fileRef = BA53B14C192A0211002E0804 /* Manifests */; };
+		BA53B14E192A0211002E0804 /* Manifests in Resources */ = {isa = PBXBuildFile; fileRef = BA53B14C192A0211002E0804 /* Manifests */; };
 		C08689C118D370C90093E810 /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
 		C08689C218D370C90093E810 /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
 		C08689C318D370C90093E810 /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
@@ -1845,6 +1849,9 @@
 		A07A52B91783AE900073F6A7 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
 		A07A52BB1783AEB80073F6A7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		A07A52C11783B01F0073F6A7 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
+		BA53B1381929D4B8002E0804 /* AssetsManagerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AssetsManagerTest.cpp; path = AssetsManagerTest/AssetsManagerTest.cpp; sourceTree = "<group>"; };
+		BA53B1391929D4B8002E0804 /* AssetsManagerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AssetsManagerTest.h; path = AssetsManagerTest/AssetsManagerTest.h; sourceTree = "<group>"; };
+		BA53B14C192A0211002E0804 /* Manifests */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Manifests; path = "../tests/cpp-tests/Resources/Manifests"; sourceTree = "<group>"; };
 		C08689C018D370C90093E810 /* background.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = background.caf; path = "../tests/cpp-tests/Resources/background.caf"; sourceTree = "<group>"; };
 		D60AE43317F7FFE100757E4B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
 		EDCC747E17C455FD007B692C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
@@ -2186,6 +2193,7 @@
 		1AC3592418CECF0A00F37B72 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				BA53B1311929D36B002E0804 /* AssetsManagerTest */,
 				1AC3592518CECF0A00F37B72 /* AccelerometerTest */,
 				1AC3592818CECF0A00F37B72 /* ActionManagerTest */,
 				1AC3592B18CECF0A00F37B72 /* ActionsEaseTest */,
@@ -3498,6 +3506,7 @@
 		1AC35CA818CED83500F37B72 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BA53B14C192A0211002E0804 /* Manifests */,
 				1AC35CA918CED84500F37B72 /* animations */,
 				1AC35CAE18CED84500F37B72 /* ccb */,
 				1A221C9B191771E300FD2BE4 /* ccs-res */,
@@ -3767,6 +3776,15 @@
 				46A15FC61807A4F9005B8026 /* libCocosDenshion iOS.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		BA53B1311929D36B002E0804 /* AssetsManagerTest */ = {
+			isa = PBXGroup;
+			children = (
+				BA53B1381929D4B8002E0804 /* AssetsManagerTest.cpp */,
+				BA53B1391929D4B8002E0804 /* AssetsManagerTest.h */,
+			);
+			name = AssetsManagerTest;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -4377,6 +4395,7 @@
 				1AC35CCA18CED84500F37B72 /* animations in Resources */,
 				1AC35CEA18CED84500F37B72 /* fileLookup.plist in Resources */,
 				1A221C9C191771E300FD2BE4 /* ccs-res in Resources */,
+				BA53B14D192A0211002E0804 /* Manifests in Resources */,
 				1AC35CF018CED84500F37B72 /* hd in Resources */,
 				1AC35CFC18CED84500F37B72 /* music.mid in Resources */,
 				1AC35D0A18CED84500F37B72 /* zwoptex in Resources */,
@@ -4421,6 +4440,7 @@
 				1AC35D0518CED84500F37B72 /* Shaders in Resources */,
 				1AC35CD318CED84500F37B72 /* background.ogg in Resources */,
 				1AC35CCB18CED84500F37B72 /* animations in Resources */,
+				BA53B14E192A0211002E0804 /* Manifests in Resources */,
 				1AC35C8C18CECF1400F37B72 /* Icon-114.png in Resources */,
 				1AC35CF118CED84500F37B72 /* hd in Resources */,
 				1AC35C9318CECF1400F37B72 /* Icon-57.png in Resources */,
@@ -4686,6 +4706,7 @@
 				1AC35B3D18CECF0C00F37B72 /* Bug-422.cpp in Sources */,
 				1AC35C0B18CECF0C00F37B72 /* KeyboardTest.cpp in Sources */,
 				1AC35BF518CECF0C00F37B72 /* HttpClientTest.cpp in Sources */,
+				BA53B13A1929D4B8002E0804 /* AssetsManagerTest.cpp in Sources */,
 				1AC35B4F18CECF0C00F37B72 /* ClickAndMoveTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4854,6 +4875,7 @@
 				1AC35B9A18CECF0C00F37B72 /* UIButtonTest.cpp in Sources */,
 				1AC35B5418CECF0C00F37B72 /* CocosDenshionTest.cpp in Sources */,
 				1AC35B8018CECF0C00F37B72 /* ProjectileController.cpp in Sources */,
+				BA53B13B1929D4B8002E0804 /* AssetsManagerTest.cpp in Sources */,
 				1AC35C2618CECF0C00F37B72 /* PerformanceAllocTest.cpp in Sources */,
 				1AC35BCA18CECF0C00F37B72 /* UITextAtlasTest_Editor.cpp in Sources */,
 				1AC35B5A18CECF0C00F37B72 /* controller.cpp in Sources */,
