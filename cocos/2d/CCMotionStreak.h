@@ -42,7 +42,7 @@ NS_CC_BEGIN
  * @{
  */
 
-/** MotionStreak.
+/** MotionStreak.h
  创建一个精灵尾巴的路径
  */
 class CC_DLL MotionStreak : public Node, public TextureProtocol
