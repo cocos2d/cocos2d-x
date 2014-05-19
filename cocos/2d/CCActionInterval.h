@@ -63,15 +63,15 @@ Action *pingPongAction = Sequence::actions(action, action->reverse(), nullptr);
 class CC_DLL ActionInterval : public FiniteTimeAction
 {
 public:
-    /** how many seconds had elapsed since the actions started to run. */
+    /** 从动作开始执行过去了多少秒 。*/
     inline float getElapsed(void) { return _elapsed; }
 
-    //extension in GridAction
+    //网格动作上的延伸
     void setAmplitudeRate(float amp);
     float getAmplitudeRate(void);
 
     //
-    // Overrides
+    // 重载
     //
     virtual bool isDone(void) const override;
     virtual void step(float dt) override;
@@ -80,7 +80,7 @@ public:
 	virtual ActionInterval *clone() const override = 0;
 
 protected:
-    /** initializes the action */
+    /**初始化动作 */
     bool initWithDuration(float d);
 
     float _elapsed;
@@ -92,9 +92,10 @@ protected:
 class CC_DLL Sequence : public ActionInterval
 {
 public:
-    /** helper constructor to create an array of sequenceable actions */
+    /** 创建一组顺序性动作的协助构造函数*/
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    // WP8 in VS2012 does not support nullptr in variable args lists and variadic templates are also not supported
+   
+    /*WP8在VS2012中，不支持在变量参数列表中使用nullptr，也不支持可变参数模板*/
     typedef FiniteTimeAction* M;
     static Sequence* create(M m1, std::nullptr_t listEnd) { return variadicCreate(m1, NULL); }
     static Sequence* create(M m1, M m2, std::nullptr_t listEnd) { return variadicCreate(m1, m2, NULL); }
@@ -107,13 +108,13 @@ public:
     static Sequence* create(M m1, M m2, M m3, M m4, M m5, M m6, M m7, M m8, M m9, std::nullptr_t listEnd) { return variadicCreate(m1, m2, m3, m4, m5, m6, m7, m8, m9, NULL); }
     static Sequence* create(M m1, M m2, M m3, M m4, M m5, M m6, M m7, M m8, M m9, M m10, std::nullptr_t listEnd) { return variadicCreate(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10,  NULL); }
 
-    // On WP8 for variable argument lists longer than 10 items, use the other create functions or variadicCreate with NULL as the last argument
+    //在WP8平台上，对于变量参数列表多余10项的情况，使用其他的创建函数或者是使用以NULL作为最后一个参数的可变参数的创建函数
     static Sequence* variadicCreate(FiniteTimeAction* item, ...);
 #else
     static Sequence* create(FiniteTimeAction *action1, ...) CC_REQUIRES_NULL_TERMINATION;
 #endif
 
-    /** helper constructor to create an array of sequenceable actions given an array
+    /**用一组给定的动作创建一组顺序性动作的协助构造函数
      * @code
      * When this funtion bound to the js or lua,the input params changed
      * in js  :var   create(var   object1,var   object2, ...)
@@ -121,13 +122,13 @@ public:
      * @endcode
      */
     static Sequence* create(const Vector<FiniteTimeAction*>& arrayOfActions);
-    /** helper constructor to create an array of sequence-able actions */
+    /** 创建一组顺序性动作的协助构造函数 */
     static Sequence* createWithVariableList(FiniteTimeAction *action1, va_list args);
-    /** creates the action */
+    /** 创建动作 */
     static Sequence* createWithTwoActions(FiniteTimeAction *actionOne, FiniteTimeAction *actionTwo);
 
     //
-    // Overrides
+    // 重载
     //
     virtual Sequence* clone() const override;
 	virtual Sequence* reverse() const override;
@@ -139,7 +140,7 @@ CC_CONSTRUCTOR_ACCESS:
     Sequence() {}
     virtual ~Sequence(void);
 
-    /** initializes the action */
+    /** 初始化动作 */
     bool initWithTwoActions(FiniteTimeAction *pActionOne, FiniteTimeAction *pActionTwo);
 
 protected:
@@ -157,7 +158,7 @@ private:
 class CC_DLL Repeat : public ActionInterval
 {
 public:
-    /** creates a Repeat action. Times is an unsigned integer between 1 and pow(2,30) */
+    /** 创建一个重复性动作。第二个参数表示次数，是一个取值在1到2的30次方之间的无符号整数 */
     static Repeat* create(FiniteTimeAction *action, unsigned int times);
 
     inline void setInnerAction(FiniteTimeAction *action)
@@ -176,7 +177,7 @@ public:
     }
 
     //
-    // Overrides
+    // 重载
     //
     virtual Repeat* clone() const override;
 	virtual Repeat* reverse() const override;
@@ -189,7 +190,7 @@ CC_CONSTRUCTOR_ACCESS:
     Repeat() {}
     virtual ~Repeat();
 
-    /** initializes a Repeat action. Times is an unsigned integer between 1 and pow(2,30) */
+    /** 初始化一个重复性动作。第二个参数表示次数，是一个取值在1到2的30次方之间的无符号整数*/
     bool initWithAction(FiniteTimeAction *pAction, unsigned int times);
 
 protected:
@@ -197,7 +198,7 @@ protected:
     unsigned int _total;
     float _nextDt;
     bool _actionInstant;
-    /** Inner action */
+    /** 内部动作成员变量 */
     FiniteTimeAction *_innerAction;
 
 private:
@@ -211,7 +212,7 @@ To repeat the an action for a limited number of times use the Repeat action.
 class CC_DLL RepeatForever : public ActionInterval
 {
 public:
-    /** creates the action */
+    /** 创建动作 */
     static RepeatForever* create(ActionInterval *action);
 
     inline void setInnerAction(ActionInterval *action)
@@ -230,7 +231,7 @@ public:
     }
 
     //
-    // Overrides
+    // 重载
     //
     virtual RepeatForever* clone() const override;
 	virtual RepeatForever* reverse(void) const override;
@@ -244,11 +245,11 @@ CC_CONSTRUCTOR_ACCESS:
     {}
     virtual ~RepeatForever();
 
-    /** initializes the action */
+    /** 初始化动作 */
     bool initWithAction(ActionInterval *action);
 
 protected:
-    /** Inner action */
+    /** 内部动作成员变量 */
     ActionInterval *_innerAction;
 
 private:
@@ -268,7 +269,7 @@ public:
      * @endcode
      */
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    // WP8 in VS2012 does not support nullptr in variable args lists and variadic templates are also not supported
+    // WP8在VS2012中，不支持在变量参数列表中使用nullptr，也不支持可变参数模板
     typedef FiniteTimeAction* M;
     static Spawn* create(M m1, std::nullptr_t listEnd) { return variadicCreate(m1, NULL); }
     static Spawn* create(M m1, M m2, std::nullptr_t listEnd) { return variadicCreate(m1, m2, NULL); }
@@ -281,23 +282,24 @@ public:
     static Spawn* create(M m1, M m2, M m3, M m4, M m5, M m6, M m7, M m8, M m9, std::nullptr_t listEnd) { return variadicCreate(m1, m2, m3, m4, m5, m6, m7, m8, m9, NULL); }
     static Spawn* create(M m1, M m2, M m3, M m4, M m5, M m6, M m7, M m8, M m9, M m10, std::nullptr_t listEnd) { return variadicCreate(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10,  NULL); }
 
-    // On WP8 for variable argument lists longer than 10 items, use the other create functions or createSpawn with NULL as the last argument
+    // 在WP8平台上，对于变量参数列表多余10项的情况，使用其他的创建函数或者是使用以NULL作为最后一个参数的可变参数的创建函数
     static Spawn* variadicCreate(FiniteTimeAction* item, ...);
 #else
     static Spawn* create(FiniteTimeAction *action1, ...) CC_REQUIRES_NULL_TERMINATION;
 #endif
 
-    /** helper constructor to create an array of spawned actions */
+    /** 创建一组同时发生的动作的协助构造函数 */
     static Spawn* createWithVariableList(FiniteTimeAction *action1, va_list args);
 
-    /** helper constructor to create an array of spawned actions given an array */
+   
+    /**通过一组给定的动作创建一组同时发生的动作的协助构造函数*/
     static Spawn* create(const Vector<FiniteTimeAction*>& arrayOfActions);
 
-    /** creates the Spawn action */
+    /** 创建同时发生的动作 */
     static Spawn* createWithTwoActions(FiniteTimeAction *action1, FiniteTimeAction *action2);
 
     //
-    // Overrides
+    // 重载
     //
     virtual Spawn* clone() const override;
 	virtual Spawn* reverse(void) const override;
@@ -309,7 +311,7 @@ CC_CONSTRUCTOR_ACCESS:
     Spawn() {}
     virtual ~Spawn();
 
-    /** initializes the Spawn action with the 2 actions to spawn */
+    /** 用两个动作为参数初始化同时发生的动作 */
     bool initWithTwoActions(FiniteTimeAction *action1, FiniteTimeAction *action2);
 
 protected:
@@ -327,14 +329,14 @@ private:
 class CC_DLL RotateTo : public ActionInterval
 {
 public:
-    /** creates the action with separate rotation angles */
+    /** 用单独的旋转角度创建动作 */
     static RotateTo* create(float duration, float deltaAngleX, float deltaAngleY);
 
-    /** creates the action */
+    /** 创建动作 */
     static RotateTo* create(float duration, float deltaAngle);
 
     //
-    // Overrides
+    // 重载
     //
     virtual RotateTo* clone() const override;
     virtual RotateTo* reverse() const override;
@@ -345,7 +347,7 @@ CC_CONSTRUCTOR_ACCESS:
     RotateTo() {}
     virtual ~RotateTo() {}
 
-    /** initializes the action */
+    /** 初始化动作 */
     bool initWithDuration(float duration, float deltaAngle);
     bool initWithDuration(float duration, float deltaAngleX, float deltaAngleY);
     
@@ -367,13 +369,13 @@ private:
 class CC_DLL RotateBy : public ActionInterval
 {
 public:
-    /** creates the action */
+    /** 创建动作*/
     static RotateBy* create(float duration, float deltaAngle);
     static RotateBy* create(float duration, float deltaAngleZ_X, float deltaAngleZ_Y);
     static RotateBy* create(float duration, const Vec3& deltaAngle3D);
 
     //
-    // Override
+    // 重载
     //
     virtual RotateBy* clone() const override;
 	virtual RotateBy* reverse(void) const override;
@@ -384,7 +386,7 @@ CC_CONSTRUCTOR_ACCESS:
     RotateBy();
     virtual ~RotateBy() {}
 
-    /** initializes the action */
+    /** 初始化动作 */
     bool initWithDuration(float duration, float deltaAngle);
     bool initWithDuration(float duration, float deltaAngleZ_X, float deltaAngleZ_Y);
     bool initWithDuration(float duration, const Vec3& deltaAngle3D);
@@ -403,20 +405,19 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(RotateBy);
 };
 
-/**  Moves a Node object x,y pixels by modifying it's position attribute.
- x and y are relative to the position of the object.
- Several MoveBy actions can be concurrently called, and the resulting
- movement will be the sum of individual movements.
+/** 通过修改节点对象的位置属性来改变节点对象的x,y像素。
+ * x,y的坐标是相对于这个对象的位置来说的。
+ 几个MoveBy动作可以同时被调用，最终的运动是这几个单独运动的综合
  @since v2.1beta2-custom
  */
 class CC_DLL MoveBy : public ActionInterval
 {
 public:
-    /** creates the action */
+    /** 创建动作*/
     static MoveBy* create(float duration, const Vec2& deltaPosition);
 
     //
-    // Overrides
+    // 重载
     //
     virtual MoveBy* clone() const override;
 	virtual MoveBy* reverse(void) const  override;
@@ -427,7 +428,7 @@ CC_CONSTRUCTOR_ACCESS:
     MoveBy() {}
     virtual ~MoveBy() {}
 
-    /** initializes the action */
+    /**初始化动作 */
     bool initWithDuration(float duration, const Vec2& deltaPosition);
 
 protected:
@@ -439,19 +440,18 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(MoveBy);
 };
 
-/** Moves a Node object to the position x,y. x and y are absolute coordinates by modifying it's position attribute.
- Several MoveTo actions can be concurrently called, and the resulting
- movement will be the sum of individual movements.
+/** 移动节点对象到位置x,y。x,y是绝对坐标，通过修改它的位置属性来改变它们的值。
+ 几个MoveTo动作可以被同时调用，并且最终的运动是几个单独运动的综合。
  @since v2.1beta2-custom
  */
 class CC_DLL MoveTo : public MoveBy
 {
 public:
-    /** creates the action */
+    /** 创建动作 */
     static MoveTo* create(float duration, const Vec2& position);
 
     //
-    // Overrides
+    // 重载
     //
     virtual MoveTo* clone() const override;
     virtual void startWithTarget(Node *target) override;
@@ -460,7 +460,7 @@ CC_CONSTRUCTOR_ACCESS:
     MoveTo() {}
     virtual ~MoveTo() {}
 
-    /** initializes the action */
+    /** 初始化动作 */
     bool initWithDuration(float duration, const Vec2& position);
 
 protected:
@@ -470,17 +470,18 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(MoveTo);
 };
 
-/** Skews a Node object to given angles by modifying it's skewX and skewY attributes
+/** 
+ * 通过修改节点对象的skewX和skewY属性来使节点对象倾斜到一个给定的角度。
 @since v1.0
 */
 class CC_DLL SkewTo : public ActionInterval
 {
 public:
-    /** creates the action */
+    /** 创建动作 */
     static SkewTo* create(float t, float sx, float sy);
 
     //
-    // Overrides
+    // 重载
     //
     virtual SkewTo* clone() const override;
 	virtual SkewTo* reverse(void) const override;
@@ -507,17 +508,17 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(SkewTo);
 };
 
-/** Skews a Node object by skewX and skewY degrees
+/** 通过skewX和skewY的度数来事节点对象倾斜
 @since v1.0
 */
 class CC_DLL SkewBy : public SkewTo
 {
 public:
-    /** creates the action */
+    /** 创建动作*/
     static SkewBy* create(float t, float deltaSkewX, float deltaSkewY);
 
     //
-    // Overrides
+    // 重载
     //
     virtual void startWithTarget(Node *target) override;
     virtual SkewBy* clone() const  override;
@@ -538,11 +539,11 @@ private:
 class CC_DLL JumpBy : public ActionInterval
 {
 public:
-    /** creates the action */
+    /** 创建动作n */
     static JumpBy* create(float duration, const Vec2& position, float height, int jumps);
 
     //
-    // Overrides
+    // 重载
     //
     virtual JumpBy* clone() const override;
 	virtual JumpBy* reverse(void) const override;
@@ -553,7 +554,7 @@ CC_CONSTRUCTOR_ACCESS:
     JumpBy() {}
     virtual ~JumpBy() {}
 
-    /** initializes the action */
+    /** 初始化动作 */
     bool initWithDuration(float duration, const Vec2& position, float height, int jumps);
 
 protected:
@@ -572,11 +573,11 @@ private:
 class CC_DLL JumpTo : public JumpBy
 {
 public:
-    /** creates the action */
+    /**创建动作 */
     static JumpTo* create(float duration, const Vec2& position, float height, int jumps);
 
     //
-    // Override
+    // 重载
     //
     virtual void startWithTarget(Node *target) override;
     virtual JumpTo* clone() const override;
@@ -588,14 +589,14 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(JumpTo);
 };
 
-/** Bezier configuration structure
+/** 贝塞尔曲线的配置结构体
  */
 typedef struct _ccBezierConfig {
-    //! end position of the bezier
+    //! 贝塞尔曲线的终点
     Vec2 endPosition;
-    //! Bezier control point 1
+    //! 贝塞尔曲线的第一个控制点
     Vec2 controlPoint_1;
-    //! Bezier control point 2
+    //! 贝塞尔曲线的第二个控制点
     Vec2 controlPoint_2;
 } ccBezierConfig;
 
@@ -604,7 +605,8 @@ typedef struct _ccBezierConfig {
 class CC_DLL BezierBy : public ActionInterval
 {
 public:
-    /** creates the action with a duration and a bezier configuration 
+    /** 
+     * 以持续时间和贝塞尔曲线的配置结构体为参数创建动作
      * @code
      * when this function bound to js or lua,the input params are changed
      * in js: var create(var t,var table)
@@ -614,7 +616,7 @@ public:
     static BezierBy* create(float t, const ccBezierConfig& c);
 
     //
-    // Overrides
+    // 重载
     //
     virtual BezierBy* clone() const override;
 	virtual BezierBy* reverse(void) const override;
@@ -625,7 +627,7 @@ CC_CONSTRUCTOR_ACCESS:
     BezierBy() {}
     virtual ~BezierBy() {}
 
-    /** initializes the action with a duration and a bezier configuration */
+    /** 以持续时间和贝塞尔曲线的配置结构体为参数初始化动作 */
     bool initWithDuration(float t, const ccBezierConfig& c);
 
 protected:
@@ -643,7 +645,7 @@ private:
 class CC_DLL BezierTo : public BezierBy
 {
 public:
-    /** creates the action with a duration and a bezier configuration 
+    /** 以持续时间和贝塞尔曲线的配置结构体为参数创建动作
      * @code
      * when this function bound to js or lua,the input params are changed
      * in js: var create(var t,var table)
@@ -653,7 +655,7 @@ public:
     static BezierTo* create(float t, const ccBezierConfig& c);
 
     //
-    // Overrides
+    // 重载
     //
     virtual void startWithTarget(Node *target) override;
     virtual BezierTo* clone() const override;
@@ -678,17 +680,17 @@ private:
 class CC_DLL ScaleTo : public ActionInterval
 {
 public:
-    /** creates the action with the same scale factor for X and Y */
+    /** 创建一个X和Y有相同的缩放因子的动作 */
     static ScaleTo* create(float duration, float s);
 
-    /** creates the action with and X factor and a Y factor */
+    /** 用X和Y的缩放因子去创建动作(X和Y的缩放因子可以不同) */
     static ScaleTo* create(float duration, float sx, float sy);
 
-    /** creates the action with X Y Z factor */
+    /** 用X、Y、Z的缩放因子创建动作 */
     static ScaleTo* create(float duration, float sx, float sy, float sz);
 
     //
-    // Overrides
+    // 重载
     //
     virtual ScaleTo* clone() const override;
 	virtual ScaleTo* reverse(void) const override;
@@ -699,11 +701,11 @@ CC_CONSTRUCTOR_ACCESS:
     ScaleTo() {}
     virtual ~ScaleTo() {}
 
-    /** initializes the action with the same scale factor for X and Y */
+    /** 初始化一个X和Y有相同的缩放因子的动作 */
     bool initWithDuration(float duration, float s);
-    /** initializes the action with and X factor and a Y factor */
+    /** 用X和Y的缩放因子初始化动作 */
     bool initWithDuration(float duration, float sx, float sy);
-    /** initializes the action with X Y Z factor */
+    /** 用X、Y、Z的缩放因子初始化动作 */
     bool initWithDuration(float duration, float sx, float sy, float sz);
 
 protected:
@@ -729,17 +731,17 @@ private:
 class CC_DLL ScaleBy : public ScaleTo
 {
 public:
-    /** creates the action with the same scale factor for X and Y */
+    /** 创建一个X和Y有相同的缩放因子的动作 */
     static ScaleBy* create(float duration, float s);
 
-    /** creates the action with and X factor and a Y factor */
+    /** 用X和Y的缩放因子去创建动作(X和Y的缩放因子可以不同) */
     static ScaleBy* create(float duration, float sx, float sy);
 
-    /** creates the action with X Y Z factor */
+    /** 用X、Y、Z的缩放因子创建动作 */
     static ScaleBy* create(float duration, float sx, float sy, float sz);
 
     //
-    // Overrides
+    // 重载
     //
     virtual void startWithTarget(Node *target) override;
     virtual ScaleBy* clone() const override;
@@ -758,11 +760,11 @@ private:
 class CC_DLL Blink : public ActionInterval
 {
 public:
-    /** creates the action */
+    /** 创建动作 */
     static Blink* create(float duration, int blinks);
 
     //
-    // Overrides
+    // 重载
     //
     virtual Blink* clone() const override;
 	virtual Blink* reverse(void) const override;
@@ -774,7 +776,7 @@ CC_CONSTRUCTOR_ACCESS:
     Blink() {}
     virtual ~Blink() {}
 
-    /** initializes the action */
+    /** 初始化动作 */
     bool initWithDuration(float duration, int blinks);
     
 protected:
@@ -792,11 +794,11 @@ private:
 class CC_DLL FadeTo : public ActionInterval
 {
 public:
-    /** creates an action with duration and opacity */
+    /** 用持续时间和不透明度创建动作 */
     static FadeTo* create(float duration, GLubyte opacity);
 
     //
-    // Overrides
+    // 重载
     //
     virtual FadeTo* clone() const override;
 	virtual FadeTo* reverse(void) const override;
@@ -807,7 +809,7 @@ CC_CONSTRUCTOR_ACCESS:
     FadeTo() {}
     virtual ~FadeTo() {}
 
-    /** initializes the action with duration and opacity */
+    /** 用持续时间和不透明度初始化动作 */
     bool initWithDuration(float duration, GLubyte opacity);
 
 protected:
@@ -825,11 +827,11 @@ private:
 class CC_DLL FadeIn : public FadeTo
 {
 public:
-    /** creates the action */
+    /** 创建动作*/
     static FadeIn* create(float d);
 
     //
-    // Overrides
+    //重载
     //
     virtual void startWithTarget(Node *target) override;
     virtual FadeIn* clone() const override;
@@ -852,11 +854,11 @@ private:
 class CC_DLL FadeOut : public FadeTo
 {
 public:
-    /** creates the action */
+    /** 创建动作 */
     static FadeOut* create(float d);
 
     //
-    // Overrides
+    // 重载
     //
     virtual void startWithTarget(Node *target) override;
     virtual FadeOut* clone() const  override;
@@ -878,11 +880,11 @@ private:
 class CC_DLL TintTo : public ActionInterval
 {
 public:
-    /** creates an action with duration and color */
+    /** 用持续时间和颜色创建动作 */
     static TintTo* create(float duration, GLubyte red, GLubyte green, GLubyte blue);
 
     //
-    // Overrides
+    // 重载
     //
     virtual TintTo* clone() const override;
 	virtual TintTo* reverse(void) const override;
@@ -893,7 +895,7 @@ CC_CONSTRUCTOR_ACCESS:
     TintTo() {}
     virtual ~TintTo() {}
 
-    /** initializes the action with duration and color */
+    /** 用持续时间和颜色初始化动作*/
     bool initWithDuration(float duration, GLubyte red, GLubyte green, GLubyte blue);
 
 protected:
@@ -910,11 +912,11 @@ private:
 class CC_DLL TintBy : public ActionInterval
 {
 public:
-    /** creates an action with duration and color */
+    /** 用持续时间和颜色创建动作 */
     static TintBy* create(float duration, GLshort deltaRed, GLshort deltaGreen, GLshort deltaBlue);
 
     //
-    // Overrides
+    // 重载
     //
     virtual TintBy* clone() const override;
 	virtual TintBy* reverse() const override;
@@ -925,7 +927,7 @@ CC_CONSTRUCTOR_ACCESS:
     TintBy() {}
     virtual ~TintBy() {}
 
-    /** initializes the action with duration and color */
+    /** 用持续时间和颜色初始化动作 */
     bool initWithDuration(float duration, GLshort deltaRed, GLshort deltaGreen, GLshort deltaBlue);
 
 protected:
@@ -946,11 +948,11 @@ private:
 class CC_DLL DelayTime : public ActionInterval
 {
 public:
-    /** creates the action */
+    /** 创建动作 */
     static DelayTime* create(float d);
 
     //
-    // Overrides
+    // 重载
     //
     virtual void update(float time) override;
     virtual DelayTime* reverse() const override;
@@ -974,11 +976,11 @@ private:
 class CC_DLL ReverseTime : public ActionInterval
 {
 public:
-    /** creates the action */
+    /** 创建动作 */
     static ReverseTime* create(FiniteTimeAction *action);
 
     //
-    // Overrides
+    // 重载
     //
 	virtual ReverseTime* reverse() const override;
     virtual ReverseTime* clone() const override;
@@ -990,7 +992,7 @@ CC_CONSTRUCTOR_ACCESS:
     ReverseTime();
     virtual ~ReverseTime(void);
 
-    /** initializes the action */
+    /** 初始化动作 */
     bool initWithAction(FiniteTimeAction *action);
 
 protected:
@@ -1005,17 +1007,17 @@ class Texture2D;
 class CC_DLL Animate : public ActionInterval
 {
 public:
-    /** creates the action with an Animation and will restore the original frame when the animation is over */
+    /*用一个动画创建动作，当这个动画结束的时候恢复原来的帧*/
     static Animate* create(Animation *animation);
 
-    /** sets the Animation object to be animated */
+    /** 设置动画对象 */
     void setAnimation( Animation* animation );
-    /** returns the Animation object that is being animated */
+    /** 返回正在运行的动画对象 */
     Animation* getAnimation() { return _animation; }
     const Animation* getAnimation() const { return _animation; }
 
     //
-    // Overrides
+    // 重载
     //
     virtual Animate* clone() const override;
     virtual Animate* reverse() const override;
@@ -1027,7 +1029,7 @@ CC_CONSTRUCTOR_ACCESS:
     Animate();
     virtual ~Animate();
 
-    /** initializes the action with an Animation and will restore the original frame when the animation is over */
+    /** 用一个动画初始化动作，当这个动画结束的时候恢复原来的帧 */
     bool initWithAnimation(Animation *animation);
 
 protected:
@@ -1043,23 +1045,22 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(Animate);
 };
 
-/** Overrides the target of an action so that it always runs on the target
- * specified at action creation rather than the one specified by runAction.
+/**改写一个动作的目标，让这个动作可以在动作创建的时候运行在一个指定的目标上，而不是运行在通过runAction指定的目标
  */
 class CC_DLL TargetedAction : public ActionInterval
 {
 public:
-    /** Create an action with the specified action and forced target */
+    /** 用具体的动作和强制的目标创建动作 */
     static TargetedAction* create(Node* target, FiniteTimeAction* action);
 
-    /** Sets the target that the action will be forced to run with */
+    /** 设置讲强制运行这个动作的目标*/
     void setForcedTarget(Node* forcedTarget);
-    /** returns the target that the action is forced to run with */
+    /** 返回强制运行这个动作的目标 */
     Node* getForcedTarget() { return _forcedTarget; }
     const Node* getForcedTarget() const { return _forcedTarget; }
 
     //
-    // Overrides
+    // 重载
     //
     virtual TargetedAction* clone() const override;
     virtual TargetedAction* reverse() const  override;
@@ -1071,7 +1072,7 @@ CC_CONSTRUCTOR_ACCESS:
     TargetedAction();
     virtual ~TargetedAction();
 
-    /** Init an action with the specified action and forced target */
+    /** 用具体的动作和强制的目标初始化动作 */
     bool initWithTarget(Node* target, FiniteTimeAction* action);
 
 protected:
@@ -1082,7 +1083,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(TargetedAction);
 };
 
-// end of actions group
+// 结束
 /// @}
 
 NS_CC_END
