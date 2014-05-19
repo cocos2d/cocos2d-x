@@ -61,6 +61,8 @@ def check_current_3rd_libs(branch):
         current_file = current_files[i]
         copy(current_file, backup_file)
 
+http_proxy = 'http://127.0.0.1:8087'
+proxyDict = {'http':http_proxy,'https':http_proxy}
 def main():
     #get payload from os env
     payload_str = os.environ['payload']
@@ -105,7 +107,7 @@ def main():
     Headers = {"Authorization":"token " + access_token} 
 
     try:
-        requests.post(statuses_url, data=json.dumps(data), headers=Headers)
+        requests.post(statuses_url, data=json.dumps(data), headers=Headers, proxies = proxyDict)
     except:
         traceback.print_exc()
 
