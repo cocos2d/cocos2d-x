@@ -43,27 +43,27 @@ NS_CC_EXT_BEGIN
 class AAssetsManager : public Ref, DownloaderDelegateProtocol
 {
 public:
-    enum class ErrorCode
+    enum UpdateEventCode
     {
-        // Error caused by creating a file to store downloaded data
-        CREATE_FILE,
-        /** Error caused by network
-         -- network unavaivable
-         -- timeout
-         -- ...
-         */
-        NETWORK,
-        /** There is not a new version
-         */
-        NO_NEW_VERSION,
-        /** Error caused in uncompressing stage
-         -- can not open zip file
-         -- can not read file global information
-         -- can not read file information
-         -- can not create a directory
-         -- ...
-         */
-        UNCOMPRESS,
+        NEW_VERSION_FOUND,
+        
+        ALREADY_UP_TO_DATE,
+        
+        UPDATING_ERROR,
+        
+        FINISHED_UPDATE,
+        
+        FINISHED_WITH_ERROR,
+        
+        UNCOMPRESS_ERROR,
+    };
+    
+    struct UpdateEvent
+    {
+        UpdateEventCode code;
+        std::string message;
+        std::string assetId;
+        AAssetsManager *manager;
     };
     
     enum UpdateState
@@ -84,7 +84,7 @@ public:
     //! The root of writable path
     static std::string s_nWritableRoot;
     
-    AAssetsManager(const std::string& manifestUrl = NULL, const std::string& storagePath = "");
+    AAssetsManager(const std::string &managerId, const std::string& manifestUrl = NULL, const std::string& storagePath = "");
     /**
      * @js NA
      * @lua NA
@@ -93,10 +93,8 @@ public:
     
     /* @brief To access within scripting environment
      */
-    static AAssetsManager* create(const std::string& manifestUrl, const std::string& storagePath = "");
+    static AAssetsManager* create(const std::string &managerId, const std::string &manifestUrl, const std::string &storagePath = "");
     
-    
-    static std::string getLoadedEventName(const std::string& key);
     
     /* @brief Check out if there is a new version of manifest.
      *        You may use this method before updating, then let user determine whether
@@ -107,6 +105,8 @@ public:
     void update();
     
     UpdateState updateState();
+    
+    std::string getLoadedEventName(const std::string& key);
     
     /* @brief Gets url of a asset for the given key.
      */
@@ -122,6 +122,14 @@ public:
      * @warm The path should be a valid path.
      */
     void setStoragePath(const std::string& storagePath);
+    
+    const Manifest* getLocalManifest();
+    
+    void addUpdateEventListener(const std::function<void(EventCustom*)>& callback, int priority = 1);
+    
+    void addUpdateProgressEventListener(const std::function<void(EventCustom*)>& callback, int priority = 1);
+    
+    void addNoLocalManifestErrorListener(const std::function<void(EventCustom*)>& callback, int priority = 1);
     
     
     /* @brief Call back function for error
@@ -152,6 +160,8 @@ protected:
     void setLocalManifest(Manifest *manifest);
     void adjustPath(std::string &path);
     void prependSearchPath(const std::string &path);
+    
+    void dispatchUpdateEvent(UpdateEventCode code, std::string message = "", std::string assetId = "");
     //bool uncompress();
     //void downloadAndUncompress();
     
@@ -165,6 +175,8 @@ private:
     
 private:
     
+    std::string _managerId;
+    
     EventDispatcher *_eventDispatcher;
     FileUtils *_fileUtils;
     
@@ -175,6 +187,7 @@ private:
     std::map<std::string, Downloader::DownloadUnit> _downloadUnits;
     
     int _totalToDownload;
+    int _totalWaitToDownload;
     
     const std::map<std::string, Manifest::Asset> *_assets;
     
