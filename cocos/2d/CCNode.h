@@ -402,13 +402,13 @@ public:
      *
      * @见 `setSkewY(float)`
      *
-     * @return The Y skew angle of the node in degrees.
+     * @return 该节点的Y轴倾斜角。
      */
     virtual float getSkewY() const;
 
 
     /**
-     * Sets the anchor point in percent.
+     * 设置锚点，用百分比表示。
      *
      * anchorPoint is the point around which all transformations and positioning manipulations take place.
      * It's like a pin in the node where it is "attached" to its parent.
