@@ -62,70 +62,70 @@ typedef struct _ccArray {
 	Ref** arr;
 } ccArray;
 
-/** Allocates and initializes a new array with specified capacity */
+/** 根据指定的容量（capacity）分配和初始化一个新的数组 */
 ccArray* ccArrayNew(ssize_t capacity);
 
-/** Frees array after removing all remaining objects. Silently ignores nil arr. */
+/** 在移除所有执有对象后释放数组。忽略空的数组。 */
 void ccArrayFree(ccArray*& arr);
 
-/** Doubles array capacity */
+/** 数组容量翻倍 */
 void ccArrayDoubleCapacity(ccArray *arr);
 
-/** Increases array capacity such that max >= num + extra. */
+/** 如果数组当前元素数量（num）加额外空间（extra）大于数组容量（max），增加数组容量
+ 译者注：增加方式为让数组容量翻倍 */
 void ccArrayEnsureExtraCapacity(ccArray *arr, ssize_t extra);
 
-/** shrinks the array so the memory footprint corresponds with the number of items */
+/** 把数组的容量收缩为数组内容的数量，让内存符合数组包含的内容 */
 void ccArrayShrink(ccArray *arr);
 
-/** Returns index of first occurrence of object, NSNotFound if object not found. */
+/** 返回第一个匹配对象（Object）的索引（index），如果没有找到返回NSNotFound */
 ssize_t ccArrayGetIndexOfObject(ccArray *arr, Ref* object);
 
-/** Returns a Boolean value that indicates whether object is present in array. */
+/** 返回布尔（Boolean）值代表此对象（object）是否在当前数组中 */
 bool ccArrayContainsObject(ccArray *arr, Ref* object);
 
-/** Appends an object. Behavior undefined if array doesn't have enough capacity. */
+/** 追加一个对象（object）。如果数组没有足够容量，则执行的结果是不可预料的（Undefined behavior）。 */
 void ccArrayAppendObject(ccArray *arr, Ref* object);
 
-/** Appends an object. Capacity of arr is increased if needed. */
+/** 追加一个对象（object）。如果容量不足，增加数组的容量。 */
 void ccArrayAppendObjectWithResize(ccArray *arr, Ref* object);
 
-/** Appends objects from plusArr to arr. 
- Behavior undefined if arr doesn't have enough capacity. */
+/** 从plusArr追加对象（objects）到arr。
+ 如果数组没有足够容量，则执行的结果是不可预料的（Undefined behavior） */
 void ccArrayAppendArray(ccArray *arr, ccArray *plusArr);
 
-/** Appends objects from plusArr to arr. Capacity of arr is increased if needed. */
+/** 从plusArr追加对象（objects）到arr。如果容量不足，增加数组的容量。 */
 void ccArrayAppendArrayWithResize(ccArray *arr, ccArray *plusArr);
 
-/** Inserts an object at index */
+/** 在索引（index）位置插入对象（object） */
 void ccArrayInsertObjectAtIndex(ccArray *arr, Ref* object, ssize_t index);
 
-/** Swaps two objects */
+/** 交换两个对象（object） */
 void ccArraySwapObjectsAtIndexes(ccArray *arr, ssize_t index1, ssize_t index2);
 
-/** Removes all objects from arr */
+/** 删除数组的所有对象（objects） */
 void ccArrayRemoveAllObjects(ccArray *arr);
 
-/** Removes object at specified index and pushes back all subsequent objects.
- Behavior undefined if index outside [0, num-1]. */
+/** 删除指定索引（index）的对象（object）然后把索引（index）后面的对象（object）向前移动。
+ 如果索引（index）在[0, num-1]以外，即索引位置没有对象（object），则执行的结果是不可预料的（Undefined behavior）。 */
 void ccArrayRemoveObjectAtIndex(ccArray *arr, ssize_t index, bool releaseObj = true);
 
-/** Removes object at specified index and fills the gap with the last object,
- thereby avoiding the need to push back subsequent objects.
- Behavior undefined if index outside [0, num-1]. */
+/** 删除指定索引（index）的对象（object）然后把最后一个对象填充到指定索引（index）位置，
+ 从而避免移动后面的对象（objects）。
+ 如果索引（index）在[0, num-1]以外，即索引位置没有对象（object），则执行的结果是不可预料的（Undefined behavior）。 */
 void ccArrayFastRemoveObjectAtIndex(ccArray *arr, ssize_t index);
 
 void ccArrayFastRemoveObject(ccArray *arr, Ref* object);
 
-/** Searches for the first occurrence of object and removes it. If object is not
- found the function has no effect. */
+/** 搜索第一个匹配的对象（object）并删除它。如果没有找到对象（object），函数不造成任何影响。 */
 void ccArrayRemoveObject(ccArray *arr, Ref* object, bool releaseObj = true);
 
-/** Removes from arr all objects in minusArr. For each object in minusArr, the
- first matching instance in arr will be removed. */
+/** 根据minusArr数组中的对象（object），删除arr数组中的相同对象（object）。
+ 匹配时，根据minusArr数组中的对象（object），arr数组中的第一个匹配对象（object）将被删除。 */
 void ccArrayRemoveArray(ccArray *arr, ccArray *minusArr);
 
-/** Removes from arr all objects in minusArr. For each object in minusArr, all
- matching instances in arr will be removed. */
+/** 根据minusArr数组中的对象（object），删除arr数组中的所有相同对象（object）。
+ 匹配时，根据minusArr数组中的对象（object），arr数组中的所有匹配对象（object）将被删除。 */
 void ccArrayFullRemoveArray(ccArray *arr, ccArray *minusArr);
 
 // 
@@ -136,67 +136,69 @@ typedef struct _ccCArray {
     void** arr;
 } ccCArray;
 
-/** Allocates and initializes a new C array with specified capacity */
+/** 根据指定的容量（capacity）分配和初始化一个新的C数组 */
 ccCArray* ccCArrayNew(ssize_t capacity);
 
-/** Frees C array after removing all remaining values. Silently ignores nil arr. */
+/** 在移除所有执有对象后释放C数组。忽略空的数组。 */
 void ccCArrayFree(ccCArray *arr);
 
-/** Doubles C array capacity */
+/** C数组容量翻倍 */
 void ccCArrayDoubleCapacity(ccCArray *arr);
 
-/** Increases array capacity such that max >= num + extra. */
+/** 如果数组当前元素数量（num）加额外空间（extra）大于数组容量（max），增加数组容量  译者注：增加方式为让数组容量翻倍 */
 void ccCArrayEnsureExtraCapacity(ccCArray *arr, ssize_t extra);
 
-/** Returns index of first occurrence of value, NSNotFound if value not found. */
+/** 返回第一个匹配值（value）的索引（index），如果没有找到返回NSNotFound */
 ssize_t ccCArrayGetIndexOfValue(ccCArray *arr, void* value);
 
-/** Returns a Boolean value that indicates whether value is present in the C array. */
+/** 返回布尔（Boolean）值代表此值（value）是否在当前C数组中 */
 bool ccCArrayContainsValue(ccCArray *arr, void* value);
 
-/** Inserts a value at a certain position. Behavior undefined if array doesn't have enough capacity */
+/** 在索引（index）位置插入值（value）。如果数组没有足够容量，则执行的结果是不可预料的（Undefined behavior）。 */
 void ccCArrayInsertValueAtIndex( ccCArray *arr, void* value, ssize_t index);
 
-/** Appends an value. Behavior undefined if array doesn't have enough capacity. */
+/** 追加一个值（value）。如果数组没有足够容量，则执行的结果是不可预料的（Undefined behavior）。 */
 void ccCArrayAppendValue(ccCArray *arr, void* value);
 
-/** Appends an value. Capacity of arr is increased if needed. */
+/** 追加一个值（value）。如果容量不足，增加数组的容量。 */
 void ccCArrayAppendValueWithResize(ccCArray *arr, void* value);
 
-/** Appends values from plusArr to arr. Behavior undefined if arr doesn't have
- enough capacity. */
+/** 从plusArr追加值（values）到arr。
+ 如果数组没有足够容量，则执行的结果是不可预料的（Undefined behavior） */
 void ccCArrayAppendArray(ccCArray *arr, ccCArray *plusArr);
 
-/** Appends values from plusArr to arr. Capacity of arr is increased if needed. */
+/** 从plusArr追加值（values）到arr。如果容量不足，增加数组的容量。 */
 void ccCArrayAppendArrayWithResize(ccCArray *arr, ccCArray *plusArr);
 
-/** Removes all values from arr */
+/** 删除数组的所有值（values） */
 void ccCArrayRemoveAllValues(ccCArray *arr);
 
-/** Removes value at specified index and pushes back all subsequent values.
- Behavior undefined if index outside [0, num-1].
+/** 删除指定索引（index）的值（value）然后把索引后面的值（values）向前移动。
+ 如果索引（index）在[0, num-1]以外，即索引位置没有值（value），则执行的结果是不可预料的（Undefined behavior）。
  @since v0.99.4
  */
 void ccCArrayRemoveValueAtIndex(ccCArray *arr, ssize_t index);
 
-/** Removes value at specified index and fills the gap with the last value,
- thereby avoiding the need to push back subsequent values.
- Behavior undefined if index outside [0, num-1].
+/** 删除指定索引（index）的值（value）然后把最后一个值（value）填充到指定索引（index）位置，
+ 从而避免移动后面的值（values）。
+ 如果索引（index）在[0, num-1]以外，即索引位置没有值（value），则执行的结果是不可预料的（Undefined behavior）。
  @since v0.99.4
  */
 void ccCArrayFastRemoveValueAtIndex(ccCArray *arr, ssize_t index);
 
-/** Searches for the first occurrence of value and removes it. If value is not found the function has no effect.
+/** 搜索第一个匹配的值（value）并删除它。如果没有找到值，函数不造成任何影响。
  @since v0.99.4
  */
 void ccCArrayRemoveValue(ccCArray *arr, void* value);
 
-/** Removes from arr all values in minusArr. For each Value in minusArr, the first matching instance in arr will be removed.
+/** 根据minusArr数组中的值（value），删除arr数组中的相同值（value）。
+ 匹配时，根据minusArr数组中的值（value），arr数组中的第一个匹配值（value）将被删除。
  @since v0.99.4
  */
 void ccCArrayRemoveArray(ccCArray *arr, ccCArray *minusArr);
 
-/** Removes from arr all values in minusArr. For each value in minusArr, all matching instances in arr will be removed.
+/** 根据minusArr数组中的值（value），删除arr数组中的所有相同值（value）。
+ 匹配时，根据minusArr数组中的值（value），arr数组中的所有匹配值（value）将被删除。
  @since v0.99.4
  */
 void ccCArrayFullRemoveArray(ccCArray *arr, ccCArray *minusArr);
