@@ -24,35 +24,58 @@ std::string AssetsManagerTestLayer::title() const
 
 void AssetsManagerTestLayer::onEnter()
 {
-    Layer::onEnter();
+    BaseTest::onEnter();
     _background = Sprite::create(_spritePath);
     addChild(_background, 1);
     _background->setPosition( VisibleRect::center() );
 }
 
+void AssetsManagerTestLayer::restartCallback(Ref* sender)
+{
+}
+void AssetsManagerTestLayer::nextCallback(Ref* sender)
+{
+    if (AssetsManagerLoaderScene::currentScene < 2)
+    {
+        AssetsManagerLoaderScene::currentScene++;
+    }
+    else AssetsManagerLoaderScene::currentScene = 0;
+    auto scene = new AssetsManagerLoaderScene();
+    scene->runThisTest();
+}
+void AssetsManagerTestLayer::backCallback(Ref* sender)
+{
+    if (AssetsManagerLoaderScene::currentScene > 0)
+    {
+        AssetsManagerLoaderScene::currentScene--;
+    }
+    else AssetsManagerLoaderScene::currentScene = 2;
+    auto scene = new AssetsManagerLoaderScene();
+    scene->runThisTest();
+}
 
-static int currentScene = 0;
+
+AssetsManagerTestScene::AssetsManagerTestScene(std::string background)
+{
+    auto layer = new AssetsManagerTestLayer(background);
+    addChild(layer);
+    layer->release();
+}
 
 void AssetsManagerTestScene::runThisTest()
 {
-    _background = backgroundPaths[currentScene];
-    new AssetsManagerLoaderScene(sceneId[currentScene], sceneManifests[currentScene], storagePaths[currentScene], this);
-    currentScene++;
 }
 
-void AssetsManagerTestScene::onLoad()
+int AssetsManagerLoaderScene::currentScene = 0;
+AssetsManagerLoaderScene::AssetsManagerLoaderScene()
 {
-    auto layer = new AssetsManagerTestLayer(_background);
-    addChild(layer);
-    layer->release();
+}
+
+void AssetsManagerLoaderScene::runThisTest()
+{
+    int currentId = currentScene;
+    std::string managerId = sceneId[currentId], manifestPath = sceneManifests[currentId], storagePath = storagePaths[currentId];
     
-    Director::getInstance()->replaceScene(this);
-}
-
-
-AssetsManagerLoaderScene::AssetsManagerLoaderScene(std::string managerId, std::string manifestPath, std::string storagePath, AssetsManagerTestScene *scene)
-: _scene(scene)
-{
     Sprite *sprite = Sprite::create("Images/Icon.png");
     auto layer = new Layer();
     addChild(layer);
@@ -60,47 +83,61 @@ AssetsManagerLoaderScene::AssetsManagerLoaderScene(std::string managerId, std::s
     sprite->setPosition( VisibleRect::center() );
     layer->release();
     
-    AAssetsManager *am = AAssetsManager::create(managerId, manifestPath, storagePath);
+    _am = AAssetsManager::create(managerId, manifestPath, storagePath);
+    _am->retain();
     
-    if (!am->getLocalManifest()->isLoaded())
+    if (!_am->getLocalManifest()->isLoaded())
     {
         CCLOG("Fail to update assets, step skipped.");
-        scene->onLoad();
+        AssetsManagerTestScene *scene = new AssetsManagerTestScene(backgroundPaths[currentId]);
+        Director::getInstance()->replaceScene(scene);
     }
     else
     {
-        am->addUpdateEventListener([scene](EventCustom* event){
+        _am->addUpdateEventListener([currentId](EventCustom* event){
             AAssetsManager::UpdateEvent *e = (AAssetsManager::UpdateEvent *)event->getUserData();
+            AssetsManagerTestScene *scene;
             switch (e->code)
             {
                 case AAssetsManager::ALREADY_UP_TO_DATE:
                 case AAssetsManager::FINISHED_UPDATE:
-                    scene->onLoad();
+                    scene = new AssetsManagerTestScene(backgroundPaths[currentId]);
+                    Director::getInstance()->replaceScene(scene);
                     break;
                 case AAssetsManager::FINISHED_WITH_ERROR:
                     CCLOG("Fail to update assets, step skipped.");
-                    scene->onLoad();
+                    scene = new AssetsManagerTestScene(backgroundPaths[currentId]);
+                    Director::getInstance()->replaceScene(scene);
                     break;
                 case AAssetsManager::UPDATING_ERROR:
                     CCLOG("Asset %s : %s", e->assetId.c_str(), e->message.c_str());
+                    scene = new AssetsManagerTestScene(backgroundPaths[currentId]);
+                    Director::getInstance()->replaceScene(scene);
                     break;
                 default:
                     break;
             }
         });
         
-        am->addNoLocalManifestErrorListener([scene](EventCustom* event){
+        _am->addNoLocalManifestErrorListener([currentId](EventCustom* event){
             CCLOG("No local manifest file found, skip assets update.");
-            scene->onLoad();
+            AssetsManagerTestScene *scene = new AssetsManagerTestScene(backgroundPaths[currentId]);
+            Director::getInstance()->replaceScene(scene);
         });
         
-        am->addUpdateProgressEventListener([scene](EventCustom* event){
+        _am->addUpdateProgressEventListener([](EventCustom* event){
             double *percent = (double *)event->getUserData();
             CCLOG("Update percent : %f", *percent);
         });
         
-        am->update();
+        _am->update();
         
         Director::getInstance()->replaceScene(this);
     }
+}
+
+void AssetsManagerLoaderScene::onExit()
+{
+    _am->release();
+    Scene::onExit();
 }

@@ -16,7 +16,11 @@ public:
     ~AssetsManagerTestLayer(void);
     
     virtual std::string title() const;
-    virtual void onEnter() override;
+    void onEnter();
+    
+    virtual void restartCallback(Ref* sender);
+    virtual void nextCallback(Ref* sender);
+    virtual void backCallback(Ref* sender);
     
 private:
     Sprite *_background;
@@ -26,20 +30,23 @@ private:
 class AssetsManagerTestScene : public TestScene
 {
 public:
+    AssetsManagerTestScene(std::string background);
     virtual void runThisTest() override;
-    void onLoad();
-private:
-    std::string _background;
 };
 
-class AssetsManagerLoaderScene : public Scene
+class AssetsManagerLoaderScene : public TestScene
 {
 public:
-    AssetsManagerLoaderScene(std::string managerId, std::string manifestPath, std::string storagePath, AssetsManagerTestScene *scene);
+    AssetsManagerLoaderScene();
+    
+    virtual void runThisTest() override;
+    
+    virtual void onExit() override;
     
     static int currentScene;
+    
 private:
-    AssetsManagerTestScene *_scene;
+    AAssetsManager *_am;
 };
 
 #endif /* defined(__AssetsManager_Test_H__) */
