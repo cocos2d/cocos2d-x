@@ -944,8 +944,6 @@
 		2905FA6F18CF08D100240AA3 /* UIRichText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2905FA0418CF08D000240AA3 /* UIRichText.cpp */; };
 		2905FA7018CF08D100240AA3 /* UIRichText.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA0518CF08D000240AA3 /* UIRichText.h */; };
 		2905FA7118CF08D100240AA3 /* UIRichText.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA0518CF08D000240AA3 /* UIRichText.h */; };
-		2905FA7218CF08D100240AA3 /* UIScrollInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA0618CF08D000240AA3 /* UIScrollInterface.h */; };
-		2905FA7318CF08D100240AA3 /* UIScrollInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA0618CF08D000240AA3 /* UIScrollInterface.h */; };
 		2905FA7418CF08D100240AA3 /* UIScrollView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2905FA0718CF08D000240AA3 /* UIScrollView.cpp */; };
 		2905FA7518CF08D100240AA3 /* UIScrollView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2905FA0718CF08D000240AA3 /* UIScrollView.cpp */; };
 		2905FA7618CF08D100240AA3 /* UIScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA0818CF08D000240AA3 /* UIScrollView.h */; };
@@ -979,6 +977,8 @@
 		29CB8F4D1929D1BB00C841D6 /* UILayoutExecutant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29CB8F4A1929D1BB00C841D6 /* UILayoutExecutant.cpp */; };
 		29CB8F4E1929D1BB00C841D6 /* UILayoutExecutant.h in Headers */ = {isa = PBXBuildFile; fileRef = 29CB8F4B1929D1BB00C841D6 /* UILayoutExecutant.h */; };
 		29CB8F4F1929D1BB00C841D6 /* UILayoutExecutant.h in Headers */ = {isa = PBXBuildFile; fileRef = 29CB8F4B1929D1BB00C841D6 /* UILayoutExecutant.h */; };
+		29CB8F551929D7A900C841D6 /* UIScrollInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 29CB8F541929D7A900C841D6 /* UIScrollInterface.h */; };
+		29CB8F561929D7A900C841D6 /* UIScrollInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 29CB8F541929D7A900C841D6 /* UIScrollInterface.h */; };
 		2AC795DB1862870F005EC8E1 /* SkeletonBounds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC795D918628689005EC8E1 /* SkeletonBounds.cpp */; };
 		2AC795DC1862870F005EC8E1 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC795D51862867D005EC8E1 /* Event.cpp */; };
 		2AC795DD1862870F005EC8E1 /* EventData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC795D71862867D005EC8E1 /* EventData.cpp */; };
@@ -2239,7 +2239,6 @@
 		2905FA0318CF08D000240AA3 /* UIPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPageView.h; sourceTree = "<group>"; };
 		2905FA0418CF08D000240AA3 /* UIRichText.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIRichText.cpp; sourceTree = "<group>"; };
 		2905FA0518CF08D000240AA3 /* UIRichText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIRichText.h; sourceTree = "<group>"; };
-		2905FA0618CF08D000240AA3 /* UIScrollInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIScrollInterface.h; sourceTree = "<group>"; };
 		2905FA0718CF08D000240AA3 /* UIScrollView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIScrollView.cpp; sourceTree = "<group>"; };
 		2905FA0818CF08D000240AA3 /* UIScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIScrollView.h; sourceTree = "<group>"; };
 		2905FA0918CF08D000240AA3 /* UISlider.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UISlider.cpp; sourceTree = "<group>"; };
@@ -2259,6 +2258,7 @@
 		2986667918B1B079000E39CA /* CCTweenFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTweenFunction.h; sourceTree = "<group>"; };
 		29CB8F4A1929D1BB00C841D6 /* UILayoutExecutant.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILayoutExecutant.cpp; sourceTree = "<group>"; };
 		29CB8F4B1929D1BB00C841D6 /* UILayoutExecutant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILayoutExecutant.h; sourceTree = "<group>"; };
+		29CB8F541929D7A900C841D6 /* UIScrollInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIScrollInterface.h; sourceTree = "<group>"; };
 		2AC795D318628672005EC8E1 /* BoundingBoxAttachment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BoundingBoxAttachment.cpp; sourceTree = "<group>"; };
 		2AC795D418628672005EC8E1 /* BoundingBoxAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoundingBoxAttachment.h; sourceTree = "<group>"; };
 		2AC795D51862867D005EC8E1 /* Event.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Event.cpp; sourceTree = "<group>"; };
@@ -3924,25 +3924,63 @@
 		2905F9E618CF08D000240AA3 /* ui */ = {
 			isa = PBXGroup;
 			children = (
-				29CB8F4A1929D1BB00C841D6 /* UILayoutExecutant.cpp */,
-				29CB8F4B1929D1BB00C841D6 /* UILayoutExecutant.h */,
-				3EA0FB69191C841D00B170C8 /* UIVideoPlayer.h */,
-				3EA0FB6A191C841D00B170C8 /* UIVideoPlayerIOS.mm */,
+				29CB8F531929D67D00C841D6 /* widgets */,
+				29CB8F521929D65500C841D6 /* experimental */,
+				29CB8F511929D64500C841D6 /* base */,
+				29CB8F501929D63600C841D6 /* layout */,
 				2905F9E918CF08D000240AA3 /* CocosGUI.cpp */,
 				2905F9EA18CF08D000240AA3 /* CocosGUI.h */,
-				2905F9EB18CF08D000240AA3 /* GUIDefine.h */,
-				2905F9F018CF08D000240AA3 /* UIButton.cpp */,
-				2905F9F118CF08D000240AA3 /* UIButton.h */,
-				2905F9F218CF08D000240AA3 /* UICheckBox.cpp */,
-				2905F9F318CF08D000240AA3 /* UICheckBox.h */,
-				2905F9F418CF08D000240AA3 /* UIHelper.cpp */,
-				2905F9F518CF08D000240AA3 /* UIHelper.h */,
-				2905F9F618CF08D000240AA3 /* UIImageView.cpp */,
-				2905F9F718CF08D000240AA3 /* UIImageView.h */,
+			);
+			name = ui;
+			path = ../cocos/ui;
+			sourceTree = "<group>";
+		};
+		29CB8F501929D63600C841D6 /* layout */ = {
+			isa = PBXGroup;
+			children = (
+				50E6D32E18E174130051CA34 /* UIHBox.cpp */,
+				50E6D32F18E174130051CA34 /* UIHBox.h */,
+				50E6D33018E174130051CA34 /* UIRelativeBox.cpp */,
+				50E6D33118E174130051CA34 /* UIRelativeBox.h */,
+				50E6D33218E174130051CA34 /* UIVBox.cpp */,
+				50E6D33318E174130051CA34 /* UIVBox.h */,
 				2905F9F818CF08D000240AA3 /* UILayout.cpp */,
 				2905F9F918CF08D000240AA3 /* UILayout.h */,
 				2905F9FC18CF08D000240AA3 /* UILayoutParameter.cpp */,
 				2905F9FD18CF08D000240AA3 /* UILayoutParameter.h */,
+				29CB8F4A1929D1BB00C841D6 /* UILayoutExecutant.cpp */,
+				29CB8F4B1929D1BB00C841D6 /* UILayoutExecutant.h */,
+			);
+			name = layout;
+			sourceTree = "<group>";
+		};
+		29CB8F511929D64500C841D6 /* base */ = {
+			isa = PBXGroup;
+			children = (
+				29080DEB191B82CE0066F8DF /* UIDeprecated.h */,
+				2905FA1318CF08D100240AA3 /* UIWidget.cpp */,
+				2905FA1418CF08D100240AA3 /* UIWidget.h */,
+				50E6D30C18DADB5D0051CA34 /* CCProtectedNode.cpp */,
+				50E6D30D18DADB5D0051CA34 /* CCProtectedNode.h */,
+				2905F9F418CF08D000240AA3 /* UIHelper.cpp */,
+				2905F9F518CF08D000240AA3 /* UIHelper.h */,
+				2905F9EB18CF08D000240AA3 /* GUIDefine.h */,
+			);
+			name = base;
+			sourceTree = "<group>";
+		};
+		29CB8F521929D65500C841D6 /* experimental */ = {
+			isa = PBXGroup;
+			children = (
+				3EA0FB69191C841D00B170C8 /* UIVideoPlayer.h */,
+				3EA0FB6A191C841D00B170C8 /* UIVideoPlayerIOS.mm */,
+			);
+			name = experimental;
+			sourceTree = "<group>";
+		};
+		29CB8F531929D67D00C841D6 /* widgets */ = {
+			isa = PBXGroup;
+			children = (
 				2905F9FE18CF08D000240AA3 /* UIListView.cpp */,
 				2905F9FF18CF08D000240AA3 /* UIListView.h */,
 				2905FA0018CF08D000240AA3 /* UILoadingBar.cpp */,
@@ -3951,9 +3989,9 @@
 				2905FA0318CF08D000240AA3 /* UIPageView.h */,
 				2905FA0418CF08D000240AA3 /* UIRichText.cpp */,
 				2905FA0518CF08D000240AA3 /* UIRichText.h */,
-				2905FA0618CF08D000240AA3 /* UIScrollInterface.h */,
 				2905FA0718CF08D000240AA3 /* UIScrollView.cpp */,
 				2905FA0818CF08D000240AA3 /* UIScrollView.h */,
+				29CB8F541929D7A900C841D6 /* UIScrollInterface.h */,
 				2905FA0918CF08D000240AA3 /* UISlider.cpp */,
 				2905FA0A18CF08D100240AA3 /* UISlider.h */,
 				2905FA0B18CF08D100240AA3 /* UIText.cpp */,
@@ -3964,20 +4002,14 @@
 				2905FA1018CF08D100240AA3 /* UITextBMFont.h */,
 				2905FA1118CF08D100240AA3 /* UITextField.cpp */,
 				2905FA1218CF08D100240AA3 /* UITextField.h */,
-				2905FA1318CF08D100240AA3 /* UIWidget.cpp */,
-				2905FA1418CF08D100240AA3 /* UIWidget.h */,
-				50E6D30C18DADB5D0051CA34 /* CCProtectedNode.cpp */,
-				50E6D30D18DADB5D0051CA34 /* CCProtectedNode.h */,
-				50E6D32E18E174130051CA34 /* UIHBox.cpp */,
-				50E6D32F18E174130051CA34 /* UIHBox.h */,
-				50E6D33018E174130051CA34 /* UIRelativeBox.cpp */,
-				50E6D33118E174130051CA34 /* UIRelativeBox.h */,
-				50E6D33218E174130051CA34 /* UIVBox.cpp */,
-				50E6D33318E174130051CA34 /* UIVBox.h */,
-				29080DEB191B82CE0066F8DF /* UIDeprecated.h */,
+				2905F9F018CF08D000240AA3 /* UIButton.cpp */,
+				2905F9F118CF08D000240AA3 /* UIButton.h */,
+				2905F9F218CF08D000240AA3 /* UICheckBox.cpp */,
+				2905F9F318CF08D000240AA3 /* UICheckBox.h */,
+				2905F9F618CF08D000240AA3 /* UIImageView.cpp */,
+				2905F9F718CF08D000240AA3 /* UIImageView.h */,
 			);
-			name = ui;
-			path = ../cocos/ui;
+			name = widgets;
 			sourceTree = "<group>";
 		};
 		37936A361869B76800E974DD /* internal */ = {
@@ -5063,7 +5095,6 @@
 				1AD71DED180E26E600808F54 /* CCMenuLoader.h in Headers */,
 				50ABBE8F1925AB6F00A911A9 /* CCPlatformConfig.h in Headers */,
 				1AD71DF1180E26E600808F54 /* CCNode+CCBRelativePositioning.h in Headers */,
-				2905FA7218CF08D100240AA3 /* UIScrollInterface.h in Headers */,
 				1AD71DF5180E26E600808F54 /* CCNodeLoader.h in Headers */,
 				1AD71DF9180E26E600808F54 /* CCNodeLoaderLibrary.h in Headers */,
 				50ABBE291925AB6F00A911A9 /* CCAutoreleasePool.h in Headers */,
@@ -5128,6 +5159,7 @@
 				50ABBD9D1925AB4100A911A9 /* ccGLStateCache.h in Headers */,
 				50ABBEB91925AB6F00A911A9 /* ccUTF8.h in Headers */,
 				1AAF536E180E3374000584C8 /* HttpRequest.h in Headers */,
+				29CB8F551929D7A900C841D6 /* UIScrollInterface.h in Headers */,
 				1AAF5370180E3374000584C8 /* HttpResponse.h in Headers */,
 				50ABBE671925AB6F00A911A9 /* CCEventListenerCustom.h in Headers */,
 				1AAF5374180E3374000584C8 /* SocketIO.h in Headers */,
@@ -5410,7 +5442,6 @@
 				503DD8E41926736A00CD74DD /* CCDirectorCaller.h in Headers */,
 				50ABBD8A1925AB4100A911A9 /* CCCustomCommand.h in Headers */,
 				2905FA6D18CF08D100240AA3 /* UIPageView.h in Headers */,
-				2905FA7318CF08D100240AA3 /* UIScrollInterface.h in Headers */,
 				50ABBE881925AB6F00A911A9 /* ccMacros.h in Headers */,
 				50ABC0101926664800A911A9 /* CCFileUtils.h in Headers */,
 				2905FA4318CF08D100240AA3 /* CocosGUI.h in Headers */,
@@ -5581,6 +5612,7 @@
 				50ABBD921925AB4100A911A9 /* CCGLProgramCache.h in Headers */,
 				1AD71E0E180E26E600808F54 /* CocosBuilder.h in Headers */,
 				B29594C91926D61F003EEF37 /* CCObjLoader.h in Headers */,
+				29CB8F561929D7A900C841D6 /* UIScrollInterface.h in Headers */,
 				1AD71E98180E26E600808F54 /* Animation.h in Headers */,
 				1AD71E9C180E26E600808F54 /* AnimationState.h in Headers */,
 				50ABBE961925AB6F00A911A9 /* CCProfiling.h in Headers */,
