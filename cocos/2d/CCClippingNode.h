@@ -48,12 +48,12 @@ public:
     static ClippingNode* create();
     
     /** 使用其他节点（Node）作为模板（stencil）创建并初始化一个裁剪节点（clipping node）。
-	模板（stencil）将会被保留（retained）。
+	模板（stencil）对象将会被retain
      */
     static ClippingNode* create(Node *stencil);
 
     /** 用来做裁剪的模板（stencil）节点（Node）
-	模板（stencil）将会被保留（retained）。
+	模板（stencil）将会被retain
 	模板（stencil）对象默认为空（nil）。
      */
     Node* getStencil() const;
@@ -111,7 +111,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool init();
     
     /** 用另一个模板（stencil）节点（Node）初始化一个裁剪节点（clipping node）。
-	 模板（stencil）将会被保留（retained）（不被释放），它的父节点会被设置为此裁剪节点（clipping node）。
+	 模板（stencil）将会被retain，它的父节点会被设置为此裁剪节点（clipping node）。
      */
     virtual bool init(Node *stencil);
 
