@@ -1226,8 +1226,7 @@ void Director::captureScreen(const std::function<void(bool, const std::string&)>
 void Director::onCaptureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename, const Rect& rect)
 {
     // the rect is specified based on the design resolution
-    auto glView = Director::getInstance()->getOpenGLView();
-    Size designSize = glView->getDesignResolutionSize();
+    Size designSize = _openGLView->getDesignResolutionSize();
     int originx = 0;
     int originy = 0;
     int width = designSize.width;
@@ -1247,9 +1246,9 @@ void Director::onCaptureScreen(const std::function<void(bool, const std::string&
     }
     
     // the frame buffer size is based on the device pixel resolution
-    Size frameSize = glView->getFrameSize();
+    Size frameSize = _openGLView->getFrameSize();
 #if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
-    frameSize = frameSize * glView->getFrameZoomFactor() * glView->getRetinaFactor();
+    frameSize = frameSize * _openGLView->getFrameZoomFactor() * _openGLView->getRetinaFactor();
 #endif
     
     originx = static_cast<int>(float(originx) / designSize.width * frameSize.width);
