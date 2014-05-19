@@ -1951,34 +1951,34 @@ void TextureMemoryAlloc::updateImage(cocos2d::Ref *sender)
 	switch (tag) 
     {
 		case 0:
-			file = "Images/test_1021x1024.png";
+			file = "Images/background.png";
 			break;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
             // android can not pack .gz file into apk file
         case 1:
-            file = "Images/test_1021x1024_rgba8888.pvr";
+            file = "Images/fire_rgba8888.pvr";
             break;
         case 2:
-            file = "Images/test_1021x1024_rgb888.pvr";
+            file = "Images/grossini_prv_rgba8888.pvr";
             break;
         case 3:
-            file = "Images/test_1021x1024_rgba4444.pvr";
+            file = "Images/grossini_prv_rgba4444.pvr";
             break;
         case 4:
-            file = "Images/test_1021x1024_a8.pvr";
+            file = "Images/test_image_a8.pvr";
             break;
 #else
 		case 1:
-			file = "Images/test_1021x1024_rgba8888.pvr.gz";
+			file = "Images/test_image_rgba4444.pvr.gz";
 			break;
 		case 2:
-			file = "Images/test_1021x1024_rgb888.pvr.gz";
+			file = "Images/test_image_rgba4444.pvr.gz";
 			break;
 		case 3:
-			file = "Images/test_1021x1024_rgba4444.pvr.gz";
+			file = "Images/test_image_rgba4444.pvr.gz";
 			break;
 		case 4:
-			file = "Images/test_1021x1024_a8.pvr.gz";
+			file = "Images/test_image_rgba4444.pvr.gz";
 			break;
 #endif
 	}
