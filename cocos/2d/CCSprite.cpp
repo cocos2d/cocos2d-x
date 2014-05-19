@@ -26,14 +26,18 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "2d/CCSprite.h"
+
+#include <string.h>
+#include <algorithm>
+
 #include "2d/CCSpriteBatchNode.h"
 #include "2d/CCAnimation.h"
 #include "2d/CCAnimationCache.h"
 #include "2d/CCSpriteFrame.h"
 #include "2d/CCSpriteFrameCache.h"
-#include "2d/CCTextureCache.h"
 #include "2d/CCDrawingPrimitives.h"
-#include "2d/CCTexture2D.h"
+#include "renderer/CCTextureCache.h"
+#include "renderer/CCTexture2D.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgram.h"
@@ -48,8 +52,6 @@ THE SOFTWARE.
 
 #include "deprecated/CCString.h"
 
-#include <string.h>
-#include <algorithm>
 
 NS_CC_BEGIN
 

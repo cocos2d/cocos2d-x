@@ -178,12 +178,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\Cocos2dRenderer.cpp" />
-    <ClCompile Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\Direct3DContentProvider.cpp" />
-    <ClCompile Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\Direct3DInterop.cpp" />
-    <ClCompile Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\DirectXBase.cpp" />
-    <ClCompile Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\EditBoxEvent.cpp" />
+    <ClCompile Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Cocos2dRenderer.cpp" />
+    <ClCompile Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Direct3DContentProvider.cpp" />
+    <ClCompile Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Direct3DInterop.cpp" />
+    <ClCompile Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\DirectXBase.cpp" />
+    <ClCompile Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\EditBoxEvent.cpp" />
     <ClCompile Include="..\..\Classes\BaseTest.cpp" />
+    <ClCompile Include="..\..\Classes\BugsTest\Bug-Child.cpp" />
     <ClCompile Include="..\..\Classes\ChipmunkTest\ChipmunkTest.cpp" />
     <ClCompile Include="..\..\Classes\ClippingNodeTest\ClippingNodeTest.cpp" />
     <ClCompile Include="..\..\Classes\ConfigurationTest\ConfigurationTest.cpp" />
@@ -227,6 +228,7 @@
     <ClCompile Include="..\..\Classes\ReleasePoolTest\ReleasePoolTest.cpp" />
     <ClCompile Include="..\..\Classes\ShaderTest\ShaderTest2.cpp" />
     <ClCompile Include="..\..\Classes\SpineTest\SpineTest.cpp" />
+    <ClCompile Include="..\..\Classes\Sprite3DTest\Sprite3DTest.cpp" />
     <ClCompile Include="..\..\Classes\TexturePackerEncryptionTest\TextureAtlasEncryptionTest.cpp" />
     <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\CocosGUIScene.cpp" />
     <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\CocoStudioGUITest.cpp" />
@@ -366,18 +368,19 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\Cocos2dRenderer.h" />
-    <ClInclude Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\Direct3DContentProvider.h" />
-    <ClInclude Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\Direct3DInterop.h" />
-    <ClInclude Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\DirectXBase.h" />
-    <ClInclude Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\DirectXHelper.h" />
-    <ClInclude Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\EditBoxEvent.h" />
+    <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Cocos2dRenderer.h" />
+    <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Direct3DContentProvider.h" />
+    <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Direct3DInterop.h" />
+    <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\DirectXBase.h" />
+    <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\DirectXHelper.h" />
+    <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\EditBoxEvent.h" />
     <ClInclude Include="..\..\Classes\BaseTest.h" />
     <ClInclude Include="..\..\Classes\Box2DTestBed\Tests\ConvexHull.h" />
     <ClInclude Include="..\..\Classes\Box2DTestBed\Tests\ConveyorBelt.h" />
     <ClInclude Include="..\..\Classes\Box2DTestBed\Tests\Mobile.h" />
     <ClInclude Include="..\..\Classes\Box2DTestBed\Tests\MobileBalanced.h" />
     <ClInclude Include="..\..\Classes\Box2DTestBed\Tests\MotorJoint.h" />
+    <ClInclude Include="..\..\Classes\BugsTest\Bug-Child.h" />
     <ClInclude Include="..\..\Classes\ChipmunkTest\ChipmunkTest.h" />
     <ClInclude Include="..\..\Classes\ClippingNodeTest\ClippingNodeTest.h" />
     <ClInclude Include="..\..\Classes\ConfigurationTest\ConfigurationTest.h" />
@@ -424,6 +427,7 @@
     <ClInclude Include="..\..\Classes\ReleasePoolTest\ReleasePoolTest.h" />
     <ClInclude Include="..\..\Classes\ShaderTest\ShaderTest2.h" />
     <ClInclude Include="..\..\Classes\SpineTest\SpineTest.h" />
+    <ClInclude Include="..\..\Classes\Sprite3DTest\Sprite3DTest.h" />
     <ClInclude Include="..\..\Classes\TexturePackerEncryptionTest\TextureAtlasEncryptionTest.h" />
     <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\CocosGUIScene.h" />
     <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\CocoStudioGUITest.h" />

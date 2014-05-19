@@ -8,6 +8,8 @@ set(COCOS_SRC
 )
 
 include(2d/CMakeLists.txt)
+include(3d/CMakeLists.txt)
+include(platform/CMakeLists.txt)
 include(physics/CMakeLists.txt)
 include(math/CMakeLists.txt)
 include(renderer/CMakeLists.txt)
@@ -20,7 +22,8 @@ include(storage/CMakeLists.txt)
 add_library(cocos2d STATIC
   ${COCOS_SRC}
   ${COCOS_2D_SRC}
-  ${COCOS_2D_PLATFORM_SRC}
+  ${COCOS_3D_SRC}
+  ${COCOS_PLATFORM_SRC}
   ${COCOS_BASE_SRC}
   ${COCOS_RENDERER_SRC}
   ${COCOS_MATH_SRC}

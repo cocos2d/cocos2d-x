@@ -90,13 +90,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\..\cocos\2d\platform\wp8-xaml\xaml\App.xaml.cs">
+    <Compile Include="..\..\..\..\cocos\platform\wp8-xaml\xaml\App.xaml.cs">
       <Link>App.xaml.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\..\cocos\2d\platform\wp8-xaml\xaml\EditBox.xaml.cs">
+    <Compile Include="..\..\..\..\cocos\platform\wp8-xaml\xaml\EditBox.xaml.cs">
       <Link>EditBox.xaml.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\..\cocos\2d\platform\wp8-xaml\xaml\MainPage.xaml.cs">
+    <Compile Include="..\..\..\..\cocos\platform\wp8-xaml\xaml\MainPage.xaml.cs">
       <Link>MainPage.xaml.cs</Link>
     </Compile>
     <Compile Include="LocalizedStrings.cs" />
@@ -142,23 +142,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="..\..\..\..\cocos\2d\platform\wp8-xaml\xaml\App.xaml">
-      <Link>App.xaml</Link>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="..\..\..\..\cocos\2d\platform\wp8-xaml\xaml\EditBox.xaml">
-      <Link>EditBox.xaml</Link>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="..\..\..\..\cocos\2d\platform\wp8-xaml\xaml\MainPage.xaml">
-      <Link>MainPage.xaml</Link>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\cpp-empty-testComponent\cpp-empty-testComponent.vcxproj">
       <Project>{F5D665F8-AE19-4F3F-99A7-230A1E8305D2}</Project>
       <Name>cpp-empty-testComponent</Name>
@@ -169,6 +152,23 @@
       <Link>Assets\Resources\%(RecursiveDir)%(FileName)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="..\..\..\..\cocos\platform\wp8-xaml\xaml\App.xaml">
+      <Link>App.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\..\..\..\cocos\platform\wp8-xaml\xaml\EditBox.xaml">
+      <Link>EditBox.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\..\..\..\cocos\platform\wp8-xaml\xaml\MainPage.xaml">
+      <Link>MainPage.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />

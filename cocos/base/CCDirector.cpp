@@ -31,23 +31,24 @@ THE SOFTWARE.
 // standard includes
 #include <string>
 
-#include "2d/ccFPSImages.h"
 #include "2d/CCDrawingPrimitives.h"
 #include "2d/CCScene.h"
 #include "2d/CCSpriteFrameCache.h"
-#include "2d/platform/CCFileUtils.h"
-#include "renderer/ccGLStateCache.h"
-#include "2d/platform/CCImage.h"
+#include "platform/CCFileUtils.h"
+#include "platform/CCImage.h"
 #include "2d/CCActionManager.h"
 #include "2d/CCFontFNT.h"
 #include "2d/CCFontAtlasCache.h"
 #include "2d/CCAnimationCache.h"
-#include "2d/CCUserDefault.h"
+#include "2d/CCTransition.h"
+#include "2d/CCFontFreeType.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/CCGLProgramStateCache.h"
-#include "2d/CCTransition.h"
-#include "2d/CCTextureCache.h"
-#include "2d/CCFontFreeType.h"
+#include "renderer/CCTextureCache.h"
+#include "renderer/ccGLStateCache.h"
+#include "renderer/CCRenderer.h"
+#include "base/CCUserDefault.h"
+#include "base/ccFPSImages.h"
 #include "base/CCScheduler.h"
 #include "base/ccMacros.h"
 #include "base/CCEventDispatcher.h"
@@ -57,7 +58,6 @@ THE SOFTWARE.
 #include "base/CCAutoreleasePool.h"
 #include "base/CCProfiling.h"
 #include "base/CCConfiguration.h"
-#include "renderer/CCRenderer.h"
 #include "base/CCNS.h"
 #include "math/CCMath.h"
 #include "CCApplication.h"
@@ -887,6 +887,13 @@ void Director::popToSceneStackLevel(int level)
     if (level >= c)
         return;
 
+    auto fisrtOnStackScene = _scenesStack.back();
+    if (fisrtOnStackScene == _runningScene)
+    {
+        _scenesStack.popBack();
+        --c;
+    }
+
     // pop stack until reaching desired level
     while (c > level)
     {
@@ -903,7 +910,9 @@ void Director::popToSceneStackLevel(int level)
     }
 
     _nextScene = _scenesStack.back();
-    _sendCleanupToScene = false;
+
+    // cleanup running scene
+    _sendCleanupToScene = true;
 }
 
 void Director::end()

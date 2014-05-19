@@ -26,8 +26,9 @@
 #ifndef __CCRENDERCOMMAND_H_
 #define __CCRENDERCOMMAND_H_
 
-#include "base/CCPlatformMacros.h"
 #include <stdint.h>
+
+#include "base/CCPlatformMacros.h"
 #include "base/ccTypes.h"
 
 NS_CC_BEGIN
@@ -47,6 +48,7 @@ public:
         CUSTOM_COMMAND,
         BATCH_COMMAND,
         GROUP_COMMAND,
+        MESH_COMMAND,
     };
 
     /** Get Render Command Id */

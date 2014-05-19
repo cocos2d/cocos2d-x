@@ -26,18 +26,20 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "base/CCDirector.h"
 #include "renderer/CCGLProgram.h"
-#include "renderer/ccGLStateCache.h"
-#include "base/ccMacros.h"
-#include "2d/platform/CCFileUtils.h"
-#include "2d/uthash.h"
-#include "deprecated/CCString.h"
-#include "CCGL.h"
 
 #ifndef WIN32
 #include <alloca.h>
 #endif
+
+#include "base/CCDirector.h"
+#include "base/ccMacros.h"
+#include "base/uthash.h"
+#include "renderer/ccGLStateCache.h"
+#include "platform/CCFileUtils.h"
+#include "CCGL.h"
+
+#include "deprecated/CCString.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 #include "CCPrecompiledShaders.h"
@@ -68,6 +70,9 @@ const char* GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL = "ShaderLabelDFNo
 const char* GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_GLOW = "ShaderLabelDFGlow";
 const char* GLProgram::SHADER_NAME_LABEL_NORMAL = "ShaderLabelNormal";
 const char* GLProgram::SHADER_NAME_LABEL_OUTLINE = "ShaderLabelOutline";
+
+const char* GLProgram::SHADER_3D_POSITION = "Shader3DPosition";
+const char* GLProgram::SHADER_3D_POSITION_TEXTURE = "Shader3DPositionTexture";
 
 
 // uniform names

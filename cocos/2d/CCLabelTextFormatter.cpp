@@ -23,10 +23,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#include "2d/CCLabelTextFormatter.h"
+
 #include <vector>
 
-#include "ccUTF8.h"
-#include "CCLabelTextFormatter.h"
+#include "base/ccUTF8.h"
 #include "base/CCDirector.h"
 #include "2d/CCLabel.h"
 

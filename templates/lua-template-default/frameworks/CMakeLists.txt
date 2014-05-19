@@ -58,9 +58,9 @@ include_directories(
   ${COCOS2D_ROOT}
   ${COCOS2D_ROOT}/cocos
   ${COCOS2D_ROOT}/cocos/audio/include
-  ${COCOS2D_ROOT}/cocos/2d/platform
-  ${COCOS2D_ROOT}/cocos/2d/platform/desktop
-  ${COCOS2D_ROOT}/cocos/2d/platform/linux
+  ${COCOS2D_ROOT}/cocos/platform
+  ${COCOS2D_ROOT}/cocos/platform/desktop
+  ${COCOS2D_ROOT}/cocos/platform/linux
   ${COCOS2D_ROOT}/cocos/editor-support
   ${COCOS2D_ROOT}/extensions
   ${COCOS2D_ROOT}/external

@@ -29,8 +29,8 @@ THE SOFTWARE.
 #define __SPRITE_NODE_CCSPRITE_H__
 
 #include "2d/CCNode.h"
-#include "2d/CCProtocols.h"
-#include "2d/CCTextureAtlas.h"
+#include "base/CCProtocols.h"
+#include "renderer/CCTextureAtlas.h"
 #include "base/ccTypes.h"
 #include <string>
 #ifdef EMSCRIPTEN
