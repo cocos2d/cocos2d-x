@@ -12,6 +12,7 @@ import traceback
 import platform
 import subprocess
 import codecs
+from shutil import copy
 
 #set Jenkins build description using submitDescription to mock browser behavior
 #TODO: need to set parent build description 
