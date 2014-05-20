@@ -123,5 +123,6 @@ public class AppActivity extends Cocos2dxActivity{
 	}
 	
 	private static native boolean nativeIsLandScape();
+	private static native boolean nativeIsDebug();
 	
 }
