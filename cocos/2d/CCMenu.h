@@ -43,11 +43,11 @@ NS_CC_BEGIN
 
 
 
-/** @brief A Menu
+/** @brief 菜单(Menu)
 * 
-* Features and Limitation:
-*  - You can add MenuItem objects in runtime using addChild:
-*  - But the only accepted children are MenuItem objects
+* 特性和限制:
+*  - 在运行时你可以使用addChild方法添加菜单项:
+*  - 但是只接受菜单项对象作为孩子
 */
 class CC_DLL Menu : public Layer
 {
@@ -58,7 +58,7 @@ public:
         TRACKING_TOUCH,
     };
     
-    /** creates an empty Menu */
+    /** 创建一个空的菜单 */
     static Menu* create();
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
@@ -78,42 +78,42 @@ public:
     // On WP8 for lists longer than 10 items, use createWithArray or variadicCreate with NULL as the last argument
     static Menu* variadicCreate(MenuItem* item, ...);
 #else
-    /** creates a Menu with MenuItem objects */
+    /** 通过指定多个菜单项对象创建一个菜单 */
     static Menu* create(MenuItem* item, ...) CC_REQUIRES_NULL_TERMINATION;
 #endif
 
-    /** creates a Menu with a Array of MenuItem objects */
+    /** 通过指定菜单项对象组成的Vector集合创建一个菜单 */
     static Menu* createWithArray(const Vector<MenuItem*>& arrayOfItems);
 
-    /** creates a Menu with it's item, then use addChild() to add 
-      * other items. It is used for script, it can't init with undetermined
-      * number of variables.
-    */
+    /** 通过指定菜单项创建一个菜单, 然后使用 addChild()方法添加
+     * 其他菜单项. 它用于脚本创建菜单,
+     * 它不能通过数量不确定的变量初始化.
+     */
     static Menu* createWithItem(MenuItem* item);
     
-    /** creates a Menu with MenuItem objects */
+    /** 通过指定多个菜单项对象创建一个菜单 */
     static Menu* createWithItems(MenuItem *firstItem, va_list args);
 
-    /** align items vertically */
+    /** 垂直对齐项目 */
     void alignItemsVertically();
-    /** align items vertically with padding
+    /** 垂直对齐项目与填充
     @since v0.7.2
     */
     void alignItemsVerticallyWithPadding(float padding);
 
-    /** align items horizontally */
+    /** 水平对齐项目 */
     void alignItemsHorizontally();
-    /** align items horizontally with padding
+    /** 使项目水平与填充
     @since v0.7.2
     */
     void alignItemsHorizontallyWithPadding(float padding);
 
-    /** align items in rows of columns */
+    /** 对齐行的列中的项目 */
     void alignItemsInColumns(int columns, ...) CC_REQUIRES_NULL_TERMINATION;
     void alignItemsInColumns(int columns, va_list args);
     void alignItemsInColumnsWithArray(const ValueVector& rows);
 
-    /** align items in columns of rows */
+    /** 对齐列的行中的项目 */
     void alignItemsInRows(int rows, ...) CC_REQUIRES_NULL_TERMINATION;
     void alignItemsInRows(int rows, va_list args);
     void alignItemsInRowsWithArray(const ValueVector& columns);
@@ -147,17 +147,17 @@ CC_CONSTRUCTOR_ACCESS:
     Menu() : _selectedItem(nullptr) {}
     virtual ~Menu();
 
-    /** initializes an empty Menu */
+    /** 初始化一个空菜单 */
     bool init();
 
-    /** initializes a Menu with a NSArray of MenuItem objects */
+    /** 通过菜单项组成的Vector集合初始一个菜单 */
     bool initWithArray(const Vector<MenuItem*>& arrayOfItems);
 
 protected:
 
 
 
-    /** whether or not the menu will receive events */
+    /** 菜单是否会收到事件 */
     bool _enabled;
 
     MenuItem* getItemForTouch(Touch * touch);
