@@ -59,30 +59,30 @@ public:
     typedef std::function<void(Ref*,CheckBox::EventType)> ccCheckBoxCallback;
     
     /**
-     * Default constructor
+     * 默认构造函数（constructor）
      */
     CheckBox();
 
     /**
-     * Default destructor
+     * 默认析构函数（destructor）
      */
     virtual ~CheckBox();
 
     /**
-     * Allocates and initializes.
+     * 分配（allocates）并初始化（initializes）.
      */
     static CheckBox* create();
     
     /**
-     * create an checkbox
+     * 创建一个checkbox
      *
-     * @param backGround    backGround texture.
+     * @param backGround    背景纹理（texture）.
      *
-     * @param backGroundSelected    backGround selected state texture.
+     * @param backGroundSelected    选择状态的背景纹理（texture）.
      *
-     * @param cross    cross texture.
+     * @param cross    交叉纹理贴图（cross texture）.
      *
-     * @param frontCrossDisabled    cross dark state texture.
+     * @param frontCrossDisabled    暗态交叉纹理贴图（cross dark state texture）（暗态（dark state）即为禁用状态（Disabled）  译者注）.
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
@@ -94,15 +94,15 @@ public:
                             TextureResType texType = TextureResType::LOCAL);
 
     /**
-     * Load textures for checkbox.
+     * 加载checkbox的纹理贴图.
      *
-     * @param backGround    backGround texture.
+     * @param backGround    背景纹理（texture）.
      *
-     * @param backGroundSelected    backGround selected state texture.
+     * @param backGroundSelected    选择状态的背景纹理（texture）.
      *
-     * @param cross    cross texture.
+     * @param cross    交叉纹理贴图（cross texture）.
      *
-     * @param frontCrossDisabled    cross dark state texture.
+     * @param frontCrossDisabled    暗态交叉纹理贴图（cross dark state texture）.
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
@@ -114,79 +114,79 @@ public:
                       TextureResType texType = TextureResType::LOCAL);
 
     /**
-     * Load backGround texture for checkbox.
+     * 加载checkbox的背景纹理贴图.
      *
-     * @param backGround    backGround texture.
+     * @param backGround    背景纹理（texture）.
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
     void loadTextureBackGround(const std::string& backGround,TextureResType type = TextureResType::LOCAL);
 
     /**
-     * Load backGroundSelected texture for checkbox.
+     * 加载checkbox选择状态的背景纹理贴图（backGroundSelected）.
      *
-     * @param backGroundSelected     backGround selected state texture.
+     * @param backGroundSelected     选择状态的背景纹理（texture）.
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
     void loadTextureBackGroundSelected(const std::string& backGroundSelected,TextureResType texType = TextureResType::LOCAL);
 
     /**
-     * Load cross texture for checkbox.
+     * 加载checkbox的交叉纹理贴图（cross texture）.
      *
-     * @param cross    cross texture.
+     * @param cross    交叉纹理贴图（cross texture）.
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
     void loadTextureFrontCross(const std::string&,TextureResType texType = TextureResType::LOCAL);
 
     /**
-     * Load backGroundDisabled texture for checkbox.
+     * 加载checkbox禁用状态的背景纹理贴图（backGroundDisabled）.
      *
-     * @param backGroundDisabled    backGroundDisabled texture.
+     * @param backGroundDisabled    禁用状态的背景纹理贴图（texture）.
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
     void loadTextureBackGroundDisabled(const std::string& backGroundDisabled,TextureResType texType = TextureResType::LOCAL);
 
     /**
-     * Load frontCrossDisabled texture for checkbox.
+     * 加载checkbox禁用状态的交叉纹理贴图（frontCrossDisabled）.
      *
-     * @param frontCrossDisabled    frontCrossDisabled texture.
+     * @param frontCrossDisabled    禁用状态的交叉纹理贴图（texture）.
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
     void loadTextureFrontCrossDisabled(const std::string& frontCrossDisabled,TextureResType texType = TextureResType::LOCAL);
 
     /**
-     * Sets selcted state for checkbox.
+     * 设置checkbox的选中状态.
      *
-     * @param selected    true that checkbox is selected, false otherwise.
+     * @param selected    值为true 时 checkbox 为选中状态, 为false 则不会.
      */
     void setSelectedState(bool selected);
 
     /**
-     * Gets selcted state of checkbox.
+     * 获取checkbox的选中状态.
      *
-     * @return selected    true that checkbox is selected, false otherwise.
+     * @return selected    值为true 时 checkbox 为选中状态, 为false 则不会.
      */
     bool getSelectedState();
 
-    //add a call back function would called when checkbox is selected or unselected.
+    //增加一个回调函数，当checkbox被选中或被反选时该函数将被调用
     CC_DEPRECATED_ATTRIBUTE void addEventListenerCheckBox(Ref* target,SEL_SelectedStateEvent selector);
     void addEventListener(const ccCheckBoxCallback& callback);
 
-    //override "onTouchEnded" method of widget.
+    //重写（override）widget 的 "onTouchEnded" 方法.
     virtual void onTouchEnded(Touch *touch, Event *unusedEvent);
 
-    //override "getVirtualRendererSize" method of widget.
+    //重写（override）widget 的 "getVirtualRendererSize" 方法.
     virtual const Size& getVirtualRendererSize() const override;
 
-    //override "getVirtualRenderer" method of widget.
+    //重写（override）widget 的 "getVirtualRenderer" 方法.
     virtual Node* getVirtualRenderer() override;
 
     /**
-     * Returns the "class name" of widget.
+     * 返回 widget的"类名（class name）".
      */
     virtual std::string getDescription() const override;
     
@@ -227,19 +227,19 @@ protected:
     Sprite* _backGroundBoxDisabledRenderer;
     Sprite* _frontCrossDisabledRenderer;
     bool _isSelected;
-    //if you use the old event callback, it will retain the _checkBoxEventListener
+    //如果你使用了旧的事件回调（event callback）, 它将retain  _checkBoxEventListener
     Ref*       _checkBoxEventListener;
     
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
+#elif _MSC_VER >= 1400 //vs 2005或更高版本
 #pragma warning (push)
 #pragma warning (disable: 4996)
 #endif
     SEL_SelectedStateEvent    _checkBoxEventSelector;
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic warning "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
+#elif _MSC_VER >= 1400 //vs 2005或更高版本
 #pragma warning (pop)
 #endif
     

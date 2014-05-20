@@ -42,25 +42,25 @@ class Button : public Widget
     
 public:
     /**
-     * Default constructor
+     * 默认构造函数（constructor）
      */
     Button();
 
     /**
-     * Default destructor
+     * 默认析构函数（destructor）
      */
     virtual ~Button();
 
     /**
-     * Allocates and initializes.
+     * 分配（allocates）并初始化（initializes）
      */
     static Button* create();
     
     /**
-     * create a button with custom textures
-     * @normalImage normal state texture name
-     * @selectedImage  selected state texture name
-     * @disableImage disabled state texture name
+     * 使用自定义纹理贴图（textures）创建一个按钮
+     * @normalImage    正常状态的纹理贴图（texture）名
+     * @selectedImage  选中状态的纹理贴图（texture）名
+     * @disableImage   禁用状态的纹理贴图（texture）名
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
     static Button* create(const std::string& normalImage,
@@ -70,13 +70,13 @@ public:
     
 
     /**
-     * Load textures for button.
+     * 加载按钮的纹理贴图（texture）
      *
-     * @param normal    normal state texture name.
+     * @param normal    正常状态的纹理贴图（texture）名
      *
-     * @param selected    selected state texture name.
+     * @param selected    选中状态的纹理贴图（texture）名
      *
-     * @param disabled    disabled state texture name.
+     * @param disabled   禁用状态的纹理贴图（texture）名
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
@@ -86,93 +86,93 @@ public:
                       TextureResType texType = TextureResType::LOCAL);
 
     /**
-     * Load normal state texture for button.
+     * 加载按钮正常状态的纹理贴图（texture）
      *
-     * @param normal    normal state texture.
+     * @param normal    正常状态的纹理贴图（texture）
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
     void loadTextureNormal(const std::string& normal, TextureResType texType = TextureResType::LOCAL);
 
     /**
-     * Load selected state texture for button.
+     * 加载按钮选中状态的纹理贴图（texture）
      *
-     * @param selected    selected state texture.
+     * @param selected    选中状态的纹理贴图（texture）
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
     void loadTexturePressed(const std::string& selected, TextureResType texType = TextureResType::LOCAL);
 
     /**
-     * Load dark state texture for button.
+     * 加载按钮暗态（dark state）的纹理贴图（texture）（此处暗态（dark state）即为禁用状态（disabled）原文写为dark state。译者注）
      *
-     * @param disabled    dark state texture.
+     * @param disabled    暗态（dark state）纹理贴图（texture）
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
     void loadTextureDisabled(const std::string& disabled, TextureResType texType = TextureResType::LOCAL);
 
     /**
-     * Sets capinsets for button, if button is using scale9 renderer.
+     * 如果按钮使用九宫（scale9）渲染器进行渲染，设置按钮的capinsets
      *
-     * @param capInsets    capinsets for button
+     * @param capInsets    按钮的capinsets
      */
     void setCapInsets(const Rect &capInsets);
 
     /**
-     * Sets capinsets for button, if button is using scale9 renderer.
+     * 如果按钮使用九宫（scale9）渲染器进行渲染，设置按钮的capinsets
      *
-     * @param capInsets    capinsets for button
+     * @param capInsets    按钮的capinsets
      */
     void setCapInsetsNormalRenderer(const Rect &capInsets);
 
     const Rect& getCapInsetsNormalRenderer();
 
     /**
-     * Sets capinsets for button, if button is using scale9 renderer.
+     * 如果按钮使用九宫（scale9）渲染器进行渲染，设置按钮的capinsets
      *
-     * @param capInsets    capinsets for button
+     * @param capInsets    按钮的capinsets
      */
     void setCapInsetsPressedRenderer(const Rect &capInsets);
 
     const Rect& getCapInsetsPressedRenderer();
 
     /**
-     * Sets capinsets for button, if button is using scale9 renderer.
+     * 如果按钮使用九宫（scale9）渲染器进行渲染，设置按钮的capinsets
      *
-     * @param capInsets    capinsets for button
+     * @param capInsets    按钮的capinsets
      */
     void setCapInsetsDisabledRenderer(const Rect &capInsets);
 
     const Rect& getCapInsetsDisabledRenderer();
 
     /**
-     * Sets if button is using scale9 renderer.
+     * 设置按钮使用九宫（scale9）渲染器进行渲染
      *
-     * @param true that using scale9 renderer, false otherwise.
+     * @param 值为true则使用九宫（scale9）渲染器, 为false则不会。
      */
     virtual void setScale9Enabled(bool able);
 
     bool isScale9Enabled();
 
     /**
-     * Changes if button can be clicked zoom effect.
+     * 设置可被点击的按钮使用缩放效果（zoom effect）
      *
-     * @param true that can be clicked zoom effect, false otherwise.
+     * @param 值为true则使用点击缩放效果（zoom effect）, 为false 则不会.
      */
     void setPressedActionEnabled(bool enabled);
 
-    //override "ignoreContentAdaptWithSize" method of widget.
+    //重写（override）widget 的"ignoreContentAdaptWithSize" 方法.
     virtual void ignoreContentAdaptWithSize(bool ignore) override;
 
-    //override "getVirtualRendererSize" method of widget.
+    //重写（override）widget 的"getVirtualRendererSize" 方法.
     virtual const Size& getVirtualRendererSize() const override;
 
-    //override "getVirtualRenderer" method of widget.
+    //重写（override）widget 的"getVirtualRenderer" 方法.
     virtual Node* getVirtualRenderer() override;
 
     /**
-     * Returns the "class name" of widget.
+     * 返回weight的“类名（class name）”.
      */
     virtual std::string getDescription() const override;
 

@@ -42,22 +42,22 @@ class TextAtlas : public Widget
     
 public:
     /**
-     * Default constructor
+     * 默认构造函数
      */
     TextAtlas();
     
     /**
-     * Default destructor
+     * 默认析构函数
      */
     virtual ~TextAtlas();
     
     /**
-     * Allocates and initializes.
+     * 创建和初始化对象
      */
     static TextAtlas* create();
     
     /**
-     * create a LabelAtlas from a char map file
+     * 根据字符映射文件（char map file）创建一个图集标签（LabelAtlas）
      */
     static TextAtlas* create(const std::string& stringValue,
                              const std::string& charMapFile,
@@ -65,7 +65,10 @@ public:
                              int itemHeight,
                              const std::string& startCharMap);
     
-    /** initializes the LabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
+    /** 
+     * 根据字符串（string）、字符映射文件（char map file）（图集）、每个元素的宽度（width）和高度（height），
+     * 图集（atlas）的开始字符初始化图集标签（LabelAtlas）
+     */
     void setProperty(const std::string& stringValue,
                      const std::string& charMapFile,
                      int itemWidth,
@@ -81,11 +84,11 @@ public:
     const std::string& getString() const;
     
     /**
-     * Gets the string length of the label.
-     * Note: This length will be larger than the raw string length,
-     * if you want to get the raw string length, you should call this->getString().size() instead
+     * 获得标签（label）的字符串长度
+     * 注：获得的长度会比原始字符串的长度长，
+     * 如果你想得到原始字符串的长度， 你应用调用this->getString().size()来获得
      *
-     * @return  string length.
+     * @return 字符串长度
      */
     ssize_t getStringLength()const;
     
@@ -96,7 +99,7 @@ public:
     virtual Node* getVirtualRenderer() override;
     
     /**
-     * Returns the "class name" of widget.
+     * 返回控件（widget）的类名（class name）
      */
     virtual std::string getDescription() const override;
     

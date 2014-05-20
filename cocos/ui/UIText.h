@@ -32,7 +32,7 @@ NS_CC_BEGIN
 namespace ui {
 
 /**
- *  For creating a system font or a TTF font Text
+ *  为创建系统字体（font）或TTF字体（font）提供支持
  *@js 
  *@lua NA
  */
@@ -48,72 +48,73 @@ public:
         TTF
     };
     /**
-     * Default constructor
+     * 默认构造函数
      */
     Text();
 
     /**
-     * Default destructor
+     * 默认析构函数
      */
     virtual ~Text();
 
     /**
-     * Allocates and initializes.
+     * 创建和初始化对象
+	 * 译者注：Allocate此处是为对象分配空间
      */
     static Text* create();
     
     /**
-     *  create a Text object with textContent, fontName and fontSize
-     *  the fontName could be a system font name or a TTF file path.
-     *  Usage:  Text *text = Text::create("Hello", "Arial", 20);  //create a system font UIText
-     *          Text *text = Text::create("Hello", "xxx\xxx.ttf", 20); //create a TTF font UIText
+	 *  创建一个指定文本内容（textContent），字体名称（fontName）和字体大小（fontSize）的文本对象
+	 *  字体名称（fontName）可以是系统字体名称或TTF文件路径。
+	 *  用法：  Text *text = Text::create("Hello", "Arial", 20);  //创建一个系统字体的UIText
+	 *          Text *text = Text::create("Hello", "xxx\xxx.ttf", 20); //创建一个TTF字体的UIText
      */
     static Text* create(const std::string& textContent,
                         const std::string& fontName,
                         int fontSize);
 
     /**
-     * Changes the string value of label.
+     * 变更标签（label）的字符串值
      *
-     * @param text  string value.
+     * @param text 字符串值
      */
     CC_DEPRECATED_ATTRIBUTE void setText(const std::string& text){this->setString(text);}
     void setString(const std::string& text);
 
     /**
-     * Gets the string value of label.
+     * 获得标签（label）的字符串值
      *
-     * @return text  string value.
+     * @return 字符串文本值
      */
     CC_DEPRECATED_ATTRIBUTE const std::string& getStringValue(){ return this->getString();}
     const std::string& getString()const;
 
     /**
-     * Gets the string length of the label.
-     * Note: This length will be larger than the raw string length,
-     * if you want to get the raw string length, you should call this->getString().size() instead
+     * 获得标签（label）的字符串长度
+	 * 注：获得的长度会比原始字符串的长度长，
+	 * 如果你想得到原始字符串的长度， 你应用调用this->getString().size()来获得
      *
-     * @return  string length.
+     * @return  字符串长度
      */
     ssize_t getStringLength()const;
 
     /**
-     * Sets the font size of label.
+     * 设置标签（label）的字体（font）大小
      *
-     * @param  font size.
+     * @param size 字体大小
      */
     void setFontSize(int size);
 
     int getFontSize();
 
     /**
-     * Sets the font name of label.
-     *  If you are trying to use a system font, you could just pass a font name
-     * If you are trying to use a TTF, you should pass a file path to the TTF file
-     * Usage:  Text *text = Text::create("Hello", "Arial", 20);  //create a system font UIText
-     *         text->setFontName("Marfelt");  // it will change the font  to  system font no matter the previous font type is TTF or system font
-     *         text->setFontName("xxxx/xxx.ttf"); //it will change the font  to TTF font no matter the previous font type is TTF or system font
-     * @param  font name.
+     * 设置标签（label）的字体（font）名称
+	 * 如果你要用系统字体，你应该传一个字体名称的参数
+	 * 如果你要用TTF字体，你应该传一个TTF字体的文件路径
+	 * 用法：  Text *text = Text::create("Hello", "Arial", 20);  //创建一个系统字体的UIText
+	 *         text->setFontName("Marfelt");  // 不管之前的字体类型是TTF字体还是系统字体，它都会把字体改为系统字体
+	 *         text->setFontName("xxxx/xxx.ttf"); //不管之前的字体类型是TTF字体还是系统字体，它都会把字体改为TTF字体
+     * @param  name 字体名称
      */
     void setFontName(const std::string& name);
 
@@ -122,16 +123,16 @@ public:
     Type getType() const;
 
     /**
-     * Sets the touch scale enabled of label.
+     * 设置标签（label）是否可点击
      *
-     * @param  touch scale enabled of label.
+     * @param enabled 标签（label）是否可点击
      */
     void setTouchScaleChangeEnabled(bool enabled);
 
     /**
-     * Gets the touch scale enabled of label.
+     * 获得标签（label）是否可点击
      *
-     * @return  touch scale enabled of label.
+     * @return 获得标签（label）是否可点击
      */
     bool isTouchScaleChangeEnabled();
 
@@ -142,7 +143,7 @@ public:
     virtual Node* getVirtualRenderer() override;
 
     /**
-     * Returns the "class name" of widget.
+     * 返回控件（widget）的类名（class name）
      */
     virtual std::string getDescription() const override;
 

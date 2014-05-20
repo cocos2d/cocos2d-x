@@ -38,20 +38,19 @@ NS_CC_BEGIN
  * @{
  */
 
-/** @brief Scene is a subclass of Node that is used only as an abstract concept.
+/** @brief Scene(场景)是一个抽象的概念，仅被用作Node(节点)的一个子类.
 
-Scene and Node are almost identical with the difference that Scene has its
-anchor point (by default) at the center of the screen.
-
-For the moment Scene has no other logic than that, but in future releases it might have
-additional logic.
-
-It is a good practice to use a Scene as the parent of all your nodes.
+Scene(场景)和Node(节点)几乎相同，不同的是Scene的默认锚点在屏幕的中心. 
+ 
+ 现在 scene 没有其它的逻辑，但在未来的版本中它可能有
+ 额外的逻辑.
+ 
+ 把 Scene 作为所有 node 的parent 是一个很好的做法.
 */
 class CC_DLL Scene : public Node
 {
 public:
-    /** creates a new Scene object */
+    /** 创建一个新的Scene对象 */
     static Scene *create();
 
     // Overrides
