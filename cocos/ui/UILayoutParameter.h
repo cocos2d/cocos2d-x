@@ -129,15 +129,6 @@ protected:
     Margin _margin;
     Type _layoutParameterType;
 };
-    
-class LayoutParameterProtocol
-{
-public:
-    LayoutParameterProtocol(){}
-    virtual ~LayoutParameterProtocol(){}
-    
-    virtual LayoutParameter* getLayoutParameter() = 0;
-};
 
     
 /**
