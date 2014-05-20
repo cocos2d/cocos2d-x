@@ -57,7 +57,7 @@ public:
     static TextAtlas* create();
     
     /**
-     * 根据字符映射文件（char map file）创建一个标签图集（LabelAtlas）
+     * 根据字符映射文件（char map file）创建一个图集标签（LabelAtlas）
      */
     static TextAtlas* create(const std::string& stringValue,
                              const std::string& charMapFile,
@@ -67,7 +67,7 @@ public:
     
     /** 
      * 根据字符串（string）、字符映射文件（char map file）（图集）、每个元素的宽度（width）和高度（height），
-     * 图集（atlas）的开始字符初始化标签图集（LabelAtlas）
+     * 图集（atlas）的开始字符初始化图集标签（LabelAtlas）
      */
     void setProperty(const std::string& stringValue,
                      const std::string& charMapFile,
