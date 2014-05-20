@@ -1,5 +1,5 @@
- #include "AssetsManagerTest.h"
-#include "../testResource.h"
+#include "AssetsManagerTest.h"
+#include "../../testResource.h"
 #include "cocos2d.h"
 
 std::vector<std::string> sceneId {"AMTestScene1", "AMTestScene2", "AMTestScene3"};

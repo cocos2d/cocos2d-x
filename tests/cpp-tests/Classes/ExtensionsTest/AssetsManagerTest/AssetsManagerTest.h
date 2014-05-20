@@ -2,8 +2,8 @@
 #define __AssetsManager_Test_H__
 
 #include "extensions/cocos-ext.h"
-#include "../testBasic.h"
-#include "../BaseTest.h"
+#include "../../testBasic.h"
+#include "../../BaseTest.h"
 #include "extensions/assets-manager/AssetsManager.h"
 
 USING_NS_CC;

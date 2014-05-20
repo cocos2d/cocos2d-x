@@ -17,7 +17,6 @@ Classes/ActionManagerTest/ActionManagerTest.cpp \
 Classes/ActionsEaseTest/ActionsEaseTest.cpp \
 Classes/ActionsProgressTest/ActionsProgressTest.cpp \
 Classes/ActionsTest/ActionsTest.cpp \
-Classes/AssetsManagerTest/AssetsManagerTest.cpp \
 Classes/Box2DTest/Box2dTest.cpp \
 Classes/Box2DTestBed/Box2dView.cpp \
 Classes/Box2DTestBed/GLES-Render.cpp \
@@ -48,6 +47,7 @@ Classes/DrawPrimitivesTest/DrawPrimitivesTest.cpp \
 Classes/EffectsAdvancedTest/EffectsAdvancedTest.cpp \
 Classes/EffectsTest/EffectsTest.cpp \
 Classes/ExtensionsTest/ExtensionsTest.cpp \
+Classes/ExtensionsTest/AssetsManagerTest/AssetsManagerTest.cpp \
 Classes/ExtensionsTest/CocosBuilderTest/CocosBuilderTest.cpp \
 Classes/ExtensionsTest/CocosBuilderTest/AnimationsTest/AnimationsTestLayer.cpp \
 Classes/ExtensionsTest/CocosBuilderTest/ButtonTest/ButtonTestLayer.cpp \
