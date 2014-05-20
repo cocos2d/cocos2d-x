@@ -37,7 +37,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(KUIFocusTest_HBox);
             sceneManager->setMinUISceneId(KUIFocusTest_HBox);
-            sceneManager->setMaxUISceneId(KUIFocusTest_NestedLayout3);
+            sceneManager->setMaxUISceneId(kUIFocusTest_ListView);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }

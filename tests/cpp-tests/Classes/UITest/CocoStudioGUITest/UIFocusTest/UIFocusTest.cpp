@@ -587,3 +587,89 @@ void UIFocusTestNestedLayout3::toggleFocusLoop(cocos2d::Ref * pObjc, Widget::Tou
         }
     }
 }
+
+//UIFocusTestListView
+UIFocusTestListView::UIFocusTestListView()
+{
+    
+}
+
+UIFocusTestListView::~UIFocusTestListView()
+{
+    
+}
+
+bool UIFocusTestListView::init()
+{
+    if (UIFocusTestBase::init()) {
+        
+        Size winSize = Director::getInstance()->getVisibleSize();
+        
+        _listView = ListView::create();
+        _listView->setDirection(ui::ScrollView::Direction::VERTICAL);
+        _listView->setBounceEnabled(true);
+        _listView->setBackGroundImage("cocosui/green_edit.png");
+        _listView->setBackGroundImageScale9Enabled(true);
+        _listView->setSize(Size(240, 130));
+        
+        _listView->setPosition(Vec2(40, 70));
+        _uiLayer->addChild(_listView);
+        _listView->setScale(0.8);
+        
+        _listView->setFocused(true);
+        _listView->setLoopFocus(true);
+        _listView->setTag(-1000);
+        _firstFocusedWidget = _listView;
+        
+        // create model
+        Button* default_button = Button::create("cocosui/backtotoppressed.png", "cocosui/backtotopnormal.png");
+        default_button->setName("Title Button");
+        
+        
+        // set model
+        _listView->setItemModel(default_button);
+        
+        // add default item
+        ssize_t count = 20;
+        for (int i = 0; i < count / 4; ++i)
+        {
+            _listView->pushBackDefaultItem();
+        }
+        // insert default item
+        for (int i = 0; i < count / 4; ++i)
+        {
+            _listView->insertDefaultItem(0);
+        }
+        
+        
+        
+        _loopText = Text::create("loop enabled", "Airal", 20);
+        _loopText->setPosition(Vec2(winSize.width/2, winSize.height - 50));
+        _loopText->setColor(Color3B::GREEN);
+        this->addChild(_loopText);
+        
+        auto btn = Button::create("cocosui/switch-mask.png");
+        btn->setTitleText("Toggle Loop");
+        btn->setPosition(Vec2(60, winSize.height - 50));
+        btn->setTitleColor(Color3B::RED);
+        btn->addTouchEventListener(CC_CALLBACK_2(UIFocusTestListView::toggleFocusLoop, this));
+        this->addChild(btn);
+        
+        
+        return true;
+    }
+    return false;
+}
+
+
+void UIFocusTestListView::toggleFocusLoop(cocos2d::Ref * pObjc, Widget::TouchEventType type)
+{
+    if (type == Widget::TouchEventType::ENDED) {
+        _listView->setLoopFocus(!_listView->isLoopFocus());
+        if (_listView->isLoopFocus()) {
+            _loopText->setString("loop enabled");
+        }else{
+            _loopText->setString("loop disabled");
+        }
+    }
+}
