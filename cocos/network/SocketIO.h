@@ -73,7 +73,7 @@ class SIOClientImpl;
 class SIOClient;
 
 /**
- *  @brief Singleton and wrapper class to provide static creation method as well as registry of all sockets
+ *  @brief 单例和包装的类，提供了静态创建方法以及所有sockets的注册
  */
 class SocketIO
 {
@@ -82,7 +82,7 @@ public:
     static void destroyInstance();
 
     /**
-     *  @brief The delegate class to process socket.io events
+     *  @brief 处理socket.io事件的delegate类
      */
     class SIODelegate
     {
@@ -96,10 +96,10 @@ public:
     };
 
     /**
-     *  @brief  Static client creation method, similar to socketio.connect(uri) in JS
-     *  @param  delegate The delegate which want to receive events from the socket.io client
-     *  @param  uri      The URI of the socket.io server
-     *  @return An initialized SIOClient if connected successfully, otherwise NULL
+     *  @brief  静态客户端创建方法，类似于JS中的socketio.connect(uri)
+     *  @param  delegate 想要从socket.io客户端接收事件的delegate
+     *  @param  uri      socket.io服务端的URI
+     *  @return 如果连接成功，返回一个初始化的SIOClient，否则为NULL
      */
     static SIOClient* connect(const std::string& uri, SocketIO::SIODelegate& delegate);
 
@@ -128,8 +128,8 @@ typedef std::function<void(SIOClient*, const std::string&)> SIOEvent;
 //c++11 map to callbacks
 typedef std::unordered_map<std::string, SIOEvent> EventRegistry;
 
-/**
-     *  @brief A single connection to a socket.io endpoint
+    /**
+     *  @brief 到socket.io端点的单个连接
      */
 class SIOClient
     : public cocos2d::Ref
@@ -157,25 +157,25 @@ public:
     virtual ~SIOClient(void);
 
     /**
-     *  @brief Returns the delegate for the client
+     *  @brief 返回客户端的delegate
      */
     SocketIO::SIODelegate* getDelegate() { return _delegate; };
 
     /**
-     *  @brief Disconnect from the endpoint, onClose will be called on the delegate when comlpete
+     *  @brief 从端点断开连接，当完成的时候onClose会从delegate中被调用
      */
     void disconnect();
     /**
-     *  @brief Send a message to the socket.io server
+     *  @brief 向socket.io服务端发送一个message
      */
     void send(std::string s);
     /**
-     *  @brief The delegate class to process socket.io events
+     *  @brief 处理socket.io事件的delegate类
      */
     void emit(std::string eventname, std::string args);
     /**
-     *  @brief Used to resgister a socket.io event callback
-     *         Event argument should be passed using CC_CALLBACK2(&Base::function, this)
+     *  @brief 用于注册一个socket.io事件回调
+     *         事件参数应该使用CC_CALLBACK2(&Base::function, this)来传递
      */
     void on(const std::string& eventName, SIOEvent e);
 

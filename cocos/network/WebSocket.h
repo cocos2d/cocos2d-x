@@ -61,7 +61,7 @@ public:
     virtual ~WebSocket();
 
     /**
-     *  @brief Data structure for message
+     *  @brief message的数据结构
      */
     struct Data
     {
@@ -72,7 +72,7 @@ public:
     };
 
     /**
-     *  @brief Errors in websocket
+     *  @brief websocket中的errors
      */
     enum class ErrorCode
     {
@@ -82,7 +82,7 @@ public:
     };
 
     /**
-     *  Websocket state
+     *  Websocket 状态
      */
     enum class State
     {
@@ -93,7 +93,7 @@ public:
     };
 
     /**
-     *  @brief The delegate class to process websocket events.
+     *  @brief 处理websocket事件的delegate类
      */
     class Delegate
     {
@@ -107,33 +107,33 @@ public:
 
 
     /**
-     *  @brief  The initialized method for websocket.
-     *          It needs to be invoked right after websocket instance is allocated.
-     *  @param  delegate The delegate which want to receive event from websocket.
-     *  @param  url      The URL of websocket server.
-     *  @return true: Success, false: Failure
+     *  @brief  websocket的初始化方法。
+     *          在websocket实例被分配之后需要被正确引用
+     *  @param  delegate 要从websocket接收事件的delegate
+     *  @param  url      websocket服务端的url
+     *  @return true: 成功, false: 失败
      */
     bool init(const Delegate& delegate,
               const std::string& url,
               const std::vector<std::string>* protocols = nullptr);
 
     /**
-     *  @brief Sends string data to websocket server.
+     *  @brief 向websocket服务端发送string数据
      */
     void send(const std::string& message);
 
     /**
-     *  @brief Sends binary data to websocket server.
+     *  @brief 向websocket服务端发送二进制数据。
      */
     void send(const unsigned char* binaryMsg, unsigned int len);
 
     /**
-     *  @brief Closes the connection to server.
+     *  @brief 关闭到服务端的连接。
      */
     void close();
 
     /**
-     *  @brief Gets current state of connection.
+     *  @brief 获取当前连接的状态。
      */
     State getReadyState();
 

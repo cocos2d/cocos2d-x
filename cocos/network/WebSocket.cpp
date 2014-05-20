@@ -54,7 +54,7 @@ public:
 };
 
 /**
- *  @brief Websocket thread helper, it's used for sending message between UI thread and websocket thread.
+ *  @brief Websocket线程helper，用来在UI线程和websockeet线程之间发送消息
  */
 class WsThreadHelper : public Ref
 {
@@ -412,13 +412,13 @@ void WebSocket::onSubThreadStarted()
 	struct lws_context_creation_info info;
 	memset(&info, 0, sizeof info);
     
-	/*
-	 * create the websocket context.  This tracks open connections and
-	 * knows how to route any traffic and which protocol version to use,
-	 * and if each connection is client or server side.
-	 *
-	 * For this client-only demo, we tell it to not listen on any port.
-	 */
+    /*
+     * 创建websocket context。这个tracks打开的连接，
+     * 知道如何路由所有流量和使用哪个协议版本
+     * 以及每个连接是客户端还是服务端
+     *
+     * 在这个只有客户端的demo中，我们让它不要监听任何端口
+     */
     
 	info.port = CONTEXT_PORT_NO_LISTEN;
 	info.protocols = _wsProtocols;
@@ -504,8 +504,8 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
                 _readyState = State::OPEN;
                 
                 /*
-                 * start the ball rolling,
-                 * LWS_CALLBACK_CLIENT_WRITEABLE will come next service
+                 * 开始滚球球，
+                 * LWS_CALLBACK_CLIENT_WRITEABLE 会过来下一个service
                  */
                 libwebsocket_callback_on_writable(ctx, wsi);
                 _wsHelper->sendMessageToUIThread(msg);
@@ -588,7 +588,7 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
                     }
                 }
                 
-                /* get notified as soon as we can write again */
+                /* 只要我们可以再次写入就获得通知 */
                 
                 libwebsocket_callback_on_writable(ctx, wsi);
             }

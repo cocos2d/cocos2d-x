@@ -42,8 +42,8 @@ namespace network {
 //class declarations
 
 /**
- *  @brief The implementation of the socket.io connection
- *         Clients/endpoints may share the same impl to accomplish multiplexing on the same websocket
+ *  @brief socket.io连接的实现
+ *         Clients/endpoints 也许分享了同样的实现来完成在同一个websocket中的多路
  */
 class SIOClientImpl :
     public cocos2d::Ref,
