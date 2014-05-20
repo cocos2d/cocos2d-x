@@ -84,7 +84,7 @@ public:
     /**
      * 获得标签（label）的字符串值
      *
-     * @return text  字符串值
+     * @return 字符串文本值
      */
     CC_DEPRECATED_ATTRIBUTE const std::string& getStringValue(){ return this->getString();}
     const std::string& getString()const;
@@ -94,7 +94,7 @@ public:
 	 * 注：获得的长度会比原始字符串的长度长，
 	 * 如果你想得到原始字符串的长度， 你应用调用this->getString().size()来获得
      *
-     * @return  string 长度
+     * @return  字符串长度
      */
     ssize_t getStringLength()const;
 
