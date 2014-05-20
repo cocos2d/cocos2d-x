@@ -890,16 +890,16 @@ public:
     /**
      * 每次当Node离开“stage”时才调用事件回调。
      * 如果Node离开“stage”状态时伴随着一个转换（transition）, 那么事件将会在这个转换结束的时候被调用。
-     * During onExit you can't access a sibling node.
-     * If you override onExit, you shall call its parent's one, e.g., Node::onExit().
+     * 在onEnter过程中中你不能够接入一个兄妹节点。
+     * 如果你重写onExit, 你应该调用它的父类, e.g., Node::onExit().
      * @js NA
      * @lua NA
      */
     virtual void onExit();
 
     /**
-     * Event callback that is called every time the Node leaves the 'stage'.
-     * If the Node leaves the 'stage' with a transition, this callback is called when the transition starts.
+     * 每次当Node离开“stage”时才调用事件回调。
+     * 如果Node离开“stage”状态时伴随着一个转换（transition）, 那么事件将会在这个转换开始的时候被调用。
      * @js NA
      * @lua NA
      */
@@ -909,44 +909,44 @@ public:
 
 
     /**
-     * Stops all running actions and schedulers
+     * 暂停所有的活动着的动作和调度器。
      */
     virtual void cleanup();
 
     /**
-     * Override this method to draw your own node.
-     * The following GL states will be enabled by default:
+     * 重写这个方法来绘制你自己的节点。
+     * 以下的GL状态是默认开启的：
      * - `glEnableClientState(GL_VERTEX_ARRAY);`
      * - `glEnableClientState(GL_COLOR_ARRAY);`
      * - `glEnableClientState(GL_TEXTURE_COORD_ARRAY);`
      * - `glEnable(GL_TEXTURE_2D);`
-     * AND YOU SHOULD NOT DISABLE THEM AFTER DRAWING YOUR NODE
-     * But if you enable any other GL state, you should disable it after drawing your node.
+     * 并且你不能够关闭他们在绘制完你的节点之后。
+     * 但是如果你开启了其他的GL状态，那么你要关闭他们在绘制完你的节点之后。
      */
     virtual void draw(Renderer *renderer, const Mat4& transform, bool transformUpdated);
     virtual void draw() final;
 
     /**
-     * Visits this node's children and draw them recursively.
+     * 访问节点的孩子，并且循环递归的绘制它们。
      */
     virtual void visit(Renderer *renderer, const Mat4& parentTransform, bool parentTransformUpdated);
     virtual void visit() final;
 
 
-    /** Returns the Scene that contains the Node.
-     It returns `nullptr` if the node doesn't belong to any Scene.
-     This function recursively calls parent->getScene() until parent is a Scene object. The results are not cached. It is that the user caches the results in case this functions is being used inside a loop.
+    /** 返回包含Node(节点)的Scene（场景）。
+     如果这个节点不属于任何的场景，它将返回`nullptr`。
+     这个函数循环递归地调用parent->getScene() 直到父类是一个Scene对象。结果不会被缓存。只有当这个函数被用在一个循环中时，用户才会缓存这个结果。
      */
     virtual Scene* getScene();
 
     /**
-     * Returns an AABB (axis-aligned bounding-box) in its parent's coordinate system.
+     * 返回 一个AABB(轴向包围盒)在它的父坐标系中。
      *
-     * @return An AABB (axis-aligned bounding-box) in its parent's coordinate system
+     * @return 一个AABB(轴向包围盒)在它的父坐标系中。
      */
     virtual Rect getBoundingBox() const;
 
-    /** @deprecated Use getBoundingBox instead */
+    /** @deprecated 使用 getBoundingBox 来代替 */
     CC_DEPRECATED_ATTRIBUTE inline virtual Rect boundingBox() const { return getBoundingBox(); }
 
     virtual void setEventDispatcher(EventDispatcher* dispatcher);
@@ -956,56 +956,56 @@ public:
     /// @name Actions
 
     /**
-     * Sets the ActionManager object that is used by all actions.
+     * 设置被所有动作使用的ActionManager对象。
      *
-     * @warning If you set a new ActionManager, then previously created actions will be removed.
+     * @warning 如果你设置了一个新的ActionManager, 那么之前创建的动作将会被删除。
      *
-     * @param actionManager     A ActionManager object that is used by all actions.
+     * @param actionManager     ActionManager被所有动作使用。
      */
     virtual void setActionManager(ActionManager* actionManager);
     /**
-     * Gets the ActionManager object that is used by all actions.
+     * 得到被所有动作使用的ActionManager对象。
      * @see setActionManager(ActionManager*)
-     * @return A ActionManager object.
+     * @return ActionManager对象。
      */
     virtual ActionManager* getActionManager() { return _actionManager; }
     virtual const ActionManager* getActionManager() const { return _actionManager; }
 
     /**
-     * Executes an action, and returns the action that is executed.
+     * 执行一个动作，并且返回执行的该动作。
      *
-     * This node becomes the action's target. Refer to Action::getTarget()
-     * @warning Actions don't retain their target.
+     * 这个节点将会变成动作的目标，参考Action::getTarget()
+     * @warning Actions（动作）不存储它的目标。
      *
-     * @return An Action pointer
+     * @return Action（动作）指针
      */
     Action* runAction(Action* action);
 
     /**
-     * Stops and removes all actions from the running action list .
+     * 停止并且删除所有的动作从活动动作列表中。
      */
     void stopAllActions();
 
     /**
-     * Stops and removes an action from the running action list.
+     * 停止并且删除所有的动作从活动动作列表中。
      *
-     * @param action    The action object to be removed.
+     * @param action    将要被删除的动作对象。
      */
     void stopAction(Action* action);
 
     /**
-     * Removes an action from the running action list by its tag.
+     * 通过动作的标记从活动动作列表中删除一个动作。
      *
-     * @param tag   A tag that indicates the action to be removed.
+     * @param tag   一个指示将要被删除的动作的标记。
      */
     void stopActionByTag(int tag);
 
     /**
-     * Gets an action from the running action list by its tag.
+     * 通过动作的标记从活动动作列表中得到一个动作。
      *
      * @see `setTag(int)`, `getTag()`.
      *
-     * @return The action object with the given tag.
+     * @return 动作对象拥有给定的标记。
      */
     Action* getActionByTag(int tag);
 
