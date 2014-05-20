@@ -33,24 +33,25 @@ extern "C" {
 namespace cocos2d {
 
 /** @file
- base64 helper functions
+ base64 助手(helper)函数
  */
 
 /** 
- * Decodes a 64base encoded memory. The decoded memory is
- * expected to be freed by the caller by calling `free()`
+ * 解码base64编码的内存信息, 解码后的内存信息(指in)应该调用`free()`函数释放.
+ * 注:原文为decoded memory, 但是释放的应该是已经处理过的内存区域, 实现中仅会在
+ * 解码失败时释放out内存区域.
  *
- * @returns the length of the out buffer
+ * @returns 输出缓冲区的长度
  *
  @since v0.8.1
  */
 int base64Decode(const unsigned char *in, unsigned int inLength, unsigned char **out);
     
 /**
- * Encodes bytes into a 64base encoded memory with terminating '\0' character. 
- * The encoded memory is expected to be freed by the caller by calling `free()`
+ * 把给定字符编码为以'\0'结尾的base64编码的内存信息.
+ * 编码后的内存信息(指in)应该调用`free()`函数释放.
  *
- * @returns the length of the out buffer
+ * @returns 输出缓冲区的长度
  *
  @since v2.1.4
  */

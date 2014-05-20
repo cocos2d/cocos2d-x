@@ -36,12 +36,11 @@ THE SOFTWARE.
 */
 
 /** @def CC_ENABLE_STACKABLE_ACTIONS
- If enabled, actions that alter the position property (eg: MoveBy, JumpBy, BezierBy, etc..) will be stacked.
- If you run 2 or more 'position' actions at the same time on a node, then end position will be the sum of all the positions.
- If disabled, only the last run action will take effect.
+ 如果启用, 改变位置属性的动作(如 MoveBy, JumpBy, BezierBy..)将会放到栈里面. 
+ 如果在一个对象(`node`)上同时运行了2个或更多改变位置属性的动作, 这个对象(`node`)的最终位置会是所有改变位置属性动作的综合矢量和.
+ 如果禁用, 只有最后一个改变位置属性的动作会执行.
  
- Enabled by default. Disable to be compatible with v2.0 and older versions.
- 
+ 默认启用. 禁用是为了和v2.0或更旧的版本兼容.
  @since v2.1
  */
 #ifndef CC_ENABLE_STACKABLE_ACTIONS
@@ -49,19 +48,16 @@ THE SOFTWARE.
 #endif
 
 /** @def CC_ENABLE_GL_STATE_CACHE
- If enabled, cocos2d will maintain an OpenGL state cache internally to avoid unnecessary switches.
- In order to use them, you have to use the following functions, instead of the the GL ones:
-    - ccGLUseProgram() instead of glUseProgram()
-    - GL::deleteProgram() instead of glDeleteProgram()
-    - GL::blendFunc() instead of glBlendFunc()
+ 如果启用, cocos2d 会内部维护一个OpenGL状态缓存来避免不必要的切换.
+ 为了使用它们, 你必须要使用以下函数来替代 GL 那些.
+    - ccGLUseProgram() 替代 glUseProgram()
+    - GL::deleteProgram() 替代 glDeleteProgram()
+    - GL::blendFunc() 替代 glBlendFunc()
+ 如果这个功能禁用了, ccGLUseProgram(), GL::deleteProgram(), GL::blendFunc()会不使用(OpenGL状态)缓存调用 GL 那些函数.
+ 推荐启用, 无论何时都有可能提升速度.
+ 如果你在从GL ES1.1迁移代码, 请保持禁用. 当所有代码都如预期那样工作的时候, 再启用这项功能.
 
- If this functionality is disabled, then ccGLUseProgram(), GL::deleteProgram(), GL::blendFunc() will call the GL ones, without using the cache.
-
- It is recommended to enable whenever possible to improve speed.
- If you are migrating your code from GL ES 1.1, then keep it disabled. Once all your code works as expected, turn it on.
- 
- Default value: Enabled by default
- 
+ 默认值: 默认启用
  @since v2.0.0
  */
 #ifndef CC_ENABLE_GL_STATE_CACHE
@@ -69,22 +65,20 @@ THE SOFTWARE.
 #endif
 
 /** @def CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-If enabled, the texture coordinates will be calculated by using this formula:
-- texCoord.left = (rect.origin.x*2+1) / (texture.wide*2);
-- texCoord.right = texCoord.left + (rect.size.width*2-2)/(texture.wide*2);
+如果启用, 纹理贴图坐标将会使用以下公式计算:
+    - texCoord.left = (rect.origin.x*2+1) / (texture.wide*2);
+    - texCoord.right = texCoord.left + (rect.size.width*2-2)/(texture.wide*2);
+纹理贴图坐标的顶部和底部公式是同样的.The same for bottom and top.
 
-The same for bottom and top.
+这个公式使用了其纹理的99%的防止失真.
+正确防止失真的方法是使用spritesheet-artifact-fixer.py或一个相似的工具.
 
-This formula prevents artifacts by using 99% of the texture.
-The "correct" way to prevent artifacts is by using the spritesheet-artifact-fixer.py or a similar tool.
-
-Affected nodes:
-- Sprite / SpriteBatchNode and subclasses: LabelBMFont, TMXTiledMap
-- LabelAtlas
-- QuadParticleSystem
-- TileMap
-
-To enabled set it to 1. Disabled by default.
+影响的对象(nodes):
+    - Sprite / SpriteBatchNode and subclasses: LabelBMFont, TMXTiledMap
+    - LabelAtlas
+    - QuadParticleSystem
+    - TileMap
+启用请设置值为 1, 默认禁用.
 
 @since v0.99.5
 */
@@ -93,32 +87,32 @@ To enabled set it to 1. Disabled by default.
 #endif
 
 /** @def CC_DIRECTOR_FPS_INTERVAL
- Seconds between FPS updates.
- 0.5 seconds, means that the FPS number will be updated every 0.5 seconds.
- Having a bigger number means a more reliable FPS
- 
- Default value: 0.1f
+ FPS (数字)更新间隔(单位: 秒)
+ 0.5 秒表示 FPS 数字每隔0.5 秒更新一次.
+ 有一个更大的(FPS)数字表示一个更可靠的FPS.
+
+ 默认值: 0.1f
  */
 #ifndef CC_DIRECTOR_STATS_INTERVAL
 #define CC_DIRECTOR_STATS_INTERVAL (0.1f)
 #endif
 
 /** @def CC_DIRECTOR_FPS_POSITION
- Position of the FPS
+ FPS 数字的位置
 
- Default: 0,0 (bottom-left corner)
+ 默认值: 0,0(左下角)
  */
 #ifndef CC_DIRECTOR_FPS_POSITION
 #define CC_DIRECTOR_FPS_POSITION Vec2(0,0)
 #endif
 
 /** @def CC_DIRECTOR_DISPATCH_FAST_EVENTS
- If enabled, and only when it is used with FastDirector, the main loop will wait 0.04 seconds to
- dispatch all the events, even if there are not events to dispatch.
- If your game uses lot's of events (eg: touches) it might be a good idea to enable this feature.
- Otherwise, it is safe to leave it disabled.
- 
- To enable set it to 1. Disabled by default.
+ 如果启用, 只有此功能被FastDirector使用时, 主循环才会等待 0.04 秒去分发所有的活动(Event), 即使此时没有
+ 任何活动需要分发.
+ 如果你的游戏使用了大量的活动(如:touches), 使用此功能是个不错的主意.
+ 否则的话, 安全起见保持禁用.
+
+ 启用请设置值为 1. 默认禁用.
  
  @warning This feature is experimental
  */
@@ -127,14 +121,13 @@ To enabled set it to 1. Disabled by default.
 #endif
 
 /** @def CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
-If enabled, cocos2d-mac will run on the Display Link thread. If disabled cocos2d-mac will run in its own thread.
+如果启用, cocos2d-mac 将会在Display Link线程上运行. 如果禁用, cocos2d-mac 将会在自己的线程上运行.
+如果启用, 图像将会在正确的时间绘制出, 但是活动(Event)可能不会很及时响应.
+如果禁用, 一些帧会被跳过, 但是活动(Event)将会在到达时分发(产生即分发,及时响应).
 
-If enabled, the images will be drawn at the "correct" time, but the events might not be very responsive.
-If disabled, some frames might be skipped, but the events will be dispatched as they arrived.
+启用请设置值为 1. 禁用请设置值为 0. 默认启用. 
 
-To enable set it to a 1, to disable it set to 0. Enabled by default.
-
-Only valid for cocos2d-mac. Not supported on cocos2d-ios.
+仅仅在cocos2d-mac上有效. 不支持cocos2d-ios.
 
 */
 #ifndef CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
@@ -142,51 +135,51 @@ Only valid for cocos2d-mac. Not supported on cocos2d-ios.
 #endif
 
 /** @def CC_NODE_RENDER_SUBPIXEL
- If enabled, the Node objects (Sprite, Label,etc) will be able to render in subpixels.
- If disabled, integer pixels will be used.
- 
- To enable set it to 1. Enabled by default.
+ 如果启用, Node 对象(Sprite, Label等)将会以亚像素级别渲染.
+ 如果禁用, 将会使用整像素(integer pixels).
+
+ 启用请设置值为 1. 默认启用.
  */
 #ifndef CC_NODE_RENDER_SUBPIXEL
 #define CC_NODE_RENDER_SUBPIXEL 1
 #endif
 
 /** @def CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
- If enabled, the Sprite objects rendered with SpriteBatchNode will be able to render in subpixels.
- If disabled, integer pixels will be used.
- 
- To enable set it to 1. Enabled by default.
+ 如果启用, 使用 SpriteBatchNode 渲染的 Sprite 对象将会以亚像素(subpixels)渲染.
+ 如果禁用, 将会使用整像素(integer pixels).
+
+ 启用请设置值为 1. 默认启用.
  */
 #ifndef CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
 #define CC_SPRITEBATCHNODE_RENDER_SUBPIXEL    1
 #endif
 
 /** @def CC_TEXTURE_ATLAS_USE_VAO
- By default, TextureAtlas (used by many cocos2d classes) will use VAO (Vertex Array Objects).
- Apple recommends its usage but they might consume a lot of memory, specially if you use many of them.
- So for certain cases, where you might need hundreds of VAO objects, it might be a good idea to disable it.
- 
- To disable it set it to 0. Enabled by default.
+ 默认情况下, TextureAtlas(被很多 cocos2d 类使用)将会使用VAO(Vertex Array Objects).
+ 苹果公司推荐使用VAO, 不过VAO可能会消耗掉大量内存, 尤其是使用太多VAO的时候.
+ 所以在某些情况下, 当你需要使用数百个TextureAtlas对象时, 最好关闭这个功能.
+
+ 禁用请设置值为 0. 默认启用.
  
  */
 #ifndef CC_TEXTURE_ATLAS_USE_VAO
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
         #define CC_TEXTURE_ATLAS_USE_VAO 1
     #else
-        /* Some Windows display adapter driver cannot support VAO. */
-        /* Some android devices cannot support VAO very well, so we disable it by default for android platform. */
-        /* Blackberry also doesn't support this feature. */
+        /* 一些 Windows 显卡驱动程序不支持 VAO. */
+        /* 一些 android设备也不能很好的支持 VAO, 所以在android平台上我们默认禁用了此功能. */
+        /* Blackberry 也不支持这个功能. */
 		#define CC_TEXTURE_ATLAS_USE_VAO 0
     #endif
 #endif
 
 
 /** @def CC_USE_LA88_LABELS
- If enabled, it will use LA88 (Luminance Alpha 16-bit textures) for LabelTTF objects.
- If it is disabled, it will use A8 (Alpha 8-bit textures).
- LA88 textures are 6% faster than A8 textures, but they will consume 2x memory.
-
- This feature is enabled by default.
+ 如果启用, LabelTTF 对象将使用 LA88(Luminance Alpha 16-bit textures);
+ 如果禁用,将使用A8 (Alpha 8-bit textures).
+ LA88 纹理比 A8 快 6%, 但LA88纹理使用了2倍于A8纹理的内存.
+ 
+ 这个功能默认启用.
 
  @since v0.99.5
  */
@@ -195,93 +188,89 @@ Only valid for cocos2d-mac. Not supported on cocos2d-ios.
 #endif
 
 /** @def CC_SPRITE_DEBUG_DRAW
- If enabled, all subclasses of Sprite will draw a bounding box
- Useful for debugging purposes only. It is recommended to leave it disabled.
- 
- To enable set it to a value different than 0. Disabled by default:
+ 如果启用, 所有 Sprite 的子类都将绘制一个边界框(bounding box).
+ 仅在调试模式下有用. 推荐保持为禁用状态.
+
+ 设置一个非 0 值启用. 默认禁用.
  0 -- disabled
- 1 -- draw bounding box
- 2 -- draw texture box
- 0 -- disabled
- 1 -- draw bounding box
- 2 -- draw texture box
+ 1 -- draw bounding box // 绘制边界框
+ 2 -- draw texture box  // 绘制纹理框
 */
 #ifndef CC_SPRITE_DEBUG_DRAW
 #define CC_SPRITE_DEBUG_DRAW 0
 #endif
 
 /** @def CC_SPRITEBATCHNODE_DEBUG_DRAW
-If enabled, all subclasses of Sprite that are rendered using an SpriteBatchNode draw a bounding box.
-Useful for debugging purposes only. It is recommended to leave it disabled.
+ 如果启用, 所有渲染使用 SpriteBatchNode 的 Sprite 的子类都将绘制一个边界框(bounding box).
+ 仅在调试模式下有用. 推荐保持为禁用状态.
 
-To enable set it to a value different than 0. Disabled by default.
+ 设置一个非 0 值启用. 默认禁用.
 */
 #ifndef CC_SPRITEBATCHNODE_DEBUG_DRAW
 #define CC_SPRITEBATCHNODE_DEBUG_DRAW 0
 #endif
 
 /** @def CC_LABELBMFONT_DEBUG_DRAW
-If enabled, all subclasses of LabelBMFont will draw a bounding box
-Useful for debugging purposes only. It is recommended to leave it disabled.
+ 如果启用, 所有 LabelBMFont 的子类都将绘制一个边界框(bounding box).
+ 仅在调试模式下有用. 推荐保持为禁用状态.
 
-To enable set it to a value different than 0. Disabled by default.
+ 设置一个非 0 值启用. 默认禁用.
 */
 #ifndef CC_LABELBMFONT_DEBUG_DRAW
 #define CC_LABELBMFONT_DEBUG_DRAW 0
 #endif
 
 /** @def CC_LABELATLAS_DEBUG_DRAW
- If enabled, all subclasses of LabeltAtlas will draw a bounding box
- Useful for debugging purposes only. It is recommended to leave it disabled.
- 
- To enable set it to a value different than 0. Disabled by default.
+ 如果启用, 所有 LabeltAtlas 的子类都将绘制一个边界框(bounding box).
+ 仅在调试模式下有用. 推荐保持为禁用状态.
+
+ 设置一个非 0 值启用. 默认禁用.
  */
 #ifndef CC_LABELATLAS_DEBUG_DRAW
 #define CC_LABELATLAS_DEBUG_DRAW 0
 #endif
 
 /** @def CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS
- If enabled (in conjunction with assertion macros) will verify on Node destruction that the node being destroyed has no event
- listeners still associated with it in the event dispatcher. This can be used to track down problems where the event dispatch 
- system has dangling pointers to destroyed nodes.
- 
- Note: event listener verification will always be disabled in builds where assertions are disabled regardless of this setting.
+ 如果启用(和断言一起), 将会验证 Node 对象析构—— node 析构时没有与 EventDispather 联系的 EventListener.
+ 这个可以用来查出那些问题—— EventDispather 系统含有指向已析构node的悬空指针.
+
+ 注意: 当断言被禁用时, 无论此处设置为何值, 构建过程中 EventListener 验证将总是禁用的.
  */
 #ifndef CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS
 #define CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS 0
 #endif
 
 /** @def CC_ENABLE_PROFILERS
- If enabled, will activate various profilers within cocos2d. This statistical data will be output to the console
- once per second showing average time (in milliseconds) required to execute the specific routine(s).
- Useful for debugging purposes only. It is recommended to leave it disabled.
- 
- To enable set it to a value different than 0. Disabled by default.
+ 如果启用, 将会激活 cocos2d 内各种各样的 profiler(分析工具). 这个统计数据每秒一次输出到控制台, 
+ 显示执行这些特定程式所需的平均时间(单位: 毫秒).
+ 仅在调试模式下有用. 推荐保持为禁用状态.
+
+ 设置一个非 0 值启用. 默认禁用.
  */
 #ifndef CC_ENABLE_PROFILERS
 #define CC_ENABLE_PROFILERS 0
 #endif
 
-/** Enable Lua engine debug log */
+/** 启用 lua 引擎调试日志 */
 #ifndef CC_LUA_ENGINE_DEBUG
 #define CC_LUA_ENGINE_DEBUG 0
 #endif
 
-/** Use physics integration API */
+/** 启用 physics 集成API */
 #ifndef CC_USE_PHYSICS
 #define CC_USE_PHYSICS 1
 #endif
 
-/** Enable Script binding */
+/** 启用脚本绑定 */
 #ifndef CC_ENABLE_SCRIPT_BINDING
 #define CC_ENABLE_SCRIPT_BINDING 1
 #endif
 
 /** @def CC_CONSTRUCTOR_ACCESS
- Indicate the init functions access modifier. If value equals to protected, then these functions are protected. 
- If value equals to public, these functions are public
- 
- protected by default.
+ 初始化函数的访问修饰符
+ 如果值为 protected, 那在这个修饰符下的函数都是 protected 的.
+ 如果值是 public, 那些函数就是 public 的.
+ 默认值 protected.
  */
 #ifndef CC_CONSTRUCTOR_ACCESS
 #define CC_CONSTRUCTOR_ACCESS protected
