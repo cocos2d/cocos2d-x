@@ -122,9 +122,6 @@ def main():
     if(ret != 0):
         return(2)
 
-    #copy check_current_3rd_libs
-    check_current_3rd_libs(branch)
-
     #build
     #TODO: add android-linux build
     #TODO: add mac build
@@ -140,6 +137,8 @@ def main():
         os.system('git reset --hard')
         os.system("git clean -xdf -f")
         make_temp_dir()
+        #copy check_current_3rd_libs
+        check_current_3rd_libs(branch)
         if(branch == 'v3'):
           # Generate binding glue codes
           ret = os.system("python tools/jenkins-scripts/gen_jsb.py")
