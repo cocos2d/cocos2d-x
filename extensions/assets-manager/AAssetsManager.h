@@ -135,6 +135,8 @@ public:
     
     void addNoLocalManifestErrorListener(const std::function<void(EventCustom*)>& callback, int priority = 1);
     
+    void destroyDownloadedVersion();
+    
     
     /* @brief Call back function for error
      @param errorCode Type of error

@@ -557,8 +557,6 @@ void AAssetsManager::update()
 
 void AAssetsManager::onError(const Downloader::Error &error)
 {
-    _totalWaitToDownload--;
-    
     CCLOG("%d : %s\n", error.code, error.message.c_str());
     
     // Skip version error occured
@@ -569,9 +567,13 @@ void AAssetsManager::onError(const Downloader::Error &error)
         checkUpdate();
     }
     else if (error.customId == "@manifest")
+    {
         dispatchUpdateEvent(UpdateEventCode::FAIL_DOWNLOAD_MANIFEST);
+    }
     else
+    {
         dispatchUpdateEvent(UpdateEventCode::UPDATING_ERROR, error.message, error.customId);
+    }
 }
 
 void AAssetsManager::onProgress(double total, double downloaded, const std::string &url, const std::string &customId)
@@ -587,7 +589,6 @@ void AAssetsManager::onProgress(double total, double downloaded, const std::stri
 void AAssetsManager::onSuccess(const std::string &srcUrl, const std::string &customId)
 {
     CCLOG("SUCCEED: %s\n", customId.c_str());
-    _totalWaitToDownload--;
     
     if (customId == "@version")
     {
@@ -601,6 +602,8 @@ void AAssetsManager::onSuccess(const std::string &srcUrl, const std::string &cus
     }
     else
     {
+        _totalWaitToDownload--;
+        
         std::string eventName = getLoadedEventName(customId);
         EventCustom event(eventName);
         std::string cid = customId;
@@ -630,11 +633,18 @@ void AAssetsManager::onSuccess(const std::string &srcUrl, const std::string &cus
             dispatchUpdateEvent(UpdateEventCode::FINISHED_UPDATE);
         }
         // Finished with error check
-        if (_totalWaitToDownload == 0)
+        if (_totalWaitToDownload > 0)
         {
             dispatchUpdateEvent(UpdateEventCode::FINISHED_WITH_ERROR);
+            destroyDownloadedVersion();
         }
     }
+}
+
+void AAssetsManager::destroyDownloadedVersion()
+{
+    destroyFile(_storagePath + VERSION_FILENAME);
+    destroyFile(_storagePath + MANIFEST_FILENAME);
 }
 
 NS_CC_EXT_END;
