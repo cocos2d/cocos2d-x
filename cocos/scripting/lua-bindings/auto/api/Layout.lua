@@ -1,7 +1,7 @@
 
 --------------------------------
 -- @module Layout
--- @extend Widget,LayoutProtocol
+-- @extend Widget
 
 --------------------------------
 -- @function [parent=#Layout] setBackGroundColorVector 
