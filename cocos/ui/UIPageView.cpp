@@ -435,18 +435,18 @@ bool PageView::scrollPages(float touchOffset)
     switch (_touchMoveDir)
     {
         case TouchDirection::LEFT: // left
-            if (_rightChild->getRightBoundary() + touchOffset <= _rightBoundary)
+            if (_rightChild->getRightInParent() + touchOffset <= _rightBoundary)
             {
-                realOffset = _rightBoundary - _rightChild->getRightBoundary();
+                realOffset = _rightBoundary - _rightChild->getRightInParent();
                 movePages(realOffset);
                 return false;
             }
             break;
             
         case TouchDirection::RIGHT: // right
-            if (_leftChild->getLeftBoundary() + touchOffset >= _leftBoundary)
+            if (_leftChild->getLeftInParent() + touchOffset >= _leftBoundary)
             {
-                realOffset = _leftBoundary - _leftChild->getLeftBoundary();
+                realOffset = _leftBoundary - _leftChild->getLeftInParent();
                 movePages(realOffset);
                 return false;
             }
