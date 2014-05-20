@@ -158,7 +158,7 @@ In v3.1, we decoupled the shader state from the shader. We added the `GLProgramS
 
 The API is the following:
 
-```
+```c++
 auto glprogram = GLProgram::create(...);
 
 // it will automatically parse all the attributes and uniforms
