@@ -32,7 +32,7 @@
 NS_CC_EXT_BEGIN
 
 /**
- * Abstract class for SWTableView cell node
+ * 用于表示TableView中单元格的抽象类（译者注：此处没有纯虚函数，实际为普通基类，不能算抽象类）
  */
 class TableViewCell: public Node
 {
@@ -41,12 +41,12 @@ public:
     
     TableViewCell() {}
     /**
-     * The index used internally by SWTableView and its subclasses
+     * TableView及其派生类内部使用的索引
      */
     ssize_t getIdx() const;
     void setIdx(ssize_t uIdx);
     /**
-     * Cleans up any resources linked to this cell and resets <code>idx</code> property.
+     * 对此单元格中一切相关的资源进行清理，并重置 <code>idx</code> 属性
      */
     void reset();
 
