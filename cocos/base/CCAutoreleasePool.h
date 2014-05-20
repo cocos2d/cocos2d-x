@@ -41,14 +41,14 @@ class CC_DLL AutoreleasePool
 {
 public:
     /**
-     * @warn Don't create an auto release pool in heap, create it in stack.
+     * @warn 在栈上创建AutoreleasePool,不要在堆上创建。
      * @js NA
      * @lua NA
      */
     AutoreleasePool();
     
     /**
-     * Create an autorelease pool with specific name. This name is useful for debugging.
+     * 创建一个特定名称的AutoreleasePool. 这个名称在调试的时候有用。
      */
     AutoreleasePool(const std::string &name);
     
@@ -59,23 +59,22 @@ public:
     ~AutoreleasePool();
 
     /**
-     * Add a given object to this pool.
+     * 添加一个对象到当前pool。
      *
-     * The same object may be added several times to the same pool; When the
-     * pool is destructed, the object's Ref::release() method will be called
-     * for each time it was added.
+     * 同一个对象可以多次添加到pool，
+     * 当pool被销毁的时候，对象的Ref::release()方法将被调用多次（和add的次数一致）
      *
-     * @param object    The object to add to the pool.
+     * @param object    将被加入到pool的对象.
      * @js NA
      * @lua NA
      */
     void addObject(Ref *object);
 
     /**
-     * Clear the autorelease pool.
+     * 清理pool.
      *
-     * Ref::release() will be called for each time the managed object is
-     * added to the pool.
+     * 对象的Ref::release()方法将被调用多次 （和add的次数一致）
+     * 
      * @js NA
      * @lua NA
      */
@@ -83,41 +82,39 @@ public:
     
 #if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
     /**
-     * Whether the pool is doing `clear` operation.
+     * pool是否正在做清理操作。
      */
     bool isClearing() const { return _isClearing; };
 #endif
     
     /**
-     * Checks whether the pool contains the specified object.
+     * 检查pool是否包含指定的对象。
      */
     bool contains(Ref* object) const;
 
     /**
-     * Dump the objects that are put into autorelease pool. It is used for debugging.
+     * 打印添加到pool的所有对象信息。调试使用。
      *
-     * The result will look like:
-     * Object pointer address     object id     reference count
+     * 结果将以下面的格式输出:
+     * 对象指针地址     对象id     引用计数
      *
      */
     void dump();
     
 private:
     /**
-     * The underlying array of object managed by the pool.
+     * 内部数组管理pool中的对象。
      *
-     * Although Array retains the object once when an object is added, proper
-     * Ref::release() is called outside the array to make sure that the pool
-     * does not affect the managed object's reference count. So an object can
-     * be destructed properly by calling Ref::release() even if the object
-     * is in the pool.
+     * 尽管数组中包含了添加到pool的对象，
+     * 对象的Ref::release()方法是在数组外被调用以保证不影响对象的引用计数。
+     * 所以对象可以调用Ref::release()来销毁，即使对象已被添加到pool。
      */
     std::vector<Ref*> _managedObjectArray;
     std::string _name;
     
 #if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
     /**
-     *  The flag for checking whether the pool is doing `clear` operation.
+     *  用来检查pool是否在清理的标识。
      */
     bool _isClearing;
 #endif
@@ -141,8 +138,8 @@ public:
     static void destroyInstance();
     
     /**
-     * Get current auto release pool, there is at least one auto release pool that created by engine.
-     * You can create your own auto release pool at demand, which will be put into auto releae pool stack.
+     * 获取当前pool，引擎至少会创建一个AutoreleasePool。
+     * 你可以创建自己的AutoreleasePool，并添加到AutoreleasePool栈。
      */
     AutoreleasePool *getCurrentPool() const;
 
