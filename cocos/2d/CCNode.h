@@ -870,26 +870,26 @@ public:
     /// @name Event Callbacks
 
     /**
-     * Event callback that is invoked every time when Node enters the 'stage'.
-     * If the Node enters the 'stage' with a transition, this event is called when the transition starts.
-     * During onEnter you can't access a "sister/brother" node.
-     * If you override onEnter, you shall call its parent's one, e.g., Node::onEnter().
+     * 每次当Node进入“stage”时才调用事件回调。
+     * 如果Node进入“stage”状态时伴随着一个转换（transition）,那么事件将会在这个转换开始的时候被调用。
+     * 在onEnter过程中，你不能够接入“sister/brother”兄妹节点。
+     * 如果你重写了onEnter方法，你应该调用它的父类，e.g., Node::onEnter().
      * @js NA
      * @lua NA
      */
     virtual void onEnter();
 
-    /** Event callback that is invoked when the Node enters in the 'stage'.
-     * If the Node enters the 'stage' with a transition, this event is called when the transition finishes.
-     * If you override onEnterTransitionDidFinish, you shall call its parent's one, e.g. Node::onEnterTransitionDidFinish()
+    /** 每次当Node进入“stage”时才调用事件回调。
+     * 如果Node进入“stage”状态时伴随着一个转换（transition）,那么事件将会在这个转换结束的时候被调用。
+     * 如果你重写了onEnterTransitionDidFinish方法 你应该调用它的父类, e.g. Node::onEnterTransitionDidFinish()
      * @js NA
      * @lua NA
      */
     virtual void onEnterTransitionDidFinish();
 
     /**
-     * Event callback that is invoked every time the Node leaves the 'stage'.
-     * If the Node leaves the 'stage' with a transition, this event is called when the transition finishes.
+     * 每次当Node离开“stage”时才调用事件回调。
+     * 如果Node离开“stage”状态时伴随着一个转换（transition）, 那么事件将会在这个转换结束的时候被调用。
      * During onExit you can't access a sibling node.
      * If you override onExit, you shall call its parent's one, e.g., Node::onExit().
      * @js NA
