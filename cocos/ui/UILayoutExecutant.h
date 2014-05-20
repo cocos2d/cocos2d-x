@@ -26,12 +26,15 @@
 #define __cocos2d_libs__CCLayoutExecutant__
 
 #include "base/CCRef.h"
+#include "base/CCVector.h"
 
 NS_CC_BEGIN
 
 namespace ui {
     
 class LayoutProtocol;
+class Widget;
+class RelativeLayoutParameter;
 
 class LayoutExecutant : public Ref
 {
@@ -67,6 +70,20 @@ public:
     virtual ~RelativeLayoutExecutant(){};
     static RelativeLayoutExecutant* create();
     virtual void doLayout(LayoutProtocol *layout) override;
+    
+protected:
+    Vector<Widget*> getAllWidgets(LayoutProtocol *layout);
+    Widget* getRelativeWidget(Widget* widget);
+    bool caculateFinalPositionWithRelativeWidget(LayoutProtocol *layout);
+    void caculateFinalPositionWithRelativeAlign();
+    
+    ssize_t _unlayoutChildCount = 0;
+    Vector<Widget*> _widgetChildren;
+    Widget* _widget = nullptr;
+    float _finalPositionX = 0.0;
+    float _finalPositionY = 0.0;
+    
+    RelativeLayoutParameter* _relativeWidgetLP = nullptr;
 };
 
 }
