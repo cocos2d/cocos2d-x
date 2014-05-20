@@ -83,7 +83,7 @@ void Downloader::setConnectionTimeout(int timeout)
 
 void Downloader::notifyError(ErrorCode code, const std::string &msg/* ="" */, const std::string &customId/* ="" */)
 {
-    Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
+    Director::getInstance()->getScheduler()->performFunctionInCocosThread([code, msg, customId, this]{
         Error err;
         err.code = code;
         err.message = msg;
@@ -186,26 +186,27 @@ void Downloader::download(const std::string &srcUrl, FILE *fp, const std::string
     curl_easy_setopt(curl, CURLOPT_NOPROGRESS, false);
     curl_easy_setopt(curl, CURLOPT_PROGRESSFUNCTION, downloadProgressFunc);
     curl_easy_setopt(curl, CURLOPT_PROGRESSDATA, &data);
+    curl_easy_setopt(curl, CURLOPT_FAILONERROR, true);
     if (_connectionTimeout) curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, _connectionTimeout);
     curl_easy_setopt(curl, CURLOPT_NOSIGNAL, 1L);
     curl_easy_setopt(curl, CURLOPT_LOW_SPEED_LIMIT, LOW_SPEED_LIMIT);
     curl_easy_setopt(curl, CURLOPT_LOW_SPEED_TIME, LOW_SPEED_TIME);
     
     res = curl_easy_perform(curl);
-    curl_easy_cleanup(curl);
-    if (res != 0)
+    if (res != CURLE_OK)
     {
         this->notifyError(ErrorCode::NETWORK, "Error when download file", customId);
-        fclose(fp);
-        return;
     }
-    
-    Director::getInstance()->getScheduler()->performFunctionInCocosThread([srcUrl, customId, this]{
-        if (this->_delegate)
-            this->_delegate->onSuccess(srcUrl, customId);
-    });
-    
+    else
+    {
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([srcUrl, customId, this]{
+            if (this->_delegate)
+                this->_delegate->onSuccess(srcUrl, customId);
+        });
+    }
     fclose(fp);
+    curl_easy_cleanup(curl);
+    
 }
 
 NS_CC_EXT_END;
