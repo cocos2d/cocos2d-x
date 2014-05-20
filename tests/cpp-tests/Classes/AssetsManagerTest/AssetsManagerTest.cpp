@@ -84,7 +84,7 @@ void AssetsManagerLoaderScene::runThisTest()
     
     TTFConfig config("fonts/tahoma.ttf", 40);
     Label *progress = Label::createWithTTF(config, "0%", TextHAlignment::CENTER);
-    progress->setPosition( Vector2(VisibleRect::center().x, VisibleRect::center().y + 50) );
+    progress->setPosition( Vec2(VisibleRect::center().x, VisibleRect::center().y + 50) );
     layer->addChild(progress);
     
     layer->release();
