@@ -295,3 +295,5 @@ In order to try to make the transition easier to v3.1, we created a tool that fi
 ## deprecated functions and  global variables
 
 TODO: The old Math API
+
+#QA release for v3.1
