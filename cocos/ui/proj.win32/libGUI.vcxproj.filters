@@ -87,6 +87,9 @@
     <ClInclude Include="..\UIVBox.h">
       <Filter>Layouts</Filter>
     </ClInclude>
+    <ClInclude Include="..\UILayoutExecutant.h">
+      <Filter>Layouts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UIScrollView.cpp">
@@ -153,6 +156,9 @@
       <Filter>Layouts</Filter>
     </ClCompile>
     <ClCompile Include="..\UIVBox.cpp">
+      <Filter>Layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UILayoutExecutant.cpp">
       <Filter>Layouts</Filter>
     </ClCompile>
   </ItemGroup>
