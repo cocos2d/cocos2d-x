@@ -77,7 +77,7 @@ void AssetsManagerLoaderScene::runThisTest()
     std::string managerId = sceneId[currentId], manifestPath = sceneManifests[currentId], storagePath = storagePaths[currentId];
     
     Sprite *sprite = Sprite::create("Images/Icon.png");
-    auto layer = new Layer();
+    auto layer = Layer::create();
     addChild(layer);
     layer->addChild(sprite);
     sprite->setPosition( VisibleRect::center() );
