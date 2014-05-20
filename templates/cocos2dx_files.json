@@ -938,6 +938,8 @@
         "cocos/ui/UIImageView.h", 
         "cocos/ui/UILayout.cpp", 
         "cocos/ui/UILayout.h", 
+        "cocos/ui/UILayoutExecutant.cpp", 
+        "cocos/ui/UILayoutExecutant.h", 
         "cocos/ui/UILayoutParameter.cpp", 
         "cocos/ui/UILayoutParameter.h", 
         "cocos/ui/UIListView.cpp", 
