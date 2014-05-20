@@ -45,6 +45,10 @@ class AAssetsManager : public Ref, DownloaderDelegateProtocol
 public:
     enum UpdateEventCode
     {
+        FAIL_DOWNLOAD_MANIFEST,
+        
+        FAIL_PARSE_MANIFEST,
+        
         NEW_VERSION_FOUND,
         
         ALREADY_UP_TO_DATE,

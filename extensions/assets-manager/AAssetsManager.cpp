@@ -81,6 +81,8 @@ AAssetsManager::AAssetsManager(const std::string &managerId, const std::string& 
 , _waitToUpdate(false)
 , _manifestUrl(manifestUrl)
 , _assets(nullptr)
+, _localManifest(nullptr)
+, _remoteManifest(nullptr)
 {
     // Init writable path
     if (s_nWritableRoot.size() == 0) {
@@ -98,6 +100,7 @@ AAssetsManager::AAssetsManager(const std::string &managerId, const std::string& 
     setStoragePath(storagePath);
     
     loadManifest(manifestUrl);
+    CCLOG("%s\n%s\n%p\n", _manifestUrl.c_str(), _storagePath.c_str(), this);
 }
 
 AAssetsManager::~AAssetsManager()
@@ -106,7 +109,7 @@ AAssetsManager::~AAssetsManager()
 
 AAssetsManager* AAssetsManager::create(const std::string &managerId, const std::string& manifestUrl, const std::string& storagePath/* = ""*/)
 {
-    auto* manager = new AAssetsManager(managerId, manifestUrl, storagePath);
+    AAssetsManager* manager = new AAssetsManager(managerId, manifestUrl, storagePath);
     manager->autorelease();
     return manager;
 }
@@ -123,24 +126,29 @@ void AAssetsManager::setLocalManifest(Manifest *manifest)
 
 void AAssetsManager::loadManifest(const std::string& manifestUrl)
 {
+    _localManifest = nullptr;
     std::string cachedManifest = _storagePath + MANIFEST_FILENAME;
     // Prefer to use the cached manifest file, if not found use user configured manifest file
     // Prepend storage path to avoid multi package conflict issue
     if (_fileUtils->isFileExist(cachedManifest))
-        setLocalManifest(new Manifest(cachedManifest));
-    
-    // Fail to found cached manifest file
-    if (!_localManifest) {
-        setLocalManifest(new Manifest(_manifestUrl));
+    {
+        Manifest *manifest = new Manifest(cachedManifest);
+        if (manifest->isLoaded())
+            setLocalManifest(manifest);
+        else
+            destroyFile(cachedManifest);
     }
-    // Fail to load cached manifest file
-    else if (!_localManifest->isLoaded()) {
-        destroyFile(cachedManifest);
-        _localManifest->parse(_manifestUrl);
+    
+    // Fail to found or load cached manifest file
+    if (_localManifest == nullptr)
+    {
+        Manifest *manifest = new Manifest(_manifestUrl);
+        if (manifest->isLoaded())
+            setLocalManifest(manifest);
     }
     
     // Fail to load local manifest
-    if (!_localManifest->isLoaded())
+    if (_localManifest == nullptr || !_localManifest->isLoaded())
     {
         CCLOG("AssetsManager : No local manifest file found error.");
         EventCustom event(_managerId + NO_LOCAL_MANIFEST);
@@ -376,7 +384,7 @@ void AAssetsManager::checkUpdate()
         break;
         case VERSION_LOADED:
         {
-            if (!_remoteManifest)
+            if (_remoteManifest == nullptr)
                 _remoteManifest = new Manifest(_storagePath + VERSION_FILENAME);
             else
                 _remoteManifest->parse(_storagePath + VERSION_FILENAME);
@@ -418,17 +426,18 @@ void AAssetsManager::checkUpdate()
                 _downloader->downloadAsync(manifestUrl, _storagePath + MANIFEST_FILENAME, "@manifest");
                 _updateState = DOWNLOADING_MANIFEST;
             }
-            // No version file found
+            // No manifest file found
             else
             {
                 CCLOG("No manifest file found, check update failed\n");
+                dispatchUpdateEvent(UpdateEventCode::FAIL_DOWNLOAD_MANIFEST);
                 _updateState = UNKNOWN;
             }
         }
         break;
         case MANIFEST_LOADED:
         {
-            if (!_remoteManifest)
+            if (_remoteManifest == nullptr)
                 _remoteManifest = new Manifest(_storagePath + MANIFEST_FILENAME);
             else
                 _remoteManifest->parse(_storagePath + MANIFEST_FILENAME);
@@ -436,6 +445,7 @@ void AAssetsManager::checkUpdate()
             if (!_remoteManifest->isLoaded())
             {
                 CCLOG("Error parsing manifest file\n");
+                dispatchUpdateEvent(UpdateEventCode::FAIL_PARSE_MANIFEST);
                 _updateState = UNKNOWN;
             }
             else
@@ -488,7 +498,7 @@ void AAssetsManager::update()
             }
             
             // Check difference
-            if (_localManifest && _remoteManifest)
+            if (_localManifest != nullptr && _remoteManifest != nullptr)
             {
                 std::map<std::string, Manifest::AssetDiff> diff_map = _localManifest->genDiff(_remoteManifest);
                 if (diff_map.size() == 0)
@@ -507,7 +517,7 @@ void AAssetsManager::update()
                         Manifest::AssetDiff diff = it->second;
                         
                         if (diff.type == Manifest::DELETED) {
-// DELETE
+                            destroyFile(_storagePath + diff.asset.path);
                         }
                         else
                         {
@@ -549,15 +559,19 @@ void AAssetsManager::onError(const Downloader::Error &error)
 {
     _totalWaitToDownload--;
     
-    // Rollback check states when error occured
-    if (error.customId == "@version")
-    {
-        _updateState = PREDOWNLOAD_VERSION;
-    }
-    
     CCLOG("%d : %s\n", error.code, error.message.c_str());
     
-    dispatchUpdateEvent(UpdateEventCode::UPDATING_ERROR, error.message, error.customId);
+    // Skip version error occured
+    if (error.customId == "@version")
+    {
+        CCLOG("Error downloading version file, step skipped\n");
+        _updateState = PREDOWNLOAD_MANIFEST;
+        checkUpdate();
+    }
+    else if (error.customId == "@manifest")
+        dispatchUpdateEvent(UpdateEventCode::FAIL_DOWNLOAD_MANIFEST);
+    else
+        dispatchUpdateEvent(UpdateEventCode::UPDATING_ERROR, error.message, error.customId);
 }
 
 void AAssetsManager::onProgress(double total, double downloaded, const std::string &url, const std::string &customId)
