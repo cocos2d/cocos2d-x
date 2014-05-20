@@ -83,7 +83,7 @@ public:
     /**
      * Gets the string value of label.
      *
-     * @return text  string value.
+     * @return string value.
      */
     CC_DEPRECATED_ATTRIBUTE const std::string& getStringValue(){ return this->getString();}
     const std::string& getString()const;
@@ -100,7 +100,7 @@ public:
     /**
      * Sets the font size of label.
      *
-     * @param  font size.
+     * @param size font size.
      */
     void setFontSize(int size);
 
@@ -113,7 +113,7 @@ public:
      * Usage:  Text *text = Text::create("Hello", "Arial", 20);  //create a system font UIText
      *         text->setFontName("Marfelt");  // it will change the font  to  system font no matter the previous font type is TTF or system font
      *         text->setFontName("xxxx/xxx.ttf"); //it will change the font  to TTF font no matter the previous font type is TTF or system font
-     * @param  font name.
+     * @param name font name.
      */
     void setFontName(const std::string& name);
 
@@ -124,7 +124,7 @@ public:
     /**
      * Sets the touch scale enabled of label.
      *
-     * @param  touch scale enabled of label.
+     * @param enabled touch scale enabled of label.
      */
     void setTouchScaleChangeEnabled(bool enabled);
 
