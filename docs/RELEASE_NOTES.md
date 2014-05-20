@@ -113,8 +113,7 @@ Run
     
 ## How to start a new game
 
-Please refer to [ReadMe](../README.md). And there is a [document](https://github.com/chukong/cocos-docs/blob/master/manual/framework/native/getting-started/v3.0/how-to-start-a-new-game/en.md) for it.
-    
+Please refer to this document: [ReadMe](../README.md)
 
 # Highlights of v3.1
 
