@@ -31,7 +31,7 @@ struct {
 	{ "Texture Perf Test",[](Ref*sender){runTextureTest();} },
 	{ "Touches Perf Test",[](Ref*sender){runTouchesTest();} },
     { "Label Perf Test",[](Ref*sender){runLabelTest();} },
-    { "Renderer Perf Test",[](Ref*sender){runRendererTest();} },
+    //{ "Renderer Perf Test",[](Ref*sender){runRendererTest();} },
     { "Container Perf Test", [](Ref* sender ) { runContainerPerformanceTest(); } },
     { "EventDispatcher Perf Test", [](Ref* sender ) { runEventDispatcherPerformanceTest(); } },
     { "Scenario Perf Test", [](Ref* sender ) { runScenarioTest(); } },
