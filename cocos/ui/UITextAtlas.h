@@ -66,9 +66,9 @@ public:
                              const std::string& startCharMap);
     
     /** 
-	 * 根据字符串（string）、字符映射文件（char map file）（图集）、每个元素的宽度（width）和高度（height），
-	 * 图集（atlas）的开始字符初始化标签图集（LabelAtlas）
-	 */
+     * 根据字符串（string）、字符映射文件（char map file）（图集）、每个元素的宽度（width）和高度（height），
+     * 图集（atlas）的开始字符初始化标签图集（LabelAtlas）
+     */
     void setProperty(const std::string& stringValue,
                      const std::string& charMapFile,
                      int itemWidth,
@@ -85,8 +85,8 @@ public:
     
     /**
      * 获得标签（label）的字符串长度
-	 * 注：获得的长度会比原始字符串的长度长，
-	 * 如果你想得到原始字符串的长度， 你应用调用this->getString().size()来获得
+     * 注：获得的长度会比原始字符串的长度长，
+     * 如果你想得到原始字符串的长度， 你应用调用this->getString().size()来获得
      *
      * @return 字符串长度
      */
