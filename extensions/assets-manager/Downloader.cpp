@@ -28,7 +28,6 @@
 #include <curl/easy.h>
 #include <stdio.h>
 #include <thread>
-#include <future>
 
 using namespace cocos2d;
 
@@ -159,7 +158,8 @@ void Downloader::batchDownload(const std::map<std::string, Downloader::DownloadU
         std::string storagePath = unit.storagePath;
         std::string customId = unit.customId;
         
-        auto future = std::async(&Downloader::downloadSync, this, srcUrl, storagePath, customId);
+        auto t = std::thread(&Downloader::downloadSync, this, srcUrl, storagePath, customId);
+        t.detach();
     }
 }
 
