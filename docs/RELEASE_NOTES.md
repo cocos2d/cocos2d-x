@@ -40,7 +40,7 @@
 * OS X 10.7 or newer
 * Windows 7 or newer
 * Windows Phone 8 or newer
-* Linux Ubuntu 12.04 (or newer)
+* Linux Ubuntu 12.04 or newer
 * ~~Browsers via Emscripten~~ N/A for the moment
 
 ## Compiler Requirements
