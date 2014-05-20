@@ -52,7 +52,7 @@ class SpriteFrame;
  * @{
  */
 
-/** @brief MenuItem base class
+/** @brief MenuItem基类
  *
  *  子类菜单项（或任意一个子类）来创建自定义MenuItem对象.
  */
@@ -430,7 +430,7 @@ public:
     void setNormalSpriteFrame(SpriteFrame* frame);
     /** 设置精灵选中时候的图片 */
     void setSelectedSpriteFrame(SpriteFrame* frame);
-    /** s设置精灵禁用时候的图片 */
+    /** 设置精灵禁用时候的图片 */
     void setDisabledSpriteFrame(SpriteFrame* frame);
     
 CC_CONSTRUCTOR_ACCESS:

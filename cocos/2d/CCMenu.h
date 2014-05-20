@@ -96,14 +96,14 @@ public:
 
     /** 垂直对齐项目 */
     void alignItemsVertically();
-    /** 垂直对齐项目与填充
+    /** 垂直对齐项目且填充
     @since v0.7.2
     */
     void alignItemsVerticallyWithPadding(float padding);
 
     /** 水平对齐项目 */
     void alignItemsHorizontally();
-    /** 使项目水平与填充
+    /** 使项目水平且填充
     @since v0.7.2
     */
     void alignItemsHorizontallyWithPadding(float padding);
