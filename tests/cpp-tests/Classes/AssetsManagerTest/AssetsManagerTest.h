@@ -4,7 +4,7 @@
 #include "extensions/cocos-ext.h"
 #include "../testBasic.h"
 #include "../BaseTest.h"
-#include "extensions/assets-manager/AAssetsManager.h"
+#include "extensions/assets-manager/AssetsManager.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -46,7 +46,7 @@ public:
     static int currentScene;
     
 private:
-    AAssetsManager *_am;
+    AssetsManager *_am;
 };
 
 #endif /* defined(__AssetsManager_Test_H__) */

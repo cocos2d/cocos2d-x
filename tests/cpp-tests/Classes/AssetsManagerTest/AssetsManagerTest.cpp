@@ -89,7 +89,7 @@ void AssetsManagerLoaderScene::runThisTest()
     
     layer->release();
     
-    _am = AAssetsManager::create(managerId, manifestPath, storagePath);
+    _am = AssetsManager::create(managerId, manifestPath, storagePath);
     _am->retain();
     
     if (!_am->getLocalManifest()->isLoaded())
@@ -101,28 +101,28 @@ void AssetsManagerLoaderScene::runThisTest()
     else
     {
         _am->addUpdateEventListener([currentId](EventCustom* event){
-            AAssetsManager::UpdateEvent *e = (AAssetsManager::UpdateEvent *)event->getUserData();
+            AssetsManager::UpdateEvent *e = (AssetsManager::UpdateEvent *)event->getUserData();
             AssetsManagerTestScene *scene;
             switch (e->code)
             {
-                case AAssetsManager::FAIL_DOWNLOAD_MANIFEST:
-                case AAssetsManager::FAIL_PARSE_MANIFEST:
+                case AssetsManager::FAIL_DOWNLOAD_MANIFEST:
+                case AssetsManager::FAIL_PARSE_MANIFEST:
                     CCLOG("Fail to download manifest file, update skipped.");
                     scene = new AssetsManagerTestScene(backgroundPaths[currentId]);
                     Director::getInstance()->replaceScene(scene);
                     break;
-                case AAssetsManager::ALREADY_UP_TO_DATE:
-                case AAssetsManager::FINISHED_UPDATE:
+                case AssetsManager::ALREADY_UP_TO_DATE:
+                case AssetsManager::FINISHED_UPDATE:
                     CCLOG("Update succeeded.");
                     scene = new AssetsManagerTestScene(backgroundPaths[currentId]);
                     Director::getInstance()->replaceScene(scene);
                     break;
-                case AAssetsManager::FINISHED_WITH_ERROR:
+                case AssetsManager::FINISHED_WITH_ERROR:
                     CCLOG("Fail to update assets, update skipped.");
                     scene = new AssetsManagerTestScene(backgroundPaths[currentId]);
                     Director::getInstance()->replaceScene(scene);
                     break;
-                case AAssetsManager::UPDATING_ERROR:
+                case AssetsManager::UPDATING_ERROR:
                     CCLOG("Asset %s : %s.", e->assetId.c_str(), e->message.c_str());
                     scene = new AssetsManagerTestScene(backgroundPaths[currentId]);
                     Director::getInstance()->replaceScene(scene);
