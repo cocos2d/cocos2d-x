@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "ui/UIWidget.h"
 #include "ui/UILayout.h"
 #include "ui/UIHelper.h"
+#include "ui/UIFocusManager.h"
 
 NS_CC_BEGIN
 
@@ -1102,6 +1103,7 @@ void Widget::requestFocus()
     }
     
     this->dispatchFocusEvent(_focusedWidget, this);
+    FocusManager::getInstance()->setFirstFocsuedWidget(this);
 }
     
 void Widget::onFocusChange(Widget* widgetLostFocus, Widget* widgetGetFocus)

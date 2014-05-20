@@ -975,6 +975,10 @@
 		2905FA8E18CF08D100240AA3 /* UIWidget.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA1418CF08D100240AA3 /* UIWidget.h */; };
 		2905FA8F18CF08D100240AA3 /* UIWidget.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA1418CF08D100240AA3 /* UIWidget.h */; };
 		2986667F18B1B246000E39CA /* CCTweenFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2986667818B1B079000E39CA /* CCTweenFunction.cpp */; };
+		29CB8F6E192B4C8F00C841D6 /* UIFocusManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29CB8F6C192B4C8F00C841D6 /* UIFocusManager.cpp */; };
+		29CB8F6F192B4C8F00C841D6 /* UIFocusManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29CB8F6C192B4C8F00C841D6 /* UIFocusManager.cpp */; };
+		29CB8F70192B4C8F00C841D6 /* UIFocusManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 29CB8F6D192B4C8F00C841D6 /* UIFocusManager.h */; };
+		29CB8F71192B4C8F00C841D6 /* UIFocusManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 29CB8F6D192B4C8F00C841D6 /* UIFocusManager.h */; };
 		2AC795DB1862870F005EC8E1 /* SkeletonBounds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC795D918628689005EC8E1 /* SkeletonBounds.cpp */; };
 		2AC795DC1862870F005EC8E1 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC795D51862867D005EC8E1 /* Event.cpp */; };
 		2AC795DD1862870F005EC8E1 /* EventData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC795D71862867D005EC8E1 /* EventData.cpp */; };
@@ -2253,6 +2257,8 @@
 		29080DEB191B82CE0066F8DF /* UIDeprecated.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIDeprecated.h; sourceTree = "<group>"; };
 		2986667818B1B079000E39CA /* CCTweenFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTweenFunction.cpp; sourceTree = "<group>"; };
 		2986667918B1B079000E39CA /* CCTweenFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTweenFunction.h; sourceTree = "<group>"; };
+		29CB8F6C192B4C8F00C841D6 /* UIFocusManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIFocusManager.cpp; sourceTree = "<group>"; };
+		29CB8F6D192B4C8F00C841D6 /* UIFocusManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIFocusManager.h; sourceTree = "<group>"; };
 		2AC795D318628672005EC8E1 /* BoundingBoxAttachment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BoundingBoxAttachment.cpp; sourceTree = "<group>"; };
 		2AC795D418628672005EC8E1 /* BoundingBoxAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoundingBoxAttachment.h; sourceTree = "<group>"; };
 		2AC795D51862867D005EC8E1 /* Event.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Event.cpp; sourceTree = "<group>"; };
@@ -3951,6 +3957,8 @@
 				50E6D33218E174130051CA34 /* UIVBox.cpp */,
 				50E6D33318E174130051CA34 /* UIVBox.h */,
 				29080DEB191B82CE0066F8DF /* UIDeprecated.h */,
+				29CB8F6C192B4C8F00C841D6 /* UIFocusManager.cpp */,
+				29CB8F6D192B4C8F00C841D6 /* UIFocusManager.h */,
 			);
 			name = ui;
 			path = ../cocos/ui;
@@ -5069,6 +5077,7 @@
 				50ABBE3F1925AB6F00A911A9 /* CCDataVisitor.h in Headers */,
 				1AD71EDF180E26E600808F54 /* Slot.h in Headers */,
 				1AD71EE3180E26E600808F54 /* SlotData.h in Headers */,
+				29CB8F70192B4C8F00C841D6 /* UIFocusManager.h in Headers */,
 				1AD71EE7180E26E600808F54 /* spine-cocos2dx.h in Headers */,
 				1AD71EE9180E26E600808F54 /* spine.h in Headers */,
 				1AAF536C180E3374000584C8 /* HttpClient.h in Headers */,
@@ -5600,6 +5609,7 @@
 				50ABBE261925AB6F00A911A9 /* base64.h in Headers */,
 				1A8C59C2180E930E00EF57C3 /* CCComAudio.h in Headers */,
 				1A01C68718F57BE800EFE3A6 /* CCArray.h in Headers */,
+				29CB8F71192B4C8F00C841D6 /* UIFocusManager.h in Headers */,
 				1A01C6A718F58F7500EFE3A6 /* CCNotificationCenter.h in Headers */,
 				1A8C59C6180E930E00EF57C3 /* CCComController.h in Headers */,
 				50ABBEDA1925AB6F00A911A9 /* ZipUtils.h in Headers */,
@@ -6137,6 +6147,7 @@
 				1A570310180BCF190088DEC7 /* CCComponentContainer.cpp in Sources */,
 				B37510711823AC9F00B3BA6A /* CCPhysicsBodyInfo_chipmunk.cpp in Sources */,
 				1A01C69C18F57BE800EFE3A6 /* CCString.cpp in Sources */,
+				29CB8F6E192B4C8F00C841D6 /* UIFocusManager.cpp in Sources */,
 				50ABBD3C1925AB0000A911A9 /* CCGeometry.cpp in Sources */,
 				50ABC0011926664800A911A9 /* CCLock.cpp in Sources */,
 				50E6D30E18DADB5D0051CA34 /* CCProtectedNode.cpp in Sources */,
@@ -6497,6 +6508,7 @@
 				50ABBD4D1925AB0000A911A9 /* MathUtil.cpp in Sources */,
 				50ABBE3E1925AB6F00A911A9 /* CCDataVisitor.cpp in Sources */,
 				1A57009F180BC5D20088DEC7 /* CCNode.cpp in Sources */,
+				29CB8F6F192B4C8F00C841D6 /* UIFocusManager.cpp in Sources */,
 				B37510831823ACA100B3BA6A /* CCPhysicsShapeInfo_chipmunk.cpp in Sources */,
 				B29594CF1926D61F003EEF37 /* CCSprite3DDataCache.cpp in Sources */,
 				1A57010F180BC8EE0088DEC7 /* CCDrawingPrimitives.cpp in Sources */,
