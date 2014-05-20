@@ -1,13 +1,8 @@
 
 --------------------------------
 -- @module Widget
--- @extend ProtectedNode,LayoutParameterProtocol
+-- @extend ProtectedNode
 
---------------------------------
--- @function [parent=#Widget] clone 
--- @param self
--- @return Widget#Widget ret (return value: ccui.Widget)
-        
 --------------------------------
 -- @function [parent=#Widget] setSizePercent 
 -- @param self
@@ -19,9 +14,9 @@
 -- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
--- @function [parent=#Widget] getLeftBoundary 
+-- @function [parent=#Widget] setFlippedY 
 -- @param self
--- @return float#float ret (return value: float)
+-- @param #bool bool
         
 --------------------------------
 -- @function [parent=#Widget] setFlippedX 
@@ -29,9 +24,9 @@
 -- @param #bool bool
         
 --------------------------------
--- @function [parent=#Widget] getVirtualRenderer 
+-- @function [parent=#Widget] getLeftInParent 
 -- @param self
--- @return Node#Node ret (return value: cc.Node)
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- @function [parent=#Widget] getTouchEndPos 
@@ -69,9 +64,9 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- @function [parent=#Widget] getVirtualRendererSize 
+-- @function [parent=#Widget] getBottomInParent 
 -- @param self
--- @return size_table#size_table ret (return value: size_table)
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- @function [parent=#Widget] isHighlighted 
@@ -81,17 +76,13 @@
 --------------------------------
 -- @function [parent=#Widget] getLayoutParameter 
 -- @param self
+-- @param #ccui.LayoutParameter::Type type
 -- @return LayoutParameter#LayoutParameter ret (return value: ccui.LayoutParameter)
         
 --------------------------------
 -- @function [parent=#Widget] getPositionType 
 -- @param self
 -- @return Widget::PositionType#Widget::PositionType ret (return value: ccui.Widget::PositionType)
-        
---------------------------------
--- @function [parent=#Widget] getTopBoundary 
--- @param self
--- @return float#float ret (return value: float)
         
 --------------------------------
 -- @function [parent=#Widget] getChildByName 
@@ -108,6 +99,11 @@
 -- @function [parent=#Widget] isFocused 
 -- @param self
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#Widget] getVirtualRendererSize 
+-- @param self
+-- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
 -- @function [parent=#Widget] findNextFocusedWidget 
@@ -137,19 +133,14 @@
 -- @param #bool bool
         
 --------------------------------
--- @function [parent=#Widget] setActionTag 
--- @param self
--- @param #int int
-        
---------------------------------
 -- @function [parent=#Widget] setTouchEnabled 
 -- @param self
 -- @param #bool bool
         
 --------------------------------
--- @function [parent=#Widget] setFlippedY 
+-- @function [parent=#Widget] clone 
 -- @param self
--- @param #bool bool
+-- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
 -- @function [parent=#Widget] getTouchMovePos 
@@ -162,9 +153,9 @@
 -- @param #bool bool
         
 --------------------------------
--- @function [parent=#Widget] getRightBoundary 
+-- @function [parent=#Widget] getVirtualRenderer 
 -- @param self
--- @return float#float ret (return value: float)
+-- @return Node#Node ret (return value: cc.Node)
         
 --------------------------------
 -- @function [parent=#Widget] setBrightStyle 
@@ -197,9 +188,9 @@
 -- @param #bool bool
         
 --------------------------------
--- @function [parent=#Widget] getBottomBoundary 
+-- @function [parent=#Widget] setActionTag 
 -- @param self
--- @return float#float ret (return value: float)
+-- @param #int int
         
 --------------------------------
 -- @function [parent=#Widget] isBright 
@@ -219,6 +210,11 @@
 -- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
+-- @function [parent=#Widget] getTopInParent 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
 -- @function [parent=#Widget] requestFocus 
 -- @param self
         
@@ -235,6 +231,11 @@
 -- @function [parent=#Widget] getSize 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)
+        
+--------------------------------
+-- @function [parent=#Widget] getRightInParent 
+-- @param self
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- @function [parent=#Widget] getSizeType 
