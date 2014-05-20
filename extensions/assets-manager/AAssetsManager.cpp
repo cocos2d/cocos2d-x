@@ -572,6 +572,7 @@ void AAssetsManager::onError(const Downloader::Error &error)
     }
     else
     {
+        _totalWaitToDownload--;
         dispatchUpdateEvent(UpdateEventCode::UPDATING_ERROR, error.message, error.customId);
     }
 }
@@ -628,18 +629,20 @@ void AAssetsManager::onSuccess(const std::string &srcUrl, const std::string &cus
             _eventDispatcher->dispatchEvent(&updateEvent);
         }
         // Finish check
-        if (_downloadUnits.size() == 0)
+        if (_totalWaitToDownload == 0)
         {
-            // Every thing is correctly downloaded, swap the localManifest
-            setLocalManifest(_remoteManifest);
-            
-            dispatchUpdateEvent(UpdateEventCode::FINISHED_UPDATE);
-        }
-        // Finished with error check
-        if (_totalWaitToDownload > 0)
-        {
-            dispatchUpdateEvent(UpdateEventCode::FINISHED_WITH_ERROR);
-            destroyDownloadedVersion();
+            // Finished with error check
+            if (_downloadUnits.size() > 0)
+            {
+                dispatchUpdateEvent(UpdateEventCode::FINISHED_WITH_ERROR);
+                destroyDownloadedVersion();
+            }
+            else
+            {
+                // Every thing is correctly downloaded, swap the localManifest
+                setLocalManifest(_remoteManifest);
+                dispatchUpdateEvent(UpdateEventCode::FINISHED_UPDATE);
+            }
         }
     }
 }
