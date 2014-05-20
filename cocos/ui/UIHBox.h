@@ -37,24 +37,24 @@ class HBox : public Layout{
 public:
     
     /**
-     * Default constructor
+     * 默认构造函数（constructor）
      */
     HBox();
     
     /**
-     * Default destructor
+     * 默认解析函数（destructor）
      */
     virtual ~HBox();
     
     /**
-     * Allocates and initializes a HBox.
+     * 分配（Allocates）并初始化（initializes）一个HBox.
      */
     static HBox* create();
     
     static HBox* create(const Size& size);
     
 CC_CONSTRUCTOR_ACCESS:
-    //initializes state of widget.
+    //widget的初始化阶段（initializes state）
     virtual bool init() override;
     virtual bool initWithSize(const Size& size);
 };
