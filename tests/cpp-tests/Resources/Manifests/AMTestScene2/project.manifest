@@ -1,6 +1,6 @@
 {
 	"packageUrl" : "http://tools.itharbors.com/assets_manager/AMTestScene2/",
-	"remoteVersionUrl" : "http://tools.itharbors.com/assets_manager/AMTestScene2/version.manifest",
+	"remoteManifestUrl" : "http://tools.itharbors.com/assets_manager/AMTestScene2/project.manifest",
 	"version" : "1.0.0",
 	"groupVersions" : {
 		"1" : "1.0.0"

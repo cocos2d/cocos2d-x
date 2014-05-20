@@ -5,7 +5,7 @@
 std::vector<std::string> sceneId {"AMTestScene1", "AMTestScene2", "AMTestScene3"};
 std::vector<std::string> sceneManifests {"Manifests/AMTestScene1/project.manifest", "Manifests/AMTestScene2/project.manifest", "Manifests/AMTestScene3/project.manifest"};
 std::vector<std::string> storagePaths {"CppTests/AssetsManagerTest/scene1/", "CppTests/AssetsManagerTest/scene2/", "CppTests/AssetsManagerTest/scene3"};
-std::vector<std::string> backgroundPaths {"Images/background1.jpg", "Images/background2.jpg", "background3.png"};
+std::vector<std::string> backgroundPaths {"Images/background1.jpg", "Images/background2.jpg", "Images/background3.png"};
 
 AssetsManagerTestLayer::AssetsManagerTestLayer(std::string spritePath)
 : _spritePath(spritePath)
@@ -99,18 +99,25 @@ void AssetsManagerLoaderScene::runThisTest()
             AssetsManagerTestScene *scene;
             switch (e->code)
             {
+                case AAssetsManager::FAIL_DOWNLOAD_MANIFEST:
+                case AAssetsManager::FAIL_PARSE_MANIFEST:
+                    CCLOG("Fail to download manifest file, update skipped.");
+                    scene = new AssetsManagerTestScene(backgroundPaths[currentId]);
+                    Director::getInstance()->replaceScene(scene);
+                    break;
                 case AAssetsManager::ALREADY_UP_TO_DATE:
                 case AAssetsManager::FINISHED_UPDATE:
+                    CCLOG("Update succeeded.");
                     scene = new AssetsManagerTestScene(backgroundPaths[currentId]);
                     Director::getInstance()->replaceScene(scene);
                     break;
                 case AAssetsManager::FINISHED_WITH_ERROR:
-                    CCLOG("Fail to update assets, step skipped.");
+                    CCLOG("Fail to update assets, update skipped.");
                     scene = new AssetsManagerTestScene(backgroundPaths[currentId]);
                     Director::getInstance()->replaceScene(scene);
                     break;
                 case AAssetsManager::UPDATING_ERROR:
-                    CCLOG("Asset %s : %s", e->assetId.c_str(), e->message.c_str());
+                    CCLOG("Asset %s : %s.", e->assetId.c_str(), e->message.c_str());
                     scene = new AssetsManagerTestScene(backgroundPaths[currentId]);
                     Director::getInstance()->replaceScene(scene);
                     break;
