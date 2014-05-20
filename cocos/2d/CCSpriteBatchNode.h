@@ -47,18 +47,15 @@ NS_CC_BEGIN
 
 class Sprite;
 
-/** SpriteBatchNode is like a batch node: if it contains children, it will draw them in 1 single OpenGL call
-* (often known as "batch draw").
+/** SpriteBatchNode与批量节点类似，如果包含子节点会在一次OpenGL调用内绘制完成(一般称为"batch draw")
 *
-* A SpriteBatchNode can reference one and only one texture (one image file, one texture atlas).
-* Only the Sprites that are contained in that texture can be added to the SpriteBatchNode.
-* All Sprites added to a SpriteBatchNode are drawn in one OpenGL ES draw call.
-* If the Sprites are not added to a SpriteBatchNode then an OpenGL ES draw call will be needed for each one, which is less efficient.
+* 一个SpriteBatchNode可以引用一个且只有一个纹理(一个图像文件或一个纹理集)，只有包含该纹理的Sprite可以加入到SpriteBatchNode中。
+* 加入SpriteBatchNode的所有Sprite在一次OpenGL ES调用内绘制完成，而未加入SpriteBatchNode的Sprite每一个都需要单独调用OpenGL ES绘制，这样效率比较低。
 *
 *
-* Limitations:
-*  - The only object that is accepted as child (or grandchild, grand-grandchild, etc...) is Sprite or any subclass of Sprite. eg: particles, labels and layer can't be added to a SpriteBatchNode.
-*  - Either all its children are Aliased or Antialiased. It can't be a mix. This is because "alias" is a property of the texture, and all the sprites share the same texture.
+* 限制：
+*  - 只有Sprite或Sprite的子类对象才允许作为子节点(或孙子节点，等等)加入到SpriteBatchNode中，例如：particles、labels和layer不能加入SpriteBatchNode。
+*  - 所有子节点的"alias"属性必须统一为Aliased或Antialiased，不能二者同时存在，因为"alias"是纹理的属性，而SpriteBatchNode全部的子节点共用一个纹理。
 * 
 * @since v0.7.1
 */
@@ -67,22 +64,22 @@ class CC_DLL SpriteBatchNode : public Node, public TextureProtocol
     static const int DEFAULT_CAPACITY = 29;
 
 public:
-    /** creates a SpriteBatchNode with a texture2d and capacity of children.
-     The capacity will be increased in 33% in runtime if it run out of space.
+    /** 创建一个指定子节点纹理(texture2d)和容量(capacity)参数的SpriteBatchNode。
+     在运行期如超出预设容量则扩容33%。
      */
     static SpriteBatchNode* createWithTexture(Texture2D* tex, ssize_t capacity = DEFAULT_CAPACITY);
 
-    /** creates a SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and capacity of children.
-     The capacity will be increased in 33% in runtime if it run out of space.
-     The file will be loaded using the TextureMgr.
+    /** 创建一个指定子节点纹理图像文件(.png、.jpeg、.pvr等)和容量(capacity)参数的SpriteBatchNode。
+     在运行期如超出预设容量则扩容33%。
+     使用TextureMgr加载图像文件。
      */
     static SpriteBatchNode* create(const std::string& fileImage, ssize_t capacity = DEFAULT_CAPACITY);
 
 
-    /** returns the TextureAtlas object */
+    /** 返回纹理集(TextureAtlas)对象 */
     inline TextureAtlas* getTextureAtlas(void) { return _textureAtlas; }
 
-    /** sets the TextureAtlas object */
+    /** 设置纹理集(TextureAtlas)对象 */
     inline void setTextureAtlas(TextureAtlas* textureAtlas)
     { 
         if (textureAtlas != _textureAtlas)
@@ -93,14 +90,14 @@ public:
         }
     }
 
-    /** returns an array with the descendants (children, gran children, etc.). 
-     This is specific to BatchNode. In order to use the children, use getChildren() instead */
+    /** 返回后代节点(子节点，孙子节点，等等)数组。 
+     此函数为BatchNode特有，如需要返回子节点则使用getChildren函数替代。 */
     inline const std::vector<Sprite*>& getDescendants() const { return _descendants; }
 
     void increaseAtlasCapacity();
 
-    /** removes a child given a certain index. It will also cleanup the running actions depending on the cleanup parameter.
-    @warning Removing a child from a SpriteBatchNode is very slow
+    /** 删除指定索引值(index)的子节点，根据doCleanup参数确定是否同时释放该节点。
+    @warning 从SpriteBatchNode删除一个子节点非常慢
     */
     void removeChildAtIndex(ssize_t index, bool doCleanup);
 
@@ -111,7 +108,7 @@ public:
     ssize_t highestAtlasIndexInChild(Sprite *sprite);
     ssize_t lowestAtlasIndexInChild(Sprite *sprite);
     ssize_t atlasIndexForChild(Sprite *sprite, int z);
-    /* Sprites use this to start sortChildren, don't call this manually */
+    /* Sprite使用这个函数执行sortChildren，不要手工调用此函数 */
     void reorderBatch(bool reorder);
 
     //
@@ -122,8 +119,8 @@ public:
     virtual void setTexture(Texture2D *texture) override;
     /**
     *@code
-    *When this function bound into js or lua,the parameter will be changed
-    *In js: var setBlendFunc(var src, var dst)
+    *当此函数绑定到js或lua时，函数参数将将被改变
+    *js函数声明: var setBlendFunc(var src, var dst)
     *@endcode
     * @lua NA 
     */
@@ -146,13 +143,12 @@ public:
     virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
     virtual std::string getDescription() const override;
 
-    /** Inserts a quad at a certain index into the texture atlas. The Sprite won't be added into the children array.
-     This method should be called only when you are dealing with very big AtlasSrite and when most of the Sprite won't be updated.
-     For example: a tile map (TMXMap) or a label with lots of characters (LabelBMFont)
+    /** 在指定索引位置插入一个quad(顶点的坐标位置，纹理的坐标位置和颜色信息)到纹理集，参数中的Sprite不会添加到子节点数组。
+     此方法仅在处理一个很大的AtlasSprite且大部分Sprite不改变时调用。
+     例如：瓦片地图(TMXMap)或包含非常多字符的标签(LabelBMFont)
      */
     void insertQuadFromSprite(Sprite *sprite, ssize_t index);
-    /* This is the opposite of "addQuadFromSprite.
-    It add the sprite to the children and descendants array, but it doesn't update add it to the texture atlas
+    /* 与insertQuadFromSprite相反，此函数添加Sprite到子节点数组但不添加到纹理集中。
     */
     SpriteBatchNode * addSpriteWithoutQuad(Sprite *child, int z, int aTag);
     
@@ -167,13 +163,13 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual ~SpriteBatchNode();
     
-    /** initializes a SpriteBatchNode with a texture2d and capacity of children.
-     The capacity will be increased in 33% in runtime if it run out of space.
+    /** 指定子节点纹理(texture2d)和容量(capacity)参数初始化SpriteBatchNode。
+     在运行期如超出预设容量则扩容33%。
      */
     bool initWithTexture(Texture2D *tex, ssize_t capacity);
-    /** initializes a SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and a capacity of children.
-     The capacity will be increased in 33% in runtime if it run out of space.
-     The file will be loaded using the TextureMgr.
+    /** 指定子节点纹理图像文件(.png、.jpeg、.pvr等)和容量(capacity)参数初始化SpriteBatchNode。
+     在运行期如超出预设容量则扩容33%。
+     使用TextureMgr加载图像文件。
      * @js init
      * @lua init
      */
@@ -181,9 +177,9 @@ CC_CONSTRUCTOR_ACCESS:
     bool init();
     
 protected:
-    /** Updates a quad at a certain index into the texture atlas. The Sprite won't be added into the children array.
-     This method should be called only when you are dealing with very big AtlasSrite and when most of the Sprite won't be updated.
-     For example: a tile map (TMXMap) or a label with lots of characters (LabelBMFont)
+    /** 在指定索引位置更新一个quad(顶点的坐标位置，纹理的坐标位置和颜色信息)到纹理集，参数中的Sprite不会添加到子节点数组。
+     此方法仅在处理一个很大的AtlasSprite且大部分Sprite不改变时调用。
+     例如：瓦片地图(TMXMap)或包含非常多字符的标签(LabelBMFont)
      */
     void updateQuadFromSprite(Sprite *sprite, ssize_t index);   
 
@@ -195,9 +191,9 @@ protected:
     BlendFunc _blendFunc;
     BatchCommand _batchCommand;     // render command
 
-    // all descendants: children, grand children, etc...
-    // There is not need to retain/release these objects, since they are already retained by _children
-    // So, using std::vector<Sprite*> is slightly faster than using cocos2d::Array for this particular case
+    // 所有后代节点：子节点，孙子节点，等等
+    // 不需要保持/释放(retain/release)这些对象，因为它们已经在_children保持了
+    // 因此，在这种特殊情况下使用std::vector<Sprite*>比使用cocos2d::Array稍快
     std::vector<Sprite*> _descendants;
 };
 
