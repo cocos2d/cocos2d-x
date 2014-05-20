@@ -120,9 +120,7 @@ void ActionInterval::step(float dt)
     }
     
     this->update(MAX (0,                                  // needed for rewind. elapsed could be negative
-                      MIN(1, _elapsed /
-                          MAX(_duration, FLT_EPSILON)   // division by 0
-                          )
+                      MIN(1, _elapsed /_duration)
                       )
                  );
 }
