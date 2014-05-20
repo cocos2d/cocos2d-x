@@ -87,8 +87,6 @@ void AssetsManagerLoaderScene::runThisTest()
     progress->setPosition( Vec2(VisibleRect::center().x, VisibleRect::center().y + 50) );
     layer->addChild(progress);
     
-    layer->release();
-    
     _am = AssetsManager::create(managerId, manifestPath, storagePath);
     _am->retain();
     
