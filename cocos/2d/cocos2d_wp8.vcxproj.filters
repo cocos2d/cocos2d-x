@@ -571,9 +571,6 @@
     <ClCompile Include="..\platform\winrt\InputEvent.cpp">
       <Filter>platform\winrt</Filter>
     </ClCompile>
-    <ClCompile Include="..\platform\winrt\pch.cpp">
-      <Filter>platform\winrt</Filter>
-    </ClCompile>
     <ClCompile Include="..\platform\winrt\sha1.cpp">
       <Filter>platform\winrt</Filter>
     </ClCompile>
@@ -1181,9 +1178,6 @@
       <Filter>platform\winrt</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\winrt\InputEventTypes.h">
-      <Filter>platform\winrt</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\winrt\pch.h">
       <Filter>platform\winrt</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\winrt\sha1.h">
