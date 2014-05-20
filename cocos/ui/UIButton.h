@@ -52,7 +52,7 @@ public:
     virtual ~Button();
 
     /**
-     * 分配并初始化
+     * 分配（allocates）并初始化（initializes）
      */
     static Button* create();
     
@@ -113,14 +113,14 @@ public:
     void loadTextureDisabled(const std::string& disabled, TextureResType texType = TextureResType::LOCAL);
 
     /**
-     * 如果按钮使用scale9渲染器进行渲染，设置按钮的capinsets
+     * 如果按钮使用九宫（scale9）渲染器进行渲染，设置按钮的capinsets
      *
      * @param capInsets    按钮的capinsets
      */
     void setCapInsets(const Rect &capInsets);
 
     /**
-     * 如果按钮使用scale9渲染器进行渲染，设置按钮的capinsets
+     * 如果按钮使用九宫（scale9）渲染器进行渲染，设置按钮的capinsets
      *
      * @param capInsets    按钮的capinsets
      */
@@ -129,7 +129,7 @@ public:
     const Rect& getCapInsetsNormalRenderer();
 
     /**
-     * 如果按钮使用scale9渲染器进行渲染，设置按钮的capinsets
+     * 如果按钮使用九宫（scale9）渲染器进行渲染，设置按钮的capinsets
      *
      * @param capInsets    按钮的capinsets
      */
@@ -138,7 +138,7 @@ public:
     const Rect& getCapInsetsPressedRenderer();
 
     /**
-     * 如果按钮使用scale9渲染器进行渲染，设置按钮的capinsets
+     * 如果按钮使用九宫（scale9）渲染器进行渲染，设置按钮的capinsets
      *
      * @param capInsets    按钮的capinsets
      */
@@ -147,18 +147,18 @@ public:
     const Rect& getCapInsetsDisabledRenderer();
 
     /**
-     * 如果按钮使用scale9渲染器进行渲染，设置按钮
+     * 设置按钮使用九宫（scale9）渲染器进行渲染
      *
-     * @param 值为true则使用scale9渲染器, 为false则不会。
+     * @param 值为true则使用九宫（scale9）渲染器, 为false则不会。
      */
     virtual void setScale9Enabled(bool able);
 
     bool isScale9Enabled();
 
     /**
-     * 如果按钮使用点击缩放效果（zoom effect），改变按钮状态
+     * 设置可被点击的按钮使用缩放效果（zoom effect）
      *
-     * @param 值为true则为使用点击缩放效果（zoom effect）, 为false 则不会.
+     * @param 值为true则使用点击缩放效果（zoom effect）, 为false 则不会.
      */
     void setPressedActionEnabled(bool enabled);
 
