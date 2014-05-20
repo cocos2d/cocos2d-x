@@ -28,7 +28,7 @@
 #include "2d/CCActionInstant.h"
 #include "2d/CCNode.h"
 #include "2d/CCSprite.h"
-#include "2d/CCScriptSupport.h"
+#include "base/CCScriptSupport.h"
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
@@ -278,7 +278,7 @@ FlipY * FlipY::clone() const
 // Place
 //
 
-Place* Place::create(const Vector2& pos)
+Place* Place::create(const Vec2& pos)
 {
     Place *ret = new Place();
 
@@ -291,7 +291,7 @@ Place* Place::create(const Vector2& pos)
     return nullptr;
 }
 
-bool Place::initWithPosition(const Vector2& pos) {
+bool Place::initWithPosition(const Vec2& pos) {
     _position = pos;
     return true;
 }

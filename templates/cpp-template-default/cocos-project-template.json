@@ -23,6 +23,7 @@
                "proj.win32/PROJECT_NAME.sln",
                "proj.win32/main.cpp",
                "proj.android/.project",
+               "proj.android/.cproject",
                "proj.android/AndroidManifest.xml",
                "proj.android/build.xml",
                "proj.android/res/values/strings.xml",

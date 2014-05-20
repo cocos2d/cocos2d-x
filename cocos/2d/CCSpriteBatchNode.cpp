@@ -27,26 +27,27 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "2d/CCSpriteBatchNode.h"
-#include "base/ccConfig.h"
+
+#include <algorithm>
+
 #include "2d/CCSprite.h"
 #include "2d/CCGrid.h"
 #include "2d/CCDrawingPrimitives.h"
-#include "2d/CCTextureCache.h"
-#include "2d/CCShaderCache.h"
-#include "2d/CCGLProgram.h"
-#include "2d/ccGLStateCache.h"
-#include "base/CCDirector.h"
-#include "math/TransformUtils.h"
-#include "base/CCProfiling.h"
 #include "2d/CCLayer.h"
 #include "2d/CCScene.h"
+#include "base/ccConfig.h"
+#include "base/CCDirector.h"
+#include "base/CCProfiling.h"
+#include "renderer/CCTextureCache.h"
+#include "renderer/CCGLProgramState.h"
+#include "renderer/CCGLProgram.h"
+#include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCQuadCommand.h"
-// external
+#include "math/TransformUtils.h"
 
 #include "deprecated/CCString.h" // For StringUtils::format
 
-#include <algorithm>
 
 NS_CC_BEGIN
 
@@ -99,7 +100,7 @@ bool SpriteBatchNode::initWithTexture(Texture2D *tex, ssize_t capacity)
 
     _descendants.reserve(capacity);
     
-    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
     return true;
 }
 
@@ -131,7 +132,7 @@ SpriteBatchNode::~SpriteBatchNode()
 
 // override visit
 // don't call visit on it's children
-void SpriteBatchNode::visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
+void SpriteBatchNode::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
 {
     CC_PROFILER_START_CATEGORY(kProfilerCategoryBatchSprite, "CCSpriteBatchNode - visit");
 
@@ -155,7 +156,7 @@ void SpriteBatchNode::visit(Renderer *renderer, const Matrix &parentTransform, b
     _transformUpdated = false;
 
     // IMPORTANT:
-    // To ease the migration to v3.0, we still support the Matrix stack,
+    // To ease the migration to v3.0, we still support the Mat4 stack,
     // but it is deprecated and your code should not rely on it
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -355,7 +356,7 @@ void SpriteBatchNode::reorderBatch(bool reorder)
     _reorderChildDirty=reorder;
 }
 
-void SpriteBatchNode::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void SpriteBatchNode::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     // Optimization: Fast Dispatch
     if( _textureAtlas->getTotalQuads() == 0 )
@@ -368,7 +369,7 @@ void SpriteBatchNode::draw(Renderer *renderer, const Matrix &transform, bool tra
 
     _batchCommand.init(
                        _globalZOrder,
-                       _shaderProgram,
+                       getGLProgram(),
                        _blendFunc,
                        _textureAtlas,
                        transform);

@@ -7,7 +7,6 @@ set(COCOS_UI_SRC
   ui/UIHelper.cpp
   ui/UIImageView.cpp
   ui/UILayout.cpp
-  ui/UILayoutDefine.cpp
   ui/UILayoutParameter.cpp
   ui/UIListView.cpp
   ui/UILoadingBar.cpp

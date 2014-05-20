@@ -27,7 +27,7 @@
 
 #include "base/CCRef.h"
 #include "base/CCDataVisitor.h"
-#include "2d/platform/CCCommon.h"
+#include "platform/CCCommon.h"
 
 NS_CC_BEGIN
 

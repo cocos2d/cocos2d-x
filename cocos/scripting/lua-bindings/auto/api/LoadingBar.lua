@@ -6,18 +6,18 @@
 --------------------------------
 -- @function [parent=#LoadingBar] setPercent 
 -- @param self
--- @param #int int
+-- @param #float float
         
 --------------------------------
 -- @function [parent=#LoadingBar] loadTexture 
 -- @param self
 -- @param #string str
--- @param #ccui.TextureResType texturerestype
+-- @param #ccui.Widget::TextureResType texturerestype
         
 --------------------------------
 -- @function [parent=#LoadingBar] setDirection 
 -- @param self
--- @param #ccui.LoadingBarType loadingbartype
+-- @param #ccui.LoadingBar::Direction direction
         
 --------------------------------
 -- @function [parent=#LoadingBar] setScale9Enabled 
@@ -32,7 +32,7 @@
 --------------------------------
 -- @function [parent=#LoadingBar] getDirection 
 -- @param self
--- @return int#int ret (return value: int)
+-- @return LoadingBar::Direction#LoadingBar::Direction ret (return value: ccui.LoadingBar::Direction)
         
 --------------------------------
 -- @function [parent=#LoadingBar] getCapInsets 
@@ -47,17 +47,17 @@
 --------------------------------
 -- @function [parent=#LoadingBar] getPercent 
 -- @param self
--- @return int#int ret (return value: int)
+-- @return float#float ret (return value: float)
         
 --------------------------------
--- overload function: create(string, int)
+-- overload function: create(string, float)
 --          
 -- overload function: create()
 --          
 -- @function [parent=#LoadingBar] create
 -- @param self
 -- @param #string str
--- @param #int int
+-- @param #float float
 -- @return LoadingBar#LoadingBar ret (retunr value: ccui.LoadingBar)
 
 --------------------------------

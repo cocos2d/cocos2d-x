@@ -48,22 +48,22 @@ namespace cocostudio
         
         const rapidjson::Value& normalDic = DICTOOL->getSubDictionary_json(options, "normalData");
         int normalType = DICTOOL->getIntValue_json(normalDic, "resourceType");
-        std::string normalTexturePath = this->getResourcePath(normalDic, "path", (TextureResType)normalType);
-        button->loadTextureNormal(normalTexturePath, (TextureResType)normalType);
+        std::string normalTexturePath = this->getResourcePath(normalDic, "path", (Widget::TextureResType)normalType);
+        button->loadTextureNormal(normalTexturePath, (Widget::TextureResType)normalType);
         
         
         const rapidjson::Value& pressedDic = DICTOOL->getSubDictionary_json(options, "pressedData");
         int pressedType = DICTOOL->getIntValue_json(pressedDic, "resourceType");
         
-        std::string pressedTexturePath = this->getResourcePath(pressedDic, "path", (TextureResType)pressedType);
-        button->loadTexturePressed(pressedTexturePath, (TextureResType)pressedType);
+        std::string pressedTexturePath = this->getResourcePath(pressedDic, "path", (Widget::TextureResType)pressedType);
+        button->loadTexturePressed(pressedTexturePath, (Widget::TextureResType)pressedType);
         
         
         const rapidjson::Value& disabledDic = DICTOOL->getSubDictionary_json(options, "disabledData");
         int disabledType = DICTOOL->getIntValue_json(disabledDic, "resourceType");
         
-        std::string disabledTexturePath = this->getResourcePath(disabledDic, "path", (TextureResType)disabledType);
-        button->loadTextureDisabled(disabledTexturePath, (TextureResType)disabledType);
+        std::string disabledTexturePath = this->getResourcePath(disabledDic, "path", (Widget::TextureResType)disabledType);
+        button->loadTextureDisabled(disabledTexturePath, (Widget::TextureResType)disabledType);
        
         if (scale9Enable)
         {

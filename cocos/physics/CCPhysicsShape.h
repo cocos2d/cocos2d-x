@@ -107,16 +107,16 @@ public:
     /** Calculate the default moment value */
     virtual float calculateDefaultMoment() { return 0.0f; }
     /** Get offset */
-    virtual Vector2 getOffset() { return Vector2::ZERO; }
+    virtual Vec2 getOffset() { return Vec2::ZERO; }
     /** Get center of this shape */
-    virtual Vector2 getCenter() { return getOffset(); }
+    virtual Vec2 getCenter() { return getOffset(); }
     /** Test point is in shape or not */
-    bool containsPoint(const Vector2& point) const;
+    bool containsPoint(const Vec2& point) const;
     
     /** move the points to the center */
-    static void recenterPoints(Vector2* points, int count, const Vector2& center = Vector2::ZERO);
+    static void recenterPoints(Vec2* points, int count, const Vec2& center = Vec2::ZERO);
     /** get center of the polyon points */
-    static Vector2 getPolyonCenter(const Vector2* points, int count);
+    static Vec2 getPolyonCenter(const Vec2* points, int count);
     
     /**
      * A mask that defines which categories this physics body belongs to.
@@ -184,16 +184,16 @@ protected:
 class PhysicsShapeCircle : public PhysicsShape
 {
 public:
-    static PhysicsShapeCircle* create(float radius, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vector2& offset = Vector2(0, 0));
+    static PhysicsShapeCircle* create(float radius, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2(0, 0));
     static float calculateArea(float radius);
-    static float calculateMoment(float mass, float radius, const Vector2& offset = Vector2::ZERO);
+    static float calculateMoment(float mass, float radius, const Vec2& offset = Vec2::ZERO);
     
     virtual float calculateDefaultMoment() override;
     
     float getRadius() const;
-    virtual Vector2 getOffset() override;
+    virtual Vec2 getOffset() override;
 protected:
-    bool init(float radius, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vector2& offset = Vector2::ZERO);
+    bool init(float radius, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
     virtual float calculateArea() override;
     
 protected:
@@ -205,19 +205,19 @@ protected:
 class PhysicsShapeBox : public PhysicsShape
 {
 public:
-    static PhysicsShapeBox* create(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vector2& offset = Vector2::ZERO);
+    static PhysicsShapeBox* create(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
     static float calculateArea(const Size& size);
-    static float calculateMoment(float mass, const Size& size, const Vector2& offset = Vector2::ZERO);
+    static float calculateMoment(float mass, const Size& size, const Vec2& offset = Vec2::ZERO);
     
     virtual float calculateDefaultMoment() override;
     
-    void getPoints(Vector2* outPoints) const;
+    void getPoints(Vec2* outPoints) const;
     int getPointsCount() const { return 4; }
     Size getSize() const;
-    virtual Vector2 getOffset() override { return _offset; }
+    virtual Vec2 getOffset() override { return _offset; }
     
 protected:
-    bool init(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vector2& offset = Vector2::ZERO);
+    bool init(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
     virtual float calculateArea() override;
     
 protected:
@@ -225,25 +225,25 @@ protected:
     virtual ~PhysicsShapeBox();
     
 protected:
-    Vector2 _offset;
+    Vec2 _offset;
 };
 
 /** A polygon shape */
 class PhysicsShapePolygon : public PhysicsShape
 {
 public:
-    static PhysicsShapePolygon* create(const Vector2* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vector2& offset = Vector2::ZERO);
-    static float calculateArea(const Vector2* points, int count);
-    static float calculateMoment(float mass, const Vector2* points, int count, const Vector2& offset = Vector2::ZERO);
+    static PhysicsShapePolygon* create(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
+    static float calculateArea(const Vec2* points, int count);
+    static float calculateMoment(float mass, const Vec2* points, int count, const Vec2& offset = Vec2::ZERO);
     
     float calculateDefaultMoment() override;
     
-    Vector2 getPoint(int i) const;
-    void getPoints(Vector2* outPoints) const;
+    Vec2 getPoint(int i) const;
+    void getPoints(Vec2* outPoints) const;
     int getPointsCount() const;
-    virtual Vector2 getCenter() override;
+    virtual Vec2 getCenter() override;
 protected:
-    bool init(const Vector2* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vector2& offset = Vector2::ZERO);
+    bool init(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
     float calculateArea() override;
     
 protected:
@@ -251,28 +251,28 @@ protected:
     virtual ~PhysicsShapePolygon();
     
 protected:
-    Vector2 _center;
+    Vec2 _center;
 };
 
 /** A segment shape */
 class PhysicsShapeEdgeSegment : public PhysicsShape
 {
 public:
-    static PhysicsShapeEdgeSegment* create(const Vector2& a, const Vector2& b, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
+    static PhysicsShapeEdgeSegment* create(const Vec2& a, const Vec2& b, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
     
-    Vector2 getPointA() const;
-    Vector2 getPointB() const;
-    virtual Vector2 getCenter() override;
+    Vec2 getPointA() const;
+    Vec2 getPointB() const;
+    virtual Vec2 getCenter() override;
     
 protected:
-    bool init(const Vector2& a, const Vector2& b, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
+    bool init(const Vec2& a, const Vec2& b, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
     
 protected:
     PhysicsShapeEdgeSegment();
     virtual ~PhysicsShapeEdgeSegment();
     
 protected:
-    Vector2 _center;
+    Vec2 _center;
     
     friend class PhysicsBody;
 };
@@ -281,20 +281,20 @@ protected:
 class PhysicsShapeEdgeBox : public PhysicsShape
 {
 public:
-    static PhysicsShapeEdgeBox* create(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 0, const Vector2& offset = Vector2::ZERO);
-    virtual Vector2 getOffset() override { return _offset; }
-    void getPoints(Vector2* outPoints) const;
+    static PhysicsShapeEdgeBox* create(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 0, const Vec2& offset = Vec2::ZERO);
+    virtual Vec2 getOffset() override { return _offset; }
+    void getPoints(Vec2* outPoints) const;
     int getPointsCount() const { return 4; }
     
 protected:
-    bool init(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1, const Vector2& offset = Vector2::ZERO);
+    bool init(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1, const Vec2& offset = Vec2::ZERO);
     
 protected:
     PhysicsShapeEdgeBox();
     virtual ~PhysicsShapeEdgeBox();
     
 protected:
-    Vector2 _offset;
+    Vec2 _offset;
     
     friend class PhysicsBody;
 };
@@ -303,13 +303,13 @@ protected:
 class PhysicsShapeEdgePolygon : public PhysicsShape
 {
 public:
-    static PhysicsShapeEdgePolygon* create(const Vector2* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
-    virtual Vector2 getCenter() override;
-    void getPoints(Vector2* outPoints) const;
+    static PhysicsShapeEdgePolygon* create(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
+    virtual Vec2 getCenter() override;
+    void getPoints(Vec2* outPoints) const;
     int getPointsCount() const;
     
 protected:
-    bool init(const Vector2* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
+    bool init(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
     
 protected:
     PhysicsShapeEdgePolygon();
@@ -318,27 +318,27 @@ protected:
     friend class PhysicsBody;
     
 protected:
-    Vector2 _center;
+    Vec2 _center;
 };
 
 /** a chain shape */
 class PhysicsShapeEdgeChain : public PhysicsShape
 {
 public:
-    static PhysicsShapeEdgeChain* create(const Vector2* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
-    virtual Vector2 getCenter() override;
-    void getPoints(Vector2* outPoints) const;
+    static PhysicsShapeEdgeChain* create(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
+    virtual Vec2 getCenter() override;
+    void getPoints(Vec2* outPoints) const;
     int getPointsCount() const;
     
 protected:
-    bool init(const Vector2* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
+    bool init(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
     
 protected:
     PhysicsShapeEdgeChain();
     virtual ~PhysicsShapeEdgeChain();
     
 protected:
-    Vector2 _center;
+    Vec2 _center;
     
     friend class PhysicsBody;
 };

@@ -25,7 +25,7 @@
 
 #include "CCScrollView.h"
 #include "CCGLView.h"
-#include "2d/platform/CCDevice.h"
+#include "platform/CCDevice.h"
 #include "2d/CCActionInstant.h"
 #include "2d/CCActionInterval.h"
 #include "2d/CCActionTween.h"
@@ -114,7 +114,7 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
         {
             _container = Layer::create();
             _container->ignoreAnchorPointForPosition(false);
-            _container->setAnchorPoint(Vector2(0.0f, 0.0f));
+            _container->setAnchorPoint(Vec2(0.0f, 0.0f));
         }
 
         this->setViewSize(size);
@@ -128,7 +128,7 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
         _clippingToBounds = true;
         //_container->setContentSize(Size::ZERO);
         _direction  = Direction::BOTH;
-        _container->setPosition(Vector2(0.0f, 0.0f));
+        _container->setPosition(Vec2(0.0f, 0.0f));
         _touchLength = 0.0f;
         
         this->addChild(_container);
@@ -147,7 +147,7 @@ bool ScrollView::init()
 
 bool ScrollView::isNodeVisible(Node* node)
 {
-    const Vector2 offset = this->getContentOffset();
+    const Vec2 offset = this->getContentOffset();
     const Size  size   = this->getViewSize();
     const float   scale  = this->getZoomScale();
     
@@ -206,7 +206,7 @@ void ScrollView::setTouchEnabled(bool enabled)
     }
 }
 
-void ScrollView::setContentOffset(Vector2 offset, bool animated/* = false*/)
+void ScrollView::setContentOffset(Vec2 offset, bool animated/* = false*/)
 {
     if (animated)
     { //animate scrolling
@@ -216,8 +216,8 @@ void ScrollView::setContentOffset(Vector2 offset, bool animated/* = false*/)
     { //set the container position directly
         if (!_bounceable)
         {
-            const Vector2 minOffset = this->minContainerOffset();
-            const Vector2 maxOffset = this->maxContainerOffset();
+            const Vec2 minOffset = this->minContainerOffset();
+            const Vec2 maxOffset = this->maxContainerOffset();
             
             offset.x = MAX(minOffset.x, MIN(maxOffset.x, offset.x));
             offset.y = MAX(minOffset.y, MIN(maxOffset.y, offset.y));
@@ -232,7 +232,7 @@ void ScrollView::setContentOffset(Vector2 offset, bool animated/* = false*/)
     }
 }
 
-void ScrollView::setContentOffsetInDuration(Vector2 offset, float dt)
+void ScrollView::setContentOffsetInDuration(Vec2 offset, float dt)
 {
     FiniteTimeAction *scroll, *expire;
     
@@ -242,7 +242,7 @@ void ScrollView::setContentOffsetInDuration(Vector2 offset, float dt)
     this->schedule(schedule_selector(ScrollView::performedAnimatedScroll));
 }
 
-Vector2 ScrollView::getContentOffset()
+Vec2 ScrollView::getContentOffset()
 {
     return _container->getPosition();
 }
@@ -251,12 +251,12 @@ void ScrollView::setZoomScale(float s)
 {
     if (_container->getScale() != s)
     {
-        Vector2 oldCenter, newCenter;
-        Vector2 center;
+        Vec2 oldCenter, newCenter;
+        Vec2 center;
         
         if (_touchLength == 0.0f) 
         {
-            center = Vector2(_viewSize.width*0.5f, _viewSize.height*0.5f);
+            center = Vec2(_viewSize.width*0.5f, _viewSize.height*0.5f);
             center = this->convertToWorldSpace(center);
         }
         else
@@ -268,7 +268,7 @@ void ScrollView::setZoomScale(float s)
         _container->setScale(MAX(_minScale, MIN(_maxScale, s)));
         newCenter = _container->convertToWorldSpace(oldCenter);
         
-        const Vector2 offset = center - newCenter;
+        const Vec2 offset = center - newCenter;
         if (_delegate != NULL)
         {
             _delegate->scrollViewDidZoom(this);
@@ -338,7 +338,7 @@ void ScrollView::setContainer(Node * pContainer)
     this->_container = pContainer;
 
     this->_container->ignoreAnchorPointForPosition(false);
-    this->_container->setAnchorPoint(Vector2(0.0f, 0.0f));
+    this->_container->setAnchorPoint(Vec2(0.0f, 0.0f));
 
     this->addChild(this->_container);
 
@@ -347,7 +347,7 @@ void ScrollView::setContainer(Node * pContainer)
 
 void ScrollView::relocateContainer(bool animated)
 {
-    Vector2 oldPoint, min, max;
+    Vec2 oldPoint, min, max;
     float newX, newY;
     
     min = this->minContainerOffset();
@@ -371,18 +371,18 @@ void ScrollView::relocateContainer(bool animated)
 
     if (newY != oldPoint.y || newX != oldPoint.x)
     {
-        this->setContentOffset(Vector2(newX, newY), animated);
+        this->setContentOffset(Vec2(newX, newY), animated);
     }
 }
 
-Vector2 ScrollView::maxContainerOffset()
+Vec2 ScrollView::maxContainerOffset()
 {
-    return Vector2(0.0f, 0.0f);
+    return Vec2(0.0f, 0.0f);
 }
 
-Vector2 ScrollView::minContainerOffset()
+Vec2 ScrollView::minContainerOffset()
 {
-    return Vector2(_viewSize.width - _container->getContentSize().width*_container->getScaleX(), 
+    return Vec2(_viewSize.width - _container->getContentSize().width*_container->getScaleX(), 
                _viewSize.height - _container->getContentSize().height*_container->getScaleY());
 }
 
@@ -395,7 +395,7 @@ void ScrollView::deaccelerateScrolling(float dt)
     }
     
     float newX, newY;
-    Vector2 maxInset, minInset;
+    Vec2 maxInset, minInset;
     
     _container->setPosition(_container->getPosition() + _scrollDistance);
     
@@ -414,7 +414,7 @@ void ScrollView::deaccelerateScrolling(float dt)
     newY = _container->getPosition().y;
     
     _scrollDistance     = _scrollDistance * SCROLL_DEACCEL_RATE;
-    this->setContentOffset(Vector2(newX,newY));
+    this->setContentOffset(Vec2(newX,newY));
     
     if ((fabsf(_scrollDistance.x) <= SCROLL_DEACCEL_DIST &&
          fabsf(_scrollDistance.y) <= SCROLL_DEACCEL_DIST) ||
@@ -470,10 +470,10 @@ void ScrollView::updateInset()
 	if (this->getContainer() != NULL)
 	{
 		_maxInset = this->maxContainerOffset();
-		_maxInset = Vector2(_maxInset.x + _viewSize.width * INSET_RATIO,
+		_maxInset = Vec2(_maxInset.x + _viewSize.width * INSET_RATIO,
 			_maxInset.y + _viewSize.height * INSET_RATIO);
 		_minInset = this->minContainerOffset();
-		_minInset = Vector2(_minInset.x - _viewSize.width * INSET_RATIO,
+		_minInset = Vec2(_minInset.x - _viewSize.width * INSET_RATIO,
 			_minInset.y - _viewSize.height * INSET_RATIO);
 	}
 }
@@ -553,7 +553,7 @@ void ScrollView::onAfterDraw()
     }
 }
 
-void ScrollView::visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
+void ScrollView::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
 {
 	// quick return if not visible
 	if (!isVisible())
@@ -567,7 +567,7 @@ void ScrollView::visit(Renderer *renderer, const Matrix &parentTransform, bool p
     _transformUpdated = false;
 
     // IMPORTANT:
-    // To ease the migration to v3.0, we still support the Matrix stack,
+    // To ease the migration to v3.0, we still support the Mat4 stack,
     // but it is deprecated and your code should not rely on it
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -642,7 +642,7 @@ bool ScrollView::onTouchBegan(Touch* touch, Event* event)
         _touchPoint     = this->convertTouchToNodeSpace(touch);
         _touchMoved     = false;
         _dragging     = true; //dragging started
-        _scrollDistance = Vector2(0.0f, 0.0f);
+        _scrollDistance = Vec2(0.0f, 0.0f);
         _touchLength    = 0.0f;
     }
     else if (_touches.size() == 2)
@@ -669,7 +669,7 @@ void ScrollView::onTouchMoved(Touch* touch, Event* event)
     {
         if (_touches.size() == 1 && _dragging)
         { // scrolling
-            Vector2 moveDistance, newPoint;
+            Vec2 moveDistance, newPoint;
             Rect  frame;
             float newX, newY;
             
@@ -718,7 +718,7 @@ void ScrollView::onTouchMoved(Touch* touch, Event* event)
             
             if (!_touchMoved)
             {
-                moveDistance = Vector2::ZERO;
+                moveDistance = Vec2::ZERO;
             }
             
             _touchPoint = newPoint;
@@ -729,10 +729,10 @@ void ScrollView::onTouchMoved(Touch* touch, Event* event)
                 switch (_direction)
                 {
                     case Direction::VERTICAL:
-                        moveDistance = Vector2(0.0f, moveDistance.y);
+                        moveDistance = Vec2(0.0f, moveDistance.y);
                         break;
                     case Direction::HORIZONTAL:
-                        moveDistance = Vector2(moveDistance.x, 0.0f);
+                        moveDistance = Vec2(moveDistance.x, 0.0f);
                         break;
                     default:
                         break;
@@ -742,7 +742,7 @@ void ScrollView::onTouchMoved(Touch* touch, Event* event)
                 newY     = _container->getPosition().y + moveDistance.y;
 
                 _scrollDistance = moveDistance;
-                this->setContentOffset(Vector2(newX, newY));
+                this->setContentOffset(Vec2(newX, newY));
             }
         }
         else if (_touches.size() == 2 && !_dragging)
@@ -798,7 +798,7 @@ void ScrollView::onTouchCancelled(Touch* touch, Event* event)
 
 Rect ScrollView::getViewRect()
 {
-    Vector2 screenPos = this->convertToWorldSpace(Vector2::ZERO);
+    Vec2 screenPos = this->convertToWorldSpace(Vec2::ZERO);
     
     float scaleX = this->getScaleX();
     float scaleY = this->getScaleY();

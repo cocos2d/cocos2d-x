@@ -11,7 +11,6 @@
 #include "CocoStudioArmatureTest/ArmatureScene.h"
 #include "CocoStudioComponentsTest/ComponentsTestScene.h"
 #include "CocoStudioSceneTest/SceneEditorTest.h"
-#include "CocoStudioGUITest/CocoStudioGUITest.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) 
 #include "NetworkTest/WebSocketTest.h"
@@ -86,18 +85,11 @@ static struct {
 	                                       scene->release();
  }
 	},
-    { "CocoStudioGUITest", [](Ref *sender)
-        {
-            CocoStudioGUITestScene* pScene = new CocoStudioGUITestScene();
-            pScene->runThisTest();
-            pScene->release();
-        }
-	},
 };
 
 static const int g_maxTests = sizeof(g_extensionsTests) / sizeof(g_extensionsTests[0]);
 
-static Vector2 s_tCurPos = Vector2::ZERO;
+static Vec2 s_tCurPos = Vec2::ZERO;
 
 ////////////////////////////////////////////////////////
 //
@@ -111,13 +103,13 @@ void ExtensionsMainLayer::onEnter()
     auto s = Director::getInstance()->getWinSize();
     
     _itemMenu = Menu::create();
-    _itemMenu->setPosition( Vector2::ZERO );
+    _itemMenu->setPosition( Vec2::ZERO );
     MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(24);
     for (int i = 0; i < g_maxTests; ++i)
     {
         auto pItem = MenuItemFont::create(g_extensionsTests[i].name, g_extensionsTests[i].callback);
-        pItem->setPosition(Vector2(s.width / 2, s.height - (i + 1) * LINE_SPACE));
+        pItem->setPosition(Vec2(s.width / 2, s.height - (i + 1) * LINE_SPACE));
         _itemMenu->addChild(pItem, kItemTagBasic + i);
     }
 
@@ -151,17 +143,17 @@ void ExtensionsMainLayer::onTouchesMoved(const std::vector<Touch*>& touches, Eve
     float nMoveY = touchLocation.y - _beginPos.y;
 
     auto curPos  = _itemMenu->getPosition();
-    auto nextPos = Vector2(curPos.x, curPos.y + nMoveY);
+    auto nextPos = Vec2(curPos.x, curPos.y + nMoveY);
 
     if (nextPos.y < 0.0f)
     {
-        _itemMenu->setPosition(Vector2::ZERO);
+        _itemMenu->setPosition(Vec2::ZERO);
         return;
     }
 
     if (nextPos.y > ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
     {
-        _itemMenu->setPosition(Vector2(0, ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        _itemMenu->setPosition(Vec2(0, ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
         return;
     }
 
@@ -176,17 +168,17 @@ void ExtensionsMainLayer::onMouseScroll(Event* event)
     float nMoveY = mouseEvent->getScrollY() * 6;
     
     auto curPos  = _itemMenu->getPosition();
-    auto nextPos = Vector2(curPos.x, curPos.y + nMoveY);
+    auto nextPos = Vec2(curPos.x, curPos.y + nMoveY);
     
     if (nextPos.y < 0.0f)
     {
-        _itemMenu->setPosition(Vector2::ZERO);
+        _itemMenu->setPosition(Vec2::ZERO);
         return;
     }
     
     if (nextPos.y > ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
     {
-        _itemMenu->setPosition(Vector2(0, ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        _itemMenu->setPosition(Vec2(0, ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
         return;
     }
     

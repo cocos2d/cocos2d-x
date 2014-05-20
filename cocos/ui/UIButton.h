@@ -66,7 +66,7 @@ public:
     static Button* create(const std::string& normalImage,
                           const std::string& selectedImage = "",
                           const std::string& disableImage = "",
-                          TextureResType texType = UI_TEX_TYPE_LOCAL);
+                          TextureResType texType = TextureResType::LOCAL);
     
 
     /**
@@ -83,7 +83,7 @@ public:
     void loadTextures(const std::string& normal,
                       const std::string& selected,
                       const std::string& disabled = "",
-                      TextureResType texType = UI_TEX_TYPE_LOCAL);
+                      TextureResType texType = TextureResType::LOCAL);
 
     /**
      * Load normal state texture for button.
@@ -92,7 +92,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadTextureNormal(const std::string& normal, TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadTextureNormal(const std::string& normal, TextureResType texType = TextureResType::LOCAL);
 
     /**
      * Load selected state texture for button.
@@ -101,7 +101,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadTexturePressed(const std::string& selected, TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadTexturePressed(const std::string& selected, TextureResType texType = TextureResType::LOCAL);
 
     /**
      * Load dark state texture for button.
@@ -110,7 +110,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadTextureDisabled(const std::string& disabled, TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadTextureDisabled(const std::string& disabled, TextureResType texType = TextureResType::LOCAL);
 
     /**
      * Sets capinsets for button, if button is using scale9 renderer.
@@ -190,7 +190,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool init(const std::string& normalImage,
                       const std::string& selectedImage = "",
                       const std::string& disableImage = "",
-                      TextureResType texType = UI_TEX_TYPE_LOCAL);
+                      TextureResType texType = TextureResType::LOCAL);
 
 
 protected:

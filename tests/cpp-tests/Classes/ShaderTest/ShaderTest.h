@@ -1,6 +1,8 @@
 #ifndef _SHADER_TEST_H_
 #define _SHADER_TEST_H_
 
+#include "ui/CocosGUI.h"
+
 #include "../testBasic.h"
 #include "extensions/cocos-ext.h"
 #include "../BaseTest.h"
@@ -113,25 +115,24 @@ protected:
 class ShaderNode : public Node
 {
 public:
+    static ShaderNode* shaderNodeWithVertex(const std::string &vert, const std::string &frag);
+
+    virtual void update(float dt);
+    virtual void setPosition(const Vec2 &newPosition);
+    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+
+protected:
     ShaderNode();
     ~ShaderNode();
 
-    bool initWithVertex(const char *vert, const char *frag);
-    void loadShaderVertex(const char *vert, const char *frag);
+    bool initWithVertex(const std::string &vert, const std::string &frag);
+    void loadShaderVertex(const std::string &vert, const std::string &frag);
 
-    virtual void update(float dt);
-    virtual void setPosition(const Vector2 &newPosition);
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
+    void onDraw(const Mat4 &transform, bool transformUpdated);
 
-    static ShaderNode* shaderNodeWithVertex(const char *vert, const char *frag);
-
-protected:
-    void onDraw(const Matrix &transform, bool transformUpdated);
-
-    Vector2 _center;
-    Vector2 _resolution;
+    Vec2 _center;
+    Vec2 _resolution;
     float      _time;
-    GLuint     _uniformCenter, _uniformResolution, _uniformTime;
     std::string _vertFileName;
     std::string _fragFileName;
     CustomCommand _customCommand;
@@ -143,6 +144,36 @@ public:
     virtual void runThisTest();
 };
 
-//CCLayer* nextAction();
+class ShaderLensFlare : public ShaderTestDemo
+{
+public:
+    ShaderLensFlare();
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual bool init();
+};
+
+class ShaderGlow : public ShaderTestDemo
+{
+public:
+    ShaderGlow();
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual bool init();
+};
+
+class ShaderMultiTexture : public ShaderTestDemo
+{
+public:
+    ShaderMultiTexture();
+    ui::Slider* createSliderCtl();
+    Sprite *_sprite;
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual bool init();
+};
 
 #endif

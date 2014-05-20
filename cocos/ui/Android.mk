@@ -9,7 +9,6 @@ LOCAL_SRC_FILES := \
 UIWidget.cpp \
 UILayout.cpp \
 UILayoutParameter.cpp \
-UILayoutDefine.cpp \
 CocosGUI.cpp \
 UIHelper.cpp \
 UIListView.cpp \
@@ -28,9 +27,8 @@ UIRichText.cpp \
 CCProtectedNode.cpp \
 UIHBox.cpp \
 UIVBox.cpp \
-UIRelativeBox.cpp
-
-
+UIRelativeBox.cpp \
+UIVideoPlayerAndroid.cpp
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/.. \
 $(LOCAL_PATH)/../editor-support

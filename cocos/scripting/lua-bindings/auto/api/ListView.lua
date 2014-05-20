@@ -16,7 +16,7 @@
 --------------------------------
 -- @function [parent=#ListView] setGravity 
 -- @param self
--- @param #ccui.ListViewGravity listviewgravity
+-- @param #ccui.ListView::Gravity gravity
         
 --------------------------------
 -- @function [parent=#ListView] pushBackCustomItem 
@@ -62,6 +62,11 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
+-- @function [parent=#ListView] addEventListener 
+-- @param self
+-- @param #function func
+        
+--------------------------------
 -- @function [parent=#ListView] getItem 
 -- @param self
 -- @param #long long
@@ -99,7 +104,7 @@
 --------------------------------
 -- @function [parent=#ListView] setDirection 
 -- @param self
--- @param #ccui.SCROLLVIEW_DIR scrollview_dir
+-- @param #ccui.ScrollView::Direction direction
         
 --------------------------------
 -- @function [parent=#ListView] getDescription 

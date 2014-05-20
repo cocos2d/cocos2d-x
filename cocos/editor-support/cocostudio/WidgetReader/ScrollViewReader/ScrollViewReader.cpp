@@ -41,7 +41,7 @@ namespace cocostudio
         float innerHeight = DICTOOL->getFloatValue_json(options, "innerHeight");
         scrollView->setInnerContainerSize(Size(innerWidth, innerHeight));
         int direction = DICTOOL->getFloatValue_json(options, "direction");
-        scrollView->setDirection((SCROLLVIEW_DIR)direction);
+        scrollView->setDirection((ScrollView::Direction)direction);
         scrollView->setBounceEnabled(DICTOOL->getBooleanValue_json(options, "bounceEnable"));
         
         

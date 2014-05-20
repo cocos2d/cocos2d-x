@@ -112,23 +112,19 @@ elif [ "$PLATFORM"x = "emscripten"x ]; then
     export LLVM=$HOME/bin/clang+llvm-3.2/bin
     export LLVM_ROOT=$LLVM
     EMCC_DEBUG=1 make PLATFORM=emscripten -j 8
-elif [ "$PLATFORM"x = "ios"x ]; then
-    cd $COCOS2DX_ROOT/tools/travis-scripts
-    ./generate-bindings.sh
-    ./generate-cocosfiles.sh
+elif [ "$PLATFORM"x = "mac-ios"x ]; then
+    if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
+        exit 0
+    fi
 
-    cd $COCOS2DX_ROOT
-    xctool/xctool.sh -project samples/Cpp/HelloCpp/proj.ios/HelloCpp.xcodeproj -scheme HelloCpp test
-    xctool/xctool.sh -project samples/Cpp/SimpleGame/proj.ios/SimpleGame.xcodeproj -scheme SimpleGame test
-    xctool/xctool.sh -project samples/Cpp/TestCpp/proj.ios/TestCpp.xcodeproj -scheme TestCpp test
-    #xctool/xctool.sh -project samples/Cpp/AssetsManagerTest/proj.ios/AssetsManagerTest.xcodeproj -scheme AssetsManagerTest test
-    #xctool/xctool.sh -project samples/Javascript/CocosDragonJS/proj.ios/CocosDragonJS.xcodeproj -scheme CocosDragonJS test
-    #xctool/xctool.sh -project samples/Javascript/CrystalCraze/proj.ios/CrystalCraze.xcodeproj -scheme CrystalCraze test
-    xctool/xctool.sh -project samples/Javascript/MoonWarriors/proj.ios/MoonWarriors.xcodeproj -scheme MoonWarriors test
-    xctool/xctool.sh -project samples/Javascript/TestJavascript/proj.ios/TestJavascript.xcodeproj -scheme TestJavascript test
-    #xctool/xctool.sh -project samples/Javascript/WatermelonWithMe/proj.ios/WatermelonWithMe.xcodeproj -scheme WatermelonWithMe test
-    xctool/xctool.sh -project samples/Lua/HelloLua/proj.ios/HelloLua.xcodeproj -scheme HelloLua test
-    xctool/xctool.sh -project samples/Lua/TestLua/proj.ios/TestLua.xcodeproj -scheme TestLua test
+    if [ "$PUSH_TO_MAC"x != "YES"x ]; then
+        cd $COCOS2DX_ROOT/tools/travis-scripts
+        ./generate-bindings.sh
+        ./generate-cocosfiles.sh
+
+        cd $COCOS2DX_ROOT
+        xctool -project build/cocos2d_tests.xcodeproj -scheme "$SCHEME" -jobs 8 -arch "$ARCH" -sdk "$SDK"  build
+    fi
 else
     echo "Unknown \$PLATFORM: '$PLATFORM'"
     exit 1

@@ -62,7 +62,7 @@ public:
     void     renderCharAt(unsigned char *dest,int posX, int posY, unsigned char* bitmap,long bitmapWidth,long bitmapHeight); 
 
     virtual FontAtlas   * createFontAtlas() override;
-    virtual int         * getHorizontalKerningForTextUTF16(unsigned short *text, int &outNumLetters) const override;
+    virtual int         * getHorizontalKerningForTextUTF16(const std::u16string& text, int &outNumLetters) const override;
     
     unsigned char       * getGlyphBitmap(unsigned short theChar, long &outWidth, long &outHeight, Rect &outRect,int &xAdvance);
     

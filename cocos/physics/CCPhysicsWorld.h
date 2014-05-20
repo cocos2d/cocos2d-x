@@ -42,7 +42,7 @@ class PhysicsWorldInfo;
 class PhysicsShape;
 class PhysicsContact;
 
-typedef Vector2 Vect;
+typedef Vec2 Vect;
 
 class Node;
 class Sprite;
@@ -55,9 +55,9 @@ class PhysicsWorld;
 typedef struct PhysicsRayCastInfo
 {
     PhysicsShape* shape;
-    Vector2 start;
-    Vector2 end;              //< in lua, it's name is "ended"
-    Vector2 contact;
+    Vec2 start;
+    Vec2 end;              //< in lua, it's name is "ended"
+    Vec2 contact;
     Vect normal;
     float fraction;
     void* data;
@@ -105,15 +105,15 @@ public:
     virtual void removeAllBodies();
     
     /** Searches for physics shapes that intersects the ray. */
-    void rayCast(PhysicsRayCastCallbackFunc func, const Vector2& start, const Vector2& end, void* data);
+    void rayCast(PhysicsRayCastCallbackFunc func, const Vec2& start, const Vec2& end, void* data);
     /** Searches for physics shapes that contains in the rect. */
     void queryRect(PhysicsQueryRectCallbackFunc func, const Rect& rect, void* data);
     /** Searches for physics shapes that contains the point. */
-    void queryPoint(PhysicsQueryPointCallbackFunc func, const Vector2& point, void* data);
+    void queryPoint(PhysicsQueryPointCallbackFunc func, const Vec2& point, void* data);
     /** Get phsyics shapes that contains the point. */
-    Vector<PhysicsShape*> getShapes(const Vector2& point) const;
+    Vector<PhysicsShape*> getShapes(const Vec2& point) const;
     /** return physics shape that contains the point. */
-    PhysicsShape* getShape(const Vector2& point) const;
+    PhysicsShape* getShape(const Vec2& point) const;
     /** Get all the bodys that in the physics world. */
     const Vector<PhysicsBody*>& getAllBodies() const;
     /** Get body by tag */

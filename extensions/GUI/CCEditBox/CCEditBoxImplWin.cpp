@@ -73,16 +73,16 @@ bool EditBoxImplWin::initWithSize(const Size& size)
     _label = Label::create();
     _label->setSystemFontSize(size.height-12);
 	// align the text vertically center
-    _label->setAnchorPoint(Vector2(0, 0.5f));
-    _label->setPosition(Vector2(5, size.height / 2.0f));
+    _label->setAnchorPoint(Vec2(0, 0.5f));
+    _label->setPosition(Vec2(5, size.height / 2.0f));
     _label->setColor(_colText);
     _editBox->addChild(_label);
 
     _labelPlaceHolder = Label::create();
     _labelPlaceHolder->setSystemFontSize(size.height-12);
 	// align the text vertically center
-    _labelPlaceHolder->setAnchorPoint(Vector2(0, 0.5f));
-    _labelPlaceHolder->setPosition(Vector2(5, size.height / 2.0f));
+    _labelPlaceHolder->setAnchorPoint(Vec2(0, 0.5f));
+    _labelPlaceHolder->setPosition(Vec2(5, size.height / 2.0f));
     _labelPlaceHolder->setVisible(false);
     _labelPlaceHolder->setColor(_colPlaceHolder);
     _editBox->addChild(_labelPlaceHolder);
@@ -211,7 +211,7 @@ void EditBoxImplWin::setPlaceHolder(const char* pText)
     }
 }
 
-void EditBoxImplWin::setPosition(const Vector2& pos)
+void EditBoxImplWin::setPosition(const Vec2& pos)
 {
 	//_label->setPosition(pos);
 	//_labelPlaceHolder->setPosition(pos);
@@ -225,7 +225,7 @@ void EditBoxImplWin::setContentSize(const Size& size)
 {
 }
 
-void EditBoxImplWin::setAnchorPoint(const Vector2& anchorPoint)
+void EditBoxImplWin::setAnchorPoint(const Vec2& anchorPoint)
 { // don't need to be implemented on win32 platform.
 	
 }

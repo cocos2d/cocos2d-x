@@ -11,7 +11,7 @@
 --------------------------------
 -- @function [parent=#LayoutParameter] getLayoutType 
 -- @param self
--- @return LayoutParameterType#LayoutParameterType ret (return value: ccui.LayoutParameterType)
+-- @return LayoutParameter::Type#LayoutParameter::Type ret (return value: ccui.LayoutParameter::Type)
         
 --------------------------------
 -- @function [parent=#LayoutParameter] createCloneInstance 

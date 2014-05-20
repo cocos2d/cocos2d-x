@@ -12,19 +12,24 @@
 -- @function [parent=#CheckBox] loadTextureBackGroundSelected 
 -- @param self
 -- @param #string str
--- @param #ccui.TextureResType texturerestype
+-- @param #ccui.Widget::TextureResType texturerestype
         
 --------------------------------
 -- @function [parent=#CheckBox] loadTextureBackGroundDisabled 
 -- @param self
 -- @param #string str
--- @param #ccui.TextureResType texturerestype
+-- @param #ccui.Widget::TextureResType texturerestype
+        
+--------------------------------
+-- @function [parent=#CheckBox] addEventListener 
+-- @param self
+-- @param #function func
         
 --------------------------------
 -- @function [parent=#CheckBox] loadTextureFrontCross 
 -- @param self
 -- @param #string str
--- @param #ccui.TextureResType texturerestype
+-- @param #ccui.Widget::TextureResType texturerestype
         
 --------------------------------
 -- @function [parent=#CheckBox] loadTextures 
@@ -34,13 +39,13 @@
 -- @param #string str
 -- @param #string str
 -- @param #string str
--- @param #ccui.TextureResType texturerestype
+-- @param #ccui.Widget::TextureResType texturerestype
         
 --------------------------------
 -- @function [parent=#CheckBox] loadTextureBackGround 
 -- @param self
 -- @param #string str
--- @param #ccui.TextureResType texturerestype
+-- @param #ccui.Widget::TextureResType texturerestype
         
 --------------------------------
 -- @function [parent=#CheckBox] setSelectedState 
@@ -51,10 +56,10 @@
 -- @function [parent=#CheckBox] loadTextureFrontCrossDisabled 
 -- @param self
 -- @param #string str
--- @param #ccui.TextureResType texturerestype
+-- @param #ccui.Widget::TextureResType texturerestype
         
 --------------------------------
--- overload function: create(string, string, string, string, string, ccui.TextureResType)
+-- overload function: create(string, string, string, string, string, ccui.Widget::TextureResType)
 --          
 -- overload function: create()
 --          
@@ -65,7 +70,7 @@
 -- @param #string str
 -- @param #string str
 -- @param #string str
--- @param #ccui.TextureResType texturerestype
+-- @param #ccui.Widget::TextureResType texturerestype
 -- @return CheckBox#CheckBox ret (retunr value: ccui.CheckBox)
 
 --------------------------------

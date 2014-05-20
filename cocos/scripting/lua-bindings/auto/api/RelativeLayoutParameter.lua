@@ -6,32 +6,32 @@
 --------------------------------
 -- @function [parent=#RelativeLayoutParameter] setAlign 
 -- @param self
--- @param #ccui.RelativeAlign relativealign
+-- @param #ccui.RelativeLayoutParameter::RelativeAlign relativealign
         
 --------------------------------
 -- @function [parent=#RelativeLayoutParameter] setRelativeToWidgetName 
 -- @param self
--- @param #char char
+-- @param #string str
         
 --------------------------------
 -- @function [parent=#RelativeLayoutParameter] getRelativeName 
 -- @param self
--- @return char#char ret (return value: char)
+-- @return string#string ret (return value: string)
         
 --------------------------------
 -- @function [parent=#RelativeLayoutParameter] getRelativeToWidgetName 
 -- @param self
--- @return char#char ret (return value: char)
+-- @return string#string ret (return value: string)
         
 --------------------------------
 -- @function [parent=#RelativeLayoutParameter] setRelativeName 
 -- @param self
--- @param #char char
+-- @param #string str
         
 --------------------------------
 -- @function [parent=#RelativeLayoutParameter] getAlign 
 -- @param self
--- @return RelativeAlign#RelativeAlign ret (return value: ccui.RelativeAlign)
+-- @return RelativeLayoutParameter::RelativeAlign#RelativeLayoutParameter::RelativeAlign ret (return value: ccui.RelativeLayoutParameter::RelativeAlign)
         
 --------------------------------
 -- @function [parent=#RelativeLayoutParameter] create 

@@ -40,8 +40,8 @@ namespace cocostudio
         
         const rapidjson::Value& imageFileNameDic = DICTOOL->getSubDictionary_json(options, "textureData");
         int imageFileNameType = DICTOOL->getIntValue_json(imageFileNameDic, "resourceType");
-        std::string imageFileName = this->getResourcePath(imageFileNameDic, "path", (TextureResType)imageFileNameType);
-        loadingBar->loadTexture(imageFileName, (TextureResType)imageFileNameType);
+        std::string imageFileName = this->getResourcePath(imageFileNameDic, "path", (Widget::TextureResType)imageFileNameType);
+        loadingBar->loadTexture(imageFileName, (Widget::TextureResType)imageFileNameType);
 
         
         /* gui mark add load bar scale9 parse */
@@ -63,7 +63,7 @@ namespace cocostudio
         }
         /**/
         
-        loadingBar->setDirection(LoadingBarType(DICTOOL->getIntValue_json(options, "direction")));
+        loadingBar->setDirection(LoadingBar::Direction(DICTOOL->getIntValue_json(options, "direction")));
         loadingBar->setPercent(DICTOOL->getIntValue_json(options, "percent"));
         
         

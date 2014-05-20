@@ -65,10 +65,10 @@ public:
     virtual void setText(const char* pText);
     virtual const char* getText(void);
     virtual void setPlaceHolder(const char* pText);
-    virtual void setPosition(const Vector2& pos);
+    virtual void setPosition(const Vec2& pos);
 	virtual void setVisible(bool visible);
     virtual void setContentSize(const Size& size);
-    virtual void setAnchorPoint(const Vector2& anchorPoint);
+    virtual void setAnchorPoint(const Vec2& anchorPoint);
     /**
      * @js NA
      * @lua NA

@@ -43,7 +43,7 @@ public:
 	virtual void nextCallback(cocos2d::Ref* pSender);
 	virtual void backCallback(cocos2d::Ref* pSender);
 
-	virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
+	virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
 
 protected:
 	MenuItemImage *restartItem;
@@ -100,7 +100,7 @@ public:
 	virtual void onEnter() override;
     virtual void onExit() override;
     cocos2d::Node* createGameScene();
-	void touchEvent(cocos2d::Ref *pSender, cocos2d::ui::TouchEventType type);
+	void touchEvent(cocos2d::Ref *pSender, ui::Widget::TouchEventType type);
 private:
 	cocos2d::Node* _node;
 };

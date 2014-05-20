@@ -52,7 +52,9 @@ namespace cocostudio
     protected:
         std::string getResourcePath(const rapidjson::Value& dict,
                                     const std::string& key,
-                                    cocos2d::ui::TextureResType texType);
+                                    cocos2d::ui::Widget::TextureResType texType);
+        void setAnchorPointForWidget(cocos2d::ui::Widget* widget, const rapidjson::Value&options);
+
     };
 }
 

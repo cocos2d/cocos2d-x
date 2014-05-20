@@ -104,7 +104,7 @@ public:
     /* Creates a label with an FNT file,an initial string,horizontal alignment,max line width and the offset of image*/
     static Label* createWithBMFont(const std::string& bmfontFilePath, const std::string& text,
         const TextHAlignment& alignment = TextHAlignment::LEFT, int maxLineWidth = 0, 
-        const Vector2& imageOffset = Vector2::ZERO);
+        const Vec2& imageOffset = Vec2::ZERO);
     
     static Label * createWithCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
     static Label * createWithCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
@@ -114,7 +114,7 @@ public:
     virtual bool setTTFConfig(const TTFConfig& ttfConfig);
     virtual const TTFConfig& getTTFConfig() const { return _fontConfig;}
 
-    virtual bool setBMFontFilePath(const std::string& bmfontFilePath, const Vector2& imageOffset = Vector2::ZERO);
+    virtual bool setBMFontFilePath(const std::string& bmfontFilePath, const Vec2& imageOffset = Vec2::ZERO);
     const std::string& getBMFontFilePath() const { return _bmFontPath;}
 
     virtual bool setCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
@@ -237,8 +237,8 @@ public:
 
     virtual Rect getBoundingBox() const override;
 
-    virtual void visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated) override;
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
+    virtual void visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
 
     CC_DEPRECATED_ATTRIBUTE static Label* create(const std::string& text, const std::string& font, float fontSize,
         const Size& dimensions = Size::ZERO, TextHAlignment hAlignment = TextHAlignment::LEFT,
@@ -248,13 +248,13 @@ public:
     CC_DEPRECATED_ATTRIBUTE const FontDefinition& getFontDefinition() const { return _fontDefinition; }
 
 protected:
-    void onDraw(const Matrix& transform, bool transformUpdated);
+    void onDraw(const Mat4& transform, bool transformUpdated);
 
     struct LetterInfo
     {
         FontLetterDefinition def;
 
-        Vector2 position;
+        Vec2 position;
         Size  contentSize;
         int   atlasIndex;
     };
@@ -279,16 +279,15 @@ protected:
 
     virtual void setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled = false, bool useA8Shader = false);
 
-    bool recordLetterInfo(const cocos2d::Vector2& point,const FontLetterDefinition& letterDef, int spriteIndex);
+    bool recordLetterInfo(const cocos2d::Vec2& point,const FontLetterDefinition& letterDef, int spriteIndex);
     bool recordPlaceholderInfo(int spriteIndex);
 
     void setFontScale(float fontScale);
     
     virtual void alignText();
     
-    bool computeHorizontalKernings(unsigned short int *stringToRender);
-    bool setCurrentString(unsigned short *stringToSet);
-    bool setOriginalString(unsigned short *stringToSet);
+    bool computeHorizontalKernings(const std::u16string& stringToRender);
+
     void computeStringNumLines();
 
     void updateQuads();
@@ -311,7 +310,7 @@ protected:
     bool _isOpacityModifyRGB;
     bool _contentDirty;
 
-    bool _fontDirty;
+    bool _systemFontDirty;
     std::string _systemFont;
     float         _systemFontSize;
     LabelType _currentLabelType;
@@ -344,8 +343,7 @@ protected:
     TextVAlignment _vAlignment;
 
     int           _currNumLines;
-    unsigned short int * _currentUTF16String;
-    unsigned short int * _originalUTF16String;
+    std::u16string _currentUTF16String;
     std::string          _originalUTF8String;
 
     float _fontScale;
@@ -365,7 +363,7 @@ protected:
     bool    _shadowEnabled;
     Size    _shadowOffset;
     int     _shadowBlurRadius;
-    Matrix  _shadowTransform;
+    Mat4  _shadowTransform;
     Color3B _shadowColor;
     float   _shadowOpacity;
     Sprite*   _shadowNode;

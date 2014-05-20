@@ -58,14 +58,14 @@ public:
 
     LabelFNTSpriteActions();
     virtual void step(float dt);
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
 protected:
     CustomCommand _renderCmd;
-    void onDraw(const Matrix &transform, bool transformUpdated);
+    void onDraw(const Mat4 &transform, bool transformUpdated);
 };
 
 class LabelFNTPadding : public AtlasDemoNew
@@ -224,13 +224,13 @@ public:
 
     LabelFNTBounds();
     
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
 protected:
     CustomCommand _renderCmd;
-    void onDraw(const Matrix &transform, bool transformUpdated);
+    void onDraw(const Mat4 &transform, bool transformUpdated);
     Label *label1;
 };
 
@@ -372,7 +372,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
-    void sliderEvent(Ref *pSender, ui::SliderEventType type);
+    void sliderEvent(Ref *pSender, ui::Slider::EventType type);
 private:
     Label* shadowLabelOutline;
     Label* shadowLabelTTF;
@@ -430,14 +430,14 @@ public:
 
     LabelTTFOldNew();
 
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
 protected:
     CustomCommand _renderCmd;
-    void onDraw(const Matrix &transform, bool transformUpdated);
+    void onDraw(const Mat4 &transform, bool transformUpdated);
 };
 
 class LabelTTFLargeText : public AtlasDemoNew

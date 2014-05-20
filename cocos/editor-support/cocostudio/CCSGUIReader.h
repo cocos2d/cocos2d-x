@@ -92,6 +92,9 @@ public:
                                                               cocos2d::ui::Widget* widget,
                                                               const rapidjson::Value& customOptions) = 0;
 protected:
+    void setAnchorPointForWidget(cocos2d::ui::Widget* widget, const rapidjson::Value&options);
+    
+protected:
     std::string m_strFilePath;
 };
 
@@ -160,6 +163,8 @@ public:
     virtual void setPropsForAllCustomWidgetFromJsonDictionary(const std::string& classType,
                                                               cocos2d::ui::Widget* widget,
                                                               const rapidjson::Value& customOptions);
+    
+
 };
 
 

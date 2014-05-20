@@ -30,8 +30,9 @@
 #include "renderer/CCBatchCommand.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCGroupCommand.h"
-#include "2d/CCShaderCache.h"
-#include "2d/ccGLStateCache.h"
+#include "renderer/CCGLProgramCache.h"
+#include "renderer/ccGLStateCache.h"
+#include "renderer/CCMeshCommand.h"
 #include "base/CCConfiguration.h"
 #include "base/CCDirector.h"
 #include "base/CCEventDispatcher.h"
@@ -202,8 +203,8 @@ void Renderer::setupVBOAndVAO()
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B_T2F), (GLvoid*) offsetof( V3F_C4B_T2F, colors));
 
     // tex coords
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORDS);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*) offsetof( V3F_C4B_T2F, texCoords));
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*) offsetof( V3F_C4B_T2F, texCoords));
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * VBO_SIZE * 6, _indices, GL_STATIC_DRAW);
@@ -318,6 +319,12 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
             auto cmd = static_cast<BatchCommand*>(command);
             cmd->execute();
         }
+        else if (RenderCommand::Type::MESH_COMMAND == commandType)
+        {
+            flush();
+            auto cmd = static_cast<MeshCommand*>(command);
+            cmd->execute();
+        }
         else
         {
             CCLOGERROR("Unknown commands in renderQueue");
@@ -371,7 +378,7 @@ void Renderer::clean()
     _lastMaterialID = 0;
 }
 
-void Renderer::convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const Matrix& modelView)
+void Renderer::convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const Mat4& modelView)
 {
 //    kmMat4 matrixP, mvp;
 //    kmGLGetMatrix(KM_GL_PROJECTION, &matrixP);
@@ -379,16 +386,16 @@ void Renderer::convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quanti
     for(ssize_t i=0; i<quantity; ++i)
     {
         V3F_C4B_T2F_Quad *q = &quads[i];
-        Vector3 *vec1 = (Vector3*)&q->bl.vertices;
+        Vec3 *vec1 = (Vec3*)&q->bl.vertices;
         modelView.transformPoint(vec1);
 
-        Vector3 *vec2 = (Vector3*)&q->br.vertices;
+        Vec3 *vec2 = (Vec3*)&q->br.vertices;
         modelView.transformPoint(vec2);
 
-        Vector3 *vec3 = (Vector3*)&q->tr.vertices;
+        Vec3 *vec3 = (Vec3*)&q->tr.vertices;
         modelView.transformPoint(vec3);
 
-        Vector3 *vec4 = (Vector3*)&q->tl.vertices;
+        Vec3 *vec4 = (Vec3*)&q->tl.vertices;
         modelView.transformPoint(vec4);
     }
 }
@@ -444,16 +451,16 @@ void Renderer::drawBatchedQuads()
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, colors));
 
         // tex coords
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, texCoords));
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, texCoords));
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
     }
 
     //Start drawing verties in batch
-    //for(auto i = _batchedQuadCommands.begin(); i != _batchedQuadCommands.end(); ++i)
     for(const auto& cmd : _batchedQuadCommands)
     {
-        if(_lastMaterialID != cmd->getMaterialID())
+        auto newMaterialID = cmd->getMaterialID();
+        if(_lastMaterialID != newMaterialID || newMaterialID == QuadCommand::MATERIAL_ID_DO_NOT_BATCH)
         {
             //Draw quads
             if(quadsToDraw > 0)
@@ -468,7 +475,7 @@ void Renderer::drawBatchedQuads()
 
             //Use new material
             cmd->useMaterial();
-            _lastMaterialID = cmd->getMaterialID();
+            _lastMaterialID = newMaterialID;
         }
 
         quadsToDraw += cmd->getQuadCount();
@@ -505,7 +512,7 @@ void Renderer::flush()
 
 // helpers
 
-bool Renderer::checkVisibility(const Matrix &transform, const Size &size)
+bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
 {
     // half size of the screen
     Size screen_half = Director::getInstance()->getWinSize();
@@ -515,7 +522,7 @@ bool Renderer::checkVisibility(const Matrix &transform, const Size &size)
     float hSizeX = size.width/2;
     float hSizeY = size.height/2;
 
-    Vector4 v4world, v4local;
+    Vec4 v4world, v4local;
     v4local.set(hSizeX, hSizeY, 0, 1);
     transform.transformVector(v4local, &v4world);
 

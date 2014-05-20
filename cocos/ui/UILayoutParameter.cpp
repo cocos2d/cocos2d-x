@@ -28,7 +28,38 @@
 NS_CC_BEGIN
 
 namespace ui {
+    
+Margin::Margin(void) : left(0), top(0), right(0), bottom(0)
+{
+}
 
+Margin::Margin(float l, float t, float r, float b) : left(l), top(t), right(r), bottom(b)
+{
+}
+
+Margin::Margin(const Margin& other) : left(other.left), top(other.top), right(other.right), bottom(other.bottom)
+{
+}
+
+Margin& Margin::operator= (const Margin& other)
+{
+    setMargin(other.left, other.top, other.right, other.bottom);
+    return *this;
+}
+
+void Margin::setMargin(float l, float t, float r, float b)
+{
+    left = l;
+    top = t;
+    right = r;
+    bottom = b;
+}
+
+bool Margin::equals(const Margin &target) const
+{
+    return (left == target.left && top == target.top && right == target.right && bottom == target.bottom);
+}
+    
 
 LayoutParameter* LayoutParameter::create()
 {
@@ -52,7 +83,7 @@ const Margin& LayoutParameter::getMargin() const
     return _margin;
 }
 
-LayoutParameterType LayoutParameter::getLayoutType() const
+LayoutParameter::Type LayoutParameter::getLayoutType() const
 {
     return _layoutParameterType;
 }
@@ -91,7 +122,7 @@ void LinearLayoutParameter::setGravity(LinearGravity gravity)
     _linearGravity = gravity;
 }
 
-LinearGravity LinearLayoutParameter::getGravity() const
+LinearLayoutParameter::LinearGravity LinearLayoutParameter::getGravity() const
 {
     return _linearGravity;
 }
@@ -128,29 +159,29 @@ void RelativeLayoutParameter::setAlign(RelativeAlign align)
     _relativeAlign = align;
 }
 
-RelativeAlign RelativeLayoutParameter::getAlign() const
+RelativeLayoutParameter::RelativeAlign RelativeLayoutParameter::getAlign() const
 {
     return _relativeAlign;
 }
 
-void RelativeLayoutParameter::setRelativeToWidgetName(const char *name)
+void RelativeLayoutParameter::setRelativeToWidgetName(const std::string& name)
 {
     _relativeWidgetName = name;
 }
 
-const char* RelativeLayoutParameter::getRelativeToWidgetName() const
+const std::string& RelativeLayoutParameter::getRelativeToWidgetName() const
 {
-    return _relativeWidgetName.c_str();
+    return _relativeWidgetName;
 }
 
-void RelativeLayoutParameter::setRelativeName(const char* name)
+void RelativeLayoutParameter::setRelativeName(const std::string& name)
 {
     _relativeLayoutName = name;
 }
 
-const char* RelativeLayoutParameter::getRelativeName() const
+const std::string& RelativeLayoutParameter::getRelativeName() const
 {
-    return _relativeLayoutName.c_str();
+    return _relativeLayoutName;
 }
     
 LayoutParameter* RelativeLayoutParameter::createCloneInstance()
@@ -165,8 +196,8 @@ void RelativeLayoutParameter::copyProperties(LayoutParameter *model)
     if (parameter)
     {
         setAlign(parameter->_relativeAlign);
-        setRelativeName(parameter->_relativeLayoutName.c_str());
-        setRelativeToWidgetName(parameter->_relativeWidgetName.c_str());
+        setRelativeName(parameter->_relativeLayoutName);
+        setRelativeToWidgetName(parameter->_relativeWidgetName);
     }
 }
 

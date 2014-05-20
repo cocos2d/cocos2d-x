@@ -6,17 +6,22 @@
 --------------------------------
 -- @function [parent=#Layout] setBackGroundColorVector 
 -- @param self
--- @param #vector2_table array
+-- @param #cc.Vec2 vec2
         
 --------------------------------
 -- @function [parent=#Layout] setClippingType 
 -- @param self
--- @param #ccui.LayoutClippingType layoutclippingtype
+-- @param #ccui.Layout::ClippingType clippingtype
         
 --------------------------------
 -- @function [parent=#Layout] setBackGroundColorType 
 -- @param self
--- @param #ccui.LayoutBackGroundColorType layoutbackgroundcolortype
+-- @param #ccui.Layout::BackGroundColorType backgroundcolortype
+        
+--------------------------------
+-- @function [parent=#Layout] setLoopFocus 
+-- @param self
+-- @param #bool bool
         
 --------------------------------
 -- @function [parent=#Layout] setBackGroundImageColor 
@@ -26,12 +31,17 @@
 --------------------------------
 -- @function [parent=#Layout] getBackGroundColorVector 
 -- @param self
--- @return vector2_table#vector2_table ret (return value: vector2_table)
+-- @return Vec2#Vec2 ret (return value: cc.Vec2)
         
 --------------------------------
 -- @function [parent=#Layout] getClippingType 
 -- @param self
--- @return LayoutClippingType#LayoutClippingType ret (return value: ccui.LayoutClippingType)
+-- @return Layout::ClippingType#Layout::ClippingType ret (return value: ccui.Layout::ClippingType)
+        
+--------------------------------
+-- @function [parent=#Layout] isLoopFocus 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @function [parent=#Layout] removeBackGroundImage 
@@ -56,7 +66,7 @@
 -- @function [parent=#Layout] setBackGroundImage 
 -- @param self
 -- @param #string str
--- @param #ccui.TextureResType texturerestype
+-- @param #ccui.Widget::TextureResType texturerestype
         
 --------------------------------
 -- overload function: setBackGroundColor(color3b_table, color3b_table)
@@ -100,7 +110,7 @@
 --------------------------------
 -- @function [parent=#Layout] getBackGroundColorType 
 -- @param self
--- @return LayoutBackGroundColorType#LayoutBackGroundColorType ret (return value: ccui.LayoutBackGroundColorType)
+-- @return Layout::BackGroundColorType#Layout::BackGroundColorType ret (return value: ccui.Layout::BackGroundColorType)
         
 --------------------------------
 -- @function [parent=#Layout] getBackGroundEndColor 
@@ -118,6 +128,11 @@
 -- @return unsigned char#unsigned char ret (return value: unsigned char)
         
 --------------------------------
+-- @function [parent=#Layout] isPassFocusToChild 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- @function [parent=#Layout] setBackGroundImageCapInsets 
 -- @param self
 -- @param #rect_table rect
@@ -130,7 +145,12 @@
 --------------------------------
 -- @function [parent=#Layout] getLayoutType 
 -- @param self
--- @return LayoutType#LayoutType ret (return value: ccui.LayoutType)
+-- @return Layout::Type#Layout::Type ret (return value: ccui.Layout::Type)
+        
+--------------------------------
+-- @function [parent=#Layout] setPassFocusToChild 
+-- @param self
+-- @param #bool bool
         
 --------------------------------
 -- @function [parent=#Layout] getBackGroundStartColor 
@@ -145,7 +165,7 @@
 --------------------------------
 -- @function [parent=#Layout] setLayoutType 
 -- @param self
--- @param #ccui.LayoutType layouttype
+-- @param #ccui.Layout::Type type
         
 --------------------------------
 -- @function [parent=#Layout] create 
@@ -187,6 +207,13 @@
 --------------------------------
 -- @function [parent=#Layout] sortAllChildren 
 -- @param self
+        
+--------------------------------
+-- @function [parent=#Layout] findNextFocusedWidget 
+-- @param self
+-- @param #ccui.Widget::FocusDirection focusdirection
+-- @param #ccui.Widget widget
+-- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
 -- @function [parent=#Layout] removeChild 

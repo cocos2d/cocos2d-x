@@ -31,13 +31,13 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
-    
+
     auto screenSize = glview->getFrameSize();
-    
+
     auto designSize = Size(480, 320);
-    
+
     auto pFileUtils = FileUtils::getInstance();
-    
+
     if (screenSize.height > 320)
     {
         auto resourceSize = Size(960, 640);
@@ -46,24 +46,24 @@ bool AppDelegate::applicationDidFinishLaunching()
         pFileUtils->setSearchPaths(searchPaths);
         director->setContentScaleFactor(resourceSize.height/designSize.height);
     }
-    
+
     glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::FIXED_HEIGHT);
-    
+
     // register lua engine
     LuaEngine* pEngine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
-    
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID ||CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     LuaStack* stack = pEngine->getLuaStack();
     register_assetsmanager_test_sample(stack->getLuaState());
 #endif
-    
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     std::string resPrefix("");
 #else
     std::string resPrefix("res/");
 #endif
-    
+
     std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
     searchPaths.insert(searchPaths.begin(), resPrefix);
 
@@ -71,38 +71,40 @@ bool AppDelegate::applicationDidFinishLaunching()
     if (screenSize.height > 320)
     {
         searchPaths.insert(searchPaths.begin(), resPrefix + "hd");
-        searchPaths.insert(searchPaths.begin(), resPrefix + "hd/Images");
-        searchPaths.insert(searchPaths.begin(), resPrefix + "hd/scenetest/ArmatureComponentTest");
-        searchPaths.insert(searchPaths.begin(), resPrefix + "hd/scenetest/AttributeComponentTest");
-        searchPaths.insert(searchPaths.begin(), resPrefix + "hd/scenetest/BackgroundComponentTest");
-        searchPaths.insert(searchPaths.begin(), resPrefix + "hd/scenetest/EffectComponentTest");
-        searchPaths.insert(searchPaths.begin(), resPrefix + "hd/scenetest/LoadSceneEdtiorFileTest");
-        searchPaths.insert(searchPaths.begin(), resPrefix + "hd/scenetest/ParticleComponentTest");
-        searchPaths.insert(searchPaths.begin(), resPrefix + "hd/scenetest/SpriteComponentTest");
-        searchPaths.insert(searchPaths.begin(), resPrefix + "hd/scenetest/TmxMapComponentTest");
-        searchPaths.insert(searchPaths.begin(), resPrefix + "hd/scenetest/UIComponentTest");
-        searchPaths.insert(searchPaths.begin(), resPrefix + "hd/scenetest/TriggerTest");
+        searchPaths.insert(searchPaths.begin(), resPrefix + "ccs-res");
+        searchPaths.insert(searchPaths.begin(), resPrefix + "ccs-res/hd");
+        searchPaths.insert(searchPaths.begin(), resPrefix + "ccs-res/hd/Images");
+        searchPaths.insert(searchPaths.begin(), resPrefix + "ccs-res/hd/scenetest/ArmatureComponentTest");
+        searchPaths.insert(searchPaths.begin(), resPrefix + "ccs-res/hd/scenetest/AttributeComponentTest");
+        searchPaths.insert(searchPaths.begin(), resPrefix + "ccs-res/hd/scenetest/BackgroundComponentTest");
+        searchPaths.insert(searchPaths.begin(), resPrefix + "ccs-res/hd/scenetest/EffectComponentTest");
+        searchPaths.insert(searchPaths.begin(), resPrefix + "ccs-res/hd/scenetest/LoadSceneEdtiorFileTest");
+        searchPaths.insert(searchPaths.begin(), resPrefix + "ccs-res/hd/scenetest/ParticleComponentTest");
+        searchPaths.insert(searchPaths.begin(), resPrefix + "ccs-res/hd/scenetest/SpriteComponentTest");
+        searchPaths.insert(searchPaths.begin(), resPrefix + "ccs-res/hd/scenetest/TmxMapComponentTest");
+        searchPaths.insert(searchPaths.begin(), resPrefix + "ccs-res/hd/scenetest/UIComponentTest");
+        searchPaths.insert(searchPaths.begin(), resPrefix + "ccs-res/hd/scenetest/TriggerTest");
     }
     else
     {
-        searchPaths.insert(searchPaths.begin(), resPrefix + "Images");
-        searchPaths.insert(searchPaths.begin(), resPrefix + "scenetest/ArmatureComponentTest");
-        searchPaths.insert(searchPaths.begin(), resPrefix + "scenetest/AttributeComponentTest");
-        searchPaths.insert(searchPaths.begin(), resPrefix + "scenetest/BackgroundComponentTest");
-        searchPaths.insert(searchPaths.begin(), resPrefix + "scenetest/EffectComponentTest");
-        searchPaths.insert(searchPaths.begin(), resPrefix + "scenetest/LoadSceneEdtiorFileTest");
-        searchPaths.insert(searchPaths.begin(), resPrefix + "scenetest/ParticleComponentTest");
-        searchPaths.insert(searchPaths.begin(), resPrefix + "scenetest/SpriteComponentTest");
-        searchPaths.insert(searchPaths.begin(), resPrefix + "scenetest/TmxMapComponentTest");
-        searchPaths.insert(searchPaths.begin(), resPrefix + "scenetest/UIComponentTest");
-        searchPaths.insert(searchPaths.begin(), resPrefix + "scenetest/TriggerTest");
+        searchPaths.insert(searchPaths.begin(), resPrefix + "ccs-res/Images");
+        searchPaths.insert(searchPaths.begin(), resPrefix + "ccs-res/scenetest/ArmatureComponentTest");
+        searchPaths.insert(searchPaths.begin(), resPrefix + "ccs-res/scenetest/AttributeComponentTest");
+        searchPaths.insert(searchPaths.begin(), resPrefix + "ccs-res/scenetest/BackgroundComponentTest");
+        searchPaths.insert(searchPaths.begin(), resPrefix + "ccs-res/scenetest/EffectComponentTest");
+        searchPaths.insert(searchPaths.begin(), resPrefix + "ccs-res/scenetest/LoadSceneEdtiorFileTest");
+        searchPaths.insert(searchPaths.begin(), resPrefix + "ccs-res/scenetest/ParticleComponentTest");
+        searchPaths.insert(searchPaths.begin(), resPrefix + "ccs-res/scenetest/SpriteComponentTest");
+        searchPaths.insert(searchPaths.begin(), resPrefix + "ccs-res/scenetest/TmxMapComponentTest");
+        searchPaths.insert(searchPaths.begin(), resPrefix + "ccs-res/scenetest/UIComponentTest");
+        searchPaths.insert(searchPaths.begin(), resPrefix + "ccs-res/scenetest/TriggerTest");
     }
 
 
     FileUtils::getInstance()->setSearchPaths(searchPaths);
 
     pEngine->executeScriptFile("src/controller.lua");
-    
+
     return true;
 }
 
