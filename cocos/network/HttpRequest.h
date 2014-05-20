@@ -67,7 +67,7 @@ public:
         UNKNOWN,
     };
     
-    /** 构造
+    /** 构造函数
         因为 HttpRequset 对象会被用在UI线程和network线程之间，
         为了避免崩溃，在AutoreleasePool中，requestObj->autorelease()是被禁止的
         new/retain/release 依然工作，意味着你需要手动释放它。
@@ -85,7 +85,7 @@ public:
         _pUserData = nullptr;
     };
     
-    /** 析构 */
+    /** 析构函数 */
     virtual ~HttpRequest()
     {
         if (_pTarget)
@@ -94,7 +94,7 @@ public:
         }
     };
     
-    /** 复写 autorelease 方法来避免开发者调用它 */
+    /** 覆写 autorelease 方法来避免开发者调用它 */
     Ref* autorelease(void)
     {
         CCASSERT(false, "HttpResponse is used between network thread and ui thread \
@@ -102,7 +102,7 @@ public:
         return NULL;
     }
             
-    // 属性的 setter/getters
+    // 属性的 setters/getters
      
     /** 在发送之前，HttpRequest对象的必填字段
         目前支持 kHttpGet & kHttpPost 
