@@ -43,8 +43,8 @@ void TestScene::onEnter()
     auto menuItem = MenuItemLabel::create(label, testScene_callback );
     auto menu = Menu::create(menuItem, NULL);
 
-    menu->setPosition( Vector2::ZERO );
-    menuItem->setPosition( Vector2( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
+    menu->setPosition( Vec2::ZERO );
+    menuItem->setPosition( Vec2( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
 
     addChild(menu, 1);
 }

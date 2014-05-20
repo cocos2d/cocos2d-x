@@ -34,7 +34,7 @@ THE SOFTWARE.
 #include "base/CCRef.h"
 #include "base/ccMacros.h"
 #else
-#include "2d/ccCArray.h"
+#include "base/ccCArray.h"
 #endif
 
 #include "base/CCDataVisitor.h"

@@ -23,12 +23,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#include "2d/CCFontFreeType.h"
+
 #include <stdio.h>
 #include <algorithm>
 
-#include "ccUTF8.h"
-#include "2d/CCFontFreeType.h"
-#include "2d/platform/CCFileUtils.h"
+#include "base/ccUTF8.h"
+#include "platform/CCFileUtils.h"
 #include "edtaa3func.h"
 #include FT_BBOX_H
 

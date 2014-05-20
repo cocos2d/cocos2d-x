@@ -51,10 +51,10 @@ public:
     void updateArmatureTransform();
     void updateTransform() override;
 
-    Matrix getNodeToWorldTransform() const override;
-    Matrix getNodeToWorldTransformAR() const;
+    cocos2d::Mat4 getNodeToWorldTransform() const override;
+    cocos2d::Mat4 getNodeToWorldTransformAR() const;
     
-    virtual void draw(cocos2d::Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
+    virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, bool transformUpdated) override;
     
     /**
      *  @js NA
@@ -75,7 +75,7 @@ protected:
     BaseData _skinData;
     Bone *_bone;
     Armature *_armature;
-    Matrix _skinTransform;
+    cocos2d::Mat4 _skinTransform;
     std::string _displayName;
     cocos2d::QuadCommand _quadCommand;     // quad command
 };

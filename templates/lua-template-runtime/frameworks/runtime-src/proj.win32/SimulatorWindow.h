@@ -28,6 +28,6 @@ THE SOFTWARE.
 /************************
 @brief create Simulator
 *********************************/
-void createSimulator(const char* viewName, float width, float height,float frameZoomFactor = 1.0f);
+void createSimulator(const char* viewName, float width, float height,bool isLandscape = true,float frameZoomFactor = 1.0f);
 
 #endif /* __PROJECT_CONFIG_H_ */

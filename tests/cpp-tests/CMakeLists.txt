@@ -35,6 +35,7 @@ set(SAMPLE_SRC
   Classes/BugsTest/Bug-899.cpp
   Classes/BugsTest/Bug-914.cpp
   Classes/BugsTest/BugsTest.cpp
+  Classes/BugsTest/Bug-Child.cpp
   Classes/ChipmunkTest/ChipmunkTest.cpp
   Classes/ClickAndMoveTest/ClickAndMoveTest.cpp
   Classes/ClippingNodeTest/ClippingNodeTest.cpp
@@ -158,6 +159,7 @@ set(SAMPLE_SRC
   Classes/ShaderTest/ShaderTest.cpp
   Classes/ShaderTest/ShaderTest2.cpp
   Classes/SpriteTest/SpriteTest.cpp
+  Classes/Sprite3DTest/Sprite3DTest.cpp
   Classes/TextInputTest/TextInputTest.cpp
   Classes/Texture2dTest/Texture2dTest.cpp
   Classes/TexturePackerEncryptionTest/TextureAtlasEncryptionTest.cpp

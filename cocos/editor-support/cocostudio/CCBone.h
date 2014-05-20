@@ -35,8 +35,6 @@ THE SOFTWARE.
 
 namespace cocostudio {
 
-USING_NS_CC_MATH;
-
 class Armature;
 
 class Bone : public cocos2d::Node
@@ -156,10 +154,10 @@ public:
     virtual void setTransformDirty(bool dirty) { _boneTransformDirty = dirty; }
     virtual bool isTransformDirty() { return _boneTransformDirty; }
 
-    virtual Matrix getNodeToArmatureTransform() const;
-    virtual Matrix getNodeToWorldTransform() const override;
+    virtual cocos2d::Mat4 getNodeToArmatureTransform() const;
+    virtual cocos2d::Mat4 getNodeToWorldTransform() const override;
 
-    Node *getDisplayRenderNode();
+    cocos2d::Node *getDisplayRenderNode();
     DisplayType getDisplayRenderNodeType();
 
     /*
@@ -250,7 +248,7 @@ protected:
     bool _boneTransformDirty;          //! Whether or not transform dirty
 
     //! self Transform, use this to change display's state
-    Matrix _worldTransform;
+    cocos2d::Mat4 _worldTransform;
 
     BaseData *_worldInfo;
     

@@ -30,7 +30,7 @@ THE SOFTWARE.
 #define __CC_TM_XML_PARSER__
 
 #include "math/CCGeometry.h"
-#include "2d/platform/CCSAXParser.h"
+#include "platform/CCSAXParser.h"
 #include "base/CCVector.h"
 #include "base/CCValue.h"
 
@@ -112,7 +112,7 @@ public:
     bool                _visible;
     unsigned char       _opacity;
     bool                _ownTiles;
-    Vector2               _offset;
+    Vec2               _offset;
 };
 
 /** @brief TMXTilesetInfo contains the information about the tilesets like:

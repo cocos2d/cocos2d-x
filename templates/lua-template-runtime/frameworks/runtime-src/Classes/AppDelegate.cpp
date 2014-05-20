@@ -3,6 +3,7 @@
 #include "SimpleAudioEngine.h"
 #include "cocos2d.h"
 #include "Runtime.h"
+#include "ConfigParser.h"
 
 using namespace CocosDenshion;
 
@@ -20,15 +21,30 @@ AppDelegate::~AppDelegate()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
+    
+#if (COCOS2D_DEBUG>0)
+    initRuntime();
+#endif
+    
+    if (!ConfigParser::getInstance()->isInit()) {
+            ConfigParser::getInstance()->readConfig();
+        }
+
     // initialize director
     auto director = Director::getInstance();
-    auto glview = director->getOpenGLView();
+    auto glview = director->getOpenGLView();    
     if(!glview) {
-        glview = GLView::createWithRect("HelloLua", Rect(0,0,900,640));
+        Size viewSize = ConfigParser::getInstance()->getInitViewSize();
+        string title = ConfigParser::getInstance()->getInitViewName();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+        extern void createSimulator(const char* viewName, float width, float height,bool isLandscape = true, float frameZoomFactor = 1.0f);
+        bool isLanscape = ConfigParser::getInstance()->isLanscape();
+        createSimulator(title.c_str(),viewSize.width,viewSize.height,isLanscape);
+#else
+        glview = GLView::createWithRect(title.c_str(), Rect(0,0,viewSize.width,viewSize.height));
         director->setOpenGLView(glview);
+#endif
     }
-
-    glview->setDesignResolutionSize(480, 320, ResolutionPolicy::NO_BORDER);
 
     // turn on display FPS
     director->setDisplayStats(true);
@@ -36,16 +52,19 @@ bool AppDelegate::applicationDidFinishLaunching()
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
    
-#ifdef COCOS2D_DEBUG
+    auto engine = LuaEngine::getInstance();
+    ScriptEngineManager::getInstance()->setScriptEngine(engine);
+    
+    //register custom function
+    //LuaStack* stack = engine->getLuaStack();
+    //register_custom_function(stack->getLuaState());
+    
+#if (COCOS2D_DEBUG>0)
     if (startRuntime())
         return true;
 #endif
 
-    auto engine = LuaEngine::getInstance();
-    ScriptEngineManager::getInstance()->setScriptEngine(engine);
-    if (engine->executeScriptFile("src/main.lua")) {
-        return false;
-    }
+    engine->executeScriptFile(ConfigParser::getInstance()->getEntryFile().c_str());
     return true;
 }
 
@@ -64,3 +83,4 @@ void AppDelegate::applicationWillEnterForeground()
 
     SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
 }
+

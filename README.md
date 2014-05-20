@@ -5,7 +5,7 @@ cocos2d-x
 =========
 
 [![Build Status](https://travis-ci.org/cocos2d/cocos2d-x.png?branch=v3)](https://travis-ci.org/cocos2d/cocos2d-x)
-[![Build Status](https://travis-ci.org/cocos2d/cocos2d-x.png?branch=v3)](https://travis-ci.org/cocos-travis-mac/cocos2d-x)
+[![Build Status](https://travis-ci.org/cocos-travis-mac/cocos2d-x.png?branch=v3)](https://travis-ci.org/cocos-travis-mac/cocos2d-x)
 
 [cocos2d-x][1] is a multi-platform framework for building 2d games, interactive books, demos and other graphical applications.
 It is based on [cocos2d-iphone][2], but instead of using Objective-C, it uses C++.
@@ -18,7 +18,15 @@ cocos2d-x is:
   * Easy to use
   * Community Supported
 
+Git user attention
+-----------------------
 
+1. After cloning the repo, please execute `download-deps.py` to download and install some dependences.
+
+         $ cd cocos2d-x
+         $ python download-deps.py
+
+2. Please execute `download-deps.py` once you synchronize with this repo. If there aren't any updates, it will not download dependences again.
 
 How to start a new game
 -----------------------

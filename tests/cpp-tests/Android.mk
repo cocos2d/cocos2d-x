@@ -31,6 +31,7 @@ Classes/BugsTest/Bug-886.cpp \
 Classes/BugsTest/Bug-899.cpp \
 Classes/BugsTest/Bug-914.cpp \
 Classes/BugsTest/BugsTest.cpp \
+Classes/BugsTest/Bug-Child.cpp \
 Classes/BugsTest/Bug-458/Bug-458.cpp \
 Classes/BugsTest/Bug-458/QuestionContainerSprite.cpp \
 Classes/ChipmunkTest/ChipmunkTest.cpp \
@@ -165,6 +166,7 @@ Classes/ShaderTest/ShaderTest.cpp \
 Classes/ShaderTest/ShaderTest2.cpp \
 Classes/SpineTest/SpineTest.cpp \
 Classes/SpriteTest/SpriteTest.cpp \
+Classes/Sprite3DTest/Sprite3DTest.cpp \
 Classes/TextInputTest/TextInputTest.cpp \
 Classes/Texture2dTest/Texture2dTest.cpp \
 Classes/TextureCacheTest/TextureCacheTest.cpp \

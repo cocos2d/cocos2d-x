@@ -106,7 +106,7 @@ void PhysicsContact::generateContactData()
         _contactData->points[i] = PhysicsHelper::cpv2point(cpArbiterGetPoint(arb, i));
     }
     
-    _contactData->normal = _contactData->count > 0 ? PhysicsHelper::cpv2point(cpArbiterGetNormal(arb, 0)) : Vector2::ZERO;
+    _contactData->normal = _contactData->count > 0 ? PhysicsHelper::cpv2point(cpArbiterGetNormal(arb, 0)) : Vec2::ZERO;
 }
 
 // PhysicsContactPreSolve implementation
@@ -129,7 +129,7 @@ float PhysicsContactPreSolve::getFriction() const
     return static_cast<cpArbiter*>(_contactInfo)->u;
 }
 
-Vector2 PhysicsContactPreSolve::getSurfaceVelocity() const
+Vec2 PhysicsContactPreSolve::getSurfaceVelocity() const
 {
     return PhysicsHelper::cpv2point(static_cast<cpArbiter*>(_contactInfo)->surface_vr);
 }
@@ -176,7 +176,7 @@ float PhysicsContactPostSolve::getFriction() const
     return static_cast<cpArbiter*>(_contactInfo)->u;
 }
 
-Vector2 PhysicsContactPostSolve::getSurfaceVelocity() const
+Vec2 PhysicsContactPostSolve::getSurfaceVelocity() const
 {
     return PhysicsHelper::cpv2point(static_cast<cpArbiter*>(_contactInfo)->surface_vr);
 }

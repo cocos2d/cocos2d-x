@@ -61,7 +61,7 @@ public:
     virtual void onEnter() override;
     virtual void update(float dt);
 private:
-    Vector2 _center;
+    Vec2 _center;
     float _radius;
     float _angle;
 };

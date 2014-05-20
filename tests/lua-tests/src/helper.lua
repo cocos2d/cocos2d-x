@@ -83,7 +83,12 @@ function Helper.restartAction()
 end
 
 function Helper.newScene()
-    local scene = cc.Scene:create()
+    local scene
+    if Helper.usePhysics then
+       scene = cc.Scene:createWithPhysics()
+    else
+       scene = cc.Scene:create()
+    end
     Helper.currentLayer = Helper.createFunctionTable[Helper.index]()
     scene:addChild(Helper.currentLayer)
     scene:addChild(CreateBackMenuItem())

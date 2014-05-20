@@ -39,6 +39,10 @@ typedef std::vector<Value> ValueVector;
 typedef std::unordered_map<std::string, Value> ValueMap;
 typedef std::unordered_map<int, Value> ValueMapIntKey;
 
+extern const ValueVector ValueVectorNull;
+extern const ValueMap ValueMapNull;
+extern const ValueMapIntKey ValueMapIntKeyNull;
+
 class Value
 {
 public:
