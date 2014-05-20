@@ -26,9 +26,9 @@
 NS_CC_MATH_BEGIN
 
 /**
- * Defines a math utility class.
+ * 定义一个数学工具类
  *
- * This is primarily used for optimized internal math operations.
+ * 这主要用于优化内部的数学运算
  */
 class MathUtil
 {
@@ -38,31 +38,29 @@ class MathUtil
 public:
 
     /**
-     * Updates the given scalar towards the given target using a smoothing function.
-     * The given response time determines the amount of smoothing (lag). A longer
-     * response time yields a smoother result and more lag. To force the scalar to
-     * follow the target closely, provide a response time that is very small relative
-     * to the given elapsed time.
+     * 使用平滑函数和给定的标量对给定的目标进行处理。
+     * 给定的响应时间决定了平滑的数量（延迟）。
+     * 响应时间越长，平滑的结果越好，同时延迟的时间越长。
+     * 给定的标量与目标是密切相关的，提供的响应时间相对于给定的运行时间是非常小的。
      *
-     * @param x the scalar to update.
-     * @param target target value.
-     * @param elapsedTime elapsed time between calls.
-     * @param responseTime response time (in the same units as elapsedTime).
+     * @param x 更新的标量。
+     * @param target 目标值。
+     * @param elapsedTime 调用时的运行时间。
+     * @param responseTime 响应时间（和运行时间单位相同）。
      */
     static void smooth(float* x, float target, float elapsedTime, float responseTime);
 
     /**
-     * Updates the given scalar towards the given target using a smoothing function.
-     * The given rise and fall times determine the amount of smoothing (lag). Longer
-     * rise and fall times yield a smoother result and more lag. To force the scalar to
-     * follow the target closely, provide rise and fall times that are very small relative
-     * to the given elapsed time.
+     * 使用平滑函数和给定的标量对给定的目标进行处理。
+     * 给定的上升和下降时间决定了平滑的数量（延迟）。
+     * 上升和下降时间越长，平滑的结果越好，同时延迟的时间越长。
+     * 给定的标量与目标是密切相关的，提供的响应时间相对于给定的运行时间是非常小的。
      *
-     * @param x the scalar to update.
-     * @param target target value.
-     * @param elapsedTime elapsed time between calls.
-     * @param riseTime response time for rising slope (in the same units as elapsedTime).
-     * @param fallTime response time for falling slope (in the same units as elapsedTime).
+     * @param x 更新的标量。
+     * @param target 目标值。
+     * @param elapsedTime 调用时的运行时间。
+     * @param riseTime 平滑上升处理的响应时间（和运行时间单位相同）。
+     * @param fallTime 平滑下降处理的响应时间（和运行时间单位相同）。
      */
     static void smooth(float* x, float target, float elapsedTime, float riseTime, float fallTime);
 
