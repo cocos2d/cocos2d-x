@@ -595,6 +595,7 @@
     <ClCompile Include="..\renderer\CCMeshCommand.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
+    <ClCompile Include="..\platform\wp8\pch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -1209,6 +1210,7 @@
     <ClInclude Include="..\renderer\CCMeshCommand.h">
       <Filter>renderer</Filter>
     </ClInclude>
+    <ClInclude Include="..\platform\wp8\pch.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\math\Mat4.inl">
