@@ -13,12 +13,11 @@ else if (_pos > _max)   \
 // AccelerometerTest
 //
 //------------------------------------------------------------------
-AccelerometerTest::AccelerometerTest(void)
-: _lastTime(0.0)
+AccelerometerTest::AccelerometerTest()
 {
 }
 
-AccelerometerTest::~AccelerometerTest(void)
+AccelerometerTest::~AccelerometerTest()
 {
     _ball->release();
     Device::setAccelerometerEnabled(false);
@@ -50,34 +49,21 @@ void AccelerometerTest::onEnter()
 
 void AccelerometerTest::onAcceleration(Acceleration* acc, Event* event)
 {
-//     double fNow = pAccelerationValue->timestamp;
-// 
-//     if (_lastTime > 0.0)
-//     {
-//         auto ptNow = convertToUI
-//     }
-// 
-//     _lastTime = fNow;
-
-    auto pDir = Director::getInstance();
-
     /*FIXME: Testing on the Nexus S sometimes _ball is NULL */
-    if ( _ball == NULL ) {
+    if ( _ball == nullptr ) {
         return;
     }
 
     auto ballSize  = _ball->getContentSize();
 
-    auto ptNow  = _ball->getPosition();
-    auto ptTemp = pDir->convertToUI(ptNow);
+    auto pos  = _ball->getPosition();
 
-    ptTemp.x += acc->x * 9.81f;
-    ptTemp.y -= acc->y * 9.81f;
+    pos.x += acc->x * 9.81f;
+    pos.y += acc->y * 9.81f;
 
-    auto ptNext = pDir->convertToGL(ptTemp);
-    FIX_POS(ptNext.x, (VisibleRect::left().x+ballSize.width / 2.0), (VisibleRect::right().x - ballSize.width / 2.0));
-    FIX_POS(ptNext.y, (VisibleRect::bottom().y+ballSize.height / 2.0), (VisibleRect::top().y - ballSize.height / 2.0));
-    _ball->setPosition(ptNext);
+    FIX_POS(pos.x, (VisibleRect::left().x+ballSize.width / 2.0), (VisibleRect::right().x - ballSize.width / 2.0));
+    FIX_POS(pos.y, (VisibleRect::bottom().y+ballSize.height / 2.0), (VisibleRect::top().y - ballSize.height / 2.0));
+    _ball->setPosition(pos);
 }
 
 //------------------------------------------------------------------

@@ -2499,20 +2499,6 @@
 		46A169981807AFD6005B8026 /* cpSweep1D.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = cpSweep1D.c; sourceTree = "<group>"; };
 		46A169991807AFD6005B8026 /* cpVect.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = cpVect.c; sourceTree = "<group>"; };
 		46A1699A1807AFD6005B8026 /* prime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = prime.h; sourceTree = "<group>"; };
-		46A16E1B1807C948005B8026 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../cocos/2d/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
-		46A16E1C1807C948005B8026 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../cocos/2d/platform/third_party/ios/libraries/libfreetype.a; sourceTree = "<group>"; };
-		46A16E1D1807C948005B8026 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = ../cocos/2d/platform/third_party/ios/libraries/libjpeg.a; sourceTree = "<group>"; };
-		46A16E1E1807C948005B8026 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = ../cocos/2d/platform/third_party/ios/libraries/libpng.a; sourceTree = "<group>"; };
-		46A16E1F1807C948005B8026 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiff.a; path = ../cocos/2d/platform/third_party/ios/libraries/libtiff.a; sourceTree = "<group>"; };
-		46A16E201807C948005B8026 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = ../cocos/2d/platform/third_party/ios/libraries/libwebp.a; sourceTree = "<group>"; };
-		46A16E211807C95C005B8026 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../cocos/2d/platform/third_party/mac/libraries/libfreetype.a; sourceTree = "<group>"; };
-		46A16E221807C95C005B8026 /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = ../cocos/2d/platform/third_party/mac/libraries/libglfw3.a; sourceTree = "<group>"; };
-		46A16E231807C95C005B8026 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = ../cocos/2d/platform/third_party/mac/libraries/libjpeg.a; sourceTree = "<group>"; };
-		46A16E241807C95C005B8026 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = ../cocos/2d/platform/third_party/mac/libraries/libpng.a; sourceTree = "<group>"; };
-		46A16E251807C95C005B8026 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiff.a; path = ../cocos/2d/platform/third_party/mac/libraries/libtiff.a; sourceTree = "<group>"; };
-		46A16E261807C95C005B8026 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = ../cocos/2d/platform/third_party/mac/libraries/libwebp.a; sourceTree = "<group>"; };
-		46A16E271807C992005B8026 /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = ../external/libwebsockets/ios/lib/libwebsockets.a; sourceTree = "<group>"; };
-		46A16E281807C99F005B8026 /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = ../external/libwebsockets/mac/lib/libwebsockets.a; sourceTree = "<group>"; };
 		46A1706E1807CE7A005B8026 /* CCPhysicsBody.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsBody.cpp; sourceTree = "<group>"; };
 		46A1706F1807CE7A005B8026 /* CCPhysicsBody.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPhysicsBody.h; sourceTree = "<group>"; };
 		46A170701807CE7A005B8026 /* CCPhysicsContact.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsContact.cpp; sourceTree = "<group>"; };
@@ -2969,8 +2955,6 @@
 		1551A341158F2AB200E66CFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B3D8D44B179921D50039C204 /* ios */,
-				B3D8D4471799219B0039C204 /* mac */,
 				1551A342158F2AB200E66CFE /* Foundation.framework */,
 			);
 			name = Frameworks;
@@ -4848,34 +4832,6 @@
 			);
 			name = 3d;
 			path = ../cocos/3d;
-			sourceTree = "<group>";
-		};
-		B3D8D4471799219B0039C204 /* mac */ = {
-			isa = PBXGroup;
-			children = (
-				46A16E281807C99F005B8026 /* libwebsockets.a */,
-				46A16E211807C95C005B8026 /* libfreetype.a */,
-				46A16E221807C95C005B8026 /* libglfw3.a */,
-				46A16E231807C95C005B8026 /* libjpeg.a */,
-				46A16E241807C95C005B8026 /* libpng.a */,
-				46A16E251807C95C005B8026 /* libtiff.a */,
-				46A16E261807C95C005B8026 /* libwebp.a */,
-			);
-			name = mac;
-			sourceTree = "<group>";
-		};
-		B3D8D44B179921D50039C204 /* ios */ = {
-			isa = PBXGroup;
-			children = (
-				46A16E271807C992005B8026 /* libwebsockets.a */,
-				46A16E1B1807C948005B8026 /* libcurl.a */,
-				46A16E1C1807C948005B8026 /* libfreetype.a */,
-				46A16E1D1807C948005B8026 /* libjpeg.a */,
-				46A16E1E1807C948005B8026 /* libpng.a */,
-				46A16E1F1807C948005B8026 /* libtiff.a */,
-				46A16E201807C948005B8026 /* libwebp.a */,
-			);
-			name = ios;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -7116,7 +7072,7 @@
 					"\"$(SRCROOT)/../external/freetype2/prebuilt/mac\"",
 					"\"$(SRCROOT)/../external/websockets/prebuilt/mac\"",
 				);
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/websockets/include/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../cocos/platform/desktop";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/websockets/include/mac $(SRCROOT)/../external/glfw3/include/mac";
 			};
 			name = Debug;
 		};
@@ -7142,7 +7098,7 @@
 					"\"$(SRCROOT)/../external/freetype2/prebuilt/mac\"",
 					"\"$(SRCROOT)/../external/websockets/prebuilt/mac\"",
 				);
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/websockets/include/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../cocos/platform/desktop";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/websockets/include/mac $(SRCROOT)/../external/glfw3/include/mac";
 			};
 			name = Release;
 		};
@@ -7302,7 +7258,7 @@
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external/websockets/include/ios $(SRCROOT)/../external/freetype2/include/ios $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../external/webp/include/ios $(SRCROOT)/../external/tiff/include/ios $(SRCROOT)/../external/jpeg/include/ios $(SRCROOT)/../external/png/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/websockets/include/ios $(SRCROOT)/../external/freetype2/include/ios $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../external/webp/include/ios $(SRCROOT)/../external/tiff/include/ios $(SRCROOT)/../external/jpeg/include/ios $(SRCROOT)/../external/png/include/ios";
 			};
 			name = Debug;
 		};
@@ -7340,7 +7296,7 @@
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external/websockets/include/ios $(SRCROOT)/../external/freetype2/include/ios $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../external/webp/include/ios $(SRCROOT)/../external/tiff/include/ios $(SRCROOT)/../external/jpeg/include/ios $(SRCROOT)/../external/png/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/websockets/include/ios $(SRCROOT)/../external/freetype2/include/ios $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../external/webp/include/ios $(SRCROOT)/../external/tiff/include/ios $(SRCROOT)/../external/jpeg/include/ios $(SRCROOT)/../external/png/include/ios";
 			};
 			name = Release;
 		};
