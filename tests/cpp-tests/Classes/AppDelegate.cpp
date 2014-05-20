@@ -66,7 +66,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto designSize = Size(480, 320);
 
     auto fileUtils = FileUtils::getInstance();
-    std::vector<std::string> searchPaths;
+    std::vector<std::string> searchPaths = fileUtils->getSearchPaths();
     
     if (screenSize.height > 320)
     {

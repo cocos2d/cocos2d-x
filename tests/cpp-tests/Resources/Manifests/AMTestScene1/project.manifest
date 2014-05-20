@@ -1,0 +1,21 @@
+{
+	"packageUrl" : "http://tools.itharbors.com/assets_manager/AMTestScene1/",
+	"remoteManifestUrl" : "http://tools.itharbors.com/assets_manager/AMTestScene1/project.manifest",
+	"remoteVersionUrl" : "http://tools.itharbors.com/assets_manager/AMTestScene1/version.manifest",
+	"version" : "1.0.0",
+	"groupVersions" : {
+		"1" : "1.0.0"
+	},
+	"engineVersion" : "3.0 beta",
+
+	"assets" : {
+		"background" : {
+			"path" : "background1.jpg",
+			"md5" : "...",
+			"group" : "1"
+		}
+	},
+    
+    "searchPaths" : [
+    ]
+}
