@@ -251,15 +251,86 @@ v3.1 has a new `Node` to play videos. The API is:
 // API in the future
 auto videoPlayer = cocos2d::experimental::ui::VideoPlayer::create();
 videoPlayer->setContentSize(Size(x,y));
-videoPlayer->setURL("http://example.com/video.mp4");
+videoPlayer->setURL("http://example.com/video.mp4");  
+//you could also play a local video file as follows:
+//videoPlayer->setFileName("filepath/video.mp4");
 videoPlayer->play();
 ```
 
 
 ## UI navigation
 
-TODO
+3.1 supports focus navigation of UI widget which is very useful for OTT manufacturer.
 
+###Usage
+Suppose that your screen has 3 widgets layout horizontally. We could define it like this:
+
+```c++
+HBox(widget1, widget2, widget3)
+```
+
+If you want the `widget1` to get focused, you could call
+
+```c++
+widget1->setfocused(true)
+```
+
+If you want to move the focus to the next widget, you could just call
+
+```c++
+widget1->findNextFocusedWidget(Widget::FocusDirection::RIGHT, _firstFocusedWidget);
+```
+
+When the focus goes to `widget3`, if you call 
+
+```c++
+widget3->findNextFocusedWidget(Widget::FocusDirection::RIGHT, _firstFocusedWidget);
+```
+, the focus will stay there only when you call `HBox->setLoopFocus()` then the focus will move to `widget1` again.
+
+**Note:**
+
+The HBox and VBox could be nested in any ways and all the widgets should be added into the HBox/VBox if you want them to be focused later.
+
+When a focus moves from one widget to another, it will trigger a *focus event*. You could add the following code to handle these event:
+
+```c++
+auto eventListener = EventListenerFocus::create();
+eventListener->onFocusChanged = CC_CALLBACK_2(UIFocusTestBase::onFocusChanged, this);
+eventDispatcher->addEventListenerWithFixedPriority(_eventListener, 1);
+``` 
+
+The onFocusChanged callback, when the widget lose focus, we change its color to white, when the widget get focus, we change its color to red. You could add more complex animations to them when focus change happens.
+
+```c++
+void UIFocusTestBase::onFocusChanged(cocos2d::ui::Widget *widgetLostFocus, cocos2d::ui::Widget *widgetGetFocus)
+{
+    Layout *getLayout = dynamic_cast<Layout*>(widgetGetFocus);
+    if (!getLayout && widgetGetFocus && widgetGetFocus->isFocusEnabled()) {
+        widgetGetFocus->setColor(Color3B::RED);
+    }
+    Layout *loseLayout = dynamic_cast<Layout*>(widgetLostFocus);
+    if (!loseLayout && widgetLostFocus && widgetLostFocus->isFocusEnabled()) {
+        widgetLostFocus->setColor(Color3B::WHITE);
+    }
+}
+```
+For more usage information, please refer to [this file](https://github.com/cocos2d/cocos2d-x/blob/v3/tests/cpp-tests/Classes/UITest/CocoStudioGUITest/UIFocusTest/UIFocusTest.cpp) for more information.
+
+
+###Limitations
+Only Layout type `HORIZONTAL` and `VERTICAL` is supported which means we could not treat Scrollview and PageView as a base layout.
+
+The following layouts:
+
+```c++
+HBox(VBox, ScrollView(HBox(VBox, VBox, VBox)))
+VBox(HBox, PageView(VBox(HBox,HBox))))
+```
+ are not supported yet, we will implement it in cocos2d-x v3.2.
+ 
+ If you want to achieve the focus movement in scrollview, you could manually call `setFocusEnabled(true/false)` when the widget in the scrollview moves out of the scrollview's boundary.
+ 
 ## Improved folder structure
 
 In v3.0 we started a folder re-organization for cocos2d-x. Unfortunately we didn't have the time to finish it on time.
