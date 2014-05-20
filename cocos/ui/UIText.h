@@ -76,7 +76,7 @@ public:
     /**
      * 变更标签（label）的字符串值
      *
-     * @param text  字符串值
+     * @param text 字符串值
      */
     CC_DEPRECATED_ATTRIBUTE void setText(const std::string& text){this->setString(text);}
     void setString(const std::string& text);
@@ -101,7 +101,7 @@ public:
     /**
      * 设置标签（label）的字体（font）大小
      *
-     * @param  font 大小
+     * @param size 字体大小
      */
     void setFontSize(int size);
 
@@ -114,7 +114,7 @@ public:
 	 * 用法：  Text *text = Text::create("Hello", "Arial", 20);  //创建一个系统字体的UIText
 	 *         text->setFontName("Marfelt");  // 不管之前的字体类型是TTF字体还是系统字体，它都会把字体改为系统字体
 	 *         text->setFontName("xxxx/xxx.ttf"); //不管之前的字体类型是TTF字体还是系统字体，它都会把字体改为TTF字体
-     * @param  font 字体名称
+     * @param  name 字体名称
      */
     void setFontName(const std::string& name);
 
@@ -125,14 +125,14 @@ public:
     /**
      * 设置标签（label）是否可点击
      *
-     * @param  touch 标签（label）是否可点击
+     * @param enabled 标签（label）是否可点击
      */
     void setTouchScaleChangeEnabled(bool enabled);
 
     /**
      * 获得标签（label）是否可点击
      *
-     * @return  touch 获得标签（label）是否可点击
+     * @return 获得标签（label）是否可点击
      */
     bool isTouchScaleChangeEnabled();
 
