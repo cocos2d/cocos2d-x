@@ -929,12 +929,12 @@ void Layout::requestDoLayout()
     _doLayoutDirty = true;
 }
     
-const Size Layout::getLayoutSize()
+const Size Layout::getLayoutContentSize()
 {
     return this->getSize();
 }
     
-const Vector<Node*>& Layout::getLayoutChildren()
+const Vector<Node*>& Layout::getLayoutElements()
 {
     return this->getChildren();
 }
@@ -1031,7 +1031,7 @@ bool Layout::isPassFocusToChild()
     return _passFocusToChild;
 }
 
-Size Layout::getLayoutContentSize()const
+Size Layout::getLayoutAccumulatedSize()const
 {
     const auto& children = this->getChildren();
     Size layoutSize = Size::ZERO;
@@ -1041,7 +1041,7 @@ Size Layout::getLayoutContentSize()const
         Layout *layout = dynamic_cast<Layout*>(widget);
         if (nullptr != layout)
         {
-            layoutSize = layoutSize + layout->getLayoutContentSize();
+            layoutSize = layoutSize + layout->getLayoutAccumulatedSize();
         }
         else
         {
@@ -1072,7 +1072,7 @@ Vec2 Layout::getWorldCenterPoint(Widget* widget)
 {
     Layout *layout = dynamic_cast<Layout*>(widget);
     //FIXEDME: we don't need to calculate the content size of layout anymore
-    Size widgetSize = layout ? layout->getLayoutContentSize() :  widget->getSize();
+    Size widgetSize = layout ? layout->getLayoutAccumulatedSize() :  widget->getSize();
 //    CCLOG("contnet size : width = %f, height = %f", widgetSize.width, widgetSize.height);
     return widget->convertToWorldSpace(Vec2(widgetSize.width/2, widgetSize.height/2));
 }

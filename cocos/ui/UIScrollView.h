@@ -38,6 +38,7 @@ public:
     ScrollInnerContainer();
     virtual ~ScrollInnerContainer();
     static ScrollInnerContainer* create();
+    virtual const Size& getLayoutSize() override;
 };
 
 CC_DEPRECATED_ATTRIBUTE typedef enum

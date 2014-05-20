@@ -40,8 +40,8 @@ public:
     virtual ~LayoutProtocol(){}
     
     virtual LayoutExecutant* createLayoutExecutant() = 0;
-    virtual const Size getLayoutSize() = 0;
-    virtual const Vector<Node*>& getLayoutChildren() = 0;
+    virtual const Size getLayoutContentSize() = 0;
+    virtual const Vector<Node*>& getLayoutElements() = 0;
     virtual void doLayout() = 0;
 };
 
@@ -329,8 +329,8 @@ protected:
     
     virtual void doLayout()override;
     virtual LayoutExecutant* createLayoutExecutant()override;
-    virtual const Size getLayoutSize()override;
-    virtual const Vector<Node*>& getLayoutChildren() override;
+    virtual const Size getLayoutContentSize()override;
+    virtual const Vector<Node*>& getLayoutElements() override;
     
     //clipping
     void onBeforeVisitStencil();
@@ -346,7 +346,7 @@ protected:
     /**
      *get the content size of the layout, it will accumulate all its children's content size
      */
-    Size getLayoutContentSize() const;
+    Size getLayoutAccumulatedSize() const;
     
     /**
      * When the layout get focused, it the layout pass the focus to its child, it will use this method to determine which child 

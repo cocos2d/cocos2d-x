@@ -50,6 +50,18 @@ ScrollInnerContainer* ScrollInnerContainer::create()
     return nullptr;
 }
 
+const Size& ScrollInnerContainer::getLayoutSize()
+{
+    Widget* parent = getWidgetParent();
+    if (parent)
+    {
+        return parent->getSize();
+    }
+    else
+    {
+        return _size;
+    }
+}
 
 static const float AUTOSCROLLMAXSPEED = 1000.0f;
 

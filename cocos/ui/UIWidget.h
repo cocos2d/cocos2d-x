@@ -441,7 +441,7 @@ public:
     
     const Size& getCustomSize() const;
     
-    //virtual const Size& getLayoutSize() {return _size;};
+    virtual const Size& getLayoutSize() {return _size;};
 
     /**
      * Returns size percent of widget

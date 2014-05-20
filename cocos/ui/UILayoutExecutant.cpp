@@ -67,8 +67,8 @@ RelativeLayoutExecutant* RelativeLayoutExecutant::create()
 
 void LinearVerticalLayoutExecutant::doLayout(LayoutProtocol* layout)
 {
-    Size layoutSize = layout->getLayoutSize();
-    Vector<Node*> container = layout->getLayoutChildren();
+    Size layoutSize = layout->getLayoutContentSize();
+    Vector<Node*> container = layout->getLayoutElements();
     float topBoundary = layoutSize.height;
     
     for (auto& subWidget : container)
@@ -111,8 +111,8 @@ void LinearVerticalLayoutExecutant::doLayout(LayoutProtocol* layout)
 
 void LinearHorizontalLayoutExecutant::doLayout(LayoutProtocol* layout)
 {
-    Size layoutSize = layout->getLayoutSize();
-    Vector<Node*> container = layout->getLayoutChildren();
+    Size layoutSize = layout->getLayoutContentSize();
+    Vector<Node*> container = layout->getLayoutElements();
     float leftBoundary = 0.0f;
     for (auto& subWidget : container)
     {
@@ -153,8 +153,8 @@ void LinearHorizontalLayoutExecutant::doLayout(LayoutProtocol* layout)
 
 void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
 {
-    Size layoutSize = layout->getLayoutSize();
-    Vector<Node*> container = layout->getLayoutChildren();
+    Size layoutSize = layout->getLayoutContentSize();
+    Vector<Node*> container = layout->getLayoutElements();
     ssize_t unlayoutChildCount = 0;
     Vector<Widget*> widgetChildren;
     for (auto& subWidget : container)
