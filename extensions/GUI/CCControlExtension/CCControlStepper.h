@@ -81,7 +81,7 @@ public:
     void update(float dt);
 
     /** Update the layout of the stepper with the given touch location. */
-    void updateLayoutUsingTouchLocation(Vector2 location);
+    void updateLayoutUsingTouchLocation(Vec2 location);
 
     /** Start the autorepeat increment/decrement. */
     void startAutorepeat();

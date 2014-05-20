@@ -29,8 +29,8 @@ THE SOFTWARE.
 #define __SPRITE_NODE_CCSPRITE_H__
 
 #include "2d/CCNode.h"
-#include "2d/CCProtocols.h"
-#include "2d/CCTextureAtlas.h"
+#include "base/CCProtocols.h"
+#include "renderer/CCTextureAtlas.h"
 #include "base/ccTypes.h"
 #include <string>
 #ifdef EMSCRIPTEN
@@ -317,7 +317,7 @@ public:
     /**
      * Gets the offset position of the sprite. Calculated automatically by editors like Zwoptex.
      */
-    inline const Vector2& getOffsetPosition(void) const { return _offsetPosition; }
+    inline const Vec2& getOffsetPosition(void) const { return _offsetPosition; }
 
 
     /**
@@ -402,7 +402,7 @@ public:
     * @js  NA
     * @lua NA
     */
-    virtual void setPosition(const Vector2& pos) override;
+    virtual void setPosition(const Vec2& pos) override;
     virtual void setPosition(float x, float y) override;
     virtual void setRotation(float rotation) override;
     virtual void setRotationSkewX(float rotationX) override;
@@ -417,10 +417,10 @@ public:
     virtual void sortAllChildren() override;
     virtual void setScale(float scale) override;
     virtual void setPositionZ(float positionZ) override;
-    virtual void setAnchorPoint(const Vector2& anchor) override;
+    virtual void setAnchorPoint(const Vec2& anchor) override;
     virtual void ignoreAnchorPointForPosition(bool value) override;
     virtual void setVisible(bool bVisible) override;
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
     virtual void setOpacityModifyRGB(bool modify) override;
     virtual bool isOpacityModifyRGB(void) const override;
     /// @}
@@ -535,7 +535,7 @@ protected:
     bool                _dirty;             /// Whether the sprite needs to be updated
     bool                _recursiveDirty;    /// Whether all of the sprite's children needs to be updated
     bool                _shouldBeHidden;    /// should not be drawn because one of the ancestors is not visible
-    Matrix              _transformToBatch;
+    Mat4              _transformToBatch;
 
     //
     // Data used when the sprite is self-rendered
@@ -556,8 +556,8 @@ protected:
     bool   _rectRotated;                    /// Whether the texture is rotated
 
     // Offset Position (used by Zwoptex)
-    Vector2 _offsetPosition;
-    Vector2 _unflippedOffsetPositionFromCenter;
+    Vec2 _offsetPosition;
+    Vec2 _unflippedOffsetPositionFromCenter;
 
     // vertex coords, texture coords and color info
     V3F_C4B_T2F_Quad _quad;

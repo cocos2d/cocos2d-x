@@ -122,10 +122,10 @@ int lua_cocos2dx_spine_Skeleton_onDraw(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
-        cocos2d::Matrix arg0;
+        cocos2d::Mat4 arg0;
         bool arg1;
 
-        ok &= luaval_to_matrix(tolua_S, 2, &arg0);
+        ok &= luaval_to_mat4(tolua_S, 2, &arg0);
 
         ok &= luaval_to_boolean(tolua_S, 3,&arg1);
         if(!ok)

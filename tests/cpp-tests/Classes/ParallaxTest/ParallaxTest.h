@@ -60,7 +60,7 @@ protected:
     
     float _addChildStep;
     float _wholeMoveTime;
-    Vector2 _wholeMoveSize;
+    Vec2 _wholeMoveSize;
 
     virtual void update(float dt) override;
     

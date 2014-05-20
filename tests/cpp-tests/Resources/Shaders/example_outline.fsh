@@ -6,8 +6,6 @@ http://www.idevgames.com/forums/thread-3010.html
 varying vec2 v_texCoord;
 varying vec4 v_fragmentColor;
 
-uniform sampler2D CC_Texture0;
-
 uniform vec3 u_outlineColor;
 uniform float u_threshold;
 uniform float u_radius;

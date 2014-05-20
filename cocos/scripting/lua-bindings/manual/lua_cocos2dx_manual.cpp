@@ -34,9 +34,9 @@
 
 static int tolua_cocos2d_MenuItemImage_create(lua_State* tolua_S)
 {
-    if (NULL == tolua_S) 
+    if (nullptr == tolua_S)
         return 0;
-
+    
     int argc = 0;
     bool ok  = true;
     
@@ -58,49 +58,53 @@ static int tolua_cocos2d_MenuItemImage_create(lua_State* tolua_S)
         }
     } while (0);
     do {
+        if (argc == 2)
+        {
 #if COCOS2D_DEBUG >= 1
-		if (!tolua_isstring(tolua_S,2,0,&tolua_err) ||
-            !tolua_isstring(tolua_S,3,0,&tolua_err))
-        {
-            ok = false;
-		}
-#endif        
-        if (!ok)
-        {
-            ok = true;
-            break;
+            if (!tolua_isstring(tolua_S,2,0,&tolua_err) ||
+                !tolua_isstring(tolua_S,3,0,&tolua_err))
+            {
+                ok = false;
+            }
+#endif
+            if (!ok)
+            {
+                ok = true;
+                break;
+            }
+            const std::string normalImage = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
+            const std::string selectedImage = ((const std::string)  tolua_tocppstring(tolua_S,3,0));
+            MenuItemImage* tolua_ret = (MenuItemImage*)  MenuItemImage::create(normalImage,selectedImage);
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
+            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"cc.MenuItemImage");
+            return 1;
         }
-        const std::string normalImage = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
-        const std::string selectedImage = ((const std::string)  tolua_tocppstring(tolua_S,3,0));
-        MenuItemImage* tolua_ret = (MenuItemImage*)  MenuItemImage::create(normalImage,selectedImage);
-        int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
-        int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
-        toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"cc.MenuItemImage");
-        return 1;
-        
     } while (0);
     do {
-#if COCOS2D_DEBUG >= 1
-        if (!tolua_isstring(tolua_S,2,0,&tolua_err) ||
-            !tolua_isstring(tolua_S,3,0,&tolua_err) ||
-            !tolua_isstring(tolua_S,4,0,&tolua_err) )
+        if (argc == 3)
         {
-            goto tolua_lerror;
-            break;
-        }
+#if COCOS2D_DEBUG >= 1
+            if (!tolua_isstring(tolua_S,2,0,&tolua_err) ||
+                !tolua_isstring(tolua_S,3,0,&tolua_err) ||
+                !tolua_isstring(tolua_S,4,0,&tolua_err) )
+            {
+                goto tolua_lerror;
+                break;
+            }
 #endif
-        const std::string normalImage = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
-        const std::string selectedImage = ((const std::string)  tolua_tocppstring(tolua_S,3,0));
-        const std::string disabledImage = ((const std::string)  tolua_tocppstring(tolua_S,4,0));
-        
-        MenuItemImage* tolua_ret = (MenuItemImage*)  MenuItemImage::create(normalImage,selectedImage,disabledImage);
-        int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
-        int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
-        toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"cc.MenuItemImage");
-        return 1;
-        
+            const std::string normalImage = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
+            const std::string selectedImage = ((const std::string)  tolua_tocppstring(tolua_S,3,0));
+            const std::string disabledImage = ((const std::string)  tolua_tocppstring(tolua_S,4,0));
+            
+            MenuItemImage* tolua_ret = (MenuItemImage*)  MenuItemImage::create(normalImage,selectedImage,disabledImage);
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
+            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"cc.MenuItemImage");
+            return 1;
+        }
     } while (0);
-
+    
 	CCLOG("'create' has wrong number of arguments: %d, was expecting %d\n", argc, 0);
 	return 0;
     
@@ -2125,8 +2129,8 @@ int tolua_cocos2d_Node_setAnchorPoint(lua_State* tolua_S)
     
     if (1 == argc)
     {
-        cocos2d::Vector2 pt;
-        ok &= luaval_to_vector2(tolua_S, 2, &pt);
+        cocos2d::Vec2 pt;
+        ok &= luaval_to_vec2(tolua_S, 2, &pt);
         if (!ok)
             return 0;
         
@@ -2147,7 +2151,7 @@ int tolua_cocos2d_Node_setAnchorPoint(lua_State* tolua_S)
         if (!ok)
             return 0;
         
-        cobj->setAnchorPoint(cocos2d::Vector2(x,y));
+        cobj->setAnchorPoint(cocos2d::Vec2(x,y));
         return 0;
     }
     
@@ -2291,8 +2295,8 @@ int lua_cocos2d_CardinalSplineBy_create(lua_State* tolua_S)
             return 0;
         
         int num = 0;
-        cocos2d::Vector2 *arr = NULL;
-        ok &= luaval_to_array_of_vector2(tolua_S, 3, &arr, &num);
+        cocos2d::Vec2 *arr = NULL;
+        ok &= luaval_to_array_of_vec2(tolua_S, 3, &arr, &num);
         if (!ok)
             return 0;
         
@@ -2363,8 +2367,8 @@ int tolua_cocos2d_CatmullRomBy_create(lua_State* tolua_S)
             return 0;
         
         int num = 0;
-        cocos2d::Vector2 *arr = NULL;
-        ok &= luaval_to_array_of_vector2(tolua_S, 3, &arr, &num);
+        cocos2d::Vec2 *arr = NULL;
+        ok &= luaval_to_array_of_vec2(tolua_S, 3, &arr, &num);
         if (!ok)
             return 0;
         
@@ -2427,8 +2431,8 @@ int tolua_cocos2d_CatmullRomTo_create(lua_State* tolua_S)
             return 0;
         
         int num = 0;
-        cocos2d::Vector2 *arr = NULL;
-        ok &= luaval_to_array_of_vector2(tolua_S, 3, &arr, &num);
+        cocos2d::Vec2 *arr = NULL;
+        ok &= luaval_to_array_of_vec2(tolua_S, 3, &arr, &num);
         if (!ok)
             return 0;
         
@@ -2491,8 +2495,8 @@ int tolua_cocos2d_BezierBy_create(lua_State* tolua_S)
             return 0;
         
         int num = 0;
-        cocos2d::Vector2 *arr = NULL;
-        ok &= luaval_to_array_of_vector2(tolua_S, 3, &arr, &num);
+        cocos2d::Vec2 *arr = NULL;
+        ok &= luaval_to_array_of_vec2(tolua_S, 3, &arr, &num);
         if (!ok)
             return 0;
         
@@ -2551,8 +2555,8 @@ int tolua_cocos2d_BezierTo_create(lua_State* tolua_S)
             return 0;
         
         int num = 0;
-        cocos2d::Vector2 *arr = NULL;
-        ok &= luaval_to_array_of_vector2(tolua_S, 3, &arr, &num);
+        cocos2d::Vec2 *arr = NULL;
+        ok &= luaval_to_array_of_vec2(tolua_S, 3, &arr, &num);
         if (!ok)
             return 0;
         
@@ -2626,7 +2630,7 @@ static int tolua_cocos2d_DrawNode_drawPolygon(lua_State* tolua_S)
         size_t size = lua_tonumber(tolua_S, 3);
         if ( size > 0 )
         {
-            cocos2d::Vector2* points = new cocos2d::Vector2[size];
+            cocos2d::Vec2* points = new cocos2d::Vec2[size];
             if (NULL == points)
                 return 0;
             
@@ -2642,7 +2646,7 @@ static int tolua_cocos2d_DrawNode_drawPolygon(lua_State* tolua_S)
 #endif
                 }
                 
-                if(!luaval_to_vector2(tolua_S, lua_gettop(tolua_S), &points[i]))
+                if(!luaval_to_vec2(tolua_S, lua_gettop(tolua_S), &points[i]))
                 {
                     lua_pop(tolua_S, 1);
                     CC_SAFE_DELETE_ARRAY(points);

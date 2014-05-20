@@ -73,10 +73,21 @@ public:
                      const std::string& startCharMap);
     
     //set string value for labelatlas.
-    void setStringValue(const std::string& value);
+    CC_DEPRECATED_ATTRIBUTE void setStringValue(const std::string& value){this->setString(value);}
+    void setString(const std::string& value);
     
     //get string value for labelatlas.
-    const std::string& getStringValue() const;
+    CC_DEPRECATED_ATTRIBUTE const std::string& getStringValue() const{return this->getString();}
+    const std::string& getString() const;
+    
+    /**
+     * Gets the string length of the label.
+     * Note: This length will be larger than the raw string length,
+     * if you want to get the raw string length, you should call this->getString().size() instead
+     *
+     * @return  string length.
+     */
+    ssize_t getStringLength()const;
     
     //override "getVirtualRendererSize" method of widget.
     virtual const Size& getVirtualRendererSize() const override;
@@ -100,7 +111,7 @@ protected:
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
 protected:
-    LabelAtlas* _labelAtlasRenderer;
+    Label* _labelAtlasRenderer;
     std::string _stringValue;
     std::string _charMapFileName;
     int _itemWidth;

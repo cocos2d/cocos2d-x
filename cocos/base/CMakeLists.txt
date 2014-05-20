@@ -1,36 +1,44 @@
 set(COCOS_BASE_SRC
-  base/atitc.cpp
-  base/base64.cpp
   base/CCAutoreleasePool.cpp
   base/CCConfiguration.cpp
   base/CCConsole.cpp
   base/CCData.cpp
   base/CCDataVisitor.cpp
   base/CCDirector.cpp
-  base/CCEventAcceleration.cpp
   base/CCEvent.cpp
+  base/CCEventAcceleration.cpp
   base/CCEventCustom.cpp
   base/CCEventDispatcher.cpp
+  base/CCEventFocus.cpp
   base/CCEventKeyboard.cpp
-  base/CCEventListenerAcceleration.cpp
   base/CCEventListener.cpp
+  base/CCEventListenerAcceleration.cpp
   base/CCEventListenerCustom.cpp
+  base/CCEventListenerFocus.cpp
   base/CCEventListenerKeyboard.cpp
   base/CCEventListenerMouse.cpp
   base/CCEventListenerTouch.cpp
   base/CCEventMouse.cpp
   base/CCEventTouch.cpp
-  base/CCEventFocus.cpp
-  base/CCEventListenerFocus.cpp
+  base/CCIMEDispatcher.cpp
   base/CCNS.cpp
   base/CCProfiling.cpp
   base/CCRef.cpp
   base/CCScheduler.cpp
+  base/CCScriptSupport.cpp
   base/CCTouch.cpp
-  base/ccTypes.cpp
+  base/CCUserDefault.cpp
+  base/CCUserDefaultAndroid.cpp
   base/CCValue.cpp
+  base/TGAlib.cpp
+  base/ZipUtils.cpp
+  base/atitc.cpp
+  base/base64.cpp
+  base/ccCArray.cpp
+  base/ccFPSImages.c
+  base/ccTypes.cpp
+  base/ccUTF8.cpp
+  base/ccUtils.cpp
   base/etc1.cpp
   base/s3tc.cpp
-  base/ZipUtils.cpp
 )
-

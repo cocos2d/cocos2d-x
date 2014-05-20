@@ -37,10 +37,10 @@ public:
     virtual ~UIScrollInterface() {}
 
 protected:
-    virtual void handlePressLogic(const Vector2 &touchPoint) = 0;
-    virtual void handleMoveLogic(const Vector2 &touchPoint) = 0;
-    virtual void handleReleaseLogic(const Vector2 &touchPoint) = 0;
-    virtual void interceptTouchEvent(int handleState, Widget* sender, const Vector2 &touchPoint) = 0;
+    virtual void handlePressLogic(const Vec2 &touchPoint) = 0;
+    virtual void handleMoveLogic(const Vec2 &touchPoint) = 0;
+    virtual void handleReleaseLogic(const Vec2 &touchPoint) = 0;
+    virtual void interceptTouchEvent(int handleState, Widget* sender, const Vec2 &touchPoint) = 0;
 };
 
 }

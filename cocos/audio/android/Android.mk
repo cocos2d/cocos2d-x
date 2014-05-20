@@ -13,11 +13,7 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../include
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../include \
                     $(LOCAL_PATH)/../.. \
-                    $(LOCAL_PATH)/../../math \
-                    $(LOCAL_PATH)/../../2d \
-                    $(LOCAL_PATH)/../../2d/platform/android \
-                    $(LOCAL_PATH)/../../base \
-                    $(LOCAL_PATH)/../../physics
+                    $(LOCAL_PATH)/../../platform/android
 
 LOCAL_CFLAGS += -Wno-psabi
 LOCAL_EXPORT_CFLAGS += -Wno-psabi

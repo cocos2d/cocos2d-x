@@ -380,7 +380,7 @@ ActionInterval* CCBAnimationManager::getAction(CCBKeyframe *pKeyframe0, CCBKeyfr
         
         Size containerSize = getContainerSize(pNode->getParent());
         
-        Vector2 absPos = getAbsolutePosition(Vector2(x,y), type, containerSize, propName);
+        Vec2 absPos = getAbsolutePosition(Vec2(x,y), type, containerSize, propName);
         
         return MoveTo::create(duration, absPos);
     }
@@ -452,7 +452,7 @@ void CCBAnimationManager::setAnimatedProperty(const std::string& propName, Node 
             float x = valueVector[0].asFloat();
             float y = valueVector[1].asFloat();
             
-            pNode->setPosition(getAbsolutePosition(Vector2(x,y), type, getContainerSize(pNode->getParent()), propName));
+            pNode->setPosition(getAbsolutePosition(Vec2(x,y), type, getContainerSize(pNode->getParent()), propName));
         }
         else if (propName == "scale")
         {

@@ -82,18 +82,18 @@ public:
     virtual void onTouchEnded(Touch *pTouch, Event *pEvent) override;
 
     /** Factorize the event dispath into these methods. */
-    void potentiometerBegan(Vector2 location);
-    void potentiometerMoved(Vector2 location);
-    void potentiometerEnded(Vector2 location);
+    void potentiometerBegan(Vec2 location);
+    void potentiometerMoved(Vec2 location);
+    void potentiometerEnded(Vec2 location);
 
     /** Returns the distance between the point1 and point2. */
-    float distanceBetweenPointAndPoint(Vector2 point1, Vector2 point2);
+    float distanceBetweenPointAndPoint(Vec2 point1, Vec2 point2);
     /** Returns the angle in degree between line1 and line2. */
     float angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint(
-        Vector2 beginLineA, 
-        Vector2 endLineA,
-        Vector2 beginLineB,
-        Vector2 endLineB);
+        Vec2 beginLineA, 
+        Vec2 endLineA,
+        Vec2 beginLineB,
+        Vec2 endLineB);
 
 protected:
     /** Contains the receiver’s current value. */
@@ -107,7 +107,7 @@ protected:
 
     CC_SYNTHESIZE_RETAIN(Sprite*, _thumbSprite, ThumbSprite)
     CC_SYNTHESIZE_RETAIN(ProgressTimer*, _progressTimer, ProgressTimer)
-    CC_SYNTHESIZE(Vector2, _previousLocation, PreviousLocation)
+    CC_SYNTHESIZE(Vec2, _previousLocation, PreviousLocation)
 };
 
 // end of GUI group

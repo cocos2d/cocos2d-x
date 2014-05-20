@@ -23,10 +23,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#include "2d/CCLabelTextFormatter.h"
+
 #include <vector>
 
-#include "ccUTF8.h"
-#include "CCLabelTextFormatter.h"
+#include "base/ccUTF8.h"
 #include "base/CCDirector.h"
 #include "2d/CCLabel.h"
 
@@ -310,7 +311,7 @@ bool LabelTextFormatter::createStringSprites(Label *theLabel)
     auto strWhole = theLabel->_currentUTF16String;
     auto fontAtlas = theLabel->_fontAtlas;
     FontLetterDefinition tempDefinition;
-    Vector2 letterPosition;
+    Vec2 letterPosition;
     const auto& kernings = theLabel->_horizontalKernings;
 
     float clipTop = 0;

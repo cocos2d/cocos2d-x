@@ -28,6 +28,10 @@
 
 NS_CC_BEGIN
 
+const ValueVector ValueVectorNull;
+const ValueMap ValueMapNull;
+const ValueMapIntKey ValueMapIntKeyNull;
+
 const Value Value::Null;
 
 Value::Value()

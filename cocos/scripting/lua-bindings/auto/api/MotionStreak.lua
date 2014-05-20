@@ -99,7 +99,7 @@
 --------------------------------
 -- overload function: setPosition(float, float)
 --          
--- overload function: setPosition(vector2_table)
+-- overload function: setPosition(cc.Vec2)
 --          
 -- @function [parent=#MotionStreak] setPosition
 -- @param self

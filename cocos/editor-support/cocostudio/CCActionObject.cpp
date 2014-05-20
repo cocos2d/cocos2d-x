@@ -123,7 +123,7 @@ void ActionObject::initWithDictionary(const rapidjson::Value& dic, Ref* root)
 		if(length > maxLength)
 			maxLength = length;
 	}
-	_fTotalTime = maxLength*_fTotalTime;
+	_fTotalTime = maxLength*_fUnitTime;
 }
 
 void ActionObject::addActionNode(ActionNode* node)
