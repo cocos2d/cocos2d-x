@@ -77,7 +77,7 @@ private:
 #if CC_USE_PHYSICS
 public:
     virtual void addChild(Node* child, int zOrder, int tag) override;
-    virtual void update(float delta) override;
+    virtual void updatePhysicsWorld(float delta);
     inline PhysicsWorld* getPhysicsWorld() { return _physicsWorld; }
     static Scene *createWithPhysics();
     

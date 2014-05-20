@@ -97,9 +97,8 @@ void Scene::addChild(Node* child, int zOrder, int tag)
     addChildToPhysicsWorld(child);
 }
 
-void Scene::update(float delta)
+void Scene::updatePhysicsWorld(float delta)
 {
-    Node::update(delta);
     if (nullptr != _physicsWorld)
     {
         _physicsWorld->update(delta);
@@ -131,7 +130,7 @@ bool Scene::initWithPhysics()
         this->setContentSize(director->getWinSize());
         CC_BREAK_IF(! (_physicsWorld = PhysicsWorld::construct(*this)));
         
-        this->scheduleUpdate();
+        this->schedule(schedule_selector(Scene::updatePhysicsWorld));
         // success
         ret = true;
     } while (0);
