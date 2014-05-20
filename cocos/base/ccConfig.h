@@ -37,8 +37,8 @@ THE SOFTWARE.
 
 /** @def CC_ENABLE_STACKABLE_ACTIONS
  如果启用, 改变位置属性的动作(如 MoveBy, JumpBy, BezierBy..)将会放到栈里面. 
- 如果在一个对象(`node`)上同时运行了2个或更多改变位置属性的动作, 这个对象(`node`)的最终位置会是所有改变位置属性动作的综合矢量和.
- 如果禁用, 只有最后一个改变位置属性的动作会执行.
+ 如果在一个对象(`node`)上同时运行了2个或更多改变位置属性的动作, 这个对象(`node`)的最终位置会是所有改变位置属性动作的矢量和.
+ 如果禁用, 只有最后一个改变位置属性的动作会生效.
  
  默认启用. 禁用是为了和v2.0或更旧的版本兼容.
  @since v2.1
@@ -68,7 +68,7 @@ THE SOFTWARE.
 如果启用, 纹理贴图坐标将会使用以下公式计算:
     - texCoord.left = (rect.origin.x*2+1) / (texture.wide*2);
     - texCoord.right = texCoord.left + (rect.size.width*2-2)/(texture.wide*2);
-纹理贴图坐标的顶部和底部公式是同样的.The same for bottom and top.
+纹理贴图坐标的顶部和底部公式是同样的.
 
 这个公式使用了其纹理的99%的防止失真.
 正确防止失真的方法是使用spritesheet-artifact-fixer.py或一个相似的工具.
@@ -135,7 +135,7 @@ THE SOFTWARE.
 #endif
 
 /** @def CC_NODE_RENDER_SUBPIXEL
- 如果启用, Node 对象(Sprite, Label等)将会以亚像素级别渲染.
+ 如果启用, Node 对象(Sprite, Label等)将会以亚像素(subpixels)级别渲染.
  如果禁用, 将会使用整像素(integer pixels).
 
  启用请设置值为 1. 默认启用.
