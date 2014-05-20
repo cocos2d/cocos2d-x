@@ -60,7 +60,7 @@ typedef struct PhysicsMaterial
 const PhysicsMaterial PHYSICSSHAPE_MATERIAL_DEFAULT(0.0f, 0.5f, 0.5f);
 
 /**
- * @brief 给body的一个形状。你不会直接创建PhysicsWorld 对象，与之代替的，你可以查看PhysicsBody去了解怎么创建它。
+ * @brief 给body的一个形状(shape)。你不会直接创建PhysicsWorld 对象，与之代替的，你可以查看PhysicsBody去了解怎么创建它。
  */
 class PhysicsShape : public Ref
 {
@@ -78,22 +78,22 @@ public:
     };
     
 public:
-    /** 获取这个形状连接到的body */
+    /** 获取这个形状(shape)连接到的body */
     inline PhysicsBody* getBody() const { return _body; }
-    /** 返回形状的类型 */
+    /** 返回形状(shape)的类型 */
     inline Type getType() const { return _type; }
-    /** 返回形状所占的面积 */
+    /** 返回形状(shape)所占的面积 */
     inline float getArea() const { return _area; }
     /** 获取力矩 */
     inline float getMoment() const { return _moment; }
-    /** 设置力矩，它会更改这个形状关联的body的力矩 */
+    /** 设置力矩，它会更改这个形状(shape)关联的body的力矩 */
     void setMoment(float moment);
     inline void setTag(int tag) { _tag = tag; }
     inline int getTag() const { return _tag; }
     
     /** 获取质量 */
     inline float getMass() const { return _mass; }
-    /** 设置质量，它会改变这个形状关联的body的质量 */
+    /** 设置质量，它会改变这个形状(shape)关联的body的质量 */
     void setMass(float mass);
     inline float getDensity() const { return _material.density; }
     void setDensity(float density);
@@ -108,9 +108,9 @@ public:
     virtual float calculateDefaultMoment() { return 0.0f; }
     /** 获取偏移值 */
     virtual Vec2 getOffset() { return Vec2::ZERO; }
-    /** 获取这个形状的中心 */
+    /** 获取这个形状(shape)的中心 */
     virtual Vec2 getCenter() { return getOffset(); }
-    /** 检测某个点是否在这个形状里 */
+    /** 检测某个点是否在这个形状(shape)里 */
     bool containsPoint(const Vec2& point) const;
     
     /** 把那个点移动到中心点 */
@@ -153,7 +153,7 @@ protected:
     
     void setBody(PhysicsBody* body);
     
-    /** 计算这个形状所占的面积 */
+    /** 计算这个形状(shape)所占的面积 */
     virtual float calculateArea() { return 0.0f; }
     
 protected:
@@ -180,7 +180,7 @@ protected:
     friend class PhysicsDebugDraw;
 };
 
-/** 圆形形状 */
+/** PhysicsShapeCircle圆形形状 */
 class PhysicsShapeCircle : public PhysicsShape
 {
 public:
@@ -201,7 +201,7 @@ protected:
     virtual ~PhysicsShapeCircle();
 };
 
-/** Box形状 */
+/** PhysicsShpaeBox:Box形状 */
 class PhysicsShapeBox : public PhysicsShape
 {
 public:
@@ -228,7 +228,7 @@ protected:
     Vec2 _offset;
 };
 
-/** 多边形形状 */
+/** PhysicsShapePolygon:多边形形状 */
 class PhysicsShapePolygon : public PhysicsShape
 {
 public:
@@ -254,7 +254,7 @@ protected:
     Vec2 _center;
 };
 
-/** 线段形状 */
+/** PhysicsShapeEdgeSegment:线段形状 */
 class PhysicsShapeEdgeSegment : public PhysicsShape
 {
 public:
@@ -277,7 +277,7 @@ protected:
     friend class PhysicsBody;
 };
 
-/** 获取一个边缘box形状 */
+/** PhysicsShapeEdgeBox:获取一个边缘box形状 */
 class PhysicsShapeEdgeBox : public PhysicsShape
 {
 public:
@@ -299,7 +299,7 @@ protected:
     friend class PhysicsBody;
 };
 
-/** 边缘多边形的形状 */
+/** PhysicsShapeEdgePolygon:边缘多边形的形状 */
 class PhysicsShapeEdgePolygon : public PhysicsShape
 {
 public:
@@ -321,7 +321,7 @@ protected:
     Vec2 _center;
 };
 
-/** 链形状 */
+/** PhysicsShapeEdgeChain:链形状 */
 class PhysicsShapeEdgeChain : public PhysicsShape
 {
 public:

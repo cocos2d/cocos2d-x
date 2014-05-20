@@ -57,7 +57,7 @@ typedef struct PhysicsContactData
 }PhysicsContactData;
 
 /**
- * @brief 碰撞信息。当两个形状彼此发生接触的时候会自动创建，当两个形状彼此分离的时候自动销毁。
+ * @brief 碰撞信息。当两个形状(shape)彼此发生接触的时候会自动创建，当两个形状彼此分离的时候自动销毁。
  */
 class PhysicsContact : public EventCustom
 {
@@ -144,8 +144,7 @@ public:
     void setFriction(float friction);
     /** 设置表面速度 */
     void setSurfaceVelocity(const Vect& velocity);
-    /** 忽视碰撞的其他presolve 和 postsolve 回调。
-     ignore the rest of the contact presolve and postsolve callbacks */
+    /** 忽视碰撞的其他presolve 和 postsolve 回调。*/
     void ignore();
     
 private:
@@ -160,7 +159,6 @@ private:
 
 /*
  * @brief 当onContactPostSolve被调用时生成postsolve value
- postsolve value generated when onContactPostSolve called.
  */
 class PhysicsContactPostSolve
 {

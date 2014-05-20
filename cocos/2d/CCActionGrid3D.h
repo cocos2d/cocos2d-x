@@ -62,7 +62,7 @@ CC_CONSTRUCTOR_ACCESS:
     Waves3D() {}
     virtual ~Waves3D() {}
 
-    /** 用持续时间、网格大小、波的数目和振幅初始化一个动作 */
+    /** 用持续时间、网格(grid)大小、波的数目和振幅初始化一个动作 */
     bool initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude);
 
 protected:
@@ -119,7 +119,7 @@ private:
 class CC_DLL Lens3D : public Grid3DAction
 {
 public:
-    /** 用中心坐标、半径、网格大小和持续时间创建动作 */
+    /** 用中心坐标、半径、网格(grid)大小和持续时间创建动作 */
     static Lens3D* create(float duration, const Size& gridSize, const Vec2& position, float radius);
 
     /** 获取透镜的中心坐标 */
@@ -140,7 +140,7 @@ CC_CONSTRUCTOR_ACCESS:
     Lens3D() {}
     virtual ~Lens3D() {}
 
-    /** 用中心坐标、半径、网格大小和持续时间初始化动作 */
+    /** 用中心坐标、半径、网格(grid)大小和持续时间初始化动作 */
     bool initWithDuration(float duration, const Size& gridSize, const Vec2& position, float radius);
 
 protected:
@@ -163,7 +163,7 @@ private:
 class CC_DLL Ripple3D : public Grid3DAction
 {
 public:
-    /** 用半径、波浪的数量、振幅、网格大小和持续时间创建动作 */
+    /** 用半径、波浪的数量、振幅、网格(grid)大小和持续时间创建动作 */
     static Ripple3D* create(float duration, const Size& gridSize, const Vec2& position, float radius, unsigned int waves, float amplitude);
  
     /** 获取中心坐标 */
@@ -185,7 +185,7 @@ CC_CONSTRUCTOR_ACCESS:
     Ripple3D() {}
     virtual ~Ripple3D() {}
 
-    /** 用半径、波浪的数目、振幅、网格大小和持续时间初始化动作 */
+    /** 用半径、波浪的数目、振幅、网格(grid)大小和持续时间初始化动作 */
     bool initWithDuration(float duration, const Size& gridSize, const Vec2& position, float radius, unsigned int waves, float amplitude);
 
 protected:
@@ -204,7 +204,7 @@ private:
 class CC_DLL Shaky3D : public Grid3DAction
 {
 public:
-    /** 用一个范围、是否晃动的z轴顶点、网格大小和持续时间创建动作 */
+    /** 用一个范围、是否晃动的z轴顶点、网格(grid)大小和持续时间创建动作 */
     static Shaky3D* create(float duration, const Size& gridSize, int range, bool shakeZ);
 
     // Overrides
@@ -215,7 +215,7 @@ CC_CONSTRUCTOR_ACCESS:
     Shaky3D() {}
     virtual ~Shaky3D() {}
     
-    /** 用一个范围、是否晃动的z轴顶点、网格大小和持续时间初始化动作 */
+    /** 用一个范围、是否晃动的z轴顶点、网格(grid)大小和持续时间初始化动作 */
     bool initWithDuration(float duration, const Size& gridSize, int range, bool shakeZ);
 
 protected:
@@ -230,7 +230,7 @@ private:
 class CC_DLL Liquid : public Grid3DAction
 {
 public:
-    /** 用振幅、网格大小和持续时间创建动作 */
+    /** 用振幅、网格(grid)大小和持续时间创建动作 */
     static Liquid* create(float duration, const Size& gridSize, unsigned int waves, float amplitude);
     
     inline float getAmplitude() const { return _amplitude; }
@@ -247,7 +247,7 @@ CC_CONSTRUCTOR_ACCESS:
     Liquid() {}
     virtual ~Liquid() {}
     
-    /** 用振幅、网格大小和持续时间初始化动作 */
+    /** 用振幅、网格(grid)大小和持续时间初始化动作 */
     bool initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude);
 
 protected:
@@ -263,7 +263,7 @@ private:
 class CC_DLL Waves : public Grid3DAction
 {
 public:
-    /** 用振幅、水平正弦、垂直正弦、网格大小和持续时间创建动作 */
+    /** 用振幅、水平正弦、垂直正弦、网格(grid)大小和持续时间创建动作 */
     static Waves* create(float duration, const Size& gridSize, unsigned int waves, float amplitude, bool horizontal, bool vertical);
 
     inline float getAmplitude() const { return _amplitude; }
@@ -280,7 +280,7 @@ CC_CONSTRUCTOR_ACCESS:
     Waves() {}
     virtual ~Waves() {}
     
-    /** 用振幅、水平正弦、垂直正弦、网格大小和持续时间初始化动作 */
+    /** 用振幅、水平正弦、垂直正弦、网格(grid)大小和持续时间初始化动作 */
     bool initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude, bool horizontal, bool vertical);
 
 protected:
@@ -298,7 +298,7 @@ private:
 class CC_DLL Twirl : public Grid3DAction
 {
 public:
-    /** 用中心坐标、螺旋数、振幅、网格大小和持续时间创建动作 */
+    /** 用中心坐标、螺旋数、振幅、网格(grid)大小和持续时间创建动作 */
     static Twirl* create(float duration, const Size& gridSize, Vec2 position, unsigned int twirls, float amplitude);
 
     /** 获取螺旋坐标 */
@@ -321,7 +321,7 @@ CC_CONSTRUCTOR_ACCESS:
     Twirl() {}
     virtual ~Twirl() {}
     
-    /** 用中心坐标、螺旋数、振幅、网格大小和持续时间初始化动作 */
+    /** 用中心坐标、螺旋数、振幅、网格(grid)大小和持续时间初始化动作 */
     bool initWithDuration(float duration, const Size& gridSize, Vec2 position, unsigned int twirls, float amplitude);
 
 protected:

@@ -64,10 +64,10 @@ typedef struct PhysicsRayCastInfo
 }PhysicsRayCastInfo;
 
 /**
- * @brief  当被查询中找到时被调用。你通过返回一个float控制光线投射怎么被处理。
+ * @brief  当被查询中找到时被调用。你通过返回一个float控制光线投射(ray cast)怎么被处理。
  * 返回true: 继续
- * 返回false: 终止光线投射
- * @param fixture 被光线投射的设备
+ * 返回false: 终止光线投射(ray cast)
+ * @param fixture 被光线投射(ray cast)的设备
  * @param point 初始的交叉点
  * @param normal 交叉点的方向矢量
  * @return true to continue, false to terminate 返回true继续，返回false终止。
@@ -90,11 +90,11 @@ public:
     static const int DEBUGDRAW_ALL;         ///< 画所有东西
     
 public:
-    /** 向PhysicsWorld增加一个关节点 */
+    /** 向PhysicsWorld增加一个关节点(joint) */
     virtual void addJoint(PhysicsJoint* joint);
-    /** 从PhysicsWorld删除一个节点 */
+    /** 从PhysicsWorld删除一个节点(joint) */
     virtual void removeJoint(PhysicsJoint* joint, bool destroy = true);
-    /** 从PhysicsWorld删除所有的关节点*/
+    /** 从PhysicsWorld删除所有的关节点(joint) */
     virtual void removeAllJoints(bool destroy = true);
     
     /** 从PhysicsWorld移除body */
@@ -104,15 +104,15 @@ public:
     /** 从PhysicsWorld移除所有body */
     virtual void removeAllBodies();
     
-    /** 寻找和光线相交的物理形状 */
+    /** 寻找和光线相交的物理形状(PhysicsShape) */
     void rayCast(PhysicsRayCastCallbackFunc func, const Vec2& start, const Vec2& end, void* data);
-    /** 寻找包含在矩形中的物理形状 */
+    /** 寻找包含在矩形中的物理形状(PhysicsShape) */
     void queryRect(PhysicsQueryRectCallbackFunc func, const Rect& rect, void* data);
-    /** 寻找包含某个点的物理形状 */
+    /** 寻找包含某个点的物理形状(PhysicsShape) */
     void queryPoint(PhysicsQueryPointCallbackFunc func, const Vec2& point, void* data);
-    /** 寻找包含某个点的物理形状 */
+    /** 寻找包含某个点的物理形状(PhysicsShape) */
     Vector<PhysicsShape*> getShapes(const Vec2& point) const;
-    /** 寻找包含某个点的物理形状 */
+    /** 寻找包含某个点的物理形状(PhysicsShape) */
     PhysicsShape* getShape(const Vec2& point) const;
     /** 获取所有在物理世界的body */
     const Vector<PhysicsBody*>& getAllBodies() const;

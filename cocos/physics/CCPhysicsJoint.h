@@ -55,14 +55,14 @@ public:
     inline int getTag() const { return _tag; }
     inline void setTag(int tag) { _tag = tag; }
     inline bool isEnabled() const { return _enable; }
-    /** 设置关节点是否激活 */
+    /** 设置关节点（joint)是否激活 */
     void setEnable(bool enable);
     inline bool isCollisionEnabled() const { return _collisionEnable; }
     /** 设置两个连接的body间是否发生冲突 */
     void setCollisionEnable(bool enable);
-    /** 从物理世界移除这个关节点 */
+    /** 从物理世界移除这个关节点（joint) */
     void removeFormWorld();
-    /** 销毁某个关节点 */
+    /** 销毁某个关节点(joint) */
     static void destroy(PhysicsJoint* joint);
     
     /** 设置两个连接的body相互间最大的作用力 */
@@ -95,7 +95,7 @@ protected:
 };
 
 /*
- * @brief 一个固定的关节点在某一个参考点把两个body融合在一起。固定的关节点对于创建复杂的、可以在之后断裂的形状很有用。
+ * @brief 一个PhysicsJointFixed对象在某一个参考点把两个body融合在一起。固定的关节点对于创建复杂的、可以在之后断裂的形状(shape)很有用。
  */
 class PhysicsJointFixed : public PhysicsJoint
 {
@@ -111,7 +111,7 @@ protected:
 };
 
 /*
- * @brief 一个有限的关节限定了两个body间最大的距离，就像他们之间被一条绳子连接一样。
+ * @brief 一个PhysicsJointLimit对象限定了两个body间最大的距离，就像他们之间被一条绳子连接一样。
  */
 class PhysicsJointLimit : public PhysicsJoint
 {
@@ -137,7 +137,7 @@ protected:
 };
 
 /*
- * @brief 一个pin 关节点允许两个body独立地以锚点为轴旋转如果pinned在一起。
+ * @brief 一个PhysicsJointPin对象允许两个body独立地以锚点为轴旋转如果pinned在一起。
  */
 class PhysicsJointPin : public PhysicsJoint
 {
@@ -152,7 +152,7 @@ protected:
     virtual ~PhysicsJointPin() {}
 };
 
-/** 设置两个body之间固定的距离。 */
+/** PhysicsJointDistance:设置两个body之间固定的距离。 */
 class PhysicsJointDistance : public PhysicsJoint
 {
 public:
@@ -169,7 +169,7 @@ protected:
     virtual ~PhysicsJointDistance() {}
 };
 
-/** 用一个弹簧连接两个物理body */
+/** PhysicsJointSpring:用一个弹簧连接两个物理body */
 class PhysicsJointSpring : public PhysicsJoint
 {
 public:
@@ -193,7 +193,7 @@ protected:
     virtual ~PhysicsJointSpring() {}
 };
 
-/** 连接一个body a到一条线、连接一个body b到一个点 */
+/** PhysicsJointGroove:连接一个body a到一条线、连接一个body b到一个点 */
 class PhysicsJointGroove : public PhysicsJoint
 {
 public:
@@ -214,7 +214,7 @@ protected:
     virtual ~PhysicsJointGroove() {}
 };
 
-/** 像一个弹簧关节点，但是能够可以旋转 */
+/** PhysicsJointRotarySpring:像一个PhysicsJointSpring，但是能够可以旋转 */
 class PhysicsJointRotarySpring : public PhysicsJoint
 {
 public:
@@ -235,7 +235,7 @@ protected:
     virtual ~PhysicsJointRotarySpring() {}
 };
 
-/** 跟有限关节点差不多,不过能够旋转 */
+/** PhysicsJointRotaryLimit:跟PhysicsJointLimit差不多,不过能够旋转 */
 class PhysicsJointRotaryLimit : public PhysicsJoint
 {
 public:
@@ -255,7 +255,7 @@ protected:
     virtual ~PhysicsJointRotaryLimit() {}
 };
 
-/** 跟插座扳手关节点差不多 */
+/** PhysicsJointRatchet:跟插座扳手关节点（socket wrench）差不多 */
 class PhysicsJointRatchet : public PhysicsJoint
 {
 public:
@@ -276,7 +276,7 @@ protected:
     virtual ~PhysicsJointRatchet() {}
 };
 
-/** 保持一对body的恒定角速率. */
+/** PhysicsJointGear:保持一对body的恒定角速率. */
 class PhysicsJointGear : public PhysicsJoint
 {
 public:
@@ -295,7 +295,7 @@ protected:
     virtual ~PhysicsJointGear() {}
 };
 
-/** 保持一对body的恒定相对角速率 */
+/** PhysicsJointMotor:保持一对body的恒定相对角速率 */
 class PhysicsJointMotor : public PhysicsJoint
 {
 public:

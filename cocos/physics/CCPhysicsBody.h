@@ -75,13 +75,13 @@ public:
      */
     static PhysicsBody* createPolygon(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
     
-    /** 创建一个包含边缘片段形状的body */
+    /** 创建一个包含边缘片段(EdgeSegment)形状的body */
     static PhysicsBody* createEdgeSegment(const Vec2& a, const Vec2& b, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
-    /** 创建一个包含边缘box形状的body */
+    /** 创建一个包含边缘box(EdgeBox)形状的body */
     static PhysicsBody* createEdgeBox(const Size& size, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1, const Vec2& offset = Vec2::ZERO);
-    /** 创建一个包含边缘五边形形状的body */
+    /** 创建一个包含边缘多边形(EdgePolygon)形状的body */
     static PhysicsBody* createEdgePolygon(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
-    /** 创建一个包含边缘链形状的body */
+    /** 创建一个包含边缘链(EdgeChain)形状的body */
     static PhysicsBody* createEdgeChain(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
     
     /*
@@ -253,7 +253,7 @@ public:
     inline float getLinearDamping() const { return _linearDamping; }
     /** 
      * 设置线性阻尼
-     * 被用作模拟作用在body上德流体或是空气摩擦力
+     * 被用作模拟作用在body上的流体或是空气摩擦力
      * 值的范围是0.0f到1.0f
      */
     inline void setLinearDamping(float damping) { _linearDamping = damping; updateDamping(); }

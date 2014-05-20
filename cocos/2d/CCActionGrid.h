@@ -39,12 +39,12 @@ class NodeGrid;
  * @{
  */
 
-/** @brief Base class for Grid actions */
+/** @brief 网格(grid)动作的基类 */
 class CC_DLL GridAction : public ActionInterval
 {
 public:
 
-    /** 返回网格 */
+    /** 返回网格(grid) */
     virtual GridBase* getGrid();
 
     // overrides
@@ -70,15 +70,15 @@ private:
 
 /** 
  @brief 
- 3D网格动作的基类
- 3D网格动作可以修改一个非平铺的网格 */
+ Grid3DAction的基类
+ Grid3DAction可以修改一个非平铺的网格 */
 class CC_DLL Grid3DAction : public GridAction
 {
 public:
 
-    /** 返回网格 */
+    /** 返回网格(grid) */
     virtual GridBase* getGrid();
-    /** 返回网格中属于某个位置的顶点
+    /** 返回网格(grid)中属于某个位置的顶点
      * @js NA
      * @lua NA
      */
@@ -90,7 +90,7 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE inline Vec3 vertex(const Vec2& position) { return getVertex(position); }
 
-    /** 返回网格中属于某个位置的原始顶点（未经过变换）
+    /** 返回网格(grid)中属于某个位置的原始顶点（未经过变换）
      * @js NA
      * @lua NA
      */
@@ -102,7 +102,7 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE inline Vec3 originalVertex(const Vec2& position) { return getOriginalVertex(position); }
 
-    /** 设置一个新的顶点到网格中的一定位置
+    /** 设置一个新的顶点到网格(grid)中的一定位置
      * @js NA
      * @lua NA
      */
@@ -112,7 +112,7 @@ public:
 	virtual Grid3DAction * clone() const override = 0;
 };
 
-/** @brief 平铺的3Dgrid动作的基类 */
+/** @brief TiledGird3DAction的基类 */
 class CC_DLL TiledGrid3DAction : public GridAction
 {
 public:
@@ -122,7 +122,7 @@ public:
      */
     static TiledGrid3DAction* create(float duration, const Size& gridSize);
 
-    /** 返回网格中某个位置的格子
+    /** 返回网格(grid)中某个位置的格子(tile)
      * @js NA
      * @lua NA
      */
@@ -134,25 +134,25 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE Quad3 tile(const Vec2& position) { return getTile(position); }
 
-    /**  返回网格中某个位置的原始格子（未经过变换）
+    /**  返回网格(grid)中某个位置的原始格子(tile)（未经过变换）
      * @js NA
      * @lua NA
      */
     Quad3 getOriginalTile(const Vec2& position) const;
 
-    /** @deprecated 视同getOriginalTile()代替
+    /** @deprecated 使用getOriginalTile()代替
      * @js NA
      * @lua NA
      */
     CC_DEPRECATED_ATTRIBUTE Quad3 originalTile(const Vec2& position) { return getOriginalTile(position); }
 
-    /**  设置网格中某个位置的格子
+    /**  设置网格(grid)中某个位置的格子
      * @js NA
      * @lua NA
      */
     void setTile(const Vec2& position, const Quad3& coords);
 
-    /** 返回网格 */
+    /** 返回网格(grid) */
     virtual GridBase* getGrid();
 
     // Override
@@ -258,8 +258,8 @@ private:
 };
 
 /** @brief StopGrid action.
- @warning 如果另一个网格动作激活了，不要调用这个动作。
- 如果你想要移除网格特效，则调用。如： Sequence::actions(Lens::action(...), StopGrid::action(...), nullptr);
+ @warning 如果另一个网格(grid)动作激活了，不要调用这个动作。
+ 如果你想要移除网格(grid)特效，则调用。如： Sequence::actions(Lens::action(...), StopGrid::action(...), nullptr);
  */
 class CC_DLL StopGrid : public ActionInstant
 {
@@ -288,7 +288,7 @@ private:
 class CC_DLL ReuseGrid : public ActionInstant
 {
 public:
-    /** 用当前网格将被使用的次数来创建一个动作 */
+    /** 用当前网格(grid)将被使用的次数来创建一个动作 */
     static ReuseGrid* create(int times);
 
     // Override
@@ -300,7 +300,7 @@ CC_CONSTRUCTOR_ACCESS:
     ReuseGrid() {}
     virtual ~ReuseGrid() {}
     
-    /** 用当前网格将被使用的次数创建一个动作 */
+    /** 用当前网格(grid)将被使用的次数创建一个动作 */
     bool initWithTimes(int times);
 
 protected:
