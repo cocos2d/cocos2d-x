@@ -41,10 +41,9 @@ THE SOFTWARE.
 
 #if CC_USE_ARRAY_VECTOR
 /**
- * A reference counting-managed pointer for classes derived from RCBase which can
- * be used as C pointer
- * Original code: http://www.codeproject.com/Articles/64111/Building-a-Quick-and-Handy-Reference-Counting-Clas
- * License: http://www.codeproject.com/info/cpol10.aspx
+ * 由RCBasep衍生出的指针引用计数类，用法类似C语言指针。
+ * 代码原型: http://www.codeproject.com/Articles/64111/Building-a-Quick-and-Handy-Reference-Counting-Clas
+ * 许可证: http://www.codeproject.com/info/cpol10.aspx
  */
 template < class T >
 class RCPtr
@@ -131,12 +130,12 @@ private:
  */
 
 /** @def CCARRAY_FOREACH
-A convenience macro to iterate over a Array using. It is faster than the "fast enumeration" interface.
+方便遍历数组（Array）的宏。比"快速枚举（fast enumeration）"速度快。
 @since v0.99.4
 */
 
 /*
-In cocos2d-iphone 1.0.0, This macro have been update to like this:
+在cocos2d-iphone 1.0.0中，此宏被更新为以下形式：
 
 #define CCARRAY_FOREACH(__array__, __object__)                                                \
 if (__array__ && __array__->data->num > 0)                                                    \
@@ -144,7 +143,7 @@ for(id *__arr__ = __array__->data->arr, *end = __array__->data->arr + __array__-
 __arr__ <= end && ((__object__ = *__arr__) != nil || true);                                        \
 __arr__++)
 
-I found that it's not work in C++. So it keep what it's look like in version 1.0.0-rc3. ---By Bin
+我们发现这个方法在c++中不适用。所以把他保留为1.0.0-rc3版本中的形式。 --By Bin
 */
 
 #if CC_USE_ARRAY_VECTOR
@@ -236,38 +235,37 @@ class CC_DLL __Array : public Ref, public Clonable
 {
 public:
 
-    /** Creates an empty array. Default capacity is 10 
+    /** 创建一个空数组。默认容量是 10.
      * @js NA
      * @lua NA
      */
     static __Array* create();
-    /** Create an array with objects 
+    /** 通过多个object创建一个数组。
      * @js NA
      */
     static __Array* create(Ref* object, ...) CC_REQUIRES_NULL_TERMINATION;
-    /** Create an array with one object 
+    /** 通过单个object创建一个数组。
      * @js NA
      */
     static __Array* createWithObject(Ref* object);
-    /** Create an array with a default capacity 
+    /** 通过默认容量创建一个数组。
      * @js NA
      */
     static __Array* createWithCapacity(ssize_t capacity);
-    /** Create an array with from an existing array 
+    /** 通过已有数组创建一个新数组。
      * @js NA
      */
     static __Array* createWithArray(__Array* otherArray);
     /**
-     @brief   Generate a Array pointer by file
-     @param   pFileName  The file name of *.plist file
-     @return  The Array pointer generated from the file
+     @brief   通过文件内容创建一个数组。
+     @param   pFileName  文件名，比如：*.plist
+     @return  数组
      * @js NA
      */
     static __Array* createWithContentsOfFile(const std::string& pFileName);
-    
+
     /*
-     @brief The same meaning as arrayWithContentsOfFile(), but it doesn't call autorelease, so the
-     invoker should call release().
+     @brief 和接口 arrayWithContentsOfFile() 类似, 但是不使用自动释放（autorelease）, 所以需要手动调用release().
      * @js NA
      * @lua NA
      */
@@ -278,27 +276,27 @@ public:
      */
     ~__Array();
 
-    /** Initializes an array 
+    /** 初始化一个数组
      * @js NA
      * @lua NA
      */
     bool init();
-    /** Initializes an array with one object 
+    /** 使用一个object初始化数组。
      * @js NA
      * @lua NA
      */
     bool initWithObject(Ref* object);
-    /** Initializes an array with some objects 
+    /** 使用多个object初始化数组。
      * @js NA
      * @lua NA
      */
     bool initWithObjects(Ref* object, ...) CC_REQUIRES_NULL_TERMINATION;
-    /** Initializes an array with capacity 
+    /** 根据容量（capacity）初始化一个数组。
      * @js NA
      * @lua NA
      */
     bool initWithCapacity(ssize_t capacity);
-    /** Initializes an array with an existing array 
+    /** 通过已有的数组初始化一个新的数组。
      * @js NA
      * @lua NA
      */
@@ -306,7 +304,7 @@ public:
 
     // Querying an Array
 
-    /** Returns element count of the array 
+    /** 返回数组中数据总数。
      * @js NA
      */
     ssize_t count() const
@@ -317,7 +315,7 @@ public:
         return data->num;
 #endif
     }
-    /** Returns capacity of the array 
+    /** 返回数组的容量。
      * @js NA
      */
     ssize_t capacity() const
@@ -328,7 +326,7 @@ public:
         return data->max;
 #endif
     }
-    /** Returns index of a certain object, return UINT_MAX if doesn't contain the object 
+    /** 返回index指定的object；如果未指定index，返回UINT_MAX。
      * @js NA
      * @lua NA
      */
@@ -338,7 +336,7 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE ssize_t indexOfObject(Ref* object) const { return getIndexOfObject(object); }
 
-    /** Returns an element with a certain index 
+    /** 返回用index指定的元素（element）。
      * @js NA
      * @lua NA
      */
@@ -352,7 +350,7 @@ public:
 #endif
     }
     CC_DEPRECATED_ATTRIBUTE Ref* objectAtIndex(ssize_t index) { return getObjectAtIndex(index); }
-    /** Returns the last element of the array 
+    /** 返回数组最后一个元素（element）。
      * @js NA
      */
     Ref* getLastObject()
@@ -362,7 +360,7 @@ public:
 #else
         if(data->num > 0)
             return data->arr[data->num-1];
-        
+
         return nullptr;
 #endif
     }
@@ -370,7 +368,7 @@ public:
      * @js NA
      */
     CC_DEPRECATED_ATTRIBUTE Ref* lastObject() { return getLastObject(); }
-    /** Returns a random element 
+    /** 返回一个随机元素（element）。
      * @js NA
      * @lua NA
      */
@@ -379,37 +377,37 @@ public:
      * @js NA
      */
     CC_DEPRECATED_ATTRIBUTE Ref* randomObject() { return getRandomObject(); }
-    /** Returns a Boolean value that indicates whether object is present in array. 
+    /** 返回一个表示object是否出现在数组中的布偶值（Boolean value）。
      * @js NA
      */
     bool containsObject(Ref* object) const;
-    /** @since 1.1 
+    /** @since 1.1
      * @js NA
      */
     bool isEqualToArray(__Array* otherArray);
-    // Adding Objects
+    // 添加object。
 
-    /** Add a certain object 
+    /** 添加指定的对象（object）。
      * @js NA
      */
     void addObject(Ref* object);
     /**
      * @js NA
      */
-    /** Add all elements of an existing array 
+    /** 添加已存在的数组中的所有元素（elements）。
      * @js NA
      */
     void addObjectsFromArray(__Array* otherArray);
-    /** Insert a certain object at a certain index 
+    /** 在index指定的位置插入指定的对象（object）。
      * @js NA
      */
     void insertObject(Ref* object, ssize_t index);
-    /** sets a certain object at a certain index 
+    /** 通过index设置一个指定的对象（object）。
      * @js NA
      * @lua NA
      */
     void setObject(Ref* object, ssize_t index);
-    /** sets a certain object at a certain index without retaining. Use it with caution 
+    /** 通过index设置一个指定的对象（object）并且不使用自动引用计数。请谨慎使用此功能。
      * @js NA
      * @lua NA
      */
@@ -418,7 +416,7 @@ public:
 #if CC_USE_ARRAY_VECTOR
         setObject(object, index);
 #else
-        // no retain
+        // 不使用引用计数
         data->arr[index] = object;
 #endif
     }
@@ -438,61 +436,61 @@ public:
 
     // Removing Objects
 
-    /** Remove last object 
+    /** 移除最后一个对象（object）。
      * @js NA
      */
     void removeLastObject(bool releaseObj = true);
-    /** Remove a certain object 
+    /** 移除一个指定对象（object）。
      * @js NA
      */
     void removeObject(Ref* object, bool releaseObj = true);
-    /** Remove an element with a certain index 
+    /** 通过index指定并移除一个元素（element）。
      * @js NA
      */
     void removeObjectAtIndex(ssize_t index, bool releaseObj = true);
-    /** Remove all elements 
+    /** 移除所有元素（element）。
      * @js NA
      */
     void removeObjectsInArray(__Array* otherArray);
-    /** Remove all objects 
+    /** 移除所有对象（object）。
      * @js NA
      */
     void removeAllObjects();
-    /** Fast way to remove a certain object 
+    /** 快速移除一个指定对象（object）。
      * @js NA
      */
     void fastRemoveObject(Ref* object);
-    /** Fast way to remove an element with a certain index 
+    /** 通过index指定一个元素，并将它快速移除
      * @js NA
      */
     void fastRemoveObjectAtIndex(ssize_t index);
 
     // Rearranging Content
 
-    /** Swap two elements 
+    /** 交换两个元素（element）。
      * @js NA
      */
     void exchangeObject(Ref* object1, Ref* object2);
-    /** Swap two elements with certain indexes 
+    /** 通过index指定并交换两个元素（element）。
      * @js NA
      */
     void exchangeObjectAtIndex(ssize_t index1, ssize_t index2);
 
-    /** Replace object at index with another object. 
+    /** 通过index指定并覆盖一个旧的元素。
      * @js NA
      */
     void replaceObjectAtIndex(ssize_t index, Ref* object, bool releaseObject = true);
 
-    /** Revers the array 
+    /** 倒序一个数组。
      * @js NA
      */
     void reverseObjects();
-    /* Shrinks the array so the memory footprint corresponds with the number of items 
+    /* Shrinks the array so the memory footprint corresponds with the number of items
      * @js NA
      */
     void reduceMemoryFootprint();
-  
-    /* override functions 
+
+    /* 重写方法
      * @js NA
      */
     virtual void acceptVisitor(DataVisitor &visitor);
