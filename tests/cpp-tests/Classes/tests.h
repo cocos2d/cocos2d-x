@@ -69,6 +69,7 @@
 #include "ConfigurationTest/ConfigurationTest.h"
 #include "PhysicsTest/PhysicsTest.h"
 #include "ReleasePoolTest/ReleasePoolTest.h"
+#include "AssetsManagerTest/AssetsManagerTest.h"
 
 #include "Sprite3DTest/Sprite3DTest.h"
 

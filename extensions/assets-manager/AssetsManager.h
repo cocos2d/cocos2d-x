@@ -26,212 +26,192 @@
 #define __AssetsManager__
 
 #include <string>
-
-#include <mutex>
+#include <map>
+#include <vector>
 
 #include "cocos2d.h"
+#include "Downloader.h"
+#include "Manifest.h"
 #include "extensions/ExtensionMacros.h"
+#include "json/document.h"
 
 NS_CC_EXT_BEGIN
 
-class AssetsManagerDelegateProtocol;
-
 /*
  *  This class is used to auto update resources, such as pictures or scripts.
- *  The updated package should be a zip file. And there should be a file named
- *  version in the server, which contains version code.
  */
-class AssetsManager : public Node
+class AssetsManager : public Ref, DownloaderDelegateProtocol
 {
 public:
-    enum class ErrorCode
+    enum UpdateEventCode
     {
-        // Error caused by creating a file to store downloaded data
-        CREATE_FILE,
-        /** Error caused by network
-         -- network unavaivable
-         -- timeout
-         -- ...
-         */
-        NETWORK,
-        /** There is not a new version
-         */
-        NO_NEW_VERSION,
-        /** Error caused in uncompressing stage
-         -- can not open zip file
-         -- can not read file global information
-         -- can not read file information
-         -- can not create a directory
-         -- ...
-         */
-        UNCOMPRESS,
+        FAIL_DOWNLOAD_MANIFEST,
+        
+        FAIL_PARSE_MANIFEST,
+        
+        NEW_VERSION_FOUND,
+        
+        ALREADY_UP_TO_DATE,
+        
+        UPDATING_ERROR,
+        
+        FINISHED_UPDATE,
+        
+        FINISHED_WITH_ERROR,
+        
+        UNCOMPRESS_ERROR,
     };
     
-    /* @brief Creates a AssetsManager with new package url, version code url and storage path.
-     *
-     * @param packageUrl URL of new package, the package should be a zip file.
-     * @param versionFileUrl URL of version file. It should contain version code of new package.
-     * @param storagePath The path to store downloaded resources.
-     * @js NA
-     */
-    AssetsManager(const char* packageUrl = NULL, const char* versionFileUrl = NULL, const char* storagePath = NULL);
+    struct UpdateEvent
+    {
+        UpdateEventCode code;
+        std::string message;
+        std::string assetId;
+        AssetsManager *manager;
+    };
+    
+    enum UpdateState
+    {
+        UNKNOWN,
+        CHECKING,
+        PREDOWNLOAD_VERSION,
+        DOWNLOADING_VERSION,
+        VERSION_LOADED,
+        PREDOWNLOAD_MANIFEST,
+        DOWNLOADING_MANIFEST,
+        MANIFEST_LOADED,
+        NEED_UPDATE,
+        UPDATING,
+        UP_TO_DATE
+    };
+    
+    //! The root of writable path
+    static std::string s_nWritableRoot;
+    
+    AssetsManager(const std::string &managerId, const std::string& manifestUrl = NULL, const std::string& storagePath = "");
     /**
      * @js NA
      * @lua NA
      */
     virtual ~AssetsManager();
     
-    typedef std::function<void(int)> ErrorCallback;
-    typedef std::function<void(int)> ProgressCallback;
-    typedef std::function<void(void)> SuccessCallback;
-
     /* @brief To access within scripting environment
      */
-    static AssetsManager* create(const char* packageUrl, const char* versionFileUrl, const char* storagePath, ErrorCallback errorCallback, ProgressCallback progressCallback, SuccessCallback successCallback );
-
-    /* @brief Check out if there is a new version resource.
+    static AssetsManager* create(const std::string &managerId, const std::string &manifestUrl, const std::string &storagePath = "");
+    
+    
+    /* @brief Check out if there is a new version of manifest.
      *        You may use this method before updating, then let user determine whether
      *        he wants to update resources.
      */
-    virtual bool checkUpdate();
+    void checkUpdate();
     
-    using Node::update;
-    /* @brief Download new package if there is a new version, and uncompress downloaded zip file.
-     *        Ofcourse it will set search path that stores downloaded files.
-     */
-    virtual void update();
+    void update();
     
-    /* @brief Gets url of package.
-     */
-    const char* getPackageUrl() const;
+    UpdateState updateState();
     
-    /* @brief Sets package url.
-     */
-    void setPackageUrl(const char* packageUrl);
+    std::string getLoadedEventName(const std::string& key);
     
-    /* @brief Gets version file url.
+    /* @brief Gets url of a asset for the given key.
      */
-    const char* getVersionFileUrl() const;
-    
-    /* @brief Gets version file url.
-     */
-    void setVersionFileUrl(const char* versionFileUrl);
-    
-    /* @brief Gets current version code.
-     */
-    std::string getVersion();
-    
-    /* @brief Deletes recorded version code.
-     */
-    void deleteVersion();
+    std::string get(const std::string& key) const;
     
     /* @brief Gets storage path.
      */
-    const char* getStoragePath() const;
+    const std::string& getStoragePath() const;
     
     /* @brief Sets storage path.
      *
      * @param storagePath The path to store downloaded resources.
      * @warm The path should be a valid path.
      */
-    void setStoragePath(const char* storagePath);
+    void setStoragePath(const std::string& storagePath);
     
-    /** @brief Sets delegate, the delegate will receive messages
-     * @js NA
-     * @lua NA
-     */
-    void setDelegate(AssetsManagerDelegateProtocol *delegate);
+    const Manifest* getLocalManifest();
     
-    /**
-     * @js NA
-     * @lua NA
-     */
-    AssetsManagerDelegateProtocol* getDelegate() const { return _delegate ;}
+    void addUpdateEventListener(const std::function<void(EventCustom*)>& callback, int priority = 1);
     
-    /** @brief Sets connection time out in seconds
-     */
-    void setConnectionTimeout(unsigned int timeout);
+    void addUpdateProgressEventListener(const std::function<void(EventCustom*)>& callback, int priority = 1);
     
-    /** @brief Gets connection time out in secondes
-     */
-    unsigned int getConnectionTimeout();
+    void addNoLocalManifestErrorListener(const std::function<void(EventCustom*)>& callback, int priority = 1);
     
-    /* downloadAndUncompress is the entry of a new thread 
-     */
-    friend int assetsManagerProgressFunc(void *, double, double, double, double);
-
-protected:
-    bool downLoad();
-    void checkStoragePath();
-    bool uncompress();
-    bool createDirectory(const char *path);
-    void setSearchPath();
-    void downloadAndUncompress();
-
-private:
-    /** @brief Initializes storage path.
-     */
-    void createStoragePath();
+    void destroyDownloadedVersion();
     
-    /** @brief Destroys storage path.
-     */
-    void destroyStoragePath();
     
-private:
-    //! The path to store downloaded resources.
-    std::string _storagePath;
-    
-    //! The version of downloaded resources.
-    std::string _version;
-    
-    std::string _packageUrl;
-    std::string _versionFileUrl;
-    
-    std::string _downloadedVersion;
-    
-    void *_curl;
-
-    unsigned int _connectionTimeout;
-    
-    AssetsManagerDelegateProtocol *_delegate; 
-    
-    bool _isDownloading;
-    bool _shouldDeleteDelegateWhenExit;
-    
-    std::string keyOfVersion() const;
-    std::string keyOfDownloadedVersion() const;
-};
-
-class AssetsManagerDelegateProtocol
-{
-public:
-    virtual ~AssetsManagerDelegateProtocol(){};
-public:
     /* @brief Call back function for error
-       @param errorCode Type of error
+     @param errorCode Type of error
      * @js NA
      * @lua NA
      */
-    virtual void onError(AssetsManager::ErrorCode errorCode) {};
+    virtual void onError(const Downloader::Error &error);
+    
     /** @brief Call back function for recording downloading percent
-        @param percent How much percent downloaded
-        @warning    This call back function just for recording downloading percent.
-              AssetsManager will do some other thing after downloading, you should
-              write code in onSuccess() after downloading. 
+     @param percent How much percent downloaded
+     @warning    This call back function just for recording downloading percent.
+     AssetsManager will do some other thing after downloading, you should
+     write code in onSuccess() after downloading.
      * @js NA
      * @lua NA
      */
-    virtual void onProgress(int percent) {};
+    virtual void onProgress(double total, double downloaded, const std::string &url, const std::string &customId);
+    
     /** @brief Call back function for success
      * @js NA
      * @lua NA
      */
-    virtual void onSuccess() {};
+    virtual void onSuccess(const std::string &srcUrl, const std::string &customId);
+    
+protected:
+    void loadManifest(const std::string& manifestUrl);
+    void setLocalManifest(Manifest *manifest);
+    void adjustPath(std::string &path);
+    void prependSearchPath(const std::string &path);
+    
+    void dispatchUpdateEvent(UpdateEventCode code, std::string message = "", std::string assetId = "");
+    //bool uncompress();
+    //void downloadAndUncompress();
+    
+private:
+    
+    void createDirectory(const std::string &path);
+    
+    void destroyDirectory(const std::string &path);
+    
+    void destroyFile(const std::string &path);
+    
+private:
+    
+    std::string _managerId;
+    
+    EventDispatcher *_eventDispatcher;
+    FileUtils *_fileUtils;
+    
+    UpdateState _updateState;
+    
+    bool _waitToUpdate;
+    
+    std::map<std::string, Downloader::DownloadUnit> _downloadUnits;
+    
+    int _totalToDownload;
+    int _totalWaitToDownload;
+    
+    const std::map<std::string, Manifest::Asset> *_assets;
+    
+    //! The path to store downloaded resources.
+    std::string _storagePath;
+    
+    //! The path of local manifest file
+    std::string _manifestUrl;
+    
+    //! Local manifest
+    Manifest *_localManifest;
+    
+    //! Remote manifest
+    Manifest *_remoteManifest;
+    
+    //! Downloader
+    Downloader* _downloader;
 };
-
-// Deprecated declaration
-CC_DEPRECATED_ATTRIBUTE typedef AssetsManager CCAssetsManager;
-CC_DEPRECATED_ATTRIBUTE typedef AssetsManagerDelegateProtocol CCAssetsManagerDelegateProtocol;
 
 NS_CC_EXT_END;
 
