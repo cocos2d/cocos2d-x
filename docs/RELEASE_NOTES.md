@@ -329,8 +329,8 @@ VBox(HBox, PageView(VBox(HBox,HBox))))
 ```
  are not supported yet, we will implement it in cocos2d-x v3.2.
  
- If you want to achieve the focus movement in scrollview, you could manually call `setFocusEnabled(true/false)` when the widget in the scrollview moves out of the scrollview's boundary.
- 
+ If you want to achieve the focus movement in scrollview, you could use a normal VBox or HBox to layout elements and call `setFocusEnabled(true/false)` manually to skip the unwanted widgets.
+  
 ## Improved folder structure
 
 In v3.0 we started a folder re-organization for cocos2d-x. Unfortunately we didn't have the time to finish it on time.
