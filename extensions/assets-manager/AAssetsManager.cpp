@@ -578,6 +578,9 @@ void AAssetsManager::onError(const Downloader::Error &error)
 
 void AAssetsManager::onProgress(double total, double downloaded, const std::string &url, const std::string &customId)
 {
+    if (customId == "@version" || customId == "@manifest")
+        return;
+    
     int percent = (downloaded / total) * 100;
     CCLOG("Progress: %d\n", percent);
     

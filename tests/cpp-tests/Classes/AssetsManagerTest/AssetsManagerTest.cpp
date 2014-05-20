@@ -81,6 +81,12 @@ void AssetsManagerLoaderScene::runThisTest()
     addChild(layer);
     layer->addChild(sprite);
     sprite->setPosition( VisibleRect::center() );
+    
+    TTFConfig config("fonts/tahoma.ttf", 40);
+    Label *progress = Label::createWithTTF(config, "0%", TextHAlignment::CENTER);
+    progress->setPosition( Vector2(VisibleRect::center().x, VisibleRect::center().y + 50) );
+    layer->addChild(progress);
+    
     layer->release();
     
     _am = AAssetsManager::create(managerId, manifestPath, storagePath);
@@ -132,9 +138,12 @@ void AssetsManagerLoaderScene::runThisTest()
             Director::getInstance()->replaceScene(scene);
         });
         
-        _am->addUpdateProgressEventListener([](EventCustom* event){
-            double *percent = (double *)event->getUserData();
-            CCLOG("Update percent : %f", *percent);
+        _am->addUpdateProgressEventListener([progress](EventCustom* event){
+            int *percent = (int *)event->getUserData();
+            //CCLOG("Update percent : %f", *percent);
+            std::ostringstream oss;
+            oss << *percent << "%";
+            progress->setString(oss.str());
         });
         
         _am->update();
