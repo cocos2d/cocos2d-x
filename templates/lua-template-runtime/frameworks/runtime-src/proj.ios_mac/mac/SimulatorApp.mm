@@ -128,7 +128,7 @@ void createSimulator(const char* viewName, float width, float height,bool isLand
         {
             float tmpvalue =width;
             width = height;
-            height = width;
+            height = tmpvalue;
         }
         
         [g_nsAppDelegate createSimulator:[NSString stringWithUTF8String:viewName] viewWidth:width viewHeight:height factor:frameZoomFactor];
