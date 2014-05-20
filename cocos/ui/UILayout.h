@@ -30,14 +30,27 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 namespace ui {
+    
+class LayoutExecutant;
+    
+class LayoutProtocol
+{
+public:
+    LayoutProtocol(){}
+    virtual ~LayoutProtocol(){}
+    
+    virtual LayoutExecutant* createLayoutExecutant() = 0;
+    virtual const Size getLayoutContentSize() = 0;
+    virtual const Vector<Node*>& getLayoutElements() = 0;
+    virtual void doLayout() = 0;
+};
 
 /**
  *  @js NA
  *  @lua NA
  */
-class LayoutExecutant;
     
-class Layout : public Widget
+class Layout : public Widget, public LayoutProtocol
 {
     
     DECLARE_CLASS_GUI_INFO
@@ -313,7 +326,11 @@ protected:
     
     void setStencilClippingSize(const Size& size);
     const Rect& getClippingRect();
-    virtual void doLayout();
+    
+    virtual void doLayout()override;
+    virtual LayoutExecutant* createLayoutExecutant()override;
+    virtual const Size getLayoutContentSize()override;
+    virtual const Vector<Node*>& getLayoutElements() override;
     
     //clipping
     void onBeforeVisitStencil();
@@ -325,12 +342,11 @@ protected:
     void updateBackGroundImageColor();
     void updateBackGroundImageOpacity();
     void updateBackGroundImageRGBA();
-    LayoutExecutant* createCurrentLayoutExecutant();
     
     /**
      *get the content size of the layout, it will accumulate all its children's content size
      */
-    Size getLayoutContentSize() const;
+    Size getLayoutAccumulatedSize() const;
     
     /**
      * When the layout get focused, it the layout pass the focus to its child, it will use this method to determine which child 
@@ -476,8 +492,6 @@ protected:
     
     Color3B _backGroundImageColor;
     GLubyte _backGroundImageOpacity;
-    
-    LayoutExecutant* _curLayoutExecutant;
     
     GLint _mask_layer_le;
     GroupCommand _groupCommand;
