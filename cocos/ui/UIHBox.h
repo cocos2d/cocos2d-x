@@ -37,17 +37,17 @@ class HBox : public Layout{
 public:
     
     /**
-     * Default constructor
+     * 默认构造函数
      */
     HBox();
     
     /**
-     * Default destructor
+     * 默认析构函数
      */
     virtual ~HBox();
     
     /**
-     * Allocates and initializes a HBox.
+     * 创建和初始化一个HBox.
      */
     static HBox* create();
     
