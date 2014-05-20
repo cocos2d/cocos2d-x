@@ -42,46 +42,46 @@ class TextBMFont : public Widget
     
 public:
     /**
-     * Default constructor
+     * 默认构造函数
      */
     TextBMFont();
     
     /**
-     * Default destructor
+     * 默认析构函数
      */
     virtual ~TextBMFont();
     
     /**
-     * Allocates and initializes.
+     * 创建和初始化对象
      */
     static TextBMFont* create();
     
     static TextBMFont* create(const std::string& text, const std::string& filename);
     
-    /** init a bitmap font atlas with an initial string and the FNT file */
+    /** 根据初始字符串和FNT文件初始化一个位图字体图集 */
     void setFntFile(const std::string& fileName);
     
-    /** set string value for labelbmfont*/
+    /** 设置labelbmfont的字符串值*/
     CC_DEPRECATED_ATTRIBUTE void setText(const std::string& value){this->setString(value);}
     void setString(const std::string& value);
     
-    /** get string value for labelbmfont*/
+    /** 获得labelbmfont的字符串值*/
     CC_DEPRECATED_ATTRIBUTE const std::string& getStringValue()const{return this->getString();}
     const std::string& getString()const;
     
     /**
-     * Gets the string length of the label.
-     * Note: This length will be larger than the raw string length,
-     * if you want to get the raw string length, you should call this->getString().size() instead
+     * 获得标签（label）的字符串长度
+     * 注：获得的长度会比原始字符串的长度长，
+     * 如果你想得到原始字符串的长度， 你应用调用this->getString().size()来获得
      *
-     * @return  string length.
+     * @return 字符串长度
      */
     ssize_t getStringLength()const;
 
     virtual const Size& getVirtualRendererSize() const override;
     virtual Node* getVirtualRenderer() override;
     /**
-     * Returns the "class name" of widget.
+     * 返回控件（widget）的类名（class name）
      */
     virtual std::string getDescription() const override;
 protected:

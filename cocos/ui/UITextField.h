@@ -157,7 +157,7 @@ public:
     void addEventListener(const ccTextFieldCallback& callback);
     
     /**
-     * Returns the "class name" of widget.
+     * 返回控件（widget）的类名（class name）
      */
     virtual std::string getDescription() const override;
 
