@@ -80,7 +80,7 @@ public:
      * 它将调用setTextureRect(const Rect& rect, bool rotated, const Size& untrimmedSize)
 	 * 参数为： rotated = NO, utrimmedSize = rect.size.
 	 * 
-	 * 译者注：只有在使用scale9渲染器（renderer）时，才会调用。
+	 * 译者注：只有在没有使用scale9渲染器（renderer）时，才会调用。
      */
     void setTextureRect(const Rect& rect);
 
