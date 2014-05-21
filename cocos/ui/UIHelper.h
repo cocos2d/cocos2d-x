@@ -37,24 +37,24 @@ class Helper
 {
 public:
     /**
-     * Finds a widget whose tag equals to param tag from root widget.
+     * 从根控件（widget）搜索控件（widget）的标签（tag）等于参数tag的控件
      *
-     * @param root      widget which will be seeked.
+     * @param root      将会搜索的控件
      *
-     * @tag             tag value.
+     * @tag             标签（tag）值
      *
-     * @return finded result.
+     * @return 找到的控件
      */
     static Widget* seekWidgetByTag(Widget* root, int tag);
     
     /**
-     * Finds a widget whose name equals to param name from root widget.
+     * 从根控件（widget）搜索控件（widget）的名称（name）等于参数tag的控件
      *
-     * @param root      widget which will be seeked.
+     * @param root      将会搜索的控件
      *
-     * @name             name value.
+     * @name            名称（name）值
      *
-     * @return finded result.
+     * @return 找到的控件
      */
     static Widget* seekWidgetByName(Widget* root, const std::string& name);
     
