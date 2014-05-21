@@ -36,7 +36,7 @@
 
 NS_CC_EXT_BEGIN
 
-class CC_DLL Manifest
+class CC_DLL Manifest : public Ref
 {
 public:
     
@@ -58,7 +58,7 @@ public:
         DiffType type;
     };
     
-    Manifest(const std::string& manifestUrl);
+    Manifest(const std::string& manifestUrl = "");
     
     void parse(const std::string& manifestUrl);
     

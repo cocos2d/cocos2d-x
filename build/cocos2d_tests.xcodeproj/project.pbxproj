@@ -835,6 +835,8 @@
 		B2507B6C192589AF00FA4972 /* Shaders3D in Resources */ = {isa = PBXBuildFile; fileRef = B2507B6A192589AF00FA4972 /* Shaders3D */; };
 		BA53B19E192B556F002E0804 /* AssetsManagerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA53B19C192B556F002E0804 /* AssetsManagerTest.cpp */; };
 		BA53B19F192B556F002E0804 /* AssetsManagerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA53B19C192B556F002E0804 /* AssetsManagerTest.cpp */; };
+		BA53B1B5192C4035002E0804 /* Manifests in Resources */ = {isa = PBXBuildFile; fileRef = BA53B1B4192C4035002E0804 /* Manifests */; };
+		BA53B1B6192C4035002E0804 /* Manifests in Resources */ = {isa = PBXBuildFile; fileRef = BA53B1B4192C4035002E0804 /* Manifests */; };
 		C08689C118D370C90093E810 /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
 		C08689C218D370C90093E810 /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
 		C08689C318D370C90093E810 /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
@@ -1878,6 +1880,7 @@
 		B2507B6A192589AF00FA4972 /* Shaders3D */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Shaders3D; path = "../tests/cpp-tests/Resources/Shaders3D"; sourceTree = "<group>"; };
 		BA53B19C192B556F002E0804 /* AssetsManagerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AssetsManagerTest.cpp; path = ExtensionsTest/AssetsManagerTest/AssetsManagerTest.cpp; sourceTree = "<group>"; };
 		BA53B19D192B556F002E0804 /* AssetsManagerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AssetsManagerTest.h; path = ExtensionsTest/AssetsManagerTest/AssetsManagerTest.h; sourceTree = "<group>"; };
+		BA53B1B4192C4035002E0804 /* Manifests */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Manifests; path = "../tests/cpp-tests/Resources/Manifests"; sourceTree = "<group>"; };
 		C08689C018D370C90093E810 /* background.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = background.caf; path = "../tests/cpp-tests/Resources/background.caf"; sourceTree = "<group>"; };
 		D60AE43317F7FFE100757E4B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
 		EDCC747E17C455FD007B692C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
@@ -3302,6 +3305,7 @@
 				1AC35CBA18CED84500F37B72 /* fonts */,
 				1AC35CBC18CED84500F37B72 /* hd */,
 				1AC35CBE18CED84500F37B72 /* Images */,
+				BA53B1B4192C4035002E0804 /* Manifests */,
 				1AC35CC118CED84500F37B72 /* Misc */,
 				1AC35CC318CED84500F37B72 /* Particles */,
 				1AC35CC618CED84500F37B72 /* Shaders */,
@@ -4463,6 +4467,7 @@
 				1AC35CEC18CED84500F37B72 /* fonts in Resources */,
 				1AC35CCA18CED84500F37B72 /* animations in Resources */,
 				1AC35CEA18CED84500F37B72 /* fileLookup.plist in Resources */,
+				BA53B1B5192C4035002E0804 /* Manifests in Resources */,
 				1A221C9C191771E300FD2BE4 /* ccs-res in Resources */,
 				1AC35CF018CED84500F37B72 /* hd in Resources */,
 				1AC35CFC18CED84500F37B72 /* music.mid in Resources */,
@@ -4503,6 +4508,7 @@
 				1AC35C9518CECF1400F37B72 /* Icon-72.png in Resources */,
 				1AC35D0B18CED84500F37B72 /* zwoptex in Resources */,
 				1AC35CF518CED84500F37B72 /* Images in Resources */,
+				BA53B1B6192C4035002E0804 /* Manifests in Resources */,
 				1AC35C9118CECF1400F37B72 /* Icon-40.png in Resources */,
 				1AC35C8B18CECF1400F37B72 /* Icon-100.png in Resources */,
 				1AC35D0118CED84500F37B72 /* pew-pew-lei.wav in Resources */,
