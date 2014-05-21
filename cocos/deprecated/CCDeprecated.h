@@ -40,7 +40,7 @@ NS_CC_BEGIN
  * @{
  */
 
-/** Helper macro that creates a Vec2
+/** 助手macro 帮忙创建了Vec2
  @return Vec2
  @since v0.7.2
  */
@@ -49,7 +49,7 @@ CC_DEPRECATED_ATTRIBUTE inline Vec2 ccp(float x, float y)
     return Vec2(x, y);
 }
 
-/** Returns opposite of point.
+/** 返回相反位置的点.
  @return Vec2
  @since v0.7.2
  @deprecated please use Vec2::-, for example: -v1
@@ -60,7 +60,7 @@ ccpNeg(const Vec2& v)
     return -v;
 }
 
-/** Calculates sum of two points.
+/** 计算两个点的向量和.
  @return Vec2
  @since v0.7.2
  @deprecated please use Vec2::+, for example: v1 + v2
@@ -71,7 +71,7 @@ ccpAdd(const Vec2& v1, const Vec2& v2)
     return v1 + v2;
 }
 
-/** Calculates difference of two points.
+/** 计算两个点的向量之差.
  @return Vec2
  @since v0.7.2
  @deprecated please use Vec2::-, for example: v1 - v2
@@ -82,7 +82,7 @@ ccpSub(const Vec2& v1, const Vec2& v2)
     return v1 - v2;
 }
 
-/** Returns point multiplied by given factor.
+/** 返回一个向量和一个常数的乘积.
  @return Vec2
  @since v0.7.2
  @deprecated please use Vec2::*, for example: v1 * v2
@@ -93,7 +93,7 @@ ccpMult(const Vec2& v, const float s)
     return v * s;
 }
 
-/** Calculates midpoint between two points.
+/** 计算两个点的中点.
  @return Vec2
  @since v0.7.2
  @deprecated please use it like (v1 + v2) / 2.0f
@@ -104,7 +104,7 @@ ccpMidpoint(const Vec2& v1, const Vec2& v2)
     return v1.getMidpoint(v2);
 }
 
-/** Calculates dot product of two points.
+/** 计算两个向量乘积.
  @return float
  @since v0.7.2
  */
@@ -114,7 +114,7 @@ ccpDot(const Vec2& v1, const Vec2& v2)
     return v1.dot(v2);
 }
 
-/** Calculates cross product of two points.
+/** 计算两个向量的叉积.
  @return float
  @since v0.7.2
  */
@@ -124,7 +124,7 @@ ccpCross(const Vec2& v1, const Vec2& v2)
     return v1.cross(v2);
 }
 
-/** Calculates perpendicular of v, rotated 90 degrees counter-clockwise -- cross(v, perp(v)) >= 0
+/**  计算一个向量逆时针旋转90度之后的值
  @return Vec2
  @since v0.7.2
  */
@@ -134,7 +134,7 @@ ccpPerp(const Vec2& v)
     return v.getPerp();
 }
 
-/** Calculates perpendicular of v, rotated 90 degrees clockwise -- cross(v, rperp(v)) <= 0
+/**  计算一个向量顺时针旋转90度之后的值
  @return Vec2
  @since v0.7.2
  */
@@ -144,7 +144,7 @@ ccpRPerp(const Vec2& v)
     return v.getRPerp();
 }
 
-/** Calculates the projection of v1 over v2.
+/** 计算向量v1在v2上的投影.
  @return Vec2
  @since v0.7.2
  */
@@ -154,7 +154,7 @@ ccpProject(const Vec2& v1, const Vec2& v2)
     return v1.project(v2);
 }
 
-/** Rotates two points.
+/** 旋转两个向量.
  @return Vec2
  @since v0.7.2
  */
@@ -174,7 +174,7 @@ ccpUnrotate(const Vec2& v1, const Vec2& v2)
     return v1.unrotate(v2);
 }
 
-/** Calculates the square length of a Vec2 (not calling sqrt() )
+/** 计算Vec2的长度的平方 (不调用sqrt() )
  @return float
  @since v0.7.2
  */
@@ -185,7 +185,7 @@ ccpLengthSQ(const Vec2& v)
 }
 
 
-/** Calculates the square distance between two points (not calling sqrt() )
+/** 计算两个点的距离 (不调用sqrt() )
  @return float
  @since v1.1
  */
@@ -196,7 +196,7 @@ ccpDistanceSQ(const Vec2 p1, const Vec2 p2)
 }
 
 
-/** Calculates distance between point an origin
+/** 计算点到原点的距离
  @return float
  @since v0.7.2
  */
@@ -205,7 +205,7 @@ CC_DEPRECATED_ATTRIBUTE static inline float ccpLength(const Vec2& v)
     return v.getLength();
 }
 
-/** Calculates the distance between two points
+/** 计算两个点的距离
  @return float
  @since v0.7.2
  */
@@ -214,7 +214,7 @@ CC_DEPRECATED_ATTRIBUTE static inline float ccpDistance(const Vec2& v1, const Ve
     return v1.getDistance(v2);
 }
 
-/** Returns point multiplied to a length of 1.
+/** 返回点乘之后的长度为1.
  @return Vec2
  @since v0.7.2
  */
@@ -223,7 +223,7 @@ CC_DEPRECATED_ATTRIBUTE static inline Vec2 ccpNormalize(const Vec2& v)
     return v.getNormalized();
 }
 
-/** Converts radians to a normalized vector.
+/** 将弧度转化为归1化的向量.
  @return Vec2
  @since v0.7.2
  */
@@ -232,7 +232,7 @@ CC_DEPRECATED_ATTRIBUTE static inline Vec2 ccpForAngle(const float a)
     return Vec2::forAngle(a);
 }
 
-/** Converts a vector to radians.
+/** 将向量转化为弧度.
  @return float
  @since v0.7.2
  */
@@ -250,7 +250,7 @@ CC_DEPRECATED_ATTRIBUTE static inline Vec2 ccpClamp(const Vec2& p, const Vec2& f
     return p.getClampPoint(from, to);
 }
 
-/** Quickly convert Size to a Vec2
+/** 快速转换Size 为一个 Vec2
  @since v0.99.1
  */
 CC_DEPRECATED_ATTRIBUTE static inline Vec2 ccpFromSize(const Size& s)
@@ -258,7 +258,7 @@ CC_DEPRECATED_ATTRIBUTE static inline Vec2 ccpFromSize(const Size& s)
     return Vec2(s);
 }
 
-/** Run a math operation function on each point component
+/** 执行数学运算功能上的每个点的组件
  * absf, fllorf, ceilf, roundf
  * any function that has the signature: float func(float);
  * For example: let's try to take the floor of x,y
@@ -270,7 +270,7 @@ CC_DEPRECATED_ATTRIBUTE static inline Vec2 ccpCompOp(const Vec2& p, float (*opFu
     return p.compOp(opFunc);
 }
 
-/** Linear Interpolation between two points a and b
+/** 点a和点b之前的线性插值
  @returns
  alpha == 0 ? a
  alpha == 1 ? b
@@ -283,7 +283,7 @@ CC_DEPRECATED_ATTRIBUTE static inline Vec2 ccpLerp(const Vec2& a, const Vec2& b,
 }
 
 
-/** @returns if points have fuzzy equality which means equal with some degree of variance.
+/** @returns 如果点模糊相等， 判断相等的时候容许有一定程度的误差.
  @since v0.99.1
  */
 CC_DEPRECATED_ATTRIBUTE static inline bool ccpFuzzyEqual(const Vec2& a, const Vec2& b, float variance)
@@ -292,7 +292,7 @@ CC_DEPRECATED_ATTRIBUTE static inline bool ccpFuzzyEqual(const Vec2& a, const Ve
 }
 
 
-/** Multiplies a and b components, a.x*b.x, a.y*b.y
+/** 向量a和向量b点乘
  @returns a component-wise multiplication
  @since v0.99.1
  */
@@ -301,7 +301,7 @@ CC_DEPRECATED_ATTRIBUTE static inline Vec2 ccpCompMult(const Vec2& a, const Vec2
     return Vec2(a.x * b.x, a.y * b.y);
 }
 
-/** @returns the signed angle in radians between two vector directions
+/** @returns 两个向量之间的角的signed弧度
  @since v0.99.1
  */
 CC_DEPRECATED_ATTRIBUTE static inline float ccpAngleSigned(const Vec2& a, const Vec2& b)
@@ -309,7 +309,7 @@ CC_DEPRECATED_ATTRIBUTE static inline float ccpAngleSigned(const Vec2& a, const 
     return a.getAngle(b);
 }
 
-/** @returns the angle in radians between two vector directions
+/** @returns 两个向量之间的角的弧度
  @since v0.99.1
  */
 CC_DEPRECATED_ATTRIBUTE static inline float ccpAngle(const Vec2& a, const Vec2& b)
@@ -317,11 +317,11 @@ CC_DEPRECATED_ATTRIBUTE static inline float ccpAngle(const Vec2& a, const Vec2& 
     return a.getAngle(b);
 }
 
-/** Rotates a point counter clockwise by the angle around a pivot
- @param v is the point to rotate
+/** 点逆时针旋转的角度得到的点
+ @param v 表示旋转的点
  @param pivot is the pivot, naturally
- @param angle is the angle of rotation cw in radians
- @returns the rotated point
+ @param angle 顺时针旋转的弧度角
+ @returns 旋转点
  @since v0.99.1
  */
 CC_DEPRECATED_ATTRIBUTE static inline Vec2 ccpRotateByAngle(const Vec2& v, const Vec2& pivot, float angle)
@@ -329,7 +329,7 @@ CC_DEPRECATED_ATTRIBUTE static inline Vec2 ccpRotateByAngle(const Vec2& v, const
     return v.rotateByAngle(pivot, angle);
 }
 
-/** A general line-line intersection test
+/** 一个普通的的线线相交测试
  @param p1
  is the startpoint for the first line P1 = (p1 - p2)
  @param p2
@@ -358,7 +358,7 @@ CC_DEPRECATED_ATTRIBUTE static inline bool ccpLineIntersect(const Vec2& p1, cons
 }
 
 /*
- ccpSegmentIntersect returns true if Segment A-B intersects with segment C-D
+ ccpSegmentIntersect 如果A-B段与C-D段相交则返回真
  @since v1.0.0
  */
 CC_DEPRECATED_ATTRIBUTE static inline bool ccpSegmentIntersect(const Vec2& A, const Vec2& B, const Vec2& C, const Vec2& D)
@@ -367,7 +367,7 @@ CC_DEPRECATED_ATTRIBUTE static inline bool ccpSegmentIntersect(const Vec2& A, co
 }
 
 /*
- ccpIntersectPoint returns the intersection point of line A-B, C-D
+ ccpIntersectPoint 返回A-B与C-D相交的点
  @since v1.0.0
  */
 CC_DEPRECATED_ATTRIBUTE static inline Vec2 ccpIntersectPoint(const Vec2& A, const Vec2& B, const Vec2& C, const Vec2& D)
