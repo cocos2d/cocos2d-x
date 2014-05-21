@@ -1010,14 +1010,14 @@ public:
     Action* getActionByTag(int tag);
 
     /**
-     * Returns the numbers of actions that are running plus the ones that are schedule to run (actions in actionsToAdd and actions arrays).
+     * 返回活动着的动作加上正在调度运行的动作的总数 (在actionsToAdd状态的动作和动作数组中的).
      *
-     * Composable actions are counted as 1 action. Example:
-     *    If you are running 1 Sequence of 7 actions, it will return 1.
-     *    If you are running 7 Sequences of 2 actions, it will return 7.
+     * 组成的动作被记为一个动作。例如：
+     *    如果你正在运行7个活动中的1Sequence, 它将返回 1.
+     *    如果你正在运行2个动作中的7个Sequencesm,它将返回 7.
      * @todo Rename to getNumberOfRunningActions()
      *
-     * @return The number of actions that are running plus the ones that are schedule to run
+     * @return 返回活动着的动作加上正在调度运行的动作的总数
      */
     ssize_t getNumberOfRunningActions() const;
 
@@ -1031,72 +1031,72 @@ public:
     /// @name Scheduler and Timer
 
     /**
-     * Sets a Scheduler object that is used to schedule all "updates" and timers.
+     * 设置一个调度器对象来用于调度所有的“update”和定时器。
      *
-     * @warning If you set a new Scheduler, then previously created timers/update are going to be removed.
-     * @param scheduler     A Shdeduler object that is used to schedule all "update" and timers.
+     * @warning 如果你设置了一个新的调度器，那么之前创建的timers/update将会被删除。
+     * @param scheduler     一个调度器对象来用于调度所有的“update”和定时器。
      */
     virtual void setScheduler(Scheduler* scheduler);
     /**
-     * Gets a Sheduler object.
+     * 得到调度器对象。
      *
      * @see setScheduler(Scheduler*)
-     * @return A Scheduler object.
+     * @return 一个调度器对象。
      */
     virtual Scheduler* getScheduler() { return _scheduler; }
     virtual const Scheduler* getScheduler() const { return _scheduler; }
 
 
     /**
-     * Checks whether a selector is scheduled.
+     * 检查是否一个选择器是预定的。
      *
-     * @param selector      A function selector
-     * @return Whether the funcion selector is scheduled.
+     * @param selector      函数选择器。
+     * @return 是否函数选择器是预定的。
      * @js NA
      * @lua NA
      */
     bool isScheduled(SEL_SCHEDULE selector);
 
     /**
-     * Schedules the "update" method.
+     * 调度“update”方法。
      *
-     * It will use the order number 0. This method will be called every frame.
-     * Scheduled methods with a lower order value will be called before the ones that have a higher order value.
-     * Only one "update" method could be scheduled per node.
+     * 它将会使用顺序数字0，这个方法将会在每一帧都被调用。
+     * 拥有低顺序值的调度方法将会在有用高顺序值的方法之前被调用。
+     * 只有一“update" 能够被调度，在每一个节点。
      * @js NA
      * @lua NA
      */
     void scheduleUpdate(void);
 
     /**
-     * Schedules the "update" method with a custom priority.
+     * 调度这个"update"方法伴随着一个自定义优先级。
      *
-     * This selector will be called every frame.
-     * Scheduled methods with a lower priority will be called before the ones that have a higher value.
-     * Only one "update" selector could be scheduled per node (You can't have 2 'update' selectors).
+     * 这个选择器将会在每一帧被调用。
+     * 拥有低顺序值的调度方法将会在有用高顺序值的方法之前被调用。
+     * 只有一“update" 能够被调度，在每一个节点(你不能够有2个“update”选择器).
      * @js NA
      * @lua NA
      */
     void scheduleUpdateWithPriority(int priority);
 
     /*
-     * Unschedules the "update" method.
+     * 不调度"update" 方法。
      * @see scheduleUpdate();
      */
     void unscheduleUpdate(void);
 
     /**
-     * Schedules a custom selector.
+     * 调度一个自定义的选择器。
      *
-     * If the selector is already scheduled, then the interval parameter will be updated without scheduling it again.
+     * 如果这个选择器已经被调度了，那么内部的参数将会被更新而不用再次调度一遍。
      @code
-     // firstly, implement a schedule function
+     // 首先，实现一个调度方法。
      void MyNode::TickMe(float dt);
-     // wrap this function into a selector via schedule_selector marco.
+     // 将这个方法添加到选择器中通过schedule_selector宏。
      this->schedule(schedule_selector(MyNode::TickMe), 0, 0, 0);
      @endcode
      *
-     * @param selector  The SEL_SCHEDULE selector to be scheduled.
+     * @param selector  将被调度的 SEL_SCHEDULE 选择器。
      * @param interval  Tick interval in seconds. 0 means tick every frame. If interval = 0, it's recommended to use scheduleUpdate() instead.
      * @param repeat    The selector will be excuted (repeat + 1) times, you can use kRepeatForever for tick infinitely.
      * @param delay     The amount of time that the first tick will wait before execution.
