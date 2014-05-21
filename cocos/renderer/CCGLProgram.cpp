@@ -504,6 +504,10 @@ bool GLProgram::link()
     if(!_hasShaderCompiler)
     {
         // precompiled shader program is already linked
+
+        //bindPredefinedVertexAttribs();
+        parseVertexAttribs();
+        parseUniforms();
         return true;
     }
 #endif
