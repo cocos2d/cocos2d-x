@@ -88,10 +88,7 @@ public:
     //! The root of writable path
     static std::string s_nWritableRoot;
     
-    /* @brief To access within scripting environment
-     */
-    static AssetsManager* create(const std::string &managerId, const std::string &manifestUrl, const std::string &storagePath = "");
-    
+    static AssetsManager* create(const std::string &managerId, const std::string &manifestUrl, const std::string &storagePath);
     
     /* @brief Check out if there is a new version of manifest.
      *        You may use this method before updating, then let user determine whether
@@ -156,7 +153,7 @@ public:
     
 CC_CONSTRUCTOR_ACCESS:
     
-    AssetsManager(const std::string &managerId, const std::string& manifestUrl = NULL, const std::string& storagePath = "");
+    AssetsManager(const std::string &managerId, const std::string& manifestUrl, const std::string& storagePath);
     /**
      * @js NA
      * @lua NA

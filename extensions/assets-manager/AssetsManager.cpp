@@ -47,9 +47,6 @@ NS_CC_EXT_BEGIN;
 // Events
 #define UPDATING_EVENT              "_Updating_Event"
 #define NO_LOCAL_MANIFEST           "_No_Local_Manifest"
-//#define ALREADY_UP_TO_DATE_EVENT    "_Already_Up_To_Date"
-//#define FINISH_UPDATE_EVENT         "_Update_Finished"
-//#define NEW_VERSION_EVENT           "_New_Version_Found"
 #define UPDATING_PERCENT_EVENT      "_Updating_Percent"
 
 #define BUFFER_SIZE         8192
@@ -76,10 +73,14 @@ std::string AssetsManager::s_nWritableRoot = "";
 
 // Implementation of AssetsManager
 
-AssetsManager::AssetsManager(const std::string &managerId, const std::string& manifestUrl, const std::string& storagePath/* = "" */)
+AssetsManager::AssetsManager(const std::string &managerId, const std::string& manifestUrl, const std::string& storagePath)
 : _managerId(managerId)
+, _updateState(UNKNOWN)
 , _waitToUpdate(false)
+, _totalToDownload(0)
+, _totalWaitToDownload(0)
 , _manifestUrl(manifestUrl)
+, _storagePath("")
 , _assets(nullptr)
 , _localManifest(nullptr)
 , _remoteManifest(nullptr)
@@ -142,9 +143,8 @@ void AssetsManager::loadManifest(const std::string& manifestUrl)
         else
             destroyFile(cachedManifest);
     }
-    
     // Fail to found or load cached manifest file
-    if (_localManifest == nullptr)
+    else
     {
         _localManifest->parse(_manifestUrl);
         if (_localManifest->isLoaded())
@@ -152,7 +152,7 @@ void AssetsManager::loadManifest(const std::string& manifestUrl)
     }
     
     // Fail to load local manifest
-    if (_localManifest == nullptr || !_localManifest->isLoaded())
+    if (!_localManifest->isLoaded())
     {
         CCLOG("AssetsManager : No local manifest file found error.");
         EventCustom event(_managerId + NO_LOCAL_MANIFEST);
