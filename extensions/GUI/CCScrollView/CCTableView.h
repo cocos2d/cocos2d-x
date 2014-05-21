@@ -37,48 +37,47 @@ NS_CC_EXT_BEGIN
 class TableView;
 
 /**
- * Sole purpose of this delegate is to single touch event in this version.
+ * 本版本中此委托只处理单点触摸事件
  */
 class TableViewDelegate : public ScrollViewDelegate
 {
 public:
     /**
-     * Delegate to respond touch event
+     * 单元格被点击时响应此委托
      *
-     * @param table table contains the given cell
-     * @param cell  cell that is touched
+     * @param table 包含所给单元格的TableView
+     * @param cell  被点击的单元格
      * @js NA
      * @lua NA
      */
     virtual void tableCellTouched(TableView* table, TableViewCell* cell) = 0;
 
     /**
-     * Delegate to respond a table cell press event.
+     * 单元格被按下时响应此委托
      *
-     * @param table table contains the given cell
-     * @param cell  cell that is pressed
+     * @param table 包含所给单元格的TableView
+     * @param cell  被按下的单元格
      * @js NA
      * @lua NA
      */
     virtual void tableCellHighlight(TableView* table, TableViewCell* cell){};
 
     /**
-     * Delegate to respond a table cell release event
+     * 单元格被释放时响应此委托（译者注：可能为按下后松手，或者按下后拖动超过阈值）
      *
-     * @param table table contains the given cell
-     * @param cell  cell that is pressed
+     * @param table 包含所给单元格的TableView
+     * @param cell  被释放的单元格
      * @js NA
      * @lua NA
      */
     virtual void tableCellUnhighlight(TableView* table, TableViewCell* cell){};
 
     /**
-     * Delegate called when the cell is about to be recycled. Immediately
-     * after this call the cell will be removed from the scene graph and
-     * recycled.
+     * 单元格即将被回收时响应此委托
+     * 本委托调用结束后，此单元格会立即从场景移除回收等待重用。
      *
-     * @param table table contains the given cell
-     * @param cell  cell that is pressed
+     * @param table 包含所给单元格的TableView
+     * @param cell  被回收的单元格
      * @js NA
      * @lua NA
      */
@@ -88,7 +87,7 @@ public:
 
 
 /**
- * Data source that governs table backend data.
+ * 用于管理表格后端数据的数据源
  */
 class TableViewDataSource
 {
@@ -100,34 +99,34 @@ public:
     virtual ~TableViewDataSource() {}
 
     /**
-     * cell size for a given index
+     * 获取指定索引对应单元格的尺寸
      *
-     * @param idx the index of a cell to get a size
-     * @return size of a cell at given index
+     * @param idx 需要查询尺寸的单元格索引
+     * @return 对应单元格的尺寸
      */
     virtual Size tableCellSizeForIndex(TableView *table, ssize_t idx) {
         return cellSizeForTable(table);
     };
     /**
-     * cell height for a given table.
+     * 获取指定表格的单元格尺寸
      *
-     * @param table table to hold the instances of Class
-     * @return cell size
+     * @param table 存放本数据源数据的TableView
+     * @return 单元格尺寸
      */
     virtual Size cellSizeForTable(TableView *table) {
         return Size::ZERO;
     };
     /**
-     * a cell instance at a given index
+     * 获取指定索引对应的单元格实例
      *
-     * @param idx index to search for a cell
-     * @return cell found at idx
+     * @param idx 需要获取的单元格的索引
+     * @return 指定索引对应的单元格
      */
     virtual TableViewCell* tableCellAtIndex(TableView *table, ssize_t idx) = 0;
     /**
-     * Returns number of cells in a given table view.
+     * 返回指定TableView中单元格的个数
      *
-     * @return number of cells
+     * @return 单元格个数
      */
     virtual ssize_t numberOfCellsInTableView(TableView *table) = 0;
 
@@ -135,9 +134,9 @@ public:
 
 
 /**
- * UITableView support for cocos2d-x.
+ * Cocos2d-x中的TableView支持
  *
- * This is a very basic, minimal implementation to bring UITableView-like component into cocos2d world.
+ * 这是一个类UITableView元件的最小实现，为Cocos2d-x带来表格的基本支持
  */
 class TableView : public ScrollView, public ScrollViewDelegate
 {
@@ -149,17 +148,17 @@ public:
         BOTTOM_UP
     };
     
-    /** Empty contructor of TableView */
+    /** TableView的空构造函数 */
     static TableView* create();
     
     /**
-     * An intialized table view object
+     * 创建一个被初始化的TableView
      *
-     * @param dataSource data source
-     * @param size view size
-     * @return table view
+     * @param dataSource 数据源
+     * @param size 表格可见尺寸
+     * @return 表格
      * @code
-     * when this function bound to js or lua,the input params are changed
+     * 此函数被js或lua绑定后，输入参数发生改变
      * in js:var create(var jsObject,var size)
      * in lua:local create(var size)
      * in lua:
@@ -167,14 +166,14 @@ public:
      */
     static TableView* create(TableViewDataSource* dataSource, Size size);
     /**
-     * An initialized table view object
+     * 创建一个被初始化的TableView
      *
-     * @param dataSource data source;
-     * @param size view size
-     * @param container parent object for cells
-     * @return table view
+     * @param dataSource 数据源
+     * @param size 表格可见尺寸
+     * @param container 单元格的父对象容器
+     * @return 表格
      * @code
-     * when this function bound to js or lua,the input params are changed
+     * 此函数被js或lua绑定后，输入参数发生改变
      * in js:var create(var jsObject,var size,var container)
      * in lua:local create(var size, var container)
      * in lua:
@@ -200,7 +199,7 @@ public:
      */
     TableViewDataSource* getDataSource() { return _dataSource; }
     /**
-     * when this function bound to js or lua,the input params are changed
+     * 此函数被js或lua绑定后，输入参数发生改变
      * in js:var setDataSource(var jsSource)
      * in lua:local setDataSource()
      * @endcode
@@ -214,7 +213,7 @@ public:
     TableViewDelegate* getDelegate() { return _tableViewDelegate; }
     /**
      * @code
-     * when this function bound to js or lua,the input params are changed
+     * 此函数被js或lua绑定后，输入参数发生改变
      * in js:var setDelegate(var jsDelegate)
      * in lua:local setDelegate()
      * @endcode
@@ -222,45 +221,45 @@ public:
     void setDelegate(TableViewDelegate* pDelegate) { _tableViewDelegate = pDelegate; }
 
     /**
-     * determines how cell is ordered and filled in the view.
+     * 设置单元格在表格中的填充顺序
      */
     void setVerticalFillOrder(VerticalFillOrder order);
     VerticalFillOrder getVerticalFillOrder();
 
     /**
-     * Updates the content of the cell at a given index.
+     * 更新索引对应单元格的内容
      *
-     * @param idx index to find a cell
+     * @param idx 用于指定单元格的索引
      */
     void updateCellAtIndex(ssize_t idx);
     /**
-     * Inserts a new cell at a given index
+     * 在指定索引插入新单元格
      *
-     * @param idx location to insert
+     * @param idx 用于指定插入位置的索引
      */
     void insertCellAtIndex(ssize_t idx);
     /**
-     * Removes a cell at a given index
+     * 移除指定索引的单元格
      *
-     * @param idx index to find a cell
+     * @param idx 用于指定单元格的索引
      */
     void removeCellAtIndex(ssize_t idx);
     /**
-     * reloads data from data source.  the view will be refreshed.
+     * 从数据源重新载入数据，整个表格会被刷新
      */
     void reloadData();
     /**
-     * Dequeues a free cell if available. nil if not.
+     * 从回收队列获取一个可用的空闲单元格，如果没有可用单元格则返回空指针
      *
-     * @return free cell
+     * @return 空闲单元格
      */
     TableViewCell *dequeueCell();
 
     /**
-     * Returns an existing cell at a given index. Returns nil if a cell is nonexistent at the moment of query.
+     * 获取索引对应的单元格。如果当前索引对应单元格不存在则返回空指针。
      *
-     * @param idx index
-     * @return a cell at a given index
+     * @param idx 索引
+     * @return 对应单元格
      */
     TableViewCell *cellAtIndex(ssize_t idx);
 
@@ -287,34 +286,34 @@ protected:
 
     TableViewCell *_touchedCell;
     /**
-     * vertical direction of cell filling
+     * 单元格垂直方向的填充顺序
      */
     VerticalFillOrder _vordering;
 
     /**
-     * index set to query the indexes of the cells used.
+     * 用于查询已用单元格的索引集合
      */
     std::set<ssize_t>* _indices;
 
     /**
-     * vector with all cell positions
+     * 用于存放所有单元格位置的数组容器
      */
     std::vector<float> _vCellsPositions;
     //NSMutableIndexSet *indices_;
     /**
-     * cells that are currently in the table
+     * 当前正在使用的单元格
      */
     Vector<TableViewCell*> _cellsUsed;
     /**
-     * free list of cells
+     * 空闲单元格
      */
     Vector<TableViewCell*> _cellsFreed;
     /**
-     * weak link to the data source object
+     * 数据源对象的弱引用
      */
     TableViewDataSource* _dataSource;
     /**
-     * weak link to the delegate object
+     * 委托对象的弱引用
      */
     TableViewDelegate* _tableViewDelegate;
 
