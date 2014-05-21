@@ -1398,58 +1398,58 @@ protected:
 
     Mat4 _modelViewTransform;    ///< 节点的模型视图变换
 
-    // "cache" variables are allowed to be mutable
-    mutable Mat4 _transform;      ///< transform
+    // "cache" 可以是可变的
+    mutable Mat4 _transform;      ///< 变换
     mutable bool _transformDirty;   ///< transform dirty flag
-    mutable Mat4 _inverse;        ///< inverse transform
+    mutable Mat4 _inverse;        ///< 逆变换
     mutable bool _inverseDirty;     ///< inverse transform dirty flag
-    mutable Mat4 _additionalTransform; ///< transform
+    mutable Mat4 _additionalTransform; ///< 变换
     bool _useAdditionalTransform;   ///< The flag to check whether the additional transform is dirty
-    bool _transformUpdated;         ///< Whether or not the Transform object was updated since the last frame
+    bool _transformUpdated;         ///< 是否Transform 对象在最后一帧更新了
 
-    int _localZOrder;               ///< Local order (relative to its siblings) used to sort the node
-    float _globalZOrder;            ///< Global order used to sort the node
+    int _localZOrder;               ///< Local 顺序 (和兄妹节点相关) 被用于节点的排序
+    float _globalZOrder;            ///< Global 顺序 用于节点的排序
 
-    Vector<Node*> _children;        ///< array of children nodes
-    Node *_parent;                  ///< weak reference to parent node
+    Vector<Node*> _children;        ///< 子节点数列
+    Node *_parent;                  ///< 父节点的弱引用
 
-    int _tag;                         ///< a tag. Can be any number you assigned just to identify this node
+    int _tag;                         ///<一个标记. 你可以定义任何的数字来分辨这个节点
     
-    std::string _name;               ///<a string label, an user defined string to identify this node
+    std::string _name;               ///<一个字符串标签, 一个用户定义的字符串来分辨这个节点
 
-    void *_userData;                ///< A user assingned void pointer, Can be point to any cpp object
-    Ref *_userObject;               ///< A user assigned Object
+    void *_userData;                ///< 一个用户分配的空指针，能够指向任何cpp对象
+    Ref *_userObject;               ///< 一个用户分配的对象
 
     GLProgramState *_glProgramState; ///< OpenGL Program State
 
-    int _orderOfArrival;            ///< used to preserve sequence while sorting children with the same localZOrder
+    int _orderOfArrival;            ///< 用于保存序列当对有相同localZOrder的子节点进行排序
 
-    Scheduler *_scheduler;          ///< scheduler used to schedule timers and updates
+    Scheduler *_scheduler;          ///< 调度器用于调度定时器和更新
 
-    ActionManager *_actionManager;  ///< a pointer to ActionManager singleton, which is used to handle all the actions
+    ActionManager *_actionManager;  ///< 一个指向ActionManager singleton模式的指针, 用于操作所有的动作。
 
-    EventDispatcher* _eventDispatcher;  ///< event dispatcher used to dispatch all kinds of events
+    EventDispatcher* _eventDispatcher;  ///< 事件调度器使用调度各种事件
 
-    bool _running;                  ///< is running
+    bool _running;                  ///< 活动中
 
-    bool _visible;                  ///< is this node visible
+    bool _visible;                  ///< 节点可见
 
-    bool _ignoreAnchorPointForPosition; ///< true if the Anchor Vec2 will be (0,0) when you position the Node, false otherwise.
-                                          ///< Used by Layer and Scene.
+    bool _ignoreAnchorPointForPosition; ///< true 如果锚点 Vec2 是 (0,0) 当你拜访节点时, false则不是（0，0）
+                                          ///< 被Layer和Scene使用
 
     bool _reorderChildDirty;          ///< children order dirty flag
-    bool _isTransitionFinished;       ///< flag to indicate whether the transition was finished
+    bool _isTransitionFinished;       ///< 一个表明转换是否完成的标记
 
 #if CC_ENABLE_SCRIPT_BINDING
-    int _scriptHandler;               ///< script handler for onEnter() & onExit(), used in Javascript binding and Lua binding.
-    int _updateScriptHandler;         ///< script handler for update() callback per frame, which is invoked from lua & javascript.
-    ccScriptType _scriptType;         ///< type of script binding, lua or javascript
+    int _scriptHandler;               ///< 对onEnter()和onExit()的脚本处理器，用于Javascript binding和Lua binding.
+    int _updateScriptHandler;         ///< 对update() 每帧回调的脚本处理器，从 lua和javascript中调用。
+    ccScriptType _scriptType;         ///< 脚本绑定的类型, lua 或者javascript
 #endif
     
     ComponentContainer *_componentContainer;        ///< Dictionary of components
 
 #if CC_USE_PHYSICS
-    PhysicsBody* _physicsBody;        ///< the physicsBody the node have
+    PhysicsBody* _physicsBody;        ///< 节点拥有的physicsBody
 #endif
     
     // opacity controls
@@ -1472,13 +1472,13 @@ private:
 
 // NodeRGBA
 
-/** NodeRGBA is a subclass of Node that implements the RGBAProtocol protocol.
+/** NodeRGBA是节点的子类，实现RGBAProtocol协议。
  
- All features from Node are valid, plus the following new features:
+ 节点的所有特点都是有效的，加上如下的一些新特点：
  - opacity
  - RGB colors
  
- Opacity/Color propagates into children that conform to the RGBAProtocol if cascadeOpacity/cascadeColor is enabled.
+ Opacity/Color 传播到符合RGBAProtocol协议的孩子中，如果cascadeOpacity/cascadeColor 是可行的。
  @since v2.1
  */
 class CC_DLL __NodeRGBA : public Node, public __RGBAProtocol
