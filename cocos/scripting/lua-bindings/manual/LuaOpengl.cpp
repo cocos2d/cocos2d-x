@@ -1447,7 +1447,7 @@ static int tolua_Cocos2d_glDrawElements00(lua_State* tolua_S)
         !tolua_isnumber(tolua_S,2,0,&tolua_err)            ||
         !tolua_isnumber(tolua_S,3,0,&tolua_err)            ||
         !tolua_isnumber(tolua_S,4,0,&tolua_err)            ||
-        !tolua_istable(tolua_S,5,0,&tolua_err)             ||
+        !tolua_istable(tolua_S,5,1,&tolua_err)             ||
         !tolua_isnoobj(tolua_S,6, &tolua_err)
         )
         goto tolua_lerror;
@@ -1460,45 +1460,70 @@ static int tolua_Cocos2d_glDrawElements00(lua_State* tolua_S)
         unsigned int arg3  = (unsigned int)tolua_tonumber(tolua_S, 4, 0);
         if (GL_UNSIGNED_BYTE == arg2)
         {
-            unsigned char* unit8Array     = new unsigned char[arg3];
-            if (NULL == unit8Array)
+            if (arg3 > 0)
             {
-                return 0;
+                unsigned char* unit8Array     = new unsigned char[arg3];
+                if (NULL == unit8Array)
+                {
+                    return 0;
+                }
+                for (unsigned int i = 1; i <= arg3; i++)
+                {
+                    unit8Array[i-1] = (unsigned char)tolua_tofieldnumber(tolua_S, 5, i, 0);
+                }
+                glDrawElements((GLenum)arg0 , (GLsizei)arg1 , (GLenum)arg2 , (GLvoid*)unit8Array);
+                CC_SAFE_DELETE_ARRAY(unit8Array);
+                
             }
-            for (unsigned int i = 1; i <= arg3; i++)
+            else
             {
-                unit8Array[i-1] = (unsigned char)tolua_tofieldnumber(tolua_S, 5, i, 0);
+                glDrawElements((GLenum)arg0 , (GLsizei)arg1 , (GLenum)arg2 , nullptr);
             }
-            glDrawElements((GLenum)arg0 , (GLsizei)arg1 , (GLenum)arg2 , (GLvoid*)unit8Array);
-            CC_SAFE_DELETE_ARRAY(unit8Array);
         }
         else if(GL_UNSIGNED_SHORT == arg2)
         {
-            unsigned short* shortArray     = new unsigned short[arg3];
-            if (NULL == shortArray)
+            if (arg3 > 0)
             {
-                return 0;
+                unsigned short* shortArray     = new unsigned short[arg3];
+                if (NULL == shortArray)
+                {
+                    return 0;
+                }
+                for (unsigned int i = 1; i <= arg3; i++)
+                {
+                    shortArray[i-1] = (unsigned short)tolua_tofieldnumber(tolua_S, 5, i, 0);
+                }
+                
+                glDrawElements((GLenum)arg0 , (GLsizei)arg1 , (GLenum)arg2 , (GLvoid*)shortArray);
+                
+                CC_SAFE_DELETE_ARRAY(shortArray);
             }
-            for (unsigned int i = 1; i <= arg3; i++)
+            else
             {
-                shortArray[i-1] = (unsigned short)tolua_tofieldnumber(tolua_S, 5, i, 0);
+                glDrawElements((GLenum)arg0 , (GLsizei)arg1 , (GLenum)arg2 , nullptr);
             }
-            glDrawElements((GLenum)arg0 , (GLsizei)arg1 , (GLenum)arg2 , (GLvoid*)shortArray);
-            CC_SAFE_DELETE_ARRAY(shortArray);
         }
         else if(GL_UNSIGNED_INT == arg2)
         {
-            unsigned int* intArray     = new unsigned int[arg3];
-            if (NULL == intArray)
+            if (arg3 > 0)
             {
-                return 0;
+                unsigned int* intArray     = new unsigned int[arg3];
+                if (NULL == intArray)
+                {
+                    return 0;
+                }
+                for (unsigned int i = 1; i <= arg3; i++)
+                {
+                    intArray[i-1] = (unsigned int)tolua_tofieldnumber(tolua_S, 5, i, 0);
+                }
+                glDrawElements((GLenum)arg0 , (GLsizei)arg1 , (GLenum)arg2 , (GLvoid*)intArray);
+                CC_SAFE_DELETE_ARRAY(intArray);
             }
-            for (unsigned int i = 1; i <= arg3; i++)
+            else
             {
-                intArray[i-1] = (unsigned int)tolua_tofieldnumber(tolua_S, 5, i, 0);
+                glDrawElements((GLenum)arg0 , (GLsizei)arg1 , (GLenum)arg2 , nullptr);
+
             }
-            glDrawElements((GLenum)arg0 , (GLsizei)arg1 , (GLenum)arg2 , (GLvoid*)intArray);
-            CC_SAFE_DELETE_ARRAY(intArray);
         }
     }
     return 0;

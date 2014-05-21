@@ -118,7 +118,7 @@ def ANDROID_BUILD():
 			print 'clean **CLEAN FAILED**'
 		time.sleep(sleep_time)
 	def updateProperty():
-		infoUpdate = os.system('android update project -p  ./cocos/2d/platform/android/java/ -t 12')
+		infoUpdate = os.system('android update project -p  ./cocos/platform/android/java/ -t 12')
 		print 'cocos update:', infoUpdate
 		infoUpdate = os.system('android update project -p '+PATH_ANDROID_SRC+' -t 12')
 		print 'test update:', infoUpdate

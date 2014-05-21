@@ -147,6 +147,7 @@ void Text::setFontName(const std::string& name)
     {
         TTFConfig config = _labelRenderer->getTTFConfig();
         config.fontFilePath = name;
+        config.fontSize = _fontSize;
         _labelRenderer->setTTFConfig(config);
         _type = Type::TTF;
     }

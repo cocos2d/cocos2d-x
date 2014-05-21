@@ -71,7 +71,8 @@ public:
 	void HideKeyboard(Windows::Foundation::Rect r);
 
     // WP8 XAML app
-    virtual bool Create(EGLDisplay eglDisplay, EGLContext eglContext, EGLSurface eglSurface, float width, float height);
+    virtual bool Create(EGLDisplay eglDisplay, EGLContext eglContext, EGLSurface eglSurface, float width, float height
+        ,Windows::Graphics::Display::DisplayOrientations orientation);
     virtual void UpdateDevice(EGLDisplay eglDisplay, EGLContext eglContext, EGLSurface eglSurface);
 
 	void OnPointerPressed(Windows::UI::Core::PointerEventArgs^ args);
