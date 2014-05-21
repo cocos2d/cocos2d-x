@@ -47,79 +47,79 @@ public:
         RIGHT
     };
     /**
-     * Default constructor
+     * 默认构造函数
      */
     LoadingBar();
     
     /**
-     * Default destructor
+     * 默认析构函数
      */
     virtual ~LoadingBar();
     
     /**
-     * Allocates and initializes.
+     * 创建和初始化对象
      */
     static LoadingBar* create();
     
     /**
-     * create a LoadingBar with a texture and a percentage
+     * 根据纹理文件（texture）和进度百分比（percentage）创建一个进度条（LoadingBar）
      **/
     static LoadingBar* create(const std::string& textureName, float percentage = 0);
     
     /**
-     * Changes the progress direction of loadingbar.
+     * 修改进度条的前进方向
      *
-     * @see Direction  LEFT means progress left to right, RIGHT otherwise.
+     * @see Direction  LEFT从左至右前进，RIGHT从右至左前进。
      *
-     * @param Direction
+     * @param direction 方向
      */
     void setDirection(Direction direction);
     
     /**
-     * Gets the progress direction of loadingbar.
+     * 获得进度条（loadingbar）的前进方向
      *
-     * @see Direction  LEFT means progress left to right, RIGHT otherwise.
+     * @see Direction  LEFT从左至右前进，RIGHT从右至左前进。
      *
-     * @return Direction
+     * @return 方向
      */
     Direction getDirection()const;
     
     /**
-     * Load texture for loadingbar.
+     * 为进度条加载纹理文件（texture）
      *
-     * @param fileName   file name of texture.
+     * @param texture   file name of texture.
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
     void loadTexture(const std::string& texture,TextureResType texType = TextureResType::LOCAL);
     
     /**
-     * Changes the progress direction of loadingbar.
+     * 修改进度条（loadingbar）的进度
      *
-     * @param percent    percent value from 1 to 100.
+     * @param percent    百分比值（percent）范围为1到100
      */
     void setPercent(float percent);
     
     /**
-     * Gets the progress direction of loadingbar.
+     * 获得进度条（loadingbar）的进度
      *
-     * @return percent    percent value from 1 to 100.
+     * @return 百分比值（percent）范围为1到100
      */
     float getPercent() const;
     
     /**
-     * Sets if loadingbar is using scale9 renderer.
+     * 设置进度条（loadingbar）是否使用scale9渲染（renderer）
      *
-     * @param true that using scale9 renderer, false otherwise.
+     * @param enabled true则使用scale9渲染器（renderer）, false则不使用
      */
     void setScale9Enabled(bool enabled);
     
     bool isScale9Enabled();
     
     /**
-     * Sets capinsets for loadingbar, if loadingbar is using scale9 renderer.
+     * 如果进度条（loadingbar）使用scale9渲染器（renderer）则设置进度条（loadingbar）的capinsets
      *
-     * @param capInsets    capinsets for loadingbar
+     * @param capInsets    进度条（loadingbar）的capinsets
      */
     void setCapInsets(const Rect &capInsets);
     
@@ -135,7 +135,7 @@ public:
     virtual Node* getVirtualRenderer() override;
     
     /**
-     * Returns the "class name" of widget.
+     * 返回控件（widget）的类名（class name）
      */
     virtual std::string getDescription() const override;
 protected:
