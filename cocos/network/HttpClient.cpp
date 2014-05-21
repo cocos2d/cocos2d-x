@@ -47,8 +47,8 @@ namespace network {
 static std::mutex       s_requestQueueMutex;
 static std::mutex       s_responseQueueMutex;
 
-static std::mutex		s_SleepMutex;
-static std::condition_variable		s_SleepCondition;
+static std::mutex       s_SleepMutex;
+static std::condition_variable  s_SleepCondition;
 
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
@@ -207,16 +207,15 @@ void HttpClient::networkThread()
         {
             response->setSucceed(true);
         }
-
         
         // add response packet into queue
-		if (s_responseQueue != nullptr)
-		{
-			s_responseQueueMutex.lock();
-			s_responseQueue->pushBack(response);
-			s_responseQueueMutex.unlock();
-		}
-		
+        if (s_responseQueue != nullptr)
+        {
+            s_responseQueueMutex.lock();
+            s_responseQueue->pushBack(response);
+            s_responseQueueMutex.unlock();
+        }
+
         if (nullptr != s_pHttpClient) {
             scheduler->performFunctionInCocosThread(CC_CALLBACK_0(HttpClient::dispatchResponseCallbacks, this));
         }
@@ -238,86 +237,85 @@ void HttpClient::networkThread()
 // Worker thread
 void HttpClient::networkThreadAlone(HttpRequest* request)
 {    
+    auto scheduler = Director::getInstance()->getScheduler();
 
-	auto scheduler = Director::getInstance()->getScheduler();
+    // Create a HttpResponse object, the default setting is http access failed
+    HttpResponse *response = new HttpResponse(request);
 
-	// Create a HttpResponse object, the default setting is http access failed
-	HttpResponse *response = new HttpResponse(request);
+    // request's refcount = 2 here, it's retained by HttpRespose constructor
+    request->release();
+    // ok, refcount = 1 now, only HttpResponse hold it.
 
-	// request's refcount = 2 here, it's retained by HttpRespose constructor
-	request->release();
-	// ok, refcount = 1 now, only HttpResponse hold it.
+    long responseCode = -1;
+    int retValue = 0;
 
-	long responseCode = -1;
-	int retValue = 0;
+    // Process the request -> get response packet
+    switch (request->getRequestType())
+    {
+    case HttpRequest::Type::GET: // HTTP GET
+        retValue = processGetTask(request,
+            writeData, 
+            response->getResponseData(), 
+            &responseCode,
+            writeHeaderData,
+            response->getResponseHeader());
+        break;
 
-	// Process the request -> get response packet
-	switch (request->getRequestType())
-	{
-	case HttpRequest::Type::GET: // HTTP GET
-		retValue = processGetTask(request,
-			writeData, 
-			response->getResponseData(), 
-			&responseCode,
-			writeHeaderData,
-			response->getResponseHeader());
-		break;
+    case HttpRequest::Type::POST: // HTTP POST
+        retValue = processPostTask(request,
+            writeData, 
+            response->getResponseData(), 
+            &responseCode,
+            writeHeaderData,
+            response->getResponseHeader());
+        break;
 
-	case HttpRequest::Type::POST: // HTTP POST
-		retValue = processPostTask(request,
-			writeData, 
-			response->getResponseData(), 
-			&responseCode,
-			writeHeaderData,
-			response->getResponseHeader());
-		break;
+    case HttpRequest::Type::PUT:
+        retValue = processPutTask(request,
+            writeData,
+            response->getResponseData(),
+            &responseCode,
+            writeHeaderData,
+            response->getResponseHeader());
+        break;
 
-	case HttpRequest::Type::PUT:
-		retValue = processPutTask(request,
-			writeData,
-			response->getResponseData(),
-			&responseCode,
-			writeHeaderData,
-			response->getResponseHeader());
-		break;
+    case HttpRequest::Type::DELETE:
+        retValue = processDeleteTask(request,
+            writeData,
+            response->getResponseData(),
+            &responseCode,
+            writeHeaderData,
+            response->getResponseHeader());
+        break;
 
-	case HttpRequest::Type::DELETE:
-		retValue = processDeleteTask(request,
-			writeData,
-			response->getResponseData(),
-			&responseCode,
-			writeHeaderData,
-			response->getResponseHeader());
-		break;
+    default:
+        CCASSERT(true, "CCHttpClient: unkown request type, only GET and POSt are supported");
+        break;
+    }
 
-	default:
-		CCASSERT(true, "CCHttpClient: unkown request type, only GET and POSt are supported");
-		break;
-	}
+    // write data to HttpResponse
+    response->setResponseCode(responseCode);
 
-	// write data to HttpResponse
-	response->setResponseCode(responseCode);
+    if (retValue != 0) 
+    {
+        response->setSucceed(false);
+        response->setErrorBuffer(s_errorBuffer);
+    }
+    else
+    {
+        response->setSucceed(true);
+    }
 
-	if (retValue != 0) 
-	{
-		response->setSucceed(false);
-		response->setErrorBuffer(s_errorBuffer);
-	}
-	else
-	{
-		response->setSucceed(true);
-	}
+    if (s_responseQueue != nullptr)
+    {
+        s_responseQueueMutex.lock();
+        s_responseQueue->pushBack(response);
+        s_responseQueueMutex.unlock();
+    }
 
-	if (s_responseQueue != nullptr)
-	{
-		s_responseQueueMutex.lock();
-		s_responseQueue->pushBack(response);
-		s_responseQueueMutex.unlock();
-	}
-
-	if (nullptr != s_pHttpClient) {
-		scheduler->performFunctionInCocosThread(CC_CALLBACK_0(HttpClient::dispatchResponseCallbacks, this));
-	}
+    if (nullptr != s_pHttpClient) {
+        scheduler->performFunctionInCocosThread(CC_CALLBACK_0(HttpClient::dispatchResponseCallbacks, this));
+    }
 }
 
 //Configure curl's timeout property
@@ -392,7 +390,7 @@ public:
             return false;
 
         /* get custom header data (if set) */
-       	std::vector<std::string> headers=request->getHeaders();
+        std::vector<std::string> headers=request->getHeaders();
         if(!headers.empty())
         {
             /* append custom headers one by one */
@@ -515,7 +513,7 @@ HttpClient::~HttpClient()
     s_need_quit = true;
     
     if (s_requestQueue != nullptr) {
-    	s_SleepCondition.notify_one();
+        s_SleepCondition.notify_one();
     }
     
     s_pHttpClient = nullptr;
@@ -524,11 +522,11 @@ HttpClient::~HttpClient()
 //Lazy create semaphore & mutex & thread
 bool HttpClient::lazyInitThreadSemphore()
 {
-	if (nullptr == s_responseQueue)
-	{
-		s_responseQueue = new Vector<HttpResponse*>();
-	}
-	
+    if (nullptr == s_responseQueue)
+    {
+        s_responseQueue = new Vector<HttpResponse*>();
+    }
+    
     if (s_requestQueue != nullptr) {
         return true;
     } else {
@@ -571,19 +569,19 @@ void HttpClient::send(HttpRequest* request)
 
 void HttpClient::immediateSend(HttpRequest* request)
 {
-	if(!request)
-	{
-		return;
-	}
+    if(!request)
+    {
+        return;
+    }
 
-	if (nullptr == s_responseQueue)
-	{
-		s_responseQueue = new Vector<HttpResponse*>();
-	}
+    if (nullptr == s_responseQueue)
+    {
+        s_responseQueue = new Vector<HttpResponse*>();
+    }
 
-	request->retain();
-	auto t = std::thread(&HttpClient::networkThreadAlone, this, request);
-	t.detach();
+    request->retain();
+    auto t = std::thread(&HttpClient::networkThreadAlone, this, request);
+    t.detach();
 }
 
 // Poll and notify main thread if responses exists in queue
