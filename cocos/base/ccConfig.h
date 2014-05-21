@@ -74,7 +74,7 @@ THE SOFTWARE.
 正确防止失真的方法是使用spritesheet-artifact-fixer.py或一个相似的工具.
 
 影响的对象(nodes):
-    - Sprite / SpriteBatchNode and subclasses: LabelBMFont, TMXTiledMap
+    - Sprite / SpriteBatchNode 和子类: LabelBMFont, TMXTiledMap
     - LabelAtlas
     - QuadParticleSystem
     - TileMap
