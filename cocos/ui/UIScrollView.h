@@ -260,46 +260,21 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE void addEventListenerScrollView(Ref* target, SEL_ScrollViewEvent selector);
     void addEventListener(const ccScrollViewCallback& callback);
-        
+    
+    //all of these functions are related to innerContainer.
     virtual void addChild(Node * child) override;
-    /**
-     * Adds a child to the container with a z-order
-     *
-     * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
-     *
-     * @param child     A child node
-     * @param zOrder    Z order for drawing priority. Please refer to setLocalZOrder(int)
-     */
     virtual void addChild(Node * child, int zOrder) override;
-    /**
-     * Adds a child to the container with z order and tag
-     *
-     * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
-     *
-     * @param child     A child node
-     * @param zOrder    Z order for drawing priority. Please refer to setLocalZOrder(int)
-     * @param tag       A interger to identify the node easily. Please refer to setTag(int)
-     */
     virtual void addChild(Node* child, int zOrder, int tag) override;
-    
-    //override "removeAllChildrenAndCleanUp" method of widget.
     virtual void removeAllChildren() override;
-    
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
-    
-    //override "removeChild" method of widget.
 	virtual void removeChild(Node* child, bool cleaup = true) override;
-    
-    //override "getChildren" method of widget.
     virtual Vector<Node*>& getChildren() override;
     virtual const Vector<Node*>& getChildren() const override;
-    
     virtual ssize_t getChildrenCount() const override;
-    
     virtual Node * getChildByTag(int tag) const override;
-    
     virtual Widget* getChildByName(const std::string& name) override;
     
+    //handle touch event
     virtual bool onTouchBegan(Touch *touch, Event *unusedEvent) override;
     virtual void onTouchMoved(Touch *touch, Event *unusedEvent) override;
     virtual void onTouchEnded(Touch *touch, Event *unusedEvent) override;

@@ -258,12 +258,12 @@ const Size& ScrollView::getInnerContainerSize() const
     
 void ScrollView::addChild(Node *child)
 {
-    Layout::addChild(child);
+    ScrollView::addChild(child, child->getZOrder(), child->getTag());
 }
 
 void ScrollView::addChild(Node * child, int zOrder)
 {
-    Layout::addChild(child, zOrder);
+    ScrollView::addChild(child, zOrder, child->getTag());
 }
 
 void ScrollView::addChild(Node *child, int zOrder, int tag)

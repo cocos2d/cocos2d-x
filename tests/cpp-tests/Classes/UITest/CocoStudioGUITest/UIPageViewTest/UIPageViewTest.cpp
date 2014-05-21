@@ -47,7 +47,10 @@ bool UIPageViewTest::init()
                                   (widgetSize.height - backgroundSize.height) / 2.0f +
                                   (backgroundSize.height - pageView->getSize().height) / 2.0f));
         
-        for (int i = 0; i < 3; ++i)
+        pageView->removeAllPages();
+        
+        int pageCount = 4;
+        for (int i = 0; i < pageCount; ++i)
         {
             Layout* layout = Layout::create();
             layout->setSize(Size(240.0f, 130.0f));
@@ -63,8 +66,12 @@ bool UIPageViewTest::init()
             label->setPosition(Vec2(layout->getSize().width / 2.0f, layout->getSize().height / 2.0f));
             layout->addChild(label);
             
-            pageView->addPage(layout);
+            pageView->insertPage(layout,i);
         }
+        
+        pageView->removePageAtIndex(0);
+        pageView->scrollToPage(pageCount-2);
+        
         pageView->addEventListener(CC_CALLBACK_2(UIPageViewTest::pageViewEvent, this));
         
         _uiLayer->addChild(pageView);

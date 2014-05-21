@@ -173,9 +173,12 @@ void PageView::insertPage(Layout* page, int idx)
     else
     {
         _protectedChildren.insert(idx, page);
+        page->setParent(this);
+        
         page->setPosition(Vec2(getPositionXByIndex(idx), 0));
         Size pSize = page->getSize();
         Size pvSize = getSize();
+        
         if (!pSize.equals(pvSize))
         {
             CCLOG("page size does not match pageview size, it will be force sized!");
@@ -248,8 +251,11 @@ void PageView::updateChildrenSize()
     Size selfSize = getSize();
     for (auto& page : _protectedChildren)
     {
+        //FIXME:  should call node->setContentSize
         Layout* layout = dynamic_cast<Layout*>(page);
-        layout->setSize(selfSize);
+        if (layout) {
+            layout->setSize(selfSize);
+        }
     }
 }
 
@@ -269,7 +275,9 @@ void PageView::updateChildrenPosition()
     for (int i=0; i<pageCount; i++)
     {
         Layout* page = dynamic_cast<Layout*>(_protectedChildren.at(i));
-        page->setPosition(Vec2((i-_curPageIdx)*pageWidth, 0));
+        if (page) {
+            page->setPosition(Vec2((i-_curPageIdx)*pageWidth, 0));
+        }
     }
 }
 
