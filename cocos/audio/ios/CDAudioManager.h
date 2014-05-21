@@ -29,26 +29,26 @@
     #import "CDXMacOSXSupport.h"
 #endif
 
-/** Different modes of the engine */
+/** 音频引擎的不同模式 */
 typedef enum {
-    kAMM_FxOnly,                    //!Other apps will be able to play audio
-    kAMM_FxPlusMusic,                //!Only this app will play audio
-    kAMM_FxPlusMusicIfNoOtherAudio,    //!If another app is playing audio at start up then allow it to continue and don't play music
-    kAMM_MediaPlayback,                //!This app takes over audio e.g music player app
-    kAMM_PlayAndRecord                //!App takes over audio and has input and output
+    kAMM_FxOnly,                    //!其他app也可以播放音频
+    kAMM_FxPlusMusic,                //!只有当前app可以播放音频
+    kAMM_FxPlusMusicIfNoOtherAudio,    //!如果其他app正在播放音频，允许它继续播放，取消现在的播放请求
+    kAMM_MediaPlayback,                //!播放当前音频
+    kAMM_PlayAndRecord                //!当前音频接管音频输入和输出
 } tAudioManagerMode;
 
-/** Possible states of the engine */
+/** 音频引擎的状态值 */
 typedef enum {
-    kAMStateUninitialised, //!Audio manager has not been initialised - do not use
-    kAMStateInitialising,  //!Audio manager is in the process of initialising - do not use
-    kAMStateInitialised       //!Audio manager is initialised - safe to use
+    kAMStateUninitialised, //!音频管理对象未初始化-不能使用
+    kAMStateInitialising,  //!音频管理对象正在初始化中-不能使用
+    kAMStateInitialised       //!音频管理对象已经初始化完成-可以安全使用
 } tAudioManagerState;
 
 typedef enum {
-    kAMRBDoNothing,                //Audio manager will not do anything on resign or becoming active
-    kAMRBStopPlay,                //Background music is stopped on resign and resumed on become active
-    kAMRBStop                    //Background music is stopped on resign but not resumed - maybe because you want to do this from within your game
+    kAMRBDoNothing,                //音频管理对象不会改变当前任何操作
+    kAMRBStopPlay,                //背景音乐将会暂停并在播放完成后恢复播放
+    kAMRBStop                    //背景音乐将会停止并且不会被恢复-也许你在游戏里面会想用这种模式
 } tAudioManagerResignBehavior;
 
 /** Notifications */
@@ -57,7 +57,7 @@ extern NSString * const kCDN_AudioManagerInitialised;
 @interface CDAsynchInitialiser : NSOperation {}    
 @end
 
-/** CDAudioManager supports two long audio source channels called left and right*/
+/** CDAudioManager 提供两个声道，左声道和右声道*/
 typedef enum {
     kASC_Left = 0,
     kASC_Right = 1
@@ -74,9 +74,9 @@ typedef enum {
 @class CDLongAudioSource;
 @protocol CDLongAudioSourceDelegate <NSObject>
 @optional
-/** The audio source completed playing */
+/** 声道播放完成 */
 - (void) cdAudioSourceDidFinishPlaying:(CDLongAudioSource *) audioSource;
-/** The file used to load the audio source has changed */
+/** 声道播放的音频源有变化 */
 - (void) cdAudioSourceFileDidChange:(CDLongAudioSource *) audioSource;
 @end
 
@@ -87,6 +87,9 @@ typedef enum {
  Bear in mind that current iDevices can only use hardware to decode a single compressed
  audio file at a time and playing multiple compressed files will result in a performance drop
  as software decompression will take place.
+ CDLongAudioSource表示的是需要花费较长时间来加载音频文件到内存中，并且使用CDSoundEngine来播放的音频源。比如：
+ 背景音乐或者叙述性的语音。这类的语音文件有可能被压缩，目前的设备只能硬解码单个的这类文件，如果同时播放多个这类
+ 文件只能通过软解码来代替。
  @since v0.99
  */
 @interface CDLongAudioSource : NSObject <AVAudioPlayerDelegate, CDAudioInterruptProtocol>{
@@ -116,31 +119,27 @@ typedef enum {
 @property (readwrite, nonatomic) BOOL backgroundMusic;
 @property (readonly) BOOL paused;
 
-/** Loads the file into the audio source */
+/** 加载文件到音频源中 */
 -(void) load:(NSString*) filePath;
-/** Plays the audio source */
+/** 播放音频源 */
 -(void) play;
-/** Stops playing the audio soruce */
+/** 停止播放音频源 */
 -(void) stop;
-/** Pauses the audio source */
+/** 暂停播放音频源 */
 -(void) pause;
-/** Rewinds the audio source */
+/** 将音频源倒放 */
 -(void) rewind;
-/** Resumes playing the audio source if it was paused */
+/** 恢复暂停播放的音频源 */
 -(void) resume;
-/** Returns whether or not the audio source is playing */
+/** 音频源是否在播放中 */
 -(BOOL) isPlaying;
 
 @end
 
 /** 
- CDAudioManager manages audio requirements for a game.  It provides access to a CDSoundEngine object
- for playing sound effects.  It provides access to two CDLongAudioSource object (left and right channel)
- for playing long duration audio such as background music and narration tracks.  Additionally it manages
- the audio session to take care of things like audio session interruption and interacting with the audio
- of other apps that are running on the device.
- 
- Requirements:
+ CDAudioManager 管理游戏的音频。它用于提供通过CDSoundEngine对象来播放音效的权限。CDAudioManager内部包含两个CDLongAudioSource
+ 对象(左右声道)，用来播放长间隔的音频比如背景音乐和叙述性的语音。另外，它来管理同其他app声音之间的切换和交互。
+ 环境要求:
  - Firmware: OS 2.2 or greater 
  - Files: CDAudioManager.*, CocosDenshion.*
  - Frameworks: OpenAL, AudioToolbox, AVFoundation
@@ -171,67 +170,67 @@ typedef enum {
 @property (readonly) CDLongAudioSource *backgroundMusic;
 @property (readonly) BOOL willPlayBackgroundMusic;
 
-/** Returns the shared singleton */
+/** 返回共享的单例 */
 + (CDAudioManager *) sharedManager;
 + (tAudioManagerState) sharedManagerState;
-/** Configures the shared singleton with a mode*/
+/** 设置单例的模式*/
 + (void) configure: (tAudioManagerMode) mode;
-/** Initializes the engine asynchronously with a mode */
+/** 异步的初始化音频引擎的模式*/
 + (void) initAsynchronously: (tAudioManagerMode) mode;
-/** Initializes the engine synchronously with a mode, channel definition and a total number of channels */
+/** 同步的初始化引擎的模式，声道定义和声道数量 */
 - (id) init: (tAudioManagerMode) mode;
 -(void) audioSessionInterrupted;
 -(void) audioSessionResumed;
 -(void) setResignBehavior:(tAudioManagerResignBehavior) resignBehavior autoHandle:(BOOL) autoHandle;
-/** Returns true is audio is muted at a hardware level e.g user has ringer switch set to off */
+/** 返回音频是否硬件层的将设备设为静音 */
 -(BOOL) isDeviceMuted;
-/** Returns true if another app is playing audio such as the iPod music player */
+/** 返回是否有其他app在播放音频，比如iPod音乐播放程序 */
 -(BOOL) isOtherAudioPlaying;
-/** Sets the way the audio manager interacts with the operating system such as whether it shares output with other apps or obeys the mute switch */
+/** 设置音频管理同操作系统交互的方式，比如是否同其他app交互使用音频输出设备或者允许静音开关 */
 -(void) setMode:(tAudioManagerMode) mode;
-/** Shuts down the shared audio manager instance so that it can be reinitialised */
+/** 关闭音频管理对象，以便于重新初始化 */
 +(void) end;
 
-/** Call if you want to use built in resign behavior but need to do some additional audio processing on resign active. */
+/** 如果你需要使用内置的挂起行为又想在挂起时执行一些自己的音频处理操作，实现这个方法 */
 - (void) applicationWillResignActive;
-/** Call if you want to use built in resign behavior but need to do some additional audio processing on become active. */
+/** 如果你需要使用内置的恢复行为又想在恢复时执行一些自己的音频处理操作，实现这个方法. */
 - (void) applicationDidBecomeActive;
 
 //New AVAudioPlayer API
-/** Loads the data from the specified file path to the channel's audio source */
+/** 从指定音频文件中加载数据到声道的音频源中 */
 -(CDLongAudioSource*) audioSourceLoad:(NSString*) filePath channel:(tAudioSourceChannel) channel;
-/** Retrieves the audio source for the specified channel */
+/** 恢复指定声道的音频源 */
 -(CDLongAudioSource*) audioSourceForChannel:(tAudioSourceChannel) channel;
 
 //Legacy AVAudioPlayer API
-/** Plays music in background. The music can be looped or not
- It is recommended to use .aac files as background music since they are decoded by the device (hardware).
+/** 播放背景音乐，可以循环也可以不循环
+推荐使用.acc格式的背景音乐，因为这种格式文件可以硬件解码
  */
 -(void) playBackgroundMusic:(NSString*) filePath loop:(BOOL) loop;
-/** Preloads a background music */
+/** 预加载背景音乐 */
 -(void) preloadBackgroundMusic:(NSString*) filePath;
-/** Stops playing the background music */
+/** 停止播放背景音乐 */
 -(void) stopBackgroundMusic;
-/** Pauses the background music */
+/** 暂停背景音乐播放 */
 -(void) pauseBackgroundMusic;
-/** Rewinds the background music */
+/** 倒序播放背景音乐 */
 -(void) rewindBackgroundMusic;
-/** Resumes playing the background music */
+/** 恢复播放背景音乐 */
 -(void) resumeBackgroundMusic;
-/** Returns whether or not the background music is playing */
+/** 背景音乐是否正在播放中 */
 -(BOOL) isBackgroundMusicPlaying;
 
 -(void) setBackgroundMusicCompletionListener:(id) listener selector:(SEL) selector;
 
 @end
 
-/** Fader for long audio source objects */
+/** 长音频源对象的增益调节器 */
 @interface CDLongAudioSourceFader : CDPropertyModifier{}
 @end
 
 static const int kCDNoBuffer = -1;
 
-/** Allows buffers to be associated with file names */
+/** 让缓冲区和文件名关联起来 */
 @interface CDBufferManager:NSObject{
     NSMutableDictionary* loadedBuffers;
     NSMutableArray    *freedBuffers;
