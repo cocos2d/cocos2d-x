@@ -643,7 +643,7 @@ public:
      *
      * @return a Node object whose tag equals to the input parameter
      */
-    virtual Node * getChildByTag(int tag);
+    virtual Node * getChildByTag(int tag) const;
     /**
      * Returns the array of the node's children
      *
