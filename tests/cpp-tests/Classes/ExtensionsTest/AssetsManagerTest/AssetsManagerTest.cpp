@@ -1,5 +1,5 @@
- #include "AssetsManagerTest.h"
-#include "../testResource.h"
+#include "AssetsManagerTest.h"
+#include "../../testResource.h"
 #include "cocos2d.h"
 
 std::vector<std::string> sceneId {"AMTestScene1", "AMTestScene2", "AMTestScene3"};
@@ -77,7 +77,7 @@ void AssetsManagerLoaderScene::runThisTest()
     std::string managerId = sceneId[currentId], manifestPath = sceneManifests[currentId], storagePath = storagePaths[currentId];
     
     Sprite *sprite = Sprite::create("Images/Icon.png");
-    auto layer = new Layer();
+    auto layer = Layer::create();
     addChild(layer);
     layer->addChild(sprite);
     sprite->setPosition( VisibleRect::center() );
@@ -86,8 +86,6 @@ void AssetsManagerLoaderScene::runThisTest()
     Label *progress = Label::createWithTTF(config, "0%", TextHAlignment::CENTER);
     progress->setPosition( Vec2(VisibleRect::center().x, VisibleRect::center().y + 50) );
     layer->addChild(progress);
-    
-    layer->release();
     
     _am = AssetsManager::create(managerId, manifestPath, storagePath);
     _am->retain();

@@ -88,13 +88,6 @@ public:
     //! The root of writable path
     static std::string s_nWritableRoot;
     
-    AssetsManager(const std::string &managerId, const std::string& manifestUrl = NULL, const std::string& storagePath = "");
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~AssetsManager();
-    
     /* @brief To access within scripting environment
      */
     static AssetsManager* create(const std::string &managerId, const std::string &manifestUrl, const std::string &storagePath = "");
@@ -160,6 +153,15 @@ public:
      * @lua NA
      */
     virtual void onSuccess(const std::string &srcUrl, const std::string &customId);
+    
+CC_CONSTRUCTOR_ACCESS:
+    
+    AssetsManager(const std::string &managerId, const std::string& manifestUrl = NULL, const std::string& storagePath = "");
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~AssetsManager();
     
 protected:
     void loadManifest(const std::string& manifestUrl);
