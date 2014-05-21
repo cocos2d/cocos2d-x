@@ -37,21 +37,21 @@ NS_CC_BEGIN
  */
 
 /**
- * UserDefault acts as a tiny database. You can save and get base type values by it.
- * For example, setBoolForKey("played", true) will add a bool value true into the database.
- * Its key is "played". You can get the value of the key by getBoolForKey("played").
+ * UserDefault是个微型数据库，你可以将基础数据类型存储在里面或从里面读取出来.
+ * 例如:setBoolForKey("played", true)是将一个bool值存储进去,
+ * 其key是"played",因此你可以通过getBoolForKey("played")从数据库中读取该bool值
  * 
- * It supports the following base types:
+ * 其支持的基础数据类型如下:
  * bool, int, float, double, string
  */
 class CC_DLL UserDefault
 {
 public:
-    // get value methods
+    // 读取数据值方法
 
     /**
-    @brief Get bool value by key, if the key doesn't exist, a default value will return.
-     You can set the default value, or it is false.
+    @brief 读取bool值,如果这个key不存在，将返回默认值
+     你可以设置默认值，或不设置则为false
     * @js NA
     */
     bool    getBoolForKey(const char* pKey);
@@ -60,8 +60,8 @@ public:
      */
     bool    getBoolForKey(const char* pKey, bool defaultValue);
     /**
-    @brief Get integer value by key, if the key doesn't exist, a default value will return.
-     You can set the default value, or it is 0.
+    @brief 读取integer值,如果这个key不存在，将返回默认值
+     你可以设置默认值，或不设置则为0
     * @js NA
     */
     int     getIntegerForKey(const char* pKey);
@@ -70,8 +70,8 @@ public:
      */
     int     getIntegerForKey(const char* pKey, int defaultValue);
     /**
-    @brief Get float value by key, if the key doesn't exist, a default value will return.
-     You can set the default value, or it is 0.0f.
+    @brief 读取float值,如果这个key不存在，将返回默认值
+     你可以设置默认值，或不设置则为0.0f.
     * @js NA
     */
     float    getFloatForKey(const char* pKey);
@@ -80,8 +80,8 @@ public:
      */
     float    getFloatForKey(const char* pKey, float defaultValue);
     /**
-    @brief Get double value by key, if the key doesn't exist, a default value will return.
-     You can set the default value, or it is 0.0.
+    @brief 读取double值,如果这个key不存在，将返回默认值
+     你可以设置默认值，或不设置则为0.0.
     * @js NA
     */
     double  getDoubleForKey(const char* pKey);
@@ -90,8 +90,8 @@ public:
      */
     double  getDoubleForKey(const char* pKey, double defaultValue);
     /**
-    @brief Get string value by key, if the key doesn't exist, a default value will return.
-    You can set the default value, or it is "".
+    @brief 读取string值,如果这个key不存在，将返回默认值
+    你可以设置默认值，或不设置则为"".
     * @js NA
     */
     std::string getStringForKey(const char* pKey);
@@ -100,8 +100,8 @@ public:
      */
     std::string getStringForKey(const char* pKey, const std::string & defaultValue);
     /**
-     @brief Get binary data value by key, if the key doesn't exist, a default value will return.
-     You can set the default value, or it is null.
+     @brief 读取基于key的二进制数据(binary data),如果这个key不存在，将返回默认值
+     你可以设置默认值，或不设置则为null.
      * @js NA
      * @lua NA
      */
@@ -112,46 +112,46 @@ public:
      */
     Data getDataForKey(const char* pKey, const Data& defaultValue);
 
-    // set value methods
+    // 存储值方法
 
     /**
-     @brief Set bool value by key.
+     @brief 存储bool值
      * @js NA
      */
     void    setBoolForKey(const char* pKey, bool value);
     /**
-     @brief Set integer value by key.
+     @brief 存储integer值
      * @js NA
      */
     void    setIntegerForKey(const char* pKey, int value);
     /**
-     @brief Set float value by key.
+     @brief 存储float值
      * @js NA
      */
     void    setFloatForKey(const char* pKey, float value);
     /**
-     @brief Set double value by key.
+     @brief 存储double值
      * @js NA
      */
     void    setDoubleForKey(const char* pKey, double value);
     /**
-     @brief Set string value by key.
+     @brief 存储string值
      * @js NA
      */
     void    setStringForKey(const char* pKey, const std::string & value);
     /**
-     @brief Set binary data value by key.
+     @brief 存储二进制数据(binary data)
      * @js NA
      * @lua NA
      */
     void    setDataForKey(const char* pKey, const Data& value);
     /**
-     @brief Save content to xml file
+     @brief 将内容保存到xml文件
      * @js NA
      */
     void    flush();
 
-    /** returns the singleton 
+    /** 返回singleton 
      * @js NA
      * @lua NA
      */
@@ -161,7 +161,7 @@ public:
      */
     static void destroyInstance();
 
-    /** deprecated. Use getInstace() instead 
+    /** deprecated. 使用getInstace()代替
      * @js NA
      * @lua NA
      */
