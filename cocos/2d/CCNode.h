@@ -1097,82 +1097,82 @@ public:
      @endcode
      *
      * @param selector  将被调度的 SEL_SCHEDULE 选择器。
-     * @param interval  Tick interval in seconds. 0 means tick every frame. If interval = 0, it's recommended to use scheduleUpdate() instead.
-     * @param repeat    The selector will be excuted (repeat + 1) times, you can use kRepeatForever for tick infinitely.
-     * @param delay     The amount of time that the first tick will wait before execution.
+     * @param interval  以秒为时间间隔。0代表时间间隔为每帧。如果interval = 0,那就需要使用 scheduleUpdate()来代替。
+     * @param repeat    这个选择器将会被执行的次数（repeat+1）,你可以使用kRepeatForever来无限重复。
+     * @param delay     第一个时间间隔开始执行前的等待总时间。
      * @lua NA
      */
     void schedule(SEL_SCHEDULE selector, float interval, unsigned int repeat, float delay);
 
     /**
-     * Schedules a custom selector with an interval time in seconds.
+     * 调度一个自定义的选择器伴随着一个以秒为单位的内部时间。
      * @see `schedule(SEL_SCHEDULE, float, unsigned int, float)`
      *
-     * @param selector      The SEL_SCHEDULE selector to be scheduled.
-     * @param interval      Callback interval time in seconds. 0 means tick every frame,
+     * @param selector      将会被调度的SEL_SCHEDULE选择器。
+     * @param interval      回调以秒为单位的内部时间，0代表以每帧为时间间隔。
      * @lua NA
      */
     void schedule(SEL_SCHEDULE selector, float interval);
 
     /**
-     * Schedules a selector that runs only once, with a delay of 0 or larger
+     * 调度一个只运行一次的选择器，伴随着一个0或者更大的延期。
      * @see `schedule(SEL_SCHEDULE, float, unsigned int, float)`
      *
-     * @param selector      The SEL_SCHEDULE selector to be scheduled.
-     * @param delay         The amount of time that the first tick will wait before execution.
+     * @param selector      将会被调度的SEL_SCHEDULE选择器。
+     * @param delay         第一个时间间隔开始执行前的等待总时间。
      * @lua NA
      */
     void scheduleOnce(SEL_SCHEDULE selector, float delay);
 
     /**
-     * Schedules a custom selector, the scheduled selector will be ticked every frame
+     * 调度一个自定义的选择器，这个调度后的选择器将会以每帧为时间间隔。
      * @see schedule(SEL_SCHEDULE, float, unsigned int, float)
      *
-     * @param selector      A function wrapped as a selector
+     * @param selector      作为选择器的一个函数。
      * @lua NA
      */
     void schedule(SEL_SCHEDULE selector);
 
     /**
-     * Unschedules a custom selector.
+     * 不调度一个自定义的选择器。
      * @see `schedule(SEL_SCHEDULE, float, unsigned int, float)`
      *
-     * @param selector      A function wrapped as a selector
+     * @param selector     作为选择器的一个函数。
      * @lua NA
      */
     void unschedule(SEL_SCHEDULE selector);
 
     /**
-     * Unschedule all scheduled selectors: custom selectors, and the 'update' selector.
-     * Actions are not affected by this method.
+     * 不调度所有的调度过的选择器： 自定义选择器, 和 'update' 选择器。
+     * 动作不受这个方法的影响。
      * @lua NA
      */
     void unscheduleAllSelectors(void);
 
     /**
-     * Resumes all scheduled selectors, actions and event listeners.
-     * This method is called internally by onEnter
+     * 恢复所有的调度过的选择器，动作和事件监听器。
+     * 这个方法被onEnter方法在内部调用。
      */
     void resume(void);
     /**
-     * Pauses all scheduled selectors, actions and event listeners..
-     * This method is called internally by onExit
+     * 暂停所有的调度过的选择器，动作和事件监听器。
+     * 这个方法被onExit方法在内部调用。
      */
     void pause(void);
 
     /**
-     * Resumes all scheduled selectors, actions and event listeners.
-     * This method is called internally by onEnter
+     * 恢复所有的调度过的选择器，动作和事件监听器。
+     * 这个方法被onEnter方法在内部调用。
      */
     CC_DEPRECATED_ATTRIBUTE void resumeSchedulerAndActions(void);
     /**
-     * Pauses all scheduled selectors, actions and event listeners..
-     * This method is called internally by onExit
+     * 暂停所有的调度过的选择器，动作和事件监听器。
+     * 这个方法被onExit方法在内部调用。
      */
     CC_DEPRECATED_ATTRIBUTE void pauseSchedulerAndActions(void);
 
     /*
-     * Update method will be called automatically every frame if "scheduleUpdate" is called, and the node is "live"
+     * 更新方法将会被自动调用如果"scheduleUpdate"每帧都被调用的话, 并且这个节点是"live"
      */
     virtual void update(float delta);
 
@@ -1182,11 +1182,11 @@ public:
     /// @name Transformations
 
     /**
-     * Calls children's updateTransform() method recursively.
+     * 递归的调用孩子的updateTransform()方法。
      *
-     * This method is moved from Sprite, so it's no longer specific to Sprite.
-     * As the result, you apply SpriteBatchNode's optimization on your customed Node.
-     * e.g., `batchNode->addChild(myCustomNode)`, while you can only addChild(sprite) before.
+     * 这个方法从Sprite类中删除，因此它不再适用于Sprite.
+     * 因此，你应该提供SpriteBatchNode的最佳化在你自定义的节点上。
+     * e.g., `batchNode->addChild(myCustomNode)`, 以前你可以只addChild(sprite)
      */
     virtual void updateTransform();
 
