@@ -42,18 +42,18 @@ class __Dictionary;
 
 
 /**
- *  DictElement is used for traversing Dictionary.
+ *  DictElement 用于遍历字典.
  *
- *  A DictElement is one element of Dictionary, it contains two properties, key and object.
- *  Its key has two different type (integer and string).
+ *  一个 DictElement 字典中的一个元素, 包含两个属性, key 和 object.
+ *  key 有两种类型 (integer 和 string).
  *
- *  @note The key type is unique, all the elements in Dictionary has the same key type(integer or string).
+ *  @note key 的类型唯一, 所有的字典元素都有相同的类型(integer 或者 string).
  *  @code
  *  DictElement* pElement;
  *  CCDICT_FOREACH(dict, pElement)
  *  {
  *      const char*key = pElement->getStrKey();
- *      // You certainly know the type of value, so we assume that it's a Sprite.
+ *      // 你当然知道key的值, 我们确保它是一个Sprite.
  *      Sprite* pSprite = static_cast<Sprite*>(pElement->getObject());
  *      // ......
  *  }
@@ -64,37 +64,36 @@ class CC_DLL DictElement
 {
 private:
     /**
-     *  Constructor of DictElement. It's only for internal usage. Dictionary is its friend class.
+     *  DictElement的构造函数. 只做内部使用. Dictionary 是它的友元类.
      *  
-     *  @param  pszKey    The string key of this element.
-     *  @param  pObject   The object of this element.
+     *  @param  pszKey    string key类型元素.
+     *  @param  pObject   object对象元素.
      */
     DictElement(const char* pszKey, Ref* pObject);
 
     /**
-     *  Constructor of DictElement. It's only for internal usage. Dictionary is its friend class.
+     *  DictElement的构造函数. 只做内部使用. Dictionary 是它的友元类.
      *
-     *  @param  iKey    The integer key of this element.
-     *  @param  pObject   The object of this element.
+     *  @param  iKey      integer key类型元素.
+     *  @param  pObject   object对象元素.
      */
     DictElement(intptr_t iKey, Ref* pObject);
     
 public:
     /**
-     *  The destructor of DictElement.
+     *  DictElement的析构函数.
      * @js NA
      * @lua NA
      */
     ~DictElement();
 
-    // Inline functions need to be implemented in header file on Android.
-    
+    // 在android头文件中，内联函数需要被实现
     /**
-     * Get the string key of this element.
-     * @note    This method assumes you know the key type in the element. 
-     *          If the element's key type is integer, invoking this method will cause an assert.
+     * 获取string key元素.
+     * @note    该方法确保你知道key类型中的元素. 
+     *          如果key类型是integer, 调用该方法将导致一个断言.
      *
-     * @return  The string key of this element.
+     * @return  string key元素.
      */
     inline const char* getStrKey() const
     {
@@ -103,11 +102,11 @@ public:
     }
 
     /**
-     * Get the integer key of this element.
-     * @note    This method assumes you know the key type in the element.
-     *          If the element's key type is string, invoking this method will cause an assert.
+     * 获取integer key类型元素.
+     * @note    该方法确保你知道key类型中的元素.
+     *          如果key类型是string, 调用该方法将导致一个断言.
      *
-     * @return  The integer key of this element.
+     * @return  integer key元素.
      */
     inline intptr_t getIntKey() const
     {
@@ -116,29 +115,29 @@ public:
     }
     
     /**
-     * Get the object of this element.
+     * 获取该元素的对象.
      *
-     * @return  The object of this element.
+     * @return 该元素的对象.
      */
     inline Ref* getObject() const { return _object; }
 
 private:
-    // The max length of string key.
+    // string key的最大长度.
     #define   MAX_KEY_LEN   256
-    // char array is needed for HASH_ADD_STR in UT_HASH.
-    // So it's a pain that all elements will allocate 256 bytes for this array.
-    char      _strKey[MAX_KEY_LEN];     // hash key of string type
-    intptr_t  _intKey;       // hash key of integer type
-    Ref* _object;    // hash value
+    // char array 需要 HASH_ADD_STR in UT_HASH.
+    // 所以这是一个痛苦的过程，为这个数组所有元素分配256个字节
+    char      _strKey[MAX_KEY_LEN];     // string 类型的 hash key 
+    intptr_t  _intKey;       //integer 类型的 hash key  
+    Ref* _object;    // hash 值
 public:
-    UT_hash_handle hh;      // makes this class hashable
-    friend class __Dictionary; // declare Dictionary as friend class
+    UT_hash_handle hh;      // 让这个类可哈希
+    friend class __Dictionary; // 声明一个 Dictionary 作为友元类
 };
 
-/** The macro for traversing dictionary
+/** 这个宏用作遍历字典
  *  
- *  @note It's faster than getting all keys and traversing keys to get objects by objectForKey.
- *        It's also safe to remove elements while traversing.
+ *  @note 它比获取所有的key然后遍历key值快很多。
+ *        在遍历的时候移除也是安全的.
  */
 #define CCDICT_FOREACH(__dict__, __el__) \
     DictElement* pTmp##__dict__##__el__ = nullptr; \
@@ -148,14 +147,14 @@ public:
 
 
 /**
- *  Dictionary is a class like NSDictionary in Obj-C .
+ *  Dictionary 就像 Obj-C 中的 NSDictionary .
  *
- *  @note Only the pointer of Object or its subclass can be inserted to Dictionary.
+ *  @note 只有对象的指针 或者它的子类 能往 Dictionary里面插入数据.
  *  @code
- *  // Create a dictionary, return an autorelease object.
+ *  // 创建一个dictionary, 返回autorelease object.
  *  Dictionary* pDict = Dictionary::create();
  *
- *  // Insert objects to dictionary
+ *  // 插入对象进Dictionary
  *  String* pValue1 = String::create("100");
  *  String* pValue2 = String::create("120");
  *  Integer* pValue3 = Integer::create(200);
@@ -163,7 +162,7 @@ public:
  *  pDict->setObject(pValue2, "key2");
  *  pDict->setObject(pValue3, "key3");
  *
- *  // Get the object for key
+ *  // 获取object的key
  *  String* pStr1 = static_cast<String*>(pDict->objectForKey("key1"));
  *  log("{ key1: %s }", pStr1->getCString());
  *  Integer* pInteger = static_cast<Integer*>(pDict->objectForKey("key3"));
@@ -176,59 +175,59 @@ class CC_DLL __Dictionary : public Ref, public Clonable
 {
 public:
     /**
-     * The constructor of Dictionary.
+     * Dictionary的构造函数.
      * @js NA
      * @lua NA
      */
     __Dictionary();
 
     /**
-     * The destructor of Dictionary
+     * Dictionary的析构函数
      * @js NA
      * @lua NA
      */
     ~__Dictionary();
 
-    /** Initializes the dictionary. It returns true if the initializations was successful. 
+    /** 初始化dictionary. 如果初始化成功，返回true . 
      * @js NA
      * @lua NA
      */
     bool init();
     /**
-     *  Get the count of elements in Dictionary.
+     *  获取Dictionary中元素个数.
      *
-     *  @return  The count of elements.
+     *  @return  元素个数.
      * @js NA
      */
     unsigned int count();
 
     /**
-     *  Return all keys of elements.
+     *  返回所有元素的 key.
      *
-     *  @return  The array contains all keys of elements. It's an autorelease object yet.
+     *  @return  数组包含所有元素的key. 它也是autorelease类型.
      * @js NA
      */
     __Array* allKeys();
 
     /** 
-     *  Get all keys according to the specified object.
-     *  @warning  We use '==' to compare two objects
-     *  @return   The array contains all keys for the specified object. It's an autorelease object yet.
+     *  获取根据指定对象条件下的所有key.
+     *  @warning  使用 '==' 比较两个对象
+     *  @return  数组 包含指定条件下的所有key对应的对象. 它也是autorelease object.
      * @js NA
      */
     __Array* allKeysForObject(Ref* object);
 
     /**
-     *  Get the object according to the specified string key.
+     *  根据这个特定的string key，获取所有的object.
      *
-     *  @note The dictionary needs to use string as key. If integer is passed, an assert will appear.
-     *  @param key  The string key for searching.
-     *  @return The object matches the key. You need to force convert it to the type you know.
+     *  @note 这个 dictionary 需要使用string类型的key. 如果使用integer, 可能引发断言.
+     *  @param key  用于搜索的string类型的key.
+     *  @return 这个 object必须匹配 key. 你需要强制转换为你知道的那个类型.
      *  @code
-     *     // Assume that the elements are String* pointers. Convert it by following code.
+     *     // 假设这个元素是 String* pointers. 转换代码如下.
      *     String* pStr = static_cast<String*>(pDict->objectForKey("key1"));
      *     // Do something about pStr.
-     *     // If you don't know the object type, properly you need to use dynamic_cast<SomeType*> to check it.
+     *     // 如果你不知道这个对象的类型, 最好使用 dynamic_cast<SomeType*>去检查它.
      *     String* pStr2 = dynamic_cast<String*>(pDict->objectForKey("key1"));
      *     if (pStr2 != NULL) {
      *          // Do something about pStr2
@@ -240,69 +239,68 @@ public:
     Ref* objectForKey(const std::string& key);
     
     /**
-     *  Get the object according to the specified integer key.
+     *  根据特殊的integer key获取object.
      *
-     *  @note The dictionary needs to use integer as key. If string is passed, an assert will appear.
-     *  @param key  The integer key for searching.
-     *  @return The object matches the key.
+     *  @note 这个dictionary 需要使用integer作为key. 如果是加入string类型的key, 将会发生断言.
+     *  @param key  用于搜索的 integer key.
+     *  @return 这个object 匹配 key.
      *  @see objectForKey(const std::string&)
      * @js NA
      */
     Ref* objectForKey(intptr_t key);
     
-    /** Get the value according to the specified string key.
+    /** 根据特定的string key，获取值.
      *
-     *  @note Be careful to use this function since it assumes the objects in the dictionary are __String pointer.
-     *  @param key  The string key for searching
-     *  @return An instance of String.
-     *          It will return an empty string if the objects aren't __String pointer or the key wasn't found.
+     *  @note 小心使用这个函数由于它假设这个dictionary里面的对象是__String pointer.
+     *  @param key  用于搜索的 string key
+     *  @return 返回一个String实例.
+     *          如果没被找到或者这个string不存在，将返回空.
      *  @see valueForKey(intptr_t)
      *  @js NA
      */
     const __String* valueForKey(const std::string& key);
     
-    /** Get the value according to the specified integer key.
+    /** 根据特定的integer key获取值.
      *
-     *  @note Be careful to use this function since it assumes the objects in the dictionary are __String pointer.
-     *  @param key  The string key for searching.
-     *  @return An instance of String.
-     *          It will return an empty string if the objects aren't __String pointer or the key wasn't found.
+     *  @note 小心使用这个函数由于它假设这个dictionary里面的对象是__String pointer.
+     *  @param key  用于搜索的 string key.
+     *  @return 返回一个String实例.
+     *          如果没被找到或者这个string不存在，将返回空.
      *  @see valueForKey(intptr_t)
      *  @js NA
      */
     const __String* valueForKey(intptr_t key);
 
-    /** Insert an object to dictionary, and match it with the specified string key.
+    /** 插入一个对象进dictionary, 匹配插入特定的string key.
      *
-     *  @note Whe the first time this method is invoked, the key type will be set to string.
-     *        After that you can't setObject with an integer key.
-     *        If the dictionary contains the key you passed, the object matching the key will be released and removed from dictionary.
-     *        Then the new object will be inserted after that.
+     *  @note 当这个方法首次调用时, 这个key将被设置为string类型.
+     *       这之后你不能使用 setObject 设置integer key.
+     *        如果Dictionary包含了你传递的key, 匹配这个key的对象将被释放，从这个dictionary   里移除.然后新的对象将被插入。
      *
-     *  @param pObject  The Object to be inserted.
-     *  @param key      The string key for searching.
+     *  @param pObject  被插入的对象.
+     *  @param key      用于搜索的string key.
      *  @see setObject(Ref*, intptr_t)
      * @js NA
      */
     void setObject(Ref* pObject, const std::string& key);
     
-    /** Insert an object to dictionary, and match it with the specified string key.
+    /** 插入一个对象进dictionary, 用特定的string key匹配它.
      *
-     *  @note Then the first time this method is invoked, the key type will be set to string.
-     *        After that you can't setObject with an integer key.
-     *        If the dictionary contains the key you passed, the object matching the key will be released and removed from dictionary.
-     *        Then the new object will be inserted after that.
-     *  @param pObject  The Object to be inserted.
-     *  @param key      The string key for searching.
+     *  @note 当这个方法首次被调用时, 这个key的类型将被设置为string类型.
+     *       这之后你不能setObject为integer类型.
+     *        如果dictionary中已经存在了这个key, 这个key所对应的对象将被释放和移除.
+     *        新的对象将会插入.
+     *  @param pObject  被插入的对象.
+     *  @param key      用于搜索的string key.
      *  @see setObject(Ref*, const std::string&)
      *  @js NA
      */
     void setObject(Ref* pObject, intptr_t key);
 
     /** 
-     *  Remove an object by the specified string key.
+     *  根据特定的string key移除对应的对象.
      *
-     *  @param key  The string key for searching.
+     *  @param key  用于搜索的string key.
      *  @see removeObjectForKey(intptr_t), removeObjectsForKeys(__Array*),
      *       removeObjectForElememt(DictElement*), removeAllObjects().
      *  @js NA
@@ -310,9 +308,9 @@ public:
     void removeObjectForKey(const std::string& key);
     
     /**
-     *  Remove an object by the specified integer key.
+     *  根据特定的integer key，移除对象的对象.
      *
-     *  @param key  The integer key for searching.
+     *  @param key  用于搜索的integer key.
      *  @see removeObjectForKey(const std::string&), removeObjectsForKeys(__Array*),
      *       removeObjectForElememt(DictElement*), removeAllObjects().
      *  @js NA
@@ -320,9 +318,9 @@ public:
     void removeObjectForKey(intptr_t key);
     
     /**
-     *  Remove objects by an array of keys.
+     *  根据array中得keys移除对应的所有对象.
      *
-     *  @param pKeyArray  The array contains keys to be removed.
+     *  @param pKeyArray  包含这个keys的数组里的对象都会被移除.
      *  @see removeObjectForKey(const std::string&), removeObjectForKey(intptr_t),
      *       removeObjectForElememt(DictElement*), removeAllObjects().
      *  @js NA
@@ -330,9 +328,9 @@ public:
     void removeObjectsForKeys(__Array* pKey__Array);
     
     /**
-     *  Remove an object by an element.
+     *  根据某个元素移除对应的对象
      *
-     *  @param pElement  The element need to be removed.
+     *  @param pElement  这个element对应的对象将被移除.
      *  @see removeObjectForKey(const std::string&), removeObjectForKey(intptr_t),
      *       removeObjectsForKeys(__Array*), removeAllObjects().
      * @js NA
@@ -341,7 +339,7 @@ public:
     void removeObjectForElememt(DictElement* pElement);
     
     /**
-     *  Remove all objects in the dictionary.
+     *  移除dictionary中所有对象.
      *
      *  @see removeObjectForKey(const std::string&), removeObjectForKey(intptr_t),
      *       removeObjectsForKeys(__Array*), removeObjectForElememt(DictElement*).
@@ -350,7 +348,7 @@ public:
     void removeAllObjects();
     
     /**
-     *  Return a random object in the dictionary.
+     *  返回dictionary中随机的一个对象.
      *
      *  @return The random object. 
      *  @see objectForKey(intptr_t), objectForKey(const std::string&)
@@ -360,57 +358,57 @@ public:
     Ref* randomObject();
     
     /**
-     *  Create a dictionary.
-     *  @return A dictionary which is an autorelease object.
+     *  创建一个dictionary.
+     *  @return 返回一个autorelease dictionary.
      *  @see createWithDictionary(Dictionary*), createWithContentsOfFile(const char*), createWithContentsOfFileThreadSafe(const char*).
      *  @js NA
      */
     static __Dictionary* create();
 
     /**
-     *  Create a dictionary with an existing dictionary.
+     *  根据现存的dictionary创建一个新的dictionary.
      *
-     *  @param srcDict The exist dictionary.
-     *  @return A dictionary which is an autorelease object.
+     *  @param srcDict 现存的dictionary.
+     *  @return 一个autorelease类型的dictionary.
      *  @see create(), createWithContentsOfFile(const char*), createWithContentsOfFileThreadSafe(const char*).
      *  @js NA
      */
     static __Dictionary* createWithDictionary(__Dictionary* srcDict);
     
     /**
-     *  Create a dictionary with a plist file.
-     *  @param  pFileName  The name of the plist file.
-     *  @return A dictionary which is an autorelease object.
+     *  根据plist文件创建一个dictionary.
+     *  @param  pFileName  plist文件的名字.
+     *  @return 一个autorelease类型的dictionary.
      *  @see create(), createWithDictionary(Dictionary*), createWithContentsOfFileThreadSafe(const char*).
      *  @js NA
      */
     static __Dictionary* createWithContentsOfFile(const char *pFileName);
     
     /**
-     *  Write a dictionary to a plist file.
-     *  @param fullPath The full path of the plist file. You can get writeable path by getWritablePath()
-     *  @return true if successed, false if failed
+     *  往plist文件中写入一个dictionary.
+     *  @param fullPath plist文件的全路径. 通过 getWritablePath()可以获取可写的路径
+     *  @return true 表示创建成功, false 表示创建失败
      *  @js NA
      *  @lua NA
      */
     bool writeToFile(const char *fullPath);
      
     /**
-     *  Create a dictionary with a plist file.
+     *  根据plist文件创建一个dictionary.
      *  
-     *  @note the return object isn't an autorelease object.
-     *        This can make sure not using autorelease pool in a new thread.
-     *        Therefore, you need to manage the lifecycle of the return object.
-     *        It means that when you don't need it, CC_SAFE_RELEASE needs to be invoked.
+     *  @note 返回值不是autorelease类型.
+     *        这能确保在新的线程中不适用autorelease pool.
+     *        因此, 你需要管理好返回对象的生命周期.
+     *        这意味着你不需要它时, CC_SAFE_RELEASE 需要被调用.
      *
-     *  @param  pFileName  The name of the plist file.
-     *  @return A dictionary which isn't an autorelease object.
+     *  @param  pFileName  plist 文件.
+     *  @return 不是autorelease类型的dictionary.
      *  @js NA
      *  @lua NA
      */
     static __Dictionary* createWithContentsOfFileThreadSafe(const char *pFileName);
 
-    /* override functions 
+    /* 重载方法
      *  @js NA
      *  @lua NA
      */
@@ -423,21 +421,21 @@ public:
     
 private:
     /** 
-     *  For internal usage, invoked by setObject.
+     *  对于内部使用, 通过调用setObject.
      */
     void setObjectUnSafe(Ref* pObject, const std::string& key);
     void setObjectUnSafe(Ref* pObject, const intptr_t key);
     
 public:
     /**
-     *  All the elements in dictionary.
+     *  dictionary中得所有元素.
      * 
-     *  @note For internal usage, we need to declare this member variable as public since it's used in UT_HASH.
+     *  @note 对于内部使用, 我们需要把这个成员变量声明为public，因为它在UT_HASH中使用.
      */
     DictElement* _elements;
 private:
     
-    /** The support type of dictionary, it's confirmed when setObject is invoked. */
+    /** dictionary支持的类型, 它已经声明了当setObject被调用时. */
     enum DictType
     {
         kDictUnknown = 0,
@@ -446,7 +444,7 @@ private:
     };
     
     /** 
-     *  The type of dictionary, it's assigned to kDictUnknown by default.
+     *  dictionary类型, 默认分配为kDictUnknown类型.
      */
     DictType _dictType;
 };
