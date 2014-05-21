@@ -180,31 +180,34 @@ protected:
     virtual void removeChild(Node* widget, bool cleanup = true) override;
     virtual void removeAllChildren() override;
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
-    virtual Vector<Node*>& getChildren() override{return Widget::getChildren();};
-    virtual const Vector<Node*>& getChildren() const override{return Widget::getChildren();};
-    virtual ssize_t getChildrenCount() const override {return Widget::getChildrenCount();};
-    virtual Node * getChildByTag(int tag) const override {return Widget::getChildByTag(tag);};
-virtual Widget* getChildByName(const std::string& name) override {return Widget::getChildByName(name);};
+
 
     Layout* createPage();
     float getPositionXByIndex(ssize_t idx);
     void updateBoundaryPages();
-    virtual void handlePressLogic(const Vec2 &touchPoint) override;
-    virtual void handleMoveLogic(const Vec2 &touchPoint) override;
-    virtual void handleReleaseLogic(const Vec2 &touchPoint) override;
-    virtual void interceptTouchEvent(int handleState, Widget* sender, const Vec2 &touchPoint) override;
-    virtual void checkChildInfo(int handleState, Widget* sender, const Vec2 &touchPoint) override;
     virtual bool scrollPages(float touchOffset);
     void movePages(float offset);
     void pageTurningEvent();
     void updateChildrenSize();
     void updateChildrenPosition();
+
+    //overrided functions
+    virtual void handlePressLogic(const Vec2 &touchPoint) override;
+    virtual void handleMoveLogic(const Vec2 &touchPoint) override;
+    virtual void handleReleaseLogic(const Vec2 &touchPoint) override;
+    virtual void interceptTouchEvent(int handleState, Widget* sender, const Vec2 &touchPoint) override;
+    virtual void checkChildInfo(int handleState, Widget* sender, const Vec2 &touchPoint) override;
     virtual void onSizeChanged() override;
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
     virtual void copyClonedWidgetChildren(Widget* model) override;
-    virtual void setClippingEnabled(bool enabled) override {Layout::setClippingEnabled(enabled);};
-    virtual void doLayout() override{if (!_doLayoutDirty){return;} _doLayoutDirty = false;};
+    //do we really need this method???
+    virtual void doLayout() override
+    {
+    if (!_doLayoutDirty){return;}
+    _doLayoutDirty = false;
+    };
+
 protected:
     ssize_t _curPageIdx;
     Vector<Layout*> _pages;
