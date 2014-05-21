@@ -96,7 +96,7 @@ private:
     Vec2 _prevPoint;
 };
 
-// 结束
+// end of input group
 /// @}
 
 NS_CC_END
