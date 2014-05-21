@@ -39,31 +39,31 @@ class CC_DLL __NotificationCenter : public Ref
 {
     friend class ScriptHandlerMgr;
 public:
-    /** __NotificationCenter constructor
+    /** __NotificationCenter 构造函数
      * @js ctor
      */
     __NotificationCenter();
 
-    /** __NotificationCenter destructor
+    /** __NotificationCenter 析构函数
      * @js NA
      * @lua NA
      */
     ~__NotificationCenter();
     
-    /** Gets the single instance of __NotificationCenter. */
+    /** 得到 __NotificationCenter的单例. */
     static __NotificationCenter *getInstance();
 
-    /** Destroys the single instance of __NotificationCenter. */
+    /** 销毁 __NotificationCenter的单例. */
     static void destroyInstance();
 
-    /** @deprecated use getInstance() instead */
+    /** @deprecated 废弃使用 getInstance() 替代 */
     CC_DEPRECATED_ATTRIBUTE static __NotificationCenter *sharedNotificationCenter(void);
 
-    /** @deprecated use destroyInstance() instead */
+    /** @deprecated 废弃使用 destroyInstance() 替代 */
     CC_DEPRECATED_ATTRIBUTE static void purgeNotificationCenter(void);
 
 
-    /** @brief Adds an observer for the specified target.
+    /** @brief 根据指定的target，添加观察者.
      *  @param target The target which wants to observe notification events.
      *  @param selector The callback function which will be invoked when the specified notification event was posted.
      *  @param name The name of this notification.
@@ -74,53 +74,53 @@ public:
                      const std::string& name,
                      Ref *sender);
 
-    /** @brief Removes the observer by the specified target and name.
+    /** @brief 根据指定的target 和 name 移除观察者.
      *  @param target The target of this notification.
      *  @param name The name of this notification. 
      */
     void removeObserver(Ref *target,const std::string& name);
     
-    /** @brief Removes all notifications registered by this target
+    /** @brief 移除这个target注册的所有通知
      *  @param target The target of this notification.
      *  @returns the number of observers removed
      */
     int removeAllObservers(Ref *target);
 
-    /** @brief Registers one hander for script binding.
+    /** @brief 注册一个 hander 用作脚本绑定.
      *  @note Only supports Lua Binding now.
      *  @param handler The lua handler.
      */
     void registerScriptObserver(Ref *target,int handler,const std::string& name);
 
-    /** Unregisters script observer */
+    /** 取消注册脚本observer */
     void unregisterScriptObserver(Ref *target,const std::string& name);
     
-    /** @brief Posts one notification event by name.
+    /** @brief 根据某个名字发送一个通知事件.
      *  @param name The name of this notification.
      */
     void postNotification(const std::string& name);
 
-    /** @brief Posts one notification event by name.
+    /** @brief 根据某个名字发送一个通知事件.
      *  @param name The name of this notification.
      *  @param sender The object posting the notification. Can be nullptr
      */
     void postNotification(const std::string& name, Ref *sender);
     
-    /** @brief Gets script handler.
+    /** @brief 获取脚本 handler.
      *  @note Only supports Lua Binding now.
      *  @return The script handle.
      */
     inline int getScriptHandler() const { return _scriptHandler; };
     
-    /** @brief Gets observer script handler.
+    /** @brief 获取 observer 脚本 handler.
      *  @param name The name of this notification.
      *  @return The observer script handle.
      */
     int getObserverHandlerByName(const std::string& name);
 private:
-    // internal functions
+    // 内部函数
 
-    // Check whether the observer exists by the specified target and name.
+    // 根据特定的 target 和 name 检查观察者是否存在.
     bool observerExisted(Ref *target,const std::string& name, Ref *sender);
     
     // variables
@@ -132,10 +132,10 @@ private:
 class CC_DLL NotificationObserver : public Ref
 {
 public:
-    /** @brief NotificationObserver constructor
-     *  @param target The target which wants to observer notification events.
-     *  @param selector The callback function which will be invoked when the specified notification event was posted.
-     *  @param name The name of this notification.
+    /** @brief NotificationObserver 构造函数
+     *  @param target 这个 target 用于监听通知事件.
+     *  @param selector 当指定的通知事件被传递，毁掉函数将被调用
+     *  @param name notification 名字.
      *  @param sender The object whose notifications the target wants to receive. Only notifications sent by this sender are delivered to the target. nullptr means that the sender is not used to decide whether to deliver the notification to target.
      * @js NA
      * @lua NA
@@ -145,13 +145,13 @@ public:
                            const std::string& name,
                            Ref *sender);
 
-    /** NotificationObserver destructor function 
+    /** NotificationObserver 析构方法
      * @js NA
      * @lua NA
      */
     ~NotificationObserver();      
     
-    /** Invokes the callback function of this observer 
+    /** 调用观察者回调方法 
      * @js NA
      * @lua NA
      */
