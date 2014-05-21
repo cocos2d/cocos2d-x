@@ -845,6 +845,7 @@ Developers:
         Fixed a bug that the effect of particle loaded from CocosBuilder is incorrectly
         Fix twice calling onExit
         Fixed bug with cascade opacity and color for control button
+        Fix Progress Action. Not working with charging from 100 to 0. 
         
     twhittock
         Fixed a bug that Application::run returns wrong value on Mac platform
@@ -857,6 +858,9 @@ Developers:
         
     NatWeiss
         Fix compilation error using arch i386
+        
+    favorcode
+        Correct some doxygen comment
     
 Retired Core Developers:
     WenSheng Yang

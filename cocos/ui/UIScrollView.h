@@ -296,7 +296,7 @@ public:
     
     virtual ssize_t getChildrenCount() const override;
     
-    virtual Node * getChildByTag(int tag) override;
+    virtual Node * getChildByTag(int tag) const override;
     
     virtual Widget* getChildByName(const std::string& name) override;
     
@@ -357,13 +357,7 @@ protected:
     void startBounceChildren(float v);
     void stopBounceChildren();
     bool checkCustomScrollDestination(float* touchOffsetX, float* touchOffsetY);
-    
     virtual bool scrollChildren(float touchOffsetX, float touchOffsetY);
-    virtual bool scrollChilderHorizontal(float touchOffsetX, float touchOffsetY);
-    virtual bool scrollChilderVertical(float touchOffsetX, float touchOffsetY);
-    virtual bool scrollChilderBoth(float touchOffsetX, float touchOffsetY);
-
-    
     bool bounceScrollChildren(float touchOffsetX, float touchOffsetY);
     void startRecordSlidAction();
     virtual void endRecordSlidAction();

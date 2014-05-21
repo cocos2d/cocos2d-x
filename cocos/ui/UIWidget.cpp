@@ -62,8 +62,7 @@ _opacity(255),
 _flippedX(false),
 _flippedY(false),
 _focused(false),
-_focusEnabled(true),
-_layoutParameterType(LayoutParameter::Type::NONE)
+_focusEnabled(true)
 {
     onFocusChanged = CC_CALLBACK_2(Widget::onFocusChange,this);
     onNextFocusedWidget = nullptr;
@@ -816,24 +815,24 @@ bool Widget::isEnabled() const
     return _enabled;
 }
 
-float Widget::getLeftBoundary() const
+float Widget::getLeftInParent()
 {
-    return getPosition().x - getAnchorPoint().x * _size.width;
+    return getPosition().x - getAnchorPoint().x * _size.width;;
 }
 
-float Widget::getBottomBoundary() const
+float Widget::getBottomInParent()
 {
-    return getPosition().y - getAnchorPoint().y * _size.height;
+    return getPosition().y - getAnchorPoint().y * _size.height;;
 }
 
-float Widget::getRightBoundary() const
+float Widget::getRightInParent()
 {
-    return getLeftBoundary() + _size.width;
+    return getLeftInParent() + _size.width;
 }
 
-float Widget::getTopBoundary() const
+float Widget::getTopInParent()
 {
-    return getBottomBoundary() + _size.height;
+    return getBottomInParent() + _size.height;
 }
 
 const Vec2& Widget::getTouchStartPos()
@@ -869,14 +868,8 @@ void Widget::setLayoutParameter(LayoutParameter *parameter)
         return;
     }
     _layoutParameterDictionary.insert((int)parameter->getLayoutType(), parameter);
-    _layoutParameterType = parameter->getLayoutType();
 }
 
-LayoutParameter* Widget::getLayoutParameter()
-{
-    return dynamic_cast<LayoutParameter*>(_layoutParameterDictionary.at((int)_layoutParameterType));
-}
-    
 LayoutParameter* Widget::getLayoutParameter(LayoutParameter::Type type)
 {
     return dynamic_cast<LayoutParameter*>(_layoutParameterDictionary.at((int)type));

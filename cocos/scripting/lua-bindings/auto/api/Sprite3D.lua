@@ -13,6 +13,11 @@
 -- @param #string str
 
 --------------------------------
+-- @function [parent=#Sprite3D] getMesh 
+-- @param self
+-- @return Mesh#Mesh ret (return value: cc.Mesh)
+        
+--------------------------------
 -- @function [parent=#Sprite3D] getBlendFunc 
 -- @param self
 -- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)

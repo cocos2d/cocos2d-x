@@ -69,8 +69,8 @@ public class AppActivity extends Cocos2dxActivity{
 		
 		//2.Set the format of window
 		
-		// Check the wifi is opened when the android:debuggable is "true".
-		if(0!=((this.getApplicationInfo().flags) & ApplicationInfo.FLAG_DEBUGGABLE))
+		// Check the wifi is opened when the native is debug.
+		if(nativeIsDebug())
 		{
 			if(!isWifiConnected())
 			{
@@ -123,5 +123,6 @@ public class AppActivity extends Cocos2dxActivity{
 	}
 	
 	private static native boolean nativeIsLandScape();
+	private static native boolean nativeIsDebug();
 	
 }
