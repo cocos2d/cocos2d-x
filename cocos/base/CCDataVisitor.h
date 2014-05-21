@@ -46,18 +46,18 @@ class __Set;
  */
 
 /**
- * Visitor that helps to perform action that depends on polymorphic object type
+ * 访问者(Visitor)模式: 在多型的数据的情形下, 提供一个共同的方法, 使访问数据更加方便.
  *
- * Use cases:
- *  - data serialization,
- *  - pretty printing of Ref* 
- *  - safe value reading from Array, __Dictionary, Set
+ * 用例:
+ *  - 数据序列化,
+ *  - 更好地打印 Ref* 
+ *  - 安全的从 Array, __Dictionary, Set 中读数据.
  *
- * Usage:
- *  1. subclass DataVisitor
- *  2. overload visit() methods for object that you need to handle
- *  3. handle other objects in visitObject()
- *  4. pass your visitor to Object::acceptVisitor()
+ * 使用方法:
+ *  1. 一个继承 DataVisitor 的子类.
+ *  2. 重载你需要处理的对象的`visit()` 方法.
+ *  3. 在 `visitObject()` 处理其他对象.
+ *  4. 把你的访问者(Visitor)传递给 `Object::acceptVisitor()`.
  */
 class CC_DLL DataVisitor
 {
@@ -68,7 +68,7 @@ public:
      */
     virtual ~DataVisitor() {}
 
-    /** default method, called from non-overloaded methods and for unrecognized objects */
+    /** 默认方法, 由未重载方法和未识别对象调用. */
     virtual void visitObject(const Ref *p) = 0;
 
     virtual void visit(const __Bool *p);

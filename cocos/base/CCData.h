@@ -43,7 +43,7 @@ public:
     Data(Data&& other);
     ~Data();
     
-    // Assignment operator
+    // copy assignment operator
     Data& operator= (const Data& other);
     Data& operator= (Data&& other);
     
@@ -58,26 +58,26 @@ public:
      */
     ssize_t getSize() const;
     
-    /** Copies the buffer pointer and its size.
-     *  @note This method will copy the whole buffer.
-     *        Developer should free the pointer after invoking this method.
+    /** 拷贝缓冲区内容(指 `bytes`), 缓冲区长度信息到Data.
+     *  @note 这个方法会拷贝整个缓冲区的内容到Data.
+     *        开发者应该在调用这个方法之后释放内存(指 `bytes`).
      *  @see Data::fastSet
      */
     void copy(unsigned char* bytes, const ssize_t size);
     
-    /** Fast set the buffer pointer and its size. Please use it carefully.
-     *  @param bytes The buffer pointer, note that it have to be allocated by 'malloc' or 'calloc',
-     *         since in the destructor of Data, the buffer will be deleted by 'free'.
-     *  @note 1. This method will move the ownship of 'bytes'pointer to Data,
-     *        2. The pointer should not be used outside after it was passed to this method.
+    /** 快速设置 Data 缓冲区内容(仅复制指针, 不复制内容)和缓冲区长度. 请谨慎使用.
+     *  @param bytes 缓冲区指针, 必须使用 'malloc' 或 'calloc' 来分配内存,
+     *         因为 Data 析构函数会使用 'free' 释放内存.
+     *  @note 1. 这个方法将移动 `bytes`指针的拥有权至Data,
+     *        2. 这个指针(指 `bytes`)在作为参数传递给这个方法之后不应该再在其他地方使用.
      *  @see Data::copy
      */
     void fastSet(unsigned char* bytes, const ssize_t size);
     
-    /** Clears data, free buffer and reset data size */
+    /** 清空 Data, 释放缓冲区内存, 重置 Data 缓冲区长度. */
     void clear();
     
-    /** Check whether the data is null. */
+    /** 检查 Data 是否为空. */
     bool isNull() const;
     
 private:
