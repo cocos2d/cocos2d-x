@@ -52,7 +52,7 @@ public:
         return pRet;
     }
 
-    /* override functions */
+    /* 重载方法 */
     virtual void acceptVisitor(DataVisitor &visitor) { visitor.visit(this); }
     
     __Double* clone() const
