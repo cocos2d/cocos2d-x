@@ -39,23 +39,23 @@ NS_CC_BEGIN
  * @{
  */
 /**
- @brief Configuration contains some openGL variables
+ @brief 包含一些 openGL 变量的Configuration.
  @since v0.99.0
  */
 class CC_DLL Configuration : public Ref
 {
 public:
     
-    /** returns a shared instance of Configuration */
+    /** 返回Configuration的单例实例.*/
     static Configuration *getInstance();
 
-    /** purge the shared instance of Configuration */
+    /** 销毁Configuration的单例实例. */
     static void destroyInstance();
 
-    /** @deprecated Use getInstance() instead */
+    /** @deprecated 使用 getInstance() 代替此方法 */
     CC_DEPRECATED_ATTRIBUTE static Configuration *sharedConfiguration();
 
-    /** @deprecated Use destroyInstance() instead */
+    /** @deprecated 使用 destroyInstance() 代替此方法 */
     CC_DEPRECATED_ATTRIBUTE static void purgeConfiguration();
 
 public:
@@ -65,69 +65,72 @@ public:
      */
 	virtual ~Configuration();
 
-    /** OpenGL Max texture size. */
+    /** OpenGL 最大纹理大小. */
 	int getMaxTextureSize() const;
 
-    /** OpenGL Max Modelview Stack Depth. */
+    /** OpenGL 最大模型视图栈深度(Modelview Stack Depth). */
 	int getMaxModelviewStackDepth() const;
 
-    /** returns the maximum texture units
+    /** 返回纹理单元的最大数目.
      @since v2.0.0
      */
 	int getMaxTextureUnits() const;
 
-    /** Whether or not the GPU supports NPOT (Non Power Of Two) textures.
-     OpenGL ES 2.0 already supports NPOT (iOS).
+    /** 无论GPU 是否支持NPOT (Non Power Of Two)纹理.
+     OpenGL ES 2.0 支持 NPOT (iOS).
      
      @since v0.99.2
      */
 	bool supportsNPOT() const;
 
-    /** Whether or not PVR Texture Compressed is supported */
+    /** 是否支持 PVR 纹理压缩(Texture Compressed) */
 	bool supportsPVRTC() const;
     
-     /** Whether or not ETC Texture Compressed is supported */
+    /** 是否支持 ETC 纹理压缩(Texture Compressed) */
     bool supportsETC() const;
     
-    /** Whether or  not S3TC Texture Compressed is supported */
+    /** 是否支持 S3TC 纹理压缩(Texture Compressed) */
     bool supportsS3TC() const;
     
-    /** Whether or  not ATITC Texture Compressed is supported */
+    /** 是否支持 ATITC 纹理压缩(Texture Compressed) */
     bool supportsATITC() const;
     
-    /** Whether or not BGRA8888 textures are supported.
+    /** 是否支持 BGRA8888 格式的纹理.
      @since v0.99.2
      */
 	bool supportsBGRA8888() const;
 
-    /** Whether or not glDiscardFramebufferEXT is supported
+    /** 是否支持 glDiscardFramebufferEXT. 
      @since v0.99.2
      */
 	bool supportsDiscardFramebuffer() const;
 
-    /** Whether or not shareable VAOs are supported.
+    /** 是否支持可共享 VAOs(shareable VAOs).
      @since v2.0.0
      */
 	bool supportsShareableVAO() const;
 
-    /** returns whether or not an OpenGL is supported */
+    /** 检查是否支持 OpenGL */
     bool checkForGLExtension(const std::string &searchName) const;
 
     bool init();
 
-	/** returns the value of a given key as a double */
+	/** 返回指定键(key)对应的值(Value) */
 	const Value& getValue(const std::string& key, const Value& defaultValue = Value::Null) const;
 
-	/** sets a new key/value pair  in the configuration dictionary */
+	/** 在Configuration的ValueMap中设置一个新的键值对 */
 	void setValue(const std::string& key, const Value& value);
 
-    /** returns the Configuration info */
+    /** 返回 Configuration 信息 */
     std::string getInfo() const;
 
-	/** gathers OpenGL / GPU information */
+	/** 收集 OpenGL / GPU 信息 */
 	void gatherGPUInfo();
 
-	/** Loads a config file. If the keys are already present, then they are going to be replaced. Otherwise the new keys are added. */
+	/** 加载配置文件到 Configuration. 如果文件中的键已经存在于Configuration中, 将忽略文件中的值.
+    否则把新的键值对添加到 Configuration.
+    注: 英文原意为若key存在则替换value,但是代码与英文原意明显不同,请确认代码.
+     */
 	void loadConfigFile(const std::string& filename);
 
 private:
