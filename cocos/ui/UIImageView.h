@@ -42,24 +42,24 @@ class ImageView : public Widget
     
 public:
     /**
-     * Default constructor
+     * 默认构造函数
      */
     ImageView();
 
     /**
-     * Default destructor
+     * 默认析构函数
      */
     virtual ~ImageView();
 
     /**
-     * Allocates and initializes.
+     * 创建和初始化
      */
     static ImageView* create();
     
     /**
-     * create a  imageview 
+     * 创建imageview 
      *
-     * @param fileName   file name of texture.
+     * @param fileName   纹理（texture）文件名称
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
@@ -67,33 +67,36 @@ public:
     
 
     /**
-     * Load texture for imageview.
+     * 为imageview载入纹理
      *
-     * @param fileName   file name of texture.
+     * @param fileName   纹理（texture）文件名称
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
     void loadTexture(const std::string& fileName,TextureResType texType = TextureResType::LOCAL);
 
     /**
-     * Updates the texture rect of the ImageView in points.
-     * It will call setTextureRect:rotated:untrimmedSize with rotated = NO, and utrimmedSize = rect.size.
+     * 更新ImageView的纹理矩形（texture rect）的大小
+     * 它将调用setTextureRect(const Rect& rect, bool rotated, const Size& untrimmedSize)
+	 * 参数为： rotated = NO, utrimmedSize = rect.size.
+	 * 
+	 * 译者注：只有在没有使用scale9渲染器（renderer）时，才会调用。
      */
     void setTextureRect(const Rect& rect);
 
     /**
-     * Sets if imageview is using scale9 renderer.
+     * 设置imageview是否使用scale9渲染器（renderer）
      *
-     * @param true that using scale9 renderer, false otherwise.
+     * @param able true则使用scale9渲染器（renderer）, false则不使用
      */
     void setScale9Enabled(bool able);
 
     bool isScale9Enabled();
 
     /**
-     * Sets capinsets for imageview, if imageview is using scale9 renderer.
+     * 如果imageview使用scale9渲染器（renderer）则设置imageview的capinsets
      *
-     * @param capInsets    capinsets for imageview
+     * @param capInsets    imageview的capinsets
      */
     void setCapInsets(const Rect &capInsets);
 
@@ -103,7 +106,7 @@ public:
     virtual void ignoreContentAdaptWithSize(bool ignore) override;
 
     /**
-     * Returns the "class name" of widget.
+     * 返回控件（widget）的类名（class name）
      */
     virtual std::string getDescription() const override;
 
