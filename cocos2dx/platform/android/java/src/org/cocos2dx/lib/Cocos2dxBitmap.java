@@ -85,9 +85,9 @@ public class Cocos2dxBitmap {
 
 	/**
 	 * @param pWidth
-	 *            the width to draw, it can be 0
+	 *			the width to draw, it can be 0
 	 * @param pHeight
-	 *            the height to draw, it can be 0
+	 *			the height to draw, it can be 0
 	 */
 	public static void createTextBitmap(String pString, final String pFontName,
 			final int pFontSize, final int pAlignment, final int pWidth,
@@ -359,51 +359,147 @@ public class Cocos2dxBitmap {
 		return ret;
 	}
 
-	private static LinkedList<String> divideStringWithMaxWidth(
-			final String pString, final int pMaxWidth, final Paint pPaint) {
-		final int charLength = pString.length();
-		int start = 0;
-		int tempWidth = 0;
+//	private static LinkedList<String> divideStringWithMaxWidth(
+//			final String pString, final int pMaxWidth, final Paint pPaint) {
+//		final int charLength = pString.length();
+//		int start = 0;
+//		int tempWidth = 0;
+//		final LinkedList<String> strList = new LinkedList<String>();
+//		
+//		/* Break a String into String[] by the width & should wrap the word. */
+//		for (int i = 1; i <= charLength; ++i) {
+//			tempWidth = (int) FloatMath.ceil(pPaint.measureText(pString, start,
+//					i));
+//			if (tempWidth >= pMaxWidth) {
+//				final int lastIndexOfSpace = pString.substring(0, i)
+//						.lastIndexOf(" ");
+//
+//				if (lastIndexOfSpace != -1 && lastIndexOfSpace > start) {
+//					/* Should wrap the word. */
+//					strList.add(pString.substring(start, lastIndexOfSpace));
+//					i = lastIndexOfSpace + 1; // skip space
+//				} else {
+//					/* Should not exceed the width. */
+//					if (tempWidth > pMaxWidth) {
+//						strList.add(pString.substring(start, i - 1));
+//						/* Compute from previous char. */
+//						--i;
+//					} else {
+//						strList.add(pString.substring(start, i));
+//					}
+//				}
+//
+//				/* Remove spaces at the beginning of a new line. */
+//				while (i < charLength && pString.charAt(i) == ' ') {
+//					++i;
+//				}
+//
+//				start = i;
+//			}
+//		}
+//
+//		/* Add the last chars. */
+//		if (start < charLength) {
+//			strList.add(pString.substring(start));
+//		}
+//
+//		return strList;
+//	}
+	
+	private static LinkedList<String> divideStringWithMaxWidth( final String pString, final int pMaxWidth, final Paint pPaint)
+	{
 		final LinkedList<String> strList = new LinkedList<String>();
-
-		/* Break a String into String[] by the width & should wrap the word. */
-		for (int i = 1; i <= charLength; ++i) {
-			tempWidth = (int) FloatMath.ceil(pPaint.measureText(pString, start,
-					i));
-			if (tempWidth >= pMaxWidth) {
-				final int lastIndexOfSpace = pString.substring(0, i)
-						.lastIndexOf(" ");
-
-				if (lastIndexOfSpace != -1 && lastIndexOfSpace > start) {
-					/* Should wrap the word. */
-					strList.add(pString.substring(start, lastIndexOfSpace));
-					i = lastIndexOfSpace + 1; // skip space
-				} else {
-					/* Should not exceed the width. */
-					if (tempWidth > pMaxWidth) {
-						strList.add(pString.substring(start, i - 1));
-						/* Compute from previous char. */
-						--i;
-					} else {
-						strList.add(pString.substring(start, i));
+	
+		//the start index of a word (inclusive)
+		int wordStart = 0;
+	
+		//the end index of a word (exclusive)
+		int wordEnd = 0;
+			
+		while ( wordEnd < pString.length() )
+		{
+			//iterate through characters either until we need to word wrap or until the end of the string
+			for ( int charIndex = wordStart; charIndex < pString.length(); charIndex++ )
+			{
+				//we may modify this later based upon word wrap
+				wordEnd = charIndex + 1;
+			
+				//we will use the width of the current word to decide if we need to word wrap
+				int wordWidth = (int) FloatMath.ceil( pPaint.measureText( pString, wordStart, wordEnd ) );
+				
+				//if the width of the current word is greater than the desired width, then we need to wrap
+				if ( wordWidth > pMaxWidth )
+				{
+					//look for the last space in this word so we can end the word there instead
+					int lastSpaceIndex = lastIndexOfWhitespace( pString, charIndex );
+				
+					//if we were unable to find a space, or the last space was before this word started, then we must truncate
+					if ( lastSpaceIndex == -1 || lastSpaceIndex < wordStart )
+					{
+						//the string must be longer than a single character... if one character overflows, we must let it
+						if ( wordEnd - wordStart > 1 )
+						{
+							//we know the previous character was okay, so go back to it
+							wordEnd--;
+						}
 					}
+					//we found a space, so move the wordEnd to be back there
+					else
+					{
+						wordEnd = lastSpaceIndex;
+					}
+				
+					//to get an accurate next word start, we need to trim all spaces at the start of the next word
+					int nextWordStart = wordEnd;
+					for ( ; nextWordStart < pString.length(); nextWordStart++ )
+					{
+						//there is a special case, where we want to append any newlines to the end of the previous string so they are still honored
+						//they cannot precurse the next word because then we would just use that newline forever as a word separator
+						char c = pString.charAt( nextWordStart );
+						if ( c == '\n' )
+						{
+							wordEnd = nextWordStart + 1;
+						}
+						else if ( !Character.isWhitespace( c ) )
+						{
+							break;
+						}
+					}
+				
+					//add this word to the array of words
+					strList.add( pString.substring( wordStart, wordEnd ) );
+					wordStart = nextWordStart;
+					
+					break;
 				}
-
-				/* Remove spaces at the beginning of a new line. */
-				while (i < charLength && pString.charAt(i) == ' ') {
-					++i;
-				}
-
-				start = i;
 			}
 		}
-
-		/* Add the last chars. */
-		if (start < charLength) {
-			strList.add(pString.substring(start));
+	
+		//we may need to add a last word
+		if ( wordEnd > wordStart )
+		{
+			strList.add( pString.substring( wordStart, wordEnd ) );
 		}
-
+		
 		return strList;
+	}
+	
+	private static int lastIndexOfWhitespace( final String str, final int startIndex )
+	{
+		if ( startIndex >= str.length() )
+		{
+			return -1;
+		}
+		
+		for ( int i = startIndex; i >= 0; i-- )
+		{
+			if ( Character.isWhitespace( str.charAt( i ) ) )
+			{
+				return i;
+			} 
+		}
+		
+		return -1;
 	}
 
 	private static String refactorString(final String pString) {
