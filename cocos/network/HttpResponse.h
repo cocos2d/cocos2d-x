@@ -33,15 +33,15 @@ NS_CC_BEGIN
 namespace network {
 
 /** 
- @brief defines the object which users will receive at onHttpCompleted(sender, HttpResponse) callback
- Please refer to samples/TestCpp/Classes/ExtensionTest/NetworkTest/HttpClientTest.cpp as a sample
+ @brief 定义了用户会在onHttpCompleted(sender, HttpResponse) 回调中接收的对象
+ 请移步 tests/test-cpp/Classes/ExtensionTest/NetworkTest/HttpClientTest.cpp 作为参考
  @since v2.0.2
  */
 class HttpResponse : public cocos2d::Ref
 {
 public:
-    /** Constructor, it's used by HttpClient internal, users don't need to create HttpResponse manually
-     @param request the corresponding HttpRequest which leads to this response 
+    /** 构造函数，被HttpClient内部使用，用户不需要手动创建HttpResponse
+     @param 请求引导这个响应的相符的HttpRequest
      */
     HttpResponse(HttpRequest* request)
     {
@@ -56,8 +56,8 @@ public:
         _errorBuffer.clear();
     }
     
-    /** Destructor, it will be called in HttpClient internal,
-     users don't need to desturct HttpResponse object manully 
+    /** 析构函数，会被HttpClient内部调用，
+     用户不需要手动销毁HttpResponse对象
      */
     virtual ~HttpResponse()
     {
@@ -67,7 +67,7 @@ public:
         }
     }
     
-    /** Override autorelease method to prevent developers from calling it */
+    /** 覆写autorelease方法来避免开发者调用 */
     cocos2d::Ref* autorelease(void)
     {
         CCASSERT(false, "HttpResponse is used between network thread and ui thread \
@@ -75,59 +75,61 @@ public:
         return NULL;
     }
     
-    // getters, will be called by users
+    // getters，会被用户调用
     
-    /** Get the corresponding HttpRequest object which leads to this response 
-        There's no paired setter for it, coz it's already setted in class constructor
+    /** 得到导致这个响应的相符的HttpRequest，
+        这里没有对应的setter方法，因为已经在类的构造函数中设置了
      */
     inline HttpRequest* getHttpRequest()
     {
         return _pHttpRequest;
     }
         
-    /** To see if the http reqeust is returned successfully,
-        Althrough users can judge if (http return code = 200), we want an easier way
-        If this getter returns false, you can call getResponseCode and getErrorBuffer to find more details
+    /** 方便查看http请求是否成功的返回了，
+        虽然用户可以通过判断(http return code = 200)来确定，我们依然想要一个更简单的方式
+        如果这个getter返回false，你可以调用getResponseCode 和 getErrorBuffer来看到更多细节
      */
     inline bool isSucceed()
     {
         return _succeed;
     };
     
-    /** Get the http response raw data */
+    /** 获取http响应的raw数据 */
     inline std::vector<char>* getResponseData()
     {
         return &_responseData;
     }
     
-    /** get the Rawheader **/
+    /** 获取Rawheader **/
     inline std::vector<char>* getResponseHeader()
     {
         return &_responseHeader;
     }
 
-    /** Get the http response errorCode
-     *  I know that you want to see http 200 :)
+    /** 获取http相应的errorCode
+     *  我知道你想要看见http 200 :)
      */
     inline long getResponseCode()
     {
         return _responseCode;
     }
 
-    /** Get the rror buffer which will tell you more about the reason why http request failed
+    /** Get the error buffer which will tell you more about the reason why http request failed
+     */
+    /** 得到错误缓存，能够告诉你更多关于http请求失败的原因
      */
     inline const char* getErrorBuffer()
     {
         return _errorBuffer.c_str();
     }
     
-    // setters, will be called by HttpClient
-    // users should avoid invoking these methods
+    // setters，会被HttpClient调用
+    // 用户应该避免调用这些方法 
     
     
-    /** Set if the http request is returned successfully,
-     Althrough users can judge if (http code == 200), we want a easier way
-     This setter is mainly used in HttpClient, users mustn't set it directly
+    /** 如果http请求返回成功则设置
+     虽然用户能判断它(http code == 200)，我们依然想要一个更简单的方式
+     这个setter主要被用在HttpClient里面，用户不得直接设置它
      */
     inline void setSucceed(bool value)
     {
@@ -135,14 +137,14 @@ public:
     };
     
     
-    /** Set the http response raw buffer, is used by HttpClient
+    /** 设置http响应的raw buffer，被HttpClient所使用
      */
     inline void setResponseData(std::vector<char>* data)
     {
         _responseData = *data;
     }
     
-    /** Set the http response Header raw buffer, is used by HttpClient
+    /** 设置http响应Header的raw buffer，被HttpClient所使用
      */
     inline void setResponseHeader(std::vector<char>* data)
     {
@@ -150,7 +152,7 @@ public:
     }
     
     
-    /** Set the http response errorCode
+    /** 设置http响应errorCode
      */
     inline void setResponseCode(long value)
     {
@@ -158,7 +160,7 @@ public:
     }
     
     
-    /** Set the error buffer which will tell you more the reason why http request failed
+    /** 设置error buffer，会告诉你更多为什么http请求失败的原因
      */
     inline void setErrorBuffer(const char* value)
     {
@@ -169,13 +171,13 @@ public:
 protected:
     bool initWithRequest(HttpRequest* request);
     
-    // properties
-    HttpRequest*        _pHttpRequest;  /// the corresponding HttpRequest pointer who leads to this response 
-    bool                _succeed;       /// to indecate if the http reqeust is successful simply
-    std::vector<char>   _responseData;  /// the returned raw data. You can also dump it as a string
-    std::vector<char>   _responseHeader;  /// the returned raw header data. You can also dump it as a string
-    long                _responseCode;    /// the status code returned from libcurl, e.g. 200, 404
-    std::string         _errorBuffer;   /// if _responseCode != 200, please read _errorBuffer to find the reason 
+    // 属性
+    HttpRequest*        _pHttpRequest;      /// 导致这个响应的相应请求指针
+    bool                _succeed;           /// 简单的表明http请求是否成功
+    std::vector<char>   _responseData;      /// 返回的raw数据。你也可以转成一个字符串
+    std::vector<char>   _responseHeader;    /// 返回的raw header数据。你也可以转成一个字符串
+    long                _responseCode;      /// librurl返回的状态码，例如：200、404
+    std::string         _errorBuffer;       /// 如果 _responseCode != 200, 请从_errorBuffer里面寻找原因
     
 };
 
