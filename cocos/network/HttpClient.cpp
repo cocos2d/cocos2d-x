@@ -48,7 +48,7 @@ static std::mutex       s_requestQueueMutex;
 static std::mutex       s_responseQueueMutex;
 
 static std::mutex       s_SleepMutex;
-static std::condition_variable  s_SleepCondition;
+static std::condition_variable      s_SleepCondition;
 
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
@@ -194,7 +194,7 @@ void HttpClient::networkThread()
                 CCASSERT(true, "CCHttpClient: unkown request type, only GET and POSt are supported");
                 break;
         }
-        
+                
         // write data to HttpResponse
         response->setResponseCode(responseCode);
         
@@ -207,15 +207,13 @@ void HttpClient::networkThread()
         {
             response->setSucceed(true);
         }
+
         
         // add response packet into queue
-        if (s_responseQueue != nullptr)
-        {
-            s_responseQueueMutex.lock();
-            s_responseQueue->pushBack(response);
-            s_responseQueueMutex.unlock();
-        }
-
+        s_responseQueueMutex.lock();
+        s_responseQueue->pushBack(response);
+        s_responseQueueMutex.unlock();
+        
         if (nullptr != s_pHttpClient) {
             scheduler->performFunctionInCocosThread(CC_CALLBACK_0(HttpClient::dispatchResponseCallbacks, this));
         }
@@ -230,15 +228,15 @@ void HttpClient::networkThread()
     if (s_requestQueue != nullptr) {
         delete s_requestQueue;
         s_requestQueue = nullptr;
+        delete s_responseQueue;
+        s_responseQueue = nullptr;
     }
     
 }
 
 // Worker thread
 void HttpClient::networkThreadAlone(HttpRequest* request)
-{    
-    auto scheduler = Director::getInstance()->getScheduler();
-
+{
     // Create a HttpResponse object, the default setting is http access failed
     HttpResponse *response = new HttpResponse(request);
 
@@ -306,16 +304,24 @@ void HttpClient::networkThreadAlone(HttpRequest* request)
         response->setSucceed(true);
     }
 
-    if (s_responseQueue != nullptr)
-    {
-        s_responseQueueMutex.lock();
-        s_responseQueue->pushBack(response);
-        s_responseQueueMutex.unlock();
-    }
+    auto scheduler = Director::getInstance()->getScheduler();
+    scheduler->performFunctionInCocosThread([response]{
+        HttpRequest *request = response->getHttpRequest();
+        const ccHttpRequestCallback& callback = request->getCallback();
+        Ref* pTarget = request->getTarget();
+        SEL_HttpResponse pSelector = request->getSelector();
 
-    if (nullptr != s_pHttpClient) {
-        scheduler->performFunctionInCocosThread(CC_CALLBACK_0(HttpClient::dispatchResponseCallbacks, this));
-    }
+        if (callback != nullptr)
+        {
+            callback(s_pHttpClient, response);
+        }
+        else if (pTarget && pSelector)
+        {
+            (pTarget->*pSelector)(s_pHttpClient, response);
+        }
+        
+        response->release();
+    });
 }
 
 //Configure curl's timeout property
@@ -522,16 +528,12 @@ HttpClient::~HttpClient()
 //Lazy create semaphore & mutex & thread
 bool HttpClient::lazyInitThreadSemphore()
 {
-    if (nullptr == s_responseQueue)
-    {
-        s_responseQueue = new Vector<HttpResponse*>();
-    }
-    
     if (s_requestQueue != nullptr) {
         return true;
     } else {
         
         s_requestQueue = new Vector<HttpRequest*>();
+        s_responseQueue = new Vector<HttpResponse*>();
         
         auto t = std::thread(CC_CALLBACK_0(HttpClient::networkThread, this));
         t.detach();
@@ -544,7 +546,7 @@ bool HttpClient::lazyInitThreadSemphore()
 
 //Add a get task to queue
 void HttpClient::send(HttpRequest* request)
-{
+{    
     if (false == lazyInitThreadSemphore()) 
     {
         return;
@@ -572,11 +574,6 @@ void HttpClient::immediateSend(HttpRequest* request)
     if(!request)
     {
         return;
-    }
-
-    if (nullptr == s_responseQueue)
-    {
-        s_responseQueue = new Vector<HttpResponse*>();
     }
 
     request->retain();
