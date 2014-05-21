@@ -1191,14 +1191,14 @@ public:
     virtual void updateTransform();
 
     /**
-     * Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
-     * The matrix is in Pixels.
+     * 返回这个将节点（局部）的空间坐标系转换成父节点的空间坐标系的矩阵。
+     * 这个矩阵以像素为单位。
      */
     virtual const Mat4& getNodeToParentTransform() const;
     virtual AffineTransform getNodeToParentAffineTransform() const;
 
     /** 
-     * Sets the Transformation matrix manually.
+     * 手动设置变换矩阵。
      */
     virtual void setNodeToParentTransform(const Mat4& transform);
 
@@ -1206,8 +1206,8 @@ public:
     CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform nodeToParentTransform() const { return getNodeToParentAffineTransform(); }
 
     /**
-     * Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.
-     * The matrix is in Pixels.
+     * 返回这个将父节点的空间坐标系转换成节点（局部）的空间坐标系转的矩阵。
+     * 这个矩阵以像素为单位。
      */
     virtual const Mat4& getParentToNodeTransform() const;
     virtual AffineTransform getParentToNodeAffineTransform() const;
@@ -1216,7 +1216,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform parentToNodeTransform() const { return getParentToNodeAffineTransform(); }
 
     /**
-     * Returns the world affine transform matrix. The matrix is in Pixels.
+     * 返回世界仿射变换矩阵。矩阵单位是像素。
      */
     virtual Mat4 getNodeToWorldTransform() const;
     virtual AffineTransform getNodeToWorldAffineTransform() const;
@@ -1225,7 +1225,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform nodeToWorldTransform() const { return getNodeToWorldAffineTransform(); }
 
     /**
-     * Returns the inverse world affine transform matrix. The matrix is in Pixels.
+     * 返回逆世界仿射变换矩阵。矩阵单位是像素。
      */
     virtual Mat4 getWorldToNodeTransform() const;
     virtual AffineTransform getWorldToNodeAffineTransform() const;
@@ -1241,44 +1241,44 @@ public:
     /// @name Coordinate Converters
 
     /**
-     * Converts a Vec2 to node (local) space coordinates. The result is in Points.
+     * 将Vec2 转换成节点 (局部) 空间坐标系。结果按以Points为单位。
      */
     Vec2 convertToNodeSpace(const Vec2& worldPoint) const;
 
     /**
-     * Converts a Vec2 to world space coordinates. The result is in Points.
+     * 将Vec2转换成世界空间坐标系。结果按以Points为单位。
      */
     Vec2 convertToWorldSpace(const Vec2& nodePoint) const;
 
     /**
-     * Converts a Vec2 to node (local) space coordinates. The result is in Points.
-     * treating the returned/received node point as anchor relative.
+     * 将Vec2转换成节点(局部)空间坐标系. 结果按以Points为单位。
+     * 将returned/received节点的point当作相对应的锚点。
      */
     Vec2 convertToNodeSpaceAR(const Vec2& worldPoint) const;
 
     /**
-     * Converts a local Vec2 to world space coordinates.The result is in Points.
-     * treating the returned/received node point as anchor relative.
+     * 将局部的Vec2转换成世界空间坐标系。结果按以Points为单位。
+     * 将returned/received节点的point当作相对应的锚点。
      */
     Vec2 convertToWorldSpaceAR(const Vec2& nodePoint) const;
 
     /**
-     * convenience methods which take a Touch instead of Vec2
+     * 一个方便的方法将触摸转换成Vec2
      */
     Vec2 convertTouchToNodeSpace(Touch * touch) const;
 
     /**
-     * converts a Touch (world coordinates) into a local coordinate. This method is AR (Anchor Relative).
+     * 将Touch (世界坐标系) 转换成局部坐标系。这个方法是AR (相对的锚点).
      */
     Vec2 convertTouchToNodeSpaceAR(Touch * touch) const;
 
 	/**
-     *  Sets an additional transform matrix to the node.
+     *  为节点设置一个附加转换矩阵。
      *
-     *  In order to remove it, call it again with the argument `nullptr`
+     *  为了删除它，再一次调用它通过传入参数“nullptr”.
      *
-     *  @note The additional transform will be concatenated at the end of getNodeToParentTransform.
-     *        It could be used to simulate `parent-child` relationship between two nodes (e.g. one is in BatchNode, another isn't).
+     *  @note 这个附加转换将会连接在getNodeToParentTransform之后。
+     *        它将被用于模拟`parent-child`的关系在两个节点之间(e.g. 其中一个在BatchNode中, 另一个却不在).
      */
     void setAdditionalTransform(Mat4* additionalTransform);
     void setAdditionalTransform(const AffineTransform& additionalTransform);
@@ -1288,22 +1288,22 @@ public:
       /// @{
     /// @name component functions
     /**
-     *   gets a component by its name
+     *   通过名字得到组件
      */
     Component* getComponent(const std::string& pName);
 
     /**
-     *   adds a component
+     *   添加一个组件
      */
     virtual bool addComponent(Component *pComponent);
 
     /**
-     *   removes a component by its name
+     *   通过名字删除一个组件
      */
     virtual bool removeComponent(const std::string& pName);
 
     /**
-     *   removes all components
+     *   删除所有组件
      */
     virtual void removeAllComponents();
     /// @} end of component functions
@@ -1311,19 +1311,19 @@ public:
 
 #if CC_USE_PHYSICS
     /**
-     *   set the PhysicsBody that let the sprite effect with physics
-     * @note This method will set anchor point to Vec2::ANCHOR_MIDDLE if body not null, and you cann't change anchor point if node has a physics body.
+     *   设置PhysicsBody来让精灵sprite有物理效应。
+     * @note 这个方法将会设置Vec2::ANCHOR_MIDDLE锚点如果身体非空, 并且你不可以改变这个锚点如果节点有物理身体。
      */
     void setPhysicsBody(PhysicsBody* body);
 
     /**
-     *   get the PhysicsBody the sprite have
+     *   得到精灵拥有的PhysicsBody
      */
     PhysicsBody* getPhysicsBody() const;
 
 #endif
     
-    // overrides
+    // 重写
     virtual GLubyte getOpacity() const;
     virtual GLubyte getDisplayedOpacity() const;
     virtual void setOpacity(GLubyte opacity);
@@ -1342,23 +1342,23 @@ public:
     virtual bool isOpacityModifyRGB() const { return false; };
     
 CC_CONSTRUCTOR_ACCESS:
-    // Nodes should be created using create();
+    // 节点应该被创建通过使用create();
     Node();
     virtual ~Node();
 
     virtual bool init();
 
 protected:
-    /// lazy allocs
+    /// 较慢的分配
     void childrenAlloc(void);
     
-    /// helper that reorder a child
+    /// 记录孩子的助手
     void insertChild(Node* child, int z);
 
-    /// Removes a child, call child->onExit(), do cleanup, remove it from children array.
+    /// 删除一个孩子，调用child->onExit(), 从子数列中做清理，并删除它。
     void detachChild(Node *child, ssize_t index, bool doCleanup);
 
-    /// Convert cocos2d coordinates to UI windows coordinate.
+    ///转换cocos2d 坐标系到用户界面窗口坐标
     Vec2 convertToWindowSpace(const Vec2& nodePoint) const;
 
     Mat4 transform(const Mat4 &parentTransform);
@@ -1374,29 +1374,29 @@ protected:
     virtual void updatePhysicsBodyRotation(Scene* layer);
 #endif // CC_USE_PHYSICS
 
-    float _rotationX;               ///< rotation on the X-axis
-    float _rotationY;               ///< rotation on the Y-axis
+    float _rotationX;               ///< X轴的旋转
+    float _rotationY;               ///< Y轴的旋转
 
-    // rotation Z is decomposed in 2 to simulate Skew for Flash animations
-    float _rotationZ_X;             ///< rotation angle on Z-axis, component X
-    float _rotationZ_Y;             ///< rotation angle on Z-axis, component Y
+    // 旋转Z轴被分成2个用来模拟Flash动画倾斜。
+    float _rotationZ_X;             ///< 旋转角度在Z轴，组件X轴
+    float _rotationZ_Y;             ///< 旋转角度在Z轴，组件Y轴
 
-    float _scaleX;                  ///< scaling factor on x-axis
-    float _scaleY;                  ///< scaling factor on y-axis
-    float _scaleZ;                  ///< scaling factor on z-axis
+    float _scaleX;                  ///< X轴的缩放因子
+    float _scaleY;                  ///< Y轴的缩放因子
+    float _scaleZ;                  ///< Z轴的缩放因子
 
-    Vec2 _position;                ///< position of the node
-    float _positionZ;               ///< OpenGL real Z position
+    Vec2 _position;                ///< 节点的位置
+    float _positionZ;               ///< OpenGL 真正Z轴坐标位置
 
-    float _skewX;                   ///< skew angle on x-axis
-    float _skewY;                   ///< skew angle on y-axis
+    float _skewX;                   ///< X轴的倾斜角
+    float _skewY;                   ///< Y轴的倾斜角
 
-    Vec2 _anchorPointInPoints;     ///< anchor point in points
-    Vec2 _anchorPoint;             ///< anchor point normalized (NOT in points)
+    Vec2 _anchorPointInPoints;     ///< 锚点以points为单位
+    Vec2 _anchorPoint;             ///< 正常的锚点(不是以points为单位的)
 
-    Size _contentSize;              ///< untransformed size of the node
+    Size _contentSize;              ///< 未转换节点的大小
 
-    Mat4 _modelViewTransform;    ///< ModelView transform of the Node.
+    Mat4 _modelViewTransform;    ///< 节点的模型视图变换
 
     // "cache" variables are allowed to be mutable
     mutable Mat4 _transform;      ///< transform
