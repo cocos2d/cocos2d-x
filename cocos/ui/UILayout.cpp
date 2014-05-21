@@ -666,12 +666,12 @@ bool Layout::init()
     
 void Layout::addChild(Node *child)
 {
-    Widget::addChild(child);
+    Layout::addChild(child, child->getZOrder(), child->getTag());
 }
 
 void Layout::addChild(Node * child, int zOrder)
 {
-    Widget::addChild(child, zOrder);
+    Layout::addChild(child, zOrder, child->getZOrder());
 }
 
 void Layout::addChild(Node *child, int zOrder, int tag)
@@ -690,6 +690,7 @@ void Layout::removeChild(Node *child, bool cleanup)
 void Layout::removeAllChildren()
 {
     Widget::removeAllChildren();
+    _doLayoutDirty = true;
 }
     
 void Layout::removeAllChildrenWithCleanup(bool cleanup)
