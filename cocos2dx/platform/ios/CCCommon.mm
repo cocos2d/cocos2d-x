@@ -42,6 +42,8 @@ void CCLog(const char * pszFormat, ...)
     va_end(ap);
     
     NSLog( @"Cocos2d: %@\n", stringArgs );
+    
+    [stringArgs release];
 #else
     printf("Cocos2d: ");
     char szBuf[kMaxLogLen+1] = {0};
