@@ -71,16 +71,16 @@ public:
      /** 为一个目标添加动作。
 	 如果目标已经存在，动作将被加在已经存在的目标上。
      	 如果目标不存在，将会创建这个目标的新对象，这个动作将被添加在这个新创建出来的对象上
-     	 当目标暂停，动作队列不会乱。
+     	 当目标动作被暂停，动作队列的顺序也不会乱。
      */
     void addAction(Action *action, Node *target, bool paused);
 
-    /** 从所有目标上移除所有动作。
+    /** 移除所有动作。
     */
     void removeAllActions();
 
-     /** 移除某一个目标身上的所有动作。
-	 所有属于这个目标身上的动作都将被移除。
+     /** 移除某一个Node身上的所有动作。
+	 所有属于这个Node身上的动作都将被移除。
     */
     void removeAllActionsFromTarget(Node *target);
 
@@ -110,11 +110,11 @@ public:
    */
     void pauseTarget(Node *target);
 
-    /** 恢复目标动作。所有的动作队列都将被恢复。
+    /** 恢复目标动作。所有的动作都将被恢复。
     */
     void resumeTarget(Node *target);
     
-     /** 暂停所有正在执行的动作，返回所有被暂停动作的Node的Vector。
+     /** 暂停所有正在执行的动作，返回所有被暂停动作的Node的并且把所有Node装到Vector里。
      */
     Vector<Node*> pauseAllRunningActions();
     
