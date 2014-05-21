@@ -59,10 +59,10 @@ public:
         CCLOGINFO("deallocing ~__Integer: %p", this);
     }
 
-    /* override functions */
+    /* 重载方法 */
     virtual void acceptVisitor(DataVisitor &visitor) { visitor.visit(this); }
 
-    // overrides
+    // 重载
     virtual __Integer* clone() const override
     {
         return __Integer::create(_value);
