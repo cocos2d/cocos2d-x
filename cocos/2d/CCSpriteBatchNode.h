@@ -119,7 +119,7 @@ public:
     virtual void setTexture(Texture2D *texture) override;
     /**
     *@code
-    *当此函数绑定到js或lua时，函数参数将将被改变
+    *当此函数绑定到js或lua时，函数参数将被改变
     *js函数声明: var setBlendFunc(var src, var dst)
     *@endcode
     * @lua NA 

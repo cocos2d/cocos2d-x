@@ -56,25 +56,25 @@ struct transformValues_;
  */
 
 /**
- * Sprite is a 2d image ( http://en.wikipedia.org/wiki/Sprite_(computer_graphics) )
+ * Sprite定义为二维图像 ( 参见：http://en.wikipedia.org/wiki/Sprite_(computer_graphics) )
  *
- * Sprite can be created with an image, or with a sub-rectangle of an image.
+ * 可以通过一个图像或一个图像的矩形裁剪部分创建Sprite
  *
- * To optimize the Sprite rendering, please follow the following best practices:
+ * 为了优化Sprite渲染，请遵循以下最佳用法：
  *
- *  - Put all your sprites in the same spritesheet (http://www.codeandweb.com/what-is-a-sprite-sheet)
- *  - Use the same blending function for all your sprites
- *  - ...and the Renderer will automatically "batch" your sprites (will draw all of them in one OpenGL call).
+ *  - 所有Sprite放入同一个SpriteSheet (http://www.codeandweb.com/what-is-a-sprite-sheet)
+ *  - 所有Sprite使用相同的渲染混合函数(BlendFunc)
+ *  - 使得渲染器(Renderer)自动批量处理("batch")Sprite (将会在一次OpenGL调用内绘制完成)
  *
- *  To gain an additional 5% ~ 10% more in the rendering, you can parent your sprites into a `SpriteBatchNode`.
- *  But doing so carries the following limitations:
+ *  为了获得额外5%~10%的渲染优化效果，你可以把Sprite作为子节点加入到SpriteBatchNode中，
+ *  但这么做有以下限制：
  *
- *  - The Alias/Antialias property belongs to `SpriteBatchNode`, so you can't individually set the aliased property.
- *  - The Blending function property belongs to `SpriteBatchNode`, so you can't individually set the blending function property.
- *  - `ParallaxNode` is not supported, but can be simulated with a "proxy" sprite.
- *  - Sprites can only have other Sprites (or subclasses of Sprite) as children.
+ *  - Alias/Antialias属性属于SpriteBatchNode，不能单独设置Sprite的Alias属性。
+ *  - 渲染混合函数(BlendFunc)属于SpriteBatchNode，不能单独设置Sprite的渲染混合函数(BlendFunc)。
+ *  - 不支持ParallaxNode，不过可以使用代理("proxy")Sprite模拟实现。
+ *  - Sprite的子节点只能是其它Sprite(或Sprite的子类)
  *
- * The default anchorPoint in Sprite is (0.5, 0.5).
+ * Sprite的默认锚点(anchorPoint)为(0.5, 0.5)。
  */
 class CC_DLL Sprite : public Node, public TextureProtocol
 {
@@ -86,71 +86,69 @@ public:
     /// @name Creators
 
     /**
-     * Creates an empty sprite without texture. You can call setTexture method subsequently.
+     * 创建一个无纹理Sprite，可以在创建后调用setTexture方法设置纹理。
      *
-     * @return An autoreleased sprite object.
+     * @return 自动释放的Sprite对象
      */
     static Sprite* create();
 
     /**
-     * Creates a sprite with an image filename.
+     * 指定图像文件名创建Sprite
      *
-     * After creation, the rect of sprite will be the size of the image,
-     * and the offset will be (0,0).
+     * 创建之后，Sprite的尺寸大小与图像相同，且偏移被置为(0,0)。
      *
-     * @param   filename A path to image file, e.g., "scene1/monster.png"
-     * @return  An autoreleased sprite object.
+     * @param   filename 包含路径的图像文件名，比如"scene1/monster.png"
+     * @return  自动释放的Sprite对象
      */
     static Sprite* create(const std::string& filename);
 
     /**
-     * Creates a sprite with an image filename and a rect.
+     * 指定图像文件名及Rect参数创建Sprite
      *
-     * @param   filename A path to image file, e.g., "scene1/monster.png"
-     * @param   rect     A subrect of the image file
-     * @return  An autoreleased sprite object
+     * @param   filename 包含路径的图像文件名，比如"scene1/monster.png"
+     * @param   rect     图像文件裁剪矩形框，仅位于rect矩形框内的图像内容被应用于此Sprite
+     * @return  An 自动释放的Sprite对象
      */
     static Sprite* create(const std::string& filename, const Rect& rect);
 
     /**
-     * Creates a sprite with a Texture2D object.
+     * 指定Texture2D纹理对象创建Sprite
      *
-     * After creation, the rect will be the size of the texture, and the offset will be (0,0).
+     * 创建之后，Sprite的尺寸大小与纹理对象相同，且偏移被置为(0,0)。
      *
-     * @param   texture    A pointer to a Texture2D object.
-     * @return  An autoreleased sprite object
+     * @param   texture    Texture2D纹理对象指针
+     * @return  自动释放的Sprite对象
      */
     static Sprite* createWithTexture(Texture2D *texture);
 
     /**
-     * Creates a sprite with a texture and a rect.
+     * 指定Texture2D纹理对象及Rect参数创建Sprite
      *
-     * After creation, the offset will be (0,0).
+     * 创建之后，Sprite偏移被置为(0,0)。
      *
-     * @param   texture    A pointer to an existing Texture2D object.
-     *                      You can use a Texture2D object for many sprites.
-     * @param   rect        Only the contents inside the rect of this texture will be applied for this sprite.
-     * @param   rotated     Whether or not the rect is rotated
-     * @return  An autoreleased sprite object
+     * @param   texture    Texture2D纹理对象指针
+     *                      多个Sprite可使用同一个Texture2D纹理对象
+     * @param   rect        图像文件裁剪矩形框，仅位于rect矩形框内的纹理内容被应用于此Sprite
+     * @param   rotated     rect矩形框是否旋转
+     * @return  自动释放的Sprite对象
      */
     static Sprite* createWithTexture(Texture2D *texture, const Rect& rect, bool rotated=false);
 
     /**
-     * Creates a sprite with an sprite frame.
+     * 指定Sprite帧(SpriteFrame)创建Sprite
      *
-     * @param   spriteFrame    A sprite frame which involves a texture and a rect
-     * @return  An autoreleased sprite object
+     * @param   spriteFrame    Sprite帧，包括了纹理(texture)和裁剪矩形框(rect)属性
+     * @return  自动释放的Sprite对象
      */
     static Sprite* createWithSpriteFrame(SpriteFrame *spriteFrame);
 
     /**
-     * Creates a sprite with an sprite frame name.
+     * 指定Sprite帧名称创建Sprite
      *
-     * A SpriteFrame will be fetched from the SpriteFrameCache by spriteFrameName param.
-     * If the SpriteFrame doesn't exist it will raise an exception.
+     * 通过指定的spriteFrameName参数从SpriteFrameCache中提取SpriteFrame，如SpriteFrame不存在将抛出异常。
      *
-     * @param   spriteFrameName A null terminated string which indicates the sprite frame name.
-     * @return  An autoreleased sprite object
+     * @param   spriteFrameName Sprite帧名称，参数类型为以null结尾的字符串
+     * @return  自动释放的Sprite对象
      */
     static Sprite* createWithSpriteFrameName(const std::string& spriteFrameName);
 
@@ -161,20 +159,19 @@ public:
     /// @name BatchNode methods
 
     /**
-     * Updates the quad according the rotation, position, scale values.
+     * 根据旋转、位置、缩放比例值更新quad数据。
      */
     virtual void updateTransform(void);
 
     /**
-     * Returns the batch node object if this sprite is rendered by SpriteBatchNode
+     * 如果Sprite已经加入SpriteBatchNode返回SpriteBatchNode对象。
      *
-     * @return The SpriteBatchNode object if this sprite is rendered by SpriteBatchNode,
-     *         nullptr if the sprite isn't used batch node.
+     * @return 如果Sprite已经加入SpriteBatchNode返回SpriteBatchNode对象，否则返回空指针。
      */
     virtual SpriteBatchNode* getBatchNode(void);
     /**
-     * Sets the batch node to sprite
-     * @warning This method is not recommended for game developers. Sample code for using batch node
+     * 设置SpriteBatchNode对象。
+     * @warning 不推荐手工调用此方法，可参照以下示例代码使用SpriteBatchNode
      * @code
      * SpriteBatchNode *batch = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 15);
      * Sprite *sprite = Sprite::createWithTexture(batch->getTexture(), Rect(0, 0, 57, 57));
@@ -191,61 +188,64 @@ public:
     /// @{
     /// @name Texture / Frame methods
 
-    /** Sets a new texture (from a filename) to the sprite.
-     It will call `setTextureRect()` with the texture's content size.
+    /** 指定图像文件名重新设置Sprite纹理(texture)。
+     方法内会同时调用setTextureRect设置Sprite的尺寸。
      TODO: The whole Sprite API needs to be reviewed.
      */
     virtual void setTexture(const std::string &filename );
 
-    /** Sets a new texture to the sprite.
-     The Texture's rect is not changed.
+    /** 指定Texture2D纹理对象重新设置Sprite纹理(texture)。
+     纹理(texture)的矩形尺寸大小不会发生改变。
      */
     virtual void setTexture(Texture2D *texture) override;
 
-    /** returns the Texture2D object used by the sprite */
+    /** 返回Sprite当前使用的Texture2D纹理对象 */
     virtual Texture2D* getTexture() const override;
 
     /**
-     * Updates the texture rect of the Sprite in points.
-     * It will call setTextureRect(const Rect& rect, bool rotated, const Size& untrimmedSize) with \p rotated = false, and \p utrimmedSize = rect.size.
+     * 设置Sprite纹理(texture)的Rect尺寸。
+     * 通过调用setTextureRect(const Rect& rect, bool rotated, const Size& untrimmedSize)实现，其中入参为：\p rotated = false, \p utrimmedSize = rect.size.
      */
     virtual void setTextureRect(const Rect& rect);
 
     /**
-     * Sets the texture rect, rectRotated and untrimmed size of the Sprite in points.
-     * It will update the texture coordinates and the vertex rectangle.
+     * 设置Sprite纹理(texture)的Rect尺寸(rect)、 是否旋转(rotated)、裁剪尺寸(untrimmedSize)。
+     * 调用此方法会修改纹理(texture)的坐标和顶点位置。
      */
     virtual void setTextureRect(const Rect& rect, bool rotated, const Size& untrimmedSize);
 
     /**
-     * Sets the vertex rect.
-     * It will be called internally by setTextureRect.
-     * Useful if you want to create 2x images from SD images in Retina Display.
-     * Do not call it manually. Use setTextureRect instead.
+     * 设置Sprite的顶点Rect。
+     * 此方法由setTextureRect内部调用，用于在视网膜屏(Retina Display)上显示2倍大小的标清图像。
+     * 不能手工调用此方法，应该调用setTextureRect实现相应的功能。
      */
     virtual void setVertexRect(const Rect& rect);
 
     /**
-     * Sets a new SpriteFrame to the Sprite.
+     * 通过指定的spriteFrameName参数设置新的Sprite帧(SpriteFrame)。
      */
     virtual void setSpriteFrame(const std::string &spriteFrameName);
+
+    /**
+     * 设置新的Sprite帧(SpriteFrame)。
+     */
     virtual void setSpriteFrame(SpriteFrame* newFrame);
 
-    /** @deprecated Use `setSpriteFrame()` instead. */
+    /** @deprecated 使用`setSpriteFrame()`方法替代 */
     CC_DEPRECATED_ATTRIBUTE virtual void setDisplayFrame(SpriteFrame *newFrame) { setSpriteFrame(newFrame); }
 
     /**
-     * Returns whether or not a SpriteFrame is being displayed
+     * 返回指定的Sprite帧(SpriteFrame)是否正在显示。
      */
     virtual bool isFrameDisplayed(SpriteFrame *pFrame) const;
 
     /**
-     * Returns the current displayed frame.
+     * 返回当前正在显示的Sprite帧(SpriteFrame)。
      */
     virtual SpriteFrame* getSpriteFrame() const;
-    /** @deprecated Use `getSpriteFrame()` instead */
+    /** @deprecated 使用`getSpriteFrame()`方法替代 */
     CC_DEPRECATED_ATTRIBUTE virtual SpriteFrame* getDisplayFrame() const { return getSpriteFrame(); }
-    /** @deprecated Use `getSpriteFrame()` instead */
+    /** @deprecated 使用`getSpriteFrame()`方法替代 */
     CC_DEPRECATED_ATTRIBUTE virtual SpriteFrame* displayFrame() const { return getSpriteFrame(); };
 
     /// @} End of frames methods
@@ -254,8 +254,7 @@ public:
     /// @{
     /// @name Animation methods
     /**
-     * Changes the display frame with animation name and index.
-     * The animation name will be get from the AnimationCache
+     * 指定动画名称(animationName)和帧索引(frameIndex)修改要显示的帧，动画名称从AnimationCache中获取。
      */
     virtual void setDisplayFrameWithAnimationName(const std::string& animationName, ssize_t frameIndex);
     /// @}
@@ -265,110 +264,110 @@ public:
     /// @name Sprite Properties' setter/getters
 
     /**
-     * Whether or not the Sprite needs to be updated in the Atlas.
+     * 判断Sprite在Atlas中是否需要更新。
      *
-     * @return true if the sprite needs to be updated in the Atlas, false otherwise.
+     * @return 如Sprite在Atlas中需要更新返回true，否则返回false。
      */
     virtual bool isDirty(void) const { return _dirty; }
 
     /**
-     * Makes the Sprite to be updated in the Atlas.
+     * 设置Sprite在Atlas中是否需要更新
      */
     virtual void setDirty(bool dirty) { _dirty = dirty; }
 
     /**
-     * Returns the quad (tex coords, vertex coords and color) information.
+     * 返回quad(纹理坐标，顶点坐标和颜色)信息。
      * @js  NA
      * @lua NA
      */
     inline V3F_C4B_T2F_Quad getQuad(void) const { return _quad; }
 
     /**
-     * Returns whether or not the texture rectangle is rotated.
+     * 返回纹理(texture)是否已经旋转。
      */
     inline bool isTextureRectRotated(void) const { return _rectRotated; }
 
     /**
-     * Returns the index used on the TextureAtlas.
+     * 返回纹理集(TextureAtlas)的当前使用索引。
      */
     inline ssize_t getAtlasIndex(void) const { return _atlasIndex; }
 
     /**
-     * Sets the index used on the TextureAtlas.
-     * @warning Don't modify this value unless you know what you are doing
+     * 设置纹理集(TextureAtlas)的当前使用索引。
+     * @warning 除非你了解调用此方法的影响，否则不要改变此值
      */
     inline void setAtlasIndex(ssize_t atlasIndex) { _atlasIndex = atlasIndex; }
 
     /**
-     * Returns the rect of the Sprite in points
+     * 返回Sprite的Rect信息
      */
     inline const Rect& getTextureRect(void) { return _rect; }
 
     /**
-     * Gets the weak reference of the TextureAtlas when the sprite is rendered using via SpriteBatchNode
+     * 返回Sprite被SpriteBatchNode使用时纹理集(TextureAtlas)的弱引用
      */
     inline TextureAtlas* getTextureAtlas(void) { return _textureAtlas; }
 
     /**
-     * Sets the weak reference of the TextureAtlas when the sprite is rendered using via SpriteBatchNode
+     * 设置Sprite被SpriteBatchNode使用时纹理集(TextureAtlas)的弱引用
      */
     inline void setTextureAtlas(TextureAtlas *pobTextureAtlas) { _textureAtlas = pobTextureAtlas; }
 
     /**
-     * Gets the offset position of the sprite. Calculated automatically by editors like Zwoptex.
+     * 返回Sprite的偏移位置，像Zwoptex一样由编辑器自动计算。
      */
     inline const Vec2& getOffsetPosition(void) const { return _offsetPosition; }
 
 
     /**
-     * Returns the flag which indicates whether the sprite is flipped horizontally or not.
+     * 返回Sprite是否水平翻转。
      *
-     * It only flips the texture of the sprite, and not the texture of the sprite's children.
-     * Also, flipping the texture doesn't alter the anchorPoint.
-     * If you want to flip the anchorPoint too, and/or to flip the children too use:
+     * 返回结果只表明Sprite纹理(texture)是否翻转，而不是Sprite子节点的纹理(texture)是否翻转。
+     * 此外，翻转纹理(texture)不会改变锚点(anchorPoint)。
+     * 如果需要同时翻转锚点(anchorPoint)，和/或同时翻转Sprite子节点，可使用以下方法实现:
      * sprite->setScaleX(sprite->getScaleX() * -1);
      *
-     * @return true if the sprite is flipped horizontally, false otherwise.
+     * @return 如Sprite已水平翻转返回true，否则返回false。
      */
     bool isFlippedX(void) const;
     /**
-     * Sets whether the sprite should be flipped horizontally or not.
+     * 设置Sprite是否水平翻转。
      *
-     * @param flippedX true if the sprite should be flipped horizontally, false otherwise.
+     * @param flippedX 如设置水平翻转传入true，否则传入false。
      */
     void setFlippedX(bool flippedX);
 
-    /** @deprecated Use isFlippedX() instead
+    /** @deprecated 使用isFlippedX()替代
     * @js NA
     * @lua NA
     */
     CC_DEPRECATED_ATTRIBUTE bool isFlipX() { return isFlippedX(); };
-    /** @deprecated Use setFlippedX() instead */
+    /** @deprecated 使用setFlippedX()替代 */
     CC_DEPRECATED_ATTRIBUTE void setFlipX(bool flippedX) { setFlippedX(flippedX); };
 
     /**
-     * Return the flag which indicates whether the sprite is flipped vertically or not.
+     * 返回Sprite是否垂直翻转。
      *
-     * It only flips the texture of the sprite, and not the texture of the sprite's children.
-     * Also, flipping the texture doesn't alter the anchorPoint.
-     * If you want to flip the anchorPoint too, and/or to flip the children too use:
+     * 返回结果只表明Sprite纹理(texture)是否翻转，而不是Sprite子节点的纹理(texture)是否翻转。
+     * 此外，翻转纹理(texture)不会改变锚点(anchorPoint)。
+     * 如果需要同时翻转锚点(anchorPoint)，和/或同时翻转Sprite子节点，可使用以下方法实现:
      * sprite->setScaleY(sprite->getScaleY() * -1);
      *
-     * @return true if the sprite is flipped vertically, false otherwise.
+     * @return 如Sprite已垂直翻转返回true，否则返回false。
      */
     bool isFlippedY(void) const;
     /**
-     * Sets whether the sprite should be flipped vertically or not.
+     * 设置Sprite是否垂直翻转。
      *
-     * @param flippedY true if the sprite should be flipped vertically, false otherwise.
+     * @param flippedY 如设置垂直翻转传入true，否则传入false。
      */
     void setFlippedY(bool flippedY);
 
     /// @} End of Sprite properties getter/setters
 
-    /** @deprecated Use isFlippedY() instead */
+    /** @deprecated 使用isFlippedY()替代 */
     CC_DEPRECATED_ATTRIBUTE bool isFlipY() { return isFlippedY(); };
-    /** @deprecated Use setFlippedY() instead */
+    /** @deprecated 使用setFlippedY()替代 */
     CC_DEPRECATED_ATTRIBUTE void setFlipY(bool flippedY) { setFlippedY(flippedY); };
 
     //
@@ -378,9 +377,9 @@ public:
     /// @name Functions inherited from TextureProtocol
     /**
     *@code
-    *When this function bound into js or lua,the parameter will be changed
-    *In js: var setBlendFunc(var src, var dst)
-    *In lua: local setBlendFunc(local src, local dst)
+    *当此函数绑定到js或lua时，函数参数将被改变
+    *js函数声明: var setBlendFunc(var src, var dst)
+    *lua函数声明: local setBlendFunc(local src, local dst)
     *@endcode
     */
     inline void setBlendFunc(const BlendFunc &blendFunc) override { _blendFunc = blendFunc; }
@@ -430,88 +429,85 @@ CC_CONSTRUCTOR_ACCESS:
     Sprite(void);
     virtual ~Sprite(void);
 
-    /* Initializes an empty sprite with nothing init. */
+    /** 对未初始化的空Sprite执行初始化操作。 */
     virtual bool init(void);
 
     /**
-     * Initializes a sprite with a texture.
+     * 指定Texture2D纹理初始化Sprite。
      *
-     * After initialization, the rect used will be the size of the texture, and the offset will be (0,0).
+     * 初始化之后，Sprite的尺寸大小与纹理对象相同，且偏移被置为(0,0)。
      *
-     * @param   texture    A pointer to an existing Texture2D object.
-     *                      You can use a Texture2D object for many sprites.
-     * @return  true if the sprite is initialized properly, false otherwise.
+     * @param   texture    Texture2D纹理对象指针
+     *                      多个Sprite可使用同一个Texture2D纹理对象
+     * @return  Sprite正确初始化返回true，否则返回false。
      */
     virtual bool initWithTexture(Texture2D *texture);
 
     /**
-     * Initializes a sprite with a texture and a rect.
+     * 指定Texture2D纹理对象及Rect参数初始化Sprite。
      *
-     * After initialization, the offset will be (0,0).
+     * 初始化之后，Sprite偏移被置为(0,0)。
      *
-     * @param   texture    A pointer to an exisiting Texture2D object.
-     *                      You can use a Texture2D object for many sprites.
-     * @param   rect        Only the contents inside rect of this texture will be applied for this sprite.
-     * @return  true if the sprite is initialized properly, false otherwise.
+     * @param   texture    Texture2D纹理对象指针
+     *                      多个Sprite可使用同一个Texture2D纹理对象
+     * @param   rect        图像文件裁剪矩形框，仅位于rect矩形框内的纹理内容被应用于此Sprite
+     * @return  Sprite正确初始化返回true，否则返回false。
      */
     virtual bool initWithTexture(Texture2D *texture, const Rect& rect);
 
     /**
-     * Initializes a sprite with a texture and a rect in points, optionally rotated.
+     * 指定Texture2D纹理对象、Rect参数及是否旋转初始化Sprite。
      *
-     * After initialization, the offset will be (0,0).
-     * @note    This is the designated initializer.
+     * 初始化之后，Sprite偏移被置为(0,0)。
+     * @note    这是特定用途的初始化方法。
      *
-     * @param   texture    A Texture2D object whose texture will be applied to this sprite.
-     * @param   rect        A rectangle assigned the contents of texture.
-     * @param   rotated     Whether or not the texture rectangle is rotated.
-     * @return  true if the sprite is initialized properly, false otherwise.
+     * @param   texture    Texture2D对象，该对象纹理(texture)将用于Sprite。
+     * @param   rect        指定纹理的内容的Rect矩形框。
+     * @param   rotated     纹理矩形框是否旋转。
+     * @return  Sprite正确初始化返回true，否则返回false。
      */
     virtual bool initWithTexture(Texture2D *texture, const Rect& rect, bool rotated);
 
     /**
-     * Initializes a sprite with an SpriteFrame. The texture and rect in SpriteFrame will be applied on this sprite
+     * 指定SpriteFrame初始化Sprite，SpriteFrame中的纹理(texture)和Rect参数将被用于此Sprite。
      *
-     * @param   pSpriteFrame  A SpriteFrame object. It should includes a valid texture and a rect
-     * @return  true if the sprite is initialized properly, false otherwise.
+     * @param   pSpriteFrame  SpriteFrame对象，包括了纹理(texture)和裁剪矩形框(rect)属性
+     * @return  Sprite正确初始化返回true，否则返回false。
      */
     virtual bool initWithSpriteFrame(SpriteFrame *pSpriteFrame);
 
     /**
-     * Initializes a sprite with an sprite frame name.
+     * 指定Sprite帧名称初始化Sprite。
      *
-     * A SpriteFrame will be fetched from the SpriteFrameCache by name.
-     * If the SpriteFrame doesn't exist it will raise an exception.
+     * 通过指定的spriteFrameName参数从SpriteFrameCache中提取SpriteFrame，如SpriteFrame不存在将抛出异常。
      *
-     * @param   spriteFrameName  A key string that can fected a volid SpriteFrame from SpriteFrameCache
-     * @return  true if the sprite is initialized properly, false otherwise.
+     * @param   spriteFrameName  可以从SpriteFrameCache中提取SpriteFrame的关键字
+     * @return  Sprite正确初始化返回true，否则返回false。
      */
     virtual bool initWithSpriteFrameName(const std::string& spriteFrameName);
 
     /**
-     * Initializes a sprite with an image filename.
+     * 指定图像文件初始化Sprite。
      *
-     * This method will find filename from local file system, load its content to Texture2D,
-     * then use Texture2D to create a sprite.
-     * After initialization, the rect used will be the size of the image. The offset will be (0,0).
+     * 此方法从本地文件系统查找该文件并使用Texture2D加载文件内容，然后使用Texture2D对象创建Sprite。
+     * 初始化之后，Sprite的尺寸大小与图像相同，且偏移被置为(0,0)。
      *
-     * @param   filename The path to an image file in local file system
-     * @return  true if the sprite is initialized properly, false otherwise.
+     * @param   filename 本地文件系统中的含路径图像文件名
+     * @return  Sprite正确初始化返回true，否则返回false。
      * @js      init
      * @lua     init
      */
     virtual bool initWithFile(const std::string& filename);
 
     /**
-     * Initializes a sprite with an image filename, and a rect.
+     * 指定图像文件名及Rect参数初始化Sprite。
      *
-     * This method will find filename from local file system, load its content to Texture2D,
-     * then use Texture2D to create a sprite.
-     * After initialization, the offset will be (0,0).
+     * 此方法从本地文件系统查找该文件并使用Texture2D加载文件内容，然后使用Texture2D对象创建Sprite。
+     * 初始化之后，Sprite偏移被置为(0,0)。
      *
-     * @param   filename The path to an image file in local file system.
-     * @param   rect        The rectangle assigned the content area from texture.
-     * @return  true if the sprite is initialized properly, false otherwise.
+     * @param   filename 本地文件系统中的含路径图像文件名。
+     * @param   rect        指定纹理的内容区域的Rect矩形框。
+     * @return  Sprite正确初始化返回true，否则返回false。
      * @js      init
      * @lua     init
      */
@@ -528,21 +524,21 @@ protected:
     //
     // Data used when the sprite is rendered using a SpriteSheet
     //
-    TextureAtlas*       _textureAtlas;      /// SpriteBatchNode texture atlas (weak reference)
-    ssize_t             _atlasIndex;        /// Absolute (real) Index on the SpriteSheet
-    SpriteBatchNode*    _batchNode;         /// Used batch node (weak reference)
+    TextureAtlas*       _textureAtlas;      /// SpriteBatchNode纹理集(弱引用)
+    ssize_t             _atlasIndex;        /// SpriteSheet绝对(实际)索引
+    SpriteBatchNode*    _batchNode;         /// Sprite已加入的SpriteBatchNode(弱引用)
 
-    bool                _dirty;             /// Whether the sprite needs to be updated
-    bool                _recursiveDirty;    /// Whether all of the sprite's children needs to be updated
-    bool                _shouldBeHidden;    /// should not be drawn because one of the ancestors is not visible
+    bool                _dirty;             /// Sprite是否需要更新
+    bool                _recursiveDirty;    /// Sprite的所有子节点是否需要更新
+    bool                _shouldBeHidden;    /// 不能被绘制，因为Sprite的其中一个祖先不可见
     Mat4              _transformToBatch;
 
     //
     // Data used when the sprite is self-rendered
     //
-    BlendFunc        _blendFunc;            /// It's required for TextureProtocol inheritance
-    Texture2D*       _texture;              /// Texture2D object that is used to render the sprite
-    QuadCommand      _quadCommand;          /// quad command
+    BlendFunc        _blendFunc;            /// TextureProtocol继承使用
+    Texture2D*       _texture;              /// 用于渲染Sprite的Texture2D对象
+    QuadCommand      _quadCommand;          /// quad命令
 #if CC_SPRITE_DEBUG_DRAW
     CustomCommand   _customDebugDrawCommand;
     void drawDebugData();
@@ -552,8 +548,8 @@ protected:
     //
 
     // texture
-    Rect _rect;                             /// Retangle of Texture2D
-    bool   _rectRotated;                    /// Whether the texture is rotated
+    Rect _rect;                             /// Texture2D矩形框
+    bool   _rectRotated;                    /// 纹理是否旋转
 
     // Offset Position (used by Zwoptex)
     Vec2 _offsetPosition;
@@ -566,10 +562,10 @@ protected:
     bool _opacityModifyRGB;
 
     // image is flipped
-    bool _flippedX;                         /// Whether the sprite is flipped horizontally or not
-    bool _flippedY;                         /// Whether the sprite is flipped vertically or not
+    bool _flippedX;                         /// Sprite是否水平旋转
+    bool _flippedY;                         /// Sprite是否垂直旋转
 
-    bool _insideBounds;                     /// whether or not the sprite was inside bounds the previous frame
+    bool _insideBounds;                     /// Sprite是否在前一帧的边界范围内
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Sprite);
 };
