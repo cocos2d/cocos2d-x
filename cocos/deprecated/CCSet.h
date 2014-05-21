@@ -54,52 +54,52 @@ public:
     virtual ~__Set(void);
 
     /**
-    * @brief Create and return a new empty set.
+    * @brief 创建并返回一个新的空集.
     */
     static __Set * create();
 
     /**
-    *@brief Return a copy of the Set, it will copy all the elements.
+    *@brief Return 一个集合的 copy, 它将 copy 所有的集合元素.
     */
     __Set* copy();
     /**
-    *@brief It is the same as copy().
+    *@brief 和copy()功能一致.
     */
     __Set* mutableCopy();
     /**
-    *@brief Return the number of elements the Set contains.
+    *@brief Return 集合中包含的元素个数.
     */
     int count();
     /**
-    *@brief Add a element into Set, it will retain the element.
+    *@brief 往集合中添加一个元素, 它将 retain 这个元素.
     */
     void addObject(Ref *pObject);
     /**
-    *@brief Remove the given element, nothing todo if no element equals pObject.
+    *@brief Remove给出的元素, 如果集合中不存在这个元素则什么都不做.
     */
     void removeObject(Ref *pObject);
     /**
-     *@brief Remove all elements of the set
+     *@brief 移除 集合中得所有元素
      */
     void removeAllObjects();
     /**
-    *@brief Check if Set contains a element equals pObject.
+    *@brief 检查集合中是否存在和 pObject一样的元素.
     */
     bool containsObject(Ref *pObject);
     /**
-    *@brief Return the iterator that points to the first element.
+    *@brief 返回集合中第一个元素的迭代器.
     * @js NA
     * @lua NA
     */
     __SetIterator begin();
     /**
-    *@brief Return the iterator that points to the position after the last element.
+    *@brief 返回集合的最后一个元素之后位置的迭代器.
     * @js NA
     * @lua NA
     */
     __SetIterator end();
     /**
-    *@brief Return the first element if it contains elements, or null if it doesn't contain any element.
+    *@brief  如果它包含这个元素则返回第一个元素, 否则返回null .
     */
     Ref* anyObject();
     /**
