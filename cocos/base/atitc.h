@@ -35,7 +35,7 @@ enum class ATITCDecodeFlag
     ATC_INTERPOLATED_ALPHA = 5,
 };
 
-//Decode ATITC encode data to RGB32
+//将ATITC编码的数据解码为RGB32格式的数据. 
 void atitc_decode(uint8_t *encode_data,
                   uint8_t *decode_data,
                   const int pixelsWidth,
