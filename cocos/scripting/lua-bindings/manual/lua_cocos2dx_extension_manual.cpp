@@ -1153,6 +1153,9 @@ tolua_lerror:
 
 static int lua_cocos2dx_AssetsManager_getLocalManifest(lua_State* L)
 {
+    if (nullptr == L)
+        return 0;
+    
     int argc = 0;
     cocos2d::extension::AssetsManager* self = nullptr;
     bool ok  = true;
@@ -1203,6 +1206,282 @@ static void extendAssetsManager(lua_State* L)
         tolua_function(L, "addUpdateProgressEventListener", lua_cocos2dx_AssetsManager_addUpdateProgressEventListener);
         tolua_function(L, "addUpdateProgressEventListener", lua_cocos2dx_AssetsManager_addNoLocalManifestErrorListener);
         tolua_function(L, "getLocalManifest", lua_cocos2dx_AssetsManager_getLocalManifest);
+    }
+    lua_pop(L, 1);
+}
+
+static int lua_cocos2dx_Extension_Manifest_getAssets(lua_State* L)
+{
+    if (nullptr == L)
+        return 0;
+    
+    int argc = 0;
+    cocos2d::extension::Manifest* self = nullptr;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(L,1,"cc.Manifest",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = (cocos2d::extension::Manifest*)tolua_tousertype(L,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self)
+    {
+        tolua_error(L,"invalid 'cobj' in function 'lua_cocos2dx_Extension_Manifest_getAssets'", nullptr);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(L)-1;
+    if (argc == 0)
+    {
+        if(!ok)
+            return 0;
+        
+        const std::map<std::string, cocos2d::extension::Manifest::Asset> assets = self->getAssets();
+        
+        lua_newtable(L);
+        for (auto const & asset : assets)
+        {
+            tolua_pushcppstring(L, asset.first.c_str());
+            
+            lua_newtable(L);
+            tolua_pushcppstring(L, "md5");
+            tolua_pushcppstring(L, asset.second.md5.c_str());
+            lua_rawset(L, -3);
+            tolua_pushcppstring(L, "path");
+            tolua_pushcppstring(L, asset.second.path.c_str());
+            lua_rawset(L, -3);
+            tolua_pushcppstring(L, "group");
+            tolua_pushcppstring(L, asset.second.group.c_str());
+            lua_rawset(L, -3);
+            tolua_pushcppstring(L, "updating");
+            tolua_pushboolean(L, asset.second.updating);
+            lua_rawset(L, -3);
+            
+            lua_rawset(L, -3);
+        }
+        
+        
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getAssets",argc, 0);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_Extension_Manifest_getAssets'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int lua_cocos2dx_Extension_Manifest_genDiff(lua_State* L)
+{
+    if (nullptr == L)
+        return 0;
+    
+    int argc = 0;
+    cocos2d::extension::Manifest* self = nullptr;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(L,1,"cc.Manifest",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = (cocos2d::extension::Manifest*)tolua_tousertype(L,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self)
+    {
+        tolua_error(L,"invalid 'cobj' in function 'lua_cocos2dx_Extension_Manifest_genDiff'", nullptr);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(L)-1;
+    if (argc == 1)
+    {
+
+#if COCOS2D_DEBUG >= 1
+        if (!tolua_isusertype(L,2,"cc.Manifest",0,&tolua_err)) goto tolua_lerror;
+#endif
+        
+        cocos2d::extension::Manifest* other = tolua_usertype(L, "cc.Manifest");
+        
+        std::map<std::string, cocos2d::extension::Manifest::AssetDiff> diff = self->genDiff(other);
+        
+        lua_newtable(L);
+        
+        for (auto const & asset : assets)
+        {
+            tolua_pushcppstring(L, asset.first.c_str());
+            
+            lua_newtable(L);
+            
+            tolua_pushcppstring(L, "asset");
+            lua_newtable(L);
+            tolua_pushcppstring(L, "md5");
+            tolua_pushcppstring(L, asset.second.assets.md5.c_str());
+            lua_rawset(L, -3);
+            tolua_pushcppstring(L, "path");
+            tolua_pushcppstring(L, asset.second.path.c_str());
+            lua_rawset(L, -3);
+            tolua_pushcppstring(L, "group");
+            tolua_pushcppstring(L, asset.second.group.c_str());
+            lua_rawset(L, -3);
+            tolua_pushcppstring(L, "updating");
+            tolua_pushboolean(L, asset.second.updating);
+            lua_rawset(L, -3);
+            lua_rawset(L, -3);
+            
+            tolua_pushcppstring(L, "type");
+            tolua_pushnumber(L, asset.second.type);
+            lua_rawset(L, -3);
+            
+            lua_rawset(L, -3);
+        }
+        
+        
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "genDiff",argc, 0);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_Extension_Manifest_genDiff'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int lua_cocos2dx_Extension_Manifest_getGroupVerions(lua_State* L)
+{
+    if (nullptr == L)
+        return 0;
+    
+    int argc = 0;
+    cocos2d::extension::Manifest* self = nullptr;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(L,1,"cc.Manifest",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = (cocos2d::extension::Manifest*)tolua_tousertype(L,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self)
+    {
+        tolua_error(L,"invalid 'cobj' in function 'lua_cocos2dx_Extension_Manifest_getGroupVerions'", nullptr);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(L)-1;
+    if (argc == 0)
+    {
+        
+        const std::map<std::string, std::string> groupVerions = self->getGroupVerions();
+        
+        lua_newtable(L);
+        
+        for (auto const & asset : assets)
+        {
+            tolua_pushcppstring(L, asset.first.c_str());
+            tolua_pushcppstring(L, asset.second.c_str());
+            lua_rawset(L, -3);
+        }
+        
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getGroupVerions",argc, 0);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_Extension_Manifest_getGroupVerions'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int lua_cocos2dx_Extension_Manifest_getAsset(lua_State* L)
+{
+    if (nullptr == L)
+        return 0;
+    
+    int argc = 0;
+    cocos2d::extension::Manifest* self = nullptr;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(L,1,"cc.Manifest",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = (cocos2d::extension::Manifest*)tolua_tousertype(L,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self)
+    {
+        tolua_error(L,"invalid 'cobj' in function 'lua_cocos2dx_Extension_Manifest_getAsset'", nullptr);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(L)-1;
+    if (argc == 1)
+    {
+        
+#if COCOS2D_DEBUG >= 1
+        if (!tolua_isstring(L, 2, 0, &tolua_err)) goto tolua_lerror;
+#endif
+        
+        //const Asset& getAsset(const std::string &key) const;
+        
+        const char* key = tolua_tocppstring(L, 2, "");
+        const Manifest::Asset asset = self->getAssets();
+
+        lua_newtable(L);
+        
+        tolua_pushcppstring(L, "md5");
+        tolua_pushcppstring(L, asset.second.assets.md5.c_str());
+        lua_rawset(L, -3);
+        tolua_pushcppstring(L, "path");
+        tolua_pushcppstring(L, asset.second.path.c_str());
+        lua_rawset(L, -3);
+        tolua_pushcppstring(L, "group");
+        tolua_pushcppstring(L, asset.second.group.c_str());
+        lua_rawset(L, -3);
+        tolua_pushcppstring(L, "updating");
+        tolua_pushboolean(L, asset.second.updating);
+        lua_rawset(L, -3);
+        
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getAsset",argc, 0);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_Extension_Manifest_getAsset'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static void extendManifest(lua_State* L)
+{
+    lua_pushstring(L, "cc.Manifest");
+    lua_rawget(L, LUA_REGISTRYINDEX);
+    if (lua_istable(L,-1))
+    {
+        tolua_function(L, "getAssets", lua_cocos2dx_Extension_Manifest_getAssets);
+        tolua_function(L, "genDiff", lua_cocos2dx_Extension_Manifest_genDiff);
+        tolua_function(L, "getGroupVerions", lua_cocos2dx_Extension_Manifest_getGroupVerions);
+        tolua_function(L, "getAsset", lua_cocos2dx_Extension_Manifest_getAsset);
     }
     lua_pop(L, 1);
 }
