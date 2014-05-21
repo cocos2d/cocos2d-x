@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include <stdio.h>
 #include <algorithm>
-
+#include "base/CCDirector.h"
 #include "base/ccUTF8.h"
 #include "platform/CCFileUtils.h"
 #include "edtaa3func.h"
@@ -104,7 +104,7 @@ FontFreeType::FontFreeType(bool distanceFieldEnabled /* = false */,int outline /
     {
         FT_Stroker_New(FontFreeType::getFTLibrary(), &_stroker);
         FT_Stroker_Set(_stroker,
-            (int)(_outlineSize * 64),
+            (int)(_outlineSize * 64 * CC_CONTENT_SCALE_FACTOR()),
             FT_STROKER_LINECAP_ROUND,
             FT_STROKER_LINEJOIN_ROUND,
             0);
@@ -142,7 +142,7 @@ bool FontFreeType::createFontObject(const std::string &fontName, int fontSize)
 
     // set the requested font size
     int dpi = 72;
-    int fontSizePoints = (int)(64.f * fontSize);
+    int fontSizePoints = (int)(64.f * fontSize * CC_CONTENT_SCALE_FACTOR());
     if (FT_Set_Char_Size(face, fontSizePoints, fontSizePoints, dpi, dpi))
         return false;
     
