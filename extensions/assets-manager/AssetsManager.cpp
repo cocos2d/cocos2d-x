@@ -171,15 +171,25 @@ std::string AssetsManager::get(const std::string& key) const
     else return "";
 }
 
+const std::string& AssetsManager::getManagerId() const
+{
+    return _managerId;
+}
+
 std::string AssetsManager::getLoadedEventName(const std::string& key)
 {
     std::string eventName = _managerId + "_" + key + "_Loaded";
     return eventName;
 }
 
-const Manifest* AssetsManager::getLocalManifest()
+const Manifest* AssetsManager::getLocalManifest() const
 {
     return _localManifest;
+}
+
+const Manifest* AssetsManager::getRemoteManifest() const
+{
+    return _remoteManifest;
 }
 
 const std::string& AssetsManager::getStoragePath() const

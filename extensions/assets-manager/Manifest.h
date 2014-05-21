@@ -40,12 +40,14 @@ class CC_DLL Manifest : public Ref
 {
 public:
     
+    //! The type of difference
     enum DiffType {
         ADDED,
         DELETED,
         MODIFIED
     };
     
+    //! Asset object
     struct Asset {
         std::string md5;
         std::string path;
@@ -53,73 +55,98 @@ public:
         bool updating;
     };
     
+    //! Object indicate the difference between two Assets
     struct AssetDiff {
         Asset asset;
         DiffType type;
     };
     
+    /** @brief Constructor for Manifest class
+     @param manifestUrl Url of the local manifest
+     */
     Manifest(const std::string& manifestUrl = "");
     
+    /** @brief Parse the manifest file information into this manifest
+     @param manifestUrl Url of the local manifest
+     */
     void parse(const std::string& manifestUrl);
     
+    /** @brief Check whether the version informations have been fully loaded
+     */
     bool isVersionLoaded() const;
+    
+    /** @brief Check whether the manifest have been fully loaded
+     */
     bool isLoaded() const;
     
+    /** @brief Check whether the version of this manifest equals to another.
+     @param b   The other manifest
+     */
     bool versionEquals(const Manifest *b) const;
     
+    /** @brief Generate difference between this Manifest and another.
+     @param b   The other manifest
+     */
     std::map<std::string, AssetDiff> genDiff(const Manifest *b) const;
     
+    /** @brief Prepend all search paths to the FileUtils.
+     */
     void prependSearchPaths();
     
-    /* @brief Gets remote package url.
+    /** @brief Gets remote package url.
      */
     const std::string& getPackageUrl() const;
     
-    /* @brief Sets remote package url.
+    /** @brief Sets remote package url.
+     @param packageUrl  Url of the remote package for downloading
      */
     void setPackageUrl(const std::string& packageUrl);
     
-    /* @brief Gets remote manifest file url.
+    /** @brief Gets remote manifest file url.
      */
     const std::string& getManifestFileUrl() const;
     
-    /* @brief Sets remote manifest file url.
+    /** @brief Sets remote manifest file url.
+     @param manifestFileUrl Url of the remote manifest file
      */
     void setManifestFileUrl(const std::string& manifestFileUrl);
     
-    /* @brief Gets remote version file url.
+    /** @brief Gets remote version file url.
      */
     const std::string& getVersionFileUrl() const;
     
-    /* @brief Sets remote version file url.
+    /** @brief Sets remote version file url.
+     @param manifestFileUrl Url of the remote version file
      */
     void setVersionFileUrl(const std::string& versionFileUrl);
     
-    /* @brief Gets manifest version.
+    /** @brief Gets manifest version.
      */
     const std::string& getManifestVersion() const;
     
-    /* @brief Gets all groups.
+    /** @brief Gets all groups.
      */
     const std::vector<std::string>& getGroups() const;
     
-    /* @brief Gets all groups version.
+    /** @brief Gets all groups version.
      */
     const std::map<std::string, std::string>& getGroupVerions() const;
     
-    /* @brief Gets version for the given group.
+    /** @brief Gets version for the given group.
+     @param group   Key of the requested group
      */
     const std::string& getGroupVersion(const std::string &group) const;
     
-    /* @brief Gets engine version.
+    /** @brief Gets engine version.
      */
     const std::string& getEngineVersion() const;
     
-    /* @brief Gets assets.
+    /** @brief Gets assets.
      */
     const std::map<std::string, Asset>& getAssets() const;
     
-    /* @brief Gets asset by key.
+    /** @brief Gets asset by key.
+     @param key Key of the requested asset
      */
     const Asset& getAsset(const std::string &key) const;
     
@@ -130,10 +157,13 @@ protected:
     
 private:
     
+    //! Indicate whether the version informations have been fully loaded
     bool _versionLoaded;
     
+    //! Indicate whether the manifest have been fully loaded
     bool _loaded;
     
+    //! Reference to the global file utils
     FileUtils *_fileUtils;
     
     //! The local manifest root

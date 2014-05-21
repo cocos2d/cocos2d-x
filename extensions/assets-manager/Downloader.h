@@ -37,24 +37,12 @@ class CC_DLL Downloader
 public:
     enum class ErrorCode
     {
-        // Error caused by creating a file to store downloaded data
         CREATE_FILE,
-        /** Error caused by network
-         -- network unavaivable
-         -- timeout
-         -- ...
-         */
+        
         NETWORK,
-        /** There is not a new version
-         */
+        
         NO_NEW_VERSION,
-        /** Error caused in uncompressing stage
-         -- can not open zip file
-         -- can not read file global information
-         -- can not read file information
-         -- can not create a directory
-         -- ...
-         */
+        
         UNCOMPRESS,
         
         CURL_UNINIT,
@@ -125,25 +113,33 @@ class DownloaderDelegateProtocol
 {
 public:
     virtual ~DownloaderDelegateProtocol() {};
-
-    /* @brief Call back function for error
-     @param error Error object
+    
+    /** @brief  Call back function for error handling,
+     the error will then be reported to user's listener registed in addUpdateEventListener
+     @param error   The error object contains ErrorCode, message, asset url, asset key
+     @warning AssetsManager internal use only
      * @js NA
      * @lua NA
      */
     virtual void onError(const Downloader::Error &error) {};
     
-    /** @brief Call back function for recording downloading percent
-     @param percent How much percent downloaded
-     @warning    This call back function just for recording downloading percent.
-     AssetsManager will do some other thing after downloading, you should
-     write code in onSuccess() after downloading.
+    /** @brief  Call back function for recording downloading percent of the current asset,
+     the progression will then be reported to user's listener registed in addUpdateProgressEventListener
+     @param total       Total size to download for this asset
+     @param downloaded  Total size already downloaded for this asset
+     @param url         The url of this asset
+     @param customId    The key of this asset
+     @warning AssetsManager internal use only
      * @js NA
      * @lua NA
      */
     virtual void onProgress(double total, double downloaded, const std::string &url, const std::string &customId) {};
     
-    /** @brief Call back function for success
+    /** @brief  Call back function for success of the current asset
+     the success event will then be send to user's listener registed in addUpdateEventListener
+     @param srcUrl      The url of this asset
+     @param customId    The key of this asset
+     @warning AssetsManager internal use only
      * @js NA
      * @lua NA
      */
