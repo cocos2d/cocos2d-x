@@ -128,7 +128,7 @@ public:
      */
     ssize_t getCurPageIndex() const;
     
-    Vector<Layout*>& getPages();
+    Vector<Layout*> getPages();
     
     Layout* getPage(ssize_t index);
     
@@ -174,13 +174,6 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
 
 protected:
-    virtual void addChild(Node * child) override;
-    virtual void addChild(Node * child, int zOrder) override;
-    virtual void addChild(Node* child, int zOrder, int tag) override;
-    virtual void removeChild(Node* widget, bool cleanup = true) override;
-    virtual void removeAllChildren() override;
-    virtual void removeAllChildrenWithCleanup(bool cleanup) override;
-
 
     Layout* createPage();
     float getPositionXByIndex(ssize_t idx);
@@ -210,8 +203,9 @@ protected:
 
 protected:
     ssize_t _curPageIdx;
-    Vector<Layout*> _pages;
+
     TouchDirection _touchMoveDir;
+
     float _touchStartLocation;
     float _touchMoveStartLocation;
     Vec2 _movePagePoint;
