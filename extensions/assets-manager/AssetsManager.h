@@ -37,41 +37,42 @@ NS_CC_EXT_BEGIN
 class AssetsManagerDelegateProtocol;
 
 /*
- *  This class is used to auto update resources, such as pictures or scripts.
- *  The updated package should be a zip file. And there should be a file named
- *  version in the server, which contains version code.
+ *  这个是自动更新诸如图片、脚本等资源的类
+ *  更新包应该是zip文件，并且在客户端应该有一个命名为version的文件，里面包含版本号。
+ *  
  */
 class AssetsManager : public Node
 {
 public:
     enum class ErrorCode
     {
-        // Error caused by creating a file to store downloaded data
+        
+        //创建存储已下载数据的文件引起的错误
         CREATE_FILE,
-        /** Error caused by network
-         -- network unavaivable
-         -- timeout
+        /** 网络错误
+         -- 不可用网络
+         -- 超时
          -- ...
          */
         NETWORK,
-        /** There is not a new version
+        /** 没用新版本
          */
         NO_NEW_VERSION,
-        /** Error caused in uncompressing stage
-         -- can not open zip file
-         -- can not read file global information
-         -- can not read file information
-         -- can not create a directory
+        /** 解压缩文件引起的错误
+         -- 无法打开zip文件
+         -- 无法读取文件的全局信息
+         -- 无法读取文件信息
+         -- 无法创建目录
          -- ...
          */
         UNCOMPRESS,
     };
     
-    /* @brief Creates a AssetsManager with new package url, version code url and storage path.
+    /* @brief 以packUrl,versionFileUrl,storagePath为参数创建AssetsManager
      *
-     * @param packageUrl URL of new package, the package should be a zip file.
-     * @param versionFileUrl URL of version file. It should contain version code of new package.
-     * @param storagePath The path to store downloaded resources.
+     * @param packageUrl 新包的URL, 这个包应该是一个zip文件.
+     * @param versionFileUrl 版本文件的URL. 里面应该包含新包的版本号.
+     * @param storagePath 存储已下载资源的路径.
      * @js NA
      */
     AssetsManager(const char* packageUrl = NULL, const char* versionFileUrl = NULL, const char* storagePath = NULL);
@@ -85,58 +86,58 @@ public:
     typedef std::function<void(int)> ProgressCallback;
     typedef std::function<void(void)> SuccessCallback;
 
-    /* @brief To access within scripting environment
+    /* @brief 在脚本环境中访问
      */
     static AssetsManager* create(const char* packageUrl, const char* versionFileUrl, const char* storagePath, ErrorCallback errorCallback, ProgressCallback progressCallback, SuccessCallback successCallback );
 
-    /* @brief Check out if there is a new version resource.
-     *        You may use this method before updating, then let user determine whether
-     *        he wants to update resources.
+    /* @brief 检查是否有新版的资源
+     *        你可以在更新之前调用这个方法，然后让用户决定是否更新资源
+     *       
      */
     virtual bool checkUpdate();
     
     using Node::update;
-    /* @brief Download new package if there is a new version, and uncompress downloaded zip file.
-     *        Ofcourse it will set search path that stores downloaded files.
+    /* @brief 如果有新的版本，就下载新包并解压缩下载的zip文件
+     *        并且设置存储已下载文件的搜寻路径
      */
     virtual void update();
     
-    /* @brief Gets url of package.
+    /* @brief 获取包的URL.
      */
     const char* getPackageUrl() const;
     
-    /* @brief Sets package url.
+    /* @brief 设置包的URL.
      */
     void setPackageUrl(const char* packageUrl);
     
-    /* @brief Gets version file url.
+    /* @brief 获取版本文件的URL.
      */
     const char* getVersionFileUrl() const;
     
-    /* @brief Gets version file url.
+    /* @brief 设置版本文件的URL.
      */
     void setVersionFileUrl(const char* versionFileUrl);
     
-    /* @brief Gets current version code.
+    /* @brief 获取当前版本号.
      */
     std::string getVersion();
     
-    /* @brief Deletes recorded version code.
+    /* @brief 删除原来的(recorded)版本号.
      */
     void deleteVersion();
     
-    /* @brief Gets storage path.
+    /* @brief 获取存储路径.
      */
     const char* getStoragePath() const;
     
-    /* @brief Sets storage path.
+    /* @brief 设置存储路径.
      *
-     * @param storagePath The path to store downloaded resources.
-     * @warm The path should be a valid path.
+     * @param storagePath 存储已下载资源的路径.
+     * @warm 这应该是一个有效的路径.
      */
     void setStoragePath(const char* storagePath);
     
-    /** @brief Sets delegate, the delegate will receive messages
+    /** @brief 设置委托，这个委托将接收消息
      * @js NA
      * @lua NA
      */
@@ -148,15 +149,15 @@ public:
      */
     AssetsManagerDelegateProtocol* getDelegate() const { return _delegate ;}
     
-    /** @brief Sets connection time out in seconds
+    /** @brief 设置以秒为单位的连接超时时间
      */
     void setConnectionTimeout(unsigned int timeout);
     
-    /** @brief Gets connection time out in secondes
+    /** @brief 获取以秒为单位的连接超时时间
      */
     unsigned int getConnectionTimeout();
     
-    /* downloadAndUncompress is the entry of a new thread 
+    /* 用一个新的线程下载并解压缩
      */
     friend int assetsManagerProgressFunc(void *, double, double, double, double);
 
@@ -169,19 +170,19 @@ protected:
     void downloadAndUncompress();
 
 private:
-    /** @brief Initializes storage path.
+    /** @brief 初始化存储路径
      */
     void createStoragePath();
     
-    /** @brief Destroys storage path.
+    /** @brief 销毁存储路径
      */
     void destroyStoragePath();
     
 private:
-    //! The path to store downloaded resources.
+    //! 存储已下载资源的路径（成员变量）
     std::string _storagePath;
     
-    //! The version of downloaded resources.
+    //! 以下载资源的版本（成员变量）
     std::string _version;
     
     std::string _packageUrl;
@@ -207,29 +208,29 @@ class AssetsManagerDelegateProtocol
 public:
     virtual ~AssetsManagerDelegateProtocol(){};
 public:
-    /* @brief Call back function for error
-       @param errorCode Type of error
+    /* @brief 发生错误时调用的成员函数
+       @param 错误类型
      * @js NA
      * @lua NA
      */
     virtual void onError(AssetsManager::ErrorCode errorCode) {};
-    /** @brief Call back function for recording downloading percent
-        @param percent How much percent downloaded
-        @warning    This call back function just for recording downloading percent.
-              AssetsManager will do some other thing after downloading, you should
-              write code in onSuccess() after downloading. 
+    /** @brief 记录下载进度的回调函数
+        @param percent 已下载的百分比
+        @warning    这个回调函数只是记录下载的百分比
+              你应该在onSuccess()函数中编写代码，让AssetsManager在下载完成后做一些其他的事情
+        
      * @js NA
      * @lua NA
      */
     virtual void onProgress(int percent) {};
-    /** @brief Call back function for success
+    /** @brief 成功的时候调用的回调函数
      * @js NA
      * @lua NA
      */
     virtual void onSuccess() {};
 };
 
-// Deprecated declaration
+// 弃用的声明
 CC_DEPRECATED_ATTRIBUTE typedef AssetsManager CCAssetsManager;
 CC_DEPRECATED_ATTRIBUTE typedef AssetsManagerDelegateProtocol CCAssetsManagerDelegateProtocol;
 
