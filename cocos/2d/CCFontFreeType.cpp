@@ -102,9 +102,10 @@ FontFreeType::FontFreeType(bool distanceFieldEnabled /* = false */,int outline /
 {
     if (_outlineSize > 0)
     {
+        _outlineSize *= CC_CONTENT_SCALE_FACTOR();
         FT_Stroker_New(FontFreeType::getFTLibrary(), &_stroker);
         FT_Stroker_Set(_stroker,
-            (int)(_outlineSize * 64 * CC_CONTENT_SCALE_FACTOR()),
+            (int)(_outlineSize * 64),
             FT_STROKER_LINECAP_ROUND,
             FT_STROKER_LINEJOIN_ROUND,
             0);
@@ -305,8 +306,8 @@ unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWid
             auto blendImage = new unsigned char[blendWidth * blendHeight * 2];
             memset(blendImage, 0, blendWidth * blendHeight * 2);
 
-            int px = blendWidth == outlineWidth ? 0 : _outlineSize;
-            int py = blendHeight == outlineHeight ? 0 : _outlineSize;
+            int px = (blendWidth - outlineWidth) / 2;
+            int py = (blendHeight - outlineHeight) / 2;
             for (int x = 0; x < outlineWidth; ++x)
             {
                 for (int y = 0; y < outlineHeight; ++y)
@@ -317,8 +318,8 @@ unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWid
                 }
             }
 
-            px = blendWidth == outWidth ? 0 : _outlineSize;
-            py = blendHeight == outHeight ? 0 : _outlineSize;
+            px = (blendWidth - outWidth) / 2;
+            py = (blendHeight - outHeight) / 2;
             for (int x = 0; x < outWidth; ++x)
             {
                 for (int y = 0; y < outHeight; ++y)
