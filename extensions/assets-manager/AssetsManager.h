@@ -165,7 +165,7 @@ CC_CONSTRUCTOR_ACCESS:
     
 protected:
     void loadManifest(const std::string& manifestUrl);
-    void setLocalManifest(Manifest *manifest);
+    void prepareLocalManifest();
     void adjustPath(std::string &path);
     void prependSearchPath(const std::string &path);
     

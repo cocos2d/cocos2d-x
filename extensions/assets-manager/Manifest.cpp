@@ -44,7 +44,7 @@ NS_CC_EXT_BEGIN;
 #define KEY_COMPRESSED          "compressed"
 #define KEY_COMPRESSED_FILE     "compressedFile"
 
-Manifest::Manifest(const std::string& manifestUrl)
+Manifest::Manifest(const std::string& manifestUrl/* = ""*/)
 : _versionLoaded(false)
 , _loaded(false)
 , _manifestRoot("")
@@ -61,6 +61,7 @@ Manifest::Manifest(const std::string& manifestUrl)
 
 void Manifest::parse(const std::string& manifestUrl)
 {
+    clear();
     rapidjson::Document json = parseJSON(manifestUrl);
     if (json.IsObject())
     {
@@ -379,8 +380,6 @@ void Manifest::loadVersion(const rapidjson::Document &json)
 
 void Manifest::loadManifest(const rapidjson::Document &json)
 {
-    clear();
-    
     loadVersion(json);
     
     // Retrieve package url
