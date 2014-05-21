@@ -96,7 +96,7 @@ void PageView::addWidgetToPage(Widget *widget, ssize_t pageIdx, bool forceCreate
     {
         return;
     }
-    ssize_t pageCount = _protectedChildren.size();
+    ssize_t pageCount = this->getPageCount();
     if (pageIdx < 0 || pageIdx >= pageCount)
     {
         if (forceCreate)
@@ -112,7 +112,7 @@ void PageView::addWidgetToPage(Widget *widget, ssize_t pageIdx, bool forceCreate
     }
     else
     {
-        Node * page = _protectedChildren.at(pageIdx);
+        Node * page = this->getPages().at(pageIdx);
         page->addChild(widget);
     }
 }
@@ -142,7 +142,7 @@ void PageView::addPage(Layout* page)
         CCLOG("page size does not match pageview size, it will be force sized!");
         page->setSize(pvSize);
     }
-    page->setPosition(Vec2(getPositionXByIndex(_protectedChildren.size()), 0));
+    page->setPosition(Vec2(getPositionXByIndex(this->getPageCount()), 0));
     
     addProtectedChild(page);
     
@@ -184,7 +184,7 @@ void PageView::insertPage(Layout* page, int idx)
             CCLOG("page size does not match pageview size, it will be force sized!");
             page->setSize(pvSize);
         }
-        ssize_t length = _protectedChildren.size();
+        ssize_t length = this->getPageCount();
         for (ssize_t i=(idx+1); i<length; i++){
             Node* behindPage = _protectedChildren.at(i);
             Vec2 formerPos = behindPage->getPosition();
@@ -208,17 +208,20 @@ void PageView::removePage(Layout* page)
 
 void PageView::removePageAtIndex(ssize_t index)
 {
-    if (index < 0 || index >= _protectedChildren.size())
+    if (index < 0 || index >= this->getPages().size())
     {
         return;
     }
-    Layout* page = dynamic_cast<Layout*>(_protectedChildren.at(index));
+    Layout* page = dynamic_cast<Layout*>(this->getPages().at(index));
     removePage(page);
 }
     
 void PageView::removeAllPages()
 {
-    _protectedChildren.clear();
+    for(auto& node : this->getPages())
+    {
+        _protectedChildren.eraseObject(node);
+    }
 }
 
 void PageView::updateBoundaryPages()
@@ -229,8 +232,13 @@ void PageView::updateBoundaryPages()
         _rightChild = nullptr;
         return;
     }
-    _leftChild = dynamic_cast<Widget*>(_protectedChildren.at(0));
-    _rightChild = dynamic_cast<Widget*>(_protectedChildren.at(_protectedChildren.size()-1));
+    _leftChild = dynamic_cast<Widget*>(this->getPages().at(0));
+    _rightChild = dynamic_cast<Widget*>(this->getPages().at(this->getPageCount()-1));
+}
+
+ssize_t PageView::getPageCount()
+{
+    return this->getPages().size();
 }
 
 float PageView::getPositionXByIndex(ssize_t idx)
@@ -261,7 +269,7 @@ void PageView::updateChildrenSize()
 
 void PageView::updateChildrenPosition()
 {
-    ssize_t pageCount = _protectedChildren.size();
+    ssize_t pageCount = this->getPageCount();
     if (pageCount <= 0)
     {
         _curPageIdx = 0;
@@ -274,22 +282,21 @@ void PageView::updateChildrenPosition()
     float pageWidth = getSize().width;
     for (int i=0; i<pageCount; i++)
     {
-        Layout* page = dynamic_cast<Layout*>(_protectedChildren.at(i));
-        if (page) {
-            page->setPosition(Vec2((i-_curPageIdx)*pageWidth, 0));
-        }
+        Layout* page = this->getPages().at(i);
+        page->setPosition(Vec2((i-_curPageIdx)*pageWidth, 0));
+        
     }
 }
 
 
 void PageView::scrollToPage(ssize_t idx)
 {
-    if (idx < 0 || idx >= _protectedChildren.size())
+    if (idx < 0 || idx >= this->getPageCount())
     {
         return;
     }
     _curPageIdx = idx;
-    Widget* curPage = dynamic_cast<Widget*>(_protectedChildren.at(idx));
+    Widget* curPage = dynamic_cast<Widget*>(this->getPages().at(idx));
     _autoScrollDistance = -(curPage->getPosition().x);
     _autoScrollSpeed = fabs(_autoScrollDistance)/0.2f;
     _autoScrollDir = _autoScrollDistance > 0 ? 1 : 0;
@@ -385,7 +392,7 @@ void PageView::onTouchCancelled(Touch *touch, Event *unusedEvent)
 
 void PageView::movePages(float offset)
 {
-    for (auto& page : _protectedChildren)
+    for (auto& page : this->getPages())
     {
         _movePagePoint.x = page->getPosition().x + offset;
         _movePagePoint.y = page->getPosition().y;
@@ -395,7 +402,7 @@ void PageView::movePages(float offset)
 
 bool PageView::scrollPages(float touchOffset)
 {
-    if (_protectedChildren.size() <= 0)
+    if (this->getPageCount() <= 0)
     {
         return false;
     }
@@ -461,15 +468,15 @@ void PageView::handleMoveLogic(const Vec2 &touchPoint)
 
 void PageView::handleReleaseLogic(const Vec2 &touchPoint)
 {
-    if (_protectedChildren.size() <= 0)
+    if (this->getPages().size() <= 0)
     {
         return;
     }
-    Widget* curPage = dynamic_cast<Widget*>(_protectedChildren.at(_curPageIdx));
+    Widget* curPage = dynamic_cast<Widget*>(this->getPages().at(_curPageIdx));
     if (curPage)
     {
         Vec2 curPagePos = curPage->getPosition();
-        ssize_t pageCount = _protectedChildren.size();
+        ssize_t pageCount = this->getPages().size();
         float curPageLocation = curPagePos.x;
         float pageWidth = getSize().width;
         float boundary = pageWidth/2.0f;
@@ -567,18 +574,20 @@ Vector<Layout*> PageView::getPages()
     Vector<Layout*> layoutChildren;
     for (auto& node : _protectedChildren) {
         Layout *layout = dynamic_cast<Layout*>(node);
-        layoutChildren.pushBack(layout);
+        if (layout) {
+            layoutChildren.pushBack(layout);
+        }
     }
     return layoutChildren;
 }
     
 Layout* PageView::getPage(ssize_t index)
 {
-    if (index < 0 || index >= _protectedChildren.size())
+    if (index < 0 || index >= this->getPages().size())
     {
         return nullptr;
     }
-    return dynamic_cast<Layout*>(_protectedChildren.at(index));
+    return dynamic_cast<Layout*>(this->getPages().at(index));
 }
 
 std::string PageView::getDescription() const

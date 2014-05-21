@@ -177,6 +177,8 @@ protected:
 
     Layout* createPage();
     float getPositionXByIndex(ssize_t idx);
+    ssize_t getPageCount();
+
     void updateBoundaryPages();
     virtual bool scrollPages(float touchOffset);
     void movePages(float offset);
