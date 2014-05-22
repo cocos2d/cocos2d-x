@@ -1261,16 +1261,16 @@ void Director::onCaptureScreen(const std::function<void(bool, const std::string&
     
     do
     {
-        GLubyte* buffer = new GLubyte[width * height * 4];
+        std::shared_ptr<GLubyte> buffer(new GLubyte[width * height * 4], [](GLubyte* p){ CC_SAFE_DELETE_ARRAY(p); });
         if (!buffer)
         {
             break;
         }
         
         glPixelStorei(GL_PACK_ALIGNMENT, 1);
-        glReadPixels(originx, originy, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
+        glReadPixels(originx, originy, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer.get());
         
-        GLubyte* flippedBuffer = new GLubyte[width * height * 4];
+        std::shared_ptr<GLubyte> flippedBuffer(new GLubyte[width * height * 4], [](GLubyte* p) { CC_SAFE_DELETE_ARRAY(p); });
         if (!flippedBuffer)
         {
             break;
@@ -1278,14 +1278,13 @@ void Director::onCaptureScreen(const std::function<void(bool, const std::string&
         
         for (int row = 0; row < height; ++row)
         {
-            memcpy(flippedBuffer + (height - row - 1) * width * 4, buffer + row * width * 4, width * 4);
+            memcpy(flippedBuffer.get() + (height - row - 1) * width * 4, buffer.get() + row * width * 4, width * 4);
         }
-        CC_SAFE_DELETE_ARRAY(buffer);
         
-        Image* image = new Image();
+        std::shared_ptr<Image> image(new Image);
         if (image)
         {
-            image->initWithRawData(flippedBuffer, width * height * 4, width, height, 8);
+            image->initWithRawData(flippedBuffer.get(), width * height * 4, width, height, 8);
             if (FileUtils::getInstance()->isAbsolutePath(filename))
             {
                 outputFile = filename;
@@ -1297,8 +1296,6 @@ void Director::onCaptureScreen(const std::function<void(bool, const std::string&
             }
             succeed = image->saveToFile(outputFile);
         }
-        CC_SAFE_DELETE_ARRAY(flippedBuffer);
-        CC_SAFE_DELETE(image);
     }while(0);
     
     if (afterCaptured)
