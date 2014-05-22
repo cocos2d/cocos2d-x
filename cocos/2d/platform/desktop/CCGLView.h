@@ -42,7 +42,7 @@ public:
     static GLView* createWithFullScreen(const std::string& viewName, const GLFWvidmode &videoMode, GLFWmonitor *monitor);
 
     /*
-     *frameZoomFactor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
+     *帧缩放因子。这个函数是用来调试桌面版的大分辨率的（如：ipad）应用程序
      */
 
     //void resize(int width, int height);
@@ -58,7 +58,7 @@ public:
     void pollEvents();
     GLFWwindow* getWindow() const { return _mainWindow; }
 
-    /* override functions */
+    /* 重载函数 */
     virtual bool isOpenGLReady() override;
     virtual void end() override;
     virtual void swapBuffers() override;
@@ -66,15 +66,15 @@ public:
     virtual void setIMEKeyboardState(bool bOpen) override;
 
     /*
-     * Set zoom factor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
+     *设置帧缩放因子。这个函数是用来调试桌面版的大分辨率应用程序（如：iPad）
      */
     void setFrameZoomFactor(float zoomFactor);
 
-    /** Retina support is disabled by default
-     *  @note This method is only available on Mac.
+    /** 默认情况下Retina支持是不可用的
+     *  @note 这个函数只能在Mac平台上使用.
      */
     void enableRetina(bool enabled);
-    /** Check whether retina display is enabled. */
+    /** 检查是否支持retina display */
     bool isRetinaEnabled() { return _isRetinaEnabled; };
 
 protected:
@@ -89,7 +89,7 @@ protected:
 
     void updateFrameSize();
 
-    // GLFW callbacks
+    // GLFW 回调函数
     void onGLFWError(int errorID, const char* errorDesc);
     void onGLFWMouseCallBack(GLFWwindow* window, int button, int action, int modify);
     void onGLFWMouseMoveCallBack(GLFWwindow* window, double x, double y);
@@ -104,7 +104,7 @@ protected:
     bool _supportTouch;
     bool _isInRetinaMonitor;
     bool _isRetinaEnabled;
-    int  _retinaFactor;  // Should be 1 or 2
+    int  _retinaFactor;  // 值应该是1或者2
 
     float _frameZoomFactor;
 
