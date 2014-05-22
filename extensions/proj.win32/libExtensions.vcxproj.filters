@@ -19,6 +19,12 @@
     <Filter Include="AssetsManager">
       <UniqueIdentifier>{49487dbe-5758-436a-b014-8e2edc6b33ae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="AssetsManager\rapidjson">
+      <UniqueIdentifier>{109ac043-53f4-44fe-872e-c18838dfd36a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AssetsManager\rapidjson\internal">
+      <UniqueIdentifier>{bd9c3c57-97d9-40fe-b717-ea440865205d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\GUI\CCScrollView\CCScrollView.cpp">
@@ -83,6 +89,18 @@
     </ClCompile>
     <ClCompile Include="..\physics-nodes\CCPhysicsSprite.cpp">
       <Filter>physics_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\assets-manager\CCEventAssetsManager.cpp">
+      <Filter>AssetsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\assets-manager\CCEventListenerAssetsManager.cpp">
+      <Filter>AssetsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\assets-manager\Downloader.cpp">
+      <Filter>AssetsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\assets-manager\Manifest.cpp">
+      <Filter>AssetsManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -156,6 +174,48 @@
     </ClInclude>
     <ClInclude Include="..\physics-nodes\CCPhysicsSprite.h">
       <Filter>physics_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\assets-manager\CCEventAssetsManager.h">
+      <Filter>AssetsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\assets-manager\CCEventListenerAssetsManager.h">
+      <Filter>AssetsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\assets-manager\Downloader.h">
+      <Filter>AssetsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\assets-manager\Manifest.h">
+      <Filter>AssetsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\json\document.h">
+      <Filter>AssetsManager\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\json\filestream.h">
+      <Filter>AssetsManager\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\json\prettywriter.h">
+      <Filter>AssetsManager\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\json\rapidjson.h">
+      <Filter>AssetsManager\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\json\reader.h">
+      <Filter>AssetsManager\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\json\stringbuffer.h">
+      <Filter>AssetsManager\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\json\writer.h">
+      <Filter>AssetsManager\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\json\internal\pow10.h">
+      <Filter>AssetsManager\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\json\internal\stack.h">
+      <Filter>AssetsManager\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\json\internal\strfunc.h">
+      <Filter>AssetsManager\rapidjson\internal</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
