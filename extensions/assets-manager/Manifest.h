@@ -40,8 +40,10 @@ class CC_DLL Manifest : public Ref
 {
 public:
     
+    friend class AssetsManager;
+    
     //! The type of difference
-    enum DiffType {
+    enum class DiffType {
         ADDED,
         DELETED,
         MODIFIED
@@ -51,8 +53,6 @@ public:
     struct Asset {
         std::string md5;
         std::string path;
-        std::string group;
-        bool updating;
     };
     
     //! Object indicate the difference between two Assets
@@ -60,6 +60,41 @@ public:
         Asset asset;
         DiffType type;
     };
+    
+    /** @brief Check whether the version informations have been fully loaded
+     */
+    bool isVersionLoaded() const;
+    
+    /** @brief Check whether the manifest have been fully loaded
+     */
+    bool isLoaded() const;
+    
+    /** @brief Gets remote package url.
+     */
+    const std::string& getPackageUrl() const;
+    
+    /** @brief Gets remote manifest file url.
+     */
+    const std::string& getManifestFileUrl() const;
+    
+    /** @brief Gets remote version file url.
+     */
+    const std::string& getVersionFileUrl() const;
+    
+    /** @brief Gets manifest version.
+     */
+    const std::string& getVersion() const;
+    
+    /** @brief Gets assets.
+     */
+    const std::unordered_map<std::string, Asset>& getAssets() const;
+    
+    /** @brief Gets asset by key.
+     @param key Key of the requested asset
+     */
+    const Asset& getAsset(const std::string &key) const;
+    
+protected:
     
     /** @brief Constructor for Manifest class
      @param manifestUrl Url of the local manifest
@@ -71,14 +106,6 @@ public:
      */
     void parse(const std::string& manifestUrl);
     
-    /** @brief Check whether the version informations have been fully loaded
-     */
-    bool isVersionLoaded() const;
-    
-    /** @brief Check whether the manifest have been fully loaded
-     */
-    bool isLoaded() const;
-    
     /** @brief Check whether the version of this manifest equals to another.
      @param b   The other manifest
      */
@@ -87,42 +114,21 @@ public:
     /** @brief Generate difference between this Manifest and another.
      @param b   The other manifest
      */
-    std::map<std::string, AssetDiff> genDiff(const Manifest *b) const;
+    std::unordered_map<std::string, AssetDiff> genDiff(const Manifest *b) const;
     
     /** @brief Prepend all search paths to the FileUtils.
      */
     void prependSearchPaths();
     
-    /** @brief Gets remote package url.
-     */
-    const std::string& getPackageUrl() const;
+    void loadVersion(const rapidjson::Document &json);
     
-    /** @brief Sets remote package url.
-     @param packageUrl  Url of the remote package for downloading
-     */
-    void setPackageUrl(const std::string& packageUrl);
+    void loadManifest(const rapidjson::Document &json);
     
-    /** @brief Gets remote manifest file url.
-     */
-    const std::string& getManifestFileUrl() const;
+    rapidjson::Document parseJSON(const std::string &url);
     
-    /** @brief Sets remote manifest file url.
-     @param manifestFileUrl Url of the remote manifest file
-     */
-    void setManifestFileUrl(const std::string& manifestFileUrl);
+    Asset parseAsset(const std::string &path, const rapidjson::Value &json);
     
-    /** @brief Gets remote version file url.
-     */
-    const std::string& getVersionFileUrl() const;
-    
-    /** @brief Sets remote version file url.
-     @param manifestFileUrl Url of the remote version file
-     */
-    void setVersionFileUrl(const std::string& versionFileUrl);
-    
-    /** @brief Gets manifest version.
-     */
-    const std::string& getManifestVersion() const;
+    void clear();
     
     /** @brief Gets all groups.
      */
@@ -130,30 +136,12 @@ public:
     
     /** @brief Gets all groups version.
      */
-    const std::map<std::string, std::string>& getGroupVerions() const;
+    const std::unordered_map<std::string, std::string>& getGroupVerions() const;
     
     /** @brief Gets version for the given group.
      @param group   Key of the requested group
      */
     const std::string& getGroupVersion(const std::string &group) const;
-    
-    /** @brief Gets engine version.
-     */
-    const std::string& getEngineVersion() const;
-    
-    /** @brief Gets assets.
-     */
-    const std::map<std::string, Asset>& getAssets() const;
-    
-    /** @brief Gets asset by key.
-     @param key Key of the requested asset
-     */
-    const Asset& getAsset(const std::string &key) const;
-    
-protected:
-    void loadVersion(const rapidjson::Document &json);
-    void loadManifest(const rapidjson::Document &json);
-    Asset parseAsset(const rapidjson::Value &json);
     
 private:
     
@@ -185,20 +173,16 @@ private:
     std::vector<std::string> _groups;
     
     //! The versions of all local group [Optional]
-    std::map<std::string, std::string> _groupVer;
+    std::unordered_map<std::string, std::string> _groupVer;
     
     //! The version of local engine
     std::string _engineVer;
     
     //! Full assets list
-    std::map<std::string, Asset> _assets;
+    std::unordered_map<std::string, Asset> _assets;
     
     //! All search paths
     std::vector<std::string> _searchPaths;
-    
-    rapidjson::Document parseJSON(const std::string &url);
-    
-    void clear();
 };
 
 NS_CC_EXT_END;

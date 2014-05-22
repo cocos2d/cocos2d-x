@@ -87,7 +87,7 @@ bool Manifest::isLoaded() const
 bool Manifest::versionEquals(const Manifest *b) const
 {
     // Check manifest version
-    if (_version != b->getManifestVersion())
+    if (_version != b->getVersion())
     {
         return false;
     }
@@ -95,7 +95,7 @@ bool Manifest::versionEquals(const Manifest *b) const
     else
     {
         std::vector<std::string> bGroups = b->getGroups();
-        std::map<std::string, std::string> bGroupVer = b->getGroupVerions();
+        std::unordered_map<std::string, std::string> bGroupVer = b->getGroupVerions();
         // Check group size
         if (bGroups.size() != _groups.size())
             return false;
@@ -114,15 +114,15 @@ bool Manifest::versionEquals(const Manifest *b) const
     return true;
 }
 
-std::map<std::string, Manifest::AssetDiff> Manifest::genDiff(const Manifest *b) const
+std::unordered_map<std::string, Manifest::AssetDiff> Manifest::genDiff(const Manifest *b) const
 {
-    std::map<std::string, AssetDiff> diff_map;
-    std::map<std::string, Asset> bAssets = b->getAssets();
+    std::unordered_map<std::string, AssetDiff> diff_map;
+    std::unordered_map<std::string, Asset> bAssets = b->getAssets();
     
     std::string key;
     Asset valueA;
     Asset valueB;
-    std::map<std::string, Asset>::const_iterator valueIt, it;
+    std::unordered_map<std::string, Asset>::const_iterator valueIt, it;
     for (it = _assets.begin(); it != _assets.end(); it++)
     {
         key = it->first;
@@ -133,8 +133,9 @@ std::map<std::string, Manifest::AssetDiff> Manifest::genDiff(const Manifest *b) 
         if (valueIt == bAssets.cend()) {
             AssetDiff diff;
             diff.asset = valueA;
-            diff.type = DELETED;
+            diff.type = DiffType::DELETED;
             diff_map.emplace(key, diff);
+            continue;
         }
         
         // Modified
@@ -142,7 +143,7 @@ std::map<std::string, Manifest::AssetDiff> Manifest::genDiff(const Manifest *b) 
         if (valueA.md5 != valueB.md5) {
             AssetDiff diff;
             diff.asset = valueB;
-            diff.type = MODIFIED;
+            diff.type = DiffType::MODIFIED;
             diff_map.emplace(key, diff);
         }
     }
@@ -157,7 +158,7 @@ std::map<std::string, Manifest::AssetDiff> Manifest::genDiff(const Manifest *b) 
         if (valueIt == _assets.cend()) {
             AssetDiff diff;
             diff.asset = valueB;
-            diff.type = ADDED;
+            diff.type = DiffType::ADDED;
             diff_map.emplace(key, diff);
         }
     }
@@ -190,19 +191,9 @@ const std::string& Manifest::getPackageUrl() const
     return _packageUrl;
 }
 
-void Manifest::setPackageUrl(const std::string& packageUrl)
-{
-    _packageUrl = packageUrl;
-}
-
 const std::string& Manifest::getManifestFileUrl() const
 {
     return _remoteManifestUrl;
-}
-
-void Manifest::setManifestFileUrl(const std::string& manifestFileUrl)
-{
-    _remoteManifestUrl = manifestFileUrl;
 }
 
 const std::string& Manifest::getVersionFileUrl() const
@@ -210,12 +201,7 @@ const std::string& Manifest::getVersionFileUrl() const
     return _remoteVersionUrl;
 }
 
-void Manifest::setVersionFileUrl(const std::string& versionFileUrl)
-{
-    _remoteVersionUrl = versionFileUrl;
-}
-
-const std::string& Manifest::getManifestVersion() const
+const std::string& Manifest::getVersion() const
 {
     return _version;
 }
@@ -225,7 +211,7 @@ const std::vector<std::string>& Manifest::getGroups() const
     return _groups;
 }
 
-const std::map<std::string, std::string>& Manifest::getGroupVerions() const
+const std::unordered_map<std::string, std::string>& Manifest::getGroupVerions() const
 {
     return _groupVer;
 }
@@ -235,12 +221,7 @@ const std::string& Manifest::getGroupVersion(const std::string &group) const
     return _groupVer.at(group);
 }
 
-const std::string& Manifest::getEngineVersion() const
-{
-    return _engineVer;
-}
-
-const std::map<std::string, Manifest::Asset>& Manifest::getAssets() const
+const std::unordered_map<std::string, Manifest::Asset>& Manifest::getAssets() const
 {
     return _assets;
 }
@@ -303,27 +284,20 @@ void Manifest::clear()
     }
 }
 
-Manifest::Asset Manifest::parseAsset(const rapidjson::Value& json)
+Manifest::Asset Manifest::parseAsset(const std::string &path, const rapidjson::Value &json)
 {
     Asset asset;
-    asset.updating = false;
+    asset.path = path;
+        
+    if( json.HasMember(KEY_MD5) && json[KEY_MD5].IsString() )
+    {
+        asset.md5 = json[KEY_MD5].GetString();
+    }
+    else asset.md5 = "";
     
-    // The path info is obligated in Asset
     if( json.HasMember(KEY_PATH) && json[KEY_PATH].IsString() )
     {
         asset.path = json[KEY_PATH].GetString();
-        
-        if( json.HasMember(KEY_MD5) && json[KEY_MD5].IsString() )
-        {
-            asset.md5 = json[KEY_MD5].GetString();
-        }
-        else asset.md5 = "";
-        
-        if( json.HasMember(KEY_GROUP) && json[KEY_GROUP].IsString() )
-        {
-            asset.group = json[KEY_GROUP].GetString();
-        }
-        else asset.group = "";
     }
     
     return asset;
@@ -405,7 +379,7 @@ void Manifest::loadManifest(const rapidjson::Document &json)
             for (rapidjson::Value::ConstMemberIterator itr = assets.MemberonBegin(); itr != assets.MemberonEnd(); ++itr)
             {
                 std::string key = itr->name.GetString();
-                Asset asset = parseAsset(itr->value);
+                Asset asset = parseAsset(key, itr->value);
                 _assets.emplace(key, asset);
             }
         }
