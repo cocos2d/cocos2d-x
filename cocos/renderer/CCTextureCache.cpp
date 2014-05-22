@@ -268,7 +268,11 @@ void TextureCache::addImageAsyncCallBack(float dt)
                 texture = it->second;
         }
         
-        asyncStruct->callback(texture);
+        if (asyncStruct->callback)
+        {
+            asyncStruct->callback(texture);
+        }
+        
         if(image)
         {
             image->release();
