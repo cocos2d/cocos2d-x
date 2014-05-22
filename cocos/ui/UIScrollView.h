@@ -58,7 +58,7 @@ CC_DEPRECATED_ATTRIBUTE typedef void (Ref::*SEL_ScrollViewEvent)(Ref*, Scrollvie
 #define scrollvieweventselector(_SELECTOR) (SEL_ScrollViewEvent)(&_SELECTOR)
 
 
-class ScrollView : public Layout , public UIScrollInterface
+class ScrollView : public Layout , public ScrollViewProtocol
 {
     
     DECLARE_CLASS_GUI_INFO

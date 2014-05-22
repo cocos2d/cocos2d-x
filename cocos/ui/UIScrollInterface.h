@@ -31,10 +31,10 @@ NS_CC_BEGIN
 
 namespace ui {
 
-class UIScrollInterface
+class ScrollViewProtocol
 {
 public:
-    virtual ~UIScrollInterface() {}
+    virtual ~ScrollViewProtocol() {}
 
 protected:
     virtual void handlePressLogic(const Vec2 &touchPoint) = 0;
