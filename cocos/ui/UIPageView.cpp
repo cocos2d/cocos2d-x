@@ -43,7 +43,7 @@ _rightBoundary(0.0f),
 _isAutoScrolling(false),
 _autoScrollDistance(0.0f),
 _autoScrollSpeed(0.0f),
-_autoScrollDir(0),
+_autoScrollDirection(AutoScrollDirection::LEFT),
 _childFocusCancelOffset(5.0f),
 _pageViewEventListener(nullptr),
 _pageViewEventSelector(nullptr),
@@ -262,7 +262,7 @@ void PageView::scrollToPage(ssize_t idx)
     Layout* curPage = _pages.at(idx);
     _autoScrollDistance = -(curPage->getPosition().x);
     _autoScrollSpeed = fabs(_autoScrollDistance)/0.2f;
-    _autoScrollDir = _autoScrollDistance > 0 ? 1 : 0;
+    _autoScrollDirection = _autoScrollDistance > 0 ? AutoScrollDirection::RIGHT : AutoScrollDirection::LEFT;
     _isAutoScrolling = true;
 }
 
@@ -270,9 +270,15 @@ void PageView::update(float dt)
 {
     if (_isAutoScrolling)
     {
-        switch (_autoScrollDir)
+        this->autoScroll(dt);
+    }
+}
+    
+void PageView::autoScroll(float dt)
+    {
+        switch (_autoScrollDirection)
         {
-            case 0:
+            case AutoScrollDirection::LEFT:
             {
                 float step = _autoScrollSpeed*dt;
                 if (_autoScrollDistance + step >= 0.0f)
@@ -293,7 +299,7 @@ void PageView::update(float dt)
                 break;
             }
                 break;
-            case 1:
+            case AutoScrollDirection::RIGHT:
             {
                 float step = _autoScrollSpeed*dt;
                 if (_autoScrollDistance - step <= 0.0f)
@@ -307,17 +313,19 @@ void PageView::update(float dt)
                     _autoScrollDistance -= step;
                 }
                 scrollPages(step);
+                
                 if (!_isAutoScrolling)
                 {
                     pageTurningEvent();
                 }
+                
                 break;
             }
             default:
                 break;
         }
+
     }
-}
 
 bool PageView::onTouchBegan(Touch *touch, Event *unusedEvent)
 {
@@ -576,7 +584,7 @@ void PageView::copyClonedWidgetChildren(Widget* model)
     auto modelPages = static_cast<PageView*>(model)->getPages();
     for (auto& page : modelPages)
     {
-        addPage(dynamic_cast<Layout*>(page->clone()));
+        addPage(static_cast<Layout*>(page->clone()));
     }
 }
 

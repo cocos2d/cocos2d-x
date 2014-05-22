@@ -187,6 +187,7 @@ protected:
     void pageTurningEvent();
     void updateAllPagesSize();
     void updateAllPagesPosition();
+    void autoScroll(float dt);
 
     virtual void handlePressLogic(const Vec2 &touchPoint);
     virtual void handleMoveLogic(const Vec2 &touchPoint) ;
@@ -203,6 +204,16 @@ protected:
     virtual void doLayout() override;
 
 protected:
+    enum class AutoScrollDirection
+    {
+        LEFT,
+        RIGHT
+    };
+    bool _isAutoScrolling;
+    float _autoScrollDistance;
+    float _autoScrollSpeed;
+    AutoScrollDirection _autoScrollDirection;
+    
     ssize_t _curPageIdx;
     Vector<Layout*> _pages;
 
@@ -215,10 +226,7 @@ protected:
     Widget* _rightBoundaryChild;
     float _leftBoundary;
     float _rightBoundary;
-    bool _isAutoScrolling;
-    float _autoScrollDistance;
-    float _autoScrollSpeed;
-    int _autoScrollDir;
+   
     float _childFocusCancelOffset;
 
 
