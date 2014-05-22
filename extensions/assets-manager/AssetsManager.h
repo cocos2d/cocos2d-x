@@ -195,7 +195,7 @@ private:
     State _updateState;
     
     //! Downloader
-    Downloader* _downloader;
+    std::shared_ptr<Downloader> _downloader;
     
     //! The reference to the local assets
     const std::unordered_map<std::string, Manifest::Asset> *_assets;

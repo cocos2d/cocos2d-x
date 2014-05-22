@@ -28,9 +28,11 @@
 #include "cocos2d.h"
 #include "extensions/ExtensionMacros.h"
 
+#include <memory>
+
 NS_CC_EXT_BEGIN
 
-class CC_DLL Downloader
+class CC_DLL Downloader : public std::enable_shared_from_this<Downloader>
 {
 public:
     
@@ -63,7 +65,7 @@ public:
     
     struct ProgressData
     {
-        Downloader* downloader;
+        std::weak_ptr<Downloader> downloader;
         std::string customId;
         std::string url;
         double downloaded;
@@ -92,12 +94,14 @@ public:
     
     void batchDownload(const std::unordered_map<std::string, DownloadUnit> &units);
     
-protected:
-    
     /**
      *  The default constructor.
      */
     Downloader();
+    
+    ~Downloader();
+    
+protected:
     
     FILE *prepareDownload(const std::string &srcUrl, const std::string &storagePath, const std::string &customId);
     

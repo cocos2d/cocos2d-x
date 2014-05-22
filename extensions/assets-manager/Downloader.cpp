@@ -50,11 +50,14 @@ int downloadProgressFunc(Downloader::ProgressData *ptr, double totalToDownload, 
     if (ptr->downloaded != nowDownloaded)
     {
         ptr->downloaded = nowDownloaded;
+        
         std::string url = ptr->url;
         std::string customId = ptr->customId;
-        auto callback = ptr->downloader->getProgressCallback();
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread([url, customId, callback, totalToDownload, nowDownloaded]{
-            if (callback)
+        std::shared_ptr<Downloader> downloader = ptr->downloader.lock();
+        
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
+            auto callback = downloader->getProgressCallback();
+            if (downloader != nullptr && callback != nullptr)
                 callback(totalToDownload, nowDownloaded, url, customId);
         });
     }
@@ -71,6 +74,10 @@ Downloader::Downloader()
 {
 }
 
+Downloader::~Downloader()
+{
+}
+
 int Downloader::getConnectionTimeout()
 {
     return _connectionTimeout;
@@ -84,13 +91,14 @@ void Downloader::setConnectionTimeout(int timeout)
 
 void Downloader::notifyError(ErrorCode code, const std::string &msg/* ="" */, const std::string &customId/* ="" */)
 {
-    Director::getInstance()->getScheduler()->performFunctionInCocosThread([code, msg, customId, this]{
+    std::shared_ptr<Downloader> downloader = shared_from_this();
+    Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
         Error err;
         err.code = code;
         err.message = msg;
         err.customId = customId;
-        if (this->_onError != nullptr)
-            this->_onError(err);
+        if (downloader != nullptr && downloader->_onError != nullptr)
+            downloader->_onError(err);
     });
 }
 
@@ -167,10 +175,11 @@ void Downloader::batchDownload(const std::unordered_map<std::string, Downloader:
 
 void Downloader::download(const std::string &srcUrl, FILE *fp, const std::string &customId)
 {
+    std::shared_ptr<Downloader> downloader = shared_from_this();
     ProgressData data;
     data.customId = customId;
     data.url = srcUrl;
-    data.downloader = this;
+    data.downloader = downloader;
     data.downloaded = 0;
     
     void *curl = curl_easy_init();
@@ -201,9 +210,9 @@ void Downloader::download(const std::string &srcUrl, FILE *fp, const std::string
     }
     else
     {
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread([srcUrl, customId, this]{
-            if (this->_onSuccess)
-                this->_onSuccess(srcUrl, customId);
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([srcUrl, customId, downloader]{
+            if (downloader != nullptr && downloader->_onSuccess != nullptr)
+                downloader->_onSuccess(srcUrl, customId);
         });
     }
     fclose(fp);

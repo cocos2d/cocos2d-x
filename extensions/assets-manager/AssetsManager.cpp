@@ -84,7 +84,7 @@ AssetsManager::AssetsManager(const std::string& manifestUrl, const std::string& 
     _fileUtils = FileUtils::getInstance();
     _updateState = State::UNCHECKED;
     
-    _downloader = new Downloader();
+    _downloader = std::make_shared<Downloader>();
     _downloader->_onError = std::bind( &AssetsManager::onError, this, std::placeholders::_1 );
     _downloader->_onProgress = std::bind(&AssetsManager::onProgress,
                                          this,
@@ -105,7 +105,9 @@ AssetsManager::AssetsManager(const std::string& manifestUrl, const std::string& 
 
 AssetsManager::~AssetsManager()
 {
-    _downloader->~Downloader();
+    _downloader->_onError = nullptr;
+    _downloader->_onSuccess = nullptr;
+    _downloader->_onProgress = nullptr;
     _localManifest->release();
     _remoteManifest->release();
 }
