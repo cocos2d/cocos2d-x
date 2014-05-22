@@ -47,6 +47,8 @@ NS_CC_EXT_BEGIN;
 #define TEMP_MANIFEST_FILENAME  "project.manifest.temp"
 #define MANIFEST_FILENAME       "project.manifest"
 
+#define DEFAULT_CONNECTION_TIMEOUT 8
+
 // Some data struct for sending messages
 //
 //struct ProgressMessage
@@ -85,6 +87,7 @@ AssetsManager::AssetsManager(const std::string& manifestUrl, const std::string& 
     _updateState = State::UNCHECKED;
     
     _downloader = std::make_shared<Downloader>();
+    _downloader->setConnectionTimeout(DEFAULT_CONNECTION_TIMEOUT);
     _downloader->_onError = std::bind( &AssetsManager::onError, this, std::placeholders::_1 );
     _downloader->_onProgress = std::bind(&AssetsManager::onProgress,
                                          this,
@@ -106,8 +109,8 @@ AssetsManager::~AssetsManager()
     _downloader->_onError = nullptr;
     _downloader->_onSuccess = nullptr;
     _downloader->_onProgress = nullptr;
-    _localManifest->release();
-    _remoteManifest->release();
+    CC_SAFE_RELEASE(_localManifest);
+    CC_SAFE_RELEASE(_remoteManifest);
 }
 
 AssetsManager* AssetsManager::create(const std::string& manifestUrl, const std::string& storagePath)
@@ -487,8 +490,7 @@ void AssetsManager::startUpdate()
                 }
             }
             _totalWaitToDownload = _totalToDownload = (int)_downloadUnits.size();
-            auto t = std::thread(&Downloader::batchDownload, _downloader, _downloadUnits);
-            t.detach();
+            _downloader->batchDownload(_downloadUnits);
         }
     }
     
@@ -661,6 +663,7 @@ void AssetsManager::onSuccess(const std::string &srcUrl, const std::string &cust
                 if (_localManifest != nullptr)
                     _localManifest->release();
                 _localManifest = _remoteManifest;
+                _remoteManifest = nullptr;
                 // 3. make local manifest take effect
                 prepareLocalManifest();
             }

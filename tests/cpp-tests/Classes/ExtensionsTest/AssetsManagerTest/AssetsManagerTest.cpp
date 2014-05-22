@@ -4,10 +4,9 @@
 #include "extensions/assets-manager/CCEventAssetsManager.h"
 #include "extensions/assets-manager/CCEventListenerAssetsManager.h"
 
-std::vector<std::string> sceneId {"AMTestScene1", "AMTestScene2", "AMTestScene3"};
-std::vector<std::string> sceneManifests {"Manifests/AMTestScene1/project.manifest", "Manifests/AMTestScene2/project.manifest", "Manifests/AMTestScene3/project.manifest"};
-std::vector<std::string> storagePaths {"CppTests/AssetsManagerTest/scene1/", "CppTests/AssetsManagerTest/scene2/", "CppTests/AssetsManagerTest/scene3"};
-std::vector<std::string> backgroundPaths {"Images/background1.jpg", "Images/background2.jpg", "Images/background3.png"};
+const char* sceneManifests[] = {"Manifests/AMTestScene1/project.manifest", "Manifests/AMTestScene2/project.manifest", "Manifests/AMTestScene3/project.manifest"};
+const char* storagePaths[] = {"CppTests/AssetsManagerTest/scene1/", "CppTests/AssetsManagerTest/scene2/", "CppTests/AssetsManagerTest/scene3"};
+const char* backgroundPaths[] = {"Images/background1.jpg", "Images/background2.jpg", "Images/background3.png"};
 
 AssetsManagerTestLayer::AssetsManagerTestLayer(std::string spritePath)
 : _spritePath(spritePath)
@@ -16,7 +15,6 @@ AssetsManagerTestLayer::AssetsManagerTestLayer(std::string spritePath)
 
 AssetsManagerTestLayer::~AssetsManagerTestLayer(void)
 {
-    
 }
 
 std::string AssetsManagerTestLayer::title() const
@@ -44,6 +42,7 @@ void AssetsManagerTestLayer::nextCallback(Ref* sender)
     else AssetsManagerLoaderScene::currentScene = 0;
     auto scene = new AssetsManagerLoaderScene();
     scene->runThisTest();
+    scene->release();
 }
 void AssetsManagerTestLayer::backCallback(Ref* sender)
 {
@@ -54,6 +53,7 @@ void AssetsManagerTestLayer::backCallback(Ref* sender)
     else AssetsManagerLoaderScene::currentScene = 2;
     auto scene = new AssetsManagerLoaderScene();
     scene->runThisTest();
+    scene->release();
 }
 
 
@@ -76,7 +76,7 @@ AssetsManagerLoaderScene::AssetsManagerLoaderScene()
 void AssetsManagerLoaderScene::runThisTest()
 {
     int currentId = currentScene;
-    std::string managerId = sceneId[currentId], manifestPath = sceneManifests[currentId], storagePath = storagePaths[currentId];
+    std::string manifestPath = sceneManifests[currentId], storagePath = storagePaths[currentId];
     
     Sprite *sprite = Sprite::create("Images/Icon.png");
     auto layer = Layer::create();
@@ -97,6 +97,7 @@ void AssetsManagerLoaderScene::runThisTest()
         CCLOG("Fail to update assets, step skipped.");
         AssetsManagerTestScene *scene = new AssetsManagerTestScene(backgroundPaths[currentId]);
         Director::getInstance()->replaceScene(scene);
+        scene->release();
     }
     else
     {
@@ -107,8 +108,9 @@ void AssetsManagerLoaderScene::runThisTest()
                 case EventAssetsManager::EventCode::ERROR_NO_LOCAL_MANIFEST:
                 {
                     CCLOG("No local manifest file found, skip assets update.");
-                    AssetsManagerTestScene *scene = new AssetsManagerTestScene(backgroundPaths[currentId]);
+                    scene = new AssetsManagerTestScene(backgroundPaths[currentId]);
                     Director::getInstance()->replaceScene(scene);
+                    scene->release();
                 }
                     break;
                 case EventAssetsManager::EventCode::UPDATE_PROGRESSION:
@@ -123,6 +125,7 @@ void AssetsManagerLoaderScene::runThisTest()
                     CCLOG("Fail to download manifest file, update skipped.");
                     scene = new AssetsManagerTestScene(backgroundPaths[currentId]);
                     Director::getInstance()->replaceScene(scene);
+                    scene->release();
                 }
                     break;
                 case EventAssetsManager::EventCode::ALREADY_UP_TO_DATE:
@@ -131,6 +134,7 @@ void AssetsManagerLoaderScene::runThisTest()
                     CCLOG("Update finished.");
                     scene = new AssetsManagerTestScene(backgroundPaths[currentId]);
                     Director::getInstance()->replaceScene(scene);
+                    scene->release();
                 }
                     break;
                 case EventAssetsManager::EventCode::ERROR_UPDATING:
@@ -138,6 +142,7 @@ void AssetsManagerLoaderScene::runThisTest()
                     CCLOG("Asset %s : %s.", event->getAssetId().c_str(), event->getMessage().c_str());
                     scene = new AssetsManagerTestScene(backgroundPaths[currentId]);
                     Director::getInstance()->replaceScene(scene);
+                    scene->release();
                 }
                     break;
                 default:
