@@ -80,7 +80,6 @@ bool PageView::init()
     if (Layout::init())
     {
         setClippingEnabled(true);
-        setTouchEnabled(true);
         return true;
     }
     return false;
@@ -88,14 +87,11 @@ bool PageView::init()
 
 void PageView::addWidgetToPage(Widget *widget, ssize_t pageIdx, bool forceCreate)
 {
-    if (!widget)
+    if (!widget || pageIdx < 0)
     {
         return;
     }
-    if (pageIdx < 0)
-    {
-        return;
-    }
+   
     ssize_t pageCount = this->getPageCount();
     if (pageIdx < 0 || pageIdx >= pageCount)
     {
@@ -126,45 +122,25 @@ Layout* PageView::createPage()
 
 void PageView::addPage(Layout* page)
 {
-    if (!page)
+    if (!page || _pages.contains(page))
     {
         return;
     }
-    
-    if (_pages.contains(page))
-    {
-        return;
-    }
-    Size pSize = page->getSize();
-    Size pvSize = getSize();
-    if (!pSize.equals(pvSize))
-    {
-        CCLOG("page size does not match pageview size, it will be force sized!");
-        page->setSize(pvSize);
-    }
-    page->setPosition(Vec2(getPositionXByIndex(this->getPageCount()), 0));
+
     
     addProtectedChild(page);
     _pages.pushBack(page);
     
-    updateBoundaryPages();
+    _doLayoutDirty = true;
 }
 
 void PageView::insertPage(Layout* page, int idx)
 {
-    if (idx < 0)
+    if (idx < 0 || !page || _pages.contains(page))
     {
         return;
     }
-    if (!page)
-    {
-        return;
-    }
-  
-    if (_pages.contains(page))
-    {
-        return;
-    }
+   
     
     ssize_t pageCount = this->getPageCount();
     if (idx >= pageCount)
@@ -176,23 +152,9 @@ void PageView::insertPage(Layout* page, int idx)
         _pages.insert(idx, page);
         addProtectedChild(page);
         
-        page->setPosition(Vec2(getPositionXByIndex(idx), 0));
-        Size pSize = page->getSize();
-        Size pvSize = getSize();
-        
-        if (!pSize.equals(pvSize))
-        {
-            CCLOG("page size does not match pageview size, it will be force sized!");
-            page->setSize(pvSize);
-        }
-        ssize_t length = this->getPageCount();
-        for (ssize_t i=(idx+1); i<length; i++){
-            Node* behindPage = _pages.at(i);
-            Vec2 formerPos = behindPage->getPosition();
-            behindPage->setPosition(Vec2(formerPos.x+getSize().width, 0));
-        }
-        updateBoundaryPages();
     }
+    
+    _doLayoutDirty = true;
 }
 
 void PageView::removePage(Layout* page)
@@ -204,9 +166,7 @@ void PageView::removePage(Layout* page)
     removeProtectedChild(page);
     _pages.eraseObject(page);
     
-    updateAllPagesPosition();
-    
-    updateBoundaryPages();
+    _doLayoutDirty = true;
 }
 
 void PageView::removePageAtIndex(ssize_t index)
@@ -221,7 +181,6 @@ void PageView::removePageAtIndex(ssize_t index)
     
 void PageView::removeAllPages()
 {
-    
     for(auto& node : _pages)
     {
         removeProtectedChild(node);
@@ -256,8 +215,7 @@ void PageView::onSizeChanged()
     Layout::onSizeChanged();
     _rightBoundary = getSize().width;
     
-    updateAllPagesSize();
-    updateAllPagesPosition();
+    _doLayoutDirty = true;
 }
 
 void PageView::updateAllPagesSize()
@@ -272,15 +230,18 @@ void PageView::updateAllPagesSize()
 void PageView::updateAllPagesPosition()
 {
     ssize_t pageCount = this->getPageCount();
+    
     if (pageCount <= 0)
     {
         _curPageIdx = 0;
         return;
     }
+    
     if (_curPageIdx >= pageCount)
     {
         _curPageIdx = pageCount-1;
     }
+    
     float pageWidth = getSize().width;
     for (int i=0; i<pageCount; i++)
     {
@@ -390,6 +351,21 @@ void PageView::onTouchCancelled(Touch *touch, Event *unusedEvent)
 {
     Layout::onTouchCancelled(touch, unusedEvent);
     handleReleaseLogic(touch->getLocation());
+}
+
+void PageView::doLayout()
+{
+    if (!_doLayoutDirty)
+    {
+        return;
+    }
+    
+    updateAllPagesPosition();
+    updateAllPagesSize();
+    updateBoundaryPages();
+
+    
+    _doLayoutDirty = false;
 }
 
 void PageView::movePages(float offset)
@@ -582,7 +558,7 @@ Layout* PageView::getPage(ssize_t index)
     {
         return nullptr;
     }
-    return dynamic_cast<Layout*>(this->getPages().at(index));
+    return _pages.at(index);
 }
 
 std::string PageView::getDescription() const

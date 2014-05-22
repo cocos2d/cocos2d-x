@@ -729,12 +729,12 @@ void Layout::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentT
     {
         ProtectedNode::visit(renderer, parentTransform, parentTransformUpdated);
     }
+    doLayout();
 }
     
 void Layout::sortAllChildren()
 {
     Widget::sortAllChildren();
-    doLayout();
 }
     
 void Layout::stencilClippingVisit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)

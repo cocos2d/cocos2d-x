@@ -40,7 +40,7 @@ CC_DEPRECATED_ATTRIBUTE typedef enum
 CC_DEPRECATED_ATTRIBUTE typedef void (Ref::*SEL_PageViewEvent)(Ref*, PageViewEventType);
 #define pagevieweventselector(_SELECTOR)(SEL_PageViewEvent)(&_SELECTOR)
 
-class PageView : public Layout , public UIScrollInterface
+class PageView : public Layout
 {
     
     DECLARE_CLASS_GUI_INFO
@@ -188,22 +188,19 @@ protected:
     void updateAllPagesSize();
     void updateAllPagesPosition();
 
+    virtual void handlePressLogic(const Vec2 &touchPoint);
+    virtual void handleMoveLogic(const Vec2 &touchPoint) ;
+    virtual void handleReleaseLogic(const Vec2 &touchPoint) ;
+    virtual void interceptTouchEvent(int handleState, Widget* sender, const Vec2 &touchPoint) ;
+    
     //overrided functions
-    virtual void handlePressLogic(const Vec2 &touchPoint) override;
-    virtual void handleMoveLogic(const Vec2 &touchPoint) override;
-    virtual void handleReleaseLogic(const Vec2 &touchPoint) override;
-    virtual void interceptTouchEvent(int handleState, Widget* sender, const Vec2 &touchPoint) override;
     virtual void checkChildInfo(int handleState, Widget* sender, const Vec2 &touchPoint) override;
     virtual void onSizeChanged() override;
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
     virtual void copyClonedWidgetChildren(Widget* model) override;
-    //do we really need this method???
-    virtual void doLayout() override
-    {
-    if (!_doLayoutDirty){return;}
-    _doLayoutDirty = false;
-    };
+
+    virtual void doLayout() override;
 
 protected:
     ssize_t _curPageIdx;
