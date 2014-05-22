@@ -85,6 +85,8 @@
 		15C90B4A18E66C2B00D69802 /* tp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAB118DA8B6C00F6518C /* tp.lua */; };
 		15C90B4B18E66C2F00D69802 /* url.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAB218DA8B6C00F6518C /* url.lua */; };
 		15C90B4C18E66C3100D69802 /* url.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAB218DA8B6C00F6518C /* url.lua */; };
+		15E66FC8192D957100C20A52 /* Sprite3DTest in Resources */ = {isa = PBXBuildFile; fileRef = 3E92EA841921A7720094CD21 /* Sprite3DTest */; };
+		15E66FD6192DC8C700C20A52 /* Sprite3DTest in Resources */ = {isa = PBXBuildFile; fileRef = 3E92EA841921A7720094CD21 /* Sprite3DTest */; };
 		1A0EE2A118CDF6DA004CD58F /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB41807A4F9005B8026 /* libchipmunk Mac.a */; };
 		1A0EE2A218CDF6DA004CD58F /* libcocos2dx Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2dx Mac.a */; };
 		1A0EE2A418CDF6DA004CD58F /* libCocosDenshion Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB81807A4F9005B8026 /* libCocosDenshion Mac.a */; };
@@ -4286,6 +4288,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15E66FD6192DC8C700C20A52 /* Sprite3DTest in Resources */,
 				1AC35DC318CEE65100F37B72 /* Misc in Resources */,
 				1AC35DC618CEE65100F37B72 /* Shaders in Resources */,
 				1AC35DBB18CEE65100F37B72 /* components in Resources */,
@@ -4354,6 +4357,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15E66FC8192D957100C20A52 /* Sprite3DTest in Resources */,
 				15C90B4418E66C1800D69802 /* mime.lua in Resources */,
 				15C90B4C18E66C3100D69802 /* url.lua in Resources */,
 				1AC35DD618CEE65200F37B72 /* Misc in Resources */,

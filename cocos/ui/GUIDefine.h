@@ -25,7 +25,6 @@
 #ifndef __TestCpp__GUIDefine__
 #define __TestCpp__GUIDefine__
 
-#include "cocos2d.h"
 #include <string>
 #include "cocostudio/ObjectFactory.h"
 

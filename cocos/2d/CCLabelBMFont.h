@@ -115,7 +115,7 @@ public:
     virtual const BlendFunc &getBlendFunc() const override;
 
     virtual Sprite * getLetter(int ID);
-    virtual Node * getChildByTag(int tag) override;
+    virtual Node * getChildByTag(int tag) const override;
 
     virtual void setColor(const Color3B& color) override;
 
