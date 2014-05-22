@@ -28,33 +28,26 @@
 #include "cocos2d.h"
 #include "extensions/ExtensionMacros.h"
 
+#include <unordered_map>
+#include <memory>
+#include <string>
+
 NS_CC_EXT_BEGIN
 
-class DownloaderDelegateProtocol;
-
-class CC_DLL Downloader
+class CC_DLL Downloader : public std::enable_shared_from_this<Downloader>
 {
 public:
+    
+    friend class AssetsManager;
+    
     enum class ErrorCode
     {
-        // Error caused by creating a file to store downloaded data
         CREATE_FILE,
-        /** Error caused by network
-         -- network unavaivable
-         -- timeout
-         -- ...
-         */
+        
         NETWORK,
-        /** There is not a new version
-         */
+        
         NO_NEW_VERSION,
-        /** Error caused in uncompressing stage
-         -- can not open zip file
-         -- can not read file global information
-         -- can not read file information
-         -- can not create a directory
-         -- ...
-         */
+        
         UNCOMPRESS,
         
         CURL_UNINIT,
@@ -74,7 +67,7 @@ public:
     
     struct ProgressData
     {
-        Downloader* downloader;
+        std::weak_ptr<Downloader> downloader;
         std::string customId;
         std::string url;
         double downloaded;
@@ -87,22 +80,28 @@ public:
         std::string customId;
     };
     
-    /**
-     *  The default constructor.
-     */
-    Downloader(DownloaderDelegateProtocol* delegate);
-    
-    DownloaderDelegateProtocol* getDelegate() const { return _delegate ;}
-    
     int getConnectionTimeout();
     
     void setConnectionTimeout(int timeout);
+    
+    std::function<void(const Downloader::Error &)> getErrorCallback() const { return _onError; };
+    
+    std::function<void(double, double, const std::string &, const std::string &)> getProgressCallback() const { return _onProgress; };
+    
+    std::function<void(const std::string &, const std::string &)> getSuccessCallback() const { return _onSuccess; };
     
     void downloadAsync(const std::string &srcUrl, const std::string &storagePath, const std::string &customId = "");
     
     void downloadSync(const std::string &srcUrl, const std::string &storagePath, const std::string &customId = "");
     
-    void batchDownload(const std::map<std::string, DownloadUnit> &units);
+    void batchDownload(const std::unordered_map<std::string, DownloadUnit> &units);
+    
+    /**
+     *  The default constructor.
+     */
+    Downloader();
+    
+    ~Downloader();
     
 protected:
     
@@ -116,38 +115,13 @@ private:
     
     int _connectionTimeout;
     
-    DownloaderDelegateProtocol* _delegate;
+    std::function<void(const Downloader::Error &)> _onError;
     
-    std::string getFileNameFormUrl(const std::string &srcUrl);
-};
-
-class DownloaderDelegateProtocol
-{
-public:
-    virtual ~DownloaderDelegateProtocol() {};
-
-    /* @brief Call back function for error
-     @param error Error object
-     * @js NA
-     * @lua NA
-     */
-    virtual void onError(const Downloader::Error &error) {};
+    std::function<void(double, double, const std::string &, const std::string &)> _onProgress;
     
-    /** @brief Call back function for recording downloading percent
-     @param percent How much percent downloaded
-     @warning    This call back function just for recording downloading percent.
-     AssetsManager will do some other thing after downloading, you should
-     write code in onSuccess() after downloading.
-     * @js NA
-     * @lua NA
-     */
-    virtual void onProgress(double total, double downloaded, const std::string &url, const std::string &customId) {};
+    std::function<void(const std::string &, const std::string &)> _onSuccess;
     
-    /** @brief Call back function for success
-     * @js NA
-     * @lua NA
-     */
-    virtual void onSuccess(const std::string &srcUrl, const std::string &customId) {};
+    std::string getFileNameFromUrl(const std::string &srcUrl);
 };
 
 NS_CC_EXT_END;
