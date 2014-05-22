@@ -25,43 +25,35 @@
 #ifndef __AssetsManager__
 #define __AssetsManager__
 
-#include <string>
-#include <map>
-#include <vector>
+#include "CCEventAssetsManager.h"
 
 #include "cocos2d.h"
 #include "Downloader.h"
 #include "Manifest.h"
 #include "extensions/ExtensionMacros.h"
 #include "json/document.h"
+#include <string>
+#include <map>
+#include <vector>
+
+namespace cocos2d
+{
+    class EventListenerAssetsManager;
+}
 
 NS_CC_EXT_BEGIN
 
 /**
  * @brief   This class is used to auto update resources, such as pictures or scripts.
  */
-class AssetsManager : public Ref, DownloaderDelegateProtocol
+class AssetsManager : public Ref
 {
 public:
     
-    //! Update events code
-    enum UpdateEventCode
-    {
-        FAIL_DOWNLOAD_MANIFEST,
-        FAIL_PARSE_MANIFEST,
-        NEW_VERSION_FOUND,
-        ALREADY_UP_TO_DATE,
-        UPDATING_ERROR,
-        FINISHED_UPDATE,
-        FINISHED_WITH_ERROR,
-        UNCOMPRESS_ERROR,
-    };
-    
     //! Update states
-    enum UpdateState
+    enum class State
     {
-        UNKNOWN,
-        CHECKING,
+        UNCHECKED,
         PREDOWNLOAD_VERSION,
         DOWNLOADING_VERSION,
         VERSION_LOADED,
@@ -73,23 +65,13 @@ public:
         UP_TO_DATE
     };
     
-    //! Update event object
-    struct UpdateEvent
-    {
-        UpdateEventCode code;
-        std::string message;
-        std::string assetId;
-        AssetsManager *manager;
-    };
-    
     /** @brief Create function for creating a new AssetsManager
-     @param managerId The manager's id to identify itself in event dispatcher
      @param manifestUrl   The url for the local manifest file
      @param storagePath   The storage path for downloaded assetes
      @warning   The cached manifest in your storage path have higher priority and will be searched first,
                 only if it doesn't exist, AssetsManager will use the given manifestUrl.
      */
-    static AssetsManager* create(const std::string &managerId, const std::string &manifestUrl, const std::string &storagePath);
+    static AssetsManager* create(const std::string &manifestUrl, const std::string &storagePath);
     
     /** @brief  Check out if there is a new version of manifest.
      *          You may use this method before updating, then let user determine whether
@@ -103,30 +85,11 @@ public:
     
     /** @brief Gets the current update state.
      */
-    UpdateState updateState();
-    
-    /** @brief Gets url of a asset for the given key.
-     @param key The key of the requested asset
-     */
-    std::string get(const std::string& key) const;
-    
-    /** @brief Gets the manager's identification.
-     */
-    const std::string& getManagerId() const;
-    
-    /** @brief Gets loaded event name for the asset of the given key.
-     @param key The key of the requested asset
-     */
-    std::string getLoadedEventName(const std::string& key);
+    State getState() const;
     
     /** @brief Gets storage path.
      */
     const std::string& getStoragePath() const;
-    
-    /** @brief Sets storage path, the path will then be created recursively in the writable path
-     @param storagePath The path to store downloaded resources.
-     */
-    void setStoragePath(const std::string& storagePath);
     
     /** @brief Function for retrieve the local manifest object
      */
@@ -140,27 +103,52 @@ public:
      @param callback    The callback function
      @param priority    The priority of the listener
      */
-    void addUpdateEventListener(const std::function<void(EventCustom*)>& callback, int priority = 1);
+    void registerEventListener(const std::function<void(EventAssetsManager*)>& callback, int priority = 1);
     
-    /** @brief Function for register a listener to handle the download progression
-     @param callback    The callback function
-     @param priority    The priority of the listener
-     */
-    void addUpdateProgressEventListener(const std::function<void(EventCustom*)>& callback, int priority = 1);
+CC_CONSTRUCTOR_ACCESS:
     
-    /** @brief Function for register a listener to the NoLocalManifestError
-     @param callback    The callback function
-     @param priority    The priority of the listener
-     */
-    void addNoLocalManifestErrorListener(const std::function<void(EventCustom*)>& callback, int priority = 1);
+    AssetsManager(const std::string& manifestUrl, const std::string& storagePath);
+    
+    virtual ~AssetsManager();
+    
+protected:
+    
+    std::string get(const std::string& key) const;
+    
+    void loadManifest(const std::string& manifestUrl);
+    
+    void prepareLocalManifest();
+    
+    void setStoragePath(const std::string& storagePath);
+    
+    void adjustPath(std::string &path);
+    
+    void prependSearchPath(const std::string &path);
+    
+    void dispatchUpdateEvent(EventAssetsManager::EventCode code, std::string message = "", std::string assetId = "");
+    
+    void createDirectory(const std::string &path);
+    
+    void destroyDirectory(const std::string &path);
+    
+    void destroyFile(const std::string &path);
+    
+    void renameFile(const std::string &path, const std::string &oldname, const std::string &name);
+    
+    void downloadVersion();
+    void parseVersion();
+    void downloadManifest();
+    void parseManifest();
+    void startUpdate();
+// TODO: For next version
+    //bool uncompress();
     
     /** @brief Function for destorying the downloaded version file and manifest file
      */
     void destroyDownloadedVersion();
     
-    
     /** @brief  Call back function for error handling,
-                the error will then be reported to user's listener registed in addUpdateEventListener
+     the error will then be reported to user's listener registed in addUpdateEventListener
      @param error   The error object contains ErrorCode, message, asset url, asset key
      @warning AssetsManager internal use only
      * @js NA
@@ -169,7 +157,7 @@ public:
     virtual void onError(const Downloader::Error &error);
     
     /** @brief  Call back function for recording downloading percent of the current asset,
-                the progression will then be reported to user's listener registed in addUpdateProgressEventListener
+     the progression will then be reported to user's listener registed in addUpdateProgressEventListener
      @param total       Total size to download for this asset
      @param downloaded  Total size already downloaded for this asset
      @param url         The url of this asset
@@ -181,7 +169,7 @@ public:
     virtual void onProgress(double total, double downloaded, const std::string &url, const std::string &customId);
     
     /** @brief  Call back function for success of the current asset
-                the success event will then be send to user's listener registed in addUpdateEventListener
+     the success event will then be send to user's listener registed in addUpdateEventListener
      @param srcUrl      The url of this asset
      @param customId    The key of this asset
      @warning AssetsManager internal use only
@@ -190,36 +178,13 @@ public:
      */
     virtual void onSuccess(const std::string &srcUrl, const std::string &customId);
     
-CC_CONSTRUCTOR_ACCESS:
-    
-    AssetsManager(const std::string &managerId, const std::string& manifestUrl, const std::string& storagePath);
-    
-    virtual ~AssetsManager();
-    
-protected:
-    void loadManifest(const std::string& manifestUrl);
-    void prepareLocalManifest();
-    void adjustPath(std::string &path);
-    void prependSearchPath(const std::string &path);
-    void dispatchUpdateEvent(UpdateEventCode code, std::string message = "", std::string assetId = "");
-    //bool uncompress();
-    //void downloadAndUncompress();
-    
-private:
-    
-    void createDirectory(const std::string &path);
-    
-    void destroyDirectory(const std::string &path);
-    
-    void destroyFile(const std::string &path);
-    
 private:
     
     //! The root of writable path
     static std::string s_nWritableRoot;
     
-    //! The identification of the current AssetsManager
-    std::string _managerId;
+    //! The event of the current AssetsManager in event dispatcher
+    std::string _eventName;
     
     //! Reference to the global event dispatcher
     EventDispatcher *_eventDispatcher;
@@ -227,13 +192,13 @@ private:
     FileUtils *_fileUtils;
     
     //! State of update
-    UpdateState _updateState;
+    State _updateState;
     
     //! Downloader
     Downloader* _downloader;
     
     //! The reference to the local assets
-    const std::map<std::string, Manifest::Asset> *_assets;
+    const std::unordered_map<std::string, Manifest::Asset> *_assets;
     
     //! The path to store downloaded resources.
     std::string _storagePath;
@@ -251,7 +216,10 @@ private:
     bool _waitToUpdate;
     
     //! All assets unit to download
-    std::map<std::string, Downloader::DownloadUnit> _downloadUnits;
+    std::unordered_map<std::string, Downloader::DownloadUnit> _downloadUnits;
+    
+    //! Download percent
+    float _percent;
     
     //! Total number of assets to download
     int _totalToDownload;
