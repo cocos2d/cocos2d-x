@@ -39,24 +39,24 @@ THE SOFTWARE.
 #define GL_DEPTH24_STENCIL8			GL_DEPTH24_STENCIL8_OES
 #define GL_WRITE_ONLY				GL_WRITE_ONLY_OES
 
-// GL_GLEXT_PROTOTYPES isn't defined in glplatform.h on android ndk r7 
-// we manually define it here
+// 在android ndk r7中，头文件glplatform.h中没有定义GL_GLEXT_PROTOTYPES
+// 我们要在这里手动定义它
 #include <GLES2/gl2platform.h>
 #ifndef GL_GLEXT_PROTOTYPES
 #define GL_GLEXT_PROTOTYPES 1
 #endif
 
-// normal process
+// 标准过程
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
-// gl2.h doesn't define GLchar on Android
+//  Android平台上，在gl2.h中没有定义GLchar
 typedef char GLchar;
-// android defines GL_BGRA_EXT but not GL_BRGA
+// 在android中定义 GL_BGRA_EXT而不定义GL_BRGA
 #ifndef GL_BGRA
 #define GL_BGRA  0x80E1
 #endif
 
-//declare here while define in EGLView_android.cpp
+//在这里声明并在EGLView_android.cpp中定义
 extern PFNGLGENVERTEXARRAYSOESPROC glGenVertexArraysOESEXT;
 extern PFNGLBINDVERTEXARRAYOESPROC glBindVertexArrayOESEXT;
 extern PFNGLDELETEVERTEXARRAYSOESPROC glDeleteVertexArraysOESEXT;
