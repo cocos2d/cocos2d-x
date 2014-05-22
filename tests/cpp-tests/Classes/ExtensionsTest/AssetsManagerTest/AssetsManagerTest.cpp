@@ -70,7 +70,7 @@ void AssetsManagerTestScene::runThisTest()
 
 int AssetsManagerLoaderScene::currentScene = 0;
 AssetsManagerLoaderScene::AssetsManagerLoaderScene()
-{""
+{
 }
 
 void AssetsManagerLoaderScene::runThisTest()
