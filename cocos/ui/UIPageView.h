@@ -59,72 +59,72 @@ public:
     
     typedef std::function<void(Ref*,EventType)> ccPageViewCallback;
     /**
-     * Default constructor
+     * 默认构造函数
      */
     PageView();
     
     /**
-     * Default destructor
+     * 默认析构函数
      */
     virtual ~PageView();
     
     /**
-     * Allocates and initializes.
+     * 创建和初始化对象
      */
     static PageView* create();
     
     /**
-     * Add a widget to a page of pageview.
+     * 给页面视图（pageview）的页面（page）添加一个控件（widget）
      *
-     * @param widget    widget to be added to pageview.
+     * @param widget    将被添加到页面视图（pageview）的控件（widget）
      *
-     * @param pageIdx   index of page.
+     * @param pageIdx   页数
      *
-     * @param forceCreate   if force create and there is no page exsit, pageview would create a default page for adding widget.
+     * @param forceCreate   forceCreate为真时，如果没有指定页，页面视图（pageview）将会创建一个默认的页面（page）用来添加控件
      */
     void addWidgetToPage(Widget* widget, ssize_t pageIdx, bool forceCreate);
     
     /**
-     * Push back a page to pageview.
+     * 在页面视图（pageview）后面添加一个页面
      *
-     * @param page    page to be added to pageview.
+     * @param page    将添加到页面视图（pageview）的页面（page）
      */
     void addPage(Layout* page);
     
     /**
-     * Inert a page to pageview.
+     * 在页面视图（pageview）中插入一个页面
      *
-     * @param page    page to be added to pageview.
+     * @param page    将插入到页面视图（pageview）的页面（page）
      */
     void insertPage(Layout* page, int idx);
     
     /**
-     * Remove a page of pageview.
+     * 移除页面视图（pageview）中的一个页面
      *
-     * @param page    page which will be removed.
+     * @param page    将被移除的页面（page）
      */
     void removePage(Layout* page);
 
     /**
-     * Remove a page at index of pageview.
+     * 移除页面视图（pageview）中指定页数的页面
      *
-     * @param index    index of page.
+     * @param index    页数
      */
     void removePageAtIndex(ssize_t index);
     
     void removeAllPages();
     
     /**
-     * scroll pageview to index.
+     * 滚动到页面视图（pageview）的指定页数
      *
-     * @param idx    index of page.
+     * @param idx    页数
      */
     void scrollToPage(ssize_t idx);
     
     /**
-     * Gets current page index.
+     * 获得当前页数
      *
-     * @return current page index.
+     * @return 当前页数
      */
     ssize_t getCurPageIndex() const;
     
@@ -146,25 +146,25 @@ public:
     //override "update" method of widget.
     virtual void update(float dt) override;
     /**
-     * Sets LayoutType.
+     * 设置布局类型（LayoutType）
      *
      * @see LayoutType
      *
-     * @param LayoutType
+     * @param type 布局类型（LayoutType）
      */
     virtual void setLayoutType(Type type) override{};
     
     /**
-     * Gets LayoutType.
+     * 获得布局类型（LayoutType）
      *
      * @see LayoutType
      *
-     * @return LayoutType
+     * @return 布局类型
      */
     virtual Type getLayoutType() const override{return Type::ABSOLUTE;};
     
     /**
-     * Returns the "class name" of widget.
+     * 返回控件（widget）的类名（class name）
      */
     virtual std::string getDescription() const override;
 
