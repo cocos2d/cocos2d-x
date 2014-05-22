@@ -53,7 +53,7 @@ THE SOFTWARE.
 
 #define CC_UNUSED_PARAM(unusedparam) (void)unusedparam
 
-/* Define NULL pointer value */
+/* 定义NULL指针的值*/
 #ifndef NULL
 #ifdef __cplusplus
 #define NULL    0
