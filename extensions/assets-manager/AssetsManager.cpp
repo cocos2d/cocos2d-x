@@ -142,17 +142,16 @@ void AssetsManager::loadManifest(const std::string& manifestUrl)
         else
             destroyFile(cachedManifest);
     }
-    
-    // Fail to found or load cached manifest file
-    if (_localManifest == nullptr)
+    else
     {
+        // Fail to found or load cached manifest file
         _localManifest->parse(_manifestUrl);
         if (_localManifest->isLoaded())
             prepareLocalManifest();
     }
-    
+        
     // Fail to load local manifest
-    if (_localManifest == nullptr || !_localManifest->isLoaded())
+    if (!_localManifest->isLoaded())
     {
         CCLOG("AssetsManager : No local manifest file found error.");
         EventCustom event(_managerId + NO_LOCAL_MANIFEST);
