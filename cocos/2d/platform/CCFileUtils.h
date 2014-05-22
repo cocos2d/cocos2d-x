@@ -161,7 +161,7 @@ public:
     /**
      * 通过文件名加载文件查找词典。
      * 
-     * @note plist文件的文件名应该遵循如下的格式：
+     * @note plist文件应该遵循如下的格式：
      * 
      * @code
      * <?xml version="1.0" encoding="UTF-8"?>
