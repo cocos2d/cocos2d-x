@@ -109,8 +109,8 @@ AssetsManager::~AssetsManager()
     _downloader->_onError = nullptr;
     _downloader->_onSuccess = nullptr;
     _downloader->_onProgress = nullptr;
-    _localManifest->release();
-    _remoteManifest->release();
+    CC_SAFE_RELEASE(_localManifest);
+    CC_SAFE_RELEASE(_remoteManifest);
 }
 
 AssetsManager* AssetsManager::create(const std::string& manifestUrl, const std::string& storagePath)
@@ -663,6 +663,7 @@ void AssetsManager::onSuccess(const std::string &srcUrl, const std::string &cust
                 if (_localManifest != nullptr)
                     _localManifest->release();
                 _localManifest = _remoteManifest;
+                _remoteManifest = nullptr;
                 // 3. make local manifest take effect
                 prepareLocalManifest();
             }
