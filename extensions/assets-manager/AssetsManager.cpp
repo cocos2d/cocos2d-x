@@ -96,11 +96,9 @@ AssetsManager::AssetsManager(const std::string& manifestUrl, const std::string& 
     setStoragePath(storagePath);
     
     _localManifest = new Manifest();
-    _localManifest->retain();
     loadManifest(manifestUrl);
     
     _remoteManifest = new Manifest();
-    _remoteManifest->retain();
 }
 
 AssetsManager::~AssetsManager()
@@ -146,7 +144,7 @@ void AssetsManager::loadManifest(const std::string& manifestUrl)
         if (_localManifest->isLoaded())
             prepareLocalManifest();
         else
-            destroyFile(cachedManifest);
+            removeFile(cachedManifest);
     }
     // Fail to found or load cached manifest file
     else
@@ -191,7 +189,7 @@ const std::string& AssetsManager::getStoragePath() const
 void AssetsManager::setStoragePath(const std::string& storagePath)
 {
     if (_storagePath.size() > 0)
-        destroyDirectory(_storagePath);
+        removeDirectory(_storagePath);
     
     _storagePath = storagePath;
     adjustPath(_storagePath);
@@ -260,7 +258,7 @@ void AssetsManager::createDirectory(const std::string& path)
 #endif
 }
 
-void AssetsManager::destroyDirectory(const std::string& path)
+void AssetsManager::removeDirectory(const std::string& path)
 {
     // Check writable path existance
     if (path.find(s_nWritableRoot) == std::string::npos)
@@ -289,7 +287,7 @@ void AssetsManager::destroyDirectory(const std::string& path)
 #endif
 }
 
-void AssetsManager::destroyFile(const std::string &path)
+void AssetsManager::removeFile(const std::string &path)
 {
     if (path.find(s_nWritableRoot) != std::string::npos)
     {
@@ -331,12 +329,6 @@ void AssetsManager::dispatchUpdateEvent(EventAssetsManager::EventCode code, std:
 {
     EventAssetsManager event(_eventName, this, code, _percent, assetId, message);
     _eventDispatcher->dispatchEvent(&event);
-}
-
-void AssetsManager::registerEventListener(const std::function<void(EventAssetsManager*)>& callback, int priority/* = 1*/)
-{
-    EventListenerAssetsManager *listener = EventListenerAssetsManager::create(this, callback);
-    _eventDispatcher->addEventListenerWithFixedPriority(listener, priority);
 }
 
 AssetsManager::State AssetsManager::getState() const
@@ -479,7 +471,7 @@ void AssetsManager::startUpdate()
                 Manifest::AssetDiff diff = it->second;
                 
                 if (diff.type == Manifest::DiffType::DELETED) {
-                    destroyFile(_storagePath + diff.asset.path);
+                    removeFile(_storagePath + diff.asset.path);
                 }
                 else
                 {
@@ -680,8 +672,8 @@ void AssetsManager::onSuccess(const std::string &srcUrl, const std::string &cust
 
 void AssetsManager::destroyDownloadedVersion()
 {
-    destroyFile(_storagePath + VERSION_FILENAME);
-    destroyFile(_storagePath + MANIFEST_FILENAME);
+    removeFile(_storagePath + VERSION_FILENAME);
+    removeFile(_storagePath + MANIFEST_FILENAME);
 }
 
 NS_CC_EXT_END;
