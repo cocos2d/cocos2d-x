@@ -132,7 +132,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void setCascadeColorEnabled(bool cascadeColorEnabled) = 0;
+    virtual void setCascadeColorEnabled(bool cascadeColorEnabled, bool recursive = false) = 0;
     
     /**
      *  recursive method that updates display color
@@ -151,7 +151,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) = 0;
+    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled, bool recursive = false) = 0;
     
     /**
      *  recursive method that updates the displayed opacity.
