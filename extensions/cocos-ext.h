@@ -14,5 +14,6 @@
 #include "physics-nodes/CCPhysicsSprite.h"
 
 #include "assets-manager/AssetsManager.h"
+#include "assets-manager/CCEventListenerAssetsManager.h"
 
 #endif /* __COCOS2D_EXT_H__ */

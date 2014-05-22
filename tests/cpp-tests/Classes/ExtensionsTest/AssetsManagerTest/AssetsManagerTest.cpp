@@ -70,6 +70,7 @@ void AssetsManagerTestScene::runThisTest()
 
 int AssetsManagerLoaderScene::currentScene = 0;
 AssetsManagerLoaderScene::AssetsManagerLoaderScene()
+: _progress(nullptr)
 {
 }
 
@@ -84,10 +85,10 @@ void AssetsManagerLoaderScene::runThisTest()
     layer->addChild(sprite);
     sprite->setPosition( VisibleRect::center() );
     
-    TTFConfig config("fonts/tahoma.ttf", 40);
-    Label *progress = Label::createWithTTF(config, "0%", TextHAlignment::CENTER);
-    progress->setPosition( Vec2(VisibleRect::center().x, VisibleRect::center().y + 50) );
-    layer->addChild(progress);
+    TTFConfig config("fonts/tahoma.ttf", 30);
+    _progress = Label::createWithTTF(config, "0%", TextHAlignment::CENTER);
+    _progress->setPosition( Vec2(VisibleRect::center().x, VisibleRect::center().y + 50) );
+    layer->addChild(_progress);
     
     _am = AssetsManager::create(manifestPath, storagePath);
     _am->retain();
@@ -101,7 +102,7 @@ void AssetsManagerLoaderScene::runThisTest()
     }
     else
     {
-        cocos2d::extension::EventListenerAssetsManager *listener = cocos2d::extension::EventListenerAssetsManager::create(_am, [currentId, progress](EventAssetsManager* event){
+        cocos2d::extension::EventListenerAssetsManager *listener = cocos2d::extension::EventListenerAssetsManager::create(_am, [currentId, this](EventAssetsManager* event){
             AssetsManagerTestScene *scene;
             switch (event->getEventCode())
             {
@@ -115,8 +116,20 @@ void AssetsManagerLoaderScene::runThisTest()
                     break;
                 case EventAssetsManager::EventCode::UPDATE_PROGRESSION:
                 {
+                    std::string assetId = event->getAssetId();
                     int percent = event->getPercent();
-                    progress->setString(StringUtils::format("%d", percent));
+                    std::string str;
+                    if (assetId == AssetsManager::VERSION_ID)
+                    {
+                        str = StringUtils::format("Version file: %d", percent) + "%";
+                    }
+                    else if (assetId == AssetsManager::MANIFEST_ID)
+                    {
+                        str = StringUtils::format("Manifest file: %d", percent) + "%";
+                    }
+                    else str = StringUtils::format("%d", percent) + "%";
+                    if (this->_progress != nullptr)
+                        this->_progress->setString(str);
                 }
                     break;
                 case EventAssetsManager::EventCode::ERROR_DOWNLOAD_MANIFEST:

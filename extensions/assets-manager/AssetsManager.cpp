@@ -59,6 +59,9 @@ NS_CC_EXT_BEGIN;
 
 std::string AssetsManager::s_nWritableRoot = "";
 
+const std::string AssetsManager::VERSION_ID = "@version";
+const std::string AssetsManager::MANIFEST_ID = "@manifest";
+
 // Implementation of AssetsManager
 
 AssetsManager::AssetsManager(const std::string& manifestUrl, const std::string& storagePath)
@@ -349,7 +352,7 @@ void AssetsManager::downloadVersion()
     {
         _updateState = State::DOWNLOADING_VERSION;
         // Download version file asynchronously
-        _downloader->downloadAsync(versionUrl, _storagePath + VERSION_FILENAME, "@version");
+        _downloader->downloadAsync(versionUrl, _storagePath + VERSION_FILENAME, VERSION_ID);
     }
     // No version file found
     else
@@ -405,7 +408,7 @@ void AssetsManager::downloadManifest()
     {
         _updateState = State::DOWNLOADING_MANIFEST;
         // Download version file asynchronously
-        _downloader->downloadAsync(manifestUrl, _storagePath + TEMP_MANIFEST_FILENAME, "@manifest");
+        _downloader->downloadAsync(manifestUrl, _storagePath + TEMP_MANIFEST_FILENAME, MANIFEST_ID);
     }
     // No manifest file found
     else
@@ -494,7 +497,6 @@ void AssetsManager::startUpdate()
         }
     }
     
-    _updateState = State::UPDATING;
     _waitToUpdate = false;
 }
 
@@ -519,6 +521,7 @@ void AssetsManager::checkUpdate()
             dispatchUpdateEvent(EventAssetsManager::EventCode::ALREADY_UP_TO_DATE);
         }
             break;
+        case State::FAIL_TO_UPDATE:
         case State::NEED_UPDATE:
         {
             dispatchUpdateEvent(EventAssetsManager::EventCode::NEW_VERSION_FOUND);
@@ -565,6 +568,7 @@ void AssetsManager::update()
             parseManifest();
         }
             break;
+        case State::FAIL_TO_UPDATE:
         case State::NEED_UPDATE:
         {
             // Manifest not loaded yet
@@ -593,13 +597,13 @@ void AssetsManager::update()
 void AssetsManager::onError(const Downloader::Error &error)
 {
     // Skip version error occured
-    if (error.customId == "@version")
+    if (error.customId == VERSION_ID)
     {
         CCLOG("Error downloading version file, step skipped\n");
         _updateState = State::PREDOWNLOAD_MANIFEST;
         downloadManifest();
     }
-    else if (error.customId == "@manifest")
+    else if (error.customId == MANIFEST_ID)
     {
         dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_DOWNLOAD_MANIFEST);
     }
@@ -612,19 +616,24 @@ void AssetsManager::onError(const Downloader::Error &error)
 
 void AssetsManager::onProgress(double total, double downloaded, const std::string &url, const std::string &customId)
 {
-    if (customId == "@version" || customId == "@manifest")
+    if (customId == VERSION_ID || customId == MANIFEST_ID)
+    {
+        _percent = 100 * (total - downloaded) / total;
+        // Notify progression event
+        dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_PROGRESSION, customId);
         return;
+    }
 // TODO : Calculate the precised percentage of download
 }
 
 void AssetsManager::onSuccess(const std::string &srcUrl, const std::string &customId)
 {
-    if (customId == "@version")
+    if (customId == VERSION_ID)
     {
         _updateState = State::VERSION_LOADED;
         parseVersion();
     }
-    else if (customId == "@manifest")
+    else if (customId == MANIFEST_ID)
     {
         _updateState = State::MANIFEST_LOADED;
         parseManifest();
@@ -642,9 +651,11 @@ void AssetsManager::onSuccess(const std::string &srcUrl, const std::string &cust
             // Remove from download unit list
             _downloadUnits.erase(unitIt);
             
-            _percent = 100 * (_totalToDownload - _downloadUnits.size()) / _totalToDownload;
-            // Notify progression event
-            dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_PROGRESSION, customId);
+            if (_updateState == State::UPDATING) {
+                _percent = 100 * (_totalToDownload - _downloadUnits.size()) / _totalToDownload;
+                // Notify progression event
+                dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_PROGRESSION, customId);
+            }
         }
         // Finish check
         if (_totalWaitToDownload == 0)
@@ -652,6 +663,7 @@ void AssetsManager::onSuccess(const std::string &srcUrl, const std::string &cust
             // Finished with error check
             if (_downloadUnits.size() > 0)
             {
+                _updateState = State::FAIL_TO_UPDATE;
                 destroyDownloadedVersion();
             }
             else
@@ -666,6 +678,8 @@ void AssetsManager::onSuccess(const std::string &srcUrl, const std::string &cust
                 _remoteManifest = nullptr;
                 // 3. make local manifest take effect
                 prepareLocalManifest();
+                // 4. Set update state
+                _updateState = State::UP_TO_DATE;
             }
             // Notify finished event
             dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_FINISHED);
