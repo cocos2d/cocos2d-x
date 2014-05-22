@@ -50,12 +50,15 @@ int downloadProgressFunc(Downloader::ProgressData *ptr, double totalToDownload, 
     if (ptr->downloaded != nowDownloaded)
     {
         ptr->downloaded = nowDownloaded;
+        
         std::string url = ptr->url;
         std::string customId = ptr->customId;
-        DownloaderDelegateProtocol* delegate = ptr->downloader->getDelegate();
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread([url, customId, delegate, totalToDownload, nowDownloaded]{
-            if (delegate)
-                delegate->onProgress(totalToDownload, nowDownloaded, url, customId);
+        std::shared_ptr<Downloader> downloader = ptr->downloader.lock();
+        
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
+            auto callback = downloader->getProgressCallback();
+            if (downloader != nullptr && callback != nullptr)
+                callback(totalToDownload, nowDownloaded, url, customId);
         });
     }
     
@@ -63,9 +66,15 @@ int downloadProgressFunc(Downloader::ProgressData *ptr, double totalToDownload, 
 }
 
 
-Downloader::Downloader(DownloaderDelegateProtocol* delegate)
-: _delegate(delegate)
+Downloader::Downloader()
+: _onError(nullptr)
+, _onProgress(nullptr)
+, _onSuccess(nullptr)
 , _connectionTimeout(0)
+{
+}
+
+Downloader::~Downloader()
 {
 }
 
@@ -82,17 +91,18 @@ void Downloader::setConnectionTimeout(int timeout)
 
 void Downloader::notifyError(ErrorCode code, const std::string &msg/* ="" */, const std::string &customId/* ="" */)
 {
-    Director::getInstance()->getScheduler()->performFunctionInCocosThread([code, msg, customId, this]{
+    std::shared_ptr<Downloader> downloader = shared_from_this();
+    Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
         Error err;
         err.code = code;
         err.message = msg;
         err.customId = customId;
-        if (this->_delegate)
-            this->_delegate->onError(err);
+        if (downloader != nullptr && downloader->_onError != nullptr)
+            downloader->_onError(err);
     });
 }
 
-std::string Downloader::getFileNameFormUrl(const std::string &srcUrl)
+std::string Downloader::getFileNameFromUrl(const std::string &srcUrl)
 {
     // Find file name and file extension
     std::string filename;
@@ -109,12 +119,12 @@ FILE *Downloader::prepareDownload(const std::string &srcUrl, const std::string &
     Error err;
     err.customId = customId;
     // Asserts
-    std::string filename = getFileNameFormUrl(srcUrl);
+    std::string filename = getFileNameFromUrl(srcUrl);
     if (filename.size() == 0)
     {
         err.code = ErrorCode::INVALID_URL;
         err.message = "Invalid url or filename not exist error: " + srcUrl;
-        if (this->_delegate) this->_delegate->onError(err);
+        if (this->_onError) this->_onError(err);
         return fp;
     }
     
@@ -125,7 +135,7 @@ FILE *Downloader::prepareDownload(const std::string &srcUrl, const std::string &
     {
         err.code = ErrorCode::CREATE_FILE;
         err.message = "Can not create file " + outFileName;
-        if (this->_delegate) this->_delegate->onError(err);
+        if (this->_onError) this->_onError(err);
     }
     
     return fp;
@@ -150,7 +160,7 @@ void Downloader::downloadSync(const std::string &srcUrl, const std::string &stor
     }
 }
 
-void Downloader::batchDownload(const std::map<std::string, Downloader::DownloadUnit> &units)
+void Downloader::batchDownload(const std::unordered_map<std::string, Downloader::DownloadUnit> &units)
 {
     for (auto it = units.cbegin(); it != units.cend(); it++) {
         DownloadUnit unit = it->second;
@@ -165,10 +175,11 @@ void Downloader::batchDownload(const std::map<std::string, Downloader::DownloadU
 
 void Downloader::download(const std::string &srcUrl, FILE *fp, const std::string &customId)
 {
+    std::shared_ptr<Downloader> downloader = shared_from_this();
     ProgressData data;
     data.customId = customId;
     data.url = srcUrl;
-    data.downloader = this;
+    data.downloader = downloader;
     data.downloaded = 0;
     
     void *curl = curl_easy_init();
@@ -199,9 +210,9 @@ void Downloader::download(const std::string &srcUrl, FILE *fp, const std::string
     }
     else
     {
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread([srcUrl, customId, this]{
-            if (this->_delegate)
-                this->_delegate->onSuccess(srcUrl, customId);
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([srcUrl, customId, downloader]{
+            if (downloader != nullptr && downloader->_onSuccess != nullptr)
+                downloader->_onSuccess(srcUrl, customId);
         });
     }
     fclose(fp);

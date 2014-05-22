@@ -1,6 +1,7 @@
 #include "AssetsManagerTest.h"
 #include "../../testResource.h"
 #include "cocos2d.h"
+#include "extensions/assets-manager/CCEventAssetsManager.h"
 
 std::vector<std::string> sceneId {"AMTestScene1", "AMTestScene2", "AMTestScene3"};
 std::vector<std::string> sceneManifests {"Manifests/AMTestScene1/project.manifest", "Manifests/AMTestScene2/project.manifest", "Manifests/AMTestScene3/project.manifest"};
@@ -87,7 +88,7 @@ void AssetsManagerLoaderScene::runThisTest()
     progress->setPosition( Vec2(VisibleRect::center().x, VisibleRect::center().y + 50) );
     layer->addChild(progress);
     
-    _am = AssetsManager::create(managerId, manifestPath, storagePath);
+    _am = AssetsManager::create(manifestPath, storagePath);
     _am->retain();
     
     if (!_am->getLocalManifest()->isLoaded())
@@ -98,50 +99,49 @@ void AssetsManagerLoaderScene::runThisTest()
     }
     else
     {
-        _am->addUpdateEventListener([currentId](EventCustom* event){
-            AssetsManager::UpdateEvent *e = (AssetsManager::UpdateEvent *)event->getUserData();
+        _am->registerEventListener([currentId, progress](EventAssetsManager* event){
             AssetsManagerTestScene *scene;
-            switch (e->code)
+            switch (event->getEventCode())
             {
-                case AssetsManager::FAIL_DOWNLOAD_MANIFEST:
-                case AssetsManager::FAIL_PARSE_MANIFEST:
+                case EventAssetsManager::EventCode::ERROR_NO_LOCAL_MANIFEST:
+                {
+                    CCLOG("No local manifest file found, skip assets update.");
+                    AssetsManagerTestScene *scene = new AssetsManagerTestScene(backgroundPaths[currentId]);
+                    Director::getInstance()->replaceScene(scene);
+                }
+                    break;
+                case EventAssetsManager::EventCode::UPDATE_PROGRESSION:
+                {
+                    int percent = event->getPercent();
+                    progress->setString(StringUtils::format("%d", percent));
+                }
+                    break;
+                case EventAssetsManager::EventCode::ERROR_DOWNLOAD_MANIFEST:
+                case EventAssetsManager::EventCode::ERROR_PARSE_MANIFEST:
+                {
                     CCLOG("Fail to download manifest file, update skipped.");
                     scene = new AssetsManagerTestScene(backgroundPaths[currentId]);
                     Director::getInstance()->replaceScene(scene);
+                }
                     break;
-                case AssetsManager::ALREADY_UP_TO_DATE:
-                case AssetsManager::FINISHED_UPDATE:
-                    CCLOG("Update succeeded.");
+                case EventAssetsManager::EventCode::ALREADY_UP_TO_DATE:
+                case EventAssetsManager::EventCode::UPDATE_FINISHED:
+                {
+                    CCLOG("Update finished.");
                     scene = new AssetsManagerTestScene(backgroundPaths[currentId]);
                     Director::getInstance()->replaceScene(scene);
+                }
                     break;
-                case AssetsManager::FINISHED_WITH_ERROR:
-                    CCLOG("Fail to update assets, update skipped.");
+                case EventAssetsManager::EventCode::ERROR_UPDATING:
+                {
+                    CCLOG("Asset %s : %s.", event->getAssetId().c_str(), event->getMessage().c_str());
                     scene = new AssetsManagerTestScene(backgroundPaths[currentId]);
                     Director::getInstance()->replaceScene(scene);
-                    break;
-                case AssetsManager::UPDATING_ERROR:
-                    CCLOG("Asset %s : %s.", e->assetId.c_str(), e->message.c_str());
-                    scene = new AssetsManagerTestScene(backgroundPaths[currentId]);
-                    Director::getInstance()->replaceScene(scene);
+                }
                     break;
                 default:
                     break;
             }
-        });
-        
-        _am->addNoLocalManifestErrorListener([currentId](EventCustom* event){
-            CCLOG("No local manifest file found, skip assets update.");
-            AssetsManagerTestScene *scene = new AssetsManagerTestScene(backgroundPaths[currentId]);
-            Director::getInstance()->replaceScene(scene);
-        });
-        
-        _am->addUpdateProgressEventListener([progress](EventCustom* event){
-            int *percent = (int *)event->getUserData();
-            //CCLOG("Update percent : %f", *percent);
-            std::ostringstream oss;
-            oss << *percent << "%";
-            progress->setString(oss.str());
         });
         
         _am->update();

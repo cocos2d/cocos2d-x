@@ -29,7 +29,7 @@
 #include "extensions/ExtensionMacros.h"
 
 #include <string>
-#include <map>
+#include <unordered_map>
 #include <vector>
 
 #include "json/document.h"
@@ -40,100 +40,118 @@ class CC_DLL Manifest : public Ref
 {
 public:
     
-    enum DiffType {
+    friend class AssetsManager;
+    
+    //! The type of difference
+    enum class DiffType {
         ADDED,
         DELETED,
         MODIFIED
     };
     
+    //! Asset object
     struct Asset {
         std::string md5;
         std::string path;
-        std::string group;
-        bool updating;
     };
     
+    //! Object indicate the difference between two Assets
     struct AssetDiff {
         Asset asset;
         DiffType type;
     };
     
-    Manifest(const std::string& manifestUrl = "");
-    
-    void parse(const std::string& manifestUrl);
-    
+    /** @brief Check whether the version informations have been fully loaded
+     */
     bool isVersionLoaded() const;
+    
+    /** @brief Check whether the manifest have been fully loaded
+     */
     bool isLoaded() const;
     
-    bool versionEquals(const Manifest *b) const;
-    
-    std::map<std::string, AssetDiff> genDiff(const Manifest *b) const;
-    
-    void prependSearchPaths();
-    
-    /* @brief Gets remote package url.
+    /** @brief Gets remote package url.
      */
     const std::string& getPackageUrl() const;
     
-    /* @brief Sets remote package url.
-     */
-    void setPackageUrl(const std::string& packageUrl);
-    
-    /* @brief Gets remote manifest file url.
+    /** @brief Gets remote manifest file url.
      */
     const std::string& getManifestFileUrl() const;
     
-    /* @brief Sets remote manifest file url.
-     */
-    void setManifestFileUrl(const std::string& manifestFileUrl);
-    
-    /* @brief Gets remote version file url.
+    /** @brief Gets remote version file url.
      */
     const std::string& getVersionFileUrl() const;
     
-    /* @brief Sets remote version file url.
+    /** @brief Gets manifest version.
      */
-    void setVersionFileUrl(const std::string& versionFileUrl);
+    const std::string& getVersion() const;
     
-    /* @brief Gets manifest version.
+    /** @brief Gets assets.
      */
-    const std::string& getManifestVersion() const;
+    const std::unordered_map<std::string, Asset>& getAssets() const;
     
-    /* @brief Gets all groups.
-     */
-    const std::vector<std::string>& getGroups() const;
-    
-    /* @brief Gets all groups version.
-     */
-    const std::map<std::string, std::string>& getGroupVerions() const;
-    
-    /* @brief Gets version for the given group.
-     */
-    const std::string& getGroupVersion(const std::string &group) const;
-    
-    /* @brief Gets engine version.
-     */
-    const std::string& getEngineVersion() const;
-    
-    /* @brief Gets assets.
-     */
-    const std::map<std::string, Asset>& getAssets() const;
-    
-    /* @brief Gets asset by key.
+    /** @brief Gets asset by key.
+     @param key Key of the requested asset
      */
     const Asset& getAsset(const std::string &key) const;
     
 protected:
+    
+    /** @brief Constructor for Manifest class
+     @param manifestUrl Url of the local manifest
+     */
+    Manifest(const std::string& manifestUrl = "");
+    
+    /** @brief Parse the manifest file information into this manifest
+     @param manifestUrl Url of the local manifest
+     */
+    void parse(const std::string& manifestUrl);
+    
+    /** @brief Check whether the version of this manifest equals to another.
+     @param b   The other manifest
+     */
+    bool versionEquals(const Manifest *b) const;
+    
+    /** @brief Generate difference between this Manifest and another.
+     @param b   The other manifest
+     */
+    std::unordered_map<std::string, AssetDiff> genDiff(const Manifest *b) const;
+    
+    /** @brief Prepend all search paths to the FileUtils.
+     */
+    void prependSearchPaths();
+    
     void loadVersion(const rapidjson::Document &json);
+    
     void loadManifest(const rapidjson::Document &json);
-    Asset parseAsset(const rapidjson::Value &json);
+    
+    rapidjson::Document parseJSON(const std::string &url);
+    
+    Asset parseAsset(const std::string &path, const rapidjson::Value &json);
+    
+    void clear();
+    
+    /** @brief Gets all groups.
+     */
+    const std::vector<std::string>& getGroups() const;
+    
+    /** @brief Gets all groups version.
+     */
+    const std::unordered_map<std::string, std::string>& getGroupVerions() const;
+    
+    /** @brief Gets version for the given group.
+     @param group   Key of the requested group
+     */
+    const std::string& getGroupVersion(const std::string &group) const;
     
 private:
     
+    //! Indicate whether the version informations have been fully loaded
     bool _versionLoaded;
     
+    //! Indicate whether the manifest have been fully loaded
     bool _loaded;
     
+    //! Reference to the global file utils
     FileUtils *_fileUtils;
     
     //! The local manifest root
@@ -155,20 +173,16 @@ private:
     std::vector<std::string> _groups;
     
     //! The versions of all local group [Optional]
-    std::map<std::string, std::string> _groupVer;
+    std::unordered_map<std::string, std::string> _groupVer;
     
     //! The version of local engine
     std::string _engineVer;
     
     //! Full assets list
-    std::map<std::string, Asset> _assets;
+    std::unordered_map<std::string, Asset> _assets;
     
     //! All search paths
     std::vector<std::string> _searchPaths;
-    
-    rapidjson::Document parseJSON(const std::string &url);
-    
-    void clear();
 };
 
 NS_CC_EXT_END;

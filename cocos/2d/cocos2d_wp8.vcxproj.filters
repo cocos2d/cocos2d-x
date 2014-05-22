@@ -571,9 +571,6 @@
     <ClCompile Include="..\platform\winrt\InputEvent.cpp">
       <Filter>platform\winrt</Filter>
     </ClCompile>
-    <ClCompile Include="..\platform\winrt\pch.cpp">
-      <Filter>platform\winrt</Filter>
-    </ClCompile>
     <ClCompile Include="..\platform\winrt\sha1.cpp">
       <Filter>platform\winrt</Filter>
     </ClCompile>
@@ -595,6 +592,7 @@
     <ClCompile Include="..\renderer\CCMeshCommand.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
+    <ClCompile Include="..\platform\wp8\pch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -1182,9 +1180,6 @@
     <ClInclude Include="..\platform\winrt\InputEventTypes.h">
       <Filter>platform\winrt</Filter>
     </ClInclude>
-    <ClInclude Include="..\platform\winrt\pch.h">
-      <Filter>platform\winrt</Filter>
-    </ClInclude>
     <ClInclude Include="..\platform\winrt\sha1.h">
       <Filter>platform\winrt</Filter>
     </ClInclude>
@@ -1209,6 +1204,7 @@
     <ClInclude Include="..\renderer\CCMeshCommand.h">
       <Filter>renderer</Filter>
     </ClInclude>
+    <ClInclude Include="..\platform\wp8\pch.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\math\Mat4.inl">

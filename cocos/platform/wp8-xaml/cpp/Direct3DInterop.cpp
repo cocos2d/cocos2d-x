@@ -40,10 +40,10 @@ using namespace PhoneDirect3DXamlAppComponent;
 namespace PhoneDirect3DXamlAppComponent
 {
 
-Direct3DInterop::Direct3DInterop() 
-    : mCurrentOrientation(DisplayOrientations::Portrait), m_delegate(nullptr)
+Direct3DInterop::Direct3DInterop(Windows::Graphics::Display::DisplayOrientations orientation) 
+    : mCurrentOrientation(orientation), m_delegate(nullptr)
 {
-    m_renderer = ref new Cocos2dRenderer();
+    m_renderer = ref new Cocos2dRenderer(mCurrentOrientation);
 }
 
 IDrawingSurfaceBackgroundContentProvider^ Direct3DInterop::CreateContentProvider()
