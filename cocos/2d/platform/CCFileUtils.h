@@ -126,45 +126,42 @@ public:
      	并通过setSearchResolutionsOrder给存放解析顺序的vector设置三个元素（"resources-ipadhd/", "resources-ipad/", "resources-iphonehd"）
 	"internal_dir"是"Resources/"下的文件
      
-     	如果我们有一个名字为‘sprite.png’的文件，
-		If we have a file named 'sprite.png', the mapping in fileLookup dictionary contains `key: sprite.png -> value: sprite.pvr.gz`.
-     	Firstly, it will replace 'sprite.png' with 'sprite.pvr.gz', then searching the file sprite.pvr.gz as follows:
+     	如果我们有一个名为‘sprite.png’的文件，并且在文件查找词典中包含key为sprite.png、value为sprite.pvr.gz的键值对。
+     	那么就会用'sprite.pvr.gz'代替'sprite.png'，然后按照下面的顺序查找文件sprite.pvr.gz：
 
-     	    /mnt/sdcard/resources-ipadhd/sprite.pvr.gz      (if not found, search next)
-     	    /mnt/sdcard/resources-ipad/sprite.pvr.gz        (if not found, search next)
-     	    /mnt/sdcard/resources-iphonehd/sprite.pvr.gz    (if not found, search next)
-     	    /mnt/sdcard/sprite.pvr.gz                       (if not found, search next)
-     	    internal_dir/resources-ipadhd/sprite.pvr.gz     (if not found, search next)
-     	    internal_dir/resources-ipad/sprite.pvr.gz       (if not found, search next)
-     	    internal_dir/resources-iphonehd/sprite.pvr.gz   (if not found, search next)
-     	    internal_dir/sprite.pvr.gz                      (if not found, return "sprite.png")
+     	    /mnt/sdcard/resources-ipadhd/sprite.pvr.gz      (如果找不到，则查找下一个)
+     	    /mnt/sdcard/resources-ipad/sprite.pvr.gz        (如果找不到，则查找下一个)
+     	    /mnt/sdcard/resources-iphonehd/sprite.pvr.gz    (如果找不到，则查找下一个)
+     	    /mnt/sdcard/sprite.pvr.gz                       (如果找不到，则查找下一个)
+     	    internal_dir/resources-ipadhd/sprite.pvr.gz     (如果找不到，则查找下一个)
+     	    internal_dir/resources-ipad/sprite.pvr.gz       (如果找不到，则查找下一个)
+     	    internal_dir/resources-iphonehd/sprite.pvr.gz   (如果找不到，则查找下一个)
+     	    internal_dir/sprite.pvr.gz                      (如果找不到，则返回 "sprite.png")
 
-        If the filename contains relative path like "gamescene/uilayer/sprite.png",
-        and the mapping in fileLookup dictionary contains `key: gamescene/uilayer/sprite.png -> value: gamescene/uilayer/sprite.pvr.gz`.
-        The file search order will be:
+        如果文件名包含像"gamescene/uilayer/sprite.png"的相对路径，
+        并且文件查找词典中包含key为gamescene/uilayer/sprite.png、value为gamescene/uilayer/sprite.pvr.gz的键值对，
+        那么将按下面的顺序查找文件：
 
-     	    /mnt/sdcard/gamescene/uilayer/resources-ipadhd/sprite.pvr.gz      (if not found, search next)
-     	    /mnt/sdcard/gamescene/uilayer/resources-ipad/sprite.pvr.gz        (if not found, search next)
-     	    /mnt/sdcard/gamescene/uilayer/resources-iphonehd/sprite.pvr.gz    (if not found, search next)
-     	    /mnt/sdcard/gamescene/uilayer/sprite.pvr.gz                       (if not found, search next)
-     	    internal_dir/gamescene/uilayer/resources-ipadhd/sprite.pvr.gz     (if not found, search next)
-     	    internal_dir/gamescene/uilayer/resources-ipad/sprite.pvr.gz       (if not found, search next)
-     	    internal_dir/gamescene/uilayer/resources-iphonehd/sprite.pvr.gz   (if not found, search next)
-     	    internal_dir/gamescene/uilayer/sprite.pvr.gz                      (if not found, return "gamescene/uilayer/sprite.png")
-
-     If the new file can't be found on the file system, it will return the parameter filename directly.
-     
-     This method was added to simplify multiplatform support. Whether you are using cocos2d-js or any cross-compilation toolchain like StellaSDK or Apportable,
-     you might need to load different resources for a given file in the different platforms.
-
+     	    /mnt/sdcard/gamescene/uilayer/resources-ipadhd/sprite.pvr.gz      (如果找不到，则查找下一个)
+     	    /mnt/sdcard/gamescene/uilayer/resources-ipad/sprite.pvr.gz        (如果找不到，则查找下一个)
+     	    /mnt/sdcard/gamescene/uilayer/resources-iphonehd/sprite.pvr.gz    (如果找不到，则查找下一个)
+     	    /mnt/sdcard/gamescene/uilayer/sprite.pvr.gz                       (如果找不到，则查找下一个)
+     	    internal_dir/gamescene/uilayer/resources-ipadhd/sprite.pvr.gz     (如果找不到，则查找下一个)
+     	    internal_dir/gamescene/uilayer/resources-ipad/sprite.pvr.gz       (如果找不到，则查找下一个)
+     	    internal_dir/gamescene/uilayer/resources-iphonehd/sprite.pvr.gz   (如果找不到，则查找下一个)
+     	    internal_dir/gamescene/uilayer/sprite.pvr.gz                      (如果找不到，则返回 "gamescene/uilayer/sprite.png")
+     	    
+     如果在文件系统中找不到新文件，就会直接返回文件名的那个参数。
+     这个方法添加了跨平台的支持。你使用的无论是cocos2d-js还是其他的像StellaSDK 和 Apportable一样的跨平台编译工具链，
+     对于不同平台下的给定的文件，你也许需要加载不同的资源。
      @since v2.1
      */
     virtual std::string fullPathForFilename(const std::string &filename);
     
     /**
-     * Loads the filenameLookup dictionary from the contents of a filename.
+     * 通过文件名加载文件查找词典。
      * 
-     * @note The plist file name should follow the format below:
+     * @note plist文件的文件名应该遵循如下的格式：
      * 
      * @code
      * <?xml version="1.0" encoding="UTF-8"?>
@@ -188,7 +185,7 @@ public:
      * </dict>
      * </plist>
      * @endcode
-     * @param filename The plist file name.
+     * @param filename plist文件名
      *
      @since v2.1
      * @js loadFilenameLookup
@@ -197,9 +194,9 @@ public:
     virtual void loadFilenameLookupDictionaryFromFile(const std::string &filename);
     
     /** 
-     *  Sets the filenameLookup dictionary.
+     *  设置文件查找词典
      *
-     *  @param pFilenameLookupDict The dictionary for replacing filename.
+     *  @param pFilenameLookupDict 代替文件名的词典
      *  @since v2.1
      */
     virtual void setFilenameLookupDictionary(const ValueMap& filenameLookupDict);
@@ -210,7 +207,7 @@ public:
      *  @param pszRelativeFile 文件的相对路径
      *  @return 完整路径
      *          例如：文件名: hello.png, pszRelativeFile: /User/path1/path2/hello.plist
-     *               返回: /User/path1/path2/hello.pvr (If there a a key(hello.png)-value(hello.pvr) 
+     *               返回: /User/path1/path2/hello.pvr （如果有key为hello.png、value为hello.pvr的键值对） 
      * 
      */
     virtual std::string fullPathFromRelativeFile(const std::string &filename, const std::string &relativeFile);
@@ -364,10 +361,10 @@ protected:
     virtual bool isFileExistInternal(const std::string& filename) const = 0;
     
     /**
-     *  以文件名、分辨目录和查找路径为参数获取完整路径
+     *  以文件名、解析目录和查找路径为参数获取完整路径
      *
      *  @param filename 文件名
-     *  @param resolutionDirectory 分辨目录
+     *  @param resolutionDirectory 解析目录
      *  @param searchPath 查找路径
      *  @return 返回文件的完整路径。如果文件的完整路径不存在，则返回一个空的string对象
      */
