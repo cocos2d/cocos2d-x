@@ -122,8 +122,8 @@ static void wait(int t)
 }
 
 TestController::TestController()
-: _beginPos(Vec2::ZERO),
-_exitThread(false)
+: _beginPos(Vec2::ZERO)
+,_exitThread(false)
 {
     // add close menu
     auto closeItem = MenuItemImage::create(s_pathClose, s_pathClose, CC_CALLBACK_1(TestController::closeCallback, this) );
@@ -333,7 +333,7 @@ void TestController::addConsoleAutoTest()
     static struct Console::Command autotest = {
         "autotest", 
         "testcpp autotest command, use -h to list available tests", 
-        [&](int fd, const std::string& args)
+        [this](int fd, const std::string& args)
         {
             Scheduler *sched = Director::getInstance()->getScheduler();
             if(args == "help" || args == "-h")
