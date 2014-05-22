@@ -27,7 +27,7 @@ KeypadTest::~KeypadTest()
 
 void KeypadTest::onKeyReleased(EventKeyboard::KeyCode keycode, Event* event)
 {
-    if (keycode == EventKeyboard::KeyCode::KEY_BACKSPACE)
+    if (keycode == EventKeyboard::KeyCode::KEY_ESCAPE)
     {
         _label->setString("BACK clicked!");
     }
