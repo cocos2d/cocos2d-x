@@ -153,7 +153,7 @@ void ScrollView::initRenderer()
 {
     Layout::initRenderer();
     _innerContainer = Layout::create();
-    Layout::addChild(_innerContainer,1,1);
+    addProtectedChild(_innerContainer, 1, 1);
 }
 
 void ScrollView::onSizeChanged()

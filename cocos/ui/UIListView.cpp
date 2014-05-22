@@ -251,7 +251,6 @@ void ListView::pushBackDefaultItem()
         return;
     }
     Widget* newItem = _model->clone();
-    _items.pushBack(newItem);
     remedyLayoutParameter(newItem);
     addChild(newItem);
     _refreshViewDirty = true;
@@ -264,25 +263,71 @@ void ListView::insertDefaultItem(ssize_t index)
         return;
     }
     Widget* newItem = _model->clone();
+    
     _items.insert(index, newItem);
+    ScrollView::addChild(newItem);
+
     remedyLayoutParameter(newItem);
-    addChild(newItem);
+    
     _refreshViewDirty = true;
 }
 
 void ListView::pushBackCustomItem(Widget* item)
 {
-    _items.pushBack(item);
     remedyLayoutParameter(item);
     addChild(item);
     _refreshViewDirty = true;
+}
+    
+void ListView::addChild(cocos2d::Node *child)
+{
+    ListView::addChild(child, child->getZOrder(), child->getTag());
+}
+    
+void ListView::addChild(cocos2d::Node *child, int zOrder)
+{
+    ListView::addChild(child, zOrder, child->getTag());
+}
+    
+void ListView::addChild(cocos2d::Node *child, int zOrder, int tag)
+{
+    ScrollView::addChild(child, zOrder, tag);
+
+    Widget* widget = dynamic_cast<Widget*>(child);
+    if (widget)
+    {
+        _items.pushBack(widget);
+    }
+
+}
+    
+void ListView::removeChild(cocos2d::Node *child, bool cleaup)
+{
+    Widget* widget = dynamic_cast<Widget*>(child);
+    if (widget) {
+        _items.eraseObject(widget);
+    }
+   
+    ScrollView::removeChild(child, cleaup);
+}
+    
+void ListView::removeAllChildren()
+{
+    this->removeAllChildrenWithCleanup(true);
+}
+    
+void ListView::removeAllChildrenWithCleanup(bool cleanup)
+{
+    ScrollView::removeAllChildrenWithCleanup(cleanup);
+    _items.clear();
 }
 
 void ListView::insertCustomItem(Widget* item, ssize_t index)
 {
     _items.insert(index, item);
+    ScrollView::addChild(item);
+
     remedyLayoutParameter(item);
-    addChild(item);
     _refreshViewDirty = true;
 }
 
@@ -293,8 +338,8 @@ void ListView::removeItem(ssize_t index)
     {
         return;
     }
-    _items.eraseObject(item);
-    removeChild(item);
+    removeChild(item, true);
+    
     _refreshViewDirty = true;
 }
 
@@ -305,7 +350,6 @@ void ListView::removeLastItem()
     
 void ListView::removeAllItems()
 {
-    _items.clear();
     removeAllChildren();
 }
 

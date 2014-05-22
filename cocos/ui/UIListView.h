@@ -162,6 +162,12 @@ public:
     float getItemsMargin();
     
     virtual void sortAllChildren() override;
+    virtual void addChild(Node * child) override;
+    virtual void addChild(Node * child, int zOrder) override;
+    virtual void addChild(Node* child, int zOrder, int tag) override;
+    virtual void removeAllChildren() override;
+    virtual void removeAllChildrenWithCleanup(bool cleanup) override;
+	virtual void removeChild(Node* child, bool cleaup = true) override;
     
     ssize_t getCurSelectedIndex() const;
     
@@ -186,18 +192,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
     
 protected:
-    virtual void addChild(Node* child) override{ScrollView::addChild(child);};
-    virtual void addChild(Node * child, int zOrder) override{ScrollView::addChild(child, zOrder);};
-    virtual void addChild(Node* child, int zOrder, int tag) override{ScrollView::addChild(child, zOrder, tag);};
-    virtual void removeChild(Node* widget, bool cleanup = true) override{ScrollView::removeChild(widget, cleanup);};
     
-    virtual void removeAllChildren() override{removeAllChildrenWithCleanup(true);};
-    virtual void removeAllChildrenWithCleanup(bool cleanup) override {ScrollView::removeAllChildrenWithCleanup(cleanup);};
-    virtual Vector<Node*>& getChildren() override{return ScrollView::getChildren();};
-    virtual const Vector<Node*>& getChildren() const override{return ScrollView::getChildren();};
-    virtual ssize_t getChildrenCount() const override {return ScrollView::getChildrenCount();};
-    virtual Node * getChildByTag(int tag) const override {return ScrollView::getChildByTag(tag);};
-    virtual Widget* getChildByName(const std::string& name) override {return ScrollView::getChildByName(name);};
     void updateInnerContainerSize();
     void remedyLayoutParameter(Widget* item);
     virtual void onSizeChanged() override;

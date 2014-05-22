@@ -676,7 +676,9 @@ void Layout::addChild(Node * child, int zOrder)
 
 void Layout::addChild(Node *child, int zOrder, int tag)
 {
-    supplyTheLayoutParameterLackToChild(static_cast<Widget*>(child));
+    if (dynamic_cast<Widget*>(child)) {
+        supplyTheLayoutParameterLackToChild(static_cast<Widget*>(child));
+    }
     Widget::addChild(child, zOrder, tag);
     _doLayoutDirty = true;
 }
