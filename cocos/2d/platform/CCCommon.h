@@ -36,17 +36,17 @@ NS_CC_BEGIN
  */
 
 /**
- * lua can not deal with ...
+ * Lua无法处理
  */
 void CC_DLL LuaLog(const char * format);
 
 /**
-@brief Pop out a message box
+@brief 弹出一个消息框
 */
 void CC_DLL MessageBox(const char * msg, const char * title);
 
 /**
-@brief Enum the language type supported now
+@brief 枚举当前支持的语言类型
 */
 enum class LanguageType
 {
