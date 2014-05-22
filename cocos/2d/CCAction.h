@@ -53,7 +53,7 @@ public:
      */
     virtual std::string description() const;
 
-	/** 返回action的克隆 */
+	/** 返回action的克隆对象 */
 	virtual Action* clone() const = 0;
 
     /** 返回执行与本Action对象相反操作的新Action对象 */

@@ -28,8 +28,8 @@ THE SOFTWARE.
 #ifndef __CCCAMERA_ACTION_H__
 #define __CCCAMERA_ACTION_H__
 
-#include "2d/CCActionInterval.h"
-#include "math/CCMath.h"
+#include "CCActionInterval.h"
+#include "kazmath/kazmath.h"
 
 NS_CC_BEGIN
 
@@ -57,50 +57,50 @@ public:
      */
     virtual ~ActionCamera(){};
 
-    // Overrides
+    // 可重载
     virtual void startWithTarget(Node *target) override;
     virtual ActionCamera * reverse() const override;
 	virtual ActionCamera *clone() const override;
 
-    /* sets the Eye value of the Camera */
-    void setEye(const Vec3 &eye);
+    /* 设置人眼所在的位置坐标 */
+    void setEye(const kmVec3 &eye);
     void setEye(float x, float y, float z);
-    /* returns the Eye value of the Camera */
-    const Vec3& getEye() const { return _eye; }
-    /* sets the Center value of the Camera */
-    void setCenter(const Vec3 &center);
-    /* returns the Center value of the Camera */
-    const Vec3& getCenter() const { return _center; }
-    /* sets the Up value of the Camera */
-    void setUp(const Vec3 &up);
-    /* Returns the Up value of the Camera */
-    const Vec3& getUp() const { return _up; }
+    /* 返回人眼所在点的向量值 */
+    const kmVec3& getEye() const { return _eye; }
+    /* 设置中心点所在的位置 */
+    void setCenter(const kmVec3 &center);
+    /* 返回中心点所在的位置 */
+    const kmVec3& getCenter() const { return _center; }
+    /* 设置向上的向量值 */
+    void setUp(const kmVec3 &up);
+    /* 返回向上的向量值 */
+    const kmVec3& getUp() const { return _up; }
 
 protected:
 
     void restore();
     void updateTransform();
 
-    Vec3 _center;
-    Vec3 _eye;
-    Vec3 _up;
+    kmVec3 _center;
+    kmVec3 _eye;
+    kmVec3 _up;
 };
 
 /** 
 @brief OrbitCamera action
-Orbits the camera around the center of the screen using spherical coordinates
+视角按照球面坐标轨迹 围绕屏幕中心进行旋转
 @ingroup Actions
 */
 class CC_DLL OrbitCamera : public ActionCamera //<NSCopying> 
 {
 public:
-    /** creates a OrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX */
+    /** 创建一个带有起始半径、半径差、起始z角、旋转z角的差、起始x角、旋转x角的差 这些参数的运动视角动作类 */
     static OrbitCamera* create(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX);
     
-    /** positions the camera according to spherical coordinates */
+    /** 根据球面坐标确定视角的位置 */
     void sphericalRadius(float *r, float *zenith, float *azimuth);
 
-    // Overrides
+    // 可重载
 	OrbitCamera *clone() const override;
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
@@ -116,7 +116,7 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual ~OrbitCamera();
     
-    /** initializes a OrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX */
+    /** 初始化一个运动视角动作类的起始半径、半径差、起始z角、旋转z角的差、起始x角、旋转x角的差 */
     bool initWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX);
 
 protected:
