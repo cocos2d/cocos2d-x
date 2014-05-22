@@ -671,10 +671,6 @@
 		1AAF533E180E2F10000584C8 /* b2Rope.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A169331807AF9C005B8026 /* b2Rope.h */; };
 		1AAF533F180E2F11000584C8 /* b2Rope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A169321807AF9C005B8026 /* b2Rope.cpp */; };
 		1AAF5340180E2F11000584C8 /* b2Rope.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A169331807AF9C005B8026 /* b2Rope.h */; };
-		1AAF5353180E3060000584C8 /* AssetsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5351180E3060000584C8 /* AssetsManager.cpp */; };
-		1AAF5354180E3060000584C8 /* AssetsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5351180E3060000584C8 /* AssetsManager.cpp */; };
-		1AAF5355180E3060000584C8 /* AssetsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5352180E3060000584C8 /* AssetsManager.h */; };
-		1AAF5356180E3060000584C8 /* AssetsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5352180E3060000584C8 /* AssetsManager.h */; };
 		1AAF536A180E3374000584C8 /* HttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5362180E3374000584C8 /* HttpClient.cpp */; };
 		1AAF536B180E3374000584C8 /* HttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5362180E3374000584C8 /* HttpClient.cpp */; };
 		1AAF536C180E3374000584C8 /* HttpClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5363180E3374000584C8 /* HttpClient.h */; };
@@ -1771,6 +1767,26 @@
 		B3AF01A31842FBA400A98B85 /* b2MotorJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = B3AF019F1842FBA400A98B85 /* b2MotorJoint.h */; };
 		B3B12A5A17E7F44000026B4A /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A03F2CB81780BD04006731B9 /* libchipmunk Mac.a */; };
 		B3B12A5B17E7F45C00026B4A /* libchipmunk iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A4F3B178387670073F6A7 /* libchipmunk iOS.a */; };
+		BA53B165192B07AB002E0804 /* AssetsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA53B15F192B07AB002E0804 /* AssetsManager.cpp */; };
+		BA53B166192B07AB002E0804 /* AssetsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA53B15F192B07AB002E0804 /* AssetsManager.cpp */; };
+		BA53B167192B07AB002E0804 /* AssetsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = BA53B160192B07AB002E0804 /* AssetsManager.h */; };
+		BA53B168192B07AB002E0804 /* AssetsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = BA53B160192B07AB002E0804 /* AssetsManager.h */; };
+		BA53B169192B07AB002E0804 /* Downloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA53B161192B07AB002E0804 /* Downloader.cpp */; };
+		BA53B16A192B07AB002E0804 /* Downloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA53B161192B07AB002E0804 /* Downloader.cpp */; };
+		BA53B16B192B07AB002E0804 /* Downloader.h in Headers */ = {isa = PBXBuildFile; fileRef = BA53B162192B07AB002E0804 /* Downloader.h */; };
+		BA53B16C192B07AB002E0804 /* Downloader.h in Headers */ = {isa = PBXBuildFile; fileRef = BA53B162192B07AB002E0804 /* Downloader.h */; };
+		BA53B16D192B07AB002E0804 /* Manifest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA53B163192B07AB002E0804 /* Manifest.cpp */; };
+		BA53B16E192B07AB002E0804 /* Manifest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA53B163192B07AB002E0804 /* Manifest.cpp */; };
+		BA53B16F192B07AB002E0804 /* Manifest.h in Headers */ = {isa = PBXBuildFile; fileRef = BA53B164192B07AB002E0804 /* Manifest.h */; };
+		BA53B170192B07AB002E0804 /* Manifest.h in Headers */ = {isa = PBXBuildFile; fileRef = BA53B164192B07AB002E0804 /* Manifest.h */; };
+		BABE70C1192D908E00468E13 /* CCEventAssetsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BABE70BD192D908E00468E13 /* CCEventAssetsManager.cpp */; };
+		BABE70C2192D908E00468E13 /* CCEventAssetsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BABE70BD192D908E00468E13 /* CCEventAssetsManager.cpp */; };
+		BABE70C3192D908E00468E13 /* CCEventAssetsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = BABE70BE192D908E00468E13 /* CCEventAssetsManager.h */; };
+		BABE70C4192D908E00468E13 /* CCEventAssetsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = BABE70BE192D908E00468E13 /* CCEventAssetsManager.h */; };
+		BABE70C5192D908E00468E13 /* CCEventListenerAssetsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BABE70BF192D908E00468E13 /* CCEventListenerAssetsManager.cpp */; };
+		BABE70C6192D908E00468E13 /* CCEventListenerAssetsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BABE70BF192D908E00468E13 /* CCEventListenerAssetsManager.cpp */; };
+		BABE70C7192D908E00468E13 /* CCEventListenerAssetsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = BABE70C0192D908E00468E13 /* CCEventListenerAssetsManager.h */; };
+		BABE70C8192D908E00468E13 /* CCEventListenerAssetsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = BABE70C0192D908E00468E13 /* CCEventListenerAssetsManager.h */; };
 		ED9C6A9418599AD8000A5232 /* CCNodeGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */; };
 		ED9C6A9518599AD8000A5232 /* CCNodeGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */; };
 		ED9C6A9618599AD8000A5232 /* CCNodeGrid.h in Headers */ = {isa = PBXBuildFile; fileRef = ED9C6A9318599AD8000A5232 /* CCNodeGrid.h */; };
@@ -2096,8 +2112,6 @@
 		1A8C598A180E930E00EF57C3 /* DictionaryHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DictionaryHelper.h; sourceTree = "<group>"; };
 		1A9DCA02180E6955007A3AD4 /* CCGLBufferedNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGLBufferedNode.cpp; sourceTree = "<group>"; };
 		1A9DCA03180E6955007A3AD4 /* CCGLBufferedNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGLBufferedNode.h; sourceTree = "<group>"; };
-		1AAF5351180E3060000584C8 /* AssetsManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AssetsManager.cpp; sourceTree = "<group>"; };
-		1AAF5352180E3060000584C8 /* AssetsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetsManager.h; sourceTree = "<group>"; };
 		1AAF5362180E3374000584C8 /* HttpClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpClient.cpp; sourceTree = "<group>"; };
 		1AAF5363180E3374000584C8 /* HttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpClient.h; sourceTree = "<group>"; };
 		1AAF5364180E3374000584C8 /* HttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequest.h; sourceTree = "<group>"; };
@@ -2804,6 +2818,16 @@
 		B375104F1823AC7B00B3BA6A /* CCPhysicsWorldInfo_chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsWorldInfo_chipmunk.h; sourceTree = "<group>"; };
 		B3AF019E1842FBA400A98B85 /* b2MotorJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2MotorJoint.cpp; sourceTree = "<group>"; };
 		B3AF019F1842FBA400A98B85 /* b2MotorJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2MotorJoint.h; sourceTree = "<group>"; };
+		BA53B15F192B07AB002E0804 /* AssetsManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AssetsManager.cpp; sourceTree = "<group>"; };
+		BA53B160192B07AB002E0804 /* AssetsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetsManager.h; sourceTree = "<group>"; };
+		BA53B161192B07AB002E0804 /* Downloader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Downloader.cpp; sourceTree = "<group>"; };
+		BA53B162192B07AB002E0804 /* Downloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Downloader.h; sourceTree = "<group>"; };
+		BA53B163192B07AB002E0804 /* Manifest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Manifest.cpp; sourceTree = "<group>"; };
+		BA53B164192B07AB002E0804 /* Manifest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Manifest.h; sourceTree = "<group>"; };
+		BABE70BD192D908E00468E13 /* CCEventAssetsManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEventAssetsManager.cpp; sourceTree = "<group>"; };
+		BABE70BE192D908E00468E13 /* CCEventAssetsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventAssetsManager.h; sourceTree = "<group>"; };
+		BABE70BF192D908E00468E13 /* CCEventListenerAssetsManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEventListenerAssetsManager.cpp; sourceTree = "<group>"; };
+		BABE70C0192D908E00468E13 /* CCEventListenerAssetsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventListenerAssetsManager.h; sourceTree = "<group>"; };
 		ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCNodeGrid.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		ED9C6A9318599AD8000A5232 /* CCNodeGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNodeGrid.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -3634,8 +3658,16 @@
 		1AAF5350180E305F000584C8 /* assets-manager */ = {
 			isa = PBXGroup;
 			children = (
-				1AAF5351180E3060000584C8 /* AssetsManager.cpp */,
-				1AAF5352180E3060000584C8 /* AssetsManager.h */,
+				BABE70BD192D908E00468E13 /* CCEventAssetsManager.cpp */,
+				BABE70BE192D908E00468E13 /* CCEventAssetsManager.h */,
+				BABE70BF192D908E00468E13 /* CCEventListenerAssetsManager.cpp */,
+				BABE70C0192D908E00468E13 /* CCEventListenerAssetsManager.h */,
+				BA53B15F192B07AB002E0804 /* AssetsManager.cpp */,
+				BA53B160192B07AB002E0804 /* AssetsManager.h */,
+				BA53B161192B07AB002E0804 /* Downloader.cpp */,
+				BA53B162192B07AB002E0804 /* Downloader.h */,
+				BA53B163192B07AB002E0804 /* Manifest.cpp */,
+				BA53B164192B07AB002E0804 /* Manifest.h */,
 			);
 			path = "assets-manager";
 			sourceTree = "<group>";
@@ -5258,12 +5290,14 @@
 			files = (
 				460E478318080902000CDD6D /* CCControlExtensions.h in Headers */,
 				460E477E18080902000CDD6D /* CCControl.h in Headers */,
+				BA53B16B192B07AB002E0804 /* Downloader.h in Headers */,
 				460E47B11808090B000CDD6D /* CCEditBoxImpl.h in Headers */,
 				460E47B31808090B000CDD6D /* CCEditBoxImplAndroid.h in Headers */,
 				460E47B61808090B000CDD6D /* CCEditBoxImplMac.h in Headers */,
 				460E477B180808F5000CDD6D /* ExtensionMacros.h in Headers */,
 				460E479118080902000CDD6D /* CCControlUtils.h in Headers */,
 				460E468118080832000CDD6D /* cocos-ext.h in Headers */,
+				BABE70C7192D908E00468E13 /* CCEventListenerAssetsManager.h in Headers */,
 				460E47B41808090B000CDD6D /* CCEditBoxImplIOS.h in Headers */,
 				460E47CC18080913000CDD6D /* CCScrollView.h in Headers */,
 				460E47B01808090B000CDD6D /* CCEditBox.h in Headers */,
@@ -5274,15 +5308,17 @@
 				460E478718080902000CDD6D /* CCControlPotentiometer.h in Headers */,
 				460E47BC1808090B000CDD6D /* CCEditBoxImplWin.h in Headers */,
 				460E478B18080902000CDD6D /* CCControlSlider.h in Headers */,
+				BA53B16F192B07AB002E0804 /* Manifest.h in Headers */,
 				460E478218080902000CDD6D /* CCControlColourPicker.h in Headers */,
 				460E478518080902000CDD6D /* CCControlHuePicker.h in Headers */,
 				460E479318080902000CDD6D /* CCInvocation.h in Headers */,
+				BA53B167192B07AB002E0804 /* AssetsManager.h in Headers */,
 				460E478018080902000CDD6D /* CCControlButton.h in Headers */,
 				460E478D18080902000CDD6D /* CCControlStepper.h in Headers */,
+				BABE70C3192D908E00468E13 /* CCEventAssetsManager.h in Headers */,
 				460E47D218080913000CDD6D /* CCTableViewCell.h in Headers */,
 				1AD71EF2180E27CF00808F54 /* CCPhysicsDebugNode.h in Headers */,
 				1AD71EF6180E27CF00808F54 /* CCPhysicsSprite.h in Headers */,
-				1AAF5355180E3060000584C8 /* AssetsManager.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5651,12 +5687,14 @@
 			files = (
 				460E47A618080904000CDD6D /* CCControlStepper.h in Headers */,
 				460E47D418080914000CDD6D /* CCScrollView.h in Headers */,
+				BA53B16C192B07AB002E0804 /* Downloader.h in Headers */,
 				460E479918080904000CDD6D /* CCControlButton.h in Headers */,
 				460E47A418080904000CDD6D /* CCControlSlider.h in Headers */,
 				460E479E18080904000CDD6D /* CCControlHuePicker.h in Headers */,
 				460E468218080836000CDD6D /* cocos-ext.h in Headers */,
 				460E47C41808090D000CDD6D /* CCEditBoxImplMac.h in Headers */,
 				460E47BF1808090D000CDD6D /* CCEditBoxImpl.h in Headers */,
+				BABE70C8192D908E00468E13 /* CCEventListenerAssetsManager.h in Headers */,
 				460E47AE18080904000CDD6D /* CCScale9Sprite.h in Headers */,
 				460E477C180808F7000CDD6D /* ExtensionMacros.h in Headers */,
 				460E47A218080904000CDD6D /* CCControlSaturationBrightnessPicker.h in Headers */,
@@ -5667,15 +5705,17 @@
 				460E47A818080904000CDD6D /* CCControlSwitch.h in Headers */,
 				460E47D818080914000CDD6D /* CCTableView.h in Headers */,
 				460E479718080904000CDD6D /* CCControl.h in Headers */,
+				BA53B170192B07AB002E0804 /* Manifest.h in Headers */,
 				460E479C18080904000CDD6D /* CCControlExtensions.h in Headers */,
 				460E47DA18080914000CDD6D /* CCTableViewCell.h in Headers */,
 				460E47AC18080904000CDD6D /* CCInvocation.h in Headers */,
+				BA53B168192B07AB002E0804 /* AssetsManager.h in Headers */,
 				460E47A018080904000CDD6D /* CCControlPotentiometer.h in Headers */,
 				460E47BE1808090D000CDD6D /* CCEditBox.h in Headers */,
+				BABE70C4192D908E00468E13 /* CCEventAssetsManager.h in Headers */,
 				460E47C21808090D000CDD6D /* CCEditBoxImplIOS.h in Headers */,
 				1AD71EF3180E27CF00808F54 /* CCPhysicsDebugNode.h in Headers */,
 				1AD71EF7180E27CF00808F54 /* CCPhysicsSprite.h in Headers */,
-				1AAF5356180E3060000584C8 /* AssetsManager.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6404,11 +6444,14 @@
 				460E477D18080902000CDD6D /* CCControl.cpp in Sources */,
 				460E47CB18080913000CDD6D /* CCScrollView.cpp in Sources */,
 				460E47D118080913000CDD6D /* CCTableViewCell.cpp in Sources */,
+				BABE70C1192D908E00468E13 /* CCEventAssetsManager.cpp in Sources */,
 				460E47CF18080913000CDD6D /* CCTableView.cpp in Sources */,
 				460E478618080902000CDD6D /* CCControlPotentiometer.cpp in Sources */,
+				BABE70C5192D908E00468E13 /* CCEventListenerAssetsManager.cpp in Sources */,
 				460E478C18080902000CDD6D /* CCControlStepper.cpp in Sources */,
 				460E47BB1808090B000CDD6D /* CCEditBoxImplWin.cpp in Sources */,
 				460E47B21808090B000CDD6D /* CCEditBoxImplAndroid.cpp in Sources */,
+				BA53B169192B07AB002E0804 /* Downloader.cpp in Sources */,
 				460E47B81808090B000CDD6D /* CCEditBoxImplNone.cpp in Sources */,
 				460E478418080902000CDD6D /* CCControlHuePicker.cpp in Sources */,
 				460E478A18080902000CDD6D /* CCControlSlider.cpp in Sources */,
@@ -6422,9 +6465,10 @@
 				460E479418080902000CDD6D /* CCScale9Sprite.cpp in Sources */,
 				460E478118080902000CDD6D /* CCControlColourPicker.cpp in Sources */,
 				460E479018080902000CDD6D /* CCControlUtils.cpp in Sources */,
+				BA53B16D192B07AB002E0804 /* Manifest.cpp in Sources */,
 				1AD71EF0180E27CF00808F54 /* CCPhysicsDebugNode.cpp in Sources */,
 				1AD71EF4180E27CF00808F54 /* CCPhysicsSprite.cpp in Sources */,
-				1AAF5353180E3060000584C8 /* AssetsManager.cpp in Sources */,
+				BA53B165192B07AB002E0804 /* AssetsManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6742,11 +6786,14 @@
 				460E47D918080914000CDD6D /* CCTableViewCell.cpp in Sources */,
 				460E47C01808090D000CDD6D /* CCEditBoxImplAndroid.cpp in Sources */,
 				460E47A118080904000CDD6D /* CCControlSaturationBrightnessPicker.cpp in Sources */,
+				BABE70C2192D908E00468E13 /* CCEventAssetsManager.cpp in Sources */,
 				460E47BD1808090D000CDD6D /* CCEditBox.cpp in Sources */,
 				460E47C61808090D000CDD6D /* CCEditBoxImplNone.cpp in Sources */,
+				BABE70C6192D908E00468E13 /* CCEventListenerAssetsManager.cpp in Sources */,
 				460E47D318080914000CDD6D /* CCScrollView.cpp in Sources */,
 				460E47C91808090D000CDD6D /* CCEditBoxImplWin.cpp in Sources */,
 				460E47A918080904000CDD6D /* CCControlUtils.cpp in Sources */,
+				BA53B16A192B07AB002E0804 /* Downloader.cpp in Sources */,
 				460E47D718080914000CDD6D /* CCTableView.cpp in Sources */,
 				460E479F18080904000CDD6D /* CCControlPotentiometer.cpp in Sources */,
 				460E479818080904000CDD6D /* CCControlButton.cpp in Sources */,
@@ -6760,9 +6807,10 @@
 				460E479618080904000CDD6D /* CCControl.cpp in Sources */,
 				460E47A518080904000CDD6D /* CCControlStepper.cpp in Sources */,
 				460E479A18080904000CDD6D /* CCControlColourPicker.cpp in Sources */,
+				BA53B16E192B07AB002E0804 /* Manifest.cpp in Sources */,
 				1AD71EF1180E27CF00808F54 /* CCPhysicsDebugNode.cpp in Sources */,
 				1AD71EF5180E27CF00808F54 /* CCPhysicsSprite.cpp in Sources */,
-				1AAF5354180E3060000584C8 /* AssetsManager.cpp in Sources */,
+				BA53B166192B07AB002E0804 /* AssetsManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
