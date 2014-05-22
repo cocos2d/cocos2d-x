@@ -848,6 +848,8 @@
         "cocos/platform/wp8/Direct3DBase.h", 
         "cocos/platform/wp8/DirectXBase.cpp", 
         "cocos/platform/wp8/DirectXBase.h", 
+        "cocos/platform/wp8/pch.cpp", 
+        "cocos/platform/wp8/pch.h", 
         "cocos/platform/wp8/shaders/precompiledshaders.h", 
         "cocos/renderer/CCBatchCommand.cpp", 
         "cocos/renderer/CCBatchCommand.h", 
