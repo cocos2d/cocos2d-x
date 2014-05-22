@@ -99,12 +99,6 @@ public:
      */
     const Manifest* getRemoteManifest() const;
     
-    /** @brief Function for register a listener to handle the update process events: success, error, etc
-     @param callback    The callback function
-     @param priority    The priority of the listener
-     */
-    void registerEventListener(const std::function<void(EventAssetsManager*)>& callback, int priority = 1);
-    
 CC_CONSTRUCTOR_ACCESS:
     
     AssetsManager(const std::string& manifestUrl, const std::string& storagePath);
@@ -129,9 +123,9 @@ protected:
     
     void createDirectory(const std::string &path);
     
-    void destroyDirectory(const std::string &path);
+    void removeDirectory(const std::string &path);
     
-    void destroyFile(const std::string &path);
+    void removeFile(const std::string &path);
     
     void renameFile(const std::string &path, const std::string &oldname, const std::string &name);
     

@@ -2,6 +2,7 @@
 #include "../../testResource.h"
 #include "cocos2d.h"
 #include "extensions/assets-manager/CCEventAssetsManager.h"
+#include "extensions/assets-manager/CCEventListenerAssetsManager.h"
 
 std::vector<std::string> sceneId {"AMTestScene1", "AMTestScene2", "AMTestScene3"};
 std::vector<std::string> sceneManifests {"Manifests/AMTestScene1/project.manifest", "Manifests/AMTestScene2/project.manifest", "Manifests/AMTestScene3/project.manifest"};
@@ -99,7 +100,7 @@ void AssetsManagerLoaderScene::runThisTest()
     }
     else
     {
-        _am->registerEventListener([currentId, progress](EventAssetsManager* event){
+        cocos2d::extension::EventListenerAssetsManager *listener = cocos2d::extension::EventListenerAssetsManager::create(_am, [currentId, progress](EventAssetsManager* event){
             AssetsManagerTestScene *scene;
             switch (event->getEventCode())
             {
@@ -143,6 +144,7 @@ void AssetsManagerLoaderScene::runThisTest()
                     break;
             }
         });
+        Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, 1);
         
         _am->update();
         
