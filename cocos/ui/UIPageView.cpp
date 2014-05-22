@@ -344,7 +344,7 @@ void PageView::onTouchMoved(Touch *touch, Event *unusedEvent)
     Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
-        widgetParent->checkChildInfo(1,this,_touchMovePos);
+        widgetParent->passTouchEventToParent(TouchEventType::MOVED,this,_touchMovePos);
     }
     moveEvent();
 }
@@ -495,19 +495,19 @@ void PageView::handleReleaseLogic(const Vec2 &touchPoint)
     }
 }
 
-void PageView::checkChildInfo(int handleState,Widget* sender, const Vec2 &touchPoint)
+void PageView::passTouchEventToParent(TouchEventType event,Widget* sender, const Vec2 &touchPoint)
 {
-    interceptTouchEvent(handleState, sender, touchPoint);
+    interceptTouchEvent(event, sender, touchPoint);
 }
 
-void PageView::interceptTouchEvent(int handleState, Widget *sender, const Vec2 &touchPoint)
+void PageView::interceptTouchEvent(TouchEventType event, Widget *sender, const Vec2 &touchPoint)
 {
-    switch (handleState)
+    switch (event)
     {
-        case 0:
+        case TouchEventType::BEGAN:
             handlePressLogic(touchPoint);
             break;
-        case 1:
+        case TouchEventType::MOVED:
         {
             float offset = 0;
             offset = fabs(sender->getTouchStartPos().x - touchPoint.x);
@@ -518,11 +518,8 @@ void PageView::interceptTouchEvent(int handleState, Widget *sender, const Vec2 &
             }
         }
             break;
-        case 2:
-            handleReleaseLogic(touchPoint);
-            break;
-            
-        case 3:
+        case TouchEventType::CANCELED:
+        case TouchEventType::ENDED:
             handleReleaseLogic(touchPoint);
             break;
     }

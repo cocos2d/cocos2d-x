@@ -414,11 +414,11 @@ void ListView::addEventListener(const ccListViewCallback& callback)
     _eventCallback = callback;
 }
     
-void ListView::selectedItemEvent(int state)
+void ListView::selectedItemEvent(TouchEventType event)
 {
-    switch (state)
+    switch (event)
     {
-        case 0:
+        case TouchEventType::BEGAN:
         {
             if (_listViewEventListener && _listViewEventSelector)
             {
@@ -444,10 +444,10 @@ void ListView::selectedItemEvent(int state)
 
 }
     
-void ListView::interceptTouchEvent(int handleState, Widget *sender, const Vec2 &touchPoint)
+void ListView::interceptTouchEvent(TouchEventType event, Widget *sender, const Vec2 &touchPoint)
 {
-    ScrollView::interceptTouchEvent(handleState, sender, touchPoint);
-    if (handleState != 1)
+    ScrollView::interceptTouchEvent(event, sender, touchPoint);
+    if (event != TouchEventType::MOVED)
     {
         Widget* parent = sender;
         while (parent)
@@ -459,7 +459,7 @@ void ListView::interceptTouchEvent(int handleState, Widget *sender, const Vec2 &
             }
             parent = dynamic_cast<Widget*>(parent->getParent());
         }
-        selectedItemEvent(handleState);
+        selectedItemEvent(event);
     }
 }
     

@@ -354,11 +354,6 @@ public:
     bool clippingParentAreaContainPoint(const Vec2 &pt);
 
     /*
-     * Sends the touch event to widget's parent
-     */
-    virtual void checkChildInfo(int handleState,Widget* sender,const Vec2 &touchPoint);
-
-    /*
      * Gets the touch began point of widget when widget is selected.
      *
      * @return the touch began point.
@@ -453,6 +448,14 @@ public:
      * @return true if the point is in widget's space, flase otherwise.
      */
     virtual bool hitTest(const Vec2 &pt);
+    
+    /*
+     * Sends the touch event to widget's parent
+     * @param  event  the touch event type, it could be BEGAN/MOVED/CANCELED/ENDED
+     * @param parent
+     * @param point
+     */
+    virtual void passTouchEventToParent(TouchEventType event,Widget* sender,const Vec2 &point);
 
     virtual bool onTouchBegan(Touch *touch, Event *unusedEvent);
     virtual void onTouchMoved(Touch *touch, Event *unusedEvent);
@@ -615,21 +618,27 @@ protected:
     void moveEvent();
     void releaseUpEvent();
     void cancelUpEvent();
+    
     virtual void updateTextureColor(){};
     virtual void updateTextureOpacity(){};
     virtual void updateTextureRGBA(){};
     virtual void updateFlippedX(){};
     virtual void updateFlippedY(){};
+    virtual void adaptRenderers(){};
+
+    
     void updateColorToRenderer(Node* renderer);
     void updateOpacityToRenderer(Node* renderer);
     void updateRGBAToRenderer(Node* renderer);
+    
     void copyProperties(Widget* model);
     virtual Widget* createCloneInstance();
     virtual void copySpecialProperties(Widget* model);
     virtual void copyClonedWidgetChildren(Widget* model);
+    
     Widget* getWidgetParent();
     void updateContentSizeWithTextureSize(const Size& size);
-    virtual void adaptRenderers(){};
+    
     bool isAncestorsEnabled();
     Widget* getAncensterWidget(Node* node);
     bool isAncestorsVisible(Node* node);

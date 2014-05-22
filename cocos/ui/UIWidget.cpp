@@ -586,7 +586,7 @@ bool Widget::onTouchBegan(Touch *touch, Event *unusedEvent)
     Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
-        widgetParent->checkChildInfo(0,this,_touchStartPos);
+        widgetParent->passTouchEventToParent(TouchEventType::BEGAN, this, _touchStartPos);
     }
     pushDownEvent();
     return true;
@@ -599,7 +599,7 @@ void Widget::onTouchMoved(Touch *touch, Event *unusedEvent)
     Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
-        widgetParent->checkChildInfo(1,this,_touchMovePos);
+        widgetParent->passTouchEventToParent(TouchEventType::MOVED, this, _touchMovePos);
     }
     moveEvent();
 }
@@ -612,7 +612,7 @@ void Widget::onTouchEnded(Touch *touch, Event *unusedEvent)
     Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
-        widgetParent->checkChildInfo(2,this,_touchEndPos);
+        widgetParent->passTouchEventToParent(TouchEventType::ENDED, this, _touchEndPos);
     }
     if (highlight)
     {
@@ -746,13 +746,14 @@ bool Widget::clippingParentAreaContainPoint(const Vec2 &pt)
     return true;
 }
 
-void Widget::checkChildInfo(int handleState, Widget *sender, const Vec2 &touchPoint)
+void Widget::passTouchEventToParent(cocos2d::ui::Widget::TouchEventType event, cocos2d::ui::Widget *sender, const cocos2d::Vec2 &point)
 {
     Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
-        widgetParent->checkChildInfo(handleState,sender,touchPoint);
+        widgetParent->passTouchEventToParent(event,sender,point);
     }
+
 }
 
 void Widget::setPosition(const Vec2 &pos)

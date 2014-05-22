@@ -320,6 +320,16 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     virtual void initRenderer() override;
+    
+    virtual void onSizeChanged() override;
+    virtual void doLayout() override;
+    virtual void passTouchEventToParent(TouchEventType event,Widget* sender,const Vec2 &point) override;
+
+    virtual Widget* createCloneInstance() override;
+    virtual void copySpecialProperties(Widget* model) override;
+    virtual void copyClonedWidgetChildren(Widget* model) override;
+    
+    
     void moveChildren(float offsetX, float offsetY);
     void autoScrollChildren(float dt);
     void bounceChildren(float dt);
@@ -336,27 +346,28 @@ protected:
     bool bounceScrollChildren(float touchOffsetX, float touchOffsetY);
     void startRecordSlidAction();
     virtual void endRecordSlidAction();
+    
+    //ScrollViewProtocol
     virtual void handlePressLogic(const Vec2 &touchPoint) override;
     virtual void handleMoveLogic(const Vec2 &touchPoint) override;
     virtual void handleReleaseLogic(const Vec2 &touchPoint) override;
-    virtual void interceptTouchEvent(int handleState,Widget* sender,const Vec2 &touchPoint) override;
-    virtual void checkChildInfo(int handleState,Widget* sender,const Vec2 &touchPoint) override;
+    virtual void interceptTouchEvent(Widget::TouchEventType event,Widget* sender,const Vec2 &touchPoint) override;
+    
     void recordSlidTime(float dt);
+    
     void scrollToTopEvent();
     void scrollToBottomEvent();
     void scrollToLeftEvent();
     void scrollToRightEvent();
     void scrollingEvent();
+    
     void bounceTopEvent();
     void bounceBottomEvent();
     void bounceLeftEvent();
     void bounceRightEvent();
-    virtual void onSizeChanged() override;
-    virtual Widget* createCloneInstance() override;
-    virtual void copySpecialProperties(Widget* model) override;
-    virtual void copyClonedWidgetChildren(Widget* model) override;
-    virtual void setClippingEnabled(bool able) override{Layout::setClippingEnabled(able);};
-    virtual void doLayout() override;
+    
+    
+
 protected:
     Layout* _innerContainer;
     

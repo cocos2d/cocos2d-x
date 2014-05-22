@@ -308,7 +308,7 @@ void CheckBox::onTouchEnded(Touch *touch, Event *unusedEvent)
     Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
-        widgetParent->checkChildInfo(2,this,_touchEndPos);
+        widgetParent->passTouchEventToParent(TouchEventType::ENDED,this,_touchEndPos);
     }
 }
 

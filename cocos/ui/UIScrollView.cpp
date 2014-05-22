@@ -1515,15 +1515,15 @@ void ScrollView::recordSlidTime(float dt)
     }
 }
 
-void ScrollView::interceptTouchEvent(int handleState, Widget *sender, const Vec2 &touchPoint)
+void ScrollView::interceptTouchEvent(Widget::TouchEventType event, Widget *sender, const Vec2 &touchPoint)
 {
-    switch (handleState)
+    switch (event)
     {
-        case 0:
+        case TouchEventType::BEGAN:
             handlePressLogic(touchPoint);
             break;
             
-        case 1:
+        case TouchEventType::MOVED:
         {
             float offset = (sender->getTouchStartPos() - touchPoint).getLength();
             if (offset > _childFocusCancelOffset)
@@ -1534,19 +1534,17 @@ void ScrollView::interceptTouchEvent(int handleState, Widget *sender, const Vec2
         }
             break;
             
-        case 2:
+        case TouchEventType::CANCELED:
+        case TouchEventType::ENDED:
             handleReleaseLogic(touchPoint);
-            break;
-            
-        case 3:
             handleReleaseLogic(touchPoint);
             break;
     }
 }
 
-void ScrollView::checkChildInfo(int handleState,Widget* sender,const Vec2 &touchPoint)
+void ScrollView::passTouchEventToParent(cocos2d::ui::Widget::TouchEventType event, cocos2d::ui::Widget *sender, const cocos2d::Vec2 &point)
 {
-    interceptTouchEvent(handleState, sender, touchPoint);
+    interceptTouchEvent(event, sender, point);
 }
 
 void ScrollView::scrollToTopEvent()
