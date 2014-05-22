@@ -1,150 +1,72 @@
 local targetPlatform = cc.Application:getInstance():getTargetPlatform()
 
-local lineSpace = 40
-local itemTagBasic = 1000
-local menuItemNames =
+local sceneID = 
 {
-    "enter",
-    "reset",
-    "update",
+    "AMTestScene1", 
+    "AMTestScene2", 
+    "AMTestScene3",
 }
 
-local winSize = cc.Director:getInstance():getWinSize()
+local sceneManifests = 
+{
+    "Manifests/AMTestScene1/project.manifest", 
+    "Manifests/AMTestScene2/project.manifest", 
+    "Manifests/AMTestScene3/project.manifest"
+}
 
-local function updateLayer()
-    local layer = cc.Layer:create()
+--UNCHECK
+local storagePaths = 
+{
+    "LuaTests/AssetsManagerTest/scene1",
+    "LuaTests/AssetsManagerTest/scene2", 
+    "LuaTests/AssetsManagerTest/scene3",
+}
 
-    local support  = false
-    if (cc.PLATFORM_OS_IPHONE == targetPlatform) or (cc.PLATFORM_OS_IPAD == targetPlatform) 
-        or (cc.PLATFORM_OS_WINDOWS == targetPlatform) or (cc.PLATFORM_OS_ANDROID == targetPlatform) 
-        or (cc.PLATFORM_OS_MAC  == targetPlatform) then
-        support = true
-    end
+local backgroundPaths = 
+{
+    "Images/background1.jpg", 
+    "Images/background2.jpg", 
+    "Images/background3.png"
+}
 
-    if not support then
-        print("Platform is not supported!")
-        return layer
-    end
+-------------------------------------
+--  AssetsManager Test
+-------------------------------------
+local AMTestScene1 = {}
+AMTestScene1.__index = AMTestScene1
 
-    local isUpdateItemClicked = false
-    local assetsManager       = nil
-    local pathToSave          = ""
+function AMTestScene1.create()
+    local sprite = cc.Sprite:create("Images/Icon.png")
+    local layer  = cc.Layer:create()
 
-    local menu = cc.Menu:create()
-    menu:setPosition(cc.p(0, 0))
-    cc.MenuItemFont:setFontName("Arial")
-    cc.MenuItemFont:setFontSize(24)
+    layer:addChild(sprite)
+    sprite:setPosition(cc.p(VisibleRect:center().x, VisibleRect:center().y))
 
-    local progressLable = cc.Label:createWithTTF("",s_arialPath,30)
-    progressLable:setAnchorPoint(cc.p(0.5, 0.5))
-    progressLable:setPosition(cc.p(140,50))
-    layer:addChild(progressLable)
+    local ttfConfig = {}
+    ttfConfig.fontFilePath = "fonts/arial.ttf"
+    ttfConfig.fontSize = 40
 
-    pathToSave = createDownloadDir()
+    local  progress = cc.Label:createWithTTF(ttfConfig, "0%", cc.VERTICAL_TEXT_ALIGNMENT_CENTER)
+    progress:setPosition(cc.p(VisibleRect:center().x, VisibleRect:center().y + 50))
+    layer:addChild(progress)
 
-    local function onError(errorCode)
-        if errorCode == cc.ASSETSMANAGER_NO_NEW_VERSION then
-            progressLable:setString("no new version")
-        elseif errorCode == cc.ASSETSMANAGER_NETWORK then
-            progressLable:setString("network error")
+    local am = cc.AssetsManager:create("AMTestScene1", "Manifests/AMTestScene1/project.manifest", "LuaTests/AssetsManagerTest/scene1")
+    am:retain()
+
+    if not am:getLocalManifest():isLoaded() then
+        print("Fail to update assets, step skipped.")
+        --AssetsManagerTestScene *scene = new AssetsManagerTestScene(backgroundPaths[currentId])
+        --cc.Director:getInstance():replaceScene(scene)
+        local background = cc.Sprite:create(backgroundPaths[1])
+        layer:addChild(background, 1)
+        background:setPosition(cc.p(VisibleRect:center().x, VisibleRect:center().y))
+
+    else
+        local function onUpdate(event)
+            
         end
+        am:addUpdateEventListener(onUpdate)
     end
-
-    local function onProgress( percent )
-        local progress = string.format("downloading %d%%",percent)
-        progressLable:setString(progress)
-    end
-
-    local function onSuccess()
-        progressLable:setString("downloading ok")
-    end
-
-    local function getAssetsManager()
-        if nil == assetsManager then
-            assetsManager = cc.AssetsManager:new("https://raw.github.com/samuele3hu/AssetsManagerTest/master/package.zip",
-                                           "https://raw.github.com/samuele3hu/AssetsManagerTest/master/version",
-                                           pathToSave)
-            assetsManager:retain()
-            assetsManager:setDelegate(onError, cc.ASSETSMANAGER_PROTOCOL_ERROR )
-            assetsManager:setDelegate(onProgress, cc.ASSETSMANAGER_PROTOCOL_PROGRESS)
-            assetsManager:setDelegate(onSuccess, cc.ASSETSMANAGER_PROTOCOL_SUCCESS )
-            assetsManager:setConnectionTimeout(3)
-        end
-
-        return assetsManager
-    end
-
-    local function update(sender)
-        progressLable:setString("")
-
-        getAssetsManager():update()
-    end
-
-    local function reset(sender)
-        progressLable:setString("")
-
-        deleteDownloadDir(pathToSave)
-
-        getAssetsManager():deleteVersion()
-
-        createDownloadDir()
-    end
-
-    local function reloadModule( moduleName )
-
-        package.loaded[moduleName] = nil
-
-        return require(moduleName)
-    end
-
-    local function enter(sender)
-
-        if not isUpdateItemClicked then
-            local realPath = pathToSave .. "/package"
-            addSearchPath(realPath,true)
-        end
-
-        assetsManagerModule = reloadModule("src/AssetsManagerTest/AssetsManagerModule")
-
-        assetsManagerModule.newScene(AssetsManagerTestMain)
-    end
-
-    local callbackFuncs =
-    {
-        enter,
-        reset,
-        update,
-    }
-
-    local function menuCallback(tag, menuItem)
-        local scene = nil
-        local nIdx = menuItem:getLocalZOrder() - itemTagBasic
-        local ExtensionsTestScene = CreateExtensionsTestScene(nIdx)
-        if nil ~= ExtensionsTestScene then
-            cc.Director:getInstance():replaceScene(ExtensionsTestScene)
-        end
-    end
-
-    for i = 1, table.getn(menuItemNames) do
-        local item = cc.MenuItemFont:create(menuItemNames[i])
-        item:registerScriptTapHandler(callbackFuncs[i])
-        item:setPosition(winSize.width / 2, winSize.height - i * lineSpace)
-        if not support then
-            item:setEnabled(false)
-        end
-        menu:addChild(item, itemTagBasic + i)
-    end
-
-    local function onNodeEvent(msgName)
-        if nil ~= assetsManager then
-            assetsManager:release()
-            assetsManager = nil
-        end
-    end
-
-    layer:registerScriptHandler(onNodeEvent)
-
-    layer:addChild(menu)
 
     return layer
 end
@@ -154,7 +76,13 @@ end
 -------------------------------------
 function AssetsManagerTestMain()
     local scene = cc.Scene:create()
-    scene:addChild(updateLayer())
+
+    Helper.createFunctionTable = 
+    {
+        AMTestScene1.create,
+    }
+
+    scene:addChild(AMTestScene1.create())
     scene:addChild(CreateBackMenuItem())
     return scene
 end
