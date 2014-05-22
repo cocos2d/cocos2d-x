@@ -73,6 +73,7 @@ extern bool luavals_variadic_to_array(lua_State* L,int argc, __Array** ret);
 extern bool luavals_variadic_to_ccvaluevector(lua_State* L, int argc, cocos2d::ValueVector* ret);
 extern bool luaval_to_vec2(lua_State* L,int lo,cocos2d::Vec2* outValue);
 extern bool luaval_to_vec3(lua_State* L,int lo,cocos2d::Vec3* outValue);
+extern bool luaval_to_vec4(lua_State* L,int lo,cocos2d::Vec4* outValue);
 extern bool luaval_to_blendfunc(lua_State* L, int lo, cocos2d::BlendFunc* outValue);
 extern bool luaval_to_ttfconfig(lua_State* L, int lo, cocos2d::TTFConfig* outValue);
 
@@ -228,10 +229,14 @@ bool luaval_to_object(lua_State* L, int lo, const char* type, T** ret)
     return true;
 }
 
+extern bool luaval_to_mesh_vertex_attrib(lua_State* L, int lo, cocos2d::MeshVertexAttrib* ret);
+extern bool luaval_to_std_vector_float(lua_State* L, int lo, std::vector<float>* ret);
+extern bool luaval_to_std_vector_ushort(lua_State* L, int lo, std::vector<unsigned short>* ret);
 
 // from native
 extern void vec2_to_luaval(lua_State* L,const cocos2d::Vec2& vec2);
 extern void vec3_to_luaval(lua_State* L,const cocos2d::Vec3& vec3);
+extern void vec4_to_luaval(lua_State* L,const cocos2d::Vec4& vec3);
 extern void vec2_array_to_luaval(lua_State* L,const cocos2d::Vec2* points, int count);
 extern void size_to_luaval(lua_State* L,const Size& sz);
 extern void rect_to_luaval(lua_State* L,const Rect& rt);
@@ -371,5 +376,11 @@ void object_to_luaval(lua_State* L,const char* type, T* ret)
         lua_pushnil(L);
     }
 }
+
+void mesh_vertex_attrib_to_luaval(lua_State* L, const cocos2d::MeshVertexAttrib& inValue);
+void ccvector_std_string_to_luaval(lua_State* L, const std::vector<std::string>& inValue);
+void ccvector_int_to_luaval(lua_State* L, const std::vector<int>& inValue);
+void ccvector_float_to_luaval(lua_State* L, const std::vector<float>& inValue);
+void ccvector_ushort_to_luaval(lua_State* L, const std::vector<unsigned short>& inValue);
 
 #endif //__COCOS2DX_SCRIPTING_LUA_COCOS2DXSUPPORT_LUABAISCCONVERSIONS_H__

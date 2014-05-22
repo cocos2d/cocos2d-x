@@ -71,6 +71,10 @@ cocos2d.cpp \
 2d/CCTransitionPageTurn.cpp \
 2d/CCTransitionProgress.cpp \
 2d/CCTweenFunction.cpp \
+3d/CCMesh.cpp \
+3d/CCSprite3DDataCache.cpp \
+3d/CCObjLoader.cpp \
+3d/CCSprite3D.cpp \
 platform/CCGLViewProtocol.cpp \
 platform/CCFileUtils.cpp \
 platform/CCSAXParser.cpp \
@@ -136,6 +140,7 @@ renderer/CCGLProgramState.cpp \
 renderer/CCGLProgramStateCache.cpp \
 renderer/CCGroupCommand.cpp \
 renderer/CCQuadCommand.cpp \
+renderer/CCMeshCommand.cpp \
 renderer/CCRenderCommand.cpp \
 renderer/CCRenderer.cpp \
 renderer/CCTexture2D.cpp \

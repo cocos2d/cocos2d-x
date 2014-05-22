@@ -1,4 +1,8 @@
-﻿#pragma once
+﻿// XXX: For some reason, this file must not be compiled
+// XXX: Ask MS why
+#if 0
+
+#pragma once
 
 #include "DirectXHelper.h"
 #include <wrl/client.h>
@@ -38,3 +42,5 @@ protected private:
 	float m_dpi;
 
 };
+
+#endif  // 0
