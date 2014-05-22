@@ -113,18 +113,20 @@ public:
 
     
     /** 返回给定的文件名的完整路径
+    
+     首先我们试着在“filenameLookup”词典中获得新的文件名。
+     如果找不到新的文件名，则还是用原来的文件名。
+     然后尝试使用FileUtils 的查找规则：resolutions, and search paths来获得该文件名的完整路径。
+     文件查找是在数组中存放的查找路径的元素顺序和解析目录的基础上实现的。
+  
      
-     First it will try to get a new filename from the "filenameLookup" dictionary.
-     If a new filename can't be found on the dictionary, it will use the original filename.
-     Then it will try to obtain the full path of the filename using the FileUtils search rules: resolutions, and search paths.
-     The file search is based on the array element order of search paths and resolution directories.
+     例如：
      
-     For instance:
-
-     	We set two elements("/mnt/sdcard/", "internal_dir/") to search paths vector by setSearchPaths,
-     	and set three elements("resources-ipadhd/", "resources-ipad/", "resources-iphonehd")
-     	to resolutions vector by setSearchResolutionsOrder. The "internal_dir" is relative to "Resources/".
-
+     	我们通过setSearchPaths给存放查找路径的vector设置两个元素（"/mnt/sdcard/", "internal_dir/"），
+     	并通过setSearchResolutionsOrder给存放解析顺序的vector设置三个元素（"resources-ipadhd/", "resources-ipad/", "resources-iphonehd"）
+	"internal_dir"是"Resources/"下的文件
+     
+     	如果我们有一个名字为‘sprite.png’的文件，
 		If we have a file named 'sprite.png', the mapping in fileLookup dictionary contains `key: sprite.png -> value: sprite.pvr.gz`.
      	Firstly, it will replace 'sprite.png' with 'sprite.pvr.gz', then searching the file sprite.pvr.gz as follows:
 
