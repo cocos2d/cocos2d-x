@@ -161,7 +161,7 @@ public:
      */
     static void destroyInstance();
 
-    /** deprecated. 使用getInstace()代替
+    /**@deprecated. 使用getInstace()代替
      * @js NA
      * @lua NA
      */
