@@ -9,6 +9,8 @@ LOCAL_SRC_FILES := \
 assets-manager/AssetsManager.cpp \
 assets-manager/Downloader.cpp \
 assets-manager/Manifest.cpp \
+assets-manager/CCEventAssetsManager.cpp \
+assets-manager/CCEventListenerAssetsManager.cpp \
 GUI/CCControlExtension/CCControl.cpp \
 GUI/CCControlExtension/CCControlButton.cpp \
 GUI/CCControlExtension/CCControlColourPicker.cpp \
