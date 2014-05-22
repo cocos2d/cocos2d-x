@@ -33,7 +33,7 @@
 #include "extensions/ExtensionMacros.h"
 #include "json/document.h"
 #include <string>
-#include <map>
+#include <unordered_map>
 #include <vector>
 
 namespace cocos2d

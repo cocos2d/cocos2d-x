@@ -28,7 +28,9 @@
 #include "cocos2d.h"
 #include "extensions/ExtensionMacros.h"
 
+#include <unordered_map>
 #include <memory>
+#include <string>
 
 NS_CC_EXT_BEGIN
 

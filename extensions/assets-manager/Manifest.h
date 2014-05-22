@@ -29,7 +29,7 @@
 #include "extensions/ExtensionMacros.h"
 
 #include <string>
-#include <map>
+#include <unordered_map>
 #include <vector>
 
 #include "json/document.h"
