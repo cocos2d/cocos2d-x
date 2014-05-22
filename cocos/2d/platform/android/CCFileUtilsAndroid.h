@@ -43,7 +43,7 @@ NS_CC_BEGIN
  * @{
  */
 
-//! @brief  Helper class to handle file operations
+//! @brief  处理文件操作的协助类
 class CC_DLL FileUtilsAndroid : public FileUtils
 {
     friend class FileUtils;
@@ -57,20 +57,20 @@ public:
 
     static void setassetmanager(AAssetManager* a);
 
-    /* override funtions */
+    /* 重载函数 */
     bool init();
 
-    /** @deprecated Please use FileUtils::getDataFromFile or FileUtils::getStringFromFile instead. */
+    /** @deprecated 请使用FileUtils::getDataFromFile or FileUtils::getStringFromFile 代替. */
     CC_DEPRECATED_ATTRIBUTE virtual unsigned char* getFileData(const std::string& filename, const char* mode, ssize_t * size) override;
 
     /**
-     *  Gets string from a file.
+     *  获取文件中的内容，返回字符串
      */
     virtual std::string getStringFromFile(const std::string& filename) override;
     
     /**
-     *  Creates binary data from a file.
-     *  @return A data object.
+     *  用文件中的内容创建二进制数据
+     *  @return 返回数据对象
      */
     virtual Data getDataFromFile(const std::string& filename) override;
 

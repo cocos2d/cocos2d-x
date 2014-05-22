@@ -39,8 +39,8 @@ class CC_DLL ApplicationProtocol
 {
 public:
 
-    // Since WINDOWS and ANDROID are defined as macros, we could not just use these keywords in enumeration(Platform).
-    // Therefore, 'OS_' prefix is added to avoid conflicts with the definitions of system macros.
+    //因为在windows和Android平台上被定义为宏，我们不能只是使用枚举里面的这些关键字，
+    //因此，添加‘OS_’前缀来避免和系统定义的宏发生冲突
     enum class Platform
     {
         OS_WINDOWS,
@@ -64,54 +64,54 @@ public:
     virtual ~ApplicationProtocol() {}
 
     /**
-    @brief    Implement Director and Scene init code here.
-    @return true    Initialize success, app continue.
-    @return false   Initialize failed, app terminate.
+    @brief    在这里实现Director和Scene的初始化。
+    @return true    初始化成功，应用程序继续。
+    @return false   初始化失败，应用程序终止。
     * @js NA
     * @lua NA
     */
     virtual bool applicationDidFinishLaunching() = 0;
 
     /**
-    @brief  This function will be called when the application enters background.
+    @brief  这个函数在应用程序进入后台的时候被调用
     * @js NA
     * @lua NA
     */
     virtual void applicationDidEnterBackground() = 0;
 
     /**
-    @brief  This function will be called when the application enters foreground.
+    @brief  这个函数在应用程序进入前台的时候被调用
     * @js NA
     * @lua NA
     */
     virtual void applicationWillEnterForeground() = 0;
 
     /**
-    @brief    Callback by Director for limit FPS.
-    @param interval The time, expressed in seconds, between current frame and next.
+    @brief    被Director调用来限制FPS.
+    @param interval 当前帧和下一帧的时间间隔，以秒为单位。
     * @js NA
     * @lua NA
     */
     virtual void setAnimationInterval(double interval) = 0;
 
     /**
-    @brief Get current language config
-    @return Current language config
+    @brief 获取当前语言配置
+    @return 返回当前语言配置
     * @js NA
     * @lua NA
     */
     virtual LanguageType getCurrentLanguage() = 0;
     
     /**
-     @brief Get current language iso 639-1 code
-     @return Current language iso 639-1 code
+     @brief 获取当前语言的iso 639-1代码
+     @return 返回当前语言的iso 639-1代码
      * @js NA
      * @lua NA
      */
     virtual const char * getCurrentLanguageCode() = 0;
     
     /**
-     @brief Get target platform
+     @brief 获取目标平台
      * @js NA
      * @lua NA
      */

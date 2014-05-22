@@ -39,7 +39,7 @@ class CC_DLL GLView : public GLViewProtocol, public Ref
 {
 public:
 
-    // static function
+    // 静态函数
     static GLView* create(const std::string &viewname);
     static GLView* createWithRect(const std::string& viewName, Rect rect, float frameZoomFactor = 1.0f);
     static GLView* createWithFullScreen(const std::string& viewName);

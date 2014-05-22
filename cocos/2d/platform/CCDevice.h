@@ -39,28 +39,28 @@ class CC_DLL Device
 public:
     enum class TextAlign
     {
-        CENTER        = 0x33, ///< Horizontal center and vertical center.
-        TOP           = 0x13, ///< Horizontal center and vertical top.
-        TOP_RIGHT     = 0x12, ///< Horizontal right and vertical top.
-        RIGHT         = 0x32, ///< Horizontal right and vertical center.
-        BOTTOM_RIGHT = 0x22, ///< Horizontal right and vertical bottom.
-        BOTTOM        = 0x23, ///< Horizontal center and vertical bottom.
-        BOTTOM_LEFT  = 0x21, ///< Horizontal left and vertical bottom.
-        LEFT          = 0x31, ///< Horizontal left and vertical center.
-        TOP_LEFT      = 0x11, ///< Horizontal left and vertical top.
+        CENTER        = 0x33, ///< 水平方向的中间和垂直方向的中间
+        TOP           = 0x13, ///< 水平方向的中间和垂直方向的顶部
+        TOP_RIGHT     = 0x12, ///< 水平方向的右边和垂直方向的顶部
+        RIGHT         = 0x32, ///< 水平方向的右边和垂直方向的中间
+        BOTTOM_RIGHT = 0x22, ///< 水平方向的右边和垂直方向的底部
+        BOTTOM        = 0x23, ///< 水平方向的中间和垂直方向的底部
+        BOTTOM_LEFT  = 0x21, ///< 水平方向的左边和垂直方向的底部
+        LEFT          = 0x31, ///< 水平方向的左边和垂直方向的中间
+        TOP_LEFT      = 0x11, ///< 水平方向的左边和垂直方向的顶部
     };
     /**
-     *  Gets the DPI of device
-     *  @return The DPI of device.
+     *  获取设备的DPI
+     *  @return 返回设备的DPI
      */
     static int getDPI();
     
     /**
-     * To enable or disable accelerometer.
+     * 启用或禁用加速度计
      */
     static void setAccelerometerEnabled(bool isEnabled);
     /**
-     *  Sets the interval of accelerometer.
+     *  设置加速度的值
      */
     static void setAccelerometerInterval(float interval);
 

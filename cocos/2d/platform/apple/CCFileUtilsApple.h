@@ -39,11 +39,11 @@ NS_CC_BEGIN
  * @{
  */
 
-//! @brief  Helper class to handle file operations
+//! @brief  处理文件操作的协助类
 class CC_DLL FileUtilsApple : public FileUtils
 {
 public:
-    /* override funtions */
+    /* 重载函数 */
     virtual std::string getWritablePath() const override;
     virtual std::string getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename) override;
     

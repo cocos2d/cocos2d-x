@@ -48,46 +48,46 @@ public:
     virtual ~Application();
 
     /**
-    @brief    Callback by Director to limit FPS.
-    @param interval The time, expressed in seconds, between current frame and next.
+    @brief    Director调用来限制FPS的函数。
+    @param interval 当前帧和下一帧之间的时间，以秒为单位。
     */
     void setAnimationInterval(double interval);
 
     /**
-    @brief    Run the message loop.
+    @brief    运行消息循环。
     */
     int run();
 
     /**
-    @brief    Get current application instance.
-    @return Current application instance pointer.
+    @brief    获取当前应用程序的实例。
+    @return  返回当前应用程序实例的指针
     */
     static Application* getInstance();
 
-    /** @deprecated Use getInstance() instead */
+    /** @deprecated 用getInstance()替代 */
     CC_DEPRECATED_ATTRIBUTE static Application* sharedApplication();
 
     /**
-    @brief Get current language config
-    @return Current language config
+    @brief 获取当前的语言配置
+    @return 返回当前的语言配置
     */
     virtual LanguageType getCurrentLanguage();
     
     /**
-    @brief Get current language iso 639-1 code
-    @return Current language iso 639-1 code
+    @brief 获取当前语言的iso 639-1代码
+    @return 返回当前语言的iso 639-1代码
     */
     virtual const char * getCurrentLanguageCode();
     
     /**
-     @brief Get target platform
+     @brief 获取目标平台
      */
     virtual Platform getTargetPlatform();
 
 	/**
-	@brief  This function will be called when the application screen size is changed.
-	@param new width
-	@param new height
+	@brief  这个函数是在应用程序的屏幕大小改变的时候被调用的
+	@param 新的宽度
+	@param 新的高度
 	*/
 	virtual void applicationScreenSizeChanged(int newWidth, int newHeight);
 
