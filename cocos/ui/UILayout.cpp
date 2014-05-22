@@ -671,7 +671,7 @@ void Layout::addChild(Node *child)
 
 void Layout::addChild(Node * child, int zOrder)
 {
-    Layout::addChild(child, zOrder, child->getZOrder());
+    Layout::addChild(child, zOrder, child->getTag());
 }
 
 void Layout::addChild(Node *child, int zOrder, int tag)
