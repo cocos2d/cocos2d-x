@@ -175,8 +175,8 @@ public:
     void setUniformVec4(const std::string &uniformName, const Vec4& value);
     void setUniformMat4(const std::string &uniformName, const Mat4& value);
     void setUniformCallback(const std::string &uniformName, const std::function<void(Uniform*)> &callback);
-    void setUniformTexture(const std::string &uniformName, Texture2D *texture);
-    void setUniformTexture(const std::string &uniformName, GLuint textureId);
+    void setUniformTexture(const std::string &uniformName, Texture2D *texture, int textureUnitIndex = -1);
+    void setUniformTexture(const std::string &uniformName, GLuint textureId, int textureUnitIndex = -1);
 
 protected:
     GLProgramState();
