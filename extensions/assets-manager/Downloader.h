@@ -30,11 +30,12 @@
 
 NS_CC_EXT_BEGIN
 
-class DownloaderDelegateProtocol;
-
 class CC_DLL Downloader
 {
 public:
+    
+    friend class AssetsManager;
+    
     enum class ErrorCode
     {
         CREATE_FILE,
@@ -75,24 +76,28 @@ public:
         std::string customId;
     };
     
-    /**
-     *  The default constructor.
-     */
-    Downloader(DownloaderDelegateProtocol* delegate);
-    
-    DownloaderDelegateProtocol* getDelegate() const { return _delegate ;}
-    
     int getConnectionTimeout();
     
     void setConnectionTimeout(int timeout);
+    
+    std::function<void(const Downloader::Error &)> getErrorCallback() const { return _onError; };
+    
+    std::function<void(double, double, const std::string &, const std::string &)> getProgressCallback() const { return _onProgress; };
+    
+    std::function<void(const std::string &, const std::string &)> getSuccessCallback() const { return _onSuccess; };
     
     void downloadAsync(const std::string &srcUrl, const std::string &storagePath, const std::string &customId = "");
     
     void downloadSync(const std::string &srcUrl, const std::string &storagePath, const std::string &customId = "");
     
-    void batchDownload(const std::map<std::string, DownloadUnit> &units);
+    void batchDownload(const std::unordered_map<std::string, DownloadUnit> &units);
     
 protected:
+    
+    /**
+     *  The default constructor.
+     */
+    Downloader();
     
     FILE *prepareDownload(const std::string &srcUrl, const std::string &storagePath, const std::string &customId);
     
@@ -104,46 +109,13 @@ private:
     
     int _connectionTimeout;
     
-    DownloaderDelegateProtocol* _delegate;
+    std::function<void(const Downloader::Error &)> _onError;
     
-    std::string getFileNameFormUrl(const std::string &srcUrl);
-};
-
-class DownloaderDelegateProtocol
-{
-public:
-    virtual ~DownloaderDelegateProtocol() {};
+    std::function<void(double, double, const std::string &, const std::string &)> _onProgress;
     
-    /** @brief  Call back function for error handling,
-     the error will then be reported to user's listener registed in addUpdateEventListener
-     @param error   The error object contains ErrorCode, message, asset url, asset key
-     @warning AssetsManager internal use only
-     * @js NA
-     * @lua NA
-     */
-    virtual void onError(const Downloader::Error &error) {};
+    std::function<void(const std::string &, const std::string &)> _onSuccess;
     
-    /** @brief  Call back function for recording downloading percent of the current asset,
-     the progression will then be reported to user's listener registed in addUpdateProgressEventListener
-     @param total       Total size to download for this asset
-     @param downloaded  Total size already downloaded for this asset
-     @param url         The url of this asset
-     @param customId    The key of this asset
-     @warning AssetsManager internal use only
-     * @js NA
-     * @lua NA
-     */
-    virtual void onProgress(double total, double downloaded, const std::string &url, const std::string &customId) {};
-    
-    /** @brief  Call back function for success of the current asset
-     the success event will then be send to user's listener registed in addUpdateEventListener
-     @param srcUrl      The url of this asset
-     @param customId    The key of this asset
-     @warning AssetsManager internal use only
-     * @js NA
-     * @lua NA
-     */
-    virtual void onSuccess(const std::string &srcUrl, const std::string &customId) {};
+    std::string getFileNameFromUrl(const std::string &srcUrl);
 };
 
 NS_CC_EXT_END;

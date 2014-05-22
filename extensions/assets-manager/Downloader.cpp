@@ -52,10 +52,10 @@ int downloadProgressFunc(Downloader::ProgressData *ptr, double totalToDownload, 
         ptr->downloaded = nowDownloaded;
         std::string url = ptr->url;
         std::string customId = ptr->customId;
-        DownloaderDelegateProtocol* delegate = ptr->downloader->getDelegate();
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread([url, customId, delegate, totalToDownload, nowDownloaded]{
-            if (delegate)
-                delegate->onProgress(totalToDownload, nowDownloaded, url, customId);
+        auto callback = ptr->downloader->getProgressCallback();
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([url, customId, callback, totalToDownload, nowDownloaded]{
+            if (callback)
+                callback(totalToDownload, nowDownloaded, url, customId);
         });
     }
     
@@ -63,8 +63,10 @@ int downloadProgressFunc(Downloader::ProgressData *ptr, double totalToDownload, 
 }
 
 
-Downloader::Downloader(DownloaderDelegateProtocol* delegate)
-: _delegate(delegate)
+Downloader::Downloader()
+: _onError(nullptr)
+, _onProgress(nullptr)
+, _onSuccess(nullptr)
 , _connectionTimeout(0)
 {
 }
@@ -87,12 +89,12 @@ void Downloader::notifyError(ErrorCode code, const std::string &msg/* ="" */, co
         err.code = code;
         err.message = msg;
         err.customId = customId;
-        if (this->_delegate)
-            this->_delegate->onError(err);
+        if (this->_onError != nullptr)
+            this->_onError(err);
     });
 }
 
-std::string Downloader::getFileNameFormUrl(const std::string &srcUrl)
+std::string Downloader::getFileNameFromUrl(const std::string &srcUrl)
 {
     // Find file name and file extension
     std::string filename;
@@ -109,12 +111,12 @@ FILE *Downloader::prepareDownload(const std::string &srcUrl, const std::string &
     Error err;
     err.customId = customId;
     // Asserts
-    std::string filename = getFileNameFormUrl(srcUrl);
+    std::string filename = getFileNameFromUrl(srcUrl);
     if (filename.size() == 0)
     {
         err.code = ErrorCode::INVALID_URL;
         err.message = "Invalid url or filename not exist error: " + srcUrl;
-        if (this->_delegate) this->_delegate->onError(err);
+        if (this->_onError) this->_onError(err);
         return fp;
     }
     
@@ -125,7 +127,7 @@ FILE *Downloader::prepareDownload(const std::string &srcUrl, const std::string &
     {
         err.code = ErrorCode::CREATE_FILE;
         err.message = "Can not create file " + outFileName;
-        if (this->_delegate) this->_delegate->onError(err);
+        if (this->_onError) this->_onError(err);
     }
     
     return fp;
@@ -150,7 +152,7 @@ void Downloader::downloadSync(const std::string &srcUrl, const std::string &stor
     }
 }
 
-void Downloader::batchDownload(const std::map<std::string, Downloader::DownloadUnit> &units)
+void Downloader::batchDownload(const std::unordered_map<std::string, Downloader::DownloadUnit> &units)
 {
     for (auto it = units.cbegin(); it != units.cend(); it++) {
         DownloadUnit unit = it->second;
@@ -200,8 +202,8 @@ void Downloader::download(const std::string &srcUrl, FILE *fp, const std::string
     else
     {
         Director::getInstance()->getScheduler()->performFunctionInCocosThread([srcUrl, customId, this]{
-            if (this->_delegate)
-                this->_delegate->onSuccess(srcUrl, customId);
+            if (this->_onSuccess)
+                this->_onSuccess(srcUrl, customId);
         });
     }
     fclose(fp);
