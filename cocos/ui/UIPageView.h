@@ -130,7 +130,7 @@ public:
     
     //TODO: add Vector<Layout*> member variables into UIPageView, but it only used for reference purpose,
     //all the pages are added into proteced node, so does scrollview, listview
-    Vector<Layout*> getPages();
+    Vector<Layout*>& getPages();
     
     Layout* getPage(ssize_t index);
     
@@ -185,8 +185,8 @@ protected:
     virtual bool scrollPages(float touchOffset);
     void movePages(float offset);
     void pageTurningEvent();
-    void updateChildrenSize();
-    void updateChildrenPosition();
+    void updateAllPagesSize();
+    void updateAllPagesPosition();
 
     //overrided functions
     virtual void handlePressLogic(const Vec2 &touchPoint) override;
@@ -207,6 +207,7 @@ protected:
 
 protected:
     ssize_t _curPageIdx;
+    Vector<Layout*> _pages;
 
     TouchDirection _touchMoveDirection;
 
