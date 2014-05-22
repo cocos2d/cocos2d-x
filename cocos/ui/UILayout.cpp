@@ -705,7 +705,7 @@ bool Layout::isClippingEnabled()
 
 void Layout::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
 {
-    if (!_enabled)
+    if (!_visible)
     {
         return;
     }

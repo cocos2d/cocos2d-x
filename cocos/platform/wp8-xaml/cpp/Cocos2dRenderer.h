@@ -32,7 +32,7 @@ class AppDelegate;
 ref class Cocos2dRenderer sealed : public DirectXBase
 {
 public:
-	Cocos2dRenderer();
+	Cocos2dRenderer(Windows::Graphics::Display::DisplayOrientations orientation);
 
 	// Direct3DBase methods.
 	virtual void OnOrientationChanged(Windows::Graphics::Display::DisplayOrientations orientation) override;
@@ -64,4 +64,5 @@ private:
 
 	// The AppDelegate for the Cocos2D app
 	AppDelegate* mApp;
+    Windows::Graphics::Display::DisplayOrientations m_orientation;
 };

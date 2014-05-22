@@ -526,18 +526,20 @@ void PhysicsWorld::updateBodies()
         return;
     }
     
-    for (auto& body : _delayAddBodies)
+    // issue #4944, contact callback will be invoked when add/remove body, _delayAddBodies maybe changed, so we need make a copy.
+    auto addCopy = _delayAddBodies;
+    _delayAddBodies.clear();
+    for (auto& body : addCopy)
     {
         doAddBody(body);
     }
     
-    for (auto& body : _delayRemoveBodies)
+    auto removeCopy = _delayRemoveBodies;
+    _delayRemoveBodies.clear();
+    for (auto& body : removeCopy)
     {
         doRemoveBody(body);
     }
-    
-    _delayAddBodies.clear();
-    _delayRemoveBodies.clear();
 }
 
 void PhysicsWorld::removeBody(int tag)
@@ -668,12 +670,16 @@ void PhysicsWorld::updateJoints()
         return;
     }
     
-    for (auto joint : _delayAddJoints)
+    auto addCopy = _delayAddJoints;
+    _delayAddJoints.clear();
+    for (auto joint : addCopy)
     {
         doAddJoint(joint);
     }
     
-    for (auto joint : _delayRemoveJoints)
+    auto removeCopy = _delayRemoveJoints;
+    _delayRemoveJoints.clear();
+    for (auto joint : removeCopy)
     {
         doRemoveJoint(joint);
         
@@ -682,9 +688,6 @@ void PhysicsWorld::updateJoints()
             delete joint;
         }
     }
-    
-    _delayAddJoints.clear();
-    _delayRemoveJoints.clear();
 }
 
 void PhysicsWorld::removeShape(PhysicsShape* shape)
@@ -878,7 +881,7 @@ void PhysicsWorld::setGravity(const Vect& gravity)
 
 void PhysicsWorld::update(float delta)
 {
-    if (_delayDirty)
+    while (_delayDirty)
     {
         // the updateJoints must run before the updateBodies.
         updateJoints();

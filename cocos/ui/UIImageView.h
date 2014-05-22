@@ -59,7 +59,7 @@ public:
     /**
      * create a  imageview 
      *
-     * @param fileName   file name of texture.
+     * @param imageFileName   file name of texture.
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
@@ -84,7 +84,7 @@ public:
     /**
      * Sets if imageview is using scale9 renderer.
      *
-     * @param true that using scale9 renderer, false otherwise.
+     * @param able true that using scale9 renderer, false otherwise.
      */
     void setScale9Enabled(bool able);
 

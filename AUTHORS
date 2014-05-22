@@ -858,6 +858,9 @@ Developers:
         
     NatWeiss
         Fix compilation error using arch i386
+        
+    favorcode
+        Correct some doxygen comment
     
 Retired Core Developers:
     WenSheng Yang
