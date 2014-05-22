@@ -71,7 +71,7 @@ public:
 	virtual void setAnchorPoint(const Vec2& anchorPoint) = 0;
     
     /**
-     * check the editbox's position, update it when needed
+     * 检查编辑框的位置，有需要则更新
      */
     virtual void updatePosition(float dt){};
     /**
@@ -94,7 +94,7 @@ protected:
     EditBox* _editBox;
 };
 
-// This method must be implemented at each subclass of EditBoxImpl.
+// EditBoxImpl的每个子类都必须实现此方法
 extern EditBoxImpl* __createSystemEditBox(EditBox* pEditBox);
 
 

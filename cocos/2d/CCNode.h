@@ -75,71 +75,71 @@ bool nodeComparisonLess(Node* n1, Node* n2);
 
 class EventListener;
 
-/** @brief Node is the base element of the Scene Graph. Elements of the Scene Graph must be Node objects or subclasses of it.
- The most common Node objects are: Scene, Layer, Sprite, Menu, Label.
+/** @brief:节点是场景图的基本元素。场景图的基本元素必须是节点对象或者是节点对象的子类。
+ 一些常用的节点对象：Scene, Layer, Sprite, Menu, Label.
 
- The main features of a Node are:
- - They can contain other Node objects (`addChild`, `getChildByTag`, `removeChild`, etc)
- - They can schedule periodic callback (`schedule`, `unschedule`, etc)
- - They can execute actions (`runAction`, `stopAction`, etc)
+ 一个节点的主要特点:
+ - 他们可以包含其他的节点对象(`addChild`, `getChildByTag`, `removeChild`, etc)
+ - 他们可以安排定期的回调(`schedule`, `unschedule`, etc)
+ - 他们可以执行一些动作(`runAction`, `stopAction`, etc)
 
- Subclassing a Node usually means (one/all) of:
- - overriding init to initialize resources and schedule callbacks
- - create callbacks to handle the advancement of time
- - overriding `draw` to render the node
+ 子类节点通常意味着(单一的/所有的):
+ - 重写初始化资源并且可以安排回调
+ - 创建回调来操作进行的时间
+ - 重写“draw”来渲染节点
 
- Properties of Node:
- - position (default: x=0, y=0)
- - scale (default: x=1, y=1)
- - rotation (in degrees, clockwise) (default: 0)
- - anchor point (default: x=0, y=0)
- - contentSize (default: width=0, height=0)
- - visible (default: true)
+ 节点的属性:
+ - 位置（默认值：x=0,y=0）
+ - 缩放（默认值：x=1,y=1）
+ - 旋转（以角度为单位，按顺时针方向）（默认值：0）
+ - 锚点（默认值：x=0,y=0）
+ - 内容大小（默认值：width=0,heigh=0）
+ - 可见性（默认值：true）
 
- Limitations:
- - A Node is a "void" object. If you want to draw something on the screen, you should use a Sprite instead. Or subclass Node and override `draw`.
+ 局限性：Limitations:
+ - 一个节点类是一个“void”对象。如果你想要在场景中画一些东西，你应该使用精灵类来代替。或者是节点的子类并且重写“draw”.
 
  */
 
 class CC_DLL Node : public Ref
 {
 public:
-    /// Default tag used for all the nodes
+    /// 默认的标记用于所有的节点
     static const int INVALID_TAG = -1;
 
     /// @{
-    /// @name Constructor, Destructor and Initializers
+    /// @name 构造函数，析构函数和一些初始化
 
     /**
-     * Allocates and initializes a node.
-     * @return A initialized node which is marked as "autorelease".
+     * 分配并且初始化一个节点.
+     * @return 一个初始化的节点，该节点被标记为“autorelease”(自动释放).
      */
     static Node * create(void);
 
     /**
-     * Gets the description string. It makes debugging easier.
-     * @return A string
+     * 得到描述性的字符串。这将会使得调试更加简单。
+     * @return 一个字符串
      * @js NA
      * @lua NA
      */
     virtual std::string getDescription() const;
 
-    /// @} end of initializers
+    /// @} 初始化的结束
 
 
 
     /// @{
-    /// @name Setters & Getters for Graphic Peroperties
+    /// @name 图形属性的设值函数和得值函数
 
     /**
-     LocalZOrder is the 'key' used to sort the node relative to its siblings.
+     LocalZOrder是“key”(关键)来分辨节点和它兄弟节点的相关性。
 
-     The Node's parent will sort all its children based ont the LocalZOrder value.
-     If two nodes have the same LocalZOrder, then the node that was added first to the children's array will be in front of the other node in the array.
+     父节点将会通过LocalZOrder的值来分辨所有的子节点。
+     如果两个节点有同样的LocalZOrder,那么先加入子节点数组的节点将会显示在后加入的节点的前面。
      
-     Also, the Scene Graph is traversed using the "In-Order" tree traversal algorithm ( http://en.wikipedia.org/wiki/Tree_traversal#In-order )
-     And Nodes that have LocalZOder values < 0 are the "left" subtree
-     While Nodes with LocalZOder >=0 are the "right" subtree.
+     同样的，场景图使用“In-Order（按顺序）”遍历数算法来遍历 ( http://en.wikipedia.org/wiki/Tree_traversal#In-order )
+     并且拥有小于0的LocalZOrder的值的节点是“left”子树（左子树）
+     所以拥有大于0的LocalZOrder的值得节点是“right”子树（右子树）
      
      @see `setGlobalZOrder`
      @see `setVertexZ`
@@ -147,33 +147,33 @@ public:
     virtual void setLocalZOrder(int localZOrder);
 
     CC_DEPRECATED_ATTRIBUTE virtual void setZOrder(int localZOrder) { setLocalZOrder(localZOrder); }
-    /* Helper function used by `setLocalZOrder`. Don't use it unless you know what you are doing.
+    /* `setLocalZOrder`使用的辅助函数。不要使用它除非你知道你在干什么。 
      */
     virtual void _setLocalZOrder(int z);
     /**
-     * Gets the local Z order of this node.
+     * 得到这个节点的局部Z顺序
      *
      * @see `setLocalZOrder(int)`
      *
-     * @return The local (relative to its siblings) Z order.
+     * @return 局部Z顺序(相对于兄弟节点)。
      */
     virtual int getLocalZOrder() const { return _localZOrder; }
     CC_DEPRECATED_ATTRIBUTE virtual int getZOrder() const { return getLocalZOrder(); }
 
     /**
-     Defines the oder in which the nodes are renderer.
-     Nodes that have a Global Z Order lower, are renderer first.
+     定义渲染节点的顺序
+     拥有全局Z顺序越小的节点，最先渲染
      
-     In case two or more nodes have the same Global Z Order, the oder is not guaranteed.
-     The only exception if the Nodes have a Global Z Order == 0. In that case, the Scene Graph order is used.
+     假设两个或者更多的节点拥有相同的全局Z顺序，那么渲染顺序无法保证。
+     唯一的例外是如果节点的全局Z顺序为零，那么场景图顺序是可以使用的。 
      
-     By default, all nodes have a Global Z Order = 0. That means that by default, the Scene Graph order is used to render the nodes.
+     默认的，所有的节点全局Z顺序都是零。这就是说，默认使用场景图顺序来渲染节点。
      
-     Global Z Order is useful when you need to render nodes in an order different than the Scene Graph order.
+     全局Z顺序是非常有用的当你需要渲染节点按照不同的顺序而不是场景图顺序。
      
-     Limitations: Global Z Order can't be used used by Nodes that have SpriteBatchNode as one of their acenstors.
-     And if ClippingNode is one of the ancestors, then "global Z order" will be relative to the ClippingNode.
-
+     局限性: 全局Z顺序不能够被拥有继承“SpriteBatchNode”的节点使用。
+     并且如果“ClippingNode”是其中之一的上代，那么“global Z order” 将会和“ClippingNode”有关。
+     
      @see `setLocalZOrder()`
      @see `setVertexZ()`
 
@@ -181,125 +181,125 @@ public:
      */
     virtual void setGlobalZOrder(float globalZOrder);
     /**
-     * Returns the Node's Global Z Order.
+     * 返回节点的全局Z顺序。
      *
      * @see `setGlobalZOrder(int)`
      *
-     * @return The node's global Z order
+     * @see 节点的全局Z顺序
      */
     virtual float getGlobalZOrder() const { return _globalZOrder; }
 
     /**
-     * Sets the scale (x) of the node.
+     * 设置节点的缩放（x）。
      *
-     * It is a scaling factor that multiplies the width of the node and its children.
+     * 它是一个缩放因子，将会乘以节点的宽以及它的子节点。
      *
-     * @param scaleX   The scale factor on X axis.
+     * @param scaleX   X轴的缩放因子.
      */
     virtual void setScaleX(float scaleX);
     /**
-     * Returns the scale factor on X axis of this node
+     * 返回该节点的X轴的缩放因子。
      *
-     * @see setScaleX(float)
+     * @see setScaleX(float)。
      *
-     * @return The scale factor on X axis.
+     * @return X轴的缩放因子。
      */
     virtual float getScaleX() const;
 
 
     /**
-     * Sets the scale (y) of the node.
+     * 设置节点的缩放（y）。
      *
-     * It is a scaling factor that multiplies the height of the node and its children.
+     * 它是一个缩放因子，将会乘以节点的宽以及它的子节点。
      *
-     * @param scaleY   The scale factor on Y axis.
+     * @param scaleY   Y轴的缩放因子
      */
     virtual void setScaleY(float scaleY);
     /**
-     * Returns the scale factor on Y axis of this node
+     * 返回该节点的Y轴的缩放因子。
      *
      * @see `setScaleY(float)`
      *
-     * @return The scale factor on Y axis.
+     * @return Y轴的缩放因子
      */
     virtual float getScaleY() const;
 
     /**
-     * Changes the scale factor on Z axis of this node
+     * 改变该节点的Z轴的缩放因子。
      *
-     * The Default value is 1.0 if you haven't changed it before.
+     * 如果你之前没有改变过它，那么它的默认值是1.0。
      *
-     * @param scaleY   The scale factor on Y axis.
+     * @param scaleY   Z轴的缩放因子
      */
     virtual void setScaleZ(float scaleZ);
     /**
-     * Returns the scale factor on Z axis of this node
+     * 返回该节点的梓州的缩放因子。
      *
      * @see `setScaleZ(float)`
      *
-     * @return The scale factor on Z axis.
+     * @return Z轴的缩放因子。
      */
     virtual float getScaleZ() const;
 
 
     /**
-     * Sets the scale (x,y,z) of the node.
+     * 设置几点的缩放（x,y,z）.
      *
-     * It is a scaling factor that multiplies the width, height and depth of the node and its children.
+     * 缩放因子将会乘以该节点和它子节点的宽，高和深度。
      *
-     * @param scale     The scale factor for both X and Y axis.
+     * @param scale    X轴和Y轴的缩放因子
      */
     virtual void setScale(float scale);
     /**
-     * Gets the scale factor of the node,  when X and Y have the same scale factor.
+     * 得到该节点的缩放因子，当X轴和Y轴有相同的缩放因子时。
      *
-     * @warning Assert when `_scaleX != _scaleY`
+     * @warning 判断 当 `_scaleX != _scaleY`
      * @see setScale(float)
      *
-     * @return The scale factor of the node.
+     * @return 该节点的缩放因子
      */
     virtual float getScale() const;
 
      /**
-     * Sets the scale (x,y) of the node.
+     * 设置节点的缩放（x,y）.
      *
-     * It is a scaling factor that multiplies the width and height of the node and its children.
+     * 缩放因子乘以该节点和它子节点的宽与高。
      *
-     * @param scaleX     The scale factor on X axis.
-     * @param scaleY     The scale factor on Y axis.
+     * @param scaleX     X轴的缩放因子。
+     * @param scaleY     Y轴的缩放因子。
      */
     virtual void setScale(float scaleX, float scaleY);
 
     /**
-     * Sets the position (x,y) of the node in its parent's coordinate system.
+     * 设置节点的位置在父节点的坐标系系统中。
      *
-     * Usually we use `Vec2(x,y)` to compose Vec2 object.
-     * This code snippet sets the node in the center of screen.
+     * 通常我们使用`Vec2(x,y)` 来组成 Vec2 对象。
+     * 这一段代码设置节点在屏幕中间。
      @code
      Size size = Director::getInstance()->getWinSize();
      node->setPosition( Vec2(size.width/2, size.height/2) )
      @endcode
      *
-     * @param position  The position (x,y) of the node in OpenGL coordinates
+     * @param position  这个节点的位置（x,y）在OpenGL坐标系中。
      */
     virtual void setPosition(const Vec2 &position);
     /**
-     * Gets the position (x,y) of the node in its parent's coordinate system.
+     * 得到在父节点坐标系中节点的位置（x,y）。
      *
      * @see setPosition(const Vec2&)
      *
-     * @return The position (x,y) of the node in OpenGL coordinates
+     * @return 节点在OpenGL坐标系中的位置（x,y)。
      * @code
      * In js and lua return value is table which contains x,y
      * @endcode
      */
     virtual const Vec2& getPosition() const;
     /**
-     * Sets the position (x,y) of the node in its parent's coordinate system.
+     * 设置节点在它父节点坐标系中的位置（x,y）。
      *
-     * Passing two numbers (x,y) is much efficient than passing Vec2 object.
-     * This method is bound to Lua and JavaScript.
-     * Passing a number is 10 times faster than passing a object from Lua to c++
+     * 传递两个数字（x,y）比传递Vec2对象更有效率。
+     * 这个方法要在Lua和JavaScript下。
+     * 从Lua到C++传递一个数字比传递一个对象快10倍。
      *
      @code
      // sample code in Lua
@@ -307,20 +307,20 @@ public:
      node:setPosition(x, y)            -- pass x, y coordinate to C++
      @endcode
      *
-     * @param x     X coordinate for position
-     * @param y     Y coordinate for position
+     * @param x     位置的X轴坐标系
+     * @param y     位置的Y轴坐标系
      */
     virtual void setPosition(float x, float y);
     /**
-     * Gets position in a more efficient way, returns two number instead of a Vec2 object
+     * 用一个更有效率的方法设置位置，返回两个数字而不是Vec2对象。
      *
      * @see `setPosition(float, float)`
      * In js,out value not return
      */
     virtual void getPosition(float* x, float* y) const;
     /**
-     * Gets/Sets x or y coordinate individually for position.
-     * These methods are used in Lua and Javascript Bindings
+     * 分别得到或者设置位置的X或者Y轴坐标系
+     * 这些方法被绑定使用在在Lua和JavaScript。
      */
     virtual void  setPositionX(float x);
     virtual float getPositionX(void) const;
@@ -328,278 +328,278 @@ public:
     virtual float getPositionY(void) const;
 
     /**
-     * Sets the position (X, Y, and Z) in its parent's coordinate system
+     * 设置在父节点坐标系中的位置（x,y,z）。
      */
     virtual void setPosition3D(const Vec3& position);
     /**
-     * returns the position (X,Y,Z) in its parent's coordinate system
+     * 返回父坐标系的位置（X,Y,Z）。
      */
     virtual Vec3 getPosition3D() const;
 
     /**
-     * Sets the 'z' coordinate in the position. It is the OpenGL Z vertex value.
+     * 设置位置的“z”轴坐标系，是OpneGL Z 定点值。
      *
-     * The OpenGL depth buffer and depth testing are disabled by default. You need to turn them on
-     * in order to use this property correctly.
+     * OpenGL深度缓存和深度测试默认值是关闭的，你需要打开它们
+     * 来正确的使用这个属性。
      *
-     * `setPositionZ()` also sets the `setGlobalZValue()` with the positionZ as value.
+     * `setPositionZ()` 同样设置 `setGlobalZValue()` 用“positionZ” 作为值。
      *
      * @see `setGlobalZValue()`
      *
-     * @param vertexZ  OpenGL Z vertex of this node.
+     * @param vertexZ  该节点的penGL Z 定点。
      */
     virtual void setPositionZ(float positionZ);
     CC_DEPRECATED_ATTRIBUTE virtual void setVertexZ(float vertexZ) { setPositionZ(vertexZ); }
 
     /**
-     * Gets position Z coordinate of this node.
+     * 得到该节点的Z轴坐标系的位置。
      *
      * @see setPositionZ(float)
      *
-     * @return the position Z coordinate of this node.
+     * @return 该节点的Z轴坐标系。
      */
     virtual float getPositionZ() const;
     CC_DEPRECATED_ATTRIBUTE virtual float getVertexZ() const { return getPositionZ(); }
 
     /**
-     * Changes the X skew angle of the node in degrees.
+     * 改变该节点X轴的倾斜角，单位是度。
      *
-     * The difference between `setRotationalSkew()` and `setSkew()` is that the first one simulate Flash's skew functionality
-     * while the second one uses the real skew function.
+     * `setRotationalSkew()`和 `setSkew()` 的不同时是前一个模拟Flash的倾斜功能。
+     * 然而后一个使用真正的倾斜功能。
      *
-     * This angle describes the shear distortion in the X direction.
-     * Thus, it is the angle between the Y coordinate and the left edge of the shape
-     * The default skewX angle is 0. Positive values distort the node in a CW direction.
+     * 这个角度描述了在X轴方向的切形变（shear distortion）。
+     * 因此，这个角度在Y轴和图形左边之间。
+     * 默认值skewX角度是0，负值使该节点按顺时针变形。
      *
-     * @param skewX The X skew angle of the node in degrees.
+     * @param skewX 该节点的X轴的倾斜角。
      */
     virtual void setSkewX(float skewX);
     /**
-     * Returns the X skew angle of the node in degrees.
+     * 返回该节点的X轴倾斜角，单位是度。
      *
      * @see `setSkewX(float)`
      *
-     * @return The X skew angle of the node in degrees.
+     * @return 该节点的X轴倾斜角。
      */
     virtual float getSkewX() const;
 
 
     /**
-     * Changes the Y skew angle of the node in degrees.
+     * 改变该节点Y轴的倾斜角，单位是度。
      *
-     * The difference between `setRotationalSkew()` and `setSkew()` is that the first one simulate Flash's skew functionality
-     * while the second one uses the real skew function.
+     * `setRotationalSkew()`和 `setSkew()` 的不同时是前一个模拟Flash的倾斜功能。
+     * 然而后一个使用真正的倾斜功能。
      *
-     * This angle describes the shear distortion in the Y direction.
-     * Thus, it is the angle between the X coordinate and the bottom edge of the shape
-     * The default skewY angle is 0. Positive values distort the node in a CCW direction.
+     * 这个角度描述了在Y轴方向的切形变（shear distortion）。
+     *  因此，这个角度在X轴和图形底边之间。
+     * 默认值skewY角度是0，负值使该节点按顺时针变形。
      *
-     * @param skewY    The Y skew angle of the node in degrees.
+     * @param skewY    该节点的Y轴的倾斜角。
      */
     virtual void setSkewY(float skewY);
     /**
-     * Returns the Y skew angle of the node in degrees.
+     * 返回该节点的Y轴倾斜角，单位是度。
      *
      * @see `setSkewY(float)`
      *
-     * @return The Y skew angle of the node in degrees.
+     * @return 该节点的Y轴倾斜角。
      */
     virtual float getSkewY() const;
 
 
     /**
-     * Sets the anchor point in percent.
+     * 设置锚点，用百分比表示。
      *
-     * anchorPoint is the point around which all transformations and positioning manipulations take place.
-     * It's like a pin in the node where it is "attached" to its parent.
-     * The anchorPoint is normalized, like a percentage. (0,0) means the bottom-left corner and (1,1) means the top-right corner.
-     * But you can use values higher than (1,1) and lower than (0,0) too.
-     * The default anchorPoint is (0.5,0.5), so it starts in the center of the node.
-     * @note If node has a physics body, the anchor must be in the middle, you cann't change this to other value.
+     * 一个锚点是所有的转换和定位操作发生的点。
+     * 它就像在节点上连接其父类的大头针。
+     * 锚点是标准化的，就像百分比一样。(0,0)表示左下角，(1,1)表示右上角。
+     * 但是你可以使用比（1,1,）更高的值或者比（0,0）更低的值。
+     * 默认的锚点是（0.5,0.5），因此它开始于节点的中心位置。
+     * @note 如果节点有物理体，锚点必须在中心，你不能够这个值。
      *
-     * @param anchorPoint   The anchor point of node.
+     * @param anchorPoint   节点的锚点。
      */
     virtual void setAnchorPoint(const Vec2& anchorPoint);
     /**
-     * Returns the anchor point in percent.
+     * 返回用百分比表示的锚点。
      *
      * @see `setAnchorPoint(const Vec2&)`
      *
-     * @return The anchor point of node.
+     * @return 节点的锚点
      */
     virtual const Vec2& getAnchorPoint() const;
     /**
-     * Returns the anchorPoint in absolute pixels.
+     * 返回绝对像素的锚点
      *
-     * @warning You can only read it. If you wish to modify it, use anchorPoint instead.
+     * @warning 你只能够读取它，如果你想修改它，使用setAnchoPoint。
      * @see `getAnchorPoint()`
      *
-     * @return The anchor point in absolute pixels.
+     * @return 绝对像素的锚点。
      */
     virtual const Vec2& getAnchorPointInPoints() const;
 
 
     /**
-     * Sets the untransformed size of the node.
+     * 设置不转换节点的大小。
      *
-     * The contentSize remains the same no matter the node is scaled or rotated.
-     * All nodes has a size. Layer and Scene has the same size of the screen.
+     * contentSize依然是相同的，无论节点是缩放或者旋转。
+     * 所有的节点都有大小。图层和场景有相同的屏幕大小。
      *
-     * @param contentSize   The untransformed size of the node.
+     * @param contentSize   未转换节点的大小
      */
     virtual void setContentSize(const Size& contentSize);
     /**
-     * Returns the untransformed size of the node.
+     * 返回未转换节点的大小。
      *
      * @see `setContentSize(const Size&)`
      *
-     * @return The untransformed size of the node.
+     * @return 未转换节点的大小
      */
     virtual const Size& getContentSize() const;
 
 
     /**
-     * Sets whether the node is visible
+     * 设置节点是否可见。
      *
-     * The default value is true, a node is default to visible
+     * 默认值是true,一个节点默认是可见的。
      *
-     * @param visible   true if the node is visible, false if the node is hidden.
+     * @param visible   true 如果节点是可见的，false 如果节点是隐藏的。
      */
     virtual void setVisible(bool visible);
     /**
-     * Determines if the node is visible
+     * 决定节点是否可见。
      *
      * @see `setVisible(bool)`
      *
-     * @return true if the node is visible, false if the node is hidden.
+     * @return true 如果节点是可见的, false 如果节点是隐藏的。
      */
     virtual bool isVisible() const;
 
 
     /**
-     * Sets the rotation (angle) of the node in degrees.
+     * 设置节点的旋转（angle）角度。
      *
-     * 0 is the default rotation angle.
-     * Positive values rotate node clockwise, and negative values for anti-clockwise.
+     * 0 是默认的旋转角度。
+     * 负数顺时针旋转节点，正数逆时针旋转节点。
      *
-     * @param rotation     The rotation of the node in degrees.
+     * @param rotation     节点的旋转角度。
      */
     virtual void setRotation(float rotation);
     /**
-     * Returns the rotation of the node in degrees.
+     * 返回节点的旋转角度。
      *
      * @see `setRotation(float)`
      *
-     * @return The rotation of the node in degrees.
+     * @return 节点的旋转角度。
      */
     virtual float getRotation() const;
 
     /**
-     * Sets the rotation (X,Y,Z) in degrees.
-     * Useful for 3d rotations
+     * 设置（X,Y,Z）旋转角度。
+     * 对3d旋转非常有用。
      */
     virtual void setRotation3D(const Vec3& rotation);
     /**
-     * returns the rotation (X,Y,Z) in degrees.
+     * 返回（X,Y,Z）的旋转角度。
      */
     virtual Vec3 getRotation3D() const;
 
     /**
-     * Sets the X rotation (angle) of the node in degrees which performs a horizontal rotational skew.
+     * 设置节点X轴的旋转角度，表现为水平旋转倾斜。
      *
-     * The difference between `setRotationalSkew()` and `setSkew()` is that the first one simulate Flash's skew functionality
-     * while the second one uses the real skew function.
+     * `setRotationalSkew()` 和 `setSkew()`的不同是前一个是模拟Flash的倾斜功能
+     * 然而后一个使用真正的倾斜功能。
      *
-     * 0 is the default rotation angle.
-     * Positive values rotate node clockwise, and negative values for anti-clockwise.
+     * 0 是默认的旋转角度。
+     * 负数节点顺时针旋转，正数节点逆时针旋转。
      *
-     * @param rotationX    The X rotation in degrees which performs a horizontal rotational skew.
+     * @param rotationX    X轴的旋转角度表现为水平旋转倾斜。
      */
     virtual void setRotationSkewX(float rotationX);
     CC_DEPRECATED_ATTRIBUTE virtual void setRotationX(float rotationX) { return setRotationSkewX(rotationX); }
 
     /**
-     * Gets the X rotation (angle) of the node in degrees which performs a horizontal rotation skew.
+     * 得到X轴节点的旋转角度，表现为水平旋转倾斜（horizontal rotation skew）.
      *
      * @see `setRotationSkewX(float)`
      *
-     * @return The X rotation in degrees.
+     * @return X轴的旋转角度。
      */
     virtual float getRotationSkewX() const;
     CC_DEPRECATED_ATTRIBUTE virtual float getRotationX() const { return getRotationSkewX(); }
 
     /**
-     * Sets the Y rotation (angle) of the node in degrees which performs a vertical rotational skew.
+     * 设置Y轴节点的旋转角度，表现为垂直旋转倾斜。
      *
-     * The difference between `setRotationalSkew()` and `setSkew()` is that the first one simulate Flash's skew functionality
-     * while the second one uses the real skew function.
+     * `setRotationalSkew()` 和`setSkew()` 的不同是前一个使用Flash倾斜功能
+     * 后一个使用了真正的倾斜功能。
      *
-     * 0 is the default rotation angle.
-     * Positive values rotate node clockwise, and negative values for anti-clockwise.
+     * 0 默认的旋转角度。
+     * 负数表示顺时针旋转，正数表示逆时针旋转。
      *
-     * @param rotationY    The Y rotation in degrees.
+     * @param rotationY    Y轴的旋转角度。
      */
     virtual void setRotationSkewY(float rotationY);
     CC_DEPRECATED_ATTRIBUTE virtual void setRotationY(float rotationY) { return setRotationSkewY(rotationY); }
 
     /**
-     * Gets the Y rotation (angle) of the node in degrees which performs a vertical rotational skew.
+     * 得到节点Y轴的旋转角度，表现为垂直旋转倾斜（vertical rotational skew.）
      *
      * @see `setRotationSkewY(float)`
      *
-     * @return The Y rotation in degrees.
+     * @return Y轴旋转角度。
      */
     virtual float getRotationSkewY() const;
     CC_DEPRECATED_ATTRIBUTE virtual float getRotationY() const { return getRotationSkewY(); }
 
     /**
-     * Sets the arrival order when this node has a same ZOrder with other children.
+     * 设置到达顺序，当这个节点和其他子节点有相同的ZOrder时。
      *
-     * A node which called addChild subsequently will take a larger arrival order,
-     * If two children have the same Z order, the child with larger arrival order will be drawn later.
+     * 一个调用了之后调用了addChild函数的节点将会有更大的到达顺序值，
+     * 如果两个子对象有相同的Z轴顺序，这个有更大到达顺序的子类将会后画。
      *
-     * @warning This method is used internally for localZOrder sorting, don't change this manually
+     * @warning 这个方法在内部被用于localZOrder排序，不能手动的改变。
      *
-     * @param orderOfArrival   The arrival order.
+     * @param orderOfArrival   到达顺序。
      */
     void setOrderOfArrival(int orderOfArrival);
     /**
-     * Returns the arrival order, indicates which children is added previously.
+     * 返回到达顺序，指出哪一个子类先被添加。
      *
      * @see `setOrderOfArrival(unsigned int)`
      *
-     * @return The arrival order.
+     * @return 到达顺序。
      */
     int getOrderOfArrival() const;
 
 
-    /** @deprecated No longer needed
+    /** @deprecated 不再需要
     * @js NA
     * @lua NA
     */
     CC_DEPRECATED_ATTRIBUTE void setGLServerState(int serverState) { /* ignore */ };
-    /** @deprecated No longer needed
+    /** @deprecated 不再需要。
     * @js NA
     * @lua NA
     */
     CC_DEPRECATED_ATTRIBUTE int getGLServerState() const { return 0; }
 
     /**
-     * Sets whether the anchor point will be (0,0) when you position this node.
+     * 设置抹点为（0,0）当你摆放这个节点的时候。
      *
-     * This is an internal method, only used by Layer and Scene. Don't call it outside framework.
-     * The default value is false, while in Layer and Scene are true
+     * 这是一个内部方法，仅仅被Layer和Scene使用。不要在框架外调用。
+     * 默认值是false,但是在Layer和Scene中是true.
      *
-     * @param ignore    true if anchor point will be (0,0) when you position this node
-     * @todo This method should be renamed as setIgnoreAnchorPointForPosition(bool) or something with "set"
+     * @param ignore    true 如果锚点是（0,0）当你摆放这个节点的时候。
+     * @todo 这个方法应该被命名为setIgnoreAnchorPointForPosition(bool) 或者其他的有“set”的名称。
      */
     virtual void ignoreAnchorPointForPosition(bool ignore);
     /**
-     * Gets whether the anchor point will be (0,0) when you position this node.
+     * 得到节点的锚点是否为（0,0），当你摆放这个节点时。
      *
      * @see `ignoreAnchorPointForPosition(bool)`
      *
-     * @return true if the anchor point will be (0,0) when you position this node.
+     * @return true 如果锚点是 (0,0) 当你摆放这个节点时。
      */
     virtual bool isIgnoreAnchorPointForPosition() const;
 
@@ -610,67 +610,67 @@ public:
     /// @name Children and Parent
 
     /**
-     * Adds a child to the container with z-order as 0.
+     * 添加一个子节点到容器内，z-order是0.
      *
-     * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
+     * 如果子节点被添加到了一个“running（活动着的）”节点，那么'onEnter'喝 'onEnterTransitionDidFinish' 将会立即调用。
      *
-     * @param child A child node
+     * @param child 一个子节点。
      */
     virtual void addChild(Node * child);
     /**
-     * Adds a child to the container with a local z-order
+     * 添加一个子节点到容器中，参数有一个局部Z轴顺序。
      *
-     * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
+     * 如果子节点被添加到了一个“running（活动着的）”节点，那么'onEnter'喝 'onEnterTransitionDidFinish' 将会立即调用。
      *
-     * @param child     A child node
-     * @param zOrder    Z order for drawing priority. Please refer to `setLocalZOrder(int)`
+     * @param child     一个子节点。
+     * @param zOrder    Z轴顺序为了绘画的优先权。 请参考 `setLocalZOrder(int)`
      */
     virtual void addChild(Node * child, int localZOrder);
     /**
-     * Adds a child to the container with z order and tag
+     * 添加一个子节点到容器中，有Z轴顺序和一个标记。
      *
-     * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
+     * 如果子节点被添加到了一个“running（活动着的）”节点，那么'onEnter'喝 'onEnterTransitionDidFinish' 将会立即调用。
      *
-     * @param child     A child node
-     * @param zOrder    Z order for drawing priority. Please refer to `setLocalZOrder(int)`
-     * @param tag       An integer to identify the node easily. Please refer to `setTag(int)`
+     * @param child    一个子节点
+     * @param zOrder    Z轴顺序为了绘画的优先权。 请参考 `setLocalZOrder(int)`
+     * @param tag       一个用来更容易分辨节点的整数。请参考 `setTag(int)`
      */
     virtual void addChild(Node* child, int localZOrder, int tag);
     /**
-     * Gets a child from the container with its tag
+     * 从容器中得到一个子节点通过它的标记。
      *
-     * @param tag   An identifier to find the child node.
+     * @param tag   一个标识符用于找到子节点。
      *
-     * @return a Node object whose tag equals to the input parameter
+     * @return 一个标记与输入的参数相同的节点对象。
      */
     virtual Node * getChildByTag(int tag);
     /**
-     * Returns the array of the node's children
+     * 返回子节点数组。
      *
-     * @return the array the node's children
+     * @return 子节点数组。
      */
     virtual Vector<Node*>& getChildren() { return _children; }
     virtual const Vector<Node*>& getChildren() const { return _children; }
     
     /** 
-     * Returns the amount of children
+     * 返回子节点的总数
      *
-     * @return The amount of children.
+     * @return 子节点的总数
      */
     virtual ssize_t getChildrenCount() const;
 
     /**
-     * Sets the parent node
+     * 设置父节点Sets the parent node
      *
-     * @param parent    A pointer to the parent node
+     * @param parent    指向父节点的指针。
      */
     virtual void setParent(Node* parent);
     /**
-     * Returns a pointer to the parent node
+     * 返回指向父节点的指针。
      *
      * @see `setParent(Node*)`
      *
-     * @returns A pointer to the parent node
+     * @returns 指向父节点的指针。
      */
     virtual Node* getParent() { return _parent; }
     virtual const Node* getParent() const { return _parent; }
@@ -679,92 +679,92 @@ public:
     ////// REMOVES //////
 
     /**
-     * Removes this node itself from its parent node with a cleanup.
-     * If the node orphan, then nothing happens.
+     * 从父节点中删除一个节点，有一个cleanup参数。
+     * 如果这个节点是一个孤节点，那么什么都不会发生。
      * @see `removeFromParentAndCleanup(bool)`
      */
     virtual void removeFromParent();
     /**
-     * Removes this node itself from its parent node.
-     * If the node orphan, then nothing happens.
-     * @param cleanup   true if all actions and callbacks on this node should be removed, false otherwise.
+     * 从父节点中删除一个节点
+     * 如果这个节点是一个孤节点，那么什么都不会发生。
+     * @param cleanup   true 在这个节点上所有的动作和回调都会被删除, false 就不会删除。
      * @js removeFromParent
      * @lua removeFromParent
      */
     virtual void removeFromParentAndCleanup(bool cleanup);
 
     /**
-     * Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter.
+     * 从容器中删除一个孩子，取决于cleanup参数同时会清除所有的活动的动作。
      *
-     * @param child     The child node which will be removed.
-     * @param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
+     * @param child     被删除的子节点。
+     * @param cleanup   true 在这个节点上所有的动作和回调都会被删除, false 就不会删除。
      */
     virtual void removeChild(Node* child, bool cleanup = true);
 
     /**
-     * Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
+     * 从一个容器中删除一个孩子通过标记值。取决于cleanup参数同时会清除所有的活动的动作。
      *
-     * @param tag       An interger number that identifies a child node
-     * @param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
+     * @param tag       一个用于识别子节点的整数。
+     * @param cleanup   true 在这个节点上所有的动作和回调都会被删除， false 就不会删除。
      */
     virtual void removeChildByTag(int tag, bool cleanup = true);
     /**
-     * Removes all children from the container with a cleanup.
+     * 从容器中删除所有的孩子，with a cleanup。
      *
      * @see `removeAllChildrenWithCleanup(bool)`
      */
     virtual void removeAllChildren();
     /**
-     * Removes all children from the container, and do a cleanup to all running actions depending on the cleanup parameter.
+     * 从容器中删除所有的孩子, 取决于cleanup参数同时会清除所有的活动的动作。
      *
-     * @param cleanup   true if all running actions on all children nodes should be cleanup, false oterwise.
+     * @param cleanup   true 在这个节点上所有的动作和回调都会被删除, false 就不会删除。
      * @js removeAllChildren
      * @lua removeAllChildren
      */
     virtual void removeAllChildrenWithCleanup(bool cleanup);
 
     /**
-     * Reorders a child according to a new z value.
+     * 对一个孩子重新排序，设定一个新的z轴的值。
      *
-     * @param child     An already added child node. It MUST be already added.
-     * @param localZOrder Z order for drawing priority. Please refer to setLocalZOrder(int)
+     * @param child     一个已经被添加的子节点，它必须是已经添加的。
+     * @param localZOrder Z轴顺序为了绘画优先级，请参考setLocalZOrder(int)
      */
     virtual void reorderChild(Node * child, int localZOrder);
 
     /**
-     * Sorts the children array once before drawing, instead of every time when a child is added or reordered.
-     * This appraoch can improves the performance massively.
-     * @note Don't call this manually unless a child added needs to be removed in the same frame
+     * 在绘画之前，排列所有的孩子数组一次，而不是每次添加或者删除子节点时都排序。
+     * 这个方法可以大量地提高性能。
+     * @note 不要手动调用这个方法，除非一个添加过的子节点将要被删除在这个结构内。
      */
     virtual void sortAllChildren();
 
     /// @} end of Children and Parent
     
     /// @{
-    /// @name Tag & User data
+    /// @name Tag & User 数据
 
     /**
-     * Returns a tag that is used to identify the node easily.
+     * 返回一个用来更简单分辨节点的标记。
      *
-     * @return An integer that identifies the node.
+     * @return 一个分辨节点的整数。
      */
     virtual int getTag() const;
     /**
-     * Changes the tag that is used to identify the node easily.
+     * 改变这个用来更容易分辨节点的标记。
      *
-     * Please refer to getTag for the sample code.
+     * 请参考 getTag 的相同代码。
      *
-     * @param tag   A integer that identifies the node.
+     * @param tag   一个分辨节点的整数。
      */
     virtual void setTag(int tag);
 
     
     /**
-     * Returns a custom user data pointer
+     * 返回一个自定义用户数据的指针。
      *
-     * You can set everything in UserData pointer, a data block, a structure or an object.
+     * 你可以随意设置UserData 指针为, 一个数据块, 结构体或者一个对象。
      *
-     * @return A custom user data pointer
+     * @return 自定义用户数据的指针。
      * @js NA
      * @lua NA
      */
@@ -776,24 +776,24 @@ public:
     virtual const void* getUserData() const { return _userData; }
 
     /**
-     * Sets a custom user data pointer
+     * 设置一个自定义用户数据的指针。
      *
-     * You can set everything in UserData pointer, a data block, a structure or an object, etc.
-     * @warning Don't forget to release the memory manually,
-     *          especially before you change this data pointer, and before this node is autoreleased.
+     * 你可以随意设置UserData 指针为, 一个数据块, 结构体或者一个对象，等等。
+     * @warning 不要忘记要手动释放内存，Don't forget to release the memory manually,
+     *          特别是在你改变这个数据指针之前，和这个节点被自动释放之前。
      *
-     * @param userData  A custom user data pointer
+     * @param userData  一个自定义用户数据指针。
      * @js NA
      * @lua NA
      */
     virtual void setUserData(void *userData);
 
     /**
-     * Returns a user assigned Object
+     * 返回一个用户分配的对象
      *
-     * Similar to userData, but instead of holding a void* it holds an object
+     * 和userData类似, 但它拥有的是一个对象而不是void*
      *
-     * @return A user assigned Object
+     * @return 一个用户分配的对象。
      * @js NA
      * @lua NA
      */
@@ -805,14 +805,14 @@ public:
     virtual const Ref* getUserObject() const { return _userObject; }
 
     /**
-     * Returns a user assigned Object
+     * 返回一个用户分配的对象
      *
-     * Similar to UserData, but instead of holding a void* it holds an object.
-     * The UserObject will be retained once in this method,
-     * and the previous UserObject (if existed) will be released.
-     * The UserObject will be released in Node's destructor.
+     * 和userData类似, 但它拥有的是一个对象而不是void*
+     * UserObject将会在这个方法中留存一次
+     * 然后之前的UserObject （如果存在的话）将会被释放。
+     * UserObject 将会在节点的析构函数中释放。
      *
-     * @param userObject    A user assigned Object
+     * @param userObject    一个用户分配的对象
      */
     virtual void setUserObject(Ref *userObject);
 
@@ -822,9 +822,9 @@ public:
     /// @{
     /// @name GLProgram
     /**
-     * Return the GLProgram (shader) currently used for this node
+     * 返回当前用于这个节点的GLProgram (shader) 
      *
-     * @return The GLProgram (shader) currently used for this node
+     * @return 当前用于这个节点的GLProgram (shader)
      */
     GLProgram* getGLProgram();
     CC_DEPRECATED_ATTRIBUTE GLProgram* getShaderProgram() { return getGLProgram(); }
@@ -833,15 +833,15 @@ public:
     void setGLProgramState(GLProgramState *glProgramState);
 
     /**
-     * Sets the shader program for this node
+     * 为这个节点设置着色器程序
      *
-     * Since v2.0, each rendering node must set its shader program.
-     * It should be set in initialize phase.
+     * 自从 v2.0, 每一个渲染的节点必须设置它自己的着色器程序。
+     * 它应该在初始化阶段被设置。
      @code
      node->setGLrProgram(GLProgramCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
      @endcode
      *
-     * @param shaderProgram The shader program
+     * @param shaderProgram 着色器程序
      */
     void setGLProgram(GLProgram *glprogram);
     CC_DEPRECATED_ATTRIBUTE void setShaderProgram(GLProgram *glprogram) { setGLProgram(glprogram); }
@@ -849,16 +849,16 @@ public:
 
 
     /**
-     * Returns whether or not the node is "running".
+     * 返回节点是否是“running(活动的)”。
      *
-     * If the node is running it will accept event callbacks like onEnter(), onExit(), update()
+     * 如果节点是活动的，它将会允许事件回调就像onEnter(), onExit(), update()
      *
-     * @return Whether or not the node is running.
+     * @return 节点是否是“running(活动的)”。
      */
     virtual bool isRunning() const;
 
     /**
-     * Schedules for lua script.
+     * lua script的时间表
      * @js NA
      */
     void scheduleUpdateWithPriorityLua(int handler, int priority);
@@ -870,36 +870,36 @@ public:
     /// @name Event Callbacks
 
     /**
-     * Event callback that is invoked every time when Node enters the 'stage'.
-     * If the Node enters the 'stage' with a transition, this event is called when the transition starts.
-     * During onEnter you can't access a "sister/brother" node.
-     * If you override onEnter, you shall call its parent's one, e.g., Node::onEnter().
+     * 每次当Node进入“stage”时才调用事件回调。
+     * 如果Node进入“stage”状态时伴随着一个转换（transition）,那么事件将会在这个转换开始的时候被调用。
+     * 在onEnter过程中，你不能够接入“sister/brother”兄妹节点。
+     * 如果你重写了onEnter方法，你应该调用它的父类，e.g., Node::onEnter().
      * @js NA
      * @lua NA
      */
     virtual void onEnter();
 
-    /** Event callback that is invoked when the Node enters in the 'stage'.
-     * If the Node enters the 'stage' with a transition, this event is called when the transition finishes.
-     * If you override onEnterTransitionDidFinish, you shall call its parent's one, e.g. Node::onEnterTransitionDidFinish()
+    /** 每次当Node进入“stage”时才调用事件回调。
+     * 如果Node进入“stage”状态时伴随着一个转换（transition）,那么事件将会在这个转换结束的时候被调用。
+     * 如果你重写了onEnterTransitionDidFinish方法 你应该调用它的父类, e.g. Node::onEnterTransitionDidFinish()
      * @js NA
      * @lua NA
      */
     virtual void onEnterTransitionDidFinish();
 
     /**
-     * Event callback that is invoked every time the Node leaves the 'stage'.
-     * If the Node leaves the 'stage' with a transition, this event is called when the transition finishes.
-     * During onExit you can't access a sibling node.
-     * If you override onExit, you shall call its parent's one, e.g., Node::onExit().
+     * 每次当Node离开“stage”时才调用事件回调。
+     * 如果Node离开“stage”状态时伴随着一个转换（transition）, 那么事件将会在这个转换结束的时候被调用。
+     * 在onEnter过程中中你不能够接入一个兄妹节点。
+     * 如果你重写onExit, 你应该调用它的父类, e.g., Node::onExit().
      * @js NA
      * @lua NA
      */
     virtual void onExit();
 
     /**
-     * Event callback that is called every time the Node leaves the 'stage'.
-     * If the Node leaves the 'stage' with a transition, this callback is called when the transition starts.
+     * 每次当Node离开“stage”时才调用事件回调。
+     * 如果Node离开“stage”状态时伴随着一个转换（transition）, 那么事件将会在这个转换开始的时候被调用。
      * @js NA
      * @lua NA
      */
@@ -909,44 +909,44 @@ public:
 
 
     /**
-     * Stops all running actions and schedulers
+     * 暂停所有的活动着的动作和调度器。
      */
     virtual void cleanup();
 
     /**
-     * Override this method to draw your own node.
-     * The following GL states will be enabled by default:
+     * 重写这个方法来绘制你自己的节点。
+     * 以下的GL状态是默认开启的：
      * - `glEnableClientState(GL_VERTEX_ARRAY);`
      * - `glEnableClientState(GL_COLOR_ARRAY);`
      * - `glEnableClientState(GL_TEXTURE_COORD_ARRAY);`
      * - `glEnable(GL_TEXTURE_2D);`
-     * AND YOU SHOULD NOT DISABLE THEM AFTER DRAWING YOUR NODE
-     * But if you enable any other GL state, you should disable it after drawing your node.
+     * 并且你不能够关闭他们在绘制完你的节点之后。
+     * 但是如果你开启了其他的GL状态，那么你要关闭他们在绘制完你的节点之后。
      */
     virtual void draw(Renderer *renderer, const Mat4& transform, bool transformUpdated);
     virtual void draw() final;
 
     /**
-     * Visits this node's children and draw them recursively.
+     * 访问节点的孩子，并且循环递归的绘制它们。
      */
     virtual void visit(Renderer *renderer, const Mat4& parentTransform, bool parentTransformUpdated);
     virtual void visit() final;
 
 
-    /** Returns the Scene that contains the Node.
-     It returns `nullptr` if the node doesn't belong to any Scene.
-     This function recursively calls parent->getScene() until parent is a Scene object. The results are not cached. It is that the user caches the results in case this functions is being used inside a loop.
+    /** 返回包含Node(节点)的Scene（场景）。
+     如果这个节点不属于任何的场景，它将返回`nullptr`。
+     这个函数循环递归地调用parent->getScene() 直到父类是一个Scene对象。结果不会被缓存。只有当这个函数被用在一个循环中时，用户才会缓存这个结果。
      */
     virtual Scene* getScene();
 
     /**
-     * Returns an AABB (axis-aligned bounding-box) in its parent's coordinate system.
+     * 返回 一个AABB(轴向包围盒)在它的父坐标系中。
      *
-     * @return An AABB (axis-aligned bounding-box) in its parent's coordinate system
+     * @return 一个AABB(轴向包围盒)在它的父坐标系中。
      */
     virtual Rect getBoundingBox() const;
 
-    /** @deprecated Use getBoundingBox instead */
+    /** @deprecated 使用 getBoundingBox 来代替 */
     CC_DEPRECATED_ATTRIBUTE inline virtual Rect boundingBox() const { return getBoundingBox(); }
 
     virtual void setEventDispatcher(EventDispatcher* dispatcher);
@@ -956,68 +956,68 @@ public:
     /// @name Actions
 
     /**
-     * Sets the ActionManager object that is used by all actions.
+     * 设置被所有动作使用的ActionManager对象。
      *
-     * @warning If you set a new ActionManager, then previously created actions will be removed.
+     * @warning 如果你设置了一个新的ActionManager, 那么之前创建的动作将会被删除。
      *
-     * @param actionManager     A ActionManager object that is used by all actions.
+     * @param actionManager     ActionManager被所有动作使用。
      */
     virtual void setActionManager(ActionManager* actionManager);
     /**
-     * Gets the ActionManager object that is used by all actions.
+     * 得到被所有动作使用的ActionManager对象。
      * @see setActionManager(ActionManager*)
-     * @return A ActionManager object.
+     * @return ActionManager对象。
      */
     virtual ActionManager* getActionManager() { return _actionManager; }
     virtual const ActionManager* getActionManager() const { return _actionManager; }
 
     /**
-     * Executes an action, and returns the action that is executed.
+     * 执行一个动作，并且返回执行的该动作。
      *
-     * This node becomes the action's target. Refer to Action::getTarget()
-     * @warning Actions don't retain their target.
+     * 这个节点将会变成动作的目标，参考Action::getTarget()
+     * @warning Actions（动作）不存储它的目标。
      *
-     * @return An Action pointer
+     * @return Action（动作）指针
      */
     Action* runAction(Action* action);
 
     /**
-     * Stops and removes all actions from the running action list .
+     * 停止并且删除所有的动作从活动动作列表中。
      */
     void stopAllActions();
 
     /**
-     * Stops and removes an action from the running action list.
+     * 停止并且删除所有的动作从活动动作列表中。
      *
-     * @param action    The action object to be removed.
+     * @param action    将要被删除的动作对象。
      */
     void stopAction(Action* action);
 
     /**
-     * Removes an action from the running action list by its tag.
+     * 通过动作的标记从活动动作列表中删除一个动作。
      *
-     * @param tag   A tag that indicates the action to be removed.
+     * @param tag   一个指示将要被删除的动作的标记。
      */
     void stopActionByTag(int tag);
 
     /**
-     * Gets an action from the running action list by its tag.
+     * 通过动作的标记从活动动作列表中得到一个动作。
      *
      * @see `setTag(int)`, `getTag()`.
      *
-     * @return The action object with the given tag.
+     * @return 动作对象拥有给定的标记。
      */
     Action* getActionByTag(int tag);
 
     /**
-     * Returns the numbers of actions that are running plus the ones that are schedule to run (actions in actionsToAdd and actions arrays).
+     * 返回活动着的动作加上正在调度运行的动作的总数 (在actionsToAdd状态的动作和动作数组中的).
      *
-     * Composable actions are counted as 1 action. Example:
-     *    If you are running 1 Sequence of 7 actions, it will return 1.
-     *    If you are running 7 Sequences of 2 actions, it will return 7.
+     * 组成的动作被记为一个动作。例如：
+     *    如果你正在运行7个活动中的1Sequence, 它将返回 1.
+     *    如果你正在运行2个动作中的7个Sequencesm,它将返回 7.
      * @todo Rename to getNumberOfRunningActions()
      *
-     * @return The number of actions that are running plus the ones that are schedule to run
+     * @return 返回活动着的动作加上正在调度运行的动作的总数
      */
     ssize_t getNumberOfRunningActions() const;
 
@@ -1031,148 +1031,148 @@ public:
     /// @name Scheduler and Timer
 
     /**
-     * Sets a Scheduler object that is used to schedule all "updates" and timers.
+     * 设置一个调度器对象来用于调度所有的“update”和定时器。
      *
-     * @warning If you set a new Scheduler, then previously created timers/update are going to be removed.
-     * @param scheduler     A Shdeduler object that is used to schedule all "update" and timers.
+     * @warning 如果你设置了一个新的调度器，那么之前创建的timers/update将会被删除。
+     * @param scheduler     一个调度器对象来用于调度所有的“update”和定时器。
      */
     virtual void setScheduler(Scheduler* scheduler);
     /**
-     * Gets a Sheduler object.
+     * 得到调度器对象。
      *
      * @see setScheduler(Scheduler*)
-     * @return A Scheduler object.
+     * @return 一个调度器对象。
      */
     virtual Scheduler* getScheduler() { return _scheduler; }
     virtual const Scheduler* getScheduler() const { return _scheduler; }
 
 
     /**
-     * Checks whether a selector is scheduled.
+     * 检查是否一个选择器是预定的。
      *
-     * @param selector      A function selector
-     * @return Whether the funcion selector is scheduled.
+     * @param selector      函数选择器。
+     * @return 是否函数选择器是预定的。
      * @js NA
      * @lua NA
      */
     bool isScheduled(SEL_SCHEDULE selector);
 
     /**
-     * Schedules the "update" method.
+     * 调度“update”方法。
      *
-     * It will use the order number 0. This method will be called every frame.
-     * Scheduled methods with a lower order value will be called before the ones that have a higher order value.
-     * Only one "update" method could be scheduled per node.
+     * 它将会使用顺序数字0，这个方法将会在每一帧都被调用。
+     * 拥有低顺序值的调度方法将会在有用高顺序值的方法之前被调用。
+     * 只有一“update" 能够被调度，在每一个节点。
      * @js NA
      * @lua NA
      */
     void scheduleUpdate(void);
 
     /**
-     * Schedules the "update" method with a custom priority.
+     * 调度这个"update"方法伴随着一个自定义优先级。
      *
-     * This selector will be called every frame.
-     * Scheduled methods with a lower priority will be called before the ones that have a higher value.
-     * Only one "update" selector could be scheduled per node (You can't have 2 'update' selectors).
+     * 这个选择器将会在每一帧被调用。
+     * 拥有低顺序值的调度方法将会在有用高顺序值的方法之前被调用。
+     * 只有一“update" 能够被调度，在每一个节点(你不能够有2个“update”选择器).
      * @js NA
      * @lua NA
      */
     void scheduleUpdateWithPriority(int priority);
 
     /*
-     * Unschedules the "update" method.
+     * 不调度"update" 方法。
      * @see scheduleUpdate();
      */
     void unscheduleUpdate(void);
 
     /**
-     * Schedules a custom selector.
+     * 调度一个自定义的选择器。
      *
-     * If the selector is already scheduled, then the interval parameter will be updated without scheduling it again.
+     * 如果这个选择器已经被调度了，那么内部的参数将会被更新而不用再次调度一遍。
      @code
-     // firstly, implement a schedule function
+     // 首先，实现一个调度方法。
      void MyNode::TickMe(float dt);
-     // wrap this function into a selector via schedule_selector marco.
+     // 将这个方法添加到选择器中通过schedule_selector宏。
      this->schedule(schedule_selector(MyNode::TickMe), 0, 0, 0);
      @endcode
      *
-     * @param selector  The SEL_SCHEDULE selector to be scheduled.
-     * @param interval  Tick interval in seconds. 0 means tick every frame. If interval = 0, it's recommended to use scheduleUpdate() instead.
-     * @param repeat    The selector will be excuted (repeat + 1) times, you can use kRepeatForever for tick infinitely.
-     * @param delay     The amount of time that the first tick will wait before execution.
+     * @param selector  将被调度的 SEL_SCHEDULE 选择器。
+     * @param interval  以秒为时间间隔。0代表时间间隔为每帧。如果interval = 0,那就需要使用 scheduleUpdate()来代替。
+     * @param repeat    这个选择器将会被执行的次数（repeat+1）,你可以使用kRepeatForever来无限重复。
+     * @param delay     第一个时间间隔开始执行前的等待总时间。
      * @lua NA
      */
     void schedule(SEL_SCHEDULE selector, float interval, unsigned int repeat, float delay);
 
     /**
-     * Schedules a custom selector with an interval time in seconds.
+     * 调度一个自定义的选择器伴随着一个以秒为单位的内部时间。
      * @see `schedule(SEL_SCHEDULE, float, unsigned int, float)`
      *
-     * @param selector      The SEL_SCHEDULE selector to be scheduled.
-     * @param interval      Callback interval time in seconds. 0 means tick every frame,
+     * @param selector      将会被调度的SEL_SCHEDULE选择器。
+     * @param interval      回调以秒为单位的内部时间，0代表以每帧为时间间隔。
      * @lua NA
      */
     void schedule(SEL_SCHEDULE selector, float interval);
 
     /**
-     * Schedules a selector that runs only once, with a delay of 0 or larger
+     * 调度一个只运行一次的选择器，伴随着一个0或者更大的延期。
      * @see `schedule(SEL_SCHEDULE, float, unsigned int, float)`
      *
-     * @param selector      The SEL_SCHEDULE selector to be scheduled.
-     * @param delay         The amount of time that the first tick will wait before execution.
+     * @param selector      将会被调度的SEL_SCHEDULE选择器。
+     * @param delay         第一个时间间隔开始执行前的等待总时间。
      * @lua NA
      */
     void scheduleOnce(SEL_SCHEDULE selector, float delay);
 
     /**
-     * Schedules a custom selector, the scheduled selector will be ticked every frame
+     * 调度一个自定义的选择器，这个调度后的选择器将会以每帧为时间间隔。
      * @see schedule(SEL_SCHEDULE, float, unsigned int, float)
      *
-     * @param selector      A function wrapped as a selector
+     * @param selector      作为选择器的一个函数。
      * @lua NA
      */
     void schedule(SEL_SCHEDULE selector);
 
     /**
-     * Unschedules a custom selector.
+     * 不调度一个自定义的选择器。
      * @see `schedule(SEL_SCHEDULE, float, unsigned int, float)`
      *
-     * @param selector      A function wrapped as a selector
+     * @param selector     作为选择器的一个函数。
      * @lua NA
      */
     void unschedule(SEL_SCHEDULE selector);
 
     /**
-     * Unschedule all scheduled selectors: custom selectors, and the 'update' selector.
-     * Actions are not affected by this method.
+     * 不调度所有的调度过的选择器： 自定义选择器, 和 'update' 选择器。
+     * 动作不受这个方法的影响。
      * @lua NA
      */
     void unscheduleAllSelectors(void);
 
     /**
-     * Resumes all scheduled selectors, actions and event listeners.
-     * This method is called internally by onEnter
+     * 恢复所有的调度过的选择器，动作和事件监听器。
+     * 这个方法被onEnter方法在内部调用。
      */
     void resume(void);
     /**
-     * Pauses all scheduled selectors, actions and event listeners..
-     * This method is called internally by onExit
+     * 暂停所有的调度过的选择器，动作和事件监听器。
+     * 这个方法被onExit方法在内部调用。
      */
     void pause(void);
 
     /**
-     * Resumes all scheduled selectors, actions and event listeners.
-     * This method is called internally by onEnter
+     * 恢复所有的调度过的选择器，动作和事件监听器。
+     * 这个方法被onEnter方法在内部调用。
      */
     CC_DEPRECATED_ATTRIBUTE void resumeSchedulerAndActions(void);
     /**
-     * Pauses all scheduled selectors, actions and event listeners..
-     * This method is called internally by onExit
+     * 暂停所有的调度过的选择器，动作和事件监听器。
+     * 这个方法被onExit方法在内部调用。
      */
     CC_DEPRECATED_ATTRIBUTE void pauseSchedulerAndActions(void);
 
     /*
-     * Update method will be called automatically every frame if "scheduleUpdate" is called, and the node is "live"
+     * 更新方法将会被自动调用如果"scheduleUpdate"每帧都被调用的话, 并且这个节点是"live"
      */
     virtual void update(float delta);
 
@@ -1182,23 +1182,23 @@ public:
     /// @name Transformations
 
     /**
-     * Calls children's updateTransform() method recursively.
+     * 递归的调用孩子的updateTransform()方法。
      *
-     * This method is moved from Sprite, so it's no longer specific to Sprite.
-     * As the result, you apply SpriteBatchNode's optimization on your customed Node.
-     * e.g., `batchNode->addChild(myCustomNode)`, while you can only addChild(sprite) before.
+     * 这个方法从Sprite类中删除，因此它不再适用于Sprite.
+     * 因此，你应该提供SpriteBatchNode的最佳化在你自定义的节点上。
+     * e.g., `batchNode->addChild(myCustomNode)`, 以前你可以只addChild(sprite)
      */
     virtual void updateTransform();
 
     /**
-     * Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
-     * The matrix is in Pixels.
+     * 返回这个将节点（局部）的空间坐标系转换成父节点的空间坐标系的矩阵。
+     * 这个矩阵以像素为单位。
      */
     virtual const Mat4& getNodeToParentTransform() const;
     virtual AffineTransform getNodeToParentAffineTransform() const;
 
     /** 
-     * Sets the Transformation matrix manually.
+     * 手动设置变换矩阵。
      */
     virtual void setNodeToParentTransform(const Mat4& transform);
 
@@ -1206,8 +1206,8 @@ public:
     CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform nodeToParentTransform() const { return getNodeToParentAffineTransform(); }
 
     /**
-     * Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.
-     * The matrix is in Pixels.
+     * 返回这个将父节点的空间坐标系转换成节点（局部）的空间坐标系转的矩阵。
+     * 这个矩阵以像素为单位。
      */
     virtual const Mat4& getParentToNodeTransform() const;
     virtual AffineTransform getParentToNodeAffineTransform() const;
@@ -1216,7 +1216,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform parentToNodeTransform() const { return getParentToNodeAffineTransform(); }
 
     /**
-     * Returns the world affine transform matrix. The matrix is in Pixels.
+     * 返回世界仿射变换矩阵。矩阵单位是像素。
      */
     virtual Mat4 getNodeToWorldTransform() const;
     virtual AffineTransform getNodeToWorldAffineTransform() const;
@@ -1225,7 +1225,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform nodeToWorldTransform() const { return getNodeToWorldAffineTransform(); }
 
     /**
-     * Returns the inverse world affine transform matrix. The matrix is in Pixels.
+     * 返回逆世界仿射变换矩阵。矩阵单位是像素。
      */
     virtual Mat4 getWorldToNodeTransform() const;
     virtual AffineTransform getWorldToNodeAffineTransform() const;
@@ -1241,44 +1241,44 @@ public:
     /// @name Coordinate Converters
 
     /**
-     * Converts a Vec2 to node (local) space coordinates. The result is in Points.
+     * 将Vec2 转换成节点 (局部) 空间坐标系。结果按以Points为单位。
      */
     Vec2 convertToNodeSpace(const Vec2& worldPoint) const;
 
     /**
-     * Converts a Vec2 to world space coordinates. The result is in Points.
+     * 将Vec2转换成世界空间坐标系。结果按以Points为单位。
      */
     Vec2 convertToWorldSpace(const Vec2& nodePoint) const;
 
     /**
-     * Converts a Vec2 to node (local) space coordinates. The result is in Points.
-     * treating the returned/received node point as anchor relative.
+     * 将Vec2转换成节点(局部)空间坐标系. 结果按以Points为单位。
+     * 将returned/received节点的point当作相对应的锚点。
      */
     Vec2 convertToNodeSpaceAR(const Vec2& worldPoint) const;
 
     /**
-     * Converts a local Vec2 to world space coordinates.The result is in Points.
-     * treating the returned/received node point as anchor relative.
+     * 将局部的Vec2转换成世界空间坐标系。结果按以Points为单位。
+     * 将returned/received节点的point当作相对应的锚点。
      */
     Vec2 convertToWorldSpaceAR(const Vec2& nodePoint) const;
 
     /**
-     * convenience methods which take a Touch instead of Vec2
+     * 一个方便的方法将触摸转换成Vec2
      */
     Vec2 convertTouchToNodeSpace(Touch * touch) const;
 
     /**
-     * converts a Touch (world coordinates) into a local coordinate. This method is AR (Anchor Relative).
+     * 将Touch (世界坐标系) 转换成局部坐标系。这个方法是AR (相对的锚点).
      */
     Vec2 convertTouchToNodeSpaceAR(Touch * touch) const;
 
 	/**
-     *  Sets an additional transform matrix to the node.
+     *  为节点设置一个附加转换矩阵。
      *
-     *  In order to remove it, call it again with the argument `nullptr`
+     *  为了删除它，再一次调用它通过传入参数“nullptr”.
      *
-     *  @note The additional transform will be concatenated at the end of getNodeToParentTransform.
-     *        It could be used to simulate `parent-child` relationship between two nodes (e.g. one is in BatchNode, another isn't).
+     *  @note 这个附加转换将会连接在getNodeToParentTransform之后。
+     *        它将被用于模拟`parent-child`的关系在两个节点之间(e.g. 其中一个在BatchNode中, 另一个却不在).
      */
     void setAdditionalTransform(Mat4* additionalTransform);
     void setAdditionalTransform(const AffineTransform& additionalTransform);
@@ -1288,22 +1288,22 @@ public:
       /// @{
     /// @name component functions
     /**
-     *   gets a component by its name
+     *   通过名字得到组件
      */
     Component* getComponent(const std::string& pName);
 
     /**
-     *   adds a component
+     *   添加一个组件
      */
     virtual bool addComponent(Component *pComponent);
 
     /**
-     *   removes a component by its name
+     *   通过名字删除一个组件
      */
     virtual bool removeComponent(const std::string& pName);
 
     /**
-     *   removes all components
+     *   删除所有组件
      */
     virtual void removeAllComponents();
     /// @} end of component functions
@@ -1311,19 +1311,19 @@ public:
 
 #if CC_USE_PHYSICS
     /**
-     *   set the PhysicsBody that let the sprite effect with physics
-     * @note This method will set anchor point to Vec2::ANCHOR_MIDDLE if body not null, and you cann't change anchor point if node has a physics body.
+     *   设置PhysicsBody来让精灵sprite有物理效应。
+     * @note 这个方法将会设置Vec2::ANCHOR_MIDDLE锚点如果身体非空, 并且你不可以改变这个锚点如果节点有物理身体。
      */
     void setPhysicsBody(PhysicsBody* body);
 
     /**
-     *   get the PhysicsBody the sprite have
+     *   得到精灵拥有的PhysicsBody
      */
     PhysicsBody* getPhysicsBody() const;
 
 #endif
     
-    // overrides
+    // 重写
     virtual GLubyte getOpacity() const;
     virtual GLubyte getDisplayedOpacity() const;
     virtual void setOpacity(GLubyte opacity);
@@ -1342,23 +1342,23 @@ public:
     virtual bool isOpacityModifyRGB() const { return false; };
     
 CC_CONSTRUCTOR_ACCESS:
-    // Nodes should be created using create();
+    // 节点应该被创建通过使用create();
     Node();
     virtual ~Node();
 
     virtual bool init();
 
 protected:
-    /// lazy allocs
+    /// 较慢的分配
     void childrenAlloc(void);
     
-    /// helper that reorder a child
+    /// 记录孩子的助手
     void insertChild(Node* child, int z);
 
-    /// Removes a child, call child->onExit(), do cleanup, remove it from children array.
+    /// 删除一个孩子，调用child->onExit(), 从子数列中做清理，并删除它。
     void detachChild(Node *child, ssize_t index, bool doCleanup);
 
-    /// Convert cocos2d coordinates to UI windows coordinate.
+    ///转换cocos2d 坐标系到用户界面窗口坐标
     Vec2 convertToWindowSpace(const Vec2& nodePoint) const;
 
     Mat4 transform(const Mat4 &parentTransform);
@@ -1374,82 +1374,82 @@ protected:
     virtual void updatePhysicsBodyRotation(Scene* layer);
 #endif // CC_USE_PHYSICS
 
-    float _rotationX;               ///< rotation on the X-axis
-    float _rotationY;               ///< rotation on the Y-axis
+    float _rotationX;               ///< X轴的旋转
+    float _rotationY;               ///< Y轴的旋转
 
-    // rotation Z is decomposed in 2 to simulate Skew for Flash animations
-    float _rotationZ_X;             ///< rotation angle on Z-axis, component X
-    float _rotationZ_Y;             ///< rotation angle on Z-axis, component Y
+    // 旋转Z轴被分成2个用来模拟Flash动画倾斜。
+    float _rotationZ_X;             ///< 旋转角度在Z轴，组件X轴
+    float _rotationZ_Y;             ///< 旋转角度在Z轴，组件Y轴
 
-    float _scaleX;                  ///< scaling factor on x-axis
-    float _scaleY;                  ///< scaling factor on y-axis
-    float _scaleZ;                  ///< scaling factor on z-axis
+    float _scaleX;                  ///< X轴的缩放因子
+    float _scaleY;                  ///< Y轴的缩放因子
+    float _scaleZ;                  ///< Z轴的缩放因子
 
-    Vec2 _position;                ///< position of the node
-    float _positionZ;               ///< OpenGL real Z position
+    Vec2 _position;                ///< 节点的位置
+    float _positionZ;               ///< OpenGL 真正Z轴坐标位置
 
-    float _skewX;                   ///< skew angle on x-axis
-    float _skewY;                   ///< skew angle on y-axis
+    float _skewX;                   ///< X轴的倾斜角
+    float _skewY;                   ///< Y轴的倾斜角
 
-    Vec2 _anchorPointInPoints;     ///< anchor point in points
-    Vec2 _anchorPoint;             ///< anchor point normalized (NOT in points)
+    Vec2 _anchorPointInPoints;     ///< 锚点以points为单位
+    Vec2 _anchorPoint;             ///< 正常的锚点(不是以points为单位的)
 
-    Size _contentSize;              ///< untransformed size of the node
+    Size _contentSize;              ///< 未转换节点的大小
 
-    Mat4 _modelViewTransform;    ///< ModelView transform of the Node.
+    Mat4 _modelViewTransform;    ///< 节点的模型视图变换
 
-    // "cache" variables are allowed to be mutable
-    mutable Mat4 _transform;      ///< transform
+    // "cache" 可以是可变的
+    mutable Mat4 _transform;      ///< 变换
     mutable bool _transformDirty;   ///< transform dirty flag
-    mutable Mat4 _inverse;        ///< inverse transform
+    mutable Mat4 _inverse;        ///< 逆变换
     mutable bool _inverseDirty;     ///< inverse transform dirty flag
-    mutable Mat4 _additionalTransform; ///< transform
+    mutable Mat4 _additionalTransform; ///< 变换
     bool _useAdditionalTransform;   ///< The flag to check whether the additional transform is dirty
-    bool _transformUpdated;         ///< Whether or not the Transform object was updated since the last frame
+    bool _transformUpdated;         ///< 是否Transform 对象在最后一帧更新了
 
-    int _localZOrder;               ///< Local order (relative to its siblings) used to sort the node
-    float _globalZOrder;            ///< Global order used to sort the node
+    int _localZOrder;               ///< Local 顺序 (和兄妹节点相关) 被用于节点的排序
+    float _globalZOrder;            ///< Global 顺序 用于节点的排序
 
-    Vector<Node*> _children;        ///< array of children nodes
-    Node *_parent;                  ///< weak reference to parent node
+    Vector<Node*> _children;        ///< 子节点数列
+    Node *_parent;                  ///< 父节点的弱引用
 
-    int _tag;                         ///< a tag. Can be any number you assigned just to identify this node
+    int _tag;                         ///<一个标记. 你可以定义任何的数字来分辨这个节点
     
-    std::string _name;               ///<a string label, an user defined string to identify this node
+    std::string _name;               ///<一个字符串标签, 一个用户定义的字符串来分辨这个节点
 
-    void *_userData;                ///< A user assingned void pointer, Can be point to any cpp object
-    Ref *_userObject;               ///< A user assigned Object
+    void *_userData;                ///< 一个用户分配的空指针，能够指向任何cpp对象
+    Ref *_userObject;               ///< 一个用户分配的对象
 
     GLProgramState *_glProgramState; ///< OpenGL Program State
 
-    int _orderOfArrival;            ///< used to preserve sequence while sorting children with the same localZOrder
+    int _orderOfArrival;            ///< 用于保存序列当对有相同localZOrder的子节点进行排序
 
-    Scheduler *_scheduler;          ///< scheduler used to schedule timers and updates
+    Scheduler *_scheduler;          ///< 调度器用于调度定时器和更新
 
-    ActionManager *_actionManager;  ///< a pointer to ActionManager singleton, which is used to handle all the actions
+    ActionManager *_actionManager;  ///< 一个指向ActionManager singleton模式的指针, 用于操作所有的动作。
 
-    EventDispatcher* _eventDispatcher;  ///< event dispatcher used to dispatch all kinds of events
+    EventDispatcher* _eventDispatcher;  ///< 事件调度器使用调度各种事件
 
-    bool _running;                  ///< is running
+    bool _running;                  ///< 活动中
 
-    bool _visible;                  ///< is this node visible
+    bool _visible;                  ///< 节点可见
 
-    bool _ignoreAnchorPointForPosition; ///< true if the Anchor Vec2 will be (0,0) when you position the Node, false otherwise.
-                                          ///< Used by Layer and Scene.
+    bool _ignoreAnchorPointForPosition; ///< true 如果锚点 Vec2 是 (0,0) 当你拜访节点时, false则不是（0，0）
+                                          ///< 被Layer和Scene使用
 
     bool _reorderChildDirty;          ///< children order dirty flag
-    bool _isTransitionFinished;       ///< flag to indicate whether the transition was finished
+    bool _isTransitionFinished;       ///< 一个表明转换是否完成的标记
 
 #if CC_ENABLE_SCRIPT_BINDING
-    int _scriptHandler;               ///< script handler for onEnter() & onExit(), used in Javascript binding and Lua binding.
-    int _updateScriptHandler;         ///< script handler for update() callback per frame, which is invoked from lua & javascript.
-    ccScriptType _scriptType;         ///< type of script binding, lua or javascript
+    int _scriptHandler;               ///< 对onEnter()和onExit()的脚本处理器，用于Javascript binding和Lua binding.
+    int _updateScriptHandler;         ///< 对update() 每帧回调的脚本处理器，从 lua和javascript中调用。
+    ccScriptType _scriptType;         ///< 脚本绑定的类型, lua 或者javascript
 #endif
     
     ComponentContainer *_componentContainer;        ///< Dictionary of components
 
 #if CC_USE_PHYSICS
-    PhysicsBody* _physicsBody;        ///< the physicsBody the node have
+    PhysicsBody* _physicsBody;        ///< 节点拥有的physicsBody
 #endif
     
     // opacity controls
@@ -1472,13 +1472,13 @@ private:
 
 // NodeRGBA
 
-/** NodeRGBA is a subclass of Node that implements the RGBAProtocol protocol.
+/** NodeRGBA是节点的子类，实现RGBAProtocol协议。
  
- All features from Node are valid, plus the following new features:
+ 节点的所有特点都是有效的，加上如下的一些新特点：
  - opacity
  - RGB colors
  
- Opacity/Color propagates into children that conform to the RGBAProtocol if cascadeOpacity/cascadeColor is enabled.
+ Opacity/Color 传播到符合RGBAProtocol协议的孩子中，如果cascadeOpacity/cascadeColor 是可行的。
  @since v2.1
  */
 class CC_DLL __NodeRGBA : public Node, public __RGBAProtocol

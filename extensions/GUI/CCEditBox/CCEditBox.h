@@ -46,8 +46,8 @@ public:
     virtual ~EditBoxDelegate() {};
     
     /**
-     * This method is called when an edit box gains focus after keyboard is shown.
-     * @param editBox The edit box object that generated the event.
+     * 本方法在键盘弹出，编辑框获得焦点后调用
+     * @param editBox 产生事件的编辑框对象
      * @js NA
      * @lua NA
      */
@@ -55,25 +55,25 @@ public:
     
     
     /**
-     * This method is called when an edit box loses focus after keyboard is hidden.
-     * @param editBox The edit box object that generated the event.
+     * 本方法在键盘隐藏，编辑框失去焦点后调用
+     * @param editBox 产生事件的编辑框对象
      * @js NA
      * @lua NA
      */
     virtual void editBoxEditingDidEnd(EditBox* editBox) {};
     
     /**
-     * This method is called when the edit box text was changed.
-     * @param editBox The edit box object that generated the event.
-     * @param text The new text.
+     * 本方法在编辑框文本内容被改变时调用
+     * @param editBox 产生事件的编辑框对象
+     * @param text 新文本
      * @js NA
      * @lua NA
      */
     virtual void editBoxTextChanged(EditBox* editBox, const std::string& text) {};
     
     /**
-     * This method is called when the return button was pressed or the outside area of keyboard was touched.
-     * @param editBox The edit box object that generated the event.
+     * 本方法在按下返回按钮，或者按下键盘以外区域时被调用
+     * @param editBox 产生事件的编辑框对象
      * @js NA
      * @lua NA
      */
@@ -82,9 +82,9 @@ public:
 };
 
 /**
- * \brief Class for edit box.
+ * \brief 编辑框类
  *
- * You can use this widget to gather small amounts of text from the user.
+ * 本控件可用于让用户输入少量文本
  * 
  */
  
@@ -103,112 +103,108 @@ public:
     };
     
     /**
-     * \brief The EditBox::InputMode defines the type of text that the user is allowed
-     * to enter.
+     * \brief EditBox::InputMode定义了用户可输入的文本类型
      */
     enum class InputMode
     {
         /**
-         * The user is allowed to enter any text, including line breaks.
+         * 用户可输入任何文本，包括换行
          */
         ANY,
         
         /**
-         * The user is allowed to enter an e-mail address.
+         * 用户可输入一个电子邮件地址
          */
         EMAIL_ADDRESS,
         
         /**
-         * The user is allowed to enter an integer value.
+         * 用户可输入一个整数
          */
         NUMERIC,
         
         /**
-         * The user is allowed to enter a phone number.
+         * 用户可输入一个电话号码
          */
         PHONE_NUMBER,
         
         /**
-         * The user is allowed to enter a URL.
+         * 用户可输入一个URL
          */
         URL,
         
         /**
-         * The user is allowed to enter a real number value.
-         * This extends kEditBoxInputModeNumeric by allowing a decimal point.
+         * 用户可输入一个实数
+         * 跟NUMERIC相比，此模式可以多出一个小数点
          */
         DECIMAL,
         
         /**
-         * The user is allowed to enter any text, except for line breaks.
+         * 用户可输入除换行符外的任何文本
          */
         SINGLE_LINE,
     };
     
     /**
-     * \brief The EditBox::InputFlag defines how the input text is displayed/formatted.
+     * \brief EditBox::InputFlag定义了被输入文字的显示格式
      */
     enum class InputFlag
     {
         /**
-         * Indicates that the text entered is confidential data that should be
-         * obscured whenever possible. This implies EDIT_BOX_INPUT_FLAG_SENSITIVE.
+         * 表示输入文本为机密数据，只要可能就不要直接显示。
+         * 此标志暗含了SENSITIVE标志。
          */
         PASSWORD,
         
         /**
-         * Indicates that the text entered is sensitive data that the
-         * implementation must never store into a dictionary or table for use
-         * in predictive, auto-completing, or other accelerated input schemes.
-         * A credit card number is an example of sensitive data.
+         * 表示输入文字为敏感数据，在实现时禁止为了预测、自动填充
+         * 或者其余加速输入的目的而将其存入字典或者表格。
+         * 例如信用卡号就是一种敏感数据。
          */
         SENSITIVE,
         
         /**
-         * This flag is a hint to the implementation that during text editing,
-         * the initial letter of each word should be capitalized.
+         * 表示在文本编辑的过程中，每个单词的首字母都应该大写。
          */
         INITIAL_CAPS_WORD,
         
         /**
-         * This flag is a hint to the implementation that during text editing,
-         * the initial letter of each sentence should be capitalized.
+         * 表示在文本编辑的过程中，每句话的首字母都应该大写。
          */
         INITIAL_CAPS_SENTENCE,
         
         /**
-         * Capitalize all characters automatically.
+         * 自动将所有字母大写。
          */
         INTIAL_CAPS_ALL_CHARACTERS,
     };
     
     /**
-     * create a edit box with size.
-     * @return An autorelease pointer of EditBox, you don't need to release it only if you retain it again.
+     * 创建一个给定尺寸的编辑框
+     * @return 返回一个autorelease的编辑框指针，只有在你手动retain的时候才需要自己release。
      */
     static EditBox* create(const Size& size, Scale9Sprite* pNormal9SpriteBg, Scale9Sprite* pPressed9SpriteBg = NULL, Scale9Sprite* pDisabled9SpriteBg = NULL);
 
     /**
-     * Constructor.
+     * 构造函数
      * @js ctor
      */
     EditBox(void);
     
     /**
-     * Destructor.
+     * 析构函数
      * @js NA
      * @lua NA
      */
     virtual ~EditBox(void);
 
     /**
-     * Init edit box with specified size. This method should be invoked right after constructor.
-     * @param size The size of edit box.
+     * 用指定尺寸初始化编辑框。应该在构造函数执行完毕后即刻执行本函数。
+     * @param size 编辑框的尺寸
      */
     bool initWithSizeAndBackgroundSprite(const Size& size, Scale9Sprite* pNormal9SpriteBg);
     
     /**
-     * Gets/Sets the delegate for edit box.
+     * 获取/设置编辑框的委托
      * @lua NA
      */
     void setDelegate(EditBoxDelegate* pDelegate);
@@ -220,20 +216,20 @@ public:
     
 #if CC_ENABLE_SCRIPT_BINDING
     /**
-     * Registers a script function that will be called for EditBox events.
+     * 注册一个用于编辑框事件的脚本函数
      *
-     * This handler will be removed automatically after onExit() called.
+     * 此处理器会在onExit()调用结束后自行移除
      * @code
      * -- lua sample
      * local function editboxEventHandler(eventType)
      *     if eventType == "began" then
-     *         -- triggered when an edit box gains focus after keyboard is shown
+     *         -- 在键盘弹出，编辑框获得焦点时触发
      *     elseif eventType == "ended" then
-     *         -- triggered when an edit box loses focus after keyboard is hidden.
+     *         -- 在键盘隐藏，编辑框失去焦点后触发
      *     elseif eventType == "changed" then
-     *         -- triggered when the edit box text was changed.
+     *         -- 在键盘文本内容被改变时触发
      *     elseif eventType == "return" then
-     *         -- triggered when the return button was pressed or the outside area of keyboard was touched.
+     *         -- 在按下返回按钮，或者按下键盘以外区域时触发
      *     end
      * end
      *
@@ -241,20 +237,20 @@ public:
      * editbox = registerScriptEditBoxHandler(editboxEventHandler)
      * @endcode
      *
-     * @param handler A number that indicates a lua function.
+     * @param handler 一个用于表示lua函数的数字
      * @js NA
      * @lua NA
      */
     void registerScriptEditBoxHandler(int handler);
     
     /**
-     * Unregisters a script function that will be called for EditBox events.
+     * 取消注册一个用于处理编辑框事件的脚本函数
      * @js NA
      * @lua NA
      */
     void unregisterScriptEditBoxHandler(void);
     /**
-     * get a script Handler
+     * 获取脚本的处理器
      * @js NA
      * @lua NA
      */
@@ -263,110 +259,108 @@ public:
 #endif // #if CC_ENABLE_SCRIPT_BINDING
     
     /**
-     * Set the text entered in the edit box.
-     * @param pText The given text.
+     * 对编辑框的文本进行设置
+     * @param pText 指定文本
      */
     void setText(const char* pText);
     
     /**
-     * Get the text entered in the edit box.
-     * @return The text entered in the edit box.
+     * 获取输入框输入的文本
+     * @return 输入框输入的文本
      */
     const char* getText(void);
 	
 	/**
-	 * Set the font.
-	 * @param pFontName The font name.
-	 * @param fontSize The font size.
+	 * 设置字体
+	 * @param pFontName 字体名称
+	 * @param fontSize 字体尺寸
 	 */
 	void setFont(const char* pFontName, int fontSize);
     
 	/**
-	 * Set the font name.
-	 * @param pFontName The font name.
+	 * 设置字体名称
+	 * @param pFontName 字体名称
 	 */
 	void setFontName(const char* pFontName);
     
     /**
-	 * Set the font size.
-	 * @param fontSize The font size.
+	 * 设置字体尺寸
+	 * @param fontSize 字体尺寸
 	 */
 	void setFontSize(int fontSize);
     
     /**
-     * Set the font color of the widget's text.
+     * 设置控件字体的颜色
      */
     void setFontColor(const Color3B& color);
     
 	/**
-	 * Set the placeholder's font.
-	 * @param pFontName The font name.
-	 * @param fontSize The font size.
+	 * 设置占位符的字体
+	 * @param pFontName 字体名称
+	 * @param fontSize 字体尺寸
 	 */
 	void setPlaceholderFont(const char* pFontName, int fontSize);
     
     /**
-	 * Set the placeholder's font name.
-	 * @param pFontName The font name.
+	 * 设置占位符的字体名称
+	 * @param pFontName 字体名称
 	 */
 	void setPlaceholderFontName(const char* pFontName);
     
     /**
-	 * Set the placeholder's font size.
-	 * @param fontSize The font size.
+	 * 设置占位符的字体尺寸
+	 * @param fontSize 字体尺寸
 	 */
 	void setPlaceholderFontSize(int fontSize);
     
     /**
-     * Set the font color of the placeholder text when the edit box is empty.
-     * Not supported on IOS.
+     * 设置当输入框为空时，占位符的字体颜色
+     * IOS不支持
      */
     void setPlaceholderFontColor(const Color3B& color);
     
     /**
-     * Set a text in the edit box that acts as a placeholder when an
-     * edit box is empty.
-     * @param pText The given text.
+     * 设置当输入框为空时，占位符的文本内容
+     * @param pText 指定文本
      */
     void setPlaceHolder(const char* pText);
     
     /**
-     * Get a text in the edit box that acts as a placeholder when an
-     * edit box is empty.
+     * 获取当输入框为空时，占位符的文本内容
      */
     const char* getPlaceHolder(void);
     
     /**
-     * Set the input mode of the edit box.
-     * @param inputMode One of the EditBox::InputMode constants.
+     * 设置编辑框的输入模式
+     * @param inputMode EditBox::InputMode常量中的一种模式
      */
     void setInputMode(InputMode inputMode);
     
     /**
-     * Sets the maximum input length of the edit box.
-     * Setting this value enables multiline input mode by default.
-     * Available on Android, iOS and Windows Phone.
+     * 设置编辑框的最大输入长度
+     * 设置此值默认就打开了多行输入模式
+     * 在Android, iOS和Windows Phone可用
      *
-     * @param maxLength The maximum length.
+     * @param maxLength 最大长度
      */
     void setMaxLength(int maxLength);
     
     /**
-     * Gets the maximum input length of the edit box.
+     * 获取编辑框的最大可输入长度
      *
-     * @return Maximum input length.
+     * @return 最大可输入长度
      */
     int getMaxLength();
     
     /**
-     * Set the input flags that are to be applied to the edit box.
-     * @param inputFlag One of the EditBox::InputFlag constants.
+     * 设置编辑框的输入标志
+     * @param inputFlag EditBox::InputFlag常量中的某种标志
      */
     void setInputFlag(InputFlag inputFlag);
     
     /**
-     * Set the return type that are to be applied to the edit box.
-     * @param returnType One of the EditBox::KeyboardReturnType constants.
+     * 设置编辑框的返回类型
+     * @param returnType EditBox::KeyboardReturnType常量中的某种类型.
      */
     void setReturnType(EditBox::KeyboardReturnType returnType);
     
@@ -411,7 +405,7 @@ public:
      */
     virtual void keyboardDidHide(IMEKeyboardNotificationInfo& info) override;
     
-    /* callback funtions
+    /* 回调函数
      * @js NA
      * @lua NA
      */
