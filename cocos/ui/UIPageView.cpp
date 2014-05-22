@@ -32,12 +32,12 @@ IMPLEMENT_CLASS_GUI_INFO(PageView)
 
 PageView::PageView():
 _curPageIdx(0),
-_touchMoveDir(TouchDirection::LEFT),
+_touchMoveDirection(TouchDirection::LEFT),
 _touchStartLocation(0.0f),
 _touchMoveStartLocation(0.0f),
 _movePagePoint(Vec2::ZERO),
-_leftChild(nullptr),
-_rightChild(nullptr),
+_leftBoundaryChild(nullptr),
+_rightBoundaryChild(nullptr),
 _leftBoundary(0.0f),
 _rightBoundary(0.0f),
 _isAutoScrolling(false),
@@ -228,12 +228,12 @@ void PageView::updateBoundaryPages()
 {
     if (_protectedChildren.size() <= 0)
     {
-        _leftChild = nullptr;
-        _rightChild = nullptr;
+        _leftBoundaryChild = nullptr;
+        _rightBoundaryChild = nullptr;
         return;
     }
-    _leftChild = dynamic_cast<Widget*>(this->getPages().at(0));
-    _rightChild = dynamic_cast<Widget*>(this->getPages().at(this->getPageCount()-1));
+    _leftBoundaryChild = dynamic_cast<Widget*>(this->getPages().at(0));
+    _rightBoundaryChild = dynamic_cast<Widget*>(this->getPages().at(this->getPageCount()-1));
 }
 
 ssize_t PageView::getPageCount()
@@ -407,28 +407,28 @@ bool PageView::scrollPages(float touchOffset)
         return false;
     }
     
-    if (!_leftChild || !_rightChild)
+    if (!_leftBoundaryChild || !_rightBoundaryChild)
     {
         return false;
     }
     
     float realOffset = touchOffset;
     
-    switch (_touchMoveDir)
+    switch (_touchMoveDirection)
     {
         case TouchDirection::LEFT: // left
-            if (_rightChild->getRightInParent() + touchOffset <= _rightBoundary)
+            if (_rightBoundaryChild->getRightInParent() + touchOffset <= _rightBoundary)
             {
-                realOffset = _rightBoundary - _rightChild->getRightInParent();
+                realOffset = _rightBoundary - _rightBoundaryChild->getRightInParent();
                 movePages(realOffset);
                 return false;
             }
             break;
             
         case TouchDirection::RIGHT: // right
-            if (_leftChild->getLeftInParent() + touchOffset >= _leftBoundary)
+            if (_leftBoundaryChild->getLeftInParent() + touchOffset >= _leftBoundary)
             {
-                realOffset = _leftBoundary - _leftChild->getLeftInParent();
+                realOffset = _leftBoundary - _leftBoundaryChild->getLeftInParent();
                 movePages(realOffset);
                 return false;
             }
@@ -457,11 +457,11 @@ void PageView::handleMoveLogic(const Vec2 &touchPoint)
     _touchMoveStartLocation = moveX;
     if (offset < 0)
     {
-        _touchMoveDir = TouchDirection::LEFT;
+        _touchMoveDirection = TouchDirection::LEFT;
     }
     else if (offset > 0)
     {
-        _touchMoveDir = TouchDirection::RIGHT;
+        _touchMoveDirection = TouchDirection::RIGHT;
     }
     scrollPages(offset);
 }

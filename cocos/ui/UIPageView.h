@@ -128,6 +128,8 @@ public:
      */
     ssize_t getCurPageIndex() const;
     
+    //TODO: add Vector<Layout*> member variables into UIPageView, but it only used for reference purpose,
+    //all the pages are added into proteced node, so does scrollview, listview
     Vector<Layout*> getPages();
     
     Layout* getPage(ssize_t index);
@@ -206,13 +208,13 @@ protected:
 protected:
     ssize_t _curPageIdx;
 
-    TouchDirection _touchMoveDir;
+    TouchDirection _touchMoveDirection;
 
     float _touchStartLocation;
     float _touchMoveStartLocation;
     Vec2 _movePagePoint;
-    Widget* _leftChild;
-    Widget* _rightChild;
+    Widget* _leftBoundaryChild;
+    Widget* _rightBoundaryChild;
     float _leftBoundary;
     float _rightBoundary;
     bool _isAutoScrolling;
