@@ -157,8 +157,8 @@ void SpriteProgressToRadial::onEnter()
     
     auto s = Director::getInstance()->getWinSize();
 
-    auto to1 = ProgressTo::create(2, 100);
-    auto to2 = ProgressTo::create(2, 100);
+    auto to1 = Sequence::createWithTwoActions(ProgressTo::create(2, 100), ProgressTo::create(0, 0));
+    auto to2 = Sequence::createWithTwoActions(ProgressTo::create(2, 100), ProgressTo::create(0, 0));
 
     auto left = ProgressTimer::create(Sprite::create(s_pathSister1));
     left->setType( ProgressTimer::Type::RADIAL );
@@ -192,8 +192,8 @@ void SpriteProgressToHorizontal::onEnter()
     
     auto s = Director::getInstance()->getWinSize();
     
-    auto to1 = ProgressTo::create(2, 100);
-    auto to2 = ProgressTo::create(2, 100);
+    auto to1 = Sequence::createWithTwoActions(ProgressTo::create(2, 100), ProgressTo::create(0, 0));
+    auto to2 = Sequence::createWithTwoActions(ProgressTo::create(2, 100), ProgressTo::create(0, 0));
     
     auto left = ProgressTimer::create(Sprite::create(s_pathSister1));
     left->setType(ProgressTimer::Type::BAR);
@@ -232,8 +232,8 @@ void SpriteProgressToVertical::onEnter()
     
     auto s = Director::getInstance()->getWinSize();
     
-    auto to1 = ProgressTo::create(2, 100);
-    auto to2 = ProgressTo::create(2, 100);
+    auto to1 = Sequence::createWithTwoActions(ProgressTo::create(2, 100), ProgressTo::create(0, 0));
+    auto to2 = Sequence::createWithTwoActions(ProgressTo::create(2, 100), ProgressTo::create(0, 0));
     
     auto left = ProgressTimer::create(Sprite::create(s_pathSister1));
     left->setType(ProgressTimer::Type::BAR);
@@ -273,7 +273,7 @@ void SpriteProgressToRadialMidpointChanged::onEnter()
 
     auto s = Director::getInstance()->getWinSize();
 
-    auto action = ProgressTo::create(2, 100);
+    auto action = Sequence::createWithTwoActions(ProgressTo::create(2, 100), ProgressTo::create(0, 0));
 
     /**
    *  Our image on the left should be a radial progress indicator, clockwise
@@ -317,7 +317,7 @@ void SpriteProgressBarVarious::onEnter()
 
     auto s = Director::getInstance()->getWinSize();
 
-    auto to = ProgressTo::create(2, 100);
+    auto to = Sequence::createWithTwoActions(ProgressTo::create(2, 100), ProgressTo::create(0, 0));
 
     auto left = ProgressTimer::create(Sprite::create(s_pathSister1));
     left->setType(ProgressTimer::Type::BAR);
@@ -367,7 +367,7 @@ void SpriteProgressBarTintAndFade::onEnter()
 
     auto s = Director::getInstance()->getWinSize();
 
-    auto to = ProgressTo::create(6, 100);
+    auto to = Sequence::createWithTwoActions(ProgressTo::create(6, 100), ProgressTo::create(0, 0));
 	auto tint = Sequence::create(TintTo::create(1, 255, 0, 0),
 								   TintTo::create(1, 0, 255, 0),
 								   TintTo::create(1, 0, 0, 255),
@@ -434,7 +434,7 @@ void SpriteProgressWithSpriteFrame::onEnter()
 
     auto s = Director::getInstance()->getWinSize();
 
-    auto to = ProgressTo::create(6, 100);
+    auto to = Sequence::createWithTwoActions(ProgressTo::create(6, 100), ProgressTo::create(0, 0));
 
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("zwoptex/grossini.plist");
 

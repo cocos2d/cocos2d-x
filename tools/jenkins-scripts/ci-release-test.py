@@ -149,7 +149,7 @@ def main():
             ret = os.system("python build/android-build.py -b " + mode + " -n -j10 all")
             # create and save apk
             if(ret == 0):
-              os.system('android update project -p cocos/2d/platform/android/java/ -t android-13')
+              os.system('android update project -p cocos/platform/android/java/ -t android-13')
               for i, test in enumerate(tests_dirs):
                 os.system('android update project -p ' + test + ' -t android-13')
                 local_apk = test + '/' + tests_names[i] + '.apk'
