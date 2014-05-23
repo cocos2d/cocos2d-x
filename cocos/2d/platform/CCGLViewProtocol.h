@@ -33,24 +33,18 @@ THE SOFTWARE.
 
 enum class ResolutionPolicy
 {
-    // The entire application is visible in the specified area without trying to preserve the original aspect ratio.
-    // Distortion can occur, and the application may appear stretched or compressed.
+    //在指定的区域可以显示整个应用程序，并且不会保留它原始样子的比例。
+    //所以可能发生变形，应用程序可能会被拉伸或者压缩
     EXACT_FIT,
-    // The entire application fills the specified area, without distortion but possibly with some cropping,
-    // while maintaining the original aspect ratio of the application.
+    //整个应用程序填充指定的区域，不会发生变形但是可能会有剪切，同时保留应用程序原始样子的比例。
     NO_BORDER,
-    // The entire application is visible in the specified area without distortion while maintaining the original
-    // aspect ratio of the application. Borders can appear on two sides of the application.
+    //在指定的区域可以显示整个应用程序，同时保留应用程序原始样子的比例而不发生变形。但是应用程序的两侧可能会出现边框。
     SHOW_ALL,
-    // The application takes the height of the design resolution size and modifies the width of the internal
-    // canvas so that it fits the aspect ratio of the device
-    // no distortion will occur however you must make sure your application works on different
-    // aspect ratios
+    //程序取设计分辨率的高度，然后更改内部画布的宽度使程序适配设备的尺寸比例
+    //不会发生变形，但是你必须确保你的程序可以运行在不同比例下
     FIXED_HEIGHT,
-    // The application takes the width of the design resolution size and modifies the height of the internal
-    // canvas so that it fits the aspect ratio of the device
-    // no distortion will occur however you must make sure your application works on different
-    // aspect ratios
+    //程序取设计分辨率的宽度，然后更改内部画布的高度使程序适配设备的尺寸比例
+    //不会发生变形，但是你必须确保你的程序可以运行在不同比例下
     FIXED_WIDTH,
 
     UNKNOWN,
@@ -76,32 +70,30 @@ public:
      */
     virtual ~GLViewProtocol();
 
-    /** Force destroying EGL view, subclass must implement this method. */
+    /**强制销毁EGL视图，子类必须实现这个方法 */
     virtual void end() = 0;
 
-    /** Get whether opengl render system is ready, subclass must implement this method. */
+    /** 获取OpenGL渲染系统是否就绪，子类必须实现这个方法 */
     virtual bool isOpenGLReady() = 0;
 
-    /** Exchanges the front and back buffers, subclass must implement this method. */
+    /** 交换前后缓冲区，子类必须实现这个方法 */
     virtual void swapBuffers() = 0;
 
-    /** Open or close IME keyboard , subclass must implement this method. */
+    /** 开启或者关闭键盘，子类必须实现这个方法*/
     virtual void setIMEKeyboardState(bool open) = 0;
 
     /**
-     * Polls input events. Subclass must implement methods if platform
-     * does not provide event callbacks.
+     * 轮询输入事件。如果平台没有提供事件回调函数，子类必须实现这个方法
      */
     virtual void pollInputEvents();
 
-    /**
-     * Get the frame size of EGL view.
-     * In general, it returns the screen size since the EGL view is a fullscreen view.
+    /**获取EGL视图的框架尺寸
+     * 一般情况下，因为EGL视图是全屏视图，所以它会返回屏幕的尺寸
      */
     virtual const Size& getFrameSize() const;
 
     /**
-     * Set the frame size of EGL view.
+     * 设置EGL 视图的框架尺寸
      */
     virtual void setFrameSize(float width, float height);
 
@@ -111,76 +103,76 @@ public:
     virtual Size getVisibleSize() const;
 
     /**
-     * Get the visible origin point of opengl viewport.
+     * 获取OpenGL视口的可视原点
      */
     virtual Vec2 getVisibleOrigin() const;
 
     /**
-     * Get the visible rectangle of opengl viewport.
+     *获取OpenGL视口的可视矩形
      */
     virtual Rect getVisibleRect() const;
 
     /**
-     * Set the design resolution size.
-     * @param width Design resolution width.
-     * @param height Design resolution height.
-     * @param resolutionPolicy The resolution policy desired, you may choose:
-     *                         [1] EXACT_FIT Fill screen by stretch-to-fit: if the design resolution ratio of width to height is different from the screen resolution ratio, your game view will be stretched.
-     *                         [2] NO_BORDER Full screen without black border: if the design resolution ratio of width to height is different from the screen resolution ratio, two areas of your game view will be cut.
-     *                         [3] SHOW_ALL  Full screen with black border: if the design resolution ratio of width to height is different from the screen resolution ratio, two black borders will be shown.
+     * 设置设计分辨率尺寸
+     * @param width 设计分辨率的宽度
+     * @param height 设计分辨率的高度
+     * @param resolutionPolicy 你选择的期望的分辨率规则：
+     *                         [1] EXACT_FIT 伸展以适配屏幕: 如果你的设计分辨率的宽和高的比例与屏幕的分辨率的比例不同，你的游戏视图就会被拉伸。
+     *                         [2] NO_BORDER 无边框适配屏幕: 如果你的设计分辨率的宽和高的比例与屏幕的分辨率的比例不同，你的游戏视图的两个区域将会被剪切。
+     *                         [3] SHOW_ALL  有黑框适配屏幕: 如果你的设计分辨率的宽和高的比例与屏幕的分辨率的比例不同，两侧会出现两个黑色的边框。
      */
     virtual void setDesignResolutionSize(float width, float height, ResolutionPolicy resolutionPolicy);
 
-    /** Get design resolution size.
-     *  Default resolution size is the same as 'getFrameSize'.
+    /** 获得设计分辨率的尺寸。
+     *  默认的分辨率尺寸和 'getFrameSize'一样。
      */
     virtual const Size&  getDesignResolutionSize() const;
 
     /**
-     * Set opengl view port rectangle with points.
+     * 通过点来设置OpenGL视口的矩形。
      */
     virtual void setViewPortInPoints(float x , float y , float w , float h);
 
     /**
-     * Set Scissor rectangle with points.
+     * 通过点来设置裁剪矩形。
      */
     virtual void setScissorInPoints(float x , float y , float w , float h);
 
     /**
-     * Get whether GL_SCISSOR_TEST is enable
+     * 获取GL_SCISSOR_TEST 是否可用
      */
     virtual bool isScissorEnabled();
 
     /**
-     * Get the current scissor rectangle
+     * 获取当前的裁剪矩形。
      */
     virtual Rect getScissorRect() const;
 
     virtual void setViewName(const std::string& viewname);
     const std::string& getViewName() const;
 
-    /** Touch events are handled by default; if you want to customize your handlers, please override these functions: */
+    /** 通过默认的方式处理触摸事件; 如果你想自定义处理程序，可以重载下面的这些函数： */
     virtual void handleTouchesBegin(int num, intptr_t ids[], float xs[], float ys[]);
     virtual void handleTouchesMove(int num, intptr_t ids[], float xs[], float ys[]);
     virtual void handleTouchesEnd(int num, intptr_t ids[], float xs[], float ys[]);
     virtual void handleTouchesCancel(int num, intptr_t ids[], float xs[], float ys[]);
 
     /**
-     * Get the opengl view port rectangle.
+     * 获取OpenGL视口矩形。
      */
     const Rect& getViewPortRect() const;
 
     /**
-     * Get scale factor of the horizontal direction.
+     * 获取水平方向的缩放因子
      */
     float getScaleX() const;
 
     /**
-     * Get scale factor of the vertical direction.
+     * 获取垂直方向的缩放因子
      */
     float getScaleY() const;
 
-    /** returns the current Resolution policy */
+    /** 返回当前的分辨率适配规则*/
     ResolutionPolicy getResolutionPolicy() const { return _resolutionPolicy; }
 
 protected:
@@ -188,13 +180,13 @@ protected:
     
     void handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode, int num, intptr_t ids[], float xs[], float ys[]);
 
-    // real screen size
+    // 真正的屏幕尺寸
     Size _screenSize;
-    // resolution size, it is the size appropriate for the app resources.
+    // 分辨率尺寸。它是应用程序资源的适当的尺寸。
     Size _designResolutionSize;
-    // the view port size
+    // 视口尺寸
     Rect _viewPortRect;
-    // the view name
+    // 视图的名字
     std::string _viewName;
 
     float _scaleX;
