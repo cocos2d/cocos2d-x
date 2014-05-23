@@ -37,17 +37,17 @@ class RelativeBox : public Layout{
 public:
     
     /**
-     * Default constructor
+     * 默认构造函数
      */
     RelativeBox();
     
     /**
-     * Default destructor
+     * 默认析构函数
      */
     virtual ~RelativeBox();
     
     /**
-     * Allocates and initializes a RelativeBox.
+     * 创建和初始化一个RelativeBox对象
      */
     static RelativeBox* create();
     
