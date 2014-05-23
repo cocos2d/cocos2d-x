@@ -571,15 +571,28 @@
     <ClCompile Include="..\platform\winrt\InputEvent.cpp">
       <Filter>platform\winrt</Filter>
     </ClCompile>
-    <ClCompile Include="..\platform\winrt\pch.cpp">
-      <Filter>platform\winrt</Filter>
-    </ClCompile>
     <ClCompile Include="..\platform\winrt\sha1.cpp">
       <Filter>platform\winrt</Filter>
     </ClCompile>
     <ClCompile Include="..\base\CCIMEDispatcher.cpp">
       <Filter>base</Filter>
     </ClCompile>
+    <ClCompile Include="..\3d\CCMesh.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCObjLoader.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCSprite3D.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCSprite3DDataCache.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCMeshCommand.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\wp8\pch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -1167,9 +1180,6 @@
     <ClInclude Include="..\platform\winrt\InputEventTypes.h">
       <Filter>platform\winrt</Filter>
     </ClInclude>
-    <ClInclude Include="..\platform\winrt\pch.h">
-      <Filter>platform\winrt</Filter>
-    </ClInclude>
     <ClInclude Include="..\platform\winrt\sha1.h">
       <Filter>platform\winrt</Filter>
     </ClInclude>
@@ -1179,6 +1189,22 @@
     <ClInclude Include="..\base\CCIMEDispatcher.h">
       <Filter>base</Filter>
     </ClInclude>
+    <ClInclude Include="..\3d\CCMesh.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCObjLoader.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCSprite3D.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCSprite3DDataCache.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCMeshCommand.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\wp8\pch.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\math\Mat4.inl">

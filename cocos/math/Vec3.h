@@ -467,7 +467,7 @@ public:
  */
 inline const Vec3 operator*(float x, const Vec3& v);
 
-typedef Vec3 Point3;
+//typedef Vec3 Point3;
 
 NS_CC_MATH_END
 

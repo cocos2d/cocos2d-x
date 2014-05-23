@@ -69,8 +69,8 @@ FontAtlas * FontAtlasCache::getFontAtlasTTF(const TTFConfig & config)
 
     if ( it == _atlasMap.end() )
     {
-        auto font = FontFreeType::create(config.fontFilePath, fontSize * contentScaleFactor, config.glyphs, 
-            config.customGlyphs,useDistanceField,config.outlineSize * contentScaleFactor);
+        auto font = FontFreeType::create(config.fontFilePath, fontSize, config.glyphs, 
+            config.customGlyphs, useDistanceField, config.outlineSize);
         if (font)
         {
             auto tempAtlas = font->createFontAtlas();
