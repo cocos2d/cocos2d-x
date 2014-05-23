@@ -124,6 +124,6 @@ private:
     std::string getFileNameFromUrl(const std::string &srcUrl);
 };
 
-NS_CC_EXT_END;
+NS_CC_EXT_END
 
 #endif /* defined(__Downloader__) */
