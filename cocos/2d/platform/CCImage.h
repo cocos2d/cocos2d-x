@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "base/CCRef.h"
 #include "2d/CCTexture2D.h"
 
-//  阿尔法通道。如果我们在Texture2D中使用其他的像素格式（如：RGB888, RGB5A1），效果就会出错
+//  透明像素复合（premultiply alpha）。如果我们在Texture2D中使用其他的像素格式（如：RGB888, RGB5A1），效果就会出错
 #define CC_RGB_PREMULTIPLY_ALPHA(vr, vg, vb, va) \
     (unsigned)(((unsigned)((unsigned char)(vr) * ((unsigned char)(va) + 1)) >> 8) | \
     ((unsigned)((unsigned char)(vg) * ((unsigned char)(va) + 1) >> 8) << 8) | \
