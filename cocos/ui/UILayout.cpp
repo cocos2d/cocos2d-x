@@ -1515,6 +1515,8 @@ void Layout::copySpecialProperties(Widget *widget)
         setLayoutType(layout->_layoutType);
         setClippingEnabled(layout->_clippingEnabled);
         setClippingType(layout->_clippingType);
+        _loopFocus = layout->_loopFocus;
+        _passFocusToChild = layout->_passFocusToChild;
     }
 }
     
