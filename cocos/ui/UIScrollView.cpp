@@ -136,6 +136,10 @@ void ScrollView::onEnter()
 {
     Layout::onEnter();
     scheduleUpdate();
+    _eventListener = EventListenerFocus::create();
+    _eventListener->onFocusChanged = CC_CALLBACK_2(ScrollView::onFocusChanged, this);
+    
+    _eventDispatcher->addEventListenerWithFixedPriority(_eventListener, 1);
 }
 
 bool ScrollView::init()
@@ -1769,6 +1773,24 @@ Widget* ScrollView::findNextFocusedWidget(cocos2d::ui::Widget::FocusDirection di
     else
     {
         return Widget::findNextFocusedWidget(direction, current);
+    }
+}
+    
+void ScrollView::onFocusChanged(cocos2d::ui::Widget *widgetLostFocus, cocos2d::ui::Widget *widgetGetFocus)
+{
+    if (dynamic_cast<Layout*>(widgetGetFocus) || dynamic_cast<Layout*>(widgetLostFocus)) {
+        return;
+    }
+    if (this->getLayoutType() == Layout::Type::VERTICAL) {
+        float loseFocusWidgetBoundary = widgetLostFocus->getTopInParent();
+        float getFocusWidgetBoundary = widgetGetFocus->getTopInParent();
+    
+        if (loseFocusWidgetBoundary >= getFocusWidgetBoundary) {
+            CCLOG("down");
+        }
+        else{
+            CCLOG("up");
+        }
     }
 }
 
