@@ -41,13 +41,13 @@ class Label;
 
 
 
-/** @brief LabelTTF is a subclass of TextureNode that knows how to render text labels
+/** @brief LabelTTF 是 TextureNode 的子类，它可以渲染 labels 的标签（label上面显示的文字)
  *
- * All features from TextureNode are valid in LabelTTF
+ * TextureNode 的所有功能在 LabelTTF 里面都是有效的
  *
- * LabelTTF objects are slow. Consider using LabelAtlas or LabelBMFont instead.
+ * LabelTTF 对象非常缓慢. 可以考虑使用 LabelAtlas 、 LabelBMFont 代替.
  *
- * Custom ttf file can be put in assets/ or external storage that the Application can access.
+ * 自定义的 ttf 文件 可以放在  assets/ 应用程序可以访问的存储器里面.
  * @code
  * LabelTTF *label1 = LabelTTF::create("alignment left", "A Damn Mess", fontSize, blockSize, 
  *                                          TextHAlignment::LEFT, TextVAlignment::CENTER);
@@ -69,7 +69,7 @@ public:
      */
     virtual ~LabelTTF();
 
-    /** creates a Label from a fontname, alignment, dimension in points and font size in points
+    /**  使用 字体名称, 对齐方式, 质量大小(以点为单位), fontSize（以点为单位）创建一个 LabelTTF creates a Label from a fontname, alignment, dimension in points and font size in points
      @since v2.0.1
      */
     static LabelTTF * create(const std::string& string, const std::string& fontName, float fontSize,
@@ -77,47 +77,48 @@ public:
                              TextVAlignment vAlignment = TextVAlignment::TOP);
     
     
-    /** Create a lable with string and a font definition*/
+    /** 使用 string、textDefinition 创建一个 LabelTTF */
     static LabelTTF * createWithFontDefinition(const std::string& string, FontDefinition &textDefinition);
     
-    /** initializes the LabelTTF with a font name, alignment, dimension and font size */
+    /** 使用 字体名称, 对齐方式, 质量大小(以点为单位), fontSize（以点为单位）初始化一个 LabelTTF */
     bool initWithString(const std::string& string, const std::string& fontName, float fontSize,
                         const Size& dimensions = Size::ZERO, TextHAlignment hAlignment = TextHAlignment::LEFT, 
                         TextVAlignment vAlignment = TextVAlignment::TOP);
     
-    /** initializes the LabelTTF with a font name, alignment, dimension and font size */
+    /** 使用 string、textDefinition 初始化一个 LabelTTF */
     bool initWithStringAndTextDefinition(const std::string& string, FontDefinition &textDefinition);
     
-    /** set the text definition used by this label */
+    /** 设置这个label使用的文本definition */
     void setTextDefinition(const FontDefinition& theDefinition);
     
-    /** get the text definition used by this label */
+    /** 获取这个label使用的文本definition */
     const FontDefinition& getTextDefinition() const;
     
     
     
-    /** enable or disable shadow for the label */
+    /** 启用/禁用 这个 label 的阴影 */
     void enableShadow(const Size &shadowOffset, float shadowOpacity, float shadowBlur, bool mustUpdateTexture = true);
     
-    /** disable shadow rendering */
+    /** 禁用阴影渲染 */
     void disableShadow(bool mustUpdateTexture = true);
     
-    /** enable or disable stroke */
+    /** 启用/禁用绘制轮廓 */
     void enableStroke(const Color3B &strokeColor, float strokeSize, bool mustUpdateTexture = true);
     
-    /** disable stroke */
+    /** 禁用绘制轮廓 */
     void disableStroke(bool mustUpdateTexture = true);
     
-    /** set text tinting */
+    /** 设置文本着色 */
     void setFontFillColor(const Color3B &tintColor, bool mustUpdateTexture = true);
 
-    /** Creates an label.
+    /** 创建一个label.
      */
     static LabelTTF * create();
 
-    /** changes the string to render
-    * @warning Changing the string is as expensive as creating a new LabelTTF. To obtain better performance use LabelAtlas
-    */
+
+    /**修改要渲染的字符串
+     * @warning 改变字符串是昂贵的像创建一个LabelTTF一样. 为了获得更好的性能建议使用LabelAtlas
+     */
     virtual void setString(const std::string &label) override;
     virtual const std::string& getString(void) const override ;
     
