@@ -30,7 +30,7 @@ end
 
 local searchPaths = fileUtils:getSearchPaths()
 table.insert(searchPaths, 1, resPrefix)
-table.insert(searchPaths, 1, "cocosbuilderRes")
+table.insert(searchPaths, 1, resPrefix .. "cocosbuilderRes")
 
 if screenSize.height > 320 then
     table.insert(searchPaths, 1, resPrefix .. "hd")
