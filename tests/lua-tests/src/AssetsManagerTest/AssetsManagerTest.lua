@@ -255,16 +255,15 @@ function AMTestScene3.create()
 
         if not am:getLocalManifest():isLoaded() then
             print("Fail to update assets, step skipped.")
-            local background = cc.Sprite:create("Images/background3.jpg")
+            local background = cc.Sprite:create("Images/background3.png")
             layer:addChild(background, 1)
             background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
         else
             local function onUpdateEvent(event)
-                print("eventcode", event:getEventCode())
                 local eventCode = event:getEventCode()
                 if eventCode == cc.EventAssetsManager.EventCode.ERROR_NO_LOCAL_MANIFEST then
                     print("No local manifest file found, skip assets update.")
-                    local background = cc.Sprite:create("Images/background3.jpg")
+                    local background = cc.Sprite:create("Images/background3.png")
                     layer:addChild(background, 1)
                     background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
                 elseif  eventCode == cc.EventAssetsManager.EventCode.UPDATE_PROGRESSION then
@@ -283,18 +282,18 @@ function AMTestScene3.create()
                 elseif eventCode == cc.EventAssetsManager.EventCode.ERROR_DOWNLOAD_MANIFEST or 
                        eventCode == cc.EventAssetsManager.EventCode.ERROR_PARSE_MANIFEST then
                     print("Fail to download manifest file, update skipped.")
-                    local background = cc.Sprite:create("Images/background3.jpg")
+                    local background = cc.Sprite:create("Images/background3.png")
                     layer:addChild(background, 1)
                     background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
                 elseif eventCode == cc.EventAssetsManager.EventCode.ALREADY_UP_TO_DATE or 
                        eventCode == cc.EventAssetsManager.EventCode.UPDATE_FINISHED then
                         print("Update finished.")
-                        local background = cc.Sprite:create("Images/background3.jpg")
+                        local background = cc.Sprite:create("Images/background3.png")
                         layer:addChild(background, 1)
                         background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
                 elseif eventCode == cc.EventAssetsManager.EventCode.ERROR_UPDATING then
                         print("Asset ", event:getAssetId(), ", ", event:getMessage())
-                        local background = cc.Sprite:create("Images/background3.jpg")
+                        local background = cc.Sprite:create("Images/background3.png")
                         layer:addChild(background, 1)
                         background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
                 end
@@ -317,6 +316,7 @@ function AMTestScene3.create()
 
     return layer
 end
+
 -------------------------------------
 --  AssetsManager Test
 -------------------------------------
