@@ -28,9 +28,9 @@ THE SOFTWARE.
 #include "base/CCScheduler.h"
 #include "base/ccMacros.h"
 #include "base/CCDirector.h"
-#include "2d/utlist.h"
-#include "2d/ccCArray.h"
-#include "2d/CCScriptSupport.h"
+#include "base/utlist.h"
+#include "base/ccCArray.h"
+#include "base/CCScriptSupport.h"
 
 NS_CC_BEGIN
 

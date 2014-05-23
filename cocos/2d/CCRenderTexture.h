@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 #include "2d/CCNode.h"
 #include "2d/CCSprite.h"
-#include "2d/platform/CCImage.h"
+#include "platform/CCImage.h"
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCCustomCommand.h"
 

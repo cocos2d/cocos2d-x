@@ -25,17 +25,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCLabelAtlas.h"
-#include "2d/CCTextureAtlas.h"
-#include "2d/CCTextureCache.h"
+#include "renderer/CCTextureAtlas.h"
 #include "2d/CCDrawingPrimitives.h"
+#include "platform/CCFileUtils.h"
 #include "base/ccConfig.h"
+#include "base/CCDirector.h"
+#include "renderer/CCTextureCache.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/ccGLStateCache.h"
-#include "base/CCDirector.h"
 #include "math/TransformUtils.h"
-#include "2d/platform/CCFileUtils.h"
-// external
+
 #include "deprecated/CCString.h"
 
 #if CC_LABELATLAS_DEBUG_DRAW

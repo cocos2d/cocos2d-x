@@ -27,7 +27,7 @@ THE SOFTWARE.
 #ifndef __CCPARTICLE_SYSTEM_H__
 #define __CCPARTICLE_SYSTEM_H__
 
-#include "2d/CCProtocols.h"
+#include "base/CCProtocols.h"
 #include "2d/CCNode.h"
 #include "base/CCValue.h"
 #include "deprecated/CCString.h"

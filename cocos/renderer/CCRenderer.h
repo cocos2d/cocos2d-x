@@ -26,12 +26,13 @@
 #ifndef __CC_RENDERER_H_
 #define __CC_RENDERER_H_
 
-#include "base/CCPlatformMacros.h"
-#include "CCRenderCommand.h"
-#include "renderer/CCGLProgram.h"
-#include "CCGL.h"
 #include <vector>
 #include <stack>
+
+#include "base/CCPlatformMacros.h"
+#include "renderer/CCRenderCommand.h"
+#include "renderer/CCGLProgram.h"
+#include "CCGL.h"
 
 NS_CC_BEGIN
 

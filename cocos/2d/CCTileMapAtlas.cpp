@@ -25,9 +25,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCTileMapAtlas.h"
-#include "2d/platform/CCFileUtils.h"
-#include "2d/CCTextureAtlas.h"
-#include "TGAlib.h"
+#include "platform/CCFileUtils.h"
+#include "renderer/CCTextureAtlas.h"
+#include "base/TGAlib.h"
 #include "base/ccConfig.h"
 #include "base/CCDirector.h"
 #include "deprecated/CCString.h"

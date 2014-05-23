@@ -42,21 +42,21 @@ THE SOFTWARE.
 //  cocos2d uses a another approach, but the results are almost identical. 
 //
 
-#include "CCParticleSystem.h"
+#include "2d/CCParticleSystem.h"
 
 #include <string>
 
-#include "CCParticleBatchNode.h"
+#include "2d/CCParticleBatchNode.h"
+#include "renderer/CCTextureAtlas.h"
+#include "platform/CCFileUtils.h"
+#include "platform/CCImage.h"
 #include "base/ccTypes.h"
-#include "2d/CCTextureCache.h"
-#include "2d/CCTextureAtlas.h"
 #include "base/base64.h"
-#include "2d/platform/CCFileUtils.h"
-#include "2d/platform/CCImage.h"
 #include "base/ZipUtils.h"
 #include "base/CCDirector.h"
 #include "base/CCProfiling.h"
-// opengl
+#include "renderer/CCTextureCache.h"
+
 #include "CCGL.h"
 
 using namespace std;

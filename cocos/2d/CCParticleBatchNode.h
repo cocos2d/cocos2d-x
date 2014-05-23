@@ -31,7 +31,7 @@
 #define __CCPARTICLEBATCHNODE_H__
 
 #include "2d/CCNode.h"
-#include "2d/CCProtocols.h"
+#include "base/CCProtocols.h"
 #include "renderer/CCBatchCommand.h"
 
 NS_CC_BEGIN

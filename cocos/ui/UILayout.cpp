@@ -705,7 +705,7 @@ bool Layout::isClippingEnabled()
 
 void Layout::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
 {
-    if (!_enabled)
+    if (!_visible)
     {
         return;
     }
@@ -1515,6 +1515,8 @@ void Layout::copySpecialProperties(Widget *widget)
         setLayoutType(layout->_layoutType);
         setClippingEnabled(layout->_clippingEnabled);
         setClippingType(layout->_clippingType);
+        _loopFocus = layout->_loopFocus;
+        _passFocusToChild = layout->_passFocusToChild;
     }
 }
     

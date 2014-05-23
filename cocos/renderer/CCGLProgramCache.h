@@ -28,10 +28,10 @@ THE SOFTWARE.
 #ifndef __CCGLPROGRAMCACHE_H__
 #define __CCGLPROGRAMCACHE_H__
 
-#include "base/CCRef.h"
-
 #include <string>
 #include <unordered_map>
+
+#include "base/CCRef.h"
 
 NS_CC_BEGIN
 

@@ -28,15 +28,17 @@ THE SOFTWARE.
 
 #include "2d/CCSpriteBatchNode.h"
 
+#include <algorithm>
+
 #include "2d/CCSprite.h"
 #include "2d/CCGrid.h"
 #include "2d/CCDrawingPrimitives.h"
-#include "2d/CCTextureCache.h"
 #include "2d/CCLayer.h"
 #include "2d/CCScene.h"
 #include "base/ccConfig.h"
 #include "base/CCDirector.h"
 #include "base/CCProfiling.h"
+#include "renderer/CCTextureCache.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/ccGLStateCache.h"
@@ -46,8 +48,6 @@ THE SOFTWARE.
 
 #include "deprecated/CCString.h" // For StringUtils::format
 
-// external
-#include <algorithm>
 
 NS_CC_BEGIN
 

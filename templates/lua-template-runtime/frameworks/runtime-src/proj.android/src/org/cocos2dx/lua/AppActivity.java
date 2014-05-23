@@ -38,6 +38,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
@@ -60,10 +61,16 @@ public class AppActivity extends Cocos2dxActivity{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		
+		if(nativeIsLandScape()) {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+		} else {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+		}
+		
 		//2.Set the format of window
 		
-		// Check the wifi is opened when the android:debuggable is "true".
-		if(0!=((this.getApplicationInfo().flags) & ApplicationInfo.FLAG_DEBUGGABLE))
+		// Check the wifi is opened when the native is debug.
+		if(nativeIsDebug())
 		{
 			if(!isWifiConnected())
 			{
@@ -114,5 +121,8 @@ public class AppActivity extends Cocos2dxActivity{
 		}
 		return null;
 	}
+	
+	private static native boolean nativeIsLandScape();
+	private static native boolean nativeIsDebug();
 	
 }

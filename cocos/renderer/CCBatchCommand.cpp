@@ -25,8 +25,8 @@
 
 #include "renderer/CCBatchCommand.h"
 #include "renderer/ccGLStateCache.h"
-#include "2d/CCTextureAtlas.h"
-#include "2d/CCTexture2D.h"
+#include "renderer/CCTextureAtlas.h"
+#include "renderer/CCTexture2D.h"
 
 NS_CC_BEGIN
 

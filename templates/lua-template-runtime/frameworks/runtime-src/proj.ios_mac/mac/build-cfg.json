@@ -1,6 +1,7 @@
 {
     "remove_res" : [
         "src",
-        "res"
+        "res",
+        "config.json"
     ]
 }

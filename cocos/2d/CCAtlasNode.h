@@ -29,7 +29,7 @@ THE SOFTWARE.
 #define __CCATLAS_NODE_H__
 
 #include "2d/CCNode.h"
-#include "2d/CCProtocols.h"
+#include "base/CCProtocols.h"
 #include "base/ccTypes.h"
 #include "renderer/CCQuadCommand.h"
 

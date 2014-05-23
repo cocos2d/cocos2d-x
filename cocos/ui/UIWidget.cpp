@@ -925,7 +925,6 @@ void Widget::copyProperties(Widget *widget)
     _ignoreSize = widget->_ignoreSize;
     _size = widget->_size;
     _customSize = widget->_customSize;
-    copySpecialProperties(widget);
     _sizeType = widget->getSizeType();
     _sizePercent = widget->_sizePercent;
     _positionType = widget->_positionType;
@@ -941,6 +940,14 @@ void Widget::copyProperties(Widget *widget)
     setFlippedY(widget->isFlippedY());
     setColor(widget->getColor());
     setOpacity(widget->getOpacity());
+    _touchEventCallback = widget->_touchEventCallback;
+    _touchEventListener = widget->_touchEventListener;
+    _touchEventSelector = widget->_touchEventSelector;
+    _focused = widget->_focused;
+    _focusEnabled = widget->_focusEnabled;
+    
+    copySpecialProperties(widget);
+
     //FIXME:copy focus properties, also make sure all the subclass the copy behavior is correct
     Map<int, LayoutParameter*>& layoutParameterDic = widget->_layoutParameterDictionary;
     for (auto iter = layoutParameterDic.begin(); iter != layoutParameterDic.end(); ++iter)

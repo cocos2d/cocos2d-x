@@ -32,9 +32,9 @@ THE SOFTWARE.
 #include <vector>
 
 #include "2d/CCNode.h"
-#include "2d/CCProtocols.h"
-#include "2d/CCTextureAtlas.h"
+#include "base/CCProtocols.h"
 #include "base/ccMacros.h"
+#include "renderer/CCTextureAtlas.h"
 #include "renderer/CCBatchCommand.h"
 
 NS_CC_BEGIN

@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "2d/CCParticleSystemQuad.h"
 #include "2d/CCSpriteFrame.h"
 #include "2d/CCParticleBatchNode.h"
-#include "2d/CCTextureAtlas.h"
+#include "renderer/CCTextureAtlas.h"
 #include "base/CCDirector.h"
 #include "base/CCEventType.h"
 #include "base/CCConfiguration.h"

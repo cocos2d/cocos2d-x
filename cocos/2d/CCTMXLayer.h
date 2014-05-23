@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "CCAtlasNode.h"
 #include "2d/CCSpriteBatchNode.h"
 #include "CCTMXXMLParser.h"
-#include "2d/ccCArray.h"
+#include "base/ccCArray.h"
 NS_CC_BEGIN
 
 class TMXMapInfo;

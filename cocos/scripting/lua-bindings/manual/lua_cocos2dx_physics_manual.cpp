@@ -6,8 +6,8 @@
 #include "CCLuaValue.h"
 #include "CCLuaEngine.h"
 
-#ifndef CC_SAFE_FREE
-#define CC_SAFE_FREE(p) { if(p) free(p); p = nullptr; }
+#ifndef CC_SAFE_DELETE_ARRAY
+#define do { if(p) { delete[] (p); (p) = nullptr; } } while(0)
 #endif
 
 int lua_cocos2dx_physics_PhysicsBody_getJoints(lua_State* tolua_S)
@@ -334,11 +334,11 @@ int lua_cocos2dx_physics_PhysicsBody_createPolygon(lua_State* tolua_S)
             }} while (0);
         if(!ok)
         {
-            CC_SAFE_FREE(arg0);
+            CC_SAFE_DELETE_ARRAY(arg0);
             return 0;
         }
         cocos2d::PhysicsBody* ret = cocos2d::PhysicsBody::createPolygon(arg0, arg1);
-        CC_SAFE_FREE(arg0);
+        CC_SAFE_DELETE_ARRAY(arg0);
         do {
             if (nullptr != ret)
             {
@@ -366,11 +366,11 @@ int lua_cocos2dx_physics_PhysicsBody_createPolygon(lua_State* tolua_S)
         ok &= luaval_to_physics_material(tolua_S, 3, &arg2);
         if(!ok)
         {
-            CC_SAFE_FREE(arg0);
+            CC_SAFE_DELETE_ARRAY(arg0);
             return 0;
         }
         cocos2d::PhysicsBody* ret = cocos2d::PhysicsBody::createPolygon(arg0, arg1, arg2);
-        CC_SAFE_FREE(arg0);
+        CC_SAFE_DELETE_ARRAY(arg0);
         do {
 
             if (nullptr != ret)
@@ -401,11 +401,11 @@ int lua_cocos2dx_physics_PhysicsBody_createPolygon(lua_State* tolua_S)
         ok &= luaval_to_vec2(tolua_S, 4, &arg3);
         if(!ok)
         {
-            CC_SAFE_FREE(arg0);
+            CC_SAFE_DELETE_ARRAY(arg0);
             return 0;
         }
         cocos2d::PhysicsBody* ret = cocos2d::PhysicsBody::createPolygon(arg0, arg1, arg2, arg3);
-        CC_SAFE_FREE(arg0);
+        CC_SAFE_DELETE_ARRAY(arg0);
         do {
             if (nullptr != ret)
             {
@@ -455,11 +455,11 @@ int lua_cocos2dx_physics_PhysicsBody_createEdgePolygon(lua_State* tolua_S)
             }} while (0);
         if(!ok)
         {
-            CC_SAFE_FREE(arg0);
+            CC_SAFE_DELETE_ARRAY(arg0);
             return 0;
         }
         cocos2d::PhysicsBody* ret = cocos2d::PhysicsBody::createEdgePolygon(arg0, arg1);
-        CC_SAFE_FREE(arg0);
+        CC_SAFE_DELETE_ARRAY(arg0);
         do {
                 if (nullptr != ret)
                 {
@@ -487,11 +487,11 @@ int lua_cocos2dx_physics_PhysicsBody_createEdgePolygon(lua_State* tolua_S)
         ok &= luaval_to_physics_material(tolua_S, 3, &arg2);
         if(!ok)
         {
-            CC_SAFE_FREE(arg0);
+            CC_SAFE_DELETE_ARRAY(arg0);
             return 0;
         }
         cocos2d::PhysicsBody* ret = cocos2d::PhysicsBody::createEdgePolygon(arg0, arg1, arg2);
-        CC_SAFE_FREE(arg0);
+        CC_SAFE_DELETE_ARRAY(arg0);
         do {
                 if (nullptr != ret)
                 {
@@ -521,11 +521,11 @@ int lua_cocos2dx_physics_PhysicsBody_createEdgePolygon(lua_State* tolua_S)
         ok &= luaval_to_number(tolua_S, 4,&arg3);
         if(!ok)
         {
-            CC_SAFE_FREE(arg0);
+            CC_SAFE_DELETE_ARRAY(arg0);
             return 0;
         }
         cocos2d::PhysicsBody* ret = cocos2d::PhysicsBody::createEdgePolygon(arg0, arg1, arg2, arg3);
-        CC_SAFE_FREE(arg0);
+        CC_SAFE_DELETE_ARRAY(arg0);
         do {
                 if (nullptr != ret)
                 {
@@ -575,11 +575,11 @@ int lua_cocos2dx_physics_PhysicsBody_createEdgeChain(lua_State* tolua_S)
             }} while (0);
         if(!ok)
         {
-            CC_SAFE_FREE(arg0);
+            CC_SAFE_DELETE_ARRAY(arg0);
             return 0;
         }
         cocos2d::PhysicsBody* ret = cocos2d::PhysicsBody::createEdgeChain(arg0, arg1);
-        CC_SAFE_FREE(arg0);
+        CC_SAFE_DELETE_ARRAY(arg0);
         do {
             if (nullptr != ret)
             {
@@ -607,11 +607,11 @@ int lua_cocos2dx_physics_PhysicsBody_createEdgeChain(lua_State* tolua_S)
         ok &= luaval_to_physics_material(tolua_S, 3, &arg2);
         if(!ok)
         {
-            CC_SAFE_FREE(arg0);
+            CC_SAFE_DELETE_ARRAY(arg0);
             return 0;
         }
         cocos2d::PhysicsBody* ret = cocos2d::PhysicsBody::createEdgeChain(arg0, arg1, arg2);
-        CC_SAFE_FREE(arg0);
+        CC_SAFE_DELETE_ARRAY(arg0);
         do {
             if (nullptr != ret)
             {
@@ -641,11 +641,11 @@ int lua_cocos2dx_physics_PhysicsBody_createEdgeChain(lua_State* tolua_S)
         ok &= luaval_to_number(tolua_S, 4,&arg3);
         if(!ok)
         {
-            CC_SAFE_FREE(arg0);
+            CC_SAFE_DELETE_ARRAY(arg0);
             return 0;
         }
         cocos2d::PhysicsBody* ret = cocos2d::PhysicsBody::createEdgeChain(arg0, arg1, arg2, arg3);
-        CC_SAFE_FREE(arg0);
+        CC_SAFE_DELETE_ARRAY(arg0);
         do {
             if (nullptr != ret)
             {
@@ -695,12 +695,12 @@ int lua_cocos2dx_physics_PhysicsShape_recenterPoints(lua_State* tolua_S)
             }} while (0);
         if(!ok)
         {
-            CC_SAFE_FREE(arg0);
+            CC_SAFE_DELETE_ARRAY(arg0);
             return 0;
         }
         cocos2d::PhysicsShape::recenterPoints(arg0, arg1);
         vec2_array_to_luaval(tolua_S, arg0, arg1);
-        CC_SAFE_FREE(arg0);
+        CC_SAFE_DELETE_ARRAY(arg0);
         
         return 0;
     }
@@ -717,12 +717,12 @@ int lua_cocos2dx_physics_PhysicsShape_recenterPoints(lua_State* tolua_S)
         ok &= luaval_to_vec2(tolua_S, 3, &arg2);
         if(!ok)
         {
-            CC_SAFE_FREE(arg0);
+            CC_SAFE_DELETE_ARRAY(arg0);
             return 0;
         }
         cocos2d::PhysicsShape::recenterPoints(arg0, arg1, arg2);
         vec2_array_to_luaval(tolua_S, arg0, arg1);
-        CC_SAFE_FREE(arg0);
+        CC_SAFE_DELETE_ARRAY(arg0);
         return 0;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "recenterPoints",argc, 2);
@@ -760,11 +760,11 @@ int lua_cocos2dx_physics_PhysicsShape_getPolyonCenter(lua_State* tolua_S)
             }} while (0);
         if(!ok)
         {
-            CC_SAFE_FREE(arg0);
+            CC_SAFE_DELETE_ARRAY(arg0);
             return 0;
         }
         cocos2d::Vec2 ret = cocos2d::PhysicsShape::getPolyonCenter(arg0, arg1);
-        CC_SAFE_FREE(arg0);
+        CC_SAFE_DELETE_ARRAY(arg0);
         vec2_to_luaval(tolua_S, ret);
         return 1;
     }
@@ -849,7 +849,7 @@ int lua_cocos2dx_physics_PhysicsShapePolygon_getPoints(lua_State* tolua_S)
         cocos2d::Vec2* arg0 = new cocos2d::Vec2[count];
         cobj->getPoints(arg0);
         vec2_array_to_luaval(tolua_S, arg0, count);
-        CC_SAFE_FREE(arg0);
+        CC_SAFE_DELETE_ARRAY(arg0);
         return 0;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getPoints",argc, 1);
@@ -890,11 +890,11 @@ int lua_cocos2dx_physics_PhysicsShapePolygon_create(lua_State* tolua_S)
         
         if(!ok)
         {
-            CC_SAFE_FREE(arg0);
+            CC_SAFE_DELETE_ARRAY(arg0);
             return 0;
         }
         cocos2d::PhysicsShapePolygon* ret = cocos2d::PhysicsShapePolygon::create(arg0, arg1);
-        CC_SAFE_FREE(arg0);
+        CC_SAFE_DELETE_ARRAY(arg0);
         object_to_luaval<cocos2d::PhysicsShapePolygon>(tolua_S, "cc.PhysicsShapePolygon",(cocos2d::PhysicsShapePolygon*)ret);
         return 1;
     }
@@ -911,11 +911,11 @@ int lua_cocos2dx_physics_PhysicsShapePolygon_create(lua_State* tolua_S)
         ok &= luaval_to_physics_material(tolua_S, 3, &arg2);
         if(!ok)
         {
-            CC_SAFE_FREE(arg0);
+            CC_SAFE_DELETE_ARRAY(arg0);
             return 0;
         }
         cocos2d::PhysicsShapePolygon* ret = cocos2d::PhysicsShapePolygon::create(arg0, arg1, arg2);
-        CC_SAFE_FREE(arg0);
+        CC_SAFE_DELETE_ARRAY(arg0);
         object_to_luaval<cocos2d::PhysicsShapePolygon>(tolua_S, "cc.PhysicsShapePolygon",(cocos2d::PhysicsShapePolygon*)ret);
         return 1;
     }
@@ -934,11 +934,11 @@ int lua_cocos2dx_physics_PhysicsShapePolygon_create(lua_State* tolua_S)
         ok &= luaval_to_vec2(tolua_S, 4, &arg3);
         if(!ok)
         {
-            CC_SAFE_FREE(arg0);
+            CC_SAFE_DELETE_ARRAY(arg0);
             return 0;
         }
         cocos2d::PhysicsShapePolygon* ret = cocos2d::PhysicsShapePolygon::create(arg0, arg1, arg2, arg3);
-        CC_SAFE_FREE(arg0);
+        CC_SAFE_DELETE_ARRAY(arg0);
         object_to_luaval<cocos2d::PhysicsShapePolygon>(tolua_S, "cc.PhysicsShapePolygon",(cocos2d::PhysicsShapePolygon*)ret);
         return 1;
     }
@@ -976,11 +976,11 @@ int lua_cocos2dx_physics_PhysicsShapePolygon_calculateArea(lua_State* tolua_S)
             }} while (0);
         if(!ok)
         {
-            CC_SAFE_FREE(arg0);
+            CC_SAFE_DELETE_ARRAY(arg0);
             return 0;
         }
         double ret = cocos2d::PhysicsShapePolygon::calculateArea(arg0, arg1);
-        CC_SAFE_FREE(arg0);
+        CC_SAFE_DELETE_ARRAY(arg0);
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
@@ -1020,11 +1020,11 @@ int lua_cocos2dx_physics_PhysicsShapePolygon_calculateMoment(lua_State* tolua_S)
             }} while (0);
         if(!ok)
         {
-            CC_SAFE_FREE(arg1);
+            CC_SAFE_DELETE_ARRAY(arg1);
             return 0;
         }
         double ret = cocos2d::PhysicsShapePolygon::calculateMoment(arg0, arg1, arg2);
-        CC_SAFE_FREE(arg1);
+        CC_SAFE_DELETE_ARRAY(arg1);
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
@@ -1043,11 +1043,11 @@ int lua_cocos2dx_physics_PhysicsShapePolygon_calculateMoment(lua_State* tolua_S)
         ok &= luaval_to_vec2(tolua_S, 4, &arg3);
         if(!ok)
         {
-            CC_SAFE_FREE(arg1);
+            CC_SAFE_DELETE_ARRAY(arg1);
             return 0;
         }
         double ret = cocos2d::PhysicsShapePolygon::calculateMoment(arg0, arg1, arg2, arg3);
-        CC_SAFE_FREE(arg1);
+        CC_SAFE_DELETE_ARRAY(arg1);
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
@@ -1090,7 +1090,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgeBox_getPoints(lua_State* tolua_S)
         cocos2d::Vec2* arg0 = new cocos2d::Vec2[count];
         cobj->getPoints(arg0);
         vec2_array_to_luaval(tolua_S, arg0, count);
-        CC_SAFE_FREE(arg0);
+        CC_SAFE_DELETE_ARRAY(arg0);
         return 0;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getPoints",argc, 1);
@@ -1134,7 +1134,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgePolygon_getPoints(lua_State* tolua_S)
         cocos2d::Vec2* arg0 = new cocos2d::Vec2[count];
         cobj->getPoints(arg0);
         vec2_array_to_luaval(tolua_S, arg0, count);
-        CC_SAFE_FREE(arg0);
+        CC_SAFE_DELETE_ARRAY(arg0);
         return 0;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getPoints",argc, 1);
@@ -1178,7 +1178,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgeChain_getPoints(lua_State* tolua_S)
         cocos2d::Vec2* arg0 = new cocos2d::Vec2[count];
         cobj->getPoints(arg0);
         vec2_array_to_luaval(tolua_S, arg0, count);
-        CC_SAFE_FREE(arg0);
+        CC_SAFE_DELETE_ARRAY(arg0);
         return 0;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getPoints",argc, 1);
@@ -1322,11 +1322,11 @@ int lua_cocos2dx_physics_PhysicsShapeEdgePolygon_create(lua_State* tolua_S)
             }} while (0);
         if(!ok)
         {
-            CC_SAFE_FREE(arg0);
+            CC_SAFE_DELETE_ARRAY(arg0);
             return 0;
         }
         cocos2d::PhysicsShapeEdgePolygon* ret = cocos2d::PhysicsShapeEdgePolygon::create(arg0, arg1);
-        CC_SAFE_FREE(arg0);
+        CC_SAFE_DELETE_ARRAY(arg0);
         object_to_luaval<cocos2d::PhysicsShapeEdgePolygon>(tolua_S, "cc.PhysicsShapeEdgePolygon",(cocos2d::PhysicsShapeEdgePolygon*)ret);
         return 1;
     }
@@ -1343,11 +1343,11 @@ int lua_cocos2dx_physics_PhysicsShapeEdgePolygon_create(lua_State* tolua_S)
         ok &= luaval_to_physics_material(tolua_S, 3, &arg2);
         if(!ok)
         {
-            CC_SAFE_FREE(arg0);
+            CC_SAFE_DELETE_ARRAY(arg0);
             return 0;
         }
         cocos2d::PhysicsShapeEdgePolygon* ret = cocos2d::PhysicsShapeEdgePolygon::create(arg0, arg1, arg2);
-        CC_SAFE_FREE(arg0);
+        CC_SAFE_DELETE_ARRAY(arg0);
         object_to_luaval<cocos2d::PhysicsShapeEdgePolygon>(tolua_S, "cc.PhysicsShapeEdgePolygon",(cocos2d::PhysicsShapeEdgePolygon*)ret);
         return 1;
     }
@@ -1366,11 +1366,11 @@ int lua_cocos2dx_physics_PhysicsShapeEdgePolygon_create(lua_State* tolua_S)
         ok &= luaval_to_number(tolua_S, 4,&arg3);
         if(!ok)
         {
-            CC_SAFE_FREE(arg0);
+            CC_SAFE_DELETE_ARRAY(arg0);
             return 0;
         }
         cocos2d::PhysicsShapeEdgePolygon* ret = cocos2d::PhysicsShapeEdgePolygon::create(arg0, arg1, arg2, arg3);
-        CC_SAFE_FREE(arg0);
+        CC_SAFE_DELETE_ARRAY(arg0);
         object_to_luaval<cocos2d::PhysicsShapeEdgePolygon>(tolua_S, "cc.PhysicsShapeEdgePolygon",(cocos2d::PhysicsShapeEdgePolygon*)ret);
         return 1;
     }
@@ -1409,11 +1409,11 @@ int lua_cocos2dx_physics_PhysicsShapeEdgeChain_create(lua_State* tolua_S)
             }} while (0);
         if(!ok)
         {
-            CC_SAFE_FREE(arg0);
+            CC_SAFE_DELETE_ARRAY(arg0);
             return 0;
         }
         cocos2d::PhysicsShapeEdgeChain* ret = cocos2d::PhysicsShapeEdgeChain::create(arg0, arg1);
-        CC_SAFE_FREE(arg0);
+        CC_SAFE_DELETE_ARRAY(arg0);
         object_to_luaval<cocos2d::PhysicsShapeEdgeChain>(tolua_S, "cc.PhysicsShapeEdgeChain",(cocos2d::PhysicsShapeEdgeChain*)ret);
         return 1;
     }
@@ -1430,11 +1430,11 @@ int lua_cocos2dx_physics_PhysicsShapeEdgeChain_create(lua_State* tolua_S)
         ok &= luaval_to_physics_material(tolua_S, 3, &arg2);
         if(!ok)
         {
-            CC_SAFE_FREE(arg0);
+            CC_SAFE_DELETE_ARRAY(arg0);
             return 0;
         }
         cocos2d::PhysicsShapeEdgeChain* ret = cocos2d::PhysicsShapeEdgeChain::create(arg0, arg1, arg2);
-        CC_SAFE_FREE(arg0);
+        CC_SAFE_DELETE_ARRAY(arg0);
         object_to_luaval<cocos2d::PhysicsShapeEdgeChain>(tolua_S, "cc.PhysicsShapeEdgeChain",(cocos2d::PhysicsShapeEdgeChain*)ret);
         return 1;
     }
@@ -1453,11 +1453,11 @@ int lua_cocos2dx_physics_PhysicsShapeEdgeChain_create(lua_State* tolua_S)
         ok &= luaval_to_number(tolua_S, 4,&arg3);
         if(!ok)
         {
-            CC_SAFE_FREE(arg0);
+            CC_SAFE_DELETE_ARRAY(arg0);
             return 0;
         }
         cocos2d::PhysicsShapeEdgeChain* ret = cocos2d::PhysicsShapeEdgeChain::create(arg0, arg1, arg2, arg3);
-        CC_SAFE_FREE(arg0);
+        CC_SAFE_DELETE_ARRAY(arg0);
         object_to_luaval<cocos2d::PhysicsShapeEdgeChain>(tolua_S, "cc.PhysicsShapeEdgeChain",(cocos2d::PhysicsShapeEdgeChain*)ret);
         return 1;
     }

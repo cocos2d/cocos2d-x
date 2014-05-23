@@ -25,7 +25,7 @@
 #ifndef _CC_BATCHCOMMAND_H_
 #define _CC_BATCHCOMMAND_H_
 
-#include "CCRenderCommand.h"
+#include "renderer/CCRenderCommand.h"
 #include "renderer/CCGLProgram.h"
 #include "CCRenderCommandPool.h"
 

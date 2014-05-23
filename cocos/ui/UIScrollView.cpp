@@ -301,7 +301,7 @@ ssize_t ScrollView::getChildrenCount() const
     return _innerContainer->getChildrenCount();
 }
     
-Node* ScrollView::getChildByTag(int tag)
+Node* ScrollView::getChildByTag(int tag) const
 {
     return _innerContainer->getChildByTag(tag);
 }
@@ -1738,6 +1738,9 @@ void ScrollView::copySpecialProperties(Widget *widget)
         setDirection(scrollView->_direction);
         setBounceEnabled(scrollView->_bounceEnabled);
         setInertiaScrollEnabled(scrollView->_inertiaScrollEnabled);
+        _scrollViewEventListener = scrollView->_scrollViewEventListener;
+        _scrollViewEventSelector = scrollView->_scrollViewEventSelector;
+        _eventCallback = scrollView->_eventCallback;
     }
 }
 

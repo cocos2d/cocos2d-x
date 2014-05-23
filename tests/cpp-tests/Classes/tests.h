@@ -71,4 +71,6 @@
 #include "ReleasePoolTest/ReleasePoolTest.h"
 #include "CameraTest/CameraTest.h"
 
+#include "Sprite3DTest/Sprite3DTest.h"
+
 #endif

@@ -26,8 +26,8 @@ THE SOFTWARE.
 #ifndef __CCMOTION_STREAK_H__
 #define __CCMOTION_STREAK_H__
 
-#include "2d/CCProtocols.h"
-#include "2d/CCTexture2D.h"
+#include "base/CCProtocols.h"
+#include "renderer/CCTexture2D.h"
 #include "base/ccTypes.h"
 #include "2d/CCNode.h"
 #include "renderer/CCCustomCommand.h"

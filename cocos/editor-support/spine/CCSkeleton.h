@@ -37,8 +37,8 @@
 #include <spine/spine.h>
 
 #include "2d/CCNode.h"
-#include "2d/CCProtocols.h"
-#include "2d/CCTextureAtlas.h"
+#include "base/CCProtocols.h"
+#include "renderer/CCTextureAtlas.h"
 #include "renderer/CCCustomCommand.h"
 
 namespace spine {

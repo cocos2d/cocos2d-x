@@ -24,11 +24,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCParticleExamples.h"
+
+#include "2d/CCParticleExamples.h"
+#include "platform/CCImage.h"
 #include "base/CCDirector.h"
-#include "2d/CCTextureCache.h"
-#include "firePngData.h"
-#include "2d/platform/CCImage.h"
+#include "base/firePngData.h"
+#include "renderer/CCTextureCache.h"
 
 NS_CC_BEGIN
 //
