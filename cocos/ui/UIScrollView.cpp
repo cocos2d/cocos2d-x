@@ -1759,6 +1759,18 @@ void ScrollView::copySpecialProperties(Widget *widget)
         setInertiaScrollEnabled(scrollView->_inertiaScrollEnabled);
     }
 }
+    
+Widget* ScrollView::findNextFocusedWidget(cocos2d::ui::Widget::FocusDirection direction, cocos2d::ui::Widget *current)
+{
+    if (this->getLayoutType() == Layout::Type::VERTICAL
+        || this->getLayoutType() == Layout::Type::HORIZONTAL) {
+        return _innerContainer->findNextFocusedWidget(direction, current);
+    }
+    else
+    {
+        return Widget::findNextFocusedWidget(direction, current);
+    }
+}
 
 }
 

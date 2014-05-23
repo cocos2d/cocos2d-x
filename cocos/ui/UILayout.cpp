@@ -652,10 +652,8 @@ Layout* Layout::create()
 
 bool Layout::init()
 {
-    if (ProtectedNode::init())
+    if (Widget::init())
     {
-        initRenderer();
-        setBright(true);
         ignoreContentAdaptWithSize(false);
         setSize(Size::ZERO);
         setAnchorPoint(Vec2::ZERO);

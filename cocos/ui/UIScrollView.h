@@ -314,6 +314,15 @@ public:
     virtual std::string getDescription() const override;
     
     virtual void onEnter() override;
+    
+    /**
+     *  When a widget is in a layout, you could call this method to get the next focused widget within a specified direction.
+     *  If the widget is not in a layout, it will return itself
+     *@param dir the direction to look for the next focused widget in a layout
+     *@param current  the current focused widget
+     *@return the next focused widget in a layout
+     */
+    virtual Widget* findNextFocusedWidget(FocusDirection direction, Widget* current) override;
 
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
