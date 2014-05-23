@@ -29,8 +29,7 @@ THE SOFTWARE.
 #include "base/CCRef.h"
 #include "2d/CCTexture2D.h"
 
-// premultiply alpha, or the effect will wrong when want to use other pixel format in Texture2D,
-// such as RGB888, RGB5A1
+//  阿尔法通道。如果我们在Texture2D中使用其他的像素格式（如：RGB888, RGB5A1），效果就会出错
 #define CC_RGB_PREMULTIPLY_ALPHA(vr, vg, vb, va) \
     (unsigned)(((unsigned)((unsigned char)(vr) * ((unsigned char)(va) + 1)) >> 8) | \
     ((unsigned)((unsigned char)(vg) * ((unsigned char)(va) + 1) >> 8) << 8) | \
@@ -45,7 +44,7 @@ NS_CC_BEGIN
  */
 
 /**
- @brief Structure which can tell where mipmap begins and how long is it
+ @brief 用来辨别mipmap起始位置和长度的结构体
  */
 typedef struct _MipmapInfo
 {
@@ -67,7 +66,7 @@ public:
      */
     virtual ~Image();
 
-    /** Supported formats for Image */
+    /** 支持的图片格式 */
     enum class Format
     {
         //! JPEG
@@ -88,33 +87,33 @@ public:
         ATITC,
         //! TGA
         TGA,
-        //! Raw Data
+        //! 原始数据
         RAW_DATA,
-        //! Unknown format
+        //! 未知格式
         UNKOWN
     };
 
     /**
-    @brief Load the image from the specified path.
-    @param path   the absolute file path.
-    @return true if loaded correctly.
+    @brief 从指定的路径加载图片
+    @param path   文件的绝对路径
+    @return 如果正确加载则返回true
     */
     bool initWithImageFile(const std::string& path);
 
     /**
-    @brief Load image from stream buffer.
-    @param data  stream buffer which holds the image data.
-    @param dataLen  data length expressed in (number of) bytes.
-    @return true if loaded correctly.
+    @brief 从流缓冲区加载图片
+    @param data  存放图片数据的流缓冲区
+    @param dataLen 数据的字节数
+    @return true if loaded correctly.如果正确加载则返回true
     * @js NA
     * @lua NA
     */
     bool initWithImageData(const unsigned char * data, ssize_t dataLen);
 
-    // @warning kFmtRawData only support RGBA8888
+    // @warning kFmtRawData只支持RGBA8888
     bool initWithRawData(const unsigned char * data, ssize_t dataLen, int width, int height, int bitsPerComponent, bool preMulti = false);
 
-    // Getters
+    // get函数
     inline unsigned char *   getData()               { return _data; }
     inline ssize_t           getDataLen()            { return _dataLen; }
     inline Format            getFileType()           {return _fileType; }
@@ -132,9 +131,9 @@ public:
 
 
     /**
-     @brief    Save Image data to the specified file, with specified format.
-     @param    filePath        the file's absolute path, including file suffix.
-     @param    isToRGB        whether the image is saved as RGB format.
+     @brief    以指定的格式把图片数据保存到指定的文件中
+     @param    filePath        包括文件后缀的绝对路径
+     @param    isToRGB        图片是否以RGB格式保存
      */
     bool saveToFile(const std::string &filename, bool isToRGB = true);
 
@@ -157,8 +156,8 @@ protected:
     
 protected:
     /**
-     @brief Determine how many mipmaps can we have.
-     Its same as define but it respects namespaces
+     @brief 决定mipmap允许的最大数量
+     这个和使用define是一样的，只不过它遵守命名空间的规则
      */
     static const int MIPMAP_MAX = 16;
     unsigned char *_data;
@@ -168,24 +167,23 @@ protected:
     Format _fileType;
     Texture2D::PixelFormat _renderFormat;
     bool _preMulti;
-    MipmapInfo _mipmaps[MIPMAP_MAX];   // pointer to mipmap images
+    MipmapInfo _mipmaps[MIPMAP_MAX];   // 存放mipmap的数组
     int _numberOfMipmaps;
-    // false if we cann't auto detect the image is premultiplied or not.
+    // 如果我们无法检测图片是否是自左乘的，将返回false
     bool _hasPremultipliedAlpha;
     std::string _filePath;
 
 
 protected:
-    // noncopyable
+    // 不可复制
     Image(const Image&    rImg);
     Image & operator=(const Image&);
     
     /*
-     @brief The same result as with initWithImageFile, but thread safe. It is caused by
-     loadImage() in TextureCache.cpp.
-     @param fullpath  full path of the file.
-     @param imageType the type of image, currently only supporting two types.
-     @return  true if loaded correctly.
+     @brief 它和使用initWithImageFile的结果是一样的，只不过线程相对安全。它在源文件TextureCache.cpp中被 loadImage()调用
+     @param fullpath  文件的完整路径
+     @param imageType 图片类型，当前只支持两个类型
+     @return  如果正确加载则返回true
      */
     bool initWithImageFileThreadSafe(const std::string& fullpath);
     
