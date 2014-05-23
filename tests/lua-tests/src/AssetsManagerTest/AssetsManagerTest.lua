@@ -36,37 +36,82 @@ local AMTestScene1 = {}
 AMTestScene1.__index = AMTestScene1
 
 function AMTestScene1.create()
-    local sprite = cc.Sprite:create("Images/Icon.png")
+
     local layer  = cc.Layer:create()
 
-    layer:addChild(sprite)
-    sprite:setPosition(cc.p(VisibleRect:center().x, VisibleRect:center().y))
+    local am = nil
 
-    local ttfConfig = {}
-    ttfConfig.fontFilePath = "fonts/arial.ttf"
-    ttfConfig.fontSize = 40
+    local function onEnter()
 
-    local  progress = cc.Label:createWithTTF(ttfConfig, "0%", cc.VERTICAL_TEXT_ALIGNMENT_CENTER)
-    progress:setPosition(cc.p(VisibleRect:center().x, VisibleRect:center().y + 50))
-    layer:addChild(progress)
+        Helper.initWithLayer(layer)
+        Helper.titleLabel:setString("AssetsManagerTest")
 
-    local am = cc.AssetsManager:create("AMTestScene1", "Manifests/AMTestScene1/project.manifest", "LuaTests/AssetsManagerTest/scene1")
-    am:retain()
+        local sprite = cc.Sprite:create("Images/Icon.png")
+        layer:addChild(sprite)
+        sprite:setPosition(cc.p(VisibleRect:center().x, VisibleRect:center().y))
 
-    if not am:getLocalManifest():isLoaded() then
-        print("Fail to update assets, step skipped.")
-        --AssetsManagerTestScene *scene = new AssetsManagerTestScene(backgroundPaths[currentId])
-        --cc.Director:getInstance():replaceScene(scene)
-        local background = cc.Sprite:create(backgroundPaths[1])
-        layer:addChild(background, 1)
-        background:setPosition(cc.p(VisibleRect:center().x, VisibleRect:center().y))
+        local ttfConfig = {}
+        ttfConfig.fontFilePath = "fonts/arial.ttf"
+        ttfConfig.fontSize = 40
 
-    else
-        local function onUpdate(event)
+        local  progress = cc.Label:createWithTTF(ttfConfig, "0%", cc.VERTICAL_TEXT_ALIGNMENT_CENTER)
+        progress:setPosition(cc.p(VisibleRect:center().x, VisibleRect:center().y + 50))
+        layer:addChild(progress)
+
+        am = cc.AssetsManager:create("Manifests/AMTestScene1/project.manifest", "LuaTests/AssetsManagerTest/scene1")
+        am:retain()
+
+        if not am:getLocalManifest():isLoaded() then
+            print("Fail to update assets, step skipped.")
+            local background = cc.Sprite:create("Images/background1.jpg")
+            layer:addChild(background, 1)
+            background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
+        else
+            local function onUpdateEvent(event)
+                local eventCode = event:getEventCode()
+                if eventCode == cc.EventAssetsManager.EventCode.ERROR_NO_LOCAL_MANIFEST then
+                    print("No local manifest file found, skip assets update.")
+                    local background = cc.Sprite:create("Images/background1.jpg")
+                    layer:addChild(background, 1)
+                    background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
+                elseif  eventCode == cc.EventAssetsManager.EventCode.UPDATE_PROGRESSION then
+                    print("come in")
+                    local percent = event:getPercent()
+                    progress:setString(string.format("%d", percent))
+                elseif eventCode == cc.EventAssetsManager.EventCode.ERROR_DOWNLOAD_MANIFEST or 
+                       eventCode == cc.EventAssetsManager.EventCode.ERROR_PARSE_MANIFEST then
+                    print("Fail to download manifest file, update skipped.")
+                    local background = cc.Sprite:create("Images/background1.jpg")
+                    layer:addChild(background, 1)
+                    background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
+                elseif eventCode == cc.EventAssetsManager.EventCode.ALREADY_UP_TO_DATE or 
+                       eventCode == cc.EventAssetsManager.EventCode.UPDATE_FINISHED then
+                        print("Update finished.")
+                        local background = cc.Sprite:create("Images/background1.jpg")
+                        layer:addChild(background, 1)
+                        background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
+                elseif eventCode == cc.EventAssetsManager.EventCode.ERROR_UPDATING then
+                        print("Asset ", event:getAssetId(), ", ", event:getMessage())
+                        local background = cc.Sprite:create("Images/background1.jpg")
+                        layer:addChild(background, 1)
+                        background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
+                end
+            end
+            local listener = cc.EventListenerAssetsManager:create(am,onUpdateEvent)
+            cc.Director:getInstance():getEventDispatcher():addEventListenerWithFixedPriority(listener, 1)
             
+            am:update()
         end
-        am:addUpdateEventListener(onUpdate)
     end
+
+    local function onNodeEvent(event)
+        if "enter" == event then
+            onEnter()
+        elseif "exit" == event then
+            am:release()
+        end
+    end
+    layer:registerScriptHandler(onNodeEvent)
 
     return layer
 end

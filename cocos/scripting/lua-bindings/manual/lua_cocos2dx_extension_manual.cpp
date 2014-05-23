@@ -1477,21 +1477,10 @@ static int lua_cocos2dx_Extension_EventListenerAssetsManager_create(lua_State* L
         return 0;
     
     int argc = 0;
-    cocos2d::extension::EventListenerAssetsManager* self = nullptr;
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
     if (!tolua_isusertable(L,1,"cc.EventListenerAssetsManager",0,&tolua_err)) goto tolua_lerror;
-#endif
-    
-
-    
-#if COCOS2D_DEBUG >= 1
-    if (nullptr == self)
-    {
-        tolua_error(L,"invalid 'cobj' in function 'lua_cocos2dx_Extension_EventListenerAssetsManager_create'", nullptr);
-        return 0;
-    }
 #endif
     
     argc = lua_gettop(L)-1;
@@ -1509,10 +1498,9 @@ static int lua_cocos2dx_Extension_EventListenerAssetsManager_create(lua_State* L
         LUA_FUNCTION handler = toluafix_ref_function(L,3,0);
         
         cocos2d::extension::EventListenerAssetsManager* ret = cocos2d::extension::EventListenerAssetsManager::create(assetManager, [=](EventAssetsManager* event){
-            tolua_pushusertype(L, (void*)event, "cc.EventAssetsManager");
-            int id = assetManager? (int)assetManager->_ID : -1;
-            int* luaID = assetManager? &assetManager->_luaID : nullptr;
-            toluafix_pushusertype_ccobject(L, id, luaID, (void*)assetManager,"cc.EventListenerAssetsManager");
+            int id = event? (int)event->_ID : -1;
+            int* luaID = event? &event->_luaID : nullptr;
+            toluafix_pushusertype_ccobject(L, id, luaID, (void*)event,"cc.EventAssetsManager");
             LuaEngine::getInstance()->getLuaStack()->executeFunctionByHandler(handler, 1);
         });
         
@@ -1532,6 +1520,17 @@ tolua_lerror:
 #endif
 }
 
+static void extendEventListenerAssetsManager(lua_State* L)
+{
+    lua_pushstring(L, "cc.EventListenerAssetsManager");
+    lua_rawget(L, LUA_REGISTRYINDEX);
+    if (lua_istable(L,-1))
+    {
+        tolua_function(L, "create", lua_cocos2dx_Extension_EventListenerAssetsManager_create);
+    }
+    lua_pop(L, 1);
+}
+
 int register_all_cocos2dx_extension_manual(lua_State* tolua_S)
 {
     extendControl(tolua_S);
@@ -1541,5 +1540,6 @@ int register_all_cocos2dx_extension_manual(lua_State* tolua_S)
     extendScrollView(tolua_S);
     extendTableView(tolua_S);
     extendManifest(tolua_S);
+    extendEventListenerAssetsManager(tolua_S);
     return 0;
 }
