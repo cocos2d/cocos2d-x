@@ -47,6 +47,7 @@ public:
     
 private:
     AssetsManager *_am;
+    Label *_progress;
 };
 
 #endif /* defined(__AssetsManager_Test_H__) */

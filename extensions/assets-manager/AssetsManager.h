@@ -57,8 +57,12 @@ public:
         MANIFEST_LOADED,
         NEED_UPDATE,
         UPDATING,
-        UP_TO_DATE
+        UP_TO_DATE,
+        FAIL_TO_UPDATE
     };
+    
+    const static std::string VERSION_ID;
+    const static std::string MANIFEST_ID;
     
     /** @brief Create function for creating a new AssetsManager
      @param manifestUrl   The url for the local manifest file
