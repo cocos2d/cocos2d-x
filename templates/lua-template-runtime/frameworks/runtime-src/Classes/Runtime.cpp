@@ -149,11 +149,12 @@ public:
         
         string strip = getIPAddress();
         char szIPAddress[512]={0};
-        sprintf(szIPAddress, "LocalIP: %s",strip.c_str());
-        auto IPlabel = Label::create(szIPAddress, "Arial", 36);
+        sprintf(szIPAddress, "IP: %s",strip.c_str());
+        auto IPlabel = Label::create(szIPAddress, "Arial", 72);
         IPlabel->setAnchorPoint(Vec2(0,0));
-        int spaceSize = 72;
-        IPlabel->setPosition( Point(VisibleRect::leftTop().x+spaceSize, VisibleRect::top().y -spaceSize) );
+        int spaceSizex = 72;
+        int spaceSizey = 200;
+        IPlabel->setPosition( Point(VisibleRect::leftTop().x+spaceSizex, VisibleRect::top().y -spaceSizey) );
         addChild(IPlabel, 9999);
 
         string strShowMsg = "waiting for file transfer ...";
@@ -162,9 +163,9 @@ public:
             strShowMsg = "waiting for debugger to connect ...";
         }
 
-        _labelUploadFile = Label::create(strShowMsg.c_str(), "Arial", 24);
+        _labelUploadFile = Label::create(strShowMsg.c_str(), "Arial", 36);
         _labelUploadFile->setAnchorPoint(Vec2(0,0));
-        _labelUploadFile->setPosition( Point(VisibleRect::leftTop().x+spaceSize, IPlabel->getPositionY()-spaceSize) );
+        _labelUploadFile->setPosition( Point(VisibleRect::leftTop().x+spaceSizex, IPlabel->getPositionY()-spaceSizex) );
         _labelUploadFile->setAlignment(TextHAlignment::LEFT);
         addChild(_labelUploadFile, 10000);
 
