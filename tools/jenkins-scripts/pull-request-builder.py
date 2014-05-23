@@ -190,7 +190,7 @@ def main():
         data = re.sub('<uses-feature android:glEsVersion="0x00020000" />', '<uses-feature android:glEsVersion="0x00020000" /> <uses-permission android:name="android.permission.INTERNET"/>', data)
         codecs.open(modify_file, 'wb', encoding='UTF-8').write(data)
         print "Start build android..."
-        ret = os.system("python build/android-build.py -n -j10 -p 10 all")
+        ret = os.system("python build/android-build.py -p 10 all")
         # create and save apk
         if(ret == 0):
           sample_dir = 'tests/cpp-tests/proj.android/'
