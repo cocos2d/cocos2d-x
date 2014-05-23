@@ -296,18 +296,18 @@ unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWid
                 break;
             }
 
-            long outlineWidth = (bbox.xMax - bbox.xMin)>>6;
-            long outlineHeight = (bbox.yMax - bbox.yMin)>>6;
+            auto outlineWidth = (bbox.xMax - bbox.xMin)>>6;
+            auto outlineHeight = (bbox.yMax - bbox.yMin)>>6;
 
-            long blendWidth = outlineWidth > outWidth ? outlineWidth : outWidth;
-            long blendHeight = outlineHeight > outHeight ? outlineHeight : outHeight;
+            auto blendWidth = outlineWidth > outWidth ? outlineWidth : outWidth;
+            auto blendHeight = outlineHeight > outHeight ? outlineHeight : outHeight;
 
             long index,index2;
             auto blendImage = new unsigned char[blendWidth * blendHeight * 2];
             memset(blendImage, 0, blendWidth * blendHeight * 2);
 
-            int px = (blendWidth - outlineWidth) / 2;
-            int py = (blendHeight - outlineHeight) / 2;
+            auto px = (blendWidth - outlineWidth) / 2;
+            auto py = (blendHeight - outlineHeight) / 2;
             for (int x = 0; x < outlineWidth; ++x)
             {
                 for (int y = 0; y < outlineHeight; ++y)

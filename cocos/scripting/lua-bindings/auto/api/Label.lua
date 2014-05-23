@@ -302,6 +302,13 @@
 -- @param #cc.BlendFunc blendfunc
         
 --------------------------------
+-- @function [parent=#Label] visit 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #cc.Mat4 mat4
+-- @param #bool bool
+        
+--------------------------------
 -- @function [parent=#Label] getScaleX 
 -- @param self
 -- @return float#float ret (return value: float)
