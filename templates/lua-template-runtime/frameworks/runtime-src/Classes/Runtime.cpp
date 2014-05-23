@@ -106,12 +106,12 @@ public:
         int designWidth = 1280;
         int designHeight = 800;
         Director::getInstance()->getOpenGLView()->setDesignResolutionSize(designWidth,designHeight,ResolutionPolicy::EXACT_FIT);
-        string playEnbleFile = "res/debug/Play1.png";
-        string shineFile = "res/debug/shine.png";
-        string backgroundFile = "res/debug/landscape.png";
+        string playEnbleFile = "rtres/Play1.png";
+        string shineFile = "rtres/shine.png";
+        string backgroundFile = "rtres/landscape.png";
         if (!ConfigParser::getInstance()->isLanscape())
         {
-            backgroundFile = "res/debug/portrait.png";
+            backgroundFile = "rtres/portrait.png";
             Director::getInstance()->getOpenGLView()->setDesignResolutionSize(designHeight,designWidth,ResolutionPolicy::EXACT_FIT);
         }
 
