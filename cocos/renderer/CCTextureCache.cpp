@@ -144,7 +144,7 @@ void TextureCache::addImageAsync(const std::string &path, const std::function<vo
 void TextureCache::unbindImageAsync(const std::string& filename)
 {
     std::string fullpath = FileUtils::getInstance()->fullPathForFilename(filename);
-    auto found = std::find_if(_imageInfoQueue->begin(), _imageInfoQueue->end(), [&](ImageInfo* ptr)->bool{ return ptr->asyncStruct->filename == fullpath; });
+    auto found = std::find_if(_imageInfoQueue->begin(), _imageInfoQueue->end(), [&fullpath](ImageInfo* ptr)->bool{ return ptr->asyncStruct->filename == fullpath; });
     if (found != _imageInfoQueue->end())
     {
         _imageInfoMutex.lock();
@@ -162,6 +162,7 @@ void TextureCache::unbindAllImageAsync()
         _imageInfoMutex.unlock();
     }
 }
+
 
 void TextureCache::loadImage()
 {
