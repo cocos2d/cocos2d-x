@@ -1,4 +1,8 @@
-﻿#include <wrl/client.h>
+﻿// XXX: For some reason, this file must not be compiled
+// XXX: Ask MS why
+#if 0
+
+#include <wrl/client.h>
 #include <d3d11_1.h>
 #include "DirectXBase.h"
 
@@ -276,3 +280,5 @@ void DirectXBase::SetDpi(float dpi)
       UpdateForWindowSizeChange();
    }
 }
+
+#endif //0 

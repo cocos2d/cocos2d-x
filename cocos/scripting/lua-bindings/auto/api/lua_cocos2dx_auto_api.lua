@@ -52,6 +52,11 @@
 
 
 --------------------------------------------------------
+-- the cc GLProgramState
+-- @field [parent=#cc] GLProgramState#GLProgramState GLProgramState preloaded module
+
+
+--------------------------------------------------------
 -- the cc AtlasNode
 -- @field [parent=#cc] AtlasNode#AtlasNode AtlasNode preloaded module
 
@@ -1127,6 +1132,11 @@
 
 
 --------------------------------------------------------
+-- the cc GLProgramCache
+-- @field [parent=#cc] GLProgramCache#GLProgramCache GLProgramCache preloaded module
+
+
+--------------------------------------------------------
 -- the cc TextureCache
 -- @field [parent=#cc] TextureCache#TextureCache TextureCache preloaded module
 
@@ -1199,6 +1209,16 @@
 --------------------------------------------------------
 -- the cc Component
 -- @field [parent=#cc] Component#Component Component preloaded module
+
+
+--------------------------------------------------------
+-- the cc Sprite3D
+-- @field [parent=#cc] Sprite3D#Sprite3D Sprite3D preloaded module
+
+
+--------------------------------------------------------
+-- the cc Mesh
+-- @field [parent=#cc] Mesh#Mesh Mesh preloaded module
 
 
 --------------------------------------------------------

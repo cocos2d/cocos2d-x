@@ -71,6 +71,9 @@ const char* GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_GLOW = "ShaderLabelDFGlow
 const char* GLProgram::SHADER_NAME_LABEL_NORMAL = "ShaderLabelNormal";
 const char* GLProgram::SHADER_NAME_LABEL_OUTLINE = "ShaderLabelOutline";
 
+const char* GLProgram::SHADER_3D_POSITION = "Shader3DPosition";
+const char* GLProgram::SHADER_3D_POSITION_TEXTURE = "Shader3DPositionTexture";
+
 
 // uniform names
 const char* GLProgram::UNIFORM_NAME_P_MATRIX = "CC_PMatrix";
@@ -501,6 +504,10 @@ bool GLProgram::link()
     if(!_hasShaderCompiler)
     {
         // precompiled shader program is already linked
+
+        //bindPredefinedVertexAttribs();
+        parseVertexAttribs();
+        parseUniforms();
         return true;
     }
 #endif

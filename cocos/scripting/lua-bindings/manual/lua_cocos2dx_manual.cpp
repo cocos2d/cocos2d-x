@@ -5296,6 +5296,80 @@ static void extendConsole(lua_State* tolua_S)
     lua_pop(tolua_S, 1);
 }
 
+static int lua_cocos2dx_GLProgramState_setVertexAttribPointer(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::GLProgramState* cobj = nullptr;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.GLProgramState",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    cobj = (cocos2d::GLProgramState*)tolua_tousertype(tolua_S,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgramState_setVertexAttribPointer'", nullptr);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 6)
+    {
+        std::string arg0;
+        int arg1;
+        unsigned int arg2;
+        bool arg3;
+        int arg4;
+        int arg5;
+        
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0);
+        
+        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
+        
+        ok &= luaval_to_uint32(tolua_S, 4,&arg2);
+        
+        ok &= luaval_to_boolean(tolua_S, 5, &arg3);
+        
+        ok &= luaval_to_int32(tolua_S, 6,(int *)&arg4);
+        
+        ok &= luaval_to_int32(tolua_S, 7, (int *)&arg5);
+        
+        if(!ok)
+            return 0;
+        cobj->setVertexAttribPointer(arg0, arg1, arg2, arg3, arg4, (void*)arg5);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setVertexAttribPointer",argc, 6);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_GLProgramState_setVertexAttribPointer'.",&tolua_err);
+#endif
+    
+    return 0;
+}
+
+static void extendGLProgramState(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "cc.GLProgramState");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        tolua_function(tolua_S,"setVertexAttribPointer", lua_cocos2dx_GLProgramState_setVertexAttribPointer);
+    }
+    lua_pop(tolua_S, 1);
+}
+
 int register_all_cocos2dx_manual(lua_State* tolua_S)
 {
     if (NULL == tolua_S)
@@ -5344,5 +5418,7 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
     extendLabel(tolua_S);
     extendTMXTiledMap(tolua_S);
     extendConsole(tolua_S);
+    extendGLProgramState(tolua_S);
+    
     return 0;
 }

@@ -12,6 +12,7 @@ import traceback
 import platform
 import subprocess
 import codecs
+from shutil import copy
 
 #set Jenkins build description using submitDescription to mock browser behavior
 #TODO: need to set parent build description 
@@ -121,9 +122,6 @@ def main():
     if(ret != 0):
         return(2)
 
-    #copy check_current_3rd_libs
-    check_current_3rd_libs(branch)
-
     #build
     #TODO: add android-linux build
     #TODO: add mac build
@@ -139,6 +137,8 @@ def main():
         os.system('git reset --hard')
         os.system("git clean -xdf -f")
         make_temp_dir()
+        #copy check_current_3rd_libs
+        check_current_3rd_libs(branch)
         if(branch == 'v3'):
           # Generate binding glue codes
           ret = os.system("python tools/jenkins-scripts/gen_jsb.py")
@@ -149,7 +149,7 @@ def main():
             ret = os.system("python build/android-build.py -b " + mode + " -n -j10 all")
             # create and save apk
             if(ret == 0):
-              os.system('android update project -p cocos/2d/platform/android/java/ -t android-13')
+              os.system('android update project -p cocos/platform/android/java/ -t android-13')
               for i, test in enumerate(tests_dirs):
                 os.system('android update project -p ' + test + ' -t android-13')
                 local_apk = test + '/' + tests_names[i] + '.apk'

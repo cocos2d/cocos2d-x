@@ -70,4 +70,6 @@
 #include "PhysicsTest/PhysicsTest.h"
 #include "ReleasePoolTest/ReleasePoolTest.h"
 
+#include "Sprite3DTest/Sprite3DTest.h"
+
 #endif

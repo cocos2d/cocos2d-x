@@ -90,10 +90,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="App.xaml.cs" />
-    <Compile Include="EditBox.xaml.cs" />
+    <Compile Include="..\..\..\..\cocos\platform\wp8-xaml\xaml\App.xaml.cs">
+      <Link>App.xaml.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\cocos\platform\wp8-xaml\xaml\EditBox.xaml.cs">
+      <Link>EditBox.xaml.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\cocos\platform\wp8-xaml\xaml\MainPage.xaml.cs">
+      <Link>MainPage.xaml.cs</Link>
+    </Compile>
     <Compile Include="LocalizedStrings.cs" />
-    <Compile Include="MainPage.xaml.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\AppResources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -147,15 +153,18 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="App.xaml">
+    <Page Include="..\..\..\..\cocos\platform\wp8-xaml\xaml\App.xaml">
+      <Link>App.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="EditBox.xaml">
+    <Page Include="..\..\..\..\cocos\platform\wp8-xaml\xaml\EditBox.xaml">
+      <Link>EditBox.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MainPage.xaml">
+    <Page Include="..\..\..\..\cocos\platform\wp8-xaml\xaml\MainPage.xaml">
+      <Link>MainPage.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
