@@ -99,50 +99,114 @@ bool reloadScript(const string& modulefile)
 class ConnectWaitLayer: public Layer
 {
 private:
-    LabelTTF* pLabelUploadFile;
+    Label* _labelUploadFile;
 public:
-
     ConnectWaitLayer()
     {
+        int designWidth = 1280;
+        int designHeight = 800;
+        Director::getInstance()->getOpenGLView()->setDesignResolutionSize(designWidth,designHeight,ResolutionPolicy::EXACT_FIT);
+        string playEnbleFile = "rtres/Play1.png";
+        string shineFile = "rtres/shine.png";
+        string backgroundFile = "rtres/landscape.png";
+        if (!ConfigParser::getInstance()->isLanscape())
+        {
+            backgroundFile = "rtres/portrait.png";
+            Director::getInstance()->getOpenGLView()->setDesignResolutionSize(designHeight,designWidth,ResolutionPolicy::EXACT_FIT);
+        }
+
+        auto background = Sprite::create(backgroundFile.c_str());
+        if (background)
+        {
+            background->setAnchorPoint(Vec2(0,0));
+            addChild(background,9999);
+        }
+
+        auto playSprite = Sprite::create(playEnbleFile.c_str());
+        if (playSprite)
+        {
+            playSprite->setPosition(Vec2(902,400));
+            addChild(playSprite,9999);
+        }else
+        {
+            auto labelPlay = LabelTTF::create("play", "Arial", 108);
+            auto menuItem = MenuItemLabel::create(labelPlay, CC_CALLBACK_1(ConnectWaitLayer::playerCallback, this));
+            auto menu = Menu::create(menuItem, NULL);
+
+            menu->setPosition( Point::ZERO );
+            menuItem->setPosition(Vec2(902,400));
+            if (!ConfigParser::getInstance()->isLanscape()) menuItem->setPosition(Vec2(400,500));
+            addChild(menu, 1);
+        }
+
+        auto shineSprite = Sprite::create(shineFile.c_str());
+        if (shineSprite)
+        {
+            shineSprite->setPosition(Vec2(902,400));
+            shineSprite->runAction(RepeatForever::create(Sequence::createWithTwoActions(ScaleBy::create(1.0f, 1.08f),ScaleTo::create(1.0f, 1))));
+            addChild(shineSprite,9999);
+        }
+        
         string strip = getIPAddress();
         char szIPAddress[512]={0};
-        sprintf(szIPAddress, "LocalIP: %s",strip.c_str());
-        auto label = LabelTTF::create(szIPAddress, "Arial", 24);
-        addChild(label, 9999);
-        label->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 30) );
-        
-        string strShowMsg ="";
+        sprintf(szIPAddress, "IP: %s",strip.c_str());
+        auto IPlabel = Label::create(szIPAddress, "Arial", 72);
+        IPlabel->setAnchorPoint(Vec2(0,0));
+        int spaceSizex = 72;
+        int spaceSizey = 200;
+        IPlabel->setPosition( Point(VisibleRect::leftTop().x+spaceSizex, VisibleRect::top().y -spaceSizey) );
+        addChild(IPlabel, 9999);
+
+        string strShowMsg = "waiting for file transfer ...";
         if (CC_PLATFORM_WIN32 == CC_TARGET_PLATFORM || CC_PLATFORM_MAC == CC_TARGET_PLATFORM)
         {
             strShowMsg = "waiting for debugger to connect ...";
-        }else
+        }
+
+        _labelUploadFile = Label::create(strShowMsg.c_str(), "Arial", 36);
+        _labelUploadFile->setAnchorPoint(Vec2(0,0));
+        _labelUploadFile->setPosition( Point(VisibleRect::leftTop().x+spaceSizex, IPlabel->getPositionY()-spaceSizex) );
+        _labelUploadFile->setAlignment(TextHAlignment::LEFT);
+        addChild(_labelUploadFile, 10000);
+
+        if (!ConfigParser::getInstance()->isLanscape())
         {
-            strShowMsg = "waiting for file transfer ...";
-        }		
-        auto labelwait = LabelTTF::create(strShowMsg.c_str(), "Arial", 22);
-        addChild(labelwait, 10000);
-        labelwait->setPosition( Point(VisibleRect::center().x, VisibleRect::center().y) );
+            if (playSprite)   playSprite->setPosition(400,500);
+            if (shineSprite)  shineSprite->setPosition(400,500);
+            _labelUploadFile->setAlignment(TextHAlignment::LEFT);
+        }
 
-        pLabelUploadFile  = LabelTTF::create("", "Arial", 22);
-        addChild(pLabelUploadFile, 10000);
-        pLabelUploadFile->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 60) );
-
-        auto labelPlay = LabelTTF::create("play", "Arial", 36);
-        auto menuItem = MenuItemLabel::create(labelPlay, CC_CALLBACK_1(ConnectWaitLayer::playerCallback, this));
-        auto menu = Menu::create(menuItem, NULL);
+        if (playSprite)
+        {        
+            auto listener = EventListenerTouchOneByOne::create();
+            listener->onTouchBegan = [](Touch* touch, Event  *event)->bool{
+                auto target = static_cast<Sprite*>(event->getCurrentTarget());
+                Vec2 point = target->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
+                auto rect = Rect(0, 0, target->getContentSize().width, target->getContentSize().height);
+                if (!rect.containsPoint(point)) return false;
+                target->stopAllActions();
+                target->runAction(Sequence::createWithTwoActions(ScaleBy::create(0.05f, 0.9f),ScaleTo::create(0.125f, 1)));
+                return true;
+            };
+            listener->onTouchEnded = [](Touch* touch, Event  *event){
+                auto target = static_cast<Sprite*>(event->getCurrentTarget());
+                Vec2 point = target->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
+                auto rect = Rect(0, 0, target->getContentSize().width, target->getContentSize().height);
+                if (!rect.containsPoint(point)) return;
+                startScript("");
+            };
+            _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, playSprite);
+        }
         
-        menu->setPosition( Point::ZERO );
-        menuItem->setPosition( Point( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
-        addChild(menu, 1);
     }
-    
+
     void playerCallback(Object* sender)
     {
         startScript("");
     }
 
     void showCurRcvFile(string fileName) {
-        pLabelUploadFile->setString(fileName);
+        _labelUploadFile->setString(fileName);
     }
 };
 
