@@ -29,7 +29,9 @@ THE SOFTWARE.
 #define __CCSCENE_H__
 
 #include "2d/CCNode.h"
+#include "2d/CCCamera.h"
 #include "physics/CCPhysicsWorld.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
@@ -59,7 +61,14 @@ public:
 
     using Node::addChild;
     virtual std::string getDescription() const override;
-    
+
+	/**
+	* Apply camera projection for rendering,
+	* Then visit children.
+	*/
+	using Node::visit;
+	virtual void visit(Renderer *renderer, const Mat4& parentTransform, bool parentTransformUpdated);
+
 CC_CONSTRUCTOR_ACCESS:
     Scene();
     virtual ~Scene();
@@ -89,6 +98,35 @@ protected:
 
     PhysicsWorld* _physicsWorld;
 #endif // CC_USE_PHYSICS
+
+public:
+	/**
+	* Set camera for rendering
+	* @param camera Camera to set
+	*/
+	inline void setCamera(Camera* camera) { _camera = camera; }
+
+	/**
+	* Get current camera
+	* @return the camera, nullptr if not assigned
+	*/
+	inline Camera* getCamera(Camera* camera) const { return _camera; }
+
+protected:
+	/**
+	* Camera use by scene
+	*/
+	Camera*		_camera;
+
+	/**
+	* Apply projection of camera
+	*/
+	cocos2d::CustomCommand _pushProj;
+
+	/**
+	* Remove projection of camera
+	*/
+	cocos2d::CustomCommand _popProj;
 };
 
 // end of scene group

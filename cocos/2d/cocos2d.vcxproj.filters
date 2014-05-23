@@ -590,6 +590,9 @@
     <ClCompile Include="CCTweenFunction.cpp">
       <Filter>actions</Filter>
     </ClCompile>
+    <ClCompile Include="CCCamera.cpp">
+      <Filter>misc_nodes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -1142,6 +1145,9 @@
     </ClInclude>
     <ClInclude Include="CCTweenFunction.h">
       <Filter>actions</Filter>
+    </ClInclude>
+    <ClInclude Include="CCCamera.h">
+      <Filter>misc_nodes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

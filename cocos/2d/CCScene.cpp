@@ -32,16 +32,29 @@ THE SOFTWARE.
 #include "2d/CCSpriteBatchNode.h"
 #include "physics/CCPhysicsWorld.h"
 #include "deprecated/CCString.h"
+#include "renderer/CCRenderer.h"
 
 NS_CC_BEGIN
 
-Scene::Scene()
+Scene::Scene():
+_camera(nullptr)
 #if CC_USE_PHYSICS
-: _physicsWorld(nullptr)
+, _physicsWorld(nullptr)
 #endif
 {
     _ignoreAnchorPointForPosition = true;
-    setAnchorPoint(Vec2(0.5f, 0.5f));
+	setAnchorPoint(Vec2(0.5f, 0.5f));
+
+	_pushProj.func = [this]{
+		Mat4 projMatrix;
+		_camera->getProjectionMatrix(projMatrix);
+		Director::getInstance()->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+		Director::getInstance()->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, projMatrix);
+	};
+
+	_popProj.func = [this]{
+		Director::getInstance()->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+	};
 }
 
 Scene::~Scene()
@@ -160,5 +173,20 @@ void Scene::addChildToPhysicsWorld(Node* child)
     }
 }
 #endif
+
+void Scene::visit(Renderer *renderer, const Mat4& parentTransform, bool parentTransformUpdated)
+{
+	if (_camera)
+	{
+		Director::getInstance()->getRenderer()->addCommand(&_pushProj);
+	}
+
+	Node::visit(renderer, parentTransform, parentTransformUpdated);
+
+	if (_camera)
+	{
+		Director::getInstance()->getRenderer()->addCommand(&_popProj);
+	}
+}
 
 NS_CC_END
