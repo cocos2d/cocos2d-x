@@ -40,8 +40,7 @@ NS_CC_BEGIN
  * @{
  */
 
-/* On iOS, should create autorelease pool when create a new thread
- * and release it when the thread end.
+/* 在IOS平台上，在创建一个新的线程时，应该创建自动释放池。当这个线程结束的时候，就释放它。
  */
 
 class CC_DLL ThreadHelper
@@ -49,7 +48,7 @@ class CC_DLL ThreadHelper
 public:
     friend DisplayLinkDirector;
 
-    /** Create an autorelease pool for objective-c codes.
+    /** 为objective-c代码创建自动释放池
      * @js NA
      * @lua NA
      */
