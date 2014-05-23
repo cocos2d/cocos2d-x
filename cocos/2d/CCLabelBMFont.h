@@ -41,28 +41,28 @@ Use any of these editors to generate BMFonts:
 
 NS_CC_BEGIN
 
-/** @brief LabelBMFont is a subclass of SpriteBatchNode.
+/** @brief LabelBMFont 是 SpriteBatchNode的子类.
 
-Features:
-- Treats each character like a Sprite. This means that each individual character can be:
-- rotated
-- scaled
-- translated
-- tinted
-- change the opacity
-- It can be used as part of a menu item.
-- anchorPoint can be used to align the "label"
-- Supports AngelCode text format
+特性:
+- 对待那个字符都想对待 Sprite 一样，这意味着每一个子符都可以：
+- rotated（旋转）
+- scaled（）（缩放）
+- translated（转换）
+- tinted（色彩）
+- 更改不透明度
+- 它可以作为一个菜单项的一部分。
+- 可以用来锚点对齐“标签”
+- 支持AngelCode文本格式
 
-Limitations:
-- All inner characters are using an anchorPoint of (0.5f, 0.5f) and it is not recommend to change it
-because it might affect the rendering
+限制:
+- 所有字符的内部都使用锚点（0.5F，0.5F），但是不建议去改变它
+ 因为它可能会影响渲染
+ 
+ LabelBMFont 实现了 LabelProtocol, 像一个 Label 、 LabelAtlas.
+ LabelBMFont 是一个灵活的 Label, 他有 LabelAtlas 的速度， Sprite 的所有特性.
+ 如果有疑问，可以使用 LabelBMFont 代替 LabelAtlas / Label.
 
-LabelBMFont implements the protocol LabelProtocol, like Label and LabelAtlas.
-LabelBMFont has the flexibility of Label, the speed of LabelAtlas and all the features of Sprite.
-If in doubt, use LabelBMFont instead of LabelAtlas / Label.
-
-Supported editors:
+支持的编辑器:
 http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
 http://www.n4te.com/hiero/hiero.jnlp (Free, Java)
 http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
@@ -84,14 +84,14 @@ public:
      */
     virtual ~LabelBMFont();
 
-    /** creates a bitmap font atlas with an initial string and the FNT file */
+    /** 使用string和FNT文创建件并初始化bitmap(位图)字体集 */
     static LabelBMFont * create(const std::string& str, const std::string& fntFile, float width = 0, TextHAlignment alignment = TextHAlignment::LEFT,const Vec2& imageOffset = Vec2::ZERO);
 
-    /** Creates an label.
+    /**创建一个label.
      */
     static LabelBMFont * create();
 
-    /** init a bitmap font atlas with an initial string and the FNT file */
+    /** 使用string和FNT文初始化bitmap(位图)字体集 */
     bool initWithString(const std::string& str, const std::string& fntFile, float width = 0, TextHAlignment alignment = TextHAlignment::LEFT,const Vec2& imageOffset = Vec2::ZERO);
 
     // super method
