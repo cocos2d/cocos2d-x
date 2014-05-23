@@ -166,7 +166,6 @@ void TextureCache::unbindAllImageAsync()
     _imageInfoMutex.unlock();
 }
 
-
 void TextureCache::loadImage()
 {
     AsyncStruct *asyncStruct = nullptr;
