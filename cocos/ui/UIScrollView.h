@@ -342,7 +342,13 @@ protected:
     void startBounceChildren(float v);
     void stopBounceChildren();
     bool checkCustomScrollDestination(float* touchOffsetX, float* touchOffsetY);
+    
     virtual bool scrollChildren(float touchOffsetX, float touchOffsetY);
+    bool scrollChildrenVertical(float touchOffsetX, float touchOffsetY);
+    bool scrollChildrenHorizontal(float touchOffsetX, float touchOffestY);
+    bool scrollChildrenBoth(float touchOffsetX, float touchOffsetY);
+    
+    
     bool bounceScrollChildren(float touchOffsetX, float touchOffsetY);
     void startRecordSlidAction();
     virtual void endRecordSlidAction();
