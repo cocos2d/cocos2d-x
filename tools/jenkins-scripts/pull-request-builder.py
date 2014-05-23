@@ -190,16 +190,13 @@ def main():
         data = re.sub('<uses-feature android:glEsVersion="0x00020000" />', '<uses-feature android:glEsVersion="0x00020000" /> <uses-permission android:name="android.permission.INTERNET"/>', data)
         codecs.open(modify_file, 'wb', encoding='UTF-8').write(data)
         print "Start build android..."
-        ret = os.system("python build/android-build.py -n -j10 all")
+        ret = os.system("python build/android-build.py -n -j10 -p 10 all")
         # create and save apk
         if(ret == 0):
-          sample_dir = 'tests/cpp-empty-test/proj.android/'
-          os.system('android update project -p cocos/platform/android/java/ -t android-13')
-          os.system('android update project -p ' + sample_dir + ' -t android-13')
-          os.system('ant debug -f ' + sample_dir + 'build.xml')
-          local_apk = sample_dir + 'bin/CppEmptyTest-debug.apk'
-          remote_apk = 'apks/cpp_empty_test/cpp_empty_test_' + str(pr_num) + '.apk'
-          os.system('tools/jenkins-scripts/upload_apk.sh ' + local_apk + ' ' + remote_apk)
+          sample_dir = 'tests/cpp-tests/proj.android/'
+          local_apk = sample_dir + 'bin/CppTests-debug.apk'
+          backup_apk = os.environ['BACKUP_PATH'] + 'CppTests_' + str(pr_num) + '.apk'
+          os.system('cp ' + local_apk + ' ' + backup_apk)
       elif(node_name == 'win32_win7'):
         ret = subprocess.call('"%VS110COMNTOOLS%..\IDE\devenv.com" "build\cocos2d-win32.vc2012.sln" /Build "Debug|Win32"', shell=True)
       elif(node_name == 'ios_mac'):
