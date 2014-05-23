@@ -2,10 +2,10 @@
 #include <algorithm>
 
 #include "base/CCDirector.h"
-#include "2d/platform/CCFileUtils.h"
+#include "platform/CCFileUtils.h"
 #include "2d/CCScene.h"
-#include "2d/CCTextureCache.h"
 #include "2d/CCSpriteFrameCache.h"
+#include "renderer/CCTextureCache.h"
 
 #include "CCBReader.h"
 #include "CCNodeLoader.h"

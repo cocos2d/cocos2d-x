@@ -229,14 +229,14 @@ public:
 	*
 	* @param the move action position.
 	*/
-	void setPosition(cocos2d::Vector2 pos);
+	void setPosition(cocos2d::Vec2 pos);
 
 	/**
 	* Gets the move action position.
 	*
 	* @return the move action position.
 	*/
-	cocos2d::Vector2 getPosition();
+	cocos2d::Vec2 getPosition();
 
 	/**
 	* Gets the ActionInterval of ActionFrame.
@@ -247,7 +247,7 @@ public:
 	*/
 	virtual cocos2d::ActionInterval* getAction(float duration);
 protected:
-    cocos2d::Vector2 _position;
+    cocos2d::Vec2 _position;
 };
 
 /**

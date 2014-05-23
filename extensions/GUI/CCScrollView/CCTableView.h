@@ -273,10 +273,10 @@ public:
     virtual void onTouchCancelled(Touch *pTouch, Event *pEvent) override;
 
 protected:
-    long __indexFromOffset(Vector2 offset);
-    long _indexFromOffset(Vector2 offset);
-    Vector2 __offsetFromIndex(ssize_t index);
-    Vector2 _offsetFromIndex(ssize_t index);
+    long __indexFromOffset(Vec2 offset);
+    long _indexFromOffset(Vec2 offset);
+    Vec2 __offsetFromIndex(ssize_t index);
+    Vec2 _offsetFromIndex(ssize_t index);
 
     void _moveCellOutOfSight(TableViewCell *cell);
     void _setIndexForCell(ssize_t index, TableViewCell *cell);

@@ -36,6 +36,8 @@ def check_current_3rd_libs(branch):
     config_file_paths = ['external/config.json','templates/lua-template-runtime/runtime/config.json']
     if (branch == 'v2'):
         config_file_paths = ['external/config.json']
+        backup_files = range(1)
+        current_files = range(1)
     for i, config_file_path in enumerate(config_file_paths):
         if not os.path.isfile(config_file_path):
             raise Exception("Could not find 'external/config.json'")
@@ -115,7 +117,7 @@ def main():
     print "Before checkout: git clean -xdf -f"    
     os.system("git clean -xdf -f")
     #fetch pull request to local repo
-    git_fetch_pr = "git fetch origin pull/" + str(pr_num) + "/merge"
+    git_fetch_pr = "git fetch origin pull/" + str(pr_num) + "/head"
     ret = os.system(git_fetch_pr)
     if(ret != 0):
         return(2)
@@ -192,7 +194,7 @@ def main():
         # create and save apk
         if(ret == 0):
           sample_dir = 'tests/cpp-empty-test/proj.android/'
-          os.system('android update project -p cocos/2d/platform/android/java/ -t android-13')
+          os.system('android update project -p cocos/platform/android/java/ -t android-13')
           os.system('android update project -p ' + sample_dir + ' -t android-13')
           os.system('ant debug -f ' + sample_dir + 'build.xml')
           local_apk = sample_dir + 'bin/CppEmptyTest-debug.apk'

@@ -25,17 +25,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCLabelAtlas.h"
-#include "2d/CCTextureAtlas.h"
-#include "2d/CCTextureCache.h"
+#include "renderer/CCTextureAtlas.h"
 #include "2d/CCDrawingPrimitives.h"
+#include "platform/CCFileUtils.h"
 #include "base/ccConfig.h"
+#include "base/CCDirector.h"
+#include "renderer/CCTextureCache.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/ccGLStateCache.h"
-#include "base/CCDirector.h"
 #include "math/TransformUtils.h"
-#include "2d/platform/CCFileUtils.h"
-// external
+
 #include "deprecated/CCString.h"
 
 #if CC_LABELATLAS_DEBUG_DRAW
@@ -249,7 +249,7 @@ void LabelAtlas::updateColor()
 
 //CCLabelAtlas - draw
 #if CC_LABELATLAS_DEBUG_DRAW
-void LabelAtlas::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void LabelAtlas::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     AtlasNode::draw(renderer, transform, transformUpdated);
 
@@ -258,7 +258,7 @@ void LabelAtlas::draw(Renderer *renderer, const Matrix &transform, bool transfor
     renderer->addCommand(&_customDebugDrawCommand);
 }
 
-void LabelAtlas::drawDebugData(const Matrix& transform, bool transformUpdated)
+void LabelAtlas::drawDebugData(const Mat4& transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
@@ -266,12 +266,12 @@ void LabelAtlas::drawDebugData(const Matrix& transform, bool transformUpdated)
 
     auto size = getContentSize();
 
-    Vector2 vertices[4]=
+    Vec2 vertices[4]=
     {
-        Vector2::ZERO,
-        Vector2(size.width, 0),
-        Vector2(size.width, size.height),
-        Vector2(0, size.height)
+        Vec2::ZERO,
+        Vec2(size.width, 0),
+        Vec2(size.width, size.height),
+        Vec2(0, size.height)
     };
 
     DrawPrimitives::drawPoly(vertices, 4, true);

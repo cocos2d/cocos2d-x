@@ -58,7 +58,7 @@
 -- @function [parent=#Director] loadMatrix 
 -- @param self
 -- @param #cc.MATRIX_STACK_TYPE matrix_stack_type
--- @param #matrix_table matrix
+-- @param #cc.Mat4 mat4
         
 --------------------------------
 -- @function [parent=#Director] getNotificationNode 
@@ -83,7 +83,7 @@
 --------------------------------
 -- @function [parent=#Director] getVisibleOrigin 
 -- @param self
--- @return vector2_table#vector2_table ret (return value: vector2_table)
+-- @return Vec2#Vec2 ret (return value: cc.Vec2)
         
 --------------------------------
 -- @function [parent=#Director] mainLoop 
@@ -107,8 +107,8 @@
 --------------------------------
 -- @function [parent=#Director] convertToUI 
 -- @param self
--- @param #vector2_table array
--- @return vector2_table#vector2_table ret (return value: vector2_table)
+-- @param #cc.Vec2 vec2
+-- @return Vec2#Vec2 ret (return value: cc.Vec2)
         
 --------------------------------
 -- @function [parent=#Director] setDefaultValues 
@@ -177,8 +177,8 @@
 --------------------------------
 -- @function [parent=#Director] convertToGL 
 -- @param self
--- @param #vector2_table array
--- @return vector2_table#vector2_table ret (return value: vector2_table)
+-- @param #cc.Vec2 vec2
+-- @return Vec2#Vec2 ret (return value: cc.Vec2)
         
 --------------------------------
 -- @function [parent=#Director] purgeCachedData 
@@ -212,7 +212,7 @@
 -- @function [parent=#Director] getMatrix 
 -- @param self
 -- @param #cc.MATRIX_STACK_TYPE matrix_stack_type
--- @return matrix_table#matrix_table ret (return value: matrix_table)
+-- @return Mat4#Mat4 ret (return value: cc.Mat4)
         
 --------------------------------
 -- @function [parent=#Director] popScene 
@@ -286,7 +286,7 @@
 -- @function [parent=#Director] multiplyMatrix 
 -- @param self
 -- @param #cc.MATRIX_STACK_TYPE matrix_stack_type
--- @param #matrix_table matrix
+-- @param #cc.Mat4 mat4
         
 --------------------------------
 -- @function [parent=#Director] getActionManager 

@@ -26,18 +26,20 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "base/CCDirector.h"
 #include "renderer/CCGLProgram.h"
-#include "renderer/ccGLStateCache.h"
-#include "base/ccMacros.h"
-#include "2d/platform/CCFileUtils.h"
-#include "2d/uthash.h"
-#include "deprecated/CCString.h"
-#include "CCGL.h"
 
 #ifndef WIN32
 #include <alloca.h>
 #endif
+
+#include "base/CCDirector.h"
+#include "base/ccMacros.h"
+#include "base/uthash.h"
+#include "renderer/ccGLStateCache.h"
+#include "platform/CCFileUtils.h"
+#include "CCGL.h"
+
+#include "deprecated/CCString.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 #include "CCPrecompiledShaders.h"
@@ -68,6 +70,9 @@ const char* GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL = "ShaderLabelDFNo
 const char* GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_GLOW = "ShaderLabelDFGlow";
 const char* GLProgram::SHADER_NAME_LABEL_NORMAL = "ShaderLabelNormal";
 const char* GLProgram::SHADER_NAME_LABEL_OUTLINE = "ShaderLabelOutline";
+
+const char* GLProgram::SHADER_3D_POSITION = "Shader3DPosition";
+const char* GLProgram::SHADER_3D_POSITION_TEXTURE = "Shader3DPositionTexture";
 
 
 // uniform names
@@ -398,6 +403,10 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
         "uniform vec4 CC_SinTime;\n"
         "uniform vec4 CC_CosTime;\n"
         "uniform vec4 CC_Random01;\n"
+        "uniform sampler2D CC_Texture0;\n"
+        "uniform sampler2D CC_Texture1;\n"
+        "uniform sampler2D CC_Texture2;\n"
+        "uniform sampler2D CC_Texture3;\n"
         "//CC INCLUDES END\n\n",
         source,
     };
@@ -495,6 +504,10 @@ bool GLProgram::link()
     if(!_hasShaderCompiler)
     {
         // precompiled shader program is already linked
+
+        //bindPredefinedVertexAttribs();
+        parseVertexAttribs();
+        parseUniforms();
         return true;
     }
 #endif
@@ -808,15 +821,15 @@ void GLProgram::setUniformsForBuiltins()
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     
-    Matrix matrixMV;
+    Mat4 matrixMV;
     matrixMV = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
     setUniformsForBuiltins(matrixMV);
 }
 
-void GLProgram::setUniformsForBuiltins(const Matrix &matrixMV)
+void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
 {
-    Matrix matrixP = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    Mat4 matrixP = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
     if(_flags.usesP)
         setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_P_MATRIX], matrixP.m, 1);
@@ -825,7 +838,7 @@ void GLProgram::setUniformsForBuiltins(const Matrix &matrixMV)
         setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_MV_MATRIX], matrixMV.m, 1);
 
     if(_flags.usesMVP) {
-        Matrix matrixMVP = matrixP * matrixMV;
+        Mat4 matrixMVP = matrixP * matrixMV;
         setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_MVP_MATRIX], matrixMVP.m, 1);
     }
 

@@ -29,12 +29,12 @@
 -- @return TextVAlignment#TextVAlignment ret (return value: cc.TextVAlignment)
         
 --------------------------------
--- @function [parent=#Text] getStringValue 
+-- @function [parent=#Text] getString 
 -- @param self
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- @function [parent=#Text] setText 
+-- @function [parent=#Text] setString 
 -- @param self
 -- @param #string str
         

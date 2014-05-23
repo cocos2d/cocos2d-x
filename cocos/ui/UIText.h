@@ -32,9 +32,10 @@ NS_CC_BEGIN
 namespace ui {
 
 /**
-*   @js NA
-*   @lua NA
-*/
+ *  For creating a system font or a TTF font Text
+ *@js 
+ *@lua NA
+ */
 class Text : public Widget
 {
     
@@ -76,26 +77,30 @@ public:
      *
      * @param text  string value.
      */
-    void setText(const std::string& text);
+    CC_DEPRECATED_ATTRIBUTE void setText(const std::string& text){this->setString(text);}
+    void setString(const std::string& text);
 
     /**
      * Gets the string value of label.
      *
-     * @return text  string value.
+     * @return string value.
      */
-    const std::string& getStringValue();
+    CC_DEPRECATED_ATTRIBUTE const std::string& getStringValue(){ return this->getString();}
+    const std::string& getString()const;
 
     /**
-     * Gets the string length of label.
+     * Gets the string length of the label.
+     * Note: This length will be larger than the raw string length,
+     * if you want to get the raw string length, you should call this->getString().size() instead
      *
      * @return  string length.
      */
-    ssize_t getStringLength();
+    ssize_t getStringLength()const;
 
     /**
      * Sets the font size of label.
      *
-     * @param  font size.
+     * @param size font size.
      */
     void setFontSize(int size);
 
@@ -108,7 +113,7 @@ public:
      * Usage:  Text *text = Text::create("Hello", "Arial", 20);  //create a system font UIText
      *         text->setFontName("Marfelt");  // it will change the font  to  system font no matter the previous font type is TTF or system font
      *         text->setFontName("xxxx/xxx.ttf"); //it will change the font  to TTF font no matter the previous font type is TTF or system font
-     * @param  font name.
+     * @param name font name.
      */
     void setFontName(const std::string& name);
 
@@ -119,7 +124,7 @@ public:
     /**
      * Sets the touch scale enabled of label.
      *
-     * @param  touch scale enabled of label.
+     * @param enabled touch scale enabled of label.
      */
     void setTouchScaleChangeEnabled(bool enabled);
 

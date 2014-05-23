@@ -23,8 +23,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCFont.h"
-#include "ccUTF8.h"
+#include "2d/CCFont.h"
+#include "base/ccUTF8.h"
 
 NS_CC_BEGIN
 

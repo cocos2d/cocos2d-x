@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "base/CCRef.h"
 #include "base/CCAutoreleasePool.h"
 #include "base/ccMacros.h"
-#include "2d/CCScriptSupport.h"
+#include "base/CCScriptSupport.h"
 
 #if CC_USE_MEM_LEAK_DETECTION
 #include <algorithm>    // std::find

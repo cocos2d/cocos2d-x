@@ -62,7 +62,7 @@ TextAtlas* TextAtlas::create()
 
 void TextAtlas::initRenderer()
 {
-    _labelAtlasRenderer = LabelAtlas::create();
+    _labelAtlasRenderer = Label::create();
     _labelAtlasRenderer->setAnchorPoint(Point::ANCHOR_MIDDLE);
     addProtectedChild(_labelAtlasRenderer, LABELATLAS_RENDERER_Z, -1);
 }
@@ -91,24 +91,32 @@ void TextAtlas::setProperty(const std::string& stringValue, const std::string& c
     _itemWidth = itemWidth;
     _itemHeight = itemHeight;
     _startCharMap = startCharMap;
-    _labelAtlasRenderer->initWithString(stringValue, charMapFile, itemWidth, itemHeight, (int)(startCharMap[0]));
+    
+    _labelAtlasRenderer->setCharMap(_charMapFileName, _itemWidth, _itemHeight, (int)(_startCharMap[0]));
+    _labelAtlasRenderer->setString(stringValue);
+    
     updateContentSizeWithTextureSize(_labelAtlasRenderer->getContentSize());
     _labelAtlasRendererAdaptDirty = true;
-    CCLOG("cs w %f, h %f", _contentSize.width, _contentSize.height);
+//    CCLOG("cs w %f, h %f", _contentSize.width, _contentSize.height);
 }
 
-void TextAtlas::setStringValue(const std::string& value)
+void TextAtlas::setString(const std::string& value)
 {
     _stringValue = value;
     _labelAtlasRenderer->setString(value);
     updateContentSizeWithTextureSize(_labelAtlasRenderer->getContentSize());
     _labelAtlasRendererAdaptDirty = true;
-    CCLOG("cssss w %f, h %f", _contentSize.width, _contentSize.height);
+//    CCLOG("cssss w %f, h %f", _contentSize.width, _contentSize.height);
 }
 
-const std::string& TextAtlas::getStringValue() const
+const std::string& TextAtlas::getString() const
 {
     return _labelAtlasRenderer->getString();
+}
+    
+ssize_t TextAtlas::getStringLength()const
+{
+    return _labelAtlasRenderer->getStringLength();
 }
 
 void TextAtlas::onSizeChanged()

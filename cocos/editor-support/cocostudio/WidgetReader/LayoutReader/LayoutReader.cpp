@@ -72,7 +72,7 @@ namespace cocostudio
         
         float bgcv1 = DICTOOL->getFloatValue_json(options, "vectorX");
         float bgcv2 = DICTOOL->getFloatValue_json(options, "vectorY");
-        panel->setBackGroundColorVector(Vector2(bgcv1, bgcv2));
+        panel->setBackGroundColorVector(Vec2(bgcv1, bgcv2));
         
         int co = DICTOOL->getIntValue_json(options, "bgColorOpacity");
         

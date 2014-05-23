@@ -24,27 +24,27 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "base/CCConfiguration.h"
 #include "2d/CCRenderTexture.h"
+
+#include "base/ccUtils.h"
+#include "platform/CCImage.h"
+#include "platform/CCFileUtils.h"
+#include "2d/CCGrid.h"
+#include "base/CCEventType.h"
+#include "base/CCConfiguration.h"
+#include "base/CCConfiguration.h"
 #include "base/CCDirector.h"
-#include "2d/platform/CCImage.h"
+#include "base/CCEventListenerCustom.h"
+#include "base/CCEventDispatcher.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/ccGLStateCache.h"
-#include "base/CCConfiguration.h"
-#include "2d/ccUtils.h"
-#include "2d/CCTextureCache.h"
-#include "2d/platform/CCFileUtils.h"
-#include "CCGL.h"
-#include "base/CCEventType.h"
-#include "2d/CCGrid.h"
-
+#include "renderer/CCTextureCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCCustomCommand.h"
 
-// extern
-#include "base/CCEventListenerCustom.h"
-#include "base/CCEventDispatcher.h"
+#include "CCGL.h"
+
 
 NS_CC_BEGIN
 
@@ -306,7 +306,7 @@ void RenderTexture::setKeepMatrix(bool keepMatrix)
     _keepMatrix = keepMatrix;
 }
 
-void RenderTexture::setVirtualViewport(const Vector2& rtBegin, const Rect& fullRect, const Rect& fullViewport)
+void RenderTexture::setVirtualViewport(const Vec2& rtBegin, const Rect& fullRect, const Rect& fullViewport)
 {
     _rtTextureRect.origin.x = rtBegin.x;
     _rtTextureRect.origin.y = rtBegin.y;
@@ -383,7 +383,7 @@ void RenderTexture::clearStencil(int stencilValue)
     glClearStencil(stencilClearValue);
 }
 
-void RenderTexture::visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
+void RenderTexture::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
 {
     // override visit.
 	// Don't call visit on its children
@@ -401,7 +401,7 @@ void RenderTexture::visit(Renderer *renderer, const Matrix &parentTransform, boo
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
 
     // IMPORTANT:
-    // To ease the migration to v3.0, we still support the Matrix stack,
+    // To ease the migration to v3.0, we still support the Mat4 stack,
     // but it is deprecated and your code should not rely on it
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
@@ -535,7 +535,7 @@ void RenderTexture::onBegin()
         director->setProjection(director->getProjection());
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-        Matrix modifiedProjection = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        Mat4 modifiedProjection = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
         modifiedProjection = CCEGLView::sharedOpenGLView()->getReverseOrientationMatrix() * modifiedProjection;
         director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION,modifiedProjection);
 #endif
@@ -547,8 +547,8 @@ void RenderTexture::onBegin()
         float widthRatio = size.width / texSize.width;
         float heightRatio = size.height / texSize.height;
         
-        Matrix orthoMatrix;
-        Matrix::createOrthographicOffCenter((float)-1.0 / widthRatio, (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1, 1, &orthoMatrix);
+        Mat4 orthoMatrix;
+        Mat4::createOrthographicOffCenter((float)-1.0 / widthRatio, (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1, 1, &orthoMatrix);
         director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
     }
     
@@ -654,7 +654,7 @@ void RenderTexture::onClearDepth()
     glClearDepth(depthClearValue);
 }
 
-void RenderTexture::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void RenderTexture::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     if (_autoDraw)
     {
@@ -703,8 +703,8 @@ void RenderTexture::begin()
         float widthRatio = size.width / texSize.width;
         float heightRatio = size.height / texSize.height;
         
-        Matrix orthoMatrix;
-        Matrix::createOrthographicOffCenter((float)-1.0 / widthRatio, (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1, 1, &orthoMatrix);
+        Mat4 orthoMatrix;
+        Mat4::createOrthographicOffCenter((float)-1.0 / widthRatio, (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1, 1, &orthoMatrix);
         director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
     }
 

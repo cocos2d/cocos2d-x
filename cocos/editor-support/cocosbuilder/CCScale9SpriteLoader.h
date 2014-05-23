@@ -31,7 +31,7 @@ protected:
     virtual cocos2d::extension::Scale9Sprite * createNode(cocos2d::Node * pParent, cocosbuilder::CCBReader * ccbReader) {
         cocos2d::extension::Scale9Sprite* pNode = cocos2d::extension::Scale9Sprite::create();
         
-        pNode->setAnchorPoint(cocos2d::Vector2::ZERO);
+        pNode->setAnchorPoint(cocos2d::Vec2::ZERO);
         
         return pNode;
     };

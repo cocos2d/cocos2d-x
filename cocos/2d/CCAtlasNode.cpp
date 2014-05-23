@@ -26,10 +26,10 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCAtlasNode.h"
-#include "2d/CCTextureAtlas.h"
-#include "2d/CCTextureCache.h"
+#include "renderer/CCTextureAtlas.h"
 #include "base/CCDirector.h"
 #include "base/CCDirector.h"
+#include "renderer/CCTextureCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramState.h"
@@ -133,7 +133,7 @@ void AtlasNode::updateAtlasValues()
 }
 
 // AtlasNode - draw
-void AtlasNode::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void AtlasNode::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
 {
     _quadCommand.init(
               _globalZOrder,

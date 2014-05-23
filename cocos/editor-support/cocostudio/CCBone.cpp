@@ -72,7 +72,7 @@ Bone::Bone()
     _displayManager = nullptr;
     _ignoreMovementBoneData = false;
 //    _worldTransform = AffineTransformMake(1, 0, 0, 1, 0, 0);
-    _worldTransform = Matrix::IDENTITY;
+    _worldTransform = Mat4::IDENTITY;
     _boneTransformDirty = true;
     _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
     _blendDirty = false;
@@ -380,12 +380,12 @@ void Bone::setLocalZOrder(int zOrder)
         Node::setLocalZOrder(zOrder);
 }
 
-Matrix Bone::getNodeToArmatureTransform() const
+Mat4 Bone::getNodeToArmatureTransform() const
 {
     return _worldTransform;
 }
 
-Matrix Bone::getNodeToWorldTransform() const
+Mat4 Bone::getNodeToWorldTransform() const
 {
     return TransformConcat(_worldTransform, _armature->getNodeToWorldTransform());
 }

@@ -5,7 +5,6 @@ precision lowp float;
 #endif
 
 varying vec2 v_texCoord;
-uniform sampler2D CC_Texture0;
 
 vec4 getColorByCoord(int y){
     if(y < 5){

@@ -73,9 +73,9 @@ void TransitionProgress::onEnter()
 
     // create the second render texture for outScene
     RenderTexture *texture = RenderTexture::create((int)size.width, (int)size.height);
-    texture->getSprite()->setAnchorPoint(Vector2(0.5f,0.5f));
-    texture->setPosition(Vector2(size.width/2, size.height/2));
-    texture->setAnchorPoint(Vector2(0.5f,0.5f));
+    texture->getSprite()->setAnchorPoint(Vec2(0.5f,0.5f));
+    texture->setPosition(Vec2(size.width/2, size.height/2));
+    texture->setAnchorPoint(Vec2(0.5f,0.5f));
 
     // render outScene to its texturebuffer
     texture->beginWithClear(0, 0, 0, 1);
@@ -145,8 +145,8 @@ ProgressTimer* TransitionProgressRadialCCW::progressTimerNodeWithRenderTexture(R
     //    Return the radial type that we want to use
     node->setReverseDirection(false);
     node->setPercentage(100);
-    node->setPosition(Vector2(size.width/2, size.height/2));
-    node->setAnchorPoint(Vector2(0.5f,0.5f));
+    node->setPosition(Vec2(size.width/2, size.height/2));
+    node->setAnchorPoint(Vec2(0.5f,0.5f));
     
     return node;
 }
@@ -189,8 +189,8 @@ ProgressTimer* TransitionProgressRadialCW::progressTimerNodeWithRenderTexture(Re
     //    Return the radial type that we want to use
     node->setReverseDirection(true);
     node->setPercentage(100);
-    node->setPosition(Vector2(size.width/2, size.height/2));
-    node->setAnchorPoint(Vector2(0.5f,0.5f));
+    node->setPosition(Vec2(size.width/2, size.height/2));
+    node->setAnchorPoint(Vec2(0.5f,0.5f));
     
     return node;
 }
@@ -218,12 +218,12 @@ ProgressTimer* TransitionProgressHorizontal::progressTimerNodeWithRenderTexture(
     node->getSprite()->setFlippedY(true);
     node->setType( ProgressTimer::Type::BAR);
     
-    node->setMidpoint(Vector2(1, 0));
-    node->setBarChangeRate(Vector2(1,0));
+    node->setMidpoint(Vec2(1, 0));
+    node->setBarChangeRate(Vec2(1,0));
     
     node->setPercentage(100);
-    node->setPosition(Vector2(size.width/2, size.height/2));
-    node->setAnchorPoint(Vector2(0.5f,0.5f));
+    node->setPosition(Vec2(size.width/2, size.height/2));
+    node->setAnchorPoint(Vec2(0.5f,0.5f));
 
     return node;
 }
@@ -251,12 +251,12 @@ ProgressTimer* TransitionProgressVertical::progressTimerNodeWithRenderTexture(Re
     node->getSprite()->setFlippedY(true);
     node->setType(ProgressTimer::Type::BAR);
     
-    node->setMidpoint(Vector2(0, 0));
-    node->setBarChangeRate(Vector2(0,1));
+    node->setMidpoint(Vec2(0, 0));
+    node->setBarChangeRate(Vec2(0,1));
     
     node->setPercentage(100);
-    node->setPosition(Vector2(size.width/2, size.height/2));
-    node->setAnchorPoint(Vector2(0.5f,0.5f));
+    node->setPosition(Vec2(size.width/2, size.height/2));
+    node->setAnchorPoint(Vec2(0.5f,0.5f));
     
     return node;
 }
@@ -297,12 +297,12 @@ ProgressTimer* TransitionProgressInOut::progressTimerNodeWithRenderTexture(Rende
     node->getSprite()->setFlippedY(true);
     node->setType( ProgressTimer::Type::BAR);
     
-    node->setMidpoint(Vector2(0.5f, 0.5f));
-    node->setBarChangeRate(Vector2(1, 1));
+    node->setMidpoint(Vec2(0.5f, 0.5f));
+    node->setBarChangeRate(Vec2(1, 1));
     
     node->setPercentage(0);
-    node->setPosition(Vector2(size.width/2, size.height/2));
-    node->setAnchorPoint(Vector2(0.5f,0.5f));
+    node->setPosition(Vec2(size.width/2, size.height/2));
+    node->setAnchorPoint(Vec2(0.5f,0.5f));
     
     return node;
 }
@@ -331,12 +331,12 @@ ProgressTimer* TransitionProgressOutIn::progressTimerNodeWithRenderTexture(Rende
     node->getSprite()->setFlippedY(true);
     node->setType( ProgressTimer::Type::BAR );
     
-    node->setMidpoint(Vector2(0.5f, 0.5f));
-    node->setBarChangeRate(Vector2(1, 1));
+    node->setMidpoint(Vec2(0.5f, 0.5f));
+    node->setBarChangeRate(Vec2(1, 1));
     
     node->setPercentage(100);
-    node->setPosition(Vector2(size.width/2, size.height/2));
-    node->setAnchorPoint(Vector2(0.5f,0.5f));
+    node->setPosition(Vec2(size.width/2, size.height/2));
+    node->setAnchorPoint(Vec2(0.5f,0.5f));
     
     return node;
 }

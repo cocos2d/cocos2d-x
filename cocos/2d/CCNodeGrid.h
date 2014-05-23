@@ -54,7 +54,7 @@ public:
     void setTarget(Node *target);
 
     // overrides
-    virtual void visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated) override;
+    virtual void visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated) override;
 
 protected:
     NodeGrid();

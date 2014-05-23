@@ -30,12 +30,12 @@ void Ball::move(float delta)
     
     if (getPosition().x > VisibleRect::right().x - radius()) 
     {
-        setPosition( Vector2( VisibleRect::right().x - radius(), getPosition().y) );
+        setPosition( Vec2( VisibleRect::right().x - radius(), getPosition().y) );
         _velocity.x *= -1;
     } 
     else if (getPosition().x < VisibleRect::left().x + radius()) 
     {
-        setPosition( Vector2(VisibleRect::left().x + radius(), getPosition().y) );
+        setPosition( Vec2(VisibleRect::left().x + radius(), getPosition().y) );
         _velocity.x *= -1;
     }
 }
@@ -60,13 +60,13 @@ void Ball::collideWithPaddle(Paddle* paddle)
         
         if (getPosition().y > midY && getPosition().y <= highY + radius()) 
         {
-            setPosition( Vector2(getPosition().x, highY + radius()) );
+            setPosition( Vec2(getPosition().x, highY + radius()) );
             hit = true;
             angleOffset = (float)M_PI / 2;
         }
         else if (getPosition().y < midY && getPosition().y >= lowY - radius()) 
         {
-            setPosition( Vector2(getPosition().x, lowY - radius()) );
+            setPosition( Vec2(getPosition().x, lowY - radius()) );
             hit = true;
             angleOffset = -(float)M_PI / 2;
         }
@@ -78,7 +78,7 @@ void Ball::collideWithPaddle(Paddle* paddle)
             float scalarVelocity = _velocity.getLength() * 1.05f;
             float velocityAngle = -_velocity.getAngle() + 0.5f * hitAngle;
             
-            _velocity = Vector2::forAngle(velocityAngle) * scalarVelocity;
+            _velocity = Vec2::forAngle(velocityAngle) * scalarVelocity;
         }
     }    
 } 

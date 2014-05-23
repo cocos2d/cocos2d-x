@@ -69,8 +69,8 @@ FontAtlas * FontAtlasCache::getFontAtlasTTF(const TTFConfig & config)
 
     if ( it == _atlasMap.end() )
     {
-        auto font = FontFreeType::create(config.fontFilePath, fontSize * contentScaleFactor, config.glyphs, 
-            config.customGlyphs,useDistanceField,config.outlineSize * contentScaleFactor);
+        auto font = FontFreeType::create(config.fontFilePath, fontSize, config.glyphs, 
+            config.customGlyphs, useDistanceField, config.outlineSize);
         if (font)
         {
             auto tempAtlas = font->createFontAtlas();
@@ -90,7 +90,7 @@ FontAtlas * FontAtlasCache::getFontAtlasTTF(const TTFConfig & config)
     return nullptr;
 }
 
-FontAtlas * FontAtlasCache::getFontAtlasFNT(const std::string& fontFileName, const Vector2& imageOffset /* = Vector2::ZERO */)
+FontAtlas * FontAtlasCache::getFontAtlasFNT(const std::string& fontFileName, const Vec2& imageOffset /* = Vec2::ZERO */)
 {
     std::string atlasName = generateFontName(fontFileName, 0, GlyphCollection::CUSTOM,false);
     auto it = _atlasMap.find(atlasName);

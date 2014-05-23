@@ -25,7 +25,7 @@
 
 #include "2d/CCFontAtlas.h"
 #include "2d/CCFontFreeType.h"
-#include "ccUTF8.h"
+#include "base/ccUTF8.h"
 #include "base/CCDirector.h"
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
@@ -33,8 +33,8 @@
 
 NS_CC_BEGIN
 
-const int FontAtlas::CacheTextureWidth = 1024;
-const int FontAtlas::CacheTextureHeight = 1024;
+const int FontAtlas::CacheTextureWidth = 512;
+const int FontAtlas::CacheTextureHeight = 512;
 const char* FontAtlas::EVENT_PURGE_TEXTURES = "__cc_FontAtlasPurgeTextures";
 
 FontAtlas::FontAtlas(Font &theFont) 

@@ -78,12 +78,12 @@ public:
     /** returns a tile from position x,y.
     For the moment only channel R is used
     */
-    Color3B getTileAt(const Vector2& position) const;
-    CC_DEPRECATED_ATTRIBUTE Color3B tileAt(const Vector2& position) const { return getTileAt(position); };
+    Color3B getTileAt(const Vec2& position) const;
+    CC_DEPRECATED_ATTRIBUTE Color3B tileAt(const Vec2& position) const { return getTileAt(position); };
     /** sets a tile at position x,y.
     For the moment only channel R is used
     */
-    void setTile(const Color3B& tile, const Vector2& position);
+    void setTile(const Color3B& tile, const Vec2& position);
     /** dealloc the map from memory */
     void releaseMap();
     
@@ -93,7 +93,7 @@ public:
 protected:
     void loadTGAfile(const std::string& file);
     void calculateItemsToRender();
-    void updateAtlasValueAt(const Vector2& pos, const Color3B& value, int index);
+    void updateAtlasValueAt(const Vec2& pos, const Color3B& value, int index);
     void updateAtlasValues();
 
 

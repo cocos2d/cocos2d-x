@@ -221,7 +221,7 @@ ActionInterval* ActionFrame::getEasingAction(ActionInterval* action)
 //////////////////////////////////////////////////////////////////////////
 
 ActionMoveFrame::ActionMoveFrame()
-	: _position(Vector2(0.0f,0.0f))
+	: _position(Vec2(0.0f,0.0f))
 {
 	_frameType = (int)kKeyframeMove;
 }
@@ -229,11 +229,11 @@ ActionMoveFrame::~ActionMoveFrame()
 {
 
 }
-void ActionMoveFrame::setPosition(Vector2 pos)
+void ActionMoveFrame::setPosition(Vec2 pos)
 {
 	_position = pos;
 }
-Vector2 ActionMoveFrame::getPosition()
+Vec2 ActionMoveFrame::getPosition()
 {
 	return _position;
 }

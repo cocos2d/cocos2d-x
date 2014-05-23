@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "renderer/CCGLProgramStateCache.h"
+
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCGLProgram.h"
 
