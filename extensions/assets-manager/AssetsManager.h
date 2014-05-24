@@ -36,11 +36,6 @@
 #include <unordered_map>
 #include <vector>
 
-namespace cocos2d
-{
-    class EventListenerAssetsManager;
-}
-
 NS_CC_EXT_BEGIN
 
 /**
