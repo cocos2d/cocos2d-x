@@ -39,8 +39,6 @@
 
 #include "unzip.h"
 
-using namespace cocos2d;
-
 NS_CC_EXT_BEGIN;
 
 #define VERSION_FILENAME        "version.manifest"
