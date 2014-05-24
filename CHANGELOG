@@ -1,4 +1,4 @@
-cocos2d-x-3.1  ???
+cocos2d-x-3.1  May.24 2014
     [FIX]           Label: may crash when using outline effect
     [FIX]           Label: using outline and invoking 'Director::setContentScaleFactor' cause label show nothing
     [FIX]           ProgressTo: will start from 0 when it reaches 100 
