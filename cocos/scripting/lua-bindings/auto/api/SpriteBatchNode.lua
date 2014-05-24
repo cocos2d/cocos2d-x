@@ -127,6 +127,13 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
+-- @function [parent=#SpriteBatchNode] visit 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #cc.Mat4 mat4
+-- @param #bool bool
+        
+--------------------------------
 -- @function [parent=#SpriteBatchNode] sortAllChildren 
 -- @param self
         

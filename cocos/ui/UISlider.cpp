@@ -627,6 +627,9 @@ void Slider::copySpecialProperties(Widget *widget)
         loadSlidBallTexturePressed(slider->_slidBallPressedTextureFile, slider->_ballPTexType);
         loadSlidBallTextureDisabled(slider->_slidBallDisabledTextureFile, slider->_ballDTexType);
         setPercent(slider->getPercent());
+        _sliderEventListener = slider->_sliderEventListener;
+        _sliderEventSelector = slider->_sliderEventSelector;
+        _eventCallback = slider->_eventCallback;
     }
 }
 

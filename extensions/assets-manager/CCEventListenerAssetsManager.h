@@ -51,7 +51,7 @@ class AssetsManager;
 class EventListenerAssetsManager : public cocos2d::EventListenerCustom
 {
 public:
-    static const std::string LISTENER_ID;
+    friend class AssetsManager;
     
     /** Creates an event listener with type and callback.
      *  @param eventType The type of the event.
@@ -71,6 +71,8 @@ CC_CONSTRUCTOR_ACCESS:
     bool init(const AssetsManager *assetsManager, const std::function<void(EventAssetsManager*)>& callback);
     
 protected:
+    static const std::string LISTENER_ID;
+    
     std::function<void(EventAssetsManager*)> _onAssetsManagerEvent;
     
     const AssetsManager *_assetsManager;

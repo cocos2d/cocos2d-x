@@ -308,23 +308,26 @@ void createSimulator(const char* viewName, float width, float height, bool isLan
         return;
     }
 
-    if((isLandscape && height > width) ||  (!isLandscape && width > height))
+    g_landscape = isLandscape;
+    if(height > width)
     {
         float tmpvalue =width;
         width = height;
         height = tmpvalue;
     }
-    
+    g_screenSize.width = width;
+    g_screenSize.height = height;
+
+    if(!g_landscape)
+    {
+        float tmpvalue =width;
+        width = height;
+        height = tmpvalue;
+    }
+
     g_eglView = GLView::createWithRect(viewName,Rect(0,0,width,height),frameZoomFactor);
     auto director = Director::getInstance();
     director->setOpenGLView(g_eglView);
-    g_landscape = false;
-    g_screenSize.width = width;
-    g_screenSize.height = height;
-    if (width  > height)
-    {
-        g_landscape = true;
-    }
 
     HWND hWnd=glfwGetWin32Window(g_eglView->getWindow());
     HMENU hMenu = LoadMenu(GetModuleHandle(NULL), MAKEINTRESOURCE(IDR_MENU_COCOS));
