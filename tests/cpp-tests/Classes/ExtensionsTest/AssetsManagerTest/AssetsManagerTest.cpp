@@ -8,7 +8,7 @@ const char* sceneManifests[] = {"Manifests/AMTestScene1/project.manifest", "Mani
 const char* storagePaths[] = {"CppTests/AssetsManagerTest/scene1/", "CppTests/AssetsManagerTest/scene2/", "CppTests/AssetsManagerTest/scene3"};
 const char* backgroundPaths[] = {"Images/background1.jpg", "Images/background2.jpg", "Images/background3.png"};
 
-AssetsManagerTestLayer::AssetsManagerTestLayer(std::string spritePath)
+AssetsManagerTestLayer::AssetsManagerTestLayer(const std::string& spritePath)
 : _spritePath(spritePath)
 {
 }
@@ -33,17 +33,22 @@ void AssetsManagerTestLayer::onEnter()
 void AssetsManagerTestLayer::restartCallback(Ref* sender)
 {
 }
+
 void AssetsManagerTestLayer::nextCallback(Ref* sender)
 {
     if (AssetsManagerLoaderScene::currentScene < 2)
     {
         AssetsManagerLoaderScene::currentScene++;
     }
-    else AssetsManagerLoaderScene::currentScene = 0;
+    else
+    {
+        AssetsManagerLoaderScene::currentScene = 0;
+    }
     auto scene = new AssetsManagerLoaderScene();
     scene->runThisTest();
     scene->release();
 }
+
 void AssetsManagerTestLayer::backCallback(Ref* sender)
 {
     if (AssetsManagerLoaderScene::currentScene > 0)
@@ -71,6 +76,7 @@ void AssetsManagerTestScene::runThisTest()
 int AssetsManagerLoaderScene::currentScene = 0;
 AssetsManagerLoaderScene::AssetsManagerLoaderScene()
 : _progress(nullptr)
+, _amListener(nullptr)
 {
 }
 
@@ -102,7 +108,7 @@ void AssetsManagerLoaderScene::runThisTest()
     }
     else
     {
-        cocos2d::extension::EventListenerAssetsManager *listener = cocos2d::extension::EventListenerAssetsManager::create(_am, [currentId, this](EventAssetsManager* event){
+        _amListener = cocos2d::extension::EventListenerAssetsManager::create(_am, [currentId, this](EventAssetsManager* event){
             AssetsManagerTestScene *scene;
             switch (event->getEventCode())
             {
@@ -144,7 +150,7 @@ void AssetsManagerLoaderScene::runThisTest()
                 case EventAssetsManager::EventCode::ALREADY_UP_TO_DATE:
                 case EventAssetsManager::EventCode::UPDATE_FINISHED:
                 {
-                    CCLOG("Update finished.");
+                    CCLOG("Update finished. %d", event->getEventCode());
                     scene = new AssetsManagerTestScene(backgroundPaths[currentId]);
                     Director::getInstance()->replaceScene(scene);
                     scene->release();
@@ -162,7 +168,7 @@ void AssetsManagerLoaderScene::runThisTest()
                     break;
             }
         });
-        Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, 1);
+        Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_amListener, 1);
         
         _am->update();
         
@@ -172,6 +178,7 @@ void AssetsManagerLoaderScene::runThisTest()
 
 void AssetsManagerLoaderScene::onExit()
 {
+    _eventDispatcher->removeEventListener(_amListener);
     _am->release();
     Scene::onExit();
 }
