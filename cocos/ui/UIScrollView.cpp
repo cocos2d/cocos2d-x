@@ -1738,6 +1738,9 @@ void ScrollView::copySpecialProperties(Widget *widget)
         setDirection(scrollView->_direction);
         setBounceEnabled(scrollView->_bounceEnabled);
         setInertiaScrollEnabled(scrollView->_inertiaScrollEnabled);
+        _scrollViewEventListener = scrollView->_scrollViewEventListener;
+        _scrollViewEventSelector = scrollView->_scrollViewEventSelector;
+        _eventCallback = scrollView->_eventCallback;
     }
 }
 
