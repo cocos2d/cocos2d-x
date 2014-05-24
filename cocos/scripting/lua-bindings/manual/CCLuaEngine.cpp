@@ -773,6 +773,13 @@ int LuaEngine::handleEvent(ScriptHandlerMgr::HandlerType type,void* data)
                 return handleTableViewEvent(type, data);
             }
             break;
+        case ScriptHandlerMgr::HandlerType::ASSETSMANAGER_PROGRESS:
+        case ScriptHandlerMgr::HandlerType::ASSETSMANAGER_ERROR:
+        case ScriptHandlerMgr::HandlerType::ASSETSMANAGER_SUCCESS:
+            {
+                return handleAssetsManagerEvent(type, data);
+            }
+            break;
         case ScriptHandlerMgr::HandlerType::STUDIO_EVENT_LISTENER:
             {
                 return handleStudioEventListener(type, data);
@@ -946,6 +953,46 @@ int LuaEngine::handleTableViewEvent(ScriptHandlerMgr::HandlerType handlerType,vo
     }
     
     return ret;
+}
+
+int LuaEngine::handleAssetsManagerEvent(ScriptHandlerMgr::HandlerType type,void* data)
+{
+    if (nullptr == data)
+        return 0;
+    
+    BasicScriptData* eventData = static_cast<BasicScriptData*>(data);
+    if (nullptr == eventData->nativeObject || nullptr == eventData->value)
+        return 0;
+    
+//    LuaAssetsManagerEventData* assetsManagerData = static_cast<LuaAssetsManagerEventData*>(eventData->value);
+//    
+//    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)eventData->nativeObject, type);
+//    
+//    if (0 == handler)
+//        return 0;
+//    
+//    int ret = 0;
+//    switch (type)
+//    {
+//        case ScriptHandlerMgr::HandlerType::ASSETSMANAGER_PROGRESS:
+//        case ScriptHandlerMgr::HandlerType::ASSETSMANAGER_ERROR:
+//            {
+//                _stack->pushInt(assetsManagerData->value);
+//                ret = _stack->executeFunctionByHandler(handler, 1);
+//            }
+//            break;
+//            
+//        case ScriptHandlerMgr::HandlerType::ASSETSMANAGER_SUCCESS:
+//            {
+//                ret = _stack->executeFunctionByHandler(handler, 0);
+//            }
+//            break;
+//            
+//        default:
+//            break;
+//    }
+    
+    return 0;
 }
 
 int LuaEngine::handleStudioEventListener(ScriptHandlerMgr::HandlerType type,void* data)
