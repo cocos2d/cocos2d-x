@@ -559,5 +559,11 @@ cc.EventAssetsManager =
     },
 }
 
+cc.AssetsManagerStatic = 
+{
+    VERSION_ID  = "@version",
+    MANIFEST_ID = "@manifest",
+}
+
 
 
