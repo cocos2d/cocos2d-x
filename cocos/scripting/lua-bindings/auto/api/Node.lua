@@ -316,6 +316,17 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- overload function: visit()
+--          
+-- overload function: visit(cc.Renderer, cc.Mat4, bool)
+--          
+-- @function [parent=#Node] visit
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #cc.Mat4 mat4
+-- @param #bool bool
+
+--------------------------------
 -- @function [parent=#Node] isOpacityModifyRGB 
 -- @param self
 -- @return bool#bool ret (return value: bool)

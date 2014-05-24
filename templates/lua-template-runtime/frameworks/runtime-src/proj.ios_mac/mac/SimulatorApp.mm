@@ -98,16 +98,16 @@ std::string getCurAppPath(void)
         return;
     }
     
+    if(!g_landscape)
+    {
+        float tmpvalue =width;
+        width = height;
+        height = tmpvalue;
+    }
+    
     g_eglView = GLView::createWithRect([viewName cStringUsingEncoding:NSUTF8StringEncoding],cocos2d::Rect(0.0f,0.0f,width,height),frameZoomFactor);
     auto director = Director::getInstance();
     director->setOpenGLView(g_eglView);
-    g_landscape = false;
-    g_screenSize.width = width;
-    g_screenSize.height = height;
-    if (width  > height)
-    {
-        g_landscape = true;
-    }
 
     window = glfwGetCocoaWindow(g_eglView->getWindow());
     [NSApp setDelegate: self];
@@ -124,12 +124,15 @@ void createSimulator(const char* viewName, float width, float height,bool isLand
 {
     if(g_nsAppDelegate)
     {
-        if((isLandscape && height > width) ||  (!isLandscape && width > height))
+        g_landscape = isLandscape;
+        if(height > width)
         {
             float tmpvalue =width;
             width = height;
             height = tmpvalue;
         }
+        g_screenSize.width = width;
+        g_screenSize.height = height;
         
         [g_nsAppDelegate createSimulator:[NSString stringWithUTF8String:viewName] viewWidth:width viewHeight:height factor:frameZoomFactor];
     }
