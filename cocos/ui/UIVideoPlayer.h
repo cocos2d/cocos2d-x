@@ -77,6 +77,9 @@ namespace experimental{
             virtual void draw(Renderer *renderer, const Mat4& transform, bool transformUpdated) override;
 
         protected:
+            virtual cocos2d::ui::Widget* createCloneInstance() override;
+            virtual void copySpecialProperties(Widget* model) override;
+            
             VideoPlayer();
             virtual ~VideoPlayer();
 

@@ -502,6 +502,9 @@ void ListView::copySpecialProperties(Widget *widget)
         setItemModel(listViewEx->_model);
         setItemsMargin(listViewEx->_itemsMargin);
         setGravity(listViewEx->_gravity);
+        _listViewEventListener = listViewEx->_listViewEventListener;
+        _listViewEventSelector = listViewEx->_listViewEventSelector;
+        _eventCallback = listViewEx->_eventCallback;
     }
 }
 

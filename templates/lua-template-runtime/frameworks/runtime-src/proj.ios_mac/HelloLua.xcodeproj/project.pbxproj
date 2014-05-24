@@ -128,6 +128,8 @@
 		C09BA7E718BC929700A85A3E /* WorkSpaceDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = C09BA7E418BC929700A85A3E /* WorkSpaceDialog.xib */; };
 		C09BA7E818BC929700A85A3E /* WorkSpaceDialogController.mm in Sources */ = {isa = PBXBuildFile; fileRef = C09BA7E618BC929700A85A3E /* WorkSpaceDialogController.mm */; };
 		C09BA7EE18BCA49600A85A3E /* NSAppSheetAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C09BA7ED18BCA49600A85A3E /* NSAppSheetAdditions.m */; };
+		C0F9D4BC192F3E6A0066134A /* rtres in Resources */ = {isa = PBXBuildFile; fileRef = C0F9D4BB192F3E6A0066134A /* rtres */; };
+		C0F9D4BD192F3E6A0066134A /* rtres in Resources */ = {isa = PBXBuildFile; fileRef = C0F9D4BB192F3E6A0066134A /* rtres */; };
 		D6B061351803AC000077942B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B061341803AC000077942B /* CoreMotion.framework */; };
 		F293B3CD15EB7BE500256477 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F293B3CC15EB7BE500256477 /* QuartzCore.framework */; };
 		F293B3D115EB7BE500256477 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F293B3D015EB7BE500256477 /* OpenAL.framework */; };
@@ -394,6 +396,7 @@
 		C09BA7E618BC929700A85A3E /* WorkSpaceDialogController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WorkSpaceDialogController.mm; sourceTree = "<group>"; };
 		C09BA7EC18BCA49600A85A3E /* NSAppSheetAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSAppSheetAdditions.h; sourceTree = "<group>"; };
 		C09BA7ED18BCA49600A85A3E /* NSAppSheetAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSAppSheetAdditions.m; sourceTree = "<group>"; };
+		C0F9D4BB192F3E6A0066134A /* rtres */ = {isa = PBXFileReference; lastKnownFileType = folder; name = rtres; path = ../../../runtime/rtres; sourceTree = "<group>"; };
 		D6B061341803AC000077942B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
 		F293B3C815EB7BE500256477 /* HelloLua iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HelloLua iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F293B3CC15EB7BE500256477 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -642,6 +645,7 @@
 		F293BC4615EB859D00256477 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C0F9D4BB192F3E6A0066134A /* rtres */,
 				C05D1C111923449100B808A4 /* config.json */,
 				C03781B718BF655400FE4F13 /* res */,
 				C03781B818BF655400FE4F13 /* src */,
@@ -852,6 +856,7 @@
 				C08D5D5D18E567C6009071A4 /* ltn12.lua in Resources */,
 				C03781EC18BF656A00FE4F13 /* luaoc.lua in Resources */,
 				C07828F918B4D72E00BD2287 /* MainMenu.xib in Resources */,
+				C0F9D4BD192F3E6A0066134A /* rtres in Resources */,
 				5023817617EBBE3400990C9B /* Icon.icns in Resources */,
 				C03781D218BF656A00FE4F13 /* CCBReaderLoad.lua in Resources */,
 				C08D5D5F18E567C6009071A4 /* mbox.lua in Resources */,
@@ -894,6 +899,7 @@
 				C03781F118BF656A00FE4F13 /* StudioConstants.lua in Resources */,
 				5023811F17EBBCAC00990C9B /* Icon-152.png in Resources */,
 				C03781D118BF656A00FE4F13 /* CCBReaderLoad.lua in Resources */,
+				C0F9D4BC192F3E6A0066134A /* rtres in Resources */,
 				5023812017EBBCAC00990C9B /* Icon-57.png in Resources */,
 				C03781CF18BF656A00FE4F13 /* AudioEngine.lua in Resources */,
 				C03781B918BF655400FE4F13 /* res in Resources */,
