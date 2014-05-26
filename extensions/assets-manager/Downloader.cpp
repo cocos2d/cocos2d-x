@@ -189,7 +189,7 @@ void Downloader::downloadSync(const std::string &srcUrl, const std::string &stor
 
 void Downloader::batchDownload(const std::unordered_map<std::string, Downloader::DownloadUnit> &units)
 {
-    for (auto it = units.cbegin(); it != units.cend(); it++) {
+    for (auto it = units.cbegin(); it != units.cend(); ++it) {
         DownloadUnit unit = it->second;
         std::string srcUrl = unit.srcUrl;
         std::string storagePath = unit.storagePath;
