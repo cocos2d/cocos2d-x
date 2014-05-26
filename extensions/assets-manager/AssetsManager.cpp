@@ -231,8 +231,12 @@ void AssetsManager::createDirectory(const std::string& path)
 #else
     if ((GetFileAttributesA(path.c_str())) == INVALID_FILE_ATTRIBUTES)
     {
-        // TODO: create recursively the path on windows
-        CreateDirectoryA(path.c_str(), 0);
+		subpath = "";
+		for(int i = 0 ; i < dirs.size() ; ++i)
+		{
+			subpath += dirs[i];
+			CreateDirectoryA(subpath.c_str(), NULL);
+		}
     }
 #endif
 }
@@ -255,7 +259,7 @@ void AssetsManager::removeDirectory(const std::string& path)
     std::string command = "rd /s /q ";
     // Path may include space.
     command += "\"" + path + "\"";
-    system(command.c_str());
+	WinExec(command.c_str(), SW_HIDE);
 #endif
 }
 
@@ -271,7 +275,7 @@ void AssetsManager::removeFile(const std::string &path)
     std::string command = "del /q ";
     // Path may include space.
     command += "\"" + path + "\"";
-    system(command.c_str());
+	WinExec(command.c_str(), SW_HIDE);
 #endif
 }
 
@@ -287,7 +291,7 @@ void AssetsManager::renameFile(const std::string &path, const std::string &oldna
     std::string command = "ren ";
     // Path may include space.
     command += "\"" + path + oldname + "\" \"" + name + "\"";
-    system(command.c_str());
+	WinExec(command.c_str(), SW_HIDE);
 #endif
 }
 
