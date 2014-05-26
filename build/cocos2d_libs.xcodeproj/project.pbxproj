@@ -1779,8 +1779,6 @@
 		BA53B16E192B07AB002E0804 /* Manifest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA53B163192B07AB002E0804 /* Manifest.cpp */; };
 		BA53B16F192B07AB002E0804 /* Manifest.h in Headers */ = {isa = PBXBuildFile; fileRef = BA53B164192B07AB002E0804 /* Manifest.h */; };
 		BA53B170192B07AB002E0804 /* Manifest.h in Headers */ = {isa = PBXBuildFile; fileRef = BA53B164192B07AB002E0804 /* Manifest.h */; };
-		BA6FEC261932D71E00F5D174 /* threadpool.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BA6FEC251932D71E00F5D174 /* threadpool.hpp */; };
-		BA6FEC271932D71E00F5D174 /* threadpool.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BA6FEC251932D71E00F5D174 /* threadpool.hpp */; };
 		BABE70C1192D908E00468E13 /* CCEventAssetsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BABE70BD192D908E00468E13 /* CCEventAssetsManager.cpp */; };
 		BABE70C2192D908E00468E13 /* CCEventAssetsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BABE70BD192D908E00468E13 /* CCEventAssetsManager.cpp */; };
 		BABE70C3192D908E00468E13 /* CCEventAssetsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = BABE70BE192D908E00468E13 /* CCEventAssetsManager.h */; };
@@ -2826,8 +2824,6 @@
 		BA53B162192B07AB002E0804 /* Downloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Downloader.h; sourceTree = "<group>"; };
 		BA53B163192B07AB002E0804 /* Manifest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Manifest.cpp; sourceTree = "<group>"; };
 		BA53B164192B07AB002E0804 /* Manifest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Manifest.h; sourceTree = "<group>"; };
-		BA6FEC251932D71E00F5D174 /* threadpool.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = threadpool.hpp; path = ../base/threadpool.hpp; sourceTree = "<group>"; };
-		BA6FEC281932D73700F5D174 /* threadpool */ = {isa = PBXFileReference; lastKnownFileType = folder; name = threadpool; path = ../base/threadpool; sourceTree = "<group>"; };
 		BABE70BD192D908E00468E13 /* CCEventAssetsManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEventAssetsManager.cpp; sourceTree = "<group>"; };
 		BABE70BE192D908E00468E13 /* CCEventAssetsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventAssetsManager.h; sourceTree = "<group>"; };
 		BABE70BF192D908E00468E13 /* CCEventListenerAssetsManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEventListenerAssetsManager.cpp; sourceTree = "<group>"; };
@@ -3158,8 +3154,6 @@
 				50ABBE181925AB6F00A911A9 /* s3tc.h */,
 				50ABBE191925AB6F00A911A9 /* TGAlib.cpp */,
 				50ABBE1A1925AB6F00A911A9 /* TGAlib.h */,
-				BA6FEC251932D71E00F5D174 /* threadpool.hpp */,
-				BA6FEC281932D73700F5D174 /* threadpool */,
 				50ABBE1B1925AB6F00A911A9 /* uthash.h */,
 				50ABBE1C1925AB6F00A911A9 /* utlist.h */,
 				50ABBE1D1925AB6F00A911A9 /* ZipUtils.cpp */,
@@ -5163,7 +5157,6 @@
 				1A8C59D5180E930E00EF57C3 /* CCDecorativeDisplay.h in Headers */,
 				1A8C59D9180E930E00EF57C3 /* CCDisplayFactory.h in Headers */,
 				50ABC0691926664800A911A9 /* CCStdC.h in Headers */,
-				BA6FEC261932D71E00F5D174 /* threadpool.hpp in Headers */,
 				50ABBECD1925AB6F00A911A9 /* s3tc.h in Headers */,
 				50ABBE771925AB6F00A911A9 /* CCEventListenerTouch.h in Headers */,
 				1A8C59DD180E930E00EF57C3 /* CCDisplayManager.h in Headers */,
@@ -5420,7 +5413,6 @@
 				50FCEBBA18C72017004AD434 /* TextAtlasReader.h in Headers */,
 				5034CA2E191D591100CE6051 /* ccShader_PositionTextureA8Color.frag in Headers */,
 				50ABBD5B1925AB0000A911A9 /* Vec2.h in Headers */,
-				BA6FEC271932D71E00F5D174 /* threadpool.hpp in Headers */,
 				50ABBD411925AB0000A911A9 /* CCMath.h in Headers */,
 				1A5701A0180BCB590088DEC7 /* CCFont.h in Headers */,
 				50ABBD9A1925AB4100A911A9 /* CCGLProgramStateCache.h in Headers */,
