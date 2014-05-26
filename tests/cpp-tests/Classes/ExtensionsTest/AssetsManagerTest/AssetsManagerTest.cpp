@@ -83,7 +83,7 @@ AssetsManagerLoaderScene::AssetsManagerLoaderScene()
 void AssetsManagerLoaderScene::runThisTest()
 {
     int currentId = currentScene;
-    std::string manifestPath = sceneManifests[currentId], storagePath = storagePaths[currentId];
+    std::string manifestPath = sceneManifests[currentId], storagePath = FileUtils::getInstance()->getWritablePath() + storagePaths[currentId];
     
     Sprite *sprite = Sprite::create("Images/Icon.png");
     auto layer = Layer::create();

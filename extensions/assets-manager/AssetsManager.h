@@ -116,8 +116,6 @@ protected:
     
     void adjustPath(std::string &path);
     
-    void prependSearchPath(const std::string &path);
-    
     void dispatchUpdateEvent(EventAssetsManager::EventCode code, std::string message = "", std::string assetId = "");
     
     void createDirectory(const std::string &path);
@@ -172,9 +170,6 @@ protected:
     virtual void onSuccess(const std::string &srcUrl, const std::string &customId);
     
 private:
-    
-    //! The root of writable path
-    static std::string s_nWritableRoot;
     
     //! The event of the current AssetsManager in event dispatcher
     std::string _eventName;
