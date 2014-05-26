@@ -23,7 +23,6 @@
  ****************************************************************************/
 
 #include "Downloader.h"
-#include "base/threadpool.hpp"
 
 #include <curl/curl.h>
 #include <curl/easy.h>
@@ -38,6 +37,10 @@ NS_CC_EXT_BEGIN
 #define MAX_FILENAME        512
 #define LOW_SPEED_LIMIT     1L
 #define LOW_SPEED_TIME      5L
+
+#if USE_THREAD_POOL
+#include "base/threadpool.hpp"
+#endif
 
 #define POOL() static_cast<threadpool::pool*>(this->_threadPool)
 
