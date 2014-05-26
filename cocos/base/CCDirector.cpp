@@ -1226,7 +1226,7 @@ void Director::captureScreen(const std::function<void(bool, const std::string&)>
 void Director::onCaptureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename)
 {
     Size frameSize = _openGLView->getFrameSize();
-#if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
     frameSize = frameSize * _openGLView->getFrameZoomFactor() * _openGLView->getRetinaFactor();
 #endif
     
