@@ -125,16 +125,6 @@
     <ClCompile Include="Win32InputBox.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\external\json\document.h" />
-    <ClInclude Include="..\..\external\json\filestream.h" />
-    <ClInclude Include="..\..\external\json\internal\pow10.h" />
-    <ClInclude Include="..\..\external\json\internal\stack.h" />
-    <ClInclude Include="..\..\external\json\internal\strfunc.h" />
-    <ClInclude Include="..\..\external\json\prettywriter.h" />
-    <ClInclude Include="..\..\external\json\rapidjson.h" />
-    <ClInclude Include="..\..\external\json\reader.h" />
-    <ClInclude Include="..\..\external\json\stringbuffer.h" />
-    <ClInclude Include="..\..\external\json\writer.h" />
     <ClInclude Include="..\assets-manager\AssetsManager.h" />
     <ClInclude Include="..\assets-manager\CCEventAssetsManager.h" />
     <ClInclude Include="..\assets-manager\CCEventListenerAssetsManager.h" />
