@@ -13037,50 +13037,6 @@ int lua_register_cocos2dx_extension_EditBox(lua_State* tolua_S)
     return 1;
 }
 
-int lua_cocos2dx_extension_EventAssetsManager_getAssetsManager(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::extension::EventAssetsManager* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.EventAssetsManager",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::extension::EventAssetsManager*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_EventAssetsManager_getAssetsManager'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        cocos2d::extension::AssetsManager* ret = cobj->getAssetsManager();
-        object_to_luaval<cocos2d::extension::AssetsManager>(tolua_S, "cc.AssetsManager",(cocos2d::extension::AssetsManager*)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getAssetsManager",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_EventAssetsManager_getAssetsManager'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_extension_EventAssetsManager_getAssetId(lua_State* tolua_S)
 {
     int argc = 0;
@@ -13169,7 +13125,7 @@ int lua_cocos2dx_extension_EventAssetsManager_getMessage(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_extension_EventAssetsManager_getEventCode(lua_State* tolua_S)
+int lua_cocos2dx_extension_EventAssetsManager_getAssetsManager(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::EventAssetsManager* cobj = nullptr;
@@ -13189,7 +13145,7 @@ int lua_cocos2dx_extension_EventAssetsManager_getEventCode(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_EventAssetsManager_getEventCode'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_EventAssetsManager_getAssetsManager'", nullptr);
         return 0;
     }
 #endif
@@ -13199,16 +13155,16 @@ int lua_cocos2dx_extension_EventAssetsManager_getEventCode(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        int ret = (int)cobj->getEventCode();
-        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        cocos2d::extension::AssetsManager* ret = cobj->getAssetsManager();
+        object_to_luaval<cocos2d::extension::AssetsManager>(tolua_S, "cc.AssetsManager",(cocos2d::extension::AssetsManager*)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getEventCode",argc, 0);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getAssetsManager",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_EventAssetsManager_getEventCode'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_EventAssetsManager_getAssetsManager'.",&tolua_err);
 #endif
 
     return 0;
@@ -13257,7 +13213,7 @@ int lua_cocos2dx_extension_EventAssetsManager_getPercent(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_extension_EventAssetsManager_constructor(lua_State* tolua_S)
+int lua_cocos2dx_extension_EventAssetsManager_getEventCode(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::EventAssetsManager* cobj = nullptr;
@@ -13268,116 +13224,39 @@ int lua_cocos2dx_extension_EventAssetsManager_constructor(lua_State* tolua_S)
 #endif
 
 
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.EventAssetsManager",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::extension::EventAssetsManager*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_EventAssetsManager_getEventCode'", nullptr);
+        return 0;
+    }
+#endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 3) 
+    if (argc == 0) 
     {
-        std::string arg0;
-        cocos2d::extension::AssetsManager* arg1;
-        cocos2d::extension::EventAssetsManager::EventCode arg2;
-
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0);
-
-        ok &= luaval_to_object<cocos2d::extension::AssetsManager>(tolua_S, 3, "cc.AssetsManager",&arg1);
-
-        ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2);
         if(!ok)
             return 0;
-        cobj = new cocos2d::extension::EventAssetsManager(arg0, arg1, arg2);
-        cobj->autorelease();
-        int ID =  (int)cobj->_ID ;
-        int* luaID =  &cobj->_luaID ;
-        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.EventAssetsManager");
+        int ret = (int)cobj->getEventCode();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
-    if (argc == 4) 
-    {
-        std::string arg0;
-        cocos2d::extension::AssetsManager* arg1;
-        cocos2d::extension::EventAssetsManager::EventCode arg2;
-        double arg3;
-
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0);
-
-        ok &= luaval_to_object<cocos2d::extension::AssetsManager>(tolua_S, 3, "cc.AssetsManager",&arg1);
-
-        ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2);
-
-        ok &= luaval_to_number(tolua_S, 5,&arg3);
-        if(!ok)
-            return 0;
-        cobj = new cocos2d::extension::EventAssetsManager(arg0, arg1, arg2, arg3);
-        cobj->autorelease();
-        int ID =  (int)cobj->_ID ;
-        int* luaID =  &cobj->_luaID ;
-        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.EventAssetsManager");
-        return 1;
-    }
-    if (argc == 5) 
-    {
-        std::string arg0;
-        cocos2d::extension::AssetsManager* arg1;
-        cocos2d::extension::EventAssetsManager::EventCode arg2;
-        double arg3;
-        std::string arg4;
-
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0);
-
-        ok &= luaval_to_object<cocos2d::extension::AssetsManager>(tolua_S, 3, "cc.AssetsManager",&arg1);
-
-        ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2);
-
-        ok &= luaval_to_number(tolua_S, 5,&arg3);
-
-        ok &= luaval_to_std_string(tolua_S, 6,&arg4);
-        if(!ok)
-            return 0;
-        cobj = new cocos2d::extension::EventAssetsManager(arg0, arg1, arg2, arg3, arg4);
-        cobj->autorelease();
-        int ID =  (int)cobj->_ID ;
-        int* luaID =  &cobj->_luaID ;
-        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.EventAssetsManager");
-        return 1;
-    }
-    if (argc == 6) 
-    {
-        std::string arg0;
-        cocos2d::extension::AssetsManager* arg1;
-        cocos2d::extension::EventAssetsManager::EventCode arg2;
-        double arg3;
-        std::string arg4;
-        std::string arg5;
-
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0);
-
-        ok &= luaval_to_object<cocos2d::extension::AssetsManager>(tolua_S, 3, "cc.AssetsManager",&arg1);
-
-        ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2);
-
-        ok &= luaval_to_number(tolua_S, 5,&arg3);
-
-        ok &= luaval_to_std_string(tolua_S, 6,&arg4);
-
-        ok &= luaval_to_std_string(tolua_S, 7,&arg5);
-        if(!ok)
-            return 0;
-        cobj = new cocos2d::extension::EventAssetsManager(arg0, arg1, arg2, arg3, arg4, arg5);
-        cobj->autorelease();
-        int ID =  (int)cobj->_ID ;
-        int* luaID =  &cobj->_luaID ;
-        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.EventAssetsManager");
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "EventAssetsManager",argc, 3);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getEventCode",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_EventAssetsManager_constructor'.",&tolua_err);
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_EventAssetsManager_getEventCode'.",&tolua_err);
 #endif
 
     return 0;
 }
-
 static int lua_cocos2dx_extension_EventAssetsManager_finalize(lua_State* tolua_S)
 {
     printf("luabindings: finalizing LUA object (EventAssetsManager)");
@@ -13390,12 +13269,11 @@ int lua_register_cocos2dx_extension_EventAssetsManager(lua_State* tolua_S)
     tolua_cclass(tolua_S,"EventAssetsManager","cc.EventAssetsManager","cc.EventCustom",nullptr);
 
     tolua_beginmodule(tolua_S,"EventAssetsManager");
-        tolua_function(tolua_S,"getAssetsManager",lua_cocos2dx_extension_EventAssetsManager_getAssetsManager);
         tolua_function(tolua_S,"getAssetId",lua_cocos2dx_extension_EventAssetsManager_getAssetId);
         tolua_function(tolua_S,"getMessage",lua_cocos2dx_extension_EventAssetsManager_getMessage);
-        tolua_function(tolua_S,"getEventCode",lua_cocos2dx_extension_EventAssetsManager_getEventCode);
+        tolua_function(tolua_S,"getAssetsManager",lua_cocos2dx_extension_EventAssetsManager_getAssetsManager);
         tolua_function(tolua_S,"getPercent",lua_cocos2dx_extension_EventAssetsManager_getPercent);
-        tolua_function(tolua_S,"new",lua_cocos2dx_extension_EventAssetsManager_constructor);
+        tolua_function(tolua_S,"getEventCode",lua_cocos2dx_extension_EventAssetsManager_getEventCode);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::extension::EventAssetsManager).name();
     g_luaType[typeName] = "cc.EventAssetsManager";
