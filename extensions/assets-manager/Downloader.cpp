@@ -39,6 +39,8 @@ NS_CC_EXT_BEGIN
 #define LOW_SPEED_LIMIT     1L
 #define LOW_SPEED_TIME      5L
 
+#define POOL() static_cast<threadpool::pool*>(this->_threadPool)
+
 static size_t curlWriteFunc(void *ptr, size_t size, size_t nmemb, void *userdata)
 {
     FILE *fp = (FILE*)userdata;
