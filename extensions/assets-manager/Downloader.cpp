@@ -23,18 +23,21 @@
  ****************************************************************************/
 
 #include "Downloader.h"
+#include "base/threadpool.hpp"
 
 #include <curl/curl.h>
 #include <curl/easy.h>
 #include <stdio.h>
-#include <thread>
+
+NS_CC_EXT_BEGIN
+
+#define USE_THREAD_POOL 1
+#define POOL_SIZE 6
 
 #define BUFFER_SIZE         8192
 #define MAX_FILENAME        512
 #define LOW_SPEED_LIMIT     1L
 #define LOW_SPEED_TIME      5L
-
-NS_CC_EXT_BEGIN
 
 static size_t curlWriteFunc(void *ptr, size_t size, size_t nmemb, void *userdata)
 {
@@ -43,20 +46,29 @@ static size_t curlWriteFunc(void *ptr, size_t size, size_t nmemb, void *userdata
     return written;
 }
 
-int downloadProgressFunc(Downloader::ProgressData *ptr, double totalToDownload, double nowDownloaded, double totalToUpLoad, double nowUpLoaded)
+static int downloadProgressFunc(Downloader::ProgressData *ptr, double totalToDownload, double nowDownloaded, double totalToUpLoad, double nowUpLoaded)
 {
     if (ptr->downloaded != nowDownloaded)
     {
         ptr->downloaded = nowDownloaded;
         
-        std::string url = ptr->url;
-        std::string customId = ptr->customId;
-        std::shared_ptr<Downloader> downloader = ptr->downloader.lock();
+        Downloader::ProgressData data = *ptr;
         
         Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
-            auto callback = downloader->getProgressCallback();
-            if (downloader != nullptr && callback != nullptr)
-                callback(totalToDownload, nowDownloaded, url, customId);
+            std::shared_ptr<Downloader> downloader = data.downloader.lock();
+            
+            if (downloader)
+            {
+                auto callback = downloader->getProgressCallback();
+                if (callback)
+                {
+                    callback(totalToDownload, nowDownloaded, data.url, data.customId);
+                }
+            }
+            else
+            {
+                CCLOG("invalid callback.");
+            }
         });
     }
     
@@ -70,10 +82,17 @@ Downloader::Downloader()
 , _onSuccess(nullptr)
 , _connectionTimeout(0)
 {
+#if USE_THREAD_POOL
+    _threadPool = new threadpool::pool(POOL_SIZE);
+#endif
 }
 
 Downloader::~Downloader()
 {
+#if USE_THREAD_POOL
+    POOL()->wait();
+    delete POOL();
+#endif
 }
 
 int Downloader::getConnectionTimeout()
@@ -144,8 +163,13 @@ void Downloader::downloadAsync(const std::string &srcUrl, const std::string &sto
     FILE *fp = prepareDownload(srcUrl, storagePath, customId);
     if (fp != nullptr)
     {
+
+#if USE_THREAD_POOL
+        POOL()->schedule(std::bind(&Downloader::download, this, srcUrl, fp, customId));
+#else
         auto t = std::thread(&Downloader::download, this, srcUrl, fp, customId);
         t.detach();
+#endif
     }
 }
 
@@ -166,14 +190,19 @@ void Downloader::batchDownload(const std::unordered_map<std::string, Downloader:
         std::string storagePath = unit.storagePath;
         std::string customId = unit.customId;
         
+#if USE_THREAD_POOL
+        POOL()->schedule(std::bind(&Downloader::downloadSync, this, srcUrl, storagePath, customId));
+#else
         auto t = std::thread(&Downloader::downloadSync, this, srcUrl, storagePath, customId);
         t.detach();
+#endif
     }
 }
 
 void Downloader::download(const std::string &srcUrl, FILE *fp, const std::string &customId)
 {
     std::shared_ptr<Downloader> downloader = shared_from_this();
+
     ProgressData data;
     data.customId = customId;
     data.url = srcUrl;

@@ -12,7 +12,7 @@ USING_NS_CC_EXT;
 class AssetsManagerTestLayer : public BaseTest
 {
 public:
-    AssetsManagerTestLayer(std::string spritePath);
+    AssetsManagerTestLayer(const std::string& spritePath);
     ~AssetsManagerTestLayer(void);
     
     virtual std::string title() const;
@@ -48,6 +48,7 @@ public:
 private:
     AssetsManager *_am;
     Label *_progress;
+    EventListenerAssetsManager* _amListener;
 };
 
 #endif /* defined(__AssetsManager_Test_H__) */
