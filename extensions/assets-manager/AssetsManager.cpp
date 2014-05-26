@@ -257,7 +257,7 @@ void AssetsManager::removeDirectory(const std::string& path)
     std::string command = "rd /s /q ";
     // Path may include space.
     command += "\"" + path + "\"";
-    system(command.c_str());
+	WinExec(command.c_str(), SW_HIDE);
 #endif
 }
 
@@ -273,7 +273,7 @@ void AssetsManager::removeFile(const std::string &path)
     std::string command = "del /q ";
     // Path may include space.
     command += "\"" + path + "\"";
-    system(command.c_str());
+	WinExec(command.c_str(), SW_HIDE);
 #endif
 }
 
@@ -289,7 +289,7 @@ void AssetsManager::renameFile(const std::string &path, const std::string &oldna
     std::string command = "ren ";
     // Path may include space.
     command += "\"" + path + oldname + "\" \"" + name + "\"";
-    system(command.c_str());
+	WinExec(command.c_str(), SW_HIDE);
 #endif
 }
 
