@@ -625,6 +625,6 @@ void CaptureScreenTest::afterCaptured(bool succeed, const std::string& outputFil
     }
     else
     {
-        log("Captrue screen failed.");
+        log("Capture screen failed.");
     }
 }
