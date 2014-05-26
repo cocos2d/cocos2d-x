@@ -78,7 +78,7 @@ void UIFocusTestBase::onLeftKeyPressed()
 {
     if (_firstFocusedWidget) {
         if (!_firstFocusedWidget->isFocused()) {
-            _firstFocusedWidget = _firstFocusedWidget->getCurrentFocusedWidget(false);
+            _firstFocusedWidget = _firstFocusedWidget->getCurrentFocusedWidget();
         }
         _firstFocusedWidget = _firstFocusedWidget->findNextFocusedWidget(Widget::FocusDirection::LEFT, _firstFocusedWidget);
     }
@@ -88,7 +88,7 @@ void UIFocusTestBase::onRightKeyPressed()
 {
     if (_firstFocusedWidget) {
         if (!_firstFocusedWidget->isFocused()) {
-            _firstFocusedWidget = _firstFocusedWidget->getCurrentFocusedWidget(false);
+            _firstFocusedWidget = _firstFocusedWidget->getCurrentFocusedWidget();
         }
         _firstFocusedWidget = _firstFocusedWidget->findNextFocusedWidget(Widget::FocusDirection::RIGHT, _firstFocusedWidget);
     }
@@ -98,7 +98,7 @@ void UIFocusTestBase::onUpKeyPressed()
 {
     if (_firstFocusedWidget) {
         if (!_firstFocusedWidget->isFocused()) {
-            _firstFocusedWidget = _firstFocusedWidget->getCurrentFocusedWidget(false);
+            _firstFocusedWidget = _firstFocusedWidget->getCurrentFocusedWidget();
         }
         _firstFocusedWidget = _firstFocusedWidget->findNextFocusedWidget(Widget::FocusDirection::UP, _firstFocusedWidget);
     }
@@ -109,7 +109,7 @@ void UIFocusTestBase::onDownKeyPressed()
 {
     if (_firstFocusedWidget) {
         if (!_firstFocusedWidget->isFocused()) {
-            _firstFocusedWidget = _firstFocusedWidget->getCurrentFocusedWidget(false);
+            _firstFocusedWidget = _firstFocusedWidget->getCurrentFocusedWidget();
         }
         _firstFocusedWidget = _firstFocusedWidget->findNextFocusedWidget(Widget::FocusDirection::DOWN, _firstFocusedWidget);
     }
@@ -118,14 +118,11 @@ void UIFocusTestBase::onDownKeyPressed()
 
 void UIFocusTestBase::onFocusChanged(cocos2d::ui::Widget *widgetLostFocus, cocos2d::ui::Widget *widgetGetFocus)
 {
-    //only change the widgets' state
-    Layout *getLayout = dynamic_cast<Layout*>(widgetGetFocus);
-    if (!getLayout && widgetGetFocus && widgetGetFocus->isFocusEnabled()) {
+    if (widgetGetFocus && widgetGetFocus->isFocusEnabled()) {
         widgetGetFocus->setColor(Color3B::RED);
     }
     
-    Layout *loseLayout = dynamic_cast<Layout*>(widgetLostFocus);
-    if (!loseLayout && widgetLostFocus && widgetLostFocus->isFocusEnabled()) {
+    if (widgetLostFocus && widgetLostFocus->isFocusEnabled()) {
         widgetLostFocus->setColor(Color3B::WHITE);
     }
     

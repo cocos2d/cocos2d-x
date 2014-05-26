@@ -129,7 +129,7 @@ void Widget::FocusNavigationController::removeKeyboardEventListener()
 }
 
 Widget* Widget::_focusedWidget = nullptr;
-Widget* Widget::_realFocusedWidget = nullptr;
+Widget::FocusNavigationController* Widget::_focusNavigationController = nullptr;
     
 Widget::Widget():
 _enabled(true),
@@ -161,8 +161,7 @@ _flippedX(false),
 _flippedY(false),
 _focused(false),
 _focusEnabled(true),
-_layoutParameterType(LayoutParameter::Type::NONE),
-_focusNavigationController(nullptr)
+_layoutParameterType(LayoutParameter::Type::NONE)
 {
     onFocusChanged = CC_CALLBACK_2(Widget::onFocusChange,this);
     onNextFocusedWidget = nullptr;
@@ -172,16 +171,23 @@ _focusNavigationController(nullptr)
 
 Widget::~Widget()
 {
-    setTouchEnabled(false);
+    this->cleanupWidget();
+}
+
+void Widget::cleanupWidget()
+{
+    //clean up _touchListener
+    _eventDispatcher->removeEventListener(_touchListener);
+    CC_SAFE_RELEASE_NULL(_touchListener);
     
-    //cleanup focused widget
-    if (_focusedWidget == this || _realFocusedWidget == this)
+    //cleanup focused widget and focus navigation controller
+    if (_focusedWidget == this)
     {
         //delete
         CC_SAFE_DELETE(_focusNavigationController);
         _focusedWidget = nullptr;
-        _realFocusedWidget = nullptr;
     }
+
 }
 
 Widget* Widget::create()
@@ -1129,9 +1135,6 @@ void Widget::setFocused(bool focus)
         if (_focusNavigationController) {
             _focusNavigationController->setFirstFocsuedWidget(this);
         }
-        if (!dynamic_cast<Layout*>(this)) {
-            _realFocusedWidget = this;
-        }
     }
     
 }
@@ -1154,7 +1157,7 @@ bool Widget::isFocusEnabled()
 Widget* Widget::findNextFocusedWidget(FocusDirection direction,  Widget* current)
 {
     if (nullptr == onNextFocusedWidget || nullptr == onNextFocusedWidget(direction) ) {
-        if (this->isFocused() || !current->isFocusEnabled())
+        if (this->isFocused() || dynamic_cast<Layout*>(current))
         {
             Node* parent = this->getParent();
             
@@ -1239,12 +1242,8 @@ void Widget::onFocusChange(Widget* widgetLostFocus, Widget* widgetGetFocus)
     }
 }
 
-Widget* Widget::getCurrentFocusedWidget(bool isWidget)
+Widget* Widget::getCurrentFocusedWidget()
 {
-    if (isWidget)
-    {
-        return _realFocusedWidget;
-    }
     return _focusedWidget;
 }
 

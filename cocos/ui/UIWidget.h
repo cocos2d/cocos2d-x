@@ -584,7 +584,23 @@ public:
      * when a widget calls this method, it will get focus immediately.
      */
     void requestFocus();
-    
+
+    /**
+     * no matter what widget object you call this method on , it will return you the exact one focused widget
+     * @param isWidget  if your set isWidget to true, it will return the _realFocusedWidget which is always a widget
+     *                  otherwise, it will return a widget or a layout
+     */
+    CC_DEPRECATED_ATTRIBUTE Widget* getCurrentFocusedWidget(bool isWidget){
+        CC_UNUSED_PARAM(isWidget);
+        return getCurrentFocusedWidget();
+    }
+
+    Widget* getCurrentFocusedWidget();
+    static void enableDpadNavigation(bool enable);
+
+    std::function<void(Widget*,Widget*)> onFocusChanged;
+    std::function<Widget*(FocusDirection)> onNextFocusedWidget;
+
 CC_CONSTRUCTOR_ACCESS:
     //initializes state of widget.
     virtual bool init() override;
@@ -651,6 +667,8 @@ protected:
     Widget* getAncensterWidget(Node* node);
     bool isAncestorsVisible(Node* node);
 
+    void cleanupWidget();
+
 protected:
     bool _enabled;            ///< Highest control of widget
     bool _bright;             ///< is this widget bright
@@ -711,23 +729,12 @@ protected:
      * store the only one focued widget
      */
     static Widget *_focusedWidget;  //both layout & widget will be stored in this variable
-    static Widget *_realFocusedWidget; //only the widget class will be stored in this variable
 
 private:
     class FocusNavigationController;
-    FocusNavigationController* _focusNavigationController;
+    static FocusNavigationController* _focusNavigationController;
 
-public:
-    /**
-     * no matter what widget object you call this method on , it will return you the exact one focused widget
-     * @param isWidget  if your set isWidget to true, it will return the _realFocusedWidget which is always a widget
-     *                  otherwise, it will return a widget or a layout
-     */
-    Widget* getCurrentFocusedWidget(bool isWidget);
-    void enableDpadNavigation(bool enable);
 
-    std::function<void(Widget*,Widget*)> onFocusChanged;
-    std::function<Widget*(FocusDirection)> onNextFocusedWidget;
 };
 }
 
