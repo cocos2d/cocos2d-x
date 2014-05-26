@@ -1126,7 +1126,9 @@ void Widget::setFocused(bool focus)
     //make sure there is only one focusedWidget
     if (focus) {
         _focusedWidget = this;
-        _focusNavigationController->setFirstFocsuedWidget(this);
+        if (_focusNavigationController) {
+            _focusNavigationController->setFirstFocsuedWidget(this);
+        }
         if (!dynamic_cast<Layout*>(this)) {
             _realFocusedWidget = this;
         }
@@ -1253,6 +1255,9 @@ void Widget::enableDpadNavigation(bool enable)
         if (nullptr == _focusNavigationController)
         {
             _focusNavigationController = new FocusNavigationController;
+            if (_focusedWidget) {
+                _focusNavigationController->setFirstFocsuedWidget(_focusedWidget);
+            }
         }
     }
     else
