@@ -47,16 +47,6 @@ NS_CC_EXT_BEGIN
 
 #define DEFAULT_CONNECTION_TIMEOUT 8
 
-// Some data struct for sending messages
-//
-//struct ProgressMessage
-//{
-//    int percent;
-//    AssetsManager* manager;
-//};
-
-std::string AssetsManager::s_nWritableRoot = "";
-
 const std::string AssetsManager::VERSION_ID = "@version";
 const std::string AssetsManager::MANIFEST_ID = "@manifest";
 
@@ -101,6 +91,7 @@ AssetsManager::AssetsManager(const std::string& manifestUrl, const std::string& 
 
 AssetsManager::~AssetsManager()
 {
+    removeFile(_storagePath + TEMP_MANIFEST_FILENAME);
     _downloader->_onError = nullptr;
     _downloader->_onSuccess = nullptr;
     _downloader->_onProgress = nullptr;
@@ -200,28 +191,12 @@ void AssetsManager::adjustPath(std::string &path)
     {
         path.append("/");
     }
-    path.insert(0, s_nWritableRoot);
-}
-
-void AssetsManager::prependSearchPath(const std::string& path)
-{
-    std::vector<std::string> searchPaths = FileUtils::getInstance()->getSearchPaths();
-    std::vector<std::string>::iterator iter = searchPaths.begin();
-    searchPaths.insert(iter, path);
-    FileUtils::getInstance()->setSearchPaths(searchPaths);
 }
 
 void AssetsManager::createDirectory(const std::string& path)
 {
-    // Check writable path existance
-    if (path.find(s_nWritableRoot) == std::string::npos)
-    {
-        CCLOG("Path which isn't under system's writable path cannot be created.");
-        return;
-    }
-
     // Split the path
-    size_t start = s_nWritableRoot.size();
+    size_t start = 0;
     size_t found = path.find_first_of("/\\", start);
     std::string subpath;
     std::vector<std::string> dirs;
@@ -238,7 +213,7 @@ void AssetsManager::createDirectory(const std::string& path)
     DIR *dir = NULL;
 
     // Create path recursively
-    subpath = s_nWritableRoot;
+    subpath = "";
     for (int i = 0; i < dirs.size(); i++) {
         subpath += dirs[i];
         dir = opendir (subpath.c_str());
@@ -258,13 +233,6 @@ void AssetsManager::createDirectory(const std::string& path)
 
 void AssetsManager::removeDirectory(const std::string& path)
 {
-    // Check writable path existance
-    if (path.find(s_nWritableRoot) == std::string::npos)
-    {
-        CCLOG("Path which isn't under system's writable path cannot be destroyed.");
-        return;
-    }
-
     if (path.size() > 0 && path[path.size() - 1] != '/')
     {
         CCLOG("Invalid path.");
@@ -287,40 +255,34 @@ void AssetsManager::removeDirectory(const std::string& path)
 
 void AssetsManager::removeFile(const std::string &path)
 {
-    if (path.find(s_nWritableRoot) != std::string::npos)
-    {
-        // Remove downloaded file
+    // Remove downloaded file
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
-        std::string command = "rm ";
-        // Path may include space.
-        command += "\"" + path + "\"";
-        system(command.c_str());
+    std::string command = "rm ";
+    // Path may include space.
+    command += "\"" + path + "\"";
+    system(command.c_str());
 #else
-        std::string command = "del /q ";
-        // Path may include space.
-        command += "\"" + path + "\"";
-        system(command.c_str());
+    std::string command = "del /q ";
+    // Path may include space.
+    command += "\"" + path + "\"";
+    system(command.c_str());
 #endif
-    }
 }
 
 void AssetsManager::renameFile(const std::string &path, const std::string &oldname, const std::string &name)
 {
-    if (path.find(s_nWritableRoot) != std::string::npos)
-    {
-        // Rename a file
+    // Rename a file
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
-        std::string command = "mv -f ";
-        // Path may include space.
-        command += "\"" + path + oldname + "\" \"" + path + name + "\"";
-        system(command.c_str());
+    std::string command = "mv -f ";
+    // Path may include space.
+    command += "\"" + path + oldname + "\" \"" + path + name + "\"";
+    system(command.c_str());
 #else
-        std::string command = "ren ";
-        // Path may include space.
-        command += "\"" + path + oldname + "\" \"" + name + "\"";
-        system(command.c_str());
+    std::string command = "ren ";
+    // Path may include space.
+    command += "\"" + path + oldname + "\" \"" + name + "\"";
+    system(command.c_str());
 #endif
-    }
 }
 
 void AssetsManager::dispatchUpdateEvent(EventAssetsManager::EventCode code, std::string assetId/* = ""*/, std::string message/* = ""*/)
@@ -423,12 +385,14 @@ void AssetsManager::parseManifest()
         CCLOG("Error parsing manifest file\n");
         dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_PARSE_MANIFEST);
         _updateState = State::UNCHECKED;
+        removeFile(_storagePath + TEMP_MANIFEST_FILENAME);
     }
     else
     {
         if (_localManifest->versionEquals(_remoteManifest))
         {
             _updateState = State::UP_TO_DATE;
+            removeFile(_storagePath + TEMP_MANIFEST_FILENAME);
             dispatchUpdateEvent(EventAssetsManager::EventCode::ALREADY_UP_TO_DATE);
         }
         else
@@ -456,6 +420,8 @@ void AssetsManager::startUpdate()
         if (diff_map.size() == 0)
         {
             _updateState = State::UP_TO_DATE;
+            // Rename temporary manifest to valid manifest
+            renameFile(_storagePath, TEMP_MANIFEST_FILENAME, MANIFEST_FILENAME);
             dispatchUpdateEvent(EventAssetsManager::EventCode::ALREADY_UP_TO_DATE);
         }
         else
