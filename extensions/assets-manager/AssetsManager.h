@@ -104,8 +104,6 @@ CC_CONSTRUCTOR_ACCESS:
     
     virtual ~AssetsManager();
     
-    void batchDownload(const std::unordered_map<std::string, Downloader::DownloadUnit> &units);
-    
 protected:
     
     std::string get(const std::string& key) const;
@@ -135,6 +133,8 @@ protected:
     void startUpdate();
 // TODO: For next version
     //bool uncompress();
+    
+    void batchDownload(const std::unordered_map<std::string, Downloader::DownloadUnit> &units);
     
     /** @brief Function for destorying the downloaded version file and manifest file
      */
