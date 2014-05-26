@@ -229,15 +229,11 @@ void AssetsManager::createDirectory(const std::string& path)
 #else
     if ((GetFileAttributesA(path.c_str())) == INVALID_FILE_ATTRIBUTES)
     {
-		std::string _path = s_nWritableRoot;
-		SECURITY_ATTRIBUTES attribute;
-        attribute.nLength = sizeof(attribute);
-        attribute.lpSecurityDescriptor = NULL;
-        attribute.bInheritHandle = FALSE;
+		subpath = "";
 		for(int i = 0 ; i < dirs.size() ; ++i)
 		{
-			_path += dirs[i];
-			CreateDirectoryA(_path.c_str(), &attribute);
+			subpath += dirs[i];
+			CreateDirectoryA(subpath.c_str(), NULL);
 		}
     }
 #endif
