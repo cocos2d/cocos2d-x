@@ -29,8 +29,7 @@ CCProtectedNode.cpp \
 UIHBox.cpp \
 UIVBox.cpp \
 UIRelativeBox.cpp \
-UIVideoPlayerAndroid.cpp \
-UIFocusManager.cpp
+UIVideoPlayerAndroid.cpp
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/.. \
 $(LOCAL_PATH)/../editor-support
