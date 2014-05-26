@@ -587,7 +587,7 @@ bool Widget::onTouchBegan(Touch *touch, Event *unusedEvent)
     Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
-        widgetParent->passTouchEventToParent(TouchEventType::BEGAN, this, _touchStartPos);
+        widgetParent->interceptTouchEvent(TouchEventType::BEGAN, this, _touchStartPos);
     }
     pushDownEvent();
     return true;
@@ -600,7 +600,7 @@ void Widget::onTouchMoved(Touch *touch, Event *unusedEvent)
     Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
-        widgetParent->passTouchEventToParent(TouchEventType::MOVED, this, _touchMovePos);
+        widgetParent->interceptTouchEvent(TouchEventType::MOVED, this, _touchMovePos);
     }
     moveEvent();
 }
@@ -608,14 +608,14 @@ void Widget::onTouchMoved(Touch *touch, Event *unusedEvent)
 void Widget::onTouchEnded(Touch *touch, Event *unusedEvent)
 {
     _touchEndPos = touch->getLocation();
-    bool highlight = _highlight;
-    setHighlighted(false);
+    
     Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
-        widgetParent->passTouchEventToParent(TouchEventType::ENDED, this, _touchEndPos);
+        widgetParent->interceptTouchEvent(TouchEventType::ENDED, this, _touchEndPos);
     }
-    if (highlight)
+    
+    if (_highlight)
     {
         releaseUpEvent();
     }
@@ -623,6 +623,9 @@ void Widget::onTouchEnded(Touch *touch, Event *unusedEvent)
     {
         cancelUpEvent();
     }
+    
+    setHighlighted(false);
+
 }
 
 void Widget::onTouchCancelled(Touch *touch, Event *unusedEvent)
@@ -747,12 +750,12 @@ bool Widget::clippingParentAreaContainPoint(const Vec2 &pt)
     return true;
 }
 
-void Widget::passTouchEventToParent(cocos2d::ui::Widget::TouchEventType event, cocos2d::ui::Widget *sender, const cocos2d::Vec2 &point)
+void Widget::interceptTouchEvent(cocos2d::ui::Widget::TouchEventType event, cocos2d::ui::Widget *sender, const cocos2d::Vec2 &point)
 {
     Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
-        widgetParent->passTouchEventToParent(event,sender,point);
+        widgetParent->interceptTouchEvent(event,sender,point);
     }
 
 }

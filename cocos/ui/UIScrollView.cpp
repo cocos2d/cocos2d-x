@@ -1596,10 +1596,6 @@ void ScrollView::interceptTouchEvent(Widget::TouchEventType event, Widget *sende
     }
 }
 
-void ScrollView::passTouchEventToParent(cocos2d::ui::Widget::TouchEventType event, cocos2d::ui::Widget *sender, const cocos2d::Vec2 &point)
-{
-    interceptTouchEvent(event, sender, point);
-}
 
 void ScrollView::scrollToTopEvent()
 {

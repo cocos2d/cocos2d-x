@@ -40,7 +40,6 @@ protected:
     virtual void handlePressLogic(const Vec2 &touchPoint) = 0;
     virtual void handleMoveLogic(const Vec2 &touchPoint) = 0;
     virtual void handleReleaseLogic(const Vec2 &touchPoint) = 0;
-    virtual void interceptTouchEvent(Widget::TouchEventType event, Widget* sender, const Vec2 &touchPoint) = 0;
 };
 
 }

@@ -460,7 +460,7 @@ public:
      * @param parent
      * @param point
      */
-    virtual void passTouchEventToParent(TouchEventType event,Widget* sender,const Vec2 &point);
+    virtual void interceptTouchEvent(TouchEventType event,Widget* sender,const Vec2 &point);
 
     virtual bool onTouchBegan(Touch *touch, Event *unusedEvent);
     virtual void onTouchMoved(Touch *touch, Event *unusedEvent);
@@ -623,8 +623,9 @@ protected:
     virtual void onPressStateChangedToDisabled();
     void pushDownEvent();
     void moveEvent();
-    void releaseUpEvent();
-    void cancelUpEvent();
+
+    virtual void releaseUpEvent();
+    virtual void cancelUpEvent();
     
     virtual void updateTextureColor(){};
     virtual void updateTextureOpacity(){};

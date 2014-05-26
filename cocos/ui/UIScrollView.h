@@ -334,7 +334,6 @@ protected:
     
     virtual void onSizeChanged() override;
     virtual void doLayout() override;
-    virtual void passTouchEventToParent(TouchEventType event,Widget* sender,const Vec2 &point) override;
 
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;

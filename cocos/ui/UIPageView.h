@@ -194,8 +194,6 @@ protected:
     virtual void handleReleaseLogic(const Vec2 &touchPoint) ;
     virtual void interceptTouchEvent(TouchEventType event, Widget* sender, const Vec2 &touchPoint) ;
     
-    //overrided functions
-    virtual void passTouchEventToParent(TouchEventType event,Widget* sender,const Vec2 &point) override;
     
     virtual void onSizeChanged() override;
     virtual Widget* createCloneInstance() override;

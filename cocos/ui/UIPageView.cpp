@@ -344,7 +344,7 @@ void PageView::onTouchMoved(Touch *touch, Event *unusedEvent)
     Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
-        widgetParent->passTouchEventToParent(TouchEventType::MOVED,this,_touchMovePos);
+        widgetParent->interceptTouchEvent(TouchEventType::MOVED,this,_touchMovePos);
     }
     moveEvent();
 }
@@ -497,10 +497,6 @@ void PageView::handleReleaseLogic(const Vec2 &touchPoint)
     }
 }
 
-void PageView::passTouchEventToParent(TouchEventType event,Widget* sender, const Vec2 &touchPoint)
-{
-    interceptTouchEvent(event, sender, touchPoint);
-}
 
 void PageView::interceptTouchEvent(TouchEventType event, Widget *sender, const Vec2 &touchPoint)
 {
