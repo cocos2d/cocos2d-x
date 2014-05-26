@@ -4,11 +4,6 @@
 -- @extend EventCustom
 
 --------------------------------
--- @function [parent=#EventAssetsManager] getAssetsManager 
--- @param self
--- @return AssetsManager#AssetsManager ret (return value: cc.AssetsManager)
-        
---------------------------------
 -- @function [parent=#EventAssetsManager] getAssetId 
 -- @param self
 -- @return string#string ret (return value: string)
@@ -19,9 +14,9 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- @function [parent=#EventAssetsManager] getEventCode 
+-- @function [parent=#EventAssetsManager] getAssetsManager 
 -- @param self
--- @return EventAssetsManager::EventCode#EventAssetsManager::EventCode ret (return value: cc.EventAssetsManager::EventCode)
+-- @return AssetsManager#AssetsManager ret (return value: cc.AssetsManager)
         
 --------------------------------
 -- @function [parent=#EventAssetsManager] getPercent 
@@ -29,13 +24,8 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- @function [parent=#EventAssetsManager] EventAssetsManager 
+-- @function [parent=#EventAssetsManager] getEventCode 
 -- @param self
--- @param #string str
--- @param #cc.AssetsManager assetsmanager
--- @param #cc.EventAssetsManager::EventCode eventcode
--- @param #float float
--- @param #string str
--- @param #string str
+-- @return EventAssetsManager::EventCode#EventAssetsManager::EventCode ret (return value: cc.EventAssetsManager::EventCode)
         
 return nil
