@@ -36,11 +36,6 @@
 #include <unordered_map>
 #include <vector>
 
-namespace cocos2d
-{
-    class EventListenerAssetsManager;
-}
-
 NS_CC_EXT_BEGIN
 
 /**
@@ -225,6 +220,6 @@ private:
     int _totalWaitToDownload;
 };
 
-NS_CC_EXT_END;
+NS_CC_EXT_END
 
 #endif /* defined(__AssetsManager__) */

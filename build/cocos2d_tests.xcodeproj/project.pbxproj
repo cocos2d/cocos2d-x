@@ -181,6 +181,8 @@
 		1A0EE57F18CDFBBE004CD58F /* StudioConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1ABCA37718CD9E180087CE3A /* StudioConstants.lua */; };
 		1A1645A6191B6281008C7C7F /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 1A221C9B191771E300FD2BE4 /* ccs-res */; };
 		1A1645A9191B6283008C7C7F /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 1A221C9B191771E300FD2BE4 /* ccs-res */; };
+		1A1AAACB192EE79200EFD411 /* Manifests in Resources */ = {isa = PBXBuildFile; fileRef = BA53B1B4192C4035002E0804 /* Manifests */; };
+		1A1AAACE192EE79500EFD411 /* Manifests in Resources */ = {isa = PBXBuildFile; fileRef = BA53B1B4192C4035002E0804 /* Manifests */; };
 		1A221C9C191771E300FD2BE4 /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 1A221C9B191771E300FD2BE4 /* ccs-res */; };
 		1A221C9D191771E400FD2BE4 /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 1A221C9B191771E300FD2BE4 /* ccs-res */; };
 		1A9F808D177E98A600D9A1CB /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9F808C177E98A600D9A1CB /* libcurl.dylib */; };
@@ -4318,6 +4320,7 @@
 				1AC35DC818CEE65100F37B72 /* TileMaps in Resources */,
 				1ABCA37C18CD9E180087CE3A /* Cocos2d.lua in Resources */,
 				1AC35DBE18CEE65100F37B72 /* fonts in Resources */,
+				1A1AAACB192EE79200EFD411 /* Manifests in Resources */,
 				1AC35DDE18CEE65900F37B72 /* CocosBuilderExample.ccbresourcelog in Resources */,
 				1AC35DBC18CEE65100F37B72 /* configs in Resources */,
 				1ABCA38818CD9E180087CE3A /* DeprecatedOpenglEnum.lua in Resources */,
@@ -4436,6 +4439,7 @@
 				1AC35D9C18CEE5D100F37B72 /* Icon-114.png in Resources */,
 				1ABCA38B18CD9E180087CE3A /* DrawPrimitives.lua in Resources */,
 				1ABCA39918CD9E180087CE3A /* OpenglConstants.lua in Resources */,
+				1A1AAACE192EE79500EFD411 /* Manifests in Resources */,
 				1ABCA37918CD9E180087CE3A /* AudioEngine.lua in Resources */,
 				1AC35D9F18CEE5D100F37B72 /* Icon-152.png in Resources */,
 				1AC35DEE18CEE65B00F37B72 /* background.mp3 in Resources */,
