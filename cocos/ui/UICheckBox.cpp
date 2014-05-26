@@ -615,6 +615,9 @@ void CheckBox::copySpecialProperties(Widget *widget)
         loadTextureBackGroundDisabled(checkBox->_backGroundDisabledFileName, checkBox->_backGroundDisabledTexType);
         loadTextureFrontCrossDisabled(checkBox->_frontCrossDisabledFileName, checkBox->_frontCrossDisabledTexType);
         setSelectedState(checkBox->_isSelected);
+        _checkBoxEventListener = checkBox->_checkBoxEventListener;
+        _checkBoxEventSelector = checkBox->_checkBoxEventSelector;
+        _checkBoxEventCallback = checkBox->_checkBoxEventCallback;
     }
 }
 

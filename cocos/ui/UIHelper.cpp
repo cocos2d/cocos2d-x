@@ -22,7 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CocosGUI.h"
+#include "ui/UIHelper.h"
+#include "ui/UIWidget.h"
 
 NS_CC_BEGIN
 

@@ -63,7 +63,8 @@ _opacity(255),
 _flippedX(false),
 _flippedY(false),
 _focused(false),
-_focusEnabled(true)
+_focusEnabled(true),
+_layoutParameterType(LayoutParameter::Type::NONE)
 {
     onFocusChanged = CC_CALLBACK_2(Widget::onFocusChange,this);
     onNextFocusedWidget = nullptr;
@@ -817,24 +818,24 @@ bool Widget::isEnabled() const
     return _enabled;
 }
 
-float Widget::getLeftInParent()
+float Widget::getLeftBoundary() const
 {
-    return getPosition().x - getAnchorPoint().x * _size.width;;
+    return getPosition().x - getAnchorPoint().x * _size.width;
 }
 
-float Widget::getBottomInParent()
+float Widget::getBottomBoundary() const
 {
-    return getPosition().y - getAnchorPoint().y * _size.height;;
+    return getPosition().y - getAnchorPoint().y * _size.height;
 }
 
-float Widget::getRightInParent()
+float Widget::getRightBoundary() const
 {
-    return getLeftInParent() + _size.width;
+    return getLeftBoundary() + _size.width;
 }
 
-float Widget::getTopInParent()
+float Widget::getTopBoundary() const
 {
-    return getBottomInParent() + _size.height;
+    return getBottomBoundary() + _size.height;
 }
 
 const Vec2& Widget::getTouchStartPos()
@@ -870,8 +871,14 @@ void Widget::setLayoutParameter(LayoutParameter *parameter)
         return;
     }
     _layoutParameterDictionary.insert((int)parameter->getLayoutType(), parameter);
+    _layoutParameterType = parameter->getLayoutType();
 }
 
+LayoutParameter* Widget::getLayoutParameter()
+{
+    return dynamic_cast<LayoutParameter*>(_layoutParameterDictionary.at((int)_layoutParameterType));
+}
+    
 LayoutParameter* Widget::getLayoutParameter(LayoutParameter::Type type)
 {
     return dynamic_cast<LayoutParameter*>(_layoutParameterDictionary.at((int)type));
@@ -927,7 +934,6 @@ void Widget::copyProperties(Widget *widget)
     _ignoreSize = widget->_ignoreSize;
     _size = widget->_size;
     _customSize = widget->_customSize;
-    copySpecialProperties(widget);
     _sizeType = widget->getSizeType();
     _sizePercent = widget->_sizePercent;
     _positionType = widget->_positionType;
@@ -943,6 +949,14 @@ void Widget::copyProperties(Widget *widget)
     setFlippedY(widget->isFlippedY());
     setColor(widget->getColor());
     setOpacity(widget->getOpacity());
+    _touchEventCallback = widget->_touchEventCallback;
+    _touchEventListener = widget->_touchEventListener;
+    _touchEventSelector = widget->_touchEventSelector;
+    _focused = widget->_focused;
+    _focusEnabled = widget->_focusEnabled;
+    
+    copySpecialProperties(widget);
+
     //FIXME:copy focus properties, also make sure all the subclass the copy behavior is correct
     Map<int, LayoutParameter*>& layoutParameterDic = widget->_layoutParameterDictionary;
     for (auto iter = layoutParameterDic.begin(); iter != layoutParameterDic.end(); ++iter)

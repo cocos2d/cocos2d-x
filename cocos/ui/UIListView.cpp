@@ -130,7 +130,7 @@ void ListView::remedyLayoutParameter(Widget *item)
     switch (_direction) {
         case Direction::VERTICAL:
         {
-            LinearLayoutParameter* llp = (LinearLayoutParameter*)(item->getLayoutParameter(LayoutParameter::Type::LINEAR));
+            LinearLayoutParameter* llp = (LinearLayoutParameter*)(item->getLayoutParameter());
             if (!llp)
             {
                 LinearLayoutParameter* defaultLp = LinearLayoutParameter::create();
@@ -185,7 +185,7 @@ void ListView::remedyLayoutParameter(Widget *item)
         }
         case Direction::HORIZONTAL:
         {
-            LinearLayoutParameter* llp = (LinearLayoutParameter*)(item->getLayoutParameter(LayoutParameter::Type::LINEAR));
+            LinearLayoutParameter* llp = (LinearLayoutParameter*)(item->getLayoutParameter());
             if (!llp)
             {
                 LinearLayoutParameter* defaultLp = LinearLayoutParameter::create();
@@ -546,6 +546,9 @@ void ListView::copySpecialProperties(Widget *widget)
         setItemModel(listViewEx->_model);
         setItemsMargin(listViewEx->_itemsMargin);
         setGravity(listViewEx->_gravity);
+        _listViewEventListener = listViewEx->_listViewEventListener;
+        _listViewEventSelector = listViewEx->_listViewEventSelector;
+        _eventCallback = listViewEx->_eventCallback;
     }
 }
 

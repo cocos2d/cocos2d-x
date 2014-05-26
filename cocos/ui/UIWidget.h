@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "ui/CCProtectedNode.h"
 #include "ui/UILayoutParameter.h"
 #include "ui/GUIDefine.h"
+#include "ui/UILayoutParameter.h"
 
 NS_CC_BEGIN
 
@@ -57,7 +58,7 @@ CC_DEPRECATED_ATTRIBUTE typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType)
 #endif
 
 
-class Widget : public ProtectedNode
+class Widget : public ProtectedNode, public LayoutParameterProtocol
 {
 public:
     enum class FocusDirection
@@ -200,28 +201,32 @@ public:
      *
      * @return The left boundary position of this widget.
      */
-    float getLeftInParent();
+    CC_DEPRECATED_ATTRIBUTE float getLeftInParent(){return this->getLeftBoundary();}
+    float getLeftBoundary() const;
 
     /**
      * Gets the bottom boundary position of this widget.
      *
      * @return The bottom boundary position of this widget.
      */
-    float getBottomInParent();
+    CC_DEPRECATED_ATTRIBUTE float getBottomInParent(){return this->getBottomBoundary();}
+    float getBottomBoundary() const;
 
     /**
      * Gets the right boundary position of this widget.
      *
      * @return The right boundary position of this widget.
      */
-    float getRightInParent();
+    CC_DEPRECATED_ATTRIBUTE float getRightInParent(){return this->getRightBoundary();}
+    float getRightBoundary() const;
 
     /**
      * Gets the top boundary position of this widget.
      *
      * @return The top boundary position of this widget.
      */
-    float getTopInParent();
+    CC_DEPRECATED_ATTRIBUTE float getTopInParent(){return this->getTopBoundary();}
+    float getTopBoundary() const;
 
     /**
      * Gets a child from the container with its name
@@ -482,7 +487,9 @@ public:
      *
      * @return LayoutParameter
      */
-    LayoutParameter* getLayoutParameter(LayoutParameter::Type type);
+    LayoutParameter* getLayoutParameter() override;
+    CC_DEPRECATED_ATTRIBUTE LayoutParameter* getLayoutParameter(LayoutParameter::Type type);
+
 
     /**
      * Ignore the widget size
@@ -676,9 +683,12 @@ protected:
     Size _size;
     Size _customSize;
     bool _ignoreSize;
-    bool _affectByClipping;
+
     SizeType _sizeType;
     Vec2 _sizePercent;
+
+    bool _affectByClipping;
+
     PositionType _positionType;
     Vec2 _positionPercent;
     bool _reorderWidgetChildDirty;
@@ -688,8 +698,10 @@ protected:
     GLubyte _opacity;
     bool _flippedX;
     bool _flippedY;
-    Map<int, LayoutParameter*> _layoutParameterDictionary;
-    
+    //use map to enble switch back and forth for user layout parameters
+    Map<int,LayoutParameter*> _layoutParameterDictionary;
+    LayoutParameter::Type _layoutParameterType;
+
     bool _focused;
     bool _focusEnabled;
     

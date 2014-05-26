@@ -355,6 +355,28 @@ void VideoPlayer::onPlayEvent(VideoPlayer::EventType event)
     }
 }
 
+cocos2d::ui::Widget* VideoPlayer::createCloneInstance()
+{
+    return VideoPlayer::create();
+}
+
+void VideoPlayer::copySpecialProperties(Widget *widget)
+{
+    VideoPlayer* videoPlayer = dynamic_cast<VideoPlayer*>(widget);
+    if (videoPlayer)
+    {
+        _isPlaying = videoPlayer->_isPlaying;
+        _fullScreenEnabled = videoPlayer->_fullScreenEnabled;
+        _fullScreenDirty = videoPlayer->_fullScreenDirty;
+        _videoURL = videoPlayer->_videoURL;
+        _keepAspectRatioEnabled = videoPlayer->_keepAspectRatioEnabled;
+        _videoSource = videoPlayer->_videoSource;
+        _videoPlayerIndex = videoPlayer->_videoPlayerIndex;
+        _eventCallback = videoPlayer->_eventCallback;
+        _videoView = videoPlayer->_videoView;
+    }
+}
+
 void executeVideoCallback(int index,int event)
 {
     auto it = s_allVideoPlayers.find(index);

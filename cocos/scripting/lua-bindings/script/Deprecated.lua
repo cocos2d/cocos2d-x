@@ -1195,4 +1195,13 @@ end
 rawset(ccui.Text,"getStringValue", TextBMFontDeprecated.getStringValue)
 --functions of ccui.TextBMFont will be deprecated begin
 
+--functions of cc.ShaderCache will be deprecated begin
+local ShaderCacheDeprecated = { }
+function ShaderCacheDeprecated.getProgram(self,strShader)
+    deprecatedTip("cc.ShaderCache:getProgram","cc.ShaderCache:getGLProgram")
+    return self:getGLProgram(strShader)
+end
+rawset(cc.ShaderCache,"getProgram", ShaderCacheDeprecated.getProgram)
+--functions of ccui.TextBMFont will be deprecated begin
+
 
