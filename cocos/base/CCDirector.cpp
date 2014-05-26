@@ -1230,8 +1230,6 @@ void Director::onCaptureScreen(const std::function<void(bool, const std::string&
     frameSize = frameSize * _openGLView->getFrameZoomFactor() * _openGLView->getRetinaFactor();
 #endif
     
-    int originx = 0;
-    int originy = 0;
     int width = static_cast<int>(frameSize.width);
     int height = static_cast<int>(frameSize.height);
     
@@ -1247,7 +1245,7 @@ void Director::onCaptureScreen(const std::function<void(bool, const std::string&
         }
         
         glPixelStorei(GL_PACK_ALIGNMENT, 1);
-        glReadPixels(originx, originy, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer.get());
+        glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer.get());
         
         std::shared_ptr<GLubyte> flippedBuffer(new GLubyte[width * height * 4], [](GLubyte* p) { CC_SAFE_DELETE_ARRAY(p); });
         if (!flippedBuffer)
