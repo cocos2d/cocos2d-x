@@ -273,10 +273,12 @@ void AssetsManager::renameFile(const std::string &path, const std::string &oldna
 {
     // Rename a file
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
-    std::string command = "mv -f ";
-    // Path may include space.
-    command += "\"" + path + oldname + "\" \"" + path + name + "\"";
-    system(command.c_str());
+    std::string oldPath = path + oldname;
+    std::string newPath = path + name;
+    if (rename(oldPath.c_str(), newPath.c_str()) != 0)
+    {
+        CCLOGERROR("Error: Rename file %s to %s !", oldPath.c_str(), newPath.c_str());
+    }
 #else
     std::string command = "ren ";
     // Path may include space.
@@ -302,6 +304,7 @@ void AssetsManager::downloadVersion()
         return;
 
     std::string versionUrl = _localManifest->getVersionFileUrl();
+
     if (versionUrl.size() > 0)
     {
         _updateState = State::DOWNLOADING_VERSION;
