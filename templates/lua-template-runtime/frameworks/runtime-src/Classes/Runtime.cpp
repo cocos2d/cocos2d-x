@@ -205,6 +205,10 @@ public:
     void update( float fDelta )  
     {  
         s_FileNameMutex.lock();
+        if (s_strFile.length() < 1)
+        {
+            return;
+        }
         _labelUploadFile->setString(s_strFile);
         s_FileNameMutex.unlock();
     } 
