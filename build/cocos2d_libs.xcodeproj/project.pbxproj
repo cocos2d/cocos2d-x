@@ -973,10 +973,6 @@
 		2905FA8E18CF08D100240AA3 /* UIWidget.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA1418CF08D100240AA3 /* UIWidget.h */; };
 		2905FA8F18CF08D100240AA3 /* UIWidget.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA1418CF08D100240AA3 /* UIWidget.h */; };
 		2986667F18B1B246000E39CA /* CCTweenFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2986667818B1B079000E39CA /* CCTweenFunction.cpp */; };
-		29AD4D2019330D5000C0469E /* UIFocusManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29AD4D1E19330D5000C0469E /* UIFocusManager.cpp */; };
-		29AD4D2119330D5000C0469E /* UIFocusManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29AD4D1E19330D5000C0469E /* UIFocusManager.cpp */; };
-		29AD4D2219330D5000C0469E /* UIFocusManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 29AD4D1F19330D5000C0469E /* UIFocusManager.h */; };
-		29AD4D2319330D5000C0469E /* UIFocusManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 29AD4D1F19330D5000C0469E /* UIFocusManager.h */; };
 		29CB8F4C1929D1BB00C841D6 /* UILayoutExecutant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29CB8F4A1929D1BB00C841D6 /* UILayoutExecutant.cpp */; };
 		29CB8F4D1929D1BB00C841D6 /* UILayoutExecutant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29CB8F4A1929D1BB00C841D6 /* UILayoutExecutant.cpp */; };
 		29CB8F4E1929D1BB00C841D6 /* UILayoutExecutant.h in Headers */ = {isa = PBXBuildFile; fileRef = 29CB8F4B1929D1BB00C841D6 /* UILayoutExecutant.h */; };
@@ -2260,8 +2256,6 @@
 		29080DEB191B82CE0066F8DF /* UIDeprecated.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIDeprecated.h; sourceTree = "<group>"; };
 		2986667818B1B079000E39CA /* CCTweenFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTweenFunction.cpp; sourceTree = "<group>"; };
 		2986667918B1B079000E39CA /* CCTweenFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTweenFunction.h; sourceTree = "<group>"; };
-		29AD4D1E19330D5000C0469E /* UIFocusManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIFocusManager.cpp; sourceTree = "<group>"; };
-		29AD4D1F19330D5000C0469E /* UIFocusManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIFocusManager.h; sourceTree = "<group>"; };
 		29CB8F4A1929D1BB00C841D6 /* UILayoutExecutant.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILayoutExecutant.cpp; sourceTree = "<group>"; };
 		29CB8F4B1929D1BB00C841D6 /* UILayoutExecutant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILayoutExecutant.h; sourceTree = "<group>"; };
 		29CB8F541929D7A900C841D6 /* UIScrollInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIScrollInterface.h; sourceTree = "<group>"; };
@@ -3947,8 +3941,6 @@
 		29CB8F511929D64500C841D6 /* base */ = {
 			isa = PBXGroup;
 			children = (
-				29AD4D1E19330D5000C0469E /* UIFocusManager.cpp */,
-				29AD4D1F19330D5000C0469E /* UIFocusManager.h */,
 				29080DEB191B82CE0066F8DF /* UIDeprecated.h */,
 				2905FA1318CF08D100240AA3 /* UIWidget.cpp */,
 				2905FA1418CF08D100240AA3 /* UIWidget.h */,
@@ -5044,7 +5036,6 @@
 				50ABBE9D1925AB6F00A911A9 /* CCRefPtr.h in Headers */,
 				1AD71DBF180E26E600808F54 /* CCBSequence.h in Headers */,
 				1AD71DC3180E26E600808F54 /* CCBSequenceProperty.h in Headers */,
-				29AD4D2219330D5000C0469E /* UIFocusManager.h in Headers */,
 				5034CA31191D591100CE6051 /* ccShader_PositionTexture_uColor.vert in Headers */,
 				1AD71DCB180E26E600808F54 /* CCControlButtonLoader.h in Headers */,
 				1AD71DCF180E26E600808F54 /* CCControlLoader.h in Headers */,
@@ -5553,7 +5544,6 @@
 				1AD71DDC180E26E600808F54 /* CCLayerColorLoader.h in Headers */,
 				1AD71DE0180E26E600808F54 /* CCLayerGradientLoader.h in Headers */,
 				1AD71DE4180E26E600808F54 /* CCLayerLoader.h in Headers */,
-				29AD4D2319330D5000C0469E /* UIFocusManager.h in Headers */,
 				50ABBEC81925AB6F00A911A9 /* etc1.h in Headers */,
 				1AD71DE8180E26E600808F54 /* CCMenuItemImageLoader.h in Headers */,
 				50E6D31118DAF01E0051CA34 /* CCProtectedNode.h in Headers */,
@@ -6053,7 +6043,6 @@
 				50ABBE2B1925AB6F00A911A9 /* ccCArray.cpp in Sources */,
 				2AC795DC1862870F005EC8E1 /* Event.cpp in Sources */,
 				1A01C68A18F57BE800EFE3A6 /* CCDeprecated.cpp in Sources */,
-				29AD4D2019330D5000C0469E /* UIFocusManager.cpp in Sources */,
 				1A1645B0191B726C008C7C7F /* ConvertUTF.c in Sources */,
 				2905FA5618CF08D100240AA3 /* UILayout.cpp in Sources */,
 				2AC795DD1862870F005EC8E1 /* EventData.cpp in Sources */,
@@ -6642,7 +6631,6 @@
 				1AD71DAA180E26E600808F54 /* CCBAnimationManager.cpp in Sources */,
 				50ABBD881925AB4100A911A9 /* CCCustomCommand.cpp in Sources */,
 				50ABBE941925AB6F00A911A9 /* CCProfiling.cpp in Sources */,
-				29AD4D2119330D5000C0469E /* UIFocusManager.cpp in Sources */,
 				1AD71DAE180E26E600808F54 /* CCBFileLoader.cpp in Sources */,
 				1AD71DB2180E26E600808F54 /* CCBKeyframe.cpp in Sources */,
 				1AD71DB8180E26E600808F54 /* CCBReader.cpp in Sources */,

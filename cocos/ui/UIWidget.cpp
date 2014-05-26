@@ -25,11 +25,108 @@ THE SOFTWARE.
 #include "ui/UIWidget.h"
 #include "ui/UILayout.h"
 #include "ui/UIHelper.h"
-#include "ui/UIFocusManager.h"
 
 NS_CC_BEGIN
 
 namespace ui {
+    
+class Widget::FocusNavigationController
+{
+    void enableFocusNavigation(bool flag);
+    
+    FocusNavigationController():
+    _keyboardListener(nullptr),
+    _firstFocusedWidget(nullptr),
+    _enableFocusNavigation(false),
+    _keyboardEventPriority(1)
+    {
+        //no-op
+    }
+    ~FocusNavigationController();
+protected:
+    void setFirstFocsuedWidget(Widget* widget);
+    
+    void onKeypadKeyPressed(EventKeyboard::KeyCode, Event*);
+    
+    void addKeyboardEventListener();
+    void removeKeyboardEventListener();
+    
+    friend class Widget;
+private:
+    EventListenerKeyboard* _keyboardListener ;
+    Widget* _firstFocusedWidget ;
+    bool _enableFocusNavigation ;
+    const int _keyboardEventPriority;
+};
+    
+Widget::FocusNavigationController::~FocusNavigationController()
+{
+    this->removeKeyboardEventListener();
+}
+
+void Widget::FocusNavigationController::onKeypadKeyPressed(EventKeyboard::KeyCode  keyCode, Event *event)
+{
+    if (_enableFocusNavigation && _firstFocusedWidget)
+    {
+        if (keyCode == EventKeyboard::KeyCode::KEY_DPAD_DOWN)
+        {
+            _firstFocusedWidget = _firstFocusedWidget->findNextFocusedWidget(Widget::FocusDirection::DOWN, _firstFocusedWidget);
+        }
+        if (keyCode == EventKeyboard::KeyCode::KEY_DPAD_UP)
+        {
+            _firstFocusedWidget = _firstFocusedWidget->findNextFocusedWidget(Widget::FocusDirection::UP, _firstFocusedWidget);
+        }
+        if (keyCode == EventKeyboard::KeyCode::KEY_DPAD_LEFT)
+        {
+            _firstFocusedWidget = _firstFocusedWidget->findNextFocusedWidget(Widget::FocusDirection::LEFT, _firstFocusedWidget);
+        }
+        if (keyCode == EventKeyboard::KeyCode::KEY_DPAD_RIGHT)
+        {
+            _firstFocusedWidget = _firstFocusedWidget->findNextFocusedWidget(Widget::FocusDirection::RIGHT, _firstFocusedWidget);
+        }
+    }
+}
+
+void Widget::FocusNavigationController::enableFocusNavigation(bool flag)
+{
+    if (_enableFocusNavigation == flag)
+        return;
+    
+    _enableFocusNavigation = flag;
+    
+    if (flag)
+        this->addKeyboardEventListener();
+    else
+        this->removeKeyboardEventListener();
+}
+
+void Widget::FocusNavigationController::setFirstFocsuedWidget(Widget* widget)
+{
+    _firstFocusedWidget = widget;
+}
+
+void Widget::FocusNavigationController::addKeyboardEventListener()
+{
+    if (nullptr == _keyboardListener)
+    {
+        CCASSERT(_firstFocusedWidget != nullptr, "Please set the first focused widget first!");
+        
+        _keyboardListener = EventListenerKeyboard::create();
+        _keyboardListener->onKeyReleased = CC_CALLBACK_2(Widget::FocusNavigationController::onKeypadKeyPressed, this);
+        EventDispatcher* dispatcher = Director::getInstance()->getEventDispatcher();
+        dispatcher->addEventListenerWithFixedPriority(_keyboardListener, _keyboardEventPriority);
+    }
+}
+
+void Widget::FocusNavigationController::removeKeyboardEventListener()
+{
+    if (nullptr != _keyboardListener)
+    {
+        EventDispatcher* dispatcher = Director::getInstance()->getEventDispatcher();
+        dispatcher->removeEventListener(_keyboardListener);
+        _keyboardListener = nullptr;
+    }
+}
 
 Widget* Widget::_focusedWidget = nullptr;
 Widget* Widget::_realFocusedWidget = nullptr;
@@ -64,7 +161,8 @@ _flippedX(false),
 _flippedY(false),
 _focused(false),
 _focusEnabled(true),
-_layoutParameterType(LayoutParameter::Type::NONE)
+_layoutParameterType(LayoutParameter::Type::NONE),
+_focusNavigationController(nullptr)
 {
     onFocusChanged = CC_CALLBACK_2(Widget::onFocusChange,this);
     onNextFocusedWidget = nullptr;
@@ -77,10 +175,11 @@ Widget::~Widget()
     setTouchEnabled(false);
     
     //cleanup focused widget
-    if (_focusedWidget == this) {
+    if (_focusedWidget == this || _realFocusedWidget == this)
+    {
+        //delete
+        CC_SAFE_DELETE(_focusNavigationController);
         _focusedWidget = nullptr;
-    }
-    if (_realFocusedWidget == this) {
         _realFocusedWidget = nullptr;
     }
 }
@@ -1121,7 +1220,7 @@ void Widget::requestFocus()
     }
     
     this->dispatchFocusEvent(_focusedWidget, this);
-    FocusManager::getInstance()->setFirstFocsuedWidget(this);
+    _focusNavigationController->setFirstFocsuedWidget(this);
 }
     
 void Widget::onFocusChange(Widget* widgetLostFocus, Widget* widgetGetFocus)
@@ -1140,12 +1239,27 @@ void Widget::onFocusChange(Widget* widgetLostFocus, Widget* widgetGetFocus)
 
 Widget* Widget::getCurrentFocusedWidget(bool isWidget)
 {
-    if (isWidget) {
+    if (isWidget)
+    {
         return _realFocusedWidget;
     }
     return _focusedWidget;
 }
 
+void Widget::enableDpadNavigation(bool enable)
+{
+    if (enable)
+    {
+        if (nullptr == _focusNavigationController) {
+            _focusNavigationController = new FocusNavigationController;
+        }
+    }
+    else
+    {
+        CC_SAFE_DELETE(_focusNavigationController);
+    }
+    _focusNavigationController->enableFocusNavigation(enable);
+}
 
 
 }

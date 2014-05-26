@@ -705,12 +705,18 @@ protected:
 
     bool _focused;
     bool _focusEnabled;
-    
+
+
     /**
      * store the only one focued widget
      */
     static Widget *_focusedWidget;  //both layout & widget will be stored in this variable
     static Widget *_realFocusedWidget; //only the widget class will be stored in this variable
+
+private:
+    class FocusNavigationController;
+    FocusNavigationController* _focusNavigationController;
+
 public:
     /**
      * no matter what widget object you call this method on , it will return you the exact one focused widget
@@ -718,7 +724,8 @@ public:
      *                  otherwise, it will return a widget or a layout
      */
     Widget* getCurrentFocusedWidget(bool isWidget);
-    
+    void enableDpadNavigation(bool enable);
+
     std::function<void(Widget*,Widget*)> onFocusChanged;
     std::function<Widget*(FocusDirection)> onNextFocusedWidget;
 };
