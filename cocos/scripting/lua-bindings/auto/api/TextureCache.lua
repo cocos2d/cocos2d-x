@@ -10,6 +10,10 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- @function [parent=#TextureCache] unbindAllImageAsync 
+-- @param self
+        
+--------------------------------
 -- @function [parent=#TextureCache] removeTextureForKey 
 -- @param self
 -- @param #string str
@@ -39,6 +43,11 @@
 -- @param #string str
 -- @return Texture2D#Texture2D ret (retunr value: cc.Texture2D)
 
+--------------------------------
+-- @function [parent=#TextureCache] unbindImageAsync 
+-- @param self
+-- @param #string str
+        
 --------------------------------
 -- @function [parent=#TextureCache] getTextureForKey 
 -- @param self
