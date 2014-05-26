@@ -220,7 +220,7 @@ void AssetsManager::createDirectory(const std::string& path)
 
     // Create path recursively
     subpath = "";
-    for (int i = 0; i < dirs.size(); i++) {
+    for (int i = 0; i < dirs.size(); ++i) {
         subpath += dirs[i];
         dir = opendir (subpath.c_str());
         if (!dir)
@@ -441,7 +441,7 @@ void AssetsManager::startUpdate()
             _downloadUnits.clear();
             _totalWaitToDownload = _totalToDownload = 0;
             std::string packageUrl = _remoteManifest->getPackageUrl();
-            for (auto it = diff_map.begin(); it != diff_map.end(); it++) {
+            for (auto it = diff_map.begin(); it != diff_map.end(); ++it) {
                 Manifest::AssetDiff diff = it->second;
 
                 if (diff.type == Manifest::DiffType::DELETED) {
@@ -568,7 +568,7 @@ void AssetsManager::update()
 
 void AssetsManager::batchDownload(const std::unordered_map<std::string, Downloader::DownloadUnit> &units)
 {
-    for (auto it = units.cbegin(); it != units.cend(); it++) {
+    for (auto it = units.cbegin(); it != units.cend(); ++it) {
         Downloader::DownloadUnit unit = it->second;
         std::string srcUrl = unit.srcUrl;
         std::string storagePath = unit.storagePath;
