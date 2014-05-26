@@ -50,23 +50,12 @@ namespace ui {
     
     FocusManager::~FocusManager()
     {
-        if (nullptr != _keyboardListener)
-        {
-            EventDispatcher* dispatcher = Director::getInstance()->getEventDispatcher();
-            dispatcher->removeEventListener(_keyboardListener);
-            _keyboardListener = nullptr;
-        }
+        this->removeKeyboardEventListener();
     }
     
     void FocusManager::onKeypadKeyPressed(EventKeyboard::KeyCode  keyCode, Event *event)
     {
-        
-        if (onKeypadReleased != nullptr)
-        {
-            onKeypadReleased(keyCode, event);
-        }
-
-        if (_enableAndroidDpad)
+        if (_enableFocusNavigation && _firstFocusedWidget)
         {
             if (keyCode == EventKeyboard::KeyCode::KEY_DPAD_DOWN)
             {
@@ -87,39 +76,45 @@ namespace ui {
         }
     }
     
-    void FocusManager::enableAndroidDpad(bool flag)
+    void FocusManager::enableFocusNavigation(bool flag)
     {
-        if (_enableAndroidDpad == flag)
-        {
+        if (_enableFocusNavigation == flag)
             return;
-        }
         
-        _enableAndroidDpad = flag;
+        _enableFocusNavigation = flag;
         
         if (flag)
-        {
-            if (nullptr == _keyboardListener)
-            {
-                _keyboardListener = EventListenerKeyboard::create();
-                _keyboardListener->onKeyReleased = CC_CALLBACK_2(FocusManager::onKeypadKeyPressed, this);
-                EventDispatcher* dispatcher = Director::getInstance()->getEventDispatcher();
-                dispatcher->addEventListenerWithFixedPriority(_keyboardListener, keyboardEventPriority);
-            }
-        }
+            this->addKeyboardEventListener();
         else
-        {
-            if (nullptr != _keyboardListener)
-            {
-                EventDispatcher* dispatcher = Director::getInstance()->getEventDispatcher();
-                dispatcher->removeEventListener(_keyboardListener);
-                _keyboardListener = nullptr;
-            }
-        }
+            this->removeKeyboardEventListener();
     }
     
     void FocusManager::setFirstFocsuedWidget(Widget* widget)
     {
         _firstFocusedWidget = widget;
+    }
+    
+    void FocusManager::addKeyboardEventListener()
+    {
+        if (nullptr == _keyboardListener)
+        {
+            CCASSERT(_firstFocusedWidget != nullptr, "Please set the first focused widget first!");
+            
+            _keyboardListener = EventListenerKeyboard::create();
+            _keyboardListener->onKeyReleased = CC_CALLBACK_2(FocusManager::onKeypadKeyPressed, this);
+            EventDispatcher* dispatcher = Director::getInstance()->getEventDispatcher();
+            dispatcher->addEventListenerWithFixedPriority(_keyboardListener, keyboardEventPriority);
+        }
+    }
+    
+    void FocusManager::removeKeyboardEventListener()
+    {
+        if (nullptr != _keyboardListener)
+        {
+            EventDispatcher* dispatcher = Director::getInstance()->getEventDispatcher();
+            dispatcher->removeEventListener(_keyboardListener);
+            _keyboardListener = nullptr;
+        }
     }
 }
 

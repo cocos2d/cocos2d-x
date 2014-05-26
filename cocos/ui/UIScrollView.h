@@ -383,9 +383,6 @@ protected:
     void bounceLeftEvent();
     void bounceRightEvent();
     
-    
-    virtual void onFocusChanged(Widget* widgetLostFocus, Widget* widgetGetFocus);
-
 protected:
     Layout* _innerContainer;
     
@@ -432,8 +429,6 @@ protected:
     Vec2 _bounceDir;
     float _bounceOriginalSpeed;
     bool _inertiaScrollEnabled;
-
-    EventListenerFocus *_eventListener;
     
     Ref* _scrollViewEventListener;
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))

@@ -136,10 +136,7 @@ void ScrollView::onEnter()
 {
     Layout::onEnter();
     scheduleUpdate();
-    _eventListener = EventListenerFocus::create();
-    _eventListener->onFocusChanged = CC_CALLBACK_2(ScrollView::onFocusChanged, this);
-    
-    _eventDispatcher->addEventListenerWithFixedPriority(_eventListener, 1);
+   
 }
 
 bool ScrollView::init()
@@ -880,14 +877,14 @@ bool ScrollView::scrollChildrenVertical(float touchOffsetX, float touchOffsetY)
     bool scrollEnabled = false;
     if (_bounceEnabled)
     {
-        float icBottomPos = _innerContainer->getBottomInParent();
+        float icBottomPos = _innerContainer->getBottomBoundary();
         if (icBottomPos + touchOffsetY >= _bounceBottomBoundary)
         {
             realOffset = _bounceBottomBoundary - icBottomPos;
             scrollToBottomEvent();
             scrollEnabled = false;
         }
-        float icTopPos = _innerContainer->getTopInParent();
+        float icTopPos = _innerContainer->getTopBoundary();
         if (icTopPos + touchOffsetY <= _bounceTopBoundary)
         {
             realOffset = _bounceTopBoundary - icTopPos;
@@ -898,14 +895,14 @@ bool ScrollView::scrollChildrenVertical(float touchOffsetX, float touchOffsetY)
     }
     else
     {
-        float icBottomPos = _innerContainer->getBottomInParent();
+        float icBottomPos = _innerContainer->getBottomBoundary();
         if (icBottomPos + touchOffsetY >= _bottomBoundary)
         {
             realOffset = _bottomBoundary - icBottomPos;
             scrollToBottomEvent();
             scrollEnabled = false;
         }
-        float icTopPos = _innerContainer->getTopInParent();
+        float icTopPos = _innerContainer->getTopBoundary();
         if (icTopPos + touchOffsetY <= _topBoundary)
         {
             realOffset = _topBoundary - icTopPos;
@@ -923,14 +920,14 @@ bool ScrollView::scrollChildrenHorizontal(float touchOffsetX, float touchOffestY
     float realOffset = touchOffsetX;
     if (_bounceEnabled)
     {
-        float icRightPos = _innerContainer->getRightInParent();
+        float icRightPos = _innerContainer->getRightBoundary();
         if (icRightPos + touchOffsetX <= _bounceRightBoundary)
         {
             realOffset = _bounceRightBoundary - icRightPos;
             scrollToRightEvent();
             scrollenabled = false;
         }
-        float icLeftPos = _innerContainer->getLeftInParent();
+        float icLeftPos = _innerContainer->getLeftBoundary();
         if (icLeftPos + touchOffsetX >= _bounceLeftBoundary)
         {
             realOffset = _bounceLeftBoundary - icLeftPos;
@@ -940,14 +937,14 @@ bool ScrollView::scrollChildrenHorizontal(float touchOffsetX, float touchOffestY
     }
     else
     {
-        float icRightPos = _innerContainer->getRightInParent();
+        float icRightPos = _innerContainer->getRightBoundary();
         if (icRightPos + touchOffsetX <= _rightBoundary)
         {
             realOffset = _rightBoundary - icRightPos;
             scrollToRightEvent();
             scrollenabled = false;
         }
-        float icLeftPos = _innerContainer->getLeftInParent();
+        float icLeftPos = _innerContainer->getLeftBoundary();
         if (icLeftPos + touchOffsetX >= _leftBoundary)
         {
             realOffset = _leftBoundary - icLeftPos;
@@ -968,7 +965,7 @@ bool ScrollView::scrollChildrenBoth(float touchOffsetX, float touchOffsetY)
     {
         if (touchOffsetX > 0.0f && touchOffsetY > 0.0f) // up right
         {
-            float icLeftPos = _innerContainer->getLeftInParent();
+            float icLeftPos = _innerContainer->getLeftBoundary();
 
             if (icLeftPos + touchOffsetX >= _bounceLeftBoundary)
             {
@@ -1804,23 +1801,6 @@ Widget* ScrollView::findNextFocusedWidget(cocos2d::ui::Widget::FocusDirection di
     }
 }
     
-void ScrollView::onFocusChanged(cocos2d::ui::Widget *widgetLostFocus, cocos2d::ui::Widget *widgetGetFocus)
-{
-    if (dynamic_cast<Layout*>(widgetGetFocus) || dynamic_cast<Layout*>(widgetLostFocus)) {
-        return;
-    }
-    if (this->getLayoutType() == Layout::Type::VERTICAL) {
-        float loseFocusWidgetBoundary = widgetLostFocus->getTopInParent();
-        float getFocusWidgetBoundary = widgetGetFocus->getTopInParent();
-    
-        if (loseFocusWidgetBoundary >= getFocusWidgetBoundary) {
-            CCLOG("down");
-        }
-        else{
-            CCLOG("up");
-        }
-    }
-}
 
 }
 
