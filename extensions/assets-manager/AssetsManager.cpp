@@ -60,6 +60,9 @@ AssetsManager::AssetsManager(const std::string& manifestUrl, const std::string& 
 , _percent(0)
 , _manifestUrl(manifestUrl)
 , _storagePath("")
+, _cacheVersionPath("")
+, _cacheManifestPath("")
+, _tempManifestPath("")
 , _assets(nullptr)
 , _localManifest(nullptr)
 , _remoteManifest(nullptr)
@@ -82,6 +85,9 @@ AssetsManager::AssetsManager(const std::string& manifestUrl, const std::string& 
                                          std::placeholders::_4);
     _downloader->_onSuccess = std::bind(&AssetsManager::onSuccess, this, std::placeholders::_1, std::placeholders::_2);
     setStoragePath(storagePath);
+    _cacheVersionPath = _storagePath + VERSION_FILENAME;
+    _cacheManifestPath = _storagePath + MANIFEST_FILENAME;
+    _tempManifestPath = _storagePath + TEMP_MANIFEST_FILENAME;
 
     _localManifest = new Manifest();
     loadManifest(manifestUrl);
@@ -91,7 +97,7 @@ AssetsManager::AssetsManager(const std::string& manifestUrl, const std::string& 
 
 AssetsManager::~AssetsManager()
 {
-    removeFile(_storagePath + TEMP_MANIFEST_FILENAME);
+    removeFile(_tempManifestPath);
     _downloader->_onError = nullptr;
     _downloader->_onSuccess = nullptr;
     _downloader->_onProgress = nullptr;
@@ -124,16 +130,15 @@ void AssetsManager::prepareLocalManifest()
 
 void AssetsManager::loadManifest(const std::string& manifestUrl)
 {
-    std::string cachedManifest = _storagePath + MANIFEST_FILENAME;
     // Prefer to use the cached manifest file, if not found use user configured manifest file
     // Prepend storage path to avoid multi package conflict issue
-    if (_fileUtils->isFileExist(cachedManifest))
+    if (_fileUtils->isFileExist(_cacheManifestPath))
     {
-        _localManifest->parse(cachedManifest);
+        _localManifest->parse(_cacheManifestPath);
         if (_localManifest->isLoaded())
             prepareLocalManifest();
         else
-            removeFile(cachedManifest);
+            removeFile(_cacheManifestPath);
     }
     // Fail to found or load cached manifest file
     else
@@ -306,7 +311,7 @@ void AssetsManager::downloadVersion()
     {
         _updateState = State::DOWNLOADING_VERSION;
         // Download version file asynchronously
-        _downloader->downloadAsync(versionUrl, _storagePath + VERSION_FILENAME, VERSION_ID);
+        _downloader->downloadAsync(versionUrl, _cacheVersionPath, VERSION_ID);
     }
     // No version file found
     else
@@ -322,7 +327,7 @@ void AssetsManager::parseVersion()
     if (_updateState != State::VERSION_LOADED)
         return;
 
-    _remoteManifest->parse(_storagePath + VERSION_FILENAME);
+    _remoteManifest->parse(_cacheVersionPath);
 
     if (!_remoteManifest->isVersionLoaded())
     {
@@ -362,7 +367,7 @@ void AssetsManager::downloadManifest()
     {
         _updateState = State::DOWNLOADING_MANIFEST;
         // Download version file asynchronously
-        _downloader->downloadAsync(manifestUrl, _storagePath + TEMP_MANIFEST_FILENAME, MANIFEST_ID);
+        _downloader->downloadAsync(manifestUrl, _tempManifestPath, MANIFEST_ID);
     }
     // No manifest file found
     else
@@ -378,21 +383,21 @@ void AssetsManager::parseManifest()
     if (_updateState != State::MANIFEST_LOADED)
         return;
 
-    _remoteManifest->parse(_storagePath + TEMP_MANIFEST_FILENAME);
+    _remoteManifest->parse(_tempManifestPath);
 
     if (!_remoteManifest->isLoaded())
     {
         CCLOG("Error parsing manifest file\n");
         dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_PARSE_MANIFEST);
         _updateState = State::UNCHECKED;
-        removeFile(_storagePath + TEMP_MANIFEST_FILENAME);
+        removeFile(_tempManifestPath);
     }
     else
     {
         if (_localManifest->versionEquals(_remoteManifest))
         {
             _updateState = State::UP_TO_DATE;
-            removeFile(_storagePath + TEMP_MANIFEST_FILENAME);
+            removeFile(_tempManifestPath);
             dispatchUpdateEvent(EventAssetsManager::EventCode::ALREADY_UP_TO_DATE);
         }
         else
@@ -647,8 +652,8 @@ void AssetsManager::onSuccess(const std::string &srcUrl, const std::string &cust
 
 void AssetsManager::destroyDownloadedVersion()
 {
-    removeFile(_storagePath + VERSION_FILENAME);
-    removeFile(_storagePath + MANIFEST_FILENAME);
+    removeFile(_cacheVersionPath);
+    removeFile(_cacheManifestPath);
 }
 
 NS_CC_EXT_END
