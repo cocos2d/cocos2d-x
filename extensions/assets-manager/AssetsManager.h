@@ -36,11 +36,6 @@
 #include <unordered_map>
 #include <vector>
 
-namespace cocos2d
-{
-    class EventListenerAssetsManager;
-}
-
 NS_CC_EXT_BEGIN
 
 /**
@@ -121,8 +116,6 @@ protected:
     
     void adjustPath(std::string &path);
     
-    void prependSearchPath(const std::string &path);
-    
     void dispatchUpdateEvent(EventAssetsManager::EventCode code, std::string message = "", std::string assetId = "");
     
     void createDirectory(const std::string &path);
@@ -178,9 +171,6 @@ protected:
     
 private:
     
-    //! The root of writable path
-    static std::string s_nWritableRoot;
-    
     //! The event of the current AssetsManager in event dispatcher
     std::string _eventName;
     
@@ -200,6 +190,15 @@ private:
     
     //! The path to store downloaded resources.
     std::string _storagePath;
+    
+    //! The local path of cached version file
+    std::string _cacheVersionPath;
+    
+    //! The local path of cached manifest file
+    std::string _cacheManifestPath;
+    
+    //! The local path of cached temporary manifest file
+    std::string _tempManifestPath;
     
     //! The path of local manifest file
     std::string _manifestUrl;
@@ -225,6 +224,6 @@ private:
     int _totalWaitToDownload;
 };
 
-NS_CC_EXT_END;
+NS_CC_EXT_END
 
 #endif /* defined(__AssetsManager__) */

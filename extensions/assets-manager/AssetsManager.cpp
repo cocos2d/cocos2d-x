@@ -1,18 +1,18 @@
 /****************************************************************************
  Copyright (c) 2014 cocos2d-x.org
- 
+
  http://www.cocos2d-x.org
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -28,7 +28,6 @@
 #include <curl/curl.h>
 #include <curl/easy.h>
 #include <stdio.h>
-#include <thread>
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 #include <sys/types.h>
@@ -47,16 +46,6 @@ NS_CC_EXT_BEGIN
 
 #define DEFAULT_CONNECTION_TIMEOUT 8
 
-// Some data struct for sending messages
-//
-//struct ProgressMessage
-//{
-//    int percent;
-//    AssetsManager* manager;
-//};
-
-std::string AssetsManager::s_nWritableRoot = "";
-
 const std::string AssetsManager::VERSION_ID = "@version";
 const std::string AssetsManager::MANIFEST_ID = "@manifest";
 
@@ -70,23 +59,20 @@ AssetsManager::AssetsManager(const std::string& manifestUrl, const std::string& 
 , _percent(0)
 , _manifestUrl(manifestUrl)
 , _storagePath("")
+, _cacheVersionPath("")
+, _cacheManifestPath("")
+, _tempManifestPath("")
 , _assets(nullptr)
 , _localManifest(nullptr)
 , _remoteManifest(nullptr)
 {
-    // Init writable path
-    if (s_nWritableRoot.size() == 0) {
-        s_nWritableRoot = FileUtils::getInstance()->getWritablePath();
-        prependSearchPath(s_nWritableRoot);
-    }
-    
     // Init variables
     _eventDispatcher = Director::getInstance()->getEventDispatcher();
     std::string pointer = StringUtils::format("%p", this);
     _eventName = EventListenerAssetsManager::LISTENER_ID + pointer;
     _fileUtils = FileUtils::getInstance();
     _updateState = State::UNCHECKED;
-    
+
     _downloader = std::make_shared<Downloader>();
     _downloader->setConnectionTimeout(DEFAULT_CONNECTION_TIMEOUT);
     _downloader->_onError = std::bind( &AssetsManager::onError, this, std::placeholders::_1 );
@@ -98,15 +84,19 @@ AssetsManager::AssetsManager(const std::string& manifestUrl, const std::string& 
                                          std::placeholders::_4);
     _downloader->_onSuccess = std::bind(&AssetsManager::onSuccess, this, std::placeholders::_1, std::placeholders::_2);
     setStoragePath(storagePath);
-    
+    _cacheVersionPath = _storagePath + VERSION_FILENAME;
+    _cacheManifestPath = _storagePath + MANIFEST_FILENAME;
+    _tempManifestPath = _storagePath + TEMP_MANIFEST_FILENAME;
+
     _localManifest = new Manifest();
     loadManifest(manifestUrl);
-    
+
     _remoteManifest = new Manifest();
 }
 
 AssetsManager::~AssetsManager()
 {
+    removeFile(_tempManifestPath);
     _downloader->_onError = nullptr;
     _downloader->_onSuccess = nullptr;
     _downloader->_onProgress = nullptr;
@@ -132,23 +122,22 @@ void AssetsManager::prepareLocalManifest()
 {
     // An alias to assets
     _assets = &(_localManifest->getAssets());
-    
+
     // Add search paths
     _localManifest->prependSearchPaths();
 }
 
 void AssetsManager::loadManifest(const std::string& manifestUrl)
 {
-    std::string cachedManifest = _storagePath + MANIFEST_FILENAME;
     // Prefer to use the cached manifest file, if not found use user configured manifest file
     // Prepend storage path to avoid multi package conflict issue
-    if (_fileUtils->isFileExist(cachedManifest))
+    if (_fileUtils->isFileExist(_cacheManifestPath))
     {
-        _localManifest->parse(cachedManifest);
+        _localManifest->parse(_cacheManifestPath);
         if (_localManifest->isLoaded())
             prepareLocalManifest();
         else
-            removeFile(cachedManifest);
+            removeFile(_cacheManifestPath);
     }
     // Fail to found or load cached manifest file
     else
@@ -157,7 +146,7 @@ void AssetsManager::loadManifest(const std::string& manifestUrl)
         if (_localManifest->isLoaded())
             prepareLocalManifest();
     }
-    
+
     // Fail to load local manifest
     if (!_localManifest->isLoaded())
     {
@@ -194,7 +183,7 @@ void AssetsManager::setStoragePath(const std::string& storagePath)
 {
     if (_storagePath.size() > 0)
         removeDirectory(_storagePath);
-    
+
     _storagePath = storagePath;
     adjustPath(_storagePath);
     createDirectory(_storagePath);
@@ -206,28 +195,12 @@ void AssetsManager::adjustPath(std::string &path)
     {
         path.append("/");
     }
-    path.insert(0, s_nWritableRoot);
-}
-
-void AssetsManager::prependSearchPath(const std::string& path)
-{
-    std::vector<std::string> searchPaths = FileUtils::getInstance()->getSearchPaths();
-    std::vector<std::string>::iterator iter = searchPaths.begin();
-    searchPaths.insert(iter, path);
-    FileUtils::getInstance()->setSearchPaths(searchPaths);
 }
 
 void AssetsManager::createDirectory(const std::string& path)
 {
-    // Check writable path existance
-    if (path.find(s_nWritableRoot) == std::string::npos)
-    {
-        CCLOG("Path which isn't under system's writable path cannot be created.");
-        return;
-    }
-    
     // Split the path
-    size_t start = s_nWritableRoot.size();
+    size_t start = 0;
     size_t found = path.find_first_of("/\\", start);
     std::string subpath;
     std::vector<std::string> dirs;
@@ -238,13 +211,13 @@ void AssetsManager::createDirectory(const std::string& path)
         start = found+1;
         found = path.find_first_of("/\\", start);
     }
-    
+
     // Remove downloaded files
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
     DIR *dir = NULL;
-    
+
     // Create path recursively
-    subpath = s_nWritableRoot;
+    subpath = "";
     for (int i = 0; i < dirs.size(); i++) {
         subpath += dirs[i];
         dir = opendir (subpath.c_str());
@@ -272,19 +245,12 @@ void AssetsManager::createDirectory(const std::string& path)
 
 void AssetsManager::removeDirectory(const std::string& path)
 {
-    // Check writable path existance
-    if (path.find(s_nWritableRoot) == std::string::npos)
-    {
-        CCLOG("Path which isn't under system's writable path cannot be destroyed.");
-        return;
-    }
-    
     if (path.size() > 0 && path[path.size() - 1] != '/')
     {
         CCLOG("Invalid path.");
         return;
     }
-    
+
     // Remove downloaded files
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
     std::string command = "rm -r ";
@@ -301,40 +267,34 @@ void AssetsManager::removeDirectory(const std::string& path)
 
 void AssetsManager::removeFile(const std::string &path)
 {
-    if (path.find(s_nWritableRoot) != std::string::npos)
-    {
-        // Remove downloaded file
+    // Remove downloaded file
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
-        std::string command = "rm ";
-        // Path may include space.
-        command += "\"" + path + "\"";
-        system(command.c_str());
+    std::string command = "rm -f ";
+    // Path may include space.
+    command += "\"" + path + "\"";
+    system(command.c_str());
 #else
-        std::string command = "del /q ";
-        // Path may include space.
-        command += "\"" + path + "\"";
-        system(command.c_str());
+    std::string command = "del /q ";
+    // Path may include space.
+    command += "\"" + path + "\"";
+    system(command.c_str());
 #endif
-    }
 }
 
 void AssetsManager::renameFile(const std::string &path, const std::string &oldname, const std::string &name)
 {
-    if (path.find(s_nWritableRoot) != std::string::npos)
-    {
-        // Rename a file
+    // Rename a file
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
-        std::string command = "mv -f ";
-        // Path may include space.
-        command += "\"" + path + oldname + "\" \"" + path + name + "\"";
-        system(command.c_str());
+    std::string command = "mv -f ";
+    // Path may include space.
+    command += "\"" + path + oldname + "\" \"" + path + name + "\"";
+    system(command.c_str());
 #else
-        std::string command = "ren ";
-        // Path may include space.
-        command += "\"" + path + oldname + "\" \"" + name + "\"";
-        system(command.c_str());
+    std::string command = "ren ";
+    // Path may include space.
+    command += "\"" + path + oldname + "\" \"" + name + "\"";
+    system(command.c_str());
 #endif
-    }
 }
 
 void AssetsManager::dispatchUpdateEvent(EventAssetsManager::EventCode code, std::string assetId/* = ""*/, std::string message/* = ""*/)
@@ -352,13 +312,13 @@ void AssetsManager::downloadVersion()
 {
     if (_updateState != State::PREDOWNLOAD_VERSION)
         return;
-    
+
     std::string versionUrl = _localManifest->getVersionFileUrl();
     if (versionUrl.size() > 0)
     {
         _updateState = State::DOWNLOADING_VERSION;
         // Download version file asynchronously
-        _downloader->downloadAsync(versionUrl, _storagePath + VERSION_FILENAME, VERSION_ID);
+        _downloader->downloadAsync(versionUrl, _cacheVersionPath, VERSION_ID);
     }
     // No version file found
     else
@@ -373,9 +333,9 @@ void AssetsManager::parseVersion()
 {
     if (_updateState != State::VERSION_LOADED)
         return;
-    
-    _remoteManifest->parse(_storagePath + VERSION_FILENAME);
-    
+
+    _remoteManifest->parse(_cacheVersionPath);
+
     if (!_remoteManifest->isVersionLoaded())
     {
         CCLOG("Error parsing version file, step skipped\n");
@@ -393,7 +353,7 @@ void AssetsManager::parseVersion()
         {
             _updateState = State::NEED_UPDATE;
             dispatchUpdateEvent(EventAssetsManager::EventCode::NEW_VERSION_FOUND);
-            
+
             // Wait to update so continue the process
             if (_waitToUpdate)
             {
@@ -408,13 +368,13 @@ void AssetsManager::downloadManifest()
 {
     if (_updateState != State::PREDOWNLOAD_MANIFEST)
         return;
-    
+
     std::string manifestUrl = _localManifest->getManifestFileUrl();
     if (manifestUrl.size() > 0)
     {
         _updateState = State::DOWNLOADING_MANIFEST;
         // Download version file asynchronously
-        _downloader->downloadAsync(manifestUrl, _storagePath + TEMP_MANIFEST_FILENAME, MANIFEST_ID);
+        _downloader->downloadAsync(manifestUrl, _tempManifestPath, MANIFEST_ID);
     }
     // No manifest file found
     else
@@ -429,27 +389,29 @@ void AssetsManager::parseManifest()
 {
     if (_updateState != State::MANIFEST_LOADED)
         return;
-    
-    _remoteManifest->parse(_storagePath + TEMP_MANIFEST_FILENAME);
-    
+
+    _remoteManifest->parse(_tempManifestPath);
+
     if (!_remoteManifest->isLoaded())
     {
         CCLOG("Error parsing manifest file\n");
         dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_PARSE_MANIFEST);
         _updateState = State::UNCHECKED;
+        removeFile(_tempManifestPath);
     }
     else
     {
         if (_localManifest->versionEquals(_remoteManifest))
         {
             _updateState = State::UP_TO_DATE;
+            removeFile(_tempManifestPath);
             dispatchUpdateEvent(EventAssetsManager::EventCode::ALREADY_UP_TO_DATE);
         }
         else
         {
             _updateState = State::NEED_UPDATE;
             dispatchUpdateEvent(EventAssetsManager::EventCode::NEW_VERSION_FOUND);
-            
+
             if (_waitToUpdate)
             {
                 update();
@@ -462,7 +424,7 @@ void AssetsManager::startUpdate()
 {
     if (_updateState != State::NEED_UPDATE)
         return;
-    
+
     // Check difference
     if (_localManifest != nullptr && _remoteManifest != nullptr)
     {
@@ -470,6 +432,8 @@ void AssetsManager::startUpdate()
         if (diff_map.size() == 0)
         {
             _updateState = State::UP_TO_DATE;
+            // Rename temporary manifest to valid manifest
+            renameFile(_storagePath, TEMP_MANIFEST_FILENAME, MANIFEST_FILENAME);
             dispatchUpdateEvent(EventAssetsManager::EventCode::ALREADY_UP_TO_DATE);
         }
         else
@@ -481,7 +445,7 @@ void AssetsManager::startUpdate()
             std::string packageUrl = _remoteManifest->getPackageUrl();
             for (auto it = diff_map.begin(); it != diff_map.end(); it++) {
                 Manifest::AssetDiff diff = it->second;
-                
+
                 if (diff.type == Manifest::DiffType::DELETED) {
                     removeFile(_storagePath + diff.asset.path);
                 }
@@ -490,7 +454,7 @@ void AssetsManager::startUpdate()
                     std::string path = diff.asset.path;
                     // Create path
                     createDirectory(_storagePath + path);
-                    
+
                     Downloader::DownloadUnit unit;
                     unit.customId = it->first;
                     unit.srcUrl = packageUrl + path;
@@ -502,7 +466,7 @@ void AssetsManager::startUpdate()
             _downloader->batchDownload(_downloadUnits);
         }
     }
-    
+
     _waitToUpdate = false;
 }
 
@@ -514,7 +478,7 @@ void AssetsManager::checkUpdate()
         dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_NO_LOCAL_MANIFEST);
         return;
     }
-    
+
     switch (_updateState) {
         case State::UNCHECKED:
         case State::PREDOWNLOAD_VERSION:
@@ -546,9 +510,9 @@ void AssetsManager::update()
         dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_NO_LOCAL_MANIFEST);
         return;
     }
-    
+
     _waitToUpdate = true;
-    
+
     switch (_updateState) {
         case State::UNCHECKED:
         {
@@ -649,14 +613,14 @@ void AssetsManager::onSuccess(const std::string &srcUrl, const std::string &cust
         _totalWaitToDownload--;
         // Notify asset updated event
         dispatchUpdateEvent(EventAssetsManager::EventCode::ASSET_UPDATED, customId);
-        
+
         auto unitIt = _downloadUnits.find(customId);
         // Found unit and delete it
         if (unitIt != _downloadUnits.end())
         {
             // Remove from download unit list
             _downloadUnits.erase(unitIt);
-            
+
             if (_updateState == State::UPDATING) {
                 _percent = 100 * (_totalToDownload - _downloadUnits.size()) / _totalToDownload;
                 // Notify progression event
@@ -695,8 +659,8 @@ void AssetsManager::onSuccess(const std::string &srcUrl, const std::string &cust
 
 void AssetsManager::destroyDownloadedVersion()
 {
-    removeFile(_storagePath + VERSION_FILENAME);
-    removeFile(_storagePath + MANIFEST_FILENAME);
+    removeFile(_cacheVersionPath);
+    removeFile(_cacheManifestPath);
 }
 
 NS_CC_EXT_END

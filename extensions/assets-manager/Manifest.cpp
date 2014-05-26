@@ -254,37 +254,7 @@ const Manifest::Asset& Manifest::getAsset(const std::string &key) const
 {
     return _assets.at(key);
 }
-/*
-rapidjson::Document Manifest::parseJSON(const std::string &url)
-{
-    std::string content;
-    rapidjson::Document json;
-    if (_fileUtils->isFileExist(url))
-    {
-        // Load file content
-        content = _fileUtils->getStringFromFile(url);
-        
-        if (content.size() == 0)
-        {
-            CCLOG("Fail to retrieve local file content: %s\n", url.c_str());
-        }
-        else
-        {
-            // Parse file with rapid json
-            json.Parse<0>(content.c_str());
-            // Print error
-            if (json.HasParseError()) {
-                size_t offset = json.GetErrorOffset();
-                if(offset > 0)
-                    offset--;
-                std::string errorSnippet = content.substr(offset, 10);
-                CCLOG("File parse error %s at <%s>\n", json.GetParseError(), errorSnippet.c_str());
-            }
-        }
-    }
-    return json;
-}
-*/
+
 void Manifest::clear()
 {
     if (_versionLoaded || _loaded)
