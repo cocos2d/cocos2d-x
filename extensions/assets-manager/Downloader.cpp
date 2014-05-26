@@ -249,4 +249,4 @@ void Downloader::download(const std::string &srcUrl, FILE *fp, const std::string
     
 }
 
-NS_CC_EXT_END;
+NS_CC_EXT_END
