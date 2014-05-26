@@ -49,7 +49,8 @@ public:
 
     Touch() 
         : _id(0),
-        _startPointCaptured(false)
+        _startPointCaptured(false),
+		_viewTransform(nullptr)
     {}
 
     /** returns the current touch location in OpenGL coordinates */
@@ -88,12 +89,19 @@ public:
         return _id;
     }
 
+	inline void setTransformFunc(std::function<Vec2(Vec2)> viewTransform)
+	{
+		_viewTransform = viewTransform;
+	}
+
 private:
     int _id;
     bool _startPointCaptured;
     Vec2 _startPoint;
     Vec2 _point;
     Vec2 _prevPoint;
+	// express screen coordinate in world coordinate
+	std::function<Vec2(Vec2)> _viewTransform;
 };
 
 // end of input group

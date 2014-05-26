@@ -33,6 +33,7 @@
 #include "base/CCEventListenerFocus.h"
 
 #include "2d/CCScene.h"
+#include "2d/CCCameraView.h"
 #include "base/CCDirector.h"
 #include "base/CCEventType.h"
 
@@ -869,7 +870,17 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
                 if (eventCode == EventTouch::EventCode::BEGAN)
                 {
                     if (listener->onTouchBegan)
-                    {
+					{
+						CameraView* camView = listener->_node->getCameraView();
+						if (camView)
+						{
+							(*touchesIter)->setTransformFunc(CC_CALLBACK_1(Node::convertToWorldSpace, camView->getCamera()));
+						}
+						else
+						{
+							(*touchesIter)->setTransformFunc(nullptr);
+						}
+
                         isClaimed = listener->onTouchBegan(*touchesIter, event);
                         if (isClaimed && listener->_isRegistered)
                         {
@@ -880,7 +891,16 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
                 else if (listener->_claimedTouches.size() > 0
                          && ((removedIter = std::find(listener->_claimedTouches.begin(), listener->_claimedTouches.end(), *touchesIter)) != listener->_claimedTouches.end()))
                 {
-                    isClaimed = true;
+					isClaimed = true;
+					CameraView* camView = listener->_node->getCameraView();
+					if (camView)
+					{
+						(*touchesIter)->setTransformFunc(CC_CALLBACK_1(Node::convertToWorldSpace, camView->getCamera()));
+					}
+					else
+					{
+						(*touchesIter)->setTransformFunc(nullptr);
+					}
                     
                     switch (eventCode)
                     {

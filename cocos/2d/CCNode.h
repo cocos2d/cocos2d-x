@@ -57,6 +57,7 @@ class GLProgramState;
 #if CC_USE_PHYSICS
 class PhysicsBody;
 #endif
+class CameraView;
 
 /**
  * @addtogroup base_nodes
@@ -1340,7 +1341,14 @@ public:
     
     virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
     virtual bool isOpacityModifyRGB() const { return false; };
-    
+
+	/**
+	* Get himself if node is a camera view, else try parent.
+	* Possibly one of the worst way to do it as it recurse and use dynamic_cast.
+	* Cocos2d event structure should change quite a bit to allow different input screen to view transformation.
+	*/
+	CameraView* getCameraView();
+
 CC_CONSTRUCTOR_ACCESS:
     // Nodes should be created using create();
     Node();
