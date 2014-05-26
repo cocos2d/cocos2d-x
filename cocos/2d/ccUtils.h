@@ -50,3 +50,4 @@ int ccNextPOT(int value);
 NS_CC_END
 
 #endif // __SUPPORT_CC_UTILS_H__
+
