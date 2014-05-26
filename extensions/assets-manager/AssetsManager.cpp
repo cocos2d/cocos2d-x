@@ -40,6 +40,8 @@
 
 NS_CC_EXT_BEGIN
 
+#define ENABLE_MULTITHREAD      0
+
 #define VERSION_FILENAME        "version.manifest"
 #define TEMP_MANIFEST_FILENAME  "project.manifest.temp"
 #define MANIFEST_FILENAME       "project.manifest"
@@ -455,7 +457,12 @@ void AssetsManager::startUpdate()
                 }
             }
             _totalWaitToDownload = _totalToDownload = (int)_downloadUnits.size();
+#if ENABLE_MULTITHREAD
             _downloader->batchDownload(_downloadUnits);
+#else
+            auto t = std::thread(&AssetsManager::batchDownload, this, _downloadUnits);
+            t.detach();
+#endif
         }
     }
 
@@ -552,6 +559,18 @@ void AssetsManager::update()
             break;
         default:
             break;
+    }
+}
+
+void AssetsManager::batchDownload(const std::unordered_map<std::string, Downloader::DownloadUnit> &units)
+{
+    for (auto it = units.cbegin(); it != units.cend(); it++) {
+        Downloader::DownloadUnit unit = it->second;
+        std::string srcUrl = unit.srcUrl;
+        std::string storagePath = unit.storagePath;
+        std::string customId = unit.customId;
+        
+        _downloader->downloadAsync(srcUrl, storagePath, customId);
     }
 }
 
