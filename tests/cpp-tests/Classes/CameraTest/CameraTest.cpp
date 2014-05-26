@@ -10,11 +10,14 @@ CameraTestScene::~CameraTestScene()
 
 void CameraTestScene::runThisTest()
 {
+	auto camView = CameraView::create();
+	addChild(camView);
+
 	auto layer = CameraTest::create();
-	addChild(layer);
+	camView->addChild(layer);
 
 	addChild(layer->getCamera());
-	setCamera(layer->getCamera());
+	camView->setCamera(layer->getCamera());
 
 	Director::getInstance()->replaceScene(this);
 }
@@ -100,5 +103,5 @@ std::string CameraTest::title() const
 
 std::string CameraTest::subtitle() const
 {
-	return "Ready to try camera?";
+	return "Use your mouse to move/zoom camera";
 }

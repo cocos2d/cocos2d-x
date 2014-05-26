@@ -566,7 +566,10 @@
       <Filter>3d</Filter>
     </ClCompile>
     <ClCompile Include="CCCamera.cpp">
-      <Filter>misc_nodes</Filter>
+      <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="CCCameraView.cpp">
+      <Filter>2d</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1148,7 +1151,10 @@
       <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="CCCamera.h">
-      <Filter>misc_nodes</Filter>
+      <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="CCCameraView.h">
+      <Filter>2d</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

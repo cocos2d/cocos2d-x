@@ -292,6 +292,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="CCAnimationCache.cpp" />
     <ClCompile Include="CCAtlasNode.cpp" />
     <ClCompile Include="CCCamera.cpp" />
+    <ClCompile Include="CCCameraView.cpp" />
     <ClCompile Include="CCClippingNode.cpp" />
     <ClCompile Include="CCComponent.cpp" />
     <ClCompile Include="CCComponentContainer.cpp" />
@@ -488,6 +489,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="CCAnimationCache.h" />
     <ClInclude Include="CCAtlasNode.h" />
     <ClInclude Include="CCCamera.h" />
+    <ClInclude Include="CCCameraView.h" />
     <ClInclude Include="CCClippingNode.h" />
     <ClInclude Include="CCComponent.h" />
     <ClInclude Include="CCComponentContainer.h" />

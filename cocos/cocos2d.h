@@ -130,6 +130,8 @@ THE SOFTWARE.
 #include "2d/CCParticleSystem.h"
 #include "2d/CCParticleExamples.h"
 #include "2d/CCParticleSystemQuad.h"
+#include "2d/CCCamera.h"
+#include "2d/CCCameraView.h"
 
 // 2d utils
 #include "2d/CCGrabber.h"
