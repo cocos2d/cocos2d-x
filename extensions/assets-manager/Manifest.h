@@ -125,8 +125,6 @@ protected:
     
     void loadManifest(const rapidjson::Document &json);
     
-    //rapidjson::Document parseJSON(const std::string &url);
-    
     Asset parseAsset(const std::string &path, const rapidjson::Value &json);
     
     void clear();
