@@ -2120,7 +2120,8 @@ bool Image::saveImageToJPG(const std::string& filePath)
         cinfo.in_color_space = JCS_RGB;       /* colorspace of input image */
 
         jpeg_set_defaults(&cinfo);
-
+        jpeg_set_quality(&cinfo, 90, TRUE);
+        
         jpeg_start_compress(&cinfo, TRUE);
 
         row_stride = _width * 3; /* JSAMPLEs per row in image_buffer */

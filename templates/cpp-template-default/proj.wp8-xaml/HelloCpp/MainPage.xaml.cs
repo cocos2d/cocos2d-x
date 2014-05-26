@@ -24,6 +24,7 @@ using Microsoft.Phone.Shell;
 using Windows.UI.Input;
 using System.Windows.Threading;
 using Microsoft.Phone.Info;
+using Windows.Graphics.Display;
 
 namespace PhoneDirect3DXamlAppInterop
 {
@@ -53,7 +54,30 @@ namespace PhoneDirect3DXamlAppInterop
         {
             if (m_d3dInterop == null)
             {
-                m_d3dInterop = new Direct3DInterop();
+                PageOrientation pageOrientation = (PageOrientation)GetValue(OrientationProperty);
+                DisplayOrientations displayOrientation;
+
+                switch(pageOrientation)
+                {
+                    case PageOrientation.Portrait:
+                    case PageOrientation.PortraitUp:
+                        displayOrientation = DisplayOrientations.Portrait;
+                        break;
+                    case PageOrientation.PortraitDown:
+                        displayOrientation = DisplayOrientations.PortraitFlipped;
+                        break;
+                    case PageOrientation.Landscape:
+                    case PageOrientation.LandscapeLeft:
+                        displayOrientation = DisplayOrientations.Landscape;
+                        break;
+                    case PageOrientation.LandscapeRight:
+                        displayOrientation = DisplayOrientations.LandscapeFlipped;
+                        break;
+                    default:
+                        displayOrientation = DisplayOrientations.Landscape;
+                        break;
+                }
+                m_d3dInterop = new Direct3DInterop(displayOrientation);
 
                 // Set WindowBounds to size of DrawingSurface
                 m_d3dInterop.WindowBounds = new Windows.Foundation.Size(

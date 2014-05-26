@@ -6330,6 +6330,63 @@ int lua_cocos2dx_Node_addComponent(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_Node_visit(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Node* cobj = nullptr;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocos2d::Node*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_visit'", nullptr);
+        return 0;
+    }
+#endif
+    argc = lua_gettop(tolua_S)-1;
+    do{
+        if (argc == 0) {
+            cobj->visit();
+            return 0;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 3) {
+            cocos2d::Renderer* arg0;
+            ok &= luaval_to_object<cocos2d::Renderer>(tolua_S, 2, "cc.Renderer",&arg0);
+
+            if (!ok) { break; }
+            cocos2d::Mat4 arg1;
+            ok &= luaval_to_mat4(tolua_S, 3, &arg1);
+
+            if (!ok) { break; }
+            bool arg2;
+            ok &= luaval_to_boolean(tolua_S, 4,&arg2);
+
+            if (!ok) { break; }
+            cobj->visit(arg0, arg1, arg2);
+            return 0;
+        }
+    }while(0);
+    ok  = true;
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "visit",argc, 3);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_visit'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_Node_isOpacityModifyRGB(lua_State* tolua_S)
 {
     int argc = 0;
@@ -9311,6 +9368,7 @@ int lua_register_cocos2dx_Node(lua_State* tolua_S)
         tolua_function(tolua_S,"getChildrenCount",lua_cocos2dx_Node_getChildrenCount);
         tolua_function(tolua_S,"convertToNodeSpaceAR",lua_cocos2dx_Node_convertToNodeSpaceAR);
         tolua_function(tolua_S,"addComponent",lua_cocos2dx_Node_addComponent);
+        tolua_function(tolua_S,"visit",lua_cocos2dx_Node_visit);
         tolua_function(tolua_S,"isOpacityModifyRGB",lua_cocos2dx_Node_isOpacityModifyRGB);
         tolua_function(tolua_S,"getRotation",lua_cocos2dx_Node_getRotation);
         tolua_function(tolua_S,"getAnchorPointInPoints",lua_cocos2dx_Node_getAnchorPointInPoints);
@@ -56704,6 +56762,49 @@ int lua_cocos2dx_TextureCache_reloadTexture(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_TextureCache_unbindAllImageAsync(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::TextureCache* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.TextureCache",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::TextureCache*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_unbindAllImageAsync'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cobj->unbindAllImageAsync();
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "unbindAllImageAsync",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_TextureCache_unbindAllImageAsync'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_TextureCache_removeTextureForKey(lua_State* tolua_S)
 {
     int argc = 0;
@@ -56940,6 +57041,52 @@ int lua_cocos2dx_TextureCache_addImage(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_TextureCache_unbindImageAsync(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::TextureCache* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.TextureCache",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::TextureCache*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_unbindImageAsync'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        std::string arg0;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0);
+        if(!ok)
+            return 0;
+        cobj->unbindImageAsync(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "unbindImageAsync",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_TextureCache_unbindImageAsync'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_TextureCache_getTextureForKey(lua_State* tolua_S)
 {
     int argc = 0;
@@ -57166,11 +57313,13 @@ int lua_register_cocos2dx_TextureCache(lua_State* tolua_S)
 
     tolua_beginmodule(tolua_S,"TextureCache");
         tolua_function(tolua_S,"reloadTexture",lua_cocos2dx_TextureCache_reloadTexture);
+        tolua_function(tolua_S,"unbindAllImageAsync",lua_cocos2dx_TextureCache_unbindAllImageAsync);
         tolua_function(tolua_S,"removeTextureForKey",lua_cocos2dx_TextureCache_removeTextureForKey);
         tolua_function(tolua_S,"removeAllTextures",lua_cocos2dx_TextureCache_removeAllTextures);
         tolua_function(tolua_S,"getDescription",lua_cocos2dx_TextureCache_getDescription);
         tolua_function(tolua_S,"getCachedTextureInfo",lua_cocos2dx_TextureCache_getCachedTextureInfo);
         tolua_function(tolua_S,"addImage",lua_cocos2dx_TextureCache_addImage);
+        tolua_function(tolua_S,"unbindImageAsync",lua_cocos2dx_TextureCache_unbindImageAsync);
         tolua_function(tolua_S,"getTextureForKey",lua_cocos2dx_TextureCache_getTextureForKey);
         tolua_function(tolua_S,"removeUnusedTextures",lua_cocos2dx_TextureCache_removeUnusedTextures);
         tolua_function(tolua_S,"removeTexture",lua_cocos2dx_TextureCache_removeTexture);

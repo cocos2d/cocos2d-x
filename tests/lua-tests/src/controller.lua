@@ -30,7 +30,7 @@ end
 
 local searchPaths = fileUtils:getSearchPaths()
 table.insert(searchPaths, 1, resPrefix)
-table.insert(searchPaths, 1, "cocosbuilderRes")
+table.insert(searchPaths, 1, resPrefix .. "cocosbuilderRes")
 
 if screenSize.height > 320 then
     table.insert(searchPaths, 1, resPrefix .. "hd")
@@ -65,4 +65,8 @@ fileUtils:setSearchPaths(searchPaths)
 
 local scene = cc.Scene:create()
 scene:addChild(CreateTestMenu())
-cc.Director:getInstance():runWithScene(scene)
+if cc.Director:getInstance():getRunningScene() then
+    cc.Director:getInstance():replaceScene(scene)
+else
+    cc.Director:getInstance():runWithScene(scene)
+end
