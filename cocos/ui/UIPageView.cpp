@@ -626,6 +626,9 @@ void PageView::copySpecialProperties(Widget *widget)
     if (pageView)
     {
         Layout::copySpecialProperties(widget);
+        _eventCallback = pageView->_eventCallback;
+        _pageViewEventListener = pageView->_pageViewEventListener;
+        _pageViewEventSelector = pageView->_pageViewEventSelector;
     }
 }
 

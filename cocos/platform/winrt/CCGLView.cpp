@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "base/ccMacros.h"
 #include "base/CCDirector.h"
 #include "base/CCTouch.h"
-#include "2d/CCIMEDispatcher.h"
+#include "base/CCIMEDispatcher.h"
 #include "CCApplication.h"
 #include "CCWinRTUtils.h"
 

@@ -34,6 +34,13 @@
 -- @param #int int
         
 --------------------------------
+-- @function [parent=#ParallaxNode] visit 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #cc.Mat4 mat4
+-- @param #bool bool
+        
+--------------------------------
 -- @function [parent=#ParallaxNode] removeChild 
 -- @param self
 -- @param #cc.Node node

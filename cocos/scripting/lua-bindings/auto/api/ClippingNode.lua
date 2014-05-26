@@ -43,4 +43,11 @@
 -- @param #cc.Node node
 -- @return ClippingNode#ClippingNode ret (retunr value: cc.ClippingNode)
 
+--------------------------------
+-- @function [parent=#ClippingNode] visit 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #cc.Mat4 mat4
+-- @param #bool bool
+        
 return nil
