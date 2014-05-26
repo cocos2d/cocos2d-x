@@ -173,6 +173,13 @@
 -- @param #bool bool
         
 --------------------------------
+-- @function [parent=#RenderTexture] visit 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #cc.Mat4 mat4
+-- @param #bool bool
+        
+--------------------------------
 -- @function [parent=#RenderTexture] RenderTexture 
 -- @param self
         
