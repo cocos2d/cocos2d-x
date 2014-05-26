@@ -72,37 +72,47 @@ public:
 
 	/**
 	* Get zoom value.
+	* Use scale as zoom. Assume it won't be changed directly by other method.
 	* @return the zoom value
 	*/
-	inline float getZoom() const { return _zoom; }
+	inline float getZoom() const { return _scaleX; }
 
 	/**
 	* Set zoom value.
 	* Zoom will modify the projection matrix by changing the fov.
 	* @param value The zoom value
 	*/
-	inline void setZoom(float value){ _zoom = clampf(value, _zoomLimit.x, _zoomLimit.y); }
+	inline void setZoom(float value)
+	{ 
+		float zoom = clampf(value, _zoomLimit.x, _zoomLimit.y); 
+		setScale(zoom, zoom); 
+	}
 
 	/**
 	* Add zoom value to current zoom.
 	* Zoom will modify the projection matrix by changing the fov.
 	* @param value The zoom value
 	*/
-	inline void addZoom(float value){ _zoom = clampf(_zoom + value, _zoomLimit.x, _zoomLimit.y); }
+	inline void addZoom(float value)
+	{ 
+		float zoom = clampf(_scaleX + value, _zoomLimit.x, _zoomLimit.y);
+		setScale(zoom, zoom); 
+	}
 
 	/**
 	* Set zoom boundaries
+	* As we use the scale, we should reverse the value
 	* @param min Min value of zoom (farthest)
 	* @param max Max value of zoom (nearest)
 	*/
-	inline void setZoomLimit(float min, float max) { _zoomLimit.set(min, max); }
+	inline void setZoomLimit(float min, float max) { _zoomLimit.set(1.f / max, 1.f / min); }
 
 	/**
 	* Compute the current camera projection matrix.
 	* @param projMatrix get the projection matrix computed
 	*/
 	virtual void getProjectionMatrix(Mat4& projMatrix);
-	
+
 private:
 	/**
 	* Default constructor
@@ -125,11 +135,6 @@ private:
 	* Near and far range
 	*/
 	Vec2			_range;
-
-	/**
-	* Zoom value
-	*/
-	float			_zoom;
 
 	/**
 	* Zoom boundaries

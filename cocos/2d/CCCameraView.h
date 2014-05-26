@@ -74,7 +74,7 @@ public:
 	* Get current camera
 	* @return the camera, nullptr if not assigned
 	*/
-	inline Camera* getCamera(Camera* camera) const { return _camera; }
+	inline Camera* getCamera() const { return _camera; }
 
 private:
 	/**
