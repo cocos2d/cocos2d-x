@@ -1,18 +1,18 @@
 /****************************************************************************
  Copyright (c) 2014 cocos2d-x.org
- 
+
  http://www.cocos2d-x.org
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -74,19 +74,13 @@ AssetsManager::AssetsManager(const std::string& manifestUrl, const std::string& 
 , _localManifest(nullptr)
 , _remoteManifest(nullptr)
 {
-    // Init writable path
-    if (s_nWritableRoot.size() == 0) {
-        s_nWritableRoot = FileUtils::getInstance()->getWritablePath();
-        prependSearchPath(s_nWritableRoot);
-    }
-    
     // Init variables
     _eventDispatcher = Director::getInstance()->getEventDispatcher();
     std::string pointer = StringUtils::format("%p", this);
     _eventName = EventListenerAssetsManager::LISTENER_ID + pointer;
     _fileUtils = FileUtils::getInstance();
     _updateState = State::UNCHECKED;
-    
+
     _downloader = std::make_shared<Downloader>();
     _downloader->setConnectionTimeout(DEFAULT_CONNECTION_TIMEOUT);
     _downloader->_onError = std::bind( &AssetsManager::onError, this, std::placeholders::_1 );
@@ -98,10 +92,10 @@ AssetsManager::AssetsManager(const std::string& manifestUrl, const std::string& 
                                          std::placeholders::_4);
     _downloader->_onSuccess = std::bind(&AssetsManager::onSuccess, this, std::placeholders::_1, std::placeholders::_2);
     setStoragePath(storagePath);
-    
+
     _localManifest = new Manifest();
     loadManifest(manifestUrl);
-    
+
     _remoteManifest = new Manifest();
 }
 
@@ -133,7 +127,7 @@ void AssetsManager::prepareLocalManifest()
 {
     // An alias to assets
     _assets = &(_localManifest->getAssets());
-    
+
     // Add search paths
     _localManifest->prependSearchPaths();
 }
@@ -158,7 +152,7 @@ void AssetsManager::loadManifest(const std::string& manifestUrl)
         if (_localManifest->isLoaded())
             prepareLocalManifest();
     }
-    
+
     // Fail to load local manifest
     if (!_localManifest->isLoaded())
     {
@@ -195,7 +189,7 @@ void AssetsManager::setStoragePath(const std::string& storagePath)
 {
     if (_storagePath.size() > 0)
         removeDirectory(_storagePath);
-    
+
     _storagePath = storagePath;
     adjustPath(_storagePath);
     createDirectory(_storagePath);
@@ -226,7 +220,7 @@ void AssetsManager::createDirectory(const std::string& path)
         CCLOG("Path which isn't under system's writable path cannot be created.");
         return;
     }
-    
+
     // Split the path
     size_t start = s_nWritableRoot.size();
     size_t found = path.find_first_of("/\\", start);
@@ -239,11 +233,11 @@ void AssetsManager::createDirectory(const std::string& path)
         start = found+1;
         found = path.find_first_of("/\\", start);
     }
-    
+
     // Remove downloaded files
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
     DIR *dir = NULL;
-    
+
     // Create path recursively
     subpath = s_nWritableRoot;
     for (int i = 0; i < dirs.size(); i++) {
@@ -271,13 +265,13 @@ void AssetsManager::removeDirectory(const std::string& path)
         CCLOG("Path which isn't under system's writable path cannot be destroyed.");
         return;
     }
-    
+
     if (path.size() > 0 && path[path.size() - 1] != '/')
     {
         CCLOG("Invalid path.");
         return;
     }
-    
+
     // Remove downloaded files
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
     std::string command = "rm -r ";
@@ -345,7 +339,7 @@ void AssetsManager::downloadVersion()
 {
     if (_updateState != State::PREDOWNLOAD_VERSION)
         return;
-    
+
     std::string versionUrl = _localManifest->getVersionFileUrl();
     if (versionUrl.size() > 0)
     {
@@ -366,9 +360,9 @@ void AssetsManager::parseVersion()
 {
     if (_updateState != State::VERSION_LOADED)
         return;
-    
+
     _remoteManifest->parse(_storagePath + VERSION_FILENAME);
-    
+
     if (!_remoteManifest->isVersionLoaded())
     {
         CCLOG("Error parsing version file, step skipped\n");
@@ -386,7 +380,7 @@ void AssetsManager::parseVersion()
         {
             _updateState = State::NEED_UPDATE;
             dispatchUpdateEvent(EventAssetsManager::EventCode::NEW_VERSION_FOUND);
-            
+
             // Wait to update so continue the process
             if (_waitToUpdate)
             {
@@ -401,7 +395,7 @@ void AssetsManager::downloadManifest()
 {
     if (_updateState != State::PREDOWNLOAD_MANIFEST)
         return;
-    
+
     std::string manifestUrl = _localManifest->getManifestFileUrl();
     if (manifestUrl.size() > 0)
     {
@@ -422,9 +416,9 @@ void AssetsManager::parseManifest()
 {
     if (_updateState != State::MANIFEST_LOADED)
         return;
-    
+
     _remoteManifest->parse(_storagePath + TEMP_MANIFEST_FILENAME);
-    
+
     if (!_remoteManifest->isLoaded())
     {
         CCLOG("Error parsing manifest file\n");
@@ -444,7 +438,7 @@ void AssetsManager::parseManifest()
         {
             _updateState = State::NEED_UPDATE;
             dispatchUpdateEvent(EventAssetsManager::EventCode::NEW_VERSION_FOUND);
-            
+
             if (_waitToUpdate)
             {
                 update();
@@ -457,7 +451,7 @@ void AssetsManager::startUpdate()
 {
     if (_updateState != State::NEED_UPDATE)
         return;
-    
+
     // Check difference
     if (_localManifest != nullptr && _remoteManifest != nullptr)
     {
@@ -478,7 +472,7 @@ void AssetsManager::startUpdate()
             std::string packageUrl = _remoteManifest->getPackageUrl();
             for (auto it = diff_map.begin(); it != diff_map.end(); it++) {
                 Manifest::AssetDiff diff = it->second;
-                
+
                 if (diff.type == Manifest::DiffType::DELETED) {
                     removeFile(_storagePath + diff.asset.path);
                 }
@@ -487,7 +481,7 @@ void AssetsManager::startUpdate()
                     std::string path = diff.asset.path;
                     // Create path
                     createDirectory(_storagePath + path);
-                    
+
                     Downloader::DownloadUnit unit;
                     unit.customId = it->first;
                     unit.srcUrl = packageUrl + path;
@@ -499,7 +493,7 @@ void AssetsManager::startUpdate()
             _downloader->batchDownload(_downloadUnits);
         }
     }
-    
+
     _waitToUpdate = false;
 }
 
@@ -511,7 +505,7 @@ void AssetsManager::checkUpdate()
         dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_NO_LOCAL_MANIFEST);
         return;
     }
-    
+
     switch (_updateState) {
         case State::UNCHECKED:
         case State::PREDOWNLOAD_VERSION:
@@ -543,9 +537,9 @@ void AssetsManager::update()
         dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_NO_LOCAL_MANIFEST);
         return;
     }
-    
+
     _waitToUpdate = true;
-    
+
     switch (_updateState) {
         case State::UNCHECKED:
         {
@@ -646,14 +640,14 @@ void AssetsManager::onSuccess(const std::string &srcUrl, const std::string &cust
         _totalWaitToDownload--;
         // Notify asset updated event
         dispatchUpdateEvent(EventAssetsManager::EventCode::ASSET_UPDATED, customId);
-        
+
         auto unitIt = _downloadUnits.find(customId);
         // Found unit and delete it
         if (unitIt != _downloadUnits.end())
         {
             // Remove from download unit list
             _downloadUnits.erase(unitIt);
-            
+
             if (_updateState == State::UPDATING) {
                 _percent = 100 * (_totalToDownload - _downloadUnits.size()) / _totalToDownload;
                 // Notify progression event
