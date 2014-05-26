@@ -158,7 +158,7 @@ protected:
     CaptureScreenTest();
     ~CaptureScreenTest();
 
-    void onCaptured(Ref*, const Rect& rect);
+    void onCaptured(Ref*);
     void afterCaptured(bool succeed, const std::string& outputFile);
 
     std::string _filename;

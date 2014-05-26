@@ -1216,45 +1216,24 @@ void Director::setEventDispatcher(EventDispatcher* dispatcher)
     }
 }
 
-void Director::captureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename, const Rect& rect)
+void Director::captureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename)
 {
     _captureScreen.init(std::numeric_limits<float>::max());
-    _captureScreen.func = CC_CALLBACK_0(Director::onCaptureScreen, this, afterCaptured, filename, rect);
+    _captureScreen.func = CC_CALLBACK_0(Director::onCaptureScreen, this, afterCaptured, filename);
     Director::getInstance()->getRenderer()->addCommand(&_captureScreen);
 }
 
-void Director::onCaptureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename, const Rect& rect)
+void Director::onCaptureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename)
 {
-    // the rect is specified based on the design resolution
-    Size designSize = _openGLView->getDesignResolutionSize();
-    int originx = 0;
-    int originy = 0;
-    int width = designSize.width;
-    int height = designSize.height;
-    if (!rect.equals(Rect::ZERO))
-    {
-        originx = (int)rect.origin.x;
-        originy = (int)rect.origin.y;
-        width = (int)rect.size.width;
-        height = (int)rect.size.height;
-        
-        auto clip = [](int in, int min, int max) { return std::max(std::min(in, max), min); };
-        originx = clip(originx, 0, (int)designSize.width);
-        originy = clip(originy, 0, (int)designSize.height);
-        width = clip(width, 0, designSize.width - originx);
-        height = clip(height, 0, designSize.height - originy);
-    }
-    
-    // the frame buffer size is based on the device pixel resolution
     Size frameSize = _openGLView->getFrameSize();
 #if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
     frameSize = frameSize * _openGLView->getFrameZoomFactor() * _openGLView->getRetinaFactor();
 #endif
     
-    originx = static_cast<int>(float(originx) / designSize.width * frameSize.width);
-    originy = static_cast<int>(float(originy) / designSize.height * frameSize.height);
-    width = static_cast<int>(float(width) / designSize.width * frameSize.width);
-    height = static_cast<int>(float(height) / designSize.height * frameSize.height);
+    int originx = 0;
+    int originy = 0;
+    int width = static_cast<int>(frameSize.width);
+    int height = static_cast<int>(frameSize.height);
     
     bool succeed = false;
     std::string outputFile = "";

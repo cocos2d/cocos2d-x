@@ -581,11 +581,8 @@ CaptureScreenTest::CaptureScreenTest()
     sp2->runAction(seq2);
 
     auto label1 = Label::createWithTTF(TTFConfig("fonts/arial.ttf"), "capture all");
-    auto mi1 = MenuItemLabel::create(label1, CC_CALLBACK_1(CaptureScreenTest::onCaptured, this, Rect::ZERO));
-    auto label2 = Label::createWithTTF(TTFConfig("fonts/arial.ttf"), "capture half");
-    auto mi2 = MenuItemLabel::create(label2, CC_CALLBACK_1(CaptureScreenTest::onCaptured, this, Rect(0, 0, s.width/2, s.height)));
-    mi2->setPosition(0, -15);
-    auto menu = Menu::create(mi1, mi2, nullptr);
+    auto mi1 = MenuItemLabel::create(label1, CC_CALLBACK_1(CaptureScreenTest::onCaptured, this));
+    auto menu = Menu::create(mi1, nullptr);
     addChild(menu);
     menu->setPosition(s.width / 2, s.height / 4);
 
@@ -607,12 +604,12 @@ std::string CaptureScreenTest::subtitle() const
     return "Capture screen test, press the munu items to capture the screen";
 }
 
-void CaptureScreenTest::onCaptured(Ref*, const Rect& rect)
+void CaptureScreenTest::onCaptured(Ref*)
 {
     Director::getInstance()->getTextureCache()->removeTextureForKey(_filename);
     removeChildByTag(ChildTag);
     _filename = "CaptureScreenTest.png";
-    Director::getInstance()->captureScreen(CC_CALLBACK_2(CaptureScreenTest::afterCaptured, this), _filename, rect);
+    Director::getInstance()->captureScreen(CC_CALLBACK_2(CaptureScreenTest::afterCaptured, this), _filename);
 }
 
 void CaptureScreenTest::afterCaptured(bool succeed, const std::string& outputFile)

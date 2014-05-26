@@ -408,7 +408,7 @@ public:
     /**
      * Capture screen
      */
-    void captureScreen(const std::function<void(bool, const std::string&)>& afterCaptued, const std::string& filename, const Rect& rect = Rect::ZERO);
+    void captureScreen(const std::function<void(bool, const std::string&)>& afterCaptued, const std::string& filename);
 
 protected:
     void purgeDirector();
@@ -429,7 +429,7 @@ protected:
     void destroyTextureCache();
     
     /* Captrue screen implementation */
-    void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterCaptued, const std::string& fileanme, const Rect& rect);
+    void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterCaptued, const std::string& fileanme);
 
     /** Scheduler associated with this director
      @since v2.0
