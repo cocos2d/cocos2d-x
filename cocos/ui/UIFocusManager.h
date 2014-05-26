@@ -46,20 +46,24 @@ namespace ui {
         void enableAndroidDpad(bool flag);
         void setFirstFocsuedWidget(Widget* widget);
         
-        std::function<void(EventKeyboard::KeyCode, Event*)> onKeypadReleased = nullptr;
+        std::function<void(EventKeyboard::KeyCode, Event*)> onKeypadReleased;
         
     protected:
         void onKeypadKeyPressed(EventKeyboard::KeyCode, Event*);
         
     private:
-        FocusManager(){}
+        FocusManager():_keyboardListener(nullptr),
+			_firstFocusedWidget(nullptr),
+			_enableAndroidDpad(false),
+			onKeypadReleased(nullptr)
+		{}
         ~FocusManager();
         
         static FocusManager* _instance;
         
-        EventListenerKeyboard* _keyboardListener = nullptr;
-        Widget* _firstFocusedWidget = nullptr;
-        bool _enableAndroidDpad = false;
+        EventListenerKeyboard* _keyboardListener ;
+        Widget* _firstFocusedWidget ;
+        bool _enableAndroidDpad ;
     };
 }
 

@@ -90,6 +90,9 @@
     <ClInclude Include="..\UILayoutExecutant.h">
       <Filter>Layouts</Filter>
     </ClInclude>
+    <ClInclude Include="..\UIFocusManager.h">
+      <Filter>BaseClasses</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UIScrollView.cpp">
@@ -160,6 +163,9 @@
     </ClCompile>
     <ClCompile Include="..\UILayoutExecutant.cpp">
       <Filter>Layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UIFocusManager.cpp">
+      <Filter>BaseClasses</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
