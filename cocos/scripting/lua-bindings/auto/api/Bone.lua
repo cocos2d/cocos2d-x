@@ -162,7 +162,7 @@
 --------------------------------
 -- @function [parent=#Bone] getNodeToArmatureTransform 
 -- @param self
--- @return matrix_table#matrix_table ret (return value: matrix_table)
+-- @return Mat4#Mat4 ret (return value: cc.Mat4)
         
 --------------------------------
 -- @function [parent=#Bone] getDisplayManager 
@@ -202,7 +202,7 @@
 --------------------------------
 -- @function [parent=#Bone] getNodeToWorldTransform 
 -- @param self
--- @return matrix_table#matrix_table ret (return value: matrix_table)
+-- @return Mat4#Mat4 ret (return value: cc.Mat4)
         
 --------------------------------
 -- @function [parent=#Bone] update 

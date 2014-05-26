@@ -134,7 +134,7 @@ public:
     
     // event
     CC_DEPRECATED_ATTRIBUTE void addEventListenerPageView(Ref *target, SEL_PageViewEvent selector);
-    void addEventListener(ccPageViewCallback callback);
+    void addEventListener(const ccPageViewCallback& callback);
     
 
     
@@ -183,17 +183,17 @@ protected:
     virtual Vector<Node*>& getChildren() override{return Widget::getChildren();};
     virtual const Vector<Node*>& getChildren() const override{return Widget::getChildren();};
     virtual ssize_t getChildrenCount() const override {return Widget::getChildrenCount();};
-    virtual Node * getChildByTag(int tag) override {return Widget::getChildByTag(tag);};
+    virtual Node * getChildByTag(int tag) const override {return Widget::getChildByTag(tag);};
 virtual Widget* getChildByName(const std::string& name) override {return Widget::getChildByName(name);};
 
     Layout* createPage();
     float getPositionXByIndex(ssize_t idx);
     void updateBoundaryPages();
-    virtual void handlePressLogic(const Vector2 &touchPoint) override;
-    virtual void handleMoveLogic(const Vector2 &touchPoint) override;
-    virtual void handleReleaseLogic(const Vector2 &touchPoint) override;
-    virtual void interceptTouchEvent(int handleState, Widget* sender, const Vector2 &touchPoint) override;
-    virtual void checkChildInfo(int handleState, Widget* sender, const Vector2 &touchPoint) override;
+    virtual void handlePressLogic(const Vec2 &touchPoint) override;
+    virtual void handleMoveLogic(const Vec2 &touchPoint) override;
+    virtual void handleReleaseLogic(const Vec2 &touchPoint) override;
+    virtual void interceptTouchEvent(int handleState, Widget* sender, const Vec2 &touchPoint) override;
+    virtual void checkChildInfo(int handleState, Widget* sender, const Vec2 &touchPoint) override;
     virtual bool scrollPages(float touchOffset);
     void movePages(float offset);
     void pageTurningEvent();
@@ -211,7 +211,7 @@ protected:
     TouchDirection _touchMoveDir;
     float _touchStartLocation;
     float _touchMoveStartLocation;
-    Vector2 _movePagePoint;
+    Vec2 _movePagePoint;
     Widget* _leftChild;
     Widget* _rightChild;
     float _leftBoundary;

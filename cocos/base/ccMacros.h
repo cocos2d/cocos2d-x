@@ -25,8 +25,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCMACROS_H__
-#define __CCMACROS_H__
+#ifndef __BASE_CCMACROS_H__
+#define __BASE_CCMACROS_H__
 
 #ifndef _USE_MATH_DEFINES
 #define _USE_MATH_DEFINES
@@ -153,13 +153,13 @@ On iPhone it returns 2 if RetinaDisplay is On. Otherwise it returns 1
  Converts a rect in pixels to points
  */
 #define CC_POINT_PIXELS_TO_POINTS(__pixels__)                                                                        \
-Vector2( (__pixels__).x / CC_CONTENT_SCALE_FACTOR(), (__pixels__).y / CC_CONTENT_SCALE_FACTOR())
+Vec2( (__pixels__).x / CC_CONTENT_SCALE_FACTOR(), (__pixels__).y / CC_CONTENT_SCALE_FACTOR())
 
 /** @def CC_POINT_POINTS_TO_PIXELS
  Converts a rect in points to pixels
  */
 #define CC_POINT_POINTS_TO_PIXELS(__points__)                                                                        \
-Vector2( (__points__).x * CC_CONTENT_SCALE_FACTOR(), (__points__).y * CC_CONTENT_SCALE_FACTOR())
+Vec2( (__points__).x * CC_CONTENT_SCALE_FACTOR(), (__points__).y * CC_CONTENT_SCALE_FACTOR())
 
 /** @def CC_POINT_PIXELS_TO_POINTS
  Converts a rect in pixels to points
@@ -276,4 +276,4 @@ It should work same as apples CFSwapInt32LittleToHost(..)
 #define CC_CALLBACK_2(__selector__,__target__, ...) std::bind(&__selector__,__target__, std::placeholders::_1, std::placeholders::_2, ##__VA_ARGS__)
 #define CC_CALLBACK_3(__selector__,__target__, ...) std::bind(&__selector__,__target__, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, ##__VA_ARGS__)
 
-#endif // __CCMACROS_H__
+#endif // __BASE_CCMACROS_H__

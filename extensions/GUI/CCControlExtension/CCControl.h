@@ -152,7 +152,7 @@ public:
      * control space coordinates.
      * @param touch A Touch object that represents a touch.
      */
-    virtual Vector2 getTouchLocation(Touch* touch);
+    virtual Vec2 getTouchLocation(Touch* touch);
 
     virtual bool onTouchBegan(Touch *touch, Event *event) { return false; };
     virtual void onTouchMoved(Touch *touch, Event *event) {};

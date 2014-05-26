@@ -16,7 +16,7 @@
 --------------------------------
 -- @function [parent=#CardinalSplineBy] updatePosition 
 -- @param self
--- @param #vector2_table array
+-- @param #cc.Vec2 vec2
         
 --------------------------------
 -- @function [parent=#CardinalSplineBy] reverse 

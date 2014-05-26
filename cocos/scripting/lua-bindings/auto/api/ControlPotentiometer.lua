@@ -6,7 +6,7 @@
 --------------------------------
 -- @function [parent=#ControlPotentiometer] setPreviousLocation 
 -- @param self
--- @param #vector2_table array
+-- @param #cc.Vec2 vec2
         
 --------------------------------
 -- @function [parent=#ControlPotentiometer] setValue 
@@ -26,16 +26,16 @@
 --------------------------------
 -- @function [parent=#ControlPotentiometer] angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint 
 -- @param self
--- @param #vector2_table array
--- @param #vector2_table array
--- @param #vector2_table array
--- @param #vector2_table array
+-- @param #cc.Vec2 vec2
+-- @param #cc.Vec2 vec2
+-- @param #cc.Vec2 vec2
+-- @param #cc.Vec2 vec2
 -- @return float#float ret (return value: float)
         
 --------------------------------
 -- @function [parent=#ControlPotentiometer] potentiometerBegan 
 -- @param self
--- @param #vector2_table array
+-- @param #cc.Vec2 vec2
         
 --------------------------------
 -- @function [parent=#ControlPotentiometer] setMaximumValue 
@@ -60,19 +60,19 @@
 --------------------------------
 -- @function [parent=#ControlPotentiometer] getPreviousLocation 
 -- @param self
--- @return vector2_table#vector2_table ret (return value: vector2_table)
+-- @return Vec2#Vec2 ret (return value: cc.Vec2)
         
 --------------------------------
 -- @function [parent=#ControlPotentiometer] distanceBetweenPointAndPoint 
 -- @param self
--- @param #vector2_table array
--- @param #vector2_table array
+-- @param #cc.Vec2 vec2
+-- @param #cc.Vec2 vec2
 -- @return float#float ret (return value: float)
         
 --------------------------------
 -- @function [parent=#ControlPotentiometer] potentiometerEnded 
 -- @param self
--- @param #vector2_table array
+-- @param #cc.Vec2 vec2
         
 --------------------------------
 -- @function [parent=#ControlPotentiometer] setProgressTimer 
@@ -100,7 +100,7 @@
 --------------------------------
 -- @function [parent=#ControlPotentiometer] potentiometerMoved 
 -- @param self
--- @param #vector2_table array
+-- @param #cc.Vec2 vec2
         
 --------------------------------
 -- @function [parent=#ControlPotentiometer] create 

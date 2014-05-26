@@ -157,14 +157,14 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void visit(cocos2d::Renderer *renderer, const cocos2d::Matrix &parentTransform, bool parentTransformUpdated) override;
-    virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Matrix &transform, bool transformUpdated) override;
+    virtual void visit(cocos2d::Renderer *renderer, const cocos2d::Mat4 &parentTransform, bool parentTransformUpdated) override;
+    virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, bool transformUpdated) override;
     virtual void update(float dt) override;
 
     virtual void onEnter() override;
     virtual void onExit() override; 
 
-    virtual const cocos2d::Matrix& getNodeToParentTransform() const override;
+    virtual const cocos2d::Mat4& getNodeToParentTransform() const override;
     /**
      *  @js NA
      *  @lua NA
@@ -181,8 +181,8 @@ public:
      * Set contentsize and Calculate anchor point.
      */
     virtual void updateOffsetPoint();
-    virtual void setAnchorPoint(const cocos2d::Vector2& point) override;
-    virtual const cocos2d::Vector2& getAnchorPointInPoints() const override;
+    virtual void setAnchorPoint(const cocos2d::Vec2& point) override;
+    virtual const cocos2d::Vec2& getAnchorPointInPoints() const override;
 
     virtual void setAnimation(ArmatureAnimation *animation);
     virtual ArmatureAnimation *getAnimation() const;
@@ -269,8 +269,8 @@ protected:
 
     cocos2d::BlendFunc _blendFunc;                    //! It's required for CCTextureProtocol inheritance
 
-    cocos2d::Vector2 _offsetPoint;
-    cocos2d::Vector2 _realAnchorPointInPoints;
+    cocos2d::Vec2 _offsetPoint;
+    cocos2d::Vec2 _realAnchorPointInPoints;
 
     ArmatureAnimation *_animation;
 

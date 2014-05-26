@@ -9,11 +9,10 @@ class AccelerometerTest: public Layer
 {
 protected:
     Sprite* _ball;
-    double    _lastTime;
 
 public:
-    AccelerometerTest(void);
-    ~AccelerometerTest(void);
+    AccelerometerTest();
+    ~AccelerometerTest();
 
     void onAcceleration(Acceleration* acc, Event* event);
 

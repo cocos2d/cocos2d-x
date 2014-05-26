@@ -53,19 +53,19 @@ public:
     {}
 
     /** returns the current touch location in OpenGL coordinates */
-    Vector2 getLocation() const;
+    Vec2 getLocation() const;
     /** returns the previous touch location in OpenGL coordinates */
-    Vector2 getPreviousLocation() const;
+    Vec2 getPreviousLocation() const;
     /** returns the start touch location in OpenGL coordinates */
-    Vector2 getStartLocation() const;
+    Vec2 getStartLocation() const;
     /** returns the delta of 2 current touches locations in screen coordinates */
-    Vector2 getDelta() const;
+    Vec2 getDelta() const;
     /** returns the current touch location in screen coordinates */
-    Vector2 getLocationInView() const;
+    Vec2 getLocationInView() const;
     /** returns the previous touch location in screen coordinates */
-    Vector2 getPreviousLocationInView() const;
+    Vec2 getPreviousLocationInView() const;
     /** returns the start touch location in screen coordinates */
-    Vector2 getStartLocationInView() const;
+    Vec2 getStartLocationInView() const;
     
     void setTouchInfo(int id, float x, float y)
     {
@@ -91,9 +91,9 @@ public:
 private:
     int _id;
     bool _startPointCaptured;
-    Vector2 _startPoint;
-    Vector2 _point;
-    Vector2 _prevPoint;
+    Vec2 _startPoint;
+    Vec2 _point;
+    Vec2 _prevPoint;
 };
 
 // end of input group

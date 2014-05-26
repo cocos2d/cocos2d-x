@@ -1147,4 +1147,61 @@ end
 rawset(cc.GLProgram,"addAttribute", GLProgram.addAttribute)
 --functions of cc.GLProgram will be deprecated end
 
+--functions of ccui.Text will be deprecated begin
+local TextDeprecated = { }
+function TextDeprecated.setText(self, str)
+    deprecatedTip("ccui.Text:setText","ccui.Text:setString")
+    return self:setString(str)
+end
+rawset(ccui.Text,"setText", TextDeprecated.setText)
+
+function TextDeprecated.getStringValue(self)
+    deprecatedTip("ccui.Text:getStringValue","ccui.Text:getString")
+    return self:getString()
+end
+rawset(ccui.Text,"getStringValue", TextDeprecated.getStringValue)
+
+--functions of ccui.Text will be deprecated begin
+
+--functions of ccui.TextAtlas will be deprecated begin
+local TextAtlasDeprecated = { }
+function TextAtlasDeprecated.setStringValue(self, str)
+    deprecatedTip("ccui.TextAtlas:setStringValue","ccui.TextAtlas:setString")
+    return self:setString(str)
+end
+rawset(ccui.TextAtlas,"setStringValue", TextAtlasDeprecated.setStringValue)
+
+function TextAtlasDeprecated.getStringValue(self)
+    deprecatedTip("ccui.TextAtlas:getStringValue","ccui.TextAtlas:getString")
+    return self:getString()
+end
+rawset(ccui.TextAtlas,"getStringValue", TextAtlasDeprecated.getStringValue)
+
+--functions of ccui.TextAtlas will be deprecated begin
+
+
+--functions of ccui.TextBMFont will be deprecated begin
+local TextBMFontDeprecated = { }
+function TextBMFontDeprecated.setText(self, str)
+    deprecatedTip("ccui.TextBMFont:setText","ccui.TextBMFont:setString")
+    return self:setString(str)
+end
+rawset(ccui.TextBMFont,"setText", TextBMFontDeprecated.setText)
+
+function TextBMFontDeprecated.getStringValue(self)
+    deprecatedTip("ccui.Text:getStringValue","ccui.TextBMFont:getString")
+    return self:getString()
+end
+rawset(ccui.Text,"getStringValue", TextBMFontDeprecated.getStringValue)
+--functions of ccui.TextBMFont will be deprecated begin
+
+--functions of cc.ShaderCache will be deprecated begin
+local ShaderCacheDeprecated = { }
+function ShaderCacheDeprecated.getProgram(self,strShader)
+    deprecatedTip("cc.ShaderCache:getProgram","cc.ShaderCache:getGLProgram")
+    return self:getGLProgram(strShader)
+end
+rawset(cc.ShaderCache,"getProgram", ShaderCacheDeprecated.getProgram)
+--functions of ccui.TextBMFont will be deprecated begin
+
 

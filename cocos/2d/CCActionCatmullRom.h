@@ -80,22 +80,22 @@ public:
     /** appends a control point 
      * @js NA
      */
-    void addControlPoint(Vector2 controlPoint);
+    void addControlPoint(Vec2 controlPoint);
     
     /** inserts a controlPoint at index 
      * @js NA
      */
-    void insertControlPoint(Vector2 &controlPoint, ssize_t index);
+    void insertControlPoint(Vec2 &controlPoint, ssize_t index);
     
     /** replaces an existing controlPoint at index 
      * @js NA
      */
-    void replaceControlPoint(Vector2 &controlPoint, ssize_t index);
+    void replaceControlPoint(Vec2 &controlPoint, ssize_t index);
     
     /** get the value of a controlPoint at a given index 
      * @js NA
      */
-    Vector2 getControlPointAtIndex(ssize_t index);
+    Vec2 getControlPointAtIndex(ssize_t index);
     
     /** deletes a control point at a given index 
      * @js NA
@@ -124,14 +124,14 @@ public:
     /**
      * @js NA
      */
-    const std::vector<Vector2*>* getControlPoints() const;
+    const std::vector<Vec2*>* getControlPoints() const;
     /**
      * @js NA
      */
-    void setControlPoints(std::vector<Vector2*> *controlPoints);
+    void setControlPoints(std::vector<Vec2*> *controlPoints);
 private:
     /** Array that contains the control points */
-    std::vector<Vector2*> *_controlPoints;
+    std::vector<Vec2*> *_controlPoints;
 };
 
 /** Cardinal Spline path.
@@ -164,7 +164,7 @@ public:
     /** initializes the action with a duration and an array of points */
     bool initWithDuration(float duration, PointArray* points, float tension);
 
-    virtual void updatePosition(Vector2 &newPos);
+    virtual void updatePosition(Vec2 &newPos);
 
     inline PointArray* getPoints() { return _points; }
     /**
@@ -189,8 +189,8 @@ protected:
     PointArray *_points;
     float _deltaT;
     float _tension;
-    Vector2	_previousPosition;
-    Vector2	_accumulatedDiff;
+    Vec2	_previousPosition;
+    Vec2	_accumulatedDiff;
 };
 
 /** Cardinal Spline path.
@@ -214,12 +214,12 @@ public:
     
     // Overrides
     virtual void startWithTarget(Node *target) override;
-    virtual void updatePosition(Vector2 &newPos) override;
+    virtual void updatePosition(Vec2 &newPos) override;
 	virtual CardinalSplineBy *clone() const override;
     virtual CardinalSplineBy* reverse() const override;
 
 protected:
-    Vector2 _startPosition;
+    Vec2 _startPosition;
 };
 
 /** An action that moves the target with a CatmullRom curve to a destination point.
@@ -275,7 +275,7 @@ public:
 };
 
 /** Returns the Cardinal Spline position for a given set of control points, tension and time */
-extern CC_DLL Vector2 ccCardinalSplineAt(Vector2 &p0, Vector2 &p1, Vector2 &p2, Vector2 &p3, float tension, float t);
+extern CC_DLL Vec2 ccCardinalSplineAt(Vec2 &p0, Vec2 &p1, Vec2 &p2, Vec2 &p3, float tension, float t);
 
 // end of actions group
 /// @}

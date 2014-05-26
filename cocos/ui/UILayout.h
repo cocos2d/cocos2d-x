@@ -30,14 +30,27 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 namespace ui {
+    
+class LayoutExecutant;
+    
+class LayoutProtocol
+{
+public:
+    LayoutProtocol(){}
+    virtual ~LayoutProtocol(){}
+    
+    virtual LayoutExecutant* createLayoutExecutant() = 0;
+    virtual const Size getLayoutContentSize() = 0;
+    virtual const Vector<Node*>& getLayoutElements() = 0;
+    virtual void doLayout() = 0;
+};
 
 /**
  *  @js NA
  *  @lua NA
  */
-class LayoutExecutant;
     
-class Layout : public Widget
+class Layout : public Widget, public LayoutProtocol
 {
     
     DECLARE_CLASS_GUI_INFO
@@ -153,9 +166,9 @@ public:
      *
      * @param vector
      */
-    void setBackGroundColorVector(const Vector2 &vector);
+    void setBackGroundColorVector(const Vec2 &vector);
     
-    const Vector2& getBackGroundColorVector();
+    const Vec2& getBackGroundColorVector();
     
     void setBackGroundImageColor(const Color3B& color);
     
@@ -228,7 +241,7 @@ public:
      */
     virtual void addChild(Node* child, int zOrder, int tag) override;
     
-    virtual void visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated) override;
+    virtual void visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated) override;
 
     virtual void removeChild(Node* child, bool cleanup = true) override;
     
@@ -308,12 +321,16 @@ protected:
     virtual void copySpecialProperties(Widget* model) override;
     virtual void copyClonedWidgetChildren(Widget* model) override;
     
-    void stencilClippingVisit(Renderer *renderer, const Matrix& parentTransform, bool parentTransformUpdated);
-    void scissorClippingVisit(Renderer *renderer, const Matrix& parentTransform, bool parentTransformUpdated);
+    void stencilClippingVisit(Renderer *renderer, const Mat4& parentTransform, bool parentTransformUpdated);
+    void scissorClippingVisit(Renderer *renderer, const Mat4& parentTransform, bool parentTransformUpdated);
     
     void setStencilClippingSize(const Size& size);
     const Rect& getClippingRect();
-    virtual void doLayout();
+    
+    virtual void doLayout()override;
+    virtual LayoutExecutant* createLayoutExecutant()override;
+    virtual const Size getLayoutContentSize()override;
+    virtual const Vector<Node*>& getLayoutElements() override;
     
     //clipping
     void onBeforeVisitStencil();
@@ -325,12 +342,11 @@ protected:
     void updateBackGroundImageColor();
     void updateBackGroundImageOpacity();
     void updateBackGroundImageRGBA();
-    LayoutExecutant* createCurrentLayoutExecutant();
     
     /**
      *get the content size of the layout, it will accumulate all its children's content size
      */
-    Size getLayoutContentSize() const;
+    Size getLayoutAccumulatedSize() const;
     
     /**
      * When the layout get focused, it the layout pass the focus to its child, it will use this method to determine which child 
@@ -386,7 +402,7 @@ protected:
     /**
      * get the center point of a widget in world space
      */
-    Vector2 getWorldCenterPoint(Widget* node);
+    Vec2 getWorldCenterPoint(Widget* node);
     
     /**
      * this method is called internally by nextFocusedWidget. When the dir is Right/Down, then this method will be called
@@ -445,7 +461,7 @@ protected:
     Color3B _cColor;
     Color3B _gStartColor;
     Color3B _gEndColor;
-    Vector2 _alongVector;
+    Vec2 _alongVector;
     GLubyte _cOpacity;
     Size _backGroundImageTextureSize;
     Type _layoutType;
@@ -476,8 +492,6 @@ protected:
     
     Color3B _backGroundImageColor;
     GLubyte _backGroundImageOpacity;
-    
-    LayoutExecutant* _curLayoutExecutant;
     
     GLint _mask_layer_le;
     GroupCommand _groupCommand;

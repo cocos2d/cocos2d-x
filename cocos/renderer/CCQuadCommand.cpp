@@ -24,6 +24,7 @@
 
 
 #include "renderer/CCQuadCommand.h"
+
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramState.h"
@@ -43,7 +44,7 @@ QuadCommand::QuadCommand()
     _type = RenderCommand::Type::QUAD_COMMAND;
 }
 
-void QuadCommand::init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, ssize_t quadCount, const Matrix &mv)
+void QuadCommand::init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, ssize_t quadCount, const Mat4 &mv)
 {
     CCASSERT(glProgramState, "Invalid GLProgramState");
     CCASSERT(glProgramState->getVertexAttribsFlags() == 0, "No custom attributes are supported in QuadCommand");

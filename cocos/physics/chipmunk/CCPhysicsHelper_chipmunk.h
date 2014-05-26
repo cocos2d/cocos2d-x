@@ -37,8 +37,8 @@ NS_CC_BEGIN
 class PhysicsHelper
 {
 public:
-    static Vector2 cpv2point(const cpVect& vec) { return Vector2(vec.x, vec.y); }
-    static cpVect point2cpv(const Vector2& point) { return cpv(point.x, point.y); }
+    static Vec2 cpv2point(const cpVect& vec) { return Vec2(vec.x, vec.y); }
+    static cpVect point2cpv(const Vec2& point) { return cpv(point.x, point.y); }
     static Size cpv2size(const cpVect& vec) { return Size(vec.x, vec.y); }
     static cpVect size2cpv(const Size& size) { return cpv(size.width, size.height); }
     static float cpfloat2float(cpFloat f) { return f; }
@@ -46,7 +46,7 @@ public:
     static cpBB rect2cpbb(const Rect& rect) { return cpBBNew(rect.origin.x, rect.origin.y, rect.origin.x + rect.size.width, rect.origin.y + rect.size.height); }
     static Rect cpbb2rect(const cpBB& bb) { return Rect(bb.l, bb.b, bb.r -  bb.l, bb.t - bb.b); }
     
-    static Vector2* cpvs2points(const cpVect* cpvs, Vector2* out, int count)
+    static Vec2* cpvs2points(const cpVect* cpvs, Vec2* out, int count)
     {
         for (int i = 0; i < count; ++i)
         {
@@ -56,7 +56,7 @@ public:
         return out;
     }
     
-    static cpVect* points2cpvs(const Vector2* points, cpVect* out, int count)
+    static cpVect* points2cpvs(const Vec2* points, cpVect* out, int count)
     {
         for (int i = 0; i < count; ++i)
         {

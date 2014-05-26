@@ -60,12 +60,12 @@ ActionCamera * ActionCamera::reverse() const
 
 void ActionCamera::restore()
 {
-    _center = Vector3(0, 0, 0);
-    _eye = Vector3(0, 0, FLT_EPSILON);
-    _up = Vector3(0, 1, 0);
+    _center = Vec3(0, 0, 0);
+    _eye = Vec3(0, 0, FLT_EPSILON);
+    _up = Vec3(0, 1, 0);
 }
 
-void ActionCamera::setEye(const Vector3& eye)
+void ActionCamera::setEye(const Vec3& eye)
 {
     _eye = eye;
     updateTransform();
@@ -73,17 +73,17 @@ void ActionCamera::setEye(const Vector3& eye)
 
 void ActionCamera::setEye(float x, float y, float z)
 {
-    _eye = Vector3(x, y, z);
+    _eye = Vec3(x, y, z);
     updateTransform();
 }
 
-void ActionCamera::setCenter(const Vector3& center)
+void ActionCamera::setCenter(const Vec3& center)
 {
     _center = center;
     updateTransform();
 }
 
-void ActionCamera::setUp(const Vector3& up)
+void ActionCamera::setUp(const Vec3& up)
 {
     _up = up;
     updateTransform();
@@ -91,18 +91,18 @@ void ActionCamera::setUp(const Vector3& up)
 
 void ActionCamera::updateTransform()
 {
-    Matrix lookupMatrix;
-    Matrix::createLookAt(_eye.x, _eye.y, _eye.z, _center.x, _center.y, _center.z, _up.x, _up.y, _up.z, &lookupMatrix);
+    Mat4 lookupMatrix;
+    Mat4::createLookAt(_eye.x, _eye.y, _eye.z, _center.x, _center.y, _center.z, _up.x, _up.y, _up.z, &lookupMatrix);
 
-    Vector2 anchorPoint = _target->getAnchorPointInPoints();
+    Vec2 anchorPoint = _target->getAnchorPointInPoints();
 
-    bool needsTranslation = !anchorPoint.equals(Vector2::ZERO);
+    bool needsTranslation = !anchorPoint.equals(Vec2::ZERO);
 
-    Matrix mv = Matrix::IDENTITY;
+    Mat4 mv = Mat4::IDENTITY;
 
     if(needsTranslation) {
-        Matrix t;
-        Matrix::createTranslation(anchorPoint.x, anchorPoint.y, 0, &t);
+        Mat4 t;
+        Mat4::createTranslation(anchorPoint.x, anchorPoint.y, 0, &t);
         mv = mv * t;
     }
     
@@ -110,8 +110,8 @@ void ActionCamera::updateTransform()
 
     if(needsTranslation) {
         
-        Matrix t;
-        Matrix::createTranslation(-anchorPoint.x, -anchorPoint.y, 0, &t);
+        Mat4 t;
+        Mat4::createTranslation(-anchorPoint.x, -anchorPoint.y, 0, &t);
         mv = mv * t;
     }
 

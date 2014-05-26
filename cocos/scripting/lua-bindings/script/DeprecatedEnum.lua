@@ -402,17 +402,14 @@ _G.LAYOUT_COLOR_NONE              = ccui.LayoutBackGroundColorType.none
 _G.LAYOUT_COLOR_SOLID             = ccui.LayoutBackGroundColorType.solid
 _G.LAYOUT_COLOR_GRADIENT          = ccui.LayoutBackGroundColorType.gradient
 
-_G.LAYOUT_ABSOLUTE                = ccui.LayoutType.absolute
-_G.LAYOUT_LINEAR_VERTICAL         = ccui.LayoutType.linearVertical
-_G.LAYOUT_LINEAR_HORIZONTAL       = ccui.LayoutType.linearHorizontal
-_G.LAYOUT_RELATIVE                = ccui.LayoutType.relative
+_G.LAYOUT_ABSOLUTE                = ccui.Type.ABSOLUTE
+_G.LAYOUT_LINEAR_VERTICAL         = ccui.Type.VERTICAL
+_G.LAYOUT_LINEAR_HORIZONTAL       = ccui.Type.HORIZONTAL
+_G.LAYOUT_RELATIVE                = ccui.Type.RELATIVE
 
 _G.BRIGHT_NONE               = ccui.BrightStyle.none
 _G.BRIGHT_NORMAL             = ccui.BrightStyle.normal
 _G.BRIGHT_HIGHLIGHT          = ccui.BrightStyle.highlight
-
-_G.WidgetTypeWidget                = ccui.WidgetType.widget
-_G.WidgetTypeContainer             = ccui.WidgetType.container
 
 _G.UI_TEX_TYPE_LOCAL               = ccui.TextureResType.localType
 _G.UI_TEX_TYPE_PLIST               = ccui.TextureResType.plistType
@@ -434,8 +431,8 @@ _G.CHECKBOX_STATE_EVENT_UNSELECTED   = ccui.CheckBoxEventType.unselected
 _G.CHECKBOX_STATE_EVENT_SELECTED     = ccui.CheckBoxEventType.selected
 _G.CHECKBOX_STATE_EVENT_UNSELECTED   = ccui.CheckBoxEventType.unselected
 
-_G.LoadingBarTypeLeft     = ccui.LoadingBarType.left
-_G.LoadingBarTypeRight   = ccui.LoadingBarType.right
+_G.LoadingBarTypeLeft     = ccui.LoadingBarDirection.LEFT
+_G.LoadingBarTypeRight   = ccui.LoadingBarDirection.RIGHT
 
 _G.LoadingBarTypeRight   = ccui.SliderEventType.percent_changed
 
@@ -485,3 +482,13 @@ _G.kCCScrollViewDirectionHorizontal        = cc.SCROLLVIEW_DIRECTION_HORIZONTAL
 _G.kCCScrollViewDirectionVertical          = cc.SCROLLVIEW_DIRECTION_VERTICAL
 _G.kCCTableViewFillTopDown                 = cc.TABLEVIEW_FILL_TOPDOWN
 _G.kCCTableViewFillBottomUp                = cc.TABLEVIEW_FILL_BOTTOMUP
+
+ccui.LoadingBarType = ccui.LoadingBarDirection 
+ccui.LoadingBarType.left = ccui.LoadingBarDirection.LEFT
+ccui.LoadingBarType.right = ccui.LoadingBarDirection.RIGHT
+
+ccui.LayoutType.absolute = ccui.LayoutType.ABSOLUTE
+ccui.LayoutType.linearVertical = ccui.LayoutType.VERTICAL
+ccui.LayoutType.linearHorizontal = ccui.LayoutType.HORIZONTAL
+ccui.LayoutType.relative = ccui.LayoutType.RELATIVE
+

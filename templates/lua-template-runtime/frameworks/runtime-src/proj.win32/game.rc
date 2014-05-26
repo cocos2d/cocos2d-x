@@ -65,7 +65,7 @@ BEGIN
     END
     POPUP "&Control"
     BEGIN
-        MENUITEM "Reload",                      ID_CONTROL_RELOAD
+        MENUITEM "Restart(F5)",                 ID_CONTROL_RELOAD
     END
     POPUP "&Help"
     BEGIN

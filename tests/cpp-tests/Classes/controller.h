@@ -19,9 +19,11 @@ public:
 
     void onMouseScroll(Event *event);
     void addConsoleAutoTest();
-
+    void autorun();
+    void startAutoRun();
+    ssize_t readline(int fd, char* ptr, size_t maxlen);
 private:
-    Vector2 _beginPos;
+    Vec2 _beginPos;
     Menu* _itemMenu;
 };
 

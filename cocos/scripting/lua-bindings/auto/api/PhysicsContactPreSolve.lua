@@ -24,12 +24,12 @@
 --------------------------------
 -- @function [parent=#PhysicsContactPreSolve] getSurfaceVelocity 
 -- @param self
--- @return vector2_table#vector2_table ret (return value: vector2_table)
+-- @return Vec2#Vec2 ret (return value: cc.Vec2)
         
 --------------------------------
 -- @function [parent=#PhysicsContactPreSolve] setSurfaceVelocity 
 -- @param self
--- @param #vector2_table array
+-- @param #cc.Vec2 vec2
         
 --------------------------------
 -- @function [parent=#PhysicsContactPreSolve] setRestitution 

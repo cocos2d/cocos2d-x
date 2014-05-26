@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "2d/platform/CCFileUtils.h"
+#include "platform/CCFileUtils.h"
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 
@@ -1166,7 +1166,7 @@ ContourData *DataReaderHelper::decodeContour(tinyxml2::XMLElement *contourXML, D
 
     while (vertexDataXML)
     {
-        Vector2 vertex;
+        Vec2 vertex;
 
         vertexDataXML->QueryFloatAttribute(A_X, &vertex.x);
         vertexDataXML->QueryFloatAttribute(A_Y, &vertex.y);
@@ -1631,7 +1631,7 @@ ContourData *DataReaderHelper::decodeContour(const rapidjson::Value& json)
     {
         const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, VERTEX_POINT, i);
 
-        Vector2 vertex;
+        Vec2 vertex;
 
         vertex.x = DICTOOL->getFloatValue_json(dic, A_X);
         vertex.y = DICTOOL->getFloatValue_json(dic, A_Y);

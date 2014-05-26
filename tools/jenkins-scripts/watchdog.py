@@ -1,8 +1,39 @@
 import jenkinsapi
 from jenkinsapi.jenkins import Jenkins
+from jenkinsapi.node import Node
 import sys
 import time
 import os
+from email.mime.text import MIMEText
+import smtplib
+
+def send_mail(sub,title,content):
+    to_list = os.environ['EMAIL_LIST'].split(' ')
+    mail_user = os.environ['EMAIL_USER']
+    mail_pass = os.environ['EMAIL_PWD']
+    mail_postfix = 'gmail.com'
+    me = mail_user + "<" + mail_user + "@" + mail_postfix + ">"
+    msg = MIMEText(content, _subtype='plain', _charset='gb2312')
+    msg['Subject'] = sub
+    msg['From'] = me
+    msg['To'] = " ".join(to_list)
+    print 'to users:', msg['To']
+    msg['Content'] = 'test'
+    try:
+        s = smtplib.SMTP('smtp.gmail.com', 587)
+        s.ehlo()
+        s.starttls()
+        s.login(mail_user,mail_pass)
+        s.sendmail(me, to_list, str(msg))
+        print 'info:', me, to_list, str(msg)
+        s.close()
+        return True
+    except Exception, e:
+        print str(e)
+        return False
+
+def sendEmail(msg):
+    send_mail("Jenkins node " + msg + " is offline", 'for offline.', msg + ' is offline')
 
 #check & kill dead buid
 def build_time(_job,_threshold):
@@ -18,17 +49,14 @@ def build_time(_job,_threshold):
     buildnu = _job.get_last_buildnumber()
     print "buildnumber:#",buildnu
     #get nowtime
-    nowtime = time.strftime('%M',time.localtime(time.time()))
-    #print 'nowtime:',nowtime
+    nowtime = int(time.time())
+    print 'nowtime:', time.ctime(nowtime)
     #get build start time
-    timeb = build.get_timestamp()
-    #print 'buildtime:',str(timeb)[14:16]
-    buildtime = int(str(timeb)[14:16])
-    subtime = 0
-    if int(nowtime) >= buildtime:
-        subtime = int(nowtime)-buildtime
-    else:
-        subtime = 60-buildtime+int(nowtime)
+    timestamp = build._poll()['timestamp']
+    buildtime = int(timestamp)/1000
+    print 'buildtime:', time.ctime(buildtime)
+    subtime = (nowtime - buildtime)/60
+    print 'subtime:', subtime, _threshold
     if subtime > _threshold:
         #print 'subtime',subtime
         #kill dead buid
@@ -46,6 +74,16 @@ def main():
         else:
             threshold = int(os.environ['jenkins-job-watchdog-threshold'])
         build_time(job,threshold)
+
+    #check node status
+    node_names = os.environ['NODE_LIST'].split(' ')
+    for node_name in node_names:
+        node = J.get_node(node_name)
+        if node.is_online():
+            print node_name, ' : is online'
+        else:
+            sendEmail(node_name)
+            print node_name, ' : is offline'
     return(0)
     
 

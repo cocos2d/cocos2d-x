@@ -37,8 +37,8 @@
 #include <spine/spine.h>
 
 #include "2d/CCNode.h"
-#include "2d/CCProtocols.h"
-#include "2d/CCTextureAtlas.h"
+#include "base/CCProtocols.h"
+#include "renderer/CCTextureAtlas.h"
 #include "renderer/CCCustomCommand.h"
 
 namespace spine {
@@ -67,8 +67,8 @@ public:
 	virtual ~Skeleton ();
 
 	virtual void update (float deltaTime) override;
-	virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Matrix &transform, bool transformUpdated) override;
-    void onDraw(const cocos2d::Matrix &transform, bool transformUpdated);
+	virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, bool transformUpdated) override;
+    void onDraw(const cocos2d::Mat4 &transform, bool transformUpdated);
 	void onEnter() override;
 	void onExit() override;
 	virtual cocos2d::Rect getBoundingBox () const override;

@@ -68,7 +68,7 @@ class CocosZipInstaller(object):
         self._url = data["repo_parent"] + self._repo_name + '/archive/' + self._filename
         self._zip_file_size = int(data["zip_file_size"])
         # 'v' letter was swallowed by github, so we need to substring it from the 2nd letter
-        self._extracted_folder_name = self._repo_name + '-' + self._current_version[1:]
+        self._extracted_folder_name = os.path.join(self._workpath, self._repo_name + '-' + self._current_version[1:])
 
         try:
             data = self.load_json_file(version_path)
@@ -291,8 +291,9 @@ def main():
 
     print("=======================================================")
     print("==> Prepare to download external libraries!")
+    external_path = os.path.join(workpath, 'external')
     installer = CocosZipInstaller(workpath, os.path.join(workpath, 'external', 'config.json'), os.path.join(workpath, 'external', 'version.json'), "prebuilt_libs_version")
-    installer.run("external", opts.remove_downloaded, opts.force_update, opts.download_only)
+    installer.run(external_path, opts.remove_downloaded, opts.force_update, opts.download_only)
 
     print("=======================================================")
     print("==> Prepare to download lua runtime binaries")

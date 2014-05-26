@@ -56,8 +56,8 @@ void CustomParticleWidgetScene::onEnter()
     
     Menu* pMenu = Menu::create(pMenuItem, NULL);
     
-    pMenu->setPosition( Vector2::ZERO );
-    pMenuItem->setPosition( Vector2( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
+    pMenu->setPosition( Vec2::ZERO );
+    pMenuItem->setPosition( Vec2( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
     
     addChild(pMenu, 1);
 }

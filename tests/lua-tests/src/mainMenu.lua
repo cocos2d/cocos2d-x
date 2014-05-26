@@ -39,6 +39,7 @@ require "src/ParticleTest/ParticleTest"
 require "src/PerformanceTest/PerformanceTest"
 require "src/RenderTextureTest/RenderTextureTest"
 require "src/RotateWorldTest/RotateWorldTest"
+require "src/Sprite3DTest/Sprite3DTest"
 require "src/SpriteTest/SpriteTest"
 require "src/SceneTest/SceneTest"
 require "src/SpineTest/SpineTest"
@@ -102,6 +103,7 @@ local _allTests = {
     { isSupported = true,  name = "SpineTest"              , create_func   =                 SpineTestMain  },
     { isSupported = false,  name = "SchdulerTest"           , create_func=              SchdulerTestMain  },
     { isSupported = false,  name = "ShaderTest"             , create_func=            ShaderTestMain      },
+    { isSupported = true,  name = "Sprite3DTest"           , create_func   =                Sprite3DTest    },
     { isSupported = true,  name = "SpriteTest"             , create_func   =                SpriteTest      },
     { isSupported = false,  name = "TextInputTest"          , create_func=             TextInputTestMain  },
     { isSupported = true,  name = "Texture2DTest"          , create_func   =             Texture2dTestMain  },
