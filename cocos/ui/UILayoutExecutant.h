@@ -66,7 +66,13 @@ public:
 class RelativeLayoutExecutant : public LayoutExecutant
 {
 public:
-    RelativeLayoutExecutant(){};
+    RelativeLayoutExecutant()
+    :_unlayoutChildCount(0),
+    _widget(nullptr),
+    _finalPositionX(0.0f),
+    _finalPositionY(0.0f),
+    _relativeWidgetLP(nullptr)
+    {}
     virtual ~RelativeLayoutExecutant(){};
     static RelativeLayoutExecutant* create();
     virtual void doLayout(LayoutProtocol *layout) override;
@@ -77,13 +83,13 @@ protected:
     bool caculateFinalPositionWithRelativeWidget(LayoutProtocol *layout);
     void caculateFinalPositionWithRelativeAlign();
     
-    ssize_t _unlayoutChildCount = 0;
+    ssize_t _unlayoutChildCount;
     Vector<Widget*> _widgetChildren;
-    Widget* _widget = nullptr;
-    float _finalPositionX = 0.0;
-    float _finalPositionY = 0.0;
+    Widget* _widget;
+    float _finalPositionX;
+    float _finalPositionY;
     
-    RelativeLayoutParameter* _relativeWidgetLP = nullptr;
+    RelativeLayoutParameter* _relativeWidgetLP;
 };
 
 }
