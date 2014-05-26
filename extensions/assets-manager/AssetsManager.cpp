@@ -28,7 +28,6 @@
 #include <curl/curl.h>
 #include <curl/easy.h>
 #include <stdio.h>
-#include <thread>
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 #include <sys/types.h>
@@ -262,7 +261,7 @@ void AssetsManager::removeFile(const std::string &path)
 {
     // Remove downloaded file
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
-    std::string command = "rm ";
+    std::string command = "rm -f ";
     // Path may include space.
     command += "\"" + path + "\"";
     system(command.c_str());
