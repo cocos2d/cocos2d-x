@@ -31,7 +31,7 @@
 
 NS_CC_EXT_BEGIN
 
-#define USE_THREAD_POOL 1
+#define USE_THREAD_POOL 0
 #define POOL_SIZE 6
 
 #define BUFFER_SIZE         8192
