@@ -39,9 +39,7 @@
 
 #include "unzip.h"
 
-using namespace cocos2d;
-
-NS_CC_EXT_BEGIN;
+NS_CC_EXT_BEGIN
 
 #define VERSION_FILENAME        "version.manifest"
 #define TEMP_MANIFEST_FILENAME  "project.manifest.temp"
@@ -693,4 +691,4 @@ void AssetsManager::destroyDownloadedVersion()
     removeFile(_storagePath + MANIFEST_FILENAME);
 }
 
-NS_CC_EXT_END;
+NS_CC_EXT_END

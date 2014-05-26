@@ -36,7 +36,8 @@
 
 NS_CC_EXT_BEGIN
 
-class CC_DLL Manifest : public Ref
+
+class Manifest : public Ref
 {
 public:
     
@@ -124,7 +125,7 @@ protected:
     
     void loadManifest(const rapidjson::Document &json);
     
-    rapidjson::Document parseJSON(const std::string &url);
+    //rapidjson::Document parseJSON(const std::string &url);
     
     Asset parseAsset(const std::string &path, const rapidjson::Value &json);
     
@@ -185,6 +186,5 @@ private:
     std::vector<std::string> _searchPaths;
 };
 
-NS_CC_EXT_END;
-
+NS_CC_EXT_END
 #endif /* defined(__Manifest__) */

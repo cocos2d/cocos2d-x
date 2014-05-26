@@ -29,14 +29,12 @@
 #include <stdio.h>
 #include <thread>
 
-using namespace cocos2d;
-
-NS_CC_EXT_BEGIN;
-
 #define BUFFER_SIZE         8192
 #define MAX_FILENAME        512
 #define LOW_SPEED_LIMIT     1L
 #define LOW_SPEED_TIME      5L
+
+NS_CC_EXT_BEGIN
 
 static size_t curlWriteFunc(void *ptr, size_t size, size_t nmemb, void *userdata)
 {
@@ -220,4 +218,4 @@ void Downloader::download(const std::string &srcUrl, FILE *fp, const std::string
     
 }
 
-NS_CC_EXT_END;
+NS_CC_EXT_END
