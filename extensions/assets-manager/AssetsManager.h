@@ -104,6 +104,8 @@ CC_CONSTRUCTOR_ACCESS:
     
     virtual ~AssetsManager();
     
+    void batchDownload(const std::unordered_map<std::string, Downloader::DownloadUnit> &units);
+    
 protected:
     
     std::string get(const std::string& key) const;
