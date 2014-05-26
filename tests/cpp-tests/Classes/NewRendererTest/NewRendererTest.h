@@ -148,7 +148,7 @@ protected:
 
 class CaptureScreenTest : public MultiSceneTest
 {
-    static const int ChildTag = 119;
+    static const int childTag = 119;
 public:
     CREATE_FUNC(CaptureScreenTest);
     virtual std::string title() const override;

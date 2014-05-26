@@ -601,13 +601,13 @@ std::string CaptureScreenTest::title() const
 
 std::string CaptureScreenTest::subtitle() const
 {
-    return "Capture screen test, press the munu items to capture the screen";
+    return "Capture screen test, press the menu items to capture the screen";
 }
 
 void CaptureScreenTest::onCaptured(Ref*)
 {
     Director::getInstance()->getTextureCache()->removeTextureForKey(_filename);
-    removeChildByTag(ChildTag);
+    removeChildByTag(childTag);
     _filename = "CaptureScreenTest.png";
     Director::getInstance()->captureScreen(CC_CALLBACK_2(CaptureScreenTest::afterCaptured, this), _filename);
 }
@@ -617,7 +617,7 @@ void CaptureScreenTest::afterCaptured(bool succeed, const std::string& outputFil
     if (succeed)
     {
         auto sp = Sprite::create(outputFile);
-        addChild(sp, 0, ChildTag);
+        addChild(sp, 0, childTag);
         Size s = Director::getInstance()->getWinSize();
         sp->setPosition(s.width / 2, s.height / 2);
         sp->setScale(0.25);
