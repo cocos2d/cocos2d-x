@@ -130,7 +130,7 @@ public:
      *
      * @return the item widget.
      */
-    Widget* getItem(ssize_t index);
+    Widget* getItem(ssize_t index)const;
     
     /**
      * Returns the item container.
@@ -159,7 +159,7 @@ public:
      */
     void setItemsMargin(float margin);
     
-    float getItemsMargin();
+    float getItemsMargin()const;
     
     virtual void sortAllChildren() override;
     virtual void addChild(Node * child) override;
