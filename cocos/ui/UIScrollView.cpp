@@ -307,7 +307,7 @@ Node* ScrollView::getChildByTag(int tag) const
     return _innerContainer->getChildByTag(tag);
 }
     
-Widget* ScrollView::getChildByName(const std::string& name)
+Widget* ScrollView::getChildByName(const std::string& name)const
 {
     return _innerContainer->getChildByName(name);
 }
@@ -1709,7 +1709,7 @@ void ScrollView::setDirection(Direction dir)
     _direction = dir;
 }
 
-ScrollView::Direction ScrollView::getDirection()
+ScrollView::Direction ScrollView::getDirection()const
 {
     return _direction;
 }
@@ -1734,7 +1734,7 @@ bool ScrollView::isInertiaScrollEnabled() const
     return _inertiaScrollEnabled;
 }
 
-Layout* ScrollView::getInnerContainer()
+Layout* ScrollView::getInnerContainer()const
 {
     return _innerContainer;
 }

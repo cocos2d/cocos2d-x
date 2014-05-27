@@ -118,7 +118,7 @@ public:
      *
      * @return SCROLLVIEW_DIR
      */
-    Direction getDirection();
+    Direction getDirection()const;
     
     /**
      * Gets inner container of scrollview.
@@ -127,7 +127,7 @@ public:
      *
      * @return inner container.
      */
-    Layout* getInnerContainer();
+    Layout* getInnerContainer()const;
     
     /**
      * Scroll inner container to bottom boundary of scrollview.
@@ -274,7 +274,7 @@ public:
     virtual const Vector<Node*>& getChildren() const override;
     virtual ssize_t getChildrenCount() const override;
     virtual Node * getChildByTag(int tag) const override;
-    virtual Widget* getChildByName(const std::string& name) override;
+    virtual Widget* getChildByName(const std::string& name)const override;
     
     //handle touch event
     virtual bool onTouchBegan(Touch *touch, Event *unusedEvent) override;

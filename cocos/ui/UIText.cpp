@@ -136,7 +136,7 @@ void Text::setFontSize(int size)
     _labelRendererAdaptDirty = true;
 }
     
-int Text::getFontSize()
+int Text::getFontSize()const
 {
     return _fontSize;
 }
@@ -160,7 +160,7 @@ void Text::setFontName(const std::string& name)
     _labelRendererAdaptDirty = true;
 }
     
-const std::string& Text::getFontName()
+const std::string& Text::getFontName()const
 {
     return _fontName;
 }
@@ -177,7 +177,7 @@ void Text::setTextAreaSize(const Size &size)
     _labelRendererAdaptDirty = true;
 }
     
-const Size& Text::getTextAreaSize()
+const Size& Text::getTextAreaSize()const
 {
     return _labelRenderer->getDimensions();
 }
@@ -189,7 +189,7 @@ void Text::setTextHorizontalAlignment(TextHAlignment alignment)
     _labelRendererAdaptDirty = true;
 }
     
-TextHAlignment Text::getTextHorizontalAlignment()
+TextHAlignment Text::getTextHorizontalAlignment()const
 {
     return _labelRenderer->getHorizontalAlignment();
 }
@@ -201,7 +201,7 @@ void Text::setTextVerticalAlignment(TextVAlignment alignment)
     _labelRendererAdaptDirty = true;
 }
     
-TextVAlignment Text::getTextVerticalAlignment()
+TextVAlignment Text::getTextVerticalAlignment()const
 {
     return _labelRenderer->getVerticalAlignment();
 }
@@ -211,7 +211,7 @@ void Text::setTouchScaleChangeEnabled(bool enable)
     _touchScaleChangeEnabled = enable;
 }
     
-bool Text::isTouchScaleChangeEnabled()
+bool Text::isTouchScaleChangeEnabled()const
 {
     return _touchScaleChangeEnabled;
 }

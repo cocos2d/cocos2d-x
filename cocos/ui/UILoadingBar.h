@@ -114,7 +114,7 @@ public:
      */
     void setScale9Enabled(bool enabled);
     
-    bool isScale9Enabled();
+    bool isScale9Enabled()const;
     
     /**
      * Sets capinsets for loadingbar, if loadingbar is using scale9 renderer.
@@ -123,7 +123,7 @@ public:
      */
     void setCapInsets(const Rect &capInsets);
     
-    const Rect& getCapInsets();
+    const Rect& getCapInsets()const;
     
     //override "ignoreContentAdaptWithSize" method of widget.
     virtual void ignoreContentAdaptWithSize(bool ignore) override;

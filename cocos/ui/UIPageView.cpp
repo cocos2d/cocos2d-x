@@ -181,7 +181,7 @@ void PageView::removePageAtIndex(ssize_t index)
     
 void PageView::removeAllPages()
 {
-    for(auto& node : _pages)
+    for(const auto& node : _pages)
     {
         removeProtectedChild(node);
     }
@@ -200,12 +200,12 @@ void PageView::updateBoundaryPages()
     _rightBoundaryChild = _pages.at(this->getPageCount()-1);
 }
 
-ssize_t PageView::getPageCount()
+ssize_t PageView::getPageCount()const
 {
     return _pages.size();
 }
 
-float PageView::getPositionXByIndex(ssize_t idx)
+float PageView::getPositionXByIndex(ssize_t idx)const
 {
     return (getSize().width * (idx-_curPageIdx));
 }

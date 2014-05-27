@@ -85,7 +85,7 @@ public:
      */
     void setScale9Enabled(bool able);
     
-    bool isScale9Enabled();
+    bool isScale9Enabled()const;
     
     /**
      * Sets capinsets for slider, if slider is using scale9 renderer.
@@ -101,7 +101,7 @@ public:
      */
     void setCapInsetsBarRenderer(const Rect &capInsets);
     
-    const Rect& getCapInsetsBarRenderer();
+    const Rect& getCapInsetsBarRenderer()const;
     
     /**
      * Sets capinsets for slider, if slider is using scale9 renderer.
@@ -110,7 +110,7 @@ public:
      */
     void setCapInsetProgressBarRebderer(const Rect &capInsets);
     
-    const Rect& getCapInsetsProgressBarRebderer();
+    const Rect& getCapInsetsProgressBarRebderer()const;
     
     /**
      * Load textures for slider ball.
@@ -176,7 +176,7 @@ public:
      *
      * @return percent    percent value from 1 to 100.
      */
-    int getPercent();
+    int getPercent()const;
     
     /**
      * Add call back function called when slider's percent has changed to slider.
@@ -210,7 +210,7 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     virtual void initRenderer() override;
-    float getPercentWithBallPos(float location);
+    float getPercentWithBallPos(float location)const;
     void percentChangedEvent();
     virtual void onPressStateChangedToNormal() override;
     virtual void onPressStateChangedToPressed() override;

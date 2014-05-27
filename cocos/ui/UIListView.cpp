@@ -353,7 +353,7 @@ void ListView::removeAllItems()
     removeAllChildren();
 }
 
-Widget* ListView::getItem(ssize_t index)
+Widget* ListView::getItem(ssize_t index)const
 {
     if (index < 0 || index >= _items.size())
     {
@@ -396,7 +396,7 @@ void ListView::setItemsMargin(float margin)
     _refreshViewDirty = true;
 }
     
-float ListView::getItemsMargin()
+float ListView::getItemsMargin()const
 {
     return _itemsMargin;
 }

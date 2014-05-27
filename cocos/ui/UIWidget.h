@@ -235,7 +235,7 @@ public:
      *
      * @return a Widget object whose name equals to the input parameter
      */
-    virtual Widget* getChildByName(const std::string& name);
+    virtual Widget* getChildByName(const std::string& name) const;
 
     virtual void visit(cocos2d::Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated) override;
 
@@ -274,7 +274,7 @@ public:
      *
      * @return The percent (x,y) of the widget in OpenGL coordinates
      */
-    const Vec2& getPositionPercent();
+    const Vec2& getPositionPercent()const;
 
     /**
      * Changes the position type of the widget
@@ -311,7 +311,7 @@ public:
      *
      * @return true if the widget is flipped horizaontally, false otherwise.
      */
-    virtual bool isFlippedX(){return _flippedX;};
+    virtual bool isFlippedX()const{return _flippedX;};
 
     /**
      * Sets whether the widget should be flipped vertically or not.
@@ -330,7 +330,7 @@ public:
      *
      * @return true if the widget is flipped vertically, flase otherwise.
      */
-    virtual bool isFlippedY(){return _flippedY;};
+    virtual bool isFlippedY()const{return _flippedY;};
     
     virtual void setColor(const Color3B& color) override;
     
@@ -363,21 +363,21 @@ public:
      *
      * @return the touch began point.
      */
-    const Vec2& getTouchStartPos();
+    const Vec2& getTouchStartPos()const;
 
     /*
      * Gets the touch move point of widget when widget is selected.
      *
      * @return the touch move point.
      */
-    const Vec2& getTouchMovePos();
+    const Vec2& getTouchMovePos()const;
 
     /*
      * Gets the touch end point of widget when widget is selected.
      *
      * @return the touch end point.
      */
-    const Vec2& getTouchEndPos();
+    const Vec2& getTouchEndPos()const;
 
     /**
      * Changes the name that is used to identify the widget easily.
@@ -487,7 +487,7 @@ public:
      *
      * @return LayoutParameter
      */
-    LayoutParameter* getLayoutParameter() override;
+    LayoutParameter* getLayoutParameter()const override;
     CC_DEPRECATED_ATTRIBUTE LayoutParameter* getLayoutParameter(LayoutParameter::Type type);
 
 
@@ -510,7 +510,7 @@ public:
      *
      * @return world position of widget.
      */
-    Vec2 getWorldPosition();
+    Vec2 getWorldPosition()const;
 
     /**
      * Gets the Virtual Renderer of widget.
@@ -547,12 +547,12 @@ public:
     
     /*temp action*/
     void setActionTag(int tag);
-	int getActionTag();
+	int getActionTag()const;
     
     /**
      *@return  whether the widget is focused or not
      */
-    bool isFocused();
+    bool isFocused()const;
     
     /**
      *@param focus  pass true to let the widget get focus or pass false to let the widget lose focus
@@ -563,7 +563,7 @@ public:
     /**
      *@return true represent the widget could accept focus, false represent the widget couldn't accept focus
      */
-    bool isFocusEnabled();
+    bool isFocusEnabled()const;
     
     /**
      *@param enable pass true/false to enable/disable the focus ability of a widget
@@ -595,7 +595,7 @@ public:
         return getCurrentFocusedWidget();
     }
 
-    Widget* getCurrentFocusedWidget();
+    Widget* getCurrentFocusedWidget()const;
     static void enableDpadNavigation(bool enable);
 
     std::function<void(Widget*,Widget*)> onFocusChanged;

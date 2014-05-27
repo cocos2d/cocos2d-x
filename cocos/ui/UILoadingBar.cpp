@@ -217,7 +217,7 @@ void LoadingBar::setScale9Enabled(bool enabled)
     setPercent(_percent);
 }
 
-bool LoadingBar::isScale9Enabled()
+bool LoadingBar::isScale9Enabled()const
 {
     return _scale9Enabled;
 }
@@ -232,7 +232,7 @@ void LoadingBar::setCapInsets(const Rect &capInsets)
     static_cast<extension::Scale9Sprite*>(_barRenderer)->setCapInsets(capInsets);
 }
 
-const Rect& LoadingBar::getCapInsets()
+const Rect& LoadingBar::getCapInsets()const
 {
     return _capInsets;
 }
