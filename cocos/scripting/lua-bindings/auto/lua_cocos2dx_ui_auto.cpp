@@ -2683,18 +2683,15 @@ int lua_cocos2dx_ui_Widget_getCurrentFocusedWidget(lua_State* tolua_S)
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
+    if (argc == 0) 
     {
-        bool arg0;
-
-        ok &= luaval_to_boolean(tolua_S, 2,&arg0);
         if(!ok)
             return 0;
-        cocos2d::ui::Widget* ret = cobj->getCurrentFocusedWidget(arg0);
+        cocos2d::ui::Widget* ret = cobj->getCurrentFocusedWidget();
         object_to_luaval<cocos2d::ui::Widget>(tolua_S, "ccui.Widget",(cocos2d::ui::Widget*)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getCurrentFocusedWidget",argc, 1);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getCurrentFocusedWidget",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -2926,6 +2923,58 @@ int lua_cocos2dx_ui_Widget_ignoreContentAdaptWithSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Widget_ignoreContentAdaptWithSize'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_Widget_interceptTouchEvent(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::Widget* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.Widget",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::Widget*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_Widget_interceptTouchEvent'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 3) 
+    {
+        cocos2d::ui::Widget::TouchEventType arg0;
+        cocos2d::ui::Widget* arg1;
+        cocos2d::Vec2 arg2;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0);
+
+        ok &= luaval_to_object<cocos2d::ui::Widget>(tolua_S, 3, "ccui.Widget",&arg1);
+
+        ok &= luaval_to_vec2(tolua_S, 4, &arg2);
+        if(!ok)
+            return 0;
+        cobj->interceptTouchEvent(arg0, arg1, arg2);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "interceptTouchEvent",argc, 3);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Widget_interceptTouchEvent'.",&tolua_err);
 #endif
 
     return 0;
@@ -3205,58 +3254,6 @@ int lua_cocos2dx_ui_Widget_setSizeType(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_ui_Widget_checkChildInfo(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::ui::Widget* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"ccui.Widget",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::ui::Widget*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_Widget_checkChildInfo'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 3) 
-    {
-        int arg0;
-        cocos2d::ui::Widget* arg1;
-        cocos2d::Vec2 arg2;
-
-        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0);
-
-        ok &= luaval_to_object<cocos2d::ui::Widget>(tolua_S, 3, "ccui.Widget",&arg1);
-
-        ok &= luaval_to_vec2(tolua_S, 4, &arg2);
-        if(!ok)
-            return 0;
-        cobj->checkChildInfo(arg0, arg1, arg2);
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "checkChildInfo",argc, 3);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Widget_checkChildInfo'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_ui_Widget_setSize(lua_State* tolua_S)
 {
     int argc = 0;
@@ -3393,6 +3390,38 @@ int lua_cocos2dx_ui_Widget_isFocusEnabled(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_ui_Widget_enableDpadNavigation(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"ccui.Widget",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 1)
+    {
+        bool arg0;
+        ok &= luaval_to_boolean(tolua_S, 2,&arg0);
+        if(!ok)
+            return 0;
+        cocos2d::ui::Widget::enableDpadNavigation(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "enableDpadNavigation",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Widget_enableDpadNavigation'.",&tolua_err);
+#endif
+    return 0;
+}
 int lua_cocos2dx_ui_Widget_create(lua_State* tolua_S)
 {
     int argc = 0;
@@ -3517,17 +3546,18 @@ int lua_register_cocos2dx_ui_Widget(lua_State* tolua_S)
         tolua_function(tolua_S,"getSize",lua_cocos2dx_ui_Widget_getSize);
         tolua_function(tolua_S,"getSizeType",lua_cocos2dx_ui_Widget_getSizeType);
         tolua_function(tolua_S,"ignoreContentAdaptWithSize",lua_cocos2dx_ui_Widget_ignoreContentAdaptWithSize);
+        tolua_function(tolua_S,"interceptTouchEvent",lua_cocos2dx_ui_Widget_interceptTouchEvent);
         tolua_function(tolua_S,"addTouchEventListener",lua_cocos2dx_ui_Widget_addTouchEventListener);
         tolua_function(tolua_S,"getPositionPercent",lua_cocos2dx_ui_Widget_getPositionPercent);
         tolua_function(tolua_S,"hitTest",lua_cocos2dx_ui_Widget_hitTest);
         tolua_function(tolua_S,"isFlippedX",lua_cocos2dx_ui_Widget_isFlippedX);
         tolua_function(tolua_S,"isFlippedY",lua_cocos2dx_ui_Widget_isFlippedY);
         tolua_function(tolua_S,"setSizeType",lua_cocos2dx_ui_Widget_setSizeType);
-        tolua_function(tolua_S,"checkChildInfo",lua_cocos2dx_ui_Widget_checkChildInfo);
         tolua_function(tolua_S,"setSize",lua_cocos2dx_ui_Widget_setSize);
         tolua_function(tolua_S,"setBright",lua_cocos2dx_ui_Widget_setBright);
         tolua_function(tolua_S,"isFocusEnabled",lua_cocos2dx_ui_Widget_isFocusEnabled);
         tolua_function(tolua_S,"new",lua_cocos2dx_ui_Widget_constructor);
+        tolua_function(tolua_S,"enableDpadNavigation", lua_cocos2dx_ui_Widget_enableDpadNavigation);
         tolua_function(tolua_S,"create", lua_cocos2dx_ui_Widget_create);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::ui::Widget).name();
@@ -16743,7 +16773,6 @@ TOLUA_API int register_all_cocos2dx_ui(lua_State* tolua_S)
 	lua_register_cocos2dx_ui_TextBMFont(tolua_S);
 	lua_register_cocos2dx_ui_LoadingBar(tolua_S);
 	lua_register_cocos2dx_ui_TextField(tolua_S);
-	lua_register_cocos2dx_ui_RichText(tolua_S);
 	lua_register_cocos2dx_ui_RichElement(tolua_S);
 	lua_register_cocos2dx_ui_RichElementCustomNode(tolua_S);
 	lua_register_cocos2dx_ui_Slider(tolua_S);
@@ -16757,6 +16786,7 @@ TOLUA_API int register_all_cocos2dx_ui(lua_State* tolua_S)
 	lua_register_cocos2dx_ui_PageView(tolua_S);
 	lua_register_cocos2dx_ui_Helper(tolua_S);
 	lua_register_cocos2dx_ui_Text(tolua_S);
+	lua_register_cocos2dx_ui_RichText(tolua_S);
 	lua_register_cocos2dx_ui_RichElementImage(tolua_S);
 	lua_register_cocos2dx_ui_RelativeLayoutParameter(tolua_S);
 

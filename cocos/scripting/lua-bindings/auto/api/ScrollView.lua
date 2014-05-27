@@ -1,7 +1,7 @@
 
 --------------------------------
 -- @module ScrollView
--- @extend Layout,UIScrollInterface
+-- @extend Layout,ScrollViewProtocol
 
 --------------------------------
 -- @function [parent=#ScrollView] scrollToTop 
@@ -221,6 +221,13 @@
 --------------------------------
 -- @function [parent=#ScrollView] removeAllChildren 
 -- @param self
+        
+--------------------------------
+-- @function [parent=#ScrollView] findNextFocusedWidget 
+-- @param self
+-- @param #ccui.Widget::FocusDirection focusdirection
+-- @param #ccui.Widget widget
+-- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
 -- @function [parent=#ScrollView] removeChild 
