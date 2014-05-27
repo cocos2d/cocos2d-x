@@ -215,7 +215,6 @@
 --------------------------------
 -- @function [parent=#Widget] getCurrentFocusedWidget 
 -- @param self
--- @param #bool bool
 -- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
@@ -245,6 +244,13 @@
 -- @function [parent=#Widget] ignoreContentAdaptWithSize 
 -- @param self
 -- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#Widget] interceptTouchEvent 
+-- @param self
+-- @param #ccui.Widget::TouchEventType toucheventtype
+-- @param #ccui.Widget widget
+-- @param #cc.Vec2 vec2
         
 --------------------------------
 -- @function [parent=#Widget] addTouchEventListener 
@@ -278,13 +284,6 @@
 -- @param #ccui.Widget::SizeType sizetype
         
 --------------------------------
--- @function [parent=#Widget] checkChildInfo 
--- @param self
--- @param #int int
--- @param #ccui.Widget widget
--- @param #cc.Vec2 vec2
-        
---------------------------------
 -- @function [parent=#Widget] setSize 
 -- @param self
 -- @param #size_table size
@@ -298,6 +297,11 @@
 -- @function [parent=#Widget] isFocusEnabled 
 -- @param self
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#Widget] enableDpadNavigation 
+-- @param self
+-- @param #bool bool
         
 --------------------------------
 -- @function [parent=#Widget] create 
