@@ -170,7 +170,7 @@ public:
      *
      * @return selected    true that checkbox is selected, false otherwise.
      */
-    bool getSelectedState();
+    bool getSelectedState()const;
 
     //add a call back function would called when checkbox is selected or unselected.
     CC_DEPRECATED_ATTRIBUTE void addEventListenerCheckBox(Ref* target,SEL_SelectedStateEvent selector);

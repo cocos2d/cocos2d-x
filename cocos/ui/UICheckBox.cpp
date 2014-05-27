@@ -343,7 +343,7 @@ void CheckBox::setSelectedState(bool selected)
     _frontCrossRenderer->setVisible(_isSelected);
 }
 
-bool CheckBox::getSelectedState()
+bool CheckBox::getSelectedState()const
 {
     return _isSelected;
 }
