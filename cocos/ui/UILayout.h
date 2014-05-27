@@ -40,8 +40,8 @@ public:
     virtual ~LayoutProtocol(){}
     
     virtual LayoutExecutant* createLayoutExecutant() = 0;
-    virtual const Size getLayoutContentSize() = 0;
-    virtual const Vector<Node*>& getLayoutElements() = 0;
+    virtual const Size getLayoutContentSize()const = 0;
+    virtual const Vector<Node*>& getLayoutElements()const = 0;
     virtual void doLayout() = 0;
 };
 
@@ -329,8 +329,8 @@ protected:
     
     virtual void doLayout()override;
     virtual LayoutExecutant* createLayoutExecutant()override;
-    virtual const Size getLayoutContentSize()override;
-    virtual const Vector<Node*>& getLayoutElements() override;
+    virtual const Size getLayoutContentSize()const override;
+    virtual const Vector<Node*>& getLayoutElements()const override;
     
     //clipping
     void onBeforeVisitStencil();

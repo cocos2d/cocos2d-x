@@ -307,7 +307,7 @@ Node* ScrollView::getChildByTag(int tag) const
     return _innerContainer->getChildByTag(tag);
 }
     
-Widget* ScrollView::getChildByName(const std::string& name)
+Widget* ScrollView::getChildByName(const std::string& name)const
 {
     return _innerContainer->getChildByName(name);
 }

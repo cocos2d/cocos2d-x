@@ -244,7 +244,7 @@ void Widget::setEnabled(bool enabled)
     _enabled = enabled;
 }
 
-Widget* Widget::getChildByName(const std::string& name)
+Widget* Widget::getChildByName(const std::string& name)const
 {
     for (auto& child : _children)
     {
@@ -468,7 +468,7 @@ const Vec2& Widget::getSizePercent() const
     return _sizePercent;
 }
 
-Vec2 Widget::getWorldPosition()
+Vec2 Widget::getWorldPosition()const
 {
     return convertToWorldSpace(Vec2(_anchorPoint.x * _contentSize.width, _anchorPoint.y * _contentSize.height));
 }
@@ -899,8 +899,7 @@ void Widget::setPositionPercent(const Vec2 &percent)
     }
 }
 
-const Vec2& Widget::getPositionPercent()
-{
+const Vec2& Widget::getPositionPercent()const{
     return _positionPercent;
 }
 
@@ -944,17 +943,17 @@ float Widget::getTopBoundary() const
     return getBottomBoundary() + _size.height;
 }
 
-const Vec2& Widget::getTouchStartPos()
+const Vec2& Widget::getTouchStartPos()const
 {
     return _touchStartPos;
 }
 
-const Vec2& Widget::getTouchMovePos()
+const Vec2& Widget::getTouchMovePos()const
 {
     return _touchMovePos;
 }
 
-const Vec2& Widget::getTouchEndPos()
+const Vec2& Widget::getTouchEndPos()const
 {
     return _touchEndPos;
 }
@@ -980,7 +979,7 @@ void Widget::setLayoutParameter(LayoutParameter *parameter)
     _layoutParameterType = parameter->getLayoutType();
 }
 
-LayoutParameter* Widget::getLayoutParameter()
+LayoutParameter* Widget::getLayoutParameter()const
 {
     return dynamic_cast<LayoutParameter*>(_layoutParameterDictionary.at((int)_layoutParameterType));
 }
@@ -1118,7 +1117,7 @@ void Widget::setActionTag(int tag)
 	_actionTag = tag;
 }
 
-int Widget::getActionTag()
+int Widget::getActionTag()const
 {
 	return _actionTag;
 }
@@ -1137,7 +1136,7 @@ void Widget::setFocused(bool focus)
     
 }
 
-bool Widget::isFocused()
+bool Widget::isFocused()const
 {
     return _focused;
 }
@@ -1147,7 +1146,7 @@ void Widget::setFocusEnabled(bool enable)
     _focusEnabled = enable;
 }
 
-bool Widget::isFocusEnabled()
+bool Widget::isFocusEnabled()const
 {
     return _focusEnabled;
 }
@@ -1240,7 +1239,7 @@ void Widget::onFocusChange(Widget* widgetLostFocus, Widget* widgetGetFocus)
     }
 }
 
-Widget* Widget::getCurrentFocusedWidget()
+Widget* Widget::getCurrentFocusedWidget()const
 {
     return _focusedWidget;
 }

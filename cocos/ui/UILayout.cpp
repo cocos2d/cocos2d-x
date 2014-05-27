@@ -465,7 +465,7 @@ void Layout::setStencilClippingSize(const Size &size)
     }
 }
     
-const Rect& Layout::getClippingRect()
+const Rect& Layout::getClippingRect() 
 {
     if (_clippingRectDirty)
     {
@@ -932,12 +932,12 @@ void Layout::requestDoLayout()
     _doLayoutDirty = true;
 }
     
-const Size Layout::getLayoutContentSize()
+const Size Layout::getLayoutContentSize()const
 {
     return this->getSize();
 }
     
-const Vector<Node*>& Layout::getLayoutElements()
+const Vector<Node*>& Layout::getLayoutElements()const
 {
     return this->getChildren();
 }
