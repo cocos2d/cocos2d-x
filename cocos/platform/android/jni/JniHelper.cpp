@@ -29,6 +29,7 @@ THE SOFTWARE.
 
 #define  LOG_TAG    "JniHelper"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
+#define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
 
 static pthread_key_t g_key;
 
@@ -46,7 +47,8 @@ jclass _getClassID(const char *className) {
                                                    _jstrClassName);
 
     if (NULL == _clazz) {
-        LOGD("Classloader failed to find class of %s", className);
+        LOGE("Classloader failed to find class of %s", className);
+        env->ExceptionClear();
     }
 
     env->DeleteLocalRef(_jstrClassName);
@@ -94,7 +96,7 @@ namespace cocos2d {
                 
             if (jvm->AttachCurrentThread(&_env, NULL) < 0)
                 {
-                    LOGD("Failed to get the environment using AttachCurrentThread()");
+                    LOGE("Failed to get the environment using AttachCurrentThread()");
 
                     return NULL;
                 } else {
@@ -105,9 +107,9 @@ namespace cocos2d {
                 
         case JNI_EVERSION :
             // Cannot recover from this error
-            LOGD("JNI interface version 1.4 not supported");
+            LOGE("JNI interface version 1.4 not supported");
         default :
-            LOGD("Failed to get the environment using GetEnv()");
+            LOGE("Failed to get the environment using GetEnv()");
             return NULL;
         }
     }
@@ -161,19 +163,21 @@ namespace cocos2d {
 
         JNIEnv *pEnv = JniHelper::getEnv();
         if (!pEnv) {
-            LOGD("Failed to get JNIEnv");
+            LOGE("Failed to get JNIEnv");
             return false;
         }
             
         jclass classID = _getClassID(className);
         if (! classID) {
-            LOGD("Failed to find class %s", className);
+            LOGE("Failed to find class %s", className);
+            pEnv->ExceptionClear();
             return false;
         }
 
         jmethodID methodID = pEnv->GetStaticMethodID(classID, methodName, paramCode);
         if (! methodID) {
-            LOGD("Failed to find static method id of %s", methodName);
+            LOGE("Failed to find static method id of %s", methodName);
+            pEnv->ExceptionClear();
             return false;
         }
             
@@ -200,13 +204,15 @@ namespace cocos2d {
 
         jclass classID = pEnv->FindClass(className);
         if (! classID) {
-            LOGD("Failed to find class %s", className);
+            LOGE("Failed to find class %s", className);
+            pEnv->ExceptionClear();
             return false;
         }
 
         jmethodID methodID = pEnv->GetMethodID(classID, methodName, paramCode);
         if (! methodID) {
-            LOGD("Failed to find method id of %s", methodName);
+            LOGE("Failed to find method id of %s", methodName);
+            pEnv->ExceptionClear();
             return false;
         }
 
@@ -234,14 +240,14 @@ namespace cocos2d {
 
         jclass classID = _getClassID(className);
         if (! classID) {
-            LOGD("Failed to find class %s", className);
+            LOGE("Failed to find class %s", className);
             pEnv->ExceptionClear();
             return false;
         }
 
         jmethodID methodID = pEnv->GetMethodID(classID, methodName, paramCode);
         if (! methodID) {
-            LOGD("Failed to find method id of %s", methodName);
+            LOGE("Failed to find method id of %s", methodName);
             pEnv->ExceptionClear();
             return false;
         }
