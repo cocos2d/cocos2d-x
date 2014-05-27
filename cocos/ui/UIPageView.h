@@ -40,7 +40,7 @@ CC_DEPRECATED_ATTRIBUTE typedef enum
 CC_DEPRECATED_ATTRIBUTE typedef void (Ref::*SEL_PageViewEvent)(Ref*, PageViewEventType);
 #define pagevieweventselector(_SELECTOR)(SEL_PageViewEvent)(&_SELECTOR)
 
-class PageView : public Layout , public UIScrollInterface
+class PageView : public Layout
 {
     
     DECLARE_CLASS_GUI_INFO
@@ -128,6 +128,8 @@ public:
      */
     ssize_t getCurPageIndex() const;
     
+    //TODO: add Vector<Layout*> member variables into UIPageView, but it only used for reference purpose,
+    //all the pages are added into proteced node, so does scrollview, listview
     Vector<Layout*>& getPages();
     
     Layout* getPage(ssize_t index);
@@ -174,52 +176,56 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
 
 protected:
-    virtual void addChild(Node * child) override;
-    virtual void addChild(Node * child, int zOrder) override;
-    virtual void addChild(Node* child, int zOrder, int tag) override;
-    virtual void removeChild(Node* widget, bool cleanup = true) override;
-    virtual void removeAllChildren() override;
-    virtual void removeAllChildrenWithCleanup(bool cleanup) override;
-    virtual Vector<Node*>& getChildren() override{return Widget::getChildren();};
-    virtual const Vector<Node*>& getChildren() const override{return Widget::getChildren();};
-    virtual ssize_t getChildrenCount() const override {return Widget::getChildrenCount();};
-    virtual Node * getChildByTag(int tag) const override {return Widget::getChildByTag(tag);};
-virtual Widget* getChildByName(const std::string& name) override {return Widget::getChildByName(name);};
 
     Layout* createPage();
     float getPositionXByIndex(ssize_t idx);
+    ssize_t getPageCount();
+
     void updateBoundaryPages();
-    virtual void handlePressLogic(const Vec2 &touchPoint) override;
-    virtual void handleMoveLogic(const Vec2 &touchPoint) override;
-    virtual void handleReleaseLogic(const Vec2 &touchPoint) override;
-    virtual void interceptTouchEvent(int handleState, Widget* sender, const Vec2 &touchPoint) override;
-    virtual void checkChildInfo(int handleState, Widget* sender, const Vec2 &touchPoint) override;
     virtual bool scrollPages(float touchOffset);
     void movePages(float offset);
     void pageTurningEvent();
-    void updateChildrenSize();
-    void updateChildrenPosition();
+    void updateAllPagesSize();
+    void updateAllPagesPosition();
+    void autoScroll(float dt);
+
+    virtual void handlePressLogic(const Vec2 &touchPoint);
+    virtual void handleMoveLogic(const Vec2 &touchPoint) ;
+    virtual void handleReleaseLogic(const Vec2 &touchPoint) ;
+    virtual void interceptTouchEvent(TouchEventType event, Widget* sender, const Vec2 &touchPoint) ;
+    
+    
     virtual void onSizeChanged() override;
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
     virtual void copyClonedWidgetChildren(Widget* model) override;
-    virtual void setClippingEnabled(bool enabled) override {Layout::setClippingEnabled(enabled);};
-    virtual void doLayout() override{if (!_doLayoutDirty){return;} _doLayoutDirty = false;};
+
+    virtual void doLayout() override;
+
 protected:
-    ssize_t _curPageIdx;
-    Vector<Layout*> _pages;
-    TouchDirection _touchMoveDir;
-    float _touchStartLocation;
-    float _touchMoveStartLocation;
-    Vec2 _movePagePoint;
-    Widget* _leftChild;
-    Widget* _rightChild;
-    float _leftBoundary;
-    float _rightBoundary;
+    enum class AutoScrollDirection
+    {
+        LEFT,
+        RIGHT
+    };
     bool _isAutoScrolling;
     float _autoScrollDistance;
     float _autoScrollSpeed;
-    int _autoScrollDir;
+    AutoScrollDirection _autoScrollDirection;
+    
+    ssize_t _curPageIdx;
+    Vector<Layout*> _pages;
+
+    TouchDirection _touchMoveDirection;
+
+    float _touchStartLocation;
+    float _touchMoveStartLocation;
+    Vec2 _movePagePoint;
+    Widget* _leftBoundaryChild;
+    Widget* _rightBoundaryChild;
+    float _leftBoundary;
+    float _rightBoundary;
+   
     float _childFocusCancelOffset;
 
 

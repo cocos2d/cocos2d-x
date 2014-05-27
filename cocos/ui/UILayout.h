@@ -501,8 +501,12 @@ protected:
     CustomCommand _beforeVisitCmdScissor;
     CustomCommand _afterVisitCmdScissor;
     
-    bool _loopFocus; //whether enable loop focus or not
-    bool _passFocusToChild;  //on default, it will pass the focus to the next nearest widget
+    //whether enable loop focus or not
+    bool _loopFocus;
+    //on default, it will pass the focus to the next nearest widget
+    bool _passFocusToChild;
+     //when finding the next focused widget, use this variable to pass focus between layout & widget
+    bool _isFocusPassing;
 };
     
 }

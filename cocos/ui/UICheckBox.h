@@ -176,8 +176,6 @@ public:
     CC_DEPRECATED_ATTRIBUTE void addEventListenerCheckBox(Ref* target,SEL_SelectedStateEvent selector);
     void addEventListener(const ccCheckBoxCallback& callback);
 
-    //override "onTouchEnded" method of widget.
-    virtual void onTouchEnded(Touch *touch, Event *unusedEvent);
 
     //override "getVirtualRendererSize" method of widget.
     virtual const Size& getVirtualRendererSize() const override;
@@ -204,8 +202,12 @@ protected:
     virtual void onPressStateChangedToNormal() override;
     virtual void onPressStateChangedToPressed() override;
     virtual void onPressStateChangedToDisabled() override;
+    
     void selectedEvent();
     void unSelectedEvent();
+    
+    virtual void releaseUpEvent();
+    
     virtual void onSizeChanged() override;
     virtual void updateTextureColor() override;
     virtual void updateTextureOpacity() override;
