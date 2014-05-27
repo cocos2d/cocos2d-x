@@ -135,8 +135,9 @@ void AssetsManager::loadManifest(const std::string& manifestUrl)
         else
             removeFile(cachedManifest);
     }
+    
     // Fail to found or load cached manifest file
-    else
+    if (!_localManifest->isLoaded())
     {
         _localManifest->parse(_manifestUrl);
         if (_localManifest->isLoaded())
