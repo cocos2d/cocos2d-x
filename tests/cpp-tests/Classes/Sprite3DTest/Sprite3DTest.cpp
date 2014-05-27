@@ -348,7 +348,7 @@ void Effect3DOutline::setOutlineWidth(float width)
 
 void Effect3DOutline::setTarget(EffectSprite3D *sprite)
 {
-    CCASSERT(nullptr != sprite || nullptr != sprite->getMesh(),"Error: Setting a null pointer or a null mesh EffectSprite3D to Effect3D");
+    CCASSERT(nullptr != sprite && nullptr != sprite->getMesh(),"Error: Setting a null pointer or a null mesh EffectSprite3D to Effect3D");
     
     if(sprite != _sprite)
     {
