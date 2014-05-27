@@ -24,12 +24,13 @@ THE SOFTWARE.
 ****************************************************************************/
 #ifndef __SUPPORT_CC_UTILS_H__
 #define __SUPPORT_CC_UTILS_H__
+#include "base/ccMacros.h"
 
 /** @file ccUtils.h
 Misc free functions
 */
 
-namespace cocos2d {
+NS_CC_BEGIN
 /*
 ccNextPOT function is licensed under the same license that is used in Texture2D.m.
 */
@@ -46,6 +47,19 @@ Examples:
 
 int ccNextPOT(int value);
 
+namespace Utilities
+{
+    /**
+     * Capture screen interface
+     */
+    void captureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename);
+    
+    /**
+     * The implementation of capturing screen
+     */
+    void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename);
 }
+
+NS_CC_END
 
 #endif // __SUPPORT_CC_UTILS_H__
