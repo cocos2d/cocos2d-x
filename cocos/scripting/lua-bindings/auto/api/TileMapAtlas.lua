@@ -19,14 +19,14 @@
 --------------------------------
 -- @function [parent=#TileMapAtlas] getTileAt 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
 -- @return color3b_table#color3b_table ret (return value: color3b_table)
         
 --------------------------------
 -- @function [parent=#TileMapAtlas] setTile 
 -- @param self
 -- @param #color3b_table color3b
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#TileMapAtlas] setTGAInfo 

@@ -24,7 +24,7 @@
 --------------------------------
 -- @function [parent=#ScrollView] scrollToPercentBothDirection 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
 -- @param #float float
 -- @param #bool bool
         
@@ -128,7 +128,7 @@
 --------------------------------
 -- @function [parent=#ScrollView] jumpToPercentBothDirection 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#ScrollView] scrollToPercentVertical 

@@ -6,7 +6,7 @@
 --------------------------------
 -- @function [parent=#ControlPotentiometer] setPreviousLocation 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#ControlPotentiometer] setValue 
@@ -26,16 +26,16 @@
 --------------------------------
 -- @function [parent=#ControlPotentiometer] angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint 
 -- @param self
--- @param #cc.Vec2 vec2
--- @param #cc.Vec2 vec2
--- @param #cc.Vec2 vec2
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
+-- @param #vec2_table vec2
+-- @param #vec2_table vec2
+-- @param #vec2_table vec2
 -- @return float#float ret (return value: float)
         
 --------------------------------
 -- @function [parent=#ControlPotentiometer] potentiometerBegan 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#ControlPotentiometer] setMaximumValue 
@@ -60,19 +60,19 @@
 --------------------------------
 -- @function [parent=#ControlPotentiometer] getPreviousLocation 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#ControlPotentiometer] distanceBetweenPointAndPoint 
 -- @param self
--- @param #cc.Vec2 vec2
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
+-- @param #vec2_table vec2
 -- @return float#float ret (return value: float)
         
 --------------------------------
 -- @function [parent=#ControlPotentiometer] potentiometerEnded 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#ControlPotentiometer] setProgressTimer 
@@ -100,7 +100,7 @@
 --------------------------------
 -- @function [parent=#ControlPotentiometer] potentiometerMoved 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#ControlPotentiometer] create 
