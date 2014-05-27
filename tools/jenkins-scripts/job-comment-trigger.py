@@ -8,6 +8,9 @@ import sys
 import traceback
 import urllib2
 
+http_proxy = 'http://127.0.0.1:8087'
+proxyDict = {'http':http_proxy,'https':http_proxy}
+
 def main():
     #get payload from os env
     payload_str = os.environ['payload']
@@ -82,7 +85,7 @@ def main():
         if searchCI:
           ciOper = searchCI.group()
           if('rebuild' in ciOper):
-            requests.post(statuses_url, data=json.dumps(data), headers=Headers)
+            requests.post(statuses_url, data=json.dumps(data), headers=Headers, proxies = proxyDict)
     except:
         traceback.print_exc()
 
@@ -112,7 +115,7 @@ def main():
     else:
       post_data = {'payload':""}
       post_data['payload']= json.dumps(payload_forword)
-    requests.post(job_trigger_url, data=post_data)
+    requests.post(job_trigger_url, data=post_data, proxies = proxyDict)
 
     return(0)
 
