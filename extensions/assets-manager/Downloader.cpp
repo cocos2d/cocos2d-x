@@ -23,7 +23,6 @@
  ****************************************************************************/
 
 #include "Downloader.h"
-#include "base/threadpool.hpp"
 #include "AssetsManager.h"
 
 #include <curl/curl.h>
@@ -41,6 +40,10 @@ NS_CC_EXT_BEGIN
 #define LOW_SPEED_TIME      5L
 
 #define TEMP_EXT            ".temp"
+
+#if USE_THREAD_POOL
+#include "base/threadpool.hpp"
+#endif
 
 #define POOL() static_cast<threadpool::pool*>(this->_threadPool)
 
@@ -197,7 +200,7 @@ void Downloader::downloadSync(const std::string &srcUrl, const std::string &stor
 
 void Downloader::batchDownload(const std::unordered_map<std::string, Downloader::DownloadUnit> &units)
 {
-    for (auto it = units.cbegin(); it != units.cend(); it++) {
+    for (auto it = units.cbegin(); it != units.cend(); ++it) {
         DownloadUnit unit = it->second;
         std::string srcUrl = unit.srcUrl;
         std::string storagePath = unit.storagePath;

@@ -193,6 +193,15 @@ private:
     //! The path to store downloaded resources.
     std::string _storagePath;
     
+    //! The local path of cached version file
+    std::string _cacheVersionPath;
+    
+    //! The local path of cached manifest file
+    std::string _cacheManifestPath;
+    
+    //! The local path of cached temporary manifest file
+    std::string _tempManifestPath;
+    
     //! The path of local manifest file
     std::string _manifestUrl;
     
