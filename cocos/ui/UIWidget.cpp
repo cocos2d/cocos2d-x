@@ -109,8 +109,6 @@ void Widget::FocusNavigationController::addKeyboardEventListener()
 {
     if (nullptr == _keyboardListener)
     {
-        CCASSERT(_firstFocusedWidget != nullptr, "Please set the first focused widget first!");
-        
         _keyboardListener = EventListenerKeyboard::create();
         _keyboardListener->onKeyReleased = CC_CALLBACK_2(Widget::FocusNavigationController::onKeypadKeyPressed, this);
         EventDispatcher* dispatcher = Director::getInstance()->getEventDispatcher();
