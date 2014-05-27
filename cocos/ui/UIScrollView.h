@@ -118,7 +118,7 @@ public:
      *
      * @return SCROLLVIEW_DIR
      */
-    Direction getDirection();
+    Direction getDirection()const;
     
     /**
      * Gets inner container of scrollview.
@@ -127,7 +127,7 @@ public:
      *
      * @return inner container.
      */
-    Layout* getInnerContainer();
+    Layout* getInnerContainer()const;
     
     /**
      * Scroll inner container to bottom boundary of scrollview.
