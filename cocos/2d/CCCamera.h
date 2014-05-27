@@ -34,6 +34,8 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+class EventListenerTouchOneByOne;
+
 /**
 * Camera class. Use to control the view.
 * Only test and use for 2d.
@@ -113,6 +115,34 @@ public:
 	*/
 	virtual void getProjectionMatrix(Mat4& projMatrix);
 
+	/**
+	* Event receive when began touched
+	* @param touch Touch data
+	* @param unused_event Event data
+	*/
+	virtual bool onTouchBegan(Touch *touch, Event *unused_event);
+
+	/**
+	* Event receive when touched moved
+	* @param touch Touch data
+	* @param unused_event Event data
+	*/
+	virtual void onTouchMoved(Touch *touch, Event *unused_event);
+
+	/**
+	* Event receive when touched ended
+	* @param touch Touch data
+	* @param unused_event Event data
+	*/
+	virtual void onTouchEnded(Touch *touch, Event *unused_event);
+
+	/**
+	* Event receive when touched cancelled
+	* @param touch Touch data
+	* @param unused_event Event data
+	*/
+	virtual void onTouchCancelled(Touch *touch, Event *unused_event);
+
 private:
 	/**
 	* Default constructor
@@ -140,6 +170,11 @@ private:
 	* Zoom boundaries
 	*/
 	Vec2			_zoomLimit;
+
+	/**
+	* Event listener
+	*/
+	EventListenerTouchOneByOne* _touchListener;
 };
 
 NS_CC_END
