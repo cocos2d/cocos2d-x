@@ -25,6 +25,8 @@ set(COCOS_2D_SRC
   2d/CCAnimationCache.cpp
   2d/CCAnimation.cpp
   2d/CCAtlasNode.cpp
+  2d/CCCamera.cpp
+  2d/CCCameraView.cpp
   2d/CCClippingNode.cpp
   2d/CCComponentContainer.cpp
   2d/CCComponent.cpp

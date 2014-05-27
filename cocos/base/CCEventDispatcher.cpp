@@ -871,10 +871,10 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
                 {
                     if (listener->onTouchBegan)
 					{
-						CameraView* camView = listener->_node->getCameraView();
-						if (camView)
+						Camera* camera = listener->_node->getCameraView()->getCamera();
+						if (camera)
 						{
-							(*touchesIter)->setTransformFunc(CC_CALLBACK_1(Node::convertToWorldSpace, camView->getCamera()));
+							(*touchesIter)->setTransformFunc(CC_CALLBACK_1(Node::convertToWorldSpace, camera));
 						}
 						else
 						{
@@ -892,10 +892,10 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
                          && ((removedIter = std::find(listener->_claimedTouches.begin(), listener->_claimedTouches.end(), *touchesIter)) != listener->_claimedTouches.end()))
                 {
 					isClaimed = true;
-					CameraView* camView = listener->_node->getCameraView();
-					if (camView)
+					Camera* cam = listener->_node->getCameraView()->getCamera();
+					if (cam)
 					{
-						(*touchesIter)->setTransformFunc(CC_CALLBACK_1(Node::convertToWorldSpace, camView->getCamera()));
+						(*touchesIter)->setTransformFunc(CC_CALLBACK_1(Node::convertToWorldSpace, cam));
 					}
 					else
 					{
