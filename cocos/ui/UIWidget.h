@@ -596,6 +596,10 @@ public:
     }
 
     Widget* getCurrentFocusedWidget()const;
+    /*
+     *  call this method with parameter true to enable the Android Dpad focus navigation feature
+     *@param enable  set true to enable dpad focus navigation, otherwise disenable dpad focus navigation
+     */
     static void enableDpadNavigation(bool enable);
 
     std::function<void(Widget*,Widget*)> onFocusChanged;

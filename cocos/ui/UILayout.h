@@ -40,7 +40,7 @@ public:
     virtual ~LayoutProtocol(){}
     
     virtual LayoutExecutant* createLayoutExecutant() = 0;
-    virtual const Size getLayoutContentSize()const = 0;
+    virtual Size getLayoutContentSize()const = 0;
     virtual const Vector<Node*>& getLayoutElements()const = 0;
     virtual void doLayout() = 0;
 };
@@ -329,7 +329,7 @@ protected:
     
     virtual void doLayout()override;
     virtual LayoutExecutant* createLayoutExecutant()override;
-    virtual const Size getLayoutContentSize()const override;
+    virtual Size getLayoutContentSize()const override;
     virtual const Vector<Node*>& getLayoutElements()const override;
     
     //clipping

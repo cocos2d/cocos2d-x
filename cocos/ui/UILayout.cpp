@@ -932,7 +932,7 @@ void Layout::requestDoLayout()
     _doLayoutDirty = true;
 }
     
-const Size Layout::getLayoutContentSize()const
+Size Layout::getLayoutContentSize()const
 {
     return this->getSize();
 }
