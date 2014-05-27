@@ -181,7 +181,7 @@ void PageView::removePageAtIndex(ssize_t index)
     
 void PageView::removeAllPages()
 {
-    for(auto& node : _pages)
+    for(const auto& node : _pages)
     {
         removeProtectedChild(node);
     }
