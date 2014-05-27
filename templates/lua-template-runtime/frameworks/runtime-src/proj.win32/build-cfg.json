@@ -15,6 +15,10 @@
     ],
     "must_copy_resources": [
         {
+            "from": "../../../runtime/rtres",
+            "to": "rtres"
+        },
+        {
             "from": "../../cocos2d-x/cocos/scripting/lua-bindings/script",
             "to": ""
         },
