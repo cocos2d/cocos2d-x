@@ -81,7 +81,8 @@ static std::function<Layer*()> createFunctions[] = {
     CL(Issue1288),
     CL(Issue1288_2),
     CL(Issue1327),
-    CL(Issue1398)
+    CL(Issue1398),
+    CL(Issue2599)
 };
 
 static int sceneIdx=-1;
@@ -2092,6 +2093,38 @@ std::string Issue1398::subtitle() const
 std::string Issue1398::title() const
 {
     return "Issue 1398";
+}
+
+void Issue2599::onEnter()
+{
+    ActionsDemo::onEnter();
+    this->centerSprites(0);
+    
+    _count = 0;
+    log("before: count = %d", _count);
+    
+    log("start count up 50 times using Repeat action");
+    auto delay = 1.0f / 50;
+    auto repeatAction = Repeat::create(
+        Sequence::createWithTwoActions(
+            CallFunc::create([&](){ this->_count++; }),
+            DelayTime::create(delay)),
+        50);
+    this->runAction(
+        Sequence::createWithTwoActions(
+            repeatAction,
+            CallFunc::create([&]() { log("after: count = %d", this->_count); })
+        ));
+}
+
+std::string Issue2599::subtitle() const
+{
+    return "See console: You should see '50'";
+}
+
+std::string Issue2599::title() const
+{
+    return "Issue 2599";
 }
 
 /** ActionCatmullRom
