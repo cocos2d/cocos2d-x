@@ -29,9 +29,15 @@
 #include <curl/easy.h>
 #include <stdio.h>
 
+#define USE_THREAD_POOL 1
+
+#if USE_THREAD_POOL
+#include "base/threadpool.hpp"
+#define POOL() static_cast<cocos2d::threadpool::pool*>(this->_threadPool)
+#endif
+
 NS_CC_EXT_BEGIN
 
-#define USE_THREAD_POOL 1
 #define POOL_SIZE 6
 
 #define BUFFER_SIZE         8192
@@ -40,12 +46,6 @@ NS_CC_EXT_BEGIN
 #define LOW_SPEED_TIME      5L
 
 #define TEMP_EXT            ".temp"
-
-#if USE_THREAD_POOL
-#include "base/threadpool.hpp"
-#endif
-
-#define POOL() static_cast<threadpool::pool*>(this->_threadPool)
 
 static size_t curlWriteFunc(void *ptr, size_t size, size_t nmemb, void *userdata)
 {
