@@ -44,16 +44,11 @@ int ccNextPOT(int x)
     return x + 1;
 }
 
-namespace Utilities
+namespace utils
 {
-void captureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename)
-{
-    static CustomCommand captureScreenCommand;
-    captureScreenCommand.init(std::numeric_limits<float>::max());
-    captureScreenCommand.func = std::bind(onCaptureScreen, afterCaptured, filename);
-    Director::getInstance()->getRenderer()->addCommand(&captureScreenCommand);
-}
-    
+/**
+ * Capture screen implementation, don't use it directly.
+ */
 void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename)
 {
     auto glView = Director::getInstance()->getOpenGLView();
@@ -111,6 +106,16 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
     {
         afterCaptured(succeed, outputFile);
     }
+}
+/*
+ * Capture screen interface
+ */
+void captureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename)
+{
+    static CustomCommand captureScreenCommand;
+    captureScreenCommand.init(std::numeric_limits<float>::max());
+    captureScreenCommand.func = std::bind(onCaptureScreen, afterCaptured, filename);
+    Director::getInstance()->getRenderer()->addCommand(&captureScreenCommand);
 }
 }
 

@@ -47,17 +47,18 @@ Examples:
 
 int ccNextPOT(int value);
 
-namespace Utilities
+namespace utils
 {
-    /**
-     * Capture screen interface
+    /** Capture the entire screen
+     * To ensure the snapshot is applied after everything is updated and rendered in the current frame,
+     * we need to wrap the operation with a custom command which is then inserted into the tail of the render queue.
+     * - afterCaptured, specify the callback function which will be invoked after the snapshot is done.
+     * - filename, specify a filename where the snapshot is stored. This parameter can be either an absolute path or a simple 
+     * base filename ("hello.png" etc.), don't use a relative path with directory ("mydir/hello.png" etc.) cause the existence
+     * of the path is not guaranteed.
+     * @since v3.2
      */
     void captureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename);
-    
-    /**
-     * The implementation of capturing screen
-     */
-    void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename);
 }
 
 NS_CC_END
