@@ -404,11 +404,6 @@ public:
      *  get Frame Rate
      */
     float getFrameRate() const { return _frameRate; }
-    
-    /**
-     * Capture screen
-     */
-    void captureScreen(const std::function<void(bool, const std::string&)>& afterCaptued, const std::string& filename);
 
 protected:
     void purgeDirector();
@@ -427,9 +422,6 @@ protected:
     //textureCache creation or release
     void initTextureCache();
     void destroyTextureCache();
-    
-    /* Captrue screen implementation */
-    void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterCaptued, const std::string& fileanme);
 
     /** Scheduler associated with this director
      @since v2.0

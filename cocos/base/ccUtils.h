@@ -47,7 +47,19 @@ Examples:
 
 int ccNextPOT(int value);
 
+namespace Utilities
+{
+    /**
+     * Capture screen interface
+     */
+    void captureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename);
+    
+    /**
+     * The implementation of capturing screen
+     */
+    void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename);
+}
+
 NS_CC_END
 
 #endif // __SUPPORT_CC_UTILS_H__
-

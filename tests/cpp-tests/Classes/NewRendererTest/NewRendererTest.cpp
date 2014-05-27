@@ -609,7 +609,7 @@ void CaptureScreenTest::onCaptured(Ref*)
     Director::getInstance()->getTextureCache()->removeTextureForKey(_filename);
     removeChildByTag(childTag);
     _filename = "CaptureScreenTest.png";
-    Director::getInstance()->captureScreen(CC_CALLBACK_2(CaptureScreenTest::afterCaptured, this), _filename);
+    Utilities::captureScreen(CC_CALLBACK_2(CaptureScreenTest::afterCaptured, this), _filename);
 }
 
 void CaptureScreenTest::afterCaptured(bool succeed, const std::string& outputFile)
