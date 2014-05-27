@@ -791,6 +791,7 @@ Developers:
         Adds getCurrentLanguageCode() which returns iso 639-1 language code
         Adds support for get response when Activity's onActivityResult is triggered
         Improve Android projects
+        Android jni error clear & more readable log
         
     youknowone
         Adds iOS-like elastic bounceback support for cocos2d::extension::ScrollView
