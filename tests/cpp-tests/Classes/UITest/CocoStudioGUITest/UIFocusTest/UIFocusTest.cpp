@@ -49,6 +49,9 @@ bool UIFocusTestBase::init()
         _dpadMenu->setPosition(Vec2::ZERO);
         _uiLayer->addChild(_dpadMenu);
         
+        //call this method to enable Dpad focus navigation
+        Widget::enableDpadNavigation(true);
+        
         _eventListener = EventListenerFocus::create();
         _eventListener->onFocusChanged = CC_CALLBACK_2(UIFocusTestBase::onFocusChanged, this);
         
@@ -76,43 +79,31 @@ void UIFocusTestBase::onImageViewClicked(cocos2d::Ref *ref, Widget::TouchEventTy
 
 void UIFocusTestBase::onLeftKeyPressed()
 {
-    if (_firstFocusedWidget) {
-        if (!_firstFocusedWidget->isFocused()) {
-            _firstFocusedWidget = _firstFocusedWidget->getCurrentFocusedWidget();
-        }
-        _firstFocusedWidget = _firstFocusedWidget->findNextFocusedWidget(Widget::FocusDirection::LEFT, _firstFocusedWidget);
-    }
+    cocos2d::EventKeyboard::KeyCode cocos2dKey =EventKeyboard::KeyCode::KEY_DPAD_LEFT;
+    cocos2d::EventKeyboard event(cocos2dKey, false);
+    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
 }
 
 void UIFocusTestBase::onRightKeyPressed()
 {
-    if (_firstFocusedWidget) {
-        if (!_firstFocusedWidget->isFocused()) {
-            _firstFocusedWidget = _firstFocusedWidget->getCurrentFocusedWidget();
-        }
-        _firstFocusedWidget = _firstFocusedWidget->findNextFocusedWidget(Widget::FocusDirection::RIGHT, _firstFocusedWidget);
-    }
+    cocos2d::EventKeyboard::KeyCode cocos2dKey =EventKeyboard::KeyCode::KEY_DPAD_RIGHT;
+    cocos2d::EventKeyboard event(cocos2dKey, false);
+    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
 }
 
 void UIFocusTestBase::onUpKeyPressed()
 {
-    if (_firstFocusedWidget) {
-        if (!_firstFocusedWidget->isFocused()) {
-            _firstFocusedWidget = _firstFocusedWidget->getCurrentFocusedWidget();
-        }
-        _firstFocusedWidget = _firstFocusedWidget->findNextFocusedWidget(Widget::FocusDirection::UP, _firstFocusedWidget);
-    }
+    cocos2d::EventKeyboard::KeyCode cocos2dKey =EventKeyboard::KeyCode::KEY_DPAD_UP;
+    cocos2d::EventKeyboard event(cocos2dKey, false);
+    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
     
 }
 
 void UIFocusTestBase::onDownKeyPressed()
 {
-    if (_firstFocusedWidget) {
-        if (!_firstFocusedWidget->isFocused()) {
-            _firstFocusedWidget = _firstFocusedWidget->getCurrentFocusedWidget();
-        }
-        _firstFocusedWidget = _firstFocusedWidget->findNextFocusedWidget(Widget::FocusDirection::DOWN, _firstFocusedWidget);
-    }
+    cocos2d::EventKeyboard::KeyCode cocos2dKey =EventKeyboard::KeyCode::KEY_DPAD_DOWN;
+    cocos2d::EventKeyboard event(cocos2dKey, false);
+    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
     
 }
 
