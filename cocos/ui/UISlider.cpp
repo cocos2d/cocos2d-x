@@ -231,7 +231,7 @@ void Slider::setScale9Enabled(bool able)
     setCapInsetProgressBarRebderer(_capInsetsProgressBarRenderer);
 }
     
-bool Slider::isScale9Enabled()
+bool Slider::isScale9Enabled()const
 {
     return _scale9Enabled;
 }
@@ -261,7 +261,7 @@ void Slider::setCapInsetsBarRenderer(const Rect &capInsets)
     static_cast<extension::Scale9Sprite*>(_barRenderer)->setCapInsets(capInsets);
 }
     
-const Rect& Slider::getCapInsetsBarRenderer()
+const Rect& Slider::getCapInsetsBarRenderer()const
 {
     return _capInsetsBarRenderer;
 }
@@ -276,7 +276,7 @@ void Slider::setCapInsetProgressBarRebderer(const Rect &capInsets)
     static_cast<extension::Scale9Sprite*>(_progressBarRenderer)->setCapInsets(capInsets);
 }
     
-const Rect& Slider::getCapInsetsProgressBarRebderer()
+const Rect& Slider::getCapInsetsProgressBarRebderer()const
 {
     return _capInsetsProgressBarRenderer;
 }
@@ -422,7 +422,7 @@ void Slider::onTouchCancelled(Touch *touch, Event *unusedEvent)
     Widget::onTouchCancelled(touch, unusedEvent);
 }
 
-float Slider::getPercentWithBallPos(float px)
+float Slider::getPercentWithBallPos(float px)const
 {
     return ((px/_barLength)*100.0f);
 }
@@ -449,7 +449,7 @@ void Slider::percentChangedEvent()
     }
 }
 
-int Slider::getPercent()
+int Slider::getPercent()const
 {
     return _percent;
 }
