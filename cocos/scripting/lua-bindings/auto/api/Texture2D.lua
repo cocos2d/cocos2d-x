@@ -144,7 +144,7 @@
 --------------------------------
 -- @function [parent=#Texture2D] drawAtPoint 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#Texture2D] getGLProgram 

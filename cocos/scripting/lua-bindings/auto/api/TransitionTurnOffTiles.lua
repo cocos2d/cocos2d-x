@@ -20,7 +20,7 @@
 -- @function [parent=#TransitionTurnOffTiles] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #cc.Mat4 mat4
+-- @param #mat4_table mat4
 -- @param #bool bool
         
 return nil

@@ -11,7 +11,7 @@
 --------------------------------
 -- @function [parent=#ProgressTimer] setBarChangeRate 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#ProgressTimer] getPercentage 
@@ -36,12 +36,12 @@
 --------------------------------
 -- @function [parent=#ProgressTimer] setMidpoint 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#ProgressTimer] getBarChangeRate 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- overload function: setReverseDirection(bool)
@@ -55,7 +55,7 @@
 --------------------------------
 -- @function [parent=#ProgressTimer] getMidpoint 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#ProgressTimer] setPercentage 
@@ -76,13 +76,13 @@
 --------------------------------
 -- @function [parent=#ProgressTimer] setAnchorPoint 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#ProgressTimer] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #cc.Mat4 mat4
+-- @param #mat4_table mat4
 -- @param #bool bool
         
 --------------------------------

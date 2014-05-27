@@ -36,7 +36,7 @@
 --------------------------------
 -- @function [parent=#ParticleSystem] setPosVar 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#ParticleSystem] getEndSpin 
@@ -106,7 +106,7 @@
 --------------------------------
 -- @function [parent=#ParticleSystem] getGravity 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#ParticleSystem] getTangentialAccel 
@@ -151,7 +151,7 @@
 --------------------------------
 -- @function [parent=#ParticleSystem] getPosVar 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#ParticleSystem] updateWithNoTime 
@@ -179,7 +179,7 @@
 --------------------------------
 -- @function [parent=#ParticleSystem] getSourcePosition 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#ParticleSystem] setLifeVar 
@@ -200,7 +200,7 @@
 -- @function [parent=#ParticleSystem] updateQuadWithParticle 
 -- @param self
 -- @param #cc.sParticle sparticle
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#ParticleSystem] getAtlasIndex 
@@ -294,7 +294,7 @@
 --------------------------------
 -- @function [parent=#ParticleSystem] setSourcePosition 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#ParticleSystem] getEndSpinVar 
@@ -389,7 +389,7 @@
 --------------------------------
 -- @function [parent=#ParticleSystem] setGravity 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#ParticleSystem] postStep 
