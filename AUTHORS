@@ -863,6 +863,9 @@ Developers:
         
     favorcode
         Correct some doxygen comment
+        
+    asuuma
+        Fix Repeat will run one more over in rare situations.
     
 Retired Core Developers:
     WenSheng Yang
