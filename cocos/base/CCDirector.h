@@ -38,7 +38,6 @@ THE SOFTWARE.
 #include "2d/CCLabelAtlas.h"
 #include <stack>
 #include "math/CCMath.h"
-#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
@@ -503,9 +502,6 @@ protected:
 
     /* Renderer for the Director */
     Renderer *_renderer;
-    
-    /* Capture screen command */
-    CustomCommand _captureScreenCommand;
 
 #if  (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     /* Console for the director */
