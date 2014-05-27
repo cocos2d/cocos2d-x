@@ -52,9 +52,9 @@ namespace utils
     /** Capture the entire screen
      * To ensure the snapshot is applied after everything is updated and rendered in the current frame,
      * we need to wrap the operation with a custom command which is then inserted into the tail of the render queue.
-     * - afterCaptured, specify the callback function which will be invoked after the snapshot is done.
-     * - filename, specify a filename where the snapshot is stored. This parameter can be either an absolute path or a simple 
-     * base filename ("hello.png" etc.), don't use a relative path including directory ("mydir/hello.png" etc.).
+     * @param afterCaptured, specify the callback function which will be invoked after the snapshot is done.
+     * @param filename, specify a filename where the snapshot is stored. This parameter can be either an absolute path or a simple
+     * base filename ("hello.png" etc.), don't use a relative path containing directory names.("mydir/hello.png" etc.)
      * @since v3.2
      */
     void captureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename);
