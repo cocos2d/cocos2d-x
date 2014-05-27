@@ -178,7 +178,7 @@ void Layout::removeAllChildrenWithCleanup(bool cleanup)
     _doLayoutDirty = true;
 }
 
-bool Layout::isClippingEnabled()
+bool Layout::isClippingEnabled()const
 {
     return _clippingEnabled;
 }
@@ -445,7 +445,7 @@ void Layout::setClippingType(ClippingType type)
     setClippingEnabled(clippingEnabled);
 }
     
-Layout::ClippingType Layout::getClippingType()
+Layout::ClippingType Layout::getClippingType()const
 {
     return _clippingType;
 }
@@ -582,7 +582,7 @@ void Layout::setBackGroundImageScale9Enabled(bool able)
     setBackGroundImageCapInsets(_backGroundImageCapInsets);
 }
     
-bool Layout::isBackGroundImageScale9Enabled()
+bool Layout::isBackGroundImageScale9Enabled()const
 {
     return _backGroundScale9Enabled;
 }
@@ -643,7 +643,7 @@ void Layout::setBackGroundImageCapInsets(const Rect &capInsets)
     }
 }
     
-const Rect& Layout::getBackGroundImageCapInsets()
+const Rect& Layout::getBackGroundImageCapInsets()const
 {
     return _backGroundImageCapInsets;
 }
@@ -773,7 +773,7 @@ void Layout::setBackGroundColorType(BackGroundColorType type)
     }
 }
     
-Layout::BackGroundColorType Layout::getBackGroundColorType()
+Layout::BackGroundColorType Layout::getBackGroundColorType()const
 {
     return _colorType;
 }
@@ -787,7 +787,7 @@ void Layout::setBackGroundColor(const Color3B &color)
     }
 }
     
-const Color3B& Layout::getBackGroundColor()
+const Color3B& Layout::getBackGroundColor()const
 {
     return _cColor;
 }
@@ -806,12 +806,12 @@ void Layout::setBackGroundColor(const Color3B &startColor, const Color3B &endCol
     }
 }
     
-const Color3B& Layout::getBackGroundStartColor()
+const Color3B& Layout::getBackGroundStartColor()const
 {
     return _gStartColor;
 }
 
-const Color3B& Layout::getBackGroundEndColor()
+const Color3B& Layout::getBackGroundEndColor()const
 {
     return _gEndColor;
 }
@@ -834,7 +834,7 @@ void Layout::setBackGroundColorOpacity(GLubyte opacity)
     }
 }
     
-GLubyte Layout::getBackGroundColorOpacity()
+GLubyte Layout::getBackGroundColorOpacity()const
 {
     return _cOpacity;
 }
@@ -848,7 +848,7 @@ void Layout::setBackGroundColorVector(const Vec2 &vector)
     }
 }
     
-const Vec2& Layout::getBackGroundColorVector()
+const Vec2& Layout::getBackGroundColorVector()const
 {
     return _alongVector;
 }
@@ -865,12 +865,12 @@ void Layout::setBackGroundImageOpacity(GLubyte opacity)
     updateBackGroundImageOpacity();
 }
 
-const Color3B& Layout::getBackGroundImageColor()
+const Color3B& Layout::getBackGroundImageColor()const
 {
     return _backGroundImageColor;
 }
 
-GLubyte Layout::getBackGroundImageOpacity()
+GLubyte Layout::getBackGroundImageOpacity()const
 {
     return _backGroundImageOpacity;
 }
@@ -1020,7 +1020,7 @@ void Layout::setLoopFocus(bool loop)
     _loopFocus = loop;
 }
 
-bool Layout::isLoopFocus()
+bool Layout::isLoopFocus()const
 {
     return _loopFocus;
 }
@@ -1031,7 +1031,7 @@ void Layout::setPassFocusToChild(bool pass)
     _passFocusToChild = pass;
 }
 
-bool Layout::isPassFocusToChild()
+bool Layout::isPassFocusToChild()const
 {
     return _passFocusToChild;
 }
@@ -1073,7 +1073,7 @@ Size Layout::getLayoutAccumulatedSize()const
     return layoutSize;
 }
 
-Vec2 Layout::getWorldCenterPoint(Widget* widget)
+Vec2 Layout::getWorldCenterPoint(Widget* widget)const
 {
     Layout *layout = dynamic_cast<Layout*>(widget);
     //FIXEDME: we don't need to calculate the content size of layout anymore
@@ -1433,7 +1433,7 @@ Widget* Layout::passFocusToChild(FocusDirection dir, cocos2d::ui::Widget *curren
         
 }
 
-bool Layout::checkFocusEnabledChild()
+bool Layout::checkFocusEnabledChild()const
 {
     bool ret = false;
     for(Node* node : _children)
@@ -1448,7 +1448,7 @@ bool Layout::checkFocusEnabledChild()
     return ret;
 }
 
-Widget* Layout::getChildWidgetByIndex(ssize_t index)
+Widget* Layout::getChildWidgetByIndex(ssize_t index)const
 {
     ssize_t size = _children.size();
     int count = 0;
@@ -1671,7 +1671,7 @@ Widget* Layout::getNextFocusedWidget(FocusDirection direction, Widget *current)
     }
 }
 
-bool  Layout::isLastWidgetInContainer(Widget* widget, FocusDirection direction)
+bool  Layout::isLastWidgetInContainer(Widget* widget, FocusDirection direction)const
 {
     Layout* parent = dynamic_cast<Layout*>(widget->getParent());
     if (parent == nullptr)
@@ -1757,7 +1757,7 @@ bool  Layout::isLastWidgetInContainer(Widget* widget, FocusDirection direction)
     return false;
 }
 
-bool  Layout::isWidgetAncestorSupportLoopFocus(Widget* widget, FocusDirection direction)
+bool  Layout::isWidgetAncestorSupportLoopFocus(Widget* widget, FocusDirection direction)const
 {
     Layout* parent = dynamic_cast<Layout*>(widget->getParent());
     if (parent == nullptr)
