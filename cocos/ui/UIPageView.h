@@ -92,7 +92,7 @@ public:
     void addPage(Layout* page);
     
     /**
-     * Inert a page to pageview.
+     * Insert a page to pageview.
      *
      * @param page    page to be added to pageview.
      */
@@ -152,7 +152,7 @@ public:
      *
      * @see LayoutType
      *
-     * @param LayoutType
+     * @param type LayoutType
      */
     virtual void setLayoutType(Type type) override{};
     
