@@ -12,7 +12,6 @@ Classes/BaseTest.cpp \
 Classes/controller.cpp \
 Classes/testBasic.cpp \
 Classes/VisibleRect.cpp \
-Classes/AccelerometerTest/AccelerometerTest.cpp \
 Classes/ActionManagerTest/ActionManagerTest.cpp \
 Classes/ActionsEaseTest/ActionsEaseTest.cpp \
 Classes/ActionsProgressTest/ActionsProgressTest.cpp \
