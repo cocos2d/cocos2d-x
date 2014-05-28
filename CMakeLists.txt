@@ -99,6 +99,7 @@ endif()
 
 if(MINGW)
   add_definitions(-DGLEW_STATIC)
+  add_definitions(-D__SSIZE_T)
 endif()
 
 
