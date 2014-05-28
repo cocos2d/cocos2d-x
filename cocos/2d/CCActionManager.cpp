@@ -39,16 +39,16 @@ NS_CC_BEGIN
 //
 typedef struct _hashElement
 {
-    struct _ccArray             *actions;
-    Node                    *target;
-    int                actionIndex;
-    Action                    *currentAction;
-    bool                        currentActionSalvaged;
-    bool                        paused;
-    UT_hash_handle                hh;
+    struct _ccArray     *actions;
+    Node                *target;
+    int                 actionIndex;
+    Action              *currentAction;
+    bool                currentActionSalvaged;
+    bool                paused;
+    UT_hash_handle      hh;
 } tHashElement;
 
-ActionManager::ActionManager(void)
+ActionManager::ActionManager()
 : _targets(nullptr),
   _currentTarget(nullptr),
   _currentTargetSalvaged(false)
@@ -56,7 +56,7 @@ ActionManager::ActionManager(void)
 
 }
 
-ActionManager::~ActionManager(void)
+ActionManager::~ActionManager()
 {
     CCLOGINFO("deallocing ActionManager: %p", this);
 

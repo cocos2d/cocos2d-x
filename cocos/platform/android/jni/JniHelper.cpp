@@ -34,8 +34,8 @@ THE SOFTWARE.
 static pthread_key_t g_key;
 
 jclass _getClassID(const char *className) {
-    if (NULL == className) {
-        return NULL;
+    if (nullptr == className) {
+        return nullptr;
     }
 
     JNIEnv* env = cocos2d::JniHelper::getEnv();
@@ -46,7 +46,7 @@ jclass _getClassID(const char *className) {
                                                    cocos2d::JniHelper::loadclassMethod_methodID,
                                                    _jstrClassName);
 
-    if (NULL == _clazz) {
+    if (nullptr == _clazz) {
         LOGE("Classloader failed to find class of %s", className);
         env->ExceptionClear();
     }
@@ -58,9 +58,9 @@ jclass _getClassID(const char *className) {
 
 namespace cocos2d {
 
-    JavaVM* JniHelper::_psJavaVM = NULL;
-    jmethodID JniHelper::loadclassMethod_methodID = NULL;
-    jobject JniHelper::classloader = NULL;
+    JavaVM* JniHelper::_psJavaVM = nullptr;
+    jmethodID JniHelper::loadclassMethod_methodID = nullptr;
+    jobject JniHelper::classloader = nullptr;
 
     JavaVM* JniHelper::getJavaVM() {
         pthread_t thisthread = pthread_self();
@@ -73,11 +73,11 @@ namespace cocos2d {
         LOGD("JniHelper::setJavaVM(%p), pthread_self() = %ld", javaVM, thisthread);
         _psJavaVM = javaVM;
 
-        pthread_key_create(&g_key, NULL);
+        pthread_key_create(&g_key, nullptr);
     }
 
     JNIEnv* JniHelper::cacheEnv(JavaVM* jvm) {
-        JNIEnv* _env = NULL;
+        JNIEnv* _env = nullptr;
         // get jni environment
         jint ret = jvm->GetEnv((void**)&_env, JNI_VERSION_1_4);
         
@@ -94,11 +94,11 @@ namespace cocos2d {
             // must call DetachCurrentThread() in future.
             // see: http://developer.android.com/guide/practices/design/jni.html
                 
-            if (jvm->AttachCurrentThread(&_env, NULL) < 0)
+            if (jvm->AttachCurrentThread(&_env, nullptr) < 0)
                 {
                     LOGE("Failed to get the environment using AttachCurrentThread()");
 
-                    return NULL;
+                    return nullptr;
                 } else {
                 // Success : Attached and obtained JNIEnv!
                 pthread_setspecific(g_key, _env);
@@ -110,13 +110,13 @@ namespace cocos2d {
             LOGE("JNI interface version 1.4 not supported");
         default :
             LOGE("Failed to get the environment using GetEnv()");
-            return NULL;
+            return nullptr;
         }
     }
 
     JNIEnv* JniHelper::getEnv() {
         JNIEnv *_env = (JNIEnv *)pthread_getspecific(g_key);
-        if (_env == NULL)
+        if (_env == nullptr)
             _env = JniHelper::cacheEnv(_psJavaVM);
         return _env;
     }
@@ -133,7 +133,7 @@ namespace cocos2d {
         jobject _c = cocos2d::JniHelper::getEnv()->CallObjectMethod(activityinstance,
                                                                     _getclassloaderMethod.methodID);
 
-        if (NULL == _c) {
+        if (nullptr == _c) {
             return false;
         }
 
@@ -155,14 +155,14 @@ namespace cocos2d {
                                         const char *className, 
                                         const char *methodName,
                                         const char *paramCode) {
-        if ((NULL == className) ||
-            (NULL == methodName) ||
-            (NULL == paramCode)) {
+        if ((nullptr == className) ||
+            (nullptr == methodName) ||
+            (nullptr == paramCode)) {
             return false;
         }
 
-        JNIEnv *pEnv = JniHelper::getEnv();
-        if (!pEnv) {
+        JNIEnv *env = JniHelper::getEnv();
+        if (!env) {
             LOGE("Failed to get JNIEnv");
             return false;
         }
@@ -170,19 +170,19 @@ namespace cocos2d {
         jclass classID = _getClassID(className);
         if (! classID) {
             LOGE("Failed to find class %s", className);
-            pEnv->ExceptionClear();
+            env->ExceptionClear();
             return false;
         }
 
-        jmethodID methodID = pEnv->GetStaticMethodID(classID, methodName, paramCode);
+        jmethodID methodID = env->GetStaticMethodID(classID, methodName, paramCode);
         if (! methodID) {
             LOGE("Failed to find static method id of %s", methodName);
-            pEnv->ExceptionClear();
+            env->ExceptionClear();
             return false;
         }
             
         methodinfo.classID = classID;
-        methodinfo.env = pEnv;
+        methodinfo.env = env;
         methodinfo.methodID = methodID;
         return true;
     }
@@ -191,33 +191,33 @@ namespace cocos2d {
                                                      const char *className,
                                                      const char *methodName,
                                                      const char *paramCode) {
-        if ((NULL == className) ||
-            (NULL == methodName) ||
-            (NULL == paramCode)) {
+        if ((nullptr == className) ||
+            (nullptr == methodName) ||
+            (nullptr == paramCode)) {
             return false;
         }
 
-        JNIEnv *pEnv = JniHelper::getEnv();
-        if (!pEnv) {
+        JNIEnv *env = JniHelper::getEnv();
+        if (!env) {
             return false;
         }
 
-        jclass classID = pEnv->FindClass(className);
+        jclass classID = env->FindClass(className);
         if (! classID) {
             LOGE("Failed to find class %s", className);
-            pEnv->ExceptionClear();
+            env->ExceptionClear();
             return false;
         }
 
-        jmethodID methodID = pEnv->GetMethodID(classID, methodName, paramCode);
+        jmethodID methodID = env->GetMethodID(classID, methodName, paramCode);
         if (! methodID) {
             LOGE("Failed to find method id of %s", methodName);
-            pEnv->ExceptionClear();
+            env->ExceptionClear();
             return false;
         }
 
         methodinfo.classID = classID;
-        methodinfo.env = pEnv;
+        methodinfo.env = env;
         methodinfo.methodID = methodID;
 
         return true;
@@ -227,51 +227,51 @@ namespace cocos2d {
                                   const char *className,
                                   const char *methodName,
                                   const char *paramCode) {
-        if ((NULL == className) ||
-            (NULL == methodName) ||
-            (NULL == paramCode)) {
+        if ((nullptr == className) ||
+            (nullptr == methodName) ||
+            (nullptr == paramCode)) {
             return false;
         }
 
-        JNIEnv *pEnv = JniHelper::getEnv();
-        if (!pEnv) {
+        JNIEnv *env = JniHelper::getEnv();
+        if (!env) {
             return false;
         }
 
         jclass classID = _getClassID(className);
         if (! classID) {
             LOGE("Failed to find class %s", className);
-            pEnv->ExceptionClear();
+            env->ExceptionClear();
             return false;
         }
 
-        jmethodID methodID = pEnv->GetMethodID(classID, methodName, paramCode);
+        jmethodID methodID = env->GetMethodID(classID, methodName, paramCode);
         if (! methodID) {
             LOGE("Failed to find method id of %s", methodName);
-            pEnv->ExceptionClear();
+            env->ExceptionClear();
             return false;
         }
 
         methodinfo.classID = classID;
-        methodinfo.env = pEnv;
+        methodinfo.env = env;
         methodinfo.methodID = methodID;
 
         return true;
     }
 
     std::string JniHelper::jstring2string(jstring jstr) {
-        if (jstr == NULL) {
+        if (jstr == nullptr) {
             return "";
         }
         
-        JNIEnv *pEnv = JniHelper::getEnv();
-        if (!pEnv) {
-            return NULL;
+        JNIEnv *env = JniHelper::getEnv();
+        if (!env) {
+            return nullptr;
         }
 
-        const char* chars = pEnv->GetStringUTFChars(jstr, NULL);
+        const char* chars = env->GetStringUTFChars(jstr, nullptr);
         std::string ret(chars);
-        pEnv->ReleaseStringUTFChars(jstr, chars);
+        env->ReleaseStringUTFChars(jstr, chars);
 
         return ret;
     }

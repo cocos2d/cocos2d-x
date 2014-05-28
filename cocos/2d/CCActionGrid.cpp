@@ -263,7 +263,7 @@ AccelAmplitude* AccelAmplitude::clone() const
 	return a;
 }
 
-AccelAmplitude::~AccelAmplitude(void)
+AccelAmplitude::~AccelAmplitude()
 {
     CC_SAFE_DELETE(_other);
 }
