@@ -206,7 +206,10 @@ local function main()
     end
 
     -- play background music, preload effect
-    cc.SimpleAudioEngine:getInstance():playMusic("res/background.mp3", true)
+
+    -- uncomment below for the BlackBerry version
+    local bgMusicPath = cc.FileUtils:getInstance():fullPathForFilename("background.mp3") 
+    cc.SimpleAudioEngine:getInstance():playMusic(bgMusicPath, true)
     local effectPath = cc.FileUtils:getInstance():fullPathForFilename("effect1.wav")
     cc.SimpleAudioEngine:getInstance():preloadEffect(effectPath)
 
