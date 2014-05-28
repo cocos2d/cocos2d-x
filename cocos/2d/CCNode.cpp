@@ -1002,9 +1002,6 @@ void Node::visit(Renderer* renderer, const Mat4 &parentTransform, bool parentTra
         this->draw(renderer, _modelViewTransform, dirty);
     }
 
-    // reset for next frame
-    _orderOfArrival = 0;
- 
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
