@@ -169,7 +169,7 @@ public:
     /** get amplitude rate */
     inline float getRate(void) const { return _rate; }
     /** set amplitude rate */
-    inline void setRate(float fRate) { _rate = fRate; }
+    inline void setRate(float rate) { _rate = rate; }
 
     // Overrides
     virtual void startWithTarget(Node *target) override;
@@ -182,7 +182,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~AccelDeccelAmplitude();
     
     /** initializes the action with an inner action that has the amplitude property, and a duration time */
-    bool initWithAction(Action *pAction, float duration);
+    bool initWithAction(Action *action, float duration);
 
 protected:
     float _rate;
@@ -232,7 +232,7 @@ public:
     static DeccelAmplitude* create(Action *action, float duration);
 
     /** get amplitude rate */
-    inline float getRate(void) const { return _rate; }
+    inline float getRate() const { return _rate; }
     /** set amplitude rate */
     inline void setRate(float rate) { _rate = rate; }
 

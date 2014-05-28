@@ -510,11 +510,11 @@ bool Node::isVisible() const
 }
 
 /// isVisible setter
-void Node::setVisible(bool var)
+void Node::setVisible(bool visible)
 {
-    if(var != _visible)
+    if(visible != _visible)
     {
-        _visible = var;
+        _visible = visible;
         if(_visible) _transformUpdated = _transformDirty = _inverseDirty = true;
     }
 }
@@ -572,9 +572,9 @@ bool Node::isRunning() const
 }
 
 /// parent setter
-void Node::setParent(Node * var)
+void Node::setParent(Node * parent)
 {
-    _parent = var;
+    _parent = parent;
 }
 
 /// isRelativeAnchorPoint getter
@@ -599,15 +599,15 @@ int Node::getTag() const
 }
 
 /// tag setter
-void Node::setTag(int var)
+void Node::setTag(int tag)
 {
-    _tag = var;
+    _tag = tag ;
 }
 
 /// userData setter
-void Node::setUserData(void *var)
+void Node::setUserData(void *userData)
 {
-    _userData = var;
+    _userData = userData;
 }
 
 int Node::getOrderOfArrival() const
@@ -621,14 +621,14 @@ void Node::setOrderOfArrival(int orderOfArrival)
     _orderOfArrival = orderOfArrival;
 }
 
-void Node::setUserObject(Ref *pUserObject)
+void Node::setUserObject(Ref *userObject)
 {
-    CC_SAFE_RETAIN(pUserObject);
+    CC_SAFE_RETAIN(userObject);
     CC_SAFE_RELEASE(_userObject);
-    _userObject = pUserObject;
+    _userObject = userObject;
 }
 
-GLProgramState* Node::getGLProgramState()
+GLProgramState* Node::getGLProgramState() const
 {
     return _glProgramState;
 }
@@ -652,7 +652,7 @@ void Node::setGLProgram(GLProgram *glProgram)
     }
 }
 
-GLProgram * Node::getGLProgram()
+GLProgram * Node::getGLProgram() const
 {
     return _glProgramState ? _glProgramState->getGLProgram() : nullptr;
 }
@@ -671,7 +671,7 @@ Rect Node::getBoundingBox() const
     return RectApplyAffineTransform(rect, getNodeToParentAffineTransform());
 }
 
-Node * Node::create(void)
+Node * Node::create()
 {
 	Node * ret = new Node();
     if (ret && ret->init())
@@ -713,7 +713,7 @@ std::string Node::getDescription() const
 }
 
 // lazy allocs
-void Node::childrenAlloc(void)
+void Node::childrenAlloc()
 {
     _children.reserve(4);
 }
@@ -1572,25 +1572,25 @@ void Node::updateTransform()
         child->updateTransform();
 }
 
-Component* Node::getComponent(const std::string& pName)
+Component* Node::getComponent(const std::string& name)
 {
     if( _componentContainer )
-        return _componentContainer->get(pName);
+        return _componentContainer->get(name);
     return nullptr;
 }
 
-bool Node::addComponent(Component *pComponent)
+bool Node::addComponent(Component *component)
 {
     // lazy alloc
     if( !_componentContainer )
         _componentContainer = new ComponentContainer(this);
-    return _componentContainer->add(pComponent);
+    return _componentContainer->add(component);
 }
 
-bool Node::removeComponent(const std::string& pName)
+bool Node::removeComponent(const std::string& name)
 {
     if( _componentContainer )
-        return _componentContainer->remove(pName);
+        return _componentContainer->remove(name);
     return false;
 }
 
@@ -1699,7 +1699,7 @@ GLubyte Node::getOpacity(void) const
 	return _realOpacity;
 }
 
-GLubyte Node::getDisplayedOpacity(void) const
+GLubyte Node::getDisplayedOpacity() const
 {
 	return _displayedOpacity;
 }
