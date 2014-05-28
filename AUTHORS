@@ -866,6 +866,9 @@ Developers:
         
     asuuma
         Fix Repeat will run one more over in rare situations.
+        
+    uqtimes 
+        Fix NSNotificationCenter and NSTimer leaks
     
 Retired Core Developers:
     WenSheng Yang
