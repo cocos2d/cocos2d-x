@@ -31,7 +31,7 @@ NS_CC_BEGIN
 
 namespace ui {
     
-class LayoutExecutant;
+class LayoutManager;
     
 class LayoutProtocol
 {
@@ -39,7 +39,7 @@ public:
     LayoutProtocol(){}
     virtual ~LayoutProtocol(){}
     
-    virtual LayoutExecutant* createLayoutExecutant() = 0;
+    virtual LayoutManager* createLayoutManager() = 0;
     virtual Size getLayoutContentSize()const = 0;
     virtual const Vector<Node*>& getLayoutElements()const = 0;
     virtual void doLayout() = 0;
@@ -328,7 +328,7 @@ protected:
     const Rect& getClippingRect();
     
     virtual void doLayout()override;
-    virtual LayoutExecutant* createLayoutExecutant()override;
+    virtual LayoutManager* createLayoutManager()override;
     virtual Size getLayoutContentSize()const override;
     virtual const Vector<Node*>& getLayoutElements()const override;
     

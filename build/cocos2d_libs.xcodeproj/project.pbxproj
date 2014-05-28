@@ -973,10 +973,10 @@
 		2905FA8E18CF08D100240AA3 /* UIWidget.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA1418CF08D100240AA3 /* UIWidget.h */; };
 		2905FA8F18CF08D100240AA3 /* UIWidget.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA1418CF08D100240AA3 /* UIWidget.h */; };
 		2986667F18B1B246000E39CA /* CCTweenFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2986667818B1B079000E39CA /* CCTweenFunction.cpp */; };
-		29CB8F4C1929D1BB00C841D6 /* UILayoutExecutant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29CB8F4A1929D1BB00C841D6 /* UILayoutExecutant.cpp */; };
-		29CB8F4D1929D1BB00C841D6 /* UILayoutExecutant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29CB8F4A1929D1BB00C841D6 /* UILayoutExecutant.cpp */; };
-		29CB8F4E1929D1BB00C841D6 /* UILayoutExecutant.h in Headers */ = {isa = PBXBuildFile; fileRef = 29CB8F4B1929D1BB00C841D6 /* UILayoutExecutant.h */; };
-		29CB8F4F1929D1BB00C841D6 /* UILayoutExecutant.h in Headers */ = {isa = PBXBuildFile; fileRef = 29CB8F4B1929D1BB00C841D6 /* UILayoutExecutant.h */; };
+		29CB8F4C1929D1BB00C841D6 /* UILayoutManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29CB8F4A1929D1BB00C841D6 /* UILayoutManager.cpp */; };
+		29CB8F4D1929D1BB00C841D6 /* UILayoutManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29CB8F4A1929D1BB00C841D6 /* UILayoutManager.cpp */; };
+		29CB8F4E1929D1BB00C841D6 /* UILayoutManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 29CB8F4B1929D1BB00C841D6 /* UILayoutManager.h */; };
+		29CB8F4F1929D1BB00C841D6 /* UILayoutManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 29CB8F4B1929D1BB00C841D6 /* UILayoutManager.h */; };
 		29CB8F551929D7A900C841D6 /* UIScrollInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 29CB8F541929D7A900C841D6 /* UIScrollInterface.h */; };
 		29CB8F561929D7A900C841D6 /* UIScrollInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 29CB8F541929D7A900C841D6 /* UIScrollInterface.h */; };
 		2AC795DB1862870F005EC8E1 /* SkeletonBounds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC795D918628689005EC8E1 /* SkeletonBounds.cpp */; };
@@ -2256,8 +2256,8 @@
 		29080DEB191B82CE0066F8DF /* UIDeprecated.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIDeprecated.h; sourceTree = "<group>"; };
 		2986667818B1B079000E39CA /* CCTweenFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTweenFunction.cpp; sourceTree = "<group>"; };
 		2986667918B1B079000E39CA /* CCTweenFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTweenFunction.h; sourceTree = "<group>"; };
-		29CB8F4A1929D1BB00C841D6 /* UILayoutExecutant.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILayoutExecutant.cpp; sourceTree = "<group>"; };
-		29CB8F4B1929D1BB00C841D6 /* UILayoutExecutant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILayoutExecutant.h; sourceTree = "<group>"; };
+		29CB8F4A1929D1BB00C841D6 /* UILayoutManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILayoutManager.cpp; sourceTree = "<group>"; };
+		29CB8F4B1929D1BB00C841D6 /* UILayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILayoutManager.h; sourceTree = "<group>"; };
 		29CB8F541929D7A900C841D6 /* UIScrollInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIScrollInterface.h; sourceTree = "<group>"; };
 		2AC795D318628672005EC8E1 /* BoundingBoxAttachment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BoundingBoxAttachment.cpp; sourceTree = "<group>"; };
 		2AC795D418628672005EC8E1 /* BoundingBoxAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoundingBoxAttachment.h; sourceTree = "<group>"; };
@@ -3932,8 +3932,8 @@
 				2905F9F918CF08D000240AA3 /* UILayout.h */,
 				2905F9FC18CF08D000240AA3 /* UILayoutParameter.cpp */,
 				2905F9FD18CF08D000240AA3 /* UILayoutParameter.h */,
-				29CB8F4A1929D1BB00C841D6 /* UILayoutExecutant.cpp */,
-				29CB8F4B1929D1BB00C841D6 /* UILayoutExecutant.h */,
+				29CB8F4A1929D1BB00C841D6 /* UILayoutManager.cpp */,
+				29CB8F4B1929D1BB00C841D6 /* UILayoutManager.h */,
 			);
 			name = layout;
 			sourceTree = "<group>";
@@ -4846,7 +4846,7 @@
 				5034CA39191D591100CE6051 /* ccShader_PositionColorLengthTexture.frag in Headers */,
 				2AC795DF18628723005EC8E1 /* SkeletonBounds.h in Headers */,
 				50ABBE891925AB6F00A911A9 /* CCMap.h in Headers */,
-				29CB8F4E1929D1BB00C841D6 /* UILayoutExecutant.h in Headers */,
+				29CB8F4E1929D1BB00C841D6 /* UILayoutManager.h in Headers */,
 				2AC795E018628723005EC8E1 /* Event.h in Headers */,
 				2AC795E118628723005EC8E1 /* EventData.h in Headers */,
 				50E6D33618E174130051CA34 /* UIHBox.h in Headers */,
@@ -5661,7 +5661,7 @@
 				1A8C59E2180E930E00EF57C3 /* CCInputDelegate.h in Headers */,
 				503DD8EA1926736A00CD74DD /* CCESRenderer.h in Headers */,
 				1A8C59E6180E930E00EF57C3 /* CCProcessBase.h in Headers */,
-				29CB8F4F1929D1BB00C841D6 /* UILayoutExecutant.h in Headers */,
+				29CB8F4F1929D1BB00C841D6 /* UILayoutManager.h in Headers */,
 				50ABBE581925AB6F00A911A9 /* CCEventFocus.h in Headers */,
 				50ABC00A1926664800A911A9 /* CCCommon.h in Headers */,
 				2905FA5918CF08D100240AA3 /* UILayout.h in Headers */,
@@ -6242,7 +6242,7 @@
 				2905FA4018CF08D100240AA3 /* CocosGUI.cpp in Sources */,
 				1AD71EC1180E26E600808F54 /* extension.cpp in Sources */,
 				50ABBE511925AB6F00A911A9 /* CCEventDispatcher.cpp in Sources */,
-				29CB8F4C1929D1BB00C841D6 /* UILayoutExecutant.cpp in Sources */,
+				29CB8F4C1929D1BB00C841D6 /* UILayoutManager.cpp in Sources */,
 				50ABC0051926664800A911A9 /* CCThread.mm in Sources */,
 				1AD71EC5180E26E600808F54 /* Json.cpp in Sources */,
 				50E6D33C18E174130051CA34 /* UIVBox.cpp in Sources */,
@@ -6721,7 +6721,7 @@
 				50FCEBAC18C72017004AD434 /* PageViewReader.cpp in Sources */,
 				1A8C598C180E930E00EF57C3 /* CCActionFrame.cpp in Sources */,
 				1A8C5990180E930E00EF57C3 /* CCActionFrameEasing.cpp in Sources */,
-				29CB8F4D1929D1BB00C841D6 /* UILayoutExecutant.cpp in Sources */,
+				29CB8F4D1929D1BB00C841D6 /* UILayoutManager.cpp in Sources */,
 				50FCEBA418C72017004AD434 /* ListViewReader.cpp in Sources */,
 				1A8C5994180E930E00EF57C3 /* CCActionManagerEx.cpp in Sources */,
 				50ABBEBC1925AB6F00A911A9 /* ccUtils.cpp in Sources */,
