@@ -441,8 +441,6 @@
 		1AC35C0818CECF0C00F37B72 /* MouseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A9618CECF0B00F37B72 /* MouseTest.cpp */; };
 		1AC35C0918CECF0C00F37B72 /* IntervalTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A9918CECF0B00F37B72 /* IntervalTest.cpp */; };
 		1AC35C0A18CECF0C00F37B72 /* IntervalTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A9918CECF0B00F37B72 /* IntervalTest.cpp */; };
-		1AC35C0B18CECF0C00F37B72 /* KeyboardTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A9C18CECF0B00F37B72 /* KeyboardTest.cpp */; };
-		1AC35C0C18CECF0C00F37B72 /* KeyboardTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A9C18CECF0B00F37B72 /* KeyboardTest.cpp */; };
 		1AC35C0F18CECF0C00F37B72 /* LabelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AA218CECF0C00F37B72 /* LabelTest.cpp */; };
 		1AC35C1018CECF0C00F37B72 /* LabelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AA218CECF0C00F37B72 /* LabelTest.cpp */; };
 		1AC35C1118CECF0C00F37B72 /* LabelTestNew.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AA418CECF0C00F37B72 /* LabelTestNew.cpp */; };
@@ -1543,8 +1541,6 @@
 		1AC35A9718CECF0B00F37B72 /* MouseTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseTest.h; sourceTree = "<group>"; };
 		1AC35A9918CECF0B00F37B72 /* IntervalTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IntervalTest.cpp; sourceTree = "<group>"; };
 		1AC35A9A18CECF0B00F37B72 /* IntervalTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntervalTest.h; sourceTree = "<group>"; };
-		1AC35A9C18CECF0B00F37B72 /* KeyboardTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KeyboardTest.cpp; sourceTree = "<group>"; };
-		1AC35A9D18CECF0B00F37B72 /* KeyboardTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardTest.h; sourceTree = "<group>"; };
 		1AC35AA218CECF0C00F37B72 /* LabelTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = LabelTest.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		1AC35AA318CECF0C00F37B72 /* LabelTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelTest.h; sourceTree = "<group>"; };
 		1AC35AA418CECF0C00F37B72 /* LabelTestNew.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LabelTestNew.cpp; sourceTree = "<group>"; };
@@ -2240,7 +2236,6 @@
 				1AC35A9218CECF0B00F37B72 /* FontTest */,
 				1AC35A9518CECF0B00F37B72 /* InputTest */,
 				1AC35A9818CECF0B00F37B72 /* IntervalTest */,
-				1AC35A9B18CECF0B00F37B72 /* KeyboardTest */,
 				1AC35AA118CECF0B00F37B72 /* LabelTest */,
 				1AC35AA618CECF0C00F37B72 /* LayerTest */,
 				1AC35AA918CECF0C00F37B72 /* MenuTest */,
@@ -2888,15 +2883,6 @@
 				1AC35A9A18CECF0B00F37B72 /* IntervalTest.h */,
 			);
 			path = IntervalTest;
-			sourceTree = "<group>";
-		};
-		1AC35A9B18CECF0B00F37B72 /* KeyboardTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC35A9C18CECF0B00F37B72 /* KeyboardTest.cpp */,
-				1AC35A9D18CECF0B00F37B72 /* KeyboardTest.h */,
-			);
-			path = KeyboardTest;
 			sourceTree = "<group>";
 		};
 		1AC35AA118CECF0B00F37B72 /* LabelTest */ = {
@@ -4731,7 +4717,6 @@
 				1AC35C3B18CECF0C00F37B72 /* PerformanceTouchesTest.cpp in Sources */,
 				29080D8F191B595E0066F8DF /* CocoStudioGUITest.cpp in Sources */,
 				1AC35B3D18CECF0C00F37B72 /* Bug-422.cpp in Sources */,
-				1AC35C0B18CECF0C00F37B72 /* KeyboardTest.cpp in Sources */,
 				1AC35BF518CECF0C00F37B72 /* HttpClientTest.cpp in Sources */,
 				1AC35B4F18CECF0C00F37B72 /* ClickAndMoveTest.cpp in Sources */,
 				29080DCF191B595E0066F8DF /* UISliderTest.cpp in Sources */,
@@ -4912,7 +4897,6 @@
 				29080DA2191B595E0066F8DF /* GUIEditorTest.cpp in Sources */,
 				29080D94191B595E0066F8DF /* CustomImageTest.cpp in Sources */,
 				1AC35B3E18CECF0C00F37B72 /* Bug-422.cpp in Sources */,
-				1AC35C0C18CECF0C00F37B72 /* KeyboardTest.cpp in Sources */,
 				29080DAC191B595E0066F8DF /* UIFocusTest.cpp in Sources */,
 				1AC35BF618CECF0C00F37B72 /* HttpClientTest.cpp in Sources */,
 				29080DA6191B595E0066F8DF /* UIButtonTest_Editor.cpp in Sources */,

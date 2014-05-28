@@ -124,7 +124,6 @@ set(SAMPLE_SRC
   Classes/NewEventDispatcherTest/NewEventDispatcherTest.cpp
   Classes/FontTest/FontTest.cpp
   Classes/IntervalTest/IntervalTest.cpp
-  Classes/KeyboardTest/KeyboardTest.cpp
   Classes/InputTest/MouseTest.cpp
   Classes/LabelTest/LabelTest.cpp
   Classes/LabelTest/LabelTestNew.cpp
