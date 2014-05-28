@@ -206,15 +206,7 @@ local function main()
     end
 
     -- play background music, preload effect
-
-    -- uncomment below for the BlackBerry version
-    local bgMusicPath = nil 
-    if (cc.PLATFORM_OS_IPHONE == targetPlatform) or (cc.PLATFORM_OS_IPAD == targetPlatform) then
-        bgMusicPath = cc.FileUtils:getInstance():fullPathForFilename("res/background.caf")
-    else
-        bgMusicPath = cc.FileUtils:getInstance():fullPathForFilename("res/background.mp3")
-    end
-    cc.SimpleAudioEngine:getInstance():playMusic(bgMusicPath, true)
+    cc.SimpleAudioEngine:getInstance():playMusic("res/background.mp3", true)
     local effectPath = cc.FileUtils:getInstance():fullPathForFilename("effect1.wav")
     cc.SimpleAudioEngine:getInstance():preloadEffect(effectPath)
 
