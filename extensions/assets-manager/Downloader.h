@@ -114,7 +114,7 @@ protected:
 
     FileDescriptor prepareDownload(const std::string &srcUrl, const std::string &storagePath, const std::string &customId);
 
-    void download(const std::string &srcUrl, FileDescriptor fDesc, const std::string &customId);
+    void download(const std::string &srcUrl, const FileDescriptor &fDesc, const std::string &customId);
 
     void notifyError(ErrorCode code, const std::string &msg = "", const std::string &customId = "");
 

@@ -215,7 +215,7 @@ void Downloader::batchDownload(const std::unordered_map<std::string, Downloader:
     }
 }
 
-void Downloader::download(const std::string &srcUrl, FileDescriptor fDesc, const std::string &customId)
+void Downloader::download(const std::string &srcUrl, const FileDescriptor &fDesc, const std::string &customId)
 {
     std::shared_ptr<Downloader> downloader = shared_from_this();
 
