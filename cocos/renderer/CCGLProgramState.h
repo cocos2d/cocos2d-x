@@ -185,7 +185,6 @@ protected:
     ~GLProgramState();
     bool init(GLProgram* program);
     void resetGLProgram();
-    void setProgramStateDirty(EventCustom* event);
     VertexAttribValue* getVertexAttribValue(const std::string &attributeName);
     UniformValue* getUniformValue(const std::string &uniformName);
     

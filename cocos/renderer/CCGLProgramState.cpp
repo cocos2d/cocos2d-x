@@ -281,15 +281,9 @@ GLProgramState::GLProgramState()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     // listen the event when app go to foreground
     CCLOG("create _backToForegroundlistener for GLProgramState");
-    _backToForegroundlistener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, CC_CALLBACK_1(GLProgramState::setProgramStateDirty, this));
+    _backToForegroundlistener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom*) { _uniformAttributeValueDirty = true; });
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundlistener, -1);
 #endif
-}
-
-void GLProgramState::setProgramStateDirty(EventCustom *event)
-{
-    CCLOG("GLProgramState to background---------");
-    _uniformAttributeValueDirty = true;
 }
 
 GLProgramState::~GLProgramState()
