@@ -45,6 +45,8 @@ class AssetsManager : public Ref
 {
 public:
     
+    friend class Downloader;
+    
     //! Update states
     enum class State
     {
@@ -106,6 +108,14 @@ CC_CONSTRUCTOR_ACCESS:
     
 protected:
     
+    static void createDirectory(const std::string &path);
+    
+    static void removeDirectory(const std::string &path);
+    
+    static void removeFile(const std::string &path);
+    
+    static void renameFile(const std::string &path, const std::string &oldname, const std::string &name);
+    
     std::string get(const std::string& key) const;
     
     void loadManifest(const std::string& manifestUrl);
@@ -117,14 +127,6 @@ protected:
     void adjustPath(std::string &path);
     
     void dispatchUpdateEvent(EventAssetsManager::EventCode code, std::string message = "", std::string assetId = "");
-    
-    void createDirectory(const std::string &path);
-    
-    void removeDirectory(const std::string &path);
-    
-    void removeFile(const std::string &path);
-    
-    void renameFile(const std::string &path, const std::string &oldname, const std::string &name);
     
     void downloadVersion();
     void parseVersion();
@@ -190,6 +192,15 @@ private:
     
     //! The path to store downloaded resources.
     std::string _storagePath;
+    
+    //! The local path of cached version file
+    std::string _cacheVersionPath;
+    
+    //! The local path of cached manifest file
+    std::string _cacheManifestPath;
+    
+    //! The local path of cached temporary manifest file
+    std::string _tempManifestPath;
     
     //! The path of local manifest file
     std::string _manifestUrl;

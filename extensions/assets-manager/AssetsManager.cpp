@@ -28,7 +28,6 @@
 #include <curl/curl.h>
 #include <curl/easy.h>
 #include <stdio.h>
-#include <thread>
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 #include <sys/types.h>
@@ -60,6 +59,9 @@ AssetsManager::AssetsManager(const std::string& manifestUrl, const std::string& 
 , _percent(0)
 , _manifestUrl(manifestUrl)
 , _storagePath("")
+, _cacheVersionPath("")
+, _cacheManifestPath("")
+, _tempManifestPath("")
 , _assets(nullptr)
 , _localManifest(nullptr)
 , _remoteManifest(nullptr)
@@ -82,6 +84,9 @@ AssetsManager::AssetsManager(const std::string& manifestUrl, const std::string& 
                                          std::placeholders::_4);
     _downloader->_onSuccess = std::bind(&AssetsManager::onSuccess, this, std::placeholders::_1, std::placeholders::_2);
     setStoragePath(storagePath);
+    _cacheVersionPath = _storagePath + VERSION_FILENAME;
+    _cacheManifestPath = _storagePath + MANIFEST_FILENAME;
+    _tempManifestPath = _storagePath + TEMP_MANIFEST_FILENAME;
 
     _localManifest = new Manifest();
     loadManifest(manifestUrl);
@@ -91,7 +96,7 @@ AssetsManager::AssetsManager(const std::string& manifestUrl, const std::string& 
 
 AssetsManager::~AssetsManager()
 {
-    removeFile(_storagePath + TEMP_MANIFEST_FILENAME);
+    removeFile(_tempManifestPath);
     _downloader->_onError = nullptr;
     _downloader->_onSuccess = nullptr;
     _downloader->_onProgress = nullptr;
@@ -124,19 +129,19 @@ void AssetsManager::prepareLocalManifest()
 
 void AssetsManager::loadManifest(const std::string& manifestUrl)
 {
-    std::string cachedManifest = _storagePath + MANIFEST_FILENAME;
     // Prefer to use the cached manifest file, if not found use user configured manifest file
     // Prepend storage path to avoid multi package conflict issue
-    if (_fileUtils->isFileExist(cachedManifest))
+    if (_fileUtils->isFileExist(_cacheManifestPath))
     {
-        _localManifest->parse(cachedManifest);
+        _localManifest->parse(_cacheManifestPath);
         if (_localManifest->isLoaded())
             prepareLocalManifest();
         else
-            removeFile(cachedManifest);
+            removeFile(_cacheManifestPath);
     }
+    
     // Fail to found or load cached manifest file
-    else
+    if (!_localManifest->isLoaded())
     {
         _localManifest->parse(_manifestUrl);
         if (_localManifest->isLoaded())
@@ -214,7 +219,7 @@ void AssetsManager::createDirectory(const std::string& path)
 
     // Create path recursively
     subpath = "";
-    for (int i = 0; i < dirs.size(); i++) {
+    for (int i = 0; i < dirs.size(); ++i) {
         subpath += dirs[i];
         dir = opendir (subpath.c_str());
         if (!dir)
@@ -225,8 +230,12 @@ void AssetsManager::createDirectory(const std::string& path)
 #else
     if ((GetFileAttributesA(path.c_str())) == INVALID_FILE_ATTRIBUTES)
     {
-        // TODO: create recursively the path on windows
-        CreateDirectoryA(path.c_str(), 0);
+		subpath = "";
+		for(int i = 0 ; i < dirs.size() ; ++i)
+		{
+			subpath += dirs[i];
+			CreateDirectoryA(subpath.c_str(), NULL);
+		}
     }
 #endif
 }
@@ -249,7 +258,7 @@ void AssetsManager::removeDirectory(const std::string& path)
     std::string command = "rd /s /q ";
     // Path may include space.
     command += "\"" + path + "\"";
-    system(command.c_str());
+	WinExec(command.c_str(), SW_HIDE);
 #endif
 }
 
@@ -257,7 +266,7 @@ void AssetsManager::removeFile(const std::string &path)
 {
     // Remove downloaded file
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
-    std::string command = "rm ";
+    std::string command = "rm -f ";
     // Path may include space.
     command += "\"" + path + "\"";
     system(command.c_str());
@@ -265,7 +274,7 @@ void AssetsManager::removeFile(const std::string &path)
     std::string command = "del /q ";
     // Path may include space.
     command += "\"" + path + "\"";
-    system(command.c_str());
+	WinExec(command.c_str(), SW_HIDE);
 #endif
 }
 
@@ -283,7 +292,7 @@ void AssetsManager::renameFile(const std::string &path, const std::string &oldna
     std::string command = "ren ";
     // Path may include space.
     command += "\"" + path + oldname + "\" \"" + name + "\"";
-    system(command.c_str());
+	WinExec(command.c_str(), SW_HIDE);
 #endif
 }
 
@@ -309,7 +318,7 @@ void AssetsManager::downloadVersion()
     {
         _updateState = State::DOWNLOADING_VERSION;
         // Download version file asynchronously
-        _downloader->downloadAsync(versionUrl, _storagePath + VERSION_FILENAME, VERSION_ID);
+        _downloader->downloadAsync(versionUrl, _cacheVersionPath, VERSION_ID);
     }
     // No version file found
     else
@@ -325,7 +334,7 @@ void AssetsManager::parseVersion()
     if (_updateState != State::VERSION_LOADED)
         return;
 
-    _remoteManifest->parse(_storagePath + VERSION_FILENAME);
+    _remoteManifest->parse(_cacheVersionPath);
 
     if (!_remoteManifest->isVersionLoaded())
     {
@@ -365,7 +374,7 @@ void AssetsManager::downloadManifest()
     {
         _updateState = State::DOWNLOADING_MANIFEST;
         // Download version file asynchronously
-        _downloader->downloadAsync(manifestUrl, _storagePath + TEMP_MANIFEST_FILENAME, MANIFEST_ID);
+        _downloader->downloadAsync(manifestUrl, _tempManifestPath, MANIFEST_ID);
     }
     // No manifest file found
     else
@@ -381,21 +390,21 @@ void AssetsManager::parseManifest()
     if (_updateState != State::MANIFEST_LOADED)
         return;
 
-    _remoteManifest->parse(_storagePath + TEMP_MANIFEST_FILENAME);
+    _remoteManifest->parse(_tempManifestPath);
 
     if (!_remoteManifest->isLoaded())
     {
         CCLOG("Error parsing manifest file\n");
         dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_PARSE_MANIFEST);
         _updateState = State::UNCHECKED;
-        removeFile(_storagePath + TEMP_MANIFEST_FILENAME);
+        removeFile(_tempManifestPath);
     }
     else
     {
         if (_localManifest->versionEquals(_remoteManifest))
         {
             _updateState = State::UP_TO_DATE;
-            removeFile(_storagePath + TEMP_MANIFEST_FILENAME);
+            removeFile(_tempManifestPath);
             dispatchUpdateEvent(EventAssetsManager::EventCode::ALREADY_UP_TO_DATE);
         }
         else
@@ -434,7 +443,7 @@ void AssetsManager::startUpdate()
             _downloadUnits.clear();
             _totalWaitToDownload = _totalToDownload = 0;
             std::string packageUrl = _remoteManifest->getPackageUrl();
-            for (auto it = diff_map.begin(); it != diff_map.end(); it++) {
+            for (auto it = diff_map.begin(); it != diff_map.end(); ++it) {
                 Manifest::AssetDiff diff = it->second;
 
                 if (diff.type == Manifest::DiffType::DELETED) {
@@ -650,8 +659,8 @@ void AssetsManager::onSuccess(const std::string &srcUrl, const std::string &cust
 
 void AssetsManager::destroyDownloadedVersion()
 {
-    removeFile(_storagePath + VERSION_FILENAME);
-    removeFile(_storagePath + MANIFEST_FILENAME);
+    removeFile(_cacheVersionPath);
+    removeFile(_cacheManifestPath);
 }
 
 NS_CC_EXT_END

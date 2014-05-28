@@ -125,7 +125,7 @@ bool Manifest::versionEquals(const Manifest *b) const
             return false;
         
         // Check groups version
-        for (int i = 0; i < _groups.size(); i++) {
+        for (int i = 0; i < _groups.size(); ++i) {
             std::string gid =_groups[i];
             // Check group name
             if (gid != bGroups[i])
@@ -147,7 +147,7 @@ std::unordered_map<std::string, Manifest::AssetDiff> Manifest::genDiff(const Man
     Asset valueA;
     Asset valueB;
     std::unordered_map<std::string, Asset>::const_iterator valueIt, it;
-    for (it = _assets.begin(); it != _assets.end(); it++)
+    for (it = _assets.begin(); it != _assets.end(); ++it)
     {
         key = it->first;
         valueA = it->second;
@@ -172,7 +172,7 @@ std::unordered_map<std::string, Manifest::AssetDiff> Manifest::genDiff(const Man
         }
     }
     
-    for (it = bAssets.begin(); it != bAssets.end(); it++)
+    for (it = bAssets.begin(); it != bAssets.end(); ++it)
     {
         key = it->first;
         valueB = it->second;
@@ -385,7 +385,7 @@ void Manifest::loadManifest(const rapidjson::Document &json)
         const rapidjson::Value& paths = json[KEY_SEARCH_PATHS];
         if (paths.IsArray())
         {
-            for (rapidjson::SizeType i = 0; i < paths.Size(); i++)
+            for (rapidjson::SizeType i = 0; i < paths.Size(); ++i)
             {
                 if (paths[i].IsString()) {
                     _searchPaths.push_back(paths[i].GetString());
