@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UILayoutExecutant.h"
+#include "UILayoutManager.h"
 #include "UILayout.h"
 
 NS_CC_BEGIN

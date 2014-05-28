@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCCustomCommand.h"
-#include "ui/UILayoutExecutant.h"
+#include "ui/UILayoutManager.h"
 
 NS_CC_BEGIN
 

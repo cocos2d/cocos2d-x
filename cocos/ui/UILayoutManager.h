@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __cocos2d_libs__CCLayoutExecutant__
-#define __cocos2d_libs__CCLayoutExecutant__
+#ifndef __cocos2d_libs__CCLayoutManager__
+#define __cocos2d_libs__CCLayoutManager__
 
 #include "base/CCRef.h"
 #include "base/CCVector.h"
@@ -83,7 +83,6 @@ private:
     static RelativeLayoutManager* create();
     virtual void doLayout(LayoutProtocol *layout) override;
     
-protected:
     Vector<Widget*> getAllWidgets(LayoutProtocol *layout);
     Widget* getRelativeWidget(Widget* widget);
     bool caculateFinalPositionWithRelativeWidget(LayoutProtocol *layout);
@@ -103,4 +102,4 @@ protected:
 }
 
 NS_CC_END
-#endif /* defined(__cocos2d_libs__CCLayoutExecutant__) */
+#endif /* defined(__cocos2d_libs__CCLayoutManager__) */
