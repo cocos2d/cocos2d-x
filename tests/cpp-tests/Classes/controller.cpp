@@ -69,7 +69,6 @@ Controller g_aTestNames[] = {
 	{ "Fonts", []() { return new FontTestScene(); } },
 	{ "Interval", [](){return new IntervalTestScene(); } },
 	{ "Keyboard", []() { return new KeyboardTestScene(); } },
-	{ "Keypad", []() { return new KeypadTestScene(); } },
 	{ "Node: Clipping", []() { return new ClippingNodeTestScene(); } },
 	{ "Node: Draw", [](){return new DrawPrimitivesTestScene();} },
     { "Node: Label - New API", [](){return new AtlasTestSceneNew(); } },

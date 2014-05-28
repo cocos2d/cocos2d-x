@@ -443,8 +443,6 @@
 		1AC35C0A18CECF0C00F37B72 /* IntervalTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A9918CECF0B00F37B72 /* IntervalTest.cpp */; };
 		1AC35C0B18CECF0C00F37B72 /* KeyboardTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A9C18CECF0B00F37B72 /* KeyboardTest.cpp */; };
 		1AC35C0C18CECF0C00F37B72 /* KeyboardTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A9C18CECF0B00F37B72 /* KeyboardTest.cpp */; };
-		1AC35C0D18CECF0C00F37B72 /* KeypadTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A9F18CECF0B00F37B72 /* KeypadTest.cpp */; };
-		1AC35C0E18CECF0C00F37B72 /* KeypadTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A9F18CECF0B00F37B72 /* KeypadTest.cpp */; };
 		1AC35C0F18CECF0C00F37B72 /* LabelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AA218CECF0C00F37B72 /* LabelTest.cpp */; };
 		1AC35C1018CECF0C00F37B72 /* LabelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AA218CECF0C00F37B72 /* LabelTest.cpp */; };
 		1AC35C1118CECF0C00F37B72 /* LabelTestNew.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AA418CECF0C00F37B72 /* LabelTestNew.cpp */; };
@@ -1547,8 +1545,6 @@
 		1AC35A9A18CECF0B00F37B72 /* IntervalTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntervalTest.h; sourceTree = "<group>"; };
 		1AC35A9C18CECF0B00F37B72 /* KeyboardTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KeyboardTest.cpp; sourceTree = "<group>"; };
 		1AC35A9D18CECF0B00F37B72 /* KeyboardTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardTest.h; sourceTree = "<group>"; };
-		1AC35A9F18CECF0B00F37B72 /* KeypadTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KeypadTest.cpp; sourceTree = "<group>"; };
-		1AC35AA018CECF0B00F37B72 /* KeypadTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeypadTest.h; sourceTree = "<group>"; };
 		1AC35AA218CECF0C00F37B72 /* LabelTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = LabelTest.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		1AC35AA318CECF0C00F37B72 /* LabelTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelTest.h; sourceTree = "<group>"; };
 		1AC35AA418CECF0C00F37B72 /* LabelTestNew.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LabelTestNew.cpp; sourceTree = "<group>"; };
@@ -2245,7 +2241,6 @@
 				1AC35A9518CECF0B00F37B72 /* InputTest */,
 				1AC35A9818CECF0B00F37B72 /* IntervalTest */,
 				1AC35A9B18CECF0B00F37B72 /* KeyboardTest */,
-				1AC35A9E18CECF0B00F37B72 /* KeypadTest */,
 				1AC35AA118CECF0B00F37B72 /* LabelTest */,
 				1AC35AA618CECF0C00F37B72 /* LayerTest */,
 				1AC35AA918CECF0C00F37B72 /* MenuTest */,
@@ -2902,15 +2897,6 @@
 				1AC35A9D18CECF0B00F37B72 /* KeyboardTest.h */,
 			);
 			path = KeyboardTest;
-			sourceTree = "<group>";
-		};
-		1AC35A9E18CECF0B00F37B72 /* KeypadTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC35A9F18CECF0B00F37B72 /* KeypadTest.cpp */,
-				1AC35AA018CECF0B00F37B72 /* KeypadTest.h */,
-			);
-			path = KeypadTest;
 			sourceTree = "<group>";
 		};
 		1AC35AA118CECF0B00F37B72 /* LabelTest */ = {
@@ -4652,7 +4638,6 @@
 				1AC35C2718CECF0C00F37B72 /* PerformanceContainerTest.cpp in Sources */,
 				1AC35BEF18CECF0C00F37B72 /* CCControlSwitchTest.cpp in Sources */,
 				29080D91191B595E0066F8DF /* CustomGUIScene.cpp in Sources */,
-				1AC35C0D18CECF0C00F37B72 /* KeypadTest.cpp in Sources */,
 				29080DC1191B595E0066F8DF /* UIRichTextTest.cpp in Sources */,
 				1AC35B2B18CECF0C00F37B72 /* BaseTest.cpp in Sources */,
 				1AC35B7D18CECF0C00F37B72 /* PlayerController.cpp in Sources */,
@@ -4832,7 +4817,6 @@
 				29080D92191B595E0066F8DF /* CustomGUIScene.cpp in Sources */,
 				1AC35C2818CECF0C00F37B72 /* PerformanceContainerTest.cpp in Sources */,
 				1AC35BF018CECF0C00F37B72 /* CCControlSwitchTest.cpp in Sources */,
-				1AC35C0E18CECF0C00F37B72 /* KeypadTest.cpp in Sources */,
 				1AC35B2C18CECF0C00F37B72 /* BaseTest.cpp in Sources */,
 				1AC35B7E18CECF0C00F37B72 /* PlayerController.cpp in Sources */,
 				1AC35C9818CECF1400F37B72 /* main.m in Sources */,
