@@ -439,7 +439,7 @@ void Repeat::update(float dt)
 
             _innerAction->stop();
             _innerAction->startWithTarget(_target);
-            _nextDt += _innerAction->getDuration()/_duration;
+            _nextDt = _innerAction->getDuration()/_duration * (_total+1);
         }
 
         // fix for issue #1288, incorrect end value of repeat

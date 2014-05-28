@@ -1,8 +1,9 @@
 cocos2d-x-3.2  ???
     [NEW]           TextureCache: added unbindImageAsync() and unbindAllImageAsync()
     
-    [FIX]           Image: Set jpeg save quality to 90 
     [FIX]           Application.mk: not output debug message in releae mode on Android
+    [FIX]           Image: Set jpeg save quality to 90 
+    [FIX]           Repeat: will run one more over in rare situations
 
 cocos2d-x-3.1  May.24 2014
     [FIX]           EventKeyboard::KeyCode: key code for back button changed from KEY_BACKSPACE to KEY_ESCAPE
