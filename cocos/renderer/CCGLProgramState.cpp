@@ -287,7 +287,11 @@ GLProgramState::GLProgramState()
 }
 
 GLProgramState::~GLProgramState()
-{    
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundlistener);
+#endif
+    
     CC_SAFE_RELEASE(_glprogram);
 }
 
