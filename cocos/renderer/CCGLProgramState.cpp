@@ -33,6 +33,10 @@ THE SOFTWARE.
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCTexture2D.h"
+#include "base/CCEventCustom.h"
+#include "base/CCEventListenerCustom.h"
+#include "base/CCEventType.h"
+#include "base/CCDirector.h"
 
 NS_CC_BEGIN
 
@@ -272,7 +276,20 @@ GLProgramState::GLProgramState()
 : _vertexAttribsFlags(0)
 , _glprogram(nullptr)
 , _textureUnitIndex(1)
+, _uniformAttributeValueDirty(true)
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    // listen the event when app go to foreground
+    CCLOG("create _backToForegroundlistener for GLProgramState");
+    _backToForegroundlistener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, CC_CALLBACK_1(GLProgramState::setProgramStateDirty, this));
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundlistener, -1);
+#endif
+}
+
+void GLProgramState::setProgramStateDirty(EventCustom *event)
+{
+    CCLOG("GLProgramState to background---------");
+    _uniformAttributeValueDirty = true;
 }
 
 GLProgramState::~GLProgramState()
@@ -312,7 +329,24 @@ void GLProgramState::resetGLProgram()
 void GLProgramState::apply(const Mat4& modelView)
 {
     CCASSERT(_glprogram, "invalid glprogram");
-
+    if(_uniformAttributeValueDirty)
+    {
+        for(auto& uniformValue : _uniforms)
+        {
+            uniformValue.second._uniform = _glprogram->getUniform(uniformValue.first);
+        }
+        
+        _vertexAttribsFlags = 0;
+        for(auto& attributeValue : _attributes)
+        {
+            attributeValue.second._vertexAttrib = _glprogram->getVertexAttrib(attributeValue.first);;
+            if(attributeValue.second._enabled)
+                _vertexAttribsFlags |= 1 << attributeValue.second._vertexAttrib->index;
+        }
+        
+        _uniformAttributeValueDirty = false;
+        
+    }
     // set shader
     _glprogram->use();
     _glprogram->setUniformsForBuiltins(modelView);
@@ -322,9 +356,9 @@ void GLProgramState::apply(const Mat4& modelView)
     if(_vertexAttribsFlags) {
         // enable/disable vertex attribs
         GL::enableVertexAttribs(_vertexAttribsFlags);
-
         // set attributes
-        for(auto &attribute : _attributes) {
+        for(auto &attribute : _attributes)
+        {
             attribute.second.apply();
         }
     }
