@@ -1015,6 +1015,7 @@
     </ClInclude>
     <ClInclude Include="..\Classes\TextureCacheTest\TextureCacheTest.h">
       <Filter>Classes\TextureCacheTest</Filter>
+    </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\ExtensionsTest.h">
       <Filter>Classes\ExtensionsTest</Filter>
     </ClInclude>
