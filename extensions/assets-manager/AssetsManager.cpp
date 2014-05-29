@@ -635,6 +635,7 @@ void AssetsManager::onSuccess(const std::string &srcUrl, const std::string &cust
             {
                 _updateState = State::FAIL_TO_UPDATE;
                 destroyDownloadedVersion();
+                dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_FAILED);
             }
             else
             {
@@ -650,9 +651,9 @@ void AssetsManager::onSuccess(const std::string &srcUrl, const std::string &cust
                 prepareLocalManifest();
                 // 4. Set update state
                 _updateState = State::UP_TO_DATE;
+                // 5. Notify finished event
+                dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_FINISHED);
             }
-            // Notify finished event
-            dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_FINISHED);
         }
     }
 }

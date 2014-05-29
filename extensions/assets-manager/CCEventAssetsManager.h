@@ -50,7 +50,8 @@ public:
         UPDATE_PROGRESSION,
         ASSET_UPDATED,
         ERROR_UPDATING,
-        UPDATE_FINISHED
+        UPDATE_FINISHED,
+        UPDATE_FAILED
 // TODO: For next version
         // UNCOMPRESS_ERROR
     };
