@@ -564,6 +564,18 @@ private:
     int _testInteger;
 };
 
+class Issue2599 : public ActionsDemo
+{
+public:
+    CREATE_FUNC(Issue2599);
+    
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+    virtual std::string title() const override;
+private:
+    int _count;
+};
+
 class ActionCatmullRom : public ActionsDemo
 {
 public:

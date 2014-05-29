@@ -247,7 +247,7 @@ ShuffleTiles* ShuffleTiles::clone() const
 	return a;
 }
 
-ShuffleTiles::~ShuffleTiles(void)
+ShuffleTiles::~ShuffleTiles()
 {
     CC_SAFE_DELETE_ARRAY(_tilesOrder);
     CC_SAFE_DELETE_ARRAY(_tiles);
@@ -255,8 +255,7 @@ ShuffleTiles::~ShuffleTiles(void)
 
 void ShuffleTiles::shuffle(unsigned int *array, unsigned int len)
 {
-    int i;
-    for( i = len - 1; i >= 0; i-- )
+    for (int i = len - 1; i >= 0; i-- )
     {
         unsigned int j = rand() % (i+1);
         unsigned int v = array[i];
@@ -308,14 +307,12 @@ void ShuffleTiles::startWithTarget(Node *target)
 
     _tilesCount = _gridSize.width * _gridSize.height;
     _tilesOrder = new unsigned int[_tilesCount];
-    int i, j;
-    unsigned int k;
 
     /**
      * Use k to loop. Because _tilesCount is unsigned int,
      * and i is used later for int.
      */
-    for (k = 0; k < _tilesCount; ++k)
+    for (unsigned int k = 0; k < _tilesCount; ++k)
     {
         _tilesOrder[k] = k;
     }
@@ -325,9 +322,9 @@ void ShuffleTiles::startWithTarget(Node *target)
     _tiles = (struct Tile *)new Tile[_tilesCount];
     Tile *tileArray = (Tile*) _tiles;
 
-    for (i = 0; i < _gridSize.width; ++i)
+    for (int i = 0; i < _gridSize.width; ++i)
     {
-        for (j = 0; j < _gridSize.height; ++j)
+        for ( int j = 0; j < _gridSize.height; ++j)
         {
             tileArray->position = Vec2((float)i, (float)j);
             tileArray->startPosition = Vec2((float)i, (float)j);
@@ -339,13 +336,11 @@ void ShuffleTiles::startWithTarget(Node *target)
 
 void ShuffleTiles::update(float time)
 {
-    int i, j;
-
     Tile *tileArray = (Tile*)_tiles;
 
-    for (i = 0; i < _gridSize.width; ++i)
+    for (int i = 0; i < _gridSize.width; ++i)
     {
-        for (j = 0; j < _gridSize.height; ++j)
+        for (int j = 0; j < _gridSize.height; ++j)
         {
             tileArray->position = Vec2((float)tileArray->delta.width, (float)tileArray->delta.height) * time;
             placeTile(Vec2(i, j), tileArray);
@@ -429,11 +424,9 @@ void FadeOutTRTiles::transformTile(const Vec2& pos, float distance)
 
 void FadeOutTRTiles::update(float time)
 {
-    int i, j;
-
-    for (i = 0; i < _gridSize.width; ++i)
+    for (int i = 0; i < _gridSize.width; ++i)
     {
-        for (j = 0; j < _gridSize.height; ++j)
+        for (int j = 0; j < _gridSize.height; ++j)
         {
             float distance = testFunc(Size(i, j), time);
             if ( distance == 0 )
@@ -652,8 +645,7 @@ TurnOffTiles::~TurnOffTiles(void)
 
 void TurnOffTiles::shuffle(unsigned int *array, unsigned int len)
 {
-    int i;
-    for (i = len - 1; i >= 0; i--)
+    for (int i = len - 1; i >= 0; i--)
     {
         unsigned int j = rand() % (i+1);
         unsigned int v = array[i];
@@ -677,8 +669,6 @@ void TurnOffTiles::turnOffTile(const Vec2& pos)
 
 void TurnOffTiles::startWithTarget(Node *target)
 {
-    unsigned int i;
-
     TiledGrid3DAction::startWithTarget(target);
 
     if (_seed != (unsigned int)-1)
@@ -689,7 +679,7 @@ void TurnOffTiles::startWithTarget(Node *target)
     _tilesCount = _gridSize.width * _gridSize.height;
     _tilesOrder = new unsigned int[_tilesCount];
 
-    for (i = 0; i < _tilesCount; ++i)
+    for (unsigned int i = 0; i < _tilesCount; ++i)
     {
         _tilesOrder[i] = i;
     }
@@ -699,11 +689,10 @@ void TurnOffTiles::startWithTarget(Node *target)
 
 void TurnOffTiles::update(float time)
 {
-    unsigned int i, l, t;
+    unsigned int l = (unsigned int)(time * (float)_tilesCount);
 
-    l = (unsigned int)(time * (float)_tilesCount);
-
-    for( i = 0; i < _tilesCount; i++ )
+    unsigned int t = 0;
+    for (unsigned int i = 0; i < _tilesCount; i++ )
     {
         t = _tilesOrder[i];
         Vec2 tilePos = Vec2( (unsigned int)(t / _gridSize.height), t % (unsigned int)_gridSize.height );
@@ -765,11 +754,9 @@ WavesTiles3D* WavesTiles3D::clone() const
 
 void WavesTiles3D::update(float time)
 {
-    int i, j;
-
-    for( i = 0; i < _gridSize.width; i++ )
+    for (int i = 0; i < _gridSize.width; i++ )
     {
-        for( j = 0; j < _gridSize.height; j++ )
+        for (int j = 0; j < _gridSize.height; j++ )
         {
             Quad3 coords = getOriginalTile(Vec2(i, j));
 
@@ -830,14 +817,12 @@ JumpTiles3D* JumpTiles3D::clone() const
 
 void JumpTiles3D::update(float time)
 {
-    int i, j;
-
     float sinz =  (sinf((float)M_PI * time * _jumps * 2) * _amplitude * _amplitudeRate );
     float sinz2 = (sinf((float)M_PI * (time * _jumps * 2 + 1)) * _amplitude * _amplitudeRate );
 
-    for( i = 0; i < _gridSize.width; i++ )
+    for (int i = 0; i < _gridSize.width; i++ )
     {
-        for( j = 0; j < _gridSize.height; j++ )
+        for (int j = 0; j < _gridSize.height; j++ )
         {
             Quad3 coords = getOriginalTile(Vec2(i, j));
 
@@ -906,9 +891,7 @@ void SplitRows::startWithTarget(Node *target)
 
 void SplitRows::update(float time)
 {
-    unsigned int j;
-
-    for (j = 0; j < _gridSize.height; ++j)
+    for (unsigned int j = 0; j < _gridSize.height; ++j)
     {
         Quad3 coords = getOriginalTile(Vec2(0, j));
         float    direction = 1;
@@ -971,9 +954,7 @@ void SplitCols::startWithTarget(Node *target)
 
 void SplitCols::update(float time)
 {
-    unsigned int i;
-
-    for (i = 0; i < _gridSize.width; ++i)
+    for (unsigned int i = 0; i < _gridSize.width; ++i)
     {
         Quad3 coords = getOriginalTile(Vec2(i, 0));
         float    direction = 1;

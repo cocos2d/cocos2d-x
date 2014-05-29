@@ -343,7 +343,7 @@ void VideoPlayer::draw(Renderer* renderer, const Mat4 &transform, bool transform
 #endif
 }
 
-bool VideoPlayer::isFullScreenEnabled()
+bool VideoPlayer::isFullScreenEnabled()const
 {
     return [((UIVideoViewWrapperIos*)_videoView) isFullScreenEnabled];
 }

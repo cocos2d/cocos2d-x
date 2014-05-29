@@ -118,6 +118,7 @@ static const char* s_testArray[] =
     "UIFocusTest-NestedLayout1",
     "UIFocusTest-NestedLayout2",
     "UIFocusTest-NestedLayout3",
+    "UIFocusTest-ListView",
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     "UIVideoPlayerTest"
 #endif
@@ -381,6 +382,8 @@ Scene *UISceneManager::currentUIScene()
             return UIFocusTestNestedLayout2::sceneWithTitle(s_testArray[_currentUISceneId]);
         case KUIFocusTest_NestedLayout3:
             return UIFocusTestNestedLayout3::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIFocusTest_ListView:
+            return UIFocusTestListView::sceneWithTitle(s_testArray[_currentUISceneId]);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         case kUIVideoPlayerTest:
             return VideoPlayerTest::sceneWithTitle(s_testArray[_currentUISceneId]);

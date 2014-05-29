@@ -24,7 +24,14 @@ public:
     CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(MenuLoader, loader);
 
 protected:
-    CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(cocos2d::Menu);
+    virtual cocos2d::Menu * createNode(cocos2d::Node * pParent, cocosbuilder::CCBReader * ccbReader)
+    {
+        cocos2d::Menu * pMenu = cocos2d::Menu::create();
+        
+        pMenu->setContentSize(cocos2d::Size::ZERO);
+        
+        return pMenu;
+    }
 };
 
 }
