@@ -31,6 +31,7 @@
 #include <unordered_map>
 #include <memory>
 #include <string>
+#include <curl/curl.h>
 
 NS_CC_EXT_BEGIN
 
@@ -108,11 +109,12 @@ protected:
     struct FileDescriptor
     {
         FILE *fp;
+        CURL *curl;
         std::string path;
         std::string name;
     };
 
-    FileDescriptor prepareDownload(const std::string &srcUrl, const std::string &storagePath, const std::string &customId);
+    void prepareDownload(FileDescriptor *fDesc, const std::string &srcUrl, const std::string &storagePath, const std::string &customId);
 
     void download(const std::string &srcUrl, const FileDescriptor &fDesc, const std::string &customId);
 
@@ -129,6 +131,12 @@ private:
     std::function<void(const std::string &, const std::string &)> _onSuccess;
 
     std::string getFileNameFromUrl(const std::string &srcUrl);
+    
+    void clearDownloadData();
+    
+    std::vector<FileDescriptor *> _files;
+    
+    std::vector<ProgressData *> _progDatas;
 
     void* _threadPool;
 };

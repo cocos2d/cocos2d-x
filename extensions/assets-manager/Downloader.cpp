@@ -25,7 +25,6 @@
 #include "Downloader.h"
 #include "AssetsManager.h"
 
-#include <curl/curl.h>
 #include <curl/easy.h>
 #include <stdio.h>
 
@@ -44,6 +43,8 @@ NS_CC_EXT_BEGIN
 #define MAX_FILENAME        512
 #define LOW_SPEED_LIMIT     1L
 #define LOW_SPEED_TIME      5L
+#define MAX_REDIRS          2
+#define SELECT_TIMEOUT      4
 
 #define TEMP_EXT            ".temp"
 
@@ -137,10 +138,23 @@ std::string Downloader::getFileNameFromUrl(const std::string &srcUrl)
     return filename;
 }
 
-Downloader::FileDescriptor Downloader::prepareDownload(const std::string &srcUrl, const std::string &storagePath, const std::string &customId)
+void Downloader::clearDownloadData()
 {
-    FileDescriptor desc;
-    desc.fp = nullptr;
+    while (_progDatas.size() != 0) {
+        delete _progDatas.back();
+        _progDatas.pop_back();
+    }
+    
+    while (_files.size() != 0) {
+        delete _files.back();
+        _files.pop_back();
+    }
+}
+
+void Downloader::prepareDownload(FileDescriptor *fDesc, const std::string &srcUrl, const std::string &storagePath, const std::string &customId)
+{
+    fDesc->fp = nullptr;
+    fDesc->curl = nullptr;
     
     Error err;
     err.customId = customId;
@@ -150,33 +164,32 @@ Downloader::FileDescriptor Downloader::prepareDownload(const std::string &srcUrl
     unsigned long found = storagePath.find_last_of("/\\");
     if (found != std::string::npos)
     {
-        desc.name = storagePath.substr(found+1);
-        desc.path = storagePath.substr(0, found+1);
+        fDesc->name = storagePath.substr(found+1);
+        fDesc->path = storagePath.substr(0, found+1);
     }
     else
     {
         err.code = ErrorCode::INVALID_URL;
         err.message = "Invalid url or filename not exist error: " + srcUrl;
         if (this->_onError) this->_onError(err);
-        return desc;
+        return;
     }
     
     // Create a file to save package.
     const std::string outFileName = storagePath + TEMP_EXT;
-    desc.fp = fopen(outFileName.c_str(), "wb");
-    if (!desc.fp)
+    fDesc->fp = fopen(outFileName.c_str(), "wb");
+    if (!fDesc->fp)
     {
         err.code = ErrorCode::CREATE_FILE;
         err.message = "Can not create file " + outFileName;
         if (this->_onError) this->_onError(err);
     }
-    
-    return desc;
 }
 
 void Downloader::downloadAsync(const std::string &srcUrl, const std::string &storagePath, const std::string &customId/* = ""*/)
 {
-    FileDescriptor fDesc = prepareDownload(srcUrl, storagePath, customId);
+    FileDescriptor fDesc;
+    prepareDownload(&fDesc, srcUrl, storagePath, customId);
     if (fDesc.fp != nullptr)
     {
 
@@ -191,7 +204,8 @@ void Downloader::downloadAsync(const std::string &srcUrl, const std::string &sto
 
 void Downloader::downloadSync(const std::string &srcUrl, const std::string &storagePath, const std::string &customId/* = ""*/)
 {
-    FileDescriptor fDesc = prepareDownload(srcUrl, storagePath, customId);
+    FileDescriptor fDesc;
+    prepareDownload(&fDesc, srcUrl, storagePath, customId);
     if (fDesc.fp != nullptr)
     {
         download(srcUrl, fDesc, customId);
