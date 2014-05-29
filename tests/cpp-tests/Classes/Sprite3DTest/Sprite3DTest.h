@@ -96,6 +96,9 @@ protected:
     
     Vec3 _outlineColor;
     float _outlineWidth;
+//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    EventListenerCustom* _backToForeGroundLister;
+//#endif
     
 protected:
     static const std::string _vertShaderFile;
