@@ -29,6 +29,6 @@ if(result == STATUS_SUCCESS):
 else:
     data['state'] = "failure"
 
-http_proxy = 'http://127.0.0.1:8087'
+http_proxy = os.environ['HTTP_PROXY']
 proxyDict = {'http':http_proxy,'https':http_proxy}
 requests.post(statuses_url, data=json.dumps(data), headers=Headers, proxies = proxyDict)
