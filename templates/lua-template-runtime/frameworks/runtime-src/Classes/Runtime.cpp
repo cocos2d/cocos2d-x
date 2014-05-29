@@ -143,7 +143,7 @@ public:
         if (shineSprite)
         {
             shineSprite->setPosition(Vec2(902,400));
-            shineSprite->runAction(RepeatForever::create(Sequence::createWithTwoActions(ScaleBy::create(1.0f, 1.08f),ScaleTo::create(1.0f, 1))));
+            shineSprite->runAction(RepeatForever::create(Sequence::createWithTwoActions(FadeIn::create(0.8f),FadeOut::create(1.0f))));
             addChild(shineSprite,9999);
         }
         
