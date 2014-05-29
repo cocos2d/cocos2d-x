@@ -477,6 +477,7 @@ void Scheduler::schedulePerFrame(const ccSchedulerFunc& callback, void *target, 
             }
             else
             {
+            	// unschedule it and add it back later.
                 unscheduleUpdate(target);
             }
         }
