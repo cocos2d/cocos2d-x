@@ -569,7 +569,7 @@ void SpriteEaseBezier::onEnter()
     
     _grossini->runAction( rep);
     _tamara->runAction(bezierEaseTo1);
-    _kathia->runAction(bezierTo2);
+    _kathia->runAction(bezierEaseTo2);
     
 }
 
