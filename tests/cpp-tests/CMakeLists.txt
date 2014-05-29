@@ -14,7 +14,6 @@ else()
 endif()
 
 set(SAMPLE_SRC
-  Classes/AccelerometerTest/AccelerometerTest.cpp
   Classes/ActionManagerTest/ActionManagerTest.cpp
   Classes/ActionsEaseTest/ActionsEaseTest.cpp
   Classes/ActionsProgressTest/ActionsProgressTest.cpp
@@ -125,9 +124,7 @@ set(SAMPLE_SRC
   Classes/NewEventDispatcherTest/NewEventDispatcherTest.cpp
   Classes/FontTest/FontTest.cpp
   Classes/IntervalTest/IntervalTest.cpp
-  Classes/KeyboardTest/KeyboardTest.cpp
   Classes/InputTest/MouseTest.cpp
-  Classes/KeypadTest/KeypadTest.cpp
   Classes/LabelTest/LabelTest.cpp
   Classes/LabelTest/LabelTestNew.cpp
   Classes/LayerTest/LayerTest.cpp
