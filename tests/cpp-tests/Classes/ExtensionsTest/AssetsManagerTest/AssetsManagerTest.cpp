@@ -156,6 +156,14 @@ void AssetsManagerLoaderScene::runThisTest()
                     scene->release();
                 }
                     break;
+                case EventAssetsManager::EventCode::UPDATE_FAILED:
+                {
+                    CCLOG("Update failed. %d", event->getEventCode());
+                    scene = new AssetsManagerTestScene(backgroundPaths[currentId]);
+                    Director::getInstance()->replaceScene(scene);
+                    scene->release();
+                }
+                    break;
                 case EventAssetsManager::EventCode::ERROR_UPDATING:
                 {
                     CCLOG("Asset %s : %s.", event->getAssetId().c_str(), event->getMessage().c_str());
