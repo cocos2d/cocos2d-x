@@ -86,15 +86,6 @@ public:
      */
     const std::string& getVersion() const;
     
-    /** @brief Gets assets.
-     */
-    const std::unordered_map<std::string, Asset>& getAssets() const;
-    
-    /** @brief Gets asset by key.
-     @param key Key of the requested asset
-     */
-    const Asset& getAsset(const std::string &key) const;
-    
 protected:
     
     /** @brief Constructor for Manifest class
@@ -141,6 +132,10 @@ protected:
      @param group   Key of the requested group
      */
     const std::string& getGroupVersion(const std::string &group) const;
+    
+    /** @brief Gets assets.
+     */
+    const std::unordered_map<std::string, Asset>& getAssets() const;
     
 private:
     
