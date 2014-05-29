@@ -202,6 +202,10 @@ target_link_libraries(${APP_NAME}
   cocos2d
   box2d
 )
+# MinGW builds need to link libws2_32 manually
+if (MINGW)
+  target_link_libraries(${APP_NAME} ws2_32)
+endif()
 
 set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
 
