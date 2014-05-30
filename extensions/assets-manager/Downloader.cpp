@@ -44,18 +44,17 @@ NS_CC_EXT_BEGIN
 #define LOW_SPEED_LIMIT     1L
 #define LOW_SPEED_TIME      5L
 #define MAX_REDIRS          2
-#define SELECT_TIMEOUT      4
 
 #define TEMP_EXT            ".temp"
 
-static size_t curlWriteFunc(void *ptr, size_t size, size_t nmemb, void *userdata)
+size_t curlWriteFunc(void *ptr, size_t size, size_t nmemb, void *userdata)
 {
     FILE *fp = (FILE*)userdata;
     size_t written = fwrite(ptr, size, nmemb, fp);
     return written;
 }
 
-static int downloadProgressFunc(Downloader::ProgressData *ptr, double totalToDownload, double nowDownloaded, double totalToUpLoad, double nowUpLoaded)
+int downloadProgressFunc(Downloader::ProgressData *ptr, double totalToDownload, double nowDownloaded, double totalToUpLoad, double nowUpLoaded)
 {
     if (ptr->downloaded != nowDownloaded)
     {
@@ -63,22 +62,43 @@ static int downloadProgressFunc(Downloader::ProgressData *ptr, double totalToDow
         
         Downloader::ProgressData data = *ptr;
         
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
-            std::shared_ptr<Downloader> downloader = data.downloader.lock();
+        if (nowDownloaded == totalToDownload)
+        {
+            AssetsManager::renameFile(data.path, data.name + TEMP_EXT, data.name);
+            data.finished = true;
             
-            if (downloader != nullptr)
-            {
-                auto callback = downloader->getProgressCallback();
-                if (callback)
+            Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
+                std::shared_ptr<Downloader> downloader = data.downloader.lock();
+                
+                if (downloader != nullptr)
                 {
-                    callback(totalToDownload, nowDownloaded, data.url, data.customId);
+                    auto callback = downloader->getSuccessCallback();
+                    if (callback != nullptr)
+                    {
+                        callback(data.url, data.customId);
+                    }
                 }
-            }
-            else
-            {
-                CCLOG("invalid callback.");
-            }
-        });
+            });
+        }
+        else
+        {
+            Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
+                std::shared_ptr<Downloader> downloader = data.downloader.lock();
+                
+                if (downloader != nullptr)
+                {
+                    auto callback = downloader->getProgressCallback();
+                    if (callback != nullptr)
+                    {
+                        callback(totalToDownload, nowDownloaded, data.url, data.customId);
+                    }
+                }
+                else
+                {
+                    CCLOG("invalid callback.");
+                }
+            });
+        }
     }
     
     return 0;
@@ -115,7 +135,7 @@ void Downloader::setConnectionTimeout(int timeout)
         _connectionTimeout = timeout;
 }
 
-void Downloader::notifyError(ErrorCode code, const std::string &msg/* ="" */, const std::string &customId/* ="" */)
+void Downloader::notifyError(ErrorCode code, const std::string &msg/* ="" */, const std::string &customId/* ="" */, const CURLMcode &curl_code/* = CURLM_OK*/)
 {
     std::shared_ptr<Downloader> downloader = shared_from_this();
     Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
@@ -138,7 +158,7 @@ std::string Downloader::getFileNameFromUrl(const std::string &srcUrl)
     return filename;
 }
 
-void Downloader::clearDownloadData()
+void Downloader::clearBatchDownloadData()
 {
     while (_progDatas.size() != 0) {
         delete _progDatas.back();
@@ -151,8 +171,15 @@ void Downloader::clearDownloadData()
     }
 }
 
-void Downloader::prepareDownload(FileDescriptor *fDesc, const std::string &srcUrl, const std::string &storagePath, const std::string &customId)
+void Downloader::prepareDownload(const std::string &srcUrl, const std::string &storagePath, const std::string &customId, FileDescriptor *fDesc, ProgressData *pData)
 {
+    std::shared_ptr<Downloader> downloader = shared_from_this();
+    pData->customId = customId;
+    pData->url = srcUrl;
+    pData->downloader = downloader;
+    pData->downloaded = 0;
+    pData->finished = false;
+    
     fDesc->fp = nullptr;
     fDesc->curl = nullptr;
     
@@ -164,8 +191,8 @@ void Downloader::prepareDownload(FileDescriptor *fDesc, const std::string &srcUr
     unsigned long found = storagePath.find_last_of("/\\");
     if (found != std::string::npos)
     {
-        fDesc->name = storagePath.substr(found+1);
-        fDesc->path = storagePath.substr(0, found+1);
+        pData->name = storagePath.substr(found+1);
+        pData->path = storagePath.substr(0, found+1);
     }
     else
     {
@@ -189,14 +216,15 @@ void Downloader::prepareDownload(FileDescriptor *fDesc, const std::string &srcUr
 void Downloader::downloadAsync(const std::string &srcUrl, const std::string &storagePath, const std::string &customId/* = ""*/)
 {
     FileDescriptor fDesc;
-    prepareDownload(&fDesc, srcUrl, storagePath, customId);
+    ProgressData pData;
+    prepareDownload(srcUrl, storagePath, customId, &fDesc, &pData);
     if (fDesc.fp != nullptr)
     {
 
 #if USE_THREAD_POOL
-        POOL()->schedule(std::bind(&Downloader::download, this, srcUrl, fDesc, customId));
+        POOL()->schedule(std::bind(&Downloader::download, this, srcUrl, customId, fDesc, pData));
 #else
-        auto t = std::thread(&Downloader::download, this, srcUrl, fDesc, customId);
+        auto t = std::thread(&Downloader::download, this, srcUrl, customId, fDesc, pData);
         t.detach();
 #endif
     }
@@ -205,177 +233,16 @@ void Downloader::downloadAsync(const std::string &srcUrl, const std::string &sto
 void Downloader::downloadSync(const std::string &srcUrl, const std::string &storagePath, const std::string &customId/* = ""*/)
 {
     FileDescriptor fDesc;
-    prepareDownload(&fDesc, srcUrl, storagePath, customId);
+    ProgressData pData;
+    prepareDownload(srcUrl, storagePath, customId, &fDesc, &pData);
     if (fDesc.fp != nullptr)
     {
-        download(srcUrl, fDesc, customId);
+        download(srcUrl, customId, fDesc, pData);
     }
 }
 
-void Downloader::batchDownload(const std::unordered_map<std::string, Downloader::DownloadUnit> &units)
+void Downloader::download(const std::string &srcUrl, const std::string &customId, const FileDescriptor &fDesc, const ProgressData &data)
 {
-    struct timeval start_tv;
-    gettimeofday(&start_tv, NULL);
-    long spend_time = 0;
-    
-    CURLM* multi_handle = curl_multi_init();
-    int still_running = 0;
-    
-    for (auto it = units.cbegin(); it != units.cend(); ++it)
-    {
-        DownloadUnit unit = it->second;
-        std::string srcUrl = unit.srcUrl;
-        std::string storagePath = unit.storagePath;
-        std::string customId = unit.customId;
-        
-        FileDescriptor *fDesc = new FileDescriptor();
-        prepareDownload(fDesc, srcUrl, storagePath, customId);
-        _files.push_back(fDesc);
-        
-        if (fDesc->fp != nullptr)
-        {
-            std::shared_ptr<Downloader> downloader = shared_from_this();
-            ProgressData *data = new ProgressData();
-            data->customId = customId;
-            data->url = srcUrl;
-            data->downloader = downloader;
-            data->downloaded = 0;
-            
-            CURL* curl = curl_easy_init();
-            curl_easy_setopt(curl, CURLOPT_URL, srcUrl.c_str());
-            curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curlWriteFunc);
-            curl_easy_setopt(curl, CURLOPT_WRITEDATA, fDesc->fp);
-            curl_easy_setopt(curl, CURLOPT_NOPROGRESS, false);
-            curl_easy_setopt(curl, CURLOPT_PROGRESSFUNCTION, downloadProgressFunc);
-            curl_easy_setopt(curl, CURLOPT_PROGRESSDATA, &data);
-            curl_easy_setopt(curl, CURLOPT_FAILONERROR, true);
-            if (_connectionTimeout) curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, _connectionTimeout);
-            curl_easy_setopt(curl, CURLOPT_NOSIGNAL, 1L);
-            curl_easy_setopt(curl, CURLOPT_LOW_SPEED_LIMIT, LOW_SPEED_LIMIT);
-            curl_easy_setopt(curl, CURLOPT_LOW_SPEED_TIME, LOW_SPEED_TIME);
-            curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, true);
-            curl_easy_setopt(curl, CURLOPT_MAXREDIRS, MAX_REDIRS);
-            fDesc->curl = curl;
-            
-            int ret = curl_multi_add_handle(multi_handle, curl);
-            if (ret != CURLM_OK)
-            {
-                CCLOG("failed to add handle.");
-            }
-        }
-    }
-    
-    // Query multi perform
-    CURLMcode curlm_code = CURLM_CALL_MULTI_PERFORM;
-    while(CURLM_CALL_MULTI_PERFORM == curlm_code) {
-        curlm_code = curl_multi_perform(multi_handle, &still_running);
-    }
-    if (curlm_code != CURLM_OK) {
-        CCLOG("code[%d]msg[%s]", curlm_code, curl_multi_strerror(curlm_code));
-        clearDownloadData();
-        return;
-    }
-    
-    bool failed = false;
-    while (still_running > 0 && !failed)
-    {
-        /* set a suitable timeout to play around with */
-        struct timeval timeout;
-        long curl_timeo = -1;
-        timeout.tv_sec = 1;
-        timeout.tv_usec = 0;
-        
-        curl_multi_timeout(multi_handle, &curl_timeo);
-        if(curl_timeo >= 0) {
-            timeout.tv_sec = curl_timeo / 1000;
-            if(timeout.tv_sec > 1)
-                timeout.tv_sec = 1;
-            else
-                timeout.tv_usec = (curl_timeo % 1000) * 1000;
-        }
-        
-        int rc;
-        fd_set fdread;
-        fd_set fdwrite;
-        fd_set fdexcep;
-        int maxfd = -1;
-        FD_ZERO(&fdread);
-        FD_ZERO(&fdwrite);
-        FD_ZERO(&fdexcep);
-        curl_multi_fdset(multi_handle, &fdread, &fdwrite, &fdexcep, &maxfd);
-        rc = select(maxfd + 1, &fdread, &fdwrite, &fdexcep, &timeout);
-        
-        switch(rc)
-        {
-            case -1:
-                failed = true;
-                break;
-            case 0:
-            default:
-                curl_multi_perform(multi_handle, &still_running);
-                //CCLOG("ret[%d]PERFORM[%d]\n", ret, CURLM_CALL_MULTI_PERFORM);
-                
-                break;
-        }
-        
-        //gettimeofday(&end_tv, NULL);
-        //spend_time = (end_tv.tv_sec-start_tv.tv_sec)*1000 + (end_tv.tv_usec-start_tv.tv_usec)/1000;
-        //if ((spend_time + 1000) >= _connectionTimeout) {
-        //    CCLOG("multi perform timeout, spend_time:%ldms", spend_time);
-        //    break;
-        //}
-    }
-    
-    curl_multi_cleanup(multi_handle);
-    for (auto it = _files.begin(); it != _files.end(); ++it)
-    {
-        curl_easy_cleanup((*it)->curl);
-    }
-    
-    if (failed) {
-        CCLOG("something failed. spend_time:%ldms, [%m]", spend_time);
-        clearDownloadData();
-        return;
-    }
-    
-    clearDownloadData();
-    
-//    for (auto it = units.cbegin(); it != units.cend(); ++it)
-//    {
-//        if (_array[i].len <= 0)
-//        {
-//            CCLOG("failed to get url of post_str[%s]index[%d]len[%d]", post_str[i], i, _array[i].len);
-//            return;
-//        }
-//    }
-    
-    /*
-    for (auto it = units.cbegin(); it != units.cend(); ++it)
-    {
-        DownloadUnit unit = it->second;
-        std::string srcUrl = unit.srcUrl;
-        std::string storagePath = unit.storagePath;
-        std::string customId = unit.customId;
-        
-#if USE_THREAD_POOL
-        POOL()->schedule(std::bind(&Downloader::downloadSync, this, srcUrl, storagePath, customId));
-#else
-        auto t = std::thread(&Downloader::downloadSync, this, srcUrl, storagePath, customId);
-        t.detach();
-#endif
-    }*/
-}
-
-void Downloader::download(const std::string &srcUrl, const FileDescriptor &fDesc, const std::string &customId)
-{
-    std::shared_ptr<Downloader> downloader = shared_from_this();
-
-    ProgressData data;
-    data.customId = customId;
-    data.url = srcUrl;
-    data.downloader = downloader;
-    data.downloaded = 0;
-    
     void *curl = curl_easy_init();
     if (!curl)
     {
@@ -400,20 +267,151 @@ void Downloader::download(const std::string &srcUrl, const FileDescriptor &fDesc
     res = curl_easy_perform(curl);
     if (res != CURLE_OK)
     {
-        AssetsManager::removeFile(fDesc.path + fDesc.name + TEMP_EXT);
-        this->notifyError(ErrorCode::NETWORK, "Error when download file", customId);
+        AssetsManager::removeFile(data.path + data.name + TEMP_EXT);
+        this->notifyError(ErrorCode::NETWORK, "Fail to download file", customId);
     }
-    else
-    {
-        AssetsManager::renameFile(fDesc.path, fDesc.name + TEMP_EXT, fDesc.name);
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread([srcUrl, customId, downloader]{
-            if (downloader != nullptr && downloader->_onSuccess != nullptr)
-                downloader->_onSuccess(srcUrl, customId);
-        });
-    }
+    
     fclose(fDesc.fp);
     curl_easy_cleanup(curl);
     
+}
+
+void Downloader::batchDownloadAsync(const std::unordered_map<std::string, Downloader::DownloadUnit> &units)
+{
+    auto t = std::thread(&Downloader::batchDownloadSync, this, units);
+    t.detach();
+}
+
+void Downloader::batchDownloadSync(const std::unordered_map<std::string, Downloader::DownloadUnit> &units)
+{
+    CURLM* multi_handle = curl_multi_init();
+    int still_running = 0;
+    
+    for (auto it = units.cbegin(); it != units.cend(); ++it)
+    {
+        DownloadUnit unit = it->second;
+        std::string srcUrl = unit.srcUrl;
+        std::string storagePath = unit.storagePath;
+        std::string customId = unit.customId;
+        
+        FileDescriptor *fDesc = new FileDescriptor();
+        ProgressData *data = new ProgressData();
+        prepareDownload(srcUrl, storagePath, customId, fDesc, data);
+        
+        if (fDesc->fp != nullptr)
+        {
+            CURL* curl = curl_easy_init();
+            curl_easy_setopt(curl, CURLOPT_URL, srcUrl.c_str());
+            curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curlWriteFunc);
+            curl_easy_setopt(curl, CURLOPT_WRITEDATA, fDesc->fp);
+            curl_easy_setopt(curl, CURLOPT_NOPROGRESS, false);
+            curl_easy_setopt(curl, CURLOPT_PROGRESSFUNCTION, downloadProgressFunc);
+            curl_easy_setopt(curl, CURLOPT_PROGRESSDATA, data);
+            curl_easy_setopt(curl, CURLOPT_FAILONERROR, true);
+            if (_connectionTimeout) curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, _connectionTimeout);
+            curl_easy_setopt(curl, CURLOPT_NOSIGNAL, 1L);
+            curl_easy_setopt(curl, CURLOPT_LOW_SPEED_LIMIT, LOW_SPEED_LIMIT);
+            curl_easy_setopt(curl, CURLOPT_LOW_SPEED_TIME, LOW_SPEED_TIME);
+            curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, true);
+            curl_easy_setopt(curl, CURLOPT_MAXREDIRS, MAX_REDIRS);
+            fDesc->curl = curl;
+            
+            int ret = curl_multi_add_handle(multi_handle, curl);
+            if (ret != CURLM_OK)
+            {
+                // Avoid memory leak
+                delete data;
+                delete fDesc;
+                this->notifyError(ErrorCode::CURL_UNINIT, "Unable to add curl handler for " + customId, customId);
+            }
+            else
+            {
+                // Add to list for tracking
+                _progDatas.push_back(data);
+                _files.push_back(fDesc);
+            }
+        }
+    }
+    
+    // Query multi perform
+    CURLMcode curlm_code = CURLM_CALL_MULTI_PERFORM;
+    while(CURLM_CALL_MULTI_PERFORM == curlm_code) {
+        curlm_code = curl_multi_perform(multi_handle, &still_running);
+    }
+    if (curlm_code != CURLM_OK) {
+        std::string msg = StringUtils::format("Unable to continue the download process: %s", curl_multi_strerror(curlm_code));
+        this->notifyError(ErrorCode::NETWORK, msg, "", curlm_code);
+    }
+    else
+    {
+        bool failed = false;
+        while (still_running > 0 && !failed)
+        {
+            /* set a suitable timeout to play around with */
+            struct timeval select_tv;
+            long curl_timeo = -1;
+            select_tv.tv_sec = 1;
+            select_tv.tv_usec = 0;
+            
+            curl_multi_timeout(multi_handle, &curl_timeo);
+            if(curl_timeo >= 0) {
+                select_tv.tv_sec = curl_timeo / 1000;
+                if(select_tv.tv_sec > 1)
+                    select_tv.tv_sec = 1;
+                else
+                    select_tv.tv_usec = (curl_timeo % 1000) * 1000;
+            }
+            
+            int rc;
+            fd_set fdread;
+            fd_set fdwrite;
+            fd_set fdexcep;
+            int maxfd = -1;
+            FD_ZERO(&fdread);
+            FD_ZERO(&fdwrite);
+            FD_ZERO(&fdexcep);
+            curl_multi_fdset(multi_handle, &fdread, &fdwrite, &fdexcep, &maxfd);
+            rc = select(maxfd + 1, &fdread, &fdwrite, &fdexcep, &select_tv);
+            
+            switch(rc)
+            {
+                case -1:
+                    failed = true;
+                    break;
+                case 0:
+                default:
+                    curlm_code = CURLM_CALL_MULTI_PERFORM;
+                    while(CURLM_CALL_MULTI_PERFORM == curlm_code) {
+                        curlm_code = curl_multi_perform(multi_handle, &still_running);
+                    }
+                    if (curlm_code != CURLM_OK) {
+                        std::string msg = StringUtils::format("Unable to continue the download process: %s", curl_multi_strerror(curlm_code));
+                        this->notifyError(ErrorCode::NETWORK, msg, "", curlm_code);
+                    }
+                    break;
+            }
+        }
+    }
+    
+    // Clean up and close files
+    curl_multi_cleanup(multi_handle);
+    for (auto it = _files.begin(); it != _files.end(); ++it)
+    {
+        fclose((*it)->fp);
+        curl_easy_cleanup((*it)->curl);
+    }
+    
+    // Check unfinished files and notify errors
+    for (auto it = _progDatas.begin(); it != _progDatas.end(); ++it) {
+        ProgressData *data = *it;
+        if (!data->finished)
+        {
+            AssetsManager::removeFile(data->path + data->name + TEMP_EXT);
+            this->notifyError(ErrorCode::NETWORK, "Fail to download file", data->customId);
+        }
+    }
+    
+    clearBatchDownloadData();
 }
 
 NS_CC_EXT_END

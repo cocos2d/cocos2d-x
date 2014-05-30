@@ -61,6 +61,7 @@ public:
     struct Error
     {
         ErrorCode code;
+        CURLMcode curl_code;
         std::string message;
         std::string customId;
         std::string url;
@@ -71,7 +72,10 @@ public:
         std::weak_ptr<Downloader> downloader;
         std::string customId;
         std::string url;
+        std::string path;
+        std::string name;
         double downloaded;
+        bool finished;
     };
 
     struct DownloadUnit
@@ -94,8 +98,10 @@ public:
     void downloadAsync(const std::string &srcUrl, const std::string &storagePath, const std::string &customId = "");
 
     void downloadSync(const std::string &srcUrl, const std::string &storagePath, const std::string &customId = "");
-
-    void batchDownload(const std::unordered_map<std::string, DownloadUnit> &units);
+    
+    void batchDownloadAsync(const std::unordered_map<std::string, DownloadUnit> &units);
+    
+    void batchDownloadSync(const std::unordered_map<std::string, DownloadUnit> &units);
 
     /**
      *  The default constructor.
@@ -110,15 +116,13 @@ protected:
     {
         FILE *fp;
         CURL *curl;
-        std::string path;
-        std::string name;
     };
 
-    void prepareDownload(FileDescriptor *fDesc, const std::string &srcUrl, const std::string &storagePath, const std::string &customId);
+    void prepareDownload(const std::string &srcUrl, const std::string &storagePath, const std::string &customId, FileDescriptor *fDesc, ProgressData *pData);
 
-    void download(const std::string &srcUrl, const FileDescriptor &fDesc, const std::string &customId);
+    void download(const std::string &srcUrl, const std::string &customId, const FileDescriptor &fDesc, const ProgressData &data);
 
-    void notifyError(ErrorCode code, const std::string &msg = "", const std::string &customId = "");
+    void notifyError(ErrorCode code, const std::string &msg = "", const std::string &customId = "", const CURLMcode &curl_code = CURLM_OK);
 
 private:
 
@@ -132,7 +136,7 @@ private:
 
     std::string getFileNameFromUrl(const std::string &srcUrl);
     
-    void clearDownloadData();
+    void clearBatchDownloadData();
     
     std::vector<FileDescriptor *> _files;
     
@@ -140,6 +144,8 @@ private:
 
     void* _threadPool;
 };
+
+int downloadProgressFunc(Downloader::ProgressData *ptr, double totalToDownload, double nowDownloaded, double totalToUpLoad, double nowUpLoaded);
 
 NS_CC_EXT_END
 

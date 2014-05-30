@@ -463,8 +463,7 @@ void AssetsManager::startUpdate()
                 }
             }
             _totalWaitToDownload = _totalToDownload = (int)_downloadUnits.size();
-            auto t = std::thread(&Downloader::batchDownload, _downloader, _downloadUnits);
-            t.detach();
+            _downloader->batchDownloadAsync(_downloadUnits);
         }
     }
 
