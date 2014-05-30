@@ -477,7 +477,7 @@ void Scheduler::schedulePerFrame(const ccSchedulerFunc& callback, void *target, 
             }
             else
             {
-            	// unschedule it and will be added again outside if (hashElement).
+            	// will be added again outside if (hashElement).
                 unscheduleUpdate(target);
             }
         }
