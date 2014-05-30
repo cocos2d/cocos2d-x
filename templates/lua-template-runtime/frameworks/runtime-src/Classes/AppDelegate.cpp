@@ -2,7 +2,7 @@
 #include "CCLuaEngine.h"
 #include "SimpleAudioEngine.h"
 #include "cocos2d.h"
-#include "Runtime.h"
+#include "runtime/Runtime.h"
 #include "ConfigParser.h"
 
 using namespace CocosDenshion;
