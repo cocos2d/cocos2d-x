@@ -66,6 +66,7 @@ public:
     
     const static std::string VERSION_ID;
     const static std::string MANIFEST_ID;
+    const static std::string BATCH_UPDATE_ID;
     
     /** @brief Create function for creating a new AssetsManager
      @param manifestUrl   The url for the local manifest file

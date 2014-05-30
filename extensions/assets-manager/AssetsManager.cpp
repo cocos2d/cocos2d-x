@@ -463,7 +463,7 @@ void AssetsManager::startUpdate()
                 }
             }
             _totalWaitToDownload = _totalToDownload = (int)_downloadUnits.size();
-            _downloader->batchDownloadAsync(_downloadUnits);
+            _downloader->batchDownloadAsync(_downloadUnits, BATCH_UPDATE_ID);
         }
     }
 
@@ -608,6 +608,33 @@ void AssetsManager::onSuccess(const std::string &srcUrl, const std::string &cust
         _updateState = State::MANIFEST_LOADED;
         parseManifest();
     }
+    else if (customId == BATCH_UPDATE_ID)
+    {
+        // Finished with error check
+        if (_downloadUnits.size() > 0)
+        {
+            _updateState = State::FAIL_TO_UPDATE;
+            destroyDownloadedVersion();
+            dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_FAILED);
+        }
+        else
+        {
+            // Every thing is correctly downloaded, do the following
+            // 1. rename temporary manifest to valid manifest
+            renameFile(_storagePath, TEMP_MANIFEST_FILENAME, MANIFEST_FILENAME);
+            // 2. swap the localManifest
+            if (_localManifest != nullptr)
+                _localManifest->release();
+            _localManifest = _remoteManifest;
+            _remoteManifest = nullptr;
+            // 3. make local manifest take effect
+            prepareLocalManifest();
+            // 4. Set update state
+            _updateState = State::UP_TO_DATE;
+            // 5. Notify finished event
+            dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_FINISHED);
+        }
+    }
     else
     {
         _totalWaitToDownload--;
@@ -625,34 +652,6 @@ void AssetsManager::onSuccess(const std::string &srcUrl, const std::string &cust
                 _percent = 100 * (_totalToDownload - _downloadUnits.size()) / _totalToDownload;
                 // Notify progression event
                 dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_PROGRESSION, customId);
-            }
-        }
-        // Finish check
-        if (_totalWaitToDownload == 0)
-        {
-            // Finished with error check
-            if (_downloadUnits.size() > 0)
-            {
-                _updateState = State::FAIL_TO_UPDATE;
-                destroyDownloadedVersion();
-                dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_FAILED);
-            }
-            else
-            {
-                // Every thing is correctly downloaded, do the following
-                // 1. rename temporary manifest to valid manifest
-                renameFile(_storagePath, TEMP_MANIFEST_FILENAME, MANIFEST_FILENAME);
-                // 2. swap the localManifest
-                if (_localManifest != nullptr)
-                    _localManifest->release();
-                _localManifest = _remoteManifest;
-                _remoteManifest = nullptr;
-                // 3. make local manifest take effect
-                prepareLocalManifest();
-                // 4. Set update state
-                _updateState = State::UP_TO_DATE;
-                // 5. Notify finished event
-                dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_FINISHED);
             }
         }
     }

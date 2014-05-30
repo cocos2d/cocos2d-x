@@ -139,14 +139,16 @@ void Downloader::notifyError(ErrorCode code, const std::string &msg/* ="" */, co
 {
     std::shared_ptr<Downloader> downloader = shared_from_this();
     Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
-        Error err;
-        err.code = code;
-        err.curle_code = curle_code;
-        err.curlm_code = curlm_code;
-        err.message = msg;
-        err.customId = customId;
         if (downloader != nullptr && downloader->_onError != nullptr)
+        {
+            Error err;
+            err.code = code;
+            err.curle_code = curle_code;
+            err.curlm_code = curlm_code;
+            err.message = msg;
+            err.customId = customId;
             downloader->_onError(err);
+        }
     });
 }
 
@@ -288,13 +290,13 @@ void Downloader::download(const std::string &srcUrl, const std::string &customId
     
 }
 
-void Downloader::batchDownloadAsync(const std::unordered_map<std::string, Downloader::DownloadUnit> &units)
+void Downloader::batchDownloadAsync(const std::unordered_map<std::string, Downloader::DownloadUnit> &units, const std::string &batchId/* = ""*/)
 {
-    auto t = std::thread(&Downloader::batchDownloadSync, this, units);
+    auto t = std::thread(&Downloader::batchDownloadSync, this, units, batchId);
     t.detach();
 }
 
-void Downloader::batchDownloadSync(const std::unordered_map<std::string, Downloader::DownloadUnit> &units)
+void Downloader::batchDownloadSync(const std::unordered_map<std::string, Downloader::DownloadUnit> &units, const std::string &batchId/* = ""*/)
 {
     CURLM* multi_handle = curl_multi_init();
     int still_running = 0;
@@ -423,6 +425,17 @@ void Downloader::batchDownloadSync(const std::unordered_map<std::string, Downloa
             this->notifyError(ErrorCode::NETWORK, "Unable to download file", data->customId);
         }
     }
+    
+    std::shared_ptr<Downloader> downloader = shared_from_this();
+    Director::getInstance()->getScheduler()->performFunctionInCocosThread([downloader, batchId]{
+        if (downloader != nullptr) {
+            auto callback = downloader->getSuccessCallback();
+            if (callback != nullptr)
+            {
+                callback("", batchId);
+            }
+        }
+    });
     
     clearBatchDownloadData();
 }

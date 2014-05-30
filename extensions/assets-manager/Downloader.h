@@ -104,9 +104,9 @@ public:
 
     void downloadSync(const std::string &srcUrl, const std::string &storagePath, const std::string &customId = "");
     
-    void batchDownloadAsync(const std::unordered_map<std::string, DownloadUnit> &units);
+    void batchDownloadAsync(const std::unordered_map<std::string, DownloadUnit> &units, const std::string &batchId = "");
     
-    void batchDownloadSync(const std::unordered_map<std::string, DownloadUnit> &units);
+    void batchDownloadSync(const std::unordered_map<std::string, DownloadUnit> &units, const std::string &batchId = "");
 
     /**
      *  The default constructor.
