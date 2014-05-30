@@ -51,6 +51,10 @@ public:
         UNCOMPRESS,
 
         CURL_UNINIT,
+        
+        CURL_MULTI_ERROR,
+        
+        CURL_EASY_ERROR,
 
         INVALID_URL,
 
@@ -60,6 +64,8 @@ public:
     struct Error
     {
         ErrorCode code;
+        int curlm_code;
+        int curle_code;
         std::string message;
         std::string customId;
         std::string url;
@@ -70,7 +76,10 @@ public:
         std::weak_ptr<Downloader> downloader;
         std::string customId;
         std::string url;
+        std::string path;
+        std::string name;
         double downloaded;
+        double totalToDownload;
     };
 
     struct DownloadUnit
@@ -93,8 +102,10 @@ public:
     void downloadAsync(const std::string &srcUrl, const std::string &storagePath, const std::string &customId = "");
 
     void downloadSync(const std::string &srcUrl, const std::string &storagePath, const std::string &customId = "");
-
-    void batchDownload(const std::unordered_map<std::string, DownloadUnit> &units);
+    
+    void batchDownloadAsync(const std::unordered_map<std::string, DownloadUnit> &units, const std::string &batchId = "");
+    
+    void batchDownloadSync(const std::unordered_map<std::string, DownloadUnit> &units, const std::string &batchId = "");
 
     /**
      *  The default constructor.
@@ -108,15 +119,18 @@ protected:
     struct FileDescriptor
     {
         FILE *fp;
-        std::string path;
-        std::string name;
+        void *curl;
     };
 
-    FileDescriptor prepareDownload(const std::string &srcUrl, const std::string &storagePath, const std::string &customId);
+    void prepareDownload(const std::string &srcUrl, const std::string &storagePath, const std::string &customId, FileDescriptor *fDesc, ProgressData *pData);
 
-    void download(const std::string &srcUrl, const FileDescriptor &fDesc, const std::string &customId);
+    void download(const std::string &srcUrl, const std::string &customId, const FileDescriptor &fDesc, const ProgressData &data);
 
-    void notifyError(ErrorCode code, const std::string &msg = "", const std::string &customId = "");
+    void notifyError(ErrorCode code, const std::string &msg = "", const std::string &customId = "", int curle_code = 0, int curlm_code = 0);
+    
+    void notifyError(const std::string &msg, int curlm_code, const std::string &customId = "");
+    
+    void notifyError(const std::string &msg, const std::string &customId, int curle_code);
 
 private:
 
@@ -129,9 +143,17 @@ private:
     std::function<void(const std::string &, const std::string &)> _onSuccess;
 
     std::string getFileNameFromUrl(const std::string &srcUrl);
+    
+    void clearBatchDownloadData();
+    
+    std::vector<FileDescriptor *> _files;
+    
+    std::vector<ProgressData *> _progDatas;
 
     void* _threadPool;
 };
+
+int downloadProgressFunc(Downloader::ProgressData *ptr, double totalToDownload, double nowDownloaded, double totalToUpLoad, double nowUpLoaded);
 
 NS_CC_EXT_END
 

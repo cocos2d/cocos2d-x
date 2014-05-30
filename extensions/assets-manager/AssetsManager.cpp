@@ -48,6 +48,7 @@ NS_CC_EXT_BEGIN
 
 const std::string AssetsManager::VERSION_ID = "@version";
 const std::string AssetsManager::MANIFEST_ID = "@manifest";
+const std::string AssetsManager::BATCH_UPDATE_ID = "@batch_update";
 
 // Implementation of AssetsManager
 
@@ -244,7 +245,7 @@ void AssetsManager::removeDirectory(const std::string& path)
 {
     if (path.size() > 0 && path[path.size() - 1] != '/')
     {
-        CCLOG("Invalid path.");
+        CCLOGERROR("Fail to remove directory, invalid path: %s", path.c_str());
         return;
     }
 
@@ -286,7 +287,7 @@ void AssetsManager::renameFile(const std::string &path, const std::string &oldna
     std::string newPath = path + name;
     if (rename(oldPath.c_str(), newPath.c_str()) != 0)
     {
-        CCLOGERROR("Error: Rename file %s to %s !", oldPath.c_str(), newPath.c_str());
+        CCLOGERROR("Fail to rename file %s to %s !", oldPath.c_str(), newPath.c_str());
     }
 #else
     std::string command = "ren ";
@@ -296,9 +297,9 @@ void AssetsManager::renameFile(const std::string &path, const std::string &oldna
 #endif
 }
 
-void AssetsManager::dispatchUpdateEvent(EventAssetsManager::EventCode code, std::string assetId/* = ""*/, std::string message/* = ""*/)
+void AssetsManager::dispatchUpdateEvent(EventAssetsManager::EventCode code, std::string assetId/* = ""*/, std::string message/* = ""*/, int curle_code/* = CURLE_OK*/, int curlm_code/* = CURLM_OK*/)
 {
-    EventAssetsManager event(_eventName, this, code, _percent, assetId, message);
+    EventAssetsManager event(_eventName, this, code, _percent, assetId, message, curle_code, curlm_code);
     _eventDispatcher->dispatchEvent(&event);
 }
 
@@ -323,7 +324,7 @@ void AssetsManager::downloadVersion()
     // No version file found
     else
     {
-        CCLOG("No version file found, step skipped\n");
+        CCLOG("AssetsManager : No version file found, step skipped\n");
         _updateState = State::PREDOWNLOAD_MANIFEST;
         downloadManifest();
     }
@@ -338,7 +339,7 @@ void AssetsManager::parseVersion()
 
     if (!_remoteManifest->isVersionLoaded())
     {
-        CCLOG("Error parsing version file, step skipped\n");
+        CCLOG("AssetsManager : Fail to parse version file, step skipped\n");
         _updateState = State::PREDOWNLOAD_MANIFEST;
         downloadManifest();
     }
@@ -379,7 +380,7 @@ void AssetsManager::downloadManifest()
     // No manifest file found
     else
     {
-        CCLOG("No manifest file found, check update failed\n");
+        CCLOG("AssetsManager : No manifest file found, check update failed\n");
         dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_DOWNLOAD_MANIFEST);
         _updateState = State::UNCHECKED;
     }
@@ -394,7 +395,7 @@ void AssetsManager::parseManifest()
 
     if (!_remoteManifest->isLoaded())
     {
-        CCLOG("Error parsing manifest file\n");
+        CCLOG("AssetsManager : Error parsing manifest file\n");
         dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_PARSE_MANIFEST);
         _updateState = State::UNCHECKED;
         removeFile(_tempManifestPath);
@@ -414,7 +415,7 @@ void AssetsManager::parseManifest()
 
             if (_waitToUpdate)
             {
-                update();
+                startUpdate();
             }
         }
     }
@@ -440,6 +441,7 @@ void AssetsManager::startUpdate()
         {
             _updateState = State::UPDATING;
             // UPDATE
+            _failedUnits.clear();
             _downloadUnits.clear();
             _totalWaitToDownload = _totalToDownload = 0;
             std::string packageUrl = _remoteManifest->getPackageUrl();
@@ -463,7 +465,7 @@ void AssetsManager::startUpdate()
                 }
             }
             _totalWaitToDownload = _totalToDownload = (int)_downloadUnits.size();
-            _downloader->batchDownload(_downloadUnits);
+            _downloader->batchDownloadAsync(_downloadUnits, BATCH_UPDATE_ID);
         }
     }
 
@@ -563,24 +565,48 @@ void AssetsManager::update()
     }
 }
 
+void AssetsManager::updateAssets(const std::unordered_map<std::string, Downloader::DownloadUnit>& assets)
+{
+    if (_updateState != State::UPDATING && _localManifest->isLoaded() && _remoteManifest->isLoaded())
+    {
+        int size = (int)(assets.size());
+        if (size > 0)
+        {
+            _updateState = State::UPDATING;
+            _downloader->batchDownloadAsync(assets, BATCH_UPDATE_ID);
+        }
+    }
+}
+
+const std::unordered_map<std::string, Downloader::DownloadUnit>& AssetsManager::getFailedAssets() const
+{
+    return _failedUnits;
+}
+
 
 void AssetsManager::onError(const Downloader::Error &error)
 {
     // Skip version error occured
     if (error.customId == VERSION_ID)
     {
-        CCLOG("Error downloading version file, step skipped\n");
+        CCLOG("AssetsManager : Fail to download version file, step skipped\n");
         _updateState = State::PREDOWNLOAD_MANIFEST;
         downloadManifest();
     }
     else if (error.customId == MANIFEST_ID)
     {
-        dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_DOWNLOAD_MANIFEST);
+        dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_DOWNLOAD_MANIFEST, error.customId, error.message, error.curle_code, error.curlm_code);
     }
     else
     {
-        _totalWaitToDownload--;
-        dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_UPDATING, error.customId, error.message);
+        auto unitIt = _downloadUnits.find(error.customId);
+        // Found unit and add it to failed units
+        if (unitIt != _downloadUnits.end())
+        {
+            Downloader::DownloadUnit unit = unitIt->second;
+            _failedUnits.emplace(unit.customId, unit);
+        }
+        dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_UPDATING, error.customId, error.message, error.curle_code, error.curlm_code);
     }
 }
 
@@ -608,51 +634,55 @@ void AssetsManager::onSuccess(const std::string &srcUrl, const std::string &cust
         _updateState = State::MANIFEST_LOADED;
         parseManifest();
     }
+    else if (customId == BATCH_UPDATE_ID)
+    {
+        // Finished with error check
+        if (_failedUnits.size() > 0 || _totalWaitToDownload > 0)
+        {
+            _updateState = State::FAIL_TO_UPDATE;
+            dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_FAILED);
+        }
+        else
+        {
+            // Every thing is correctly downloaded, do the following
+            // 1. rename temporary manifest to valid manifest
+            renameFile(_storagePath, TEMP_MANIFEST_FILENAME, MANIFEST_FILENAME);
+            // 2. swap the localManifest
+            if (_localManifest != nullptr)
+                _localManifest->release();
+            _localManifest = _remoteManifest;
+            _remoteManifest = nullptr;
+            // 3. make local manifest take effect
+            prepareLocalManifest();
+            // 4. Set update state
+            _updateState = State::UP_TO_DATE;
+            // 5. Notify finished event
+            dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_FINISHED);
+        }
+    }
     else
     {
-        _totalWaitToDownload--;
-        // Notify asset updated event
-        dispatchUpdateEvent(EventAssetsManager::EventCode::ASSET_UPDATED, customId);
-
         auto unitIt = _downloadUnits.find(customId);
-        // Found unit and delete it
         if (unitIt != _downloadUnits.end())
         {
-            // Remove from download unit list
-            _downloadUnits.erase(unitIt);
-
-            if (_updateState == State::UPDATING) {
-                _percent = 100 * (_totalToDownload - _downloadUnits.size()) / _totalToDownload;
-                // Notify progression event
-                dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_PROGRESSION, customId);
-            }
+            // Reduce count only when unit found in _downloadUnits
+            _totalWaitToDownload--;
         }
-        // Finish check
-        if (_totalWaitToDownload == 0)
+        // Notify asset updated event
+        dispatchUpdateEvent(EventAssetsManager::EventCode::ASSET_UPDATED, customId);
+        
+        unitIt = _failedUnits.find(customId);
+        // Found unit and delete it
+        if (unitIt != _failedUnits.end())
         {
-            // Finished with error check
-            if (_downloadUnits.size() > 0)
-            {
-                _updateState = State::FAIL_TO_UPDATE;
-                destroyDownloadedVersion();
-            }
-            else
-            {
-                // Every thing is correctly downloaded, do the following
-                // 1. rename temporary manifest to valid manifest
-                renameFile(_storagePath, TEMP_MANIFEST_FILENAME, MANIFEST_FILENAME);
-                // 2. swap the localManifest
-                if (_localManifest != nullptr)
-                    _localManifest->release();
-                _localManifest = _remoteManifest;
-                _remoteManifest = nullptr;
-                // 3. make local manifest take effect
-                prepareLocalManifest();
-                // 4. Set update state
-                _updateState = State::UP_TO_DATE;
-            }
-            // Notify finished event
-            dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_FINISHED);
+            // Remove from failed units list
+            _failedUnits.erase(unitIt);
+        }
+
+        if (_updateState == State::UPDATING) {
+            _percent = 100 * (_totalToDownload - _totalWaitToDownload) / _totalToDownload;
+            // Notify progression event
+            dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_PROGRESSION, customId);
         }
     }
 }

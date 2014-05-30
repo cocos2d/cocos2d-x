@@ -250,11 +250,6 @@ const std::unordered_map<std::string, Manifest::Asset>& Manifest::getAssets() co
     return _assets;
 }
 
-const Manifest::Asset& Manifest::getAsset(const std::string &key) const
-{
-    return _assets.at(key);
-}
-
 void Manifest::clear()
 {
     if (_versionLoaded || _loaded)

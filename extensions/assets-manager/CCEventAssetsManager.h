@@ -27,7 +27,7 @@
 
 #include "base/CCEvent.h"
 #include "base/CCEventCustom.h"
-#include "extensions/ExtensionMacros.h"
+#include "extensions/ExtensionMacros.h" 
 
 NS_CC_EXT_BEGIN
 
@@ -50,12 +50,17 @@ public:
         UPDATE_PROGRESSION,
         ASSET_UPDATED,
         ERROR_UPDATING,
-        UPDATE_FINISHED
+        UPDATE_FINISHED,
+        UPDATE_FAILED
 // TODO: For next version
         // UNCOMPRESS_ERROR
     };
     
     inline EventCode getEventCode() const { return _code; };
+    
+    inline int getCURLECode() const { return _curle_code; };
+    
+    inline int getCURLMCode() const { return _curlm_code; };
     
     inline std::string getMessage() const { return _message; };
     
@@ -67,7 +72,7 @@ public:
     
 protected:
     /** Constructor */
-    EventAssetsManager(const std::string& eventName, cocos2d::extension::AssetsManager *manager, const EventCode &code, float percent = 0, const std::string& assetId = "", const std::string& message = "");
+    EventAssetsManager(const std::string& eventName, cocos2d::extension::AssetsManager *manager, const EventCode &code, float percent = 0, const std::string& assetId = "", const std::string& message = "", int curle_code = 0, int curlm_code = 0);
     
 private:
     EventCode _code;
@@ -77,6 +82,10 @@ private:
     std::string _message;
     
     std::string _assetId;
+    
+    int _curle_code;
+    
+    int _curlm_code;
     
     float _percent;
 };
