@@ -202,10 +202,16 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
 
 void SpriteFrameCache::addSpriteFramesWithFile(const std::string& pszPlist, Texture2D *pobTexture)
 {
+    if (_loadedFileNames->find(pszPlist) != _loadedFileNames->end())
+    {
+        return; // We already added it
+    }
+    
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(pszPlist);
     ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(fullPath);
 
     addSpriteFramesWithDictionary(dict, pobTexture);
+    _loadedFileNames->insert(pszPlist);
 }
 
 void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist, const std::string& textureFileName)
