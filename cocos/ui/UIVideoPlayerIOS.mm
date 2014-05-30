@@ -312,7 +312,7 @@ void VideoPlayer::setURL(const std::string& videoUrl)
     [((UIVideoViewWrapperIos*)_videoView) setURL:(int)_videoSource :_videoURL];
 }
 
-void VideoPlayer::draw(Renderer* renderer, const Mat4 &transform, bool transformUpdated)
+void VideoPlayer::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags)
 {
     cocos2d::ui::Widget::draw(renderer,transform,transformUpdated);
     

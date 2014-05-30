@@ -84,7 +84,7 @@ public:
     virtual std::string getDescription() const override;
 
 #if CC_LABELATLAS_DEBUG_DRAW
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 #endif
 
 protected:

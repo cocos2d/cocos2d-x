@@ -225,12 +225,12 @@ void Widget::onExit()
     ProtectedNode::onExit();
 }
 
-void Widget::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
+void Widget::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     if (_visible)
     {
         adaptRenderers();
-        ProtectedNode::visit(renderer, parentTransform, parentTransformUpdated);
+        ProtectedNode::visit(renderer, parentTransform, parentFlags);
     }
 }
 

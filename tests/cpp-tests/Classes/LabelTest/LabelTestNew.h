@@ -58,14 +58,14 @@ public:
 
     LabelFNTSpriteActions();
     virtual void step(float dt);
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
 protected:
     CustomCommand _renderCmd;
-    void onDraw(const Mat4 &transform, bool transformUpdated);
+    void onDraw(const Mat4 &transform, uint32_t flags);
 };
 
 class LabelFNTPadding : public AtlasDemoNew
@@ -224,13 +224,13 @@ public:
 
     LabelFNTBounds();
     
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
 protected:
     CustomCommand _renderCmd;
-    void onDraw(const Mat4 &transform, bool transformUpdated);
+    void onDraw(const Mat4 &transform, uint32_t flags);
     Label *label1;
 };
 
@@ -430,14 +430,14 @@ public:
 
     LabelTTFOldNew();
 
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
 protected:
     CustomCommand _renderCmd;
-    void onDraw(const Mat4 &transform, bool transformUpdated);
+    void onDraw(const Mat4 &transform, uint32_t flags);
 };
 
 class LabelTTFLargeText : public AtlasDemoNew

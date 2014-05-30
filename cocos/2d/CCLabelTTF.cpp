@@ -262,14 +262,14 @@ void LabelTTF::setFlippedY(bool flippedY)
     }
 }
 
-void LabelTTF::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
+void LabelTTF::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     if (_contentDirty)
     {
         this->setContentSize(_renderLabel->getContentSize());
         _contentDirty = false;
     }
-    Node::visit(renderer,parentTransform,parentTransformUpdated);
+    Node::visit(renderer,parentTransform, parentFlags);
 }
 
 const Size& LabelTTF::getContentSize() const

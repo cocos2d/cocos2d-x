@@ -200,7 +200,8 @@ void SceneTestLayer3::testDealloc(float dt)
 
 void SceneTestLayer3::item0Clicked(Ref* sender)
 {
-    auto newScene = Scene::create();
+    auto s = Director::getInstance()->getWinSize();
+    auto newScene = Scene::createWithSize(s);
     newScene->addChild(SceneTestLayer3::create());
     Director::getInstance()->pushScene(TransitionFade::create(0.5, newScene, Color3B(0,255,255)));
 }

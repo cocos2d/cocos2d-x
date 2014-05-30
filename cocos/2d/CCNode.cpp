@@ -121,6 +121,7 @@ Node::Node(void)
 , _realColor(Color3B::WHITE)
 , _cascadeColorEnabled(false)
 , _cascadeOpacityEnabled(false)
+, _usingNormalizedPosition(false)
 {
     // set default scheduler and actionManager
     Director *director = Director::getInstance();
@@ -423,6 +424,7 @@ void Node::setPosition(const Vec2& position)
     
     _position = position;
     _transformUpdated = _transformDirty = _inverseDirty = true;
+    _usingNormalizedPosition = false;
 
 #if CC_USE_PHYSICS
     if (_physicsBody != nullptr && !_physicsBody->_positionResetTag)
@@ -498,6 +500,23 @@ void Node::setPositionZ(float positionZ)
     setGlobalZOrder(positionZ);
 }
 
+/// position getter
+const Vec2& Node::getNormalizedPosition() const
+{
+    return _normalizedPosition;
+}
+
+/// position setter
+void Node::setNormalizedPosition(const Vec2& position)
+{
+    if (_normalizedPosition.equals(position))
+        return;
+
+    _normalizedPosition = position;
+    _usingNormalizedPosition = true;
+    _transformUpdated = _transformDirty = _inverseDirty = true;
+}
+
 ssize_t Node::getChildrenCount() const
 {
     return _children.size();
@@ -561,7 +580,7 @@ void Node::setContentSize(const Size & size)
         _contentSize = size;
 
         _anchorPointInPoints = Vec2(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y );
-        _transformUpdated = _transformDirty = _inverseDirty = true;
+        _transformUpdated = _transformDirty = _inverseDirty = _contentSizeDirty = true;
     }
 }
 
@@ -943,7 +962,7 @@ void Node::draw()
     draw(renderer, _modelViewTransform, true);
 }
 
-void Node::draw(Renderer* renderer, const Mat4 &transform, bool transformUpdated)
+void Node::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags)
 {
 }
 
@@ -954,7 +973,30 @@ void Node::visit()
     visit(renderer, parentTransform, true);
 }
 
-void Node::visit(Renderer* renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
+uint32_t Node::processParentFlags(const Mat4& parentTransform, uint32_t parentFlags)
+{
+    uint32_t flags = parentFlags;
+    flags |= (_transformUpdated ? PARENT_TRANSFORM_DIRTY : 0);
+    flags |= (_contentSizeDirty ? PARENT_CONTENT_SIZE_DIRTY : 0);
+
+    if(_usingNormalizedPosition && (flags & PARENT_CONTENT_SIZE_DIRTY)) {
+        CCASSERT(_parent, "setNormalizedPosition() doesn't work with orphan nodes");
+        auto s = _parent->getContentSize();
+        _position.x = _normalizedPosition.x * s.width;
+        _position.y = _normalizedPosition.y * s.height;
+        _transformUpdated = _transformDirty = _inverseDirty = true;
+    }
+
+    if(flags & PARENT_DIRTY_MASK)
+        _modelViewTransform = this->transform(parentTransform);
+
+    _transformUpdated = false;
+    _contentSizeDirty = false;
+
+    return flags;
+}
+
+void Node::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     // quick return if not visible. children won't be drawn.
     if (!_visible)
@@ -962,17 +1004,12 @@ void Node::visit(Renderer* renderer, const Mat4 &parentTransform, bool parentTra
         return;
     }
 
-    bool dirty = _transformUpdated || parentTransformUpdated;
-    if(dirty)
-        _modelViewTransform = this->transform(parentTransform);
-    _transformUpdated = false;
-
+    uint32_t flags = processParentFlags(parentTransform, parentFlags);
 
     // IMPORTANT:
     // To ease the migration to v3.0, we still support the Mat4 stack,
     // but it is deprecated and your code should not rely on it
     Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
 
@@ -987,19 +1024,19 @@ void Node::visit(Renderer* renderer, const Mat4 &parentTransform, bool parentTra
             auto node = _children.at(i);
 
             if ( node && node->_localZOrder < 0 )
-                node->visit(renderer, _modelViewTransform, dirty);
+                node->visit(renderer, _modelViewTransform, flags);
             else
                 break;
         }
         // self draw
-        this->draw(renderer, _modelViewTransform, dirty);
+        this->draw(renderer, _modelViewTransform, flags);
 
         for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
-            (*it)->visit(renderer, _modelViewTransform, dirty);
+            (*it)->visit(renderer, _modelViewTransform, flags);
     }
     else
     {
-        this->draw(renderer, _modelViewTransform, dirty);
+        this->draw(renderer, _modelViewTransform, flags);
     }
 
     // reset for next frame

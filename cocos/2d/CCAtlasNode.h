@@ -69,7 +69,7 @@ public:
 
     
     // Overrides
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     virtual Texture2D* getTexture() const override;
     virtual void setTexture(Texture2D *texture) override;
     virtual bool isOpacityModifyRGB() const override;

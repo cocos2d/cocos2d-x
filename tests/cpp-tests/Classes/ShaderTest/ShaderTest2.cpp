@@ -148,10 +148,10 @@ public:
         std::sort(std::begin(_effects), std::end(_effects), tuple_sort);
     }
 
-    void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override
+    void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override
     {
         // Don't do calculate the culling if the transform was not updated
-        _insideBounds = transformUpdated ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
+        _insideBounds = (flags & PARENT_DIRTY_MASK) ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
 
         if(_insideBounds)
         {
