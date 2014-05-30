@@ -154,6 +154,7 @@ public:
         addChild(IPlabel, 9999);
 
         string strShowMsg = "waiting for file transfer ...";
+        s_strFile = strShowMsg;
         if (CC_PLATFORM_WIN32 == CC_TARGET_PLATFORM || CC_PLATFORM_MAC == CC_TARGET_PLATFORM)
         {
             strShowMsg = "waiting for debugger to connect ...";
