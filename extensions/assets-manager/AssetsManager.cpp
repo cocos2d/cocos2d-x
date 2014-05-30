@@ -414,7 +414,7 @@ void AssetsManager::parseManifest()
 
             if (_waitToUpdate)
             {
-                update();
+                startUpdate();
             }
         }
     }
@@ -463,7 +463,8 @@ void AssetsManager::startUpdate()
                 }
             }
             _totalWaitToDownload = _totalToDownload = (int)_downloadUnits.size();
-            _downloader->batchDownload(_downloadUnits);
+            auto t = std::thread(&Downloader::batchDownload, _downloader, _downloadUnits);
+            t.detach();
         }
     }
 
