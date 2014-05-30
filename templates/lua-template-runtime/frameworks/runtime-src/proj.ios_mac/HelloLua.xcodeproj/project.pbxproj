@@ -50,6 +50,18 @@
 		50D7C96C17EBBEDF005D0B91 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D7C96B17EBBEDF005D0B91 /* OpenGL.framework */; };
 		50D7C96E17EBBEE6005D0B91 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D7C96D17EBBEE6005D0B91 /* AppKit.framework */; };
 		50D7C97017EBBEEC005D0B91 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D7C96F17EBBEEC005D0B91 /* IOKit.framework */; };
+		C00FD4921938512100C6382D /* Landscape_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD48A1938512100C6382D /* Landscape_png.cpp */; };
+		C00FD4931938512100C6382D /* Landscape_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD48A1938512100C6382D /* Landscape_png.cpp */; };
+		C00FD4941938512100C6382D /* PlayDisable_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD48B1938512100C6382D /* PlayDisable_png.cpp */; };
+		C00FD4951938512100C6382D /* PlayDisable_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD48B1938512100C6382D /* PlayDisable_png.cpp */; };
+		C00FD4961938512100C6382D /* PlayEnable_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD48C1938512100C6382D /* PlayEnable_png.cpp */; };
+		C00FD4971938512100C6382D /* PlayEnable_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD48C1938512100C6382D /* PlayEnable_png.cpp */; };
+		C00FD4981938512100C6382D /* Portrait_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD48D1938512100C6382D /* Portrait_png.cpp */; };
+		C00FD4991938512100C6382D /* Portrait_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD48D1938512100C6382D /* Portrait_png.cpp */; };
+		C00FD49A1938512100C6382D /* Runtime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD48F1938512100C6382D /* Runtime.cpp */; };
+		C00FD49B1938512100C6382D /* Runtime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD48F1938512100C6382D /* Runtime.cpp */; };
+		C00FD49C1938512100C6382D /* Shine_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD4911938512100C6382D /* Shine_png.cpp */; };
+		C00FD49D1938512100C6382D /* Shine_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD4911938512100C6382D /* Shine_png.cpp */; };
 		C033B51C191B337200D06937 /* VisibleRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C033B51A191B337200D06937 /* VisibleRect.cpp */; };
 		C033B51D191B337200D06937 /* VisibleRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C033B51A191B337200D06937 /* VisibleRect.cpp */; };
 		C03781B918BF655400FE4F13 /* res in Resources */ = {isa = PBXBuildFile; fileRef = C03781B718BF655400FE4F13 /* res */; };
@@ -103,8 +115,6 @@
 		C07828F818B4D72E00BD2287 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C07828F418B4D72E00BD2287 /* main.m */; };
 		C07828F918B4D72E00BD2287 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C07828F518B4D72E00BD2287 /* MainMenu.xib */; };
 		C07828FA18B4D72E00BD2287 /* SimulatorApp.mm in Sources */ = {isa = PBXBuildFile; fileRef = C07828F718B4D72E00BD2287 /* SimulatorApp.mm */; };
-		C07828FD18B4DC6F00BD2287 /* Runtime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C07828FB18B4DC6F00BD2287 /* Runtime.cpp */; };
-		C07828FE18B4DC7000BD2287 /* Runtime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C07828FB18B4DC6F00BD2287 /* Runtime.cpp */; };
 		C08D5D5618E567C6009071A4 /* ftp.lua in Resources */ = {isa = PBXBuildFile; fileRef = C08D5D4C18E567C6009071A4 /* ftp.lua */; };
 		C08D5D5718E567C6009071A4 /* ftp.lua in Resources */ = {isa = PBXBuildFile; fileRef = C08D5D4C18E567C6009071A4 /* ftp.lua */; };
 		C08D5D5818E567C6009071A4 /* headers.lua in Resources */ = {isa = PBXBuildFile; fileRef = C08D5D4D18E567C6009071A4 /* headers.lua */; };
@@ -128,8 +138,6 @@
 		C09BA7E718BC929700A85A3E /* WorkSpaceDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = C09BA7E418BC929700A85A3E /* WorkSpaceDialog.xib */; };
 		C09BA7E818BC929700A85A3E /* WorkSpaceDialogController.mm in Sources */ = {isa = PBXBuildFile; fileRef = C09BA7E618BC929700A85A3E /* WorkSpaceDialogController.mm */; };
 		C09BA7EE18BCA49600A85A3E /* NSAppSheetAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C09BA7ED18BCA49600A85A3E /* NSAppSheetAdditions.m */; };
-		C0F9D4BC192F3E6A0066134A /* rtres in Resources */ = {isa = PBXBuildFile; fileRef = C0F9D4BB192F3E6A0066134A /* rtres */; };
-		C0F9D4BD192F3E6A0066134A /* rtres in Resources */ = {isa = PBXBuildFile; fileRef = C0F9D4BB192F3E6A0066134A /* rtres */; };
 		D6B061351803AC000077942B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B061341803AC000077942B /* CoreMotion.framework */; };
 		F293B3CD15EB7BE500256477 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F293B3CC15EB7BE500256477 /* QuartzCore.framework */; };
 		F293B3D115EB7BE500256477 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F293B3D015EB7BE500256477 /* OpenAL.framework */; };
@@ -348,6 +356,14 @@
 		50D7C96B17EBBEDF005D0B91 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		50D7C96D17EBBEE6005D0B91 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		50D7C96F17EBBEEC005D0B91 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		C00FD48A1938512100C6382D /* Landscape_png.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Landscape_png.cpp; sourceTree = "<group>"; };
+		C00FD48B1938512100C6382D /* PlayDisable_png.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayDisable_png.cpp; sourceTree = "<group>"; };
+		C00FD48C1938512100C6382D /* PlayEnable_png.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayEnable_png.cpp; sourceTree = "<group>"; };
+		C00FD48D1938512100C6382D /* Portrait_png.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Portrait_png.cpp; sourceTree = "<group>"; };
+		C00FD48E1938512100C6382D /* ResData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResData.h; sourceTree = "<group>"; };
+		C00FD48F1938512100C6382D /* Runtime.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Runtime.cpp; sourceTree = "<group>"; };
+		C00FD4901938512100C6382D /* Runtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Runtime.h; sourceTree = "<group>"; };
+		C00FD4911938512100C6382D /* Shine_png.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shine_png.cpp; sourceTree = "<group>"; };
 		C033B51A191B337200D06937 /* VisibleRect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VisibleRect.cpp; path = ../Classes/VisibleRect.cpp; sourceTree = "<group>"; };
 		C033B51B191B337200D06937 /* VisibleRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VisibleRect.h; path = ../Classes/VisibleRect.h; sourceTree = "<group>"; };
 		C03781AE18BF654500FE4F13 /* cocos2d_lua_bindings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_lua_bindings.xcodeproj; path = "../../cocos2d-x/cocos/scripting/lua-bindings/proj.ios_mac/cocos2d_lua_bindings.xcodeproj"; sourceTree = "<group>"; };
@@ -379,8 +395,6 @@
 		C07828F518B4D72E00BD2287 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		C07828F618B4D72E00BD2287 /* SimulatorApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimulatorApp.h; sourceTree = "<group>"; };
 		C07828F718B4D72E00BD2287 /* SimulatorApp.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SimulatorApp.mm; sourceTree = "<group>"; };
-		C07828FB18B4DC6F00BD2287 /* Runtime.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Runtime.cpp; path = ../Classes/Runtime.cpp; sourceTree = "<group>"; };
-		C07828FC18B4DC6F00BD2287 /* Runtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Runtime.h; path = ../Classes/Runtime.h; sourceTree = "<group>"; };
 		C08D5D4C18E567C6009071A4 /* ftp.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ftp.lua; path = "../../cocos2d-x/external/lua/luasocket/ftp.lua"; sourceTree = "<group>"; };
 		C08D5D4D18E567C6009071A4 /* headers.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = headers.lua; path = "../../cocos2d-x/external/lua/luasocket/headers.lua"; sourceTree = "<group>"; };
 		C08D5D4E18E567C6009071A4 /* http.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = http.lua; path = "../../cocos2d-x/external/lua/luasocket/http.lua"; sourceTree = "<group>"; };
@@ -396,7 +410,6 @@
 		C09BA7E618BC929700A85A3E /* WorkSpaceDialogController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WorkSpaceDialogController.mm; sourceTree = "<group>"; };
 		C09BA7EC18BCA49600A85A3E /* NSAppSheetAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSAppSheetAdditions.h; sourceTree = "<group>"; };
 		C09BA7ED18BCA49600A85A3E /* NSAppSheetAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSAppSheetAdditions.m; sourceTree = "<group>"; };
-		C0F9D4BB192F3E6A0066134A /* rtres */ = {isa = PBXFileReference; lastKnownFileType = folder; name = rtres; path = ../../../runtime/rtres; sourceTree = "<group>"; };
 		D6B061341803AC000077942B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
 		F293B3C815EB7BE500256477 /* HelloLua iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HelloLua iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F293B3CC15EB7BE500256477 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -569,6 +582,22 @@
 			name = Icons;
 			sourceTree = "<group>";
 		};
+		C00FD4891938512100C6382D /* runtime */ = {
+			isa = PBXGroup;
+			children = (
+				C00FD48A1938512100C6382D /* Landscape_png.cpp */,
+				C00FD48B1938512100C6382D /* PlayDisable_png.cpp */,
+				C00FD48C1938512100C6382D /* PlayEnable_png.cpp */,
+				C00FD48D1938512100C6382D /* Portrait_png.cpp */,
+				C00FD48E1938512100C6382D /* ResData.h */,
+				C00FD48F1938512100C6382D /* Runtime.cpp */,
+				C00FD4901938512100C6382D /* Runtime.h */,
+				C00FD4911938512100C6382D /* Shine_png.cpp */,
+			);
+			name = runtime;
+			path = ../Classes/runtime;
+			sourceTree = "<group>";
+		};
 		C03781AF18BF654500FE4F13 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -629,12 +658,11 @@
 		F293BB7C15EB830F00256477 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				C00FD4891938512100C6382D /* runtime */,
 				C033B51A191B337200D06937 /* VisibleRect.cpp */,
 				C033B51B191B337200D06937 /* VisibleRect.h */,
 				C06C3794191A1D1E00617BED /* ConfigParser.cpp */,
 				C06C3795191A1D1E00617BED /* ConfigParser.h */,
-				C07828FB18B4DC6F00BD2287 /* Runtime.cpp */,
-				C07828FC18B4DC6F00BD2287 /* Runtime.h */,
 				C0619CD61896894800872C26 /* Runtime_ios-mac.mm */,
 				F293BB7E15EB831F00256477 /* AppDelegate.cpp */,
 				F293BB7F15EB831F00256477 /* AppDelegate.h */,
@@ -645,7 +673,6 @@
 		F293BC4615EB859D00256477 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				C0F9D4BB192F3E6A0066134A /* rtres */,
 				C05D1C111923449100B808A4 /* config.json */,
 				C03781B718BF655400FE4F13 /* res */,
 				C03781B818BF655400FE4F13 /* src */,
@@ -856,7 +883,6 @@
 				C08D5D5D18E567C6009071A4 /* ltn12.lua in Resources */,
 				C03781EC18BF656A00FE4F13 /* luaoc.lua in Resources */,
 				C07828F918B4D72E00BD2287 /* MainMenu.xib in Resources */,
-				C0F9D4BD192F3E6A0066134A /* rtres in Resources */,
 				5023817617EBBE3400990C9B /* Icon.icns in Resources */,
 				C03781D218BF656A00FE4F13 /* CCBReaderLoad.lua in Resources */,
 				C08D5D5F18E567C6009071A4 /* mbox.lua in Resources */,
@@ -899,7 +925,6 @@
 				C03781F118BF656A00FE4F13 /* StudioConstants.lua in Resources */,
 				5023811F17EBBCAC00990C9B /* Icon-152.png in Resources */,
 				C03781D118BF656A00FE4F13 /* CCBReaderLoad.lua in Resources */,
-				C0F9D4BC192F3E6A0066134A /* rtres in Resources */,
 				5023812017EBBCAC00990C9B /* Icon-57.png in Resources */,
 				C03781CF18BF656A00FE4F13 /* AudioEngine.lua in Resources */,
 				C03781B918BF655400FE4F13 /* res in Resources */,
@@ -938,13 +963,18 @@
 			files = (
 				C07828FA18B4D72E00BD2287 /* SimulatorApp.mm in Sources */,
 				5023813317EBBCE400990C9B /* AppDelegate.cpp in Sources */,
+				C00FD4971938512100C6382D /* PlayEnable_png.cpp in Sources */,
+				C00FD4951938512100C6382D /* PlayDisable_png.cpp in Sources */,
 				C033B51D191B337200D06937 /* VisibleRect.cpp in Sources */,
+				C00FD49D1938512100C6382D /* Shine_png.cpp in Sources */,
 				C09BA7EE18BCA49600A85A3E /* NSAppSheetAdditions.m in Sources */,
-				C07828FE18B4DC7000BD2287 /* Runtime.cpp in Sources */,
+				C00FD4991938512100C6382D /* Portrait_png.cpp in Sources */,
 				C06C3797191A1D1E00617BED /* ConfigParser.cpp in Sources */,
 				C09BA7E818BC929700A85A3E /* WorkSpaceDialogController.mm in Sources */,
 				C07828F818B4D72E00BD2287 /* main.m in Sources */,
+				C00FD49B1938512100C6382D /* Runtime.cpp in Sources */,
 				C0619CD81896894800872C26 /* Runtime_ios-mac.mm in Sources */,
+				C00FD4931938512100C6382D /* Landscape_png.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -952,13 +982,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C00FD4981938512100C6382D /* Portrait_png.cpp in Sources */,
 				5023812517EBBCAC00990C9B /* RootViewController.mm in Sources */,
+				C00FD4921938512100C6382D /* Landscape_png.cpp in Sources */,
 				F293BB9C15EB831F00256477 /* AppDelegate.cpp in Sources */,
+				C00FD49A1938512100C6382D /* Runtime.cpp in Sources */,
 				C06C3796191A1D1E00617BED /* ConfigParser.cpp in Sources */,
+				C00FD4961938512100C6382D /* PlayEnable_png.cpp in Sources */,
+				C00FD4941938512100C6382D /* PlayDisable_png.cpp in Sources */,
+				C00FD49C1938512100C6382D /* Shine_png.cpp in Sources */,
 				5023812417EBBCAC00990C9B /* main.m in Sources */,
 				C033B51C191B337200D06937 /* VisibleRect.cpp in Sources */,
 				C0619CD71896894800872C26 /* Runtime_ios-mac.mm in Sources */,
-				C07828FD18B4DC6F00BD2287 /* Runtime.cpp in Sources */,
 				5023811817EBBCAC00990C9B /* AppController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

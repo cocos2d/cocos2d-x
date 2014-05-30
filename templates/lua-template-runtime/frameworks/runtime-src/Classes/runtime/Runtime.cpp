@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "runtime/Runtime.h"
+#include "Runtime.h"
 #include "lua_debugger.h"
 #include "CCLuaEngine.h"
 #include "cocos2d.h"
@@ -99,7 +99,7 @@ private:
 public:
     ConnectWaitLayer()
     {
-#include "runtime/ResData.h"
+#include "ResData.h"
         int designWidth = 1280;
         int designHeight = 800;
         Director::getInstance()->getOpenGLView()->setDesignResolutionSize(designWidth,designHeight,ResolutionPolicy::EXACT_FIT);

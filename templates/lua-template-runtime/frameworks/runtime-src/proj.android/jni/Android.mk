@@ -20,7 +20,8 @@ LOCAL_SRC_FILES := lua/main.cpp \
                    
 
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \
+                    $(LOCAL_PATH)/../../Classes/runtime \
 
 LOCAL_STATIC_LIBRARIES := curl_static_prebuilt
 
