@@ -46,6 +46,7 @@ class AssetsManager : public Ref
 public:
     
     friend class Downloader;
+    friend int downloadProgressFunc(Downloader::ProgressData *ptr, double totalToDownload, double nowDownloaded, double totalToUpLoad, double nowUpLoaded);
     
     //! Update states
     enum class State
