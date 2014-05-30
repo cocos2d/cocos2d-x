@@ -61,7 +61,9 @@ def check_current_3rd_libs(branch):
         current_file = current_files[i]
         copy(current_file, backup_file)
 
-http_proxy = 'http://127.0.0.1:8087'
+http_proxy = ''
+if(os.environ.has_key('HTTP_PROXY')):
+    http_proxy = os.environ['HTTP_PROXY']
 proxyDict = {'http':http_proxy,'https':http_proxy}
 def main():
     #get payload from os env
