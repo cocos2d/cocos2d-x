@@ -512,6 +512,7 @@ static Data getData(const std::string& filename, bool forString)
     Data ret;
     unsigned char* buffer = nullptr;
     ssize_t size = 0;
+    size_t readsize;
     const char* mode = nullptr;
     if (forString)
         mode = "rt";
@@ -538,8 +539,13 @@ static Data getData(const std::string& filename, bool forString)
             buffer = (unsigned char*)malloc(sizeof(unsigned char) * size);
         }
         
-        size = fread(buffer, sizeof(unsigned char), size, fp);
+        readsize = fread(buffer, sizeof(unsigned char), size, fp);
         fclose(fp);
+        
+        if (forString && readsize < size)
+        {
+            buffer[readsize] = '\0';
+        }
     } while (0);
     
     if (nullptr == buffer || 0 == size)
