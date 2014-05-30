@@ -840,6 +840,9 @@
     <ClCompile Include="..\..\Classes\Sprite3DTest\Sprite3DTest.cpp">
       <Filter>Classes\Sprite3DTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Classes\FileUtilsTest\xxtea.cpp">
+      <Filter>Classes\FileUtilsTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Classes\AppDelegate.h">
@@ -1556,6 +1559,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Classes\Sprite3DTest\Sprite3DTest.h">
       <Filter>Classes\Sprite3DTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\FileUtilsTest\xxtea.h">
+      <Filter>Classes\FileUtilsTest</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
