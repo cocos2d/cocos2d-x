@@ -86,6 +86,14 @@ public:
      */
     void update();
     
+    /** @brief Update a list of assets under the current AssetsManager context
+     */
+    void updateAssets(const std::unordered_map<std::string, Downloader::DownloadUnit>& assets);
+    
+    /** @brief Retrieve all failed assets during the last update
+     */
+    const std::unordered_map<std::string, Downloader::DownloadUnit>& getFailedAssets() const;
+    
     /** @brief Gets the current update state.
      */
     State getState() const;
@@ -218,6 +226,9 @@ private:
     
     //! All assets unit to download
     std::unordered_map<std::string, Downloader::DownloadUnit> _downloadUnits;
+    
+    //! All failed units
+    std::unordered_map<std::string, Downloader::DownloadUnit> _failedUnits;
     
     //! Download percent
     float _percent;

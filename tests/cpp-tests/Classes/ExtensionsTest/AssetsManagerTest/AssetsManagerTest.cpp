@@ -159,9 +159,8 @@ void AssetsManagerLoaderScene::runThisTest()
                 case EventAssetsManager::EventCode::UPDATE_FAILED:
                 {
                     CCLOG("Update failed. %d", event->getEventCode());
-                    scene = new AssetsManagerTestScene(backgroundPaths[currentId]);
-                    Director::getInstance()->replaceScene(scene);
-                    scene->release();
+                    auto assets = _am->getFailedAssets();
+                    _am->updateAssets(assets);
                 }
                     break;
                 case EventAssetsManager::EventCode::ERROR_UPDATING:
