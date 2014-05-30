@@ -548,7 +548,7 @@ static Data getData(const std::string& filename, bool forString)
         }
     } while (0);
     
-    if (nullptr == buffer || 0 == size)
+    if (nullptr == buffer || 0 == readsize)
     {
         std::string msg = "Get data from file(";
         msg.append(filename).append(") failed!");
@@ -556,7 +556,7 @@ static Data getData(const std::string& filename, bool forString)
     }
     else
     {
-        ret.fastSet(buffer, size);
+        ret.fastSet(buffer, readsize);
     }
     
     return ret;
