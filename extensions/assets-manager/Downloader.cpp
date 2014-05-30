@@ -25,6 +25,7 @@
 #include "Downloader.h"
 #include "AssetsManager.h"
 
+#include <curl/curl.h>
 #include <curl/easy.h>
 #include <stdio.h>
 
@@ -139,7 +140,7 @@ void Downloader::setConnectionTimeout(int timeout)
         _connectionTimeout = timeout;
 }
 
-void Downloader::notifyError(ErrorCode code, const std::string &msg/* ="" */, const std::string &customId/* ="" */, const CURLcode &curle_code/* = CURLE_OK*/, const CURLMcode &curlm_code/* = CURLM_OK*/)
+void Downloader::notifyError(ErrorCode code, const std::string &msg/* ="" */, const std::string &customId/* ="" */, int curle_code/* = CURLE_OK*/, int curlm_code/* = CURLM_OK*/)
 {
     std::shared_ptr<Downloader> downloader = shared_from_this();
     Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
@@ -156,12 +157,12 @@ void Downloader::notifyError(ErrorCode code, const std::string &msg/* ="" */, co
     });
 }
 
-void Downloader::notifyError(const std::string &msg, const CURLMcode &curlm_code, const std::string &customId/* = ""*/)
+void Downloader::notifyError(const std::string &msg, int curlm_code, const std::string &customId/* = ""*/)
 {
     notifyError(ErrorCode::CURL_MULTI_ERROR, msg, customId, CURLE_OK, curlm_code);
 }
 
-void Downloader::notifyError(const std::string &msg, const std::string &customId, const CURLcode &curle_code)
+void Downloader::notifyError(const std::string &msg, const std::string &customId, int curle_code)
 {
     notifyError(ErrorCode::CURL_EASY_ERROR, msg, customId, curle_code);
 }
@@ -261,7 +262,7 @@ void Downloader::downloadSync(const std::string &srcUrl, const std::string &stor
 
 void Downloader::download(const std::string &srcUrl, const std::string &customId, const FileDescriptor &fDesc, const ProgressData &data)
 {
-    void *curl = curl_easy_init();
+    CURL *curl = curl_easy_init();
     if (!curl)
     {
         this->notifyError(ErrorCode::CURL_EASY_ERROR, "Can not init curl with curl_easy_init", customId);

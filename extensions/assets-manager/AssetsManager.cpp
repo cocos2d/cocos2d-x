@@ -297,7 +297,7 @@ void AssetsManager::renameFile(const std::string &path, const std::string &oldna
 #endif
 }
 
-void AssetsManager::dispatchUpdateEvent(EventAssetsManager::EventCode code, std::string assetId/* = ""*/, std::string message/* = ""*/, const CURLcode &curle_code/* = CURLE_OK*/, const CURLMcode &curlm_code/* = CURLM_OK*/)
+void AssetsManager::dispatchUpdateEvent(EventAssetsManager::EventCode code, std::string assetId/* = ""*/, std::string message/* = ""*/, int curle_code/* = CURLE_OK*/, int curlm_code/* = CURLM_OK*/)
 {
     EventAssetsManager event(_eventName, this, code, _percent, assetId, message, curle_code, curlm_code);
     _eventDispatcher->dispatchEvent(&event);

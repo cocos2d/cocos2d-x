@@ -31,7 +31,6 @@
 #include <unordered_map>
 #include <memory>
 #include <string>
-#include <curl/curl.h>
 
 NS_CC_EXT_BEGIN
 
@@ -65,8 +64,8 @@ public:
     struct Error
     {
         ErrorCode code;
-        CURLMcode curlm_code;
-        CURLcode curle_code;
+        int curlm_code;
+        int curle_code;
         std::string message;
         std::string customId;
         std::string url;
@@ -120,18 +119,18 @@ protected:
     struct FileDescriptor
     {
         FILE *fp;
-        CURL *curl;
+        void *curl;
     };
 
     void prepareDownload(const std::string &srcUrl, const std::string &storagePath, const std::string &customId, FileDescriptor *fDesc, ProgressData *pData);
 
     void download(const std::string &srcUrl, const std::string &customId, const FileDescriptor &fDesc, const ProgressData &data);
 
-    void notifyError(ErrorCode code, const std::string &msg = "", const std::string &customId = "", const CURLcode &curle_code = CURLE_OK, const CURLMcode &curlm_code = CURLM_OK);
+    void notifyError(ErrorCode code, const std::string &msg = "", const std::string &customId = "", int curle_code = 0, int curlm_code = 0);
     
-    void notifyError(const std::string &msg, const CURLMcode &curlm_code, const std::string &customId = "");
+    void notifyError(const std::string &msg, int curlm_code, const std::string &customId = "");
     
-    void notifyError(const std::string &msg, const std::string &customId, const CURLcode &curle_code);
+    void notifyError(const std::string &msg, const std::string &customId, int curle_code);
 
 private:
 
