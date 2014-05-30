@@ -65,7 +65,7 @@ void SpriteFrameCache::destroyInstance()
     CC_SAFE_RELEASE_NULL(_sharedSpriteFrameCache);
 }
 
-bool SpriteFrameCache::init(void)
+bool SpriteFrameCache::init()
 {
     _spriteFrames.reserve(20);
     _spriteFramesAliases.reserve(20);
@@ -73,7 +73,7 @@ bool SpriteFrameCache::init(void)
     return true;
 }
 
-SpriteFrameCache::~SpriteFrameCache(void)
+SpriteFrameCache::~SpriteFrameCache()
 {
     CC_SAFE_DELETE(_loadedFileNames);
 }
@@ -200,12 +200,18 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
     }
 }
 
-void SpriteFrameCache::addSpriteFramesWithFile(const std::string& pszPlist, Texture2D *pobTexture)
+void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist, Texture2D *texture)
 {
-    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(pszPlist);
+    if (_loadedFileNames->find(plist) != _loadedFileNames->end())
+    {
+        return; // We already added it
+    }
+    
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(plist);
     ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(fullPath);
 
-    addSpriteFramesWithDictionary(dict, pobTexture);
+    addSpriteFramesWithDictionary(dict, texture);
+    _loadedFileNames->insert(plist);
 }
 
 void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist, const std::string& textureFileName)
@@ -223,13 +229,13 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist, const s
     }
 }
 
-void SpriteFrameCache::addSpriteFramesWithFile(const std::string& pszPlist)
+void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist)
 {
-    CCASSERT(pszPlist.size()>0, "plist filename should not be nullptr");
+    CCASSERT(plist.size()>0, "plist filename should not be nullptr");
 
-    if (_loadedFileNames->find(pszPlist) == _loadedFileNames->end())
+    if (_loadedFileNames->find(plist) == _loadedFileNames->end())
     {
-        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(pszPlist);
+        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(plist);
         ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(fullPath);
 
         string texturePath("");
@@ -244,12 +250,12 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& pszPlist)
         if (!texturePath.empty())
         {
             // build texture path relative to plist file
-            texturePath = FileUtils::getInstance()->fullPathFromRelativeFile(texturePath.c_str(), pszPlist);
+            texturePath = FileUtils::getInstance()->fullPathFromRelativeFile(texturePath.c_str(), plist);
         }
         else
         {
             // build texture path by replacing file extension
-            texturePath = pszPlist;
+            texturePath = plist;
 
             // remove .xxx
             size_t startPos = texturePath.find_last_of("."); 
@@ -266,7 +272,7 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& pszPlist)
         if (texture)
         {
             addSpriteFramesWithDictionary(dict, texture);
-            _loadedFileNames->insert(pszPlist);
+            _loadedFileNames->insert(plist);
         }
         else
         {
