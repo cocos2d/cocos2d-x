@@ -52,6 +52,10 @@ public:
         UNCOMPRESS,
 
         CURL_UNINIT,
+        
+        CURL_MULTI_ERROR,
+        
+        CURL_EASY_ERROR,
 
         INVALID_URL,
 
@@ -61,7 +65,8 @@ public:
     struct Error
     {
         ErrorCode code;
-        CURLMcode curl_code;
+        CURLMcode curlm_code;
+        CURLcode curle_code;
         std::string message;
         std::string customId;
         std::string url;
@@ -122,7 +127,11 @@ protected:
 
     void download(const std::string &srcUrl, const std::string &customId, const FileDescriptor &fDesc, const ProgressData &data);
 
-    void notifyError(ErrorCode code, const std::string &msg = "", const std::string &customId = "", const CURLMcode &curl_code = CURLM_OK);
+    void notifyError(ErrorCode code, const std::string &msg = "", const std::string &customId = "", const CURLcode &curle_code = CURLE_OK, const CURLMcode &curlm_code = CURLM_OK);
+    
+    void notifyError(const std::string &msg, const CURLMcode &curlm_code, const std::string &customId = "");
+    
+    void notifyError(const std::string &msg, const std::string &customId, const CURLcode &curle_code);
 
 private:
 

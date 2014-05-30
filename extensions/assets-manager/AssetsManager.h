@@ -127,7 +127,7 @@ protected:
     
     void adjustPath(std::string &path);
     
-    void dispatchUpdateEvent(EventAssetsManager::EventCode code, std::string message = "", std::string assetId = "");
+    void dispatchUpdateEvent(EventAssetsManager::EventCode code, std::string message = "", std::string assetId = "", const CURLcode &curle_code = CURLE_OK, const CURLMcode &curlm_code = CURLM_OK);
     
     void downloadVersion();
     void parseVersion();

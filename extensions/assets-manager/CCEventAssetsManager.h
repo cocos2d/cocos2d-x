@@ -28,6 +28,7 @@
 #include "base/CCEvent.h"
 #include "base/CCEventCustom.h"
 #include "extensions/ExtensionMacros.h"
+#include <curl/curl.h>
 
 NS_CC_EXT_BEGIN
 
@@ -58,6 +59,10 @@ public:
     
     inline EventCode getEventCode() const { return _code; };
     
+    inline CURLcode getCURLECode() const { return _curle_code; };
+    
+    inline CURLMcode getCURLMCode() const { return _curlm_code; };
+    
     inline std::string getMessage() const { return _message; };
     
     inline std::string getAssetId() const { return _assetId; };
@@ -68,7 +73,7 @@ public:
     
 protected:
     /** Constructor */
-    EventAssetsManager(const std::string& eventName, cocos2d::extension::AssetsManager *manager, const EventCode &code, float percent = 0, const std::string& assetId = "", const std::string& message = "");
+    EventAssetsManager(const std::string& eventName, cocos2d::extension::AssetsManager *manager, const EventCode &code, float percent = 0, const std::string& assetId = "", const std::string& message = "", const CURLcode &curle_code = CURLE_OK, const CURLMcode &curlm_code = CURLM_OK);
     
 private:
     EventCode _code;
@@ -78,6 +83,10 @@ private:
     std::string _message;
     
     std::string _assetId;
+    
+    CURLcode _curle_code;
+    
+    CURLMcode _curlm_code;
     
     float _percent;
 };

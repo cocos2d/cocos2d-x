@@ -135,17 +135,29 @@ void Downloader::setConnectionTimeout(int timeout)
         _connectionTimeout = timeout;
 }
 
-void Downloader::notifyError(ErrorCode code, const std::string &msg/* ="" */, const std::string &customId/* ="" */, const CURLMcode &curl_code/* = CURLM_OK*/)
+void Downloader::notifyError(ErrorCode code, const std::string &msg/* ="" */, const std::string &customId/* ="" */, const CURLcode &curle_code/* = CURLE_OK*/, const CURLMcode &curlm_code/* = CURLM_OK*/)
 {
     std::shared_ptr<Downloader> downloader = shared_from_this();
     Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
         Error err;
         err.code = code;
+        err.curle_code = curle_code;
+        err.curlm_code = curlm_code;
         err.message = msg;
         err.customId = customId;
         if (downloader != nullptr && downloader->_onError != nullptr)
             downloader->_onError(err);
     });
+}
+
+void Downloader::notifyError(const std::string &msg, const CURLMcode &curlm_code, const std::string &customId/* = ""*/)
+{
+    notifyError(ErrorCode::CURL_MULTI_ERROR, msg, customId, CURLE_OK, curlm_code);
+}
+
+void Downloader::notifyError(const std::string &msg, const std::string &customId, const CURLcode &curle_code)
+{
+    notifyError(ErrorCode::CURL_EASY_ERROR, msg, customId, curle_code);
 }
 
 std::string Downloader::getFileNameFromUrl(const std::string &srcUrl)
@@ -246,12 +258,11 @@ void Downloader::download(const std::string &srcUrl, const std::string &customId
     void *curl = curl_easy_init();
     if (!curl)
     {
-        this->notifyError(ErrorCode::CURL_UNINIT, "Can not init curl");
+        this->notifyError(ErrorCode::CURL_EASY_ERROR, "Can not init curl with curl_easy_init", customId);
         return;
     }
     
     // Download pacakge
-    CURLcode res;
     curl_easy_setopt(curl, CURLOPT_URL, srcUrl.c_str());
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curlWriteFunc);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, fDesc.fp);
@@ -264,11 +275,12 @@ void Downloader::download(const std::string &srcUrl, const std::string &customId
     curl_easy_setopt(curl, CURLOPT_LOW_SPEED_LIMIT, LOW_SPEED_LIMIT);
     curl_easy_setopt(curl, CURLOPT_LOW_SPEED_TIME, LOW_SPEED_TIME);
     
-    res = curl_easy_perform(curl);
+    CURLcode res = curl_easy_perform(curl);
     if (res != CURLE_OK)
     {
         AssetsManager::removeFile(data.path + data.name + TEMP_EXT);
-        this->notifyError(ErrorCode::NETWORK, "Fail to download file", customId);
+        std::string msg = StringUtils::format("Unable to download file: [curl error]%s", curl_easy_strerror(res));
+        this->notifyError(msg, customId, res);
     }
     
     fclose(fDesc.fp);
@@ -316,13 +328,14 @@ void Downloader::batchDownloadSync(const std::unordered_map<std::string, Downloa
             curl_easy_setopt(curl, CURLOPT_MAXREDIRS, MAX_REDIRS);
             fDesc->curl = curl;
             
-            int ret = curl_multi_add_handle(multi_handle, curl);
-            if (ret != CURLM_OK)
+            CURLMcode code = curl_multi_add_handle(multi_handle, curl);
+            if (code != CURLM_OK)
             {
                 // Avoid memory leak
                 delete data;
                 delete fDesc;
-                this->notifyError(ErrorCode::CURL_UNINIT, "Unable to add curl handler for " + customId, customId);
+                std::string msg = StringUtils::format("Unable to add curl handler for %s: [curl error]%s", customId.c_str(), curl_multi_strerror(code));
+                this->notifyError(msg, code, customId);
             }
             else
             {
@@ -339,8 +352,8 @@ void Downloader::batchDownloadSync(const std::unordered_map<std::string, Downloa
         curlm_code = curl_multi_perform(multi_handle, &still_running);
     }
     if (curlm_code != CURLM_OK) {
-        std::string msg = StringUtils::format("Unable to continue the download process: %s", curl_multi_strerror(curlm_code));
-        this->notifyError(ErrorCode::NETWORK, msg, "", curlm_code);
+        std::string msg = StringUtils::format("Unable to continue the download process: [curl error]%s", curl_multi_strerror(curlm_code));
+        this->notifyError(msg, curlm_code);
     }
     else
     {
@@ -385,8 +398,8 @@ void Downloader::batchDownloadSync(const std::unordered_map<std::string, Downloa
                         curlm_code = curl_multi_perform(multi_handle, &still_running);
                     }
                     if (curlm_code != CURLM_OK) {
-                        std::string msg = StringUtils::format("Unable to continue the download process: %s", curl_multi_strerror(curlm_code));
-                        this->notifyError(ErrorCode::NETWORK, msg, "", curlm_code);
+                        std::string msg = StringUtils::format("Unable to continue the download process: [curl error]%s", curl_multi_strerror(curlm_code));
+                        this->notifyError(msg, curlm_code);
                     }
                     break;
             }
@@ -407,7 +420,7 @@ void Downloader::batchDownloadSync(const std::unordered_map<std::string, Downloa
         if (!data->finished)
         {
             AssetsManager::removeFile(data->path + data->name + TEMP_EXT);
-            this->notifyError(ErrorCode::NETWORK, "Fail to download file", data->customId);
+            this->notifyError(ErrorCode::NETWORK, "Unable to download file", data->customId);
         }
     }
     

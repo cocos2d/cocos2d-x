@@ -296,9 +296,9 @@ void AssetsManager::renameFile(const std::string &path, const std::string &oldna
 #endif
 }
 
-void AssetsManager::dispatchUpdateEvent(EventAssetsManager::EventCode code, std::string assetId/* = ""*/, std::string message/* = ""*/)
+void AssetsManager::dispatchUpdateEvent(EventAssetsManager::EventCode code, std::string assetId/* = ""*/, std::string message/* = ""*/, const CURLcode &curle_code/* = CURLE_OK*/, const CURLMcode &curlm_code/* = CURLM_OK*/)
 {
-    EventAssetsManager event(_eventName, this, code, _percent, assetId, message);
+    EventAssetsManager event(_eventName, this, code, _percent, assetId, message, curle_code, curlm_code);
     _eventDispatcher->dispatchEvent(&event);
 }
 
@@ -575,12 +575,12 @@ void AssetsManager::onError(const Downloader::Error &error)
     }
     else if (error.customId == MANIFEST_ID)
     {
-        dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_DOWNLOAD_MANIFEST);
+        dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_DOWNLOAD_MANIFEST, error.customId, error.message, error.curle_code, error.curlm_code);
     }
     else
     {
         _totalWaitToDownload--;
-        dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_UPDATING, error.customId, error.message);
+        dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_UPDATING, error.customId, error.message, error.curle_code, error.curlm_code);
     }
 }
 
