@@ -245,7 +245,7 @@ void AssetsManager::removeDirectory(const std::string& path)
 {
     if (path.size() > 0 && path[path.size() - 1] != '/')
     {
-        CCLOGERROR("Fail to remove directory: invalid path.");
+        CCLOGERROR("Fail to remove directory, invalid path: %s", path.c_str());
         return;
     }
 
