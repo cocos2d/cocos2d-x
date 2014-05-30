@@ -321,7 +321,7 @@ Effect3DOutline::Effect3DOutline()
 , _sprite(nullptr)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    _backToForeGroundLister = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
+    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
                                                           [this](EventCustom*)
                                                           {
                                                               auto glProgram = _glProgramState->getGLProgram();
@@ -331,7 +331,7 @@ Effect3DOutline::Effect3DOutline()
                                                               glProgram->updateUniforms();
                                                           }
                                                           );
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForeGroundLister, -1);
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
 #endif
 }
 
@@ -339,7 +339,7 @@ Effect3DOutline::~Effect3DOutline()
 {
     CC_SAFE_RELEASE_NULL(_sprite);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForeGroundLister);
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
 }
 

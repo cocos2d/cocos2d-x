@@ -99,7 +99,7 @@ protected:
     float _outlineWidth;
     EffectSprite3D* _sprite;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    EventListenerCustom* _backToForeGroundLister;
+    EventListenerCustom* _backToForegroundListener;
 #endif
     
 protected:
