@@ -48,6 +48,7 @@ NS_CC_EXT_BEGIN
 
 const std::string AssetsManager::VERSION_ID = "@version";
 const std::string AssetsManager::MANIFEST_ID = "@manifest";
+const std::string AssetsManager::BATCH_UPDATE_ID = "@batch_update";
 
 // Implementation of AssetsManager
 
@@ -244,7 +245,7 @@ void AssetsManager::removeDirectory(const std::string& path)
 {
     if (path.size() > 0 && path[path.size() - 1] != '/')
     {
-        CCLOG("Invalid path.");
+        CCLOGERROR("Fail to remove directory: invalid path.");
         return;
     }
 
@@ -286,7 +287,7 @@ void AssetsManager::renameFile(const std::string &path, const std::string &oldna
     std::string newPath = path + name;
     if (rename(oldPath.c_str(), newPath.c_str()) != 0)
     {
-        CCLOGERROR("Error: Rename file %s to %s !", oldPath.c_str(), newPath.c_str());
+        CCLOGERROR("Fail to rename file %s to %s !", oldPath.c_str(), newPath.c_str());
     }
 #else
     std::string command = "ren ";
@@ -323,7 +324,7 @@ void AssetsManager::downloadVersion()
     // No version file found
     else
     {
-        CCLOG("No version file found, step skipped\n");
+        CCLOG("AssetsManager : No version file found, step skipped\n");
         _updateState = State::PREDOWNLOAD_MANIFEST;
         downloadManifest();
     }
@@ -338,7 +339,7 @@ void AssetsManager::parseVersion()
 
     if (!_remoteManifest->isVersionLoaded())
     {
-        CCLOG("Error parsing version file, step skipped\n");
+        CCLOG("AssetsManager : Fail to parse version file, step skipped\n");
         _updateState = State::PREDOWNLOAD_MANIFEST;
         downloadManifest();
     }
@@ -379,7 +380,7 @@ void AssetsManager::downloadManifest()
     // No manifest file found
     else
     {
-        CCLOG("No manifest file found, check update failed\n");
+        CCLOG("AssetsManager : No manifest file found, check update failed\n");
         dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_DOWNLOAD_MANIFEST);
         _updateState = State::UNCHECKED;
     }
@@ -394,7 +395,7 @@ void AssetsManager::parseManifest()
 
     if (!_remoteManifest->isLoaded())
     {
-        CCLOG("Error parsing manifest file\n");
+        CCLOG("AssetsManager : Error parsing manifest file\n");
         dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_PARSE_MANIFEST);
         _updateState = State::UNCHECKED;
         removeFile(_tempManifestPath);
@@ -569,7 +570,7 @@ void AssetsManager::onError(const Downloader::Error &error)
     // Skip version error occured
     if (error.customId == VERSION_ID)
     {
-        CCLOG("Error downloading version file, step skipped\n");
+        CCLOG("AssetsManager : Fail to download version file, step skipped\n");
         _updateState = State::PREDOWNLOAD_MANIFEST;
         downloadManifest();
     }

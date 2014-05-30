@@ -56,6 +56,11 @@ size_t curlWriteFunc(void *ptr, size_t size, size_t nmemb, void *userdata)
 
 int downloadProgressFunc(Downloader::ProgressData *ptr, double totalToDownload, double nowDownloaded, double totalToUpLoad, double nowUpLoaded)
 {
+    if (ptr->totalToDownload == 0)
+    {
+        ptr->totalToDownload = totalToDownload;
+    }
+    
     if (ptr->downloaded != nowDownloaded)
     {
         ptr->downloaded = nowDownloaded;
@@ -65,13 +70,12 @@ int downloadProgressFunc(Downloader::ProgressData *ptr, double totalToDownload, 
         if (nowDownloaded == totalToDownload)
         {
             AssetsManager::renameFile(data.path, data.name + TEMP_EXT, data.name);
-            data.finished = true;
             
             Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
-                std::shared_ptr<Downloader> downloader = data.downloader.lock();
-                
-                if (downloader != nullptr)
+                if (!data.downloader.expired())
                 {
+                    std::shared_ptr<Downloader> downloader = data.downloader.lock();
+                
                     auto callback = downloader->getSuccessCallback();
                     if (callback != nullptr)
                     {
@@ -83,10 +87,10 @@ int downloadProgressFunc(Downloader::ProgressData *ptr, double totalToDownload, 
         else
         {
             Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
-                std::shared_ptr<Downloader> downloader = data.downloader.lock();
-                
-                if (downloader != nullptr)
+                if (!data.downloader.expired())
                 {
+                    std::shared_ptr<Downloader> downloader = data.downloader.lock();
+                
                     auto callback = downloader->getProgressCallback();
                     if (callback != nullptr)
                     {
@@ -192,7 +196,7 @@ void Downloader::prepareDownload(const std::string &srcUrl, const std::string &s
     pData->url = srcUrl;
     pData->downloader = downloader;
     pData->downloaded = 0;
-    pData->finished = false;
+    pData->totalToDownload = 0;
     
     fDesc->fp = nullptr;
     fDesc->curl = nullptr;
@@ -419,7 +423,7 @@ void Downloader::batchDownloadSync(const std::unordered_map<std::string, Downloa
     // Check unfinished files and notify errors
     for (auto it = _progDatas.begin(); it != _progDatas.end(); ++it) {
         ProgressData *data = *it;
-        if (!data->finished)
+        if (data->downloaded < data->totalToDownload)
         {
             AssetsManager::removeFile(data->path + data->name + TEMP_EXT);
             this->notifyError(ErrorCode::NETWORK, "Unable to download file", data->customId);

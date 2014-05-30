@@ -80,7 +80,7 @@ public:
         std::string path;
         std::string name;
         double downloaded;
-        bool finished;
+        double totalToDownload;
     };
 
     struct DownloadUnit
