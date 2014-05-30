@@ -83,4 +83,16 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class TestDecryptData : public FileUtilsDemo
+{
+public:
+    CREATE_FUNC(TestDecryptData);
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+private:
+    TestDecryptData();
+};
+
 #endif /* __FILEUTILSTEST_H__ */

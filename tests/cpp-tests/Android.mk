@@ -125,6 +125,7 @@ Classes/ExtensionsTest/NotificationCenterTest/NotificationCenterTest.cpp \
 Classes/ExtensionsTest/Scale9SpriteTest/Scale9SpriteTest.cpp \
 Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.cpp \
 Classes/ExtensionsTest/TableViewTest/TableViewTestScene.cpp \
+Classes/FileUtilsTest/xxtea.cpp \
 Classes/FileUtilsTest/FileUtilsTest.cpp \
 Classes/FontTest/FontTest.cpp \
 Classes/InputTest/MouseTest.cpp \

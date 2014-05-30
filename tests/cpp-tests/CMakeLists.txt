@@ -168,6 +168,7 @@ set(SAMPLE_SRC
   Classes/TransitionsTest/TransitionsTest.cpp
   Classes/UserDefaultTest/UserDefaultTest.cpp
   Classes/ZwoptexTest/ZwoptexTest.cpp
+  Classes/FileUtilsTest/xxtea.cpp
   Classes/FileUtilsTest/FileUtilsTest.cpp
   Classes/SpineTest/SpineTest.cpp
   Classes/DataVisitorTest/DataVisitorTest.cpp

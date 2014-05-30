@@ -45,6 +45,7 @@ NS_CC_BEGIN
 class CC_DLL FileUtils
 {
 public:
+    static std::function<Data(const unsigned char * data, ssize_t dataLen)> onDecryptData;
     /**
      *  Gets the instance of FileUtils.
      */
