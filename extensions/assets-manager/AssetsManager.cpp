@@ -569,9 +569,10 @@ void AssetsManager::updateAssets(const std::unordered_map<std::string, Downloade
 {
     if (_updateState != State::UPDATING && _localManifest->isLoaded() && _remoteManifest->isLoaded())
     {
-        _totalWaitToDownload = _totalToDownload = (int)(assets.size());
-        if (_totalToDownload > 0)
+        int size = (int)(assets.size());
+        if (size > 0)
         {
+            _totalWaitToDownload = _totalToDownload = size;
             _downloader->batchDownloadAsync(assets, BATCH_UPDATE_ID);
         }
     }
