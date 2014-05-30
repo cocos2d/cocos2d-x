@@ -572,7 +572,7 @@ void AssetsManager::updateAssets(const std::unordered_map<std::string, Downloade
         int size = (int)(assets.size());
         if (size > 0)
         {
-            _totalWaitToDownload = _totalToDownload = size;
+            _updateState = State::UPDATING;
             _downloader->batchDownloadAsync(assets, BATCH_UPDATE_ID);
         }
     }
@@ -599,7 +599,6 @@ void AssetsManager::onError(const Downloader::Error &error)
     }
     else
     {
-        _totalWaitToDownload--;
         auto unitIt = _downloadUnits.find(error.customId);
         // Found unit and add it to failed units
         if (unitIt != _downloadUnits.end())
@@ -638,7 +637,7 @@ void AssetsManager::onSuccess(const std::string &srcUrl, const std::string &cust
     else if (customId == BATCH_UPDATE_ID)
     {
         // Finished with error check
-        if (_totalWaitToDownload != 0 || _failedUnits.size() != 0)
+        if (_failedUnits.size() > 0 || _totalWaitToDownload > 0)
         {
             _updateState = State::FAIL_TO_UPDATE;
             dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_FAILED);
@@ -663,11 +662,16 @@ void AssetsManager::onSuccess(const std::string &srcUrl, const std::string &cust
     }
     else
     {
-        _totalWaitToDownload--;
+        auto unitIt = _downloadUnits.find(customId);
+        if (unitIt != _downloadUnits.end())
+        {
+            // Reduce count only when unit found in _downloadUnits
+            _totalWaitToDownload--;
+        }
         // Notify asset updated event
         dispatchUpdateEvent(EventAssetsManager::EventCode::ASSET_UPDATED, customId);
         
-        auto unitIt = _failedUnits.find(customId);
+        unitIt = _failedUnits.find(customId);
         // Found unit and delete it
         if (unitIt != _failedUnits.end())
         {
