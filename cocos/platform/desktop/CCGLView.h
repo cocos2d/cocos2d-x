@@ -75,7 +75,10 @@ public:
      */
     void enableRetina(bool enabled);
     /** Check whether retina display is enabled. */
-    bool isRetinaEnabled() { return _isRetinaEnabled; };
+    bool isRetinaEnabled() const { return _isRetinaEnabled; };
+    
+    /** Get retina factor */
+    int getRetinaFactor() const { return _retinaFactor; }
 
 protected:
     GLView();

@@ -766,7 +766,7 @@ public:
     // Overrides
     //
     virtual Blink* clone() const override;
-	virtual Blink* reverse(void) const override;
+	virtual Blink* reverse() const override;
     virtual void update(float time) override;
     virtual void startWithTarget(Node *target) override;
     virtual void stop() override;

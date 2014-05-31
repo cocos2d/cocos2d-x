@@ -288,29 +288,22 @@ void CheckBox::loadTextureFrontCrossDisabled(const std::string& frontCrossDisabl
     _frontCrossDisabledRendererAdaptDirty = true;
 }
 
-void CheckBox::onTouchEnded(Touch *touch, Event *unusedEvent)
+
+void CheckBox::releaseUpEvent()
 {
-    _touchEndPos = touch->getLocation();
-    if (_highlight)
-    {
-        releaseUpEvent();
-        if (_isSelected){
-            setSelectedState(false);
-            unSelectedEvent();
-        }
-        else
-        {
-            setSelectedState(true);
-            selectedEvent();
-        }
+    Widget::releaseUpEvent();
+    
+    if (_isSelected){
+        setSelectedState(false);
+        unSelectedEvent();
     }
-    setHighlighted(false);
-    Widget* widgetParent = getWidgetParent();
-    if (widgetParent)
+    else
     {
-        widgetParent->checkChildInfo(2,this,_touchEndPos);
+        setSelectedState(true);
+        selectedEvent();
     }
 }
+
 
 void CheckBox::onPressStateChangedToNormal()
 {
@@ -350,7 +343,7 @@ void CheckBox::setSelectedState(bool selected)
     _frontCrossRenderer->setVisible(_isSelected);
 }
 
-bool CheckBox::getSelectedState()
+bool CheckBox::getSelectedState()const
 {
     return _isSelected;
 }

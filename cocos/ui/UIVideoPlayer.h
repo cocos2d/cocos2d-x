@@ -66,10 +66,10 @@ namespace experimental{
             virtual void setVisible(bool visible) override;
 
             virtual void setKeepAspectRatioEnabled(bool enable);
-            virtual bool isKeepAspectRatioEnabled() { return _keepAspectRatioEnabled;}
+            virtual bool isKeepAspectRatioEnabled()const { return _keepAspectRatioEnabled;}
 
             virtual void setFullScreenEnabled(bool enabled);
-            virtual bool isFullScreenEnabled();
+            virtual bool isFullScreenEnabled()const;
 
             virtual void addEventListener(const VideoPlayer::ccVideoPlayerCallback& callback);
 

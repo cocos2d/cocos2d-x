@@ -11,7 +11,7 @@
 --------------------------------
 -- @function [parent=#Skin] getNodeToWorldTransformAR 
 -- @param self
--- @return Mat4#Mat4 ret (return value: cc.Mat4)
+-- @return mat4_table#mat4_table ret (return value: mat4_table)
         
 --------------------------------
 -- @function [parent=#Skin] initWithFile 
@@ -62,13 +62,13 @@
 --------------------------------
 -- @function [parent=#Skin] getNodeToWorldTransform 
 -- @param self
--- @return Mat4#Mat4 ret (return value: cc.Mat4)
+-- @return mat4_table#mat4_table ret (return value: mat4_table)
         
 --------------------------------
 -- @function [parent=#Skin] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #cc.Mat4 mat4
+-- @param #mat4_table mat4
 -- @param #bool bool
         
 --------------------------------

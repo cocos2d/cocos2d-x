@@ -496,6 +496,17 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class LabelIssue4999Test : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelIssue4999Test);
+
+    LabelIssue4999Test();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 // we don't support linebreak mode
 
 #endif

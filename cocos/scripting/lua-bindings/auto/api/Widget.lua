@@ -11,7 +11,7 @@
 --------------------------------
 -- @function [parent=#Widget] setSizePercent 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#Widget] getCustomSize 
@@ -36,12 +36,12 @@
 --------------------------------
 -- @function [parent=#Widget] getTouchEndPos 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#Widget] setPositionPercent 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#Widget] getLayoutSize 
@@ -129,7 +129,7 @@
 --------------------------------
 -- @function [parent=#Widget] getWorldPosition 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#Widget] setFocused 
@@ -154,7 +154,7 @@
 --------------------------------
 -- @function [parent=#Widget] getTouchMovePos 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#Widget] setEnabled 
@@ -184,12 +184,12 @@
 --------------------------------
 -- @function [parent=#Widget] getSizePercent 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#Widget] getTouchStartPos 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#Widget] setFocusEnabled 
@@ -209,13 +209,12 @@
 --------------------------------
 -- @function [parent=#Widget] clippingParentAreaContainPoint 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @function [parent=#Widget] getCurrentFocusedWidget 
 -- @param self
--- @param #bool bool
 -- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
@@ -247,6 +246,13 @@
 -- @param #bool bool
         
 --------------------------------
+-- @function [parent=#Widget] interceptTouchEvent 
+-- @param self
+-- @param #ccui.Widget::TouchEventType toucheventtype
+-- @param #ccui.Widget widget
+-- @param #vec2_table vec2
+        
+--------------------------------
 -- @function [parent=#Widget] addTouchEventListener 
 -- @param self
 -- @param #function func
@@ -254,12 +260,12 @@
 --------------------------------
 -- @function [parent=#Widget] getPositionPercent 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#Widget] hitTest 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -278,13 +284,6 @@
 -- @param #ccui.Widget::SizeType sizetype
         
 --------------------------------
--- @function [parent=#Widget] checkChildInfo 
--- @param self
--- @param #int int
--- @param #ccui.Widget widget
--- @param #cc.Vec2 vec2
-        
---------------------------------
 -- @function [parent=#Widget] setSize 
 -- @param self
 -- @param #size_table size
@@ -298,6 +297,11 @@
 -- @function [parent=#Widget] isFocusEnabled 
 -- @param self
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#Widget] enableDpadNavigation 
+-- @param self
+-- @param #bool bool
         
 --------------------------------
 -- @function [parent=#Widget] create 
@@ -327,7 +331,7 @@
 --------------------------------
 -- @function [parent=#Widget] setPosition 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#Widget] getDescription 

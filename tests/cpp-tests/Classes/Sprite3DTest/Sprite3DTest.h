@@ -65,7 +65,8 @@ class EffectSprite3D;
 class Effect3D : public Ref
 {
 public:
-    virtual void drawWithSprite(EffectSprite3D* sprite, const Mat4 &transform) = 0;
+    virtual void draw(const Mat4 &transform) = 0;
+    virtual void setTarget(EffectSprite3D *sprite) = 0;
 protected:
     Effect3D() : _glProgramState(nullptr) {}
     virtual ~Effect3D()
@@ -85,8 +86,8 @@ public:
     
     void setOutlineWidth(float width);
     
-    void drawWithSprite(EffectSprite3D* sprite, const Mat4 &transform);
-    
+    virtual void draw(const Mat4 &transform) override;
+    virtual void setTarget(EffectSprite3D *sprite) override;
 protected:
     
     Effect3DOutline();
@@ -96,6 +97,7 @@ protected:
     
     Vec3 _outlineColor;
     float _outlineWidth;
+    EffectSprite3D* _sprite;
     
 protected:
     static const std::string _vertShaderFile;

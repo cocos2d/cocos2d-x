@@ -242,7 +242,7 @@ void VideoPlayer::setFullScreenEnabled(bool enabled)
     }
 }
 
-bool VideoPlayer::isFullScreenEnabled()
+bool VideoPlayer::isFullScreenEnabled()const
 {
     return _fullScreenEnabled;
 }

@@ -109,12 +109,12 @@
 --------------------------------
 -- @function [parent=#EditBox] setAnchorPoint 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#EditBox] setPosition 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#EditBox] setVisible 

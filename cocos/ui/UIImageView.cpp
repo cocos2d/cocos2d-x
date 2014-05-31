@@ -230,7 +230,7 @@ void ImageView::setScale9Enabled(bool able)
     setCapInsets(_capInsets);
 }
     
-bool ImageView::isScale9Enabled()
+bool ImageView::isScale9Enabled()const
 {
     return _scale9Enabled;
 }
@@ -254,7 +254,7 @@ void ImageView::setCapInsets(const Rect &capInsets)
     STATIC_CAST_SCALE9SPRITE->setCapInsets(capInsets);
 }
 
-const Rect& ImageView::getCapInsets()
+const Rect& ImageView::getCapInsets()const
 {
     return _capInsets;
 }

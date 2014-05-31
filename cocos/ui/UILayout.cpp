@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCCustomCommand.h"
-#include "ui/UILayoutExecutant.h"
+#include "ui/UILayoutManager.h"
 
 NS_CC_BEGIN
 
@@ -85,7 +85,8 @@ _currentAlphaTestRef(1),
 _backGroundImageColor(Color3B::WHITE),
 _backGroundImageOpacity(255),
 _passFocusToChild(true),
-_loopFocus(false)
+_loopFocus(false),
+_isFocusPassing(false)
 {
     onPassFocusToChild = CC_CALLBACK_2(Layout::findNearestChildWidgetIndex, this);
     this->setAnchorPoint(Vec2::ZERO);
@@ -130,10 +131,8 @@ Layout* Layout::create()
 
 bool Layout::init()
 {
-    if (ProtectedNode::init())
+    if (Widget::init())
     {
-        initRenderer();
-        setBright(true);
         ignoreContentAdaptWithSize(false);
         setSize(Size::ZERO);
         setAnchorPoint(Vec2::ZERO);
@@ -144,17 +143,19 @@ bool Layout::init()
     
 void Layout::addChild(Node *child)
 {
-    Widget::addChild(child);
+    Layout::addChild(child, child->getZOrder(), child->getTag());
 }
 
 void Layout::addChild(Node * child, int zOrder)
 {
-    Widget::addChild(child, zOrder);
+    Layout::addChild(child, zOrder, child->getTag());
 }
 
 void Layout::addChild(Node *child, int zOrder, int tag)
 {
-    supplyTheLayoutParameterLackToChild(static_cast<Widget*>(child));
+    if (dynamic_cast<Widget*>(child)) {
+        supplyTheLayoutParameterLackToChild(static_cast<Widget*>(child));
+    }
     Widget::addChild(child, zOrder, tag);
     _doLayoutDirty = true;
 }
@@ -168,6 +169,7 @@ void Layout::removeChild(Node *child, bool cleanup)
 void Layout::removeAllChildren()
 {
     Widget::removeAllChildren();
+    _doLayoutDirty = true;
 }
     
 void Layout::removeAllChildrenWithCleanup(bool cleanup)
@@ -176,7 +178,7 @@ void Layout::removeAllChildrenWithCleanup(bool cleanup)
     _doLayoutDirty = true;
 }
 
-bool Layout::isClippingEnabled()
+bool Layout::isClippingEnabled()const
 {
     return _clippingEnabled;
 }
@@ -206,6 +208,7 @@ void Layout::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentT
     {
         ProtectedNode::visit(renderer, parentTransform, parentTransformUpdated);
     }
+    doLayout();
 }
     
 void Layout::sortAllChildren()
@@ -442,7 +445,7 @@ void Layout::setClippingType(ClippingType type)
     setClippingEnabled(clippingEnabled);
 }
     
-Layout::ClippingType Layout::getClippingType()
+Layout::ClippingType Layout::getClippingType()const
 {
     return _clippingType;
 }
@@ -462,7 +465,7 @@ void Layout::setStencilClippingSize(const Size &size)
     }
 }
     
-const Rect& Layout::getClippingRect()
+const Rect& Layout::getClippingRect() 
 {
     if (_clippingRectDirty)
     {
@@ -579,7 +582,7 @@ void Layout::setBackGroundImageScale9Enabled(bool able)
     setBackGroundImageCapInsets(_backGroundImageCapInsets);
 }
     
-bool Layout::isBackGroundImageScale9Enabled()
+bool Layout::isBackGroundImageScale9Enabled()const
 {
     return _backGroundScale9Enabled;
 }
@@ -640,7 +643,7 @@ void Layout::setBackGroundImageCapInsets(const Rect &capInsets)
     }
 }
     
-const Rect& Layout::getBackGroundImageCapInsets()
+const Rect& Layout::getBackGroundImageCapInsets()const
 {
     return _backGroundImageCapInsets;
 }
@@ -770,7 +773,7 @@ void Layout::setBackGroundColorType(BackGroundColorType type)
     }
 }
     
-Layout::BackGroundColorType Layout::getBackGroundColorType()
+Layout::BackGroundColorType Layout::getBackGroundColorType()const
 {
     return _colorType;
 }
@@ -784,7 +787,7 @@ void Layout::setBackGroundColor(const Color3B &color)
     }
 }
     
-const Color3B& Layout::getBackGroundColor()
+const Color3B& Layout::getBackGroundColor()const
 {
     return _cColor;
 }
@@ -803,12 +806,12 @@ void Layout::setBackGroundColor(const Color3B &startColor, const Color3B &endCol
     }
 }
     
-const Color3B& Layout::getBackGroundStartColor()
+const Color3B& Layout::getBackGroundStartColor()const
 {
     return _gStartColor;
 }
 
-const Color3B& Layout::getBackGroundEndColor()
+const Color3B& Layout::getBackGroundEndColor()const
 {
     return _gEndColor;
 }
@@ -831,7 +834,7 @@ void Layout::setBackGroundColorOpacity(GLubyte opacity)
     }
 }
     
-GLubyte Layout::getBackGroundColorOpacity()
+GLubyte Layout::getBackGroundColorOpacity()const
 {
     return _cOpacity;
 }
@@ -845,7 +848,7 @@ void Layout::setBackGroundColorVector(const Vec2 &vector)
     }
 }
     
-const Vec2& Layout::getBackGroundColorVector()
+const Vec2& Layout::getBackGroundColorVector()const
 {
     return _alongVector;
 }
@@ -862,12 +865,12 @@ void Layout::setBackGroundImageOpacity(GLubyte opacity)
     updateBackGroundImageOpacity();
 }
 
-const Color3B& Layout::getBackGroundImageColor()
+const Color3B& Layout::getBackGroundImageColor()const
 {
     return _backGroundImageColor;
 }
 
-GLubyte Layout::getBackGroundImageOpacity()
+GLubyte Layout::getBackGroundImageOpacity()const
 {
     return _backGroundImageOpacity;
 }
@@ -929,29 +932,29 @@ void Layout::requestDoLayout()
     _doLayoutDirty = true;
 }
     
-const Size Layout::getLayoutContentSize()
+Size Layout::getLayoutContentSize()const
 {
     return this->getSize();
 }
     
-const Vector<Node*>& Layout::getLayoutElements()
+const Vector<Node*>& Layout::getLayoutElements()const
 {
     return this->getChildren();
 }
     
-LayoutExecutant* Layout::createLayoutExecutant()
+LayoutManager* Layout::createLayoutManager()
 {
-    LayoutExecutant* exe = nullptr;
+    LayoutManager* exe = nullptr;
     switch (_layoutType)
     {
         case Type::VERTICAL:
-            exe = LinearVerticalLayoutExecutant::create();
+            exe = LinearVerticalLayoutManager::create();
             break;
         case Type::HORIZONTAL:
-            exe = LinearHorizontalLayoutExecutant::create();
+            exe = LinearHorizontalLayoutManager::create();
             break;
         case Type::RELATIVE:
-            exe = RelativeLayoutExecutant::create();
+            exe = RelativeLayoutManager::create();
             break;
         default:
             break;
@@ -966,7 +969,7 @@ void Layout::doLayout()
     {
         return;
     }
-    LayoutExecutant* executant = this->createLayoutExecutant();
+    LayoutManager* executant = this->createLayoutManager();
     
     if (executant)
     {
@@ -1017,7 +1020,7 @@ void Layout::setLoopFocus(bool loop)
     _loopFocus = loop;
 }
 
-bool Layout::isLoopFocus()
+bool Layout::isLoopFocus()const
 {
     return _loopFocus;
 }
@@ -1028,7 +1031,7 @@ void Layout::setPassFocusToChild(bool pass)
     _passFocusToChild = pass;
 }
 
-bool Layout::isPassFocusToChild()
+bool Layout::isPassFocusToChild()const
 {
     return _passFocusToChild;
 }
@@ -1070,7 +1073,7 @@ Size Layout::getLayoutAccumulatedSize()const
     return layoutSize;
 }
 
-Vec2 Layout::getWorldCenterPoint(Widget* widget)
+Vec2 Layout::getWorldCenterPoint(Widget* widget)const
 {
     Layout *layout = dynamic_cast<Layout*>(widget);
     //FIXEDME: we don't need to calculate the content size of layout anymore
@@ -1365,30 +1368,30 @@ void Layout::findProperSearchingFunctor(FocusDirection dir, Widget* baseWidget)
     
     Vec2 previousWidgetPosition = this->getWorldCenterPoint(baseWidget);
     
-    Vec2 layoutPosition = this->getWorldCenterPoint(this->findFirstNonLayoutWidget());
+    Vec2 widgetPosition = this->getWorldCenterPoint(this->findFirstNonLayoutWidget());
     
     if (dir == FocusDirection::LEFT) {
-        if (previousWidgetPosition.x > layoutPosition.x) {
+        if (previousWidgetPosition.x > widgetPosition.x) {
             onPassFocusToChild = CC_CALLBACK_2(Layout::findNearestChildWidgetIndex, this);
         }
         else{
             onPassFocusToChild = CC_CALLBACK_2(Layout::findFarestChildWidgetIndex, this);
         }
     }else if(dir == FocusDirection::RIGHT){
-        if (previousWidgetPosition.x > layoutPosition.x) {
+        if (previousWidgetPosition.x > widgetPosition.x) {
             onPassFocusToChild = CC_CALLBACK_2(Layout::findFarestChildWidgetIndex, this);
         }
         else{
             onPassFocusToChild = CC_CALLBACK_2(Layout::findNearestChildWidgetIndex, this);
         }
     }else if(dir == FocusDirection::DOWN){
-        if (previousWidgetPosition.y > layoutPosition.y) {
+        if (previousWidgetPosition.y > widgetPosition.y) {
             onPassFocusToChild = CC_CALLBACK_2(Layout::findNearestChildWidgetIndex, this);
         }else{
             onPassFocusToChild = CC_CALLBACK_2(Layout::findFarestChildWidgetIndex, this);
         }
     }else if(dir == FocusDirection::UP){
-        if (previousWidgetPosition.y < layoutPosition.y) {
+        if (previousWidgetPosition.y < widgetPosition.y) {
             onPassFocusToChild = CC_CALLBACK_2(Layout::findNearestChildWidgetIndex, this);
         }else{
             onPassFocusToChild = CC_CALLBACK_2(Layout::findFarestChildWidgetIndex, this);
@@ -1404,21 +1407,22 @@ Widget* Layout::passFocusToChild(FocusDirection dir, cocos2d::ui::Widget *curren
 {
     if (checkFocusEnabledChild())
     {
-        Widget* previousWidget = this->getCurrentFocusedWidget(true);
+        Widget* previousWidget = this->getCurrentFocusedWidget();
         
         this->findProperSearchingFunctor(dir, previousWidget);
         
         int index = onPassFocusToChild(dir, previousWidget);
         
         Widget *widget = this->getChildWidgetByIndex(index);
-        this->dispatchFocusEvent(current, widget);
         Layout *layout = dynamic_cast<Layout*>(widget);
         if (layout)
         {
+            layout->_isFocusPassing = true;
             return layout->findNextFocusedWidget(dir, layout);
         }
         else
         {
+            this->dispatchFocusEvent(current, widget);
             return widget;
         }
     }
@@ -1429,7 +1433,7 @@ Widget* Layout::passFocusToChild(FocusDirection dir, cocos2d::ui::Widget *curren
         
 }
 
-bool Layout::checkFocusEnabledChild()
+bool Layout::checkFocusEnabledChild()const
 {
     bool ret = false;
     for(Node* node : _children)
@@ -1444,7 +1448,7 @@ bool Layout::checkFocusEnabledChild()
     return ret;
 }
 
-Widget* Layout::getChildWidgetByIndex(ssize_t index)
+Widget* Layout::getChildWidgetByIndex(ssize_t index)const
 {
     ssize_t size = _children.size();
     int count = 0;
@@ -1493,14 +1497,14 @@ Widget* Layout::getPreviousFocusedWidget(FocusDirection direction, Widget *curre
         if (nextWidget->isFocusEnabled())
         {
             
-            this->dispatchFocusEvent(current, nextWidget);
             
             Layout* layout = dynamic_cast<Layout*>(nextWidget);
             if (layout)
             {
+                layout->_isFocusPassing = true;
                 return layout->findNextFocusedWidget(direction, layout);
             }
-           
+            this->dispatchFocusEvent(current, nextWidget);
             return nextWidget;
         }
         else
@@ -1518,14 +1522,15 @@ Widget* Layout::getPreviousFocusedWidget(FocusDirection direction, Widget *curre
                 nextWidget = this->getChildWidgetByIndex(previousWidgetPos);
                 if (nextWidget->isFocusEnabled())
                 {
-                    this->dispatchFocusEvent(current, nextWidget);
                     Layout* layout = dynamic_cast<Layout*>(nextWidget);
                     if (layout)
                     {
+                        layout->_isFocusPassing = true;
                         return layout->findNextFocusedWidget(direction, layout);
                     }
                     else
                     {
+                        this->dispatchFocusEvent(current, nextWidget);
                         return nextWidget;
                     }
                 }
@@ -1551,7 +1556,6 @@ Widget* Layout::getPreviousFocusedWidget(FocusDirection direction, Widget *curre
             {
                 if (isWidgetAncestorSupportLoopFocus(this, direction))
                 {
-                    this->dispatchFocusEvent(current, this);
                     return Widget::findNextFocusedWidget(direction, this);
                 }
                 if (dynamic_cast<Layout*>(current)) {
@@ -1564,8 +1568,6 @@ Widget* Layout::getPreviousFocusedWidget(FocusDirection direction, Widget *curre
             }
             else
             {
-                //call parent method to get its parent's next focus enabled widget
-                this->dispatchFocusEvent(current,this);
                 return Widget::findNextFocusedWidget(direction, this);
             }
         }
@@ -1586,14 +1588,15 @@ Widget* Layout::getNextFocusedWidget(FocusDirection direction, Widget *current)
             if (nextWidget->isFocusEnabled())
             {
                 
-                this->dispatchFocusEvent(current, nextWidget);
                 Layout* layout = dynamic_cast<Layout*>(nextWidget);
                 if (layout)
                 {
+                    layout->_isFocusPassing = true;
                     return layout->findNextFocusedWidget(direction, layout);
                 }
                 else
                 {
+                    this->dispatchFocusEvent(current, nextWidget);
                     return nextWidget;
                 }
             }
@@ -1617,14 +1620,15 @@ Widget* Layout::getNextFocusedWidget(FocusDirection direction, Widget *current)
                 if (nextWidget->isFocusEnabled())
                 {
                     
-                    this->dispatchFocusEvent(current, nextWidget);
-                    
                     Layout* layout = dynamic_cast<Layout*>(nextWidget);
                     if (layout)
                     {
+                        layout->_isFocusPassing = true;
                         return layout->findNextFocusedWidget(direction, layout);
-                    }else
+                    }
+                    else
                     {
+                        this->dispatchFocusEvent(current, nextWidget);
                         return nextWidget;
                     }
                 }
@@ -1649,7 +1653,6 @@ Widget* Layout::getNextFocusedWidget(FocusDirection direction, Widget *current)
             {
                 if (isWidgetAncestorSupportLoopFocus(this, direction))
                 {
-                    this->dispatchFocusEvent(current, this);
                     return Widget::findNextFocusedWidget(direction, this);
                 }
                 if (dynamic_cast<Layout*>(current)) {
@@ -1662,15 +1665,13 @@ Widget* Layout::getNextFocusedWidget(FocusDirection direction, Widget *current)
             }
             else
             {
-                //call parent method to get its parent's next focus enabled widget
-                this->dispatchFocusEvent(current,this);
                 return Widget::findNextFocusedWidget(direction, this);
             }
         }
     }
 }
 
-bool  Layout::isLastWidgetInContainer(Widget* widget, FocusDirection direction)
+bool  Layout::isLastWidgetInContainer(Widget* widget, FocusDirection direction)const
 {
     Layout* parent = dynamic_cast<Layout*>(widget->getParent());
     if (parent == nullptr)
@@ -1756,7 +1757,7 @@ bool  Layout::isLastWidgetInContainer(Widget* widget, FocusDirection direction)
     return false;
 }
 
-bool  Layout::isWidgetAncestorSupportLoopFocus(Widget* widget, FocusDirection direction)
+bool  Layout::isWidgetAncestorSupportLoopFocus(Widget* widget, FocusDirection direction)const
 {
     Layout* parent = dynamic_cast<Layout*>(widget->getParent());
     if (parent == nullptr)
@@ -1805,15 +1806,17 @@ bool  Layout::isWidgetAncestorSupportLoopFocus(Widget* widget, FocusDirection di
 
 Widget* Layout::findNextFocusedWidget(FocusDirection direction, Widget* current)
 {
-    if (this->isFocused())
+    if (_isFocusPassing || this->isFocused())
     {
         Layout* parent = dynamic_cast<Layout*>(this->getParent());
-
+        _isFocusPassing = false;
+        
         if (_passFocusToChild)
         {
             Widget * w = this->passFocusToChild(direction, current);
             if (dynamic_cast<Layout*>(w)) {
                 if (parent) {
+                    parent->_isFocusPassing = true;
                     return parent->findNextFocusedWidget(direction, this);
                 }
             }
@@ -1823,10 +1826,11 @@ Widget* Layout::findNextFocusedWidget(FocusDirection direction, Widget* current)
         if (nullptr == parent) {
             return this;
         }
+        parent->_isFocusPassing = true;
         return parent->findNextFocusedWidget(direction, this);
             
     }
-    else if(current->isFocused() || !current->isFocusEnabled())
+    else if(current->isFocused() || dynamic_cast<Layout*>(current))
     {
         if (_layoutType == Type::HORIZONTAL)
         {
@@ -1847,13 +1851,11 @@ Widget* Layout::findNextFocusedWidget(FocusDirection direction, Widget* current)
                     {
                         if (isWidgetAncestorSupportLoopFocus(current, direction))
                         {
-                            this->dispatchFocusEvent(current, this);
                             return Widget::findNextFocusedWidget(direction, this);
                         }
                         return current;
                     }
                     else{
-                        this->dispatchFocusEvent(current, this);
                         return Widget::findNextFocusedWidget(direction, this);
                     }
                 }break;
@@ -1876,14 +1878,12 @@ Widget* Layout::findNextFocusedWidget(FocusDirection direction, Widget* current)
                     {
                         if (isWidgetAncestorSupportLoopFocus(current, direction))
                         {
-                            this->dispatchFocusEvent(current, this);
                             return Widget::findNextFocusedWidget(direction, this);
                         }
                         return current;
                     }
                     else
                     {
-                        this->dispatchFocusEvent(current, this);
                         return Widget::findNextFocusedWidget(direction, this);
                     }
                 } break;

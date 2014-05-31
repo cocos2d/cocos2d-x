@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __cocos2d_libs__CCLayoutExecutant__
-#define __cocos2d_libs__CCLayoutExecutant__
+#ifndef __cocos2d_libs__CCLayoutManager__
+#define __cocos2d_libs__CCLayoutManager__
 
 #include "base/CCRef.h"
 #include "base/CCVector.h"
@@ -36,48 +36,53 @@ class LayoutProtocol;
 class Widget;
 class RelativeLayoutParameter;
 
-class LayoutExecutant : public Ref
+class LayoutManager : public Ref
 {
 public:
-    LayoutExecutant(){};
-    virtual ~LayoutExecutant(){};
+    virtual ~LayoutManager(){};
+    LayoutManager(){};
     
     virtual void doLayout(LayoutProtocol *layout) = 0;
+    
+    friend class Layout;
 };
 
-class LinearVerticalLayoutExecutant : public LayoutExecutant
+class LinearVerticalLayoutManager : public LayoutManager
 {
-public:
-    LinearVerticalLayoutExecutant(){};
-    virtual ~LinearVerticalLayoutExecutant(){};
-    static LinearVerticalLayoutExecutant* create();
+private:
+    LinearVerticalLayoutManager(){};
+    virtual ~LinearVerticalLayoutManager(){};
+    static LinearVerticalLayoutManager* create();
     virtual void doLayout(LayoutProtocol *layout) override;
+    
+    friend class Layout;
 };
 
-class LinearHorizontalLayoutExecutant : public LayoutExecutant
+class LinearHorizontalLayoutManager : public LayoutManager
 {
-public:
-    LinearHorizontalLayoutExecutant(){};
-    virtual ~LinearHorizontalLayoutExecutant(){};
-    static LinearHorizontalLayoutExecutant* create();
+private:
+    LinearHorizontalLayoutManager(){};
+    virtual ~LinearHorizontalLayoutManager(){};
+    static LinearHorizontalLayoutManager* create();
     virtual void doLayout(LayoutProtocol *layout) override;
+    
+    friend class Layout;
 };
 
-class RelativeLayoutExecutant : public LayoutExecutant
+class RelativeLayoutManager : public LayoutManager
 {
-public:
-    RelativeLayoutExecutant()
+private:
+    RelativeLayoutManager()
     :_unlayoutChildCount(0),
     _widget(nullptr),
     _finalPositionX(0.0f),
     _finalPositionY(0.0f),
     _relativeWidgetLP(nullptr)
     {}
-    virtual ~RelativeLayoutExecutant(){};
-    static RelativeLayoutExecutant* create();
+    virtual ~RelativeLayoutManager(){};
+    static RelativeLayoutManager* create();
     virtual void doLayout(LayoutProtocol *layout) override;
     
-protected:
     Vector<Widget*> getAllWidgets(LayoutProtocol *layout);
     Widget* getRelativeWidget(Widget* widget);
     bool caculateFinalPositionWithRelativeWidget(LayoutProtocol *layout);
@@ -90,9 +95,11 @@ protected:
     float _finalPositionY;
     
     RelativeLayoutParameter* _relativeWidgetLP;
+    
+    friend class Layout;
 };
 
 }
 
 NS_CC_END
-#endif /* defined(__cocos2d_libs__CCLayoutExecutant__) */
+#endif /* defined(__cocos2d_libs__CCLayoutManager__) */
