@@ -139,7 +139,6 @@ PoolManager::PoolManager()
 PoolManager::~PoolManager()
 {
     CCLOGINFO("deallocing PoolManager: %p", this);
-    CC_ASSERT(std::unique(_releasePoolStack.begin(), _releasePoolStack.end()) == _releasePoolStack.end());
     std::for_each(_releasePoolStack.begin(), _releasePoolStack.end(), std::default_delete<AutoreleasePool>());
 }
 
