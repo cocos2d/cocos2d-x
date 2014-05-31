@@ -880,7 +880,7 @@ void Label::drawShadowWithoutBlur()
 void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     // Don't do calculate the culling if the transform was not updated
-    _insideBounds = (flags & PARENT_DIRTY_MASK) ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
+    _insideBounds = (flags & FLAGS_TRANSFORM_DIRTY) ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
 
     if(_insideBounds) {
         _customCommand.init(_globalZOrder);
@@ -1066,7 +1066,7 @@ void Label::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t pare
 
     uint32_t flags = processParentFlags(parentTransform, parentFlags);
 
-    if (_shadowEnabled && _shadowBlurRadius <= 0 && (_shadowDirty || (flags & PARENT_DIRTY_MASK)))
+    if (_shadowEnabled && _shadowBlurRadius <= 0 && (_shadowDirty || (flags & FLAGS_DIRTY_MASK)))
     {
         _position.x += _shadowOffset.width;
         _position.y += _shadowOffset.height;

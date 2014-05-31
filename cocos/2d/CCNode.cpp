@@ -976,10 +976,10 @@ void Node::visit()
 uint32_t Node::processParentFlags(const Mat4& parentTransform, uint32_t parentFlags)
 {
     uint32_t flags = parentFlags;
-    flags |= (_transformUpdated ? PARENT_TRANSFORM_DIRTY : 0);
-    flags |= (_contentSizeDirty ? PARENT_CONTENT_SIZE_DIRTY : 0);
+    flags |= (_transformUpdated ? FLAGS_TRANSFORM_DIRTY : 0);
+    flags |= (_contentSizeDirty ? FLAGS_CONTENT_SIZE_DIRTY : 0);
 
-    if(_usingNormalizedPosition && (flags & PARENT_CONTENT_SIZE_DIRTY)) {
+    if(_usingNormalizedPosition && (flags & FLAGS_CONTENT_SIZE_DIRTY)) {
         CCASSERT(_parent, "setNormalizedPosition() doesn't work with orphan nodes");
         auto s = _parent->getContentSize();
         _position.x = _normalizedPosition.x * s.width;
@@ -987,7 +987,7 @@ uint32_t Node::processParentFlags(const Mat4& parentTransform, uint32_t parentFl
         _transformUpdated = _transformDirty = _inverseDirty = true;
     }
 
-    if(flags & PARENT_DIRTY_MASK)
+    if(flags & FLAGS_DIRTY_MASK)
         _modelViewTransform = this->transform(parentTransform);
 
     _transformUpdated = false;

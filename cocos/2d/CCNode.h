@@ -108,10 +108,10 @@ public:
     static const int INVALID_TAG = -1;
 
     enum {
-        PARENT_TRANSFORM_DIRTY = (1 << 0),
-        PARENT_CONTENT_SIZE_DIRTY = (1 << 1),
+        FLAGS_TRANSFORM_DIRTY = (1 << 0),
+        FLAGS_CONTENT_SIZE_DIRTY = (1 << 1),
 
-        PARENT_DIRTY_MASK = (PARENT_TRANSFORM_DIRTY | PARENT_CONTENT_SIZE_DIRTY),
+        FLAGS_DIRTY_MASK = (FLAGS_TRANSFORM_DIRTY | FLAGS_CONTENT_SIZE_DIRTY),
     };
     /// @{
     /// @name Constructor, Destructor and Initializers

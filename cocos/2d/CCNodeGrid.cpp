@@ -94,7 +94,7 @@ void NodeGrid::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t p
     renderer->addCommand(&_groupCommand);
     renderer->pushGroup(_groupCommand.getRenderQueueID());
 
-    bool dirty = (parentFlags & PARENT_TRANSFORM_DIRTY) || _transformUpdated;
+    bool dirty = (parentFlags & FLAGS_TRANSFORM_DIRTY) || _transformUpdated;
     if(dirty)
         _modelViewTransform = this->transform(parentTransform);
     _transformUpdated = false;
