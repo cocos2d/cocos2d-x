@@ -74,7 +74,7 @@ namespace experimental{
             virtual void addEventListener(const VideoPlayer::ccVideoPlayerCallback& callback);
 
             virtual void onPlayEvent(VideoPlayer::EventType event);
-            virtual void draw(Renderer *renderer, const Mat4& transform, bool transformUpdated) override;
+            virtual void draw(Renderer *renderer, const Mat4& transform, uint32_t flags) override;
 
         protected:
             virtual cocos2d::ui::Widget* createCloneInstance() override;
