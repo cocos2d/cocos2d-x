@@ -455,17 +455,20 @@ void GLProgramState::setUniformMat4(const std::string &uniformName, const Mat4& 
 
 // Textures
 
-void GLProgramState::setUniformTexture(const std::string &uniformName, Texture2D *texture)
+void GLProgramState::setUniformTexture(const std::string &uniformName, Texture2D *texture, int textureUnitIndex)
 {
     CCASSERT(texture, "Invalid texture");
-    setUniformTexture(uniformName, texture->getName());
+    setUniformTexture(uniformName, texture->getName(), textureUnitIndex);
 }
 
-void GLProgramState::setUniformTexture(const std::string &uniformName, GLuint textureId)
+void GLProgramState::setUniformTexture(const std::string &uniformName, GLuint textureId, int textureUnitIndex)
 {
     auto v = getUniformValue(uniformName);
-    if (v)
+    if (v) {
+        if (textureUnitIndex != -1)
+            _textureUnitIndex = textureUnitIndex;
         v->setTexture(textureId, _textureUnitIndex++);
+    }
     else
         CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
 }
