@@ -236,12 +236,12 @@ Data FileUtilsAndroid::getData(const std::string& filename, bool forString)
     {
         if (FileUtils::onDecryptData)
         {
-            ret = FileUtils::onDecryptData(buffer,size);
-            free(buffer);
+            ret = FileUtils::onDecryptData(data,size);
+            free(data);
         } 
         else
         {
-            ret.fastSet(buffer, size);
+            ret.fastSet(data, size);
         }
     }
 
