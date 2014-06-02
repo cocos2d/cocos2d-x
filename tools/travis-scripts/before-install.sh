@@ -82,7 +82,7 @@ fi
 
 if [ "$PLATFORM"x = "nacl"x ]; then
     sudo apt-get update
-    sudo apt-get install libc6:i386
+    sudo apt-get install libc6:i386 libstdc++6:i386
     echo "Download nacl_sdk ..."
     wget http://storage.googleapis.com/nativeclient-mirror/nacl/nacl_sdk/nacl_sdk.zip
     echo "Decompress nacl_sdk.zip"

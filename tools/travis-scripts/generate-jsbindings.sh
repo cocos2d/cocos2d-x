@@ -42,7 +42,9 @@ else
     sudo apt-get --force-yes --yes install python-yaml python-cheetah
 fi
 
-if [ "$GEN_JSB"x != "YES"x ]; then
+# this script is running on some repo other than cocos2d/cocos2d-x then
+# don't try to create create PR, just regenerate the bindings locally.
+if [ "$GEN_JSB" != "YES" -o "${TRAVIS_REPO_SLUG}" != "cocos2d/cocos2d-x" ]; then
     pushd "$TOJS_ROOT"
     ./genbindings.sh
     popd
@@ -50,15 +52,15 @@ if [ "$GEN_JSB"x != "YES"x ]; then
 fi
 
 #Set git user
-git config --global user.email ${GH_EMAIL}
-git config --global user.name ${GH_USER}
+git config user.email ${GH_EMAIL}
+git config user.name ${GH_USER}
 
 # Update submodule of auto-gen JSBinding repo.
 pushd "$GENERATED_WORKTREE"
 
 git checkout -B v2
-#Set remotes
-git remote add upstream https://${GH_USER}:${GH_PASSWORD}@github.com/folecr/cocos2dx-autogen-bindings.git 2> /dev/null > /dev/null
+#Set remote
+git remote add upstream https://${GH_USER}:${GH_PASSWORD}@github.com/folecr/cocos2dx-autogen-bindings.git > /dev/null
 
 echo "Delete all directories and files except '.git' and 'README'."
 ls -a | grep -E -v ^\[.\]\{1,2\}$ | grep -E -v ^\.git$ | grep -E -v ^README$ | xargs -I{} rm -rf {}
