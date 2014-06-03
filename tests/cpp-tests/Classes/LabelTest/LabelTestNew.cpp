@@ -78,7 +78,8 @@ static std::function<Layer*()> createFunctions[] =
     CL(LabelTTFOldNew),
     CL(LabelFontNameTest),
     CL(LabelAlignmentTest),
-    CL(LabelIssue4428Test)
+    CL(LabelIssue4428Test),
+    CL(LabelIssue4999Test)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -1778,4 +1779,22 @@ std::string LabelIssue4428Test::title() const
 std::string LabelIssue4428Test::subtitle() const
 {
     return "Reorder issue #4428.The label should be flipped vertically.";
+}
+
+LabelIssue4999Test::LabelIssue4999Test()
+{
+    auto label = Label::createWithTTF("Smaller font test", "fonts/arial.ttf",5);
+    label->setPosition(VisibleRect::center());
+    label->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    addChild(label);
+}
+
+std::string LabelIssue4999Test::title() const
+{
+    return "New Label Bugs Test";
+}
+
+std::string LabelIssue4999Test::subtitle() const
+{
+    return "Reorder issue #4999.The label should be display cleanly.";
 }

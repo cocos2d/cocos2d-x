@@ -295,8 +295,6 @@
 		1AC3590A18CEC1FB00F37B72 /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 1AC3590118CEC1FB00F37B72 /* ipadhd */; };
 		1AC3590B18CEC1FB00F37B72 /* iphone in Resources */ = {isa = PBXBuildFile; fileRef = 1AC3590218CEC1FB00F37B72 /* iphone */; };
 		1AC3590C18CEC1FB00F37B72 /* iphone in Resources */ = {isa = PBXBuildFile; fileRef = 1AC3590218CEC1FB00F37B72 /* iphone */; };
-		1AC35B1F18CECF0C00F37B72 /* AccelerometerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC3592618CECF0A00F37B72 /* AccelerometerTest.cpp */; };
-		1AC35B2018CECF0C00F37B72 /* AccelerometerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC3592618CECF0A00F37B72 /* AccelerometerTest.cpp */; };
 		1AC35B2118CECF0C00F37B72 /* ActionManagerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC3592918CECF0A00F37B72 /* ActionManagerTest.cpp */; };
 		1AC35B2218CECF0C00F37B72 /* ActionManagerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC3592918CECF0A00F37B72 /* ActionManagerTest.cpp */; };
 		1AC35B2318CECF0C00F37B72 /* ActionsEaseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC3592C18CECF0A00F37B72 /* ActionsEaseTest.cpp */; };
@@ -443,10 +441,6 @@
 		1AC35C0818CECF0C00F37B72 /* MouseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A9618CECF0B00F37B72 /* MouseTest.cpp */; };
 		1AC35C0918CECF0C00F37B72 /* IntervalTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A9918CECF0B00F37B72 /* IntervalTest.cpp */; };
 		1AC35C0A18CECF0C00F37B72 /* IntervalTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A9918CECF0B00F37B72 /* IntervalTest.cpp */; };
-		1AC35C0B18CECF0C00F37B72 /* KeyboardTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A9C18CECF0B00F37B72 /* KeyboardTest.cpp */; };
-		1AC35C0C18CECF0C00F37B72 /* KeyboardTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A9C18CECF0B00F37B72 /* KeyboardTest.cpp */; };
-		1AC35C0D18CECF0C00F37B72 /* KeypadTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A9F18CECF0B00F37B72 /* KeypadTest.cpp */; };
-		1AC35C0E18CECF0C00F37B72 /* KeypadTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A9F18CECF0B00F37B72 /* KeypadTest.cpp */; };
 		1AC35C0F18CECF0C00F37B72 /* LabelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AA218CECF0C00F37B72 /* LabelTest.cpp */; };
 		1AC35C1018CECF0C00F37B72 /* LabelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AA218CECF0C00F37B72 /* LabelTest.cpp */; };
 		1AC35C1118CECF0C00F37B72 /* LabelTestNew.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AA418CECF0C00F37B72 /* LabelTestNew.cpp */; };
@@ -1337,8 +1331,6 @@
 		1AC3590218CEC1FB00F37B72 /* iphone */ = {isa = PBXFileReference; lastKnownFileType = folder; name = iphone; path = "../tests/cpp-empty-test/Resources/iphone"; sourceTree = "<group>"; };
 		1AC3590D18CEC25300F37B72 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1AC3590F18CEC26700F37B72 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1AC3592618CECF0A00F37B72 /* AccelerometerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AccelerometerTest.cpp; sourceTree = "<group>"; };
-		1AC3592718CECF0A00F37B72 /* AccelerometerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccelerometerTest.h; sourceTree = "<group>"; };
 		1AC3592918CECF0A00F37B72 /* ActionManagerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActionManagerTest.cpp; sourceTree = "<group>"; };
 		1AC3592A18CECF0A00F37B72 /* ActionManagerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionManagerTest.h; sourceTree = "<group>"; };
 		1AC3592C18CECF0A00F37B72 /* ActionsEaseTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActionsEaseTest.cpp; sourceTree = "<group>"; };
@@ -1549,10 +1541,6 @@
 		1AC35A9718CECF0B00F37B72 /* MouseTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseTest.h; sourceTree = "<group>"; };
 		1AC35A9918CECF0B00F37B72 /* IntervalTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IntervalTest.cpp; sourceTree = "<group>"; };
 		1AC35A9A18CECF0B00F37B72 /* IntervalTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntervalTest.h; sourceTree = "<group>"; };
-		1AC35A9C18CECF0B00F37B72 /* KeyboardTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KeyboardTest.cpp; sourceTree = "<group>"; };
-		1AC35A9D18CECF0B00F37B72 /* KeyboardTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardTest.h; sourceTree = "<group>"; };
-		1AC35A9F18CECF0B00F37B72 /* KeypadTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KeypadTest.cpp; sourceTree = "<group>"; };
-		1AC35AA018CECF0B00F37B72 /* KeypadTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeypadTest.h; sourceTree = "<group>"; };
 		1AC35AA218CECF0C00F37B72 /* LabelTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = LabelTest.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		1AC35AA318CECF0C00F37B72 /* LabelTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelTest.h; sourceTree = "<group>"; };
 		1AC35AA418CECF0C00F37B72 /* LabelTestNew.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LabelTestNew.cpp; sourceTree = "<group>"; };
@@ -2218,7 +2206,6 @@
 		1AC3592418CECF0A00F37B72 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				1AC3592518CECF0A00F37B72 /* AccelerometerTest */,
 				1AC3592818CECF0A00F37B72 /* ActionManagerTest */,
 				1AC3592B18CECF0A00F37B72 /* ActionsEaseTest */,
 				1AC3592E18CECF0A00F37B72 /* ActionsProgressTest */,
@@ -2249,8 +2236,6 @@
 				1AC35A9218CECF0B00F37B72 /* FontTest */,
 				1AC35A9518CECF0B00F37B72 /* InputTest */,
 				1AC35A9818CECF0B00F37B72 /* IntervalTest */,
-				1AC35A9B18CECF0B00F37B72 /* KeyboardTest */,
-				1AC35A9E18CECF0B00F37B72 /* KeypadTest */,
 				1AC35AA118CECF0B00F37B72 /* LabelTest */,
 				1AC35AA618CECF0C00F37B72 /* LayerTest */,
 				1AC35AA918CECF0C00F37B72 /* MenuTest */,
@@ -2292,15 +2277,6 @@
 			);
 			name = Classes;
 			path = "../tests/cpp-tests/Classes";
-			sourceTree = "<group>";
-		};
-		1AC3592518CECF0A00F37B72 /* AccelerometerTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC3592618CECF0A00F37B72 /* AccelerometerTest.cpp */,
-				1AC3592718CECF0A00F37B72 /* AccelerometerTest.h */,
-			);
-			path = AccelerometerTest;
 			sourceTree = "<group>";
 		};
 		1AC3592818CECF0A00F37B72 /* ActionManagerTest */ = {
@@ -2907,24 +2883,6 @@
 				1AC35A9A18CECF0B00F37B72 /* IntervalTest.h */,
 			);
 			path = IntervalTest;
-			sourceTree = "<group>";
-		};
-		1AC35A9B18CECF0B00F37B72 /* KeyboardTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC35A9C18CECF0B00F37B72 /* KeyboardTest.cpp */,
-				1AC35A9D18CECF0B00F37B72 /* KeyboardTest.h */,
-			);
-			path = KeyboardTest;
-			sourceTree = "<group>";
-		};
-		1AC35A9E18CECF0B00F37B72 /* KeypadTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC35A9F18CECF0B00F37B72 /* KeypadTest.cpp */,
-				1AC35AA018CECF0B00F37B72 /* KeypadTest.h */,
-			);
-			path = KeypadTest;
 			sourceTree = "<group>";
 		};
 		1AC35AA118CECF0B00F37B72 /* LabelTest */ = {
@@ -4606,7 +4564,6 @@
 				1AC35BF918CECF0C00F37B72 /* WebSocketTest.cpp in Sources */,
 				1AC35BF118CECF0C00F37B72 /* EditBoxTest.cpp in Sources */,
 				1AC35B3918CECF0C00F37B72 /* Bug-1174.cpp in Sources */,
-				1AC35B1F18CECF0C00F37B72 /* AccelerometerTest.cpp in Sources */,
 				1AC35BE318CECF0C00F37B72 /* CCControlColourPickerTest.cpp in Sources */,
 				29080DB1191B595E0066F8DF /* UILayoutTest.cpp in Sources */,
 				1AC35B2318CECF0C00F37B72 /* ActionsEaseTest.cpp in Sources */,
@@ -4667,7 +4624,6 @@
 				1AC35C2718CECF0C00F37B72 /* PerformanceContainerTest.cpp in Sources */,
 				1AC35BEF18CECF0C00F37B72 /* CCControlSwitchTest.cpp in Sources */,
 				29080D91191B595E0066F8DF /* CustomGUIScene.cpp in Sources */,
-				1AC35C0D18CECF0C00F37B72 /* KeypadTest.cpp in Sources */,
 				29080DC1191B595E0066F8DF /* UIRichTextTest.cpp in Sources */,
 				1AC35B2B18CECF0C00F37B72 /* BaseTest.cpp in Sources */,
 				1AC35B7D18CECF0C00F37B72 /* PlayerController.cpp in Sources */,
@@ -4761,7 +4717,6 @@
 				1AC35C3B18CECF0C00F37B72 /* PerformanceTouchesTest.cpp in Sources */,
 				29080D8F191B595E0066F8DF /* CocoStudioGUITest.cpp in Sources */,
 				1AC35B3D18CECF0C00F37B72 /* Bug-422.cpp in Sources */,
-				1AC35C0B18CECF0C00F37B72 /* KeyboardTest.cpp in Sources */,
 				1AC35BF518CECF0C00F37B72 /* HttpClientTest.cpp in Sources */,
 				1AC35B4F18CECF0C00F37B72 /* ClickAndMoveTest.cpp in Sources */,
 				29080DCF191B595E0066F8DF /* UISliderTest.cpp in Sources */,
@@ -4785,7 +4740,6 @@
 				1AC35BFA18CECF0C00F37B72 /* WebSocketTest.cpp in Sources */,
 				1AC35BF218CECF0C00F37B72 /* EditBoxTest.cpp in Sources */,
 				1AC35B3A18CECF0C00F37B72 /* Bug-1174.cpp in Sources */,
-				1AC35B2018CECF0C00F37B72 /* AccelerometerTest.cpp in Sources */,
 				1AC35BE418CECF0C00F37B72 /* CCControlColourPickerTest.cpp in Sources */,
 				29080DD4191B595E0066F8DF /* UITextAtlasTest.cpp in Sources */,
 				1AC35B2418CECF0C00F37B72 /* ActionsEaseTest.cpp in Sources */,
@@ -4848,7 +4802,6 @@
 				29080D92191B595E0066F8DF /* CustomGUIScene.cpp in Sources */,
 				1AC35C2818CECF0C00F37B72 /* PerformanceContainerTest.cpp in Sources */,
 				1AC35BF018CECF0C00F37B72 /* CCControlSwitchTest.cpp in Sources */,
-				1AC35C0E18CECF0C00F37B72 /* KeypadTest.cpp in Sources */,
 				1AC35B2C18CECF0C00F37B72 /* BaseTest.cpp in Sources */,
 				1AC35B7E18CECF0C00F37B72 /* PlayerController.cpp in Sources */,
 				1AC35C9818CECF1400F37B72 /* main.m in Sources */,
@@ -4944,7 +4897,6 @@
 				29080DA2191B595E0066F8DF /* GUIEditorTest.cpp in Sources */,
 				29080D94191B595E0066F8DF /* CustomImageTest.cpp in Sources */,
 				1AC35B3E18CECF0C00F37B72 /* Bug-422.cpp in Sources */,
-				1AC35C0C18CECF0C00F37B72 /* KeyboardTest.cpp in Sources */,
 				29080DAC191B595E0066F8DF /* UIFocusTest.cpp in Sources */,
 				1AC35BF618CECF0C00F37B72 /* HttpClientTest.cpp in Sources */,
 				29080DA6191B595E0066F8DF /* UIButtonTest_Editor.cpp in Sources */,

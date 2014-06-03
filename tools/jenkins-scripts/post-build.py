@@ -5,7 +5,9 @@ import jenkinsapi
 from jenkinsapi.jenkins import Jenkins
 from jenkinsapi.constants import STATUS_SUCCESS
 
-payload_str = os.environ['payload']
+http_proxy = ''
+if(os.environ.has_key('HTTP_PROXY')):
+    http_proxy = os.environ['HTTP_PROXY']
 payload_str = payload_str.decode('utf-8','ignore')
 #parse to json obj
 payload = json.loads(payload_str)
@@ -29,6 +31,6 @@ if(result == STATUS_SUCCESS):
 else:
     data['state'] = "failure"
 
-http_proxy = 'http://127.0.0.1:8087'
+http_proxy = os.environ['HTTP_PROXY']
 proxyDict = {'http':http_proxy,'https':http_proxy}
 requests.post(statuses_url, data=json.dumps(data), headers=Headers, proxies = proxyDict)

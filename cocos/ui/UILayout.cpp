@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCCustomCommand.h"
-#include "ui/UILayoutExecutant.h"
+#include "ui/UILayoutManager.h"
 
 NS_CC_BEGIN
 
@@ -942,19 +942,19 @@ const Vector<Node*>& Layout::getLayoutElements()const
     return this->getChildren();
 }
     
-LayoutExecutant* Layout::createLayoutExecutant()
+LayoutManager* Layout::createLayoutManager()
 {
-    LayoutExecutant* exe = nullptr;
+    LayoutManager* exe = nullptr;
     switch (_layoutType)
     {
         case Type::VERTICAL:
-            exe = LinearVerticalLayoutExecutant::create();
+            exe = LinearVerticalLayoutManager::create();
             break;
         case Type::HORIZONTAL:
-            exe = LinearHorizontalLayoutExecutant::create();
+            exe = LinearHorizontalLayoutManager::create();
             break;
         case Type::RELATIVE:
-            exe = RelativeLayoutExecutant::create();
+            exe = RelativeLayoutManager::create();
             break;
         default:
             break;
@@ -969,7 +969,7 @@ void Layout::doLayout()
     {
         return;
     }
-    LayoutExecutant* executant = this->createLayoutExecutant();
+    LayoutManager* executant = this->createLayoutManager();
     
     if (executant)
     {

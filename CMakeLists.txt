@@ -153,7 +153,7 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/external/xxhash
 )
 
-if(WIN32)
+if(WIN32 AND NOT MINGW)
   include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/external/${PLATFORM_FOLDER}-specific/gles/include/OGLES
     ${CMAKE_CURRENT_SOURCE_DIR}/external/${PLATFORM_FOLDER}-specific/icon/include

@@ -34,7 +34,6 @@ Controller g_aTestNames[] = {
     // TESTS MUST BE ORDERED ALPHABETICALLY
     //     violators will be prosecuted
     //
-	{ "Accelerometer", []() { return new AccelerometerTestScene(); } },
 	{ "ActionManager", [](){return new ActionManagerTestScene(); } },
 	{ "Actions - Basic", [](){ return new ActionsTestScene(); } },
 	{ "Actions - Ease", [](){return new ActionsEaseTestScene();} },
@@ -69,8 +68,6 @@ Controller g_aTestNames[] = {
 	{ "FileUtils", []() { return new FileUtilsTestScene(); } },
 	{ "Fonts", []() { return new FontTestScene(); } },
 	{ "Interval", [](){return new IntervalTestScene(); } },
-	{ "Keyboard", []() { return new KeyboardTestScene(); } },
-	{ "Keypad", []() { return new KeypadTestScene(); } },
 	{ "Node: Clipping", []() { return new ClippingNodeTestScene(); } },
 	{ "Node: Draw", [](){return new DrawPrimitivesTestScene();} },
     { "Node: Label - New API", [](){return new AtlasTestSceneNew(); } },

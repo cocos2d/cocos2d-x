@@ -2,8 +2,11 @@ cocos2d-x-3.2  ???
     [NEW]           TextureCache: added unbindImageAsync() and unbindAllImageAsync()
     
     [FIX]           Application.mk: not output debug message in releae mode on Android
+    [FIX]           Cocos2dxGLSurfaceView.java: prevent flickering when opening another activity
     [FIX]           Image: Set jpeg save quality to 90 
+    [FIX]           Label: label is unsharp if it's created by smaller font
     [FIX]           Repeat: will run one more over in rare situations
+    [FIX]           SpriteFrameCache: fix memory leak
 
 cocos2d-x-3.1  May.24 2014
     [FIX]           EventKeyboard::KeyCode: key code for back button changed from KEY_BACKSPACE to KEY_ESCAPE

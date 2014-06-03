@@ -22,16 +22,16 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UILayoutExecutant.h"
+#include "UILayoutManager.h"
 #include "UILayout.h"
 
 NS_CC_BEGIN
 
 namespace ui {
 
-LinearVerticalLayoutExecutant* LinearVerticalLayoutExecutant::create()
+LinearHorizontalLayoutManager* LinearHorizontalLayoutManager::create()
 {
-    LinearVerticalLayoutExecutant* exe = new LinearVerticalLayoutExecutant();
+    LinearHorizontalLayoutManager* exe = new LinearHorizontalLayoutManager();
     if (exe)
     {
         exe->autorelease();
@@ -40,10 +40,55 @@ LinearVerticalLayoutExecutant* LinearVerticalLayoutExecutant::create()
     CC_SAFE_DELETE(exe);
     return nullptr;
 }
-
-LinearHorizontalLayoutExecutant* LinearHorizontalLayoutExecutant::create()
+    
+    
+void LinearHorizontalLayoutManager::doLayout(LayoutProtocol* layout)
 {
-    LinearHorizontalLayoutExecutant* exe = new LinearHorizontalLayoutExecutant();
+    Size layoutSize = layout->getLayoutContentSize();
+    Vector<Node*> container = layout->getLayoutElements();
+    float leftBoundary = 0.0f;
+    for (auto& subWidget : container)
+    {
+        Widget* child = dynamic_cast<Widget*>(subWidget);
+        if (child)
+        {
+            LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter());
+            if (layoutParameter)
+            {
+                LinearLayoutParameter::LinearGravity childGravity = layoutParameter->getGravity();
+                Vec2 ap = child->getAnchorPoint();
+                Size cs = child->getSize();
+                float finalPosX = leftBoundary + (ap.x * cs.width);
+                float finalPosY = layoutSize.height - (1.0f - ap.y) * cs.height;
+                switch (childGravity)
+                {
+                    case LinearLayoutParameter::LinearGravity::NONE:
+                    case LinearLayoutParameter::LinearGravity::TOP:
+                        break;
+                    case LinearLayoutParameter::LinearGravity::BOTTOM:
+                        finalPosY = ap.y * cs.height;
+                        break;
+                    case LinearLayoutParameter::LinearGravity::CENTER_VERTICAL:
+                        finalPosY = layoutSize.height / 2.0f - cs.height * (0.5f - ap.y);
+                        break;
+                    default:
+                        break;
+                }
+                Margin mg = layoutParameter->getMargin();
+                finalPosX += mg.left;
+                finalPosY -= mg.top;
+                child->setPosition(Vec2(finalPosX, finalPosY));
+                leftBoundary = child->getRightBoundary() + mg.right;
+            }
+        }
+    }
+}
+    
+    
+//LinearVerticalLayoutManager
+LinearVerticalLayoutManager* LinearVerticalLayoutManager::create()
+{
+    LinearVerticalLayoutManager* exe = new LinearVerticalLayoutManager();
     if (exe)
     {
         exe->autorelease();
@@ -52,20 +97,8 @@ LinearHorizontalLayoutExecutant* LinearHorizontalLayoutExecutant::create()
     CC_SAFE_DELETE(exe);
     return nullptr;
 }
-
-RelativeLayoutExecutant* RelativeLayoutExecutant::create()
-{
-    RelativeLayoutExecutant* exe = new RelativeLayoutExecutant();
-    if (exe)
-    {
-        exe->autorelease();
-        return exe;
-    }
-    CC_SAFE_DELETE(exe);
-    return nullptr;
-}
-
-void LinearVerticalLayoutExecutant::doLayout(LayoutProtocol* layout)
+    
+void LinearVerticalLayoutManager::doLayout(LayoutProtocol* layout)
 {
     Size layoutSize = layout->getLayoutContentSize();
     Vector<Node*> container = layout->getLayoutElements();
@@ -108,50 +141,25 @@ void LinearVerticalLayoutExecutant::doLayout(LayoutProtocol* layout)
         }
     }
 }
-
-void LinearHorizontalLayoutExecutant::doLayout(LayoutProtocol* layout)
-{
-    Size layoutSize = layout->getLayoutContentSize();
-    Vector<Node*> container = layout->getLayoutElements();
-    float leftBoundary = 0.0f;
-    for (auto& subWidget : container)
-    {
-        Widget* child = dynamic_cast<Widget*>(subWidget);
-        if (child)
-        {
-            LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter());
-            if (layoutParameter)
-            {
-                LinearLayoutParameter::LinearGravity childGravity = layoutParameter->getGravity();
-                Vec2 ap = child->getAnchorPoint();
-                Size cs = child->getSize();
-                float finalPosX = leftBoundary + (ap.x * cs.width);
-                float finalPosY = layoutSize.height - (1.0f - ap.y) * cs.height;
-                switch (childGravity)
-                {
-                    case LinearLayoutParameter::LinearGravity::NONE:
-                    case LinearLayoutParameter::LinearGravity::TOP:
-                        break;
-                    case LinearLayoutParameter::LinearGravity::BOTTOM:
-                        finalPosY = ap.y * cs.height;
-                        break;
-                    case LinearLayoutParameter::LinearGravity::CENTER_VERTICAL:
-                        finalPosY = layoutSize.height / 2.0f - cs.height * (0.5f - ap.y);
-                        break;
-                    default:
-                        break;
-                }
-                Margin mg = layoutParameter->getMargin();
-                finalPosX += mg.left;
-                finalPosY -= mg.top;
-                child->setPosition(Vec2(finalPosX, finalPosY));
-                leftBoundary = child->getRightBoundary() + mg.right;
-            }
-        }
-    }
-}
     
-Vector<Widget*> RelativeLayoutExecutant::getAllWidgets(cocos2d::ui::LayoutProtocol *layout)
+//RelativeLayoutManager
+
+RelativeLayoutManager* RelativeLayoutManager::create()
+{
+    RelativeLayoutManager* exe = new RelativeLayoutManager();
+    if (exe)
+    {
+        exe->autorelease();
+        return exe;
+    }
+    CC_SAFE_DELETE(exe);
+    return nullptr;
+}
+
+
+
+
+Vector<Widget*> RelativeLayoutManager::getAllWidgets(cocos2d::ui::LayoutProtocol *layout)
 {
     Vector<Node*> container = layout->getLayoutElements();
     Vector<Widget*> widgetChildren;
@@ -170,7 +178,7 @@ Vector<Widget*> RelativeLayoutExecutant::getAllWidgets(cocos2d::ui::LayoutProtoc
 
 }
     
-Widget* RelativeLayoutExecutant::getRelativeWidget(Widget* widget)
+Widget* RelativeLayoutManager::getRelativeWidget(Widget* widget)
 {
     Widget* relativeWidget = nullptr;
     RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(widget->getLayoutParameter());
@@ -195,7 +203,7 @@ Widget* RelativeLayoutExecutant::getRelativeWidget(Widget* widget)
     return relativeWidget;
 }
     
-bool RelativeLayoutExecutant::caculateFinalPositionWithRelativeWidget(LayoutProtocol *layout)
+bool RelativeLayoutManager::caculateFinalPositionWithRelativeWidget(LayoutProtocol *layout)
 {
     Vec2 ap = _widget->getAnchorPoint();
     Size cs = _widget->getSize();
@@ -418,7 +426,7 @@ bool RelativeLayoutExecutant::caculateFinalPositionWithRelativeWidget(LayoutProt
     return true;
 }
     
-void RelativeLayoutExecutant::caculateFinalPositionWithRelativeAlign()
+void RelativeLayoutManager::caculateFinalPositionWithRelativeAlign()
 {
     RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(_widget->getLayoutParameter());
     
@@ -514,7 +522,7 @@ void RelativeLayoutExecutant::caculateFinalPositionWithRelativeAlign()
     }
 }
 
-void RelativeLayoutExecutant::doLayout(LayoutProtocol *layout)
+void RelativeLayoutManager::doLayout(LayoutProtocol *layout)
 {
     
     _widgetChildren = this->getAllWidgets(layout);

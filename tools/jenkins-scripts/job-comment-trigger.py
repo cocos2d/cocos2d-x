@@ -8,7 +8,9 @@ import sys
 import traceback
 import urllib2
 
-http_proxy = 'http://127.0.0.1:8087'
+http_proxy = ''
+if(os.environ.has_key('HTTP_PROXY')):
+    http_proxy = os.environ['HTTP_PROXY']
 proxyDict = {'http':http_proxy,'https':http_proxy}
 
 def main():

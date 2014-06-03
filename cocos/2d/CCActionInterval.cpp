@@ -57,7 +57,7 @@ ExtraAction* ExtraAction::create()
     }
     return ret;
 }
-ExtraAction* ExtraAction::clone(void) const
+ExtraAction* ExtraAction::clone() const
 {
 	// no copy constructor
 	auto a = new ExtraAction();
@@ -65,7 +65,7 @@ ExtraAction* ExtraAction::clone(void) const
 	return a;
 }
 
-ExtraAction* ExtraAction::reverse(void) const
+ExtraAction* ExtraAction::reverse() const
 {
     return ExtraAction::create();
 }
@@ -102,7 +102,7 @@ bool ActionInterval::initWithDuration(float d)
     return true;
 }
 
-bool ActionInterval::isDone(void) const
+bool ActionInterval::isDone() const
 {
     return _elapsed >= _duration;
 }
@@ -134,7 +134,7 @@ void ActionInterval::setAmplitudeRate(float amp)
     CCASSERT(0, "");
 }
 
-float ActionInterval::getAmplitudeRate(void)
+float ActionInterval::getAmplitudeRate()
 {
     // Abstract class needs implementation
     CCASSERT(0, "");
@@ -260,7 +260,7 @@ bool Sequence::initWithTwoActions(FiniteTimeAction *actionOne, FiniteTimeAction 
     return true;
 }
 
-Sequence* Sequence::clone(void) const
+Sequence* Sequence::clone() const
 {
 	// no copy constructor
 	auto a = new Sequence();
@@ -507,7 +507,7 @@ bool RepeatForever::initWithAction(ActionInterval *action)
     return true;
 }
 
-RepeatForever *RepeatForever::clone(void) const
+RepeatForever *RepeatForever::clone() const
 {
 	// no copy constructor	
 	auto a = new RepeatForever();
@@ -909,7 +909,7 @@ bool RotateBy::initWithDuration(float duration, const Vec3& deltaAngle3D)
 }
 
 
-RotateBy* RotateBy::clone(void) const
+RotateBy* RotateBy::clone() const
 {
 	// no copy constructor
 	auto a = new RotateBy();
@@ -993,7 +993,7 @@ bool MoveBy::initWithDuration(float duration, const Vec2& deltaPosition)
     return false;
 }
 
-MoveBy* MoveBy::clone(void) const
+MoveBy* MoveBy::clone() const
 {
 	// no copy constructor
 	auto a = new MoveBy();
@@ -1055,7 +1055,7 @@ bool MoveTo::initWithDuration(float duration, const Vec2& position)
     return false;
 }
 
-MoveTo* MoveTo::clone(void) const
+MoveTo* MoveTo::clone() const
 {
 	// no copy constructor
 	auto a = new MoveTo();
@@ -1107,7 +1107,7 @@ bool SkewTo::initWithDuration(float t, float sx, float sy)
     return bRet;
 }
 
-SkewTo* SkewTo::clone(void) const
+SkewTo* SkewTo::clone() const
 {
 	// no copy constructor
 	auto a = new SkewTo();
@@ -1277,7 +1277,7 @@ bool JumpBy::initWithDuration(float duration, const Vec2& position, float height
     return false;
 }
 
-JumpBy* JumpBy::clone(void) const
+JumpBy* JumpBy::clone() const
 {
 	// no copy constructor
 	auto a = new JumpBy();
@@ -1337,7 +1337,7 @@ JumpTo* JumpTo::create(float duration, const Vec2& position, float height, int j
     return jumpTo;
 }
 
-JumpTo* JumpTo::clone(void) const
+JumpTo* JumpTo::clone() const
 {
 	// no copy constructor
 	auto a = new JumpTo();
@@ -1400,7 +1400,7 @@ void BezierBy::startWithTarget(Node *target)
     _previousPosition = _startPosition = target->getPosition();
 }
 
-BezierBy* BezierBy::clone(void) const
+BezierBy* BezierBy::clone() const
 {
 	// no copy constructor
 	auto a = new BezierBy();
@@ -1441,7 +1441,7 @@ void BezierBy::update(float time)
     }
 }
 
-BezierBy* BezierBy::reverse(void) const
+BezierBy* BezierBy::reverse() const
 {
     ccBezierConfig r;
 
@@ -1477,7 +1477,7 @@ bool BezierTo::initWithDuration(float t, const ccBezierConfig &c)
     return false;
 }
 
-BezierTo* BezierTo::clone(void) const
+BezierTo* BezierTo::clone() const
 {
 	// no copy constructor
 	auto a = new BezierTo();
@@ -1573,7 +1573,7 @@ bool ScaleTo::initWithDuration(float duration, float sx, float sy, float sz)
     return false;
 }
 
-ScaleTo* ScaleTo::clone(void) const
+ScaleTo* ScaleTo::clone() const
 {
 	// no copy constructor
 	auto a = new ScaleTo();
@@ -1641,7 +1641,7 @@ ScaleBy* ScaleBy::create(float duration, float sx, float sy, float sz)
     return scaleBy;
 }
 
-ScaleBy* ScaleBy::clone(void) const
+ScaleBy* ScaleBy::clone() const
 {
 	// no copy constructor
 	auto a = new ScaleBy();
@@ -2091,7 +2091,7 @@ ReverseTime::ReverseTime() : _other(nullptr)
 
 }
 
-ReverseTime::~ReverseTime(void)
+ReverseTime::~ReverseTime()
 {
     CC_SAFE_RELEASE(_other);
 }
@@ -2219,7 +2219,7 @@ void Animate::startWithTarget(Node *target)
     _executedLoops = 0;
 }
 
-void Animate::stop(void)
+void Animate::stop()
 {
     if (_animation->getRestoreOriginalFrame() && _target)
     {
@@ -2349,7 +2349,7 @@ TargetedAction* TargetedAction::clone() const
 	return a;
 }
 
-TargetedAction* TargetedAction::reverse(void) const
+TargetedAction* TargetedAction::reverse() const
 {
 	// just reverse the internal action
 	auto a = new TargetedAction();
@@ -2364,7 +2364,7 @@ void TargetedAction::startWithTarget(Node *target)
     _action->startWithTarget(_forcedTarget);
 }
 
-void TargetedAction::stop(void)
+void TargetedAction::stop()
 {
     _action->stop();
 }
