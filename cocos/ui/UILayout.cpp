@@ -189,7 +189,10 @@ void Layout::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentT
     {
         return;
     }
+    
+    doLayout();
     adaptRenderers();
+    
     if (_clippingEnabled)
     {
         switch (_clippingType)
@@ -208,15 +211,9 @@ void Layout::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentT
     {
         ProtectedNode::visit(renderer, parentTransform, parentTransformUpdated);
     }
-    doLayout();
 }
     
-void Layout::sortAllChildren()
-{
-    Widget::sortAllChildren();
-    doLayout();
-}
-    
+ 
 void Layout::stencilClippingVisit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
 {
     if(!_visible)
@@ -327,10 +324,20 @@ void Layout::onBeforeVisitStencil()
     glStencilFunc(GL_NEVER, mask_layer, mask_layer);
     glStencilOp(GL_ZERO, GL_KEEP, GL_KEEP);
 
+    this->drawFullScreenQuadClearStencil();
+    
+    glStencilFunc(GL_NEVER, mask_layer, mask_layer);
+    glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
+}
+    
+void Layout::drawFullScreenQuadClearStencil()
+{
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     
@@ -338,8 +345,6 @@ void Layout::onBeforeVisitStencil()
     
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    glStencilFunc(GL_NEVER, mask_layer, mask_layer);
-    glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
 }
 
 void Layout::onAfterDrawStencil()
