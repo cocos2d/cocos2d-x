@@ -29,19 +29,8 @@
 #include <curl/easy.h>
 #include <stdio.h>
 
-#define USE_THREAD_POOL 1
-
-#if USE_THREAD_POOL
-#include "base/threadpool.hpp"
-#define POOL() static_cast<cocos2d::threadpool::pool*>(this->_threadPool)
-#endif
-
 NS_CC_EXT_BEGIN
 
-#define POOL_SIZE 6
-
-#define BUFFER_SIZE         8192
-#define MAX_FILENAME        512
 #define LOW_SPEED_LIMIT     1L
 #define LOW_SPEED_TIME      5L
 #define MAX_REDIRS          2
@@ -80,7 +69,7 @@ int downloadProgressFunc(Downloader::ProgressData *ptr, double totalToDownload, 
                     auto callback = downloader->getSuccessCallback();
                     if (callback != nullptr)
                     {
-                        callback(data.url, data.customId);
+                        callback(data.url, data.path + data.name, data.customId);
                     }
                 }
             });
@@ -116,17 +105,10 @@ Downloader::Downloader()
 , _onSuccess(nullptr)
 , _connectionTimeout(0)
 {
-#if USE_THREAD_POOL
-    _threadPool = new threadpool::pool(POOL_SIZE);
-#endif
 }
 
 Downloader::~Downloader()
 {
-#if USE_THREAD_POOL
-    POOL()->wait();
-    delete POOL();
-#endif
 }
 
 int Downloader::getConnectionTimeout()
@@ -239,13 +221,8 @@ void Downloader::downloadAsync(const std::string &srcUrl, const std::string &sto
     prepareDownload(srcUrl, storagePath, customId, &fDesc, &pData);
     if (fDesc.fp != nullptr)
     {
-
-#if USE_THREAD_POOL
-        POOL()->schedule(std::bind(&Downloader::download, this, srcUrl, customId, fDesc, pData));
-#else
         auto t = std::thread(&Downloader::download, this, srcUrl, customId, fDesc, pData);
         t.detach();
-#endif
     }
 }
 
@@ -437,7 +414,7 @@ void Downloader::batchDownloadSync(const std::unordered_map<std::string, Downloa
             auto callback = downloader->getSuccessCallback();
             if (callback != nullptr)
             {
-                callback("", batchId);
+                callback("", "", batchId);
             }
         }
     });

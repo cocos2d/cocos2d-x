@@ -97,7 +97,7 @@ public:
 
     std::function<void(double, double, const std::string &, const std::string &)> getProgressCallback() const { return _onProgress; };
 
-    std::function<void(const std::string &, const std::string &)> getSuccessCallback() const { return _onSuccess; };
+    std::function<void(const std::string &, const std::string &, const std::string &)> getSuccessCallback() const { return _onSuccess; };
 
     void downloadAsync(const std::string &srcUrl, const std::string &storagePath, const std::string &customId = "");
 
@@ -140,7 +140,7 @@ private:
 
     std::function<void(double, double, const std::string &, const std::string &)> _onProgress;
 
-    std::function<void(const std::string &, const std::string &)> _onSuccess;
+    std::function<void(const std::string &, const std::string &, const std::string &)> _onSuccess;
 
     std::string getFileNameFromUrl(const std::string &srcUrl);
     
