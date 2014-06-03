@@ -141,7 +141,7 @@ PoolManager::~PoolManager()
 
 AutoreleasePool* PoolManager::getCurrentPool() const
 {
-    return _curReleasePool;
+    return _releasePoolStack.back();
 }
 
 bool PoolManager::isObjectInPools(Ref* obj) const
@@ -157,14 +157,12 @@ bool PoolManager::isObjectInPools(Ref* obj) const
 void PoolManager::push(AutoreleasePool *pool)
 {
     _releasePoolStack.push_back(pool);
-    _curReleasePool = pool;
 }
 
 void PoolManager::pop()
 {
     CC_ASSERT(!_releasePoolStack.empty());
     _releasePoolStack.pop_back();
-    _curReleasePool = _releasePoolStack.empty() ? nullptr : _releasePoolStack.back();
 }
 
 NS_CC_END
