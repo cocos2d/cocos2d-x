@@ -124,6 +124,7 @@ void PoolManager::destroyInstance()
 
 PoolManager::PoolManager()
 {
+    _releasePoolStack.reserve(10);
 }
 
 PoolManager::~PoolManager()
