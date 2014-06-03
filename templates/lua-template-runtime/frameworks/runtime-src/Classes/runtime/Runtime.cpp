@@ -99,26 +99,29 @@ private:
 public:
     ConnectWaitLayer()
     {
+#include "ResData.h"
         int designWidth = 1280;
         int designHeight = 800;
         Director::getInstance()->getOpenGLView()->setDesignResolutionSize(designWidth,designHeight,ResolutionPolicy::EXACT_FIT);
-        string playEnbleFile = "rtres/Play1.png";
-        string shineFile = "rtres/shine.png";
-        string backgroundFile = "rtres/landscape.png";
+        Image* imagebg = new Image();
+        imagebg->initWithImageData(__landscapePngData, sizeof(__landscapePngData));
         if (!ConfigParser::getInstance()->isLanscape())
         {
-            backgroundFile = "rtres/portrait.png";
+            imagebg->initWithImageData(__portraitPngData, sizeof(__portraitPngData));
             Director::getInstance()->getOpenGLView()->setDesignResolutionSize(designHeight,designWidth,ResolutionPolicy::EXACT_FIT);
         }
-
-        auto background = Sprite::create(backgroundFile.c_str());
+        Texture2D* texturebg = Director::getInstance()->getTextureCache()->addImage(imagebg, "play_background");
+        auto background = Sprite::createWithTexture(texturebg);
         if (background)
         {
             background->setAnchorPoint(Vec2(0,0));
             addChild(background,9999);
         }
 
-        auto playSprite = Sprite::create(playEnbleFile.c_str());
+        Image* imageplay = new Image();
+        imageplay->initWithImageData(__playEnablePngData, sizeof(__playEnablePngData));
+        Texture2D* textureplay = Director::getInstance()->getTextureCache()->addImage(imageplay, "play_enable");
+        auto playSprite = Sprite::createWithTexture(textureplay);
         if (playSprite)
         {
             playSprite->setPosition(Vec2(902,400));
@@ -135,11 +138,14 @@ public:
             addChild(menu, 1);
         }
 
-        auto shineSprite = Sprite::create(shineFile.c_str());
+        Image* imageShine = new Image();
+        imageShine->initWithImageData(__shinePngData, sizeof(__shinePngData));
+        Texture2D* textureShine = Director::getInstance()->getTextureCache()->addImage(imageShine, "play_enable");
+        auto shineSprite = Sprite::createWithTexture(textureShine);
         if (shineSprite)
         {
             shineSprite->setPosition(Vec2(902,400));
-            shineSprite->runAction(RepeatForever::create(Sequence::createWithTwoActions(ScaleBy::create(1.0f, 1.08f),ScaleTo::create(1.0f, 1))));
+            shineSprite->runAction(RepeatForever::create(Sequence::createWithTwoActions(FadeIn::create(0.6f),FadeOut::create(0.8f))));
             addChild(shineSprite,9999);
         }
         
@@ -153,13 +159,13 @@ public:
         IPlabel->setPosition( Point(VisibleRect::leftTop().x+spaceSizex, VisibleRect::top().y -spaceSizey) );
         addChild(IPlabel, 9999);
 
-        string strShowMsg = "waiting for file transfer ...";
+        s_strFile = "waiting for file transfer ...";
         if (CC_PLATFORM_WIN32 == CC_TARGET_PLATFORM || CC_PLATFORM_MAC == CC_TARGET_PLATFORM)
         {
-            strShowMsg = "waiting for debugger to connect ...";
+            s_strFile = "waiting for debugger to connect ...";
         }
 
-        _labelUploadFile = Label::create(strShowMsg.c_str(), "Arial", 36);
+        _labelUploadFile = Label::create(s_strFile.c_str(), "Arial", 36);
         _labelUploadFile->setAnchorPoint(Vec2(0,0));
         _labelUploadFile->setPosition( Point(VisibleRect::leftTop().x+spaceSizex, IPlabel->getPositionY()-spaceSizex) );
         _labelUploadFile->setAlignment(TextHAlignment::LEFT);

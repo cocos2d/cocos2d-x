@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "cocos2d.h"
 #include "glfw3native.h"
 #include "resource.h"
-#include "Runtime.h"
+#include "runtime/Runtime.h"
 #include "ConfigParser.h"
 
 #include <string>
