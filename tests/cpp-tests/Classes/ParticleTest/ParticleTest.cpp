@@ -1012,13 +1012,14 @@ Layer* createParticleLayer(int nIndex)
         case 46: return new Issue3990();
         case 47: return new ParticleAutoBatching();
         case 48: return new ParticleVisibleTest();
+        case 49: return new Issue5331();
         default:
             break;
     }
 
     return NULL;
 }
-#define MAX_LAYER    49
+#define MAX_LAYER    50
 
 
 Layer* nextParticleAction()
@@ -1979,13 +1980,13 @@ void ParticleVisibleTest::callback(float delta)
 void ParticleAutoBatching::onEnter()
 {
     ParticleDemo::onEnter();
-
+    
 	_color->setColor(Color3B::BLACK);
     this->removeChild(_background, true);
     _background = NULL;
-
+    
     Size s = Director::getInstance()->getWinSize();
-
+    
     for(int i=0; i<10; i++) {
         auto particle = ParticleSystemQuad::create("Particles/SmallSun.plist");
         particle->setTotalParticles(100);
@@ -2002,6 +2003,36 @@ std::string ParticleAutoBatching::title() const
 std::string ParticleAutoBatching::subtitle() const
 {
     return "All 10 particles should be drawin in one batch";
+}
+
+//
+// Issue5331
+//
+void Issue5331::onEnter()
+{
+    ParticleDemo::onEnter();
+    this->removeChild(_background, true);
+    _background = nullptr;
+    
+    _emitter = ParticleExplosion::create();
+    this->addChild(_emitter);
+    
+    schedule(schedule_selector(Issue5331::addParticle), 0.1);
+}
+
+void Issue5331::addParticle(float delta)
+{
+    _emitter->addParticle();
+}
+
+std::string Issue5331::title() const
+{
+    return "addParticle";
+}
+
+std::string Issue5331::subtitle() const
+{
+    return "should not crash";
 }
 
 //
