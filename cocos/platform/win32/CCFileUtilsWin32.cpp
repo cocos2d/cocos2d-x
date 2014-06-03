@@ -188,7 +188,15 @@ static Data getData(const std::string& filename, bool forString)
     }
     else
     {
-        ret.fastSet(buffer, size);
+        if (FileUtils::onDecryptData)
+        {
+            ret = FileUtils::onDecryptData(buffer,size);
+            free(buffer);
+        } 
+        else
+        {
+            ret.fastSet(buffer, size);
+        }
     }
     return ret;
 }

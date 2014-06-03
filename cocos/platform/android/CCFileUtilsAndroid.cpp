@@ -234,7 +234,15 @@ Data FileUtilsAndroid::getData(const std::string& filename, bool forString)
     }
     else
     {
-        ret.fastSet(data, size);
+        if (FileUtils::onDecryptData)
+        {
+            ret = FileUtils::onDecryptData(data,size);
+            free(data);
+        } 
+        else
+        {
+            ret.fastSet(data, size);
+        }
     }
 
     return ret;

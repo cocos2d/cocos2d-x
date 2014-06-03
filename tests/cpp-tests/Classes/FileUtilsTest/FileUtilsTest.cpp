@@ -1,4 +1,5 @@
 #include "FileUtilsTest.h"
+#include "xxtea.h"
 
 static std::function<Layer*()> createFunctions[] = {
     CL(TestResolutionDirectories),
@@ -6,6 +7,7 @@ static std::function<Layer*()> createFunctions[] = {
     CL(TestFilenameLookup),
     CL(TestIsFileExist),
     CL(TextWritePlist),
+    CL(TestDecryptData)
 };
 
 static int sceneIdx=-1;
@@ -395,4 +397,57 @@ std::string TextWritePlist::subtitle() const
 {
     std::string writablePath = FileUtils::getInstance()->getWritablePath().c_str();
     return ("See plist file at your writablePath");
+}
+
+// TestDecryptData
+
+TestDecryptData::TestDecryptData()
+{
+    
+    auto decryptFun = [](const unsigned char * data, ssize_t dataLen){
+        Data ret;
+        xxtea_long decryptLen = 0;
+        unsigned char* decryptData = nullptr;
+
+        if (strncmp((const char*)data, "sign", 4) == 0)
+        {
+            decryptData = xxtea_decrypt((unsigned char*)data + 4, dataLen - 4, (unsigned char*)"cocos", 5, &decryptLen);
+            ret.fastSet(decryptData,dataLen);
+        }
+        
+        return ret;
+    };
+
+    auto centerPos = VisibleRect::center();
+
+    FileUtils::onDecryptData = decryptFun;
+    auto sprite1 = Sprite::create("Images/encryption_grossini.png");
+    if (sprite1)
+    {
+        centerPos.x -= 80;
+        sprite1->setPosition(centerPos);
+        addChild( sprite1 );
+    }
+    
+    Image::onDecryptData = decryptFun;
+    auto sprite2 = Sprite::create("Images/encryption_grossini.png");
+    if (sprite2)
+    {
+        centerPos.x += 160;
+        sprite2->setPosition(centerPos);
+        addChild( sprite2 );
+    }
+
+    FileUtils::onDecryptData = nullptr;
+    Image::onDecryptData = nullptr;
+}
+
+std::string TestDecryptData::title() const
+{
+    return "FileUtils: Decrypt file data";
+}
+
+std::string TestDecryptData::subtitle() const
+{
+    return ("See two sprites on the screen");
 }

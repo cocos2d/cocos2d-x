@@ -379,6 +379,8 @@ namespace
 // Implement Image
 //////////////////////////////////////////////////////////////////////////
 
+std::function<Data(const unsigned char * data, ssize_t dataLen)> Image::onDecryptData = nullptr;
+
 Image::Image()
 : _data(nullptr)
 , _dataLen(0)
@@ -423,7 +425,13 @@ bool Image::initWithImageFile(const std::string& path)
 
     SDL_FreeSurface(iSurf);
 #else
+    auto fileDecryptCallback = FileUtils::onDecryptData;
+    if (Image::onDecryptData)
+    {
+        FileUtils::onDecryptData = nullptr;
+    }
     Data data = FileUtils::getInstance()->getDataFromFile(_filePath);
+    FileUtils::onDecryptData = fileDecryptCallback;
 
     if (!data.isNull())
     {
@@ -439,7 +447,13 @@ bool Image::initWithImageFileThreadSafe(const std::string& fullpath)
     bool ret = false;
     _filePath = fullpath;
 
+    auto fileDecryptCallback = FileUtils::onDecryptData;
+    if (Image::onDecryptData)
+    {
+        FileUtils::onDecryptData = nullptr;
+    }
     Data data = FileUtils::getInstance()->getDataFromFile(fullpath);
+    FileUtils::onDecryptData = fileDecryptCallback;
 
     if (!data.isNull())
     {
@@ -457,23 +471,49 @@ bool Image::initWithImageData(const unsigned char * data, ssize_t dataLen)
     {
         CC_BREAK_IF(! data || dataLen <= 0);
         
+        Data decryptData;
+        unsigned char* decryptBytes = nullptr;
         unsigned char* unpackedData = nullptr;
         ssize_t unpackedLen = 0;
         
-        //detecgt and unzip the compress file
-        if (ZipUtils::isCCZBuffer(data, dataLen))
+        if (onDecryptData)
         {
-            unpackedLen = ZipUtils::inflateCCZBuffer(data, dataLen, &unpackedData);
-        }
-        else if (ZipUtils::isGZipBuffer(data, dataLen))
-        {
-            unpackedLen = ZipUtils::inflateMemory(const_cast<unsigned char*>(data), dataLen, &unpackedData);
-        }
+            decryptData = onDecryptData(data,dataLen);
+            dataLen = decryptData.getSize();
+            decryptBytes = decryptData.getBytes();
+
+            //detecgt and unzip the compress file
+            if (ZipUtils::isCCZBuffer(decryptBytes, dataLen))
+            {
+                unpackedLen = ZipUtils::inflateCCZBuffer(decryptBytes, dataLen, &unpackedData);
+            }
+            else if (ZipUtils::isGZipBuffer(decryptBytes, dataLen))
+            {
+                unpackedLen = ZipUtils::inflateMemory(decryptBytes, dataLen, &unpackedData);
+            }
+            else
+            {
+                unpackedData = decryptBytes;
+                unpackedLen = dataLen;
+            }
+        } 
         else
         {
-            unpackedData = const_cast<unsigned char*>(data);
-            unpackedLen = dataLen;
-        }
+            //detecgt and unzip the compress file
+            if (ZipUtils::isCCZBuffer(data, dataLen))
+            {
+                unpackedLen = ZipUtils::inflateCCZBuffer(data, dataLen, &unpackedData);
+            }
+            else if (ZipUtils::isGZipBuffer(data, dataLen))
+            {
+                unpackedLen = ZipUtils::inflateMemory(const_cast<unsigned char*>(data), dataLen, &unpackedData);
+            }
+            else
+            {
+                unpackedData = const_cast<unsigned char*>(data);
+                unpackedLen = dataLen;
+            }
+        } 
 
         _fileType = detectFormat(unpackedData, unpackedLen);
 
@@ -522,7 +562,14 @@ bool Image::initWithImageData(const unsigned char * data, ssize_t dataLen)
             }
         }
         
-        if(unpackedData != data)
+        if (onDecryptData)
+        {
+            if (unpackedData != decryptBytes)
+            {
+                free(unpackedData);
+            }
+        }
+        else if(unpackedData != data)
         {
             free(unpackedData);
         }

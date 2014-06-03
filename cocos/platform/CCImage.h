@@ -28,6 +28,7 @@ THE SOFTWARE.
 
 #include "base/CCRef.h"
 #include "renderer/CCTexture2D.h"
+#include "base/CCData.h"
 
 // premultiply alpha, or the effect will wrong when want to use other pixel format in Texture2D,
 // such as RGB888, RGB5A1
@@ -57,6 +58,8 @@ class CC_DLL Image : public Ref
 {
 public:
     friend class TextureCache;
+
+    static std::function<Data(const unsigned char * data, ssize_t dataLen)> onDecryptData;
     /**
      * @js ctor
      */

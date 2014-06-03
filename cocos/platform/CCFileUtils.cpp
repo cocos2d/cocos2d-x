@@ -474,6 +474,7 @@ bool FileUtils::writeToFile(ValueMap& dict, const std::string &fullPath) {return
 
 
 FileUtils* FileUtils::s_sharedFileUtils = nullptr;
+std::function<Data(const unsigned char * data, ssize_t dataLen)> FileUtils::onDecryptData = nullptr;
 
 
 void FileUtils::destroyInstance()
@@ -550,7 +551,15 @@ static Data getData(const std::string& filename, bool forString)
     }
     else
     {
-        ret.fastSet(buffer, size);
+        if (FileUtils::onDecryptData)
+        {
+            ret = FileUtils::onDecryptData(buffer,size);
+            free(buffer);
+        } 
+        else
+        {
+            ret.fastSet(buffer, size);
+        }
     }
     
     return ret;
