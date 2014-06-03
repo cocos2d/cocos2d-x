@@ -217,7 +217,6 @@ bool AssetsManager::createDirectory(const std::string& path)
         found = path.find_first_of("/\\", start);
     }
 
-    // Remove downloaded files
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
     DIR *dir = NULL;
 
@@ -333,7 +332,7 @@ bool AssetsManager::decompress(std::string zip)
     unzFile zipfile = unzOpen(zip.c_str());
     if (! zipfile)
     {
-        CCLOG("can not open downloaded zip file %s", zip.c_str());
+        CCLOG("AssetsManager : can not open downloaded zip file %s", zip.c_str());
         return false;
     }
     
@@ -341,15 +340,13 @@ bool AssetsManager::decompress(std::string zip)
     unz_global_info global_info;
     if (unzGetGlobalInfo(zipfile, &global_info) != UNZ_OK)
     {
-        CCLOG("can not read file global info of %s", zip.c_str());
+        CCLOG("AssetsManager : can not read file global info of %s", zip.c_str());
         unzClose(zipfile);
         return false;
     }
     
     // Buffer to hold data read from the zip file
     char readBuffer[BUFFER_SIZE];
-    
-    CCLOG("start decompressing");
     
     // Loop to extract all files.
     uLong i;
@@ -367,79 +364,41 @@ bool AssetsManager::decompress(std::string zip)
                                   NULL,
                                   0) != UNZ_OK)
         {
-            CCLOG("can not read file info");
+            CCLOG("AssetsManager : can not read compressed file info");
             unzClose(zipfile);
             return false;
         }
         
-        const std::string fullPath = _storagePath + fileName;
+        const std::string fullPath = zip + fileName;
+        
+        //There are not directory entry in some case.
+        //So we need to create directory when decompressing file entry
+        if ( !createDirectory(fullPath) )
+        {
+            // Failed to create directory
+            CCLOG("AssetsManager : can not create directory %s", fullPath.c_str());
+            unzClose(zipfile);
+            return false;
+        }
         
         // Check if this entry is a directory or a file.
         const size_t filenameLength = strlen(fileName);
-        if (fileName[filenameLength-1] == '/')
+        if (fileName[filenameLength-1] != '/')
         {
-            // Entry is a direcotry, so create it.
-            // If the directory exists, it will failed scilently.
-            if (!createDirectory(fullPath))
-            {
-                CCLOG("can not create directory %s", fullPath.c_str());
-                unzClose(zipfile);
-                return false;
-            }
-        }
-        else
-        {
-            //There are not directory entry in some case.
-            //So we need to test whether the file directory exists when decompressing file entry
-            //, if does not exist then create directory
-            const std::string fileNameStr(fileName);
-            
-            size_t startIndex=0;
-            
-            size_t index = fileNameStr.find("/",startIndex);
-            
-            while(index != std::string::npos)
-            {
-                const std::string dir = _storagePath + fileNameStr.substr(0,index);
-                
-                FILE *out = fopen(dir.c_str(), "r");
-                if(!out)
-                {
-                    if (!createDirectory(dir.c_str()))
-                    {
-                        CCLOG("can not create directory %s", dir.c_str());
-                        unzClose(zipfile);
-                        return false;
-                    }
-                    else
-                    {
-                        CCLOG("create directory %s", dir.c_str());
-                    }
-                }
-                else
-                {
-                    fclose(out);
-                }
-                
-                startIndex = index+1;
-                
-                index = fileNameStr.find("/", startIndex);
-            }
-            
             // Entry is a file, so extract it.
             // Open current file.
             if (unzOpenCurrentFile(zipfile) != UNZ_OK)
             {
-                CCLOG("can not open file %s", fileName);
+                CCLOG("AssetsManager : can not extract file %s", fileName);
                 unzClose(zipfile);
                 return false;
             }
             
             // Create a file to store current file.
             FILE *out = fopen(fullPath.c_str(), "wb");
-            if (! out)
+            if (!out)
             {
-                CCLOG("can not open destination file %s", fullPath.c_str());
+                CCLOG("AssetsManager : can not create decompress destination file %s", fullPath.c_str());
                 unzCloseCurrentFile(zipfile);
                 unzClose(zipfile);
                 return false;
@@ -452,7 +411,7 @@ bool AssetsManager::decompress(std::string zip)
                 error = unzReadCurrentFile(zipfile, readBuffer, BUFFER_SIZE);
                 if (error < 0)
                 {
-                    CCLOG("can not read zip file %s, error code is %d", fileName, error);
+                    CCLOG("AssetsManager : can not read zip file %s, error code is %d", fileName, error);
                     unzCloseCurrentFile(zipfile);
                     unzClose(zipfile);
                     return false;
@@ -474,14 +433,13 @@ bool AssetsManager::decompress(std::string zip)
         {
             if (unzGoToNextFile(zipfile) != UNZ_OK)
             {
-                CCLOG("can not read next file");
+                CCLOG("AssetsManager : can not read next file for decompressing");
                 unzClose(zipfile);
                 return false;
             }
         }
     }
     
-    CCLOG("end decompressing");
     unzClose(zipfile);
     return true;
 }
