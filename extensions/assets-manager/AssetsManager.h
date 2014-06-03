@@ -118,13 +118,13 @@ CC_CONSTRUCTOR_ACCESS:
     
 protected:
     
-    static void createDirectory(const std::string &path);
+    static bool createDirectory(const std::string &path);
     
-    static void removeDirectory(const std::string &path);
+    static bool removeDirectory(const std::string &path);
     
-    static void removeFile(const std::string &path);
+    static bool removeFile(const std::string &path);
     
-    static void renameFile(const std::string &path, const std::string &oldname, const std::string &name);
+    static bool renameFile(const std::string &path, const std::string &oldname, const std::string &name);
     
     std::string get(const std::string& key) const;
     
@@ -143,8 +143,7 @@ protected:
     void downloadManifest();
     void parseManifest();
     void startUpdate();
-// TODO: For next version
-    //bool uncompress();
+    bool decompress(std::string filename);
     
     /** @brief Function for destorying the downloaded version file and manifest file
      */
@@ -179,7 +178,7 @@ protected:
      * @js NA
      * @lua NA
      */
-    virtual void onSuccess(const std::string &srcUrl, const std::string &customId);
+    virtual void onSuccess(const std::string &srcUrl, const std::string &storagePath, const std::string &customId);
     
 private:
     
@@ -229,6 +228,9 @@ private:
     
     //! All failed units
     std::unordered_map<std::string, Downloader::DownloadUnit> _failedUnits;
+    
+    //! All files to be decompressed
+    std::vector<std::string> _compressedFiles;
     
     //! Download percent
     float _percent;
