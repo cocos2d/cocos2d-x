@@ -1922,11 +1922,6 @@ bool Image::initWithRawData(const unsigned char * data, ssize_t dataLen, int wid
         _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
         CC_BREAK_IF(! _data);
         memcpy(_data, data, _dataLen);
-        
-        if (_preMulti)
-        {
-            premultipliedAlpha();
-        }
 
         bRet = true;
     } while (0);
@@ -2206,7 +2201,7 @@ void Image::premultipliedAlpha()
 {
     CCASSERT(_width * _height * 4 == _dataLen, "The file format should be RGBA8888!");
     
-    unsigned int *fourBytes = (unsigned int *)_data;
+    unsigned int* fourBytes = (unsigned int*)_data;
     for(int i = 0; i < _width * _height; i++)
     {
         unsigned char* p = _data + i * 4;
