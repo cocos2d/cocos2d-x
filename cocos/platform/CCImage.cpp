@@ -1551,15 +1551,7 @@ bool Image::initWithTGAData(tImageTGA* tgaData)
         _dataLen = _width * _height * tgaData->pixelDepth / 8;
         _fileType = Format::TGA;
         
-        // premultiplied alpha for RGBA8888
-        if (tgaData->pixelDepth == 32)
-        {
-            premultipliedAlpha();
-        }
-        else
-        {
-            _preMulti = false;
-        }
+        _preMulti = false;
         
         ret = true;
         
@@ -1892,10 +1884,6 @@ bool Image::initWithWebpData(const unsigned char * data, ssize_t dataLen)
             _data = nullptr;
             break;
         }
-        else
-        {
-            premultipliedAlpha();
-        }
         
         bRet = true;
 	} while (0);
@@ -2199,7 +2187,7 @@ bool Image::saveImageToJPG(const std::string& filePath)
 
 void Image::premultipliedAlpha()
 {
-    CCASSERT(_width * _height * 4 == _dataLen, "The file format should be RGBA8888!");
+    CCASSERT(_renderFormat == Texture2D::PixelFormat::RGBA8888, "The pixel format should be RGBA8888!");
     
     unsigned int* fourBytes = (unsigned int*)_data;
     for(int i = 0; i < _width * _height; i++)
