@@ -220,6 +220,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="..\base\etc1.cpp" />
     <ClCompile Include="..\base\s3tc.cpp" />
     <ClCompile Include="..\base\TGAlib.cpp" />
+    <ClCompile Include="..\base\xxtea.cpp" />
     <ClCompile Include="..\base\ZipUtils.cpp" />
     <ClCompile Include="..\cocos2d.cpp" />
     <ClCompile Include="..\deprecated\CCArray.cpp" />
@@ -403,6 +404,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="..\base\TGAlib.h" />
     <ClInclude Include="..\base\uthash.h" />
     <ClInclude Include="..\base\utlist.h" />
+    <ClInclude Include="..\base\xxtea.h" />
     <ClInclude Include="..\base\ZipUtils.h" />
     <ClInclude Include="..\cocos2d.h" />
     <ClInclude Include="..\deprecated\CCArray.h" />
