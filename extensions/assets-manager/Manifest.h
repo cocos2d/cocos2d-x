@@ -54,6 +54,7 @@ public:
     struct Asset {
         std::string md5;
         std::string path;
+        bool compressed;
     };
     
     //! Object indicate the difference between two Assets

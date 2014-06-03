@@ -79,7 +79,7 @@ void Manifest::parse(const std::string& manifestUrl)
 			// Print error
 			if (json.HasParseError()) {
 			size_t offset = json.GetErrorOffset();
-			if(offset > 0)
+			if (offset > 0)
 			offset--;
 			std::string errorSnippet = content.substr(offset, 10);
 			CCLOG("File parse error %s at <%s>\n", json.GetParseError(), errorSnippet.c_str());
@@ -278,16 +278,22 @@ Manifest::Asset Manifest::parseAsset(const std::string &path, const rapidjson::V
     Asset asset;
     asset.path = path;
 	
-    if( json.HasMember(KEY_MD5) && json[KEY_MD5].IsString() )
+    if ( json.HasMember(KEY_MD5) && json[KEY_MD5].IsString() )
     {
         asset.md5 = json[KEY_MD5].GetString();
     }
     else asset.md5 = "";
     
-    if( json.HasMember(KEY_PATH) && json[KEY_PATH].IsString() )
+    if ( json.HasMember(KEY_PATH) && json[KEY_PATH].IsString() )
     {
         asset.path = json[KEY_PATH].GetString();
     }
+    
+    if ( json.HasMember(KEY_COMPRESSED) && json[KEY_COMPRESSED].IsBool() )
+    {
+        asset.compressed = json[KEY_COMPRESSED].GetBool();
+    }
+    else asset.compressed = false;
     
     return asset;
 }
@@ -295,25 +301,25 @@ Manifest::Asset Manifest::parseAsset(const std::string &path, const rapidjson::V
 void Manifest::loadVersion(const rapidjson::Document &json)
 {
     // Retrieve remote manifest url
-    if( json.HasMember(KEY_MANIFEST_URL) && json[KEY_MANIFEST_URL].IsString() )
+    if ( json.HasMember(KEY_MANIFEST_URL) && json[KEY_MANIFEST_URL].IsString() )
     {
         _remoteManifestUrl = json[KEY_MANIFEST_URL].GetString();
     }
     
     // Retrieve remote version url
-    if( json.HasMember(KEY_VERSION_URL) && json[KEY_VERSION_URL].IsString() )
+    if ( json.HasMember(KEY_VERSION_URL) && json[KEY_VERSION_URL].IsString() )
     {
         _remoteVersionUrl = json[KEY_VERSION_URL].GetString();
     }
     
     // Retrieve local version
-    if( json.HasMember(KEY_VERSION) && json[KEY_VERSION].IsString() )
+    if ( json.HasMember(KEY_VERSION) && json[KEY_VERSION].IsString() )
     {
         _version = json[KEY_VERSION].GetString();
     }
     
     // Retrieve local group version
-    if( json.HasMember(KEY_GROUP_VERSIONS) )
+    if ( json.HasMember(KEY_GROUP_VERSIONS) )
     {
         const rapidjson::Value& groupVers = json[KEY_GROUP_VERSIONS];
         if (groupVers.IsObject())
@@ -322,7 +328,7 @@ void Manifest::loadVersion(const rapidjson::Document &json)
             {
                 std::string group = itr->name.GetString();
                 std::string version = "0";
-                if(itr->value.IsString())
+                if (itr->value.IsString())
                 {
                     version = itr->value.GetString();
                 }
@@ -333,7 +339,7 @@ void Manifest::loadVersion(const rapidjson::Document &json)
     }
     
     // Retrieve local engine version
-    if( json.HasMember(KEY_ENGINE_VERSION) && json[KEY_ENGINE_VERSION].IsString() )
+    if ( json.HasMember(KEY_ENGINE_VERSION) && json[KEY_ENGINE_VERSION].IsString() )
     {
         _engineVer = json[KEY_ENGINE_VERSION].GetString();
     }
@@ -346,7 +352,7 @@ void Manifest::loadManifest(const rapidjson::Document &json)
     loadVersion(json);
     
     // Retrieve package url
-    if( json.HasMember(KEY_PACKAGE_URL) && json[KEY_PACKAGE_URL].IsString() )
+    if ( json.HasMember(KEY_PACKAGE_URL) && json[KEY_PACKAGE_URL].IsString() )
     {
         _packageUrl = json[KEY_PACKAGE_URL].GetString();
         // Append automatically "/"
@@ -356,11 +362,8 @@ void Manifest::loadManifest(const rapidjson::Document &json)
         }
     }
     
-    // Retrieve all compressed files
-// TODO
-    
     // Retrieve all assets
-    if( json.HasMember(KEY_ASSETS) )
+    if ( json.HasMember(KEY_ASSETS) )
     {
         const rapidjson::Value& assets = json[KEY_ASSETS];
         if (assets.IsObject())
@@ -375,7 +378,7 @@ void Manifest::loadManifest(const rapidjson::Document &json)
     }
     
     // Retrieve all search paths
-    if( json.HasMember(KEY_SEARCH_PATHS) )
+    if ( json.HasMember(KEY_SEARCH_PATHS) )
     {
         const rapidjson::Value& paths = json[KEY_SEARCH_PATHS];
         if (paths.IsArray())
