@@ -328,6 +328,15 @@ bool AssetsManager::renameFile(const std::string &path, const std::string &oldna
 
 bool AssetsManager::decompress(std::string zip)
 {
+    // Find root path for zip file
+    size_t pos = zip.find_last_of("/\\");
+    if (pos == std::string::npos)
+    {
+        CCLOG("AssetsManager : no root path specified for zip file %s", zip.c_str());
+        return false;
+    }
+    const std::string rootPath = zip.substr(0, pos+1);
+    
     // Open the zip file
     unzFile zipfile = unzOpen(zip.c_str());
     if (! zipfile)
@@ -347,7 +356,6 @@ bool AssetsManager::decompress(std::string zip)
     
     // Buffer to hold data read from the zip file
     char readBuffer[BUFFER_SIZE];
-    
     // Loop to extract all files.
     uLong i;
     for (i = 0; i < global_info.number_entry; ++i)
@@ -369,7 +377,7 @@ bool AssetsManager::decompress(std::string zip)
             return false;
         }
         
-        const std::string fullPath = zip + fileName;
+        const std::string fullPath = rootPath + fileName;
         
         //There are not directory entry in some case.
         //So we need to create directory when decompressing file entry
