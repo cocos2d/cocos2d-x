@@ -35,6 +35,7 @@ include_directories(
   ../../ui
   ../../../external/lua/lua
   ../../../external/lua/tolua
+  ../../../external/xxtea
 )
 
 
@@ -46,6 +47,7 @@ target_link_libraries(luabinding
   tolua
   lua
   spine
+  xxtea
 )
 
 set_target_properties(luabinding

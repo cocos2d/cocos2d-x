@@ -41,5 +41,4 @@ set(COCOS_BASE_SRC
   base/ccUtils.cpp
   base/etc1.cpp
   base/s3tc.cpp
-  base/xxtea.cpp
 )

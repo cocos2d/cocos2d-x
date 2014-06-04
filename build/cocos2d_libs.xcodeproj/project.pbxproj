@@ -56,10 +56,6 @@
 		06CAAAD0186AD7FE0012A414 /* TriggerBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 06CAAABC186AD63B0012A414 /* TriggerBase.cpp */; };
 		06CAAAD1186AD8010012A414 /* ObjectFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CAAABB186AD63B0012A414 /* ObjectFactory.h */; };
 		06CAAAD2186AD8030012A414 /* ObjectFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CAAABB186AD63B0012A414 /* ObjectFactory.h */; };
-		1540AF41193EB3A000717D8E /* xxtea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1540AF3F193EB3A000717D8E /* xxtea.cpp */; };
-		1540AF42193EB3A000717D8E /* xxtea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1540AF3F193EB3A000717D8E /* xxtea.cpp */; };
-		1540AF43193EB3A000717D8E /* xxtea.h in Headers */ = {isa = PBXBuildFile; fileRef = 1540AF40193EB3A000717D8E /* xxtea.h */; };
-		1540AF44193EB3A000717D8E /* xxtea.h in Headers */ = {isa = PBXBuildFile; fileRef = 1540AF40193EB3A000717D8E /* xxtea.h */; };
 		1A01C68418F57BE800EFE3A6 /* CCArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A01C67618F57BE800EFE3A6 /* CCArray.cpp */; };
 		1A01C68518F57BE800EFE3A6 /* CCArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A01C67618F57BE800EFE3A6 /* CCArray.cpp */; };
 		1A01C68618F57BE800EFE3A6 /* CCArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A01C67718F57BE800EFE3A6 /* CCArray.h */; };
@@ -1881,8 +1877,6 @@
 		06CAAABF186AD63B0012A414 /* TriggerMng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerMng.h; sourceTree = "<group>"; };
 		06CAAAC0186AD63B0012A414 /* TriggerObj.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerObj.cpp; sourceTree = "<group>"; };
 		06CAAAC1186AD63B0012A414 /* TriggerObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerObj.h; sourceTree = "<group>"; };
-		1540AF3F193EB3A000717D8E /* xxtea.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = xxtea.cpp; sourceTree = "<group>"; };
-		1540AF40193EB3A000717D8E /* xxtea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xxtea.h; sourceTree = "<group>"; };
 		1551A33F158F2AB200E66CFE /* libcocos2dx Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2dx Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1551A342158F2AB200E66CFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1A01C67618F57BE800EFE3A6 /* CCArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCArray.cpp; sourceTree = "<group>"; };
@@ -2912,15 +2906,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1540AF3E193EB3A000717D8E /* xxtea */ = {
-			isa = PBXGroup;
-			children = (
-				1540AF3F193EB3A000717D8E /* xxtea.cpp */,
-				1540AF40193EB3A000717D8E /* xxtea.h */,
-			);
-			path = xxtea;
-			sourceTree = "<group>";
-		};
 		1551A334158F2AB200E66CFE = {
 			isa = PBXGroup;
 			children = (
@@ -4082,7 +4067,6 @@
 			children = (
 				46A167D21807AF4D005B8026 /* cocos-ext.h */,
 				46A168321807AF4E005B8026 /* ExtensionMacros.h */,
-				1540AF3E193EB3A000717D8E /* xxtea */,
 				1AAF5350180E305F000584C8 /* assets-manager */,
 				46A168331807AF4E005B8026 /* GUI */,
 				1AD71EEB180E27CF00808F54 /* physics-nodes */,
@@ -5336,7 +5320,6 @@
 				460E479318080902000CDD6D /* CCInvocation.h in Headers */,
 				460E478018080902000CDD6D /* CCControlButton.h in Headers */,
 				460E478D18080902000CDD6D /* CCControlStepper.h in Headers */,
-				1540AF43193EB3A000717D8E /* xxtea.h in Headers */,
 				460E47D218080913000CDD6D /* CCTableViewCell.h in Headers */,
 				1AD71EF2180E27CF00808F54 /* CCPhysicsDebugNode.h in Headers */,
 				1AD71EF6180E27CF00808F54 /* CCPhysicsSprite.h in Headers */,
@@ -5731,7 +5714,6 @@
 				460E47AC18080904000CDD6D /* CCInvocation.h in Headers */,
 				460E47A018080904000CDD6D /* CCControlPotentiometer.h in Headers */,
 				460E47BE1808090D000CDD6D /* CCEditBox.h in Headers */,
-				1540AF44193EB3A000717D8E /* xxtea.h in Headers */,
 				460E47C21808090D000CDD6D /* CCEditBoxImplIOS.h in Headers */,
 				1AD71EF3180E27CF00808F54 /* CCPhysicsDebugNode.h in Headers */,
 				1AD71EF7180E27CF00808F54 /* CCPhysicsSprite.h in Headers */,
@@ -6474,7 +6456,6 @@
 				460E478418080902000CDD6D /* CCControlHuePicker.cpp in Sources */,
 				460E478A18080902000CDD6D /* CCControlSlider.cpp in Sources */,
 				460E478818080902000CDD6D /* CCControlSaturationBrightnessPicker.cpp in Sources */,
-				1540AF41193EB3A000717D8E /* xxtea.cpp in Sources */,
 				460E47B51808090B000CDD6D /* CCEditBoxImplIOS.mm in Sources */,
 				460E478E18080902000CDD6D /* CCControlSwitch.cpp in Sources */,
 				460E479218080902000CDD6D /* CCInvocation.cpp in Sources */,
@@ -6814,7 +6795,6 @@
 				460E479F18080904000CDD6D /* CCControlPotentiometer.cpp in Sources */,
 				460E479818080904000CDD6D /* CCControlButton.cpp in Sources */,
 				460E47C51808090D000CDD6D /* CCEditBoxImplMac.mm in Sources */,
-				1540AF42193EB3A000717D8E /* xxtea.cpp in Sources */,
 				460E479D18080904000CDD6D /* CCControlHuePicker.cpp in Sources */,
 				460E47A318080904000CDD6D /* CCControlSlider.cpp in Sources */,
 				460E47AB18080904000CDD6D /* CCInvocation.cpp in Sources */,
