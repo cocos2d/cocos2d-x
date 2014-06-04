@@ -190,7 +190,11 @@ bool CCGLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* sour
     
     const GLchar *sources[] = {
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32 && CC_TARGET_PLATFORM != CC_PLATFORM_LINUX && CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
+#if CC_TARGET_PLATFORM == CC_PLATFORM_NACL
+        "precision highp float;\n"
+#else
         (type == GL_VERTEX_SHADER ? "precision highp float;\n" : "precision mediump float;\n"),
+#endif
 #endif
         "uniform mat4 CC_PMatrix;\n"
         "uniform mat4 CC_MVMatrix;\n"
@@ -295,13 +299,12 @@ bool CCGLProgram::link()
     }
     
     m_uVertShader = m_uFragShader = 0;
-	
-#if defined(DEBUG) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (defined(COCOS2D_DEBUG) && COCOS2D_DEBUG) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     glGetProgramiv(m_uProgram, GL_LINK_STATUS, &status);
-	
+
     if (status == GL_FALSE)
     {
-        CCLOG("cocos2d: ERROR: Failed to link program: %i", m_uProgram);
+        CCLOG("cocos2d: ERROR: Failed to link program: %i\n%s", m_uProgram, programLog());
         ccGLDeleteProgram(m_uProgram);
         m_uProgram = 0;
     }
