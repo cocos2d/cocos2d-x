@@ -8,6 +8,7 @@ cocos2d-x-3.2  ???
     [FIX]           Image: Set jpeg save quality to 90 
     [FIX]           Image: premultipy alpha when loading png file to resovle black border issue
     [FIX]           Label: label is unsharp if it's created by smaller font
+    [FIX]           Lua-binding: comipling error on release mode
     [FIX]           Node: setPhysicsBody() can not work correctly if it is added to a Node
     [FIX]           Others: Treat warning as error on iOS and Mac
     [FIX]           Repeat: will run one more over in rare situations
