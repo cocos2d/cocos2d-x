@@ -437,9 +437,10 @@ void ListView::refreshView()
     updateInnerContainerSize();
 }
     
-void ListView::sortAllChildren()
+void ListView::doLayout()
 {
-    ScrollView::sortAllChildren();
+    Layout::doLayout();
+    
     if (_refreshViewDirty)
     {
         refreshView();

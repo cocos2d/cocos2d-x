@@ -260,7 +260,6 @@ public:
      */
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
 
-    virtual void sortAllChildren() override;
     
     void requestDoLayout();
     
@@ -336,6 +335,9 @@ protected:
     void onBeforeVisitStencil();
     void onAfterDrawStencil();
     void onAfterVisitStencil();
+    /**draw fullscreen quad to clear stencil bits
+     */
+    void drawFullScreenQuadClearStencil();
     
     void onBeforeVisitScissor();
     void onAfterVisitScissor();
