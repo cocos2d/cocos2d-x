@@ -1640,8 +1640,18 @@ void Node::updatePhysicsBodyRotation(Scene* scene)
 
 void Node::setPhysicsBody(PhysicsBody* body)
 {
+    if (_physicsBody == body)
+    {
+        return;
+    }
+    
     if (body != nullptr)
     {
+        if (body->getNode() != nullptr)
+        {
+            body->getNode()->setPhysicsBody(nullptr);
+        }
+        
         body->_node = this;
         body->retain();
         
@@ -1681,6 +1691,11 @@ void Node::setPhysicsBody(PhysicsBody* body)
                 scene = tmpScene;
                 break;
             }
+        }
+        
+        if (scene != nullptr)
+        {
+            scene->getPhysicsWorld()->addBody(body);
         }
         
         updatePhysicsBodyPosition(scene);
