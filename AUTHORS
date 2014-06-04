@@ -869,6 +869,9 @@ Developers:
         
     uqtimes 
         Fix NSNotificationCenter and NSTimer leaks
+        
+    ntotani
+        fix building error in lua-binding in release mode
     
 Retired Core Developers:
     WenSheng Yang
