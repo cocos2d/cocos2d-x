@@ -25,6 +25,9 @@ THE SOFTWARE.
 #include "base/CCAutoreleasePool.h"
 #include "base/ccMacros.h"
 
+#include <algorithm>
+#include <memory>
+
 NS_CC_BEGIN
 
 AutoreleasePool::AutoreleasePool()
@@ -110,9 +113,14 @@ PoolManager* PoolManager::getInstance()
     if (s_singleInstance == nullptr)
     {
         s_singleInstance = new PoolManager();
-        // Add the first auto release pool
-        s_singleInstance->_curReleasePool = new AutoreleasePool("cocos2d autorelease pool");
-        s_singleInstance->_releasePoolStack.push_back(s_singleInstance->_curReleasePool);
+
+        // Create top level autorelease pool.
+        //
+        // AutoreleasePool's constructor will push itself to PoolManager::getInstance().
+        auto topPool = new AutoreleasePool("cocos2d autorelease pool");
+        CC_ASSERT(s_singleInstance->_releasePoolStack.size() == 1);
+        CC_ASSERT(topPool == s_singleInstance->getCurrentPool());
+        (void)topPool;
     }
     return s_singleInstance;
 }
@@ -125,55 +133,39 @@ void PoolManager::destroyInstance()
 
 PoolManager::PoolManager()
 {
+    _releasePoolStack.reserve(16);
 }
 
 PoolManager::~PoolManager()
 {
     CCLOGINFO("deallocing PoolManager: %p", this);
-    
-    while (!_releasePoolStack.empty())
-    {
-        AutoreleasePool* pool = _releasePoolStack.back();
-        _releasePoolStack.pop_back();
-        
-        delete pool;
-    }
+    std::for_each(_releasePoolStack.begin(), _releasePoolStack.end(), std::default_delete<AutoreleasePool>());
 }
 
 
 AutoreleasePool* PoolManager::getCurrentPool() const
 {
-    return _curReleasePool;
+    CC_ASSERT(!_releasePoolStack.empty());
+    return _releasePoolStack.back();
 }
 
 bool PoolManager::isObjectInPools(Ref* obj) const
 {
-    for (const auto& pool : _releasePoolStack)
-    {
-        if (pool->contains(obj))
-            return true;
-    }
-    return false;
+    auto end = _releasePoolStack.end();
+    return end != std::find_if(_releasePoolStack.begin(), end, [obj] (AutoreleasePool *pool) { return pool->contains(obj); });
 }
 
 void PoolManager::push(AutoreleasePool *pool)
 {
     _releasePoolStack.push_back(pool);
-    _curReleasePool = pool;
 }
 
 void PoolManager::pop()
 {
     // Can not pop the pool that created by engine
-    CC_ASSERT(_releasePoolStack.size() >= 1);
-    
+    CC_ASSERT(_releasePoolStack.size() > 1);
+
     _releasePoolStack.pop_back();
-    
-    // Should update _curReleasePool if a temple pool is released
-    if (_releasePoolStack.size() > 1)
-    {
-        _curReleasePool = _releasePoolStack.back();
-    }
 }
 
 NS_CC_END
