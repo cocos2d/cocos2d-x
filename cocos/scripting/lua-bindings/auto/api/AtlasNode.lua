@@ -51,7 +51,7 @@
 -- @param self
 -- @param #cc.Renderer renderer
 -- @param #mat4_table mat4
--- @param #bool bool
+-- @param #unsigned int int
         
 --------------------------------
 -- @function [parent=#AtlasNode] isOpacityModifyRGB 
