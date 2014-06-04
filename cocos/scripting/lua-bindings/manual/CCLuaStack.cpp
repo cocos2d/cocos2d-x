@@ -25,7 +25,7 @@
 
 #include "CCLuaStack.h"
 #include "tolua_fix.h"
-#include "base/xxtea.h"
+#include "extensions/xxtea/xxtea.h"
 extern "C" {
 #include "lua.h"
 #include "tolua++.h"
@@ -708,7 +708,7 @@ void LuaStack::setXXTEAKeyAndSign(const char *key, int keyLen, const char *sign,
     }
 }
 
-void LuaStack::cleanupXXTEAKeyAndSign(void)
+void LuaStack::cleanupXXTEAKeyAndSign()
 {
     if (_xxteaKey)
     {
@@ -724,7 +724,7 @@ void LuaStack::cleanupXXTEAKeyAndSign(void)
     }
 }
 
-int LuaStack::lua_loadbuffer(lua_State *L, const char *chunk, int chunkSize, const char *chunkName)
+int LuaStack::luaLoadBuffer(lua_State *L, const char *chunk, int chunkSize, const char *chunkName)
 {
     int r = 0;
     

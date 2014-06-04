@@ -35,11 +35,11 @@ extern "C"
 {
     int cocos2dx_lua_loader(lua_State *L)
     {
-        static const std::string BYTE_FILE_EXT    = ".luac";
-        static const std::string NO_BYTE_FILE_EXT = ".lua";
+        static const std::string BYTECODE_FILE_EXT    = ".luac";
+        static const std::string NOT_BYTECODE_FILE_EXT = ".lua";
         
         std::string filename(luaL_checkstring(L, 1));
-        size_t pos = filename.rfind(NO_BYTE_FILE_EXT);
+        size_t pos = filename.rfind(NOT_BYTECODE_FILE_EXT);
         if (pos != std::string::npos)
         {
             filename = filename.substr(0, pos);
@@ -51,10 +51,9 @@ extern "C"
             filename.replace(pos, 1, "/");
             pos = filename.find_first_of(".");
         }
-        //filename.append(".lua");
         
         // search file in package.path
-        unsigned char* chunk = NULL;
+        unsigned char* chunk = nullptr;
         ssize_t chunkSize = 0;
         std::string chunkName;
         FileUtils* utils = FileUtils::getInstance();
@@ -68,7 +67,8 @@ extern "C"
         
         do
         {
-            if (next == std::string::npos) next = searchpath.length();
+            if (next == std::string::npos)
+                next = searchpath.length();
             std::string prefix = searchpath.substr(begin, next);
             if (prefix[0] == '.' && prefix[1] == '/')
             {
@@ -76,7 +76,7 @@ extern "C"
             }
             
             pos = prefix.find("?.lua");
-            chunkName = prefix.substr(0, pos) + filename + BYTE_FILE_EXT;
+            chunkName = prefix.substr(0, pos) + filename + BYTECODE_FILE_EXT;
             chunkName = utils->fullPathForFilename(chunkName.c_str());
             if (utils->isFileExist(chunkName))
             {
@@ -85,7 +85,7 @@ extern "C"
             }
             else
             {
-                chunkName = prefix.substr(0, pos) + filename + NO_BYTE_FILE_EXT;
+                chunkName = prefix.substr(0, pos) + filename + NOT_BYTECODE_FILE_EXT;
                 chunkName = utils->fullPathForFilename(chunkName.c_str());
                 if (utils->isFileExist(chunkName))
                 {
@@ -101,7 +101,7 @@ extern "C"
         if (chunk)
         {
             LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
-            stack->lua_loadbuffer(L, (char*)chunk, (int)chunkSize, chunkName.c_str());
+            stack->luaLoadBuffer(L, (char*)chunk, (int)chunkSize, chunkName.c_str());
             delete []chunk;
         }
         else

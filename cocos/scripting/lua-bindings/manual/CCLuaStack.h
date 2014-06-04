@@ -130,9 +130,9 @@ public:
     virtual bool handleAssert(const char *msg);
     
     virtual void setXXTEAKeyAndSign(const char *key, int keyLen, const char *sign, int signLen);
-    virtual void cleanupXXTEAKeyAndSign(void);
+    virtual void cleanupXXTEAKeyAndSign();
     
-    int lua_loadbuffer(lua_State *L, const char *chunk, int chunkSize, const char *chunkName);
+    int luaLoadBuffer(lua_State *L, const char *chunk, int chunkSize, const char *chunkName);
     
 protected:
     LuaStack(void)
