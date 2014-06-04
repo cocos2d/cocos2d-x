@@ -26,13 +26,20 @@ THE SOFTWARE.
 #define __LAYOUT_H__
 
 #include "ui/UIWidget.h"
+#include "renderer/CCCustomCommand.h"
+#include "renderer/CCGroupCommand.h"
 
 NS_CC_BEGIN
+
+class DrawNode;
+class LayerColor;
+class LayerGradient;
 
 namespace ui {
     
 class LayoutManager;
-    
+
+
 class LayoutProtocol
 {
 public:

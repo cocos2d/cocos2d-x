@@ -28,9 +28,12 @@ THE SOFTWARE.
 #include "ui/CCProtectedNode.h"
 #include "ui/UILayoutParameter.h"
 #include "ui/GUIDefine.h"
-#include "ui/UILayoutParameter.h"
+#include "base/CCMap.h"
 
 NS_CC_BEGIN
+
+class EventListenerTouchOneByOne;
+
 
 namespace ui {
     
