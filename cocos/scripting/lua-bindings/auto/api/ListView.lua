@@ -44,6 +44,10 @@
 -- @param #long long
         
 --------------------------------
+-- @function [parent=#ListView] requestRefreshView 
+-- @param self
+        
+--------------------------------
 -- @function [parent=#ListView] setItemsMargin 
 -- @param self
 -- @param #float float
@@ -78,7 +82,7 @@
 -- @param #ccui.Widget widget
         
 --------------------------------
--- @function [parent=#ListView] requestRefreshView 
+-- @function [parent=#ListView] doLayout 
 -- @param self
         
 --------------------------------
@@ -131,10 +135,6 @@
         
 --------------------------------
 -- @function [parent=#ListView] removeAllChildren 
--- @param self
-        
---------------------------------
--- @function [parent=#ListView] sortAllChildren 
 -- @param self
         
 --------------------------------

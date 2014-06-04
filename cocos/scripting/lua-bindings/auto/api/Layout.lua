@@ -205,10 +205,6 @@
 -- @param self
         
 --------------------------------
--- @function [parent=#Layout] sortAllChildren 
--- @param self
-        
---------------------------------
 -- @function [parent=#Layout] findNextFocusedWidget 
 -- @param self
 -- @param #ccui.Widget::FocusDirection focusdirection
