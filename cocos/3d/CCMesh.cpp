@@ -122,6 +122,15 @@ bool RenderMeshData::initFrom(const std::vector<float>& positions,
     return true;
 }
 
+bool RenderMeshData::initFrom(const float* vertex, int vertexSizeInFloat, unsigned short* indices, int numIndex, const MeshVertexAttrib* attribs, int attribCount)
+{
+    _vertexs.assign(vertex, vertex + vertexSizeInFloat);
+    _indices.assign(indices, indices + numIndex);
+    _vertexAttribs.assign(attribs, attribs + attribCount);
+    
+    return true;
+}
+
 Mesh::Mesh()
 :_vertexBuffer(0)
 , _indexBuffer(0)
@@ -148,9 +157,31 @@ Mesh* Mesh::create(const std::vector<float>& positions, const std::vector<float>
     return nullptr;
 }
 
+Mesh* Mesh::create(const float* vertex, int vertexSizeInFloat, unsigned short* indices, int numIndex, const MeshVertexAttrib* attribs, int attribCount)
+{
+    auto mesh = new Mesh();
+    if (mesh && mesh->init(vertex, vertexSizeInFloat, indices, numIndex, attribs, attribCount))
+    {
+        mesh->autorelease();
+        return mesh;
+    }
+    CC_SAFE_DELETE(mesh);
+    return nullptr;
+}
+
 bool Mesh::init(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices)
 {
     bool bRet = _renderdata.initFrom(positions, normals, texs, indices);
+    if (!bRet)
+        return false;
+    
+    restore();
+    return true;
+}
+
+bool Mesh::init(const float* vertex, int vertexSizeInFloat, unsigned short* indices, int numIndex, const MeshVertexAttrib* attribs, int attribCount)
+{
+    bool bRet = _renderdata.initFrom(vertex, vertexSizeInFloat, indices, numIndex, attribs, attribCount);
     if (!bRet)
         return false;
     

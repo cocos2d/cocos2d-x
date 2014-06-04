@@ -26,6 +26,7 @@
 #include "3d/CCSprite3DDataCache.h"
 #include "3d/CCMesh.h"
 #include "3d/CCObjLoader.h"
+#include "3d/CCMeshSkin.h"
 
 #include "base/CCDirector.h"
 #include "base/CCPlatformMacros.h"
@@ -40,7 +41,7 @@
 
 NS_CC_BEGIN
 
-std::string s_attributeNames[] = {GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::ATTRIBUTE_NAME_NORMAL};
+std::string s_attributeNames[] = {GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::ATTRIBUTE_NAME_NORMAL, GLProgram::ATTRIBUTE_NAME_BLEND_WEIGHT, GLProgram::ATTRIBUTE_NAME_BLEND_INDEX};
 
 Sprite3D* Sprite3D::create(const std::string &modelPath)
 {
@@ -135,8 +136,21 @@ bool Sprite3D::loadFromObj(const std::string& path)
     return true;
 }
 
+bool Sprite3D::loadFromC3b(const std::string& path)
+{
+    //load from .c3b
+    return true;
+}
+
+bool Sprite3D::loadFromC3t(const std::string& path)
+{
+    //load from .c3t
+    return true;
+}
+
 Sprite3D::Sprite3D()
 : _mesh(nullptr)
+, _skin(nullptr)
 , _texture(nullptr)
 , _blend(BlendFunc::ALPHA_NON_PREMULTIPLIED)
 {
@@ -146,12 +160,13 @@ Sprite3D::~Sprite3D()
 {
     CC_SAFE_RELEASE_NULL(_texture);
     CC_SAFE_RELEASE_NULL(_mesh);
+    CC_SAFE_RELEASE_NULL(_skin);
 }
 
 bool Sprite3D::initWithFile(const std::string &path)
 {
     CC_SAFE_RELEASE_NULL(_mesh);
-    
+    CC_SAFE_RELEASE_NULL(_skin);
     CC_SAFE_RELEASE_NULL(_texture);
     
     //find from the cache
@@ -172,11 +187,22 @@ bool Sprite3D::initWithFile(const std::string &path)
     {
         //load from file
         std::string ext = path.substr(path.length() - 4, 4);
-        if (ext != ".obj" || !loadFromObj(path))
+        std::transform(ext.begin(), ext.end(), ext.begin(), tolower);
+        
+        if (ext == ".obj")
         {
-            return false;
+            return loadFromObj(path);
         }
-        return true;
+        else if (ext == ".c3b")
+        {
+            return loadFromC3b(path);
+        }
+        else if (ext == ".c3t")
+        {
+            return loadFromC3t(path);
+        }
+        
+        return false;
     }
 }
 

@@ -42,7 +42,7 @@ struct MeshVertexAttrib
     GLint size;
     //GL_FLOAT
     GLenum type;
-    //VERTEX_ATTRIB_POSITION,VERTEX_ATTRIB_COLOR,VERTEX_ATTRIB_TEX_COORD,VERTEX_ATTRIB_NORMAL, GLProgram for detail
+    //VERTEX_ATTRIB_POSITION,VERTEX_ATTRIB_COLOR,VERTEX_ATTRIB_TEX_COORD,VERTEX_ATTRIB_NORMAL, VERTEX_ATTRIB_BLEND_WEIGHT, VERTEX_ATTRIB_BLEND_INDEX, GLProgram for detail
     int  vertexAttrib;
     //size in bytes
     int attribSizeBytes;
@@ -57,6 +57,7 @@ public:
     }
     bool hasVertexAttrib(int attrib);
     bool initFrom(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices);
+    bool initFrom(const float* vertex, int vertexSizeInFloat, unsigned short* indices, int numIndex, const MeshVertexAttrib* attribs, int attribCount);
     
 protected:
     int _vertexsizeBytes;
@@ -89,6 +90,8 @@ public:
 
     //create
     static Mesh* create(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices);
+    
+    static Mesh* create(const float* vertex, int vertexSizeInFloat, unsigned short* indices, int numIndex, const MeshVertexAttrib* attribs, int attribCount);
 
     //get vertex buffer
     inline GLuint getVertexBuffer() const { return _vertexBuffer; }
@@ -114,6 +117,8 @@ protected:
     Mesh();
     virtual ~Mesh();
     bool init(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices);
+    
+    bool init(const float* vertex, int vertexSizeInFloat, unsigned short* indices, int numIndex, const MeshVertexAttrib* attribs, int attribCount);
 
     //build buffer
     void buildBuffer();

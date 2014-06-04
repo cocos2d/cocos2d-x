@@ -1775,6 +1775,20 @@
 		B3AF01A31842FBA400A98B85 /* b2MotorJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = B3AF019F1842FBA400A98B85 /* b2MotorJoint.h */; };
 		B3B12A5A17E7F44000026B4A /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A03F2CB81780BD04006731B9 /* libchipmunk Mac.a */; };
 		B3B12A5B17E7F45C00026B4A /* libchipmunk iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A4F3B178387670073F6A7 /* libchipmunk iOS.a */; };
+		B6ACD897193D6693005E0B8A /* CCMeshSkin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6ACD895193D6693005E0B8A /* CCMeshSkin.cpp */; };
+		B6ACD898193D6693005E0B8A /* CCMeshSkin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6ACD895193D6693005E0B8A /* CCMeshSkin.cpp */; };
+		B6ACD899193D6693005E0B8A /* CCMeshSkin.h in Headers */ = {isa = PBXBuildFile; fileRef = B6ACD896193D6693005E0B8A /* CCMeshSkin.h */; };
+		B6ACD89A193D6693005E0B8A /* CCMeshSkin.h in Headers */ = {isa = PBXBuildFile; fileRef = B6ACD896193D6693005E0B8A /* CCMeshSkin.h */; };
+		B6ACD89E193DC0CC005E0B8A /* CCAnimate3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6ACD89C193DC0CC005E0B8A /* CCAnimate3D.cpp */; };
+		B6ACD89F193DC0CC005E0B8A /* CCAnimate3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6ACD89C193DC0CC005E0B8A /* CCAnimate3D.cpp */; };
+		B6ACD8A0193DC0CC005E0B8A /* CCAnimate3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B6ACD89D193DC0CC005E0B8A /* CCAnimate3D.h */; };
+		B6ACD8A1193DC0CC005E0B8A /* CCAnimate3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B6ACD89D193DC0CC005E0B8A /* CCAnimate3D.h */; };
+		B6B2633F19381FBF0088FE25 /* CCAnimationCurve.h in Headers */ = {isa = PBXBuildFile; fileRef = B6B2633C19381FBF0088FE25 /* CCAnimationCurve.h */; };
+		B6B2634019381FBF0088FE25 /* CCAnimationCurve.h in Headers */ = {isa = PBXBuildFile; fileRef = B6B2633C19381FBF0088FE25 /* CCAnimationCurve.h */; };
+		B6B26343193884D60088FE25 /* CCAnimation3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6B26341193884D60088FE25 /* CCAnimation3D.cpp */; };
+		B6B26344193884D60088FE25 /* CCAnimation3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6B26341193884D60088FE25 /* CCAnimation3D.cpp */; };
+		B6B26345193884D60088FE25 /* CCAnimation3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B6B26342193884D60088FE25 /* CCAnimation3D.h */; };
+		B6B26346193884D60088FE25 /* CCAnimation3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B6B26342193884D60088FE25 /* CCAnimation3D.h */; };
 		ED9C6A9418599AD8000A5232 /* CCNodeGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */; };
 		ED9C6A9518599AD8000A5232 /* CCNodeGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */; };
 		ED9C6A9618599AD8000A5232 /* CCNodeGrid.h in Headers */ = {isa = PBXBuildFile; fileRef = ED9C6A9318599AD8000A5232 /* CCNodeGrid.h */; };
@@ -2810,6 +2824,14 @@
 		B375104F1823AC7B00B3BA6A /* CCPhysicsWorldInfo_chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsWorldInfo_chipmunk.h; sourceTree = "<group>"; };
 		B3AF019E1842FBA400A98B85 /* b2MotorJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2MotorJoint.cpp; sourceTree = "<group>"; };
 		B3AF019F1842FBA400A98B85 /* b2MotorJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2MotorJoint.h; sourceTree = "<group>"; };
+		B6ACD895193D6693005E0B8A /* CCMeshSkin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMeshSkin.cpp; sourceTree = "<group>"; };
+		B6ACD896193D6693005E0B8A /* CCMeshSkin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMeshSkin.h; sourceTree = "<group>"; };
+		B6ACD89C193DC0CC005E0B8A /* CCAnimate3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAnimate3D.cpp; sourceTree = "<group>"; };
+		B6ACD89D193DC0CC005E0B8A /* CCAnimate3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAnimate3D.h; sourceTree = "<group>"; };
+		B6B2633B19381FBF0088FE25 /* CCAnimationCurve.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CCAnimationCurve.inl; sourceTree = "<group>"; };
+		B6B2633C19381FBF0088FE25 /* CCAnimationCurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAnimationCurve.h; sourceTree = "<group>"; };
+		B6B26341193884D60088FE25 /* CCAnimation3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAnimation3D.cpp; sourceTree = "<group>"; };
+		B6B26342193884D60088FE25 /* CCAnimation3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAnimation3D.h; sourceTree = "<group>"; };
 		ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCNodeGrid.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		ED9C6A9318599AD8000A5232 /* CCNodeGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNodeGrid.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -4821,6 +4843,14 @@
 		B29594B81926D61F003EEF37 /* 3d */ = {
 			isa = PBXGroup;
 			children = (
+				B6ACD89C193DC0CC005E0B8A /* CCAnimate3D.cpp */,
+				B6ACD89D193DC0CC005E0B8A /* CCAnimate3D.h */,
+				B6ACD895193D6693005E0B8A /* CCMeshSkin.cpp */,
+				B6ACD896193D6693005E0B8A /* CCMeshSkin.h */,
+				B6B26341193884D60088FE25 /* CCAnimation3D.cpp */,
+				B6B26342193884D60088FE25 /* CCAnimation3D.h */,
+				B6B2633B19381FBF0088FE25 /* CCAnimationCurve.inl */,
+				B6B2633C19381FBF0088FE25 /* CCAnimationCurve.h */,
 				B29594B91926D61F003EEF37 /* CCMesh.cpp */,
 				B29594BA1926D61F003EEF37 /* CCMesh.h */,
 				B29594BB1926D61F003EEF37 /* CCObjLoader.cpp */,
@@ -5188,6 +5218,10 @@
 				1A8C5A0F180E930E00EF57C3 /* DictionaryHelper.h in Headers */,
 				50FCEBBD18C72017004AD434 /* TextBMFontReader.h in Headers */,
 				50FCEBCB18C72017004AD434 /* WidgetReaderProtocol.h in Headers */,
+				B6B2633F19381FBF0088FE25 /* CCAnimationCurve.h in Headers */,
+				B6B26345193884D60088FE25 /* CCAnimation3D.h in Headers */,
+				B6ACD899193D6693005E0B8A /* CCMeshSkin.h in Headers */,
+				B6ACD8A0193DC0CC005E0B8A /* CCAnimate3D.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5684,6 +5718,10 @@
 				1A8C5A08180E930E00EF57C3 /* CocoStudio.h in Headers */,
 				1A8C5A10180E930E00EF57C3 /* DictionaryHelper.h in Headers */,
 				50ABBEB21925AB6F00A911A9 /* CCUserDefault.h in Headers */,
+				B6B2634019381FBF0088FE25 /* CCAnimationCurve.h in Headers */,
+				B6B26346193884D60088FE25 /* CCAnimation3D.h in Headers */,
+				B6ACD89A193D6693005E0B8A /* CCMeshSkin.h in Headers */,
+				B6ACD8A1193DC0CC005E0B8A /* CCAnimate3D.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6335,6 +6373,9 @@
 				50ABBE931925AB6F00A911A9 /* CCProfiling.cpp in Sources */,
 				1ABA68AE1888D700007D1BB4 /* CCFontCharMap.cpp in Sources */,
 				2905FA4618CF08D100240AA3 /* UIButton.cpp in Sources */,
+				B6B26343193884D60088FE25 /* CCAnimation3D.cpp in Sources */,
+				B6ACD897193D6693005E0B8A /* CCMeshSkin.cpp in Sources */,
+				B6ACD89E193DC0CC005E0B8A /* CCAnimate3D.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6776,6 +6817,9 @@
 				1ABA68AF1888D700007D1BB4 /* CCFontCharMap.cpp in Sources */,
 				50ABBE7A1925AB6F00A911A9 /* CCEventMouse.cpp in Sources */,
 				50ABBD981925AB4100A911A9 /* CCGLProgramStateCache.cpp in Sources */,
+				B6B26344193884D60088FE25 /* CCAnimation3D.cpp in Sources */,
+				B6ACD898193D6693005E0B8A /* CCMeshSkin.cpp in Sources */,
+				B6ACD89F193DC0CC005E0B8A /* CCAnimate3D.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

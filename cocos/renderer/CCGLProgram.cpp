@@ -94,7 +94,8 @@ const char* GLProgram::ATTRIBUTE_NAME_COLOR = "a_color";
 const char* GLProgram::ATTRIBUTE_NAME_POSITION = "a_position";
 const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD = "a_texCoord";
 const char* GLProgram::ATTRIBUTE_NAME_NORMAL = "a_normal";
-
+const char* GLProgram::ATTRIBUTE_NAME_BLEND_WEIGHT = "a_blendWeight";
+const char* GLProgram::ATTRIBUTE_NAME_BLEND_INDEX = "a_blendIndex";
 
 GLProgram* GLProgram::createWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
 {
