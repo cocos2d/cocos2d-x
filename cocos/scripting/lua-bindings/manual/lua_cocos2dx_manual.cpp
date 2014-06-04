@@ -5384,7 +5384,14 @@ static int lua_cocos2dx_GLProgramState_setVertexAttribPointer(lua_State* tolua_S
         {
             lua_pushnumber(tolua_S,i + 1);
             lua_gettable(tolua_S,7);
-            if (tolua_isnumber(tolua_S, -1, 0, &tolua_err))
+            bool isnum = true;
+#if COCOS2D_DEBUG >= 1
+            if (!tolua_isnumber(tolua_S, -1, 0, &tolua_err))
+            {
+                isnum = false;
+            }
+#endif
+            if (isnum)
             {
                 arg5[i] = tolua_tonumber(tolua_S, -1, 0);
             }
