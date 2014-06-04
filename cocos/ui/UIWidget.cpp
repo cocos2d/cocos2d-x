@@ -25,6 +25,10 @@ THE SOFTWARE.
 #include "ui/UIWidget.h"
 #include "ui/UILayout.h"
 #include "ui/UIHelper.h"
+#include "base/CCEventListenerTouch.h"
+#include "base/CCEventListenerKeyboard.h"
+#include "base/CCDirector.h"
+#include "base/CCEventFocus.h"
 
 NS_CC_BEGIN
 

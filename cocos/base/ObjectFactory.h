@@ -22,64 +22,47 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "cocostudio/CCComController.h"
-#include "2d/CCNode.h"
+#ifndef __TRIGGERFACTORY_H__
+#define __TRIGGERFACTORY_H__
 
-namespace cocostudio {
+#include <string>
+#include <unordered_map>
+#include "base/CCRef.h"
+#include "base/CCPlatformMacros.h"
 
-IMPLEMENT_CLASS_COMPONENT_INFO(ComController)
-ComController::ComController(void)
+NS_CC_BEGIN
+
+class ObjectFactory
 {
-    _name = "CCComController";
-}
-
-ComController::~ComController(void)
-{
-}
-
-bool ComController::init()
-{
-    return true;
-}
-
-void ComController::onEnter()
-{
-    if (_owner != nullptr)
+public:
+    typedef cocos2d::Ref* (*Instance)(void);
+    struct TInfo
     {
-        _owner->scheduleUpdate();
-    }
-}
+        TInfo(void);
+        TInfo(const std::string& type, Instance ins = NULL);
+        TInfo(const TInfo &t);
+        ~TInfo(void);
+        TInfo& operator= (const TInfo &t);
+        std::string _class;
+        Instance _fun;
+    };
+    typedef std::unordered_map<std::string, TInfo>  FactoryMap;
 
-void ComController::onExit()
-{
-}
+    static ObjectFactory* getInstance();
+    static void destroyInstance();
+    cocos2d::Ref* createObject(const std::string &name);
 
-void ComController::update(float delta)
-{
-}
+    void registerType(const TInfo &t);
+    void removeAll();
 
-bool ComController::isEnabled() const
-{
-    return _enabled;
-}
+protected:
+    ObjectFactory(void);
+    virtual ~ObjectFactory(void);
+private:
+    static ObjectFactory *_sharedFactory;
+    FactoryMap _typeMap;
+};
 
-void ComController::setEnabled(bool b)
-{
-    _enabled = b;
-}
+NS_CC_END
 
-ComController* ComController::create(void)
-{
-    ComController * pRet = new ComController();
-    if (pRet && pRet->init())
-    {
-        pRet->autorelease();
-    }
-    else
-    {
-        CC_SAFE_DELETE(pRet);
-    }
-	return pRet;
-}
-
-}
+#endif

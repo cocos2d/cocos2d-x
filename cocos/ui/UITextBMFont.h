@@ -29,6 +29,8 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+class Label;
+
 namespace ui {
     
 /**
@@ -95,7 +97,7 @@ protected:
     virtual void copySpecialProperties(Widget* model) override;
     virtual void adaptRenderers() override;
 protected:
-    cocos2d::Label* _labelBMFontRenderer;
+    Label* _labelBMFontRenderer;
     bool _fntFileHasInit;
     std::string _fntFileName;
     std::string _stringValue;

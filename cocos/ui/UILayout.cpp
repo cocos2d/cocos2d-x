@@ -30,9 +30,13 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "2d/CCDrawingPrimitives.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCGroupCommand.h"
-#include "renderer/CCCustomCommand.h"
 #include "ui/UILayoutManager.h"
+#include "2d/CCDrawNode.h"
+#include "2d/CCLayer.h"
+#include "CCGLView.h"
+#include "2d/CCSprite.h"
+#include "base/CCEventFocus.h"
+
 
 NS_CC_BEGIN
 

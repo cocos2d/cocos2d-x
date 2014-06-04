@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "ui/UICheckBox.h"
+#include "2d/CCSprite.h"
 
 NS_CC_BEGIN
 

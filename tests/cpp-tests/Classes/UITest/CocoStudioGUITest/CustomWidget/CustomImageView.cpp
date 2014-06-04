@@ -1,6 +1,7 @@
 
 
 #include "CustomImageView.h"
+#include "2d/CCNode.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -48,7 +49,7 @@ void CustomImageView::initRenderer()
     ImageView::initRenderer();
     
     _label = Label::create();
-    CCNodeRGBA::addChild(_label, getLocalZOrder() + 1, -1);
+    ProtectedNode::addChild(_label, getLocalZOrder() + 1, -1);
 }
 
 void CustomImageView::setText(const std::string &text)

@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "ui/UISlider.h"
 #include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"
+#include "2d/CCSprite.h"
 
 NS_CC_BEGIN
 

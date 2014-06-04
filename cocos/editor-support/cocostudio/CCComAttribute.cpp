@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "cocostudio/CCComAttribute.h"
+#include "platform/CCFileUtils.h"
 
 using namespace cocos2d;
 
@@ -166,7 +167,7 @@ bool ComAttribute::serialize(void* r)
 		std::string filePath;
 		if (file != nullptr)
 		{
-			filePath.assign(cocos2d::CCFileUtils::getInstance()->fullPathForFilename(file));
+			filePath.assign(cocos2d::FileUtils::getInstance()->fullPathForFilename(file));
 		}
 		int resType = DICTOOL->getIntValue_json(fileData, "resourceType", -1);
 		CC_BREAK_IF(resType != 0);

@@ -23,7 +23,9 @@
  ****************************************************************************/
 
 #include "UIRichText.h"
-
+#include "platform/CCFileUtils.h"
+#include "2d/CCLabel.h"
+#include "2d/CCSprite.h"
 
 NS_CC_BEGIN
 
