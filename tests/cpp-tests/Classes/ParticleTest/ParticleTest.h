@@ -287,6 +287,7 @@ private:
 
 class PremultipliedAlphaTest : public ParticleDemo
 {
+    bool _hasEmitter;
 public:
     virtual void onEnter() override;
     void readdPaticle(float delta);

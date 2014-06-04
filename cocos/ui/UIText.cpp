@@ -23,6 +23,8 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "ui/UIText.h"
+#include "2d/CCLabel.h"
+#include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 

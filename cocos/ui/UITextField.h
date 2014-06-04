@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __UITEXTFIELD_H__
 
 #include "ui/UIWidget.h"
+#include "2d/CCTextFieldTTF.h"
 
 NS_CC_BEGIN
 

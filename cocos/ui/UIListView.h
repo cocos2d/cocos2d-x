@@ -161,7 +161,8 @@ public:
     
     float getItemsMargin()const;
     
-    virtual void sortAllChildren() override;
+    virtual void doLayout() override;
+    
     virtual void addChild(Node * child) override;
     virtual void addChild(Node * child, int zOrder) override;
     virtual void addChild(Node* child, int zOrder, int tag) override;

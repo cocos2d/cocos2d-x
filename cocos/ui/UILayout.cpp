@@ -30,9 +30,13 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "2d/CCDrawingPrimitives.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCGroupCommand.h"
-#include "renderer/CCCustomCommand.h"
 #include "ui/UILayoutManager.h"
+#include "2d/CCDrawNode.h"
+#include "2d/CCLayer.h"
+#include "CCGLView.h"
+#include "2d/CCSprite.h"
+#include "base/CCEventFocus.h"
+
 
 NS_CC_BEGIN
 
@@ -189,7 +193,10 @@ void Layout::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t par
     {
         return;
     }
+    
+    doLayout();
     adaptRenderers();
+    
     if (_clippingEnabled)
     {
         switch (_clippingType)
@@ -208,16 +215,9 @@ void Layout::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t par
     {
         ProtectedNode::visit(renderer, parentTransform, parentFlags);
     }
-    doLayout();
 }
     
-void Layout::sortAllChildren()
-{
-    Widget::sortAllChildren();
-    doLayout();
-}
-    
-void Layout::stencilClippingVisit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
+void Layout::stencilClippingVisit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags)
 {
     if(!_visible)
         return;
@@ -324,10 +324,20 @@ void Layout::onBeforeVisitStencil()
     glStencilFunc(GL_NEVER, mask_layer, mask_layer);
     glStencilOp(GL_ZERO, GL_KEEP, GL_KEEP);
 
+    this->drawFullScreenQuadClearStencil();
+    
+    glStencilFunc(GL_NEVER, mask_layer, mask_layer);
+    glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
+}
+    
+void Layout::drawFullScreenQuadClearStencil()
+{
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     
@@ -335,8 +345,6 @@ void Layout::onBeforeVisitStencil()
     
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    glStencilFunc(GL_NEVER, mask_layer, mask_layer);
-    glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
 }
 
 void Layout::onAfterDrawStencil()

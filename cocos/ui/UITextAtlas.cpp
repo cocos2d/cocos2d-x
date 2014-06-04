@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "ui/UITextAtlas.h"
+#include "2d/CCLabel.h"
 
 NS_CC_BEGIN
 

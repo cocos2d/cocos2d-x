@@ -236,6 +236,25 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class Bug5482 : public PhysicsDemo
+{
+public:
+    CREATE_FUNC(Bug5482);
+    
+    void onEnter() override;
+    void onExit() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void changeBodyCallback(Ref* sender);
+private:
+    Sprite* _nodeA;
+    Sprite* _nodeB;
+    PhysicsBody* _body;
+    MenuItemFont* _button;
+    bool _bodyInA;
+};
+
 
 #endif
 #endif

@@ -24,6 +24,9 @@ THE SOFTWARE.
 
 #include "ui/UIButton.h"
 #include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"
+#include "2d/CCLabel.h"
+#include "2d/CCSprite.h"
+#include "2d/CCActionInterval.h"
 
 NS_CC_BEGIN
 

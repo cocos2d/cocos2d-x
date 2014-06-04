@@ -465,13 +465,28 @@ void Scheduler::schedulePerFrame(const ccSchedulerFunc& callback, void *target, 
     HASH_FIND_PTR(_hashForUpdates, &target, hashElement);
     if (hashElement)
     {
-#if COCOS2D_DEBUG >= 1
-        CCASSERT(hashElement->entry->markedForDeletion,"");
-#endif
-        // TODO: check if priority has changed!
-
-        hashElement->entry->markedForDeletion = false;
-        return;
+        // check if priority has changed
+        if ((*hashElement->list)->priority != priority)
+        {
+            if (_updateHashLocked)
+            {
+                CCLOG("warning: you CANNOT change update priority in scheduled function");
+                hashElement->entry->markedForDeletion = false;
+                hashElement->entry->paused = paused;
+                return;
+            }
+            else
+            {
+            	// will be added again outside if (hashElement).
+                unscheduleUpdate(target);
+            }
+        }
+        else
+        {
+            hashElement->entry->markedForDeletion = false;
+            hashElement->entry->paused = paused;
+            return;
+        }
     }
 
     // most of the updates are going to be 0, that's way there

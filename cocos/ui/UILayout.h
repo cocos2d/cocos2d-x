@@ -26,13 +26,20 @@ THE SOFTWARE.
 #define __LAYOUT_H__
 
 #include "ui/UIWidget.h"
+#include "renderer/CCCustomCommand.h"
+#include "renderer/CCGroupCommand.h"
 
 NS_CC_BEGIN
+
+class DrawNode;
+class LayerColor;
+class LayerGradient;
 
 namespace ui {
     
 class LayoutManager;
-    
+
+
 class LayoutProtocol
 {
 public:
@@ -260,7 +267,6 @@ public:
      */
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
 
-    virtual void sortAllChildren() override;
     
     void requestDoLayout();
     
@@ -336,6 +342,9 @@ protected:
     void onBeforeVisitStencil();
     void onAfterDrawStencil();
     void onAfterVisitStencil();
+    /**draw fullscreen quad to clear stencil bits
+     */
+    void drawFullScreenQuadClearStencil();
     
     void onBeforeVisitScissor();
     void onAfterVisitScissor();

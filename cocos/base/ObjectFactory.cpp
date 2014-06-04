@@ -22,64 +22,86 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "cocostudio/CCComController.h"
-#include "2d/CCNode.h"
+#include "ObjectFactory.h"
 
-namespace cocostudio {
 
-IMPLEMENT_CLASS_COMPONENT_INFO(ComController)
-ComController::ComController(void)
-{
-    _name = "CCComController";
-}
+NS_CC_BEGIN
 
-ComController::~ComController(void)
+ObjectFactory::TInfo::TInfo(void)
+:_class("")
+,_fun(nullptr)
 {
 }
 
-bool ComController::init()
+ObjectFactory::TInfo::TInfo(const std::string& type, Instance ins)
+:_class(type)
+,_fun(ins)
 {
-    return true;
+    ObjectFactory::getInstance()->registerType(*this);
 }
 
-void ComController::onEnter()
+ObjectFactory::TInfo::TInfo(const TInfo &t)
 {
-    if (_owner != nullptr)
+    _class = t._class;
+    _fun = t._fun;
+}
+
+ObjectFactory::TInfo::~TInfo(void)
+{
+   _class = "";
+   _fun = nullptr;
+}
+
+ObjectFactory::TInfo& ObjectFactory::TInfo::operator= (const TInfo &t)
+{
+    _class = t._class;
+    _fun = t._fun;
+    return *this;
+}
+
+
+ObjectFactory* ObjectFactory::_sharedFactory = nullptr;
+
+ObjectFactory::ObjectFactory(void)
+{
+
+}
+
+ObjectFactory::~ObjectFactory(void)
+{
+    _typeMap.clear();
+}
+
+ObjectFactory* ObjectFactory::getInstance()
+{
+    if ( nullptr == _sharedFactory)
     {
-        _owner->scheduleUpdate();
+        _sharedFactory = new ObjectFactory();
     }
+    return _sharedFactory;
 }
 
-void ComController::onExit()
+void ObjectFactory::destroyInstance()
 {
+    CC_SAFE_DELETE(_sharedFactory);
 }
 
-void ComController::update(float delta)
+Ref* ObjectFactory::createObject(const std::string &name)
 {
+	Ref *o = nullptr;
+	do 
+	{
+		const TInfo t = _typeMap[name];
+		CC_BREAK_IF(t._fun == nullptr);
+		o = t._fun();
+	} while (0);
+   
+    return o;
 }
 
-bool ComController::isEnabled() const
+void ObjectFactory::registerType(const TInfo &t)
 {
-    return _enabled;
+    _typeMap.insert(std::make_pair(t._class, t));
 }
 
-void ComController::setEnabled(bool b)
-{
-    _enabled = b;
-}
-
-ComController* ComController::create(void)
-{
-    ComController * pRet = new ComController();
-    if (pRet && pRet->init())
-    {
-        pRet->autorelease();
-    }
-    else
-    {
-        CC_SAFE_DELETE(pRet);
-    }
-	return pRet;
-}
-
-}
+NS_CC_END

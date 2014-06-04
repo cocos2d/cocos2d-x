@@ -218,6 +218,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="..\base\ccUtils.cpp" />
     <ClCompile Include="..\base\CCValue.cpp" />
     <ClCompile Include="..\base\etc1.cpp" />
+    <ClCompile Include="..\base\ObjectFactory.cpp" />
     <ClCompile Include="..\base\s3tc.cpp" />
     <ClCompile Include="..\base\TGAlib.cpp" />
     <ClCompile Include="..\base\ZipUtils.cpp" />
@@ -399,6 +400,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="..\base\CCVector.h" />
     <ClInclude Include="..\base\etc1.h" />
     <ClInclude Include="..\base\firePngData.h" />
+    <ClInclude Include="..\base\ObjectFactory.h" />
     <ClInclude Include="..\base\s3tc.h" />
     <ClInclude Include="..\base\TGAlib.h" />
     <ClInclude Include="..\base\uthash.h" />
