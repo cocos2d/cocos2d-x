@@ -3,11 +3,13 @@ cocos2d-x-3.2  ???
     
     [FIX]           Application.mk: not output debug message in releae mode on Android
     [FIX]           Android: 3d model will be black when coming from background
+    [FIX]           Android: don't trigger EVENT_COME_TO_BACKGROUND event when go to background
     [FIX]           Cocos2dxGLSurfaceView.java: prevent flickering when opening another activity
     [FIX]           Image: Set jpeg save quality to 90 
     [FIX]           Label: label is unsharp if it's created by smaller font
     [FIX]           Others: Treat warning as error on iOS and Mac
     [FIX]           Repeat: will run one more over in rare situations
+    [FIX]           Scale9Sprite: support culling
     [FIX]           Schedule: schedulePerFrame() can not be called twice
     [FIX]           SpriteFrameCache: fix memory leak
 
