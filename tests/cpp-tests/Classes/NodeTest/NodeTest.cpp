@@ -1187,7 +1187,12 @@ NodeNormalizedPositionTest2::NodeNormalizedPositionTest2()
 : _accum(0)
 {
     Sprite *sprites[5];
-    Vec2 positions[] = { {0,0}, {0,1}, {0.5,0.5}, {1,0}, {1,1} };
+    Vec2 positions[5];
+    positions[0] = Vec2(0,0);
+    positions[1] = Vec2(0,1);
+    positions[2] = Vec2(0.5,0.5);
+    positions[3] = Vec2(1,0);
+    positions[4] = Vec2(1,1);
 
     for(int i=0; i<5; i++) {
         sprites[i] = Sprite::create("Images/grossini.png");
