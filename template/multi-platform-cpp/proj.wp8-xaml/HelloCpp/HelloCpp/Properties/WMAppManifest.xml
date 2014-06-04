@@ -11,7 +11,7 @@
       <Capability Name="ID_CAP_WEBBROWSERCOMPONENT" />
     </Capabilities>
     <Tasks>
-      <DefaultTask Name="_default" NavigationPage="MainPage.xaml" />
+      <DefaultTask Name="_default" NavigationPage="MainPage.xaml" ActivationPolicy="Resume"/>
     </Tasks>
     <Tokens>
       <PrimaryToken TokenID="PhoneDirect3DXamlAppInteropToken" TaskName="_default">
