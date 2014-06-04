@@ -17,7 +17,7 @@ public:
         setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
     }
 
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     {
         DrawPrimitives::setDrawColor4B(_touchColor.r, _touchColor.g, _touchColor.b, 255);
         glLineWidth(10);

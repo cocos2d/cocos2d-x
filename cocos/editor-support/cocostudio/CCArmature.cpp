@@ -378,7 +378,7 @@ void Armature::update(float dt)
     _armatureTransformDirty = false;
 }
 
-void Armature::draw(cocos2d::Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void Armature::draw(cocos2d::Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     if (_parentBone == nullptr && _batchNode == nullptr)
     {
@@ -408,17 +408,17 @@ void Armature::draw(cocos2d::Renderer *renderer, const Mat4 &transform, bool tra
                 {
                     skin->setBlendFunc(bone->getBlendFunc());
                 }
-                skin->draw(renderer, transform, transformUpdated);
+                skin->draw(renderer, transform, flags);
             }
             break;
             case CS_DISPLAY_ARMATURE:
             {
-                node->draw(renderer, transform, transformUpdated);
+                node->draw(renderer, transform, flags);
             }
             break;
             default:
             {
-                node->visit(renderer, transform, transformUpdated);
+                node->visit(renderer, transform, flags);
 //                CC_NODE_DRAW_SETUP();
             }
             break;
@@ -426,7 +426,7 @@ void Armature::draw(cocos2d::Renderer *renderer, const Mat4 &transform, bool tra
         }
         else if(Node *node = dynamic_cast<Node *>(object))
         {
-            node->visit(renderer, transform, transformUpdated);
+            node->visit(renderer, transform, flags);
 //            CC_NODE_DRAW_SETUP();
         }
     }
@@ -445,7 +445,7 @@ void Armature::onExit()
 }
 
 
-void Armature::visit(cocos2d::Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
+void Armature::visit(cocos2d::Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     // quick return if not visible. children won't be drawn.
     if (!_visible)
@@ -453,10 +453,7 @@ void Armature::visit(cocos2d::Renderer *renderer, const Mat4 &parentTransform, b
         return;
     }
 
-    bool dirty = parentTransformUpdated || _transformUpdated;
-    if(dirty)
-        _modelViewTransform = transform(parentTransform);
-    _transformUpdated = false;
+    uint32_t flags = processParentFlags(parentTransform, parentFlags);
 
     // IMPORTANT:
     // To ease the migration to v3.0, we still support the Mat4 stack,
@@ -468,7 +465,7 @@ void Armature::visit(cocos2d::Renderer *renderer, const Mat4 &parentTransform, b
 
 
     sortAllChildren();
-    draw(renderer, _modelViewTransform, dirty);
+    draw(renderer, _modelViewTransform, flags);
 
     // reset for next frame
     _orderOfArrival = 0;

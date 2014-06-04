@@ -75,16 +75,9 @@ Layer::~Layer()
 
 bool Layer::init()
 {
-    bool ret = false;
-    do 
-    {        
-        Director * director;
-        CC_BREAK_IF(!(director = Director::getInstance()));
-        this->setContentSize(director->getWinSize());
-        // success
-        ret = true;
-    } while(0);
-    return ret;
+    Director * director = Director::getInstance();
+    setContentSize(director->getWinSize());
+    return true;
 }
 
 Layer *Layer::create()
@@ -584,10 +577,10 @@ void LayerColor::updateColor()
     }
 }
 
-void LayerColor::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void LayerColor::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(LayerColor::onDraw, this, transform, transformUpdated);
+    _customCommand.func = CC_CALLBACK_0(LayerColor::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
     
     for(int i = 0; i < 4; ++i)
@@ -600,7 +593,7 @@ void LayerColor::draw(Renderer *renderer, const Mat4 &transform, bool transformU
     }
 }
 
-void LayerColor::onDraw(const Mat4& transform, bool transformUpdated)
+void LayerColor::onDraw(const Mat4& transform, uint32_t flags)
 {
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);

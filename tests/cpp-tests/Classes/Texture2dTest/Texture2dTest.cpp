@@ -1794,17 +1794,17 @@ std::string TextureDrawAtPoint::subtitle() const
     return "draws 2 textures using drawAtPoint";
 }
 
-void TextureDrawAtPoint::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void TextureDrawAtPoint::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    TextureDemo::draw(renderer, transform, transformUpdated);
+    TextureDemo::draw(renderer, transform, flags);
     
     _renderCmd.init(_globalZOrder);
-    _renderCmd.func = CC_CALLBACK_0(TextureDrawAtPoint::onDraw, this, transform, transformUpdated);
+    _renderCmd.func = CC_CALLBACK_0(TextureDrawAtPoint::onDraw, this, transform, flags);
     renderer->addCommand(&_renderCmd);
 
 }
 
-void TextureDrawAtPoint::onDraw(const Mat4 &transform, bool transformUpdated)
+void TextureDrawAtPoint::onDraw(const Mat4 &transform, uint32_t flags)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -1837,16 +1837,16 @@ TextureDrawInRect::~TextureDrawInRect()
     _Tex2F->release();
 }
 
-void TextureDrawInRect::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void TextureDrawInRect::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    TextureDemo::draw(renderer, transform, transformUpdated);
+    TextureDemo::draw(renderer, transform, flags);
 
     _renderCmd.init(_globalZOrder);
-    _renderCmd.func = CC_CALLBACK_0(TextureDrawInRect::onDraw, this, transform, transformUpdated);
+    _renderCmd.func = CC_CALLBACK_0(TextureDrawInRect::onDraw, this, transform, flags);
     renderer->addCommand(&_renderCmd);
 }
 
-void TextureDrawInRect::onDraw(const Mat4 &transform, bool transformUpdated)
+void TextureDrawInRect::onDraw(const Mat4 &transform, uint32_t flags)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");

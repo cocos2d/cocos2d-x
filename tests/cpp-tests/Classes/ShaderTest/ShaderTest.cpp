@@ -193,14 +193,14 @@ void ShaderNode::setPosition(const Vec2 &newPosition)
     getGLProgramState()->setUniformVec2("center", _center);
 }
 
-void ShaderNode::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void ShaderNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(ShaderNode::onDraw, this, transform, transformUpdated);
+    _customCommand.func = CC_CALLBACK_0(ShaderNode::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 }
 
-void ShaderNode::onDraw(const Mat4 &transform, bool transformUpdated)
+void ShaderNode::onDraw(const Mat4 &transform, uint32_t flags)
 {
     float w = SIZE_X, h = SIZE_Y;
     GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
