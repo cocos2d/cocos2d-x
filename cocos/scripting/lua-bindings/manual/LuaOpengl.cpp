@@ -38,10 +38,10 @@ using namespace cocos2d::extension;
 
 
     
-void GLNode::draw(Renderer *renderer, const cocos2d::Mat4& transform, bool transformUpdated)
+void GLNode::draw(Renderer *renderer, const cocos2d::Mat4& transform, uint32_t flags)
 {
     _renderCmd.init(_globalZOrder);
-    _renderCmd.func = CC_CALLBACK_0(GLNode::onDraw, this, transform, transformUpdated);
+    _renderCmd.func = CC_CALLBACK_0(GLNode::onDraw, this, transform, flags);
     renderer->addCommand(&_renderCmd);
 }
 
@@ -60,7 +60,7 @@ void GLNode::onDraw(const cocos2d::Mat4 &transform, uint32_t flags)
             stack->pushFloat(transform.m[i]);
             lua_rawseti(L, -2, i + 1);
         }
-        stack->pushBoolean(transformUpdated);
+        stack->pushInt(flags);
         stack->executeFunctionByHandler(handler, 2);
         stack->clean();
     }

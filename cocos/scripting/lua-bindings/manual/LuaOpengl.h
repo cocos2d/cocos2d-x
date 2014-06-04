@@ -39,7 +39,7 @@ class GLNode:public cocos2d::Node
 {
 public:
     virtual ~GLNode(){}
-    virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4& transform, bool transformUpdated) override;
+    virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4& transform, uint32_t flags) override;
 protected:
     cocos2d::CustomCommand _renderCmd;
     void onDraw(const cocos2d::Mat4 &transform, uint32_t flags);
