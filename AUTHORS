@@ -873,6 +873,9 @@ Developers:
         
     ntotani
         fix building error in lua-binding in release mode
+        
+    kezhuw
+        AutoReleasePool manager improvement
     
 Retired Core Developers:
     WenSheng Yang
