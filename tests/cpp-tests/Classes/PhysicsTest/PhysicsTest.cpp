@@ -20,6 +20,7 @@ namespace
         CL(PhysicsContactTest),
         CL(PhysicsPositionRotationTest),
         CL(PhysicsSetGravityEnableTest),
+        CL(Bug5482),
 #else
         CL(PhysicsDemoDisabled),
 #endif
@@ -1569,9 +1570,9 @@ void PhysicsPositionRotationTest::onEnter()
     anchorNode->setAnchorPoint(Vec2(0.1f, 0.9f));
     anchorNode->setPosition(100, 100);
     anchorNode->setScale(0.25);
+    addChild(anchorNode);
     anchorNode->setPhysicsBody(PhysicsBody::createBox(anchorNode->getContentSize()*anchorNode->getScale()));
     anchorNode->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
-    addChild(anchorNode);
     
     //parent test
     auto parent = Sprite::create("Images/YellowSquare.png");
@@ -1658,6 +1659,70 @@ std::string PhysicsSetGravityEnableTest::title() const
 std::string PhysicsSetGravityEnableTest::subtitle() const
 {
     return "only yellow box drop down";
+}
+
+void Bug5482::onEnter()
+{
+    PhysicsDemo::onEnter();
+    
+    _scene->toggleDebug();
+    
+    auto touchListener = EventListenerTouchOneByOne::create();
+    touchListener->onTouchBegan = CC_CALLBACK_2(PhysicsDemo::onTouchBegan, this);
+    touchListener->onTouchMoved = CC_CALLBACK_2(PhysicsDemo::onTouchMoved, this);
+    touchListener->onTouchEnded = CC_CALLBACK_2(PhysicsDemo::onTouchEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+    
+    _bodyInA = false;
+    
+    // wall
+    auto wall = Node::create();
+    wall->setPhysicsBody(PhysicsBody::createEdgeBox(VisibleRect::getVisibleRect().size, PhysicsMaterial(0.1f, 1.0f, 0.0f)));
+    wall->setPosition(VisibleRect::center());
+    addChild(wall);
+    
+    //button
+    MenuItemFont::setFontSize(18);
+    _button = MenuItemFont::create("Set Body To A", CC_CALLBACK_1(Bug5482::changeBodyCallback, this));
+    
+    auto menu = Menu::create(_button, nullptr);
+    this->addChild(menu);
+    
+    _nodeA = Sprite::create("Images/YellowSquare.png");
+    _nodeA->setPosition(VisibleRect::center().x - 150, 100);
+    this->addChild(_nodeA);
+    
+    _nodeB = Sprite::create("Images/YellowSquare.png");
+    _nodeB->setPosition(VisibleRect::center().x + 150, 100);
+    this->addChild(_nodeB);
+    
+    _body = PhysicsBody::createBox(_nodeA->getContentSize());
+    _body->setTag(DRAG_BODYS_TAG);
+    _body->retain();
+}
+
+void Bug5482::onExit()
+{
+    _body->release();
+}
+
+void Bug5482::changeBodyCallback(Ref* sender)
+{
+    Sprite* node = _bodyInA ? _nodeB : _nodeA;
+    
+    node->setPhysicsBody(_body);
+    
+    _bodyInA = !_bodyInA;
+}
+
+std::string Bug5482::title() const
+{
+    return "bug 5482: setPhysicsBodyTest";
+}
+
+std::string Bug5482::subtitle() const
+{
+    return "change physics body to the other.";
 }
 
 #endif // ifndef CC_USE_PHYSICS
