@@ -177,9 +177,6 @@
     <ClCompile Include="..\CCActionObject.cpp">
       <Filter>action</Filter>
     </ClCompile>
-    <ClCompile Include="..\ObjectFactory.cpp">
-      <Filter>trigger</Filter>
-    </ClCompile>
     <ClCompile Include="..\TriggerBase.cpp">
       <Filter>trigger</Filter>
     </ClCompile>

@@ -317,6 +317,7 @@
         "cocos/base/CCTouch.cpp", 
         "cocos/base/CCTouch.h", 
         "cocos/base/CCUserDefault.cpp", 
+        "cocos/base/ObjectFactory.cpp", 
         "cocos/base/CCUserDefault.h", 
         "cocos/base/CCUserDefault.mm", 
         "cocos/base/CCUserDefaultAndroid.cpp", 
