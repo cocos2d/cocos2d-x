@@ -1588,7 +1588,6 @@ void ScrollView::interceptTouchEvent(Widget::TouchEventType event, Widget *sende
         case TouchEventType::CANCELED:
         case TouchEventType::ENDED:
             handleReleaseLogic(touchPoint);
-            handleReleaseLogic(touchPoint);
             break;
     }
 }
