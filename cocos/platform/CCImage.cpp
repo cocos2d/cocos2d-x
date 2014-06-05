@@ -39,6 +39,7 @@ THE SOFTWARE.
 
 extern "C"
 {
+#if defined(__APPLE__) || defined(__unix) 
 #ifndef __ENABLE_COMPATIBILITY_WITH_UNIX_2003__
 #define __ENABLE_COMPATIBILITY_WITH_UNIX_2003__
 #include <stdio.h>
@@ -54,6 +55,7 @@ extern "C"
     {
         return strerror(errnum);
     }
+#endif
 #endif
 #include "png.h"
 #include "tiffio.h"
