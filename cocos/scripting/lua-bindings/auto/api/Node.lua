@@ -168,6 +168,11 @@
 -- @return unsigned char#unsigned char ret (return value: unsigned char)
         
 --------------------------------
+-- @function [parent=#Node] setNormalizedPosition 
+-- @param self
+-- @param #vec2_table vec2
+        
+--------------------------------
 -- @function [parent=#Node] convertTouchToNodeSpace 
 -- @param self
 -- @param #cc.Touch touch
@@ -294,6 +299,11 @@
 -- @param self
         
 --------------------------------
+-- @function [parent=#Node] setGLProgram 
+-- @param self
+-- @param #cc.GLProgram glprogram
+        
+--------------------------------
 -- @function [parent=#Node] isVisible 
 -- @param self
 -- @return bool#bool ret (return value: bool)
@@ -316,16 +326,11 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- overload function: visit()
---          
--- overload function: visit(cc.Renderer, mat4_table, bool)
---          
--- @function [parent=#Node] visit
+-- @function [parent=#Node] runAction 
 -- @param self
--- @param #cc.Renderer renderer
--- @param #mat4_table mat4
--- @param #bool bool
-
+-- @param #cc.Action action
+-- @return Action#Action ret (return value: cc.Action)
+        
 --------------------------------
 -- @function [parent=#Node] isOpacityModifyRGB 
 -- @param self
@@ -342,11 +347,16 @@
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
--- @function [parent=#Node] runAction 
+-- overload function: visit()
+--          
+-- overload function: visit(cc.Renderer, mat4_table, unsigned int)
+--          
+-- @function [parent=#Node] visit
 -- @param self
--- @param #cc.Action action
--- @return Action#Action ret (return value: cc.Action)
-        
+-- @param #cc.Renderer renderer
+-- @param #mat4_table mat4
+-- @param #unsigned int int
+
 --------------------------------
 -- @function [parent=#Node] getGLProgramState 
 -- @param self
@@ -589,13 +599,13 @@
 --------------------------------
 -- overload function: draw()
 --          
--- overload function: draw(cc.Renderer, mat4_table, bool)
+-- overload function: draw(cc.Renderer, mat4_table, unsigned int)
 --          
 -- @function [parent=#Node] draw
 -- @param self
 -- @param #cc.Renderer renderer
 -- @param #mat4_table mat4
--- @param #bool bool
+-- @param #unsigned int int
 
 --------------------------------
 -- @function [parent=#Node] setUserObject 
@@ -631,14 +641,14 @@
 -- @return mat4_table#mat4_table ret (return value: mat4_table)
         
 --------------------------------
--- @function [parent=#Node] setGLProgram 
--- @param self
--- @param #cc.GLProgram glprogram
-        
---------------------------------
 -- @function [parent=#Node] getScale 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+-- @function [parent=#Node] getNormalizedPosition 
+-- @param self
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#Node] getRotationSkewX 
