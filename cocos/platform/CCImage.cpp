@@ -39,6 +39,22 @@ THE SOFTWARE.
 
 extern "C"
 {
+#ifndef __ENABLE_COMPATIBILITY_WITH_UNIX_2003__
+#define __ENABLE_COMPATIBILITY_WITH_UNIX_2003__
+#include <stdio.h>
+    FILE *fopen$UNIX2003( const char *filename, const char *mode )
+    {
+        return fopen(filename, mode);
+    }
+    size_t fwrite$UNIX2003( const void *a, size_t b, size_t c, FILE *d )
+    {
+        return fwrite(a, b, c, d);
+    }
+    char *strerror$UNIX2003( int errnum )
+    {
+        return strerror(errnum);
+    }
+#endif
 #include "png.h"
 #include "tiffio.h"
 #include "base/etc1.h"
