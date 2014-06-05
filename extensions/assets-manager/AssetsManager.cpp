@@ -326,7 +326,7 @@ bool AssetsManager::renameFile(const std::string &path, const std::string &oldna
 #endif
 }
 
-bool AssetsManager::decompress(std::string zip)
+bool AssetsManager::decompress(const std::string &zip)
 {
     // Find root path for zip file
     size_t pos = zip.find_last_of("/\\");
@@ -452,7 +452,7 @@ bool AssetsManager::decompress(std::string zip)
     return true;
 }
 
-void AssetsManager::dispatchUpdateEvent(EventAssetsManager::EventCode code, std::string assetId/* = ""*/, std::string message/* = ""*/, int curle_code/* = CURLE_OK*/, int curlm_code/* = CURLM_OK*/)
+void AssetsManager::dispatchUpdateEvent(EventAssetsManager::EventCode code, const std::string &assetId/* = ""*/, const std::string &message/* = ""*/, int curle_code/* = CURLE_OK*/, int curlm_code/* = CURLM_OK*/)
 {
     EventAssetsManager event(_eventName, this, code, _percent, assetId, message, curle_code, curlm_code);
     _eventDispatcher->dispatchEvent(&event);
@@ -810,7 +810,7 @@ void AssetsManager::onProgress(double total, double downloaded, const std::strin
             }
         }
         
-        if (_totalEnabled)
+        if (_totalEnabled && _updateState == State::UPDATING)
         {
             float currentPercent = 100 * totalDownloaded / _totalSize;
             // Notify at integer level change
@@ -898,7 +898,7 @@ void AssetsManager::onSuccess(const std::string &srcUrl, const std::string &stor
             _failedUnits.erase(unitIt);
         }
 
-        if (_updateState == State::UPDATING) {
+        if (!_totalEnabled && _updateState == State::UPDATING) {
             _percent = 100 * (_totalToDownload - _totalWaitToDownload) / _totalToDownload;
             // Notify progression event
             dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_PROGRESSION, customId);

@@ -123,17 +123,21 @@ void AssetsManagerLoaderScene::runThisTest()
                 case EventAssetsManager::EventCode::UPDATE_PROGRESSION:
                 {
                     std::string assetId = event->getAssetId();
-                    int percent = event->getPercent();
+                    float percent = event->getPercent();
                     std::string str;
                     if (assetId == AssetsManager::VERSION_ID)
                     {
-                        str = StringUtils::format("Version file: %d", percent) + "%";
+                        str = StringUtils::format("Version file: %.2f", percent) + "%";
                     }
                     else if (assetId == AssetsManager::MANIFEST_ID)
                     {
-                        str = StringUtils::format("Manifest file: %d", percent) + "%";
+                        str = StringUtils::format("Manifest file: %.2f", percent) + "%";
                     }
-                    else str = StringUtils::format("%d", percent) + "%";
+                    else
+                    {
+                        str = StringUtils::format("%.2f", percent) + "%";
+                        CCLOG("%.2f Percent", percent);
+                    }
                     if (this->_progress != nullptr)
                         this->_progress->setString(str);
                 }

@@ -66,10 +66,15 @@ int downloadProgressFunc(Downloader::ProgressData *ptr, double totalToDownload, 
                 {
                     std::shared_ptr<Downloader> downloader = data.downloader.lock();
                 
-                    auto callback = downloader->getSuccessCallback();
-                    if (callback != nullptr)
+                    auto progressCB = downloader->getProgressCallback();
+                    if (progressCB != nullptr)
                     {
-                        callback(data.url, data.path + data.name, data.customId);
+                        progressCB(totalToDownload, nowDownloaded, data.url, data.customId);
+                    }
+                    auto successCB = downloader->getSuccessCallback();
+                    if (successCB != nullptr)
+                    {
+                        successCB(data.url, data.path + data.name, data.customId);
                     }
                 }
             });

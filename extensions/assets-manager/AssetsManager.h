@@ -136,14 +136,14 @@ protected:
     
     void adjustPath(std::string &path);
     
-    void dispatchUpdateEvent(EventAssetsManager::EventCode code, std::string message = "", std::string assetId = "", int curle_code = 0, int curlm_code = 0);
+    void dispatchUpdateEvent(EventAssetsManager::EventCode code, const std::string &message = "", const std::string &assetId = "", int curle_code = 0, int curlm_code = 0);
     
     void downloadVersion();
     void parseVersion();
     void downloadManifest();
     void parseManifest();
     void startUpdate();
-    bool decompress(std::string filename);
+    bool decompress(const std::string &filename);
     
     /** @brief Function for destorying the downloaded version file and manifest file
      */
