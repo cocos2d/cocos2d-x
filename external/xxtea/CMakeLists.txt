@@ -1,5 +1,5 @@
 set(XXTEA
-  xxtea.c
+  xxtea.cpp
 )
 
 add_library(xxtea STATIC
