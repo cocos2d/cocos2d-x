@@ -82,8 +82,6 @@ protected:
      */
     virtual ~ParallaxNode();
 
-    Vec2 absolutePosition();
-
     Vec2    _lastPosition;
     struct _ccArray* _parallaxArray;
 
