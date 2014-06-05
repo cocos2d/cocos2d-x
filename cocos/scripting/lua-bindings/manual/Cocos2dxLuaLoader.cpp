@@ -106,7 +106,7 @@ extern "C"
         }
         else
         {
-            log("can not get file data of %s", chunkName.c_str());
+            CCLOG("can not get file data of %s", chunkName.c_str());
             return 0;
         }
         
