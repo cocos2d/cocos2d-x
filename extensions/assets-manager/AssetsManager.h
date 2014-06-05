@@ -235,6 +235,18 @@ private:
     //! Download percent
     float _percent;
     
+    //! Indicate whether the total size should be enabled
+    int _totalEnabled;
+    
+    //! Indicate the number of file whose total size have been collected
+    int _sizeCollected;
+    
+    //! Total file size need to be downloaded (sum of all file)
+    double _totalSize;
+    
+    //! Downloaded size for each file
+    std::unordered_map<std::string, double> _downloadedSize;
+    
     //! Total number of assets to download
     int _totalToDownload;
     //! Total number of assets still waiting to be downloaded

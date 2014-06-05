@@ -596,10 +596,16 @@ void AssetsManager::startUpdate()
         {
             _updateState = State::UPDATING;
             // UPDATE
+            // Clean up before update
             _failedUnits.clear();
             _downloadUnits.clear();
             _compressedFiles.clear();
             _totalWaitToDownload = _totalToDownload = 0;
+            _percent = _sizeCollected = _totalSize = 0;
+            _downloadedSize.clear();
+            _totalEnabled = false;
+            
+            // Generate download units for all assets that need to be updated or added
             std::string packageUrl = _remoteManifest->getPackageUrl();
             for (auto it = diff_map.begin(); it != diff_map.end(); ++it) {
                 Manifest::AssetDiff diff = it->second;
@@ -777,7 +783,44 @@ void AssetsManager::onProgress(double total, double downloaded, const std::strin
         dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_PROGRESSION, customId);
         return;
     }
-// TODO : Calculate the precised percentage of download
+    else
+    {
+        // Calcul total downloaded
+        bool found = false;
+        double totalDownloaded = 0;
+        for (auto it = _downloadedSize.begin(); it != _downloadedSize.end(); ++it)
+        {
+            if (it->first == customId)
+            {
+                it->second = downloaded;
+                found = true;
+            }
+            totalDownloaded += it->second;
+        }
+        // Collect information if not registed
+        if (!found)
+        {
+            _downloadedSize.emplace(customId, downloaded);
+            _totalSize += total;
+            _sizeCollected++;
+            // All collected, enable total size
+            if (_sizeCollected == _totalToDownload)
+            {
+                _totalEnabled = true;
+            }
+        }
+        
+        if (_totalEnabled)
+        {
+            float currentPercent = 100 * totalDownloaded / _totalSize;
+            // Notify at integer level change
+            if ((int)currentPercent != (int)_percent) {
+                _percent = currentPercent;
+                // Notify progression event
+                dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_PROGRESSION, "");
+            }
+        }
+    }
 }
 
 void AssetsManager::onSuccess(const std::string &srcUrl, const std::string &storagePath, const std::string &customId)
