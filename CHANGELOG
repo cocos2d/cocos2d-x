@@ -12,6 +12,7 @@ cocos2d-x-3.2  ???
     [FIX]           Image: premultiply alpha when loading png file to resolve black border issue
     [FIX]           Label: label is unsharp if it's created by smaller font
     [FIX]           Lua-binding: compiling error on release mode
+    [FIX]           Lua-binding: Add xxtea encrypt support
     [FIX]           Node: setPhysicsBody() can not work correctly if it is added to a Node
     [FIX]           Repeat: will run one more over in rare situations
     [FIX]           Scale9Sprite: support culling
