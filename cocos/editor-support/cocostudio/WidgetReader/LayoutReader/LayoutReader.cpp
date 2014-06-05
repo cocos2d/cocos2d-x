@@ -47,6 +47,7 @@ namespace cocostudio
         int ecr=0, ecg=0, ecb= 0;
         float bgcv1 = 0.0f, bgcv2= 0.0f;
         float capsx = 0.0f, capsy = 0.0, capsWidth = 0.0, capsHeight = 0.0f;
+        bool isAdaptScreen = false;
         Layout::Type layoutType;
         
         for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
@@ -54,17 +55,15 @@ namespace cocostudio
             std::string value = stChildArray[i].GetValue();
             
             if (key == "adaptScreen") {
-                bool adptScreen = valueToBool(value);
-                if (adptScreen) {
-                    Size screenSize = CCDirector::getInstance()->getWinSize();
-                    w = screenSize.width;
-                    h = screenSize.height;
-                }else{
-                    w = widget->getSize().width;
-                    h = widget->getSize().height;
-                }
-                panel->setSize(Size(w,h));
-            }else if( key == "clipAble"){
+                isAdaptScreen = valueToBool(value);
+            }
+            else if(key == "width"){
+                w = valueToFloat(value);
+            }
+            else if(key == "height"){
+                h = valueToFloat(value);
+            }
+            else if( key == "clipAble"){
                 panel->setClippingEnabled(valueToBool(value));
             }else if(key == "backGroundScale9Enable"){
                 panel->setBackGroundImageScale9Enabled(valueToBool(value));
@@ -124,6 +123,13 @@ namespace cocostudio
             }
             
         }
+        
+        Size screenSize = Director::getInstance()->getWinSize();
+        if (isAdaptScreen) {
+            w = screenSize.width;
+            h = screenSize.height;
+        }
+        panel->setSize(Size(w,h));
         
         panel->setBackGroundColor(Color3B(scr, scg, scb),Color3B(ecr, ecg, ecb));
         panel->setBackGroundColor(Color3B(cr, cg, cb));

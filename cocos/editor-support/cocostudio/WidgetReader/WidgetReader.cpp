@@ -168,11 +168,21 @@ namespace cocostudio
     {
         stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
         
-       
+        
+        float sizePercentX;
+        float sizePercentY;
+        float positionPercentX;
+        float positionPercentY;
+        Size screenSize = Director::getInstance()->getWinSize();
+        float width ;
+        float height;
+        Vec2 position = widget->getPosition();
+        bool isAdaptScreen = false;
         
         for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
             std::string key = stChildArray[i].GetName(pCocoLoader);
             std::string value = stChildArray[i].GetValue();
+            CCLOG("%s", value.c_str());
             
             if (key == "ignoreSize") {
                 widget->ignoreContentAdaptWithSize(valueToBool(value));
@@ -181,17 +191,21 @@ namespace cocostudio
             }else if(key == "positionType"){
                 widget->setPositionType((Widget::PositionType)valueToInt(value));
             }else if(key == "sizePercentX"){
-                widget->setSizePercent(Vec2(valueToFloat(value), widget->getSizePercent().y));
+                sizePercentX = valueToFloat(value);
             }else if(key == "sizePercentY"){
-                widget->setSizePercent(Vec2(widget->getSizePercent().x, valueToFloat(value)));
+                sizePercentY = valueToFloat(value);
             }else if(key == "positionPercentX"){
-                widget->setPositionPercent(Vec2(valueToFloat(value), widget->getPositionPercent().y));
+                positionPercentX = valueToFloat(value);
             }else if(key == "positionPercentY"){
-                widget->setPositionPercent(Vec2(widget->getPositionPercent().x, valueToFloat(value)));
-            }else if (key == "width"){
-                widget->setSize(Size(valueToFloat(value), widget->getSize().height));
+                positionPercentY = valueToFloat(value);
+            }
+            else if(key == "adaptScreen"){
+                isAdaptScreen = valueToBool(value);
+            }
+            else if (key == "width"){
+                width = valueToFloat(value);
             }else if(key == "height"){
-                widget->setSize(Size(widget->getSize().width, valueToFloat(value)));
+                height = valueToFloat(value);
             }else if(key == "tag"){
                 widget->setTag(valueToInt(value));
             }else if(key == "actiontag"){
@@ -200,12 +214,12 @@ namespace cocostudio
                 widget->setTouchEnabled(valueToBool(value));
             }else if(key == "name"){
                 std::string widgetName = value.empty() ? "default" : value;
-                CCLOG("%s", widgetName.c_str());
+//                CCLOG("%s", widgetName.c_str());
                 widget->setName(widgetName);
             }else if(key == "x"){
-                widget->setPosition(Vec2(valueToFloat(value), widget->getPosition().y));
+                position.x = valueToFloat(value);
             }else if(key == "y"){
-                widget->setPosition(Vec2(widget->getPosition().x, valueToFloat(value)));
+                position.y = valueToFloat(value);
             }else if(key == "scaleX"){
                 widget->setScaleX(valueToFloat(value));
             }else if(key == "scaleY"){
@@ -262,8 +276,15 @@ namespace cocostudio
                         break;
                 }
             }
-            
         }
+        
+        widget->setPositionPercent(Vec2(positionPercentX, positionPercentY));
+        widget->setSizePercent(Vec2(sizePercentX, sizePercentY));
+        if (isAdaptScreen) {
+            width = screenSize.width;
+            height = screenSize.height;
+        }
+        widget->setSize(Size(width, height));
     }
     
     void WidgetReader::setColorPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode)
@@ -272,6 +293,8 @@ namespace cocostudio
         
         //set default color
         widget->setColor(Color3B(255,255,255));
+        
+        Vec2 originalAnchorPoint = widget->getAnchorPoint();
         
         for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
             std::string key = stChildArray[i].GetName(pCocoLoader);
@@ -293,8 +316,15 @@ namespace cocostudio
                 widget->setFlippedX(valueToBool(value));
             }else if(key == "flipY"){
                 widget->setFlippedY(valueToBool(value));
+            }else if(key == "anchorPointX"){
+                originalAnchorPoint.x = valueToFloat(value);
+            }else if(key == "anchorPointY"){
+                originalAnchorPoint.y = valueToFloat(value);
             }
         }
+        
+        widget->setAnchorPoint(originalAnchorPoint);
+
     }
     
     void WidgetReader::setColorPropsFromJsonDictionary(Widget *widget, const rapidjson::Value &options)

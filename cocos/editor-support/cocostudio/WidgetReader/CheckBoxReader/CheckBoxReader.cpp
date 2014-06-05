@@ -34,7 +34,7 @@ namespace cocostudio
     
     void CheckBoxReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode)
     {
-        WidgetReader::setPropsFromBinary(widget, pCocoLoader, pCocoNode);
+        WidgetReader::setBasicPropsFromBinary(widget, pCocoLoader, pCocoNode);
         
         CheckBox *checkBox = static_cast<CheckBox*>(widget);
         
@@ -91,7 +91,12 @@ namespace cocostudio
                 
                 checkBox->loadTextureFrontCrossDisabled(backgroundValue, imageFileNameType);
             }
+//            else if (key == "selectedState"){
+//                checkBox->setSelectedState(valueToBool(value));
+//            }
         }
+        
+        WidgetReader::setColorPropsFromBinary(widget, pCocoLoader, pCocoNode);
         
         
     }

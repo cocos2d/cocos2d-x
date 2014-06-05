@@ -1185,11 +1185,8 @@ Widget* WidgetPropertiesReader0300::createWidget(const rapidjson::Value& data, c
     if (rapidjson::kObjectType == tType)
     {
         //convert this function!!!
-       //widgetFromJsonDictionary(widgetTree);
         widget = widgetFromBinary(pCocoLoader, widgetTreeNode);
     }
-
-    
     
     /* *********temp********* */
     if (widget->getContentSize().equals(Size::ZERO))
@@ -1241,16 +1238,14 @@ Widget* WidgetPropertiesReader0300::widgetFromBinary(CocoLoader* pCocoLoader,  s
         reader = this->createWidgetReaderProtocol(readerName);
         
         setPropsForAllWidgetFromBinary(reader, widget, pCocoLoader, &stChildArray[3]);
-        //TODO:
-//            // 2nd., custom widget parse with custom reader
-//            const char* customProperty = DICTOOL->getStringValue_json(uiOptions, "customProperty");
-//            rapidjson::Document customJsonDict;
-//            customJsonDict.Parse<0>(customProperty);
-//            if (customJsonDict.HasParseError())
-//            {
-//                CCLOG("GetParseError %s\n", customJsonDict.GetParseError());
-//            }
-//            setPropsForAllCustomWidgetFromJsonDictionary(classname, widget, customJsonDict);
+        
+        // 2nd., custom widget parse with custom reader
+//        const char* customProperty = DICTOOL->getStringValue_json(uiOptions, "customProperty");
+//        
+//        rapidjson::Document customJsonDict;
+//        customJsonDict.Parse<0>(customProperty);
+//        
+//        setPropsForAllCustomWidgetFromBinary(classname, widget, pCocoLoader, &stChildArray[3]);
     }
     
     //parse children
@@ -1310,70 +1305,70 @@ void WidgetPropertiesReader0300::setPropsForAllWidgetFromBinary(WidgetReaderProt
     reader->setPropsFromBinary(widget, pCocoLoader, pCocoNode);
 }
 
-    std::string WidgetPropertiesReader::getWidgetReaderClassName(Widget* widget)
+std::string WidgetPropertiesReader::getWidgetReaderClassName(Widget* widget)
+{
+    std::string readerName;
+    
+    // 1st., custom widget parse properties of parent widget with parent widget reader
+    if (dynamic_cast<Button*>(widget))
     {
-        std::string readerName;
-        
-        // 1st., custom widget parse properties of parent widget with parent widget reader
-        if (dynamic_cast<Button*>(widget))
-        {
-            readerName = "ButtonReader";
-        }
-        else if (dynamic_cast<CheckBox*>(widget))
-        {
-            readerName = "CheckBoxReader";
-        }
-        else if (dynamic_cast<ImageView*>(widget))
-        {
-            readerName = "ImageViewReader";
-        }
-        else if (dynamic_cast<TextAtlas*>(widget))
-        {
-            readerName = "TextAtlasReader";
-        }
-        else if (dynamic_cast<TextBMFont*>(widget))
-        {
-            readerName = "TextBMFontReader";
-        }
-        else if (dynamic_cast<Text*>(widget))
-        {
-            readerName = "TextReader";
-        }
-        else if (dynamic_cast<LoadingBar*>(widget))
-        {
-            readerName = "LoadingBarReader";
-        }
-        else if (dynamic_cast<Slider*>(widget))
-        {
-            readerName = "SliderReader";
-        }
-        else if (dynamic_cast<TextField*>(widget))
-        {
-            readerName = "TextFieldReader";
-        }
-        else if (dynamic_cast<Layout*>(widget))
-        {
-            readerName = "LayoutReader";
-        }
-        else if (dynamic_cast<ScrollView*>(widget))
-        {
-            readerName = "ScrollViewReader";
-        }
-        else if (dynamic_cast<ListView*>(widget))
-        {
-            readerName = "ListViewReader";
-        }
-        else if (dynamic_cast<PageView*>(widget))
-        {
-            readerName = "PageViewReader";
-        }
-        else if (dynamic_cast<Widget*>(widget))
-        {
-            readerName = "WidgetReader";
-        }
-        
-        return readerName;
+        readerName = "ButtonReader";
     }
+    else if (dynamic_cast<CheckBox*>(widget))
+    {
+        readerName = "CheckBoxReader";
+    }
+    else if (dynamic_cast<ImageView*>(widget))
+    {
+        readerName = "ImageViewReader";
+    }
+    else if (dynamic_cast<TextAtlas*>(widget))
+    {
+        readerName = "TextAtlasReader";
+    }
+    else if (dynamic_cast<TextBMFont*>(widget))
+    {
+        readerName = "TextBMFontReader";
+    }
+    else if (dynamic_cast<Text*>(widget))
+    {
+        readerName = "TextReader";
+    }
+    else if (dynamic_cast<LoadingBar*>(widget))
+    {
+        readerName = "LoadingBarReader";
+    }
+    else if (dynamic_cast<Slider*>(widget))
+    {
+        readerName = "SliderReader";
+    }
+    else if (dynamic_cast<TextField*>(widget))
+    {
+        readerName = "TextFieldReader";
+    }
+    else if (dynamic_cast<Layout*>(widget))
+    {
+        readerName = "LayoutReader";
+    }
+    else if (dynamic_cast<ScrollView*>(widget))
+    {
+        readerName = "ScrollViewReader";
+    }
+    else if (dynamic_cast<ListView*>(widget))
+    {
+        readerName = "ListViewReader";
+    }
+    else if (dynamic_cast<PageView*>(widget))
+    {
+        readerName = "PageViewReader";
+    }
+    else if (dynamic_cast<Widget*>(widget))
+    {
+        readerName = "WidgetReader";
+    }
+    
+    return readerName;
+}
     
 Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Value& data)
 {
