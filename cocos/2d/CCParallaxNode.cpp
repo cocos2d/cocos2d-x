@@ -137,6 +137,11 @@ Vec2 ParallaxNode::absolutePosition()
         cn = cn->getParent();
         ret = ret + cn->getPosition();
     }
+
+    auto glView = cocos2d::Director::getInstance()->getOpenGLView();
+    ret.x *= glView->getFrameSize().width / glView->getDesignResolutionSize().width;
+    ret.y *= glView->getFrameSize().height / v->getDesignResolutionSize().height;
+
     return ret;
 }
 
