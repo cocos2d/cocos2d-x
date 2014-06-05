@@ -1032,7 +1032,7 @@ void EventDispatcher::updateListeners(Event* event)
         
         if (sceneGraphPriorityListeners)
         {
-            bool isDirtyForsceneGraphPriorityListeners = false;
+            bool isDirtyForSceneGraphPriorityListeners = false;
             for (auto iter = sceneGraphPriorityListeners->begin(); iter != sceneGraphPriorityListeners->end();)
             {
                 auto l = *iter;
@@ -1040,19 +1040,19 @@ void EventDispatcher::updateListeners(Event* event)
                 {
                     iter = sceneGraphPriorityListeners->erase(iter);
                     l->release();
-                    isDirtyForsceneGraphPriorityListeners = true;
+                    isDirtyForSceneGraphPriorityListeners = true;
                 }
                 else
                 {
                     ++iter;
                 }
             }
-            if (isDirtyForsceneGraphPriorityListeners) setDirty(listenerID, DirtyFlag::SCENE_GRAPH_PRIORITY);
+            if (isDirtyForSceneGraphPriorityListeners) setDirty(listenerID, DirtyFlag::SCENE_GRAPH_PRIORITY);
         }
         
         if (fixedPriorityListeners)
         {
-            bool isDirtyForfixedPriorityListeners = false;
+            bool isDirtyForFixedPriorityListeners = false;
             for (auto iter = fixedPriorityListeners->begin(); iter != fixedPriorityListeners->end();)
             {
                 auto l = *iter;
@@ -1060,14 +1060,14 @@ void EventDispatcher::updateListeners(Event* event)
                 {
                     iter = fixedPriorityListeners->erase(iter);
                     l->release();
-                    isDirtyForfixedPriorityListeners = true;
+                    isDirtyForFixedPriorityListeners = true;
                 }
                 else
                 {
                     ++iter;
                 }
             }
-            if (isDirtyForfixedPriorityListeners) setDirty(listenerID, DirtyFlag::FIXED_PRIORITY);
+            if (isDirtyForFixedPriorityListeners) setDirty(listenerID, DirtyFlag::FIXED_PRIORITY);
         }
         
         if (sceneGraphPriorityListeners && sceneGraphPriorityListeners->empty())
