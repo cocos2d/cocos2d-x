@@ -51,6 +51,45 @@ bool Bundle3D::load(const std::string& path)
     return true;
 }
 
+/**
+ * load mesh data from bundle
+ * @param id The ID of the mesh, load the first Mesh in the bundle if it is empty
+ */
+bool Bundle3D::loadMeshData(const std::string& id, MeshData* meshdata)
+{
+    //meshdata->vertex;
+    return true;
+}
+
+//
+/**
+ * load skin data from bundle
+ * @param id The ID of the skin, load the first Skin in the bundle if it is empty
+ */
+bool Bundle3D::loadSkinData(const std::string& id, SkinData* skindata)
+{
+    return true;
+}
+
+//
+/**
+ * load material data from bundle
+ * @param id The ID of the material, load the first Material in the bundle if it is empty
+ */
+bool Bundle3D::loadMaterialData(const std::string& id, MaterialData* materialdata)
+{
+    return true;
+}
+
+/**
+ * load material data from bundle
+ * @param id The ID of the animation, load the first animation in the bundle if it is empty
+ */
+bool Bundle3D::loadAnimationData(const std::string& id, Animation3DData* animationdata)
+{
+    return true;
+}
+
 Bundle3D::Bundle3D()
 {
     

@@ -50,6 +50,8 @@ public:
      */
     const Mat4& getInverseBindPose();
     
+    bool needUpdateWorldMat() const;
+    
     //update own world matrix and children's
     void updateWorldMat();
     
@@ -138,6 +140,7 @@ protected:
     Vector<Bone*> _children;
     
     int           _dirtyFlag;
+    bool          _worldDirty;
     Mat4          _world;
     Mat4          _local;
     Vec3          _localTranslate;

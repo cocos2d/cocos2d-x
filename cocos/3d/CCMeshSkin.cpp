@@ -45,6 +45,18 @@ const Mat4& Bone::getInverseBindPose()
     return _bindPose;
 }
 
+bool Bone::needUpdateWorldMat() const
+{
+    bool needupdate = _worldDirty;
+    auto bone = _parent;
+    while (!needupdate && bone) {
+        needupdate = bone->_worldDirty;
+        bone = bone->_parent;
+    }
+    
+    return needupdate;
+}
+
 //update own world matrix and children's
 void Bone::updateWorldMat()
 {
@@ -56,11 +68,17 @@ void Bone::updateWorldMat()
 
 const Mat4& Bone::getWorldMat()
 {
-    if (_parent)
+    if (needUpdateWorldMat())
     {
-        updateLocalMat();
-        _world = _parent->getWorldMat() * _local;
+        if (_parent)
+        {
+            updateLocalMat();
+            _world = _parent->getWorldMat() * _local;
+        }
+        else
+            _world = _local;
     }
+    
     return _world;
 }
 
@@ -165,6 +183,7 @@ Bone::Bone(const std::string& id)
 : _name(id)
 , _parent(nullptr)
 , _dirtyFlag(0)
+, _worldDirty(true)
 {
     
 }

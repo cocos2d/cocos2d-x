@@ -141,10 +141,25 @@ bool Sprite3D::loadFromC3x(const std::string& path)
 {
     //load from .c3b or .c3t
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
-    if (!Bundle3D::getInstance()->load(fullPath))
+    auto bundle = Bundle3D::getInstance();
+    if (!bundle->load(fullPath))
         return false;
     
-    //Bundle3D::getInstance()->loadMeshData(<#const std::string &id#>, <#cocos2d::Bundle3D::MeshData *meshdata#>)
+    Bundle3D::MeshData meshdata;
+    bool ret = bundle->loadMeshData("", &meshdata);
+    if (!ret)
+    {
+        return false;
+    }
+    
+    _mesh = Mesh::create(meshdata.vertex, meshdata.vertexSizeInFloat, meshdata.indices, meshdata.numIndex, meshdata.attribs, meshdata.attribCount);
+    _mesh->retain();
+    
+    Bundle3D::SkinData skindata;
+    ret = bundle->loadSkinData("", &skindata);
+    
+    Bundle3D::MaterialData materialdata;
+    ret = bundle->loadMaterialData("", &materialdata);
     
     return true;
 }
