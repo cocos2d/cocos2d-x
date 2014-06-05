@@ -132,6 +132,7 @@ public:
     //3D
     static const char* SHADER_3D_POSITION;
     static const char* SHADER_3D_POSITION_TEXTURE;
+    static const char* SHADER_3D_SKINPOSITION_TEXTURE;
     
     // uniform names
     static const char* UNIFORM_NAME_P_MATRIX;

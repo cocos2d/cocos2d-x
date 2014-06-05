@@ -53,6 +53,10 @@ public:
     void setDepthWriteEnabled(bool enable);
     
     void setDisplayColor(const Vec4& color);
+    
+    void setMatrixPalette(const Vec4* matrixPalette) { _matrixPalette = matrixPalette; }
+    
+    void setMatrixPaletteSize(int size) { _matrixPaletteSize = size; }
 
     void execute();
 
@@ -70,6 +74,10 @@ protected:
     GLuint _textrueID;
     
     Vec4 _displayColor; // in order to support tint and fade in fade out
+    
+    // used for skin
+    const Vec4* _matrixPalette;
+    int   _matrixPaletteSize;
     
     GLuint _vertexBuffer;
     GLuint _indexBuffer;

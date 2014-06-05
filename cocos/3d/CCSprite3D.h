@@ -70,9 +70,8 @@ protected:
     //.mtl file should at the same directory with the same name if exist
     bool loadFromObj(const std::string& path);
     
-    bool loadFromC3b(const std::string& path);
-    
-    bool loadFromC3t(const std::string& path);
+    //load from .c3b or .c3t
+    bool loadFromC3x(const std::string& path);
 
     virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
     

@@ -73,6 +73,7 @@ const char* GLProgram::SHADER_NAME_LABEL_OUTLINE = "ShaderLabelOutline";
 
 const char* GLProgram::SHADER_3D_POSITION = "Shader3DPosition";
 const char* GLProgram::SHADER_3D_POSITION_TEXTURE = "Shader3DPositionTexture";
+const char* GLProgram::SHADER_3D_SKINPOSITION_TEXTURE = "Shader3DSkinPositionTexture";
 
 
 // uniform names

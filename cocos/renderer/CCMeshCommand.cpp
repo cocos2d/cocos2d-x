@@ -26,6 +26,7 @@
 #include "base/CCDirector.h"
 #include "renderer/CCMeshCommand.h"
 #include "renderer/ccGLStateCache.h"
+#include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTextureAtlas.h"
@@ -42,6 +43,8 @@ MeshCommand::MeshCommand()
 , _depthTestEnabled(false)
 , _depthWriteEnabled(false)
 , _displayColor(1.0f, 1.0f, 1.0f, 1.0f)
+, _matrixPalette(nullptr)
+, _matrixPaletteSize(0)
 {
     _type = RenderCommand::Type::MESH_COMMAND;
 }
@@ -145,6 +148,17 @@ void MeshCommand::execute()
 
     glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
     _glProgramState->setUniformVec4("u_color", _displayColor);
+    if (_matrixPaletteSize && _matrixPalette)
+    {
+        auto glProgram = _glProgramState->getGLProgram();
+
+        auto uniform = glProgram->getUniform("u_matrixPalette");
+        if (uniform)
+        {
+            glProgram->setUniformLocationWith4fv(uniform->location, (const float*)_matrixPalette, _matrixPaletteSize);
+        }
+    }
+    
     _glProgramState->apply(_mv);
     
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);

@@ -27,6 +27,7 @@
 #include "3d/CCMesh.h"
 #include "3d/CCObjLoader.h"
 #include "3d/CCMeshSkin.h"
+#include "3d/CCBundle3D.h"
 
 #include "base/CCDirector.h"
 #include "base/CCPlatformMacros.h"
@@ -136,15 +137,15 @@ bool Sprite3D::loadFromObj(const std::string& path)
     return true;
 }
 
-bool Sprite3D::loadFromC3b(const std::string& path)
+bool Sprite3D::loadFromC3x(const std::string& path)
 {
-    //load from .c3b
-    return true;
-}
-
-bool Sprite3D::loadFromC3t(const std::string& path)
-{
-    //load from .c3t
+    //load from .c3b or .c3t
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
+    if (!Bundle3D::getInstance()->load(fullPath))
+        return false;
+    
+    //Bundle3D::getInstance()->loadMeshData(<#const std::string &id#>, <#cocos2d::Bundle3D::MeshData *meshdata#>)
+    
     return true;
 }
 
@@ -193,13 +194,9 @@ bool Sprite3D::initWithFile(const std::string &path)
         {
             return loadFromObj(path);
         }
-        else if (ext == ".c3b")
+        else if (ext == ".c3b" || ext == ".c3t")
         {
-            return loadFromC3b(path);
-        }
-        else if (ext == ".c3t")
-        {
-            return loadFromC3t(path);
+            return loadFromC3x(path);
         }
         
         return false;
@@ -227,8 +224,14 @@ void Sprite3D::genGLProgramState()
 
 GLProgram* Sprite3D::getDefaultGLProgram(bool textured)
 {
+    bool hasSkin = _skin && _mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_INDEX)
+    && _mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT);
+    
     if(textured)
     {
+        if (hasSkin)
+            return GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_SKINPOSITION_TEXTURE);
+        
         return GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION_TEXTURE);
     }
     else
@@ -276,6 +279,11 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, bool transformUpd
     
     _meshCommand.setCullFaceEnabled(true);
     _meshCommand.setDepthTestEnabled(true);
+    if (_skin)
+    {
+        _meshCommand.setMatrixPaletteSize(_skin->getMatrixPaletteSize());
+        _meshCommand.setMatrixPalette(_skin->getMatrixPalette());
+    }
     //support tint and fade
     _meshCommand.setDisplayColor(Vec4(color.r, color.g, color.b, color.a));
     Director::getInstance()->getRenderer()->addCommand(&_meshCommand);
