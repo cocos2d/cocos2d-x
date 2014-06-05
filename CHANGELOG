@@ -19,6 +19,8 @@ cocos2d-x-3.2  ???
     [FIX]           SpriteFrameCache: fix memory leak
     [FIX]           WP8: will restart if app goes to background, then touches icon to go to foreground
     [FIX]           WP8: will be black if: 1. 3rd pops up a view; 2. go to background; 3. come to foreground
+    
+    [3RD]           curl: will crash if use https request on iOS simulator
 
 cocos2d-x-3.1.1 May.31 2014
     [FIX]           GLProgramState: restores states after coming from background
