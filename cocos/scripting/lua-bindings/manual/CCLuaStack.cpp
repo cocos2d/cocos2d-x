@@ -25,6 +25,7 @@
 
 #include "CCLuaStack.h"
 #include "tolua_fix.h"
+#include "external/xxtea/xxtea.h"
 extern "C" {
 #include "lua.h"
 #include "tolua++.h"
@@ -683,6 +684,90 @@ int LuaStack::reload(const char* moduleFileName)
     std::string name = moduleFileName;
     std::string require = "require \'" + name + "\'";
     return executeString(require.c_str());
+}
+
+void LuaStack::setXXTEAKeyAndSign(const char *key, int keyLen, const char *sign, int signLen)
+{
+    cleanupXXTEAKeyAndSign();
+    
+    if (key && keyLen && sign && signLen)
+    {
+        _xxteaKey = (char*)malloc(keyLen);
+        memcpy(_xxteaKey, key, keyLen);
+        _xxteaKeyLen = keyLen;
+        
+        _xxteaSign = (char*)malloc(signLen);
+        memcpy(_xxteaSign, sign, signLen);
+        _xxteaSignLen = signLen;
+        
+        _xxteaEnabled = true;
+    }
+    else
+    {
+        _xxteaEnabled = false;
+    }
+}
+
+void LuaStack::cleanupXXTEAKeyAndSign()
+{
+    if (_xxteaKey)
+    {
+        free(_xxteaKey);
+        _xxteaKey = nullptr;
+        _xxteaKeyLen = 0;
+    }
+    if (_xxteaSign)
+    {
+        free(_xxteaSign);
+        _xxteaSign = nullptr;
+        _xxteaSignLen = 0;
+    }
+}
+
+int LuaStack::luaLoadBuffer(lua_State *L, const char *chunk, int chunkSize, const char *chunkName)
+{
+    int r = 0;
+    
+    if (_xxteaEnabled && strncmp(chunk, _xxteaSign, _xxteaSignLen) == 0)
+    {
+        // decrypt XXTEA
+        xxtea_long len = 0;
+        unsigned char* result = xxtea_decrypt((unsigned char*)chunk + _xxteaSignLen,
+                                              (xxtea_long)chunkSize - _xxteaSignLen,
+                                              (unsigned char*)_xxteaKey,
+                                              (xxtea_long)_xxteaKeyLen,
+                                              &len);
+        r = luaL_loadbuffer(L, (char*)result, len, chunkName);
+        free(result);
+    }
+    else
+    {
+        r = luaL_loadbuffer(L, chunk, chunkSize, chunkName);
+    }
+    
+#if defined(COCOS2D_DEBUG) && COCOS2D_DEBUG > 0
+    if (r)
+    {
+        switch (r)
+        {
+            case LUA_ERRSYNTAX:
+                CCLOG("[LUA ERROR] load \"%s\", error: syntax error during pre-compilation.", chunkName);
+                break;
+                
+            case LUA_ERRMEM:
+                CCLOG("[LUA ERROR] load \"%s\", error: memory allocation error.", chunkName);
+                break;
+                
+            case LUA_ERRFILE:
+                CCLOG("[LUA ERROR] load \"%s\", error: cannot open/read file.", chunkName);
+                break;
+                
+            default:
+                CCLOG("[LUA ERROR] load \"%s\", error: unknown.", chunkName);
+        }
+    }
+#endif
+    return r;
 }
 
 NS_CC_END
