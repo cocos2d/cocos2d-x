@@ -415,8 +415,8 @@ public class Cocos2dxBitmap {
 	
 		//the end index of a word (exclusive)
 		int wordEnd = 0;
-			
-		while ( wordEnd < pString.length() )
+		
+		while ( wordEnd < pString.length() && wordStart < pString.length() )
 		{
 			//iterate through characters either until we need to word wrap or until the end of the string
 			for ( int charIndex = wordStart; charIndex < pString.length(); charIndex++ )
