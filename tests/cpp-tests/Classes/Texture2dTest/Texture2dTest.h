@@ -65,6 +65,7 @@ class TexturePNG : public TextureDemo
 public:
     CREATE_FUNC(TexturePNG);
     virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     virtual void onEnter() override;
 };
 
