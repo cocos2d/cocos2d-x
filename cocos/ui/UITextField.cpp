@@ -564,6 +564,11 @@ const std::string& TextField::getStringValue()
 {
     return _textFieldRenderer->getString();
 }
+    
+int TextField::getStringLength() {
+    return _textFieldRenderer->getStringLength();
+}
+
 
 bool TextField::onTouchBegan(Touch *touch, Event *unusedEvent)
 {
