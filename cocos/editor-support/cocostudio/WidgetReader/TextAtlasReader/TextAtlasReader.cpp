@@ -2,6 +2,7 @@
 
 #include "TextAtlasReader.h"
 #include "ui/UITextAtlas.h"
+#include "cocostudio/CocoLoader.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -29,6 +30,52 @@ namespace cocostudio
             instanceTextAtalsReader = new TextAtlasReader();
         }
         return instanceTextAtalsReader;
+    }
+    
+    void TextAtlasReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode)
+    {
+        WidgetReader::setPropsFromBinary(widget, pCocoLoader, pCocoNode);
+        
+        TextAtlas* labelAtlas = static_cast<TextAtlas*>(widget);
+
+        
+        stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+        Widget::TextureResType type;
+        std::string charMapFileName;
+        std::string stringValue;
+        std::string startCharMap;
+        float itemWidth;
+        float itemHeight;
+        for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
+            std::string key = stChildArray[i].GetName(pCocoLoader);
+            std::string value = stChildArray[i].GetValue();
+            
+            if (key == "stringValue") {
+                stringValue = value;
+            }
+            else if(key == "charMapFileData"){
+                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
+                std::string resType = backGroundChildren[2].GetValue();;
+                
+                Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
+                
+                std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+                
+                charMapFileName = backgroundValue;
+                type  = imageFileNameType;
+                
+            }else if(key == "itemWidth"){
+                itemWidth = valueToFloat(value);
+            }else if(key == "itemHeight"){
+                itemHeight = valueToFloat(value);
+            }else if(key == "startCharMap"){
+                startCharMap = value;
+            }
+        } //end of for loop
+        
+        if (type == (Widget::TextureResType)0) {
+            labelAtlas->setProperty(stringValue, charMapFileName, itemWidth, itemHeight, startCharMap);
+        }
     }
     
     void TextAtlasReader::setPropsFromJsonDictionary(Widget *widget, const rapidjson::Value &options)

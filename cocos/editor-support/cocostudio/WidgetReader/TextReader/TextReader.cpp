@@ -2,6 +2,7 @@
 
 #include "TextReader.h"
 #include "ui/UIText.h"
+#include "cocostudio/CocoLoader.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -29,6 +30,42 @@ namespace cocostudio
             instanceTextReader = new TextReader();
         }
         return instanceTextReader;
+    }
+    
+    void TextReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode)
+    {
+        WidgetReader::setPropsFromBinary(widget, pCocoLoader, pCocoNode);
+        
+        stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+        
+        Text* label = static_cast<Text*>(widget);
+    
+        
+        for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
+            std::string key = stChildArray[i].GetName(pCocoLoader);
+            std::string value = stChildArray[i].GetValue();
+            
+            if (key == "touchScaleEnable") {
+                label->setTouchScaleChangeEnabled(valueToBool(value));
+            }
+            
+            else if(key == "text"){
+                label->setString(value);
+            }else if(key == "fontSize"){
+                label->setFontSize(valueToInt(value));
+            }else if(key == "fontName"){
+                label->setFontName(value);
+            }else if(key == "areaWidth"){
+                label->setTextAreaSize(Size(valueToFloat(value), label->getTextAreaSize().height));
+            }else if(key == "areaHeight"){
+                label->setTextAreaSize(Size(label->getTextAreaSize().width, valueToFloat(value)));
+            }else if(key == "hAlignment"){
+                label->setTextHorizontalAlignment((TextHAlignment)valueToInt(value));
+            }else if(key == "vAlignment"){
+                label->setTextVerticalAlignment((TextVAlignment)valueToInt(value));
+            }
+            
+        } //end of for loop
     }
     
     void TextReader::setPropsFromJsonDictionary(Widget *widget, const rapidjson::Value &options)

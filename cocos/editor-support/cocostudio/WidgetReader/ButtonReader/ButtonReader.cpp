@@ -2,6 +2,7 @@
 
 #include "ButtonReader.h"
 #include "ui/UIButton.h"
+#include "cocostudio/CocoLoader.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -34,6 +35,97 @@ namespace cocostudio
     void ButtonReader::purge()
     {
         CC_SAFE_DELETE(instanceButtonReader);
+    }
+    
+    void ButtonReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode)
+    {
+        WidgetReader::setPropsFromBinary(widget, pCocoLoader, pCocoNode);
+        
+        Button *button = static_cast<Button*>(widget);
+        
+        stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+        
+        float capsx = 0.0f, capsy = 0.0, capsWidth = 0.0, capsHeight = 0.0f;
+        int cri = 255, cgi = 255, cbi = 255;
+        float scale9Width = 0.0f, scale9Height = 0.0f;
+        for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
+            std::string key = stChildArray[i].GetName(pCocoLoader);
+            std::string value = stChildArray[i].GetValue();
+            
+            if (key == "scale9Enable") {
+                button->setScale9Enabled(valueToBool(value));
+            }
+            else if (key == "normalData"){
+                
+                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
+                std::string resType = backGroundChildren[2].GetValue();;
+                
+                Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
+                
+                std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+                
+                button->loadTextureNormal(backgroundValue, imageFileNameType);
+                
+            }
+            else if (key == "pressedData"){
+                
+                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
+                std::string resType = backGroundChildren[2].GetValue();;
+                
+                Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
+                
+                std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+                
+                button->loadTexturePressed(backgroundValue, imageFileNameType);
+                
+            }
+            else if (key == "disabledData"){
+                
+                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
+                std::string resType = backGroundChildren[2].GetValue();;
+                
+                Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
+                
+                std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+                
+                button->loadTextureDisabled(backgroundValue, imageFileNameType);
+                
+            }else if (key == "text"){
+                button->setTitleText(value);
+            }
+            else if(key == "capInsetsX"){
+                capsx = valueToFloat(value);
+            }else if(key == "capInsetsY"){
+                capsy = valueToFloat(value);
+            }else if(key == "capInsetsWidth"){
+                capsWidth = valueToFloat(value);
+            }else if(key == "capInsetsHeight"){
+                capsHeight = valueToFloat(value);
+            }else if(key == "scale9Width"){
+                scale9Width = valueToFloat(value);
+            }else if(key == "scale9Height"){
+                scale9Height = valueToFloat(value);
+            }else if(key == "textColorR"){
+                cri = valueToInt(value);
+            }else if(key == "textColorG"){
+                cgi = valueToInt(value);
+            }else if(key == "textColorB"){
+                cbi = valueToInt(value);
+            }else if(key == "fontSize"){
+                button->setTitleFontSize(valueToFloat(value));
+            }else if(key == "fontName"){
+                button->setTitleFontName(value);
+            }
+            
+        } //end of for loop
+        
+        if (button->isScale9Enabled()) {
+            button->setCapInsets(Rect(capsx, capsy, capsWidth, capsHeight));
+            button->setSize(Size(scale9Width, scale9Height));
+        }
+        
+        button->setTitleColor(Color3B(cri, cgi, cbi));
+        
     }
     
     void ButtonReader::setPropsFromJsonDictionary(Widget *widget, const rapidjson::Value &options)

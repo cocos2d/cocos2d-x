@@ -2,6 +2,7 @@
 
 #include "SliderReader.h"
 #include "ui/UISlider.h"
+#include "cocostudio/CocoLoader.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -29,6 +30,85 @@ namespace cocostudio
             instanceSliderReader = new SliderReader();
         }
         return instanceSliderReader;
+    }
+    
+    void SliderReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode)
+    {
+        WidgetReader::setPropsFromBinary(widget, pCocoLoader, pCocoNode);
+        
+        Slider* slider = static_cast<Slider*>(widget);
+        
+        float barLength = 0.0f;
+        stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+        
+        for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
+            std::string key = stChildArray[i].GetName(pCocoLoader);
+            std::string value = stChildArray[i].GetValue();
+            
+            if (key == "scale9Enable") {
+                slider->setScale9Enabled(valueToBool(value));
+            }
+            else if(key == "percent"){
+                slider->setPercent(valueToInt(value));
+            }else if(key == "barFileNameData"){
+                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
+                std::string resType = backGroundChildren[2].GetValue();;
+                
+                Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
+                
+                std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+                
+                slider->loadBarTexture(backgroundValue, imageFileNameType);
+                
+            }else if(key == "length"){
+                barLength = valueToFloat(value);
+            }else if(key == "ballNormalData"){
+                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
+                std::string resType = backGroundChildren[2].GetValue();;
+                
+                Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
+                
+                std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+                
+                slider->loadSlidBallTextureNormal(backgroundValue, imageFileNameType);
+
+            }else if(key == "ballPressedData"){
+                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
+                std::string resType = backGroundChildren[2].GetValue();;
+                
+                Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
+                
+                std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+                
+                slider->loadSlidBallTexturePressed(backgroundValue, imageFileNameType);
+                
+            }else if(key == "ballDisabledData"){
+                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
+                std::string resType = backGroundChildren[2].GetValue();;
+                
+                Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
+                
+                std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+                
+                slider->loadSlidBallTextureDisabled(backgroundValue, imageFileNameType);
+                
+            }else if(key == "progressBarData"){
+                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
+                std::string resType = backGroundChildren[2].GetValue();;
+                
+                Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
+                
+                std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+                
+                slider->loadProgressBarTexture(backgroundValue, imageFileNameType);
+                
+            }
+            
+        } //end of for loop
+        
+        if (slider->isScale9Enabled()) {
+            slider->setSize(Size(barLength, slider->getContentSize().height));
+        }
     }
     
     void SliderReader::setPropsFromJsonDictionary(Widget *widget, const rapidjson::Value &options)

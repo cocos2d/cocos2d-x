@@ -2,6 +2,7 @@
 
 #include "TextBMFontReader.h"
 #include "ui/UITextBMFont.h"
+#include "cocostudio/CocoLoader.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -29,6 +30,37 @@ namespace cocostudio
             instanceTextBMFontReader = new TextBMFontReader();
         }
         return instanceTextBMFontReader;
+    }
+    
+    void TextBMFontReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode)
+    {
+        WidgetReader::setPropsFromBinary(widget, pCocoLoader, pCocoNode);
+        
+        TextBMFont* labelBMFont = static_cast<TextBMFont*>(widget);
+        
+        
+        stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+        
+        for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
+            std::string key = stChildArray[i].GetName(pCocoLoader);
+            std::string value = stChildArray[i].GetValue();
+            
+            if(key == "fileNameData"){
+                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
+                std::string resType = backGroundChildren[2].GetValue();;
+                
+                Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
+                
+                std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+                if (imageFileNameType == (Widget::TextureResType)0) {
+                    labelBMFont->setFntFile(backgroundValue);
+                }
+                
+            }else if(key == "text"){
+                labelBMFont->setString(value);
+            }
+        } //end of for loop
+        
     }
     
     void TextBMFontReader::setPropsFromJsonDictionary(Widget *widget, const rapidjson::Value &options)

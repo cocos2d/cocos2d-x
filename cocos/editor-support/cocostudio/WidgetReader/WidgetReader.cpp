@@ -1,6 +1,7 @@
 
 
 #include "WidgetReader.h"
+#include "cocostudio/CocoLoader.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -13,7 +14,22 @@ namespace cocostudio
     
     WidgetReader::WidgetReader()
     {
+        valueToInt = [=](std::string str) -> int{
+            return atoi(str.c_str());
+        };
         
+        valueToBool = [=](std::string str) -> bool{
+            int intValue = valueToInt(str);
+            if (1 == intValue) {
+                return true;
+            }else{
+                return false;
+            }
+        };
+        
+        valueToFloat = [=](std::string str) -> float{
+            return atof(str.c_str());
+        };
     }
     
     WidgetReader::~WidgetReader()
@@ -148,6 +164,139 @@ namespace cocostudio
         }
     }
     
+    void WidgetReader::setBasicPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode)
+    {
+        stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+        
+       
+        
+        for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
+            std::string key = stChildArray[i].GetName(pCocoLoader);
+            std::string value = stChildArray[i].GetValue();
+            
+            if (key == "ignoreSize") {
+                widget->ignoreContentAdaptWithSize(valueToBool(value));
+            }else if(key == "sizeType"){
+                widget->setSizeType((Widget::SizeType)valueToInt(value));
+            }else if(key == "positionType"){
+                widget->setPositionType((Widget::PositionType)valueToInt(value));
+            }else if(key == "sizePercentX"){
+                widget->setSizePercent(Vec2(valueToFloat(value), widget->getSizePercent().y));
+            }else if(key == "sizePercentY"){
+                widget->setSizePercent(Vec2(widget->getSizePercent().x, valueToFloat(value)));
+            }else if(key == "positionPercentX"){
+                widget->setPositionPercent(Vec2(valueToFloat(value), widget->getPositionPercent().y));
+            }else if(key == "positionPercentY"){
+                widget->setPositionPercent(Vec2(widget->getPositionPercent().x, valueToFloat(value)));
+            }else if (key == "width"){
+                widget->setSize(Size(valueToFloat(value), widget->getSize().height));
+            }else if(key == "height"){
+                widget->setSize(Size(widget->getSize().width, valueToFloat(value)));
+            }else if(key == "tag"){
+                widget->setTag(valueToInt(value));
+            }else if(key == "actiontag"){
+                widget->setActionTag(valueToInt(value));
+            }else if(key == "touchAble"){
+                widget->setTouchEnabled(valueToBool(value));
+            }else if(key == "name"){
+                std::string widgetName = value.empty() ? "default" : value;
+                CCLOG("%s", widgetName.c_str());
+                widget->setName(widgetName);
+            }else if(key == "x"){
+                widget->setPosition(Vec2(valueToFloat(value), widget->getPosition().y));
+            }else if(key == "y"){
+                widget->setPosition(Vec2(widget->getPosition().x, valueToFloat(value)));
+            }else if(key == "scaleX"){
+                widget->setScaleX(valueToFloat(value));
+            }else if(key == "scaleY"){
+                widget->setScaleY(valueToFloat(value));
+            }else if(key == "rotation"){
+                widget->setRotation(valueToFloat(value));
+            }else if(key == "visible"){
+                widget->setVisible(valueToBool(value));
+            }else if(key == "ZOrder"){
+                widget->setZOrder(valueToInt(value));
+            }else if(key == "layoutParameter"){
+                stExpCocoNode *layoutCocosNode = stChildArray[i].GetChildArray();
+                
+                LinearLayoutParameter *linearParameter = LinearLayoutParameter::create();
+                RelativeLayoutParameter *relativeParameter = RelativeLayoutParameter::create();
+                Margin mg;
+                
+                int paramType = -1;
+                for (int j = 0; j < stChildArray[i].GetChildNum(); ++j) {
+                    std::string innerKey = layoutCocosNode[j].GetName(pCocoLoader);
+                    std::string innerValue = layoutCocosNode[j].GetValue();
+                    
+                    if (innerKey == "type") {
+                        paramType = valueToInt(innerValue);
+                    }else if(innerKey == "gravity"){
+                        linearParameter->setGravity((cocos2d::ui::LinearLayoutParameter::LinearGravity)valueToInt(innerValue));
+                    }else if(innerKey == "relativeName"){
+                        relativeParameter->setRelativeName(innerValue);
+                    }else if(innerKey == "relativeToName"){
+                        relativeParameter->setRelativeToWidgetName(innerValue);
+                    }else if(innerKey == "align"){
+                        relativeParameter->setAlign((cocos2d::ui::RelativeLayoutParameter::RelativeAlign)valueToInt(innerValue));
+                    }else if(innerKey == "marginLeft"){
+                        mg.left = valueToFloat(innerValue);
+                    }else if(innerKey == "marginTop"){
+                        mg.top = valueToFloat(innerValue);
+                    }else if(innerKey == "marginRight"){
+                        mg.right = valueToFloat(innerValue);
+                    }else if(innerKey == "marginDown"){
+                        mg.bottom = valueToFloat(innerValue);
+                    }
+                }
+                
+                linearParameter->setMargin(mg);
+                relativeParameter->setMargin(mg);
+                
+                switch (paramType) {
+                    case 1:
+                        widget->setLayoutParameter(linearParameter);
+                        break;
+                    case 2:
+                        widget->setLayoutParameter(relativeParameter);
+                    default:
+                        break;
+                }
+            }
+            
+        }
+    }
+    
+    void WidgetReader::setColorPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode)
+    {
+        stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+        
+        //set default color
+        widget->setColor(Color3B(255,255,255));
+        
+        for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
+            std::string key = stChildArray[i].GetName(pCocoLoader);
+            std::string value = stChildArray[i].GetValue();
+            
+            if (key == "opacity") {
+                widget->setOpacity(valueToInt(value));
+            }else if(key == "colorR"){
+                Color3B color = widget->getColor();
+                widget->setColor(Color3B(valueToInt(value), color.g, color.b));
+            }else if(key == "colorG"){
+                Color3B color = widget->getColor();
+                widget->setColor(Color3B( color.r, valueToInt(value), color.b));
+            }else if(key == "colorB")
+            {
+                Color3B color = widget->getColor();
+                widget->setColor(Color3B( color.r,  color.g , valueToInt(value)));
+            }else if(key == "flipX"){
+                widget->setFlippedX(valueToBool(value));
+            }else if(key == "flipY"){
+                widget->setFlippedY(valueToBool(value));
+            }
+        }
+    }
+    
     void WidgetReader::setColorPropsFromJsonDictionary(Widget *widget, const rapidjson::Value &options)
     {
         bool op = DICTOOL->checkObjectExist_json(options, "opacity");
@@ -185,6 +334,30 @@ namespace cocostudio
             }
             else if(texType == ui::Widget::TextureResType::PLIST){
                 imageFileName_tp = imageFileName;
+            }
+            else{
+                CCASSERT(0, "invalid TextureResType!!!");
+            }
+        }
+        return imageFileName_tp;
+    }
+    
+    std::string WidgetReader::getResourcePath(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, cocos2d::ui::Widget::TextureResType texType)
+    {
+        stExpCocoNode *backGroundChildren = pCocoNode->GetChildArray();
+        std::string backgroundValue = backGroundChildren[0].GetValue();
+
+       
+        std::string binaryPath = GUIReader::getInstance()->getFilePath();
+        
+        std::string imageFileName_tp;
+        if (!backgroundValue.empty())
+        {
+            if (texType == ui::Widget::TextureResType::LOCAL) {
+                imageFileName_tp = binaryPath + backgroundValue;
+            }
+            else if(texType == ui::Widget::TextureResType::PLIST){
+                imageFileName_tp = backgroundValue;
             }
             else{
                 CCASSERT(0, "invalid TextureResType!!!");

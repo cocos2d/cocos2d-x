@@ -30,8 +30,13 @@
 #include "ui/GUIDefine.h"
 #include "ui/UIWidget.h"
 
+
+
 namespace cocostudio
 {
+    class CocoLoader;
+    class stExpCocoNode;
+    
     class WidgetReader : public cocos2d::Ref, public WidgetReaderProtocol
     {
     public:
@@ -49,11 +54,24 @@ namespace cocostudio
         virtual void setColorPropsFromJsonDictionary(cocos2d::ui::Widget* widget,
                                                      const rapidjson::Value& options);
         
+        virtual void setBasicPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* pCocoLoader,  stExpCocoNode*	pCocoNode);
+        virtual void setColorPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* pCocoLoader,  stExpCocoNode*	pCocoNode);
+        
+        virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* pCocoLoader,  stExpCocoNode*	pCocoNode)
+        {
+            this->setBasicPropsFromBinary(widget, pCocoLoader, pCocoNode);
+            this->setColorPropsFromBinary(widget, pCocoLoader, pCocoNode);
+        };
     protected:
         std::string getResourcePath(const rapidjson::Value& dict,
                                     const std::string& key,
                                     cocos2d::ui::Widget::TextureResType texType);
+        std::string getResourcePath(CocoLoader* pCocoLoader,  stExpCocoNode*	pCocoNode, cocos2d::ui::Widget::TextureResType texType);
         void setAnchorPointForWidget(cocos2d::ui::Widget* widget, const rapidjson::Value&options);
+        
+        std::function<int(std::string)> valueToInt;
+        std::function<bool(std::string)> valueToBool;
+        std::function<float(std::string)> valueToFloat;
 
     };
 }

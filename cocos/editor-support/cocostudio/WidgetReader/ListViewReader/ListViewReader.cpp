@@ -2,6 +2,7 @@
 
 #include "ListViewReader.h"
 #include "ui/UIListView.h"
+#include "cocostudio/CocoLoader.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -29,6 +30,30 @@ namespace cocostudio
             instanceListViewReader = new ListViewReader();
         }
         return instanceListViewReader;
+    }
+    
+    void ListViewReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode)
+    {
+        ScrollViewReader::setPropsFromBinary(widget, pCocoLoader, pCocoNode);
+        
+        ListView* listView = static_cast<ListView*>(widget);
+        
+        stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+        
+        for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
+            std::string key = stChildArray[i].GetName(pCocoLoader);
+            std::string value = stChildArray[i].GetValue();
+            
+            if (key == "direction") {
+                listView->setDirection((ScrollView::Direction)valueToInt(value));
+            }
+            else if(key == "gravity"){
+                listView->setGravity((ListView::Gravity)valueToInt(value));
+            }else if(key == "itemMargin"){
+                listView->setItemsMargin(valueToFloat(value));
+            }
+            
+        } //end of for loop
     }
     
     void ListViewReader::setPropsFromJsonDictionary(Widget *widget, const rapidjson::Value &options)

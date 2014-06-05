@@ -2,6 +2,7 @@
 
 #include "LayoutReader.h"
 #include "ui/UILayout.h"
+#include "cocostudio/CocoLoader.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -29,6 +30,111 @@ namespace cocostudio
             instanceLayoutReader = new LayoutReader();
         }
         return instanceLayoutReader;
+    }
+    
+    void LayoutReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode)
+    {
+        WidgetReader::setPropsFromBinary(widget, pCocoLoader, pCocoNode);
+        
+        Layout* panel = static_cast<Layout*>(widget);
+
+        float w = 0, h= 0;
+        
+        stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+        
+        int cr=0, cg = 0, cb = 0;
+        int scr=0, scg=0, scb=0;
+        int ecr=0, ecg=0, ecb= 0;
+        float bgcv1 = 0.0f, bgcv2= 0.0f;
+        float capsx = 0.0f, capsy = 0.0, capsWidth = 0.0, capsHeight = 0.0f;
+        Layout::Type layoutType;
+        
+        for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
+            std::string key = stChildArray[i].GetName(pCocoLoader);
+            std::string value = stChildArray[i].GetValue();
+            
+            if (key == "adaptScreen") {
+                bool adptScreen = valueToBool(value);
+                if (adptScreen) {
+                    Size screenSize = CCDirector::getInstance()->getWinSize();
+                    w = screenSize.width;
+                    h = screenSize.height;
+                }else{
+                    w = widget->getSize().width;
+                    h = widget->getSize().height;
+                }
+                panel->setSize(Size(w,h));
+            }else if( key == "clipAble"){
+                panel->setClippingEnabled(valueToBool(value));
+            }else if(key == "backGroundScale9Enable"){
+                panel->setBackGroundImageScale9Enabled(valueToBool(value));
+            }else if(key == "bgColorR"){
+                cr = valueToInt(value);
+            }else if(key == "bgColorG"){
+                cg = valueToInt(value);
+            }else if(key == "bgColorB")
+            {
+                cb = valueToInt(value);
+            }else if(key == "bgStartColorR"){
+                scr = valueToInt(value);
+            }else if(key == "bgStartColorG"){
+                scg = valueToInt(value);
+            }else if(key == "bgStartColorB")
+            {
+                scb = valueToInt(value);
+            }
+            else if(key == "bgEndColorR"){
+                ecr = valueToInt(value);
+            }else if(key == "bgEndColorG"){
+                ecg = valueToInt(value);
+            }else if(key == "bgEndColorB")
+            {
+                ecb = valueToInt(value);
+            }else if (key == "vectorX"){
+                bgcv1 = valueToFloat(value);
+            }else if(key == "vectorY"){
+                bgcv2 = valueToFloat(value);
+            }else if(key == "bgColorOpacity"){
+                panel->setBackGroundColorOpacity(valueToInt(value));
+            }else if( key == "colorType"){
+                panel->setBackGroundColorType(Layout::BackGroundColorType(valueToInt(value)));
+            }else if (key == "backGroundImageData"){
+                
+                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
+                if (backGroundChildren) {
+                    std::string resType = backGroundChildren[2].GetValue();;
+                    
+                    Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
+                    
+                    std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+                    
+                    panel->setBackGroundImage(backgroundValue,imageFileNameType);
+                }
+                
+            }else if(key == "capInsetsX"){
+                capsx = valueToFloat(value);
+            }else if(key == "capInsetsY"){
+                capsy = valueToFloat(value);
+            }else if(key == "capInsetsWidth"){
+                capsWidth = valueToFloat(value);
+            }else if(key == "capInsetsHeight"){
+                capsHeight = valueToFloat(value);
+            }else if (key == "layoutType"){
+                layoutType = (Layout::Type)valueToInt(value);
+            }
+            
+        }
+        
+        panel->setBackGroundColor(Color3B(scr, scg, scb),Color3B(ecr, ecg, ecb));
+        panel->setBackGroundColor(Color3B(cr, cg, cb));
+        panel->setBackGroundColorVector(Vec2(bgcv1, bgcv2));
+        
+        if (panel->isBackGroundImageScale9Enabled()) {
+            panel->setBackGroundImageCapInsets(Rect(capsx, capsy, capsWidth, capsHeight));
+        }
+        
+        panel->setLayoutType(layoutType);
+
     }
     
     void LayoutReader::setPropsFromJsonDictionary(Widget *widget, const rapidjson::Value &options)

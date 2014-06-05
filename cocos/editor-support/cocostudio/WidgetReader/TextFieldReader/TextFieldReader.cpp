@@ -2,6 +2,7 @@
 
 #include "TextFieldReader.h"
 #include "ui/UITextField.h"
+#include "cocostudio/CocoLoader.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -29,6 +30,42 @@ namespace cocostudio
             instanceTextFieldReader = new TextFieldReader();
         }
         return instanceTextFieldReader;
+    }
+    
+    void TextFieldReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode)
+    {
+        WidgetReader::setPropsFromBinary(widget, pCocoLoader, pCocoNode);
+        
+        TextField* textField = static_cast<TextField*>(widget);
+        
+        stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+        
+        for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
+            std::string key = stChildArray[i].GetName(pCocoLoader);
+            std::string value = stChildArray[i].GetValue();
+            
+            if(key == "placeHolder"){
+                textField->setPlaceHolder(value);
+            }else if(key == "text"){
+                textField->setText(value);
+            }else if(key == "fontSize"){
+                textField->setFontSize(valueToInt(value));
+            }else if(key == "fontName"){
+                textField->setFontName(value);
+            }else if(key == "touchSizeWidth"){
+                textField->setTouchSize(Size(valueToFloat(value), textField->getTouchSize().height));
+            }else if(key == "touchSizeHeight"){
+                textField->setTouchSize(Size(textField->getTouchSize().width,  valueToFloat(value)));
+            }else if (key == "maxLengthEnable"){
+                textField->setMaxLengthEnabled(valueToBool(value));
+            }else if(key == "maxLength"){
+                textField->setMaxLength(valueToInt(value));
+            }else if(key == "passwordEnable"){
+                textField->setPasswordEnabled(valueToBool(value));
+            }else if(key == "passwordStyleText"){
+                textField->setPasswordStyleText(value.c_str());
+            }
+        } //end of for loop
     }
     
     void TextFieldReader::setPropsFromJsonDictionary(Widget *widget, const rapidjson::Value &options)

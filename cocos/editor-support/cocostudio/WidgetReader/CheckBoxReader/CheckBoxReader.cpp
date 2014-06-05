@@ -2,6 +2,7 @@
 
 #include "CheckBoxReader.h"
 #include "ui/UICheckBox.h"
+#include "cocostudio/CocoLoader.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -29,6 +30,70 @@ namespace cocostudio
             instanceCheckBoxReader = new CheckBoxReader();
         }
         return instanceCheckBoxReader;
+    }
+    
+    void CheckBoxReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode)
+    {
+        WidgetReader::setPropsFromBinary(widget, pCocoLoader, pCocoNode);
+        
+        CheckBox *checkBox = static_cast<CheckBox*>(widget);
+        
+        stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+        
+        for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
+            std::string key = stChildArray[i].GetName(pCocoLoader);
+            std::string value = stChildArray[i].GetValue();
+            
+            if (key == "backGroundBoxData"){
+                
+                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
+                std::string resType = backGroundChildren[2].GetValue();;
+                
+                Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
+                
+                std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+                
+                checkBox->loadTextureBackGround(backgroundValue, imageFileNameType);
+            }else if(key == "backGroundBoxSelectedData"){
+                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
+                std::string resType = backGroundChildren[2].GetValue();;
+                
+                Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
+                
+                std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+                
+                checkBox->loadTextureBackGroundSelected(backgroundValue, imageFileNameType);
+            }else if(key == "frontCrossData"){
+                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
+                std::string resType = backGroundChildren[2].GetValue();;
+                
+                Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
+                
+                std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+                
+                checkBox->loadTextureFrontCross(backgroundValue, imageFileNameType);
+            }else if(key == "backGroundBoxDisabledData"){
+                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
+                std::string resType = backGroundChildren[2].GetValue();;
+                
+                Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
+                
+                std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+                
+                checkBox->loadTextureBackGroundDisabled(backgroundValue, imageFileNameType);
+            }else if (key == "frontCrossDisabledData"){
+                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
+                std::string resType = backGroundChildren[2].GetValue();;
+                
+                Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
+                
+                std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+                
+                checkBox->loadTextureFrontCrossDisabled(backgroundValue, imageFileNameType);
+            }
+        }
+        
+        
     }
     
     void CheckBoxReader::setPropsFromJsonDictionary(Widget *widget, const rapidjson::Value &options)

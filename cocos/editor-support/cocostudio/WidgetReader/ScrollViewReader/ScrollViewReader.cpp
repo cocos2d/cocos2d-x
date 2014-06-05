@@ -2,6 +2,7 @@
 
 #include "ScrollViewReader.h"
 #include "ui/UIScrollView.h"
+#include "cocostudio/CocoLoader.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -29,6 +30,34 @@ namespace cocostudio
             instanceScrollViewReader = new ScrollViewReader();
         }
         return instanceScrollViewReader;
+    }
+    
+    void ScrollViewReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode)
+    {
+        LayoutReader::setPropsFromBinary(widget, pCocoLoader, pCocoNode);
+        
+        ScrollView* scrollView = static_cast<ScrollView*>(widget);
+
+        
+        stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+        
+        for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
+            std::string key = stChildArray[i].GetName(pCocoLoader);
+            std::string value = stChildArray[i].GetValue();
+            
+            if (key == "innerWidth") {
+                scrollView->setInnerContainerSize(Size(valueToFloat(value), scrollView->getInnerContainerSize().height));
+            }
+            else if(key == "innerHeight"){
+                scrollView->setInnerContainerSize(Size(scrollView->getInnerContainerSize().height, valueToFloat(value) ));
+            }else if(key == "direction"){
+                scrollView->setDirection((ScrollView::Direction)valueToInt(value));
+            }else if(key == "bounceEnable"){
+                scrollView->setBounceEnabled(valueToBool(value));
+            }
+            
+        } //end of for loop
+
     }
     
     void ScrollViewReader::setPropsFromJsonDictionary(Widget *widget, const rapidjson::Value &options)
