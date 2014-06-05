@@ -48,7 +48,9 @@ class CC_DLL ParallaxNode : public Node
 {
 public:
     // Create a Parallax node
-    static ParallaxNode * create();
+    CREATE_FUNC(ParallaxNode);
+
+    Vec2 parallaxPosition = {0.0, 0.0};
 
     // prevents compiler warning: "Included function hides overloaded virtual functions"
     using Node::addChild;
@@ -61,13 +63,21 @@ public:
     struct _ccArray* getParallaxArray() { return _parallaxArray; }
     const struct _ccArray* getParallaxArray() const { return _parallaxArray; }
 
+    inline void setParallaxX(float x) { parallaxPosition.x = x; }
+    inline void setParallaxY(float y) { parallaxPosition.y = y; }
+    inline void setParallaxPosition(float x, float y) { setParallaxX(x); setParallaxY(y); }
+
+    inline float getParallaxX() { return parallaxPosition.x; }
+    inline float getParallaxY() { return parallaxPosition.y; }
+    inline Vec2 getParallaxPosition() const { return parallaxPosition; }
+
     //
     // Overrides
     //
     virtual void addChild(Node * child, int zOrder, int tag) override;
     virtual void removeChild(Node* child, bool cleanup) override;
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
-    virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
+    virtual void visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated) override;
 
 protected:
     /** Adds a child to the container with a z-order, a parallax ratio and a position offset

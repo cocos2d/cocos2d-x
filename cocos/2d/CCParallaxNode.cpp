@@ -78,13 +78,6 @@ ParallaxNode::~ParallaxNode()
     }
 }
 
-ParallaxNode * ParallaxNode::create()
-{
-    ParallaxNode *ret = new ParallaxNode();
-    ret->autorelease();
-    return ret;
-}
-
 void ParallaxNode::addChild(Node * child, int zOrder, int tag)
 {
     CC_UNUSED_PARAM(zOrder);
@@ -128,26 +121,20 @@ The positions are updated at visit because:
 - using a timer is not guaranteed that it will called after all the positions were updated
 - overriding "draw" will only precise if the children have a z > 0
 */
-void ParallaxNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
+void ParallaxNode::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
 {
-    //    Vec2 pos = position_;
-    //    Vec2    pos = [self convertToWorldSpace:Vec2::ZERO];
-    Vec2 pos = this->getPosition();
-    pos = this->getParent()->convertToWorldSpace(pos);
+    Vec2 pos = parallaxPosition;
 
-    if( ! pos.equals(_lastPosition) )
-    {
-        for( int i=0; i < _parallaxArray->num; i++ ) 
-        {
+    if (!pos.equals(_lastPosition)) {
+        for( int i=0; i < _parallaxArray->num; i++ ) {
             PointObject *point = (PointObject*)_parallaxArray->arr[i];
             float x = pos.x * point->getRatio().x + point->getOffset().x;
             float y = pos.y * point->getRatio().y + point->getOffset().y;
-            auto childPos = this->convertToNodeSpace({x, y});
-            point->getChild()->setPosition(childPos);
+            point->getChild()->setPosition({x, y});
         }
         _lastPosition = pos;
     }
-    Node::visit(renderer, parentTransform, parentFlags);
+    Node::visit(renderer, parentTransform, parentTransformUpdated);
 }
 
 NS_CC_END
