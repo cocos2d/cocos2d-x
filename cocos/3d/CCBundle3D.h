@@ -76,27 +76,27 @@ public:
     //
     /**
      * load mesh data from bundle
-     * @param id The ID of the mesh, load the first Mesh in the bundle
+     * @param id The ID of the mesh, load the first Mesh in the bundle if it is empty
      */
     bool loadMeshData(const std::string& id, MeshData* meshdata);
     
     //
     /**
      * load skin data from bundle
-     * @param id The ID of the skin, load the first Skin in the bundle
+     * @param id The ID of the skin, load the first Skin in the bundle if it is empty
      */
     bool loadSkinData(const std::string& id, SkinData* skindata);
     
     //
     /**
      * load material data from bundle
-     * @param id The ID of the material, load the first Material in the bundle
+     * @param id The ID of the material, load the first Material in the bundle if it is empty
      */
     bool loadMaterialData(const std::string& id, MaterialData* materialdata);
     
     /**
      * load material data from bundle
-     * @param id The ID of the animation, load the first animation in the bundle
+     * @param id The ID of the animation, load the first animation in the bundle if it is empty
      */
     bool loadAnimationData(const std::string& id, Animation3DData* animationdata);
     
