@@ -264,22 +264,22 @@ void TexturePNG::onEnter()
     
     // Test PNG files with different pixel formats
     // grayscale without alpha
-    auto i8 = Sprite::create("Images/PNG-I8.png");
+    auto i8 = Sprite::create("Images/test_image_i8.png");
     i8->setPosition(s.width/4.0f, s.height/4.0f);
     addChild(i8);
     
     // grayscale with alpha
-    auto ai88 = Sprite::create("Images/PNG-AI88.png");
+    auto ai88 = Sprite::create("Images/test_image_ai88.png");
     ai88->setPosition(s.width / 4.0f, s.height * 3.0f / 4.0f);
     addChild(ai88);
     
     // rgb without alpha
-    auto rgb888 = Sprite::create("Images/PNG-RGB888.png");
+    auto rgb888 = Sprite::create("Images/test_image_rgb888.png");
     rgb888->setPosition(s.width * 3.0f / 4.0f, s.height / 4.0f);
     addChild(rgb888);
     
     // rgba with alpha
-    auto rgba8888 = Sprite::create("Images/PNG-RGBA8888.png");
+    auto rgba8888 = Sprite::create("Images/test_image_rgba8888.png");
     rgba8888->setPosition(s.width * 3.0f / 4.0f, s.height * 3.0f / 4.0f);
     addChild(rgba8888);
 }
