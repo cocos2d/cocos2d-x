@@ -899,12 +899,6 @@ void AssetsManager::onSuccess(const std::string &srcUrl, const std::string &stor
             // Remove from failed units list
             _failedUnits.erase(unitIt);
         }
-
-        if (!_totalEnabled && _updateState == State::UPDATING) {
-            _percent = 100 * (_totalToDownload - _totalWaitToDownload) / _totalToDownload;
-            // Notify progression event
-            dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_PROGRESSION, customId);
-        }
     }
 }
 
