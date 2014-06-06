@@ -421,6 +421,7 @@ bool AssetsManager::decompress(const std::string &zip)
                 if (error < 0)
                 {
                     CCLOG("AssetsManager : can not read zip file %s, error code is %d", fileName, error);
+                    fclose(out);
                     unzCloseCurrentFile(zipfile);
                     unzClose(zipfile);
                     return false;
