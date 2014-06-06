@@ -334,14 +334,6 @@ public:
      * @return true if the widget is flipped vertically, flase otherwise.
      */
     virtual bool isFlippedY()const{return _flippedY;};
-    
-    virtual void setColor(const Color3B& color) override;
-    
-    virtual void setOpacity(GLubyte opacity) override;
-    
-    const Color3B& getColor() const override {return _color;};
-    
-    GLubyte getOpacity() const override {return _opacity;};
 
     /** @deprecated Use isFlippedX() instead */
     CC_DEPRECATED_ATTRIBUTE bool isFlipX() { return isFlippedX(); };
@@ -649,18 +641,10 @@ protected:
 
     virtual void releaseUpEvent();
     virtual void cancelUpEvent();
-    
-    virtual void updateTextureColor(){};
-    virtual void updateTextureOpacity(){};
-    virtual void updateTextureRGBA(){};
+
     virtual void updateFlippedX(){};
     virtual void updateFlippedY(){};
     virtual void adaptRenderers(){};
-
-    
-    void updateColorToRenderer(Node* renderer);
-    void updateOpacityToRenderer(Node* renderer);
-    void updateRGBAToRenderer(Node* renderer);
     
     void copyProperties(Widget* model);
     virtual Widget* createCloneInstance();
@@ -720,8 +704,6 @@ protected:
     bool _reorderWidgetChildDirty;
     bool _hitted;
     EventListenerTouchOneByOne* _touchListener;
-    Color3B _color;
-    GLubyte _opacity;
     bool _flippedX;
     bool _flippedY;
     //use map to enble switch back and forth for user layout parameters
