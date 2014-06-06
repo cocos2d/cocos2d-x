@@ -87,6 +87,8 @@ public:
         std::string storagePath;
         std::string customId;
     };
+    
+    typedef std::unordered_map<std::string, DownloadUnit> DownloadUnits;
 
     int getConnectionTimeout();
 
@@ -102,9 +104,9 @@ public:
 
     void downloadSync(const std::string &srcUrl, const std::string &storagePath, const std::string &customId = "");
     
-    void batchDownloadAsync(const std::unordered_map<std::string, DownloadUnit> &units, const std::string &batchId = "");
+    void batchDownloadAsync(const DownloadUnits &units, const std::string &batchId = "");
     
-    void batchDownloadSync(const std::unordered_map<std::string, DownloadUnit> &units, const std::string &batchId = "");
+    void batchDownloadSync(const DownloadUnits &units, const std::string &batchId = "");
 
     /**
      *  The default constructor.
@@ -124,6 +126,8 @@ protected:
     void prepareDownload(const std::string &srcUrl, const std::string &storagePath, const std::string &customId, FileDescriptor *fDesc, ProgressData *pData);
 
     void download(const std::string &srcUrl, const std::string &customId, const FileDescriptor &fDesc, const ProgressData &data);
+    
+    void groupBatchDownload(const DownloadUnits &units);
 
     void notifyError(ErrorCode code, const std::string &msg = "", const std::string &customId = "", int curle_code = 0, int curlm_code = 0);
     
@@ -148,8 +152,6 @@ private:
     std::vector<FileDescriptor *> _files;
     
     std::vector<ProgressData *> _progDatas;
-
-    void* _threadPool;
 };
 
 int downloadProgressFunc(Downloader::ProgressData *ptr, double totalToDownload, double nowDownloaded, double totalToUpLoad, double nowUpLoaded);

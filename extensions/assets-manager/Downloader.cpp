@@ -27,7 +27,8 @@
 
 #include <curl/curl.h>
 #include <curl/easy.h>
-#include <stdio.h>
+#include <cstdio>
+#include <cerrno>
 
 NS_CC_EXT_BEGIN
 
@@ -217,7 +218,7 @@ void Downloader::prepareDownload(const std::string &srcUrl, const std::string &s
         err.message = StringUtils::format("Can not create file %s: errno %d", outFileName.c_str(), errno);
         if (this->_onError) this->_onError(err);
     }
-    else CCLOG("<<<<<FOPEN : %s (%p)", customId.c_str(), fDesc->fp);
+    else CCLOG("<<<<<FOPEN : %s", customId.c_str());
 }
 
 void Downloader::downloadAsync(const std::string &srcUrl, const std::string &storagePath, const std::string &customId/* = ""*/)
@@ -225,7 +226,7 @@ void Downloader::downloadAsync(const std::string &srcUrl, const std::string &sto
     FileDescriptor fDesc;
     ProgressData pData;
     prepareDownload(srcUrl, storagePath, customId, &fDesc, &pData);
-    if (fDesc.fp != nullptr)
+    if (fDesc.fp != NULL)
     {
         auto t = std::thread(&Downloader::download, this, srcUrl, customId, fDesc, pData);
         t.detach();
@@ -237,7 +238,7 @@ void Downloader::downloadSync(const std::string &srcUrl, const std::string &stor
     FileDescriptor fDesc;
     ProgressData pData;
     prepareDownload(srcUrl, storagePath, customId, &fDesc, &pData);
-    if (fDesc.fp != nullptr)
+    if (fDesc.fp != NULL)
     {
         download(srcUrl, customId, fDesc, pData);
     }
@@ -275,12 +276,14 @@ void Downloader::download(const std::string &srcUrl, const std::string &customId
     
     CCLOG("FCLOSE : %p>>>>>\n", fDesc.fp);
     fclose(fDesc.fp);
+    CCLOG("FCLOSE : %s>>>>>\n", customId.c_str());
     curl_easy_cleanup(curl);
     
 }
 
-void Downloader::batchDownloadAsync(const std::unordered_map<std::string, Downloader::DownloadUnit> &units, const std::string &batchId/* = ""*/)
+void Downloader::batchDownloadAsync(const DownloadUnits &units, const std::string &batchId/* = ""*/)
 {
+    CCLOG("MAX_FOPEN : %d", FOPEN_MAX);
     auto t = std::thread(&Downloader::batchDownloadSync, this, units, batchId);
     t.detach();
 }
@@ -291,11 +294,12 @@ void Downloader::batchDownloadSync(const DownloadUnits &units, const std::string
     DownloadUnits group;
     for (auto it = units.cbegin(); it != units.cend(); ++it, ++count)
     {
-        if (count == FOPEN_MAX)
+        if (count == 1)
         {
             groupBatchDownload(group);
             group.clear();
             count = 0;
+            break;
         }
         const std::string &key = it->first;
         const DownloadUnit &unit = it->second;
@@ -334,7 +338,7 @@ void Downloader::groupBatchDownload(const DownloadUnits &units)
         ProgressData *data = new ProgressData();
         prepareDownload(srcUrl, storagePath, customId, fDesc, data);
         
-        if (fDesc->fp != nullptr)
+        if (fDesc->fp != NULL)
         {
             CURL* curl = curl_easy_init();
             curl_easy_setopt(curl, CURLOPT_URL, srcUrl.c_str());
@@ -355,9 +359,9 @@ void Downloader::groupBatchDownload(const DownloadUnits &units)
             CURLMcode code = curl_multi_add_handle(multi_handle, curl);
             if (code != CURLM_OK)
             {
-                CCLOG("FCLOSE : %p>>>>>\n", fDesc->fp);
                 // Avoid memory leak
                 fclose(fDesc->fp);
+                CCLOG("FCLOSE : %s>>>>>\n", customId.c_str());
                 delete data;
                 delete fDesc;
                 std::string msg = StringUtils::format("Unable to add curl handler for %s: [curl error]%s", customId.c_str(), curl_multi_strerror(code));
@@ -386,7 +390,7 @@ void Downloader::groupBatchDownload(const DownloadUnits &units)
         bool failed = false;
         while (still_running > 0 && !failed)
         {
-            /* set a suitable timeout to play around with */
+            // set a suitable timeout to play around with
             struct timeval select_tv;
             long curl_timeo = -1;
             select_tv.tv_sec = 1;
@@ -438,6 +442,9 @@ void Downloader::groupBatchDownload(const DownloadUnits &units)
     {
         CCLOG("FCLOSE %p>>>>>", (*it)->fp);
         fclose((*it)->fp);
+        char str[1024];
+        curl_easy_getinfo((*it)->curl, CURLINFO_FILETIME, &str);
+        CCLOG("FCLOSE : %s>>>>>\n", str);
         curl_easy_cleanup((*it)->curl);
     }
     
@@ -450,17 +457,6 @@ void Downloader::groupBatchDownload(const DownloadUnits &units)
             this->notifyError(ErrorCode::NETWORK, "Unable to download file", data->customId);
         }
     }
-    
-    std::shared_ptr<Downloader> downloader = shared_from_this();
-    Director::getInstance()->getScheduler()->performFunctionInCocosThread([downloader, batchId]{
-        if (downloader != nullptr) {
-            auto callback = downloader->getSuccessCallback();
-            if (callback != nullptr)
-            {
-                callback("", "", batchId);
-            }
-        }
-    });
     
     clearBatchDownloadData();
 }
