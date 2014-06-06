@@ -33,9 +33,6 @@ IMPLEMENT_CLASS_GUI_INFO(PageView)
 PageView::PageView():
 _curPageIdx(0),
 _touchMoveDirection(TouchDirection::LEFT),
-_touchStartLocation(0.0f),
-_touchMoveStartLocation(0.0f),
-_movePagePoint(Vec2::ZERO),
 _leftBoundaryChild(nullptr),
 _rightBoundaryChild(nullptr),
 _leftBoundary(0.0f),
@@ -332,19 +329,18 @@ bool PageView::onTouchBegan(Touch *touch, Event *unusedEvent)
     bool pass = Layout::onTouchBegan(touch, unusedEvent);
     if (_hitted)
     {
-        handlePressLogic(touch->getLocation());
+        handlePressLogic(touch);
     }
     return pass;
 }
 
 void PageView::onTouchMoved(Touch *touch, Event *unusedEvent)
 {
-    _touchMovePos = touch->getLocation();
-    handleMoveLogic(_touchMovePos);
+    handleMoveLogic(touch);
     Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
-        widgetParent->interceptTouchEvent(TouchEventType::MOVED,this,_touchMovePos);
+        widgetParent->interceptTouchEvent(TouchEventType::MOVED,this,touch);
     }
     moveEvent();
 }
@@ -352,13 +348,13 @@ void PageView::onTouchMoved(Touch *touch, Event *unusedEvent)
 void PageView::onTouchEnded(Touch *touch, Event *unusedEvent)
 {
     Layout::onTouchEnded(touch, unusedEvent);
-    handleReleaseLogic(_touchEndPos);
+    handleReleaseLogic(touch);
 }
     
 void PageView::onTouchCancelled(Touch *touch, Event *unusedEvent)
 {
     Layout::onTouchCancelled(touch, unusedEvent);
-    handleReleaseLogic(touch->getLocation());
+    handleReleaseLogic(touch);
 }
 
 void PageView::doLayout()
@@ -380,9 +376,8 @@ void PageView::movePages(float offset)
 {
     for (auto& page : this->getPages())
     {
-        _movePagePoint.x = page->getPosition().x + offset;
-        _movePagePoint.y = page->getPosition().y;
-        page->setPosition(_movePagePoint);
+        page->setPosition(Vec2(page->getPosition().x + offset,
+                               page->getPosition().y));
     }
 }
 
@@ -429,20 +424,18 @@ bool PageView::scrollPages(float touchOffset)
     return true;
 }
 
-void PageView::handlePressLogic(const Vec2 &touchPoint)
+void PageView::handlePressLogic(Touch *touch)
 {
-    Vec2 nsp = convertToNodeSpace(touchPoint);
-    _touchMoveStartLocation = nsp.x;
-    _touchStartLocation = nsp.x;
+    //no-op
 }
 
-void PageView::handleMoveLogic(const Vec2 &touchPoint)
+void PageView::handleMoveLogic(Touch *touch)
 {
-    Vec2 nsp = convertToNodeSpace(touchPoint);
+    Vec2 touchPoint = touch->getLocation();
+    
     float offset = 0.0;
-    float moveX = nsp.x;
-    offset = moveX - _touchMoveStartLocation;
-    _touchMoveStartLocation = moveX;
+    offset = touchPoint.x - touch->getPreviousLocation().x;
+    
     if (offset < 0)
     {
         _touchMoveDirection = TouchDirection::LEFT;
@@ -454,7 +447,7 @@ void PageView::handleMoveLogic(const Vec2 &touchPoint)
     scrollPages(offset);
 }
 
-void PageView::handleReleaseLogic(const Vec2 &touchPoint)
+void PageView::handleReleaseLogic(Touch *touch)
 {
     if (this->getPageCount() <= 0)
     {
@@ -498,27 +491,29 @@ void PageView::handleReleaseLogic(const Vec2 &touchPoint)
 }
 
 
-void PageView::interceptTouchEvent(TouchEventType event, Widget *sender, const Vec2 &touchPoint)
+void PageView::interceptTouchEvent(TouchEventType event, Widget *sender, Touch *touch)
 {
+    Vec2 touchPoint = touch->getLocation();
+    
     switch (event)
     {
         case TouchEventType::BEGAN:
-            handlePressLogic(touchPoint);
+            handlePressLogic(touch);
             break;
         case TouchEventType::MOVED:
         {
             float offset = 0;
-            offset = fabs(sender->getTouchStartPos().x - touchPoint.x);
+            offset = fabs(sender->getTouchBeganPosition().x - touchPoint.x);
             if (offset > _childFocusCancelOffset)
             {
                 sender->setHighlighted(false);
-                handleMoveLogic(touchPoint);
+                handleMoveLogic(touch);
             }
         }
             break;
         case TouchEventType::CANCELED:
         case TouchEventType::ENDED:
-            handleReleaseLogic(touchPoint);
+            handleReleaseLogic(touch);
             break;
     }
 }

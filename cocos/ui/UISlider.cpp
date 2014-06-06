@@ -406,7 +406,7 @@ bool Slider::onTouchBegan(Touch *touch, Event *unusedEvent)
     bool pass = Widget::onTouchBegan(touch, unusedEvent);
     if (_hitted)
     {
-        Vec2 nsp = convertToNodeSpace(_touchStartPos);
+        Vec2 nsp = convertToNodeSpace(_touchBeganPosition);
         setPercent(getPercentWithBallPos(nsp.x));
         percentChangedEvent();
     }
@@ -415,8 +415,8 @@ bool Slider::onTouchBegan(Touch *touch, Event *unusedEvent)
 
 void Slider::onTouchMoved(Touch *touch, Event *unusedEvent)
 {
-    _touchMovePos = touch->getLocation();
-    Vec2 nsp = convertToNodeSpace(_touchMovePos);
+    _touchMovePosition = touch->getLocation();
+    Vec2 nsp = convertToNodeSpace(_touchMovePosition);
     setPercent(getPercentWithBallPos(nsp.x));
     percentChangedEvent();
 }
