@@ -346,7 +346,8 @@ void Text::enableOutline(const Color4B& outlineColor,int outlineSize) {
 }
     
 void Text::enableGlow(const Color4B& glowColor) {
-    _labelRenderer->enableGlow(glowColor);
+    if (_type == Type::TTF)
+        _labelRenderer->enableGlow(glowColor);
 }
     
 void Text::disableEffect() {
