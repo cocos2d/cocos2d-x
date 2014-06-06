@@ -85,6 +85,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         searchPaths.push_back("ccs-res/hd/scenetest/UIComponentTest");
         searchPaths.push_back("ccs-res/hd/scenetest/TriggerTest");
         searchPaths.push_back("ccs-res");
+        searchPaths.push_back("Manifests");
         director->setContentScaleFactor(resourceSize.height/designSize.height);
     }
     else
