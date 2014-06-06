@@ -261,11 +261,37 @@ void TexturePNG::onEnter()
     img->setPosition(Vec2( s.width/2.0f, s.height/2.0f));
     addChild(img);
     log("%s\n", Director::getInstance()->getTextureCache()->getCachedTextureInfo().c_str());
+    
+    // Test PNG files with different pixel formats
+    // grayscale without alpha
+    auto i8 = Sprite::create("Images/test_image_i8.png");
+    i8->setPosition(s.width/4.0f, s.height/4.0f);
+    addChild(i8);
+    
+    // grayscale with alpha
+    auto ai88 = Sprite::create("Images/test_image_ai88.png");
+    ai88->setPosition(s.width / 4.0f, s.height * 3.0f / 4.0f);
+    addChild(ai88);
+    
+    // rgb without alpha
+    auto rgb888 = Sprite::create("Images/test_image_rgb888.png");
+    rgb888->setPosition(s.width * 3.0f / 4.0f, s.height / 4.0f);
+    addChild(rgb888);
+    
+    // rgba with alpha
+    auto rgba8888 = Sprite::create("Images/test_image_rgba8888.png");
+    rgba8888->setPosition(s.width * 3.0f / 4.0f, s.height * 3.0f / 4.0f);
+    addChild(rgba8888);
 }
 
 std::string TexturePNG::title() const
 {
     return "PNG Test";
+}
+
+std::string TexturePNG::subtitle() const
+{
+    return "LB:I8, LT:AI8\nRB:RGB888, RT: RGBA8888";
 }
 
 //------------------------------------------------------------------
