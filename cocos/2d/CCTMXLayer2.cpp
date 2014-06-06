@@ -423,9 +423,9 @@ Mat4 TMXLayer2::tileToNodeTransform()
             _tileToNodeTransform = Mat4
             (
                 w, 0.0f, 0.0f, 0.0f,
-                0.0f, -h, 0.0f, 0.0f,
+                0.0f, -h, 0.0f, offY,
                 0.0f, 0.0f, 1.0f, 0.0f,
-                0.0f, offY, 0.0f, 1.0f
+                0.0f, 0.0, 0.0f, 1.0f
             );
             
             return _tileToNodeTransform;
@@ -435,11 +435,10 @@ Mat4 TMXLayer2::tileToNodeTransform()
             float offX = (_layerSize.width - 1) * w / 2;
             _tileToNodeTransform = Mat4
             (
-                w/2, -h/2, 0.0f, 0.0f,
-                -w/2, -h/2, 0.0f, 0.0f,
+                w/2, -w/2, 0.0f, offX,
+                -h/2, -h/2, 0.0f, offY,
                 0.0f, 0.0f, 1.0f, 0.0f,
-                offX, offY, 0.0f, 1.0f
-                
+                0.0f, 0.0f, 0.0f, 1.0f
             );
 			return _tileToNodeTransform;
 		}
