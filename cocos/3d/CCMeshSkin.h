@@ -152,10 +152,10 @@ protected:
 class MeshSkin: public Ref
 {
 public:
-    MeshSkin* getOrCreate(const std::string& filename, const std::string& name);
+    static MeshSkin* getOrCreate(const std::string& filename, const std::string& name);
     
     //create a new meshskin if do not want to share meshskin
-    MeshSkin* create(const std::string& filename, const std::string& name);
+    static MeshSkin* create(const std::string& filename, const std::string& name);
     
     //get & set bind shape matrix
     const Mat4& getBindShape() const;

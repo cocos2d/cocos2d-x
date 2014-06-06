@@ -153,14 +153,19 @@ bool Sprite3D::loadFromC3x(const std::string& path)
     }
     
     _mesh = Mesh::create(meshdata.vertex, meshdata.vertexSizeInFloat, meshdata.indices, meshdata.numIndex, meshdata.attribs, meshdata.attribCount);
-    _mesh->retain();
+    CC_SAFE_RETAIN(_mesh);
     
-    Bundle3D::SkinData skindata;
-    ret = bundle->loadSkinData("", &skindata);
+//    _skin = MeshSkin::create(fullPath, "");
+//    CC_SAFE_RETAIN(_skin);
     
     Bundle3D::MaterialData materialdata;
     ret = bundle->loadMaterialData("", &materialdata);
+    if (ret)
+    {
+        setTexture(materialdata.texturePath);
+    }
     
+    genGLProgramState();
     return true;
 }
 
@@ -292,7 +297,7 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, bool transformUpd
                       _mesh->getIndexCount(),
                       transform);
     
-    _meshCommand.setCullFaceEnabled(true);
+    //_meshCommand.setCullFaceEnabled(true);
     _meshCommand.setDepthTestEnabled(true);
     if (_skin)
     {

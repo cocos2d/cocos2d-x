@@ -41,7 +41,8 @@ static int sceneIdx = -1;
 static std::function<Layer*()> createFunctions[] =
 {
     CL(Sprite3DBasicTest),
-    CL(Sprite3DEffectTest)
+    CL(Sprite3DEffectTest),
+    CL(Sprite3DWithSkinTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -494,6 +495,44 @@ void Sprite3DEffectTest::addNewSpriteWithCoords(Vec2 p)
 }
 
 void Sprite3DEffectTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
+    for (auto touch: touches)
+    {
+        auto location = touch->getLocation();
+        
+        addNewSpriteWithCoords( location );
+    }
+}
+
+Sprite3DWithSkinTest::Sprite3DWithSkinTest()
+{
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DWithSkinTest::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
+    auto s = Director::getInstance()->getWinSize();
+    addNewSpriteWithCoords( Vec2(s.width/2, s.height/2) );
+}
+std::string Sprite3DWithSkinTest::title() const
+{
+    return "Testing Sprite3D"; 
+}
+std::string Sprite3DWithSkinTest::subtitle() const
+{
+    return "Sprite3D from .c3t";
+}
+
+void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
+{
+    auto sprite = Sprite3D::create("Sprite3DTest/XXX.c3t");
+    sprite->setScale(8.f);
+    sprite->setTexture("Sprite3DTest/boss.png");
+    addChild(sprite);
+    
+    sprite->setPosition( Vec2( p.x, p.y) );
+}
+
+void Sprite3DWithSkinTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
     for (auto touch: touches)
     {

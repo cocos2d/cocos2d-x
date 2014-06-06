@@ -48,6 +48,9 @@ public:
         int numIndex;
         MeshVertexAttrib* attribs;
         int attribCount;
+        void resetData();
+        MeshData();
+        ~MeshData();
     };
     struct SkinData
     {

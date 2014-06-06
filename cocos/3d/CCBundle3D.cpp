@@ -34,6 +34,30 @@ NS_CC_BEGIN
 
 Bundle3D* Bundle3D::_instance = nullptr;
 
+Bundle3D::MeshData::MeshData()
+: vertex(nullptr)
+, vertexSizeInFloat(0)
+, indices(nullptr)
+, numIndex(0)
+, attribs(nullptr)
+, attribCount(0)
+{
+    
+}
+Bundle3D::MeshData::~MeshData()
+{
+    resetData();
+}
+void Bundle3D::MeshData::resetData()
+{
+    CC_SAFE_DELETE_ARRAY(vertex);
+    CC_SAFE_DELETE_ARRAY(indices);
+    CC_SAFE_DELETE_ARRAY(attribs);
+    vertexSizeInFloat = 0;
+    numIndex = 0;
+    attribCount = 0;
+}
+
 Bundle3D* Bundle3D::getInstance()
 {
     if (_instance == nullptr)
@@ -57,7 +81,30 @@ bool Bundle3D::load(const std::string& path)
  */
 bool Bundle3D::loadMeshData(const std::string& id, MeshData* meshdata)
 {
-    //meshdata->vertex;
+    meshdata->resetData();
+    meshdata->vertexSizeInFloat = 5 * 4;
+    meshdata->vertex = new float[meshdata->vertexSizeInFloat];
+    float vert[] = {0.f,50.f,0.f,0.f,0.f,  0.f,0.f,50.f,1.f,1.f, 50.f,0.f,0.f,1.f,1.f, -50.f,0.f,0.f,1.f,1.f};
+    memcpy(meshdata->vertex, vert, meshdata->vertexSizeInFloat * sizeof(float));
+    
+    //meshdata->numIndex = 4 * 3;
+    meshdata->numIndex = 3;
+    meshdata->indices = new unsigned short[meshdata->numIndex];
+    unsigned short index[] = {0,1,2};//{0,1,2, 0,3,1, 0,2,3, 3,2,1};
+    memcpy(meshdata->indices, index, meshdata->numIndex * sizeof(unsigned short));
+    
+    meshdata->attribCount = 2;
+    meshdata->attribs = new MeshVertexAttrib[meshdata->attribCount];
+    meshdata->attribs[0].attribSizeBytes = 3 * sizeof(float);
+    meshdata->attribs[0].size = 3;
+    meshdata->attribs[0].type = GL_FLOAT;
+    meshdata->attribs[0].vertexAttrib = GLProgram::VERTEX_ATTRIB_POSITION;
+    
+    meshdata->attribs[1].attribSizeBytes = 2 * sizeof(float);
+    meshdata->attribs[1].size = 2;
+    meshdata->attribs[1].type = GL_FLOAT;
+    meshdata->attribs[1].vertexAttrib = GLProgram::VERTEX_ATTRIB_TEX_COORD;
+    
     return true;
 }
 
@@ -78,6 +125,7 @@ bool Bundle3D::loadSkinData(const std::string& id, SkinData* skindata)
  */
 bool Bundle3D::loadMaterialData(const std::string& id, MaterialData* materialdata)
 {
+    materialdata->texturePath = "Sprite3DTest/boss.png";
     return true;
 }
 
