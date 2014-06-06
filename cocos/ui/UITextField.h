@@ -197,9 +197,7 @@ protected:
     void insertTextEvent();
     void deleteBackwardEvent();
     virtual void onSizeChanged() override;
-    virtual void updateTextureColor() override;
-    virtual void updateTextureOpacity() override;
-    virtual void updateTextureRGBA() override;
+  
     void textfieldRendererScaleChangedWithSize();
     
     virtual Widget* createCloneInstance() override;
