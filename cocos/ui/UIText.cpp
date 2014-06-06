@@ -342,13 +342,11 @@ void Text::enableShadow(const Color4B& shadowColor,const Size &offset, int blurR
 }
 
 void Text::enableOutline(const Color4B& outlineColor,int outlineSize) {
-    if (_type == Type::TTF)
-        _labelRenderer->enableOutline(outlineColor, outlineSize);
+    _labelRenderer->enableOutline(outlineColor, outlineSize);
 }
     
 void Text::enableGlow(const Color4B& glowColor) {
-    if (_type == Type::TTF)
-        _labelRenderer->enableGlow(glowColor);
+    _labelRenderer->enableGlow(glowColor);
 }
     
 void Text::disableEffect() {
