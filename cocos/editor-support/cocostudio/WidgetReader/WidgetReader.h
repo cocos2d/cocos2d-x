@@ -73,6 +73,7 @@ namespace cocostudio
         std::function<bool(std::string)> valueToBool;
         std::function<float(std::string)> valueToFloat;
 
+
     };
 }
 

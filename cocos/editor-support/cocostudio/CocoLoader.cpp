@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "CocoLoader.h"
+#include <iostream>
 
 namespace cocostudio {
     const	char* kTypeNames[] = { "Null", "False", "True", "Object", "Array", "String", "Number" };
@@ -185,7 +186,8 @@ namespace cocostudio {
         char*   pStringAddr = pStartAddr + m_pFileHeader->m_lStringMemAddr ;
         
         m_pRootNode = (stExpCocoNode*)pCocoMemAddr;
-        
+        std::cout<<"header size = "<<sizeof(m_pFileHeader)<<std::endl;
+        std::cout<<"unsigned long = "<<sizeof(unsigned long)<<std::endl;
         if(1 == m_pFileHeader->m_nFirstUsed)
         {	
             for(int i = 0 ; i < m_pFileHeader->m_ObjectCount ; i++)
