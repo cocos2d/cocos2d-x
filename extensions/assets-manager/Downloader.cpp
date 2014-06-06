@@ -214,9 +214,10 @@ void Downloader::prepareDownload(const std::string &srcUrl, const std::string &s
     if (!fDesc->fp)
     {
         err.code = ErrorCode::CREATE_FILE;
-        err.message = "Can not create file " + outFileName;
+        err.message = StringUtils::format("Can not create file %s: errno %d", outFileName.c_str(), errno);
         if (this->_onError) this->_onError(err);
     }
+    else CCLOG("<<<<<FOPEN : %s (%p)", customId.c_str(), fDesc->fp);
 }
 
 void Downloader::downloadAsync(const std::string &srcUrl, const std::string &storagePath, const std::string &customId/* = ""*/)
@@ -272,6 +273,7 @@ void Downloader::download(const std::string &srcUrl, const std::string &customId
         this->notifyError(msg, customId, res);
     }
     
+    CCLOG("FCLOSE : %p>>>>>\n", fDesc.fp);
     fclose(fDesc.fp);
     curl_easy_cleanup(curl);
     
@@ -283,7 +285,40 @@ void Downloader::batchDownloadAsync(const std::unordered_map<std::string, Downlo
     t.detach();
 }
 
-void Downloader::batchDownloadSync(const std::unordered_map<std::string, Downloader::DownloadUnit> &units, const std::string &batchId/* = ""*/)
+void Downloader::batchDownloadSync(const DownloadUnits &units, const std::string &batchId/* = ""*/)
+{
+    int count = 0;
+    DownloadUnits group;
+    for (auto it = units.cbegin(); it != units.cend(); ++it, ++count)
+    {
+        if (count == FOPEN_MAX)
+        {
+            groupBatchDownload(group);
+            group.clear();
+            count = 0;
+        }
+        const std::string &key = it->first;
+        const DownloadUnit &unit = it->second;
+        group.emplace(key, unit);
+    }
+    if (group.size() > 0)
+    {
+        groupBatchDownload(group);
+    }
+    
+    std::shared_ptr<Downloader> downloader = shared_from_this();
+    Director::getInstance()->getScheduler()->performFunctionInCocosThread([downloader, batchId]{
+        if (downloader != nullptr) {
+            auto callback = downloader->getSuccessCallback();
+            if (callback != nullptr)
+            {
+                callback("", "", batchId);
+            }
+        }
+    });
+}
+
+void Downloader::groupBatchDownload(const DownloadUnits &units)
 {
     CURLM* multi_handle = curl_multi_init();
     int still_running = 0;
@@ -320,7 +355,9 @@ void Downloader::batchDownloadSync(const std::unordered_map<std::string, Downloa
             CURLMcode code = curl_multi_add_handle(multi_handle, curl);
             if (code != CURLM_OK)
             {
+                CCLOG("FCLOSE : %p>>>>>\n", fDesc->fp);
                 // Avoid memory leak
+                fclose(fDesc->fp);
                 delete data;
                 delete fDesc;
                 std::string msg = StringUtils::format("Unable to add curl handler for %s: [curl error]%s", customId.c_str(), curl_multi_strerror(code));
@@ -399,6 +436,7 @@ void Downloader::batchDownloadSync(const std::unordered_map<std::string, Downloa
     curl_multi_cleanup(multi_handle);
     for (auto it = _files.begin(); it != _files.end(); ++it)
     {
+        CCLOG("FCLOSE %p>>>>>", (*it)->fp);
         fclose((*it)->fp);
         curl_easy_cleanup((*it)->curl);
     }
