@@ -1091,7 +1091,7 @@ std::string TMXIsoVertexZNew::title() const
 
 std::string TMXIsoVertexZNew::subtitle() const
 {
-    return "Sprite should hide behind the trees";
+    return "Doesn't support yet";
 }
 
 
@@ -1162,7 +1162,7 @@ std::string TMXOrthoVertexZNew::title() const
 
 std::string TMXOrthoVertexZNew::subtitle() const
 {
-    return "Sprite should hide behind the trees";
+    return "Doesn't support yet";
 }
 
 

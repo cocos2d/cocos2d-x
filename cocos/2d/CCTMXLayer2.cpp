@@ -116,13 +116,13 @@ TMXLayer2::TMXLayer2()
 ,_layerOrientation(TMXOrientationOrtho)
 ,_texture(nullptr)
 ,_reusedTile(nullptr)
-,_previousRect(0,0,0,0)
 ,_verticesToDraw(0)
 ,_vertexZvalue(0)
 ,_useAutomaticVertexZ(false)
 ,_quads(nullptr)
 ,_indices(nullptr)
 ,_numQuads(0)
+,_dirty(false)
 {}
 
 TMXLayer2::~TMXLayer2()
@@ -152,7 +152,7 @@ void TMXLayer2::onDraw(const Mat4 &transform, bool transformUpdated)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
 
 
-    if( transformUpdated ) {
+    if( transformUpdated || _dirty ) {
     
         Size s = Director::getInstance()->getWinSize();
 		auto rect = Rect(0, 0, s.width, s.height);
@@ -161,32 +161,29 @@ void TMXLayer2::onDraw(const Mat4 &transform, bool transformUpdated)
         inv.inverse();
         rect = RectApplyTransform(rect, inv);
 
-        if( !rect.equals(_previousRect) )
+        if (Configuration::getInstance()->supportsShareableVAO())
         {
-            if (Configuration::getInstance()->supportsShareableVAO())
+            V2F_T2F_Quad* quads = (V2F_T2F_Quad*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+            GLushort* indices = (GLushort *)glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY);
+            _verticesToDraw = updateTiles(rect, quads, indices);
+            glUnmapBuffer(GL_ARRAY_BUFFER);
+            glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
+        }
+        else
+        {
+            _verticesToDraw = updateTiles(rect, nullptr, nullptr);
+            
+            if (_quads != nullptr && _indices != nullptr && _verticesToDraw > 0)
             {
-                V2F_T2F_Quad* quads = (V2F_T2F_Quad*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-                GLushort* indices = (GLushort *)glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY);
-                _verticesToDraw = updateTiles(rect, quads, indices);
-                glUnmapBuffer(GL_ARRAY_BUFFER);
-                glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
+                glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _numQuads , _quads, GL_DYNAMIC_DRAW);
+                glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _numQuads * 6 , _indices, GL_STATIC_DRAW);
             }
-            else
-            {
-                _verticesToDraw = updateTiles(rect, nullptr, nullptr);
-                
-                if (_quads != nullptr && _indices != nullptr && _verticesToDraw > 0)
-                {
-                    glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _numQuads , _quads, GL_DYNAMIC_DRAW);
-                    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _numQuads * 6 , _indices, GL_STATIC_DRAW);
-                }
-            }
-
-            _previousRect = rect;
         }
 
         // don't draw more than 65535 vertices since we are using GL_UNSIGNED_SHORT for indices
         _verticesToDraw = std::min(_verticesToDraw, 65535);
+        
+        _dirty = false;
     }
 
     if(_verticesToDraw > 0) {
@@ -491,7 +488,7 @@ Sprite* TMXLayer2::getTileAt(const Point& tileCoordinate)
             _spriteContainer.insert(std::pair<int, std::pair<Sprite*, int> >(index, std::pair<Sprite*, int>(tile, gid)));
             
             // tile is converted to sprite.
-            _tiles[index] = 0;
+            setTileForGID(index, 0);
         }
 	}
 	return tile;
@@ -563,16 +560,15 @@ void TMXLayer2::removeTileAt(const Point& tileCoordinate)
 {
     
 	CCASSERT( tileCoordinate.x < _layerSize.width && tileCoordinate.y < _layerSize.height && tileCoordinate.x >=0 && tileCoordinate.y >=0, "TMXLayer: invalid position");
-	CCASSERT( _tiles, "TMXLayer: the tiles map has been released");
     
-	uint32_t gid = this->getTileGIDAt(tileCoordinate);
+	int gid = this->getTileGIDAt(tileCoordinate);
     
 	if( gid ) {
         
 		int z = tileCoordinate.x + tileCoordinate.y * _layerSize.width;
         
 		// remove tile from GID map
-		_tiles[z] = 0;
+		setTileForGID(z, 0);
         
 		// remove it from sprites
         auto it = _spriteContainer.find(z);
@@ -581,6 +577,12 @@ void TMXLayer2::removeTileAt(const Point& tileCoordinate)
             this->removeChild(it->second.first);
         }
 	}
+}
+
+void TMXLayer2::setTileForGID(int index, int gid)
+{
+    _tiles[index] = gid;
+    _dirty = true;
 }
 
 
@@ -656,15 +658,6 @@ Point TMXLayer2::calculateLayerOffset(const Point& pos)
     return ret;    
 }
 
-//void TMXLayer2::releaseMap()
-//{
-//    if (_tiles)
-//    {
-//        delete [] _tiles;
-//        _tiles = nullptr;
-//    }
-//}
-
 // TMXLayer - adding / remove tiles
 void TMXLayer2::setTileGID(int gid, const Point& tileCoordinate)
 {
@@ -693,7 +686,7 @@ void TMXLayer2::setTileGID(int gid, const Point& tileCoordinate, TMXTileFlags fl
         else if (currentGID == 0)
         {
             int z = tileCoordinate.x + tileCoordinate.y * _layerSize.width;
-            _tiles[z] = gidAndFlags;
+            setTileForGID(z, gidAndFlags);
         }
         // modifying an existing tile with a non-empty tile
         else
@@ -717,7 +710,7 @@ void TMXLayer2::setTileGID(int gid, const Point& tileCoordinate, TMXTileFlags fl
             }
             else
             {
-                _tiles[z] = gidAndFlags;
+                setTileForGID(z, gidAndFlags);
             }
         }
     }

@@ -204,6 +204,7 @@ protected:
     int getVertexZForPos(const Point& pos);
     
     void insertTileForGID(int gid, const Point& pos);
+    void setTileForGID(int index, int gid);
 
 protected:
     CustomCommand _customCommand;
@@ -235,7 +236,6 @@ protected:
     Size _screenGridSize;
     Rect _screenGridRect;
     int _screenTileCount;
-    Rect _previousRect;
     int _verticesToDraw;
     
     int _vertexZvalue;
@@ -250,6 +250,7 @@ protected:
     int _numQuads;
     /** indices */
     GLushort* _indices;
+    bool _dirty;
 };
 
 // end of tilemap_parallax_nodes group
