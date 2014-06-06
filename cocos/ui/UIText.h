@@ -165,7 +165,10 @@ public:
      */
     void enableShadow(const Color4B& shadowColor = Color4B::BLACK,const Size &offset = Size(2,-2), int blurRadius = 0);
     
-    /** only support for TTF */
+    /**
+     * Enable outline for the label
+     * It only works on IOS and Android when you use System fonts
+     */ 
     void enableOutline(const Color4B& outlineColor,int outlineSize = -1);
     
     /** only support for TTF */
