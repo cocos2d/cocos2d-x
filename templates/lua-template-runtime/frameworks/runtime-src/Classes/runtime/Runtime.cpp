@@ -141,12 +141,12 @@ public:
         shineSprite->setOpacity(0);
         shineSprite->setPosition(Vec2(lanscaptX,lanscaptY));
         Vector<FiniteTimeAction*> arrayOfActions;
-        arrayOfActions.pushBack(DelayTime::create(0.5));
-        arrayOfActions.pushBack(FadeTo::create(1.0f,178));
-        arrayOfActions.pushBack(FadeTo::create(1.0f,255));
-        arrayOfActions.pushBack(FadeTo::create(1.0f,178));
-        arrayOfActions.pushBack(FadeTo::create(1.0f,0));
-        arrayOfActions.pushBack(DelayTime::create(0.5));
+        arrayOfActions.pushBack(DelayTime::create(0.4));
+        arrayOfActions.pushBack(FadeTo::create(0.8f,200));
+        arrayOfActions.pushBack(FadeTo::create(0.8f,255));
+        arrayOfActions.pushBack(FadeTo::create(0.8f,200));
+        arrayOfActions.pushBack(FadeTo::create(0.8f,0));
+        arrayOfActions.pushBack(DelayTime::create(0.4));
         Sequence * arrayAction = Sequence::create(arrayOfActions);
         shineSprite->runAction(RepeatForever::create(Sequence::create(arrayOfActions)));
         addChild(shineSprite,9998);
