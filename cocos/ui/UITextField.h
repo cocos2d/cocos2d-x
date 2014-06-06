@@ -140,7 +140,7 @@ public:
     bool isMaxLengthEnabled();
     void setMaxLength(int length);
     int getMaxLength();
-    int getStringLength();
+    int getStringLength() const;
     void setPasswordEnabled(bool enable);
     bool isPasswordEnabled();
     void setPasswordStyleText(const char* styleText);

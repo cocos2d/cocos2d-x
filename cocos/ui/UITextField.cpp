@@ -565,7 +565,7 @@ const std::string& TextField::getStringValue()
     return _textFieldRenderer->getString();
 }
     
-int TextField::getStringLength() {
+int TextField::getStringLength() const {
     return _textFieldRenderer->getStringLength();
 }
 
