@@ -376,22 +376,23 @@ bool AssetsManager::decompress(const std::string &zip)
             unzClose(zipfile);
             return false;
         }
-        
         const std::string fullPath = rootPath + fileName;
-        
-        //There are not directory entry in some case.
-        //So we need to create directory when decompressing file entry
-        if ( !createDirectory(fullPath) )
-        {
-            // Failed to create directory
-            CCLOG("AssetsManager : can not create directory %s", fullPath.c_str());
-            unzClose(zipfile);
-            return false;
-        }
         
         // Check if this entry is a directory or a file.
         const size_t filenameLength = strlen(fileName);
-        if (fileName[filenameLength-1] != '/')
+        if (fileName[filenameLength-1] == '/')
+        {
+            //There are not directory entry in some case.
+            //So we need to create directory when decompressing file entry
+            if ( !createDirectory(fullPath) )
+            {
+                // Failed to create directory
+                CCLOG("AssetsManager : can not create directory %s", fullPath.c_str());
+                unzClose(zipfile);
+                return false;
+            }
+        }
+        else
         {
             // Entry is a file, so extract it.
             // Open current file.
