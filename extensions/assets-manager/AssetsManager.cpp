@@ -729,7 +729,7 @@ void AssetsManager::update()
     }
 }
 
-void AssetsManager::updateAssets(const std::unordered_map<std::string, Downloader::DownloadUnit>& assets)
+void AssetsManager::updateAssets(const Downloader::DownloadUnits& assets)
 {
     if (_updateState != State::UPDATING && _localManifest->isLoaded() && _remoteManifest->isLoaded())
     {
@@ -744,9 +744,14 @@ void AssetsManager::updateAssets(const std::unordered_map<std::string, Downloade
     }
 }
 
-const std::unordered_map<std::string, Downloader::DownloadUnit>& AssetsManager::getFailedAssets() const
+const Downloader::DownloadUnits& AssetsManager::getFailedAssets() const
 {
     return _failedUnits;
+}
+
+void AssetsManager::downloadFailedAssets()
+{
+    updateAssets(_failedUnits);
 }
 
 

@@ -87,6 +87,7 @@ void AssetsManagerLoaderScene::runThisTest()
 {
     int currentId = currentScene;
     std::string manifestPath = sceneManifests[currentId], storagePath = FileUtils::getInstance()->getWritablePath() + storagePaths[currentId];
+    CCLOG("Storage path for this test : %s", storagePath.c_str());
     
     Sprite *sprite = Sprite::create("Images/Icon.png");
     auto layer = Layer::create();
@@ -167,25 +168,12 @@ void AssetsManagerLoaderScene::runThisTest()
                 case EventAssetsManager::EventCode::UPDATE_FAILED:
                 {
                     CCLOG("Update failed. %s", event->getMessage().c_str());
-                    
-                    failCount ++;
-                    if (failCount < 5)
-                    {
-                        _am->downloadFailedAssets();
-                    }
-                    else
-                    {
-                        CCLOG("Reach maximum fail count, exit update process");
-                        failCount = 0;
-                        scene = new AssetsManagerTestScene(backgroundPaths[currentId]);
-                        Director::getInstance()->replaceScene(scene);
-                        scene->release();
-                    }
+                    _am->downloadFailedAssets();
                 }
                     break;
                 case EventAssetsManager::EventCode::ERROR_UPDATING:
                 {
-                    CCLOG("Asset %s : %s.", event->getAssetId().c_str(), event->getMessage().c_str());
+                    CCLOG("Asset %s : %s", event->getAssetId().c_str(), event->getMessage().c_str());
                 }
                     break;
                 case EventAssetsManager::EventCode::ERROR_DECOMPRESS:
