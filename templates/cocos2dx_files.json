@@ -378,6 +378,8 @@
         "cocos/base/etc1.cpp", 
         "cocos/base/etc1.h", 
         "cocos/base/firePngData.h", 
+        "cocos/base/pvr.cpp", 
+        "cocos/base/pvr.h", 
         "cocos/base/s3tc.cpp", 
         "cocos/base/s3tc.h", 
         "cocos/base/uthash.h", 
