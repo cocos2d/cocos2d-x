@@ -78,7 +78,15 @@ public:
     };
     typedef std::function<void(Ref*, EventType)> ccScrollViewCallback;
    
+    /**
+     * Default constructor
+     */
+    ScrollView();
     
+    /**
+     * Default destructor
+     */
+    virtual ~ScrollView();
     /**
      * Allocates and initializes.
      */
@@ -310,15 +318,6 @@ public:
 
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
-    /**
-     * Default constructor
-     */
-    ScrollView();
-    
-    /**
-     * Default destructor
-     */
-    virtual ~ScrollView();
     
 protected:
     virtual void initRenderer() override;
