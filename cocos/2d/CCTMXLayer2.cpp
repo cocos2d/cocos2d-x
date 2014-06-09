@@ -243,14 +243,14 @@ int TMXLayer2::updateTiles(const Rect& culledRect, V2F_T2F_Quad *quads, GLushort
         indicesTmp = _indices;
     }
 
-    int rows_per_tile = ceil(tileSize.height / mapTileSize.height) - 1;
+    int tiles_overflow = ceil(tileSize.height / mapTileSize.height) - 1;
 
     Size texSize = _tileSet->_imageSize;
-    for (int y =  visibleTiles.origin.y - rows_per_tile; y <= visibleTiles.origin.y + visibleTiles.size.height; ++y)
+    for (int y =  visibleTiles.origin.y; y <= visibleTiles.origin.y + visibleTiles.size.height + tiles_overflow; ++y)
     {
         if(y<0 || y >= _layerSize.height)
             continue;
-        for (int x = visibleTiles.origin.x; x <= visibleTiles.origin.x + visibleTiles.size.width; x++)
+        for (int x = visibleTiles.origin.x - tiles_overflow; x <= visibleTiles.origin.x + visibleTiles.size.width; x++)
         {
             if(x<0 || x >= _layerSize.width)
                 continue;
@@ -258,7 +258,8 @@ int TMXLayer2::updateTiles(const Rect& culledRect, V2F_T2F_Quad *quads, GLushort
             int tileGID = _tiles[x + y * (int)_layerSize.width];
 
             // GID==0 empty tile
-            if(tileGID!=0) {
+            if(tileGID!=0)
+            {
 
                 V2F_T2F_Quad *quad = &quadsTmp[tilesUsed];
                 
@@ -268,10 +269,20 @@ int TMXLayer2::updateTiles(const Rect& culledRect, V2F_T2F_Quad *quads, GLushort
                 float left, right, top, bottom;
 
                 // vertices
-                left = nodePos.x;
-                right = nodePos.x + tileSize.width;
-                bottom = nodePos.y + tileSize.height;
-                top = nodePos.y;
+                if (tileGID & kTMXTileDiagonalFlag)
+                {
+                    left = nodePos.x;
+                    right = nodePos.x + tileSize.height;
+                    bottom = nodePos.y + tileSize.width;
+                    top = nodePos.y;
+                }
+                else
+                {
+                    left = nodePos.x;
+                    right = nodePos.x + tileSize.width;
+                    bottom = nodePos.y + tileSize.height;
+                    top = nodePos.y;
+                }
 
                 if(tileGID & kTMXTileVerticalFlag)
                     std::swap(top, bottom);
