@@ -107,7 +107,15 @@ public:
 
     
     typedef std::function<void(Ref*,Widget::TouchEventType)> ccWidgetTouchCallback;
-
+    /**
+     * Default constructor
+     */
+    Widget(void);
+    
+    /**
+     * Default destructor
+     */
+    virtual ~Widget();
     /**
      * Allocates and initializes a widget.
      */
@@ -593,15 +601,6 @@ public:
     std::function<Widget*(FocusDirection)> onNextFocusedWidget;
 
 CC_CONSTRUCTOR_ACCESS:
-    /**
-     * Default constructor
-     */
-    Widget(void);
-
-    /**
-     * Default destructor
-     */
-    virtual ~Widget();
 
     //initializes state of widget.
     virtual bool init() override;
