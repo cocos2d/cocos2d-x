@@ -325,6 +325,24 @@ std::string Text::getDescription() const
 }
     
 
+    
+void Text::enableShadow(const Color4B& shadowColor,const Size &offset, int blurRadius) {
+    _labelRenderer->enableShadow(shadowColor, offset, blurRadius);
+}
+
+void Text::enableOutline(const Color4B& outlineColor,int outlineSize) {
+    _labelRenderer->enableOutline(outlineColor, outlineSize);
+}
+    
+void Text::enableGlow(const Color4B& glowColor) {
+    if (_type == Type::TTF)
+        _labelRenderer->enableGlow(glowColor);
+}
+
+void Text::disableEffect() {
+    _labelRenderer->disableEffect();
+}
+
 Widget* Text::createCloneInstance()
 {
     return Text::create();
