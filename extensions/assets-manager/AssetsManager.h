@@ -99,6 +99,7 @@ public:
     /* @brief Download new package if there is a new version, and uncompress downloaded zip file.
      *        Ofcourse it will set search path that stores downloaded files.
      */
+	virtual void updateAsync();
     virtual void update();
     
     /* @brief Gets url of package.
@@ -120,6 +121,7 @@ public:
     /* @brief Gets current version code.
      */
     std::string getVersion();
+	void setVersion(std::string version );
     
     /* @brief Deletes recorded version code.
      */
@@ -188,7 +190,7 @@ private:
     std::string _versionFileUrl;
     
     std::string _downloadedVersion;
-    
+	std::string _outputFileName;
     void *_curl;
 
     unsigned int _connectionTimeout;

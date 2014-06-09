@@ -112,7 +112,8 @@ void AssetsManager::checkStoragePath()
 static std::string keyWithHash( const char* prefix, const std::string& url )
 {
     char buf[256];
-    sprintf(buf,"%s%zd",prefix,std::hash<std::string>()(url));
+	size_t temp = std::hash<std::string>()(url);
+	sprintf(buf, "%s%d", prefix, temp);
     return buf;
 }
 
@@ -228,7 +229,7 @@ void AssetsManager::downloadAndUncompress()
             this->setSearchPath();
             
             // Delete unloaded zip file.
-            string zipfileName = this->_storagePath + TEMP_PACKAGE_FILE_NAME;
+			string zipfileName = _outputFileName;
             if (remove(zipfileName.c_str()) != 0)
             {
                 CCLOG("can not remove downloaded zip file %s", zipfileName.c_str());
@@ -242,41 +243,59 @@ void AssetsManager::downloadAndUncompress()
     _isDownloading = false;
 }
 
+void AssetsManager::updateAsync()
+{
+	if (_isDownloading) return;
+
+	_isDownloading = true;
+
+	// 1. Urls of package and version should be valid;
+	// 2. Package should be a zip file.
+	if (_versionFileUrl.size() == 0 ||
+		_packageUrl.size() == 0 ||
+		std::string::npos == _packageUrl.find(".zip"))
+	{
+		CCLOG("no version file url, or no package url, or the package is not a zip file");
+		_isDownloading = false;
+		return;
+	}
+
+	// Check if there is a new version.
+	if (_version == "")
+	{
+		if (!checkUpdate())
+		{
+			_isDownloading = false;
+			return;
+		}
+	}
+	else
+	{
+		string recordedVersion = UserDefault::getInstance()->getStringForKey(keyOfVersion().c_str());
+		if (recordedVersion == _version)
+		{
+			return;
+		}
+	}
+	
+
+	// Is package already downloaded?
+	_downloadedVersion = UserDefault::getInstance()->getStringForKey(keyOfDownloadedVersion().c_str());
+
+	downloadAndUncompress();
+}
+
 void AssetsManager::update()
 {
-    if (_isDownloading) return;
-    
-    _isDownloading = true;
-    
-    // 1. Urls of package and version should be valid;
-    // 2. Package should be a zip file.
-    if (_versionFileUrl.size() == 0 ||
-        _packageUrl.size() == 0 ||
-        std::string::npos == _packageUrl.find(".zip"))
-    {
-        CCLOG("no version file url, or no package url, or the package is not a zip file");
-        _isDownloading = false;
-        return;
-    }
-    
-    // Check if there is a new version.
-    if (! checkUpdate())
-    {
-        _isDownloading = false;
-        return;
-    }
-    
-    // Is package already downloaded?
-    _downloadedVersion = UserDefault::getInstance()->getStringForKey(keyOfDownloadedVersion().c_str());
-    
-    auto t = std::thread(&AssetsManager::downloadAndUncompress, this);
+	_outputFileName = _storagePath + keyOfDownloadedVersion() +".zip";
+	auto t = std::thread(&AssetsManager::updateAsync, this);
     t.detach();
 }
 
 bool AssetsManager::uncompress()
 {
     // Open the zip file
-    string outFileName = _storagePath + TEMP_PACKAGE_FILE_NAME;
+	string outFileName = _outputFileName;
     unzFile zipfile = unzOpen(outFileName.c_str());
     if (! zipfile)
     {
@@ -466,6 +485,7 @@ bool AssetsManager::createDirectory(const char *path)
 
 void AssetsManager::setSearchPath()
 {
+	return;
     vector<string> searchPaths = FileUtils::getInstance()->getSearchPaths();
     vector<string>::iterator iter = searchPaths.begin();
     searchPaths.insert(iter, _storagePath);
@@ -502,7 +522,7 @@ int assetsManagerProgressFunc(void *ptr, double totalToDownload, double nowDownl
 bool AssetsManager::downLoad()
 {
     // Create a file to save package.
-    const string outFileName = _storagePath + TEMP_PACKAGE_FILE_NAME;
+	const string outFileName = _outputFileName;
     FILE *fp = fopen(outFileName.c_str(), "wb");
     if (! fp)
     {
@@ -575,7 +595,10 @@ void AssetsManager::setVersionFileUrl(const char *versionFileUrl)
 {
     _versionFileUrl = versionFileUrl;
 }
-
+void AssetsManager::setVersion(std::string version)
+{
+	_version = version;
+}
 string AssetsManager::getVersion()
 {
     return UserDefault::getInstance()->getStringForKey(keyOfVersion().c_str());
@@ -665,5 +688,8 @@ void AssetsManager::destroyStoragePath()
     system(command.c_str());
 #endif
 }
+
+
+
 
 NS_CC_EXT_END;
