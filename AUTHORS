@@ -880,6 +880,7 @@ Developers:
         
     zhouxiaoxiaoxujian
         Added TextField::getStringLength()
+        Add shadow, outline, glow filter support for UIText
     
 Retired Core Developers:
     WenSheng Yang
