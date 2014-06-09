@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "tinyxml2.h"
 #include "base/base64.h"
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS && CC_TARGET_PLATFORM != CC_PLATFORM_MAC && CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS && CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
 
 // root name of xml
 #define USERDEFAULT_ROOT_NAME    "userDefaultRoot"
@@ -44,8 +44,11 @@ NS_CC_BEGIN
  * export xmlNodePtr and other types in "CCUserDefault.h"
  */
 
+ std::mutex UserDefault::_mtx;
+
 static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLElement** rootNode, tinyxml2::XMLDocument **doc)
 {
+	
     tinyxml2::XMLElement* curNode = nullptr;
 
     // check the key value
@@ -53,7 +56,7 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLEle
     {
         return nullptr;
     }
-
+	UserDefault::_mtx.lock();
     do 
     {
  		tinyxml2::XMLDocument* xmlDoc = new tinyxml2::XMLDocument();
@@ -88,12 +91,13 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLEle
 			curNode = curNode->NextSiblingElement();
 		}
 	} while (0);
-
+	UserDefault::_mtx.unlock();
 	return curNode;
 }
 
 static void setValueForKey(const char* pKey, const char* pValue)
 {
+	
  	tinyxml2::XMLElement* rootNode;
 	tinyxml2::XMLDocument* doc;
 	tinyxml2::XMLElement* node;
@@ -104,6 +108,8 @@ static void setValueForKey(const char* pKey, const char* pValue)
 	}
 	// find the node
 	node = getXMLNodeForKey(pKey, &rootNode, &doc);
+
+	UserDefault::_mtx.lock();
 	// if node exist, change the content
 	if (node)
 	{
@@ -134,6 +140,7 @@ static void setValueForKey(const char* pKey, const char* pValue)
 		doc->SaveFile(UserDefault::getInstance()->getXMLFilePath().c_str());
 		delete doc;
 	}
+	UserDefault::_mtx.unlock();
 }
 
 /**
@@ -402,24 +409,28 @@ void UserDefault::setDataForKey(const char* pKey, const Data& value) {
     if (encodedData)
         free(encodedData);
 }
-
+std::once_flag flag;
 UserDefault* UserDefault::getInstance()
-{
-    initXMLFilePath();
+{	
+	std::call_once(flag, []()->UserDefault*
+		{
+			initXMLFilePath();
 
-    // only create xml file one time
-    // the file exists after the program exit
-    if ((! isXMLFileExist()) && (! createXMLFile()))
-    {
-        return nullptr;
-    }
+			// only create xml file one time
+			// the file exists after the program exit
+			if ((!isXMLFileExist()) && (!createXMLFile()))
+			{
+				return nullptr;
+			}
 
-    if (! _userDefault)
-    {
-        _userDefault = new UserDefault();
-    }
-
-    return _userDefault;
+			if (!_userDefault)
+			{
+				_userDefault = new UserDefault();
+			}
+			return _userDefault;
+		}    
+	);
+	return  _userDefault;
 }
 
 void UserDefault::destroyInstance()

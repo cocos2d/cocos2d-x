@@ -208,7 +208,6 @@ void LuaMinXmlHttpRequest::handle_requestResponse(network::HttpClient *sender, n
     {
         CCLOG("response failed");
         CCLOG("error buffer: %s", response->getErrorBuffer());
-        return;
     }
     
     // set header
