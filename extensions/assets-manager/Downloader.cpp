@@ -442,9 +442,6 @@ void Downloader::groupBatchDownload(const DownloadUnits &units)
     {
         CCLOG("FCLOSE %p>>>>>", (*it)->fp);
         fclose((*it)->fp);
-        char str[1024];
-        curl_easy_getinfo((*it)->curl, CURLINFO_FILETIME, &str);
-        CCLOG("FCLOSE : %s>>>>>\n", str);
         curl_easy_cleanup((*it)->curl);
     }
     
