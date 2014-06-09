@@ -7723,6 +7723,65 @@ int lua_cocos2dx_ui_Text_getFontSize(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_ui_Text_enableOutline(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::Text* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.Text",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::Text*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_Text_enableOutline'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::Color4B arg0;
+
+        ok &=luaval_to_color4b(tolua_S, 2, &arg0);
+        if(!ok)
+            return 0;
+        cobj->enableOutline(arg0);
+        return 0;
+    }
+    if (argc == 2) 
+    {
+        cocos2d::Color4B arg0;
+        int arg1;
+
+        ok &=luaval_to_color4b(tolua_S, 2, &arg0);
+
+        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
+        if(!ok)
+            return 0;
+        cobj->enableOutline(arg0, arg1);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "enableOutline",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Text_enableOutline'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_ui_Text_getTextVerticalAlignment(lua_State* tolua_S)
 {
     int argc = 0;
@@ -7807,6 +7866,88 @@ int lua_cocos2dx_ui_Text_getString(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Text_getString'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_Text_enableShadow(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::Text* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.Text",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::Text*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_Text_enableShadow'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cobj->enableShadow();
+        return 0;
+    }
+    if (argc == 1) 
+    {
+        cocos2d::Color4B arg0;
+
+        ok &=luaval_to_color4b(tolua_S, 2, &arg0);
+        if(!ok)
+            return 0;
+        cobj->enableShadow(arg0);
+        return 0;
+    }
+    if (argc == 2) 
+    {
+        cocos2d::Color4B arg0;
+        cocos2d::Size arg1;
+
+        ok &=luaval_to_color4b(tolua_S, 2, &arg0);
+
+        ok &= luaval_to_size(tolua_S, 3, &arg1);
+        if(!ok)
+            return 0;
+        cobj->enableShadow(arg0, arg1);
+        return 0;
+    }
+    if (argc == 3) 
+    {
+        cocos2d::Color4B arg0;
+        cocos2d::Size arg1;
+        int arg2;
+
+        ok &=luaval_to_color4b(tolua_S, 2, &arg0);
+
+        ok &= luaval_to_size(tolua_S, 3, &arg1);
+
+        ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2);
+        if(!ok)
+            return 0;
+        cobj->enableShadow(arg0, arg1, arg2);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "enableShadow",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Text_enableShadow'.",&tolua_err);
 #endif
 
     return 0;
@@ -7943,6 +8084,52 @@ int lua_cocos2dx_ui_Text_setTextVerticalAlignment(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Text_setTextVerticalAlignment'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_Text_enableGlow(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::Text* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.Text",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::Text*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_Text_enableGlow'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::Color4B arg0;
+
+        ok &=luaval_to_color4b(tolua_S, 2, &arg0);
+        if(!ok)
+            return 0;
+        cobj->enableGlow(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "enableGlow",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Text_enableGlow'.",&tolua_err);
 #endif
 
     return 0;
@@ -8171,6 +8358,49 @@ int lua_cocos2dx_ui_Text_getType(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_ui_Text_disableEffect(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::Text* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.Text",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::Text*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_Text_disableEffect'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cobj->disableEffect();
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "disableEffect",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Text_disableEffect'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_ui_Text_getFontName(lua_State* tolua_S)
 {
     int argc = 0;
@@ -8394,16 +8624,20 @@ int lua_register_cocos2dx_ui_Text(lua_State* tolua_S)
         tolua_function(tolua_S,"setFontName",lua_cocos2dx_ui_Text_setFontName);
         tolua_function(tolua_S,"setTouchScaleChangeEnabled",lua_cocos2dx_ui_Text_setTouchScaleChangeEnabled);
         tolua_function(tolua_S,"getFontSize",lua_cocos2dx_ui_Text_getFontSize);
+        tolua_function(tolua_S,"enableOutline",lua_cocos2dx_ui_Text_enableOutline);
         tolua_function(tolua_S,"getTextVerticalAlignment",lua_cocos2dx_ui_Text_getTextVerticalAlignment);
         tolua_function(tolua_S,"getString",lua_cocos2dx_ui_Text_getString);
+        tolua_function(tolua_S,"enableShadow",lua_cocos2dx_ui_Text_enableShadow);
         tolua_function(tolua_S,"setString",lua_cocos2dx_ui_Text_setString);
         tolua_function(tolua_S,"getTextHorizontalAlignment",lua_cocos2dx_ui_Text_getTextHorizontalAlignment);
         tolua_function(tolua_S,"setTextVerticalAlignment",lua_cocos2dx_ui_Text_setTextVerticalAlignment);
+        tolua_function(tolua_S,"enableGlow",lua_cocos2dx_ui_Text_enableGlow);
         tolua_function(tolua_S,"getTextAreaSize",lua_cocos2dx_ui_Text_getTextAreaSize);
         tolua_function(tolua_S,"setTextHorizontalAlignment",lua_cocos2dx_ui_Text_setTextHorizontalAlignment);
         tolua_function(tolua_S,"setFontSize",lua_cocos2dx_ui_Text_setFontSize);
         tolua_function(tolua_S,"isTouchScaleChangeEnabled",lua_cocos2dx_ui_Text_isTouchScaleChangeEnabled);
         tolua_function(tolua_S,"getType",lua_cocos2dx_ui_Text_getType);
+        tolua_function(tolua_S,"disableEffect",lua_cocos2dx_ui_Text_disableEffect);
         tolua_function(tolua_S,"getFontName",lua_cocos2dx_ui_Text_getFontName);
         tolua_function(tolua_S,"setTextAreaSize",lua_cocos2dx_ui_Text_setTextAreaSize);
         tolua_function(tolua_S,"create", lua_cocos2dx_ui_Text_create);
