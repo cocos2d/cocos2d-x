@@ -18,6 +18,7 @@ cocos2d-x-3.2  ???
     [FIX]           Lua-binding: compiling error on release mode
     [FIX]           Lua-binding: Add xxtea encrypt support
     [FIX]           Node: setPhysicsBody() can not work correctly if it is added to a Node
+    [FIX]           Node: state of _transformUpdated, _transformDirty and _inverseDirty are wrong in setParent()
     [FIX]           Other: link error with Xcode 6 when building with 32-bit architecture
     [FIX]           Repeat: will run one more over in rare situations
     [FIX]           Scale9Sprite: support culling
