@@ -171,7 +171,7 @@ public:
      * Enable outline for the label
      * It only works on IOS and Android when you use System fonts
      */ 
-    void enableOutline(const Color4B& outlineColor,int outlineSize = -1);
+    void enableOutline(const Color4B& outlineColor,int outlineSize = 1);
     
     /** only support for TTF */
     void enableGlow(const Color4B& glowColor);
