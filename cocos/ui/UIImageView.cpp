@@ -154,7 +154,9 @@ void ImageView::loadTexture(const std::string& fileName, TextureResType texType)
     _imageTextureSize = _imageRenderer->getContentSize();
     updateFlippedX();
     updateFlippedY();
-    updateRGBAToRenderer(_imageRenderer);
+    _imageRenderer->setColor(this->getColor());
+    _imageRenderer->setOpacity(this->getOpacity());
+    
     updateContentSizeWithTextureSize(_imageTextureSize);
     _imageRendererAdaptDirty = true;
 }
@@ -320,21 +322,6 @@ void ImageView::imageTextureScaleChangedWithSize()
 std::string ImageView::getDescription() const
 {
     return "ImageView";
-}
-    
-void ImageView::updateTextureColor()
-{
-    updateColorToRenderer(_imageRenderer);
-}
-
-void ImageView::updateTextureOpacity()
-{
-    updateOpacityToRenderer(_imageRenderer);
-}
-
-void ImageView::updateTextureRGBA()
-{
-    updateRGBAToRenderer(_imageRenderer);
 }
 
 Widget* ImageView::createCloneInstance()
