@@ -489,9 +489,9 @@ void ListView::selectedItemEvent(TouchEventType event)
 
 }
     
-void ListView::interceptTouchEvent(TouchEventType event, Widget *sender, const Vec2 &touchPoint)
+void ListView::interceptTouchEvent(TouchEventType event, Widget *sender, Touch* touch)
 {
-    ScrollView::interceptTouchEvent(event, sender, touchPoint);
+    ScrollView::interceptTouchEvent(event, sender, touch);
     if (event != TouchEventType::MOVED)
     {
         Widget* parent = sender;

@@ -176,7 +176,6 @@
     <ClInclude Include="..\..\ui\UILoadingBar.h" />
     <ClInclude Include="..\..\ui\UIPageView.h" />
     <ClInclude Include="..\..\ui\UIRichText.h" />
-    <ClInclude Include="..\..\ui\UIScrollInterface.h" />
     <ClInclude Include="..\..\ui\UIScrollView.h" />
     <ClInclude Include="..\..\ui\UISlider.h" />
     <ClInclude Include="..\..\ui\UIText.h" />

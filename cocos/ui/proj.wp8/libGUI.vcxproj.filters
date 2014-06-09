@@ -36,9 +36,6 @@
     <ClInclude Include="..\..\ui\UIPageView.h">
       <Filter>UIWidgets\ScrollWidget</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\ui\UIScrollInterface.h">
-      <Filter>UIWidgets\ScrollWidget</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\ui\UIScrollView.h">
       <Filter>UIWidgets\ScrollWidget</Filter>
     </ClInclude>

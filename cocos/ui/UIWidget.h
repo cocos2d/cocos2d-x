@@ -107,18 +107,15 @@ public:
 
     
     typedef std::function<void(Ref*,Widget::TouchEventType)> ccWidgetTouchCallback;
-
-    
     /**
      * Default constructor
      */
     Widget(void);
-
+    
     /**
      * Default destructor
      */
     virtual ~Widget();
-
     /**
      * Allocates and initializes a widget.
      */
@@ -351,28 +348,32 @@ public:
      *
      * @return true if the point is in parent's area, flase otherwise.
      */
-    bool clippingParentAreaContainPoint(const Vec2 &pt);
+    CC_DEPRECATED_ATTRIBUTE bool clippingParentAreaContainPoint(const Vec2 &pt){return this->isClippingParentContainsPoint(pt);}
+    bool isClippingParentContainsPoint(const Vec2& pt);
 
     /*
      * Gets the touch began point of widget when widget is selected.
      *
      * @return the touch began point.
      */
-    const Vec2& getTouchStartPos()const;
+    CC_DEPRECATED_ATTRIBUTE const Vec2& getTouchStartPos()const{return this->getTouchBeganPosition();}
+    const Vec2& getTouchBeganPosition()const;
 
     /*
      * Gets the touch move point of widget when widget is selected.
      *
      * @return the touch move point.
      */
-    const Vec2& getTouchMovePos()const;
+    CC_DEPRECATED_ATTRIBUTE const Vec2& getTouchMovePos()const{ return this->getTouchMovePosition();}
+    const Vec2& getTouchMovePosition()const;
 
     /*
      * Gets the touch end point of widget when widget is selected.
      *
      * @return the touch end point.
      */
-    const Vec2& getTouchEndPos()const;
+    CC_DEPRECATED_ATTRIBUTE const Vec2& getTouchEndPos()const{return this->getTouchEndPosition();}
+    const Vec2& getTouchEndPosition()const;
 
     /**
      * Changes the name that is used to identify the widget easily.
@@ -448,14 +449,6 @@ public:
      * @return true if the point is in widget's space, flase otherwise.
      */
     virtual bool hitTest(const Vec2 &pt);
-    
-    /*
-     * Sends the touch event to widget's parent
-     * @param  event  the touch event type, it could be BEGAN/MOVED/CANCELED/ENDED
-     * @param parent
-     * @param point
-     */
-    virtual void interceptTouchEvent(TouchEventType event,Widget* sender,const Vec2 &point);
 
     virtual bool onTouchBegan(Touch *touch, Event *unusedEvent);
     virtual void onTouchMoved(Touch *touch, Event *unusedEvent);
@@ -597,13 +590,29 @@ public:
      */
     static void enableDpadNavigation(bool enable);
 
+    /**
+     * When a widget lose/get focus, this method will be called. Be Caution when you provide your own version, 
+     * you must call widget->setFocused(true/false) to change the focus state of the current focused widget;
+     */
     std::function<void(Widget*,Widget*)> onFocusChanged;
+    /**
+     * use this function to manually specify the next focused widget regards to each direction
+     */
     std::function<Widget*(FocusDirection)> onNextFocusedWidget;
 
 CC_CONSTRUCTOR_ACCESS:
+
     //initializes state of widget.
     virtual bool init() override;
-    
+
+    /*
+     * Sends the touch event to widget's parent
+     * @param  event  the touch event type, it could be BEGAN/MOVED/CANCELED/ENDED
+     * @param parent
+     * @param point
+     */
+    virtual void interceptTouchEvent(TouchEventType event, Widget* sender, Touch *touch);
+    friend class PageView;
     /**
      * This method is called when a focus change event happens
      *@param widgetLostFocus  The widget which lose its focus
@@ -630,12 +639,11 @@ protected:
 
     //call back function called widget's state changed to normal.
     virtual void onPressStateChangedToNormal();
-
     //call back function called widget's state changed to selected.
     virtual void onPressStateChangedToPressed();
-
     //call back function called widget's state changed to dark.
     virtual void onPressStateChangedToDisabled();
+
     void pushDownEvent();
     void moveEvent();
 
@@ -665,65 +673,62 @@ protected:
     bool _bright;             ///< is this widget bright
     bool _touchEnabled;       ///< is this widget touch endabled
     bool _highlight;              ///< is the widget on focus
-    BrightStyle _brightStyle; ///< bright style
-    Vec2 _touchStartPos;    ///< touch began point
-    Vec2 _touchMovePos;     ///< touch moved point
-    Vec2 _touchEndPos;      ///< touch ended point
-    
-    //if use the old API, we must retain the _touchEventListener
-    Ref*       _touchEventListener;
-    
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#pragma warning (push)
-#pragma warning (disable: 4996)
-#endif
-    SEL_TouchEvent    _touchEventSelector;
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#pragma GCC diagnostic warning "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#pragma warning (pop)
-#endif
-    
-    ccWidgetTouchCallback _touchEventCallback;
-    
-    std::string _name;
-    int _actionTag;
-    Size _size;
-    Size _customSize;
+    bool _reorderWidgetChildDirty;
+    bool _affectByClipping;
     bool _ignoreSize;
 
+    BrightStyle _brightStyle; ///< bright style
     SizeType _sizeType;
-    Vec2 _sizePercent;
-
-    bool _affectByClipping;
-
     PositionType _positionType;
+
+    //use
+    std::string _name;
+    int _actionTag;
+
+    Size _size;
+    Size _customSize;
+
+    Vec2 _sizePercent;
     Vec2 _positionPercent;
-    bool _reorderWidgetChildDirty;
+
     bool _hitted;
     EventListenerTouchOneByOne* _touchListener;
+    Vec2 _touchBeganPosition;    ///< touch began point
+    Vec2 _touchMovePosition;     ///< touch moved point
+    Vec2 _touchEndPosition;      ///< touch ended point
+
     bool _flippedX;
     bool _flippedY;
+
     //use map to enble switch back and forth for user layout parameters
     Map<int,LayoutParameter*> _layoutParameterDictionary;
     LayoutParameter::Type _layoutParameterType;
 
     bool _focused;
     bool _focusEnabled;
-
-
     /**
      * store the only one focued widget
      */
     static Widget *_focusedWidget;  //both layout & widget will be stored in this variable
 
+    //if use the old API, we must retain the _touchEventListener
+    Ref*       _touchEventListener;
+    #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+    #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+    #elif _MSC_VER >= 1400 //vs 2005 or higher
+    #pragma warning (push)
+    #pragma warning (disable: 4996)
+    #endif
+    SEL_TouchEvent    _touchEventSelector;
+    #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+    #pragma GCC diagnostic warning "-Wdeprecated-declarations"
+    #elif _MSC_VER >= 1400 //vs 2005 or higher
+    #pragma warning (pop)
+    #endif
+    ccWidgetTouchCallback _touchEventCallback;
 private:
     class FocusNavigationController;
     static FocusNavigationController* _focusNavigationController;
-
-
 };
 }
 

@@ -956,7 +956,6 @@
         "cocos/ui/UIRelativeBox.h", 
         "cocos/ui/UIRichText.cpp", 
         "cocos/ui/UIRichText.h", 
-        "cocos/ui/UIScrollInterface.h", 
         "cocos/ui/UIScrollView.cpp", 
         "cocos/ui/UIScrollView.h", 
         "cocos/ui/UISlider.cpp", 
