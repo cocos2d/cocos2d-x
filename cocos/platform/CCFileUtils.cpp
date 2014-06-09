@@ -35,8 +35,14 @@ THE SOFTWARE.
 #include "tinyxml2.h"
 #include "unzip.h"
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 
-using namespace std;
+#else
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <dirent.h>
+#endif
+
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
 
@@ -908,6 +914,123 @@ bool FileUtils::isFileExist(const std::string& filename) const
 bool FileUtils::isAbsolutePath(const std::string& path) const
 {
     return (path[0] == '/');
+}
+
+bool FileUtils::writeStringToFile(const std::string& content, const std::string& fullpath)
+{
+    size_t pos = fullpath.find_last_of("\\/");
+    if (pos == std::string::npos)
+    {
+        return false;
+    }
+    std::string dir = fullpath.substr(0, pos);
+    
+    if (!isExist(dir))
+    {
+        createDirectories(dir);
+    }
+    
+    FILE* fp = fopen(fullpath.c_str(), "wb");
+    if (nullptr == fp)
+    {
+        return false;
+    }
+
+    fwrite(content.data(), content.length(), 1, fp);
+    fclose(fp);
+    return true;
+}
+
+bool FileUtils::isExist(const std::string& path)
+{
+    CCASSERT(!path.empty(), "Invalid path");
+    
+	struct stat st;
+	return stat(path.c_str(), &st) == 0;
+}
+
+bool FileUtils::isDirectory(const std::string& dirPath)
+{
+    CCASSERT(!dirPath.empty(), "Invalid path");
+    
+	struct stat st;
+	if (stat(dirPath.c_str(), &st) == 0)
+		return S_ISDIR(st.st_mode);
+
+	return false;
+}
+
+bool FileUtils::createDirectory(const std::string& dirPath)
+{
+    CCASSERT(!dirPath.empty(), "Invalid path");
+    
+    if (isExist(dirPath) && isDirectory(dirPath))
+        return false;
+    
+    if (mkdir(dirPath.c_str(), S_IRWXU | S_IRWXG | S_IRWXO) != 0)
+    {
+        CCLOGERROR("Create directory (%s) failed", dirPath.c_str());
+    }
+    return true;
+}
+
+bool FileUtils::createDirectories(const std::string& path)
+{
+    // Split the path
+    size_t start = 0;
+    size_t found = path.find_first_of("/\\", start);
+    std::string subpath;
+    std::vector<std::string> dirs;
+    
+    if (found != std::string::npos)
+    {
+        while (true)
+        {
+            subpath = path.substr(start, found - start + 1);
+            if (!subpath.empty())
+                dirs.push_back(subpath);
+            start = found+1;
+            found = path.find_first_of("/\\", start);
+            if (found == std::string::npos)
+            {
+                if (start < path.length())
+                {
+                    dirs.push_back(path.substr(start));
+                }
+                break;
+            }
+        }
+    }
+    
+    // Remove downloaded files
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+    DIR *dir = NULL;
+    
+    // Create path recursively
+    subpath = "";
+    for (int i = 0; i < dirs.size(); i++) {
+        subpath += dirs[i];
+        dir = opendir (subpath.c_str());
+        if (!dir)
+        {
+            CCLOG("create dir %s", subpath.c_str());
+            if (0 != mkdir(subpath.c_str(), S_IRWXU | S_IRWXG | S_IRWXO))
+            {
+                CCLOGERROR("Create dir %s failed!", subpath.c_str());
+                return false;
+            }
+            CCLOG("create dir %s succeed!", subpath.c_str());
+        }
+    }
+#else
+    if ((GetFileAttributesA(path.c_str())) == INVALID_FILE_ATTRIBUTES)
+    {
+        // TODO: create recursively the path on windows
+        CreateDirectoryA(path.c_str(), 0);
+    }
+#endif
+    
+    return true;
 }
 
 //////////////////////////////////////////////////////////////////////////

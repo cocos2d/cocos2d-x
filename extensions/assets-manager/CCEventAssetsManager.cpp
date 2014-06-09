@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -21,32 +21,25 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#ifndef COCOS2DX_SCRIPT_LUA_COCOS2DX_SUPPORT_LUA_COCOS2DX_EXTENSION_MANUAL_H
-#define COCOS2DX_SCRIPT_LUA_COCOS2DX_SUPPORT_LUA_COCOS2DX_EXTENSION_MANUAL_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-#include "tolua++.h"
-#ifdef __cplusplus
-}
-#endif
+#include "CCEventAssetsManager.h"
+#include "base/ccMacros.h"
+#include <functional>
+#include "AssetsManager.h"
 
-#include "LuaScriptHandlerMgr.h"
+NS_CC_EXT_BEGIN
 
-TOLUA_API int register_all_cocos2dx_extension_manual(lua_State* tolua_S);
-TOLUA_API int register_cocos2dx_extension_CCBProxy(lua_State* tolua_S);
-
-struct LuaTableViewEventData
+EventAssetsManager::EventAssetsManager(const std::string& eventName, cocos2d::extension::AssetsManager *manager, const EventCode &code, float percent/* = 0 */, const std::string& assetId/* = "" */, const std::string& message/* = "" */, int curle_code/* = CURLE_OK*/, int curlm_code/* = CURLM_OK*/)
+: EventCustom(eventName)
+, _manager(manager)
+, _code(code)
+, _curle_code(curle_code)
+, _curlm_code(curlm_code)
+, _percent(percent)
+, _assetId(assetId)
+, _message(message)
 {
-    void* value;
-    
-    // Constructor
-    LuaTableViewEventData(void* _value = nullptr)
-    :value(_value)
-    {
-    }
-};
+}
 
 
-#endif // #ifndef COCOS2DX_SCRIPT_LUA_COCOS2DX_SUPPORT_LUA_COCOS2DX_EXTENSION_MANUAL_H
+NS_CC_EXT_END

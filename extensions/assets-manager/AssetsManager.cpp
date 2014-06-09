@@ -1,18 +1,18 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
- 
+ Copyright (c) 2014 cocos2d-x.org
+
  http://www.cocos2d-x.org
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -22,13 +22,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "AssetsManager.h"
-#include "cocos2d.h"
+
+#include "CCEventListenerAssetsManager.h"
 
 #include <curl/curl.h>
 #include <curl/easy.h>
 #include <stdio.h>
-#include <vector>
-#include <thread>
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 #include <sys/types.h>
@@ -37,250 +36,312 @@
 #include <dirent.h>
 #endif
 
-
 #include "unzip.h"
 
-using namespace cocos2d;
-using namespace std;
+NS_CC_EXT_BEGIN
 
-NS_CC_EXT_BEGIN;
+#define VERSION_FILENAME        "version.manifest"
+#define TEMP_MANIFEST_FILENAME  "project.manifest.temp"
+#define MANIFEST_FILENAME       "project.manifest"
 
-#define KEY_OF_VERSION   "current-version-code"
-#define KEY_OF_DOWNLOADED_VERSION    "downloaded-version-code"
-#define TEMP_PACKAGE_FILE_NAME    "cocos2dx-update-temp-package.zip"
 #define BUFFER_SIZE    8192
 #define MAX_FILENAME   512
 
-#define LOW_SPEED_LIMIT 1L
-#define LOW_SPEED_TIME 5L
+#define DEFAULT_CONNECTION_TIMEOUT 8
 
-
-// Message type
-#define ASSETSMANAGER_MESSAGE_UPDATE_SUCCEED                0
-#define ASSETSMANAGER_MESSAGE_RECORD_DOWNLOADED_VERSION     1
-#define ASSETSMANAGER_MESSAGE_PROGRESS                      2
-#define ASSETSMANAGER_MESSAGE_ERROR                         3
-
-// Some data struct for sending messages
-
-struct ErrorMessage
-{
-    AssetsManager::ErrorCode code;
-    AssetsManager* manager;
-};
-
-struct ProgressMessage
-{
-    int percent;
-    AssetsManager* manager;
-};
+const std::string AssetsManager::VERSION_ID = "@version";
+const std::string AssetsManager::MANIFEST_ID = "@manifest";
+const std::string AssetsManager::BATCH_UPDATE_ID = "@batch_update";
 
 // Implementation of AssetsManager
 
-AssetsManager::AssetsManager(const char* packageUrl/* =NULL */, const char* versionFileUrl/* =NULL */, const char* storagePath/* =NULL */)
-:  _storagePath(storagePath)
-, _version("")
-, _packageUrl(packageUrl)
-, _versionFileUrl(versionFileUrl)
-, _downloadedVersion("")
-, _curl(nullptr)
-, _connectionTimeout(0)
-, _delegate(nullptr)
-, _isDownloading(false)
-, _shouldDeleteDelegateWhenExit(false)
+AssetsManager::AssetsManager(const std::string& manifestUrl, const std::string& storagePath)
+: _updateState(State::UNCHECKED)
+, _waitToUpdate(false)
+, _totalToDownload(0)
+, _totalWaitToDownload(0)
+, _percent(0)
+, _manifestUrl(manifestUrl)
+, _storagePath("")
+, _cacheVersionPath("")
+, _cacheManifestPath("")
+, _tempManifestPath("")
+, _assets(nullptr)
+, _localManifest(nullptr)
+, _remoteManifest(nullptr)
 {
-    checkStoragePath();
+    // Init variables
+    _eventDispatcher = Director::getInstance()->getEventDispatcher();
+    std::string pointer = StringUtils::format("%p", this);
+    _eventName = EventListenerAssetsManager::LISTENER_ID + pointer;
+    _fileUtils = FileUtils::getInstance();
+    _updateState = State::UNCHECKED;
+
+    _downloader = std::make_shared<Downloader>();
+    _downloader->setConnectionTimeout(DEFAULT_CONNECTION_TIMEOUT);
+    _downloader->_onError = std::bind(&AssetsManager::onError, this, std::placeholders::_1);
+    _downloader->_onProgress = std::bind(&AssetsManager::onProgress,
+                                         this,
+                                         std::placeholders::_1,
+                                         std::placeholders::_2,
+                                         std::placeholders::_3,
+                                         std::placeholders::_4);
+    _downloader->_onSuccess = std::bind(&AssetsManager::onSuccess, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+    setStoragePath(storagePath);
+    _cacheVersionPath = _storagePath + VERSION_FILENAME;
+    _cacheManifestPath = _storagePath + MANIFEST_FILENAME;
+    _tempManifestPath = _storagePath + TEMP_MANIFEST_FILENAME;
+
+    _localManifest = new Manifest();
+    loadManifest(manifestUrl);
+
+    _remoteManifest = new Manifest();
 }
 
 AssetsManager::~AssetsManager()
 {
-    if (_shouldDeleteDelegateWhenExit)
+    removeFile(_tempManifestPath);
+    _downloader->_onError = nullptr;
+    _downloader->_onSuccess = nullptr;
+    _downloader->_onProgress = nullptr;
+    CC_SAFE_RELEASE(_localManifest);
+    CC_SAFE_RELEASE(_remoteManifest);
+}
+
+AssetsManager* AssetsManager::create(const std::string& manifestUrl, const std::string& storagePath)
+{
+    AssetsManager* ret = new AssetsManager(manifestUrl, storagePath);
+    if (ret)
     {
-        delete _delegate;
+        ret->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(ret);
+    }
+    return ret;
+}
+
+void AssetsManager::prepareLocalManifest()
+{
+    // An alias to assets
+    _assets = &(_localManifest->getAssets());
+
+    // Add search paths
+    _localManifest->prependSearchPaths();
+}
+
+void AssetsManager::loadManifest(const std::string& manifestUrl)
+{
+    // Prefer to use the cached manifest file, if not found use user configured manifest file
+    // Prepend storage path to avoid multi package conflict issue
+    if (_fileUtils->isFileExist(_cacheManifestPath))
+    {
+        _localManifest->parse(_cacheManifestPath);
+        if (_localManifest->isLoaded())
+            prepareLocalManifest();
+        else
+            removeFile(_cacheManifestPath);
+    }
+    
+    // Fail to found or load cached manifest file
+    if (!_localManifest->isLoaded())
+    {
+        _localManifest->parse(_manifestUrl);
+        if (_localManifest->isLoaded())
+            prepareLocalManifest();
+    }
+
+    // Fail to load local manifest
+    if (!_localManifest->isLoaded())
+    {
+        CCLOG("AssetsManager : No local manifest file found error.");
+        dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_NO_LOCAL_MANIFEST);
     }
 }
 
-void AssetsManager::checkStoragePath()
+std::string AssetsManager::get(const std::string& key) const
 {
-    if (_storagePath.size() > 0 && _storagePath[_storagePath.size() - 1] != '/')
+    auto it = _assets->find(key);
+    if (it != _assets->cend()) {
+        return _storagePath + it->second.path;
+    }
+    else return "";
+}
+
+const Manifest* AssetsManager::getLocalManifest() const
+{
+    return _localManifest;
+}
+
+const Manifest* AssetsManager::getRemoteManifest() const
+{
+    return _remoteManifest;
+}
+
+const std::string& AssetsManager::getStoragePath() const
+{
+    return _storagePath;
+}
+
+void AssetsManager::setStoragePath(const std::string& storagePath)
+{
+    if (_storagePath.size() > 0)
+        removeDirectory(_storagePath);
+
+    _storagePath = storagePath;
+    adjustPath(_storagePath);
+    createDirectory(_storagePath);
+}
+
+void AssetsManager::adjustPath(std::string &path)
+{
+    if (path.size() > 0 && path[path.size() - 1] != '/')
     {
-        _storagePath.append("/");
+        path.append("/");
     }
 }
 
-// Multiple key names
-static std::string keyWithHash( const char* prefix, const std::string& url )
+bool AssetsManager::createDirectory(const std::string& path)
 {
-    char buf[256];
-    sprintf(buf,"%s%zd",prefix,std::hash<std::string>()(url));
-    return buf;
-}
-
-// hashed version
-std::string AssetsManager::keyOfVersion() const
-{
-    return keyWithHash(KEY_OF_VERSION,_packageUrl);
-}
-
-// hashed version
-std::string AssetsManager::keyOfDownloadedVersion() const
-{
-    return keyWithHash(KEY_OF_DOWNLOADED_VERSION,_packageUrl);
-}
-
-static size_t getVersionCode(void *ptr, size_t size, size_t nmemb, void *userdata)
-{
-    string *version = (string*)userdata;
-    version->append((char*)ptr, size * nmemb);
-    
-    return (size * nmemb);
-}
-
-bool AssetsManager::checkUpdate()
-{
-    if (_versionFileUrl.size() == 0) return false;
-    
-    _curl = curl_easy_init();
-    if (! _curl)
+    // Split the path
+    size_t start = 0;
+    size_t found = path.find_first_of("/\\", start);
+    std::string subpath;
+    std::vector<std::string> dirs;
+    while (found != std::string::npos)
     {
-        CCLOG("can not init curl");
-        return false;
+        subpath = path.substr(start, found - start + 1);
+        if (subpath.size() > 0) dirs.push_back(subpath);
+        start = found+1;
+        found = path.find_first_of("/\\", start);
     }
-    
-    // Clear _version before assign new value.
-    _version.clear();
-    
-    CURLcode res;
-    curl_easy_setopt(_curl, CURLOPT_URL, _versionFileUrl.c_str());
-    curl_easy_setopt(_curl, CURLOPT_SSL_VERIFYPEER, 0L);
-    curl_easy_setopt(_curl, CURLOPT_WRITEFUNCTION, getVersionCode);
-    curl_easy_setopt(_curl, CURLOPT_WRITEDATA, &_version);
-    if (_connectionTimeout) curl_easy_setopt(_curl, CURLOPT_CONNECTTIMEOUT, _connectionTimeout);
-    curl_easy_setopt(_curl, CURLOPT_NOSIGNAL, 1L);
-    curl_easy_setopt(_curl, CURLOPT_LOW_SPEED_LIMIT, LOW_SPEED_LIMIT);
-    curl_easy_setopt(_curl, CURLOPT_LOW_SPEED_TIME, LOW_SPEED_TIME);
-    res = curl_easy_perform(_curl);
-    
-    if (res != 0)
-    {
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
-            if (this->_delegate)
-                this->_delegate->onError(ErrorCode::NETWORK);
-        });
-        CCLOG("can not get version file content, error code is %d", res);
-        curl_easy_cleanup(_curl);
-        return false;
-    }
-    
-    string recordedVersion = UserDefault::getInstance()->getStringForKey(keyOfVersion().c_str());
-    if (recordedVersion == _version)
-    {
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
-            if (this->_delegate)
-                this->_delegate->onError(ErrorCode::NO_NEW_VERSION);
-        });
-        CCLOG("there is not new version");
-        // Set resource search path.
-        setSearchPath();
-        return false;
-    }
-    
-    CCLOG("there is a new version: %s", _version.c_str());
-    
-    return true;
-}
 
-void AssetsManager::downloadAndUncompress()
-{
-    do
-    {
-        if (_downloadedVersion != _version)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+    DIR *dir = NULL;
+
+    // Create path recursively
+    subpath = "";
+    for (int i = 0; i < dirs.size(); ++i) {
+        subpath += dirs[i];
+        dir = opendir(subpath.c_str());
+        if (!dir)
         {
-            if (! downLoad()) break;
-            
-            Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
-                UserDefault::getInstance()->setStringForKey(this->keyOfDownloadedVersion().c_str(),
-                                                            this->_version.c_str());
-                UserDefault::getInstance()->flush();
-            });
-        }
-        
-        // Uncompress zip file.
-        if (! uncompress())
-        {
-            Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
-                if (this->_delegate)
-                    this->_delegate->onError(ErrorCode::UNCOMPRESS);
-            });
-            break;
-        }
-        
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this] {
-            
-            // Record new version code.
-            UserDefault::getInstance()->setStringForKey(this->keyOfVersion().c_str(), this->_version.c_str());
-            
-            // Unrecord downloaded version code.
-            UserDefault::getInstance()->setStringForKey(this->keyOfDownloadedVersion().c_str(), "");
-            UserDefault::getInstance()->flush();
-            
-            // Set resource search path.
-            this->setSearchPath();
-            
-            // Delete unloaded zip file.
-            string zipfileName = this->_storagePath + TEMP_PACKAGE_FILE_NAME;
-            if (remove(zipfileName.c_str()) != 0)
+            int ret = mkdir(subpath.c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
+            if (ret != 0 && (errno != EEXIST))
             {
-                CCLOG("can not remove downloaded zip file %s", zipfileName.c_str());
+                return false;
             }
-            
-            if (this->_delegate) this->_delegate->onSuccess();
-        });
-       
-    } while (0);
-    
-    _isDownloading = false;
+        }
+    }
+    return true;
+#else
+    if ((GetFileAttributesA(path.c_str())) == INVALID_FILE_ATTRIBUTES)
+    {
+		subpath = "";
+		for(int i = 0 ; i < dirs.size() ; ++i)
+		{
+			subpath += dirs[i];
+			BOOL ret = CreateDirectoryA(subpath.c_str(), NULL);
+            if (!ret && ERROR_ALREADY_EXISTS != GetLastError())
+            {
+                return false;
+            }
+		}
+    }
+    return true;
+#endif
 }
 
-void AssetsManager::update()
+bool AssetsManager::removeDirectory(const std::string& path)
 {
-    if (_isDownloading) return;
-    
-    _isDownloading = true;
-    
-    // 1. Urls of package and version should be valid;
-    // 2. Package should be a zip file.
-    if (_versionFileUrl.size() == 0 ||
-        _packageUrl.size() == 0 ||
-        std::string::npos == _packageUrl.find(".zip"))
+    if (path.size() > 0 && path[path.size() - 1] != '/')
     {
-        CCLOG("no version file url, or no package url, or the package is not a zip file");
-        _isDownloading = false;
-        return;
+        CCLOGERROR("Fail to remove directory, invalid path: %s", path.c_str());
+        return false;
     }
-    
-    // Check if there is a new version.
-    if (! checkUpdate())
-    {
-        _isDownloading = false;
-        return;
-    }
-    
-    // Is package already downloaded?
-    _downloadedVersion = UserDefault::getInstance()->getStringForKey(keyOfDownloadedVersion().c_str());
-    
-    auto t = std::thread(&AssetsManager::downloadAndUncompress, this);
-    t.detach();
+
+    // Remove downloaded files
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+    std::string command = "rm -r ";
+    // Path may include space.
+    command += "\"" + path + "\"";
+    if (system(command.c_str()) >= 0)
+        return true;
+    else
+        return false;
+#else
+    std::string command = "rd /s /q ";
+    // Path may include space.
+    command += "\"" + path + "\"";
+	if (WinExec(command.c_str(), SW_HIDE) > 31)
+        return true;
+    else
+        return false;
+#endif
 }
 
-bool AssetsManager::uncompress()
+bool AssetsManager::removeFile(const std::string &path)
 {
+    // Remove downloaded file
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+    std::string command = "rm -f ";
+    // Path may include space.
+    command += "\"" + path + "\"";
+    if (system(command.c_str()) >= 0)
+        return true;
+    else
+        return false;
+#else
+    std::string command = "del /q ";
+    // Path may include space.
+    command += "\"" + path + "\"";
+	if (WinExec(command.c_str(), SW_HIDE) > 31)
+        return true;
+    else
+        return false;
+#endif
+}
+
+bool AssetsManager::renameFile(const std::string &path, const std::string &oldname, const std::string &name)
+{
+    // Rename a file
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+    std::string oldPath = path + oldname;
+    std::string newPath = path + name;
+    if (rename(oldPath.c_str(), newPath.c_str()) != 0)
+    {
+        CCLOGERROR("Fail to rename file %s to %s !", oldPath.c_str(), newPath.c_str());
+        return false;
+    }
+    return true;
+#else
+    std::string command = "ren ";
+    // Path may include space.
+    command += "\"" + path + oldname + "\" \"" + name + "\"";
+	if (WinExec(command.c_str(), SW_HIDE) > 31)
+        return true;
+    else
+        return false;
+#endif
+}
+
+bool AssetsManager::decompress(const std::string &zip)
+{
+    // Find root path for zip file
+    size_t pos = zip.find_last_of("/\\");
+    if (pos == std::string::npos)
+    {
+        CCLOG("AssetsManager : no root path specified for zip file %s", zip.c_str());
+        return false;
+    }
+    const std::string rootPath = zip.substr(0, pos+1);
+    
     // Open the zip file
-    string outFileName = _storagePath + TEMP_PACKAGE_FILE_NAME;
-    unzFile zipfile = unzOpen(outFileName.c_str());
+    unzFile zipfile = unzOpen(zip.c_str());
     if (! zipfile)
     {
-        CCLOG("can not open downloaded zip file %s", outFileName.c_str());
+        CCLOG("AssetsManager : can not open downloaded zip file %s", zip.c_str());
         return false;
     }
     
@@ -288,16 +349,13 @@ bool AssetsManager::uncompress()
     unz_global_info global_info;
     if (unzGetGlobalInfo(zipfile, &global_info) != UNZ_OK)
     {
-        CCLOG("can not read file global info of %s", outFileName.c_str());
+        CCLOG("AssetsManager : can not read file global info of %s", zip.c_str());
         unzClose(zipfile);
         return false;
     }
     
     // Buffer to hold data read from the zip file
     char readBuffer[BUFFER_SIZE];
-    
-    CCLOG("start uncompressing");
-    
     // Loop to extract all files.
     uLong i;
     for (i = 0; i < global_info.number_entry; ++i)
@@ -314,84 +372,41 @@ bool AssetsManager::uncompress()
                                   NULL,
                                   0) != UNZ_OK)
         {
-            CCLOG("can not read file info");
+            CCLOG("AssetsManager : can not read compressed file info");
             unzClose(zipfile);
             return false;
         }
         
-        const string fullPath = _storagePath + fileName;
+        const std::string fullPath = rootPath + fileName;
+        
+        //There are not directory entry in some case.
+        //So we need to create directory when decompressing file entry
+        if ( !createDirectory(fullPath) )
+        {
+            // Failed to create directory
+            CCLOG("AssetsManager : can not create directory %s", fullPath.c_str());
+            unzClose(zipfile);
+            return false;
+        }
         
         // Check if this entry is a directory or a file.
         const size_t filenameLength = strlen(fileName);
-        if (fileName[filenameLength-1] == '/')
+        if (fileName[filenameLength-1] != '/')
         {
-            // Entry is a direcotry, so create it.
-            // If the directory exists, it will failed scilently.
-            if (!createDirectory(fullPath.c_str()))
-            {
-                CCLOG("can not create directory %s", fullPath.c_str());
-                unzClose(zipfile);
-                return false;
-            }
-        }
-        else
-        {
-            //There are not directory entry in some case.
-            //So we need to test whether the file directory exists when uncompressing file entry
-            //, if does not exist then create directory
-            const string fileNameStr(fileName);
-            
-            size_t startIndex=0;
-            
-            size_t index=fileNameStr.find("/",startIndex);
-            
-            while(index != std::string::npos)
-            {
-                const string dir=_storagePath+fileNameStr.substr(0,index);
-                
-                FILE *out = fopen(dir.c_str(), "r");
-                
-                if(!out)
-                {
-                    if (!createDirectory(dir.c_str()))
-                    {
-                        CCLOG("can not create directory %s", dir.c_str());
-                        unzClose(zipfile);
-                        return false;
-                    }
-                    else
-                    {
-                        CCLOG("create directory %s",dir.c_str());
-                    }
-                }
-                else
-                {
-                    fclose(out);
-                }
-                
-                startIndex=index+1;
-                
-                index=fileNameStr.find("/",startIndex);
-                
-            }
-            
-            
-            
             // Entry is a file, so extract it.
-            
             // Open current file.
             if (unzOpenCurrentFile(zipfile) != UNZ_OK)
             {
-                CCLOG("can not open file %s", fileName);
+                CCLOG("AssetsManager : can not extract file %s", fileName);
                 unzClose(zipfile);
                 return false;
             }
             
             // Create a file to store current file.
             FILE *out = fopen(fullPath.c_str(), "wb");
-            if (! out)
+            if (!out)
             {
-                CCLOG("can not open destination file %s", fullPath.c_str());
+                CCLOG("AssetsManager : can not create decompress destination file %s", fullPath.c_str());
                 unzCloseCurrentFile(zipfile);
                 unzClose(zipfile);
                 return false;
@@ -404,7 +419,7 @@ bool AssetsManager::uncompress()
                 error = unzReadCurrentFile(zipfile, readBuffer, BUFFER_SIZE);
                 if (error < 0)
                 {
-                    CCLOG("can not read zip file %s, error code is %d", fileName, error);
+                    CCLOG("AssetsManager : can not read zip file %s, error code is %d", fileName, error);
                     unzCloseCurrentFile(zipfile);
                     unzClose(zipfile);
                     return false;
@@ -426,244 +441,475 @@ bool AssetsManager::uncompress()
         {
             if (unzGoToNextFile(zipfile) != UNZ_OK)
             {
-                CCLOG("can not read next file");
+                CCLOG("AssetsManager : can not read next file for decompressing");
                 unzClose(zipfile);
                 return false;
             }
         }
     }
     
-    CCLOG("end uncompressing");
     unzClose(zipfile);
-    
     return true;
 }
 
-/*
- * Create a direcotry is platform depended.
- */
-bool AssetsManager::createDirectory(const char *path)
+void AssetsManager::dispatchUpdateEvent(EventAssetsManager::EventCode code, const std::string &assetId/* = ""*/, const std::string &message/* = ""*/, int curle_code/* = CURLE_OK*/, int curlm_code/* = CURLM_OK*/)
 {
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
-    mode_t processMask = umask(0);
-    int ret = mkdir(path, S_IRWXU | S_IRWXG | S_IRWXO);
-    umask(processMask);
-    if (ret != 0 && (errno != EEXIST))
+    EventAssetsManager event(_eventName, this, code, _percent, assetId, message, curle_code, curlm_code);
+    _eventDispatcher->dispatchEvent(&event);
+}
+
+AssetsManager::State AssetsManager::getState() const
+{
+    return _updateState;
+}
+
+void AssetsManager::downloadVersion()
+{
+    if (_updateState != State::PREDOWNLOAD_VERSION)
+        return;
+
+    std::string versionUrl = _localManifest->getVersionFileUrl();
+
+    if (versionUrl.size() > 0)
     {
-        return false;
+        _updateState = State::DOWNLOADING_VERSION;
+        // Download version file asynchronously
+        _downloader->downloadAsync(versionUrl, _cacheVersionPath, VERSION_ID);
     }
-    
-    return true;
-#else
-    BOOL ret = CreateDirectoryA(path, NULL);
-	if (!ret && ERROR_ALREADY_EXISTS != GetLastError())
-	{
-		return false;
-	}
-    return true;
-#endif
-}
-
-void AssetsManager::setSearchPath()
-{
-    vector<string> searchPaths = FileUtils::getInstance()->getSearchPaths();
-    vector<string>::iterator iter = searchPaths.begin();
-    searchPaths.insert(iter, _storagePath);
-    FileUtils::getInstance()->setSearchPaths(searchPaths);
-}
-
-static size_t downLoadPackage(void *ptr, size_t size, size_t nmemb, void *userdata)
-{
-    FILE *fp = (FILE*)userdata;
-    size_t written = fwrite(ptr, size, nmemb, fp);
-    return written;
-}
-
-int assetsManagerProgressFunc(void *ptr, double totalToDownload, double nowDownloaded, double totalToUpLoad, double nowUpLoaded)
-{
-    static int percent = 0;
-    int tmp = (int)(nowDownloaded / totalToDownload * 100);
-    
-    if (percent != tmp)
+    // No version file found
+    else
     {
-        percent = tmp;
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
-            auto manager = static_cast<AssetsManager*>(ptr);
-            if (manager->_delegate)
-                manager->_delegate->onProgress(percent);
-        });
+        CCLOG("AssetsManager : No version file found, step skipped\n");
+        _updateState = State::PREDOWNLOAD_MANIFEST;
+        downloadManifest();
+    }
+}
+
+void AssetsManager::parseVersion()
+{
+    if (_updateState != State::VERSION_LOADED)
+        return;
+
+    _remoteManifest->parse(_cacheVersionPath);
+
+    if (!_remoteManifest->isVersionLoaded())
+    {
+        CCLOG("AssetsManager : Fail to parse version file, step skipped\n");
+        _updateState = State::PREDOWNLOAD_MANIFEST;
+        downloadManifest();
+    }
+    else
+    {
+        if (_localManifest->versionEquals(_remoteManifest))
+        {
+            _updateState = State::UP_TO_DATE;
+            dispatchUpdateEvent(EventAssetsManager::EventCode::ALREADY_UP_TO_DATE);
+        }
+        else
+        {
+            _updateState = State::NEED_UPDATE;
+            dispatchUpdateEvent(EventAssetsManager::EventCode::NEW_VERSION_FOUND);
+
+            // Wait to update so continue the process
+            if (_waitToUpdate)
+            {
+                _updateState = State::PREDOWNLOAD_MANIFEST;
+                downloadManifest();
+            }
+        }
+    }
+}
+
+void AssetsManager::downloadManifest()
+{
+    if (_updateState != State::PREDOWNLOAD_MANIFEST)
+        return;
+
+    std::string manifestUrl = _localManifest->getManifestFileUrl();
+    if (manifestUrl.size() > 0)
+    {
+        _updateState = State::DOWNLOADING_MANIFEST;
+        // Download version file asynchronously
+        _downloader->downloadAsync(manifestUrl, _tempManifestPath, MANIFEST_ID);
+    }
+    // No manifest file found
+    else
+    {
+        CCLOG("AssetsManager : No manifest file found, check update failed\n");
+        dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_DOWNLOAD_MANIFEST);
+        _updateState = State::UNCHECKED;
+    }
+}
+
+void AssetsManager::parseManifest()
+{
+    if (_updateState != State::MANIFEST_LOADED)
+        return;
+
+    _remoteManifest->parse(_tempManifestPath);
+
+    if (!_remoteManifest->isLoaded())
+    {
+        CCLOG("AssetsManager : Error parsing manifest file\n");
+        dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_PARSE_MANIFEST);
+        _updateState = State::UNCHECKED;
+        removeFile(_tempManifestPath);
+    }
+    else
+    {
+        if (_localManifest->versionEquals(_remoteManifest))
+        {
+            _updateState = State::UP_TO_DATE;
+            removeFile(_tempManifestPath);
+            dispatchUpdateEvent(EventAssetsManager::EventCode::ALREADY_UP_TO_DATE);
+        }
+        else
+        {
+            _updateState = State::NEED_UPDATE;
+            dispatchUpdateEvent(EventAssetsManager::EventCode::NEW_VERSION_FOUND);
+
+            if (_waitToUpdate)
+            {
+                startUpdate();
+            }
+        }
+    }
+}
+
+void AssetsManager::startUpdate()
+{
+    if (_updateState != State::NEED_UPDATE)
+        return;
+
+    // Check difference
+    if (_localManifest != nullptr && _remoteManifest != nullptr)
+    {
+        std::unordered_map<std::string, Manifest::AssetDiff> diff_map = _localManifest->genDiff(_remoteManifest);
+        if (diff_map.size() == 0)
+        {
+            _updateState = State::UP_TO_DATE;
+            // Rename temporary manifest to valid manifest
+            renameFile(_storagePath, TEMP_MANIFEST_FILENAME, MANIFEST_FILENAME);
+            dispatchUpdateEvent(EventAssetsManager::EventCode::ALREADY_UP_TO_DATE);
+        }
+        else
+        {
+            _updateState = State::UPDATING;
+            // UPDATE
+            // Clean up before update
+            _failedUnits.clear();
+            _downloadUnits.clear();
+            _compressedFiles.clear();
+            _totalWaitToDownload = _totalToDownload = 0;
+            _percent = _sizeCollected = _totalSize = 0;
+            _downloadedSize.clear();
+            _totalEnabled = false;
+            
+            // Generate download units for all assets that need to be updated or added
+            std::string packageUrl = _remoteManifest->getPackageUrl();
+            for (auto it = diff_map.begin(); it != diff_map.end(); ++it) {
+                Manifest::AssetDiff diff = it->second;
+
+                if (diff.type == Manifest::DiffType::DELETED) {
+                    removeFile(_storagePath + diff.asset.path);
+                }
+                else
+                {
+                    std::string path = diff.asset.path;
+                    // Create path
+                    createDirectory(_storagePath + path);
+
+                    Downloader::DownloadUnit unit;
+                    unit.customId = it->first;
+                    unit.srcUrl = packageUrl + path;
+                    unit.storagePath = _storagePath + path;
+                    _downloadUnits.emplace(unit.customId, unit);
+                }
+            }
+            _totalWaitToDownload = _totalToDownload = (int)_downloadUnits.size();
+            _downloader->batchDownloadAsync(_downloadUnits, BATCH_UPDATE_ID);
+        }
+    }
+
+    _waitToUpdate = false;
+}
+
+void AssetsManager::checkUpdate()
+{
+    if (!_localManifest->isLoaded())
+    {
+        CCLOG("AssetsManager : No local manifest file found error.");
+        dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_NO_LOCAL_MANIFEST);
+        return;
+    }
+
+    switch (_updateState) {
+        case State::UNCHECKED:
+        case State::PREDOWNLOAD_VERSION:
+        {
+            downloadVersion();
+        }
+            break;
+        case State::UP_TO_DATE:
+        {
+            dispatchUpdateEvent(EventAssetsManager::EventCode::ALREADY_UP_TO_DATE);
+        }
+            break;
+        case State::FAIL_TO_UPDATE:
+        case State::NEED_UPDATE:
+        {
+            dispatchUpdateEvent(EventAssetsManager::EventCode::NEW_VERSION_FOUND);
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+void AssetsManager::update()
+{
+    if (!_localManifest->isLoaded())
+    {
+        CCLOG("AssetsManager : No local manifest file found error.");
+        dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_NO_LOCAL_MANIFEST);
+        return;
+    }
+
+    _waitToUpdate = true;
+
+    switch (_updateState) {
+        case State::UNCHECKED:
+        {
+            _updateState = State::PREDOWNLOAD_VERSION;
+        }
+        case State::PREDOWNLOAD_VERSION:
+        {
+            downloadVersion();
+        }
+            break;
+        case State::VERSION_LOADED:
+        {
+            parseVersion();
+        }
+            break;
+        case State::PREDOWNLOAD_MANIFEST:
+        {
+            downloadManifest();
+        }
+            break;
+        case State::MANIFEST_LOADED:
+        {
+            parseManifest();
+        }
+            break;
+        case State::FAIL_TO_UPDATE:
+        case State::NEED_UPDATE:
+        {
+            // Manifest not loaded yet
+            if (!_remoteManifest->isLoaded())
+            {
+                _waitToUpdate = true;
+                _updateState = State::PREDOWNLOAD_MANIFEST;
+                downloadManifest();
+            }
+            else
+            {
+                startUpdate();
+            }
+        }
+            break;
+        case State::UP_TO_DATE:
+        case State::UPDATING:
+            _waitToUpdate = false;
+            break;
+        default:
+            break;
+    }
+}
+
+void AssetsManager::updateAssets(const std::unordered_map<std::string, Downloader::DownloadUnit>& assets)
+{
+    if (_updateState != State::UPDATING && _localManifest->isLoaded() && _remoteManifest->isLoaded())
+    {
+        int size = (int)(assets.size());
+        if (size > 0)
+        {
+            _updateState = State::UPDATING;
+            _downloadUnits.clear();
+            _downloadUnits = assets;
+            _downloader->batchDownloadAsync(_downloadUnits, BATCH_UPDATE_ID);
+        }
+    }
+}
+
+const std::unordered_map<std::string, Downloader::DownloadUnit>& AssetsManager::getFailedAssets() const
+{
+    return _failedUnits;
+}
+
+
+void AssetsManager::onError(const Downloader::Error &error)
+{
+    // Skip version error occured
+    if (error.customId == VERSION_ID)
+    {
+        CCLOG("AssetsManager : Fail to download version file, step skipped\n");
+        _updateState = State::PREDOWNLOAD_MANIFEST;
+        downloadManifest();
+    }
+    else if (error.customId == MANIFEST_ID)
+    {
+        dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_DOWNLOAD_MANIFEST, error.customId, error.message, error.curle_code, error.curlm_code);
+    }
+    else
+    {
+        auto unitIt = _downloadUnits.find(error.customId);
+        // Found unit and add it to failed units
+        if (unitIt != _downloadUnits.end())
+        {
+            Downloader::DownloadUnit unit = unitIt->second;
+            _failedUnits.emplace(unit.customId, unit);
+        }
+        dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_UPDATING, error.customId, error.message, error.curle_code, error.curlm_code);
+    }
+}
+
+void AssetsManager::onProgress(double total, double downloaded, const std::string &url, const std::string &customId)
+{
+    if (customId == VERSION_ID || customId == MANIFEST_ID)
+    {
+        _percent = 100 * (total - downloaded) / total;
+        // Notify progression event
+        dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_PROGRESSION, customId);
+        return;
+    }
+    else
+    {
+        // Calcul total downloaded
+        bool found = false;
+        double totalDownloaded = 0;
+        for (auto it = _downloadedSize.begin(); it != _downloadedSize.end(); ++it)
+        {
+            if (it->first == customId)
+            {
+                it->second = downloaded;
+                found = true;
+            }
+            totalDownloaded += it->second;
+        }
+        // Collect information if not registed
+        if (!found)
+        {
+            _downloadedSize.emplace(customId, downloaded);
+            _totalSize += total;
+            _sizeCollected++;
+            // All collected, enable total size
+            if (_sizeCollected == _totalToDownload)
+            {
+                _totalEnabled = true;
+            }
+        }
         
-        CCLOG("downloading... %d%%", percent);
+        if (_totalEnabled && _updateState == State::UPDATING)
+        {
+            float currentPercent = 100 * totalDownloaded / _totalSize;
+            // Notify at integer level change
+            if ((int)currentPercent != (int)_percent) {
+                _percent = currentPercent;
+                // Notify progression event
+                dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_PROGRESSION, "");
+            }
+        }
     }
-    
-    return 0;
 }
 
-bool AssetsManager::downLoad()
+void AssetsManager::onSuccess(const std::string &srcUrl, const std::string &storagePath, const std::string &customId)
 {
-    // Create a file to save package.
-    const string outFileName = _storagePath + TEMP_PACKAGE_FILE_NAME;
-    FILE *fp = fopen(outFileName.c_str(), "wb");
-    if (! fp)
+    if (customId == VERSION_ID)
     {
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
-            if (this->_delegate)
-                this->_delegate->onError(ErrorCode::CREATE_FILE);
-        });
-        CCLOG("can not create file %s", outFileName.c_str());
-        return false;
+        _updateState = State::VERSION_LOADED;
+        parseVersion();
     }
-    
-    // Download pacakge
-    CURLcode res;
-    curl_easy_setopt(_curl, CURLOPT_URL, _packageUrl.c_str());
-    curl_easy_setopt(_curl, CURLOPT_WRITEFUNCTION, downLoadPackage);
-    curl_easy_setopt(_curl, CURLOPT_WRITEDATA, fp);
-    curl_easy_setopt(_curl, CURLOPT_NOPROGRESS, false);
-    curl_easy_setopt(_curl, CURLOPT_PROGRESSFUNCTION, assetsManagerProgressFunc);
-    curl_easy_setopt(_curl, CURLOPT_PROGRESSDATA, this);
-    curl_easy_setopt(_curl, CURLOPT_NOSIGNAL, 1L);
-    curl_easy_setopt(_curl, CURLOPT_LOW_SPEED_LIMIT, LOW_SPEED_LIMIT);
-    curl_easy_setopt(_curl, CURLOPT_LOW_SPEED_TIME, LOW_SPEED_TIME);
-
-    res = curl_easy_perform(_curl);
-    curl_easy_cleanup(_curl);
-    if (res != 0)
+    else if (customId == MANIFEST_ID)
     {
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
-            if (this->_delegate)
-                this->_delegate->onError(ErrorCode::NETWORK);
-        });
-        CCLOG("error when download package");
-        fclose(fp);
-        return false;
+        _updateState = State::MANIFEST_LOADED;
+        parseManifest();
     }
-    
-    CCLOG("succeed downloading package %s", _packageUrl.c_str());
-    
-    fclose(fp);
-    return true;
-}
-
-const char* AssetsManager::getPackageUrl() const
-{
-    return _packageUrl.c_str();
-}
-
-void AssetsManager::setPackageUrl(const char *packageUrl)
-{
-    _packageUrl = packageUrl;
-}
-
-const char* AssetsManager::getStoragePath() const
-{
-    return _storagePath.c_str();
-}
-
-void AssetsManager::setStoragePath(const char *storagePath)
-{
-    _storagePath = storagePath;
-    checkStoragePath();
-}
-
-const char* AssetsManager::getVersionFileUrl() const
-{
-    return _versionFileUrl.c_str();
-}
-
-void AssetsManager::setVersionFileUrl(const char *versionFileUrl)
-{
-    _versionFileUrl = versionFileUrl;
-}
-
-string AssetsManager::getVersion()
-{
-    return UserDefault::getInstance()->getStringForKey(keyOfVersion().c_str());
-}
-
-void AssetsManager::deleteVersion()
-{
-    UserDefault::getInstance()->setStringForKey(keyOfVersion().c_str(), "");
-}
-
-void AssetsManager::setDelegate(AssetsManagerDelegateProtocol *delegate)
-{
-    _delegate = delegate;
-}
-
-void AssetsManager::setConnectionTimeout(unsigned int timeout)
-{
-    _connectionTimeout = timeout;
-}
-
-unsigned int AssetsManager::getConnectionTimeout()
-{
-    return _connectionTimeout;
-}
-
-AssetsManager* AssetsManager::create(const char* packageUrl, const char* versionFileUrl, const char* storagePath, ErrorCallback errorCallback, ProgressCallback progressCallback, SuccessCallback successCallback )
-{
-    class DelegateProtocolImpl : public AssetsManagerDelegateProtocol 
+    else if (customId == BATCH_UPDATE_ID)
     {
-    public :
-        DelegateProtocolImpl(ErrorCallback aErrorCallback, ProgressCallback aProgressCallback, SuccessCallback aSuccessCallback)
-        : errorCallback(aErrorCallback), progressCallback(aProgressCallback), successCallback(aSuccessCallback)
-        {}
-
-        virtual void onError(AssetsManager::ErrorCode errorCode) { errorCallback(int(errorCode)); }
-        virtual void onProgress(int percent) { progressCallback(percent); }
-        virtual void onSuccess() { successCallback(); }
-
-    private :
-        ErrorCallback errorCallback;
-        ProgressCallback progressCallback;
-        SuccessCallback successCallback;
-    };
-
-    auto* manager = new AssetsManager(packageUrl,versionFileUrl,storagePath);
-    auto* delegate = new DelegateProtocolImpl(errorCallback,progressCallback,successCallback);
-    manager->setDelegate(delegate);
-    manager->_shouldDeleteDelegateWhenExit = true;
-    manager->autorelease();
-    return manager;
-}
-
-void AssetsManager::createStoragePath()
-{
-    // Remove downloaded files
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
-    DIR *dir = NULL;
-    
-    dir = opendir (_storagePath.c_str());
-    if (!dir)
-    {
-        mkdir(_storagePath.c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
+        // Finished with error check
+        if (_failedUnits.size() > 0 || _totalWaitToDownload > 0)
+        {
+            _updateState = State::FAIL_TO_UPDATE;
+            dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_FAILED);
+        }
+        else
+        {
+            // Every thing is correctly downloaded, do the following
+            // 1. rename temporary manifest to valid manifest
+            renameFile(_storagePath, TEMP_MANIFEST_FILENAME, MANIFEST_FILENAME);
+            // 2. swap the localManifest
+            if (_localManifest != nullptr)
+                _localManifest->release();
+            _localManifest = _remoteManifest;
+            _remoteManifest = nullptr;
+            // 3. make local manifest take effect
+            prepareLocalManifest();
+            // 4. decompress all compressed files
+            for (auto it = _compressedFiles.begin(); it != _compressedFiles.end(); ++it) {
+                std::string zipfile = *it;
+                if (!decompress(zipfile))
+                {
+                    dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_DECOMPRESS, "", "Unable to decompress file " + zipfile);
+                }
+                removeFile(zipfile);
+            }
+            // 5. Set update state
+            _updateState = State::UP_TO_DATE;
+            // 6. Notify finished event
+            dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_FINISHED);
+        }
     }
-#else    
-    if ((GetFileAttributesA(_storagePath.c_str())) == INVALID_FILE_ATTRIBUTES)
+    else
     {
-        CreateDirectoryA(_storagePath.c_str(), 0);
+        // Add file to need decompress list
+        auto assets = _remoteManifest->getAssets();
+        auto assetIt = assets.find(customId);
+        if (assetIt != assets.end()) {
+            if (assetIt->second.compressed) {
+                _compressedFiles.push_back(storagePath);
+            }
+        }
+        
+        auto unitIt = _downloadUnits.find(customId);
+        if (unitIt != _downloadUnits.end())
+        {
+            // Reduce count only when unit found in _downloadUnits
+            _totalWaitToDownload--;
+        }
+        // Notify asset updated event
+        dispatchUpdateEvent(EventAssetsManager::EventCode::ASSET_UPDATED, customId);
+        
+        unitIt = _failedUnits.find(customId);
+        // Found unit and delete it
+        if (unitIt != _failedUnits.end())
+        {
+            // Remove from failed units list
+            _failedUnits.erase(unitIt);
+        }
+
+        if (!_totalEnabled && _updateState == State::UPDATING) {
+            _percent = 100 * (_totalToDownload - _totalWaitToDownload) / _totalToDownload;
+            // Notify progression event
+            dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_PROGRESSION, customId);
+        }
     }
-#endif
 }
 
-void AssetsManager::destroyStoragePath()
+void AssetsManager::destroyDownloadedVersion()
 {
-    // Delete recorded version codes.
-    deleteVersion();
-    
-    // Remove downloaded files
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
-    string command = "rm -r ";
-    // Path may include space.
-    command += "\"" + _storagePath + "\"";
-    system(command.c_str());    
-#else
-    string command = "rd /s /q ";
-    // Path may include space.
-    command += "\"" + _storagePath + "\"";
-    system(command.c_str());
-#endif
+    removeFile(_cacheVersionPath);
+    removeFile(_cacheManifestPath);
 }
 
-NS_CC_EXT_END;
+NS_CC_EXT_END

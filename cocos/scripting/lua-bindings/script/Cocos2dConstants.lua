@@ -543,5 +543,27 @@ cc.KeyCode =
     KEY_SEARCH            = 0xFFAA,
 };
 
+cc.EventAssetsManager =
+{
+    EventCode = 
+    {
+        ERROR_NO_LOCAL_MANIFEST = 0,
+        ERROR_DOWNLOAD_MANIFEST = 1,
+        ERROR_PARSE_MANIFEST = 2,
+        NEW_VERSION_FOUND = 3,
+        ALREADY_UP_TO_DATE = 4,
+        UPDATE_PROGRESSION = 5,
+        ASSET_UPDATED = 6,
+        ERROR_UPDATING = 7,
+        UPDATE_FINISHED = 8,
+    },
+}
+
+cc.AssetsManagerStatic = 
+{
+    VERSION_ID  = "@version",
+    MANIFEST_ID = "@manifest",
+}
+
 
 
