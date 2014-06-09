@@ -82,6 +82,11 @@
 -- @param self
         
 --------------------------------
+-- @function [parent=#TextField] getStringLength 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
 -- @function [parent=#TextField] setPasswordEnabled 
 -- @param self
 -- @param #bool bool
