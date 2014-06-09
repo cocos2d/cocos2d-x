@@ -877,6 +877,9 @@ Developers:
         
     kezhuw
         AutoReleasePool manager improvement
+        
+    zhouxiaoxiaoxujian
+        Added TextField::getStringLength()
     
 Retired Core Developers:
     WenSheng Yang
