@@ -87,7 +87,9 @@ void TextBMFont::setFntFile(const std::string& fileName)
     }
     _fntFileName = fileName;
     _labelBMFontRenderer->setBMFontFilePath(fileName);
-    updateRGBAToRenderer(_labelBMFontRenderer);
+    
+    _labelBMFontRenderer->setColor(this->getColor());
+    _labelBMFontRenderer->setOpacity(this->getOpacity());
     _fntFileHasInit = true;
     setString(_stringValue);
 }
@@ -164,21 +166,6 @@ void TextBMFont::labelBMFontScaleChangedWithSize()
 std::string TextBMFont::getDescription() const
 {
     return "TextBMFont";
-}
-    
-void TextBMFont::updateTextureColor()
-{
-    updateColorToRenderer(_labelBMFontRenderer);
-}
-
-void TextBMFont::updateTextureOpacity()
-{
-    updateOpacityToRenderer(_labelBMFontRenderer);
-}
-
-void TextBMFont::updateTextureRGBA()
-{
-    updateRGBAToRenderer(_labelBMFontRenderer);
 }
 
 Widget* TextBMFont::createCloneInstance()

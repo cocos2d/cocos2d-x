@@ -157,8 +157,6 @@ _positionPercent(Vec2::ZERO),
 _reorderWidgetChildDirty(true),
 _hitted(false),
 _touchListener(nullptr),
-_color(Color3B::WHITE),
-_opacity(255),
 _flippedX(false),
 _flippedY(false),
 _focused(false),
@@ -212,6 +210,8 @@ bool Widget::init()
         setBright(true);
         ignoreContentAdaptWithSize(true);
         setAnchorPoint(Vec2(0.5f, 0.5f));
+        this->setCascadeColorEnabled(true);
+        this->setCascadeOpacityEnabled(true);
         return true;
     }
     return false;
@@ -1075,18 +1075,6 @@ void Widget::copyProperties(Widget *widget)
     onSizeChanged();
 }
     
-void Widget::setColor(const Color3B& color)
-{
-    _color = color;
-    updateTextureColor();
-}
-
-void Widget::setOpacity(GLubyte opacity)
-{
-    _opacity = opacity;
-    updateTextureOpacity();
-}
-    
 void Widget::setFlippedX(bool flippedX)
 {
     _flippedX = flippedX;
@@ -1099,21 +1087,6 @@ void Widget::setFlippedY(bool flippedY)
     updateFlippedY();
 }
 
-void Widget::updateColorToRenderer(Node* renderer)
-{
-    renderer->setColor(_color);
-}
-
-void Widget::updateOpacityToRenderer(Node* renderer)
-{
-    renderer->setOpacity(_opacity);
-}
-
-void Widget::updateRGBAToRenderer(Node* renderer)
-{
-    renderer->setColor(_color);
-    renderer->setOpacity(_opacity);
-}
 
 /*temp action*/
 void Widget::setActionTag(int tag)
