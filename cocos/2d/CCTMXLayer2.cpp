@@ -152,7 +152,8 @@ void TMXLayer2::onDraw(const Mat4 &transform, bool transformUpdated)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
 
 
-    if( transformUpdated || _dirty ) {
+    if( transformUpdated || _dirty )
+    {
     
         Size s = Director::getInstance()->getWinSize();
 		auto rect = Rect(0, 0, s.width, s.height);
@@ -199,7 +200,7 @@ void TMXLayer2::onDraw(const Mat4 &transform, bool transformUpdated)
 
         // color
         glVertexAttrib4f(GLProgram::VERTEX_ATTRIB_COLOR, _displayedColor.r/255.0f, _displayedColor.g/255.0f, _displayedColor.b/255.0f, _displayedOpacity/255.0f);
-
+        
         glDrawElements(GL_TRIANGLES, _verticesToDraw, GL_UNSIGNED_SHORT, nullptr);
         CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_verticesToDraw);
     }
@@ -216,22 +217,48 @@ int TMXLayer2::updateTiles(const Rect& culledRect, V2F_T2F_Quad *quads, GLushort
     Rect visibleTiles = culledRect;
     Size mapTileSize = CC_SIZE_PIXELS_TO_POINTS(_mapTileSize);
     Size tileSize = CC_SIZE_PIXELS_TO_POINTS(_tileSet->_tileSize);
-    Mat4 nodeToTile = _tileToNodeTransform;
-    nodeToTile.inverse();
+    Mat4 nodeToTileTransform = _tileToNodeTransform;
+    nodeToTileTransform.inverse();
     //transform to tile
-    visibleTiles = RectApplyTransform(visibleTiles, nodeToTile);
+    visibleTiles = RectApplyTransform(visibleTiles, nodeToTileTransform);
     
+    // if x=0.7, width=9.5, we need to draw number 0~10 of tiles, and so is height.
+    visibleTiles.size.width = ceil(visibleTiles.origin.x + visibleTiles.size.width)  - floor(visibleTiles.origin.x);
+    visibleTiles.size.height = ceil(visibleTiles.origin.y + visibleTiles.size.height) - floor(visibleTiles.origin.y);
     visibleTiles.origin.x = floor(visibleTiles.origin.x);
     visibleTiles.origin.y = floor(visibleTiles.origin.y);
-    visibleTiles.size.width = ceil(visibleTiles.size.width);
-    visibleTiles.size.height = ceil(visibleTiles.size.height);
     
     V2F_T2F_Quad* quadsTmp = quads;
     GLushort* indicesTmp = indices;
+    
+    // for the bigger tiles.
+    int tilesOverX = 0;
+    int tilesOverY = 0;
+    // for diagonal oriention tiles
+    float tileSizeMax = std::max(tileSize.width, tileSize.height);
+    if (_layerOrientation == TMXOrientationOrtho)
+    {
+        tilesOverX = ceil(tileSizeMax / mapTileSize.width) - 1;
+        tilesOverY = ceil(tileSizeMax / mapTileSize.height) - 1;
+        
+        if (tilesOverX < 0) tilesOverX = 0;
+        if (tilesOverY < 0) tilesOverY = 0;
+    }
+    else if(_layerOrientation == TMXOrientationIso)
+    {
+        Rect overTileRect(0, 0, tileSizeMax - mapTileSize.width, tileSizeMax - mapTileSize.height);
+        if (overTileRect.size.width < 0) overTileRect.size.width = 0;
+        if (overTileRect.size.height < 0) overTileRect.size.height = 0;
+        overTileRect = RectApplyTransform(overTileRect, nodeToTileTransform);
+        
+        tilesOverX = ceil(overTileRect.origin.x + overTileRect.size.width) - floor(overTileRect.origin.x);
+        tilesOverY = ceil(overTileRect.origin.y + overTileRect.size.height) - floor(overTileRect.origin.y);
+    }
+    
     // doesn't support VBO
     if (quadsTmp == nullptr)
     {
-        int quadsNeed = std::min(static_cast<int>((visibleTiles.size.width + 1) * (visibleTiles.size.height + 1)), MAX_QUADS_COUNT);
+        int quadsNeed = std::min(static_cast<int>((visibleTiles.size.width + tilesOverX) * (visibleTiles.size.height + tilesOverY)), MAX_QUADS_COUNT);
         if (_numQuads < quadsNeed)
         {
             _numQuads = quadsNeed;
@@ -243,14 +270,13 @@ int TMXLayer2::updateTiles(const Rect& culledRect, V2F_T2F_Quad *quads, GLushort
         indicesTmp = _indices;
     }
 
-    int tiles_overflow = ceil(tileSize.height / mapTileSize.height) - 1;
 
     Size texSize = _tileSet->_imageSize;
-    for (int y =  visibleTiles.origin.y; y <= visibleTiles.origin.y + visibleTiles.size.height + tiles_overflow; ++y)
+    for (int y =  visibleTiles.origin.y; y < visibleTiles.origin.y + visibleTiles.size.height + tilesOverY; ++y)
     {
         if(y<0 || y >= _layerSize.height)
             continue;
-        for (int x = visibleTiles.origin.x - tiles_overflow; x <= visibleTiles.origin.x + visibleTiles.size.width; x++)
+        for (int x = visibleTiles.origin.x - tilesOverX; x < visibleTiles.origin.x + visibleTiles.size.width; ++x)
         {
             if(x<0 || x >= _layerSize.width)
                 continue;
