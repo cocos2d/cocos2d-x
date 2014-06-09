@@ -64,9 +64,8 @@ enum
     kUITextAtlasTest,
     kUITextTest,
     kUITextTest_LineWrap,
-    /*
+    
     kUILabelTest_Effect,
-     */
     kUITextTest_TTF,
     kUITextBMFontTest,
     kUITextFieldTest,
