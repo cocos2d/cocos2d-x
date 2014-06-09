@@ -309,34 +309,14 @@
 -- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
--- @function [parent=#Widget] setColor 
+-- @function [parent=#Widget] getDescription 
 -- @param self
--- @param #color3b_table color3b
-        
---------------------------------
--- @function [parent=#Widget] getColor 
--- @param self
--- @return color3b_table#color3b_table ret (return value: color3b_table)
-        
---------------------------------
--- @function [parent=#Widget] setOpacity 
--- @param self
--- @param #unsigned char char
-        
---------------------------------
--- @function [parent=#Widget] getOpacity 
--- @param self
--- @return unsigned char#unsigned char ret (return value: unsigned char)
+-- @return string#string ret (return value: string)
         
 --------------------------------
 -- @function [parent=#Widget] setPosition 
 -- @param self
 -- @param #vec2_table vec2
-        
---------------------------------
--- @function [parent=#Widget] getDescription 
--- @param self
--- @return string#string ret (return value: string)
         
 --------------------------------
 -- @function [parent=#Widget] Widget 
