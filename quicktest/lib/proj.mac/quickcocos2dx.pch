@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'quickcocos2dx' target in the 'quickcocos2dx' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif

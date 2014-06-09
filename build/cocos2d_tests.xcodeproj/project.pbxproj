@@ -5434,6 +5434,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = eeeeeeeee;
 			};
 			name = Debug;
 		};
@@ -5441,6 +5442,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = eeeeeeeee;
 			};
 			name = Release;
 		};

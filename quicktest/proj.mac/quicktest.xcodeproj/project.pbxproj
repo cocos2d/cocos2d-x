@@ -7,19 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA17433D19457885005688AB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DA17433819457885005688AB /* InfoPlist.strings */; };
+		DA17433E19457885005688AB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA17433A19457885005688AB /* MainMenu.xib */; };
+		DA17433F19457885005688AB /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA17433C19457885005688AB /* main.cpp */; };
+		DA1CC5221945987C005ED7AE /* libquickcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA1735D419455A9E005688AB /* libquickcocos2dx.a */; };
 		F40EE898163F83E000090121 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F44C957915F49004004D4151 /* AppKit.framework */; };
 		F44C957715F49004004D4151 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F44C957615F49004004D4151 /* Cocoa.framework */; };
-		F4703CBE177955E200A8A9E9 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4703CBC177955E100A8A9E9 /* MainMenu.xib */; };
 		F4A5C15E16B7A35700A12606 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A5C15816B7A35700A12606 /* AudioToolbox.framework */; };
 		F4A5C15F16B7A35700A12606 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A5C15916B7A35700A12606 /* OpenAL.framework */; };
 		F4A5C16016B7A35700A12606 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A5C15A16B7A35700A12606 /* OpenGL.framework */; };
 		F4A5C16E16B7A3EC00A12606 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A5C16B16B7A3EC00A12606 /* libcurl.dylib */; };
 		F4A5C16F16B7A3EC00A12606 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A5C16C16B7A3EC00A12606 /* libxml2.dylib */; };
 		F4A5C17016B7A3EC00A12606 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A5C16D16B7A3EC00A12606 /* libz.dylib */; };
-		F4B0814A175C89050029F472 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F4B08140175C89050029F472 /* AppController.mm */; };
 		F4B0814D175C89050029F472 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = F4B08146175C89050029F472 /* Icon.icns */; };
-		F4B0814F175C89050029F472 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B08148175C89050029F472 /* main.m */; };
-		F4B08157175C89E90029F472 /* libquickcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4B08156175C89E30029F472 /* libquickcocos2dx.a */; };
 		F4B0815E175C8A1E0029F472 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B0815A175C8A1E0029F472 /* AppDelegate.cpp */; };
 		F4B4EF6616CA2A8B00736FFE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4B4EF6516CA2A8B00736FFE /* SystemConfiguration.framework */; };
 		F4BA6EB315F499A300CE7A10 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4BA6EB215F499A300CE7A10 /* QuartzCore.framework */; };
@@ -28,9 +28,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		F4B08155175C89E30029F472 /* PBXContainerItemProxy */ = {
+		DA1735D319455A9E005688AB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = F4B08151175C89E30029F472 /* quickcocos2dx.xcodeproj */;
+			containerPortal = DA1735CF19455A9D005688AB /* quickcocos2dx.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = F4DE082016800061005DB2DB;
 			remoteInfo = quickcocos2dx;
@@ -51,25 +51,23 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		F44C957215F49004004D4151 /* quicktest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "quicktest.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA1735CF19455A9D005688AB /* quickcocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = quickcocos2dx.xcodeproj; path = ../lib/proj.mac/quickcocos2dx.xcodeproj; sourceTree = "<group>"; };
+		DA17433919457885005688AB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
+		DA17433B19457885005688AB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = MainMenu.xib; sourceTree = "<group>"; };
+		DA17433C19457885005688AB /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		F44C957215F49004004D4151 /* quicktest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = quicktest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F44C957615F49004004D4151 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		F44C957915F49004004D4151 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		F44C957A15F49004004D4151 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		F44C957B15F49004004D4151 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		F4703CBC177955E100A8A9E9 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		F4A5C15816B7A35700A12606 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
 		F4A5C15916B7A35700A12606 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/OpenAL.framework; sourceTree = "<absolute>"; };
 		F4A5C15A16B7A35700A12606 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		F4A5C16B16B7A3EC00A12606 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/libcurl.dylib; sourceTree = "<absolute>"; };
 		F4A5C16C16B7A3EC00A12606 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/libxml2.dylib; sourceTree = "<absolute>"; };
 		F4A5C16D16B7A3EC00A12606 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/libz.dylib; sourceTree = "<absolute>"; };
-		F4B0813F175C89050029F472 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = SOURCE_ROOT; };
-		F4B08140175C89050029F472 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = SOURCE_ROOT; };
 		F4B08146175C89050029F472 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = SOURCE_ROOT; };
 		F4B08147175C89050029F472 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
-		F4B08148175C89050029F472 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = SOURCE_ROOT; };
-		F4B08149175C89050029F472 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = SOURCE_ROOT; };
-		F4B08151175C89E30029F472 /* quickcocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = quickcocos2dx.xcodeproj; path = lib/proj.mac/quickcocos2dx.xcodeproj; sourceTree = QUICK_COCOS2DX_ROOT; };
 		F4B0815A175C8A1E0029F472 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		F4B0815B175C8A1E0029F472 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F4B4EF6516CA2A8B00736FFE /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -83,7 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4B08157175C89E90029F472 /* libquickcocos2dx.a in Frameworks */,
+				DA1CC5221945987C005ED7AE /* libquickcocos2dx.a in Frameworks */,
 				F4B4EF6616CA2A8B00736FFE /* SystemConfiguration.framework in Frameworks */,
 				F40EE898163F83E000090121 /* AppKit.framework in Frameworks */,
 				F4BA6EBD15F499EE00CE7A10 /* Security.framework in Frameworks */,
@@ -101,10 +99,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DA1735D019455A9D005688AB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DA1735D419455A9E005688AB /* libquickcocos2dx.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DA17433719457885005688AB /* en.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				DA17433819457885005688AB /* InfoPlist.strings */,
+				DA17433A19457885005688AB /* MainMenu.xib */,
+			);
+			path = en.lproj;
+			sourceTree = "<group>";
+		};
 		F44C956715F49004004D4151 = {
 			isa = PBXGroup;
 			children = (
-				F4B08151175C89E30029F472 /* quickcocos2dx.xcodeproj */,
+				DA1735CF19455A9D005688AB /* quickcocos2dx.xcodeproj */,
 				F44C957C15F49004004D4151 /* quicktest */,
 				F44C957515F49004004D4151 /* Frameworks */,
 				F44C957315F49004004D4151 /* Products */,
@@ -146,27 +161,16 @@
 				F4B08159175C8A1E0029F472 /* sources */,
 				F4B08158175C8A100029F472 /* mac */,
 			);
-			name = "quicktest";
-			sourceTree = "<group>";
-		};
-		F4B08152175C89E30029F472 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				F4B08156175C89E30029F472 /* libquickcocos2dx.a */,
-			);
-			name = Products;
+			name = quicktest;
 			sourceTree = "<group>";
 		};
 		F4B08158175C8A100029F472 /* mac */ = {
 			isa = PBXGroup;
 			children = (
-				F4B0813F175C89050029F472 /* AppController.h */,
-				F4B08140175C89050029F472 /* AppController.mm */,
+				DA17433719457885005688AB /* en.lproj */,
+				DA17433C19457885005688AB /* main.cpp */,
 				F4B08146175C89050029F472 /* Icon.icns */,
 				F4B08147175C89050029F472 /* Info.plist */,
-				F4B08148175C89050029F472 /* main.m */,
-				F4703CBC177955E100A8A9E9 /* MainMenu.xib */,
-				F4B08149175C89050029F472 /* Prefix.pch */,
 			);
 			name = mac;
 			sourceTree = "<group>";
@@ -197,8 +201,8 @@
 			);
 			dependencies = (
 			);
-			name = "quicktest";
-			productName = "quicktest";
+			name = quicktest;
+			productName = quicktest;
 			productReference = F44C957215F49004004D4151 /* quicktest.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -223,8 +227,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = F4B08152175C89E30029F472 /* Products */;
-					ProjectRef = F4B08151175C89E30029F472 /* quickcocos2dx.xcodeproj */;
+					ProductGroup = DA1735D019455A9D005688AB /* Products */;
+					ProjectRef = DA1735CF19455A9D005688AB /* quickcocos2dx.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -235,11 +239,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		F4B08156175C89E30029F472 /* libquickcocos2dx.a */ = {
+		DA1735D419455A9E005688AB /* libquickcocos2dx.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libquickcocos2dx.a;
-			remoteRef = F4B08155175C89E30029F472 /* PBXContainerItemProxy */;
+			remoteRef = DA1735D319455A9E005688AB /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -250,7 +254,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F4B0814D175C89050029F472 /* Icon.icns in Resources */,
-				F4703CBE177955E200A8A9E9 /* MainMenu.xib in Resources */,
+				DA17433D19457885005688AB /* InfoPlist.strings in Resources */,
+				DA17433E19457885005688AB /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,13 +266,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4B0814A175C89050029F472 /* AppController.mm in Sources */,
-				F4B0814F175C89050029F472 /* main.m in Sources */,
+				DA17433F19457885005688AB /* main.cpp in Sources */,
 				F4B0815E175C8A1E0029F472 /* AppDelegate.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		DA17433819457885005688AB /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DA17433919457885005688AB /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		DA17433A19457885005688AB /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DA17433B19457885005688AB /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		F44C958E15F49004004D4151 /* Debug */ = {
@@ -354,27 +377,19 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = (
 					"\"$(SDKROOT)/usr/include/libxml2\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/cocos2dx\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/cocos2dx/include\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/cocos2dx/platform\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/cocos2dx/platform/mac\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/cocos2dx/platform/third_party/mac\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/cocos2dx/kazmath/include\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/CocosDenshion/include\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/CocosDenshion/mac\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/extensions\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/extensions/GUI/CCControlExtension\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/extensions/GUI/CCEditBox\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/external/chipmunk/include\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/external/chipmunk/luabinding\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/external/extra\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/external/extra/luabinding\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/scripting/lua/cocos2dx_support\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/scripting/lua/tolua\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/scripting/lua/luajit/include\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/scripting/lua/lua_extensions\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/scripting/lua/lua_extensions/cjson\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/scripting/lua/lua_extensions/zlib\"",
+					"$(QUICK_3_ROOT)",
+					"$(QUICK_3_ROOT)/cocos",
+					"$(QUICK_3_ROOT)/cocos/base",
+					"$(QUICK_3_ROOT)/cocos/deprecated",
+					"$(QUICK_3_ROOT)/cocos/editor-support",
+					"$(QUICK_3_ROOT)/extensions",
+					"$(QUICK_3_ROOT)/external",
+					"$(QUICK_3_ROOT)/external/chipmunk/include/chipmunk",
+					"$(QUICK_3_ROOT)/cocos/platform/mac",
+					"$(QUICK_3_ROOT)/external/glfw3/include/mac",
+					"$(QUICK_3_ROOT)/external/lua/tolua",
+					"$(QUICK_3_ROOT)/cocos/scripting/lua/cocos2dx_support",
+					"$(QUICK_3_ROOT)/external/lua/luajit/include",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INFOPLIST_OUTPUT_FORMAT = binary;
@@ -406,27 +421,19 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = (
 					"\"$(SDKROOT)/usr/include/libxml2\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/cocos2dx\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/cocos2dx/include\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/cocos2dx/platform\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/cocos2dx/platform/mac\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/cocos2dx/platform/third_party/mac\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/cocos2dx/kazmath/include\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/CocosDenshion/include\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/CocosDenshion/mac\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/extensions\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/extensions/GUI/CCControlExtension\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/extensions/GUI/CCEditBox\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/external/chipmunk/include\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/external/chipmunk/luabinding\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/external/extra\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/external/extra/luabinding\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/scripting/lua/cocos2dx_support\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/scripting/lua/tolua\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/scripting/lua/luajit/include\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/scripting/lua/lua_extensions\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/scripting/lua/lua_extensions/cjson\"",
-					"\"$(QUICK_COCOS2DX_ROOT)/lib/cocos2d-x/scripting/lua/lua_extensions/zlib\"",
+					"$(QUICK_3_ROOT)",
+					"$(QUICK_3_ROOT)/cocos",
+					"$(QUICK_3_ROOT)/cocos/base",
+					"$(QUICK_3_ROOT)/cocos/deprecated",
+					"$(QUICK_3_ROOT)/cocos/editor-support",
+					"$(QUICK_3_ROOT)/extensions",
+					"$(QUICK_3_ROOT)/external",
+					"$(QUICK_3_ROOT)/external/chipmunk/include/chipmunk",
+					"$(QUICK_3_ROOT)/cocos/platform/mac",
+					"$(QUICK_3_ROOT)/external/glfw3/include/mac",
+					"$(QUICK_3_ROOT)/external/lua/tolua",
+					"$(QUICK_3_ROOT)/cocos/scripting/lua/cocos2dx_support",
+					"$(QUICK_3_ROOT)/external/lua/luajit/include",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INFOPLIST_OUTPUT_FORMAT = binary;
