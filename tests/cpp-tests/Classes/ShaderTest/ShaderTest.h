@@ -166,9 +166,12 @@ public:
 
 class ShaderMultiTexture : public ShaderTestDemo
 {
+    static const int rightSpriteTag = 2014;
 public:
     ShaderMultiTexture();
     ui::Slider* createSliderCtl();
+    void changeTexture(Ref*);
+    int _changedTextureId;
     Sprite *_sprite;
 
     virtual std::string title() const override;

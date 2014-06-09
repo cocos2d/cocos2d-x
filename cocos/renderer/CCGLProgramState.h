@@ -191,6 +191,7 @@ protected:
     bool _uniformAttributeValueDirty;
     std::unordered_map<std::string, UniformValue> _uniforms;
     std::unordered_map<std::string, VertexAttribValue> _attributes;
+    std::unordered_map<std::string, int> _boundTextureUnits;
 
     int _textureUnitIndex;
     uint32_t _vertexAttribsFlags;
