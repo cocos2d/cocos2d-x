@@ -47,6 +47,7 @@ Classes/DrawPrimitivesTest/DrawPrimitivesTest.cpp \
 Classes/EffectsAdvancedTest/EffectsAdvancedTest.cpp \
 Classes/EffectsTest/EffectsTest.cpp \
 Classes/ExtensionsTest/ExtensionsTest.cpp \
+Classes/ExtensionsTest/AssetsManagerTest/AssetsManagerTest.cpp \
 Classes/ExtensionsTest/CocosBuilderTest/CocosBuilderTest.cpp \
 Classes/ExtensionsTest/CocosBuilderTest/AnimationsTest/AnimationsTestLayer.cpp \
 Classes/ExtensionsTest/CocosBuilderTest/ButtonTest/ButtonTestLayer.cpp \

@@ -84,6 +84,18 @@
     <ClCompile Include="..\physics-nodes\CCPhysicsSprite.cpp">
       <Filter>physics_nodes</Filter>
     </ClCompile>
+    <ClCompile Include="..\assets-manager\CCEventAssetsManager.cpp">
+      <Filter>AssetsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\assets-manager\CCEventListenerAssetsManager.cpp">
+      <Filter>AssetsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\assets-manager\Downloader.cpp">
+      <Filter>AssetsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\assets-manager\Manifest.cpp">
+      <Filter>AssetsManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\GUI\CCScrollView\CCScrollView.h">
@@ -156,6 +168,18 @@
     </ClInclude>
     <ClInclude Include="..\physics-nodes\CCPhysicsSprite.h">
       <Filter>physics_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\assets-manager\CCEventAssetsManager.h">
+      <Filter>AssetsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\assets-manager\CCEventListenerAssetsManager.h">
+      <Filter>AssetsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\assets-manager\Downloader.h">
+      <Filter>AssetsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\assets-manager\Manifest.h">
+      <Filter>AssetsManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
