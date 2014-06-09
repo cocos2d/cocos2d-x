@@ -40,7 +40,7 @@ NS_CC_BEGIN
  */
 class Bone : public Ref
 {
-    
+    friend class MeshSkin;
 public:
     
     /**
@@ -176,7 +176,7 @@ public:
     int getBoneIndex(Bone* joint) const;
     
     //compute matrix palette used by gpu skin
-    Vec4* getMatrixPalette() const;
+    Vec4* getMatrixPalette();
     
     //getBoneCount() * 3
     unsigned int getMatrixPaletteSize() const;

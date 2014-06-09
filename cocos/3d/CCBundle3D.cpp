@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "CCBundle3D.h"
+#include "CCAnimationCurve.h"
 #include "CCAnimation3D.h"
 #include "CCSprite3D.h"
 #include "CCMeshSkin.h"
@@ -82,18 +83,22 @@ bool Bundle3D::load(const std::string& path)
 bool Bundle3D::loadMeshData(const std::string& id, MeshData* meshdata)
 {
     meshdata->resetData();
-    meshdata->vertexSizeInFloat = 5 * 4;
+    meshdata->vertexSizeInFloat = 13 * 4;
     meshdata->vertex = new float[meshdata->vertexSizeInFloat];
-    float vert[] = {0.f,50.f,0.f,0.f,0.f,  0.f,0.f,50.f,1.f,1.f, 50.f,0.f,0.f,1.f,1.f, -50.f,0.f,0.f,1.f,1.f};
+    float vert[] = {0.f,50.f,0.f,0.f,0.f,0.f,0.f,0.f,0.f,1.f,0.f,0.f,0.f,
+        0.f,0.f,50.f,1.f,1.f,0.f,0.f,0.f,0.f,1.f,0.f,0.f,0.f,
+        50.f,0.f,0.f,1.f,1.f,0.f,0.f,0.f,0.f,1.f,0.f,0.f,0.f,
+        -50.f,0.f,0.f,1.f,1.f,0.f,0.f,0.f,0.f,1.f,0.f,0.f,0.f};
+    //float vert[] = {0.f,50.f,0.f,  0.f,0.f,50.f, 50.f,0.f,0.f, -50.f,0.f,0.f};
     memcpy(meshdata->vertex, vert, meshdata->vertexSizeInFloat * sizeof(float));
     
-    //meshdata->numIndex = 4 * 3;
-    meshdata->numIndex = 3;
+    meshdata->numIndex = 4 * 3;
+    //meshdata->numIndex = 3;
     meshdata->indices = new unsigned short[meshdata->numIndex];
-    unsigned short index[] = {0,1,2};//{0,1,2, 0,3,1, 0,2,3, 3,2,1};
+    unsigned short index[] = {0,1,2, 0,3,1, 0,2,3, 3,2,1};
     memcpy(meshdata->indices, index, meshdata->numIndex * sizeof(unsigned short));
     
-    meshdata->attribCount = 2;
+    meshdata->attribCount = 4;
     meshdata->attribs = new MeshVertexAttrib[meshdata->attribCount];
     meshdata->attribs[0].attribSizeBytes = 3 * sizeof(float);
     meshdata->attribs[0].size = 3;
@@ -105,6 +110,16 @@ bool Bundle3D::loadMeshData(const std::string& id, MeshData* meshdata)
     meshdata->attribs[1].type = GL_FLOAT;
     meshdata->attribs[1].vertexAttrib = GLProgram::VERTEX_ATTRIB_TEX_COORD;
     
+    meshdata->attribs[2].attribSizeBytes = 4 * sizeof(float);
+    meshdata->attribs[2].size = 4;
+    meshdata->attribs[2].type = GL_FLOAT;
+    meshdata->attribs[2].vertexAttrib = GLProgram::VERTEX_ATTRIB_BLEND_INDEX;
+    
+    meshdata->attribs[3].attribSizeBytes = 4 * sizeof(float);
+    meshdata->attribs[3].size = 4;
+    meshdata->attribs[3].type = GL_FLOAT;
+    meshdata->attribs[3].vertexAttrib = GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT;
+    
     return true;
 }
 
@@ -115,6 +130,11 @@ bool Bundle3D::loadMeshData(const std::string& id, MeshData* meshdata)
  */
 bool Bundle3D::loadSkinData(const std::string& id, SkinData* skindata)
 {
+    skindata->resetData();
+    skindata->boneNames.push_back("root");
+    skindata->inverseBindPoseMatrices.push_back(Mat4::IDENTITY);
+    skindata->rootBoneIndex = 0;
+    
     return true;
 }
 
@@ -135,6 +155,34 @@ bool Bundle3D::loadMaterialData(const std::string& id, MaterialData* materialdat
  */
 bool Bundle3D::loadAnimationData(const std::string& id, Animation3DData* animationdata)
 {
+    auto animation = animationdata->animation;
+    animation->_duration = 3.0f;
+    for (auto it : animation->_boneCurves) {
+        CC_SAFE_DELETE(it.second);
+    }
+    animation->_boneCurves.clear();
+    auto curve = new Animation3D::Curve();
+    float keytime[] = {0.f, 1.f};
+    float pos[] = {0.f, 0.f, 0.f, 20.f, 0.f, 0.f};
+    //curve->translateCurve = Animation3D::Curve::AnimationCurveVec3::create(keytime, pos, 2);
+    //curve->translateCurve->retain();
+    
+    float keytime1[] = {0.f, 0.25f, 0.5f, 1.f};
+    float rot[4 * 4];
+    Quaternion quat;
+    Quaternion::createFromAxisAngle(Vec3(0.f, 1.f, 0.f), 0, &quat);
+    rot[0] = quat.x, rot[1] = quat.y, rot[2] = quat.z, rot[3] = quat.w;
+    Quaternion::createFromAxisAngle(Vec3(0.f, 1.f, 0.f), MATH_DEG_TO_RAD(90), &quat);
+    rot[4] = quat.x, rot[5] = quat.y, rot[6] = quat.z, rot[7] = quat.w;
+    Quaternion::createFromAxisAngle(Vec3(0.f, 1.f, 0.f), MATH_DEG_TO_RAD(180), &quat);
+    rot[8] = quat.x, rot[9] = quat.y, rot[10] = quat.z, rot[11] = quat.w;
+    Quaternion::createFromAxisAngle(Vec3(0.f, 1.f, 0.f), MATH_DEG_TO_RAD(270), &quat);
+    rot[12] = quat.x, rot[13] = quat.y, rot[14] = quat.z, rot[15] = quat.w;
+    curve->rotCurve = Animation3D::Curve::AnimationCurveQuat::create(keytime1, rot, 4);
+    curve->rotCurve->retain();
+    
+    animation->_boneCurves["root"] = curve;
+    
     return true;
 }
 

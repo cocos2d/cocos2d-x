@@ -155,8 +155,8 @@ bool Sprite3D::loadFromC3x(const std::string& path)
     _mesh = Mesh::create(meshdata.vertex, meshdata.vertexSizeInFloat, meshdata.indices, meshdata.numIndex, meshdata.attribs, meshdata.attribCount);
     CC_SAFE_RETAIN(_mesh);
     
-//    _skin = MeshSkin::create(fullPath, "");
-//    CC_SAFE_RETAIN(_skin);
+    _skin = MeshSkin::create(fullPath, "");
+    CC_SAFE_RETAIN(_skin);
     
     Bundle3D::MaterialData materialdata;
     ret = bundle->loadMaterialData("", &materialdata);
@@ -297,7 +297,7 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, bool transformUpd
                       _mesh->getIndexCount(),
                       transform);
     
-    //_meshCommand.setCullFaceEnabled(true);
+    _meshCommand.setCullFaceEnabled(true);
     _meshCommand.setDepthTestEnabled(true);
     if (_skin)
     {

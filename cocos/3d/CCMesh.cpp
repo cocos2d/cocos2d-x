@@ -56,7 +56,6 @@ bool RenderMeshData::initFrom(const std::vector<float>& positions,
     CC_ASSERT(positions.size()<65536 * 3 && "index may out of bound");
     
     _vertexAttribs.clear();
-    _vertexsizeBytes = 0;
     
     _vertexNum = positions.size() / 3; //number of vertex
     if (_vertexNum == 0)
@@ -65,7 +64,6 @@ bool RenderMeshData::initFrom(const std::vector<float>& positions,
     if ((normals.size() != 0 && _vertexNum * 3 != normals.size()) || (texs.size() != 0 && _vertexNum * 2 != texs.size()))
         return false;
     
-    _vertexsizeBytes += 3;
     MeshVertexAttrib meshvertexattrib;
     meshvertexattrib.size = 3;
     meshvertexattrib.type = GL_FLOAT;
@@ -77,14 +75,12 @@ bool RenderMeshData::initFrom(const std::vector<float>& positions,
     if (normals.size())
     {
         //add normal flag
-        _vertexsizeBytes += 3;
         meshvertexattrib.vertexAttrib = GLProgram::VERTEX_ATTRIB_NORMAL;
         _vertexAttribs.push_back(meshvertexattrib);
     }
     //
     if (texs.size())
     {
-        _vertexsizeBytes += 2;
         meshvertexattrib.size = 2;
         meshvertexattrib.vertexAttrib = GLProgram::VERTEX_ATTRIB_TEX_COORD;
         meshvertexattrib.attribSizeBytes = meshvertexattrib.size * sizeof(float);
@@ -92,8 +88,8 @@ bool RenderMeshData::initFrom(const std::vector<float>& positions,
     }
     
     _vertexs.clear();
-    _vertexs.reserve(_vertexNum * _vertexsizeBytes);
-    _vertexsizeBytes *= sizeof(float);
+    _vertexsizeBytes = calVertexSizeBytes();
+    _vertexs.reserve(_vertexNum * _vertexsizeBytes / sizeof(float));
     
     bool hasNormal = hasVertexAttrib(GLProgram::VERTEX_ATTRIB_NORMAL);
     bool hasTexCoord = hasVertexAttrib(GLProgram::VERTEX_ATTRIB_TEX_COORD);
@@ -128,7 +124,22 @@ bool RenderMeshData::initFrom(const float* vertex, int vertexSizeInFloat, unsign
     _indices.assign(indices, indices + numIndex);
     _vertexAttribs.assign(attribs, attribs + attribCount);
     
+    _vertexsizeBytes = calVertexSizeBytes();
+    
+    
     return true;
+}
+
+int RenderMeshData::calVertexSizeBytes()
+{
+    int sizeBytes = 0;
+    for (auto it = _vertexAttribs.begin(); it != _vertexAttribs.end(); it++) {
+        sizeBytes += (*it).size;
+        CCASSERT((*it).type == GL_FLOAT, "use float");
+    }
+    sizeBytes *= sizeof(float);
+    
+    return sizeBytes;
 }
 
 Mesh::Mesh()

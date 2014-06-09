@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "CCAnimation3D.h"
+#include "CCBundle3D.h"
 
 #include "base/ccMacros.h"
 #include "platform/CCFileUtils.h"
@@ -37,10 +38,21 @@ Animation3D* Animation3D::getOrCreate(const std::string& fileName, const std::st
     if (animation != nullptr)
         return animation;
     
-    animation = new Animation3D();
     //load animation here
+    auto bundle = Bundle3D::getInstance();
+    if (bundle->load(fullPath))
+    {
+        Bundle3D::Animation3DData animationdata;
+        animationdata.animation = new Animation3D();
+        bundle->loadAnimationData(animationName, &animationdata);
+        animation = animationdata.animation;
+    }
     
-    Animation3DCache::getInstance()->addAnimation(key, animation);
+    if (animation)
+    {
+        Animation3DCache::getInstance()->addAnimation(key, animation);
+    }
+    
     return animation;
 }
 
@@ -98,7 +110,7 @@ Animation3DCache* Animation3DCache::_cacheInstance = nullptr;
 
 Animation3DCache* Animation3DCache::getInstance()
 {
-    if (_cacheInstance)
+    if (_cacheInstance == nullptr)
         _cacheInstance = new Animation3DCache();
     
     return _cacheInstance;

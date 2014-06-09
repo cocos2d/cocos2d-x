@@ -46,7 +46,7 @@ class Animate3D: public ActionInterval
 public:
     
     //create Animate3D using Animation.
-    Animate3D* create(Animation3D* animation);
+    static Animate3D* create(Animation3D* animation);
     
     //
     // Overrides

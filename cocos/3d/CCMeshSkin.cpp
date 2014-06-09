@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "CCMeshSkin.h"
+#include "CCBundle3D.h"
 
 #include "base/ccMacros.h"
 #include "base/CCPlatformMacros.h"
@@ -70,6 +71,7 @@ const Mat4& Bone::getWorldMat()
 {
     if (needUpdateWorldMat())
     {
+        updateLocalMat();
         if (_parent)
         {
             updateLocalMat();
@@ -137,7 +139,6 @@ void Bone::updateJointMatrix(const Mat4& bindShape, Vec4* matrixPalette)
     //if (_skinCount > 1 || _jointMatrixDirty)
     {
         //_jointMatrixDirty = false;
-        
         static Mat4 t;
         Mat4::multiply(_world, getInverseBindPose(), &t);
         Mat4::multiply(t, bindShape, &t);
@@ -251,11 +252,42 @@ MeshSkin* MeshSkin::getOrCreate(const std::string& fileName, const std::string& 
 //create a new meshskin if do not want to share meshskin
 MeshSkin* MeshSkin::create(const std::string& filename, const std::string& name)
 {
-    auto skin = new MeshSkin();
-    //load skin here;
     
-    skin->autorelease();
-    return skin;
+    //load skin here;
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename);
+    auto instance = Bundle3D::getInstance();
+    bool ret = instance->load(fullPath);
+    if (ret)
+    {
+        Bundle3D::SkinData skindata;
+        if (instance->loadSkinData(name, &skindata))
+        {
+            auto skin = new MeshSkin();
+            skin->_bindShape = skindata.bindShape;
+            skin->setBoneCount(skindata.boneNames.size());
+            for (size_t i = 0; i < skindata.boneNames.size(); i++) {
+                auto bone = Bone::create(skindata.boneNames[i]);
+                bone->_bindPose = skindata.inverseBindPoseMatrices[i];
+                skin->addBone(bone);
+            }
+            for (auto it : skindata.boneChild) {
+                auto parent = skin->getBoneByIndex(it.first);
+                for (auto childIt : it.second) {
+                    auto child = skin->getBoneByIndex(childIt);
+                    child->_parent = parent;
+                    parent->_children.pushBack(child);
+                }
+            }
+            
+            skin->setRootBone(skin->getBoneByIndex(skindata.rootBoneIndex));
+            
+            skin->autorelease();
+            return skin;
+        }
+    }
+    
+    
+    return nullptr;
 }
 
 //get & set bind shape matrix
@@ -294,8 +326,8 @@ Bone* MeshSkin::getRootBone() const
 }
 void MeshSkin::setRootBone(Bone* joint)
 {
-    joint->retain();
-    _rootBone->release();
+    CC_SAFE_RETAIN(joint);
+    CC_SAFE_RELEASE(_rootBone);
     _rootBone = joint;
 }
 
@@ -335,8 +367,10 @@ int MeshSkin::getBoneIndex(Bone* joint) const
 }
 
 //compute matrix palette used by gpu skin
-Vec4* MeshSkin::getMatrixPalette() const
+Vec4* MeshSkin::getMatrixPalette()
 {
+    updateBoneMatrix();
+    
     int i = 0;
 	for (auto it : _bones )
 	{

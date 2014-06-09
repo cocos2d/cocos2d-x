@@ -40,6 +40,7 @@ NS_CC_BEGIN
  */
 class Animation3D: public Ref
 {
+    friend class Bundle3D;
 public:
     class Curve
     {
@@ -55,7 +56,7 @@ public:
     };
     
     //read all animation or only the animation with given animationName? animationName == "" read all.
-    Animation3D* getOrCreate(const std::string& filename, const std::string& animationName = "");
+    static Animation3D* getOrCreate(const std::string& filename, const std::string& animationName = "");
     
     float getDuration() const { return _duration; }
     

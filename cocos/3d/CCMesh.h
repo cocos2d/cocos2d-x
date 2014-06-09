@@ -60,6 +60,9 @@ public:
     bool initFrom(const float* vertex, int vertexSizeInFloat, unsigned short* indices, int numIndex, const MeshVertexAttrib* attribs, int attribCount);
     
 protected:
+    
+    int calVertexSizeBytes();
+    
     int _vertexsizeBytes;
     ssize_t _vertexNum;
     std::vector<float> _vertexs;

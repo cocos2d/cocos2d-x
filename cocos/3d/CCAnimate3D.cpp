@@ -40,7 +40,7 @@ Animate3D* Animate3D::create(Animation3D* animation)
     animation->retain();
     
     animate->autorelease();
-    setDuration(animate->getDuration());
+    animate->setDuration(animation->getDuration());
     
     return animate;
 }
@@ -115,7 +115,7 @@ void Animate3D::update(float t)
             }
             if (curve->rotCurve)
             {
-                curve->translateCurve->evaluate(t, dst, QuatSlerp);
+                curve->rotCurve->evaluate(t, dst, QuatSlerp);
                 bone->setAnimationValueRotation(dst);
             }
             if (curve->scaleCurve)

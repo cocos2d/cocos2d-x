@@ -52,7 +52,7 @@ class AnimationCurve: public Ref
 public:
     
     //create animation curve
-    AnimationCurve* create(float* keytime, float* value, int count);
+    static AnimationCurve* create(float* keytime, float* value, int count);
     
     void evaluate(float time, float* dst, EvaluateType type) const;
     

@@ -60,6 +60,14 @@ public:
         
         std::map<int, std::vector<int> > boneChild;//key parent, value child
         int                              rootBoneIndex;
+        void resetData()
+        {
+            bindShape.setIdentity();
+            boneNames.clear();
+            inverseBindPoseMatrices.clear();
+            boneChild.clear();
+            rootBoneIndex = -1;
+        }
     };
     struct MaterialData
     {

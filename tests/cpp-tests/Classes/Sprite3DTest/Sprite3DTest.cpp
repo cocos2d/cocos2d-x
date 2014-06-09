@@ -24,6 +24,8 @@
  ****************************************************************************/
 
 #include "Sprite3DTest.h"
+#include "3d/CCAnimation3D.h"
+#include "3d/CCAnimate3D.h"
 
 #include <algorithm>
 #include "../testResource.h"
@@ -525,11 +527,15 @@ std::string Sprite3DWithSkinTest::subtitle() const
 void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
 {
     auto sprite = Sprite3D::create("Sprite3DTest/XXX.c3t");
-    sprite->setScale(8.f);
+    sprite->setScale(1.f);
     sprite->setTexture("Sprite3DTest/boss.png");
     addChild(sprite);
     
     sprite->setPosition( Vec2( p.x, p.y) );
+    auto animation = Animation3D::getOrCreate("Sprite3DTest/XXX.c3t");
+    
+    auto animate = Animate3D::create(animation);
+    sprite->runAction(animate);
 }
 
 void Sprite3DWithSkinTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
