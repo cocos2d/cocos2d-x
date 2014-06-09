@@ -150,8 +150,9 @@ public:
     void setMaxLengthEnabled(bool enable);
     bool isMaxLengthEnabled()const;
     void setMaxLength(int length);
+
     int getMaxLength()const;
-    
+    int getStringLength() const;
     void setPasswordEnabled(bool enable);
     bool isPasswordEnabled()const;
     void setPasswordStyleText(const char* styleText);
