@@ -142,9 +142,9 @@ void MciPlayer::Resume()
         MCI_STATUS_PARMS mciStatusParms;
         MCI_PLAY_PARMS   mciPlayParms;  
         mciStatusParms.dwItem = MCI_STATUS_POSITION;   
-        _SendGenericCommand(MCI_STATUS, MCI_STATUS_ITEM,(DWORD)(LPVOID)&mciStatusParms); // MCI_STATUS   
+        _SendGenericCommand(MCI_STATUS, MCI_STATUS_ITEM, reinterpret_cast<DWORD_PTR>(&mciStatusParms)); // MCI_STATUS   
         mciPlayParms.dwFrom = mciStatusParms.dwReturn;  // get position  
-        _SendGenericCommand(MCI_PLAY, MCI_FROM, (DWORD)(LPVOID)&mciPlayParms); // MCI_FROM
+        _SendGenericCommand(MCI_PLAY, MCI_FROM, reinterpret_cast<DWORD_PTR>(&mciPlayParms)); // MCI_FROM
     } 
     else
     {

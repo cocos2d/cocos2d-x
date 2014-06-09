@@ -118,8 +118,8 @@
 -- @function [parent=#SpriteBatchNode] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #cc.Mat4 mat4
--- @param #bool bool
+-- @param #mat4_table mat4
+-- @param #unsigned int int
         
 --------------------------------
 -- @function [parent=#SpriteBatchNode] getDescription 
@@ -130,8 +130,8 @@
 -- @function [parent=#SpriteBatchNode] visit 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #cc.Mat4 mat4
--- @param #bool bool
+-- @param #mat4_table mat4
+-- @param #unsigned int int
         
 --------------------------------
 -- @function [parent=#SpriteBatchNode] sortAllChildren 

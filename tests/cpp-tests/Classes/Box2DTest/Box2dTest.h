@@ -17,7 +17,7 @@ public:
 
     void initPhysics();
     void createResetButton();
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
     void addNewSpriteAtPosition(Vec2 p);
     void update(float dt);

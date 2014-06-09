@@ -29,6 +29,8 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+class Label;
+
 namespace ui{
 
 /**
@@ -126,7 +128,7 @@ public:
      */
     void setCapInsetsNormalRenderer(const Rect &capInsets);
 
-    const Rect& getCapInsetsNormalRenderer();
+    const Rect& getCapInsetsNormalRenderer()const;
 
     /**
      * Sets capinsets for button, if button is using scale9 renderer.
@@ -135,7 +137,7 @@ public:
      */
     void setCapInsetsPressedRenderer(const Rect &capInsets);
 
-    const Rect& getCapInsetsPressedRenderer();
+    const Rect& getCapInsetsPressedRenderer()const;
 
     /**
      * Sets capinsets for button, if button is using scale9 renderer.
@@ -144,7 +146,7 @@ public:
      */
     void setCapInsetsDisabledRenderer(const Rect &capInsets);
 
-    const Rect& getCapInsetsDisabledRenderer();
+    const Rect& getCapInsetsDisabledRenderer()const;
 
     /**
      * Sets if button is using scale9 renderer.
@@ -153,7 +155,7 @@ public:
      */
     virtual void setScale9Enabled(bool able);
 
-    bool isScale9Enabled();
+    bool isScale9Enabled()const;
 
     /**
      * Changes if button can be clicked zoom effect.

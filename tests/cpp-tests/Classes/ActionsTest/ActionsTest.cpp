@@ -81,7 +81,8 @@ static std::function<Layer*()> createFunctions[] = {
     CL(Issue1288),
     CL(Issue1288_2),
     CL(Issue1327),
-    CL(Issue1398)
+    CL(Issue1398),
+    CL(Issue2599)
 };
 
 static int sceneIdx=-1;
@@ -1349,15 +1350,15 @@ void ActionFollow::onEnter()
     this->runAction(Follow::create(_grossini, Rect(0, 0, s.width * 2 - 100, s.height)));
 }
 
-void ActionFollow::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void ActionFollow::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(ActionFollow::onDraw, this, transform, transformUpdated);
+    _customCommand.func = CC_CALLBACK_0(ActionFollow::onDraw, this, transform, flags);
     
     renderer->addCommand(&_customCommand);
 }
 
-void ActionFollow::onDraw(const Mat4 &transform, bool transformUpdated)
+void ActionFollow::onDraw(const Mat4 &transform, uint32_t flags)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -1663,9 +1664,9 @@ ActionCatmullRomStacked::~ActionCatmullRomStacked()
     CC_SAFE_RELEASE(_array2);
 }
 
-void ActionCatmullRomStacked::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void ActionCatmullRomStacked::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    ActionsDemo::draw(renderer, transform, transformUpdated);
+    ActionsDemo::draw(renderer, transform, flags);
     
     // move to 50,50 since the "by" path will start at 50,50
     Director* director = Director::getInstance();
@@ -1683,11 +1684,11 @@ void ActionCatmullRomStacked::draw(Renderer *renderer, const Mat4 &transform, bo
     _modelViewMV2 = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(ActionCatmullRomStacked::onDraw, this, transform, transformUpdated);
+    _customCommand.func = CC_CALLBACK_0(ActionCatmullRomStacked::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 }
 
-void ActionCatmullRomStacked::onDraw(const Mat4 &transform, bool transformUpdated)
+void ActionCatmullRomStacked::onDraw(const Mat4 &transform, uint32_t flags)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -1783,9 +1784,9 @@ ActionCardinalSplineStacked::~ActionCardinalSplineStacked()
     CC_SAFE_RELEASE(_array);
 }
 
-void ActionCardinalSplineStacked::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void ActionCardinalSplineStacked::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    ActionsDemo::draw(renderer, transform, transformUpdated);
+    ActionsDemo::draw(renderer, transform, flags);
     
     // move to 50,50 since the "by" path will start at 50,50
     Director* director = Director::getInstance();
@@ -1813,11 +1814,11 @@ void ActionCardinalSplineStacked::draw(Renderer *renderer, const Mat4 &transform
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(ActionCardinalSplineStacked::onDraw, this, transform, transformUpdated);
+    _customCommand.func = CC_CALLBACK_0(ActionCardinalSplineStacked::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 }
 
-void ActionCardinalSplineStacked::onDraw(const Mat4 &transform, bool transformUpdated)
+void ActionCardinalSplineStacked::onDraw(const Mat4 &transform, uint32_t flags)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -2094,6 +2095,38 @@ std::string Issue1398::title() const
     return "Issue 1398";
 }
 
+void Issue2599::onEnter()
+{
+    ActionsDemo::onEnter();
+    this->centerSprites(0);
+    
+    _count = 0;
+    log("before: count = %d", _count);
+    
+    log("start count up 50 times using Repeat action");
+    auto delay = 1.0f / 50;
+    auto repeatAction = Repeat::create(
+        Sequence::createWithTwoActions(
+            CallFunc::create([&](){ this->_count++; }),
+            DelayTime::create(delay)),
+        50);
+    this->runAction(
+        Sequence::createWithTwoActions(
+            repeatAction,
+            CallFunc::create([&]() { log("after: count = %d", this->_count); })
+        ));
+}
+
+std::string Issue2599::subtitle() const
+{
+    return "See console: You should see '50'";
+}
+
+std::string Issue2599::title() const
+{
+    return "Issue 2599";
+}
+
 /** ActionCatmullRom
  */
 void ActionCatmullRom::onEnter()
@@ -2165,9 +2198,9 @@ ActionCatmullRom::~ActionCatmullRom()
     _array2->release();
 }
 
-void ActionCatmullRom::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void ActionCatmullRom::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    ActionsDemo::draw(renderer, transform, transformUpdated);
+    ActionsDemo::draw(renderer, transform, flags);
     
     // move to 50,50 since the "by" path will start at 50,50
     Director* director = Director::getInstance();
@@ -2185,12 +2218,12 @@ void ActionCatmullRom::draw(Renderer *renderer, const Mat4 &transform, bool tran
     _modelViewMV2 = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(ActionCatmullRom::onDraw, this, transform, transformUpdated);
+    _customCommand.func = CC_CALLBACK_0(ActionCatmullRom::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 }
 
 
-void ActionCatmullRom::onDraw(const Mat4 &transform, bool transformUpdated)
+void ActionCatmullRom::onDraw(const Mat4 &transform, uint32_t flags)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -2270,9 +2303,9 @@ ActionCardinalSpline::~ActionCardinalSpline()
     _array->release();
 }
 
-void ActionCardinalSpline::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void ActionCardinalSpline::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    ActionsDemo::draw(renderer, transform, transformUpdated);
+    ActionsDemo::draw(renderer, transform, flags);
     
     // move to 50,50 since the "by" path will start at 50,50
     Director* director = Director::getInstance();
@@ -2298,11 +2331,11 @@ void ActionCardinalSpline::draw(Renderer *renderer, const Mat4 &transform, bool 
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(ActionCardinalSpline::onDraw, this, transform, transformUpdated);
+    _customCommand.func = CC_CALLBACK_0(ActionCardinalSpline::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 }
 
-void ActionCardinalSpline::onDraw(const Mat4 &transform, bool transformUpdated)
+void ActionCardinalSpline::onDraw(const Mat4 &transform, uint32_t flags)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");

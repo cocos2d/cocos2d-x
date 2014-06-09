@@ -84,6 +84,9 @@
     <ClInclude Include="..\UIRelativeBox.h">
       <Filter>Layouts</Filter>
     </ClInclude>
+    <ClInclude Include="..\UILayoutManager.h">
+      <Filter>Layouts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ui\UILayout.cpp">
@@ -150,6 +153,9 @@
       <Filter>UIWidgets</Filter>
     </ClCompile>
     <ClCompile Include="..\UIRelativeBox.cpp">
+      <Filter>Layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UILayoutManager.cpp">
       <Filter>Layouts</Filter>
     </ClCompile>
   </ItemGroup>

@@ -29,6 +29,8 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+class Label;
+
 namespace ui {
 
 /**
@@ -104,7 +106,7 @@ public:
      */
     void setFontSize(int size);
 
-    int getFontSize();
+    int getFontSize()const;
 
     /**
      * Sets the font name of label.
@@ -117,7 +119,7 @@ public:
      */
     void setFontName(const std::string& name);
 
-    const std::string& getFontName();
+    const std::string& getFontName()const;
     
     Type getType() const;
 
@@ -133,7 +135,7 @@ public:
      *
      * @return  touch scale enabled of label.
      */
-    bool isTouchScaleChangeEnabled();
+    bool isTouchScaleChangeEnabled()const;
 
     //override "getVirtualRendererSize" method of widget.
     virtual const Size& getVirtualRendererSize() const override;
@@ -148,15 +150,15 @@ public:
 
     void setTextAreaSize(const Size &size);
 
-    const Size& getTextAreaSize();
+    const Size& getTextAreaSize()const;
 
     void setTextHorizontalAlignment(TextHAlignment alignment);
 
-    TextHAlignment getTextHorizontalAlignment();
+    TextHAlignment getTextHorizontalAlignment()const;
 
     void setTextVerticalAlignment(TextVAlignment alignment);
 
-    TextVAlignment getTextVerticalAlignment();
+    TextVAlignment getTextVerticalAlignment()const;
     
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;

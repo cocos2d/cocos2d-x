@@ -78,7 +78,8 @@ static std::function<Layer*()> createFunctions[] =
     CL(LabelTTFOldNew),
     CL(LabelFontNameTest),
     CL(LabelAlignmentTest),
-    CL(LabelIssue4428Test)
+    CL(LabelIssue4428Test),
+    CL(LabelIssue4999Test)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -308,15 +309,15 @@ LabelFNTSpriteActions::LabelFNTSpriteActions()
     schedule( schedule_selector(LabelFNTSpriteActions::step), 0.1f);
 }
 
-void LabelFNTSpriteActions::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void LabelFNTSpriteActions::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     _renderCmd.init(_globalZOrder);
-    _renderCmd.func = CC_CALLBACK_0(LabelFNTSpriteActions::onDraw, this, transform, transformUpdated);
+    _renderCmd.func = CC_CALLBACK_0(LabelFNTSpriteActions::onDraw, this, transform, flags);
     renderer->addCommand(&_renderCmd);
 
 }
 
-void LabelFNTSpriteActions::onDraw(const Mat4 &transform, bool transformUpdated)
+void LabelFNTSpriteActions::onDraw(const Mat4 &transform, uint32_t flags)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -907,14 +908,14 @@ std::string LabelFNTBounds::subtitle() const
     return "You should see string enclosed by a box";
 }
 
-void LabelFNTBounds::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void LabelFNTBounds::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     _renderCmd.init(_globalZOrder);
-    _renderCmd.func = CC_CALLBACK_0(LabelFNTBounds::onDraw, this, transform, transformUpdated);
+    _renderCmd.func = CC_CALLBACK_0(LabelFNTBounds::onDraw, this, transform, flags);
     renderer->addCommand(&_renderCmd);
 }
 
-void LabelFNTBounds::onDraw(const Mat4 &transform, bool transformUpdated)
+void LabelFNTBounds::onDraw(const Mat4 &transform, uint32_t flags)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -1532,7 +1533,7 @@ LabelTTFOldNew::LabelTTFOldNew()
     label2->setPosition(Vec2(s.width/2, delta * 2));
 }
 
-void LabelTTFOldNew::onDraw(const Mat4 &transform, bool transformUpdated)
+void LabelTTFOldNew::onDraw(const Mat4 &transform, uint32_t flags)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -1576,10 +1577,10 @@ void LabelTTFOldNew::onDraw(const Mat4 &transform, bool transformUpdated)
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
-void LabelTTFOldNew::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void LabelTTFOldNew::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     _renderCmd.init(_globalZOrder);
-    _renderCmd.func = CC_CALLBACK_0(LabelTTFOldNew::onDraw, this, transform, transformUpdated);
+    _renderCmd.func = CC_CALLBACK_0(LabelTTFOldNew::onDraw, this, transform, flags);
     renderer->addCommand(&_renderCmd);
 }
 
@@ -1778,4 +1779,22 @@ std::string LabelIssue4428Test::title() const
 std::string LabelIssue4428Test::subtitle() const
 {
     return "Reorder issue #4428.The label should be flipped vertically.";
+}
+
+LabelIssue4999Test::LabelIssue4999Test()
+{
+    auto label = Label::createWithTTF("Smaller font test", "fonts/arial.ttf",5);
+    label->setPosition(VisibleRect::center());
+    label->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    addChild(label);
+}
+
+std::string LabelIssue4999Test::title() const
+{
+    return "New Label Bugs Test";
+}
+
+std::string LabelIssue4999Test::subtitle() const
+{
+    return "Reorder issue #4999.The label should be display cleanly.";
 }

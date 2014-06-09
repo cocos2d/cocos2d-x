@@ -60,6 +60,7 @@ THE SOFTWARE.
 #include "base/CCUserDefault.h"
 #include "base/CCIMEDelegate.h"
 #include "base/CCIMEDispatcher.h"
+#include "base/ccUtils.h"
 
 // EventDispatcher
 #include "base/CCEventType.h"

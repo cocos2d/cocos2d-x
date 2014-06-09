@@ -92,7 +92,7 @@ static void setGLBufferData(void *buf, GLuint bufSize)
 
 #endif // EMSCRIPTEN
 
-static void lazy_init( void )
+static void lazy_init()
 {
     if( ! s_initialized ) {
 
@@ -123,7 +123,7 @@ void free()
 	s_initialized = false;
 }
 
-void drawPoint( const Vec2& point )
+void drawPoint(const Vec2& point)
 {
     lazy_init();
 
@@ -198,7 +198,7 @@ void drawPoints( const Vec2 *points, unsigned int numberOfPoints )
 }
 
 
-void drawLine( const Vec2& origin, const Vec2& destination )
+void drawLine(const Vec2& origin, const Vec2& destination)
 {
     lazy_init();
 
@@ -231,7 +231,7 @@ void drawRect( Vec2 origin, Vec2 destination )
     drawLine(Vec2(origin.x, destination.y), Vec2(origin.x, origin.y));
 }
 
-void drawSolidRect( Vec2 origin, Vec2 destination, Color4F color )
+void drawSolidRect(Vec2 origin, Vec2 destination, Color4F color)
 {
     Vec2 vertices[] = {
         origin,
@@ -243,7 +243,7 @@ void drawSolidRect( Vec2 origin, Vec2 destination, Color4F color )
     drawSolidPoly(vertices, 4, color );
 }
 
-void drawPoly( const Vec2 *poli, unsigned int numberOfPoints, bool closePolygon )
+void drawPoly(const Vec2 *poli, unsigned int numberOfPoints, bool closePolygon)
 {
     lazy_init();
 
@@ -295,7 +295,7 @@ void drawPoly( const Vec2 *poli, unsigned int numberOfPoints, bool closePolygon 
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, numberOfPoints);
 }
 
-void drawSolidPoly( const Vec2 *poli, unsigned int numberOfPoints, Color4F color )
+void drawSolidPoly(const Vec2 *poli, unsigned int numberOfPoints, Color4F color)
 {
     lazy_init();
 
@@ -309,7 +309,7 @@ void drawSolidPoly( const Vec2 *poli, unsigned int numberOfPoints, Color4F color
     Vec2* newPoli = new Vec2[numberOfPoints];
 
     // iPhone and 32-bit machines optimization
-    if( sizeof(Vec2) == sizeof(Vec2) )
+    if (sizeof(Vec2) == sizeof(Vec2))
     {
 #ifdef EMSCRIPTEN
         setGLBufferData((void*) poli, numberOfPoints * sizeof(Vec2));
@@ -321,7 +321,7 @@ void drawSolidPoly( const Vec2 *poli, unsigned int numberOfPoints, Color4F color
     else
     {
         // Mac on 64-bit
-        for( unsigned int i=0; i<numberOfPoints;i++)
+        for(unsigned int i = 0; i < numberOfPoints; i++)
         {
             newPoli[i] = Vec2( poli[i].x, poli[i].y );
         }
@@ -532,7 +532,7 @@ void drawCubicBezier(const Vec2& origin, const Vec2& control1, const Vec2& contr
     Vec2* vertices = new Vec2[segments + 1];
 
     float t = 0;
-    for(unsigned int i = 0; i < segments; i++)
+    for (unsigned int i = 0; i < segments; i++)
     {
         vertices[i].x = powf(1 - t, 3) * origin.x + 3.0f * powf(1 - t, 2) * t * control1.x + 3.0f * (1 - t) * t * t * control2.x + t * t * t * destination.x;
         vertices[i].y = powf(1 - t, 3) * origin.y + 3.0f * powf(1 - t, 2) * t * control1.y + 3.0f * (1 - t) * t * t * control2.y + t * t * t * destination.y;

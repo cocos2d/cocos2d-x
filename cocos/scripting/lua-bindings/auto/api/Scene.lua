@@ -9,6 +9,12 @@
 -- @return PhysicsWorld#PhysicsWorld ret (return value: cc.PhysicsWorld)
         
 --------------------------------
+-- @function [parent=#Scene] createWithSize 
+-- @param self
+-- @param #size_table size
+-- @return Scene#Scene ret (return value: cc.Scene)
+        
+--------------------------------
 -- @function [parent=#Scene] create 
 -- @param self
 -- @return Scene#Scene ret (return value: cc.Scene)

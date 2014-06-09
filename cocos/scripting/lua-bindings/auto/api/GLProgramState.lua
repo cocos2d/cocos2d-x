@@ -17,7 +17,7 @@
 -- @function [parent=#GLProgramState] setUniformMat4 
 -- @param self
 -- @param #string str
--- @param #cc.Mat4 mat4
+-- @param #mat4_table mat4
         
 --------------------------------
 -- @function [parent=#GLProgramState] getUniformCount 
@@ -34,7 +34,7 @@
 -- @function [parent=#GLProgramState] setUniformVec3 
 -- @param self
 -- @param #string str
--- @param #cc.Vec3 vec3
+-- @param #vec3_table vec3
         
 --------------------------------
 -- @function [parent=#GLProgramState] setGLProgram 
@@ -45,7 +45,7 @@
 -- @function [parent=#GLProgramState] setUniformVec4 
 -- @param self
 -- @param #string str
--- @param #cc.Vec4 vec4
+-- @param #vec4_table vec4
         
 --------------------------------
 -- @function [parent=#GLProgramState] getVertexAttribCount 
@@ -62,7 +62,7 @@
 -- @function [parent=#GLProgramState] setUniformVec2 
 -- @param self
 -- @param #string str
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#GLProgramState] getVertexAttribsFlags 
@@ -72,7 +72,7 @@
 --------------------------------
 -- @function [parent=#GLProgramState] apply 
 -- @param self
--- @param #cc.Mat4 mat4
+-- @param #mat4_table mat4
         
 --------------------------------
 -- @function [parent=#GLProgramState] getGLProgram 

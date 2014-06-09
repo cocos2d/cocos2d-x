@@ -258,9 +258,10 @@ void EffectSprite3D::addEffect(Effect3DOutline* effect, ssize_t order)
 {
     if(nullptr == effect) return;
     effect->retain();
+    effect->setTarget(this);
     
     _effects.push_back(std::make_tuple(order,effect,CustomCommand()));
-    
+
     std::sort(std::begin(_effects), std::end(_effects), tuple_sort);
 }
 
@@ -317,9 +318,10 @@ bool Effect3DOutline::init()
 Effect3DOutline::Effect3DOutline()
 : _outlineWidth(1.0f)
 , _outlineColor(1, 1, 1)
+, _sprite(nullptr)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    _backToForeGroundLister = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
+    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
                                                           [this](EventCustom*)
                                                           {
                                                               auto glProgram = _glProgramState->getGLProgram();
@@ -329,14 +331,15 @@ Effect3DOutline::Effect3DOutline()
                                                               glProgram->updateUniforms();
                                                           }
                                                           );
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForeGroundLister, -1);
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
 #endif
 }
 
 Effect3DOutline::~Effect3DOutline()
 {
+    CC_SAFE_RELEASE_NULL(_sprite);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForeGroundLister);
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
 }
 
@@ -358,33 +361,48 @@ void Effect3DOutline::setOutlineWidth(float width)
     }
 }
 
-void Effect3DOutline::drawWithSprite(EffectSprite3D* sprite, const Mat4 &transform)
+void Effect3DOutline::setTarget(EffectSprite3D *sprite)
 {
-    auto mesh = sprite->getMesh();
-    long offset = 0;
-    for (auto i = 0; i < mesh->getMeshVertexAttribCount(); i++)
+    CCASSERT(nullptr != sprite && nullptr != sprite->getMesh(),"Error: Setting a null pointer or a null mesh EffectSprite3D to Effect3D");
+    
+    if(sprite != _sprite)
     {
-        auto meshvertexattrib = mesh->getMeshVertexAttribute(i);
+        CC_SAFE_RETAIN(sprite);
+        CC_SAFE_RELEASE_NULL(_sprite);
+        _sprite = sprite;
         
-        _glProgramState->setVertexAttribPointer(s_attributeNames[meshvertexattrib.vertexAttrib],
-                                                meshvertexattrib.size,
-                                                meshvertexattrib.type,
-                                                GL_FALSE,
-                                                mesh->getVertexSizeInBytes(),
-                                                (void*)offset);
-        offset += meshvertexattrib.attribSizeBytes;
+        auto mesh = sprite->getMesh();
+        long offset = 0;
+        for (auto i = 0; i < mesh->getMeshVertexAttribCount(); i++)
+        {
+            auto meshvertexattrib = mesh->getMeshVertexAttribute(i);
+            
+            _glProgramState->setVertexAttribPointer(s_attributeNames[meshvertexattrib.vertexAttrib],
+                                                    meshvertexattrib.size,
+                                                    meshvertexattrib.type,
+                                                    GL_FALSE,
+                                                    mesh->getVertexSizeInBytes(),
+                                                    (void*)offset);
+            offset += meshvertexattrib.attribSizeBytes;
+        }
+        
+        Color4F color(_sprite->getDisplayedColor());
+        color.a = _sprite->getDisplayedOpacity() / 255.0f;
+        _glProgramState->setUniformVec4("u_color", Vec4(color.r, color.g, color.b, color.a));
     }
+    
+}
+
+void Effect3DOutline::draw(const Mat4 &transform)
+{
     //draw
+    if(_sprite && _sprite->getMesh())
     {
         glEnable(GL_CULL_FACE);
         glCullFace(GL_FRONT);
         glEnable(GL_DEPTH_TEST);
-        Color4F color(sprite->getDisplayedColor());
-        color.a = sprite->getDisplayedOpacity() / 255.0f;
         
-        _glProgramState->setUniformVec4("u_color", Vec4(color.r, color.g, color.b, color.a));
-        
-        auto mesh = sprite->getMesh();
+        auto mesh = _sprite->getMesh();
         glBindBuffer(GL_ARRAY_BUFFER, mesh->getVertexBuffer());
         _glProgramState->apply(transform);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->getIndexBuffer());
@@ -398,26 +416,26 @@ void Effect3DOutline::drawWithSprite(EffectSprite3D* sprite, const Mat4 &transfo
     }
 }
 
-void EffectSprite3D::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, bool transformUpdated)
+void EffectSprite3D::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags)
 {
     for(auto &effect : _effects)
     {
         if(std::get<0>(effect) >=0)
             break;
         CustomCommand &cc = std::get<2>(effect);
-        cc.func = CC_CALLBACK_0(Effect3D::drawWithSprite,std::get<1>(effect),this,transform);
+        cc.func = CC_CALLBACK_0(Effect3D::draw,std::get<1>(effect),transform);
         renderer->addCommand(&cc);
         
     }
     
     if(!_defaultEffect)
     {
-        Sprite3D::draw(renderer, transform, transformUpdated);
+        Sprite3D::draw(renderer, transform, flags);
     }
     else
     {
         _command.init(_globalZOrder);
-        _command.func = CC_CALLBACK_0(Effect3D::drawWithSprite, _defaultEffect, this, transform);
+        _command.func = CC_CALLBACK_0(Effect3D::draw, _defaultEffect, transform);
         renderer->addCommand(&_command);
     }
     
@@ -426,7 +444,7 @@ void EffectSprite3D::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &tran
         if(std::get<0>(effect) <=0)
             continue;
         CustomCommand &cc = std::get<2>(effect);
-        cc.func = CC_CALLBACK_0(Effect3D::drawWithSprite,std::get<1>(effect),this,transform);
+        cc.func = CC_CALLBACK_0(Effect3D::draw,std::get<1>(effect),transform);
         renderer->addCommand(&cc);
         
     }

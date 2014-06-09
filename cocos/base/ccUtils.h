@@ -24,12 +24,13 @@ THE SOFTWARE.
 ****************************************************************************/
 #ifndef __SUPPORT_CC_UTILS_H__
 #define __SUPPORT_CC_UTILS_H__
+#include "base/ccMacros.h"
 
 /** @file ccUtils.h
 Misc free functions
 */
 
-namespace cocos2d {
+NS_CC_BEGIN
 /*
 ccNextPOT function is licensed under the same license that is used in Texture2D.m.
 */
@@ -46,6 +47,19 @@ Examples:
 
 int ccNextPOT(int value);
 
+namespace utils
+{
+    /** Capture the entire screen
+     * To ensure the snapshot is applied after everything is updated and rendered in the current frame,
+     * we need to wrap the operation with a custom command which is then inserted into the tail of the render queue.
+     * @param afterCaptured, specify the callback function which will be invoked after the snapshot is done.
+     * @param filename, specify a filename where the snapshot is stored. This parameter can be either an absolute path or a simple
+     * base filename ("hello.png" etc.), don't use a relative path containing directory names.("mydir/hello.png" etc.)
+     * @since v3.2
+     */
+    void captureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename);
 }
+
+NS_CC_END
 
 #endif // __SUPPORT_CC_UTILS_H__

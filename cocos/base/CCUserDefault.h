@@ -25,10 +25,10 @@ THE SOFTWARE.
 #ifndef __SUPPORT_CCUSERDEFAULT_H__
 #define __SUPPORT_CCUSERDEFAULT_H__
 
-#include "base/CCPlatformMacros.h"
+#include "CCPlatformMacros.h"
 #include <string>
-#include "base/CCData.h"
-
+#include "CCData.h"
+#include <mutex>
 NS_CC_BEGIN
 
 /**
@@ -178,11 +178,11 @@ public:
      * @js NA
      */
     static bool isXMLFileExist();
-
+	static std::mutex _mtx;
 private:
     UserDefault();
     ~UserDefault();
-    
+	
     static bool createXMLFile();
     static void initXMLFilePath();
     
