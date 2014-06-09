@@ -732,7 +732,7 @@ bool ShaderGlow::init()
 //
 // ShaderMultiTexture
 //
-ShaderMultiTexture::ShaderMultiTexture()
+ShaderMultiTexture::ShaderMultiTexture():_changedTextureId(0)
 {
     init();
 }
