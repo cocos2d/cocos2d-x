@@ -218,7 +218,7 @@ void Downloader::prepareDownload(const std::string &srcUrl, const std::string &s
         err.message = StringUtils::format("Can not create file %s: errno %d", outFileName.c_str(), errno);
         if (this->_onError) this->_onError(err);
     }
-    else CCLOG("<<<<<FOPEN : %s", customId.c_str());
+    else CCLOG("<<<<<FOPEN : %s (%p)", customId.c_str(), fDesc->fp);
 }
 
 void Downloader::downloadAsync(const std::string &srcUrl, const std::string &storagePath, const std::string &customId/* = ""*/)
@@ -276,14 +276,12 @@ void Downloader::download(const std::string &srcUrl, const std::string &customId
     
     CCLOG("FCLOSE : %p>>>>>\n", fDesc.fp);
     fclose(fDesc.fp);
-    CCLOG("FCLOSE : %s>>>>>\n", customId.c_str());
     curl_easy_cleanup(curl);
     
 }
 
 void Downloader::batchDownloadAsync(const DownloadUnits &units, const std::string &batchId/* = ""*/)
 {
-    CCLOG("MAX_FOPEN : %d", FOPEN_MAX);
     auto t = std::thread(&Downloader::batchDownloadSync, this, units, batchId);
     t.detach();
 }
@@ -294,12 +292,11 @@ void Downloader::batchDownloadSync(const DownloadUnits &units, const std::string
     DownloadUnits group;
     for (auto it = units.cbegin(); it != units.cend(); ++it, ++count)
     {
-        if (count == 1)
+        if (count == FOPEN_MAX)
         {
             groupBatchDownload(group);
             group.clear();
             count = 0;
-            break;
         }
         const std::string &key = it->first;
         const DownloadUnit &unit = it->second;
@@ -359,9 +356,9 @@ void Downloader::groupBatchDownload(const DownloadUnits &units)
             CURLMcode code = curl_multi_add_handle(multi_handle, curl);
             if (code != CURLM_OK)
             {
+                CCLOG("FCLOSE : %p>>>>>\n", fDesc->fp);
                 // Avoid memory leak
                 fclose(fDesc->fp);
-                CCLOG("FCLOSE : %s>>>>>\n", customId.c_str());
                 delete data;
                 delete fDesc;
                 std::string msg = StringUtils::format("Unable to add curl handler for %s: [curl error]%s", customId.c_str(), curl_multi_strerror(code));
