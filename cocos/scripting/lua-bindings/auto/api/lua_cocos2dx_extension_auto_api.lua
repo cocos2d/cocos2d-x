@@ -72,8 +72,23 @@
 
 
 --------------------------------------------------------
+-- the cc EventAssetsManager
+-- @field [parent=#cc] EventAssetsManager#EventAssetsManager EventAssetsManager preloaded module
+
+
+--------------------------------------------------------
+-- the cc Manifest
+-- @field [parent=#cc] Manifest#Manifest Manifest preloaded module
+
+
+--------------------------------------------------------
 -- the cc AssetsManager
 -- @field [parent=#cc] AssetsManager#AssetsManager AssetsManager preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventListenerAssetsManager
+-- @field [parent=#cc] EventListenerAssetsManager#EventListenerAssetsManager EventListenerAssetsManager preloaded module
 
 
 --------------------------------------------------------
