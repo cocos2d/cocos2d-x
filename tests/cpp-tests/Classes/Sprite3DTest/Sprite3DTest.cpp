@@ -296,7 +296,7 @@ Effect3DOutline* Effect3DOutline::create()
 bool Effect3DOutline::init()
 {
 
-    GLProgram* glprogram = Effect3DOutline::getOrCreateProgram();
+    GLProgram* glprogram = GLProgram::createWithFilenames(_vertShaderFile, _fragShaderFile);
     if(nullptr == glprogram)
     {
         CC_SAFE_DELETE(glprogram);
@@ -318,11 +318,26 @@ Effect3DOutline::Effect3DOutline()
 : _outlineWidth(1.0f)
 , _outlineColor(1, 1, 1)
 {
-    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    _backToForeGroundLister = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
+                                                          [this](EventCustom*)
+                                                          {
+                                                              auto glProgram = _glProgramState->getGLProgram();
+                                                              glProgram->reset();
+                                                              glProgram->initWithFilenames(_vertShaderFile, _fragShaderFile);
+                                                              glProgram->link();
+                                                              glProgram->updateUniforms();
+                                                          }
+                                                          );
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForeGroundLister, -1);
+#endif
 }
 
 Effect3DOutline::~Effect3DOutline()
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForeGroundLister);
+#endif
 }
 
 void Effect3DOutline::setOutlineColor(const Vec3& color)

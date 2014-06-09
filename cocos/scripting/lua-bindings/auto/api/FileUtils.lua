@@ -20,6 +20,12 @@
 -- @param #map_table map
         
 --------------------------------
+-- @function [parent=#FileUtils] isDirectory 
+-- @param self
+-- @param #string str
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- @function [parent=#FileUtils] isAbsolutePath 
 -- @param self
 -- @param #string str
@@ -65,6 +71,13 @@
 -- @param #array_table array
         
 --------------------------------
+-- @function [parent=#FileUtils] writeStringToFile 
+-- @param self
+-- @param #string str
+-- @param #string str
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- @function [parent=#FileUtils] setSearchResolutionsOrder 
 -- @param self
 -- @param #array_table array
@@ -102,9 +115,27 @@
 -- @param #bool bool
         
 --------------------------------
+-- @function [parent=#FileUtils] isExist 
+-- @param self
+-- @param #string str
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- @function [parent=#FileUtils] getSearchResolutionsOrder 
 -- @param self
 -- @return array_table#array_table ret (return value: array_table)
+        
+--------------------------------
+-- @function [parent=#FileUtils] createDirectory 
+-- @param self
+-- @param #string str
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#FileUtils] createDirectories 
+-- @param self
+-- @param #string str
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @function [parent=#FileUtils] getWritablePath 

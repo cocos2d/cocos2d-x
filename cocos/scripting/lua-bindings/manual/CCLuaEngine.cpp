@@ -773,13 +773,6 @@ int LuaEngine::handleEvent(ScriptHandlerMgr::HandlerType type,void* data)
                 return handleTableViewEvent(type, data);
             }
             break;
-        case ScriptHandlerMgr::HandlerType::ASSETSMANAGER_PROGRESS:
-        case ScriptHandlerMgr::HandlerType::ASSETSMANAGER_ERROR:
-        case ScriptHandlerMgr::HandlerType::ASSETSMANAGER_SUCCESS:
-            {
-                return handleAssetsManagerEvent(type, data);
-            }
-            break;
         case ScriptHandlerMgr::HandlerType::STUDIO_EVENT_LISTENER:
             {
                 return handleStudioEventListener(type, data);

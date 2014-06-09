@@ -168,7 +168,7 @@ void AssetsManagerLoaderScene::runThisTest()
                 case EventAssetsManager::EventCode::UPDATE_FAILED:
                 {
                     CCLOG("Update failed. %s", event->getMessage().c_str());
-                    
+
                     failCount ++;
                     if (failCount < 5)
                     {

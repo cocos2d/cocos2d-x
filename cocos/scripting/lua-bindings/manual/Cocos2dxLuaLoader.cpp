@@ -53,6 +53,7 @@ extern "C"
         {
             if (luaL_loadbuffer(L, (char*)data.getBytes(), data.getSize(), filename.c_str()) != 0)
             {
+                CCLOGERROR("error loading module %s from %s :\n\t%s", lua_tostring(L, 1), filename.c_str(), lua_tostring(L, -1));
                 luaL_error(L, "error loading module %s from file %s :\n\t%s",
                     lua_tostring(L, 1), filename.c_str(), lua_tostring(L, -1));
             }

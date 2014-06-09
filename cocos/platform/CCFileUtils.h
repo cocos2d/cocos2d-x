@@ -317,10 +317,35 @@ public:
     virtual ValueMap getValueMapFromFile(const std::string& filename);
     
     /**
-     *  Write a ValueMap to a plist file.
+     *  Writes a ValueMap to a plist file.
      *  @note This method is used internally.
      */
     virtual bool writeToFile(ValueMap& dict, const std::string& fullPath);
+    
+    /**
+     *  Writes string to a file
+     */
+    virtual bool writeStringToFile(const std::string& content, const std::string& fullpath);
+    
+    /**
+     *  Checks whether the file or directory exists
+     */
+    virtual bool isExist(const std::string& path);
+    
+    /** 
+     *  Checks whether the path is a directory
+     */
+    virtual bool isDirectory(const std::string& dirPath);
+    
+    /** 
+     *  Creates a directory without recursive
+     */
+    virtual bool createDirectory(const std::string& dirPath);
+    
+    /**
+     *  Creates a directory recursively
+     */
+    virtual bool createDirectories(const std::string& dirPath);
     
     /**
      *  Converts the contents of a file to a ValueVector.

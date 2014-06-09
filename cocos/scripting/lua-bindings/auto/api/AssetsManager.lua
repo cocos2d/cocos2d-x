@@ -32,6 +32,10 @@
 -- @return Manifest#Manifest ret (return value: cc.Manifest)
         
 --------------------------------
+-- @function [parent=#AssetsManager] downloadFailedAssets 
+-- @param self
+        
+--------------------------------
 -- @function [parent=#AssetsManager] create 
 -- @param self
 -- @param #string str
