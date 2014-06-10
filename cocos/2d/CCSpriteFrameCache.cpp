@@ -132,13 +132,12 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
             ow = abs(ow);
             oh = abs(oh);
             // create frame
-            spriteFrame = new SpriteFrame();
-            spriteFrame->initWithTexture(texture,
-                                        Rect(x, y, w, h), 
-                                        false,
-                                        Vec2(ox, oy),
-                                        Size((float)ow, (float)oh)
-                                        );
+            spriteFrame = SpriteFrame::createWithTexture(texture,
+                                                         Rect(x, y, w, h),
+                                                         false,
+                                                         Vec2(ox, oy),
+                                                         Size((float)ow, (float)oh)
+                                                         );
         } 
         else if(format == 1 || format == 2) 
         {
@@ -155,13 +154,12 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
             Size sourceSize = SizeFromString(frameDict["sourceSize"].asString());
 
             // create frame
-            spriteFrame = new SpriteFrame();
-            spriteFrame->initWithTexture(texture,
-                frame,
-                rotated,
-                offset,
-                sourceSize
-                );
+            spriteFrame = SpriteFrame::createWithTexture(texture,
+                                                         frame,
+                                                         rotated,
+                                                         offset,
+                                                         sourceSize
+                                                         );
         } 
         else if (format == 3)
         {
@@ -186,17 +184,15 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
             }
             
             // create frame
-            spriteFrame = new SpriteFrame();
-            spriteFrame->initWithTexture(texture,
-                            Rect(textureRect.origin.x, textureRect.origin.y, spriteSize.width, spriteSize.height),
-                            textureRotated,
-                            spriteOffset,
-                            spriteSourceSize);
+            spriteFrame = SpriteFrame::createWithTexture(texture,
+                                                         Rect(textureRect.origin.x, textureRect.origin.y, spriteSize.width, spriteSize.height),
+                                                         textureRotated,
+                                                         spriteOffset,
+                                                         spriteSourceSize);
         }
 
         // add sprite frame
         _spriteFrames.insert(spriteFrameName, spriteFrame);
-        spriteFrame->release();
     }
 }
 
