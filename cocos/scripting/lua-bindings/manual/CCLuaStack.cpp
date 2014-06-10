@@ -262,6 +262,32 @@ int LuaStack::executeScriptFile(const char* filename)
     return executeString(code.c_str());
 #else
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename);
+    if (!FileUtils::getInstance()->isFileExist(fullPath))
+    {
+        const std::string BYTECODE_FILE_EXT    = ".luac";
+        const std::string NOT_BYTECODE_FILE_EXT = ".lua";
+        
+        std::string restructuringFileName = filename;
+        size_t pos = restructuringFileName.rfind(BYTECODE_FILE_EXT);
+        if (pos != std::string::npos)
+        {
+            restructuringFileName = restructuringFileName.substr(0, pos) + NOT_BYTECODE_FILE_EXT;
+        }
+        else
+        {
+            pos = restructuringFileName.rfind(NOT_BYTECODE_FILE_EXT);
+            if (pos != std::string::npos)
+            {
+                restructuringFileName = restructuringFileName.substr(0, pos) + BYTECODE_FILE_EXT;
+            }
+        }
+        
+        fullPath = FileUtils::getInstance()->fullPathForFilename(restructuringFileName);
+        if (!FileUtils::getInstance()->isFileExist(fullPath))
+        {
+            return 1;
+        }
+    }
     ++_callFromLua;
     int nRet = luaL_dofile(_state, fullPath.c_str());
     --_callFromLua;
