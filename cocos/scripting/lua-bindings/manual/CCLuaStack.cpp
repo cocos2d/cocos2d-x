@@ -285,6 +285,7 @@ int LuaStack::executeScriptFile(const char* filename)
         fullPath = FileUtils::getInstance()->fullPathForFilename(restructuringFileName);
         if (!FileUtils::getInstance()->isFileExist(fullPath))
         {
+            CCLOG("executeScriptFile function can't find the file");
             return 1;
         }
     }
