@@ -114,7 +114,7 @@ public:
     // Overrides
 	virtual SpriteFrame *clone() const override;
     
-CC_CONSTRUCTOR_ACCESS:
+//CC_CONSTRUCTOR_ACCESS:
     /**
      * @lua NA
      */
