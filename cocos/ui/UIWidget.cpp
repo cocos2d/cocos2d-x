@@ -724,7 +724,10 @@ void Widget::onTouchEnded(Touch *touch, Event *unusedEvent)
         widgetParent->interceptTouchEvent(TouchEventType::ENDED, this, touch);
     }
     
-    if (_highlight)
+    bool highlight = _highlight;
+    setHighlighted(false);
+    
+    if (highlight)
     {
         releaseUpEvent();
     }
@@ -732,9 +735,6 @@ void Widget::onTouchEnded(Touch *touch, Event *unusedEvent)
     {
         cancelUpEvent();
     }
-    
-    setHighlighted(false);
-
 }
 
 void Widget::onTouchCancelled(Touch *touch, Event *unusedEvent)
