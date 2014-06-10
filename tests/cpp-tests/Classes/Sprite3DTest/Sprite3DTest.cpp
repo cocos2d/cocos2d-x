@@ -534,8 +534,10 @@ void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
     sprite->setPosition( Vec2( p.x, p.y) );
     auto animation = Animation3D::getOrCreate("Sprite3DTest/XXX.c3t");
     
+    
     auto animate = Animate3D::create(animation);
-    sprite->runAction(animate);
+    
+    sprite->runAction(RepeatForever::create(animate));
 }
 
 void Sprite3DWithSkinTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)

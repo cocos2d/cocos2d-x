@@ -85,17 +85,19 @@ bool Bundle3D::loadMeshData(const std::string& id, MeshData* meshdata)
     meshdata->resetData();
     meshdata->vertexSizeInFloat = 13 * 4;
     meshdata->vertex = new float[meshdata->vertexSizeInFloat];
-    float vert[] = {0.f,50.f,0.f,0.f,0.f,0.f,0.f,0.f,0.f,1.f,0.f,0.f,0.f,
-        0.f,0.f,50.f,1.f,1.f,0.f,0.f,0.f,0.f,1.f,0.f,0.f,0.f,
-        50.f,0.f,0.f,1.f,1.f,0.f,0.f,0.f,0.f,1.f,0.f,0.f,0.f,
-        -50.f,0.f,0.f,1.f,1.f,0.f,0.f,0.f,0.f,1.f,0.f,0.f,0.f};
+    float vert[] = {0.f,50.f,0.f,  0.f,0.f,  0.f,0.f,0.f,0.f,   1.f,0.f,0.f,0.f,
+                    0.f,0.f,50.f,  1.f,1.f,  0.f,0.f,0.f,0.f,   1.f,0.f,0.f,0.f,
+                    50.f,0.f,0.f,  1.f,1.f,  0.f,0.f,0.f,0.f,   1.f,0.f,0.f,0.f,
+                   -50.f,0.f,0.f,  1.f,1.f,  0.f,0.f,0.f,0.f,   1.f,0.f,0.f,0.f};
     //float vert[] = {0.f,50.f,0.f,  0.f,0.f,50.f, 50.f,0.f,0.f, -50.f,0.f,0.f};
     memcpy(meshdata->vertex, vert, meshdata->vertexSizeInFloat * sizeof(float));
     
-    meshdata->numIndex = 4 * 3;
-    //meshdata->numIndex = 3;
+    //meshdata->numIndex = 4 * 3;
+    meshdata->numIndex = 3;
     meshdata->indices = new unsigned short[meshdata->numIndex];
-    unsigned short index[] = {0,1,2, 0,3,1, 0,2,3, 3,2,1};
+    //unsigned short index[] = {0,1,2, 0,3,1, 0,2,3, 3,2,1};
+    unsigned short index[] = {0,3,2};
+    //unsigned short index[] = {0,1,2};
     memcpy(meshdata->indices, index, meshdata->numIndex * sizeof(unsigned short));
     
     meshdata->attribCount = 4;
@@ -167,16 +169,16 @@ bool Bundle3D::loadAnimationData(const std::string& id, Animation3DData* animati
     //curve->translateCurve = Animation3D::Curve::AnimationCurveVec3::create(keytime, pos, 2);
     //curve->translateCurve->retain();
     
-    float keytime1[] = {0.f, 0.25f, 0.5f, 1.f};
+    float keytime1[] = {0.f, 0.333f, 0.667f, 1.f};
     float rot[4 * 4];
     Quaternion quat;
-    Quaternion::createFromAxisAngle(Vec3(0.f, 1.f, 0.f), 0, &quat);
+    Quaternion::createFromAxisAngle(Vec3(1.f, 0.f, 0.f), 0, &quat);
     rot[0] = quat.x, rot[1] = quat.y, rot[2] = quat.z, rot[3] = quat.w;
-    Quaternion::createFromAxisAngle(Vec3(0.f, 1.f, 0.f), MATH_DEG_TO_RAD(90), &quat);
+    Quaternion::createFromAxisAngle(Vec3(1.f, 0.f, 0.f), MATH_DEG_TO_RAD(0), &quat);
     rot[4] = quat.x, rot[5] = quat.y, rot[6] = quat.z, rot[7] = quat.w;
-    Quaternion::createFromAxisAngle(Vec3(0.f, 1.f, 0.f), MATH_DEG_TO_RAD(180), &quat);
+    Quaternion::createFromAxisAngle(Vec3(1.f, 0.f, 0.f), MATH_DEG_TO_RAD(0), &quat);
     rot[8] = quat.x, rot[9] = quat.y, rot[10] = quat.z, rot[11] = quat.w;
-    Quaternion::createFromAxisAngle(Vec3(0.f, 1.f, 0.f), MATH_DEG_TO_RAD(270), &quat);
+    Quaternion::createFromAxisAngle(Vec3(1.f, 0.f, 0.f), MATH_DEG_TO_RAD(0), &quat);
     rot[12] = quat.x, rot[13] = quat.y, rot[14] = quat.z, rot[15] = quat.w;
     curve->rotCurve = Animation3D::Curve::AnimationCurveQuat::create(keytime1, rot, 4);
     curve->rotCurve->retain();
