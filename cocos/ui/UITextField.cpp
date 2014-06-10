@@ -576,6 +576,8 @@ bool TextField::onTouchBegan(Touch *touch, Event *unusedEvent)
     if (_hitted)
     {
         _textFieldRenderer->attachWithIME();
+    } else {
+        this->didNotSelectSelf();
     }
     return pass;
 }
