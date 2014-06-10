@@ -62,7 +62,6 @@ static std::function<Layer*()> createFunctions[] =
     CL(LabelTTFAlignmentNew),
     CL(LabelFNTBounds),
     CL(LabelTTFLongLineWrapping),
-    CL(LabelTTFLargeText),
     CL(LabelTTFColor),
     CL(LabelTTFFontsTestNew),
     CL(LabelTTFDynamicAlignment),
@@ -606,7 +605,7 @@ LabelTTFUnicodeChinese::LabelTTFUnicodeChinese()
     auto size = Director::getInstance()->getWinSize();
     // Adding "啊" letter at the end of string to make VS2012 happy, otherwise VS will generate errors  
     // like "Error 3 error C2146: syntax error : missing ')' before identifier 'label'"; 
-    TTFConfig ttfConfig("fonts/wt021.ttf",28,GlyphCollection::CUSTOM, "美好的一天啊");
+    TTFConfig ttfConfig("fonts/HKYuanMini.ttf",28,GlyphCollection::CUSTOM, "美好的一天啊");
     auto label = Label::createWithTTF(ttfConfig,"美好的一天啊", TextHAlignment::CENTER, size.width);
 
     if(label) {
@@ -962,30 +961,6 @@ std::string LabelTTFLongLineWrapping::subtitle() const
     return "Uses the new Label with TTF. Testing auto-wrapping";
 }
 
-LabelTTFLargeText::LabelTTFLargeText()
-{
-    auto size = Director::getInstance()->getWinSize();
-
-    // Long sentence
-    TTFConfig ttfConfig("fonts/wt021.ttf",18,GlyphCollection::DYNAMIC);
-    std::string text = FileUtils::getInstance()->getStringFromFile("commonly_used_words.txt");
-    auto label = Label::createWithTTF(ttfConfig,text, TextHAlignment::CENTER, size.width);
-    if(label) {
-        label->setPosition( Vec2(size.width/2, size.height/2) );
-        addChild(label);
-    }
-}
-
-std::string LabelTTFLargeText::title() const
-{
-    return "New Label + .TTF";
-}
-
-std::string LabelTTFLargeText::subtitle() const
-{
-    return "Uses the new Label with TTF. Testing large text";
-}
-
 LabelTTFColor::LabelTTFColor()
 {
     auto size = Director::getInstance()->getWinSize();
@@ -1093,7 +1068,7 @@ LabelTTFCJKWrappingTest::LabelTTFCJKWrappingTest()
         Vec2(size.width * 0.85, size.height * 0.8),
         Vec2(size.width * 0.85, 0), 1, Color4F(1, 0, 0, 1));
     
-    TTFConfig ttfConfig("fonts/wt021.ttf", 25, GlyphCollection::DYNAMIC);
+    TTFConfig ttfConfig("fonts/HKYuanMini.ttf", 25, GlyphCollection::DYNAMIC);
     auto label1 = Label::createWithTTF(ttfConfig,
         "你好，Cocos2d-x v3的New Label.", TextHAlignment::LEFT, size.width * 0.75);
     if(label1) {
@@ -1162,7 +1137,7 @@ LabelTTFUnicodeNew::LabelTTFUnicodeNew()
     addChild(label2);
     
     // chinese
-    ttfConfig.fontFilePath = "fonts/wt021.ttf";
+    ttfConfig.fontFilePath = "fonts/HKYuanMini.ttf";
     ttfConfig.glyphs = GlyphCollection::CUSTOM;
     ttfConfig.customGlyphs = chinese.c_str();
     auto label3 = Label::createWithTTF(ttfConfig,chinese, TextHAlignment::CENTER,size.width);

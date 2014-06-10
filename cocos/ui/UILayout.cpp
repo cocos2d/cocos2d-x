@@ -92,8 +92,7 @@ _passFocusToChild(true),
 _loopFocus(false),
 _isFocusPassing(false)
 {
-    onPassFocusToChild = CC_CALLBACK_2(Layout::findNearestChildWidgetIndex, this);
-    this->setAnchorPoint(Vec2::ZERO);
+    //no-op
 }
 
 Layout::~Layout()
@@ -140,6 +139,7 @@ bool Layout::init()
         ignoreContentAdaptWithSize(false);
         setSize(Size::ZERO);
         setAnchorPoint(Vec2::ZERO);
+        onPassFocusToChild = CC_CALLBACK_2(Layout::findNearestChildWidgetIndex, this);
         return true;
     }
     return false;
@@ -194,8 +194,8 @@ void Layout::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t par
         return;
     }
     
-    doLayout();
     adaptRenderers();
+    doLayout();
     
     if (_clippingEnabled)
     {
@@ -213,7 +213,7 @@ void Layout::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t par
     }
     else
     {
-        ProtectedNode::visit(renderer, parentTransform, parentFlags);
+        Widget::visit(renderer, parentTransform, parentFlags);
     }
 }
     

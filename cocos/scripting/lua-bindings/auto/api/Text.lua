@@ -24,6 +24,12 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
+-- @function [parent=#Text] enableOutline 
+-- @param self
+-- @param #color4b_table color4b
+-- @param #int int
+        
+--------------------------------
 -- @function [parent=#Text] getTextVerticalAlignment 
 -- @param self
 -- @return TextVAlignment#TextVAlignment ret (return value: cc.TextVAlignment)
@@ -32,6 +38,10 @@
 -- @function [parent=#Text] getString 
 -- @param self
 -- @return string#string ret (return value: string)
+        
+--------------------------------
+-- @function [parent=#Text] enableShadow 
+-- @param self
         
 --------------------------------
 -- @function [parent=#Text] setString 
@@ -47,6 +57,11 @@
 -- @function [parent=#Text] setTextVerticalAlignment 
 -- @param self
 -- @param #cc.TextVAlignment textvalignment
+        
+--------------------------------
+-- @function [parent=#Text] enableGlow 
+-- @param self
+-- @param #color4b_table color4b
         
 --------------------------------
 -- @function [parent=#Text] getTextAreaSize 
@@ -72,6 +87,10 @@
 -- @function [parent=#Text] getType 
 -- @param self
 -- @return Text::Type#Text::Type ret (return value: ccui.Text::Type)
+        
+--------------------------------
+-- @function [parent=#Text] disableEffect 
+-- @param self
         
 --------------------------------
 -- @function [parent=#Text] getFontName 
