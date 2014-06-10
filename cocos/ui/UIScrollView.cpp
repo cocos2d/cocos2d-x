@@ -27,41 +27,6 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 namespace ui {
-    
-ScrollInnerContainer::ScrollInnerContainer()
-{
-    
-}
-    
-ScrollInnerContainer::~ScrollInnerContainer()
-{
-    
-}
-    
-ScrollInnerContainer* ScrollInnerContainer::create()
-{
-    ScrollInnerContainer* widget = new ScrollInnerContainer();
-    if (widget && widget->init())
-    {
-        widget->autorelease();
-        return widget;
-    }
-    CC_SAFE_DELETE(widget);
-    return nullptr;
-}
-
-const Size& ScrollInnerContainer::getLayoutSize()
-{
-    Widget* parent = getWidgetParent();
-    if (parent)
-    {
-        return parent->getSize();
-    }
-    else
-    {
-        return _size;
-    }
-}
 
 static const float AUTOSCROLLMAXSPEED = 1000.0f;
 
@@ -75,10 +40,6 @@ IMPLEMENT_CLASS_GUI_INFO(ScrollView)
 ScrollView::ScrollView():
 _innerContainer(nullptr),
 _direction(Direction::VERTICAL),
-_touchBeganPoint(Vec2::ZERO),
-_touchMovedPoint(Vec2::ZERO),
-_touchEndedPoint(Vec2::ZERO),
-_touchMovingPoint(Vec2::ZERO),
 _autoScrollDir(Vec2::ZERO),
 _topBoundary(0.0f),
 _bottomBoundary(0.0f),
@@ -1438,7 +1399,7 @@ void ScrollView::endRecordSlidAction()
         switch (_direction)
         {
             case Direction::VERTICAL:
-                totalDis = _touchEndedPoint.y - _touchBeganPoint.y;
+                totalDis = _touchEndPosition.y - _touchBeganPosition.y;
                 if (totalDis < 0.0f)
                 {
                     dir = SCROLLDIR_DOWN;
@@ -1449,7 +1410,7 @@ void ScrollView::endRecordSlidAction()
                 }
                 break;
             case Direction::HORIZONTAL:
-                totalDis = _touchEndedPoint.x - _touchBeganPoint.x;
+                totalDis = _touchEndPosition.x - _touchBeganPosition.x;
                 if (totalDis < 0.0f)
                 {
                     dir = SCROLLDIR_LEFT;
@@ -1461,7 +1422,7 @@ void ScrollView::endRecordSlidAction()
                 break;
             case Direction::BOTH:
             {
-                Vec2 subVector = _touchEndedPoint - _touchBeganPoint;
+                Vec2 subVector = _touchEndPosition - _touchBeganPosition;
                 totalDis = subVector.getLength();
                 dir = subVector.getNormalized();
                 break;
@@ -1475,19 +1436,15 @@ void ScrollView::endRecordSlidAction()
     }
 }
 
-void ScrollView::handlePressLogic(const Vec2 &touchPoint)
-{        
-    _touchBeganPoint = convertToNodeSpace(touchPoint);
-    _touchMovingPoint = _touchBeganPoint;    
+void ScrollView::handlePressLogic(Touch *touch)
+{
     startRecordSlidAction();
     _bePressed = true;
 }
 
-void ScrollView::handleMoveLogic(const Vec2 &touchPoint)
+void ScrollView::handleMoveLogic(Touch *touch)
 {
-    _touchMovedPoint = convertToNodeSpace(touchPoint);
-    Vec2 delta = _touchMovedPoint - _touchMovingPoint;
-    _touchMovingPoint = _touchMovedPoint;
+    Vec2 delta = touch->getLocation() - touch->getPreviousLocation();
     switch (_direction)
     {
         case Direction::VERTICAL: // vertical
@@ -1510,9 +1467,8 @@ void ScrollView::handleMoveLogic(const Vec2 &touchPoint)
     }
 }
 
-void ScrollView::handleReleaseLogic(const Vec2 &touchPoint)
+void ScrollView::handleReleaseLogic(Touch *touch)
 {
-    _touchEndedPoint = convertToNodeSpace(touchPoint);
     endRecordSlidAction();
     _bePressed = false;
 }    
@@ -1522,7 +1478,7 @@ bool ScrollView::onTouchBegan(Touch *touch, Event *unusedEvent)
     bool pass = Layout::onTouchBegan(touch, unusedEvent);
     if (_hitted)
     {
-        handlePressLogic(_touchStartPos);
+        handlePressLogic(touch);
     }
     return pass;
 }
@@ -1530,19 +1486,19 @@ bool ScrollView::onTouchBegan(Touch *touch, Event *unusedEvent)
 void ScrollView::onTouchMoved(Touch *touch, Event *unusedEvent)
 {
     Layout::onTouchMoved(touch, unusedEvent);
-    handleMoveLogic(_touchMovePos);
+    handleMoveLogic(touch);
 }
 
 void ScrollView::onTouchEnded(Touch *touch, Event *unusedEvent)
 {
     Layout::onTouchEnded(touch, unusedEvent);
-    handleReleaseLogic(_touchEndPos);
+    handleReleaseLogic(touch);
 }
 
 void ScrollView::onTouchCancelled(Touch *touch, Event *unusedEvent)
 {
     Layout::onTouchCancelled(touch, unusedEvent);
-    handleReleaseLogic(touch->getLocation());
+    handleReleaseLogic(touch);
 }
 
 void ScrollView::update(float dt)
@@ -1566,28 +1522,29 @@ void ScrollView::recordSlidTime(float dt)
     }
 }
 
-void ScrollView::interceptTouchEvent(Widget::TouchEventType event, Widget *sender, const Vec2 &touchPoint)
+void ScrollView::interceptTouchEvent(Widget::TouchEventType event, Widget *sender,Touch* touch)
 {
+    Vec2 touchPoint = touch->getLocation();
     switch (event)
     {
         case TouchEventType::BEGAN:
-            handlePressLogic(touchPoint);
+            handlePressLogic(touch);
             break;
             
         case TouchEventType::MOVED:
         {
-            float offset = (sender->getTouchStartPos() - touchPoint).getLength();
+            float offset = (sender->getTouchBeganPosition() - touchPoint).getLength();
             if (offset > _childFocusCancelOffset)
             {
                 sender->setHighlighted(false);
-                handleMoveLogic(touchPoint);
+                handleMoveLogic(touch);
             }
         }
             break;
             
         case TouchEventType::CANCELED:
         case TouchEventType::ENDED:
-            handleReleaseLogic(touchPoint);
+            handleReleaseLogic(touch);
             break;
     }
 }

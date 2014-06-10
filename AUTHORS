@@ -831,6 +831,7 @@ Developers:
         Fixed incompatible pointer conversion in external/chipmunk/src/cpArray.c
         Fixed memory leak in 'Image'
         Fixed loosing precision when using 'recv' in 'Console'
+        Fixed link error with Xcode 6 when building with 32-bit architecture
         
     ololomax
         Fixed a potential crash in SceneReader::createNodeWithSceneFile
@@ -876,6 +877,10 @@ Developers:
         
     kezhuw
         AutoReleasePool manager improvement
+        
+    zhouxiaoxiaoxujian
+        Added TextField::getStringLength()
+        Add shadow, outline, glow filter support for UIText
     
 Retired Core Developers:
     WenSheng Yang

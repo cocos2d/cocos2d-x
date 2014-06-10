@@ -45,7 +45,7 @@ protected:
     UI_SCENE_CREATE_FUNC(UITextTest_LineWrap)
 };
 
-/*
+
 class UILabelTest_Effect : public UIScene
 {
 public:
@@ -54,7 +54,7 @@ public:
 protected:
     UI_SCENE_CREATE_FUNC(UILabelTest_Effect)
 };
- */
+ 
 
 class UITextTest_TTF : public UIScene
 {

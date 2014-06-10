@@ -26,22 +26,12 @@ THE SOFTWARE.
 #define __UISCROLLVIEW_H__
 
 #include "ui/UILayout.h"
-#include "ui/UIScrollInterface.h"
 
 NS_CC_BEGIN
 
 class EventFocusListener;
 
 namespace ui {
-    
-class ScrollInnerContainer : public Layout
-{
-public:
-    ScrollInnerContainer();
-    virtual ~ScrollInnerContainer();
-    static ScrollInnerContainer* create();
-    virtual const Size& getLayoutSize() override;
-};
 
 CC_DEPRECATED_ATTRIBUTE typedef enum
 {
@@ -60,7 +50,7 @@ CC_DEPRECATED_ATTRIBUTE typedef void (Ref::*SEL_ScrollViewEvent)(Ref*, Scrollvie
 #define scrollvieweventselector(_SELECTOR) (SEL_ScrollViewEvent)(&_SELECTOR)
 
 
-class ScrollView : public Layout , public ScrollViewProtocol
+class ScrollView : public Layout
 {
     
     DECLARE_CLASS_GUI_INFO
@@ -87,6 +77,7 @@ public:
         BOUNCE_RIGHT
     };
     typedef std::function<void(Ref*, EventType)> ccScrollViewCallback;
+   
     /**
      * Default constructor
      */
@@ -96,7 +87,6 @@ public:
      * Default destructor
      */
     virtual ~ScrollView();
-    
     /**
      * Allocates and initializes.
      */
@@ -328,7 +318,7 @@ public:
 
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
-
+    
 protected:
     virtual void initRenderer() override;
     
@@ -365,10 +355,11 @@ protected:
     virtual void endRecordSlidAction();
     
     //ScrollViewProtocol
-    virtual void handlePressLogic(const Vec2 &touchPoint) override;
-    virtual void handleMoveLogic(const Vec2 &touchPoint) override;
-    virtual void handleReleaseLogic(const Vec2 &touchPoint) override;
-    virtual void interceptTouchEvent(Widget::TouchEventType event,Widget* sender,const Vec2 &touchPoint) override;
+    virtual void handlePressLogic(Touch *touch) ;
+    virtual void handleMoveLogic(Touch *touch) ;
+    virtual void handleReleaseLogic(Touch *touch) ;
+    
+    virtual void interceptTouchEvent(Widget::TouchEventType event,Widget* sender,Touch *touch) override;
     
     void recordSlidTime(float dt);
     
@@ -387,11 +378,6 @@ protected:
     Layout* _innerContainer;
     
     Direction _direction;
-
-    Vec2 _touchBeganPoint;
-    Vec2 _touchMovedPoint;
-    Vec2 _touchEndedPoint;
-    Vec2 _touchMovingPoint;
     Vec2 _autoScrollDir;
     
     float _topBoundary;

@@ -123,7 +123,7 @@ LoadingBar::Direction LoadingBar::getDirection()const
 }
     
 
-    void LoadingBar::loadTexture(const std::string& texture,TextureResType texType)
+void LoadingBar::loadTexture(const std::string& texture,TextureResType texType)
 {
     if (texture.empty())
     {
@@ -160,7 +160,9 @@ LoadingBar::Direction LoadingBar::getDirection()const
         default:
             break;
     }
-    updateRGBAToRenderer(_barRenderer);
+    _barRenderer->setColor(this->getColor());
+    _barRenderer->setOpacity(this->getOpacity());
+    
     _barRendererTextureSize = _barRenderer->getContentSize();
     
     switch (_direction)
@@ -357,21 +359,6 @@ void LoadingBar::setScale9Scale()
 std::string LoadingBar::getDescription() const
 {
     return "LoadingBar";
-}
-    
-void LoadingBar::updateTextureColor()
-{
-    updateColorToRenderer(_barRenderer);
-}
-
-void LoadingBar::updateTextureOpacity()
-{
-    updateOpacityToRenderer(_barRenderer);
-}
-
-void LoadingBar::updateTextureRGBA()
-{
-    updateRGBAToRenderer(_barRenderer);
 }
 
 Widget* LoadingBar::createCloneInstance()

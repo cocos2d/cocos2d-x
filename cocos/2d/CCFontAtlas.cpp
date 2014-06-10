@@ -264,8 +264,16 @@ bool FontAtlas::prepareLetterDefinitions(const std::u16string& utf16String)
                     _currentPageOrigY += _commonLineHeight;
                     _currentPageOrigX = 0;
                     if(_currentPageOrigY + _commonLineHeight >= CacheTextureHeight)
-                    {     
-                        auto data = _currentPageData + CacheTextureWidth * (int)startY;
+                    {
+                        unsigned char *data = nullptr;
+                        if(pixelFormat == Texture2D::PixelFormat::AI88)
+                        {
+                            data = _currentPageData + CacheTextureWidth * (int)startY * 2;
+                        }
+                        else
+                        {
+                            data = _currentPageData + CacheTextureWidth * (int)startY;
+                        }
                         _atlasTextures[_currentPage]->updateWithData(data, 0, startY, 
                             CacheTextureWidth, CacheTextureHeight - startY);
 
@@ -325,7 +333,15 @@ bool FontAtlas::prepareLetterDefinitions(const std::u16string& utf16String)
 
     if(existNewLetter)
     {
-        auto data = _currentPageData + CacheTextureWidth * (int)startY;
+        unsigned char *data = nullptr;
+        if(pixelFormat == Texture2D::PixelFormat::AI88)
+        {
+            data = _currentPageData + CacheTextureWidth * (int)startY * 2;
+        }
+        else
+        {
+            data = _currentPageData + CacheTextureWidth * (int)startY;
+        }
         _atlasTextures[_currentPage]->updateWithData(data, 0, startY, 
             CacheTextureWidth, _currentPageOrigY - startY + _commonLineHeight);
     }

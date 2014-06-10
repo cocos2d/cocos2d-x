@@ -1204,4 +1204,32 @@ end
 rawset(cc.ShaderCache,"getProgram", ShaderCacheDeprecated.getProgram)
 --functions of ccui.TextBMFont will be deprecated begin
 
+--functions of ccui.Widget will be deprecated begin
+local UIWidgetDeprecated = { }
+function UIWidgetDeprecated.getLeftInParent(self)
+    deprecatedTip("ccui.Widget:getLeftInParent","ccui.Widget:getLeftBoundary")
+    return self:getLeftBoundary()
+end
+rawset(ccui.Widget,"getLeftInParent", UIWidgetDeprecated.getLeftInParent)
+
+function UIWidgetDeprecated.getBottomInParent(self)
+    deprecatedTip("ccui.Widget:getBottomInParent","ccui.Widget:getBottomBoundary")
+    return self:getBottomBoundary()
+end
+rawset(ccui.Widget,"getBottomInParent", UIWidgetDeprecated.getBottomInParent)
+
+function UIWidgetDeprecated.getRightInParent(self)
+    deprecatedTip("ccui.Widget:getRightInParent","ccui.Widget:getRightBoundary")
+    return self:getRightBoundary()
+end
+rawset(ccui.Widget,"getRightInParent", UIWidgetDeprecated.getRightInParent)
+
+function UIWidgetDeprecated.getTopInParent(self)
+    deprecatedTip("ccui.Widget:getTopInParent","ccui.Widget:getTopBoundary")
+    return self:getTopBoundary()
+end
+rawset(ccui.Widget,"getTopInParent", UIWidgetDeprecated.getTopInParent)
+
+--functions of ccui.Widget will be deprecated begin
+
 

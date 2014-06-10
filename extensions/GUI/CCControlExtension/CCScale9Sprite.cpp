@@ -98,7 +98,8 @@ bool Scale9Sprite::initWithBatchNode(SpriteBatchNode* batchnode, const Rect& rec
     {
         this->updateWithBatchNode(batchnode, rect, rotated, capInsets);
     }
-    
+    this->setCascadeColorEnabled(true);
+    this->setCascadeOpacityEnabled(true);
     this->setAnchorPoint(Vec2(0.5f, 0.5f));
     this->_positionsAreDirty = true;
     
