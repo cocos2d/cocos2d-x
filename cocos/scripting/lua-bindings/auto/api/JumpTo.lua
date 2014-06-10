@@ -7,7 +7,7 @@
 -- @function [parent=#JumpTo] create 
 -- @param self
 -- @param #float float
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
 -- @param #float float
 -- @param #int int
 -- @return JumpTo#JumpTo ret (return value: cc.JumpTo)

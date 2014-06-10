@@ -2187,4 +2187,22 @@ end
 _G["cc.EGLView"] = DeprecatedClass.EGLView()
 --EGLView  class will be Deprecated,end
 
+--EGLView class will be Deprecated,begin
+function DeprecatedClass.EGLView()
+    deprecatedTip("cc.EGLView","cc.GLView")
+    print(cc.GLView)
+    return cc.GLView
+end
+_G["cc.EGLView"] = DeprecatedClass.EGLView()
+--EGLView  class will be Deprecated,end
+
+--ShaderCache class will be Deprecated,begin
+function DeprecatedClass.ShaderCache()
+    deprecatedTip("cc.ShaderCache","cc.GLProgramCache")
+    return cc.GLProgramCache
+end
+cc.ShaderCache = DeprecatedClass.ShaderCache()
+--ShaderCache  class will be Deprecated,end
+
+
 

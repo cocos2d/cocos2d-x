@@ -193,14 +193,14 @@ void ShaderNode::setPosition(const Vec2 &newPosition)
     getGLProgramState()->setUniformVec2("center", _center);
 }
 
-void ShaderNode::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void ShaderNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(ShaderNode::onDraw, this, transform, transformUpdated);
+    _customCommand.func = CC_CALLBACK_0(ShaderNode::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 }
 
-void ShaderNode::onDraw(const Mat4 &transform, bool transformUpdated)
+void ShaderNode::onDraw(const Mat4 &transform, uint32_t flags)
 {
     float w = SIZE_X, h = SIZE_Y;
     GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
@@ -732,7 +732,7 @@ bool ShaderGlow::init()
 //
 // ShaderMultiTexture
 //
-ShaderMultiTexture::ShaderMultiTexture()
+ShaderMultiTexture::ShaderMultiTexture():_changedTextureId(0)
 {
     init();
 }
@@ -785,32 +785,51 @@ bool ShaderMultiTexture::init()
 
         // Right: normal sprite
         auto right = Sprite::create("Images/grossinis_sister2.png");
-        addChild(right);
+        addChild(right, 0, rightSpriteTag);
         right->setPosition(s.width*3/4, s.height/2);
 
 
         // Center: MultiTexture
-        _sprite = Sprite::create("Images/grossinis_sister1.png");
-        Texture2D *texture1 = Director::getInstance()->getTextureCache()->addImage("Images/grossinis_sister2.png");
-
+        _sprite = Sprite::createWithTexture(left->getTexture());
         addChild(_sprite);
-
         _sprite->setPosition(Vec2(s.width/2, s.height/2));
 
         auto glprogram = GLProgram::createWithFilenames("Shaders/example_MultiTexture.vsh", "Shaders/example_MultiTexture.fsh");
         auto glprogramstate = GLProgramState::getOrCreateWithGLProgram(glprogram);
         _sprite->setGLProgramState(glprogramstate);
 
-        glprogramstate->setUniformTexture("u_texture1", texture1);
+        glprogramstate->setUniformTexture("u_texture1", right->getTexture());
         glprogramstate->setUniformFloat("u_interpolate",0.5);
 
         // slider
         createSliderCtl();
+        
+        // menu
+        auto label = Label::createWithTTF(TTFConfig("fonts/arial.ttf"), "change");
+        auto mi = MenuItemLabel::create(label, CC_CALLBACK_1(ShaderMultiTexture::changeTexture, this));
+        auto menu = Menu::create(mi, nullptr);
+        addChild(menu);
+        menu->setPosition(s.width * 7 / 8, s.height / 2);
 
         return true;
     }
 
     return false;
+}
+
+void ShaderMultiTexture::changeTexture(Ref*)
+{
+    static const int textureFilesCount = 3;
+    static const std::string textureFiles[textureFilesCount] = {
+        "Images/grossini.png",
+        "Images/grossinis_sister1.png",
+        "Images/grossinis_sister2.png"
+    };
+    auto textrue = Director::getInstance()->getTextureCache()->addImage(textureFiles[_changedTextureId++ % textureFilesCount]);
+    Sprite* right = dynamic_cast<Sprite*>(getChildByTag(rightSpriteTag));
+    right->setTexture(textrue);
+    auto programState = _sprite->getGLProgramState();
+    programState->setUniformTexture("u_texture1", right->getTexture());
 }
 
 

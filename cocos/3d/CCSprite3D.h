@@ -67,7 +67,7 @@ protected:
     //.mtl file should at the same directory with the same name if exist
     bool loadFromObj(const std::string& path);
 
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     
     virtual GLProgram* getDefaultGLProgram(bool textured = true);
     

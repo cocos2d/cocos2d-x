@@ -553,7 +553,7 @@ void ScrollView::onAfterDraw()
     }
 }
 
-void ScrollView::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
+void ScrollView::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
 	// quick return if not visible
 	if (!isVisible())
@@ -561,10 +561,7 @@ void ScrollView::visit(Renderer *renderer, const Mat4 &parentTransform, bool par
 		return;
     }
 
-    bool dirty = parentTransformUpdated || _transformUpdated;
-    if(dirty)
-        _modelViewTransform = this->transform(parentTransform);
-    _transformUpdated = false;
+    uint32_t flags = processParentFlags(parentTransform, parentFlags);
 
     // IMPORTANT:
     // To ease the migration to v3.0, we still support the Mat4 stack,
@@ -586,7 +583,7 @@ void ScrollView::visit(Renderer *renderer, const Mat4 &parentTransform, bool par
 			Node *child = _children.at(i);
 			if ( child->getLocalZOrder() < 0 )
             {
-				child->visit(renderer, _modelViewTransform, dirty);
+				child->visit(renderer, _modelViewTransform, flags);
 			}
             else
             {
@@ -595,19 +592,19 @@ void ScrollView::visit(Renderer *renderer, const Mat4 &parentTransform, bool par
 		}
 		
 		// this draw
-		this->draw(renderer, _modelViewTransform, dirty);
+		this->draw(renderer, _modelViewTransform, flags);
         
 		// draw children zOrder >= 0
 		for( ; i < _children.size(); i++ )
         {
 			Node *child = _children.at(i);
-			child->visit(renderer, _modelViewTransform, dirty);
+			child->visit(renderer, _modelViewTransform, flags);
 		}
         
 	}
     else
     {
-		this->draw(renderer, _modelViewTransform, dirty);
+		this->draw(renderer, _modelViewTransform, flags);
     }
 
     this->afterDraw();

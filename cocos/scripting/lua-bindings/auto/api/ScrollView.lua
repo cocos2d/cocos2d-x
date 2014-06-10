@@ -1,7 +1,7 @@
 
 --------------------------------
 -- @module ScrollView
--- @extend Layout,UIScrollInterface
+-- @extend Layout
 
 --------------------------------
 -- @function [parent=#ScrollView] scrollToTop 
@@ -24,7 +24,7 @@
 --------------------------------
 -- @function [parent=#ScrollView] scrollToPercentBothDirection 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
 -- @param #float float
 -- @param #bool bool
         
@@ -128,7 +128,7 @@
 --------------------------------
 -- @function [parent=#ScrollView] jumpToPercentBothDirection 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#ScrollView] scrollToPercentVertical 
@@ -221,6 +221,13 @@
 --------------------------------
 -- @function [parent=#ScrollView] removeAllChildren 
 -- @param self
+        
+--------------------------------
+-- @function [parent=#ScrollView] findNextFocusedWidget 
+-- @param self
+-- @param #ccui.Widget::FocusDirection focusdirection
+-- @param #ccui.Widget widget
+-- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
 -- @function [parent=#ScrollView] removeChild 

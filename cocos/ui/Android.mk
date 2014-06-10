@@ -9,6 +9,7 @@ LOCAL_SRC_FILES := \
 UIWidget.cpp \
 UILayout.cpp \
 UILayoutParameter.cpp \
+UILayoutManager.cpp \
 CocosGUI.cpp \
 UIHelper.cpp \
 UIListView.cpp \

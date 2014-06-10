@@ -83,7 +83,7 @@ CC_CONSTRUCTOR_ACCESS:
     bool initWithDuration(float duration, const std::string& key, float from, float to);
 
 protected:
-    std::string        _key;
+    std::string       _key;
     float            _from, _to;
     float            _delta;
 };

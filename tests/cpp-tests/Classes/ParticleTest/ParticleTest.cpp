@@ -1841,9 +1841,7 @@ std::string PremultipliedAlphaTest::subtitle() const
 
 void PremultipliedAlphaTest::readdPaticle(float delta)
 {
-    static int count = 0;
-    
-    if (count++ % 2 == 0)
+    if (_hasEmitter)
     {
         _emitter->removeFromParent();
     }
@@ -1851,6 +1849,8 @@ void PremultipliedAlphaTest::readdPaticle(float delta)
     {
         this->addChild(_emitter);
     }
+    
+    _hasEmitter = !_hasEmitter;
 }
 
 void PremultipliedAlphaTest::onEnter()
@@ -1880,6 +1880,7 @@ void PremultipliedAlphaTest::onEnter()
     _emitter->setEndColorVar(Color4F(0.0f, 0.0f, 0.0f, 0.0f));
 
     this->addChild(_emitter, 10);
+    _hasEmitter = true;
     
     schedule(schedule_selector(PremultipliedAlphaTest::readdPaticle), 1.0f);
 }

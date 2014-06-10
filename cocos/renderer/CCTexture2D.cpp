@@ -535,11 +535,6 @@ bool Texture2D::initWithData(const void *data, ssize_t dataLen, Texture2D::Pixel
     mipmap.address = (unsigned char*)data;
     mipmap.len = static_cast<int>(dataLen);
     return initWithMipmaps(&mipmap, 1, pixelFormat, pixelsWide, pixelsHigh);
-
-    //update information
-    _contentSize = contentSize;
-    _maxS = contentSize.width / (float)(pixelsWide);
-    _maxT = contentSize.height / (float)(pixelsHigh);
 }
 
 bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat pixelFormat, int pixelsWide, int pixelsHigh)
@@ -709,7 +704,7 @@ std::string Texture2D::getDescription() const
 // implementation Texture2D (Image)
 bool Texture2D::initWithImage(Image *image)
 {
-    return initWithImage(image, PixelFormat::NONE);
+    return initWithImage(image, image->getRenderFormat());
 }
 
 bool Texture2D::initWithImage(Image *image, PixelFormat format)
@@ -1121,7 +1116,8 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
     textDef._stroke._strokeSize *= contentScaleFactor;
     textDef._shadow._shadowEnabled = false;
     
-    Data outData = Device::getTextureDataForText(text, textDef, align, imageWidth, imageHeight, _hasPremultipliedAlpha);
+    bool hasPremultipliedAlpha;
+    Data outData = Device::getTextureDataForText(text, textDef, align, imageWidth, imageHeight, hasPremultipliedAlpha);
     if(outData.isNull())
     {
         return false;
@@ -1136,6 +1132,7 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
     {
         free(outTempData);
     }
+    _hasPremultipliedAlpha = hasPremultipliedAlpha;
 
     return ret;
 }

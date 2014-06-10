@@ -30,6 +30,9 @@
 #include <jni.h>
 #include <string>
 #include "jni/JniHelper.h"
+#include "base/CCDirector.h"
+#include "CCGLView.h"
+#include "base/CCEventListenerKeyboard.h"
 
 //-----------------------------------------------------------------------------------------------------------
 #define  CLASS_NAME "org/cocos2dx/lib/Cocos2dxVideoHelper"
@@ -195,11 +198,11 @@ void VideoPlayer::setURL(const std::string& videoUrl)
     setVideoURLJNI(_videoPlayerIndex,(int)Source::URL,_videoURL);
 }
 
-void VideoPlayer::draw(Renderer* renderer, const Mat4 &transform, bool transformUpdated)
+void VideoPlayer::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags)
 {
-    cocos2d::ui::Widget::draw(renderer,transform,transformUpdated);
+    cocos2d::ui::Widget::draw(renderer,transform,flags);
 
-    if (transformUpdated || _fullScreenDirty)
+    if ((flags&FLAGS_TRANSFORM_DIRTY) || _fullScreenDirty)
     {
         _fullScreenDirty = false;
         auto directorInstance = Director::getInstance();
@@ -209,7 +212,7 @@ void VideoPlayer::draw(Renderer* renderer, const Mat4 &transform, bool transform
         if (_fullScreenEnabled)
         {
             setVideoRectJNI(_videoPlayerIndex,0,0,frameSize.width,frameSize.height);
-        } 
+        }
         else
         {
             auto winSize = directorInstance->getWinSize();
@@ -223,7 +226,7 @@ void VideoPlayer::draw(Renderer* renderer, const Mat4 &transform, bool transform
             setVideoRectJNI(_videoPlayerIndex,uiLeft,uiTop,
                 (rightTop.x - leftBottom.x) * glView->getScaleX(),
                 (rightTop.y - leftBottom.y) * glView->getScaleY());
-        } 
+        }
     }
 
 #if CC_VIDEOPLAYER_DEBUG_DRAW
@@ -242,7 +245,7 @@ void VideoPlayer::setFullScreenEnabled(bool enabled)
     }
 }
 
-bool VideoPlayer::isFullScreenEnabled()
+bool VideoPlayer::isFullScreenEnabled()const
 {
     return _fullScreenEnabled;
 }
@@ -352,6 +355,28 @@ void VideoPlayer::onPlayEvent(VideoPlayer::EventType event)
     if (_eventCallback)
     {
         _eventCallback(this,event);
+    }
+}
+
+cocos2d::ui::Widget* VideoPlayer::createCloneInstance()
+{
+    return VideoPlayer::create();
+}
+
+void VideoPlayer::copySpecialProperties(Widget *widget)
+{
+    VideoPlayer* videoPlayer = dynamic_cast<VideoPlayer*>(widget);
+    if (videoPlayer)
+    {
+        _isPlaying = videoPlayer->_isPlaying;
+        _fullScreenEnabled = videoPlayer->_fullScreenEnabled;
+        _fullScreenDirty = videoPlayer->_fullScreenDirty;
+        _videoURL = videoPlayer->_videoURL;
+        _keepAspectRatioEnabled = videoPlayer->_keepAspectRatioEnabled;
+        _videoSource = videoPlayer->_videoSource;
+        _videoPlayerIndex = videoPlayer->_videoPlayerIndex;
+        _eventCallback = videoPlayer->_eventCallback;
+        _videoView = videoPlayer->_videoView;
     }
 }
 

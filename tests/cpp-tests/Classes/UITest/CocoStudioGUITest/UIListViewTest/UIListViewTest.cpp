@@ -57,7 +57,6 @@ bool UIListViewTest_Vertical::init()
         ListView* listView = ListView::create();
         // set list view ex direction
         listView->setDirection(ui::ScrollView::Direction::VERTICAL);
-        listView->setTouchEnabled(true);
         listView->setBounceEnabled(true);
         listView->setBackGroundImage("cocosui/green_edit.png");
         listView->setBackGroundImageScale9Enabled(true);
@@ -96,6 +95,12 @@ bool UIListViewTest_Vertical::init()
             listView->insertDefaultItem(0);
         }
         
+        listView->removeAllChildren();
+        
+        Sprite* testSprite = Sprite::create("cocosui/backtotoppressed.png");
+        testSprite->setPosition(Vec2(200,200));
+        listView->addChild(testSprite);
+        
         // add custom item
         for (int i = 0; i < count / 4; ++i)
         {
@@ -109,7 +114,7 @@ bool UIListViewTest_Vertical::init()
             custom_button->setPosition(Vec2(custom_item->getSize().width / 2.0f, custom_item->getSize().height / 2.0f));
             custom_item->addChild(custom_button);
             
-            listView->pushBackCustomItem(custom_item);
+            listView->addChild(custom_item);
         }
         // insert custom item
         Vector<Widget*>& items = listView->getItems();
@@ -125,6 +130,7 @@ bool UIListViewTest_Vertical::init()
             custom_item->setSize(custom_button->getSize());
             custom_button->setPosition(Vec2(custom_item->getSize().width / 2.0f, custom_item->getSize().height / 2.0f));
             custom_item->addChild(custom_button);
+            custom_item->setTag(1);
             
             listView->insertCustomItem(custom_item, items_count);
         }
@@ -140,7 +146,7 @@ bool UIListViewTest_Vertical::init()
         }
         
         // remove last item
-        listView->removeLastItem();
+        listView->removeChildByTag(1);
         
         // remove item by index
         items_count = items.size();

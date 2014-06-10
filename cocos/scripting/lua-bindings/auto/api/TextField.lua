@@ -82,6 +82,11 @@
 -- @param self
         
 --------------------------------
+-- @function [parent=#TextField] getStringLength 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
 -- @function [parent=#TextField] setPasswordEnabled 
 -- @param self
 -- @param #bool bool
@@ -154,7 +159,7 @@
 --------------------------------
 -- @function [parent=#TextField] hitTest 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
