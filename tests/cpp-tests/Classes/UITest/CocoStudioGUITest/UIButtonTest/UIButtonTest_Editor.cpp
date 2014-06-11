@@ -20,23 +20,23 @@ bool UIButtonTest_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        auto _layout2 = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIButton_Editor/UIButton_Editor_1.json"));
+//        auto _layout2 = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIButton_Editor/UIButton_Editor_1.json"));
 
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIButton_Editor/uibutton_editor_2(1).json"));
-//        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UIButton_Editor/UIButton_Editor_1.csb"));
+//        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIButton_Editor/uibutton_editor_2(1).json"));
+        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UIButton_Editor/UIButton_Editor_1.csb"));
         
         
-        Vector<Layout*> firstLayouts = _layout2->getAllLayouts(_layout2);
-        Vector<Layout*>  secondLayouts = _layout->getAllLayouts(_layout);
-        
-    
-        CCASSERT(firstLayouts.size() == secondLayouts.size(), "can't compare");
-        
-        for (int i=0 ; i < firstLayouts.size(); ++i) {
-            Layout *l1 = firstLayouts.at(i);
-            Layout *l2 = secondLayouts.at(i);
-            l1->compareLayout(l2);
-        }
+//        Vector<Layout*> firstLayouts = _layout2->getAllLayouts(_layout2);
+//        Vector<Layout*>  secondLayouts = _layout->getAllLayouts(_layout);
+//        
+//    
+//        CCASSERT(firstLayouts.size() == secondLayouts.size(), "can't compare");
+//        
+//        for (int i=0 ; i < firstLayouts.size(); ++i) {
+//            Layout *l1 = firstLayouts.at(i);
+//            Layout *l2 = secondLayouts.at(i);
+//            l1->compareLayout(l2);
+//        }
         
         
 

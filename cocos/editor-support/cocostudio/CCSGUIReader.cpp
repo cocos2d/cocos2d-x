@@ -218,6 +218,70 @@ Widget* GUIReader::widgetFromJsonFile(const char *fileName)
     return widget;
 }
     
+std::string WidgetPropertiesReader::getWidgetReaderClassName(Widget* widget)
+{
+    std::string readerName;
+    
+    // 1st., custom widget parse properties of parent widget with parent widget reader
+    if (dynamic_cast<Button*>(widget))
+    {
+        readerName = "ButtonReader";
+    }
+    else if (dynamic_cast<CheckBox*>(widget))
+    {
+        readerName = "CheckBoxReader";
+    }
+    else if (dynamic_cast<ImageView*>(widget))
+    {
+        readerName = "ImageViewReader";
+    }
+    else if (dynamic_cast<TextAtlas*>(widget))
+    {
+        readerName = "TextAtlasReader";
+    }
+    else if (dynamic_cast<TextBMFont*>(widget))
+    {
+        readerName = "TextBMFontReader";
+    }
+    else if (dynamic_cast<Text*>(widget))
+    {
+        readerName = "TextReader";
+    }
+    else if (dynamic_cast<LoadingBar*>(widget))
+    {
+        readerName = "LoadingBarReader";
+    }
+    else if (dynamic_cast<Slider*>(widget))
+    {
+        readerName = "SliderReader";
+    }
+    else if (dynamic_cast<TextField*>(widget))
+    {
+        readerName = "TextFieldReader";
+    }
+    else if (dynamic_cast<Layout*>(widget))
+    {
+        readerName = "LayoutReader";
+    }
+    else if (dynamic_cast<ScrollView*>(widget))
+    {
+        readerName = "ScrollViewReader";
+    }
+    else if (dynamic_cast<ListView*>(widget))
+    {
+        readerName = "ListViewReader";
+    }
+    else if (dynamic_cast<PageView*>(widget))
+    {
+        readerName = "PageViewReader";
+    }
+    else if (dynamic_cast<Widget*>(widget))
+    {
+        readerName = "WidgetReader";
+    }
+    
+    return readerName;
+}
 
 
 std::string WidgetPropertiesReader::getGUIClassName(const std::string &name)
@@ -297,12 +361,14 @@ Widget* GUIReader::widgetFromBinaryFile(const char *fileName)
             {
                 stExpCocoNode *tpChildArray = tpRootCocoNode->GetChildArray();
                 
-                //rapidjson::Type tType  = tpChildArray[i].GetType(pCocoLoader);
-            
-                std::string	strValue = tpChildArray[7].GetValue();
                 
-                fileVersion = strValue.c_str();
-                
+                for (int i = 0; i < tpRootCocoNode->GetChildNum(); ++i) {
+                    std::string key = tpChildArray[i].GetName(&tCocoLoader);
+                    if (key == "version") {
+                        fileVersion = tpChildArray[i].GetValue();
+                        break;
+                    }
+                }
                 
                 WidgetPropertiesReader * pReader = nullptr;
                 if (fileVersion)
@@ -310,6 +376,7 @@ Widget* GUIReader::widgetFromBinaryFile(const char *fileName)
                     int versionInteger = getVersionInteger(fileVersion);
                     if (versionInteger < 250)
                     {
+                        CCASSERT(0, "You current studio doesn't support binary format, please upgrade to the latest version!");
                         pReader = new WidgetPropertiesReader0250();
                         widget = pReader->createWidgetFromBinary(&tCocoLoader, tpRootCocoNode, fileName);
                     }
@@ -438,11 +505,6 @@ Widget* WidgetPropertiesReader0250::createWidget(const rapidjson::Value& data, c
     Ref* rootWidget = (Ref*) widget;
     ActionManagerEx::getInstance()->initWithDictionary(fileName,actions,rootWidget);
     return widget;
-}
-    
-cocos2d::ui::Widget* WidgetPropertiesReader0250::createWidgetFromBinary(CocoLoader* pCocoLoader,stExpCocoNode*	pCocoNode, const char* fileName)
-{
-    return nullptr;
 }
 
 
@@ -1159,7 +1221,10 @@ Widget* WidgetPropertiesReader0300::createWidget(const rapidjson::Value& data, c
 {
     
     stExpCocoNode *tpChildArray = pCocoNode->GetChildArray();
-        
+    for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
+        const char* value = tpChildArray[i].GetName(pCocoLoader);
+        CCLOG("%s", value);
+    }
     int texturesCount = tpChildArray[6].GetChildNum();
     for (int i=0; i<texturesCount; i++)
     {
@@ -1317,70 +1382,6 @@ void WidgetPropertiesReader0300::setPropsForAllWidgetFromBinary(WidgetReaderProt
     reader->setPropsFromBinary(widget, pCocoLoader, pCocoNode);
 }
 
-std::string WidgetPropertiesReader::getWidgetReaderClassName(Widget* widget)
-{
-    std::string readerName;
-    
-    // 1st., custom widget parse properties of parent widget with parent widget reader
-    if (dynamic_cast<Button*>(widget))
-    {
-        readerName = "ButtonReader";
-    }
-    else if (dynamic_cast<CheckBox*>(widget))
-    {
-        readerName = "CheckBoxReader";
-    }
-    else if (dynamic_cast<ImageView*>(widget))
-    {
-        readerName = "ImageViewReader";
-    }
-    else if (dynamic_cast<TextAtlas*>(widget))
-    {
-        readerName = "TextAtlasReader";
-    }
-    else if (dynamic_cast<TextBMFont*>(widget))
-    {
-        readerName = "TextBMFontReader";
-    }
-    else if (dynamic_cast<Text*>(widget))
-    {
-        readerName = "TextReader";
-    }
-    else if (dynamic_cast<LoadingBar*>(widget))
-    {
-        readerName = "LoadingBarReader";
-    }
-    else if (dynamic_cast<Slider*>(widget))
-    {
-        readerName = "SliderReader";
-    }
-    else if (dynamic_cast<TextField*>(widget))
-    {
-        readerName = "TextFieldReader";
-    }
-    else if (dynamic_cast<Layout*>(widget))
-    {
-        readerName = "LayoutReader";
-    }
-    else if (dynamic_cast<ScrollView*>(widget))
-    {
-        readerName = "ScrollViewReader";
-    }
-    else if (dynamic_cast<ListView*>(widget))
-    {
-        readerName = "ListViewReader";
-    }
-    else if (dynamic_cast<PageView*>(widget))
-    {
-        readerName = "PageViewReader";
-    }
-    else if (dynamic_cast<Widget*>(widget))
-    {
-        readerName = "WidgetReader";
-    }
-    
-    return readerName;
-}
     
 Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Value& data)
 {
