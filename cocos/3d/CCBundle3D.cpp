@@ -35,30 +35,6 @@ NS_CC_BEGIN
 
 Bundle3D* Bundle3D::_instance = nullptr;
 
-Bundle3D::MeshData::MeshData()
-: vertex(nullptr)
-, vertexSizeInFloat(0)
-, indices(nullptr)
-, numIndex(0)
-, attribs(nullptr)
-, attribCount(0)
-{
-    
-}
-Bundle3D::MeshData::~MeshData()
-{
-    resetData();
-}
-void Bundle3D::MeshData::resetData()
-{
-    CC_SAFE_DELETE_ARRAY(vertex);
-    CC_SAFE_DELETE_ARRAY(indices);
-    CC_SAFE_DELETE_ARRAY(attribs);
-    vertexSizeInFloat = 0;
-    numIndex = 0;
-    attribCount = 0;
-}
-
 Bundle3D* Bundle3D::getInstance()
 {
     if (_instance == nullptr)

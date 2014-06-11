@@ -145,7 +145,7 @@ bool Sprite3D::loadFromC3x(const std::string& path)
     if (!bundle->load(fullPath))
         return false;
     
-    Bundle3D::MeshData meshdata;
+    MeshData meshdata;
     bool ret = bundle->loadMeshData("", &meshdata);
     if (!ret)
     {
@@ -158,7 +158,7 @@ bool Sprite3D::loadFromC3x(const std::string& path)
     _skin = MeshSkin::create(fullPath, "");
     CC_SAFE_RETAIN(_skin);
     
-    Bundle3D::MaterialData materialdata;
+    MaterialData materialdata;
     ret = bundle->loadMaterialData("", &materialdata);
     if (ret)
     {

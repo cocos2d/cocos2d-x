@@ -259,7 +259,7 @@ MeshSkin* MeshSkin::create(const std::string& filename, const std::string& name)
     bool ret = instance->load(fullPath);
     if (ret)
     {
-        Bundle3D::SkinData skindata;
+        SkinData skindata;
         if (instance->loadSkinData(name, &skindata))
         {
             auto skin = new MeshSkin();

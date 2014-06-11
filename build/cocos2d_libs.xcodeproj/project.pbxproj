@@ -1745,6 +1745,8 @@
 		B29594CF1926D61F003EEF37 /* CCSprite3DDataCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B29594BF1926D61F003EEF37 /* CCSprite3DDataCache.cpp */; };
 		B29594D01926D61F003EEF37 /* CCSprite3DDataCache.h in Headers */ = {isa = PBXBuildFile; fileRef = B29594C01926D61F003EEF37 /* CCSprite3DDataCache.h */; };
 		B29594D11926D61F003EEF37 /* CCSprite3DDataCache.h in Headers */ = {isa = PBXBuildFile; fileRef = B29594C01926D61F003EEF37 /* CCSprite3DDataCache.h */; };
+		B2D3D3B91948613300BA4831 /* CCBundle3DData.h in Headers */ = {isa = PBXBuildFile; fileRef = B2D3D3B81948613300BA4831 /* CCBundle3DData.h */; };
+		B2D3D3BA1948613300BA4831 /* CCBundle3DData.h in Headers */ = {isa = PBXBuildFile; fileRef = B2D3D3B81948613300BA4831 /* CCBundle3DData.h */; };
 		B37510711823AC9F00B3BA6A /* CCPhysicsBodyInfo_chipmunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B37510451823AC7B00B3BA6A /* CCPhysicsBodyInfo_chipmunk.cpp */; };
 		B37510721823AC9F00B3BA6A /* CCPhysicsBodyInfo_chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = B37510461823AC7B00B3BA6A /* CCPhysicsBodyInfo_chipmunk.h */; };
 		B37510731823AC9F00B3BA6A /* CCPhysicsContactInfo_chipmunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B37510471823AC7B00B3BA6A /* CCPhysicsContactInfo_chipmunk.cpp */; };
@@ -2812,6 +2814,7 @@
 		B29594BE1926D61F003EEF37 /* CCSprite3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSprite3D.h; sourceTree = "<group>"; };
 		B29594BF1926D61F003EEF37 /* CCSprite3DDataCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSprite3DDataCache.cpp; sourceTree = "<group>"; };
 		B29594C01926D61F003EEF37 /* CCSprite3DDataCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSprite3DDataCache.h; sourceTree = "<group>"; };
+		B2D3D3B81948613300BA4831 /* CCBundle3DData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBundle3DData.h; sourceTree = "<group>"; };
 		B37510451823AC7B00B3BA6A /* CCPhysicsBodyInfo_chipmunk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsBodyInfo_chipmunk.cpp; sourceTree = "<group>"; };
 		B37510461823AC7B00B3BA6A /* CCPhysicsBodyInfo_chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsBodyInfo_chipmunk.h; sourceTree = "<group>"; };
 		B37510471823AC7B00B3BA6A /* CCPhysicsContactInfo_chipmunk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsContactInfo_chipmunk.cpp; sourceTree = "<group>"; };
@@ -4863,6 +4866,7 @@
 				B29594BE1926D61F003EEF37 /* CCSprite3D.h */,
 				B29594BF1926D61F003EEF37 /* CCSprite3DDataCache.cpp */,
 				B29594C01926D61F003EEF37 /* CCSprite3DDataCache.h */,
+				B2D3D3B81948613300BA4831 /* CCBundle3DData.h */,
 			);
 			name = 3d;
 			path = ../cocos/3d;
@@ -4930,6 +4934,7 @@
 				50ABBD8D1925AB4100A911A9 /* CCGLProgram.h in Headers */,
 				50ABBEA11925AB6F00A911A9 /* CCScheduler.h in Headers */,
 				50ABBDB71925AB4100A911A9 /* CCTexture2D.h in Headers */,
+				B2D3D3B91948613300BA4831 /* CCBundle3DData.h in Headers */,
 				2905FA6C18CF08D100240AA3 /* UIPageView.h in Headers */,
 				50FCEB9518C72017004AD434 /* ButtonReader.h in Headers */,
 				50ABBE811925AB6F00A911A9 /* CCEventType.h in Headers */,
@@ -5418,6 +5423,7 @@
 				1A01C68918F57BE800EFE3A6 /* CCBool.h in Headers */,
 				1A57007C180BC5A10088DEC7 /* CCActionInstant.h in Headers */,
 				50ABBE781925AB6F00A911A9 /* CCEventListenerTouch.h in Headers */,
+				B2D3D3BA1948613300BA4831 /* CCBundle3DData.h in Headers */,
 				B37510861823ACA100B3BA6A /* CCPhysicsWorldInfo_chipmunk.h in Headers */,
 				1A570080180BC5A10088DEC7 /* CCActionInterval.h in Headers */,
 				1A570084180BC5A10088DEC7 /* CCActionManager.h in Headers */,

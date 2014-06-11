@@ -116,7 +116,6 @@ void Animate3D::update(float t)
             if (curve->rotCurve)
             {
                 curve->rotCurve->evaluate(t, dst, QuatSlerp);
-                CCLOG("%f,%f,%f,%f", dst[0], dst[1], dst[2], dst[3]);
                 bone->setAnimationValueRotation(dst);
             }
             if (curve->scaleCurve)
