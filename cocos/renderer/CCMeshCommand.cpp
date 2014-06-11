@@ -155,6 +155,7 @@ void MeshCommand::execute()
         auto uniform = glProgram->getUniform("u_matrixPalette");
         if (uniform)
         {
+            glProgram->use();
             glProgram->setUniformLocationWith4fv(uniform->location, (const float*)_matrixPalette, _matrixPaletteSize);
         }
     }
