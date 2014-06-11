@@ -33,20 +33,9 @@
 #include "math/CCMath.h"
 #include "renderer/CCGLProgram.h"
 
-NS_CC_BEGIN
+#include "3d/CCBundle3DData.h"
 
-//mesh vertex attribute
-struct MeshVertexAttrib
-{
-    //attribute size
-    GLint size;
-    //GL_FLOAT
-    GLenum type;
-    //VERTEX_ATTRIB_POSITION,VERTEX_ATTRIB_COLOR,VERTEX_ATTRIB_TEX_COORD,VERTEX_ATTRIB_NORMAL, VERTEX_ATTRIB_BLEND_WEIGHT, VERTEX_ATTRIB_BLEND_INDEX, GLProgram for detail
-    int  vertexAttrib;
-    //size in bytes
-    int attribSizeBytes;
-};
+NS_CC_BEGIN
 
 class RenderMeshData
 {
