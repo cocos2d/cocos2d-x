@@ -1221,53 +1221,58 @@ Widget* WidgetPropertiesReader0300::createWidget(const rapidjson::Value& data, c
 {
     
     stExpCocoNode *tpChildArray = pCocoNode->GetChildArray();
-    for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
-        const char* value = tpChildArray[i].GetName(pCocoLoader);
-        CCLOG("%s", value);
-    }
-    int texturesCount = tpChildArray[6].GetChildNum();
-    for (int i=0; i<texturesCount; i++)
-    {
-        const char* file =   nullptr;
-        stExpCocoNode *textureCountsArray = tpChildArray[6].GetChildArray();
-        file = textureCountsArray[i].GetValue();
-        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(file);
-    }
+    float fileDesignWidth;
+    float fileDesignHeight;
     
-    
-    float fileDesignWidth =  atof(tpChildArray[5].GetValue());
-    
-    float fileDesignHeight = atof(tpChildArray[4].GetValue());
-    
-    if (fileDesignWidth <= 0 || fileDesignHeight <= 0) {
-        CCLOGERROR("Read design size error!\n");
-        Size winSize = Director::getInstance()->getWinSize();
-        GUIReader::getInstance()->storeFileDesignSize(fileName, winSize);
-    }
-    else
-    {
-        GUIReader::getInstance()->storeFileDesignSize(fileName, Size(fileDesignWidth, fileDesignHeight));
-    }
-    
-    stExpCocoNode *widgetTreeNode = &tpChildArray[8];
-    rapidjson::Type tType  = tpChildArray[8].GetType(pCocoLoader);
-
     Widget* widget =  nullptr;
 
-    if (rapidjson::kObjectType == tType)
-    {
-        //convert this function!!!
-        widget = widgetFromBinary(pCocoLoader, widgetTreeNode);
+    for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
+        std::string key = tpChildArray[i].GetName(pCocoLoader);
+       
+        if (key == "textures") {
+            int texturesCount = tpChildArray[i].GetChildNum();
+            for (int j=0; j<texturesCount; j++)
+            {
+                std::string file;
+                stExpCocoNode *textureCountsArray = tpChildArray[i].GetChildArray();
+                file = textureCountsArray[j].GetValue();
+                SpriteFrameCache::getInstance()->addSpriteFramesWithFile(file);
+            }
+        }else if (key == "designWidth"){
+            fileDesignWidth =  atof(tpChildArray[i].GetValue());
+        }else if (key == "designHeight"){
+            fileDesignHeight = atof(tpChildArray[i].GetValue());
+        }else if (key == "widgetTree"){
+            
+            if (fileDesignWidth <= 0 || fileDesignHeight <= 0) {
+                CCLOGERROR("Read design size error!\n");
+                Size winSize = Director::getInstance()->getWinSize();
+                GUIReader::getInstance()->storeFileDesignSize(fileName, winSize);
+            }
+            else
+            {
+                GUIReader::getInstance()->storeFileDesignSize(fileName, Size(fileDesignWidth, fileDesignHeight));
+            }
+            
+            
+            stExpCocoNode *widgetTreeNode = &tpChildArray[i];
+            rapidjson::Type tType  = tpChildArray[i].GetType(pCocoLoader);
+            
+            if (rapidjson::kObjectType == tType)
+            {
+                widget = widgetFromBinary(pCocoLoader, widgetTreeNode);
+            }
+            
+            if (widget->getContentSize().equals(Size::ZERO))
+            {
+                Layout* rootWidget = dynamic_cast<Layout*>(widget);
+                rootWidget->setSize(Size(fileDesignWidth, fileDesignHeight));
+            }
+        }
     }
     
-    /* *********temp********* */
-    if (widget->getContentSize().equals(Size::ZERO))
-    {
-        Layout* rootWidget = dynamic_cast<Layout*>(widget);
-        rootWidget->setSize(Size(fileDesignWidth, fileDesignHeight));
-    }
     /* ********************** */
-    
+    //TODO:
 //    //    widget->setFileDesignSize(Size(fileDesignWidth, fileDesignHeight));
 //    const rapidjson::Value& actions = DICTOOL->getSubDictionary_json(data, "animation");
 //    /* *********temp********* */
