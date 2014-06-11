@@ -300,7 +300,7 @@ Effect3DOutline* Effect3DOutline::create()
 bool Effect3DOutline::init()
 {
 
-    GLProgram* glprogram = Effect3DOutline::getOrCreateProgram();
+    GLProgram* glprogram = GLProgram::createWithFilenames(_vertShaderFile, _fragShaderFile);
     if(nullptr == glprogram)
     {
         CC_SAFE_DELETE(glprogram);
@@ -323,12 +323,27 @@ Effect3DOutline::Effect3DOutline()
 , _outlineColor(1, 1, 1)
 , _sprite(nullptr)
 {
-    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
+                                                          [this](EventCustom*)
+                                                          {
+                                                              auto glProgram = _glProgramState->getGLProgram();
+                                                              glProgram->reset();
+                                                              glProgram->initWithFilenames(_vertShaderFile, _fragShaderFile);
+                                                              glProgram->link();
+                                                              glProgram->updateUniforms();
+                                                          }
+                                                          );
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+#endif
 }
 
 Effect3DOutline::~Effect3DOutline()
 {
     CC_SAFE_RELEASE_NULL(_sprite);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
 }
 
 void Effect3DOutline::setOutlineColor(const Vec3& color)
@@ -404,7 +419,7 @@ void Effect3DOutline::draw(const Mat4 &transform)
     }
 }
 
-void EffectSprite3D::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, bool transformUpdated)
+void EffectSprite3D::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags)
 {
     for(auto &effect : _effects)
     {
@@ -418,7 +433,7 @@ void EffectSprite3D::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &tran
     
     if(!_defaultEffect)
     {
-        Sprite3D::draw(renderer, transform, transformUpdated);
+        Sprite3D::draw(renderer, transform, flags);
     }
     else
     {

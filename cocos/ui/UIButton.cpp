@@ -24,6 +24,9 @@ THE SOFTWARE.
 
 #include "ui/UIButton.h"
 #include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"
+#include "2d/CCLabel.h"
+#include "2d/CCSprite.h"
+#include "2d/CCActionInterval.h"
 
 NS_CC_BEGIN
 
@@ -257,7 +260,10 @@ void Button::loadTextureNormal(const std::string& normal,TextureResType texType)
     _normalTextureSize = _buttonNormalRenderer->getContentSize();
     updateFlippedX();
     updateFlippedY();
-    updateRGBAToRenderer(_buttonNormalRenderer);
+    
+    _buttonNormalRenderer->setColor(this->getColor());
+    _buttonNormalRenderer->setOpacity(this->getOpacity());
+    
     updateContentSizeWithTextureSize(_normalTextureSize);
     _normalTextureLoaded = true;
     _normalTextureAdaptDirty = true;
@@ -305,7 +311,10 @@ void Button::loadTexturePressed(const std::string& selected,TextureResType texTy
     _pressedTextureSize = _buttonClickedRenderer->getContentSize();
     updateFlippedX();
     updateFlippedY();
-    updateRGBAToRenderer(_buttonDisableRenderer);
+    
+    _buttonDisableRenderer->setColor(this->getColor());
+    _buttonDisableRenderer->setOpacity(this->getOpacity());
+    
     _pressedTextureLoaded = true;
     _pressedTextureAdaptDirty = true;
 }
@@ -352,7 +361,9 @@ void Button::loadTextureDisabled(const std::string& disabled,TextureResType texT
     _disabledTextureSize = _buttonDisableRenderer->getContentSize();
     updateFlippedX();
     updateFlippedY();
-    updateRGBAToRenderer(_buttonDisableRenderer);
+    _buttonDisableRenderer->setColor(this->getColor());
+    _buttonDisableRenderer->setOpacity(this->getOpacity());
+    
     _disabledTextureLoaded = true;
     _disabledTextureAdaptDirty = true;
 }
@@ -429,7 +440,7 @@ void Button::onPressStateChangedToNormal()
     {
         if (_scale9Enabled)
         {
-            updateTextureRGBA();
+            updateTexturesRGBA();
         }
         else
         {
@@ -437,6 +448,17 @@ void Button::onPressStateChangedToNormal()
             _buttonNormalRenderer->setScale(_normalTextureScaleXInSize, _normalTextureScaleYInSize);
         }
     }
+}
+    
+void Button::updateTexturesRGBA()
+{
+    _buttonNormalRenderer->setColor(this->getColor());
+    _buttonClickedRenderer->setColor(this->getColor());
+    _buttonDisableRenderer->setColor(this->getColor());
+
+    _buttonNormalRenderer->setOpacity(this->getOpacity());
+    _buttonClickedRenderer->setOpacity(this->getOpacity());
+    _buttonDisableRenderer->setOpacity(this->getOpacity());
 }
 
 void Button::onPressStateChangedToPressed()
@@ -728,27 +750,6 @@ const std::string& Button::getTitleFontName() const
 std::string Button::getDescription() const
 {
     return "Button";
-}
-    
-void Button::updateTextureColor()
-{
-    updateColorToRenderer(_buttonNormalRenderer);
-    updateColorToRenderer(_buttonClickedRenderer);
-    updateColorToRenderer(_buttonDisableRenderer);
-}
-
-void Button::updateTextureOpacity()
-{
-    updateOpacityToRenderer(_buttonNormalRenderer);
-    updateOpacityToRenderer(_buttonClickedRenderer);
-    updateOpacityToRenderer(_buttonDisableRenderer);
-}
-
-void Button::updateTextureRGBA()
-{
-    updateRGBAToRenderer(_buttonNormalRenderer);
-    updateRGBAToRenderer(_buttonClickedRenderer);
-    updateRGBAToRenderer(_buttonDisableRenderer);
 }
 
 Widget* Button::createCloneInstance()

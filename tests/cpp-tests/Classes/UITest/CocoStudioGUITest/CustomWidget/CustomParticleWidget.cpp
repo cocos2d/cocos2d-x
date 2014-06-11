@@ -7,6 +7,8 @@
 //
 
 #include "CustomParticleWidget.h"
+#include "2d/CCParticleSystem.h"
+#include "2d/CCParticleSystemQuad.h"
 
 USING_NS_CC;
 using namespace ui;

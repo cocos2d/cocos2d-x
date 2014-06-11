@@ -28,7 +28,8 @@ static std::function<Layer*()> createFunctions[] = {
     CL(RescheduleSelector),
     CL(SchedulerDelayAndRepeat),
     CL(SchedulerIssue2268),
-    CL(ScheduleCallbackTest)
+    CL(ScheduleCallbackTest),
+    CL(ScheduleUpdatePriority)
 };
 
 #define MAX_LAYER (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -1146,6 +1147,47 @@ void ScheduleCallbackTest::onEnter()
 void ScheduleCallbackTest::callback(float dt)
 {
     log("In the callback of schedule(CC_CALLBACK_1(XXX::member_function), this), this, ...), dt = %f", dt);
+}
+
+
+// ScheduleUpdatePriority
+
+std::string ScheduleUpdatePriority::title() const
+{
+    return "ScheduleUpdatePriorityTest";
+}
+
+std::string ScheduleUpdatePriority::subtitle() const
+{
+    return "click to change update priority with random value";
+}
+
+bool ScheduleUpdatePriority::onTouchBegan(Touch* touch, Event* event)
+{
+    int priority = static_cast<int>(CCRANDOM_0_1() * 11) - 5;  // -5 ~ 5
+    CCLOG("change update priority to %d", priority);
+    scheduleUpdateWithPriority(priority);
+    return true;
+}
+
+void ScheduleUpdatePriority::onEnter()
+{
+    SchedulerTestLayer::onEnter();
+    
+    scheduleUpdate();
+
+    auto listener = EventListenerTouchOneByOne::create();
+    listener->onTouchBegan = CC_CALLBACK_2(ScheduleUpdatePriority::onTouchBegan, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+}
+
+void ScheduleUpdatePriority::onExit()
+{
+    unscheduleUpdate();
+}
+
+void ScheduleUpdatePriority::update(float dt)
+{
 }
 
 //------------------------------------------------------------------

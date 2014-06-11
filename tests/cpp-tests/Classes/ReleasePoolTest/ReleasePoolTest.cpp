@@ -75,6 +75,11 @@ void ReleasePoolTestScene::runThisTest()
     }
     
     // object in pool2 should be released
+
+    {
+        new AutoreleasePool;
+        PoolManager::destroyInstance();
+    }
     
     Director::getInstance()->replaceScene(this);
 }

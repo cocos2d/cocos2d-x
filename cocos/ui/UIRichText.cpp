@@ -23,7 +23,9 @@
  ****************************************************************************/
 
 #include "UIRichText.h"
-
+#include "platform/CCFileUtils.h"
+#include "2d/CCLabel.h"
+#include "2d/CCSprite.h"
 
 NS_CC_BEGIN
 
@@ -447,12 +449,12 @@ void RichText::pushToContainer(cocos2d::Node *renderer)
     _elementRenders[_elementRenders.size()-1]->pushBack(renderer);
 }
 
-void RichText::visit(cocos2d::Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
+void RichText::visit(cocos2d::Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     if (_enabled)
     {
         formatText();
-        Widget::visit(renderer, parentTransform, parentTransformUpdated);
+        Widget::visit(renderer, parentTransform, parentFlags);
     }
 }
     

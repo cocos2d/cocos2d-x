@@ -30,9 +30,13 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "2d/CCDrawingPrimitives.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCGroupCommand.h"
-#include "renderer/CCCustomCommand.h"
 #include "ui/UILayoutManager.h"
+#include "2d/CCDrawNode.h"
+#include "2d/CCLayer.h"
+#include "CCGLView.h"
+#include "2d/CCSprite.h"
+#include "base/CCEventFocus.h"
+
 
 NS_CC_BEGIN
 
@@ -88,8 +92,7 @@ _passFocusToChild(true),
 _loopFocus(false),
 _isFocusPassing(false)
 {
-    onPassFocusToChild = CC_CALLBACK_2(Layout::findNearestChildWidgetIndex, this);
-    this->setAnchorPoint(Vec2::ZERO);
+    //no-op
 }
 
 Layout::~Layout()
@@ -136,6 +139,7 @@ bool Layout::init()
         ignoreContentAdaptWithSize(false);
         setSize(Size::ZERO);
         setAnchorPoint(Vec2::ZERO);
+        onPassFocusToChild = CC_CALLBACK_2(Layout::findNearestChildWidgetIndex, this);
         return true;
     }
     return false;
@@ -183,22 +187,25 @@ bool Layout::isClippingEnabled()const
     return _clippingEnabled;
 }
 
-void Layout::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
+void Layout::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     if (!_visible)
     {
         return;
     }
+    
     adaptRenderers();
+    doLayout();
+    
     if (_clippingEnabled)
     {
         switch (_clippingType)
         {
             case ClippingType::STENCIL:
-                stencilClippingVisit(renderer, parentTransform, parentTransformUpdated);
+                stencilClippingVisit(renderer, parentTransform, parentFlags);
                 break;
             case ClippingType::SCISSOR:
-                scissorClippingVisit(renderer, parentTransform, parentTransformUpdated);
+                scissorClippingVisit(renderer, parentTransform, parentFlags);
                 break;
             default:
                 break;
@@ -206,26 +213,16 @@ void Layout::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentT
     }
     else
     {
-        ProtectedNode::visit(renderer, parentTransform, parentTransformUpdated);
+        Widget::visit(renderer, parentTransform, parentFlags);
     }
-    doLayout();
 }
     
-void Layout::sortAllChildren()
-{
-    Widget::sortAllChildren();
-    doLayout();
-}
-    
-void Layout::stencilClippingVisit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
+void Layout::stencilClippingVisit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags)
 {
     if(!_visible)
         return;
     
-    bool dirty = parentTransformUpdated || _transformUpdated;
-    if(dirty)
-        _modelViewTransform = transform(parentTransform);
-    _transformUpdated = false;
+    uint32_t flags = processParentFlags(parentTransform, parentFlags);
 
     // IMPORTANT:
     // To ease the migration to v3.0, we still support the Mat4 stack,
@@ -245,7 +242,7 @@ void Layout::stencilClippingVisit(Renderer *renderer, const Mat4 &parentTransfor
     _beforeVisitCmdStencil.func = CC_CALLBACK_0(Layout::onBeforeVisitStencil, this);
     renderer->addCommand(&_beforeVisitCmdStencil);
     
-    _clippingStencil->visit(renderer, _modelViewTransform, dirty);
+    _clippingStencil->visit(renderer, _modelViewTransform, flags);
     
     _afterDrawStencilCmd.init(_globalZOrder);
     _afterDrawStencilCmd.func = CC_CALLBACK_0(Layout::onAfterDrawStencil, this);
@@ -265,7 +262,7 @@ void Layout::stencilClippingVisit(Renderer *renderer, const Mat4 &parentTransfor
         auto node = _children.at(i);
         
         if ( node && node->getLocalZOrder() < 0 )
-            node->visit(renderer, _modelViewTransform, dirty);
+            node->visit(renderer, _modelViewTransform, flags);
         else
             break;
     }
@@ -275,7 +272,7 @@ void Layout::stencilClippingVisit(Renderer *renderer, const Mat4 &parentTransfor
         auto node = _protectedChildren.at(j);
         
         if ( node && node->getLocalZOrder() < 0 )
-            node->visit(renderer, _modelViewTransform, dirty);
+            node->visit(renderer, _modelViewTransform, flags);
         else
             break;
     }
@@ -283,16 +280,16 @@ void Layout::stencilClippingVisit(Renderer *renderer, const Mat4 &parentTransfor
     //
     // draw self
     //
-    this->draw(renderer, _modelViewTransform, dirty);
+    this->draw(renderer, _modelViewTransform, flags);
     
     //
     // draw children and protectedChildren zOrder >= 0
     //
     for(auto it=_protectedChildren.cbegin()+j; it != _protectedChildren.cend(); ++it)
-        (*it)->visit(renderer, _modelViewTransform, dirty);
+        (*it)->visit(renderer, _modelViewTransform, flags);
     
     for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
-        (*it)->visit(renderer, _modelViewTransform, dirty);
+        (*it)->visit(renderer, _modelViewTransform, flags);
 
     
     _afterVisitCmdStencil.init(_globalZOrder);
@@ -327,10 +324,20 @@ void Layout::onBeforeVisitStencil()
     glStencilFunc(GL_NEVER, mask_layer, mask_layer);
     glStencilOp(GL_ZERO, GL_KEEP, GL_KEEP);
 
+    this->drawFullScreenQuadClearStencil();
+    
+    glStencilFunc(GL_NEVER, mask_layer, mask_layer);
+    glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
+}
+    
+void Layout::drawFullScreenQuadClearStencil()
+{
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     
@@ -338,8 +345,6 @@ void Layout::onBeforeVisitStencil()
     
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    glStencilFunc(GL_NEVER, mask_layer, mask_layer);
-    glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
 }
 
 void Layout::onAfterDrawStencil()
@@ -375,13 +380,13 @@ void Layout::onAfterVisitScissor()
     glDisable(GL_SCISSOR_TEST);
 }
     
-void Layout::scissorClippingVisit(Renderer *renderer, const Mat4& parentTransform, bool parentTransformUpdated)
+void Layout::scissorClippingVisit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags)
 {
     _beforeVisitCmdScissor.init(_globalZOrder);
     _beforeVisitCmdScissor.func = CC_CALLBACK_0(Layout::onBeforeVisitScissor, this);
     renderer->addCommand(&_beforeVisitCmdScissor);
 
-    ProtectedNode::visit(renderer, parentTransform, parentTransformUpdated);
+    ProtectedNode::visit(renderer, parentTransform, parentFlags);
     
     _afterVisitCmdScissor.init(_globalZOrder);
     _afterVisitCmdScissor.func = CC_CALLBACK_0(Layout::onAfterVisitScissor, this);

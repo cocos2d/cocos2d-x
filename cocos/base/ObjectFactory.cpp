@@ -22,27 +22,86 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __UISCROLLDELEGATE_H__
-#define __UISCROLLDELEGATE_H__
+#include "ObjectFactory.h"
 
-#include "ui/UIWidget.h"
 
 NS_CC_BEGIN
 
-namespace ui {
-
-class ScrollViewProtocol
+ObjectFactory::TInfo::TInfo(void)
+:_class("")
+,_fun(nullptr)
 {
-public:
-    virtual ~ScrollViewProtocol() {}
+}
 
-protected:
-    virtual void handlePressLogic(const Vec2 &touchPoint) = 0;
-    virtual void handleMoveLogic(const Vec2 &touchPoint) = 0;
-    virtual void handleReleaseLogic(const Vec2 &touchPoint) = 0;
-};
+ObjectFactory::TInfo::TInfo(const std::string& type, Instance ins)
+:_class(type)
+,_fun(ins)
+{
+    ObjectFactory::getInstance()->registerType(*this);
+}
+
+ObjectFactory::TInfo::TInfo(const TInfo &t)
+{
+    _class = t._class;
+    _fun = t._fun;
+}
+
+ObjectFactory::TInfo::~TInfo(void)
+{
+   _class = "";
+   _fun = nullptr;
+}
+
+ObjectFactory::TInfo& ObjectFactory::TInfo::operator= (const TInfo &t)
+{
+    _class = t._class;
+    _fun = t._fun;
+    return *this;
+}
+
+
+ObjectFactory* ObjectFactory::_sharedFactory = nullptr;
+
+ObjectFactory::ObjectFactory(void)
+{
 
 }
-NS_CC_END
 
-#endif /* defined(__UIScrollDelegate__) */
+ObjectFactory::~ObjectFactory(void)
+{
+    _typeMap.clear();
+}
+
+ObjectFactory* ObjectFactory::getInstance()
+{
+    if ( nullptr == _sharedFactory)
+    {
+        _sharedFactory = new ObjectFactory();
+    }
+    return _sharedFactory;
+}
+
+void ObjectFactory::destroyInstance()
+{
+    CC_SAFE_DELETE(_sharedFactory);
+}
+
+Ref* ObjectFactory::createObject(const std::string &name)
+{
+	Ref *o = nullptr;
+	do 
+	{
+		const TInfo t = _typeMap[name];
+		CC_BREAK_IF(t._fun == nullptr);
+		o = t._fun();
+	} while (0);
+   
+    return o;
+}
+
+void ObjectFactory::registerType(const TInfo &t)
+{
+    _typeMap.insert(std::make_pair(t._class, t));
+}
+
+NS_CC_END

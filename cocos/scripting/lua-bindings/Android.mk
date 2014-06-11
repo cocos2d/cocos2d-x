@@ -54,7 +54,8 @@ LOCAL_SRC_FILES := manual/CCLuaBridge.cpp \
           ../../../external/lua/luasocket/timeout.c \
           ../../../external/lua/luasocket/udp.c \
           ../../../external/lua/luasocket/unix.c \
-          ../../../external/lua/luasocket/usocket.c
+          ../../../external/lua/luasocket/usocket.c \
+          ../../../external/xxtea/xxtea.cpp
 
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../external/lua/tolua \
@@ -68,7 +69,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../external/lua/tolua \
                     $(LOCAL_PATH)/auto \
                     $(LOCAL_PATH)/manual \
                     $(LOCAL_PATH)/manual/platform/android \
-                    $(LOCAL_PATH)/manual/platform/android/jni
+                    $(LOCAL_PATH)/manual/platform/android/jni \
+                    $(LOCAL_PATH)/../../../external/xxtea
 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../../../external/lua/tolua \

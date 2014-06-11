@@ -134,11 +134,11 @@ public:
     TMXOrthoObjectsTest(void);
     virtual std::string title() const override;
 
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     virtual std::string subtitle() const override;
 protected:
     CustomCommand _renderCmd;
-    void onDraw(const Mat4 &transform, bool transformUpdated);
+    void onDraw(const Mat4 &transform, uint32_t flags);
 };
 
 class TMXIsoObjectsTest : public TileDemo
@@ -147,11 +147,11 @@ public:
     TMXIsoObjectsTest(void);
     virtual std::string title() const override;
 
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     virtual std::string subtitle() const override;
 protected:
     CustomCommand _renderCmd;
-    void onDraw(const Mat4 &transform, bool transformUpdated);
+    void onDraw(const Mat4 &transform, uint32_t flags);
 };
 
 class TMXResizeTest : public TileDemo
@@ -292,11 +292,11 @@ public:
     TMXGIDObjectsTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
 protected:
     CustomCommand _renderCmd;
-    void onDraw(const Mat4 &transform, bool transformUpdated);
+    void onDraw(const Mat4 &transform, uint32_t flags);
     
 };
 

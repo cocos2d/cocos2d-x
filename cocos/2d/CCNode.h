@@ -107,6 +107,12 @@ public:
     /// Default tag used for all the nodes
     static const int INVALID_TAG = -1;
 
+    enum {
+        FLAGS_TRANSFORM_DIRTY = (1 << 0),
+        FLAGS_CONTENT_SIZE_DIRTY = (1 << 1),
+
+        FLAGS_DIRTY_MASK = (FLAGS_TRANSFORM_DIRTY | FLAGS_CONTENT_SIZE_DIRTY),
+    };
     /// @{
     /// @name Constructor, Destructor and Initializers
 
@@ -283,6 +289,19 @@ public:
      * @param position  The position (x,y) of the node in OpenGL coordinates
      */
     virtual void setPosition(const Vec2 &position);
+
+    /** Sets the position (x,y) using values between 0 and 1.
+     The positions in pixels is calculated like the following:
+     @code
+     // pseudo code
+     void setNormalizedPosition(Vec2 pos) {
+       Size s = getParent()->getContentSize();
+       _position = pos * s;
+     }
+     @endcode
+     */
+    virtual void setNormalizedPosition(const Vec2 &position);
+
     /**
      * Gets the position (x,y) of the node in its parent's coordinate system.
      *
@@ -294,6 +313,10 @@ public:
      * @endcode
      */
     virtual const Vec2& getPosition() const;
+
+    /** returns the normalized position */
+    virtual const Vec2& getNormalizedPosition() const;
+
     /**
      * Sets the position (x,y) of the node in its parent's coordinate system.
      *
@@ -923,13 +946,13 @@ public:
      * AND YOU SHOULD NOT DISABLE THEM AFTER DRAWING YOUR NODE
      * But if you enable any other GL state, you should disable it after drawing your node.
      */
-    virtual void draw(Renderer *renderer, const Mat4& transform, bool transformUpdated);
+    virtual void draw(Renderer *renderer, const Mat4& transform, uint32_t flags);
     virtual void draw() final;
 
     /**
      * Visits this node's children and draw them recursively.
      */
-    virtual void visit(Renderer *renderer, const Mat4& parentTransform, bool parentTransformUpdated);
+    virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags);
     virtual void visit() final;
 
 
@@ -1362,6 +1385,7 @@ protected:
     Vec2 convertToWindowSpace(const Vec2& nodePoint) const;
 
     Mat4 transform(const Mat4 &parentTransform);
+    uint32_t processParentFlags(const Mat4& parentTransform, uint32_t parentFlags);
 
     virtual void updateCascadeOpacity();
     virtual void disableCascadeOpacity();
@@ -1387,6 +1411,8 @@ protected:
 
     Vec2 _position;                ///< position of the node
     float _positionZ;               ///< OpenGL real Z position
+    Vec2 _normalizedPosition;
+    bool _usingNormalizedPosition;
 
     float _skewX;                   ///< skew angle on x-axis
     float _skewY;                   ///< skew angle on y-axis
@@ -1395,6 +1421,7 @@ protected:
     Vec2 _anchorPoint;             ///< anchor point normalized (NOT in points)
 
     Size _contentSize;              ///< untransformed size of the node
+    bool _contentSizeDirty;         ///< whether or not the contentSize is dirty
 
     Mat4 _modelViewTransform;    ///< ModelView transform of the Node.
 

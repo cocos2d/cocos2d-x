@@ -98,6 +98,9 @@ protected:
     Vec3 _outlineColor;
     float _outlineWidth;
     EffectSprite3D* _sprite;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    EventListenerCustom* _backToForegroundListener;
+#endif
     
 protected:
     static const std::string _vertShaderFile;
@@ -112,7 +115,7 @@ public:
     static EffectSprite3D* createFromObjFileAndTexture(const std::string& objFilePath, const std::string& textureFilePath);
     void setEffect3D(Effect3D* effect);
     void addEffect(Effect3DOutline* effect, ssize_t order);
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 protected:
     EffectSprite3D();
     virtual ~EffectSprite3D();

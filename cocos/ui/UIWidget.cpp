@@ -25,6 +25,10 @@ THE SOFTWARE.
 #include "ui/UIWidget.h"
 #include "ui/UILayout.h"
 #include "ui/UIHelper.h"
+#include "base/CCEventListenerTouch.h"
+#include "base/CCEventListenerKeyboard.h"
+#include "base/CCDirector.h"
+#include "base/CCEventFocus.h"
 
 NS_CC_BEGIN
 
@@ -135,9 +139,9 @@ _bright(true),
 _touchEnabled(false),
 _highlight(false),
 _brightStyle(BrightStyle::NONE),
-_touchStartPos(Vec2::ZERO),
-_touchMovePos(Vec2::ZERO),
-_touchEndPos(Vec2::ZERO),
+_touchBeganPosition(Vec2::ZERO),
+_touchMovePosition(Vec2::ZERO),
+_touchEndPosition(Vec2::ZERO),
 _touchEventListener(nullptr),
 _touchEventSelector(nullptr),
 _name("default"),
@@ -153,18 +157,13 @@ _positionPercent(Vec2::ZERO),
 _reorderWidgetChildDirty(true),
 _hitted(false),
 _touchListener(nullptr),
-_color(Color3B::WHITE),
-_opacity(255),
 _flippedX(false),
 _flippedY(false),
 _focused(false),
 _focusEnabled(true),
 _layoutParameterType(LayoutParameter::Type::NONE)
 {
-    onFocusChanged = CC_CALLBACK_2(Widget::onFocusChange,this);
-    onNextFocusedWidget = nullptr;
-    this->setAnchorPoint(Vec2(0.5f, 0.5f));
-    this->setTouchEnabled(true);
+  
 }
 
 Widget::~Widget()
@@ -206,8 +205,15 @@ bool Widget::init()
     {
         initRenderer();
         setBright(true);
+        //TODO: need refactor
         ignoreContentAdaptWithSize(true);
-        setAnchorPoint(Vec2(0.5f, 0.5f));
+        onFocusChanged = CC_CALLBACK_2(Widget::onFocusChange,this);
+        onNextFocusedWidget = nullptr;
+        this->setAnchorPoint(Vec2(0.5f, 0.5f));
+        this->setTouchEnabled(true);
+        this->setCascadeColorEnabled(true);
+        this->setCascadeOpacityEnabled(true);
+        
         return true;
     }
     return false;
@@ -225,12 +231,12 @@ void Widget::onExit()
     ProtectedNode::onExit();
 }
 
-void Widget::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
+void Widget::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     if (_visible)
     {
         adaptRenderers();
-        ProtectedNode::visit(renderer, parentTransform, parentTransformUpdated);
+        ProtectedNode::visit(renderer, parentTransform, parentFlags);
     }
 }
 
@@ -676,8 +682,8 @@ bool Widget::onTouchBegan(Touch *touch, Event *unusedEvent)
     _hitted = false;
     if (isVisible() && isEnabled() && isAncestorsEnabled() && isAncestorsVisible(this) )
     {
-        _touchStartPos = touch->getLocation();
-        if(hitTest(_touchStartPos) && clippingParentAreaContainPoint(_touchStartPos))
+        _touchBeganPosition = touch->getLocation();
+        if(hitTest(_touchBeganPosition) && isClippingParentContainsPoint(_touchBeganPosition))
         {
             _hitted = true;
         }
@@ -690,7 +696,7 @@ bool Widget::onTouchBegan(Touch *touch, Event *unusedEvent)
     Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
-        widgetParent->interceptTouchEvent(TouchEventType::BEGAN, this, _touchStartPos);
+        widgetParent->interceptTouchEvent(TouchEventType::BEGAN, this, touch);
     }
     pushDownEvent();
     return true;
@@ -698,27 +704,30 @@ bool Widget::onTouchBegan(Touch *touch, Event *unusedEvent)
 
 void Widget::onTouchMoved(Touch *touch, Event *unusedEvent)
 {
-    _touchMovePos = touch->getLocation();
-    setHighlighted(hitTest(_touchMovePos));
+    _touchMovePosition = touch->getLocation();
+    setHighlighted(hitTest(_touchMovePosition));
     Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
-        widgetParent->interceptTouchEvent(TouchEventType::MOVED, this, _touchMovePos);
+        widgetParent->interceptTouchEvent(TouchEventType::MOVED, this, touch);
     }
     moveEvent();
 }
 
 void Widget::onTouchEnded(Touch *touch, Event *unusedEvent)
 {
-    _touchEndPos = touch->getLocation();
+    _touchEndPosition = touch->getLocation();
     
     Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
-        widgetParent->interceptTouchEvent(TouchEventType::ENDED, this, _touchEndPos);
+        widgetParent->interceptTouchEvent(TouchEventType::ENDED, this, touch);
     }
     
-    if (_highlight)
+    bool highlight = _highlight;
+    setHighlighted(false);
+    
+    if (highlight)
     {
         releaseUpEvent();
     }
@@ -726,9 +735,6 @@ void Widget::onTouchEnded(Touch *touch, Event *unusedEvent)
     {
         cancelUpEvent();
     }
-    
-    setHighlighted(false);
-
 }
 
 void Widget::onTouchCancelled(Touch *touch, Event *unusedEvent)
@@ -811,7 +817,7 @@ bool Widget::hitTest(const Vec2 &pt)
     return false;
 }
 
-bool Widget::clippingParentAreaContainPoint(const Vec2 &pt)
+bool Widget::isClippingParentContainsPoint(const Vec2 &pt)
 {
     _affectByClipping = false;
     Widget* parent = getWidgetParent();
@@ -846,19 +852,19 @@ bool Widget::clippingParentAreaContainPoint(const Vec2 &pt)
         }
         if (bRet)
         {
-            return clippingParent->clippingParentAreaContainPoint(pt);
+            return clippingParent->isClippingParentContainsPoint(pt);
         }
         return false;
     }
     return true;
 }
 
-void Widget::interceptTouchEvent(cocos2d::ui::Widget::TouchEventType event, cocos2d::ui::Widget *sender, const cocos2d::Vec2 &point)
+void Widget::interceptTouchEvent(cocos2d::ui::Widget::TouchEventType event, cocos2d::ui::Widget *sender, Touch *touch)
 {
     Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
-        widgetParent->interceptTouchEvent(event,sender,point);
+        widgetParent->interceptTouchEvent(event,sender,touch);
     }
 
 }
@@ -943,19 +949,19 @@ float Widget::getTopBoundary() const
     return getBottomBoundary() + _size.height;
 }
 
-const Vec2& Widget::getTouchStartPos()const
+const Vec2& Widget::getTouchBeganPosition()const
 {
-    return _touchStartPos;
+    return _touchBeganPosition;
 }
 
-const Vec2& Widget::getTouchMovePos()const
+const Vec2& Widget::getTouchMovePosition()const
 {
-    return _touchMovePos;
+    return _touchMovePosition;
 }
 
-const Vec2& Widget::getTouchEndPos()const
+const Vec2& Widget::getTouchEndPosition()const
 {
-    return _touchEndPos;
+    return _touchEndPosition;
 }
 
 void Widget::setName(const std::string& name)
@@ -1071,18 +1077,6 @@ void Widget::copyProperties(Widget *widget)
     onSizeChanged();
 }
     
-void Widget::setColor(const Color3B& color)
-{
-    _color = color;
-    updateTextureColor();
-}
-
-void Widget::setOpacity(GLubyte opacity)
-{
-    _opacity = opacity;
-    updateTextureOpacity();
-}
-    
 void Widget::setFlippedX(bool flippedX)
 {
     _flippedX = flippedX;
@@ -1095,21 +1089,6 @@ void Widget::setFlippedY(bool flippedY)
     updateFlippedY();
 }
 
-void Widget::updateColorToRenderer(Node* renderer)
-{
-    renderer->setColor(_color);
-}
-
-void Widget::updateOpacityToRenderer(Node* renderer)
-{
-    renderer->setOpacity(_opacity);
-}
-
-void Widget::updateRGBAToRenderer(Node* renderer)
-{
-    renderer->setColor(_color);
-    renderer->setOpacity(_opacity);
-}
 
 /*temp action*/
 void Widget::setActionTag(int tag)

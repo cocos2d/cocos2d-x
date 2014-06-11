@@ -877,14 +877,14 @@ void Label::drawShadowWithoutBlur()
     setColor(oldColor);
 }
 
-void Label::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     // Don't do calculate the culling if the transform was not updated
-    _insideBounds = transformUpdated ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
+    _insideBounds = (flags & FLAGS_TRANSFORM_DIRTY) ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
 
     if(_insideBounds) {
         _customCommand.init(_globalZOrder);
-        _customCommand.func = CC_CALLBACK_0(Label::onDraw, this, transform, transformUpdated);
+        _customCommand.func = CC_CALLBACK_0(Label::onDraw, this, transform, flags);
         renderer->addCommand(&_customCommand);
     }
 }
@@ -1019,7 +1019,7 @@ void Label::updateFont()
     _systemFontDirty = false;
 }
 
-void Label::drawTextSprite(Renderer *renderer, bool parentTransformUpdated)
+void Label::drawTextSprite(Renderer *renderer, uint32_t parentFlags)
 {
     if (_fontDefinition._fontFillColor != _textColor)
     {
@@ -1044,12 +1044,12 @@ void Label::drawTextSprite(Renderer *renderer, bool parentTransformUpdated)
     }
     if (_shadowNode)
     {
-        _shadowNode->visit(renderer, _modelViewTransform, parentTransformUpdated);
+        _shadowNode->visit(renderer, _modelViewTransform, parentFlags);
     }
-    _textSprite->visit(renderer, _modelViewTransform, parentTransformUpdated);
+    _textSprite->visit(renderer, _modelViewTransform, parentFlags);
 }
 
-void Label::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
+void Label::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     if (! _visible || _originalUTF8String.empty())
     {
@@ -1064,9 +1064,9 @@ void Label::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTr
         updateContent();
     }
 
-    bool dirty = parentTransformUpdated || _transformUpdated;
+    uint32_t flags = processParentFlags(parentTransform, parentFlags);
 
-    if (_shadowEnabled && _shadowBlurRadius <= 0 && (_shadowDirty || dirty))
+    if (_shadowEnabled && _shadowBlurRadius <= 0 && (_shadowDirty || (flags & FLAGS_DIRTY_MASK)))
     {
         _position.x += _shadowOffset.width;
         _position.y += _shadowOffset.height;
@@ -1081,12 +1081,6 @@ void Label::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTr
         _shadowDirty = false;
     }
 
-    if(dirty)
-    {
-        _modelViewTransform = transform(parentTransform);
-    }
-    _transformUpdated = false;
-
     // IMPORTANT:
     // To ease the migration to v3.0, we still support the Mat4 stack,
     // but it is deprecated and your code should not rely on it
@@ -1099,11 +1093,11 @@ void Label::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTr
 
     if (_textSprite)
     {
-        drawTextSprite(renderer,dirty);
+        drawTextSprite(renderer, flags);
     }
     else
     {
-        draw(renderer, _modelViewTransform, dirty);
+        draw(renderer, _modelViewTransform, flags);
     }
 
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);

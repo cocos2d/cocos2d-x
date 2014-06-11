@@ -116,7 +116,7 @@ public:
     virtual void syncPhysicsTransform() const;
     virtual const Mat4& getNodeToParentTransform() const override;
     
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
 protected:
     const Vec2& getPosFromPhysics() const;

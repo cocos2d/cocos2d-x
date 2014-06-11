@@ -16,7 +16,7 @@
 -- @function [parent=#DrawNode] onDraw 
 -- @param self
 -- @param #mat4_table mat4
--- @param #bool bool
+-- @param #unsigned int int
         
 --------------------------------
 -- @function [parent=#DrawNode] clear 
@@ -65,6 +65,6 @@
 -- @param self
 -- @param #cc.Renderer renderer
 -- @param #mat4_table mat4
--- @param #bool bool
+-- @param #unsigned int int
         
 return nil

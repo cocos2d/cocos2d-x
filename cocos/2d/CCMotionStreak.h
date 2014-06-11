@@ -85,7 +85,7 @@ public:
     * @js NA
     * @lua NA
     */
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     /**
     * @js NA
     * @lua NA
@@ -120,7 +120,7 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     //renderer callback
-    void onDraw(const Mat4 &transform, bool transformUpdated);
+    void onDraw(const Mat4 &transform, uint32_t flags);
 
     bool _fastMode;
     bool _startingPositionInitialized;

@@ -26,7 +26,6 @@ THE SOFTWARE.
 #define __UIPAGEVIEW_H__
 
 #include "ui/UILayout.h"
-#include "ui/UIScrollInterface.h"
 
 NS_CC_BEGIN
 
@@ -138,8 +137,6 @@ public:
     CC_DEPRECATED_ATTRIBUTE void addEventListenerPageView(Ref *target, SEL_PageViewEvent selector);
     void addEventListener(const ccPageViewCallback& callback);
     
-
-    
     virtual bool onTouchBegan(Touch *touch, Event *unusedEvent) override;
     virtual void onTouchMoved(Touch *touch, Event *unusedEvent) override;
     virtual void onTouchEnded(Touch *touch, Event *unusedEvent) override;
@@ -189,10 +186,10 @@ protected:
     void updateAllPagesPosition();
     void autoScroll(float dt);
 
-    virtual void handlePressLogic(const Vec2 &touchPoint);
-    virtual void handleMoveLogic(const Vec2 &touchPoint) ;
-    virtual void handleReleaseLogic(const Vec2 &touchPoint) ;
-    virtual void interceptTouchEvent(TouchEventType event, Widget* sender, const Vec2 &touchPoint) ;
+    virtual void handlePressLogic(Touch *touch);
+    virtual void handleMoveLogic(Touch *touch) ;
+    virtual void handleReleaseLogic(Touch *touch) ;
+    virtual void interceptTouchEvent(TouchEventType event, Widget* sender,Touch *touch) ;
     
     
     virtual void onSizeChanged() override;
@@ -217,17 +214,14 @@ protected:
     Vector<Layout*> _pages;
 
     TouchDirection _touchMoveDirection;
-
-    float _touchStartLocation;
-    float _touchMoveStartLocation;
-    Vec2 _movePagePoint;
+   
     Widget* _leftBoundaryChild;
     Widget* _rightBoundaryChild;
+    
     float _leftBoundary;
     float _rightBoundary;
    
     float _childFocusCancelOffset;
-
 
     Ref* _pageViewEventListener;
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))

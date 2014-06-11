@@ -33,6 +33,10 @@ THE SOFTWARE.
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCTexture2D.h"
+#include "base/CCEventCustom.h"
+#include "base/CCEventListenerCustom.h"
+#include "base/CCEventType.h"
+#include "base/CCDirector.h"
 
 NS_CC_BEGIN
 
@@ -272,11 +276,22 @@ GLProgramState::GLProgramState()
 : _vertexAttribsFlags(0)
 , _glprogram(nullptr)
 , _textureUnitIndex(1)
+, _uniformAttributeValueDirty(true)
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    // listen the event when app go to foreground
+    CCLOG("create _backToForegroundlistener for GLProgramState");
+    _backToForegroundlistener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom*) { _uniformAttributeValueDirty = true; });
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundlistener, -1);
+#endif
 }
 
 GLProgramState::~GLProgramState()
-{    
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundlistener);
+#endif
+    
     CC_SAFE_RELEASE(_glprogram);
 }
 
@@ -312,7 +327,24 @@ void GLProgramState::resetGLProgram()
 void GLProgramState::apply(const Mat4& modelView)
 {
     CCASSERT(_glprogram, "invalid glprogram");
-
+    if(_uniformAttributeValueDirty)
+    {
+        for(auto& uniformValue : _uniforms)
+        {
+            uniformValue.second._uniform = _glprogram->getUniform(uniformValue.first);
+        }
+        
+        _vertexAttribsFlags = 0;
+        for(auto& attributeValue : _attributes)
+        {
+            attributeValue.second._vertexAttrib = _glprogram->getVertexAttrib(attributeValue.first);;
+            if(attributeValue.second._enabled)
+                _vertexAttribsFlags |= 1 << attributeValue.second._vertexAttrib->index;
+        }
+        
+        _uniformAttributeValueDirty = false;
+        
+    }
     // set shader
     _glprogram->use();
     _glprogram->setUniformsForBuiltins(modelView);
@@ -322,9 +354,9 @@ void GLProgramState::apply(const Mat4& modelView)
     if(_vertexAttribsFlags) {
         // enable/disable vertex attribs
         GL::enableVertexAttribs(_vertexAttribsFlags);
-
         // set attributes
-        for(auto &attribute : _attributes) {
+        for(auto &attribute : _attributes)
+        {
             attribute.second.apply();
         }
     }
@@ -465,9 +497,21 @@ void GLProgramState::setUniformTexture(const std::string &uniformName, GLuint te
 {
     auto v = getUniformValue(uniformName);
     if (v)
-        v->setTexture(textureId, _textureUnitIndex++);
+    {
+        if (_boundTextureUnits.find(uniformName) != _boundTextureUnits.end())
+        {
+            v->setTexture(textureId, _boundTextureUnits[uniformName]);
+        }
+        else
+        {
+            v->setTexture(textureId, _textureUnitIndex);
+            _boundTextureUnits[uniformName] = _textureUnitIndex++;
+        }
+    }
     else
+    {
         CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
+    }
 }
 
 

@@ -279,7 +279,7 @@ void Sprite3D::setTexture(Texture2D* texture)
     }
 }
 
-void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     GLProgramState* programstate = getGLProgramState();
     Color4F color(getDisplayedColor());
