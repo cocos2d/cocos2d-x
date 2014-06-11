@@ -668,6 +668,16 @@ public:
      */
     virtual Node * getChildByTag(int tag) const;
     /**
+     * Gets a child from the container with its name
+     *
+     * @param name   An identifier to find the child node.
+     *
+     * @return a Node object whose name equals to the input parameter
+     *
+     * @since v3.2
+     */
+    virtual Node* getChildByName(const std::string& name) const;
+    /**
      * Returns the array of the node's children
      *
      * @return the array the node's children
@@ -780,6 +790,19 @@ public:
      * @param tag   A integer that identifies the node.
      */
     virtual void setTag(int tag);
+    
+    /** Returns a string that is used to identify the node.
+     * @return A string that identifies the node.
+     * 
+     * @since v3.2
+     */
+    virtual std::string getName() const;
+    /** Changes the name that is used to identify the node easily.
+     * @param name A string that identifies the node.
+     *
+     * @since v3.2
+     */
+    virtual void setName(const std::string& name);
 
     
     /**
@@ -1443,6 +1466,7 @@ protected:
     int _tag;                         ///< a tag. Can be any number you assigned just to identify this node
     
     std::string _name;               ///<a string label, an user defined string to identify this node
+    size_t _hashOfName;            ///<hash value of _name, used for speed in getChildByName
 
     void *_userData;                ///< A user assingned void pointer, Can be point to any cpp object
     Ref *_userObject;               ///< A user assigned Object

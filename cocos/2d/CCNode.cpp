@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "2d/CCNode.h"
 
 #include <algorithm>
+#include <string>
 
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
@@ -122,6 +123,8 @@ Node::Node(void)
 , _cascadeColorEnabled(false)
 , _cascadeOpacityEnabled(false)
 , _usingNormalizedPosition(false)
+, _name("")
+, _hashOfName(0)
 {
     // set default scheduler and actionManager
     Director *director = Director::getInstance();
@@ -624,6 +627,18 @@ void Node::setTag(int tag)
     _tag = tag ;
 }
 
+std::string Node::getName() const
+{
+    return _name;
+}
+
+void Node::setName(const std::string& name)
+{
+    _name = name;
+    std::hash<std::string> h;
+    _hashOfName = h(name);
+}
+
 /// userData setter
 void Node::setUserData(void *userData)
 {
@@ -745,6 +760,22 @@ Node* Node::getChildByTag(int tag) const
     for (auto& child : _children)
     {
         if(child && child->_tag == tag)
+            return child;
+    }
+    return nullptr;
+}
+
+Node* Node::getChildByName(const std::string& name) const
+{
+    CCASSERT(name.size() != 0, "Invilide name");
+    
+    std::hash<std::string> h;
+    size_t hash = h(name);
+    
+    for (auto& child : _children)
+    {
+        // Different strings may have the same hash code, but can use it to compare first for speed
+        if(child->_hashOfName == hash && child->_name.compare(name) == 0)
             return child;
     }
     return nullptr;
