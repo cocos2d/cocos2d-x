@@ -171,10 +171,17 @@ void deleteTexture(GLuint textureId)
 void deleteTextureN(GLuint textureUnit, GLuint textureId)
 {
 #if CC_ENABLE_GL_STATE_CACHE
-	if (s_currentBoundTexture[textureUnit] == textureId)
+    
+    // Need to check if the texture is still bound against any of the available texture units and mark it as unbound.
+    // Internally GL will do this if the texture is deleted so our state cache needs to be kept consitent with the internal GL state.
+    for (size_t i = 0; i < MAX_ACTIVE_TEXTURE; ++i)
     {
-		s_currentBoundTexture[textureUnit] = -1;
+        if (s_currentBoundTexture[i] == textureId)
+        {
+            s_currentBoundTexture[i] = -1;
+        }
     }
+
 #endif // CC_ENABLE_GL_STATE_CACHE
     
 	glDeleteTextures(1, &textureId);
