@@ -201,20 +201,25 @@ void TestTimelineAction::onEnter()
 {
     TimelineActionTestLayer::onEnter();
 
-    FileUtils::getInstance()->addSearchPath("E:/cocos2d-x/cocos2d-x/tests/cpp-tests/Resources/TimelineAction");
+//     FileUtils::getInstance()->addSearchPath("E:/cocos2d-x/cocos2d-x/tests/cpp-tests/Resources/TimelineAction");
+// 
+//     for(int i=0; i<1; i++)
+//     {
+//         node = NodeCache::getInstance()->createNode("NewUi11123_1.json");
+//         action = TimelineActionCache::getInstance()->createAction("NewUi11123_1.json");
+// 
+//         node->runAction(action);
+//         action->gotoFrameAndPlay(0);
+// 
+//         //node->setScale(0.4f);
+//         node->setPosition(100+i*5,160);
+// 
+//         addChild(node);
+//     }
 
-    for(int i=0; i<1; i++)
+    for(int i=0; i<100; i++)
     {
-        node = NodeCache::getInstance()->createNode("NewUi11123_1.json");
-        action = TimelineActionCache::getInstance()->createAction("NewUi11123_1.json");
-
-        node->runAction(action);
-        action->gotoFrameAndPlay(0);
-
-        //node->setScale(0.4f);
-        node->setPosition(100+i*5,160);
-
-        addChild(node);
+        AsyncReader::getInstance()->readFileAsync("armature/bg.jpg", CC_CALLBACK_1(TestTimelineAction::loadingRef, this), CC_CALLBACK_1(TestTimelineAction::loadedRef, this));
     }
 
 }
@@ -222,4 +227,17 @@ void TestTimelineAction::onEnter()
 std::string TestTimelineAction::title() const
 {
     return "Test AnimationElement";
+}
+
+cocos2d::Ref* TestTimelineAction::loadingRef(std::string filename)
+{
+    return Sprite::create(filename);
+}
+
+void TestTimelineAction::loadedRef(cocos2d::Ref* ref)
+{
+    if(cocos2d::Node* node = dynamic_cast<cocos2d::Node*>(ref))
+    {
+        addChild(node);
+    }
 }

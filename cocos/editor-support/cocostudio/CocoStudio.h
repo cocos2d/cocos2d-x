@@ -63,5 +63,6 @@ THE SOFTWARE.
 #include "cocostudio/TimelineAction/CCTimeLine.h"
 #include "cocostudio/TimelineAction/CCTimelineAction.h"
 #include "cocostudio/TimelineAction/CCTimelineActionCache.h"
+#include "cocostudio/TimelineAction/CCAsyncReader.h"
 
 #endif

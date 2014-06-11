@@ -42,6 +42,7 @@
     <ClCompile Include="..\CCTween.cpp" />
     <ClCompile Include="..\CCUtilMath.cpp" />
     <ClCompile Include="..\DictionaryHelper.cpp" />
+    <ClCompile Include="..\TimelineAction\CCAsyncReader.cpp" />
     <ClCompile Include="..\TimelineAction\CCFrame.cpp" />
     <ClCompile Include="..\TimelineAction\CCNodeCache.cpp" />
     <ClCompile Include="..\TimelineAction\CCTimeLine.cpp" />
@@ -108,6 +109,7 @@
     <ClInclude Include="..\CCTween.h" />
     <ClInclude Include="..\CCUtilMath.h" />
     <ClInclude Include="..\DictionaryHelper.h" />
+    <ClInclude Include="..\TimelineAction\CCAsyncReader.h" />
     <ClInclude Include="..\TimelineAction\CCFrame.h" />
     <ClInclude Include="..\TimelineAction\CCNodeCache.h" />
     <ClInclude Include="..\TimelineAction\CCTimeLine.h" />
