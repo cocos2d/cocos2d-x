@@ -148,20 +148,20 @@ void MeshCommand::execute()
 
     glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
     _glProgramState->setUniformVec4("u_color", _displayColor);
-    if (_matrixPaletteSize && _matrixPalette)
-    {
-        auto glProgram = _glProgramState->getGLProgram();
 
-        auto uniform = glProgram->getUniform("u_matrixPalette");
-        if (uniform)
-        {
-            glProgram->use();
-            glProgram->setUniformLocationWith4fv(uniform->location, (const float*)_matrixPalette, _matrixPaletteSize);
-        }
-    }
     
     _glProgramState->apply(_mv);
     
+    if (_matrixPaletteSize && _matrixPalette)
+    {
+        auto glProgram = _glProgramState->getGLProgram();
+        
+        auto uniform = glProgram->getUniform("u_matrixPalette");
+        if (uniform)
+        {
+            glProgram->setUniformLocationWith4fv(uniform->location, (const float*)_matrixPalette, _matrixPaletteSize);
+        }
+    }
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
     
     // Draw

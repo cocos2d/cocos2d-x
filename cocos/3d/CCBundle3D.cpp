@@ -85,10 +85,11 @@ bool Bundle3D::loadMeshData(const std::string& id, MeshData* meshdata)
     meshdata->resetData();
     meshdata->vertexSizeInFloat = 13 * 4;
     meshdata->vertex = new float[meshdata->vertexSizeInFloat];
-    float vert[] = {0.f,50.f,0.f,  0.f,0.f,  0.f,0.f,0.f,0.f,   1.f,0.f,0.f,0.f,
-                    0.f,0.f,50.f,  1.f,1.f,  0.f,0.f,0.f,0.f,   1.f,0.f,0.f,0.f,
-                    50.f,0.f,0.f,  1.f,1.f,  0.f,0.f,0.f,0.f,   1.f,0.f,0.f,0.f,
-                   -50.f,0.f,0.f,  1.f,1.f,  0.f,0.f,0.f,0.f,   1.f,0.f,0.f,0.f};
+   float vert[] = {0.f,50.f,0.f,  0.f,1.f,  0.f,0.f,0.f,0.f,   1.f,0.f,0.f,0.f,
+                   0.f,0.f,50.f,  0.f,0.f,  0.f,0.f,0.f,0.f,   1.f,0.f,0.f,0.f,
+                   50.f,0.f,0.f,  1.f,0.f,  0.f,0.f,0.f,0.f,   1.f,0.f,0.f,0.f,
+                  50.f,50.f,0.f,  1.f,1.f,  0.f,0.f,0.f,0.f,   1.f,0.f,0.f,0.f};
+    
     //float vert[] = {0.f,50.f,0.f,  0.f,0.f,50.f, 50.f,0.f,0.f, -50.f,0.f,0.f};
     memcpy(meshdata->vertex, vert, meshdata->vertexSizeInFloat * sizeof(float));
     
