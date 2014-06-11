@@ -42,7 +42,6 @@
 #include "WidgetReader/ScrollViewReader/ScrollViewReader.h"
 #include "WidgetReader/ListViewReader/ListViewReader.h"
 
-
 NS_CC_EXT_BEGIN
 
 using namespace cocos2d::ui;
@@ -182,6 +181,73 @@ void GUIReader::registerTypeAndCallBack(const std::string& classType,
     }
 }
 
+cocos2d::ui::Widget* GUIReader::widgetFromBinaryFile(const char *fileName)
+{
+    std::string jsonpath;
+    rapidjson::Document jsonDict;
+    jsonpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(fileName);
+    size_t pos = jsonpath.find_last_of('/');
+    m_strFilePath = jsonpath.substr(0,pos+1);
+    unsigned long nSize = 0;
+    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(fileName);
+    unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str(), "rb", &nSize);
+    
+    const char* fileVersion = "";
+    ui::Widget* widget = NULL;
+    
+    if (pBuffer != NULL && nSize > 0)
+    {
+        CocoLoader	tCocoLoader;
+        if(true == tCocoLoader.ReadCocoBinBuff((char*)pBuffer))
+        {
+            stExpCocoNode*	tpRootCocoNode = tCocoLoader.GetRootCocoNode();
+            
+            rapidjson::Type tType = tpRootCocoNode->GetType(&tCocoLoader);
+            if (rapidjson::kObjectType == tType || rapidjson::kArrayType == tType)
+            {
+                stExpCocoNode *tpChildArray = tpRootCocoNode->GetChildArray();
+                
+                
+                for (int i = 0; i < tpRootCocoNode->GetChildNum(); ++i) {
+                    std::string key = tpChildArray[i].GetName(&tCocoLoader);
+                    if (key == "version") {
+                        fileVersion = tpChildArray[i].GetValue();
+                        break;
+                    }
+                }
+                
+                WidgetPropertiesReader * pReader = NULL;
+                if (fileVersion)
+                {
+                    int versionInteger = getVersionInteger(fileVersion);
+                    if (versionInteger < 250)
+                    {
+                        CCAssert(0, "You current studio doesn't support binary format, please upgrade to the latest version!");
+                        pReader = new WidgetPropertiesReader0250();
+                        widget = pReader->createWidgetFromBinary(&tCocoLoader, tpRootCocoNode, fileName);
+                    }
+                    else
+                    {
+                        pReader = new WidgetPropertiesReader0300();
+                        widget = pReader->createWidgetFromBinary(&tCocoLoader, tpRootCocoNode, fileName);
+                    }
+                }
+                else
+                {
+                    pReader = new WidgetPropertiesReader0250();
+                    widget = pReader->createWidgetFromBinary(&tCocoLoader, tpRootCocoNode, fileName);
+                }
+                
+                CC_SAFE_DELETE(pReader);
+                
+            }
+        }
+    }
+    
+    CC_SAFE_DELETE_ARRAY(pBuffer);
+    
+    return widget;
+}
 
 cocos2d::ui::Widget* GUIReader::widgetFromJsonFile(const char *fileName)
 {
