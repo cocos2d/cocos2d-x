@@ -517,11 +517,11 @@ Sprite3DWithSkinTest::Sprite3DWithSkinTest()
 }
 std::string Sprite3DWithSkinTest::title() const
 {
-    return "Testing Sprite3D"; 
+    return "Testing Sprite3D for animation from c3t";
 }
 std::string Sprite3DWithSkinTest::subtitle() const
 {
-    return "Sprite3D from .c3t";
+    return "Tap screen to add more sprite3D";
 }
 
 void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
@@ -534,8 +534,16 @@ void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
     sprite->setPosition( Vec2( p.x, p.y) );
     auto animation = Animation3D::getOrCreate("Sprite3DTest/XXX.c3t");
     
-    
     auto animate = Animate3D::create(animation);
+    if(std::rand() %3 == 0)
+    {
+        animate->setPlayBack(true);
+    }
+    
+    if(std::rand() % 3 == 0)
+    {
+        animate->setSpeed(animate->getSpeed() * (std::rand() % 10));
+    }
     
     sprite->runAction(RepeatForever::create(animate));
 }
