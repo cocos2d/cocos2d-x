@@ -68,6 +68,7 @@ namespace cocostudio
         std::string frontCrossDisabledFileName = this->getResourcePath(frontCrossDisabledDic, "path", (Widget::TextureResType)frontCrossDisabledType);
         checkBox->loadTextureFrontCrossDisabled(frontCrossDisabledFileName, (Widget::TextureResType)frontCrossDisabledType);
         
+        checkBox->setSelectedState(DICTOOL->getBooleanValue_json(options, "selectedState"));
         
         WidgetReader::setColorPropsFromJsonDictionary(widget, options);
     }
