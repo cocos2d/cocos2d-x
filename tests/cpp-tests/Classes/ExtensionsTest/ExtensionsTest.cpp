@@ -9,6 +9,7 @@
 #include "TableViewTest/TableViewTestScene.h"
 
 #include "CocoStudioArmatureTest/ArmatureScene.h"
+#include "CocoStudioTimelineActionTest/TimelineActionTestScene.h"
 #include "CocoStudioComponentsTest/ComponentsTestScene.h"
 #include "CocoStudioSceneTest/SceneEditorTest.h"
 
@@ -78,6 +79,11 @@ static struct {
 	                                       scene->release();
 	}
 	},
+    { "CocoStudioTimelineActionTest", [](Ref *sender) { TimelineActionTestScene *scene = new TimelineActionTestScene();
+    scene->runThisTest();
+    scene->release();
+    }
+    },
     { "CocoStudioComponentsTest", [](Ref *sender) { runComponentsTestLayerTest(); }
     },
 	{ "CocoStudioSceneTest", [](Ref *sender) { SceneEditorTestScene *scene = new SceneEditorTestScene();
