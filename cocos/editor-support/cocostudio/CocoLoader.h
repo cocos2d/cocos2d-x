@@ -28,41 +28,44 @@
 #include <stdio.h>
 #include <vector>
 #include <cstdio>
+#include <stdint.h>
 #include "rapidjson.h"
 #include "document.h"
 
 namespace cocostudio {
     
+#pragma pack (4)
     struct  stExpCocoAttribDesc
     {
         rapidjson::Type			m_Type;
-        char*					m_szName;
-        char*					m_szDefaultValue;
+		uint64_t	m_szName;				//对应的名称
+		uint64_t	m_szDefaultValue;		//对应的默认值
     public:
         
         void	ReBuild(char* pStringMemoryAddr)
         {
-            m_szName = (char*)((unsigned long)m_szName + pStringMemoryAddr);
-            m_szDefaultValue = (char*)((unsigned long)m_szDefaultValue + pStringMemoryAddr);
+			m_szName = m_szName + (uint64_t)pStringMemoryAddr;
+			m_szDefaultValue = m_szDefaultValue + (uint64_t)pStringMemoryAddr;
         }
     }
     ;
     
     struct  stExpCocoObjectDesc
     {
-        char*					m_szName;
-        int						m_nAttribNum;
-        stExpCocoAttribDesc*	m_pAttribDescArray;
+        uint32_t		m_nAttribNum;			//属性数量
+		uint64_t		m_szName;				//对应的名称字符串的位置,默认为0
+		uint64_t		m_pAttribDescArray;		//属性数组
     public:
         
         void	ReBuild(char* pAttribMemoryAddr,char* pStringMemoryAddr)
         {
-            m_szName = (char*)((unsigned long)m_szName + pStringMemoryAddr);
-            m_pAttribDescArray = (stExpCocoAttribDesc*)((unsigned long)m_pAttribDescArray + pAttribMemoryAddr);
-            for(int i = 0 ; i < m_nAttribNum ; i++)
-            {
-                m_pAttribDescArray[i].ReBuild(pStringMemoryAddr);
-            }
+			m_szName = m_szName + (uint64_t)pStringMemoryAddr;
+			m_pAttribDescArray = m_pAttribDescArray + (uint64_t)pAttribMemoryAddr;
+			stExpCocoAttribDesc* tpAttribDescArray = (stExpCocoAttribDesc*)m_pAttribDescArray;
+			for(int i = 0 ; i < m_nAttribNum ; i++)
+			{
+				tpAttribDescArray[i].ReBuild(pStringMemoryAddr);
+			}
         }
         
     };
@@ -72,11 +75,11 @@ namespace cocostudio {
     struct  stExpCocoNode
     {
     protected:
-        int						m_ObjIndex;
-        int						m_AttribIndex;
-        char*					m_szValue;
-        int						m_ChildNum;
-        stExpCocoNode*			m_ChildArray;
+		int32_t						m_ObjIndex;				//对应的物体索引
+		int32_t						m_AttribIndex;			//属性的物体索引
+		uint32_t					m_ChildNum;				//子节点数量
+        uint64_t					m_szValue;				//对应的默认值
+		uint64_t					m_ChildArray;			//对应的子节点数组
     public:
         
         
@@ -99,13 +102,13 @@ namespace cocostudio {
     
     struct		stCocoFileHeader
     {
-        int				m_nFirstUsed;
-        char			m_FileDesc[32];
-        char			m_Version[32];
-        int				m_ObjectCount;
-        unsigned long	m_lAttribMemAddr;
-        unsigned long   m_CocoNodeMemAddr;
-        unsigned long   m_lStringMemAddr;
+		char			m_FileDesc[32];
+		char			m_Version[32];
+		uint32_t		m_nFirstUsed;
+		uint32_t		m_ObjectCount;
+		uint64_t		m_lAttribMemAddr;
+		uint64_t		m_CocoNodeMemAddr;
+		uint64_t		m_lStringMemAddr;
         
     };
     
@@ -137,6 +140,8 @@ namespace cocostudio {
         stExpCocoObjectDesc*	GetCocoObjectDesc(){return	m_pObjectDescArray;}
         
     };
+    
+#pragma pack ()
 }
 
 

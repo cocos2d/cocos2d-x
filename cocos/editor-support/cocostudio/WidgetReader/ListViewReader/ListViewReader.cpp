@@ -45,7 +45,7 @@ namespace cocostudio
             std::string value = stChildArray[i].GetValue();
             
             if (key == "direction") {
-                listView->setDirection((ScrollView::Direction)valueToInt(value));
+                listView->setDirection((ScrollView::Direction)valueToFloat(value));
             }
             else if(key == "gravity"){
                 listView->setGravity((ListView::Gravity)valueToInt(value));

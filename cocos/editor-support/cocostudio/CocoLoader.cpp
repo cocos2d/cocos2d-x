@@ -23,7 +23,6 @@
  ****************************************************************************/
 
 #include "CocoLoader.h"
-#include <iostream>
 
 namespace cocostudio {
     const	char* kTypeNames[] = { "Null", "False", "True", "Object", "Array", "String", "Number" };
@@ -38,10 +37,12 @@ namespace cocostudio {
             stExpCocoObjectDesc*	tpCocoObjectDesc = pCoco->GetCocoObjectDesc();
             if( m_AttribIndex >= 0 )
             {
-                tType = tpCocoObjectDesc[m_ObjIndex].m_pAttribDescArray[m_AttribIndex].m_Type;
-                if(rapidjson::kFalseType == tType || rapidjson::kTrueType == tType)
+				stExpCocoAttribDesc* tpAttribDescArray = (stExpCocoAttribDesc*) tpCocoObjectDesc[m_ObjIndex].m_pAttribDescArray;
+				tType = tpAttribDescArray[m_AttribIndex].m_Type;
+				if(rapidjson::kFalseType == tType || rapidjson::kTrueType == tType)
                 {
-                    if(m_szValue[0] == '0')
+                    char* szValue = (char*)m_szValue;
+                    if(szValue[0] == '0')
                     {
                         return rapidjson::kFalseType;
                     }
@@ -66,7 +67,8 @@ namespace cocostudio {
                 
                 if(rapidjson::kFalseType == tType || rapidjson::kTrueType == tType)
                 {
-                    if(m_szValue[0] == '0')
+                    char* szValue = (char*)m_szValue;
+                    if(szValue[0] == '0')
                     {
                         return rapidjson::kFalseType;
                     }
@@ -92,68 +94,73 @@ namespace cocostudio {
             stExpCocoObjectDesc*	tpCocoObjectDesc = pCoco->GetCocoObjectDesc();
             if( m_AttribIndex >= 0 )
             {
-                szName = tpCocoObjectDesc[m_ObjIndex].m_pAttribDescArray[m_AttribIndex].m_szName;
+				stExpCocoAttribDesc* tpAttribDescArray = (stExpCocoAttribDesc*) tpCocoObjectDesc[m_ObjIndex].m_pAttribDescArray;
+				szName = (char*)tpAttribDescArray[m_AttribIndex].m_szName;
             }
             else
             {
                 
-                if(m_szValue[0])
-                {
-                    szName = m_szValue;
-                }
-                else
-                {
-                    szName = tpCocoObjectDesc[m_ObjIndex].m_szName;
-                }
+				//如果名字与类名称不同，则按真实值设置
+				char* szValue = (char*)m_szValue;
+				if(szValue[0])
+				{
+					//数组
+					szName = (char*)m_szValue;
+				}
+				else
+				{
+					//结构
+					szName = (char*)tpCocoObjectDesc[m_ObjIndex].m_szName;
+				}
             }
         }
         else
         {
-            if(m_AttribIndex >= 0)
-            {
-                char*   pStringAddr = (char*)pCoco->GetCocoObjectDesc() + pCoco->GetFileHeader()->m_lStringMemAddr ;
-                szName  = (char*)((unsigned long)m_ChildArray + pStringAddr);
-            }
-            else
-            {
-                szName = m_szValue;
-            }
+			if(m_AttribIndex >= 0)
+			{
+				char*   pStringAddr = (char*)pCoco->GetCocoObjectDesc() + pCoco->GetFileHeader()->m_lStringMemAddr ;
+				szName  = m_ChildArray + pStringAddr;	
+			}
+			else
+			{
+				szName = (char*)m_szValue;
+			}
         }
         return szName ;
     }
     
     char*	stExpCocoNode::GetValue()
     {
-        return m_szValue;
+		return (char*)m_szValue;
     }
     
     int		stExpCocoNode::GetChildNum()
     {
-        return m_ChildNum;
+		return m_ChildNum;
     }
     
     stExpCocoNode*		stExpCocoNode::GetChildArray()
     {
-        return m_ChildArray;
+		return (stExpCocoNode*)m_ChildArray;
     }
    
     void	stExpCocoNode::ReBuild(char* pCocoNodeAddr,char* pStringMemoryAddr)
     {
-        m_szValue = (char*)((unsigned long)m_szValue + pStringMemoryAddr);
-        
-   
-        if( -1 == m_AttribIndex )
-        {
-            if(m_ChildNum > 0)
-            {
-                m_ChildArray = (stExpCocoNode*)((unsigned long)(m_ChildArray) + pCocoNodeAddr );
-            }
-            
-            for(int i = 0 ; i < m_ChildNum ; i++)
-            {
-                m_ChildArray[i].ReBuild(pCocoNodeAddr,pStringMemoryAddr);
-            }
-        }
+		m_szValue = m_szValue + (uint64_t)pStringMemoryAddr;
+		//如果是物体或数组，分组子结点
+		if( -1 == m_AttribIndex )
+		{
+			if(m_ChildNum > 0)
+			{
+				m_ChildArray = m_ChildArray + (uint64_t)pCocoNodeAddr;
+
+				stExpCocoNode* tpChildArray = (stExpCocoNode*)m_ChildArray;
+				for(int i = 0 ; i < m_ChildNum ; i++)
+				{
+					tpChildArray[i].ReBuild(pCocoNodeAddr,pStringMemoryAddr);
+				}
+			}
+		}
         
     }
    
@@ -172,7 +179,6 @@ namespace cocostudio {
     {
         //Type
         char*	pTempBuff = pBinBuff;
-        
     
         m_pFileHeader = (stCocoFileHeader*)pTempBuff;
         pTempBuff += sizeof(stCocoFileHeader);
@@ -186,8 +192,7 @@ namespace cocostudio {
         char*   pStringAddr = pStartAddr + m_pFileHeader->m_lStringMemAddr ;
         
         m_pRootNode = (stExpCocoNode*)pCocoMemAddr;
-        std::cout<<"header size = "<<sizeof(m_pFileHeader)<<std::endl;
-        std::cout<<"unsigned long = "<<sizeof(unsigned long)<<std::endl;
+        
         if(1 == m_pFileHeader->m_nFirstUsed)
         {	
             for(int i = 0 ; i < m_pFileHeader->m_ObjectCount ; i++)

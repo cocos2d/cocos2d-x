@@ -54,13 +54,9 @@ namespace cocostudio
         virtual void setColorPropsFromJsonDictionary(cocos2d::ui::Widget* widget,
                                                      const rapidjson::Value& options);
         
-        virtual void setBasicPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* pCocoLoader,  stExpCocoNode*	pCocoNode);
-        virtual void setColorPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* pCocoLoader,  stExpCocoNode*	pCocoNode);
-        
         virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* pCocoLoader,  stExpCocoNode*	pCocoNode)
         {
-            this->setBasicPropsFromBinary(widget, pCocoLoader, pCocoNode);
-            this->setColorPropsFromBinary(widget, pCocoLoader, pCocoNode);
+           
         };
     protected:
         std::string getResourcePath(const rapidjson::Value& dict,
@@ -69,10 +65,23 @@ namespace cocostudio
         std::string getResourcePath(CocoLoader* pCocoLoader,  stExpCocoNode*	pCocoNode, cocos2d::ui::Widget::TextureResType texType);
         void setAnchorPointForWidget(cocos2d::ui::Widget* widget, const rapidjson::Value&options);
         
+        void beginSetBasicProperties(cocos2d::ui::Widget *widget);
+        void endSetBasicProperties(cocos2d::ui::Widget *widget);
+        
+        
         std::function<int(std::string)> valueToInt;
         std::function<bool(std::string)> valueToBool;
         std::function<float(std::string)> valueToFloat;
-
+        
+        float sizePercentX;
+        float sizePercentY;
+        float positionPercentX;
+        float positionPercentY;
+        float width ;
+        float height;
+        cocos2d::Vec2 position;
+        bool isAdaptScreen;
+        cocos2d::Vec2 originalAnchorPoint;
 
     };
 }

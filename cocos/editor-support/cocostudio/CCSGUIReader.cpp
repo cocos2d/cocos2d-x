@@ -293,7 +293,7 @@ Widget* GUIReader::widgetFromBinaryFile(const char *fileName)
             stExpCocoNode*	tpRootCocoNode = tCocoLoader.GetRootCocoNode();
             
             rapidjson::Type tType = tpRootCocoNode->GetType(&tCocoLoader);
-            if (rapidjson::kObjectType == tType)
+            if (rapidjson::kObjectType == tType || rapidjson::kArrayType == tType)
             {
                 stExpCocoNode *tpChildArray = tpRootCocoNode->GetChildArray();
                 
@@ -1249,47 +1249,52 @@ Widget* WidgetPropertiesReader0300::widgetFromBinary(CocoLoader* pCocoLoader,  s
     }
     
     //parse children
-    auto childrenArray = stChildArray[2].GetChildArray();
+    stExpCocoNode* childrenArray = &stChildArray[2];
     if (nullptr != childrenArray) {
-        int childrenCount = childrenArray->GetChildNum();
-        for (int i=0; i < childrenCount; ++i) {
-            rapidjson::Type tType  = childrenArray[i].GetType(pCocoLoader);
+        rapidjson::Type tType22  = stChildArray[2].GetType(pCocoLoader);
+        if (tType22 == rapidjson::kArrayType) {
             
-            if (tType == rapidjson::kObjectType) {
+            int childrenCount = childrenArray->GetChildNum();
+            stExpCocoNode* innerChildArray = childrenArray->GetChildArray();
+            for (int i=0; i < childrenCount; ++i) {
+                rapidjson::Type tType  = innerChildArray[i].GetType(pCocoLoader);
                 
-                Widget *child = widgetFromBinary(pCocoLoader, &childrenArray[i]);
-                
-                if (child)
-                {
-                    PageView* pageView = dynamic_cast<PageView*>(widget);
-                    if (pageView)
+                if (tType == rapidjson::kObjectType) {
+                    
+                    Widget *child = widgetFromBinary(pCocoLoader, &innerChildArray[i]);
+                    
+                    if (child)
                     {
-                        pageView->addPage(static_cast<Layout*>(child));
-                    }
-                    else
-                    {
-                        ListView* listView = dynamic_cast<ListView*>(widget);
-                        if (listView)
+                        PageView* pageView = dynamic_cast<PageView*>(widget);
+                        if (pageView)
                         {
-                            listView->pushBackCustomItem(child);
+                            pageView->addPage(static_cast<Layout*>(child));
                         }
                         else
                         {
-                            if (!dynamic_cast<Layout*>(widget))
+                            ListView* listView = dynamic_cast<ListView*>(widget);
+                            if (listView)
                             {
-                                if (child->getPositionType() == ui::Widget::PositionType::PERCENT)
-                                {
-                                    child->setPositionPercent(Vec2(child->getPositionPercent().x + widget->getAnchorPoint().x,
-                                                                   child->getPositionPercent().y + widget->getAnchorPoint().y));
-                                }
-                                child->setPosition(Vec2(child->getPositionX() + widget->getAnchorPointInPoints().x,
-                                                        child->getPositionY() + widget->getAnchorPointInPoints().y));
+                                listView->pushBackCustomItem(child);
                             }
-                            widget->addChild(child);
+                            else
+                            {
+                                if (!dynamic_cast<Layout*>(widget))
+                                {
+                                    if (child->getPositionType() == ui::Widget::PositionType::PERCENT)
+                                    {
+                                        child->setPositionPercent(Vec2(child->getPositionPercent().x + widget->getAnchorPoint().x,
+                                                                       child->getPositionPercent().y + widget->getAnchorPoint().y));
+                                    }
+                                    child->setPosition(Vec2(child->getPositionX() + widget->getAnchorPointInPoints().x,
+                                                            child->getPositionY() + widget->getAnchorPointInPoints().y));
+                                }
+                                widget->addChild(child);
+                            }
                         }
                     }
+                    
                 }
-                
             }
         }
     }
@@ -1375,7 +1380,7 @@ Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Va
     const char* classname = DICTOOL->getStringValue_json(data, "classname");
     const rapidjson::Value& uiOptions = DICTOOL->getSubDictionary_json(data, "options");
     Widget* widget = this->createGUI(classname);
-    
+    CCLOG("classname = %s", classname);
     std::string readerName = this->getWidgetReaderClassName(classname);
     
     WidgetReaderProtocol* reader = this->createWidgetReaderProtocol(readerName);
