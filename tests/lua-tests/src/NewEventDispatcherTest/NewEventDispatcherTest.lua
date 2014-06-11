@@ -665,13 +665,15 @@ function LabelKeyboardEventTest:onEnter()
     self:addChild(statusLabel)
 
     local function onKeyPressed(keyCode, event)
-        local buf = string.format("Key %s was pressed!",string.char(keyCode))
+        print("come in keyCode is ",keyCode)
+        local buf = string.format("Key %d was pressed!",keyCode)
         local label = event:getCurrentTarget()
-        label:setString(buf)
+        label:setString(buf..keyCode)
     end
 
     local function onKeyReleased(keyCode, event)
-        local buf = string.format("Key %s was released!",string.char(keyCode))
+        print("come in keyCode is ", keyCode)
+        local buf = string.format("Key %s was released!",keyCode)
         local label = event:getCurrentTarget()
         label:setString(buf)
     end
