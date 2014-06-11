@@ -33,6 +33,8 @@
 NS_CC_BEGIN
 
 class GLProgramState;
+class GLProgram;
+class Uniform;
 
 //it is a common mesh
 class MeshCommand : public RenderCommand
@@ -66,6 +68,8 @@ protected:
     
     //restore to all false
     void restoreRenderState();
+    
+    void MatrixPalleteCallBack( GLProgram* glProgram, Uniform* uniform);
 
     GLuint _textureID;
     GLProgramState* _glProgramState;
