@@ -126,6 +126,13 @@ public:
                                                       stExpCocoNode*	pCocoNode) = 0;
     
 protected:
+    std::string  getWidgetReaderClassName(const std::string& classname);
+    std::string  getWidgetReaderClassName(cocos2d::ui::Widget *widget);
+    
+    std::string getGUIClassName(const std::string& name);
+    cocos2d::ui::Widget *createGUI(const std::string& classname);
+    WidgetReaderProtocol* createWidgetReaderProtocol(const std::string& classname);
+    
     std::string m_strFilePath;
 };
 
@@ -228,15 +235,15 @@ public:
     //added for binary parsing
     virtual cocos2d::ui::Widget* createWidgetFromBinary(CocoLoader* pCocoLoader,
                                                         stExpCocoNode*	pCocoNode,
-                                                        const char* fileName)override{return NULL;}
+                                                        const char* fileName)override;
     
     virtual cocos2d::ui::Widget* widgetFromBinary(CocoLoader* pCocoLoader,
-                                                  stExpCocoNode*	pCocoNode){return NULL;}
+                                                  stExpCocoNode*	pCocoNode);
     
     virtual void setPropsForAllWidgetFromBinary(WidgetReaderProtocol* reader,
                                                 cocos2d::ui::Widget* widget,
                                                 CocoLoader* pCocoLoader,
-                                                stExpCocoNode*	pCocoNode) {}
+                                                stExpCocoNode*	pCocoNode);
     
     virtual void setPropsForAllCustomWidgetFromBinary(const std::string& classType,
                                                       cocos2d::ui::Widget* widget,
