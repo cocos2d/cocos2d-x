@@ -671,7 +671,7 @@ function LabelKeyboardEventTest:onEnter()
     end
 
     local function onKeyReleased(keyCode, event)
-        local buf = string.format("Key %s was released!",keyCode)
+        local buf = string.format("Key %d was released!",keyCode)
         local label = event:getCurrentTarget()
         label:setString(buf)
     end
