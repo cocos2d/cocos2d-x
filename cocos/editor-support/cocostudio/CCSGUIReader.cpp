@@ -1298,7 +1298,7 @@ Widget* WidgetPropertiesReader0300::widgetFromBinary(CocoLoader* pCocoLoader,  s
         widget = this->createGUI(classname);
     }
     
-    CCLOG("classname = %s", classname.c_str());
+//    CCLOG("classname = %s", classname.c_str());
     std::string readerName = this->getWidgetReaderClassName(classname);
     
     WidgetReaderProtocol* reader = this->createWidgetReaderProtocol(readerName);

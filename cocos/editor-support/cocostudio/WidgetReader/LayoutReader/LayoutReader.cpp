@@ -54,7 +54,7 @@ namespace cocostudio
         for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
             std::string key = stChildArray[i].GetName(pCocoLoader);
             std::string value = stChildArray[i].GetValue();
-            CCLOG("Layout: key = %s, value = %s", key.c_str(), value.c_str());
+//            CCLOG("Layout: key = %s, value = %s", key.c_str(), value.c_str());
             if (key == "ignoreSize") {
                 widget->ignoreContentAdaptWithSize(valueToBool(value));
             }else if(key == "sizeType"){
@@ -220,7 +220,7 @@ namespace cocostudio
                     Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                     
                     std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
-                    CCLOG("Layout : image =%s", backgroundValue.c_str());
+//                    CCLOG("Layout : image =%s", backgroundValue.c_str());
                     
                     panel->setBackGroundImage(backgroundValue, imageFileNameType);
                 }
