@@ -19,19 +19,10 @@
 -- @param #cc.Texture2D texture2d
         
 --------------------------------
--- overload function: initWithTexture(cc.Texture2D, rect_table, bool, vec2_table, size_table)
---          
--- overload function: initWithTexture(cc.Texture2D, rect_table)
---          
--- @function [parent=#SpriteFrame] initWithTexture
+-- @function [parent=#SpriteFrame] getOffset 
 -- @param self
--- @param #cc.Texture2D texture2d
--- @param #rect_table rect
--- @param #bool bool
--- @param #vec2_table vec2
--- @param #size_table size
--- @return bool#bool ret (retunr value: bool)
-
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
+        
 --------------------------------
 -- @function [parent=#SpriteFrame] setRectInPixels 
 -- @param self
@@ -78,29 +69,10 @@
 -- @param #vec2_table vec2
         
 --------------------------------
--- @function [parent=#SpriteFrame] getOffset 
--- @param self
--- @return vec2_table#vec2_table ret (return value: vec2_table)
-        
---------------------------------
 -- @function [parent=#SpriteFrame] isRotated 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
---------------------------------
--- overload function: initWithTextureFilename(string, rect_table, bool, vec2_table, size_table)
---          
--- overload function: initWithTextureFilename(string, rect_table)
---          
--- @function [parent=#SpriteFrame] initWithTextureFilename
--- @param self
--- @param #string str
--- @param #rect_table rect
--- @param #bool bool
--- @param #vec2_table vec2
--- @param #size_table size
--- @return bool#bool ret (retunr value: bool)
-
 --------------------------------
 -- @function [parent=#SpriteFrame] setRect 
 -- @param self
