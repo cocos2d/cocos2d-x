@@ -60,7 +60,7 @@ static const char* ClassName_Widget     = "Widget";
 static const char* NODE        = "nodeTree";
 static const char* CHILDREN    = "children";
 static const char* CLASSNAME   = "classname";
-static const char* FILE_PATH   = "filePath";
+static const char* FILE_PATH   = "fileName";
 static const char* PLIST_FILE  = "plistFile";
 static const char* ACTION_TAG  = "actionTag";
 
@@ -100,6 +100,8 @@ static const char* MUL_MARGIN_TOP              = "top";
 static const char* MUL_MARGIN_RIGHT            = "right";
 static const char* MUL_MARGIN_BOTTOM           = "bottom";
 
+static const char* TEXTURES     = "textures";
+static const char* TEXTURES_PNG = "texturesPng";
 
 static NodeCache* _sharedNodeCache = nullptr;
 
@@ -119,9 +121,14 @@ void NodeCache::destroyInstance()
     CC_SAFE_DELETE(_sharedNodeCache);
 }
 
+NodeCache::NodeCache()
+    : _recordJsonPath(true)
+    , _jsonPath("")
+{
+}
+
 void NodeCache::purge()
 {
-    _nodes.clear();
 }
 
 void NodeCache::init()
@@ -133,7 +140,7 @@ void NodeCache::init()
     _funcs.insert(Pair(ClassName_Sprite,    std::bind(&NodeCache::loadSprite,     this, _1)));
     _funcs.insert(Pair(ClassName_Particle,  std::bind(&NodeCache::loadParticle,   this, _1)));
 
-    _funcs.insert(Pair(ClassName_Panel,    std::bind(&NodeCache::loadWidget,   this, _1)));
+    _funcs.insert(Pair(ClassName_Panel,     std::bind(&NodeCache::loadWidget,   this, _1)));
     _funcs.insert(Pair(ClassName_Button,    std::bind(&NodeCache::loadWidget,   this, _1)));
     _funcs.insert(Pair(ClassName_CheckBox,  std::bind(&NodeCache::loadWidget,   this, _1)));
     _funcs.insert(Pair(ClassName_ImageView, std::bind(&NodeCache::loadWidget,   this, _1)));
@@ -154,14 +161,20 @@ void NodeCache::init()
 
 cocos2d::Node* NodeCache::createNode(const std::string& filename)
 {
-    cocos2d::Node* node = _nodes.at(filename);
-    if (node == nullptr)
+    if(_recordJsonPath)
     {
-        node = loadNodeWithFile(filename);
+        std::string jsonPath = filename.substr(0, filename.find_last_of('/') + 1);
+        GUIReader::shareReader()->setFilePath(jsonPath);
 
-//         if(cache)
-//             _nodes.insert(filename, node);
+        _jsonPath = jsonPath;
     }
+    else
+    {
+        GUIReader::shareReader()->setFilePath("");
+        _jsonPath = "";
+    }
+
+    cocos2d::Node* node = loadNodeWithFile(filename);
 
     return node;
 }
@@ -172,20 +185,34 @@ cocos2d::Node* NodeCache::loadNodeWithFile(const std::string& fileName)
     std::string fullPath = CCFileUtils::getInstance()->fullPathForFilename(fileName);
     std::string contentStr = FileUtils::getInstance()->getStringFromFile(fullPath);
 
+    cocos2d::Node* node = loadNodeWithContent(contentStr);
+
     // Load animation data from file
     TimelineActionCache::getInstance()->loadAnimationActionWithContent(fileName, contentStr);
 
-    return loadNodeWithContent(contentStr);
+    return node;
 }
 
 cocos2d::Node* NodeCache::loadNodeWithContent(const std::string& content)
 {
     rapidjson::Document doc;
     doc.Parse<0>(content.c_str());
-    if (doc.HasParseError()) {
+    if (doc.HasParseError()) 
+    {
         CCLOG("GetParseError %s\n", doc.GetParseError());
     }
 
+    // decode plist 
+    int length = DICTOOL->getArrayCount_json(doc, TEXTURES);
+    for(int i=0; i<length; i++)
+    {
+        std::string plist = DICTOOL->getStringValueFromArray_json(doc, TEXTURES, i);
+        //std::string png   = DICTOOL->getStringValueFromArray_json(doc, TEXTURES_PNG, i);
+        plist = _jsonPath + plist;
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(plist);
+    }
+
+    // decode node tree
     const rapidjson::Value& subJson = DICTOOL->getSubDictionary_json(doc, NODE);
     return loadNode(subJson);
 }
@@ -209,7 +236,8 @@ cocos2d::Node* NodeCache::loadNode(const rapidjson::Value& json)
         {
             const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, CHILDREN, i);
             cocos2d::Node* child = loadNode(dic);
-            if (child) {
+            if (child) 
+            {
                 node->addChild(child);
             }
         }
@@ -310,13 +338,16 @@ Node* NodeCache::loadSprite(const rapidjson::Value& json)
 
     if(filePath != nullptr)
     {
-        SpriteFrame* spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(filePath);
+        std::string path = filePath;
+
+        SpriteFrame* spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(path);
         if(!spriteFrame)
         {
-            sprite = Sprite::create(filePath);
+            sprite = Sprite::create(path);
         }
         else
         {
+            path = _jsonPath + path;
             sprite = Sprite::createWithSpriteFrame(spriteFrame);
         }
 

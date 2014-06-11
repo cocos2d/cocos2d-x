@@ -41,6 +41,7 @@ public:
     static NodeCache* getInstance();
     static void destroyInstance();
 
+    NodeCache();
     void purge();
 
     void init();
@@ -49,6 +50,13 @@ public:
 
     cocos2d::Node* loadNodeWithFile(const std::string& fileName);
     cocos2d::Node* loadNodeWithContent(const std::string& content);
+
+    void setRecordJsonPath(bool record) { _recordJsonPath = record; }
+    bool isRecordJsonPath() { return _recordJsonPath; }
+
+    void setJsonPath(std::string jsonPath) { _jsonPath = jsonPath; }
+    std::string getJsonPath() { return _jsonPath; }
+
 protected:
 
     cocos2d::Node* loadNode(const rapidjson::Value& json);
@@ -70,9 +78,11 @@ protected:
     typedef std::pair<std::string, NodeCreateFunc> Pair;
 
     std::unordered_map<std::string, NodeCreateFunc> _funcs;
-    cocos2d::Map<std::string, cocos2d::Node*> _nodes;
 
     WidgetPropertiesReader0300* _guiReader;
+    bool _recordJsonPath;
+
+    std::string _jsonPath;
 };
 
 }

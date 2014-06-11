@@ -116,7 +116,12 @@ void TextureFrame::onEnter(Frame *nextFrame)
 {
     if(_sprite)
     {
-        _sprite->setTexture(_texture.c_str());
+        SpriteFrame* spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(_texture);
+
+        if(spriteFrame != nullptr)
+            _sprite->setSpriteFrame(spriteFrame);
+        else
+            _sprite->setTexture(_texture);
     }
 }
 

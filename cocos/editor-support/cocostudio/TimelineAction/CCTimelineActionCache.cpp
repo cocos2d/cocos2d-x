@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "CCTimelineActionCache.h"
 #include "CCTimelineAction.h"
 #include "CCFrame.h"
+#include "CCNodeCache.h"
 
 using namespace cocos2d;
 
@@ -342,8 +343,18 @@ Frame* TimelineActionCache::loadTextureFrame(const rapidjson::Value& json)
     const char* texture = DICTOOL->getStringValue_json(json, Value);
 
     if(texture != NULL)
-        frame->setTexture(texture);
+    {
+        std::string path = texture;
 
+        SpriteFrame* spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(path);
+        if(spriteFrame == nullptr)
+        {
+            std::string jsonPath = NodeCache::getInstance()->getJsonPath();
+            path = jsonPath + texture;
+        }
+
+        frame->setTexture(path);
+    }
     return frame;
 }
 

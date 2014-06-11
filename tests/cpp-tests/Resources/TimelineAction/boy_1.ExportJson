@@ -1,0 +1,1137 @@
+{
+  "version": "1.3.0.1",
+  "designWidth": 1000,
+  "designHeight": 1024,
+  "dataScale": 1.0,
+  "textures": [
+    "boy0.plist",
+    "boy1.plist"
+  ],
+  "texturesPng": [
+    "boy0.png",
+    "boy1.png"
+  ],
+  "nodeTree": {
+    "options": {
+      "$type": "EditorCommon.JsonModel.Component.GUI.RootGUISurrogate, EditorCommon",
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "visible": true,
+      "width": 0.0,
+      "height": 0.0,
+      "name": "Scene",
+      "classname": "Node"
+    },
+    "children": [
+      {
+        "options": {
+          "$type": "EditorCommon.JsonModel.Component.GUI.SpriteSurrogate, EditorCommon",
+          "fileName": "testAnimationResource/6.png",
+          "fileNameData": {
+            "resourceType": 1,
+            "path": "testAnimationResource/6.png",
+            "plistFile": ""
+          },
+          "x": 601.0,
+          "y": 260.0,
+          "scaleX": 1.0,
+          "scaleY": 1.0,
+          "rotation": 0.0,
+          "flipX": false,
+          "flipY": false,
+          "colorR": 255,
+          "colorG": 255,
+          "colorB": 255,
+          "opacity": 255,
+          "visible": true,
+          "ZOrder": 0,
+          "classType": "Sprite",
+          "width": 0.0,
+          "height": 0.0,
+          "actionTag": 440279615,
+          "tag": 5,
+          "anchorPointX": 0.34,
+          "anchorPointY": 0.07,
+          "name": "Sprite_4",
+          "classname": "Sprite"
+        },
+        "children": [
+          {
+            "options": {
+              "$type": "EditorCommon.JsonModel.Component.GUI.SpriteSurrogate, EditorCommon",
+              "fileName": "testAnimationResource/8.png",
+              "fileNameData": {
+                "resourceType": 1,
+                "path": "testAnimationResource/8.png",
+                "plistFile": ""
+              },
+              "x": 68.0,
+              "y": 138.0,
+              "scaleX": 1.0,
+              "scaleY": 1.0,
+              "rotation": 0.0,
+              "flipX": false,
+              "flipY": false,
+              "colorR": 255,
+              "colorG": 255,
+              "colorB": 255,
+              "opacity": 255,
+              "visible": true,
+              "ZOrder": -2,
+              "classType": "Sprite",
+              "width": 0.0,
+              "height": 0.0,
+              "actionTag": 749769307,
+              "tag": 3,
+              "anchorPointX": 0.77,
+              "anchorPointY": 0.8,
+              "name": "Sprite_2",
+              "classname": "Sprite"
+            },
+            "children": [
+              {
+                "options": {
+                  "$type": "EditorCommon.JsonModel.Component.GUI.SpriteSurrogate, EditorCommon",
+                  "fileName": "testAnimationResource/3.png",
+                  "fileNameData": {
+                    "resourceType": 1,
+                    "path": "testAnimationResource/3.png",
+                    "plistFile": ""
+                  },
+                  "x": 18.0,
+                  "y": 21.0,
+                  "scaleX": 1.0,
+                  "scaleY": 1.0,
+                  "rotation": 0.0,
+                  "flipX": false,
+                  "flipY": false,
+                  "colorR": 255,
+                  "colorG": 255,
+                  "colorB": 255,
+                  "opacity": 255,
+                  "visible": true,
+                  "ZOrder": 0,
+                  "classType": "Sprite",
+                  "width": 0.0,
+                  "height": 0.0,
+                  "actionTag": 1042971898,
+                  "tag": 8,
+                  "anchorPointX": 0.5,
+                  "anchorPointY": 0.11,
+                  "name": "Sprite_7",
+                  "classname": "Sprite"
+                },
+                "children": [],
+                "name": null,
+                "classname": "Sprite"
+              }
+            ],
+            "name": null,
+            "classname": "Sprite"
+          },
+          {
+            "options": {
+              "$type": "EditorCommon.JsonModel.Component.GUI.SpriteSurrogate, EditorCommon",
+              "fileName": "testAnimationResource/5.png",
+              "fileNameData": {
+                "resourceType": 1,
+                "path": "testAnimationResource/5.png",
+                "plistFile": ""
+              },
+              "x": 145.0,
+              "y": 33.0,
+              "scaleX": 1.0,
+              "scaleY": 1.0,
+              "rotation": 0.0,
+              "flipX": false,
+              "flipY": false,
+              "colorR": 255,
+              "colorG": 255,
+              "colorB": 255,
+              "opacity": 255,
+              "visible": true,
+              "ZOrder": -2,
+              "classType": "Sprite",
+              "width": 0.0,
+              "height": 0.0,
+              "actionTag": 718719067,
+              "tag": 6,
+              "anchorPointX": 0.7,
+              "anchorPointY": 0.79,
+              "name": "Sprite_5",
+              "classname": "Sprite"
+            },
+            "children": [
+              {
+                "options": {
+                  "$type": "EditorCommon.JsonModel.Component.GUI.SpriteSurrogate, EditorCommon",
+                  "fileName": "testAnimationResource/4.png",
+                  "fileNameData": {
+                    "resourceType": 1,
+                    "path": "testAnimationResource/4.png",
+                    "plistFile": ""
+                  },
+                  "x": 66.0,
+                  "y": 1.0,
+                  "scaleX": 1.0,
+                  "scaleY": 1.0,
+                  "rotation": 0.0,
+                  "flipX": false,
+                  "flipY": false,
+                  "colorR": 255,
+                  "colorG": 255,
+                  "colorB": 255,
+                  "opacity": 255,
+                  "visible": true,
+                  "ZOrder": 0,
+                  "classType": "Sprite",
+                  "width": 0.0,
+                  "height": 0.0,
+                  "actionTag": 426784833,
+                  "tag": 7,
+                  "anchorPointX": 0.67,
+                  "anchorPointY": 0.72,
+                  "name": "Sprite_6",
+                  "classname": "Sprite"
+                },
+                "children": [],
+                "name": null,
+                "classname": "Sprite"
+              }
+            ],
+            "name": null,
+            "classname": "Sprite"
+          },
+          {
+            "options": {
+              "$type": "EditorCommon.JsonModel.Component.GUI.SpriteSurrogate, EditorCommon",
+              "fileName": "testAnimationResource/2.png",
+              "fileNameData": {
+                "resourceType": 1,
+                "path": "testAnimationResource/2.png",
+                "plistFile": ""
+              },
+              "x": 200.0,
+              "y": 27.0,
+              "scaleX": 1.0,
+              "scaleY": 1.0,
+              "rotation": 0.0,
+              "flipX": false,
+              "flipY": false,
+              "colorR": 255,
+              "colorG": 255,
+              "colorB": 255,
+              "opacity": 255,
+              "visible": true,
+              "ZOrder": 0,
+              "classType": "Sprite",
+              "width": 0.0,
+              "height": 0.0,
+              "actionTag": 716668964,
+              "tag": 9,
+              "anchorPointX": 0.42,
+              "anchorPointY": 0.75,
+              "name": "Sprite_8",
+              "classname": "Sprite"
+            },
+            "children": [
+              {
+                "options": {
+                  "$type": "EditorCommon.JsonModel.Component.GUI.SpriteSurrogate, EditorCommon",
+                  "fileName": "testAnimationResource/7.png",
+                  "fileNameData": {
+                    "resourceType": 1,
+                    "path": "testAnimationResource/7.png",
+                    "plistFile": ""
+                  },
+                  "x": 155.0,
+                  "y": 16.0,
+                  "scaleX": 1.0,
+                  "scaleY": 1.0,
+                  "rotation": 0.0,
+                  "flipX": false,
+                  "flipY": false,
+                  "colorR": 255,
+                  "colorG": 255,
+                  "colorB": 255,
+                  "opacity": 255,
+                  "visible": true,
+                  "ZOrder": 0,
+                  "classType": "Sprite",
+                  "width": 0.0,
+                  "height": 0.0,
+                  "actionTag": 453863477,
+                  "tag": 4,
+                  "anchorPointX": 0.5,
+                  "anchorPointY": 0.77,
+                  "name": "Sprite_3",
+                  "classname": "Sprite"
+                },
+                "children": [],
+                "name": null,
+                "classname": "Sprite"
+              }
+            ],
+            "name": null,
+            "classname": "Sprite"
+          },
+          {
+            "options": {
+              "$type": "EditorCommon.JsonModel.Component.GUI.SpriteSurrogate, EditorCommon",
+              "fileName": "testAnimationResource/hat.png",
+              "fileNameData": {
+                "resourceType": 1,
+                "path": "testAnimationResource/hat.png",
+                "plistFile": ""
+              },
+              "x": 134.0,
+              "y": 308.0,
+              "scaleX": 1.0,
+              "scaleY": 1.0,
+              "rotation": 0.0,
+              "flipX": false,
+              "flipY": false,
+              "colorR": 255,
+              "colorG": 255,
+              "colorB": 255,
+              "opacity": 255,
+              "visible": true,
+              "ZOrder": 0,
+              "classType": "Sprite",
+              "width": 0.0,
+              "height": 0.0,
+              "actionTag": 729381978,
+              "tag": 10,
+              "anchorPointX": 0.77,
+              "anchorPointY": 0.25,
+              "name": "Sprite_9",
+              "classname": "Sprite"
+            },
+            "children": [],
+            "name": null,
+            "classname": "Sprite"
+          },
+          {
+            "options": {
+              "$type": "EditorCommon.JsonModel.Component.GUI.SpriteSurrogate, EditorCommon",
+              "fileName": "testAnimationResource/1.png",
+              "fileNameData": {
+                "resourceType": 1,
+                "path": "testAnimationResource/1.png",
+                "plistFile": ""
+              },
+              "x": 279.0,
+              "y": 144.0,
+              "scaleX": 1.0,
+              "scaleY": 1.0,
+              "rotation": 0.0,
+              "flipX": false,
+              "flipY": false,
+              "colorR": 255,
+              "colorG": 255,
+              "colorB": 255,
+              "opacity": 255,
+              "visible": true,
+              "ZOrder": 0,
+              "classType": "Sprite",
+              "width": 0.0,
+              "height": 0.0,
+              "actionTag": 647613269,
+              "tag": 2,
+              "anchorPointX": 0.22,
+              "anchorPointY": 0.86,
+              "name": "Sprite_1",
+              "classname": "Sprite"
+            },
+            "children": [],
+            "name": null,
+            "classname": "Sprite"
+          }
+        ],
+        "name": null,
+        "classname": "Sprite"
+      }
+    ],
+    "name": null,
+    "classname": "Node"
+  },
+  "action": {
+    "duration": 60,
+    "speed": 1.0,
+    "timelines": [
+      {
+        "frameType": "PositionFrame",
+        "actionTag": 440279615,
+        "frames": [
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 601.0,
+            "y": 260.0,
+            "frameIndex": 0,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 601.0,
+            "y": 260.0,
+            "frameIndex": 30,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 601.0,
+            "y": 260.0,
+            "frameIndex": 60,
+            "tween": true
+          }
+        ]
+      },
+      {
+        "frameType": "ScaleFrame",
+        "actionTag": 440279615,
+        "frames": [
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 1.0,
+            "y": 1.0,
+            "frameIndex": 0,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 1.0,
+            "y": 1.0,
+            "frameIndex": 30,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 1.0,
+            "y": 1.0,
+            "frameIndex": 60,
+            "tween": true
+          }
+        ]
+      },
+      {
+        "frameType": "RotationSkewFrame",
+        "actionTag": 440279615,
+        "frames": [
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 0.0,
+            "y": 0.0,
+            "frameIndex": 0,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 0.9654804,
+            "y": 0.9654804,
+            "frameIndex": 30,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 0.0,
+            "y": 0.0,
+            "frameIndex": 60,
+            "tween": true
+          }
+        ]
+      },
+      {
+        "frameType": "PositionFrame",
+        "actionTag": 749769307,
+        "frames": [
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 68.0,
+            "y": 138.0,
+            "frameIndex": 0,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 68.0,
+            "y": 138.0,
+            "frameIndex": 30,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 68.0,
+            "y": 138.0,
+            "frameIndex": 60,
+            "tween": true
+          }
+        ]
+      },
+      {
+        "frameType": "ScaleFrame",
+        "actionTag": 749769307,
+        "frames": [
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 1.0,
+            "y": 1.0,
+            "frameIndex": 0,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 1.0,
+            "y": 1.0,
+            "frameIndex": 30,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 1.0,
+            "y": 1.0,
+            "frameIndex": 60,
+            "tween": true
+          }
+        ]
+      },
+      {
+        "frameType": "RotationSkewFrame",
+        "actionTag": 749769307,
+        "frames": [
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 0.0,
+            "y": 0.0,
+            "frameIndex": 0,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 3.0,
+            "y": 3.0,
+            "frameIndex": 30,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 0.0,
+            "y": 0.0,
+            "frameIndex": 60,
+            "tween": true
+          }
+        ]
+      },
+      {
+        "frameType": "ZOrderFrame",
+        "actionTag": 749769307,
+        "frames": [
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLineIntFrameSurrogate, EditorCommon",
+            "value": -2,
+            "frameIndex": 0,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLineIntFrameSurrogate, EditorCommon",
+            "value": -2,
+            "frameIndex": 30,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLineIntFrameSurrogate, EditorCommon",
+            "value": -2,
+            "frameIndex": 60,
+            "tween": true
+          }
+        ]
+      },
+      {
+        "frameType": "PositionFrame",
+        "actionTag": 1042971898,
+        "frames": [
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 18.0,
+            "y": 21.0,
+            "frameIndex": 0,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 18.0,
+            "y": 21.0,
+            "frameIndex": 30,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 18.0,
+            "y": 21.0,
+            "frameIndex": 60,
+            "tween": true
+          }
+        ]
+      },
+      {
+        "frameType": "ScaleFrame",
+        "actionTag": 1042971898,
+        "frames": [
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 1.0,
+            "y": 1.0,
+            "frameIndex": 0,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 1.0,
+            "y": 1.0,
+            "frameIndex": 30,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 1.0,
+            "y": 1.0,
+            "frameIndex": 60,
+            "tween": true
+          }
+        ]
+      },
+      {
+        "frameType": "RotationSkewFrame",
+        "actionTag": 1042971898,
+        "frames": [
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 0.0,
+            "y": 0.0,
+            "frameIndex": 0,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 0.0,
+            "y": 0.0,
+            "frameIndex": 30,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 0.0,
+            "y": 0.0,
+            "frameIndex": 60,
+            "tween": true
+          }
+        ]
+      },
+      {
+        "frameType": "PositionFrame",
+        "actionTag": 718719067,
+        "frames": [
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 145.0,
+            "y": 33.0,
+            "frameIndex": 0,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 145.0,
+            "y": 33.0,
+            "frameIndex": 30,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 145.0,
+            "y": 33.0,
+            "frameIndex": 60,
+            "tween": true
+          }
+        ]
+      },
+      {
+        "frameType": "ScaleFrame",
+        "actionTag": 718719067,
+        "frames": [
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 1.0,
+            "y": 1.0,
+            "frameIndex": 0,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 1.0,
+            "y": 1.0,
+            "frameIndex": 30,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 1.0,
+            "y": 1.0,
+            "frameIndex": 60,
+            "tween": true
+          }
+        ]
+      },
+      {
+        "frameType": "RotationSkewFrame",
+        "actionTag": 718719067,
+        "frames": [
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 0.0,
+            "y": 0.0,
+            "frameIndex": 0,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 6.43459034,
+            "y": 6.43459034,
+            "frameIndex": 30,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 0.0,
+            "y": 0.0,
+            "frameIndex": 60,
+            "tween": true
+          }
+        ]
+      },
+      {
+        "frameType": "ZOrderFrame",
+        "actionTag": 718719067,
+        "frames": [
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLineIntFrameSurrogate, EditorCommon",
+            "value": -2,
+            "frameIndex": 0,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLineIntFrameSurrogate, EditorCommon",
+            "value": -2,
+            "frameIndex": 60,
+            "tween": true
+          }
+        ]
+      },
+      {
+        "frameType": "PositionFrame",
+        "actionTag": 426784833,
+        "frames": [
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 66.0,
+            "y": 1.0,
+            "frameIndex": 0,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 66.0,
+            "y": 1.0,
+            "frameIndex": 30,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 66.0,
+            "y": 1.0,
+            "frameIndex": 60,
+            "tween": true
+          }
+        ]
+      },
+      {
+        "frameType": "ScaleFrame",
+        "actionTag": 426784833,
+        "frames": [
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 1.0,
+            "y": 1.0,
+            "frameIndex": 0,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 1.0,
+            "y": 1.0,
+            "frameIndex": 30,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 1.0,
+            "y": 1.0,
+            "frameIndex": 60,
+            "tween": true
+          }
+        ]
+      },
+      {
+        "frameType": "RotationSkewFrame",
+        "actionTag": 426784833,
+        "frames": [
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 0.0,
+            "y": 0.0,
+            "frameIndex": 0,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": -7.849513,
+            "y": -7.849513,
+            "frameIndex": 30,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 0.0,
+            "y": 0.0,
+            "frameIndex": 60,
+            "tween": true
+          }
+        ]
+      },
+      {
+        "frameType": "PositionFrame",
+        "actionTag": 716668964,
+        "frames": [
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 200.0,
+            "y": 27.0,
+            "frameIndex": 0,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 200.0,
+            "y": 27.0,
+            "frameIndex": 30,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 200.0,
+            "y": 27.0,
+            "frameIndex": 60,
+            "tween": true
+          }
+        ]
+      },
+      {
+        "frameType": "ScaleFrame",
+        "actionTag": 716668964,
+        "frames": [
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 1.0,
+            "y": 1.0,
+            "frameIndex": 0,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 1.0,
+            "y": 1.0,
+            "frameIndex": 30,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 1.0,
+            "y": 1.0,
+            "frameIndex": 60,
+            "tween": true
+          }
+        ]
+      },
+      {
+        "frameType": "RotationSkewFrame",
+        "actionTag": 716668964,
+        "frames": [
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 0.0,
+            "y": 0.0,
+            "frameIndex": 0,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 5.65789843,
+            "y": 5.65789843,
+            "frameIndex": 30,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 0.0,
+            "y": 0.0,
+            "frameIndex": 60,
+            "tween": true
+          }
+        ]
+      },
+      {
+        "frameType": "PositionFrame",
+        "actionTag": 453863477,
+        "frames": [
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 155.0,
+            "y": 16.0,
+            "frameIndex": 0,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 155.0,
+            "y": 16.0,
+            "frameIndex": 30,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 155.0,
+            "y": 16.0,
+            "frameIndex": 60,
+            "tween": true
+          }
+        ]
+      },
+      {
+        "frameType": "ScaleFrame",
+        "actionTag": 453863477,
+        "frames": [
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 1.0,
+            "y": 1.0,
+            "frameIndex": 0,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 1.0,
+            "y": 1.0,
+            "frameIndex": 30,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 1.0,
+            "y": 1.0,
+            "frameIndex": 60,
+            "tween": true
+          }
+        ]
+      },
+      {
+        "frameType": "RotationSkewFrame",
+        "actionTag": 453863477,
+        "frames": [
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 0.0,
+            "y": 0.0,
+            "frameIndex": 0,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": -14.9207821,
+            "y": -14.9207821,
+            "frameIndex": 30,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 0.0,
+            "y": 0.0,
+            "frameIndex": 60,
+            "tween": true
+          }
+        ]
+      },
+      {
+        "frameType": "PositionFrame",
+        "actionTag": 729381978,
+        "frames": [
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 134.0,
+            "y": 308.0,
+            "frameIndex": 0,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 134.0,
+            "y": 308.0,
+            "frameIndex": 30,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 134.0,
+            "y": 308.0,
+            "frameIndex": 60,
+            "tween": true
+          }
+        ]
+      },
+      {
+        "frameType": "ScaleFrame",
+        "actionTag": 729381978,
+        "frames": [
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 1.0,
+            "y": 1.0,
+            "frameIndex": 0,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 1.0,
+            "y": 1.0,
+            "frameIndex": 30,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 1.0,
+            "y": 1.0,
+            "frameIndex": 60,
+            "tween": true
+          }
+        ]
+      },
+      {
+        "frameType": "RotationSkewFrame",
+        "actionTag": 729381978,
+        "frames": [
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 0.0,
+            "y": 0.0,
+            "frameIndex": 0,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 0.0,
+            "y": 0.0,
+            "frameIndex": 30,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 0.0,
+            "y": 0.0,
+            "frameIndex": 60,
+            "tween": true
+          }
+        ]
+      },
+      {
+        "frameType": "PositionFrame",
+        "actionTag": 647613269,
+        "frames": [
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 279.0,
+            "y": 144.0,
+            "frameIndex": 0,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 279.0,
+            "y": 144.0,
+            "frameIndex": 30,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 279.0,
+            "y": 144.0,
+            "frameIndex": 60,
+            "tween": true
+          }
+        ]
+      },
+      {
+        "frameType": "ScaleFrame",
+        "actionTag": 647613269,
+        "frames": [
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 1.0,
+            "y": 1.0,
+            "frameIndex": 0,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 1.0,
+            "y": 1.0,
+            "frameIndex": 30,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 1.0,
+            "y": 1.0,
+            "frameIndex": 60,
+            "tween": true
+          }
+        ]
+      },
+      {
+        "frameType": "RotationSkewFrame",
+        "actionTag": 647613269,
+        "frames": [
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 0.0,
+            "y": 0.0,
+            "frameIndex": 0,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 8.991114,
+            "y": 8.991114,
+            "frameIndex": 30,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 0.0,
+            "y": 0.0,
+            "frameIndex": 60,
+            "tween": true
+          }
+        ]
+      }
+    ]
+  },
+  "name": null,
+  "classname": null
+}

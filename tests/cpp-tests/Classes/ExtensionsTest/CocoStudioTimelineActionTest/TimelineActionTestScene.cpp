@@ -201,18 +201,16 @@ void TestTimelineAction::onEnter()
 {
     TimelineActionTestLayer::onEnter();
 
-    FileUtils::getInstance()->addSearchPath("E:/cocos2d-x/cocos2d-x/tests/cpp-tests/Resources/TimelineAction");
-
-    for(int i=0; i<1; i++)
+    for(int i=0; i<100; i++)
     {
-        node = NodeCache::getInstance()->createNode("NewUi11123_1.json");
-        action = TimelineActionCache::getInstance()->createAction("NewUi11123_1.json");
+        node = NodeCache::getInstance()->createNode("TimelineAction/boy_1.ExportJson");
+        action = TimelineActionCache::getInstance()->createAction("TimelineAction/boy_1.ExportJson");
 
         node->runAction(action);
-        action->gotoFrameAndPlay(0);
+        action->gotoFrameAndPlay(0, 60, true);
 
-        //node->setScale(0.4f);
-        node->setPosition(100+i*5,160);
+        node->setScale(0.4f);
+        node->setPosition(-200+i*5,0);
 
         addChild(node);
     }
