@@ -1986,10 +1986,10 @@ void TextureMemoryAlloc::updateImage(cocos2d::Ref *sender)
             file = "Images/fire_rgba8888.pvr";
             break;
         case 2:
-            file = "Images/grossini_prv_rgba8888.pvr";
+            file = "Images/grossini_pvr_rgba8888.pvr";
             break;
         case 3:
-            file = "Images/grossini_prv_rgba4444.pvr";
+            file = "Images/grossini_pvr_rgba4444.pvr";
             break;
         case 4:
             file = "Images/test_image_a8.pvr";
