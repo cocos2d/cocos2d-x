@@ -1285,9 +1285,8 @@ void NodeNameTest::onEnter()
         return true;
     });
     
-    int i = 1;
     log("will find all nodes with name 'test' twice");
-    enumerateChildren("test", [&i](const Node* node) -> bool {
+    enumerateChildren("test", [](const Node* node) -> bool {
         log("find node with name 'test'");
         return false;
     });
