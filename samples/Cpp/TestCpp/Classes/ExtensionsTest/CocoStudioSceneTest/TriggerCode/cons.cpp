@@ -47,6 +47,29 @@ void TimeElapsed::serialize(const rapidjson::Value &val)
 	}
 }
 
+void TimeElapsed::serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode)
+{
+	int length = pCocoNode->GetChildNum();
+	int count = 0;
+	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray();
+	std::string key;
+	const char *str = NULL;
+	for (int i = 0; i < length; ++i)
+	{
+		count = pDataItemsArray[i].GetChildNum();
+		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray();
+		key = pDataItemArray[0].GetValue();
+		str = pDataItemArray[1].GetValue();
+		if (key == "TotalTime")
+		{
+			if (str != NULL)
+			{
+				_fTotalTime = atof(str); //DICTOOL->getFloatValue_json(subDict, "value");
+			}
+		}
+	}
+}
+
 void TimeElapsed::removeAll()
 {
 	_pScheduler->unscheduleUpdateForTarget(this);
@@ -121,6 +144,51 @@ void ArmatureActionState::serialize(const rapidjson::Value &val)
 		{
 			_nState = DICTOOL->getIntValue_json(subDict, "value");
 			continue;
+		}
+	}
+}
+
+void ArmatureActionState::serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode)
+{
+	int length = pCocoNode->GetChildNum();
+	int count = 0;
+	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray();
+	std::string key;
+	const char *str = NULL;
+	for (int i = 0; i < length; ++i)
+	{
+		count = pDataItemsArray[i].GetChildNum();
+		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray();
+		key = pDataItemArray[0].GetValue();
+		str = pDataItemArray[1].GetValue();
+		if (key == "Tag")
+		{
+			if (str != NULL)
+			{
+				_nTag = atoi(str);//DICTOOL->getIntValue_json(subDict, "value");
+			}
+		}
+		else if (key == "componentName")
+		{
+			if (str != NULL)
+			{
+				_comName = str; //DICTOOL->getStringValue_json(subDict, "value");
+			}
+			
+		}
+		else if (key == "AnimationName")
+		{
+			if (str != NULL)
+			{
+				_aniname = str; //DICTOOL->getStringValue_json(subDict, "value");
+			}
+		}
+		else if (key == "ActionType")
+		{
+			if (str != NULL)
+			{
+				_nState = atoi(str); //DICTOOL->getIntValue_json(subDict, "value");
+			}
 		}
 	}
 }
@@ -209,6 +277,57 @@ void NodeInRect::serialize(const rapidjson::Value &val)
 	}
 }
 
+void NodeInRect::serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode)
+{
+	int length = pCocoNode->GetChildNum();
+	int count = 0;
+	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray();
+	std::string key;
+	const char *str = NULL;
+	for (int i = 0; i < length; ++i)
+	{
+		count = pDataItemsArray[i].GetChildNum();
+		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray();
+		key = pDataItemArray[0].GetValue();
+		str = pDataItemArray[1].GetValue();
+		if (key == "Tag")
+		{
+			if (str != NULL)
+			{
+				_nTag = atoi(str);//DICTOOL->getIntValue_json(subDict, "value");
+			}
+		}
+		else if (key == "originX")
+		{
+			if (str != NULL)
+			{
+				_origin.x = atoi(str); //DICTOOL->getIntValue_json(subDict, "value");
+			}
+		}
+		else if (key == "originY")
+		{
+			if (str != NULL)
+			{
+				_origin.y = atoi(str); //DICTOOL->getIntValue_json(subDict, "value");
+			}
+		}
+		else if (key == "sizeWidth")
+		{
+			if (str != NULL)
+			{
+				_size.width = atoi(str); //DICTOOL->getIntValue_json(subDict, "value");
+			}
+		}
+		else if (key == "sizeHeight")
+		{
+			if (str != NULL)
+			{
+				_size.height = atoi(str); //DICTOOL->getIntValue_json(subDict, "value");
+			}
+		}
+	}
+}
+
 void NodeInRect::removeAll()
 {
 	CCLOG("NodeInRect::removeAll");
@@ -257,6 +376,36 @@ void NodeVisible::serialize(const rapidjson::Value &val)
 		{
 			_bVisible = DICTOOL->getIntValue_json(subDict, "value") != 0? true:false;
 			continue;
+		}
+	}
+}
+
+void NodeVisible::serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode)
+{
+	int length = pCocoNode->GetChildNum();
+	int count = 0;
+	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray();
+	std::string key;
+	const char *str = NULL;
+	for (int i = 0; i < length; ++i)
+	{
+		count = pDataItemsArray[i].GetChildNum();
+		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray();
+		key = pDataItemArray[0].GetValue();
+		str = pDataItemArray[1].GetValue();
+		if (key == "Tag")
+		{
+			if (str != NULL)
+			{
+				_nTag = atoi(str);//DICTOOL->getIntValue_json(subDict, "value");
+			}
+		}
+		else if (key == "Visible")
+		{
+			if (str != NULL)
+			{
+				_bVisible = atoi(str) != 0? true:false;//DICTOOL->getIntValue_json(subDict, "value") != 0? true:false;
+			}
 		}
 	}
 }

@@ -40,11 +40,11 @@ NS_CC_EXT_BEGIN
 struct  stExpCocoAttribDesc
 {
 	rapidjson::Type	m_Type;
-	uint64_t	m_szName;
-	uint64_t	m_szDefaultValue;
+	uint64_t m_szName;
+	uint64_t m_szDefaultValue;
 public:
 	
-	void	ReBuild(char* pStringMemoryAddr)
+	void ReBuild(char* pStringMemoryAddr)
 	{
 		m_szName = m_szName + (uint64_t)pStringMemoryAddr;
 		m_szDefaultValue = m_szDefaultValue + (uint64_t)pStringMemoryAddr;
