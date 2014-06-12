@@ -74,6 +74,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(NodeGlobalZValueTest),
     CL(NodeNormalizedPositionTest1),
     CL(NodeNormalizedPositionTest2),
+    CL(NodeNameTest),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -1229,6 +1230,67 @@ void NodeNormalizedPositionTest2::update(float dt)
     setContentSize(s);
 
     CCLOG("s: %f,%f", s.width, s.height);
+}
+
+
+std::string NodeNameTest::title() const
+{
+    return "getName()/setName()/getChildByName()/enumerateChildren()";
+}
+
+std::string NodeNameTest::subtitle() const
+{
+    return "see console";
+}
+
+void NodeNameTest::onEnter()
+{
+    TestCocosNodeDemo::BaseTest::onEnter();
+    
+    // setName(), getName() and getChildByName()
+    char name[20];
+    for (int i = 0; i < 10; ++i)
+    {
+        sprintf(name, "node%d", i);
+        auto node = Node::create();
+        node->setName(name);
+        addChild(node);
+    }
+
+    for (int j = 0; j < 10; ++j)
+    {
+        sprintf(name, "node%d", j);
+        auto node = getChildByName(name);
+        log("find child: %s", node->getName().c_str());
+    }
+    
+    // node with same name
+    auto node = Node::create();
+    log("node with name test: %p", node);
+    node->setName("test");
+    addChild(node);
+    
+    node = Node::create();
+    log("node with name test: %p", node);
+    node->setName("test");
+    addChild(node);
+    
+    node = getChildByName("test");
+    log("find node with name: %p", node);
+    
+    // enumerateChildren()
+    log("will terminate when find node with name 'test'");
+    enumerateChildren("test", [](const Node* node) -> bool {
+        log("find node with name 'test'");
+        return true;
+    });
+    
+    int i = 1;
+    log("will find all nodes with name 'test' twice");
+    enumerateChildren("test", [&i](const Node* node) -> bool {
+        log("find node with name 'test'");
+        return false;
+    });
 }
 
 ///
