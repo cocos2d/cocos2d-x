@@ -92,7 +92,8 @@ Director* Director::getInstance()
 {
     if (!s_SharedDirector)
     {
-        s_SharedDirector = new DisplayLinkDirector();
+        s_SharedDirector = new (std::nothrow) DisplayLinkDirector();
+        CCASSERT(s_SharedDirector, "FATAL: Not enough memory");
         s_SharedDirector->init();
     }
 
@@ -1091,9 +1092,9 @@ void Director::showStats()
 
         Mat4 identity = Mat4::IDENTITY;
 
-        _drawnVerticesLabel->visit(_renderer, identity, false);
-        _drawnBatchesLabel->visit(_renderer, identity, false);
-        _FPSLabel->visit(_renderer, identity, false);
+        _drawnVerticesLabel->visit(_renderer, identity, 0);
+        _drawnBatchesLabel->visit(_renderer, identity, 0);
+        _FPSLabel->visit(_renderer, identity, 0);
     }
 }
 

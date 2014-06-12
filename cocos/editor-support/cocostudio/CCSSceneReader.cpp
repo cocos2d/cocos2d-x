@@ -110,7 +110,44 @@ Node* SceneReader::nodeByTag(Node *parent, int tag)
     }
     return _retNode;
 }
-
+    
+cocos2d::Component* SceneReader::createComponent(const std::string classname)
+{
+    std::string name = this->getComponentClassName(classname);
+    Ref *object = ObjectFactory::getInstance()->createObject(name);
+    
+    return dynamic_cast<Component*>(object);
+}
+std::string SceneReader::getComponentClassName(const std::string &name)
+{
+    std::string comName;
+    if (name == "CCSprite" || name == "CCTMXTiledMap" || name == "CCParticleSystemQuad" || name == "CCArmature" || name == "GUIComponent")
+    {
+        comName = "ComRender";
+    }
+    else if (name == "CCComAudio" || name == "CCBackgroundAudio")
+    {
+        comName = "ComAudio";
+    }
+    else if (name == "CCComController")
+    {
+        comName = "ComController";
+    }
+    else if (name == "CCComAttribute")
+    {
+        comName = "ComAttribute";
+    }
+    else if (name == "CCScene")
+    {
+        comName = "Scene";
+    }
+    else
+    {
+        CCASSERT(false, "Unregistered Component!");
+    }
+    
+    return comName;
+}
 
 Node* SceneReader::createObject(const rapidjson::Value &dict, cocos2d::Node* parent, AttachComponentType attachComponent)
 {
@@ -134,7 +171,7 @@ Node* SceneReader::createObject(const rapidjson::Value &dict, cocos2d::Node* par
                 break;
             }
             const char *comName = DICTOOL->getStringValue_json(subDict, "classname");
-            Component *com = ObjectFactory::getInstance()->createComponent(comName);
+            Component *com = this->createComponent(comName);
             if (com != nullptr)
             {
                 if (com->serialize((void*)(&subDict)))

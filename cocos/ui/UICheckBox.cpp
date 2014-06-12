@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "ui/UICheckBox.h"
+#include "2d/CCSprite.h"
 
 NS_CC_BEGIN
 
@@ -183,7 +184,9 @@ void CheckBox::loadTextureBackGround(const std::string& backGround,TextureResTyp
     }
     updateFlippedX();
     updateFlippedY();
-    updateRGBAToRenderer(_backGroundBoxRenderer);
+    _backGroundBoxRenderer->setColor(this->getColor());
+    _backGroundBoxRenderer->setOpacity(this->getOpacity());
+    
     updateContentSizeWithTextureSize(_backGroundBoxRenderer->getContentSize());
     _backGroundBoxRendererAdaptDirty = true;
 }
@@ -209,7 +212,8 @@ void CheckBox::loadTextureBackGroundSelected(const std::string& backGroundSelect
     }
     updateFlippedX();
     updateFlippedY();
-    updateRGBAToRenderer(_backGroundSelectedBoxRenderer);
+    _backGroundSelectedBoxRenderer->setColor(this->getColor());
+    _backGroundSelectedBoxRenderer->setOpacity(this->getOpacity());
     _backGroundSelectedBoxRendererAdaptDirty = true;
 }
 
@@ -234,7 +238,8 @@ void CheckBox::loadTextureFrontCross(const std::string& cross,TextureResType tex
     }
     updateFlippedX();
     updateFlippedY();
-    updateRGBAToRenderer(_frontCrossRenderer);
+    _frontCrossRenderer->setColor(this->getColor());
+    _frontCrossRenderer->setOpacity(this->getOpacity());
     _frontCrossRendererAdaptDirty = true;
 }
 
@@ -259,7 +264,9 @@ void CheckBox::loadTextureBackGroundDisabled(const std::string& backGroundDisabl
     }
     updateFlippedX();
     updateFlippedY();
-    updateRGBAToRenderer(_backGroundBoxDisabledRenderer);
+    _backGroundBoxDisabledRenderer->setColor(this->getColor());
+    _backGroundBoxDisabledRenderer->setOpacity(this->getOpacity());
+    
     _backGroundBoxDisabledRendererAdaptDirty = true;
 }
 
@@ -284,7 +291,9 @@ void CheckBox::loadTextureFrontCrossDisabled(const std::string& frontCrossDisabl
     }
     updateFlippedX();
     updateFlippedY();
-    updateRGBAToRenderer(_frontCrossDisabledRenderer);
+    _frontCrossDisabledRenderer->setColor(this->getColor());
+    _frontCrossDisabledRenderer->setOpacity(this->getOpacity());
+    
     _frontCrossDisabledRendererAdaptDirty = true;
 }
 
@@ -563,33 +572,6 @@ void CheckBox::frontCrossDisabledTextureScaleChangedWithSize()
 std::string CheckBox::getDescription() const
 {
     return "CheckBox";
-}
-    
-void CheckBox::updateTextureColor()
-{
-    updateColorToRenderer(_backGroundBoxRenderer);
-    updateColorToRenderer(_backGroundSelectedBoxRenderer);
-    updateColorToRenderer(_frontCrossRenderer);
-    updateColorToRenderer(_backGroundBoxDisabledRenderer);
-    updateColorToRenderer(_frontCrossDisabledRenderer);
-}
-
-void CheckBox::updateTextureOpacity()
-{
-    updateOpacityToRenderer(_backGroundBoxRenderer);
-    updateOpacityToRenderer(_backGroundSelectedBoxRenderer);
-    updateOpacityToRenderer(_frontCrossRenderer);
-    updateOpacityToRenderer(_backGroundBoxDisabledRenderer);
-    updateOpacityToRenderer(_frontCrossDisabledRenderer);
-}
-
-void CheckBox::updateTextureRGBA()
-{
-    updateRGBAToRenderer(_backGroundBoxRenderer);
-    updateRGBAToRenderer(_backGroundSelectedBoxRenderer);
-    updateRGBAToRenderer(_frontCrossRenderer);
-    updateRGBAToRenderer(_backGroundBoxDisabledRenderer);
-    updateRGBAToRenderer(_frontCrossDisabledRenderer);
 }
 
 Widget* CheckBox::createCloneInstance()

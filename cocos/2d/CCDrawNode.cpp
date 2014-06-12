@@ -205,14 +205,14 @@ bool DrawNode::init()
     return true;
 }
 
-void DrawNode::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void DrawNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(DrawNode::onDraw, this, transform, transformUpdated);
+    _customCommand.func = CC_CALLBACK_0(DrawNode::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 }
 
-void DrawNode::onDraw(const Mat4 &transform, bool transformUpdated)
+void DrawNode::onDraw(const Mat4 &transform, uint32_t flags)
 {
     auto glProgram = getGLProgram();
     glProgram->use();

@@ -29,6 +29,8 @@ if(result == STATUS_SUCCESS):
 else:
     data['state'] = "failure"
 
-http_proxy = os.environ['HTTP_PROXY']
+http_proxy = ''
+if(os.environ.has_key('HTTP_PROXY')):
+    http_proxy = os.environ['HTTP_PROXY']
 proxyDict = {'http':http_proxy,'https':http_proxy}
 requests.post(statuses_url, data=json.dumps(data), headers=Headers, proxies = proxyDict)

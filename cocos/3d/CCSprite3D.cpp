@@ -145,7 +145,7 @@ bool Sprite3D::loadFromC3x(const std::string& path)
     if (!bundle->load(fullPath))
         return false;
     
-    Bundle3D::MeshData meshdata;
+    MeshData meshdata;
     bool ret = bundle->loadMeshData("", &meshdata);
     if (!ret)
     {
@@ -158,7 +158,7 @@ bool Sprite3D::loadFromC3x(const std::string& path)
     _skin = MeshSkin::create(fullPath, "");
     CC_SAFE_RETAIN(_skin);
     
-    Bundle3D::MaterialData materialdata;
+    MaterialData materialdata;
     ret = bundle->loadMaterialData("", &materialdata);
     if (ret)
     {
@@ -279,7 +279,7 @@ void Sprite3D::setTexture(Texture2D* texture)
     }
 }
 
-void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     GLProgramState* programstate = getGLProgramState();
     Color4F color(getDisplayedColor());
@@ -297,7 +297,7 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, bool transformUpd
                       _mesh->getIndexCount(),
                       transform);
     
-    _meshCommand.setCullFaceEnabled(true);
+    _meshCommand.setCullFaceEnabled(false);
     _meshCommand.setDepthTestEnabled(true);
     if (_skin)
     {

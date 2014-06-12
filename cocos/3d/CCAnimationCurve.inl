@@ -21,7 +21,7 @@ void AnimationCurve<componentSize>::evaluate(float time, float* dst, EvaluateTyp
     float scale = (_keytime[index + 1] - _keytime[index]);
     float t = (time - _keytime[index]) / scale;
     
-    float* fromValue = &_value[index * _componentSizeByte];
+    float* fromValue = &_value[index * componentSize];
     float* toValue = fromValue + componentSize;
     
     switch (type) {

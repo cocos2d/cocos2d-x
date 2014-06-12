@@ -213,14 +213,14 @@ Atlas1::~Atlas1()
     _textureAtlas->release();
 }
 
-void Atlas1::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void Atlas1::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(Atlas1::onDraw, this, transform, transformUpdated);
+    _customCommand.func = CC_CALLBACK_0(Atlas1::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 }
 
-void Atlas1::onDraw(const Mat4 &transform, bool transformUpdated)
+void Atlas1::onDraw(const Mat4 &transform, uint32_t flags)
 {
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
@@ -532,14 +532,14 @@ Atlas4::Atlas4()
     schedule( schedule_selector(Atlas4::step), 0.1f);
 }
 
-void Atlas4::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void Atlas4::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(Atlas4::onDraw, this, transform, transformUpdated);
+    _customCommand.func = CC_CALLBACK_0(Atlas4::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 }
 
-void Atlas4::onDraw(const Mat4 &transform, bool transformUpdated)
+void Atlas4::onDraw(const Mat4 &transform, uint32_t flags)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -1660,14 +1660,14 @@ std::string LabelBMFontBounds::subtitle() const
     return "You should see string enclosed by a box";
 }
 
-void LabelBMFontBounds::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void LabelBMFontBounds::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(LabelBMFontBounds::onDraw, this, transform, transformUpdated);
+    _customCommand.func = CC_CALLBACK_0(LabelBMFontBounds::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 }
 
-void LabelBMFontBounds::onDraw(const Mat4 &transform, bool transformUpdated)
+void LabelBMFontBounds::onDraw(const Mat4 &transform, uint32_t flags)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");

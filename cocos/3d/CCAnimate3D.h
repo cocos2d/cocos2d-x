@@ -58,6 +58,11 @@ public:
     
     virtual void update(float t) override;
     
+    float getSpeed() const { return _speed; }
+    void setSpeed(float speed) { _speed = speed; }
+    
+    bool getPlayBack() const { return _playBack; }
+    void setPlayBack(bool playBack) { _playBack = playBack; }
 protected:
     Animate3D();
     virtual ~Animate3D();

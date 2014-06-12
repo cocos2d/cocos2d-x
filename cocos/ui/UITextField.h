@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __UITEXTFIELD_H__
 
 #include "ui/UIWidget.h"
+#include "2d/CCTextFieldTTF.h"
 
 NS_CC_BEGIN
 
@@ -149,8 +150,9 @@ public:
     void setMaxLengthEnabled(bool enable);
     bool isMaxLengthEnabled()const;
     void setMaxLength(int length);
+
     int getMaxLength()const;
-    
+    int getStringLength() const;
     void setPasswordEnabled(bool enable);
     bool isPasswordEnabled()const;
     void setPasswordStyleText(const char* styleText);
@@ -196,9 +198,7 @@ protected:
     void insertTextEvent();
     void deleteBackwardEvent();
     virtual void onSizeChanged() override;
-    virtual void updateTextureColor() override;
-    virtual void updateTextureOpacity() override;
-    virtual void updateTextureRGBA() override;
+  
     void textfieldRendererScaleChangedWithSize();
     
     virtual Widget* createCloneInstance() override;

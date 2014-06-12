@@ -163,8 +163,7 @@ private:
     
     static PoolManager* s_singleInstance;
     
-    std::deque<AutoreleasePool*> _releasePoolStack;
-    AutoreleasePool *_curReleasePool;
+    std::vector<AutoreleasePool*> _releasePoolStack;
 };
 
 // end of base_nodes group

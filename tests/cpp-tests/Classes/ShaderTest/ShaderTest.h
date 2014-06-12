@@ -119,7 +119,7 @@ public:
 
     virtual void update(float dt);
     virtual void setPosition(const Vec2 &newPosition);
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
 protected:
     ShaderNode();
@@ -128,7 +128,7 @@ protected:
     bool initWithVertex(const std::string &vert, const std::string &frag);
     void loadShaderVertex(const std::string &vert, const std::string &frag);
 
-    void onDraw(const Mat4 &transform, bool transformUpdated);
+    void onDraw(const Mat4 &transform, uint32_t flags);
 
     Vec2 _center;
     Vec2 _resolution;
@@ -166,9 +166,12 @@ public:
 
 class ShaderMultiTexture : public ShaderTestDemo
 {
+    static const int rightSpriteTag = 2014;
 public:
     ShaderMultiTexture();
     ui::Slider* createSliderCtl();
+    void changeTexture(Ref*);
+    int _changedTextureId;
     Sprite *_sprite;
 
     virtual std::string title() const override;

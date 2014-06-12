@@ -74,9 +74,9 @@ static const char* s_testArray[] =
     "UITextAtlasTest",
     "UITextTest",
     "UITextTest_LineWrap",
-    /*
+    
     "UILabelTest_Effect",
-     */
+    
     "UITextTest_TTF",
     "UITextBMFontTest",
     "UITextFieldTest",
@@ -275,10 +275,10 @@ Scene *UISceneManager::currentUIScene()
         case kUITextTest_LineWrap:
             return UITextTest_LineWrap::sceneWithTitle(s_testArray[_currentUISceneId]);
             
-            /*
+            
         case kUILabelTest_Effect:
             return UILabelTest_Effect::sceneWithTitle(s_testArray[_currentUISceneId]);
-             */
+            
             
         case kUITextTest_TTF:
             return UITextTest_TTF::sceneWithTitle(s_testArray[_currentUISceneId]);

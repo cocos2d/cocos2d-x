@@ -32,56 +32,21 @@
 #include "base/ccTypes.h"
 
 #include "3d/CCMesh.h"
+#include "3d/CCBundle3DData.h"
 
 #include "document.h"
 
 NS_CC_BEGIN
 
 class Animation3D;
+struct Animation3DData
+{
+    Animation3D* animation;
+};
+
 class Bundle3D
 {
 public:
-    struct MeshData
-    {
-        float* vertex;
-        int vertexSizeInFloat;
-        unsigned short* indices;
-        int numIndex;
-        MeshVertexAttrib* attribs;
-        int attribCount;
-        void resetData();
-        MeshData();
-        ~MeshData();
-    };
-    struct SkinData
-    {
-        Mat4                     bindShape;
-        std::vector<std::string> boneNames;
-        std::vector<Mat4>        inverseBindPoseMatrices; //bind pose of bone
-        
-        std::map<int, std::vector<int> > boneChild;//key parent, value child
-        int                              rootBoneIndex;
-        void resetData()
-        {
-            bindShape.setIdentity();
-            boneNames.clear();
-            inverseBindPoseMatrices.clear();
-            boneChild.clear();
-            rootBoneIndex = -1;
-        }
-
-        int getBoneNameIndex(const std::string& name);
-        
-        void getChildMap(std::map<int, std::vector<int> >& map, const rapidjson::Value& val, int index);
-    };
-    struct MaterialData
-    {
-        std::string texturePath;
-    };
-    struct Animation3DData
-    {
-        Animation3D* animation;
-    };
     
     static Bundle3D* getInstance();
     
@@ -117,12 +82,14 @@ public:
     bool loadAnimationData(const std::string& id, Animation3DData* animationdata);
     
 protected:
+
+    //void assignGLTypeByString(GLenum& type, std::string str);
+
+    GLenum parseGLType(const std::string& str);
+
     unsigned int parseGLTypeSize(const std::string& str);
 
-    unsigned int parseGLType(const std::string& str);
-
     unsigned int parseGLProgramAttribute(const std::string& str);
-
 
 protected:
     Bundle3D();

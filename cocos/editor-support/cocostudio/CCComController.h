@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include "CCComBase.h"
 #include "cocostudio/CCInputDelegate.h"
+#include "2d/CCComponent.h"
 
 namespace cocostudio {
 

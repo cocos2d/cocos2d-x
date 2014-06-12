@@ -716,6 +716,7 @@ Developers:
     kicktheken (Kenneth Chan)
         Fixed a bug that the setBlendFunc method of some classes wasn't exposed to LUA.
         Fix lua project template crash on iOS5.1 device
+        Fix layout constant syntax error in lua-binding
         
     andyque
         Fixed a bug that missing to check self assignment of Vector<T>, Map<K,V>, Value and String.
@@ -830,6 +831,7 @@ Developers:
         Fixed incompatible pointer conversion in external/chipmunk/src/cpArray.c
         Fixed memory leak in 'Image'
         Fixed loosing precision when using 'recv' in 'Console'
+        Fixed link error with Xcode 6 when building with 32-bit architecture
         
     ololomax
         Fixed a potential crash in SceneReader::createNodeWithSceneFile
@@ -869,6 +871,16 @@ Developers:
         
     uqtimes 
         Fix NSNotificationCenter and NSTimer leaks
+        
+    ntotani
+        fix building error in lua-binding in release mode
+        
+    kezhuw
+        AutoReleasePool manager improvement
+        
+    zhouxiaoxiaoxujian
+        Added TextField::getStringLength()
+        Add shadow, outline, glow filter support for UIText
     
 Retired Core Developers:
     WenSheng Yang

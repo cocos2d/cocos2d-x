@@ -202,16 +202,16 @@ std::string Box2DView::title() const
     return std::string(m_entry->name);
 }
 
-void Box2DView::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void Box2DView::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    Layer::draw(renderer, transform, transformUpdated);
+    Layer::draw(renderer, transform, flags);
 
     _customCmd.init(_globalZOrder);
-    _customCmd.func = CC_CALLBACK_0(Box2DView::onDraw, this, transform, transformUpdated);
+    _customCmd.func = CC_CALLBACK_0(Box2DView::onDraw, this, transform, flags);
     renderer->addCommand(&_customCmd);
 }
 
-void Box2DView::onDraw(const Mat4 &transform, bool transformUpdated)
+void Box2DView::onDraw(const Mat4 &transform, uint32_t flags)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");

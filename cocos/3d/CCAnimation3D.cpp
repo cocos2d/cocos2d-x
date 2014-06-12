@@ -42,7 +42,7 @@ Animation3D* Animation3D::getOrCreate(const std::string& fileName, const std::st
     auto bundle = Bundle3D::getInstance();
     if (bundle->load(fullPath))
     {
-        Bundle3D::Animation3DData animationdata;
+        Animation3DData animationdata;
         animationdata.animation = new Animation3D();
         bundle->loadAnimationData(animationName, &animationdata);
         animation = animationdata.animation;

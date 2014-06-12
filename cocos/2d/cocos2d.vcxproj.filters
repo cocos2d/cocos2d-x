@@ -565,6 +565,9 @@
     <ClCompile Include="..\3d\CCSprite3DDataCache.cpp">
       <Filter>3d</Filter>
     </ClCompile>
+    <ClCompile Include="..\base\ObjectFactory.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
     <ClCompile Include="..\3d\CCBundle3D.cpp">
       <Filter>3d</Filter>
     </ClCompile>
@@ -1156,6 +1159,9 @@
     <ClInclude Include="..\3d\CCSprite3DDataCache.h">
       <Filter>3d</Filter>
     </ClInclude>
+    <ClInclude Include="..\base\ObjectFactory.h">
+      <Filter>base</Filter>
+    </ClInclude>
     <ClInclude Include="..\3d\CCBundle3D.h">
       <Filter>3d</Filter>
     </ClInclude>
@@ -1169,6 +1175,9 @@
       <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="..\3d\CCAnimation3D.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCBundle3DData.h">
       <Filter>3d</Filter>
     </ClInclude>
   </ItemGroup>

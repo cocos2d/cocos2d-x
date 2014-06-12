@@ -300,7 +300,7 @@ Effect3DOutline* Effect3DOutline::create()
 bool Effect3DOutline::init()
 {
 
-    GLProgram* glprogram = Effect3DOutline::getOrCreateProgram();
+    GLProgram* glprogram = GLProgram::createWithFilenames(_vertShaderFile, _fragShaderFile);
     if(nullptr == glprogram)
     {
         CC_SAFE_DELETE(glprogram);
@@ -323,12 +323,27 @@ Effect3DOutline::Effect3DOutline()
 , _outlineColor(1, 1, 1)
 , _sprite(nullptr)
 {
-    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
+                                                          [this](EventCustom*)
+                                                          {
+                                                              auto glProgram = _glProgramState->getGLProgram();
+                                                              glProgram->reset();
+                                                              glProgram->initWithFilenames(_vertShaderFile, _fragShaderFile);
+                                                              glProgram->link();
+                                                              glProgram->updateUniforms();
+                                                          }
+                                                          );
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+#endif
 }
 
 Effect3DOutline::~Effect3DOutline()
 {
     CC_SAFE_RELEASE_NULL(_sprite);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
 }
 
 void Effect3DOutline::setOutlineColor(const Vec3& color)
@@ -404,7 +419,7 @@ void Effect3DOutline::draw(const Mat4 &transform)
     }
 }
 
-void EffectSprite3D::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, bool transformUpdated)
+void EffectSprite3D::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags)
 {
     for(auto &effect : _effects)
     {
@@ -418,7 +433,7 @@ void EffectSprite3D::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &tran
     
     if(!_defaultEffect)
     {
-        Sprite3D::draw(renderer, transform, transformUpdated);
+        Sprite3D::draw(renderer, transform, flags);
     }
     else
     {
@@ -517,25 +532,35 @@ Sprite3DWithSkinTest::Sprite3DWithSkinTest()
 }
 std::string Sprite3DWithSkinTest::title() const
 {
-    return "Testing Sprite3D"; 
+    return "Testing Sprite3D for animation from c3t";
 }
 std::string Sprite3DWithSkinTest::subtitle() const
 {
-    return "Sprite3D from .c3t";
+    return "Tap screen to add more sprite3D";
 }
 
 void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
 {
-    auto sprite = Sprite3D::create("Sprite3DTest/XXX.c3t");
+    auto sprite = Sprite3D::create("Sprite3DTest/test.c3t");
     sprite->setScale(1.f);
     sprite->setTexture("Sprite3DTest/boss.png");
     addChild(sprite);
     
-    sprite->setPosition( Vec2( p.x, p.y) );
-    auto animation = Animation3D::getOrCreate("Sprite3DTest/XXX.c3t");
+    /*sprite->setPosition( Vec2( p.x, p.y) );
+    auto animation = Animation3D::getOrCreate("Sprite3DTest/cube_anim.c3t");
     
     auto animate = Animate3D::create(animation);
-    sprite->runAction(animate);
+    if(std::rand() %3 == 0)
+    {
+        animate->setPlayBack(true);
+    }
+    
+    if(std::rand() % 3 == 0)
+    {
+        animate->setSpeed(animate->getSpeed() * (std::rand() % 10));
+    }
+    
+    sprite->runAction(RepeatForever::create(animate));*/
 }
 
 void Sprite3DWithSkinTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)

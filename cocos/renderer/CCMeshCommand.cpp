@@ -31,6 +31,7 @@
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTextureAtlas.h"
 #include "renderer/CCTexture2D.h"
+#include "renderer/ccGLStateCache.h"
 
 NS_CC_BEGIN
 
@@ -137,6 +138,11 @@ void MeshCommand::restoreRenderState()
     }
 }
 
+void MeshCommand::MatrixPalleteCallBack( GLProgram* glProgram, Uniform* uniform)
+{
+    glProgram->setUniformLocationWith4fv(uniform->location, (const float*)_matrixPalette, _matrixPaletteSize);
+}
+
 void MeshCommand::execute()
 {
     // set render state
@@ -148,15 +154,11 @@ void MeshCommand::execute()
 
     glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
     _glProgramState->setUniformVec4("u_color", _displayColor);
+    
     if (_matrixPaletteSize && _matrixPalette)
     {
-        auto glProgram = _glProgramState->getGLProgram();
-
-        auto uniform = glProgram->getUniform("u_matrixPalette");
-        if (uniform)
-        {
-            glProgram->setUniformLocationWith4fv(uniform->location, (const float*)_matrixPalette, _matrixPaletteSize);
-        }
+        _glProgramState->setUniformCallback("u_matrixPalette", CC_CALLBACK_2(MeshCommand::MatrixPalleteCallBack, this));
+        
     }
     
     _glProgramState->apply(_mv);

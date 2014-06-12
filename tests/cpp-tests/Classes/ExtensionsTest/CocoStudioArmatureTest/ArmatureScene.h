@@ -211,7 +211,7 @@ public:
 	virtual void onEnter() override;
 	virtual void onExit() override;
 	virtual std::string title() const override;
-	virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+	virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 	virtual void update(float delta);
 
 	void onFrameEvent(cocostudio::Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex);
@@ -270,8 +270,8 @@ public:
     virtual void onEnter() override;
     virtual std::string title() const override;
     virtual void update(float delta);
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
-    void onDraw(const Mat4 &transform, bool transformUpdated);
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    void onDraw(const Mat4 &transform, uint32_t flags);
     
     void onFrameEvent(cocostudio::Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex);
     
@@ -293,13 +293,13 @@ class TestBoundingBox : public ArmatureTestLayer
 public:
 	virtual void onEnter() override;
 	virtual std::string title() const override;
-	virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+	virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
 	cocostudio::Armature *armature;
 	Rect rect;
 
 protected:
-    void onDraw(const Mat4 &transform, bool transformUpdated);
+    void onDraw(const Mat4 &transform, uint32_t flags);
 
     CustomCommand _customCommand;
 };

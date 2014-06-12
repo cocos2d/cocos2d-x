@@ -141,14 +141,14 @@ public:
 protected:
     virtual void initRenderer() override;
     virtual void onSizeChanged() override;
-    virtual void updateTextureColor() override;
-    virtual void updateTextureOpacity() override;
-    virtual void updateTextureRGBA() override;
+   
     void setScale9Scale();
     void barRendererScaleChangedWithSize();
+    
+    virtual void adaptRenderers() override;
+    
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
-    virtual void adaptRenderers() override;
 protected:
     Direction _direction;
     float _percent;

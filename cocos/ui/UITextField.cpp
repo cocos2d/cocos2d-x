@@ -564,6 +564,11 @@ const std::string& TextField::getStringValue()const
 {
     return _textFieldRenderer->getString();
 }
+    
+int TextField::getStringLength() const {
+    return _textFieldRenderer->getStringLength();
+}
+
 
 bool TextField::onTouchBegan(Touch *touch, Event *unusedEvent)
 {
@@ -798,21 +803,6 @@ Node* TextField::getVirtualRenderer()
 std::string TextField::getDescription() const
 {
     return "TextField";
-}
-    
-void TextField::updateTextureColor()
-{
-    updateColorToRenderer(_textFieldRenderer);
-}
-
-void TextField::updateTextureOpacity()
-{
-    updateOpacityToRenderer(_textFieldRenderer);
-}
-
-void TextField::updateTextureRGBA()
-{
-    updateRGBAToRenderer(_textFieldRenderer);
 }
 
 void TextField::attachWithIME()

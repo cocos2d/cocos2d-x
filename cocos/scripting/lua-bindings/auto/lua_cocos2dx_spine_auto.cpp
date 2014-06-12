@@ -123,11 +123,11 @@ int lua_cocos2dx_spine_Skeleton_onDraw(lua_State* tolua_S)
     if (argc == 2) 
     {
         cocos2d::Mat4 arg0;
-        bool arg1;
+        unsigned int arg1;
 
         ok &= luaval_to_mat4(tolua_S, 2, &arg0);
 
-        ok &= luaval_to_boolean(tolua_S, 3,&arg1);
+        ok &= luaval_to_uint32(tolua_S, 3,&arg1);
         if(!ok)
             return 0;
         cobj->onDraw(arg0, arg1);

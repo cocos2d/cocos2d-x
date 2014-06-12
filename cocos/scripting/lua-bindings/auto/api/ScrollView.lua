@@ -1,7 +1,7 @@
 
 --------------------------------
 -- @module ScrollView
--- @extend Layout,ScrollViewProtocol
+-- @extend Layout
 
 --------------------------------
 -- @function [parent=#ScrollView] scrollToTop 

@@ -33,38 +33,12 @@
 
 NS_CC_BEGIN
 
-Bundle3D* Bundle3D::_instance = nullptr;
 
-Bundle3D::MeshData::MeshData()
-: vertex(nullptr)
-, vertexSizeInFloat(0)
-, indices(nullptr)
-, numIndex(0)
-, attribs(nullptr)
-, attribCount(0)
+void getChildMap(const SkinData* skinData, std::map<int, std::vector<int> >& map, const rapidjson::Value& val, int index)
 {
-    
-}
-Bundle3D::MeshData::~MeshData()
-{
-    resetData();
-}
+    if (!skinData)
+        return;
 
-int Bundle3D::SkinData::getBoneNameIndex(const std::string& name)
-{
-    std::vector<std::string>::iterator iter = boneNames.begin();
-    for (int i = 0; iter != boneNames.end(); ++iter, ++i)
-    {
-        if ((*iter) == name)
-        {
-            return i;
-        }
-    }
-    return -1;
-}
-
-void Bundle3D::SkinData::getChildMap(std::map<int, std::vector<int> >& map, const rapidjson::Value& val, int index)
-{
     if (val.HasMember("children"))
     {
         const rapidjson::Value& children = val["children"];
@@ -72,27 +46,20 @@ void Bundle3D::SkinData::getChildMap(std::map<int, std::vector<int> >& map, cons
         {
             const rapidjson::Value& child = children[i];
             std::string child_name = child["id"].GetString();
-            
-            int child_name_index = getBoneNameIndex(child_name);
+
+            int child_name_index = skinData->getBoneNameIndex(child_name);
             if (child_name_index < 0)
                 break;
 
             map[index].push_back(child_name_index);
 
-            getChildMap(map, child, child_name_index);
+            getChildMap(skinData, map, child, child_name_index);
         }
     }
 }
 
-void Bundle3D::MeshData::resetData()
-{
-    CC_SAFE_DELETE_ARRAY(vertex);
-    CC_SAFE_DELETE_ARRAY(indices);
-    CC_SAFE_DELETE_ARRAY(attribs);
-    vertexSizeInFloat = 0;
-    numIndex = 0;
-    attribCount = 0;
-}
+
+Bundle3D* Bundle3D::_instance = nullptr;
 
 Bundle3D* Bundle3D::getInstance()
 {
@@ -210,6 +177,7 @@ bool Bundle3D::loadMeshData(const std::string& id, MeshData* meshdata)
         meshdata->attribs[i].size = mesh_vertex_attribute_val["size"].GetUint();
         meshdata->attribs[i].attribSizeBytes = meshdata->attribs[1].size * parseGLTypeSize(mesh_vertex_attribute_val["type"].GetString());
         meshdata->attribs[i].type = parseGLType(mesh_vertex_attribute_val["type"].GetString());
+        //assignGLTypeByString(meshdata->attribs[i].type, mesh_vertex_attribute_val["type"].GetString());
         meshdata->attribs[i].vertexAttrib = parseGLProgramAttribute(mesh_vertex_attribute_val["vertex_attribute"].GetString());
     }
 
@@ -236,7 +204,7 @@ bool Bundle3D::loadSkinData(const std::string& id, SkinData* skindata)
     
     const rapidjson::Value& skin_data_array_val_0 = skin_data_array[(rapidjson::SizeType)0];
     skindata->boneNames.push_back("root");
-
+    skindata->inverseBindPoseMatrices.push_back(Mat4::IDENTITY);
     skindata->rootBoneIndex = 0;
 
     const rapidjson::Value& skin_data_bind_shape = skin_data_array_val_0["bind_shape"];
@@ -262,7 +230,7 @@ bool Bundle3D::loadSkinData(const std::string& id, SkinData* skindata)
     }
 
     const rapidjson::Value& skin_data_array_val_1 = skin_data_array[1];
-    skindata->getChildMap(skindata->boneChild, skin_data_array_val_1, 0);
+    getChildMap(skindata, skindata->boneChild, skin_data_array_val_1, 0);
 
     return true;
 }
@@ -304,16 +272,16 @@ bool Bundle3D::loadAnimationData(const std::string& id, Animation3DData* animati
     float keytime[] = {0.f, 1.f};
     float pos[] = {0.f, 0.f, 0.f, 20.f, 0.f, 0.f};
     
-    float keytime1[] = {0.f, 0.25f, 0.5f, 1.f};
+    float keytime1[] = {0.f, 0.333f, 0.667f, 1.f};
     float rot[4 * 4];
     Quaternion quat;
-    Quaternion::createFromAxisAngle(Vec3(0.f, 1.f, 0.f), 0, &quat);
+    Quaternion::createFromAxisAngle(Vec3(1.f, 0.f, 0.f), 0, &quat);
     rot[0] = quat.x, rot[1] = quat.y, rot[2] = quat.z, rot[3] = quat.w;
-    Quaternion::createFromAxisAngle(Vec3(0.f, 1.f, 0.f), MATH_DEG_TO_RAD(90), &quat);
+    Quaternion::createFromAxisAngle(Vec3(1.f, 0.f, 0.f), MATH_DEG_TO_RAD(90), &quat);
     rot[4] = quat.x, rot[5] = quat.y, rot[6] = quat.z, rot[7] = quat.w;
-    Quaternion::createFromAxisAngle(Vec3(0.f, 1.f, 0.f), MATH_DEG_TO_RAD(180), &quat);
+    Quaternion::createFromAxisAngle(Vec3(1.f, 0.f, 0.f), MATH_DEG_TO_RAD(180), &quat);
     rot[8] = quat.x, rot[9] = quat.y, rot[10] = quat.z, rot[11] = quat.w;
-    Quaternion::createFromAxisAngle(Vec3(0.f, 1.f, 0.f), MATH_DEG_TO_RAD(270), &quat);
+    Quaternion::createFromAxisAngle(Vec3(1.f, 0.f, 0.f), MATH_DEG_TO_RAD(270), &quat);
     rot[12] = quat.x, rot[13] = quat.y, rot[14] = quat.z, rot[15] = quat.w;
     curve->rotCurve = Animation3D::Curve::AnimationCurveQuat::create(keytime1, rot, 4);
     curve->rotCurve->retain();
@@ -355,6 +323,7 @@ bool Bundle3D::loadAnimationData(const std::string& id, Animation3DData* animati
                     }
                     
                     curve->translateCurve = Animation3D::Curve::AnimationCurveVec3::create(keytime, position,  bone_keyframe_position.Size());
+                    curve->translateCurve->retain();
                 }
 
                 if ( bone_keyframe.HasMember("rotation"))
@@ -376,6 +345,7 @@ bool Bundle3D::loadAnimationData(const std::string& id, Animation3DData* animati
                     }
                     
                     curve->rotCurve = Animation3D::Curve::AnimationCurveQuat::create(keytime, rotate,  bone_keyframe_position.Size());
+                    curve->rotCurve->retain();
                 }
 
                 if ( bone_keyframe.HasMember("scale"))
@@ -397,6 +367,7 @@ bool Bundle3D::loadAnimationData(const std::string& id, Animation3DData* animati
                     }
 
                     curve->scaleCurve = Animation3D::Curve::AnimationCurveVec3::create(keytime, scale,  bone_keyframe_position.Size());
+                    curve->scaleCurve->retain();
                 }
 
                 animation->_boneCurves[bone_name] = curve;
@@ -404,6 +375,39 @@ bool Bundle3D::loadAnimationData(const std::string& id, Animation3DData* animati
         }
     }
     return true;
+}
+
+//void Bundle3D::assignGLTypeByString(GLenum& type, std::string str)
+//{
+//    if (str == "GL_FLOAT")
+//    {
+//        type = GL_FLOAT;
+//    }
+//    else if (str == "GL_UNSIGNED_INT")
+//    {
+//        type = GL_UNSIGNED_INT;
+//    }
+//    else
+//    {
+//        assert(0);
+//    }
+//}
+
+GLenum Bundle3D::parseGLType(const std::string& str)
+{
+    if (str == "GL_FLOAT")
+    {
+        return GL_FLOAT;
+    }
+    else if (str == "GL_UNSIGNED_INT")
+    {
+        return GL_UNSIGNED_INT;
+    }
+    else
+    {
+        assert(0);
+        return 0;
+    }
 }
 
 unsigned int Bundle3D::parseGLTypeSize(const std::string& str)
@@ -415,23 +419,6 @@ unsigned int Bundle3D::parseGLTypeSize(const std::string& str)
     else if (str == "GL_UNSIGNED_INT")
     {
         return sizeof(unsigned int);
-    }
-    else
-    {
-        assert(0);
-        return -1;
-    }
-}
-
-unsigned int Bundle3D::parseGLType(const std::string& str)
-{
-    if (str == "GL_FLOAT")
-    {
-        return GL_FLOAT;
-    }
-    else if (str == "GL_UNSIGNED_INT")
-    {
-        return GL_UNSIGNED_INT;
     }
     else
     {

@@ -72,6 +72,8 @@ static std::function<Layer*()> createFunctions[] =
     CL(NodeOpaqueTest),
     CL(NodeNonOpaqueTest),
     CL(NodeGlobalZValueTest),
+    CL(NodeNormalizedPositionTest1),
+    CL(NodeNormalizedPositionTest2),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -993,22 +995,22 @@ public:
         sprite->setGLProgramState(shaderState);
         return sprite;
     }
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
-    void onDraw(const Mat4 &transform, bool transformUpdated);
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    void onDraw(const Mat4 &transform, uint32_t flags);
 
 protected:
     CustomCommand _customCommand;
 
 };
 
-void MySprite::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void MySprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(MySprite::onDraw, this, transform, transformUpdated);
+    _customCommand.func = CC_CALLBACK_0(MySprite::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 }
 
-void MySprite::onDraw(const Mat4 &transform, bool transformUpdated)
+void MySprite::onDraw(const Mat4 &transform, uint32_t flags)
 {
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
@@ -1087,6 +1089,7 @@ std::string CameraTest1::subtitle() const
 {
     return "Both images should rotate with a 3D effect";
 }
+
 //------------------------------------------------------------------
 //
 // CameraTest2
@@ -1141,6 +1144,91 @@ std::string CameraTest2::title() const
 std::string CameraTest2::subtitle() const
 {
     return "Both images should look the same";
+}
+
+//------------------------------------------------------------------
+//
+// NodeNormalizedPositionTest1
+//
+//------------------------------------------------------------------
+NodeNormalizedPositionTest1::NodeNormalizedPositionTest1()
+{
+    Sprite *sprites[5];
+    Vec2 positions[5];
+    positions[0] = Vec2(0,0);
+    positions[1] = Vec2(0,1);
+    positions[2] = Vec2(0.5,0.5);
+    positions[3] = Vec2(1,0);
+    positions[4] = Vec2(1,1);
+
+    for(int i=0; i<5; i++) {
+        sprites[i] = Sprite::create("Images/grossini.png");
+        sprites[i]->setNormalizedPosition(positions[i]);
+        addChild(sprites[i]);
+    }
+}
+
+std::string NodeNormalizedPositionTest1::title() const
+{
+    return "setNormalizedPositon()";
+}
+
+std::string NodeNormalizedPositionTest1::subtitle() const
+{
+    return "5 sprites: One in the center, the others on the corners";
+}
+
+//------------------------------------------------------------------
+//
+// NodeNormalizedPositionTest2
+//
+//------------------------------------------------------------------
+NodeNormalizedPositionTest2::NodeNormalizedPositionTest2()
+: _accum(0)
+{
+    Sprite *sprites[5];
+    Vec2 positions[5];
+    positions[0] = Vec2(0,0);
+    positions[1] = Vec2(0,1);
+    positions[2] = Vec2(0.5,0.5);
+    positions[3] = Vec2(1,0);
+    positions[4] = Vec2(1,1);
+
+    for(int i=0; i<5; i++) {
+        sprites[i] = Sprite::create("Images/grossini.png");
+        sprites[i]->setNormalizedPosition(positions[i]);
+        addChild(sprites[i]);
+    }
+    scheduleUpdate();
+
+    setContentSize( Director::getInstance()->getWinSize());
+    _copyContentSize = getContentSize();
+
+//    setAnchorPoint(Vec2(0.5,0.5));
+//    setNormalizedPosition(Vec2(0.5,0.5));
+}
+
+std::string NodeNormalizedPositionTest2::title() const
+{
+    return "setNormalizedPositon() #2";
+}
+
+std::string NodeNormalizedPositionTest2::subtitle() const
+{
+    return "5 sprites: One in the center, the others on the corners of its parents";
+}
+
+void NodeNormalizedPositionTest2::update(float dt)
+{
+    _accum += dt;
+
+    // for 5 seconds
+    float norm = sinf(_accum);
+
+    Size s = Size(_copyContentSize.width*norm, _copyContentSize.height*norm);
+    setContentSize(s);
+
+    CCLOG("s: %f,%f", s.width, s.height);
 }
 
 ///

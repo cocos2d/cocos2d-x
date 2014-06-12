@@ -66,7 +66,7 @@ vec4 getPosition()
 
 void main()
 {
-    vec4 position = getPosition();
+    vec4 position = a_position;//getPosition();
     gl_Position = CC_MVPMatrix * position;
     
     TextureCoordOut = a_texCoord;
