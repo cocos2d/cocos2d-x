@@ -997,26 +997,6 @@ int LuaEngine::handleAssetsManagerEvent(ScriptHandlerMgr::HandlerType type,void*
 
 int LuaEngine::handleStudioEventListener(ScriptHandlerMgr::HandlerType type,void* data)
 {
-    if (nullptr == data)
-        return 0;
-    
-    BasicScriptData* eventData = static_cast<BasicScriptData*>(data);
-    if (nullptr == eventData->nativeObject || nullptr == eventData->value)
-        return 0;
-    
-    LuaStudioEventListenerData* listenerData = static_cast<LuaStudioEventListenerData*>(eventData->value);
-    
-    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)eventData->nativeObject, ScriptHandlerMgr::HandlerType::STUDIO_EVENT_LISTENER);
-    
-    if (0 == handler)
-        return 0;
-    
-    _stack->pushObject(listenerData->objTarget, "cc.Ref");
-    _stack->pushInt(listenerData->eventType);
-    
-    _stack->executeFunctionByHandler(handler, 2);
-    _stack->clean();
-    
     return 0;
 }
 
