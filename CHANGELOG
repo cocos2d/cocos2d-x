@@ -17,6 +17,7 @@ cocos2d-x-3.2  ???
     [FIX]           Label: label is unsharp if it's created by smaller font
     [FIX]           Label: Label's display may go bonkers if invoking Label::setString() with outline feature enabled
     [FIX]           Label: don't release cached texture in time
+    [FIX]           Label: calculated height of multi-line string was incorrect on iOS
     [FIX]           Lua-binding: compiling error on release mode
     [FIX]           Lua-binding: Add xxtea encrypt support
     [FIX]           Node: setPhysicsBody() can not work correctly if it is added to a Node
