@@ -92,11 +92,14 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     virtual bool init();
-    ControlSlider* createSliderCtl();
-    void sliderAction(Ref* sender, Control::EventType controlEvent);
+    void createSliderCtls();
+    void onRadiusChanged(Ref* sender, Control::EventType controlEvent);
+    void onSampleNumChanged(Ref* sender, Control::EventType controlEvent);
+    
 protected:
     SpriteBlur* _blurSprite;
-    ControlSlider* _sliderCtl;
+    ControlSlider* _sliderRadiusCtl;
+    ControlSlider* _sliderNumCtrl;
 };
 
 class ShaderRetroEffect : public ShaderTestDemo
