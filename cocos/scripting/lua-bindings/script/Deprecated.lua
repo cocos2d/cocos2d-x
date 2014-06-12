@@ -1230,6 +1230,60 @@ function UIWidgetDeprecated.getTopInParent(self)
 end
 rawset(ccui.Widget,"getTopInParent", UIWidgetDeprecated.getTopInParent)
 
---functions of ccui.Widget will be deprecated begin
+--functions of ccui.Widget will be deprecated end
+
+--functions of ccui.CheckBox will be deprecated begin
+local UICheckBoxDeprecated = { }
+function UICheckBoxDeprecated.addEventListenerCheckBox(self,handler)
+    deprecatedTip("ccui.CheckBox:addEventListenerCheckBox","ccui.CheckBox:addEventListener")
+    return self:addEventListener(handler)
+end
+rawset(ccui.CheckBox,"addEventListenerCheckBox", UICheckBoxDeprecated.addEventListenerCheckBox)
+--functions of ccui.CheckBox will be deprecated end
+
+--functions of ccui.Slider will be deprecated begin
+local UISliderDeprecated = { }
+function UISliderDeprecated.addEventListenerSlider(self,handler)
+    deprecatedTip("ccui.Slider:addEventListenerSlider","ccui.Slider:addEventListener")
+    return self:addEventListener(handler)
+end
+rawset(ccui.Slider,"addEventListenerSlider", UISliderDeprecated.addEventListenerSlider)
+--functions of ccui.Slider will be deprecated end
+
+--functions of ccui.TextField will be deprecated begin
+local UITextFieldDeprecated = { }
+function UITextFieldDeprecated.addEventListenerTextField(self,handler)
+    deprecatedTip("ccui.TextField:addEventListenerTextField","ccui.TextField:addEventListener")
+    return self:addEventListener(handler)
+end
+rawset(ccui.TextField,"addEventListenerTextField", UITextFieldDeprecated.addEventListenerTextField)
+--functions of ccui.TextField will be deprecated end
+
+--functions of ccui.PageView will be deprecated begin
+local UIPageViewDeprecated = { }
+function UIPageViewDeprecated.addEventListenerPageView(self,handler)
+    deprecatedTip("ccui.PageView:addEventListenerPageView","ccui.PageView:addEventListener")
+    return self:addEventListener(handler)
+end
+rawset(ccui.PageView,"addEventListenerPageView", UIPageViewDeprecated.addEventListenerPageView)
+--functions of ccui.PageView will be deprecated end
+
+--functions of ccui.ScrollView will be deprecated begin
+local UIScrollViewDeprecated = { }
+function UIScrollViewDeprecated.addEventListenerScrollView(self,handler)
+    deprecatedTip("ccui.ScrollView:addEventListenerScrollView","ccui.ScrollView:addEventListener")
+    return self:addEventListener(handler)
+end
+rawset(ccui.ScrollView,"addEventListenerScrollView", UIScrollViewDeprecated.addEventListenerScrollView)
+--functions of ccui.ScrollView will be deprecated end
+
+--functions of ccui.ListView will be deprecated begin
+local UIListViewDeprecated = { }
+function UIListViewDeprecated.addEventListenerListView(self,handler)
+    deprecatedTip("ccui.ListView:addEventListenerListView","ccui.ListView:addEventListener")
+    return self:addEventListener(handler)
+end
+rawset(ccui.ListView,"addEventListenerListView", UIListViewDeprecated.addEventListenerListView)
+--functions of ccui.ListView will be deprecated end
 
 
