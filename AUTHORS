@@ -885,6 +885,9 @@ Developers:
         
     QiuleiWang
         Fix the bug that calculated height of multi-line string was incorrect on iOS
+        
+    Rumist
+        Fix the bug that the result of Director->convertToUI() is error.
     
 Retired Core Developers:
     WenSheng Yang
