@@ -767,18 +767,37 @@ Node* Node::getChildByTag(int tag) const
 
 Node* Node::getChildByName(const std::string& name) const
 {
-    CCASSERT(name.size() != 0, "Invilide name");
+    CCASSERT(name.size() != 0, "Invalid name");
     
     std::hash<std::string> h;
     size_t hash = h(name);
     
-    for (auto& child : _children)
+    for (const auto& child : _children)
     {
         // Different strings may have the same hash code, but can use it to compare first for speed
         if(child->_hashOfName == hash && child->_name.compare(name) == 0)
             return child;
     }
     return nullptr;
+}
+
+void Node::enumerateChildren(const std::string &name, std::function<bool (const Node *)> callback) const
+{
+    CCASSERT(name.size() != 0, "Invalid name");
+    
+    std::hash<std::string> h;
+    size_t hash = h(name);
+    
+    for (const auto& child : _children)
+    {
+        // Different strings may have the same hash code, but can use it to compare first for speed
+        if(child->_hashOfName == hash && child->_name.compare(name) == 0)
+        {
+            // terminate enumeration if callback return true
+            if (callback(child))
+                break;
+        }
+    }
 }
 
 /* "add" logic MUST only be on this method

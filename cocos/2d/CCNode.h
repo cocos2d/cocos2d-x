@@ -677,6 +677,17 @@ public:
      * @since v3.2
      */
     virtual Node* getChildByName(const std::string& name) const;
+    /** Search the children of the receiving node to perform processing for nodes which share a name.
+     *
+     * @param name The name to search for
+     * @param callback A callback function to execute on nodes that match the `name` parameter. The function takes the following arguments:
+     *  `node` 
+     *      A node that matches the name
+     *  And returns a boolean result. Your callback can return `true` to terminate the enumeration.
+     *
+     * @since v3.2
+     */
+    virtual void enumerateChildren(const std::string &name, std::function<bool(const Node* node)> callback) const;
     /**
      * Returns the array of the node's children
      *
