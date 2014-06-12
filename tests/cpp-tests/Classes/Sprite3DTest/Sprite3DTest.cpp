@@ -555,12 +555,11 @@ void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
         animate->setPlayBack(true);
     }
     
-    if(std::rand() % 3 == 0)
-    {
-        animate->setSpeed(animate->getSpeed() * (std::rand() % 10));
-    }
+    animate->setSpeed(animate->getSpeed() + (CCRANDOM_MINUS1_1() * 0.6f));
+    auto sequence = Sequence::create(animate, animate->reverse(), NULL);
+    //animate->setSpeed(animate->getSpeed() + (CCRANDOM_MINUS1_1() * 0.6f));
     
-    sprite->runAction(RepeatForever::create(animate));
+    sprite->runAction(RepeatForever::create(sequence));
 }
 
 void Sprite3DWithSkinTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
