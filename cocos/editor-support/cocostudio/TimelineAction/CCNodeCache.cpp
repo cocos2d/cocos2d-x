@@ -424,35 +424,38 @@ Node* NodeCache::loadParticle(const rapidjson::Value& json)
 
 cocos2d::Node* NodeCache::loadWidget(const rapidjson::Value& json)
 {
-    const char* classname = DICTOOL->getStringValue_json(json, CLASSNAME);
+    const char* str = DICTOOL->getStringValue_json(json, CLASSNAME);
+    if(str == nullptr)
+        return nullptr;
+
+    std::string classname = str;
+
+    if (classname == "Panel")
+    {
+        classname = "Layout";
+    }
+    else if (classname == "TextArea")
+    {
+        classname = "Text";
+    }
+    else if (classname == "TextButton")
+    {
+        classname = "Button";
+    }
+    else if (classname == "Label")
+    {
+        classname = "Text";
+    }
+    else if (classname == "LabelAtlas")
+    {
+        classname = "TextAtlas";
+    }
+    else if (classname == "LabelBMFont")
+    {
+        classname = "TextBMFont";
+    }
 
     std::string readerName = classname;
-
-    if (readerName == "Panel")
-    {
-        readerName = "Layout";
-    }
-    else if (readerName == "TextArea")
-    {
-        readerName = "Text";
-    }
-    else if (readerName == "TextButton")
-    {
-        readerName = "Button";
-    }
-    else if (readerName == "Label")
-    {
-        readerName = "Text";
-    }
-    else if (readerName == "LabelAtlas")
-    {
-        readerName = "TextAtlas";
-    }
-    else if (readerName == "LabelBMFont")
-    {
-        readerName = "TextBMFont";
-    }
-
     readerName.append("Reader");
     
     Widget*               widget = dynamic_cast<Widget*>(ObjectFactory::getInstance()->createObject(classname));
