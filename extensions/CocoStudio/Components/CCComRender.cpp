@@ -183,17 +183,44 @@ bool CCComRender::serialize(void* r)
 					m_pRender = pAr;
 					m_pRender->retain();
 					const char *actionName = NULL;
-					if (pCocoNode != NULL)
-					{
-						actionName = pCocoNode[6].GetValue();//DICTOOL->getStringValue_json(*v, "selectedactionname");
-					}
-					else
-					{
-						actionName = DICTOOL->getStringValue_json(*v, "selectedactionname");
-					}
+					actionName = DICTOOL->getStringValue_json(*v, "selectedactionname");
 					if (actionName != NULL && pAr->getAnimation() != NULL)
 					{
 						pAr->getAnimation()->play(actionName);
+					}
+				}
+				else if (file_extension == ".CSB")
+				{
+					unsigned long size = 0;
+					unsigned char *pBytes = NULL;
+					std::string binaryFilePath = CCFileUtils::sharedFileUtils()->fullPathForFilename(strFilePath.c_str());
+					pBytes = cocos2d::CCFileUtils::sharedFileUtils()->getFileData(binaryFilePath.c_str(), "rb", &size);
+					CC_BREAK_IF(pBytes == NULL || strcmp((char*)pBytes, "") == 0);
+					CocoLoader tCocoLoader;
+					if (tCocoLoader.ReadCocoBinBuff((char*)pBytes))
+					{
+						stExpCocoNode *tpRootCocoNode = tCocoLoader.GetRootCocoNode();
+						rapidjson::Type tType = tpRootCocoNode->GetType(&tCocoLoader);
+						if (rapidjson::kObjectType  == tType)
+						{
+							stExpCocoNode *tpChildArray = tpRootCocoNode->GetChildArray();
+							stExpCocoNode *armaturedataArray = tpChildArray[0].GetChildArray();
+							stExpCocoNode *armaturedata = armaturedataArray[0].GetChildArray();
+							const char *name = armaturedata[2].GetValue();
+							CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(strFilePath.c_str());
+							CCArmature *pAr = CCArmature::create(name);
+							m_pRender = pAr;
+							m_pRender->retain();
+							const char *actionName = NULL;
+							if (pCocoNode != NULL)
+							{
+								actionName = pCocoNode[6].GetValue();//DICTOOL->getStringValue_json(*v, "selectedactionname");
+							}
+							if (actionName != NULL && pAr->getAnimation() != NULL)
+							{
+								pAr->getAnimation()->play(actionName);
+							}
+						}
 					}
 				}
 			}
