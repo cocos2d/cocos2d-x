@@ -85,21 +85,6 @@ static const char* RED              = "colorR";
 static const char* GREEN            = "colorG";
 static const char* BLUE             = "colorB";
 static const char* PARTICLE_NUM     = "particleNum";
-    
-static const char* MULRESPOSITION              = "mulResPosition";
-static const char* POSITIONTYPE                = "positionType";
-static const char* MUL_POSITION                = "position";
-static const char* MUL_POSITIONX               = "x";
-static const char* MUL_POSITIONY               = "y";
-static const char* MUL_POSITIONPERCENTAGE      = "percentagepos";
-static const char* MUL_POSITIONPERCENTAGEX     = "x";
-static const char* MUL_POSITIONPERCENTAGEY     = "y";
-static const char* MUL_RELATIVEALIGN           = "mulpositionpercentage";
-static const char* MUL_MARGIN                  = "margin";
-static const char* MUL_MARGIN_LEFT             = "left";
-static const char* MUL_MARGIN_TOP              = "top";
-static const char* MUL_MARGIN_RIGHT            = "right";
-static const char* MUL_MARGIN_BOTTOM           = "bottom";
 
 static const char* TEXTURES     = "textures";
 static const char* TEXTURES_PNG = "texturesPng";
@@ -193,13 +178,13 @@ cocos2d::Node* NodeReader::createNode(const std::string& filename)
     if(_recordJsonPath)
     {
         std::string jsonPath = filename.substr(0, filename.find_last_of('/') + 1);
-        GUIReader::shareReader()->setFilePath(jsonPath);
+        GUIReader::getInstance()->setFilePath(jsonPath);
 
         _jsonPath = jsonPath;
     }
     else
     {
-        GUIReader::shareReader()->setFilePath("");
+        GUIReader::getInstance()->setFilePath("");
         _jsonPath = "";
     }
 
@@ -307,7 +292,7 @@ void NodeReader::initNode(cocos2d::Node* node, const rapidjson::Value& json)
     int actionTag       = DICTOOL->getIntValue_json(json, ACTION_TAG);
 
     if(x != 0 || y != 0)
-        node->setPosition(CCPoint(x, y));
+        node->setPosition(Point(x, y));
     if(scalex != 1)
         node->setScaleX(scalex);
     if(scaley != 1)
@@ -323,18 +308,22 @@ void NodeReader::initNode(cocos2d::Node* node, const rapidjson::Value& json)
     if(skewy != 0)
         node->setSkewY(skewy);
     if(anchorx != 0.5f || anchory != 0.5f)
-        node->setAnchorPoint(CCPoint(anchorx, anchory));
+        node->setAnchorPoint(Point(anchorx, anchory));
     if(width != 0 || height != 0)
         node->setContentSize(Size(width, height));
 
-    CCRGBAProtocol *rgbaProtocaol = dynamic_cast<CCRGBAProtocol *>(node);
-    if(rgbaProtocaol)
+
+    if(alpha != 255)
     {
-        if(alpha != 255)
-            rgbaProtocaol->setOpacity(alpha); rgbaProtocaol->setCascadeOpacityEnabled(true);
-        if(red != 255 || green != 255 || blue != 255)
-            rgbaProtocaol->setColor(ccc3(red, green, blue));
+        node->setOpacity(alpha);
+        node->setCascadeOpacityEnabled(true);
     }
+    if(red != 255 || green != 255 || blue != 255)
+    {
+        node->setColor(Color3B(red, green, blue));
+        node->setCascadeColorEnabled(true);
+    }
+
 
     node->setTag(tag);
     node->setUserObject(TimelineActionData::create(actionTag));

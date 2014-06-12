@@ -31,7 +31,7 @@ namespace cocostudio {
 namespace timeline{
 
 
-class Frame : public cocos2d::Object
+class Frame : public cocos2d::Ref
 {
 public:
 
@@ -92,7 +92,7 @@ public:
 
     TextureFrame();
 
-    virtual void setNode(cocos2d::CCNode* node);
+    virtual void setNode(cocos2d::Node* node);
 
     virtual void onEnter(Frame *nextFrame) override;
     virtual Frame* clone() override;
@@ -101,7 +101,7 @@ public:
     inline std::string getTexture() const { return _texture; }
 
 protected:
-    cocos2d::CCSprite* _sprite;
+    cocos2d::Sprite* _sprite;
     std::string _texture;
 };
 

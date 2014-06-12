@@ -995,18 +995,10 @@
 		2AC795EA1862875D005EC8E1 /* BoundingBoxAttachment.h in Headers */ = {isa = PBXBuildFile; fileRef = 2AC795D418628672005EC8E1 /* BoundingBoxAttachment.h */; };
 		373B9129187891F400198F86 /* CCComBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 373B910718787C0B00198F86 /* CCComBase.h */; };
 		373B912A187891FB00198F86 /* CCComBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 373B910718787C0B00198F86 /* CCComBase.h */; };
-		38FA2E0D1949569800FF2BE4 /* CCAsyncReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38FA2E011949569800FF2BE4 /* CCAsyncReader.cpp */; };
-		38FA2E0E1949569800FF2BE4 /* CCAsyncReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38FA2E011949569800FF2BE4 /* CCAsyncReader.cpp */; };
-		38FA2E0F1949569800FF2BE4 /* CCAsyncReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 38FA2E021949569800FF2BE4 /* CCAsyncReader.h */; };
-		38FA2E101949569800FF2BE4 /* CCAsyncReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 38FA2E021949569800FF2BE4 /* CCAsyncReader.h */; };
 		38FA2E111949569800FF2BE4 /* CCFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38FA2E031949569800FF2BE4 /* CCFrame.cpp */; };
 		38FA2E121949569800FF2BE4 /* CCFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38FA2E031949569800FF2BE4 /* CCFrame.cpp */; };
 		38FA2E131949569800FF2BE4 /* CCFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = 38FA2E041949569800FF2BE4 /* CCFrame.h */; };
 		38FA2E141949569800FF2BE4 /* CCFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = 38FA2E041949569800FF2BE4 /* CCFrame.h */; };
-		38FA2E151949569800FF2BE4 /* CCNodeCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38FA2E051949569800FF2BE4 /* CCNodeCache.cpp */; };
-		38FA2E161949569800FF2BE4 /* CCNodeCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38FA2E051949569800FF2BE4 /* CCNodeCache.cpp */; };
-		38FA2E171949569800FF2BE4 /* CCNodeCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 38FA2E061949569800FF2BE4 /* CCNodeCache.h */; };
-		38FA2E181949569800FF2BE4 /* CCNodeCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 38FA2E061949569800FF2BE4 /* CCNodeCache.h */; };
 		38FA2E191949569800FF2BE4 /* CCTimeLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38FA2E071949569800FF2BE4 /* CCTimeLine.cpp */; };
 		38FA2E1A1949569800FF2BE4 /* CCTimeLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38FA2E071949569800FF2BE4 /* CCTimeLine.cpp */; };
 		38FA2E1B1949569800FF2BE4 /* CCTimeLine.h in Headers */ = {isa = PBXBuildFile; fileRef = 38FA2E081949569800FF2BE4 /* CCTimeLine.h */; };
@@ -1019,6 +1011,10 @@
 		38FA2E221949569800FF2BE4 /* CCTimelineActionCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38FA2E0B1949569800FF2BE4 /* CCTimelineActionCache.cpp */; };
 		38FA2E231949569800FF2BE4 /* CCTimelineActionCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 38FA2E0C1949569800FF2BE4 /* CCTimelineActionCache.h */; };
 		38FA2E241949569800FF2BE4 /* CCTimelineActionCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 38FA2E0C1949569800FF2BE4 /* CCTimelineActionCache.h */; };
+		38FA2E341949C75600FF2BE4 /* CCNodeReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38FA2E321949C75600FF2BE4 /* CCNodeReader.cpp */; };
+		38FA2E351949C75600FF2BE4 /* CCNodeReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38FA2E321949C75600FF2BE4 /* CCNodeReader.cpp */; };
+		38FA2E361949C75600FF2BE4 /* CCNodeReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 38FA2E331949C75600FF2BE4 /* CCNodeReader.h */; };
+		38FA2E371949C75600FF2BE4 /* CCNodeReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 38FA2E331949C75600FF2BE4 /* CCNodeReader.h */; };
 		3EA0FB6B191C841D00B170C8 /* UIVideoPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EA0FB69191C841D00B170C8 /* UIVideoPlayer.h */; };
 		3EA0FB6C191C841D00B170C8 /* UIVideoPlayerIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0FB6A191C841D00B170C8 /* UIVideoPlayerIOS.mm */; };
 		460E468118080832000CDD6D /* cocos-ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A167D21807AF4D005B8026 /* cocos-ext.h */; };
@@ -2299,18 +2295,16 @@
 		37936A3C1869B76800E974DD /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reader.h; sourceTree = "<group>"; };
 		37936A3D1869B76800E974DD /* stringbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringbuffer.h; sourceTree = "<group>"; };
 		37936A3E1869B76800E974DD /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
-		38FA2E011949569800FF2BE4 /* CCAsyncReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAsyncReader.cpp; sourceTree = "<group>"; };
-		38FA2E021949569800FF2BE4 /* CCAsyncReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAsyncReader.h; sourceTree = "<group>"; };
 		38FA2E031949569800FF2BE4 /* CCFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFrame.cpp; sourceTree = "<group>"; };
 		38FA2E041949569800FF2BE4 /* CCFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFrame.h; sourceTree = "<group>"; };
-		38FA2E051949569800FF2BE4 /* CCNodeCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNodeCache.cpp; sourceTree = "<group>"; };
-		38FA2E061949569800FF2BE4 /* CCNodeCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNodeCache.h; sourceTree = "<group>"; };
 		38FA2E071949569800FF2BE4 /* CCTimeLine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTimeLine.cpp; sourceTree = "<group>"; };
 		38FA2E081949569800FF2BE4 /* CCTimeLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTimeLine.h; sourceTree = "<group>"; };
 		38FA2E091949569800FF2BE4 /* CCTimelineAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTimelineAction.cpp; sourceTree = "<group>"; };
 		38FA2E0A1949569800FF2BE4 /* CCTimelineAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTimelineAction.h; sourceTree = "<group>"; };
 		38FA2E0B1949569800FF2BE4 /* CCTimelineActionCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTimelineActionCache.cpp; sourceTree = "<group>"; };
 		38FA2E0C1949569800FF2BE4 /* CCTimelineActionCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTimelineActionCache.h; sourceTree = "<group>"; };
+		38FA2E321949C75600FF2BE4 /* CCNodeReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNodeReader.cpp; sourceTree = "<group>"; };
+		38FA2E331949C75600FF2BE4 /* CCNodeReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNodeReader.h; sourceTree = "<group>"; };
 		3EA0FB69191C841D00B170C8 /* UIVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIVideoPlayer.h; sourceTree = "<group>"; };
 		3EA0FB6A191C841D00B170C8 /* UIVideoPlayerIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UIVideoPlayerIOS.mm; sourceTree = "<group>"; };
 		46A15FCC1807A544005B8026 /* AUTHORS */ = {isa = PBXFileReference; lastKnownFileType = text; name = AUTHORS; path = ../AUTHORS; sourceTree = "<group>"; };
@@ -4042,12 +4036,10 @@
 		38FA2E001949569800FF2BE4 /* TimelineAction */ = {
 			isa = PBXGroup;
 			children = (
-				38FA2E011949569800FF2BE4 /* CCAsyncReader.cpp */,
-				38FA2E021949569800FF2BE4 /* CCAsyncReader.h */,
+				38FA2E321949C75600FF2BE4 /* CCNodeReader.cpp */,
+				38FA2E331949C75600FF2BE4 /* CCNodeReader.h */,
 				38FA2E031949569800FF2BE4 /* CCFrame.cpp */,
 				38FA2E041949569800FF2BE4 /* CCFrame.h */,
-				38FA2E051949569800FF2BE4 /* CCNodeCache.cpp */,
-				38FA2E061949569800FF2BE4 /* CCNodeCache.h */,
 				38FA2E071949569800FF2BE4 /* CCTimeLine.cpp */,
 				38FA2E081949569800FF2BE4 /* CCTimeLine.h */,
 				38FA2E091949569800FF2BE4 /* CCTimelineAction.cpp */,
@@ -5197,7 +5189,6 @@
 				50ABC00B1926664800A911A9 /* CCDevice.h in Headers */,
 				2905FA7A18CF08D100240AA3 /* UISlider.h in Headers */,
 				1A8C59AD180E930E00EF57C3 /* CCArmatureDefine.h in Headers */,
-				38FA2E171949569800FF2BE4 /* CCNodeCache.h in Headers */,
 				50ABC0131926664800A911A9 /* CCGLViewProtocol.h in Headers */,
 				1A8C59B1180E930E00EF57C3 /* CCBatchNode.h in Headers */,
 				50ABBDB31925AB4100A911A9 /* ccShaders.h in Headers */,
@@ -5212,6 +5203,7 @@
 				38FA2E231949569800FF2BE4 /* CCTimelineActionCache.h in Headers */,
 				1A8C59C5180E930E00EF57C3 /* CCComController.h in Headers */,
 				1A8C59C9180E930E00EF57C3 /* CCComRender.h in Headers */,
+				38FA2E361949C75600FF2BE4 /* CCNodeReader.h in Headers */,
 				1A8C59CD180E930E00EF57C3 /* CCDataReaderHelper.h in Headers */,
 				50ABBEB11925AB6F00A911A9 /* CCUserDefault.h in Headers */,
 				50ABBEC71925AB6F00A911A9 /* etc1.h in Headers */,
@@ -5222,7 +5214,6 @@
 				1A8C59D9180E930E00EF57C3 /* CCDisplayFactory.h in Headers */,
 				50ABC0691926664800A911A9 /* CCStdC.h in Headers */,
 				50ABBECD1925AB6F00A911A9 /* s3tc.h in Headers */,
-				38FA2E0F1949569800FF2BE4 /* CCAsyncReader.h in Headers */,
 				50ABBE771925AB6F00A911A9 /* CCEventListenerTouch.h in Headers */,
 				1A8C59DD180E930E00EF57C3 /* CCDisplayManager.h in Headers */,
 				1A8C59E1180E930E00EF57C3 /* CCInputDelegate.h in Headers */,
@@ -5445,6 +5436,7 @@
 				50ABBD9E1925AB4100A911A9 /* ccGLStateCache.h in Headers */,
 				1A57008C180BC5A10088DEC7 /* CCActionProgressTimer.h in Headers */,
 				2905FA8318CF08D100240AA3 /* UITextAtlas.h in Headers */,
+				38FA2E371949C75600FF2BE4 /* CCNodeReader.h in Headers */,
 				1A570090180BC5A10088DEC7 /* CCActionTiledGrid.h in Headers */,
 				1A570094180BC5A10088DEC7 /* CCActionTween.h in Headers */,
 				1A57009B180BC5C10088DEC7 /* CCAtlasNode.h in Headers */,
@@ -5494,7 +5486,6 @@
 				50ABBE9E1925AB6F00A911A9 /* CCRefPtr.h in Headers */,
 				1A01C69518F57BE800EFE3A6 /* CCFloat.h in Headers */,
 				1A5701CA180BCB5A0088DEC7 /* CCLabelTextFormatter.h in Headers */,
-				38FA2E181949569800FF2BE4 /* CCNodeCache.h in Headers */,
 				2905FA7B18CF08D100240AA3 /* UISlider.h in Headers */,
 				5034CA22191D591100CE6051 /* ccShader_PositionTextureColorAlphaTest.frag in Headers */,
 				50ABBECE1925AB6F00A911A9 /* s3tc.h in Headers */,
@@ -5689,7 +5680,6 @@
 				1A8C599E180E930E00EF57C3 /* CCActionObject.h in Headers */,
 				1A8C59A2180E930E00EF57C3 /* CCArmature.h in Headers */,
 				1A8C59A6180E930E00EF57C3 /* CCArmatureAnimation.h in Headers */,
-				38FA2E101949569800FF2BE4 /* CCAsyncReader.h in Headers */,
 				2905FA8718CF08D100240AA3 /* UITextBMFont.h in Headers */,
 				1A8C59AA180E930E00EF57C3 /* CCArmatureDataManager.h in Headers */,
 				1A8C59AE180E930E00EF57C3 /* CCArmatureDefine.h in Headers */,
@@ -6234,6 +6224,7 @@
 				1A5702EE180BCE750088DEC7 /* CCTMXLayer.cpp in Sources */,
 				50ABBE691925AB6F00A911A9 /* CCEventListenerFocus.cpp in Sources */,
 				1A5702F2180BCE750088DEC7 /* CCTMXObjectGroup.cpp in Sources */,
+				38FA2E341949C75600FF2BE4 /* CCNodeReader.cpp in Sources */,
 				1A5702F6180BCE750088DEC7 /* CCTMXTiledMap.cpp in Sources */,
 				38FA2E191949569800FF2BE4 /* CCTimeLine.cpp in Sources */,
 				1A5702FA180BCE750088DEC7 /* CCTMXXMLParser.cpp in Sources */,
@@ -6277,7 +6268,6 @@
 				2905FA6A18CF08D100240AA3 /* UIPageView.cpp in Sources */,
 				B29594C61926D61F003EEF37 /* CCObjLoader.cpp in Sources */,
 				06CAAAC7186AD7E90012A414 /* TriggerObj.cpp in Sources */,
-				38FA2E151949569800FF2BE4 /* CCNodeCache.cpp in Sources */,
 				1AD71DEF180E26E600808F54 /* CCNode+CCBRelativePositioning.cpp in Sources */,
 				50ABC01D1926664800A911A9 /* CCThread.cpp in Sources */,
 				1AD71DF3180E26E600808F54 /* CCNodeLoader.cpp in Sources */,
@@ -6315,7 +6305,6 @@
 				50E6D33818E174130051CA34 /* UIRelativeBox.cpp in Sources */,
 				1AD71ECD180E26E600808F54 /* Skeleton.cpp in Sources */,
 				1AD71ED1180E26E600808F54 /* SkeletonData.cpp in Sources */,
-				38FA2E0D1949569800FF2BE4 /* CCAsyncReader.cpp in Sources */,
 				1AD71ED5180E26E600808F54 /* SkeletonJson.cpp in Sources */,
 				B29594CA1926D61F003EEF37 /* CCSprite3D.cpp in Sources */,
 				1AD71ED9180E26E600808F54 /* Skin.cpp in Sources */,
@@ -6627,6 +6616,7 @@
 				1A5701B6180BCB590088DEC7 /* CCFontFreeType.cpp in Sources */,
 				50ABBEAC1925AB6F00A911A9 /* ccTypes.cpp in Sources */,
 				1A5701BA180BCB5A0088DEC7 /* CCLabel.cpp in Sources */,
+				38FA2E351949C75600FF2BE4 /* CCNodeReader.cpp in Sources */,
 				2905FA4B18CF08D100240AA3 /* UICheckBox.cpp in Sources */,
 				1A5701BE180BCB5A0088DEC7 /* CCLabelAtlas.cpp in Sources */,
 				1A5701C2180BCB5A0088DEC7 /* CCLabelBMFont.cpp in Sources */,
@@ -6834,12 +6824,10 @@
 				1A8C59EC180E930E00EF57C3 /* CCSkin.cpp in Sources */,
 				2905FA4718CF08D100240AA3 /* UIButton.cpp in Sources */,
 				1A8C59F0180E930E00EF57C3 /* CCSpriteFrameCacheHelper.cpp in Sources */,
-				38FA2E161949569800FF2BE4 /* CCNodeCache.cpp in Sources */,
 				50ABBEB41925AB6F00A911A9 /* CCUserDefault.mm in Sources */,
 				1A1645B1191B726C008C7C7F /* ConvertUTF.c in Sources */,
 				1A8C59F4180E930E00EF57C3 /* CCSSceneReader.cpp in Sources */,
 				1A8C59F8180E930E00EF57C3 /* CCTransformHelp.cpp in Sources */,
-				38FA2E0E1949569800FF2BE4 /* CCAsyncReader.cpp in Sources */,
 				50ABBE3A1925AB6F00A911A9 /* CCData.cpp in Sources */,
 				1A8C59FC180E930E00EF57C3 /* CCTween.cpp in Sources */,
 				2905FA5318CF08D100240AA3 /* UIImageView.cpp in Sources */,
