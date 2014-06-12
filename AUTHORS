@@ -882,6 +882,9 @@ Developers:
     zhouxiaoxiaoxujian
         Added TextField::getStringLength()
         Add shadow, outline, glow filter support for UIText
+        
+    QiuleiWang
+        Fix the bug that calculated height of multi-line string was incorrect on iOS
     
 Retired Core Developers:
     WenSheng Yang
