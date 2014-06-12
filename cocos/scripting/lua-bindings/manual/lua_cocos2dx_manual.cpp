@@ -5003,58 +5003,6 @@ tolua_lerror:
     return lua_cocos2dx_Label_createWithTTF00(L);
 }
 
-extern int lua_cocos2dx_Label_create(lua_State* tolua_S);
-
-static int lua_cocos2dx_Label_create_deprecated(lua_State* tolua_S)
-{
-    if (nullptr == tolua_S)
-        return 0;
-    
-    int argc = 0;
-    
-    tolua_Error tolua_err;
-    if (!tolua_isusertable(tolua_S,1,"cc.Label",0,&tolua_err)) goto tolua_lerror;
-    
-    argc = lua_gettop(tolua_S) - 1;
-    
-    if (argc >= 3 && argc <= 6)
-    {
-        if (!tolua_isstring(tolua_S, 2, 0, &tolua_err)  ||
-            !tolua_isstring(tolua_S, 3, 0, &tolua_err)  ||
-            !tolua_isnumber(tolua_S, 4, 0, &tolua_err)  ||
-            !tolua_istable(tolua_S, 5, 1, &tolua_err)   ||
-            !tolua_isnumber(tolua_S, 6, 1, &tolua_err)  ||
-            !tolua_isnumber(tolua_S, 7, 1, &tolua_err) )
-        {
-            goto tolua_lerror;
-        }
-        else
-        {
-            CCLOG("The create(text, ...) was deprecated,please use create createWithTTF(text, ...) instead");
-            std::string text = tolua_tocppstring(tolua_S, 2, "");
-            std::string fontFile = tolua_tocppstring(tolua_S, 3, "");
-            float fontSize   = tolua_tonumber(tolua_S, 4, 0);
-            cocos2d::Size dimensions = cocos2d::Size::ZERO;
-            if (lua_istable(tolua_S, 5))
-            {
-                luaval_to_size(tolua_S, 5, &dimensions);
-            }
-            TextHAlignment hAlignment = static_cast<TextHAlignment>((int)tolua_tonumber(tolua_S, 6, 0));
-            TextVAlignment vAlignment = static_cast<TextVAlignment>((int)tolua_tonumber(tolua_S, 7, 0));
-            
-            cocos2d::Label* ret = cocos2d::Label::create(text, fontFile, fontSize, dimensions, hAlignment, vAlignment);
-            
-            int ID = ret ? (int)(ret->_ID) : -1;
-            int* luaID = ret ? &(ret->_luaID) : nullptr;
-            toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"cc.Label");
-            return 1;
-        }
-    }
-    
-tolua_lerror:
-    return lua_cocos2dx_Label_create(tolua_S);
-}
-
 static void extendLabel(lua_State* tolua_S)
 {
     lua_pushstring(tolua_S, "cc.Label");
@@ -5063,7 +5011,6 @@ static void extendLabel(lua_State* tolua_S)
     {
         tolua_function(tolua_S, "createWithTTF", lua_cocos2dx_Label_createWithTTF00);
         tolua_function(tolua_S, "createWithTTF", lua_cocos2dx_Label_createWithTTF01);
-        tolua_function(tolua_S, "create", lua_cocos2dx_Label_create_deprecated);
     }
     lua_pop(tolua_S, 1);
 }
