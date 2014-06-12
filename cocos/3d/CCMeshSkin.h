@@ -104,6 +104,13 @@ protected:
         Dirty_Rotation = 2,
         Dirty_Scale = 4,
     };
+    struct BoneBlendState
+    {
+        Vec3          localTranslate;
+        Quaternion    localRot;
+        Vec3          localScale;
+        float         weight;
+    };
 	/**
      * Constructor.
      */
@@ -143,6 +150,8 @@ protected:
     bool          _worldDirty;
     Mat4          _world;
     Mat4          _local;
+    
+    BoneBlendState _blendState;
     Vec3          _localTranslate;
     Quaternion    _localRot;
     Vec3          _localScale;
