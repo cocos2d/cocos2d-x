@@ -53,6 +53,12 @@ WidgetReader/TextAtlasReader/TextAtlasReader.cpp \
 WidgetReader/TextBMFontReader/TextBMFontReader.cpp \
 WidgetReader/TextFieldReader/TextFieldReader.cpp \
 WidgetReader/TextReader/TextReader.cpp \
+TimelineAction/CCFrame.cpp \
+TimelineAction/CCNodeCache.cpp \
+TimelineAction/CCTimeLine.cpp \
+TimelineAction/CCTimelineAction.cpp \
+TimelineAction/CCTimelineActionCache.cpp \
+
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/.. \
 $(LOCAL_PATH)/../../../external
