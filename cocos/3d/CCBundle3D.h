@@ -39,11 +39,6 @@
 NS_CC_BEGIN
 
 class Animation3D;
-struct Animation3DData
-{
-    Animation3D* animation;
-};
-
 class Bundle3D
 {
 public:

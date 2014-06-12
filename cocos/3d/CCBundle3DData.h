@@ -118,6 +118,72 @@ struct MaterialData
     std::string texturePath;
 };
 
+struct Animation3DData
+{
+    struct Vec3Key
+    {
+        Vec3Key()
+        : _time(0)
+        , _key(Vec3::ZERO)
+        {
+        }
+        
+        Vec3Key(float time, const Vec3& v)
+        : _time(time)
+        , _key(v)
+        {
+        }
+        
+        float _time;
+        Vec3 _key;
+    };
+    
+    struct QuatKey
+    {
+        QuatKey()
+        : _time(0)
+        , _key(Quaternion::identity())
+        {
+        }
+        
+        QuatKey(float time, const Quaternion& quat)
+        : _time(time)
+        , _key(quat)
+        {
+        }
+        
+        float _time;
+        Quaternion _key;
+    };
+    
+    std::map<std::string, std::vector<Vec3Key>> _translationKeys;
+    std::map<std::string, std::vector<QuatKey>> _rotationKeys;
+    std::map<std::string, std::vector<Vec3Key>> _scaleKeys;
+    
+    float _totalTime;
+    
+    Animation3DData()
+    :_totalTime(0)
+    {
+    }
+    
+    Animation3DData(const Animation3DData& other)
+    : _totalTime(other._totalTime)
+    , _translationKeys(other._translationKeys)
+    , _rotationKeys(other._rotationKeys)
+    , _scaleKeys(other._scaleKeys)
+    {
+    }
+    
+    void clear()
+    {
+        _totalTime = 0;
+        _translationKeys.clear();
+        _rotationKeys.clear();
+        _scaleKeys.clear();
+    }
+};
+
 NS_CC_END
 
 #endif //__CC_BUNDLE_3D_DATA_H__

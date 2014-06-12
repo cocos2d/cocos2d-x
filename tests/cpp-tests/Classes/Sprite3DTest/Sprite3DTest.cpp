@@ -541,7 +541,7 @@ std::string Sprite3DWithSkinTest::subtitle() const
 
 void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
 {
-    auto sprite = Sprite3D::create("Sprite3DTest/test.c3t");
+    auto sprite = Sprite3D::create("Sprite3DTest/cube_anim.c3t");
     sprite->setScale(1.f);
     sprite->setTexture("Sprite3DTest/boss.png");
     addChild(sprite);

@@ -31,6 +31,8 @@
 #include "base/ccMacros.h"
 #include "platform/CCFileUtils.h"
 
+#include "CCBundle3DData.h"
+
 NS_CC_BEGIN
 
 
@@ -259,32 +261,38 @@ bool Bundle3D::loadMaterialData(const std::string& id, MaterialData* materialdat
  */
 bool Bundle3D::loadAnimationData(const std::string& id, Animation3DData* animationdata)
 {
+    animationdata->_rotationKeys.clear();
+    animationdata->_scaleKeys.clear();
+    animationdata->_translationKeys.clear();
     assert(document.HasMember("animation_data"));
     if (!document.HasMember("animation_data")) return false;
 
-    auto animation = animationdata->animation;
-    animation->_duration = 3.0f;
-    for (auto it : animation->_boneCurves) {
+    animationdata->_totalTime = 3;
+
+    //auto animation = animationdata->animation;
+    //animation->_duration = 3.0f;
+   /* for (auto it : animation->_boneCurves) {
         CC_SAFE_DELETE(it.second);
     }
-    animation->_boneCurves.clear();
+    animation->_boneCurves.clear();*/
     /*auto curve = new Animation3D::Curve();
     float keytime[] = {0.f, 1.f};
     float pos[] = {0.f, 0.f, 0.f, 20.f, 0.f, 0.f};
     
+    animationdata->_totalTime = 3.0f;
+    
     float keytime1[] = {0.f, 0.333f, 0.667f, 1.f};
-    float rot[4 * 4];
+    std::string boneName = "root";
+    
     Quaternion quat;
     Quaternion::createFromAxisAngle(Vec3(1.f, 0.f, 0.f), 0, &quat);
-    rot[0] = quat.x, rot[1] = quat.y, rot[2] = quat.z, rot[3] = quat.w;
+    animationdata->_rotationKeys[boneName].push_back(Animation3DData::QuatKey(keytime1[0], quat));
     Quaternion::createFromAxisAngle(Vec3(1.f, 0.f, 0.f), MATH_DEG_TO_RAD(90), &quat);
-    rot[4] = quat.x, rot[5] = quat.y, rot[6] = quat.z, rot[7] = quat.w;
+     animationdata->_rotationKeys[boneName].push_back(Animation3DData::QuatKey(keytime1[1], quat));
     Quaternion::createFromAxisAngle(Vec3(1.f, 0.f, 0.f), MATH_DEG_TO_RAD(180), &quat);
-    rot[8] = quat.x, rot[9] = quat.y, rot[10] = quat.z, rot[11] = quat.w;
+    animationdata->_rotationKeys[boneName].push_back(Animation3DData::QuatKey(keytime1[2], quat));
     Quaternion::createFromAxisAngle(Vec3(1.f, 0.f, 0.f), MATH_DEG_TO_RAD(270), &quat);
-    rot[12] = quat.x, rot[13] = quat.y, rot[14] = quat.z, rot[15] = quat.w;
-    curve->rotCurve = Animation3D::Curve::AnimationCurveQuat::create(keytime1, rot, 4);
-    curve->rotCurve->retain();
+    animationdata->_rotationKeys[boneName].push_back(Animation3DData::QuatKey(keytime1[3], quat));
     
     animation->_boneCurves["root"] = curve;*/
 
@@ -302,75 +310,54 @@ bool Bundle3D::loadAnimationData(const std::string& id, Animation3DData* animati
             const rapidjson::Value& bone_keyframes =  bone["keyframes"];
             for (rapidjson::SizeType j = 0; j < bone_keyframes.Size(); j++)
             {
-                auto curve = new Animation3D::Curve();
+                //auto curve = new Animation3D::Curve();
                 const rapidjson::Value&  bone_keyframe =  bone_keyframes[j];
                 if ( bone_keyframe.HasMember("position"))
                 {
                     const rapidjson::Value&  bone_keyframe_position =  bone_keyframe["position"];
-                    float *keytime = new float[ bone_keyframe_position.Size()];
-                    float *position = new float[ bone_keyframe_position.Size() * 3];
-                    
+
                     for (rapidjson::SizeType k = 0; k <  bone_keyframe_position.Size(); k++)
                     {
                         const rapidjson::Value&  bone_keyframe_position_obj =  bone_keyframe_position[k];
-                        keytime[k] =  bone_keyframe_position_obj["keytime"].GetDouble();
+                        float keytime =  bone_keyframe_position_obj["keytime"].GetDouble();
 
                         const rapidjson::Value&  bone_keyframe_position_values =  bone_keyframe_position_obj["value"];
-                        for (rapidjson::SizeType l = 0; l <  bone_keyframe_position_values.Size(); l++)
-                        {
-                            position[l] =  bone_keyframe_position_values[l].GetDouble();
-                        }
+                        Vec3 val = Vec3(bone_keyframe_position_values[(rapidjson::SizeType)0].GetDouble(),bone_keyframe_position_values[1].GetDouble(),bone_keyframe_position_values[2].GetDouble());
+                        animationdata->_translationKeys[bone_name].push_back(Animation3DData::Vec3Key(keytime,val));
                     }
-                    
-                    curve->translateCurve = Animation3D::Curve::AnimationCurveVec3::create(keytime, position,  bone_keyframe_position.Size());
-                    curve->translateCurve->retain();
                 }
 
                 if ( bone_keyframe.HasMember("rotation"))
                 {
                     const rapidjson::Value&  bone_keyframe_position =  bone_keyframe["rotation"];
-                    float *keytime = new float[ bone_keyframe_position.Size()];
-                    float *rotate = new float[ bone_keyframe_position.Size() * 4];
-                    
+
                     for (rapidjson::SizeType k = 0; k <  bone_keyframe_position.Size(); k++)
                     {
                         const rapidjson::Value&  bone_keyframe_position_obj =  bone_keyframe_position[k];
-                        keytime[k] =  bone_keyframe_position_obj["keytime"].GetDouble();
+                        float keytime =  bone_keyframe_position_obj["keytime"].GetDouble();
 
                         const rapidjson::Value&  bone_keyframe_position_values =  bone_keyframe_position_obj["value"];
-                        for (rapidjson::SizeType l = 0; l <  bone_keyframe_position_values.Size(); l++)
-                        {
-                            rotate[l] =  bone_keyframe_position_values[l].GetDouble();
-                        }
+                        Quaternion val = Quaternion(bone_keyframe_position_values[(rapidjson::SizeType)0].GetDouble(),bone_keyframe_position_values[1].GetDouble(),bone_keyframe_position_values[2].GetDouble(),bone_keyframe_position_values[3].GetDouble());
+                        animationdata->_rotationKeys[bone_name].push_back(Animation3DData::QuatKey(keytime,val));
                     }
-                    
-                    curve->rotCurve = Animation3D::Curve::AnimationCurveQuat::create(keytime, rotate,  bone_keyframe_position.Size());
-                    curve->rotCurve->retain();
                 }
 
                 if ( bone_keyframe.HasMember("scale"))
                 {
                     const rapidjson::Value&  bone_keyframe_position =  bone_keyframe["scale"];
-                    float *keytime = new float[ bone_keyframe_position.Size()];
-                    float *scale = new float[ bone_keyframe_position.Size() * 3];
                     
                     for (rapidjson::SizeType k = 0; k <  bone_keyframe_position.Size(); k++)
                     {
                         const rapidjson::Value&  bone_keyframe_position_obj =  bone_keyframe_position[k];
-                        keytime[k] =  bone_keyframe_position_obj["keytime"].GetDouble();
+                        float keytime =  bone_keyframe_position_obj["keytime"].GetDouble();
 
                         const rapidjson::Value&  bone_keyframe_position_values =  bone_keyframe_position_obj["value"];
-                        for (rapidjson::SizeType l = 0; l <  bone_keyframe_position_values.Size(); l++)
-                        {
-                            scale[l] =  bone_keyframe_position_values[l].GetDouble();
-                        }
+                        Vec3 val = Vec3(bone_keyframe_position_values[(rapidjson::SizeType)0].GetDouble(),bone_keyframe_position_values[1].GetDouble(),bone_keyframe_position_values[2].GetDouble());
+                        animationdata->_scaleKeys[bone_name].push_back(Animation3DData::Vec3Key(keytime,val));
                     }
-
-                    curve->scaleCurve = Animation3D::Curve::AnimationCurveVec3::create(keytime, scale,  bone_keyframe_position.Size());
-                    curve->scaleCurve->retain();
                 }
 
-                animation->_boneCurves[bone_name] = curve;
+                //animation->_boneCurves[bone_name] = curve;
             }
         }
     }
