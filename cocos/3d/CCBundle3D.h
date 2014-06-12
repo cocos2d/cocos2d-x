@@ -33,10 +33,11 @@
 
 #include "3d/CCMesh.h"
 
+#include "document.h"
+
 NS_CC_BEGIN
 
 class Animation3D;
-
 class Bundle3D
 {
 public:
@@ -68,6 +69,10 @@ public:
             boneChild.clear();
             rootBoneIndex = -1;
         }
+
+        int getBoneNameIndex(const std::string& name);
+        
+        void getChildMap(std::map<int, std::vector<int> >& map, const rapidjson::Value& val, int index);
     };
     struct MaterialData
     {
@@ -112,11 +117,22 @@ public:
     bool loadAnimationData(const std::string& id, Animation3DData* animationdata);
     
 protected:
+    unsigned int parseGLTypeSize(const std::string& str);
+
+    unsigned int parseGLType(const std::string& str);
+
+    unsigned int parseGLProgramAttribute(const std::string& str);
+
+
+protected:
     Bundle3D();
     ~Bundle3D();
     
     static Bundle3D* _instance;
     
+    char* _documentBuffer;
+    rapidjson::Document document;
+
     bool  _isBinary;
 };
 
