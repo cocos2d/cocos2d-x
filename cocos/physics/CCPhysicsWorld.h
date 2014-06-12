@@ -125,14 +125,18 @@ public:
     inline Vect getGravity() const { return _gravity; }
     /** set the gravity value */
     void setGravity(const Vect& gravity);
-    /** Set the speed of physics world, speed is the rate at which the simulation executes. default value is 1.0 */
+    /**
+     * Set the speed of physics world, speed is the rate at which the simulation executes. default value is 1.0
+     * Note: if you setAutoStep(false), this won't work.
+     */
     inline void setSpeed(float speed) { if(speed >= 0.0f) { _speed = speed; } }
     /** get the speed of physics world */
     inline float getSpeed() { return _speed; }
-    /** 
+    /**
      * set the update rate of physics world, update rate is the value of EngineUpdateTimes/PhysicsWorldUpdateTimes.
      * set it higher can improve performance, set it lower can improve accuracy of physics world simulation.
      * default value is 1.0
+     * Note: if you setAutoStep(false), this won't work.
      */
     inline void setUpdateRate(int rate) { if(rate > 0) { _updateRate = rate; } }
     /** get the update rate */
@@ -143,6 +147,20 @@ public:
     /** get the bebug draw mask */
     inline int getDebugDrawMask() { return _debugDrawMask; }
     
+    /**
+     * To control the step of physics, if you want control it by yourself( fixed-timestep for example ), you can set this to false and call step by yourself.
+     * Defaut value is true.
+     * Note: if you set auto step to false, setSpeed and setUpdateRate won't work, you need to control the time step by yourself.
+     */
+    void setAutoStep(bool autoStep){ _autoStep = autoStep; }
+    /** Get the auto step */
+    bool isAutoStep() { return _autoStep; }
+    /**
+     * The step for physics world, The times passing for simulate the physics.
+     * Note: you need to setAutoStep(false) first before it can work.
+     */
+    void step(float delta);
+    
 protected:
     static PhysicsWorld* construct(Scene& scene);
     bool init(Scene& scene);
@@ -150,7 +168,7 @@ protected:
     virtual void addBody(PhysicsBody* body);
     virtual void addShape(PhysicsShape* shape);
     virtual void removeShape(PhysicsShape* shape);
-    virtual void update(float delta);
+    virtual void update(float delta, bool userCall = false);
     
     virtual void debugDraw();
     
@@ -183,6 +201,7 @@ protected:
     Scene* _scene;
     
     bool _delayDirty;
+    bool _autoStep;
     PhysicsDebugDraw* _debugDraw;
     int _debugDrawMask;
     
