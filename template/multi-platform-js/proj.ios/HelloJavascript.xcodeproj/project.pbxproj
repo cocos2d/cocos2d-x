@@ -234,6 +234,7 @@
 		3EC20B8218331CB000F2C4D6 /* jsb_cocos2dx_studio_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EC20B7F18331CB000F2C4D6 /* jsb_cocos2dx_studio_auto.cpp */; };
 		3EC20B8518331CC100F2C4D6 /* jsb_cocos2dx_studio_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EC20B8318331CC100F2C4D6 /* jsb_cocos2dx_studio_manual.cpp */; };
 		3EC20B8618331D7400F2C4D6 /* jsb_cocos2d_studio.js in Resources */ = {isa = PBXBuildFile; fileRef = 3EC20B7C18331CA200F2C4D6 /* jsb_cocos2d_studio.js */; };
+		43B91F0D1949BB1A00F7F815 /* CocoLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 43B91F0B1949BB1A00F7F815 /* CocoLoader.cpp */; };
 		46513EB6187C02A600B5ABE1 /* UITouchGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46513EB4187C02A600B5ABE1 /* UITouchGroup.cpp */; };
 		46513EB8187C034200B5ABE1 /* cocos2d-jsb.js in Sources */ = {isa = PBXBuildFile; fileRef = 46513EB7187C034200B5ABE1 /* cocos2d-jsb.js */; };
 		46513EB9187C03D300B5ABE1 /* cocos2d-jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = 46513EB7187C034200B5ABE1 /* cocos2d-jsb.js */; };
@@ -721,6 +722,8 @@
 		3EC20B8018331CB000F2C4D6 /* jsb_cocos2dx_studio_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jsb_cocos2dx_studio_auto.hpp; sourceTree = "<group>"; };
 		3EC20B8318331CC100F2C4D6 /* jsb_cocos2dx_studio_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_studio_manual.cpp; sourceTree = "<group>"; };
 		3EC20B8418331CC100F2C4D6 /* jsb_cocos2dx_studio_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_cocos2dx_studio_manual.h; sourceTree = "<group>"; };
+		43B91F0B1949BB1A00F7F815 /* CocoLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocoLoader.cpp; sourceTree = "<group>"; };
+		43B91F0C1949BB1A00F7F815 /* CocoLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoLoader.h; sourceTree = "<group>"; };
 		46513EB4187C02A600B5ABE1 /* UITouchGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITouchGroup.cpp; sourceTree = "<group>"; };
 		46513EB5187C02A600B5ABE1 /* UITouchGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITouchGroup.h; sourceTree = "<group>"; };
 		46513EB7187C034200B5ABE1 /* cocos2d-jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "cocos2d-jsb.js"; path = "../Resources/cocos2d-jsb.js"; sourceTree = "<group>"; };
@@ -1463,6 +1466,8 @@
 				375BD536186845C60024609E /* rapidjson */,
 				1A5E748017F0874400B9ACAE /* DictionaryHelper.cpp */,
 				1A5E748117F0874400B9ACAE /* DictionaryHelper.h */,
+				43B91F0B1949BB1A00F7F815 /* CocoLoader.cpp */,
+				43B91F0C1949BB1A00F7F815 /* CocoLoader.h */,
 			);
 			path = Json;
 			sourceTree = "<group>";
@@ -2112,6 +2117,7 @@
 				1A5E74C917F0874400B9ACAE /* UILoadingBar.cpp in Sources */,
 				1A5E74CA17F0874400B9ACAE /* UISlider.cpp in Sources */,
 				1A5E74CC17F0874400B9ACAE /* UITextField.cpp in Sources */,
+				43B91F0D1949BB1A00F7F815 /* CocoLoader.cpp in Sources */,
 				1A5E74CE17F0874400B9ACAE /* DictionaryHelper.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

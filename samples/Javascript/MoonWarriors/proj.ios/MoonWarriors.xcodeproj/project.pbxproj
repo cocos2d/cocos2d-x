@@ -227,6 +227,7 @@
 		37FFCAC518606F5F0078F312 /* CCActionEaseEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37FFCAC318606F5F0078F312 /* CCActionEaseEx.cpp */; };
 		3EC20B9B1833593900F2C4D6 /* jsb_cocos2d_studio.js in Sources */ = {isa = PBXBuildFile; fileRef = 3EC20B9A1833593900F2C4D6 /* jsb_cocos2d_studio.js */; };
 		3EC20B9C1833594F00F2C4D6 /* jsb_cocos2d_studio.js in Resources */ = {isa = PBXBuildFile; fileRef = 3EC20B9A1833593900F2C4D6 /* jsb_cocos2d_studio.js */; };
+		43B91EF11949BA8300F7F815 /* CocoLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 43B91EEF1949BA8300F7F815 /* CocoLoader.cpp */; };
 		460E539B182B73A80040458A /* UILayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460E5397182B73A80040458A /* UILayout.cpp */; };
 		460E539C182B73A80040458A /* UILayoutParameter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460E5399182B73A80040458A /* UILayoutParameter.cpp */; };
 		460E53A1182B73B90040458A /* GUIReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460E539D182B73B90040458A /* GUIReader.cpp */; };
@@ -671,6 +672,8 @@
 		37FFCAD018606F760078F312 /* stringbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringbuffer.h; sourceTree = "<group>"; };
 		37FFCAD118606F760078F312 /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
 		3EC20B9A1833593900F2C4D6 /* jsb_cocos2d_studio.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocos2d_studio.js; sourceTree = "<group>"; };
+		43B91EEF1949BA8300F7F815 /* CocoLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocoLoader.cpp; sourceTree = "<group>"; };
+		43B91EF01949BA8300F7F815 /* CocoLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoLoader.h; sourceTree = "<group>"; };
 		460E5397182B73A80040458A /* UILayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILayout.cpp; sourceTree = "<group>"; };
 		460E5398182B73A80040458A /* UILayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILayout.h; sourceTree = "<group>"; };
 		460E5399182B73A80040458A /* UILayoutParameter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILayoutParameter.cpp; sourceTree = "<group>"; };
@@ -1370,6 +1373,8 @@
 				37FFCAC618606F760078F312 /* rapidjson */,
 				1AF2867B17F00F3700642436 /* DictionaryHelper.cpp */,
 				1AF2867C17F00F3700642436 /* DictionaryHelper.h */,
+				43B91EEF1949BA8300F7F815 /* CocoLoader.cpp */,
+				43B91EF01949BA8300F7F815 /* CocoLoader.h */,
 			);
 			path = Json;
 			sourceTree = "<group>";
@@ -1929,6 +1934,7 @@
 				1AF2871417F00F4E00642436 /* CCEditBoxImplAndroid.cpp in Sources */,
 				1AF2871C17F00F4E00642436 /* CCTableView.cpp in Sources */,
 				1AF2869617F00F3700642436 /* CCActionManager.cpp in Sources */,
+				43B91EF11949BA8300F7F815 /* CocoLoader.cpp in Sources */,
 				1AF286AC17F00F3700642436 /* CCComAttribute.cpp in Sources */,
 				1AF2870B17F00F4E00642436 /* CCControlPotentiometer.cpp in Sources */,
 				1AF2851C17F00EBD00642436 /* jsb_opengl_functions.cpp in Sources */,

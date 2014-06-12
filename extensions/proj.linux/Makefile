@@ -127,6 +127,7 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CocoStudio/Components/CCComRender.cpp \
 ../CocoStudio/Components/CCInputDelegate.cpp \
 ../CocoStudio/Json/DictionaryHelper.cpp \
+../CocoStudio/Json/CocoLoader.cpp \
 ../CocoStudio/Reader/SceneReader.cpp \
 ../CocoStudio/Reader/GUIReader.cpp \
 ../CocoStudio/Reader/WidgetReader/WidgetReader.cpp \
