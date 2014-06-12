@@ -27,6 +27,7 @@ cocos2d-x-3.2  ???
     [FIX]           Schedule: schedulePerFrame() can not be called twice
     [FIX]           SpriteFrameCache: fix memory leak
     [FIX]           Texture2D: use image's pixel format to create texture
+    [FIX]           TextureCache: addImageAsync() may repeatedly generate Image for the same image file
     [FIX]           WP8: will restart if app goes to background, then touches icon to go to foreground
     [FIX]           WP8: will be black if: 1. 3rd pops up a view; 2. go to background; 3. come to foreground
     [FIX]           WP8: project name of new project created by console is wrong
