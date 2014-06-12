@@ -2245,7 +2245,7 @@ cocos2d::ui::Widget* WidgetPropertiesReader0300::widgetFromBinary(CocoLoader* pC
         widget = this->createGUI(classname);
     }
     
-    //    CCLOG("classname = %s", classname.c_str());
+    CCLOG("classname = %s", classname.c_str());
     std::string readerName = this->getWidgetReaderClassName(classname);
     
     WidgetReaderProtocol* reader = this->createWidgetReaderProtocol(readerName);
@@ -2303,16 +2303,6 @@ cocos2d::ui::Widget* WidgetPropertiesReader0300::widgetFromBinary(CocoLoader* pC
                             }
                             else
                             {
-                                if (!dynamic_cast<Layout*>(widget))
-                                {
-                                    if (child->getPositionType() == POSITION_PERCENT)
-                                    {
-                                        child->setPositionPercent(CCPoint(child->getPositionPercent().x + widget->getAnchorPoint().x,
-                                                                       child->getPositionPercent().y + widget->getAnchorPoint().y));
-                                    }
-                                    child->setPosition(CCPoint(child->getPositionX() + widget->getAnchorPointInPoints().x,
-                                                            child->getPositionY() + widget->getAnchorPointInPoints().y));
-                                }
                                 widget->addChild(child);
                             }
                         }
@@ -2331,7 +2321,7 @@ void WidgetPropertiesReader0300::setPropsForAllWidgetFromBinary(WidgetReaderProt
                                             CocoLoader* pCocoLoader,
                                             stExpCocoNode*	pCocoNode)
 {
-    
+    reader->setPropsFromBinary(widget, pCocoLoader, pCocoNode);
 }
 
 NS_CC_EXT_END

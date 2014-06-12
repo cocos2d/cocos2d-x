@@ -45,6 +45,35 @@ public:
     
     virtual void setPropsFromJsonDictionary(ui::Widget* widget, const rapidjson::Value& options);
     virtual void setColorPropsFromJsonDictionary(ui::Widget* widget, const rapidjson::Value& options);
+    virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* pCocoLoader,  stExpCocoNode*	pCocoNode){}
+protected:
+    void setBasicProperties(cocos2d::ui::Widget* widget, CocoLoader* pCocoLoader,  stExpCocoNode*	pCocoNode);
+    void setColorProperties(cocos2d::ui::Widget* widget, CocoLoader* pCocoLoader,  stExpCocoNode*	pCocoNode);
+    
+    void beginSetBasicProperties(cocos2d::ui::Widget *widget);
+    void endSetBasicProperties(cocos2d::ui::Widget *widget);
+    
+    std::string getProperty(std::map<std::string, int>& map, stExpCocoNode* node, std::string key);
+    
+    int valueToInt(std::string& value);
+    bool valueToBool(std::string& value);
+    float valueToFloat(std::string& value);
+    std::string getResourcePath(CocoLoader* pCocoLoader,
+                                stExpCocoNode*	pCocoNode,
+                                cocos2d::ui::TextureResType texType);
+    
+    float sizePercentX;
+    float sizePercentY;
+    float positionPercentX;
+    float positionPercentY;
+    float width ;
+    float height;
+    cocos2d::CCPoint position;
+    bool isAdaptScreen;
+    cocos2d::CCPoint originalAnchorPoint;
+    
+    std::map<std::string, int> _basicPropertyDict;
+    std::map<std::string, int> _layoutParameterDict;
 };
 
 NS_CC_EXT_END

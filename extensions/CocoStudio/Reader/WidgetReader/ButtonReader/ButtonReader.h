@@ -39,8 +39,11 @@ public:
     
     static ButtonReader* getInstance();
     static void purge();
-    
+    virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* pCocoLoader,  stExpCocoNode*	pCocoNode);
+
     virtual void setPropsFromJsonDictionary(ui::Widget* widget, const rapidjson::Value& options);
+    
+    
 };
 
 NS_CC_EXT_END
