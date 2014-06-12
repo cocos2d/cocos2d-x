@@ -105,11 +105,11 @@ TextureFrame::TextureFrame()
 {
 }
 
-void TextureFrame::setNode(cocos2d::CCNode* node)
+void TextureFrame::setNode(cocos2d::Node* node)
 {
     Frame::setNode(node);
 
-    _sprite = dynamic_cast<CCSprite*>(node);
+    _sprite = dynamic_cast<Sprite*>(node);
 }
 
 void TextureFrame::onEnter(Frame *nextFrame)
