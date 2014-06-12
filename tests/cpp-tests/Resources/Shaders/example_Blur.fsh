@@ -44,36 +44,3 @@ vec3 blur(vec2 p)
     
     return texture2D(CC_Texture0, p).rgb;
 }
-
-//vec3 blur(vec2 p)
-//{
-//    if (blurRadius > 0.0)
-//    {
-//        vec3 col = vec3(0);
-//        vec2 unit = 1.0 / resolution.xy;
-//        
-//        float r = blurRadius;
-//        float sampleStep = r / 5.4;
-//        float count = 0.0;
-//        for (float x = 0.0; x < r; x += sampleStep)
-//        {
-//            for (float y = 0.0; y < r; y += sampleStep)
-//            {
-//                float weight = (r - x) * (r - y);
-//                col += texture2D(CC_Texture0, p + vec2(-x * unit.x, y * unit.y)).rgb * weight;
-//                col += texture2D(CC_Texture0, p + vec2(x * unit.x, -y * unit.y)).rgb * weight;
-//                col += texture2D(CC_Texture0, p + vec2(x * unit.x, y * unit.y)).rgb * weight;
-//                col += texture2D(CC_Texture0, p + vec2(-x * unit.x, -y * unit.y)).rgb * weight;
-//                count += 4.0 * weight;
-//            }
-//        }
-//        
-//        float centerWeight = 3.0 * r * r;
-//        count -= centerWeight;
-//        col -= texture2D(CC_Texture0, p).rgb * centerWeight;
-//        
-//        return col / count;
-//    }
-//    
-//    return texture2D(CC_Texture0, p).rgb;
-//}
