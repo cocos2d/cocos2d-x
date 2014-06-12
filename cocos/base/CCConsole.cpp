@@ -65,6 +65,7 @@
 #include "base/base64.h"
 NS_CC_BEGIN
 
+extern const char* cocos2dVersion(void);
 //TODO: these general utils should be in a seperate class
 //
 // Trimming functions were taken from: http://stackoverflow.com/a/217605
@@ -295,6 +296,9 @@ Console::Console()
         { "director", "director commands, type -h or [director help] to list supported directives", std::bind(&Console::commandDirector, this, std::placeholders::_1, std::placeholders::_2) },
         { "touch", "simulate touch event via console, type -h or [touch help] to list supported directives", std::bind(&Console::commandTouch, this, std::placeholders::_1, std::placeholders::_2) },
         { "upload", "upload file. Args: [filename base64_encoded_data]", std::bind(&Console::commandUpload, this, std::placeholders::_1) },
+        { "version", "print version string ", [](int fd, const std::string& args) {
+            mydprintf(fd, "%s\n", cocos2dVersion());
+        } },
     };
 
      ;
