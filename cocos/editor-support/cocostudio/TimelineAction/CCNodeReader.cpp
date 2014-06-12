@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCNodeCache.h"
+#include "CCNodeReader.h"
 #include "CCTimelineActionCache.h"
 #include "CCFrame.h"
 
@@ -131,64 +131,64 @@ bool TimelineActionData::init(int actionTag)
 }
 
 
-// NodeCache
-static NodeCache* _sharedNodeCache = nullptr;
+// NodeReader
+static NodeReader* _sharedNodeReader = nullptr;
 
-NodeCache* NodeCache::getInstance()
+NodeReader* NodeReader::getInstance()
 {
-    if (! _sharedNodeCache)
+    if (! _sharedNodeReader)
     {
-        _sharedNodeCache = new NodeCache();
-        _sharedNodeCache->init();
+        _sharedNodeReader = new NodeReader();
+        _sharedNodeReader->init();
     }
 
-    return _sharedNodeCache;
+    return _sharedNodeReader;
 }
 
-void NodeCache::destroyInstance()
+void NodeReader::destroyInstance()
 {
-    CC_SAFE_DELETE(_sharedNodeCache);
+    CC_SAFE_DELETE(_sharedNodeReader);
 }
 
-NodeCache::NodeCache()
+NodeReader::NodeReader()
     : _recordJsonPath(true)
     , _jsonPath("")
 {
 }
 
-void NodeCache::purge()
+void NodeReader::purge()
 {
 }
 
-void NodeCache::init()
+void NodeReader::init()
 {
     using namespace std::placeholders;
 
-    _funcs.insert(Pair(ClassName_Node,      std::bind(&NodeCache::loadSimpleNode, this, _1)));
-    _funcs.insert(Pair(ClassName_SubGraph,  std::bind(&NodeCache::loadSubGraph,   this, _1)));
-    _funcs.insert(Pair(ClassName_Sprite,    std::bind(&NodeCache::loadSprite,     this, _1)));
-    _funcs.insert(Pair(ClassName_Particle,  std::bind(&NodeCache::loadParticle,   this, _1)));
+    _funcs.insert(Pair(ClassName_Node,      std::bind(&NodeReader::loadSimpleNode, this, _1)));
+    _funcs.insert(Pair(ClassName_SubGraph,  std::bind(&NodeReader::loadSubGraph,   this, _1)));
+    _funcs.insert(Pair(ClassName_Sprite,    std::bind(&NodeReader::loadSprite,     this, _1)));
+    _funcs.insert(Pair(ClassName_Particle,  std::bind(&NodeReader::loadParticle,   this, _1)));
 
-    _funcs.insert(Pair(ClassName_Panel,     std::bind(&NodeCache::loadWidget,   this, _1)));
-    _funcs.insert(Pair(ClassName_Button,    std::bind(&NodeCache::loadWidget,   this, _1)));
-    _funcs.insert(Pair(ClassName_CheckBox,  std::bind(&NodeCache::loadWidget,   this, _1)));
-    _funcs.insert(Pair(ClassName_ImageView, std::bind(&NodeCache::loadWidget,   this, _1)));
-    _funcs.insert(Pair(ClassName_TextAtlas, std::bind(&NodeCache::loadWidget,   this, _1)));
-    _funcs.insert(Pair(ClassName_TextBMFont,std::bind(&NodeCache::loadWidget,   this, _1)));
-    _funcs.insert(Pair(ClassName_Text,      std::bind(&NodeCache::loadWidget,   this, _1)));
-    _funcs.insert(Pair(ClassName_LoadingBar,std::bind(&NodeCache::loadWidget,   this, _1)));
-    _funcs.insert(Pair(ClassName_TextField, std::bind(&NodeCache::loadWidget,   this, _1)));
-    _funcs.insert(Pair(ClassName_Slider,    std::bind(&NodeCache::loadWidget,   this, _1)));
-    _funcs.insert(Pair(ClassName_Layout,    std::bind(&NodeCache::loadWidget,   this, _1)));
-    _funcs.insert(Pair(ClassName_ScrollView,std::bind(&NodeCache::loadWidget,   this, _1)));
-    _funcs.insert(Pair(ClassName_ListView,  std::bind(&NodeCache::loadWidget,   this, _1)));
-    _funcs.insert(Pair(ClassName_PageView,  std::bind(&NodeCache::loadWidget,   this, _1)));
-    _funcs.insert(Pair(ClassName_Widget,    std::bind(&NodeCache::loadWidget,   this, _1)));
+    _funcs.insert(Pair(ClassName_Panel,     std::bind(&NodeReader::loadWidget,   this, _1)));
+    _funcs.insert(Pair(ClassName_Button,    std::bind(&NodeReader::loadWidget,   this, _1)));
+    _funcs.insert(Pair(ClassName_CheckBox,  std::bind(&NodeReader::loadWidget,   this, _1)));
+    _funcs.insert(Pair(ClassName_ImageView, std::bind(&NodeReader::loadWidget,   this, _1)));
+    _funcs.insert(Pair(ClassName_TextAtlas, std::bind(&NodeReader::loadWidget,   this, _1)));
+    _funcs.insert(Pair(ClassName_TextBMFont,std::bind(&NodeReader::loadWidget,   this, _1)));
+    _funcs.insert(Pair(ClassName_Text,      std::bind(&NodeReader::loadWidget,   this, _1)));
+    _funcs.insert(Pair(ClassName_LoadingBar,std::bind(&NodeReader::loadWidget,   this, _1)));
+    _funcs.insert(Pair(ClassName_TextField, std::bind(&NodeReader::loadWidget,   this, _1)));
+    _funcs.insert(Pair(ClassName_Slider,    std::bind(&NodeReader::loadWidget,   this, _1)));
+    _funcs.insert(Pair(ClassName_Layout,    std::bind(&NodeReader::loadWidget,   this, _1)));
+    _funcs.insert(Pair(ClassName_ScrollView,std::bind(&NodeReader::loadWidget,   this, _1)));
+    _funcs.insert(Pair(ClassName_ListView,  std::bind(&NodeReader::loadWidget,   this, _1)));
+    _funcs.insert(Pair(ClassName_PageView,  std::bind(&NodeReader::loadWidget,   this, _1)));
+    _funcs.insert(Pair(ClassName_Widget,    std::bind(&NodeReader::loadWidget,   this, _1)));
 
     _guiReader = new WidgetPropertiesReader0300();
 }
 
-cocos2d::Node* NodeCache::createNode(const std::string& filename)
+cocos2d::Node* NodeReader::createNode(const std::string& filename)
 {
     if(_recordJsonPath)
     {
@@ -208,7 +208,7 @@ cocos2d::Node* NodeCache::createNode(const std::string& filename)
     return node;
 }
 
-cocos2d::Node* NodeCache::loadNodeWithFile(const std::string& fileName)
+cocos2d::Node* NodeReader::loadNodeWithFile(const std::string& fileName)
 {
     // Read content from file
     std::string contentStr = FileUtils::getInstance()->getStringFromFile(fileName);
@@ -221,7 +221,7 @@ cocos2d::Node* NodeCache::loadNodeWithFile(const std::string& fileName)
     return node;
 }
 
-cocos2d::Node* NodeCache::loadNodeWithContent(const std::string& content)
+cocos2d::Node* NodeReader::loadNodeWithContent(const std::string& content)
 {
     rapidjson::Document doc;
     doc.Parse<0>(content.c_str());
@@ -250,7 +250,7 @@ cocos2d::Node* NodeCache::loadNodeWithContent(const std::string& content)
     return root;
 }
 
-cocos2d::Node* NodeCache::loadNode(const rapidjson::Value& json)
+cocos2d::Node* NodeReader::loadNode(const rapidjson::Value& json)
 {
     cocos2d::Node* node = nullptr;
     std::string nodeType = DICTOOL->getStringValue_json(json, CLASSNAME);
@@ -284,7 +284,7 @@ cocos2d::Node* NodeCache::loadNode(const rapidjson::Value& json)
     return node;
 }
 
-void NodeCache::initNode(cocos2d::Node* node, const rapidjson::Value& json)
+void NodeReader::initNode(cocos2d::Node* node, const rapidjson::Value& json)
 {
     float width         = DICTOOL->getFloatValue_json(json, WIDTH);
     float height        = DICTOOL->getFloatValue_json(json, HEIGHT);
@@ -340,7 +340,7 @@ void NodeCache::initNode(cocos2d::Node* node, const rapidjson::Value& json)
     node->setUserObject(TimelineActionData::create(actionTag));
 }
 
-Node* NodeCache::loadSimpleNode(const rapidjson::Value& json)
+Node* NodeReader::loadSimpleNode(const rapidjson::Value& json)
 {
     Node* node = Node::create();
     node->retain();
@@ -349,7 +349,7 @@ Node* NodeCache::loadSimpleNode(const rapidjson::Value& json)
     return node;
 }
 
-cocos2d::Node* NodeCache::loadSubGraph(const rapidjson::Value& json)
+cocos2d::Node* NodeReader::loadSubGraph(const rapidjson::Value& json)
 {
     const char* filePath = DICTOOL->getStringValue_json(json, FILE_PATH);
 
@@ -370,7 +370,7 @@ cocos2d::Node* NodeCache::loadSubGraph(const rapidjson::Value& json)
     return node;
 }
 
-Node* NodeCache::loadSprite(const rapidjson::Value& json)
+Node* NodeReader::loadSprite(const rapidjson::Value& json)
 {
     const char* filePath = DICTOOL->getStringValue_json(json, FILE_PATH);
     Sprite *sprite = nullptr;
@@ -408,7 +408,7 @@ Node* NodeCache::loadSprite(const rapidjson::Value& json)
     return sprite;
 }
 
-Node* NodeCache::loadParticle(const rapidjson::Value& json)
+Node* NodeReader::loadParticle(const rapidjson::Value& json)
 {
     const char* filePath = DICTOOL->getStringValue_json(json, PLIST_FILE);
     int num = DICTOOL->getIntValue_json(json, PARTICLE_NUM);
@@ -422,7 +422,7 @@ Node* NodeCache::loadParticle(const rapidjson::Value& json)
     return particle;
 }
 
-cocos2d::Node* NodeCache::loadWidget(const rapidjson::Value& json)
+cocos2d::Node* NodeReader::loadWidget(const rapidjson::Value& json)
 {
     const char* str = DICTOOL->getStringValue_json(json, CLASSNAME);
     if(str == nullptr)

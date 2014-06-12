@@ -234,9 +234,6 @@
     <ClCompile Include="..\TimelineAction\CCFrame.cpp">
       <Filter>TimelineAction</Filter>
     </ClCompile>
-    <ClCompile Include="..\TimelineAction\CCNodeCache.cpp">
-      <Filter>TimelineAction</Filter>
-    </ClCompile>
     <ClCompile Include="..\TimelineAction\CCTimeLine.cpp">
       <Filter>TimelineAction</Filter>
     </ClCompile>
@@ -244,6 +241,9 @@
       <Filter>TimelineAction</Filter>
     </ClCompile>
     <ClCompile Include="..\TimelineAction\CCTimelineActionCache.cpp">
+      <Filter>TimelineAction</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TimelineAction\CCNodeReader.cpp">
       <Filter>TimelineAction</Filter>
     </ClCompile>
   </ItemGroup>
@@ -431,9 +431,6 @@
     <ClInclude Include="..\TimelineAction\CCFrame.h">
       <Filter>TimelineAction</Filter>
     </ClInclude>
-    <ClInclude Include="..\TimelineAction\CCNodeCache.h">
-      <Filter>TimelineAction</Filter>
-    </ClInclude>
     <ClInclude Include="..\TimelineAction\CCTimeLine.h">
       <Filter>TimelineAction</Filter>
     </ClInclude>
@@ -441,6 +438,9 @@
       <Filter>TimelineAction</Filter>
     </ClInclude>
     <ClInclude Include="..\TimelineAction\CCTimelineActionCache.h">
+      <Filter>TimelineAction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TimelineAction\CCNodeReader.h">
       <Filter>TimelineAction</Filter>
     </ClInclude>
   </ItemGroup>

@@ -43,7 +43,7 @@
     <ClCompile Include="..\CCUtilMath.cpp" />
     <ClCompile Include="..\DictionaryHelper.cpp" />
     <ClCompile Include="..\TimelineAction\CCFrame.cpp" />
-    <ClCompile Include="..\TimelineAction\CCNodeCache.cpp" />
+    <ClCompile Include="..\TimelineAction\CCNodeReader.cpp" />
     <ClCompile Include="..\TimelineAction\CCTimeLine.cpp" />
     <ClCompile Include="..\TimelineAction\CCTimelineAction.cpp" />
     <ClCompile Include="..\TimelineAction\CCTimelineActionCache.cpp" />
@@ -109,7 +109,7 @@
     <ClInclude Include="..\CCUtilMath.h" />
     <ClInclude Include="..\DictionaryHelper.h" />
     <ClInclude Include="..\TimelineAction\CCFrame.h" />
-    <ClInclude Include="..\TimelineAction\CCNodeCache.h" />
+    <ClInclude Include="..\TimelineAction\CCNodeReader.h" />
     <ClInclude Include="..\TimelineAction\CCTimeLine.h" />
     <ClInclude Include="..\TimelineAction\CCTimelineAction.h" />
     <ClInclude Include="..\TimelineAction\CCTimelineActionCache.h" />

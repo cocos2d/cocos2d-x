@@ -49,13 +49,13 @@ protected:
     int _actionTag;
 };
 
-class NodeCache
+class NodeReader
 {
 public:
-    static NodeCache* getInstance();
+    static NodeReader* getInstance();
     static void destroyInstance();
 
-    NodeCache();
+    NodeReader();
     void purge();
 
     void init();

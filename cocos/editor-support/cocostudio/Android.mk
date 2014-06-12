@@ -54,7 +54,7 @@ WidgetReader/TextBMFontReader/TextBMFontReader.cpp \
 WidgetReader/TextFieldReader/TextFieldReader.cpp \
 WidgetReader/TextReader/TextReader.cpp \
 TimelineAction/CCFrame.cpp \
-TimelineAction/CCNodeCache.cpp \
+TimelineAction/CCNodeReader.cpp \
 TimelineAction/CCTimeLine.cpp \
 TimelineAction/CCTimelineAction.cpp \
 TimelineAction/CCTimelineActionCache.cpp \
