@@ -28,6 +28,7 @@
 #include "cocos2d.h"
 #include "cocos-ext.h"
 #include "ExtensionMacros.h"
+#include "../Json/CocoLoader.h"
 
 NS_CC_EXT_BEGIN
 
@@ -59,11 +60,13 @@ typedef enum {
 */
 class CC_EX_DLL SceneReader
 {
+
 public:
 	static SceneReader* sharedSceneReader();
 	static void purge();
 	static const char* sceneReaderVersion();
 	cocos2d::CCNode* createNodeWithSceneFile(const char *pszFileName, AttachComponentType eAttachComponent = ATTACH_EMPTY_NODE);
+
 	static void setTarget(CCObject *rec, SEL_CallFuncOD selector);
 	cocos2d::CCNode* getNodeByTag(int nTag);
     inline AttachComponentType getAttachComponentType(){return _eAttachComponent;}
@@ -76,6 +79,10 @@ private:
     cocos2d::CCNode* createObject(const rapidjson::Value &root, cocos2d::CCNode* parent, AttachComponentType eAttachComponent);
     void setPropertyFromJsonDict(const rapidjson::Value &root, cocos2d::CCNode *node);
     bool readJson(const char *pszFileName, rapidjson::Document &doc);
+
+	cocos2d::CCNode* createObject(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, cocos2d::CCNode* parent, AttachComponentType eAttachComponent);
+	void setPropertyFromJsonDict(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, cocos2d::CCNode *node);
+
 	cocos2d::CCNode* nodeByTag(cocos2d::CCNode *pParent, int nTag);
 private:
 	static SceneReader* _sharedReader;

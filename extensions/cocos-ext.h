@@ -67,6 +67,8 @@
 
 #include "CocoStudio/Json/DictionaryHelper.h"
 
+#include "CocoStudio/Json/CocoLoader.h"
+
 #include "CocoStudio/Reader/SceneReader.h"
 
 #include "CocoStudio/Action/CCActionManager.h"
