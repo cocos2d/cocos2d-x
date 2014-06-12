@@ -141,7 +141,7 @@ void TimelineActionTestLayer::onExit()
     backItem = restartItem = nextItem = nullptr;
 
     TimelineActionCache::getInstance()->purge();
-    NodeCache::getInstance()->purge();
+    NodeReader::getInstance()->purge();
 
     Layer::onExit();
 }
@@ -182,7 +182,7 @@ void TestTimelineAction::onEnter()
 {
     TimelineActionTestLayer::onEnter();
 
-    Node* node = NodeCache::getInstance()->createNode("TimelineAction/boy_1.ExportJson");
+    Node* node = NodeReader::getInstance()->createNode("TimelineAction/boy_1.ExportJson");
     TimelineAction* action = TimelineActionCache::getInstance()->createAction("TimelineAction/boy_1.ExportJson");
 
     node->runAction(action);
