@@ -371,11 +371,11 @@ Node* NodeReader::loadSprite(const rapidjson::Value& json)
         SpriteFrame* spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(path);
         if(!spriteFrame)
         {
+            path = _jsonPath + path;
             sprite = Sprite::create(path);
         }
         else
         {
-            path = _jsonPath + path;
             sprite = Sprite::createWithSpriteFrame(spriteFrame);
         }
 
