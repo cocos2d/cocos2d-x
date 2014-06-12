@@ -804,6 +804,10 @@
 		29080DE4191B595E0066F8DF /* UIWidgetAddNodeTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29080D89191B595E0066F8DF /* UIWidgetAddNodeTest.cpp */; };
 		29080DE5191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29080D8B191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp */; };
 		29080DE6191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29080D8B191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp */; };
+		38FA2DFC194955BA00FF2BE4 /* TimelineActionTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38FA2DFA194955BA00FF2BE4 /* TimelineActionTestScene.cpp */; };
+		38FA2DFD194955BA00FF2BE4 /* TimelineActionTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38FA2DFA194955BA00FF2BE4 /* TimelineActionTestScene.cpp */; };
+		38FA2E261949577F00FF2BE4 /* TimelineAction in Resources */ = {isa = PBXBuildFile; fileRef = 38FA2E251949577F00FF2BE4 /* TimelineAction */; };
+		38FA2E271949577F00FF2BE4 /* TimelineAction in Resources */ = {isa = PBXBuildFile; fileRef = 38FA2E251949577F00FF2BE4 /* TimelineAction */; };
 		3E92EA821921A1400094CD21 /* Sprite3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E92EA801921A1400094CD21 /* Sprite3DTest.cpp */; };
 		3E92EA831921A1400094CD21 /* Sprite3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E92EA801921A1400094CD21 /* Sprite3DTest.cpp */; };
 		3E92EA851921A7720094CD21 /* Sprite3DTest in Resources */ = {isa = PBXBuildFile; fileRef = 3E92EA841921A7720094CD21 /* Sprite3DTest */; };
@@ -1840,6 +1844,9 @@
 		29080D8A191B595E0066F8DF /* UIWidgetAddNodeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWidgetAddNodeTest.h; sourceTree = "<group>"; };
 		29080D8B191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIWidgetAddNodeTest_Editor.cpp; sourceTree = "<group>"; };
 		29080D8C191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWidgetAddNodeTest_Editor.h; sourceTree = "<group>"; };
+		38FA2DFA194955BA00FF2BE4 /* TimelineActionTestScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TimelineActionTestScene.cpp; sourceTree = "<group>"; };
+		38FA2DFB194955BA00FF2BE4 /* TimelineActionTestScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineActionTestScene.h; sourceTree = "<group>"; };
+		38FA2E251949577F00FF2BE4 /* TimelineAction */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TimelineAction; path = "../tests/cpp-tests/Resources/TimelineAction"; sourceTree = "<group>"; };
 		3E92EA801921A1400094CD21 /* Sprite3DTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Sprite3DTest.cpp; path = Sprite3DTest/Sprite3DTest.cpp; sourceTree = "<group>"; };
 		3E92EA811921A1400094CD21 /* Sprite3DTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Sprite3DTest.h; path = Sprite3DTest/Sprite3DTest.h; sourceTree = "<group>"; };
 		3E92EA841921A7720094CD21 /* Sprite3DTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sprite3DTest; path = "../tests/cpp-tests/Resources/Sprite3DTest"; sourceTree = "<group>"; };
@@ -2541,6 +2548,7 @@
 		1AC359B418CECF0B00F37B72 /* ExtensionsTest */ = {
 			isa = PBXGroup;
 			children = (
+				38FA2DF9194955BA00FF2BE4 /* CocoStudioTimelineActionTest */,
 				1AC359B518CECF0B00F37B72 /* CocosBuilderTest */,
 				1AC359DC18CECF0B00F37B72 /* CocoStudioArmatureTest */,
 				1AC359DF18CECF0B00F37B72 /* CocoStudioComponentsTest */,
@@ -3240,6 +3248,7 @@
 		1AC35CA818CED83500F37B72 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				38FA2E251949577F00FF2BE4 /* TimelineAction */,
 				B2507B6A192589AF00FA4972 /* Shaders3D */,
 				3E92EA841921A7720094CD21 /* Sprite3DTest */,
 				3EA0FB5D191B92F100B170C8 /* cocosvideo.mp4 */,
@@ -3755,6 +3764,15 @@
 				1ABCA28818CD91510087CE3A /* Other Frameworks */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		38FA2DF9194955BA00FF2BE4 /* CocoStudioTimelineActionTest */ = {
+			isa = PBXGroup;
+			children = (
+				38FA2DFA194955BA00FF2BE4 /* TimelineActionTestScene.cpp */,
+				38FA2DFB194955BA00FF2BE4 /* TimelineActionTestScene.h */,
+			);
+			path = CocoStudioTimelineActionTest;
 			sourceTree = "<group>";
 		};
 		3E92EA7D1921A0C60094CD21 /* Sprite3DTest */ = {
@@ -4386,6 +4404,7 @@
 				1AC35D0418CED84500F37B72 /* Shaders in Resources */,
 				1AC35CD818CED84500F37B72 /* CocosBuilderExample.ccbresourcelog in Resources */,
 				B2507B6B192589AF00FA4972 /* Shaders3D in Resources */,
+				38FA2E261949577F00FF2BE4 /* TimelineAction in Resources */,
 				1AC35D0618CED84500F37B72 /* spine in Resources */,
 				1AC35CE818CED84500F37B72 /* extensions in Resources */,
 				1AC35CDE18CED84500F37B72 /* components in Resources */,
@@ -4426,6 +4445,7 @@
 				1AC35CE318CED84500F37B72 /* effect1.raw in Resources */,
 				1A221C9D191771E400FD2BE4 /* ccs-res in Resources */,
 				1AC35C9018CECF1400F37B72 /* Icon-29.png in Resources */,
+				38FA2E271949577F00FF2BE4 /* TimelineAction in Resources */,
 				1AC35D0918CED84500F37B72 /* TileMaps in Resources */,
 				1AC35CFF18CED84500F37B72 /* Particles in Resources */,
 				1AC35C8818CECF1400F37B72 /* Default-568h@2x.png in Resources */,
@@ -4662,6 +4682,7 @@
 				1AC35B3318CECF0C00F37B72 /* Test.cpp in Sources */,
 				1AC35C2318CECF0C00F37B72 /* ParticleTest.cpp in Sources */,
 				1AC35C6118CECF0C00F37B72 /* TouchesTest.cpp in Sources */,
+				38FA2DFC194955BA00FF2BE4 /* TimelineActionTestScene.cpp in Sources */,
 				1AC35C6318CECF0C00F37B72 /* TransitionsTest.cpp in Sources */,
 				29080DB3191B595E0066F8DF /* UILayoutTest_Editor.cpp in Sources */,
 				29080DB9191B595E0066F8DF /* UILoadingBarTest.cpp in Sources */,
@@ -4779,6 +4800,7 @@
 				1AC35C1818CECF0C00F37B72 /* MotionStreakTest.cpp in Sources */,
 				1AC35C0618CECF0C00F37B72 /* FontTest.cpp in Sources */,
 				1AC35C3818CECF0C00F37B72 /* PerformanceTest.cpp in Sources */,
+				38FA2DFD194955BA00FF2BE4 /* TimelineActionTestScene.cpp in Sources */,
 				1F33635018E37E840074764D /* RefPtrTest.cpp in Sources */,
 				1AC35B2818CECF0C00F37B72 /* ActionsTest.cpp in Sources */,
 				1AC35C4A18CECF0C00F37B72 /* ShaderTest.cpp in Sources */,
