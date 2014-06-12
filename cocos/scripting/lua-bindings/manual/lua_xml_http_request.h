@@ -58,8 +58,6 @@ public:
     
     LuaMinXmlHttpRequest();
     ~LuaMinXmlHttpRequest();
-    
-    void handle_requestResponse(cocos2d::network::HttpClient *sender, cocos2d::network::HttpResponse *response);
 
     inline void setResponseType(ResponseType type) { _responseType = type; }
     inline ResponseType getResponseType() {return _responseType; }
