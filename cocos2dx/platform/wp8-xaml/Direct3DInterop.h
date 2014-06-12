@@ -91,7 +91,6 @@ private:
 
     std::queue<std::shared_ptr<InputEvent>> mInputEvents;
     std::mutex mMutex;
-    std::mutex mRenderingMutex;
 
     Cocos2dEventDelegate^ m_delegate;
     Cocos2dMessageBoxDelegate^ m_messageBoxDelegate;
