@@ -315,6 +315,7 @@
 		375BD48B18683FD50024609E /* TriggerMng.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD48518683FD50024609E /* TriggerMng.cpp */; };
 		375BD48C18683FD50024609E /* TriggerObj.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD48718683FD50024609E /* TriggerObj.cpp */; };
 		37FFCAD518606FE80078F312 /* CCActionEaseEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37FFCAD318606FE80078F312 /* CCActionEaseEx.cpp */; };
+		43B91EF51949BA9800F7F815 /* CocoLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 43B91EF31949BA9800F7F815 /* CocoLoader.cpp */; };
 		460E53AE182B745A0040458A /* GUIReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460E53AA182B745A0040458A /* GUIReader.cpp */; };
 		460E53AF182B745A0040458A /* SceneReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460E53AC182B745A0040458A /* SceneReader.cpp */; };
 		A218F7DC1743D97E00F65883 /* XHRTest in Resources */ = {isa = PBXBuildFile; fileRef = A218F7DB1743D97E00F65883 /* XHRTest */; };
@@ -933,6 +934,8 @@
 		37C62BF818E153C400D16FC4 /* ExtensionExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionExport.h; sourceTree = "<group>"; };
 		37FFCAD318606FE80078F312 /* CCActionEaseEx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionEaseEx.cpp; sourceTree = "<group>"; };
 		37FFCAD418606FE80078F312 /* CCActionEaseEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionEaseEx.h; sourceTree = "<group>"; };
+		43B91EF31949BA9800F7F815 /* CocoLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocoLoader.cpp; sourceTree = "<group>"; };
+		43B91EF41949BA9800F7F815 /* CocoLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoLoader.h; sourceTree = "<group>"; };
 		460E53AA182B745A0040458A /* GUIReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GUIReader.cpp; sourceTree = "<group>"; };
 		460E53AB182B745A0040458A /* GUIReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUIReader.h; sourceTree = "<group>"; };
 		460E53AC182B745A0040458A /* SceneReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneReader.cpp; sourceTree = "<group>"; };
@@ -1620,6 +1623,8 @@
 				15DB652D184C2ACC002905B6 /* rapidjson */,
 				1A36F4B217EFE19B000D0275 /* DictionaryHelper.cpp */,
 				1A36F4B317EFE19B000D0275 /* DictionaryHelper.h */,
+				43B91EF31949BA9800F7F815 /* CocoLoader.cpp */,
+				43B91EF41949BA9800F7F815 /* CocoLoader.h */,
 			);
 			path = Json;
 			sourceTree = "<group>";
@@ -2461,6 +2466,7 @@
 				1AA55E311875062B00E8F5EE /* UIPageView.cpp in Sources */,
 				1A36F4FF17EFE19B000D0275 /* CCComController.cpp in Sources */,
 				1A36F50117EFE19B000D0275 /* CCComRender.cpp in Sources */,
+				43B91EF51949BA9800F7F815 /* CocoLoader.cpp in Sources */,
 				1A36F50317EFE19B000D0275 /* CCInputDelegate.cpp in Sources */,
 				1AF2873C17F014C200642436 /* jsb_deprecated.js in Sources */,
 				460E53AE182B745A0040458A /* GUIReader.cpp in Sources */,

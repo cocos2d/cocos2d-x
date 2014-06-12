@@ -407,6 +407,7 @@
 		41BC70E615BF81A5006A0A6C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70DE15BF81A5006A0A6C /* MainMenu.xib */; };
 		41BC70E715BF81A5006A0A6C /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70E015BF81A5006A0A6C /* Icon.icns */; };
 		41BC70E815BF81A5006A0A6C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70E115BF81A5006A0A6C /* main.m */; };
+		43B91EDD1949B8FB00F7F815 /* CocoLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 43B91EDB1949B8FB00F7F815 /* CocoLoader.cpp */; };
 		467373111739F4270034BF94 /* TextureAtlasEncryptionTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4673730F1739F4270034BF94 /* TextureAtlasEncryptionTest.cpp */; };
 		5071F8FF186D8E8F00570754 /* UITouchGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5071F8FD186D8E8F00570754 /* UITouchGroup.cpp */; };
 		50E2650A18279CE70008EB60 /* UILayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E2650618279CE70008EB60 /* UILayout.cpp */; };
@@ -1285,6 +1286,8 @@
 		41BC70E115BF81A5006A0A6C /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = SOURCE_ROOT; };
 		41BC70E215BF81A5006A0A6C /* Test_Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Test_Info.plist; sourceTree = SOURCE_ROOT; };
 		41BC70E315BF81A5006A0A6C /* Test_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Test_Prefix.pch; sourceTree = SOURCE_ROOT; };
+		43B91EDB1949B8FB00F7F815 /* CocoLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocoLoader.cpp; sourceTree = "<group>"; };
+		43B91EDC1949B8FB00F7F815 /* CocoLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoLoader.h; sourceTree = "<group>"; };
 		4673730F1739F4270034BF94 /* TextureAtlasEncryptionTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextureAtlasEncryptionTest.cpp; sourceTree = "<group>"; };
 		467373101739F4270034BF94 /* TextureAtlasEncryptionTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureAtlasEncryptionTest.h; sourceTree = "<group>"; };
 		5071F8FD186D8E8F00570754 /* UITouchGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITouchGroup.cpp; sourceTree = "<group>"; };
@@ -3411,6 +3414,8 @@
 				375BD41818683E6E0024609E /* rapidjson */,
 				37CA1DA817D87B5700A649D0 /* DictionaryHelper.cpp */,
 				37CA1DA917D87B5700A649D0 /* DictionaryHelper.h */,
+				43B91EDB1949B8FB00F7F815 /* CocoLoader.cpp */,
+				43B91EDC1949B8FB00F7F815 /* CocoLoader.h */,
 			);
 			path = Json;
 			sourceTree = "<group>";
@@ -4045,6 +4050,7 @@
 				37BB5B4117E86CEC002746B4 /* UILabelAtlas.cpp in Sources */,
 				37BB5B4217E86CEC002746B4 /* UILabelBMFont.cpp in Sources */,
 				37BB5B4317E86CEC002746B4 /* UILoadingBar.cpp in Sources */,
+				43B91EDD1949B8FB00F7F815 /* CocoLoader.cpp in Sources */,
 				37BB5B4417E86CEC002746B4 /* UISlider.cpp in Sources */,
 				37BB5B4617E86CEC002746B4 /* UITextField.cpp in Sources */,
 				50E2650A18279CE70008EB60 /* UILayout.cpp in Sources */,
