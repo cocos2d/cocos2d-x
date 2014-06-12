@@ -1,4 +1,5 @@
 cocos2d-x-3.2  ???
+    [NEW]           Console: add a command to show engine version
     [NEW]           Node: added setter/getter for NormalizedPosition(). Allows to set positions in normalized values (between 0 and 1)
     [NEW]           Scene: Added createWithSize() method
     [NEW]           TextField: added getStringLength()
@@ -10,11 +11,15 @@ cocos2d-x-3.2  ???
     [FIX]           Android: 3d model will be black when coming from background
     [FIX]           Android: don't trigger EVENT_COME_TO_BACKGROUND event when go to background
     [FIX]           Cocos2dxGLSurfaceView.java: prevent flickering when opening another activity
+    [FIX]           Director: Director->convertToUI() returns wrong value.
+    [FIX]           GLProgram: not abort if shader compilation fails, just retuan false.
     [FIX]           GLProgramState: sampler can not be changed
     [FIX]           Image: Set jpeg save quality to 90 
     [FIX]           Image: premultiply alpha when loading png file to resolve black border issue
     [FIX]           Label: label is unsharp if it's created by smaller font
     [FIX]           Label: Label's display may go bonkers if invoking Label::setString() with outline feature enabled
+    [FIX]           Label: don't release cached texture in time
+    [FIX]           Label: calculated height of multi-line string was incorrect on iOS
     [FIX]           Lua-binding: compiling error on release mode
     [FIX]           Lua-binding: Add xxtea encrypt support
     [FIX]           Node: setPhysicsBody() can not work correctly if it is added to a Node
@@ -26,6 +31,7 @@ cocos2d-x-3.2  ???
     [FIX]           Schedule: schedulePerFrame() can not be called twice
     [FIX]           SpriteFrameCache: fix memory leak
     [FIX]           Texture2D: use image's pixel format to create texture
+    [FIX]           TextureCache: addImageAsync() may repeatedly generate Image for the same image file
     [FIX]           WP8: will restart if app goes to background, then touches icon to go to foreground
     [FIX]           WP8: will be black if: 1. 3rd pops up a view; 2. go to background; 3. come to foreground
     [FIX]           WP8: project name of new project created by console is wrong
