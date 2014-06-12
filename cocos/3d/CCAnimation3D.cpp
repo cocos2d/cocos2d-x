@@ -39,18 +39,17 @@ Animation3D* Animation3D::getOrCreate(const std::string& fileName, const std::st
         return animation;
     
     //load animation here
+    animation = new Animation3D();
     auto bundle = Bundle3D::getInstance();
-    if (bundle->load(fullPath))
-    {
-        Animation3DData animationdata;
-        animationdata.animation = new Animation3D();
-        bundle->loadAnimationData(animationName, &animationdata);
-        animation = animationdata.animation;
-    }
-    
-    if (animation)
+    Animation3DData animationdata;
+    if (bundle->load(fullPath) && bundle->loadAnimationData(animationName, &animationdata) && animation->init(animationdata))
     {
         Animation3DCache::getInstance()->addAnimation(key, animation);
+    }
+    else
+    {
+        CC_SAFE_DELETE(animation);
+        animation = nullptr;
     }
     
     return animation;
@@ -70,6 +69,7 @@ Animation3D::Animation3D()
 {
     
 }
+
 Animation3D::~Animation3D()
 {
     for (auto itor : _boneCurves) {
@@ -103,6 +103,86 @@ Animation3D::Curve::~Curve()
     CC_SAFE_RELEASE_NULL(translateCurve);
     CC_SAFE_RELEASE_NULL(rotCurve);
     CC_SAFE_RELEASE_NULL(scaleCurve);
+}
+
+bool Animation3D::init(const Animation3DData &data)
+{
+    _duration = data._totalTime;
+
+    for(const auto& iter : data._translationKeys)
+    {
+        Curve* curve = _boneCurves[iter.first];
+        if( curve == nullptr)
+        {
+            curve = new Curve();
+            _boneCurves[iter.first] = curve;
+        }
+        
+        if(iter.second.size() == 0) continue;
+        std::vector<float> keys;
+        std::vector<float> values;
+        for(const auto& keyIter : iter.second)
+        {
+            keys.push_back(keyIter._time);
+            values.push_back(keyIter._key.x);
+            values.push_back(keyIter._key.y);
+            values.push_back(keyIter._key.z);
+        }
+        
+        curve->translateCurve = Curve::AnimationCurveVec3::create(&keys[0], &values[0], (int)keys.size());
+        if(curve->translateCurve) curve->translateCurve->retain();
+    }
+    
+    for(const auto& iter : data._rotationKeys)
+    {
+        Curve* curve = _boneCurves[iter.first];
+        if( curve == nullptr)
+        {
+            curve = new Curve();
+            _boneCurves[iter.first] = curve;
+        }
+        
+        if(iter.second.size() == 0) continue;
+        std::vector<float> keys;
+        std::vector<float> values;
+        for(const auto& keyIter : iter.second)
+        {
+            keys.push_back(keyIter._time);
+            values.push_back(keyIter._key.x);
+            values.push_back(keyIter._key.y);
+            values.push_back(keyIter._key.z);
+            values.push_back(keyIter._key.w);
+        }
+        
+        curve->rotCurve = Curve::AnimationCurveQuat::create(&keys[0], &values[0], (int)keys.size());
+        if(curve->rotCurve) curve->rotCurve->retain();
+    }
+    
+    for(const auto& iter : data._scaleKeys)
+    {
+        Curve* curve = _boneCurves[iter.first];
+        if( curve == nullptr)
+        {
+            curve = new Curve();
+            _boneCurves[iter.first] = curve;
+        }
+        
+        if(iter.second.size() == 0) continue;
+        std::vector<float> keys;
+        std::vector<float> values;
+        for(const auto& keyIter : iter.second)
+        {
+            keys.push_back(keyIter._time);
+            values.push_back(keyIter._key.x);
+            values.push_back(keyIter._key.y);
+            values.push_back(keyIter._key.z);
+        }
+        
+        curve->scaleCurve = Curve::AnimationCurveVec3::create(&keys[0], &values[0], (int)keys.size());
+        if(curve->scaleCurve) curve->scaleCurve->retain();
+    }
+    
+    return true;
 }
 
 ////////////////////////////////////////////////////////////////

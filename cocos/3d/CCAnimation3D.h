@@ -32,6 +32,7 @@
 #include "base/ccMacros.h"
 #include "base/CCRef.h"
 #include "base/ccTypes.h"
+#include "CCBundle3DData.h"
 
 NS_CC_BEGIN
 
@@ -65,6 +66,8 @@ public:
 protected:
     Animation3D();
     virtual ~Animation3D();  
+    
+    bool init(const Animation3DData& data);
     
     std::unordered_map<std::string, Curve*> _boneCurves;//bone curves map, key bone name, value AnimationCurve
     

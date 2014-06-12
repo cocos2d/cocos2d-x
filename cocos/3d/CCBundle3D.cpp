@@ -140,33 +140,25 @@ bool Bundle3D::loadMaterialData(const std::string& id, MaterialData* materialdat
  */
 bool Bundle3D::loadAnimationData(const std::string& id, Animation3DData* animationdata)
 {
-    auto animation = animationdata->animation;
-    animation->_duration = 3.0f;
-    for (auto it : animation->_boneCurves) {
-        CC_SAFE_DELETE(it.second);
-    }
-    animation->_boneCurves.clear();
-    auto curve = new Animation3D::Curve();
-    float keytime[] = {0.f, 1.f};
-    float pos[] = {0.f, 0.f, 0.f, 20.f, 0.f, 0.f};
-    //curve->translateCurve = Animation3D::Curve::AnimationCurveVec3::create(keytime, pos, 2);
-    //curve->translateCurve->retain();
+    animationdata->_rotationKeys.clear();
+    animationdata->_scaleKeys.clear();
+    animationdata->_translationKeys.clear();
+    
+    animationdata->_totalTime = 3.0f;
     
     float keytime1[] = {0.f, 0.333f, 0.667f, 1.f};
-    float rot[4 * 4];
+    std::string boneName = "root";
+    
     Quaternion quat;
     Quaternion::createFromAxisAngle(Vec3(1.f, 0.f, 0.f), 0, &quat);
-    rot[0] = quat.x, rot[1] = quat.y, rot[2] = quat.z, rot[3] = quat.w;
+    animationdata->_rotationKeys[boneName].push_back(Animation3DData::QuatKey(keytime1[0], quat));
     Quaternion::createFromAxisAngle(Vec3(1.f, 0.f, 0.f), MATH_DEG_TO_RAD(90), &quat);
-    rot[4] = quat.x, rot[5] = quat.y, rot[6] = quat.z, rot[7] = quat.w;
+     animationdata->_rotationKeys[boneName].push_back(Animation3DData::QuatKey(keytime1[1], quat));
     Quaternion::createFromAxisAngle(Vec3(1.f, 0.f, 0.f), MATH_DEG_TO_RAD(180), &quat);
-    rot[8] = quat.x, rot[9] = quat.y, rot[10] = quat.z, rot[11] = quat.w;
+    animationdata->_rotationKeys[boneName].push_back(Animation3DData::QuatKey(keytime1[2], quat));
     Quaternion::createFromAxisAngle(Vec3(1.f, 0.f, 0.f), MATH_DEG_TO_RAD(270), &quat);
-    rot[12] = quat.x, rot[13] = quat.y, rot[14] = quat.z, rot[15] = quat.w;
-    curve->rotCurve = Animation3D::Curve::AnimationCurveQuat::create(keytime1, rot, 4);
-    curve->rotCurve->retain();
+    animationdata->_rotationKeys[boneName].push_back(Animation3DData::QuatKey(keytime1[3], quat));
     
-    animation->_boneCurves["root"] = curve;
     
     return true;
 }
