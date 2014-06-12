@@ -255,54 +255,10 @@ int LuaStack::executeString(const char *codes)
 
 int LuaStack::executeScriptFile(const char* filename)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     std::string code("require \"");
     code.append(filename);
     code.append("\"");
     return executeString(code.c_str());
-#else
-    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename);
-    if (!FileUtils::getInstance()->isFileExist(fullPath))
-    {
-        const std::string BYTECODE_FILE_EXT    = ".luac";
-        const std::string NOT_BYTECODE_FILE_EXT = ".lua";
-        
-        std::string restructuringFileName = filename;
-        size_t pos = restructuringFileName.rfind(BYTECODE_FILE_EXT);
-        if (pos != std::string::npos)
-        {
-            restructuringFileName = restructuringFileName.substr(0, pos) + NOT_BYTECODE_FILE_EXT;
-        }
-        else
-        {
-            pos = restructuringFileName.rfind(NOT_BYTECODE_FILE_EXT);
-            if (pos != std::string::npos)
-            {
-                restructuringFileName = restructuringFileName.substr(0, pos) + BYTECODE_FILE_EXT;
-            }
-        }
-        
-        fullPath = FileUtils::getInstance()->fullPathForFilename(restructuringFileName);
-        if (!FileUtils::getInstance()->isFileExist(fullPath))
-        {
-            CCLOG("executeScriptFile function can't find the file");
-            return 1;
-        }
-    }
-    ++_callFromLua;
-    int nRet = luaL_dofile(_state, fullPath.c_str());
-    --_callFromLua;
-    CC_ASSERT(_callFromLua >= 0);
-    // lua_gc(_state, LUA_GCCOLLECT, 0);
-    
-    if (nRet != 0)
-    {
-        CCLOG("[LUA ERROR] %s", lua_tostring(_state, -1));
-        lua_pop(_state, 1);
-        return nRet;
-    }
-    return 0;
-#endif
 }
 
 int LuaStack::executeGlobalFunction(const char* functionName)
