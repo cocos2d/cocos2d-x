@@ -977,8 +977,6 @@
 		29CB8F4D1929D1BB00C841D6 /* UILayoutManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29CB8F4A1929D1BB00C841D6 /* UILayoutManager.cpp */; };
 		29CB8F4E1929D1BB00C841D6 /* UILayoutManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 29CB8F4B1929D1BB00C841D6 /* UILayoutManager.h */; };
 		29CB8F4F1929D1BB00C841D6 /* UILayoutManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 29CB8F4B1929D1BB00C841D6 /* UILayoutManager.h */; };
-		29CB8F551929D7A900C841D6 /* UIScrollInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 29CB8F541929D7A900C841D6 /* UIScrollInterface.h */; };
-		29CB8F561929D7A900C841D6 /* UIScrollInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 29CB8F541929D7A900C841D6 /* UIScrollInterface.h */; };
 		2AC795DB1862870F005EC8E1 /* SkeletonBounds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC795D918628689005EC8E1 /* SkeletonBounds.cpp */; };
 		2AC795DC1862870F005EC8E1 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC795D51862867D005EC8E1 /* Event.cpp */; };
 		2AC795DD1862870F005EC8E1 /* EventData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC795D71862867D005EC8E1 /* EventData.cpp */; };
@@ -2266,7 +2264,6 @@
 		299754F3193EC95400A54AC3 /* ObjectFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectFactory.h; path = ../base/ObjectFactory.h; sourceTree = "<group>"; };
 		29CB8F4A1929D1BB00C841D6 /* UILayoutManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILayoutManager.cpp; sourceTree = "<group>"; };
 		29CB8F4B1929D1BB00C841D6 /* UILayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILayoutManager.h; sourceTree = "<group>"; };
-		29CB8F541929D7A900C841D6 /* UIScrollInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIScrollInterface.h; sourceTree = "<group>"; };
 		2AC795D318628672005EC8E1 /* BoundingBoxAttachment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BoundingBoxAttachment.cpp; sourceTree = "<group>"; };
 		2AC795D418628672005EC8E1 /* BoundingBoxAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoundingBoxAttachment.h; sourceTree = "<group>"; };
 		2AC795D51862867D005EC8E1 /* Event.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Event.cpp; sourceTree = "<group>"; };
@@ -3991,7 +3988,6 @@
 				2905FA0518CF08D000240AA3 /* UIRichText.h */,
 				2905FA0718CF08D000240AA3 /* UIScrollView.cpp */,
 				2905FA0818CF08D000240AA3 /* UIScrollView.h */,
-				29CB8F541929D7A900C841D6 /* UIScrollInterface.h */,
 				2905FA0918CF08D000240AA3 /* UISlider.cpp */,
 				2905FA0A18CF08D100240AA3 /* UISlider.h */,
 				2905FA0B18CF08D100240AA3 /* UIText.cpp */,
@@ -5133,7 +5129,6 @@
 				50ABBEB91925AB6F00A911A9 /* ccUTF8.h in Headers */,
 				C0940CAC19419BDA00B8BB48 /* CCTMXLayer2.h in Headers */,
 				1AAF536E180E3374000584C8 /* HttpRequest.h in Headers */,
-				29CB8F551929D7A900C841D6 /* UIScrollInterface.h in Headers */,
 				1AAF5370180E3374000584C8 /* HttpResponse.h in Headers */,
 				50ABBE671925AB6F00A911A9 /* CCEventListenerCustom.h in Headers */,
 				1AAF5374180E3374000584C8 /* SocketIO.h in Headers */,
@@ -5588,7 +5583,6 @@
 				50ABBD921925AB4100A911A9 /* CCGLProgramCache.h in Headers */,
 				1AD71E0E180E26E600808F54 /* CocosBuilder.h in Headers */,
 				B29594C91926D61F003EEF37 /* CCObjLoader.h in Headers */,
-				29CB8F561929D7A900C841D6 /* UIScrollInterface.h in Headers */,
 				1AD71E98180E26E600808F54 /* Animation.h in Headers */,
 				1AD71E9C180E26E600808F54 /* AnimationState.h in Headers */,
 				50ABBE961925AB6F00A911A9 /* CCProfiling.h in Headers */,

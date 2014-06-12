@@ -594,6 +594,7 @@ bool Node::isRunning() const
 void Node::setParent(Node * parent)
 {
     _parent = parent;
+    _transformUpdated = _transformDirty = _inverseDirty = true;
 }
 
 /// isRelativeAnchorPoint getter
@@ -1039,9 +1040,6 @@ void Node::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t paren
         this->draw(renderer, _modelViewTransform, flags);
     }
 
-    // reset for next frame
-    _orderOfArrival = 0;
- 
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 

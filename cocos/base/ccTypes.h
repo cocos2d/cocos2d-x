@@ -349,7 +349,7 @@ struct BlendFunc
 
     bool operator<(const BlendFunc &a) const
     {
-        return src < a.src || (src < a.src && dst < a.dst);
+        return src < a.src || (src == a.src && dst < a.dst);
     }
 };
 

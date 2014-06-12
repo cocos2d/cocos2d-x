@@ -497,9 +497,21 @@ void GLProgramState::setUniformTexture(const std::string &uniformName, GLuint te
 {
     auto v = getUniformValue(uniformName);
     if (v)
-        v->setTexture(textureId, _textureUnitIndex++);
+    {
+        if (_boundTextureUnits.find(uniformName) != _boundTextureUnits.end())
+        {
+            v->setTexture(textureId, _boundTextureUnits[uniformName]);
+        }
+        else
+        {
+            v->setTexture(textureId, _textureUnitIndex);
+            _boundTextureUnits[uniformName] = _textureUnitIndex++;
+        }
+    }
     else
+    {
         CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
+    }
 }
 
 
