@@ -251,11 +251,13 @@ public:
     CREATE_FUNC(EffectBlur);
     virtual void setTarget(EffectSprite *sprite) override;
     void setBlurRadius(float radius);
+    void setBlurSampleNum(float num);
 
 protected:
-    bool init(float blurRadius = 10.0f);
+    bool init(float blurRadius = 10.0f, float sampleNum = 5.0f);
     
     float _blurRadius;
+    float _blurSampleNum;
 };
 
 void EffectBlur::setTarget(EffectSprite *sprite)
@@ -263,12 +265,14 @@ void EffectBlur::setTarget(EffectSprite *sprite)
     Size size = sprite->getTexture()->getContentSizeInPixels();
     _glprogramstate->setUniformVec2("resolution", size);
     _glprogramstate->setUniformFloat("blurRadius", _blurRadius);
+    _glprogramstate->setUniformFloat("sampleNum", _blurSampleNum);
 }
 
-bool EffectBlur::init(float blurRadius)
+bool EffectBlur::init(float blurRadius, float sampleNum)
 {
     initGLProgramState("Shaders/example_Blur.fsh");
     _blurRadius = blurRadius;
+    _blurSampleNum = sampleNum;
     
     return true;
 }
@@ -276,6 +280,11 @@ bool EffectBlur::init(float blurRadius)
 void EffectBlur::setBlurRadius(float radius)
 {
     _blurRadius = radius;
+}
+
+void EffectBlur::setBlurSampleNum(float num)
+{
+    _blurSampleNum = num;
 }
 
 // Outline
