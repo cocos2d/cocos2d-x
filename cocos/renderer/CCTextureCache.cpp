@@ -206,11 +206,11 @@ void TextureCache::loadImage()
            for (; pos < infoSize; pos++)
            {
                imageInfo = (*_imageInfoQueue)[pos];
-               if(imageInfo->asyncStruct->filename.compare(asyncStruct->filename))
+               if(imageInfo->asyncStruct->filename.compare(asyncStruct->filename) == 0)
                    break;
            }
            _imageInfoMutex.unlock();
-           if(infoSize == 0 || pos < infoSize)
+           if(infoSize == 0 || pos == infoSize)
                generateImage = true;
         }
 
