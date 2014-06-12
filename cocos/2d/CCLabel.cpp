@@ -742,6 +742,8 @@ void Label::enableGlow(const Color4B& glowColor)
 
 void Label::enableOutline(const Color4B& outlineColor,int outlineSize /* = -1 */)
 {
+    CCASSERT(_currentLabelType == LabelType::STRING_TEXTURE || _currentLabelType == LabelType::TTF, "Only supported system font and TTF!");
+
     _effectColor = outlineColor;
     _effectColorF.r = _effectColor.r / 255.0f;
     _effectColorF.g = _effectColor.g / 255.0f;
@@ -1175,6 +1177,8 @@ Sprite * Label::getLetter(int letterIndex)
 
 void Label::setLineHeight(float height)
 {
+    CCASSERT(_currentLabelType != LabelType::STRING_TEXTURE, "Not supported system font!");
+
     if (_commonLineHeight != height)
     {
         _commonLineHeight = height;
@@ -1184,11 +1188,13 @@ void Label::setLineHeight(float height)
 
 float Label::getLineHeight() const
 {
+    CCASSERT(_currentLabelType != LabelType::STRING_TEXTURE, "Not supported system font!");
     return _textSprite ? 0.0f : _commonLineHeight;
 }
 
 void Label::setAdditionalKerning(float space)
 {
+    CCASSERT(_currentLabelType != LabelType::STRING_TEXTURE, "Not supported system font!");
     if (_additionalKerning != space)
     {
         _additionalKerning = space;
@@ -1198,6 +1204,8 @@ void Label::setAdditionalKerning(float space)
 
 float Label::getAdditionalKerning() const
 {
+    CCASSERT(_currentLabelType != LabelType::STRING_TEXTURE, "Not supported system font!");
+
     return _additionalKerning;
 }
 
@@ -1280,6 +1288,8 @@ void Label::updateDisplayedOpacity(GLubyte parentOpacity)
 
 void Label::setTextColor(const Color4B &color)
 {
+    CCASSERT(_currentLabelType == LabelType::TTF || _currentLabelType == LabelType::STRING_TEXTURE, "Only supported system font and ttf!");
+
     _textColor = color;
     _textColorF.r = _textColor.r / 255.0f;
     _textColorF.g = _textColor.g / 255.0f;
