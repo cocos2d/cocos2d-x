@@ -52,9 +52,6 @@ class TestTimelineAction : public TimelineActionTestLayer
 public:
     virtual void onEnter();
     virtual std::string title() const override;
-
-    cocos2d::Ref* loadingRef(std::string filename);
-    void loadedRef(cocos2d::Ref* ref);
 };
 
 #endif  // __ANIMATION_SCENE_H__

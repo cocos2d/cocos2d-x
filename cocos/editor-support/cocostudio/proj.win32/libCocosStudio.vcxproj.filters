@@ -246,9 +246,6 @@
     <ClCompile Include="..\TimelineAction\CCTimelineActionCache.cpp">
       <Filter>TimelineAction</Filter>
     </ClCompile>
-    <ClCompile Include="..\TimelineAction\CCAsyncReader.cpp">
-      <Filter>TimelineAction</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\CCComAttribute.h">
@@ -444,9 +441,6 @@
       <Filter>TimelineAction</Filter>
     </ClInclude>
     <ClInclude Include="..\TimelineAction\CCTimelineActionCache.h">
-      <Filter>TimelineAction</Filter>
-    </ClInclude>
-    <ClInclude Include="..\TimelineAction\CCAsyncReader.h">
       <Filter>TimelineAction</Filter>
     </ClInclude>
   </ItemGroup>

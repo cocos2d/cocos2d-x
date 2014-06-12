@@ -182,8 +182,8 @@ cocos2d::Node* NodeCache::createNode(const std::string& filename)
 cocos2d::Node* NodeCache::loadNodeWithFile(const std::string& fileName)
 {
     // Read content from file
-    std::string fullPath = CCFileUtils::getInstance()->fullPathForFilename(fileName);
-    std::string contentStr = FileUtils::getInstance()->getStringFromFile(fullPath);
+    //std::string fullPath = CCFileUtils::getInstance()->fullPathForFilename(fileName);
+    std::string contentStr = FileUtils::getInstance()->getStringFromFile(fileName);
 
     cocos2d::Node* node = loadNodeWithContent(contentStr);
 
@@ -214,7 +214,10 @@ cocos2d::Node* NodeCache::loadNodeWithContent(const std::string& content)
 
     // decode node tree
     const rapidjson::Value& subJson = DICTOOL->getSubDictionary_json(doc, NODE);
-    return loadNode(subJson);
+    cocos2d::Node* root = loadNode(subJson);
+    root->release();
+
+    return root;
 }
 
 cocos2d::Node* NodeCache::loadNode(const rapidjson::Value& json)
@@ -239,6 +242,7 @@ cocos2d::Node* NodeCache::loadNode(const rapidjson::Value& json)
             if (child) 
             {
                 node->addChild(child);
+                child->release();
             }
         }
     }
@@ -307,6 +311,7 @@ void NodeCache::initNode(cocos2d::Node* node, const rapidjson::Value& json)
 Node* NodeCache::loadSimpleNode(const rapidjson::Value& json)
 {
     Node* node = Node::create();
+    node->retain();
     initNode(node, json);
 
     return node;
@@ -325,6 +330,8 @@ cocos2d::Node* NodeCache::loadSubGraph(const rapidjson::Value& json)
     {
         node = Node::create();
     }
+
+    node->retain();
 
     initNode(node, json);
 
@@ -362,6 +369,8 @@ Node* NodeCache::loadSprite(const rapidjson::Value& json)
         sprite = Sprite::create();
     }
 
+    sprite->retain();
+
     initNode(sprite, json);
 
     return sprite;
@@ -374,6 +383,7 @@ Node* NodeCache::loadParticle(const rapidjson::Value& json)
 
     ParticleSystemQuad* particle = ParticleSystemQuad::create(filePath);
     particle->setTotalParticles(num);
+    particle->retain();
 
     initNode(particle, json);
 
@@ -388,6 +398,8 @@ cocos2d::Node* NodeCache::loadWidget(const rapidjson::Value& json)
     readerName.append("Reader");
     
     Widget*               widget = dynamic_cast<Widget*>(ObjectFactory::getInstance()->createObject(classname));
+    widget->retain();
+
     WidgetReaderProtocol* reader = dynamic_cast<WidgetReaderProtocol*>(ObjectFactory::getInstance()->createObject(readerName));
 
     _guiReader->setPropsForAllWidgetFromJsonDictionary(reader, widget, json);

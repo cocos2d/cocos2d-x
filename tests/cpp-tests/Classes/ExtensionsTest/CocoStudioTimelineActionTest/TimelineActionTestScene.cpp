@@ -163,73 +163,38 @@ void TimelineActionTestLayer::restartCallback(Ref *pSender)
     s->release();
 }
 
-Node* node = nullptr;
-TimelineAction* action = nullptr;
-
 void TimelineActionTestLayer::nextCallback(Ref *pSender)
 {
-    //     Scene *s = new TimelineActionTestScene();
-    //     s->addChild( NextAnimationTest() );
-    //     Director::getInstance()->replaceScene(s);
-    //     s->release();
-
-    int frameIndex = action->getCurrentFrame();
-    int duration = action->getDuration();
-
-    ++frameIndex;
-    frameIndex = frameIndex == duration ? 0 : frameIndex;
-
-    action->gotoFrameAndPause(frameIndex);
+    Scene *s = new TimelineActionTestScene();
+    s->addChild( NextAnimationTest() );
+    Director::getInstance()->replaceScene(s);
+    s->release();
 }
 void TimelineActionTestLayer::backCallback(Ref *pSender)
 {
-    //     Scene *s = new TimelineActionTestScene();
-    //     s->addChild( BackAnimationTest() );
-    //     Director::getInstance()->replaceScene(s);
-    //     s->release();
-
-    int frameIndex = action->getCurrentFrame();
-    int duration = action->getDuration();
-
-    --frameIndex;
-    frameIndex = frameIndex == -1 ? duration-1 : frameIndex;
-
-    action->gotoFrameAndPause(frameIndex);
+    Scene *s = new TimelineActionTestScene();
+    s->addChild( BackAnimationTest() );
+    Director::getInstance()->replaceScene(s);
+    s->release();
 }
 
 void TestTimelineAction::onEnter()
 {
     TimelineActionTestLayer::onEnter();
 
+    Node* node = NodeCache::getInstance()->createNode("TimelineAction/boy_1.ExportJson");
+    TimelineAction* action = TimelineActionCache::getInstance()->createAction("TimelineAction/boy_1.ExportJson");
 
-    for(int i=0; i<100; i++)
-    {
-        AsyncReader::getInstance()->readFileAsync("TimelineAction/boy_1.ExportJson", CC_CALLBACK_1(TestTimelineAction::loadingRef, this), CC_CALLBACK_1(TestTimelineAction::loadedRef, this));
-    }
+    node->runAction(action);
+    action->gotoFrameAndPlay(0, 60, true);
+
+    node->setScale(0.4f);
+    node->setPosition(0,0);
+
+    addChild(node);
 }
 
 std::string TestTimelineAction::title() const
 {
     return "Test AnimationElement";
-}
-
-cocos2d::Ref* TestTimelineAction::loadingRef(std::string filename)
-{
-    return NodeCache::getInstance()->createNode(filename);
-}
-
-void TestTimelineAction::loadedRef(cocos2d::Ref* ref)
-{
-    if(cocos2d::Node* node = dynamic_cast<cocos2d::Node*>(ref))
-    {
-        TimelineAction* action = TimelineActionCache::getInstance()->createAction("TimelineAction/boy_1.ExportJson");
-
-        node->runAction(action);
-        action->gotoFrameAndPlay(0, 60, true);
-
-        node->setScale(0.4f);
-        node->setPosition(-200/*+i*5*/,0);
-
-        addChild(node);
-    }
 }
