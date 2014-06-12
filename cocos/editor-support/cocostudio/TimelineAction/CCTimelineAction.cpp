@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCTimelineAction.h"
+#include "CCNodeCache.h"
 
 using namespace cocos2d;
 
@@ -175,7 +176,8 @@ void TimelineAction::startWithTarget(Node *target)
     foreachNodeDescendant(target, 
         [this, target](Node* child)
     {
-        int actionTag = child->getTag();
+        TimelineActionData* data = dynamic_cast<TimelineActionData*>(child->getUserObject());
+        int actionTag = data->getActionTag();
         if(_timelineMap.find(actionTag) != _timelineMap.end())
         {
             auto timelines = this->_timelineMap[actionTag];

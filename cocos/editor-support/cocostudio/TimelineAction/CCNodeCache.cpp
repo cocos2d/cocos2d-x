@@ -62,6 +62,7 @@ static const char* CHILDREN    = "children";
 static const char* CLASSNAME   = "classname";
 static const char* FILE_PATH   = "fileName";
 static const char* PLIST_FILE  = "plistFile";
+static const char* TAG         = "tag";
 static const char* ACTION_TAG  = "actionTag";
 
 static const char* OPTIONS     = "options";
@@ -103,6 +104,34 @@ static const char* MUL_MARGIN_BOTTOM           = "bottom";
 static const char* TEXTURES     = "textures";
 static const char* TEXTURES_PNG = "texturesPng";
 
+// TimelineActionData
+TimelineActionData* TimelineActionData::create(int actionTag)
+{
+    TimelineActionData * ret = new TimelineActionData();
+    if (ret && ret->init(actionTag))
+    {
+        ret->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(ret);
+    }
+    return ret;
+}
+
+TimelineActionData::TimelineActionData()
+    : _actionTag(0)
+{
+}
+
+bool TimelineActionData::init(int actionTag)
+{
+    _actionTag = actionTag;
+    return true;
+}
+
+
+// NodeCache
 static NodeCache* _sharedNodeCache = nullptr;
 
 NodeCache* NodeCache::getInstance()
@@ -182,7 +211,6 @@ cocos2d::Node* NodeCache::createNode(const std::string& filename)
 cocos2d::Node* NodeCache::loadNodeWithFile(const std::string& fileName)
 {
     // Read content from file
-    //std::string fullPath = CCFileUtils::getInstance()->fullPathForFilename(fileName);
     std::string contentStr = FileUtils::getInstance()->getStringFromFile(fileName);
 
     cocos2d::Node* node = loadNodeWithContent(contentStr);
@@ -275,7 +303,8 @@ void NodeCache::initNode(cocos2d::Node* node, const rapidjson::Value& json)
     GLubyte red         = (GLubyte)DICTOOL->getIntValue_json(json, RED, 255);
     GLubyte green       = (GLubyte)DICTOOL->getIntValue_json(json, GREEN, 255);
     GLubyte blue        = (GLubyte)DICTOOL->getIntValue_json(json, BLUE, 255);
-    int tag             = DICTOOL->getIntValue_json(json, ACTION_TAG);
+    int tag             = DICTOOL->getIntValue_json(json, TAG);
+    int actionTag       = DICTOOL->getIntValue_json(json, ACTION_TAG);
 
     if(x != 0 || y != 0)
         node->setPosition(CCPoint(x, y));
@@ -308,6 +337,7 @@ void NodeCache::initNode(cocos2d::Node* node, const rapidjson::Value& json)
     }
 
     node->setTag(tag);
+    node->setUserObject(TimelineActionData::create(actionTag));
 }
 
 Node* NodeCache::loadSimpleNode(const rapidjson::Value& json)
@@ -397,6 +427,32 @@ cocos2d::Node* NodeCache::loadWidget(const rapidjson::Value& json)
     const char* classname = DICTOOL->getStringValue_json(json, CLASSNAME);
 
     std::string readerName = classname;
+
+    if (readerName == "Panel")
+    {
+        readerName = "Layout";
+    }
+    else if (readerName == "TextArea")
+    {
+        readerName = "Text";
+    }
+    else if (readerName == "TextButton")
+    {
+        readerName = "Button";
+    }
+    else if (readerName == "Label")
+    {
+        readerName = "Text";
+    }
+    else if (readerName == "LabelAtlas")
+    {
+        readerName = "TextAtlas";
+    }
+    else if (readerName == "LabelBMFont")
+    {
+        readerName = "TextBMFont";
+    }
+
     readerName.append("Reader");
     
     Widget*               widget = dynamic_cast<Widget*>(ObjectFactory::getInstance()->createObject(classname));
