@@ -542,11 +542,11 @@ std::string Sprite3DWithSkinTest::subtitle() const
 void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
 {
     auto sprite = Sprite3D::create("Sprite3DTest/cube_anim.c3t");
-    sprite->setScale(1.f);
-    sprite->setTexture("Sprite3DTest/boss.png");
+    sprite->setScale(10.f);
+    //sprite->setTexture("Sprite3DTest/boss.png");
     addChild(sprite);
     
-    /*sprite->setPosition( Vec2( p.x, p.y) );
+    sprite->setPosition( Vec2( p.x, p.y) );
     auto animation = Animation3D::getOrCreate("Sprite3DTest/cube_anim.c3t");
     
     auto animate = Animate3D::create(animation);
@@ -560,7 +560,7 @@ void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
         animate->setSpeed(animate->getSpeed() * (std::rand() % 10));
     }
     
-    sprite->runAction(RepeatForever::create(animate));*/
+    sprite->runAction(RepeatForever::create(animate));
 }
 
 void Sprite3DWithSkinTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)

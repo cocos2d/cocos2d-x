@@ -36,13 +36,14 @@
 NS_CC_BEGIN
 
 
-void getChildMap(const SkinData* skinData, std::map<int, std::vector<int> >& map, const rapidjson::Value& val, int index)
+void getChildMap(const SkinData* skinData, std::map<int, std::vector<int> >& map, const rapidjson::Value& val)
 {
     if (!skinData)
         return;
 
     if (val.HasMember("children"))
     {
+        int parent_name_index = skinData->getBoneNameIndex(val["id"].GetString());
         const rapidjson::Value& children = val["children"];
         for (rapidjson::SizeType i = 0; i < children.Size(); i++)
         {
@@ -51,11 +52,11 @@ void getChildMap(const SkinData* skinData, std::map<int, std::vector<int> >& map
 
             int child_name_index = skinData->getBoneNameIndex(child_name);
             if (child_name_index < 0)
-                break;
+                continue;
 
-            map[index].push_back(child_name_index);
+            map[parent_name_index].push_back(child_name_index);
 
-            getChildMap(skinData, map, child, child_name_index);
+            getChildMap(skinData, map, child);
         }
     }
 }
@@ -98,40 +99,40 @@ bool Bundle3D::load(const std::string& path)
 bool Bundle3D::loadMeshData(const std::string& id, MeshData* meshdata)
 {
     meshdata->resetData();
-    //meshdata->vertexSizeInFloat = 13 * 4;
-    //meshdata->vertex = new float[meshdata->vertexSizeInFloat];
-    //float vert[] = {0.f,50.f,0.f,0.f,0.f,0.f,0.f,0.f,0.f,1.f,0.f,0.f,0.f,
-    //    0.f,0.f,50.f,1.f,1.f,0.f,0.f,0.f,0.f,1.f,0.f,0.f,0.f,
-    //    50.f,0.f,0.f,1.f,1.f,0.f,0.f,0.f,0.f,1.f,0.f,0.f,0.f,
-    //    -50.f,0.f,0.f,1.f,1.f,0.f,0.f,0.f,0.f,1.f,0.f,0.f,0.f};
-    //memcpy(meshdata->vertex, vert, meshdata->vertexSizeInFloat * sizeof(float));
-    
-    //meshdata->numIndex = 4 * 3;
-    //meshdata->indices = new unsigned short[meshdata->numIndex];
-    //unsigned short index[] = {0,1,2, 0,3,1, 0,2,3, 3,2,1};
-    //memcpy(meshdata->indices, index, meshdata->numIndex * sizeof(unsigned short));
-    
-    //meshdata->attribCount = 4;
-    //meshdata->attribs = new MeshVertexAttrib[meshdata->attribCount];
-    //meshdata->attribs[0].attribSizeBytes = 3 * sizeof(float);
-    //meshdata->attribs[0].size = 3;
-    //meshdata->attribs[0].type = GL_FLOAT;
-    //meshdata->attribs[0].vertexAttrib = GLProgram::VERTEX_ATTRIB_POSITION;
-    
-    //meshdata->attribs[1].attribSizeBytes = 2 * sizeof(float);
-    //meshdata->attribs[1].size = 2;
-    //meshdata->attribs[1].type = GL_FLOAT;
-    //meshdata->attribs[1].vertexAttrib = GLProgram::VERTEX_ATTRIB_TEX_COORD;
-    
-    //meshdata->attribs[2].attribSizeBytes = 4 * sizeof(float);
-    //meshdata->attribs[2].size = 4;
-    //meshdata->attribs[2].type = GL_FLOAT;
-    //meshdata->attribs[2].vertexAttrib = GLProgram::VERTEX_ATTRIB_BLEND_INDEX;
-    
-    //meshdata->attribs[3].attribSizeBytes = 4 * sizeof(float);
-    //meshdata->attribs[3].size = 4;
-    //meshdata->attribs[3].type = GL_FLOAT;
-    //meshdata->attribs[3].vertexAttrib = GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT;
+    /*meshdata->vertexSizeInFloat = 13 * 4;
+    meshdata->vertex = new float[meshdata->vertexSizeInFloat];
+    float vert[] = {0.f,50.f,0.f,0.f,0.f,0.f,0.f,0.f,0.f,1.f,0.f,0.f,0.f,
+        0.f,0.f,50.f,1.f,1.f,0.f,0.f,0.f,0.f,1.f,0.f,0.f,0.f,
+        50.f,0.f,0.f,1.f,1.f,0.f,0.f,0.f,0.f,1.f,0.f,0.f,0.f,
+        -50.f,0.f,0.f,1.f,1.f,0.f,0.f,0.f,0.f,1.f,0.f,0.f,0.f};
+    memcpy(meshdata->vertex, vert, meshdata->vertexSizeInFloat * sizeof(float));
+
+    meshdata->numIndex = 4 * 3;
+    meshdata->indices = new unsigned short[meshdata->numIndex];
+    unsigned short index[] = {0,1,2, 0,3,1, 0,2,3, 3,2,1};
+    memcpy(meshdata->indices, index, meshdata->numIndex * sizeof(unsigned short));
+
+    meshdata->attribCount = 4;
+    meshdata->attribs = new MeshVertexAttrib[meshdata->attribCount];
+    meshdata->attribs[0].attribSizeBytes = 3 * sizeof(float);
+    meshdata->attribs[0].size = 3;
+    meshdata->attribs[0].type = GL_FLOAT;
+    meshdata->attribs[0].vertexAttrib = GLProgram::VERTEX_ATTRIB_POSITION;
+
+    meshdata->attribs[1].attribSizeBytes = 2 * sizeof(float);
+    meshdata->attribs[1].size = 2;
+    meshdata->attribs[1].type = GL_FLOAT;
+    meshdata->attribs[1].vertexAttrib = GLProgram::VERTEX_ATTRIB_TEX_COORD;
+
+    meshdata->attribs[2].attribSizeBytes = 4 * sizeof(float);
+    meshdata->attribs[2].size = 4;
+    meshdata->attribs[2].type = GL_FLOAT;
+    meshdata->attribs[2].vertexAttrib = GLProgram::VERTEX_ATTRIB_BLEND_INDEX;
+
+    meshdata->attribs[3].attribSizeBytes = 4 * sizeof(float);
+    meshdata->attribs[3].size = 4;
+    meshdata->attribs[3].type = GL_FLOAT;
+    meshdata->attribs[3].vertexAttrib = GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT;*/
     
     const rapidjson::Value& mash_data_val_array = document["mesh_data"];
     assert(mash_data_val_array.IsArray());
@@ -177,7 +178,7 @@ bool Bundle3D::loadMeshData(const std::string& id, MeshData* meshdata)
         const rapidjson::Value& mesh_vertex_attribute_val = mesh_vertex_attribute[i];
 
         meshdata->attribs[i].size = mesh_vertex_attribute_val["size"].GetUint();
-        meshdata->attribs[i].attribSizeBytes = meshdata->attribs[1].size * parseGLTypeSize(mesh_vertex_attribute_val["type"].GetString());
+        meshdata->attribs[i].attribSizeBytes = meshdata->attribs[i].size * parseGLTypeSize(mesh_vertex_attribute_val["type"].GetString());
         meshdata->attribs[i].type = parseGLType(mesh_vertex_attribute_val["type"].GetString());
         //assignGLTypeByString(meshdata->attribs[i].type, mesh_vertex_attribute_val["type"].GetString());
         meshdata->attribs[i].vertexAttrib = parseGLProgramAttribute(mesh_vertex_attribute_val["vertex_attribute"].GetString());
@@ -198,16 +199,16 @@ bool Bundle3D::loadSkinData(const std::string& id, SkinData* skindata)
     skindata->inverseBindPoseMatrices.push_back(Mat4::IDENTITY);
     skindata->rootBoneIndex = 0;*/
 
-    assert(document.HasMember("skin_data"));
+    //assert(document.HasMember("skin_data"));
     if (!document.HasMember("skin_data")) return false;
 
     const rapidjson::Value& skin_data_array = document["skin_data"];
     assert(skin_data_array.IsArray());
     
     const rapidjson::Value& skin_data_array_val_0 = skin_data_array[(rapidjson::SizeType)0];
-    skindata->boneNames.push_back("root");
-    skindata->inverseBindPoseMatrices.push_back(Mat4::IDENTITY);
-    skindata->rootBoneIndex = 0;
+    //skindata->boneNames.push_back("root");
+    //skindata->inverseBindPoseMatrices.push_back(Mat4::IDENTITY);
+    skindata->rootBoneIndex = 1;
 
     const rapidjson::Value& skin_data_bind_shape = skin_data_array_val_0["bind_shape"];
     assert(skin_data_bind_shape.Size() == 16);
@@ -232,7 +233,8 @@ bool Bundle3D::loadSkinData(const std::string& id, SkinData* skindata)
     }
 
     const rapidjson::Value& skin_data_array_val_1 = skin_data_array[1];
-    getChildMap(skindata, skindata->boneChild, skin_data_array_val_1, 0);
+    const rapidjson::Value& bone_val_0 = skin_data_array_val_1["children"][(rapidjson::SizeType)0];
+    getChildMap(skindata, skindata->boneChild, /*skin_data_array_val_1*/bone_val_0);
 
     return true;
 }
@@ -244,7 +246,7 @@ bool Bundle3D::loadSkinData(const std::string& id, SkinData* skindata)
  */
 bool Bundle3D::loadMaterialData(const std::string& id, MaterialData* materialdata)
 {
-    assert(document.HasMember("material_data"));
+    //assert(document.HasMember("material_data"));
     if (!document.HasMember("material_data")) return false;
 
     const rapidjson::Value& material_data_array_val = document["material_data"];
@@ -264,7 +266,7 @@ bool Bundle3D::loadAnimationData(const std::string& id, Animation3DData* animati
     animationdata->_rotationKeys.clear();
     animationdata->_scaleKeys.clear();
     animationdata->_translationKeys.clear();
-    assert(document.HasMember("animation_data"));
+    //assert(document.HasMember("animation_data"));
     if (!document.HasMember("animation_data")) return false;
 
     animationdata->_totalTime = 3;

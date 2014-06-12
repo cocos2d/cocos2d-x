@@ -39,12 +39,12 @@
 				{
 					"size":4,
 					"type":"GL_FLOAT",
-					"vertex_attribute":"VERTEX_ATTRIB_BLEND_WEIGHT"
-				}, 
+					"vertex_attribute":"VERTEX_ATTRIB_BLEND_INDEX"
+				},
 				{
 					"size":4,
 					"type":"GL_FLOAT",
-					"vertex_attribute":"VERTEX_ATTRIB_BLEND_INDEX"
+					"vertex_attribute":"VERTEX_ATTRIB_BLEND_WEIGHT"
 				}
 			]
 		 }
