@@ -140,36 +140,13 @@ namespace PhoneDirect3DXamlAppInterop
             RootFrame.Navigated -= CompleteInitializePhoneApplication;
         }
 
-        private bool _isResume = false;
+
         private void CheckForResetNavigation(object sender, NavigationEventArgs e)
         {
+            // If the app has received a 'reset' navigation, then we need to check
+            // on the next navigation to see if the page stack should be reset
             if (e.NavigationMode == NavigationMode.Reset)
-            {
-                RootFrame.Navigating += HandlerFotResetNavigating;
-                _isResume = true;
-            }
-            else
-            {
-                if (_isResume && e.NavigationMode == NavigationMode.Refresh)
-                {
-                    RootFrame.Navigating -= HandlerFotResetNavigating;
-                    _isResume = false;
-                }
-            }
-        }
-        
-        private void HandlerFotResetNavigating(object sender, NavigatingCancelEventArgs e)
-        {
-            RootFrame.Navigating -= HandlerFotResetNavigating;
-            if (e.Uri.OriginalString.Contains("MainPage.xaml"))
-            {
-                e.Cancel = true;
-            }
-            else
-            {
                 RootFrame.Navigated += ClearBackStackAfterReset;
-            }
-            _isResume = false;
         }
 
         private void ClearBackStackAfterReset(object sender, NavigationEventArgs e)
@@ -177,8 +154,8 @@ namespace PhoneDirect3DXamlAppInterop
             // Unregister the event so it doesn't get called again
             RootFrame.Navigated -= ClearBackStackAfterReset;
 
-            // Only clear the stack for 'new' (forward) navigations
-            if (e.NavigationMode != NavigationMode.New)
+            // Only clear the stack for 'new' (forward) and 'refresh' navigations
+            if (e.NavigationMode != NavigationMode.New && e.NavigationMode != NavigationMode.Refresh)
                 return;
 
             // For UI consistency, clear the entire page stack
