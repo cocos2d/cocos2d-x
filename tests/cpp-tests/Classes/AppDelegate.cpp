@@ -68,26 +68,26 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto fileUtils = FileUtils::getInstance();
     std::vector<std::string> searchPaths;
     
-//     if (screenSize.height > 320)
-//     {
-//         auto resourceSize = Size(960, 640);
-//         searchPaths.push_back("hd");
-//         searchPaths.push_back("ccs-res/hd");
-//         searchPaths.push_back("ccs-res/hd/scenetest");
-//         searchPaths.push_back("ccs-res/hd/scenetest/ArmatureComponentTest");
-//         searchPaths.push_back("ccs-res/hd/scenetest/AttributeComponentTest");
-//         searchPaths.push_back("ccs-res/hd/scenetest/BackgroundComponentTest");
-//         searchPaths.push_back("ccs-res/hd/scenetest/EffectComponentTest");
-//         searchPaths.push_back("ccs-res/hd/scenetest/LoadSceneEdtiorFileTest");
-//         searchPaths.push_back("ccs-res/hd/scenetest/ParticleComponentTest");
-//         searchPaths.push_back("ccs-res/hd/scenetest/SpriteComponentTest");
-//         searchPaths.push_back("ccs-res/hd/scenetest/TmxMapComponentTest");
-//         searchPaths.push_back("ccs-res/hd/scenetest/UIComponentTest");
-//         searchPaths.push_back("ccs-res/hd/scenetest/TriggerTest");
-//         searchPaths.push_back("ccs-res");
-//         director->setContentScaleFactor(resourceSize.height/designSize.height);
-//     }
-//     else
+    if (screenSize.height > 320)
+    {
+        auto resourceSize = Size(960, 640);
+        searchPaths.push_back("hd");
+        searchPaths.push_back("ccs-res/hd");
+        searchPaths.push_back("ccs-res/hd/scenetest");
+        searchPaths.push_back("ccs-res/hd/scenetest/ArmatureComponentTest");
+        searchPaths.push_back("ccs-res/hd/scenetest/AttributeComponentTest");
+        searchPaths.push_back("ccs-res/hd/scenetest/BackgroundComponentTest");
+        searchPaths.push_back("ccs-res/hd/scenetest/EffectComponentTest");
+        searchPaths.push_back("ccs-res/hd/scenetest/LoadSceneEdtiorFileTest");
+        searchPaths.push_back("ccs-res/hd/scenetest/ParticleComponentTest");
+        searchPaths.push_back("ccs-res/hd/scenetest/SpriteComponentTest");
+        searchPaths.push_back("ccs-res/hd/scenetest/TmxMapComponentTest");
+        searchPaths.push_back("ccs-res/hd/scenetest/UIComponentTest");
+        searchPaths.push_back("ccs-res/hd/scenetest/TriggerTest");
+        searchPaths.push_back("ccs-res");
+        director->setContentScaleFactor(resourceSize.height/designSize.height);
+    }
+    else
     {
         searchPaths.push_back("ccs-res");
         searchPaths.push_back("ccs-res/scenetest/ArmatureComponentTest");

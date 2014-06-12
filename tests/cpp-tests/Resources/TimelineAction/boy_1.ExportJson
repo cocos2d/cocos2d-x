@@ -4,12 +4,10 @@
   "designHeight": 1024,
   "dataScale": 1.0,
   "textures": [
-    "boy0.plist",
-    "boy1.plist"
+    "boy0.plist"
   ],
   "texturesPng": [
-    "boy0.png",
-    "boy1.png"
+    "boy0.png"
   ],
   "nodeTree": {
     "options": {
@@ -65,11 +63,11 @@
                 "path": "testAnimationResource/8.png",
                 "plistFile": ""
               },
-              "x": 72.0,
-              "y": 143.0,
+              "x": 73.0,
+              "y": 148.0,
               "scaleX": 1.0,
               "scaleY": 1.0,
-              "rotation": 0.0,
+              "rotation": -5.71439838,
               "flipX": false,
               "flipY": false,
               "colorR": 255,
@@ -98,11 +96,11 @@
                     "path": "testAnimationResource/3.png",
                     "plistFile": ""
                   },
-                  "x": 38.0,
-                  "y": 20.0,
+                  "x": 31.0,
+                  "y": 26.0,
                   "scaleX": 1.0,
                   "scaleY": 1.0,
-                  "rotation": 0.0,
+                  "rotation": -4.085081,
                   "flipX": false,
                   "flipY": false,
                   "colorR": 255,
@@ -138,8 +136,8 @@
                 "path": "testAnimationResource/5.png",
                 "plistFile": ""
               },
-              "x": 144.0,
-              "y": 50.0,
+              "x": 142.0,
+              "y": 56.0,
               "scaleX": 1.0,
               "scaleY": 1.0,
               "rotation": 0.0,
@@ -171,11 +169,11 @@
                     "path": "testAnimationResource/4.png",
                     "plistFile": ""
                   },
-                  "x": 60.0,
-                  "y": -5.0,
+                  "x": 58.0,
+                  "y": 4.0,
                   "scaleX": 1.0,
                   "scaleY": 1.0,
-                  "rotation": 0.0,
+                  "rotation": -1.14092076,
                   "flipX": false,
                   "flipY": false,
                   "colorR": 255,
@@ -211,8 +209,8 @@
                 "path": "testAnimationResource/2.png",
                 "plistFile": ""
               },
-              "x": 196.0,
-              "y": 44.0,
+              "x": 194.0,
+              "y": 50.0,
               "scaleX": 1.0,
               "scaleY": 1.0,
               "rotation": 0.0,
@@ -244,11 +242,11 @@
                     "path": "testAnimationResource/7.png",
                     "plistFile": ""
                   },
-                  "x": 164.0,
-                  "y": 9.0,
+                  "x": 165.0,
+                  "y": 12.0,
                   "scaleX": 1.0,
                   "scaleY": 1.0,
-                  "rotation": 0.0,
+                  "rotation": 2.00441027,
                   "flipX": false,
                   "flipY": false,
                   "colorR": 255,
@@ -284,11 +282,11 @@
                 "path": "testAnimationResource/hat.png",
                 "plistFile": ""
               },
-              "x": 137.0,
-              "y": 301.0,
+              "x": 141.0,
+              "y": 297.0,
               "scaleX": 1.0,
               "scaleY": 1.0,
-              "rotation": 0.0,
+              "rotation": 4.71490049,
               "flipX": false,
               "flipY": false,
               "colorR": 255,
@@ -320,8 +318,8 @@
                 "path": "testAnimationResource/1.png",
                 "plistFile": ""
               },
-              "x": 282.0,
-              "y": 152.0,
+              "x": 280.0,
+              "y": 148.0,
               "scaleX": 1.0,
               "scaleY": 1.0,
               "rotation": 0.0,
@@ -368,13 +366,6 @@
             "x": 601.0,
             "y": 260.0,
             "frameIndex": 0,
-            "tween": true
-          },
-          {
-            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
-            "x": 601.0,
-            "y": 243.0,
-            "frameIndex": 30,
             "tween": true
           },
           {
@@ -457,13 +448,6 @@
             "x": 0.0,
             "y": 0.0,
             "frameIndex": 0,
-            "tween": true
-          },
-          {
-            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
-            "x": -0.9363089,
-            "y": -0.9363089,
-            "frameIndex": 30,
             "tween": true
           },
           {

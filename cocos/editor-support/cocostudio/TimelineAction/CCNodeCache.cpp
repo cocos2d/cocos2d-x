@@ -204,12 +204,14 @@ cocos2d::Node* NodeCache::loadNodeWithContent(const std::string& content)
 
     // decode plist 
     int length = DICTOOL->getArrayCount_json(doc, TEXTURES);
+
     for(int i=0; i<length; i++)
     {
         std::string plist = DICTOOL->getStringValueFromArray_json(doc, TEXTURES, i);
-        //std::string png   = DICTOOL->getStringValueFromArray_json(doc, TEXTURES_PNG, i);
+        std::string png   = DICTOOL->getStringValueFromArray_json(doc, TEXTURES_PNG, i);
         plist = _jsonPath + plist;
-        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(plist);
+        png   = _jsonPath + png;
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(plist, png);
     }
 
     // decode node tree
