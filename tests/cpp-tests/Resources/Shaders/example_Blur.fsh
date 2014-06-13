@@ -1,5 +1,3 @@
-// Shader taken from: http://webglsamples.googlecode.com/hg/electricflower/electricflower.html
-
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -7,50 +5,42 @@ precision mediump float;
 varying vec4 v_fragmentColor;
 varying vec2 v_texCoord;
 
-uniform vec4 gaussianCoefficient;
-uniform vec2 onePixelSize;
+uniform vec2 resolution;
+uniform float blurRadius;
+uniform float sampleNum;
 
-void main() {
-	if(gaussianCoefficient.x > 0.0) {
-	    vec4 sum = vec4(0.0);
-	    vec2 offset;
-	    float weight;    
-	    float squareX;
-	    
-	    for(float dx = 0.0; dx <= gaussianCoefficient.x; dx += 1.0) {
-	        squareX = dx * dx;
-	        weight = gaussianCoefficient.z * exp(squareX * gaussianCoefficient.y);
-	        
-	        offset.x = -dx * onePixelSize.x;
-	        offset.y = 0.0;
-	        sum += texture2D(CC_Texture0, v_texCoord + offset) * weight;
-	        
-	        offset.x = dx * onePixelSize.x;
-	        sum += texture2D(CC_Texture0, v_texCoord + offset) * weight;
-	        
-	        for(float dy = 1.0; dy <= gaussianCoefficient.x; dy += 1.0) {
-	            weight = gaussianCoefficient.z * exp((squareX + dy * dy) * gaussianCoefficient.y);
-	            
-	            offset.x = -dx * onePixelSize.x;
-	            offset.y = -dy * onePixelSize.y;
-	            sum += texture2D(CC_Texture0, v_texCoord + offset) * weight;
-	            
-	            offset.y = dy * onePixelSize.y;
-	            sum += texture2D(CC_Texture0, v_texCoord + offset) * weight;
-	            
-	            offset.x = dx * onePixelSize.x;
-	            sum += texture2D(CC_Texture0, v_texCoord + offset) * weight;
-	            
-	            offset.y = -dy * onePixelSize.y;
-	            sum += texture2D(CC_Texture0, v_texCoord + offset) * weight;
-	        }
-	    }
-	    sum -= texture2D(CC_Texture0, v_texCoord) * gaussianCoefficient.z;
-	    sum /= gaussianCoefficient.w;
-	    gl_FragColor = sum * v_fragmentColor;
-	}
-	else {
-	    gl_FragColor = texture2D(CC_Texture0, v_texCoord) * v_fragmentColor;
-	}
+vec3 blur(vec2);
+
+void main(void)
+{
+	vec3 col = blur(v_texCoord);
+	gl_FragColor = vec4(col, 1.0) * v_fragmentColor;
 }
 
+vec3 blur(vec2 p)
+{
+    if (blurRadius > 0.0 && sampleNum > 1.0)
+    {
+        vec3 col = vec3(0);
+        vec2 unit = 1.0 / resolution.xy;
+        
+        float r = blurRadius;
+        float sampleStep = r / sampleNum;
+        
+        float count = 0.0;
+        
+        for(float x = -r; x < r; x += sampleStep)
+        {
+            for(float y = -r; y < r; y += sampleStep)
+            {
+                float weight = (r - abs(x)) * (r - abs(y));
+                col += texture2D(CC_Texture0, p + vec2(x * unit.x, y * unit.y)).rgb * weight;
+                count += weight;
+            }
+        }
+        
+        return col / count;
+    }
+    
+    return texture2D(CC_Texture0, p).rgb;
+}

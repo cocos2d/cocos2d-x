@@ -392,16 +392,12 @@ void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false *
 
     if (_reusedLetter == nullptr)
     {
-        _reusedLetter = Sprite::createWithTexture(_fontAtlas->getTexture(0));
+        _reusedLetter = Sprite::create();
         _reusedLetter->setOpacityModifyRGB(_isOpacityModifyRGB);            
         _reusedLetter->retain();
         _reusedLetter->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
-        _reusedLetter->setBatchNode(this);
     }
-    else
-    {
-        _reusedLetter->setTexture(_fontAtlas->getTexture(0));
-    }
+    _reusedLetter->setBatchNode(this);
 
     if (_fontAtlas)
     {
