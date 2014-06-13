@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "base/CCRef.h"
 #include "math/Vec2.h"
-#include "GL/glew.h"
+#include "CCGL.h"
 #include "base/ccTypes.h"
 #include <string>
 
