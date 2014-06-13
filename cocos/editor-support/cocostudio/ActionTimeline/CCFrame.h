@@ -98,12 +98,12 @@ public:
     virtual void onEnter(Frame *nextFrame) override;
     virtual Frame* clone() override;
 
-    inline void setTexture(std::string texture) { _texture = texture;}
-    inline std::string getTexture() const { return _texture; }
+    inline void setTextureName(std::string textureName) { _textureName = textureName;}
+    inline std::string getTextureName() const { return _textureName; }
 
 protected:
     cocos2d::Sprite* _sprite;
-    std::string _texture;
+    std::string _textureName;
 };
 
 class  RotationFrame : public Frame

@@ -343,7 +343,7 @@ Frame* ActionTimelineCache::loadTextureFrame(const rapidjson::Value& json)
             path = jsonPath + texture;
         }
 
-        frame->setTexture(path);
+        frame->setTextureName(path);
     }
     return frame;
 }

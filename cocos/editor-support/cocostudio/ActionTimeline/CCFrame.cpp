@@ -108,7 +108,7 @@ TextureFrame* TextureFrame::create()
 }
 
 TextureFrame::TextureFrame()
-    : _texture("")
+    : _textureName("")
 {
 }
 
@@ -123,12 +123,12 @@ void TextureFrame::onEnter(Frame *nextFrame)
 {
     if(_sprite)
     {
-        SpriteFrame* spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(_texture);
+        SpriteFrame* spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(_textureName);
 
         if(spriteFrame != nullptr)
             _sprite->setSpriteFrame(spriteFrame);
         else
-            _sprite->setTexture(_texture);
+            _sprite->setTexture(_textureName);
     }
 }
 
@@ -136,7 +136,7 @@ void TextureFrame::onEnter(Frame *nextFrame)
 Frame* TextureFrame::clone()
 {
     TextureFrame* frame = TextureFrame::create();
-    frame->setTexture(_texture);
+    frame->setTextureName(_textureName);
 
     frame->cloneProperty(this);
 
