@@ -131,12 +131,12 @@ void Widget::visit()
 
 void Widget::addChild(CCNode *child)
 {
-    CCNode::addChild(child);
+    addChild(child, 0, kCCNodeTagInvalid);
 }
 
 void Widget::addChild(CCNode * child, int zOrder)
 {
-    CCNode::addChild(child, zOrder);
+    addChild(child, zOrder, kCCNodeTagInvalid);
 }
     
 void Widget::addChild(CCNode* child, int zOrder, int tag)
