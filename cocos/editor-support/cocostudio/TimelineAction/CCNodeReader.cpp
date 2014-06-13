@@ -453,7 +453,10 @@ cocos2d::Node* NodeReader::loadWidget(const rapidjson::Value& json)
     WidgetReaderProtocol* reader = dynamic_cast<WidgetReaderProtocol*>(ObjectFactory::getInstance()->createObject(readerName));
 
     _guiReader->setPropsForAllWidgetFromJsonDictionary(reader, widget, json);
-
+    
+    int actionTag = DICTOOL->getIntValue_json(json, ACTION_TAG);
+    widget->setUserObject(TimelineActionData::create(actionTag));
+    
     return widget;
 }
 
