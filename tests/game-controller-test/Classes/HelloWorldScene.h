@@ -2,7 +2,7 @@
 #define __HELLOWORLD_SCENE_H__
 
 #include "cocos2d.h"
-//#include "base/CCGameController.h"
+#include "base/CCGameController.h"
 
 class HelloWorld : public cocos2d::Layer
 {
@@ -21,16 +21,15 @@ public:
     // implement the "static node()" method manually
     CREATE_FUNC(HelloWorld);
 
-    //void update(float dt);
-    //void onButtonPressed(cocos2d::Controller* controller, cocos2d::ControllerButtonInput* button, cocos2d::Event* event);
-    //void onButtonReleased(cocos2d::Controller* controller, cocos2d::ControllerButtonInput* button, cocos2d::Event* event);
-    //void onAxisValueChanged(cocos2d::Controller* controller, cocos2d::ControllerAxisInput* axis, cocos2d::Event* event);
+    void update(float dt);
+    void onButtonPressed(cocos2d::Controller* controller, cocos2d::ControllerButtonInput* button, cocos2d::Event* event);
+    void onButtonReleased(cocos2d::Controller* controller, cocos2d::ControllerButtonInput* button, cocos2d::Event* event);
+    void onAxisValueChanged(cocos2d::Controller* controller, cocos2d::ControllerAxisInput* axis, cocos2d::Event* event);
 private:
-    cocos2d::ValueMap _strMap;
-    //cocos2d::Controller* _player1;
+    cocos2d::Controller* _player1;
     cocos2d::Sprite* _actor;
     cocos2d::Label* _statusLabel;
-    //cocos2d::EventListenerController* _listener;
+    cocos2d::EventListenerController* _listener;
 };
 
 #endif // __HELLOWORLD_SCENE_H__
