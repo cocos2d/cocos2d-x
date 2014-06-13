@@ -1,4 +1,4 @@
-#include "TimelineActionTestScene.h"
+#include "ActionTimelineTestScene.h"
 #include "../../testResource.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCCustomCommand.h"
@@ -20,7 +20,7 @@ Layer *CreateAnimationLayer(int index)
     switch(index)
     {
     case TEST_ANIMATIONELEMENT:
-        pLayer = new TestTimelineAction();
+        pLayer = new TestActionTimeline();
         break;
     default:
         break;
@@ -62,7 +62,7 @@ Layer *RestartAnimationTest()
 }
 
 
-TimelineActionTestScene::TimelineActionTestScene(bool bPortrait)
+ActionTimelineTestScene::ActionTimelineTestScene(bool bPortrait)
 {
     TestScene::init();
 
@@ -78,7 +78,7 @@ TimelineActionTestScene::TimelineActionTestScene(bool bPortrait)
     addChild(bg);
 }
 
-void TimelineActionTestScene::runThisTest()
+void ActionTimelineTestScene::runThisTest()
 {
     s_nActionIdx = -1;
     addChild(NextAnimationTest());
@@ -86,7 +86,7 @@ void TimelineActionTestScene::runThisTest()
     Director::getInstance()->replaceScene(this);
 }
 
-void TimelineActionTestScene::MainMenuCallback(Ref *pSender)
+void ActionTimelineTestScene::MainMenuCallback(Ref *pSender)
 {
     //TestScene::MainMenuCallback(pSender);
 
@@ -95,7 +95,7 @@ void TimelineActionTestScene::MainMenuCallback(Ref *pSender)
 
 
 
-void TimelineActionTestLayer::onEnter()
+void ActionTimelineTestLayer::onEnter()
 {
 
     Layer::onEnter();
@@ -118,9 +118,9 @@ void TimelineActionTestLayer::onEnter()
     }
 
     // add menu
-    backItem = MenuItemImage::create(s_pathB1, s_pathB2, CC_CALLBACK_1(TimelineActionTestLayer::backCallback, this) );
-    restartItem = MenuItemImage::create(s_pathR1, s_pathR2, CC_CALLBACK_1(TimelineActionTestLayer::restartCallback, this) );
-    nextItem = MenuItemImage::create(s_pathF1, s_pathF2, CC_CALLBACK_1(TimelineActionTestLayer::nextCallback, this) );
+    backItem = MenuItemImage::create(s_pathB1, s_pathB2, CC_CALLBACK_1(ActionTimelineTestLayer::backCallback, this) );
+    restartItem = MenuItemImage::create(s_pathR1, s_pathR2, CC_CALLBACK_1(ActionTimelineTestLayer::restartCallback, this) );
+    nextItem = MenuItemImage::create(s_pathF1, s_pathF2, CC_CALLBACK_1(ActionTimelineTestLayer::nextCallback, this) );
 
     Menu *menu = Menu::create(backItem, restartItem, nextItem, nullptr);
 
@@ -134,58 +134,58 @@ void TimelineActionTestLayer::onEnter()
     setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
 }
-void TimelineActionTestLayer::onExit()
+void ActionTimelineTestLayer::onExit()
 {
     removeAllChildren();
 
     backItem = restartItem = nextItem = nullptr;
 
-    TimelineActionCache::getInstance()->purge();
+    ActionTimelineCache::getInstance()->purge();
     NodeReader::getInstance()->purge();
 
     Layer::onExit();
 }
 
-std::string TimelineActionTestLayer::title() const
+std::string ActionTimelineTestLayer::title() const
 {
     return "Armature Test Bed";
 }
-std::string TimelineActionTestLayer::subtitle() const
+std::string ActionTimelineTestLayer::subtitle() const
 {
     return "";
 }
 
-void TimelineActionTestLayer::restartCallback(Ref *pSender)
+void ActionTimelineTestLayer::restartCallback(Ref *pSender)
 {
-    Scene *s = new TimelineActionTestScene();
+    Scene *s = new ActionTimelineTestScene();
     s->addChild( RestartAnimationTest() );
     Director::getInstance()->replaceScene(s);
     s->release();
 }
 
-void TimelineActionTestLayer::nextCallback(Ref *pSender)
+void ActionTimelineTestLayer::nextCallback(Ref *pSender)
 {
-    Scene *s = new TimelineActionTestScene();
+    Scene *s = new ActionTimelineTestScene();
     s->addChild( NextAnimationTest() );
     Director::getInstance()->replaceScene(s);
     s->release();
 }
-void TimelineActionTestLayer::backCallback(Ref *pSender)
+void ActionTimelineTestLayer::backCallback(Ref *pSender)
 {
-    Scene *s = new TimelineActionTestScene();
+    Scene *s = new ActionTimelineTestScene();
     s->addChild( BackAnimationTest() );
     Director::getInstance()->replaceScene(s);
     s->release();
 }
 
-void TestTimelineAction::onEnter()
+void TestActionTimeline::onEnter()
 {
-    TimelineActionTestLayer::onEnter();
+    ActionTimelineTestLayer::onEnter();
 
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("armature/Cowboy0.plist", "armature/Cowboy0.png");
 
-    Node* node = NodeReader::getInstance()->createNode("TimelineAction/boy_1.ExportJson");
-    TimelineAction* action = TimelineActionCache::getInstance()->createAction("TimelineAction/boy_1.ExportJson");
+    Node* node = NodeReader::getInstance()->createNode("ActionTimeline/boy_1.ExportJson");
+    ActionTimeline* action = ActionTimelineCache::getInstance()->createAction("ActionTimeline/boy_1.ExportJson");
 
     node->runAction(action);
     action->gotoFrameAndPlay(0, 60, true);
@@ -196,7 +196,7 @@ void TestTimelineAction::onEnter()
     addChild(node);
 }
 
-std::string TestTimelineAction::title() const
+std::string TestActionTimeline::title() const
 {
     return "Test AnimationElement";
 }

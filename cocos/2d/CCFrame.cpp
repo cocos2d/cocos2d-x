@@ -24,7 +24,8 @@ THE SOFTWARE.
 
 #include "2d/CCFrame.h"
 #include "2d/CCTimeLine.h"
-#include "2d/CCTimelineAction.h"
+#include "2d/CCTimeLine.h"
+#include "2d/CCActionTimeline.h"
 #include "2d/CCSprite.h"
 #include "2d/CCSpriteFrameCache.h"
 
@@ -41,6 +42,14 @@ Frame::Frame()
 
 Frame::~Frame()
 {
+}
+
+void Frame::emitEvent()
+{
+    if (_timeline)
+    {
+        _timeline->getActionTimeline()->emitFrameEvent(this);
+    }
 }
 
 void Frame::cloneProperty(Frame* frame)
@@ -583,10 +592,7 @@ EventFrame::EventFrame()
 
 void EventFrame::onEnter(Frame *nextFrame)
 {
-    if (_timeline)
-    {
-        _timeline->getTimelineAction()->emitFrameEvent(this);
-    }
+    emitEvent();
 }
 
 

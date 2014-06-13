@@ -58,7 +58,7 @@ THE SOFTWARE.
 #include "cocostudio/CCSGUIReader.h"
 #include "cocostudio/CCSSceneReader.h"
 #include "cocostudio/TriggerBase.h"
-#include "cocostudio/TimelineAction/CCNodeReader.h"
-#include "cocostudio/TimelineAction/CCTimelineActionCache.h"
+#include "cocostudio/ActionTimeline/CCNodeReader.h"
+#include "cocostudio/ActionTimeline/CCActionTimelineCache.h"
 
 #endif

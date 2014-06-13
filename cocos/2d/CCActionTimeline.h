@@ -33,31 +33,30 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-typedef void (Ref::*SEL_FrameEventCallFunc)(Frame *);
-#define frameEvent_selector(_SELECTOR) (SEL_FrameEventCallFunc)(&_SELECTOR)
-
-class CC_DLL TimelineActionData : public Ref
+class CC_DLL ActionTimelineData : public Ref
 {
 public:
-    static TimelineActionData* create(int actionTag);
+    static ActionTimelineData* create(int actionTag);
 
     virtual void setActionTag(int actionTag) { _actionTag = actionTag; }
-    virtual int getActionTag() { return _actionTag; }
+    virtual int getActionTag() const { return _actionTag; }
 protected:
-    TimelineActionData();
+    ActionTimelineData();
     virtual bool init(int actionTag);
 
     int _actionTag;
 };
 
 
-class CC_DLL TimelineAction : public Action
+class CC_DLL ActionTimeline : public Action
 {
 public:
-    static TimelineAction* create();
+    friend class Frame;
 
-    TimelineAction();
-    virtual ~TimelineAction();
+    static ActionTimeline* create();
+
+    ActionTimeline();
+    virtual ~ActionTimeline();
 
     virtual bool init();
 
@@ -90,46 +89,45 @@ public:
     virtual void resume();
 
     /** Whether or not Action is playing. */
-    virtual bool isPlaying();
+    virtual bool isPlaying() const;
 
     /** Set the animation speed, this will speed up or slow down the speed. */
-    virtual void  setTimeSpeed(float speed);
+    virtual void  setTimeSpeed(float speed) { _timeSpeed = speed; }
     /** Get current animation speed. */
-    virtual float getTimeSpeed();
+    virtual float getTimeSpeed() const { return _timeSpeed; }
 
     /** duration of the whole action*/
     virtual void setDuration(int duration) { _duration = duration; }
-    virtual int  getDuration() { return _duration; }
+    virtual int  getDuration() const { return _duration; }
 
     /** End frame of this action.
       * When action play to this frame, if action is not loop, then it will stop, 
       * or it will play from start frame again. */
     virtual void setEndFrame(int endFrame) { _endFrame = endFrame; }
-    virtual int  getEndFrame() { return _endFrame; }
+    virtual int  getEndFrame() const { return _endFrame; }
 
     /** Get current frame. */
-    virtual int  getCurrentFrame() { return _currentFrame; }
+    virtual int  getCurrentFrame() const { return _currentFrame; }
 
-    /** add Timeline to TimelineAction */
+    /** add Timeline to ActionTimeline */
     virtual void addTimeline(Timeline* timeline);
     virtual void removeTimeline(Timeline* timeline);
 
-    /** Set TimelineAction's frame event callback function */
+    virtual const Vector<Timeline*>& getTimelines() const { return _timelineList; }
+
+    /** Set ActionTimeline's frame event callback function */
     void setFrameEventCallFunc(std::function<void(Frame *)> listener);
     void clearFrameEventCallFunc();
 
-    /** emit frame event, call it when enter a frame*/
-    void emitFrameEvent(Frame* frame);
-
     /** Inherit from Action. */
 
-    /** Returns a clone of TimelineAction */
-    virtual TimelineAction* clone() const override; 
+    /** Returns a clone of ActionTimeline */
+    virtual ActionTimeline* clone() const override; 
 
-    /** Returns a reverse of TimelineAction. 
+    /** Returns a reverse of ActionTimeline. 
      *  Not implement yet.
      */
-    virtual TimelineAction* reverse() const override { return nullptr; }
+    virtual ActionTimeline* reverse() const override { return nullptr; }
 
     virtual void step(float delta) override; 
     virtual void startWithTarget(Node *target) override;  
@@ -137,6 +135,9 @@ public:
 protected:
     virtual void gotoFrame(int frameIndex);
     virtual void stepToFrame(int frameIndex);
+
+    /** emit frame event, call it when enter a frame*/
+    virtual void emitFrameEvent(Frame* frame);
 
     std::map<int, Vector<Timeline*>> _timelineMap;
     Vector<Timeline*> _timelineList;

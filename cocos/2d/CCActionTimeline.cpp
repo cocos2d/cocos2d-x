@@ -22,15 +22,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCTimelineAction.h"
+#include "CCActionTimeline.h"
 
 NS_CC_BEGIN
 
 
-// TimelineActionData
-TimelineActionData* TimelineActionData::create(int actionTag)
+// ActionTimelineData
+ActionTimelineData* ActionTimelineData::create(int actionTag)
 {
-    TimelineActionData * ret = new TimelineActionData();
+    ActionTimelineData * ret = new ActionTimelineData();
     if (ret && ret->init(actionTag))
     {
         ret->autorelease();
@@ -42,22 +42,22 @@ TimelineActionData* TimelineActionData::create(int actionTag)
     return ret;
 }
 
-TimelineActionData::TimelineActionData()
+ActionTimelineData::ActionTimelineData()
     : _actionTag(0)
 {
 }
 
-bool TimelineActionData::init(int actionTag)
+bool ActionTimelineData::init(int actionTag)
 {
     _actionTag = actionTag;
     return true;
 }
 
 
-// TimelineAction
-TimelineAction* TimelineAction::create()
+// ActionTimeline
+ActionTimeline* ActionTimeline::create()
 {
-    TimelineAction* object = new TimelineAction();
+    ActionTimeline* object = new ActionTimeline();
     if (object && object->init())
     {
         object->autorelease();
@@ -67,7 +67,7 @@ TimelineAction* TimelineAction::create()
     return nullptr;
 }
 
-TimelineAction::TimelineAction()
+ActionTimeline::ActionTimeline()
     : _duration(0)
     , _time(0)
     , _timeSpeed(1)
@@ -79,26 +79,26 @@ TimelineAction::TimelineAction()
 {
 }
 
-TimelineAction::~TimelineAction()
+ActionTimeline::~ActionTimeline()
 {
 }
 
-bool TimelineAction::init()
+bool ActionTimeline::init()
 {
     return true;
 }
 
-void TimelineAction::gotoFrameAndPlay(int startIndex)
+void ActionTimeline::gotoFrameAndPlay(int startIndex)
 {
     gotoFrameAndPlay(startIndex, true);
 }
 
-void TimelineAction::gotoFrameAndPlay(int startIndex, bool loop)
+void ActionTimeline::gotoFrameAndPlay(int startIndex, bool loop)
 {
     gotoFrameAndPlay(startIndex, _duration, loop);
 }
 
-void TimelineAction::gotoFrameAndPlay(int startIndex, int endIndex, bool loop)
+void ActionTimeline::gotoFrameAndPlay(int startIndex, int endIndex, bool loop)
 {
     _endFrame = endIndex;
     _loop = loop;
@@ -109,7 +109,7 @@ void TimelineAction::gotoFrameAndPlay(int startIndex, int endIndex, bool loop)
     gotoFrame(_currentFrame);
 }
 
-void TimelineAction::gotoFrameAndPause(int startIndex)
+void ActionTimeline::gotoFrameAndPause(int startIndex)
 {
     _time =_currentFrame = startIndex;
 
@@ -117,34 +117,24 @@ void TimelineAction::gotoFrameAndPause(int startIndex)
     gotoFrame(_currentFrame);
 }
 
-void TimelineAction::pause()
+void ActionTimeline::pause()
 {
     _playing = false;
 }
 
-void TimelineAction::resume()
+void ActionTimeline::resume()
 {
     _playing = true;
 }
 
-bool TimelineAction::isPlaying()
+bool ActionTimeline::isPlaying() const
 {
     return _playing;
 }
 
-void TimelineAction::setTimeSpeed(float speed)
+ActionTimeline* ActionTimeline::clone() const
 {
-    _timeSpeed = speed;
-}
-
-float TimelineAction::getTimeSpeed()
-{
-    return _timeSpeed;
-}
-
-TimelineAction* TimelineAction::clone() const
-{
-    TimelineAction* newAction = TimelineAction::create();
+    ActionTimeline* newAction = ActionTimeline::create();
     newAction->setDuration(_duration);
     newAction->setTimeSpeed(_timeSpeed);
 
@@ -160,7 +150,7 @@ TimelineAction* TimelineAction::clone() const
     return newAction;
 }
 
-void TimelineAction::step(float delta)
+void ActionTimeline::step(float delta)
 {
     if (!_playing || _timelineMap.size() == 0 || _duration == 0)
     {
@@ -194,14 +184,14 @@ void foreachNodeDescendant(Node* parent, tCallBack callback)
     }
 }
 
-void TimelineAction::startWithTarget(Node *target)
+void ActionTimeline::startWithTarget(Node *target)
 {
     Action::startWithTarget(target);
 
     foreachNodeDescendant(target, 
         [this, target](Node* child)
     {
-        TimelineActionData* data = dynamic_cast<TimelineActionData*>(child->getUserObject());
+        ActionTimelineData* data = dynamic_cast<ActionTimelineData*>(child->getUserObject());
         int actionTag = data->getActionTag();
         if(_timelineMap.find(actionTag) != _timelineMap.end())
         {
@@ -214,7 +204,7 @@ void TimelineAction::startWithTarget(Node *target)
     });
 }
 
-void TimelineAction::addTimeline(Timeline* timeline)
+void ActionTimeline::addTimeline(Timeline* timeline)
 {
     int tag = timeline->getActionTag();
     if (_timelineMap.find(tag) == _timelineMap.end())
@@ -226,11 +216,11 @@ void TimelineAction::addTimeline(Timeline* timeline)
     {
         _timelineList.pushBack(timeline);
         _timelineMap[tag].pushBack(timeline);
-        timeline->setTimelineAction(this);
+        timeline->setActionTimeline(this);
     }
 }
 
-void TimelineAction::removeTimeline(Timeline* timeline)
+void ActionTimeline::removeTimeline(Timeline* timeline)
 {
     int tag = timeline->getActionTag();
     if (_timelineMap.find(tag) != _timelineMap.end())
@@ -239,23 +229,23 @@ void TimelineAction::removeTimeline(Timeline* timeline)
         {
             _timelineMap[tag].eraseObject(timeline);
             _timelineList.eraseObject(timeline);
-            timeline->setTimelineAction(nullptr);
+            timeline->setActionTimeline(nullptr);
         }
     }
 }
 
-void TimelineAction::setFrameEventCallFunc(std::function<void(Frame *)> listener)
+void ActionTimeline::setFrameEventCallFunc(std::function<void(Frame *)> listener)
 {
     _frameEventListener = listener;
 }
 
-void TimelineAction::clearFrameEventCallFunc()
+void ActionTimeline::clearFrameEventCallFunc()
 {
     _frameEventListener = nullptr;
 }
 
 
-void TimelineAction::emitFrameEvent(Frame* frame)
+void ActionTimeline::emitFrameEvent(Frame* frame)
 {
     if(_frameEventListener)
     {
@@ -263,7 +253,7 @@ void TimelineAction::emitFrameEvent(Frame* frame)
     }
 }
 
-void TimelineAction::gotoFrame(int frameIndex)
+void ActionTimeline::gotoFrame(int frameIndex)
 {
     int size = _timelineList.size();
     for(int i = 0; i<size; i++)
@@ -272,7 +262,7 @@ void TimelineAction::gotoFrame(int frameIndex)
     }
 }
 
-void TimelineAction::stepToFrame(int frameIndex)
+void ActionTimeline::stepToFrame(int frameIndex)
 {
     int size = _timelineList.size();
     for(int i = 0; i<size; i++)

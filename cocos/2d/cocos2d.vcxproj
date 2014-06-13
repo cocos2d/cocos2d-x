@@ -333,7 +333,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="CCTextFieldTTF.cpp" />
     <ClCompile Include="CCTileMapAtlas.cpp" />
     <ClCompile Include="CCTimeLine.cpp" />
-    <ClCompile Include="CCTimelineAction.cpp" />
+    <ClCompile Include="CCActionTimeline.cpp" />
     <ClCompile Include="CCTMXLayer.cpp" />
     <ClCompile Include="CCTMXObjectGroup.cpp" />
     <ClCompile Include="CCTMXTiledMap.cpp" />
@@ -532,7 +532,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="CCTextFieldTTF.h" />
     <ClInclude Include="CCTileMapAtlas.h" />
     <ClInclude Include="CCTimeLine.h" />
-    <ClInclude Include="CCTimelineAction.h" />
+    <ClInclude Include="CCActionTimeline.h" />
     <ClInclude Include="CCTMXLayer.h" />
     <ClInclude Include="CCTMXObjectGroup.h" />
     <ClInclude Include="CCTMXTiledMap.h" />

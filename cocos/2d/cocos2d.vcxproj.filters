@@ -574,7 +574,7 @@
     <ClCompile Include="CCTimeLine.cpp">
       <Filter>2d</Filter>
     </ClCompile>
-    <ClCompile Include="CCTimelineAction.cpp">
+    <ClCompile Include="CCActionTimeline.cpp">
       <Filter>2d</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1165,7 +1165,7 @@
     <ClInclude Include="CCTimeLine.h">
       <Filter>2d</Filter>
     </ClInclude>
-    <ClInclude Include="CCTimelineAction.h">
+    <ClInclude Include="CCActionTimeline.h">
       <Filter>2d</Filter>
     </ClInclude>
   </ItemGroup>

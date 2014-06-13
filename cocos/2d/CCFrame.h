@@ -25,27 +25,32 @@ THE SOFTWARE.
 #ifndef __CCFRAME_H__
 #define __CCFRAME_H__
 
-#include "CCTimeLine.h"
+#include "base/CCRef.h"
+#include "math/Vec2.h"
+#include "GL/glew.h"
+#include "base/ccTypes.h"
+#include <string>
 
 NS_CC_BEGIN
 
 class Sprite;
+class Timeline;
 
 class CC_DLL Frame : public Ref
 {
 public:
 
     virtual void setFrameIndex(unsigned int frameIndex) { _frameIndex = frameIndex; }
-    virtual unsigned int getFrameIndex()const { return _frameIndex; }
+    virtual unsigned int getFrameIndex() const { return _frameIndex; }
 
     virtual void setTimeline(Timeline* timeline) { _timeline = timeline; }
-    virtual Timeline* getTimeline() { return _timeline; }
+    virtual Timeline* getTimeline() const { return _timeline; }
 
     virtual void setNode(Node* node) { _node = node; }
     virtual Node* getTimelineNode() const { return _node; }
 
     virtual void setTween(bool tween) { _tween = tween; }
-    virtual bool isTween()const { return _tween; }
+    virtual bool isTween() const { return _tween; }
 
     virtual void onEnter(Frame *nextFrame) = 0;
     virtual void apply(float percent) {}
@@ -55,9 +60,9 @@ protected:
     Frame();
     virtual ~Frame();
 
-    void cloneProperty(Frame* frame);
+    virtual void emitEvent();
+    virtual void cloneProperty(Frame* frame);
 protected:
-    friend class Timeline;
 
     unsigned int    _frameIndex;
     bool            _tween;
@@ -179,8 +184,8 @@ public:
     inline void setX(float x) { _position.x = x; }
     inline void setY(float y) { _position.y = y; }
 
-    inline float getX() { return _position.x; }
-    inline float getY() { return _position.y; }
+    inline float getX() const { return _position.x; }
+    inline float getY() const { return _position.y; }
 protected:
     Point _position;
     float _betweenX;

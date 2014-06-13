@@ -106,7 +106,7 @@ THE SOFTWARE.
 #include "2d/CCTweenFunction.h"
 #include "2d/CCFrame.h"
 #include "2d/CCTimeLine.h"
-#include "2d/CCTimelineAction.h"
+#include "2d/CCActionTimeline.h"
 
 // 2d nodes
 #include "2d/CCNode.h"

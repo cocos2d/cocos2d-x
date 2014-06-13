@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCNodeReader.h"
-#include "CCTimelineActionCache.h"
+#include "CCActionTimelineCache.h"
 
 #include "../CCSGUIReader.h"
 
@@ -174,7 +174,7 @@ Node* NodeReader::loadNodeWithFile(const std::string& fileName)
     Node* node = loadNodeWithContent(contentStr);
 
     // Load animation data from file
-    TimelineActionCache::getInstance()->loadAnimationActionWithContent(fileName, contentStr);
+    ActionTimelineCache::getInstance()->loadAnimationActionWithContent(fileName, contentStr);
 
     return node;
 }
@@ -299,7 +299,7 @@ void NodeReader::initNode(Node* node, const rapidjson::Value& json)
 
 
     node->setTag(tag);
-    node->setUserObject(TimelineActionData::create(actionTag));
+    node->setUserObject(ActionTimelineData::create(actionTag));
 }
 
 Node* NodeReader::loadSimpleNode(const rapidjson::Value& json)
@@ -428,7 +428,7 @@ Node* NodeReader::loadWidget(const rapidjson::Value& json)
     _guiReader->setPropsForAllWidgetFromJsonDictionary(reader, widget, json);
     
     int actionTag = DICTOOL->getIntValue_json(json, ACTION_TAG);
-    widget->setUserObject(TimelineActionData::create(actionTag));
+    widget->setUserObject(ActionTimelineData::create(actionTag));
     
     return widget;
 }

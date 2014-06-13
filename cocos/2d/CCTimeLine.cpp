@@ -23,8 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCTimeLine.h"
-#include "CCTimelineAction.h"
-#include "CCFrame.h"
+#include "CCActionTimeline.h"
 
 NS_CC_BEGIN
 
@@ -47,7 +46,7 @@ Timeline::Timeline()
     , _toIndex(0)
     , _betweenDuration(0)
     , _actionTag(0)
-    , _timelineAction(nullptr)
+    , _ActionTimeline(nullptr)
     , _node(nullptr)
 {
 }
@@ -82,7 +81,7 @@ Timeline* Timeline::clone()
     for (auto frame : _frames)
     {
         Frame* newFrame = frame->clone();
-        timeline->getFrames().pushBack(newFrame);
+        timeline->addFrame(newFrame);
     }
 
     return timeline;
@@ -114,7 +113,7 @@ void Timeline::setNode(Node* node)
     }
 }
 
-Node* Timeline::getNode()
+Node* Timeline::getNode() const
 {
     return _node;
 }

@@ -26,11 +26,11 @@ THE SOFTWARE.
 #define __CCTIMELINE_H__
 
 #include "2d/CCNode.h"
+#include "2d/CCFrame.h"
 
 NS_CC_BEGIN
 
-class Frame;
-class TimelineAction;
+class ActionTimeline;
 
 class CC_DLL Timeline : public Ref
 {
@@ -43,7 +43,6 @@ public:
     virtual void gotoFrame(int frameIndex);
     virtual void stepToFrame(int frameIndex);
 
-    virtual Vector<Frame*>& getFrames() { return _frames; }
     virtual const Vector<Frame*>& getFrames() const { return _frames; }
 
     virtual void addFrame(Frame* frame);
@@ -51,16 +50,15 @@ public:
     virtual void removeFrame(Frame* frame);
 
     virtual void setActionTag(int tag) { _actionTag = tag; }
-    virtual int  getActionTag() { return _actionTag; }
+    virtual int  getActionTag() const { return _actionTag; }
 
     virtual void setNode(Node* node);
-    virtual Node* getNode();
+    virtual Node* getNode() const;
 
-    virtual void setTimelineAction(TimelineAction* action) { _timelineAction = action; }
-    virtual TimelineAction* getTimelineAction() { return _timelineAction; }
+    virtual void setActionTimeline(ActionTimeline* action) { _ActionTimeline = action; }
+    virtual ActionTimeline* getActionTimeline() const { return _ActionTimeline; }
 
     virtual Timeline* clone();
-
 
 protected:
     virtual void apply(int frameIndex);
@@ -77,7 +75,7 @@ protected:
     int _betweenDuration;
     int _actionTag;
 
-    TimelineAction*  _timelineAction;
+    ActionTimeline*  _ActionTimeline;
     Node* _node;
 };
 

@@ -32,11 +32,11 @@ THE SOFTWARE.
 namespace cocostudio {
 namespace timeline{
 
-class TimelineActionCache
+class ActionTimelineCache
 {
 public:
     /** Gets the singleton */
-    static TimelineActionCache* getInstance();
+    static ActionTimelineCache* getInstance();
 
     /** Destroys the singleton */
     static void destroyInstance();
@@ -49,10 +49,10 @@ public:
     void removeAction(const std::string& fileName);
 
     /** Clone a action with the specified name from the container. */
-    cocos2d::TimelineAction* createAction(const std::string& fileName);
+    cocos2d::ActionTimeline* createAction(const std::string& fileName);
 
-    cocos2d::TimelineAction* loadAnimationActionWithFile(const std::string& fileName);
-    cocos2d::TimelineAction* loadAnimationActionWithContent(const std::string&fileName, const std::string& content);
+    cocos2d::ActionTimeline* loadAnimationActionWithFile(const std::string& fileName);
+    cocos2d::ActionTimeline* loadAnimationActionWithContent(const std::string&fileName, const std::string& content);
 protected:
 
     cocos2d::Timeline* loadTimeline(const rapidjson::Value& json);
@@ -76,7 +76,7 @@ protected:
     typedef std::pair<std::string, FrameCreateFunc> Pair;
 
     std::unordered_map<std::string, FrameCreateFunc> _funcs;
-    cocos2d::Map<std::string, cocos2d::TimelineAction*> _animationActions;
+    cocos2d::Map<std::string, cocos2d::ActionTimeline*> _animationActions;
 };
 
 }

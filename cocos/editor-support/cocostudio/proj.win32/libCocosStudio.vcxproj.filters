@@ -231,10 +231,10 @@
     <ClCompile Include="..\WidgetReader\PageViewReader\PageViewReader.cpp">
       <Filter>reader\WidgetReader\PageViewReader</Filter>
     </ClCompile>
-    <ClCompile Include="..\TimelineAction\CCTimelineActionCache.cpp">
+    <ClCompile Include="..\ActionTimeline\CCNodeReader.cpp">
       <Filter>TimelineAction</Filter>
     </ClCompile>
-    <ClCompile Include="..\TimelineAction\CCNodeReader.cpp">
+    <ClCompile Include="..\ActionTimeline\CCActionTimelineCache.cpp">
       <Filter>TimelineAction</Filter>
     </ClCompile>
   </ItemGroup>
@@ -419,10 +419,10 @@
     <ClInclude Include="..\WidgetReader\PageViewReader\PageViewReader.h">
       <Filter>reader\WidgetReader\PageViewReader</Filter>
     </ClInclude>
-    <ClInclude Include="..\TimelineAction\CCTimelineActionCache.h">
+    <ClInclude Include="..\ActionTimeline\CCNodeReader.h">
       <Filter>TimelineAction</Filter>
     </ClInclude>
-    <ClInclude Include="..\TimelineAction\CCNodeReader.h">
+    <ClInclude Include="..\ActionTimeline\CCActionTimelineCache.h">
       <Filter>TimelineAction</Filter>
     </ClInclude>
   </ItemGroup>

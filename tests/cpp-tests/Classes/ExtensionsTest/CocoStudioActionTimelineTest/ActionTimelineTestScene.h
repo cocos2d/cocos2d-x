@@ -9,10 +9,10 @@
 using namespace cocostudio::timeline;
 
 
-class TimelineActionTestScene : public TestScene
+class ActionTimelineTestScene : public TestScene
 {
 public: 
-    TimelineActionTestScene(bool bPortrait = false);
+    ActionTimelineTestScene(bool bPortrait = false);
 
     virtual void runThisTest();
 
@@ -26,7 +26,7 @@ enum {
     TEST_ANIMATION_LAYER_COUNT
 };
 
-class TimelineActionTestLayer : public Layer
+class ActionTimelineTestLayer : public Layer
 {
 public:
     virtual std::string title() const;
@@ -47,7 +47,7 @@ protected:
 };
 
 
-class TestTimelineAction : public TimelineActionTestLayer
+class TestActionTimeline : public ActionTimelineTestLayer
 {
 public:
     virtual void onEnter();
