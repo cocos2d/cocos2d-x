@@ -83,19 +83,26 @@ void ActionManager::initWithBinary(const char* file, cocos2d::CCObject *root,  C
 	CCArray* actionList = CCArray::create();
     
     stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
-    
+    stExpCocoNode *actionNode;
     for (int i=0; i < pCocoNode->GetChildNum(); ++i) {
         std::string key = stChildArray[i].GetName(pCocoLoader);
         if (key == "actionlist") {
-            ActionObject* action = new ActionObject();
-            action->autorelease();
-            
-            action->initWithBinary(pCocoLoader, &stChildArray[i], root);
-            
-            actionList->addObject(action);
-
+            actionNode = &stChildArray[i];
+            break;
         }
     }
+    
+    int actionCount = actionNode->GetChildNum();
+    for (int i = 0; i < actionCount; ++i) {
+        ActionObject* action = new ActionObject();
+        action->autorelease();
+        
+        action->initWithBinary(pCocoLoader, actionNode->GetChildArray(), root);
+        
+        actionList->addObject(action);
+    }
+    
+    
     
 }
 
