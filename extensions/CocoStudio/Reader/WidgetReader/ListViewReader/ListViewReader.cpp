@@ -58,7 +58,7 @@ void ListViewReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader 
         std::string value = stChildArray[i].GetValue();
         
         if (key == "direction") {
-            listView->setDirection((ui::SCROLLVIEW_DIR)valueToFloat(value));
+            listView->setDirection((ui::SCROLLVIEW_DIR)valueToInt(value));
         }
         else if(key == "gravity"){
             listView->setGravity((ui::ListViewGravity)valueToInt(value));

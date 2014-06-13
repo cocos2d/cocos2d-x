@@ -182,7 +182,7 @@ void ScrollViewReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoade
         else if(key == "innerHeight"){
             innerHeight = valueToFloat(value);
         }else if(key == "direction"){
-            scrollView->setDirection((ui::SCROLLVIEW_DIR)valueToFloat(value));
+            scrollView->setDirection((ui::SCROLLVIEW_DIR)valueToInt(value));
         }else if(key == "bounceEnable"){
             scrollView->setBounceEnabled(valueToBool(value));
         }
