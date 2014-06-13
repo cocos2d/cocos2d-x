@@ -168,6 +168,10 @@ public:
 	void simulationActionUpdate(float dt);
 
 protected:
+    int valueToInt(std::string& value);
+    bool valueToBool(std::string& value);
+    float valueToFloat(std::string& value);
+    
 	CCArray* m_ActionNodeList;/*actionnode*/
 	std::string m_name;
 	bool m_loop;
