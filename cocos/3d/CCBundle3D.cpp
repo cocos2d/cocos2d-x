@@ -60,7 +60,7 @@ bool Bundle3D::loadMeshData(const std::string& id, MeshData* meshdata)
 {
     meshdata->resetData();
     meshdata->vertexSizeInFloat = 13 * 4;
-    meshdata->vertex = new float[meshdata->vertexSizeInFloat];
+    meshdata->vertex.resize(meshdata->vertexSizeInFloat);
     //dabing's data
 //   float vert[] = {0.f,50.f,0.f,  0.f,0.f,  0.f,0.f,0.f,0.f,   1.f,0.f,0.f,0.f,
 //                   0.f,0.f,50.f,  1.f,1.f,  0.f,0.f,0.f,0.f,   1.f,0.f,0.f,0.f,
@@ -73,18 +73,18 @@ bool Bundle3D::loadMeshData(const std::string& id, MeshData* meshdata)
 
     
     //float vert[] = {0.f,50.f,0.f,  0.f,0.f,50.f, 50.f,0.f,0.f, -50.f,0.f,0.f};
-    memcpy(meshdata->vertex, vert, meshdata->vertexSizeInFloat * sizeof(float));
+    memcpy(&meshdata->vertex[0], vert, meshdata->vertexSizeInFloat * sizeof(float));
     
     meshdata->numIndex = 4 * 3;
     //meshdata->numIndex = 3;
-    meshdata->indices = new unsigned short[meshdata->numIndex];
+    meshdata->indices.resize(meshdata->numIndex);
     unsigned short index[] = {0,1,2, 0,3,1, 0,2,3, 3,2,1};
     //unsigned short index[] = {0,3,2};
     //unsigned short index[] = {0,1,2};
-    memcpy(meshdata->indices, index, meshdata->numIndex * sizeof(unsigned short));
+    memcpy(&meshdata->indices[0], index, meshdata->numIndex * sizeof(unsigned short));
     
     meshdata->attribCount = 4;
-    meshdata->attribs = new MeshVertexAttrib[meshdata->attribCount];
+    meshdata->attribs.resize(meshdata->attribCount);
     meshdata->attribs[0].attribSizeBytes = 3 * sizeof(float);
     meshdata->attribs[0].size = 3;
     meshdata->attribs[0].type = GL_FLOAT;
