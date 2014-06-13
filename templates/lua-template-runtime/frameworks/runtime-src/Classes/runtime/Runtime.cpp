@@ -48,21 +48,17 @@ using namespace cocos2d;
 
 std::string g_resourcePath;
 static rapidjson::Document g_filecfgjson; 
-class ConnectWaitLayer;
-static ConnectWaitLayer* s_pConnectLayer;
+
+static string s_strFile;
+static std::mutex s_FileNameMutex;
 extern string getIPAddress();
 const char* getRuntimeVersion()
 {
     return "1.1";
 }
 
-void hideRcvFile() {
-    s_pConnectLayer = nullptr;
-}
-
 void startScript(string strDebugArg)
 {
-    hideRcvFile();
     // register lua engine
     auto engine = LuaEngine::getInstance();
     if (!strDebugArg.empty())
@@ -103,117 +99,120 @@ private:
 public:
     ConnectWaitLayer()
     {
+#include "ResData.h"
         int designWidth = 1280;
         int designHeight = 800;
+        string fontName = "Arial";
+        if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+        {
+            fontName = "DroidSans";
+        }
         Director::getInstance()->getOpenGLView()->setDesignResolutionSize(designWidth,designHeight,ResolutionPolicy::EXACT_FIT);
-        string playEnbleFile = "rtres/Play1.png";
-        string shineFile = "rtres/shine.png";
-        string backgroundFile = "rtres/landscape.png";
+        Image* imagebg = new Image();
+        imagebg->initWithImageData(__landscapePngData, sizeof(__landscapePngData));
         if (!ConfigParser::getInstance()->isLanscape())
         {
-            backgroundFile = "rtres/portrait.png";
+            imagebg->initWithImageData(__portraitPngData, sizeof(__portraitPngData));
             Director::getInstance()->getOpenGLView()->setDesignResolutionSize(designHeight,designWidth,ResolutionPolicy::EXACT_FIT);
         }
+        Texture2D* texturebg = Director::getInstance()->getTextureCache()->addImage(imagebg, "play_background");
+        auto background = Sprite::createWithTexture(texturebg);
+        background->setAnchorPoint(Vec2(0,0));
+        addChild(background,9000);
 
-        auto background = Sprite::create(backgroundFile.c_str());
-        if (background)
-        {
-            background->setAnchorPoint(Vec2(0,0));
-            addChild(background,9999);
-        }
 
-        auto playSprite = Sprite::create(playEnbleFile.c_str());
-        if (playSprite)
-        {
-            playSprite->setPosition(Vec2(902,400));
-            addChild(playSprite,9999);
-        }else
-        {
-            auto labelPlay = LabelTTF::create("play", "Arial", 108);
-            auto menuItem = MenuItemLabel::create(labelPlay, CC_CALLBACK_1(ConnectWaitLayer::playerCallback, this));
-            auto menu = Menu::create(menuItem, NULL);
+        // variable of below is"play" button position.
+        int portraitX = 400;
+        int portraitY = 500;
+        int lanscaptX = 902;
+        int lanscaptY = 400;
+        Image* imageplay = new Image();
+        imageplay->initWithImageData(__playEnablePngData, sizeof(__playEnablePngData));
+        Texture2D* textureplay = Director::getInstance()->getTextureCache()->addImage(imageplay, "play_enable");
+        auto playSprite = Sprite::createWithTexture(textureplay);
+        playSprite->setPosition(Vec2(lanscaptX,lanscaptY));
+        addChild(playSprite,9999);
 
-            menu->setPosition( Point::ZERO );
-            menuItem->setPosition(Vec2(902,400));
-            if (!ConfigParser::getInstance()->isLanscape()) menuItem->setPosition(Vec2(400,500));
-            addChild(menu, 1);
-        }
 
-        auto shineSprite = Sprite::create(shineFile.c_str());
-        if (shineSprite)
-        {
-            shineSprite->setPosition(Vec2(902,400));
-            shineSprite->runAction(RepeatForever::create(Sequence::createWithTwoActions(ScaleBy::create(1.0f, 1.08f),ScaleTo::create(1.0f, 1))));
-            addChild(shineSprite,9999);
-        }
+        Image* imageShine = new Image();
+        imageShine->initWithImageData(__shinePngData, sizeof(__shinePngData));
+        Texture2D* textureShine = Director::getInstance()->getTextureCache()->addImage(imageShine, "Shine");
+        auto shineSprite = Sprite::createWithTexture(textureShine);
+        shineSprite->setOpacity(0);
+        shineSprite->setPosition(Vec2(lanscaptX,lanscaptY));
+        Vector<FiniteTimeAction*> arrayOfActions;
+        arrayOfActions.pushBack(DelayTime::create(0.5));
+        arrayOfActions.pushBack(FadeTo::create(1.0f,178));
+        arrayOfActions.pushBack(FadeTo::create(1.0f,255));
+        arrayOfActions.pushBack(FadeTo::create(1.0f,178));
+        arrayOfActions.pushBack(FadeTo::create(1.0f,0));
+        arrayOfActions.pushBack(DelayTime::create(0.5));
+        Sequence * arrayAction = Sequence::create(arrayOfActions);
+        shineSprite->runAction(RepeatForever::create(Sequence::create(arrayOfActions)));
+        addChild(shineSprite,9998);
+
         
         string strip = getIPAddress();
         char szIPAddress[512]={0};
         sprintf(szIPAddress, "IP: %s",strip.c_str());
-        auto IPlabel = Label::create(szIPAddress, "Arial", 72);
+        auto IPlabel = Label::create(szIPAddress, fontName.c_str(), 72);
         IPlabel->setAnchorPoint(Vec2(0,0));
         int spaceSizex = 72;
         int spaceSizey = 200;
         IPlabel->setPosition( Point(VisibleRect::leftTop().x+spaceSizex, VisibleRect::top().y -spaceSizey) );
-        addChild(IPlabel, 9999);
+        addChild(IPlabel, 9001);
 
-        string strShowMsg = "waiting for file transfer ...";
+        s_strFile = "waiting for file transfer ...";
         if (CC_PLATFORM_WIN32 == CC_TARGET_PLATFORM || CC_PLATFORM_MAC == CC_TARGET_PLATFORM)
         {
-            strShowMsg = "waiting for debugger to connect ...";
+            s_strFile = "waiting for debugger to connect ...";
         }
 
-        _labelUploadFile = Label::create(strShowMsg.c_str(), "Arial", 36);
+        _labelUploadFile = Label::create(s_strFile.c_str(), fontName.c_str(), 36);
         _labelUploadFile->setAnchorPoint(Vec2(0,0));
         _labelUploadFile->setPosition( Point(VisibleRect::leftTop().x+spaceSizex, IPlabel->getPositionY()-spaceSizex) );
         _labelUploadFile->setAlignment(TextHAlignment::LEFT);
-        addChild(_labelUploadFile, 10000);
+        addChild(_labelUploadFile, 9002);
 
         if (!ConfigParser::getInstance()->isLanscape())
         {
-            if (playSprite)   playSprite->setPosition(400,500);
-            if (shineSprite)  shineSprite->setPosition(400,500);
+            if (playSprite)   playSprite->setPosition(portraitX,portraitY);
+            if (shineSprite)  shineSprite->setPosition(portraitX,portraitY);
             _labelUploadFile->setAlignment(TextHAlignment::LEFT);
         }
 
-        if (playSprite)
-        {        
-            auto listener = EventListenerTouchOneByOne::create();
-            listener->onTouchBegan = [](Touch* touch, Event  *event)->bool{
-                auto target = static_cast<Sprite*>(event->getCurrentTarget());
-                Vec2 point = target->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
-                auto rect = Rect(0, 0, target->getContentSize().width, target->getContentSize().height);
-                if (!rect.containsPoint(point)) return false;
-                target->stopAllActions();
-                target->runAction(Sequence::createWithTwoActions(ScaleBy::create(0.05f, 0.9f),ScaleTo::create(0.125f, 1)));
-                return true;
-            };
-            listener->onTouchEnded = [](Touch* touch, Event  *event){
-                auto target = static_cast<Sprite*>(event->getCurrentTarget());
-                Vec2 point = target->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
-                auto rect = Rect(0, 0, target->getContentSize().width, target->getContentSize().height);
-                if (!rect.containsPoint(point)) return;
-                startScript("");
-            };
-            _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, playSprite);
-        }
+        auto listener = EventListenerTouchOneByOne::create();
+        listener->onTouchBegan = [](Touch* touch, Event  *event)->bool{
+            auto target = static_cast<Sprite*>(event->getCurrentTarget());
+            Vec2 point = target->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
+            auto rect = Rect(0, 0, target->getContentSize().width, target->getContentSize().height);
+            if (!rect.containsPoint(point)) return false;
+            target->stopAllActions();
+            target->runAction(Sequence::createWithTwoActions(ScaleBy::create(0.05f, 0.9f),ScaleTo::create(0.125f, 1)));
+            return true;
+        };
+        listener->onTouchEnded = [](Touch* touch, Event  *event){
+            auto target = static_cast<Sprite*>(event->getCurrentTarget());
+            Vec2 point = target->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
+            auto rect = Rect(0, 0, target->getContentSize().width, target->getContentSize().height);
+            if (!rect.containsPoint(point)) return;
+            startScript("");
+        };
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, playSprite);
         
+        this->scheduleUpdate();
     }
 
-    void playerCallback(Object* sender)
-    {
-        startScript("");
-    }
+    void update( float fDelta )  
+    {  
+        if (s_strFile.length()<1)
+            return;
 
-    void showCurRcvFile(string fileName) {
-        _labelUploadFile->setString(fileName);
-    }
+        s_FileNameMutex.lock();
+        _labelUploadFile->setString(s_strFile);
+        s_FileNameMutex.unlock();
+    } 
 };
-
-void showCurRcvFile(string fileName) {
-    if (NULL == s_pConnectLayer) return;
-    s_pConnectLayer->showCurRcvFile(fileName);
-}
 
 #if defined(_MSC_VER) || defined(__MINGW32__)
 #include <io.h>
@@ -445,7 +444,10 @@ bool FileServer::receiveFile(int fd)
         string file(fullfilename);
         file=replaceAll(file,"\\","/");
         sprintf(fullfilename, "%s", file.c_str());
-        showCurRcvFile(filename.c_str());
+
+        s_FileNameMutex.lock();
+        s_strFile = filename;
+        s_FileNameMutex.unlock();
         cocos2d::log("recv fullfilename = %s",fullfilename);
         CreateDir(file.substr(0,file.find_last_of("/")).c_str());
         FILE *fp =fopen(fullfilename, "wb");
@@ -892,10 +894,11 @@ bool startRuntime()
     
     readResFileFinfo();
     auto scene = Scene::create();
-    s_pConnectLayer = new ConnectWaitLayer();
-    s_pConnectLayer->autorelease();
+    auto connectLayer = new ConnectWaitLayer();
+    connectLayer->autorelease();
     auto director = Director::getInstance();
-    scene->addChild(s_pConnectLayer);
+    scene->addChild(connectLayer);
     director->runWithScene(scene);
+
     return true;
 }

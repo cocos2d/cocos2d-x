@@ -66,7 +66,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(EngineRoot)cocos\scripting\lua-bindings\auto;$(EngineRoot)cocos\scripting\lua-bindings\manual;$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\lua\lua;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(ProjectDir)..\Classes\runtime;$(EngineRoot)cocos\scripting\lua-bindings\auto;$(EngineRoot)cocos\scripting\lua-bindings\manual;$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\lua\lua;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
@@ -109,11 +109,9 @@ if exist "$(OutDir)\Resource" rd /s /q "$(OutDir)\Resource"
 mkdir "$(OutDir)\Resource"
 mkdir "$(OutDir)\Resource\src"
 mkdir "$(OutDir)\Resource\res"
-mkdir "$(OutDir)\Resource\rtres"
 xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script" "$(OutDir)\Resource" /e /Y
 xcopy "$(ProjectDir)..\..\..\src" "$(OutDir)\Resource\src" /e /Y
 xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\Resource\res" /e /Y
-xcopy "$(ProjectDir)..\..\..\runtime\rtres" "$(OutDir)\Resource\rtres" /e /Y
 copy "$(ProjectDir)..\..\..\config.json" "$(OutDir)\Resource\config.json" /Y
 xcopy "$(ProjectDir)..\..\cocos2d-x\external\lua\luasocket\*.lua" "$(OutDir)\Resource" /e /Y</Command>
       <Message>copy files</Message>
@@ -125,7 +123,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(EngineRoot)cocos\scripting\lua-bindings\auto;$(EngineRoot)cocos\scripting\lua-bindings\manual;$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\lua\lua;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(ProjectDir)..\Classes\runtime;$(EngineRoot)cocos\scripting\lua-bindings\auto;$(EngineRoot)cocos\scripting\lua-bindings\manual;$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\lua\lua;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
@@ -167,11 +165,9 @@ if exist "$(OutDir)\Resource" rd /s /q "$(OutDir)\Resource"
 mkdir "$(OutDir)\Resource"
 mkdir "$(OutDir)\Resource\src"
 mkdir "$(OutDir)\Resource\res"
-mkdir "$(OutDir)\Resource\rtres"
 xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script" "$(OutDir)\Resource" /e /Y
 xcopy "$(ProjectDir)..\..\..\src" "$(OutDir)\Resource\src" /e /Y
 xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\Resource\res" /e /Y
-xcopy "$(ProjectDir)..\..\..\runtime\rtres" "$(OutDir)\Resource\rtres" /e /Y
 copy "$(ProjectDir)..\..\..\config.json" "$(OutDir)\Resource\config.json" /Y
 xcopy "$(ProjectDir)..\..\cocos2d-x\external\lua\luasocket\*.lua" "$(OutDir)\Resource" /e /Y</Command>
       <Message>copy files</Message>
@@ -184,7 +180,8 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\ConfigParser.h" />
-    <ClInclude Include="..\Classes\Runtime.h" />
+    <ClInclude Include="..\Classes\runtime\ResData.h" />
+    <ClInclude Include="..\Classes\runtime\Runtime.h" />
     <ClInclude Include="..\Classes\VisibleRect.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="resource.h" />
@@ -193,7 +190,12 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\ConfigParser.cpp" />
-    <ClCompile Include="..\Classes\Runtime.cpp" />
+    <ClCompile Include="..\Classes\runtime\Landscape_png.cpp" />
+    <ClCompile Include="..\Classes\runtime\PlayDisable_png.cpp" />
+    <ClCompile Include="..\Classes\runtime\PlayEnable_png.cpp" />
+    <ClCompile Include="..\Classes\runtime\Portrait_png.cpp" />
+    <ClCompile Include="..\Classes\runtime\Runtime.cpp" />
+    <ClCompile Include="..\Classes\runtime\Shine_png.cpp" />
     <ClCompile Include="..\Classes\VisibleRect.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Runtime_win32.cpp" />
