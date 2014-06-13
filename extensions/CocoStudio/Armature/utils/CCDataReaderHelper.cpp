@@ -156,7 +156,8 @@ CCDataReaderHelper *CCDataReaderHelper::s_DataReaderHelper = NULL;
 enum ConfigType
 {
     DragonBone_XML,
-    CocoStudio_JSON
+    CocoStudio_JSON,
+	CocoStudio_Binary
 };
 
 
@@ -219,7 +220,11 @@ static void addData(AsyncStruct *pAsyncStruct)
     std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pAsyncStruct->filename.c_str());
     unsigned long size;
     pthread_mutex_lock(&s_GetFileDataMutex);
-	unsigned char *pBytes = CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str() , "r", &size);
+	std::string readmode = "r";
+	bool isbinary = pAsyncStruct->configType == CocoStudio_Binary;
+	if(isbinary)
+		readmode += "b";
+	unsigned char *pBytes = CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str() , readmode.c_str(), &size);
 	CCData data(pBytes, size);
     CC_SAFE_DELETE_ARRAY(pBytes);
 	pAsyncStruct->fileContent = std::string((const char*)data.getBytes(), data.getSize());
@@ -239,6 +244,10 @@ static void addData(AsyncStruct *pAsyncStruct)
     {
         CCDataReaderHelper::addDataFromJsonCache(pAsyncStruct->fileContent.c_str(), pDataInfo);
     }
+	else if(isbinary)
+	{
+		CCDataReaderHelper::addDataFromBinaryCache(pAsyncStruct->fileContent.c_str(),pDataInfo);
+	}
 
     // put the image info into the queue
     pthread_mutex_lock(&s_DataInfoMutex);
@@ -366,7 +375,17 @@ void CCDataReaderHelper::addDataFromFile(const char *filePath)
 
     unsigned long size;
     std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(filePath);
-    unsigned char *pBytes = CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str() , "r", &size);
+    unsigned char *pBytes = NULL;
+    if ( 0 == str.compare(".csb"))
+	{
+		pBytes = CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str() , "rb", &size);
+		
+	}
+	else
+	{
+		pBytes = CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str() , "r", &size);
+	}
+
 
     DataInfo dataInfo;
     dataInfo.filename = filePathStr;
@@ -382,6 +401,10 @@ void CCDataReaderHelper::addDataFromFile(const char *filePath)
     {
         CCDataReaderHelper::addDataFromJsonCache(load_str.c_str(), &dataInfo);
     }
+	else if(str.compare(".csb") == 0)
+	{
+		CCDataReaderHelper::addDataFromBinaryCache(load_str.c_str(), &dataInfo);
+	}
 	CC_SAFE_DELETE_ARRAY(pBytes);
 }
 
@@ -483,6 +506,10 @@ void CCDataReaderHelper::addDataFromFileAsync(const char *imagePath, const char 
     {
         data->configType = CocoStudio_JSON;
     }
+	else if( 0 == str.compare(".csb"))
+	{
+		data->configType = CocoStudio_Binary;
+	}
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     // add async struct into queue
@@ -522,7 +549,7 @@ void CCDataReaderHelper::addDataAsyncCallBack(float dt)
         if (pAsyncStruct->imagePath != "" && pAsyncStruct->plistPath != "")
         {
             pthread_mutex_lock(&s_GetFileDataMutex);
-            CCArmatureDataManager::sharedArmatureDataManager()->addSpriteFrameFromFile(pAsyncStruct->plistPath.c_str(), pAsyncStruct->imagePath.c_str(), pDataInfo->filename.c_str());
+            CCArmatureDataManager::sharedArmatureDataManager()->addSpriteFrameFromFile(pAsyncStruct->plistPath.c_str(), pAsyncStruct->imagePath.c_str());
             pthread_mutex_unlock(&s_GetFileDataMutex);
         }
 
@@ -530,7 +557,7 @@ void CCDataReaderHelper::addDataAsyncCallBack(float dt)
         {
             std::string configPath = pDataInfo->configFileQueue.front();
             pthread_mutex_lock(&s_GetFileDataMutex);
-            CCArmatureDataManager::sharedArmatureDataManager()->addSpriteFrameFromFile((pAsyncStruct->baseFilePath + configPath + ".plist").c_str(), (pAsyncStruct->baseFilePath + configPath + ".png").c_str(), pDataInfo->filename.c_str());
+            CCArmatureDataManager::sharedArmatureDataManager()->addSpriteFrameFromFile((pAsyncStruct->baseFilePath + configPath + ".plist").c_str(), (pAsyncStruct->baseFilePath + configPath + ".png").c_str());
             pthread_mutex_unlock(&s_GetFileDataMutex);
             pDataInfo->configFileQueue.pop();
         }
@@ -1281,13 +1308,13 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
         CCLOG("GetParseError %s\n",json.GetParseError());
     }
 	
-	dataInfo->contentScale = DICTOOL->getFloatValue_json(json, CONTENT_SCALE, 1.0f); //json[CONTENT_SCALE].IsNull()? 1.0f : json[CONTENT_SCALE].GetDouble();
+	dataInfo->contentScale = DICTOOL->getFloatValue_json(json, CONTENT_SCALE, 1.0f); 
 	
     // Decode armatures
-	int length = DICTOOL->getArrayCount_json(json, ARMATURE_DATA); //json[ARMATURE_DATA].IsNull() ? 0 : json[ARMATURE_DATA].Size();
+	int length = DICTOOL->getArrayCount_json(json, ARMATURE_DATA); 
 	for (int i = 0; i < length; i++)
     {
-		const rapidjson::Value &armatureDic = DICTOOL->getSubDictionary_json(json, ARMATURE_DATA, i); //json[ARMATURE_DATA][i];
+		const rapidjson::Value &armatureDic = DICTOOL->getSubDictionary_json(json, ARMATURE_DATA, i); 
         CCArmatureData *armatureData = decodeArmature(armatureDic, dataInfo);
 
         if (dataInfo->asyncStruct)
@@ -1304,7 +1331,7 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
     }
 
     // Decode animations
-	length = DICTOOL->getArrayCount_json(json, ANIMATION_DATA); //json[ANIMATION_DATA].IsNull() ? 0 : json[ANIMATION_DATA].Size();
+	length = DICTOOL->getArrayCount_json(json, ANIMATION_DATA); 
     for (int i = 0; i < length; i++)
     {
 		const rapidjson::Value &animationDic = DICTOOL->getSubDictionary_json(json, ANIMATION_DATA, i);
@@ -1323,10 +1350,10 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
     }
 
     // Decode textures
-    length = DICTOOL->getArrayCount_json(json, TEXTURE_DATA); // json[TEXTURE_DATA].IsNull() ? 0 : json[TEXTURE_DATA].Size();
+    length = DICTOOL->getArrayCount_json(json, TEXTURE_DATA);
     for (int i = 0; i < length; i++)
     {
-        const rapidjson::Value &textureDic =  DICTOOL->getSubDictionary_json(json, TEXTURE_DATA, i); // json[TEXTURE_DATA][i];
+        const rapidjson::Value &textureDic =  DICTOOL->getSubDictionary_json(json, TEXTURE_DATA, i); 
         CCTextureData *textureData = decodeTexture(textureDic);
 
         if (dataInfo->asyncStruct)
@@ -1346,11 +1373,10 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
     bool autoLoad = dataInfo->asyncStruct == NULL ? CCArmatureDataManager::sharedArmatureDataManager()->isAutoLoadSpriteFile() : dataInfo->asyncStruct->autoLoadSpriteFile;
     if (autoLoad)
     {
-        length =  DICTOOL->getArrayCount_json(json, CONFIG_FILE_PATH); // json[CONFIG_FILE_PATH].IsNull() ? 0 : json[CONFIG_FILE_PATH].Size();
+        length =  DICTOOL->getArrayCount_json(json, CONFIG_FILE_PATH); 
         for (int i = 0; i < length; i++)
         {
-			const char *path = DICTOOL->getStringValueFromArray_json(json, CONFIG_FILE_PATH, i); // json[CONFIG_FILE_PATH][i].IsNull() ? NULL : json[CONFIG_FILE_PATH][i].GetString();
-            if (path == NULL)
+			const char *path = DICTOOL->getStringValueFromArray_json(json, CONFIG_FILE_PATH, i); 
             {
                 CCLOG("load CONFIG_FILE_PATH error.");
                 return;
@@ -1747,7 +1773,7 @@ void CCDataReaderHelper::decodeNode(CCBaseData *node, const rapidjson::Value &js
     node->scaleY = DICTOOL->getFloatValue_json(json, A_SCALE_Y, 1.0f);
 
     if (dataInfo->cocoStudioVersion < VERSION_COLOR_READING)
-    {
+    { 
         if (DICTOOL->checkObjectExist_json(json, 0))
         {
             const rapidjson::Value &colorDic = DICTOOL->getSubDictionary_json(json, 0); 
@@ -1763,7 +1789,7 @@ void CCDataReaderHelper::decodeNode(CCBaseData *node, const rapidjson::Value &js
     {
         if (DICTOOL->checkObjectExist_json(json, COLOR_INFO))
         {
-            const rapidjson::Value &colorDic =  DICTOOL->getSubDictionary_json(json, COLOR_INFO); //json.getSubDictionary(COLOR_INFO);
+            const rapidjson::Value &colorDic =  DICTOOL->getSubDictionary_json(json, COLOR_INFO); 
             node->a = DICTOOL->getIntValue_json(colorDic, A_ALPHA, 255);   
             node->r = DICTOOL->getIntValue_json(colorDic, A_RED, 255);  
             node->g = DICTOOL->getIntValue_json(colorDic, A_GREEN, 255); 
@@ -1772,6 +1798,859 @@ void CCDataReaderHelper::decodeNode(CCBaseData *node, const rapidjson::Value &js
             node->isUseColorInfo = true;
         }
     }
+}
+
+
+void CCDataReaderHelper::addDataFromBinaryCache(const char *fileContent, DataInfo *dataInfo)
+{
+	CocoLoader tCocoLoader;
+	if (tCocoLoader.ReadCocoBinBuff((char*)fileContent))
+	{
+		stExpCocoNode *tpRootCocoNode = tCocoLoader.GetRootCocoNode();
+		rapidjson::Type tType = tpRootCocoNode->GetType(&tCocoLoader);
+		if (rapidjson::kObjectType  == tType)
+		{
+			stExpCocoNode *tpChildArray = tpRootCocoNode->GetChildArray();
+			int nCount = tpRootCocoNode->GetChildNum();
+
+			dataInfo->contentScale = 1.0f;
+			int length = 0;
+			std::string key;
+			stExpCocoNode* pDataArray; 
+			for (int i = 0; i < nCount; ++i)
+			{
+			    key = tpChildArray[i].GetName(&tCocoLoader);
+				if (key.compare(CONTENT_SCALE) == 0)
+				{
+					std::string value = tpChildArray[i].GetValue();
+					dataInfo->contentScale = atof(value.c_str());
+				}
+				else if ( 0 == key.compare(ARMATURE_DATA))
+				{
+					pDataArray = tpChildArray[i].GetChildArray();
+					length = tpChildArray[i].GetChildNum();
+					CCArmatureData * armatureData;
+					for (int i = 0; i < length; ++i)
+					{
+						armatureData = decodeArmature(&tCocoLoader, &pDataArray[i], dataInfo);
+						if (dataInfo->asyncStruct)
+						{
+							pthread_mutex_lock(&s_addDataMutex);
+						}
+						CCArmatureDataManager::sharedArmatureDataManager()->addArmatureData(armatureData->name.c_str(), armatureData, dataInfo->filename.c_str());
+						armatureData->release();
+						if (dataInfo->asyncStruct)
+						{
+							pthread_mutex_unlock(&s_addDataMutex);
+						}
+					}
+				}
+				else if ( 0 == key.compare(ANIMATION_DATA))
+				{
+					pDataArray = tpChildArray[i].GetChildArray();
+					length = tpChildArray[i].GetChildNum();
+					CCAnimationData *animationData;
+					for (int i = 0; i < length; ++i)
+					{
+						animationData = decodeAnimation(&tCocoLoader, &pDataArray[i], dataInfo);
+						if (dataInfo->asyncStruct)
+						{
+							pthread_mutex_lock(&s_addDataMutex);
+						}
+						CCArmatureDataManager::sharedArmatureDataManager()->addAnimationData(animationData->name.c_str(), animationData, dataInfo->filename.c_str());
+						animationData->release();
+						if (dataInfo->asyncStruct)
+						{
+							pthread_mutex_unlock(&s_addDataMutex);
+						}
+					}
+				}
+				else if (key.compare(TEXTURE_DATA) == 0)
+				{
+					pDataArray = tpChildArray[i].GetChildArray();
+					length = tpChildArray[i].GetChildNum();
+					for (int i = 0; i < length; ++i)
+					{
+						CCTextureData *textureData = decodeTexture(&tCocoLoader, &pDataArray[i]);
+						if (dataInfo->asyncStruct)
+						{
+							pthread_mutex_lock(&s_addDataMutex);
+						}
+						CCArmatureDataManager::sharedArmatureDataManager()->addTextureData(textureData->name.c_str(), textureData, dataInfo->filename.c_str());
+						textureData->release();
+						if (dataInfo->asyncStruct)
+						{
+							pthread_mutex_unlock(&s_addDataMutex);
+						}
+					}
+				}
+			}
+			// Auto losprite file
+			bool autoLoad = dataInfo->asyncStruct == NULL ? CCArmatureDataManager::sharedArmatureDataManager()->isAutoLoadSpriteFile() : dataInfo->asyncStruct->autoLoadSpriteFile;
+			if (autoLoad)
+			{
+				for (int i = 0; i < nCount; ++i)
+				{
+					key = tpChildArray[i].GetName(&tCocoLoader);
+					if( 0 != key.compare(CONFIG_FILE_PATH))
+					{
+						continue;
+					}
+					length = tpChildArray[i].GetChildNum();
+					stExpCocoNode *pConfigFilePath = tpChildArray[i].GetChildArray();
+					for (int i = 0; i < length; i++)
+					{
+						const char *path = pConfigFilePath[i].GetValue();
+						if (path == NULL)
+						{
+							CCLOG("load CONFIG_FILE_PATH error.");
+							return;
+						}
+
+						std::string filePath = path;
+						filePath = filePath.erase(filePath.find_last_of("."));
+
+						if (dataInfo->asyncStruct)
+						{
+							dataInfo->configFileQueue.push(filePath);
+						}
+						else
+						{
+							std::string plistPath = filePath + ".plist";
+							std::string pngPath =  filePath + ".png";
+
+							CCArmatureDataManager::sharedArmatureDataManager()->addSpriteFrameFromFile((dataInfo->baseFilePath + plistPath).c_str(), (dataInfo->baseFilePath + pngPath).c_str(), dataInfo->filename.c_str());
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+CCArmatureData* CCDataReaderHelper::decodeArmature(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo)
+{
+	CCArmatureData *armatureData = new CCArmatureData();
+	armatureData->init();
+	stExpCocoNode *pAramtureDataArray = pCocoNode->GetChildArray();
+	const char *name = pAramtureDataArray[2].GetValue(); //DICTOOL->getStringValue_json(json, A_NAME);
+	if(name != NULL)
+	{
+		armatureData->name = name;
+	}
+
+	float version = atof(pAramtureDataArray[1].GetValue());
+	dataInfo->cocoStudioVersion = armatureData->dataVersion = version; //DICTOOL->getFloatValue_json(json, VERSION, 0.1f);
+
+	int length = pAramtureDataArray[3].GetChildNum(); //DICTOOL->getArrayCount_json(json, BONE_DATA, 0); 
+	stExpCocoNode *pBoneChildren = pAramtureDataArray[3].GetChildArray();
+	stExpCocoNode* child;
+	for (int i = 0; i < length; i++)
+	{
+		//const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, BONE_DATA, i); //json[BONE_DATA][i];
+		child = &pBoneChildren[i];
+		CCBoneData *boneData = decodeBone(pCocoLoader, child, dataInfo);
+		armatureData->addBoneData(boneData);  
+		boneData->release();
+	}
+
+	return armatureData;
+}
+
+CCBoneData* CCDataReaderHelper::decodeBone(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo)
+{
+	CCBoneData *boneData = new CCBoneData();
+	boneData->init();
+
+	decodeNode(boneData, pCocoLoader, pCocoNode, dataInfo);
+
+	int length = pCocoNode->GetChildNum();
+	stExpCocoNode *pBoneChildren = pCocoNode->GetChildArray();
+	stExpCocoNode* child;
+	const char *str = NULL;
+	std::string key;
+	for (int i = 0; i < length; ++i)
+	{
+		child = &pBoneChildren[i];
+		key = child->GetName(pCocoLoader);
+		str = child->GetValue();
+		if (key.compare(A_NAME) == 0)
+		{
+			 //DICTOOL->getStringValue_json(json, A_NAME);
+			if(str != NULL)
+			{
+				boneData->name = str;
+			}
+		}
+		else if (key.compare(A_PARENT) == 0)
+		{
+			 //DICTOOL->getStringValue_json(json, A_PARENT);
+			if(str != NULL)
+			{
+				boneData->parentName = str;
+			}
+		}
+		else if (key.compare(DISPLAY_DATA) == 0)
+		{
+			int count = child->GetChildNum();
+			stExpCocoNode *pDisplayData = child->GetChildArray();
+			for (int i = 0; i < count; ++i)
+			{
+				CCDisplayData *displayData = decodeBoneDisplay(pCocoLoader, &pDisplayData[i], dataInfo);
+				if(displayData == NULL)
+					continue;
+				boneData->addDisplayData(displayData);
+					displayData->release();
+			}
+		}
+	}
+
+	return boneData;
+}
+
+CCDisplayData* CCDataReaderHelper::decodeBoneDisplay(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo)
+{
+	stExpCocoNode* children = pCocoNode->GetChildArray();
+	stExpCocoNode* child = &children[1];
+	const char *str = NULL;
+
+	std::string key = child->GetName(pCocoLoader);
+	str = child->GetValue();
+	CCDisplayData *displayData = NULL;
+	DisplayType displayType = CS_DISPLAY_SPRITE;
+
+	if (key.compare(A_DISPLAY_TYPE) == 0)
+	{
+		str = child->GetValue();
+		DisplayType displayType = (DisplayType)(atoi(str));
+
+		int length = 0;
+		switch (displayType)
+		{
+		case CS_DISPLAY_SPRITE:
+			{
+				displayData = new CCSpriteDisplayData();
+
+				const char *name =  children[0].GetValue(); 
+				if(name != NULL)
+				{
+					((CCSpriteDisplayData *)displayData)->displayName = name;
+				}
+				stExpCocoNode *pSkinDataArray = children[2].GetChildArray();
+				if (pSkinDataArray != NULL)
+				{
+					stExpCocoNode *pSkinData = &pSkinDataArray[0];
+					if (pSkinData != NULL)
+					{
+						CCSpriteDisplayData *sdd = (CCSpriteDisplayData *)displayData;
+						int length = pSkinData->GetChildNum();
+						stExpCocoNode *SkinDataValue = pSkinData->GetChildArray();
+						for (int i = 0; i < length; ++i)
+						{
+							key = SkinDataValue[i].GetName(pCocoLoader);
+							str = SkinDataValue[i].GetValue();
+							if (key.compare(A_X) == 0)
+							{
+								sdd->skinData.x = atof(str) * s_PositionReadScale; 
+							}
+							else if (key.compare(A_Y) == 0)
+							{
+								sdd->skinData.y = atof(str) * s_PositionReadScale; 
+							}
+							else if (key.compare(A_SCALE_X) == 0)
+							{
+								sdd->skinData.scaleX = atof(str); 
+							}
+							else if (key.compare(A_SCALE_Y) == 0)
+							{
+								sdd->skinData.scaleY = atof(str); 
+							}
+							else if (key.compare(A_SKEW_X) == 0)
+							{
+								sdd->skinData.skewX = atof(str); 
+							}
+							else if (key.compare(A_SKEW_Y) == 0)
+							{
+								sdd->skinData.skewY = atof(str); 
+							}
+						}
+
+						sdd->skinData.x *= dataInfo->contentScale;
+						sdd->skinData.y *= dataInfo->contentScale;
+					}
+				}
+			}
+
+			break;
+		case CS_DISPLAY_ARMATURE:
+			{
+				displayData = new CCArmatureDisplayData();
+
+				const char *name = pCocoNode[0].GetValue();
+				if(name != NULL)
+				{
+					((CCArmatureDisplayData *)displayData)->displayName = name;
+				}
+			}
+			break;
+		case CS_DISPLAY_PARTICLE:
+			{
+				displayData = new CCParticleDisplayData();
+				length = pCocoNode->GetChildNum();
+				stExpCocoNode *pDisplayData = pCocoNode->GetChildArray();
+				for (int i = 0; i < length; ++i)
+				{
+					key = pDisplayData[i].GetName(pCocoLoader);
+                    str = pDisplayData[i].GetValue();
+					if (key.compare(A_PLIST) == 0)
+					{
+                        const char *plist = str;
+                        if(plist != NULL)
+                        {
+                            if (dataInfo->asyncStruct)
+                            {
+                                ((CCParticleDisplayData *)displayData)->displayName = dataInfo->asyncStruct->baseFilePath + plist;
+                            }
+                            else
+                            {
+                                ((CCParticleDisplayData *)displayData)->displayName = dataInfo->baseFilePath + plist;
+                            }
+                        }
+					}
+				}
+			}
+			break;
+		default:
+			displayData = new CCSpriteDisplayData();
+
+			break;
+		}
+		displayData->displayType = displayType;
+	}
+	return displayData;
+}
+
+CCAnimationData* CCDataReaderHelper::decodeAnimation(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo)
+{
+	CCAnimationData *aniData = new CCAnimationData();
+
+	int length = pCocoNode->GetChildNum();
+	stExpCocoNode *pAnimationData = pCocoNode->GetChildArray();
+	const char *str = NULL;
+	std::string key;
+	stExpCocoNode* child;
+	CCMovementData *movementData;
+	for (int i = 0; i < length; ++i)
+	{
+		child = &pAnimationData[i];
+		key = child->GetName(pCocoLoader);
+		str = child->GetValue();
+		if (key.compare(A_NAME) == 0)
+		{
+			if(str != NULL)
+			{
+				aniData->name = str;
+			}
+		}
+		else if (key.compare(MOVEMENT_DATA) == 0)
+		{
+			int movcount = child->GetChildNum();
+			stExpCocoNode* movArray =  child->GetChildArray();
+			for( int movnum =0; movnum <movcount; movnum++)
+			{
+				movementData = decodeMovement(pCocoLoader, &movArray[movnum], dataInfo);
+				aniData->addMovement(movementData);
+				movementData->release();
+			}
+		}
+	}
+	return aniData;
+}
+
+CCMovementData* CCDataReaderHelper::decodeMovement(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo)
+{
+	CCMovementData *movementData = new CCMovementData();
+	movementData->scale = 1.0f;
+	
+	int length = pCocoNode->GetChildNum();
+	stExpCocoNode *pMoveDataArray = pCocoNode->GetChildArray();
+
+	const char *str = NULL;
+	std::string key;
+	stExpCocoNode* child;
+	for (int i = 0; i < length; ++i)
+	{
+		child = &pMoveDataArray[i];
+		key = child->GetName(pCocoLoader);
+		str = child->GetValue();
+		if (key.compare(A_NAME) == 0)
+		{
+			if(str != NULL)
+			{
+				movementData->name = str;
+			}
+		}
+		else if (key.compare(A_LOOP) == 0)
+		{
+			movementData->loop = true;
+			if(str != NULL)
+			{
+				if (strcmp("1", str) != 0)
+				{
+					movementData->loop = false;
+				}
+			}
+		}
+		else if (key.compare(A_DURATION_TWEEN) == 0)
+		{
+			movementData->durationTween = 0;
+			if(str != NULL)
+			{
+				movementData->durationTween = atoi(str); 
+			}
+		}
+		else if (key.compare(A_DURATION_TO) == 0)
+		{
+			movementData->durationTo = 0;
+			if(str != NULL)
+			{
+				movementData->durationTo = atoi(str); 
+			}
+		}
+		else if (key.compare(A_DURATION) == 0)
+		{
+			movementData->duration = 0;
+			if(str != NULL)
+			{
+				movementData->duration = atoi(str); 
+			}
+		}
+		else if (key.compare(A_MOVEMENT_SCALE) == 0)
+		{
+			movementData->scale = 1.0;
+			if(str != NULL)
+			{
+				movementData->scale = atof(str); 
+			}
+		}
+		else if (key.compare(A_TWEEN_EASING) == 0)
+		{
+			movementData->tweenEasing = Linear;
+			if(str != NULL)
+			{
+				movementData->tweenEasing = (CCTweenType)(atoi(str)); 
+			}
+		}
+		else if (key.compare(MOVEMENT_BONE_DATA) == 0)
+		{
+			int count = child->GetChildNum();
+			stExpCocoNode *pMoveBoneData = child->GetChildArray();
+			CCMovementBoneData *movementBoneData;
+			for (int i = 0; i < count; ++i)
+			{
+				movementBoneData = decodeMovementBone(pCocoLoader, &pMoveBoneData[i],dataInfo);
+				movementData->addMovementBoneData(movementBoneData);
+				movementBoneData->release();
+			}
+		}
+	}
+	return movementData;
+}
+
+CCMovementBoneData* CCDataReaderHelper::decodeMovementBone(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo)
+{
+	CCMovementBoneData *movementBoneData = new CCMovementBoneData();
+	movementBoneData->init();
+
+	int length = pCocoNode->GetChildNum();
+	stExpCocoNode *pMovementBoneDataArray = pCocoNode->GetChildArray();
+	stExpCocoNode* movebonechild;
+	const char *str = NULL;
+	for (int i = 0; i < length; ++i)
+	{
+		movebonechild = &pMovementBoneDataArray[i];
+		std::string key = movebonechild->GetName(pCocoLoader);
+		str = movebonechild->GetValue();
+		if (key.compare(A_NAME) == 0)
+		{
+			if(str != NULL)
+			{
+				movementBoneData->name = str;
+			}
+		}
+		else if (key.compare(A_MOVEMENT_DELAY) == 0)
+		{
+			if(str != NULL)
+			{
+				movementBoneData->delay = atof(str); 
+			}
+		}
+		else if (key.compare(FRAME_DATA) == 0)
+		{
+			int count =movebonechild->GetChildNum();
+			stExpCocoNode *pFrameDataArray = movebonechild->GetChildArray();
+			for (int i = 0; i < count; ++i)
+			{
+				CCFrameData *frameData = decodeFrame(pCocoLoader, &pFrameDataArray[i], dataInfo);
+				movementBoneData->addFrameData(frameData);
+				frameData->release();
+
+				if (dataInfo->cocoStudioVersion < VERSION_COMBINED)
+				{
+					frameData->frameID = movementBoneData->duration;
+					movementBoneData->duration += frameData->duration;
+				}
+			}
+		}
+	}
+
+	
+
+	if (dataInfo->cocoStudioVersion < VERSION_CHANGE_ROTATION_RANGE)
+	{
+		//! Change rotation range from (-180 -- 180) to (-infinity -- infinity)
+		CCFrameData **frames = (CCFrameData **)movementBoneData->frameList.data->arr;
+		for (int i = movementBoneData->frameList.count() - 1; i >= 0; i--)
+		{
+			if (i > 0)
+			{
+				float difSkewX = frames[i]->skewX -  frames[i - 1]->skewX;
+				float difSkewY = frames[i]->skewY -  frames[i - 1]->skewY;
+
+				if (difSkewX < -M_PI || difSkewX > M_PI)
+				{
+					frames[i - 1]->skewX = difSkewX < 0 ? frames[i - 1]->skewX - 2 * M_PI : frames[i - 1]->skewX + 2 * M_PI;
+				}
+
+				if (difSkewY < -M_PI || difSkewY > M_PI)
+				{
+					frames[i - 1]->skewY = difSkewY < 0 ? frames[i - 1]->skewY - 2 * M_PI : frames[i - 1]->skewY + 2 * M_PI;
+				}
+			}
+		}
+	}
+
+
+	if (dataInfo->cocoStudioVersion < VERSION_COMBINED)
+	{
+		if (movementBoneData->frameList.count() > 0)
+		{
+			CCFrameData *frameData = new CCFrameData();
+			frameData->copy((CCFrameData *)movementBoneData->frameList.lastObject());
+			movementBoneData->addFrameData(frameData);
+			frameData->release();
+
+			frameData->frameID = movementBoneData->duration;
+		}
+	}
+
+	return movementBoneData;
+}
+
+CCFrameData* CCDataReaderHelper::decodeFrame(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo)
+{
+	CCFrameData *frameData = new CCFrameData();
+
+	decodeNode(frameData, pCocoLoader, pCocoNode, dataInfo);
+
+	int length = pCocoNode->GetChildNum();
+	stExpCocoNode *pFrameDataArray = pCocoNode->GetChildArray();
+	const char *str = NULL;
+	for (int i = 0; i < length; ++i)
+	{
+		std::string key = pFrameDataArray[i].GetName(pCocoLoader);
+		str = pFrameDataArray[i].GetValue();
+		if (key.compare(A_TWEEN_EASING) == 0)
+		{
+			frameData->tweenEasing = Linear;
+			if(str != NULL)
+			{
+				frameData->tweenEasing = (CCTweenType)(atoi(str));
+			}
+		}
+		else if (key.compare(A_DISPLAY_INDEX) == 0)
+		{
+			if(str != NULL)
+			{
+				frameData->displayIndex = atoi(str); 
+			}
+		}
+		else if (key.compare(A_BLEND_SRC) == 0)
+		{
+			if(str != NULL)
+			{
+				frameData->blendFunc.src = (GLenum)(atoi(str));
+			}
+		}
+		else if (key.compare(A_BLEND_DST) == 0)
+		{
+			if(str != NULL)
+			{
+				frameData->blendFunc.dst = (GLenum)(atoi(str));
+			}
+		}
+		else if (key.compare(A_TWEEN_FRAME) == 0)
+		{
+			frameData->isTween = true;
+			if(str != NULL)
+			{
+				if (strcmp("1", str) != 0)
+				{
+					frameData->isTween = false; 
+				}
+			}
+		}
+		else if (key.compare(A_EVENT) == 0)
+		{
+			if(str != NULL)
+			{
+				frameData->strEvent = str;
+			}
+		}
+		else if (key.compare(A_DURATION) == 0)
+		{
+			if (dataInfo->cocoStudioVersion < VERSION_COMBINED)
+			{
+				frameData->duration = 1;
+				if(str != NULL)
+				{
+					frameData->duration = atoi(str);
+				}
+			}
+		}
+		else if (key.compare(A_FRAME_INDEX) == 0)
+		{
+			if (dataInfo->cocoStudioVersion >= VERSION_COMBINED)
+			{
+				if(str != NULL)
+				{
+					frameData->frameID = atoi(str);
+				}
+			}
+		}
+		else if (key.compare(A_EASING_PARAM) == 0)
+		{
+			int count = pFrameDataArray[i].GetChildNum();
+			if (count != 0 )
+			{
+				frameData->easingParams = new float[count];
+				stExpCocoNode *pFrameData = pFrameDataArray[i].GetChildArray();
+				for (int i = 0; i < count; ++i)
+				{
+					str = pFrameData[i].GetValue();
+					if (str != NULL)
+					{
+						frameData->easingParams[i] = atof(str);
+					}
+				}
+			}
+			
+		}
+	}
+
+	return frameData;
+}
+
+CCTextureData* CCDataReaderHelper::decodeTexture(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode)
+{
+	CCTextureData *textureData = new CCTextureData();
+	textureData->init();
+
+	if(pCocoNode == NULL)
+	{
+		return textureData;
+	}
+
+	int length = pCocoNode->GetChildNum();
+	stExpCocoNode *pTextureDataArray = pCocoNode->GetChildArray();
+	const char *str = NULL;
+	for (int i = 0; i < length; ++i)
+	{
+		std::string key = pTextureDataArray[i].GetName(pCocoLoader);
+		str = pTextureDataArray[i].GetValue();
+		if (key.compare(A_NAME) == 0)
+		{
+			if(str != NULL)
+			{
+				textureData->name = str;
+			}
+		}
+		else if (key.compare(A_WIDTH) == 0)
+		{
+			if(str != NULL)
+			{
+				textureData->width = atof(str);
+			}
+		}
+		else if (key.compare(A_HEIGHT) == 0)
+		{
+			if(str != NULL)
+			{
+				textureData->height = atof(str);
+			}
+		}
+		else if (key.compare(A_PIVOT_X) == 0)
+		{
+			if(str != NULL)
+			{
+				textureData->pivotX = atof(str);
+			}
+		}
+		else if (key.compare(A_PIVOT_Y) == 0)
+		{
+			if(str != NULL)
+			{
+				textureData->pivotY = atof(str);
+			}
+		}
+		else if (key.compare(CONTOUR_DATA) == 0)
+		{
+			int count = pTextureDataArray[i].GetChildNum();
+			stExpCocoNode *pContourArray = pTextureDataArray[i].GetChildArray();
+			for (int i = 0; i < count; ++i)
+			{
+				CCContourData *contourData = decodeContour(pCocoLoader, &pContourArray[i]);
+				textureData->contourDataList.addObject(contourData);
+				contourData->release();
+			}
+		}
+	}
+	return textureData;
+}
+
+CCContourData* CCDataReaderHelper::decodeContour(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode)
+{
+	CCContourData *contourData = new CCContourData();
+	contourData->init();
+
+	int length = pCocoNode->GetChildNum();
+	stExpCocoNode *verTexPointArray = pCocoNode->GetChildArray();
+	const char *str = NULL;
+	for (int i = 0; i < length; ++i)
+	{
+		std::string key = verTexPointArray[i].GetName(pCocoLoader);
+		str = verTexPointArray[i].GetValue();
+		if (key.compare(VERTEX_POINT) == 0)
+		{
+			int count = verTexPointArray[i].GetChildNum();
+			stExpCocoNode *pVerTexPointArray = verTexPointArray[i].GetChildArray();
+			for (int i = count - 1; i >= 0; --i)
+			{
+				int num = pVerTexPointArray[i].GetChildNum();
+				stExpCocoNode *pVerTexPoint = pVerTexPointArray[i].GetChildArray();
+				CCContourVertex2 *vertex = new CCContourVertex2(0, 0);
+				vertex->x = atof(pVerTexPoint[0].GetValue());
+				vertex->y = atof(pVerTexPoint[1].GetValue());
+				contourData->vertexList.addObject(vertex);
+					vertex->release();
+			}
+			break;
+		}
+	}
+	return contourData;
+}
+
+void CCDataReaderHelper::decodeNode(CCBaseData *node, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo)
+{
+	int length = pCocoNode->GetChildNum();
+	stExpCocoNode *NodeArray = pCocoNode->GetChildArray();
+	const char *str = NULL;
+
+	bool isVersionL = dataInfo->cocoStudioVersion < VERSION_COLOR_READING;
+	for (int i = 0; i < length; ++i)
+	{
+		std::string key = NodeArray[i].GetName(pCocoLoader);
+		str = NodeArray[i].GetValue();
+		if (key.compare(A_X) == 0)
+		{
+			node->x = atof(str) * dataInfo->contentScale;
+		}
+		else if (key.compare(A_Y) == 0)
+		{
+			node->y = atof(str) * dataInfo->contentScale;
+		}
+		else if (key.compare(A_Z) == 0)
+		{
+			node->zOrder = atoi(str);
+		}
+		else if (key.compare(A_SKEW_X) == 0)
+		{
+			node->skewX = atof(str);
+		}
+		else if (key.compare(A_SKEW_Y) == 0)
+		{
+			node->skewY = atof(str);
+		}
+		else if (key.compare(A_SCALE_X) == 0)
+		{
+			node->scaleX = atof(str);
+		}
+		else if (key.compare(A_SCALE_Y) == 0)
+		{
+			node->scaleY = atof(str);
+		}
+		else if (key.compare(COLOR_INFO) == 0)
+		{
+			if (!isVersionL)
+			{
+				int count = NodeArray[i].GetChildNum();
+				stExpCocoNode *colorArray = NodeArray[i].GetChildArray();
+				for (int j = 0; j < count; ++j)
+				{
+					std::string key = colorArray[j].GetName(pCocoLoader);
+					str = colorArray[j].GetValue();
+					if (key.compare(A_ALPHA) == 0)
+					{
+						node->a = atoi(str);
+					}
+					else if (key.compare(A_RED) == 0)
+					{
+						node->r = atoi(str);
+					}
+					else if (key.compare(A_GREEN) == 0)
+					{
+						node->g = atoi(str);
+					}
+					else if (key.compare(A_BLUE) == 0)
+					{
+						node->b = atoi(str);
+					}
+				}
+				node->isUseColorInfo = true;
+			}
+		}
+	}
+
+	if (isVersionL)
+	{
+		int colorcoount = NodeArray[0].GetChildNum();
+		if(colorcoount>0)
+		{
+			stExpCocoNode *colorArray = NodeArray[0].GetChildArray();
+			for (int i = 0; i < colorcoount; ++i)
+			{
+				std::string key = colorArray[i].GetName(pCocoLoader);
+				str = colorArray[i].GetValue();
+				if (key.compare(A_ALPHA) == 0)
+				{
+					node->a = atoi(str);
+				}
+				else if (key.compare(A_RED) == 0)
+				{
+					node->r = atoi(str);
+				}
+				else if (key.compare(A_GREEN) == 0)
+				{
+					node->g = atoi(str);
+				}
+				else if (key.compare(A_BLUE) == 0)
+				{
+					node->b = atoi(str);
+				}
+			}
+			node->isUseColorInfo = true;
+		}
+	}
 }
 
 NS_CC_EXT_END

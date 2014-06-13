@@ -279,7 +279,7 @@ void SpriteComponentTest::onExit()
 
 cocos2d::CCNode* SpriteComponentTest::createGameScene()
 {
-    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/SpriteComponentTest/SpriteComponentTest.json");
+    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/SpriteComponentTest/SpriteComponentTest.csb");
 	if (pNode == NULL)
 	{
 		return NULL;
@@ -334,7 +334,7 @@ void ArmatureComponentTest::onExit()
 
 cocos2d::CCNode* ArmatureComponentTest::createGameScene()
 {
-    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/ArmatureComponentTest/ArmatureComponentTest.json");
+    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/ArmatureComponentTest/ArmatureComponentTest.csb");
 	if (pNode == NULL)
 	{
 		return NULL;
@@ -385,7 +385,7 @@ void UIComponentTest::onExit()
 
 cocos2d::CCNode* UIComponentTest::createGameScene()
 {
-    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/UIComponentTest/UIComponentTest.json");
+    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/UIComponentTest/UIComponentTest.csb");
 	if (pNode == NULL)
 	{
 		return NULL;
@@ -457,7 +457,7 @@ void TmxMapComponentTest::onExit()
 
 cocos2d::CCNode* TmxMapComponentTest::createGameScene()
 {
-    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/TmxMapComponentTest/TmxMapComponentTest.json");
+    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/TmxMapComponentTest/TmxMapComponentTest.csb");
 	if (pNode == NULL)
 	{
 		return NULL;
@@ -514,7 +514,7 @@ void ParticleComponentTest::onExit()
 
 cocos2d::CCNode* ParticleComponentTest::createGameScene()
 {
-    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/ParticleComponentTest/ParticleComponentTest.json");
+    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/ParticleComponentTest/ParticleComponentTest.csb");
 	if (pNode == NULL)
 	{
 		return NULL;
@@ -565,7 +565,7 @@ void EffectComponentTest::onExit()
 
 cocos2d::CCNode* EffectComponentTest::createGameScene()
 {
-    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/EffectComponentTest/EffectComponentTest.json");
+    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/EffectComponentTest/EffectComponentTest.csb");
 	if (pNode == NULL)
 	{
 		return NULL;
@@ -628,7 +628,7 @@ void BackgroundComponentTest::onExit()
 
 cocos2d::CCNode* BackgroundComponentTest::createGameScene()
 {
-    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/BackgroundComponentTest/BackgroundComponentTest.json");
+    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/BackgroundComponentTest/BackgroundComponentTest.csb");
 	if (pNode == NULL)
 	{
 		return NULL;
@@ -691,7 +691,7 @@ bool AttributeComponentTest::initData()
 
 cocos2d::CCNode* AttributeComponentTest::createGameScene()
 {
-    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/AttributeComponentTest/AttributeComponentTest.json");
+    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/AttributeComponentTest/AttributeComponentTest.csb");
 	if (pNode == NULL)
 	{
 		return NULL;
@@ -774,7 +774,7 @@ static ActionObject* actionObject = NULL;
 
 cocos2d::CCNode* TriggerTest::createGameScene()
 {
-    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/TriggerTest/TriggerTest.json");
+    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/TriggerTest/TriggerTest.csb");
 	if (pNode == NULL)
 	{
 		return NULL;

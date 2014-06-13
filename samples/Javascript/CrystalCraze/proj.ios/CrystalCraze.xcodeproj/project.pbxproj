@@ -197,6 +197,7 @@
 		37FFCAB518606ECE0078F312 /* CCActionEaseEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37FFCAB318606ECE0078F312 /* CCActionEaseEx.cpp */; };
 		3EC20B941833588F00F2C4D6 /* jsb_cocos2d_studio.js in Sources */ = {isa = PBXBuildFile; fileRef = 3EC20B931833588F00F2C4D6 /* jsb_cocos2d_studio.js */; };
 		3EC20B95183358A300F2C4D6 /* jsb_cocos2d_studio.js in Resources */ = {isa = PBXBuildFile; fileRef = 3EC20B931833588F00F2C4D6 /* jsb_cocos2d_studio.js */; };
+		43B91EED1949BA6F00F7F815 /* CocoLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 43B91EEB1949BA6F00F7F815 /* CocoLoader.cpp */; };
 		460E538E182B72470040458A /* UILayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460E538A182B72470040458A /* UILayout.cpp */; };
 		460E538F182B72470040458A /* UILayoutParameter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460E538C182B72470040458A /* UILayoutParameter.cpp */; };
 		460E5394182B72620040458A /* GUIReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460E5390182B72620040458A /* GUIReader.cpp */; };
@@ -615,6 +616,8 @@
 		37FFCAC018606EDF0078F312 /* stringbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringbuffer.h; sourceTree = "<group>"; };
 		37FFCAC118606EDF0078F312 /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
 		3EC20B931833588F00F2C4D6 /* jsb_cocos2d_studio.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocos2d_studio.js; sourceTree = "<group>"; };
+		43B91EEB1949BA6F00F7F815 /* CocoLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocoLoader.cpp; sourceTree = "<group>"; };
+		43B91EEC1949BA6F00F7F815 /* CocoLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoLoader.h; sourceTree = "<group>"; };
 		460E538A182B72470040458A /* UILayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILayout.cpp; sourceTree = "<group>"; };
 		460E538B182B72470040458A /* UILayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILayout.h; sourceTree = "<group>"; };
 		460E538C182B72470040458A /* UILayoutParameter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILayoutParameter.cpp; sourceTree = "<group>"; };
@@ -1318,6 +1321,8 @@
 				37FFCAB618606EDF0078F312 /* rapidjson */,
 				1A36F72F17EFE7A8000D0275 /* DictionaryHelper.cpp */,
 				1A36F73017EFE7A8000D0275 /* DictionaryHelper.h */,
+				43B91EEB1949BA6F00F7F815 /* CocoLoader.cpp */,
+				43B91EEC1949BA6F00F7F815 /* CocoLoader.h */,
 			);
 			path = Json;
 			sourceTree = "<group>";
@@ -1787,6 +1792,7 @@
 				15A3CF7B1682C2B8002FB0C5 /* CCEditBox.cpp in Sources */,
 				15A3CF7D1682C2B8002FB0C5 /* CCEditBoxImplIOS.mm in Sources */,
 				15A3CF7F1682C2B8002FB0C5 /* CCScrollView.cpp in Sources */,
+				43B91EED1949BA6F00F7F815 /* CocoLoader.cpp in Sources */,
 				15A3CF801682C2B8002FB0C5 /* CCSorting.cpp in Sources */,
 				15A3CF811682C2B8002FB0C5 /* CCTableView.cpp in Sources */,
 				15A3CF821682C2B8002FB0C5 /* CCTableViewCell.cpp in Sources */,

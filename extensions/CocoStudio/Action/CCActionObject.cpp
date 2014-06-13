@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "CCActionObject.h"
 #include "CCActionNode.h"
 #include "../Json//DictionaryHelper.h"
+#include "../Json/CocoLoader.h"
 
 NS_CC_EXT_BEGIN
 
@@ -49,8 +50,9 @@ NS_CC_EXT_BEGIN
 
 ActionObject::~ActionObject()
 {
-	m_ActionNodeList->removeAllObjects();
-	m_ActionNodeList->release();
+	//m_ActionNodeList->removeAllObjects();
+	//m_ActionNodeList->release();
+    CC_SAFE_RELEASE_NULL(m_ActionNodeList);
 
 	CC_SAFE_RELEASE(m_pScheduler);
 }
@@ -131,6 +133,70 @@ void ActionObject::initWithDictionary(const rapidjson::Value& dic,CCObject* root
 
 	m_fTotalTime = maxLength*m_fUnitTime;
 }
+
+
+
+void ActionObject::initWithBinary(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode, cocos2d::CCObject *root)
+{
+    stExpCocoNode *stChildNode = pCocoNode->GetChildArray();
+    stExpCocoNode *actionNodeList;
+    int count = pCocoNode->GetChildNum();
+    for (int i = 0; i < count; ++i) {
+        std::string key = stChildNode[i].GetName(pCocoLoader);
+        std::string value = stChildNode[i].GetValue();
+        if (key == "name") {
+            setName(value.c_str());
+        }else if (key == "loop"){
+            setLoop(valueToBool(value));
+        }else if(key == "unittime"){
+            setUnitTime(valueToFloat(value));
+        }else if (key == "actionnodelist"){
+            actionNodeList = &stChildNode[i];
+        }
+    }
+    
+    int actionNodeCount = actionNodeList->GetChildNum();
+
+    int maxLength = 0;
+	for (int i=0; i<actionNodeCount; i++) {
+		ActionNode* actionNode = new ActionNode();
+		actionNode->autorelease();
+        
+		actionNode->initWithBinary(pCocoLoader, actionNodeList, root);
+        
+		actionNode->setUnitTime(getUnitTime());
+        
+		m_ActionNodeList->addObject(actionNode);
+        
+		int length = actionNode->getLastFrameIndex() - actionNode->getFirstFrameIndex();
+		if(length > maxLength)
+        maxLength = length;
+	}
+    
+	m_fTotalTime = maxLength*m_fUnitTime;
+    
+    
+}
+
+int ActionObject::valueToInt(std::string& value)
+{
+    return atoi(value.c_str());
+}
+bool ActionObject::valueToBool(std::string& value)
+{
+    int intValue = valueToInt(value);
+    if (1 == intValue) {
+        return true;
+    }else{
+        return false;
+    }
+}
+float ActionObject::valueToFloat(std::string& value)
+{
+    return atof(value.c_str());
+}
+
+
 
 void ActionObject::addActionNode(ActionNode* node)
 {

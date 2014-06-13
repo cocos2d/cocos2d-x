@@ -123,4 +123,230 @@ void LayoutReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
     WidgetReader::setColorPropsFromJsonDictionary(widget, options);
 }
 
+void LayoutReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode)
+{
+    WidgetReader::setPropsFromBinary(widget, pCocoLoader, pCocoNode);
+    
+    ui::Layout* panel = static_cast<ui::Layout*>(widget);
+    
+    float w = 0, h= 0;
+    
+    stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+    this->beginSetBasicProperties(widget);
+    
+    int cr=0, cg = 0, cb = 0;
+    int scr=0, scg=0, scb=0;
+    int ecr=0, ecg=0, ecb= 0;
+    float bgcv1 = 0.0f, bgcv2= 0.0f;
+    float capsx = 0.0f, capsy = 0.0, capsWidth = 0.0, capsHeight = 0.0f;
+    bool isAdaptScreen = false;
+    ui::LayoutType layoutType;
+    
+    for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
+        std::string key = stChildArray[i].GetName(pCocoLoader);
+        std::string value = stChildArray[i].GetValue();
+        //            CCLOG("Layout: key = %s, value = %d", key.c_str(), i);
+        if (key == "ignoreSize") {
+            widget->ignoreContentAdaptWithSize(valueToBool(value));
+        }else if(key == "sizeType"){
+            widget->setSizeType((ui::SizeType)valueToInt(value));
+        }else if(key == "positionType"){
+            widget->setPositionType((ui::PositionType)valueToInt(value));
+        }else if(key == "sizePercentX"){
+            sizePercentX = valueToFloat(value);
+        }else if(key == "sizePercentY"){
+            sizePercentY = valueToFloat(value);
+        }else if(key == "positionPercentX"){
+            positionPercentX = valueToFloat(value);
+        }else if(key == "positionPercentY"){
+            positionPercentY = valueToFloat(value);
+        }
+        else if(key == "adaptScreen"){
+            isAdaptScreen = valueToBool(value);
+        }
+        else if (key == "width"){
+            width = valueToFloat(value);
+        }else if(key == "height"){
+            height = valueToFloat(value);
+        }else if(key == "tag"){
+            widget->setTag(valueToInt(value));
+        }else if(key == "actiontag"){
+            widget->setActionTag(valueToInt(value));
+        }else if(key == "touchAble"){
+            widget->setTouchEnabled(valueToBool(value));
+        }else if(key == "name"){
+            std::string widgetName = value.empty() ? "default" : value;
+            widget->setName(widgetName.c_str());
+        }else if(key == "x"){
+            position.x = valueToFloat(value);
+        }else if(key == "y"){
+            position.y = valueToFloat(value);
+        }else if(key == "scaleX"){
+            widget->setScaleX(valueToFloat(value));
+        }else if(key == "scaleY"){
+            widget->setScaleY(valueToFloat(value));
+        }else if(key == "rotation"){
+            widget->setRotation(valueToFloat(value));
+        }else if(key == "visible"){
+            widget->setVisible(valueToBool(value));
+        }else if(key == "ZOrder"){
+            widget->setZOrder(valueToInt(value));
+        }else if(key == "layoutParameter"){
+            stExpCocoNode *layoutCocosNode = stChildArray[i].GetChildArray();
+            
+            ui::LinearLayoutParameter *linearParameter = ui::LinearLayoutParameter::create();
+            ui::RelativeLayoutParameter *relativeParameter = ui::RelativeLayoutParameter::create();
+            ui::Margin mg;
+            
+            int paramType = -1;
+            for (int j = 0; j < stChildArray[i].GetChildNum(); ++j) {
+                std::string innerKey = layoutCocosNode[j].GetName(pCocoLoader);
+                std::string innerValue = layoutCocosNode[j].GetValue();
+                
+                if (innerKey == "type") {
+                    paramType = valueToInt(innerValue);
+                }else if(innerKey == "gravity"){
+                    linearParameter->setGravity((cocos2d::ui::LinearGravity)valueToInt(innerValue));
+                }else if(innerKey == "relativeName"){
+                    relativeParameter->setRelativeName(innerValue.c_str());
+                }else if(innerKey == "relativeToName"){
+                    relativeParameter->setRelativeToWidgetName(innerValue.c_str());
+                }else if(innerKey == "align"){
+                    relativeParameter->setAlign((cocos2d::ui::RelativeAlign)valueToInt(innerValue));
+                }else if(innerKey == "marginLeft"){
+                    mg.left = valueToFloat(innerValue);
+                }else if(innerKey == "marginTop"){
+                    mg.top = valueToFloat(innerValue);
+                }else if(innerKey == "marginRight"){
+                    mg.right = valueToFloat(innerValue);
+                }else if(innerKey == "marginDown"){
+                    mg.bottom = valueToFloat(innerValue);
+                }
+            }
+            
+            linearParameter->setMargin(mg);
+            relativeParameter->setMargin(mg);
+            
+            switch (paramType) {
+                case 1:
+                widget->setLayoutParameter(linearParameter);
+                break;
+                case 2:
+                widget->setLayoutParameter(relativeParameter);
+                default:
+                break;
+            }
+        }
+        
+        else if (key == "opacity") {
+            widget->setOpacity(valueToInt(value));
+        }else if(key == "colorR"){
+            ccColor3B color = widget->getColor();
+            widget->setColor(ccc3(valueToInt(value), color.g, color.b));
+        }else if(key == "colorG"){
+            ccColor3B color = widget->getColor();
+            widget->setColor(ccc3( color.r, valueToInt(value), color.b));
+        }else if(key == "colorB")
+        {
+            ccColor3B color = widget->getColor();
+            widget->setColor(ccc3( color.r,  color.g , valueToInt(value)));
+        }else if(key == "flipX"){
+            widget->setFlipX(valueToBool(value));
+        }else if(key == "flipY"){
+            widget->setFlipY(valueToBool(value));
+        }else if(key == "anchorPointX"){
+            originalAnchorPoint.x = valueToFloat(value);
+        }else if(key == "anchorPointY"){
+            originalAnchorPoint.y = valueToFloat(value);
+        }
+        else if (key == "adaptScreen") {
+            isAdaptScreen = valueToBool(value);
+        }
+        else if(key == "width"){
+            w = valueToFloat(value);
+        }
+        else if(key == "height"){
+            h = valueToFloat(value);
+        }
+        else if( key == "clipAble"){
+            panel->setClippingEnabled(valueToBool(value));
+        }else if(key == "backGroundScale9Enable"){
+            panel->setBackGroundImageScale9Enabled(valueToBool(value));
+        }else if(key == "bgColorR"){
+            cr = valueToInt(value);
+        }else if(key == "bgColorG"){
+            cg = valueToInt(value);
+        }else if(key == "bgColorB")
+        {
+            cb = valueToInt(value);
+        }else if(key == "bgStartColorR"){
+            scr = valueToInt(value);
+        }else if(key == "bgStartColorG"){
+            scg = valueToInt(value);
+        }else if(key == "bgStartColorB")
+        {
+            scb = valueToInt(value);
+        }
+        else if(key == "bgEndColorR"){
+            ecr = valueToInt(value);
+        }else if(key == "bgEndColorG"){
+            ecg = valueToInt(value);
+        }else if(key == "bgEndColorB")
+        {
+            ecb = valueToInt(value);
+        }else if (key == "vectorX"){
+            bgcv1 = valueToFloat(value);
+        }else if(key == "vectorY"){
+            bgcv2 = valueToFloat(value);
+        }else if(key == "bgColorOpacity"){
+            panel->setBackGroundColorOpacity(valueToInt(value));
+        }else if( key == "colorType"){
+            panel->setBackGroundColorType(ui::LayoutBackGroundColorType(valueToInt(value)));
+        }else if (key == "backGroundImageData"){
+            
+            stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
+            if (backGroundChildren) {
+                std::string resType = backGroundChildren[2].GetValue();;
+                
+                ui::TextureResType imageFileNameType = (ui::TextureResType)valueToInt(resType);
+                
+                std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+                //                    CCLOG("Layout : image =%s", backgroundValue.c_str());
+                
+                panel->setBackGroundImage(backgroundValue.c_str(), imageFileNameType);
+            }
+            
+        }else if(key == "capInsetsX"){
+            capsx = valueToFloat(value);
+        }else if(key == "capInsetsY"){
+            capsy = valueToFloat(value);
+        }else if(key == "capInsetsWidth"){
+            capsWidth = valueToFloat(value);
+        }else if(key == "capInsetsHeight"){
+            capsHeight = valueToFloat(value);
+        }else if (key == "layoutType"){
+            layoutType = (ui::LayoutType)valueToInt(value);
+        }
+        
+    }
+    
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    if (isAdaptScreen) {
+        w = screenSize.width;
+        h = screenSize.height;
+    }
+    panel->setSize(CCSize(w,h));
+    
+    panel->setBackGroundColor(ccc3(scr, scg, scb),ccc3(ecr, ecg, ecb));
+    panel->setBackGroundColor(ccc3(cr, cg, cb));
+    panel->setBackGroundColorVector(CCPoint(bgcv1, bgcv2));
+    
+    if (panel->isBackGroundImageScale9Enabled()) {
+        panel->setBackGroundImageCapInsets(CCRect(capsx, capsy, capsWidth, capsHeight));
+    }
+    
+    panel->setLayoutType(layoutType);
+    this->endSetBasicProperties(widget);
+}
+
 NS_CC_EXT_END

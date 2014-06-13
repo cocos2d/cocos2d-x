@@ -45,6 +45,29 @@ public:
     
     virtual void setPropsFromJsonDictionary(ui::Widget* widget, const rapidjson::Value& options);
     virtual void setColorPropsFromJsonDictionary(ui::Widget* widget, const rapidjson::Value& options);
+    virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* pCocoLoader,  stExpCocoNode*	pCocoNode){}
+protected:
+    void beginSetBasicProperties(cocos2d::ui::Widget *widget);
+    void endSetBasicProperties(cocos2d::ui::Widget *widget);
+    
+    
+    int valueToInt(std::string& value);
+    bool valueToBool(std::string& value);
+    float valueToFloat(std::string& value);
+    std::string getResourcePath(CocoLoader* pCocoLoader,
+                                stExpCocoNode*	pCocoNode,
+                                cocos2d::ui::TextureResType texType);
+    
+    float sizePercentX;
+    float sizePercentY;
+    float positionPercentX;
+    float positionPercentY;
+    float width ;
+    float height;
+    cocos2d::CCPoint position;
+    bool isAdaptScreen;
+    cocos2d::CCPoint originalAnchorPoint;
+    
 };
 
 NS_CC_EXT_END

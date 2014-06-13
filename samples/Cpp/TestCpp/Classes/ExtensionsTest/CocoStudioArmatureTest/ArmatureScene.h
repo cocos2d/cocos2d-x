@@ -44,6 +44,7 @@ enum {
     TEST_PLAY_SEVERAL_MOVEMENT,
     TEST_EASING,
     TEST_CHANGE_ANIMATION_INTERNAL,
+	TEST_DIRECT_FROM_BINARY,
 
 	TEST_LAYER_COUNT
 };
@@ -391,5 +392,29 @@ public:
 
     virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
     virtual void registerWithTouchDispatcher();
+};
+
+
+
+#define BINARYFILECOUNT 6
+class TestLoadFromBinary : public ArmatureTestLayer
+{
+public:
+	virtual void onEnter();
+	virtual void onExit();
+	virtual std::string title();
+	virtual std::string subtitle();
+
+	virtual bool ccTouchBegan(CCTouch* pTouch, CCEvent* pEnvent);
+	virtual void registerWithTouchDispatcher();
+
+
+	void dataLoaded(float percent);
+
+private:
+	cocos2d::extension::CCArmature *m_armature; // current armature
+	static const char*  m_binaryFilesNames[BINARYFILECOUNT];
+	static const char*  m_armatureNames[BINARYFILECOUNT];
+	int m_armatureIndex;   // index of sync loaded armature, default -1 is none
 };
 #endif  // __HELLOWORLD_SCENE_H__

@@ -33,4 +33,11 @@ void PageViewReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidj
     LayoutReader::setPropsFromJsonDictionary(widget, options);
 }
 
+void PageViewReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode)
+{
+    LayoutReader::setPropsFromBinary(widget, pCocoLoader, pCocoNode);
+}
+
+
+
 NS_CC_EXT_END

@@ -40,6 +40,8 @@ public:
     static LabelAtlasReader* getInstance();
     
     virtual void setPropsFromJsonDictionary(ui::Widget* widget, const rapidjson::Value& options);
+    virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* pCocoLoader,  stExpCocoNode*	pCocoNode) ;
+
 };
 
 NS_CC_EXT_END

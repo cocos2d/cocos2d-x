@@ -190,4 +190,199 @@ void SliderReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
     WidgetReader::setColorPropsFromJsonDictionary(widget, options);
 }
 
+void SliderReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode)
+{
+    this->beginSetBasicProperties(widget);
+    
+    ui::Slider* slider = static_cast<ui::Slider*>(widget);
+    
+    float barLength = 0.0f;
+    stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+    
+    for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
+        std::string key = stChildArray[i].GetName(pCocoLoader);
+        std::string value = stChildArray[i].GetValue();
+        
+        if (key == "ignoreSize") {
+            widget->ignoreContentAdaptWithSize(valueToBool(value));
+        }else if(key == "sizeType"){
+            widget->setSizeType((ui::SizeType)valueToInt(value));
+        }else if(key == "positionType"){
+            widget->setPositionType((ui::PositionType)valueToInt(value));
+        }else if(key == "sizePercentX"){
+            sizePercentX = valueToFloat(value);
+        }else if(key == "sizePercentY"){
+            sizePercentY = valueToFloat(value);
+        }else if(key == "positionPercentX"){
+            positionPercentX = valueToFloat(value);
+        }else if(key == "positionPercentY"){
+            positionPercentY = valueToFloat(value);
+        }
+        else if(key == "adaptScreen"){
+            isAdaptScreen = valueToBool(value);
+        }
+        else if (key == "width"){
+            width = valueToFloat(value);
+        }else if(key == "height"){
+            height = valueToFloat(value);
+        }else if(key == "tag"){
+            widget->setTag(valueToInt(value));
+        }else if(key == "actiontag"){
+            widget->setActionTag(valueToInt(value));
+        }else if(key == "touchAble"){
+            widget->setTouchEnabled(valueToBool(value));
+        }else if(key == "name"){
+            std::string widgetName = value.empty() ? "default" : value;
+            widget->setName(widgetName.c_str());
+        }else if(key == "x"){
+            position.x = valueToFloat(value);
+        }else if(key == "y"){
+            position.y = valueToFloat(value);
+        }else if(key == "scaleX"){
+            widget->setScaleX(valueToFloat(value));
+        }else if(key == "scaleY"){
+            widget->setScaleY(valueToFloat(value));
+        }else if(key == "rotation"){
+            widget->setRotation(valueToFloat(value));
+        }else if(key == "visible"){
+            widget->setVisible(valueToBool(value));
+        }else if(key == "ZOrder"){
+            widget->setZOrder(valueToInt(value));
+        }else if(key == "layoutParameter"){
+            stExpCocoNode *layoutCocosNode = stChildArray[i].GetChildArray();
+            
+            ui::LinearLayoutParameter *linearParameter = ui::LinearLayoutParameter::create();
+            ui::RelativeLayoutParameter *relativeParameter = ui::RelativeLayoutParameter::create();
+            ui::Margin mg;
+            
+            int paramType = -1;
+            for (int j = 0; j < stChildArray[i].GetChildNum(); ++j) {
+                std::string innerKey = layoutCocosNode[j].GetName(pCocoLoader);
+                std::string innerValue = layoutCocosNode[j].GetValue();
+                
+                if (innerKey == "type") {
+                    paramType = valueToInt(innerValue);
+                }else if(innerKey == "gravity"){
+                    linearParameter->setGravity((cocos2d::ui::LinearGravity)valueToInt(innerValue));
+                }else if(innerKey == "relativeName"){
+                    relativeParameter->setRelativeName(innerValue.c_str());
+                }else if(innerKey == "relativeToName"){
+                    relativeParameter->setRelativeToWidgetName(innerValue.c_str());
+                }else if(innerKey == "align"){
+                    relativeParameter->setAlign((cocos2d::ui::RelativeAlign)valueToInt(innerValue));
+                }else if(innerKey == "marginLeft"){
+                    mg.left = valueToFloat(innerValue);
+                }else if(innerKey == "marginTop"){
+                    mg.top = valueToFloat(innerValue);
+                }else if(innerKey == "marginRight"){
+                    mg.right = valueToFloat(innerValue);
+                }else if(innerKey == "marginDown"){
+                    mg.bottom = valueToFloat(innerValue);
+                }
+            }
+            
+            linearParameter->setMargin(mg);
+            relativeParameter->setMargin(mg);
+            
+            switch (paramType) {
+                case 1:
+                    widget->setLayoutParameter(linearParameter);
+                    break;
+                case 2:
+                    widget->setLayoutParameter(relativeParameter);
+                default:
+                    break;
+            }
+        }
+        
+        else if (key == "opacity") {
+            widget->setOpacity(valueToInt(value));
+        }else if(key == "colorR"){
+            ccColor3B color = widget->getColor();
+            widget->setColor(ccc3(valueToInt(value), color.g, color.b));
+        }else if(key == "colorG"){
+            ccColor3B color = widget->getColor();
+            widget->setColor(ccc3( color.r, valueToInt(value), color.b));
+        }else if(key == "colorB")
+        {
+            ccColor3B color = widget->getColor();
+            widget->setColor(ccc3( color.r,  color.g , valueToInt(value)));
+        }else if(key == "flipX"){
+            widget->setFlipX(valueToBool(value));
+        }else if(key == "flipY"){
+            widget->setFlipY(valueToBool(value));
+        }else if(key == "anchorPointX"){
+            originalAnchorPoint.x = valueToFloat(value);
+        }else if(key == "anchorPointY"){
+            originalAnchorPoint.y = valueToFloat(value);
+        }
+        //control custom properties
+        else if (key == "scale9Enable") {
+            slider->setScale9Enabled(valueToBool(value));
+        }
+        else if(key == "percent"){
+            slider->setPercent(valueToInt(value));
+        }else if(key == "barFileNameData"){
+            stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
+            std::string resType = backGroundChildren[2].GetValue();;
+            
+            ui::TextureResType imageFileNameType = (ui::TextureResType)valueToInt(resType);
+            
+            std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+            
+            slider->loadBarTexture(backgroundValue.c_str(), imageFileNameType);
+            
+        }else if(key == "length"){
+            barLength = valueToFloat(value);
+        }else if(key == "ballNormalData"){
+            stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
+            std::string resType = backGroundChildren[2].GetValue();;
+            
+            ui::TextureResType imageFileNameType = (ui::TextureResType)valueToInt(resType);
+            
+            std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+            
+            slider->loadSlidBallTextureNormal(backgroundValue.c_str(), imageFileNameType);
+            
+        }else if(key == "ballPressedData"){
+            stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
+            std::string resType = backGroundChildren[2].GetValue();;
+            
+            ui::TextureResType imageFileNameType = (ui::TextureResType)valueToInt(resType);
+            
+            std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+            
+            slider->loadSlidBallTexturePressed(backgroundValue.c_str(), imageFileNameType);
+            
+        }else if(key == "ballDisabledData"){
+            stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
+            std::string resType = backGroundChildren[2].GetValue();;
+            
+            ui::TextureResType imageFileNameType = (ui::TextureResType)valueToInt(resType);
+            
+            std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+            
+            slider->loadSlidBallTextureDisabled(backgroundValue.c_str(), imageFileNameType);
+            
+        }else if(key == "progressBarData"){
+            stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
+            std::string resType = backGroundChildren[2].GetValue();;
+            
+            ui::TextureResType imageFileNameType = (ui::TextureResType)valueToInt(resType);
+            
+            std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+            
+            slider->loadProgressBarTexture(backgroundValue.c_str(), imageFileNameType);
+            
+        }
+        
+    } //end of for loop
+    
+    if (slider->isScale9Enabled()) {
+        slider->setSize(CCSize(barLength, slider->getContentSize().height));
+    }
+    
+    this->endSetBasicProperties(widget);
+}
+
 NS_CC_EXT_END

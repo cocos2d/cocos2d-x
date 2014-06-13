@@ -42,7 +42,6 @@
 #include "WidgetReader/ScrollViewReader/ScrollViewReader.h"
 #include "WidgetReader/ListViewReader/ListViewReader.h"
 
-
 NS_CC_EXT_BEGIN
 
 using namespace cocos2d::ui;
@@ -182,6 +181,73 @@ void GUIReader::registerTypeAndCallBack(const std::string& classType,
     }
 }
 
+cocos2d::ui::Widget* GUIReader::widgetFromBinaryFile(const char *fileName)
+{
+    std::string jsonpath;
+    rapidjson::Document jsonDict;
+    jsonpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(fileName);
+    size_t pos = jsonpath.find_last_of('/');
+    m_strFilePath = jsonpath.substr(0,pos+1);
+    unsigned long nSize = 0;
+    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(fileName);
+    unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str(), "rb", &nSize);
+    
+    const char* fileVersion = "";
+    ui::Widget* widget = NULL;
+    
+    if (pBuffer != NULL && nSize > 0)
+    {
+        CocoLoader	tCocoLoader;
+        if(true == tCocoLoader.ReadCocoBinBuff((char*)pBuffer))
+        {
+            stExpCocoNode*	tpRootCocoNode = tCocoLoader.GetRootCocoNode();
+            
+            rapidjson::Type tType = tpRootCocoNode->GetType(&tCocoLoader);
+            if (rapidjson::kObjectType == tType || rapidjson::kArrayType == tType)
+            {
+                stExpCocoNode *tpChildArray = tpRootCocoNode->GetChildArray();
+                
+                
+                for (int i = 0; i < tpRootCocoNode->GetChildNum(); ++i) {
+                    std::string key = tpChildArray[i].GetName(&tCocoLoader);
+                    if (key == "version") {
+                        fileVersion = tpChildArray[i].GetValue();
+                        break;
+                    }
+                }
+                
+                WidgetPropertiesReader * pReader = NULL;
+                if (fileVersion)
+                {
+                    int versionInteger = getVersionInteger(fileVersion);
+                    if (versionInteger < 250)
+                    {
+                        CCAssert(0, "You current studio doesn't support binary format, please upgrade to the latest version!");
+                        pReader = new WidgetPropertiesReader0250();
+                        widget = pReader->createWidgetFromBinary(&tCocoLoader, tpRootCocoNode, fileName);
+                    }
+                    else
+                    {
+                        pReader = new WidgetPropertiesReader0300();
+                        widget = pReader->createWidgetFromBinary(&tCocoLoader, tpRootCocoNode, fileName);
+                    }
+                }
+                else
+                {
+                    pReader = new WidgetPropertiesReader0250();
+                    widget = pReader->createWidgetFromBinary(&tCocoLoader, tpRootCocoNode, fileName);
+                }
+                
+                CC_SAFE_DELETE(pReader);
+                
+            }
+        }
+    }
+    
+    CC_SAFE_DELETE_ARRAY(pBuffer);
+    
+    return widget;
+}
 
 cocos2d::ui::Widget* GUIReader::widgetFromJsonFile(const char *fileName)
 {
@@ -233,6 +299,130 @@ cocos2d::ui::Widget* GUIReader::widgetFromJsonFile(const char *fileName)
     CC_SAFE_DELETE_ARRAY(pBytes);
     return widget;
 }
+
+cocos2d::ui::Widget* WidgetPropertiesReader::createGUI(const std::string &classname)
+{
+    std::string name = this->getGUIClassName(classname);
+    
+    CCObject* object = ObjectFactory::getInstance()->createObject(name);
+    
+    return dynamic_cast<ui::Widget*>(object);
+}
+
+WidgetReaderProtocol* WidgetPropertiesReader::createWidgetReaderProtocol(const std::string &classname)
+{
+    CCObject* object = ObjectFactory::getInstance()->createObject(classname);
+    
+    return dynamic_cast<WidgetReaderProtocol*>(object);
+}
+
+
+std::string  WidgetPropertiesReader::getWidgetReaderClassName(const std::string& classname)
+{
+    // create widget reader to parse properties of widget
+    std::string readerName = classname;
+    if (readerName == "Panel")
+    {
+        readerName = "Layout";
+    }
+    else if (readerName == "LabelArea")
+    {
+        readerName = "Label";
+    }
+    else if (readerName == "TextButton")
+    {
+        readerName = "Button";
+    }
+    readerName.append("Reader");
+    return readerName;
+}
+
+
+std::string WidgetPropertiesReader::getGUIClassName(const std::string &name)
+{
+    std::string convertedClassName = name;
+    if (name == "Panel")
+    {
+        convertedClassName = "Layout";
+    }
+    else if (name == "TextArea")
+    {
+        convertedClassName = "Label";
+    }
+    else if (name == "TextButton")
+    {
+        convertedClassName = "Button";
+    }
+    
+    
+    return convertedClassName;
+}
+
+std::string WidgetPropertiesReader::getWidgetReaderClassName(Widget* widget)
+{
+    std::string readerName;
+    
+    // 1st., custom widget parse properties of parent widget with parent widget reader
+    if (dynamic_cast<Button*>(widget))
+    {
+        readerName = "ButtonReader";
+    }
+    else if (dynamic_cast<CheckBox*>(widget))
+    {
+        readerName = "CheckBoxReader";
+    }
+    else if (dynamic_cast<ImageView*>(widget))
+    {
+        readerName = "ImageViewReader";
+    }
+    else if (dynamic_cast<LabelAtlas*>(widget))
+    {
+        readerName = "LabelAtlasReader";
+    }
+    else if (dynamic_cast<LabelBMFont*>(widget))
+    {
+        readerName = "LabelBMFontReader";
+    }
+    else if (dynamic_cast<Label*>(widget))
+    {
+        readerName = "LabelReader";
+    }
+    else if (dynamic_cast<LoadingBar*>(widget))
+    {
+        readerName = "LoadingBarReader";
+    }
+    else if (dynamic_cast<Slider*>(widget))
+    {
+        readerName = "SliderReader";
+    }
+    else if (dynamic_cast<TextField*>(widget))
+    {
+        readerName = "TextFieldReader";
+    }
+    else if (dynamic_cast<Layout*>(widget))
+    {
+        readerName = "LayoutReader";
+    }
+    else if (dynamic_cast<ScrollView*>(widget))
+    {
+        readerName = "ScrollViewReader";
+    }
+    else if (dynamic_cast<ListView*>(widget))
+    {
+        readerName = "ListViewReader";
+    }
+    else if (dynamic_cast<PageView*>(widget))
+    {
+        readerName = "PageViewReader";
+    }
+    else if (dynamic_cast<Widget*>(widget))
+    {
+        readerName = "WidgetReader";
+    }
+    
+    return readerName;
+}
+
 
 
 
@@ -996,21 +1186,9 @@ cocos2d::ui::Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const 
     cocos2d::ui::Widget* widget = ObjectFactory::getInstance()->createGUI(classname);
     
     // create widget reader to parse properties of widget
-    std::string readerName = classname;
-    if (readerName == "Panel")
-    {
-        readerName = "Layout";
-    }
-    else if (readerName == "TextArea")
-    {
-        readerName = "Label";
-    }
-    else if (readerName == "TextButton")
-    {
-        readerName = "Button";
-    }
-    readerName.append("Reader");
-    WidgetReaderProtocol* reader = ObjectFactory::getInstance()->createWidgetReaderProtocol(readerName);
+    std::string readerName = getWidgetReaderClassName(classname);
+    
+    WidgetReaderProtocol* reader = this->createWidgetReaderProtocol(readerName);
     
     if (reader)
     {
@@ -1020,63 +1198,8 @@ cocos2d::ui::Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const 
     else
     {
         // 1st., custom widget parse properties of parent widget with parent widget reader
-        if (dynamic_cast<Button*>(widget))
-        {
-            readerName = "ButtonReader";
-        }
-        else if (dynamic_cast<CheckBox*>(widget))
-        {
-            readerName = "CheckBoxReader";
-        }
-        else if (dynamic_cast<ImageView*>(widget))
-        {
-            readerName = "ImageViewReader";
-        }
-        else if (dynamic_cast<LabelAtlas*>(widget))
-        {
-            readerName = "LabelAtlasReader";
-        }
-        else if (dynamic_cast<LabelBMFont*>(widget))
-        {
-            readerName = "LabelBMFontReader";
-        }
-        else if (dynamic_cast<Label*>(widget))
-        {
-            readerName = "LabelReader";
-        }
-        else if (dynamic_cast<LoadingBar*>(widget))
-        {
-            readerName = "LoadingBarReader";
-        }
-        else if (dynamic_cast<Slider*>(widget))
-        {
-            readerName = "SliderReader";
-        }
-        else if (dynamic_cast<TextField*>(widget))
-        {
-            readerName = "TextFieldReader";
-        }
-        else if (dynamic_cast<Layout*>(widget))
-        {
-            readerName = "LayoutReader";
-        }
-        else if (dynamic_cast<ScrollView*>(widget))
-        {
-            readerName = "ScrollViewReader";
-        }
-        else if (dynamic_cast<ListView*>(widget))
-        {
-            readerName = "ListViewReader";
-        }
-        else if (dynamic_cast<PageView*>(widget))
-        {
-            readerName = "PageViewReader";
-        }
-        else if (dynamic_cast<Widget*>(widget))
-        {
-            readerName = "WidgetReader";
-        }
-        reader = ObjectFactory::getInstance()->createWidgetReaderProtocol(readerName);
+       
+        reader = this->createWidgetReaderProtocol(readerName);
         setPropsForAllWidgetFromJsonDictionary(reader, widget, uiOptions);
         
         // 2nd., custom widget parse with custom reader
@@ -2039,6 +2162,180 @@ void WidgetPropertiesReader0300::setPropsForAllCustomWidgetFromJsonDictionary(co
     {
         (object->*selector)(classType, widget, customOptions);
     }    
+}
+
+Widget* WidgetPropertiesReader0300::createWidgetFromBinary(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode, const char *fileName)
+{
+    stExpCocoNode *tpChildArray = pCocoNode->GetChildArray();
+    float fileDesignWidth;
+    float fileDesignHeight;
+    
+    Widget* widget =  NULL;
+    
+    for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
+        std::string key = tpChildArray[i].GetName(pCocoLoader);
+        
+        if (key == "textures") {
+            int texturesCount = tpChildArray[i].GetChildNum();
+            for (int j=0; j<texturesCount; j++)
+            {
+                std::string file;
+                stExpCocoNode *textureCountsArray = tpChildArray[i].GetChildArray();
+                file = textureCountsArray[j].GetValue();
+                CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(file.c_str());
+            }
+        }else if (key == "designWidth"){
+            fileDesignWidth =  atof(tpChildArray[i].GetValue());
+        }else if (key == "designHeight"){
+            fileDesignHeight = atof(tpChildArray[i].GetValue());
+        }else if (key == "widgetTree"){
+            
+            if (fileDesignWidth <= 0 || fileDesignHeight <= 0) {
+                CCLOGERROR("Read design size error!\n");
+                CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+                GUIReader::shareReader()->storeFileDesignSize(fileName, winSize);
+            }
+            else
+            {
+                GUIReader::shareReader()->storeFileDesignSize(fileName, CCSize(fileDesignWidth, fileDesignHeight));
+            }
+            
+            
+            stExpCocoNode *widgetTreeNode = &tpChildArray[i];
+            rapidjson::Type tType  = tpChildArray[i].GetType(pCocoLoader);
+            
+            if (rapidjson::kObjectType == tType)
+            {
+                widget = widgetFromBinary(pCocoLoader, widgetTreeNode);
+            }
+            
+            if (widget->getContentSize().equals(CCSize(0,0)))
+            {
+                Layout* rootWidget = dynamic_cast<Layout*>(widget);
+                rootWidget->setSize(CCSize(fileDesignWidth, fileDesignHeight));
+            }
+        }
+    }
+    
+    /* ********************** */
+    stExpCocoNode *optionChildNode = pCocoNode->GetChildArray();
+    for (int k = 0; k < pCocoNode->GetChildNum(); ++k) {
+        std::string key = optionChildNode[k].GetName(pCocoLoader);
+        if (key == "animation") {
+            CCObject* rootWidget = (CCObject*) widget;
+            ActionManager::shareManager()->initWithBinary(fileName,rootWidget,pCocoLoader, &optionChildNode[k]);
+            break;
+        }
+    }
+    
+   
+	
+    return widget;
+}
+
+cocos2d::ui::Widget* WidgetPropertiesReader0300::widgetFromBinary(CocoLoader* pCocoLoader,
+                                              stExpCocoNode*	pCocoNode)
+{
+    Widget* widget = NULL;
+    stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+    std::string classname;
+    
+    
+    std::string key = stChildArray[0].GetName(pCocoLoader);
+    classname = stChildArray[0].GetValue();
+    
+    if (key == "classname" && !classname.empty()) {
+        widget = this->createGUI(classname);
+    }
+    
+//    CCLOG("classname = %s", classname.c_str());
+    std::string readerName = this->getWidgetReaderClassName(classname);
+    
+    WidgetReaderProtocol* reader = this->createWidgetReaderProtocol(readerName);
+    
+    if (reader)
+    {
+        // widget parse with widget reader
+        setPropsForAllWidgetFromBinary(reader, widget, pCocoLoader, &stChildArray[3]);
+    }
+    else
+    {
+        // 1st., custom widget parse properties of parent widget with parent widget reader
+        readerName = this->getWidgetReaderClassName(widget);
+        reader = this->createWidgetReaderProtocol(readerName);
+        
+        setPropsForAllWidgetFromBinary(reader, widget, pCocoLoader, &stChildArray[3]);
+        
+        //2nd. parse custom property
+        const char* customProperty = NULL;
+        stExpCocoNode *optionChildNode = stChildArray[3].GetChildArray();
+        for (int k = 0; k < stChildArray[3].GetChildNum(); ++k) {
+            std::string key = optionChildNode[k].GetName(pCocoLoader);
+            if (key == "customProperty") {
+                customProperty = optionChildNode[k].GetValue();
+                break;
+            }
+        }
+        
+        rapidjson::Document customJsonDict;
+        customJsonDict.Parse<0>(customProperty);
+        if (customJsonDict.HasParseError())
+        {
+            CCLOG("GetParseError %s\n", customJsonDict.GetParseError());
+        }
+        setPropsForAllCustomWidgetFromJsonDictionary(classname, widget, customJsonDict);
+    }
+    
+    //parse children
+    stExpCocoNode* childrenArray = &stChildArray[2];
+    if (NULL != childrenArray) {
+        rapidjson::Type tType22  = stChildArray[2].GetType(pCocoLoader);
+        if (tType22 == rapidjson::kArrayType) {
+            
+            int childrenCount = childrenArray->GetChildNum();
+            stExpCocoNode* innerChildArray = childrenArray->GetChildArray();
+            for (int i=0; i < childrenCount; ++i) {
+                rapidjson::Type tType  = innerChildArray[i].GetType(pCocoLoader);
+                
+                if (tType == rapidjson::kObjectType) {
+                    
+                    Widget *child = widgetFromBinary(pCocoLoader, &innerChildArray[i]);
+                    
+                    if (child)
+                    {
+                        PageView* pageView = dynamic_cast<PageView*>(widget);
+                        if (pageView)
+                        {
+                            pageView->addPage(static_cast<Layout*>(child));
+                        }
+                        else
+                        {
+                            ListView* listView = dynamic_cast<ListView*>(widget);
+                            if (listView)
+                            {
+                                listView->pushBackCustomItem(child);
+                            }
+                            else
+                            {
+                                widget->addChild(child);
+                            }
+                        }
+                    }
+                    
+                }
+            }
+        }
+    }
+    
+    return widget;
+}
+
+void WidgetPropertiesReader0300::setPropsForAllWidgetFromBinary(WidgetReaderProtocol* reader,
+                                            cocos2d::ui::Widget* widget,
+                                            CocoLoader* pCocoLoader,
+                                            stExpCocoNode*	pCocoNode)
+{
+    reader->setPropsFromBinary(widget, pCocoLoader, pCocoNode);
 }
 
 NS_CC_EXT_END
