@@ -2218,15 +2218,18 @@ Widget* WidgetPropertiesReader0300::createWidgetFromBinary(cocos2d::extension::C
     }
     
     /* ********************** */
-    //TODO:
-    //    //    widget->setFileDesignSize(Size(fileDesignWidth, fileDesignHeight));
-    //    const rapidjson::Value& actions = DICTOOL->getSubDictionary_json(data, "animation");
-    //    /* *********temp********* */
-    //    //    ActionManager::getInstance()->releaseActions();
-    //    /* ********************** */
-    //    CCLOG("file name == [%s]",fileName);
-    //    Ref* rootWidget = (Ref*) widget;
-    //    ActionManagerEx::getInstance()->initWithDictionary(fileName,actions,rootWidget);
+    stExpCocoNode *optionChildNode = pCocoNode->GetChildArray();
+    for (int k = 0; k < pCocoNode->GetChildNum(); ++k) {
+        std::string key = optionChildNode[k].GetName(pCocoLoader);
+        if (key == "animation") {
+            CCObject* rootWidget = (CCObject*) widget;
+            ActionManager::shareManager()->initWithBinary(fileName,rootWidget,pCocoLoader, &optionChildNode[k]);
+            break;
+        }
+    }
+    
+   
+	
     return widget;
 }
 

@@ -24,6 +24,7 @@
 
 #include "CCActionManager.h"
 #include "../Json/DictionaryHelper.h"
+#include "CocoLoader.h"
 
 NS_CC_EXT_BEGIN
 
@@ -71,6 +72,24 @@ void ActionManager::initWithDictionary(const char* jsonName,const rapidjson::Val
         actionList->addObject(action);
     }
 	m_pActionDic->setObject(actionList, fileName);
+}
+
+void ActionManager::initWithBinary(const char* file, cocos2d::CCObject *root,  CocoLoader* pCocoLoader, stExpCocoNode*	pCocoNode)
+{
+    std::string path = file;
+	int pos = path.find_last_of("/");
+	std::string fileName = path.substr(pos+1,path.length());
+	CCLOG("filename == %s",fileName.c_str());
+	CCArray* actionList = CCArray::create();
+    
+    stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+    for (int i=0; i < pCocoNode->GetChildNum(); ++i) {
+        std::string key = stChildArray[i].GetName(pCocoLoader);
+        if (key == "actionlist") {
+            
+        }
+    }
+    
 }
 
 
