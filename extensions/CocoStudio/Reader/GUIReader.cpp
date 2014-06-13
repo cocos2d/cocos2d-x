@@ -2263,13 +2263,24 @@ cocos2d::ui::Widget* WidgetPropertiesReader0300::widgetFromBinary(CocoLoader* pC
         
         setPropsForAllWidgetFromBinary(reader, widget, pCocoLoader, &stChildArray[3]);
         
-        // 2nd., custom widget parse with custom reader
-        //        const char* customProperty = DICTOOL->getStringValue_json(uiOptions, "customProperty");
-        //
-        //        rapidjson::Document customJsonDict;
-        //        customJsonDict.Parse<0>(customProperty);
-        //
-        //        setPropsForAllCustomWidgetFromBinary(classname, widget, pCocoLoader, &stChildArray[3]);
+        //2nd. parse custom property
+        const char* customProperty = NULL;
+        stExpCocoNode *optionChildNode = stChildArray[3].GetChildArray();
+        for (int k = 0; k < stChildArray[3].GetChildNum(); ++k) {
+            std::string key = optionChildNode[k].GetName(pCocoLoader);
+            if (key == "customProperty") {
+                customProperty = optionChildNode[k].GetValue();
+                break;
+            }
+        }
+        
+        rapidjson::Document customJsonDict;
+        customJsonDict.Parse<0>(customProperty);
+        if (customJsonDict.HasParseError())
+        {
+            CCLOG("GetParseError %s\n", customJsonDict.GetParseError());
+        }
+        setPropsForAllCustomWidgetFromJsonDictionary(classname, widget, customJsonDict);
     }
     
     //parse children
@@ -2314,11 +2325,6 @@ cocos2d::ui::Widget* WidgetPropertiesReader0300::widgetFromBinary(CocoLoader* pC
     }
     
     return widget;
-}
-
-void WidgetPropertiesReader0300::setPropsForAllCustomWidgetFromBinary(const std::string &classType, cocos2d::ui::Widget *widget, cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode)
-{
-    
 }
 
 void WidgetPropertiesReader0300::setPropsForAllWidgetFromBinary(WidgetReaderProtocol* reader,

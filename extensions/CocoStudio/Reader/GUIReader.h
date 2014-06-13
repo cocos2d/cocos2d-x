@@ -36,6 +36,10 @@ NS_CC_EXT_BEGIN
 
 typedef void (CCObject::*SEL_ParseEvent)(const std::string&, CCObject*, const rapidjson::Value&);
 #define parseselector(_SELECTOR) (SEL_ParseEvent)(&_SELECTOR)
+typedef void (CCObject::*SEL_ParseEventBinary)(const std::string&, CCObject*, CocoLoader* pCocoLoader,
+                                               stExpCocoNode*	pCocoNode);
+#define parsebinaryselector(_SELECTOR) (SEL_ParseEventBinary)(&_SELECTOR)
+
 
 #define kCCSVersion 1.0
 /**
@@ -120,10 +124,10 @@ public:
                                                 CocoLoader* pCocoLoader,
                                                 stExpCocoNode*	pCocoNode) = 0;
     
-    virtual void setPropsForAllCustomWidgetFromBinary(const std::string& classType,
-                                                      cocos2d::ui::Widget* widget,
-                                                      CocoLoader* pCocoLoader,
-                                                      stExpCocoNode*	pCocoNode) = 0;
+//    virtual void setPropsForAllCustomWidgetFromBinary(const std::string& classType,
+//                                                      cocos2d::ui::Widget* widget,
+//                                                      CocoLoader* pCocoLoader,
+//                                                      stExpCocoNode*	pCocoNode) = 0;
     
 protected:
     std::string  getWidgetReaderClassName(const std::string& classname);
@@ -187,10 +191,6 @@ public:
                                                 CocoLoader* pCocoLoader,
                                                 stExpCocoNode*	pCocoNode) {}
     
-    virtual void setPropsForAllCustomWidgetFromBinary(const std::string& classType,
-                                                      cocos2d::ui::Widget* widget,
-                                                      CocoLoader* pCocoLoader,
-                                                      stExpCocoNode*	pCocoNode) {}
 };
 
 /**
@@ -245,10 +245,6 @@ public:
                                                 CocoLoader* pCocoLoader,
                                                 stExpCocoNode*	pCocoNode);
     
-    virtual void setPropsForAllCustomWidgetFromBinary(const std::string& classType,
-                                                      cocos2d::ui::Widget* widget,
-                                                      CocoLoader* pCocoLoader,
-                                                      stExpCocoNode*	pCocoNode);
 };
 
 NS_CC_EXT_END
