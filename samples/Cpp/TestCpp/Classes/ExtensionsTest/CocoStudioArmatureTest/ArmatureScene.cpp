@@ -73,6 +73,8 @@ CCLayer *CreateLayer(int index)
     case TEST_CHANGE_ANIMATION_INTERNAL:
         pLayer = new TestChangeAnimationInternal();
         break;
+	case TEST_DIRECT_FROM_BINARY:
+		pLayer = new TestLoadFromBinary(); 
     default:
         break;
     }
@@ -1485,5 +1487,110 @@ bool TestChangeAnimationInternal::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 void TestChangeAnimationInternal::registerWithTouchDispatcher()
 {
     CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, kCCMenuHandlerPriority + 1, true);
+}
+
+
+
+
+//TestDirectFromBinay
+
+const  char* TestLoadFromBinary::m_binaryFilesNames[BINARYFILECOUNT] ={"armature/bear.csb","armature/horse.csb",
+	"armature/CowBoy.csb","armature/hero.csb",
+	"armature/HeroAnimation.csb","armature/testEasing.csb"};
+const  char* TestLoadFromBinary::m_armatureNames[BINARYFILECOUNT] ={"bear","horse",
+	"Cowboy","hero",
+	"HeroAnimation","testEasing"};
+
+
+void TestLoadFromBinary::onEnter()
+{
+	ArmatureTestLayer::onEnter();
+	setTouchEnabled(true);
+
+	m_armatureIndex = -1; // none
+
+	// remove json created 
+	// remove sync resource
+	CCArmatureDataManager::sharedArmatureDataManager()->removeArmatureFileInfo("armature/bear.ExportJson");
+
+	// load from binary
+	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(m_binaryFilesNames[0]);
+
+	m_armature = cocos2d::extension::CCArmature::create(m_armatureNames[0]);
+	m_armature->getAnimation()->playWithIndex(0);
+	m_armature->setScale(1.0f);
+
+	m_armature->setPosition(ccp(VisibleRect::center().x, VisibleRect::center().y));
+	addChild(m_armature);
+
+}
+
+void TestLoadFromBinary::onExit()
+{
+	CCDirector::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
+	CCDirector::sharedDirector()->setAnimationInterval(1/60.0f);
+}
+std::string TestLoadFromBinary::title()
+{
+	return "Test load from binary file";
+}
+std::string TestLoadFromBinary::subtitle()
+{
+	return "direct load. \nTouch to change to Asynchronous load.";
+}
+
+bool TestLoadFromBinary::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
+{
+	// remove json created 
+	// remove sync resource
+	if(-1 == m_armatureIndex )
+	{
+		CCArmatureDataManager::sharedArmatureDataManager()->removeArmatureFileInfo(m_binaryFilesNames[0]);
+		CCArmatureDataManager::sharedArmatureDataManager()->removeArmatureFileInfo("armature/Cowboy.ExportJson");
+		CCArmatureDataManager::sharedArmatureDataManager()->removeArmatureFileInfo("armature/hero.ExportJson");
+		CCArmatureDataManager::sharedArmatureDataManager()->removeArmatureFileInfo("armature/horse.ExportJson");
+		CCArmatureDataManager::sharedArmatureDataManager()->removeArmatureFileInfo("armature/HeroAnimation.ExportJson");
+		CCArmatureDataManager::sharedArmatureDataManager()->removeArmatureFileInfo("armature/testEasing.ExportJson");
+
+		for( int i = 0; i < BINARYFILECOUNT; i++)
+		{
+			CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync(m_binaryFilesNames[i], this, schedule_selector(TestLoadFromBinary::dataLoaded));
+		}
+
+		m_armatureIndex = -2;    // is loading
+	}
+	else if(m_armatureIndex>=0 && m_armature != NULL)
+	{
+		this->removeChild(m_armature);
+		m_armatureIndex = m_armatureIndex==BINARYFILECOUNT-1 ? 0 : m_armatureIndex+1;
+		m_armature = cocos2d::extension::CCArmature::create(m_armatureNames[m_armatureIndex]);
+		m_armature->setPosition(ccp(VisibleRect::center().x, VisibleRect::center().y));
+		if(m_armatureIndex == 2 )  // cowboy is 0.2
+			m_armature->setScale(0.2f);
+		m_armature->getAnimation()->playWithIndex(0);
+		addChild(m_armature);
+	}
+	return true;
+}
+void TestLoadFromBinary::registerWithTouchDispatcher()
+{
+	CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, kCCMenuHandlerPriority + 1, true);
+}
+
+void TestLoadFromBinary::dataLoaded( float percent )
+{
+	CCLabelTTF *label = (CCLabelTTF *)getChildByTag(10001);
+	if (label)
+	{
+		char pszPercent[255];
+		sprintf(pszPercent, "%s %f", subtitle().c_str(), percent * 100);
+		label->setString(pszPercent);
+	}
+
+	if (percent >= 1)
+	{
+		label->setString("Touch to change armature");
+		m_armatureIndex = 0;
+	}
 }
 
