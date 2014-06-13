@@ -526,6 +526,9 @@
       <Filter>CocoStudio\GUI\UIWidgets</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="..\CocoStudio\Json\CocoLoader.cpp">
+      <Filter>CocoStudio\Json</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\GUI\CCScrollView\CCScrollView.h">
@@ -958,6 +961,9 @@
     </ClInclude>
     <ClInclude Include="..\ExtensionExport.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="..\CocoStudio\Json\CocoLoader.h">
+      <Filter>CocoStudio\Json</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\spine\Animation.h">

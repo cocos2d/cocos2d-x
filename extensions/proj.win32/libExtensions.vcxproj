@@ -193,6 +193,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\sqlite3\libraries\win32\*.*" "$(OutDir)
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UIRichText.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UISlider.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UITextField.cpp" />
+    <ClCompile Include="..\CocoStudio\Json\CocoLoader.cpp" />
     <ClCompile Include="..\CocoStudio\Json\DictionaryHelper.cpp" />
     <ClCompile Include="..\CocoStudio\Reader\GUIReader.cpp" />
     <ClCompile Include="..\CocoStudio\Reader\SceneReader.cpp" />
@@ -350,6 +351,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\sqlite3\libraries\win32\*.*" "$(OutDir)
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UIRichText.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UISlider.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UITextField.h" />
+    <ClInclude Include="..\CocoStudio\Json\CocoLoader.h" />
     <ClInclude Include="..\CocoStudio\Json\DictionaryHelper.h" />
     <ClInclude Include="..\CocoStudio\Json\rapidjson\document.h" />
     <ClInclude Include="..\CocoStudio\Json\rapidjson\filestream.h" />

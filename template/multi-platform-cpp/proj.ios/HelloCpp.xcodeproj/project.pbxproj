@@ -239,6 +239,7 @@
 		379BB9CB17F03F3700829B88 /* DictionaryHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 379BB97C17F03F3700829B88 /* DictionaryHelper.cpp */; };
 		379BB9D317F03F3700829B88 /* GUIReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 379BB99117F03F3700829B88 /* GUIReader.cpp */; };
 		379BB9D417F03F3700829B88 /* SceneReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 379BB99317F03F3700829B88 /* SceneReader.cpp */; };
+		43B91F051949BAF100F7F815 /* CocoLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 43B91F031949BAF100F7F815 /* CocoLoader.cpp */; };
 		46513EB1187BFBA200B5ABE1 /* UITouchGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46513EAF187BFBA200B5ABE1 /* UITouchGroup.cpp */; };
 		7855E0E1153FEF240059DD9A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 7855E0DF153FEF240059DD9A /* Default.png */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
@@ -757,6 +758,8 @@
 		379BB99317F03F3700829B88 /* SceneReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneReader.cpp; sourceTree = "<group>"; };
 		379BB99417F03F3700829B88 /* SceneReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneReader.h; sourceTree = "<group>"; };
 		37C62C0718E156AE00D16FC4 /* ExtensionExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionExport.h; sourceTree = "<group>"; };
+		43B91F031949BAF100F7F815 /* CocoLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocoLoader.cpp; sourceTree = "<group>"; };
+		43B91F041949BAF100F7F815 /* CocoLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoLoader.h; sourceTree = "<group>"; };
 		46513EAF187BFBA200B5ABE1 /* UITouchGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITouchGroup.cpp; sourceTree = "<group>"; };
 		46513EB0187BFBA200B5ABE1 /* UITouchGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITouchGroup.h; sourceTree = "<group>"; };
 		7855E0DF153FEF240059DD9A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
@@ -1859,6 +1862,8 @@
 				375BD4C7186841280024609E /* rapidjson */,
 				379BB97C17F03F3700829B88 /* DictionaryHelper.cpp */,
 				379BB97D17F03F3700829B88 /* DictionaryHelper.h */,
+				43B91F031949BAF100F7F815 /* CocoLoader.cpp */,
+				43B91F041949BAF100F7F815 /* CocoLoader.h */,
 			);
 			path = Json;
 			sourceTree = "<group>";
@@ -2055,6 +2060,7 @@
 				15A3D9991682F7F9002FB0C5 /* cpDampedSpring.c in Sources */,
 				15A3D99A1682F7F9002FB0C5 /* cpGearJoint.c in Sources */,
 				15A3D99B1682F7F9002FB0C5 /* cpGrooveJoint.c in Sources */,
+				43B91F051949BAF100F7F815 /* CocoLoader.cpp in Sources */,
 				15A3D99C1682F7F9002FB0C5 /* cpPinJoint.c in Sources */,
 				15A3D99D1682F7F9002FB0C5 /* cpPivotJoint.c in Sources */,
 				15A3D99E1682F7F9002FB0C5 /* cpRatchetJoint.c in Sources */,

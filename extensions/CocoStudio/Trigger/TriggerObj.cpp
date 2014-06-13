@@ -49,6 +49,11 @@ void BaseTriggerCondition::serialize(const rapidjson::Value &val)
 {
 }
 
+void BaseTriggerCondition::serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode)
+{
+
+}
+
 void BaseTriggerCondition::removeAll()
 {
 }
@@ -73,6 +78,11 @@ void BaseTriggerAction::done()
 
 void BaseTriggerAction::serialize(const rapidjson::Value &val)
 {
+}
+
+void BaseTriggerAction::serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode)
+{
+
 }
 
 void BaseTriggerAction::removeAll()
@@ -226,6 +236,89 @@ void TriggerObj::serialize(const rapidjson::Value &val)
 		}
 		_vInt.push_back(event);
 	}  
+}
+
+void TriggerObj::serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode)
+{
+	int length = pCocoNode->GetChildNum();
+	int count = 0;
+	int num = 0;
+	stExpCocoNode *pTriggerObjArray = pCocoNode->GetChildArray();
+	for (int i = 0; i < length; ++i)
+	{
+		std::string key = pTriggerObjArray[i].GetName(pCocoLoader);
+		const char* str = pTriggerObjArray[i].GetValue();
+		if (key.compare("id") == 0)
+		{
+			if (str != NULL)
+			{
+				_id = atoi(str); //(unsigned int)(DICTOOL->getIntValue_json(val, "id"));
+			}
+		}
+		else if (key.compare("conditions") == 0)
+		{
+			count = pTriggerObjArray[i].GetChildNum();
+			stExpCocoNode *pConditionsArray = pTriggerObjArray[i].GetChildArray();
+			for (int i = 0; i < count; ++i)
+			{
+				num = pConditionsArray[i].GetChildNum();
+				stExpCocoNode *pConditionArray = pConditionsArray[i].GetChildArray();
+				const char *classname = pConditionArray[0].GetValue();
+				if (classname == NULL)
+				{
+					continue;
+				}
+				BaseTriggerCondition *con = dynamic_cast<BaseTriggerCondition*>(ObjectFactory::getInstance()->createObject(classname));
+				CCAssert(con != NULL, "class named classname can not implement!");
+				con->serialize(pCocoLoader, &pConditionArray[1]);
+				con->init();
+				con->autorelease();
+				_cons->addObject(con);
+			}
+		}
+		else if (key.compare("actions") == 0)
+		{
+			count = pTriggerObjArray[i].GetChildNum();
+			stExpCocoNode *pActionsArray = pTriggerObjArray[i].GetChildArray();
+			for (int i = 0; i < count; ++i)
+			{
+				num = pActionsArray[i].GetChildNum();
+				stExpCocoNode *pActionArray = pActionsArray[i].GetChildArray();
+				const char *classname = pActionArray[0].GetValue();
+				if (classname == NULL)
+				{
+					continue;
+				}
+				BaseTriggerAction *act = dynamic_cast<BaseTriggerAction*>(ObjectFactory::getInstance()->createObject(classname));
+				CCAssert(act != NULL, "class named classname can not implement!");
+				act->serialize(pCocoLoader, &pActionArray[1]);
+				act->init();
+				act->autorelease();
+				_acts->addObject(act);
+			}
+		}
+		else if (key.compare("events") == 0)
+		{
+			count = pTriggerObjArray[i].GetChildNum();
+			stExpCocoNode *pEventsArray = pTriggerObjArray[i].GetChildArray();
+			for (int i = 0; i < count; ++i)
+			{
+				num = pEventsArray[i].GetChildNum();
+				stExpCocoNode *pEventArray = pEventsArray[i].GetChildArray();
+				const char *str = pEventArray[0].GetValue();
+				if (str == NULL)
+				{
+					continue;
+				}
+				int event = atoi(str);
+				if (event < 0)
+				{
+					continue;
+				}
+				_vInt.push_back(event);
+			}
+		}
+	}
 }
 
 unsigned int TriggerObj::getId()

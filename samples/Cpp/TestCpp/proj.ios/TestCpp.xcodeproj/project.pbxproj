@@ -256,7 +256,6 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
-		29B8F87C1948424200F9052C /* CocoLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29B8F87A1948424200F9052C /* CocoLoader.cpp */; };
 		3729024B1867D36800B59D3A /* ObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 372902431867D36800B59D3A /* ObjectFactory.cpp */; };
 		3729024C1867D36800B59D3A /* TriggerBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 372902451867D36800B59D3A /* TriggerBase.cpp */; };
 		3729024D1867D36800B59D3A /* TriggerMng.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 372902471867D36800B59D3A /* TriggerMng.cpp */; };
@@ -345,6 +344,7 @@
 		37CA1CFE17D87AC700A649D0 /* ProjectileController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37CA1CAC17D87AC700A649D0 /* ProjectileController.cpp */; };
 		37CA1CFF17D87AC700A649D0 /* SceneController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37CA1CAE17D87AC700A649D0 /* SceneController.cpp */; };
 		37CA1D1A17D87AC700A649D0 /* SceneEditorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37CA1CF717D87AC700A649D0 /* SceneEditorTest.cpp */; };
+		43B91ED81949B84200F7F815 /* CocoLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 43B91ED61949B84200F7F815 /* CocoLoader.cpp */; };
 		50181AE1185FEBAE0051CA1C /* CCActionEaseEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50181ADF185FEBAE0051CA1C /* CCActionEaseEx.cpp */; };
 		50D36120186AED6100828878 /* UITouchGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D3611E186AED6100828878 /* UITouchGroup.cpp */; };
 		50D6A4CD17E2C91100523A82 /* GUIReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D6A4CB17E2C91100523A82 /* GUIReader.cpp */; };
@@ -1000,8 +1000,6 @@
 		1D6058910D05DD3D006BFB54 /* TestCpp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestCpp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		29B8F87A1948424200F9052C /* CocoLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocoLoader.cpp; sourceTree = "<group>"; };
-		29B8F87B1948424200F9052C /* CocoLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoLoader.h; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ../main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* iphone_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iphone_Prefix.pch; path = ../iphone_Prefix.pch; sourceTree = "<group>"; };
 		372902431867D36800B59D3A /* ObjectFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectFactory.cpp; sourceTree = "<group>"; };
@@ -1170,6 +1168,8 @@
 		37CA1CAF17D87AC700A649D0 /* SceneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneController.h; sourceTree = "<group>"; };
 		37CA1CF717D87AC700A649D0 /* SceneEditorTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneEditorTest.cpp; sourceTree = "<group>"; };
 		37CA1CF817D87AC700A649D0 /* SceneEditorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneEditorTest.h; sourceTree = "<group>"; };
+		43B91ED61949B84200F7F815 /* CocoLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocoLoader.cpp; sourceTree = "<group>"; };
+		43B91ED71949B84200F7F815 /* CocoLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoLoader.h; sourceTree = "<group>"; };
 		50181ADF185FEBAE0051CA1C /* CCActionEaseEx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionEaseEx.cpp; sourceTree = "<group>"; };
 		50181AE0185FEBAE0051CA1C /* CCActionEaseEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionEaseEx.h; sourceTree = "<group>"; };
 		50D3611E186AED6100828878 /* UITouchGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITouchGroup.cpp; sourceTree = "<group>"; };
@@ -3088,6 +3088,8 @@
 				3751F70418458B7E00AC94F2 /* rapidjson */,
 				37CA1C0517D87A3300A649D0 /* DictionaryHelper.cpp */,
 				37CA1C0617D87A3300A649D0 /* DictionaryHelper.h */,
+				43B91ED61949B84200F7F815 /* CocoLoader.cpp */,
+				43B91ED71949B84200F7F815 /* CocoLoader.h */,
 			);
 			path = Json;
 			sourceTree = "<group>";
@@ -3095,8 +3097,6 @@
 		37CA1C1917D87A3300A649D0 /* Reader */ = {
 			isa = PBXGroup;
 			children = (
-				29B8F87A1948424200F9052C /* CocoLoader.cpp */,
-				29B8F87B1948424200F9052C /* CocoLoader.h */,
 				50E9E946182A355B00F6FDF1 /* SceneReader.cpp */,
 				50E9E947182A355B00F6FDF1 /* SceneReader.h */,
 				50D6A4CB17E2C91100523A82 /* GUIReader.cpp */,
@@ -3762,7 +3762,7 @@
 				15AA9D7A15B7EC460033D6C2 /* ExtensionsTest.cpp in Sources */,
 				15AA9D7B15B7EC460033D6C2 /* NotificationCenterTest.cpp in Sources */,
 				50F8545E18C581FB0019FBFB /* CocosGUIScene.cpp in Sources */,
-				29B8F87C1948424200F9052C /* CocoLoader.cpp in Sources */,
+				43B91ED81949B84200F7F815 /* CocoLoader.cpp in Sources */,
 				15AA9D7C15B7EC460033D6C2 /* FontTest.cpp in Sources */,
 				15AA9D7D15B7EC460033D6C2 /* IntervalTest.cpp in Sources */,
 				3729024C1867D36800B59D3A /* TriggerBase.cpp in Sources */,

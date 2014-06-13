@@ -44,6 +44,7 @@
 		375BD4A8186840A30024609E /* TriggerMng.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD4A2186840A30024609E /* TriggerMng.cpp */; };
 		375BD4A9186840A30024609E /* TriggerObj.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD4A4186840A30024609E /* TriggerObj.cpp */; };
 		37FFCAE9186070930078F312 /* CCActionEaseEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37FFCAE7186070930078F312 /* CCActionEaseEx.cpp */; };
+		43B91EFD1949BABE00F7F815 /* CocoLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 43B91EFB1949BABE00F7F815 /* CocoLoader.cpp */; };
 		464EA3A2175DC602004C192B /* CCBAnimationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 464EA2E6175DC601004C192B /* CCBAnimationManager.cpp */; };
 		464EA3A3175DC602004C192B /* CCBFileLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 464EA2E8175DC601004C192B /* CCBFileLoader.cpp */; };
 		464EA3A4175DC602004C192B /* CCBKeyframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 464EA2EA175DC601004C192B /* CCBKeyframe.cpp */; };
@@ -325,6 +326,8 @@
 		37C62C0318E155D600D16FC4 /* ExtensionExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionExport.h; sourceTree = "<group>"; };
 		37FFCAE7186070930078F312 /* CCActionEaseEx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionEaseEx.cpp; sourceTree = "<group>"; };
 		37FFCAE8186070930078F312 /* CCActionEaseEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionEaseEx.h; sourceTree = "<group>"; };
+		43B91EFB1949BABE00F7F815 /* CocoLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocoLoader.cpp; sourceTree = "<group>"; };
+		43B91EFC1949BABE00F7F815 /* CocoLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoLoader.h; sourceTree = "<group>"; };
 		464EA2E6175DC601004C192B /* CCBAnimationManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBAnimationManager.cpp; sourceTree = "<group>"; };
 		464EA2E7175DC601004C192B /* CCBAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBAnimationManager.h; sourceTree = "<group>"; };
 		464EA2E8175DC601004C192B /* CCBFileLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBFileLoader.cpp; sourceTree = "<group>"; };
@@ -1616,6 +1619,8 @@
 				15DB6520184C2778002905B6 /* rapidjson */,
 				ED531411183311CE008CD8A5 /* DictionaryHelper.cpp */,
 				ED531412183311CE008CD8A5 /* DictionaryHelper.h */,
+				43B91EFB1949BABE00F7F815 /* CocoLoader.cpp */,
+				43B91EFC1949BABE00F7F815 /* CocoLoader.h */,
 			);
 			path = Json;
 			sourceTree = "<group>";
@@ -1765,6 +1770,7 @@
 				ED531443183311CE008CD8A5 /* CCComAudio.cpp in Sources */,
 				46C1006E16BF5A2C00F74D54 /* Cocos2dxLuaLoader.cpp in Sources */,
 				298B2A7418D0673800C1920F /* TextFieldReader.cpp in Sources */,
+				43B91EFD1949BABE00F7F815 /* CocoLoader.cpp in Sources */,
 				46C1006F16BF5A2C00F74D54 /* LuaCocos2d.cpp in Sources */,
 				46C1007116BF5A2C00F74D54 /* tolua_fix.c in Sources */,
 				ED53143E183311CE008CD8A5 /* CCSpriteFrameCacheHelper.cpp in Sources */,
