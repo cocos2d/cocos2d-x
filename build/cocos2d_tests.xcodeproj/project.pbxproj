@@ -805,6 +805,7 @@
 		29080DE5191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29080D8B191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp */; };
 		29080DE6191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29080D8B191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp */; };
 		3E61763F1949F61F00DE83F5 /* libcocos2dx-extensions iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FC01807A4F9005B8026 /* libcocos2dx-extensions iOS.a */; };
+		3E61764E194AD5EA00DE83F5 /* GameControllerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E61764C194AD5EA00DE83F5 /* GameControllerTest.cpp */; };
 		3E7CCD8919499491000F2CCA /* libchipmunk iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FC21807A4F9005B8026 /* libchipmunk iOS.a */; };
 		3E7CCD8A19499491000F2CCA /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2dx iOS.a */; };
 		3E7CCD8B19499491000F2CCA /* libCocosDenshion iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FC61807A4F9005B8026 /* libCocosDenshion iOS.a */; };
@@ -819,7 +820,6 @@
 		3E7CCD9419499491000F2CCA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52B71783AE6D0073F6A7 /* UIKit.framework */; };
 		3E7CCD9519499491000F2CCA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52C11783B01F0073F6A7 /* AVFoundation.framework */; };
 		3E7CCDF219499A10000F2CCA /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E7CCDA019499540000F2CCA /* AppDelegate.cpp */; };
-		3E7CCDF319499A14000F2CCA /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E7CCDA319499540000F2CCA /* HelloWorldScene.cpp */; };
 		3E7CCDF419499A1C000F2CCA /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E7CCDC819499540000F2CCA /* AppController.mm */; };
 		3E7CCDF519499A22000F2CCA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E7CCDD819499540000F2CCA /* main.m */; };
 		3E7CCDF619499A25000F2CCA /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E7CCDDA19499540000F2CCA /* RootViewController.mm */; };
@@ -1909,12 +1909,12 @@
 		29080D8A191B595E0066F8DF /* UIWidgetAddNodeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWidgetAddNodeTest.h; sourceTree = "<group>"; };
 		29080D8B191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIWidgetAddNodeTest_Editor.cpp; sourceTree = "<group>"; };
 		29080D8C191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWidgetAddNodeTest_Editor.h; sourceTree = "<group>"; };
+		3E61764C194AD5EA00DE83F5 /* GameControllerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameControllerTest.cpp; sourceTree = "<group>"; };
+		3E61764D194AD5EA00DE83F5 /* GameControllerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameControllerTest.h; sourceTree = "<group>"; };
 		3E7CCD9919499491000F2CCA /* game-controller-test iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "game-controller-test iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E7CCDA019499540000F2CCA /* AppDelegate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		3E7CCDA119499540000F2CCA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		3E7CCDA219499540000F2CCA /* AppMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppMacros.h; sourceTree = "<group>"; };
-		3E7CCDA319499540000F2CCA /* HelloWorldScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HelloWorldScene.cpp; sourceTree = "<group>"; };
-		3E7CCDA419499540000F2CCA /* HelloWorldScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelloWorldScene.h; sourceTree = "<group>"; };
 		3E7CCDC719499540000F2CCA /* AppController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		3E7CCDC819499540000F2CCA /* AppController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
 		3E7CCDC919499540000F2CCA /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -3903,11 +3903,11 @@
 		3E7CCD9F19499540000F2CCA /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				3E61764C194AD5EA00DE83F5 /* GameControllerTest.cpp */,
+				3E61764D194AD5EA00DE83F5 /* GameControllerTest.h */,
 				3E7CCDA019499540000F2CCA /* AppDelegate.cpp */,
 				3E7CCDA119499540000F2CCA /* AppDelegate.h */,
 				3E7CCDA219499540000F2CCA /* AppMacros.h */,
-				3E7CCDA319499540000F2CCA /* HelloWorldScene.cpp */,
-				3E7CCDA419499540000F2CCA /* HelloWorldScene.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -4959,9 +4959,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E61764E194AD5EA00DE83F5 /* GameControllerTest.cpp in Sources */,
 				3E7CCDF419499A1C000F2CCA /* AppController.mm in Sources */,
 				3E7CCDF619499A25000F2CCA /* RootViewController.mm in Sources */,
-				3E7CCDF319499A14000F2CCA /* HelloWorldScene.cpp in Sources */,
 				3E7CCDF519499A22000F2CCA /* main.m in Sources */,
 				3E7CCDF219499A10000F2CCA /* AppDelegate.cpp in Sources */,
 			);

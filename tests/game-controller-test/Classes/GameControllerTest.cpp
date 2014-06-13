@@ -1,4 +1,4 @@
-#include "HelloWorldScene.h"
+#include "GameControllerTest.h"
 #include "AppMacros.h"
 #include "nslog/CCNSLog.h"
 #include "ui/CocosGUI.h"
@@ -6,21 +6,21 @@
 USING_NS_CC;
 
 
-Scene* HelloWorld::scene()
+Scene* GameControllerTest::scene()
 {
     auto scene = Scene::create();
-    HelloWorld *layer = HelloWorld::create();
+    GameControllerTest *layer = GameControllerTest::create();
     scene->addChild(layer);
     
     return scene;
 }
 
-HelloWorld::~HelloWorld()
+GameControllerTest::~GameControllerTest()
 {
     Controller::stopDiscoveryController();
 }
 
-bool HelloWorld::init()
+bool GameControllerTest::init()
 {
     if ( !Layer::init() )
     {
@@ -61,9 +61,9 @@ bool HelloWorld::init()
         _statusLabel->setString("controller disconnected!");
     };
 
-    _listener->onButtonPressed = CC_CALLBACK_3(HelloWorld::onButtonPressed, this);
-    _listener->onButtonReleased = CC_CALLBACK_3(HelloWorld::onButtonReleased, this);
-    _listener->onAxisValueChanged = CC_CALLBACK_3(HelloWorld::onAxisValueChanged, this);
+    _listener->onButtonPressed = CC_CALLBACK_3(GameControllerTest::onButtonPressed, this);
+    _listener->onButtonReleased = CC_CALLBACK_3(GameControllerTest::onButtonReleased, this);
+    _listener->onAxisValueChanged = CC_CALLBACK_3(GameControllerTest::onAxisValueChanged, this);
     
     _eventDispatcher->addEventListenerWithSceneGraphPriority(_listener, this);
 
@@ -72,7 +72,7 @@ bool HelloWorld::init()
     this->addChild(bullet);
     bullet->setColor(Color3B::BLUE);
     
-    auto closeItem = MenuItemImage::create("", "", CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
+    auto closeItem = MenuItemImage::create("", "", CC_CALLBACK_1(GameControllerTest::menuCloseCallback, this));
     closeItem->setPosition(origin + visibleSize - closeItem->getContentSize() / 2);
     
     auto menu = Menu::create(closeItem,nullptr);
@@ -84,9 +84,9 @@ bool HelloWorld::init()
     return true;
 }
 
-void HelloWorld::onButtonPressed(cocos2d::Controller *controller, cocos2d::ControllerButtonInput *button, cocos2d::Event *event)
+void GameControllerTest::onButtonPressed(cocos2d::Controller *controller, cocos2d::ControllerButtonInput *button, cocos2d::Event *event)
 {
-    CCNSLOG("HelloWorld::onButtonPressed: %p, %d, %f", button, button->isPressed(), button->getValue());
+    CCNSLOG("GameControllerTest::onButtonPressed: %p, %d, %f", button, button->isPressed(), button->getValue());
     
     if (_player1 == nullptr)
     {
@@ -148,9 +148,9 @@ void HelloWorld::onButtonPressed(cocos2d::Controller *controller, cocos2d::Contr
     bullet->runAction(Sequence::create(MoveTo::create(3.0f, Vec2(randX, winSize.height)), RemoveSelf::create(),  NULL));
 }
 
-void HelloWorld::onButtonReleased(cocos2d::Controller *controller, cocos2d::ControllerButtonInput *button, cocos2d::Event *event)
+void GameControllerTest::onButtonReleased(cocos2d::Controller *controller, cocos2d::ControllerButtonInput *button, cocos2d::Event *event)
 {
-    CCNSLOG("HelloWorld::onButtonReleased: %p, %d, %f", button, button->isPressed(), button->getValue());
+    CCNSLOG("GameControllerTest::onButtonReleased: %p, %d, %f", button, button->isPressed(), button->getValue());
     
     if (_player1 == nullptr)
     {
@@ -171,7 +171,7 @@ void HelloWorld::onButtonReleased(cocos2d::Controller *controller, cocos2d::Cont
     bullet->runAction(Sequence::create(MoveTo::create(3.0f, Vec2(randX, winSize.height)), RemoveSelf::create(),  NULL));
 }
 
-void HelloWorld::onAxisValueChanged(cocos2d::Controller* controller, cocos2d::ControllerAxisInput* axis, cocos2d::Event* event)
+void GameControllerTest::onAxisValueChanged(cocos2d::Controller* controller, cocos2d::ControllerAxisInput* axis, cocos2d::Event* event)
 {
     if (_player1 == nullptr)
     {
@@ -195,7 +195,7 @@ void HelloWorld::onAxisValueChanged(cocos2d::Controller* controller, cocos2d::Co
     _actor->setPosition(newPos);
 }
 
-void HelloWorld::update(float dt)
+void GameControllerTest::update(float dt)
 {
     if (_player1 && _player1->isConnected())
     {
@@ -237,7 +237,7 @@ void HelloWorld::update(float dt)
     }
 }
 
-void HelloWorld::menuCloseCallback(Ref* sender)
+void GameControllerTest::menuCloseCallback(Ref* sender)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     MessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");

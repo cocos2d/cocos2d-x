@@ -8,7 +8,7 @@ LOCAL_MODULE_FILENAME := libcpp_empty_test
 
 LOCAL_SRC_FILES := main.cpp \
                    ../../Classes/AppDelegate.cpp \
-                   ../../Classes/HelloWorldScene.cpp
+                   ../../Classes/GameControllerTest.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 
