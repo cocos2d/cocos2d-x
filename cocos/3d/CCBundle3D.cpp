@@ -159,6 +159,10 @@ bool Bundle3D::loadAnimationData(const std::string& id, Animation3DData* animati
     Quaternion::createFromAxisAngle(Vec3(1.f, 0.f, 0.f), MATH_DEG_TO_RAD(270), &quat);
     animationdata->_rotationKeys[boneName].push_back(Animation3DData::QuatKey(keytime1[3], quat));
     
+    animationdata->_translationKeys[boneName].push_back(Animation3DData::Vec3Key(keytime1[0], Vec3(0.0f, 0.0f, 0.0f)));
+    animationdata->_translationKeys[boneName].push_back(Animation3DData::Vec3Key(keytime1[1], Vec3(0.0f, 20.0f, 0.0f)));
+    animationdata->_translationKeys[boneName].push_back(Animation3DData::Vec3Key(keytime1[2], Vec3(20.0f, 0.0f, 0.0f)));
+    animationdata->_translationKeys[boneName].push_back(Animation3DData::Vec3Key(keytime1[3], Vec3(0.0f, 0.0f, 20.0f)));
     
     return true;
 }

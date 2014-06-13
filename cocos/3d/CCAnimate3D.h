@@ -70,6 +70,7 @@ protected:
     Animation3D* _animation;
 
     float      _speed;
+    float      _weight;
     bool       _playBack;
     std::map<Bone*, Animation3D::Curve*> _boneCurves; //weak ref
 };

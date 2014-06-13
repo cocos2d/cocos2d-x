@@ -59,12 +59,14 @@ public:
     
     const std::string& getName() const { return _name; }
     
-	/**
-     * Set AnimationValue. set to its transform
-     */
-	void setAnimationValueTranslation(float* value, float weight = 1.0f);
-    void setAnimationValueRotation(float* value, float weight = 1.0f);
-    void setAnimationValueScale(float* value, float weight = 1.0f);
+//	/**
+//     * Set AnimationValue. set to its transform
+//     */
+//	void setAnimationValueTranslation(float* value, float weight = 1.0f);
+//    void setAnimationValueRotation(float* value, float weight = 1.0f);
+//    void setAnimationValueScale(float* value, float weight = 1.0f);
+    
+    void setAnimationValue(float* trans, float* rot, float* scale, float weight = 1.0f);
     
     /**
      * Creates C3DBone.
@@ -135,16 +137,6 @@ protected:
      */
     Mat4 _bindPose;
     
-    //    /**
-    //     * Flag used to mark if the Joint's matrix is dirty.
-    //     */
-    //    bool _jointMatrixDirty;
-    //
-    //    /**
-    //     * The number of MeshSkin's influencing the Joint.
-    //     */
-    //    unsigned int _skinCount;
-    
     Bone* _parent;
     
     Vector<Bone*> _children;
@@ -155,9 +147,7 @@ protected:
     Mat4          _local;
     
     std::vector<BoneBlendState> _blendStates;
-    Vec3          _localTranslate;
-    Quaternion    _localRot;
-    Vec3          _localScale;
+    
 };
 
 /////////////////////////////////////////////////////////////////////////////

@@ -101,7 +101,8 @@ void Animate3D::update(float t)
 {
     if (_target)
     {
-        float dst[4];
+        float transDst[3], rotDst[4], scaleDst[3];
+        float* trans = nullptr, *rot = nullptr, *scale = nullptr;
         if (_playBack)
             t = 1 - t;
         
@@ -110,19 +111,20 @@ void Animate3D::update(float t)
             auto curve = it.second;
             if (curve->translateCurve)
             {
-                curve->translateCurve->evaluate(t, dst, Linear);
-                bone->setAnimationValueTranslation(dst);
+                curve->translateCurve->evaluate(t, transDst, Linear);
+                trans = &transDst[0];
             }
             if (curve->rotCurve)
             {
-                curve->rotCurve->evaluate(t, dst, QuatSlerp);
-                bone->setAnimationValueRotation(dst);
+                curve->rotCurve->evaluate(t, rotDst, QuatSlerp);
+                rot = &rotDst[0];
             }
             if (curve->scaleCurve)
             {
-                curve->scaleCurve->evaluate(t, dst, Linear);
-                bone->setAnimationValueScale(dst);
+                curve->scaleCurve->evaluate(t, scaleDst, Linear);
+                scale = &scaleDst[0];
             }
+            bone->setAnimationValue(trans, rot, scale, _weight);
         }
     }
     
@@ -130,6 +132,7 @@ void Animate3D::update(float t)
 
 Animate3D::Animate3D()
 : _speed(1)
+, _weight(1.f)
 , _animation(nullptr)
 , _playBack(false)
 {
