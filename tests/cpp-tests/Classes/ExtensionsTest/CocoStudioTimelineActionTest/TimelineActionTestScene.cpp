@@ -182,6 +182,8 @@ void TestTimelineAction::onEnter()
 {
     TimelineActionTestLayer::onEnter();
 
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("armature/Cowboy0.plist", "armature/Cowboy0.png");
+
     Node* node = NodeReader::getInstance()->createNode("TimelineAction/boy_1.ExportJson");
     TimelineAction* action = TimelineActionCache::getInstance()->createAction("TimelineAction/boy_1.ExportJson");
 
