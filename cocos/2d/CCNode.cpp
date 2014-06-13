@@ -1050,40 +1050,6 @@ Mat4 Node::transform(const Mat4& parentTransform)
     return ret;
 }
 
-
-#if CC_ENABLE_SCRIPT_BINDING
-
-static bool sendNodeEventToJS(Node* node, int action)
-{
-    auto scriptEngine = ScriptEngineManager::getInstance()->getScriptEngine();
-
-    if (scriptEngine->isCalledFromScript())
-    {
-        scriptEngine->setCalledFromScript(false);
-    }
-    else
-    {
-        BasicScriptData data(node,(void*)&action);
-        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
-        if (scriptEngine->sendEvent(&scriptEvent))
-            return true;
-    }
-    
-    return false;
-}
-
-static void sendNodeEventToLua(Node* node, int action)
-{
-    auto scriptEngine = ScriptEngineManager::getInstance()->getScriptEngine();
-    
-    BasicScriptData data(node,(void*)&action);
-    ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
-    
-    scriptEngine->sendEvent(&scriptEvent);
-}
-
-#endif
-
 void Node::onEnter()
 {
 #if CC_ENABLE_SCRIPT_BINDING

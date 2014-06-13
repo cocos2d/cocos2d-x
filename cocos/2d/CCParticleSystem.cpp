@@ -616,10 +616,25 @@ void ParticleSystem::initParticle(tParticle* particle)
 
 void ParticleSystem::onEnter()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (sendNodeEventToJS(this, kNodeOnEnter))
+            return;
+    }
+#endif
+    
     Node::onEnter();
     
     // update after action in run!
     this->scheduleUpdateWithPriority(1);
+    
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeLua)
+    {
+        sendNodeEventToLua(this, kNodeOnEnter);
+    }
+#endif
 }
 
 void ParticleSystem::onExit()

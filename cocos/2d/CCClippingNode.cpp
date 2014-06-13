@@ -142,6 +142,14 @@ bool ClippingNode::init(Node *stencil)
 
 void ClippingNode::onEnter()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (sendNodeEventToJS(this, kNodeOnEnter))
+            return;
+    }
+#endif
+    
     Node::onEnter();
     
     if (_stencil != nullptr)
@@ -152,6 +160,13 @@ void ClippingNode::onEnter()
     {
         CCLOG("ClippingNode warning: _stencil is nil.");
     }
+    
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeLua)
+    {
+        sendNodeEventToLua(this, kNodeOnEnter);
+    }
+#endif
 }
 
 void ClippingNode::onEnterTransitionDidFinish()

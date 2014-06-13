@@ -102,6 +102,14 @@ Layout::~Layout()
     
 void Layout::onEnter()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (sendNodeEventToJS(this, kNodeOnEnter))
+            return;
+    }
+#endif
+    
     Widget::onEnter();
     if (_clippingStencil)
     {
@@ -109,6 +117,13 @@ void Layout::onEnter()
     }
     _doLayoutDirty = true;
     _clippingRectDirty = true;
+    
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeLua)
+    {
+        sendNodeEventToLua(this, kNodeOnEnter);
+    }
+#endif
 }
     
 void Layout::onExit()

@@ -276,8 +276,23 @@ Rect Skeleton::getBoundingBox () const {
 }
 
 void Skeleton::onEnter() {
-	Node::onEnter();
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (sendNodeEventToJS(this, kNodeOnEnter))
+            return;
+    }
+#endif
+    
+    Node::onEnter();
 	scheduleUpdate();
+    
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeLua)
+    {
+        sendNodeEventToLua(this, kNodeOnEnter);
+    }
+#endif
 }
 	
 void Skeleton::onExit() {

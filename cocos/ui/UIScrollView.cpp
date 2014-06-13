@@ -95,9 +95,23 @@ ScrollView* ScrollView::create()
     
 void ScrollView::onEnter()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (sendNodeEventToJS(this, kNodeOnEnter))
+            return;
+    }
+#endif
+    
     Layout::onEnter();
     scheduleUpdate();
-   
+    
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeLua)
+    {
+        sendNodeEventToLua(this, kNodeOnEnter);
+    }
+#endif
 }
 
 bool ScrollView::init()
