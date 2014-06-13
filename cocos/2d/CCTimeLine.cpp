@@ -26,10 +26,7 @@ THE SOFTWARE.
 #include "CCTimelineAction.h"
 #include "CCFrame.h"
 
-using namespace cocos2d;
-
-namespace cocostudio {
-namespace timeline{
+NS_CC_BEGIN
 
 Timeline* Timeline::create()
 {
@@ -109,7 +106,7 @@ void Timeline::removeFrame(Frame* frame)
     frame->setTimeline(NULL);
 }
 
-void Timeline::setNode(cocos2d::Node* node)
+void Timeline::setNode(Node* node)
 {
     for (auto frame : _frames)
     {
@@ -117,7 +114,7 @@ void Timeline::setNode(cocos2d::Node* node)
     }
 }
 
-cocos2d::Node* Timeline::getNode()
+Node* Timeline::getNode()
 {
     return _node;
 }
@@ -248,5 +245,4 @@ void Timeline::updateCurrentKeyFrame(int frameIndex)
     }
 }
 
-}
-}
+NS_CC_END

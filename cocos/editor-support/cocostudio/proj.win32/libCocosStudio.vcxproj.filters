@@ -231,15 +231,6 @@
     <ClCompile Include="..\WidgetReader\PageViewReader\PageViewReader.cpp">
       <Filter>reader\WidgetReader\PageViewReader</Filter>
     </ClCompile>
-    <ClCompile Include="..\TimelineAction\CCFrame.cpp">
-      <Filter>TimelineAction</Filter>
-    </ClCompile>
-    <ClCompile Include="..\TimelineAction\CCTimeLine.cpp">
-      <Filter>TimelineAction</Filter>
-    </ClCompile>
-    <ClCompile Include="..\TimelineAction\CCTimelineAction.cpp">
-      <Filter>TimelineAction</Filter>
-    </ClCompile>
     <ClCompile Include="..\TimelineAction\CCTimelineActionCache.cpp">
       <Filter>TimelineAction</Filter>
     </ClCompile>
@@ -427,15 +418,6 @@
     </ClInclude>
     <ClInclude Include="..\WidgetReader\PageViewReader\PageViewReader.h">
       <Filter>reader\WidgetReader\PageViewReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\TimelineAction\CCFrame.h">
-      <Filter>TimelineAction</Filter>
-    </ClInclude>
-    <ClInclude Include="..\TimelineAction\CCTimeLine.h">
-      <Filter>TimelineAction</Filter>
-    </ClInclude>
-    <ClInclude Include="..\TimelineAction\CCTimelineAction.h">
-      <Filter>TimelineAction</Filter>
     </ClInclude>
     <ClInclude Include="..\TimelineAction\CCTimelineActionCache.h">
       <Filter>TimelineAction</Filter>

@@ -25,29 +25,14 @@ THE SOFTWARE.
 #ifndef __CC_NODE_CACHE_H__
 #define __CC_NODE_CACHE_H__
 
-#include "CCTimeLine.h"
 #include "cocostudio/DictionaryHelper.h"
-
+#include "cocos2d.h"
 
 namespace cocostudio {
 
 class WidgetPropertiesReader0300;
 
 namespace timeline{
-
-class TimelineActionData : public cocos2d::Ref
-{
-public:
-    static TimelineActionData* create(int actionTag);
-
-    virtual void setActionTag(int actionTag) { _actionTag = actionTag; }
-    virtual int getActionTag() { return _actionTag; }
-protected:
-    TimelineActionData();
-    virtual bool init(int actionTag);
-
-    int _actionTag;
-};
 
 class NodeReader
 {

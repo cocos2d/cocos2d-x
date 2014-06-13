@@ -24,12 +24,11 @@ THE SOFTWARE.
 
 #include "CCNodeReader.h"
 #include "CCTimelineActionCache.h"
-#include "CCFrame.h"
 
 #include "../CCSGUIReader.h"
 
 using namespace cocos2d;
-using namespace cocos2d::ui;
+using namespace ui;
 
 namespace cocostudio {
 namespace timeline{
@@ -40,7 +39,7 @@ static const char* ClassName_SubGraph = "SubGraph";
 static const char* ClassName_Sprite   = "Sprite";
 static const char* ClassName_Particle = "Particle";
 
-static const char* ClassName_Panel     = "Panel";
+static const char* ClassName_Panel      = "Panel";
 static const char* ClassName_Button     = "Button";
 static const char* ClassName_CheckBox   = "CheckBox";
 static const char* ClassName_ImageView  = "ImageView";
@@ -88,32 +87,6 @@ static const char* PARTICLE_NUM     = "particleNum";
 
 static const char* TEXTURES     = "textures";
 static const char* TEXTURES_PNG = "texturesPng";
-
-// TimelineActionData
-TimelineActionData* TimelineActionData::create(int actionTag)
-{
-    TimelineActionData * ret = new TimelineActionData();
-    if (ret && ret->init(actionTag))
-    {
-        ret->autorelease();
-    }
-    else
-    {
-        CC_SAFE_DELETE(ret);
-    }
-    return ret;
-}
-
-TimelineActionData::TimelineActionData()
-    : _actionTag(0)
-{
-}
-
-bool TimelineActionData::init(int actionTag)
-{
-    _actionTag = actionTag;
-    return true;
-}
 
 
 // NodeReader
@@ -173,7 +146,7 @@ void NodeReader::init()
     _guiReader = new WidgetPropertiesReader0300();
 }
 
-cocos2d::Node* NodeReader::createNode(const std::string& filename)
+Node* NodeReader::createNode(const std::string& filename)
 {
     if(_recordJsonPath)
     {
@@ -188,17 +161,17 @@ cocos2d::Node* NodeReader::createNode(const std::string& filename)
         _jsonPath = "";
     }
 
-    cocos2d::Node* node = loadNodeWithFile(filename);
+    Node* node = loadNodeWithFile(filename);
 
     return node;
 }
 
-cocos2d::Node* NodeReader::loadNodeWithFile(const std::string& fileName)
+Node* NodeReader::loadNodeWithFile(const std::string& fileName)
 {
     // Read content from file
     std::string contentStr = FileUtils::getInstance()->getStringFromFile(fileName);
 
-    cocos2d::Node* node = loadNodeWithContent(contentStr);
+    Node* node = loadNodeWithContent(contentStr);
 
     // Load animation data from file
     TimelineActionCache::getInstance()->loadAnimationActionWithContent(fileName, contentStr);
@@ -206,7 +179,7 @@ cocos2d::Node* NodeReader::loadNodeWithFile(const std::string& fileName)
     return node;
 }
 
-cocos2d::Node* NodeReader::loadNodeWithContent(const std::string& content)
+Node* NodeReader::loadNodeWithContent(const std::string& content)
 {
     rapidjson::Document doc;
     doc.Parse<0>(content.c_str());
@@ -229,15 +202,15 @@ cocos2d::Node* NodeReader::loadNodeWithContent(const std::string& content)
 
     // decode node tree
     const rapidjson::Value& subJson = DICTOOL->getSubDictionary_json(doc, NODE);
-    cocos2d::Node* root = loadNode(subJson);
+    Node* root = loadNode(subJson);
     root->release();
 
     return root;
 }
 
-cocos2d::Node* NodeReader::loadNode(const rapidjson::Value& json)
+Node* NodeReader::loadNode(const rapidjson::Value& json)
 {
-    cocos2d::Node* node = nullptr;
+    Node* node = nullptr;
     std::string nodeType = DICTOOL->getStringValue_json(json, CLASSNAME);
 
     NodeCreateFunc func = _funcs.at(nodeType);
@@ -253,7 +226,7 @@ cocos2d::Node* NodeReader::loadNode(const rapidjson::Value& json)
         for (int i = 0; i<length; i++)
         {
             const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, CHILDREN, i);
-            cocos2d::Node* child = loadNode(dic);
+            Node* child = loadNode(dic);
             if (child) 
             {
                 node->addChild(child);
@@ -269,7 +242,7 @@ cocos2d::Node* NodeReader::loadNode(const rapidjson::Value& json)
     return node;
 }
 
-void NodeReader::initNode(cocos2d::Node* node, const rapidjson::Value& json)
+void NodeReader::initNode(Node* node, const rapidjson::Value& json)
 {
     float width         = DICTOOL->getFloatValue_json(json, WIDTH);
     float height        = DICTOOL->getFloatValue_json(json, HEIGHT);
@@ -338,7 +311,7 @@ Node* NodeReader::loadSimpleNode(const rapidjson::Value& json)
     return node;
 }
 
-cocos2d::Node* NodeReader::loadSubGraph(const rapidjson::Value& json)
+Node* NodeReader::loadSubGraph(const rapidjson::Value& json)
 {
     const char* filePath = DICTOOL->getStringValue_json(json, FILE_PATH);
 
@@ -411,7 +384,7 @@ Node* NodeReader::loadParticle(const rapidjson::Value& json)
     return particle;
 }
 
-cocos2d::Node* NodeReader::loadWidget(const rapidjson::Value& json)
+Node* NodeReader::loadWidget(const rapidjson::Value& json)
 {
     const char* str = DICTOOL->getStringValue_json(json, CLASSNAME);
     if(str == nullptr)

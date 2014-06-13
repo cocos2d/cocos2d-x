@@ -23,13 +23,38 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCTimelineAction.h"
-#include "CCNodeReader.h"
 
-using namespace cocos2d;
+NS_CC_BEGIN
 
-namespace cocostudio {
-namespace timeline{
 
+// TimelineActionData
+TimelineActionData* TimelineActionData::create(int actionTag)
+{
+    TimelineActionData * ret = new TimelineActionData();
+    if (ret && ret->init(actionTag))
+    {
+        ret->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(ret);
+    }
+    return ret;
+}
+
+TimelineActionData::TimelineActionData()
+    : _actionTag(0)
+{
+}
+
+bool TimelineActionData::init(int actionTag)
+{
+    _actionTag = actionTag;
+    return true;
+}
+
+
+// TimelineAction
 TimelineAction* TimelineAction::create()
 {
     TimelineAction* object = new TimelineAction();
@@ -194,7 +219,7 @@ void TimelineAction::addTimeline(Timeline* timeline)
     int tag = timeline->getActionTag();
     if (_timelineMap.find(tag) == _timelineMap.end())
     {
-        _timelineMap[tag] = cocos2d::Vector<Timeline*>();
+        _timelineMap[tag] = Vector<Timeline*>();
     }
 
     if (!_timelineMap[tag].contains(timeline))
@@ -256,5 +281,4 @@ void TimelineAction::stepToFrame(int frameIndex)
     }
 }
 
-}
-}
+NS_CC_END

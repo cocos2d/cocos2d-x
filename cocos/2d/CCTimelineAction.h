@@ -25,17 +25,33 @@ THE SOFTWARE.
 #ifndef __CCTIMELINE_ACTION_H__
 #define __CCTIMELINE_ACTION_H__
 
-#include "cocos2d.h"
-#include "CCTimeLine.h"
+#include "2d/CCNode.h"
+#include "2d/CCAction.h"
+#include "2d/CCTimeLine.h"
+#include "base/CCRef.h"
 #include "renderer/CCRenderer.h"
 
-namespace cocostudio {
-namespace timeline{
+NS_CC_BEGIN
 
-typedef void (cocos2d::Ref::*SEL_FrameEventCallFunc)(Frame *);
-#define frameEvent_selector(_SELECTOR) (cocostudio::SEL_FrameEventCallFunc)(&_SELECTOR)
+typedef void (Ref::*SEL_FrameEventCallFunc)(Frame *);
+#define frameEvent_selector(_SELECTOR) (SEL_FrameEventCallFunc)(&_SELECTOR)
 
-class TimelineAction : public cocos2d::Action
+class CC_DLL TimelineActionData : public Ref
+{
+public:
+    static TimelineActionData* create(int actionTag);
+
+    virtual void setActionTag(int actionTag) { _actionTag = actionTag; }
+    virtual int getActionTag() { return _actionTag; }
+protected:
+    TimelineActionData();
+    virtual bool init(int actionTag);
+
+    int _actionTag;
+};
+
+
+class CC_DLL TimelineAction : public Action
 {
 public:
     static TimelineAction* create();
@@ -105,7 +121,7 @@ public:
     /** emit frame event, call it when enter a frame*/
     void emitFrameEvent(Frame* frame);
 
-    /** Inherit from cocos2d::Action. */
+    /** Inherit from Action. */
 
     /** Returns a clone of TimelineAction */
     virtual TimelineAction* clone() const override; 
@@ -116,14 +132,14 @@ public:
     virtual TimelineAction* reverse() const override { return nullptr; }
 
     virtual void step(float delta) override; 
-    virtual void startWithTarget(cocos2d::Node *target) override;  
+    virtual void startWithTarget(Node *target) override;  
     virtual bool isDone() const override { return false; }
 protected:
     virtual void gotoFrame(int frameIndex);
     virtual void stepToFrame(int frameIndex);
 
-    std::map<int, cocos2d::Vector<Timeline*>> _timelineMap;
-    cocos2d::Vector<Timeline*> _timelineList;
+    std::map<int, Vector<Timeline*>> _timelineMap;
+    Vector<Timeline*> _timelineList;
 
     int     _duration;
     double  _time;
@@ -137,8 +153,7 @@ protected:
     std::function<void(Frame*)> _frameEventListener;
 };
 
-}
-}
+NS_CC_END
 
 
 #endif /*__CCTIMELINE_ACTION_H__*/
