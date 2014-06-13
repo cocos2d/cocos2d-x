@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "../GUI/BaseClasses/UIWidget.h"
 #include "../GUI/System/UIHelper.h"
 #include "../Json/DictionaryHelper.h"
-#include "CocoLoader.h"
+#include "../Json/CocoLoader.h"
 
 
 NS_CC_EXT_BEGIN
