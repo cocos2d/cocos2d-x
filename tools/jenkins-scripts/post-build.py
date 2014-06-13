@@ -18,7 +18,7 @@ statuses_url = payload['statuses_url']
 J = Jenkins(os.environ['JENKINS_URL'])
 target_url = os.environ['BUILD_URL']
 build_number = int(os.environ['BUILD_NUMBER'])
-data = {"state":"pending", "target_url":target_url}
+data = {"state":"pending", "target_url":target_url, "context":"Jenkins CI", "description":"Build finished!"}
 access_token = os.environ['GITHUB_ACCESS_TOKEN']
 Headers = {"Authorization":"token " + access_token} 
 
@@ -26,9 +26,10 @@ result = J[os.environ['JOB_NAME']].get_build(build_number).get_status()
 
 if(result == STATUS_SUCCESS):
     data['state'] = "success"
+    data['description'] = "Build successfully!"
 else:
     data['state'] = "failure"
-
+    data['description'] = "Build failed!"
 http_proxy = ''
 if(os.environ.has_key('HTTP_PROXY')):
     http_proxy = os.environ['HTTP_PROXY']

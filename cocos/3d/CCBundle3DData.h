@@ -49,29 +49,26 @@ struct MeshVertexAttrib
 
 struct MeshData
 {
-    float* vertex;
+    std::vector<float> vertex;
     int vertexSizeInFloat;
-    unsigned short* indices;
+    std::vector<unsigned short> indices;
     int numIndex;
-    MeshVertexAttrib* attribs;
+    std::vector<MeshVertexAttrib> attribs;
     int attribCount;
 
 public:
     void resetData()
     {
-        CC_SAFE_DELETE_ARRAY(vertex);
-        CC_SAFE_DELETE_ARRAY(indices);
-        CC_SAFE_DELETE_ARRAY(attribs);
+        vertex.clear();
+        indices.clear();
+        attribs.clear();
         vertexSizeInFloat = 0;
         numIndex = 0;
         attribCount = 0;
     }
     MeshData()
-    : vertex(nullptr)
-    , vertexSizeInFloat(0)
-    , indices(nullptr)
+    : vertexSizeInFloat(0)
     , numIndex(0)
-    , attribs(nullptr)
     , attribCount(0)
     {
     }
@@ -106,6 +103,7 @@ struct MaterialData
 
 struct Animation3DData
 {
+public:
     struct Vec3Key
     {
         Vec3Key()
@@ -141,13 +139,15 @@ struct Animation3DData
         float _time;
         Quaternion _key;
     };
-    
+
+public:
     std::map<std::string, std::vector<Vec3Key>> _translationKeys;
     std::map<std::string, std::vector<QuatKey>> _rotationKeys;
     std::map<std::string, std::vector<Vec3Key>> _scaleKeys;
     
     float _totalTime;
-    
+
+public:
     Animation3DData()
     :_totalTime(0)
     {
