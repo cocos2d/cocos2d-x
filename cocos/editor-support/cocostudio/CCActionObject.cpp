@@ -52,6 +52,7 @@ ActionObject::~ActionObject()
 {
 	_actionNodeList.clear();
 	CC_SAFE_RELEASE(_pScheduler);
+	CC_SAFE_RELEASE(_CallBack);
 }
 
 void ActionObject::setName(const char* name)
@@ -166,6 +167,7 @@ void ActionObject::play(CallFunc* func)
 {
 	this->play();
 	this->_CallBack = func;
+	CC_SAFE_RETAIN(_CallBack);
 }
 void ActionObject::pause()
 {
@@ -213,6 +215,10 @@ void ActionObject::simulationActionUpdate(float dt)
 		if (_loop)
 		{
 			this->play();
+		}
+		else
+		{
+			_pScheduler->unschedule(schedule_selector(ActionObject::simulationActionUpdate), this);
 		}
 	}
 }

@@ -53,22 +53,35 @@ Scene::~Scene()
 
 bool Scene::init()
 {
-    bool ret = false;
-     do 
-     {
-         Director * director;
-         CC_BREAK_IF( ! (director = Director::getInstance()) );
-         this->setContentSize(director->getWinSize());
-         // success
-         ret = true;
-     } while (0);
-     return ret;
+    auto size = Director::getInstance()->getWinSize();
+    return initWithSize(size);
 }
 
-Scene *Scene::create()
+bool Scene::initWithSize(const Size& size)
+{
+    setContentSize(size);
+    return true;
+}
+
+Scene* Scene::create()
 {
     Scene *ret = new Scene();
     if (ret && ret->init())
+    {
+        ret->autorelease();
+        return ret;
+    }
+    else
+    {
+        CC_SAFE_DELETE(ret);
+        return nullptr;
+    }
+}
+
+Scene* Scene::createWithSize(const Size& size)
+{
+    Scene *ret = new Scene();
+    if (ret && ret->initWithSize(size))
     {
         ret->autorelease();
         return ret;
@@ -106,7 +119,7 @@ void Scene::update(float delta)
     }
 }
 
-Scene *Scene::createWithPhysics()
+Scene* Scene::createWithPhysics()
 {
     Scene *ret = new Scene();
     if (ret && ret->initWithPhysics())

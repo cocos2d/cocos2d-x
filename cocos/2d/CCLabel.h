@@ -237,8 +237,8 @@ public:
 
     virtual Rect getBoundingBox() const override;
 
-    virtual void visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated) override;
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+    virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
     CC_DEPRECATED_ATTRIBUTE static Label* create(const std::string& text, const std::string& font, float fontSize,
         const Size& dimensions = Size::ZERO, TextHAlignment hAlignment = TextHAlignment::LEFT,
@@ -298,7 +298,7 @@ protected:
 
     void drawShadowWithoutBlur();
 
-    void drawTextSprite(Renderer *renderer, bool parentTransformUpdated);
+    void drawTextSprite(Renderer *renderer, uint32_t parentFlags);
 
     void createSpriteWithFontDefinition();
 

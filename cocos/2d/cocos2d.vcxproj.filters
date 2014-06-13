@@ -565,6 +565,9 @@
     <ClCompile Include="..\3d\CCSprite3DDataCache.cpp">
       <Filter>3d</Filter>
     </ClCompile>
+    <ClCompile Include="..\base\ObjectFactory.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -1143,6 +1146,9 @@
     </ClInclude>
     <ClInclude Include="..\3d\CCSprite3DDataCache.h">
       <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\ObjectFactory.h">
+      <Filter>base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

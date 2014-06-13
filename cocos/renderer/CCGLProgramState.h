@@ -39,6 +39,8 @@ class GLProgram;
 class Texture2D;
 struct Uniform;
 struct VertexAttrib;
+class EventListenerCustom;
+class EventCustom;
 
 //
 //
@@ -48,7 +50,7 @@ struct VertexAttrib;
 class UniformValue
 {
     friend class GLProgram;
-
+    friend class GLProgramState;
 public:
     UniformValue();
     UniformValue(Uniform *uniform, GLProgram* glprogram);
@@ -177,7 +179,7 @@ public:
     void setUniformCallback(const std::string &uniformName, const std::function<void(Uniform*)> &callback);
     void setUniformTexture(const std::string &uniformName, Texture2D *texture);
     void setUniformTexture(const std::string &uniformName, GLuint textureId);
-
+    
 protected:
     GLProgramState();
     ~GLProgramState();
@@ -185,13 +187,19 @@ protected:
     void resetGLProgram();
     VertexAttribValue* getVertexAttribValue(const std::string &attributeName);
     UniformValue* getUniformValue(const std::string &uniformName);
-
+    
+    bool _uniformAttributeValueDirty;
     std::unordered_map<std::string, UniformValue> _uniforms;
     std::unordered_map<std::string, VertexAttribValue> _attributes;
+    std::unordered_map<std::string, int> _boundTextureUnits;
 
     int _textureUnitIndex;
     uint32_t _vertexAttribsFlags;
     GLProgram *_glprogram;
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    EventListenerCustom* _backToForegroundlistener;
+#endif
 };
 
 NS_CC_END

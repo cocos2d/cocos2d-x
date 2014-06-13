@@ -6,17 +6,17 @@
 --------------------------------
 -- @function [parent=#FadeOutTRTiles] turnOnTile 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#FadeOutTRTiles] turnOffTile 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#FadeOutTRTiles] transformTile 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
 -- @param #float float
         
 --------------------------------

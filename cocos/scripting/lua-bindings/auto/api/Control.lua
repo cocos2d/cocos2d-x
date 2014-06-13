@@ -82,7 +82,7 @@
 -- @function [parent=#Control] getTouchLocation 
 -- @param self
 -- @param #cc.Touch touch
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#Control] isHighlighted 

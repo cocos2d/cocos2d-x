@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "ui/UIImageView.h"
 #include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"
+#include "2d/CCSprite.h"
 
 NS_CC_BEGIN
 
@@ -153,7 +154,9 @@ void ImageView::loadTexture(const std::string& fileName, TextureResType texType)
     _imageTextureSize = _imageRenderer->getContentSize();
     updateFlippedX();
     updateFlippedY();
-    updateRGBAToRenderer(_imageRenderer);
+    _imageRenderer->setColor(this->getColor());
+    _imageRenderer->setOpacity(this->getOpacity());
+    
     updateContentSizeWithTextureSize(_imageTextureSize);
     _imageRendererAdaptDirty = true;
 }
@@ -230,7 +233,7 @@ void ImageView::setScale9Enabled(bool able)
     setCapInsets(_capInsets);
 }
     
-bool ImageView::isScale9Enabled()
+bool ImageView::isScale9Enabled()const
 {
     return _scale9Enabled;
 }
@@ -254,7 +257,7 @@ void ImageView::setCapInsets(const Rect &capInsets)
     STATIC_CAST_SCALE9SPRITE->setCapInsets(capInsets);
 }
 
-const Rect& ImageView::getCapInsets()
+const Rect& ImageView::getCapInsets()const
 {
     return _capInsets;
 }
@@ -319,21 +322,6 @@ void ImageView::imageTextureScaleChangedWithSize()
 std::string ImageView::getDescription() const
 {
     return "ImageView";
-}
-    
-void ImageView::updateTextureColor()
-{
-    updateColorToRenderer(_imageRenderer);
-}
-
-void ImageView::updateTextureOpacity()
-{
-    updateOpacityToRenderer(_imageRenderer);
-}
-
-void ImageView::updateTextureRGBA()
-{
-    updateRGBAToRenderer(_imageRenderer);
 }
 
 Widget* ImageView::createCloneInstance()

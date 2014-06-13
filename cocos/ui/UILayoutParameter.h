@@ -129,6 +129,15 @@ protected:
     Margin _margin;
     Type _layoutParameterType;
 };
+    
+class LayoutParameterProtocol
+{
+public:
+    LayoutParameterProtocol(){}
+    virtual ~LayoutParameterProtocol(){}
+    
+    virtual LayoutParameter* getLayoutParameter() const= 0;
+};
 
     
 /**
@@ -305,7 +314,7 @@ protected:
     std::string _relativeWidgetName;
     std::string _relativeLayoutName;
     bool _put;
-    friend class RelativeLayoutExecutant;
+    friend class RelativeLayoutManager;
 };
 
 }

@@ -85,7 +85,7 @@ public:
     virtual ~RenderTextureTestDepthStencil();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 private:
     CustomCommand _renderCmds[4];
     void onBeforeClear();
@@ -139,7 +139,7 @@ public:
         static SimpleSprite* create(const char* filename, const Rect &rect);
         SimpleSprite();
         ~SimpleSprite();
-        virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated);
+        virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags);
     public:
         RenderTexture *_rt;
     };

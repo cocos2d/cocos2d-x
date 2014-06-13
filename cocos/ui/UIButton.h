@@ -29,6 +29,8 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+class Label;
+
 namespace ui{
 
 /**
@@ -126,7 +128,7 @@ public:
      */
     void setCapInsetsNormalRenderer(const Rect &capInsets);
 
-    const Rect& getCapInsetsNormalRenderer();
+    const Rect& getCapInsetsNormalRenderer()const;
 
     /**
      * Sets capinsets for button, if button is using scale9 renderer.
@@ -135,7 +137,7 @@ public:
      */
     void setCapInsetsPressedRenderer(const Rect &capInsets);
 
-    const Rect& getCapInsetsPressedRenderer();
+    const Rect& getCapInsetsPressedRenderer()const;
 
     /**
      * Sets capinsets for button, if button is using scale9 renderer.
@@ -144,7 +146,7 @@ public:
      */
     void setCapInsetsDisabledRenderer(const Rect &capInsets);
 
-    const Rect& getCapInsetsDisabledRenderer();
+    const Rect& getCapInsetsDisabledRenderer()const;
 
     /**
      * Sets if button is using scale9 renderer.
@@ -153,7 +155,7 @@ public:
      */
     virtual void setScale9Enabled(bool able);
 
-    bool isScale9Enabled();
+    bool isScale9Enabled()const;
 
     /**
      * Changes if button can be clicked zoom effect.
@@ -199,18 +201,22 @@ protected:
     virtual void onPressStateChangedToPressed() override;
     virtual void onPressStateChangedToDisabled() override;
     virtual void onSizeChanged() override;
-    virtual void updateTextureColor() override;
-    virtual void updateTextureOpacity() override;
-    virtual void updateTextureRGBA() override;
+  
     virtual void updateFlippedX() override;
     virtual void updateFlippedY() override;
+    
+    void updateTexturesRGBA();
+    
     void normalTextureScaleChangedWithSize();
     void pressedTextureScaleChangedWithSize();
     void disabledTextureScaleChangedWithSize();
-    virtual Widget* createCloneInstance() override;
-    virtual void copySpecialProperties(Widget* model) override;
+    
     virtual void adaptRenderers() override;
     void updateTitleLocation();
+    
+    virtual Widget* createCloneInstance() override;
+    virtual void copySpecialProperties(Widget* model) override;
+   
 protected:
     Node* _buttonNormalRenderer;
     Node* _buttonClickedRenderer;

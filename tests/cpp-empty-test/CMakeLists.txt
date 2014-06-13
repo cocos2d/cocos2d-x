@@ -73,3 +73,7 @@ else()
 endif()
 
 target_link_libraries(${APP_NAME} audio cocos2d)
+# MinGW builds need to link libws2_32 and libglew32 manually
+if (MINGW)
+  target_link_libraries(${APP_NAME} glew32 ws2_32)
+endif()

@@ -82,7 +82,7 @@ void NodeGrid::onGridEndDraw()
     }
 }
 
-void NodeGrid::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
+void NodeGrid::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     // quick return if not visible. children won't be drawn.
     if (!_visible)
@@ -94,7 +94,7 @@ void NodeGrid::visit(Renderer *renderer, const Mat4 &parentTransform, bool paren
     renderer->addCommand(&_groupCommand);
     renderer->pushGroup(_groupCommand.getRenderQueueID());
 
-    bool dirty = parentTransformUpdated || _transformUpdated;
+    bool dirty = (parentFlags & FLAGS_TRANSFORM_DIRTY) || _transformUpdated;
     if(dirty)
         _modelViewTransform = this->transform(parentTransform);
     _transformUpdated = false;

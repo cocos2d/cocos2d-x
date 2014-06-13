@@ -61,7 +61,7 @@ class CC_DLL SpriteFrameCache : public Ref
 {
 public:
     /** Returns the shared instance of the Sprite Frame cache */
-    static SpriteFrameCache* getInstance(void);
+    static SpriteFrameCache* getInstance();
 
     /** @deprecated Use getInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static SpriteFrameCache* sharedSpriteFrameCache() { return SpriteFrameCache::getInstance(); }
@@ -82,7 +82,7 @@ public:
      * @lua NA
      */
     virtual ~SpriteFrameCache();
-    bool init(void);
+    bool init();
 
 public:
     /** Adds multiple Sprite Frames from a plist file.

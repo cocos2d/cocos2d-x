@@ -15,6 +15,10 @@
 		1503FAA618DA8A1C00F6518C /* io.c in Sources */ = {isa = PBXBuildFile; fileRef = 1503FA9F18DA8A1C00F6518C /* io.c */; };
 		1503FAA718DA8A1C00F6518C /* io.h in Headers */ = {isa = PBXBuildFile; fileRef = 1503FAA018DA8A1C00F6518C /* io.h */; };
 		1503FAA818DA8A1C00F6518C /* io.h in Headers */ = {isa = PBXBuildFile; fileRef = 1503FAA018DA8A1C00F6518C /* io.h */; };
+		1540AF57193EC30500717D8E /* xxtea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1540AF55193EC30500717D8E /* xxtea.cpp */; };
+		1540AF58193EC30500717D8E /* xxtea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1540AF55193EC30500717D8E /* xxtea.cpp */; };
+		1540AF59193EC30500717D8E /* xxtea.h in Headers */ = {isa = PBXBuildFile; fileRef = 1540AF56193EC30500717D8E /* xxtea.h */; };
+		1540AF5A193EC30500717D8E /* xxtea.h in Headers */ = {isa = PBXBuildFile; fileRef = 1540AF56193EC30500717D8E /* xxtea.h */; };
 		1A262AB818BEEF5900D2DB92 /* tolua_fix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A262AB718BEEF5900D2DB92 /* tolua_fix.cpp */; };
 		1A262AB918BEEF5900D2DB92 /* tolua_fix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A262AB718BEEF5900D2DB92 /* tolua_fix.cpp */; };
 		1AACE7B518BC45C200215002 /* lua_cocos2dx_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AACE74918BC45C200215002 /* lua_cocos2dx_auto.cpp */; };
@@ -214,6 +218,8 @@
 		1503FA9E18DA8A1C00F6518C /* buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = buffer.h; sourceTree = "<group>"; };
 		1503FA9F18DA8A1C00F6518C /* io.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = io.c; sourceTree = "<group>"; };
 		1503FAA018DA8A1C00F6518C /* io.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = io.h; sourceTree = "<group>"; };
+		1540AF55193EC30500717D8E /* xxtea.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = xxtea.cpp; sourceTree = "<group>"; };
+		1540AF56193EC30500717D8E /* xxtea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xxtea.h; sourceTree = "<group>"; };
 		1A262AB718BEEF5900D2DB92 /* tolua_fix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tolua_fix.cpp; sourceTree = "<group>"; };
 		1AACE74618BC45A000215002 /* libluabindings Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluabindings Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AACE74718BC45A000215002 /* libluabindings iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluabindings iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -335,6 +341,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1540AF54193EC30500717D8E /* xxtea */ = {
+			isa = PBXGroup;
+			children = (
+				1540AF55193EC30500717D8E /* xxtea.cpp */,
+				1540AF56193EC30500717D8E /* xxtea.h */,
+			);
+			name = xxtea;
+			path = ../../../../external/xxtea;
+			sourceTree = "<group>";
+		};
 		1551A334158F2AB200E66CFE = {
 			isa = PBXGroup;
 			children = (
@@ -439,6 +455,7 @@
 		1ABCA1E218CD8F230087CE3A /* external */ = {
 			isa = PBXGroup;
 			children = (
+				1540AF54193EC30500717D8E /* xxtea */,
 				1ABCA1E318CD8F2D0087CE3A /* luajit */,
 				1ABCA20E18CD8F7D0087CE3A /* luasocket */,
 				1ABCA1E418CD8F330087CE3A /* tolua */,
@@ -548,6 +565,7 @@
 				1503FAA818DA8A1C00F6518C /* io.h in Headers */,
 				1ABCA26C18CD8F7D0087CE3A /* unix.h in Headers */,
 				1AACE7E018BC45C200215002 /* CCLuaBridge.h in Headers */,
+				1540AF5A193EC30500717D8E /* xxtea.h in Headers */,
 				C0FEF4D918BE0E70001F446C /* lua_debugger.h in Headers */,
 				1AACE7B818BC45C200215002 /* lua_cocos2dx_auto.hpp in Headers */,
 				1AACE7E418BC45C200215002 /* CCLuaEngine.h in Headers */,
@@ -605,6 +623,7 @@
 				1503FAA718DA8A1C00F6518C /* io.h in Headers */,
 				1ABCA26B18CD8F7D0087CE3A /* unix.h in Headers */,
 				1AACE7DF18BC45C200215002 /* CCLuaBridge.h in Headers */,
+				1540AF59193EC30500717D8E /* xxtea.h in Headers */,
 				C0FEF4D818BE0E70001F446C /* lua_debugger.h in Headers */,
 				1AACE7B718BC45C200215002 /* lua_cocos2dx_auto.hpp in Headers */,
 				1AACE7E318BC45C200215002 /* CCLuaEngine.h in Headers */,
@@ -736,6 +755,7 @@
 				1ABCA23E18CD8F7D0087CE3A /* luasocket.c in Sources */,
 				1ABCA25218CD8F7D0087CE3A /* select.c in Sources */,
 				1ABCA24A18CD8F7D0087CE3A /* mime.c in Sources */,
+				1540AF58193EC30500717D8E /* xxtea.cpp in Sources */,
 				1ABCA26218CD8F7D0087CE3A /* timeout.c in Sources */,
 				1503FAA618DA8A1C00F6518C /* io.c in Sources */,
 				1ABCA26618CD8F7D0087CE3A /* udp.c in Sources */,
@@ -792,6 +812,7 @@
 				1ABCA23D18CD8F7D0087CE3A /* luasocket.c in Sources */,
 				1ABCA25118CD8F7D0087CE3A /* select.c in Sources */,
 				1ABCA24918CD8F7D0087CE3A /* mime.c in Sources */,
+				1540AF57193EC30500717D8E /* xxtea.cpp in Sources */,
 				1ABCA26118CD8F7D0087CE3A /* timeout.c in Sources */,
 				1503FAA518DA8A1C00F6518C /* io.c in Sources */,
 				1ABCA26518CD8F7D0087CE3A /* udp.c in Sources */,

@@ -261,11 +261,37 @@ void TexturePNG::onEnter()
     img->setPosition(Vec2( s.width/2.0f, s.height/2.0f));
     addChild(img);
     log("%s\n", Director::getInstance()->getTextureCache()->getCachedTextureInfo().c_str());
+    
+    // Test PNG files with different pixel formats
+    // grayscale without alpha
+    auto i8 = Sprite::create("Images/test_image_i8.png");
+    i8->setPosition(s.width/4.0f, s.height/4.0f);
+    addChild(i8);
+    
+    // grayscale with alpha
+    auto ai88 = Sprite::create("Images/test_image_ai88.png");
+    ai88->setPosition(s.width / 4.0f, s.height * 3.0f / 4.0f);
+    addChild(ai88);
+    
+    // rgb without alpha
+    auto rgb888 = Sprite::create("Images/test_image_rgb888.png");
+    rgb888->setPosition(s.width * 3.0f / 4.0f, s.height / 4.0f);
+    addChild(rgb888);
+    
+    // rgba with alpha
+    auto rgba8888 = Sprite::create("Images/test_image_rgba8888.png");
+    rgba8888->setPosition(s.width * 3.0f / 4.0f, s.height * 3.0f / 4.0f);
+    addChild(rgba8888);
 }
 
 std::string TexturePNG::title() const
 {
     return "PNG Test";
+}
+
+std::string TexturePNG::subtitle() const
+{
+    return "LB:I8, LT:AI8\nRB:RGB888, RT: RGBA8888";
 }
 
 //------------------------------------------------------------------
@@ -1533,6 +1559,7 @@ void TextureAsync::onEnter()
 
 TextureAsync::~TextureAsync()
 {
+    Director::getInstance()->getTextureCache()->unbindAllImageAsync();
     Director::getInstance()->getTextureCache()->removeAllTextures();
 }
 
@@ -1793,17 +1820,17 @@ std::string TextureDrawAtPoint::subtitle() const
     return "draws 2 textures using drawAtPoint";
 }
 
-void TextureDrawAtPoint::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void TextureDrawAtPoint::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    TextureDemo::draw(renderer, transform, transformUpdated);
+    TextureDemo::draw(renderer, transform, flags);
     
     _renderCmd.init(_globalZOrder);
-    _renderCmd.func = CC_CALLBACK_0(TextureDrawAtPoint::onDraw, this, transform, transformUpdated);
+    _renderCmd.func = CC_CALLBACK_0(TextureDrawAtPoint::onDraw, this, transform, flags);
     renderer->addCommand(&_renderCmd);
 
 }
 
-void TextureDrawAtPoint::onDraw(const Mat4 &transform, bool transformUpdated)
+void TextureDrawAtPoint::onDraw(const Mat4 &transform, uint32_t flags)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -1836,16 +1863,16 @@ TextureDrawInRect::~TextureDrawInRect()
     _Tex2F->release();
 }
 
-void TextureDrawInRect::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void TextureDrawInRect::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    TextureDemo::draw(renderer, transform, transformUpdated);
+    TextureDemo::draw(renderer, transform, flags);
 
     _renderCmd.init(_globalZOrder);
-    _renderCmd.func = CC_CALLBACK_0(TextureDrawInRect::onDraw, this, transform, transformUpdated);
+    _renderCmd.func = CC_CALLBACK_0(TextureDrawInRect::onDraw, this, transform, flags);
     renderer->addCommand(&_renderCmd);
 }
 
-void TextureDrawInRect::onDraw(const Mat4 &transform, bool transformUpdated)
+void TextureDrawInRect::onDraw(const Mat4 &transform, uint32_t flags)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -1959,10 +1986,10 @@ void TextureMemoryAlloc::updateImage(cocos2d::Ref *sender)
             file = "Images/fire_rgba8888.pvr";
             break;
         case 2:
-            file = "Images/grossini_prv_rgba8888.pvr";
+            file = "Images/grossini_pvr_rgba8888.pvr";
             break;
         case 3:
-            file = "Images/grossini_prv_rgba4444.pvr";
+            file = "Images/grossini_pvr_rgba4444.pvr";
             break;
         case 4:
             file = "Images/test_image_a8.pvr";

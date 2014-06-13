@@ -46,7 +46,7 @@
 -- @param #string str
 -- @param #float float
 -- @param #cc.TextHAlignment texthalignment
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -63,7 +63,7 @@
 -- @function [parent=#LabelBMFont] setFntFile 
 -- @param self
 -- @param #string str
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#LabelBMFont] setAlignment 
@@ -78,7 +78,7 @@
 --------------------------------
 -- overload function: create()
 --          
--- overload function: create(string, string, float, cc.TextHAlignment, cc.Vec2)
+-- overload function: create(string, string, float, cc.TextHAlignment, vec2_table)
 --          
 -- @function [parent=#LabelBMFont] create
 -- @param self
@@ -86,7 +86,7 @@
 -- @param #string str
 -- @param #float float
 -- @param #cc.TextHAlignment texthalignment
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
 -- @return LabelBMFont#LabelBMFont ret (retunr value: cc.LabelBMFont)
 
 --------------------------------

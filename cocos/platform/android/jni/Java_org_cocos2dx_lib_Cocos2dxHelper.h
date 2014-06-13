@@ -27,11 +27,11 @@ THE SOFTWARE.
 
 #include <string>
 
-typedef void (*EditTextCallback)(const char* pText, void* ctx);
+typedef void (*EditTextCallback)(const char* text, void* ctx);
 
 extern const char * getApkPath();
-extern void showDialogJNI(const char * pszMsg, const char * pszTitle);
-extern void showEditTextDialogJNI(const char* pszTitle, const char* pszContent, int nInputMode, int nInputFlag, int nReturnType, int nMaxLength, EditTextCallback pfEditTextCallback, void* ctx);
+extern void showDialogJNI(const char * message, const char * title);
+extern void showEditTextDialogJNI(const char* title, const char* content, int inputMode, int inputFlag, int returnType, int maxLength, EditTextCallback callback, void* ctx);
 extern void terminateProcessJNI();
 extern std::string getCurrentLanguageJNI();
 extern std::string getPackageNameJNI();
@@ -40,15 +40,15 @@ extern void enableAccelerometerJni();
 extern void disableAccelerometerJni();
 extern void setAccelerometerIntervalJni(float interval);
 // functions for UserDefault
-extern bool getBoolForKeyJNI(const char* pKey, bool defaultValue);
-extern int getIntegerForKeyJNI(const char* pKey, int defaultValue);
-extern float getFloatForKeyJNI(const char* pKey, float defaultValue);
-extern double getDoubleForKeyJNI(const char* pKey, double defaultValue);
-extern std::string getStringForKeyJNI(const char* pKey, const char* defaultValue);
-extern void setBoolForKeyJNI(const char* pKey, bool value);
-extern void setIntegerForKeyJNI(const char* pKey, int value);
-extern void setFloatForKeyJNI(const char* pKey, float value);
-extern void setDoubleForKeyJNI(const char* pKey, double value);
-extern void setStringForKeyJNI(const char* pKey, const char* value);
+extern bool getBoolForKeyJNI(const char* key, bool defaultValue);
+extern int getIntegerForKeyJNI(const char* key, int defaultValue);
+extern float getFloatForKeyJNI(const char* key, float defaultValue);
+extern double getDoubleForKeyJNI(const char* key, double defaultValue);
+extern std::string getStringForKeyJNI(const char* key, const char* defaultValue);
+extern void setBoolForKeyJNI(const char* key, bool value);
+extern void setIntegerForKeyJNI(const char* key, int value);
+extern void setFloatForKeyJNI(const char* key, float value);
+extern void setDoubleForKeyJNI(const char* key, double value);
+extern void setStringForKeyJNI(const char* key, const char* value);
 
 #endif /* __Java_org_cocos2dx_lib_Cocos2dxHelper_H__ */

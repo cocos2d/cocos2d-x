@@ -29,8 +29,8 @@ THE SOFTWARE.
 #define __COCOS2D_H__
 
 // 0x00 HI ME LO
-// 00   03 01 00
-#define COCOS2D_VERSION 0x00030100
+// 00   03 02 00
+#define COCOS2D_VERSION 0x00030200
 
 //
 // all cocos2d include files
@@ -60,6 +60,7 @@ THE SOFTWARE.
 #include "base/CCUserDefault.h"
 #include "base/CCIMEDelegate.h"
 #include "base/CCIMEDispatcher.h"
+#include "base/ccUtils.h"
 
 // EventDispatcher
 #include "base/CCEventType.h"

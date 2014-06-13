@@ -1263,17 +1263,33 @@ local function TextureMemoryAlloc()
         end
         cc.Director:getInstance():getTextureCache():removeUnusedTextures()
 
+        local targetPlatform = cc.Application:getInstance():getTargetPlatform()
         local file = ""
-        if tag == 0 then
-            file = "Images/test_1021x1024.png"
-        elseif tag == 1 then
-            file = "Images/test_1021x1024_rgba8888.pvr"
-        elseif tag == 2 then
-            file = "Images/test_1021x1024_rgb888.pvr"
-        elseif tag == 3 then
-            file = "Images/test_1021x1024_rgba4444.pvr"
-        elseif tag == 4 then
-            file = "Images/test_1021x1024_a8.pvr"
+
+        if targetPlatform == cc.PLATFORM_OS_ANDROID then
+            if tag == 0 then
+                file = "Images/background.png"
+            elseif tag == 1 then
+                file = "Images/fire_rgba8888.pvr"
+            elseif tag == 2 then
+                file = "Images/grossini_pvr_rgba8888.pvr"
+            elseif tag == 3 then
+                 file = "Images/grossini_pvr_rgba4444.pvr"
+            elseif tag == 4 then
+                file = "Images/test_image_a8.pvr"
+            end
+        else
+            if tag == 0 then
+                file = "Images/background.png"
+            elseif tag == 1 then
+                file = "Images/test_image_rgba4444.pvr.gz"
+            elseif tag == 2 then
+                file = "Images/test_image_rgba4444.pvr.gz"
+            elseif tag == 3 then
+                file = "Images/test_image_rgba4444.pvr.gz"
+            elseif tag == 4 then
+                file = "Images/test_image_rgba4444.pvr.gz"
+            end
         end
 
         m_pBackground = cc.Sprite:create(file)

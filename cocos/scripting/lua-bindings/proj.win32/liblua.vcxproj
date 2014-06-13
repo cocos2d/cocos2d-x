@@ -29,6 +29,7 @@
     <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_map.c" />
     <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_push.c" />
     <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_to.c" />
+    <ClCompile Include="..\..\..\..\external\xxtea\xxtea.cpp" />
     <ClCompile Include="..\auto\lua_cocos2dx_auto.cpp" />
     <ClCompile Include="..\auto\lua_cocos2dx_extension_auto.cpp" />
     <ClCompile Include="..\auto\lua_cocos2dx_physics_auto.cpp" />
@@ -79,6 +80,7 @@
     <ClInclude Include="..\..\..\..\external\lua\luasocket\wsocket.h" />
     <ClInclude Include="..\..\..\..\external\lua\tolua\tolua++.h" />
     <ClInclude Include="..\..\..\..\external\lua\tolua\tolua_event.h" />
+    <ClInclude Include="..\..\..\..\external\xxtea\xxtea.h" />
     <ClInclude Include="..\auto\lua_cocos2dx_auto.hpp" />
     <ClInclude Include="..\auto\lua_cocos2dx_extension_auto.hpp" />
     <ClInclude Include="..\auto\lua_cocos2dx_physics_auto.hpp" />
@@ -140,8 +142,8 @@
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
-	<PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
-	<PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>	
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -149,8 +151,8 @@
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
-	<PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
-	<PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>	
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
