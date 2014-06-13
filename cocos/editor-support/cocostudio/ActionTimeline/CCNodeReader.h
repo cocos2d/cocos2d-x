@@ -51,10 +51,10 @@ public:
     cocos2d::Node* loadNodeWithContent(const std::string& content);
 
     void setRecordJsonPath(bool record) { _recordJsonPath = record; }
-    bool isRecordJsonPath() { return _recordJsonPath; }
+    bool isRecordJsonPath() const { return _recordJsonPath; }
 
     void setJsonPath(std::string jsonPath) { _jsonPath = jsonPath; }
-    std::string getJsonPath() { return _jsonPath; }
+    std::string getJsonPath() const { return _jsonPath; }
 
 protected:
 
