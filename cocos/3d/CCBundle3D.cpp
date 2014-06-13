@@ -35,32 +35,61 @@
 
 NS_CC_BEGIN
 
-
-void getChildMap(const SkinData* skinData, std::map<int, std::vector<int> >& map, const rapidjson::Value& val)
+void getChildMap(std::map<int, std::vector<int> >& map, SkinData* skinData, const rapidjson::Value& val)
 {
     if (!skinData)
         return;
 
-    if (val.HasMember("children"))
+    if (!val.HasMember("children"))
+        return;
+
+    std::string parent_name = val["id"].GetString();
+    int parent_name_index = skinData->getBoneNameIndex(parent_name);
+
+    const rapidjson::Value& bind_pos = val["bind_shape"];
+    Mat4 mat_bind_pos;
+    for (rapidjson::SizeType j = 0; j < bind_pos.Size(); j++)
     {
-        int parent_name_index = skinData->getBoneNameIndex(val["id"].GetString());
-        const rapidjson::Value& children = val["children"];
-        for (rapidjson::SizeType i = 0; i < children.Size(); i++)
+        mat_bind_pos.m[j] = bind_pos[j].GetDouble();
+    }
+    skinData->inverseBindPoseMatrices.push_back(mat_bind_pos);
+
+    const rapidjson::Value& children = val["children"];
+    for (rapidjson::SizeType i = 0; i < children.Size(); i++)
+    {
+        const rapidjson::Value& child = children[i];
+        std::string child_name = child["id"].GetString();
+
+        int child_name_index = skinData->getBoneNameIndex(child_name);
+        if (child_name_index >= 0)
         {
-            const rapidjson::Value& child = children[i];
-            std::string child_name = child["id"].GetString();
-
-            int child_name_index = skinData->getBoneNameIndex(child_name);
-            if (child_name_index < 0)
-                continue;
-
             map[parent_name_index].push_back(child_name_index);
 
-            getChildMap(skinData, map, child);
+            getChildMap(map, skinData, child);
         }
     }
 }
 
+void getChildMapT(std::map<std::string, std::vector<std::string> >& map, const SkinData* skinData, const rapidjson::Value& val)
+{
+    if (!skinData)
+        return;
+
+    if (!val.HasMember("children"))
+        return;
+
+    std::string parent_name = val["id"].GetString();
+    const rapidjson::Value& children = val["children"];
+    for (rapidjson::SizeType i = 0; i < children.Size(); i++)
+    {
+        const rapidjson::Value& child = children[i];
+        std::string child_name = child["id"].GetString();
+
+        map[parent_name].push_back(child_name);
+
+       getChildMapT(map, skinData, child);
+    }
+}
 
 Bundle3D* Bundle3D::_instance = nullptr;
 
@@ -78,7 +107,6 @@ void Bundle3D::purgeBundle3D()
 
 bool Bundle3D::load(const std::string& path)
 {
-    //unsigned char* buffer_data = FileUtils::getInstance()->getFileData(path, "rb", &size);
     std::string strFileString = FileUtils::getInstance()->getStringFromFile(path);
     ssize_t size = strFileString.length();
 
@@ -87,8 +115,10 @@ bool Bundle3D::load(const std::string& path)
     memcpy(_documentBuffer, strFileString.c_str(), size);
     _documentBuffer[size] = '\0';
     if (document.ParseInsitu<0>(_documentBuffer).HasParseError())
+    {
+        assert(0);
         return false;
-
+    }
     return true;
 }
 
@@ -99,50 +129,12 @@ bool Bundle3D::load(const std::string& path)
 bool Bundle3D::loadMeshData(const std::string& id, MeshData* meshdata)
 {
     meshdata->resetData();
-    /*meshdata->vertexSizeInFloat = 13 * 4;
-    meshdata->vertex = new float[meshdata->vertexSizeInFloat];
-    float vert[] = {0.f,50.f,0.f,0.f,0.f,0.f,0.f,0.f,0.f,1.f,0.f,0.f,0.f,
-        0.f,0.f,50.f,1.f,1.f,0.f,0.f,0.f,0.f,1.f,0.f,0.f,0.f,
-        50.f,0.f,0.f,1.f,1.f,0.f,0.f,0.f,0.f,1.f,0.f,0.f,0.f,
-        -50.f,0.f,0.f,1.f,1.f,0.f,0.f,0.f,0.f,1.f,0.f,0.f,0.f};
-    memcpy(meshdata->vertex, vert, meshdata->vertexSizeInFloat * sizeof(float));
-
-    meshdata->numIndex = 4 * 3;
-    meshdata->indices = new unsigned short[meshdata->numIndex];
-    unsigned short index[] = {0,1,2, 0,3,1, 0,2,3, 3,2,1};
-    memcpy(meshdata->indices, index, meshdata->numIndex * sizeof(unsigned short));
-
-    meshdata->attribCount = 4;
-    meshdata->attribs = new MeshVertexAttrib[meshdata->attribCount];
-    meshdata->attribs[0].attribSizeBytes = 3 * sizeof(float);
-    meshdata->attribs[0].size = 3;
-    meshdata->attribs[0].type = GL_FLOAT;
-    meshdata->attribs[0].vertexAttrib = GLProgram::VERTEX_ATTRIB_POSITION;
-
-    meshdata->attribs[1].attribSizeBytes = 2 * sizeof(float);
-    meshdata->attribs[1].size = 2;
-    meshdata->attribs[1].type = GL_FLOAT;
-    meshdata->attribs[1].vertexAttrib = GLProgram::VERTEX_ATTRIB_TEX_COORD;
-
-    meshdata->attribs[2].attribSizeBytes = 4 * sizeof(float);
-    meshdata->attribs[2].size = 4;
-    meshdata->attribs[2].type = GL_FLOAT;
-    meshdata->attribs[2].vertexAttrib = GLProgram::VERTEX_ATTRIB_BLEND_INDEX;
-
-    meshdata->attribs[3].attribSizeBytes = 4 * sizeof(float);
-    meshdata->attribs[3].size = 4;
-    meshdata->attribs[3].type = GL_FLOAT;
-    meshdata->attribs[3].vertexAttrib = GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT;*/
     
     const rapidjson::Value& mash_data_val_array = document["mesh_data"];
     assert(mash_data_val_array.IsArray());
 
     const rapidjson::Value& mash_data_val = mash_data_val_array[(rapidjson::SizeType)0];
     assert(mash_data_val.IsObject());
-   
-    /*assert(mash_data_val.HasMember("version"));
-    assert(mash_data_val["version"].IsString());
-    printf("version = %s\n", mash_data_val["version"].GetString());*/
 
     assert(mash_data_val.HasMember("body"));
     const rapidjson::Value& mesh_data_body_array = mash_data_val["body"];
@@ -170,7 +162,7 @@ bool Bundle3D::loadMeshData(const std::string& id, MeshData* meshdata)
         meshdata->indices[i] = (unsigned short)mesh_data_body_indices_val[i].GetUint();
 
     // mesh_vertex_attribute
-    const rapidjson::Value& mesh_vertex_attribute = mesh_data_body_val["mesh_vertex_attribute"];
+    const rapidjson::Value& mesh_vertex_attribute = mash_data_val["mesh_vertex_attribute"];
     meshdata->attribCount = mesh_vertex_attribute.Size();
     meshdata->attribs = new MeshVertexAttrib[meshdata->attribCount];
     for (rapidjson::SizeType i = 0; i < mesh_vertex_attribute.Size(); i++)
@@ -195,20 +187,13 @@ bool Bundle3D::loadMeshData(const std::string& id, MeshData* meshdata)
 bool Bundle3D::loadSkinData(const std::string& id, SkinData* skindata)
 {
     skindata->resetData();
-    /*skindata->boneNames.push_back("root");
-    skindata->inverseBindPoseMatrices.push_back(Mat4::IDENTITY);
-    skindata->rootBoneIndex = 0;*/
 
-    //assert(document.HasMember("skin_data"));
     if (!document.HasMember("skin_data")) return false;
 
     const rapidjson::Value& skin_data_array = document["skin_data"];
     assert(skin_data_array.IsArray());
     
     const rapidjson::Value& skin_data_array_val_0 = skin_data_array[(rapidjson::SizeType)0];
-    //skindata->boneNames.push_back("root");
-    //skindata->inverseBindPoseMatrices.push_back(Mat4::IDENTITY);
-    skindata->rootBoneIndex = 1;
 
     const rapidjson::Value& skin_data_bind_shape = skin_data_array_val_0["bind_shape"];
     assert(skin_data_bind_shape.Size() == 16);
@@ -223,37 +208,43 @@ bool Bundle3D::loadSkinData(const std::string& id, SkinData* skindata)
         const rapidjson::Value& skin_data_bone = skin_data_bones[i];
         std::string name = skin_data_bone["node"].GetString();
         skindata->boneNames.push_back(name);
-        const rapidjson::Value& bind_pos = skin_data_bone["bind_pos"];
+        /*const rapidjson::Value& bind_pos = skin_data_bone["bind_pos"];
         Mat4 mat_bind_pos;
         for (rapidjson::SizeType j = 0; j < bind_pos.Size(); j++)
         {
             mat_bind_pos.m[j] = bind_pos[j].GetDouble();
         }
-        skindata->inverseBindPoseMatrices.push_back(mat_bind_pos);
+        skindata->inverseBindPoseMatrices.push_back(mat_bind_pos);*/
     }
 
     const rapidjson::Value& skin_data_array_val_1 = skin_data_array[1];
     const rapidjson::Value& bone_val_0 = skin_data_array_val_1["children"][(rapidjson::SizeType)0];
-    getChildMap(skindata, skindata->boneChild, /*skin_data_array_val_1*/bone_val_0);
+    skindata->rootBoneIndex = skindata->getBoneNameIndex(bone_val_0["id"].GetString());
+    getChildMap(skindata->boneChild, skindata, bone_val_0);
 
+    std::map<std::string, std::vector<std::string> > map_child;
+    getChildMapT(map_child, skindata, bone_val_0);
     return true;
 }
 
-//
 /**
  * load material data from bundle
  * @param id The ID of the material, load the first Material in the bundle if it is empty
  */
 bool Bundle3D::loadMaterialData(const std::string& id, MaterialData* materialdata)
 {
-    //assert(document.HasMember("material_data"));
-    if (!document.HasMember("material_data")) return false;
+    if (!document.HasMember("material_data")) 
+        return false;
 
     const rapidjson::Value& material_data_array_val = document["material_data"];
-    assert(material_data_array_val.IsArray());
+    if (!material_data_array_val.IsArray()) 
+        return false;
 
     const rapidjson::Value& material_data_array_val_0 = material_data_array_val[(rapidjson::SizeType)0];
-    materialdata->texturePath = material_data_array_val_0["filename"].GetString();
+    if (!material_data_array_val_0.HasMember("file_name"))
+        return false;
+
+    materialdata->texturePath = material_data_array_val_0["file_name"].GetString();
     return true;
 }
 
@@ -266,100 +257,53 @@ bool Bundle3D::loadAnimationData(const std::string& id, Animation3DData* animati
     animationdata->_rotationKeys.clear();
     animationdata->_scaleKeys.clear();
     animationdata->_translationKeys.clear();
-    //assert(document.HasMember("animation_data"));
-    if (!document.HasMember("animation_data")) return false;
+
+    assert(document.HasMember("animation_3d_data"));
+    if (!document.HasMember("animation_3d_data")) return false;
 
     animationdata->_totalTime = 3;
 
-    //auto animation = animationdata->animation;
-    //animation->_duration = 3.0f;
-   /* for (auto it : animation->_boneCurves) {
-        CC_SAFE_DELETE(it.second);
-    }
-    animation->_boneCurves.clear();*/
-    /*auto curve = new Animation3D::Curve();
-    float keytime[] = {0.f, 1.f};
-    float pos[] = {0.f, 0.f, 0.f, 20.f, 0.f, 0.f};
-    
-    animationdata->_totalTime = 3.0f;
-    
-    float keytime1[] = {0.f, 0.333f, 0.667f, 1.f};
-    std::string boneName = "root";
-    
-    Quaternion quat;
-    Quaternion::createFromAxisAngle(Vec3(1.f, 0.f, 0.f), 0, &quat);
-    animationdata->_rotationKeys[boneName].push_back(Animation3DData::QuatKey(keytime1[0], quat));
-    Quaternion::createFromAxisAngle(Vec3(1.f, 0.f, 0.f), MATH_DEG_TO_RAD(90), &quat);
-     animationdata->_rotationKeys[boneName].push_back(Animation3DData::QuatKey(keytime1[1], quat));
-    Quaternion::createFromAxisAngle(Vec3(1.f, 0.f, 0.f), MATH_DEG_TO_RAD(180), &quat);
-    animationdata->_rotationKeys[boneName].push_back(Animation3DData::QuatKey(keytime1[2], quat));
-    Quaternion::createFromAxisAngle(Vec3(1.f, 0.f, 0.f), MATH_DEG_TO_RAD(270), &quat);
-    animationdata->_rotationKeys[boneName].push_back(Animation3DData::QuatKey(keytime1[3], quat));
-    
-    animation->_boneCurves["root"] = curve;*/
-
-    const rapidjson::Value& animation_data_array_val =  document["animation_data"];
+    const rapidjson::Value& animation_data_array_val =  document["animation_3d_data"];
     const rapidjson::Value& animation_data_array_val_0 = animation_data_array_val[(rapidjson::SizeType)0];
 
     const rapidjson::Value&  bones =  animation_data_array_val_0["bones"];
-    for (rapidjson::SizeType i = 0; i <  bones.Size(); i++)
+    rapidjson::SizeType bone_size = bones.Size();
+    for (rapidjson::SizeType i = 0; i <  bone_size/*bones.Size()*/; i++)
     {
         const rapidjson::Value&  bone =  bones[i];
-        std::string bone_name =  bone["id"].GetString();
+        std::string bone_name =  bone["boneId"].GetString();
 
         if ( bone.HasMember("keyframes"))
         {
             const rapidjson::Value& bone_keyframes =  bone["keyframes"];
+            rapidjson::SizeType keyframe_size = bone_keyframes.Size();
             for (rapidjson::SizeType j = 0; j < bone_keyframes.Size(); j++)
             {
-                //auto curve = new Animation3D::Curve();
                 const rapidjson::Value&  bone_keyframe =  bone_keyframes[j];
-                if ( bone_keyframe.HasMember("position"))
+
+                if ( bone_keyframe.HasMember("translation"))
                 {
-                    const rapidjson::Value&  bone_keyframe_position =  bone_keyframe["position"];
-
-                    for (rapidjson::SizeType k = 0; k <  bone_keyframe_position.Size(); k++)
-                    {
-                        const rapidjson::Value&  bone_keyframe_position_obj =  bone_keyframe_position[k];
-                        float keytime =  bone_keyframe_position_obj["keytime"].GetDouble();
-
-                        const rapidjson::Value&  bone_keyframe_position_values =  bone_keyframe_position_obj["value"];
-                        Vec3 val = Vec3(bone_keyframe_position_values[(rapidjson::SizeType)0].GetDouble(),bone_keyframe_position_values[1].GetDouble(),bone_keyframe_position_values[2].GetDouble());
-                        animationdata->_translationKeys[bone_name].push_back(Animation3DData::Vec3Key(keytime,val));
-                    }
+                    const rapidjson::Value&  bone_keyframe_translation =  bone_keyframe["translation"];
+                    float keytime =  bone_keyframe["keytime"].GetDouble() / 1200.f;
+                    Vec3 val = Vec3(bone_keyframe_translation[(rapidjson::SizeType)0].GetDouble(), bone_keyframe_translation[1].GetDouble(), bone_keyframe_translation[2].GetDouble());
+                    animationdata->_translationKeys[bone_name].push_back(Animation3DData::Vec3Key(keytime,val));
                 }
 
                 if ( bone_keyframe.HasMember("rotation"))
                 {
-                    const rapidjson::Value&  bone_keyframe_position =  bone_keyframe["rotation"];
-
-                    for (rapidjson::SizeType k = 0; k <  bone_keyframe_position.Size(); k++)
-                    {
-                        const rapidjson::Value&  bone_keyframe_position_obj =  bone_keyframe_position[k];
-                        float keytime =  bone_keyframe_position_obj["keytime"].GetDouble();
-
-                        const rapidjson::Value&  bone_keyframe_position_values =  bone_keyframe_position_obj["value"];
-                        Quaternion val = Quaternion(bone_keyframe_position_values[(rapidjson::SizeType)0].GetDouble(),bone_keyframe_position_values[1].GetDouble(),bone_keyframe_position_values[2].GetDouble(),bone_keyframe_position_values[3].GetDouble());
-                        animationdata->_rotationKeys[bone_name].push_back(Animation3DData::QuatKey(keytime,val));
-                    }
+                    const rapidjson::Value&  bone_keyframe_rotation =  bone_keyframe["rotation"];
+                    float keytime =  bone_keyframe["keytime"].GetDouble() / 1200.f;
+                    Quaternion val = Quaternion(bone_keyframe_rotation[(rapidjson::SizeType)0].GetDouble(),bone_keyframe_rotation[1].GetDouble(),bone_keyframe_rotation[2].GetDouble(),bone_keyframe_rotation[3].GetDouble());
+                    animationdata->_rotationKeys[bone_name].push_back(Animation3DData::QuatKey(keytime,val));
                 }
 
                 if ( bone_keyframe.HasMember("scale"))
                 {
-                    const rapidjson::Value&  bone_keyframe_position =  bone_keyframe["scale"];
-                    
-                    for (rapidjson::SizeType k = 0; k <  bone_keyframe_position.Size(); k++)
-                    {
-                        const rapidjson::Value&  bone_keyframe_position_obj =  bone_keyframe_position[k];
-                        float keytime =  bone_keyframe_position_obj["keytime"].GetDouble();
-
-                        const rapidjson::Value&  bone_keyframe_position_values =  bone_keyframe_position_obj["value"];
-                        Vec3 val = Vec3(bone_keyframe_position_values[(rapidjson::SizeType)0].GetDouble(),bone_keyframe_position_values[1].GetDouble(),bone_keyframe_position_values[2].GetDouble());
-                        animationdata->_scaleKeys[bone_name].push_back(Animation3DData::Vec3Key(keytime,val));
-                    }
+                    const rapidjson::Value&  bone_keyframe_scale =  bone_keyframe["scale"];
+                    float keytime =  bone_keyframe["keytime"].GetDouble() / 1200.f;
+                    Vec3 val = Vec3(bone_keyframe_scale[(rapidjson::SizeType)0].GetDouble(), bone_keyframe_scale[1].GetDouble(), bone_keyframe_scale[2].GetDouble());
+                    animationdata->_scaleKeys[bone_name].push_back(Animation3DData::Vec3Key(keytime,val));
                 }
-
-                //animation->_boneCurves[bone_name] = curve;
             }
         }
     }

@@ -22,7 +22,7 @@ attribute vec4 a_blendIndex;
 
 attribute vec2 a_texCoord;
 
-const int SKINNING_JOINT_COUNT = 30;
+const int SKINNING_JOINT_COUNT = 60;
 // Uniforms
 uniform vec4 u_matrixPalette[SKINNING_JOINT_COUNT * 3];
 

@@ -4,35 +4,35 @@
 	"mesh_data": [
 		{
 			"version": "1.2", 
+			"mesh_vertex_attribute": [
+				{
+					"size":3,
+					"type":"GL_FLOAT",
+					"vertex_attribute":"VERTEX_ATTRIB_POSITION"
+				}, 
+				{
+					"size":3,
+					"type":"GL_FLOAT",
+					"vertex_attribute":"VERTEX_ATTRIB_NORMAL"
+				}, 
+				{
+					"size":2,
+					"type":"GL_FLOAT",
+					"vertex_attribute":"VERTEX_ATTRIB_TEX_COORD"
+				}, 
+				{
+					"size":4,
+					"type":"GL_FLOAT",
+					"vertex_attribute":"VERTEX_ATTRIB_BLEND_WEIGHT"
+				}, 
+				{
+					"size":4,
+					"type":"GL_FLOAT",
+					"vertex_attribute":"VERTEX_ATTRIB_BLEND_INDEX"
+				}
+			], 
 			"body":[
 				{
-					"mesh_vertex_attribute": [
-						{
-							"size":3,
-							"type":"GL_FLOAT",
-							"vertex_attribute":"VERTEX_ATTRIB_POSITION"
-						}, 
-						{
-							"size":3,
-							"type":"GL_FLOAT",
-							"vertex_attribute":"VERTEX_ATTRIB_NORMAL"
-						}, 
-						{
-							"size":2,
-							"type":"GL_FLOAT",
-							"vertex_attribute":"VERTEX_ATTRIB_TEX_COORD"
-						}, 
-						{
-							"size":4,
-							"type":"GL_FLOAT",
-							"vertex_attribute":"VERTEX_ATTRIB_BLEND_WEIGHT"
-						}, 
-						{
-							"size":4,
-							"type":"GL_FLOAT",
-							"vertex_attribute":"VERTEX_ATTRIB_BLEND_INDEX"
-						}
-					], 
 					"vertices": [
 						 0.000000, -2.259414, -2.259414,  0.000000,  0.000000, -1.000000,  0.582997,  0.456003,  0.500033,  0.499967,  0.000000,  0.000000,  0.000000,  1.000000,  0.000000,  0.000000, 
 						-5.314565, -2.259414, -2.259414,  0.000000,  0.000000, -1.000000,  0.582997,  0.168971,  0.933581,  0.066419,  0.000000,  0.000000,  1.000000,  0.000000,  0.000000,  0.000000, 
@@ -82,7 +82,7 @@
 	], 
 	"material_data": [
 		{
-			"filename": "Sprite3DTest/checkboard.png"
+			"file_name": "Sprite3DTest/checkboard.png"
 		}
 	], 
 	"skin_data": [
