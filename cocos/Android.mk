@@ -62,8 +62,10 @@ cocos2d.cpp \
 2d/CCSpriteFrame.cpp \
 2d/CCSpriteFrameCache.cpp \
 2d/CCTMXLayer.cpp \
+2d/CCTMXLayer2.cpp \
 2d/CCTMXObjectGroup.cpp \
 2d/CCTMXTiledMap.cpp \
+2d/CCTMXTiledMap2.cpp \
 2d/CCTMXXMLParser.cpp \
 2d/CCTextFieldTTF.cpp \
 2d/CCTileMapAtlas.cpp \

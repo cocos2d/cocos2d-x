@@ -36,14 +36,13 @@ THE SOFTWARE.
  */
 #include "CCTMXLayer2.h"
 #include "CCTMXXMLParser.h"
-#include "CCTMXTiledMap.h"
-#include "CCSprite.h"
-#include "CCTextureCache.h"
-#include "CCGLProgramCache.h"
-#include "CCGLProgram.h"
-#include "ccCArray.h"
-#include "CCDirector.h"
-#include "CCConfiguration.h"
+#include "CCTMXTiledMap2.h"
+#include "2d/CCSprite.h"
+#include "renderer/CCTextureCache.h"
+#include "renderer/CCGLProgramCache.h"
+#include "renderer/CCGLProgram.h"
+#include "base/CCDirector.h"
+#include "base/CCConfiguration.h"
 #include "renderer/CCRenderer.h"
 #include "deprecated/CCString.h"
 
@@ -113,7 +112,7 @@ TMXLayer2::TMXLayer2()
 ,_mapTileSize(Size::ZERO)
 ,_tiles(nullptr)
 ,_tileSet(nullptr)
-,_layerOrientation(TMXOrientationOrtho)
+,_layerOrientation(TMXOrientationOrtho2)
 ,_texture(nullptr)
 ,_reusedTile(nullptr)
 ,_verticesToDraw(0)
@@ -236,7 +235,7 @@ int TMXLayer2::updateTiles(const Rect& culledRect, V2F_T2F_Quad *quads, GLushort
     int tilesOverY = 0;
     // for diagonal oriention tiles
     float tileSizeMax = std::max(tileSize.width, tileSize.height);
-    if (_layerOrientation == TMXOrientationOrtho)
+    if (_layerOrientation == TMXOrientationOrtho2)
     {
         tilesOverX = ceil(tileSizeMax / mapTileSize.width) - 1;
         tilesOverY = ceil(tileSizeMax / mapTileSize.height) - 1;
@@ -244,7 +243,7 @@ int TMXLayer2::updateTiles(const Rect& culledRect, V2F_T2F_Quad *quads, GLushort
         if (tilesOverX < 0) tilesOverX = 0;
         if (tilesOverY < 0) tilesOverY = 0;
     }
-    else if(_layerOrientation == TMXOrientationIso)
+    else if(_layerOrientation == TMXOrientationIso2)
     {
         Rect overTileRect(0, 0, tileSizeMax - mapTileSize.width, tileSizeMax - mapTileSize.height);
         if (overTileRect.size.width < 0) overTileRect.size.width = 0;
@@ -424,18 +423,18 @@ void TMXLayer2::setupTiles()
 
     switch (_layerOrientation)
     {
-        case TMXOrientationOrtho:
+        case TMXOrientationOrtho2:
             _screenGridSize.width = ceil(screenSize.width / _mapTileSize.width) + 1;
             _screenGridSize.height = ceil(screenSize.height / _mapTileSize.height) + 1;
 
             // tiles could be bigger than the grid, add additional rows if needed
             _screenGridSize.height += _tileSet->_tileSize.height / _mapTileSize.height;
             break;
-        case TMXOrientationIso:
+        case TMXOrientationIso2:
             _screenGridSize.width = ceil(screenSize.width / _mapTileSize.width) + 2;
             _screenGridSize.height = ceil(screenSize.height / (_mapTileSize.height/2)) + 4;
             break;
-        case TMXOrientationHex:
+        case TMXOrientationHex2:
             break;
     }
 
@@ -452,7 +451,7 @@ Mat4 TMXLayer2::tileToNodeTransform()
     
 	switch(_layerOrientation)
     {
-		case TMXOrientationOrtho:
+		case TMXOrientationOrtho2:
         {
             _tileToNodeTransform = Mat4
             (
@@ -464,7 +463,7 @@ Mat4 TMXLayer2::tileToNodeTransform()
             
             return _tileToNodeTransform;
         }
-		case TMXOrientationIso:
+		case TMXOrientationIso2:
         {
             float offX = (_layerSize.width - 1) * w / 2;
             _tileToNodeTransform = Mat4
@@ -476,7 +475,7 @@ Mat4 TMXLayer2::tileToNodeTransform()
             );
 			return _tileToNodeTransform;
 		}
-        case TMXOrientationHex:
+        case TMXOrientationHex2:
         {
             _tileToNodeTransform = Mat4::IDENTITY;
             return _tileToNodeTransform;
@@ -570,14 +569,14 @@ int TMXLayer2::getVertexZForPos(const Point& pos)
     {
         switch (_layerOrientation)
         {
-            case TMXOrientationIso:
+            case TMXOrientationIso2:
                 maxVal = static_cast<int>(_layerSize.width + _layerSize.height);
                 ret = static_cast<int>(-(maxVal - (pos.x + pos.y)));
                 break;
-            case TMXOrientationOrtho:
+            case TMXOrientationOrtho2:
                 ret = static_cast<int>(-(_layerSize.height-pos.y));
                 break;
-            case TMXOrientationHex:
+            case TMXOrientationHex2:
                 CCASSERT(0, "TMX Hexa zOrder not supported");
                 break;
             default:
@@ -681,14 +680,14 @@ Point TMXLayer2::calculateLayerOffset(const Point& pos)
     Point ret = Point::ZERO;
     switch (_layerOrientation) 
     {
-    case TMXOrientationOrtho:
+    case TMXOrientationOrtho2:
         ret = Point( pos.x * _mapTileSize.width, -pos.y *_mapTileSize.height);
         break;
-    case TMXOrientationIso:
+    case TMXOrientationIso2:
         ret = Point((_mapTileSize.width /2) * (pos.x - pos.y),
                   (_mapTileSize.height /2 ) * (-pos.x - pos.y));
         break;
-    case TMXOrientationHex:
+    case TMXOrientationHex2:
         CCASSERT(pos.equals(Point::ZERO), "offset for hexagonal map not implemented yet");
         break;
     }
