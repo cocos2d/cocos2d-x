@@ -24,7 +24,7 @@
 
 #include "CCActionManager.h"
 #include "../Json/DictionaryHelper.h"
-#include "CocoLoader.h"
+#include "../Json/CocoLoader.h"
 
 NS_CC_EXT_BEGIN
 

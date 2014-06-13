@@ -1308,13 +1308,13 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
         CCLOG("GetParseError %s\n",json.GetParseError());
     }
 	
-	dataInfo->contentScale = DICTOOL->getFloatValue_json(json, CONTENT_SCALE, 1.0f); //json[CONTENT_SCALE].IsNull()? 1.0f : json[CONTENT_SCALE].GetDouble();
+	dataInfo->contentScale = DICTOOL->getFloatValue_json(json, CONTENT_SCALE, 1.0f); 
 	
     // Decode armatures
-	int length = DICTOOL->getArrayCount_json(json, ARMATURE_DATA); //json[ARMATURE_DATA].IsNull() ? 0 : json[ARMATURE_DATA].Size();
+	int length = DICTOOL->getArrayCount_json(json, ARMATURE_DATA); 
 	for (int i = 0; i < length; i++)
     {
-		const rapidjson::Value &armatureDic = DICTOOL->getSubDictionary_json(json, ARMATURE_DATA, i); //json[ARMATURE_DATA][i];
+		const rapidjson::Value &armatureDic = DICTOOL->getSubDictionary_json(json, ARMATURE_DATA, i); 
         CCArmatureData *armatureData = decodeArmature(armatureDic, dataInfo);
 
         if (dataInfo->asyncStruct)
@@ -1331,7 +1331,7 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
     }
 
     // Decode animations
-	length = DICTOOL->getArrayCount_json(json, ANIMATION_DATA); //json[ANIMATION_DATA].IsNull() ? 0 : json[ANIMATION_DATA].Size();
+	length = DICTOOL->getArrayCount_json(json, ANIMATION_DATA); 
     for (int i = 0; i < length; i++)
     {
 		const rapidjson::Value &animationDic = DICTOOL->getSubDictionary_json(json, ANIMATION_DATA, i);
@@ -1350,10 +1350,10 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
     }
 
     // Decode textures
-    length = DICTOOL->getArrayCount_json(json, TEXTURE_DATA); // json[TEXTURE_DATA].IsNull() ? 0 : json[TEXTURE_DATA].Size();
+    length = DICTOOL->getArrayCount_json(json, TEXTURE_DATA);
     for (int i = 0; i < length; i++)
     {
-        const rapidjson::Value &textureDic =  DICTOOL->getSubDictionary_json(json, TEXTURE_DATA, i); // json[TEXTURE_DATA][i];
+        const rapidjson::Value &textureDic =  DICTOOL->getSubDictionary_json(json, TEXTURE_DATA, i); 
         CCTextureData *textureData = decodeTexture(textureDic);
 
         if (dataInfo->asyncStruct)
@@ -1373,11 +1373,10 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
     bool autoLoad = dataInfo->asyncStruct == NULL ? CCArmatureDataManager::sharedArmatureDataManager()->isAutoLoadSpriteFile() : dataInfo->asyncStruct->autoLoadSpriteFile;
     if (autoLoad)
     {
-        length =  DICTOOL->getArrayCount_json(json, CONFIG_FILE_PATH); // json[CONFIG_FILE_PATH].IsNull() ? 0 : json[CONFIG_FILE_PATH].Size();
+        length =  DICTOOL->getArrayCount_json(json, CONFIG_FILE_PATH); 
         for (int i = 0; i < length; i++)
         {
-			const char *path = DICTOOL->getStringValueFromArray_json(json, CONFIG_FILE_PATH, i); // json[CONFIG_FILE_PATH][i].IsNull() ? NULL : json[CONFIG_FILE_PATH][i].GetString();
-            if (path == NULL)
+			const char *path = DICTOOL->getStringValueFromArray_json(json, CONFIG_FILE_PATH, i); 
             {
                 CCLOG("load CONFIG_FILE_PATH error.");
                 return;
@@ -1790,7 +1789,7 @@ void CCDataReaderHelper::decodeNode(CCBaseData *node, const rapidjson::Value &js
     {
         if (DICTOOL->checkObjectExist_json(json, COLOR_INFO))
         {
-            const rapidjson::Value &colorDic =  DICTOOL->getSubDictionary_json(json, COLOR_INFO); //json.getSubDictionary(COLOR_INFO);
+            const rapidjson::Value &colorDic =  DICTOOL->getSubDictionary_json(json, COLOR_INFO); 
             node->a = DICTOOL->getIntValue_json(colorDic, A_ALPHA, 255);   
             node->r = DICTOOL->getIntValue_json(colorDic, A_RED, 255);  
             node->g = DICTOOL->getIntValue_json(colorDic, A_GREEN, 255); 
@@ -1897,11 +1896,11 @@ void CCDataReaderHelper::addDataFromBinaryCache(const char *fileContent, DataInf
 					{
 						continue;
 					}
-					length = tpChildArray[i].GetChildNum();//DICTOOL->getArrayCount_json(json, CONFIG_FILE_PATH); // json[CONFIG_FILE_PATH].IsNull() ? 0 : json[CONFIG_FILE_PATH].Size();
+					length = tpChildArray[i].GetChildNum();
 					stExpCocoNode *pConfigFilePath = tpChildArray[i].GetChildArray();
 					for (int i = 0; i < length; i++)
 					{
-						const char *path = pConfigFilePath[i].GetValue(); //DICTOOL->getStringValueFromArray_json(json, CONFIG_FILE_PATH, i); // json[CONFIG_FILE_PATH][i].IsNull() ? NULL : json[CONFIG_FILE_PATH][i].GetString();
+						const char *path = pConfigFilePath[i].GetValue();
 						if (path == NULL)
 						{
 							CCLOG("load CONFIG_FILE_PATH error.");
@@ -2022,9 +2021,9 @@ CCDisplayData* CCDataReaderHelper::decodeBoneDisplay(CocoLoader *pCocoLoader, st
 
 	if (key.compare(A_DISPLAY_TYPE) == 0)
 	{
-		str = child->GetValue(); //DICTOOL->getStringValue_json(json, A_NAME);
-		DisplayType displayType = (DisplayType)(atoi(str)); //DisplayType displayType =  (DisplayType)(DICTOOL->getIntValue_json(json, A_DISPLAY_TYPE, CS_DISPLAY_SPRITE));
-		
+		str = child->GetValue();
+		DisplayType displayType = (DisplayType)(atoi(str));
+
 		int length = 0;
 		switch (displayType)
 		{
@@ -2032,18 +2031,14 @@ CCDisplayData* CCDataReaderHelper::decodeBoneDisplay(CocoLoader *pCocoLoader, st
 			{
 				displayData = new CCSpriteDisplayData();
 
-				const char *name =  children[0].GetValue(); //DICTOOL->getStringValue_json(json, A_NAME);
+				const char *name =  children[0].GetValue(); 
 				if(name != NULL)
 				{
 					((CCSpriteDisplayData *)displayData)->displayName = name;
 				}
 				stExpCocoNode *pSkinDataArray = children[2].GetChildArray();
-				//const rapidjson::Value &dicArray = DICTOOL->getSubDictionary_json(json, SKIN_DATA);
-				//if(!dicArray.IsNull())
 				if (pSkinDataArray != NULL)
 				{
-					/*rapidjson::SizeType index = 0;
-					const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(dicArray, index);*/
 					stExpCocoNode *pSkinData = &pSkinDataArray[0];
 					if (pSkinData != NULL)
 					{
@@ -2056,27 +2051,27 @@ CCDisplayData* CCDataReaderHelper::decodeBoneDisplay(CocoLoader *pCocoLoader, st
 							str = SkinDataValue[i].GetValue();
 							if (key.compare(A_X) == 0)
 							{
-								sdd->skinData.x = atof(str) * s_PositionReadScale; //sdd->skinData.x = DICTOOL->getFloatValue_json(dic, A_X) * s_PositionReadScale;
+								sdd->skinData.x = atof(str) * s_PositionReadScale; 
 							}
 							else if (key.compare(A_Y) == 0)
 							{
-								sdd->skinData.y = atof(str) * s_PositionReadScale; //sdd->skinData.y = DICTOOL->getFloatValue_json(dic, A_Y) * s_PositionReadScale;
+								sdd->skinData.y = atof(str) * s_PositionReadScale; 
 							}
 							else if (key.compare(A_SCALE_X) == 0)
 							{
-								sdd->skinData.scaleX = atof(str); //sdd->skinData.scaleX = DICTOOL->getFloatValue_json(dic, A_SCALE_X, 1.0f);
+								sdd->skinData.scaleX = atof(str); 
 							}
 							else if (key.compare(A_SCALE_Y) == 0)
 							{
-								sdd->skinData.scaleY = atof(str); //sdd->skinData.scaleY = DICTOOL->getFloatValue_json(dic, A_SCALE_Y, 1.0f);
+								sdd->skinData.scaleY = atof(str); 
 							}
 							else if (key.compare(A_SKEW_X) == 0)
 							{
-								sdd->skinData.skewX = atof(str); //sdd->skinData.skewX = DICTOOL->getFloatValue_json(dic, A_SKEW_X, 1.0f);
+								sdd->skinData.skewX = atof(str); 
 							}
 							else if (key.compare(A_SKEW_Y) == 0)
 							{
-								sdd->skinData.skewY = atof(str); //sdd->skinData.skewY = DICTOOL->getFloatValue_json(dic, A_SKEW_Y, 1.0f);
+								sdd->skinData.skewY = atof(str); 
 							}
 						}
 
@@ -2091,7 +2086,7 @@ CCDisplayData* CCDataReaderHelper::decodeBoneDisplay(CocoLoader *pCocoLoader, st
 			{
 				displayData = new CCArmatureDisplayData();
 
-				const char *name = pCocoNode[0].GetValue();//DICTOOL->getStringValue_json(json, A_NAME);
+				const char *name = pCocoNode[0].GetValue();
 				if(name != NULL)
 				{
 					((CCArmatureDisplayData *)displayData)->displayName = name;
@@ -2123,18 +2118,6 @@ CCDisplayData* CCDataReaderHelper::decodeBoneDisplay(CocoLoader *pCocoLoader, st
                         }
 					}
 				}
-				/*const char *plist = DICTOOL->getStringValue_json(json, A_PLIST);
-				if(plist != NULL)
-				{
-				if (dataInfo->asyncStruct)
-				{
-				((CCParticleDisplayData *)displayData)->displayName = dataInfo->asyncStruct->baseFilePath + plist;
-				}
-				else
-				{
-				((CCParticleDisplayData *)displayData)->displayName = dataInfo->baseFilePath + plist;
-				}
-				}*/
 			}
 			break;
 		default:
@@ -2214,7 +2197,7 @@ CCMovementData* CCDataReaderHelper::decodeMovement(CocoLoader *pCocoLoader, stEx
 			{
 				if (strcmp("1", str) != 0)
 				{
-					movementData->loop = false; //movementData->loop = DICTOOL->getBooleanValue_json(json, A_LOOP, true);
+					movementData->loop = false;
 				}
 			}
 		}
@@ -2223,7 +2206,7 @@ CCMovementData* CCDataReaderHelper::decodeMovement(CocoLoader *pCocoLoader, stEx
 			movementData->durationTween = 0;
 			if(str != NULL)
 			{
-				movementData->durationTween = atoi(str); //movementData->durationTween = DICTOOL->getIntValue_json(json, A_DURATION_TWEEN, 0);
+				movementData->durationTween = atoi(str); 
 			}
 		}
 		else if (key.compare(A_DURATION_TO) == 0)
@@ -2231,7 +2214,7 @@ CCMovementData* CCDataReaderHelper::decodeMovement(CocoLoader *pCocoLoader, stEx
 			movementData->durationTo = 0;
 			if(str != NULL)
 			{
-				movementData->durationTo = atoi(str); //movementData->durationTo = DICTOOL->getIntValue_json(json, A_DURATION_TO, 0);
+				movementData->durationTo = atoi(str); 
 			}
 		}
 		else if (key.compare(A_DURATION) == 0)
@@ -2239,7 +2222,7 @@ CCMovementData* CCDataReaderHelper::decodeMovement(CocoLoader *pCocoLoader, stEx
 			movementData->duration = 0;
 			if(str != NULL)
 			{
-				movementData->duration = atoi(str); //movementData->duration = DICTOOL->getIntValue_json(json, A_DURATION, 0);
+				movementData->duration = atoi(str); 
 			}
 		}
 		else if (key.compare(A_MOVEMENT_SCALE) == 0)
@@ -2248,14 +2231,6 @@ CCMovementData* CCDataReaderHelper::decodeMovement(CocoLoader *pCocoLoader, stEx
 			if(str != NULL)
 			{
 				movementData->scale = atof(str); 
-				/*if (!DICTOOL->checkObjectExist_json(json, A_DURATION))
-				{
-					movementData->scale = 1.0f;
-				}
-				else
-				{
-					movementData->scale = DICTOOL->getFloatValue_json(json, A_MOVEMENT_SCALE, 1.0f);
-				}*/
 			}
 		}
 		else if (key.compare(A_TWEEN_EASING) == 0)
@@ -2264,14 +2239,6 @@ CCMovementData* CCDataReaderHelper::decodeMovement(CocoLoader *pCocoLoader, stEx
 			if(str != NULL)
 			{
 				movementData->tweenEasing = (CCTweenType)(atoi(str)); 
-				/*if (!DICTOOL->checkObjectExist_json(json, A_DURATION))
-				{
-					movementData->scale = 1.0f;
-				}
-				else
-				{
-					movementData->scale = DICTOOL->getFloatValue_json(json, A_MOVEMENT_SCALE, 1.0f);
-				}*/
 			}
 		}
 		else if (key.compare(MOVEMENT_BONE_DATA) == 0)
@@ -2315,7 +2282,7 @@ CCMovementBoneData* CCDataReaderHelper::decodeMovementBone(CocoLoader *pCocoLoad
 		{
 			if(str != NULL)
 			{
-				movementBoneData->delay = atof(str); //movementBoneData->delay = DICTOOL->getFloatValue_json(json, A_MOVEMENT_DELAY);
+				movementBoneData->delay = atof(str); 
 			}
 		}
 		else if (key.compare(FRAME_DATA) == 0)
@@ -2337,27 +2304,7 @@ CCMovementBoneData* CCDataReaderHelper::decodeMovementBone(CocoLoader *pCocoLoad
 		}
 	}
 
-	/*const char *name = DICTOOL->getStringValue_json(json, A_NAME);
-	if(name != NULL)
-	{
-		movementBoneData->name = name;
-	}*/
-
-	//rapidjson::SizeType length = DICTOOL->getArrayCount_json(json, FRAME_DATA);
-	//for (rapidjson::SizeType i = 0; i < length; i++)
-	//{
-	//	const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, FRAME_DATA, i);
-	//	CCFrameData *frameData = decodeFrame(dic,dataInfo);
-
-	//	movementBoneData->addFrameData(frameData);
-	//	frameData->release();
-
-	//	if (dataInfo->cocoStudioVersion < VERSION_COMBINED)
-	//	{
-	//		frameData->frameID = movementBoneData->duration;
-	//		movementBoneData->duration += frameData->duration;
-	//	}
-	//}
+	
 
 	if (dataInfo->cocoStudioVersion < VERSION_CHANGE_ROTATION_RANGE)
 	{
@@ -2418,28 +2365,28 @@ CCFrameData* CCDataReaderHelper::decodeFrame(CocoLoader *pCocoLoader, stExpCocoN
 			frameData->tweenEasing = Linear;
 			if(str != NULL)
 			{
-				frameData->tweenEasing = (CCTweenType)(atoi(str)); //frameData->tweenEasing = (CCTweenType)(DICTOOL->getIntValue_json(json, A_TWEEN_EASING, Linear));
+				frameData->tweenEasing = (CCTweenType)(atoi(str));
 			}
 		}
 		else if (key.compare(A_DISPLAY_INDEX) == 0)
 		{
 			if(str != NULL)
 			{
-				frameData->displayIndex = atoi(str); //frameData->displayIndex = DICTOOL->getIntValue_json(json, A_DISPLAY_INDEX);
+				frameData->displayIndex = atoi(str); 
 			}
 		}
 		else if (key.compare(A_BLEND_SRC) == 0)
 		{
 			if(str != NULL)
 			{
-				frameData->blendFunc.src = (GLenum)(atoi(str)); //frameData->blendFunc.src = (GLenum)(DICTOOL->getIntValue_json(json, A_BLEND_SRC, CC_BLEND_SRC));
+				frameData->blendFunc.src = (GLenum)(atoi(str));
 			}
 		}
 		else if (key.compare(A_BLEND_DST) == 0)
 		{
 			if(str != NULL)
 			{
-				frameData->blendFunc.dst = (GLenum)(atoi(str)); //frameData->blendFunc.dst = (GLenum)(DICTOOL->getIntValue_json(json, A_BLEND_DST, CC_BLEND_DST));
+				frameData->blendFunc.dst = (GLenum)(atoi(str));
 			}
 		}
 		else if (key.compare(A_TWEEN_FRAME) == 0)
@@ -2449,7 +2396,7 @@ CCFrameData* CCDataReaderHelper::decodeFrame(CocoLoader *pCocoLoader, stExpCocoN
 			{
 				if (strcmp("1", str) != 0)
 				{
-					frameData->isTween = false; //DICTOOL->getBooleanValue_json(json, A_TWEEN_FRAME, true);
+					frameData->isTween = false; 
 				}
 			}
 		}
@@ -2568,23 +2515,6 @@ CCTextureData* CCDataReaderHelper::decodeTexture(CocoLoader *pCocoLoader, stExpC
 			}
 		}
 	}
-
-	/*const char *name = DICTOOL->getStringValue_json(json, A_NAME);
-	if(name != NULL)
-	{
-		textureData->name = name;
-	}*/
-
-	/*int length = DICTOOL->getArrayCount_json(json, CONTOUR_DATA);
-	for (int i = 0; i < length; i++)
-	{
-		const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, CONTOUR_DATA, i);
-		CCContourData *contourData = decodeContour(dic);
-		textureData->contourDataList.addObject(contourData);
-		contourData->release();
-
-	}*/
-
 	return textureData;
 }
 
@@ -2613,43 +2543,10 @@ CCContourData* CCDataReaderHelper::decodeContour(CocoLoader *pCocoLoader, stExpC
 				vertex->y = atof(pVerTexPoint[1].GetValue());
 				contourData->vertexList.addObject(vertex);
 					vertex->release();
-				/*
-				for (int i = 0; i < num; ++i)
-				{
-					CCContourVertex2 *vertex = new CCContourVertex2(0, 0);
-					key = pVerTexPoint[i].GetName(pCocoLoader);
-					str = pVerTexPoint[i].GetValue();
-					if (key.compare(A_X) == 0)
-					{
-						vertex->x = atof(str);
-					}
-					else if (key.compare(A_Y) == 0)
-					{
-						vertex->y = atof(str);
-					}
-					contourData->vertexList.addObject(vertex);
-					vertex->release();
-				}
-				*/
-
 			}
 			break;
 		}
 	}
-
-	//int length = DICTOOL->getArrayCount_json(json, VERTEX_POINT);
-
-	/*for (int i = length - 1; i >= 0; --i)
-	{
-		const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, VERTEX_POINT, i);
-		CCContourVertex2 *vertex = new CCContourVertex2(0, 0);
-		vertex->x = DICTOOL->getFloatValue_json(dic, A_X);
-		vertex->y = DICTOOL->getFloatValue_json(dic, A_Y);
-
-		contourData->vertexList.addObject(vertex);
-		vertex->release();
-	}*/
-
 	return contourData;
 }
 
@@ -2754,42 +2651,6 @@ void CCDataReaderHelper::decodeNode(CCBaseData *node, CocoLoader *pCocoLoader, s
 			node->isUseColorInfo = true;
 		}
 	}
-
-	/*node->x =  DICTOOL->getFloatValue_json(json, A_X) * dataInfo->contentScale;
-	node->y = DICTOOL->getFloatValue_json(json, A_Y) * dataInfo->contentScale;
-	node->zOrder = DICTOOL->getIntValue_json(json, A_Z);*/
-
-	/*node->skewX = DICTOOL->getFloatValue_json(json, A_SKEW_X);
-	node->skewY = DICTOOL->getFloatValue_json(json, A_SKEW_Y);
-	node->scaleX = DICTOOL->getFloatValue_json(json, A_SCALE_X, 1.0f);
-	node->scaleY = DICTOOL->getFloatValue_json(json, A_SCALE_Y, 1.0f);*/
-
-	//if (dataInfo->cocoStudioVersion < VERSION_COLOR_READING)
-	//{
-//		if (DICTOOL->checkObjectExist_json(json, 0))
-	//	{
-//			const rapidjson::Value &colorDic = DICTOOL->getSubDictionary_json(json, 0); 
-	//		node->a = DICTOOL->getIntValue_json(colorDic, A_ALPHA, 255);   
-	//		node->r = DICTOOL->getIntValue_json(colorDic, A_RED, 255);  
-	//		node->g = DICTOOL->getIntValue_json(colorDic, A_GREEN, 255); 
-	//		node->b = DICTOOL->getIntValue_json(colorDic, A_BLUE, 255); 
-
-	//		node->isUseColorInfo = true;
-	//	}
-	//}
-	//else
-	//{
-	//	if (DICTOOL->checkObjectExist_json(json, COLOR_INFO))
-	//	{
-	//		const rapidjson::Value &colorDic =  DICTOOL->getSubDictionary_json(json, COLOR_INFO); //json.getSubDictionary(COLOR_INFO);
-	//		node->a = DICTOOL->getIntValue_json(colorDic, A_ALPHA, 255);   
-	//		node->r = DICTOOL->getIntValue_json(colorDic, A_RED, 255);  
-	//		node->g = DICTOOL->getIntValue_json(colorDic, A_GREEN, 255); 
-	//		node->b = DICTOOL->getIntValue_json(colorDic, A_BLUE, 255); 
-
-	//		node->isUseColorInfo = true;
-	//	}
-	//}
 }
 
 NS_CC_EXT_END
