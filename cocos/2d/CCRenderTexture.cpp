@@ -413,25 +413,25 @@ bool RenderTexture::saveToFile(const std::string& filename)
 {
     return saveToFile(filename,Image::Format::JPG);
 }
-bool RenderTexture::saveToFile(const std::string& fileName, Image::Format format)
+bool RenderTexture::saveToFile(const std::string& fileName, Image::Format format, bool isRGBA)
 {
     CCASSERT(format == Image::Format::JPG || format == Image::Format::PNG,
              "the image can only be saved as JPG or PNG format");
     
     std::string fullpath = FileUtils::getInstance()->getWritablePath() + fileName;
     _saveToFileCommand.init(_globalZOrder);
-    _saveToFileCommand.func = CC_CALLBACK_0(RenderTexture::onSaveToFile,this,fullpath);
+    _saveToFileCommand.func = CC_CALLBACK_0(RenderTexture::onSaveToFile, this, fullpath, isRGBA);
     
     Director::getInstance()->getRenderer()->addCommand(&_saveToFileCommand);
     return true;
 }
 
-void RenderTexture::onSaveToFile(const std::string& filename)
+void RenderTexture::onSaveToFile(const std::string& filename, bool isRGBA)
 {
     Image *image = newImage(true);
     if (image)
     {
-        image->saveToFile(filename.c_str(), true);
+        image->saveToFile(filename.c_str(), !isRGBA);
     }
 
     CC_SAFE_DELETE(image);
