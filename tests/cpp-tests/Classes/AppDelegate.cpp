@@ -57,7 +57,9 @@ bool AppDelegate::applicationDidFinishLaunching()
         glview = GLView::create("Cpp Tests");
         director->setOpenGLView(glview);
     }
-
+    // if param true automatic global scale
+    // for size of display device
+    director->autoScaleFactor(true);
     director->setDisplayStats(true);
     director->setAnimationInterval(1.0 / 60);
 
