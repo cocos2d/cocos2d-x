@@ -62,9 +62,9 @@ public:
 	/**
      * Set AnimationValue. set to its transform
      */
-	void setAnimationValueTranslation(float* value);
-    void setAnimationValueRotation(float* value);
-    void setAnimationValueScale(float* value);
+	void setAnimationValueTranslation(float* value, float weight = 1.0f);
+    void setAnimationValueRotation(float* value, float weight = 1.0f);
+    void setAnimationValueScale(float* value, float weight = 1.0f);
     
     /**
      * Creates C3DBone.
@@ -98,6 +98,7 @@ public:
     
     
 protected:
+    
     enum DirtyFlag
     {
         Dirty_Translate = 1,
@@ -126,6 +127,8 @@ protected:
      */
     void updateLocalMat();
     
+    void clearBlendState();
+    
     std::string _name;
     /**
      * The Mat4 representation of the Joint's bind pose.
@@ -151,7 +154,7 @@ protected:
     Mat4          _world;
     Mat4          _local;
     
-    BoneBlendState _blendState;
+    std::vector<BoneBlendState> _blendStates;
     Vec3          _localTranslate;
     Quaternion    _localRot;
     Vec3          _localScale;

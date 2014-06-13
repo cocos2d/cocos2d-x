@@ -87,7 +87,7 @@ const Mat4& Bone::getWorldMat()
 /**
  * Set AnimationValue. set to its transform
  */
-void Bone::setAnimationValueTranslation(float* value)
+void Bone::setAnimationValueTranslation(float* value, float weight)
 {
     static const int bytes = 3 * sizeof(float);
     if (memcmp(&_localTranslate.x, value, bytes) != 0)
@@ -96,7 +96,7 @@ void Bone::setAnimationValueTranslation(float* value)
         _localTranslate.set(value);
     }
 }
-void Bone::setAnimationValueRotation(float* value)
+void Bone::setAnimationValueRotation(float* value, float weight)
 {
     static const int bytes = 4 * sizeof(float);
     if (memcmp(&_localRot.x, value, bytes) != 0)
@@ -105,7 +105,7 @@ void Bone::setAnimationValueRotation(float* value)
         _localRot.set(value);
     }
 }
-void Bone::setAnimationValueScale(float* value)
+void Bone::setAnimationValueScale(float* value, float weight)
 {
     static const int bytes = 3 * sizeof(float);
     if (memcmp(&_localScale.x, value, bytes) != 0)
@@ -218,6 +218,11 @@ void Bone::updateLocalMat()
         Mat4::createScale(_localScale, &_local);
     }
     _dirtyFlag = 0;
+}
+
+void Bone::clearBlendState()
+{
+    _blendStates.clear();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
