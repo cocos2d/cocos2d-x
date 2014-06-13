@@ -2316,6 +2316,11 @@ cocos2d::ui::Widget* WidgetPropertiesReader0300::widgetFromBinary(CocoLoader* pC
     return widget;
 }
 
+void WidgetPropertiesReader0300::setPropsForAllCustomWidgetFromBinary(const std::string &classType, cocos2d::ui::Widget *widget, cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode)
+{
+    
+}
+
 void WidgetPropertiesReader0300::setPropsForAllWidgetFromBinary(WidgetReaderProtocol* reader,
                                             cocos2d::ui::Widget* widget,
                                             CocoLoader* pCocoLoader,

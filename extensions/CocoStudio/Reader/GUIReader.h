@@ -248,7 +248,7 @@ public:
     virtual void setPropsForAllCustomWidgetFromBinary(const std::string& classType,
                                                       cocos2d::ui::Widget* widget,
                                                       CocoLoader* pCocoLoader,
-                                                      stExpCocoNode*	pCocoNode) {}
+                                                      stExpCocoNode*	pCocoNode);
 };
 
 NS_CC_EXT_END
