@@ -5,6 +5,8 @@
 
 NS_CC_EXT_BEGIN
 
+using namespace cocos2d::ui;
+
 static LabelReader* instanceLabelReader = NULL;
 
 IMPLEMENT_CLASS_WIDGET_READER_INFO(LabelReader)
@@ -74,84 +76,153 @@ void LabelReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson
 
 void LabelReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode)
 {
-    WidgetReader::setBasicProperties(widget, pCocoLoader, pCocoNode);
+    this->beginSetBasicProperties(widget);
     
     stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
     
     ui::Label* label = static_cast<ui::Label*>(widget);
     
-    std::map<std::string, int>  labelMap;
     
-   labelMap.insert(std::make_pair("useMergedTexture", 28));
-   labelMap.insert(std::make_pair("areaHeight", 33));
-   labelMap.insert(std::make_pair("areaWidth", 34));
-   labelMap.insert(std::make_pair("fontFile", 35));
-   labelMap.insert(std::make_pair("fontName", 36));
-   labelMap.insert(std::make_pair("fontSize", 37));
-   labelMap.insert(std::make_pair("hAlignment",38));
-   labelMap.insert(std::make_pair("text", 39));
-   labelMap.insert(std::make_pair("touchScaleEnable", 40));
-   labelMap.insert(std::make_pair("vAlignment", 41));
-    
-    
-    std::string jsonPath = GUIReader::shareReader()->getFilePath();
-    
-    std::string value1;
-    std::string value2;
-
-    
-    value1 = this->getProperty(labelMap, stChildArray, "touchScaleEnable");
-    bool touchScaleChangeAble = valueToBool(value1);
-    label->setTouchScaleChangeEnabled(touchScaleChangeAble);
-    value1 = this->getProperty(labelMap, stChildArray, "text");
-
-    const char* text = value1.c_str();
-    label->setText(text);
-    
-    value1 = this->getProperty(labelMap, stChildArray, "fontSize");
-    if (!value1.empty())
-    {
-        label->setFontSize(valueToInt(value1));
-    }
-    
-    value1 = this->getProperty(labelMap, stChildArray, "fontName");
-
-    if (!value1.empty())
-    {
-        label->setFontName(value1.c_str());
-    }
-    
-    value1 = this->getProperty(labelMap, stChildArray, "areaWidth");
-    value2 = this->getProperty(labelMap, stChildArray, "areaHeight");
-
-    bool aw = !value1.empty();
-    bool ah = !value2.empty();
-    if (aw && ah)
-    {
-        CCSize size = CCSize(valueToFloat(value1),valueToFloat(value2));
-        label->setTextAreaSize(size);
-    }
-    
-    value1 = this->getProperty(labelMap, stChildArray, "hAlignment");
-    bool ha = !value1.empty();
-    if (ha)
-    {
-        label->setTextHorizontalAlignment((CCTextAlignment)valueToInt(value1));
-    }
-    
-    value1 = this->getProperty(labelMap, stChildArray, "vAlignment");
-
-    bool va = !value1.empty();
-    if (va)
-    {
-        label->setTextVerticalAlignment((CCVerticalTextAlignment)valueToInt(value1));
-    }
-    
-
- 
-    
-    WidgetReader::setColorProperties(widget, pCocoLoader, pCocoNode);
-
+    for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
+        std::string key = stChildArray[i].GetName(pCocoLoader);
+        std::string value = stChildArray[i].GetValue();
+        //            CCLOG("Text: key = %s, value = %s", key.c_str(), value.c_str());
+        
+        if (key == "ignoreSize") {
+            widget->ignoreContentAdaptWithSize(valueToBool(value));
+        }else if(key == "sizeType"){
+            widget->setSizeType((ui::SizeType)valueToInt(value));
+        }else if(key == "positionType"){
+            widget->setPositionType((ui::PositionType)valueToInt(value));
+        }else if(key == "sizePercentX"){
+            sizePercentX = valueToFloat(value);
+        }else if(key == "sizePercentY"){
+            sizePercentY = valueToFloat(value);
+        }else if(key == "positionPercentX"){
+            positionPercentX = valueToFloat(value);
+        }else if(key == "positionPercentY"){
+            positionPercentY = valueToFloat(value);
+        }
+        else if(key == "adaptScreen"){
+            isAdaptScreen = valueToBool(value);
+        }
+        else if (key == "width"){
+            width = valueToFloat(value);
+        }else if(key == "height"){
+            height = valueToFloat(value);
+        }else if(key == "tag"){
+            widget->setTag(valueToInt(value));
+        }else if(key == "actiontag"){
+            widget->setActionTag(valueToInt(value));
+        }else if(key == "touchAble"){
+            widget->setTouchEnabled(valueToBool(value));
+        }else if(key == "name"){
+            std::string widgetName = value.empty() ? "default" : value;
+            widget->setName(widgetName.c_str());
+        }else if(key == "x"){
+            position.x = valueToFloat(value);
+        }else if(key == "y"){
+            position.y = valueToFloat(value);
+        }else if(key == "scaleX"){
+            widget->setScaleX(valueToFloat(value));
+        }else if(key == "scaleY"){
+            widget->setScaleY(valueToFloat(value));
+        }else if(key == "rotation"){
+            widget->setRotation(valueToFloat(value));
+        }else if(key == "visible"){
+            widget->setVisible(valueToBool(value));
+        }else if(key == "ZOrder"){
+            widget->setZOrder(valueToInt(value));
+        }else if(key == "layoutParameter"){
+            stExpCocoNode *layoutCocosNode = stChildArray[i].GetChildArray();
+            
+            LinearLayoutParameter *linearParameter = LinearLayoutParameter::create();
+            RelativeLayoutParameter *relativeParameter = RelativeLayoutParameter::create();
+            Margin mg;
+            
+            int paramType = -1;
+            for (int j = 0; j < stChildArray[i].GetChildNum(); ++j) {
+                std::string innerKey = layoutCocosNode[j].GetName(pCocoLoader);
+                std::string innerValue = layoutCocosNode[j].GetValue();
+                
+                if (innerKey == "type") {
+                    paramType = valueToInt(innerValue);
+                }else if(innerKey == "gravity"){
+                    linearParameter->setGravity((cocos2d::ui::LinearGravity)valueToInt(innerValue));
+                }else if(innerKey == "relativeName"){
+                    relativeParameter->setRelativeName(innerValue.c_str());
+                }else if(innerKey == "relativeToName"){
+                    relativeParameter->setRelativeToWidgetName(innerValue.c_str());
+                }else if(innerKey == "align"){
+                    relativeParameter->setAlign((cocos2d::ui::RelativeAlign)valueToInt(innerValue));
+                }else if(innerKey == "marginLeft"){
+                    mg.left = valueToFloat(innerValue);
+                }else if(innerKey == "marginTop"){
+                    mg.top = valueToFloat(innerValue);
+                }else if(innerKey == "marginRight"){
+                    mg.right = valueToFloat(innerValue);
+                }else if(innerKey == "marginDown"){
+                    mg.bottom = valueToFloat(innerValue);
+                }
+            }
+            
+            linearParameter->setMargin(mg);
+            relativeParameter->setMargin(mg);
+            
+            switch (paramType) {
+                case 1:
+                widget->setLayoutParameter(linearParameter);
+                break;
+                case 2:
+                widget->setLayoutParameter(relativeParameter);
+                default:
+                break;
+            }
+        }
+        
+        else if (key == "opacity") {
+            widget->setOpacity(valueToInt(value));
+        }else if(key == "colorR"){
+            ccColor3B color = widget->getColor();
+            widget->setColor(ccc3(valueToInt(value), color.g, color.b));
+        }else if(key == "colorG"){
+            ccColor3B color = widget->getColor();
+            widget->setColor(ccc3( color.r, valueToInt(value), color.b));
+        }else if(key == "colorB")
+        {
+            ccColor3B color = widget->getColor();
+            widget->setColor(ccc3( color.r,  color.g , valueToInt(value)));
+        }else if(key == "flipX"){
+            widget->setFlipX(valueToBool(value));
+        }else if(key == "flipY"){
+            widget->setFlipY(valueToBool(value));
+        }else if(key == "anchorPointX"){
+            originalAnchorPoint.x = valueToFloat(value);
+        }else if(key == "anchorPointY"){
+            originalAnchorPoint.y = valueToFloat(value);
+        }
+        else if (key == "touchScaleEnable") {
+            label->setTouchScaleChangeEnabled(valueToBool(value));
+        }
+        
+        else if(key == "text"){
+            label->setText(value);
+        }else if(key == "fontSize"){
+            label->setFontSize(valueToInt(value));
+        }else if(key == "fontName"){
+            label->setFontName(value);
+        }else if(key == "areaWidth"){
+            label->setTextAreaSize(CCSize(valueToFloat(value), label->getTextAreaSize().height));
+        }else if(key == "areaHeight"){
+            label->setTextAreaSize(CCSize(label->getTextAreaSize().width, valueToFloat(value)));
+        }else if(key == "hAlignment"){
+            label->setTextHorizontalAlignment((CCTextAlignment)valueToInt(value));
+        }else if(key == "vAlignment"){
+            label->setTextVerticalAlignment((CCVerticalTextAlignment)valueToInt(value));
+        }
+        
+    } //end of for loop
+    this->endSetBasicProperties(widget);
 }
 
 NS_CC_EXT_END
