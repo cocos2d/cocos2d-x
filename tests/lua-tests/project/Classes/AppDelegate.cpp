@@ -56,11 +56,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 //    pEngine->executeScriptFile("src/controller.lua");
     
     LuaStack *pStack = pEngine->getLuaStack();
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
     const char * mainLuaFile = "scripts/main.lua";
-#else
-    const char * mainLuaFile = "/Users/zhujunfeng/quick-x-3/tests/lua-tests/scripts/main.lua";
-#endif
     
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)

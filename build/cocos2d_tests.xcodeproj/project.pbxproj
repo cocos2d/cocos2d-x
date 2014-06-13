@@ -834,6 +834,20 @@
 		C08689C318D370C90093E810 /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
 		C08689C418D370C90093E810 /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
 		D60AE43417F7FFE100757E4B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
+		DAB4DAE6194B21E400081B37 /* BlueButton.png in Resources */ = {isa = PBXBuildFile; fileRef = DAB4DA9A194B21E400081B37 /* BlueButton.png */; };
+		DAB4DAE7194B21E400081B37 /* CheckBoxButton2Off.png in Resources */ = {isa = PBXBuildFile; fileRef = DAB4DA9B194B21E400081B37 /* CheckBoxButton2Off.png */; };
+		DAB4DAE8194B21E400081B37 /* CheckBoxButton2On.png in Resources */ = {isa = PBXBuildFile; fileRef = DAB4DA9C194B21E400081B37 /* CheckBoxButton2On.png */; };
+		DAB4DB25194B21E500081B37 /* Cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = DAB4DADC194B21E400081B37 /* Cursor.png */; };
+		DAB4DB26194B21E500081B37 /* GreenButton.png in Resources */ = {isa = PBXBuildFile; fileRef = DAB4DADD194B21E400081B37 /* GreenButton.png */; };
+		DAB4DB27194B21E500081B37 /* PinkButton.png in Resources */ = {isa = PBXBuildFile; fileRef = DAB4DADE194B21E400081B37 /* PinkButton.png */; };
+		DAB4DB28194B21E500081B37 /* RadioButtonOff.png in Resources */ = {isa = PBXBuildFile; fileRef = DAB4DADF194B21E400081B37 /* RadioButtonOff.png */; };
+		DAB4DB29194B21E500081B37 /* RadioButtonOffDisabled.png in Resources */ = {isa = PBXBuildFile; fileRef = DAB4DAE0194B21E400081B37 /* RadioButtonOffDisabled.png */; };
+		DAB4DB2A194B21E500081B37 /* RadioButtonOffPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = DAB4DAE1194B21E400081B37 /* RadioButtonOffPressed.png */; };
+		DAB4DB2B194B21E500081B37 /* RadioButtonOn.png in Resources */ = {isa = PBXBuildFile; fileRef = DAB4DAE2194B21E400081B37 /* RadioButtonOn.png */; };
+		DAB4DB2C194B21E500081B37 /* RadioButtonOnDisabled.png in Resources */ = {isa = PBXBuildFile; fileRef = DAB4DAE3194B21E400081B37 /* RadioButtonOnDisabled.png */; };
+		DAB4DB2D194B21E500081B37 /* RadioButtonOnPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = DAB4DAE4194B21E400081B37 /* RadioButtonOnPressed.png */; };
+		DAB4DB2E194B21E500081B37 /* WhiteButton.png in Resources */ = {isa = PBXBuildFile; fileRef = DAB4DAE5194B21E400081B37 /* WhiteButton.png */; };
+		DAB4DB32194B231600081B37 /* scripts in Resources */ = {isa = PBXBuildFile; fileRef = DAB4DB31194B231600081B37 /* scripts */; };
 		EDCC747F17C455FD007B692C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -1866,6 +1880,20 @@
 		B2507B6A192589AF00FA4972 /* Shaders3D */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Shaders3D; path = "../tests/cpp-tests/Resources/Shaders3D"; sourceTree = "<group>"; };
 		C08689C018D370C90093E810 /* background.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = background.caf; path = "../tests/cpp-tests/Resources/background.caf"; sourceTree = "<group>"; };
 		D60AE43317F7FFE100757E4B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
+		DAB4DA9A194B21E400081B37 /* BlueButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BlueButton.png; path = "../tests/lua-tests/res/BlueButton.png"; sourceTree = "<group>"; };
+		DAB4DA9B194B21E400081B37 /* CheckBoxButton2Off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CheckBoxButton2Off.png; path = "../tests/lua-tests/res/CheckBoxButton2Off.png"; sourceTree = "<group>"; };
+		DAB4DA9C194B21E400081B37 /* CheckBoxButton2On.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CheckBoxButton2On.png; path = "../tests/lua-tests/res/CheckBoxButton2On.png"; sourceTree = "<group>"; };
+		DAB4DADC194B21E400081B37 /* Cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Cursor.png; path = "../tests/lua-tests/res/Cursor.png"; sourceTree = "<group>"; };
+		DAB4DADD194B21E400081B37 /* GreenButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = GreenButton.png; path = "../tests/lua-tests/res/GreenButton.png"; sourceTree = "<group>"; };
+		DAB4DADE194B21E400081B37 /* PinkButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PinkButton.png; path = "../tests/lua-tests/res/PinkButton.png"; sourceTree = "<group>"; };
+		DAB4DADF194B21E400081B37 /* RadioButtonOff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RadioButtonOff.png; path = "../tests/lua-tests/res/RadioButtonOff.png"; sourceTree = "<group>"; };
+		DAB4DAE0194B21E400081B37 /* RadioButtonOffDisabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RadioButtonOffDisabled.png; path = "../tests/lua-tests/res/RadioButtonOffDisabled.png"; sourceTree = "<group>"; };
+		DAB4DAE1194B21E400081B37 /* RadioButtonOffPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RadioButtonOffPressed.png; path = "../tests/lua-tests/res/RadioButtonOffPressed.png"; sourceTree = "<group>"; };
+		DAB4DAE2194B21E400081B37 /* RadioButtonOn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RadioButtonOn.png; path = "../tests/lua-tests/res/RadioButtonOn.png"; sourceTree = "<group>"; };
+		DAB4DAE3194B21E400081B37 /* RadioButtonOnDisabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RadioButtonOnDisabled.png; path = "../tests/lua-tests/res/RadioButtonOnDisabled.png"; sourceTree = "<group>"; };
+		DAB4DAE4194B21E400081B37 /* RadioButtonOnPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RadioButtonOnPressed.png; path = "../tests/lua-tests/res/RadioButtonOnPressed.png"; sourceTree = "<group>"; };
+		DAB4DAE5194B21E400081B37 /* WhiteButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = WhiteButton.png; path = "../tests/lua-tests/res/WhiteButton.png"; sourceTree = "<group>"; };
+		DAB4DB31194B231600081B37 /* scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = scripts; path = "../tests/lua-tests/scripts"; sourceTree = "<group>"; };
 		EDCC747E17C455FD007B692C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -3352,6 +3380,7 @@
 		1AC35D7118CEE4AE00F37B72 /* lua-tests */ = {
 			isa = PBXGroup;
 			children = (
+				DAB4DB31194B231600081B37 /* scripts */,
 				1AC35D7B18CEE5A100F37B72 /* project */,
 				1AC35D7718CEE58D00F37B72 /* res */,
 				1AC35D7418CEE58500F37B72 /* src */,
@@ -3362,6 +3391,19 @@
 		1AC35D7718CEE58D00F37B72 /* res */ = {
 			isa = PBXGroup;
 			children = (
+				DAB4DA9A194B21E400081B37 /* BlueButton.png */,
+				DAB4DA9B194B21E400081B37 /* CheckBoxButton2Off.png */,
+				DAB4DA9C194B21E400081B37 /* CheckBoxButton2On.png */,
+				DAB4DADC194B21E400081B37 /* Cursor.png */,
+				DAB4DADD194B21E400081B37 /* GreenButton.png */,
+				DAB4DADE194B21E400081B37 /* PinkButton.png */,
+				DAB4DADF194B21E400081B37 /* RadioButtonOff.png */,
+				DAB4DAE0194B21E400081B37 /* RadioButtonOffDisabled.png */,
+				DAB4DAE1194B21E400081B37 /* RadioButtonOffPressed.png */,
+				DAB4DAE2194B21E400081B37 /* RadioButtonOn.png */,
+				DAB4DAE3194B21E400081B37 /* RadioButtonOnDisabled.png */,
+				DAB4DAE4194B21E400081B37 /* RadioButtonOnPressed.png */,
+				DAB4DAE5194B21E400081B37 /* WhiteButton.png */,
 				1AC35D7818CEE59900F37B72 /* cocosbuilderRes */,
 			);
 			name = res;
@@ -4241,6 +4283,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAB4DB29194B21E500081B37 /* RadioButtonOffDisabled.png in Resources */,
 				15E66FD6192DC8C700C20A52 /* Sprite3DTest in Resources */,
 				1AC35DC318CEE65100F37B72 /* Misc in Resources */,
 				1AC35DC618CEE65100F37B72 /* Shaders in Resources */,
@@ -4251,12 +4294,17 @@
 				1AC35DB118CEE5DA00F37B72 /* InfoPlist.strings in Resources */,
 				1AC35DDD18CEE65900F37B72 /* CocosBuilderExample.ccbproj in Resources */,
 				1ABCA39218CD9E180087CE3A /* luaj.lua in Resources */,
+				DAB4DB32194B231600081B37 /* scripts in Resources */,
 				1AC35DB218CEE5DA00F37B72 /* MainMenu.xib in Resources */,
+				DAB4DB27194B21E500081B37 /* PinkButton.png in Resources */,
 				1AC35DBF18CEE65100F37B72 /* hd in Resources */,
+				DAB4DB2C194B21E500081B37 /* RadioButtonOnDisabled.png in Resources */,
 				1ABCA38018CD9E180087CE3A /* CocoStudio.lua in Resources */,
+				DAB4DB28194B21E500081B37 /* RadioButtonOff.png in Resources */,
 				1AC35DC818CEE65100F37B72 /* TileMaps in Resources */,
 				1ABCA37C18CD9E180087CE3A /* Cocos2d.lua in Resources */,
 				1AC35DBE18CEE65100F37B72 /* fonts in Resources */,
+				DAB4DB25194B21E500081B37 /* Cursor.png in Resources */,
 				1AC35DDE18CEE65900F37B72 /* CocosBuilderExample.ccbresourcelog in Resources */,
 				1AC35DBC18CEE65100F37B72 /* configs in Resources */,
 				1ABCA38818CD9E180087CE3A /* DeprecatedOpenglEnum.lua in Resources */,
@@ -4266,17 +4314,23 @@
 				1ABCA37A18CD9E180087CE3A /* CCBReaderLoad.lua in Resources */,
 				1AC35DDF18CEE65900F37B72 /* music.mid in Resources */,
 				1AC35D7518CEE58500F37B72 /* src in Resources */,
+				DAB4DAE7194B21E400081B37 /* CheckBoxButton2Off.png in Resources */,
 				1AC35DE018CEE65900F37B72 /* background.mp3 in Resources */,
 				1A1645A6191B6281008C7C7F /* ccs-res in Resources */,
+				DAB4DB2D194B21E500081B37 /* RadioButtonOnPressed.png in Resources */,
 				C08689C218D370C90093E810 /* background.caf in Resources */,
+				DAB4DB2E194B21E500081B37 /* WhiteButton.png in Resources */,
 				15C90B4918E66C2A00D69802 /* tp.lua in Resources */,
 				1AC35DE918CEE65900F37B72 /* effect1.wav in Resources */,
+				DAB4DAE8194B21E400081B37 /* CheckBoxButton2On.png in Resources */,
 				1ABCA38E18CD9E180087CE3A /* GuiConstants.lua in Resources */,
 				15C90B3F18E66C0C00D69802 /* ltn12.lua in Resources */,
 				15C90B4718E66C2400D69802 /* socket.lua in Resources */,
 				15C90B3A18E66BE200D69802 /* ftp.lua in Resources */,
+				DAB4DB2B194B21E500081B37 /* RadioButtonOn.png in Resources */,
 				1ABCA37E18CD9E180087CE3A /* Cocos2dConstants.lua in Resources */,
 				1AC35DE518CEE65900F37B72 /* Hello.png in Resources */,
+				DAB4DB2A194B21E500081B37 /* RadioButtonOffPressed.png in Resources */,
 				1ABCA38618CD9E180087CE3A /* DeprecatedEnum.lua in Resources */,
 				1AC35DEA18CEE65900F37B72 /* pew-pew-lei.wav in Resources */,
 				1AC35DC418CEE65100F37B72 /* Particles in Resources */,
@@ -4293,6 +4347,7 @@
 				1ABCA39418CD9E180087CE3A /* luaoc.lua in Resources */,
 				1ABCA39018CD9E180087CE3A /* json.lua in Resources */,
 				1AC35D7918CEE59900F37B72 /* cocosbuilderRes in Resources */,
+				DAB4DAE6194B21E400081B37 /* BlueButton.png in Resources */,
 				15C90B3B18E66BEB00D69802 /* headers.lua in Resources */,
 				1ABCA38218CD9E180087CE3A /* Deprecated.lua in Resources */,
 				1ABCA38C18CD9E180087CE3A /* extern.lua in Resources */,
@@ -4303,6 +4358,7 @@
 				1AC35DB718CEE65100F37B72 /* animations in Resources */,
 				1ABCA38418CD9E180087CE3A /* DeprecatedClass.lua in Resources */,
 				1ABCA39618CD9E180087CE3A /* Opengl.lua in Resources */,
+				DAB4DB26194B21E500081B37 /* GreenButton.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
