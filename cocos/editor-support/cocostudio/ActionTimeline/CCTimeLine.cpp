@@ -25,7 +25,9 @@ THE SOFTWARE.
 #include "CCTimeLine.h"
 #include "CCActionTimeline.h"
 
-NS_CC_BEGIN
+USING_NS_CC;
+
+NS_TIMELINE_BEGIN
 
 Timeline* Timeline::create()
 {
@@ -244,4 +246,4 @@ void Timeline::updateCurrentKeyFrame(int frameIndex)
     }
 }
 
-NS_CC_END
+NS_TIMELINE_END

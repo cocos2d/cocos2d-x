@@ -25,18 +25,14 @@ THE SOFTWARE.
 #ifndef __CCFRAME_H__
 #define __CCFRAME_H__
 
-#include "base/CCRef.h"
-#include "math/Vec2.h"
-#include "CCGL.h"
-#include "base/ccTypes.h"
-#include <string>
+#include "cocos2d.h"
+#include "CCTimelineMacro.h"
 
-NS_CC_BEGIN
+NS_TIMELINE_BEGIN
 
-class Sprite;
 class Timeline;
 
-class CC_DLL Frame : public Ref
+class  Frame : public cocos2d::Ref
 {
 public:
 
@@ -46,8 +42,8 @@ public:
     virtual void setTimeline(Timeline* timeline) { _timeline = timeline; }
     virtual Timeline* getTimeline() const { return _timeline; }
 
-    virtual void setNode(Node* node) { _node = node; }
-    virtual Node* getTimelineNode() const { return _node; }
+    virtual void setNode(cocos2d::Node* node) { _node = node; }
+    virtual cocos2d::Node* getTimelineNode() const { return _node; }
 
     virtual void setTween(bool tween) { _tween = tween; }
     virtual bool isTween() const { return _tween; }
@@ -68,11 +64,11 @@ protected:
     bool            _tween;
 
     Timeline* _timeline;
-    Node*  _node;
+    cocos2d::Node*  _node;
 };
 
 
-class CC_DLL VisibleFrame : public Frame
+class  VisibleFrame : public Frame
 {
 public:
     static VisibleFrame* create();
@@ -90,14 +86,14 @@ protected:
 };
 
 
-class CC_DLL TextureFrame : public Frame
+class  TextureFrame : public Frame
 {
 public:
     static TextureFrame* create();
 
     TextureFrame();
 
-    virtual void setNode(Node* node);
+    virtual void setNode(cocos2d::Node* node);
 
     virtual void onEnter(Frame *nextFrame) override;
     virtual Frame* clone() override;
@@ -106,11 +102,11 @@ public:
     inline std::string getTexture() const { return _texture; }
 
 protected:
-    Sprite* _sprite;
+    cocos2d::Sprite* _sprite;
     std::string _texture;
 };
 
-class CC_DLL RotationFrame : public Frame
+class  RotationFrame : public Frame
 {
 public:
     static RotationFrame* create();
@@ -129,7 +125,7 @@ protected:
     float _betwennRotation;
 };
 
-class CC_DLL SkewFrame : public Frame
+class  SkewFrame : public Frame
 {
 public:
     static SkewFrame* create();
@@ -154,7 +150,7 @@ protected:
 };
 
 
-class CC_DLL RotationSkewFrame : public SkewFrame
+class  RotationSkewFrame : public SkewFrame
 {
 public:
     static RotationSkewFrame* create();
@@ -167,7 +163,7 @@ public:
 };
 
 
-class CC_DLL PositionFrame : public Frame
+class  PositionFrame : public Frame
 {
 public:
     static PositionFrame* create();
@@ -178,8 +174,8 @@ public:
     virtual void apply(float percent) override;
     virtual Frame* clone() override;
 
-    inline void setPosition(const Point& position) { _position = position; }
-    inline Point getPosition() const { return _position; }
+    inline void setPosition(const cocos2d::Point& position) { _position = position; }
+    inline cocos2d::Point getPosition() const { return _position; }
 
     inline void setX(float x) { _position.x = x; }
     inline void setY(float y) { _position.y = y; }
@@ -187,13 +183,13 @@ public:
     inline float getX() const { return _position.x; }
     inline float getY() const { return _position.y; }
 protected:
-    Point _position;
+    cocos2d::Point _position;
     float _betweenX;
     float _betweenY;
 };
 
 
-class CC_DLL ScaleFrame : public Frame
+class  ScaleFrame : public Frame
 {
 public:
     static ScaleFrame* create();
@@ -220,7 +216,7 @@ protected:
 };
 
 
-class CC_DLL AnchorPointFrame : public Frame
+class  AnchorPointFrame : public Frame
 {
 public:
     static AnchorPointFrame* create();
@@ -230,11 +226,11 @@ public:
     virtual void onEnter(Frame *nextFrame) override;
     virtual Frame* clone() override;
 
-    inline void setAnchorPoint(const Point& point) { _anchorPoint = point; }
-    inline Point getAnchorPoint() const { return _anchorPoint; }
+    inline void setAnchorPoint(const cocos2d::Point& point) { _anchorPoint = point; }
+    inline cocos2d::Point getAnchorPoint() const { return _anchorPoint; }
 
 protected:
-    Point _anchorPoint;
+    cocos2d::Point _anchorPoint;
 };
 
 
@@ -246,7 +242,7 @@ enum InnerActionType
     SingleFrame
 };
 
-class CC_DLL InnerActionFrame : public Frame
+class  InnerActionFrame : public Frame
 {
 public:
     static InnerActionFrame* create();
@@ -267,7 +263,7 @@ protected:
 };
 
 
-class CC_DLL ColorFrame : public Frame
+class  ColorFrame : public Frame
 {
 public:
     static ColorFrame* create();
@@ -280,12 +276,12 @@ public:
     inline void    setAlpha(GLubyte alpha) { _alpha = alpha; }
     inline GLubyte getAlpha() const { return _alpha; }
 
-    inline void    setColor(const Color3B& color) { _color = color; }
-    inline Color3B getColor() const { return _color; }
+    inline void    setColor(const cocos2d::Color3B& color) { _color = color; }
+    inline cocos2d::Color3B getColor() const { return _color; }
 
 protected:
     GLubyte _alpha;
-    Color3B _color;
+    cocos2d::Color3B _color;
 
     int _betweenAlpha;
     int _betweenRed;
@@ -294,7 +290,7 @@ protected:
 };
 
 
-class CC_DLL EventFrame : public Frame
+class  EventFrame : public Frame
 {
 public:
     static EventFrame* create();
@@ -311,7 +307,7 @@ protected:
     std::string _event;
 };
 
-class CC_DLL ZOrderFrame : public Frame
+class  ZOrderFrame : public Frame
 {
 public:
     static ZOrderFrame* create();
@@ -328,7 +324,7 @@ protected:
     int _zorder;
 };
 
-NS_CC_END
+NS_TIMELINE_END
 
 
 #endif /*__CCFRAME_H__*/

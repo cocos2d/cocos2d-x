@@ -21,9 +21,6 @@ cocos2d.cpp \
 2d/CCActionProgressTimer.cpp \
 2d/CCActionTiledGrid.cpp \
 2d/CCActionTween.cpp \
-2d/CCFrame.cpp \
-2d/CCTimeline.cpp \
-2d/CCActionTimeline.cpp \
 2d/CCAnimation.cpp \
 2d/CCAnimationCache.cpp \
 2d/CCAtlasNode.cpp \

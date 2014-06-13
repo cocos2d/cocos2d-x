@@ -237,6 +237,15 @@
     <ClCompile Include="..\ActionTimeline\CCActionTimelineCache.cpp">
       <Filter>TimelineAction</Filter>
     </ClCompile>
+    <ClCompile Include="..\ActionTimeline\CCActionTimeline.cpp">
+      <Filter>TimelineAction</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ActionTimeline\CCFrame.cpp">
+      <Filter>TimelineAction</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ActionTimeline\CCTimeLine.cpp">
+      <Filter>TimelineAction</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\CCComAttribute.h">
@@ -423,6 +432,18 @@
       <Filter>TimelineAction</Filter>
     </ClInclude>
     <ClInclude Include="..\ActionTimeline\CCActionTimelineCache.h">
+      <Filter>TimelineAction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ActionTimeline\CCActionTimeline.h">
+      <Filter>TimelineAction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ActionTimeline\CCFrame.h">
+      <Filter>TimelineAction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ActionTimeline\CCTimeLine.h">
+      <Filter>TimelineAction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ActionTimeline\CCTimelineMacro.h">
       <Filter>TimelineAction</Filter>
     </ClInclude>
   </ItemGroup>

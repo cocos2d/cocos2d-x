@@ -25,14 +25,14 @@ THE SOFTWARE.
 #ifndef __CCTIMELINE_H__
 #define __CCTIMELINE_H__
 
-#include "2d/CCNode.h"
-#include "2d/CCFrame.h"
+#include "CCFrame.h"
+#include "CCTimelineMacro.h"
 
-NS_CC_BEGIN
+NS_TIMELINE_BEGIN
 
 class ActionTimeline;
 
-class CC_DLL Timeline : public Ref
+class  Timeline : public cocos2d::Ref
 {
 public:
     static Timeline* create();
@@ -43,7 +43,7 @@ public:
     virtual void gotoFrame(int frameIndex);
     virtual void stepToFrame(int frameIndex);
 
-    virtual const Vector<Frame*>& getFrames() const { return _frames; }
+    virtual const cocos2d::Vector<Frame*>& getFrames() const { return _frames; }
 
     virtual void addFrame(Frame* frame);
     virtual void insertFrame(Frame* frame, int index);
@@ -52,8 +52,8 @@ public:
     virtual void setActionTag(int tag) { _actionTag = tag; }
     virtual int  getActionTag() const { return _actionTag; }
 
-    virtual void setNode(Node* node);
-    virtual Node* getNode() const;
+    virtual void setNode(cocos2d::Node* node);
+    virtual cocos2d::Node* getNode() const;
 
     virtual void setActionTimeline(ActionTimeline* action) { _ActionTimeline = action; }
     virtual ActionTimeline* getActionTimeline() const { return _ActionTimeline; }
@@ -66,7 +66,7 @@ protected:
     virtual void binarySearchKeyFrame (int frameIndex);
     virtual void updateCurrentKeyFrame(int frameIndex);
 
-    Vector<Frame*> _frames;
+    cocos2d::Vector<Frame*> _frames;
     Frame* _currentKeyFrame;
     int _currentKeyFrameIndex;
 
@@ -76,10 +76,10 @@ protected:
     int _actionTag;
 
     ActionTimeline*  _ActionTimeline;
-    Node* _node;
+    cocos2d::Node* _node;
 };
 
-NS_CC_END
+NS_TIMELINE_END
 
 
 #endif /*__CCTIMELINE_H__*/

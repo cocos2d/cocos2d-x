@@ -27,10 +27,13 @@ THE SOFTWARE.
 
 #include "cocos2d.h"
 #include "cocostudio/DictionaryHelper.h"
+#include "CCTimelineMacro.h"
 
+NS_TIMELINE_BEGIN
 
-namespace cocostudio {
-namespace timeline{
+class ActionTimeline;
+class Timeline;
+class Frame;
 
 class ActionTimelineCache
 {
@@ -49,38 +52,36 @@ public:
     void removeAction(const std::string& fileName);
 
     /** Clone a action with the specified name from the container. */
-    cocos2d::ActionTimeline* createAction(const std::string& fileName);
+    ActionTimeline* createAction(const std::string& fileName);
 
-    cocos2d::ActionTimeline* loadAnimationActionWithFile(const std::string& fileName);
-    cocos2d::ActionTimeline* loadAnimationActionWithContent(const std::string&fileName, const std::string& content);
+    ActionTimeline* loadAnimationActionWithFile(const std::string& fileName);
+    ActionTimeline* loadAnimationActionWithContent(const std::string&fileName, const std::string& content);
 protected:
 
-    cocos2d::Timeline* loadTimeline(const rapidjson::Value& json);
+    Timeline* loadTimeline(const rapidjson::Value& json);
 
-    cocos2d::Frame* loadVisibleFrame     (const rapidjson::Value& json);
-    cocos2d::Frame* loadPositionFrame    (const rapidjson::Value& json);
-    cocos2d::Frame* loadScaleFrame       (const rapidjson::Value& json);
-    cocos2d::Frame* loadSkewFrame        (const rapidjson::Value& json);
-    cocos2d::Frame* loadRotationSkewFrame(const rapidjson::Value& json);
-    cocos2d::Frame* loadRotationFrame    (const rapidjson::Value& json);
-    cocos2d::Frame* loadAnchorPointFrame (const rapidjson::Value& json);
-    cocos2d::Frame* loadInnerActionFrame (const rapidjson::Value& json);
-    cocos2d::Frame* loadColorFrame       (const rapidjson::Value& json);
-    cocos2d::Frame* loadTextureFrame     (const rapidjson::Value& json);
-    cocos2d::Frame* loadEventFrame       (const rapidjson::Value& json);
-    cocos2d::Frame* loadZOrderFrame      (const rapidjson::Value& json);
+    Frame* loadVisibleFrame     (const rapidjson::Value& json);
+    Frame* loadPositionFrame    (const rapidjson::Value& json);
+    Frame* loadScaleFrame       (const rapidjson::Value& json);
+    Frame* loadSkewFrame        (const rapidjson::Value& json);
+    Frame* loadRotationSkewFrame(const rapidjson::Value& json);
+    Frame* loadRotationFrame    (const rapidjson::Value& json);
+    Frame* loadAnchorPointFrame (const rapidjson::Value& json);
+    Frame* loadInnerActionFrame (const rapidjson::Value& json);
+    Frame* loadColorFrame       (const rapidjson::Value& json);
+    Frame* loadTextureFrame     (const rapidjson::Value& json);
+    Frame* loadEventFrame       (const rapidjson::Value& json);
+    Frame* loadZOrderFrame      (const rapidjson::Value& json);
 
 protected:
 
-    typedef std::function<cocos2d::Frame*(const rapidjson::Value& json)> FrameCreateFunc;
+    typedef std::function<Frame*(const rapidjson::Value& json)> FrameCreateFunc;
     typedef std::pair<std::string, FrameCreateFunc> Pair;
 
     std::unordered_map<std::string, FrameCreateFunc> _funcs;
-    cocos2d::Map<std::string, cocos2d::ActionTimeline*> _animationActions;
+    cocos2d::Map<std::string, ActionTimeline*> _animationActions;
 };
 
-}
-}
-
+NS_TIMELINE_END
 
 #endif /*__CCTIMELINE_ACTION_CACHE_H__*/

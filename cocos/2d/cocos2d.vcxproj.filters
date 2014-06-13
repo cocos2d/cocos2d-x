@@ -568,15 +568,6 @@
     <ClCompile Include="..\base\ObjectFactory.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="CCFrame.cpp">
-      <Filter>2d</Filter>
-    </ClCompile>
-    <ClCompile Include="CCTimeLine.cpp">
-      <Filter>2d</Filter>
-    </ClCompile>
-    <ClCompile Include="CCActionTimeline.cpp">
-      <Filter>2d</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -1158,15 +1149,6 @@
     </ClInclude>
     <ClInclude Include="..\base\ObjectFactory.h">
       <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="CCFrame.h">
-      <Filter>2d</Filter>
-    </ClInclude>
-    <ClInclude Include="CCTimeLine.h">
-      <Filter>2d</Filter>
-    </ClInclude>
-    <ClInclude Include="CCActionTimeline.h">
-      <Filter>2d</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

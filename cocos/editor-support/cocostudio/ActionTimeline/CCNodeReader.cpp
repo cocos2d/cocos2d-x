@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "CCNodeReader.h"
 #include "CCActionTimelineCache.h"
+#include "CCActionTimeline.h"
 
 #include "../CCSGUIReader.h"
 

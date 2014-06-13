@@ -22,14 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "2d/CCFrame.h"
-#include "2d/CCTimeLine.h"
-#include "2d/CCTimeLine.h"
-#include "2d/CCActionTimeline.h"
-#include "2d/CCSprite.h"
-#include "2d/CCSpriteFrameCache.h"
+#include "CCFrame.h"
+#include "CCTimeLine.h"
+#include "CCActionTimeline.h"
 
-NS_CC_BEGIN
+USING_NS_CC;
+
+NS_TIMELINE_BEGIN
 
 // Frame
 Frame::Frame()
@@ -642,4 +641,4 @@ Frame* ZOrderFrame::clone()
     return frame;
 }
 
-NS_CC_END
+NS_TIMELINE_END

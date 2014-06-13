@@ -60,5 +60,8 @@ THE SOFTWARE.
 #include "cocostudio/TriggerBase.h"
 #include "cocostudio/ActionTimeline/CCNodeReader.h"
 #include "cocostudio/ActionTimeline/CCActionTimelineCache.h"
+#include "cocostudio/ActionTimeline/CCFrame.h"
+#include "cocostudio/ActionTimeline/CCTimeLine.h"
+#include "cocostudio/ActionTimeline/CCActionTimeline.h"
 
 #endif

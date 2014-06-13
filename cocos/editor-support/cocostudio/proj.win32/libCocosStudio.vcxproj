@@ -11,8 +11,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\ActionTimeline\CCActionTimeline.cpp" />
+    <ClCompile Include="..\ActionTimeline\CCFrame.cpp" />
     <ClCompile Include="..\ActionTimeline\CCNodeReader.cpp" />
     <ClCompile Include="..\ActionTimeline\CCActionTimelineCache.cpp" />
+    <ClCompile Include="..\ActionTimeline\CCTimeLine.cpp" />
     <ClCompile Include="..\CCActionFrame.cpp" />
     <ClCompile Include="..\CCActionFrameEasing.cpp" />
     <ClCompile Include="..\CCActionManagerEx.cpp" />
@@ -73,8 +76,12 @@
     <ClInclude Include="..\..\..\..\external\json\reader.h" />
     <ClInclude Include="..\..\..\..\external\json\stringbuffer.h" />
     <ClInclude Include="..\..\..\..\external\json\writer.h" />
+    <ClInclude Include="..\ActionTimeline\CCActionTimeline.h" />
+    <ClInclude Include="..\ActionTimeline\CCFrame.h" />
     <ClInclude Include="..\ActionTimeline\CCNodeReader.h" />
     <ClInclude Include="..\ActionTimeline\CCActionTimelineCache.h" />
+    <ClInclude Include="..\ActionTimeline\CCTimeLine.h" />
+    <ClInclude Include="..\ActionTimeline\CCTimelineMacro.h" />
     <ClInclude Include="..\CCActionFrame.h" />
     <ClInclude Include="..\CCActionFrameEasing.h" />
     <ClInclude Include="..\CCActionManagerEx.h" />

@@ -25,15 +25,12 @@ THE SOFTWARE.
 #ifndef __CCTIMELINE_ACTION_H__
 #define __CCTIMELINE_ACTION_H__
 
-#include "2d/CCNode.h"
-#include "2d/CCAction.h"
-#include "2d/CCTimeLine.h"
-#include "base/CCRef.h"
+#include "CCTimeLine.h"
 #include "renderer/CCRenderer.h"
 
-NS_CC_BEGIN
+NS_TIMELINE_BEGIN
 
-class CC_DLL ActionTimelineData : public Ref
+class  ActionTimelineData : public cocos2d::Ref
 {
 public:
     static ActionTimelineData* create(int actionTag);
@@ -48,7 +45,7 @@ protected:
 };
 
 
-class CC_DLL ActionTimeline : public Action
+class  ActionTimeline : public cocos2d::Action
 {
 public:
     friend class Frame;
@@ -113,7 +110,7 @@ public:
     virtual void addTimeline(Timeline* timeline);
     virtual void removeTimeline(Timeline* timeline);
 
-    virtual const Vector<Timeline*>& getTimelines() const { return _timelineList; }
+    virtual const cocos2d::Vector<Timeline*>& getTimelines() const { return _timelineList; }
 
     /** Set ActionTimeline's frame event callback function */
     void setFrameEventCallFunc(std::function<void(Frame *)> listener);
@@ -130,7 +127,7 @@ public:
     virtual ActionTimeline* reverse() const override { return nullptr; }
 
     virtual void step(float delta) override; 
-    virtual void startWithTarget(Node *target) override;  
+    virtual void startWithTarget(cocos2d::Node *target) override;  
     virtual bool isDone() const override { return false; }
 protected:
     virtual void gotoFrame(int frameIndex);
@@ -139,8 +136,8 @@ protected:
     /** emit frame event, call it when enter a frame*/
     virtual void emitFrameEvent(Frame* frame);
 
-    std::map<int, Vector<Timeline*>> _timelineMap;
-    Vector<Timeline*> _timelineList;
+    std::map<int, cocos2d::Vector<Timeline*>> _timelineMap;
+    cocos2d::Vector<Timeline*> _timelineList;
 
     int     _duration;
     double  _time;
@@ -154,7 +151,7 @@ protected:
     std::function<void(Frame*)> _frameEventListener;
 };
 
-NS_CC_END
+NS_TIMELINE_END
 
 
 #endif /*__CCTIMELINE_ACTION_H__*/

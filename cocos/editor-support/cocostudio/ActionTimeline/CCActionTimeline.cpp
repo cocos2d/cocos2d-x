@@ -24,8 +24,9 @@ THE SOFTWARE.
 
 #include "CCActionTimeline.h"
 
-NS_CC_BEGIN
+USING_NS_CC;
 
+NS_TIMELINE_BEGIN
 
 // ActionTimelineData
 ActionTimelineData* ActionTimelineData::create(int actionTag)
@@ -271,4 +272,4 @@ void ActionTimeline::stepToFrame(int frameIndex)
     }
 }
 
-NS_CC_END
+NS_TIMELINE_END

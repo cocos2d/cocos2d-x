@@ -24,6 +24,9 @@ THE SOFTWARE.
 
 #include "CCActionTimelineCache.h"
 #include "CCNodeReader.h"
+#include "CCFrame.h"
+#include "CCTimeLine.h"
+#include "CCActionTimeline.h"
 
 using namespace cocos2d;
 
