@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "CCActionObject.h"
 #include "CCActionNode.h"
 #include "../Json//DictionaryHelper.h"
+#include "CocoLoader.h"
 
 NS_CC_EXT_BEGIN
 
@@ -131,6 +132,11 @@ void ActionObject::initWithDictionary(const rapidjson::Value& dic,CCObject* root
 	}
 
 	m_fTotalTime = maxLength*m_fUnitTime;
+}
+
+void ActionObject::initWithBinary(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode, cocos2d::CCObject *root)
+{
+    
 }
 
 void ActionObject::addActionNode(ActionNode* node)

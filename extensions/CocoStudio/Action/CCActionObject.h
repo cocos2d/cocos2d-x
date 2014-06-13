@@ -31,6 +31,9 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
+class CocoLoader;
+class stExpCocoNode;
+
 class ActionNode;
 /**
 *   @js NA
@@ -160,6 +163,7 @@ public:
 
 	/*init properties with a json dictionary*/
 	void initWithDictionary(const rapidjson::Value& dic,CCObject* root);
+    void initWithBinary(CocoLoader* pCocoLoader, stExpCocoNode*	pCocoNode, CCObject* root);
 
 	void simulationActionUpdate(float dt);
 
