@@ -403,6 +403,18 @@ bool LuaStack::pushFunctionByHandler(int nHandler)
     return true;
 }
 
+bool LuaStack::pushFunctionByName(const char* functionName)
+{
+    lua_getglobal(_state, functionName);       /* query function by name, stack: function */
+    if (!lua_isfunction(_state, -1))
+    {
+        CCLOG("[LUA ERROR] function name '%s' not found", functionName);
+        lua_pop(_state, 1);
+        return false;
+    }
+    return true;
+}
+
 int LuaStack::executeFunction(int numArgs)
 {
     int functionIndex = -(numArgs + 1);

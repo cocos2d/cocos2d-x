@@ -4086,6 +4086,52 @@ int lua_cocos2dx_Node_getChildren(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_Node_setCascadeBoundingBox(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Node* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Node*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setCascadeBoundingBox'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::Rect arg0;
+
+        ok &= luaval_to_rect(tolua_S, 2, &arg0);
+        if(!ok)
+            return 0;
+        cobj->setCascadeBoundingBox(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setCascadeBoundingBox",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_setCascadeBoundingBox'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_Node_pause(lua_State* tolua_S)
 {
     int argc = 0;
@@ -9044,6 +9090,93 @@ int lua_cocos2dx_Node_getScale(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_Node_getCascadeBoundingBox(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Node* cobj = nullptr;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    cobj = (cocos2d::Node*)tolua_tousertype(tolua_S,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getCascadeBoundingBox'", nullptr);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0)
+    {
+        if(!ok)
+            return 0;
+        cocos2d::Rect ret = cobj->getCascadeBoundingBox();
+        rect_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getCascadeBoundingBox",argc, 0);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_getCascadeBoundingBox'.",&tolua_err);
+#endif
+    
+    return 0;
+}
+int lua_cocos2dx_Node_resetCascadeBoundingBox(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Node* cobj = nullptr;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    cobj = (cocos2d::Node*)tolua_tousertype(tolua_S,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_resetCascadeBoundingBox'", nullptr);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0)
+    {
+        if(!ok)
+            return 0;
+        cobj->resetCascadeBoundingBox();
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "resetCascadeBoundingBox",argc, 0);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_resetCascadeBoundingBox'.",&tolua_err);
+#endif
+    
+    return 0;
+}
 int lua_cocos2dx_Node_getNormalizedPosition(lua_State* tolua_S)
 {
     int argc = 0;
@@ -9410,6 +9543,7 @@ int lua_register_cocos2dx_Node(lua_State* tolua_S)
         tolua_function(tolua_S,"setOpacityModifyRGB",lua_cocos2dx_Node_setOpacityModifyRGB);
         tolua_function(tolua_S,"setCascadeOpacityEnabled",lua_cocos2dx_Node_setCascadeOpacityEnabled);
         tolua_function(tolua_S,"getChildren",lua_cocos2dx_Node_getChildren);
+        tolua_function(tolua_S,"setCascadeBoundingBox",lua_cocos2dx_Node_setCascadeBoundingBox);
         tolua_function(tolua_S,"pause",lua_cocos2dx_Node_pause);
         tolua_function(tolua_S,"convertToWorldSpaceAR",lua_cocos2dx_Node_convertToWorldSpaceAR);
         tolua_function(tolua_S,"isIgnoreAnchorPointForPosition",lua_cocos2dx_Node_isIgnoreAnchorPointForPosition);
@@ -9518,6 +9652,8 @@ int lua_register_cocos2dx_Node(lua_State* tolua_S)
         tolua_function(tolua_S,"sortAllChildren",lua_cocos2dx_Node_sortAllChildren);
         tolua_function(tolua_S,"getWorldToNodeTransform",lua_cocos2dx_Node_getWorldToNodeTransform);
         tolua_function(tolua_S,"getScale",lua_cocos2dx_Node_getScale);
+        tolua_function(tolua_S,"getCascadeBoundingBox",lua_cocos2dx_Node_getCascadeBoundingBox);
+        tolua_function(tolua_S,"resetCascadeBoundingBox",lua_cocos2dx_Node_resetCascadeBoundingBox);
         tolua_function(tolua_S,"getNormalizedPosition",lua_cocos2dx_Node_getNormalizedPosition);
         tolua_function(tolua_S,"getRotationSkewX",lua_cocos2dx_Node_getRotationSkewX);
         tolua_function(tolua_S,"getRotationSkewY",lua_cocos2dx_Node_getRotationSkewY);

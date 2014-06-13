@@ -278,7 +278,14 @@ int LuaEngine::handleNodeEvent(void* data)
     int handler = ScriptHandlerMgr::getInstance()->getObjectHandler(basicScriptData->nativeObject, ScriptHandlerMgr::HandlerType::NODE);
     
     if (0 == handler)
-        return 0;
+    {
+        if (!_stack->pushFunctionByName("NodeEventDispatcher"))
+        {
+            return 0;
+        }
+        _stack->pushObject(static_cast<Ref*>(basicScriptData->nativeObject), "CCNode");
+        _stack->pushInt(kNodeEvent);
+    }
     
     int action = *((int*)(basicScriptData->value));
     switch (action)
@@ -306,7 +313,17 @@ int LuaEngine::handleNodeEvent(void* data)
         default:
             return 0;
     }
-    int ret = _stack->executeFunctionByHandler(handler, 1);
+    
+    int ret;
+    if ((0 == handler))
+    {
+        ret = _stack->executeFunction(3);
+        return ret;
+    }
+    else
+    {
+        ret = _stack->executeFunctionByHandler(handler, 1);
+    }
     _stack->clean();
     return ret;
 }
@@ -363,9 +380,25 @@ int LuaEngine::handleScheduler(void* data)
         return 0;
     
     SchedulerScriptData* schedulerInfo = static_cast<SchedulerScriptData*>(data);
+    if (0==schedulerInfo->handler)
+    {
+        if (!_stack->pushFunctionByName("NodeEventDispatcher"))
+        {
+            return 0;
+        }
+        _stack->pushObject(static_cast<Ref*>(schedulerInfo->node), "CCNode");
+        _stack->pushInt(kScheduleEvent);
+    }
     
     _stack->pushFloat(schedulerInfo->elapse);
-    int ret = _stack->executeFunctionByHandler(schedulerInfo->handler, 1);
+    int ret;
+    if (schedulerInfo->handler)
+    {
+        ret = _stack->executeFunctionByHandler(schedulerInfo->handler, 1);
+    }
+    else{
+        ret = _stack->executeFunction(3);
+    }
     _stack->clean();
     
     return ret;

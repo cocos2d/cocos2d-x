@@ -121,6 +121,7 @@ public:
     virtual void pushLuaValueDict(const LuaValueDict& dict);
     virtual void pushLuaValueArray(const LuaValueArray& array);    
     virtual bool pushFunctionByHandler(int nHandler);
+    virtual bool pushFunctionByName(const char* functionName);
     virtual int executeFunction(int numArgs);
     
     virtual int executeFunctionByHandler(int nHandler, int numArgs);
