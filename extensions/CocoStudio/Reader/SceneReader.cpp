@@ -74,7 +74,6 @@ cocos2d::CCNode* SceneReader::createNodeWithSceneFile(const char* pszFileName, A
 	}
 	else if (file_extension == ".CSB")
 	{
-		bool bRet = false;
 		unsigned long size = 0;
 		unsigned char *pBytes = NULL;
 		do {
@@ -92,7 +91,7 @@ cocos2d::CCNode* SceneReader::createNodeWithSceneFile(const char* pszFileName, A
 					stExpCocoNode *tpChildArray = tpRootCocoNode->GetChildArray();
 					CC_BREAK_IF(tpRootCocoNode->GetChildNum() == 0);
 					_pNode = CCNode::create();
-					int nIndex = 0, nCount = 0;
+					int  nCount = 0;
 					std::vector<CCComponent*> _vecComs;
 					CCComRender *pRender = NULL;
 					std::string key = tpChildArray[15].GetName(&tCocoLoader);

@@ -2245,7 +2245,7 @@ cocos2d::ui::Widget* WidgetPropertiesReader0300::widgetFromBinary(CocoLoader* pC
         widget = this->createGUI(classname);
     }
     
-    CCLOG("classname = %s", classname.c_str());
+//    CCLOG("classname = %s", classname.c_str());
     std::string readerName = this->getWidgetReaderClassName(classname);
     
     WidgetReaderProtocol* reader = this->createWidgetReaderProtocol(readerName);
