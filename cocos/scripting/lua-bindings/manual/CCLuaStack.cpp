@@ -52,20 +52,14 @@ extern "C" {
 #include "LuaOpengl.h"
 #include "LuaScriptHandlerMgr.h"
 #include "lua_cocos2dx_auto.hpp"
-#include "lua_cocos2dx_extension_auto.hpp"
+//#include "lua_cocos2dx_extension_auto.hpp"
 #include "lua_cocos2dx_manual.hpp"
 #include "LuaBasicConversions.h"
-#include "lua_cocos2dx_extension_manual.h"
+//#include "lua_cocos2dx_extension_manual.h"
 #include "lua_cocos2dx_deprecated.h"
 #include "lua_xml_http_request.h"
-#include "lua_cocos2dx_studio_auto.hpp"
-#include "lua_cocos2dx_coco_studio_manual.hpp"
-#include "lua_cocos2dx_spine_auto.hpp"
-#include "lua_cocos2dx_spine_manual.hpp"
 #include "lua_cocos2dx_physics_auto.hpp"
 #include "lua_cocos2dx_physics_manual.hpp"
-#include "lua_cocos2dx_ui_auto.hpp"
-#include "lua_cocos2dx_ui_manual.hpp"
 
 namespace {
 int lua_print(lua_State * luastate)

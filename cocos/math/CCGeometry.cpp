@@ -200,10 +200,10 @@ void Rect::merge(const Rect& rect)
     float right2  = rect.getMaxX();
     float bottom2 = rect.getMinY();
 #ifdef WIN32
-    origin.x    = min(left1, left2);
-    origin.y    = min(bottom1, bottom2);
-    size.width  = max(right1, right2) - origin.x;
-    size.height = max(top1, top2) - origin.y;
+    origin.x    = fminf(left1, left2);
+    origin.y    = fminf(bottom1, bottom2);
+    size.width  = fmaxf(right1, right2) - origin.x;
+    size.height = fmaxf(top1, top2) - origin.y;
 #else
     origin.x = std::min(left1, left2);
     origin.y = std::min(bottom1, bottom2);

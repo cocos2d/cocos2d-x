@@ -27,23 +27,8 @@
     <ClCompile Include="..\auto\lua_cocos2dx_auto.cpp">
       <Filter>auto</Filter>
     </ClCompile>
-    <ClCompile Include="..\auto\lua_cocos2dx_extension_auto.cpp">
-      <Filter>auto</Filter>
-    </ClCompile>
-    <ClCompile Include="..\auto\lua_cocos2dx_ui_auto.cpp">
-      <Filter>auto</Filter>
-    </ClCompile>
     <ClCompile Include="..\auto\lua_cocos2dx_physics_auto.cpp">
       <Filter>auto</Filter>
-    </ClCompile>
-    <ClCompile Include="..\auto\lua_cocos2dx_spine_auto.cpp">
-      <Filter>auto</Filter>
-    </ClCompile>
-    <ClCompile Include="..\auto\lua_cocos2dx_studio_auto.cpp">
-      <Filter>auto</Filter>
-    </ClCompile>
-    <ClCompile Include="..\manual\CCBProxy.cpp">
-      <Filter>manual</Filter>
     </ClCompile>
     <ClCompile Include="..\manual\CCLuaBridge.cpp">
       <Filter>manual</Filter>
@@ -60,16 +45,7 @@
     <ClCompile Include="..\manual\Cocos2dxLuaLoader.cpp">
       <Filter>manual</Filter>
     </ClCompile>
-    <ClCompile Include="..\manual\lua_cocos2dx_coco_studio_manual.cpp">
-      <Filter>manual</Filter>
-    </ClCompile>
     <ClCompile Include="..\manual\lua_cocos2dx_deprecated.cpp">
-      <Filter>manual</Filter>
-    </ClCompile>
-    <ClCompile Include="..\manual\lua_cocos2dx_extension_manual.cpp">
-      <Filter>manual</Filter>
-    </ClCompile>
-    <ClCompile Include="..\manual\lua_cocos2dx_ui_manual.cpp">
       <Filter>manual</Filter>
     </ClCompile>
     <ClCompile Include="..\manual\lua_cocos2dx_manual.cpp">
@@ -78,16 +54,10 @@
     <ClCompile Include="..\manual\lua_cocos2dx_physics_manual.cpp">
       <Filter>manual</Filter>
     </ClCompile>
-    <ClCompile Include="..\manual\lua_cocos2dx_spine_manual.cpp">
-      <Filter>manual</Filter>
-    </ClCompile>
     <ClCompile Include="..\manual\lua_extensions.c">
       <Filter>manual</Filter>
     </ClCompile>
     <ClCompile Include="..\manual\Lua_web_socket.cpp">
-      <Filter>manual</Filter>
-    </ClCompile>
-    <ClCompile Include="..\manual\lua_xml_http_request.cpp">
       <Filter>manual</Filter>
     </ClCompile>
     <ClCompile Include="..\manual\LuaBasicConversions.cpp">
@@ -97,9 +67,6 @@
       <Filter>manual</Filter>
     </ClCompile>
     <ClCompile Include="..\manual\LuaScriptHandlerMgr.cpp">
-      <Filter>manual</Filter>
-    </ClCompile>
-    <ClCompile Include="..\manual\LuaSkeletonAnimation.cpp">
       <Filter>manual</Filter>
     </ClCompile>
     <ClCompile Include="..\manual\tolua_fix.cpp">
@@ -170,23 +137,8 @@
     <ClInclude Include="..\auto\lua_cocos2dx_auto.hpp">
       <Filter>auto</Filter>
     </ClInclude>
-    <ClInclude Include="..\auto\lua_cocos2dx_extension_auto.hpp">
-      <Filter>auto</Filter>
-    </ClInclude>
-    <ClInclude Include="..\auto\lua_cocos2dx_ui_auto.hpp">
-      <Filter>auto</Filter>
-    </ClInclude>
     <ClInclude Include="..\auto\lua_cocos2dx_physics_auto.hpp">
       <Filter>auto</Filter>
-    </ClInclude>
-    <ClInclude Include="..\auto\lua_cocos2dx_spine_auto.hpp">
-      <Filter>auto</Filter>
-    </ClInclude>
-    <ClInclude Include="..\auto\lua_cocos2dx_studio_auto.hpp">
-      <Filter>auto</Filter>
-    </ClInclude>
-    <ClInclude Include="..\manual\CCBProxy.h">
-      <Filter>manual</Filter>
     </ClInclude>
     <ClInclude Include="..\manual\CCLuaBridge.h">
       <Filter>manual</Filter>
@@ -203,16 +155,7 @@
     <ClInclude Include="..\manual\Cocos2dxLuaLoader.h">
       <Filter>manual</Filter>
     </ClInclude>
-    <ClInclude Include="..\manual\lua_cocos2dx_coco_studio_manual.hpp">
-      <Filter>manual</Filter>
-    </ClInclude>
     <ClInclude Include="..\manual\lua_cocos2dx_deprecated.h">
-      <Filter>manual</Filter>
-    </ClInclude>
-    <ClInclude Include="..\manual\lua_cocos2dx_extension_manual.h">
-      <Filter>manual</Filter>
-    </ClInclude>
-    <ClInclude Include="..\manual\lua_cocos2dx_ui_manual.hpp">
       <Filter>manual</Filter>
     </ClInclude>
     <ClInclude Include="..\manual\lua_cocos2dx_manual.hpp">
@@ -221,16 +164,10 @@
     <ClInclude Include="..\manual\lua_cocos2dx_physics_manual.hpp">
       <Filter>manual</Filter>
     </ClInclude>
-    <ClInclude Include="..\manual\lua_cocos2dx_spine_manual.hpp">
-      <Filter>manual</Filter>
-    </ClInclude>
     <ClInclude Include="..\manual\lua_extensions.h">
       <Filter>manual</Filter>
     </ClInclude>
     <ClInclude Include="..\manual\Lua_web_socket.h">
-      <Filter>manual</Filter>
-    </ClInclude>
-    <ClInclude Include="..\manual\lua_xml_http_request.h">
       <Filter>manual</Filter>
     </ClInclude>
     <ClInclude Include="..\manual\LuaBasicConversions.h">
@@ -240,9 +177,6 @@
       <Filter>manual</Filter>
     </ClInclude>
     <ClInclude Include="..\manual\LuaScriptHandlerMgr.h">
-      <Filter>manual</Filter>
-    </ClInclude>
-    <ClInclude Include="..\manual\LuaSkeletonAnimation.h">
       <Filter>manual</Filter>
     </ClInclude>
     <ClInclude Include="..\manual\tolua_fix.h">
