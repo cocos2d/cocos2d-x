@@ -76,7 +76,7 @@ public:
 	}
 	
 };
-
+   
 class CocoLoader;
 
 struct CC_EX_DLL stExpCocoNode

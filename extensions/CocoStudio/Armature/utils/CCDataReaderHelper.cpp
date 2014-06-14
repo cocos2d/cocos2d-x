@@ -1377,6 +1377,7 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
         for (int i = 0; i < length; i++)
         {
 			const char *path = DICTOOL->getStringValueFromArray_json(json, CONFIG_FILE_PATH, i); 
+			if( NULL == path)
             {
                 CCLOG("load CONFIG_FILE_PATH error.");
                 return;

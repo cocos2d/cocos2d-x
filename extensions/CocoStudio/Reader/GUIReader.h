@@ -30,7 +30,7 @@
 #include "cocos-ext.h"
 #include "WidgetReader/WidgetReaderProtocol.h"
 #include "../Trigger/ObjectFactory.h"
-#include "CocoLoader.h"
+#include "../Json/CocoLoader.h"
 
 NS_CC_EXT_BEGIN
 

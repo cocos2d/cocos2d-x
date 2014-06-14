@@ -1,7 +1,6 @@
 
 
 #include "WidgetReader.h"
-#include "CocoLoader.h"
 #include "../../../../cocos2dx/CCDirector.h"
 
 NS_CC_EXT_BEGIN

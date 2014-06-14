@@ -1495,7 +1495,7 @@ void TestChangeAnimationInternal::registerWithTouchDispatcher()
 //TestDirectFromBinay
 
 const  char* TestLoadFromBinary::m_binaryFilesNames[BINARYFILECOUNT] ={"armature/bear.csb","armature/horse.csb",
-	"armature/CowBoy.csb","armature/hero.csb",
+	"armature/Cowboy.csb","armature/hero.csb",
 	"armature/HeroAnimation.csb","armature/testEasing.csb"};
 const  char* TestLoadFromBinary::m_armatureNames[BINARYFILECOUNT] ={"bear","horse",
 	"Cowboy","hero",
@@ -1512,7 +1512,7 @@ void TestLoadFromBinary::onEnter()
 	// remove json created 
 	// remove sync resource
 	CCArmatureDataManager::sharedArmatureDataManager()->removeArmatureFileInfo("armature/bear.ExportJson");
-
+	CCArmatureDataManager::sharedArmatureDataManager()->removeArmatureFileInfo(m_binaryFilesNames[0]);
 	// load from binary
 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(m_binaryFilesNames[0]);
 
