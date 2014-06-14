@@ -1,4 +1,7 @@
 
+#ifndef __PLAYER_SERVICE_PROTOCOL_WIN32_H_
+#define __PLAYER_SERVICE_PROTOCOL_WIN32_H_
+
 #include "stdafx.h"
 
 #include "PlayerServiceProtocol.h"
@@ -16,3 +19,5 @@ public:
 };
 
 PLAYER_NS_END
+
+#endif // __PLAYER_SERVICE_PROTOCOL_WIN32_H_

@@ -3,12 +3,6 @@
 
 #include <Commdlg.h>
 #include <Shlobj.h>
-#include <winnls.h>
-#include <shobjidl.h>
-#include <objbase.h>
-#include <objidl.h>
-#include <shlguid.h>
-#include <shellapi.h>
 
 #include "PlayerWin32.h"
 #include "PlayerFileDialogServiceWin32.h"
@@ -22,12 +16,9 @@ string PlayerFileDialogServiceWin32::openFile(const char *title,
     if (!title) title = "Open File";
     WCHAR *title_ws = utf8towide(title);
 
-    PlayerWin32 *player = dynamic_cast<PlayerWin32*>(PlayerProtocol::getInstance());
-    HWND hwnd = player->getWindowHandle();
-
     OPENFILENAME ofn = { 0 };
     ofn.lStructSize = sizeof(ofn);
-    ofn.hwndOwner = hwnd;
+    ofn.hwndOwner = dynamic_cast<PlayerWin32*>(PlayerProtocol::getInstance())->getWindowHandle();
     ofn.lpstrFilter = L"Lua Script File (*.lua)\0*.lua\0";
     ofn.lpstrTitle = title_ws;
 
@@ -42,7 +33,7 @@ string PlayerFileDialogServiceWin32::openFile(const char *title,
     }
     ofn.Flags = OFN_DONTADDTORECENT | OFN_ENABLESIZING | OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST;
 
-    WCHAR path_ws[MAX_PATH];
+    WCHAR path_ws[MAX_PATH + 1];
     ofn.lpstrFile = path_ws;
     ofn.nMaxFile = MAX_PATH;
 
@@ -52,59 +43,78 @@ string PlayerFileDialogServiceWin32::openFile(const char *title,
     if (GetOpenFileName(&ofn))
     {
         char *path = widetoutf8(path_ws);
-        string path = string(path);
+        string out = string(path);
         delete[] path;
-        return path;
+        return out;
     }
 
     return string();
 }
 
+int CALLBACK BrowseFolderCallback(HWND hwnd, UINT uMsg, LPARAM lParam, LPARAM lpData)
+{
+    if (uMsg == BFFM_INITIALIZED && lpData)
+    {
+        LPCTSTR path = reinterpret_cast<LPCTSTR>(lpData);
+        if (path)
+        {
+            SendMessage(hwnd, BFFM_SETSELECTION, true, (LPARAM)path);
+        }
+    }
+    return 0;
+}
+
 string PlayerFileDialogServiceWin32::openDirectory(const char *title,
     const char *directory /* = NULL */)
 {
-    if (!title) title = "Open File";
+    if (!title) title = "Open Directory";
     WCHAR *title_ws = utf8towide(title);
 
-    PlayerWin32 *player = dynamic_cast<PlayerWin32*>(PlayerProtocol::getInstance());
-    HWND hwnd = player->getWindowHandle();
-
-    char buff[MAX_PATH + 1] = { 0 };
-    WCHAR curr[MAX_PATH + 1] = { 0 };
-
-    if (baseDir.length() > 0)
+    WCHAR *cwd = NULL;
+    if (directory)
     {
-        MultiByteToWideChar(CP_UTF8, 0, baseDir.c_str(), baseDir.length(), curr, MAX_PATH);
+        cwd = utf8towide(directory);
     }
     else
     {
-        GetCurrentDirectory(MAX_PATH + 1, curr);
+        cwd = new WCHAR[MAX_PATH + 1];
+        GetCurrentDirectory(MAX_PATH, cwd);
     }
 
-    BROWSEINFOA bi = { 0 };
-    bi.hwndOwner = m_hwndDialog;
-    bi.pszDisplayName = buff;
-    bi.lpszTitle = "Select Project Directory";
-    bi.lParam = reinterpret_cast<LPARAM>(curr);
+    WCHAR path_ws[MAX_PATH + 1];
+    BROWSEINFO bi = { 0 };
+    bi.hwndOwner = dynamic_cast<PlayerWin32*>(PlayerProtocol::getInstance())->getWindowHandle();
+    bi.pszDisplayName = path_ws;
+    bi.lpszTitle = title_ws;
+    bi.lParam = reinterpret_cast<LPARAM>(cwd);
     bi.ulFlags = BIF_RETURNONLYFSDIRS | BIF_NONEWFOLDERBUTTON | BIF_NEWDIALOGSTYLE;
     bi.lpfn = BrowseFolderCallback;
 
-    PIDLIST_ABSOLUTE pid = SHBrowseForFolderA(&bi);
+    PIDLIST_ABSOLUTE pid = SHBrowseForFolder(&bi);
+
+    if (cwd) delete[] cwd;
+    if (title_ws) delete[] title_ws;
+
     if (pid)
     {
-        SHGetPathFromIDListA(pid, buff);
-        return string(buff);
+        SHGetPathFromIDList(pid, path_ws);
+        char *path = widetoutf8(path_ws);
+        string out = string(path);
+        delete[] path;
+        return out;
     }
     else
     {
-        return string("");
+        return string();
     }
 }
 
 vector<string> PlayerFileDialogServiceWin32::openMultiple(const char *title,
     const char *directory /* = NULL */)
 {
+    vector<string> paths;
 
+    return paths;
 }
 
 string PlayerFileDialogServiceWin32::saveFile(const char *title,
@@ -112,6 +122,7 @@ string PlayerFileDialogServiceWin32::saveFile(const char *title,
     const char *directory)
 {
 
+    return string();
 }
 
 PLAYER_NS_END

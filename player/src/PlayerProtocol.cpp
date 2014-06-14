@@ -1,9 +1,4 @@
 
-#include <string>
-#include <vector>
-
-using namespace std;
-
 #include "PlayerProtocol.h"
 
 PLAYER_NS_BEGIN

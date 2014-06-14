@@ -16,12 +16,6 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\FileDialogServiceProtocol.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\PlayerMacros.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\PlayerProtocol.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -40,8 +34,20 @@
     <ClInclude Include="PlayerWin32.h">
       <Filter>win32</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\FileDialogServiceWin32.h">
+    <ClInclude Include="..\src\PlayerServiceProtocol.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\PlayerMacros.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerServiceProtocolWin32.h">
       <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerFileDialogServiceWin32.h">
+      <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\PlayerFileDialogServiceProtocol.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -57,7 +63,13 @@
     <ClCompile Include="PlayerWin32.cpp">
       <Filter>win32</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\FileDialogServiceWin32.cpp">
+    <ClCompile Include="..\src\PlayerServiceProtocol.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerServiceProtocolWin32.cpp">
+      <Filter>win32</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerFileDialogServiceWin32.cpp">
       <Filter>win32</Filter>
     </ClCompile>
   </ItemGroup>

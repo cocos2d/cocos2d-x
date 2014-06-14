@@ -1,4 +1,6 @@
 
+#include "stdafx.h"
+
 #include "PlayerServiceProtocolWin32.h"
 
 PLAYER_NS_BEGIN

@@ -1,11 +1,14 @@
 
-#include "PlayerMacros.h"
-#include "PlayerServiceProtocol.h"
+#ifndef __PLAYER_FILE_DIALOG_SERVICE_PROTOCOL_H_
+#define __PLAYER_FILE_DIALOG_SERVICE_PROTOCOL_H_
 
 #include <string>
 #include <vector>
 
 using namespace std;
+
+#include "PlayerMacros.h"
+#include "PlayerServiceProtocol.h"
 
 PLAYER_NS_BEGIN
 
@@ -28,3 +31,5 @@ public:
 };
 
 PLAYER_NS_END
+
+#endif // __PLAYER_FILE_DIALOG_SERVICE_PROTOCOL_H_

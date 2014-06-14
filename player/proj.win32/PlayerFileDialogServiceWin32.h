@@ -1,4 +1,7 @@
 
+#ifndef __PLAYER_FILE_DIALOG_SERVICE_WIN32_H_
+#define __PLAYER_FILE_DIALOG_SERVICE_WIN32_H_
+
 #include "stdafx.h"
 
 #include "PlayerMacros.h"
@@ -27,3 +30,5 @@ class PlayerFileDialogServiceWin32 : public PlayerFileDialogServiceProtocol, pub
 };
 
 PLAYER_NS_END
+
+#endif // __PLAYER_FILE_DIALOG_SERVICE_WIN32_H_
