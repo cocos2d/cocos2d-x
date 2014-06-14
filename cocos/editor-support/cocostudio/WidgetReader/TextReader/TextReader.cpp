@@ -51,7 +51,10 @@ namespace cocostudio
         bool fn = DICTOOL->checkObjectExist_json(options, "fontName");
         if (fn)
         {
-            label->setFontName(DICTOOL->getStringValue_json(options, "fontName"));
+            std::string tp_c = jsonPath;
+            const char* cmfPath = DICTOOL->getStringValue_json(options, "fontName");
+            const char* cmf_tp = tp_c.append(cmfPath).c_str();
+            label->setFontName(cmf_tp);
         }
         bool aw = DICTOOL->checkObjectExist_json(options, "areaWidth");
         bool ah = DICTOOL->checkObjectExist_json(options, "areaHeight");
