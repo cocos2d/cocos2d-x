@@ -183,7 +183,14 @@ bool CCComRender::serialize(void* r)
 					m_pRender = pAr;
 					m_pRender->retain();
 					const char *actionName = NULL;
-					actionName = DICTOOL->getStringValue_json(*v, "selectedactionname");
+					if (pCocoNode != NULL)
+					{
+						actionName = pCocoNode[6].GetValue();//DICTOOL->getStringValue_json(*v, "selectedactionname");
+					}
+					else
+					{
+						actionName = DICTOOL->getStringValue_json(*v, "selectedactionname");
+					}
 					if (actionName != NULL && pAr->getAnimation() != NULL)
 					{
 						pAr->getAnimation()->play(actionName);
