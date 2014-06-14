@@ -153,6 +153,7 @@ void ActionObject::play()
 	{
 		e->playAction();
 	}
+	_bPlaying = true;
 	if (_loop)
 	{
 		_pScheduler->schedule(schedule_selector(ActionObject::simulationActionUpdate), this, 0.0f , kRepeatForever, 0.0f, false);
@@ -172,6 +173,7 @@ void ActionObject::play(CallFunc* func)
 void ActionObject::pause()
 {
 	_bPause = true;
+	_bPlaying = false;
 }
 
 void ActionObject::stop()
@@ -180,6 +182,7 @@ void ActionObject::stop()
 	{
 		e->stopAction();
 	}
+	_bPlaying = false;
 	_pScheduler->unschedule(schedule_selector(ActionObject::simulationActionUpdate), this);
 	_bPause = false;
 }
@@ -218,6 +221,7 @@ void ActionObject::simulationActionUpdate(float dt)
 		}
 		else
 		{
+			_bPlaying = false;
 			_pScheduler->unschedule(schedule_selector(ActionObject::simulationActionUpdate), this);
 		}
 	}
