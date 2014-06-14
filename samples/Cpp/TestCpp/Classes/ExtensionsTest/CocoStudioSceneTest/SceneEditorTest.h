@@ -51,7 +51,7 @@ protected:
 
 protected:
 	virtual void changeLoadTypeCallback(CCObject *pSender);
-	virtual void defaultPlay(){} // must to overrided
+	virtual void defaultPlay() = 0; // must to be overrided
 	void loadFileChangeHelper(string& filePathName );  // switch json& csb
 private:
 	bool m_isCsbLoad;   // default is false
