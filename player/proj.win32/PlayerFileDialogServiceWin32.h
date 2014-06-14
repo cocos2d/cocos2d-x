@@ -1,14 +1,18 @@
 
+#include "stdafx.h"
+
 #include "PlayerMacros.h"
-#include "FileDialogServiceProtocol.h"
+#include "PlayerFileDialogServiceProtocol.h"
+
+#include "PlayerServiceProtocolWin32.h"
 
 PLAYER_NS_BEGIN
 
-class FileDialogServiceWin32 : public FileDialogServiceProtocol
+class PlayerFileDialogServiceWin32 : public PlayerFileDialogServiceProtocol, public PlayerServiceProtocolWin32
 {
     virtual string openFile(const char *title,
-    const char *directory = NULL,
-    const char *extensions = NULL);
+        const char *directory = NULL,
+        const char *extensions = NULL);
 
     virtual string openDirectory(const char *title,
         const char *directory = NULL);

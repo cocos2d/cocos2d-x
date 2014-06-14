@@ -6,13 +6,16 @@
 
 PLAYER_NS_BEGIN
 
-class PlayerWin32 :
-    public PlayerProtocol
+class PlayerFileDialogServiceProtocol;
+
+class PlayerWin32 : public PlayerProtocol
 {
 public:
     virtual ~PlayerWin32();
 
-    virtual FileDialogServiceProtocol *getFileDialogService();
+    virtual PlayerFileDialogServiceProtocol *getFileDialogService();
+
+    HWND getWindowHandle();
 
 protected:
     PlayerWin32();

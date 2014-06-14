@@ -16,7 +16,7 @@ public:
 
 protected:
     PlayerProtocol(); // avoid create instance from outside
-    static void setInstance(PlayerProtocol *instance); // call from platform related source files
+    static void setInstance(PlayerProtocol *instance); // call from platform related class constructor
 
     FileDialogServiceProtocol *m_fileDialogService;
 

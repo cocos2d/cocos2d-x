@@ -1,5 +1,6 @@
 
 #include "PlayerMacros.h"
+#include "PlayerServiceProtocol.h"
 
 #include <string>
 #include <vector>
@@ -8,7 +9,7 @@ using namespace std;
 
 PLAYER_NS_BEGIN
 
-class FileDialogServiceProtocol
+class PlayerFileDialogServiceProtocol : public PlayerServiceProtocol
 {
 public:
     virtual string openFile(const char *title,
