@@ -115,7 +115,7 @@ void SceneEditorTestLayer::onEnter()
     const char *pTitle = str.c_str();
     CCLabelTTF *label = CCLabelTTF::create(pTitle, "Arial", 18);
     label->setColor(ccc3(255, 255, 255));
-    addChild(label, 1, 10000);
+    addChild(label, 100, 10000);
     label->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y - 30) );
 
     std::string strSubtitle = subtitle();
@@ -814,10 +814,7 @@ void TriggerTest::onEnter()
 	SceneEditorTestLayer::onEnter();
 	CCNode *root = createGameScene();
 	this->addChild(root, 0, 1);
-	this->schedule(schedule_selector(TriggerTest::gameLogic));
-	this->setTouchEnabled(true);
-	this->setTouchMode(kCCTouchesOneByOne);
-	sendEvent(TRIGGEREVENT_ENTERSCENE);
+	
 }
 
 void TriggerTest::onExit()
@@ -877,6 +874,11 @@ void TriggerTest::defaultPlay()
 {
 	//ui action
 	actionObject = cocos2d::extension::ActionManager::shareManager()->playActionByName("startMenu_1.json","Animation1");
+	
+	this->schedule(schedule_selector(TriggerTest::gameLogic));
+	this->setTouchEnabled(true);
+	this->setTouchMode(kCCTouchesOneByOne);
+	sendEvent(TRIGGEREVENT_ENTERSCENE);
 }
 
 
