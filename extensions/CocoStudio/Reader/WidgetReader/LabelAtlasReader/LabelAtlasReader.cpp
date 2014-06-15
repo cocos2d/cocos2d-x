@@ -79,12 +79,12 @@ void LabelAtlasReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoade
     
     
     stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
-    ui::TextureResType type;
+    ui::TextureResType type = ui::UI_TEX_TYPE_LOCAL;
     std::string charMapFileName;
     std::string stringValue;
     std::string startCharMap;
-    float itemWidth;
-    float itemHeight;
+    float itemWidth = 0.0f;
+    float itemHeight = 0.0f;
     for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
         std::string key = stChildArray[i].GetName(pCocoLoader);
         std::string value = stChildArray[i].GetValue();

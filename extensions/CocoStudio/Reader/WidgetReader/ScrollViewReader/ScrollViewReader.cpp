@@ -58,8 +58,8 @@ void ScrollViewReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoade
     ui::ScrollView* scrollView = static_cast<ui::ScrollView*>(widget);
     
     stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
-    float innerWidth;
-    float innerHeight;
+    float innerWidth = 0.0f;
+    float innerHeight = 0.0f;
     for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
         std::string key = stChildArray[i].GetName(pCocoLoader);
         std::string value = stChildArray[i].GetValue();
