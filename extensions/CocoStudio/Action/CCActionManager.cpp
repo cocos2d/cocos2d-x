@@ -103,6 +103,8 @@ void ActionManager::initWithBinary(const char* file, cocos2d::CCObject *root,  C
             actionList->addObject(action);
         }
 	}
+    m_pActionDic->setObject(actionList, fileName);
+
 }
 
 
