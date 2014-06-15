@@ -213,16 +213,21 @@ bool CCComRender::serialize(void* r)
 							stExpCocoNode *tpChildArray = tpRootCocoNode->GetChildArray();
 							stExpCocoNode *armaturedataArray = tpChildArray[0].GetChildArray();
 							stExpCocoNode *armaturedata = armaturedataArray[0].GetChildArray();
+                            CC_BREAK_IF(armaturedata == NULL);
 							const char *name = armaturedata[2].GetValue();
 							CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(strFilePath.c_str());
 							CCArmature *pAr = CCArmature::create(name);
 							m_pRender = pAr;
 							m_pRender->retain();
 							const char *actionName = NULL;
-							if (pCocoNode != NULL)
-							{
-								actionName = pCocoNode[6].GetValue();//DICTOOL->getStringValue_json(*v, "selectedactionname");
-							}
+                            if (pCocoNode != NULL)
+                            {
+                                actionName = pCocoNode[6].GetValue();//DICTOOL->getStringValue_json(*v, "selectedactionname");
+                            }
+                            else
+                            {
+                                actionName = DICTOOL->getStringValue_json(*v, "selectedactionname");
+                            }
 							if (actionName != NULL && pAr->getAnimation() != NULL)
 							{
 								pAr->getAnimation()->play(actionName);
@@ -250,7 +255,11 @@ bool CCComRender::serialize(void* r)
 				}
 				else if (file_extension == ".CSB")
 				{
-
+                    cocos2d::ui::TouchGroup* tg = cocos2d::ui::TouchGroup::create();
+                    cocos2d::ui::Widget* widget = cocos2d::extension::GUIReader::shareReader()->widgetFromBinaryFile(strFilePath.c_str());
+                    tg->addWidget(widget);
+                    m_pRender = tg;
+                    m_pRender->retain();
 				}
 			}
 			else
