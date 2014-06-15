@@ -50,10 +50,10 @@ public:
      */
     const Mat4& getInverseBindPose();
     
-    bool needUpdateWorldMat() const;
-    
     //update own world matrix and children's
     void updateWorldMat();
+    
+    void setWorldMatDirty(bool dirty = true);
     
     const Mat4& getWorldMat();
     
@@ -101,12 +101,6 @@ public:
     
 protected:
     
-    enum DirtyFlag
-    {
-        Dirty_Translate = 1,
-        Dirty_Rotation = 2,
-        Dirty_Scale = 4,
-    };
     struct BoneBlendState
     {
         Vec3          localTranslate;
@@ -141,7 +135,7 @@ protected:
     
     Vector<Bone*> _children;
     
-    int           _dirtyFlag;
+    bool           _localDirty;
     bool          _worldDirty;
     Mat4          _world;
     Mat4          _local;

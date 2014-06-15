@@ -31,7 +31,7 @@
 
 #include <vector>
 #include <map>
-
+ 
 NS_CC_BEGIN
 
 //mesh vertex attribute
@@ -94,6 +94,20 @@ struct SkinData
         boneChild.clear();
         rootBoneIndex = -1;
     }
+
+    int getBoneNameIndex(const std::string& name)const
+    {
+        std::vector<std::string>::const_iterator iter = boneNames.begin();
+        for (int i = 0; iter != boneNames.end(); ++iter, ++i)
+        {
+            if ((*iter) == name)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
 };
 
 struct MaterialData

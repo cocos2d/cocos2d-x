@@ -46,16 +46,12 @@ const Mat4& Bone::getInverseBindPose()
     return _bindPose;
 }
 
-bool Bone::needUpdateWorldMat() const
+void Bone::setWorldMatDirty(bool dirty)
 {
-    bool needupdate = _worldDirty;
-    auto bone = _parent;
-    while (!needupdate && bone) {
-        needupdate = bone->_worldDirty;
-        bone = bone->_parent;
+    _worldDirty = dirty;
+    for (auto it : _children) {
+        it->setWorldMatDirty(dirty);
     }
-    
-    return needupdate;
 }
 
 //update own world matrix and children's
@@ -63,24 +59,25 @@ void Bone::updateWorldMat()
 {
     getWorldMat();
     for (auto itor : _children) {
-        itor->getWorldMat();
+        itor->updateWorldMat();
     }
 }
 
 const Mat4& Bone::getWorldMat()
 {
-    if (needUpdateWorldMat())
+    updateLocalMat();
+    
+    if (_worldDirty)
     {
-        updateLocalMat();
         if (_parent)
         {
-            updateLocalMat();
             _world = _parent->getWorldMat() * _local;
         }
         else
             _world = _local;
     }
     
+    _worldDirty = false;
     return _world;
 }
 
@@ -127,6 +124,7 @@ void Bone::setAnimationValue(float* trans, float* rot, float* scale, float weigh
     state.weight = weight;
     
     _blendStates.push_back(state);
+    _localDirty = true;
 }
 
 /**
@@ -155,8 +153,10 @@ void Bone::updateJointMatrix(const Mat4& bindShape, Vec4* matrixPalette)
         //_jointMatrixDirty = false;
         static Mat4 t;
         Mat4::multiply(_world, getInverseBindPose(), &t);
-        Mat4::multiply(t, bindShape, &t);
+        //Mat4::multiply(t, bindShape, &t);
+        //Mat4::multiply(getInverseBindPose(), _world, &t);
         
+        //t.setIdentity();
         matrixPalette[0].set(t.m[0], t.m[4], t.m[8], t.m[12]);
         matrixPalette[1].set(t.m[1], t.m[5], t.m[9], t.m[13]);
         matrixPalette[2].set(t.m[2], t.m[6], t.m[10], t.m[14]);
@@ -197,7 +197,7 @@ void Bone::removeAllChildBone()
 Bone::Bone(const std::string& id)
 : _name(id)
 , _parent(nullptr)
-, _dirtyFlag(0)
+, _localDirty(true)
 , _worldDirty(true)
 {
     
@@ -213,25 +213,8 @@ Bone::~Bone()
 
 void Bone::updateLocalMat()
 {
-//    if (_dirtyFlag & Dirty_Translate)
-//    {
-//        Mat4::createTranslation(_localTranslate, &_local);
-//        if (_dirtyFlag & Dirty_Rotation)
-//            _local.rotate(_localRot);
-//        if (_dirtyFlag & Dirty_Scale)
-//            _local.scale(_localScale);
-//    }
-//    else if (_dirtyFlag & Dirty_Rotation)
-//    {
-//        Mat4::createRotation(_localRot, &_local);
-//        if (_dirtyFlag & Dirty_Scale)
-//            _local.scale(_localScale);
-//    }
-//    else if (_dirtyFlag & Dirty_Scale)
-//    {
-//        Mat4::createScale(_localScale, &_local);
-//    }
-//    _dirtyFlag = 0;
+    if (!_localDirty)
+        return;
     
     Vec3 translate(0.f, 0.f, 0.f), scale(0.f, 0.f, 0.f);
     Quaternion quat(0.f, 0.f, 0.f, 0.f);
@@ -304,6 +287,7 @@ void Bone::updateLocalMat()
         _local.setIdentity();
     
     _blendStates.clear();
+    _localDirty = false;
 }
 
 void Bone::clearBlendState()
@@ -480,6 +464,7 @@ unsigned int MeshSkin::getMatrixPaletteSize() const
 //refresh bone world matrix
 void MeshSkin::updateBoneMatrix()
 {
+    _rootBone->setWorldMatDirty(true);
     _rootBone->updateWorldMat();
 }
 

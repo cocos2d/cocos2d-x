@@ -34,10 +34,11 @@
 #include "3d/CCMesh.h"
 #include "3d/CCBundle3DData.h"
 
+#include "document.h"
+
 NS_CC_BEGIN
 
 class Animation3D;
-
 class Bundle3D
 {
 public:
@@ -76,11 +77,24 @@ public:
     bool loadAnimationData(const std::string& id, Animation3DData* animationdata);
     
 protected:
+
+    //void assignGLTypeByString(GLenum& type, std::string str);
+
+    GLenum parseGLType(const std::string& str);
+
+    unsigned int parseGLTypeSize(const std::string& str);
+
+    unsigned int parseGLProgramAttribute(const std::string& str);
+
+protected:
     Bundle3D();
     ~Bundle3D();
     
     static Bundle3D* _instance;
     
+    char* _documentBuffer;
+    rapidjson::Document document;
+
     bool  _isBinary;
 };
 
