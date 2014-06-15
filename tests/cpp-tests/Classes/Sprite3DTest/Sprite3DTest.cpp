@@ -548,7 +548,7 @@ void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
     addChild(sprite);
     
     //sprite->setPosition3D(Vec3(p.x, p.y, -10.f));
-    //sprite->setRotation3D(Vec3(-90,0,0));
+    sprite->setRotation3D(Vec3(-90,0,0));
     //sprite->setRotationSkewY(90);
     sprite->setPosition( Vec2( p.x, p.y) );
 
