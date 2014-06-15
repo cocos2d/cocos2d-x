@@ -10,6 +10,13 @@ static WidgetReader* instanceWidgetReader = NULL;
 IMPLEMENT_CLASS_WIDGET_READER_INFO(WidgetReader)
 
 WidgetReader::WidgetReader()
+:_sizePercentX(0.0f),
+_isAdaptScreen(false),
+_sizePercentY(0.0f),
+_width(0.0f),
+_height(0.0f),
+_positionPercentX(0.0f),
+_positionPercentY(0.0f)
 {
 }
 
@@ -171,25 +178,25 @@ void WidgetReader::setColorPropsFromJsonDictionary(ui::Widget *widget, const rap
 
 void WidgetReader::beginSetBasicProperties(cocos2d::ui::Widget *widget)
 {
-    position = widget->getPosition();
+    _position = widget->getPosition();
     //set default color
     widget->setColor(ccc3(255,255,255));
-    originalAnchorPoint = widget->getAnchorPoint();
+    _originalAnchorPoint = widget->getAnchorPoint();
 }
 
 void WidgetReader::endSetBasicProperties(cocos2d::ui::Widget *widget)
 {
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
     
-    widget->setPositionPercent(CCPoint(positionPercentX, positionPercentY));
-    widget->setSizePercent(CCPoint(sizePercentX, sizePercentY));
-    if (isAdaptScreen) {
-        width = screenSize.width;
-        height = screenSize.height;
+    widget->setPositionPercent(CCPoint(_positionPercentX, _positionPercentY));
+    widget->setSizePercent(CCPoint(_sizePercentX, _sizePercentY));
+    if (_isAdaptScreen) {
+        _width = screenSize.width;
+        _height = screenSize.height;
     }
-    widget->setSize(CCSize(width, height));
-    widget->setPosition(position);
-    widget->setAnchorPoint(originalAnchorPoint);
+    widget->setSize(CCSize(_width, _height));
+    widget->setPosition(_position);
+    widget->setAnchorPoint(_originalAnchorPoint);
 }
 
 std::string WidgetReader::getResourcePath(CocoLoader *pCocoLoader,

@@ -58,15 +58,15 @@ protected:
                                 stExpCocoNode*	pCocoNode,
                                 cocos2d::ui::TextureResType texType);
     
-    float sizePercentX;
-    float sizePercentY;
-    float positionPercentX;
-    float positionPercentY;
-    float width ;
-    float height;
-    cocos2d::CCPoint position;
-    bool isAdaptScreen;
-    cocos2d::CCPoint originalAnchorPoint;
+    float _sizePercentX;
+    float _sizePercentY;
+    float _positionPercentX;
+    float _positionPercentY;
+    float _width ;
+    float _height;
+    cocos2d::CCPoint _position;
+    bool _isAdaptScreen;
+    cocos2d::CCPoint _originalAnchorPoint;
     
 };
 
