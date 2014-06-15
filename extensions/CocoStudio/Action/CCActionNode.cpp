@@ -178,7 +178,7 @@ void ActionNode::initWithBinary(cocos2d::extension::CocoLoader *pCocoLoader, coc
     
 	int actionNodeCount =  stChildNode->GetChildNum();
     stChildNode = stChildNode[0].GetChildArray();
-    stExpCocoNode *frameListNode;
+    stExpCocoNode *frameListNode = NULL;
     for (int i = 0; i < actionNodeCount; ++i) {
         std::string key = stChildNode[i].GetName(pCocoLoader);
         std::string value = stChildNode[i].GetValue();
