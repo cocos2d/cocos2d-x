@@ -65,19 +65,19 @@ void Bone::updateWorldMat()
 
 const Mat4& Bone::getWorldMat()
 {
-    updateLocalMat();
-    
-    if (_worldDirty)
+    //if (_worldDirty)
     {
+        updateLocalMat();
         if (_parent)
         {
             _world = _parent->getWorldMat() * _local;
         }
         else
             _world = _local;
+        
+        _worldDirty = false;
     }
     
-    _worldDirty = false;
     return _world;
 }
 
@@ -123,6 +123,7 @@ void Bone::setAnimationValue(float* trans, float* rot, float* scale, float weigh
         state.localScale.set(scale);
     state.weight = weight;
     
+    _blendStates.clear();
     _blendStates.push_back(state);
     _localDirty = true;
 }
@@ -213,6 +214,13 @@ Bone::~Bone()
 
 void Bone::updateLocalMat()
 {
+    if (_blendStates.size() == 0)
+        return;
+    
+    Mat4::createTranslation(_blendStates[0].localTranslate, &_local);
+    _local.rotate(_blendStates[0].localRot);
+    return;
+    
     if (!_localDirty)
         return;
     
@@ -220,8 +228,6 @@ void Bone::updateLocalMat()
     Quaternion quat(0.f, 0.f, 0.f, 0.f);
     if (_blendStates.size())
     {
-        
-        
         float total = 0.f;
         for (auto it: _blendStates) {
             total += it.weight;
@@ -259,35 +265,37 @@ void Bone::updateLocalMat()
                 }
             }  
         }
+        
+        bool hasTrans = !translate.isZero();
+        bool hasRot = !quat.isZero();
+        bool hasScale = !scale.isZero();
+        
+        if (hasTrans)
+        {
+            Mat4::createTranslation(translate, &_local);
+            if (hasRot)
+                _local.rotate(quat);
+            if (hasScale)
+                _local.scale(scale);
+        }
+        else if (hasRot)
+        {
+            Mat4::createRotation(quat, &_local);
+            if (hasScale)
+                _local.scale(scale);
+        }
+        else if (hasScale)
+        {
+            Mat4::createScale(scale, &_local);
+        }
+        else
+            _local.setIdentity();
+        
+        _blendStates.clear();
+        _localDirty = false;
     }
     
-    bool hasTrans = !translate.isZero();
-    bool hasRot = !quat.isZero();
-    bool hasScale = !scale.isZero();
     
-    if (hasTrans)
-    {
-        Mat4::createTranslation(translate, &_local);
-        if (hasRot)
-            _local.rotate(quat);
-        if (hasScale)
-            _local.scale(scale);
-    }
-    else if (hasRot)
-    {
-        Mat4::createRotation(quat, &_local);
-        if (hasScale)
-            _local.scale(scale);
-    }
-    else if (hasScale)
-    {
-        Mat4::createScale(scale, &_local);
-    }
-    else
-        _local.setIdentity();
-    
-    _blendStates.clear();
-    _localDirty = false;
 }
 
 void Bone::clearBlendState()
