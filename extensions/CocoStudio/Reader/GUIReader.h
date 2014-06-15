@@ -66,6 +66,7 @@ public:
     void storeFileDesignSize(const char* fileName, const cocos2d::CCSize &size);
     const cocos2d::CCSize getFileDesignSize(const char* fileName) const;
     
+    void setFilePath(const std::string& strFilePath) { m_strFilePath = strFilePath; }
     const std::string& getFilePath() const { return m_strFilePath; };
     
     void registerTypeAndCallBack(const std::string& classType,
