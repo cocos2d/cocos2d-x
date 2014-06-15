@@ -32,7 +32,7 @@ THE SOFTWARE.
 NS_CC_EXT_BEGIN
 
 class CocoLoader;
-class stExpCocoNode;
+struct stExpCocoNode;
 
 class ActionNode;
 /**
