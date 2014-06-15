@@ -297,7 +297,7 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
                       _mesh->getIndexCount(),
                       transform);
     
-    _meshCommand.setCullFaceEnabled(true);
+    //_meshCommand.setCullFaceEnabled(true);
     _meshCommand.setDepthTestEnabled(true);
     if (_skin)
     {

@@ -46,13 +46,14 @@ void getChildMap(std::map<int, std::vector<int> >& map, SkinData* skinData, cons
     std::string parent_name = val["id"].GetString();
     int parent_name_index = skinData->getBoneNameIndex(parent_name);
 
-    const rapidjson::Value& bind_pos = val["bind_shape"];
-    Mat4 mat_bind_pos;
-    for (rapidjson::SizeType j = 0; j < bind_pos.Size(); j++)
-    {
-        mat_bind_pos.m[j] = bind_pos[j].GetDouble();
-    }
-    skinData->inverseBindPoseMatrices.push_back(mat_bind_pos);
+//    const rapidjson::Value& bind_pos = val["bind_shape"];
+//    Mat4 mat_bind_pos;
+//    for (rapidjson::SizeType j = 0; j < bind_pos.Size(); j++)
+//    {
+//        mat_bind_pos.m[j] = bind_pos[j].GetDouble();
+//    }
+//    
+//    skinData->inverseBindPoseMatrices[parent_name_index] = (mat_bind_pos);
 
     const rapidjson::Value& children = val["children"];
     for (rapidjson::SizeType i = 0; i < children.Size(); i++)
@@ -201,6 +202,10 @@ bool Bundle3D::loadSkinData(const std::string& id, SkinData* skindata)
     {
         skindata->bindShape.m[i] = skin_data_bind_shape[i].GetDouble();
     }
+    
+    float m[] = {-0.682038f, -0.035225f,  0.730468f,  0.000000f,  0.731315f, -0.035225f,  0.681130f,  0.000000f,  0.001738f,  0.998758f,  0.049786f,  0.000000f, -0.882000f,  78.798103f, -0.868362f,  1.000000f};
+    memcpy(skindata->bindShape.m, m, sizeof(m));
+    //skindata->bindShape.setIdentity();
 
     const rapidjson::Value& skin_data_bones = skin_data_array_val_0["bones"];
     for (rapidjson::SizeType i = 0; i < skin_data_bones.Size(); i++)
@@ -208,22 +213,35 @@ bool Bundle3D::loadSkinData(const std::string& id, SkinData* skindata)
         const rapidjson::Value& skin_data_bone = skin_data_bones[i];
         std::string name = skin_data_bone["node"].GetString();
         skindata->boneNames.push_back(name);
-        /*const rapidjson::Value& bind_pos = skin_data_bone["bind_pos"];
+        const rapidjson::Value& bind_pos = skin_data_bone["bind_pos"];
         Mat4 mat_bind_pos;
         for (rapidjson::SizeType j = 0; j < bind_pos.Size(); j++)
         {
             mat_bind_pos.m[j] = bind_pos[j].GetDouble();
         }
-        skindata->inverseBindPoseMatrices.push_back(mat_bind_pos);*/
+        skindata->inverseBindPoseMatrices.push_back(mat_bind_pos.getInversed());
     }
 
     const rapidjson::Value& skin_data_array_val_1 = skin_data_array[1];
     const rapidjson::Value& bone_val_0 = skin_data_array_val_1["children"][(rapidjson::SizeType)0];
     skindata->rootBoneIndex = skindata->getBoneNameIndex(bone_val_0["id"].GetString());
+    //skindata->inverseBindPoseMatrices.resize(skindata->boneNames.size(), Mat4::IDENTITY);
     getChildMap(skindata->boneChild, skindata, bone_val_0);
 
     std::map<std::string, std::vector<std::string> > map_child;
     getChildMapT(map_child, skindata, bone_val_0);
+    
+    for (auto it : skindata->boneNames) {
+        CCLOG("bonename: %s", it.c_str());
+    }
+    CCLOG("root: %s", skindata->boneNames[skindata->rootBoneIndex].c_str());
+    for (auto itr : skindata->boneChild) {
+        CCLOG("parent: %s", skindata->boneNames[itr.first].c_str());
+        for (auto itr2 : itr.second) {
+            CCLOG("%s", skindata->boneNames[(itr2)].c_str());
+        }
+        CCLOG("////////");
+    }
     return true;
 }
 
@@ -307,6 +325,52 @@ bool Bundle3D::loadAnimationData(const std::string& id, Animation3DData* animati
             }
         }
     }
+    
+    animationdata->_totalTime = 3;
+    
+    CCLOG("translation:////////////////");
+    //animationdata->_translationKeys.erase(animationdata->_translationKeys.begin(), animationdata->_translationKeys.end());
+    for (auto itr: animationdata->_translationKeys)
+    {
+        CCLOG("%s", itr.first.c_str());
+        auto& keys = itr.second;
+        
+        if (keys.size())
+        {
+            float maxtime = keys[keys.size() - 1]._time;
+            for (auto it : keys) {
+                it._time /= maxtime;
+            }
+        }
+    }
+    CCLOG("rotation:////////////////");
+    //animationdata->_rotationKeys.erase(animationdata->_rotationKeys.begin(), animationdata->_rotationKeys.end());
+    for (auto itr: animationdata->_rotationKeys)
+    {
+        CCLOG("%s", itr.first.c_str());
+        auto& keys = itr.second;
+        if (keys.size())
+        {
+            float maxtime = keys[keys.size() - 1]._time;
+            for (auto it : keys) {
+                it._time /= maxtime;
+            }
+        }
+    }
+    CCLOG("scale:////////////////");
+    for (auto itr: animationdata->_scaleKeys)
+    {
+        CCLOG("%s", itr.first.c_str());
+        auto& keys = itr.second;
+        if (keys.size())
+        {
+            float maxtime = keys[keys.size() - 1]._time;
+            for (auto it : keys) {
+                it._time /= maxtime;
+            }
+        }
+    }
+    
     return true;
 }
 

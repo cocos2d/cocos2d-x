@@ -55,7 +55,8 @@ bool Bone::needUpdateWorldMat() const
         bone = bone->_parent;
     }
     
-    return needupdate;
+    return true;
+    //return needupdate;
 }
 
 //update own world matrix and children's
@@ -63,7 +64,7 @@ void Bone::updateWorldMat()
 {
     getWorldMat();
     for (auto itor : _children) {
-        itor->getWorldMat();
+        itor->updateWorldMat();
     }
 }
 
@@ -74,7 +75,6 @@ const Mat4& Bone::getWorldMat()
         updateLocalMat();
         if (_parent)
         {
-            updateLocalMat();
             _world = _parent->getWorldMat() * _local;
         }
         else
@@ -141,8 +141,10 @@ void Bone::updateJointMatrix(const Mat4& bindShape, Vec4* matrixPalette)
         //_jointMatrixDirty = false;
         static Mat4 t;
         Mat4::multiply(_world, getInverseBindPose(), &t);
-        Mat4::multiply(t, bindShape, &t);
+        //Mat4::multiply(t, bindShape, &t);
+        //Mat4::multiply(getInverseBindPose(), _world, &t);
         
+        //t.setIdentity();
         matrixPalette[0].set(t.m[0], t.m[4], t.m[8], t.m[12]);
         matrixPalette[1].set(t.m[1], t.m[5], t.m[9], t.m[13]);
         matrixPalette[2].set(t.m[2], t.m[6], t.m[10], t.m[14]);
@@ -199,6 +201,11 @@ Bone::~Bone()
 
 void Bone::updateLocalMat()
 {
+    Mat4::createTranslation(_localTranslate, &_local);
+    if (!_localRot.isZero())
+    _local.rotate(_localRot);
+    return;
+    
     if (_dirtyFlag & Dirty_Translate)
     {
         Mat4::createTranslation(_localTranslate, &_local);
