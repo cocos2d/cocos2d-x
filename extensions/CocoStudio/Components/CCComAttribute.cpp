@@ -212,8 +212,11 @@ bool CCComAttribute::serialize(void* r)
 		{
 			strFilePath.assign(cocos2d::CCFileUtils::sharedFileUtils()->fullPathForFilename(pFile));
 		}
-		parse(strFilePath.c_str());
-		bRet = true;
+		if (parse(strFilePath.c_str()))
+		{
+            bRet = true;
+		}
+
 	}while (0);
 	return bRet;
 }

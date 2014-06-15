@@ -23,7 +23,6 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "cocos-ext.h"
-#include <algorithm>
 #include "CCComRender.h"
 #include "../Json/CocoLoader.h"
 
@@ -134,6 +133,7 @@ bool CCComRender::serialize(void* r)
 		{
 			setName(pClassName);
 		}
+
 		if (pFile != NULL)
 		{
 			strFilePath.assign(cocos2d::CCFileUtils::sharedFileUtils()->fullPathForFilename(pFile));
@@ -148,17 +148,23 @@ bool CCComRender::serialize(void* r)
 			{
 				m_pRender = CCSprite::create(strFilePath.c_str());
 				m_pRender->retain();
+
+                bRet = true;
 			}
 			else if(strcmp(pClassName, "CCTMXTiledMap") == 0 && strFilePath.find(".tmx") != strFilePath.npos)
 			{
 				m_pRender = CCTMXTiledMap::create(strFilePath.c_str());
 				m_pRender->retain();
+
+                bRet = true;
 			}
 			else if(strcmp(pClassName, "CCParticleSystemQuad") == 0 && strFilePath.find(".plist") != strFilePath.npos)
 			{
 				m_pRender = CCParticleSystemQuad::create(strFilePath.c_str());
 				m_pRender->setPosition(ccp(0.0f, 0.0f));
 				m_pRender->retain();
+
+                bRet = true;
 			}
 			else if(strcmp(pClassName, "CCArmature") == 0)
 			{
@@ -196,6 +202,7 @@ bool CCComRender::serialize(void* r)
 					{
 						pAr->getAnimation()->play(actionName);
 					}
+                    bRet = true;
 				}
 				else if (file_extension == ".CSB")
 				{
@@ -211,31 +218,65 @@ bool CCComRender::serialize(void* r)
 						rapidjson::Type tType = tpRootCocoNode->GetType(&tCocoLoader);
 						if (rapidjson::kObjectType  == tType)
 						{
-							stExpCocoNode *tpChildArray = tpRootCocoNode->GetChildArray();
-							stExpCocoNode *armaturedataArray = tpChildArray[0].GetChildArray();
-							stExpCocoNode *armaturedata = armaturedataArray[0].GetChildArray();
-                            CC_BREAK_IF(armaturedata == NULL);
-							const char *name = armaturedata[2].GetValue();
-							CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(strFilePath.c_str());
-							CCArmature *pAr = CCArmature::create(name);
-							m_pRender = pAr;
-							m_pRender->retain();
-							const char *actionName = NULL;
-                            if (pCocoNode != NULL)
+                            int count = tpRootCocoNode->GetChildNum();
+                            stExpCocoNode *tpChildArray = tpRootCocoNode->GetChildArray();
+                            for (int i = 0; i < count; ++i)
                             {
-                                actionName = pCocoNode[6].GetValue();//DICTOOL->getStringValue_json(*v, "selectedactionname");
+                                std::string key = tpChildArray[i].GetName(&tCocoLoader);
+                                const char *str = tpChildArray[i].GetValue();
+                                if (key.compare("armature_data") == 0)
+                                {
+                                    int length = tpChildArray[i].GetChildNum();
+                                    stExpCocoNode *armature_dataArray = tpChildArray[i].GetChildArray();
+                                    if (length < 1)
+                                    {
+                                        continue;
+                                    }
+
+                                    length = armature_dataArray[0].GetChildNum();
+                                    stExpCocoNode *armature_data = armature_dataArray[0].GetChildArray();
+                                    for (int i = 0; i < length; ++i)
+                                    {
+                                        std::string key = armature_data[i].GetName(&tCocoLoader);
+                                        const char *str = armature_data[i].GetValue();
+                                        if (key.compare("name") == 0)
+                                        {
+                                            if (str != NULL)
+                                            {
+                                                CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(strFilePath.c_str());
+                                                CCArmature *pAr = CCArmature::create(str);
+                                                m_pRender = pAr;
+                                                m_pRender->retain();
+                                                const char *actionName = NULL;
+                                                if (pCocoNode != NULL)
+                                                {
+                                                    actionName = pCocoNode[6].GetValue();//DICTOOL->getStringValue_json(*v, "selectedactionname");
+                                                }
+                                                else
+                                                {
+                                                    actionName = DICTOOL->getStringValue_json(*v, "selectedactionname");
+                                                }
+                                                if (actionName != NULL && pAr->getAnimation() != NULL)
+                                                {
+                                                    pAr->getAnimation()->play(actionName);
+                                                }
+                                                bRet = true;
+                                            }
+                                        }
+                                    }
+                                }
                             }
-                            else
-                            {
-                                actionName = DICTOOL->getStringValue_json(*v, "selectedactionname");
-                            }
-							if (actionName != NULL && pAr->getAnimation() != NULL)
-							{
-								pAr->getAnimation()->play(actionName);
-							}
 						}
 					}
+                    else
+                    {
+                        continue;
+                    }
 				}
+                else
+                {
+                    continue;
+                }
 			}
 			else if(strcmp(pClassName, "GUIComponent") == 0)
 			{
@@ -253,6 +294,8 @@ bool CCComRender::serialize(void* r)
 					tg->addWidget(widget);
 					m_pRender = tg;
 					m_pRender->retain();
+
+                    bRet = true;
 				}
 				else if (file_extension == ".CSB")
 				{
@@ -261,6 +304,8 @@ bool CCComRender::serialize(void* r)
                     tg->addWidget(widget);
                     m_pRender = tg;
                     m_pRender->retain();
+
+                    bRet = true;
 				}
 			}
 			else
@@ -282,6 +327,8 @@ bool CCComRender::serialize(void* r)
 				CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(strPlistPath.c_str(), strPngFile.c_str());
 				m_pRender = CCSprite::createWithSpriteFrameName(strFilePath.c_str());
 				m_pRender->retain();
+
+                bRet = true;
 			}
 			else
 			{
@@ -292,7 +339,6 @@ bool CCComRender::serialize(void* r)
 		{
 			CC_BREAK_IF(true);
 		}
-		bRet = true;
     } while (0);
 
     return bRet;

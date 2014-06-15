@@ -2558,10 +2558,12 @@ void CCDataReaderHelper::decodeNode(CCBaseData *node, CocoLoader *pCocoLoader, s
 	const char *str = NULL;
 
 	bool isVersionL = dataInfo->cocoStudioVersion < VERSION_COLOR_READING;
+	stExpCocoNode* child;
 	for (int i = 0; i < length; ++i)
 	{
-		std::string key = NodeArray[i].GetName(pCocoLoader);
-		str = NodeArray[i].GetValue();
+		child = &NodeArray[i];
+		std::string key = child->GetName(pCocoLoader);
+		str = child->GetValue();
 		if (key.compare(A_X) == 0)
 		{
 			node->x = atof(str) * dataInfo->contentScale;
@@ -2594,29 +2596,22 @@ void CCDataReaderHelper::decodeNode(CCBaseData *node, CocoLoader *pCocoLoader, s
 		{
 			if (!isVersionL)
 			{
-				int count = NodeArray[i].GetChildNum();
-				stExpCocoNode *colorArray = NodeArray[i].GetChildArray();
-				for (int j = 0; j < count; ++j)
+				if (child->GetType(pCocoLoader) == rapidjson::kObjectType)
 				{
-					std::string key = colorArray[j].GetName(pCocoLoader);
-					str = colorArray[j].GetValue();
-					if (key.compare(A_ALPHA) == 0)
+					if(child->GetChildNum() == 4)
 					{
-						node->a = atoi(str);
+						stExpCocoNode *ChildArray = child->GetChildArray();
+
+						node->a = atoi(ChildArray[0].GetValue());
+						node->r = atoi(ChildArray[1].GetValue());
+						node->g = atoi(ChildArray[2].GetValue());
+						node->b = atoi(ChildArray[3].GetValue());
 					}
-					else if (key.compare(A_RED) == 0)
-					{
-						node->r = atoi(str);
-					}
-					else if (key.compare(A_GREEN) == 0)
-					{
-						node->g = atoi(str);
-					}
-					else if (key.compare(A_BLUE) == 0)
-					{
-						node->b = atoi(str);
-					}
+
 				}
+
+
+				
 				node->isUseColorInfo = true;
 			}
 		}
@@ -2627,28 +2622,20 @@ void CCDataReaderHelper::decodeNode(CCBaseData *node, CocoLoader *pCocoLoader, s
 		int colorcoount = NodeArray[0].GetChildNum();
 		if(colorcoount>0)
 		{
-			stExpCocoNode *colorArray = NodeArray[0].GetChildArray();
-			for (int i = 0; i < colorcoount; ++i)
+			
+			if (NodeArray[0].GetType(pCocoLoader) == rapidjson::kObjectType)
 			{
-				std::string key = colorArray[i].GetName(pCocoLoader);
-				str = colorArray[i].GetValue();
-				if (key.compare(A_ALPHA) == 0)
+				if(NodeArray[0].GetChildNum() == 4)
 				{
-					node->a = atoi(str);
-				}
-				else if (key.compare(A_RED) == 0)
-				{
-					node->r = atoi(str);
-				}
-				else if (key.compare(A_GREEN) == 0)
-				{
-					node->g = atoi(str);
-				}
-				else if (key.compare(A_BLUE) == 0)
-				{
-					node->b = atoi(str);
+					stExpCocoNode *ChildArray = NodeArray[0].GetChildArray();
+
+					node->a = atoi(ChildArray[0].GetValue());
+					node->r = atoi(ChildArray[1].GetValue());
+					node->g = atoi(ChildArray[2].GetValue());
+					node->b = atoi(ChildArray[3].GetValue());
 				}
 			}
+
 			node->isUseColorInfo = true;
 		}
 	}

@@ -103,10 +103,6 @@ bool CCComAudio::serialize(void* r)
 			CC_BREAK_IF(!pfileData);
 			pFile = pfileData[0].GetValue();
 			CC_BREAK_IF(pFile == NULL);
-			if (pFile != NULL)
-			{
-				strFilePath.assign(cocos2d::CCFileUtils::sharedFileUtils()->fullPathForFilename(pFile));
-			}
 			nResType = atoi(pfileData[2].GetValue());
 			CC_BREAK_IF(nResType != 0);
 			bLoop = atoi(pCocoNode[5].GetValue()) != 0? true:false;
@@ -122,6 +118,10 @@ bool CCComAudio::serialize(void* r)
 		}
 		if (pFile != NULL)
 		{
+            if (strcmp(pFile, "") == 0)
+            {
+                continue;
+            }
 			strFilePath.assign(cocos2d::CCFileUtils::sharedFileUtils()->fullPathForFilename(pFile));
 		}
 		if (strcmp(pClassName, "CCBackgroundAudio") == 0)
