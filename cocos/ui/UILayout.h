@@ -315,8 +315,8 @@ public:
      * @return return the index of widget in the layout
      */
     std::function<int(FocusDirection, Widget*)> onPassFocusToChild;
-    void compareLayout(Layout* layout);
-    Vector<Layout*> getAllLayouts(Node* node);
+    virtual void compareWidget(Widget* widget);
+    Vector<Widget*> getAllLayouts(Node* node);
 
 CC_CONSTRUCTOR_ACCESS:
     //override "init" method of widget.

@@ -599,6 +599,7 @@ public:
      * use this function to manually specify the next focused widget regards to each direction
      */
     std::function<Widget*(FocusDirection)> onNextFocusedWidget;
+    virtual void compareWidget(Widget* widget);
 
 CC_CONSTRUCTOR_ACCESS:
 
@@ -628,7 +629,6 @@ CC_CONSTRUCTOR_ACCESS:
      *@return void
      */
     void  dispatchFocusEvent(Widget* widgetLoseFocus, Widget* widgetGetFocus);
-
     
 protected:
     //call back function called when size changed.

@@ -62,9 +62,13 @@ namespace cocostudio
         std::string getResourcePath(const rapidjson::Value& dict,
                                     const std::string& key,
                                     cocos2d::ui::Widget::TextureResType texType);
-        std::string getResourcePath(CocoLoader* pCocoLoader,  stExpCocoNode*	pCocoNode, cocos2d::ui::Widget::TextureResType texType);
         void setAnchorPointForWidget(cocos2d::ui::Widget* widget, const rapidjson::Value&options);
         
+        
+        std::string getResourcePath(CocoLoader* pCocoLoader,
+                                    stExpCocoNode*	pCocoNode,
+                                    cocos2d::ui::Widget::TextureResType texType);
+
         void beginSetBasicProperties(cocos2d::ui::Widget *widget);
         void endSetBasicProperties(cocos2d::ui::Widget *widget);
         

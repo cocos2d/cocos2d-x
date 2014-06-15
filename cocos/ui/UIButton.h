@@ -70,6 +70,7 @@ public:
                           const std::string& disableImage = "",
                           TextureResType texType = TextureResType::LOCAL);
     
+    virtual void  compareWidget(Widget* widget);
 
     /**
      * Load textures for button.

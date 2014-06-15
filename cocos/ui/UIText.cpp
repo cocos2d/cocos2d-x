@@ -46,6 +46,24 @@ _labelRendererAdaptDirty(true),
 _type(Type::SYSTEM)
 {
 }
+    
+    void Text::compareWidget(cocos2d::ui::Widget *widget)
+    {
+        CCLOG("Text  property comparison: ");
+        Widget::compareWidget(widget);
+
+        Text *text = dynamic_cast<Text*>(widget);
+        
+        CCLOG("Label _touchScaleChangeEnable: %d, %d", _touchScaleChangeEnabled, text->_touchScaleChangeEnabled);
+        CCLOG("Label _normalScaleValueY: %f, %f", _normalScaleValueY, text->_normalScaleValueY);
+        CCLOG("Label _normalScaleValueX: %f, %f", _normalScaleValueX, text->_normalScaleValueX);
+        CCLOG("Label _fontName: %s, %s", _fontName.c_str(), text->_fontName.c_str());
+        CCLOG("Label _fontSize: %d, %d", _fontSize, text->_fontSize);
+        CCLOG("Label _type: %d, %d", _type, text->_type);
+       
+        CCLOG("===================================");
+
+    }
 
 Text::~Text()
 {

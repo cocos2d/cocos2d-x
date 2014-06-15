@@ -94,6 +94,24 @@ _isFocusPassing(false)
 {
     //no-op
 }
+    
+    void  Layout::compareWidget(Widget* widget)
+    {
+        CCLOG("Layout property comparison");
+        Widget::compareWidget(widget);
+        
+        Layout *layout = (Layout*)widget;
+        
+        
+        CCLOG("Layout background scale9: %d, %d", this->isBackGroundImageScale9Enabled(), layout->isBackGroundImageScale9Enabled());
+        CCLOG("Layout background image: %s, %s", _backGroundImageFileName.c_str(), layout->_backGroundImageFileName.c_str());
+        CCLOG("Layout _clippingEnabled image: %d, %d", _clippingEnabled, layout->_clippingEnabled);
+        CCLOG("Layout _alongVector : (%f,%f), (%f,%f)", _alongVector.x, _alongVector.y, layout->_alongVector.x, layout->_alongVector.y);
+
+
+        
+        CCLOG("==================");
+    }
 
 Layout::~Layout()
 {
@@ -1921,67 +1939,15 @@ Widget* Layout::findNextFocusedWidget(FocusDirection direction, Widget* current)
         return current;
     }
 }
-    void Layout::compareLayout(cocos2d::ui::Layout *layout)
-    {
-        CCLOG("positionX: %f, %f",_position.x,  layout->getPosition().x );
-        CCLOG("positionY: %f, %f", _position.y, layout->getPosition().y);
-        CCLOG("ignoreSize: %d, %d ", this->isIgnoreContentAdaptWithSize(),  layout->isIgnoreContentAdaptWithSize());
-        CCLOG("sizeType: %d, %d", this->getSizeType(), layout->getSizeType());
-        CCLOG("positionType: %d, %d", this->getPositionType(), layout->getPositionType());
-        CCLOG("sizePercentX: %f, %f", this->getSizePercent().x, layout->getSizePercent().x);
-        CCLOG("sizePercentY: %f, %f", this->getSizePercent().y, layout->getSizePercent().y);
-        CCLOG("positionPercentX: %f, %f", this->getPositionPercent().x, layout->getPositionPercent().x);
-        CCLOG("positionPercentY: %f, %f", this->getPositionPercent().y, layout->getPositionPercent().y);
-        CCLOG("width: %f, %f", this->getSize().width, layout->getSize().width);
-        CCLOG("height: %f, %f", this->getSize().height, layout->getSize().height);
-        CCLOG("tag: %d, %d,", this->getTag(), layout->getTag());
-        CCLOG("actionTag: %d, %d" , this->getActionTag(), layout->getActionTag());
-        CCLOG("touchAble: %d, %d", this->isTouchEnabled(), layout->isTouchEnabled());
-        CCLOG("name: %s, %s", this->getName().c_str(), layout->getName().c_str());
-        CCLOG("scaleX: %f, %f", this->getScaleX(), layout->getScaleX());
-        CCLOG("scaleY: %f, %f", this->getScaleY(), layout->getScaleY());
-        CCLOG("rotation: %f, %f", this->getRotation(), layout->getRotation());
-        CCLOG("visible: %d, %d", this->isVisible(), layout->isVisible());
-        CCLOG("ZOrder: %d, %d", this->getZOrder(), layout->getZOrder());
-        if (this->getLayoutParameter()) {
-            if (dynamic_cast<LinearLayoutParameter*>(this->getLayoutParameter())) {
-                CCLOG("Gravity: %d, %d", ((LinearLayoutParameter*)this->getLayoutParameter())->getGravity(),
-                      ((LinearLayoutParameter*)layout->getLayoutParameter())->getGravity());
-            }
-            if (dynamic_cast<RelativeLayoutParameter*>(this->getLayoutParameter())) {
-                CCLOG("relativeName: %s, %s", ((RelativeLayoutParameter*)this->getLayoutParameter())->getRelativeName().c_str(),
-                      ((RelativeLayoutParameter*)layout->getLayoutParameter())->getRelativeName().c_str());
-                CCLOG("relativeToWidgetName: %s, %s", ((RelativeLayoutParameter*)this->getLayoutParameter())->getRelativeToWidgetName().c_str(),
-                      ((RelativeLayoutParameter*)layout->getLayoutParameter())->getRelativeToWidgetName().c_str());
-                CCLOG("Align: %d, %d", ((RelativeLayoutParameter*)this->getLayoutParameter())->getAlign(),
-                      ((RelativeLayoutParameter*)layout->getLayoutParameter())->getAlign());
-            }
-            CCLOG("LayoutParameter type:%d, %d", this->getLayoutParameter()->getLayoutType(),  layout->getLayoutParameter()->getLayoutType());
-            CCLOG("Margin left: %f, %f", this->getLayoutParameter()->getMargin().left, layout->getLayoutParameter()->getMargin().left);
-            CCLOG("Margin right: %f, %f", this->getLayoutParameter()->getMargin().right, layout->getLayoutParameter()->getMargin().right);
-            CCLOG("Margin up : %f, %f", this->getLayoutParameter()->getMargin().top, layout->getLayoutParameter()->getMargin().top);
-            CCLOG("Margin bottom: %f, %f", this->getLayoutParameter()->getMargin().bottom, layout->getLayoutParameter()->getMargin().bottom);
-        }
-        CCLOG("opacity: %d, %d", this->getOpacity(), layout->getOpacity());
-        CCLOG("colorR: %d, %d", this->getColor().r, layout->getColor().r);
-        CCLOG("colorG: %d, %d", this->getColor().g, layout->getColor().g);
-        CCLOG("colorB: %d, %d", this->getColor().b, layout->getColor().b);
-        CCLOG("flipX: %d, %d", this->isFlippedX(), layout->isFlippedX());
-        CCLOG("flipY: %d, %d", this->isFlippedY(), layout->isFlippedY());
-        CCLOG("anchorpointX: %f, %f", this->getAnchorPoint().x, layout->getAnchorPoint().x);
-        CCLOG("anchorpointY: %f, %f", this->getAnchorPoint().y, layout->getAnchorPoint().y);
-        CCLOG("background scale9: %d, %d", this->isBackGroundImageScale9Enabled(), layout->isBackGroundImageScale9Enabled());
-        
-        CCLOG("==================");
-    }
+   
     
-    Vector<Layout*> Layout::getAllLayouts(cocos2d::Node *node)
+    Vector<Widget*> Layout::getAllLayouts(cocos2d::Node *node)
     {
-        Vector<Layout*>  result;
+        Vector<Widget*>  result;
         for(auto& child : node->getChildren()){
+            result.pushBack(dynamic_cast<Widget*>(child));
             Layout* l = dynamic_cast<Layout*>(child);
             if (l) {
-                result.pushBack(l);
                 result.pushBack(l->getAllLayouts(l));
             }
         }

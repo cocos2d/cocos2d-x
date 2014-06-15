@@ -45,7 +45,7 @@ namespace cocostudio
         for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
             std::string key = stChildArray[i].GetName(pCocoLoader);
             std::string value = stChildArray[i].GetValue();
-//            CCLOG("ImageView: key = %s, value = %s", key.c_str(), value.c_str());
+            CCLOG("ImageView: key = %s, value = %d", key.c_str(), i);
 
             if (key == "ignoreSize") {
                 widget->ignoreContentAdaptWithSize(valueToBool(value));

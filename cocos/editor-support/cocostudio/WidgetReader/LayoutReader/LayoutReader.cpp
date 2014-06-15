@@ -54,7 +54,7 @@ namespace cocostudio
         for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
             std::string key = stChildArray[i].GetName(pCocoLoader);
             std::string value = stChildArray[i].GetValue();
-//            CCLOG("Layout: key = %s, value = %s", key.c_str(), value.c_str());
+//            CCLOG("Layout: key = %s, value = %d", key.c_str(), i);
             if (key == "ignoreSize") {
                 widget->ignoreContentAdaptWithSize(valueToBool(value));
             }else if(key == "sizeType"){
@@ -316,7 +316,7 @@ namespace cocostudio
         std::string imageFileName = this->getResourcePath(imageFileNameDic, "path", (Widget::TextureResType)imageFileNameType);
         panel->setBackGroundImage(imageFileName, (Widget::TextureResType)imageFileNameType);
         
-        
+
         if (backGroundScale9Enable)
         {
             float cx = DICTOOL->getFloatValue_json(options, "capInsetsX");
@@ -325,6 +325,7 @@ namespace cocostudio
             float ch = DICTOOL->getFloatValue_json(options, "capInsetsHeight");
             panel->setBackGroundImageCapInsets(Rect(cx, cy, cw, ch));
         }
+        
         panel->setLayoutType((Layout::Type)DICTOOL->getIntValue_json(options, "layoutType"));
         
         int bgimgcr = DICTOOL->getIntValue_json(options, "colorR");

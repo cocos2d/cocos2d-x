@@ -2,6 +2,7 @@
 
 #include "WidgetReader.h"
 #include "cocostudio/CocoLoader.h"
+#include "ui/UIButton.h"
 
 USING_NS_CC;
 using namespace ui;
