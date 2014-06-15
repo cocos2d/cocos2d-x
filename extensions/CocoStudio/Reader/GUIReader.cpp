@@ -1198,8 +1198,8 @@ cocos2d::ui::Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const 
     else
     {
         // 1st., custom widget parse properties of parent widget with parent widget reader
-       
-        reader = this->createWidgetReaderProtocol(readerName);
+        readerName = this->getWidgetReaderClassName(widget);
+        reader =  this->createWidgetReaderProtocol(readerName);
         setPropsForAllWidgetFromJsonDictionary(reader, widget, uiOptions);
         
         // 2nd., custom widget parse with custom reader
@@ -2164,8 +2164,17 @@ void WidgetPropertiesReader0300::setPropsForAllCustomWidgetFromJsonDictionary(co
     }    
 }
 
-Widget* WidgetPropertiesReader0300::createWidgetFromBinary(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode, const char *fileName)
+Widget* WidgetPropertiesReader0300::createWidgetFromBinary(cocos2d::extension::CocoLoader *pCocoLoader,
+                                                           cocos2d::extension::stExpCocoNode *pCocoNode,
+                                                           const char *fileName)
 {
+    
+    std::string jsonpath;
+	rapidjson::Document jsonDict;
+    jsonpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(fileName);
+    int pos = jsonpath.find_last_of('/');
+	m_strFilePath = jsonpath.substr(0,pos+1);
+    
     stExpCocoNode *tpChildArray = pCocoNode->GetChildArray();
     float fileDesignWidth;
     float fileDesignHeight;
@@ -2182,7 +2191,9 @@ Widget* WidgetPropertiesReader0300::createWidgetFromBinary(cocos2d::extension::C
                 std::string file;
                 stExpCocoNode *textureCountsArray = tpChildArray[i].GetChildArray();
                 file = textureCountsArray[j].GetValue();
-                CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(file.c_str());
+                std::string tp = m_strFilePath;
+                tp.append(file);
+                CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(tp.c_str());
             }
         }else if (key == "designWidth"){
             fileDesignWidth =  atof(tpChildArray[i].GetValue());

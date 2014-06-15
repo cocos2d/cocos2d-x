@@ -140,7 +140,7 @@ void LayoutReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *p
     float bgcv1 = 0.0f, bgcv2= 0.0f;
     float capsx = 0.0f, capsy = 0.0, capsWidth = 0.0, capsHeight = 0.0f;
     bool isAdaptScreen = false;
-    ui::LayoutType layoutType;
+    ui::LayoutType layoutType = ui::LAYOUT_ABSOLUTE;
     
     for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
         std::string key = stChildArray[i].GetName(pCocoLoader);

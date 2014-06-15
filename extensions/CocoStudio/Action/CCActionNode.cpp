@@ -191,11 +191,7 @@ void ActionNode::initWithBinary(cocos2d::extension::CocoLoader *pCocoLoader, coc
     
     int actionFrameCount = frameListNode->GetChildNum();
     stExpCocoNode *stFrameChildNode = frameListNode->GetChildArray();
-    stFrameChildNode = stFrameChildNode[0].GetChildArray();
 	for (int i=0; i<actionFrameCount; i++) {
-        
-        std::string key = stFrameChildNode[i].GetName(pCocoLoader);
-        std::string value = stFrameChildNode[i].GetValue();
         
         int frameIndex;
         int frameTweenType;
@@ -209,66 +205,71 @@ void ActionNode::initWithBinary(cocos2d::extension::CocoLoader *pCocoLoader, coc
         int colorG = -1;
         int colorB = -1;
         std::vector<float> frameTweenParameter;
-
-        if (key == "frameid") {
-            frameIndex = valueToInt(value);
-        }else if(key == "tweenType"){
-            frameTweenType = valueToInt(value);
-        }else if (key == "tweenParameter"){
-            //TODO:
-        }else if (key == "positionx"){
-            positionX = valueToFloat(value);
-        }else if (key == "positiony"){
-            positionY = valueToFloat(value);
-            ActionMoveFrame* actionFrame = new ActionMoveFrame();
-			actionFrame->autorelease();
-            actionFrame->setEasingType(frameTweenType);
-            actionFrame->setEasingParameter(frameTweenParameter);
-			actionFrame->setFrameIndex(frameIndex);
-			actionFrame->setPosition(CCPointMake(positionX, positionY));
-			CCArray* cActionArray = (CCArray*)m_FrameArray->objectAtIndex((int)kKeyframeMove);
-			cActionArray->addObject(actionFrame);
-        }else if(key == "scalex"){
-            scaleX = valueToFloat(value);
-        }else if(key == "scaley"){
-            scaleY = valueToFloat(value);
-            ActionScaleFrame* actionFrame = new ActionScaleFrame();
-			actionFrame->autorelease();
-            actionFrame->setEasingType(frameTweenType);
-            actionFrame->setEasingParameter(frameTweenParameter);
-			actionFrame->setFrameIndex(frameIndex);
-			actionFrame->setScaleX(scaleX);
-			actionFrame->setScaleY(scaleY);
-			CCArray* cActionArray = (CCArray*)m_FrameArray->objectAtIndex((int)kKeyframeScale);
-			cActionArray->addObject(actionFrame);
-        }else if (key == "rotation"){
-            rotation = valueToFloat(value);
-            ActionRotationFrame* actionFrame = new ActionRotationFrame();
-			actionFrame->autorelease();
-            actionFrame->setEasingType(frameTweenType);
-            actionFrame->setEasingParameter(frameTweenParameter);
-			actionFrame->setFrameIndex(frameIndex);
-			actionFrame->setRotation(rotation);
-			CCArray* cActionArray = (CCArray*)m_FrameArray->objectAtIndex((int)kKeyframeRotate);
-			cActionArray->addObject(actionFrame);
-        }else if (key == "opacity"){
-            opacity = valueToInt(value);
-            ActionFadeFrame* actionFrame = new ActionFadeFrame();
-			actionFrame->autorelease();
-            actionFrame->setEasingType(frameTweenType);
-            actionFrame->setEasingParameter(frameTweenParameter);
-			actionFrame->setFrameIndex(frameIndex);
-			actionFrame->setOpacity(opacity);
-			CCArray* cActionArray = (CCArray*)m_FrameArray->objectAtIndex((int)kKeyframeFade);
-			cActionArray->addObject(actionFrame);
-        }else if (key == "colorb"){
-            colorB = valueToInt(value);
-        }else if(key == "colorg"){
-            colorG = valueToInt(value);
-        }else if(key == "colorr"){
-            colorR = valueToInt(value);
+        
+        int framesCount = stFrameChildNode[i].GetChildNum();
+        stExpCocoNode *innerFrameNode = stFrameChildNode[i].GetChildArray();
+        for (int j = 0; j < framesCount; j++) {
+            std::string key = innerFrameNode[j].GetName(pCocoLoader);
+            std::string value = innerFrameNode[j].GetValue();
             
-            if (colorB > 0 && colorG > 0 && colorR > 0) {
+            if (key == "frameid") {
+                frameIndex = valueToInt(value);
+            }else if(key == "tweenType"){
+                frameTweenType = valueToInt(value);
+            }else if (key == "tweenParameter"){
+                //TODO:
+            }else if (key == "positionx"){
+                positionX = valueToFloat(value);
+            }else if (key == "positiony"){
+                positionY = valueToFloat(value);
+                ActionMoveFrame* actionFrame = new ActionMoveFrame();
+                actionFrame->autorelease();
+                actionFrame->setEasingType(frameTweenType);
+                actionFrame->setEasingParameter(frameTweenParameter);
+                actionFrame->setFrameIndex(frameIndex);
+                actionFrame->setPosition(CCPointMake(positionX, positionY));
+                CCArray* cActionArray = (CCArray*)m_FrameArray->objectAtIndex((int)kKeyframeMove);
+                cActionArray->addObject(actionFrame);
+            }else if(key == "scalex"){
+                scaleX = valueToFloat(value);
+            }else if(key == "scaley"){
+                scaleY = valueToFloat(value);
+                ActionScaleFrame* actionFrame = new ActionScaleFrame();
+                actionFrame->autorelease();
+                actionFrame->setEasingType(frameTweenType);
+                actionFrame->setEasingParameter(frameTweenParameter);
+                actionFrame->setFrameIndex(frameIndex);
+                actionFrame->setScaleX(scaleX);
+                actionFrame->setScaleY(scaleY);
+                CCArray* cActionArray = (CCArray*)m_FrameArray->objectAtIndex((int)kKeyframeScale);
+                cActionArray->addObject(actionFrame);
+            }else if (key == "rotation"){
+                rotation = valueToFloat(value);
+                ActionRotationFrame* actionFrame = new ActionRotationFrame();
+                actionFrame->autorelease();
+                actionFrame->setEasingType(frameTweenType);
+                actionFrame->setEasingParameter(frameTweenParameter);
+                actionFrame->setFrameIndex(frameIndex);
+                actionFrame->setRotation(rotation);
+                CCArray* cActionArray = (CCArray*)m_FrameArray->objectAtIndex((int)kKeyframeRotate);
+                cActionArray->addObject(actionFrame);
+            }else if (key == "opacity"){
+                opacity = valueToInt(value);
+                ActionFadeFrame* actionFrame = new ActionFadeFrame();
+                actionFrame->autorelease();
+                actionFrame->setEasingType(frameTweenType);
+                actionFrame->setEasingParameter(frameTweenParameter);
+                actionFrame->setFrameIndex(frameIndex);
+                actionFrame->setOpacity(opacity);
+                CCArray* cActionArray = (CCArray*)m_FrameArray->objectAtIndex((int)kKeyframeFade);
+                cActionArray->addObject(actionFrame);
+            }else if (key == "colorb"){
+                colorB = valueToInt(value);
+            }else if(key == "colorg"){
+                colorG = valueToInt(value);
+            }else if(key == "colorr"){
+                colorR = valueToInt(value);
+                
                 ActionTintFrame* actionFrame = new ActionTintFrame();
                 actionFrame->autorelease();
                 actionFrame->setEasingType(frameTweenType);
@@ -278,19 +279,17 @@ void ActionNode::initWithBinary(cocos2d::extension::CocoLoader *pCocoLoader, coc
                 CCArray* cActionArray = (CCArray*)m_FrameArray->objectAtIndex((int)kKeyframeTint);
                 cActionArray->addObject(actionFrame);
             }
-          
+            
+            //TODO: There are no tweenParameter args in the json file
+            //        int frameTweenParameterNum = DICTOOL->getArrayCount_json(actionFrameDic, "tweenParameter");
+            //        
+            //        for (int j = 0; j < frameTweenParameterNum; j++)
+            //        {
+            //            float value = DICTOOL->getFloatValueFromArray_json(actionFrameDic, "tweenParameter", j);
+            //            frameTweenParameter.push_back(value);
+            //        }
         }
-      
-        //TODO:
-//        int frameTweenParameterNum = DICTOOL->getArrayCount_json(actionFrameDic, "tweenParameter");
-//        
-//        for (int j = 0; j < frameTweenParameterNum; j++)
-//        {
-//            float value = DICTOOL->getFloatValueFromArray_json(actionFrameDic, "tweenParameter", j);
-//            frameTweenParameter.push_back(value);
-//        }
-        
-		
+
 	}
 	initActionNodeFromRoot(root);
 }
