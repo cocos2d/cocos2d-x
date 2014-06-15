@@ -127,12 +127,12 @@ bool Layout::init()
     
 void Layout::addChild(CCNode *child)
 {
-    Widget::addChild(child);
+    addChild(child, child->getZOrder(), child->getTag());
 }
 
 void Layout::addChild(CCNode * child, int zOrder)
 {
-    Widget::addChild(child, zOrder);
+    addChild(child, zOrder, child->getTag());
 }
 
 void Layout::addChild(CCNode *child, int zOrder, int tag)
