@@ -145,7 +145,7 @@ void ButtonReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
     bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
     if (fs)
     {
-        button->setTitleFontSize(DICTOOL->getIntValue_json(options, "fontSize"));
+        button->setTitleFontSize(DICTOOL->getFloatValue_json(options, "fontSize"));
     }
     bool fn = DICTOOL->checkObjectExist_json(options, "fontName");
     if (fn)

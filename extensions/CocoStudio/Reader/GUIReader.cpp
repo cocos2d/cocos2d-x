@@ -1199,7 +1199,7 @@ cocos2d::ui::Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const 
     {
         // 1st., custom widget parse properties of parent widget with parent widget reader
         readerName = this->getWidgetReaderClassName(widget);
-        reader =  (WidgetReader*)ObjectFactory::getInstance()->createObject(readerName);
+        reader =  this->createWidgetReaderProtocol(readerName);
         setPropsForAllWidgetFromJsonDictionary(reader, widget, uiOptions);
         
         // 2nd., custom widget parse with custom reader
