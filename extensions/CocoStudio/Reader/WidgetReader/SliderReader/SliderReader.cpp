@@ -210,21 +210,21 @@ void SliderReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *p
         }else if(key == "positionType"){
             widget->setPositionType((ui::PositionType)valueToInt(value));
         }else if(key == "sizePercentX"){
-            sizePercentX = valueToFloat(value);
+            _sizePercentX = valueToFloat(value);
         }else if(key == "sizePercentY"){
-            sizePercentY = valueToFloat(value);
+            _sizePercentY = valueToFloat(value);
         }else if(key == "positionPercentX"){
-            positionPercentX = valueToFloat(value);
+            _positionPercentX = valueToFloat(value);
         }else if(key == "positionPercentY"){
-            positionPercentY = valueToFloat(value);
+            _positionPercentY = valueToFloat(value);
         }
         else if(key == "adaptScreen"){
-            isAdaptScreen = valueToBool(value);
+            _isAdaptScreen = valueToBool(value);
         }
         else if (key == "width"){
-            width = valueToFloat(value);
+            _width = valueToFloat(value);
         }else if(key == "height"){
-            height = valueToFloat(value);
+            _height = valueToFloat(value);
         }else if(key == "tag"){
             widget->setTag(valueToInt(value));
         }else if(key == "actiontag"){
@@ -235,9 +235,9 @@ void SliderReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *p
             std::string widgetName = value.empty() ? "default" : value;
             widget->setName(widgetName.c_str());
         }else if(key == "x"){
-            position.x = valueToFloat(value);
+            _position.x = valueToFloat(value);
         }else if(key == "y"){
-            position.y = valueToFloat(value);
+            _position.y = valueToFloat(value);
         }else if(key == "scaleX"){
             widget->setScaleX(valueToFloat(value));
         }else if(key == "scaleY"){
@@ -312,9 +312,9 @@ void SliderReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *p
         }else if(key == "flipY"){
             widget->setFlipY(valueToBool(value));
         }else if(key == "anchorPointX"){
-            originalAnchorPoint.x = valueToFloat(value);
+            _originalAnchorPoint.x = valueToFloat(value);
         }else if(key == "anchorPointY"){
-            originalAnchorPoint.y = valueToFloat(value);
+            _originalAnchorPoint.y = valueToFloat(value);
         }
         //control custom properties
         else if (key == "scale9Enable") {

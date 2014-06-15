@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "cocos-ext.h"
+#include <algorithm>
 #include "CCComRender.h"
 #include "../Json/CocoLoader.h"
 

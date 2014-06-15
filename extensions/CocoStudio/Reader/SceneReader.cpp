@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "SceneReader.h"
+#include <algorithm>
 #include "SimpleAudioEngine.h"
 #include "../Trigger/ObjectFactory.h"
 
