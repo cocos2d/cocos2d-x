@@ -53,9 +53,7 @@ function MyApp:createNextButton(scene)
             return true
         end)
         :align(display.RIGHT_BOTTOM, display.right - 20, display.bottom + 20)
-        :addTo(scene):getCascadeBoundingBox()
-
-    print("----s.width, s.height:"..s.width..","..s.height)
+        :addTo(scene)
 
 end
 
