@@ -139,7 +139,7 @@ void ActionObject::initWithDictionary(const rapidjson::Value& dic,CCObject* root
 void ActionObject::initWithBinary(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode, cocos2d::CCObject *root)
 {
     stExpCocoNode *stChildNode = pCocoNode->GetChildArray();
-    stExpCocoNode *actionNodeList;
+    stExpCocoNode *actionNodeList = NULL;
     int count = pCocoNode->GetChildNum();
     for (int i = 0; i < count; ++i) {
         std::string key = stChildNode[i].GetName(pCocoLoader);
@@ -155,27 +155,29 @@ void ActionObject::initWithBinary(cocos2d::extension::CocoLoader *pCocoLoader, c
         }
     }
     
-    int actionNodeCount = actionNodeList->GetChildNum();
-
-    int maxLength = 0;
-	for (int i=0; i<actionNodeCount; i++) {
-		ActionNode* actionNode = new ActionNode();
-		actionNode->autorelease();
+	if(NULL != actionNodeList)
+	{
+        int actionNodeCount = actionNodeList->GetChildNum();
         
-		actionNode->initWithBinary(pCocoLoader, actionNodeList, root);
+        int maxLength = 0;
+        for (int i=0; i<actionNodeCount; i++) {
+            ActionNode* actionNode = new ActionNode();
+            actionNode->autorelease();
+            
+            actionNode->initWithBinary(pCocoLoader, actionNodeList, root);
+            
+            actionNode->setUnitTime(getUnitTime());
+            
+            m_ActionNodeList->addObject(actionNode);
+            
+            int length = actionNode->getLastFrameIndex() - actionNode->getFirstFrameIndex();
+            if(length > maxLength)
+                maxLength = length;
+        }
         
-		actionNode->setUnitTime(getUnitTime());
         
-		m_ActionNodeList->addObject(actionNode);
-        
-		int length = actionNode->getLastFrameIndex() - actionNode->getFirstFrameIndex();
-		if(length > maxLength)
-        maxLength = length;
-	}
-    
-	m_fTotalTime = maxLength*m_fUnitTime;
-    
-    
+        m_fTotalTime = maxLength*m_fUnitTime;
+    }
 }
 
 int ActionObject::valueToInt(std::string& value)
