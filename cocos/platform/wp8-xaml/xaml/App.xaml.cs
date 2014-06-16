@@ -54,14 +54,11 @@ namespace PhoneDirect3DXamlAppInterop
             // Phone-specific initialization
             InitializePhoneApplication();
 
-            // Language display initialization
-            InitializeLanguage();
-
-            // Show graphics profiling information while debugging.
+             // Show graphics profiling information while debugging.
             if (Debugger.IsAttached)
             {
                 // Display the current frame rate counters.
-                Application.Current.Host.Settings.EnableFrameRateCounter = true;
+                Application.Current.Host.Settings.EnableFrameRateCounter = false;
 
                 // Show the areas of the app that are being redrawn in each frame.
                 //Application.Current.Host.Settings.EnableRedrawRegions = true;
@@ -275,63 +272,6 @@ namespace PhoneDirect3DXamlAppInterop
         }
 
         #endregion
-
-        // Initialize the app's font and flow direction as defined in its localized resource strings.
-        //
-        // To ensure that the font of your application is aligned with its supported languages and that the
-        // FlowDirection for each of those languages follows its traditional direction, ResourceLanguage
-        // and ResourceFlowDirection should be initialized in each resx file to match these values with that
-        // file's culture. For example:
-        //
-        // AppResources.es-ES.resx
-        //    ResourceLanguage's value should be "es-ES"
-        //    ResourceFlowDirection's value should be "LeftToRight"
-        //
-        // AppResources.ar-SA.resx
-        //     ResourceLanguage's value should be "ar-SA"
-        //     ResourceFlowDirection's value should be "RightToLeft"
-        //
-        // For more info on localizing Windows Phone apps see http://go.microsoft.com/fwlink/?LinkId=262072.
-        //
-        private void InitializeLanguage()
-        {
-            try
-            {
-                // Set the font to match the display language defined by the
-                // ResourceLanguage resource string for each supported language.
-                //
-                // Fall back to the font of the neutral language if the Display
-                // language of the phone is not supported.
-                //
-                // If a compiler error is hit then ResourceLanguage is missing from
-                // the resource file.
-                RootFrame.Language = XmlLanguage.GetLanguage(AppResources.ResourceLanguage);
-
-                // Set the FlowDirection of all elements under the root frame based
-                // on the ResourceFlowDirection resource string for each
-                // supported language.
-                //
-                // If a compiler error is hit then ResourceFlowDirection is missing from
-                // the resource file.
-                FlowDirection flow = (FlowDirection)Enum.Parse(typeof(FlowDirection), AppResources.ResourceFlowDirection);
-                RootFrame.FlowDirection = flow;
-            }
-            catch
-            {
-                // If an exception is caught here it is most likely due to either
-                // ResourceLangauge not being correctly set to a supported language
-                // code or ResourceFlowDirection is set to a value other than LeftToRight
-                // or RightToLeft.
-
-                if (Debugger.IsAttached)
-                {
-                    Debugger.Break();
-                }
-
-                throw;
-            }
-
-        }
 
         // Helper method for adding or updating a key/value pair in isolated storage
         public bool AddOrUpdateValue(string Key, Object value)
