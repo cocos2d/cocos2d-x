@@ -362,7 +362,7 @@ void NodeReader::initNode(cocos2d::CCNode* node, const rapidjson::Value& json)
     GLubyte green       = (GLubyte)DICTOOL->getIntValue_json(json, GREEN, 255);
     GLubyte blue        = (GLubyte)DICTOOL->getIntValue_json(json, BLUE, 255);
     int zorder		    = DICTOOL->getIntValue_json(json, ZORDER);
-	int tag				= DICTOOL->getIntValue_json(json, TAG);
+    int tag				= DICTOOL->getIntValue_json(json, TAG);
     int actionTag		= DICTOOL->getIntValue_json(json, ACTION_TAG);
 
     if(x != 0 || y != 0)
