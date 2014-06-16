@@ -60,6 +60,7 @@ Classes/ExtensionsTest/EditBoxTest/EditBoxTest.cpp \
 Classes/ExtensionsTest/TableViewTest/TableViewTestScene.cpp \
 Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.cpp \
 Classes/ExtensionsTest/CocoStudioArmatureTest/ArmatureScene.cpp \
+Classes/ExtensionsTest/CocoStudioActionTimelineTest/ActionTimelineTestScene.cpp \
 Classes/ExtensionsTest/CocoStudioComponentsTest/ComponentsTestScene.cpp \
 Classes/ExtensionsTest/CocoStudioComponentsTest/EnemyController.cpp \
 Classes/ExtensionsTest/CocoStudioComponentsTest/GameOverScene.cpp \

@@ -100,6 +100,9 @@
     <Filter Include="CocoStudio\Reader\WidgetReader">
       <UniqueIdentifier>{d0949a0d-a150-443d-9b5a-84d8e367d5e0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CocoStudio\ActionTimeline">
+      <UniqueIdentifier>{106a267f-faac-4b7f-92a9-fa7eb1ea0abd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\GUI\CCScrollView\CCScrollView.cpp">
@@ -528,6 +531,21 @@
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="..\CocoStudio\Json\CocoLoader.cpp">
       <Filter>CocoStudio\Json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\ActionTimeline\CCActionTimeline.cpp">
+      <Filter>CocoStudio\ActionTimeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\ActionTimeline\CCActionTimelineCache.cpp">
+      <Filter>CocoStudio\ActionTimeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\ActionTimeline\CCFrame.cpp">
+      <Filter>CocoStudio\ActionTimeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\ActionTimeline\CCTimeLine.cpp">
+      <Filter>CocoStudio\ActionTimeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\ActionTimeline\CCNodeReader.cpp">
+      <Filter>CocoStudio\ActionTimeline</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -963,6 +981,24 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="..\CocoStudio\Json\CocoLoader.h">
       <Filter>CocoStudio\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\ActionTimeline\CCActionTimeline.h">
+      <Filter>CocoStudio\ActionTimeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\ActionTimeline\CCActionTimelineCache.h">
+      <Filter>CocoStudio\ActionTimeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\ActionTimeline\CCFrame.h">
+      <Filter>CocoStudio\ActionTimeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\ActionTimeline\CCTimeLine.h">
+      <Filter>CocoStudio\ActionTimeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\ActionTimeline\CCTimelineMacro.h">
+      <Filter>CocoStudio\ActionTimeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\ActionTimeline\CCNodeReader.h">
+      <Filter>CocoStudio\ActionTimeline</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
