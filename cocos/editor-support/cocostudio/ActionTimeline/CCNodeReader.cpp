@@ -86,6 +86,8 @@ static const char* GREEN            = "colorG";
 static const char* BLUE             = "colorB";
 static const char* ZORDER           = "ZOrder";
 static const char* PARTICLE_NUM     = "particleNum";
+static const char* FLIPX            = "flipX";
+static const char* FLIPY            = "flipY";
 
 static const char* TEXTURES     = "textures";
 static const char* TEXTURES_PNG = "texturesPng";
@@ -370,6 +372,14 @@ Node* NodeReader::loadSprite(const rapidjson::Value& json)
     sprite->retain();
 
     initNode(sprite, json);
+
+    bool flipX          = DICTOOL->getBooleanValue_json(json, FLIPX);
+    bool flipY          = DICTOOL->getBooleanValue_json(json, FLIPY);
+
+    if(flipX != false)
+        sprite->setFlipX(flipX);
+    if(flipY != false)
+        sprite->setFlipY(flipY);
 
     return sprite;
 }
