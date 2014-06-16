@@ -217,10 +217,6 @@ void Bone::updateLocalMat()
     if (_blendStates.size() == 0)
         return;
     
-    Mat4::createTranslation(_blendStates[0].localTranslate, &_local);
-    _local.rotate(_blendStates[0].localRot);
-    return;
-    
     if (!_localDirty)
         return;
     

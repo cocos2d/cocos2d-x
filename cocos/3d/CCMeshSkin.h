@@ -107,6 +107,14 @@ protected:
         Quaternion    localRot;
         Vec3          localScale;
         float         weight;
+        BoneBlendState()
+        : localTranslate(0.f, 0.f, 0.f)
+        , localRot(0.f, 0.f, 0.f, 1.0f)
+        , localScale(1.f, 1.f, 1.f)
+        , weight(0.f)
+        {
+            
+        }
     };
 	/**
      * Constructor.
