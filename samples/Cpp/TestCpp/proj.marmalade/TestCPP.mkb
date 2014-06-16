@@ -243,6 +243,11 @@ files
 	"*.cpp"
 	"*.h"
 	
+	[Test/ExtensionsTest/ActionTimelineTest]
+	(../Classes/ExtensionsTest/CocoStudioActionTimelineTest)
+	"*.cpp"
+	"*.h"
+
 	[Test/ExtensionsTest/ComponentsTest]
 	(../Classes/ExtensionsTest/CocoStudioComponentsTest)
 	"*.cpp"
