@@ -131,9 +131,10 @@ bool Bundle3D::loadMeshData(const std::string& id, MeshData* meshdata)
 {
     meshdata->resetData();
     
+    assert(document.HasMember("mesh_data"));
     const rapidjson::Value& mash_data_val_array = document["mesh_data"];
+    
     assert(mash_data_val_array.IsArray());
-
     const rapidjson::Value& mash_data_val = mash_data_val_array[(rapidjson::SizeType)0];
     assert(mash_data_val.IsObject());
 
@@ -196,12 +197,12 @@ bool Bundle3D::loadSkinData(const std::string& id, SkinData* skindata)
     
     const rapidjson::Value& skin_data_array_val_0 = skin_data_array[(rapidjson::SizeType)0];
 
-    const rapidjson::Value& skin_data_bind_shape = skin_data_array_val_0["bind_shape"];
+    /*const rapidjson::Value& skin_data_bind_shape = skin_data_array_val_0["bind_pose"];
     assert(skin_data_bind_shape.Size() == 16);
     for (rapidjson::SizeType i = 0; i < skin_data_bind_shape.Size(); i++)
     {
         skindata->bindShape.m[i] = skin_data_bind_shape[i].GetDouble();
-    }
+    }*/
     
     float m[] = {-0.682038f, -0.035225f,  0.730468f,  0.000000f,  0.731315f, -0.035225f,  0.681130f,  0.000000f,  0.001738f,  0.998758f,  0.049786f,  0.000000f, -0.882000f,  78.798103f, -0.868362f,  1.000000f};
     memcpy(skindata->bindShape.m, m, sizeof(m));
@@ -213,7 +214,7 @@ bool Bundle3D::loadSkinData(const std::string& id, SkinData* skindata)
         const rapidjson::Value& skin_data_bone = skin_data_bones[i];
         std::string name = skin_data_bone["node"].GetString();
         skindata->boneNames.push_back(name);
-        const rapidjson::Value& bind_pos = skin_data_bone["bind_pos"];
+        const rapidjson::Value& bind_pos = skin_data_bone["bind_shape"];
         Mat4 mat_bind_pos;
         for (rapidjson::SizeType j = 0; j < bind_pos.Size(); j++)
         {
@@ -302,7 +303,7 @@ bool Bundle3D::loadAnimationData(const std::string& id, Animation3DData* animati
                 if ( bone_keyframe.HasMember("translation"))
                 {
                     const rapidjson::Value&  bone_keyframe_translation =  bone_keyframe["translation"];
-                    float keytime =  bone_keyframe["keytime"].GetDouble() / 1200.f;
+                    float keytime =  bone_keyframe["keytime"].GetDouble();
                     Vec3 val = Vec3(bone_keyframe_translation[(rapidjson::SizeType)0].GetDouble(), bone_keyframe_translation[1].GetDouble(), bone_keyframe_translation[2].GetDouble());
                     animationdata->_translationKeys[bone_name].push_back(Animation3DData::Vec3Key(keytime,val));
                 }
@@ -310,7 +311,7 @@ bool Bundle3D::loadAnimationData(const std::string& id, Animation3DData* animati
                 if ( bone_keyframe.HasMember("rotation"))
                 {
                     const rapidjson::Value&  bone_keyframe_rotation =  bone_keyframe["rotation"];
-                    float keytime =  bone_keyframe["keytime"].GetDouble() / 1200.f;
+                    float keytime =  bone_keyframe["keytime"].GetDouble();
                     Quaternion val = Quaternion(bone_keyframe_rotation[(rapidjson::SizeType)0].GetDouble(),bone_keyframe_rotation[1].GetDouble(),bone_keyframe_rotation[2].GetDouble(),bone_keyframe_rotation[3].GetDouble());
                     animationdata->_rotationKeys[bone_name].push_back(Animation3DData::QuatKey(keytime,val));
                 }
@@ -318,7 +319,7 @@ bool Bundle3D::loadAnimationData(const std::string& id, Animation3DData* animati
                 if ( bone_keyframe.HasMember("scale"))
                 {
                     const rapidjson::Value&  bone_keyframe_scale =  bone_keyframe["scale"];
-                    float keytime =  bone_keyframe["keytime"].GetDouble() / 1200.f;
+                    float keytime =  bone_keyframe["keytime"].GetDouble();
                     Vec3 val = Vec3(bone_keyframe_scale[(rapidjson::SizeType)0].GetDouble(), bone_keyframe_scale[1].GetDouble(), bone_keyframe_scale[2].GetDouble());
                     animationdata->_scaleKeys[bone_name].push_back(Animation3DData::Vec3Key(keytime,val));
                 }
@@ -327,49 +328,6 @@ bool Bundle3D::loadAnimationData(const std::string& id, Animation3DData* animati
     }
     
     animationdata->_totalTime = 3;
-    
-    CCLOG("translation:////////////////");
-    //animationdata->_translationKeys.erase(animationdata->_translationKeys.begin(), animationdata->_translationKeys.end());
-    for (auto itr: animationdata->_translationKeys)
-    {
-        CCLOG("%s", itr.first.c_str());
-        auto& keys = itr.second;
-        
-        if (keys.size())
-        {
-            float maxtime = keys[keys.size() - 1]._time;
-            for (auto it : keys) {
-                it._time /= maxtime;
-            }
-        }
-    }
-    CCLOG("rotation:////////////////");
-    //animationdata->_rotationKeys.erase(animationdata->_rotationKeys.begin(), animationdata->_rotationKeys.end());
-    for (auto itr: animationdata->_rotationKeys)
-    {
-        CCLOG("%s", itr.first.c_str());
-        auto& keys = itr.second;
-        if (keys.size())
-        {
-            float maxtime = keys[keys.size() - 1]._time;
-            for (auto it : keys) {
-                it._time /= maxtime;
-            }
-        }
-    }
-    CCLOG("scale:////////////////");
-    for (auto itr: animationdata->_scaleKeys)
-    {
-        CCLOG("%s", itr.first.c_str());
-        auto& keys = itr.second;
-        if (keys.size())
-        {
-            float maxtime = keys[keys.size() - 1]._time;
-            for (auto it : keys) {
-                it._time /= maxtime;
-            }
-        }
-    }
     
     return true;
 }
