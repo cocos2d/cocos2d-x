@@ -344,6 +344,13 @@
 		37CA1CFE17D87AC700A649D0 /* ProjectileController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37CA1CAC17D87AC700A649D0 /* ProjectileController.cpp */; };
 		37CA1CFF17D87AC700A649D0 /* SceneController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37CA1CAE17D87AC700A649D0 /* SceneController.cpp */; };
 		37CA1D1A17D87AC700A649D0 /* SceneEditorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37CA1CF717D87AC700A649D0 /* SceneEditorTest.cpp */; };
+		38FA2E90194E92F400FF2BE4 /* CCActionTimeline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38FA2E85194E92F400FF2BE4 /* CCActionTimeline.cpp */; };
+		38FA2E91194E92F400FF2BE4 /* CCActionTimelineCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38FA2E87194E92F400FF2BE4 /* CCActionTimelineCache.cpp */; };
+		38FA2E92194E92F400FF2BE4 /* CCFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38FA2E89194E92F400FF2BE4 /* CCFrame.cpp */; };
+		38FA2E93194E92F400FF2BE4 /* CCNodeReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38FA2E8B194E92F400FF2BE4 /* CCNodeReader.cpp */; };
+		38FA2E94194E92F400FF2BE4 /* CCTimeLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38FA2E8D194E92F400FF2BE4 /* CCTimeLine.cpp */; };
+		38FA2E98194E930700FF2BE4 /* ActionTimelineTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38FA2E96194E930700FF2BE4 /* ActionTimelineTestScene.cpp */; };
+		38FA2E9A194E94FC00FF2BE4 /* ActionTimeline in Resources */ = {isa = PBXBuildFile; fileRef = 38FA2E99194E94FC00FF2BE4 /* ActionTimeline */; };
 		43B91ED81949B84200F7F815 /* CocoLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 43B91ED61949B84200F7F815 /* CocoLoader.cpp */; };
 		50181AE1185FEBAE0051CA1C /* CCActionEaseEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50181ADF185FEBAE0051CA1C /* CCActionEaseEx.cpp */; };
 		50D36120186AED6100828878 /* UITouchGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D3611E186AED6100828878 /* UITouchGroup.cpp */; };
@@ -1168,6 +1175,20 @@
 		37CA1CAF17D87AC700A649D0 /* SceneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneController.h; sourceTree = "<group>"; };
 		37CA1CF717D87AC700A649D0 /* SceneEditorTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneEditorTest.cpp; sourceTree = "<group>"; };
 		37CA1CF817D87AC700A649D0 /* SceneEditorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneEditorTest.h; sourceTree = "<group>"; };
+		38FA2E85194E92F400FF2BE4 /* CCActionTimeline.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionTimeline.cpp; sourceTree = "<group>"; };
+		38FA2E86194E92F400FF2BE4 /* CCActionTimeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionTimeline.h; sourceTree = "<group>"; };
+		38FA2E87194E92F400FF2BE4 /* CCActionTimelineCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionTimelineCache.cpp; sourceTree = "<group>"; };
+		38FA2E88194E92F400FF2BE4 /* CCActionTimelineCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionTimelineCache.h; sourceTree = "<group>"; };
+		38FA2E89194E92F400FF2BE4 /* CCFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFrame.cpp; sourceTree = "<group>"; };
+		38FA2E8A194E92F400FF2BE4 /* CCFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFrame.h; sourceTree = "<group>"; };
+		38FA2E8B194E92F400FF2BE4 /* CCNodeReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNodeReader.cpp; sourceTree = "<group>"; };
+		38FA2E8C194E92F400FF2BE4 /* CCNodeReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNodeReader.h; sourceTree = "<group>"; };
+		38FA2E8D194E92F400FF2BE4 /* CCTimeLine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTimeLine.cpp; sourceTree = "<group>"; };
+		38FA2E8E194E92F400FF2BE4 /* CCTimeLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTimeLine.h; sourceTree = "<group>"; };
+		38FA2E8F194E92F400FF2BE4 /* CCTimelineMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTimelineMacro.h; sourceTree = "<group>"; };
+		38FA2E96194E930700FF2BE4 /* ActionTimelineTestScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActionTimelineTestScene.cpp; sourceTree = "<group>"; };
+		38FA2E97194E930700FF2BE4 /* ActionTimelineTestScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionTimelineTestScene.h; sourceTree = "<group>"; };
+		38FA2E99194E94FC00FF2BE4 /* ActionTimeline */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ActionTimeline; sourceTree = "<group>"; };
 		43B91ED61949B84200F7F815 /* CocoLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocoLoader.cpp; sourceTree = "<group>"; };
 		43B91ED71949B84200F7F815 /* CocoLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoLoader.h; sourceTree = "<group>"; };
 		50181ADF185FEBAE0051CA1C /* CCActionEaseEx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionEaseEx.cpp; sourceTree = "<group>"; };
@@ -2153,6 +2174,7 @@
 		15AA9CBB15B7EC460033D6C2 /* ExtensionsTest */ = {
 			isa = PBXGroup;
 			children = (
+				38FA2E95194E930700FF2BE4 /* CocoStudioActionTimelineTest */,
 				37CA1CA017D87AC700A649D0 /* CocoStudioArmatureTest */,
 				37CA1CA317D87AC700A649D0 /* CocoStudioComponentsTest */,
 				50F853FC18C581FB0019FBFB /* CocoStudioGUITest */,
@@ -2861,6 +2883,7 @@
 		37CA1B8117D87A3300A649D0 /* CocoStudio */ = {
 			isa = PBXGroup;
 			children = (
+				38FA2E84194E92F400FF2BE4 /* ActionTimeline */,
 				372902421867D36800B59D3A /* Trigger */,
 				37BB5ADD17E86BF1002746B4 /* Action */,
 				37CA1B8217D87A3300A649D0 /* Armature */,
@@ -3145,6 +3168,34 @@
 			);
 			name = CocoStudioSceneTest;
 			path = ../../Classes/ExtensionsTest/CocoStudioSceneTest;
+			sourceTree = "<group>";
+		};
+		38FA2E84194E92F400FF2BE4 /* ActionTimeline */ = {
+			isa = PBXGroup;
+			children = (
+				38FA2E85194E92F400FF2BE4 /* CCActionTimeline.cpp */,
+				38FA2E86194E92F400FF2BE4 /* CCActionTimeline.h */,
+				38FA2E87194E92F400FF2BE4 /* CCActionTimelineCache.cpp */,
+				38FA2E88194E92F400FF2BE4 /* CCActionTimelineCache.h */,
+				38FA2E89194E92F400FF2BE4 /* CCFrame.cpp */,
+				38FA2E8A194E92F400FF2BE4 /* CCFrame.h */,
+				38FA2E8B194E92F400FF2BE4 /* CCNodeReader.cpp */,
+				38FA2E8C194E92F400FF2BE4 /* CCNodeReader.h */,
+				38FA2E8D194E92F400FF2BE4 /* CCTimeLine.cpp */,
+				38FA2E8E194E92F400FF2BE4 /* CCTimeLine.h */,
+				38FA2E8F194E92F400FF2BE4 /* CCTimelineMacro.h */,
+			);
+			path = ActionTimeline;
+			sourceTree = "<group>";
+		};
+		38FA2E95194E930700FF2BE4 /* CocoStudioActionTimelineTest */ = {
+			isa = PBXGroup;
+			children = (
+				38FA2E96194E930700FF2BE4 /* ActionTimelineTestScene.cpp */,
+				38FA2E97194E930700FF2BE4 /* ActionTimelineTestScene.h */,
+			);
+			name = CocoStudioActionTimelineTest;
+			path = ../../Classes/ExtensionsTest/CocoStudioActionTimelineTest;
 			sourceTree = "<group>";
 		};
 		50E9124C18C8987500D07E0D /* UIRichTextTest */ = {
@@ -3548,6 +3599,7 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				38FA2E99194E94FC00FF2BE4 /* ActionTimeline */,
 				37877486187A9002002578C7 /* animations */,
 				3787748D187A9002002578C7 /* ccb */,
 				1A16458A191B5178008C7C7F /* ccs-res */,
@@ -3701,6 +3753,7 @@
 				378774B5187A9002002578C7 /* configs in Resources */,
 				1A16458B191B5178008C7C7F /* ccs-res in Resources */,
 				378774A9187A9002002578C7 /* animations in Resources */,
+				38FA2E9A194E94FC00FF2BE4 /* ActionTimeline in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3719,6 +3772,7 @@
 				15AA9D5215B7EC460033D6C2 /* ActionManagerTest.cpp in Sources */,
 				50E9127B18C99AA600D07E0D /* CustomParticleWidgetTest.cpp in Sources */,
 				15AA9D5315B7EC460033D6C2 /* ActionsEaseTest.cpp in Sources */,
+				38FA2E98194E930700FF2BE4 /* ActionTimelineTestScene.cpp in Sources */,
 				15AA9D5415B7EC460033D6C2 /* ActionsProgressTest.cpp in Sources */,
 				15AA9D5515B7EC460033D6C2 /* ActionsTest.cpp in Sources */,
 				15AA9D5615B7EC460033D6C2 /* Box2dTest.cpp in Sources */,
@@ -3790,7 +3844,9 @@
 				15AA9D9015B7EC460033D6C2 /* SchedulerTest.cpp in Sources */,
 				15AA9D9115B7EC460033D6C2 /* ShaderTest.cpp in Sources */,
 				15AA9D9215B7EC460033D6C2 /* SpriteTest.cpp in Sources */,
+				38FA2E92194E92F400FF2BE4 /* CCFrame.cpp in Sources */,
 				15AA9D9315B7EC460033D6C2 /* testBasic.cpp in Sources */,
+				38FA2E90194E92F400FF2BE4 /* CCActionTimeline.cpp in Sources */,
 				15AA9D9415B7EC460033D6C2 /* TextInputTest.cpp in Sources */,
 				15AA9D9515B7EC460033D6C2 /* Texture2dTest.cpp in Sources */,
 				15AA9D9615B7EC460033D6C2 /* TextureCacheTest.cpp in Sources */,
@@ -3885,6 +3941,7 @@
 				15A3D99A1682F7F9002FB0C5 /* cpGearJoint.c in Sources */,
 				15A3D99B1682F7F9002FB0C5 /* cpGrooveJoint.c in Sources */,
 				15A3D99C1682F7F9002FB0C5 /* cpPinJoint.c in Sources */,
+				38FA2E91194E92F400FF2BE4 /* CCActionTimelineCache.cpp in Sources */,
 				15A3D99D1682F7F9002FB0C5 /* cpPivotJoint.c in Sources */,
 				15A3D99E1682F7F9002FB0C5 /* cpRatchetJoint.c in Sources */,
 				15A3D99F1682F7F9002FB0C5 /* cpRotaryLimitJoint.c in Sources */,
@@ -4064,7 +4121,9 @@
 				37CA1CF917D87AC700A649D0 /* ArmatureScene.cpp in Sources */,
 				37CA1CFA17D87AC700A649D0 /* ComponentsTestScene.cpp in Sources */,
 				372902F5186814E400B59D3A /* acts.cpp in Sources */,
+				38FA2E94194E92F400FF2BE4 /* CCTimeLine.cpp in Sources */,
 				50F8548218C581FB0019FBFB /* UITextFieldTest.cpp in Sources */,
+				38FA2E93194E92F400FF2BE4 /* CCNodeReader.cpp in Sources */,
 				37CA1CFB17D87AC700A649D0 /* EnemyController.cpp in Sources */,
 				37CA1CFC17D87AC700A649D0 /* GameOverScene.cpp in Sources */,
 				37CA1CFD17D87AC700A649D0 /* PlayerController.cpp in Sources */,

@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include "cocos2d.h"
 #include "CCTimelineMacro.h"
+#include "ExtensionExport.h"
 
 NS_TIMELINE_BEGIN
 class Timeline;
