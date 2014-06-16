@@ -34,7 +34,9 @@ public:
     ~UICheckBoxTest_Editor();
     bool init();
     void selectedStateEvent(CCObject* pSender, CheckBoxEventType type);
-    
+    void configureGUIScene();
+    virtual void switchLoadMethod(CCObject* pSender);
+
 protected:
     UI_SCENE_EDITOR_CREATE_FUNC(UICheckBoxTest_Editor)
     ui::Label* _displayValueLabel;

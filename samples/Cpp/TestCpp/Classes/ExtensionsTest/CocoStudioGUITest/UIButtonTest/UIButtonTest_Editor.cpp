@@ -16,18 +16,18 @@ UIButtonTest_Editor::~UIButtonTest_Editor()
     
 }
 
-void UIButtonTest_Editor::switchToJsonLoad(cocos2d::CCObject *pSender)
+void UIButtonTest_Editor::switchLoadMethod(cocos2d::CCObject *pSender)
 {
     CCMenuItemToggle *item = (CCMenuItemToggle*)pSender;
     if (item->getSelectedIndex() == 0){
-        _touchGroup->removeChild(_layout);
+        _layout->removeFromParentAndCleanup(true);
         
          _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UIButton_Editor/UIButton_Editor_1.json"));
         _touchGroup->addWidget(_layout);
 
         this->configureGUIScene();
     }else{
-        _touchGroup->removeChild(_layout);
+        _layout->removeFromParentAndCleanup(true);
 
         _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromBinaryFile("cocosui/UIEditorTest/UIButton_Editor/UIButton_Editor_1.csb"));
         _touchGroup->addWidget(_layout);

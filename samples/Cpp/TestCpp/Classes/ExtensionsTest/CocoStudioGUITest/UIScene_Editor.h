@@ -68,7 +68,7 @@ public:
     CC_SYNTHESIZE_READONLY(UILabel*, _sceneTitle, SceneTitle)
     
     UI_SCENE_EDITOR_CREATE_FUNC(UIScene_Editor);
-    virtual void switchToJsonLoad(CCObject* pSender) {}
+    virtual void switchLoadMethod(CCObject* pSender) {}
 
 protected:
     TouchGroup* _touchGroup;

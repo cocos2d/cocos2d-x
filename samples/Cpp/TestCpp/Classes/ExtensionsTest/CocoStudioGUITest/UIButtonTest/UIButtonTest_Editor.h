@@ -35,7 +35,7 @@ public:
     
     bool init();
     void touchEvent(CCObject* pSender, TouchEventType type);        
-    virtual void switchToJsonLoad(CCObject* pSender);
+    virtual void switchLoadMethod(CCObject* pSender);
     
     void configureGUIScene();
 

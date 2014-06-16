@@ -27,19 +27,19 @@ bool UIScene_Editor::init()
         
         
         //add switch
-        CCMenuItem* pLoadJsonItem = CCMenuItemFont::create("Click to switch to binary load", this,
+        CCMenuItem* pLoadJsonItem = CCMenuItemFont::create("Switch to Binary Load", this,
                                                            NULL);
-        CCMenuItem* pLoadBinaryItem = CCMenuItemFont::create("Click to switch", this, NULL);
+        CCMenuItem* pLoadBinaryItem = CCMenuItemFont::create("Switch to Json Load", this, NULL);
         pLoadJsonItem->setTag(1);
         pLoadBinaryItem->setTag(2);
         
         CCArray *array  = CCArray::create();
-        array->addObject(pLoadBinaryItem);
         array->addObject(pLoadJsonItem);
+        array->addObject(pLoadBinaryItem);
         CCMenuItemToggle *pToggleItem = CCMenuItemToggle::createWithTarget(this,
-                                                                           menu_selector(UIScene_Editor::switchToJsonLoad),
+                                                                           menu_selector(UIScene_Editor::switchLoadMethod),
                                                                            array);
-        pToggleItem->setPosition(ccp(VisibleRect::right().x - 100, VisibleRect::top().y - 50));;
+        pToggleItem->setPosition(ccp(VisibleRect::right().x - 150, VisibleRect::top().y - 50));;
         
         CCMenu* pMenu =CCMenu::create(pToggleItem, NULL);
         
