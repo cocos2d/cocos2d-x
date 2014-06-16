@@ -1996,7 +1996,7 @@ void TextureMemoryAlloc::updateImage(cocos2d::CCObject *sender)
     m_pBackground->setVisible(false);
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
-    m_pBackground->setPosition(ccp(s.width/2, s.height/2));
+    m_pBackground->setPosition(ccp(s.width/2 + 50, s.height/2 + 40));
 }
 
 string TextureMemoryAlloc::title()
