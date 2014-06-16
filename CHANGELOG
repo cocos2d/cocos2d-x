@@ -26,6 +26,7 @@ cocos2d-x-3.2  ???
     [FIX]           Node: state of _transformUpdated, _transformDirty and _inverseDirty are wrong in setParent()
     [FIX]           Node: _orderOfArrival is set to 0 after visit
     [FIX]           Other: link error with Xcode 6 when building with 32-bit architecture
+    [FIX]           RenderTexture: saveToFile() lost alpha channel
     [FIX]           Repeat: will run one more over in rare situations
     [FIX]           Scale9Sprite: support culling
     [FIX]           Schedule: schedulePerFrame() can not be called twice
