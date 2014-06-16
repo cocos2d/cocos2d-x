@@ -81,37 +81,6 @@ const Mat4& Bone::getWorldMat()
     return _world;
 }
 
-///**
-// * Set AnimationValue. set to its transform
-// */
-//void Bone::setAnimationValueTranslation(float* value, float weight)
-//{
-//    static const int bytes = 3 * sizeof(float);
-//    if (memcmp(&_localTranslate.x, value, bytes) != 0)
-//    {
-//        _dirtyFlag |= Dirty_Translate;
-//        _localTranslate.set(value);
-//    }
-//}
-//void Bone::setAnimationValueRotation(float* value, float weight)
-//{
-//    static const int bytes = 4 * sizeof(float);
-//    if (memcmp(&_localRot.x, value, bytes) != 0)
-//    {
-//        _dirtyFlag |= Dirty_Rotation;
-//        _localRot.set(value);
-//    }
-//}
-//void Bone::setAnimationValueScale(float* value, float weight)
-//{
-//    static const int bytes = 3 * sizeof(float);
-//    if (memcmp(&_localScale.x, value, bytes) != 0)
-//    {
-//        _dirtyFlag |= Dirty_Scale;
-//        _localScale.set(value);
-//    }
-//}
-
 void Bone::setAnimationValue(float* trans, float* rot, float* scale, float weight)
 {
     BoneBlendState state;
@@ -122,12 +91,18 @@ void Bone::setAnimationValue(float* trans, float* rot, float* scale, float weigh
     if (scale)
         state.localScale.set(scale);
     
-    if (_name != "L_side01" && _name != "L_side03" && _name != "L_side02")
-    CCASSERT(fabs(scale[0] - 1) < 0.001f, "");
     state.weight = weight;
     
     _blendStates.push_back(state);
     _localDirty = true;
+}
+
+void Bone::clearBoneBlendState()
+{
+    _blendStates.clear();
+    for (auto it : _children) {
+        it->clearBoneBlendState();
+    }
 }
 
 /**
@@ -150,16 +125,10 @@ Bone* Bone::create(const std::string& id)
  */
 void Bone::updateJointMatrix(const Mat4& bindShape, Vec4* matrixPalette)
 {
-    
-    //if (_skinCount > 1 || _jointMatrixDirty)
     {
-        //_jointMatrixDirty = false;
         static Mat4 t;
         Mat4::multiply(_world, getInverseBindPose(), &t);
-        //Mat4::multiply(t, bindShape, &t);
-        //Mat4::multiply(getInverseBindPose(), _world, &t);
-        
-        //t.setIdentity();
+
         matrixPalette[0].set(t.m[0], t.m[4], t.m[8], t.m[12]);
         matrixPalette[1].set(t.m[1], t.m[5], t.m[9], t.m[13]);
         matrixPalette[2].set(t.m[2], t.m[6], t.m[10], t.m[14]);

@@ -59,15 +59,9 @@ public:
     
     const std::string& getName() const { return _name; }
     
-//	/**
-//     * Set AnimationValue. set to its transform
-//     */
-//	void setAnimationValueTranslation(float* value, float weight = 1.0f);
-//    void setAnimationValueRotation(float* value, float weight = 1.0f);
-//    void setAnimationValueScale(float* value, float weight = 1.0f);
-    
     void setAnimationValue(float* trans, float* rot, float* scale, float weight = 1.0f);
     
+    void clearBoneBlendState();
     /**
      * Creates C3DBone.
      */
