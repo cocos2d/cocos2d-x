@@ -64,10 +64,10 @@ display 模块封装了绝大部分与显示有关的功能，并负责根据 co
 ]]
 local display = {}
 
-local sharedDirector         = CCDirector:sharedDirector()
-local sharedTextureCache     = CCTextureCache:sharedTextureCache()
-local sharedSpriteFrameCache = CCSpriteFrameCache:sharedSpriteFrameCache()
-local sharedAnimationCache   = CCAnimationCache:sharedAnimationCache()
+local sharedDirector         = cc.Director:getInstance()
+local sharedTextureCache     = cc.Director:getInstance():getTextureCache()
+local sharedSpriteFrameCache = cc.SpriteFrameCache:getInstance()
+local sharedAnimationCache   = cc.AnimationCache:getInstance()
 
 -- check device screen size
 local glview = sharedDirector:getOpenGLView()
@@ -1068,7 +1068,7 @@ end
 ]]
 function display.removeSpriteFrameByImageName(imageName)
     sharedSpriteFrameCache:removeSpriteFrameByName(imageName)
-    CCTextureCache:sharedTextureCache():removeTextureForKey(imageName)
+    cc.Director:getInstance():getTextureCache():removeTextureForKey(imageName)
 end
 
 --[[--

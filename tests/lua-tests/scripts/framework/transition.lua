@@ -52,7 +52,7 @@ ACTION_EASING["SINEIN"]           = {CCEaseSineIn, 1}
 ACTION_EASING["SINEINOUT"]        = {CCEaseSineInOut, 1}
 ACTION_EASING["SINEOUT"]          = {CCEaseSineOut, 1}
 
-local actionManager = CCDirector:sharedDirector():getActionManager()
+local actionManager = cc.Director:getInstance():getActionManager()
 
 function transition.newEasing(action, easingName, more)
     local key = string.upper(tostring(easingName))

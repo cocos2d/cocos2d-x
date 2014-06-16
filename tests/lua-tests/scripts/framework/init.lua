@@ -101,6 +101,13 @@ cc.PACKAGE_NAME = string.sub(CURRENT_MODULE_NAME, 1, -6)
 cc.VERSION = "2.2.3"
 cc.FRAMEWORK_NAME = "quick-cocos2d-x"
 
+if LOAD_DEPRECATED_API then
+    local dp = cc.PACKAGE_NAME .. ".deprecated."
+    require(dp .. "DeprecatedEnum")
+    require(dp .. "DeprecatedClass")
+    require(dp .. "Deprecated")
+end
+
 require(cc.PACKAGE_NAME .. ".debug")
 require(cc.PACKAGE_NAME .. ".functions")
 require(cc.PACKAGE_NAME .. ".cocos2dx")
@@ -139,15 +146,15 @@ end
 
 ----
 
-local sharedTextureCache = CCTextureCache:sharedTextureCache()
-local sharedDirector = CCDirector:sharedDirector()
+local sharedTextureCache = cc.Director:getInstance():getTextureCache()
+local sharedDirector = cc.Director:getInstance()
 
 if DEBUG_FPS then
     sharedDirector:setDisplayStats(true)
 end
 
 if DEBUG_MEM then
-    local sharedTextureCache = CCTextureCache:sharedTextureCache()
+    local sharedTextureCache = cc.Director:getInstance():getTextureCache()
     --[[--
     @ignore
     ]]

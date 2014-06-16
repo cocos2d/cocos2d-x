@@ -51,8 +51,17 @@ THE SOFTWARE.
 
 local p = cc.PACKAGE_NAME .. ".cocos2dx."
 
+require(p .. "Cocos2dConstants")
+require (p .. "OpenglConstants")
+require (p .. "Cocos2d")
 cc.c3 = cc.c3b
--- kResolutionNoBorder = 1
+kResolutionExactFit = cc.ResolutionPolicy.EXACT_FIT
+kResolutionNoBorder = cc.ResolutionPolicy.NO_BORDER
+kResolutionShowAll  = cc.ResolutionPolicy.SHOW_ALL
+kResolutionFixedHeight   = cc.ResolutionPolicy.FIXED_HEIGHT
+kResolutionFixedWidth    = cc.ResolutionPolicy.FIXED_WIDTH
+kResolutionUnKnown       = cc.ResolutionPolicy.UNKNOWN
+
 -- require(p .. "Global")
 -- require(p .. "ObjectBinding")
 require(p .. "OpenGL")

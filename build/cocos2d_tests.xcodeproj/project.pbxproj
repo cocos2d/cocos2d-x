@@ -66,27 +66,16 @@
 		15C6482F165F399D007D4F18 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
 		15C64833165F3AFD007D4F18 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
 		15C90B3718E66BE000D69802 /* ftp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAA918DA8B6C00F6518C /* ftp.lua */; };
-		15C90B3A18E66BE200D69802 /* ftp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAA918DA8B6C00F6518C /* ftp.lua */; };
-		15C90B3B18E66BEB00D69802 /* headers.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAA18DA8B6C00F6518C /* headers.lua */; };
 		15C90B3C18E66BEC00D69802 /* headers.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAA18DA8B6C00F6518C /* headers.lua */; };
-		15C90B3D18E66BF100D69802 /* http.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAB18DA8B6C00F6518C /* http.lua */; };
 		15C90B3E18E66BF200D69802 /* http.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAB18DA8B6C00F6518C /* http.lua */; };
-		15C90B3F18E66C0C00D69802 /* ltn12.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAC18DA8B6C00F6518C /* ltn12.lua */; };
 		15C90B4018E66C0D00D69802 /* ltn12.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAC18DA8B6C00F6518C /* ltn12.lua */; };
-		15C90B4118E66C1100D69802 /* mbox.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAD18DA8B6C00F6518C /* mbox.lua */; };
 		15C90B4218E66C1200D69802 /* mbox.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAD18DA8B6C00F6518C /* mbox.lua */; };
-		15C90B4318E66C1700D69802 /* mime.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAE18DA8B6C00F6518C /* mime.lua */; };
 		15C90B4418E66C1800D69802 /* mime.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAE18DA8B6C00F6518C /* mime.lua */; };
-		15C90B4518E66C1E00D69802 /* smtp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAF18DA8B6C00F6518C /* smtp.lua */; };
 		15C90B4618E66C1F00D69802 /* smtp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAF18DA8B6C00F6518C /* smtp.lua */; };
-		15C90B4718E66C2400D69802 /* socket.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAB018DA8B6C00F6518C /* socket.lua */; };
 		15C90B4818E66C2500D69802 /* socket.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAB018DA8B6C00F6518C /* socket.lua */; };
-		15C90B4918E66C2A00D69802 /* tp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAB118DA8B6C00F6518C /* tp.lua */; };
 		15C90B4A18E66C2B00D69802 /* tp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAB118DA8B6C00F6518C /* tp.lua */; };
-		15C90B4B18E66C2F00D69802 /* url.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAB218DA8B6C00F6518C /* url.lua */; };
 		15C90B4C18E66C3100D69802 /* url.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAB218DA8B6C00F6518C /* url.lua */; };
 		15E66FC8192D957100C20A52 /* Sprite3DTest in Resources */ = {isa = PBXBuildFile; fileRef = 3E92EA841921A7720094CD21 /* Sprite3DTest */; };
-		15E66FD6192DC8C700C20A52 /* Sprite3DTest in Resources */ = {isa = PBXBuildFile; fileRef = 3E92EA841921A7720094CD21 /* Sprite3DTest */; };
 		1A0EE2A118CDF6DA004CD58F /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB41807A4F9005B8026 /* libchipmunk Mac.a */; };
 		1A0EE2A218CDF6DA004CD58F /* libcocos2dx Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2dx Mac.a */; };
 		1A0EE2A418CDF6DA004CD58F /* libCocosDenshion Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB81807A4F9005B8026 /* libCocosDenshion Mac.a */; };
@@ -157,7 +146,6 @@
 		1A0EE57818CDFBBE004CD58F /* extern.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1ABCA37018CD9E180087CE3A /* extern.lua */; };
 		1A0EE57B18CDFBBE004CD58F /* luaj.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1ABCA37318CD9E180087CE3A /* luaj.lua */; };
 		1A0EE57C18CDFBBE004CD58F /* luaoc.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1ABCA37418CD9E180087CE3A /* luaoc.lua */; };
-		1A1645A6191B6281008C7C7F /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 1A221C9B191771E300FD2BE4 /* ccs-res */; };
 		1A1645A9191B6283008C7C7F /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 1A221C9B191771E300FD2BE4 /* ccs-res */; };
 		1A221C9C191771E300FD2BE4 /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 1A221C9B191771E300FD2BE4 /* ccs-res */; };
 		1A221C9D191771E400FD2BE4 /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 1A221C9B191771E300FD2BE4 /* ccs-res */; };
@@ -193,19 +181,12 @@
 		1ABCA35F18CD9AAE0087CE3A /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
 		1ABCA36118CD9AC00087CE3A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA36018CD9AC00087CE3A /* libz.dylib */; };
 		1ABCA36218CD9AC60087CE3A /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9F808C177E98A600D9A1CB /* libcurl.dylib */; };
-		1ABCA37818CD9E180087CE3A /* AudioEngine.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1ABCA36618CD9E180087CE3A /* AudioEngine.lua */; };
 		1ABCA37918CD9E180087CE3A /* AudioEngine.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1ABCA36618CD9E180087CE3A /* AudioEngine.lua */; };
-		1ABCA37C18CD9E180087CE3A /* Cocos2d.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1ABCA36818CD9E180087CE3A /* Cocos2d.lua */; };
 		1ABCA37D18CD9E180087CE3A /* Cocos2d.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1ABCA36818CD9E180087CE3A /* Cocos2d.lua */; };
-		1ABCA37E18CD9E180087CE3A /* Cocos2dConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1ABCA36918CD9E180087CE3A /* Cocos2dConstants.lua */; };
 		1ABCA37F18CD9E180087CE3A /* Cocos2dConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1ABCA36918CD9E180087CE3A /* Cocos2dConstants.lua */; };
-		1ABCA38A18CD9E180087CE3A /* DrawPrimitives.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1ABCA36F18CD9E180087CE3A /* DrawPrimitives.lua */; };
 		1ABCA38B18CD9E180087CE3A /* DrawPrimitives.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1ABCA36F18CD9E180087CE3A /* DrawPrimitives.lua */; };
-		1ABCA38C18CD9E180087CE3A /* extern.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1ABCA37018CD9E180087CE3A /* extern.lua */; };
 		1ABCA38D18CD9E180087CE3A /* extern.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1ABCA37018CD9E180087CE3A /* extern.lua */; };
-		1ABCA39218CD9E180087CE3A /* luaj.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1ABCA37318CD9E180087CE3A /* luaj.lua */; };
 		1ABCA39318CD9E180087CE3A /* luaj.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1ABCA37318CD9E180087CE3A /* luaj.lua */; };
-		1ABCA39418CD9E180087CE3A /* luaoc.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1ABCA37418CD9E180087CE3A /* luaoc.lua */; };
 		1ABCA39518CD9E180087CE3A /* luaoc.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1ABCA37418CD9E180087CE3A /* luaoc.lua */; };
 		1ABCA39D18CD9ED80087CE3A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA39C18CD9ED80087CE3A /* AVFoundation.framework */; };
 		1ABCA39F18CD9EE50087CE3A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA39E18CD9EE50087CE3A /* UIKit.framework */; };
@@ -589,8 +570,6 @@
 		1AC35D5D18CEDE9E00F37B72 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D5618CEDE9E00F37B72 /* MainMenu.xib */; };
 		1AC35D5E18CEDE9E00F37B72 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D5918CEDE9E00F37B72 /* Icon.icns */; };
 		1AC35D6018CEDE9E00F37B72 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D5B18CEDE9E00F37B72 /* main.cpp */; };
-		1AC35D7918CEE59900F37B72 /* cocosbuilderRes in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D7818CEE59900F37B72 /* cocosbuilderRes */; };
-		1AC35D7A18CEE59900F37B72 /* cocosbuilderRes in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D7818CEE59900F37B72 /* cocosbuilderRes */; };
 		1AC35D8118CEE5B100F37B72 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D7D18CEE5B100F37B72 /* AppDelegate.cpp */; };
 		1AC35D8218CEE5B100F37B72 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D7D18CEE5B100F37B72 /* AppDelegate.cpp */; };
 		1AC35D8318CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D7F18CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp */; };
@@ -609,25 +588,8 @@
 		1AC35DA418CEE5D100F37B72 /* LuaObjectCBridgeTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D9418CEE5D100F37B72 /* LuaObjectCBridgeTest.mm */; };
 		1AC35DA518CEE5D100F37B72 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D9518CEE5D100F37B72 /* main.m */; };
 		1AC35DA618CEE5D100F37B72 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D9718CEE5D100F37B72 /* RootViewController.mm */; };
-		1AC35DB118CEE5DA00F37B72 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35DA818CEE5DA00F37B72 /* InfoPlist.strings */; };
-		1AC35DB218CEE5DA00F37B72 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35DAA18CEE5DA00F37B72 /* MainMenu.xib */; };
-		1AC35DB318CEE5DA00F37B72 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35DAC18CEE5DA00F37B72 /* Icon.icns */; };
 		1AC35DB518CEE5DA00F37B72 /* LuaObjectCBridgeTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35DAF18CEE5DA00F37B72 /* LuaObjectCBridgeTest.mm */; };
 		1AC35DB618CEE5DA00F37B72 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35DB018CEE5DA00F37B72 /* main.cpp */; };
-		1AC35DB718CEE65100F37B72 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CA918CED84500F37B72 /* animations */; };
-		1AC35DB918CEE65100F37B72 /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAE18CED84500F37B72 /* ccb */; };
-		1AC35DBB18CEE65100F37B72 /* components in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB318CED84500F37B72 /* components */; };
-		1AC35DBC18CEE65100F37B72 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB418CED84500F37B72 /* configs */; };
-		1AC35DBD18CEE65100F37B72 /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB818CED84500F37B72 /* extensions */; };
-		1AC35DBE18CEE65100F37B72 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CBA18CED84500F37B72 /* fonts */; };
-		1AC35DBF18CEE65100F37B72 /* hd in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CBC18CED84500F37B72 /* hd */; };
-		1AC35DC018CEE65100F37B72 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CBE18CED84500F37B72 /* Images */; };
-		1AC35DC318CEE65100F37B72 /* Misc in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC118CED84500F37B72 /* Misc */; };
-		1AC35DC418CEE65100F37B72 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC318CED84500F37B72 /* Particles */; };
-		1AC35DC618CEE65100F37B72 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC618CED84500F37B72 /* Shaders */; };
-		1AC35DC718CEE65100F37B72 /* spine in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC718CED84500F37B72 /* spine */; };
-		1AC35DC818CEE65100F37B72 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC818CED84500F37B72 /* TileMaps */; };
-		1AC35DC918CEE65100F37B72 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC918CED84500F37B72 /* zwoptex */; };
 		1AC35DCA18CEE65200F37B72 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CA918CED84500F37B72 /* animations */; };
 		1AC35DCC18CEE65200F37B72 /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAE18CED84500F37B72 /* ccb */; };
 		1AC35DCE18CEE65200F37B72 /* components in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB318CED84500F37B72 /* components */; };
@@ -642,18 +604,6 @@
 		1AC35DDA18CEE65200F37B72 /* spine in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC718CED84500F37B72 /* spine */; };
 		1AC35DDB18CEE65200F37B72 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC818CED84500F37B72 /* TileMaps */; };
 		1AC35DDC18CEE65200F37B72 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC918CED84500F37B72 /* zwoptex */; };
-		1AC35DDD18CEE65900F37B72 /* CocosBuilderExample.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAF18CED84500F37B72 /* CocosBuilderExample.ccbproj */; };
-		1AC35DDE18CEE65900F37B72 /* CocosBuilderExample.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB018CED84500F37B72 /* CocosBuilderExample.ccbresourcelog */; };
-		1AC35DDF18CEE65900F37B72 /* music.mid in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC218CED84500F37B72 /* music.mid */; };
-		1AC35DE018CEE65900F37B72 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAC18CED84500F37B72 /* background.mp3 */; };
-		1AC35DE118CEE65900F37B72 /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAD18CED84500F37B72 /* background.ogg */; };
-		1AC35DE218CEE65900F37B72 /* effect2.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB718CED84500F37B72 /* effect2.ogg */; };
-		1AC35DE318CEE65900F37B72 /* fileLookup.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB918CED84500F37B72 /* fileLookup.plist */; };
-		1AC35DE518CEE65900F37B72 /* Hello.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CBD18CED84500F37B72 /* Hello.png */; };
-		1AC35DE618CEE65900F37B72 /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB518CED84500F37B72 /* effect1.raw */; };
-		1AC35DE718CEE65900F37B72 /* commonly_used_words.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB218CED84500F37B72 /* commonly_used_words.txt */; };
-		1AC35DE918CEE65900F37B72 /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB618CED84500F37B72 /* effect1.wav */; };
-		1AC35DEA18CEE65900F37B72 /* pew-pew-lei.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC418CED84500F37B72 /* pew-pew-lei.wav */; };
 		1AC35DEB18CEE65B00F37B72 /* CocosBuilderExample.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAF18CED84500F37B72 /* CocosBuilderExample.ccbproj */; };
 		1AC35DEC18CEE65B00F37B72 /* CocosBuilderExample.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB018CED84500F37B72 /* CocosBuilderExample.ccbresourcelog */; };
 		1AC35DED18CEE65B00F37B72 /* music.mid in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC218CED84500F37B72 /* music.mid */; };
@@ -784,24 +734,11 @@
 		B2507B6B192589AF00FA4972 /* Shaders3D in Resources */ = {isa = PBXBuildFile; fileRef = B2507B6A192589AF00FA4972 /* Shaders3D */; };
 		B2507B6C192589AF00FA4972 /* Shaders3D in Resources */ = {isa = PBXBuildFile; fileRef = B2507B6A192589AF00FA4972 /* Shaders3D */; };
 		C08689C118D370C90093E810 /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
-		C08689C218D370C90093E810 /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
 		C08689C318D370C90093E810 /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
 		C08689C418D370C90093E810 /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
 		D60AE43417F7FFE100757E4B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
-		DAB4DAE6194B21E400081B37 /* BlueButton.png in Resources */ = {isa = PBXBuildFile; fileRef = DAB4DA9A194B21E400081B37 /* BlueButton.png */; };
-		DAB4DAE7194B21E400081B37 /* CheckBoxButton2Off.png in Resources */ = {isa = PBXBuildFile; fileRef = DAB4DA9B194B21E400081B37 /* CheckBoxButton2Off.png */; };
-		DAB4DAE8194B21E400081B37 /* CheckBoxButton2On.png in Resources */ = {isa = PBXBuildFile; fileRef = DAB4DA9C194B21E400081B37 /* CheckBoxButton2On.png */; };
-		DAB4DB25194B21E500081B37 /* Cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = DAB4DADC194B21E400081B37 /* Cursor.png */; };
-		DAB4DB26194B21E500081B37 /* GreenButton.png in Resources */ = {isa = PBXBuildFile; fileRef = DAB4DADD194B21E400081B37 /* GreenButton.png */; };
-		DAB4DB27194B21E500081B37 /* PinkButton.png in Resources */ = {isa = PBXBuildFile; fileRef = DAB4DADE194B21E400081B37 /* PinkButton.png */; };
-		DAB4DB28194B21E500081B37 /* RadioButtonOff.png in Resources */ = {isa = PBXBuildFile; fileRef = DAB4DADF194B21E400081B37 /* RadioButtonOff.png */; };
-		DAB4DB29194B21E500081B37 /* RadioButtonOffDisabled.png in Resources */ = {isa = PBXBuildFile; fileRef = DAB4DAE0194B21E400081B37 /* RadioButtonOffDisabled.png */; };
-		DAB4DB2A194B21E500081B37 /* RadioButtonOffPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = DAB4DAE1194B21E400081B37 /* RadioButtonOffPressed.png */; };
-		DAB4DB2B194B21E500081B37 /* RadioButtonOn.png in Resources */ = {isa = PBXBuildFile; fileRef = DAB4DAE2194B21E400081B37 /* RadioButtonOn.png */; };
-		DAB4DB2C194B21E500081B37 /* RadioButtonOnDisabled.png in Resources */ = {isa = PBXBuildFile; fileRef = DAB4DAE3194B21E400081B37 /* RadioButtonOnDisabled.png */; };
-		DAB4DB2D194B21E500081B37 /* RadioButtonOnPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = DAB4DAE4194B21E400081B37 /* RadioButtonOnPressed.png */; };
-		DAB4DB2E194B21E500081B37 /* WhiteButton.png in Resources */ = {isa = PBXBuildFile; fileRef = DAB4DAE5194B21E400081B37 /* WhiteButton.png */; };
-		DAB4DB32194B231600081B37 /* scripts in Resources */ = {isa = PBXBuildFile; fileRef = DAB4DB31194B231600081B37 /* scripts */; };
+		DA853F89194EF15E0057DF22 /* scripts in Resources */ = {isa = PBXBuildFile; fileRef = DAB4DB31194B231600081B37 /* scripts */; };
+		DA853F8B194EF19B0057DF22 /* res in Resources */ = {isa = PBXBuildFile; fileRef = DA853F8A194EF19B0057DF22 /* res */; };
 		EDCC747F17C455FD007B692C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -1674,7 +1611,6 @@
 		1AC35D5918CEDE9E00F37B72 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		1AC35D5A18CEDE9E00F37B72 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1AC35D5B18CEDE9E00F37B72 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		1AC35D7818CEE59900F37B72 /* cocosbuilderRes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = cocosbuilderRes; path = "../tests/lua-tests/res/cocosbuilderRes"; sourceTree = "<group>"; };
 		1AC35D7D18CEE5B100F37B72 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		1AC35D7E18CEE5B100F37B72 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1AC35D7F18CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_assetsmanager_test_sample.cpp; sourceTree = "<group>"; };
@@ -1822,19 +1758,7 @@
 		B2507B6A192589AF00FA4972 /* Shaders3D */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Shaders3D; path = "../tests/cpp-tests/Resources/Shaders3D"; sourceTree = "<group>"; };
 		C08689C018D370C90093E810 /* background.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = background.caf; path = "../tests/cpp-tests/Resources/background.caf"; sourceTree = "<group>"; };
 		D60AE43317F7FFE100757E4B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
-		DAB4DA9A194B21E400081B37 /* BlueButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BlueButton.png; path = "../tests/lua-tests/res/BlueButton.png"; sourceTree = "<group>"; };
-		DAB4DA9B194B21E400081B37 /* CheckBoxButton2Off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CheckBoxButton2Off.png; path = "../tests/lua-tests/res/CheckBoxButton2Off.png"; sourceTree = "<group>"; };
-		DAB4DA9C194B21E400081B37 /* CheckBoxButton2On.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CheckBoxButton2On.png; path = "../tests/lua-tests/res/CheckBoxButton2On.png"; sourceTree = "<group>"; };
-		DAB4DADC194B21E400081B37 /* Cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Cursor.png; path = "../tests/lua-tests/res/Cursor.png"; sourceTree = "<group>"; };
-		DAB4DADD194B21E400081B37 /* GreenButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = GreenButton.png; path = "../tests/lua-tests/res/GreenButton.png"; sourceTree = "<group>"; };
-		DAB4DADE194B21E400081B37 /* PinkButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PinkButton.png; path = "../tests/lua-tests/res/PinkButton.png"; sourceTree = "<group>"; };
-		DAB4DADF194B21E400081B37 /* RadioButtonOff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RadioButtonOff.png; path = "../tests/lua-tests/res/RadioButtonOff.png"; sourceTree = "<group>"; };
-		DAB4DAE0194B21E400081B37 /* RadioButtonOffDisabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RadioButtonOffDisabled.png; path = "../tests/lua-tests/res/RadioButtonOffDisabled.png"; sourceTree = "<group>"; };
-		DAB4DAE1194B21E400081B37 /* RadioButtonOffPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RadioButtonOffPressed.png; path = "../tests/lua-tests/res/RadioButtonOffPressed.png"; sourceTree = "<group>"; };
-		DAB4DAE2194B21E400081B37 /* RadioButtonOn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RadioButtonOn.png; path = "../tests/lua-tests/res/RadioButtonOn.png"; sourceTree = "<group>"; };
-		DAB4DAE3194B21E400081B37 /* RadioButtonOnDisabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RadioButtonOnDisabled.png; path = "../tests/lua-tests/res/RadioButtonOnDisabled.png"; sourceTree = "<group>"; };
-		DAB4DAE4194B21E400081B37 /* RadioButtonOnPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RadioButtonOnPressed.png; path = "../tests/lua-tests/res/RadioButtonOnPressed.png"; sourceTree = "<group>"; };
-		DAB4DAE5194B21E400081B37 /* WhiteButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = WhiteButton.png; path = "../tests/lua-tests/res/WhiteButton.png"; sourceTree = "<group>"; };
+		DA853F8A194EF19B0057DF22 /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = "../tests/lua-tests/res"; sourceTree = "<group>"; };
 		DAB4DB31194B231600081B37 /* scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = scripts; path = "../tests/lua-tests/scripts"; sourceTree = "<group>"; };
 		EDCC747E17C455FD007B692C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -3311,32 +3235,11 @@
 		1AC35D7118CEE4AE00F37B72 /* lua-tests */ = {
 			isa = PBXGroup;
 			children = (
+				DA853F8A194EF19B0057DF22 /* res */,
 				DAB4DB31194B231600081B37 /* scripts */,
 				1AC35D7B18CEE5A100F37B72 /* project */,
-				1AC35D7718CEE58D00F37B72 /* res */,
 			);
 			name = "lua-tests";
-			sourceTree = "<group>";
-		};
-		1AC35D7718CEE58D00F37B72 /* res */ = {
-			isa = PBXGroup;
-			children = (
-				DAB4DA9A194B21E400081B37 /* BlueButton.png */,
-				DAB4DA9B194B21E400081B37 /* CheckBoxButton2Off.png */,
-				DAB4DA9C194B21E400081B37 /* CheckBoxButton2On.png */,
-				DAB4DADC194B21E400081B37 /* Cursor.png */,
-				DAB4DADD194B21E400081B37 /* GreenButton.png */,
-				DAB4DADE194B21E400081B37 /* PinkButton.png */,
-				DAB4DADF194B21E400081B37 /* RadioButtonOff.png */,
-				DAB4DAE0194B21E400081B37 /* RadioButtonOffDisabled.png */,
-				DAB4DAE1194B21E400081B37 /* RadioButtonOffPressed.png */,
-				DAB4DAE2194B21E400081B37 /* RadioButtonOn.png */,
-				DAB4DAE3194B21E400081B37 /* RadioButtonOnDisabled.png */,
-				DAB4DAE4194B21E400081B37 /* RadioButtonOnPressed.png */,
-				DAB4DAE5194B21E400081B37 /* WhiteButton.png */,
-				1AC35D7818CEE59900F37B72 /* cocosbuilderRes */,
-			);
-			name = res;
 			sourceTree = "<group>";
 		};
 		1AC35D7B18CEE5A100F37B72 /* project */ = {
@@ -4191,70 +4094,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DAB4DB29194B21E500081B37 /* RadioButtonOffDisabled.png in Resources */,
-				15E66FD6192DC8C700C20A52 /* Sprite3DTest in Resources */,
-				1AC35DC318CEE65100F37B72 /* Misc in Resources */,
-				1AC35DC618CEE65100F37B72 /* Shaders in Resources */,
-				1AC35DBB18CEE65100F37B72 /* components in Resources */,
-				1AC35DE218CEE65900F37B72 /* effect2.ogg in Resources */,
-				15C90B4318E66C1700D69802 /* mime.lua in Resources */,
-				1AC35DB118CEE5DA00F37B72 /* InfoPlist.strings in Resources */,
-				1AC35DDD18CEE65900F37B72 /* CocosBuilderExample.ccbproj in Resources */,
-				1ABCA39218CD9E180087CE3A /* luaj.lua in Resources */,
-				DAB4DB32194B231600081B37 /* scripts in Resources */,
-				1AC35DB218CEE5DA00F37B72 /* MainMenu.xib in Resources */,
-				DAB4DB27194B21E500081B37 /* PinkButton.png in Resources */,
-				1AC35DBF18CEE65100F37B72 /* hd in Resources */,
-				DAB4DB2C194B21E500081B37 /* RadioButtonOnDisabled.png in Resources */,
-				DAB4DB28194B21E500081B37 /* RadioButtonOff.png in Resources */,
-				1AC35DC818CEE65100F37B72 /* TileMaps in Resources */,
-				1ABCA37C18CD9E180087CE3A /* Cocos2d.lua in Resources */,
-				1AC35DBE18CEE65100F37B72 /* fonts in Resources */,
-				DAB4DB25194B21E500081B37 /* Cursor.png in Resources */,
-				1AC35DDE18CEE65900F37B72 /* CocosBuilderExample.ccbresourcelog in Resources */,
-				1AC35DBC18CEE65100F37B72 /* configs in Resources */,
-				1AC35DE118CEE65900F37B72 /* background.ogg in Resources */,
-				15C90B4B18E66C2F00D69802 /* url.lua in Resources */,
-				1AC35DE718CEE65900F37B72 /* commonly_used_words.txt in Resources */,
-				1AC35DDF18CEE65900F37B72 /* music.mid in Resources */,
-				DAB4DAE7194B21E400081B37 /* CheckBoxButton2Off.png in Resources */,
-				1AC35DE018CEE65900F37B72 /* background.mp3 in Resources */,
-				1A1645A6191B6281008C7C7F /* ccs-res in Resources */,
-				DAB4DB2D194B21E500081B37 /* RadioButtonOnPressed.png in Resources */,
-				C08689C218D370C90093E810 /* background.caf in Resources */,
-				DAB4DB2E194B21E500081B37 /* WhiteButton.png in Resources */,
-				15C90B4918E66C2A00D69802 /* tp.lua in Resources */,
-				1AC35DE918CEE65900F37B72 /* effect1.wav in Resources */,
-				DAB4DAE8194B21E400081B37 /* CheckBoxButton2On.png in Resources */,
-				15C90B3F18E66C0C00D69802 /* ltn12.lua in Resources */,
-				15C90B4718E66C2400D69802 /* socket.lua in Resources */,
-				15C90B3A18E66BE200D69802 /* ftp.lua in Resources */,
-				DAB4DB2B194B21E500081B37 /* RadioButtonOn.png in Resources */,
-				1ABCA37E18CD9E180087CE3A /* Cocos2dConstants.lua in Resources */,
-				1AC35DE518CEE65900F37B72 /* Hello.png in Resources */,
-				DAB4DB2A194B21E500081B37 /* RadioButtonOffPressed.png in Resources */,
-				1AC35DEA18CEE65900F37B72 /* pew-pew-lei.wav in Resources */,
-				1AC35DC418CEE65100F37B72 /* Particles in Resources */,
-				1AC35DB918CEE65100F37B72 /* ccb in Resources */,
-				15C90B4118E66C1100D69802 /* mbox.lua in Resources */,
-				1ABCA38A18CD9E180087CE3A /* DrawPrimitives.lua in Resources */,
-				1AC35DB318CEE5DA00F37B72 /* Icon.icns in Resources */,
-				1AC35DE318CEE65900F37B72 /* fileLookup.plist in Resources */,
-				15C90B3D18E66BF100D69802 /* http.lua in Resources */,
-				1AC35DE618CEE65900F37B72 /* effect1.raw in Resources */,
-				1AC35DC018CEE65100F37B72 /* Images in Resources */,
-				1ABCA37818CD9E180087CE3A /* AudioEngine.lua in Resources */,
-				1ABCA39418CD9E180087CE3A /* luaoc.lua in Resources */,
-				1AC35D7918CEE59900F37B72 /* cocosbuilderRes in Resources */,
-				DAB4DAE6194B21E400081B37 /* BlueButton.png in Resources */,
-				15C90B3B18E66BEB00D69802 /* headers.lua in Resources */,
-				1ABCA38C18CD9E180087CE3A /* extern.lua in Resources */,
-				1AC35DC918CEE65100F37B72 /* zwoptex in Resources */,
-				1AC35DBD18CEE65100F37B72 /* extensions in Resources */,
-				1AC35DC718CEE65100F37B72 /* spine in Resources */,
-				15C90B4518E66C1E00D69802 /* smtp.lua in Resources */,
-				1AC35DB718CEE65100F37B72 /* animations in Resources */,
-				DAB4DB26194B21E500081B37 /* GreenButton.png in Resources */,
+				DA853F89194EF15E0057DF22 /* scripts in Resources */,
+				DA853F8B194EF19B0057DF22 /* res in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4312,7 +4153,6 @@
 				1AC35DDA18CEE65200F37B72 /* spine in Resources */,
 				1AC35DDB18CEE65200F37B72 /* TileMaps in Resources */,
 				1AC35DF318CEE65B00F37B72 /* Hello.png in Resources */,
-				1AC35D7A18CEE59900F37B72 /* cocosbuilderRes in Resources */,
 				1AC35D9C18CEE5D100F37B72 /* Icon-114.png in Resources */,
 				1ABCA38B18CD9E180087CE3A /* DrawPrimitives.lua in Resources */,
 				1ABCA37918CD9E180087CE3A /* AudioEngine.lua in Resources */,
