@@ -76,8 +76,8 @@ public:
 
     VisibleFrame();
 
-    virtual void onEnter(Frame *nextFrame) override;
-    virtual Frame* clone() override;
+    virtual void onEnter(Frame *nextFrame) ;
+    virtual Frame* clone() ;
 
     inline void setVisible(bool visible) { _visible = visible;}
     inline bool isVisible() const { return _visible; }
@@ -96,8 +96,8 @@ public:
 
     virtual void setNode(cocos2d::CCNode* node);
 
-    virtual void onEnter(Frame *nextFrame) override;
-    virtual Frame* clone() override;
+    virtual void onEnter(Frame *nextFrame) ;
+    virtual Frame* clone() ;
 
     inline void setTextureName(std::string textureName) { _textureName = textureName;}
     inline std::string getTextureName() const { return _textureName; }
@@ -116,9 +116,9 @@ public:
 
     RotationFrame();
 
-    virtual void onEnter(Frame *nextFrame) override;
-    virtual void apply(float percent) override;
-    virtual Frame* clone() override;
+    virtual void onEnter(Frame *nextFrame) ;
+    virtual void apply(float percent) ;
+    virtual Frame* clone() ;
 
     inline void  setRotation(float rotation) { _rotation = rotation; }
     inline float getRotation() const { return _rotation; }
@@ -135,9 +135,9 @@ public:
 
     SkewFrame();
 
-    virtual void onEnter(Frame *nextFrame) override;
-    virtual void apply(float percent) override;
-    virtual Frame* clone() override;
+    virtual void onEnter(Frame *nextFrame) ;
+    virtual void apply(float percent) ;
+    virtual Frame* clone() ;
 
     inline void  setSkewX(float skewx) { _skewX = skewx; }
     inline float getSkewX() const { return _skewX; }
@@ -160,9 +160,9 @@ public:
 
     RotationSkewFrame();
 
-    virtual void onEnter(Frame *nextFrame) override;
-    virtual void apply(float percent) override;
-    virtual Frame* clone() override;
+    virtual void onEnter(Frame *nextFrame) ;
+    virtual void apply(float percent) ;
+    virtual Frame* clone() ;
 };
 
 
@@ -173,9 +173,9 @@ public:
 
     PositionFrame();
 
-    virtual void onEnter(Frame *nextFrame) override;
-    virtual void apply(float percent) override;
-    virtual Frame* clone() override;
+    virtual void onEnter(Frame *nextFrame) ;
+    virtual void apply(float percent) ;
+    virtual Frame* clone() ;
 
     inline void setPosition(const cocos2d::CCPoint& position) { _position = position; }
     inline cocos2d::CCPoint getPosition() const { return _position; }
@@ -199,9 +199,9 @@ public:
 
     ScaleFrame();
 
-    virtual void onEnter(Frame *nextFrame) override;
-    virtual void apply(float percent) override;
-    virtual Frame* clone() override;
+    virtual void onEnter(Frame *nextFrame) ;
+    virtual void apply(float percent) ;
+    virtual Frame* clone() ;
 
     inline void  setScale(float scale) { _scaleX = scale; _scaleY = scale; }
 
@@ -226,8 +226,8 @@ public:
 
     AnchorPointFrame();
 
-    virtual void onEnter(Frame *nextFrame) override;
-    virtual Frame* clone() override;
+    virtual void onEnter(Frame *nextFrame) ;
+    virtual Frame* clone() ;
 
     inline void setAnchorPoint(const cocos2d::CCPoint& point) { _anchorPoint = point; }
     inline cocos2d::CCPoint getAnchorPoint() const { return _anchorPoint; }
@@ -251,8 +251,8 @@ public:
     static InnerActionFrame* create();
     InnerActionFrame();
 
-    virtual void onEnter(Frame *nextFrame) override;
-    virtual Frame* clone() override;
+    virtual void onEnter(Frame *nextFrame) ;
+    virtual Frame* clone() ;
 
     inline void setInnerActionType(InnerActionType type) { _innerActionType = type; }
     inline InnerActionType getInnerActionType() const { return _innerActionType; }
@@ -272,9 +272,9 @@ public:
     static ColorFrame* create();
     ColorFrame();
 
-    virtual void onEnter(Frame *nextFrame) override;
-    virtual void apply(float percent) override;
-    virtual Frame* clone() override;
+    virtual void onEnter(Frame *nextFrame) ;
+    virtual void apply(float percent) ;
+    virtual Frame* clone() ;
 
     inline void    setAlpha(GLubyte alpha) { _alpha = alpha; }
     inline GLubyte getAlpha() const { return _alpha; }
@@ -299,8 +299,8 @@ public:
 
     EventFrame();
 
-    virtual void onEnter(Frame *nextFrame) override;
-    virtual Frame* clone() override;
+    virtual void onEnter(Frame *nextFrame) ;
+    virtual Frame* clone() ;
 
     inline void setEvent(std::string event) { _event = event;}
     inline std::string getEvent() const { return _event; }
@@ -316,8 +316,8 @@ public:
 
     ZOrderFrame();
 
-    virtual void onEnter(Frame *nextFrame) override;
-    virtual Frame* clone() override;
+    virtual void onEnter(Frame *nextFrame) ;
+    virtual Frame* clone() ;
 
     inline void setZOrder(int zorder) { _zorder = zorder;}
     inline int getZOrder() const { return _zorder; }

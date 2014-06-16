@@ -132,8 +132,6 @@ void LayoutReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *p
     
     ui::Layout* panel = static_cast<ui::Layout*>(widget);
     
-    float w = 0, h= 0;
-    
     stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
     this->beginSetBasicProperties(widget);
     
@@ -142,7 +140,6 @@ void LayoutReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *p
     int ecr=0, ecg=0, ecb= 0;
     float bgcv1 = 0.0f, bgcv2= 0.0f;
     float capsx = 0.0f, capsy = 0.0, capsWidth = 0.0, capsHeight = 0.0f;
-    bool isAdaptScreen = false;
     ui::LayoutType layoutType = ui::LAYOUT_ABSOLUTE;
     
     for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
@@ -165,7 +162,7 @@ void LayoutReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *p
             _positionPercentY = valueToFloat(value);
         }
         else if(key == "adaptScreen"){
-            isAdaptScreen = valueToBool(value);
+            _isAdaptScreen = valueToBool(value);
         }
         else if (key == "width"){
             _width = valueToFloat(value);
@@ -243,17 +240,16 @@ void LayoutReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *p
         
         else if (key == "opacity") {
             widget->setOpacity(valueToInt(value));
-        }else if(key == "colorR"){
-            ccColor3B color = widget->getColor();
-            widget->setColor(ccc3(valueToInt(value), color.g, color.b));
+        }
+        else if(key == "colorR"){
+            _color.r = valueToInt(value);
         }else if(key == "colorG"){
-            ccColor3B color = widget->getColor();
-            widget->setColor(ccc3( color.r, valueToInt(value), color.b));
+            _color.g = valueToInt(value);
         }else if(key == "colorB")
         {
-            ccColor3B color = widget->getColor();
-            widget->setColor(ccc3( color.r,  color.g , valueToInt(value)));
-        }else if(key == "flipX"){
+            _color.b = valueToInt(value);
+        }
+        else if(key == "flipX"){
             widget->setFlipX(valueToBool(value));
         }else if(key == "flipY"){
             widget->setFlipY(valueToBool(value));
@@ -262,14 +258,11 @@ void LayoutReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *p
         }else if(key == "anchorPointY"){
             _originalAnchorPoint.y = valueToFloat(value);
         }
-        else if (key == "adaptScreen") {
-            isAdaptScreen = valueToBool(value);
-        }
         else if(key == "width"){
-            w = valueToFloat(value);
+            _width = valueToFloat(value);
         }
         else if(key == "height"){
-            h = valueToFloat(value);
+            _height = valueToFloat(value);
         }
         else if( key == "clipAble"){
             panel->setClippingEnabled(valueToBool(value));
@@ -314,7 +307,6 @@ void LayoutReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *p
                 ui::TextureResType imageFileNameType = (ui::TextureResType)valueToInt(resType);
                 
                 std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
-                //                    CCLOG("Layout : image =%s", backgroundValue.c_str());
                 
                 panel->setBackGroundImage(backgroundValue.c_str(), imageFileNameType);
             }
@@ -332,13 +324,10 @@ void LayoutReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *p
         }
         
     }
-    
-    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-    if (isAdaptScreen) {
-        w = screenSize.width;
-        h = screenSize.height;
-    }
-    panel->setSize(CCSize(w,h));
+    panel->setLayoutType(layoutType);
+
+    this->endSetBasicProperties(widget);
+
     
     panel->setBackGroundColor(ccc3(scr, scg, scb),ccc3(ecr, ecg, ecb));
     panel->setBackGroundColor(ccc3(cr, cg, cb));
@@ -348,8 +337,7 @@ void LayoutReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *p
         panel->setBackGroundImageCapInsets(CCRect(capsx, capsy, capsWidth, capsHeight));
     }
     
-    panel->setLayoutType(layoutType);
-    this->endSetBasicProperties(widget);
+    
 }
 
 NS_CC_EXT_END

@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "cocos-ext.h"
 #include "CCComRender.h"
+#include <algorithm>
 #include "../Json/CocoLoader.h"
 
 NS_CC_EXT_BEGIN

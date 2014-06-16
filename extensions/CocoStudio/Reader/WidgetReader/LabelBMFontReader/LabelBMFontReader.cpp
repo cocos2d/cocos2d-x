@@ -170,17 +170,16 @@ void LabelBMFontReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoad
         
         else if (key == "opacity") {
             widget->setOpacity(valueToInt(value));
-        }else if(key == "colorR"){
-            ccColor3B color = widget->getColor();
-            widget->setColor(ccc3(valueToInt(value), color.g, color.b));
+        }
+        else if(key == "colorR"){
+            _color.r = valueToInt(value);
         }else if(key == "colorG"){
-            ccColor3B color = widget->getColor();
-            widget->setColor(ccc3( color.r, valueToInt(value), color.b));
+            _color.g = valueToInt(value);
         }else if(key == "colorB")
         {
-            ccColor3B color = widget->getColor();
-            widget->setColor(ccc3( color.r,  color.g , valueToInt(value)));
-        }else if(key == "flipX"){
+            _color.b = valueToInt(value);
+        }
+        else if(key == "flipX"){
             widget->setFlipX(valueToBool(value));
         }else if(key == "flipY"){
             widget->setFlipY(valueToBool(value));
@@ -204,6 +203,7 @@ void LabelBMFontReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoad
             labelBMFont->setText(value.c_str());
         }
     } //end of for loop
+    
     this->endSetBasicProperties(widget);
 }
 

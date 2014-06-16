@@ -99,6 +99,11 @@ CocoStudio/Components/CCComRender.cpp \
 CocoStudio/Components/CCInputDelegate.cpp \
 CocoStudio/Json/DictionaryHelper.cpp \
 CocoStudio/Json/CocoLoader.cpp \
+CocoStudio/ActionTimeline/CCActionTimeline.cpp \
+CocoStudio/ActionTimeline/CCActionTimelineCache.cpp \
+CocoStudio/ActionTimeline/CCFrame.cpp \
+CocoStudio/ActionTimeline/CCNodeReader.cpp \
+CocoStudio/ActionTimeline/CCTimeline.cpp \
 CocoStudio/Reader/SceneReader.cpp \
 CocoStudio/Reader/GUIReader.cpp \
 CocoStudio/Reader/WidgetReader/WidgetReader.cpp \
