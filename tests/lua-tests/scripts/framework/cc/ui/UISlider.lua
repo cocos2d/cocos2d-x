@@ -74,7 +74,7 @@ function UISlider:setSliderSize(width, height)
     assert(self.scale9_, "UISlider:setSliderSize() - can't change size for non-scale9 slider")
     self.scale9Size_ = {width, height}
     if self.barSprite_ then
-        self.barSprite_:setContentSize(CCSize(self.scale9Size_[1], self.scale9Size_[2]))
+        self.barSprite_:setContentSize(cc.size(self.scale9Size_[1], self.scale9Size_[2]))
     end
     return self
 end
@@ -171,7 +171,7 @@ function UISlider:onTouch_(event, x, y)
     local touchInTarget = self:checkTouchInButton_(x, y)
     x = x + self.buttonPositionOffset_.x
     y = y + self.buttonPositionOffset_.y
-    local buttonPosition = self:convertToNodeSpace(CCPoint(x, y))
+    local buttonPosition = self:convertToNodeSpace(cc.p(x, y))
     x = buttonPosition.x
     y = buttonPosition.y
     local offset = 0
@@ -211,9 +211,9 @@ end
 function UISlider:checkTouchInButton_(x, y)
     if not self.buttonSprite_ then return false end
     if self.touchInButtonOnly_ then
-        return self.buttonSprite_:getCascadeBoundingBox():containsPoint(CCPoint(x, y))
+        return self.buttonSprite_:getCascadeBoundingBox():containsPoint(cc.p(x, y))
     else
-        return self:getCascadeBoundingBox():containsPoint(CCPoint(x, y))
+        return self:getCascadeBoundingBox():containsPoint(cc.p(x, y))
     end
 end
 
@@ -275,7 +275,7 @@ function UISlider:updateImage_()
     if barImage then
         if self.currentBarImage_ ~= barImage then
             if self.barSprite_ then
-                self.barSprite_:removeFromParentAndCleanup(true)
+                self.barSprite_:removeFromParent(true)
                 self.barSprite_ = nil
             end
 
@@ -285,7 +285,7 @@ function UISlider:updateImage_()
                     local size = self.barSprite_:getContentSize()
                     self.scale9Size_ = {size.width, size.height}
                 else
-                    self.barSprite_:setContentSize(CCSize(self.scale9Size_[1], self.scale9Size_[2]))
+                    self.barSprite_:setContentSize(cc.size(self.scale9Size_[1], self.scale9Size_[2]))
                 end
             else
                 self.barSprite_ = display.newSprite(barImage)
@@ -302,7 +302,7 @@ function UISlider:updateImage_()
     if buttonImage then
         if self.currentButtonImage_ ~= buttonImage then
             if self.buttonSprite_ then
-                self.buttonSprite_:removeFromParentAndCleanup(true)
+                self.buttonSprite_:removeFromParent(true)
                 self.buttonSprite_ = nil
             end
             self.buttonSprite_ = display.newSprite(buttonImage)

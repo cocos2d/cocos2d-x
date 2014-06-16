@@ -194,12 +194,12 @@ function Node:fadeTo(time, opacity)
 end
 
 function Node:moveTo(time, x, y)
-    self:runAction(CCMoveTo:create(time, CCPoint(x or self:getPositionX(), y or self:getPositionY())))
+    self:runAction(CCMoveTo:create(time, cc.p(x or self:getPositionX(), y or self:getPositionY())))
     return self
 end
 
 function Node:moveBy(time, x, y)
-    self:runAction(CCMoveBy:create(time, CCPoint(x or 0, y or 0)))
+    self:runAction(CCMoveBy:create(time, cc.p(x or 0, y or 0)))
     return self
 end
 

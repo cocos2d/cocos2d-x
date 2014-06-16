@@ -12,7 +12,7 @@ function TestMultiTouches1Scene:ctor()
     -- createTouchableSprite() 定义在 includes/functions.lua 中
     self.sprite = createTouchableSprite({
             image = "WhiteButton.png",
-            size = CCSize(500, 600),
+            size = cc.size(500, 600),
             label = "TOUCH ME !",
             labelColor = cc.c3(255, 0, 0)})
         :pos(display.cx, display.cy)

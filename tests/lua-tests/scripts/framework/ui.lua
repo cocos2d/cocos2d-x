@@ -121,7 +121,7 @@ function ui.newEditBox(params)
         imageDisabled = display.newScale9Sprite(imageDisabled)
     end
 
-    local editbox = CCEditBox:create(params.size, imageNormal, imagePressed, imageDisabled)
+    local editbox = cc.EditBox:create(params.size, imageNormal, imagePressed, imageDisabled)
 
     if editbox then
         editbox:addEditBoxEventListener(params.listener)
@@ -144,7 +144,7 @@ end
 ]]
 function ui.newMenu(items)
     local menu
-    menu = CCMenu:create()
+    menu = cc.Menu:create()
 
     for k, item in pairs(items) do
         if not tolua.isnull(item) then
@@ -213,7 +213,7 @@ function ui.newImageMenuItem(params)
         imageDisabled = display.newSprite(imageDisabled)
     end
 
-    local item = CCMenuItemSprite:create(imageNormal, imageSelected, imageDisabled)
+    local item = cc.MenuItemSprite:create(imageNormal, imageSelected, imageDisabled)
     if item then
         if type(listener) == "function" then
             item:addNodeEventListener(cc.MENU_ITEM_CLICKED_EVENT, function(tag)
@@ -258,7 +258,7 @@ function ui.newTTFLabelMenuItem(params)
     local y        = params.y
     local sound    = params.sound
 
-    local item = CCMenuItemLabel:create(label)
+    local item = cc.MenuItemLabel:create(label)
     if item then
         if type(listener) == "function" then
             item:addNodeEventListener(cc.MENU_ITEM_CLICKED_EVENT, function(tag)
@@ -310,7 +310,7 @@ function ui.newBMFontLabel(params)
     local x, y      = params.x, params.y
     assert(font ~= nil, "ui.newBMFontLabel() - not set font")
 
-    local label = CCLabelBMFont:create(text, font, kCCLabelAutomaticWidth, textAlign)
+    local label = cc.LabelBMFont:create(text, font, kCCLabelAutomaticWidth, textAlign)
     if not label then return end
 
     if type(x) == "number" and type(y) == "number" then
@@ -398,9 +398,9 @@ function ui.newTTFLabel(params)
 
     local label
     if dimensions then
-        label = CCLabelTTF:create(text, font, size, dimensions, textAlign, textValign)
+        label = cc.LabelTTF:create(text, font, size, dimensions, textAlign, textValign)
     else
-        label = CCLabelTTF:create(text, font, size)
+        label = cc.LabelTTF:create(text, font, size)
     end
 
     if label then

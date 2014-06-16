@@ -46,9 +46,9 @@ c.Color4FEqual                  = ccc4FEqual
 c.Color4FFromColor3B            = ccc4FFromccc3B
 c.Color4FFromColor4B            = ccc4FFromccc4B
 c.Color4BFromColor4F            = ccc4BFromccc4F
-c.c3                            = ccc3
-c.c4                            = ccc4
-c.c4f                           = ccc4f
+c.c3                            = c.c3b
+c.c4                            = c.c4b
+-- c.c4f                           = cc.c4f
 
 -- support
 c.timeval                       = cc_timeval
