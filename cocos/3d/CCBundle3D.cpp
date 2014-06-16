@@ -132,11 +132,10 @@ bool Bundle3D::loadMeshData(const std::string& id, MeshData* meshdata)
     meshdata->resetData();
     
     assert(document.HasMember("mesh_data"));
-    const rapidjson::Value& mash_data_val_array = document["mesh_data"];
+    const rapidjson::Value& mash_data_array = document["mesh_data"];
     
-    assert(mash_data_val_array.IsArray());
-    const rapidjson::Value& mash_data_val = mash_data_val_array[(rapidjson::SizeType)0];
-    assert(mash_data_val.IsObject());
+    assert(mash_data_array.IsArray());
+    const rapidjson::Value& mash_data_val = mash_data_array[(rapidjson::SizeType)0];
 
     assert(mash_data_val.HasMember("body"));
     const rapidjson::Value& mesh_data_body_array = mash_data_val["body"];
@@ -190,23 +189,13 @@ bool Bundle3D::loadSkinData(const std::string& id, SkinData* skindata)
 {
     skindata->resetData();
 
+    assert(document.HasMember("skin_data"));
     if (!document.HasMember("skin_data")) return false;
 
     const rapidjson::Value& skin_data_array = document["skin_data"];
-    assert(skin_data_array.IsArray());
-    
-    const rapidjson::Value& skin_data_array_val_0 = skin_data_array[(rapidjson::SizeType)0];
 
-    /*const rapidjson::Value& skin_data_bind_shape = skin_data_array_val_0["bind_pose"];
-    assert(skin_data_bind_shape.Size() == 16);
-    for (rapidjson::SizeType i = 0; i < skin_data_bind_shape.Size(); i++)
-    {
-        skindata->bindShape.m[i] = skin_data_bind_shape[i].GetDouble();
-    }*/
-    
-    float m[] = {-0.682038f, -0.035225f,  0.730468f,  0.000000f,  0.731315f, -0.035225f,  0.681130f,  0.000000f,  0.001738f,  0.998758f,  0.049786f,  0.000000f, -0.882000f,  78.798103f, -0.868362f,  1.000000f};
-    memcpy(skindata->bindShape.m, m, sizeof(m));
-    //skindata->bindShape.setIdentity();
+    assert(skin_data_array.IsArray());
+    const rapidjson::Value& skin_data_array_val_0 = skin_data_array[(rapidjson::SizeType)0];
 
     const rapidjson::Value& skin_data_bones = skin_data_array_val_0["bones"];
     for (rapidjson::SizeType i = 0; i < skin_data_bones.Size(); i++)
@@ -220,29 +209,13 @@ bool Bundle3D::loadSkinData(const std::string& id, SkinData* skindata)
         {
             mat_bind_pos.m[j] = bind_pos[j].GetDouble();
         }
-        skindata->inverseBindPoseMatrices.push_back(mat_bind_pos.getInversed());
+        skindata->inverseBindPoseMatrices.push_back(mat_bind_pos);
     }
 
     const rapidjson::Value& skin_data_array_val_1 = skin_data_array[1];
     const rapidjson::Value& bone_val_0 = skin_data_array_val_1["children"][(rapidjson::SizeType)0];
     skindata->rootBoneIndex = skindata->getBoneNameIndex(bone_val_0["id"].GetString());
-    //skindata->inverseBindPoseMatrices.resize(skindata->boneNames.size(), Mat4::IDENTITY);
     getChildMap(skindata->boneChild, skindata, bone_val_0);
-
-    std::map<std::string, std::vector<std::string> > map_child;
-    getChildMapT(map_child, skindata, bone_val_0);
-    
-    for (auto it : skindata->boneNames) {
-        CCLOG("bonename: %s", it.c_str());
-    }
-    CCLOG("root: %s", skindata->boneNames[skindata->rootBoneIndex].c_str());
-    for (auto itr : skindata->boneChild) {
-        CCLOG("parent: %s", skindata->boneNames[itr.first].c_str());
-        for (auto itr2 : itr.second) {
-            CCLOG("%s", skindata->boneNames[(itr2)].c_str());
-        }
-        CCLOG("////////");
-    }
     return true;
 }
 
@@ -252,6 +225,7 @@ bool Bundle3D::loadSkinData(const std::string& id, SkinData* skindata)
  */
 bool Bundle3D::loadMaterialData(const std::string& id, MaterialData* materialdata)
 {
+    assert(document.HasMember("material_data"));
     if (!document.HasMember("material_data")) 
         return false;
 
@@ -280,10 +254,10 @@ bool Bundle3D::loadAnimationData(const std::string& id, Animation3DData* animati
     assert(document.HasMember("animation_3d_data"));
     if (!document.HasMember("animation_3d_data")) return false;
 
-    animationdata->_totalTime = 3;
-
     const rapidjson::Value& animation_data_array_val =  document["animation_3d_data"];
     const rapidjson::Value& animation_data_array_val_0 = animation_data_array_val[(rapidjson::SizeType)0];
+
+    animationdata->_totalTime = animation_data_array_val_0["length"].GetDouble();
 
     const rapidjson::Value&  bones =  animation_data_array_val_0["bones"];
     rapidjson::SizeType bone_size = bones.Size();
@@ -326,8 +300,6 @@ bool Bundle3D::loadAnimationData(const std::string& id, Animation3DData* animati
             }
         }
     }
-    
-    animationdata->_totalTime = 3;
     
     return true;
 }
