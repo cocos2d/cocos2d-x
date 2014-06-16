@@ -11,7 +11,7 @@ function TestSingleTouch1Scene:ctor()
             image = "WhiteButton.png",
             size = CCSize(500, 300),
             label = "TOUCH ME !",
-            labelColor = cc.c3b(255, 0, 0)})
+            labelColor = cc.c3(255, 0, 0)})
         :pos(display.cx, display.cy)
         :addTo(self)
     drawBoundingBox(self, self.sprite, cc.c4f(0, 1.0, 0, 1.0))

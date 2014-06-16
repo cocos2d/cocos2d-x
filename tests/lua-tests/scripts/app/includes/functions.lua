@@ -58,8 +58,7 @@ end
 
 function drawBoundingBox(parent, target, color)
     local cbb = target:getCascadeBoundingBox()
-    -- local left, bottom, width, height = cbb.origin.x, cbb.origin.y, cbb.size.width, cbb.size.height
-    local left, bottom, width, height = cbb.x, cbb.y, cbb.width, cbb.height
+    local left, bottom, width, height = cbb.origin.x, cbb.origin.y, cbb.size.width, cbb.size.height
     local points = {
         {left, bottom},
         {left + width, bottom},
