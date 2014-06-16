@@ -259,59 +259,60 @@ MeshSkin::~MeshSkin()
     removeAllBones();
 }
 
-MeshSkin* MeshSkin::getOrCreate(const std::string& fileName, const std::string& name)
-{
-    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(fileName);
-    std::string key = fullPath + "#" + name;
-    auto skin = MeshSkinCache::getInstance()->getMeshSkin(key);
-    if (skin != nullptr)
-        return skin;
-    
-    skin = create(fileName, name);
-    MeshSkinCache::getInstance()->addMeshSkin(key, skin);
-    
-    return skin;
-}
-
 //create a new meshskin if do not want to share meshskin
 MeshSkin* MeshSkin::create(const std::string& filename, const std::string& name)
 {
-    
     //load skin here;
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename);
-    auto instance = Bundle3D::getInstance();
-    bool ret = instance->load(fullPath);
-    if (ret)
+    std::string key = fullPath + "#" + name;
+    const auto skindata = MeshSkinDataCache::getInstance()->getMeshSkinData(key);
+    if (skindata)
     {
-        SkinData skindata;
-        if (instance->loadSkinData(name, &skindata))
+        auto skin = new MeshSkin();
+        skin->initFromSkinData(*skindata);
+        skin->autorelease();
+        return skin;
+    }
+    else
+    {
+        auto instance = Bundle3D::getInstance();
+        bool ret = instance->load(fullPath);
+        if (ret)
         {
-            auto skin = new MeshSkin();
-            skin->_bindShape = skindata.bindShape;
-            skin->setBoneCount((int)skindata.boneNames.size());
-            for (size_t i = 0; i < skindata.boneNames.size(); i++) {
-                auto bone = Bone::create(skindata.boneNames[i]);
-                bone->_bindPose = skindata.inverseBindPoseMatrices[i];
-                skin->addBone(bone);
+            SkinData data;
+            if (instance->loadSkinData(name, &data))
+            {
+                auto skin = new MeshSkin();
+                skin->initFromSkinData(data);
+                skin->autorelease();
+                return skin;
             }
-            for (auto it : skindata.boneChild) {
-                auto parent = skin->getBoneByIndex(it.first);
-                for (auto childIt : it.second) {
-                    auto child = skin->getBoneByIndex(childIt);
-                    child->_parent = parent;
-                    parent->_children.pushBack(child);
-                }
-            }
-            
-            skin->setRootBone(skin->getBoneByIndex(skindata.rootBoneIndex));
-            
-            skin->autorelease();
-            return skin;
         }
     }
     
-    
     return nullptr;
+}
+
+bool MeshSkin::initFromSkinData(const SkinData& skindata)
+{
+    _bindShape = skindata.bindShape;
+    setBoneCount((int)skindata.boneNames.size());
+    for (size_t i = 0; i < skindata.boneNames.size(); i++) {
+        auto bone = Bone::create(skindata.boneNames[i]);
+        bone->_bindPose = skindata.inverseBindPoseMatrices[i];
+        addBone(bone);
+    }
+    for (auto it : skindata.boneChild) {
+        auto parent = getBoneByIndex(it.first);
+        for (auto childIt : it.second) {
+            auto child = getBoneByIndex(childIt);
+            child->_parent = parent;
+            parent->_children.pushBack(child);
+        }
+    }
+    
+    setRootBone(getBoneByIndex(skindata.rootBoneIndex));
+    return true;
 }
 
 //get & set bind shape matrix
@@ -430,15 +431,15 @@ void MeshSkin::addBone(Bone* bone)
 }
 
 ////////////////////////////////////////////////////////////////////////
-MeshSkinCache* MeshSkinCache::_cacheInstance = nullptr;
+MeshSkinDataCache* MeshSkinDataCache::_cacheInstance = nullptr;
 
-MeshSkinCache* MeshSkinCache::getInstance()
+MeshSkinDataCache* MeshSkinDataCache::getInstance()
 {
     if (_cacheInstance == nullptr)
-        _cacheInstance = new MeshSkinCache();
+        _cacheInstance = new MeshSkinDataCache();
     return _cacheInstance;
 }
-void MeshSkinCache::purgeMeshSkinCache()
+void MeshSkinDataCache::purgeMeshSkinCache()
 {
     if (_cacheInstance)
     {
@@ -446,50 +447,35 @@ void MeshSkinCache::purgeMeshSkinCache()
     }
 }
 
-MeshSkin* MeshSkinCache::getMeshSkin(const std::string& key)
+const SkinData* MeshSkinDataCache::getMeshSkinData(const std::string& key) const
 {
-    auto it = _skins.find(key);
-    if (it != _skins.end())
-        return it->second;
+    auto it = _skinDatas.find(key);
+    if (it != _skinDatas.end())
+        return &it->second;
     
     return nullptr;
 }
 
-bool MeshSkinCache::addMeshSkin(const std::string& key, MeshSkin* skin)
+bool MeshSkinDataCache::addMeshSkinData(const std::string& key, const SkinData& skin)
 {
-    if (_skins.find(key) != _skins.end())
+    if (_skinDatas.find(key) != _skinDatas.end())
         return false; // already have this key
     
-    _skins[key] = skin;
-    skin->retain();
+    _skinDatas[key] = skin;
+    
     return true;
 }
 
-void MeshSkinCache::removeAllMeshSkin()
+void MeshSkinDataCache::removeAllMeshSkin()
 {
-    for (auto itr = _skins.begin(); itr != _skins.end(); itr++) {
-        CC_SAFE_RELEASE_NULL(itr->second);
-    }
-    _skins.clear();
-}
-void MeshSkinCache::removeUnusedMeshSkin()
-{
-    for( auto it=_skins.cbegin(); it!=_skins.cend(); /* nothing */) {
-        auto value = it->second;
-        if( value->getReferenceCount() == 1 ) {
-            CC_SAFE_RELEASE(value);
-            _skins.erase(it++);
-        } else {
-            ++it;
-        }
-    }
+    _skinDatas.clear();
 }
 
-MeshSkinCache::MeshSkinCache()
+MeshSkinDataCache::MeshSkinDataCache()
 {
     
 }
-MeshSkinCache::~MeshSkinCache()
+MeshSkinDataCache::~MeshSkinDataCache()
 {
     
 }
