@@ -197,8 +197,8 @@ void WidgetReader::endSetBasicProperties(cocos2d::ui::Widget *widget)
     }
     widget->setColor(_color);
     widget->setSize(CCSize(_width, _height));
-    widget->setPosition(_position);
     widget->setAnchorPoint(_originalAnchorPoint);
+    widget->setPosition(_position);
 }
 
 std::string WidgetReader::getResourcePath(CocoLoader *pCocoLoader,

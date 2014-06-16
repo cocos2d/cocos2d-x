@@ -42,7 +42,6 @@ bool UIScene_Editor::init()
         pToggleItem->setPosition(ccp(VisibleRect::right().x - 150, VisibleRect::top().y - 50));;
         
         CCMenu* pMenu =CCMenu::create(pToggleItem, NULL);
-        pMenu->setVisible(false);
         pMenu->setPosition( CCPointZero );
         
         addChild(pMenu, 1);
