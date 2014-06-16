@@ -543,7 +543,7 @@ void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
 {
     auto sprite = Sprite3D::create("Sprite3DTest/girl.c3t");
     addChild(sprite);
-    
+    sprite->setRotation3D(Vec3(-90.f, 0.f, 0.f));
     sprite->setPosition( Vec2( p.x, p.y) );
 
     auto animation = Animation3D::getOrCreate("Sprite3DTest/girl.c3t");
