@@ -27,6 +27,7 @@
 
 #include <unordered_map>
 
+#include "CCBundle3DData.h"
 #include "base/ccMacros.h"
 #include "base/CCRef.h"
 #include "base/CCVector.h"
@@ -148,7 +149,6 @@ protected:
 class MeshSkin: public Ref
 {
 public:
-    static MeshSkin* getOrCreate(const std::string& filename, const std::string& name);
     
     //create a new meshskin if do not want to share meshskin
     static MeshSkin* create(const std::string& filename, const std::string& name);
@@ -185,6 +185,8 @@ protected:
     
     ~MeshSkin();
     
+    bool initFromSkinData(const SkinData& skindata);
+    
     void removeAllBones();
     
     void addBone(Bone* bone);
@@ -200,26 +202,26 @@ protected:
     Vec4* _matrixPalette;
 };
 
-class MeshSkinCache
+class MeshSkinDataCache
 {
 public:
-    static MeshSkinCache* getInstance();
+    static MeshSkinDataCache* getInstance();
     static void purgeMeshSkinCache();
     
-    MeshSkin* getMeshSkin(const std::string& key);
+    const SkinData* getMeshSkinData(const std::string& key) const;
     
-    bool addMeshSkin(const std::string& key, MeshSkin* skin);
+    bool addMeshSkinData(const std::string& key, const SkinData& skinData);
     
     void removeAllMeshSkin();
     void removeUnusedMeshSkin();
     
 protected:
-    MeshSkinCache();
-    ~MeshSkinCache();
+    MeshSkinDataCache();
+    ~MeshSkinDataCache();
     
-    static MeshSkinCache* _cacheInstance;
+    static MeshSkinDataCache* _cacheInstance;
     
-    std::unordered_map<std::string, MeshSkin*> _skins;
+    std::unordered_map<std::string, SkinData> _skinDatas;
 };
 
 NS_CC_END
