@@ -31,7 +31,7 @@ THE SOFTWARE.
 ]]
 local scheduler = {}
 
-local sharedScheduler = CCDirector:sharedDirector():getScheduler()
+local sharedScheduler = cc.Director:getInstance():getScheduler()
 
 --[[--
 

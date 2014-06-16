@@ -1,4 +1,6 @@
-require "Cocos2d.lua"
+local p = cc.PACKAGE_NAME .. ".cocos2dx."
+
+require (p .. "Cocos2d")
 --tip
 local function deprecatedTip(old_name,new_name)
     print("\n********** \n"..old_name.." was deprecated please use ".. new_name .. " instead.\n**********")

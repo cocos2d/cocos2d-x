@@ -24,7 +24,7 @@ function AppBase:run()
 end
 
 function AppBase:exit()
-    CCDirector:sharedDirector():endToLua()
+    cc.Director:getInstance():endToLua()
     if device.platform == "windows" or device.platform == "mac" then
         os.exit()
     end
