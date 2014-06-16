@@ -99,19 +99,29 @@ void Bundle3D::purgeBundle3D()
 
 bool Bundle3D::load(const std::string& path)
 {
-    std::string fullpath = FileUtils::getInstance()->getStringFromFile(path);
-
     getModelPath(path);
 
-    ssize_t size = fullpath.length();
+    std::string strFileString = FileUtils::getInstance()->getStringFromFile(path);
+
+    ssize_t size = strFileString.length();
     CC_SAFE_DELETE_ARRAY(_documentBuffer);
     _documentBuffer = new char[size + 1];
-    memcpy(_documentBuffer, fullpath.c_str(), size);
+    memcpy(_documentBuffer, strFileString.c_str(), size);
     _documentBuffer[size] = '\0';
     if (_document.ParseInsitu<0>(_documentBuffer).HasParseError())
     {
-        assert(0);
-        return false;
+        ssize_t size = strFileString.length();
+        
+        CC_SAFE_DELETE_ARRAY(_documentBuffer);
+        _documentBuffer = new char[size + 1];
+        memcpy(_documentBuffer, strFileString.c_str(), size);
+        _documentBuffer[size] = '\0';
+        if (_document.ParseInsitu<0>(_documentBuffer).HasParseError())
+        {
+            assert(0);
+            return false;
+        }
+        _fullPath = strFileString;
     }
 
     return true;
@@ -142,7 +152,7 @@ bool Bundle3D::loadMeshData(const std::string& id, MeshData* meshdata)
     meshdata->vertexSizeInFloat = mesh_data_body_array_0["vertexsize"].GetInt();
 
     // vertices
-    meshdata->vertex = new float[meshdata->vertexSizeInFloat];
+    meshdata->vertex.resize(meshdata->vertexSizeInFloat);
     const rapidjson::Value& mesh_data_body_vertices = mesh_data_body_array_0["vertices"];
     for (rapidjson::SizeType i = 0; i < mesh_data_body_vertices.Size(); i++)
         meshdata->vertex[i] = mesh_data_body_vertices[i].GetDouble();
@@ -151,7 +161,7 @@ bool Bundle3D::loadMeshData(const std::string& id, MeshData* meshdata)
     meshdata->numIndex = mesh_data_body_array_0["indexnum"].GetUint();
 
     // indices
-    meshdata->indices = new unsigned short[meshdata->numIndex];
+    meshdata->indices.resize(meshdata->numIndex);
     const rapidjson::Value& mesh_data_body_indices_val = mesh_data_body_array_0["indices"];
     for (rapidjson::SizeType i = 0; i < mesh_data_body_indices_val.Size(); i++)
         meshdata->indices[i] = (unsigned short)mesh_data_body_indices_val[i].GetUint();
@@ -159,7 +169,7 @@ bool Bundle3D::loadMeshData(const std::string& id, MeshData* meshdata)
     // mesh_vertex_attribute
     const rapidjson::Value& mesh_vertex_attribute = mash_data_val["attributes"];
     meshdata->attribCount = mesh_vertex_attribute.Size();
-    meshdata->attribs = new MeshVertexAttrib[meshdata->attribCount];
+    meshdata->attribs.resize(meshdata->attribCount);
     for (rapidjson::SizeType i = 0; i < mesh_vertex_attribute.Size(); i++)
     {
         const rapidjson::Value& mesh_vertex_attribute_val = mesh_vertex_attribute[i];

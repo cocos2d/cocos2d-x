@@ -541,12 +541,12 @@ std::string Sprite3DWithSkinTest::subtitle() const
 
 void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
 {
-    auto sprite = Sprite3D::create("Sprite3DTest/scene.c3t");
+    auto sprite = Sprite3D::create("Sprite3DTest/girl.c3t");
     addChild(sprite);
     
     sprite->setPosition( Vec2( p.x, p.y) );
 
-    auto animation = Animation3D::getOrCreate("Sprite3DTest/scene.c3t");
+    auto animation = Animation3D::getOrCreate("Sprite3DTest/girl.c3t");
     if (animation)
     {
         auto animate = Animate3D::create(animation);

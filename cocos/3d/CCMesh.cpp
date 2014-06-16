@@ -118,14 +118,13 @@ bool RenderMeshData::initFrom(const std::vector<float>& positions,
     return true;
 }
 
-bool RenderMeshData::initFrom(const float* vertex, int vertexSizeInFloat, unsigned short* indices, int numIndex, const MeshVertexAttrib* attribs, int attribCount)
+bool RenderMeshData::initFrom(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount)
 {
-    _vertexs.assign(vertex, vertex + vertexSizeInFloat);
-    _indices.assign(indices, indices + numIndex);
-    _vertexAttribs.assign(attribs, attribs + attribCount);
+    _vertexs = vertices;
+    _indices = indices;
+    _vertexAttribs = attribs;
     
     _vertexsizeBytes = calVertexSizeBytes();
-    
     
     return true;
 }
@@ -168,10 +167,10 @@ Mesh* Mesh::create(const std::vector<float>& positions, const std::vector<float>
     return nullptr;
 }
 
-Mesh* Mesh::create(const float* vertex, int vertexSizeInFloat, unsigned short* indices, int numIndex, const MeshVertexAttrib* attribs, int attribCount)
+Mesh* Mesh::create(const std::vector<float> &vertices, int vertexSizeInFloat, const std::vector<unsigned short> &indices, int numIndex, const std::vector<MeshVertexAttrib> &attribs, int attribCount)
 {
     auto mesh = new Mesh();
-    if (mesh && mesh->init(vertex, vertexSizeInFloat, indices, numIndex, attribs, attribCount))
+    if (mesh && mesh->init(vertices, vertexSizeInFloat, indices, numIndex, attribs, attribCount))
     {
         mesh->autorelease();
         return mesh;
@@ -190,9 +189,9 @@ bool Mesh::init(const std::vector<float>& positions, const std::vector<float>& n
     return true;
 }
 
-bool Mesh::init(const float* vertex, int vertexSizeInFloat, unsigned short* indices, int numIndex, const MeshVertexAttrib* attribs, int attribCount)
+bool Mesh::init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount)
 {
-    bool bRet = _renderdata.initFrom(vertex, vertexSizeInFloat, indices, numIndex, attribs, attribCount);
+    bool bRet = _renderdata.initFrom(vertices, vertexSizeInFloat, indices, numIndex, attribs, attribCount);
     if (!bRet)
         return false;
     

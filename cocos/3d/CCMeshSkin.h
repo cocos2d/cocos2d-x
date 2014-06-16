@@ -50,22 +50,18 @@ public:
      */
     const Mat4& getInverseBindPose();
     
-    bool needUpdateWorldMat() const;
-    
     //update own world matrix and children's
     void updateWorldMat();
+    
+    void setWorldMatDirty(bool dirty = true);
     
     const Mat4& getWorldMat();
     
     const std::string& getName() const { return _name; }
     
-	/**
-     * Set AnimationValue. set to its transform
-     */
-	void setAnimationValueTranslation(float* value);
-    void setAnimationValueRotation(float* value);
-    void setAnimationValueScale(float* value);
+    void setAnimationValue(float* trans, float* rot, float* scale, float weight = 1.0f);
     
+    void clearBoneBlendState();
     /**
      * Creates C3DBone.
      */
@@ -98,11 +94,21 @@ public:
     
     
 protected:
-    enum DirtyFlag
+    
+    struct BoneBlendState
     {
-        Dirty_Translate = 1,
-        Dirty_Rotation = 2,
-        Dirty_Scale = 4,
+        Vec3          localTranslate;
+        Quaternion    localRot;
+        Vec3          localScale;
+        float         weight;
+        BoneBlendState()
+        : localTranslate(Vec3::ZERO)
+        , localRot(Quaternion::identity())
+        , localScale(Vec3::ONE)
+        , weight(1.f)
+        {
+            
+        }
     };
 	/**
      * Constructor.
@@ -125,27 +131,17 @@ protected:
      */
     Mat4 _bindPose;
     
-    //    /**
-    //     * Flag used to mark if the Joint's matrix is dirty.
-    //     */
-    //    bool _jointMatrixDirty;
-    //
-    //    /**
-    //     * The number of MeshSkin's influencing the Joint.
-    //     */
-    //    unsigned int _skinCount;
-    
     Bone* _parent;
     
     Vector<Bone*> _children;
     
-    int           _dirtyFlag;
+    bool           _localDirty;
     bool          _worldDirty;
     Mat4          _world;
     Mat4          _local;
-    Vec3          _localTranslate;
-    Quaternion    _localRot;
-    Vec3          _localScale;
+    
+    std::vector<BoneBlendState> _blendStates;
+    
 };
 
 /////////////////////////////////////////////////////////////////////////////

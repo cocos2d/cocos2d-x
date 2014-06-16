@@ -95,6 +95,7 @@ protected:
     std::string _modelRelativePath;
 
     char* _documentBuffer;
+    std::string         _fullPath;
 
     rapidjson::Document _document;
 

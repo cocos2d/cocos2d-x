@@ -46,17 +46,12 @@ const Mat4& Bone::getInverseBindPose()
     return _bindPose;
 }
 
-bool Bone::needUpdateWorldMat() const
+void Bone::setWorldMatDirty(bool dirty)
 {
-    bool needupdate = _worldDirty;
-    auto bone = _parent;
-    while (!needupdate && bone) {
-        needupdate = bone->_worldDirty;
-        bone = bone->_parent;
+    _worldDirty = dirty;
+    for (auto it : _children) {
+        it->setWorldMatDirty(dirty);
     }
-    
-    return true;
-    //return needupdate;
 }
 
 //update own world matrix and children's
@@ -70,7 +65,7 @@ void Bone::updateWorldMat()
 
 const Mat4& Bone::getWorldMat()
 {
-    if (needUpdateWorldMat())
+    if (_worldDirty)
     {
         updateLocalMat();
         if (_parent)
@@ -79,39 +74,34 @@ const Mat4& Bone::getWorldMat()
         }
         else
             _world = _local;
+        
+        _worldDirty = false;
     }
     
     return _world;
 }
 
-/**
- * Set AnimationValue. set to its transform
- */
-void Bone::setAnimationValueTranslation(float* value)
+void Bone::setAnimationValue(float* trans, float* rot, float* scale, float weight)
 {
-    static const int bytes = 3 * sizeof(float);
-    if (memcmp(&_localTranslate.x, value, bytes) != 0)
-    {
-        _dirtyFlag |= Dirty_Translate;
-        _localTranslate.set(value);
-    }
+    BoneBlendState state;
+    if (trans)
+        state.localTranslate.set(trans);
+    if (rot)
+        state.localRot.set(rot);
+    if (scale)
+        state.localScale.set(scale);
+    
+    state.weight = weight;
+    
+    _blendStates.push_back(state);
+    _localDirty = true;
 }
-void Bone::setAnimationValueRotation(float* value)
+
+void Bone::clearBoneBlendState()
 {
-    static const int bytes = 4 * sizeof(float);
-    if (memcmp(&_localRot.x, value, bytes) != 0)
-    {
-        _dirtyFlag |= Dirty_Rotation;
-        _localRot.set(value);
-    }
-}
-void Bone::setAnimationValueScale(float* value)
-{
-    static const int bytes = 3 * sizeof(float);
-    if (memcmp(&_localScale.x, value, bytes) != 0)
-    {
-        _dirtyFlag |= Dirty_Scale;
-        _localScale.set(value);
+    _blendStates.clear();
+    for (auto it : _children) {
+        it->clearBoneBlendState();
     }
 }
 
@@ -135,16 +125,10 @@ Bone* Bone::create(const std::string& id)
  */
 void Bone::updateJointMatrix(const Mat4& bindShape, Vec4* matrixPalette)
 {
-    
-    //if (_skinCount > 1 || _jointMatrixDirty)
     {
-        //_jointMatrixDirty = false;
         static Mat4 t;
         Mat4::multiply(_world, getInverseBindPose(), &t);
-        //Mat4::multiply(t, bindShape, &t);
-        //Mat4::multiply(getInverseBindPose(), _world, &t);
-        
-        //t.setIdentity();
+
         matrixPalette[0].set(t.m[0], t.m[4], t.m[8], t.m[12]);
         matrixPalette[1].set(t.m[1], t.m[5], t.m[9], t.m[13]);
         matrixPalette[2].set(t.m[2], t.m[6], t.m[10], t.m[14]);
@@ -185,11 +169,8 @@ void Bone::removeAllChildBone()
 Bone::Bone(const std::string& id)
 : _name(id)
 , _parent(nullptr)
-, _dirtyFlag(0)
+, _localDirty(true)
 , _worldDirty(true)
-, _localTranslate(Vec3::ZERO)
-, _localScale(Vec3::ONE)
-, _localRot(Quaternion::identity())
 {
     
 }
@@ -204,22 +185,63 @@ Bone::~Bone()
 
 void Bone::updateLocalMat()
 {
-//    Mat4::createTranslation(_localTranslate, &_local);
-//    if (!_localRot.isZero())
-//    _local.rotate(_localRot);
-//    return;
-    if(0 == _dirtyFlag) return;
+    if (_blendStates.size())
+    {
+        Vec3 translate(Vec3::ZERO), scale(Vec3::ONE);
+        Quaternion quat(Quaternion::identity());
+        
+        float total = 0.f;
+        for (auto it: _blendStates) {
+            total += it.weight;
+        }
+        if (total)
+        {
+            //if (_blendStates.size() == 1)
+            if (true)
+            {
+                int cnt = _blendStates.size();
+                translate = _blendStates[cnt - 1].localTranslate;
+                scale = _blendStates[cnt - 1].localScale;
+                quat = _blendStates[cnt - 1].localRot;
+            }
+            else
+            {
+                float invTotal = 1.f / total;
+                for (auto it : _blendStates) {
+                    float weight = (it.weight * invTotal);
+                    translate += it.localTranslate * weight;
+                    if (!it.localScale.isZero())
+                    {
+                        scale.x *= it.localScale.x * weight;
+                        scale.y *= it.localScale.y * weight;
+                        scale.z *= it.localScale.z * weight;
+                    }
+                    if (!it.localRot.isZero())
+                    {
+                        if (!quat.isZero())
+                        {
+                            Quaternion& q = _blendStates[0].localRot;
+                            if (q.x * quat.x + q.y * quat.y + q.z * quat.z + q.w * quat.w < 0)
+                            weight = -weight;
+                        }
+                        quat = Quaternion(it.localRot.x * weight + quat.x, it.localRot.y * weight + quat.y, it.localRot.z * weight + quat.z, it.localRot.w * weight + quat.w);
+                    }
+                }
+            }  
+        }
+        
+        Mat4::createTranslation(translate, &_local);
+        _local.rotate(quat);
+        _local.scale(scale);
+        
+        _blendStates.clear();
+        _localDirty = false;
+    }
+    else
+    {
+        CCLOG("use cached local");
+    }
     
-    Mat4 tmp;
-    Mat4::createScale(_localScale, &_local);
-    Mat4::createRotation(_localRot, &tmp);
-    
-    _local = tmp * _local;
-    
-    Mat4::createTranslation(_localTranslate, &tmp);
-    _local = tmp * _local;
-    
-    return;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -266,7 +288,7 @@ MeshSkin* MeshSkin::create(const std::string& filename, const std::string& name)
         {
             auto skin = new MeshSkin();
             skin->_bindShape = skindata.bindShape;
-            skin->setBoneCount(skindata.boneNames.size());
+            skin->setBoneCount((int)skindata.boneNames.size());
             for (size_t i = 0; i < skindata.boneNames.size(); i++) {
                 auto bone = Bone::create(skindata.boneNames[i]);
                 bone->_bindPose = skindata.inverseBindPoseMatrices[i];
@@ -391,6 +413,7 @@ unsigned int MeshSkin::getMatrixPaletteSize() const
 //refresh bone world matrix
 void MeshSkin::updateBoneMatrix()
 {
+    _rootBone->setWorldMatDirty(true);
     _rootBone->updateWorldMat();
 }
 

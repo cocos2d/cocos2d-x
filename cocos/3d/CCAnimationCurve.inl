@@ -12,7 +12,7 @@ void AnimationCurve<componentSize>::evaluate(float time, float* dst, EvaluateTyp
     }
     else if (time >= _keytime[_count - 1])
     {
-        memcpy(dst, &_value[(_count - 1) * floatSize], _componentSizeByte);
+        memcpy(dst, &_value[(_count - 1) * componentSize], _componentSizeByte);
         return;
     }
     
