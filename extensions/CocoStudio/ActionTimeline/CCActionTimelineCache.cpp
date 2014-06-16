@@ -194,7 +194,7 @@ ActionTimeline* ActionTimelineCache::loadAnimationActionWithFile(const std::stri
 {
     // Read content from file
     std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(fileName.c_str());
-    unsigned long size;
+    unsigned long size = 0;
     std::string contentStr((const char*)CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str() , "r", &size), size);
 
     return loadAnimationActionWithContent(fileName, contentStr);

@@ -299,6 +299,9 @@
     <Filter Include="Classes\CurlTest">
       <UniqueIdentifier>{f16af028-d373-4926-8aac-afbde82c1f7c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocoStudioActionTimelineTest">
+      <UniqueIdentifier>{19d0ae54-d6e9-4b12-a1cd-4b6b70dda97e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\ApplicationIcon.png">
@@ -772,6 +775,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\NetworkTest\WebSocketTest.cpp">
       <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioActionTimelineTest\ActionTimelineTestScene.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioActionTimelineTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1406,6 +1412,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\NetworkTest\WebSocketTest.h">
       <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioActionTimelineTest\ActionTimelineTestScene.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioActionTimelineTest</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
