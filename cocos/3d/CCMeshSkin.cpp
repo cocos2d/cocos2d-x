@@ -121,6 +121,9 @@ void Bone::setAnimationValue(float* trans, float* rot, float* scale, float weigh
         state.localRot.set(rot);
     if (scale)
         state.localScale.set(scale);
+    
+    if (_name != "L_side01" && _name != "L_side03" && _name != "L_side02")
+    CCASSERT(fabs(scale[0] - 1) < 0.001f, "");
     state.weight = weight;
     
     _blendStates.push_back(state);
@@ -224,11 +227,13 @@ void Bone::updateLocalMat()
         }
         if (total)
         {
-            if (_blendStates.size() == 1)
+            //if (_blendStates.size() == 1)
+            if (true)
             {
-                translate = _blendStates[0].localTranslate;
-                scale = _blendStates[0].localScale;
-                quat = _blendStates[0].localRot;
+                int cnt = _blendStates.size();
+                translate = _blendStates[cnt - 1].localTranslate;
+                scale = _blendStates[cnt - 1].localScale;
+                quat = _blendStates[cnt - 1].localRot;
             }
             else
             {
@@ -263,13 +268,11 @@ void Bone::updateLocalMat()
         _blendStates.clear();
         _localDirty = false;
     }
+    else
+    {
+        CCLOG("use cached local");
+    }
     
-    
-}
-
-void Bone::clearBlendState()
-{
-    _blendStates.clear();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

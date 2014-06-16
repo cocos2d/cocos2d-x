@@ -131,8 +131,6 @@ protected:
      */
     void updateLocalMat();
     
-    void clearBlendState();
-    
     std::string _name;
     /**
      * The Mat4 representation of the Joint's bind pose.
