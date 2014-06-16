@@ -109,17 +109,22 @@ void Bundle3D::purgeBundle3D()
 bool Bundle3D::load(const std::string& path)
 {
     std::string strFileString = FileUtils::getInstance()->getStringFromFile(path);
-    ssize_t size = strFileString.length();
-
-    CC_SAFE_DELETE_ARRAY(_documentBuffer);
-    _documentBuffer = new char[size + 1];
-    memcpy(_documentBuffer, strFileString.c_str(), size);
-    _documentBuffer[size] = '\0';
-    if (document.ParseInsitu<0>(_documentBuffer).HasParseError())
+    if (strFileString != _fullPath)
     {
-        assert(0);
-        return false;
+        ssize_t size = strFileString.length();
+        
+        CC_SAFE_DELETE_ARRAY(_documentBuffer);
+        _documentBuffer = new char[size + 1];
+        memcpy(_documentBuffer, strFileString.c_str(), size);
+        _documentBuffer[size] = '\0';
+        if (document.ParseInsitu<0>(_documentBuffer).HasParseError())
+        {
+            assert(0);
+            return false;
+        }
+        _fullPath = strFileString;
     }
+    
     return true;
 }
 

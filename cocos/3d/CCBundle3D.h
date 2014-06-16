@@ -94,6 +94,7 @@ protected:
     
     char* _documentBuffer;
     rapidjson::Document document;
+    std::string         _fullPath;
 
     bool  _isBinary;
 };
