@@ -1184,6 +1184,13 @@
 			remoteGlobalIDString = A07A4FB4178387730073F6A7;
 			remoteInfo = "CocosDenshion iOS";
 		};
+		9F05A0F5194EED5C003CFA1F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9F05A0EF194EED5B003CFA1F /* quick-x-player.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9F1C8D2F194DE61E0068C99B;
+			remoteInfo = "quick-x-player";
+		};
 		A035ACBF178246BD00987F6C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -1813,6 +1820,7 @@
 		59620E8E1921E5CF002021B6 /* Bug-Child.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-Child.h"; sourceTree = "<group>"; };
 		70A7F72D191D3E4900F0F206 /* shaderTest.psh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = shaderTest.psh.h; sourceTree = "<group>"; };
 		70A7F730191D421B00F0F206 /* ShaderTest.vsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTest.vsh.h; sourceTree = "<group>"; };
+		9F05A0EF194EED5B003CFA1F /* quick-x-player.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "quick-x-player.xcodeproj"; path = "../player/proj.mac/quick-x-player.xcodeproj"; sourceTree = "<group>"; };
 		A035A71117822E9E00987F6C /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		A07A52291783A1D20073F6A7 /* cpp-tests iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cpp-tests iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A07A52B71783AE6D0073F6A7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -3685,6 +3693,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				9F05A0EF194EED5B003CFA1F /* quick-x-player.xcodeproj */,
 				46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */,
 				1ABCA27618CD90A40087CE3A /* cocos2d_lua_bindings.xcodeproj */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -3766,6 +3775,14 @@
 				46A15FC21807A4F9005B8026 /* libchipmunk iOS.a */,
 				46A15FC41807A4F9005B8026 /* libbox2d iOS.a */,
 				46A15FC61807A4F9005B8026 /* libCocosDenshion iOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9F05A0F0194EED5B003CFA1F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9F05A0F6194EED5C003CFA1F /* quick-x-player.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3976,6 +3993,10 @@
 					ProductGroup = 1ABCA27718CD90A40087CE3A /* Products */;
 					ProjectRef = 1ABCA27618CD90A40087CE3A /* cocos2d_lua_bindings.xcodeproj */;
 				},
+				{
+					ProductGroup = 9F05A0F0194EED5B003CFA1F /* Products */;
+					ProjectRef = 9F05A0EF194EED5B003CFA1F /* quick-x-player.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -4076,6 +4097,13 @@
 			fileType = archive.ar;
 			path = "libCocosDenshion iOS.a";
 			remoteRef = 46A15FC51807A4F9005B8026 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9F05A0F6194EED5C003CFA1F /* quick-x-player.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "quick-x-player.app";
+			remoteRef = 9F05A0F5194EED5C003CFA1F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

@@ -1,0 +1,497 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9F05A0CF194EC0FA003CFA1F /* MessageBoxServiceMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9F05A0CE194EC0FA003CFA1F /* MessageBoxServiceMac.mm */; };
+		9F05A0D3194ECA3F003CFA1F /* MenuServiceMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9F05A0D2194ECA3F003CFA1F /* MenuServiceMac.mm */; };
+		9F05A0D6194EDAF6003CFA1F /* SimulatorConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F05A0D4194EDAF6003CFA1F /* SimulatorConfig.cpp */; };
+		9F1C8D33194DE61E0068C99B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F1C8D32194DE61E0068C99B /* Cocoa.framework */; };
+		9F1C8D78194DEB430068C99B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F1C8D77194DEB430068C99B /* MainMenu.xib */; };
+		9F1C8D7D194DECD70068C99B /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9F1C8D7C194DECD70068C99B /* AppController.mm */; };
+		9F1C8D81194DECE80068C99B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9F1C8D7E194DECE80068C99B /* Info.plist */; };
+		9F1C8D82194DECE80068C99B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1C8D7F194DECE80068C99B /* main.m */; };
+		9F1C8D9B194DEE040068C99B /* PlayerProtocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F1C8D97194DEE040068C99B /* PlayerProtocol.cpp */; };
+		9F1C8D9C194DEE040068C99B /* PlayerServiceProtocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F1C8D99194DEE040068C99B /* PlayerServiceProtocol.cpp */; };
+		9F1C8DA1194DEFE40068C99B /* FileDialogServiceMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9F1C8D9E194DEFE40068C99B /* FileDialogServiceMac.mm */; };
+		9F1C8DA2194DEFE40068C99B /* PlayerMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9F1C8DA0194DEFE40068C99B /* PlayerMac.mm */; };
+		9F1C8DA4194E7B290068C99B /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9F1C8DA3194E7B290068C99B /* Icon.icns */; };
+		9F29B26F194E90DF001A6981 /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F29B269194E90DF001A6981 /* libchipmunk Mac.a */; };
+		9F29B270194E90DF001A6981 /* libcocos2dx Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F29B26A194E90DF001A6981 /* libcocos2dx Mac.a */; };
+		9F29B271194E90DF001A6981 /* libcocos2dx-extensions Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F29B26B194E90DF001A6981 /* libcocos2dx-extensions Mac.a */; };
+		9F29B272194E90DF001A6981 /* libCocosDenshion Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F29B26C194E90DF001A6981 /* libCocosDenshion Mac.a */; };
+		9F29B273194E90DF001A6981 /* libluabindings Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F29B26D194E90DF001A6981 /* libluabindings Mac.a */; };
+		9F3BF72C194E91380072B3D0 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F3BF72A194E91380072B3D0 /* AppDelegate.cpp */; };
+		9F3BF72E194E91900072B3D0 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3BF72D194E91900072B3D0 /* libcurl.dylib */; };
+		9F3BF730194E91960072B3D0 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3BF72F194E91960072B3D0 /* libz.dylib */; };
+		9F3BF732194E919C0072B3D0 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3BF731194E919C0072B3D0 /* IOKit.framework */; };
+		9F3BF733194E91A40072B3D0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F1C8D37194DE61E0068C99B /* Foundation.framework */; };
+		9F3BF735194E91AA0072B3D0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3BF734194E91AA0072B3D0 /* AudioToolbox.framework */; };
+		9F3BF737194E91C80072B3D0 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3BF736194E91C80072B3D0 /* ApplicationServices.framework */; };
+		9F3BF739194E91D10072B3D0 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3BF738194E91D10072B3D0 /* OpenAL.framework */; };
+		9F3BF73B194E91D70072B3D0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3BF73A194E91D70072B3D0 /* QuartzCore.framework */; };
+		9F3BF73D194E91E10072B3D0 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3BF73C194E91E10072B3D0 /* OpenGL.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		9F05A0CC194EB080003CFA1F /* PlayerMenuServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerMenuServiceProtocol.h; sourceTree = "<group>"; };
+		9F05A0CD194EC0DB003CFA1F /* MessageBoxServiceMac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageBoxServiceMac.h; sourceTree = SOURCE_ROOT; };
+		9F05A0CE194EC0FA003CFA1F /* MessageBoxServiceMac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MessageBoxServiceMac.mm; sourceTree = SOURCE_ROOT; };
+		9F05A0D1194ECA1A003CFA1F /* MenuServiceMac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MenuServiceMac.h; sourceTree = SOURCE_ROOT; };
+		9F05A0D2194ECA3F003CFA1F /* MenuServiceMac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MenuServiceMac.mm; sourceTree = SOURCE_ROOT; };
+		9F05A0D4194EDAF6003CFA1F /* SimulatorConfig.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SimulatorConfig.cpp; sourceTree = "<group>"; };
+		9F05A0D5194EDAF6003CFA1F /* SimulatorConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimulatorConfig.h; sourceTree = "<group>"; };
+		9F1C8D2F194DE61E0068C99B /* quick-x-player.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "quick-x-player.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F1C8D32194DE61E0068C99B /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		9F1C8D35194DE61E0068C99B /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		9F1C8D36194DE61E0068C99B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		9F1C8D37194DE61E0068C99B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		9F1C8D77194DEB430068C99B /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = SOURCE_ROOT; };
+		9F1C8D7B194DECD70068C99B /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = SOURCE_ROOT; };
+		9F1C8D7C194DECD70068C99B /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = SOURCE_ROOT; };
+		9F1C8D7E194DECE80068C99B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
+		9F1C8D7F194DECE80068C99B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = SOURCE_ROOT; };
+		9F1C8D80194DECE80068C99B /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = SOURCE_ROOT; };
+		9F1C8D95194DEE040068C99B /* PlayerFileDialogServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerFileDialogServiceProtocol.h; sourceTree = "<group>"; };
+		9F1C8D96194DEE040068C99B /* PlayerMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerMacros.h; sourceTree = "<group>"; };
+		9F1C8D97194DEE040068C99B /* PlayerProtocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayerProtocol.cpp; sourceTree = "<group>"; };
+		9F1C8D98194DEE040068C99B /* PlayerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerProtocol.h; sourceTree = "<group>"; };
+		9F1C8D99194DEE040068C99B /* PlayerServiceProtocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayerServiceProtocol.cpp; sourceTree = "<group>"; };
+		9F1C8D9A194DEE040068C99B /* PlayerServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerServiceProtocol.h; sourceTree = "<group>"; };
+		9F1C8D9D194DEFE40068C99B /* FileDialogServiceMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileDialogServiceMac.h; sourceTree = SOURCE_ROOT; };
+		9F1C8D9E194DEFE40068C99B /* FileDialogServiceMac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FileDialogServiceMac.mm; sourceTree = SOURCE_ROOT; };
+		9F1C8D9F194DEFE40068C99B /* PlayerMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerMac.h; sourceTree = SOURCE_ROOT; };
+		9F1C8DA0194DEFE40068C99B /* PlayerMac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PlayerMac.mm; sourceTree = SOURCE_ROOT; };
+		9F1C8DA3194E7B290068C99B /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = SOURCE_ROOT; };
+		9F1C8DA5194E7CF00068C99B /* PlayerMessageBoxServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerMessageBoxServiceProtocol.h; sourceTree = "<group>"; };
+		9F29B269194E90DF001A6981 /* libchipmunk Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libchipmunk Mac.a"; path = "../../../../Library/Developer/Xcode/DerivedData/cocos2d_tests-axzqtwgwkrktttafksiahajkeowp/Build/Products/Debug/libchipmunk Mac.a"; sourceTree = "<group>"; };
+		9F29B26A194E90DF001A6981 /* libcocos2dx Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libcocos2dx Mac.a"; path = "../../../../Library/Developer/Xcode/DerivedData/cocos2d_tests-axzqtwgwkrktttafksiahajkeowp/Build/Products/Debug/libcocos2dx Mac.a"; sourceTree = "<group>"; };
+		9F29B26B194E90DF001A6981 /* libcocos2dx-extensions Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libcocos2dx-extensions Mac.a"; path = "../../../../Library/Developer/Xcode/DerivedData/cocos2d_tests-axzqtwgwkrktttafksiahajkeowp/Build/Products/Debug/libcocos2dx-extensions Mac.a"; sourceTree = "<group>"; };
+		9F29B26C194E90DF001A6981 /* libCocosDenshion Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libCocosDenshion Mac.a"; path = "../../../../Library/Developer/Xcode/DerivedData/cocos2d_tests-axzqtwgwkrktttafksiahajkeowp/Build/Products/Debug/libCocosDenshion Mac.a"; sourceTree = "<group>"; };
+		9F29B26D194E90DF001A6981 /* libluabindings Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libluabindings Mac.a"; path = "../../../../Library/Developer/Xcode/DerivedData/cocos2d_tests-axzqtwgwkrktttafksiahajkeowp/Build/Products/Debug/libluabindings Mac.a"; sourceTree = "<group>"; };
+		9F3BF72A194E91380072B3D0 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
+		9F3BF72B194E91380072B3D0 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		9F3BF72D194E91900072B3D0 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
+		9F3BF72F194E91960072B3D0 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		9F3BF731194E919C0072B3D0 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		9F3BF734194E91AA0072B3D0 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		9F3BF736194E91C80072B3D0 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
+		9F3BF738194E91D10072B3D0 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
+		9F3BF73A194E91D70072B3D0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		9F3BF73C194E91E10072B3D0 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9F1C8D2C194DE61E0068C99B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9F3BF73D194E91E10072B3D0 /* OpenGL.framework in Frameworks */,
+				9F3BF73B194E91D70072B3D0 /* QuartzCore.framework in Frameworks */,
+				9F3BF739194E91D10072B3D0 /* OpenAL.framework in Frameworks */,
+				9F3BF737194E91C80072B3D0 /* ApplicationServices.framework in Frameworks */,
+				9F3BF735194E91AA0072B3D0 /* AudioToolbox.framework in Frameworks */,
+				9F3BF733194E91A40072B3D0 /* Foundation.framework in Frameworks */,
+				9F3BF732194E919C0072B3D0 /* IOKit.framework in Frameworks */,
+				9F3BF730194E91960072B3D0 /* libz.dylib in Frameworks */,
+				9F3BF72E194E91900072B3D0 /* libcurl.dylib in Frameworks */,
+				9F29B26F194E90DF001A6981 /* libchipmunk Mac.a in Frameworks */,
+				9F29B270194E90DF001A6981 /* libcocos2dx Mac.a in Frameworks */,
+				9F29B271194E90DF001A6981 /* libcocos2dx-extensions Mac.a in Frameworks */,
+				9F29B272194E90DF001A6981 /* libCocosDenshion Mac.a in Frameworks */,
+				9F29B273194E90DF001A6981 /* libluabindings Mac.a in Frameworks */,
+				9F1C8D33194DE61E0068C99B /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9F1C8D26194DE61E0068C99B = {
+			isa = PBXGroup;
+			children = (
+				9F1C8D94194DEE040068C99B /* src */,
+				9F1C8D38194DE61E0068C99B /* mac */,
+				9F1C8D31194DE61E0068C99B /* Frameworks */,
+				9F1C8D30194DE61E0068C99B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9F1C8D30194DE61E0068C99B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9F1C8D2F194DE61E0068C99B /* quick-x-player.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9F1C8D31194DE61E0068C99B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9F3BF73C194E91E10072B3D0 /* OpenGL.framework */,
+				9F3BF73A194E91D70072B3D0 /* QuartzCore.framework */,
+				9F3BF738194E91D10072B3D0 /* OpenAL.framework */,
+				9F3BF736194E91C80072B3D0 /* ApplicationServices.framework */,
+				9F3BF734194E91AA0072B3D0 /* AudioToolbox.framework */,
+				9F3BF731194E919C0072B3D0 /* IOKit.framework */,
+				9F3BF72F194E91960072B3D0 /* libz.dylib */,
+				9F3BF72D194E91900072B3D0 /* libcurl.dylib */,
+				9F29B269194E90DF001A6981 /* libchipmunk Mac.a */,
+				9F29B26A194E90DF001A6981 /* libcocos2dx Mac.a */,
+				9F29B26B194E90DF001A6981 /* libcocos2dx-extensions Mac.a */,
+				9F29B26C194E90DF001A6981 /* libCocosDenshion Mac.a */,
+				9F29B26D194E90DF001A6981 /* libluabindings Mac.a */,
+				9F1C8D32194DE61E0068C99B /* Cocoa.framework */,
+				9F1C8D34194DE61E0068C99B /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9F1C8D34194DE61E0068C99B /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9F1C8D35194DE61E0068C99B /* AppKit.framework */,
+				9F1C8D36194DE61E0068C99B /* CoreData.framework */,
+				9F1C8D37194DE61E0068C99B /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		9F1C8D38194DE61E0068C99B /* mac */ = {
+			isa = PBXGroup;
+			children = (
+				9F05A0D1194ECA1A003CFA1F /* MenuServiceMac.h */,
+				9F05A0D2194ECA3F003CFA1F /* MenuServiceMac.mm */,
+				9F05A0CD194EC0DB003CFA1F /* MessageBoxServiceMac.h */,
+				9F05A0CE194EC0FA003CFA1F /* MessageBoxServiceMac.mm */,
+				9F1C8D9D194DEFE40068C99B /* FileDialogServiceMac.h */,
+				9F1C8D9E194DEFE40068C99B /* FileDialogServiceMac.mm */,
+				9F1C8D9F194DEFE40068C99B /* PlayerMac.h */,
+				9F1C8DA0194DEFE40068C99B /* PlayerMac.mm */,
+				9F1C8D7B194DECD70068C99B /* AppController.h */,
+				9F1C8D7C194DECD70068C99B /* AppController.mm */,
+				9F1C8D39194DE61E0068C99B /* Supporting Files */,
+			);
+			name = mac;
+			path = "quick-x-player";
+			sourceTree = "<group>";
+		};
+		9F1C8D39194DE61E0068C99B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				9F1C8DA3194E7B290068C99B /* Icon.icns */,
+				9F1C8D77194DEB430068C99B /* MainMenu.xib */,
+				9F1C8D7E194DECE80068C99B /* Info.plist */,
+				9F1C8D7F194DECE80068C99B /* main.m */,
+				9F1C8D80194DECE80068C99B /* Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9F1C8D94194DEE040068C99B /* src */ = {
+			isa = PBXGroup;
+			children = (
+				9F05A0D4194EDAF6003CFA1F /* SimulatorConfig.cpp */,
+				9F05A0D5194EDAF6003CFA1F /* SimulatorConfig.h */,
+				9F3BF72A194E91380072B3D0 /* AppDelegate.cpp */,
+				9F3BF72B194E91380072B3D0 /* AppDelegate.h */,
+				9F1C8D95194DEE040068C99B /* PlayerFileDialogServiceProtocol.h */,
+				9F1C8DA5194E7CF00068C99B /* PlayerMessageBoxServiceProtocol.h */,
+				9F05A0CC194EB080003CFA1F /* PlayerMenuServiceProtocol.h */,
+				9F1C8D96194DEE040068C99B /* PlayerMacros.h */,
+				9F1C8D97194DEE040068C99B /* PlayerProtocol.cpp */,
+				9F1C8D98194DEE040068C99B /* PlayerProtocol.h */,
+				9F1C8D99194DEE040068C99B /* PlayerServiceProtocol.cpp */,
+				9F1C8D9A194DEE040068C99B /* PlayerServiceProtocol.h */,
+			);
+			name = src;
+			path = ../src;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9F1C8D2E194DE61E0068C99B /* quick-x-player */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9F1C8D60194DE61E0068C99B /* Build configuration list for PBXNativeTarget "quick-x-player" */;
+			buildPhases = (
+				9F1C8D2B194DE61E0068C99B /* Sources */,
+				9F1C8D2C194DE61E0068C99B /* Frameworks */,
+				9F1C8D2D194DE61E0068C99B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "quick-x-player";
+			productName = "quick-x-player";
+			productReference = 9F1C8D2F194DE61E0068C99B /* quick-x-player.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9F1C8D27194DE61E0068C99B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = quick;
+			};
+			buildConfigurationList = 9F1C8D2A194DE61E0068C99B /* Build configuration list for PBXProject "quick-x-player" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9F1C8D26194DE61E0068C99B;
+			productRefGroup = 9F1C8D30194DE61E0068C99B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9F1C8D2E194DE61E0068C99B /* quick-x-player */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9F1C8D2D194DE61E0068C99B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9F1C8DA4194E7B290068C99B /* Icon.icns in Resources */,
+				9F1C8D81194DECE80068C99B /* Info.plist in Resources */,
+				9F1C8D78194DEB430068C99B /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9F1C8D2B194DE61E0068C99B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9F1C8DA2194DEFE40068C99B /* PlayerMac.mm in Sources */,
+				9F1C8D82194DECE80068C99B /* main.m in Sources */,
+				9F05A0D6194EDAF6003CFA1F /* SimulatorConfig.cpp in Sources */,
+				9F05A0D3194ECA3F003CFA1F /* MenuServiceMac.mm in Sources */,
+				9F1C8DA1194DEFE40068C99B /* FileDialogServiceMac.mm in Sources */,
+				9F1C8D7D194DECD70068C99B /* AppController.mm in Sources */,
+				9F3BF72C194E91380072B3D0 /* AppDelegate.cpp in Sources */,
+				9F1C8D9C194DEE040068C99B /* PlayerServiceProtocol.cpp in Sources */,
+				9F1C8D9B194DEE040068C99B /* PlayerProtocol.cpp in Sources */,
+				9F05A0CF194EC0FA003CFA1F /* MessageBoxServiceMac.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		9F1C8D5E194DE61E0068C99B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					CC_TARGET_OS_MAC,
+					"COCOS2D_DEBUG=1",
+					USE_FILE32API,
+					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../..",
+					"$(SRCROOT)/../../cocos",
+					"$(SRCROOT)/../../cocos/editor-support",
+					"$(SRCROOT)/../../extensions",
+					"$(SRCROOT)/../../external",
+					"$(SRCROOT)/../../external/chipmunk/include/chipmunk",
+					"$(SRCROOT)/../../cocos/audio/include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		9F1C8D5F194DE61E0068C99B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					USE_FILE32API,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../..",
+					"$(SRCROOT)/../../cocos",
+					"$(SRCROOT)/../../cocos/editor-support",
+					"$(SRCROOT)/../../extensions",
+					"$(SRCROOT)/../../external",
+					"$(SRCROOT)/../../external/chipmunk/include/chipmunk",
+					"$(SRCROOT)/../../cocos/audio/include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		9F1C8D61194DE61E0068C99B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					GLFW_EXPOSE_NATIVE_COCOA,
+					GLFW_EXPOSE_NATIVE_NSGL,
+					CC_TARGET_OS_MAC,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					../src,
+					"$(SRCROOT)/../../cocos/platform/mac",
+					"$(SRCROOT)/../../external/glfw3/include/mac",
+					"$(SRCROOT)/../../external",
+					"$(SRCROOT)/../../external/lua/luajit/include",
+					"$(SRCROOT)/../../external/lua/tolua",
+					"$(SRCROOT)/../../cocos/scripting/lua-bindings/manual",
+					"$(SRCROOT)/../../cocos/scripting/lua-bindings/auto",
+				);
+				INFOPLIST_FILE = Info.plist;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/jryin/workspace/cocos2d-x/build/build/Debug",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/cocos2d_tests-axzqtwgwkrktttafksiahajkeowp/Build/Products/Debug",
+				);
+				OTHER_LDFLAGS = (
+					"-pagezero_size",
+					10000,
+					"-image_base",
+					100000000,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		9F1C8D62194DE61E0068C99B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					GLFW_EXPOSE_NATIVE_COCOA,
+					GLFW_EXPOSE_NATIVE_NSGL,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					../src,
+					"$(SRCROOT)/../../cocos/platform/mac",
+					"$(SRCROOT)/../../external/glfw3/include/mac",
+					"$(SRCROOT)/../../external",
+					"$(SRCROOT)/../../external/lua/luajit/include",
+					"$(SRCROOT)/../../external/lua/tolua",
+					"$(SRCROOT)/../../cocos/scripting/lua-bindings/manual",
+					"$(SRCROOT)/../../cocos/scripting/lua-bindings/auto",
+				);
+				INFOPLIST_FILE = Info.plist;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/jryin/workspace/cocos2d-x/build/build/Debug",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/cocos2d_tests-axzqtwgwkrktttafksiahajkeowp/Build/Products/Debug",
+				);
+				OTHER_LDFLAGS = (
+					"-pagezero_size",
+					10000,
+					"-image_base",
+					100000000,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9F1C8D2A194DE61E0068C99B /* Build configuration list for PBXProject "quick-x-player" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9F1C8D5E194DE61E0068C99B /* Debug */,
+				9F1C8D5F194DE61E0068C99B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9F1C8D60194DE61E0068C99B /* Build configuration list for PBXNativeTarget "quick-x-player" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9F1C8D61194DE61E0068C99B /* Debug */,
+				9F1C8D62194DE61E0068C99B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9F1C8D27194DE61E0068C99B /* Project object */;
+}
