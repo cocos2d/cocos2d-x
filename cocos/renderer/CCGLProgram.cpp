@@ -138,9 +138,17 @@ GLProgram::~GLProgram()
 {
     CCLOGINFO("%s %d deallocing GLProgram: %p", __FUNCTION__, __LINE__, this);
 
-    // there is no need to delete the shaders. They should have been already deleted.
-    CCASSERT(_vertShader == 0, "Vertex Shaders should have been already deleted");
-    CCASSERT(_fragShader == 0, "Fragment Shaders should have been already deleted");
+    if (_vertShader)
+    {
+        glDeleteShader(_vertShader);
+    }
+    
+    if (_fragShader)
+    {
+        glDeleteShader(_fragShader);
+    }
+    
+    _vertShader = _fragShader = 0;
 
     if (_program) 
     {
@@ -436,7 +444,7 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
         }
         free(src);
 
-        abort();
+        return false;;
     }
     return (status == GL_TRUE);
 }
