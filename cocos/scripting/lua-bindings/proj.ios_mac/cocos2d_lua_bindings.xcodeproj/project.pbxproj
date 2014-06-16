@@ -165,6 +165,9 @@
 		C0FEF4D718BE0E70001F446C /* lua_debugger.c in Sources */ = {isa = PBXBuildFile; fileRef = C0FEF4D418BE0E70001F446C /* lua_debugger.c */; };
 		C0FEF4D818BE0E70001F446C /* lua_debugger.h in Headers */ = {isa = PBXBuildFile; fileRef = C0FEF4D518BE0E70001F446C /* lua_debugger.h */; };
 		C0FEF4D918BE0E70001F446C /* lua_debugger.h in Headers */ = {isa = PBXBuildFile; fileRef = C0FEF4D518BE0E70001F446C /* lua_debugger.h */; };
+		DA853F7E194EC9230057DF22 /* lua_cocos2dx_deprecated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA853F7D194EC9230057DF22 /* lua_cocos2dx_deprecated.cpp */; };
+		DA853F81194ECC200057DF22 /* lua_cocos2dx_extension_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA853F7F194ECC200057DF22 /* lua_cocos2dx_extension_auto.cpp */; };
+		DA853F82194ECC200057DF22 /* lua_cocos2dx_extension_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = DA853F80194ECC200057DF22 /* lua_cocos2dx_extension_auto.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -250,6 +253,9 @@
 		1ABCA22E18CD8F7D0087CE3A /* usocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = usocket.h; sourceTree = "<group>"; };
 		C0FEF4D418BE0E70001F446C /* lua_debugger.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lua_debugger.c; sourceTree = "<group>"; };
 		C0FEF4D518BE0E70001F446C /* lua_debugger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_debugger.h; sourceTree = "<group>"; };
+		DA853F7D194EC9230057DF22 /* lua_cocos2dx_deprecated.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_deprecated.cpp; sourceTree = "<group>"; };
+		DA853F7F194ECC200057DF22 /* lua_cocos2dx_extension_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_extension_auto.cpp; sourceTree = "<group>"; };
+		DA853F80194ECC200057DF22 /* lua_cocos2dx_extension_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_extension_auto.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -296,6 +302,8 @@
 		1AACE74818BC45C200215002 /* auto */ = {
 			isa = PBXGroup;
 			children = (
+				DA853F7F194ECC200057DF22 /* lua_cocos2dx_extension_auto.cpp */,
+				DA853F80194ECC200057DF22 /* lua_cocos2dx_extension_auto.hpp */,
 				1AACE74918BC45C200215002 /* lua_cocos2dx_auto.cpp */,
 				1AACE74A18BC45C200215002 /* lua_cocos2dx_auto.hpp */,
 				1AACE75218BC45C200215002 /* lua_cocos2dx_physics_auto.cpp */,
@@ -308,6 +316,7 @@
 		1AACE75B18BC45C200215002 /* manual */ = {
 			isa = PBXGroup;
 			children = (
+				DA853F7D194EC9230057DF22 /* lua_cocos2dx_deprecated.cpp */,
 				C0FEF4D418BE0E70001F446C /* lua_debugger.c */,
 				C0FEF4D518BE0E70001F446C /* lua_debugger.h */,
 				1AACE76018BC45C200215002 /* CCLuaBridge.cpp */,
@@ -532,6 +541,7 @@
 				1AACE7E718BC45C200215002 /* CCLuaStack.h in Headers */,
 				1ABCA1EE18CD8F470087CE3A /* luaconf.h in Headers */,
 				1ABCA23B18CD8F7D0087CE3A /* inet.h in Headers */,
+				DA853F82194ECC200057DF22 /* lua_cocos2dx_extension_auto.hpp in Headers */,
 				1ABCA1EA18CD8F470087CE3A /* lauxlib.h in Headers */,
 				1AACE80F18BC45C200215002 /* lua_extensions.h in Headers */,
 				1503FAA318DA8A1C00F6518C /* buffer.h in Headers */,
@@ -679,6 +689,7 @@
 				1ABCA20418CD8F6E0087CE3A /* tolua_is.c in Sources */,
 				1ABCA24D18CD8F7D0087CE3A /* options.c in Sources */,
 				1A262AB818BEEF5900D2DB92 /* tolua_fix.cpp in Sources */,
+				DA853F7E194EC9230057DF22 /* lua_cocos2dx_deprecated.cpp in Sources */,
 				1AACE80118BC45C200215002 /* lua_cocos2dx_manual.cpp in Sources */,
 				1ABCA23D18CD8F7D0087CE3A /* luasocket.c in Sources */,
 				1ABCA25118CD8F7D0087CE3A /* select.c in Sources */,
@@ -699,6 +710,7 @@
 				1AACE7ED18BC45C200215002 /* Cocos2dxLuaLoader.cpp in Sources */,
 				1ABCA23918CD8F7D0087CE3A /* inet.c in Sources */,
 				1AACE7E118BC45C200215002 /* CCLuaEngine.cpp in Sources */,
+				DA853F81194ECC200057DF22 /* lua_cocos2dx_extension_auto.cpp in Sources */,
 				1ABCA26D18CD8F7D0087CE3A /* usocket.c in Sources */,
 				1AACE81118BC45C200215002 /* Lua_web_socket.cpp in Sources */,
 				1AACE7F918BC45C200215002 /* lua_cocos2dx_extension_manual.cpp in Sources */,

@@ -52,8 +52,6 @@ THE SOFTWARE.
 local p = cc.PACKAGE_NAME .. ".cocos2dx."
 
 cc.c3 = cc.c3b
--- CCPoint = cc.p
--- CCSize = cc.size
 -- kResolutionNoBorder = 1
 -- require(p .. "Global")
 -- require(p .. "ObjectBinding")
