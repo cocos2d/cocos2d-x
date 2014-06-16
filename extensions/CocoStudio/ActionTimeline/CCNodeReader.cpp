@@ -85,6 +85,7 @@ static const char* BLUE             = "colorB";
 static const char* ZORDER           = "ZOrder";
 static const char* FLIPX            = "flipX";
 static const char* FLIPY            = "flipY";
+static const char* VISIBLE          = "visible";
 
 static const char* TEXTURES     = "textures";
 static const char* TEXTURES_PNG = "texturesPng";
@@ -364,6 +365,7 @@ void NodeReader::initNode(cocos2d::CCNode* node, const rapidjson::Value& json)
     int zorder          = DICTOOL->getIntValue_json(json, ZORDER);
     int tag             = DICTOOL->getIntValue_json(json, TAG);
     int actionTag       = DICTOOL->getIntValue_json(json, ACTION_TAG);
+    bool visible        = DICTOOL->getBooleanValue_json(json, VISIBLE);
 
     if(x != 0 || y != 0)
         node->setPosition(CCPoint(x, y));
@@ -385,6 +387,8 @@ void NodeReader::initNode(cocos2d::CCNode* node, const rapidjson::Value& json)
         node->setAnchorPoint(CCPoint(anchorx, anchory));
     if(zorder != 0)
         node->setZOrder(zorder);
+    if(visible != true)
+        node->setVisible(visible);
 
     CCRGBAProtocol *rgbaProtocaol = dynamic_cast<CCRGBAProtocol *>(node);
     if(rgbaProtocaol)
