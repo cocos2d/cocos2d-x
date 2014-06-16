@@ -59,7 +59,7 @@ bool UICheckBoxTest_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromBinaryFile("cocosui/UIEditorTest/UICheckBox_Editor/ui_checkbox_editor_1.csb"));
+        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UICheckBox_Editor/ui_checkbox_editor_1.json"));
         _touchGroup->addWidget(_layout);
        
         this->configureGUIScene();
