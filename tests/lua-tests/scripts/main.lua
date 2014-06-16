@@ -6,4 +6,8 @@ function __G__TRACKBACK__(errorMessage)
     print("----------------------------------------")
 end
 
+require("DeprecatedEnum.lua")
+require("DeprecatedClass.lua")
+require("Deprecated.lua")
+
 require("app.MyApp").new():run()
