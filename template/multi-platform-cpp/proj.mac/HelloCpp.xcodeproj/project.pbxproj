@@ -248,6 +248,7 @@
 		41BC70E615BF81A5006A0A6C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70DE15BF81A5006A0A6C /* MainMenu.xib */; };
 		41BC70E715BF81A5006A0A6C /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70E015BF81A5006A0A6C /* Icon.icns */; };
 		41BC70E815BF81A5006A0A6C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70E115BF81A5006A0A6C /* main.m */; };
+		43B91F091949BB0500F7F815 /* CocoLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 43B91F071949BB0500F7F815 /* CocoLoader.cpp */; };
 		8C583FAD169DB6D500F63A10 /* CCEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8C583FA8169DB6D500F63A10 /* CCEditBox.cpp */; };
 		8C583FAE169DB6D500F63A10 /* CCEditBoxImplMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8C583FAC169DB6D500F63A10 /* CCEditBoxImplMac.mm */; };
 /* End PBXBuildFile section */
@@ -761,6 +762,8 @@
 		41BC70E115BF81A5006A0A6C /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = SOURCE_ROOT; };
 		41BC70E215BF81A5006A0A6C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		41BC70E315BF81A5006A0A6C /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = SOURCE_ROOT; };
+		43B91F071949BB0500F7F815 /* CocoLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocoLoader.cpp; sourceTree = "<group>"; };
+		43B91F081949BB0500F7F815 /* CocoLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoLoader.h; sourceTree = "<group>"; };
 		8C583FA8169DB6D500F63A10 /* CCEditBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCEditBox.cpp; path = CCEditBox/CCEditBox.cpp; sourceTree = "<group>"; };
 		8C583FA9169DB6D500F63A10 /* CCEditBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEditBox.h; path = CCEditBox/CCEditBox.h; sourceTree = "<group>"; };
 		8C583FAA169DB6D500F63A10 /* CCEditBoxImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEditBoxImpl.h; path = CCEditBox/CCEditBoxImpl.h; sourceTree = "<group>"; };
@@ -1623,6 +1626,8 @@
 		37C62C8518E157C200D16FC4 /* Json */ = {
 			isa = PBXGroup;
 			children = (
+				43B91F071949BB0500F7F815 /* CocoLoader.cpp */,
+				43B91F081949BB0500F7F815 /* CocoLoader.h */,
 				37C62C8618E157C200D16FC4 /* DictionaryHelper.cpp */,
 				37C62C8718E157C200D16FC4 /* DictionaryHelper.h */,
 				37C62C8818E157C200D16FC4 /* rapidjson */,
@@ -2131,6 +2136,7 @@
 				15C15944168315E500D239F2 /* CCTableView.cpp in Sources */,
 				15C15945168315E500D239F2 /* CCTableViewCell.cpp in Sources */,
 				15C15946168315E500D239F2 /* HttpClient.cpp in Sources */,
+				43B91F091949BB0500F7F815 /* CocoLoader.cpp in Sources */,
 				15C15947168315E500D239F2 /* CCPhysicsDebugNode.cpp in Sources */,
 				37C62CD518E157C300D16FC4 /* CCTween.cpp in Sources */,
 				15C15948168315E500D239F2 /* CCPhysicsSprite.cpp in Sources */,

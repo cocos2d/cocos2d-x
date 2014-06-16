@@ -231,6 +231,7 @@
 		37FFCAA318606CC00078F312 /* CCActionEaseEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37FFCAA118606CBF0078F312 /* CCActionEaseEx.cpp */; };
 		3EC20B8D1833564000F2C4D6 /* jsb_cocos2d_studio.js in Sources */ = {isa = PBXBuildFile; fileRef = 3EC20B8C1833564000F2C4D6 /* jsb_cocos2d_studio.js */; };
 		3EC20B8E1833566100F2C4D6 /* jsb_cocos2d_studio.js in Resources */ = {isa = PBXBuildFile; fileRef = 3EC20B8C1833564000F2C4D6 /* jsb_cocos2d_studio.js */; };
+		43B91EE91949BA5600F7F815 /* CocoLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 43B91EE71949BA5600F7F815 /* CocoLoader.cpp */; };
 		460E5380182B719A0040458A /* UILayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460E537C182B719A0040458A /* UILayout.cpp */; };
 		460E5381182B719A0040458A /* UILayoutParameter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460E537E182B719A0040458A /* UILayoutParameter.cpp */; };
 		460E5386182B71B10040458A /* GUIReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460E5382182B71B10040458A /* GUIReader.cpp */; };
@@ -678,6 +679,8 @@
 		37FFCAAE18606D300078F312 /* stringbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringbuffer.h; sourceTree = "<group>"; };
 		37FFCAAF18606D300078F312 /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
 		3EC20B8C1833564000F2C4D6 /* jsb_cocos2d_studio.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocos2d_studio.js; sourceTree = "<group>"; };
+		43B91EE71949BA5600F7F815 /* CocoLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocoLoader.cpp; sourceTree = "<group>"; };
+		43B91EE81949BA5600F7F815 /* CocoLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoLoader.h; sourceTree = "<group>"; };
 		460E537C182B719A0040458A /* UILayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILayout.cpp; sourceTree = "<group>"; };
 		460E537D182B719A0040458A /* UILayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILayout.h; sourceTree = "<group>"; };
 		460E537E182B719A0040458A /* UILayoutParameter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILayoutParameter.cpp; sourceTree = "<group>"; };
@@ -1201,6 +1204,8 @@
 				37FFCAA418606D300078F312 /* rapidjson */,
 				1A36F5CD17EFE683000D0275 /* DictionaryHelper.cpp */,
 				1A36F5CE17EFE683000D0275 /* DictionaryHelper.h */,
+				43B91EE71949BA5600F7F815 /* CocoLoader.cpp */,
+				43B91EE81949BA5600F7F815 /* CocoLoader.h */,
 			);
 			path = Json;
 			sourceTree = "<group>";
@@ -2023,6 +2028,7 @@
 				1AF284C317F00C8200642436 /* CCPhysicsSprite.cpp in Sources */,
 				375BD46F18683F630024609E /* TriggerMng.cpp in Sources */,
 				1A36F69717EFE6D2000D0275 /* cpPivotJoint.c in Sources */,
+				43B91EE91949BA5600F7F815 /* CocoLoader.cpp in Sources */,
 				1A36F69817EFE6D2000D0275 /* cpRatchetJoint.c in Sources */,
 				1A36F69917EFE6D2000D0275 /* cpRotaryLimitJoint.c in Sources */,
 				1A36F69A17EFE6D2000D0275 /* cpSimpleMotor.c in Sources */,

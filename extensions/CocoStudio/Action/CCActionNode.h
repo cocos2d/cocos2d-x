@@ -31,6 +31,11 @@
 #include "../Json/DictionaryHelper.h"
 #include "../Json/rapidjson/document.h"
 NS_CC_EXT_BEGIN
+
+class CocoLoader;
+struct stExpCocoNode;
+
+
 /**
 *   @js NA
 *   @lua NA
@@ -150,6 +155,7 @@ public:
 	
     /*init properties with a json dictionary*/
 	virtual void initWithDictionary(const rapidjson::Value& dic,CCObject* root);
+    virtual void initWithBinary(CocoLoader* pCocoLoader, stExpCocoNode*	pCocoNode, CCObject* root);
     /**
      * Gets if the action is done once time.
      *
@@ -157,6 +163,10 @@ public:
      */
 	virtual bool isActionDoneOnce();
 protected:
+    int valueToInt(std::string& value);
+    bool valueToBool(std::string& value);
+    float valueToFloat(std::string& value);
+    
 	int currentFrameIndex;
 	int destFrameIndex;
 	

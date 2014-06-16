@@ -563,6 +563,9 @@
     <ClCompile Include="..\network\WebSocketWinRT.cpp">
       <Filter>network</Filter>
     </ClCompile>
+    <ClCompile Include="..\CocoStudio\Json\CocoLoader.cpp">
+      <Filter>CocoStudio\Json</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\AssetsManager\AssetsManager.h">
@@ -1065,5 +1068,8 @@
       <Filter>network</Filter>
     </ClInclude>
     <ClInclude Include="..\ExtensionExport.h" />
+    <ClInclude Include="..\CocoStudio\Json\CocoLoader.h">
+      <Filter>CocoStudio\Json</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

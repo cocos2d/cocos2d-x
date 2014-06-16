@@ -23,8 +23,8 @@ void CustomImageLayer::onEnter()
                                        parseselector(CustomImageViewReader::setProperties));        
     
     Layout* layout = static_cast<Layout*>(GUIReader::shareReader()->
-                                          widgetFromJsonFile
-                                          ("cocosui/CustomImageViewTest/NewProject_2_1.ExportJson"));
+                                          widgetFromBinaryFile
+                                          ("cocosui/CustomImageViewTest/NewProject_2_1.csb"));
     addChild(layout);
 }
 

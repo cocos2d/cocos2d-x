@@ -15,6 +15,8 @@ cocos2d-x-2.2.4 ??
      [FIX]    WP8 & WinRT: Removed debug prebuilt libs
      [FIX]    WP8 & WinRT: Label created with LabelTTF has black border on WINRT/WP8
      [FIX]    WP8: will restart if app goes to background, then touches icon to go to foreground
+     [FIX]    WP8: fix a memory leak when the phone switches between apps
+     [FIX]    WP8: updated angle to fix memory leak when closing angle
      
 cocos2d-x-2.2.3 @Mar.14 2014
 [All]
