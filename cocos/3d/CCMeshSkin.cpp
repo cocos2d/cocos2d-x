@@ -285,6 +285,7 @@ MeshSkin* MeshSkin::create(const std::string& filename, const std::string& name)
                 auto skin = new MeshSkin();
                 skin->initFromSkinData(data);
                 skin->autorelease();
+                MeshSkinDataCache::getInstance()->addMeshSkinData(key, data);
                 return skin;
             }
         }

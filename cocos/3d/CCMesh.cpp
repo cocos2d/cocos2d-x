@@ -322,7 +322,7 @@ MeshCache::MeshCache()
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     // listen the event when app go to foreground
-    _backToForegroundlistener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, CC_CALLBACK_1(Sprite3DDataCache::listenBackToForeground, this));
+    _backToForegroundlistener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, CC_CALLBACK_1(MeshCache::listenBackToForeground, this));
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundlistener, -1);
 #endif
 }
