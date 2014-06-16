@@ -31,7 +31,11 @@ THE SOFTWARE.
 local c = cc
 local Node = c.Node
 
--- local Rect = {}
+-- touch
+c.TouchesAllAtOnce              = kCCTouchesAllAtOnce
+c.TouchesOneByOne               = kCCTouchesOneByOne
+c.TOUCH_MODE_ALL_AT_ONCE        = c.TouchesAllAtOnce
+c.TOUCH_MODE_ONE_BY_ONE         = c.TouchesOneByOne
 
 local function isPointIn( rc, pt )
     local rect = cc.rect(rc.x, rc.y, rc.width, rc.height)
@@ -64,23 +68,68 @@ function Node:performWithDelay(callback, delay)
 end
 
 function Node:getCascadeBoundingBox()
-    print("-----Node:getCascadeBoundingBox   Lua ")
     local rc
     local func = tolua.getcfunction(self, "getCascadeBoundingBox")
     if func then
         rc = func(self)
     end
 
+    rc.origin = {x=rc.x, y=rc.y}
+    rc.size = {width=rc.width, height=rc.height}
     rc.containsPoint = isPointIn
     return rc
 end
 
-function Node:setTouchEnabled( b )
-    self.flagTouchEnabled_ = b
+function Node:setTouchEnabled( isEnable )
+    if self._isTouchEnabled_ and self._isTouchEnabled_==isEnable then return end
+    self._isTouchEnabled_ = isEnable
+
+    local evt = c.NODE_TOUCH_EVENT
+    if self._scriptEventListeners_ and self._scriptEventListeners_[evt] then
+        local eventDispatcher = self:getEventDispatcher()
+
+        local regFunc
+        if isEnable then
+            regFunc = function ( regHanler, obj )
+                eventDispatcher:addEventListenerWithSceneGraphPriority(regHanler, obj)
+            end
+        else
+            regFunc = function ( regHanler )
+                eventDispatcher:removeEventListener(regHanler)
+            end
+        end
+        
+        for i,v in ipairs(self._scriptEventListeners_[evt]) do
+            if v.regHanler and v.mode==self._TouchMode_ then
+                regFunc(v.regHanler, self)
+            end
+        end
+    end
 end
 
-function Node:setTouchSwallowEnabled( b )
-    self.flagTouchSwallowEnabled_ = b
+function Node:setTouchSwallowEnabled( isEnable )
+    if self._isTouchSwallowEnabled_ and self._isTouchSwallowEnabled_==isEnable then return end
+    self._isTouchSwallowEnabled_ = isEnable
+    local evt = c.NODE_TOUCH_EVENT
+    if self._scriptEventListeners_ and self._scriptEventListeners_[evt] then
+        for i,v in ipairs(self._scriptEventListeners_[evt]) do
+            if v.regHanler then v.regHanler:setSwallowTouches(isEnable) end
+        end
+    end
+end
+
+function Node:setTouchMode(mode)
+    -- print("====setTouchMode: "..mode)
+    if self._TouchMode_ ~= mode then
+      self._TouchMode_ = mode
+      if not self._isTouchEnabled_ then return end
+      self:setTouchEnabled(false)   --unregister old listeners
+      self:setTouchEnabled(true)
+    end
+end
+
+function Node:removeSelf()
+    -- body
 end
 
 function Node:onEnter()
@@ -196,35 +245,35 @@ function Node:setTouchPriority()
     PRINT_DEPRECATED("Node.setTouchPriority() is deprecated, remove it")
 end
 
-function Node:setTouchMode(...)
-end
-
 -- function Node.handleUpdate(dt)
 --     -- print("----Node:handleUpdate   "..dt)
 --     NodeEventDispatcher()
 -- end
 
 function Node:addNodeEventListener( evt, hdl, tag, priority )
-    print("----Node:addNodeEventListener")
+    -- print("----Node:addNodeEventListener")
     priority = priority or 0
     self._scriptEventListeners_ = self._scriptEventListeners_ or {}
     local idx = self._nextScriptEventHandleIndex_ or 0
-    self._nextScriptEventHandleIndex_ = idx + 1
-    local lis = self._scriptEventListeners_[evt] or {}
-    table.insert(lis, {
+    idx = idx + 1
+    self._nextScriptEventHandleIndex_ = idx
+    self._scriptEventListeners_[evt] = self._scriptEventListeners_[evt] or {}
+    local lis = {
             index_ = idx,
             listener_ = hdl,
             tag_ = tag,
             priority_ = priority,
             enable_ = true,
-        })
-    if not self._scriptEventListeners_[evt] then 
-        self._scriptEventListeners_[evt] = lis
+        }
+    if evt==c.NODE_ENTER_FRAME_EVENT then
+        self._scriptEventListeners_[evt][1] = lis
+    else
+        table.insert(self._scriptEventListeners_[evt], lis)
     end
 
     if evt==c.NODE_ENTER_FRAME_EVENT then
         local func = tolua.getcfunction(self, "scheduleUpdateWithPriorityLua")
-        print("=============func:")
+        -- print("=============func:")
         if func then 
             local listener = function (dt)
                 NodeEventDispatcher(self, c.NODE_ENTER_FRAME_EVENT, dt)
@@ -244,16 +293,54 @@ function Node:addNodeEventListener( evt, hdl, tag, priority )
             return NodeEventDispatcher(event:getCurrentTarget(), c.NODE_TOUCH_EVENT, {touch, event, "ended"})
         end
 
-        local listener = cc.EventListenerTouchOneByOne:create()
-        listener:setSwallowTouches(true)
-        listener:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN )
-        listener:registerScriptHandler(onTouchMoved,cc.Handler.EVENT_TOUCH_MOVED )
-        listener:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCH_ENDED )
+        self._isTouchSwallowEnabled_ = self._isTouchSwallowEnabled_ or true
+        local isSwallow = self._isTouchSwallowEnabled_
+        local listener
+        self._TouchMode_ = self._TouchMode_ or c.EVENT_TOUCH_ONE_BY_ONE
+        local mode = self._TouchMode_
+        if mode==c.TOUCH_MODE_ALL_AT_ONCE then
+            -- print("====TOUCH_MODE_ALL_AT_ONCE listener")
+            listener = cc.EventListenerTouchAllAtOnce:create()
+            listener:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCHES_BEGAN )
+            -- listener:registerScriptHandler(onTouchMoved,cc.Handler.EVENT_TOUCH_MOVED )
+            listener:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCHES_ENDED )
+        else
+            -- print("====EVENT_TOUCH_ONE_BY_ONE listener")
+            listener = cc.EventListenerTouchOneByOne:create()
+            listener:setSwallowTouches(isSwallow)
+            listener:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN )
+            listener:registerScriptHandler(onTouchMoved,cc.Handler.EVENT_TOUCH_MOVED )
+            listener:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCH_ENDED )
+        end
         local eventDispatcher = self:getEventDispatcher()
         eventDispatcher:addEventListenerWithSceneGraphPriority(listener, self)
+        lis.regHanler = listener
+        lis.mode = mode
     end
 
     return self._nextScriptEventHandleIndex_
+end
+
+function Node:removeNodeEventListenersByEvent( evt )
+    if self._scriptEventListeners_ and self._scriptEventListeners_[evt] then
+        local eventDispatcher = self:getEventDispatcher()
+        if evt==c.NODE_TOUCH_EVENT then
+            for i,v in ipairs(self._scriptEventListeners_[evt]) do
+                    if v.regHanler then
+                        eventDispatcher:removeEventListener(v.regHanler)
+                    end
+            end
+        elseif evt==c.NODE_ENTER_FRAME_EVENT then
+            self:unscheduleUpdate()
+        end
+
+        self._scriptEventListeners_[evt] = nil
+    end
+end
+
+function Node:removeAllNodeEventListeners()
+    removeNodeEventListenersByEvent(c.NODE_ENTER_FRAME_EVENT)
+    removeNodeEventListenersByEvent(c.NODE_TOUCH_EVENT)
 end
 
 function NodeEventDispatcher( obj, idx, data )
@@ -264,37 +351,62 @@ function NodeEventDispatcher( obj, idx, data )
     elseif idx==c.NODE_ENTER_FRAME_EVENT then
         event = data
     elseif idx==c.NODE_TOUCH_EVENT then
-        print("-----c.NODE_TOUCH_EVENT ")
+        -- print("-----c.NODE_TOUCH_EVENT ")
+        if not obj._isTouchEnabled_ then return false end
         local touch = data[1]
         local evt = data[2]
-        local p1 = touch:getLocation()
-        local p2 = touch:getPreviousLocation()
-        print("----x, y:"..p1.x..","..p1.y)
+        local ename = data[3]
 
-        local rc = obj:getCascadeBoundingBox()
-        local rect = cc.rect(rc.x, rc.y, rc.width, rc.height)
-        if not obj:getCascadeBoundingBox():containsPoint(p1) then
-        -- if not cc.rectContainsPoint(rect, p1) then
-            print("-----c.NODE_TOUCH_EVENT not in space")
-            return false
+        if obj._TouchMode_==c.EVENT_TOUCH_ONE_BY_ONE then
+            -- print("-----c.EVENT_TOUCH_ONE_BY_ONE ")
+            local p1 = touch:getLocation()
+            local p2 = touch:getPreviousLocation()
+            local rc = obj:getCascadeBoundingBox()
+            local rect = cc.rect(rc.x, rc.y, rc.width, rc.height)
+            if not obj:getCascadeBoundingBox():containsPoint(p1) then
+                return false
+            end
+
+            event = {
+                mode = c.EVENT_TOUCH_ONE_BY_ONE,
+                name = ename,
+                x = p1.x,
+                y = p1.y,
+                prevX = p2.x,
+                prevY = p2.y,
+            }
+        else
+            -- print("-----c.TOUCH_MODE_ALL_AT_ONCE ")
+            -- dump(touch)
+            -- if touch[1] then
+            --     local p1 = touch[1]:getLocation()
+            --     local rc = obj:getCascadeBoundingBox()
+            --     local rect = cc.rect(rc.x, rc.y, rc.width, rc.height)
+            --     if not obj:getCascadeBoundingBox():containsPoint(p1) then
+            --         return false
+            --     end
+            -- end
+            local pts = {}
+            for i,v in ipairs(touch) do
+                local pt = {}
+                local p = v:getLocation()
+                pt.x = p.x
+                pt.y = p.y
+                pt.id = v:getId()
+                pts[#pts+1] = pt
+            end
+
+            event = {
+                mode = c.TOUCH_MODE_ALL_AT_ONCE,
+                name = ename,
+                points = pts,
+            }
         end
-
-        event = {
-            name = data[3],
-            x = p1.x,
-            y = p1.y,
-            prevX = p2.x,
-            prevY = p2.y,
-        }
     end
 
     if obj._scriptEventListeners_ and obj._scriptEventListeners_[idx] then
         for i,v in ipairs(obj._scriptEventListeners_[idx]) do
-            -- if idx==c.NODE_TOUCH_EVENT then
-            --     v.listener_(event.name, event.x, event.y, event.prevX, event.prevY)
-            -- else
-                return v.listener_(event)
-            -- end
+            return v.listener_(event)
         end
     end
 end
