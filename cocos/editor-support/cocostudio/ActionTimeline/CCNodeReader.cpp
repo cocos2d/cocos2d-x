@@ -84,6 +84,7 @@ static const char* ALPHA            = "opacity";
 static const char* RED              = "colorR";
 static const char* GREEN            = "colorG";
 static const char* BLUE             = "colorB";
+static const char* ZORDER           = "ZOrder";
 static const char* PARTICLE_NUM     = "particleNum";
 
 static const char* TEXTURES     = "textures";
@@ -262,6 +263,7 @@ void NodeReader::initNode(Node* node, const rapidjson::Value& json)
     GLubyte red         = (GLubyte)DICTOOL->getIntValue_json(json, RED, 255);
     GLubyte green       = (GLubyte)DICTOOL->getIntValue_json(json, GREEN, 255);
     GLubyte blue        = (GLubyte)DICTOOL->getIntValue_json(json, BLUE, 255);
+    int zorder		    = DICTOOL->getIntValue_json(json, ZORDER);
     int tag             = DICTOOL->getIntValue_json(json, TAG);
     int actionTag       = DICTOOL->getIntValue_json(json, ACTION_TAG);
 
@@ -285,7 +287,8 @@ void NodeReader::initNode(Node* node, const rapidjson::Value& json)
         node->setAnchorPoint(Point(anchorx, anchory));
     if(width != 0 || height != 0)
         node->setContentSize(Size(width, height));
-
+    if(zorder != 0)
+        node->setZOrder(zorder);
 
     if(alpha != 255)
     {
