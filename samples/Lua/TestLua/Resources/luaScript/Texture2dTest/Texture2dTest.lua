@@ -1347,17 +1347,33 @@ local function TextureMemoryAlloc()
         end
         CCTextureCache:sharedTextureCache():removeUnusedTextures()
 
+        local targetPlatform = CCApplication:sharedApplication():getTargetPlatform()
         local file = ""
-        if tag == 0 then
-            file = "Images/test_1021x1024.png"
-        elseif tag == 1 then
-            file = "Images/test_1021x1024_rgba8888.pvr"
-        elseif tag == 2 then
-            file = "Images/test_1021x1024_rgb888.pvr"
-        elseif tag == 3 then
-            file = "Images/test_1021x1024_rgba4444.pvr"
-        elseif tag == 4 then
-            file = "Images/test_1021x1024_a8.pvr"
+
+        if targetPlatform == kTargetAndroid then
+            if tag == 0 then
+                file = "Images/test_1021x1024.png"
+            elseif tag == 1 then
+                file = "Images/test_1021x1024_rgba8888.pvr"
+            elseif tag == 2 then
+                file = "Images/test_1021x1024_rgb888.pvr"
+            elseif tag == 3 then
+                 file = "Images/test_1021x1024_rgba4444.pvr"
+            elseif tag == 4 then
+                file = "Images/test_1021x1024_a8.pvr"
+            end
+        else
+            if tag == 0 then
+                file = "Images/test_1021x1024.png"
+            elseif tag == 1 then
+                file = "Images/test_1021x1024_rgba8888.pvr.gz"
+            elseif tag == 2 then
+                file = "Images/test_1021x1024_rgb888.pvr.gz"
+            elseif tag == 3 then
+                file = "Images/test_1021x1024_rgba4444.pvr.gz"
+            elseif tag == 4 then
+                file = "Images/test_1021x1024_a8.pvr.gz"
+            end
         end
 
         m_pBackground = CCSprite:create(file)
