@@ -313,6 +313,9 @@
     <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest\UIRichTextTest">
       <UniqueIdentifier>{d4a3dc35-f9ec-4761-baec-a3884d0cf14a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocoStudioActionTimelineTest">
+      <UniqueIdentifier>{1cc09ab5-39ae-44d3-ab90-a74a065b826d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -760,6 +763,9 @@
     </ClCompile>
     <ClCompile Include="EditBox.xaml.cpp" />
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioActionTimelineTest\ActionTimelineTestScene.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioActionTimelineTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
@@ -1387,6 +1393,9 @@
       <Filter>Classes\ExtensionsTest\EditBoxTest</Filter>
     </ClInclude>
     <ClInclude Include="EditBox.xaml.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioActionTimelineTest\ActionTimelineTestScene.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioActionTimelineTest</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="TestCpp_TemporaryKey.pfx" />

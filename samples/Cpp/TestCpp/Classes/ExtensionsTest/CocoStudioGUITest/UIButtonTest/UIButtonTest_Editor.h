@@ -35,7 +35,10 @@ public:
     
     bool init();
     void touchEvent(CCObject* pSender, TouchEventType type);        
+    virtual void switchLoadMethod(CCObject* pSender);
     
+    void configureGUIScene();
+
 protected:
     UI_SCENE_EDITOR_CREATE_FUNC(UIButtonTest_Editor);
     ui::Label* _displayValueLabel;
