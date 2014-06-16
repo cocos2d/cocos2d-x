@@ -42,7 +42,9 @@ bool cocos2d::Image::saveToFile(const std::string& filename, bool isToRGB)
     bool saveToPNG = false;
     bool needToCopyPixels = false;
 
-    if (std::string::npos != filename.find(".png"))
+    std::string basename(filename);
+    std::transform(basename.begin(), basename.end(), basename.begin(), ::tolower);
+    if (std::string::npos != basename.find(".png"))
     {
         saveToPNG = true;
     }
