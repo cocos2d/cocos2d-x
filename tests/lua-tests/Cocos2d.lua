@@ -1,4 +1,4 @@
-require "CocoStudio"
+-- require "CocoStudio"
 
 cc = cc or {}
 

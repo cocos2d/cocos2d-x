@@ -397,7 +397,7 @@ _G.kStateConnecting               = cc.WEBSOCKET_STATE_CONNECTING
 _G.kStateOpen                     = cc.WEBSOCKET_STATE_OPEN 
 _G.kStateClosing                  = cc.WEBSOCKET_STATE_CLOSING
 _G.kStateClosed                   = cc.WEBSOCKET_STATE_CLOSED
-
+--[[
 _G.LAYOUT_COLOR_NONE              = ccui.LayoutBackGroundColorType.none
 _G.LAYOUT_COLOR_SOLID             = ccui.LayoutBackGroundColorType.solid
 _G.LAYOUT_COLOR_GRADIENT          = ccui.LayoutBackGroundColorType.gradient
@@ -491,4 +491,4 @@ ccui.LayoutType.absolute = ccui.LayoutType.ABSOLUTE
 ccui.LayoutType.linearVertical = ccui.LayoutType.VERTICAL
 ccui.LayoutType.linearHorizontal = ccui.LayoutType.HORIZONTAL
 ccui.LayoutType.relative = ccui.LayoutType.RELATIVE
-
+]]

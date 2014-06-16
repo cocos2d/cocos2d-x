@@ -68,6 +68,7 @@ local sharedDirector         = CCDirector:sharedDirector()
 local sharedTextureCache     = CCTextureCache:sharedTextureCache()
 local sharedSpriteFrameCache = CCSpriteFrameCache:sharedSpriteFrameCache()
 local sharedAnimationCache   = CCAnimationCache:sharedAnimationCache()
+print("==============trace location 1")
 
 -- check device screen size
 local glview = sharedDirector:getOpenGLView()
@@ -114,9 +115,11 @@ if CONFIG_SCREEN_AUTOSCALE then
         printError(string.format("display - invalid CONFIG_SCREEN_AUTOSCALE \"%s\"", CONFIG_SCREEN_AUTOSCALE))
     end
 
+print("==============trace location 2")
     glview:setDesignResolutionSize(CONFIG_SCREEN_WIDTH, CONFIG_SCREEN_HEIGHT, kResolutionNoBorder)
 end
 
+print("==============trace location 3")
 local winSize = sharedDirector:getWinSize()
 display.contentScaleFactor = scale
 display.size               = {width = winSize.width, height = winSize.height}
