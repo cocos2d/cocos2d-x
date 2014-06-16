@@ -88,6 +88,7 @@ static const char* ZORDER           = "ZOrder";
 static const char* PARTICLE_NUM     = "particleNum";
 static const char* FLIPX            = "flipX";
 static const char* FLIPY            = "flipY";
+static const char* VISIBLE          = "visible";
 
 static const char* TEXTURES     = "textures";
 static const char* TEXTURES_PNG = "texturesPng";
@@ -268,6 +269,7 @@ void NodeReader::initNode(Node* node, const rapidjson::Value& json)
     int zorder		    = DICTOOL->getIntValue_json(json, ZORDER);
     int tag             = DICTOOL->getIntValue_json(json, TAG);
     int actionTag       = DICTOOL->getIntValue_json(json, ACTION_TAG);
+    bool visible        = DICTOOL->getBooleanValue_json(json, VISIBLE);
 
     if(x != 0 || y != 0)
         node->setPosition(Point(x, y));
@@ -291,6 +293,8 @@ void NodeReader::initNode(Node* node, const rapidjson::Value& json)
         node->setContentSize(Size(width, height));
     if(zorder != 0)
         node->setZOrder(zorder);
+    if(visible != true)
+        node->setVisible(visible);
 
     if(alpha != 255)
     {
