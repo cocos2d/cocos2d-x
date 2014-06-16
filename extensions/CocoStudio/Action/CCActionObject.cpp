@@ -158,13 +158,13 @@ void ActionObject::initWithBinary(cocos2d::extension::CocoLoader *pCocoLoader, c
 	if(NULL != actionNodeList)
 	{
         int actionNodeCount = actionNodeList->GetChildNum();
-        
+        stExpCocoNode *actionNodeArray = actionNodeList->GetChildArray();
         int maxLength = 0;
         for (int i=0; i<actionNodeCount; i++) {
             ActionNode* actionNode = new ActionNode();
             actionNode->autorelease();
             
-            actionNode->initWithBinary(pCocoLoader, actionNodeList, root);
+            actionNode->initWithBinary(pCocoLoader, &actionNodeArray[i] , root);
             
             actionNode->setUnitTime(getUnitTime());
             
