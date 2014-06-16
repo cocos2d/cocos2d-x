@@ -46,15 +46,6 @@ void getChildMap(std::map<int, std::vector<int> >& map, SkinData* skinData, cons
     std::string parent_name = val["id"].GetString();
     int parent_name_index = skinData->getBoneNameIndex(parent_name);
 
-//    const rapidjson::Value& bind_pos = val["bind_shape"];
-//    Mat4 mat_bind_pos;
-//    for (rapidjson::SizeType j = 0; j < bind_pos.Size(); j++)
-//    {
-//        mat_bind_pos.m[j] = bind_pos[j].GetDouble();
-//    }
-//    
-//    skinData->inverseBindPoseMatrices[parent_name_index] = (mat_bind_pos);
-
     const rapidjson::Value& children = val["children"];
     for (rapidjson::SizeType i = 0; i < children.Size(); i++)
     {
@@ -108,18 +99,21 @@ void Bundle3D::purgeBundle3D()
 
 bool Bundle3D::load(const std::string& path)
 {
-    std::string strFileString = FileUtils::getInstance()->getStringFromFile(path);
-    ssize_t size = strFileString.length();
+    std::string fullpath = FileUtils::getInstance()->getStringFromFile(path);
 
+    getModelPath(path);
+
+    ssize_t size = fullpath.length();
     CC_SAFE_DELETE_ARRAY(_documentBuffer);
     _documentBuffer = new char[size + 1];
-    memcpy(_documentBuffer, strFileString.c_str(), size);
+    memcpy(_documentBuffer, fullpath.c_str(), size);
     _documentBuffer[size] = '\0';
-    if (document.ParseInsitu<0>(_documentBuffer).HasParseError())
+    if (_document.ParseInsitu<0>(_documentBuffer).HasParseError())
     {
         assert(0);
         return false;
     }
+
     return true;
 }
 
@@ -131,8 +125,8 @@ bool Bundle3D::loadMeshData(const std::string& id, MeshData* meshdata)
 {
     meshdata->resetData();
     
-    assert(document.HasMember("mesh_data"));
-    const rapidjson::Value& mash_data_array = document["mesh_data"];
+    assert(_document.HasMember("mesh"));
+    const rapidjson::Value& mash_data_array = _document["mesh"];
     
     assert(mash_data_array.IsArray());
     const rapidjson::Value& mash_data_val = mash_data_array[(rapidjson::SizeType)0];
@@ -141,29 +135,29 @@ bool Bundle3D::loadMeshData(const std::string& id, MeshData* meshdata)
     const rapidjson::Value& mesh_data_body_array = mash_data_val["body"];
     
     assert(mesh_data_body_array.IsArray());
-    const rapidjson::Value& mesh_data_body_val = mesh_data_body_array[(rapidjson::SizeType)0];
+    const rapidjson::Value& mesh_data_body_array_0 = mesh_data_body_array[(rapidjson::SizeType)0];
     
     // vertex_size
-    assert(mesh_data_body_val.HasMember("vertex_size"));
-    meshdata->vertexSizeInFloat = mesh_data_body_val["vertex_size"].GetInt();
+    assert(mesh_data_body_array_0.HasMember("vertexsize"));
+    meshdata->vertexSizeInFloat = mesh_data_body_array_0["vertexsize"].GetInt();
 
     // vertices
     meshdata->vertex = new float[meshdata->vertexSizeInFloat];
-    const rapidjson::Value& mesh_data_body_vertex_val = mesh_data_body_val["vertices"];
-    for (rapidjson::SizeType i = 0; i < mesh_data_body_vertex_val.Size(); i++)
-        meshdata->vertex[i] = mesh_data_body_vertex_val[i].GetDouble();
+    const rapidjson::Value& mesh_data_body_vertices = mesh_data_body_array_0["vertices"];
+    for (rapidjson::SizeType i = 0; i < mesh_data_body_vertices.Size(); i++)
+        meshdata->vertex[i] = mesh_data_body_vertices[i].GetDouble();
 
     // index_number
-    meshdata->numIndex = mesh_data_body_val["index_number"].GetUint();
+    meshdata->numIndex = mesh_data_body_array_0["indexnum"].GetUint();
 
     // indices
     meshdata->indices = new unsigned short[meshdata->numIndex];
-    const rapidjson::Value& mesh_data_body_indices_val = mesh_data_body_val["indices"];
+    const rapidjson::Value& mesh_data_body_indices_val = mesh_data_body_array_0["indices"];
     for (rapidjson::SizeType i = 0; i < mesh_data_body_indices_val.Size(); i++)
         meshdata->indices[i] = (unsigned short)mesh_data_body_indices_val[i].GetUint();
 
     // mesh_vertex_attribute
-    const rapidjson::Value& mesh_vertex_attribute = mash_data_val["mesh_vertex_attribute"];
+    const rapidjson::Value& mesh_vertex_attribute = mash_data_val["attributes"];
     meshdata->attribCount = mesh_vertex_attribute.Size();
     meshdata->attribs = new MeshVertexAttrib[meshdata->attribCount];
     for (rapidjson::SizeType i = 0; i < mesh_vertex_attribute.Size(); i++)
@@ -173,8 +167,7 @@ bool Bundle3D::loadMeshData(const std::string& id, MeshData* meshdata)
         meshdata->attribs[i].size = mesh_vertex_attribute_val["size"].GetUint();
         meshdata->attribs[i].attribSizeBytes = meshdata->attribs[i].size * parseGLTypeSize(mesh_vertex_attribute_val["type"].GetString());
         meshdata->attribs[i].type = parseGLType(mesh_vertex_attribute_val["type"].GetString());
-        //assignGLTypeByString(meshdata->attribs[i].type, mesh_vertex_attribute_val["type"].GetString());
-        meshdata->attribs[i].vertexAttrib = parseGLProgramAttribute(mesh_vertex_attribute_val["vertex_attribute"].GetString());
+        meshdata->attribs[i].vertexAttrib = parseGLProgramAttribute(mesh_vertex_attribute_val["attribute"].GetString());
     }
 
     return true;
@@ -187,15 +180,17 @@ bool Bundle3D::loadMeshData(const std::string& id, MeshData* meshdata)
  */
 bool Bundle3D::loadSkinData(const std::string& id, SkinData* skindata)
 {
+    if (!_document.HasMember("skin")) return false;
+
     skindata->resetData();
 
-    assert(document.HasMember("skin_data"));
-    if (!document.HasMember("skin_data")) return false;
-
-    const rapidjson::Value& skin_data_array = document["skin_data"];
+    const rapidjson::Value& skin_data_array = _document["skin"];
 
     assert(skin_data_array.IsArray());
     const rapidjson::Value& skin_data_array_val_0 = skin_data_array[(rapidjson::SizeType)0];
+
+    if (!skin_data_array_val_0.HasMember("bones"))
+        return false;
 
     const rapidjson::Value& skin_data_bones = skin_data_array_val_0["bones"];
     for (rapidjson::SizeType i = 0; i < skin_data_bones.Size(); i++)
@@ -203,8 +198,9 @@ bool Bundle3D::loadSkinData(const std::string& id, SkinData* skindata)
         const rapidjson::Value& skin_data_bone = skin_data_bones[i];
         std::string name = skin_data_bone["node"].GetString();
         skindata->boneNames.push_back(name);
-        const rapidjson::Value& bind_pos = skin_data_bone["bind_shape"];
+        
         Mat4 mat_bind_pos;
+        const rapidjson::Value& bind_pos = skin_data_bone["bindshape"];
         for (rapidjson::SizeType j = 0; j < bind_pos.Size(); j++)
         {
             mat_bind_pos.m[j] = bind_pos[j].GetDouble();
@@ -212,10 +208,10 @@ bool Bundle3D::loadSkinData(const std::string& id, SkinData* skindata)
         skindata->inverseBindPoseMatrices.push_back(mat_bind_pos);
     }
 
-    const rapidjson::Value& skin_data_array_val_1 = skin_data_array[1];
-    const rapidjson::Value& bone_val_0 = skin_data_array_val_1["children"][(rapidjson::SizeType)0];
-    skindata->rootBoneIndex = skindata->getBoneNameIndex(bone_val_0["id"].GetString());
-    getChildMap(skindata->boneChild, skindata, bone_val_0);
+    const rapidjson::Value& skin_data_1 = skin_data_array[1];
+    const rapidjson::Value& bone_array_0 = skin_data_1["children"][(rapidjson::SizeType)0];
+    skindata->rootBoneIndex = skindata->getBoneNameIndex(bone_array_0["id"].GetString());
+    getChildMap(skindata->boneChild, skindata, bone_array_0);
     return true;
 }
 
@@ -225,19 +221,19 @@ bool Bundle3D::loadSkinData(const std::string& id, SkinData* skindata)
  */
 bool Bundle3D::loadMaterialData(const std::string& id, MaterialData* materialdata)
 {
-    assert(document.HasMember("material_data"));
-    if (!document.HasMember("material_data")) 
+    if (!_document.HasMember("material")) 
         return false;
 
-    const rapidjson::Value& material_data_array_val = document["material_data"];
-    if (!material_data_array_val.IsArray()) 
-        return false;
+    const rapidjson::Value& material_data_array = _document["material"];
 
-    const rapidjson::Value& material_data_array_val_0 = material_data_array_val[(rapidjson::SizeType)0];
-    if (!material_data_array_val_0.HasMember("file_name"))
-        return false;
+    const rapidjson::Value& material_data_array_0 = material_data_array[(rapidjson::SizeType)0];
 
-    materialdata->texturePath = material_data_array_val_0["file_name"].GetString();
+    const rapidjson::Value& material_data_base_array = material_data_array_0["base"];
+
+    const rapidjson::Value& material_data_base_array_0 = material_data_base_array[(rapidjson::SizeType)0];
+
+    materialdata->texturePath = _modelRelativePath + material_data_base_array_0["filename"].GetString();
+
     return true;
 }
 
@@ -247,21 +243,21 @@ bool Bundle3D::loadMaterialData(const std::string& id, MaterialData* materialdat
  */
 bool Bundle3D::loadAnimationData(const std::string& id, Animation3DData* animationdata)
 {
+    if (!_document.HasMember("animation")) return false;
+
     animationdata->_rotationKeys.clear();
     animationdata->_scaleKeys.clear();
     animationdata->_translationKeys.clear();
 
-    assert(document.HasMember("animation_3d_data"));
-    if (!document.HasMember("animation_3d_data")) return false;
+    const rapidjson::Value& animation_data_array =  _document["animation"];
+    if (animation_data_array.Size()==0) return false;
 
-    const rapidjson::Value& animation_data_array_val =  document["animation_3d_data"];
-    const rapidjson::Value& animation_data_array_val_0 = animation_data_array_val[(rapidjson::SizeType)0];
+    const rapidjson::Value& animation_data_array_val_0 = animation_data_array[(rapidjson::SizeType)0];
 
     animationdata->_totalTime = animation_data_array_val_0["length"].GetDouble();
 
     const rapidjson::Value&  bones =  animation_data_array_val_0["bones"];
-    rapidjson::SizeType bone_size = bones.Size();
-    for (rapidjson::SizeType i = 0; i <  bone_size/*bones.Size()*/; i++)
+    for (rapidjson::SizeType i = 0; i <  bones.Size(); i++)
     {
         const rapidjson::Value&  bone =  bones[i];
         std::string bone_name =  bone["boneId"].GetString();
@@ -303,22 +299,6 @@ bool Bundle3D::loadAnimationData(const std::string& id, Animation3DData* animati
     
     return true;
 }
-
-//void Bundle3D::assignGLTypeByString(GLenum& type, std::string str)
-//{
-//    if (str == "GL_FLOAT")
-//    {
-//        type = GL_FLOAT;
-//    }
-//    else if (str == "GL_UNSIGNED_INT")
-//    {
-//        type = GL_UNSIGNED_INT;
-//    }
-//    else
-//    {
-//        assert(0);
-//    }
-//}
 
 GLenum Bundle3D::parseGLType(const std::string& str)
 {
@@ -387,8 +367,25 @@ unsigned int Bundle3D::parseGLProgramAttribute(const std::string& str)
     }
 }
 
+void Bundle3D::getModelPath(const std::string& path)
+{
+    int index = path.find_last_of('/');
+    std::string fullModelPath;
+    fullModelPath = path.substr(0, index + 1);
+
+    auto list = FileUtils::getInstance()->getSearchPaths();
+    for( const auto &item : list )
+    {
+        if ( fullModelPath.find(item) != std::string::npos )
+        {
+            _modelRelativePath = fullModelPath.substr(item.length(), fullModelPath.length() + 1);
+            break;
+        }
+    } 
+}
+
 Bundle3D::Bundle3D()
-:_isBinary(false),_documentBuffer(NULL)
+:_isBinary(false),_modelRelativePath(""),_documentBuffer(NULL)
 {
 
 }

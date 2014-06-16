@@ -541,30 +541,27 @@ std::string Sprite3DWithSkinTest::subtitle() const
 
 void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
 {
-    auto sprite = Sprite3D::create("Sprite3DTest/girl.c3t");
-    //auto sprite = Sprite3D::create("Sprite3DTest/cube_anim.c3t");
-    //sprite->setScale(2.f);
-    sprite->setTexture("Sprite3DTest/girl.png");
+    auto sprite = Sprite3D::create("Sprite3DTest/scene.c3t");
     addChild(sprite);
     
-    //sprite->setPosition3D(Vec3(p.x, p.y, -10.f));
-    sprite->setRotation3D(Vec3(-90,0,0));
-    //sprite->setRotationSkewY(90);
     sprite->setPosition( Vec2( p.x, p.y) );
 
-    auto animation = Animation3D::getOrCreate("Sprite3DTest/girl.c3t");
-    auto animate = Animate3D::create(animation);
-    if(std::rand() %3 == 0)
+    auto animation = Animation3D::getOrCreate("Sprite3DTest/scene.c3t");
+    if (animation)
     {
-        animate->setPlayBack(true);
+        auto animate = Animate3D::create(animation);
+        if(std::rand() %3 == 0)
+        {
+            animate->setPlayBack(true);
+        }
+
+        if(std::rand() % 3 == 0)
+        {
+            animate->setSpeed(animate->getSpeed() * (std::rand() % 10));
+        }
+
+        sprite->runAction(RepeatForever::create(animate));
     }
-    
-    if(std::rand() % 3 == 0)
-    {
-        animate->setSpeed(animate->getSpeed() * (std::rand() % 10));
-    }
-    
-    sprite->runAction(RepeatForever::create(animate));
 }
 
 void Sprite3DWithSkinTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)

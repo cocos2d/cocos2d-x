@@ -77,14 +77,14 @@ public:
     bool loadAnimationData(const std::string& id, Animation3DData* animationdata);
     
 protected:
-
-    //void assignGLTypeByString(GLenum& type, std::string str);
-
     GLenum parseGLType(const std::string& str);
 
     unsigned int parseGLTypeSize(const std::string& str);
 
     unsigned int parseGLProgramAttribute(const std::string& str);
+
+    // get model path
+    void getModelPath(const std::string& path);
 
 protected:
     Bundle3D();
@@ -92,8 +92,11 @@ protected:
     
     static Bundle3D* _instance;
     
+    std::string _modelRelativePath;
+
     char* _documentBuffer;
-    rapidjson::Document document;
+
+    rapidjson::Document _document;
 
     bool  _isBinary;
 };
