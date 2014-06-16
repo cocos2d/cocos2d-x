@@ -399,6 +399,7 @@ void NodeReader::initNode(cocos2d::CCNode* node, const rapidjson::Value& json)
         }
     }
 
+    node->setTag(tag);
 	node->setUserObject(TimelineActionData::create(actionTag));
 }
 
