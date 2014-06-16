@@ -212,8 +212,7 @@ public:
     
     bool addMeshSkinData(const std::string& key, const SkinData& skinData);
     
-    void removeAllMeshSkin();
-    void removeUnusedMeshSkin();
+    void removeAllMeshSkinData();
     
 protected:
     MeshSkinDataCache();

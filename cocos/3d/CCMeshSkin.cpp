@@ -466,7 +466,7 @@ bool MeshSkinDataCache::addMeshSkinData(const std::string& key, const SkinData& 
     return true;
 }
 
-void MeshSkinDataCache::removeAllMeshSkin()
+void MeshSkinDataCache::removeAllMeshSkinData()
 {
     _skinDatas.clear();
 }

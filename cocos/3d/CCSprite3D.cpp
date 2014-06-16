@@ -23,11 +23,11 @@
  ****************************************************************************/
 
 #include "3d/CCSprite3D.h"
-#include "3d/CCSprite3DDataCache.h"
 #include "3d/CCMesh.h"
 #include "3d/CCObjLoader.h"
 #include "3d/CCMeshSkin.h"
 #include "3d/CCBundle3D.h"
+#include "3d/CCSprite3DMaterial.h"
 
 #include "base/CCDirector.h"
 #include "base/CCPlatformMacros.h"
@@ -91,6 +91,22 @@ bool Sprite3D::loadFromObj(const std::string& path)
 {
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
     
+    //find from the cache
+    std::string key = fullPath + "#";
+    auto mesh = MeshCache::getInstance()->getMesh(key);
+    if (mesh)
+    {
+        _mesh = mesh;
+        _mesh->retain();
+        
+        auto tex = Sprite3DMaterialCache::getInstance()->getSprite3DMaterial(key);
+        setTexture(tex);
+        
+        genGLProgramState();
+        
+        return true;
+    }
+    
     //.mtl file directory
     std::string dir = "";
     auto last = fullPath.rfind("/");
@@ -132,15 +148,40 @@ bool Sprite3D::loadFromObj(const std::string& path)
     genGLProgramState();
     
     //add to cache
-    Sprite3DDataCache::getInstance()->addSprite3D(fullPath, _mesh, matnames.size() > 0 ? matnames[0] : "");
+    
+    if (_texture)
+    {
+        Sprite3DMaterialCache::getInstance()->addSprite3DMaterial(key, _texture);
+    }
+    
+    MeshCache::getInstance()->addMesh(key, _mesh);
 
     return true;
 }
 
 bool Sprite3D::loadFromC3x(const std::string& path)
 {
-    //load from .c3b or .c3t
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
+    //find from the cache
+    std::string key = fullPath + "#";
+    auto mesh = MeshCache::getInstance()->getMesh(key);
+    if (mesh)
+    {
+        _mesh = mesh;
+        _mesh->retain();
+        
+        auto tex = Sprite3DMaterialCache::getInstance()->getSprite3DMaterial(key);
+        setTexture(tex);
+        
+        _skin = MeshSkin::create(fullPath, "");
+        CC_SAFE_RETAIN(_skin);
+        
+        genGLProgramState();
+        
+        return true;
+    }
+    
+    //load from .c3b or .c3t
     auto bundle = Bundle3D::getInstance();
     if (!bundle->load(fullPath))
         return false;
@@ -166,6 +207,15 @@ bool Sprite3D::loadFromC3x(const std::string& path)
     }
     
     genGLProgramState();
+    
+    //add to cache
+    auto cache = Director::getInstance()->getTextureCache();
+    auto tex = cache->addImage(materialdata.texturePath);
+    if (tex)
+        Sprite3DMaterialCache::getInstance()->addSprite3DMaterial(key, tex);
+    
+    MeshCache::getInstance()->addMesh(key, _mesh);
+    
     return true;
 }
 
@@ -190,37 +240,20 @@ bool Sprite3D::initWithFile(const std::string &path)
     CC_SAFE_RELEASE_NULL(_skin);
     CC_SAFE_RELEASE_NULL(_texture);
     
-    //find from the cache
-    Mesh* mesh = Sprite3DDataCache::getInstance()->getSprite3DMesh(path);
-    if (mesh)
+    //load from file
+    std::string ext = path.substr(path.length() - 4, 4);
+    std::transform(ext.begin(), ext.end(), ext.begin(), tolower);
+    
+    if (ext == ".obj")
     {
-        _mesh = mesh;
-        _mesh->retain();
-        
-        auto tex = Sprite3DDataCache::getInstance()->getSprite3DTexture(path);
-        setTexture(tex);
-
-        genGLProgramState();
-        
-        return true;
+        return loadFromObj(path);
     }
-    else
+    else if (ext == ".c3b" || ext == ".c3t")
     {
-        //load from file
-        std::string ext = path.substr(path.length() - 4, 4);
-        std::transform(ext.begin(), ext.end(), ext.begin(), tolower);
-        
-        if (ext == ".obj")
-        {
-            return loadFromObj(path);
-        }
-        else if (ext == ".c3b" || ext == ".c3t")
-        {
-            return loadFromC3x(path);
-        }
-        
-        return false;
+        return loadFromC3x(path);
     }
+    
+    return false;
 }
 
 void Sprite3D::genGLProgramState()

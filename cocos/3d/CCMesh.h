@@ -37,6 +37,9 @@
 
 NS_CC_BEGIN
 
+class EventListenerCustom;
+class EventCustom;
+
 class RenderMeshData
 {
     friend class Mesh;
@@ -123,6 +126,40 @@ protected:
     ssize_t _indexCount;
 
     RenderMeshData _renderdata;
+};
+
+/**
+ * MeshCache
+ */
+class MeshCache
+{
+public:
+    static MeshCache* getInstance();
+    static void purgeMeshCache();
+    
+    Mesh* getMesh(const std::string& key) const;
+    
+    bool addMesh(const std::string& key, Mesh* mesh);
+    
+    void removeAllMesh();
+
+    void removeUnusedMesh();
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    void listenBackToForeground(EventCustom* event);
+#endif
+    
+protected:
+    MeshCache();
+    ~MeshCache();
+    
+    static MeshCache* _cacheInstance;
+    
+    std::unordered_map<std::string, Mesh*> _meshes;
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    EventListenerCustom* _backToForegroundlistener;
+#endif
 };
 
 NS_CC_END

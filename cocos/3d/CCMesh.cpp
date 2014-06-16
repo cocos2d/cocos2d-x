@@ -30,9 +30,14 @@
 #include <sstream>
 
 #include "base/ccMacros.h"
+#include "base/CCEventCustom.h"
+#include "base/CCEventListenerCustom.h"
+#include "base/CCEventDispatcher.h"
+#include "base/CCEventType.h"
+#include "base/CCDirector.h"
 #include "renderer/ccGLStateCache.h"
 #include "CCObjLoader.h"
-#include "CCSprite3DDataCache.h"
+#include "CCSprite3DMaterial.h"
 
 using namespace std;
 
@@ -251,5 +256,93 @@ void Mesh::restore()
     cleanAndFreeBuffers();
     buildBuffer();
 }
+
+/**
+ * MeshCache
+ */
+MeshCache* MeshCache::_cacheInstance = nullptr;
+
+MeshCache* MeshCache::getInstance()
+{
+    if (_cacheInstance == nullptr)
+        _cacheInstance = new MeshCache();
+    
+    return _cacheInstance;
+}
+void MeshCache::purgeMeshCache()
+{
+    if (_cacheInstance)
+        CC_SAFE_DELETE(_cacheInstance);
+}
+
+Mesh* MeshCache::getMesh(const std::string& key) const
+{
+    auto it = _meshes.find(key);
+    if (it != _meshes.end())
+        return it->second;
+    
+    return nullptr;
+}
+
+bool MeshCache::addMesh(const std::string& key, Mesh* mesh)
+{
+    auto it = _meshes.find(key);
+    if (it == _meshes.end())
+    {
+        mesh->retain();
+        _meshes[key] = mesh;
+        
+        return true;
+    }
+    return false;
+}
+
+void MeshCache::removeAllMesh()
+{
+    for (auto it : _meshes) {
+        CC_SAFE_RELEASE(it.second);
+    }
+    _meshes.clear();
+}
+
+void MeshCache::removeUnusedMesh()
+{
+    for( auto it=_meshes.cbegin(); it!=_meshes.cend(); /* nothing */) {
+        if(it->second->getReferenceCount() == 1)
+        {
+            it->second->release();
+            _meshes.erase(it++);
+        }
+        else
+            ++it;
+    }
+}
+
+MeshCache::MeshCache()
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    // listen the event when app go to foreground
+    _backToForegroundlistener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, CC_CALLBACK_1(Sprite3DDataCache::listenBackToForeground, this));
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundlistener, -1);
+#endif
+}
+MeshCache::~MeshCache()
+{
+    removeAllMesh();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundlistener);
+#endif
+}
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+void MeshCache::listenBackToForeground(EventCustom* event)
+{
+    for (auto iter = _meshes.begin(); iter != _meshes.end(); ++iter)
+    {
+        auto mesh = iter->second;
+        mesh->restore();
+    }
+}
+#endif
 
 NS_CC_END

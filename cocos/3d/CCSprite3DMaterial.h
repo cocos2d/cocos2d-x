@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCSPRIT3DDATA_CACHE_H__
-#define __CCSPRIT3DDATA_CACHE_H__
+#ifndef __CCSPRIT3DMATERIAL_H__
+#define __CCSPRIT3DMATERIAL_H__
 
 #include <string>
 #include <unordered_map>
@@ -38,46 +38,34 @@ class EventListenerCustom;
 class EventCustom;
 class Texture2D;
 
-class Sprite3DDataCache
+/**
+ * the sprite3D material is only texture for now
+ */
+class Sprite3DMaterialCache
 {
 public:
-    struct Sprite3DData
-    {
-        Mesh* mesh;
-        std::string texture;
-    };
     
-    static Sprite3DDataCache* getInstance();
-    static void purgeMeshCache();
+    static Sprite3DMaterialCache* getInstance();
+    static void purgeSprite3DMaterialCache();
     
-    bool addSprite3D(const std::string& fileName, Mesh* mesh, const std::string& texture);
+    bool addSprite3DMaterial(const std::string& key, Texture2D* tex);
     
-    Mesh* getSprite3DMesh(const std::string& fileName);
+    Texture2D* getSprite3DMaterial(const std::string& key);
     
-    Texture2D* getSprite3DTexture(const std::string& fileName);
-    
-    void removeAllSprite3DData();
-    void removeUnusedSprite3DData();
-
-    
- #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-     void listenBackToForeground(EventCustom* event);
- #endif
+    void removeAllSprite3DMaterial();
+    void removeUnusedSprite3DMaterial();
     
 protected:
-    Sprite3DDataCache();
+    Sprite3DMaterialCache();
     
-    ~Sprite3DDataCache();
+    ~Sprite3DMaterialCache();
     
-    static Sprite3DDataCache* _cacheInstance;
+    static Sprite3DMaterialCache* _cacheInstance;
 
-    std::unordered_map<std::string, Sprite3DData> _sprite3DDatas; //sprites 
+    std::unordered_map<std::string, Texture2D*> _materials; //
     
- #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-     EventListenerCustom* _backToForegroundlistener;
- #endif
 };
 
 NS_CC_END
 
-#endif // __CCSPRIT3DDATA_CACHE_H__
+#endif // __CCSPRIT3DMATERIAL_H__
