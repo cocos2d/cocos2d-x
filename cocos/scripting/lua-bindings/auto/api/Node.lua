@@ -57,6 +57,11 @@
 -- @return array_table#array_table ret (retunr value: array_table)
 
 --------------------------------
+-- @function [parent=#Node] setCascadeBoundingBox 
+-- @param self
+-- @param #rect_table rect
+        
+--------------------------------
 -- @function [parent=#Node] pause 
 -- @param self
         
@@ -649,6 +654,15 @@
 -- @function [parent=#Node] getNormalizedPosition 
 -- @param self
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
+        
+--------------------------------
+-- @function [parent=#Node] getCascadeBoundingBox 
+-- @param self
+-- @return rect_table#rect_table ret (return value: rect_table)
+        
+--------------------------------
+-- @function [parent=#Node] resetCascadeBoundingBox 
+-- @param self
         
 --------------------------------
 -- @function [parent=#Node] getRotationSkewX 

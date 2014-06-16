@@ -1226,9 +1226,4 @@
 -- @field [parent=#cc] SimpleAudioEngine#SimpleAudioEngine SimpleAudioEngine preloaded module
 
 
---------------------------------------------------------
--- the cc ProtectedNode
--- @field [parent=#cc] ProtectedNode#ProtectedNode ProtectedNode preloaded module
-
-
 return nil

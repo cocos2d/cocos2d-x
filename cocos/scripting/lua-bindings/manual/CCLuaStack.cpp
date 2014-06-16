@@ -49,15 +49,15 @@ extern "C" {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "Lua_web_socket.h"
 #endif
-#include "LuaOpengl.h"
+//#include "LuaOpengl.h"
 #include "LuaScriptHandlerMgr.h"
 #include "lua_cocos2dx_auto.hpp"
 //#include "lua_cocos2dx_extension_auto.hpp"
 #include "lua_cocos2dx_manual.hpp"
 #include "LuaBasicConversions.h"
 //#include "lua_cocos2dx_extension_manual.h"
-#include "lua_cocos2dx_deprecated.h"
-#include "lua_xml_http_request.h"
+//#include "lua_cocos2dx_deprecated.h"
+//#include "lua_xml_http_request.h"
 #include "lua_cocos2dx_physics_auto.hpp"
 #include "lua_cocos2dx_physics_manual.hpp"
 
@@ -148,20 +148,20 @@ bool LuaStack::init(void)
 #endif
     g_luaType.clear();
     register_all_cocos2dx(_state);
-    register_all_cocos2dx_extension(_state);
-    register_all_cocos2dx_deprecated(_state);
-    register_cocos2dx_extension_CCBProxy(_state);
-    tolua_opengl_open(_state);
-    register_all_cocos2dx_ui(_state);
-    register_all_cocos2dx_studio(_state);
+    //register_all_cocos2dx_extension(_state);
+    //register_all_cocos2dx_deprecated(_state);
+    //register_cocos2dx_extension_CCBProxy(_state);
+    //tolua_opengl_open(_state);
+    //register_all_cocos2dx_ui(_state);
+    //register_all_cocos2dx_studio(_state);
     register_all_cocos2dx_manual(_state);
-    register_all_cocos2dx_extension_manual(_state);
-    register_all_cocos2dx_manual_deprecated(_state);
-    register_all_cocos2dx_coco_studio_manual(_state);
-    register_all_cocos2dx_ui_manual(_state);
-    register_all_cocos2dx_spine(_state);
-    register_all_cocos2dx_spine_manual(_state);
-    register_glnode_manual(_state);
+    //register_all_cocos2dx_extension_manual(_state);
+    //register_all_cocos2dx_manual_deprecated(_state);
+    //register_all_cocos2dx_coco_studio_manual(_state);
+    //register_all_cocos2dx_ui_manual(_state);
+    //register_all_cocos2dx_spine(_state);
+    //register_all_cocos2dx_spine_manual(_state);
+    //register_glnode_manual(_state);
 #if CC_USE_PHYSICS
     register_all_cocos2dx_physics(_state);
     register_all_cocos2dx_physics_manual(_state);
@@ -179,7 +179,7 @@ bool LuaStack::init(void)
     register_web_socket_manual(_state);
 #endif
     
-    register_xml_http_request(_state);
+    //register_xml_http_request(_state);
     
     tolua_script_handler_mgr_open(_state);
 

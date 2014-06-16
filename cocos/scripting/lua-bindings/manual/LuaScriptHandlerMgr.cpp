@@ -31,7 +31,7 @@
 #include "CCLuaValue.h"
 #include "CCLuaEngine.h"
 #include "Lua_web_socket.h"
-#include "LuaOpengl.h"
+// #include "LuaOpengl.h"
 
 using namespace cocos2d;
 using namespace cocos2d::extension;

@@ -45,9 +45,6 @@
     <ClCompile Include="..\manual\Cocos2dxLuaLoader.cpp">
       <Filter>manual</Filter>
     </ClCompile>
-    <ClCompile Include="..\manual\lua_cocos2dx_deprecated.cpp">
-      <Filter>manual</Filter>
-    </ClCompile>
     <ClCompile Include="..\manual\lua_cocos2dx_manual.cpp">
       <Filter>manual</Filter>
     </ClCompile>
@@ -61,9 +58,6 @@
       <Filter>manual</Filter>
     </ClCompile>
     <ClCompile Include="..\manual\LuaBasicConversions.cpp">
-      <Filter>manual</Filter>
-    </ClCompile>
-    <ClCompile Include="..\manual\LuaOpengl.cpp">
       <Filter>manual</Filter>
     </ClCompile>
     <ClCompile Include="..\manual\LuaScriptHandlerMgr.cpp">
@@ -155,9 +149,6 @@
     <ClInclude Include="..\manual\Cocos2dxLuaLoader.h">
       <Filter>manual</Filter>
     </ClInclude>
-    <ClInclude Include="..\manual\lua_cocos2dx_deprecated.h">
-      <Filter>manual</Filter>
-    </ClInclude>
     <ClInclude Include="..\manual\lua_cocos2dx_manual.hpp">
       <Filter>manual</Filter>
     </ClInclude>
@@ -171,9 +162,6 @@
       <Filter>manual</Filter>
     </ClInclude>
     <ClInclude Include="..\manual\LuaBasicConversions.h">
-      <Filter>manual</Filter>
-    </ClInclude>
-    <ClInclude Include="..\manual\LuaOpengl.h">
       <Filter>manual</Filter>
     </ClInclude>
     <ClInclude Include="..\manual\LuaScriptHandlerMgr.h">
