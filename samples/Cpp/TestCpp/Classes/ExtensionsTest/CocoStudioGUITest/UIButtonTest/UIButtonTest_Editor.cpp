@@ -66,10 +66,14 @@ bool UIButtonTest_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UIButton_Editor/UIButton_Editor_1.json"));
+        
+//        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UIButton_Editor/基础控件.json"));
+        
+        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromBinaryFile("cocosui/UIEditorTest/UIButton_Editor/基础控件.csb"));
+        _layout->setScale(0.3);
         _touchGroup->addWidget(_layout);
        
-        this->configureGUIScene();
+//        this->configureGUIScene();
         
         
         _displayValueLabel = ui::Label::create();
@@ -78,7 +82,8 @@ bool UIButtonTest_Editor::init()
         _displayValueLabel->setText("No event");
         _displayValueLabel->setPosition(ccp(_layout->getSize().width / 2,
                                             _layout->getSize().height - _displayValueLabel->getSize().height * 1.75f));
-        _touchGroup->addWidget(_displayValueLabel);
+        _sceneTitle = _displayValueLabel;
+//        _touchGroup->addWidget(_displayValueLabel);
         
         return true;
     }

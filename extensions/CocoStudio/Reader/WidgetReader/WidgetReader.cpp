@@ -180,7 +180,8 @@ void WidgetReader::beginSetBasicProperties(cocos2d::ui::Widget *widget)
 {
     _position = widget->getPosition();
     //set default color
-    widget->setColor(ccc3(255,255,255));
+    _color = ccc3(255,255,255);
+    widget->setColor(_color);
     _originalAnchorPoint = widget->getAnchorPoint();
 }
 
@@ -194,6 +195,7 @@ void WidgetReader::endSetBasicProperties(cocos2d::ui::Widget *widget)
         _width = screenSize.width;
         _height = screenSize.height;
     }
+    widget->setColor(_color);
     widget->setSize(CCSize(_width, _height));
     widget->setPosition(_position);
     widget->setAnchorPoint(_originalAnchorPoint);

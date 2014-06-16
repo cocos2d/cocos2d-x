@@ -64,6 +64,7 @@ protected:
     float _positionPercentY;
     float _width ;
     float _height;
+    cocos2d::ccColor3B _color;
     cocos2d::CCPoint _position;
     bool _isAdaptScreen;
     cocos2d::CCPoint _originalAnchorPoint;
