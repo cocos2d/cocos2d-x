@@ -44,6 +44,10 @@
 -- @param #long long
         
 --------------------------------
+-- @function [parent=#ListView] requestRefreshView 
+-- @param self
+        
+--------------------------------
 -- @function [parent=#ListView] setItemsMargin 
 -- @param self
 -- @param #float float
@@ -78,7 +82,7 @@
 -- @param #ccui.Widget widget
         
 --------------------------------
--- @function [parent=#ListView] requestRefreshView 
+-- @function [parent=#ListView] doLayout 
 -- @param self
         
 --------------------------------
@@ -102,6 +106,19 @@
 -- @return Ref#Ref ret (return value: cc.Ref)
         
 --------------------------------
+-- overload function: addChild(cc.Node, int)
+--          
+-- overload function: addChild(cc.Node)
+--          
+-- overload function: addChild(cc.Node, int, int)
+--          
+-- @function [parent=#ListView] addChild
+-- @param self
+-- @param #cc.Node node
+-- @param #int int
+-- @param #int int
+
+--------------------------------
 -- @function [parent=#ListView] setDirection 
 -- @param self
 -- @param #ccui.ScrollView::Direction direction
@@ -112,8 +129,19 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- @function [parent=#ListView] sortAllChildren 
+-- @function [parent=#ListView] removeAllChildrenWithCleanup 
 -- @param self
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#ListView] removeAllChildren 
+-- @param self
+        
+--------------------------------
+-- @function [parent=#ListView] removeChild 
+-- @param self
+-- @param #cc.Node node
+-- @param #bool bool
         
 --------------------------------
 -- @function [parent=#ListView] ListView 

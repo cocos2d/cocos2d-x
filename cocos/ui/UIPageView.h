@@ -26,7 +26,6 @@ THE SOFTWARE.
 #define __UIPAGEVIEW_H__
 
 #include "ui/UILayout.h"
-#include "ui/UIScrollInterface.h"
 
 NS_CC_BEGIN
 
@@ -40,7 +39,7 @@ CC_DEPRECATED_ATTRIBUTE typedef enum
 CC_DEPRECATED_ATTRIBUTE typedef void (Ref::*SEL_PageViewEvent)(Ref*, PageViewEventType);
 #define pagevieweventselector(_SELECTOR)(SEL_PageViewEvent)(&_SELECTOR)
 
-class PageView : public Layout , public UIScrollInterface
+class PageView : public Layout
 {
     
     DECLARE_CLASS_GUI_INFO
@@ -92,7 +91,7 @@ public:
     void addPage(Layout* page);
     
     /**
-     * Inert a page to pageview.
+     * Insert a page to pageview.
      *
      * @param page    page to be added to pageview.
      */
@@ -128,6 +127,8 @@ public:
      */
     ssize_t getCurPageIndex() const;
     
+    //TODO: add Vector<Layout*> member variables into UIPageView, but it only used for reference purpose,
+    //all the pages are added into proteced node, so does scrollview, listview
     Vector<Layout*>& getPages();
     
     Layout* getPage(ssize_t index);
@@ -135,8 +136,6 @@ public:
     // event
     CC_DEPRECATED_ATTRIBUTE void addEventListenerPageView(Ref *target, SEL_PageViewEvent selector);
     void addEventListener(const ccPageViewCallback& callback);
-    
-
     
     virtual bool onTouchBegan(Touch *touch, Event *unusedEvent) override;
     virtual void onTouchMoved(Touch *touch, Event *unusedEvent) override;
@@ -150,7 +149,7 @@ public:
      *
      * @see LayoutType
      *
-     * @param LayoutType
+     * @param type LayoutType
      */
     virtual void setLayoutType(Type type) override{};
     
@@ -174,54 +173,55 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
 
 protected:
-    virtual void addChild(Node * child) override;
-    virtual void addChild(Node * child, int zOrder) override;
-    virtual void addChild(Node* child, int zOrder, int tag) override;
-    virtual void removeChild(Node* widget, bool cleanup = true) override;
-    virtual void removeAllChildren() override;
-    virtual void removeAllChildrenWithCleanup(bool cleanup) override;
-    virtual Vector<Node*>& getChildren() override{return Widget::getChildren();};
-    virtual const Vector<Node*>& getChildren() const override{return Widget::getChildren();};
-    virtual ssize_t getChildrenCount() const override {return Widget::getChildrenCount();};
-    virtual Node * getChildByTag(int tag) const override {return Widget::getChildByTag(tag);};
-virtual Widget* getChildByName(const std::string& name) override {return Widget::getChildByName(name);};
 
     Layout* createPage();
-    float getPositionXByIndex(ssize_t idx);
+    float getPositionXByIndex(ssize_t idx)const;
+    ssize_t getPageCount()const;
+
     void updateBoundaryPages();
-    virtual void handlePressLogic(const Vec2 &touchPoint) override;
-    virtual void handleMoveLogic(const Vec2 &touchPoint) override;
-    virtual void handleReleaseLogic(const Vec2 &touchPoint) override;
-    virtual void interceptTouchEvent(int handleState, Widget* sender, const Vec2 &touchPoint) override;
-    virtual void checkChildInfo(int handleState, Widget* sender, const Vec2 &touchPoint) override;
     virtual bool scrollPages(float touchOffset);
     void movePages(float offset);
     void pageTurningEvent();
-    void updateChildrenSize();
-    void updateChildrenPosition();
+    void updateAllPagesSize();
+    void updateAllPagesPosition();
+    void autoScroll(float dt);
+
+    virtual void handlePressLogic(Touch *touch);
+    virtual void handleMoveLogic(Touch *touch) ;
+    virtual void handleReleaseLogic(Touch *touch) ;
+    virtual void interceptTouchEvent(TouchEventType event, Widget* sender,Touch *touch) ;
+    
+    
     virtual void onSizeChanged() override;
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
     virtual void copyClonedWidgetChildren(Widget* model) override;
-    virtual void setClippingEnabled(bool enabled) override {Layout::setClippingEnabled(enabled);};
-    virtual void doLayout() override{if (!_doLayoutDirty){return;} _doLayoutDirty = false;};
+
+    virtual void doLayout() override;
+
 protected:
-    ssize_t _curPageIdx;
-    Vector<Layout*> _pages;
-    TouchDirection _touchMoveDir;
-    float _touchStartLocation;
-    float _touchMoveStartLocation;
-    Vec2 _movePagePoint;
-    Widget* _leftChild;
-    Widget* _rightChild;
-    float _leftBoundary;
-    float _rightBoundary;
+    enum class AutoScrollDirection
+    {
+        LEFT,
+        RIGHT
+    };
     bool _isAutoScrolling;
     float _autoScrollDistance;
     float _autoScrollSpeed;
-    int _autoScrollDir;
-    float _childFocusCancelOffset;
+    AutoScrollDirection _autoScrollDirection;
+    
+    ssize_t _curPageIdx;
+    Vector<Layout*> _pages;
 
+    TouchDirection _touchMoveDirection;
+   
+    Widget* _leftBoundaryChild;
+    Widget* _rightBoundaryChild;
+    
+    float _leftBoundary;
+    float _rightBoundary;
+   
+    float _childFocusCancelOffset;
 
     Ref* _pageViewEventListener;
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))

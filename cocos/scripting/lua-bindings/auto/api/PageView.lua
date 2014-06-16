@@ -1,7 +1,7 @@
 
 --------------------------------
 -- @module PageView
--- @extend Layout,UIScrollInterface
+-- @extend Layout
 
 --------------------------------
 -- @function [parent=#PageView] getCurPageIndex 

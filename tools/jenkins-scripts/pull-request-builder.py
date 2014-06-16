@@ -61,6 +61,10 @@ def check_current_3rd_libs(branch):
         current_file = current_files[i]
         copy(current_file, backup_file)
 
+http_proxy = ''
+if(os.environ.has_key('HTTP_PROXY')):
+    http_proxy = os.environ['HTTP_PROXY']
+proxyDict = {'http':http_proxy,'https':http_proxy}
 def main():
     #get payload from os env
     payload_str = os.environ['payload']
@@ -100,12 +104,12 @@ def main():
     set_description(pr_desc, target_url)
  
     
-    data = {"state":"pending", "target_url":target_url}
+    data = {"state":"pending", "target_url":target_url, "context":"Jenkins CI", "description":"Build started..."}
     access_token = os.environ['GITHUB_ACCESS_TOKEN']
     Headers = {"Authorization":"token " + access_token} 
 
     try:
-        requests.post(statuses_url, data=json.dumps(data), headers=Headers)
+        requests.post(statuses_url, data=json.dumps(data), headers=Headers, proxies = proxyDict)
     except:
         traceback.print_exc()
 
@@ -190,16 +194,13 @@ def main():
         data = re.sub('<uses-feature android:glEsVersion="0x00020000" />', '<uses-feature android:glEsVersion="0x00020000" /> <uses-permission android:name="android.permission.INTERNET"/>', data)
         codecs.open(modify_file, 'wb', encoding='UTF-8').write(data)
         print "Start build android..."
-        ret = os.system("python build/android-build.py -n -j10 all")
+        ret = os.system("python build/android-build.py -p 10 all")
         # create and save apk
         if(ret == 0):
-          sample_dir = 'tests/cpp-empty-test/proj.android/'
-          os.system('android update project -p cocos/platform/android/java/ -t android-13')
-          os.system('android update project -p ' + sample_dir + ' -t android-13')
-          os.system('ant debug -f ' + sample_dir + 'build.xml')
-          local_apk = sample_dir + 'bin/CppEmptyTest-debug.apk'
-          remote_apk = 'apks/cpp_empty_test/cpp_empty_test_' + str(pr_num) + '.apk'
-          os.system('tools/jenkins-scripts/upload_apk.sh ' + local_apk + ' ' + remote_apk)
+          sample_dir = 'tests/cpp-tests/proj.android/'
+          local_apk = sample_dir + 'bin/CppTests-debug.apk'
+          backup_apk = os.environ['BACKUP_PATH'] + 'CppTests_' + str(pr_num) + '.apk'
+          os.system('cp ' + local_apk + ' ' + backup_apk)
       elif(node_name == 'win32_win7'):
         ret = subprocess.call('"%VS110COMNTOOLS%..\IDE\devenv.com" "build\cocos2d-win32.vc2012.sln" /Build "Debug|Win32"', shell=True)
       elif(node_name == 'ios_mac'):

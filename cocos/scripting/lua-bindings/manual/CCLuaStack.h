@@ -129,10 +129,20 @@ public:
 
     virtual bool handleAssert(const char *msg);
     
+    virtual void setXXTEAKeyAndSign(const char *key, int keyLen, const char *sign, int signLen);
+    virtual void cleanupXXTEAKeyAndSign();
+    
+    int luaLoadBuffer(lua_State *L, const char *chunk, int chunkSize, const char *chunkName);
+    
 protected:
     LuaStack(void)
     : _state(nullptr)
     , _callFromLua(0)
+    , _xxteaEnabled(false)
+    , _xxteaKey(nullptr)
+    , _xxteaKeyLen(0)
+    , _xxteaSign(nullptr)
+    , _xxteaSignLen(0)
     {
     }
     
@@ -141,6 +151,11 @@ protected:
     
     lua_State *_state;
     int _callFromLua;
+    bool  _xxteaEnabled;
+    char* _xxteaKey;
+    int   _xxteaKeyLen;
+    char* _xxteaSign;
+    int   _xxteaSignLen;
 };
 
 NS_CC_END

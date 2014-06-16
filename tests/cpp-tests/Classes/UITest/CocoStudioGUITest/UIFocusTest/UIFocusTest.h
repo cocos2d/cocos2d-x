@@ -110,6 +110,21 @@ protected:
     Text *_loopText;
 };
 
+class UIFocusTestListView : public UIFocusTestBase
+{
+public:
+    UIFocusTestListView();
+    virtual ~UIFocusTestListView();
+    bool init();
+    
+    
+    void toggleFocusLoop(Ref*,Widget::TouchEventType);
+protected:
+    UI_SCENE_CREATE_FUNC(UIFocusTestListView);
+    ListView *_listView;
+    Text *_loopText;
+};
+
 
 
 #endif /* defined(__cocos2d_tests__UIFocusTest__) */

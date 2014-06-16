@@ -214,7 +214,6 @@
     <ClCompile Include="..\..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.cpp" />
     <ClCompile Include="..\..\Classes\FileUtilsTest\FileUtilsTest.cpp" />
     <ClCompile Include="..\..\Classes\InputTest\MouseTest.cpp" />
-    <ClCompile Include="..\..\Classes\KeyboardTest\KeyboardTest.cpp" />
     <ClCompile Include="..\..\Classes\LabelTest\LabelTestNew.cpp" />
     <ClCompile Include="..\..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.cpp" />
     <ClCompile Include="..\..\Classes\NewRendererTest\NewRendererTest.cpp" />
@@ -307,7 +306,6 @@
     <ClCompile Include="..\..\Classes\SchedulerTest\SchedulerTest.cpp" />
     <ClCompile Include="..\..\Classes\RenderTextureTest\RenderTextureTest.cpp" />
     <ClCompile Include="..\..\Classes\EffectsAdvancedTest\EffectsAdvancedTest.cpp" />
-    <ClCompile Include="..\..\Classes\KeypadTest\KeypadTest.cpp" />
     <ClCompile Include="..\..\Classes\CocosDenshionTest\CocosDenshionTest.cpp" />
     <ClCompile Include="..\..\Classes\PerformanceTest\PerformanceNodeChildrenTest.cpp" />
     <ClCompile Include="..\..\Classes\PerformanceTest\PerformanceParticleTest.cpp" />
@@ -334,7 +332,6 @@
     <ClCompile Include="..\..\Classes\FontTest\FontTest.cpp" />
     <ClCompile Include="..\..\Classes\CurrentLanguageTest\CurrentLanguageTest.cpp" />
     <ClCompile Include="..\..\Classes\TextureCacheTest\TextureCacheTest.cpp" />
-    <ClCompile Include="..\..\Classes\AccelerometerTest\AccelerometerTest.cpp" />
     <ClCompile Include="..\..\Classes\ExtensionsTest\ExtensionsTest.cpp" />
     <ClCompile Include="..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlScene.cpp" />
     <ClCompile Include="..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlSceneManager.cpp" />
@@ -413,7 +410,6 @@
     <ClInclude Include="..\..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.h" />
     <ClInclude Include="..\..\Classes\FileUtilsTest\FileUtilsTest.h" />
     <ClInclude Include="..\..\Classes\InputTest\MouseTest.h" />
-    <ClInclude Include="..\..\Classes\KeyboardTest\KeyboardTest.h" />
     <ClInclude Include="..\..\Classes\LabelTest\LabelTestNew.h" />
     <ClInclude Include="..\..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.h" />
     <ClInclude Include="..\..\Classes\NewRendererTest\NewRendererTest.h" />
@@ -508,7 +504,6 @@
     <ClInclude Include="..\..\Classes\SchedulerTest\SchedulerTest.h" />
     <ClInclude Include="..\..\Classes\RenderTextureTest\RenderTextureTest.h" />
     <ClInclude Include="..\..\Classes\EffectsAdvancedTest\EffectsAdvancedTest.h" />
-    <ClInclude Include="..\..\Classes\KeypadTest\KeypadTest.h" />
     <ClInclude Include="..\..\Classes\CocosDenshionTest\CocosDenshionTest.h" />
     <ClInclude Include="..\..\Classes\PerformanceTest\PerformanceNodeChildrenTest.h" />
     <ClInclude Include="..\..\Classes\PerformanceTest\PerformanceParticleTest.h" />
@@ -535,7 +530,6 @@
     <ClInclude Include="..\..\Classes\FontTest\FontTest.h" />
     <ClInclude Include="..\..\Classes\CurrentLanguageTest\CurrentLanguageTest.h" />
     <ClInclude Include="..\..\Classes\TextureCacheTest\TextureCacheTest.h" />
-    <ClInclude Include="..\..\Classes\AccelerometerTest\AccelerometerTest.h" />
     <ClInclude Include="..\..\Classes\ExtensionsTest\ExtensionsTest.h" />
     <ClInclude Include="..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlScene.h" />
     <ClInclude Include="..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlSceneManager.h" />

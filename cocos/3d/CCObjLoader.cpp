@@ -603,7 +603,8 @@ std::string ObjLoader::LoadObj(shapes_t& shapes, const char* filename, const cha
             
             std::vector<vertex_index> face;
             while (!isNewLine(token[0])) {
-                vertex_index vi = parseTriple(token, v.size() / 3, vn.size() / 3, vt.size() / 2);
+                // fix warning, cast to int, i think int is enough
+                vertex_index vi = parseTriple(token, (int)v.size() / 3, (int)vn.size() / 3, (int)vt.size() / 2);
                 face.push_back(vi);
                 auto n = strspn(token, " \t\r");
                 token += n;
