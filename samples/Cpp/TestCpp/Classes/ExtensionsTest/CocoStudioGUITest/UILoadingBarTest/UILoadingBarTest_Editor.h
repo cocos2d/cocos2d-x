@@ -13,7 +13,8 @@ public:
     bool init();
     void update(float delta);
     void toCocosGUITestScene(CCObject* sender, TouchEventType type);
-    
+    void configureGUIScene();
+    virtual void switchLoadMethod(CCObject* pSender);
 protected:
     UI_SCENE_EDITOR_CREATE_FUNC(UILoadingBarTest_Editor)
     int _count;

@@ -12,7 +12,8 @@ public:
     ~UISliderTest_Editor();
     bool init();
     void sliderEvent(CCObject* pSender, SliderEventType type);
-    
+    void configureGUIScene();
+    virtual void switchLoadMethod(CCObject* pSender);
 protected:
     UI_SCENE_EDITOR_CREATE_FUNC(UISliderTest_Editor)
     ui::Label* _displayValueLabel;

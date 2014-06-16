@@ -33,7 +33,8 @@ public:
     UIPageViewTest_Editor();
     ~UIPageViewTest_Editor();
     bool init();
-    
+    void configureGUIScene();
+    virtual void switchLoadMethod(CCObject* pSender);
     void pageViewEvent(CCObject* pSender, PageViewEventType type);
     
 protected:

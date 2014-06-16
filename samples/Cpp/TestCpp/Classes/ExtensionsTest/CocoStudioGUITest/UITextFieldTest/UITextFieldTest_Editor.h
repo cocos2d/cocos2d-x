@@ -34,7 +34,8 @@ public:
     ~UITextFieldTest_Editor();
     bool init();
     void textFieldEvent(CCObject* pSender, TextFiledEventType type);
-    
+    void configureGUIScene();
+    virtual void switchLoadMethod(CCObject* pSender);
 protected:
     UI_SCENE_EDITOR_CREATE_FUNC(UITextFieldTest_Editor)
     ui::Label* _displayValueLabel;
