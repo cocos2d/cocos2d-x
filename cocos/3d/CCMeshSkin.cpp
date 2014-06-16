@@ -187,6 +187,9 @@ Bone::Bone(const std::string& id)
 , _parent(nullptr)
 , _dirtyFlag(0)
 , _worldDirty(true)
+, _localTranslate(Vec3::ZERO)
+, _localScale(Vec3::ONE)
+, _localRot(Quaternion::identity())
 {
     
 }
@@ -201,30 +204,22 @@ Bone::~Bone()
 
 void Bone::updateLocalMat()
 {
-    Mat4::createTranslation(_localTranslate, &_local);
-    if (!_localRot.isZero())
-    _local.rotate(_localRot);
-    return;
+//    Mat4::createTranslation(_localTranslate, &_local);
+//    if (!_localRot.isZero())
+//    _local.rotate(_localRot);
+//    return;
+    if(0 == _dirtyFlag) return;
     
-    if (_dirtyFlag & Dirty_Translate)
-    {
-        Mat4::createTranslation(_localTranslate, &_local);
-        if (_dirtyFlag & Dirty_Rotation)
-            _local.rotate(_localRot);
-        if (_dirtyFlag & Dirty_Scale)
-            _local.scale(_localScale);
-    }
-    else if (_dirtyFlag & Dirty_Rotation)
-    {
-        Mat4::createRotation(_localRot, &_local);
-        if (_dirtyFlag & Dirty_Scale)
-            _local.scale(_localScale);
-    }
-    else if (_dirtyFlag & Dirty_Scale)
-    {
-        Mat4::createScale(_localScale, &_local);
-    }
-    _dirtyFlag = 0;
+    Mat4 tmp;
+    Mat4::createScale(_localScale, &_local);
+    Mat4::createRotation(_localRot, &tmp);
+    
+    _local = tmp * _local;
+    
+    Mat4::createTranslation(_localTranslate, &tmp);
+    _local = tmp * _local;
+    
+    return;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
