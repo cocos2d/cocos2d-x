@@ -29,7 +29,8 @@ Lua 与 Objective-C 的交互接口
 ]]
 local luaoc = {}
 
-local callStaticMethod = CCLuaObjcBridge.callStaticMethod
+-- local callStaticMethod = cc.LuaObjcBridge.callStaticMethod
+local callStaticMethod = nil
 
 --[[--
 

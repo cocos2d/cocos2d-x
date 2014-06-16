@@ -58,16 +58,16 @@ display 模块封装了绝大部分与显示有关的功能，并负责根据 co
 
 颜色：
 
--   display.COLOR_WHITE 白色, ccc3(255, 255, 255)
--   display.COLOR_BLACK 黑色, ccc3(0, 0, 0)
+-   display.COLOR_WHITE 白色, cc.c3b(255, 255, 255)
+-   display.COLOR_BLACK 黑色, cc.c3b(0, 0, 0)
 
 ]]
 local display = {}
 
-local sharedDirector         = CCDirector:sharedDirector()
-local sharedTextureCache     = CCTextureCache:sharedTextureCache()
-local sharedSpriteFrameCache = CCSpriteFrameCache:sharedSpriteFrameCache()
-local sharedAnimationCache   = CCAnimationCache:sharedAnimationCache()
+local sharedDirector         = cc.Director:getInstance()
+local sharedTextureCache     = cc.Director:getInstance():getTextureCache()
+local sharedSpriteFrameCache = cc.SpriteFrameCache:getInstance()
+local sharedAnimationCache   = cc.AnimationCache:getInstance()
 
 -- check device screen size
 local glview = sharedDirector:getOpenGLView()
@@ -114,7 +114,7 @@ if CONFIG_SCREEN_AUTOSCALE then
         printError(string.format("display - invalid CONFIG_SCREEN_AUTOSCALE \"%s\"", CONFIG_SCREEN_AUTOSCALE))
     end
 
-    glview:setDesignResolutionSize(CONFIG_SCREEN_WIDTH, CONFIG_SCREEN_HEIGHT, kResolutionNoBorder)
+    glview:setDesignResolutionSize(CONFIG_SCREEN_WIDTH, CONFIG_SCREEN_HEIGHT, cc.ResolutionPolicy.NO_BORDER)
 end
 
 local winSize = sharedDirector:getWinSize()
@@ -155,11 +155,11 @@ printInfo(string.format("# display.c_top                = %0.2f", display.c_top)
 printInfo(string.format("# display.c_bottom             = %0.2f", display.c_bottom))
 printInfo("#")
 
-display.COLOR_WHITE = ccc3(255, 255, 255)
-display.COLOR_BLACK = ccc3(0, 0, 0)
-display.COLOR_RED   = ccc3(255, 0, 0)
-display.COLOR_GREEN = ccc3(0, 255, 0)
-display.COLOR_BLUE  = ccc3(0, 0, 255)
+display.COLOR_WHITE = cc.c3b(255, 255, 255)
+display.COLOR_BLACK = cc.c3b(0, 0, 0)
+display.COLOR_RED   = cc.c3b(255, 0, 0)
+display.COLOR_GREEN = cc.c3b(0, 255, 0)
+display.COLOR_BLUE  = cc.c3b(0, 0, 255)
 
 display.AUTO_SIZE      = 0
 display.FIXED_SIZE     = 1
@@ -179,20 +179,20 @@ display.BOTTOM_RIGHT  = 8; display.RIGHT_BOTTOM  = 8
 display.BOTTOM_CENTER = 9; display.CENTER_BOTTOM = 9
 
 display.ANCHOR_POINTS = {
-    CCPoint(0.5, 0.5),  -- CENTER
-    CCPoint(0, 1),      -- TOP_LEFT
-    CCPoint(0.5, 1),    -- TOP_CENTER
-    CCPoint(1, 1),      -- TOP_RIGHT
-    CCPoint(0, 0.5),    -- CENTER_LEFT
-    CCPoint(1, 0.5),    -- CENTER_RIGHT
-    CCPoint(0, 0),      -- BOTTOM_LEFT
-    CCPoint(1, 0),      -- BOTTOM_RIGHT
-    CCPoint(0.5, 0),    -- BOTTOM_CENTER
+    cc.p(0.5, 0.5),  -- CENTER
+    cc.p(0, 1),      -- TOP_LEFT
+    cc.p(0.5, 1),    -- TOP_CENTER
+    cc.p(1, 1),      -- TOP_RIGHT
+    cc.p(0, 0.5),    -- CENTER_LEFT
+    cc.p(1, 0.5),    -- CENTER_RIGHT
+    cc.p(0, 0),      -- BOTTOM_LEFT
+    cc.p(1, 0),      -- BOTTOM_RIGHT
+    cc.p(0.5, 0),    -- BOTTOM_CENTER
 }
 
 display.SCENE_TRANSITIONS = {
     CROSSFADE       = {CCTransitionCrossFade, 2},
-    FADE            = {CCTransitionFade, 3, ccc3(0, 0, 0)},
+    FADE            = {CCTransitionFade, 3, cc.c3b(0, 0, 0)},
     FADEBL          = {CCTransitionFadeBL, 2},
     FADEDOWN        = {CCTransitionFadeDown, 2},
     FADETR          = {CCTransitionFadeTR, 2},
@@ -236,7 +236,7 @@ display.TEXTURES_PIXEL_FORMAT = {}
 
 ]]
 function display.newScene(name)
-    local scene = CCScene:create()
+    local scene = cc.Scene:create()
     scene:setNodeEventEnabled(true)
     scene:setAutoCleanupEnabled()
     scene.name = name or "<unknown-scene>"
@@ -261,7 +261,7 @@ display.replaceScene(nextScene)
 可用的过渡效果有：
 
 -   crossFade 淡出当前场景的同时淡入下一个场景
--   fade 淡出当前场景到指定颜色，默认颜色为 ccc3(0, 0, 0)，可用 wrapSceneWithTransition() 的最后一个参数指定颜色
+-   fade 淡出当前场景到指定颜色，默认颜色为 cc.c3b(0, 0, 0)，可用 wrapSceneWithTransition() 的最后一个参数指定颜色
 -   fadeBL 从左下角开始淡出场景
 -   fadeDown 从底部开始淡出场景
 -   fadeTR 从右上角开始淡出场景
@@ -333,7 +333,7 @@ end
 ~~~ lua
 
 -- 使用红色做过渡色
-display.replaceScene(nextScene, "fade", 0.5, ccc3(255, 0, 0))
+display.replaceScene(nextScene, "fade", 0.5, cc.c3b(255, 0, 0))
 
 ~~~
 
@@ -393,7 +393,7 @@ CCLayer 对象提供了触摸事件、重力感应、Android 按键检测等功�
 
 ]]
 function display.newLayer()
-    return CCLayer:create()
+    return cc.Layer:create()
 end
 
 --[[--
@@ -410,7 +410,7 @@ CCLayerColor 对象使用指定的颜色填充。
 
 ]]
 function display.newColorLayer(color)
-    return CCLayerColor:create(color)
+    return cc.LayerColor:create(color)
 end
 
 --[[--
@@ -436,7 +436,7 @@ transition.moveBy(group, {time = 2.0, x = 100})
 
 ]]
 function display.newNode()
-    return CCNode:create()
+    return cc.Node:create()
 end
 
 --[[--
@@ -469,7 +469,7 @@ scene:addChild(clipnode)
 
 ]]
 function display.newClippingRegionNode(rect)
-    return CCClippingRegionNode:create(rect)
+    return cc.ClippingRegionNode:create(rect)
 end
 
 --[[--
@@ -518,7 +518,7 @@ function display.newSprite(filename, x, y, params)
         spriteClass = params.class
         size = params.size
     end
-    if not spriteClass then spriteClass = CCSprite end
+    if not spriteClass then spriteClass = cc.Sprite end
 
     local t = type(filename)
     if t == "userdata" then t = tolua.type(filename) end
@@ -534,16 +534,16 @@ function display.newSprite(filename, x, y, params)
             end
         else
             if display.TEXTURES_PIXEL_FORMAT[filename] then
-                CCTexture2D:setDefaultAlphaPixelFormat(display.TEXTURES_PIXEL_FORMAT[filename])
+                cc.Texture2D:setDefaultAlphaPixelFormat(display.TEXTURES_PIXEL_FORMAT[filename])
                 sprite = spriteClass:create(filename)
-                CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888)
+                cc.Texture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888)
             else
                 sprite = spriteClass:create(filename)
             end
         end
-    elseif t == "CCSpriteFrame" then
+    elseif t == "SpriteFrame" then
         sprite = spriteClass:createWithSpriteFrame(filename)
-	elseif t == "CCTexture2D" then
+	elseif t == "Texture2D" then
 		sprite = spriteClass:createWithTexture(filename)
     else
         printError("display.newSprite() - invalid filename value type")
@@ -587,7 +587,7 @@ local sprite = display.newScale9Sprite("Box.png", 0, 0, CCSize(400, 300))
 
 ]]
 function display.newScale9Sprite(filename, x, y, size)
-	return display.newSprite(filename, x, y, {class = CCScale9Sprite, size = size})
+	return display.newSprite(filename, x, y, {class = cc.Scale9Sprite, size = size})
 end
 
 --[[--
@@ -595,9 +595,9 @@ end
 ]]
 function display.newTilesSprite(filename, rect)
     if not rect then
-        rect = CCRect(0, 0, display.width, display.height)
+        rect = cc.rect(0, 0, display.width, display.height)
     end
-    local sprite = CCSprite:create(filename, rect)
+    local sprite = cc.Sprite:create(filename, rect)
     if not sprite then
         printError("display.newTilesSprite() - create sprite failure, filename %s", tostring(filename))
         return
@@ -678,7 +678,7 @@ function display.newMaskedSprite(__mask, __pic)
 	__picSprite:setBlendFunc(__pb)
 
 	local __maskSize = __maskSprite:getContentSize()
-	local __canva = CCRenderTexture:create(__maskSize.width,__maskSize.height)
+	local __canva = cc.RenderTexture:create(__maskSize.width,__maskSize.height)
 	__canva:begin()
 	__maskSprite:visit()
 	__picSprite:visit()
@@ -708,8 +708,8 @@ Create a Filtered Sprite
 
 ]]
 function display.newFilteredSprite(filename, filters, params)
-	local __one = {class=CCFilteredSpriteWithOne}
-	local __multi = {class=CCFilteredSpriteWithMulti}
+	local __one = {class=cc.FilteredSpriteWithOne}
+	local __multi = {class=cc.FilteredSpriteWithMulti}
 	if not filters then return display.newSprite(filtename, nil,nil , __one) end
 	local __sp = nil
 	local __type = type(filters)
@@ -727,13 +727,13 @@ function display.newFilteredSprite(filename, filters, params)
 			__sp:setFilters(filter.newFilters(filters, params))
 		else
 			-- treat filters as {CCFilter, CCFilter , ...}
-			local __filters = CCArray:create()
+			local __filters = cc.Array:create()
 			for i in ipairs(filters) do
 				__filters:addObject(filters[i])
 			end
 			__sp:setFilters(__filters)
 		end
-	elseif __type == "CCArray" then
+	elseif __type == "Array" then
 		-- treat filters as CCArray(CCFilter, CCFilter, ...)
 		__sp = display.newSprite(filename, nil, nil, __multi)
 		__sp:setFilters(filters)
@@ -760,7 +760,7 @@ function display.newGraySprite(filename, params)
 end
 
 function display.newDrawNode()
-	return CCDrawNode:create()
+	return cc.DrawNode:create()
 end
 
 --[[--
@@ -801,7 +801,7 @@ end
 
 ]]
 function display.newCircle(radius, params)
-    local circle = CCCircleShape:create(radius)
+    local circle = cc.CircleShape:create(radius)
 	local x,y = 0,0
 	local align=display.CENTER
 	if params then
@@ -850,12 +850,12 @@ function display.newRect(width, height, params)
     local x, y = 0, 0
     if type(width) == "userdata" then
         local t = tolua.type(width)
-        if t == "CCRect" then
+        if t == "Rect" then
             x = width.origin.x
             y = width.origin.y
             height = width.size.height
             width = width.size.width
-        elseif t == "CCSize" then
+        elseif t == "Size" then
             height = width.height
             width = width.width
         else
@@ -864,7 +864,7 @@ function display.newRect(width, height, params)
         end
     end
 
-    local rect = CCRectShape:create(CCSize(width, height))
+    local rect = cc.RectShape:create(cc.Size(width, height))
 	local align=display.CENTER
 	if type(height) == "table" then params = hight end
 	if type(params) == "table" then
@@ -1005,13 +1005,13 @@ function display.addSpriteFramesWithFile(plistFilename, image, handler)
 	end
 
     if display.TEXTURES_PIXEL_FORMAT[image] then
-        CCTexture2D:setDefaultAlphaPixelFormat(display.TEXTURES_PIXEL_FORMAT[image])
+        cc.Texture2D:setDefaultAlphaPixelFormat(display.TEXTURES_PIXEL_FORMAT[image])
 		if async then
 			sharedTextureCache:addImageAsync(image, asyncHandler)
 		else
 			sharedSpriteFrameCache:addSpriteFramesWithFile(plistFilename, image)
 		end
-        CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888)
+        cc.Texture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888)
     else
 		if async then
 			sharedTextureCache:addImageAsync(image, asyncHandler)
@@ -1068,7 +1068,7 @@ end
 ]]
 function display.removeSpriteFrameByImageName(imageName)
     sharedSpriteFrameCache:removeSpriteFrameByName(imageName)
-    CCTextureCache:sharedTextureCache():removeTextureForKey(imageName)
+    cc.TextureCache:sharedTextureCache():removeTextureForKey(imageName)
 end
 
 --[[--
@@ -1105,7 +1105,7 @@ end
 
 ]]
 function display.newBatchNode(image, capacity)
-    return CCSpriteBatchNode:create(image, capacity or 100)
+    return cc.SpriteBatchNode:create(image, capacity or 100)
 end
 
 --[[--
@@ -1205,12 +1205,12 @@ sprite:playAnimationOnce(animation) -- 播放一次动画
 ]]
 function display.newAnimation(frames, time)
     local count = #frames
-    local array = CCArray:create()
+    local array = cc.Array:create()
     for i = 1, count do
         array:addObject(frames[i])
     end
     time = time or 1.0 / count
-    return CCAnimation:createWithSpriteFrames(array, time)
+    return cc.Animation:createWithSpriteFrames(array, time)
 end
 
 --[[
@@ -1274,7 +1274,7 @@ function display.newProgressTimer(image, progresssType)
         image = display.newSprite(image)
     end
 
-    local progress = CCProgressTimer:create(image)
+    local progress = cc.ProgressTimer:create(image)
     progress:setType(progresssType)
     return progress
 end
@@ -1297,7 +1297,7 @@ function display.printscreen(node, args)
 		filterParams = args.filterParams
 	end
 	local size = node:getContentSize()
-	local canvas = CCRenderTexture:create(size.width,size.height)
+	local canvas = cc.RenderTexture:create(size.width,size.height)
 	canvas:begin()
 	node:visit()
 	canvas:endToLua()

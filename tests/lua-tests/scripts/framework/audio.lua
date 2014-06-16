@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 local audio = {}
 
-local sharedEngine = SimpleAudioEngine:sharedEngine()
+local sharedEngine = cc.SimpleAudioEngine:getInstance()
 
 --[[--
 

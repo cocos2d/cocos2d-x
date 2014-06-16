@@ -83,6 +83,10 @@ quick framework 初始化
 
 ]]
 
+print("===========================================================")
+print("              LOAD QUICK FRAMEWORK")
+print("===========================================================")
+
 
 if type(DEBUG) ~= "number" then DEBUG = 0 end
 if type(DEBUG_FPS) ~= "boolean" then DEBUG_FPS = false end
@@ -139,15 +143,15 @@ end
 
 ----
 
-local sharedTextureCache = CCTextureCache:sharedTextureCache()
-local sharedDirector = CCDirector:sharedDirector()
+local sharedTextureCache = cc.Director:getInstance():getTextureCache()
+local sharedDirector = cc.Director:getInstance()
 
 if DEBUG_FPS then
     sharedDirector:setDisplayStats(true)
 end
 
 if DEBUG_MEM then
-    local sharedTextureCache = CCTextureCache:sharedTextureCache()
+    local sharedTextureCache = cc.Director:getInstance():getTextureCache()
     --[[--
     @ignore
     ]]

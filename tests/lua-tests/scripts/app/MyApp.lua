@@ -14,7 +14,7 @@ local TESTS_LIST = {
 }
 
 function MyApp:run()
-    CCFileUtils:sharedFileUtils():addSearchPath("res/")
+    cc.FileUtils:getInstance():addSearchPath("res/")
     self:enterNextScene()
 end
 

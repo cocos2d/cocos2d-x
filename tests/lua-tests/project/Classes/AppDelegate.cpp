@@ -22,7 +22,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLView::createWithRect("Lua Tests", Rect(0,0,900,640));
+        glview = GLView::createWithRect("Lua Tests", Rect(0,0,640,900));
         director->setOpenGLView(glview);
     }
 
@@ -61,10 +61,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     // load framework
-    pStack->loadChunksFromZIP("res/framework_precompiled.zip");
-    
+    //pStack->loadChunksFromZIP("res/framework_precompiled.zip");
+
     // set script path
-    string path = CCFileUtils::sharedFileUtils()->fullPathForFilename("scripts/main.lua");
+    std::string path = CCFileUtils::sharedFileUtils()->fullPathForFilename("scripts/main.lua");
 #else
     // load framework
 //    if (m_projectConfig.isLoadPrecompiledFramework())

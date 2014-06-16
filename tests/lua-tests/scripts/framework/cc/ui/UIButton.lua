@@ -138,7 +138,7 @@ function UIButton:setButtonSize(width, height)
     assert(self.scale9_, "UIButton:setButtonSize() - can't change size for non-scale9 button")
     self.scale9Size_ = {width, height}
     if self.sprite_ then
-        self.sprite_:setContentSize(CCSize(self.scale9Size_[1], self.scale9Size_[2]))
+        self.sprite_:setContentSize(cc.size(self.scale9Size_[1], self.scale9Size_[2]))
     end
     return self
 end
@@ -219,7 +219,7 @@ function UIButton:updateButtonImage_()
     if image then
         if self.currentImage_ ~= image then
             if self.sprite_ then
-                self.sprite_:removeFromParentAndCleanup(true)
+                self.sprite_:removeFromParent(true)
                 self.sprite_ = nil
             end
             self.currentImage_ = image
@@ -230,7 +230,7 @@ function UIButton:updateButtonImage_()
                     local size = self.sprite_:getContentSize()
                     self.scale9Size_ = {size.width, size.height}
                 else
-                    self.sprite_:setContentSize(CCSize(self.scale9Size_[1], self.scale9Size_[2]))
+                    self.sprite_:setContentSize(cc.size(self.scale9Size_[1], self.scale9Size_[2]))
                 end
             else
                 self.sprite_ = display.newSprite(image)

@@ -9,7 +9,7 @@ function TestMultiTouches2Scene:ctor()
     -- parentButton 是 button1 的父节点
     self.parentButton = createTouchableSprite({
             image = "WhiteButton.png",
-            size = CCSize(600, 500),
+            size = cc.size(600, 500),
             label = "TOUCH ME !",
             labelColor = cc.c3(255, 0, 0)})
         :pos(display.cx, display.cy)
@@ -27,7 +27,7 @@ function TestMultiTouches2Scene:ctor()
     -- button1 响应触摸后，会吞噬掉触摸事件
     self.button1 = createTouchableSprite({
             image = "GreenButton.png",
-            size = CCSize(400, 160),
+            size = cc.size(400, 160),
             label = "TOUCH ME !"})
         :pos(300, 400)
         :addTo(self.parentButton)
@@ -48,7 +48,7 @@ function TestMultiTouches2Scene:ctor()
     -- button2 响应触摸后，不会吞噬掉触摸事件
     self.button2 = createTouchableSprite({
             image = "PinkButton.png",
-            size = CCSize(400, 160),
+            size = cc.size(400, 160),
             label = "TOUCH ME !"})
         :pos(300, 200)
         :addTo(self.parentButton)

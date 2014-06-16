@@ -51,9 +51,8 @@ THE SOFTWARE.
 
 local p = cc.PACKAGE_NAME .. ".cocos2dx."
 
-cc.c3 = cc.c3b
 -- kResolutionNoBorder = 1
--- require(p .. "Global")
+require(p .. "Global")
 -- require(p .. "ObjectBinding")
 require(p .. "OpenGL")
 require(p .. "Geometry")

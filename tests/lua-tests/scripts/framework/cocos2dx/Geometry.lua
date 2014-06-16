@@ -49,8 +49,7 @@ print(point.x, point.y)
 @return CCPoint
 
 ]]
-c.p = CCPoint
-c.point = CCPoint
+c.point = cc.p
 
 --[[--
 
@@ -71,7 +70,7 @@ print(size.width, size.height)
 @return CCSize
 
 ]]
-c.size = CCSize
+-- c.size = CCSize
 
 --[[--
 
@@ -96,7 +95,7 @@ print(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height)
 @return CCRect
 
 ]]
-c.rect = CCRect
+-- c.rect = CCRect
 
 --[[--
 
@@ -141,7 +140,8 @@ local res = c.size2t(size)
 
 ]]
 c.size2t = function(size)
-    return {width = size.width, height = size.height}
+	return size
+    -- return {width = size.width, height = size.height}
 end
 
 --[[--
@@ -164,7 +164,8 @@ local res = c.rect2t(rect)
 
 ]]
 c.rect2t = function(rect)
-    return {origin = c.point2t(rect.origin), size = c.size2t(rect.size)}
+	return rect
+    -- return {origin = c.point2t(rect.origin), size = c.size2t(rect.size)}
 end
 
 --[[--
@@ -187,9 +188,7 @@ local res = c.t2size(input)
 @see c.size2t
 
 ]]
-c.t2point = function(t)
-    return CCPoint(t.x, t.y)
-end
+c.t2point = cc.p
 
 --[[--
 
@@ -211,7 +210,8 @@ local res = c.t2size(t)
 
 ]]
 c.t2size = function(t)
-    return CCSize(t.width, t.height)
+	return t
+    -- return CCSize(t.width, t.height)
 end
 
 --[[--

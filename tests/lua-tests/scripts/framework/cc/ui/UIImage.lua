@@ -26,7 +26,7 @@ function UIImage:setLayoutSize(width, height)
     height = height - top - bottom
 
     if self.isScale9_ then
-        self:setContentSize(CCSize(width, height))
+        self:setContentSize(cc.size(width, height))
     else
         local boundingSize = self:getBoundingBox().size
         local sx = width / (boundingSize.width / self:getScaleX())
