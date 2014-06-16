@@ -65,7 +65,7 @@ void Bone::updateWorldMat()
 
 const Mat4& Bone::getWorldMat()
 {
-    //if (_worldDirty)
+    if (_worldDirty)
     {
         updateLocalMat();
         if (_parent)
@@ -123,7 +123,6 @@ void Bone::setAnimationValue(float* trans, float* rot, float* scale, float weigh
         state.localScale.set(scale);
     state.weight = weight;
     
-    _blendStates.clear();
     _blendStates.push_back(state);
     _localDirty = true;
 }
@@ -214,16 +213,11 @@ Bone::~Bone()
 
 void Bone::updateLocalMat()
 {
-    if (_blendStates.size() == 0)
-        return;
-    
-    if (!_localDirty)
-        return;
-    
-    Vec3 translate(0.f, 0.f, 0.f), scale(0.f, 0.f, 0.f);
-    Quaternion quat(0.f, 0.f, 0.f, 0.f);
     if (_blendStates.size())
     {
+        Vec3 translate(Vec3::ZERO), scale(Vec3::ONE);
+        Quaternion quat(Quaternion::identity());
+        
         float total = 0.f;
         for (auto it: _blendStates) {
             total += it.weight;
@@ -262,30 +256,9 @@ void Bone::updateLocalMat()
             }  
         }
         
-        bool hasTrans = !translate.isZero();
-        bool hasRot = !quat.isZero();
-        bool hasScale = !scale.isZero();
-        
-        if (hasTrans)
-        {
-            Mat4::createTranslation(translate, &_local);
-            if (hasRot)
-                _local.rotate(quat);
-            if (hasScale)
-                _local.scale(scale);
-        }
-        else if (hasRot)
-        {
-            Mat4::createRotation(quat, &_local);
-            if (hasScale)
-                _local.scale(scale);
-        }
-        else if (hasScale)
-        {
-            Mat4::createScale(scale, &_local);
-        }
-        else
-            _local.setIdentity();
+        Mat4::createTranslation(translate, &_local);
+        _local.rotate(quat);
+        _local.scale(scale);
         
         _blendStates.clear();
         _localDirty = false;

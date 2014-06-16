@@ -108,10 +108,10 @@ protected:
         Vec3          localScale;
         float         weight;
         BoneBlendState()
-        : localTranslate(0.f, 0.f, 0.f)
-        , localRot(0.f, 0.f, 0.f, 1.0f)
-        , localScale(1.f, 1.f, 1.f)
-        , weight(0.f)
+        : localTranslate(Vec3::ZERO)
+        , localRot(Quaternion::identity())
+        , localScale(Vec3::ONE)
+        , weight(1.f)
         {
             
         }

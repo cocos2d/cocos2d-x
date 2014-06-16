@@ -541,7 +541,7 @@ std::string Sprite3DWithSkinTest::subtitle() const
 
 void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
 {
-    auto sprite = Sprite3D::create("Sprite3DTest/girl2.c3t");
+    auto sprite = Sprite3D::create("Sprite3DTest/girl.c3t");
     //auto sprite = Sprite3D::create("Sprite3DTest/cube_anim.c3t");
     //sprite->setScale(2.f);
     sprite->setTexture("Sprite3DTest/girl.png");
@@ -552,7 +552,7 @@ void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
     //sprite->setRotationSkewY(90);
     sprite->setPosition( Vec2( p.x, p.y) );
 
-    auto animation = Animation3D::getOrCreate("Sprite3DTest/girl2.c3t");
+    auto animation = Animation3D::getOrCreate("Sprite3DTest/girl.c3t");
     auto animate = Animate3D::create(animation);
     if(std::rand() %3 == 0)
     {
