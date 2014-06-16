@@ -105,7 +105,7 @@ void Layout::onEnter()
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
-        if (sendNodeEventToJS(this, kNodeOnEnter))
+        if (sendNodeEventToJSExtended(this, kNodeOnEnter))
             return;
     }
 #endif
@@ -117,13 +117,6 @@ void Layout::onEnter()
     }
     _doLayoutDirty = true;
     _clippingRectDirty = true;
-    
-#if CC_ENABLE_SCRIPT_BINDING
-    if (_scriptType == kScriptTypeLua)
-    {
-        sendNodeEventToLua(this, kNodeOnEnter);
-    }
-#endif
 }
     
 void Layout::onExit()

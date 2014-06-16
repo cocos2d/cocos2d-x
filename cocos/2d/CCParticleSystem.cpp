@@ -619,7 +619,7 @@ void ParticleSystem::onEnter()
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
-        if (sendNodeEventToJS(this, kNodeOnEnter))
+        if (sendNodeEventToJSExtended(this, kNodeOnEnter))
             return;
     }
 #endif
@@ -628,13 +628,6 @@ void ParticleSystem::onEnter()
     
     // update after action in run!
     this->scheduleUpdateWithPriority(1);
-    
-#if CC_ENABLE_SCRIPT_BINDING
-    if (_scriptType == kScriptTypeLua)
-    {
-        sendNodeEventToLua(this, kNodeOnEnter);
-    }
-#endif
 }
 
 void ParticleSystem::onExit()

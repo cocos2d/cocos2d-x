@@ -332,7 +332,7 @@ void EditBox::onEnter(void)
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
-        if (sendNodeEventToJS(this, kNodeOnEnter))
+        if (sendNodeEventToJSExtended(this, kNodeOnEnter))
             return;
     }
 #endif
@@ -344,13 +344,6 @@ void EditBox::onEnter(void)
     }
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     this->schedule(schedule_selector(EditBox::updatePosition), CHECK_EDITBOX_POSITION_INTERVAL);
-#endif
-    
-#if CC_ENABLE_SCRIPT_BINDING
-    if (_scriptType == kScriptTypeLua)
-    {
-        sendNodeEventToLua(this, kNodeOnEnter);
-    }
 #endif
 }
 

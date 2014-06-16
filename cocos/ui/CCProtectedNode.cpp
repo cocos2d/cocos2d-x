@@ -340,7 +340,7 @@ void ProtectedNode::onEnter()
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
-        if (sendNodeEventToJS(this, kNodeOnEnter))
+        if (sendNodeEventToJSExtended(this, kNodeOnEnter))
             return;
     }
 #endif
@@ -348,13 +348,6 @@ void ProtectedNode::onEnter()
     Node::onEnter();
     for( const auto &child: _protectedChildren)
         child->onEnter();
-    
-#if CC_ENABLE_SCRIPT_BINDING
-    if (_scriptType == kScriptTypeLua)
-    {
-        sendNodeEventToLua(this, kNodeOnEnter);
-    }
-#endif
 }
 
 void ProtectedNode::onEnterTransitionDidFinish()
