@@ -141,6 +141,8 @@ void LayoutReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *p
     float bgcv1 = 0.0f, bgcv2= 0.0f;
     float capsx = 0.0f, capsy = 0.0, capsWidth = 0.0, capsHeight = 0.0f;
     ui::LayoutType layoutType = ui::LAYOUT_ABSOLUTE;
+    ui::LayoutBackGroundColorType colorType = ui::LAYOUT_COLOR_NONE;
+    int bgColorOpacity = 0;
     
     for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
         std::string key = stChildArray[i].GetName(pCocoLoader);
@@ -295,9 +297,9 @@ void LayoutReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *p
         }else if(key == "vectorY"){
             bgcv2 = valueToFloat(value);
         }else if(key == "bgColorOpacity"){
-            panel->setBackGroundColorOpacity(valueToInt(value));
+            bgColorOpacity = valueToInt(value);
         }else if( key == "colorType"){
-            panel->setBackGroundColorType(ui::LayoutBackGroundColorType(valueToInt(value)));
+            colorType = ui::LayoutBackGroundColorType(valueToInt(value));
         }else if (key == "backGroundImageData"){
             
             stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
@@ -324,19 +326,31 @@ void LayoutReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *p
         }
         
     }
-    panel->setLayoutType(layoutType);
 
-    this->endSetBasicProperties(widget);
+    panel->setBackGroundColorVector(CCPoint(bgcv1, bgcv2));
 
+    
+    //TODO:FIXME  the calling order of the following two calls matters
+    //The backgrouhnd color type must be setted first
+    panel->setBackGroundColorType(colorType);
     
     panel->setBackGroundColor(ccc3(scr, scg, scb),ccc3(ecr, ecg, ecb));
     panel->setBackGroundColor(ccc3(cr, cg, cb));
-    panel->setBackGroundColorVector(CCPoint(bgcv1, bgcv2));
+    
+    panel->setBackGroundColorOpacity(bgColorOpacity);
+    
+   
+    panel->setBackGroundImageColor(ccc3(_color.r, _color.g, _color.b));
+    
+    panel->setBackGroundImageOpacity(panel->getOpacity());
+
     
     if (panel->isBackGroundImageScale9Enabled()) {
         panel->setBackGroundImageCapInsets(CCRect(capsx, capsy, capsWidth, capsHeight));
     }
-    
+    this->endSetBasicProperties(widget);
+
+    panel->setLayoutType(layoutType);
     
 }
 
