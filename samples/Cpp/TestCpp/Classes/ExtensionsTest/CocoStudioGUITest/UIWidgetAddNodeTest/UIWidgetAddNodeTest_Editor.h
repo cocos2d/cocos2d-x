@@ -33,7 +33,8 @@ public:
     UIWidgetAddNodeTest_Editor();
     ~UIWidgetAddNodeTest_Editor();
     bool init();
-    
+    void configureGUIScene();
+    virtual void switchLoadMethod(CCObject* pSender);
 protected:
     UI_SCENE_EDITOR_CREATE_FUNC(UIWidgetAddNodeTest_Editor)
 };

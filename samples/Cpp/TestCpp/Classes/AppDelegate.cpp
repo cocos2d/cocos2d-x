@@ -53,7 +53,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     // initialize director
     CCDirector *pDirector = CCDirector::sharedDirector();
     pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
-
+    pDirector->setDisplayStats(false);
     CCSize screenSize = CCEGLView::sharedOpenGLView()->getFrameSize();
 
     CCSize designSize = CCSizeMake(480, 320);

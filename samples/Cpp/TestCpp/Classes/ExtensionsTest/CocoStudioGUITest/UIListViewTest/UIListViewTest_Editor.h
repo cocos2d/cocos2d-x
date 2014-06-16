@@ -34,7 +34,8 @@ public:
     ~UIListViewTest_Vertical_Editor();
     bool init();
     void selectedItemEvent(CCObject* pSender, ListViewEventType type);
-    
+    void configureGUIScene();
+    virtual void switchLoadMethod(CCObject* pSender);
 protected:
     UI_SCENE_EDITOR_CREATE_FUNC(UIListViewTest_Vertical_Editor)
     ui::Label* _displayValueLabel;
@@ -50,7 +51,8 @@ public:
     ~UIListViewTest_Horizontal_Editor();
     bool init();
     void selectedItemEvent(CCObject* pSender, ListViewEventType type);
-    
+    void configureGUIScene();
+    virtual void switchLoadMethod(CCObject* pSender);
 protected:
     UI_SCENE_EDITOR_CREATE_FUNC(UIListViewTest_Horizontal_Editor)
     ui::Label* _displayValueLabel;
