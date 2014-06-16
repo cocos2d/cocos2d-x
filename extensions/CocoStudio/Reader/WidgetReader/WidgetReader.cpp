@@ -2,6 +2,7 @@
 
 #include "WidgetReader.h"
 #include "../../../../cocos2dx/CCDirector.h"
+#include "Cocostudio/ActionTimeline/CCNodeReader.h"
 
 NS_CC_EXT_BEGIN
 
@@ -77,6 +78,10 @@ void WidgetReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
     
     widget->setTag(DICTOOL->getIntValue_json(options, "tag"));
     widget->setActionTag(DICTOOL->getIntValue_json(options, "actiontag"));
+    
+    int actionTag = DICTOOL->getIntValue_json(options, "actionTag");
+    widget->setUserObject(cocostudio::timeline::TimelineActionData::create(actionTag));
+    
     widget->setTouchEnabled(DICTOOL->getBooleanValue_json(options, "touchAble"));
     const char* name = DICTOOL->getStringValue_json(options, "name");
     const char* widgetName = name?name:"default";
