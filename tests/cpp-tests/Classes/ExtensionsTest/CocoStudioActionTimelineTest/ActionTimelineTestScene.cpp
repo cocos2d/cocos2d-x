@@ -198,5 +198,5 @@ void TestActionTimeline::onEnter()
 
 std::string TestActionTimeline::title() const
 {
-    return "Test AnimationElement";
+    return "Test ActionTimeline";
 }
