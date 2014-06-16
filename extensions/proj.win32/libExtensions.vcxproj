@@ -146,7 +146,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\sqlite3\libraries\win32\*.*" "$(OutDir)
     <ClCompile Include="..\CocoStudio\ActionTimeline\CCActionTimeline.cpp" />
     <ClCompile Include="..\CocoStudio\ActionTimeline\CCActionTimelineCache.cpp" />
     <ClCompile Include="..\CocoStudio\ActionTimeline\CCFrame.cpp" />
-    <ClCompile Include="..\CocoStudio\ActionTimeline\CCNodeCache.cpp" />
+    <ClCompile Include="..\CocoStudio\ActionTimeline\CCNodeReader.cpp" />
     <ClCompile Include="..\CocoStudio\ActionTimeline\CCTimeLine.cpp" />
     <ClCompile Include="..\CocoStudio\Action\CCActionEaseEx.cpp" />
     <ClCompile Include="..\CocoStudio\Action\CCActionFrame.cpp" />
@@ -304,7 +304,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\sqlite3\libraries\win32\*.*" "$(OutDir)
     <ClInclude Include="..\CocoStudio\ActionTimeline\CCActionTimeline.h" />
     <ClInclude Include="..\CocoStudio\ActionTimeline\CCActionTimelineCache.h" />
     <ClInclude Include="..\CocoStudio\ActionTimeline\CCFrame.h" />
-    <ClInclude Include="..\CocoStudio\ActionTimeline\CCNodeCache.h" />
+    <ClInclude Include="..\CocoStudio\ActionTimeline\CCNodeReader.h" />
     <ClInclude Include="..\CocoStudio\ActionTimeline\CCTimeLine.h" />
     <ClInclude Include="..\CocoStudio\ActionTimeline\CCTimelineMacro.h" />
     <ClInclude Include="..\CocoStudio\Action\CCActionEaseEx.h" />

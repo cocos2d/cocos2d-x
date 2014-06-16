@@ -123,64 +123,64 @@ Frame* FrameCreateCallFunc::excute(const rapidjson::Value& json)
 
 
 
-// TimelineActionCache
+// ActionTimelineCache
 
-static TimelineActionCache* _sharedActionCache = NULL;
+static ActionTimelineCache* _sharedActionCache = NULL;
 
-TimelineActionCache* TimelineActionCache::getInstance()
+ActionTimelineCache* ActionTimelineCache::getInstance()
 {
     if (! _sharedActionCache)
     {
-        _sharedActionCache = new TimelineActionCache();
+        _sharedActionCache = new ActionTimelineCache();
         _sharedActionCache->init();
     }
 
     return _sharedActionCache;
 }
 
-void TimelineActionCache::destroyInstance()
+void ActionTimelineCache::destroyInstance()
 {
     CC_SAFE_DELETE(_sharedActionCache);
 }
 
-TimelineActionCache::~TimelineActionCache()
+ActionTimelineCache::~ActionTimelineCache()
 {
     CC_SAFE_DELETE(_funcs);
     CC_SAFE_DELETE(_timelineActions);
 }
 
-void TimelineActionCache::purge()
+void ActionTimelineCache::purge()
 {
     _timelineActions->removeAllObjects();
 }
 
-void TimelineActionCache::init()
+void ActionTimelineCache::init()
 {
     _funcs = new cocos2d::CCDictionary();
     _timelineActions = new cocos2d::CCDictionary();
 
     
-    _funcs->setObject(FrameCreateCallFunc::create(this, FrameCreateCallback_selector(TimelineActionCache::loadVisibleFrame)),     FrameType_VisibleFrame);
-    _funcs->setObject(FrameCreateCallFunc::create(this, FrameCreateCallback_selector(TimelineActionCache::loadPositionFrame)),    FrameType_PositionFrame);
-    _funcs->setObject(FrameCreateCallFunc::create(this, FrameCreateCallback_selector(TimelineActionCache::loadScaleFrame)),       FrameType_ScaleFrame);
-    _funcs->setObject(FrameCreateCallFunc::create(this, FrameCreateCallback_selector(TimelineActionCache::loadRotationFrame)),    FrameType_RotationFrame);
-    _funcs->setObject(FrameCreateCallFunc::create(this, FrameCreateCallback_selector(TimelineActionCache::loadSkewFrame)),        FrameType_SkewFrame);
-    _funcs->setObject(FrameCreateCallFunc::create(this, FrameCreateCallback_selector(TimelineActionCache::loadRotationSkewFrame)),FrameType_RotationSkewFrame);
-    _funcs->setObject(FrameCreateCallFunc::create(this, FrameCreateCallback_selector(TimelineActionCache::loadAnchorPointFrame)), FrameType_AnchorFrame);
-    _funcs->setObject(FrameCreateCallFunc::create(this, FrameCreateCallback_selector(TimelineActionCache::loadInnerActionFrame)), FrameType_InnerActionFrame);
-    _funcs->setObject(FrameCreateCallFunc::create(this, FrameCreateCallback_selector(TimelineActionCache::loadColorFrame)),       FrameType_ColorFrame);
-    _funcs->setObject(FrameCreateCallFunc::create(this, FrameCreateCallback_selector(TimelineActionCache::loadTextureFrame)),     FrameType_TextureFrame);
-    _funcs->setObject(FrameCreateCallFunc::create(this, FrameCreateCallback_selector(TimelineActionCache::loadEventFrame)),       FrameType_EventFrame);
-    _funcs->setObject(FrameCreateCallFunc::create(this, FrameCreateCallback_selector(TimelineActionCache::loadZOrderFrame)),      FrameType_ZOrderFrame);
+    _funcs->setObject(FrameCreateCallFunc::create(this, FrameCreateCallback_selector(ActionTimelineCache::loadVisibleFrame)),     FrameType_VisibleFrame);
+    _funcs->setObject(FrameCreateCallFunc::create(this, FrameCreateCallback_selector(ActionTimelineCache::loadPositionFrame)),    FrameType_PositionFrame);
+    _funcs->setObject(FrameCreateCallFunc::create(this, FrameCreateCallback_selector(ActionTimelineCache::loadScaleFrame)),       FrameType_ScaleFrame);
+    _funcs->setObject(FrameCreateCallFunc::create(this, FrameCreateCallback_selector(ActionTimelineCache::loadRotationFrame)),    FrameType_RotationFrame);
+    _funcs->setObject(FrameCreateCallFunc::create(this, FrameCreateCallback_selector(ActionTimelineCache::loadSkewFrame)),        FrameType_SkewFrame);
+    _funcs->setObject(FrameCreateCallFunc::create(this, FrameCreateCallback_selector(ActionTimelineCache::loadRotationSkewFrame)),FrameType_RotationSkewFrame);
+    _funcs->setObject(FrameCreateCallFunc::create(this, FrameCreateCallback_selector(ActionTimelineCache::loadAnchorPointFrame)), FrameType_AnchorFrame);
+    _funcs->setObject(FrameCreateCallFunc::create(this, FrameCreateCallback_selector(ActionTimelineCache::loadInnerActionFrame)), FrameType_InnerActionFrame);
+    _funcs->setObject(FrameCreateCallFunc::create(this, FrameCreateCallback_selector(ActionTimelineCache::loadColorFrame)),       FrameType_ColorFrame);
+    _funcs->setObject(FrameCreateCallFunc::create(this, FrameCreateCallback_selector(ActionTimelineCache::loadTextureFrame)),     FrameType_TextureFrame);
+    _funcs->setObject(FrameCreateCallFunc::create(this, FrameCreateCallback_selector(ActionTimelineCache::loadEventFrame)),       FrameType_EventFrame);
+    _funcs->setObject(FrameCreateCallFunc::create(this, FrameCreateCallback_selector(ActionTimelineCache::loadZOrderFrame)),      FrameType_ZOrderFrame);
 
 }
 
-void TimelineActionCache::removeAction(const std::string& fileName)
+void ActionTimelineCache::removeAction(const std::string& fileName)
 {
     _timelineActions->removeObjectForKey(fileName);
 }
 
-ActionTimeline* TimelineActionCache::createAction(const std::string& fileName)
+ActionTimeline* ActionTimelineCache::createAction(const std::string& fileName)
 {
     ActionTimeline* action = static_cast<ActionTimeline*>(_timelineActions->objectForKey(fileName));
     if (action == NULL)
@@ -190,7 +190,7 @@ ActionTimeline* TimelineActionCache::createAction(const std::string& fileName)
     return action->clone();
 }
 
-ActionTimeline* TimelineActionCache::loadAnimationActionWithFile(const std::string& fileName)
+ActionTimeline* ActionTimelineCache::loadAnimationActionWithFile(const std::string& fileName)
 {
     // Read content from file
     std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(fileName.c_str());
@@ -200,7 +200,7 @@ ActionTimeline* TimelineActionCache::loadAnimationActionWithFile(const std::stri
     return loadAnimationActionWithContent(fileName, contentStr);
 }
 
-ActionTimeline* TimelineActionCache::loadAnimationActionWithContent(const std::string&fileName, const std::string& content)
+ActionTimeline* ActionTimelineCache::loadAnimationActionWithContent(const std::string&fileName, const std::string& content)
 {
     // if already exists an action with filename, then return this action
     ActionTimeline* action = static_cast<ActionTimeline*>(_timelineActions->objectForKey(fileName));
@@ -237,7 +237,7 @@ ActionTimeline* TimelineActionCache::loadAnimationActionWithContent(const std::s
 }
 
 
-Timeline* TimelineActionCache::loadTimeline(const rapidjson::Value& json)
+Timeline* ActionTimelineCache::loadTimeline(const rapidjson::Value& json)
 {
     Timeline* timeline = NULL;
 
@@ -277,7 +277,7 @@ Timeline* TimelineActionCache::loadTimeline(const rapidjson::Value& json)
     return timeline;
 }
 
-Frame* TimelineActionCache::loadVisibleFrame(const rapidjson::Value& json)
+Frame* ActionTimelineCache::loadVisibleFrame(const rapidjson::Value& json)
 {
     VisibleFrame* frame = VisibleFrame::create();
 
@@ -287,7 +287,7 @@ Frame* TimelineActionCache::loadVisibleFrame(const rapidjson::Value& json)
     return frame;
 }
 
-Frame* TimelineActionCache::loadPositionFrame(const rapidjson::Value& json)
+Frame* ActionTimelineCache::loadPositionFrame(const rapidjson::Value& json)
 {
     PositionFrame* frame = PositionFrame::create();
 
@@ -298,7 +298,7 @@ Frame* TimelineActionCache::loadPositionFrame(const rapidjson::Value& json)
     return frame;
 }
 
-Frame* TimelineActionCache::loadScaleFrame(const rapidjson::Value& json)
+Frame* ActionTimelineCache::loadScaleFrame(const rapidjson::Value& json)
 {
    ScaleFrame* frame = ScaleFrame::create();
 
@@ -311,7 +311,7 @@ Frame* TimelineActionCache::loadScaleFrame(const rapidjson::Value& json)
     return frame;
 }
 
-Frame* TimelineActionCache::loadSkewFrame(const rapidjson::Value& json)
+Frame* ActionTimelineCache::loadSkewFrame(const rapidjson::Value& json)
 {
     SkewFrame* frame = SkewFrame::create();
 
@@ -324,7 +324,7 @@ Frame* TimelineActionCache::loadSkewFrame(const rapidjson::Value& json)
     return frame;
 }
 
-Frame* TimelineActionCache::loadRotationSkewFrame(const rapidjson::Value& json)
+Frame* ActionTimelineCache::loadRotationSkewFrame(const rapidjson::Value& json)
 {
     RotationSkewFrame* frame = RotationSkewFrame::create();
 
@@ -337,7 +337,7 @@ Frame* TimelineActionCache::loadRotationSkewFrame(const rapidjson::Value& json)
     return frame;
 }
 
-Frame* TimelineActionCache::loadRotationFrame(const rapidjson::Value& json)
+Frame* ActionTimelineCache::loadRotationFrame(const rapidjson::Value& json)
 {
     RotationFrame* frame = RotationFrame::create();
 
@@ -347,7 +347,7 @@ Frame* TimelineActionCache::loadRotationFrame(const rapidjson::Value& json)
     return frame;
 }
 
-Frame* TimelineActionCache::loadAnchorPointFrame (const rapidjson::Value& json)
+Frame* ActionTimelineCache::loadAnchorPointFrame (const rapidjson::Value& json)
 {
     AnchorPointFrame* frame = AnchorPointFrame::create();
 
@@ -359,7 +359,7 @@ Frame* TimelineActionCache::loadAnchorPointFrame (const rapidjson::Value& json)
     return frame;
 }
 
-Frame* TimelineActionCache::loadInnerActionFrame(const rapidjson::Value& json)
+Frame* ActionTimelineCache::loadInnerActionFrame(const rapidjson::Value& json)
 {
     InnerActionFrame* frame = InnerActionFrame::create();
 
@@ -372,7 +372,7 @@ Frame* TimelineActionCache::loadInnerActionFrame(const rapidjson::Value& json)
     return frame;
 }
 
-Frame* TimelineActionCache::loadColorFrame(const rapidjson::Value& json)
+Frame* ActionTimelineCache::loadColorFrame(const rapidjson::Value& json)
 {
     ColorFrame* frame = ColorFrame::create();
 
@@ -388,7 +388,7 @@ Frame* TimelineActionCache::loadColorFrame(const rapidjson::Value& json)
 }
 
 
-Frame* TimelineActionCache::loadTextureFrame(const rapidjson::Value& json)
+Frame* ActionTimelineCache::loadTextureFrame(const rapidjson::Value& json)
 {
     TextureFrame* frame = TextureFrame::create();
 
@@ -400,7 +400,7 @@ Frame* TimelineActionCache::loadTextureFrame(const rapidjson::Value& json)
     return frame;
 }
 
-Frame* TimelineActionCache::loadEventFrame(const rapidjson::Value& json)
+Frame* ActionTimelineCache::loadEventFrame(const rapidjson::Value& json)
 {
     EventFrame* frame = EventFrame::create();
 
@@ -412,7 +412,7 @@ Frame* TimelineActionCache::loadEventFrame(const rapidjson::Value& json)
     return frame;
 }
 
-Frame* TimelineActionCache::loadZOrderFrame(const rapidjson::Value& json)
+Frame* ActionTimelineCache::loadZOrderFrame(const rapidjson::Value& json)
 {
     ZOrderFrame* frame = ZOrderFrame::create();
 

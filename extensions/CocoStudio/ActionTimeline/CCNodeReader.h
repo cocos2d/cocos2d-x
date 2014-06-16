@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_NODE_CACHE_H__
-#define __CC_NODE_CACHE_H__
+#ifndef __CC_NODE_READER_H__
+#define __CC_NODE_READER_H__
 
 #include "CCTimeLine.h"
 #include "../Json/DictionaryHelper.h"
@@ -72,14 +72,14 @@ protected:
     int _actionTag;
 };
 
-class CC_EX_DLL NodeCache : public cocos2d::CCObject
+class CC_EX_DLL NodeReader : public cocos2d::CCObject
 {
 public:
-    static NodeCache* getInstance();
+    static NodeReader* getInstance();
     static void destroyInstance();
     
-    NodeCache();
-    virtual ~NodeCache();
+    NodeReader();
+    virtual ~NodeReader();
     void purge();
 
     void init();
@@ -118,4 +118,4 @@ protected:
 NS_TIMELINE_END
 
 
-#endif /*__CC_NODE_CACHE_H__*/
+#endif /*__CC_NODE_READER_H__*/

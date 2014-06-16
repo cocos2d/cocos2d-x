@@ -3,6 +3,7 @@
 
 using namespace cocos2d;
 using namespace cocos2d::extension;
+using namespace cocostudio::timeline;
 
 CCLayer *NextTimelineTest();
 CCLayer *BackTimelineTest();
@@ -176,9 +177,21 @@ void TestActionTimeline::onEnter()
 {
     TimelineTestLayer::onEnter();
 
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("armature/Cowboy0.plist", "armature/Cowboy0.png");
+
+    CCNode* node = NodeReader::getInstance()->createNode("ActionTimeline/boy_1.ExportJson");
+    ActionTimeline* action = ActionTimelineCache::getInstance()->createAction("ActionTimeline/boy_1.ExportJson");
+
+    node->runAction(action);
+    action->gotoFrameAndPlay(0, 60, true);
+
+    node->setScale(0.4f);
+    node->setPosition(0,0);
+
+    addChild(node);
 }
 
 std::string TestActionTimeline::title()
 {
-    return "Test Asynchronous Loading";
+    return "Test ActionTimeline";
 }

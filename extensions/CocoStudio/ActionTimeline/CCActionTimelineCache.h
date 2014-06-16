@@ -52,16 +52,16 @@ protected:
     FrameCreateCallback _callback;
 };
 
-class CC_EX_DLL TimelineActionCache : public cocos2d::CCObject
+class CC_EX_DLL ActionTimelineCache : public cocos2d::CCObject
 {
 public:
     /** Gets the singleton */
-    static TimelineActionCache* getInstance();
+    static ActionTimelineCache* getInstance();
 
     /** Destroys the singleton */
     static void destroyInstance();
 
-    virtual ~TimelineActionCache();
+    virtual ~ActionTimelineCache();
     void purge();
 
     void init();
