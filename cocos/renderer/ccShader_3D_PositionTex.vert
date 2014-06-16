@@ -30,20 +30,9 @@ uniform vec4 u_matrixPalette[SKINNING_JOINT_COUNT * 3];
 varying vec2 TextureCoordOut;
 
 vec4 _skinnedPosition;
-vec4 tmp;
-
-void skinPosition(float blendWeight, int matrixIndex)
-{
-    tmp.x = dot(a_position, u_matrixPalette[matrixIndex]);
-    tmp.y = dot(a_position, u_matrixPalette[matrixIndex + 1]);
-    tmp.z = dot(a_position, u_matrixPalette[matrixIndex + 2]);
-    tmp.w = a_position.w;
-    _skinnedPosition += blendWeight * tmp;
-}
 
 vec4 getPosition()
 {
-    _skinnedPosition = vec4(0.0);
     vec4 matrixPalette1 = vec4(0.0);
     vec4 matrixPalette2 = vec4(0.0);
     vec4 matrixPalette3 = vec4(0.0);
