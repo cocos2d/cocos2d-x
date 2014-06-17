@@ -692,7 +692,7 @@ public:
      * enumerateChildren("//MyName", ...): This searches the root's children recursively and matches any node with the name `MyName`.
      * enumerateChildren("[[:alnum:]]+", ...): This search string matches every node of its children.
      * enumerateChildren("/MyName", ...): This searches the node tree and matches the parent node of every node named `MyName`.
-     * enumerateChildren("A([:digit:])", ...): This searches the node's children and returns any child named `A0`, `A1`, ..., `A9`
+     * enumerateChildren("A[[:digit:]]", ...): This searches the node's children and returns any child named `A0`, `A1`, ..., `A9`
      * enumerateChildren("Abby/Normal", ...): This searches the node's grandchildren and returns any node whose name is `Normal`
      * and whose parent is named `Abby`.
      * enumerateChildren("//Abby/Normal", ...): This searches the node tree and returns any node whose name is `Normal` and whose
