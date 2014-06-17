@@ -261,7 +261,7 @@ void PageView::addChild(CCNode *child, int zOrder, int tag)
     
 void PageView::removeChild(CCNode *widget)
 {
-    Layout::removeChild(widget);
+    PageView::removeChild(widget, true);
 }
 
 void PageView::removeChild(CCNode *child, bool cleanup)
@@ -323,7 +323,7 @@ void PageView::updateChildrenPosition()
 
 void PageView::removeAllChildren()
 {
-    Layout::removeAllChildren();
+    PageView::removeAllChildren();
 }
     
 void PageView::removeAllChildrenWithCleanup(bool cleanup)
