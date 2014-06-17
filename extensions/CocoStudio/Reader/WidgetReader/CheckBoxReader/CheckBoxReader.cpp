@@ -255,7 +255,7 @@ void CheckBoxReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader 
         }
         
         else if (key == "opacity") {
-            widget->setOpacity(valueToInt(value));
+            _opacity = valueToInt(value);
         }
         else if(key == "colorR"){
             _color.r = valueToInt(value);
@@ -327,8 +327,6 @@ void CheckBoxReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader 
     }
     
     this->endSetBasicProperties(widget);
-    
-    
 }
 
 

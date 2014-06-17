@@ -296,7 +296,7 @@ void SliderReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *p
         }
         
         else if (key == "opacity") {
-            widget->setOpacity(valueToInt(value));
+            _opacity = valueToInt(value);
         }
         else if(key == "colorR"){
             _color.r = valueToInt(value);

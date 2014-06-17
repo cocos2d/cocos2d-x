@@ -183,7 +183,7 @@ void LabelAtlasReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoade
         }
         
         else if (key == "opacity") {
-            widget->setOpacity(valueToInt(value));
+            _opacity = valueToInt(value);
         }
         else if(key == "colorR"){
             _color.r = valueToInt(value);

@@ -174,7 +174,7 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic,CCObject* root)
 void ActionNode::initWithBinary(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode, cocos2d::CCObject *root)
 {
     
-    stExpCocoNode *stChildNode = pCocoNode->GetChildArray();
+    stExpCocoNode *stChildNode = pCocoNode;
     
 	int actionNodeCount =  stChildNode->GetChildNum();
     stChildNode = stChildNode[0].GetChildArray();
@@ -217,7 +217,14 @@ void ActionNode::initWithBinary(cocos2d::extension::CocoLoader *pCocoLoader, coc
             }else if(key == "tweenType"){
                 frameTweenType = valueToInt(value);
             }else if (key == "tweenParameter"){
-                //TODO:
+              //  There are no tweenParameter args in the json file
+                int tweenParameterCount = innerFrameNode[j].GetChildNum();
+                stExpCocoNode *tweenParameterArray = innerFrameNode[j].GetChildArray();
+                for (int k = 0; k < tweenParameterCount; ++k) {
+                    std::string t_key = tweenParameterArray[j].GetName(pCocoLoader);
+                    std::string t_value = tweenParameterArray[j].GetValue();
+                    frameTweenParameter.push_back(valueToFloat(t_value));
+                }
             }else if (key == "positionx"){
                 positionX = valueToFloat(value);
             }else if (key == "positiony"){
@@ -280,14 +287,7 @@ void ActionNode::initWithBinary(cocos2d::extension::CocoLoader *pCocoLoader, coc
                 cActionArray->addObject(actionFrame);
             }
             
-            //TODO: There are no tweenParameter args in the json file
-            //        int frameTweenParameterNum = DICTOOL->getArrayCount_json(actionFrameDic, "tweenParameter");
-            //        
-            //        for (int j = 0; j < frameTweenParameterNum; j++)
-            //        {
-            //            float value = DICTOOL->getFloatValueFromArray_json(actionFrameDic, "tweenParameter", j);
-            //            frameTweenParameter.push_back(value);
-            //        }
+           
         }
 
 	}

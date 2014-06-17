@@ -2,6 +2,7 @@
 
 #include "WidgetReader.h"
 #include "../../../../cocos2dx/CCDirector.h"
+#include "Cocostudio/ActionTimeline/CCNodeReader.h"
 
 NS_CC_EXT_BEGIN
 
@@ -16,7 +17,8 @@ _sizePercentY(0.0f),
 _width(0.0f),
 _height(0.0f),
 _positionPercentX(0.0f),
-_positionPercentY(0.0f)
+_positionPercentY(0.0f),
+_opacity(0)
 {
 }
 
@@ -77,6 +79,10 @@ void WidgetReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
     
     widget->setTag(DICTOOL->getIntValue_json(options, "tag"));
     widget->setActionTag(DICTOOL->getIntValue_json(options, "actiontag"));
+    
+    int actionTag = DICTOOL->getIntValue_json(options, "actionTag");
+    widget->setUserObject(cocostudio::timeline::TimelineActionData::create(actionTag));
+    
     widget->setTouchEnabled(DICTOOL->getBooleanValue_json(options, "touchAble"));
     const char* name = DICTOOL->getStringValue_json(options, "name");
     const char* widgetName = name?name:"default";
@@ -182,6 +188,7 @@ void WidgetReader::beginSetBasicProperties(cocos2d::ui::Widget *widget)
     //set default color
     _color = ccc3(255,255,255);
     widget->setColor(_color);
+    _opacity = widget->getOpacity();
     _originalAnchorPoint = widget->getAnchorPoint();
 }
 
@@ -195,6 +202,7 @@ void WidgetReader::endSetBasicProperties(cocos2d::ui::Widget *widget)
         _width = screenSize.width;
         _height = screenSize.height;
     }
+    widget->setOpacity(_opacity);
     widget->setColor(_color);
     widget->setSize(CCSize(_width, _height));
     widget->setAnchorPoint(_originalAnchorPoint);

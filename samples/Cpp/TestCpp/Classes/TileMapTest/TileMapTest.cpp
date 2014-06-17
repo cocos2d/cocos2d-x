@@ -150,12 +150,12 @@ void TMXOrthoTest::onEnter()
 {
     TileDemo::onEnter();
 
-    CCDirector::sharedDirector()->setProjection(kCCDirectorProjection3D);
+    //CCDirector::sharedDirector()->setProjection(kCCDirectorProjection3D);
 }
 
 void TMXOrthoTest::onExit()
 {
-    CCDirector::sharedDirector()->setProjection(kCCDirectorProjection2D);
+    //CCDirector::sharedDirector()->setProjection(kCCDirectorProjection2D);
     TileDemo::onExit();
 }
 
