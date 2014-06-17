@@ -22,6 +22,9 @@ Layer *CreateAnimationLayer(int index)
     case TEST_ANIMATIONELEMENT:
         pLayer = new TestActionTimeline();
         break;
+    case TEST_CHANGE_PLAY_SECTION:
+        pLayer = new TestChangePlaySection();
+        break;
     case TEST_TIMELINE_PERFORMACE:
         pLayer = new TestTimelinePerformance();
         break;
@@ -181,6 +184,8 @@ void ActionTimelineTestLayer::backCallback(Ref *pSender)
     s->release();
 }
 
+
+
 // TestActionTimeline
 void TestActionTimeline::onEnter()
 {
@@ -203,6 +208,46 @@ void TestActionTimeline::onEnter()
 std::string TestActionTimeline::title() const
 {
     return "Test ActionTimeline";
+}
+
+
+
+// TestActionTimeline
+void TestChangePlaySection::onEnter()
+{
+    ActionTimelineTestLayer::onEnter();
+
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("armature/Cowboy0.plist", "armature/Cowboy0.png");
+
+    Node* node = NodeReader::getInstance()->createNode("ActionTimeline/boy_1.ExportJson");
+    action = ActionTimelineCache::getInstance()->createAction("ActionTimeline/boy_1.ExportJson");
+
+    node->runAction(action);
+    action->gotoFrameAndPlay(70, action->getDuration(), true);
+
+    node->setScale(0.2f);
+    node->setPosition(150,100);
+
+    // add touch event listener
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(TestChangePlaySection::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+
+
+    addChild(node);
+}
+
+std::string TestChangePlaySection::title() const
+{
+    return "Test Change Play Section";
+}
+
+void TestChangePlaySection::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
+    if(action->getStartFrame() == 0)
+        action->gotoFrameAndPlay(70, action->getDuration(), true);
+    else
+        action->gotoFrameAndPlay(0, 60, true);
 }
 
 

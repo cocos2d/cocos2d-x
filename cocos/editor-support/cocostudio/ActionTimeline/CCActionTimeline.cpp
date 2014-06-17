@@ -116,7 +116,6 @@ void ActionTimeline::gotoFrameAndPause(int startIndex)
     _startFrame = _currentFrame = startIndex;
     _time       = _currentFrame * _frameInternal;
 
-
     pause();
     gotoFrame(_currentFrame);
 }

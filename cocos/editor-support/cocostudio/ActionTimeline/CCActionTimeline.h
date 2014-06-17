@@ -97,10 +97,12 @@ public:
     virtual void setDuration(int duration) { _duration = duration; }
     virtual int  getDuration() const { return _duration; }
 
+    /** Start frame index of this action*/
+    virtual int getStartFrame() const { return _startFrame; }
+
     /** End frame of this action.
       * When action play to this frame, if action is not loop, then it will stop, 
       * or it will play from start frame again. */
-    virtual void setEndFrame(int endFrame) { _endFrame = endFrame; }
     virtual int  getEndFrame() const { return _endFrame; }
 
     /** Get current frame. */

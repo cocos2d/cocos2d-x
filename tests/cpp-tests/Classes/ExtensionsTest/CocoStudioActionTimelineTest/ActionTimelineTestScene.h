@@ -22,6 +22,7 @@ public:
 
 enum {
     TEST_ANIMATIONELEMENT = 0,
+    TEST_CHANGE_PLAY_SECTION,
     TEST_TIMELINE_PERFORMACE,
 
     TEST_ANIMATION_LAYER_COUNT
@@ -53,6 +54,18 @@ class TestActionTimeline : public ActionTimelineTestLayer
 public:
     virtual void onEnter();
     virtual std::string title() const override;
+};
+
+class TestChangePlaySection : public ActionTimelineTestLayer
+{
+public:
+    virtual void onEnter();
+    virtual std::string title() const override;
+
+	void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+
+protected:
+    ActionTimeline* action;
 };
 
 class TestTimelinePerformance : public ActionTimelineTestLayer
