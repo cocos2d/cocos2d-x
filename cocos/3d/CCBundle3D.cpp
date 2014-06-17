@@ -95,10 +95,11 @@ void Bundle3D::purgeBundle3D()
 
 bool Bundle3D::load(const std::string& path)
 {
+    if (_path == path)
+        return true;
+
     getModelPath(path);
-
     std::string strFileString = FileUtils::getInstance()->getStringFromFile(path);
-
     ssize_t size = strFileString.length();
     CC_SAFE_DELETE_ARRAY(_documentBuffer);
     _documentBuffer = new char[size + 1];
@@ -106,20 +107,12 @@ bool Bundle3D::load(const std::string& path)
     _documentBuffer[size] = '\0';
     if (_document.ParseInsitu<0>(_documentBuffer).HasParseError())
     {
-        ssize_t size = strFileString.length();
-        
-        CC_SAFE_DELETE_ARRAY(_documentBuffer);
-        _documentBuffer = new char[size + 1];
-        memcpy(_documentBuffer, strFileString.c_str(), size);
-        _documentBuffer[size] = '\0';
-        if (_document.ParseInsitu<0>(_documentBuffer).HasParseError())
-        {
-            assert(0);
-            return false;
-        }
-        _fullPath = strFileString;
+         assert(0);
+         CC_SAFE_DELETE_ARRAY(_documentBuffer);
+         _path = "";
+         return false;
     }
-
+    _path = path;
     return true;
 }
 
@@ -391,7 +384,7 @@ void Bundle3D::getModelPath(const std::string& path)
 }
 
 Bundle3D::Bundle3D()
-:_isBinary(false),_modelRelativePath(""),_documentBuffer(NULL)
+:_isBinary(false),_modelRelativePath(""),_documentBuffer(NULL),_path("")
 {
 
 }
