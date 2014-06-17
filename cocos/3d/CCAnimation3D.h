@@ -71,9 +71,6 @@ protected:
     
     std::unordered_map<std::string, Curve*> _boneCurves;//bone curves map, key bone name, value AnimationCurve
     
-//    std::unordered_map<std::string, AnimationCurveVec3*> _boneTransCurves; 
-//    std::unordered_map<std::string, AnimationCurveQuat*> _boneRotCurves;
-//    std::unordered_map<std::string, AnimationCurveVec3*> _boneScaleCurves;
     
     float             _duration; //animation duration
 };
