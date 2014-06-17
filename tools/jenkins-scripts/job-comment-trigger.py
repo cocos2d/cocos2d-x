@@ -79,7 +79,7 @@ def main():
         print 'pull request #' + str(pr_num) + ' is '+action+', no build triggered'
         return(0)
     
-    data = {"state":"pending", "target_url":target_url}
+    data = {"state":"pending", "target_url":target_url, "context":"Jenkins CI", "description":"Wait available build machine..."}
     access_token = os.environ['GITHUB_ACCESS_TOKEN']
     Headers = {"Authorization":"token " + access_token} 
 

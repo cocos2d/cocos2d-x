@@ -18065,77 +18065,46 @@ int lua_cocos2dx_SpriteFrame_setTexture(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_SpriteFrame_initWithTexture(lua_State* tolua_S)
+int lua_cocos2dx_SpriteFrame_getOffset(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteFrame* cobj = nullptr;
     bool ok  = true;
+
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
 #endif
 
+
 #if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"cc.SpriteFrame",0,&tolua_err)) goto tolua_lerror;
 #endif
+
     cobj = (cocos2d::SpriteFrame*)tolua_tousertype(tolua_S,1,0);
+
 #if COCOS2D_DEBUG >= 1
-    if (!cobj)
+    if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_initWithTexture'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_getOffset'", nullptr);
         return 0;
     }
 #endif
+
     argc = lua_gettop(tolua_S)-1;
-    do{
-        if (argc == 5) {
-            cocos2d::Texture2D* arg0;
-            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
-
-            if (!ok) { break; }
-            cocos2d::Rect arg1;
-            ok &= luaval_to_rect(tolua_S, 3, &arg1);
-
-            if (!ok) { break; }
-            bool arg2;
-            ok &= luaval_to_boolean(tolua_S, 4,&arg2);
-
-            if (!ok) { break; }
-            cocos2d::Vec2 arg3;
-            ok &= luaval_to_vec2(tolua_S, 5, &arg3);
-
-            if (!ok) { break; }
-            cocos2d::Size arg4;
-            ok &= luaval_to_size(tolua_S, 6, &arg4);
-
-            if (!ok) { break; }
-            bool ret = cobj->initWithTexture(arg0, arg1, arg2, arg3, arg4);
-            tolua_pushboolean(tolua_S,(bool)ret);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    do{
-        if (argc == 2) {
-            cocos2d::Texture2D* arg0;
-            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
-
-            if (!ok) { break; }
-            cocos2d::Rect arg1;
-            ok &= luaval_to_rect(tolua_S, 3, &arg1);
-
-            if (!ok) { break; }
-            bool ret = cobj->initWithTexture(arg0, arg1);
-            tolua_pushboolean(tolua_S,(bool)ret);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "initWithTexture",argc, 2);
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        const cocos2d::Vec2& ret = cobj->getOffset();
+        vec2_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getOffset",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpriteFrame_initWithTexture'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpriteFrame_getOffset'.",&tolua_err);
 #endif
 
     return 0;
@@ -18546,50 +18515,6 @@ int lua_cocos2dx_SpriteFrame_setOffset(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_SpriteFrame_getOffset(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::SpriteFrame* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.SpriteFrame",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::SpriteFrame*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_getOffset'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        const cocos2d::Vec2& ret = cobj->getOffset();
-        vec2_to_luaval(tolua_S, ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getOffset",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpriteFrame_getOffset'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_SpriteFrame_isRotated(lua_State* tolua_S)
 {
     int argc = 0;
@@ -18630,81 +18555,6 @@ int lua_cocos2dx_SpriteFrame_isRotated(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpriteFrame_isRotated'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_SpriteFrame_initWithTextureFilename(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::SpriteFrame* cobj = nullptr;
-    bool ok  = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.SpriteFrame",0,&tolua_err)) goto tolua_lerror;
-#endif
-    cobj = (cocos2d::SpriteFrame*)tolua_tousertype(tolua_S,1,0);
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_initWithTextureFilename'", nullptr);
-        return 0;
-    }
-#endif
-    argc = lua_gettop(tolua_S)-1;
-    do{
-        if (argc == 5) {
-            std::string arg0;
-            ok &= luaval_to_std_string(tolua_S, 2,&arg0);
-
-            if (!ok) { break; }
-            cocos2d::Rect arg1;
-            ok &= luaval_to_rect(tolua_S, 3, &arg1);
-
-            if (!ok) { break; }
-            bool arg2;
-            ok &= luaval_to_boolean(tolua_S, 4,&arg2);
-
-            if (!ok) { break; }
-            cocos2d::Vec2 arg3;
-            ok &= luaval_to_vec2(tolua_S, 5, &arg3);
-
-            if (!ok) { break; }
-            cocos2d::Size arg4;
-            ok &= luaval_to_size(tolua_S, 6, &arg4);
-
-            if (!ok) { break; }
-            bool ret = cobj->initWithTextureFilename(arg0, arg1, arg2, arg3, arg4);
-            tolua_pushboolean(tolua_S,(bool)ret);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    do{
-        if (argc == 2) {
-            std::string arg0;
-            ok &= luaval_to_std_string(tolua_S, 2,&arg0);
-
-            if (!ok) { break; }
-            cocos2d::Rect arg1;
-            ok &= luaval_to_rect(tolua_S, 3, &arg1);
-
-            if (!ok) { break; }
-            bool ret = cobj->initWithTextureFilename(arg0, arg1);
-            tolua_pushboolean(tolua_S,(bool)ret);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "initWithTextureFilename",argc, 2);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpriteFrame_initWithTextureFilename'.",&tolua_err);
 #endif
 
     return 0;
@@ -18984,7 +18834,7 @@ int lua_register_cocos2dx_SpriteFrame(lua_State* tolua_S)
         tolua_function(tolua_S,"clone",lua_cocos2dx_SpriteFrame_clone);
         tolua_function(tolua_S,"setRotated",lua_cocos2dx_SpriteFrame_setRotated);
         tolua_function(tolua_S,"setTexture",lua_cocos2dx_SpriteFrame_setTexture);
-        tolua_function(tolua_S,"initWithTexture",lua_cocos2dx_SpriteFrame_initWithTexture);
+        tolua_function(tolua_S,"getOffset",lua_cocos2dx_SpriteFrame_getOffset);
         tolua_function(tolua_S,"setRectInPixels",lua_cocos2dx_SpriteFrame_setRectInPixels);
         tolua_function(tolua_S,"getTexture",lua_cocos2dx_SpriteFrame_getTexture);
         tolua_function(tolua_S,"getRect",lua_cocos2dx_SpriteFrame_getRect);
@@ -18994,9 +18844,7 @@ int lua_register_cocos2dx_SpriteFrame(lua_State* tolua_S)
         tolua_function(tolua_S,"getOriginalSizeInPixels",lua_cocos2dx_SpriteFrame_getOriginalSizeInPixels);
         tolua_function(tolua_S,"setOriginalSizeInPixels",lua_cocos2dx_SpriteFrame_setOriginalSizeInPixels);
         tolua_function(tolua_S,"setOffset",lua_cocos2dx_SpriteFrame_setOffset);
-        tolua_function(tolua_S,"getOffset",lua_cocos2dx_SpriteFrame_getOffset);
         tolua_function(tolua_S,"isRotated",lua_cocos2dx_SpriteFrame_isRotated);
-        tolua_function(tolua_S,"initWithTextureFilename",lua_cocos2dx_SpriteFrame_initWithTextureFilename);
         tolua_function(tolua_S,"setRect",lua_cocos2dx_SpriteFrame_setRect);
         tolua_function(tolua_S,"getOffsetInPixels",lua_cocos2dx_SpriteFrame_getOffsetInPixels);
         tolua_function(tolua_S,"getOriginalSize",lua_cocos2dx_SpriteFrame_getOriginalSize);
@@ -48160,12 +48008,48 @@ int lua_cocos2dx_RenderTexture_saveToFile(lua_State* tolua_S)
     }while(0);
     ok  = true;
     do{
+        if (argc == 3) {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0);
+
+            if (!ok) { break; }
+            cocos2d::Image::Format arg1;
+            ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
+
+            if (!ok) { break; }
+            bool arg2;
+            ok &= luaval_to_boolean(tolua_S, 4,&arg2);
+
+            if (!ok) { break; }
+            bool ret = cobj->saveToFile(arg0, arg1, arg2);
+            tolua_pushboolean(tolua_S,(bool)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
         if (argc == 1) {
             std::string arg0;
             ok &= luaval_to_std_string(tolua_S, 2,&arg0);
 
             if (!ok) { break; }
             bool ret = cobj->saveToFile(arg0);
+            tolua_pushboolean(tolua_S,(bool)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 2) {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0);
+
+            if (!ok) { break; }
+            bool arg1;
+            ok &= luaval_to_boolean(tolua_S, 3,&arg1);
+
+            if (!ok) { break; }
+            bool ret = cobj->saveToFile(arg0, arg1);
             tolua_pushboolean(tolua_S,(bool)ret);
             return 1;
         }
