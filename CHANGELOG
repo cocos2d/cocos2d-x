@@ -42,7 +42,7 @@ cocos2d-x-3.2-alpha0
     [FIX]           WP8: missing texture after app switch
     
     [3RD]           curl: will crash if use https request on iOS simulator
-    [3RD]           
+    [3RD]           curl: update OpenSSL to v1.0.1h
 
 cocos2d-x-3.1.1 May.31 2014
     [FIX]           GLProgramState: restores states after coming from background
