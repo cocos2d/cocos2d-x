@@ -188,7 +188,7 @@ transition.rotateTo(sprite, {rotate = 180, time = 0.5})
 function transition.rotateTo(target, args)
     assert(not tolua.isnull(target), "transition.rotateTo() - target is not CCNode")
     -- local rotation = args.rotate
-    local action = CCRotateTo:create(args.time, args.rotate)
+    local action = cc.RotateTo:create(args.time, args.rotate)
     return transition.execute(target, action, args)
 end
 
@@ -218,7 +218,9 @@ function transition.moveTo(target, args)
     local tx, ty = target:getPosition()
     local x = args.x or tx
     local y = args.y or ty
-    local action = CCMoveTo:create(args.time, cc.p(x, y))
+    print("htl moveto begin")
+    local action = cc.MoveTo:create(args.time, cc.p(x, y))
+    print("htl moveto end")
     return transition.execute(target, action, args)
 end
 
@@ -247,7 +249,7 @@ function transition.moveBy(target, args)
     assert(not tolua.isnull(target), "transition.moveBy() - target is not CCNode")
     local x = args.x or 0
     local y = args.y or 0
-    local action = CCMoveBy:create(args.time, cc.p(x, y))
+    local action = cc.MoveBy:create(args.time, cc.p(x, y))
     return transition.execute(target, action, args)
 end
 
@@ -273,7 +275,7 @@ action = transition.fadeIn(sprite, {time = 1.5})
 ]]
 function transition.fadeIn(target, args)
     assert(not tolua.isnull(target), "transition.fadeIn() - target is not CCNode")
-    local action = CCFadeIn:create(args.time)
+    local action = cc.fadeIn:create(args.time)
     return transition.execute(target, action, args)
 end
 
@@ -299,7 +301,7 @@ action = transition.fadeOut(sprite, {time = 1.5})
 ]]
 function transition.fadeOut(target, args)
     assert(not tolua.isnull(target), "transition.fadeOut() - target is not CCNode")
-    local action = CCFadeOut:create(args.time)
+    local action = cc.fadeOut:create(args.time)
     return transition.execute(target, action, args)
 end
 
@@ -328,7 +330,7 @@ function transition.fadeTo(target, args)
     elseif opacity > 255 then
         opacity = 255
     end
-    local action = CCFadeTo:create(args.time, opacity)
+    local action = cc.fadeTo:create(args.time, opacity)
     return transition.execute(target, action, args)
 end
 
@@ -357,7 +359,7 @@ function transition.scaleTo(target, args)
     assert(not tolua.isnull(target), "transition.scaleTo() - target is not CCNode")
     local action
     if args.scale then
-        action = CCScaleTo:create(checknumber(args.time), checknumber(args.scale))
+        action = cc.scaleTo:create(checknumber(args.time), checknumber(args.scale))
     elseif args.scaleX or args.scaleY then
         local scaleX, scaleY
         if args.scaleX then
@@ -370,7 +372,7 @@ function transition.scaleTo(target, args)
         else
             scaleY = target:getScaleY()
         end
-        action = CCScaleTo:create(checknumber(args.time), scaleX, scaleY)
+        action = cc.ScaleTo:create(checknumber(args.time), scaleX, scaleY)
     end
     return transition.execute(target, action, args)
 end

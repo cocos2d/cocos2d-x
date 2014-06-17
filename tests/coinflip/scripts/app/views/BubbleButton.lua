@@ -14,6 +14,8 @@ function BubbleButton.new(params)
         local function zoom1(offset, time, onComplete)
             local x, y = button:getPosition()
             local size = button:getContentSize()
+            size.width = 200
+            size.height = 200
 
             local scaleX = button:getScaleX() * (size.width + offset) / size.width
             local scaleY = button:getScaleY() * (size.height - offset) / size.height
@@ -30,6 +32,8 @@ function BubbleButton.new(params)
         local function zoom2(offset, time, onComplete)
             local x, y = button:getPosition()
             local size = button:getContentSize()
+            size.width = 200
+            size.height = 200
 
             transition.moveTo(button, {y = y + offset, time = time / 2})
             transition.scaleTo(button, {
@@ -40,13 +44,13 @@ function BubbleButton.new(params)
             })
         end
 
-        button:getParent():setEnabled(false)
+        button:setButtonEnabled(false)
 
         zoom1(40, 0.08, function()
             zoom2(40, 0.09, function()
                 zoom1(20, 0.10, function()
                     zoom2(20, 0.11, function()
-                        button:getParent():setEnabled(true)
+                        button:setButtonEnabled(true)
                         listener(tag)
                     end)
                 end)
@@ -54,7 +58,10 @@ function BubbleButton.new(params)
         end)
     end
 
-    button = ui.newImageMenuItem(params)
+    button =  cc.ui.UIPushButton.new({normal = params.image})
+    button:onButtonClicked(function(tag)
+        params.listener(tag)
+    end)
     return button
 end
 

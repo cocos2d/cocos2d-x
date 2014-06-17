@@ -28,31 +28,32 @@ function MenuScene:ctor()
         :addTo(self)
 
     -- create menu
-    -- self.moreGamesButton = BubbleButton.new({
-    --     image = "#MenuSceneMoreGamesButton.png",
-    --     x = display.left + 150,
-    --     y = display.bottom + 300,
-    --     sound = GAME_SFX.tapButton,
-    --     prepare = function()
-    --         self.menu:setEnabled(false)
-    --     end,
-    --     listener = function()
-    --         app:enterMoreGamesScene()
-    --     end,
-    -- })
+    self.moreGamesButton = BubbleButton.new({
+            image = "#MenuSceneMoreGamesButton.png",
+            sound = GAME_SFX.tapButton,
+            prepare = function()
+                self.moreGamesButton:setButtonEnabled(false)
+            end,
+            listener = function()
+                app:enterMoreGamesScene()
+            end,
+        })
+        :align(display.CENTER, display.left + 150, display.bottom + 300)
+        :addTo(self)
 
-    -- self.startButton = BubbleButton.new({
-    --     image = "#MenuSceneStartButton.png",
-    --     x = display.right - 150,
-    --     y = display.bottom + 300,
-    --     sound = GAME_SFX.tapButton,
-    --     prepare = function()
-    --         self.menu:setEnabled(false)
-    --     end,
-    --     listener = function()
-    --         app:enterChooseLevelScene()
-    --     end,
-    -- })
+    self.startButton = BubbleButton.new({
+            image = "#MenuSceneStartButton.png",
+            sound = GAME_SFX.tapButton,
+            prepare = function()
+                self.startButton:setButtonEnabled(false)
+            end,
+            listener = function()
+                app:enterChooseLevelScene()
+            end,
+        })
+        :align(display.CENTER, display.right - 150, display.bottom + 300)
+        :addTo(self)
+
 
     -- self.menu = ui.newMenu({self.moreGamesButton, self.startButton})
     -- self:addChild(self.menu)
