@@ -27,7 +27,7 @@ enum {
     TEST_ACTION_LAYER_COUNT
 };
 
-class TimelineTestLayer : public CCLayer
+class ActionTimelineTestLayer : public CCLayer
 {
 public:
     virtual void onEnter();
@@ -49,7 +49,7 @@ protected:
 };
 
 
-class TestActionTimeline : public TimelineTestLayer
+class TestActionTimeline : public ActionTimelineTestLayer
 {
 public:
     virtual void onEnter();
@@ -57,16 +57,24 @@ public:
 };
 
 
-class TestChangePlaySection : public TimelineTestLayer
+class TestChangePlaySection : public ActionTimelineTestLayer
 {
 public:
     virtual void onEnter();
+    virtual void onExit();
     virtual std::string title();
 
     virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
     virtual void registerWithTouchDispatcher();
 protected:
     ActionTimeline* action;
+};
+
+class TestTimelinePerformance : public ActionTimelineTestLayer
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
 };
 
 #endif  // __ACTION_TIMELINE_SCENE_H__
