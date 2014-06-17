@@ -22,6 +22,7 @@ public:
 
 enum {
     TEST_ANIMATIONELEMENT = 0,
+    TEST_TIMELINE_PERFORMACE,
 
     TEST_ANIMATION_LAYER_COUNT
 };
@@ -48,6 +49,13 @@ protected:
 
 
 class TestActionTimeline : public ActionTimelineTestLayer
+{
+public:
+    virtual void onEnter();
+    virtual std::string title() const override;
+};
+
+class TestTimelinePerformance : public ActionTimelineTestLayer
 {
 public:
     virtual void onEnter();

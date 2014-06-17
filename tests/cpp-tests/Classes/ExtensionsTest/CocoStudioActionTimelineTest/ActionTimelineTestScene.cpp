@@ -22,6 +22,9 @@ Layer *CreateAnimationLayer(int index)
     case TEST_ANIMATIONELEMENT:
         pLayer = new TestActionTimeline();
         break;
+    case TEST_TIMELINE_PERFORMACE:
+        pLayer = new TestTimelinePerformance();
+        break;
     default:
         break;
     }
@@ -178,6 +181,7 @@ void ActionTimelineTestLayer::backCallback(Ref *pSender)
     s->release();
 }
 
+// TestActionTimeline
 void TestActionTimeline::onEnter()
 {
     ActionTimelineTestLayer::onEnter();
@@ -190,8 +194,8 @@ void TestActionTimeline::onEnter()
     node->runAction(action);
     action->gotoFrameAndPlay(0, 60, true);
 
-    node->setScale(0.4f);
-    node->setPosition(0,0);
+    node->setScale(0.2f);
+    node->setPosition(150,100);
 
     addChild(node);
 }
@@ -200,3 +204,31 @@ std::string TestActionTimeline::title() const
 {
     return "Test ActionTimeline";
 }
+
+
+// TestTimelinePerformance
+void TestTimelinePerformance::onEnter()
+{
+    ActionTimelineTestLayer::onEnter();
+
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("armature/Cowboy0.plist", "armature/Cowboy0.png");
+
+    for (int i = 0; i< 100; i++)
+    {
+        Node* node = NodeReader::getInstance()->createNode("ActionTimeline/boy_1.ExportJson");
+        ActionTimeline* action = ActionTimelineCache::getInstance()->createAction("ActionTimeline/boy_1.ExportJson");
+
+        node->runAction(action);
+        action->gotoFrameAndPlay(0, 60, true);
+
+        node->setScale(0.2f);
+        node->setPosition(-50+i*2,100);
+        addChild(node);
+    }
+}
+
+std::string TestTimelinePerformance::title() const
+{
+    return "Test ActionTimeline performance";
+}
+
