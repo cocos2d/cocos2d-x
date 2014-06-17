@@ -30,6 +30,10 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
+-- @function [parent=#Texture2D] releaseGLTexture 
+-- @param self
+        
+--------------------------------
 -- @function [parent=#Texture2D] updateWithData 
 -- @param self
 -- @param #void void
