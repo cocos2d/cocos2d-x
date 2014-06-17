@@ -51,8 +51,8 @@ function Gettext._getFileData(mo_file)
     fd:close()
 	--]]
 
-	--- use quick-cocos2d-x CCFileUtils, cross-platform
-	local mo_data = CCFileUtils:sharedFileUtils():getFileData(mo_file)
+	--- use quick-cocos2d-x cc.FileUtils, cross-platform
+	local mo_data = cc.FileUtils:getInstance():getFileData(mo_file)
 	return mo_data
 end
 

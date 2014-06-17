@@ -154,7 +154,7 @@ transition.execute() 支持的缓动效果：
 -    sineInOut
 -    sineOut
 
-@param CCNode target 显示对象
+@param cc.Node target 显示对象
 @param CCAction action 动作对象
 @param table args 参数表格对象
 
@@ -162,7 +162,7 @@ transition.execute() 支持的缓动效果：
 
 ]]
 function transition.execute(target, action, args)
-    assert(not tolua.isnull(target), "transition.execute() - target is not CCNode")
+    assert(not tolua.isnull(target), "transition.execute() - target is not cc.Node")
     local action = transition.create(action, args)
     target:runAction(action)
     return action
@@ -179,14 +179,14 @@ transition.rotateTo(sprite, {rotate = 180, time = 0.5})
 
 ~~~
 
-@param CCNode target 显示对象
+@param cc.Node target 显示对象
 @param table args 参数表格对象
 
 @return mixed 结果
 
 ]]
 function transition.rotateTo(target, args)
-    assert(not tolua.isnull(target), "transition.rotateTo() - target is not CCNode")
+    assert(not tolua.isnull(target), "transition.rotateTo() - target is not cc.Node")
     -- local rotation = args.rotate
     local action = CCRotateTo:create(args.time, args.rotate)
     return transition.execute(target, action, args)
@@ -207,14 +207,14 @@ transition.moveTo(sprite, {y = display.bottom, time = 1.5})
 
 ~~~
 
-@param CCNode target 显示对象
+@param cc.Node target 显示对象
 @param table args 参数表格对象
 
 @return mixed 结果
 
 ]]
 function transition.moveTo(target, args)
-    assert(not tolua.isnull(target), "transition.moveTo() - target is not CCNode")
+    assert(not tolua.isnull(target), "transition.moveTo() - target is not cc.Node")
     local tx, ty = target:getPosition()
     local x = args.x or tx
     local y = args.y or ty
@@ -237,14 +237,14 @@ transition.moveBy(sprite, {y = -100, time = 1.5})
 
 ~~~
 
-@param CCNode target 显示对象
+@param cc.Node target 显示对象
 @param table args 参数表格对象
 
 @return mixed 结果
 
 ]]
 function transition.moveBy(target, args)
-    assert(not tolua.isnull(target), "transition.moveBy() - target is not CCNode")
+    assert(not tolua.isnull(target), "transition.moveBy() - target is not cc.Node")
     local x = args.x or 0
     local y = args.y or 0
     local action = CCMoveBy:create(args.time, cc.p(x, y))
@@ -265,14 +265,14 @@ action = transition.fadeIn(sprite, {time = 1.5})
 
 ~~~
 
-@param CCNode target 显示对象
+@param cc.Node target 显示对象
 @param table args 参数表格对象
 
 @return mixed 结果
 
 ]]
 function transition.fadeIn(target, args)
-    assert(not tolua.isnull(target), "transition.fadeIn() - target is not CCNode")
+    assert(not tolua.isnull(target), "transition.fadeIn() - target is not cc.Node")
     local action = CCFadeIn:create(args.time)
     return transition.execute(target, action, args)
 end
@@ -291,14 +291,14 @@ action = transition.fadeOut(sprite, {time = 1.5})
 
 ~~~
 
-@param CCNode target 显示对象
+@param cc.Node target 显示对象
 @param table args 参数表格对象
 
 @return mixed 结果
 
 ]]
 function transition.fadeOut(target, args)
-    assert(not tolua.isnull(target), "transition.fadeOut() - target is not CCNode")
+    assert(not tolua.isnull(target), "transition.fadeOut() - target is not cc.Node")
     local action = CCFadeOut:create(args.time)
     return transition.execute(target, action, args)
 end
@@ -314,14 +314,14 @@ transition.fadeTo(sprite, {opacity = 128, time = 1.5})
 
 ~~~
 
-@param CCNode target 显示对象
+@param cc.Node target 显示对象
 @param table args 参数表格对象
 
 @return mixed 结果
 
 ]]
 function transition.fadeTo(target, args)
-    assert(not tolua.isnull(target), "transition.fadeTo() - target is not CCNode")
+    assert(not tolua.isnull(target), "transition.fadeTo() - target is not cc.Node")
     local opacity = checkint(args.opacity)
     if opacity < 0 then
         opacity = 0
@@ -347,14 +347,14 @@ transition.scaleTo(sprite, {scaleY = 0.5, time = 1.5})
 
 ~~~
 
-@param CCNode target 显示对象
+@param cc.Node target 显示对象
 @param table args 参数表格对象
 
 @return mixed 结果
 
 ]]
 function transition.scaleTo(target, args)
-    assert(not tolua.isnull(target), "transition.scaleTo() - target is not CCNode")
+    assert(not tolua.isnull(target), "transition.scaleTo() - target is not cc.Node")
     local action
     if args.scale then
         action = CCScaleTo:create(checknumber(args.time), checknumber(args.scale))
@@ -444,8 +444,8 @@ boom:playAnimationOnce(display.newAnimation(frames, 0.3/ 8), true)
 
 此外，playAnimationOnce() 还允许在动画播放完成后执行一个指定的函数，以及播放动画前等待一段时间。合理运用这些功能，可以大大简化我们的游戏代码。 
 
-@param CCNode target 显示对象
-@param CCNode animation 动作对象
+@param cc.Node target 显示对象
+@param cc.Node animation 动作对象
 @param boolean removeWhenFinished 播放完成后删除显示对象
 @param function onComplete 播放完成后要执行的函数
 @param number delay 播放前等待的时间
@@ -492,8 +492,8 @@ sprite:playAnimationForever(animation)
 
 ~~~
 
-@param CCNode target 显示对象
-@param CCNode animation 动作对象
+@param cc.Node target 显示对象
+@param cc.Node animation 动作对象
 @param number delay 播放前等待的时间
 
 @return table 动作表格对象
