@@ -33,7 +33,10 @@
 #include "base/CCRef.h"
 #include "base/ccTypes.h"
 
-#include "document.h"
+#include "3d/CCMesh.h"
+#include "3d/CCBundle3DData.h"
+
+#include "external/json/document.h"
 
 NS_CC_BEGIN
 
