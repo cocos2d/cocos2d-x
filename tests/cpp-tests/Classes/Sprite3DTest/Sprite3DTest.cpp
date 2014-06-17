@@ -555,9 +555,14 @@ void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
             animate->setPlayBack(true);
         }
 
-        if(std::rand() % 3 == 0)
+        int rand2 = std::rand();
+        if(rand2 % 3 == 1)
         {
-            animate->setSpeed(animate->getSpeed() * (std::rand() % 10));
+            animate->setSpeed(animate->getSpeed() + CCRANDOM_0_1());
+        }
+        else if(rand2 % 3 == 2)
+        {
+            animate->setSpeed(animate->getSpeed() - 0.5 * CCRANDOM_0_1());
         }
 
         sprite->runAction(RepeatForever::create(animate));
