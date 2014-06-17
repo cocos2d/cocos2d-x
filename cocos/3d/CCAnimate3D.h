@@ -54,7 +54,7 @@ public:
     virtual void step(float dt) override;
     virtual void startWithTarget(Node *target) override;
     virtual Animate3D* reverse() const override;
-	virtual Animate3D *clone() const override;
+    virtual Animate3D *clone() const override;
     
     virtual void update(float t) override;
     
@@ -63,7 +63,9 @@ public:
     
     bool getPlayBack() const { return _playBack; }
     void setPlayBack(bool playBack) { _playBack = playBack; }
-protected:
+    
+CC_CONSTRUCTOR_ACCESS:
+    
     Animate3D();
     virtual ~Animate3D();
     

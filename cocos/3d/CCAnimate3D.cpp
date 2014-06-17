@@ -50,7 +50,7 @@ Animate3D* Animate3D::clone() const
 {
     
     auto animate = const_cast<Animate3D*>(this);
-    auto copy = animate->create(animate->_animation);
+    auto copy = Animate3D::create(animate->_animation);
     
     copy->_speed = _speed;
     copy->_elapsed = _elapsed;
@@ -111,17 +111,17 @@ void Animate3D::update(float t)
             auto curve = it.second;
             if (curve->translateCurve)
             {
-                curve->translateCurve->evaluate(t, transDst, Linear);
+                curve->translateCurve->evaluate(t, transDst, EvaluateType::LINEAR);
                 trans = &transDst[0];
             }
             if (curve->rotCurve)
             {
-                curve->rotCurve->evaluate(t, rotDst, QuatSlerp);
+                curve->rotCurve->evaluate(t, rotDst, EvaluateType::QUAT_SLERP);
                 rot = &rotDst[0];
             }
             if (curve->scaleCurve)
             {
-                curve->scaleCurve->evaluate(t, scaleDst, Linear);
+                curve->scaleCurve->evaluate(t, scaleDst, EvaluateType::LINEAR);
                 scale = &scaleDst[0];
             }
             bone->setAnimationValue(trans, rot, scale, _weight);

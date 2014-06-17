@@ -62,7 +62,8 @@ public:
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
     virtual const BlendFunc &getBlendFunc() const override;
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
+    
     Sprite3D();
     virtual ~Sprite3D();
     bool initWithFile(const std::string &path);
@@ -79,6 +80,7 @@ protected:
     
     void genGLProgramState();
 
+protected:
     Mesh              *_mesh;
     MeshSkin              *_skin;
     

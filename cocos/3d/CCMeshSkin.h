@@ -176,7 +176,8 @@ public:
     //refresh bone world matrix
     void updateBoneMatrix();
     
-protected:
+CC_CONSTRUCTOR_ACCESS:
+    
     MeshSkin();
     
     ~MeshSkin();
@@ -186,6 +187,8 @@ protected:
     void removeAllBones();
     
     void addBone(Bone* bone);
+    
+protected:
     
     Vector<Bone*> _bones;
     Bone* _rootBone;
@@ -201,7 +204,7 @@ class MeshSkinDataCache
 {
 public:
     static MeshSkinDataCache* getInstance();
-    static void purgeMeshSkinCache();
+    static void destroyInstance();
     
     const SkinData* getMeshSkinData(const std::string& key) const;
     

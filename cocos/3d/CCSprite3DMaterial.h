@@ -46,7 +46,7 @@ class Sprite3DMaterialCache
 public:
     
     static Sprite3DMaterialCache* getInstance();
-    static void purgeSprite3DMaterialCache();
+    static void destroyInstance();
     
     bool addSprite3DMaterial(const std::string& key, Texture2D* tex);
     
@@ -55,13 +55,13 @@ public:
     void removeAllSprite3DMaterial();
     void removeUnusedSprite3DMaterial();
     
-protected:
-    Sprite3DMaterialCache();
+CC_CONSTRUCTOR_ACCESS:
     
+    Sprite3DMaterialCache();
     ~Sprite3DMaterialCache();
     
+protected:
     static Sprite3DMaterialCache* _cacheInstance;
-
     std::unordered_map<std::string, Texture2D*> _materials; //
     
 };

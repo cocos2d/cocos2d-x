@@ -63,11 +63,14 @@ public:
     
     Curve* getBoneCurveByName(const std::string& name) const;
     
-protected:
+CC_CONSTRUCTOR_ACCESS:
+    
     Animation3D();
     virtual ~Animation3D();  
     
     bool init(const Animation3DData& data);
+    
+protected:
     
     std::unordered_map<std::string, Curve*> _boneCurves;//bone curves map, key bone name, value AnimationCurve
     
@@ -79,13 +82,13 @@ class Animation3DCache
 {
 public:
     static Animation3DCache* getInstance();
-    static void purgeMeshCache();
+    static void destroyInstance();
     
     Animation3D* getAnimation(const std::string& key);
     
     void addAnimation(const std::string& key, Animation3D* animation);
     
-    void removeAllAnimation();
+    void removeAllAnimations();
     void removeUnusedAnimation();
 
 protected:

@@ -44,25 +44,22 @@ public:
     
     static Bundle3D* getInstance();
     
-    static void purgeBundle3D();
+    static void destroyInstance();
     
     bool load(const std::string& path);
     
-    //
     /**
      * load mesh data from bundle
      * @param id The ID of the mesh, load the first Mesh in the bundle if it is empty
      */
     bool loadMeshData(const std::string& id, MeshData* meshdata);
     
-    //
     /**
      * load skin data from bundle
      * @param id The ID of the skin, load the first Skin in the bundle if it is empty
      */
     bool loadSkinData(const std::string& id, SkinData* skindata);
     
-    //
     /**
      * load material data from bundle
      * @param id The ID of the material, load the first Material in the bundle if it is empty
@@ -85,9 +82,11 @@ protected:
     // get model path
     void getModelPath(const std::string& path);
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     Bundle3D();
     ~Bundle3D();
+    
+protected:
     
     static Bundle3D* _instance;
     

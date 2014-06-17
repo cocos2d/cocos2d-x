@@ -428,7 +428,7 @@ MeshSkinDataCache* MeshSkinDataCache::getInstance()
         _cacheInstance = new MeshSkinDataCache();
     return _cacheInstance;
 }
-void MeshSkinDataCache::purgeMeshSkinCache()
+void MeshSkinDataCache::destroyInstance()
 {
     if (_cacheInstance)
     {

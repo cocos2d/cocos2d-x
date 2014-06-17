@@ -35,12 +35,12 @@
 
 NS_CC_BEGIN
 
-enum EvaluateType
+enum class EvaluateType
 {
-    Linear,
-    Near,
-    QuatSlerp,
-    UserFunction,
+    LINEAR,
+    NEAR,
+    QUAT_SLERP,
+    USER_FUNCTION,
 };
 
 /**
@@ -62,7 +62,7 @@ public:
     
     float getEndTime() const;
     
-protected:
+CC_CONSTRUCTOR_ACCESS:
     
     AnimationCurve();
     virtual ~AnimationCurve();
@@ -71,6 +71,8 @@ protected:
      * Determine index by time.
      */
     int determineIndex(float time) const;
+    
+protected:
     
     float* _value;   //
     float* _keytime; //key time(0 - 1), start time _keytime[0], end time _keytime[_count - 1]

@@ -48,8 +48,8 @@ public:
     {
     }
     bool hasVertexAttrib(int attrib);
-    bool initFrom(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices);
-    bool initFrom(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount);
+    bool init(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices);
+    bool init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount);
     
 protected:
     
@@ -108,7 +108,8 @@ public:
     //build vertex buffer from renderdata
     void restore();
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
+    
     Mesh();
     virtual ~Mesh();
     bool init(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices);
@@ -119,6 +120,7 @@ protected:
     void buildBuffer();
     void cleanAndFreeBuffers();
 
+protected:
     PrimitiveType _primitiveType;
     IndexFormat _indexFormat;
     GLuint _vertexBuffer;
@@ -135,13 +137,13 @@ class MeshCache
 {
 public:
     static MeshCache* getInstance();
-    static void purgeMeshCache();
+    static void destroyInstance();
     
     Mesh* getMesh(const std::string& key) const;
     
     bool addMesh(const std::string& key, Mesh* mesh);
     
-    void removeAllMesh();
+    void removeAllMeshes();
 
     void removeUnusedMesh();
     
@@ -149,9 +151,12 @@ public:
     void listenBackToForeground(EventCustom* event);
 #endif
     
-protected:
+CC_CONSTRUCTOR_ACCESS:
+    
     MeshCache();
     ~MeshCache();
+    
+protected:
     
     static MeshCache* _cacheInstance;
     

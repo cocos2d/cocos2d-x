@@ -45,6 +45,7 @@ Animation3D* Animation3D::getOrCreate(const std::string& fileName, const std::st
     if (bundle->load(fullPath) && bundle->loadAnimationData(animationName, &animationdata) && animation->init(animationdata))
     {
         Animation3DCache::getInstance()->addAnimation(key, animation);
+        animation->autorelease();
     }
     else
     {
@@ -181,7 +182,7 @@ Animation3DCache* Animation3DCache::getInstance()
     
     return _cacheInstance;
 }
-void Animation3DCache::purgeMeshCache()
+void Animation3DCache::destroyInstance()
 {
     CC_SAFE_DELETE(_cacheInstance);
 }
@@ -205,7 +206,7 @@ void Animation3DCache::addAnimation(const std::string& key, Animation3D* animati
     animation->retain();
 }
 
-void Animation3DCache::removeAllAnimation()
+void Animation3DCache::removeAllAnimations()
 {
     for (auto itor : _animations) {
         CC_SAFE_RELEASE(itor.second);
@@ -231,7 +232,7 @@ Animation3DCache::Animation3DCache()
 }
 Animation3DCache::~Animation3DCache()
 {
-    removeAllAnimation();
+    removeAllAnimations();
 }
 
 NS_CC_END
