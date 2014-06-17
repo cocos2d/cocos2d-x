@@ -163,11 +163,9 @@ RotationFrame::RotationFrame()
 
 void RotationFrame::onEnter(Frame *nextFrame)
 {
-    if (!_tween)
-    {
-        _node->setRotation(_rotation);
-    }
-    else
+    _node->setRotation(_rotation);
+
+    if(_tween)
     {
         _betwennRotation = static_cast<RotationFrame*>(nextFrame)->_rotation - _rotation;
     }
@@ -175,7 +173,7 @@ void RotationFrame::onEnter(Frame *nextFrame)
 
 void RotationFrame::apply(float percent)
 {
-    if (_tween)
+    if (_tween && _betwennRotation != 0)
     {
         float rotation = _rotation + percent * _betwennRotation;
         _node->setRotation(rotation);
@@ -215,13 +213,10 @@ SkewFrame::SkewFrame()
 
 void SkewFrame::onEnter(Frame *nextFrame)
 {
-    if (!_tween || nextFrame == this)
-    {
-        _node->setSkewX(_skewX);
-        _node->setSkewY(_skewY);
-    }
+    _node->setSkewX(_skewX);
+    _node->setSkewY(_skewY);
     
-    if(_tween)
+    if(_tween && (_betweenSkewX != 0 || _betweenSkewY != 0))
     {
         _betweenSkewX = static_cast<SkewFrame*>(nextFrame)->_skewX - _skewX;
         _betweenSkewY = static_cast<SkewFrame*>(nextFrame)->_skewY - _skewY;
@@ -274,13 +269,10 @@ RotationSkewFrame::RotationSkewFrame()
 
 void RotationSkewFrame::onEnter(Frame *nextFrame)
 {
-    if (!_tween || nextFrame == this)
-    {
-        _node->setRotationX(_skewX);
-        _node->setRotationY(_skewY);
-    }
+    _node->setRotationX(_skewX);
+    _node->setRotationY(_skewY);
     
-    if(_tween)
+    if (_tween && (_betweenSkewX != 0 || _betweenSkewY != 0))
     {
         _betweenSkewX = static_cast<RotationSkewFrame*>(nextFrame)->_skewX - _skewX;
         _betweenSkewY = static_cast<RotationSkewFrame*>(nextFrame)->_skewY - _skewY;
@@ -331,10 +323,7 @@ PositionFrame::PositionFrame()
 
 void PositionFrame::onEnter(Frame *nextFrame)
 {
-    if (!_tween || nextFrame == this)
-    {
-        _node->setPosition(_position);
-    }
+    _node->setPosition(_position);
 
     if(_tween)
     {
@@ -345,7 +334,7 @@ void PositionFrame::onEnter(Frame *nextFrame)
 
 void PositionFrame::apply(float percent)
 {
-    if (_tween)
+    if (_tween && (_betweenX != 0 || _betweenY != 0))
     {
         CCPoint p;
         p.x = _position.x + _betweenX * percent;
@@ -387,11 +376,8 @@ ScaleFrame::ScaleFrame()
 
 void ScaleFrame::onEnter(Frame *nextFrame)
 {
-    if (!_tween || nextFrame == this)
-    {
-        _node->setScaleX(_scaleX);
-        _node->setScaleY(_scaleY);
-    }
+    _node->setScaleX(_scaleX);
+    _node->setScaleY(_scaleY);
     
     if(_tween)
     {
@@ -402,7 +388,7 @@ void ScaleFrame::onEnter(Frame *nextFrame)
 
 void ScaleFrame::apply(float percent)
 {
-    if (_tween)
+    if (_tween && (_betweenScaleX != 0 || _betweenScaleY != 0))
     {
         float scaleX = _scaleX + _betweenScaleX * percent;
         float scaleY = _scaleY + _betweenScaleY * percent;
@@ -522,15 +508,8 @@ void ColorFrame::onEnter(Frame *nextFrame)
     if(!rgbaProtocaol)
         return;
 
-    if (!_tween || nextFrame == this)
-    {
-        if(_alpha != rgbaProtocaol->getOpacity())
-            rgbaProtocaol->setOpacity(_alpha);
-
-        ccColor3B color = rgbaProtocaol->getColor();
-        if((color.r != _color.r) || (color.g != _color.g) || (color.b != _color.b))
-            rgbaProtocaol->setColor(_color);
-    }
+    rgbaProtocaol->setOpacity(_alpha);
+    rgbaProtocaol->setColor(_color);
     
     if(_tween)
     {
