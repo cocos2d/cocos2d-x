@@ -20,6 +20,9 @@ CCLayer *CreateTimelineLayer(int index)
     case TEST_ACTION_TIMELINE:
         pLayer = new TestActionTimeline();
         break;
+    case TEST_CHANGE_PLAY_SECTION:
+        pLayer = new TestChangePlaySection();
+        break;
     default:
         break;
     }
@@ -172,7 +175,7 @@ void TimelineTestLayer::draw()
     CCLayer::draw();
 }
 
-
+// TestActionTimeline
 void TestActionTimeline::onEnter()
 {
     TimelineTestLayer::onEnter();
@@ -194,4 +197,44 @@ void TestActionTimeline::onEnter()
 std::string TestActionTimeline::title()
 {
     return "Test ActionTimeline";
+}
+
+
+// TestChangePlaySection
+void TestChangePlaySection::onEnter()
+{
+    TimelineTestLayer::onEnter();
+    setTouchEnabled(true);
+
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("armature/Cowboy0.plist", "armature/Cowboy0.png");
+
+    CCNode* node = NodeReader::getInstance()->createNode("ActionTimeline/boy_1.ExportJson");
+    action = ActionTimelineCache::getInstance()->createAction("ActionTimeline/boy_1.ExportJson");
+
+    node->runAction(action);
+    action->gotoFrameAndPlay(70, action->getDuration(), true);
+
+    node->setScale(0.2f);
+    node->setPosition(0,0);
+
+    addChild(node);
+}
+
+std::string TestChangePlaySection::title()
+{
+    return "Test ActionTimeline";
+}
+
+bool TestChangePlaySection::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
+{
+    if(action->getStartFrame() == 0)
+        action->gotoFrameAndPlay(70, action->getDuration(), true);
+    else
+        action->gotoFrameAndPlay(0, 60, true);
+
+    return false;
+}
+void TestChangePlaySection::registerWithTouchDispatcher()
+{
+    CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, INT_MIN + 1, true);
 }

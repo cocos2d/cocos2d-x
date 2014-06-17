@@ -6,6 +6,8 @@
 #include "../../VisibleRect.h"
 #include "../../testBasic.h"
 
+using namespace cocostudio::timeline;
+
 class TimelineTestScene : public TestScene
 {
 public: 
@@ -19,6 +21,8 @@ public:
 
 enum {
     TEST_ACTION_TIMELINE = 0,
+    TEST_CHANGE_PLAY_SECTION,
+    TEST_TIMELINE_PERFORMACE,
 
     TEST_ACTION_LAYER_COUNT
 };
@@ -50,6 +54,19 @@ class TestActionTimeline : public TimelineTestLayer
 public:
     virtual void onEnter();
     virtual std::string title();
+};
+
+
+class TestChangePlaySection : public TimelineTestLayer
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+
+    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void registerWithTouchDispatcher();
+protected:
+    ActionTimeline* action;
 };
 
 #endif  // __ACTION_TIMELINE_SCENE_H__
