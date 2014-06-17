@@ -34,6 +34,7 @@
         "build/winrt/Cocos2dShaderCompiler/ShaderCompiler.h", 
         "build/winrt/Cocos2dShaderCompiler/pch.cpp", 
         "build/winrt/Cocos2dShaderCompiler/pch.h", 
+        "build/winrt/angle.bat", 
         "build/winrt/convertprojects.ps1", 
         "build/winrt/scripts/converterutils.ps1", 
         "build/winrt/scripts/createsln.ps1", 
