@@ -26,7 +26,7 @@
 
 #include "base/ccMacros.h"
 #include "platform/CCFileUtils.h"
-
+#include "renderer/CCGLProgram.h"
 
 
 NS_CC_BEGIN

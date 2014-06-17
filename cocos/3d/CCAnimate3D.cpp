@@ -22,10 +22,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCAnimate3D.h"
-#include "CCAnimation3D.h"
-#include "CCSprite3D.h"
-#include "CCMeshSkin.h"
+#include "3d/CCAnimate3D.h"
+#include "3d/CCAnimation3D.h"
+#include "3d/CCSprite3D.h"
+#include "3d/CCMeshSkin.h"
 
 #include "base/ccMacros.h"
 #include "platform/CCFileUtils.h"
