@@ -1,7 +1,5 @@
 
-local AppBase = class("AppBase", function()
-    return display.newNode()
-end)
+local AppBase = class("AppBase")
 
 AppBase.APP_ENTER_BACKGROUND_EVENT = "APP_ENTER_BACKGROUND_EVENT"
 AppBase.APP_ENTER_FOREGROUND_EVENT = "APP_ENTER_FOREGROUND_EVENT"
@@ -12,13 +10,13 @@ function AppBase:ctor(appName, packageRoot)
     self.name = appName
     self.packageRoot = packageRoot or "app"
 
-    local eventDispatcher = self:getEventDispatcher()
-    local customListenerBg = cc.EventListenerCustom:create("APP_ENTER_BACKGROUND_EVENT",
-                                handler(self, self.onEnterBackground))
-    eventDispatcher:addEventListenerWithFixedPriority(customListenerBg, 1)
-    local customListenerFg = cc.EventListenerCustom:create("APP_ENTER_FOREGROUND_EVENT",
-                                handler(self, self.onEnterForeground))
-    eventDispatcher:addEventListenerWithFixedPriority(customListenerFg, 1)
+    -- local eventDispatcher = self:getEventDispatcher()
+    -- local customListenerBg = cc.EventListenerCustom:create("APP_ENTER_BACKGROUND_EVENT",
+    --                             handler(self, self.onEnterBackground))
+    -- eventDispatcher:addEventListenerWithFixedPriority(customListenerBg, 1)
+    -- local customListenerFg = cc.EventListenerCustom:create("APP_ENTER_FOREGROUND_EVENT",
+    --                             handler(self, self.onEnterForeground))
+    -- eventDispatcher:addEventListenerWithFixedPriority(customListenerFg, 1)
 
     self.snapshots_ = {}
 
