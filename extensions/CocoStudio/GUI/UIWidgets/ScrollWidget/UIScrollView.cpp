@@ -273,19 +273,19 @@ void ScrollView::addChild(CCNode *child, int zOrder, int tag)
     
 void ScrollView::removeChild(CCNode *child)
 {
-    Layout::removeChild(child);
+    removeChild(child, true);
 }
     
 void ScrollView::removeChild(CCNode* child, bool cleanup)
 {
-    return _innerContainer->removeChild(child, cleanup);
+    _innerContainer->removeChild(child, cleanup);
 }
     
 void ScrollView::removeAllChildren()
 {
-    Layout::removeAllChildren();
+    removeAllChildrenWithCleanup(true);
 }
-    
+
 void ScrollView::removeAllChildrenWithCleanup(bool cleanup)
 {
     _innerContainer->removeAllChildrenWithCleanup(cleanup);

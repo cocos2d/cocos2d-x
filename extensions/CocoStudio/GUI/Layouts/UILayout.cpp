@@ -145,6 +145,7 @@ void Layout::addChild(CCNode *child, int zOrder, int tag)
 void Layout::removeChild(CCNode *child)
 {
     Widget::removeChild(child);
+    _doLayoutDirty = true;
 }
     
 void Layout::removeChild(CCNode* widget, bool cleanup)
@@ -156,6 +157,7 @@ void Layout::removeChild(CCNode* widget, bool cleanup)
 void Layout::removeAllChildren()
 {
     Widget::removeAllChildren();
+    _doLayoutDirty = true;
 }
 
 void Layout::removeAllChildrenWithCleanup(bool cleanup)
