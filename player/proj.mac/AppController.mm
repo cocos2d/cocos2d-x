@@ -361,8 +361,8 @@ USING_NS_CC;
     app->setOpenRecents(titleArray);
     
     app->setProjectConfig(projectConfig);
-//    app->run();
-    Application::getInstance()->run();
+    app->run();
+//    Application::getInstance()->run();
 }
 
 - (void) openConsoleWindow

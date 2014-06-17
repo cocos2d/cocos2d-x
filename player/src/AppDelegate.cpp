@@ -44,66 +44,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     LuaEngine* pEngine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
     
-#if 0
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID ||CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    LuaStack* stack = pEngine->getLuaStack();
-//    register_assetsmanager_test_sample(stack->getLuaState());
-#endif
-    
-    //    pEngine->executeScriptFile("src/controller.lua");
-    
-    LuaStack *pStack = pEngine->getLuaStack();
-    const char * mainLuaFile = "scripts/main.lua";
-    
-    
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    // load framework
-    pStack->loadChunksFromZIP("res/framework_precompiled.zip");
-    
-    // set script path
-    string path = CCFileUtils::sharedFileUtils()->fullPathForFilename("scripts/main.lua");
-#else
-    // load framework
-    //    if (m_projectConfig.isLoadPrecompiledFramework())
-    //    {
-    //        const string precompiledFrameworkPath = SimulatorConfig::sharedDefaults()->getPrecompiledFrameworkPath();
-    //        pStack->loadChunksFromZIP(precompiledFrameworkPath.c_str());
-    //    }
-    
-    // set script path
-    //    std::string path = CCFileUtils::sharedFileUtils()->fullPathForFilename(m_projectConfig.getScriptFileRealPath().c_str());
-    std::string path = CCFileUtils::getInstance()->fullPathForFilename(mainLuaFile);
-#endif
-    
-    size_t pos;
-    while ((pos = path.find_first_of("\\")) != std::string::npos)
-    {
-        path.replace(pos, 1, "/");
-    }
-    size_t p = path.find_last_of("/\\");
-    if (p != path.npos)
-    {
-        const std::string dir = path.substr(0, p);
-        pStack->addSearchPath(dir.c_str());
-        
-        p = dir.find_last_of("/\\");
-        if (p != dir.npos)
-        {
-            pStack->addSearchPath(dir.substr(0, p).c_str());
-        }
-    }
-    
-    std::string env = "__LUA_STARTUP_FILE__=\"";
-    env.append(path);
-    env.append("\"");
-    pEngine->executeString(env.c_str());
-    
-    CCLOG("------------------------------------------------");
-    CCLOG("LOAD LUA FILE: %s", path.c_str());
-    CCLOG("------------------------------------------------");
-    pEngine->executeScriptFile(path.c_str());
-#else
-
     StartupCall *call = StartupCall::create(this);
     if (m_projectConfig.getDebuggerType() != kCCLuaDebuggerNone)
     {
@@ -119,7 +59,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     {
         call->startup();
     }
-#endif
     
     return true;
 }
@@ -185,14 +124,14 @@ void StartupCall::startup()
     // connect debugger
     if (projectConfig.getDebuggerType() != kCCLuaDebuggerNone)
     {
-//        pStack->connectDebugger(projectConfig.getDebuggerType(), NULL, 0, NULL, workdir.c_str());
+        pStack->connectDebugger(projectConfig.getDebuggerType(), NULL, 0, NULL, workdir.c_str());
     }
     
     // load framework
     if (projectConfig.isLoadPrecompiledFramework())
     {
         const string precompiledFrameworkPath = SimulatorConfig::sharedDefaults()->getPrecompiledFrameworkPath();
-//        pStack->loadChunksFromZip(precompiledFrameworkPath.c_str());
+        pStack->loadChunksFromZIP(precompiledFrameworkPath.c_str());
     }
     
     // set default scene
