@@ -28,12 +28,12 @@
 #include <string>
 #include <vector>
 
+#include "3d/CCBundle3DData.h"
+
 #include "base/CCRef.h"
 #include "base/ccTypes.h"
 #include "math/CCMath.h"
 #include "renderer/CCGLProgram.h"
-
-#include "3d/CCBundle3DData.h"
 
 NS_CC_BEGIN
 

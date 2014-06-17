@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCMeshSkin.h"
-#include "CCBundle3D.h"
+#include "3d/CCMeshSkin.h"
+#include "3d/CCBundle3D.h"
 
 #include "base/ccMacros.h"
 #include "base/CCPlatformMacros.h"
@@ -38,12 +38,12 @@ NS_CC_BEGIN
  */
 void Bone::setInverseBindPose(const Mat4& m)
 {
-    _bindPose = m;
+    _invBindPose = m;
 }
 
 const Mat4& Bone::getInverseBindPose()
 {
-    return _bindPose;
+    return _invBindPose;
 }
 
 void Bone::setWorldMatDirty(bool dirty)
@@ -120,10 +120,9 @@ Bone* Bone::create(const std::string& id)
 /**
  * Updates the joint matrix.
  *
- * @param bindShape The bind shape matrix.
  * @param matrixPalette The matrix palette to update.
  */
-void Bone::updateJointMatrix(const Mat4& bindShape, Vec4* matrixPalette)
+void Bone::updateJointMatrix(Vec4* matrixPalette)
 {
     {
         static Mat4 t;
@@ -296,11 +295,10 @@ MeshSkin* MeshSkin::create(const std::string& filename, const std::string& name)
 
 bool MeshSkin::initFromSkinData(const SkinData& skindata)
 {
-    _bindShape = skindata.bindShape;
     setBoneCount((int)skindata.boneNames.size());
     for (size_t i = 0; i < skindata.boneNames.size(); i++) {
         auto bone = Bone::create(skindata.boneNames[i]);
-        bone->_bindPose = skindata.inverseBindPoseMatrices[i];
+        bone->_invBindPose = skindata.inverseBindPoseMatrices[i];
         addBone(bone);
     }
     for (auto it : skindata.boneChild) {
@@ -314,16 +312,6 @@ bool MeshSkin::initFromSkinData(const SkinData& skindata)
     
     setRootBone(getBoneByIndex(skindata.rootBoneIndex));
     return true;
-}
-
-//get & set bind shape matrix
-const Mat4& MeshSkin::getBindShape() const
-{
-    return _bindShape;
-}
-void MeshSkin::setBindShape(const float* matrix)
-{
-    _bindShape.set(matrix);
 }
 
 unsigned int MeshSkin::getBoneCount() const
@@ -400,7 +388,7 @@ Vec4* MeshSkin::getMatrixPalette()
     int i = 0;
 	for (auto it : _bones )
 	{
-        it->updateJointMatrix(getBindShape(), &_matrixPalette[i++ * PALETTE_ROWS]);
+        it->updateJointMatrix(&_matrixPalette[i++ * PALETTE_ROWS]);
 	}
     
     return _matrixPalette;

@@ -1,4 +1,4 @@
-#include "CCAnimationCurve.h"
+#include "3d/CCAnimationCurve.h"
 NS_CC_BEGIN
 
 template <int componentSize>

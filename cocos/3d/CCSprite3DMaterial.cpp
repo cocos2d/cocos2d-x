@@ -24,7 +24,6 @@
 
 #include "3d/CCSprite3DMaterial.h"
 
-#include "3d/CCMesh.h"
 #include "platform/CCFileUtils.h"
 #include "renderer/CCTextureCache.h"
 #include "base/CCEventCustom.h"

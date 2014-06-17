@@ -27,7 +27,8 @@
 
 #include <unordered_map>
 
-#include "CCBundle3DData.h"
+#include "3d/CCBundle3DData.h"
+
 #include "base/ccMacros.h"
 #include "base/CCRef.h"
 #include "base/CCVector.h"
@@ -78,10 +79,9 @@ public:
     /**
      * Updates the joint matrix.
      *
-     * @param bindShape The bind shape matrix.
      * @param matrixPalette The matrix palette to update.
      */
-    void updateJointMatrix(const Mat4& bindShape, Vec4* matrixPalette);
+    void updateJointMatrix(Vec4* matrixPalette);
     
     //bone tree, we do not inherit from Node, Node has too many properties that we do not need. A clean Node is needed.
     Bone* getParentBone();
@@ -130,7 +130,7 @@ protected:
     /**
      * The Mat4 representation of the Joint's bind pose.
      */
-    Mat4 _bindPose;
+    Mat4 _invBindPose;
     
     Bone* _parent;
     
@@ -152,10 +152,6 @@ public:
     
     //create a new meshskin if do not want to share meshskin
     static MeshSkin* create(const std::string& filename, const std::string& name);
-    
-    //get & set bind shape matrix
-    const Mat4& getBindShape() const;
-    void setBindShape(const float* matrix);
     
     unsigned int getBoneCount() const;
     
@@ -191,7 +187,6 @@ protected:
     
     void addBone(Bone* bone);
     
-    Mat4 _bindShape;
     Vector<Bone*> _bones;
     Bone* _rootBone;
     

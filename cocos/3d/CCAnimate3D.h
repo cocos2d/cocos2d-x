@@ -27,7 +27,7 @@
 
 #include <map>
 
-#include "CCAnimation3D.h"
+#include "3d/CCAnimation3D.h"
 
 #include "base/ccMacros.h"
 #include "base/CCRef.h"

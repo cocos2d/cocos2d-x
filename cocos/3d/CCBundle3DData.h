@@ -80,7 +80,6 @@ public:
 
 struct SkinData
 {
-    Mat4                     bindShape;
     std::vector<std::string> boneNames;
     std::vector<Mat4>        inverseBindPoseMatrices; //bind pose of bone
     
@@ -88,7 +87,6 @@ struct SkinData
     int                              rootBoneIndex;
     void resetData()
     {
-        bindShape.setIdentity();
         boneNames.clear();
         inverseBindPoseMatrices.clear();
         boneChild.clear();

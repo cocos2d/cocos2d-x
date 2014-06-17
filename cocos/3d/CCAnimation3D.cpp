@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCAnimation3D.h"
-#include "CCBundle3D.h"
+#include "3d/CCAnimation3D.h"
+#include "3d/CCBundle3D.h"
 
 #include "base/ccMacros.h"
 #include "platform/CCFileUtils.h"

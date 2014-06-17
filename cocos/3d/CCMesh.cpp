@@ -29,6 +29,9 @@
 #include <iostream>
 #include <sstream>
 
+#include "3d/CCObjLoader.h"
+#include "3d/CCSprite3DMaterial.h"
+
 #include "base/ccMacros.h"
 #include "base/CCEventCustom.h"
 #include "base/CCEventListenerCustom.h"
@@ -36,8 +39,7 @@
 #include "base/CCEventType.h"
 #include "base/CCDirector.h"
 #include "renderer/ccGLStateCache.h"
-#include "CCObjLoader.h"
-#include "CCSprite3DMaterial.h"
+
 
 using namespace std;
 

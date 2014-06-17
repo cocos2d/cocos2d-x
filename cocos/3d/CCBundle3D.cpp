@@ -22,16 +22,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCBundle3D.h"
-#include "CCAnimationCurve.h"
-#include "CCAnimation3D.h"
-#include "CCSprite3D.h"
-#include "CCMeshSkin.h"
+#include "3d/CCBundle3D.h"
 
 #include "base/ccMacros.h"
 #include "platform/CCFileUtils.h"
 
-#include "CCBundle3DData.h"
+
 
 NS_CC_BEGIN
 

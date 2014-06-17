@@ -27,7 +27,7 @@
 
 #include <unordered_map>
 
-#include "CCAnimationCurve.h"
+#include "3d/CCAnimationCurve.h"
 
 #include "base/ccMacros.h"
 #include "base/CCRef.h"
