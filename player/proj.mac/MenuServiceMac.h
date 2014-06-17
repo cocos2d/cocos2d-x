@@ -15,13 +15,19 @@ PLAYER_NS_BEGIN
 class MenuServiceMac : public PlayerMenuServiceProtocol
 {
 public:
+    MenuServiceMac();
+    ~MenuServiceMac();
+    
     virtual void addItem(const MenuItem &item,
-                         int parentIndex,
+                         std::string parentId = std::string(),
                          int index = MAX_INT);
     
     virtual void modifyItem(const MenuItem &item);
     
     virtual void deleteItem(const MenuItem &item);
+    
+private:
+    NSMutableDictionary *m_id2Menu;
 };
 
 PLAYER_NS_END

@@ -9,7 +9,7 @@ function EventProtocol:ctor()
 end
 
 function EventProtocol:addEventListener(eventName, listener, tag)
-    print("---- EventProtocol:addEventListener ----")
+    -- print("---- EventProtocol:addEventListener ----")
     assert(type(eventName) == "string" and eventName ~= "",
         "EventProtocol:addEventListener() - invalid eventName")
     eventName = string.upper(eventName)

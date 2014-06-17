@@ -337,7 +337,7 @@ end
 -    text: 要显示的文本
 -    font: 字体名，如果是非系统自带的 TTF 字体，那么指定为字体文件名
 -    size: 文字尺寸，因为是 TTF 字体，所以可以任意指定尺寸
--    color: 文字颜色（可选），用 ccc3() 指定，默认为白色
+-    color: 文字颜色（可选），用 cc.c3b() 指定，默认为白色
 -    align: 文字的水平对齐方式（可选）
 -    valign: 文字的垂直对齐方式（可选），仅在指定了 dimensions 参数时有效
 -    dimensions: 文字显示对象的尺寸（可选），使用 CCSize() 指定
@@ -367,7 +367,7 @@ local label = ui.newTTFLabel({
     text = "Hello, World\n您好，世界",
     font = "Arial",
     size = 64,
-    color = ccc3(255, 0, 0), -- 使用纯红色
+    color = cc.c3b(255, 0, 0), -- 使用纯红色
     align = ui.TEXT_ALIGN_LEFT,
     valign = ui.TEXT_VALIGN_TOP,
     dimensions = CCSize(400, 200)
@@ -428,7 +428,7 @@ end
 
 相比 ui.newTTFLabel() 增加一个参数：
 
--   shadowColor: 阴影颜色（可选），用 ccc3() 指定，默认为黑色
+-   shadowColor: 阴影颜色（可选），用 cc.c3b() 指定，默认为黑色
 
 @param table params 参数表格对象
 
@@ -496,7 +496,7 @@ end
 
 相比 ui.newTTFLabel() 增加一个参数：
 
-    outlineColor: 描边颜色（可选），用 ccc3() 指定，默认为黑色
+    outlineColor: 描边颜色（可选），用 cc.c3b() 指定，默认为黑色
 
 @param table params 参数表格对象
 

@@ -58,8 +58,8 @@ display 模块封装了绝大部分与显示有关的功能，并负责根据 co
 
 颜色：
 
--   display.COLOR_WHITE 白色, ccc3(255, 255, 255)
--   display.COLOR_BLACK 黑色, ccc3(0, 0, 0)
+-   display.COLOR_WHITE 白色, cc.c3b(255, 255, 255)
+-   display.COLOR_BLACK 黑色, cc.c3b(0, 0, 0)
 
 ]]
 local display = {}
@@ -155,11 +155,11 @@ printInfo(string.format("# display.c_top                = %0.2f", display.c_top)
 printInfo(string.format("# display.c_bottom             = %0.2f", display.c_bottom))
 printInfo("#")
 
-display.COLOR_WHITE = ccc3(255, 255, 255)
-display.COLOR_BLACK = ccc3(0, 0, 0)
-display.COLOR_RED   = ccc3(255, 0, 0)
-display.COLOR_GREEN = ccc3(0, 255, 0)
-display.COLOR_BLUE  = ccc3(0, 0, 255)
+display.COLOR_WHITE = cc.c3b(255, 255, 255)
+display.COLOR_BLACK = cc.c3b(0, 0, 0)
+display.COLOR_RED   = cc.c3b(255, 0, 0)
+display.COLOR_GREEN = cc.c3b(0, 255, 0)
+display.COLOR_BLUE  = cc.c3b(0, 0, 255)
 
 display.AUTO_SIZE      = 0
 display.FIXED_SIZE     = 1
@@ -192,7 +192,7 @@ display.ANCHOR_POINTS = {
 
 display.SCENE_TRANSITIONS = {
     CROSSFADE       = {CCTransitionCrossFade, 2},
-    FADE            = {CCTransitionFade, 3, ccc3(0, 0, 0)},
+    FADE            = {CCTransitionFade, 3, cc.c3b(0, 0, 0)},
     FADEBL          = {CCTransitionFadeBL, 2},
     FADEDOWN        = {CCTransitionFadeDown, 2},
     FADETR          = {CCTransitionFadeTR, 2},
@@ -261,7 +261,7 @@ display.replaceScene(nextScene)
 可用的过渡效果有：
 
 -   crossFade 淡出当前场景的同时淡入下一个场景
--   fade 淡出当前场景到指定颜色，默认颜色为 ccc3(0, 0, 0)，可用 wrapSceneWithTransition() 的最后一个参数指定颜色
+-   fade 淡出当前场景到指定颜色，默认颜色为 cc.c3b(0, 0, 0)，可用 wrapSceneWithTransition() 的最后一个参数指定颜色
 -   fadeBL 从左下角开始淡出场景
 -   fadeDown 从底部开始淡出场景
 -   fadeTR 从右上角开始淡出场景
@@ -333,7 +333,7 @@ end
 ~~~ lua
 
 -- 使用红色做过渡色
-display.replaceScene(nextScene, "fade", 0.5, ccc3(255, 0, 0))
+display.replaceScene(nextScene, "fade", 0.5, cc.c3b(255, 0, 0))
 
 ~~~
 
@@ -415,9 +415,9 @@ end
 
 --[[--
 
-创建并返回一个 CCNode 对象
+创建并返回一个 cc.Node 对象
 
-CCNode 对象并不能显示对象，但可以作为其他显示对象的容器（起到群组的作用）。具体请参考 CCNode 。
+cc.Node 对象并不能显示对象，但可以作为其他显示对象的容器（起到群组的作用）。具体请参考 cc.Node 。
 
 ~~~ lua
 
@@ -430,13 +430,13 @@ transition.moveBy(group, {time = 2.0, x = 100})
 
 ~~~
 
-@return CCNode CCNode对象
+@return cc.Node cc.Node对象
 
-@see CCNode
+@see cc.Node
 
 ]]
 function display.newNode()
-    return CCNode:create()
+    return cc.Node:create()
 end
 
 --[[--
@@ -518,7 +518,7 @@ function display.newSprite(filename, x, y, params)
         spriteClass = params.class
         size = params.size
     end
-    if not spriteClass then spriteClass = CCSprite end
+    if not spriteClass then spriteClass = cc.Sprite end
 
     local t = type(filename)
     if t == "userdata" then t = tolua.type(filename) end
@@ -617,7 +617,7 @@ end
 
 --[[--
 
-create a tiled CCSpriteBatchNode, the image can not a POT file.
+create a tiled cc.SpriteBatchNode, the image can not a POT file.
 
 @param mixed filename As same a the first parameter for display.newSprite
 @param string plistFile Texture(plist) image filename, filename must be a part of the texture.
@@ -625,7 +625,7 @@ create a tiled CCSpriteBatchNode, the image can not a POT file.
 @param integer hPadding Horizontal padding, it will display 1 px gap on moving the node, set padding for fix it.
 @param integer vPadding Vertical padding.
 
-@return A CCSpriteBatchNode
+@return A cc.SpriteBatchNode
 
 ]]
 function display.newTiledBatchNode(filename, plistFile, size, hPadding, vPadding)
@@ -1099,13 +1099,13 @@ end
 @param string image 图像文件名
 @param integer capacity
 
-@return CCSpriteBatchNode
+@return cc.SpriteBatchNode
 
 @see Batch Node
 
 ]]
 function display.newBatchNode(image, capacity)
-    return CCSpriteBatchNode:create(image, capacity or 100)
+    return cc.SpriteBatchNode:create(image, capacity or 100)
 end
 
 --[[--
@@ -1279,7 +1279,7 @@ function display.newProgressTimer(image, progresssType)
     return progress
 end
 
--- Get a screenshot of a CCNode
+-- Get a screenshot of a cc.Node
 -- @author zrong(zengrong.net)
 -- Creation: 2014-04-10
 -- @param node A node to print.

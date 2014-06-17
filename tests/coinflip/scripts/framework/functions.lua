@@ -224,9 +224,9 @@ class() 除了定义纯 Lua 类之外，还可以从 C++ 对象继承类。
 
 ~~~ lua
 
--- 从 CCNode 对象派生 Toolbar 类，该类具有 CCNode 的所有属性和行为
+-- 从 cc.Node 对象派生 Toolbar 类，该类具有 cc.Node 的所有属性和行为
 local Toolbar = class("Toolbar", function()
-    return display.newNode() -- 返回一个 CCNode 对象
+    return display.newNode() -- 返回一个 cc.Node 对象
 end)
 
 -- 构造函数
@@ -239,8 +239,8 @@ function Toolbar:addButton(button)
     -- 将按钮对象加入 table
     self.buttons[#self.buttons + 1] = button
 
-    -- 添加按钮对象到 CCNode 中，以便显示该按钮
-    -- 因为 Toolbar 是从 CCNode 继承的，所以可以使用 addChild() 方法
+    -- 添加按钮对象到 cc.Node 中，以便显示该按钮
+    -- 因为 Toolbar 是从 cc.Node 继承的，所以可以使用 addChild() 方法
     self:addChild(button)
 
     -- 按照按钮数量，调整所有按钮的位置
@@ -261,8 +261,8 @@ class() 的这种用法让我们可以在 C++ 对象基础上任意扩展行为�
 ~~~ lua
 
 function Toolbar:setPosition(x, y)
-    -- 由于在 Toolbar 继承类中覆盖了 CCNode 对象的 setPosition() 方法
-    -- 所以我们要用以下形式才能调用到 CCNode 原本的 setPosition() 方法
+    -- 由于在 Toolbar 继承类中覆盖了 cc.Node 对象的 setPosition() 方法
+    -- 所以我们要用以下形式才能调用到 cc.Node 原本的 setPosition() 方法
     getmetatable(self).setPosition(self, x, y)
 
     printf("x = %0.2f, y = %0.2f", x, y)
@@ -270,7 +270,7 @@ end
 
 ~~~
 
-**注意:** Lua 继承类覆盖的方法并不能从 C++ 调用到。也就是说通过 C++ 代码调用这个 CCNode 对象的 setPosition() 方法时，并不会执行我们在 Lua 中定义的 Toolbar:setPosition() 方法。
+**注意:** Lua 继承类覆盖的方法并不能从 C++ 调用到。也就是说通过 C++ 代码调用这个 cc.Node 对象的 setPosition() 方法时，并不会执行我们在 Lua 中定义的 Toolbar:setPosition() 方法。
 
 @param string classname 类名
 @param [mixed super] 父类或者创建对象实例的函数
@@ -577,11 +577,11 @@ end
 
 检查指定的文件或目录是否存在，如果存在返回 true，否则返回 false
 
-可以使用 CCFileUtils:fullPathForFilename() 函数查找特定文件的完整路径，例如：
+可以使用 cc.FileUtils:fullPathForFilename() 函数查找特定文件的完整路径，例如：
 
 ~~~ lua
 
-local path = CCFileUtils:sharedFileUtils():fullPathForFilename("gamedata.txt")
+local path = cc.FileUtils:getInstance():fullPathForFilename("gamedata.txt")
 if io.exists(path) then
     ....
 end
