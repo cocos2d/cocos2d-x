@@ -72,7 +72,7 @@ _pressedTextureAdaptDirty(true),
 _disabledTextureAdaptDirty(true),
 _fontName("Thonburi"),
 _fontSize(10),
-_type(Type::SYSTEM)
+_type(FontType::SYSTEM)
 {
 
 }
@@ -732,7 +732,7 @@ const Color3B& Button::getTitleColor() const
 
 void Button::setTitleFontSize(float size)
 {
-    if (_type == Type::SYSTEM) {
+    if (_type == FontType::SYSTEM) {
         _titleRenderer->setSystemFontSize(size);
     }
     else{
@@ -756,10 +756,10 @@ void Button::setTitleFontName(const std::string& fontName)
         config.fontFilePath = fontName;
         config.fontSize = _fontSize;
         _titleRenderer->setTTFConfig(config);
-        _type = Type::TTF;
+        _type = FontType::TTF;
     } else{
         _titleRenderer->setSystemFontName(fontName);
-        _type = Type::SYSTEM;
+        _type = FontType::SYSTEM;
     }
     _fontName = fontName;
 }
