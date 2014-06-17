@@ -77,7 +77,7 @@
     </PreBuildEvent>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\win32;$(EngineRoot)external\jpeg\include\win32;$(EngineRoot)external\tiff\include\win32;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\win32;$(EngineRoot)external\win32-specific\icon\include;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\xxhash;$(EngineRoot)external\ConvertUTF;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\win32;$(EngineRoot)external\jpeg\include\win32;$(EngineRoot)external\tiff\include\win32;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\win32;$(EngineRoot)external\win32-specific\icon\include;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\xxhash;$(EngineRoot)external\ConvertUTF;$(EngineRoot)external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -175,10 +175,14 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="..\..\external\unzip\ioapi.cpp" />
     <ClCompile Include="..\..\external\unzip\unzip.cpp" />
     <ClCompile Include="..\..\external\xxhash\xxhash.c" />
+    <ClCompile Include="..\3d\CCAnimate3D.cpp" />
+    <ClCompile Include="..\3d\CCAnimation3D.cpp" />
+    <ClCompile Include="..\3d\CCBundle3D.cpp" />
     <ClCompile Include="..\3d\CCMesh.cpp" />
+    <ClCompile Include="..\3d\CCMeshSkin.cpp" />
     <ClCompile Include="..\3d\CCObjLoader.cpp" />
     <ClCompile Include="..\3d\CCSprite3D.cpp" />
-    <ClCompile Include="..\3d\CCSprite3DDataCache.cpp" />
+    <ClCompile Include="..\3d\CCSprite3DMaterial.cpp" />
     <ClCompile Include="..\base\atitc.cpp" />
     <ClCompile Include="..\base\base64.cpp" />
     <ClCompile Include="..\base\CCAutoreleasePool.cpp" />
@@ -347,10 +351,16 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="..\..\external\unzip\ioapi.h" />
     <ClInclude Include="..\..\external\unzip\unzip.h" />
     <ClInclude Include="..\..\external\xxhash\xxhash.h" />
+    <ClInclude Include="..\3d\CCAnimate3D.h" />
+    <ClInclude Include="..\3d\CCAnimation3D.h" />
+    <ClInclude Include="..\3d\CCAnimationCurve.h" />
+    <ClInclude Include="..\3d\CCBundle3D.h" />
+    <ClInclude Include="..\3d\CCBundle3DData.h" />
     <ClInclude Include="..\3d\CCMesh.h" />
+    <ClInclude Include="..\3d\CCMeshSkin.h" />
     <ClInclude Include="..\3d\CCObjLoader.h" />
     <ClInclude Include="..\3d\CCSprite3D.h" />
-    <ClInclude Include="..\3d\CCSprite3DDataCache.h" />
+    <ClInclude Include="..\3d\CCSprite3DMaterial.h" />
     <ClInclude Include="..\base\atitc.h" />
     <ClInclude Include="..\base\base64.h" />
     <ClInclude Include="..\base\CCAutoreleasePool.h" />
@@ -537,6 +547,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="CCTweenFunction.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\3d\CCAnimationCurve.inl" />
     <None Include="..\math\Mat4.inl" />
     <None Include="..\math\MathUtil.inl" />
     <None Include="..\math\MathUtilNeon.inl" />

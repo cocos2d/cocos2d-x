@@ -138,6 +138,19 @@ public:
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 };
 
+class Sprite3DWithSkinTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DWithSkinTest);
+    Sprite3DWithSkinTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void addNewSpriteWithCoords(Vec2 p);
+    
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+};
+
 class Sprite3DTestScene : public TestScene
 {
 public:

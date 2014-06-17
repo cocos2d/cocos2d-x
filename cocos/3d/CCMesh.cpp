@@ -29,10 +29,17 @@
 #include <iostream>
 #include <sstream>
 
+#include "3d/CCObjLoader.h"
+#include "3d/CCSprite3DMaterial.h"
+
 #include "base/ccMacros.h"
+#include "base/CCEventCustom.h"
+#include "base/CCEventListenerCustom.h"
+#include "base/CCEventDispatcher.h"
+#include "base/CCEventType.h"
+#include "base/CCDirector.h"
 #include "renderer/ccGLStateCache.h"
-#include "CCObjLoader.h"
-#include "CCSprite3DDataCache.h"
+
 
 using namespace std;
 
@@ -48,7 +55,7 @@ bool RenderMeshData::hasVertexAttrib(int attrib)
     return false;
 }
 
-bool RenderMeshData::initFrom(const std::vector<float>& positions,
+bool RenderMeshData::init(const std::vector<float>& positions,
                               const std::vector<float>& normals,
                               const std::vector<float>& texs,
                               const std::vector<unsigned short>& indices)
@@ -56,7 +63,6 @@ bool RenderMeshData::initFrom(const std::vector<float>& positions,
     CC_ASSERT(positions.size()<65536 * 3 && "index may out of bound");
     
     _vertexAttribs.clear();
-    _vertexsizeBytes = 0;
     
     _vertexNum = positions.size() / 3; //number of vertex
     if (_vertexNum == 0)
@@ -65,7 +71,6 @@ bool RenderMeshData::initFrom(const std::vector<float>& positions,
     if ((normals.size() != 0 && _vertexNum * 3 != normals.size()) || (texs.size() != 0 && _vertexNum * 2 != texs.size()))
         return false;
     
-    _vertexsizeBytes += 3;
     MeshVertexAttrib meshvertexattrib;
     meshvertexattrib.size = 3;
     meshvertexattrib.type = GL_FLOAT;
@@ -77,14 +82,12 @@ bool RenderMeshData::initFrom(const std::vector<float>& positions,
     if (normals.size())
     {
         //add normal flag
-        _vertexsizeBytes += 3;
         meshvertexattrib.vertexAttrib = GLProgram::VERTEX_ATTRIB_NORMAL;
         _vertexAttribs.push_back(meshvertexattrib);
     }
     //
     if (texs.size())
     {
-        _vertexsizeBytes += 2;
         meshvertexattrib.size = 2;
         meshvertexattrib.vertexAttrib = GLProgram::VERTEX_ATTRIB_TEX_COORD;
         meshvertexattrib.attribSizeBytes = meshvertexattrib.size * sizeof(float);
@@ -92,8 +95,8 @@ bool RenderMeshData::initFrom(const std::vector<float>& positions,
     }
     
     _vertexs.clear();
-    _vertexs.reserve(_vertexNum * _vertexsizeBytes);
-    _vertexsizeBytes *= sizeof(float);
+    _vertexsizeBytes = calVertexSizeBytes();
+    _vertexs.reserve(_vertexNum * _vertexsizeBytes / sizeof(float));
     
     bool hasNormal = hasVertexAttrib(GLProgram::VERTEX_ATTRIB_NORMAL);
     bool hasTexCoord = hasVertexAttrib(GLProgram::VERTEX_ATTRIB_TEX_COORD);
@@ -122,6 +125,29 @@ bool RenderMeshData::initFrom(const std::vector<float>& positions,
     return true;
 }
 
+bool RenderMeshData::init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount)
+{
+    _vertexs = vertices;
+    _indices = indices;
+    _vertexAttribs = attribs;
+    
+    _vertexsizeBytes = calVertexSizeBytes();
+    
+    return true;
+}
+
+int RenderMeshData::calVertexSizeBytes()
+{
+    int sizeBytes = 0;
+    for (auto it = _vertexAttribs.begin(); it != _vertexAttribs.end(); it++) {
+        sizeBytes += (*it).size;
+        CCASSERT((*it).type == GL_FLOAT, "use float");
+    }
+    sizeBytes *= sizeof(float);
+    
+    return sizeBytes;
+}
+
 Mesh::Mesh()
 :_vertexBuffer(0)
 , _indexBuffer(0)
@@ -148,9 +174,31 @@ Mesh* Mesh::create(const std::vector<float>& positions, const std::vector<float>
     return nullptr;
 }
 
+Mesh* Mesh::create(const std::vector<float> &vertices, int vertexSizeInFloat, const std::vector<unsigned short> &indices, int numIndex, const std::vector<MeshVertexAttrib> &attribs, int attribCount)
+{
+    auto mesh = new Mesh();
+    if (mesh && mesh->init(vertices, vertexSizeInFloat, indices, numIndex, attribs, attribCount))
+    {
+        mesh->autorelease();
+        return mesh;
+    }
+    CC_SAFE_DELETE(mesh);
+    return nullptr;
+}
+
 bool Mesh::init(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices)
 {
-    bool bRet = _renderdata.initFrom(positions, normals, texs, indices);
+    bool bRet = _renderdata.init(positions, normals, texs, indices);
+    if (!bRet)
+        return false;
+    
+    restore();
+    return true;
+}
+
+bool Mesh::init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount)
+{
+    bool bRet = _renderdata.init(vertices, vertexSizeInFloat, indices, numIndex, attribs, attribCount);
     if (!bRet)
         return false;
     
@@ -210,5 +258,93 @@ void Mesh::restore()
     cleanAndFreeBuffers();
     buildBuffer();
 }
+
+/**
+ * MeshCache
+ */
+MeshCache* MeshCache::_cacheInstance = nullptr;
+
+MeshCache* MeshCache::getInstance()
+{
+    if (_cacheInstance == nullptr)
+        _cacheInstance = new MeshCache();
+    
+    return _cacheInstance;
+}
+void MeshCache::destroyInstance()
+{
+    if (_cacheInstance)
+        CC_SAFE_DELETE(_cacheInstance);
+}
+
+Mesh* MeshCache::getMesh(const std::string& key) const
+{
+    auto it = _meshes.find(key);
+    if (it != _meshes.end())
+        return it->second;
+    
+    return nullptr;
+}
+
+bool MeshCache::addMesh(const std::string& key, Mesh* mesh)
+{
+    auto it = _meshes.find(key);
+    if (it == _meshes.end())
+    {
+        mesh->retain();
+        _meshes[key] = mesh;
+        
+        return true;
+    }
+    return false;
+}
+
+void MeshCache::removeAllMeshes()
+{
+    for (auto it : _meshes) {
+        CC_SAFE_RELEASE(it.second);
+    }
+    _meshes.clear();
+}
+
+void MeshCache::removeUnusedMesh()
+{
+    for( auto it=_meshes.cbegin(); it!=_meshes.cend(); /* nothing */) {
+        if(it->second->getReferenceCount() == 1)
+        {
+            it->second->release();
+            _meshes.erase(it++);
+        }
+        else
+            ++it;
+    }
+}
+
+MeshCache::MeshCache()
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    // listen the event when app go to foreground
+    _backToForegroundlistener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, CC_CALLBACK_1(MeshCache::listenBackToForeground, this));
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundlistener, -1);
+#endif
+}
+MeshCache::~MeshCache()
+{
+    removeAllMeshes();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundlistener);
+#endif
+}
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+void MeshCache::listenBackToForeground(EventCustom* event)
+{
+    for (auto iter = _meshes.begin(); iter != _meshes.end(); ++iter)
+    {
+        auto mesh = iter->second;
+        mesh->restore();
+    }
+}
+#endif
 
 NS_CC_END
