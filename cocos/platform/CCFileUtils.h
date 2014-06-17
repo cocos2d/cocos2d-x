@@ -262,6 +262,11 @@ public:
     virtual void setSearchPaths(const std::vector<std::string>& searchPaths);
     
     /**
+     * Set search root path.
+     */
+    void setSearchRootPath(const char* path);
+    
+    /**
       * Add search path.
       *
       * @since v2.1
@@ -282,6 +287,11 @@ public:
      *  @return  The path that can be write/read a file in
      */
     virtual std::string getWritablePath() const = 0;
+    
+    /**
+     *  Set writable/cache path (for debug).
+     */
+    virtual void setWritablePath(const char *writablePath);
     
     /**
      *  Checks whether a file exists.
@@ -419,6 +429,11 @@ protected:
      *  This variable is used for improving the performance of file search.
      */
     std::unordered_map<std::string, std::string> _fullPathCache;
+    
+    /**
+     * Writable path (for debug)
+     */
+    std::string m_strWritablePath;
     
     /**
      *  The singleton pointer of FileUtils.

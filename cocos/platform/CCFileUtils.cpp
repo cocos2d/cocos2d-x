@@ -812,6 +812,11 @@ void FileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
     }
 }
 
+void FileUtils::setSearchRootPath(const char* path)
+{
+    _defaultResRootPath = path ? path : "";
+}
+
 void FileUtils::addSearchPath(const std::string &searchpath)
 {
     std::string prefix;
@@ -866,6 +871,11 @@ std::string FileUtils::getFullPathForDirectoryAndFilename(const std::string& dir
         ret = "";
     }
     return ret;
+}
+
+void FileUtils::setWritablePath(const char *writablePath)
+{
+    m_strWritablePath = writablePath ? writablePath : "";
 }
 
 bool FileUtils::isFileExist(const std::string& filename) const
