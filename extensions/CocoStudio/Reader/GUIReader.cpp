@@ -1200,17 +1200,21 @@ cocos2d::ui::Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const 
         // 1st., custom widget parse properties of parent widget with parent widget reader
         readerName = this->getWidgetReaderClassName(widget);
         reader =  this->createWidgetReaderProtocol(readerName);
-        setPropsForAllWidgetFromJsonDictionary(reader, widget, uiOptions);
-        
-        // 2nd., custom widget parse with custom reader
-        const char* customProperty = DICTOOL->getStringValue_json(uiOptions, "customProperty");
-        rapidjson::Document customJsonDict;
-        customJsonDict.Parse<0>(customProperty);
-        if (customJsonDict.HasParseError())
-        {
-            CCLOG("GetParseError %s\n", customJsonDict.GetParseError());
+        if (reader && widget) {
+            setPropsForAllWidgetFromJsonDictionary(reader, widget, uiOptions);
+            
+            // 2nd., custom widget parse with custom reader
+            const char* customProperty = DICTOOL->getStringValue_json(uiOptions, "customProperty");
+            rapidjson::Document customJsonDict;
+            customJsonDict.Parse<0>(customProperty);
+            if (customJsonDict.HasParseError())
+            {
+                CCLOG("GetParseError %s\n", customJsonDict.GetParseError());
+            }
+            setPropsForAllCustomWidgetFromJsonDictionary(classname, widget, customJsonDict);
+        }else{
+            CCLOG("Widget or WidgetReader doesn't exists!!!  Please check your json file.");
         }
-        setPropsForAllCustomWidgetFromJsonDictionary(classname, widget, customJsonDict);
     }
     
     int childrenCount = DICTOOL->getArrayCount_json(data, "children");
@@ -2293,26 +2297,31 @@ cocos2d::ui::Widget* WidgetPropertiesReader0300::widgetFromBinary(CocoLoader* pC
         readerName = this->getWidgetReaderClassName(widget);
         reader = this->createWidgetReaderProtocol(readerName);
         
-        setPropsForAllWidgetFromBinary(reader, widget, pCocoLoader, optionsNode);
-        
-        //2nd. parse custom property
-        const char* customProperty = NULL;
-        stExpCocoNode *optionChildNode = optionsNode->GetChildArray();
-        for (int k = 0; k < optionsNode->GetChildNum(); ++k) {
-            std::string key = optionChildNode[k].GetName(pCocoLoader);
-            if (key == "customProperty") {
-                customProperty = optionChildNode[k].GetValue();
-                break;
+        if (reader && widget) {
+            setPropsForAllWidgetFromBinary(reader, widget, pCocoLoader, optionsNode);
+            
+            //2nd. parse custom property
+            const char* customProperty = NULL;
+            stExpCocoNode *optionChildNode = optionsNode->GetChildArray();
+            for (int k = 0; k < optionsNode->GetChildNum(); ++k) {
+                std::string key = optionChildNode[k].GetName(pCocoLoader);
+                if (key == "customProperty") {
+                    customProperty = optionChildNode[k].GetValue();
+                    break;
+                }
             }
+            
+            rapidjson::Document customJsonDict;
+            customJsonDict.Parse<0>(customProperty);
+            if (customJsonDict.HasParseError())
+            {
+                CCLOG("GetParseError %s\n", customJsonDict.GetParseError());
+            }
+            setPropsForAllCustomWidgetFromJsonDictionary(classname, widget, customJsonDict);
+        }else{
+            CCLOG("Widget or WidgetReader doesn't exists!!!  Please check your csb file.");
         }
-        
-        rapidjson::Document customJsonDict;
-        customJsonDict.Parse<0>(customProperty);
-        if (customJsonDict.HasParseError())
-        {
-            CCLOG("GetParseError %s\n", customJsonDict.GetParseError());
-        }
-        setPropsForAllCustomWidgetFromJsonDictionary(classname, widget, customJsonDict);
+       
     }
     
     //parse children

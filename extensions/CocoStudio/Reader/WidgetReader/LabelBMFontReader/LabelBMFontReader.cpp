@@ -69,7 +69,6 @@ void LabelBMFontReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoad
     
     ui::LabelBMFont* labelBMFont = static_cast<ui::LabelBMFont*>(widget);
     
-    
     stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
     
     for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
@@ -169,7 +168,7 @@ void LabelBMFontReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoad
         }
         
         else if (key == "opacity") {
-            widget->setOpacity(valueToInt(value));
+            _opacity = valueToInt(value);
         }
         else if(key == "colorR"){
             _color.r = valueToInt(value);

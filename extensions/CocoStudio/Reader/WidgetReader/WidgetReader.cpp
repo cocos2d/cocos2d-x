@@ -17,7 +17,8 @@ _sizePercentY(0.0f),
 _width(0.0f),
 _height(0.0f),
 _positionPercentX(0.0f),
-_positionPercentY(0.0f)
+_positionPercentY(0.0f),
+_opacity(0)
 {
 }
 
@@ -200,6 +201,7 @@ void WidgetReader::endSetBasicProperties(cocos2d::ui::Widget *widget)
         _width = screenSize.width;
         _height = screenSize.height;
     }
+    widget->setOpacity(_opacity);
     widget->setColor(_color);
     widget->setSize(CCSize(_width, _height));
     widget->setAnchorPoint(_originalAnchorPoint);
