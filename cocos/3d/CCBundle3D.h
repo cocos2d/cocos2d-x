@@ -27,14 +27,11 @@
 
 #include <map>
 
-#include "3d/CCMesh.h"
 #include "3d/CCBundle3DData.h"
+
 #include "base/ccMacros.h"
 #include "base/CCRef.h"
 #include "base/ccTypes.h"
-
-#include "3d/CCMesh.h"
-#include "3d/CCBundle3DData.h"
 
 #include "json/document.h"
 
