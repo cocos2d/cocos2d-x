@@ -143,6 +143,11 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\sqlite3\libraries\win32\*.*" "$(OutDir)
     <ClCompile Include="..\CCBReader\CCScale9SpriteLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCScrollViewLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCSpriteLoader.cpp" />
+    <ClCompile Include="..\CocoStudio\ActionTimeline\CCActionTimeline.cpp" />
+    <ClCompile Include="..\CocoStudio\ActionTimeline\CCActionTimelineCache.cpp" />
+    <ClCompile Include="..\CocoStudio\ActionTimeline\CCFrame.cpp" />
+    <ClCompile Include="..\CocoStudio\ActionTimeline\CCNodeReader.cpp" />
+    <ClCompile Include="..\CocoStudio\ActionTimeline\CCTimeLine.cpp" />
     <ClCompile Include="..\CocoStudio\Action\CCActionEaseEx.cpp" />
     <ClCompile Include="..\CocoStudio\Action\CCActionFrame.cpp" />
     <ClCompile Include="..\CocoStudio\Action\CCActionFrameEasing.cpp" />
@@ -193,6 +198,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\sqlite3\libraries\win32\*.*" "$(OutDir)
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UIRichText.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UISlider.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UITextField.cpp" />
+    <ClCompile Include="..\CocoStudio\Json\CocoLoader.cpp" />
     <ClCompile Include="..\CocoStudio\Json\DictionaryHelper.cpp" />
     <ClCompile Include="..\CocoStudio\Reader\GUIReader.cpp" />
     <ClCompile Include="..\CocoStudio\Reader\SceneReader.cpp" />
@@ -296,6 +302,12 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\sqlite3\libraries\win32\*.*" "$(OutDir)
     <ClInclude Include="..\CCBReader\CCScale9SpriteLoader.h" />
     <ClInclude Include="..\CCBReader\CCScrollViewLoader.h" />
     <ClInclude Include="..\CCBReader\CCSpriteLoader.h" />
+    <ClInclude Include="..\CocoStudio\ActionTimeline\CCActionTimeline.h" />
+    <ClInclude Include="..\CocoStudio\ActionTimeline\CCActionTimelineCache.h" />
+    <ClInclude Include="..\CocoStudio\ActionTimeline\CCFrame.h" />
+    <ClInclude Include="..\CocoStudio\ActionTimeline\CCNodeReader.h" />
+    <ClInclude Include="..\CocoStudio\ActionTimeline\CCTimeLine.h" />
+    <ClInclude Include="..\CocoStudio\ActionTimeline\CCTimelineMacro.h" />
     <ClInclude Include="..\CocoStudio\Action\CCActionEaseEx.h" />
     <ClInclude Include="..\CocoStudio\Action\CCActionFrame.h" />
     <ClInclude Include="..\CocoStudio\Action\CCActionFrameEasing.h" />
@@ -350,6 +362,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\sqlite3\libraries\win32\*.*" "$(OutDir)
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UIRichText.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UISlider.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UITextField.h" />
+    <ClInclude Include="..\CocoStudio\Json\CocoLoader.h" />
     <ClInclude Include="..\CocoStudio\Json\DictionaryHelper.h" />
     <ClInclude Include="..\CocoStudio\Json\rapidjson\document.h" />
     <ClInclude Include="..\CocoStudio\Json\rapidjson\filestream.h" />

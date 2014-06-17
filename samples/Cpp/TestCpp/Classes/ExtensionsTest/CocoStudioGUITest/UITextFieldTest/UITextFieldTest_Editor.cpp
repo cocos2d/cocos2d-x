@@ -16,32 +16,61 @@ UITextFieldTest_Editor::~UITextFieldTest_Editor()
     
 }
 
+void UITextFieldTest_Editor::switchLoadMethod(cocos2d::CCObject *pSender)
+{
+    CCMenuItemToggle *item = (CCMenuItemToggle*)pSender;
+    if (item->getSelectedIndex() == 0){
+        _layout->removeAllChildrenWithCleanup(true);
+        _layout->removeFromParentAndCleanup(true);
+        
+        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UITextField_Editor/ui_textfield_editor_1.json"));
+        _touchGroup->addWidget(_layout);
+        
+        this->configureGUIScene();
+    }else{
+        _layout->removeAllChildrenWithCleanup(true);
+        _layout->removeFromParentAndCleanup(true);
+        
+        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromBinaryFile("cocosui/UIEditorTest/UITextField_Editor/ui_textfield_editor_1.csb"));
+        _touchGroup->addWidget(_layout);
+        
+        this->configureGUIScene();
+    }
+}
+
+void UITextFieldTest_Editor::configureGUIScene()
+{
+    CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+    CCSize rootSize = _layout->getSize();
+    _touchGroup->setPosition(CCPoint((screenSize.width - rootSize.width) / 2,
+                                     (screenSize.height - rootSize.height) / 2));
+    
+    Layout* root = static_cast<Layout*>(_touchGroup->getWidgetByName("root_Panel"));
+    
+    ui::Label* back_label = static_cast<ui::Label*>(UIHelper::seekWidgetByName(root, "back"));
+    back_label->addTouchEventListener(this, toucheventselector(UIScene_Editor::toGUIEditorTestScene));
+    
+    _sceneTitle = static_cast<ui::Label*>(UIHelper::seekWidgetByName(root, "UItest"));
+    
+    TextField* textField_normal = static_cast<TextField*>(UIHelper::seekWidgetByName(root, "TextField_1109"));
+    textField_normal->addEventListenerTextField(this, textfieldeventselector(UITextFieldTest_Editor::textFieldEvent));
+    
+    TextField* textField_max_character = static_cast<TextField*>(UIHelper::seekWidgetByName(root, "TextField_1110"));
+    textField_max_character->addEventListenerTextField(this, textfieldeventselector(UITextFieldTest_Editor::textFieldEvent));
+    
+    TextField* textField_password = static_cast<TextField*>(UIHelper::seekWidgetByName(root, "TextField_1107"));
+    textField_password->addEventListenerTextField(this, textfieldeventselector(UITextFieldTest_Editor::textFieldEvent));
+}
+
 bool UITextFieldTest_Editor::init()
 {
     if (UIScene_Editor::init())
     {
         _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UITextField_Editor/ui_textfield_editor_1.json"));
+
         _touchGroup->addWidget(_layout);
-        CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-        CCSize rootSize = _layout->getSize();
-        _touchGroup->setPosition(CCPoint((screenSize.width - rootSize.width) / 2,
-                                        (screenSize.height - rootSize.height) / 2));
-        
-        Layout* root = static_cast<Layout*>(_touchGroup->getWidgetByName("root_Panel"));
-        
-        ui::Label* back_label = static_cast<ui::Label*>(UIHelper::seekWidgetByName(root, "back"));
-        back_label->addTouchEventListener(this, toucheventselector(UIScene_Editor::toGUIEditorTestScene));
-        
-        _sceneTitle = static_cast<ui::Label*>(UIHelper::seekWidgetByName(root, "UItest"));
-        
-        TextField* textField_normal = static_cast<TextField*>(UIHelper::seekWidgetByName(root, "TextField_1109"));
-        textField_normal->addEventListenerTextField(this, textfieldeventselector(UITextFieldTest_Editor::textFieldEvent));
-        
-        TextField* textField_max_character = static_cast<TextField*>(UIHelper::seekWidgetByName(root, "TextField_1110"));
-        textField_max_character->addEventListenerTextField(this, textfieldeventselector(UITextFieldTest_Editor::textFieldEvent));
-        
-        TextField* textField_password = static_cast<TextField*>(UIHelper::seekWidgetByName(root, "TextField_1107"));
-        textField_password->addEventListenerTextField(this, textfieldeventselector(UITextFieldTest_Editor::textFieldEvent));
+       
+        this->configureGUIScene();
         
         _displayValueLabel = ui::Label::create();
         _displayValueLabel->setFontName("Marker Felt");

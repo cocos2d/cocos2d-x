@@ -11,6 +11,7 @@
 #include "CocoStudioComponentsTest/ComponentsTestScene.h"
 #include "CocoStudioSceneTest/SceneEditorTest.h"
 #include "CocoStudioGUITest/CocoStudioGUITest.h"
+#include "CocoStudioActionTimelineTest/ActionTimelineTestScene.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 #include "NetworkTest/WebSocketTest.h"
@@ -43,6 +44,7 @@ enum
 	TEST_ARMATURE,
     TEST_SCENEEDITOR,
     TEST_COCOSGUI,
+    TEST_ACTIONTIMELINE,
     TEST_MAX_COUNT,
 };
 
@@ -64,7 +66,8 @@ static const std::string testsName[TEST_MAX_COUNT] =
     "CocoStudioComponentsTest",
 	"CocoStudioArmatureTest",
     "CocoStudioSceneTest",
-    "CocoStudioGUITest"
+    "CocoStudioGUITest",
+    "CocoStudioActionTimelineTest"
 };
 
 ////////////////////////////////////////////////////////
@@ -185,6 +188,12 @@ void ExtensionsMainLayer::menuCallback(CCObject* pSender)
             pScene->release();
 		}
             break;
+        case TEST_ACTIONTIMELINE:
+            {
+                TimelineTestScene* pScene = new TimelineTestScene();
+                pScene->runThisTest();
+                pScene->release();
+            }
     default:
         break;
     }

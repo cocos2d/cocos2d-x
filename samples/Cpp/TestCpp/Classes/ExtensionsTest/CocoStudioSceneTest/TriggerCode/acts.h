@@ -16,6 +16,7 @@ public:
      virtual bool init();
      virtual void done();
 	 virtual void serialize(const rapidjson::Value &val);
+	 virtual void serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode);
      virtual void removeAll();
 private:
 	 int  _nTag;
@@ -33,6 +34,7 @@ public:
 	virtual bool init();
 	virtual void done();
 	virtual void serialize(const rapidjson::Value &val);
+	virtual void serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode);
 	virtual void removeAll();
 private:
 	int  _nTag;
@@ -51,6 +53,7 @@ public:
      virtual bool init();
      virtual void done();
 	 virtual void serialize(const rapidjson::Value &val);
+	 virtual void serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode);
      virtual void removeAll();
 private:
 	int  _nTag;
@@ -70,6 +73,7 @@ public:
      virtual bool init();
      virtual void done();
 	 virtual void serialize(const rapidjson::Value &val);
+	 virtual void serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode);
      virtual void removeAll();
 private:
 	int  _nTag;
@@ -88,6 +92,7 @@ public:
      virtual bool init();
      virtual void done();
 	 virtual void serialize(const rapidjson::Value &val);
+	 virtual void serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode);
      virtual void removeAll();
 private:
 	int  _nTag;
@@ -107,6 +112,7 @@ public:
      virtual bool init();
      virtual void done();
 	 virtual void serialize(const rapidjson::Value &val);
+	 virtual void serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode);
      virtual void removeAll();
 private:
 	int  _nTag;
@@ -125,6 +131,7 @@ public:
      virtual bool init();
      virtual void done();
 	 virtual void serialize(const rapidjson::Value &val);
+	 virtual void serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode);
      virtual void removeAll();
 private:
 	int  _nTag;
@@ -145,6 +152,7 @@ public:
      virtual bool init();
      virtual void done();
 	 virtual void serialize(const rapidjson::Value &val);
+	 virtual void serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode);
      virtual void removeAll();
 private:
 	int  _nTag;
@@ -163,6 +171,7 @@ public:
      virtual bool init();
      virtual void done();
 	 virtual void serialize(const rapidjson::Value &val);
+	 virtual void serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode);
      virtual void removeAll();
 private:
 	int  _nTag;
@@ -182,6 +191,7 @@ public:
      virtual bool init();
      virtual void done();
 	 virtual void serialize(const rapidjson::Value &val);
+	 virtual void serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode);
      virtual void removeAll();
 private:
 	int  _nID;
@@ -198,10 +208,11 @@ public:
 	virtual bool init();
 	virtual void done();
 	virtual void serialize(const rapidjson::Value &val);
+	virtual void serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode);
 	virtual void removeAll();
 private:
 	int _nTag;
-	std::string _ComName;
+	std::string _comName;
 	std::string _aniname;
 };
 

@@ -63,11 +63,13 @@ public:
     
     void toGUIEditorTestScene(CCObject* sender, TouchEventType type);
     
+    
     /** Title label of the scene.*/
     CC_SYNTHESIZE_READONLY(UILabel*, _sceneTitle, SceneTitle)
     
     UI_SCENE_EDITOR_CREATE_FUNC(UIScene_Editor);
-    
+    virtual void switchLoadMethod(CCObject* pSender) {}
+
 protected:
     TouchGroup* _touchGroup;
     Layout* _layout;

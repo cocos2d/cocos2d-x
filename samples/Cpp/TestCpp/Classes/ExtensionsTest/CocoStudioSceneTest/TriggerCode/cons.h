@@ -16,6 +16,7 @@ public:
      virtual bool init();
      virtual bool detect();
 	 virtual void serialize(const rapidjson::Value &val);
+	 virtual void serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode);
      virtual void removeAll();
 	 virtual void update(float dt);
 private:
@@ -36,6 +37,7 @@ public:
      virtual bool init();
      virtual bool detect();
 	 virtual void serialize(const rapidjson::Value &val);
+	 virtual void serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode);
      virtual void removeAll();
 	 void animationEvent(cocos2d::extension::CCArmature *armature, cocos2d::extension::MovementEventType movementType, const char *movementID);
 private:
@@ -57,6 +59,7 @@ public:
      virtual bool init();
      virtual bool detect();
 	 virtual void serialize(const rapidjson::Value &val);
+	 virtual void serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode);
      virtual void removeAll();
 private:
 	int  _nTag;
@@ -74,6 +77,7 @@ public:
      virtual bool init();
      virtual bool detect();
 	 virtual void serialize(const rapidjson::Value &val);
+	 virtual void serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode);
      virtual void removeAll();
 private:
 	int  _nTag;

@@ -30,6 +30,9 @@ THE SOFTWARE.
 #include "CCActionObject.h"
 #include "../Json/rapidjson/document.h"
 NS_CC_EXT_BEGIN
+
+class CocoLoader;
+struct stExpCocoNode;
 	/**
 	*   @js NA
 	*   @lua NA
@@ -93,6 +96,7 @@ public:
 
 	/*init properties with json dictionay*/
 	void initWithDictionary(const char* jsonName,const rapidjson::Value &dic,CCObject* root);
+    void initWithBinary(const char* file, CCObject* root,  CocoLoader* pCocoLoader, stExpCocoNode*	pCocoNode);
 	/**
 	* Release all actions.
 	*

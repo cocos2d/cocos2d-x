@@ -56,6 +56,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/ExtensionsTest/ExtensionsTest.cpp \
 	../Classes/ExtensionsTest/NotificationCenterTest/NotificationCenterTest.cpp \
     ../Classes/ExtensionsTest/CocoStudioArmatureTest/ArmatureScene.cpp \
+    ../Classes/ExtensionsTest/CocoStudioActionTimelineTest/ActionTimelineTestScene.cpp \
 	../Classes/ExtensionsTest/CocoStudioComponentsTest/ComponentsTestScene.cpp \
 	../Classes/ExtensionsTest/CocoStudioComponentsTest/EnemyController.cpp \
 	../Classes/ExtensionsTest/CocoStudioComponentsTest/GameOverScene.cpp \

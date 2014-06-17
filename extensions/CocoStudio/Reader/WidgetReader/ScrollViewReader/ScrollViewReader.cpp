@@ -28,6 +28,8 @@ ScrollViewReader* ScrollViewReader::getInstance()
     return instanceScrollViewReader;
 }
 
+
+
 void ScrollViewReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson::Value &options)
 {
     LayoutReader::setPropsFromJsonDictionary(widget, options);
@@ -46,6 +48,35 @@ void ScrollViewReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapi
     
     
     LayoutReader::setColorPropsFromJsonDictionary(widget, options);
+}
+
+void ScrollViewReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode)
+{
+    //TODO::need to refactor...
+    LayoutReader::setPropsFromBinary(widget, pCocoLoader, pCocoNode);
+    
+    ui::ScrollView* scrollView = static_cast<ui::ScrollView*>(widget);
+    
+    stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+    float innerWidth = 0.0f;
+    float innerHeight = 0.0f;
+    for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
+        std::string key = stChildArray[i].GetName(pCocoLoader);
+        std::string value = stChildArray[i].GetValue();
+        if (key == "innerWidth") {
+            innerWidth = valueToFloat(value);
+        }
+        else if(key == "innerHeight"){
+            innerHeight = valueToFloat(value);
+        }else if(key == "direction"){
+            scrollView->setDirection((ui::SCROLLVIEW_DIR)valueToInt(value));
+        }else if(key == "bounceEnable"){
+            scrollView->setBounceEnabled(valueToBool(value));
+        }
+        
+    } //end of for loop
+    scrollView->setInnerContainerSize(CCSize(innerWidth, innerHeight));
+    
 }
 
 NS_CC_EXT_END

@@ -33,7 +33,8 @@ public:
     UIScrollViewTest_Vertical_Editor();
     ~UIScrollViewTest_Vertical_Editor();
     bool init();
-    
+    void configureGUIScene();
+    virtual void switchLoadMethod(CCObject* pSender);
 protected:
     UI_SCENE_EDITOR_CREATE_FUNC(UIScrollViewTest_Vertical_Editor)
     ui::Label* _displayValueLabel;
@@ -46,7 +47,8 @@ public:
     UIScrollViewTest_Horizontal_Editor();
     ~UIScrollViewTest_Horizontal_Editor();
     bool init();
-    
+    void configureGUIScene();
+    virtual void switchLoadMethod(CCObject* pSender);
 protected:
     UI_SCENE_EDITOR_CREATE_FUNC(UIScrollViewTest_Horizontal_Editor)
     ui::Label* _displayValueLabel;
@@ -59,7 +61,8 @@ public:
     UIScrollViewTest_Both_Editor();
     ~UIScrollViewTest_Both_Editor();
     bool init();
-    
+    void configureGUIScene();
+    virtual void switchLoadMethod(CCObject* pSender);
 protected:
     UI_SCENE_EDITOR_CREATE_FUNC(UIScrollViewTest_Both_Editor)
     ui::Label* _displayValueLabel;

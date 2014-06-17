@@ -101,6 +101,11 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CocoStudio/Armature/utils/CCTransformHelp.cpp \
 ../CocoStudio/Armature/utils/CCTweenFunction.cpp \
 ../CocoStudio/Armature/utils/CCUtilMath.cpp \
+../CocoStudio/ActionTimeline/CCActionTimeline.cpp \
+../CocoStudio/ActionTimeline/CCActionTimelineCache.cpp \
+../CocoStudio/ActionTimeline/CCFrame.cpp \
+../CocoStudio/ActionTimeline/CCNodeReader.cpp \
+../CocoStudio/ActionTimeline/CCTimeLine.cpp \
 ../CocoStudio/GUI/BaseClasses/UIWidget.cpp \
 ../CocoStudio/GUI/Layouts/UILayout.cpp \
 ../CocoStudio/GUI/Layouts/UILayoutParameter.cpp \
@@ -127,6 +132,7 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CocoStudio/Components/CCComRender.cpp \
 ../CocoStudio/Components/CCInputDelegate.cpp \
 ../CocoStudio/Json/DictionaryHelper.cpp \
+../CocoStudio/Json/CocoLoader.cpp \
 ../CocoStudio/Reader/SceneReader.cpp \
 ../CocoStudio/Reader/GUIReader.cpp \
 ../CocoStudio/Reader/WidgetReader/WidgetReader.cpp \

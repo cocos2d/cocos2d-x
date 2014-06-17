@@ -37,10 +37,16 @@ namespace cocos2d
 
 NS_CC_EXT_BEGIN
 
+class CocoLoader;
+struct stExpCocoNode;
+
 class CC_EX_DLL WidgetReaderProtocol
 {
 public:
     virtual void setPropsFromJsonDictionary(ui::Widget* widget, const rapidjson::Value& options) = 0;
+    virtual void setPropsFromBinary(cocos2d::ui::Widget* widget,
+                                    CocoLoader* pCocoLoader,
+                                    stExpCocoNode*	pCocoNode) = 0;
 };
 
 NS_CC_EXT_END

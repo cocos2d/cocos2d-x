@@ -30,11 +30,16 @@
 #include "cocos-ext.h"
 #include "WidgetReader/WidgetReaderProtocol.h"
 #include "../Trigger/ObjectFactory.h"
+#include "../Json/CocoLoader.h"
 
 NS_CC_EXT_BEGIN
 
 typedef void (CCObject::*SEL_ParseEvent)(const std::string&, CCObject*, const rapidjson::Value&);
 #define parseselector(_SELECTOR) (SEL_ParseEvent)(&_SELECTOR)
+typedef void (CCObject::*SEL_ParseEventBinary)(const std::string&, CCObject*, CocoLoader* pCocoLoader,
+                                               stExpCocoNode*	pCocoNode);
+#define parsebinaryselector(_SELECTOR) (SEL_ParseEventBinary)(&_SELECTOR)
+
 
 #define kCCSVersion 1.0
 /**
@@ -62,10 +67,13 @@ public:
 	static void purge();
     
     cocos2d::ui::Widget* widgetFromJsonFile(const char* fileName);
+    cocos2d::ui::Widget* widgetFromBinaryFile(const char* fileName);
+
     int getVersionInteger(const char* str);
     void storeFileDesignSize(const char* fileName, const cocos2d::CCSize &size);
     const cocos2d::CCSize getFileDesignSize(const char* fileName) const;
     
+    void setFilePath(const std::string& strFilePath) { m_strFilePath = strFilePath; }
     const std::string& getFilePath() const { return m_strFilePath; };
     
     void registerTypeAndCallBack(const std::string& classType,
@@ -89,15 +97,47 @@ public:
 class WidgetPropertiesReader : public CCObject
 {
 public:
-    virtual cocos2d::ui::Widget* createWidget(const rapidjson::Value& dic, const char* fullPath, const char* fileName)=0;
+    virtual cocos2d::ui::Widget* createWidget(const rapidjson::Value& dic,
+                                              const char* fullPath,
+                                              const char* fileName)=0;
+    
+    
     virtual cocos2d::ui::Widget* widgetFromJsonDictionary(const rapidjson::Value& data) = 0;
-    virtual void setPropsForAllWidgetFromJsonDictionary(WidgetReaderProtocol* reader, cocos2d::ui::Widget* widget, const rapidjson::Value& options) = 0;
+    
+    virtual void setPropsForAllWidgetFromJsonDictionary(WidgetReaderProtocol* reader,
+                                                        cocos2d::ui::Widget* widget,
+                                                        const rapidjson::Value& options) = 0;
     
     virtual void setPropsForAllCustomWidgetFromJsonDictionary(const std::string& classType,
                                                               cocos2d::ui::Widget* widget,
                                                               const rapidjson::Value& customOptions) = 0;
     
+    //add binary parsing
+    virtual cocos2d::ui::Widget* createWidgetFromBinary(CocoLoader* pCocoLoader,
+                                                        stExpCocoNode*	pCocoNode,
+                                                        const char* fileName)=0;
+    
+    virtual cocos2d::ui::Widget* widgetFromBinary(CocoLoader* pCocoLoader,
+                                                  stExpCocoNode*	pCocoNode) = 0;
+    
+    virtual void setPropsForAllWidgetFromBinary(WidgetReaderProtocol* reader,
+                                                cocos2d::ui::Widget* widget,
+                                                CocoLoader* pCocoLoader,
+                                                stExpCocoNode*	pCocoNode) = 0;
+    
+//    virtual void setPropsForAllCustomWidgetFromBinary(const std::string& classType,
+//                                                      cocos2d::ui::Widget* widget,
+//                                                      CocoLoader* pCocoLoader,
+//                                                      stExpCocoNode*	pCocoNode) = 0;
+    
 protected:
+    std::string  getWidgetReaderClassName(const std::string& classname);
+    std::string  getWidgetReaderClassName(cocos2d::ui::Widget *widget);
+    
+    std::string getGUIClassName(const std::string& name);
+    cocos2d::ui::Widget *createGUI(const std::string& classname);
+    WidgetReaderProtocol* createWidgetReaderProtocol(const std::string& classname);
+    
     std::string m_strFilePath;
 };
 
@@ -138,6 +178,20 @@ public:
     virtual void setPropsForAllCustomWidgetFromJsonDictionary(const std::string& classType,
                                                               cocos2d::ui::Widget* widget,
                                                               const rapidjson::Value& customOptions);
+    
+    //added for binary parsing
+    virtual cocos2d::ui::Widget* createWidgetFromBinary(CocoLoader* pCocoLoader,
+                                                        stExpCocoNode*	pCocoNode,
+                                                        const char* fileName){return NULL;}
+    
+    virtual cocos2d::ui::Widget* widgetFromBinary(CocoLoader* pCocoLoader,
+                                                  stExpCocoNode*	pCocoNode){return NULL;}
+    
+    virtual void setPropsForAllWidgetFromBinary(WidgetReaderProtocol* reader,
+                                                cocos2d::ui::Widget* widget,
+                                                CocoLoader* pCocoLoader,
+                                                stExpCocoNode*	pCocoNode) {}
+    
 };
 
 /**
@@ -176,7 +230,22 @@ public:
     
     virtual void setPropsForAllCustomWidgetFromJsonDictionary(const std::string& classType,
                                                               cocos2d::ui::Widget* widget,
-                                                              const rapidjson::Value& customOptions);    
+                                                              const rapidjson::Value& customOptions);
+    
+    
+    //added for binary parsing
+    virtual cocos2d::ui::Widget* createWidgetFromBinary(CocoLoader* pCocoLoader,
+                                                        stExpCocoNode*	pCocoNode,
+                                                        const char* fileName);
+    
+    virtual cocos2d::ui::Widget* widgetFromBinary(CocoLoader* pCocoLoader,
+                                                  stExpCocoNode*	pCocoNode);
+    
+    virtual void setPropsForAllWidgetFromBinary(WidgetReaderProtocol* reader,
+                                                cocos2d::ui::Widget* widget,
+                                                CocoLoader* pCocoLoader,
+                                                stExpCocoNode*	pCocoNode);
+    
 };
 
 NS_CC_EXT_END

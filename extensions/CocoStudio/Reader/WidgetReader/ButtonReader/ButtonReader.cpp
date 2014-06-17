@@ -145,7 +145,7 @@ void ButtonReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
     bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
     if (fs)
     {
-        button->setTitleFontSize(DICTOOL->getIntValue_json(options, "fontSize"));
+        button->setTitleFontSize(DICTOOL->getFloatValue_json(options, "fontSize"));
     }
     bool fn = DICTOOL->checkObjectExist_json(options, "fontName");
     if (fn)
@@ -155,6 +155,215 @@ void ButtonReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
     
     
     WidgetReader::setColorPropsFromJsonDictionary(widget, options);
+}
+
+void ButtonReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode)
+{
+    WidgetReader::setPropsFromBinary(widget, pCocoLoader, pCocoNode);
+    
+    ui::Button *button = static_cast<ui::Button*>(widget);
+    
+    stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+    
+    this->beginSetBasicProperties(widget);
+    
+    float capsx = 0.0f, capsy = 0.0, capsWidth = 0.0, capsHeight = 0.0f;
+    int cri = 255, cgi = 255, cbi = 255;
+    float scale9Width = 0.0f, scale9Height = 0.0f;
+    for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
+        std::string key = stChildArray[i].GetName(pCocoLoader);
+        std::string value = stChildArray[i].GetValue();
+        //            CCLOG("Button: key = %s, value = %d", key.c_str(), i);
+        
+        if (key == "ignoreSize") {
+            widget->ignoreContentAdaptWithSize(valueToBool(value));
+        }else if(key == "sizeType"){
+            widget->setSizeType((ui::SizeType)valueToInt(value));
+        }else if(key == "positionType"){
+            widget->setPositionType((ui::PositionType)valueToInt(value));
+        }else if(key == "sizePercentX"){
+            _sizePercentX = valueToFloat(value);
+        }else if(key == "sizePercentY"){
+            _sizePercentY = valueToFloat(value);
+        }else if(key == "positionPercentX"){
+            _positionPercentX = valueToFloat(value);
+        }else if(key == "positionPercentY"){
+            _positionPercentY = valueToFloat(value);
+        }
+        else if(key == "adaptScreen"){
+            _isAdaptScreen = valueToBool(value);
+        }
+        else if (key == "width"){
+            _width = valueToFloat(value);
+        }else if(key == "height"){
+            _height = valueToFloat(value);
+        }else if(key == "tag"){
+            widget->setTag(valueToInt(value));
+        }else if(key == "actiontag"){
+            widget->setActionTag(valueToInt(value));
+        }else if(key == "touchAble"){
+            widget->setTouchEnabled(valueToBool(value));
+        }else if(key == "name"){
+            std::string widgetName = value.empty() ? "default" : value;
+            widget->setName(widgetName.c_str());
+        }else if(key == "x"){
+            _position.x = valueToFloat(value);
+        }else if(key == "y"){
+            _position.y = valueToFloat(value);
+        }else if(key == "scaleX"){
+            widget->setScaleX(valueToFloat(value));
+        }else if(key == "scaleY"){
+            widget->setScaleY(valueToFloat(value));
+        }else if(key == "rotation"){
+            widget->setRotation(valueToFloat(value));
+        }else if(key == "visible"){
+            widget->setVisible(valueToBool(value));
+        }else if(key == "ZOrder"){
+            widget->setZOrder(valueToInt(value));
+        }else if(key == "layoutParameter"){
+            stExpCocoNode *layoutCocosNode = stChildArray[i].GetChildArray();
+            
+            ui::LinearLayoutParameter *linearParameter = ui::LinearLayoutParameter::create();
+            ui::RelativeLayoutParameter *relativeParameter = ui::RelativeLayoutParameter::create();
+            ui::Margin mg;
+            
+            int paramType = -1;
+            for (int j = 0; j < stChildArray[i].GetChildNum(); ++j) {
+                std::string innerKey = layoutCocosNode[j].GetName(pCocoLoader);
+                std::string innerValue = layoutCocosNode[j].GetValue();
+                
+                if (innerKey == "type") {
+                    paramType = valueToInt(innerValue);
+                }else if(innerKey == "gravity"){
+                    linearParameter->setGravity((cocos2d::ui::LinearGravity)valueToInt(innerValue));
+                }else if(innerKey == "relativeName"){
+                    relativeParameter->setRelativeName(innerValue.c_str());
+                }else if(innerKey == "relativeToName"){
+                    relativeParameter->setRelativeToWidgetName(innerValue.c_str());
+                }else if(innerKey == "align"){
+                    relativeParameter->setAlign((cocos2d::ui::RelativeAlign)valueToInt(innerValue));
+                }else if(innerKey == "marginLeft"){
+                    mg.left = valueToFloat(innerValue);
+                }else if(innerKey == "marginTop"){
+                    mg.top = valueToFloat(innerValue);
+                }else if(innerKey == "marginRight"){
+                    mg.right = valueToFloat(innerValue);
+                }else if(innerKey == "marginDown"){
+                    mg.bottom = valueToFloat(innerValue);
+                }
+            }
+            
+            linearParameter->setMargin(mg);
+            relativeParameter->setMargin(mg);
+            
+            switch (paramType) {
+                case 1:
+                widget->setLayoutParameter(linearParameter);
+                break;
+                case 2:
+                widget->setLayoutParameter(relativeParameter);
+                default:
+                break;
+            }
+        }
+        
+        else if (key == "opacity") {
+            widget->setOpacity(valueToInt(value));
+        }
+        else if(key == "colorR"){
+            _color.r = valueToInt(value);
+        }else if(key == "colorG"){
+            _color.g = valueToInt(value);
+        }else if(key == "colorB")
+        {
+            _color.b = valueToInt(value);
+        }
+        else if(key == "flipX"){
+            widget->setFlipX(valueToBool(value));
+        }else if(key == "flipY"){
+            widget->setFlipY(valueToBool(value));
+        }else if(key == "anchorPointX"){
+            _originalAnchorPoint.x = valueToFloat(value);
+        }else if(key == "anchorPointY"){
+            _originalAnchorPoint.y = valueToFloat(value);
+        }
+        
+        
+        else if (key == "scale9Enable") {
+            button->setScale9Enabled(valueToBool(value));
+        }
+        else if (key == "normalData"){
+            
+            stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
+            std::string resType = backGroundChildren[2].GetValue();;
+            
+            ui::TextureResType imageFileNameType = (ui::TextureResType)valueToInt(resType);
+            
+            std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+            
+            button->loadTextureNormal(backgroundValue.c_str(), imageFileNameType);
+            
+        }
+        else if (key == "pressedData"){
+            
+            stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
+            std::string resType = backGroundChildren[2].GetValue();;
+            
+            ui::TextureResType imageFileNameType = (ui::TextureResType)valueToInt(resType);
+            
+            std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+            
+            button->loadTexturePressed(backgroundValue.c_str(), imageFileNameType);
+            
+        }
+        else if (key == "disabledData"){
+            
+            stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
+            std::string resType = backGroundChildren[2].GetValue();;
+            
+            ui::TextureResType imageFileNameType = (ui::TextureResType)valueToInt(resType);
+            
+            std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+            
+            button->loadTextureDisabled(backgroundValue.c_str(), imageFileNameType);
+            
+        }else if (key == "text"){
+            button->setTitleText(value);
+        }
+        else if(key == "capInsetsX"){
+            capsx = valueToFloat(value);
+        }else if(key == "capInsetsY"){
+            capsy = valueToFloat(value);
+        }else if(key == "capInsetsWidth"){
+            capsWidth = valueToFloat(value);
+        }else if(key == "capInsetsHeight"){
+            capsHeight = valueToFloat(value);
+        }else if(key == "scale9Width"){
+            scale9Width = valueToFloat(value);
+        }else if(key == "scale9Height"){
+            scale9Height = valueToFloat(value);
+        }else if(key == "textColorR"){
+            cri = valueToInt(value);
+        }else if(key == "textColorG"){
+            cgi = valueToInt(value);
+        }else if(key == "textColorB"){
+            cbi = valueToInt(value);
+        }else if(key == "fontSize"){
+            button->setTitleFontSize(valueToFloat(value));
+        }else if(key == "fontName"){
+            button->setTitleFontName(value.c_str());
+        }
+        
+    } //end of for loop
+    
+    this->endSetBasicProperties(widget);
+    
+    if (button->isScale9Enabled()) {
+        button->setCapInsets(CCRect(capsx, capsy, capsWidth, capsHeight));
+        button->setSize(CCSize(scale9Width, scale9Height));
+    }
+    
+    button->setTitleColor(ccc3(cri, cgi, cbi));
 }
 
 NS_CC_EXT_END
