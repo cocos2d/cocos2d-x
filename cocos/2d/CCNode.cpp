@@ -30,6 +30,7 @@ THE SOFTWARE.
 
 #include <algorithm>
 #include <string>
+#include <regex>
 
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
@@ -692,7 +693,7 @@ GLProgram * Node::getGLProgram() const
     return _glProgramState ? _glProgramState->getGLProgram() : nullptr;
 }
 
-Scene* Node::getScene()
+Scene* Node::getScene() const
 {
     if(!_parent)
         return nullptr;
@@ -767,7 +768,7 @@ Node* Node::getChildByTag(int tag) const
 
 Node* Node::getChildByName(const std::string& name) const
 {
-    CCASSERT(name.size() != 0, "Invalid name");
+    CCASSERT(name.length() != 0, "Invalid name");
     
     std::hash<std::string> h;
     size_t hash = h(name);
@@ -781,23 +782,141 @@ Node* Node::getChildByName(const std::string& name) const
     return nullptr;
 }
 
-void Node::enumerateChildren(const std::string &name, std::function<bool (const Node *)> callback) const
+void Node::enumerateChildren(const std::string &name, std::function<bool (Node *)> callback) const
 {
-    CCASSERT(name.size() != 0, "Invalid name");
+    CCASSERT(name.length() != 0, "Invalid name");
+    CCASSERT(callback != nullptr, "Invalid callback function");
     
-    std::hash<std::string> h;
-    size_t hash = h(name);
+    size_t length = name.length();
     
-    for (const auto& child : _children)
+    size_t subStrStartPos = 0;  // sub string start index
+    size_t subStrlength = length; // sub string length
+    
+    // Starts with '/' or '//'?
+    bool searchFromRoot = false;
+    bool searchFromRootRecursive = false;
+    if (name[0] == '/')
     {
-        // Different strings may have the same hash code, but can use it to compare first for speed
-        if(child->_hashOfName == hash && child->_name.compare(name) == 0)
+        if (length > 2 && name[1] == '/')
         {
-            // terminate enumeration if callback return true
-            if (callback(child))
-                break;
+            searchFromRootRecursive = true;
+            subStrStartPos = 2;
+            subStrlength -= 2;
+        }
+        else
+        {
+            searchFromRoot = true;
+            subStrStartPos = 1;
+            subStrlength -= 1;
         }
     }
+    
+    // End with '/..'?
+    bool searchFromParent = false;
+    if (length > 3 &&
+        name[length-3] == '/' &&
+        name[length-2] == '.' &&
+        name[length-1] == '.')
+    {
+        searchFromParent = true;
+        subStrlength -= 3;
+    }
+    
+    // Remove '/', '//' and '/..' if exist
+    std::string newName = name.substr(subStrStartPos, subStrlength);
+    // If search from parent, then add * at first to make it match its children, which will do make
+    if (searchFromParent)
+    {
+        newName.insert(0, "[[:alnum:]]+/");
+    }
+    
+    if (searchFromRoot)
+    {
+        // name is '/xxx'
+        auto root = getScene();
+        if (root)
+        {
+            root->doEnumerate(newName, callback);
+        }
+    }
+    else if (searchFromRootRecursive)
+    {
+        // name is '//xxx'
+        auto root = getScene();
+        if (root)
+        {
+            doEnumerateRecursive(root, newName, callback);
+        }
+    }
+    else
+    {
+        // name is xxx
+        doEnumerate(newName, callback);
+    }
+}
+
+bool Node::doEnumerateRecursive(const Node* node, const std::string &name, std::function<bool (Node *)> callback) const
+{
+    bool ret =false;
+    
+    if (node->doEnumerate(name, callback))
+    {
+        // search itself
+        ret = true;
+    }
+    else
+    {
+        // search its children
+        for (const auto& child : node->getChildren())
+        {
+            if (doEnumerateRecursive(child, name, callback))
+            {
+                ret = true;
+                break;
+            }
+        }
+    }
+    
+    return ret;
+}
+
+bool Node::doEnumerate(std::string name, std::function<bool (Node *)> callback) const
+{
+    // name may be xxx/yyy, should find its parent
+    size_t pos = name.find('/');
+    std::string searchName = name;
+    bool needRecursive = false;
+    if (pos != name.npos)
+    {
+        searchName = name.substr(0, pos);
+        name.erase(0, pos+1);
+        needRecursive = true;
+    }
+    
+    bool ret = false;
+    for (const auto& child : _children)
+    {
+        if(std::regex_match(child->_name, std::regex(searchName)))
+        {
+            if (!needRecursive)
+            {
+                // terminate enumeration if callback return true
+                if (callback(child))
+                {
+                    ret = true;
+                    break;
+                }
+            }
+            else
+            {
+                ret = child->doEnumerate(name, callback);
+                if (ret)
+                    break;
+            }
+        }
+    }
+    
+    return ret;
 }
 
 /* "add" logic MUST only be on this method

@@ -679,7 +679,28 @@ public:
     virtual Node* getChildByName(const std::string& name) const;
     /** Search the children of the receiving node to perform processing for nodes which share a name.
      *
-     * @param name The name to search for
+     * @param name The name to search for, support c++11 regular expression
+     * Search syntax options:
+     * `/` : When placed at the start of the search string, this indicates that the search should be performed on the tree's node.
+     * `//`: Can only be placed at the begin of the search string. This indicates that the search should be performed on the tree's node
+     *       and be performed recursively across the entire node tree.
+     * `..`: The search should move up to the node's parent. Can only be placed at the end of string
+     * `/` : When placed anywhere but the start of the search string, this indicates that the search should move to the node's children
+     *
+     * @code
+     * enumerateChildren("/MyName", ...): This searches the root's children and matches any node with the name `MyName`.
+     * enumerateChildren("//MyName", ...): This searches the root's children recursively and matches any node with the name `MyName`.
+     * enumerateChildren("[[:alnum:]]+", ...): This search string matches every node of its children.
+     * enumerateChildren("/MyName", ...): This searches the node tree and matches the parent node of every node named `MyName`.
+     * enumerateChildren("A([:digit:])", ...): This searches the node's children and returns any child named `A0`, `A1`, ..., `A9`
+     * enumerateChildren("Abby/Normal", ...): This searches the node's grandchildren and returns any node whose name is `Normal`
+     * and whose parent is named `Abby`.
+     * enumerateChildren("//Abby/Normal", ...): This searches the node tree and returns any node whose name is `Normal` and whose
+     * parent is named `Abby`.
+     * @endcode
+     *
+     * @warning Only support alpha or number for name, and not support unicode
+     *
      * @param callback A callback function to execute on nodes that match the `name` parameter. The function takes the following arguments:
      *  `node` 
      *      A node that matches the name
@@ -687,7 +708,7 @@ public:
      *
      * @since v3.2
      */
-    virtual void enumerateChildren(const std::string &name, std::function<bool(const Node* node)> callback) const;
+    virtual void enumerateChildren(const std::string &name, std::function<bool(Node* node)> callback) const;
     /**
      * Returns the array of the node's children
      *
@@ -994,7 +1015,7 @@ public:
      It returns `nullptr` if the node doesn't belong to any Scene.
      This function recursively calls parent->getScene() until parent is a Scene object. The results are not cached. It is that the user caches the results in case this functions is being used inside a loop.
      */
-    virtual Scene* getScene();
+    virtual Scene* getScene() const;
 
     /**
      * Returns an AABB (axis-aligned bounding-box) in its parent's coordinate system.
@@ -1426,6 +1447,9 @@ protected:
     virtual void updateCascadeColor();
     virtual void disableCascadeColor();
     virtual void updateColor() {}
+    
+    bool doEnumerate(std::string name, std::function<bool (Node *)> callback) const;
+    bool doEnumerateRecursive(const Node* node, const std::string &name, std::function<bool (Node *)> callback) const;
     
 #if CC_USE_PHYSICS
     virtual void updatePhysicsBodyPosition(Scene* layer);
