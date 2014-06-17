@@ -81,7 +81,6 @@ function Node:getCascadeBoundingBox()
 end
 
 function Node:setTouchEnabled( isEnable )
-    print("htl setTouchEnabled ", tostring(self), isEnable)
     if self._isTouchEnabled_ and self._isTouchEnabled_==isEnable then return end
     self._isTouchEnabled_ = isEnable
 
@@ -109,7 +108,6 @@ function Node:setTouchEnabled( isEnable )
 end
 
 function Node:setTouchSwallowEnabled( isEnable )
-    print("htl setTouchSwallowEnabled:", tostring(self), isEnable)
     if self._isTouchSwallowEnabled_ and self._isTouchSwallowEnabled_==isEnable then return end
     self._isTouchSwallowEnabled_ = isEnable
     local evt = c.NODE_TOUCH_EVENT
@@ -121,7 +119,6 @@ function Node:setTouchSwallowEnabled( isEnable )
 end
 
 function Node:setTouchMode(mode)
-    print("htl setTouchMode:", tostring(self), mode)
     if self._TouchMode_ ~= mode then
       self._TouchMode_ = mode
       if not self._isTouchEnabled_ then return end
@@ -284,17 +281,14 @@ function Node:addNodeEventListener( evt, hdl, tag, priority )
         end
     elseif evt==c.NODE_TOUCH_EVENT then
         local onTouchBegan = function (touch, event)
-            print("htl nodeex began")
             return NodeEventDispatcher(event:getCurrentTarget(), c.NODE_TOUCH_EVENT, {touch, event, "began"})
         end
 
         local onTouchMoved = function (touch, event)
-            print("htl nodeex moved")
             return NodeEventDispatcher(event:getCurrentTarget(), c.NODE_TOUCH_EVENT, {touch, event, "moved"})
         end
 
         local onTouchEnded = function (touch, event)
-            print("htl nodeex ended")
             return NodeEventDispatcher(event:getCurrentTarget(), c.NODE_TOUCH_EVENT, {touch, event, "ended"})
         end
 
@@ -304,13 +298,13 @@ function Node:addNodeEventListener( evt, hdl, tag, priority )
         self._TouchMode_ = self._TouchMode_ or c.EVENT_TOUCH_ONE_BY_ONE
         local mode = self._TouchMode_
         if mode==c.TOUCH_MODE_ALL_AT_ONCE then
-            print("====TOUCH_MODE_ALL_AT_ONCE listener")
+            -- print("====TOUCH_MODE_ALL_AT_ONCE listener")
             listener = cc.EventListenerTouchAllAtOnce:create()
             listener:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCHES_BEGAN )
             -- listener:registerScriptHandler(onTouchMoved,cc.Handler.EVENT_TOUCH_MOVED )
             listener:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCHES_ENDED )
         else
-            print("====EVENT_TOUCH_ONE_BY_ONE listener")
+            -- print("====EVENT_TOUCH_ONE_BY_ONE listener")
             listener = cc.EventListenerTouchOneByOne:create()
             listener:setSwallowTouches(isSwallow)
             listener:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN )
@@ -320,6 +314,7 @@ function Node:addNodeEventListener( evt, hdl, tag, priority )
         local eventDispatcher = self:getEventDispatcher()
         eventDispatcher:addEventListenerWithSceneGraphPriority(listener, self)
         lis.regHanler = listener
+        lis.regHanler:retain()
         lis.mode = mode
     end
 
@@ -333,6 +328,7 @@ function Node:removeNodeEventListenersByEvent( evt )
             for i,v in ipairs(self._scriptEventListeners_[evt]) do
                     if v.regHanler then
                         eventDispatcher:removeEventListener(v.regHanler)
+                        v.regHanler:autorelease()
                     end
             end
         elseif evt==c.NODE_ENTER_FRAME_EVENT then
@@ -358,10 +354,6 @@ function NodeEventDispatcher( obj, idx, data )
     elseif idx==c.NODE_TOUCH_EVENT then
         -- print("-----c.NODE_TOUCH_EVENT ")
         if not obj._isTouchEnabled_ then
-            print("htl is not touch enable:", tostring(obj))
-            print("htl name:", obj.name)
-            dump(obj:getBoundingBox(), "bound:")
-            dump(obj, "obj")
             return false
         end
         local touch = data[1]
@@ -369,13 +361,12 @@ function NodeEventDispatcher( obj, idx, data )
         local ename = data[3]
 
         if obj._TouchMode_==c.EVENT_TOUCH_ONE_BY_ONE then
-            print("-----c.EVENT_TOUCH_ONE_BY_ONE ")
+            -- print("-----c.EVENT_TOUCH_ONE_BY_ONE ")
             local p1 = touch:getLocation()
             local p2 = touch:getPreviousLocation()
             local rc = obj:getCascadeBoundingBox()
             local rect = cc.rect(rc.x, rc.y, rc.width, rc.height)
             if not obj:getCascadeBoundingBox():containsPoint(p1) then
-                print("htl cascade bounding box not contain point:", tostring(obj))
                 return false
             end
 
@@ -388,7 +379,7 @@ function NodeEventDispatcher( obj, idx, data )
                 prevY = p2.y,
             }
         else
-            print("-----c.TOUCH_MODE_ALL_AT_ONCE ")
+            -- print("-----c.TOUCH_MODE_ALL_AT_ONCE ")
             -- dump(touch)
             -- if touch[1] then
             --     local p1 = touch[1]:getLocation()
