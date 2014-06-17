@@ -19,14 +19,18 @@ PLAYER_NS_BEGIN
 class MenuItem
 {
 public:
-    int itemId;             // 该菜单项id
-    int index;              // 该菜单项在同级菜单中的索引（从 0 开始的位置）
+    MenuItem():itemId(""), scriptHandlerId(0),isChecked(false),isEnabled(true), shortcut("")
+    {
+    }
+    
+    std::string itemId;     // 该菜单项id
+//    int index;              // 该菜单项在同级菜单中的索引（从 0 开始的位置）
     std::string title;      // 菜单名称
     bool isGroup;           // 是否是菜单组
     bool isEnabled;         // 是否可以点击
     bool isChecked;         // 是否设置为已选中状态（如果是菜单组，则忽略该设置）
     std::string shortcut;   // 键盘快捷键（如果是菜单组，则忽略该设置）
-    int scriptHandlerId;    // Lua 脚本的事件回调
+    int scriptHandlerId;    // 事件回调的 Lua 脚本 id
 };
 
 class PlayerMenuServiceProtocol
@@ -39,7 +43,7 @@ public:
     // @param item 菜单项定义
     // @param parentIndex 父级菜单对象
     virtual void addItem(const MenuItem &item,
-                         int parentIndex,
+                         std::string parentId = std::string(),
                          int index = MAX_INT) = 0;
     
     

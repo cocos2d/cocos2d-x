@@ -197,6 +197,25 @@ bool LuaStack::initWithLuaState(lua_State *L)
     return true;
 }
 
+void LuaStack::connectDebugger(int debuggerType, const char *host, int port, const char *debugKey, const char *workDir)
+{
+    _debuggerType = debuggerType;
+    if (debuggerType == kCCLuaDebuggerLDT)
+    {
+        lua_pushboolean(_state, 1);
+        lua_setglobal(_state, kCCLuaDebuggerGlobalKey);
+        
+        char buffer[512];
+        memset(buffer, 0, sizeof(buffer));
+        sprintf(buffer, "require('ldt_debugger')('%s', %d, '%s', nil, nil, '%s')",
+                host ? host : "127.0.0.1",
+                port > 0 ? port : 10000,
+                debugKey ? debugKey : "luaidekey",
+                workDir ? workDir : "");
+        executeString(buffer);
+    }
+}
+
 void LuaStack::addSearchPath(const char* path)
 {
     lua_getglobal(_state, "package");                                  /* L: package */

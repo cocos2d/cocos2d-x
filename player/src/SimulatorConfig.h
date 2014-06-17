@@ -17,10 +17,6 @@ using namespace cocos2d;
 #define DIRECTORY_SEPARATOR_CHAR '/'
 #endif
 
-#define kCCLuaDebuggerNone      0
-#define kCCLuaDebuggerLDT       1
-#define kCCLuaDebuggerGlobalKey "DEBUG_DISABLE_QUICK_LUA_LOADER"
-
 #define kProjectConfigQuickRootPath             1
 #define kProjectConfigProjectDir                2
 #define kProjectConfigScriptFile                4

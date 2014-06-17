@@ -35,6 +35,15 @@ extern "C" {
 
 NS_CC_BEGIN
 
+class CCLuaStack;
+
+typedef std::map<lua_State*, CCLuaStack*> CCLuaStackMap;
+typedef CCLuaStackMap::iterator CCLuaStackMapIterator;
+
+#define kCCLuaDebuggerNone      0
+#define kCCLuaDebuggerLDT       1
+#define kCCLuaDebuggerGlobalKey "DEBUG_DISABLE_QUICK_LUA_LOADER"
+
 class LuaStack : public Ref
 {
 public:
@@ -50,6 +59,11 @@ public:
     lua_State* getLuaState(void) {
         return _state;
     }
+    
+    /**
+     @brief Connect to Debugger
+     */
+    virtual void connectDebugger(int debuggerType, const char *host, int port, const char *debugKey, const char *workDir);
     
     /**
      @brief Add a path to find lua files in
@@ -147,6 +161,7 @@ protected:
     , _xxteaKeyLen(0)
     , _xxteaSign(nullptr)
     , _xxteaSignLen(0)
+    , _debuggerType(kCCLuaDebuggerNone)
     {
     }
     
@@ -154,6 +169,8 @@ protected:
     bool initWithLuaState(lua_State *L);
     
     lua_State *_state;
+    int _debuggerType;
+    
     int _callFromLua;
     bool  _xxteaEnabled;
     char* _xxteaKey;
