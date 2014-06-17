@@ -36,7 +36,7 @@
 #include "3d/CCMesh.h"
 #include "3d/CCBundle3DData.h"
 
-#include "external/json/document.h"
+#include "json/document.h"
 
 NS_CC_BEGIN
 
