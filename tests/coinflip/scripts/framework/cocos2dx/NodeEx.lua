@@ -328,7 +328,7 @@ function Node:removeNodeEventListenersByEvent( evt )
             for i,v in ipairs(self._scriptEventListeners_[evt]) do
                     if v.regHanler then
                         eventDispatcher:removeEventListener(v.regHanler)
-                        v.regHanler:autorelease()
+                        v.regHanler:release()
                     end
             end
         elseif evt==c.NODE_ENTER_FRAME_EVENT then
@@ -340,22 +340,24 @@ function Node:removeNodeEventListenersByEvent( evt )
 end
 
 function Node:removeAllNodeEventListeners()
-    removeNodeEventListenersByEvent(c.NODE_ENTER_FRAME_EVENT)
-    removeNodeEventListenersByEvent(c.NODE_TOUCH_EVENT)
+    self:removeNodeEventListenersByEvent(c.NODE_ENTER_FRAME_EVENT)
+    self:removeNodeEventListenersByEvent(c.NODE_TOUCH_EVENT)
 end
 
 function NodeEventDispatcher( obj, idx, data )
     -- print("-----Entry NodeEventDispatcher: "..idx)
+    local flagNodeCleanup = false
     local event
     if idx==c.NODE_EVENT then
         event = { name=data }
+        if data=="cleanup" then
+            flagNodeCleanup = true
+        end
     elseif idx==c.NODE_ENTER_FRAME_EVENT then
         event = data
     elseif idx==c.NODE_TOUCH_EVENT then
         -- print("-----c.NODE_TOUCH_EVENT ")
-        if not obj._isTouchEnabled_ then
-            return false
-        end
+        if not obj._isTouchEnabled_ then return false end
         local touch = data[1]
         local evt = data[2]
         local ename = data[3]
@@ -407,11 +409,15 @@ function NodeEventDispatcher( obj, idx, data )
         end
     end
 
+    local rnval = false
     if obj._scriptEventListeners_ and obj._scriptEventListeners_[idx] then
         for i,v in ipairs(obj._scriptEventListeners_[idx]) do
-            -- print("htl nodeex listener:", i)
-            return v.listener_(event)
+            rnval = rnval or v.listener_(event)
         end
     end
+
+    if flagNodeCleanup then obj:removeAllNodeEventListeners() end
+
+    return rnval
 end
 
