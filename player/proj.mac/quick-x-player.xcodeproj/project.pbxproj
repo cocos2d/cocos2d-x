@@ -672,6 +672,7 @@
 					"$(SRCROOT)/../../external/lua/tolua",
 					"$(SRCROOT)/../../cocos/scripting/lua-bindings/manual",
 					"$(SRCROOT)/../../cocos/scripting/lua-bindings/auto",
+					"$(SRCROOT)/../../external/unzip",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = (
@@ -712,6 +713,7 @@
 					"$(SRCROOT)/../../external/lua/tolua",
 					"$(SRCROOT)/../../cocos/scripting/lua-bindings/manual",
 					"$(SRCROOT)/../../cocos/scripting/lua-bindings/auto",
+					"$(SRCROOT)/../../external/unzip",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = (
