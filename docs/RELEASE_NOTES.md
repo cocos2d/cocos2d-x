@@ -2,27 +2,27 @@
 
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
+- [cocos2d-x v3.2-alpha0 Release Notes](#user-content-cocos2d-x-v32-alpha0-release-notes)
 - [Misc Information](#user-content-misc-information)
 - [Requirements](#user-content-requirements)
 	- [Runtime Requirements](#user-content-runtime-requirements)
 	- [Compiler Requirements](#user-content-compiler-requirements)
 	- [How to run tests](#user-content-how-to-run-tests)
+		- [Mac OSX & iOS](#user-content-mac-osx--ios)
+		- [Android](#user-content-android)
+		- [Windows](#user-content-windows)
+		- [Linux](#user-content-linux)
 	- [How to start a new game](#user-content-how-to-start-a-new-game)
-- [Highlights of v3.1](#user-content-highlights-of-v31)
+- [Highlights of v3.2 alpha0](#user-content-highlights-of-v32-alpha0)
 - [Features in detail](#user-content-features-in-detail)
-	- [Sprite3D](#user-content-sprite3d)
-	- [Improved Shader Subsystem](#user-content-improved-shader-subsystem)
-	- [New math library](#user-content-new-math-library)
-	- [New UIVideoPlayer](#user-content-new-uivideoplayer)
-	- [UI navigation](#user-content-ui-navigation)
-	- [Improved folder structure](#user-content-improved-folder-structure)
-	- [Particle System fixes](#user-content-particle-system-fixes)
-- [Misc API Changes](#user-content-misc-api-changes)
-	- [deprecated functions and  global variables](#user-content-deprecated-functions-and--global-variables)
+	- [Animation3D](#user-content-animation3d)
+		- [fbx-conv usage](#user-content-fbx-conv-usage)
+		- [Sample code](#user-content-sample-code)
+	- [captureScreen](#user-content-capturescreen)
 
 # Misc Information
 
-* Download: http://cdn.cocos2d-x.org/cocos2d-x-3.1rc0.zip
+* Download: http://cdn.cocos2d-x.org/cocos2d-x-3.2alpha0.zip
 * Full Changelog: https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.2alpha0/CHANGELOG
 * ~~API Reference: http://www.cocos2d-x.org/reference/native-cpp/V3.0/index.html~~
 * v3.0 Release Notes can be found here: [v3.0 Release Notes](https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.0/docs/RELEASE_NOTES.md)
