@@ -55,12 +55,18 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- @function [parent=#Mesh] create 
+-- overload function: create(array_table, int, array_table, int, array_table, int)
+--          
+-- overload function: create(array_table, array_table, array_table, array_table)
+--          
+-- @function [parent=#Mesh] create
 -- @param self
 -- @param #array_table array
--- @param #array_table array
--- @param #array_table array
+-- @param #int int
 -- @param #array_table vector<short, std::allocator<short> >
--- @return Mesh#Mesh ret (return value: cc.Mesh)
-        
+-- @param #int int
+-- @param #array_table array
+-- @param #int int
+-- @return Mesh#Mesh ret (retunr value: cc.Mesh)
+
 return nil
