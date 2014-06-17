@@ -188,6 +188,7 @@ void WidgetReader::beginSetBasicProperties(cocos2d::ui::Widget *widget)
     //set default color
     _color = ccc3(255,255,255);
     widget->setColor(_color);
+    _opacity = widget->getOpacity();
     _originalAnchorPoint = widget->getAnchorPoint();
 }
 
