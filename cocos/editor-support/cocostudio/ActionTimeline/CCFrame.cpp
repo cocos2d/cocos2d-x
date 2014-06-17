@@ -33,7 +33,7 @@ NS_TIMELINE_BEGIN
 // Frame
 Frame::Frame()
     : _frameIndex(0)
-    , _tween(false)
+    , _tween(true)
     , _timeline(nullptr)
     , _node(nullptr)
 {
@@ -165,10 +165,7 @@ RotationFrame::RotationFrame()
 
 void RotationFrame::onEnter(Frame *nextFrame)
 {
-    if (!_tween || nextFrame == this)
-    {
-        _node->setRotation(_rotation);
-    }
+    _node->setRotation(_rotation);
     
     if(_tween)
     {
@@ -218,11 +215,8 @@ SkewFrame::SkewFrame()
 
 void SkewFrame::onEnter(Frame *nextFrame)
 {
-    if (!_tween || nextFrame == this)
-    {
-        _node->setSkewX(_skewX);
-        _node->setSkewY(_skewY);
-    }
+    _node->setSkewX(_skewX);
+    _node->setSkewY(_skewY);
     
     if(_tween)
     {
@@ -276,11 +270,8 @@ RotationSkewFrame::RotationSkewFrame()
 
 void RotationSkewFrame::onEnter(Frame *nextFrame)
 {
-    if (!_tween || nextFrame == this)
-    {
-        _node->setRotationSkewX(_skewX);
-        _node->setRotationSkewY(_skewY);
-    }
+    _node->setRotationSkewX(_skewX);
+    _node->setRotationSkewY(_skewY);
     
     if (_tween)
     {
@@ -333,11 +324,8 @@ PositionFrame::PositionFrame()
 
 void PositionFrame::onEnter(Frame *nextFrame)
 {
-    if (!_tween || nextFrame == this)
-    {
-        _node->setPosition(_position);
-    }
-    
+    _node->setPosition(_position);
+
     if(_tween)
     {
         _betweenX = static_cast<PositionFrame*>(nextFrame)->_position.x - _position.x;
@@ -389,11 +377,8 @@ ScaleFrame::ScaleFrame()
 
 void ScaleFrame::onEnter(Frame *nextFrame)
 {
-    if (!_tween || nextFrame == this)
-    {
-        _node->setScaleX(_scaleX);
-        _node->setScaleY(_scaleY);
-    }
+    _node->setScaleX(_scaleX);
+    _node->setScaleY(_scaleY);
     
     if(_tween)
     {
@@ -519,15 +504,8 @@ ColorFrame::ColorFrame()
 
 void ColorFrame::onEnter(Frame *nextFrame)
 {
-    if (!_tween || nextFrame == this)
-    {
-        if(_alpha != _node->getOpacity())
-            _node->setOpacity(_alpha);
-        
-        Color3B color = _node->getColor();
-        if(color.r != _color.r || color.g != _color.r || color.b != _color.b)
-            _node->setColor(_color);
-    }
+    _node->setOpacity(_alpha);
+    _node->setColor(_color);
     
     if(_tween)
     {
