@@ -219,10 +219,10 @@ void TestTimelinePerformance::onEnter()
         ActionTimeline* action = ActionTimelineCache::getInstance()->createAction("ActionTimeline/boy_1.ExportJson");
 
         node->runAction(action);
-        action->gotoFrameAndPlay(0, 60, true);
+        action->gotoFrameAndPlay(70, action->getDuration(), true);
 
-        node->setScale(0.2f);
-        node->setPosition(-50+i*2,100);
+        node->setScale(0.1f);
+        node->setPosition(i*2,100);
         addChild(node);
     }
 }

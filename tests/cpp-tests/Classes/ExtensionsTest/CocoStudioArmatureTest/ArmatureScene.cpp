@@ -414,7 +414,7 @@ void TestPerformance::addArmature(int number)
         armature->init("Cowboy");
         armature->getAnimation()->playWithIndex(0);
         armature->setPosition(50 + armatureCount * 2, 150);
-        armature->setScale(0.2f);
+        armature->setScale(0.1f);
         addArmatureToParent(armature);
         armature->release();
     }

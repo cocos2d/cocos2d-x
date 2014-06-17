@@ -145,6 +145,7 @@ protected:
     float   _frameInternal;
     bool    _playing;
     int     _currentFrame;
+    int     _startFrame;
     int     _endFrame;
     bool    _loop;
 
