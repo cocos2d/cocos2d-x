@@ -75,20 +75,6 @@ Animation3D::~Animation3D()
     for (auto itor : _boneCurves) {
         CC_SAFE_DELETE(itor.second);
     }
-//    for (auto itor : _boneTransCurves) {
-//        CC_SAFE_RELEASE(itor.second);
-//    }
-//    _boneTransCurves.clear();
-//    
-//    for (auto itor : _boneRotCurves) {
-//        CC_SAFE_RELEASE(itor.second);
-//    }
-//    _boneRotCurves.clear();
-//    
-//    for (auto itor : _boneScaleCurves) {
-//        CC_SAFE_RELEASE(itor.second);
-//    }
-//    _boneScaleCurves.clear();
 }
 
 Animation3D::Curve::Curve()
