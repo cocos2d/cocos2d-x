@@ -1,0 +1,19 @@
+class ActionTimelineCache : public CCObject
+{
+
+    static ActionTimelineCache* getInstance();
+
+    static void destroyInstance();
+
+    virtual ~ActionTimelineCache();
+    void purge();
+
+    void init();
+
+    void removeAction(const std::string& fileName);
+
+    ActionTimeline* createAction(const std::string& fileName);
+
+    ActionTimeline* loadAnimationActionWithFile(const std::string& fileName);
+    ActionTimeline* loadAnimationActionWithContent(const std::string&fileName, const std::string& content);
+};

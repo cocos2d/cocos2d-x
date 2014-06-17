@@ -1,0 +1,22 @@
+class NodeReader : public CCObject
+{
+    static NodeReader* getInstance();
+    static void destroyInstance();
+    
+    NodeReader();
+    virtual ~NodeReader();
+    void purge();
+
+    void init();
+
+    CCNode* createNode(const std::string& filename);
+
+    CCNode* loadNodeWithFile(const std::string& fileName);
+    CCNode* loadNodeWithContent(const std::string& content);
+
+    void setRecordJsonPath(bool record);
+    bool isRecordJsonPath() const;
+
+    void setJsonPath(std::string jsonPath);
+    std::string getJsonPath() const;
+};

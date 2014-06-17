@@ -117,6 +117,23 @@ public:
     virtual void step(float delta); 
     virtual void startWithTarget(cocos2d::CCNode *target);  
     virtual bool isDone() { return false; }
+    
+    /**
+     * Returns a user assigned CCObject
+     *
+     * @return A user assigned CCObject
+     */
+    virtual cocos2d::CCObject* getUserObject() const;
+    /**
+     * Returns a user assigned CCObject
+     *
+     * The UserObject will be retained once in this method,
+     * and the previous UserObject (if existed) will be relese.
+     * The UserObject will be released in destructure.
+     *
+     * @param A user assigned CCObject
+     */
+    virtual void setUserObject(cocos2d::CCObject *userObject);
 protected:
     friend class Frame;
 
@@ -143,6 +160,8 @@ protected:
 
     SEL_FrameEventCallFunc _frameEventCallFunc;
     cocos2d::CCObject*     _frameEventTarget;
+    
+    cocos2d::CCObject* _userObject;
 };
 
 NS_TIMELINE_END

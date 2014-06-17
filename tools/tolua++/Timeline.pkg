@@ -1,0 +1,28 @@
+class Timeline : public CCObject
+{
+    static Timeline* create();
+
+    Timeline();
+    virtual ~Timeline();
+
+    virtual bool init();
+
+    virtual void gotoFrame  (int frameIndex);
+    virtual void stepToFrame(int frameIndex);
+
+    virtual const cocos2d::CCArray* getFrames();
+    virtual void addFrame(Frame* frame);
+    virtual void insertFrame(Frame* frame, int index);
+    virtual void removeFrame(Frame* frame);
+
+    virtual void setActionTag(int tag);
+    virtual int  getActionTag() const;
+
+    virtual void setNode(cocos2d::CCNode* node);
+    virtual cocos2d::CCNode* getNode() const;
+
+    virtual void setActionTimeline(ActionTimeline* action);
+    virtual ActionTimeline* getActionTimeline() const;
+
+    virtual Timeline* clone();
+};

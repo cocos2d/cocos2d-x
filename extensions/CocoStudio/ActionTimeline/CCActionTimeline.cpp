@@ -52,6 +52,7 @@ ActionTimeline::ActionTimeline()
     , _endFrame(0)
     , _frameEventCallFunc(NULL)
     , _frameEventTarget(NULL)
+    ,_userObject(NULL)
 {
 }
 
@@ -65,6 +66,7 @@ ActionTimeline::~ActionTimeline()
     }
 
     CC_SAFE_DELETE(_timelineList);
+    CC_SAFE_RELEASE_NULL(_userObject);
 }
 
 bool ActionTimeline::init()
@@ -268,6 +270,18 @@ void ActionTimeline::stepToFrame(int frameIndex)
     {      
         timelines[i]->stepToFrame(frameIndex);
     }
+}
+
+void ActionTimeline::setUserObject(cocos2d::CCObject *userObject)
+{
+    CC_SAFE_RETAIN(userObject);
+    CC_SAFE_RELEASE(_userObject);
+    _userObject = userObject;
+}
+
+cocos2d::CCObject* ActionTimeline::getUserObject() const
+{
+    return _userObject;
 }
 
 NS_TIMELINE_END

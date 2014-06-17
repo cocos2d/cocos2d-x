@@ -1,6 +1,7 @@
 require "luaScript/CocoStudioTest/CocoStudioGUITest/CocoStudioGUITest"
 require "luaScript/CocoStudioTest/CocoStudioSceneTest/CocoStudioSceneTest"
 require "luaScript/CocoStudioTest/CocoStudioArmatureTest/CocoStudioArmatureTest"
+require "luaScript/CocoStudioTest/CocoStudioTimelineTest/CocoStudioTimelineTest"
 
 local LINE_SPACE = 40
 local ITEM_TAG_BASIC = 1000
@@ -25,6 +26,13 @@ local cocoStudioTestItemNames =
         itemTitle = "CocoStudioSceneTest",
         testScene = function () 
             runCocosSceneTestScene()
+        end
+    },
+
+    {
+        itemTitle = "CocoStudioActionTimelineTest",
+        testScene = function () 
+            runCocoStudioActionTimelineTestScene()
         end
     },
 } 

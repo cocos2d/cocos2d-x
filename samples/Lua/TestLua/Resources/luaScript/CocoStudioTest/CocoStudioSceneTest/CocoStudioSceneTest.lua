@@ -24,7 +24,7 @@ SceneEditorTestLayer.__index = SceneEditorTestLayer
 SceneEditorTestLayer._backItem = nil
 SceneEditorTestLayer._restarItem = nil
 SceneEditorTestLayer._nextItem   = nil
-SceneEditorTestLayer.title       =
+SceneEditorTestLayer.title       = 
 {
     "loadSceneEdtiorFile Test",
     "Sprite Component Test",
@@ -37,6 +37,14 @@ SceneEditorTestLayer.title       =
     "Attribute Component Test",
     "Trigger Test",
 }
+SceneEditorTestLayer.loadtypeStr=
+{
+    "change to load \nwith binary file",
+    "change to load \nwith json file"
+}
+
+SceneEditorTestLayer.fileName = ""
+SceneEditorTestLayer.rootNode  = nil
 
 function SceneEditorTestLayer.extend(target)
     local t = tolua.getpeer(target)
@@ -80,6 +88,42 @@ function SceneEditorTestLayer:createTitle()
     title:setColor(ccc3(255, 255, 255))
     self:addChild(title, 1, 10000)
     title:setPosition( ccp(VisibleRect:center().x, VisibleRect:top().y - 30))
+end
+
+function SceneEditorTestLayer:loadFileChangeHelper(filePathName)
+    local indexTable = {}
+    local index = 0
+
+    while true do
+        index = string.find(filePathName, "%.", index + 1)
+        if nil == index then
+            break
+        end
+
+        indexTable[#indexTable + 1] = index
+    end
+
+    if #indexTable == 0 then
+        return filePathName
+    end
+    
+    local lastIndex = indexTable[#indexTable]
+    if lastIndex == 1 then
+        return filePathName
+    end
+    local renamePathName= string.sub(filePathName, 1, lastIndex - 1)
+    print("renamePath is", renamePathName)
+    if self.isCsbLoad then
+        renamePathName = renamePathName .. ".csb"
+    else
+        renamePathName = renamePathName .. ".json"
+    end
+
+    return renamePathName
+end
+
+function SceneEditorTestLayer:defaultPlay() 
+    
 end
 
 function SceneEditorTestLayer:createMenu()
@@ -130,6 +174,40 @@ function SceneEditorTestLayer:createMenu()
         end
     end
 
+
+
+
+    self.isCsbLoad = false
+    self.loadtypeLabel = CCLabelTTF:create(self.loadtypeStr[1], "Arial", 12)
+
+    local function changeLoadTypeCallback(sender)
+        self.isCsbLoad = not self.isCsbLoad
+        if self.isCsbLoad then
+            self.loadtypeLabel:setString(self.loadtypeStr[2])
+        else
+            self.loadtypeLabel:setString(self.loadtypeStr[1])
+        end
+
+        SceneEditorTestLayer.fileName = self:loadFileChangeHelper(SceneEditorTestLayer.fileName)
+    
+        if SceneEditorTestLayer.rootNode ~= nil then
+            self:removeChild(SceneEditorTestLayer.rootNode, true)
+            SceneEditorTestLayer.rootNode = SceneReader:sharedSceneReader():createNodeWithSceneFile(SceneEditorTestLayer.fileName)
+            if SceneEditorTestLayer.rootNode == nil then
+                return
+            end
+            self:defaultPlay()
+            self:addChild(SceneEditorTestLayer.rootNode)
+        end
+    end
+    local loadTypeItem = CCMenuItemLabel:create(self.loadtypeLabel)
+    loadTypeItem:registerScriptTapHandler(changeLoadTypeCallback)
+    local loadtypeMenu = CCMenu:create()
+    loadTypeItem:setPosition(ccp(VisibleRect:rightTop().x -50,VisibleRect:rightTop().y -20))
+    loadtypeMenu:addChild(loadTypeItem)
+    loadtypeMenu:setPosition(0, 0)
+    self:addChild(loadtypeMenu, 100)
+
     local backMenu = CCMenu:create()
     CCMenuItemFont:setFontName("Arial")
     CCMenuItemFont:setFontSize(24)
@@ -157,8 +235,14 @@ end
 
 function LoadSceneEdtiorFileTest:createGameScene()
     local node = SceneReader:sharedSceneReader():createNodeWithSceneFile("scenetest/LoadSceneEdtiorFileTest/FishJoy2.json")
-    ActionManager:shareManager():playActionByName("startMenu_1.json","Animation1")
+    SceneEditorTestLayer.fileName = "scenetest/LoadSceneEdtiorFileTest/FishJoy2.json"
+    SceneEditorTestLayer.rootNode = node
+    self:defaultPlay()
     return node
+end
+
+function LoadSceneEdtiorFileTest:defaultPlay()
+    ActionManager:shareManager():playActionByName("startMenu_1.json","Animation1")
 end
 
 function LoadSceneEdtiorFileTest:onEnter()
@@ -204,13 +288,11 @@ end
 function SpriteComponentTest:createGameScene()
     local node = SceneReader:sharedSceneReader():createNodeWithSceneFile("scenetest/SpriteComponentTest/SpriteComponentTest.json")
     if nil ~= node then
-        local action1 = CCBlink:create(2, 10)
-        local action2 = CCBlink:create(2, 5)
 
-        local sister1 = tolua.cast(node:getChildByTag(10003):getComponent("CCSprite"),"CCComRender")
-        sister1:getNode():runAction(action1)
-        local sister2 = tolua.cast(node:getChildByTag(10004):getComponent("CCSprite"),"CCComRender")
-        sister2:getNode():runAction(action2)
+        SceneEditorTestLayer.fileName = "scenetest/SpriteComponentTest/SpriteComponentTest.json"
+        SceneEditorTestLayer.rootNode = node
+
+        self:defaultPlay()
     end
 
     return node
@@ -224,6 +306,18 @@ function SpriteComponentTest:onEnter()
         self:addChild(root, 0, 1)
     end
     
+end
+
+function SpriteComponentTest:defaultPlay()
+    if SceneEditorTestLayer.rootNode ~= nil then
+        local action1 = CCBlink:create(2, 10)
+        local action2 = CCBlink:create(2, 5)
+
+        local sister1 = tolua.cast(SceneEditorTestLayer.rootNode:getChildByTag(10003):getComponent("CCSprite"),"CCComRender")
+        sister1:getNode():runAction(action1)
+        local sister2 = tolua.cast(SceneEditorTestLayer.rootNode:getChildByTag(10004):getComponent("CCSprite"),"CCComRender")
+        sister2:getNode():runAction(action2)
+    end
 end
 
 function SpriteComponentTest.create()
@@ -259,14 +353,23 @@ end
 function ArmatureComponentTest:createGameScene()
     local node = SceneReader:sharedSceneReader():createNodeWithSceneFile("scenetest/ArmatureComponentTest/ArmatureComponentTest.json")
     if nil ~= node then
-        local blowFish = tolua.cast(node:getChildByTag(10007):getComponent("CCArmature"),"CCComRender")
-        blowFish:getNode():runAction(CCMoveBy:create(10.0, ccp(-1000.0, 0)))
+        SceneEditorTestLayer.fileName = "scenetest/ArmatureComponentTest/ArmatureComponentTest.json"
+        SceneEditorTestLayer.rootNode = node
 
-        local butterflyfish = tolua.cast(node:getChildByTag(10008):getComponent("CCArmature"),"CCComRender")
-        butterflyfish:getNode():runAction(CCMoveBy:create(10.0, ccp(-1000.0, 0)))
+        self:defaultPlay()
     end
 
     return node
+end
+
+function ArmatureComponentTest:defaultPlay()
+    if SceneEditorTestLayer.rootName ~= nil then
+        local blowFish = tolua.cast(SceneEditorTestLayer.rootNode:getChildByTag(10007):getComponent("CCArmature"),"CCComRender")
+        blowFish:getNode():runAction(CCMoveBy:create(10.0, ccp(-1000.0, 0)))
+
+        local butterflyfish = tolua.cast(SceneEditorTestLayer.rootNode:getChildByTag(10008):getComponent("CCArmature"),"CCComRender")
+        butterflyfish:getNode():runAction(CCMoveBy:create(10.0, ccp(-1000.0, 0)))
+    end
 end
 
 function ArmatureComponentTest:onEnter()
@@ -312,24 +415,33 @@ end
 function UIComponentTest:createGameScene()
     local node = SceneReader:sharedSceneReader():createNodeWithSceneFile("scenetest/UIComponentTest/UIComponentTest.json")
     if nil ~= node then
-        local render = tolua.cast(node:getChildByTag(10025):getComponent("GUIComponent"),"CCComRender")
+        SceneEditorTestLayer.fileName = "scenetest/UIComponentTest/UIComponentTest.json"
+        SceneEditorTestLayer.rootNode = node
+
+        self:defaultPlay()
+    end
+
+    return node
+end
+
+function UIComponentTest:defaultPlay()
+    if SceneEditorTestLayer.rootNode ~= nil then
+        local render = tolua.cast(SceneEditorTestLayer.rootNode:getChildByTag(10025):getComponent("GUIComponent"),"CCComRender")
         local touchGroup = tolua.cast(render:getNode(), "TouchGroup")
         local widget = tolua.cast(touchGroup:getWidgetByName("Panel_154"), "Widget")
         local button = tolua.cast(widget:getChildByName("Button_156"),"Button")
         local function onTouch(sender, eventType)
             if eventType == TouchEventType.began then
-                local blowFish = tolua.cast(node:getChildByTag(10010):getComponent("CCArmature"), "CCComRender")
+                local blowFish = tolua.cast(SceneEditorTestLayer.rootNode:getChildByTag(10010):getComponent("CCArmature"), "CCComRender")
                 blowFish:getNode():runAction(CCMoveBy:create(10.0, ccp(-1000.0, 0)))
 
-                local butterflyfish = tolua.cast(node:getChildByTag(10011):getComponent("CCArmature"), "CCComRender")
+                local butterflyfish = tolua.cast(SceneEditorTestLayer.rootNode:getChildByTag(10011):getComponent("CCArmature"), "CCComRender")
                 butterflyfish:getNode():runAction(CCMoveBy:create(10.0, ccp(-1000.0, 0)))
             end
         end
 
         button:addTouchEventListener(onTouch)
     end
-
-    return node
 end
 
 function UIComponentTest:onEnter()
@@ -375,7 +487,19 @@ end
 function TmxMapComponentTest:createGameScene()
     local node = SceneReader:sharedSceneReader():createNodeWithSceneFile("scenetest/TmxMapComponentTest/TmxMapComponentTest.json")
     if nil ~= node then
-        local tmxMap = tolua.cast(node:getChildByTag(10015):getComponent("CCTMXTiledMap"),"CCComRender")
+
+        SceneEditorTestLayer.fileName = "scenetest/TmxMapComponentTest/TmxMapComponentTest.json"
+        SceneEditorTestLayer.rootNode = node
+
+        self:defaultPlay()
+    end
+
+    return node
+end
+
+function TmxMapComponentTest:defaultPlay()
+    if SceneEditorTestLayer.rootNode ~= nil then
+        local tmxMap = tolua.cast(SceneEditorTestLayer.rootNode:getChildByTag(10015):getComponent("CCTMXTiledMap"),"CCComRender")
         local actionTo = CCSkewTo:create(2, 0.0, 2.0)
         local rotateTo = CCRotateTo:create(2, 61.0)
         local actionScaleTo = CCScaleTo:create(2, -0.44, 0.47)
@@ -399,8 +523,6 @@ function TmxMapComponentTest:createGameScene()
         arr:addObject(actionScaleToBack)
         tmxMap:getNode():runAction(CCSequence:create(arr))
     end
-
-    return node
 end
 
 function TmxMapComponentTest:onEnter()
@@ -446,7 +568,19 @@ end
 function ParticleComponentTest:createGameScene()
     local node = SceneReader:sharedSceneReader():createNodeWithSceneFile("scenetest/ParticleComponentTest/ParticleComponentTest.json")
     if nil ~= node then
-        local particle = tolua.cast(node:getChildByTag(10020):getComponent("CCParticleSystemQuad"),"CCComRender")
+
+        SceneEditorTestLayer.fileName = "scenetest/ParticleComponentTest/ParticleComponentTest.json"
+        SceneEditorTestLayer.rootNode = node
+
+        self:defaultPlay()
+    end
+
+    return node
+end
+
+function ParticleComponentTest:defaultPlay()
+    if SceneEditorTestLayer.rootNode ~= nil then
+        local particle = tolua.cast(SceneEditorTestLayer.rootNode:getChildByTag(10020):getComponent("CCParticleSystemQuad"),"CCComRender")
         local jump = CCJumpBy:create(5, ccp(-500,0), 50, 4)
         local arr  = CCArray:create()
         arr:addObject(jump)
@@ -454,8 +588,6 @@ function ParticleComponentTest:createGameScene()
         local action = CCSequence:create(arr)
         particle:getNode():runAction(action)
     end
-
-    return node
 end
 
 function ParticleComponentTest:onEnter()
@@ -501,13 +633,25 @@ end
 function EffectComponentTest:createGameScene()
     local node = SceneReader:sharedSceneReader():createNodeWithSceneFile("scenetest/EffectComponentTest/EffectComponentTest.json")
     if nil ~= node then
-        local render = tolua.cast(node:getChildByTag(10015):getComponent("CCArmature"),"CCComRender")
+
+        SceneEditorTestLayer.fileName = "scenetest/EffectComponentTest/EffectComponentTest.json"
+        SceneEditorTestLayer.rootNode = node
+
+        self:defaultPlay()
+    end
+
+    return node
+end
+
+function EffectComponentTest:defaultPlay()
+    if SceneEditorTestLayer.rootNode ~= nil then
+        local render = tolua.cast(SceneEditorTestLayer.rootNode:getChildByTag(10015):getComponent("CCArmature"),"CCComRender")
         local armature = tolua.cast(render:getNode(),"CCArmature")
         local function animationEvent(armatureBack,movementType,movementID)
             local id = movementID
             if movementType == MovementEventType.loopComplete then
                 if id == "Fire" then
-                    local audio = tolua.cast(node:getChildByTag(10015):getComponent("CCComAudio"), "CCComAudio")
+                    local audio = tolua.cast(SceneEditorTestLayer.rootNode:getChildByTag(10015):getComponent("CCComAudio"), "CCComAudio")
                     audio:playEffect()
                 end
             end
@@ -515,8 +659,6 @@ function EffectComponentTest:createGameScene()
 
         armature:getAnimation():setMovementEventCallFunc(animationEvent)
     end
-
-    return node
 end
 
 function EffectComponentTest:onEnter()
@@ -562,11 +704,21 @@ end
 function BackgroundComponentTest:createGameScene()
     local node = SceneReader:sharedSceneReader():createNodeWithSceneFile("scenetest/BackgroundComponentTest/BackgroundComponentTest.json")
     if nil ~= node then
-        local audio = tolua.cast(node:getComponent("CCBackgroundAudio"),"CCComAudio")
-        audio:playBackgroundMusic()
+
+        SceneEditorTestLayer.fileName = "scenetest/BackgroundComponentTest/BackgroundComponentTest.json"
+        SceneEditorTestLayer.rootNode = node
+
+        self:defaultPlay()
     end
 
     return node
+end
+
+function BackgroundComponentTest:defaultPlay()
+    if SceneEditorTestLayer.rootNode ~= nil then
+       local audio = tolua.cast(SceneEditorTestLayer.rootNode:getComponent("CCBackgroundAudio"),"CCComAudio")
+        audio:playBackgroundMusic()
+    end
 end
 
 function BackgroundComponentTest:onEnter()
@@ -611,9 +763,19 @@ end
 
 function AttributeComponentTest:createGameScene()
     local node = SceneReader:sharedSceneReader():createNodeWithSceneFile("scenetest/AttributeComponentTest/AttributeComponentTest.json")
-    local attribute = tolua.cast(node:getChildByTag(10015):getComponent("CCComAttribute"), "CCComAttribute")
-    print(string.format("Name: %s, HP: %f, MP: %f", attribute:getCString("name"), attribute:getFloat("maxHP"), attribute:getFloat("maxMP")))
+    if nil ~= node then
+        SceneEditorTestLayer.fileName = "scenetest/AttributeComponentTest/AttributeComponentTest.json"
+        SceneEditorTestLayer.rootNode = node
+        self:defaultPlay()
     return node
+    end
+end
+
+function AttributeComponentTest:defaultPlay()
+    if SceneEditorTestLayer.rootNode ~= nil then
+        local attribute = tolua.cast(SceneEditorTestLayer.rootNode:getChildByTag(10015):getComponent("CCComAttribute"), "CCComAttribute")
+        print(string.format("Name: %s, HP: %f, MP: %f", attribute:getCString("name"), attribute:getFloat("maxHP"), attribute:getFloat("maxMP")))
+    end
 end
 
 function AttributeComponentTest:onEnter()
@@ -658,7 +820,12 @@ end
 
 function TriggerTest:createGameScene()
     local node = SceneReader:sharedSceneReader():createNodeWithSceneFile("scenetest/TriggerTest/TriggerTest.json")
+    if nil ~= node then
+        SceneEditorTestLayer.fileName = "scenetest/TriggerTest/TriggerTest.json"
+        SceneEditorTestLayer.rootNode = node
 
+        self:defaultPlay()
+    end
     return node
 end
 
@@ -685,6 +852,11 @@ function TriggerTest:onEnter()
     local root = self:createGameScene()
     if nil ~= root then
         self:addChild(root, 0, 1)
+    end    
+end
+
+function TriggerTest:defaultPlay()
+    if SceneEditorTestLayer.rootNode ~= nil then
 
         local function onTouchEvent(eventType, x, y)
             if eventType == "began" then
@@ -707,7 +879,6 @@ function TriggerTest:onEnter()
         self:scheduleUpdateWithPriorityLua(update,0)
         sendTriggerEvent(triggerEventDef.TRIGGEREVENT_ENTERSCENE)
     end
-    
 end
 
 function TriggerTest:onExit()
