@@ -31,6 +31,9 @@ THE SOFTWARE.
 
 namespace cocostudio {
 
+class CocoLoader;
+struct stExpCocoNode;
+    
 /**
 *  @js NA
 *  @lua NA
@@ -160,10 +163,17 @@ public:
 
 	/*init properties with a json dictionary*/
 	void initWithDictionary(const rapidjson::Value& dic, cocos2d::Ref* root);
+    
+    void initWithBinary(CocoLoader* pCocoLoader, stExpCocoNode*	pCocoNode, cocos2d::Ref* root);
+
 
 	/*scheduler update function*/
 	void simulationActionUpdate(float dt);
 protected:
+    int valueToInt(std::string& value);
+    bool valueToBool(std::string& value);
+    float valueToFloat(std::string& value);
+    
 	cocos2d::Vector<ActionNode*> _actionNodeList;
 	std::string _name;
 	bool _loop;
