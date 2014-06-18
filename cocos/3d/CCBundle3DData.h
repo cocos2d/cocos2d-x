@@ -82,6 +82,7 @@ struct SkinData
 {
     std::vector<std::string> boneNames;
     std::vector<Mat4>        inverseBindPoseMatrices; //bind pose of bone
+    std::vector<Mat4>        boneOriginMatrices; // original bone transform
     
     std::map<int, std::vector<int> > boneChild;//key parent, value child
     int                              rootBoneIndex;

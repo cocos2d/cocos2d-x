@@ -46,6 +46,23 @@ const Mat4& Bone::getInverseBindPose()
     return _invBindPose;
 }
 
+void Bone::setOriPose(const Mat4& m)
+{
+    _oriPose = m;
+}
+
+void Bone::resetPose()
+{
+    if (_parent)
+        _world = _parent->_world * _oriPose;
+    else
+        _world = _oriPose;
+    
+    for (auto it : _children) {
+        it->resetPose();
+    }
+}
+
 void Bone::setWorldMatDirty(bool dirty)
 {
     _worldDirty = dirty;
@@ -115,13 +132,6 @@ Bone* Bone::create(const std::string& id)
     return bone;
 }
 
-
-
-/**
- * Updates the joint matrix.
- *
- * @param matrixPalette The matrix palette to update.
- */
 void Bone::updateJointMatrix(Vec4* matrixPalette)
 {
     {
@@ -134,7 +144,6 @@ void Bone::updateJointMatrix(Vec4* matrixPalette)
     }
 }
 
-//bone tree, we do not inherit from Node, Node has too many properties that we do not need. A clean Node is needed.
 Bone* Bone::getParentBone()
 {
     return _parent;
@@ -174,9 +183,6 @@ Bone::Bone(const std::string& id)
     
 }
 
-/**
- * Destructor.
- */
 Bone::~Bone()
 {
     removeAllChildBone();
@@ -333,7 +339,6 @@ Bone* MeshSkin::getBoneByName(const std::string& id) const
     return nullptr;
 }
 
-//get & set root bone
 Bone* MeshSkin::getRootBone() const
 {
     return _rootBone;
@@ -351,10 +356,6 @@ void MeshSkin::setBoneCount(int boneCount)
     
     // Resize the joints vector and initialize to NULL
     _bones.reserve(boneCount);
-//    for (auto i = 0; i < boneCount; i++)
-//    {
-//        _bones.pushBack(nullptr);
-//    }
     
     // Rebuild the matrix palette. Each matrix is 3 rows of Vec4.
     CC_SAFE_DELETE_ARRAY(_matrixPalette);

@@ -72,9 +72,21 @@ public:
     /**
      * Sets the inverse bind pose matrix.
      *
-     * @param m C3DMatrix representing the inverse bind pose for this Bone.
+     * @param m Mat4 representing the inverse bind pose for this Bone.
      */
     void setInverseBindPose(const Mat4& m);
+    
+    /**
+     * Sets the bone's original pose.
+     *
+     * @param m Mat4 representing the original pose for this Bone.
+     */
+    void setOriPose(const Mat4& m);
+    
+    /**
+     * reset pose to origin
+     */
+    void resetPose();
     
     /**
      * Updates the joint matrix.
@@ -131,6 +143,8 @@ protected:
      * The Mat4 representation of the Joint's bind pose.
      */
     Mat4 _invBindPose;
+    
+    Mat4 _oriPose; //original bone pose
     
     Bone* _parent;
     
