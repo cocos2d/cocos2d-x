@@ -94,24 +94,6 @@ _isFocusPassing(false)
 {
     //no-op
 }
-    
-    void  Layout::compareWidget(Widget* widget)
-    {
-        CCLOG("Layout property comparison");
-        Widget::compareWidget(widget);
-        
-        Layout *layout = (Layout*)widget;
-        
-        
-        CCLOG("Layout background scale9: %d, %d", this->isBackGroundImageScale9Enabled(), layout->isBackGroundImageScale9Enabled());
-        CCLOG("Layout background image: %s, %s", _backGroundImageFileName.c_str(), layout->_backGroundImageFileName.c_str());
-        CCLOG("Layout _clippingEnabled image: %d, %d", _clippingEnabled, layout->_clippingEnabled);
-        CCLOG("Layout _alongVector : (%f,%f), (%f,%f)", _alongVector.x, _alongVector.y, layout->_alongVector.x, layout->_alongVector.y);
-
-
-        
-        CCLOG("==================");
-    }
 
 Layout::~Layout()
 {
@@ -1939,20 +1921,6 @@ Widget* Layout::findNextFocusedWidget(FocusDirection direction, Widget* current)
         return current;
     }
 }
-   
-    
-    Vector<Widget*> Layout::getAllLayouts(cocos2d::Node *node)
-    {
-        Vector<Widget*>  result;
-        for(auto& child : node->getChildren()){
-            result.pushBack(dynamic_cast<Widget*>(child));
-            Layout* l = dynamic_cast<Layout*>(child);
-            if (l) {
-                result.pushBack(l->getAllLayouts(l));
-            }
-        }
-        return result;
-    }
     
 }
 NS_CC_END

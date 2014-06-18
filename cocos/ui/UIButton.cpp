@@ -73,22 +73,6 @@ _disabledTextureAdaptDirty(true)
 {
 
 }
-    
-void Button::compareWidget(cocos2d::ui::Widget *widget)
-    {
-        CCLOG("Button  property comparison: ");
-
-        Widget::compareWidget(widget);
-
-        Button *btn = dynamic_cast<Button*>(widget);
-        
-        CCLOG("button: _normalFileName: %s, %s", _normalFileName.c_str(),  btn->_normalFileName.c_str());
-        CCLOG("button: _clickedFileName: %s, %s", _clickedFileName.c_str(),  btn->_clickedFileName.c_str());
-        CCLOG("button: _disabledFileName: %s, %s", _disabledFileName.c_str(),  btn->_disabledFileName.c_str());
-        CCLOG("button: _scale9Enabled: %d, %d", _scale9Enabled,  btn->_scale9Enabled);
-        CCLOG("===================================");
-
-    }
 
 Button::~Button()
 {

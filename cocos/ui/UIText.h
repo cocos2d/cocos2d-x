@@ -64,8 +64,6 @@ public:
      */
     static Text* create();
     
-    virtual void  compareWidget(Widget* widget);
-
     /**
      *  create a Text object with textContent, fontName and fontSize
      *  the fontName could be a system font name or a TTF file path.

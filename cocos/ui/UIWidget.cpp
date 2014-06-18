@@ -165,57 +165,6 @@ _layoutParameterType(LayoutParameter::Type::NONE)
 {
   
 }
-    
-    void Widget::compareWidget(cocos2d::ui::Widget *widget)
-    {
-        CCLOG("positionX: %f, %f",_position.x,  widget->getPosition().x );
-        CCLOG("positionY: %f, %f", _position.y, widget->getPosition().y);
-        CCLOG("ignoreSize: %d, %d ", this->isIgnoreContentAdaptWithSize(),  widget->isIgnoreContentAdaptWithSize());
-        CCLOG("sizeType: %d, %d", this->getSizeType(), widget->getSizeType());
-        CCLOG("positionType: %d, %d", this->getPositionType(), widget->getPositionType());
-        CCLOG("sizePercentX: %f, %f", this->getSizePercent().x, widget->getSizePercent().x);
-        CCLOG("sizePercentY: %f, %f", this->getSizePercent().y, widget->getSizePercent().y);
-        CCLOG("positionPercentX: %f, %f", this->getPositionPercent().x, widget->getPositionPercent().x);
-        CCLOG("positionPercentY: %f, %f", this->getPositionPercent().y, widget->getPositionPercent().y);
-        CCLOG("width: %f, %f", this->getSize().width, widget->getSize().width);
-        CCLOG("height: %f, %f", this->getSize().height, widget->getSize().height);
-        CCLOG("tag: %d, %d,", this->getTag(), widget->getTag());
-        CCLOG("actionTag: %d, %d" , this->getActionTag(), widget->getActionTag());
-        CCLOG("touchAble: %d, %d", this->isTouchEnabled(), widget->isTouchEnabled());
-        CCLOG("name: %s, %s", this->getName().c_str(), widget->getName().c_str());
-        CCLOG("scaleX: %f, %f", this->getScaleX(), widget->getScaleX());
-        CCLOG("scaleY: %f, %f", this->getScaleY(), widget->getScaleY());
-        CCLOG("rotation: %f, %f", this->getRotation(), widget->getRotation());
-        CCLOG("visible: %d, %d", this->isVisible(), widget->isVisible());
-        CCLOG("ZOrder: %d, %d", this->getZOrder(), widget->getZOrder());
-        if (this->getLayoutParameter()) {
-            if (dynamic_cast<LinearLayoutParameter*>(this->getLayoutParameter())) {
-                CCLOG("Gravity: %d, %d", ((LinearLayoutParameter*)this->getLayoutParameter())->getGravity(),
-                      ((LinearLayoutParameter*)widget->getLayoutParameter())->getGravity());
-            }
-            if (dynamic_cast<RelativeLayoutParameter*>(this->getLayoutParameter())) {
-                CCLOG("relativeName: %s, %s", ((RelativeLayoutParameter*)this->getLayoutParameter())->getRelativeName().c_str(),
-                      ((RelativeLayoutParameter*)widget->getLayoutParameter())->getRelativeName().c_str());
-                CCLOG("relativeToWidgetName: %s, %s", ((RelativeLayoutParameter*)this->getLayoutParameter())->getRelativeToWidgetName().c_str(),
-                      ((RelativeLayoutParameter*)widget->getLayoutParameter())->getRelativeToWidgetName().c_str());
-                CCLOG("Align: %d, %d", ((RelativeLayoutParameter*)this->getLayoutParameter())->getAlign(),
-                      ((RelativeLayoutParameter*)widget->getLayoutParameter())->getAlign());
-            }
-            CCLOG("LayoutParameter type:%d, %d", this->getLayoutParameter()->getLayoutType(),  widget->getLayoutParameter()->getLayoutType());
-            CCLOG("Margin left: %f, %f", this->getLayoutParameter()->getMargin().left, widget->getLayoutParameter()->getMargin().left);
-            CCLOG("Margin right: %f, %f", this->getLayoutParameter()->getMargin().right, widget->getLayoutParameter()->getMargin().right);
-            CCLOG("Margin up : %f, %f", this->getLayoutParameter()->getMargin().top, widget->getLayoutParameter()->getMargin().top);
-            CCLOG("Margin bottom: %f, %f", this->getLayoutParameter()->getMargin().bottom, widget->getLayoutParameter()->getMargin().bottom);
-        }
-        CCLOG("opacity: %d, %d", this->getOpacity(), widget->getOpacity());
-        CCLOG("colorR: %d, %d", this->getColor().r, widget->getColor().r);
-        CCLOG("colorG: %d, %d", this->getColor().g, widget->getColor().g);
-        CCLOG("colorB: %d, %d", this->getColor().b, widget->getColor().b);
-        CCLOG("flipX: %d, %d", this->isFlippedX(), widget->isFlippedX());
-        CCLOG("flipY: %d, %d", this->isFlippedY(), widget->isFlippedY());
-        CCLOG("anchorpointX: %f, %f", this->getAnchorPoint().x, widget->getAnchorPoint().x);
-        CCLOG("anchorpointY: %f, %f", this->getAnchorPoint().y, widget->getAnchorPoint().y);
-    }
 
 Widget::~Widget()
 {
