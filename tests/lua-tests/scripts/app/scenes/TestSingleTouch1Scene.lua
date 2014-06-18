@@ -31,6 +31,9 @@ function TestSingleTouch1Scene:ctor()
     end)
 
     --
+    self.sprite:addNodeEventListener(cc.KEYPAD_EVENT, function(event)
+        print("=====KEYPAD_EVENT: "..event.key)
+        end)
 
     app:createNextButton(self)
     app:createTitle(self, "单点触摸测试 - 响应触摸事件")
