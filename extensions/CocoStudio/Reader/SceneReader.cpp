@@ -249,7 +249,7 @@ CCNode* SceneReader::createObject(const rapidjson::Value &root, cocos2d::CCNode*
 			}
 			const char *comName = DICTOOL->getStringValue_json(subDict, "classname");
 			CCComponent *pCom = ObjectFactory::getInstance()->createComponent(comName);
-			SerData *pData = new SerData();
+            SerData *pData = new SerData();
 			if (pCom != NULL)
 			{
 				pData->prData = &subDict;
