@@ -255,10 +255,10 @@ struct V3F_C4B_T2F
 };
 
 //! a Vec2 with a vertex point, a tex coord point
-struct V2F_T2F
+struct V3F_T2F
 {
     //! vertices (2F)
-    Vec2       vertices;
+    Vec3       vertices;
     //! tex coords (2F)
     Tex2F          texCoords;
 };
@@ -313,16 +313,16 @@ struct V2F_C4F_T2F_Quad
     V2F_C4F_T2F    tr;
 };
 
-struct V2F_T2F_Quad
+struct V3F_T2F_Quad
 {
     //! bottom left
-    V2F_T2F    bl;
+    V3F_T2F    bl;
     //! bottom right
-    V2F_T2F    br;
+    V3F_T2F    br;
     //! top left
-    V2F_T2F    tl;
+    V3F_T2F    tl;
     //! top right
-    V2F_T2F    tr;
+    V3F_T2F    tr;
 };
 
 //! Blend Function used for textures

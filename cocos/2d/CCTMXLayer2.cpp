@@ -114,7 +114,6 @@ TMXLayer2::TMXLayer2()
 ,_tileSet(nullptr)
 ,_layerOrientation(TMXOrientationOrtho2)
 ,_texture(nullptr)
-,_reusedTile(nullptr)
 ,_verticesToDraw(0)
 ,_vertexZvalue(0)
 ,_useAutomaticVertexZ(false)
@@ -163,7 +162,7 @@ void TMXLayer2::onDraw(const Mat4 &transform, bool transformUpdated)
 
         if (Configuration::getInstance()->supportsShareableVAO())
         {
-            V2F_T2F_Quad* quads = (V2F_T2F_Quad*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+            V3F_T2F_Quad* quads = (V3F_T2F_Quad*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
             GLushort* indices = (GLushort *)glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY);
             _verticesToDraw = updateTiles(rect, quads, indices);
             glUnmapBuffer(GL_ARRAY_BUFFER);
@@ -192,10 +191,10 @@ void TMXLayer2::onDraw(const Mat4 &transform, bool transformUpdated)
         getGLProgram()->setUniformsForBuiltins(_modelViewTransform);
 
         // vertices
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_T2F), (GLvoid*) offsetof(V2F_T2F, vertices));
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_T2F), (GLvoid*) offsetof(V3F_T2F, vertices));
 
         // tex coords
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_T2F), (GLvoid*) offsetof(V2F_T2F, texCoords));
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_T2F), (GLvoid*) offsetof(V3F_T2F, texCoords));
 
         // color
         glVertexAttrib4f(GLProgram::VERTEX_ATTRIB_COLOR, _displayedColor.r/255.0f, _displayedColor.g/255.0f, _displayedColor.b/255.0f, _displayedOpacity/255.0f);
@@ -209,7 +208,7 @@ void TMXLayer2::onDraw(const Mat4 &transform, bool transformUpdated)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-int TMXLayer2::updateTiles(const Rect& culledRect, V2F_T2F_Quad *quads, GLushort *indices)
+int TMXLayer2::updateTiles(const Rect& culledRect, V3F_T2F_Quad *quads, GLushort *indices)
 {
     int tilesUsed = 0;
 
@@ -220,6 +219,8 @@ int TMXLayer2::updateTiles(const Rect& culledRect, V2F_T2F_Quad *quads, GLushort
     nodeToTileTransform.inverse();
     //transform to tile
     visibleTiles = RectApplyTransform(visibleTiles, nodeToTileTransform);
+    // tile coordinate is upside-down, so we need to make the tile coordinate use top-left for the start point.
+    visibleTiles.origin.y += 1;
     
     // if x=0.7, width=9.5, we need to draw number 0~10 of tiles, and so is height.
     visibleTiles.size.width = ceil(visibleTiles.origin.x + visibleTiles.size.width)  - floor(visibleTiles.origin.x);
@@ -227,7 +228,7 @@ int TMXLayer2::updateTiles(const Rect& culledRect, V2F_T2F_Quad *quads, GLushort
     visibleTiles.origin.x = floor(visibleTiles.origin.x);
     visibleTiles.origin.y = floor(visibleTiles.origin.y);
     
-    V2F_T2F_Quad* quadsTmp = quads;
+    V3F_T2F_Quad* quadsTmp = quads;
     GLushort* indicesTmp = indices;
     
     // for the bigger tiles.
@@ -261,7 +262,7 @@ int TMXLayer2::updateTiles(const Rect& culledRect, V2F_T2F_Quad *quads, GLushort
         if (_numQuads < quadsNeed)
         {
             _numQuads = quadsNeed;
-            _quads = (V2F_T2F_Quad*)realloc(_quads, _numQuads * sizeof(V2F_T2F_Quad));
+            _quads = (V3F_T2F_Quad*)realloc(_quads, _numQuads * sizeof(V3F_T2F_Quad));
             _indices = (GLushort*)realloc(_indices, _numQuads * 6 * sizeof(GLushort));
         }
         
@@ -271,11 +272,11 @@ int TMXLayer2::updateTiles(const Rect& culledRect, V2F_T2F_Quad *quads, GLushort
 
 
     Size texSize = _tileSet->_imageSize;
-    for (int y =  visibleTiles.origin.y; y < visibleTiles.origin.y + visibleTiles.size.height + tilesOverY; ++y)
+    for (int y =  visibleTiles.origin.y - tilesOverY; y < visibleTiles.origin.y + visibleTiles.size.height + tilesOverY; ++y)
     {
         if(y<0 || y >= _layerSize.height)
             continue;
-        for (int x = visibleTiles.origin.x - tilesOverX; x < visibleTiles.origin.x + visibleTiles.size.width; ++x)
+        for (int x = visibleTiles.origin.x - tilesOverX; x < visibleTiles.origin.x + visibleTiles.size.width + tilesOverX; ++x)
         {
             if(x<0 || x >= _layerSize.width)
                 continue;
@@ -286,12 +287,14 @@ int TMXLayer2::updateTiles(const Rect& culledRect, V2F_T2F_Quad *quads, GLushort
             if(tileGID!=0)
             {
 
-                V2F_T2F_Quad *quad = &quadsTmp[tilesUsed];
+                V3F_T2F_Quad *quad = &quadsTmp[tilesUsed];
                 
                 Vec3 nodePos(static_cast<float>(x), static_cast<float>(y), 0);
                 _tileToNodeTransform.transformPoint(&nodePos);
 
-                float left, right, top, bottom;
+                float left, right, top, bottom, z;
+                
+                z = getVertexZForPos(Vec2(x, y));
 
                 // vertices
                 if (tileGID & kTMXTileDiagonalFlag)
@@ -319,23 +322,31 @@ int TMXLayer2::updateTiles(const Rect& culledRect, V2F_T2F_Quad *quads, GLushort
                     // XXX: not working correcly
                     quad->bl.vertices.x = left;
                     quad->bl.vertices.y = bottom;
+                    quad->bl.vertices.z = z;
                     quad->br.vertices.x = left;
                     quad->br.vertices.y = top;
+                    quad->br.vertices.z = z;
                     quad->tl.vertices.x = right;
                     quad->tl.vertices.y = bottom;
+                    quad->tl.vertices.z = z;
                     quad->tr.vertices.x = right;
                     quad->tr.vertices.y = top;
+                    quad->tr.vertices.z = z;
                 }
                 else
                 {
                     quad->bl.vertices.x = left;
                     quad->bl.vertices.y = bottom;
+                    quad->bl.vertices.z = z;
                     quad->br.vertices.x = right;
                     quad->br.vertices.y = bottom;
+                    quad->br.vertices.z = z;
                     quad->tl.vertices.x = left;
                     quad->tl.vertices.y = top;
+                    quad->tl.vertices.z = z;
                     quad->tr.vertices.x = right;
                     quad->tr.vertices.y = top;
+                    quad->tr.vertices.z = z;
                 }
 
                 // texcoords
@@ -392,7 +403,7 @@ void TMXLayer2::setupVBO()
 
     // Vertex + Tex Coords
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-    glBufferData(GL_ARRAY_BUFFER, total * sizeof(V2F_T2F_Quad), NULL, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, total * sizeof(V3F_T2F_Quad), NULL, GL_DYNAMIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     // Indices
@@ -520,7 +531,7 @@ Sprite* TMXLayer2::getTileAt(const Point& tileCoordinate)
             tile->setPositionZ((float)getVertexZForPos(tileCoordinate));
             tile->setOpacity(this->getOpacity());
             tile->setTag(index);
-            this->addChild(tile, -index);
+            this->addChild(tile, index);
             _spriteContainer.insert(std::pair<int, std::pair<Sprite*, int> >(index, std::pair<Sprite*, int>(tile, gid)));
             
             // tile is converted to sprite.
@@ -806,22 +817,6 @@ void TMXLayer2::setupTileSprite(Sprite* sprite, Point pos, int gid)
             sprite->setFlippedY(true);
         }
     }
-}
-
-Sprite* TMXLayer2::reusedTileWithRect(Rect rect)
-{
-    if (! _reusedTile)
-    {
-        _reusedTile = Sprite::createWithTexture(_texture, rect);
-        _reusedTile->retain();
-    }
-    else
-    {
-		// Re-init the sprite
-        _reusedTile->setTextureRect(rect, false, rect.size);
-    }
-    
-    return _reusedTile;
 }
 
 std::string TMXLayer2::getDescription() const

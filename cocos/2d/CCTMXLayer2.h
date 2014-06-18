@@ -173,8 +173,6 @@ public:
      */
     Sprite* getTileAt(const Point& tileCoordinate);
     
-    Sprite* reusedTileWithRect(Rect rect);
-    
     Sprite* updateTileForGID(int gid, const Point& pos);
 
     void setupTileSprite(Sprite* sprite, Point pos, int gid);
@@ -189,7 +187,7 @@ public:
 protected:
 
     bool initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
-    int updateTiles(const Rect& culledRect, V2F_T2F_Quad *quads, GLushort *indices);
+    int updateTiles(const Rect& culledRect, V3F_T2F_Quad *quads, GLushort *indices);
     void setupVBO();
     Point calculateLayerOffset(const Point& offset);
 
@@ -205,7 +203,7 @@ protected:
     
     void insertTileForGID(int gid, const Point& pos);
     void setTileForGID(int index, int gid);
-
+    
 protected:
     CustomCommand _customCommand;
     
@@ -226,7 +224,6 @@ protected:
     ValueMap _properties;
 
     Texture2D *_texture;
-    Sprite* _reusedTile;
     
     /** container for sprite children. map<index, pair<sprite, gid> > */
     std::map<int, std::pair<Sprite*, int> > _spriteContainer;
@@ -245,7 +242,7 @@ protected:
     /** tile coordinate to node coordinate transform */
     Mat4 _tileToNodeTransform;
     /** quads to be rendered */
-    V2F_T2F_Quad* _quads;
+    V3F_T2F_Quad* _quads;
     /** number of quads */
     int _numQuads;
     /** indices */
