@@ -223,21 +223,17 @@ function Node:registerScriptTouchHandler(handler, isMultiTouches)
     end)
 end
 
-Node.scheduleUpdate_ = Node.scheduleUpdate
 function Node:scheduleUpdate(handler)
-    if handler then
-        PRINT_DEPRECATED("Node.scheduleUpdate(handler) is deprecated, please use Node.addNodeEventListener()")
-        self:addNodeEventListener(c.NODE_ENTER_FRAME_EVENT, handler)
-        self:scheduleUpdate_()
-    else
-        self:scheduleUpdate_()
+    PRINT_DEPRECATED("Node.scheduleUpdate(handler) is deprecated, please use Node.addNodeEventListener()")
+    if not handler then
+        handler = function(dt) self:onEnterFrame(dt) end
     end
+    self:addNodeEventListener(c.NODE_ENTER_FRAME_EVENT, handler)
 end
 
 function Node:scheduleUpdateWithPriorityLua(handler)
     PRINT_DEPRECATED("Node.scheduleUpdateWithPriorityLua() is deprecated, please use Node.addNodeEventListener()")
     self:addNodeEventListener(c.NODE_ENTER_FRAME_EVENT, handler)
-    self:scheduleUpdate_()
 end
 
 function Node:setTouchPriority()
