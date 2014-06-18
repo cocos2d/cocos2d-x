@@ -30,28 +30,12 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- @function [parent=#Texture2D] updateWithData 
+-- @function [parent=#Texture2D] releaseGLTexture 
 -- @param self
--- @param #void void
--- @param #int int
--- @param #int int
--- @param #int int
--- @param #int int
--- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @function [parent=#Texture2D] hasPremultipliedAlpha 
 -- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- @function [parent=#Texture2D] initWithMipmaps 
--- @param self
--- @param #cc._MipmapInfo map
--- @param #int int
--- @param #cc.Texture2D::PixelFormat pixelformat
--- @param #int int
--- @param #int int
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------

@@ -515,7 +515,7 @@ RenderTextureTestDepthStencil::~RenderTextureTestDepthStencil()
     CC_SAFE_RELEASE(_spriteDS);
 }
 
-void RenderTextureTestDepthStencil::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void RenderTextureTestDepthStencil::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     _renderCmds[0].init(_globalZOrder);
     _renderCmds[0].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforeClear, this);
@@ -685,7 +685,7 @@ SpriteRenderTextureBug::SimpleSprite* SpriteRenderTextureBug::SimpleSprite::crea
     return sprite;
 }
 
-void SpriteRenderTextureBug::SimpleSprite::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void SpriteRenderTextureBug::SimpleSprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     if (_rt == nullptr)
     {
@@ -696,7 +696,7 @@ void SpriteRenderTextureBug::SimpleSprite::draw(Renderer *renderer, const Mat4 &
 	_rt->beginWithClear(0.0f, 0.0f, 0.0f, 1.0f);
 	_rt->end();
 
-    Sprite::draw(renderer, transform, transformUpdated);
+    Sprite::draw(renderer, transform, flags);
     
 }
 

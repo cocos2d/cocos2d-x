@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "cocostudio/CCComController.h"
+#include "2d/CCNode.h"
 
 namespace cocostudio {
 

@@ -33,7 +33,6 @@ function UIScene:init()
 
     local function previousCallback(sender, eventType)
         if eventType == ccui.TouchEventType.ended then
-            self._uiLayer:removeFromParent()
             cc.Director:getInstance():replaceScene(guiSceneManager.previousUIScene())
         end
     end
@@ -43,7 +42,6 @@ function UIScene:init()
 
     local function restartCallback(sender, eventType)
          if eventType == ccui.TouchEventType.ended then
-             self._uiLayer:removeFromParent()
              cc.Director:getInstance():replaceScene(guiSceneManager.currentUIScene())
          end
     end
@@ -53,7 +51,6 @@ function UIScene:init()
 
     local function nextCallback(sender, eventType)
         if eventType == ccui.TouchEventType.ended then
-            self._uiLayer:removeFromParent()
             cc.Director:getInstance():replaceScene(guiSceneManager.nextUIScene())
         end
     end
@@ -63,7 +60,6 @@ function UIScene:init()
 
     local function menuCloseCallback( sender,eventType)
         if eventType == ccui.TouchEventType.ended then
-            self._uiLayer:removeFromParent()
             local scene = CocoStudioTestMain()
             if scene ~= nil then
                 cc.Director:getInstance():replaceScene(scene)
@@ -466,7 +462,7 @@ function UICheckBoxTest:initExtend()
                                "cocosui/check_box_active_disable.png")
     checkBox:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
         
-    checkBox:addEventListenerCheckBox(selectedEvent)  
+    checkBox:addEventListener(selectedEvent)  
 
     self._uiLayer:addChild(checkBox)
 end
@@ -528,7 +524,7 @@ function UISliderTest:initExtend()
     slider:loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "")
     slider:loadProgressBarTexture("cocosui/sliderProgress.png")
     slider:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
-    slider:addEventListenerSlider(percentChangedEvent)
+    slider:addEventListener(percentChangedEvent)
 
     self._uiLayer:addChild(slider)
 end
@@ -593,7 +589,7 @@ function UISliderScale9Test:initExtend()
     slider:setCapInsets(cc.rect(0, 0, 0, 0))
     slider:setSize(cc.size(250, 10))
     slider:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
-    slider:addEventListenerSlider(percentChangedEvent)
+    slider:addEventListener(percentChangedEvent)
 
     self._uiLayer:addChild(slider)
 end
@@ -760,7 +756,6 @@ function UILoadingBarLeftTest:initExtend()
     local function previousCallback(sender, eventType)
         if eventType == ccui.TouchEventType.ended then
             self:unscheduleUpdate()
-            self._uiLayer:removeFromParent()
             cc.Director:getInstance():replaceScene(guiSceneManager.previousUIScene())
         end
     end
@@ -771,7 +766,6 @@ function UILoadingBarLeftTest:initExtend()
     local function restartCallback(sender, eventType)
          if eventType == ccui.TouchEventType.ended then
              self:unscheduleUpdate()
-             self._uiLayer:removeFromParent()
              cc.Director:getInstance():replaceScene(guiSceneManager.currentUIScene())
          end
     end
@@ -782,7 +776,6 @@ function UILoadingBarLeftTest:initExtend()
     local function nextCallback(sender, eventType)
         if eventType == ccui.TouchEventType.ended then
             self:unscheduleUpdate()
-            self._uiLayer:removeFromParent()
             cc.Director:getInstance():replaceScene(guiSceneManager.nextUIScene())
         end
     end
@@ -793,7 +786,6 @@ function UILoadingBarLeftTest:initExtend()
     local function menuCloseCallback( sender,eventType)
         if eventType == ccui.TouchEventType.ended then
             self:unscheduleUpdate()
-            self._uiLayer:removeFromParent()
             local scene = CocoStudioTestMain()
             if scene ~= nil then
                 cc.Director:getInstance():replaceScene(scene)
@@ -891,7 +883,6 @@ function UILoadingBarRightTest:initExtend()
     local function previousCallback(sender, eventType)
         if eventType == ccui.TouchEventType.ended then
             self:unscheduleUpdate()
-            self._uiLayer:removeFromParent()
             cc.Director:getInstance():replaceScene(guiSceneManager.previousUIScene())
         end
     end
@@ -902,7 +893,6 @@ function UILoadingBarRightTest:initExtend()
     local function restartCallback(sender, eventType)
          if eventType == ccui.TouchEventType.ended then
              self:unscheduleUpdate()
-             self._uiLayer:removeFromParent()
              cc.Director:getInstance():replaceScene(guiSceneManager.currentUIScene())
          end
     end
@@ -913,7 +903,6 @@ function UILoadingBarRightTest:initExtend()
     local function nextCallback(sender, eventType)
         if eventType == ccui.TouchEventType.ended then
             self:unscheduleUpdate()
-            self._uiLayer:removeFromParent()
             cc.Director:getInstance():replaceScene(guiSceneManager.nextUIScene())
         end
     end
@@ -924,7 +913,6 @@ function UILoadingBarRightTest:initExtend()
     local function menuCloseCallback( sender,eventType)
         if eventType == ccui.TouchEventType.ended then
             self:unscheduleUpdate()
-            self._uiLayer:removeFromParent()
             local scene = CocoStudioTestMain()
             if scene ~= nil then
                 cc.Director:getInstance():replaceScene(scene)
@@ -1024,7 +1012,6 @@ function UILoadingBarLeftScale9Test:initExtend()
     local function previousCallback(sender, eventType)
         if eventType == ccui.TouchEventType.ended then
             self:unscheduleUpdate()
-            self._uiLayer:removeFromParent()
             cc.Director:getInstance():replaceScene(guiSceneManager.previousUIScene())
         end
     end
@@ -1035,7 +1022,6 @@ function UILoadingBarLeftScale9Test:initExtend()
     local function restartCallback(sender, eventType)
          if eventType == ccui.TouchEventType.ended then
              self:unscheduleUpdate()
-             self._uiLayer:removeFromParent()
              cc.Director:getInstance():replaceScene(guiSceneManager.currentUIScene())
          end
     end
@@ -1046,7 +1032,6 @@ function UILoadingBarLeftScale9Test:initExtend()
     local function nextCallback(sender, eventType)
         if eventType == ccui.TouchEventType.ended then
             self:unscheduleUpdate()
-            self._uiLayer:removeFromParent()
             cc.Director:getInstance():replaceScene(guiSceneManager.nextUIScene())
         end
     end
@@ -1057,7 +1042,6 @@ function UILoadingBarLeftScale9Test:initExtend()
     local function menuCloseCallback( sender,eventType)
         if eventType == ccui.TouchEventType.ended then
             self:unscheduleUpdate()
-            self._uiLayer:removeFromParent()
             local scene = CocoStudioTestMain()
             if scene ~= nil then
                 cc.Director:getInstance():replaceScene(scene)
@@ -1158,7 +1142,6 @@ function UILoadingBarRightScale9Test:initExtend()
     local function previousCallback(sender, eventType)
         if eventType == ccui.TouchEventType.ended then
             self:unscheduleUpdate()
-            self._uiLayer:removeFromParent()
             cc.Director:getInstance():replaceScene(guiSceneManager.previousUIScene())
         end
     end
@@ -1169,7 +1152,6 @@ function UILoadingBarRightScale9Test:initExtend()
     local function restartCallback(sender, eventType)
          if eventType == ccui.TouchEventType.ended then
              self:unscheduleUpdate()
-             self._uiLayer:removeFromParent()
              cc.Director:getInstance():replaceScene(guiSceneManager.currentUIScene())
          end
     end
@@ -1180,7 +1162,6 @@ function UILoadingBarRightScale9Test:initExtend()
     local function nextCallback(sender, eventType)
         if eventType == ccui.TouchEventType.ended then
             self:unscheduleUpdate()
-            self._uiLayer:removeFromParent()
             cc.Director:getInstance():replaceScene(guiSceneManager.nextUIScene())
         end
     end
@@ -1191,7 +1172,6 @@ function UILoadingBarRightScale9Test:initExtend()
     local function menuCloseCallback( sender,eventType)
         if eventType == ccui.TouchEventType.ended then
             self:unscheduleUpdate()
-            self._uiLayer:removeFromParent()
             local scene = CocoStudioTestMain()
             if scene ~= nil then
                 cc.Director:getInstance():replaceScene(scene)
@@ -1442,7 +1422,7 @@ function UITextFieldTest:initExtend()
     textField:setFontSize(30)
     textField:setPlaceHolder("input words here")
     textField:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
-    textField:addEventListenerTextField(textFieldEvent) 
+    textField:addEventListener(textFieldEvent) 
     self._uiLayer:addChild(textField) 
 end
 
@@ -1520,7 +1500,7 @@ function UITextFieldMaxLengthTest:initExtend()
     textField:setFontSize(30)
     textField:setPlaceHolder("input words here")
     textField:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
-    textField:addEventListenerTextField(textFieldEvent) 
+    textField:addEventListener(textFieldEvent) 
     self._uiLayer:addChild(textField) 
 end
 
@@ -1592,7 +1572,7 @@ function UITextFieldPasswordTest:initExtend()
     textField:setFontSize(30)
     textField:setPlaceHolder("input password here")
     textField:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
-    textField:addEventListenerTextField(textFieldEvent) 
+    textField:addEventListener(textFieldEvent) 
     self._uiLayer:addChild(textField) 
 end
 
@@ -2185,7 +2165,7 @@ function UIScrollViewVerticalTest:initExtend()
     textButton:setTouchEnabled(true)
     textButton:loadTextures("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png", "")
     textButton:setTitleText("Text Button")
-    textButton:setPosition(cc.p(innerWidth / 2, button:getBottomInParent() - button:getSize().height))
+    textButton:setPosition(cc.p(innerWidth / 2, button:getBottomBoundary() - button:getSize().height))
     scrollView:addChild(textButton)
         
     local button_scale9 = ccui.Button:create()
@@ -2193,7 +2173,7 @@ function UIScrollViewVerticalTest:initExtend()
     button_scale9:setScale9Enabled(true)
     button_scale9:loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "")
     button_scale9:setSize(cc.size(100, button_scale9:getVirtualRendererSize().height))
-    button_scale9:setPosition(cc.p(innerWidth / 2, textButton:getBottomInParent() - textButton:getSize().height))
+    button_scale9:setPosition(cc.p(innerWidth / 2, textButton:getBottomBoundary() - textButton:getSize().height))
     scrollView:addChild(button_scale9)
         
     imageView:setPosition(cc.p(innerWidth / 2, imageView:getSize().height / 2))
@@ -2278,8 +2258,8 @@ function UIScrollViewHorizontalTest:initExtend()
     textButton:setTouchEnabled(true)
     textButton:loadTextures("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png", "")
     textButton:setTitleText("Text Button")
-    textButton:setPosition(cc.p(button:getRightInParent() + button:getSize().width / 2,
-                                    button:getBottomInParent() - button:getSize().height / 2))
+    textButton:setPosition(cc.p(button:getRightBoundary() + button:getSize().width / 2,
+                                    button:getBottomBoundary() - button:getSize().height / 2))
     scrollView:addChild(textButton)
         
     local button_scale9 = ccui.Button:create()
@@ -2287,12 +2267,12 @@ function UIScrollViewHorizontalTest:initExtend()
     button_scale9:setScale9Enabled(true)
     button_scale9:loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "")
     button_scale9:setSize(cc.size(100, button_scale9:getVirtualRendererSize().height))
-    button_scale9:setPosition(cc.p(textButton:getRightInParent() + textButton:getSize().width / 2,
-                                       textButton:getBottomInParent() - textButton:getSize().height / 2))
+    button_scale9:setPosition(cc.p(textButton:getRightBoundary() + textButton:getSize().width / 2,
+                                       textButton:getBottomBoundary() - textButton:getSize().height / 2))
     scrollView:addChild(button_scale9)                
                 
     imageView:setPosition(cc.p(innerWidth - imageView:getSize().width / 2,
-                                   button_scale9:getBottomInParent() - button_scale9:getSize().height / 2))
+                                   button_scale9:getBottomBoundary() - button_scale9:getSize().height / 2))
     scrollView:addChild(imageView)  
 end
 
@@ -2384,7 +2364,7 @@ function UIPageViewTest:initExtend()
         end
     end 
 
-    pageView:addEventListenerPageView(pageViewEvent)
+    pageView:addEventListener(pageViewEvent)
         
     self._uiLayer:addChild(pageView)
   
@@ -2461,7 +2441,7 @@ function UIListViewVerticalTest:initExtend()
                               (backgroundSize.width - listView:getSize().width) / 2.0,
                               (widgetSize.height - backgroundSize.height) / 2.0 +
                               (backgroundSize.height - listView:getSize().height) / 2.0))
-    listView:addEventListenerListView(listViewEvent)
+    listView:addEventListener(listViewEvent)
     self._uiLayer:addChild(listView)
 
 
@@ -2622,7 +2602,7 @@ function UIListViewHorizontalTest:initExtend()
                               (backgroundSize.width - listView:getSize().width) / 2.0,
                               (widgetSize.height - backgroundSize.height) / 2.0 +
                               (backgroundSize.height - listView:getSize().height) / 2.0))
-    listView:addEventListenerListView(listViewEvent)
+    listView:addEventListener(listViewEvent)
     self._uiLayer:addChild(listView)
 
 

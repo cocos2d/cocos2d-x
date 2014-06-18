@@ -87,8 +87,6 @@ private:
     Windows::Graphics::Display::DisplayOrientations mCurrentOrientation;
 
 
-    std::mutex mRenderingMutex;
-
     Cocos2dEventDelegate^ m_delegate;
     Cocos2dMessageBoxDelegate^ m_messageBoxDelegate;
     Cocos2dEditBoxDelegate^ m_editBoxDelegate;

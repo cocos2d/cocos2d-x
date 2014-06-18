@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "ui/UISlider.h"
 #include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"
+#include "2d/CCSprite.h"
 
 NS_CC_BEGIN
 
@@ -146,7 +147,9 @@ void Slider::loadBarTexture(const std::string& fileName, TextureResType texType)
         default:
             break;
     }
-    updateRGBAToRenderer(_barRenderer);
+    _barRenderer->setColor(this->getColor());
+    _barRenderer->setOpacity(this->getOpacity());
+    
     _barRendererAdaptDirty = true;
     _progressBarRendererDirty = true;
     updateContentSizeWithTextureSize(_barRenderer->getContentSize());
@@ -185,7 +188,10 @@ void Slider::loadProgressBarTexture(const std::string& fileName, TextureResType 
         default:
             break;
     }
-    updateRGBAToRenderer(_progressBarRenderer);
+    
+    _progressBarRenderer->setColor(this->getColor());
+    _progressBarRenderer->setOpacity(this->getOpacity());
+    
     _progressBarRenderer->setAnchorPoint(Vec2(0.0f, 0.5f));
     _progressBarTextureSize = _progressBarRenderer->getContentSize();
     _progressBarRendererDirty = true;
@@ -307,7 +313,8 @@ void Slider::loadSlidBallTextureNormal(const std::string& normal,TextureResType 
         default:
             break;
     }
-    updateRGBAToRenderer(_slidBallNormalRenderer);
+    _slidBallNormalRenderer->setColor(this->getColor());
+    _slidBallNormalRenderer->setOpacity(this->getOpacity());
 }
 
 void Slider::loadSlidBallTexturePressed(const std::string& pressed,TextureResType texType)
@@ -329,7 +336,8 @@ void Slider::loadSlidBallTexturePressed(const std::string& pressed,TextureResTyp
         default:
             break;
     }
-    updateRGBAToRenderer(_slidBallPressedRenderer);
+    _slidBallPressedRenderer->setColor(this->getColor());
+    _slidBallPressedRenderer->setOpacity(this->getOpacity());
 }
 
     void Slider::loadSlidBallTextureDisabled(const std::string& disabled,TextureResType texType)
@@ -351,7 +359,8 @@ void Slider::loadSlidBallTexturePressed(const std::string& pressed,TextureResTyp
         default:
             break;
     }
-    updateRGBAToRenderer(_slidBallDisabledRenderer);
+    _slidBallDisabledRenderer->setColor(this->getColor());
+    _slidBallDisabledRenderer->setOpacity(this->getOpacity());
 }
 
 void Slider::setPercent(int percent)
@@ -397,7 +406,7 @@ bool Slider::onTouchBegan(Touch *touch, Event *unusedEvent)
     bool pass = Widget::onTouchBegan(touch, unusedEvent);
     if (_hitted)
     {
-        Vec2 nsp = convertToNodeSpace(_touchStartPos);
+        Vec2 nsp = convertToNodeSpace(_touchBeganPosition);
         setPercent(getPercentWithBallPos(nsp.x));
         percentChangedEvent();
     }
@@ -406,8 +415,8 @@ bool Slider::onTouchBegan(Touch *touch, Event *unusedEvent)
 
 void Slider::onTouchMoved(Touch *touch, Event *unusedEvent)
 {
-    _touchMovePos = touch->getLocation();
-    Vec2 nsp = convertToNodeSpace(_touchMovePos);
+    _touchMovePosition = touch->getLocation();
+    Vec2 nsp = convertToNodeSpace(_touchMovePosition);
     setPercent(getPercentWithBallPos(nsp.x));
     percentChangedEvent();
 }
@@ -580,33 +589,6 @@ void Slider::onPressStateChangedToDisabled()
 std::string Slider::getDescription() const
 {
     return "Slider";
-}
-    
-void Slider::updateTextureColor()
-{
-    updateColorToRenderer(_barRenderer);
-    updateColorToRenderer(_progressBarRenderer);
-    updateColorToRenderer(_slidBallNormalRenderer);
-    updateColorToRenderer(_slidBallPressedRenderer);
-    updateColorToRenderer(_slidBallDisabledRenderer);
-}
-
-void Slider::updateTextureOpacity()
-{
-    updateOpacityToRenderer(_barRenderer);
-    updateOpacityToRenderer(_progressBarRenderer);
-    updateOpacityToRenderer(_slidBallNormalRenderer);
-    updateOpacityToRenderer(_slidBallPressedRenderer);
-    updateOpacityToRenderer(_slidBallDisabledRenderer);
-}
-
-void Slider::updateTextureRGBA()
-{
-    updateRGBAToRenderer(_barRenderer);
-    updateRGBAToRenderer(_progressBarRenderer);
-    updateRGBAToRenderer(_slidBallNormalRenderer);
-    updateRGBAToRenderer(_slidBallPressedRenderer);
-    updateRGBAToRenderer(_slidBallDisabledRenderer);
 }
 
 Widget* Slider::createCloneInstance()

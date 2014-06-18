@@ -14,12 +14,6 @@
 -- @param #vec2_table vec2
         
 --------------------------------
--- @function [parent=#TurnOffTiles] shuffle 
--- @param self
--- @param #unsigned int int
--- @param #unsigned int int
-        
---------------------------------
 -- overload function: create(float, size_table, unsigned int)
 --          
 -- overload function: create(float, size_table)

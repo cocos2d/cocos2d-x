@@ -374,7 +374,7 @@ void MotionStreak::reset()
     _nuPoints = 0;
 }
 
-void MotionStreak::onDraw(const Mat4 &transform, bool transformUpdated)
+void MotionStreak::onDraw(const Mat4 &transform, uint32_t flags)
 {  
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
@@ -404,12 +404,12 @@ void MotionStreak::onDraw(const Mat4 &transform, bool transformUpdated)
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _nuPoints*2);
 }
 
-void MotionStreak::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void MotionStreak::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     if(_nuPoints <= 1)
         return;
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(MotionStreak::onDraw, this, transform, transformUpdated);
+    _customCommand.func = CC_CALLBACK_0(MotionStreak::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 }
 

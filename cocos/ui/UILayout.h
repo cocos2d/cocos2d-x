@@ -26,13 +26,20 @@ THE SOFTWARE.
 #define __LAYOUT_H__
 
 #include "ui/UIWidget.h"
+#include "renderer/CCCustomCommand.h"
+#include "renderer/CCGroupCommand.h"
 
 NS_CC_BEGIN
+
+class DrawNode;
+class LayerColor;
+class LayerGradient;
 
 namespace ui {
     
 class LayoutManager;
-    
+
+
 class LayoutProtocol
 {
 public:
@@ -49,7 +56,12 @@ public:
  *  @js NA
  *  @lua NA
  */
-    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#ifdef RELATIVE
+#undef RELATIVE
+#endif
+#endif
+
 class Layout : public Widget, public LayoutProtocol
 {
     
@@ -241,7 +253,7 @@ public:
      */
     virtual void addChild(Node* child, int zOrder, int tag) override;
     
-    virtual void visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated) override;
+    virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
 
     virtual void removeChild(Node* child, bool cleanup = true) override;
     
@@ -260,7 +272,6 @@ public:
      */
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
 
-    virtual void sortAllChildren() override;
     
     void requestDoLayout();
     
@@ -321,8 +332,8 @@ protected:
     virtual void copySpecialProperties(Widget* model) override;
     virtual void copyClonedWidgetChildren(Widget* model) override;
     
-    void stencilClippingVisit(Renderer *renderer, const Mat4& parentTransform, bool parentTransformUpdated);
-    void scissorClippingVisit(Renderer *renderer, const Mat4& parentTransform, bool parentTransformUpdated);
+    void stencilClippingVisit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags);
+    void scissorClippingVisit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags);
     
     void setStencilClippingSize(const Size& size);
     const Rect& getClippingRect();
@@ -336,6 +347,9 @@ protected:
     void onBeforeVisitStencil();
     void onAfterDrawStencil();
     void onAfterVisitStencil();
+    /**draw fullscreen quad to clear stencil bits
+     */
+    void drawFullScreenQuadClearStencil();
     
     void onBeforeVisitScissor();
     void onAfterVisitScissor();

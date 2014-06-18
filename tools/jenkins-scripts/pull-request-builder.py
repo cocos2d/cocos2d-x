@@ -104,7 +104,7 @@ def main():
     set_description(pr_desc, target_url)
  
     
-    data = {"state":"pending", "target_url":target_url}
+    data = {"state":"pending", "target_url":target_url, "context":"Jenkins CI", "description":"Build started..."}
     access_token = os.environ['GITHUB_ACCESS_TOKEN']
     Headers = {"Authorization":"token " + access_token} 
 

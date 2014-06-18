@@ -24,6 +24,8 @@
  ****************************************************************************/
 
 #include "Sprite3DTest.h"
+#include "3d/CCAnimation3D.h"
+#include "3d/CCAnimate3D.h"
 
 #include <algorithm>
 #include "../testResource.h"
@@ -41,7 +43,8 @@ static int sceneIdx = -1;
 static std::function<Layer*()> createFunctions[] =
 {
     CL(Sprite3DBasicTest),
-    CL(Sprite3DEffectTest)
+    CL(Sprite3DEffectTest),
+    CL(Sprite3DWithSkinTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -297,7 +300,7 @@ Effect3DOutline* Effect3DOutline::create()
 bool Effect3DOutline::init()
 {
 
-    GLProgram* glprogram = Effect3DOutline::getOrCreateProgram();
+    GLProgram* glprogram = GLProgram::createWithFilenames(_vertShaderFile, _fragShaderFile);
     if(nullptr == glprogram)
     {
         CC_SAFE_DELETE(glprogram);
@@ -320,12 +323,27 @@ Effect3DOutline::Effect3DOutline()
 , _outlineColor(1, 1, 1)
 , _sprite(nullptr)
 {
-    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
+                                                          [this](EventCustom*)
+                                                          {
+                                                              auto glProgram = _glProgramState->getGLProgram();
+                                                              glProgram->reset();
+                                                              glProgram->initWithFilenames(_vertShaderFile, _fragShaderFile);
+                                                              glProgram->link();
+                                                              glProgram->updateUniforms();
+                                                          }
+                                                          );
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+#endif
 }
 
 Effect3DOutline::~Effect3DOutline()
 {
     CC_SAFE_RELEASE_NULL(_sprite);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
 }
 
 void Effect3DOutline::setOutlineColor(const Vec3& color)
@@ -401,7 +419,7 @@ void Effect3DOutline::draw(const Mat4 &transform)
     }
 }
 
-void EffectSprite3D::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, bool transformUpdated)
+void EffectSprite3D::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags)
 {
     for(auto &effect : _effects)
     {
@@ -415,7 +433,7 @@ void EffectSprite3D::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &tran
     
     if(!_defaultEffect)
     {
-        Sprite3D::draw(renderer, transform, transformUpdated);
+        Sprite3D::draw(renderer, transform, flags);
     }
     else
     {
@@ -494,6 +512,64 @@ void Sprite3DEffectTest::addNewSpriteWithCoords(Vec2 p)
 }
 
 void Sprite3DEffectTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
+    for (auto touch: touches)
+    {
+        auto location = touch->getLocation();
+        
+        addNewSpriteWithCoords( location );
+    }
+}
+
+Sprite3DWithSkinTest::Sprite3DWithSkinTest()
+{
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DWithSkinTest::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
+    auto s = Director::getInstance()->getWinSize();
+    addNewSpriteWithCoords( Vec2(s.width/2, s.height/2) );
+}
+std::string Sprite3DWithSkinTest::title() const
+{
+    return "Testing Sprite3D for animation from c3t";
+}
+std::string Sprite3DWithSkinTest::subtitle() const
+{
+    return "Tap screen to add more sprite3D";
+}
+
+void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
+{
+    auto sprite = Sprite3D::create("Sprite3DTest/girl.c3t");
+    addChild(sprite);
+    sprite->setRotation3D(Vec3(-90.f, 0.f, 0.f));
+    sprite->setPosition( Vec2( p.x, p.y) );
+
+    auto animation = Animation3D::getOrCreate("Sprite3DTest/girl.c3t");
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation);
+        if(std::rand() %3 == 0)
+        {
+            animate->setPlayBack(true);
+        }
+
+        int rand2 = std::rand();
+        if(rand2 % 3 == 1)
+        {
+            animate->setSpeed(animate->getSpeed() + CCRANDOM_0_1());
+        }
+        else if(rand2 % 3 == 2)
+        {
+            animate->setSpeed(animate->getSpeed() - 0.5 * CCRANDOM_0_1());
+        }
+
+        sprite->runAction(RepeatForever::create(animate));
+    }
+}
+
+void Sprite3DWithSkinTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
     for (auto touch: touches)
     {

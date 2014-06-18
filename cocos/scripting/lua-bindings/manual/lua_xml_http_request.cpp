@@ -181,80 +181,72 @@ void LuaMinXmlHttpRequest::_setHttpRequestHeader()
  */
 void LuaMinXmlHttpRequest::_sendRequest()
 {
-    _httpRequest->setResponseCallback(this, httpresponse_selector(LuaMinXmlHttpRequest::handle_requestResponse));
+    _httpRequest->setResponseCallback([this](cocos2d::network::HttpClient* sender, cocos2d::network::HttpResponse* response){
+        if (0 != strlen(response->getHttpRequest()->getTag()))
+        {
+            CCLOG("%s completed", response->getHttpRequest()->getTag());
+        }
+        
+        long statusCode = response->getResponseCode();
+        char statusString[64] = {};
+        sprintf(statusString, "HTTP Status Code: %ld, tag = %s", statusCode, response->getHttpRequest()->getTag());
+        
+        if (!response->isSucceed())
+        {
+            CCLOG("response failed");
+            CCLOG("error buffer: %s", response->getErrorBuffer());
+            return;
+        }
+        
+        // set header
+        std::vector<char> *headers = response->getResponseHeader();
+        
+        char* concatHeader = (char*) malloc(headers->size() + 1);
+        std::string header(headers->begin(), headers->end());
+        strcpy(concatHeader, header.c_str());
+        
+        std::istringstream stream(concatHeader);
+        std::string line;
+        while(std::getline(stream, line)) {
+            _gotHeader(line);
+        }
+        
+        /** get the response data **/
+        std::vector<char> *buffer = response->getResponseData();
+        char* concatenated = (char*) malloc(buffer->size() + 1);
+        std::string s2(buffer->begin(), buffer->end());
+        strcpy(concatenated, s2.c_str());
+        
+        if (statusCode == 200)
+        {
+            //Succeeded
+            _status = 200;
+            _readyState = DONE;
+            _data << concatenated;
+            _dataSize = buffer->size();
+        }
+        else
+        {
+            _status = 0;
+        }
+        // Free Memory.
+        free((void*) concatHeader);
+        free((void*) concatenated);
+        
+        // call back lua function --TODO
+        int handler = cocos2d::ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, cocos2d::ScriptHandlerMgr::HandlerType::XMLHTTPREQUEST_READY_STATE_CHANGE );
+        
+        if (0 != handler)
+        {
+            cocos2d::CommonScriptData data(handler,"");
+            cocos2d::ScriptEvent event(cocos2d::ScriptEventType::kCommonEvent,(void*)&data);
+            cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+        }
+        release();
+    });
     network::HttpClient::getInstance()->send(_httpRequest);
     _httpRequest->release();
-}
-
-
-/**
- *  @brief Callback for HTTPRequest. Handles the response and invokes Callback.
- *  @param sender   Object which initialized callback
- *  @param respone  Response object
- *  @js NA
- */
-void LuaMinXmlHttpRequest::handle_requestResponse(network::HttpClient *sender, network::HttpResponse *response)
-{
-    if (0 != strlen(response->getHttpRequest()->getTag()))
-    {
-        CCLOG("%s completed", response->getHttpRequest()->getTag());
-    }
-    
-    long statusCode = response->getResponseCode();
-    char statusString[64] = {};
-    sprintf(statusString, "HTTP Status Code: %ld, tag = %s", statusCode, response->getHttpRequest()->getTag());
-    
-    if (!response->isSucceed())
-    {
-        CCLOG("response failed");
-        CCLOG("error buffer: %s", response->getErrorBuffer());
-        return;
-    }
-    
-    // set header
-    std::vector<char> *headers = response->getResponseHeader();
-    
-    char* concatHeader = (char*) malloc(headers->size() + 1);
-    std::string header(headers->begin(), headers->end());
-    strcpy(concatHeader, header.c_str());
-    
-    std::istringstream stream(concatHeader);
-    std::string line;
-    while(std::getline(stream, line)) {
-        _gotHeader(line);
-    }
-
-    /** get the response data **/
-    std::vector<char> *buffer = response->getResponseData();
-    char* concatenated = (char*) malloc(buffer->size() + 1);
-    std::string s2(buffer->begin(), buffer->end());
-    strcpy(concatenated, s2.c_str());
-    
-    if (statusCode == 200)
-    {
-        //Succeeded
-        _status = 200;
-        _readyState = DONE;
-        _data << concatenated;
-        _dataSize = buffer->size();
-    }
-    else
-    {
-        _status = 0;
-    }
-    // Free Memory.
-    free((void*) concatHeader);
-    free((void*) concatenated);
-    
-    // call back lua function --TODO
-    int handler = cocos2d::ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, cocos2d::ScriptHandlerMgr::HandlerType::XMLHTTPREQUEST_READY_STATE_CHANGE );
-    
-    if (0 != handler)
-    {
-        cocos2d::CommonScriptData data(handler,"");
-        cocos2d::ScriptEvent event(cocos2d::ScriptEventType::kCommonEvent,(void*)&data);
-        cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
-    }
+    retain();
 }
 
 void LuaMinXmlHttpRequest::getByteData(unsigned char* byteData)

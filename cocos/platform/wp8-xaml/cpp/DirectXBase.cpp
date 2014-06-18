@@ -24,6 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "DirectXBase.h"
+#include "DirectXHelper.h"
 
 using namespace DirectX;
 using namespace Microsoft::WRL;
@@ -167,12 +168,12 @@ void DirectXBase::Render()
 
 void DirectXBase::CloseAngle()
 {
+    eglMakeCurrent(NULL, NULL, NULL, NULL);
 
-	if(m_eglDisplay && m_eglSurface)
+    if(m_eglPhoneWindow != nullptr)
     {
-        eglDestroySurface(m_eglDisplay, m_eglSurface);
-        m_eglSurface = nullptr;
-    }
+        m_eglPhoneWindow->Update(nullptr, nullptr, nullptr);
+    }  
 
 	if(m_eglDisplay && m_eglContext)
     {
@@ -180,18 +181,17 @@ void DirectXBase::CloseAngle()
         m_eglContext = nullptr;
     }    
 
-	if(m_eglDisplay)
+	if(m_eglDisplay && m_eglSurface)
+    {
+        eglDestroySurface(m_eglDisplay, m_eglSurface);
+        m_eglSurface = nullptr;
+    }
+
+    if(m_eglDisplay)
     {
         eglTerminate(m_eglDisplay);
         m_eglDisplay = nullptr;
-    }
-
-    if(m_eglPhoneWindow != nullptr)
-    {
-         m_eglPhoneWindow->Update(nullptr, nullptr, nullptr);
-    }
-
-    eglMakeCurrent(NULL, NULL, NULL, NULL);
+    }  
 
     if(m_device)
     {
@@ -199,11 +199,8 @@ void DirectXBase::CloseAngle()
         m_device = nullptr;
     }
 
-#if 0
     m_eglPhoneWindow = nullptr;
     m_eglWindow = nullptr;  
-#endif // 0
-
 
     m_bAngleInitialized = false;
 }
@@ -262,10 +259,12 @@ bool DirectXBase::InitializeAngle(ID3D11Device1* d3dDevice, ID3D11DeviceContext1
 
     m_eglPhoneWindow->Update(d3dDevice, d3dContext, d3dRenderTargetView);
 
+    ComPtr<IUnknown> u;
+    HRESULT r = m_eglPhoneWindow.As(&u);
 
     if(m_eglWindow == nullptr)
     { 	DX::ThrowIfFailed(
-        CreateWinrtEglWindow(m_eglPhoneWindow.Get(), featureLevel, m_eglWindow.GetAddressOf())
+        CreateWinrtEglWindow(u.Get(), featureLevel, m_eglWindow.GetAddressOf())
         );
     }
 

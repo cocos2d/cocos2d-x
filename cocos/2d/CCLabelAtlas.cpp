@@ -249,7 +249,7 @@ void LabelAtlas::updateColor()
 
 //CCLabelAtlas - draw
 #if CC_LABELATLAS_DEBUG_DRAW
-void LabelAtlas::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void LabelAtlas::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     AtlasNode::draw(renderer, transform, transformUpdated);
 

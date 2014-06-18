@@ -30,7 +30,6 @@ set(CS_SRC
   DictionaryHelper.cpp
   CCSGUIReader.cpp
   CCSSceneReader.cpp
-  ObjectFactory.cpp
   TriggerBase.cpp
   TriggerMng.cpp
   TriggerObj.cpp

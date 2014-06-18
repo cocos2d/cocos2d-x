@@ -216,6 +216,58 @@ Widget* GUIReader::widgetFromJsonFile(const char *fileName)
     CC_SAFE_DELETE(pReader);
     return widget;
 }
+    
+
+
+std::string WidgetPropertiesReader::getGUIClassName(const std::string &name)
+{
+    std::string convertedClassName = name;
+    if (name == "Panel")
+    {
+        convertedClassName = "Layout";
+    }
+    else if (name == "TextArea")
+    {
+        convertedClassName = "Text";
+    }
+    else if (name == "TextButton")
+    {
+        convertedClassName = "Button";
+    }
+    else if (name == "Label")
+    {
+        convertedClassName = "Text";
+    }
+    else if (name == "LabelAtlas")
+    {
+        convertedClassName = "TextAtlas";
+    }
+    else if (name == "LabelBMFont")
+    {
+        convertedClassName = "TextBMFont";
+    }
+   
+    
+    return convertedClassName;
+}
+    
+cocos2d::ui::Widget* WidgetPropertiesReader::createGUI(const std::string &classname)
+{
+    std::string name = this->getGUIClassName(classname);
+
+    Ref* object = ObjectFactory::getInstance()->createObject(name);
+    
+    return dynamic_cast<ui::Widget*>(object);
+}
+
+WidgetReaderProtocol* WidgetPropertiesReader::createWidgetReaderProtocol(const std::string &classname)
+{
+    Ref* object = ObjectFactory::getInstance()->createObject(classname);
+    
+    return dynamic_cast<WidgetReaderProtocol*>(object);
+}
+    
+   
 
 
 void WidgetPropertiesReader::setAnchorPointForWidget(cocos2d::ui::Widget *widget, const rapidjson::Value &options)
@@ -1001,7 +1053,7 @@ Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Va
 {
     const char* classname = DICTOOL->getStringValue_json(data, "classname");
     const rapidjson::Value& uiOptions = DICTOOL->getSubDictionary_json(data, "options");
-    Widget* widget = ObjectFactory::getInstance()->createGUI(classname);
+    Widget* widget = this->createGUI(classname);
     
     // create widget reader to parse properties of widget
     std::string readerName = classname;
@@ -1030,7 +1082,8 @@ Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Va
         readerName = "TextBMFont";
     }
     readerName.append("Reader");
-    WidgetReaderProtocol* reader = ObjectFactory::getInstance()->createWidgetReaderProtocol(readerName);
+    
+    WidgetReaderProtocol* reader = this->createWidgetReaderProtocol(readerName);
     
     if (reader)
     {
@@ -1096,7 +1149,9 @@ Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Va
         {
             readerName = "WidgetReader";
         }
-        reader = ObjectFactory::getInstance()->createWidgetReaderProtocol(readerName);
+        
+        reader = dynamic_cast<WidgetReaderProtocol*>(ObjectFactory::getInstance()->createObject(readerName));
+        
         setPropsForAllWidgetFromJsonDictionary(reader, widget, uiOptions);
         
         // 2nd., custom widget parse with custom reader

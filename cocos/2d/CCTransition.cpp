@@ -103,16 +103,16 @@ void TransitionScene::sceneOrder()
     _isInSceneOnTop = true;
 }
 
-void TransitionScene::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void TransitionScene::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    Scene::draw(renderer, transform, transformUpdated);
+    Scene::draw(renderer, transform, flags);
 
     if( _isInSceneOnTop ) {
-        _outScene->visit(renderer, transform, transformUpdated);
-        _inScene->visit(renderer, transform, transformUpdated);
+        _outScene->visit(renderer, transform, flags);
+        _inScene->visit(renderer, transform, flags);
     } else {
-        _inScene->visit(renderer, transform, transformUpdated);
-        _outScene->visit(renderer, transform, transformUpdated);
+        _inScene->visit(renderer, transform, flags);
+        _outScene->visit(renderer, transform, flags);
     }
 }
 
@@ -1261,7 +1261,7 @@ TransitionCrossFade* TransitionCrossFade::create(float t, Scene* scene)
     return nullptr;
 }
 
-void TransitionCrossFade::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void TransitionCrossFade::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     // override draw since both scenes (textures) are rendered in 1 scene
 }
@@ -1410,19 +1410,19 @@ void TransitionTurnOffTiles::onExit()
     TransitionScene::onExit();
 }
 
-void TransitionTurnOffTiles::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void TransitionTurnOffTiles::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    Scene::draw(renderer, transform, transformUpdated);
+    Scene::draw(renderer, transform, flags);
     
     if( _isInSceneOnTop )
     {
-        _outSceneProxy->visit(renderer, transform, transformUpdated);
-        _inScene->visit(renderer, transform, transformUpdated);
+        _outSceneProxy->visit(renderer, transform, flags);
+        _inScene->visit(renderer, transform, flags);
     } 
     else
     {
-        _inScene->visit(renderer, transform, transformUpdated);
-        _outSceneProxy->visit(renderer, transform, transformUpdated);
+        _inScene->visit(renderer, transform, flags);
+        _outSceneProxy->visit(renderer, transform, flags);
     }
 }
 
@@ -1490,10 +1490,10 @@ void TransitionSplitCols::switchTargetToInscene()
     _gridProxy->setTarget(_inScene);
 }
 
-void TransitionSplitCols::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void TransitionSplitCols::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    Scene::draw(renderer, transform, transformUpdated);
-    _gridProxy->visit(renderer, transform, transformUpdated);
+    Scene::draw(renderer, transform, flags);
+    _gridProxy->visit(renderer, transform, flags);
 }
 
 void TransitionSplitCols::onExit()
@@ -1606,19 +1606,19 @@ void TransitionFadeTR::onExit()
     TransitionScene::onExit();
 }
 
-void TransitionFadeTR::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void TransitionFadeTR::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    Scene::draw(renderer, transform, transformUpdated);
+    Scene::draw(renderer, transform, flags);
     
     if( _isInSceneOnTop )
     {
-        _outSceneProxy->visit(renderer, transform, transformUpdated);
-        _inScene->visit(renderer, transform, transformUpdated);
+        _outSceneProxy->visit(renderer, transform, flags);
+        _inScene->visit(renderer, transform, flags);
     } 
     else
     {
-        _inScene->visit(renderer, transform, transformUpdated);
-        _outSceneProxy->visit(renderer, transform, transformUpdated);
+        _inScene->visit(renderer, transform, flags);
+        _outSceneProxy->visit(renderer, transform, flags);
     }
 }
 

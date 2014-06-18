@@ -19,6 +19,9 @@
     <Filter Include="luajit">
       <UniqueIdentifier>{cc863463-a948-487a-aacd-dc233c3e5200}</UniqueIdentifier>
     </Filter>
+    <Filter Include="xxtea">
+      <UniqueIdentifier>{1fa7ff75-c142-4928-8aef-e6a2eb2b465f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\auto\lua_cocos2dx_auto.cpp">
@@ -158,6 +161,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_to.c">
       <Filter>tolua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\xxtea\xxtea.cpp">
+      <Filter>xxtea</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -304,6 +310,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\external\lua\luajit\include\lualib.h">
       <Filter>luajit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\xxtea\xxtea.h">
+      <Filter>xxtea</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

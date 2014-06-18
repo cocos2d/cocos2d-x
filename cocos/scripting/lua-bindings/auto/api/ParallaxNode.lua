@@ -17,11 +17,6 @@
 -- @param #bool bool
         
 --------------------------------
--- @function [parent=#ParallaxNode] setParallaxArray 
--- @param self
--- @param #cc._ccArray _ccarray
-        
---------------------------------
 -- @function [parent=#ParallaxNode] create 
 -- @param self
 -- @return ParallaxNode#ParallaxNode ret (return value: cc.ParallaxNode)
@@ -38,7 +33,7 @@
 -- @param self
 -- @param #cc.Renderer renderer
 -- @param #mat4_table mat4
--- @param #bool bool
+-- @param #unsigned int int
         
 --------------------------------
 -- @function [parent=#ParallaxNode] removeChild 

@@ -47,11 +47,6 @@
 -- @return Bone#Bone ret (return value: ccs.Bone)
         
 --------------------------------
--- @function [parent=#Armature] setArmatureData 
--- @param self
--- @param #ccs.ArmatureData armaturedata
-        
---------------------------------
 -- @function [parent=#Armature] removeBone 
 -- @param self
 -- @param #ccs.Bone bone
@@ -61,11 +56,6 @@
 -- @function [parent=#Armature] getBatchNode 
 -- @param self
 -- @return BatchNode#BatchNode ret (return value: ccs.BatchNode)
-        
---------------------------------
--- @function [parent=#Armature] getName 
--- @param self
--- @return string#string ret (return value: string)
         
 --------------------------------
 -- overload function: init(string)
@@ -95,9 +85,9 @@
 -- @param #ccs.BatchNode batchnode
         
 --------------------------------
--- @function [parent=#Armature] setName 
+-- @function [parent=#Armature] setArmatureData 
 -- @param self
--- @param #string str
+-- @param #ccs.ArmatureData armaturedata
         
 --------------------------------
 -- @function [parent=#Armature] addBone 
@@ -148,7 +138,7 @@
 -- @param self
 -- @param #cc.Renderer renderer
 -- @param #mat4_table mat4
--- @param #bool bool
+-- @param #unsigned int int
         
 --------------------------------
 -- @function [parent=#Armature] getAnchorPointInPoints 

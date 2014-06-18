@@ -23,6 +23,8 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "ui/UIText.h"
+#include "2d/CCLabel.h"
+#include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 
@@ -322,19 +324,23 @@ std::string Text::getDescription() const
     return "Label";
 }
     
-void Text::updateTextureColor()
-{
-    updateColorToRenderer(_labelRenderer);
+
+    
+void Text::enableShadow(const Color4B& shadowColor,const Size &offset, int blurRadius) {
+    _labelRenderer->enableShadow(shadowColor, offset, blurRadius);
 }
 
-void Text::updateTextureOpacity()
-{
-    updateOpacityToRenderer(_labelRenderer);
+void Text::enableOutline(const Color4B& outlineColor,int outlineSize) {
+    _labelRenderer->enableOutline(outlineColor, outlineSize);
+}
+    
+void Text::enableGlow(const Color4B& glowColor) {
+    if (_type == Type::TTF)
+        _labelRenderer->enableGlow(glowColor);
 }
 
-void Text::updateTextureRGBA()
-{
-    updateRGBAToRenderer(_labelRenderer);
+void Text::disableEffect() {
+    _labelRenderer->disableEffect();
 }
 
 Widget* Text::createCloneInstance()

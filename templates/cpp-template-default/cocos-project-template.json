@@ -11,7 +11,11 @@
                "proj.win32/PROJECT_NAME.vcxproj.filters",
                "proj.win32/PROJECT_NAME.vcxproj.user",
                "proj.win32/PROJECT_NAME.sln",
-               "proj.ios_mac/PROJECT_NAME.xcodeproj"
+               "proj.ios_mac/PROJECT_NAME.xcodeproj",
+               "proj.wp8-xaml/PROJECT_NAME.sln",
+               "proj.wp8-xaml/App/PROJECT_NAME.csproj",
+               "proj.wp8-xaml/AppComponent/PROJECT_NAMEComponent.vcxproj",
+               "proj.wp8-xaml/AppComponent/PROJECT_NAMEComponent.vcxproj.filters"
             ]
          },
          "project_replace_project_name":{
@@ -22,6 +26,8 @@
                "proj.win32/PROJECT_NAME.vcxproj.user",
                "proj.win32/PROJECT_NAME.sln",
                "proj.win32/main.cpp",
+               "proj.wp8-xaml/App/PROJECT_NAME.csproj",
+               "proj.wp8-xaml/PROJECT_NAME.sln",
                "proj.android/.project",
                "proj.android/.cproject",
                "proj.android/AndroidManifest.xml",

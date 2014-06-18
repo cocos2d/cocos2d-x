@@ -759,14 +759,14 @@ TMXOrthoObjectsTest::TMXOrthoObjectsTest()
     CCLOG("%s", objectsVal.getDescription().c_str());
 }
 
-void TMXOrthoObjectsTest::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void TMXOrthoObjectsTest::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     _renderCmd.init(_globalZOrder);
-    _renderCmd.func = CC_CALLBACK_0(TMXOrthoObjectsTest::onDraw, this, transform, transformUpdated);
+    _renderCmd.func = CC_CALLBACK_0(TMXOrthoObjectsTest::onDraw, this, transform, flags);
     renderer->addCommand(&_renderCmd);
 }
 
-void TMXOrthoObjectsTest::onDraw(const Mat4 &transform, bool transformUpdated)
+void TMXOrthoObjectsTest::onDraw(const Mat4 &transform, uint32_t flags)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -834,14 +834,14 @@ TMXIsoObjectsTest::TMXIsoObjectsTest()
     CCLOG("%s", objectsVal.getDescription().c_str());
 }
 
-void TMXIsoObjectsTest::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void TMXIsoObjectsTest::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     _renderCmd.init(_globalZOrder);
-    _renderCmd.func = CC_CALLBACK_0(TMXIsoObjectsTest::onDraw, this, transform, transformUpdated);
+    _renderCmd.func = CC_CALLBACK_0(TMXIsoObjectsTest::onDraw, this, transform, flags);
     renderer->addCommand(&_renderCmd);
 }
 
-void TMXIsoObjectsTest::onDraw(const Mat4 &transform, bool transformUpdated)
+void TMXIsoObjectsTest::onDraw(const Mat4 &transform, uint32_t flags)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -1523,14 +1523,14 @@ TMXGIDObjectsTest::TMXGIDObjectsTest()
 
 }
 
-void TMXGIDObjectsTest::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void TMXGIDObjectsTest::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     _renderCmd.init(_globalZOrder);
-    _renderCmd.func = CC_CALLBACK_0(TMXGIDObjectsTest::onDraw, this, transform, transformUpdated);
+    _renderCmd.func = CC_CALLBACK_0(TMXGIDObjectsTest::onDraw, this, transform, flags);
     renderer->addCommand(&_renderCmd);
 }
 
-void TMXGIDObjectsTest::onDraw(const Mat4 &transform, bool transformUpdated)
+void TMXGIDObjectsTest::onDraw(const Mat4 &transform, uint32_t flags)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");

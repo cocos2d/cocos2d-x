@@ -26,7 +26,6 @@
     <ClInclude Include="..\UIPageView.h" />
     <ClInclude Include="..\UIRelativeBox.h" />
     <ClInclude Include="..\UIRichText.h" />
-    <ClInclude Include="..\UIScrollInterface.h" />
     <ClInclude Include="..\UIScrollView.h" />
     <ClInclude Include="..\UISlider.h" />
     <ClInclude Include="..\UIText.h" />

@@ -161,7 +161,8 @@ public:
     
     float getItemsMargin()const;
     
-    virtual void sortAllChildren() override;
+    virtual void doLayout() override;
+    
     virtual void addChild(Node * child) override;
     virtual void addChild(Node * child, int zOrder) override;
     virtual void addChild(Node* child, int zOrder, int tag) override;
@@ -200,13 +201,18 @@ protected:
     virtual void copySpecialProperties(Widget* model) override;
     virtual void copyClonedWidgetChildren(Widget* model) override;
     void selectedItemEvent(TouchEventType event);
-    virtual void interceptTouchEvent(Widget::TouchEventType event,Widget* sender,const Vec2 &touchPoint) override;
+    virtual void interceptTouchEvent(Widget::TouchEventType event,Widget* sender,Touch* touch) override;
 protected:
-    
     Widget* _model;
+    
     Vector<Widget*> _items;
+    
     Gravity _gravity;
+    
     float _itemsMargin;
+    
+    ssize_t _curSelectedIndex;
+    bool _refreshViewDirty;
     
     Ref*       _listViewEventListener;
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
@@ -222,9 +228,6 @@ protected:
 #pragma warning (pop)
 #endif
     ccListViewCallback _eventCallback;
-    
-    ssize_t _curSelectedIndex;
-    bool _refreshViewDirty;
 };
 
 }
