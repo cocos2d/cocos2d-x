@@ -1,3 +1,6 @@
+cocos2d-x-3.2 ???
+    [FIX]           UIButton: doesn't support TTF font
+
 cocos2d-x-3.2-alpha0 Jun.17 2014
     [NEW]           Console: add a command to show engine version
     [NEW]           Node: added setter/getter for NormalizedPosition(). Allows to set positions in normalized values (between 0 and 1)
