@@ -737,11 +737,6 @@
 
 
 --------------------------------------------------------
--- the cc LabelTTF
--- @field [parent=#cc] LabelTTF#LabelTTF LabelTTF preloaded module
-
-
---------------------------------------------------------
 -- the cc GLProgram
 -- @field [parent=#cc] GLProgram#GLProgram GLProgram preloaded module
 
@@ -754,11 +749,6 @@
 --------------------------------------------------------
 -- the cc Label
 -- @field [parent=#cc] Label#Label Label preloaded module
-
-
---------------------------------------------------------
--- the cc LabelBMFont
--- @field [parent=#cc] LabelBMFont#LabelBMFont LabelBMFont preloaded module
 
 
 --------------------------------------------------------
