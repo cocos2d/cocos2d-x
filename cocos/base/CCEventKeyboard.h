@@ -45,6 +45,7 @@ public:
         KEY_SYSREQ,
         KEY_BREAK,
         KEY_ESCAPE,
+        KEY_BACK = KEY_ESCAPE,
         KEY_BACKSPACE,
         KEY_TAB,
         KEY_BACK_TAB,
