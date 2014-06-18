@@ -32,15 +32,18 @@
 #include "base/CCRef.h"
 #include "math/CCMath.h"
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#undef NEAR
+#endif
 
 NS_CC_BEGIN
 
 enum class EvaluateType
 {
-    LINEAR,
-    NEAR,
-    QUAT_SLERP,
-    USER_FUNCTION,
+    INT_LINEAR,
+    INT_NEAR,
+    INT_QUAT_SLERP,
+    INT_USER_FUNCTION,
 };
 
 /**

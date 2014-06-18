@@ -888,6 +888,10 @@ Developers:
         
     Rumist
         Fix the bug that the result of Director->convertToUI() is error.
+        
+    kyokomi
+        Fix the bug that UIButton doesn't support TTF font
+        Fix a but of TextReader
     
 Retired Core Developers:
     WenSheng Yang

@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "2d/CCLabel.h"
 #include "2d/CCSprite.h"
 #include "2d/CCActionInterval.h"
+#include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 
@@ -69,7 +70,10 @@ _pressedTextureLoaded(false),
 _disabledTextureLoaded(false),
 _normalTextureAdaptDirty(true),
 _pressedTextureAdaptDirty(true),
-_disabledTextureAdaptDirty(true)
+_disabledTextureAdaptDirty(true),
+_fontName("Thonburi"),
+_fontSize(10),
+_type(FontType::SYSTEM)
 {
 
 }
@@ -729,22 +733,41 @@ const Color3B& Button::getTitleColor() const
 
 void Button::setTitleFontSize(float size)
 {
-    _titleRenderer->setSystemFontSize(size);
+    if (_type == FontType::SYSTEM) {
+        _titleRenderer->setSystemFontSize(size);
+    }
+    else{
+        TTFConfig config = _titleRenderer->getTTFConfig();
+        config.fontSize = size;
+        _titleRenderer->setTTFConfig(config);
+    }
+    _fontSize = size;
 }
 
 float Button::getTitleFontSize() const
 {
-    return _titleRenderer->getSystemFontSize();
+    return _fontSize;
 }
 
 void Button::setTitleFontName(const std::string& fontName)
 {
-    _titleRenderer->setSystemFontName(fontName);
+    if(FileUtils::getInstance()->isFileExist(fontName))
+    {
+        TTFConfig config = _titleRenderer->getTTFConfig();
+        config.fontFilePath = fontName;
+        config.fontSize = _fontSize;
+        _titleRenderer->setTTFConfig(config);
+        _type = FontType::TTF;
+    } else{
+        _titleRenderer->setSystemFontName(fontName);
+        _type = FontType::SYSTEM;
+    }
+    _fontName = fontName;
 }
 
 const std::string& Button::getTitleFontName() const
 {
-    return _titleRenderer->getSystemFontName();
+    return _fontName;
 }
     
 std::string Button::getDescription() const
