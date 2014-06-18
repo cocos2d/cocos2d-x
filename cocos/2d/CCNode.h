@@ -73,55 +73,6 @@ enum {
 
 bool nodeComparisonLess(Node* n1, Node* n2);
 
-
-#if CC_ENABLE_SCRIPT_BINDING
-
-static bool sendNodeEventToJS(Node* node, int action)
-{
-    auto scriptEngine = ScriptEngineManager::getInstance()->getScriptEngine();
-    
-    if (scriptEngine->isCalledFromScript())
-    {
-        // Should only be invoked at root class Node
-        scriptEngine->setCalledFromScript(false);
-    }
-    else
-    {
-        BasicScriptData data(node,(void*)&action);
-        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
-        if (scriptEngine->sendEvent(&scriptEvent))
-            return true;
-    }
-    
-    return false;
-}
-static bool sendNodeEventToJSExtended(Node* node, int action)
-{
-    auto scriptEngine = ScriptEngineManager::getInstance()->getScriptEngine();
-
-    if (!scriptEngine->isCalledFromScript())
-    {
-        BasicScriptData data(node,(void*)&action);
-        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
-        if (scriptEngine->sendEvent(&scriptEvent))
-            return true;
-    }
-    
-    return false;
-}
-
-static void sendNodeEventToLua(Node* node, int action)
-{
-    auto scriptEngine = ScriptEngineManager::getInstance()->getScriptEngine();
-    
-    BasicScriptData data(node,(void*)&action);
-    ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
-    
-    scriptEngine->sendEvent(&scriptEvent);
-}
-
-#endif
-
 class EventListener;
 
 /** @brief Node is the base element of the Scene Graph. Elements of the Scene Graph must be Node objects or subclasses of it.

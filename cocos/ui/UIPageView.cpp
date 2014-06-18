@@ -71,7 +71,7 @@ void PageView::onEnter()
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
-        if (sendNodeEventToJSExtended(this, kNodeOnEnter))
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnEnter))
             return;
     }
 #endif
