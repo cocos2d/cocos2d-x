@@ -42,9 +42,7 @@ function ScrollView:ctor(rect, direction)
     end)
 
     -- create container layer
-    self.view = display.newNode()
-    self:setTouchEnabled(true)
-    print("htl layer:", tostring(self.view))
+    self.view = display.newLayer()
     self:addChild(self.view)
 
     self.view:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
