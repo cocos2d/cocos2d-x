@@ -37,10 +37,10 @@ NS_CC_BEGIN
 
 enum class EvaluateType
 {
-    LINEAR,
-    NEAR,
-    QUAT_SLERP,
-    USER_FUNCTION,
+    INT_LINEAR,
+    INT_NEAR,
+    INT_QUAT_SLERP,
+    INT_USER_FUNCTION,
 };
 
 /**
