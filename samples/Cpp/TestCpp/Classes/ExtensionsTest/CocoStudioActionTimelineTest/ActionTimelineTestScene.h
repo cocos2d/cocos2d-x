@@ -22,6 +22,7 @@ public:
 enum {
     TEST_ACTION_TIMELINE = 0,
     TEST_CHANGE_PLAY_SECTION,
+    TEST_TIMELINE_FRAME_EVENT,
     TEST_TIMELINE_PERFORMACE,
 
     TEST_ACTION_LAYER_COUNT
@@ -68,6 +69,15 @@ public:
     virtual void registerWithTouchDispatcher();
 protected:
     ActionTimeline* action;
+};
+
+class TestTimelineFrameEvent : public ActionTimelineTestLayer
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+
+    void onFrameEvent(Frame* frame);
 };
 
 class TestTimelinePerformance : public ActionTimelineTestLayer

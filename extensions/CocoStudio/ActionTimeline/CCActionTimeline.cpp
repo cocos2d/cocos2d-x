@@ -150,7 +150,10 @@ void ActionTimeline::step(float delta)
     }
 
     _time += delta * _timeSpeed;
- 
+    _currentFrame = (int)(_time / _frameInternal);
+
+    stepToFrame(_currentFrame);
+
     if(_time > _endFrame * _frameInternal)
     {
         _playing = _loop;
@@ -160,9 +163,6 @@ void ActionTimeline::step(float delta)
             _time = _startFrame * _frameInternal;
     }
 
-    _currentFrame = (int)(_time / _frameInternal);
-
-    stepToFrame(_currentFrame);
 }
 
 
@@ -233,7 +233,7 @@ void ActionTimeline::removeTimeline(Timeline* timeline)
     }
 }
 
-void ActionTimeline::setFrameEventCallFunc  (CCObject *target, SEL_FrameEventCallFunc callFunc)
+void ActionTimeline::setFrameEventCallFunc  (CCObject *target, SEL_TimelineFrameEventCallFunc callFunc)
 {
     _frameEventTarget   = target;
     _frameEventCallFunc = callFunc;

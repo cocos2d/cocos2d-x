@@ -30,9 +30,9 @@ THE SOFTWARE.
 
 NS_TIMELINE_BEGIN
 
-typedef void (cocos2d::CCObject::*SEL_FrameEventCallFunc)(Frame *);
+typedef void (cocos2d::CCObject::*SEL_TimelineFrameEventCallFunc)(Frame *);
 
-#define frameEvent_selector(_SELECTOR) (SEL_FrameEventCallFunc)(&_SELECTOR)
+#define timelineFrameEvent_selector(_SELECTOR) (SEL_TimelineFrameEventCallFunc)(&_SELECTOR)
 
 class CC_EX_DLL ActionTimeline : public cocos2d::CCAction
 {
@@ -103,7 +103,7 @@ public:
     /**
      * Set action's frame event callback function
      */
-    void setFrameEventCallFunc  (CCObject *target, SEL_FrameEventCallFunc callFunc);
+    void setFrameEventCallFunc  (CCObject *target, SEL_TimelineFrameEventCallFunc callFunc);
     void clearFrameEventCallFunc();
 
     /** Inherit from cocos2d::Action. */
@@ -144,7 +144,7 @@ protected:
     bool    _loop;
 
 
-    SEL_FrameEventCallFunc _frameEventCallFunc;
+    SEL_TimelineFrameEventCallFunc _frameEventCallFunc;
     cocos2d::CCObject*     _frameEventTarget;
 };
 

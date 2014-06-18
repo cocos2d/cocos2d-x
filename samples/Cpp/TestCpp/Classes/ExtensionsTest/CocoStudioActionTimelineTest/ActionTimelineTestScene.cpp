@@ -23,6 +23,9 @@ CCLayer *CreateTimelineLayer(int index)
     case TEST_CHANGE_PLAY_SECTION:
         pLayer = new TestChangePlaySection();
         break;
+    case TEST_TIMELINE_FRAME_EVENT:
+        pLayer = new TestTimelineFrameEvent();
+        break;
     case TEST_TIMELINE_PERFORMACE:
         pLayer = new TestTimelinePerformance();
         break;
@@ -247,6 +250,52 @@ void TestChangePlaySection::registerWithTouchDispatcher()
 {
     CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, INT_MIN + 1, true);
 }
+
+
+// TestFrameEvent
+void TestTimelineFrameEvent::onEnter()
+{
+    ActionTimelineTestLayer::onEnter();
+
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("armature/Cowboy0.plist", "armature/Cowboy0.png");
+
+    CCNode* node = NodeReader::getInstance()->createNode("ActionTimeline/boy_1.ExportJson");
+    ActionTimeline* action = ActionTimelineCache::getInstance()->createAction("ActionTimeline/boy_1.ExportJson");
+
+    node->runAction(action);
+    action->gotoFrameAndPlay(0, 60, true);
+
+    node->setScale(0.2f);
+    node->setPosition(150,100);
+    addChild(node);
+
+    action->setFrameEventCallFunc(this, timelineFrameEvent_selector(TestTimelineFrameEvent::onFrameEvent));
+}
+
+std::string TestTimelineFrameEvent::title()
+{
+    return "Test Frame Event";
+}
+
+void TestTimelineFrameEvent::onFrameEvent(Frame* frame)
+{
+    EventFrame* evnt = dynamic_cast<EventFrame*>(frame);
+    if(!evnt)
+        return;
+
+    std::string str = evnt->getEvent();
+    CCSprite* sprite = dynamic_cast<CCSprite*>(evnt->getNode());
+
+    if (sprite && str == "changeColor")
+    {
+        sprite->setColor(ccc3(0,0,0));
+    }
+    else if(sprite && str == "endChangeColor")
+    {
+        sprite->setColor(ccc3(255,255,255));
+    }
+}
+
 
 
 // TestTimelinePerformance
