@@ -438,7 +438,7 @@ function NodeEventDispatcher( obj, idx, data )
         -- local evt = data[2]
         local ename = data[3]
         if ename~='Released' then return true end
-        event = code
+        event = { code=code, key=KeypadEventCodeConvert(code), }
     end
 
     local rnval = false
