@@ -30,6 +30,10 @@ THE SOFTWARE.
 #include "cocostudio/CCArmature.h"
 #include "cocostudio/DictionaryHelper.h"
 
+#include "json/document.h"
+#include "Cocoloader.h"
+#include "DictionaryHelper.h"
+
 #include <string>
 #include <queue>
 #include <list>
@@ -171,7 +175,24 @@ public:
     static ContourData *decodeContour(const rapidjson::Value& json);
 
     static void decodeNode(BaseData *node, const rapidjson::Value& json, DataInfo *dataInfo);
-
+    
+// for binary decode
+public:
+	static void addDataFromBinaryCache(const char *fileContent, DataInfo *dataInfo = NULL);
+	static ArmatureData *decodeArmature(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+	static BoneData *decodeBone(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+	static DisplayData *decodeBoneDisplay(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+	static AnimationData *decodeAnimation(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+	static MovementData *decodeMovement(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+    
+	static MovementBoneData *decodeMovementBone(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+	static FrameData *decodeFrame(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+    
+	static TextureData *decodeTexture(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode);
+	static ContourData *decodeContour(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode);
+    
+	static void decodeNode(BaseData *node, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+    
 protected:
 	void loadData();
 
