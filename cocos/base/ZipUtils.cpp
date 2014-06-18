@@ -520,7 +520,6 @@ ZipFile::ZipFile(void)
 : _data(new ZipFilePrivate)
 {
     _data->zipFile = nullptr;
-    setFilter(emptyFilename);
 }
 
 ZipFile::ZipFile(const std::string &zipFile, const std::string &filter)
@@ -675,6 +674,7 @@ bool ZipFile::initWithBuffer(const void *buffer, uLong size)
     _data->zipFile = unzOpenBuffer(buffer, size);
     if (!_data->zipFile) return false;
     
+    setFilter(emptyFilename);
     return true;
 }
 
