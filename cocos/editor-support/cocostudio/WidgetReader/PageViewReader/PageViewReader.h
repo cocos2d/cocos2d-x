@@ -41,7 +41,7 @@ namespace cocostudio
         static void purge();
         
         virtual void setPropsFromJsonDictionary(cocos2d::ui::Widget* widget, const rapidjson::Value& options);
-        virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* pCocoLoader,  stExpCocoNode*	pCocoNode) ;
+        virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* pCocoLoader,  stExpCocoNode* pCocoNode) ;
 
     };
 }

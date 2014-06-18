@@ -32,7 +32,7 @@ void AnimationCurve<componentSize>::evaluate(float time, float* dst, EvaluateTyp
             }
         }
         break;
-        case EvaluateType::NEAR:
+        case EvaluateType::NEARE:
         {
             float* src = t > 0.5f ? toValue : fromValue;
             memcpy(dst, src, _componentSizeByte);

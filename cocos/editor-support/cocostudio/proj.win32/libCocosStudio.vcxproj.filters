@@ -228,6 +228,9 @@
     <ClCompile Include="..\WidgetReader\PageViewReader\PageViewReader.cpp">
       <Filter>reader\WidgetReader\PageViewReader</Filter>
     </ClCompile>
+    <ClCompile Include="..\CocoLoader.cpp">
+      <Filter>json</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\CCComAttribute.h">
@@ -412,6 +415,12 @@
     </ClInclude>
     <ClInclude Include="..\WidgetReader\PageViewReader\PageViewReader.h">
       <Filter>reader\WidgetReader\PageViewReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoLoader.h">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio.h">
+      <Filter>json</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

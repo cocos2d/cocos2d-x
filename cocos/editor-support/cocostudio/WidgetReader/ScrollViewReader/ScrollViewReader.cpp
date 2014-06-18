@@ -51,7 +51,7 @@ namespace cocostudio
             else if(key == "innerHeight"){
                 innerHeight = valueToFloat(value);
             }else if(key == "direction"){
-                scrollView->setDirection((ScrollView::Direction)valueToFloat(value));
+                scrollView->setDirection((ScrollView::Direction)valueToInt(value));
             }else if(key == "bounceEnable"){
                 scrollView->setBounceEnabled(valueToBool(value));
             }

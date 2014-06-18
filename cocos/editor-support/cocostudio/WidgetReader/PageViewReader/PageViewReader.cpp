@@ -2,6 +2,8 @@
 
 #include "PageViewReader.h"
 #include "ui/UIPageView.h"
+#include "ui/UILayout.h"
+#include "cocostudio/CocoLoader.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -32,8 +34,8 @@ namespace cocostudio
     }
     
     void PageViewReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode)
-    {
-        LayoutReader::setPropsFromBinary(widget, pCocoLoader, pCocoNode);
+	{
+		LayoutReader::setPropsFromBinary(widget, pCocoLoader, pCocoNode);
     }
     
     void PageViewReader::setPropsFromJsonDictionary(Widget *widget, const rapidjson::Value &options)
