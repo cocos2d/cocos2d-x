@@ -53,6 +53,7 @@ ActionTimeline::ActionTimeline()
     , _endFrame(0)
     , _frameEventCallFunc(NULL)
     , _frameEventTarget(NULL)
+    , _scriptObjectDict(NULL)
 {
 }
 
@@ -66,6 +67,7 @@ ActionTimeline::~ActionTimeline()
     }
 
     CC_SAFE_DELETE(_timelineList);
+    CC_SAFE_RELEASE_NULL(_scriptObjectDict);
 }
 
 bool ActionTimeline::init()
@@ -271,6 +273,18 @@ void ActionTimeline::stepToFrame(int frameIndex)
     {      
         timelines[i]->stepToFrame(frameIndex);
     }
+}
+
+void ActionTimeline::setScriptObjectDict(cocos2d::CCDictionary *scriptObjectDict)
+{
+    CC_SAFE_RETAIN(scriptObjectDict);
+    CC_SAFE_RELEASE(_scriptObjectDict);
+    _scriptObjectDict = scriptObjectDict;
+}
+
+cocos2d::CCDictionary* ActionTimeline::getScriptObjectDict() const
+{
+    return _scriptObjectDict;
 }
 
 NS_TIMELINE_END

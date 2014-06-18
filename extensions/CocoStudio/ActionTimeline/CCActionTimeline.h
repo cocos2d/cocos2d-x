@@ -119,6 +119,23 @@ public:
     virtual void step(float delta); 
     virtual void startWithTarget(cocos2d::CCNode *target);  
     virtual bool isDone() { return false; }
+    
+    /**
+     * Returns a user assigned CCDictionary
+     *
+     * @return A user assigned CCDictionary
+     */
+    virtual cocos2d::CCDictionary* getScriptObjectDict() const;
+    /**
+     * Returns a user assigned CCDictionary
+     *
+     * The scriptObjectDict will be retained once in this method,
+     * and the previous scriptObjectDict (if existed) will be relese.
+     * The scriptObjectDict will be released in destructure.
+     *
+     * @param A user assigned CCObject
+     */
+    virtual void setScriptObjectDict(cocos2d::CCDictionary* scriptObjectDict);
 protected:
     friend class Frame;
 
@@ -146,6 +163,8 @@ protected:
 
     SEL_TimelineFrameEventCallFunc _frameEventCallFunc;
     cocos2d::CCObject*     _frameEventTarget;
+    
+    cocos2d::CCDictionary* _scriptObjectDict;
 };
 
 NS_TIMELINE_END

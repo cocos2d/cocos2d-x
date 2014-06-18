@@ -1,6 +1,6 @@
 /*
 ** Lua binding: CocoStudio
-** Generated automatically by tolua++-1.0.92 on Thu Mar 13 16:12:00 2014.
+** Generated automatically by tolua++-1.0.92 on Wed Jun 18 16:00:33 2014.
 */
 
 /****************************************************************************
@@ -98,6 +98,13 @@ static int tolua_collect_ImageView (lua_State* tolua_S)
     return 0;
 }
 
+static int tolua_collect_ActionTimelineCache (lua_State* tolua_S)
+{
+   cocostudio::timeline::ActionTimelineCache* self = (cocostudio::timeline::ActionTimelineCache*) tolua_tousertype(tolua_S,1,0);
+    Mtolua_delete(self);
+    return 0;
+}
+
 static int tolua_collect_CheckBox (lua_State* tolua_S)
 {
  CheckBox* self = (CheckBox*) tolua_tousertype(tolua_S,1,0);
@@ -115,6 +122,27 @@ static int tolua_collect_CCTween (lua_State* tolua_S)
 static int tolua_collect_CCBaseData (lua_State* tolua_S)
 {
  CCBaseData* self = (CCBaseData*) tolua_tousertype(tolua_S,1,0);
+    Mtolua_delete(self);
+    return 0;
+}
+
+static int tolua_collect_Widget (lua_State* tolua_S)
+{
+ Widget* self = (Widget*) tolua_tousertype(tolua_S,1,0);
+    Mtolua_delete(self);
+    return 0;
+}
+
+static int tolua_collect_NodeReader (lua_State* tolua_S)
+{
+   cocostudio::timeline::NodeReader* self = (cocostudio::timeline::NodeReader*) tolua_tousertype(tolua_S,1,0);
+    Mtolua_delete(self);
+    return 0;
+}
+
+static int tolua_collect_GUIReader (lua_State* tolua_S)
+{
+ GUIReader* self = (GUIReader*) tolua_tousertype(tolua_S,1,0);
     Mtolua_delete(self);
     return 0;
 }
@@ -179,9 +207,9 @@ static int tolua_collect_ActionObject (lua_State* tolua_S)
     return 0;
 }
 
-static int tolua_collect_GUIReader (lua_State* tolua_S)
+static int tolua_collect_ActionTimeline (lua_State* tolua_S)
 {
- GUIReader* self = (GUIReader*) tolua_tousertype(tolua_S,1,0);
+    cocostudio::timeline::ActionTimeline* self = (cocostudio::timeline::ActionTimeline*) tolua_tousertype(tolua_S,1,0);
     Mtolua_delete(self);
     return 0;
 }
@@ -266,9 +294,9 @@ static int tolua_collect_Button (lua_State* tolua_S)
     return 0;
 }
 
-static int tolua_collect_Widget (lua_State* tolua_S)
+static int tolua_collect_Timeline (lua_State* tolua_S)
 {
- Widget* self = (Widget*) tolua_tousertype(tolua_S,1,0);
+ Timeline* self = (Timeline*) tolua_tousertype(tolua_S,1,0);
     Mtolua_delete(self);
     return 0;
 }
@@ -331,8 +359,10 @@ static void tolua_reg_types (lua_State* tolua_S)
 {
  tolua_usertype(tolua_S,"UILayoutParameter");
  tolua_usertype(tolua_S,"ListView");
+ tolua_usertype(tolua_S,"cocos2d::CCArray");
  tolua_usertype(tolua_S,"PageView");
  tolua_usertype(tolua_S,"CCComController");
+ tolua_usertype(tolua_S,"ActionTimelineCache");
  tolua_usertype(tolua_S,"CheckBox");
  tolua_usertype(tolua_S,"CCArmatureData");
  tolua_usertype(tolua_S,"ccColor3B");
@@ -342,9 +372,12 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"CCComAudio");
  tolua_usertype(tolua_S,"CCTextureAtlas");
  tolua_usertype(tolua_S,"CCAnimationData");
+ tolua_usertype(tolua_S,"ActionTimeline");
  tolua_usertype(tolua_S,"Button");
+ tolua_usertype(tolua_S,"CCAction");
  tolua_usertype(tolua_S,"LinearLayoutParameter");
  tolua_usertype(tolua_S,"CCAffineTransform");
+ tolua_usertype(tolua_S,"cocos2d::CCNode");
  tolua_usertype(tolua_S,"ccBlendFunc");
  tolua_usertype(tolua_S,"CCComRender");
  tolua_usertype(tolua_S,"LoadingBar");
@@ -361,7 +394,10 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"CCDictionary");
  tolua_usertype(tolua_S,"CCNodeRGBA");
  tolua_usertype(tolua_S,"ImageView");
+ tolua_usertype(tolua_S,"Frame");
  tolua_usertype(tolua_S,"CCBlendProtocol");
+ tolua_usertype(tolua_S,"Timeline");
+ tolua_usertype(tolua_S,"NodeReader");
  tolua_usertype(tolua_S,"CCTween");
  tolua_usertype(tolua_S,"CCBaseData");
  tolua_usertype(tolua_S,"RichText");
@@ -24026,7 +24062,8 @@ static int tolua_CocoStudio_SceneReader_createNodeWithSceneFile00(lua_State* tol
  if (
      !tolua_isusertype(tolua_S,1,"SceneReader",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
+     !tolua_isnumber(tolua_S,3,1,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
  )
   goto tolua_lerror;
  else
@@ -24034,11 +24071,12 @@ static int tolua_CocoStudio_SceneReader_createNodeWithSceneFile00(lua_State* tol
  {
   SceneReader* self = (SceneReader*)  tolua_tousertype(tolua_S,1,0);
   const char* pszFileName = ((const char*)  tolua_tostring(tolua_S,2,0));
+  AttachComponentType eAttachComponent = ((AttachComponentType) (int)  tolua_tonumber(tolua_S,3,ATTACH_EMPTY_NODE));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createNodeWithSceneFile'", NULL);
 #endif
   {
-   CCNode* tolua_ret = (CCNode*)  self->createNodeWithSceneFile(pszFileName);
+   CCNode* tolua_ret = (CCNode*)  self->createNodeWithSceneFile(pszFileName,eAttachComponent);
     int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
@@ -24267,6 +24305,42 @@ static int tolua_CocoStudio_GUIReader_widgetFromJsonFile00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'widgetFromJsonFile'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: widgetFromBinaryFile of class  GUIReader */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_GUIReader_widgetFromBinaryFile00
+static int tolua_CocoStudio_GUIReader_widgetFromBinaryFile00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"GUIReader",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  GUIReader* self = (GUIReader*)  tolua_tousertype(tolua_S,1,0);
+  const char* fileName = ((const char*)  tolua_tostring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'widgetFromBinaryFile'", NULL);
+#endif
+  {
+   Widget* tolua_ret = (Widget*)  self->widgetFromBinaryFile(fileName);
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"Widget");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'widgetFromBinaryFile'.",&tolua_err);
  return 0;
 #endif
 }
@@ -26141,6 +26215,2166 @@ static int tolua_CocoStudio_RichText_ignoreContentAdaptWithSize00(lua_State* tol
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: create of class  ActionTimeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimeline_create00
+static int tolua_CocoStudio_ActionTimeline_create00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"ActionTimeline",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+    cocostudio::timeline::ActionTimeline* tolua_ret = (cocostudio::timeline::ActionTimeline*)  cocostudio::timeline::ActionTimeline::create();
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"ActionTimeline");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new of class  ActionTimeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimeline_new00
+static int tolua_CocoStudio_ActionTimeline_new00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"ActionTimeline",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+    cocostudio::timeline::ActionTimeline* tolua_ret = (cocostudio::timeline::ActionTimeline*)  Mtolua_new((cocostudio::timeline::ActionTimeline)());
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"ActionTimeline");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new_local of class  ActionTimeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimeline_new00_local
+static int tolua_CocoStudio_ActionTimeline_new00_local(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"ActionTimeline",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+    cocostudio::timeline::ActionTimeline* tolua_ret = (cocostudio::timeline::ActionTimeline*)  Mtolua_new((cocostudio::timeline::ActionTimeline)());
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"ActionTimeline");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: delete of class  ActionTimeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimeline_delete00
+static int tolua_CocoStudio_ActionTimeline_delete00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ActionTimeline",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocostudio::timeline::ActionTimeline* self = (cocostudio::timeline::ActionTimeline*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
+#endif
+  Mtolua_delete(self);
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: init of class  ActionTimeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimeline_init00
+static int tolua_CocoStudio_ActionTimeline_init00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ActionTimeline",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocostudio::timeline::ActionTimeline* self = (cocostudio::timeline::ActionTimeline*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'init'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->init();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'init'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: gotoFrameAndPlay of class  ActionTimeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimeline_gotoFrameAndPlay00
+static int tolua_CocoStudio_ActionTimeline_gotoFrameAndPlay00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ActionTimeline",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocostudio::timeline::ActionTimeline* self = (cocostudio::timeline::ActionTimeline*)  tolua_tousertype(tolua_S,1,0);
+  int startIndex = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'gotoFrameAndPlay'", NULL);
+#endif
+  {
+   self->gotoFrameAndPlay(startIndex);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'gotoFrameAndPlay'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: gotoFrameAndPlay of class  ActionTimeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimeline_gotoFrameAndPlay01
+static int tolua_CocoStudio_ActionTimeline_gotoFrameAndPlay01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ActionTimeline",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  cocostudio::timeline::ActionTimeline* self = (cocostudio::timeline::ActionTimeline*)  tolua_tousertype(tolua_S,1,0);
+  int startIndex = ((int)  tolua_tonumber(tolua_S,2,0));
+  bool loop = ((bool)  tolua_toboolean(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'gotoFrameAndPlay'", NULL);
+#endif
+  {
+   self->gotoFrameAndPlay(startIndex,loop);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_CocoStudio_ActionTimeline_gotoFrameAndPlay00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: gotoFrameAndPlay of class  ActionTimeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimeline_gotoFrameAndPlay02
+static int tolua_CocoStudio_ActionTimeline_gotoFrameAndPlay02(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ActionTimeline",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  cocostudio::timeline::ActionTimeline* self = (cocostudio::timeline::ActionTimeline*)  tolua_tousertype(tolua_S,1,0);
+  int startIndex = ((int)  tolua_tonumber(tolua_S,2,0));
+  int endIndex = ((int)  tolua_tonumber(tolua_S,3,0));
+  bool loop = ((bool)  tolua_toboolean(tolua_S,4,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'gotoFrameAndPlay'", NULL);
+#endif
+  {
+   self->gotoFrameAndPlay(startIndex,endIndex,loop);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_CocoStudio_ActionTimeline_gotoFrameAndPlay01(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: gotoFrameAndPause of class  ActionTimeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimeline_gotoFrameAndPause00
+static int tolua_CocoStudio_ActionTimeline_gotoFrameAndPause00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ActionTimeline",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocostudio::timeline::ActionTimeline* self = (cocostudio::timeline::ActionTimeline*)  tolua_tousertype(tolua_S,1,0);
+  int startIndex = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'gotoFrameAndPause'", NULL);
+#endif
+  {
+   self->gotoFrameAndPause(startIndex);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'gotoFrameAndPause'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: pause of class  ActionTimeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimeline_pause00
+static int tolua_CocoStudio_ActionTimeline_pause00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ActionTimeline",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocostudio::timeline::ActionTimeline* self = (cocostudio::timeline::ActionTimeline*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'pause'", NULL);
+#endif
+  {
+   self->pause();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'pause'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: resume of class  ActionTimeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimeline_resume00
+static int tolua_CocoStudio_ActionTimeline_resume00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ActionTimeline",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocostudio::timeline::ActionTimeline* self = (cocostudio::timeline::ActionTimeline*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'resume'", NULL);
+#endif
+  {
+   self->resume();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'resume'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isPlaying of class  ActionTimeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimeline_isPlaying00
+static int tolua_CocoStudio_ActionTimeline_isPlaying00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const ActionTimeline",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const cocostudio::timeline::ActionTimeline* self = (const cocostudio::timeline::ActionTimeline*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isPlaying'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isPlaying();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isPlaying'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setTimeSpeed of class  ActionTimeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimeline_setTimeSpeed00
+static int tolua_CocoStudio_ActionTimeline_setTimeSpeed00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ActionTimeline",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocostudio::timeline::ActionTimeline* self = (cocostudio::timeline::ActionTimeline*)  tolua_tousertype(tolua_S,1,0);
+  float speed = ((float)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTimeSpeed'", NULL);
+#endif
+  {
+   self->setTimeSpeed(speed);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setTimeSpeed'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getTimeSpeed of class  ActionTimeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimeline_getTimeSpeed00
+static int tolua_CocoStudio_ActionTimeline_getTimeSpeed00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const ActionTimeline",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const cocostudio::timeline::ActionTimeline* self = (const cocostudio::timeline::ActionTimeline*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTimeSpeed'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->getTimeSpeed();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getTimeSpeed'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setDuration of class  ActionTimeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimeline_setDuration00
+static int tolua_CocoStudio_ActionTimeline_setDuration00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ActionTimeline",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocostudio::timeline::ActionTimeline* self = (cocostudio::timeline::ActionTimeline*)  tolua_tousertype(tolua_S,1,0);
+  int duration = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDuration'", NULL);
+#endif
+  {
+   self->setDuration(duration);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setDuration'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getDuration of class  ActionTimeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimeline_getDuration00
+static int tolua_CocoStudio_ActionTimeline_getDuration00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const ActionTimeline",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const cocostudio::timeline::ActionTimeline* self = (const cocostudio::timeline::ActionTimeline*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDuration'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->getDuration();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getDuration'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getStartFrame of class  ActionTimeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimeline_getStartFrame00
+static int tolua_CocoStudio_ActionTimeline_getStartFrame00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const ActionTimeline",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const cocostudio::timeline::ActionTimeline* self = (const cocostudio::timeline::ActionTimeline*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getStartFrame'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->getStartFrame();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getStartFrame'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getEndFrame of class  ActionTimeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimeline_getEndFrame00
+static int tolua_CocoStudio_ActionTimeline_getEndFrame00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const ActionTimeline",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const cocostudio::timeline::ActionTimeline* self = (const cocostudio::timeline::ActionTimeline*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getEndFrame'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->getEndFrame();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getEndFrame'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getCurrentFrame of class  ActionTimeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimeline_getCurrentFrame00
+static int tolua_CocoStudio_ActionTimeline_getCurrentFrame00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const ActionTimeline",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const cocostudio::timeline::ActionTimeline* self = (const cocostudio::timeline::ActionTimeline*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getCurrentFrame'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->getCurrentFrame();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getCurrentFrame'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: addTimeline of class  ActionTimeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimeline_addTimeline00
+static int tolua_CocoStudio_ActionTimeline_addTimeline00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ActionTimeline",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"Timeline",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocostudio::timeline::ActionTimeline* self = (cocostudio::timeline::ActionTimeline*)  tolua_tousertype(tolua_S,1,0);
+  cocostudio::timeline::Timeline* timeline = ((cocostudio::timeline::Timeline*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addTimeline'", NULL);
+#endif
+  {
+   self->addTimeline(timeline);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'addTimeline'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: removeTimeline of class  ActionTimeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimeline_removeTimeline00
+static int tolua_CocoStudio_ActionTimeline_removeTimeline00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ActionTimeline",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"Timeline",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocostudio::timeline::ActionTimeline* self = (cocostudio::timeline::ActionTimeline*)  tolua_tousertype(tolua_S,1,0);
+  cocostudio::timeline::Timeline* timeline = ((cocostudio::timeline::Timeline*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeTimeline'", NULL);
+#endif
+  {
+   self->removeTimeline(timeline);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'removeTimeline'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: clone of class  ActionTimeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimeline_clone00
+static int tolua_CocoStudio_ActionTimeline_clone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const ActionTimeline",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const cocostudio::timeline::ActionTimeline* self = (const cocostudio::timeline::ActionTimeline*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'clone'", NULL);
+#endif
+  {
+     cocostudio::timeline::ActionTimeline* tolua_ret = (cocostudio::timeline::ActionTimeline*)  self->clone();
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"ActionTimeline");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'clone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverse of class  ActionTimeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimeline_reverse00
+static int tolua_CocoStudio_ActionTimeline_reverse00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const ActionTimeline",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const cocostudio::timeline::ActionTimeline* self = (const cocostudio::timeline::ActionTimeline*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+  {
+    cocostudio::timeline::ActionTimeline* tolua_ret = (cocostudio::timeline::ActionTimeline*)  self->reverse();
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"ActionTimeline");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: step of class  ActionTimeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimeline_step00
+static int tolua_CocoStudio_ActionTimeline_step00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ActionTimeline",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocostudio::timeline::ActionTimeline* self = (cocostudio::timeline::ActionTimeline*)  tolua_tousertype(tolua_S,1,0);
+  float delta = ((float)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'step'", NULL);
+#endif
+  {
+   self->step(delta);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'step'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: startWithTarget of class  ActionTimeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimeline_startWithTarget00
+static int tolua_CocoStudio_ActionTimeline_startWithTarget00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ActionTimeline",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"cocos2d::CCNode",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocostudio::timeline::ActionTimeline* self = (cocostudio::timeline::ActionTimeline*)  tolua_tousertype(tolua_S,1,0);
+  cocos2d::CCNode* target = ((cocos2d::CCNode*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'startWithTarget'", NULL);
+#endif
+  {
+   self->startWithTarget(target);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'startWithTarget'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isDone of class  ActionTimeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimeline_isDone00
+static int tolua_CocoStudio_ActionTimeline_isDone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ActionTimeline",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocostudio::timeline::ActionTimeline* self = (cocostudio::timeline::ActionTimeline*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isDone'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isDone();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isDone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getInstance of class  ActionTimelineCache */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimelineCache_getInstance00
+static int tolua_CocoStudio_ActionTimelineCache_getInstance00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"ActionTimelineCache",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+    cocostudio::timeline::ActionTimelineCache* tolua_ret = ( cocostudio::timeline::ActionTimelineCache*)cocostudio::timeline::ActionTimelineCache::getInstance();
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"ActionTimelineCache");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getInstance'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: destroyInstance of class  ActionTimelineCache */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimelineCache_destroyInstance00
+static int tolua_CocoStudio_ActionTimelineCache_destroyInstance00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"ActionTimelineCache",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   cocostudio::timeline::ActionTimelineCache::destroyInstance();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'destroyInstance'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: delete of class  ActionTimelineCache */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimelineCache_delete00
+static int tolua_CocoStudio_ActionTimelineCache_delete00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ActionTimelineCache",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+   cocostudio::timeline::ActionTimelineCache* self = (cocostudio::timeline::ActionTimelineCache*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
+#endif
+  Mtolua_delete(self);
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: purge of class  ActionTimelineCache */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimelineCache_purge00
+static int tolua_CocoStudio_ActionTimelineCache_purge00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ActionTimelineCache",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+   cocostudio::timeline::ActionTimelineCache* self = (cocostudio::timeline::ActionTimelineCache*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'purge'", NULL);
+#endif
+  {
+   self->purge();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'purge'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: init of class  ActionTimelineCache */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimelineCache_init00
+static int tolua_CocoStudio_ActionTimelineCache_init00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ActionTimelineCache",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+   cocostudio::timeline::ActionTimelineCache* self = (cocostudio::timeline::ActionTimelineCache*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'init'", NULL);
+#endif
+  {
+   self->init();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'init'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: removeAction of class  ActionTimelineCache */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimelineCache_removeAction00
+static int tolua_CocoStudio_ActionTimelineCache_removeAction00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ActionTimelineCache",0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+   cocostudio::timeline::ActionTimelineCache* self = (cocostudio::timeline::ActionTimelineCache*)  tolua_tousertype(tolua_S,1,0);
+  const std::string fileName = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeAction'", NULL);
+#endif
+  {
+   self->removeAction(fileName);
+   tolua_pushcppstring(tolua_S,(const char*)fileName);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'removeAction'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: createAction of class  ActionTimelineCache */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimelineCache_createAction00
+static int tolua_CocoStudio_ActionTimelineCache_createAction00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ActionTimelineCache",0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+   cocostudio::timeline::ActionTimelineCache* self = (cocostudio::timeline::ActionTimelineCache*)  tolua_tousertype(tolua_S,1,0);
+  const std::string fileName = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createAction'", NULL);
+#endif
+  {
+    cocostudio::timeline::ActionTimeline* tolua_ret = (cocostudio::timeline::ActionTimeline*)  self->createAction(fileName);
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"ActionTimeline");
+   tolua_pushcppstring(tolua_S,(const char*)fileName);
+  }
+ }
+ return 2;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'createAction'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: loadAnimationActionWithFile of class  ActionTimelineCache */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimelineCache_loadAnimationActionWithFile00
+static int tolua_CocoStudio_ActionTimelineCache_loadAnimationActionWithFile00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ActionTimelineCache",0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+   cocostudio::timeline::ActionTimelineCache* self = (cocostudio::timeline::ActionTimelineCache*)  tolua_tousertype(tolua_S,1,0);
+  const std::string fileName = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'loadAnimationActionWithFile'", NULL);
+#endif
+  {
+    cocostudio::timeline::ActionTimeline* tolua_ret = (cocostudio::timeline::ActionTimeline*)  self->loadAnimationActionWithFile(fileName);
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"ActionTimeline");
+   tolua_pushcppstring(tolua_S,(const char*)fileName);
+  }
+ }
+ return 2;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'loadAnimationActionWithFile'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: loadAnimationActionWithContent of class  ActionTimelineCache */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimelineCache_loadAnimationActionWithContent00
+static int tolua_CocoStudio_ActionTimelineCache_loadAnimationActionWithContent00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ActionTimelineCache",0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+   cocostudio::timeline::ActionTimelineCache* self = (cocostudio::timeline::ActionTimelineCache*)  tolua_tousertype(tolua_S,1,0);
+  const std::string fileName = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
+  const std::string content = ((const std::string)  tolua_tocppstring(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'loadAnimationActionWithContent'", NULL);
+#endif
+  {
+   cocostudio::timeline::ActionTimeline* tolua_ret = (cocostudio::timeline::ActionTimeline*)  self->loadAnimationActionWithContent(fileName,content);
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"ActionTimeline");
+   tolua_pushcppstring(tolua_S,(const char*)fileName);
+   tolua_pushcppstring(tolua_S,(const char*)content);
+  }
+ }
+ return 3;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'loadAnimationActionWithContent'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getInstance of class  NodeReader */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_NodeReader_getInstance00
+static int tolua_CocoStudio_NodeReader_getInstance00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"NodeReader",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+    cocostudio::timeline::NodeReader* tolua_ret = (cocostudio::timeline::NodeReader*)  cocostudio::timeline::NodeReader::getInstance();
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"NodeReader");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getInstance'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: destroyInstance of class  NodeReader */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_NodeReader_destroyInstance00
+static int tolua_CocoStudio_NodeReader_destroyInstance00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"NodeReader",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+    cocostudio::timeline::NodeReader::destroyInstance();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'destroyInstance'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new of class  NodeReader */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_NodeReader_new00
+static int tolua_CocoStudio_NodeReader_new00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"NodeReader",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   cocostudio::timeline::NodeReader* tolua_ret = (cocostudio::timeline::NodeReader*)  Mtolua_new((cocostudio::timeline::NodeReader)());
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"NodeReader");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new_local of class  NodeReader */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_NodeReader_new00_local
+static int tolua_CocoStudio_NodeReader_new00_local(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"NodeReader",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   cocostudio::timeline::NodeReader* tolua_ret = (cocostudio::timeline::NodeReader*)  Mtolua_new((cocostudio::timeline::NodeReader)());
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"NodeReader");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: delete of class  NodeReader */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_NodeReader_delete00
+static int tolua_CocoStudio_NodeReader_delete00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"NodeReader",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+   cocostudio::timeline::NodeReader* self = (cocostudio::timeline::NodeReader*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
+#endif
+  Mtolua_delete(self);
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: purge of class  NodeReader */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_NodeReader_purge00
+static int tolua_CocoStudio_NodeReader_purge00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"NodeReader",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+   cocostudio::timeline::NodeReader* self = (cocostudio::timeline::NodeReader*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'purge'", NULL);
+#endif
+  {
+   self->purge();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'purge'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: init of class  NodeReader */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_NodeReader_init00
+static int tolua_CocoStudio_NodeReader_init00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"NodeReader",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+   cocostudio::timeline::NodeReader* self = (cocostudio::timeline::NodeReader*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'init'", NULL);
+#endif
+  {
+   self->init();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'init'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: createNode of class  NodeReader */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_NodeReader_createNode00
+static int tolua_CocoStudio_NodeReader_createNode00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"NodeReader",0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+   cocostudio::timeline::NodeReader* self = (cocostudio::timeline::NodeReader*)  tolua_tousertype(tolua_S,1,0);
+  const std::string filename = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'createNode'", NULL);
+#endif
+  {
+   CCNode* tolua_ret = (CCNode*)  self->createNode(filename);
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
+   tolua_pushcppstring(tolua_S,(const char*)filename);
+  }
+ }
+ return 2;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'createNode'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: loadNodeWithFile of class  NodeReader */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_NodeReader_loadNodeWithFile00
+static int tolua_CocoStudio_NodeReader_loadNodeWithFile00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"NodeReader",0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+   cocostudio::timeline::NodeReader* self = (cocostudio::timeline::NodeReader*)  tolua_tousertype(tolua_S,1,0);
+  const std::string fileName = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'loadNodeWithFile'", NULL);
+#endif
+  {
+   CCNode* tolua_ret = (CCNode*)  self->loadNodeWithFile(fileName);
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
+   tolua_pushcppstring(tolua_S,(const char*)fileName);
+  }
+ }
+ return 2;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'loadNodeWithFile'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: loadNodeWithContent of class  NodeReader */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_NodeReader_loadNodeWithContent00
+static int tolua_CocoStudio_NodeReader_loadNodeWithContent00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"NodeReader",0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+   cocostudio::timeline::NodeReader* self = (cocostudio::timeline::NodeReader*)  tolua_tousertype(tolua_S,1,0);
+  const std::string content = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'loadNodeWithContent'", NULL);
+#endif
+  {
+   CCNode* tolua_ret = (CCNode*)  self->loadNodeWithContent(content);
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode");
+   tolua_pushcppstring(tolua_S,(const char*)content);
+  }
+ }
+ return 2;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'loadNodeWithContent'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setRecordJsonPath of class  NodeReader */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_NodeReader_setRecordJsonPath00
+static int tolua_CocoStudio_NodeReader_setRecordJsonPath00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"NodeReader",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+   cocostudio::timeline::NodeReader* self = (cocostudio::timeline::NodeReader*)  tolua_tousertype(tolua_S,1,0);
+  bool record = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setRecordJsonPath'", NULL);
+#endif
+  {
+   self->setRecordJsonPath(record);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setRecordJsonPath'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isRecordJsonPath of class  NodeReader */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_NodeReader_isRecordJsonPath00
+static int tolua_CocoStudio_NodeReader_isRecordJsonPath00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const NodeReader",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const cocostudio::timeline::NodeReader* self = (const cocostudio::timeline::NodeReader*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isRecordJsonPath'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isRecordJsonPath();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isRecordJsonPath'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setJsonPath of class  NodeReader */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_NodeReader_setJsonPath00
+static int tolua_CocoStudio_NodeReader_setJsonPath00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"NodeReader",0,&tolua_err) ||
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+   cocostudio::timeline::NodeReader* self = (cocostudio::timeline::NodeReader*)  tolua_tousertype(tolua_S,1,0);
+  std::string jsonPath = ((std::string)  tolua_tocppstring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setJsonPath'", NULL);
+#endif
+  {
+   self->setJsonPath(jsonPath);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setJsonPath'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getJsonPath of class  NodeReader */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_NodeReader_getJsonPath00
+static int tolua_CocoStudio_NodeReader_getJsonPath00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const NodeReader",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const cocostudio::timeline::NodeReader* self = (const cocostudio::timeline::NodeReader*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getJsonPath'", NULL);
+#endif
+  {
+   std::string tolua_ret = (std::string)  self->getJsonPath();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getJsonPath'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: create of class  Timeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_Timeline_create00
+static int tolua_CocoStudio_Timeline_create00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"Timeline",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   cocostudio::timeline::Timeline* tolua_ret = (cocostudio::timeline::Timeline*)  cocostudio::timeline::Timeline::create();
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"Timeline");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new of class  Timeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_Timeline_new00
+static int tolua_CocoStudio_Timeline_new00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"Timeline",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+    cocostudio::timeline::Timeline* tolua_ret = ( cocostudio::timeline::Timeline*)  Mtolua_new(( cocostudio::timeline::Timeline)());
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"Timeline");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new_local of class  Timeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_Timeline_new00_local
+static int tolua_CocoStudio_Timeline_new00_local(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"Timeline",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+    cocostudio::timeline::Timeline* tolua_ret = ( cocostudio::timeline::Timeline*)  Mtolua_new(( cocostudio::timeline::Timeline)());
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"Timeline");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: delete of class  Timeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_Timeline_delete00
+static int tolua_CocoStudio_Timeline_delete00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Timeline",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocostudio::timeline::Timeline* self = (cocostudio::timeline::Timeline*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
+#endif
+  Mtolua_delete(self);
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: init of class  Timeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_Timeline_init00
+static int tolua_CocoStudio_Timeline_init00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Timeline",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocostudio::timeline::Timeline* self = (cocostudio::timeline::Timeline*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'init'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->init();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'init'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: gotoFrame of class  Timeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_Timeline_gotoFrame00
+static int tolua_CocoStudio_Timeline_gotoFrame00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Timeline",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocostudio::timeline::Timeline* self = (cocostudio::timeline::Timeline*)  tolua_tousertype(tolua_S,1,0);
+  int frameIndex = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'gotoFrame'", NULL);
+#endif
+  {
+   self->gotoFrame(frameIndex);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'gotoFrame'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: stepToFrame of class  Timeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_Timeline_stepToFrame00
+static int tolua_CocoStudio_Timeline_stepToFrame00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Timeline",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocostudio::timeline::Timeline* self = (cocostudio::timeline::Timeline*)  tolua_tousertype(tolua_S,1,0);
+  int frameIndex = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'stepToFrame'", NULL);
+#endif
+  {
+   self->stepToFrame(frameIndex);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'stepToFrame'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getFrames of class  Timeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_Timeline_getFrames00
+static int tolua_CocoStudio_Timeline_getFrames00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Timeline",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocostudio::timeline::Timeline* self = (cocostudio::timeline::Timeline*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getFrames'", NULL);
+#endif
+  {
+   const cocos2d::CCArray* tolua_ret = (const cocos2d::CCArray*)  self->getFrames();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"const cocos2d::CCArray");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getFrames'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: addFrame of class  Timeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_Timeline_addFrame00
+static int tolua_CocoStudio_Timeline_addFrame00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Timeline",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"Frame",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocostudio::timeline::Timeline* self = (cocostudio::timeline::Timeline*)  tolua_tousertype(tolua_S,1,0);
+  cocostudio::timeline::Frame* frame = ((cocostudio::timeline::Frame*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addFrame'", NULL);
+#endif
+  {
+   self->addFrame(frame);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'addFrame'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: insertFrame of class  Timeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_Timeline_insertFrame00
+static int tolua_CocoStudio_Timeline_insertFrame00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Timeline",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"Frame",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocostudio::timeline::Timeline* self = (cocostudio::timeline::Timeline*)  tolua_tousertype(tolua_S,1,0);
+  cocostudio::timeline::Frame* frame = ((cocostudio::timeline::Frame*)  tolua_tousertype(tolua_S,2,0));
+  int index = ((int)  tolua_tonumber(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'insertFrame'", NULL);
+#endif
+  {
+   self->insertFrame(frame,index);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'insertFrame'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: removeFrame of class  Timeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_Timeline_removeFrame00
+static int tolua_CocoStudio_Timeline_removeFrame00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Timeline",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"Frame",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocostudio::timeline::Timeline* self = (cocostudio::timeline::Timeline*)  tolua_tousertype(tolua_S,1,0);
+  cocostudio::timeline::Frame* frame = ((cocostudio::timeline::Frame*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeFrame'", NULL);
+#endif
+  {
+   self->removeFrame(frame);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'removeFrame'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setActionTag of class  Timeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_Timeline_setActionTag00
+static int tolua_CocoStudio_Timeline_setActionTag00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Timeline",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocostudio::timeline::Timeline* self = (cocostudio::timeline::Timeline*)  tolua_tousertype(tolua_S,1,0);
+  int tag = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setActionTag'", NULL);
+#endif
+  {
+   self->setActionTag(tag);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setActionTag'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getActionTag of class  Timeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_Timeline_getActionTag00
+static int tolua_CocoStudio_Timeline_getActionTag00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Timeline",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const cocostudio::timeline::Timeline* self = (const cocostudio::timeline::Timeline*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getActionTag'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->getActionTag();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getActionTag'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setNode of class  Timeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_Timeline_setNode00
+static int tolua_CocoStudio_Timeline_setNode00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Timeline",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"cocos2d::CCNode",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocostudio::timeline::Timeline* self = (cocostudio::timeline::Timeline*)  tolua_tousertype(tolua_S,1,0);
+  cocos2d::CCNode* node = ((cocos2d::CCNode*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setNode'", NULL);
+#endif
+  {
+   self->setNode(node);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setNode'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getNode of class  Timeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_Timeline_getNode00
+static int tolua_CocoStudio_Timeline_getNode00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Timeline",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const cocostudio::timeline::Timeline* self = (const cocostudio::timeline::Timeline*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getNode'", NULL);
+#endif
+  {
+   cocos2d::CCNode* tolua_ret = (cocos2d::CCNode*)  self->getNode();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"cocos2d::CCNode");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getNode'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setActionTimeline of class  Timeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_Timeline_setActionTimeline00
+static int tolua_CocoStudio_Timeline_setActionTimeline00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Timeline",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"ActionTimeline",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocostudio::timeline::Timeline* self = (cocostudio::timeline::Timeline*)  tolua_tousertype(tolua_S,1,0);
+  cocostudio::timeline::ActionTimeline* action = ((cocostudio::timeline::ActionTimeline*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setActionTimeline'", NULL);
+#endif
+  {
+   self->setActionTimeline(action);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setActionTimeline'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getActionTimeline of class  Timeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_Timeline_getActionTimeline00
+static int tolua_CocoStudio_Timeline_getActionTimeline00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Timeline",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const cocostudio::timeline::Timeline* self = (const cocostudio::timeline::Timeline*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getActionTimeline'", NULL);
+#endif
+  {
+   cocostudio::timeline::ActionTimeline* tolua_ret = (cocostudio::timeline::ActionTimeline*)  self->getActionTimeline();
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"ActionTimeline");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getActionTimeline'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: clone of class  Timeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_Timeline_clone00
+static int tolua_CocoStudio_Timeline_clone00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Timeline",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocostudio::timeline::Timeline* self = (cocostudio::timeline::Timeline*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'clone'", NULL);
+#endif
+  {
+   cocostudio::timeline::Timeline* tolua_ret = (cocostudio::timeline::Timeline*)  self->clone();
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"Timeline");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'clone'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* Open function */
 TOLUA_API int tolua_CocoStudio_open (lua_State* tolua_S)
 {
@@ -27196,6 +29430,9 @@ TOLUA_API int tolua_CocoStudio_open (lua_State* tolua_S)
    tolua_function(tolua_S,"playActionByName",tolua_CocoStudio_ActionManager_playActionByName00);
    tolua_function(tolua_S,"releaseActions",tolua_CocoStudio_ActionManager_releaseActions00);
   tolua_endmodule(tolua_S);
+  tolua_constant(tolua_S,"ATTACH_EMPTY_NODE",ATTACH_EMPTY_NODE);
+  tolua_constant(tolua_S,"ATTACH_RENDER_NODE",ATTACH_RENDER_NODE);
+  tolua_constant(tolua_S,"DEFAULT",DEFAULT);
   #ifdef __cplusplus
   tolua_cclass(tolua_S,"SceneReader","SceneReader","",tolua_collect_SceneReader);
   #else
@@ -27225,6 +29462,7 @@ TOLUA_API int tolua_CocoStudio_open (lua_State* tolua_S)
    tolua_function(tolua_S,"shareReader",tolua_CocoStudio_GUIReader_shareReader00);
    tolua_function(tolua_S,"purge",tolua_CocoStudio_GUIReader_purge00);
    tolua_function(tolua_S,"widgetFromJsonFile",tolua_CocoStudio_GUIReader_widgetFromJsonFile00);
+   tolua_function(tolua_S,"widgetFromBinaryFile",tolua_CocoStudio_GUIReader_widgetFromBinaryFile00);
    tolua_function(tolua_S,"getVersionInteger",tolua_CocoStudio_GUIReader_getVersionInteger00);
    tolua_function(tolua_S,"storeFileDesignSize",tolua_CocoStudio_GUIReader_storeFileDesignSize00);
    tolua_function(tolua_S,"getFileDesignSize",tolua_CocoStudio_GUIReader_getFileDesignSize00);
@@ -27333,6 +29571,104 @@ TOLUA_API int tolua_CocoStudio_open (lua_State* tolua_S)
    tolua_function(tolua_S,"getContentSize",tolua_CocoStudio_RichText_getContentSize00);
    tolua_function(tolua_S,"formatText",tolua_CocoStudio_RichText_formatText00);
    tolua_function(tolua_S,"ignoreContentAdaptWithSize",tolua_CocoStudio_RichText_ignoreContentAdaptWithSize00);
+  tolua_endmodule(tolua_S);
+  #ifdef __cplusplus
+  tolua_cclass(tolua_S,"ActionTimeline","ActionTimeline","CCAction",tolua_collect_ActionTimeline);
+  #else
+  tolua_cclass(tolua_S,"ActionTimeline","ActionTimeline","CCAction",NULL);
+  #endif
+  tolua_beginmodule(tolua_S,"ActionTimeline");
+   tolua_function(tolua_S,"create",tolua_CocoStudio_ActionTimeline_create00);
+   tolua_function(tolua_S,"new",tolua_CocoStudio_ActionTimeline_new00);
+   tolua_function(tolua_S,"new_local",tolua_CocoStudio_ActionTimeline_new00_local);
+   tolua_function(tolua_S,".call",tolua_CocoStudio_ActionTimeline_new00_local);
+   tolua_function(tolua_S,"delete",tolua_CocoStudio_ActionTimeline_delete00);
+   tolua_function(tolua_S,"init",tolua_CocoStudio_ActionTimeline_init00);
+   tolua_function(tolua_S,"gotoFrameAndPlay",tolua_CocoStudio_ActionTimeline_gotoFrameAndPlay00);
+   tolua_function(tolua_S,"gotoFrameAndPlay",tolua_CocoStudio_ActionTimeline_gotoFrameAndPlay01);
+   tolua_function(tolua_S,"gotoFrameAndPlay",tolua_CocoStudio_ActionTimeline_gotoFrameAndPlay02);
+   tolua_function(tolua_S,"gotoFrameAndPause",tolua_CocoStudio_ActionTimeline_gotoFrameAndPause00);
+   tolua_function(tolua_S,"pause",tolua_CocoStudio_ActionTimeline_pause00);
+   tolua_function(tolua_S,"resume",tolua_CocoStudio_ActionTimeline_resume00);
+   tolua_function(tolua_S,"isPlaying",tolua_CocoStudio_ActionTimeline_isPlaying00);
+   tolua_function(tolua_S,"setTimeSpeed",tolua_CocoStudio_ActionTimeline_setTimeSpeed00);
+   tolua_function(tolua_S,"getTimeSpeed",tolua_CocoStudio_ActionTimeline_getTimeSpeed00);
+   tolua_function(tolua_S,"setDuration",tolua_CocoStudio_ActionTimeline_setDuration00);
+   tolua_function(tolua_S,"getDuration",tolua_CocoStudio_ActionTimeline_getDuration00);
+   tolua_function(tolua_S,"getStartFrame",tolua_CocoStudio_ActionTimeline_getStartFrame00);
+   tolua_function(tolua_S,"getEndFrame",tolua_CocoStudio_ActionTimeline_getEndFrame00);
+   tolua_function(tolua_S,"getCurrentFrame",tolua_CocoStudio_ActionTimeline_getCurrentFrame00);
+   tolua_function(tolua_S,"addTimeline",tolua_CocoStudio_ActionTimeline_addTimeline00);
+   tolua_function(tolua_S,"removeTimeline",tolua_CocoStudio_ActionTimeline_removeTimeline00);
+   tolua_function(tolua_S,"clone",tolua_CocoStudio_ActionTimeline_clone00);
+   tolua_function(tolua_S,"reverse",tolua_CocoStudio_ActionTimeline_reverse00);
+   tolua_function(tolua_S,"step",tolua_CocoStudio_ActionTimeline_step00);
+   tolua_function(tolua_S,"startWithTarget",tolua_CocoStudio_ActionTimeline_startWithTarget00);
+   tolua_function(tolua_S,"isDone",tolua_CocoStudio_ActionTimeline_isDone00);
+  tolua_endmodule(tolua_S);
+  #ifdef __cplusplus
+  tolua_cclass(tolua_S,"ActionTimelineCache","ActionTimelineCache","CCObject",tolua_collect_ActionTimelineCache);
+  #else
+  tolua_cclass(tolua_S,"ActionTimelineCache","ActionTimelineCache","CCObject",NULL);
+  #endif
+  tolua_beginmodule(tolua_S,"ActionTimelineCache");
+   tolua_function(tolua_S,"getInstance",tolua_CocoStudio_ActionTimelineCache_getInstance00);
+   tolua_function(tolua_S,"destroyInstance",tolua_CocoStudio_ActionTimelineCache_destroyInstance00);
+   tolua_function(tolua_S,"delete",tolua_CocoStudio_ActionTimelineCache_delete00);
+   tolua_function(tolua_S,"purge",tolua_CocoStudio_ActionTimelineCache_purge00);
+   tolua_function(tolua_S,"init",tolua_CocoStudio_ActionTimelineCache_init00);
+   tolua_function(tolua_S,"removeAction",tolua_CocoStudio_ActionTimelineCache_removeAction00);
+   tolua_function(tolua_S,"createAction",tolua_CocoStudio_ActionTimelineCache_createAction00);
+   tolua_function(tolua_S,"loadAnimationActionWithFile",tolua_CocoStudio_ActionTimelineCache_loadAnimationActionWithFile00);
+   tolua_function(tolua_S,"loadAnimationActionWithContent",tolua_CocoStudio_ActionTimelineCache_loadAnimationActionWithContent00);
+  tolua_endmodule(tolua_S);
+  #ifdef __cplusplus
+  tolua_cclass(tolua_S,"NodeReader","NodeReader","CCObject",tolua_collect_NodeReader);
+  #else
+  tolua_cclass(tolua_S,"NodeReader","NodeReader","CCObject",NULL);
+  #endif
+  tolua_beginmodule(tolua_S,"NodeReader");
+   tolua_function(tolua_S,"getInstance",tolua_CocoStudio_NodeReader_getInstance00);
+   tolua_function(tolua_S,"destroyInstance",tolua_CocoStudio_NodeReader_destroyInstance00);
+   tolua_function(tolua_S,"new",tolua_CocoStudio_NodeReader_new00);
+   tolua_function(tolua_S,"new_local",tolua_CocoStudio_NodeReader_new00_local);
+   tolua_function(tolua_S,".call",tolua_CocoStudio_NodeReader_new00_local);
+   tolua_function(tolua_S,"delete",tolua_CocoStudio_NodeReader_delete00);
+   tolua_function(tolua_S,"purge",tolua_CocoStudio_NodeReader_purge00);
+   tolua_function(tolua_S,"init",tolua_CocoStudio_NodeReader_init00);
+   tolua_function(tolua_S,"createNode",tolua_CocoStudio_NodeReader_createNode00);
+   tolua_function(tolua_S,"loadNodeWithFile",tolua_CocoStudio_NodeReader_loadNodeWithFile00);
+   tolua_function(tolua_S,"loadNodeWithContent",tolua_CocoStudio_NodeReader_loadNodeWithContent00);
+   tolua_function(tolua_S,"setRecordJsonPath",tolua_CocoStudio_NodeReader_setRecordJsonPath00);
+   tolua_function(tolua_S,"isRecordJsonPath",tolua_CocoStudio_NodeReader_isRecordJsonPath00);
+   tolua_function(tolua_S,"setJsonPath",tolua_CocoStudio_NodeReader_setJsonPath00);
+   tolua_function(tolua_S,"getJsonPath",tolua_CocoStudio_NodeReader_getJsonPath00);
+  tolua_endmodule(tolua_S);
+  #ifdef __cplusplus
+  tolua_cclass(tolua_S,"Timeline","Timeline","CCObject",tolua_collect_Timeline);
+  #else
+  tolua_cclass(tolua_S,"Timeline","Timeline","CCObject",NULL);
+  #endif
+  tolua_beginmodule(tolua_S,"Timeline");
+   tolua_function(tolua_S,"create",tolua_CocoStudio_Timeline_create00);
+   tolua_function(tolua_S,"new",tolua_CocoStudio_Timeline_new00);
+   tolua_function(tolua_S,"new_local",tolua_CocoStudio_Timeline_new00_local);
+   tolua_function(tolua_S,".call",tolua_CocoStudio_Timeline_new00_local);
+   tolua_function(tolua_S,"delete",tolua_CocoStudio_Timeline_delete00);
+   tolua_function(tolua_S,"init",tolua_CocoStudio_Timeline_init00);
+   tolua_function(tolua_S,"gotoFrame",tolua_CocoStudio_Timeline_gotoFrame00);
+   tolua_function(tolua_S,"stepToFrame",tolua_CocoStudio_Timeline_stepToFrame00);
+   tolua_function(tolua_S,"getFrames",tolua_CocoStudio_Timeline_getFrames00);
+   tolua_function(tolua_S,"addFrame",tolua_CocoStudio_Timeline_addFrame00);
+   tolua_function(tolua_S,"insertFrame",tolua_CocoStudio_Timeline_insertFrame00);
+   tolua_function(tolua_S,"removeFrame",tolua_CocoStudio_Timeline_removeFrame00);
+   tolua_function(tolua_S,"setActionTag",tolua_CocoStudio_Timeline_setActionTag00);
+   tolua_function(tolua_S,"getActionTag",tolua_CocoStudio_Timeline_getActionTag00);
+   tolua_function(tolua_S,"setNode",tolua_CocoStudio_Timeline_setNode00);
+   tolua_function(tolua_S,"getNode",tolua_CocoStudio_Timeline_getNode00);
+   tolua_function(tolua_S,"setActionTimeline",tolua_CocoStudio_Timeline_setActionTimeline00);
+   tolua_function(tolua_S,"getActionTimeline",tolua_CocoStudio_Timeline_getActionTimeline00);
+   tolua_function(tolua_S,"clone",tolua_CocoStudio_Timeline_clone00);
   tolua_endmodule(tolua_S);
  tolua_endmodule(tolua_S);
  return 1;

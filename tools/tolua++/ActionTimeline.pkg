@@ -1,0 +1,51 @@
+class ActionTimeline : public CCAction
+{
+public:
+
+    static ActionTimeline* create();
+
+    ActionTimeline();
+    virtual ~ActionTimeline();
+
+    virtual bool init();
+
+    virtual void gotoFrameAndPlay(int startIndex);
+
+    virtual void gotoFrameAndPlay(int startIndex, bool loop);
+
+    virtual void gotoFrameAndPlay(int startIndex, int endIndex, bool loop);
+
+    virtual void gotoFrameAndPause(int startIndex);
+
+    virtual void pause();
+
+    virtual void resume();
+
+    virtual bool isPlaying() const;
+
+    virtual void  setTimeSpeed(float speed);
+
+    virtual float getTimeSpeed() const;
+
+    virtual void setDuration(int duration);
+    virtual int  getDuration() const ;
+
+    virtual int getStartFrame() const; 
+    virtual int  getEndFrame() const;
+
+    virtual int  getCurrentFrame() const;
+
+    virtual void addTimeline(Timeline* timeline);
+    virtual void removeTimeline(Timeline* timeline);
+
+    //void setFrameEventCallFunc  (CCObject *target, SEL_FrameEventCallFunc callFunc);
+    //void clearFrameEventCallFunc();
+
+    virtual ActionTimeline* clone() const; 
+
+    virtual ActionTimeline* reverse() const;
+
+    virtual void step(float delta); 
+    virtual void startWithTarget(cocos2d::CCNode *target);  
+    virtual bool isDone();
+};

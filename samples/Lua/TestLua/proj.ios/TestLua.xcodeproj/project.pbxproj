@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		150CD38D1872B3FF007F1964 /* UITouchGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 150CD38B1872B3FF007F1964 /* UITouchGroup.cpp */; };
+		151AC18D194F48BC00B65DF8 /* CCActionTimeline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 151AC182194F48BC00B65DF8 /* CCActionTimeline.cpp */; };
+		151AC18E194F48BC00B65DF8 /* CCActionTimelineCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 151AC184194F48BC00B65DF8 /* CCActionTimelineCache.cpp */; };
+		151AC18F194F48BC00B65DF8 /* CCFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 151AC186194F48BC00B65DF8 /* CCFrame.cpp */; };
+		151AC190194F48BC00B65DF8 /* CCNodeReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 151AC188194F48BC00B65DF8 /* CCNodeReader.cpp */; };
+		151AC191194F48BC00B65DF8 /* CCTimeLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 151AC18A194F48BC00B65DF8 /* CCTimeLine.cpp */; };
+		151AC19E194FF07400B65DF8 /* ActionTimeline in Resources */ = {isa = PBXBuildFile; fileRef = 151AC19D194FF07400B65DF8 /* ActionTimeline */; };
 		153FF73E17F0389500CBA943 /* lua_cocos2dx_extensions_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 153FF73C17F0389100CBA943 /* lua_cocos2dx_extensions_manual.cpp */; };
 		1541548D1845D6840048B4A5 /* lua_cocos2dx_cocostudio_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1541548B1845D6840048B4A5 /* lua_cocos2dx_cocostudio_manual.cpp */; };
 		1583F15418D0954500F3D630 /* UIRichText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1583F15218D0954500F3D630 /* UIRichText.cpp */; };
@@ -298,6 +304,18 @@
 /* Begin PBXFileReference section */
 		150CD38B1872B3FF007F1964 /* UITouchGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITouchGroup.cpp; sourceTree = "<group>"; };
 		150CD38C1872B3FF007F1964 /* UITouchGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITouchGroup.h; sourceTree = "<group>"; };
+		151AC182194F48BC00B65DF8 /* CCActionTimeline.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionTimeline.cpp; sourceTree = "<group>"; };
+		151AC183194F48BC00B65DF8 /* CCActionTimeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionTimeline.h; sourceTree = "<group>"; };
+		151AC184194F48BC00B65DF8 /* CCActionTimelineCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionTimelineCache.cpp; sourceTree = "<group>"; };
+		151AC185194F48BC00B65DF8 /* CCActionTimelineCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionTimelineCache.h; sourceTree = "<group>"; };
+		151AC186194F48BC00B65DF8 /* CCFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFrame.cpp; sourceTree = "<group>"; };
+		151AC187194F48BC00B65DF8 /* CCFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFrame.h; sourceTree = "<group>"; };
+		151AC188194F48BC00B65DF8 /* CCNodeReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNodeReader.cpp; sourceTree = "<group>"; };
+		151AC189194F48BC00B65DF8 /* CCNodeReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNodeReader.h; sourceTree = "<group>"; };
+		151AC18A194F48BC00B65DF8 /* CCTimeLine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTimeLine.cpp; sourceTree = "<group>"; };
+		151AC18B194F48BC00B65DF8 /* CCTimeLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTimeLine.h; sourceTree = "<group>"; };
+		151AC18C194F48BC00B65DF8 /* CCTimelineMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTimelineMacro.h; sourceTree = "<group>"; };
+		151AC19D194FF07400B65DF8 /* ActionTimeline */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ActionTimeline; sourceTree = "<group>"; };
 		153FF73C17F0389100CBA943 /* lua_cocos2dx_extensions_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_extensions_manual.cpp; sourceTree = "<group>"; };
 		153FF73D17F0389300CBA943 /* lua_cocos2dx_extensions_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_cocos2dx_extensions_manual.h; sourceTree = "<group>"; };
 		1541548B1845D6840048B4A5 /* lua_cocos2dx_cocostudio_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_cocostudio_manual.cpp; sourceTree = "<group>"; };
@@ -841,6 +859,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		151AC181194F48BC00B65DF8 /* ActionTimeline */ = {
+			isa = PBXGroup;
+			children = (
+				151AC182194F48BC00B65DF8 /* CCActionTimeline.cpp */,
+				151AC183194F48BC00B65DF8 /* CCActionTimeline.h */,
+				151AC184194F48BC00B65DF8 /* CCActionTimelineCache.cpp */,
+				151AC185194F48BC00B65DF8 /* CCActionTimelineCache.h */,
+				151AC186194F48BC00B65DF8 /* CCFrame.cpp */,
+				151AC187194F48BC00B65DF8 /* CCFrame.h */,
+				151AC188194F48BC00B65DF8 /* CCNodeReader.cpp */,
+				151AC189194F48BC00B65DF8 /* CCNodeReader.h */,
+				151AC18A194F48BC00B65DF8 /* CCTimeLine.cpp */,
+				151AC18B194F48BC00B65DF8 /* CCTimeLine.h */,
+				151AC18C194F48BC00B65DF8 /* CCTimelineMacro.h */,
+			);
+			path = ActionTimeline;
+			sourceTree = "<group>";
+		};
 		159B8976175B9AB30005B47D /* script */ = {
 			isa = PBXGroup;
 			children = (
@@ -1648,6 +1684,7 @@
 		ED53146A18331444008CD8A5 /* CocoStudio */ = {
 			isa = PBXGroup;
 			children = (
+				151AC181194F48BC00B65DF8 /* ActionTimeline */,
 				375BD4AB186840C10024609E /* Trigger */,
 				ED53146B18331444008CD8A5 /* Action */,
 				ED53147618331444008CD8A5 /* Armature */,
@@ -1978,6 +2015,7 @@
 		F293BC4615EB859D00256477 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				151AC19D194FF07400B65DF8 /* ActionTimeline */,
 				1AD263A31683506C0089000C /* animations */,
 				1AD263A71683506C0089000C /* ccb */,
 				1A16458D191B5613008C7C7F /* ccs-res */,
@@ -2103,6 +2141,7 @@
 				1AD263C81683506D0089000C /* fps_images.png in Resources */,
 				1AD263C91683506D0089000C /* hd in Resources */,
 				1AD263CA1683506D0089000C /* Hello.png in Resources */,
+				151AC19E194FF07400B65DF8 /* ActionTimeline in Resources */,
 				1AD263CB1683506D0089000C /* Images in Resources */,
 				1AD263CE1683506D0089000C /* music.mid in Resources */,
 				1AD263CF1683506D0089000C /* Particles in Resources */,
@@ -2171,6 +2210,7 @@
 				15C154141683112E00D239F2 /* CCControlSaturationBrightnessPicker.cpp in Sources */,
 				ED53150D18331445008CD8A5 /* CCBatchNode.cpp in Sources */,
 				ED53150218331445008CD8A5 /* CCActionFrame.cpp in Sources */,
+				151AC18F194F48BC00B65DF8 /* CCFrame.cpp in Sources */,
 				15C154151683112E00D239F2 /* CCControlSlider.cpp in Sources */,
 				15C154161683112E00D239F2 /* CCControlStepper.cpp in Sources */,
 				15C154171683112E00D239F2 /* CCControlSwitch.cpp in Sources */,
@@ -2182,6 +2222,7 @@
 				2961DE2218C970B30017F5DB /* LabelAtlasReader.cpp in Sources */,
 				2961DE2518C970B30017F5DB /* LayoutReader.cpp in Sources */,
 				ED53151218331445008CD8A5 /* CCColliderDetector.cpp in Sources */,
+				151AC190194F48BC00B65DF8 /* CCNodeReader.cpp in Sources */,
 				15C1541F1683112E00D239F2 /* CCScrollView.cpp in Sources */,
 				15C154201683112E00D239F2 /* CCSorting.cpp in Sources */,
 				15C154211683112E00D239F2 /* CCTableView.cpp in Sources */,
@@ -2246,6 +2287,7 @@
 				15C155261683118600D239F2 /* b2TimeOfImpact.cpp in Sources */,
 				15C155271683118600D239F2 /* b2ChainShape.cpp in Sources */,
 				ED53151418331445008CD8A5 /* CCArmatureDefine.cpp in Sources */,
+				151AC18E194F48BC00B65DF8 /* CCActionTimelineCache.cpp in Sources */,
 				2961DE2B18C970B30017F5DB /* TextFieldReader.cpp in Sources */,
 				ED53152018331445008CD8A5 /* UIWidget.cpp in Sources */,
 				ED53150E18331445008CD8A5 /* CCDecorativeDisplay.cpp in Sources */,
@@ -2290,6 +2332,7 @@
 				15C1553E1683118600D239F2 /* b2PolygonAndCircleContact.cpp in Sources */,
 				15C1553F1683118600D239F2 /* b2PolygonContact.cpp in Sources */,
 				15C155401683118600D239F2 /* b2DistanceJoint.cpp in Sources */,
+				151AC18D194F48BC00B65DF8 /* CCActionTimeline.cpp in Sources */,
 				15C155411683118600D239F2 /* b2FrictionJoint.cpp in Sources */,
 				ED53153018331445008CD8A5 /* UILabelAtlas.cpp in Sources */,
 				ED53150B18331445008CD8A5 /* CCBone.cpp in Sources */,
@@ -2328,6 +2371,7 @@
 				46C1008E16BF786A00F74D54 /* CCLuaStack.cpp in Sources */,
 				46C1008F16BF786A00F74D54 /* CCLuaValue.cpp in Sources */,
 				46C1009016BF786A00F74D54 /* Cocos2dxLuaLoader.cpp in Sources */,
+				151AC191194F48BC00B65DF8 /* CCTimeLine.cpp in Sources */,
 				46C1009116BF786A00F74D54 /* LuaCocos2d.cpp in Sources */,
 				ED53151518331445008CD8A5 /* CCDataReaderHelper.cpp in Sources */,
 				ED53154018331445008CD8A5 /* SceneReader.cpp in Sources */,

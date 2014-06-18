@@ -45,20 +45,43 @@ bool AppDelegate::applicationDidFinishLaunching()
     tolua_s = pStack->getLuaState();
     tolua_web_socket_open(tolua_s);
 #endif
-        
+    
+    CCSize screenSize = CCEGLView::sharedOpenGLView()->getFrameSize();
+    CCSize designSize = CCSizeMake(480, 320);
     std::vector<std::string> searchPaths;
     searchPaths.push_back("cocosbuilderRes");
-    searchPaths.insert(searchPaths.begin(), "ccs-res");
-    searchPaths.insert(searchPaths.begin(), "ccs-res/scenetest/ArmatureComponentTest");
-    searchPaths.insert(searchPaths.begin(), "ccs-res/scenetest/AttributeComponentTest");
-    searchPaths.insert(searchPaths.begin(), "ccs-res/scenetest/BackgroundComponentTest");
-    searchPaths.insert(searchPaths.begin(), "ccs-res/scenetest/EffectComponentTest");
-    searchPaths.insert(searchPaths.begin(), "ccs-res/scenetest/LoadSceneEdtiorFileTest");
-    searchPaths.insert(searchPaths.begin(), "ccs-res/scenetest/ParticleComponentTest");
-    searchPaths.insert(searchPaths.begin(), "ccs-res/scenetest/SpriteComponentTest");
-    searchPaths.insert(searchPaths.begin(), "ccs-res/scenetest/TmxMapComponentTest");
-    searchPaths.insert(searchPaths.begin(), "ccs-res/scenetest/UIComponentTest");
-    searchPaths.insert(searchPaths.begin(), "ccs-res/scenetest/TriggerTest");
+    if (screenSize.height > 320)
+    {
+        CCSize resourceSize = CCSizeMake(960, 640);
+        searchPaths.insert(searchPaths.begin(), "ccs-res");
+        searchPaths.insert(searchPaths.begin(), "ccs-res/hd/scenetest/ArmatureComponentTest");
+        searchPaths.insert(searchPaths.begin(), "ccs-res/hd/scenetest/AttributeComponentTest");
+        searchPaths.insert(searchPaths.begin(), "ccs-res/hd/scenetest/BackgroundComponentTest");
+        searchPaths.insert(searchPaths.begin(), "ccs-res/hd/scenetest/EffectComponentTest");
+        searchPaths.insert(searchPaths.begin(), "ccs-res/hd/scenetest/LoadSceneEdtiorFileTest");
+        searchPaths.insert(searchPaths.begin(), "ccs-res/hd/scenetest/ParticleComponentTest");
+        searchPaths.insert(searchPaths.begin(), "ccs-res/hd/scenetest/SpriteComponentTest");
+        searchPaths.insert(searchPaths.begin(), "ccs-res/hd/scenetest/TmxMapComponentTest");
+        searchPaths.insert(searchPaths.begin(), "ccs-res/hd/scenetest/UIComponentTest");
+        searchPaths.insert(searchPaths.begin(), "ccs-res/hd/scenetest/TriggerTest");
+        searchPaths.insert(searchPaths.begin(), "ccs-res/hd");
+        searchPaths.insert(searchPaths.begin(),  "hd");
+        pDirector->setContentScaleFactor(resourceSize.height/designSize.height);
+    }
+    else
+    {
+        searchPaths.insert(searchPaths.begin(), "ccs-res");
+        searchPaths.insert(searchPaths.begin(), "ccs-res/scenetest/ArmatureComponentTest");
+        searchPaths.insert(searchPaths.begin(), "ccs-res/scenetest/AttributeComponentTest");
+        searchPaths.insert(searchPaths.begin(), "ccs-res/scenetest/BackgroundComponentTest");
+        searchPaths.insert(searchPaths.begin(), "ccs-res/scenetest/EffectComponentTest");
+        searchPaths.insert(searchPaths.begin(), "ccs-res/scenetest/LoadSceneEdtiorFileTest");
+        searchPaths.insert(searchPaths.begin(), "ccs-res/scenetest/ParticleComponentTest");
+        searchPaths.insert(searchPaths.begin(), "ccs-res/scenetest/SpriteComponentTest");
+        searchPaths.insert(searchPaths.begin(), "ccs-res/scenetest/TmxMapComponentTest");
+        searchPaths.insert(searchPaths.begin(), "ccs-res/scenetest/UIComponentTest");
+        searchPaths.insert(searchPaths.begin(), "ccs-res/scenetest/TriggerTest");
+    }
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
     searchPaths.push_back("TestCppResources");

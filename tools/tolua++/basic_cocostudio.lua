@@ -47,6 +47,10 @@ local CCObjectTypes = {
     "CCDictionary",
     "CCArray",
     "CCNode",
+    "Timeline",
+    "ActionTimeline",
+    "ActionTimelineCache",
+    "NodeReader",
 }
 
 -- register CCObject types
@@ -291,6 +295,38 @@ TOLUA_API int  tolua_CocoStudio_open (lua_State* tolua_S);]], [[]])
 
     replace([[(tolua_isvaluenil(tolua_S,4,&tolua_err) || !tolua_isusertype(tolua_S,4,"GLubyte",0,&tolua_err))]],[[!tolua_isnumber(tolua_S,4,0,&tolua_err)]])
     replace([[GLubyte opacity = *((GLubyte*)  tolua_tousertype(tolua_S,4,0));]],[[GLubyte opacity = ((GLubyte) (int)  tolua_tonumber(tolua_S,4,0));]])
+    -- using cocostudio::timeline namespace
+    replace([[ ActionTimelineCache* self = (ActionTimelineCache*) tolua_tousertype(tolua_S,1,0);]],[[   cocostudio::timeline::ActionTimelineCache* self = (cocostudio::timeline::ActionTimelineCache*) tolua_tousertype(tolua_S,1,0);]])
+    replace([[ NodeReader* self = (NodeReader*) tolua_tousertype(tolua_S,1,0);]],[[   cocostudio::timeline::NodeReader* self = (cocostudio::timeline::NodeReader*) tolua_tousertype(tolua_S,1,0);]])
+    replace([[ ActionTimeline* self = (ActionTimeline*) tolua_tousertype(tolua_S,1,0);]],[[    cocostudio::timeline::ActionTimeline* self = (cocostudio::timeline::ActionTimeline*) tolua_tousertype(tolua_S,1,0);]])
+    replace([[   ActionTimeline* tolua_ret = (ActionTimeline*)  Mtolua_new((ActionTimeline)());]],[[    cocostudio::timeline::ActionTimeline* tolua_ret = (cocostudio::timeline::ActionTimeline*)  Mtolua_new((cocostudio::timeline::ActionTimeline)());]])
+    replace([[  ActionTimeline* self = (ActionTimeline*)  tolua_tousertype(tolua_S,1,0);]],[[  cocostudio::timeline::ActionTimeline* self = (cocostudio::timeline::ActionTimeline*)  tolua_tousertype(tolua_S,1,0);]])
+    replace([[   ActionTimeline* tolua_ret = (ActionTimeline*)  ActionTimeline::create();]],[[    cocostudio::timeline::ActionTimeline* tolua_ret = (cocostudio::timeline::ActionTimeline*)  cocostudio::timeline::ActionTimeline::create();]])
+    replace([[  const ActionTimeline* self = (const ActionTimeline*)  tolua_tousertype(tolua_S,1,0);]],[[  const cocostudio::timeline::ActionTimeline* self = (const cocostudio::timeline::ActionTimeline*)  tolua_tousertype(tolua_S,1,0);]])
+    replace([[  Timeline* timeline = ((Timeline*)  tolua_tousertype(tolua_S,2,0));]],[[  cocostudio::timeline::Timeline* timeline = ((cocostudio::timeline::Timeline*)  tolua_tousertype(tolua_S,2,0));]])
+    replace([[   ActionTimeline* tolua_ret = (ActionTimeline*)  self->clone();]],[[     cocostudio::timeline::ActionTimeline* tolua_ret = (cocostudio::timeline::ActionTimeline*)  self->clone();]])
+    replace([[   ActionTimeline* tolua_ret = (ActionTimeline*)  self->reverse();]],[[    cocostudio::timeline::ActionTimeline* tolua_ret = (cocostudio::timeline::ActionTimeline*)  self->reverse();]])
+    replace([[   ActionTimelineCache* tolua_ret = (ActionTimelineCache*)  ActionTimelineCache::getInstance();]],[[    cocostudio::timeline::ActionTimelineCache* tolua_ret = ( cocostudio::timeline::ActionTimelineCache*)cocostudio::timeline::ActionTimelineCache::getInstance();]])
+    replace([[   ActionTimelineCache::destroyInstance();]],[[   cocostudio::timeline::ActionTimelineCache::destroyInstance();]])
+    replace([[  ActionTimelineCache* self = (ActionTimelineCache*)  tolua_tousertype(tolua_S,1,0);]],[[   cocostudio::timeline::ActionTimelineCache* self = (cocostudio::timeline::ActionTimelineCache*)  tolua_tousertype(tolua_S,1,0);]])
+    replace([[   ActionTimeline* tolua_ret = (ActionTimeline*)  self->createAction(fileName);]],[[    cocostudio::timeline::ActionTimeline* tolua_ret = (cocostudio::timeline::ActionTimeline*)  self->createAction(fileName);]])
+    replace([[   ActionTimeline* tolua_ret = (ActionTimeline*)  self->loadAnimationActionWithFile(fileName);]],[[    cocostudio::timeline::ActionTimeline* tolua_ret = (cocostudio::timeline::ActionTimeline*)  self->loadAnimationActionWithFile(fileName);]])
+    replace([[   NodeReader* tolua_ret = (NodeReader*)  NodeReader::getInstance();]],[[    cocostudio::timeline::NodeReader* tolua_ret = (cocostudio::timeline::NodeReader*)  cocostudio::timeline::NodeReader::getInstance();]])
+    replace([[   NodeReader::destroyInstance();]],[[    cocostudio::timeline::NodeReader::destroyInstance();]])
+    replace([[   ActionTimeline* tolua_ret = (ActionTimeline*)  self->loadAnimationActionWithContent(fileName,content);]],[[   cocostudio::timeline::ActionTimeline* tolua_ret = (cocostudio::timeline::ActionTimeline*)  self->loadAnimationActionWithContent(fileName,content);]])
+    replace([[   NodeReader* tolua_ret = (NodeReader*)  Mtolua_new((NodeReader)());]],[[   cocostudio::timeline::NodeReader* tolua_ret = (cocostudio::timeline::NodeReader*)  Mtolua_new((cocostudio::timeline::NodeReader)());]])
+    replace([[  NodeReader* self = (NodeReader*)  tolua_tousertype(tolua_S,1,0);]],[[   cocostudio::timeline::NodeReader* self = (cocostudio::timeline::NodeReader*)  tolua_tousertype(tolua_S,1,0);]])
+    replace([[  const NodeReader* self = (const NodeReader*)  tolua_tousertype(tolua_S,1,0);]],[[  const cocostudio::timeline::NodeReader* self = (const cocostudio::timeline::NodeReader*)  tolua_tousertype(tolua_S,1,0);]])
+    replace([[   Timeline* tolua_ret = (Timeline*)  Timeline::create();]],[[   cocostudio::timeline::Timeline* tolua_ret = (cocostudio::timeline::Timeline*)  cocostudio::timeline::Timeline::create();]])
+    replace([[   Timeline* tolua_ret = (Timeline*)  Mtolua_new((Timeline)());]],[[    cocostudio::timeline::Timeline* tolua_ret = ( cocostudio::timeline::Timeline*)  Mtolua_new(( cocostudio::timeline::Timeline)());]])
+    replace([[  Timeline* self = (Timeline*)  tolua_tousertype(tolua_S,1,0);]],[[  cocostudio::timeline::Timeline* self = (cocostudio::timeline::Timeline*)  tolua_tousertype(tolua_S,1,0);]])
+    replace([[  Frame* frame = ((Frame*)  tolua_tousertype(tolua_S,2,0));]],[[  cocostudio::timeline::Frame* frame = ((cocostudio::timeline::Frame*)  tolua_tousertype(tolua_S,2,0));]])
+    replace([[  const Timeline* self = (const Timeline*)  tolua_tousertype(tolua_S,1,0);]],[[  const cocostudio::timeline::Timeline* self = (const cocostudio::timeline::Timeline*)  tolua_tousertype(tolua_S,1,0);]])
+    replace([[  ActionTimeline* action = ((ActionTimeline*)  tolua_tousertype(tolua_S,2,0));]],[[  cocostudio::timeline::ActionTimeline* action = ((cocostudio::timeline::ActionTimeline*)  tolua_tousertype(tolua_S,2,0));]])
+    replace([[   ActionTimeline* tolua_ret = (ActionTimeline*)  self->getActionTimeline();]],[[   cocostudio::timeline::ActionTimeline* tolua_ret = (cocostudio::timeline::ActionTimeline*)  self->getActionTimeline();]])
+    replace([[   Timeline* tolua_ret = (Timeline*)  self->clone();]],[[   cocostudio::timeline::Timeline* tolua_ret = (cocostudio::timeline::Timeline*)  self->clone();]])
+
+
 
 
     WRITE(result)
