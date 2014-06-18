@@ -1574,11 +1574,11 @@ void TestLoadFromBinary::onTouchesEnded(const std::vector<Touch*>& touches, Even
 
 void TestLoadFromBinary::dataLoaded( float percent )
 {
-	LabelTTF *label = (LabelTTF *)getChildByTag(10001);
+	Label *label = (Label *)getChildByTag(10001);
 	if (label)
 	{
 		char pszPercent[255];
-		sprintf(pszPercent, "%s %f", subtitle().c_str(), percent * 100);
+		sprintf(pszPercent, "%s %f", "Asynchronous loading: ", percent * 100);
 		label->setString(pszPercent);
 	}
     
