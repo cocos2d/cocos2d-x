@@ -3660,8 +3660,6 @@
         "cocos/scripting/lua-bindings/auto/api/JumpTo.lua", 
         "cocos/scripting/lua-bindings/auto/api/Label.lua", 
         "cocos/scripting/lua-bindings/auto/api/LabelAtlas.lua", 
-        "cocos/scripting/lua-bindings/auto/api/LabelBMFont.lua", 
-        "cocos/scripting/lua-bindings/auto/api/LabelTTF.lua", 
         "cocos/scripting/lua-bindings/auto/api/Layer.lua", 
         "cocos/scripting/lua-bindings/auto/api/LayerColor.lua", 
         "cocos/scripting/lua-bindings/auto/api/LayerGradient.lua", 

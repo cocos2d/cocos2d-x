@@ -25,20 +25,20 @@ void AnimationCurve<componentSize>::evaluate(float time, float* dst, EvaluateTyp
     float* toValue = fromValue + componentSize;
     
     switch (type) {
-        case EvaluateType::LINEAR:
+        case EvaluateType::INT_LINEAR:
         {
             for (auto i = 0; i < componentSize; i++) {
                 dst[i] = fromValue[i] + (toValue[i] - fromValue[i]) * t;
             }
         }
         break;
-        case EvaluateType::NEARE:
+        case EvaluateType::INT_NEAR:
         {
             float* src = t > 0.5f ? toValue : fromValue;
             memcpy(dst, src, _componentSizeByte);
         }
         break;
-        case EvaluateType::QUAT_SLERP:
+        case EvaluateType::INT_QUAT_SLERP:
         {
             // Evaluate.
             Quaternion quat;
@@ -50,7 +50,7 @@ void AnimationCurve<componentSize>::evaluate(float time, float* dst, EvaluateTyp
             dst[0] = quat.x, dst[1] = quat.y, dst[2] = quat.z, dst[3] = quat.w;
         }
         break;
-        case EvaluateType::USER_FUNCTION:
+        case EvaluateType::INT_USER_FUNCTION:
         {
             if (_evaluateFun)
                 _evaluateFun(time, dst);

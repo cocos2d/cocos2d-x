@@ -1393,7 +1393,7 @@ Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Va
     const char* classname = DICTOOL->getStringValue_json(data, "classname");
     const rapidjson::Value& uiOptions = DICTOOL->getSubDictionary_json(data, "options");
     Widget* widget = this->createGUI(classname);
-    CCLOG("classname = %s", classname);
+//    CCLOG("classname = %s", classname);
     std::string readerName = this->getWidgetReaderClassName(classname);
     
     WidgetReaderProtocol* reader = this->createWidgetReaderProtocol(readerName);

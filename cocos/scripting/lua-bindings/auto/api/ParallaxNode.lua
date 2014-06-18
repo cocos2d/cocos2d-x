@@ -17,11 +17,6 @@
 -- @param #bool bool
         
 --------------------------------
--- @function [parent=#ParallaxNode] setParallaxArray 
--- @param self
--- @param #cc._ccArray _ccarray
-        
---------------------------------
 -- @function [parent=#ParallaxNode] create 
 -- @param self
 -- @return ParallaxNode#ParallaxNode ret (return value: cc.ParallaxNode)

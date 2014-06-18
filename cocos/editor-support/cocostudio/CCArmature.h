@@ -200,9 +200,6 @@ public:
     virtual void setArmatureData(ArmatureData *armatureData) { _armatureData = armatureData; }
     virtual ArmatureData *getArmatureData() const { return _armatureData; }
 
-    virtual void setName(const std::string &name) { _name = name; }
-    virtual const std::string &getName() const { return _name; } 
-
 
     virtual void setParentBone(Bone *parentBone);
     virtual Bone *getParentBone() const;
@@ -257,7 +254,6 @@ protected:
 
     BatchNode *_batchNode;
 
-    std::string _name;
     Bone *_parentBone;
     float _version;
 

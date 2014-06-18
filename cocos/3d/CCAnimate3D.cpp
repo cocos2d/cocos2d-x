@@ -111,17 +111,17 @@ void Animate3D::update(float t)
             auto curve = it.second;
             if (curve->translateCurve)
             {
-                curve->translateCurve->evaluate(t, transDst, EvaluateType::LINEAR);
+                curve->translateCurve->evaluate(t, transDst, EvaluateType::INT_LINEAR);
                 trans = &transDst[0];
             }
             if (curve->rotCurve)
             {
-                curve->rotCurve->evaluate(t, rotDst, EvaluateType::QUAT_SLERP);
+                curve->rotCurve->evaluate(t, rotDst, EvaluateType::INT_QUAT_SLERP);
                 rot = &rotDst[0];
             }
             if (curve->scaleCurve)
             {
-                curve->scaleCurve->evaluate(t, scaleDst, EvaluateType::LINEAR);
+                curve->scaleCurve->evaluate(t, scaleDst, EvaluateType::INT_LINEAR);
                 scale = &scaleDst[0];
             }
             bone->setAnimationValue(trans, rot, scale, _weight);
