@@ -97,11 +97,11 @@ static int tolua_Cocos2dx_Widget_addTouchEventListener00(lua_State* tolua_S)
         
         listener->setHandler(handler);
         
-        CCDictionary* dict = static_cast<CCDictionary*>(self->getUserObject());
+        CCDictionary* dict = static_cast<CCDictionary*>(self->getScriptObjectDict());
         if (NULL == dict)
         {
             dict = CCDictionary::create();
-            self->setUserObject(dict);
+            self->setScriptObjectDict(dict);
         }
         dict->setObject(listener, "widgetTouchEvent");
         
@@ -154,11 +154,11 @@ static int tolua_Cocos2dx_CheckBox_addEventListenerCheckBox00(lua_State* tolua_S
         
         listener->setHandler(handler);
         
-        CCDictionary* dict = static_cast<CCDictionary*>(self->getUserObject());
+        CCDictionary* dict = static_cast<CCDictionary*>(self->getScriptObjectDict());
         if (NULL == dict)
         {
             dict = CCDictionary::create();
-            self->setUserObject(dict);
+            self->setScriptObjectDict(dict);
         }
         dict->setObject(listener, "checkBoxEventListener");
         
@@ -211,11 +211,11 @@ static int tolua_Cocos2dx_Slider_addEventListenerSlider00(lua_State* tolua_S)
         
         listener->setHandler(handler);
         
-        CCDictionary* dict = static_cast<CCDictionary*>(self->getUserObject());
+        CCDictionary* dict = static_cast<CCDictionary*>(self->getScriptObjectDict());
         if (NULL == dict)
         {
             dict = CCDictionary::create();
-            self->setUserObject(dict);
+            self->setScriptObjectDict(dict);
         }
         dict->setObject(listener, "sliderEventListener");
         
@@ -268,11 +268,11 @@ static int tolua_Cocos2dx_TextField_addEventListenerTextField00(lua_State* tolua
         
         listener->setHandler(handler);
         
-        CCDictionary* dict = static_cast<CCDictionary*>(self->getUserObject());
+        CCDictionary* dict = static_cast<CCDictionary*>(self->getScriptObjectDict());
         if (NULL == dict)
         {
             dict = CCDictionary::create();
-            self->setUserObject(dict);
+            self->setScriptObjectDict(dict);
         }
         dict->setObject(listener, "textfieldEventListener");
         
@@ -325,11 +325,11 @@ static int tolua_Cocos2dx_PageView_addEventListenerPageView00(lua_State* tolua_S
         
         listener->setHandler(handler);
         
-        CCDictionary* dict = static_cast<CCDictionary*>(self->getUserObject());
+        CCDictionary* dict = static_cast<CCDictionary*>(self->getScriptObjectDict());
         if (NULL == dict)
         {
             dict = CCDictionary::create();
-            self->setUserObject(dict);
+            self->setScriptObjectDict(dict);
         }
         dict->setObject(listener, "pageViewEventListener");
         
@@ -382,11 +382,11 @@ static int tolua_Cocos2dx_ScrollView_addEventListenerScrollView00(lua_State* tol
         
         listener->setHandler(handler);
         
-        CCDictionary* dict = static_cast<CCDictionary*>(self->getUserObject());
+        CCDictionary* dict = static_cast<CCDictionary*>(self->getScriptObjectDict());
         if (NULL == dict)
         {
             dict = CCDictionary::create();
-            self->setUserObject(dict);
+            self->setScriptObjectDict(dict);
         }
         dict->setObject(listener, "scrollViewEventListener");
         
@@ -439,11 +439,11 @@ static int tolua_Cocos2dx_ListView_addEventListenerListView00(lua_State* tolua_S
         
         listener->setHandler(handler);
         
-        CCDictionary* dict = static_cast<CCDictionary*>(self->getUserObject());
+        CCDictionary* dict = static_cast<CCDictionary*>(self->getScriptObjectDict());
         if (NULL == dict)
         {
             dict = CCDictionary::create();
-            self->setUserObject(dict);
+            self->setScriptObjectDict(dict);
         }
         dict->setObject(listener, "listViewEventListener");
         
@@ -673,11 +673,11 @@ static int tolua_Cocos2dx_CCArmatureAnimation_setMovementEventCallFunc00(lua_Sta
         
         wrapper->setHandler(handler);
         
-        CCDictionary* dict = static_cast<CCDictionary*>(self->getUserObject());
-        if (NULL == self->getUserObject())
+        CCDictionary* dict = static_cast<CCDictionary*>(self->getScriptObjectDict());
+        if (NULL == self->getScriptObjectDict())
         {
             dict = CCDictionary::create();
-            self->setUserObject(dict);
+            self->setScriptObjectDict(dict);
         }
         
         dict->setObject(wrapper, "moveEvent");
@@ -721,11 +721,11 @@ static int tolua_Cocos2dx_CCArmatureAnimation_setFrameEventCallFunc00(lua_State*
         
         wrapper->setHandler(handler);
         
-        CCDictionary* dict = static_cast<CCDictionary*>(self->getUserObject());
-        if (NULL == self->getUserObject())
+        CCDictionary* dict = static_cast<CCDictionary*>(self->getScriptObjectDict());
+        if (NULL == self->getScriptObjectDict())
         {
             dict = CCDictionary::create();
-            self->setUserObject(dict);
+            self->setScriptObjectDict(dict);
         }
         
         dict->setObject(wrapper, "frameEvent");
@@ -911,11 +911,11 @@ static int tolua_Cocos2dx_ActionTimeline_setFrameEventCallFunc00(lua_State* tolu
         
         wrapper->setHandler(handler);
         
-        CCDictionary* dict = static_cast<CCDictionary*>(self->getUserObject());
-        if (NULL == self->getUserObject())
+        CCDictionary* dict = static_cast<CCDictionary*>(self->getScriptObjectDict());
+        if (NULL == self->getScriptObjectDict())
         {
             dict = CCDictionary::create();
-            self->setUserObject(dict);
+            self->setScriptObjectDict(dict);
         }
         
         dict->setObject(wrapper, "frameEvent");
@@ -948,7 +948,7 @@ static int tolua_Cocos2dx_ActionTimeline_clearFrameEventCallFunc00(lua_State* to
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'clearFrameEventCallFunc'", NULL);
 #endif
         
-        CCDictionary* dict = static_cast<CCDictionary*>(self->getUserObject());
+        CCDictionary* dict = static_cast<CCDictionary*>(self->getScriptObjectDict());
         if (NULL != dict)
         {
             dict->removeObjectForKey("frameEvent");
@@ -988,5 +988,6 @@ int register_all_cocos2dx_studio_manual(lua_State* tolua_S)
     extendLayoutParameter(tolua_S);
     extendCCArmatureAnimation(tolua_S);
     extendCCArmatureDataManager(tolua_S);
+    extendActionTimeline(tolua_S);
     return 0;
 }

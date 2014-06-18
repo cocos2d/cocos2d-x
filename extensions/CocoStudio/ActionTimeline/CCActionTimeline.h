@@ -119,21 +119,21 @@ public:
     virtual bool isDone() { return false; }
     
     /**
-     * Returns a user assigned CCObject
+     * Returns a user assigned CCDictionary
      *
-     * @return A user assigned CCObject
+     * @return A user assigned CCDictionary
      */
-    virtual cocos2d::CCObject* getUserObject() const;
+    virtual cocos2d::CCDictionary* getScriptObjectDict() const;
     /**
-     * Returns a user assigned CCObject
+     * Returns a user assigned CCDictionary
      *
-     * The UserObject will be retained once in this method,
-     * and the previous UserObject (if existed) will be relese.
-     * The UserObject will be released in destructure.
+     * The scriptObjectDict will be retained once in this method,
+     * and the previous scriptObjectDict (if existed) will be relese.
+     * The scriptObjectDict will be released in destructure.
      *
      * @param A user assigned CCObject
      */
-    virtual void setUserObject(cocos2d::CCObject *userObject);
+    virtual void setScriptObjectDict(cocos2d::CCDictionary* scriptObjectDict);
 protected:
     friend class Frame;
 
@@ -161,7 +161,7 @@ protected:
     SEL_FrameEventCallFunc _frameEventCallFunc;
     cocos2d::CCObject*     _frameEventTarget;
     
-    cocos2d::CCObject* _userObject;
+    cocos2d::CCDictionary* _scriptObjectDict;
 };
 
 NS_TIMELINE_END
