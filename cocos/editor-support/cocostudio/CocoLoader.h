@@ -30,8 +30,8 @@
 #include <cstdio>
 #include <stdint.h>
 #include "ExtensionMacros.h"
-#include "rapidjson.h"
-#include "document.h"
+#include "json/rapidjson.h"
+#include "json/document.h"
 
 #pragma pack (4)
 
@@ -70,7 +70,7 @@ public:
 		m_szName = m_szName + (uint64_t)pStringMemoryAddr;
 		m_pAttribDescArray = m_pAttribDescArray + (uint64_t)pAttribMemoryAddr;
 		stExpCocoAttribDesc* tpAttribDescArray = (stExpCocoAttribDesc*)m_pAttribDescArray;
-		for(int i = 0 ; i < m_nAttribNum ; i++)
+		for(uint32_t i = 0 ; i < m_nAttribNum ; i++)
 		{
 			tpAttribDescArray[i].ReBuild(pStringMemoryAddr);
 		}
