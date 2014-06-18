@@ -1290,17 +1290,34 @@ Widget* WidgetPropertiesReader0300::widgetFromBinary(CocoLoader* pCocoLoader,  s
 {
     Widget* widget = nullptr;
     stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+    stExpCocoNode *optionsNode = nullptr;
+    stExpCocoNode *childrenNode = nullptr;
+    int elementCount = pCocoNode->GetChildNum();
     std::string classname;
     
-    
-    std::string key = stChildArray[0].GetName(pCocoLoader);
-    classname = stChildArray[0].GetValue();
-    
-    if (key == "classname" && !classname.empty()) {
-        widget = this->createGUI(classname);
+    for (int i = 0; i < elementCount; ++i) {
+        std::string key = stChildArray[i].GetName(pCocoLoader);
+        std::string value = stChildArray[i].GetValue();
+        
+        if (key == "classname" )
+        {
+            if (!value.empty())
+            {
+                classname = value;
+                widget = this->createGUI(classname);
+            }
+            else
+            {
+                CCLOG("Warning!!! classname not found!");
+            }
+        }else if(key == "children"){
+            childrenNode = &stChildArray[i];
+        }else if(key == "options"){
+            optionsNode = &stChildArray[i];
+        }
+
     }
     
-//    CCLOG("classname = %s", classname.c_str());
     std::string readerName = this->getWidgetReaderClassName(classname);
     
     WidgetReaderProtocol* reader = this->createWidgetReaderProtocol(readerName);
@@ -1308,7 +1325,7 @@ Widget* WidgetPropertiesReader0300::widgetFromBinary(CocoLoader* pCocoLoader,  s
     if (reader)
     {
         // widget parse with widget reader
-        setPropsForAllWidgetFromBinary(reader, widget, pCocoLoader, &stChildArray[3]);
+        setPropsForAllWidgetFromBinary(reader, widget, pCocoLoader,optionsNode);
     }
     else
     {
@@ -1316,25 +1333,41 @@ Widget* WidgetPropertiesReader0300::widgetFromBinary(CocoLoader* pCocoLoader,  s
         readerName = this->getWidgetReaderClassName(widget);
         reader = this->createWidgetReaderProtocol(readerName);
         
-        setPropsForAllWidgetFromBinary(reader, widget, pCocoLoader, &stChildArray[3]);
         
-        // 2nd., custom widget parse with custom reader
-//        const char* customProperty = DICTOOL->getStringValue_json(uiOptions, "customProperty");
-//        
-//        rapidjson::Document customJsonDict;
-//        customJsonDict.Parse<0>(customProperty);
-//        
-//        setPropsForAllCustomWidgetFromBinary(classname, widget, pCocoLoader, &stChildArray[3]);
+        if (reader && widget) {
+            setPropsForAllWidgetFromBinary(reader, widget, pCocoLoader, optionsNode);
+            // 2nd., custom widget parse with custom reader
+            //2nd. parse custom property
+            const char* customProperty = NULL;
+            stExpCocoNode *optionChildNode = optionsNode->GetChildArray();
+            for (int k = 0; k < optionsNode->GetChildNum(); ++k) {
+                std::string key = optionChildNode[k].GetName(pCocoLoader);
+                if (key == "customProperty") {
+                    customProperty = optionChildNode[k].GetValue();
+                    break;
+                }
+            }
+            
+            rapidjson::Document customJsonDict;
+            customJsonDict.Parse<0>(customProperty);
+            if (customJsonDict.HasParseError())
+            {
+                CCLOG("GetParseError %s\n", customJsonDict.GetParseError());
+            }
+            setPropsForAllCustomWidgetFromJsonDictionary(classname, widget, customJsonDict);
+        }else{
+            CCLOG("Widget or WidgetReader doesn't exists!!!  Please check your csb file.");
+        }
+      
     }
     
     //parse children
-    stExpCocoNode* childrenArray = &stChildArray[2];
-    if (nullptr != childrenArray) {
-        rapidjson::Type tType22  = stChildArray[2].GetType(pCocoLoader);
+    if (nullptr != childrenNode) {
+        rapidjson::Type tType22  = childrenNode->GetType(pCocoLoader);
         if (tType22 == rapidjson::kArrayType) {
             
-            int childrenCount = childrenArray->GetChildNum();
-            stExpCocoNode* innerChildArray = childrenArray->GetChildArray();
+            int childrenCount = childrenNode->GetChildNum();
+            stExpCocoNode* innerChildArray = childrenNode->GetChildArray();
             for (int i=0; i < childrenCount; ++i) {
                 rapidjson::Type tType  = innerChildArray[i].GetType(pCocoLoader);
                 
@@ -1411,17 +1444,22 @@ Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Va
         
         reader = dynamic_cast<WidgetReaderProtocol*>(ObjectFactory::getInstance()->createObject(readerName));
         
-        setPropsForAllWidgetFromJsonDictionary(reader, widget, uiOptions);
-        
-        // 2nd., custom widget parse with custom reader
-        const char* customProperty = DICTOOL->getStringValue_json(uiOptions, "customProperty");
-        rapidjson::Document customJsonDict;
-        customJsonDict.Parse<0>(customProperty);
-        if (customJsonDict.HasParseError())
-        {
-            CCLOG("GetParseError %s\n", customJsonDict.GetParseError());
+        if (reader && widget) {
+            setPropsForAllWidgetFromJsonDictionary(reader, widget, uiOptions);
+            
+            // 2nd., custom widget parse with custom reader
+            const char* customProperty = DICTOOL->getStringValue_json(uiOptions, "customProperty");
+            rapidjson::Document customJsonDict;
+            customJsonDict.Parse<0>(customProperty);
+            if (customJsonDict.HasParseError())
+            {
+                CCLOG("GetParseError %s\n", customJsonDict.GetParseError());
+            }
+            setPropsForAllCustomWidgetFromJsonDictionary(classname, widget, customJsonDict);
+        }else{
+            CCLOG("Widget or WidgetReader doesn't exists!!!  Please check your csb file.");
         }
-        setPropsForAllCustomWidgetFromJsonDictionary(classname, widget, customJsonDict);
+       
     }
     
     int childrenCount = DICTOOL->getArrayCount_json(data, "children");
