@@ -2,7 +2,7 @@
 
 #include "WidgetReader.h"
 #include "../../../../cocos2dx/CCDirector.h"
-#include "Cocostudio/ActionTimeline/CCNodeReader.h"
+#include "CocoStudio/ActionTimeline/CCNodeReader.h"
 
 NS_CC_EXT_BEGIN
 
