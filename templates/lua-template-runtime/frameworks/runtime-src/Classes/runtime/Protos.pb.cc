@@ -10,123 +10,27 @@
 #include <google/protobuf/stubs/once.h>
 #include <google/protobuf/io/coded_stream.h>
 #include <google/protobuf/wire_format_lite_inl.h>
-#include <google/protobuf/descriptor.h>
-#include <google/protobuf/generated_message_reflection.h>
-#include <google/protobuf/reflection_ops.h>
-#include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 
 namespace runtime {
 
-namespace {
-
-const ::google::protobuf::Descriptor* FileSendProtos_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  FileSendProtos_reflection_ = NULL;
-const ::google::protobuf::EnumDescriptor* FileSendProtos_CompressType_descriptor_ = NULL;
-const ::google::protobuf::EnumDescriptor* FileSendProtos_VerifyMode_descriptor_ = NULL;
-const ::google::protobuf::Descriptor* FileSendComplete_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  FileSendComplete_reflection_ = NULL;
-const ::google::protobuf::EnumDescriptor* FileSendComplete_RESULT_descriptor_ = NULL;
-
-}  // namespace
-
-
-void protobuf_AssignDesc_Protos_2eproto() {
-  protobuf_AddDesc_Protos_2eproto();
-  const ::google::protobuf::FileDescriptor* file =
-    ::google::protobuf::DescriptorPool::generated_pool()->FindFileByName(
-      "Protos.proto");
-  GOOGLE_CHECK(file != NULL);
-  FileSendProtos_descriptor_ = file->message_type(0);
-  static const int FileSendProtos_offsets_[6] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FileSendProtos, filename_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FileSendProtos, modified_time_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FileSendProtos, content_size_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FileSendProtos, compress_type_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FileSendProtos, verify_mode_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FileSendProtos, verify_sign_),
-  };
-  FileSendProtos_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      FileSendProtos_descriptor_,
-      FileSendProtos::default_instance_,
-      FileSendProtos_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FileSendProtos, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FileSendProtos, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(FileSendProtos));
-  FileSendProtos_CompressType_descriptor_ = FileSendProtos_descriptor_->enum_type(0);
-  FileSendProtos_VerifyMode_descriptor_ = FileSendProtos_descriptor_->enum_type(1);
-  FileSendComplete_descriptor_ = file->message_type(1);
-  static const int FileSendComplete_offsets_[2] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FileSendComplete, filename_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FileSendComplete, result_),
-  };
-  FileSendComplete_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      FileSendComplete_descriptor_,
-      FileSendComplete::default_instance_,
-      FileSendComplete_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FileSendComplete, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FileSendComplete, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(FileSendComplete));
-  FileSendComplete_RESULT_descriptor_ = FileSendComplete_descriptor_->enum_type(0);
-}
-
-namespace {
-
-GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AssignDescriptors_once_);
-inline void protobuf_AssignDescriptorsOnce() {
-  ::google::protobuf::GoogleOnceInit(&protobuf_AssignDescriptors_once_,
-                 &protobuf_AssignDesc_Protos_2eproto);
-}
-
-void protobuf_RegisterTypes(const ::std::string&) {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    FileSendProtos_descriptor_, &FileSendProtos::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    FileSendComplete_descriptor_, &FileSendComplete::default_instance());
-}
-
-}  // namespace
-
 void protobuf_ShutdownFile_Protos_2eproto() {
   delete FileSendProtos::default_instance_;
-  delete FileSendProtos_reflection_;
   delete FileSendComplete::default_instance_;
-  delete FileSendComplete_reflection_;
 }
 
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+void protobuf_AddDesc_Protos_2eproto_impl() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+#else
 void protobuf_AddDesc_Protos_2eproto() {
   static bool already_here = false;
   if (already_here) return;
   already_here = true;
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-  ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\014Protos.proto\022\007runtime\"\263\002\n\016FileSendProt"
-    "os\022\020\n\010filename\030\001 \002(\t\022\025\n\rmodified_time\030\002 "
-    "\002(\004\022\024\n\014content_size\030\003 \002(\004\022;\n\rcompress_ty"
-    "pe\030\004 \002(\0162$.runtime.FileSendProtos.Compre"
-    "ssType\0227\n\013verify_mode\030\005 \002(\0162\".runtime.Fi"
-    "leSendProtos.VerifyMode\022\023\n\013verify_sign\030\006"
-    " \002(\t\"(\n\014CompressType\022\017\n\013NO_COMPRESS\020\000\022\007\n"
-    "\003ZIP\020\001\"-\n\nVerifyMode\022\r\n\tNO_VERIFY\020\000\022\007\n\003C"
-    "RC\020\001\022\007\n\003MD5\020\002\"\206\001\n\020FileSendComplete\022\020\n\010fi"
-    "lename\030\001 \002(\t\0220\n\006result\030\002 \002(\0162 .runtime.F"
-    "ileSendComplete.RESULT\".\n\006RESULT\022\013\n\007SUCC"
-    "ESS\020\000\022\027\n\023FAILED_LOWDISKSPACE\020\001B\"\n\030org.cc"
-    "dt.common.resourceB\006Protos", 506);
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
-    "Protos.proto", &protobuf_RegisterTypes);
+#endif
   FileSendProtos::default_instance_ = new FileSendProtos();
   FileSendComplete::default_instance_ = new FileSendComplete();
   FileSendProtos::default_instance_->InitAsDefaultInstance();
@@ -134,19 +38,23 @@ void protobuf_AddDesc_Protos_2eproto() {
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_Protos_2eproto);
 }
 
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AddDesc_Protos_2eproto_once_);
+void protobuf_AddDesc_Protos_2eproto() {
+  ::google::protobuf::::google::protobuf::GoogleOnceInit(&protobuf_AddDesc_Protos_2eproto_once_,
+                 &protobuf_AddDesc_Protos_2eproto_impl);
+}
+#else
 // Force AddDescriptors() to be called at static initialization time.
 struct StaticDescriptorInitializer_Protos_2eproto {
   StaticDescriptorInitializer_Protos_2eproto() {
     protobuf_AddDesc_Protos_2eproto();
   }
 } static_descriptor_initializer_Protos_2eproto_;
+#endif
 
 // ===================================================================
 
-const ::google::protobuf::EnumDescriptor* FileSendProtos_CompressType_descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return FileSendProtos_CompressType_descriptor_;
-}
 bool FileSendProtos_CompressType_IsValid(int value) {
   switch(value) {
     case 0:
@@ -164,10 +72,6 @@ const FileSendProtos_CompressType FileSendProtos::CompressType_MIN;
 const FileSendProtos_CompressType FileSendProtos::CompressType_MAX;
 const int FileSendProtos::CompressType_ARRAYSIZE;
 #endif  // _MSC_VER
-const ::google::protobuf::EnumDescriptor* FileSendProtos_VerifyMode_descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return FileSendProtos_VerifyMode_descriptor_;
-}
 bool FileSendProtos_VerifyMode_IsValid(int value) {
   switch(value) {
     case 0:
@@ -188,16 +92,19 @@ const FileSendProtos_VerifyMode FileSendProtos::VerifyMode_MAX;
 const int FileSendProtos::VerifyMode_ARRAYSIZE;
 #endif  // _MSC_VER
 #ifndef _MSC_VER
-const int FileSendProtos::kFilenameFieldNumber;
-const int FileSendProtos::kModifiedTimeFieldNumber;
+const int FileSendProtos::kFileNameFieldNumber;
+const int FileSendProtos::kPackageSeqFieldNumber;
+const int FileSendProtos::kPackageSumFieldNumber;
 const int FileSendProtos::kContentSizeFieldNumber;
 const int FileSendProtos::kCompressTypeFieldNumber;
+const int FileSendProtos::kModifiedTimeFieldNumber;
 const int FileSendProtos::kVerifyModeFieldNumber;
 const int FileSendProtos::kVerifySignFieldNumber;
+const int FileSendProtos::kUncompressSizeFieldNumber;
 #endif  // !_MSC_VER
 
 FileSendProtos::FileSendProtos()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
 }
 
@@ -205,19 +112,22 @@ void FileSendProtos::InitAsDefaultInstance() {
 }
 
 FileSendProtos::FileSendProtos(const FileSendProtos& from)
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
 }
 
 void FileSendProtos::SharedCtor() {
   _cached_size_ = 0;
-  filename_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  modified_time_ = GOOGLE_ULONGLONG(0);
+  file_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  package_seq_ = 0;
+  package_sum_ = 0;
   content_size_ = GOOGLE_ULONGLONG(0);
   compress_type_ = 0;
+  modified_time_ = GOOGLE_ULONGLONG(0);
   verify_mode_ = 0;
   verify_sign_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  uncompress_size_ = GOOGLE_ULONGLONG(0);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -226,13 +136,17 @@ FileSendProtos::~FileSendProtos() {
 }
 
 void FileSendProtos::SharedDtor() {
-  if (filename_ != &::google::protobuf::internal::kEmptyString) {
-    delete filename_;
+  if (file_name_ != &::google::protobuf::internal::kEmptyString) {
+    delete file_name_;
   }
   if (verify_sign_ != &::google::protobuf::internal::kEmptyString) {
     delete verify_sign_;
   }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
   if (this != default_instance_) {
+  #endif
   }
 }
 
@@ -241,13 +155,12 @@ void FileSendProtos::SetCachedSize(int size) const {
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* FileSendProtos::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return FileSendProtos_descriptor_;
-}
-
 const FileSendProtos& FileSendProtos::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_Protos_2eproto();
+#else
   if (default_instance_ == NULL) protobuf_AddDesc_Protos_2eproto();
+#endif
   return *default_instance_;
 }
 
@@ -259,14 +172,16 @@ FileSendProtos* FileSendProtos::New() const {
 
 void FileSendProtos::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (has_filename()) {
-      if (filename_ != &::google::protobuf::internal::kEmptyString) {
-        filename_->clear();
+    if (has_file_name()) {
+      if (file_name_ != &::google::protobuf::internal::kEmptyString) {
+        file_name_->clear();
       }
     }
-    modified_time_ = GOOGLE_ULONGLONG(0);
+    package_seq_ = 0;
+    package_sum_ = 0;
     content_size_ = GOOGLE_ULONGLONG(0);
     compress_type_ = 0;
+    modified_time_ = GOOGLE_ULONGLONG(0);
     verify_mode_ = 0;
     if (has_verify_sign()) {
       if (verify_sign_ != &::google::protobuf::internal::kEmptyString) {
@@ -274,8 +189,10 @@ void FileSendProtos::Clear() {
       }
     }
   }
+  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+    uncompress_size_ = GOOGLE_ULONGLONG(0);
+  }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
 }
 
 bool FileSendProtos::MergePartialFromCodedStream(
@@ -284,40 +201,53 @@ bool FileSendProtos::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required string filename = 1;
+      // required string file_name = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_filename()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->filename().data(), this->filename().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
+                input, this->mutable_file_name()));
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(16)) goto parse_modified_time;
+        if (input->ExpectTag(16)) goto parse_package_seq;
         break;
       }
 
-      // required uint64 modified_time = 2;
+      // required int32 package_seq = 2;
       case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_modified_time:
+         parse_package_seq:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
-                 input, &modified_time_)));
-          set_has_modified_time();
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &package_seq_)));
+          set_has_package_seq();
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(24)) goto parse_content_size;
+        if (input->ExpectTag(24)) goto parse_package_sum;
         break;
       }
 
-      // required uint64 content_size = 3;
+      // required int32 package_sum = 3;
       case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_package_sum:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &package_sum_)));
+          set_has_package_sum();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(32)) goto parse_content_size;
+        break;
+      }
+
+      // required uint64 content_size = 4;
+      case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_content_size:
@@ -328,12 +258,12 @@ bool FileSendProtos::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(32)) goto parse_compress_type;
+        if (input->ExpectTag(40)) goto parse_compress_type;
         break;
       }
 
-      // required .runtime.FileSendProtos.CompressType compress_type = 4;
-      case 4: {
+      // required .runtime.FileSendProtos.CompressType compress_type = 5;
+      case 5: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_compress_type:
@@ -343,18 +273,32 @@ bool FileSendProtos::MergePartialFromCodedStream(
                  input, &value)));
           if (::runtime::FileSendProtos_CompressType_IsValid(value)) {
             set_compress_type(static_cast< ::runtime::FileSendProtos_CompressType >(value));
-          } else {
-            mutable_unknown_fields()->AddVarint(4, value);
           }
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(40)) goto parse_verify_mode;
+        if (input->ExpectTag(48)) goto parse_modified_time;
         break;
       }
 
-      // required .runtime.FileSendProtos.VerifyMode verify_mode = 5;
-      case 5: {
+      // optional uint64 modified_time = 6;
+      case 6: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_modified_time:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &modified_time_)));
+          set_has_modified_time();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(56)) goto parse_verify_mode;
+        break;
+      }
+
+      // optional .runtime.FileSendProtos.VerifyMode verify_mode = 7;
+      case 7: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_verify_mode:
@@ -364,26 +308,37 @@ bool FileSendProtos::MergePartialFromCodedStream(
                  input, &value)));
           if (::runtime::FileSendProtos_VerifyMode_IsValid(value)) {
             set_verify_mode(static_cast< ::runtime::FileSendProtos_VerifyMode >(value));
-          } else {
-            mutable_unknown_fields()->AddVarint(5, value);
           }
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(50)) goto parse_verify_sign;
+        if (input->ExpectTag(66)) goto parse_verify_sign;
         break;
       }
 
-      // required string verify_sign = 6;
-      case 6: {
+      // optional string verify_sign = 8;
+      case 8: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_verify_sign:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_verify_sign()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->verify_sign().data(), this->verify_sign().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(72)) goto parse_uncompress_size;
+        break;
+      }
+
+      // optional uint64 uncompress_size = 9;
+      case 9: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_uncompress_size:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &uncompress_size_)));
+          set_has_uncompress_size();
         } else {
           goto handle_uninterpreted;
         }
@@ -397,8 +352,7 @@ bool FileSendProtos::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           return true;
         }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
         break;
       }
     }
@@ -409,141 +363,109 @@ bool FileSendProtos::MergePartialFromCodedStream(
 
 void FileSendProtos::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required string filename = 1;
-  if (has_filename()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->filename().data(), this->filename().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
+  // required string file_name = 1;
+  if (has_file_name()) {
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      1, this->filename(), output);
+      1, this->file_name(), output);
   }
 
-  // required uint64 modified_time = 2;
-  if (has_modified_time()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->modified_time(), output);
+  // required int32 package_seq = 2;
+  if (has_package_seq()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->package_seq(), output);
   }
 
-  // required uint64 content_size = 3;
+  // required int32 package_sum = 3;
+  if (has_package_sum()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->package_sum(), output);
+  }
+
+  // required uint64 content_size = 4;
   if (has_content_size()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(3, this->content_size(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(4, this->content_size(), output);
   }
 
-  // required .runtime.FileSendProtos.CompressType compress_type = 4;
+  // required .runtime.FileSendProtos.CompressType compress_type = 5;
   if (has_compress_type()) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      4, this->compress_type(), output);
+      5, this->compress_type(), output);
   }
 
-  // required .runtime.FileSendProtos.VerifyMode verify_mode = 5;
+  // optional uint64 modified_time = 6;
+  if (has_modified_time()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(6, this->modified_time(), output);
+  }
+
+  // optional .runtime.FileSendProtos.VerifyMode verify_mode = 7;
   if (has_verify_mode()) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      5, this->verify_mode(), output);
+      7, this->verify_mode(), output);
   }
 
-  // required string verify_sign = 6;
+  // optional string verify_sign = 8;
   if (has_verify_sign()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->verify_sign().data(), this->verify_sign().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      6, this->verify_sign(), output);
+      8, this->verify_sign(), output);
   }
 
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* FileSendProtos::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // required string filename = 1;
-  if (has_filename()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->filename().data(), this->filename().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->filename(), target);
+  // optional uint64 uncompress_size = 9;
+  if (has_uncompress_size()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(9, this->uncompress_size(), output);
   }
 
-  // required uint64 modified_time = 2;
-  if (has_modified_time()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->modified_time(), target);
-  }
-
-  // required uint64 content_size = 3;
-  if (has_content_size()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(3, this->content_size(), target);
-  }
-
-  // required .runtime.FileSendProtos.CompressType compress_type = 4;
-  if (has_compress_type()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
-      4, this->compress_type(), target);
-  }
-
-  // required .runtime.FileSendProtos.VerifyMode verify_mode = 5;
-  if (has_verify_mode()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
-      5, this->verify_mode(), target);
-  }
-
-  // required string verify_sign = 6;
-  if (has_verify_sign()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->verify_sign().data(), this->verify_sign().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        6, this->verify_sign(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
 }
 
 int FileSendProtos::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required string filename = 1;
-    if (has_filename()) {
+    // required string file_name = 1;
+    if (has_file_name()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->filename());
+          this->file_name());
     }
 
-    // required uint64 modified_time = 2;
-    if (has_modified_time()) {
+    // required int32 package_seq = 2;
+    if (has_package_seq()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt64Size(
-          this->modified_time());
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->package_seq());
     }
 
-    // required uint64 content_size = 3;
+    // required int32 package_sum = 3;
+    if (has_package_sum()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->package_sum());
+    }
+
+    // required uint64 content_size = 4;
     if (has_content_size()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->content_size());
     }
 
-    // required .runtime.FileSendProtos.CompressType compress_type = 4;
+    // required .runtime.FileSendProtos.CompressType compress_type = 5;
     if (has_compress_type()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->compress_type());
     }
 
-    // required .runtime.FileSendProtos.VerifyMode verify_mode = 5;
+    // optional uint64 modified_time = 6;
+    if (has_modified_time()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
+          this->modified_time());
+    }
+
+    // optional .runtime.FileSendProtos.VerifyMode verify_mode = 7;
     if (has_verify_mode()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->verify_mode());
     }
 
-    // required string verify_sign = 6;
+    // optional string verify_sign = 8;
     if (has_verify_sign()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
@@ -551,10 +473,14 @@ int FileSendProtos::ByteSize() const {
     }
 
   }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
+  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+    // optional uint64 uncompress_size = 9;
+    if (has_uncompress_size()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
+          this->uncompress_size());
+    }
+
   }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
@@ -562,32 +488,31 @@ int FileSendProtos::ByteSize() const {
   return total_size;
 }
 
-void FileSendProtos::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const FileSendProtos* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const FileSendProtos*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void FileSendProtos::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const FileSendProtos*>(&from));
 }
 
 void FileSendProtos::MergeFrom(const FileSendProtos& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_filename()) {
-      set_filename(from.filename());
+    if (from.has_file_name()) {
+      set_file_name(from.file_name());
     }
-    if (from.has_modified_time()) {
-      set_modified_time(from.modified_time());
+    if (from.has_package_seq()) {
+      set_package_seq(from.package_seq());
+    }
+    if (from.has_package_sum()) {
+      set_package_sum(from.package_sum());
     }
     if (from.has_content_size()) {
       set_content_size(from.content_size());
     }
     if (from.has_compress_type()) {
       set_compress_type(from.compress_type());
+    }
+    if (from.has_modified_time()) {
+      set_modified_time(from.modified_time());
     }
     if (from.has_verify_mode()) {
       set_verify_mode(from.verify_mode());
@@ -596,13 +521,11 @@ void FileSendProtos::MergeFrom(const FileSendProtos& from) {
       set_verify_sign(from.verify_sign());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void FileSendProtos::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
+  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+    if (from.has_uncompress_size()) {
+      set_uncompress_size(from.uncompress_size());
+    }
+  }
 }
 
 void FileSendProtos::CopyFrom(const FileSendProtos& from) {
@@ -612,40 +535,34 @@ void FileSendProtos::CopyFrom(const FileSendProtos& from) {
 }
 
 bool FileSendProtos::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000003f) != 0x0000003f) return false;
+  if ((_has_bits_[0] & 0x0000001f) != 0x0000001f) return false;
 
   return true;
 }
 
 void FileSendProtos::Swap(FileSendProtos* other) {
   if (other != this) {
-    std::swap(filename_, other->filename_);
-    std::swap(modified_time_, other->modified_time_);
+    std::swap(file_name_, other->file_name_);
+    std::swap(package_seq_, other->package_seq_);
+    std::swap(package_sum_, other->package_sum_);
     std::swap(content_size_, other->content_size_);
     std::swap(compress_type_, other->compress_type_);
+    std::swap(modified_time_, other->modified_time_);
     std::swap(verify_mode_, other->verify_mode_);
     std::swap(verify_sign_, other->verify_sign_);
+    std::swap(uncompress_size_, other->uncompress_size_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata FileSendProtos::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = FileSendProtos_descriptor_;
-  metadata.reflection = FileSendProtos_reflection_;
-  return metadata;
+::std::string FileSendProtos::GetTypeName() const {
+  return "runtime.FileSendProtos";
 }
 
 
 // ===================================================================
 
-const ::google::protobuf::EnumDescriptor* FileSendComplete_RESULT_descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return FileSendComplete_RESULT_descriptor_;
-}
 bool FileSendComplete_RESULT_IsValid(int value) {
   switch(value) {
     case 0:
@@ -664,12 +581,12 @@ const FileSendComplete_RESULT FileSendComplete::RESULT_MAX;
 const int FileSendComplete::RESULT_ARRAYSIZE;
 #endif  // _MSC_VER
 #ifndef _MSC_VER
-const int FileSendComplete::kFilenameFieldNumber;
+const int FileSendComplete::kFileNameFieldNumber;
 const int FileSendComplete::kResultFieldNumber;
 #endif  // !_MSC_VER
 
 FileSendComplete::FileSendComplete()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
 }
 
@@ -677,14 +594,14 @@ void FileSendComplete::InitAsDefaultInstance() {
 }
 
 FileSendComplete::FileSendComplete(const FileSendComplete& from)
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
 }
 
 void FileSendComplete::SharedCtor() {
   _cached_size_ = 0;
-  filename_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  file_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   result_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -694,10 +611,14 @@ FileSendComplete::~FileSendComplete() {
 }
 
 void FileSendComplete::SharedDtor() {
-  if (filename_ != &::google::protobuf::internal::kEmptyString) {
-    delete filename_;
+  if (file_name_ != &::google::protobuf::internal::kEmptyString) {
+    delete file_name_;
   }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
   if (this != default_instance_) {
+  #endif
   }
 }
 
@@ -706,13 +627,12 @@ void FileSendComplete::SetCachedSize(int size) const {
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* FileSendComplete::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return FileSendComplete_descriptor_;
-}
-
 const FileSendComplete& FileSendComplete::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_Protos_2eproto();
+#else
   if (default_instance_ == NULL) protobuf_AddDesc_Protos_2eproto();
+#endif
   return *default_instance_;
 }
 
@@ -724,15 +644,14 @@ FileSendComplete* FileSendComplete::New() const {
 
 void FileSendComplete::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (has_filename()) {
-      if (filename_ != &::google::protobuf::internal::kEmptyString) {
-        filename_->clear();
+    if (has_file_name()) {
+      if (file_name_ != &::google::protobuf::internal::kEmptyString) {
+        file_name_->clear();
       }
     }
     result_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
 }
 
 bool FileSendComplete::MergePartialFromCodedStream(
@@ -741,15 +660,12 @@ bool FileSendComplete::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required string filename = 1;
+      // required string file_name = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_filename()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->filename().data(), this->filename().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
+                input, this->mutable_file_name()));
         } else {
           goto handle_uninterpreted;
         }
@@ -768,8 +684,6 @@ bool FileSendComplete::MergePartialFromCodedStream(
                  input, &value)));
           if (::runtime::FileSendComplete_RESULT_IsValid(value)) {
             set_result(static_cast< ::runtime::FileSendComplete_RESULT >(value));
-          } else {
-            mutable_unknown_fields()->AddVarint(2, value);
           }
         } else {
           goto handle_uninterpreted;
@@ -784,8 +698,7 @@ bool FileSendComplete::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           return true;
         }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
         break;
       }
     }
@@ -796,13 +709,10 @@ bool FileSendComplete::MergePartialFromCodedStream(
 
 void FileSendComplete::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required string filename = 1;
-  if (has_filename()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->filename().data(), this->filename().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
+  // required string file_name = 1;
+  if (has_file_name()) {
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      1, this->filename(), output);
+      1, this->file_name(), output);
   }
 
   // required .runtime.FileSendComplete.RESULT result = 2;
@@ -811,46 +721,17 @@ void FileSendComplete::SerializeWithCachedSizes(
       2, this->result(), output);
   }
 
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* FileSendComplete::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // required string filename = 1;
-  if (has_filename()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->filename().data(), this->filename().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->filename(), target);
-  }
-
-  // required .runtime.FileSendComplete.RESULT result = 2;
-  if (has_result()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
-      2, this->result(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
 }
 
 int FileSendComplete::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required string filename = 1;
-    if (has_filename()) {
+    // required string file_name = 1;
+    if (has_file_name()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->filename());
+          this->file_name());
     }
 
     // required .runtime.FileSendComplete.RESULT result = 2;
@@ -860,46 +741,27 @@ int FileSendComplete::ByteSize() const {
     }
 
   }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
-void FileSendComplete::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const FileSendComplete* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const FileSendComplete*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void FileSendComplete::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const FileSendComplete*>(&from));
 }
 
 void FileSendComplete::MergeFrom(const FileSendComplete& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_filename()) {
-      set_filename(from.filename());
+    if (from.has_file_name()) {
+      set_file_name(from.file_name());
     }
     if (from.has_result()) {
       set_result(from.result());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void FileSendComplete::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
 }
 
 void FileSendComplete::CopyFrom(const FileSendComplete& from) {
@@ -916,20 +778,15 @@ bool FileSendComplete::IsInitialized() const {
 
 void FileSendComplete::Swap(FileSendComplete* other) {
   if (other != this) {
-    std::swap(filename_, other->filename_);
+    std::swap(file_name_, other->file_name_);
     std::swap(result_, other->result_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata FileSendComplete::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = FileSendComplete_descriptor_;
-  metadata.reflection = FileSendComplete_reflection_;
-  return metadata;
+::std::string FileSendComplete::GetTypeName() const {
+  return "runtime.FileSendComplete";
 }
 
 

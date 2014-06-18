@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include "VisibleRect.h"
 #include "ConfigParser.h"
 #include "Protos.pb.h"
+#include "zlib.h"
 
 #ifdef _WIN32
 #include <direct.h>
@@ -150,9 +151,7 @@ protected:
         CC_SAFE_DELETE_ARRAY(_protoBuf);
     }
 private:
-    bool receiveFile(int fd);
-    void addClient();
-    void loopReceive();
+    void loopReceiveFile();
     void loopWriteFile();
     void loopResponse();
 
@@ -167,7 +166,7 @@ private:
     struct RecvBufStruct
     {
         runtime::FileSendProtos fileProto;
-        std::vector<string> contentBufList;
+        std::string contentBuf;
         int fd;
     };
 
@@ -317,7 +316,7 @@ bool FileServer::listenOnTCP(int port)
     }
     freeaddrinfo(ressave);
     _listenfd = listenfd;
-    _receiveThread = std::thread( std::bind( &FileServer::loopReceive, this) );
+    _receiveThread = std::thread( std::bind( &FileServer::loopReceiveFile, this) );
     _writeThread = std::thread(std::bind(&FileServer::loopWriteFile, this));
     _responseThread = std::thread(std::bind(&FileServer::loopResponse, this));
     return true;	
@@ -378,78 +377,7 @@ bool CreateDir(const char *sPathName)
     return   true;  
 }
 
-bool FileServer::receiveFile(int fd)
-{
-    if (_protoBuf == nullptr){
-        _protoBuf = new char[MAXPROTOLENGTH];
-    }
-
-    // recv start flag
-    char startflag[13]={0};
-    if (recv(fd, startflag, sizeof(startflag)-1,0)<=0) {
-        return  false;
-    }
-    if (strcmp(startflag,"RuntimeSend:")!=0){
-        return false;
-    }
-    
-    // recv proto num
-    union 
-    {
-        char char_type[3];
-        unsigned short uint16_type;
-    }protonum;
-    if (recv(fd, protonum.char_type, sizeof(protonum.char_type) - 1,0)<=0) {
-        return  false;
-    }
-
-    //recv protobuf length
-    union 
-    {
-        char char_type[3];
-        unsigned short uint16_type;
-    }protolength;
-    if (recv(fd, protolength.char_type, sizeof(protolength.char_type) - 1,0)<=0) {
-        return  false;
-    }
-
-    //recv variable length
-    memset(_protoBuf,0,MAXPROTOLENGTH);
-    if (recv(fd, _protoBuf, protolength.uint16_type,0)<=0) {
-        return  false;
-    }
-
-    RecvBufStruct recvDataBuf;
-    recvDataBuf.fd = fd;
-    recvDataBuf.fileProto.ParseFromString(_protoBuf);
-    int contentSize = recvDataBuf.fileProto.content_size();
-    if (contentSize>0){  
-        //recv body data
-        int recvTotalLen = contentSize;
-        while (recvTotalLen != 0){
-            int recvLen = MAXPROTOLENGTH;
-            if(recvTotalLen < MAXPROTOLENGTH)
-                recvLen = recvTotalLen;
-            memset(_protoBuf,0,MAXPROTOLENGTH);
-            int result= recv(fd, _protoBuf, recvLen,0);
-            //cocos2d::log("recv fullfilename = %s,file size:%d",recvDataBuf.fileProto.filename().c_str(),result);
-            if (result<=0) {
-                sleep(1);
-                continue;
-            }
-            string recvBuf;
-            recvBuf.assign(_protoBuf,result);
-            recvDataBuf.contentBufList.push_back(recvBuf);
-            recvTotalLen -= result;
-        }
-        _recvBufListMutex.lock();
-        _recvBufList.push_back(recvDataBuf);
-        _recvBufListMutex.unlock();
-    }
-    return true;
-}
-    
-void FileServer::addClient()
+void FileServer::loopReceiveFile()
 {
     struct sockaddr client;
     socklen_t client_len;
@@ -457,15 +385,93 @@ void FileServer::addClient()
     /* new client */
     client_len = sizeof( client );
     int fd = accept(_listenfd, (struct sockaddr *)&client, &client_len );
+    if (_protoBuf == nullptr){
+        _protoBuf = new char[MAXPROTOLENGTH];
+    }
 
-    // add fd to list of FD
-    if( fd != -1 ) {
-        FD_SET(fd, &_read_set);
-        _fds.push_back(fd);
-        _maxfd = std::max(_maxfd,fd);
+    while(!_endThread) { 
+
+        // recv start flag
+        char startflag[13]={0};
+        if (recv(fd, startflag, sizeof(startflag)-1,0)<=0) {
+            continue;
+        }
+        if (strcmp(startflag,"RuntimeSend:")!=0){
+            continue;
+        }
+    
+        // recv proto num
+        union 
+        {
+            char char_type[3];
+            unsigned short uint16_type;
+        }protonum;
+        if (recv(fd, protonum.char_type, sizeof(protonum.char_type) - 1,0)<=0) {
+            continue;
+        }
+
+        //recv protobuf length
+        union 
+        {
+            char char_type[3];
+            unsigned short uint16_type;
+        }protolength;
+        if (recv(fd, protolength.char_type, sizeof(protolength.char_type) - 1,0)<=0) {
+            continue;
+        }
+
+        //recv variable length
+        memset(_protoBuf,0,MAXPROTOLENGTH);
+        if (recv(fd, _protoBuf, protolength.uint16_type,0)<=0) {
+            continue;
+        }
+
+        RecvBufStruct recvDataBuf;
+        recvDataBuf.fd = fd;
+        recvDataBuf.fileProto.ParseFromString(_protoBuf);
+        int contentSize = recvDataBuf.fileProto.content_size();
+        if (contentSize>0){  
+            //recv body data
+            Bytef *contentbuf= new Bytef[contentSize+1];
+            memset(contentbuf,0,contentSize+1);
+            int recvTotalLen = contentSize;
+            while (recvTotalLen != 0){
+                int recvLen = MAXPROTOLENGTH;
+                if(recvTotalLen < MAXPROTOLENGTH)
+                    recvLen = recvTotalLen;
+                memset(_protoBuf,0,MAXPROTOLENGTH);
+                int result= recv(fd, _protoBuf, recvLen,0);
+                //cocos2d::log("recv fullfilename = %s,file size:%d",recvDataBuf.fileProto.filename().c_str(),result);
+                if (result<=0) {
+                    sleep(1);
+                    continue;
+                }
+                memcpy(contentbuf+contentSize-recvTotalLen,_protoBuf,result);
+                recvTotalLen -= result;
+            }
+        
+            if (recvDataBuf.fileProto.compress_type() == runtime::FileSendProtos_CompressType::FileSendProtos_CompressType_ZIP){
+                ULONG uncompressSize = recvDataBuf.fileProto.uncompress_size();
+                Bytef *buff = new Bytef[uncompressSize * sizeof(Bytef)];
+                memset(buff, 0, uncompressSize * sizeof(Bytef));
+                int err = uncompress(buff, &uncompressSize,contentbuf, contentSize * sizeof(Bytef));
+                if (err != Z_OK){
+                    // ?
+                }
+                CC_SAFE_DELETE_ARRAY(contentbuf);
+                contentbuf = buff;
+                contentSize = uncompressSize; 
+            }
+            recvDataBuf.contentBuf.assign((const char*)contentbuf,contentSize);
+            CC_SAFE_DELETE_ARRAY(contentbuf);
+        
+            _recvBufListMutex.lock();
+            _recvBufList.push_back(recvDataBuf);
+            _recvBufListMutex.unlock();
+        }
     }
 }
-
+    
 void FileServer::loopWriteFile()
 {
      while(!_endThread) { 
@@ -481,7 +487,7 @@ void FileServer::loopWriteFile()
          RecvBufStruct recvDataBuf = _recvBufList.front();
          _recvBufList.pop_front();
          _recvBufListMutex.unlock();
-         string filename = recvDataBuf.fileProto.filename();
+         string filename = recvDataBuf.fileProto.file_name();
          string fullfilename = g_resourcePath;
          fullfilename += filename;
          _fileNameMutex.lock();
@@ -490,26 +496,51 @@ void FileServer::loopWriteFile()
          cocos2d::log("WriteFile:: fullfilename = %s",filename.c_str());
          CreateDir(fullfilename.substr(0,fullfilename.find_last_of("/")).c_str());
 
-         FILE *fp =fopen(fullfilename.c_str(), "wb");
-         for (int  i= 0;  i< recvDataBuf.contentBufList.size(); i++){
-             fwrite(recvDataBuf.contentBufList[i].c_str(), sizeof(char), recvDataBuf.contentBufList[i].size(),fp);
+         FILE *fp= nullptr;
+         if (1 == recvDataBuf.fileProto.package_seq()){
+              fp=fopen(fullfilename.c_str(), "wb");
+         }else{
+             fp=fopen(fullfilename.c_str(), "ab");
          }
-         fclose(fp);
-         
-         //record new file modify
-         addResFileInfo(filename.c_str(),recvDataBuf.fileProto.modified_time());
+         if (errno == ENOSPC){
 
-         ResponseStruct responseBuf;
-         responseBuf.fd = recvDataBuf.fd;
-         responseBuf.fileResponseProto.set_filename(filename.c_str());
-         responseBuf.fileResponseProto.set_result(runtime::FileSendComplete::RESULT::FileSendComplete_RESULT_SUCCESS);
+         }
+         if (fp){
+             fwrite(recvDataBuf.contentBuf.c_str(), sizeof(char), recvDataBuf.contentBuf.size(),fp);
+             fclose(fp);
+             //errno()
+         }
 
-         // push Response struct
-         _responseBufListMutex.lock();
-         _responseBufList.push_back(responseBuf);
-         _responseBufListMutex.unlock();
+         if (recvDataBuf.fileProto.package_seq() == recvDataBuf.fileProto.package_sum()){
+
+             //record new file modify
+             addResFileInfo(filename.c_str(),recvDataBuf.fileProto.modified_time());
+             ResponseStruct responseBuf;
+             responseBuf.fd = recvDataBuf.fd;
+             responseBuf.fileResponseProto.set_file_name(filename.c_str());
+             responseBuf.fileResponseProto.set_result(runtime::FileSendComplete::RESULT::FileSendComplete_RESULT_SUCCESS);
+
+             // push Response struct
+             _responseBufListMutex.lock();
+             _responseBufList.push_back(responseBuf);
+             _responseBufListMutex.unlock();
+         }
      }
 }
+
+
+// void FileServer::loopResponse(string fileName,int errortype)
+// {
+//     ResponseStruct responseBuf;
+//     responseBuf.fd = recvDataBuf.fd;
+//     responseBuf.fileResponseProto.set_file_name(filename.c_str());
+//     responseBuf.fileResponseProto.set_result(runtime::FileSendComplete::RESULT::FileSendComplete_RESULT_FAILED_LOWDISKSPACE);
+// 
+//     // push Response struct
+//     _responseBufListMutex.lock();
+//     _responseBufList.push_back(responseBuf);
+//     _responseBufListMutex.unlock();
+// }
 
 void FileServer::loopResponse()
 {
@@ -529,7 +560,7 @@ void FileServer::loopResponse()
         //send response
         string responseString;
         runtime::FileSendComplete  fileSendProtoComplete;
-        fileSendProtoComplete.set_filename(responseBuf.fileResponseProto.filename());
+        fileSendProtoComplete.set_file_name(responseBuf.fileResponseProto.file_name());
         fileSendProtoComplete.set_result(responseBuf.fileResponseProto.result());
         fileSendProtoComplete.SerializeToString(&responseString);
         char dataBuf[1024] ={0};
@@ -548,87 +579,6 @@ void FileServer::loopResponse()
         int sendLen = send(responseBuf.fd, dataBuf, sizeof(responseData)+responseString.size(),0);
         //pop response buf
     }
-}
-
-void FileServer::loopReceive()
-{
-    fd_set copy_set;
-    struct timeval timeout, timeout_copy;
-
-    _running = true;
-
-    FD_ZERO(&_read_set);
-    FD_SET(_listenfd, &_read_set);
-    _maxfd = _listenfd;
-
-    timeout.tv_sec = 0;
-
-    /* 0.016 seconds. Wake up once per frame at 60PFS */
-    timeout.tv_usec = 16000;
-
-    while(!_endThread) {
-
-        copy_set = _read_set;
-        timeout_copy = timeout;
-        int nready = select(_maxfd+1, &copy_set, NULL, NULL, &timeout_copy);
-
-        if( nready == -1 )
-        {
-            /* error */
-            if(errno != EINTR)
-                log("Abnormal error in select()\n");
-            continue;
-        }
-        else if( nready == 0 )
-        {
-            /* timeout. do somethig ? */
-        }
-        else
-        {
-            /* new client */
-            if(FD_ISSET(_listenfd, &copy_set)) {
-                addClient();
-                if(--nready <= 0)
-                    continue;
-            }
-
-            /* data from client */
-            std::vector<int> to_remove;
-            for(const auto &fd: _fds) {
-                if(FD_ISSET(fd,&copy_set)) {
-                    if( ! receiveFile(fd) ) {
-                        to_remove.push_back(fd);
-                    }
-                    if(--nready <= 0)
-                        break;
-                }
-            }
-
-            /* remove closed conections */
-            for(int fd: to_remove) {
-                FD_CLR(fd, &_read_set);
-                _fds.erase(std::remove(_fds.begin(), _fds.end(), fd), _fds.end());
-            }
-        }
-    }
-
-    // clean up: ignore stdin, stdout and stderr
-    for(const auto &fd: _fds )
-    {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-        closesocket(fd);
-#else
-        close(fd);
-#endif
-    }
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    closesocket(_listenfd);
-    WSACleanup();
-#else
-    close(_listenfd);
-#endif
-    _running = false;
 }
 
 class ConnectWaitLayer: public Layer

@@ -20,11 +20,9 @@
 #endif
 
 #include <google/protobuf/generated_message_util.h>
-#include <google/protobuf/message.h>
+#include <google/protobuf/message_lite.h>
 #include <google/protobuf/repeated_field.h>
 #include <google/protobuf/extension_set.h>
-#include <google/protobuf/generated_enum_reflection.h>
-#include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 
 namespace runtime {
@@ -46,16 +44,6 @@ const FileSendProtos_CompressType FileSendProtos_CompressType_CompressType_MIN =
 const FileSendProtos_CompressType FileSendProtos_CompressType_CompressType_MAX = FileSendProtos_CompressType_ZIP;
 const int FileSendProtos_CompressType_CompressType_ARRAYSIZE = FileSendProtos_CompressType_CompressType_MAX + 1;
 
-const ::google::protobuf::EnumDescriptor* FileSendProtos_CompressType_descriptor();
-inline const ::std::string& FileSendProtos_CompressType_Name(FileSendProtos_CompressType value) {
-  return ::google::protobuf::internal::NameOfEnum(
-    FileSendProtos_CompressType_descriptor(), value);
-}
-inline bool FileSendProtos_CompressType_Parse(
-    const ::std::string& name, FileSendProtos_CompressType* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<FileSendProtos_CompressType>(
-    FileSendProtos_CompressType_descriptor(), name, value);
-}
 enum FileSendProtos_VerifyMode {
   FileSendProtos_VerifyMode_NO_VERIFY = 0,
   FileSendProtos_VerifyMode_CRC = 1,
@@ -66,16 +54,6 @@ const FileSendProtos_VerifyMode FileSendProtos_VerifyMode_VerifyMode_MIN = FileS
 const FileSendProtos_VerifyMode FileSendProtos_VerifyMode_VerifyMode_MAX = FileSendProtos_VerifyMode_MD5;
 const int FileSendProtos_VerifyMode_VerifyMode_ARRAYSIZE = FileSendProtos_VerifyMode_VerifyMode_MAX + 1;
 
-const ::google::protobuf::EnumDescriptor* FileSendProtos_VerifyMode_descriptor();
-inline const ::std::string& FileSendProtos_VerifyMode_Name(FileSendProtos_VerifyMode value) {
-  return ::google::protobuf::internal::NameOfEnum(
-    FileSendProtos_VerifyMode_descriptor(), value);
-}
-inline bool FileSendProtos_VerifyMode_Parse(
-    const ::std::string& name, FileSendProtos_VerifyMode* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<FileSendProtos_VerifyMode>(
-    FileSendProtos_VerifyMode_descriptor(), name, value);
-}
 enum FileSendComplete_RESULT {
   FileSendComplete_RESULT_SUCCESS = 0,
   FileSendComplete_RESULT_FAILED_LOWDISKSPACE = 1
@@ -85,19 +63,9 @@ const FileSendComplete_RESULT FileSendComplete_RESULT_RESULT_MIN = FileSendCompl
 const FileSendComplete_RESULT FileSendComplete_RESULT_RESULT_MAX = FileSendComplete_RESULT_FAILED_LOWDISKSPACE;
 const int FileSendComplete_RESULT_RESULT_ARRAYSIZE = FileSendComplete_RESULT_RESULT_MAX + 1;
 
-const ::google::protobuf::EnumDescriptor* FileSendComplete_RESULT_descriptor();
-inline const ::std::string& FileSendComplete_RESULT_Name(FileSendComplete_RESULT value) {
-  return ::google::protobuf::internal::NameOfEnum(
-    FileSendComplete_RESULT_descriptor(), value);
-}
-inline bool FileSendComplete_RESULT_Parse(
-    const ::std::string& name, FileSendComplete_RESULT* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<FileSendComplete_RESULT>(
-    FileSendComplete_RESULT_descriptor(), name, value);
-}
 // ===================================================================
 
-class FileSendProtos : public ::google::protobuf::Message {
+class FileSendProtos : public ::google::protobuf::MessageLite {
  public:
   FileSendProtos();
   virtual ~FileSendProtos();
@@ -109,24 +77,24 @@ class FileSendProtos : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const FileSendProtos& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const FileSendProtos* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(FileSendProtos* other);
 
   // implements Message ----------------------------------------------
 
   FileSendProtos* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const FileSendProtos& from);
   void MergeFrom(const FileSendProtos& from);
   void Clear();
@@ -137,7 +105,6 @@ class FileSendProtos : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -145,7 +112,7 @@ class FileSendProtos : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -161,17 +128,6 @@ class FileSendProtos : public ::google::protobuf::Message {
     FileSendProtos_CompressType_CompressType_MAX;
   static const int CompressType_ARRAYSIZE =
     FileSendProtos_CompressType_CompressType_ARRAYSIZE;
-  static inline const ::google::protobuf::EnumDescriptor*
-  CompressType_descriptor() {
-    return FileSendProtos_CompressType_descriptor();
-  }
-  static inline const ::std::string& CompressType_Name(CompressType value) {
-    return FileSendProtos_CompressType_Name(value);
-  }
-  static inline bool CompressType_Parse(const ::std::string& name,
-      CompressType* value) {
-    return FileSendProtos_CompressType_Parse(name, value);
-  }
 
   typedef FileSendProtos_VerifyMode VerifyMode;
   static const VerifyMode NO_VERIFY = FileSendProtos_VerifyMode_NO_VERIFY;
@@ -186,64 +142,67 @@ class FileSendProtos : public ::google::protobuf::Message {
     FileSendProtos_VerifyMode_VerifyMode_MAX;
   static const int VerifyMode_ARRAYSIZE =
     FileSendProtos_VerifyMode_VerifyMode_ARRAYSIZE;
-  static inline const ::google::protobuf::EnumDescriptor*
-  VerifyMode_descriptor() {
-    return FileSendProtos_VerifyMode_descriptor();
-  }
-  static inline const ::std::string& VerifyMode_Name(VerifyMode value) {
-    return FileSendProtos_VerifyMode_Name(value);
-  }
-  static inline bool VerifyMode_Parse(const ::std::string& name,
-      VerifyMode* value) {
-    return FileSendProtos_VerifyMode_Parse(name, value);
-  }
 
   // accessors -------------------------------------------------------
 
-  // required string filename = 1;
-  inline bool has_filename() const;
-  inline void clear_filename();
-  static const int kFilenameFieldNumber = 1;
-  inline const ::std::string& filename() const;
-  inline void set_filename(const ::std::string& value);
-  inline void set_filename(const char* value);
-  inline void set_filename(const char* value, size_t size);
-  inline ::std::string* mutable_filename();
-  inline ::std::string* release_filename();
-  inline void set_allocated_filename(::std::string* filename);
+  // required string file_name = 1;
+  inline bool has_file_name() const;
+  inline void clear_file_name();
+  static const int kFileNameFieldNumber = 1;
+  inline const ::std::string& file_name() const;
+  inline void set_file_name(const ::std::string& value);
+  inline void set_file_name(const char* value);
+  inline void set_file_name(const char* value, size_t size);
+  inline ::std::string* mutable_file_name();
+  inline ::std::string* release_file_name();
+  inline void set_allocated_file_name(::std::string* file_name);
 
-  // required uint64 modified_time = 2;
-  inline bool has_modified_time() const;
-  inline void clear_modified_time();
-  static const int kModifiedTimeFieldNumber = 2;
-  inline ::google::protobuf::uint64 modified_time() const;
-  inline void set_modified_time(::google::protobuf::uint64 value);
+  // required int32 package_seq = 2;
+  inline bool has_package_seq() const;
+  inline void clear_package_seq();
+  static const int kPackageSeqFieldNumber = 2;
+  inline ::google::protobuf::int32 package_seq() const;
+  inline void set_package_seq(::google::protobuf::int32 value);
 
-  // required uint64 content_size = 3;
+  // required int32 package_sum = 3;
+  inline bool has_package_sum() const;
+  inline void clear_package_sum();
+  static const int kPackageSumFieldNumber = 3;
+  inline ::google::protobuf::int32 package_sum() const;
+  inline void set_package_sum(::google::protobuf::int32 value);
+
+  // required uint64 content_size = 4;
   inline bool has_content_size() const;
   inline void clear_content_size();
-  static const int kContentSizeFieldNumber = 3;
+  static const int kContentSizeFieldNumber = 4;
   inline ::google::protobuf::uint64 content_size() const;
   inline void set_content_size(::google::protobuf::uint64 value);
 
-  // required .runtime.FileSendProtos.CompressType compress_type = 4;
+  // required .runtime.FileSendProtos.CompressType compress_type = 5;
   inline bool has_compress_type() const;
   inline void clear_compress_type();
-  static const int kCompressTypeFieldNumber = 4;
+  static const int kCompressTypeFieldNumber = 5;
   inline ::runtime::FileSendProtos_CompressType compress_type() const;
   inline void set_compress_type(::runtime::FileSendProtos_CompressType value);
 
-  // required .runtime.FileSendProtos.VerifyMode verify_mode = 5;
+  // optional uint64 modified_time = 6;
+  inline bool has_modified_time() const;
+  inline void clear_modified_time();
+  static const int kModifiedTimeFieldNumber = 6;
+  inline ::google::protobuf::uint64 modified_time() const;
+  inline void set_modified_time(::google::protobuf::uint64 value);
+
+  // optional .runtime.FileSendProtos.VerifyMode verify_mode = 7;
   inline bool has_verify_mode() const;
   inline void clear_verify_mode();
-  static const int kVerifyModeFieldNumber = 5;
+  static const int kVerifyModeFieldNumber = 7;
   inline ::runtime::FileSendProtos_VerifyMode verify_mode() const;
   inline void set_verify_mode(::runtime::FileSendProtos_VerifyMode value);
 
-  // required string verify_sign = 6;
+  // optional string verify_sign = 8;
   inline bool has_verify_sign() const;
   inline void clear_verify_sign();
-  static const int kVerifySignFieldNumber = 6;
+  static const int kVerifySignFieldNumber = 8;
   inline const ::std::string& verify_sign() const;
   inline void set_verify_sign(const ::std::string& value);
   inline void set_verify_sign(const char* value);
@@ -252,34 +211,52 @@ class FileSendProtos : public ::google::protobuf::Message {
   inline ::std::string* release_verify_sign();
   inline void set_allocated_verify_sign(::std::string* verify_sign);
 
+  // optional uint64 uncompress_size = 9;
+  inline bool has_uncompress_size() const;
+  inline void clear_uncompress_size();
+  static const int kUncompressSizeFieldNumber = 9;
+  inline ::google::protobuf::uint64 uncompress_size() const;
+  inline void set_uncompress_size(::google::protobuf::uint64 value);
+
   // @@protoc_insertion_point(class_scope:runtime.FileSendProtos)
  private:
-  inline void set_has_filename();
-  inline void clear_has_filename();
-  inline void set_has_modified_time();
-  inline void clear_has_modified_time();
+  inline void set_has_file_name();
+  inline void clear_has_file_name();
+  inline void set_has_package_seq();
+  inline void clear_has_package_seq();
+  inline void set_has_package_sum();
+  inline void clear_has_package_sum();
   inline void set_has_content_size();
   inline void clear_has_content_size();
   inline void set_has_compress_type();
   inline void clear_has_compress_type();
+  inline void set_has_modified_time();
+  inline void clear_has_modified_time();
   inline void set_has_verify_mode();
   inline void clear_has_verify_mode();
   inline void set_has_verify_sign();
   inline void clear_has_verify_sign();
+  inline void set_has_uncompress_size();
+  inline void clear_has_uncompress_size();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
-  ::std::string* filename_;
-  ::google::protobuf::uint64 modified_time_;
+  ::std::string* file_name_;
+  ::google::protobuf::int32 package_seq_;
+  ::google::protobuf::int32 package_sum_;
   ::google::protobuf::uint64 content_size_;
+  ::google::protobuf::uint64 modified_time_;
   int compress_type_;
   int verify_mode_;
   ::std::string* verify_sign_;
+  ::google::protobuf::uint64 uncompress_size_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(9 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Protos_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_Protos_2eproto();
+  #endif
   friend void protobuf_AssignDesc_Protos_2eproto();
   friend void protobuf_ShutdownFile_Protos_2eproto();
 
@@ -288,7 +265,7 @@ class FileSendProtos : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class FileSendComplete : public ::google::protobuf::Message {
+class FileSendComplete : public ::google::protobuf::MessageLite {
  public:
   FileSendComplete();
   virtual ~FileSendComplete();
@@ -300,24 +277,24 @@ class FileSendComplete : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const FileSendComplete& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const FileSendComplete* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(FileSendComplete* other);
 
   // implements Message ----------------------------------------------
 
   FileSendComplete* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const FileSendComplete& from);
   void MergeFrom(const FileSendComplete& from);
   void Clear();
@@ -328,7 +305,6 @@ class FileSendComplete : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -336,7 +312,7 @@ class FileSendComplete : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -352,31 +328,20 @@ class FileSendComplete : public ::google::protobuf::Message {
     FileSendComplete_RESULT_RESULT_MAX;
   static const int RESULT_ARRAYSIZE =
     FileSendComplete_RESULT_RESULT_ARRAYSIZE;
-  static inline const ::google::protobuf::EnumDescriptor*
-  RESULT_descriptor() {
-    return FileSendComplete_RESULT_descriptor();
-  }
-  static inline const ::std::string& RESULT_Name(RESULT value) {
-    return FileSendComplete_RESULT_Name(value);
-  }
-  static inline bool RESULT_Parse(const ::std::string& name,
-      RESULT* value) {
-    return FileSendComplete_RESULT_Parse(name, value);
-  }
 
   // accessors -------------------------------------------------------
 
-  // required string filename = 1;
-  inline bool has_filename() const;
-  inline void clear_filename();
-  static const int kFilenameFieldNumber = 1;
-  inline const ::std::string& filename() const;
-  inline void set_filename(const ::std::string& value);
-  inline void set_filename(const char* value);
-  inline void set_filename(const char* value, size_t size);
-  inline ::std::string* mutable_filename();
-  inline ::std::string* release_filename();
-  inline void set_allocated_filename(::std::string* filename);
+  // required string file_name = 1;
+  inline bool has_file_name() const;
+  inline void clear_file_name();
+  static const int kFileNameFieldNumber = 1;
+  inline const ::std::string& file_name() const;
+  inline void set_file_name(const ::std::string& value);
+  inline void set_file_name(const char* value);
+  inline void set_file_name(const char* value, size_t size);
+  inline ::std::string* mutable_file_name();
+  inline ::std::string* release_file_name();
+  inline void set_allocated_file_name(::std::string* file_name);
 
   // required .runtime.FileSendComplete.RESULT result = 2;
   inline bool has_result() const;
@@ -387,20 +352,22 @@ class FileSendComplete : public ::google::protobuf::Message {
 
   // @@protoc_insertion_point(class_scope:runtime.FileSendComplete)
  private:
-  inline void set_has_filename();
-  inline void clear_has_filename();
+  inline void set_has_file_name();
+  inline void clear_has_file_name();
   inline void set_has_result();
   inline void clear_has_result();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
-  ::std::string* filename_;
+  ::std::string* file_name_;
   int result_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Protos_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_Protos_2eproto();
+  #endif
   friend void protobuf_AssignDesc_Protos_2eproto();
   friend void protobuf_ShutdownFile_Protos_2eproto();
 
@@ -414,107 +381,129 @@ class FileSendComplete : public ::google::protobuf::Message {
 
 // FileSendProtos
 
-// required string filename = 1;
-inline bool FileSendProtos::has_filename() const {
+// required string file_name = 1;
+inline bool FileSendProtos::has_file_name() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void FileSendProtos::set_has_filename() {
+inline void FileSendProtos::set_has_file_name() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void FileSendProtos::clear_has_filename() {
+inline void FileSendProtos::clear_has_file_name() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void FileSendProtos::clear_filename() {
-  if (filename_ != &::google::protobuf::internal::kEmptyString) {
-    filename_->clear();
+inline void FileSendProtos::clear_file_name() {
+  if (file_name_ != &::google::protobuf::internal::kEmptyString) {
+    file_name_->clear();
   }
-  clear_has_filename();
+  clear_has_file_name();
 }
-inline const ::std::string& FileSendProtos::filename() const {
-  return *filename_;
+inline const ::std::string& FileSendProtos::file_name() const {
+  return *file_name_;
 }
-inline void FileSendProtos::set_filename(const ::std::string& value) {
-  set_has_filename();
-  if (filename_ == &::google::protobuf::internal::kEmptyString) {
-    filename_ = new ::std::string;
+inline void FileSendProtos::set_file_name(const ::std::string& value) {
+  set_has_file_name();
+  if (file_name_ == &::google::protobuf::internal::kEmptyString) {
+    file_name_ = new ::std::string;
   }
-  filename_->assign(value);
+  file_name_->assign(value);
 }
-inline void FileSendProtos::set_filename(const char* value) {
-  set_has_filename();
-  if (filename_ == &::google::protobuf::internal::kEmptyString) {
-    filename_ = new ::std::string;
+inline void FileSendProtos::set_file_name(const char* value) {
+  set_has_file_name();
+  if (file_name_ == &::google::protobuf::internal::kEmptyString) {
+    file_name_ = new ::std::string;
   }
-  filename_->assign(value);
+  file_name_->assign(value);
 }
-inline void FileSendProtos::set_filename(const char* value, size_t size) {
-  set_has_filename();
-  if (filename_ == &::google::protobuf::internal::kEmptyString) {
-    filename_ = new ::std::string;
+inline void FileSendProtos::set_file_name(const char* value, size_t size) {
+  set_has_file_name();
+  if (file_name_ == &::google::protobuf::internal::kEmptyString) {
+    file_name_ = new ::std::string;
   }
-  filename_->assign(reinterpret_cast<const char*>(value), size);
+  file_name_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* FileSendProtos::mutable_filename() {
-  set_has_filename();
-  if (filename_ == &::google::protobuf::internal::kEmptyString) {
-    filename_ = new ::std::string;
+inline ::std::string* FileSendProtos::mutable_file_name() {
+  set_has_file_name();
+  if (file_name_ == &::google::protobuf::internal::kEmptyString) {
+    file_name_ = new ::std::string;
   }
-  return filename_;
+  return file_name_;
 }
-inline ::std::string* FileSendProtos::release_filename() {
-  clear_has_filename();
-  if (filename_ == &::google::protobuf::internal::kEmptyString) {
+inline ::std::string* FileSendProtos::release_file_name() {
+  clear_has_file_name();
+  if (file_name_ == &::google::protobuf::internal::kEmptyString) {
     return NULL;
   } else {
-    ::std::string* temp = filename_;
-    filename_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    ::std::string* temp = file_name_;
+    file_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
     return temp;
   }
 }
-inline void FileSendProtos::set_allocated_filename(::std::string* filename) {
-  if (filename_ != &::google::protobuf::internal::kEmptyString) {
-    delete filename_;
+inline void FileSendProtos::set_allocated_file_name(::std::string* file_name) {
+  if (file_name_ != &::google::protobuf::internal::kEmptyString) {
+    delete file_name_;
   }
-  if (filename) {
-    set_has_filename();
-    filename_ = filename;
+  if (file_name) {
+    set_has_file_name();
+    file_name_ = file_name;
   } else {
-    clear_has_filename();
-    filename_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    clear_has_file_name();
+    file_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
 }
 
-// required uint64 modified_time = 2;
-inline bool FileSendProtos::has_modified_time() const {
+// required int32 package_seq = 2;
+inline bool FileSendProtos::has_package_seq() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void FileSendProtos::set_has_modified_time() {
+inline void FileSendProtos::set_has_package_seq() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void FileSendProtos::clear_has_modified_time() {
+inline void FileSendProtos::clear_has_package_seq() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void FileSendProtos::clear_modified_time() {
-  modified_time_ = GOOGLE_ULONGLONG(0);
-  clear_has_modified_time();
+inline void FileSendProtos::clear_package_seq() {
+  package_seq_ = 0;
+  clear_has_package_seq();
 }
-inline ::google::protobuf::uint64 FileSendProtos::modified_time() const {
-  return modified_time_;
+inline ::google::protobuf::int32 FileSendProtos::package_seq() const {
+  return package_seq_;
 }
-inline void FileSendProtos::set_modified_time(::google::protobuf::uint64 value) {
-  set_has_modified_time();
-  modified_time_ = value;
+inline void FileSendProtos::set_package_seq(::google::protobuf::int32 value) {
+  set_has_package_seq();
+  package_seq_ = value;
 }
 
-// required uint64 content_size = 3;
-inline bool FileSendProtos::has_content_size() const {
+// required int32 package_sum = 3;
+inline bool FileSendProtos::has_package_sum() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void FileSendProtos::set_has_content_size() {
+inline void FileSendProtos::set_has_package_sum() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void FileSendProtos::clear_has_content_size() {
+inline void FileSendProtos::clear_has_package_sum() {
   _has_bits_[0] &= ~0x00000004u;
+}
+inline void FileSendProtos::clear_package_sum() {
+  package_sum_ = 0;
+  clear_has_package_sum();
+}
+inline ::google::protobuf::int32 FileSendProtos::package_sum() const {
+  return package_sum_;
+}
+inline void FileSendProtos::set_package_sum(::google::protobuf::int32 value) {
+  set_has_package_sum();
+  package_sum_ = value;
+}
+
+// required uint64 content_size = 4;
+inline bool FileSendProtos::has_content_size() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void FileSendProtos::set_has_content_size() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void FileSendProtos::clear_has_content_size() {
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void FileSendProtos::clear_content_size() {
   content_size_ = GOOGLE_ULONGLONG(0);
@@ -528,15 +517,15 @@ inline void FileSendProtos::set_content_size(::google::protobuf::uint64 value) {
   content_size_ = value;
 }
 
-// required .runtime.FileSendProtos.CompressType compress_type = 4;
+// required .runtime.FileSendProtos.CompressType compress_type = 5;
 inline bool FileSendProtos::has_compress_type() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
+  return (_has_bits_[0] & 0x00000010u) != 0;
 }
 inline void FileSendProtos::set_has_compress_type() {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000010u;
 }
 inline void FileSendProtos::clear_has_compress_type() {
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline void FileSendProtos::clear_compress_type() {
   compress_type_ = 0;
@@ -551,15 +540,37 @@ inline void FileSendProtos::set_compress_type(::runtime::FileSendProtos_Compress
   compress_type_ = value;
 }
 
-// required .runtime.FileSendProtos.VerifyMode verify_mode = 5;
+// optional uint64 modified_time = 6;
+inline bool FileSendProtos::has_modified_time() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void FileSendProtos::set_has_modified_time() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void FileSendProtos::clear_has_modified_time() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void FileSendProtos::clear_modified_time() {
+  modified_time_ = GOOGLE_ULONGLONG(0);
+  clear_has_modified_time();
+}
+inline ::google::protobuf::uint64 FileSendProtos::modified_time() const {
+  return modified_time_;
+}
+inline void FileSendProtos::set_modified_time(::google::protobuf::uint64 value) {
+  set_has_modified_time();
+  modified_time_ = value;
+}
+
+// optional .runtime.FileSendProtos.VerifyMode verify_mode = 7;
 inline bool FileSendProtos::has_verify_mode() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
+  return (_has_bits_[0] & 0x00000040u) != 0;
 }
 inline void FileSendProtos::set_has_verify_mode() {
-  _has_bits_[0] |= 0x00000010u;
+  _has_bits_[0] |= 0x00000040u;
 }
 inline void FileSendProtos::clear_has_verify_mode() {
-  _has_bits_[0] &= ~0x00000010u;
+  _has_bits_[0] &= ~0x00000040u;
 }
 inline void FileSendProtos::clear_verify_mode() {
   verify_mode_ = 0;
@@ -574,15 +585,15 @@ inline void FileSendProtos::set_verify_mode(::runtime::FileSendProtos_VerifyMode
   verify_mode_ = value;
 }
 
-// required string verify_sign = 6;
+// optional string verify_sign = 8;
 inline bool FileSendProtos::has_verify_sign() const {
-  return (_has_bits_[0] & 0x00000020u) != 0;
+  return (_has_bits_[0] & 0x00000080u) != 0;
 }
 inline void FileSendProtos::set_has_verify_sign() {
-  _has_bits_[0] |= 0x00000020u;
+  _has_bits_[0] |= 0x00000080u;
 }
 inline void FileSendProtos::clear_has_verify_sign() {
-  _has_bits_[0] &= ~0x00000020u;
+  _has_bits_[0] &= ~0x00000080u;
 }
 inline void FileSendProtos::clear_verify_sign() {
   if (verify_sign_ != &::google::protobuf::internal::kEmptyString) {
@@ -644,77 +655,99 @@ inline void FileSendProtos::set_allocated_verify_sign(::std::string* verify_sign
   }
 }
 
+// optional uint64 uncompress_size = 9;
+inline bool FileSendProtos::has_uncompress_size() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+inline void FileSendProtos::set_has_uncompress_size() {
+  _has_bits_[0] |= 0x00000100u;
+}
+inline void FileSendProtos::clear_has_uncompress_size() {
+  _has_bits_[0] &= ~0x00000100u;
+}
+inline void FileSendProtos::clear_uncompress_size() {
+  uncompress_size_ = GOOGLE_ULONGLONG(0);
+  clear_has_uncompress_size();
+}
+inline ::google::protobuf::uint64 FileSendProtos::uncompress_size() const {
+  return uncompress_size_;
+}
+inline void FileSendProtos::set_uncompress_size(::google::protobuf::uint64 value) {
+  set_has_uncompress_size();
+  uncompress_size_ = value;
+}
+
 // -------------------------------------------------------------------
 
 // FileSendComplete
 
-// required string filename = 1;
-inline bool FileSendComplete::has_filename() const {
+// required string file_name = 1;
+inline bool FileSendComplete::has_file_name() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void FileSendComplete::set_has_filename() {
+inline void FileSendComplete::set_has_file_name() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void FileSendComplete::clear_has_filename() {
+inline void FileSendComplete::clear_has_file_name() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void FileSendComplete::clear_filename() {
-  if (filename_ != &::google::protobuf::internal::kEmptyString) {
-    filename_->clear();
+inline void FileSendComplete::clear_file_name() {
+  if (file_name_ != &::google::protobuf::internal::kEmptyString) {
+    file_name_->clear();
   }
-  clear_has_filename();
+  clear_has_file_name();
 }
-inline const ::std::string& FileSendComplete::filename() const {
-  return *filename_;
+inline const ::std::string& FileSendComplete::file_name() const {
+  return *file_name_;
 }
-inline void FileSendComplete::set_filename(const ::std::string& value) {
-  set_has_filename();
-  if (filename_ == &::google::protobuf::internal::kEmptyString) {
-    filename_ = new ::std::string;
+inline void FileSendComplete::set_file_name(const ::std::string& value) {
+  set_has_file_name();
+  if (file_name_ == &::google::protobuf::internal::kEmptyString) {
+    file_name_ = new ::std::string;
   }
-  filename_->assign(value);
+  file_name_->assign(value);
 }
-inline void FileSendComplete::set_filename(const char* value) {
-  set_has_filename();
-  if (filename_ == &::google::protobuf::internal::kEmptyString) {
-    filename_ = new ::std::string;
+inline void FileSendComplete::set_file_name(const char* value) {
+  set_has_file_name();
+  if (file_name_ == &::google::protobuf::internal::kEmptyString) {
+    file_name_ = new ::std::string;
   }
-  filename_->assign(value);
+  file_name_->assign(value);
 }
-inline void FileSendComplete::set_filename(const char* value, size_t size) {
-  set_has_filename();
-  if (filename_ == &::google::protobuf::internal::kEmptyString) {
-    filename_ = new ::std::string;
+inline void FileSendComplete::set_file_name(const char* value, size_t size) {
+  set_has_file_name();
+  if (file_name_ == &::google::protobuf::internal::kEmptyString) {
+    file_name_ = new ::std::string;
   }
-  filename_->assign(reinterpret_cast<const char*>(value), size);
+  file_name_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* FileSendComplete::mutable_filename() {
-  set_has_filename();
-  if (filename_ == &::google::protobuf::internal::kEmptyString) {
-    filename_ = new ::std::string;
+inline ::std::string* FileSendComplete::mutable_file_name() {
+  set_has_file_name();
+  if (file_name_ == &::google::protobuf::internal::kEmptyString) {
+    file_name_ = new ::std::string;
   }
-  return filename_;
+  return file_name_;
 }
-inline ::std::string* FileSendComplete::release_filename() {
-  clear_has_filename();
-  if (filename_ == &::google::protobuf::internal::kEmptyString) {
+inline ::std::string* FileSendComplete::release_file_name() {
+  clear_has_file_name();
+  if (file_name_ == &::google::protobuf::internal::kEmptyString) {
     return NULL;
   } else {
-    ::std::string* temp = filename_;
-    filename_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    ::std::string* temp = file_name_;
+    file_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
     return temp;
   }
 }
-inline void FileSendComplete::set_allocated_filename(::std::string* filename) {
-  if (filename_ != &::google::protobuf::internal::kEmptyString) {
-    delete filename_;
+inline void FileSendComplete::set_allocated_file_name(::std::string* file_name) {
+  if (file_name_ != &::google::protobuf::internal::kEmptyString) {
+    delete file_name_;
   }
-  if (filename) {
-    set_has_filename();
-    filename_ = filename;
+  if (file_name) {
+    set_has_file_name();
+    file_name_ = file_name;
   } else {
-    clear_has_filename();
-    filename_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    clear_has_file_name();
+    file_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
 }
 
@@ -745,27 +778,6 @@ inline void FileSendComplete::set_result(::runtime::FileSendComplete_RESULT valu
 // @@protoc_insertion_point(namespace_scope)
 
 }  // namespace runtime
-
-#ifndef SWIG
-namespace google {
-namespace protobuf {
-
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::runtime::FileSendProtos_CompressType>() {
-  return ::runtime::FileSendProtos_CompressType_descriptor();
-}
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::runtime::FileSendProtos_VerifyMode>() {
-  return ::runtime::FileSendProtos_VerifyMode_descriptor();
-}
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::runtime::FileSendComplete_RESULT>() {
-  return ::runtime::FileSendComplete_RESULT_descriptor();
-}
-
-}  // namespace google
-}  // namespace protobuf
-#endif  // SWIG
 
 // @@protoc_insertion_point(global_scope)
 
