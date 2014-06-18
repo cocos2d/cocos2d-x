@@ -18,12 +18,4 @@
 -- @function [parent=#SkeletonAnimation] clearTrack 
 -- @param self
         
---------------------------------
--- @function [parent=#SkeletonAnimation] onAnimationStateEvent 
--- @param self
--- @param #int int
--- @param #spEventType speventtype
--- @param #spEvent spevent
--- @param #int int
-        
 return nil
