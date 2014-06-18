@@ -68,8 +68,6 @@ bool UIButtonTest_Editor::init()
     {
         
         _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UIButton_Editor/UIButton_Editor_1.json"));
-        
-//        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromBinaryFile("cocosui/UIEditorTest/UIButton_Editor/基础控件.csb"));
         _touchGroup->addWidget(_layout);
        
         this->configureGUIScene();

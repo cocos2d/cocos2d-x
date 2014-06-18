@@ -49,6 +49,7 @@ ActionTimeline::ActionTimeline()
     , _frameInternal(1/60.0f)
     , _playing(false)
     , _currentFrame(0)
+    , _startFrame(0)
     , _endFrame(0)
     , _frameEventCallFunc(NULL)
     , _frameEventTarget(NULL)
@@ -89,9 +90,9 @@ void ActionTimeline::gotoFrameAndPlay(int startIndex, bool loop)
 
 void ActionTimeline::gotoFrameAndPlay(int startIndex, int endIndex, bool loop)
 {
+    _startFrame = _currentFrame = startIndex;
     _endFrame = endIndex;
     _loop = loop;
-    _currentFrame = startIndex;
     _time = _currentFrame*_frameInternal;
 
     resume();
@@ -100,7 +101,8 @@ void ActionTimeline::gotoFrameAndPlay(int startIndex, int endIndex, bool loop)
 
 void ActionTimeline::gotoFrameAndPause(int startIndex)
 {
-    _time =_currentFrame = startIndex;
+    _startFrame = _currentFrame = startIndex;
+    _time       = _currentFrame * _frameInternal;
 
     pause();
     gotoFrame(_currentFrame);
@@ -152,16 +154,17 @@ void ActionTimeline::step(float delta)
     _time += delta * _timeSpeed;
     _currentFrame = (int)(_time / _frameInternal);
 
-    if (_currentFrame > _endFrame)
+    stepToFrame(_currentFrame);
+
+    if(_time > _endFrame * _frameInternal)
     {
         _playing = _loop;
         if(!_playing)
-            _currentFrame = _time = _endFrame;
+            _time = _endFrame * _frameInternal;
         else           
-            _currentFrame = _time = 0;
+            _time = _startFrame * _frameInternal;
     }
 
-    stepToFrame(_currentFrame);
 }
 
 
@@ -232,7 +235,7 @@ void ActionTimeline::removeTimeline(Timeline* timeline)
     }
 }
 
-void ActionTimeline::setFrameEventCallFunc  (CCObject *target, SEL_FrameEventCallFunc callFunc)
+void ActionTimeline::setFrameEventCallFunc  (CCObject *target, SEL_TimelineFrameEventCallFunc callFunc)
 {
     _frameEventTarget   = target;
     _frameEventCallFunc = callFunc;

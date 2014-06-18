@@ -147,8 +147,6 @@ void Timeline::binarySearchKeyFrame(int frameIndex)
     Frame *from = NULL;
     Frame *to   = NULL;
 
-    int step = 2;
-    int target = 0;
     long length = _frames->count();
     Frame **frames = (Frame **)_frames->data->arr;
 
