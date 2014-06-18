@@ -2391,6 +2391,49 @@ int lua_cocos2dx_Texture2D_getMaxS(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_Texture2D_releaseGLTexture(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Texture2D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Texture2D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_releaseGLTexture'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cobj->releaseGLTexture();
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "releaseGLTexture",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Texture2D_releaseGLTexture'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_Texture2D_updateWithData(lua_State* tolua_S)
 {
     int argc = 0;
@@ -3656,6 +3699,7 @@ int lua_register_cocos2dx_Texture2D(lua_State* tolua_S)
         tolua_function(tolua_S,"getStringForFormat",lua_cocos2dx_Texture2D_getStringForFormat);
         tolua_function(tolua_S,"initWithImage",lua_cocos2dx_Texture2D_initWithImage);
         tolua_function(tolua_S,"getMaxS",lua_cocos2dx_Texture2D_getMaxS);
+        tolua_function(tolua_S,"releaseGLTexture",lua_cocos2dx_Texture2D_releaseGLTexture);
         tolua_function(tolua_S,"updateWithData",lua_cocos2dx_Texture2D_updateWithData);
         tolua_function(tolua_S,"hasPremultipliedAlpha",lua_cocos2dx_Texture2D_hasPremultipliedAlpha);
         tolua_function(tolua_S,"initWithMipmaps",lua_cocos2dx_Texture2D_initWithMipmaps);
@@ -64896,6 +64940,50 @@ int lua_register_cocos2dx_Component(lua_State* tolua_S)
     return 1;
 }
 
+int lua_cocos2dx_Sprite3D_getSkin(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Sprite3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Sprite3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Sprite3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite3D_getSkin'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cocos2d::MeshSkin* ret = cobj->getSkin();
+        object_to_luaval<cocos2d::MeshSkin>(tolua_S, "cc.MeshSkin",(cocos2d::MeshSkin*)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getSkin",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Sprite3D_getSkin'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_Sprite3D_setTexture(lua_State* tolua_S)
 {
     int argc = 0;
@@ -65146,6 +65234,7 @@ int lua_register_cocos2dx_Sprite3D(lua_State* tolua_S)
     tolua_cclass(tolua_S,"Sprite3D","cc.Sprite3D","cc.Node",nullptr);
 
     tolua_beginmodule(tolua_S,"Sprite3D");
+        tolua_function(tolua_S,"getSkin",lua_cocos2dx_Sprite3D_getSkin);
         tolua_function(tolua_S,"setTexture",lua_cocos2dx_Sprite3D_setTexture);
         tolua_function(tolua_S,"getMesh",lua_cocos2dx_Sprite3D_getMesh);
         tolua_function(tolua_S,"getBlendFunc",lua_cocos2dx_Sprite3D_getBlendFunc);
@@ -65607,7 +65696,6 @@ int lua_cocos2dx_Mesh_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
-
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
 #endif
@@ -65616,25 +65704,59 @@ int lua_cocos2dx_Mesh_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Mesh",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    argc = lua_gettop(tolua_S) - 1;
+    argc = lua_gettop(tolua_S)-1;
 
-    if (argc == 4)
+    do 
     {
-        std::vector<float, std::allocator<float> > arg0;
-        std::vector<float, std::allocator<float> > arg1;
-        std::vector<float, std::allocator<float> > arg2;
-        std::vector<unsigned short, std::allocator<unsigned short> > arg3;
-        ok &= luaval_to_std_vector_float(tolua_S, 2, &arg0);
-        ok &= luaval_to_std_vector_float(tolua_S, 3, &arg1);
-        ok &= luaval_to_std_vector_float(tolua_S, 4, &arg2);
-        ok &= luaval_to_std_vector_ushort(tolua_S, 5, &arg3);
-        if(!ok)
-            return 0;
-        cocos2d::Mesh* ret = cocos2d::Mesh::create(arg0, arg1, arg2, arg3);
-        object_to_luaval<cocos2d::Mesh>(tolua_S, "cc.Mesh",(cocos2d::Mesh*)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "create",argc, 4);
+        if (argc == 6)
+        {
+            std::vector<float, std::allocator<float> > arg0;
+            ok &= luaval_to_std_vector_float(tolua_S, 2, &arg0);
+            if (!ok) { break; }
+            int arg1;
+            ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
+            if (!ok) { break; }
+            std::vector<unsigned short, std::allocator<unsigned short> > arg2;
+            ok &= luaval_to_std_vector_ushort(tolua_S, 4, &arg2);
+            if (!ok) { break; }
+            int arg3;
+            ok &= luaval_to_int32(tolua_S, 5,(int *)&arg3);
+            if (!ok) { break; }
+            std::vector<cocos2d::MeshVertexAttrib, std::allocator<cocos2d::MeshVertexAttrib> > arg4;
+            ok &= luaval_to_object<std::vector<cocos2d::MeshVertexAttrib, std::allocator<cocos2d::MeshVertexAttrib> >>(tolua_S, 6, "std::vector<cc.MeshVertexAttrib, std::allocator<cc.MeshVertexAttrib> >",&arg4);
+            if (!ok) { break; }
+            int arg5;
+            ok &= luaval_to_int32(tolua_S, 7,(int *)&arg5);
+            if (!ok) { break; }
+            cocos2d::Mesh* ret = cocos2d::Mesh::create(arg0, arg1, arg2, arg3, arg4, arg5);
+            object_to_luaval<cocos2d::Mesh>(tolua_S, "cc.Mesh",(cocos2d::Mesh*)ret);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    do 
+    {
+        if (argc == 4)
+        {
+            std::vector<float, std::allocator<float> > arg0;
+            ok &= luaval_to_std_vector_float(tolua_S, 2, &arg0);
+            if (!ok) { break; }
+            std::vector<float, std::allocator<float> > arg1;
+            ok &= luaval_to_std_vector_float(tolua_S, 3, &arg1);
+            if (!ok) { break; }
+            std::vector<float, std::allocator<float> > arg2;
+            ok &= luaval_to_std_vector_float(tolua_S, 4, &arg2);
+            if (!ok) { break; }
+            std::vector<unsigned short, std::allocator<unsigned short> > arg3;
+            ok &= luaval_to_std_vector_ushort(tolua_S, 5, &arg3);
+            if (!ok) { break; }
+            cocos2d::Mesh* ret = cocos2d::Mesh::create(arg0, arg1, arg2, arg3);
+            object_to_luaval<cocos2d::Mesh>(tolua_S, "cc.Mesh",(cocos2d::Mesh*)ret);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d", "create",argc, 4);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:

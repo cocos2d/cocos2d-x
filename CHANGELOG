@@ -1,4 +1,4 @@
-cocos2d-x-3.2  ???
+cocos2d-x-3.2-alpha0 Jun.17 2014
     [NEW]           Console: add a command to show engine version
     [NEW]           Node: added setter/getter for NormalizedPosition(). Allows to set positions in normalized values (between 0 and 1)
     [NEW]           Scene: Added createWithSize() method
@@ -6,6 +6,8 @@ cocos2d-x-3.2  ???
     [NEW]           TextureCache: added unbindImageAsync() and unbindAllImageAsync()
     [NEW]           utils: added captureScreen()
     [NEW]           UIText: added shadow, outline, glow filter support
+    [NEW]           Sprite3D: support 3d animation
+    [NEW]           Animation3D: 3d animation
     
     [FIX]           Application.mk: not output debug message in release mode on Android
     [FIX]           Android: 3d model will be black when coming from background
@@ -37,8 +39,10 @@ cocos2d-x-3.2  ???
     [FIX]           WP8: will restart if app goes to background, then touches icon to go to foreground
     [FIX]           WP8: will be black if: 1. 3rd pops up a view; 2. go to background; 3. come to foreground
     [FIX]           WP8: project name of new project created by console is wrong
+    [FIX]           WP8: missing texture after app switch
     
     [3RD]           curl: will crash if use https request on iOS simulator
+    [3RD]           curl: update OpenSSL to v1.0.1h
 
 cocos2d-x-3.1.1 May.31 2014
     [FIX]           GLProgramState: restores states after coming from background

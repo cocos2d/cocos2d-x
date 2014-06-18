@@ -23,9 +23,11 @@
  ****************************************************************************/
 
 #include "3d/CCSprite3D.h"
-#include "3d/CCSprite3DDataCache.h"
 #include "3d/CCMesh.h"
 #include "3d/CCObjLoader.h"
+#include "3d/CCMeshSkin.h"
+#include "3d/CCBundle3D.h"
+#include "3d/CCSprite3DMaterial.h"
 
 #include "base/CCDirector.h"
 #include "base/CCPlatformMacros.h"
@@ -40,7 +42,7 @@
 
 NS_CC_BEGIN
 
-std::string s_attributeNames[] = {GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::ATTRIBUTE_NAME_NORMAL};
+std::string s_attributeNames[] = {GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::ATTRIBUTE_NAME_NORMAL, GLProgram::ATTRIBUTE_NAME_BLEND_WEIGHT, GLProgram::ATTRIBUTE_NAME_BLEND_INDEX};
 
 Sprite3D* Sprite3D::create(const std::string &modelPath)
 {
@@ -89,6 +91,22 @@ bool Sprite3D::loadFromObj(const std::string& path)
 {
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
     
+    //find from the cache
+    std::string key = fullPath + "#";
+    auto mesh = MeshCache::getInstance()->getMesh(key);
+    if (mesh)
+    {
+        _mesh = mesh;
+        _mesh->retain();
+        
+        auto tex = Sprite3DMaterialCache::getInstance()->getSprite3DMaterial(key);
+        setTexture(tex);
+        
+        genGLProgramState();
+        
+        return true;
+    }
+    
     //.mtl file directory
     std::string dir = "";
     auto last = fullPath.rfind("/");
@@ -130,13 +148,80 @@ bool Sprite3D::loadFromObj(const std::string& path)
     genGLProgramState();
     
     //add to cache
-    Sprite3DDataCache::getInstance()->addSprite3D(fullPath, _mesh, matnames.size() > 0 ? matnames[0] : "");
+    
+    if (_texture)
+    {
+        Sprite3DMaterialCache::getInstance()->addSprite3DMaterial(key, _texture);
+    }
+    
+    MeshCache::getInstance()->addMesh(key, _mesh);
 
+    return true;
+}
+
+bool Sprite3D::loadFromC3x(const std::string& path)
+{
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
+    //find from the cache
+    std::string key = fullPath + "#";
+    auto mesh = MeshCache::getInstance()->getMesh(key);
+    if (mesh)
+    {
+        _mesh = mesh;
+        _mesh->retain();
+        
+        auto tex = Sprite3DMaterialCache::getInstance()->getSprite3DMaterial(key);
+        setTexture(tex);
+        
+        _skin = MeshSkin::create(fullPath, "");
+        CC_SAFE_RETAIN(_skin);
+        
+        genGLProgramState();
+        
+        return true;
+    }
+    
+    //load from .c3b or .c3t
+    auto bundle = Bundle3D::getInstance();
+    if (!bundle->load(fullPath))
+        return false;
+    
+    MeshData meshdata;
+    bool ret = bundle->loadMeshData("", &meshdata);
+    if (!ret)
+    {
+        return false;
+    }
+    
+    _mesh = Mesh::create(meshdata.vertex, meshdata.vertexSizeInFloat, meshdata.indices, meshdata.numIndex, meshdata.attribs, meshdata.attribCount);
+    CC_SAFE_RETAIN(_mesh);
+    
+    _skin = MeshSkin::create(fullPath, "");
+    CC_SAFE_RETAIN(_skin);
+    
+    MaterialData materialdata;
+    ret = bundle->loadMaterialData("", &materialdata);
+    if (ret)
+    {
+        setTexture(materialdata.texturePath);
+    }
+    
+    genGLProgramState();
+    
+    //add to cache
+    auto cache = Director::getInstance()->getTextureCache();
+    auto tex = cache->addImage(materialdata.texturePath);
+    if (tex)
+        Sprite3DMaterialCache::getInstance()->addSprite3DMaterial(key, tex);
+    
+    MeshCache::getInstance()->addMesh(key, _mesh);
+    
     return true;
 }
 
 Sprite3D::Sprite3D()
 : _mesh(nullptr)
+, _skin(nullptr)
 , _texture(nullptr)
 , _blend(BlendFunc::ALPHA_NON_PREMULTIPLIED)
 {
@@ -146,38 +231,29 @@ Sprite3D::~Sprite3D()
 {
     CC_SAFE_RELEASE_NULL(_texture);
     CC_SAFE_RELEASE_NULL(_mesh);
+    CC_SAFE_RELEASE_NULL(_skin);
 }
 
 bool Sprite3D::initWithFile(const std::string &path)
 {
     CC_SAFE_RELEASE_NULL(_mesh);
-    
+    CC_SAFE_RELEASE_NULL(_skin);
     CC_SAFE_RELEASE_NULL(_texture);
     
-    //find from the cache
-    Mesh* mesh = Sprite3DDataCache::getInstance()->getSprite3DMesh(path);
-    if (mesh)
+    //load from file
+    std::string ext = path.substr(path.length() - 4, 4);
+    std::transform(ext.begin(), ext.end(), ext.begin(), tolower);
+    
+    if (ext == ".obj")
     {
-        _mesh = mesh;
-        _mesh->retain();
-        
-        auto tex = Sprite3DDataCache::getInstance()->getSprite3DTexture(path);
-        setTexture(tex);
-
-        genGLProgramState();
-        
-        return true;
+        return loadFromObj(path);
     }
-    else
+    else if (ext == ".c3b" || ext == ".c3t")
     {
-        //load from file
-        std::string ext = path.substr(path.length() - 4, 4);
-        if (ext != ".obj" || !loadFromObj(path))
-        {
-            return false;
-        }
-        return true;
+        return loadFromC3x(path);
     }
+    
+    return false;
 }
 
 void Sprite3D::genGLProgramState()
@@ -201,8 +277,14 @@ void Sprite3D::genGLProgramState()
 
 GLProgram* Sprite3D::getDefaultGLProgram(bool textured)
 {
+    bool hasSkin = _skin && _mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_INDEX)
+    && _mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT);
+    
     if(textured)
     {
+        if (hasSkin)
+            return GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_SKINPOSITION_TEXTURE);
+        
         return GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION_TEXTURE);
     }
     else
@@ -250,6 +332,11 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     
     _meshCommand.setCullFaceEnabled(true);
     _meshCommand.setDepthTestEnabled(true);
+    if (_skin)
+    {
+        _meshCommand.setMatrixPaletteSize(_skin->getMatrixPaletteSize());
+        _meshCommand.setMatrixPalette(_skin->getMatrixPalette());
+    }
     //support tint and fade
     _meshCommand.setDisplayColor(Vec4(color.r, color.g, color.b, color.a));
     Director::getInstance()->getRenderer()->addCommand(&_meshCommand);

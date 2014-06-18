@@ -28,6 +28,8 @@
 #include <string>
 #include <vector>
 
+#include "3d/CCBundle3DData.h"
+
 #include "base/CCRef.h"
 #include "base/ccTypes.h"
 #include "math/CCMath.h"
@@ -35,18 +37,8 @@
 
 NS_CC_BEGIN
 
-//mesh vertex attribute
-struct MeshVertexAttrib
-{
-    //attribute size
-    GLint size;
-    //GL_FLOAT
-    GLenum type;
-    //VERTEX_ATTRIB_POSITION,VERTEX_ATTRIB_COLOR,VERTEX_ATTRIB_TEX_COORD,VERTEX_ATTRIB_NORMAL, GLProgram for detail
-    int  vertexAttrib;
-    //size in bytes
-    int attribSizeBytes;
-};
+class EventListenerCustom;
+class EventCustom;
 
 class RenderMeshData
 {
@@ -56,9 +48,13 @@ public:
     {
     }
     bool hasVertexAttrib(int attrib);
-    bool initFrom(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices);
+    bool init(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices);
+    bool init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount);
     
 protected:
+    
+    int calVertexSizeBytes();
+    
     int _vertexsizeBytes;
     ssize_t _vertexNum;
     std::vector<float> _vertexs;
@@ -89,6 +85,8 @@ public:
 
     //create
     static Mesh* create(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices);
+    
+    static Mesh* create(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount);
 
     //get vertex buffer
     inline GLuint getVertexBuffer() const { return _vertexBuffer; }
@@ -110,15 +108,19 @@ public:
     //build vertex buffer from renderdata
     void restore();
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
+    
     Mesh();
     virtual ~Mesh();
     bool init(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices);
+    
+    bool init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount);
 
     //build buffer
     void buildBuffer();
     void cleanAndFreeBuffers();
 
+protected:
     PrimitiveType _primitiveType;
     IndexFormat _indexFormat;
     GLuint _vertexBuffer;
@@ -126,6 +128,43 @@ protected:
     ssize_t _indexCount;
 
     RenderMeshData _renderdata;
+};
+
+/**
+ * MeshCache
+ */
+class MeshCache
+{
+public:
+    static MeshCache* getInstance();
+    static void destroyInstance();
+    
+    Mesh* getMesh(const std::string& key) const;
+    
+    bool addMesh(const std::string& key, Mesh* mesh);
+    
+    void removeAllMeshes();
+
+    void removeUnusedMesh();
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    void listenBackToForeground(EventCustom* event);
+#endif
+    
+CC_CONSTRUCTOR_ACCESS:
+    
+    MeshCache();
+    ~MeshCache();
+    
+protected:
+    
+    static MeshCache* _cacheInstance;
+    
+    std::unordered_map<std::string, Mesh*> _meshes;
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    EventListenerCustom* _backToForegroundlistener;
+#endif
 };
 
 NS_CC_END

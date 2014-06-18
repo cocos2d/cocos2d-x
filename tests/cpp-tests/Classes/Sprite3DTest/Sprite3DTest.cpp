@@ -24,6 +24,8 @@
  ****************************************************************************/
 
 #include "Sprite3DTest.h"
+#include "3d/CCAnimation3D.h"
+#include "3d/CCAnimate3D.h"
 
 #include <algorithm>
 #include "../testResource.h"
@@ -41,7 +43,8 @@ static int sceneIdx = -1;
 static std::function<Layer*()> createFunctions[] =
 {
     CL(Sprite3DBasicTest),
-    CL(Sprite3DEffectTest)
+    CL(Sprite3DEffectTest),
+    CL(Sprite3DWithSkinTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -509,6 +512,64 @@ void Sprite3DEffectTest::addNewSpriteWithCoords(Vec2 p)
 }
 
 void Sprite3DEffectTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
+    for (auto touch: touches)
+    {
+        auto location = touch->getLocation();
+        
+        addNewSpriteWithCoords( location );
+    }
+}
+
+Sprite3DWithSkinTest::Sprite3DWithSkinTest()
+{
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DWithSkinTest::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
+    auto s = Director::getInstance()->getWinSize();
+    addNewSpriteWithCoords( Vec2(s.width/2, s.height/2) );
+}
+std::string Sprite3DWithSkinTest::title() const
+{
+    return "Testing Sprite3D for animation from c3t";
+}
+std::string Sprite3DWithSkinTest::subtitle() const
+{
+    return "Tap screen to add more sprite3D";
+}
+
+void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
+{
+    auto sprite = Sprite3D::create("Sprite3DTest/girl.c3t");
+    addChild(sprite);
+    sprite->setRotation3D(Vec3(-90.f, 0.f, 0.f));
+    sprite->setPosition( Vec2( p.x, p.y) );
+
+    auto animation = Animation3D::getOrCreate("Sprite3DTest/girl.c3t");
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation);
+        if(std::rand() %3 == 0)
+        {
+            animate->setPlayBack(true);
+        }
+
+        int rand2 = std::rand();
+        if(rand2 % 3 == 1)
+        {
+            animate->setSpeed(animate->getSpeed() + CCRANDOM_0_1());
+        }
+        else if(rand2 % 3 == 2)
+        {
+            animate->setSpeed(animate->getSpeed() - 0.5 * CCRANDOM_0_1());
+        }
+
+        sprite->runAction(RepeatForever::create(animate));
+    }
+}
+
+void Sprite3DWithSkinTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
     for (auto touch: touches)
     {

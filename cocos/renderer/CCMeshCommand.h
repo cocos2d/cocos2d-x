@@ -33,6 +33,8 @@
 NS_CC_BEGIN
 
 class GLProgramState;
+class GLProgram;
+class Uniform;
 
 //it is a common mesh
 class MeshCommand : public RenderCommand
@@ -53,6 +55,10 @@ public:
     void setDepthWriteEnabled(bool enable);
     
     void setDisplayColor(const Vec4& color);
+    
+    void setMatrixPalette(const Vec4* matrixPalette) { _matrixPalette = matrixPalette; }
+    
+    void setMatrixPaletteSize(int size) { _matrixPaletteSize = size; }
 
     void execute();
 
@@ -62,6 +68,8 @@ protected:
     
     //restore to all false
     void restoreRenderState();
+    
+    void MatrixPalleteCallBack( GLProgram* glProgram, Uniform* uniform);
 
     GLuint _textureID;
     GLProgramState* _glProgramState;
@@ -70,6 +78,10 @@ protected:
     GLuint _textrueID;
     
     Vec4 _displayColor; // in order to support tint and fade in fade out
+    
+    // used for skin
+    const Vec4* _matrixPalette;
+    int   _matrixPaletteSize;
     
     GLuint _vertexBuffer;
     GLuint _indexBuffer;
