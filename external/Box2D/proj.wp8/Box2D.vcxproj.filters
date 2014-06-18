@@ -1,29 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Collision">
-      <UniqueIdentifier>{5c7cd6b4-30ff-418d-991b-a3a4aea83eed}</UniqueIdentifier>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Collision\Shapes">
-      <UniqueIdentifier>{63eff7aa-9881-463e-b7c5-0528e8abbbae}</UniqueIdentifier>
+    <Filter Include="Collision">
+      <UniqueIdentifier>{16c05c58-a1ec-4911-a9c6-7e9aaa7d69be}</UniqueIdentifier>
     </Filter>
     <Filter Include="Common">
-      <UniqueIdentifier>{93eb73a4-fc55-42c6-9259-3804be370437}</UniqueIdentifier>
+      <UniqueIdentifier>{3298c6c7-d7c0-4611-b639-2fe573fac349}</UniqueIdentifier>
     </Filter>
     <Filter Include="Dynamics">
-      <UniqueIdentifier>{26d1dd58-d51b-4627-8f9a-2b8d52f1602e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Rope">
-      <UniqueIdentifier>{8c61b204-9c68-4f12-8941-f38b458cc1ad}</UniqueIdentifier>
+      <UniqueIdentifier>{77d2cef6-b1ce-4b86-8a5a-9c7b153a96c9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Dynamics\Contacts">
-      <UniqueIdentifier>{73b9dc1d-0290-4066-bb9a-e5b35cba22c9}</UniqueIdentifier>
+      <UniqueIdentifier>{f742bc69-2a82-49bb-8ad4-3034f344cb01}</UniqueIdentifier>
     </Filter>
     <Filter Include="Dynamics\Joints">
-      <UniqueIdentifier>{21324ad4-77f6-4f9a-87e0-47354173bcd2}</UniqueIdentifier>
+      <UniqueIdentifier>{60987cc6-6302-4434-9f8d-5d5de9274d35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Collision\Shapes">
+      <UniqueIdentifier>{68618ac5-eebf-4fc7-b550-ede6516e3494}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Rope">
+      <UniqueIdentifier>{71918971-24a8-458c-bcb1-a23f6150e147}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Collision\Shapes\b2ChainShape.cpp">
+      <Filter>Collision\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Collision\Shapes\b2CircleShape.cpp">
+      <Filter>Collision\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Collision\Shapes\b2EdgeShape.cpp">
+      <Filter>Collision\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Collision\Shapes\b2PolygonShape.cpp">
+      <Filter>Collision\Shapes</Filter>
+    </ClCompile>
     <ClCompile Include="..\Collision\b2BroadPhase.cpp">
       <Filter>Collision</Filter>
     </ClCompile>
@@ -48,18 +64,6 @@
     <ClCompile Include="..\Collision\b2TimeOfImpact.cpp">
       <Filter>Collision</Filter>
     </ClCompile>
-    <ClCompile Include="..\Collision\Shapes\b2ChainShape.cpp">
-      <Filter>Collision\Shapes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Collision\Shapes\b2CircleShape.cpp">
-      <Filter>Collision\Shapes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Collision\Shapes\b2EdgeShape.cpp">
-      <Filter>Collision\Shapes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Collision\Shapes\b2PolygonShape.cpp">
-      <Filter>Collision\Shapes</Filter>
-    </ClCompile>
     <ClCompile Include="..\Common\b2BlockAllocator.cpp">
       <Filter>Common</Filter>
     </ClCompile>
@@ -77,24 +81,6 @@
     </ClCompile>
     <ClCompile Include="..\Common\b2Timer.cpp">
       <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Dynamics\b2Body.cpp">
-      <Filter>Dynamics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Dynamics\b2ContactManager.cpp">
-      <Filter>Dynamics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Dynamics\b2Fixture.cpp">
-      <Filter>Dynamics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Dynamics\b2Island.cpp">
-      <Filter>Dynamics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Dynamics\b2World.cpp">
-      <Filter>Dynamics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Dynamics\b2WorldCallbacks.cpp">
-      <Filter>Dynamics</Filter>
     </ClCompile>
     <ClCompile Include="..\Dynamics\Contacts\b2ChainAndCircleContact.cpp">
       <Filter>Dynamics\Contacts</Filter>
@@ -156,26 +142,29 @@
     <ClCompile Include="..\Dynamics\Joints\b2WheelJoint.cpp">
       <Filter>Dynamics\Joints</Filter>
     </ClCompile>
+    <ClCompile Include="..\Dynamics\b2Body.cpp">
+      <Filter>Dynamics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Dynamics\b2ContactManager.cpp">
+      <Filter>Dynamics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Dynamics\b2Fixture.cpp">
+      <Filter>Dynamics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Dynamics\b2Island.cpp">
+      <Filter>Dynamics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Dynamics\b2World.cpp">
+      <Filter>Dynamics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Dynamics\b2WorldCallbacks.cpp">
+      <Filter>Dynamics</Filter>
+    </ClCompile>
     <ClCompile Include="..\Rope\b2Rope.cpp">
       <Filter>Rope</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Collision\b2BroadPhase.h">
-      <Filter>Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Collision\b2Collision.h">
-      <Filter>Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Collision\b2Distance.h">
-      <Filter>Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Collision\b2DynamicTree.h">
-      <Filter>Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Collision\b2TimeOfImpact.h">
-      <Filter>Collision</Filter>
-    </ClInclude>
     <ClInclude Include="..\Collision\Shapes\b2ChainShape.h">
       <Filter>Collision\Shapes</Filter>
     </ClInclude>
@@ -191,7 +180,21 @@
     <ClInclude Include="..\Collision\Shapes\b2Shape.h">
       <Filter>Collision\Shapes</Filter>
     </ClInclude>
-    <ClInclude Include="..\Box2D.h" />
+    <ClInclude Include="..\Collision\b2BroadPhase.h">
+      <Filter>Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Collision\b2Collision.h">
+      <Filter>Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Collision\b2Distance.h">
+      <Filter>Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Collision\b2DynamicTree.h">
+      <Filter>Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Collision\b2TimeOfImpact.h">
+      <Filter>Collision</Filter>
+    </ClInclude>
     <ClInclude Include="..\Common\b2BlockAllocator.h">
       <Filter>Common</Filter>
     </ClInclude>
@@ -212,27 +215,6 @@
     </ClInclude>
     <ClInclude Include="..\Common\b2Timer.h">
       <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Dynamics\b2Body.h">
-      <Filter>Dynamics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Dynamics\b2ContactManager.h">
-      <Filter>Dynamics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Dynamics\b2Fixture.h">
-      <Filter>Dynamics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Dynamics\b2Island.h">
-      <Filter>Dynamics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Dynamics\b2TimeStep.h">
-      <Filter>Dynamics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Dynamics\b2World.h">
-      <Filter>Dynamics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Dynamics\b2WorldCallbacks.h">
-      <Filter>Dynamics</Filter>
     </ClInclude>
     <ClInclude Include="..\Dynamics\Contacts\b2ChainAndCircleContact.h">
       <Filter>Dynamics\Contacts</Filter>
@@ -294,8 +276,30 @@
     <ClInclude Include="..\Dynamics\Joints\b2WheelJoint.h">
       <Filter>Dynamics\Joints</Filter>
     </ClInclude>
+    <ClInclude Include="..\Dynamics\b2Body.h">
+      <Filter>Dynamics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Dynamics\b2ContactManager.h">
+      <Filter>Dynamics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Dynamics\b2Fixture.h">
+      <Filter>Dynamics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Dynamics\b2Island.h">
+      <Filter>Dynamics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Dynamics\b2TimeStep.h">
+      <Filter>Dynamics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Dynamics\b2World.h">
+      <Filter>Dynamics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Dynamics\b2WorldCallbacks.h">
+      <Filter>Dynamics</Filter>
+    </ClInclude>
     <ClInclude Include="..\Rope\b2Rope.h">
       <Filter>Rope</Filter>
     </ClInclude>
+    <ClInclude Include="..\Box2D.h" />
   </ItemGroup>
 </Project>
