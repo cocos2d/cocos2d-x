@@ -28,6 +28,7 @@
 #if CC_ENABLE_SCRIPT_BINDING
 
 #include "base/CCScheduler.h"
+#include "2d/CCNode.h"
 
 bool CC_DLL cc_assert_script_compatible(const char *msg)
 {
@@ -160,6 +161,51 @@ void ScriptEngineManager::destroyInstance()
         delete s_pSharedScriptEngineManager;
         s_pSharedScriptEngineManager = nullptr;
     }
+}
+
+bool ScriptEngineManager::sendNodeEventToJS(Node* node, int action)
+{
+    auto scriptEngine = getInstance()->getScriptEngine();
+    
+    if (scriptEngine->isCalledFromScript())
+    {
+        // Should only be invoked at root class Node
+        scriptEngine->setCalledFromScript(false);
+    }
+    else
+    {
+        BasicScriptData data(node,(void*)&action);
+        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
+        if (scriptEngine->sendEvent(&scriptEvent))
+            return true;
+    }
+    
+    return false;
+}
+
+bool ScriptEngineManager::sendNodeEventToJSExtended(Node* node, int action)
+{
+    auto scriptEngine = getInstance()->getScriptEngine();
+    
+    if (!scriptEngine->isCalledFromScript())
+    {
+        BasicScriptData data(node,(void*)&action);
+        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
+        if (scriptEngine->sendEvent(&scriptEvent))
+            return true;
+    }
+    
+    return false;
+}
+
+void ScriptEngineManager::sendNodeEventToLua(Node* node, int action)
+{
+    auto scriptEngine = getInstance()->getScriptEngine();
+    
+    BasicScriptData data(node,(void*)&action);
+    ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
+    
+    scriptEngine->sendEvent(&scriptEvent);
 }
 
 NS_CC_END
