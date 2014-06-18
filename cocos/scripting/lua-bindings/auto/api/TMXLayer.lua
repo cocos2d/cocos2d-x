@@ -4,13 +4,6 @@
 -- @extend SpriteBatchNode
 
 --------------------------------
--- @function [parent=#TMXLayer] getTileGIDAt 
--- @param self
--- @param #vec2_table vec2
--- @param #cc.TMXTileFlags_ tmxtileflags_
--- @return unsigned int#unsigned int ret (return value: unsigned int)
-        
---------------------------------
 -- @function [parent=#TMXLayer] getPositionAt 
 -- @param self
 -- @param #vec2_table vec2
@@ -24,11 +17,6 @@
 --------------------------------
 -- @function [parent=#TMXLayer] releaseMap 
 -- @param self
-        
---------------------------------
--- @function [parent=#TMXLayer] setTiles 
--- @param self
--- @param #unsigned int int
         
 --------------------------------
 -- @function [parent=#TMXLayer] getLayerSize 
