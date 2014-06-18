@@ -14,13 +14,14 @@ namespace cocostudio
     IMPLEMENT_CLASS_WIDGET_READER_INFO(WidgetReader)
     
     WidgetReader::WidgetReader()
-    :sizePercentX(0.0f),
-    sizePercentY(0.0f),
-    isAdaptScreen(false),
-    width(0.0f),
-    height(0.0f),
-    positionPercentX(0.0f),
-    positionPercentY(0.0f)
+    :_sizePercentX(0.0f),
+    _sizePercentY(0.0f),
+    _isAdaptScreen(false),
+    _width(0.0f),
+    _height(0.0f),
+    _positionPercentX(0.0f),
+    _positionPercentY(0.0f),
+    _opacity(255)
     {
         valueToInt = [=](std::string str) -> int{
             return atoi(str.c_str());
@@ -198,25 +199,29 @@ namespace cocostudio
     
     void WidgetReader::beginSetBasicProperties(cocos2d::ui::Widget *widget)
     {
-        position = widget->getPosition();
+        _position = widget->getPosition();
         //set default color
-        widget->setColor(Color3B(255,255,255));
-        originalAnchorPoint = widget->getAnchorPoint();
+        _color = Color3B(255,255,255);
+        widget->setColor(_color);
+        _opacity = widget->getOpacity();
+        _originalAnchorPoint = widget->getAnchorPoint();
     }
     
     void WidgetReader::endSetBasicProperties(Widget *widget)
     {
         Size screenSize = Director::getInstance()->getWinSize();
         
-        widget->setPositionPercent(Vec2(positionPercentX, positionPercentY));
-        widget->setSizePercent(Vec2(sizePercentX, sizePercentY));
-        if (isAdaptScreen) {
-            width = screenSize.width;
-            height = screenSize.height;
+        widget->setPositionPercent(Vec2(_positionPercentX, _positionPercentY));
+        widget->setSizePercent(Vec2(_sizePercentX, _sizePercentY));
+        if (_isAdaptScreen) {
+            _width = screenSize.width;
+            _height = screenSize.height;
         }
-        widget->setSize(Size(width, height));
-        widget->setPosition(position);
-        widget->setAnchorPoint(originalAnchorPoint);
+        widget->setColor(_color);
+        widget->setOpacity(_opacity);
+        widget->setSize(Size(_width, _height));
+        widget->setPosition(_position);
+        widget->setAnchorPoint(_originalAnchorPoint);
     }
     
     std::string WidgetReader::getResourcePath(const rapidjson::Value &dict,

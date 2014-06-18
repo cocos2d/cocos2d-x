@@ -74,15 +74,17 @@ namespace cocostudio
         std::function<bool(std::string)> valueToBool;
         std::function<float(std::string)> valueToFloat;
         
-        float sizePercentX;
-        float sizePercentY;
-        float positionPercentX;
-        float positionPercentY;
-        float width ;
-        float height;
-        cocos2d::Vec2 position;
-        bool isAdaptScreen;
-        cocos2d::Vec2 originalAnchorPoint;
+        float _sizePercentX;
+        float _sizePercentY;
+        float _positionPercentX;
+        float _positionPercentY;
+        float _width ;
+        float _height;
+        cocos2d::Color3B _color;
+        int _opacity;
+        cocos2d::Vec2 _position;
+        bool _isAdaptScreen;
+        cocos2d::Vec2 _originalAnchorPoint;
 
     };
 }

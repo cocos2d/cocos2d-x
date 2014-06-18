@@ -42,7 +42,7 @@ namespace cocostudio
         for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
             std::string key = stChildArray[i].GetName(pCocoLoader);
             std::string value = stChildArray[i].GetValue();
-            CCLOG("key = %s, index : %d", key.c_str(), i);
+//            CCLOG("key = %s, index : %d", key.c_str(), i);
             if (key == "ignoreSize") {
                 widget->ignoreContentAdaptWithSize(valueToBool(value));
             }else if(key == "sizeType"){
@@ -50,21 +50,21 @@ namespace cocostudio
             }else if(key == "positionType"){
                 widget->setPositionType((Widget::PositionType)valueToInt(value));
             }else if(key == "sizePercentX"){
-                sizePercentX = valueToFloat(value);
+                _sizePercentX = valueToFloat(value);
             }else if(key == "sizePercentY"){
-                sizePercentY = valueToFloat(value);
+                _sizePercentY = valueToFloat(value);
             }else if(key == "positionPercentX"){
-                positionPercentX = valueToFloat(value);
+                _positionPercentX = valueToFloat(value);
             }else if(key == "positionPercentY"){
-                positionPercentY = valueToFloat(value);
+                _positionPercentY = valueToFloat(value);
             }
             else if(key == "adaptScreen"){
-                isAdaptScreen = valueToBool(value);
+                _isAdaptScreen = valueToBool(value);
             }
             else if (key == "width"){
-                width = valueToFloat(value);
+                _width = valueToFloat(value);
             }else if(key == "height"){
-                height = valueToFloat(value);
+                _height = valueToFloat(value);
             }else if(key == "tag"){
                 widget->setTag(valueToInt(value));
             }else if(key == "actiontag"){
@@ -75,9 +75,9 @@ namespace cocostudio
                 std::string widgetName = value.empty() ? "default" : value;
                 widget->setName(widgetName);
             }else if(key == "x"){
-                position.x = valueToFloat(value);
+                _position.x = valueToFloat(value);
             }else if(key == "y"){
-                position.y = valueToFloat(value);
+                _position.y = valueToFloat(value);
             }else if(key == "scaleX"){
                 widget->setScaleX(valueToFloat(value));
             }else if(key == "scaleY"){
@@ -136,25 +136,22 @@ namespace cocostudio
             }
             
             else if (key == "opacity") {
-                widget->setOpacity(valueToInt(value));
+                _opacity = valueToInt(value);
             }else if(key == "colorR"){
-                Color3B color = widget->getColor();
-                widget->setColor(Color3B(valueToInt(value), color.g, color.b));
+                _color.r = valueToInt(value);
             }else if(key == "colorG"){
-                Color3B color = widget->getColor();
-                widget->setColor(Color3B( color.r, valueToInt(value), color.b));
+                _color.g = valueToInt(value);
             }else if(key == "colorB")
             {
-                Color3B color = widget->getColor();
-                widget->setColor(Color3B( color.r,  color.g , valueToInt(value)));
+                _color.b = valueToInt(value);
             }else if(key == "flipX"){
                 widget->setFlippedX(valueToBool(value));
             }else if(key == "flipY"){
                 widget->setFlippedY(valueToBool(value));
             }else if(key == "anchorPointX"){
-                originalAnchorPoint.x = valueToFloat(value);
+                _originalAnchorPoint.x = valueToFloat(value);
             }else if(key == "anchorPointY"){
-                originalAnchorPoint.y = valueToFloat(value);
+                _originalAnchorPoint.y = valueToFloat(value);
             }
             else if (key == "backGroundBoxData"){
                 
