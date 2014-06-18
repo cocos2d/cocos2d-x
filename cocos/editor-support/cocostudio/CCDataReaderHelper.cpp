@@ -192,6 +192,10 @@ void DataReaderHelper::loadData()
         {
             DataReaderHelper::addDataFromJsonCache(pAsyncStruct->fileContent.c_str(), pDataInfo);
         }
+        else if(pAsyncStruct->configType == CocoStudio_Binary)
+        {
+            DataReaderHelper::addDataFromBinaryCache(pAsyncStruct->fileContent.c_str(),pDataInfo);
+        }
 
         // put the image info into the queue
         _dataInfoMutex.lock();
@@ -294,8 +298,17 @@ void DataReaderHelper::addDataFromFile(const std::string& filePath)
 
     // Read content from file
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
-    std::string contentStr = FileUtils::getInstance()->getStringFromFile(fullPath);
-
+    bool isbinarysrc = str==".csb";
+    std::string filemode("r");
+    if(isbinarysrc)
+        filemode += "b";
+    ssize_t filesize;
+    
+    _dataReaderHelper->_getFileMutex.lock();
+    unsigned char *pBytes = FileUtils::getInstance()->getFileData(filePath, filemode.c_str(), &filesize);
+    std::string contentStr((const char*)pBytes,filesize);
+    _dataReaderHelper->_getFileMutex.unlock();
+    
     DataInfo dataInfo;
     dataInfo.filename = filePathStr;
     dataInfo.asyncStruct = nullptr;
@@ -308,6 +321,12 @@ void DataReaderHelper::addDataFromFile(const std::string& filePath)
     {
         DataReaderHelper::addDataFromJsonCache(contentStr, &dataInfo);
     }
+    else if(str == ".csb")
+    {
+        DataReaderHelper::addDataFromBinaryCache(contentStr.c_str(),&dataInfo);
+    }
+
+	CC_SAFE_DELETE_ARRAY(pBytes);
 }
 
 void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const std::string& plistPath, const std::string& filePath, Ref *target, SEL_SCHEDULE selector)
@@ -391,9 +410,23 @@ void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const 
 
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
 
+    bool isbinaryfilesrc = str==".csb";
+    std::string filereadmode("r");
+    if (isbinaryfilesrc) {
+        filereadmode += "b";
+    }
+    ssize_t size;
     // XXX fileContent is being leaked
-    data->fileContent = FileUtils::getInstance()->getStringFromFile(fullPath);
-
+    
+    _dataReaderHelper->_getFileMutex.lock();
+    unsigned char *pBytes = FileUtils::getInstance()->getFileData(fullPath.c_str() , filereadmode.c_str(), &size);
+    _dataReaderHelper->_getFileMutex.unlock();
+    
+	Data bytecpy;
+    bytecpy.copy(pBytes, size);
+    data->fileContent = std::string((const char*)bytecpy.getBytes(), size);
+    CC_SAFE_DELETE_ARRAY(pBytes);
+    
     if (str == ".xml")
     {
         data->configType = DragonBone_XML;
@@ -401,6 +434,10 @@ void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const 
     else if(str == ".json" || str == ".ExportJson")
     {
         data->configType = CocoStudio_JSON;
+    }
+    else if(str == ".csb")
+    {
+        data->configType = CocoStudio_Binary;
     }
 
 
@@ -1736,7 +1773,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                         pDataArray = tpChildArray[i].GetChildArray();
                         length = tpChildArray[i].GetChildNum();
                         AnimationData *animationData;
-                        for (int ii = 0; ii < length; ++i)
+                        for (int ii = 0; ii < length; ++ii)
                         {
                             animationData = decodeAnimation(&tCocoLoader, &pDataArray[ii], dataInfo);
                             if (dataInfo->asyncStruct)

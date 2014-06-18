@@ -75,6 +75,9 @@ Layer *CreateLayer(int index)
     case TEST_CHANGE_ANIMATION_INTERNAL:
         pLayer = new TestChangeAnimationInternal();
         break;
+    case TEST_DIRECT_FROM_BINARY:
+        pLayer = new TestLoadFromBinary();
+        break;
     default:
         break;
     }
@@ -1503,8 +1506,10 @@ const  char* TestLoadFromBinary::m_armatureNames[BINARYFILECOUNT] ={"bear","hors
 void TestLoadFromBinary::onEnter()
 {
 	ArmatureTestLayer::onEnter();
-	//setTouchEnabled(true);
-    
+	
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(TestLoadFromBinary::onTouchesEnded, this);    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+
 	m_armatureIndex = -1; // none
     
 	// remove json created
@@ -1530,7 +1535,7 @@ std::string TestLoadFromBinary::title() const
 }
 std::string TestLoadFromBinary::subtitle() const
 {
-	return "direct load. \nTouch to change to Asynchronous load.";
+	return "direct load.Touch to change to Asynchronous load.";
 }
 
 void TestLoadFromBinary::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)

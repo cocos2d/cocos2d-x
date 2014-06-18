@@ -59,7 +59,8 @@ protected:
 	enum ConfigType
 	{
 		DragonBone_XML,
-		CocoStudio_JSON
+		CocoStudio_JSON,
+        CocoStudio_Binary
 	};
 
 	typedef struct _AsyncStruct

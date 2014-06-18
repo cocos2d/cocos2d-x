@@ -405,6 +405,7 @@ public:
     
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
     
+    
 	void dataLoaded(float percent);
     
 private:
