@@ -26,6 +26,7 @@
 #define __CCINTEGER_H__
 
 #include "base/CCRef.h"
+#include "base/CCConsole.h"
 #include "base/CCDataVisitor.h"
 #include "platform/CCCommon.h"
 
