@@ -30,9 +30,9 @@ THE SOFTWARE.
 
 NS_TIMELINE_BEGIN
 
-typedef void (cocos2d::CCObject::*SEL_FrameEventCallFunc)(Frame *);
+typedef void (cocos2d::CCObject::*SEL_TimelineFrameEventCallFunc)(Frame *);
 
-#define frameEvent_selector(_SELECTOR) (SEL_FrameEventCallFunc)(&_SELECTOR)
+#define timelineFrameEvent_selector(_SELECTOR) (SEL_TimelineFrameEventCallFunc)(&_SELECTOR)
 
 class CC_EX_DLL ActionTimeline : public cocos2d::CCAction
 {
@@ -85,10 +85,12 @@ public:
     virtual void setDuration(int duration) { _duration = duration; }
     virtual int  getDuration() const { return _duration; }
 
+    /** Start frame index of this action*/
+    virtual int getStartFrame() const { return _startFrame; }
+
     /** End frame of this action.
      * When action play to this frame, if action is not loop, then it will stop, 
      * or it will play from start frame again. */
-    virtual void setEndFrame(int endFrame) { _endFrame = endFrame; }
     virtual int  getEndFrame() const { return _endFrame; }
 
     /** Get current frame. */
@@ -101,7 +103,7 @@ public:
     /**
      * Set action's frame event callback function
      */
-    void setFrameEventCallFunc  (CCObject *target, SEL_FrameEventCallFunc callFunc);
+    void setFrameEventCallFunc  (CCObject *target, SEL_TimelineFrameEventCallFunc callFunc);
     void clearFrameEventCallFunc();
 
     /** Inherit from cocos2d::Action. */
@@ -137,11 +139,12 @@ protected:
     float   _frameInternal;
     bool    _playing;
     int     _currentFrame;
+    int     _startFrame;
     int     _endFrame;
     bool    _loop;
 
 
-    SEL_FrameEventCallFunc _frameEventCallFunc;
+    SEL_TimelineFrameEventCallFunc _frameEventCallFunc;
     cocos2d::CCObject*     _frameEventTarget;
 };
 

@@ -1,5 +1,5 @@
 {
-  "version": "1.3.0.1",
+  "version": "1.0.0.0",
   "designWidth": 1000,
   "designHeight": 1024,
   "dataScale": 1.0,
@@ -17,7 +17,8 @@
       "visible": true,
       "width": 0.0,
       "height": 0.0,
-      "name": "Scene",
+      "frameEvent": null,
+      "name": "Node",
       "classname": "Node"
     },
     "children": [
@@ -50,6 +51,7 @@
           "tag": 5,
           "anchorPointX": 0.34,
           "anchorPointY": 0.07,
+          "frameEvent": "",
           "name": "Sprite_4",
           "classname": "Sprite"
         },
@@ -63,11 +65,11 @@
                 "path": "testAnimationResource/8.png",
                 "plistFile": ""
               },
-              "x": 73.0,
-              "y": 148.0,
+              "x": 72.0,
+              "y": 143.0,
               "scaleX": 1.0,
               "scaleY": 1.0,
-              "rotation": -5.71439838,
+              "rotation": 0.0,
               "flipX": false,
               "flipY": false,
               "colorR": 255,
@@ -83,6 +85,7 @@
               "tag": 3,
               "anchorPointX": 0.77,
               "anchorPointY": 0.8,
+              "frameEvent": "",
               "name": "Sprite_2",
               "classname": "Sprite"
             },
@@ -96,11 +99,11 @@
                     "path": "testAnimationResource/3.png",
                     "plistFile": ""
                   },
-                  "x": 31.0,
-                  "y": 26.0,
+                  "x": 38.0,
+                  "y": 20.0,
                   "scaleX": 1.0,
                   "scaleY": 1.0,
-                  "rotation": -4.085081,
+                  "rotation": 0.0,
                   "flipX": false,
                   "flipY": false,
                   "colorR": 255,
@@ -116,6 +119,7 @@
                   "tag": 8,
                   "anchorPointX": 0.5,
                   "anchorPointY": 0.11,
+                  "frameEvent": "",
                   "name": "Sprite_7",
                   "classname": "Sprite"
                 },
@@ -136,8 +140,8 @@
                 "path": "testAnimationResource/5.png",
                 "plistFile": ""
               },
-              "x": 142.0,
-              "y": 56.0,
+              "x": 144.0,
+              "y": 50.0,
               "scaleX": 1.0,
               "scaleY": 1.0,
               "rotation": 0.0,
@@ -148,7 +152,7 @@
               "colorB": 255,
               "opacity": 255,
               "visible": true,
-              "ZOrder": -2,
+              "ZOrder": -1,
               "classType": "Sprite",
               "width": 0.0,
               "height": 0.0,
@@ -156,6 +160,7 @@
               "tag": 6,
               "anchorPointX": 0.7,
               "anchorPointY": 0.79,
+              "frameEvent": "",
               "name": "Sprite_5",
               "classname": "Sprite"
             },
@@ -169,11 +174,11 @@
                     "path": "testAnimationResource/4.png",
                     "plistFile": ""
                   },
-                  "x": 58.0,
-                  "y": 4.0,
+                  "x": 60.0,
+                  "y": -5.0,
                   "scaleX": 1.0,
                   "scaleY": 1.0,
-                  "rotation": -1.14092076,
+                  "rotation": 0.0,
                   "flipX": false,
                   "flipY": false,
                   "colorR": 255,
@@ -189,6 +194,7 @@
                   "tag": 7,
                   "anchorPointX": 0.67,
                   "anchorPointY": 0.72,
+                  "frameEvent": "",
                   "name": "Sprite_6",
                   "classname": "Sprite"
                 },
@@ -209,8 +215,8 @@
                 "path": "testAnimationResource/2.png",
                 "plistFile": ""
               },
-              "x": 194.0,
-              "y": 50.0,
+              "x": 196.0,
+              "y": 44.0,
               "scaleX": 1.0,
               "scaleY": 1.0,
               "rotation": 0.0,
@@ -229,6 +235,7 @@
               "tag": 9,
               "anchorPointX": 0.42,
               "anchorPointY": 0.75,
+              "frameEvent": "",
               "name": "Sprite_8",
               "classname": "Sprite"
             },
@@ -242,11 +249,11 @@
                     "path": "testAnimationResource/7.png",
                     "plistFile": ""
                   },
-                  "x": 165.0,
-                  "y": 12.0,
+                  "x": 164.0,
+                  "y": 9.0,
                   "scaleX": 1.0,
                   "scaleY": 1.0,
-                  "rotation": 2.00441027,
+                  "rotation": 0.0,
                   "flipX": false,
                   "flipY": false,
                   "colorR": 255,
@@ -262,6 +269,7 @@
                   "tag": 4,
                   "anchorPointX": 0.5,
                   "anchorPointY": 0.77,
+                  "frameEvent": "",
                   "name": "Sprite_3",
                   "classname": "Sprite"
                 },
@@ -282,11 +290,11 @@
                 "path": "testAnimationResource/hat.png",
                 "plistFile": ""
               },
-              "x": 141.0,
-              "y": 297.0,
+              "x": 137.0,
+              "y": 301.0,
               "scaleX": 1.0,
               "scaleY": 1.0,
-              "rotation": 4.71490049,
+              "rotation": 0.0,
               "flipX": false,
               "flipY": false,
               "colorR": 255,
@@ -302,6 +310,7 @@
               "tag": 10,
               "anchorPointX": 0.77,
               "anchorPointY": 0.25,
+              "frameEvent": "",
               "name": "Sprite_9",
               "classname": "Sprite"
             },
@@ -318,8 +327,8 @@
                 "path": "testAnimationResource/1.png",
                 "plistFile": ""
               },
-              "x": 280.0,
-              "y": 148.0,
+              "x": 282.0,
+              "y": 152.0,
               "scaleX": 1.0,
               "scaleY": 1.0,
               "rotation": 0.0,
@@ -338,6 +347,7 @@
               "tag": 2,
               "anchorPointX": 0.22,
               "anchorPointY": 0.86,
+              "frameEvent": "",
               "name": "Sprite_1",
               "classname": "Sprite"
             },
@@ -346,6 +356,80 @@
             "classname": "Sprite"
           }
         ],
+        "name": null,
+        "classname": "Sprite"
+      },
+      {
+        "options": {
+          "$type": "EditorCommon.JsonModel.Component.GUI.SpriteSurrogate, EditorCommon",
+          "fileName": "testAnimationResource/4.png",
+          "fileNameData": {
+            "resourceType": 1,
+            "path": "testAnimationResource/4.png",
+            "plistFile": ""
+          },
+          "x": 488.0,
+          "y": 66.0,
+          "scaleX": 1.0,
+          "scaleY": 1.0,
+          "rotation": 0.0,
+          "flipX": false,
+          "flipY": false,
+          "colorR": 52,
+          "colorG": 237,
+          "colorB": 58,
+          "opacity": 255,
+          "visible": false,
+          "ZOrder": 0,
+          "classType": "Sprite",
+          "width": 0.0,
+          "height": 0.0,
+          "actionTag": 822262162,
+          "tag": 15,
+          "anchorPointX": 0.5,
+          "anchorPointY": 0.5,
+          "frameEvent": "",
+          "name": "Sprite_11",
+          "classname": "Sprite"
+        },
+        "children": [],
+        "name": null,
+        "classname": "Sprite"
+      },
+      {
+        "options": {
+          "$type": "EditorCommon.JsonModel.Component.GUI.SpriteSurrogate, EditorCommon",
+          "fileName": "testAnimationResource/7.png",
+          "fileNameData": {
+            "resourceType": 1,
+            "path": "testAnimationResource/7.png",
+            "plistFile": ""
+          },
+          "x": 722.0,
+          "y": 65.0,
+          "scaleX": 1.0,
+          "scaleY": 1.0,
+          "rotation": 0.0,
+          "flipX": false,
+          "flipY": false,
+          "colorR": 2,
+          "colorG": 49,
+          "colorB": 165,
+          "opacity": 255,
+          "visible": false,
+          "ZOrder": 0,
+          "classType": "Sprite",
+          "width": 0.0,
+          "height": 0.0,
+          "actionTag": 32747275,
+          "tag": 16,
+          "anchorPointX": 0.5,
+          "anchorPointY": 0.5,
+          "frameEvent": "",
+          "name": "Sprite_12",
+          "classname": "Sprite"
+        },
+        "children": [],
         "name": null,
         "classname": "Sprite"
       }
@@ -366,6 +450,13 @@
             "x": 601.0,
             "y": 260.0,
             "frameIndex": 0,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": 601.0,
+            "y": 243.0,
+            "frameIndex": 30,
             "tween": true
           },
           {
@@ -452,6 +543,13 @@
           },
           {
             "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
+            "x": -0.9363089,
+            "y": -0.9363089,
+            "frameIndex": 30,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLinePointFrameSurrogate, EditorCommon",
             "x": 0.0,
             "y": 0.0,
             "frameIndex": 60,
@@ -504,6 +602,30 @@
             "x": 0.272187382,
             "y": 0.272187382,
             "frameIndex": 130,
+            "tween": true
+          }
+        ]
+      },
+      {
+        "frameType": "EventFrame",
+        "actionTag": 440279615,
+        "frames": [
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLineStringFrameSurrogate, EditorCommon",
+            "value": "",
+            "frameIndex": 0,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLineStringFrameSurrogate, EditorCommon",
+            "value": "changeColor",
+            "frameIndex": 30,
+            "tween": true
+          },
+          {
+            "$type": "EditorCommon.JsonModel.Animation.TimeLineStringFrameSurrogate, EditorCommon",
+            "value": "endChangeColor",
+            "frameIndex": 60,
             "tween": true
           }
         ]
@@ -709,42 +831,6 @@
             "$type": "EditorCommon.JsonModel.Animation.TimeLineIntFrameSurrogate, EditorCommon",
             "value": -2,
             "frameIndex": 0,
-            "tween": true
-          },
-          {
-            "$type": "EditorCommon.JsonModel.Animation.TimeLineIntFrameSurrogate, EditorCommon",
-            "value": -2,
-            "frameIndex": 60,
-            "tween": true
-          },
-          {
-            "$type": "EditorCommon.JsonModel.Animation.TimeLineIntFrameSurrogate, EditorCommon",
-            "value": -2,
-            "frameIndex": 70,
-            "tween": true
-          },
-          {
-            "$type": "EditorCommon.JsonModel.Animation.TimeLineIntFrameSurrogate, EditorCommon",
-            "value": -2,
-            "frameIndex": 80,
-            "tween": true
-          },
-          {
-            "$type": "EditorCommon.JsonModel.Animation.TimeLineIntFrameSurrogate, EditorCommon",
-            "value": -2,
-            "frameIndex": 90,
-            "tween": true
-          },
-          {
-            "$type": "EditorCommon.JsonModel.Animation.TimeLineIntFrameSurrogate, EditorCommon",
-            "value": -2,
-            "frameIndex": 100,
-            "tween": true
-          },
-          {
-            "$type": "EditorCommon.JsonModel.Animation.TimeLineIntFrameSurrogate, EditorCommon",
-            "value": -2,
-            "frameIndex": 130,
             "tween": true
           }
         ]
@@ -1134,7 +1220,7 @@
         "frames": [
           {
             "$type": "EditorCommon.JsonModel.Animation.TimeLineIntFrameSurrogate, EditorCommon",
-            "value": -2,
+            "value": -1,
             "frameIndex": 0,
             "tween": true
           }
