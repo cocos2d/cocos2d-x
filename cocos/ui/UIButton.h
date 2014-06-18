@@ -43,6 +43,7 @@ class Button : public Widget
     DECLARE_CLASS_GUI_INFO
     
 public:
+
     /**
      * Default constructor
      */
@@ -248,6 +249,17 @@ protected:
     bool _normalTextureAdaptDirty;
     bool _pressedTextureAdaptDirty;
     bool _disabledTextureAdaptDirty;
+
+private:
+    enum class FontType
+    {
+        SYSTEM,
+        TTF
+    };
+
+    std::string _fontName;
+    int _fontSize;
+    FontType _type;
 };
 
 }
