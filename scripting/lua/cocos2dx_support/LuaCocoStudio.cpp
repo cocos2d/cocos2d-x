@@ -1,6 +1,6 @@
 /*
 ** Lua binding: CocoStudio
-** Generated automatically by tolua++-1.0.92 on Tue Jun 17 15:07:40 2014.
+** Generated automatically by tolua++-1.0.92 on Wed Jun 18 16:00:33 2014.
 */
 
 /****************************************************************************
@@ -26719,34 +26719,33 @@ static int tolua_CocoStudio_ActionTimeline_getDuration00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: setEndFrame of class  ActionTimeline */
-#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimeline_setEndFrame00
-static int tolua_CocoStudio_ActionTimeline_setEndFrame00(lua_State* tolua_S)
+/* method: getStartFrame of class  ActionTimeline */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionTimeline_getStartFrame00
+static int tolua_CocoStudio_ActionTimeline_getStartFrame00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"ActionTimeline",0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
+     !tolua_isusertype(tolua_S,1,"const ActionTimeline",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
-  cocostudio::timeline::ActionTimeline* self = (cocostudio::timeline::ActionTimeline*)  tolua_tousertype(tolua_S,1,0);
-  int endFrame = ((int)  tolua_tonumber(tolua_S,2,0));
+  const cocostudio::timeline::ActionTimeline* self = (const cocostudio::timeline::ActionTimeline*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setEndFrame'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getStartFrame'", NULL);
 #endif
   {
-   self->setEndFrame(endFrame);
+   int tolua_ret = (int)  self->getStartFrame();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
   }
  }
- return 0;
+ return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'setEndFrame'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'getStartFrame'.",&tolua_err);
  return 0;
 #endif
 }
@@ -29596,7 +29595,7 @@ TOLUA_API int tolua_CocoStudio_open (lua_State* tolua_S)
    tolua_function(tolua_S,"getTimeSpeed",tolua_CocoStudio_ActionTimeline_getTimeSpeed00);
    tolua_function(tolua_S,"setDuration",tolua_CocoStudio_ActionTimeline_setDuration00);
    tolua_function(tolua_S,"getDuration",tolua_CocoStudio_ActionTimeline_getDuration00);
-   tolua_function(tolua_S,"setEndFrame",tolua_CocoStudio_ActionTimeline_setEndFrame00);
+   tolua_function(tolua_S,"getStartFrame",tolua_CocoStudio_ActionTimeline_getStartFrame00);
    tolua_function(tolua_S,"getEndFrame",tolua_CocoStudio_ActionTimeline_getEndFrame00);
    tolua_function(tolua_S,"getCurrentFrame",tolua_CocoStudio_ActionTimeline_getCurrentFrame00);
    tolua_function(tolua_S,"addTimeline",tolua_CocoStudio_ActionTimeline_addTimeline00);

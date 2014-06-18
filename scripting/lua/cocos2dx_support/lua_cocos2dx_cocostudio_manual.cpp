@@ -920,8 +920,8 @@ static int tolua_Cocos2dx_ActionTimeline_setFrameEventCallFunc00(lua_State* tolu
         
         dict->setObject(wrapper, "frameEvent");
         
-        using cocostudio::timeline::SEL_FrameEventCallFunc;
-        self->setFrameEventCallFunc(wrapper, frameEvent_selector(LuaActionTimelineWrapper::frameEventCallback));
+        using cocostudio::timeline::SEL_TimelineFrameEventCallFunc;
+        self->setFrameEventCallFunc(wrapper, timelineFrameEvent_selector(LuaActionTimelineWrapper::frameEventCallback));
     }
     return 0;
 #ifndef TOLUA_RELEASE

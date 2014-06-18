@@ -30,7 +30,7 @@ public:
     virtual void setDuration(int duration);
     virtual int  getDuration() const ;
 
-    virtual void setEndFrame(int endFrame);
+    virtual int getStartFrame() const; 
     virtual int  getEndFrame() const;
 
     virtual int  getCurrentFrame() const;
