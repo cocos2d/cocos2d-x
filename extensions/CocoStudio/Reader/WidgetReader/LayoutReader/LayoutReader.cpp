@@ -342,7 +342,7 @@ void LayoutReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *p
    
     panel->setBackGroundImageColor(ccc3(_color.r, _color.g, _color.b));
     
-    panel->setBackGroundImageOpacity(panel->getOpacity());
+    panel->setBackGroundImageOpacity(_opacity);
 
     
     if (panel->isBackGroundImageScale9Enabled()) {
