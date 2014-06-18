@@ -16,6 +16,12 @@ PLAYER_NS_BEGIN
 #define MAX_INT ((unsigned)(-1))>>1
 #define MIN_INT ~MAX_INT
 
+#define kPlayerSuperModifyKey "super"
+#define kPlayerShiftModifyKey "shift"
+#define kPlayerCtrlModifyKey  "ctrl"
+#define kPlayerAltModifyKey   "alt"
+
+
 class MenuItem
 {
 public:
