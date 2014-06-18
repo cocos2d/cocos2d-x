@@ -28,7 +28,7 @@
 #if CC_ENABLE_SCRIPT_BINDING
 
 #include "base/CCScheduler.h"
-#include "CCNode.h"
+#include "2d/CCNode.h"
 
 bool CC_DLL cc_assert_script_compatible(const char *msg)
 {
