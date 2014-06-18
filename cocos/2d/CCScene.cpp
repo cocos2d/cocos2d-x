@@ -98,9 +98,10 @@ std::string Scene::getDescription() const
     return StringUtils::format("<Scene | tag = %d>", _tag);
 }
 
-Scene* Scene::getScene()
+Scene* Scene::getScene() const
 {
-    return this;
+    // FIX ME: should use const_case<> to fix compiling error
+    return const_cast<Scene*>(this);
 }
 
 #if CC_USE_PHYSICS
