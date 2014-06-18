@@ -43,7 +43,7 @@ public:
     virtual Timeline* getTimeline() const { return _timeline; }
 
     virtual void setNode(cocos2d::Node* node) { _node = node; }
-    virtual cocos2d::Node* getTimelineNode() const { return _node; }
+    virtual cocos2d::Node* getNode() const { return _node; }
 
     virtual void setTween(bool tween) { _tween = tween; }
     virtual bool isTween() const { return _tween; }

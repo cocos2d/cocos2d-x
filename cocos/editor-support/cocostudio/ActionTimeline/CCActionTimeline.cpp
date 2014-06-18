@@ -161,6 +161,9 @@ void ActionTimeline::step(float delta)
     }
 
     _time += delta * _timeSpeed;
+    _currentFrame = (int)(_time / _frameInternal);
+
+    stepToFrame(_currentFrame);
 
     if(_time > _endFrame * _frameInternal)
     {
@@ -171,9 +174,6 @@ void ActionTimeline::step(float delta)
             _time = _startFrame * _frameInternal;
     }
 
-    _currentFrame = (int)(_time / _frameInternal);
-
-    stepToFrame(_currentFrame);
 }
 
 typedef std::function<void(Node*)> tCallBack;

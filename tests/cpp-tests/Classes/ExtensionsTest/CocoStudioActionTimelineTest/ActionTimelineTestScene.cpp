@@ -25,6 +25,9 @@ Layer *CreateAnimationLayer(int index)
     case TEST_CHANGE_PLAY_SECTION:
         pLayer = new TestChangePlaySection();
         break;
+    case TEST_TIMELINE_FRAME_EVENT:
+        pLayer = new TestTimelineFrameEvent();
+        break;
     case TEST_TIMELINE_PERFORMACE:
         pLayer = new TestTimelinePerformance();
         break;
@@ -248,6 +251,49 @@ void TestChangePlaySection::onTouchesEnded(const std::vector<Touch*>& touches, E
         action->gotoFrameAndPlay(70, action->getDuration(), true);
     else
         action->gotoFrameAndPlay(0, 60, true);
+}
+
+// TestFrameEvent
+void TestTimelineFrameEvent::onEnter()
+{
+    ActionTimelineTestLayer::onEnter();
+
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("armature/Cowboy0.plist", "armature/Cowboy0.png");
+
+    Node* node = NodeReader::getInstance()->createNode("ActionTimeline/boy_1.ExportJson");
+    ActionTimeline* action = ActionTimelineCache::getInstance()->createAction("ActionTimeline/boy_1.ExportJson");
+
+    node->runAction(action);
+    action->gotoFrameAndPlay(0, 60, true);
+
+    node->setScale(0.2f);
+    node->setPosition(150,100);
+    addChild(node);
+
+    action->setFrameEventCallFunc(CC_CALLBACK_1(TestTimelineFrameEvent::onFrameEvent, this));
+}
+
+std::string TestTimelineFrameEvent::title() const
+{
+    return "Test Frame Event";
+}
+
+void TestTimelineFrameEvent::onFrameEvent(Frame* frame)
+{
+    EventFrame* evnt = dynamic_cast<EventFrame*>(frame);
+    if(!evnt)
+        return;
+
+    std::string str = evnt->getEvent();
+
+    if (str == "changeColor")
+    {
+        evnt->getNode()->setColor(Color3B(0,0,0));
+    }
+    else if(str == "endChangeColor")
+    {
+        evnt->getNode()->setColor(Color3B(255,255,255));
+    }
 }
 
 
