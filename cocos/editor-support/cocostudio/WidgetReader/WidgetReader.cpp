@@ -14,6 +14,13 @@ namespace cocostudio
     IMPLEMENT_CLASS_WIDGET_READER_INFO(WidgetReader)
     
     WidgetReader::WidgetReader()
+    :sizePercentX(0.0f),
+    sizePercentY(0.0f),
+    isAdaptScreen(false),
+    width(0.0f),
+    height(0.0f),
+    positionPercentX(0.0f),
+    positionPercentY(0.0f)
     {
         valueToInt = [=](std::string str) -> int{
             return atoi(str.c_str());
@@ -34,6 +41,7 @@ namespace cocostudio
     }
     
     WidgetReader::~WidgetReader()
+   
     {
         
     }
