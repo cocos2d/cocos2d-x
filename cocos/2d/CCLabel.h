@@ -215,20 +215,23 @@ public:
     bool isClipMarginEnabled() const { return _clipEnabled; }
 
     /** Sets the line height of the label
-     * @warning Not support system font
+      @warning Not support system font
+      @since v3.2.0
      */
     void setLineHeight(float height);
     /** Returns the line height of this label
-     * @warning Not support system font
+      @warning Not support system font
      */
     float getLineHeight() const;
 
     /** Sets the additional kerning of the label
-     * @warning Not support system font
+      @warning Not support system font
+      @since v3.2.0
      */
     void setAdditionalKerning(float space);
     /** Returns the additional kerning of this label
-     * @warning Not support system font
+      @warning Not support system font
+      @since v3.2.0
      */
     float getAdditionalKerning() const;
 
