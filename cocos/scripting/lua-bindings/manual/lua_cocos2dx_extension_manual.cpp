@@ -27,13 +27,13 @@
 #include "LuaBasicConversions.h"
 #include "CCLuaValue.h"
 #include "cocos-ext.h"
-#include "CCBProxy.h"
-#include "cocostudio/CocoStudio.h"
+//#include "CCBProxy.h"
+//#include "cocostudio/CocoStudio.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
-using namespace cocostudio;
-
+//using namespace cocostudio;
+#if 0
 class LuaScrollViewDelegate:public Ref, public ScrollViewDelegate
 {
 public:
@@ -229,7 +229,7 @@ static void extendScrollView(lua_State* tolua_S)
     }
     lua_pop(tolua_S, 1);
 }
-
+#endif   //if 0
 
 static int tolua_cocos2d_Control_registerControlEventHandler(lua_State* tolua_S)
 {
@@ -460,7 +460,7 @@ static void extendEditBox(lua_State* tolua_S)
     }
     lua_pop(tolua_S, 1);
 }
-
+#if 0
 static int tolua_cocos2d_CCBProxy_create(lua_State* tolua_S)
 {
     if (NULL == tolua_S)
@@ -861,7 +861,9 @@ tolua_lerror:
     return 0;
 #endif
 }
+#endif //if 0
 
+#if 0
 static void extendCCBAnimationManager(lua_State* tolua_S)
 {
     lua_pushstring(tolua_S, "cc.CCBAnimationManager");
@@ -988,7 +990,8 @@ static void extendAssetsManager(lua_State* L)
     }
     lua_pop(L, 1);
 }
-
+#endif //if 0
+#if 0
 #define KEY_TABLEVIEW_DATA_SOURCE  "TableViewDataSource"
 #define KEY_TABLEVIEW_DELEGATE     "TableViewDelegate"
 
@@ -1455,15 +1458,15 @@ static void extendTableView(lua_State* L)
     }
     lua_pop(L, 1);
 }
-
+#endif //if 0
 int register_all_cocos2dx_extension_manual(lua_State* tolua_S)
 {
     extendControl(tolua_S);
     extendEditBox(tolua_S);
-    extendCCBReader(tolua_S);
-    extendCCBAnimationManager(tolua_S);
-    extendAssetsManager(tolua_S);
-    extendScrollView(tolua_S);
-    extendTableView(tolua_S);
+//    extendCCBReader(tolua_S);
+//    extendCCBAnimationManager(tolua_S);
+//    extendAssetsManager(tolua_S);
+//    extendScrollView(tolua_S);
+//    extendTableView(tolua_S);
     return 0;
 }

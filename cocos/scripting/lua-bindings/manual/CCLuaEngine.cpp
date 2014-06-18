@@ -27,11 +27,11 @@
 #include "tolua_fix.h"
 #include "cocos2d.h"
 #include "extensions/GUI/CCControlExtension/CCControl.h"
-#include "LuaOpengl.h"
+// #include "LuaOpengl.h"
 #include "lua_cocos2dx_manual.hpp"
 #include "lua_cocos2dx_extension_manual.h"
-#include "lua_cocos2dx_coco_studio_manual.hpp"
-#include "lua_cocos2dx_ui_manual.hpp"
+// #include "lua_cocos2dx_coco_studio_manual.hpp"
+// #include "lua_cocos2dx_ui_manual.hpp"
 
 NS_CC_BEGIN
 
@@ -57,9 +57,9 @@ bool LuaEngine::init(void)
 {
     _stack = LuaStack::create();
     _stack->retain();
-    executeScriptFile("DeprecatedEnum.lua");
-    executeScriptFile("DeprecatedClass.lua");
-    executeScriptFile("Deprecated.lua");
+//    executeScriptFile("DeprecatedEnum.lua");
+//    executeScriptFile("DeprecatedClass.lua");
+//    executeScriptFile("Deprecated.lua");
     return true;
 }
 
@@ -278,7 +278,14 @@ int LuaEngine::handleNodeEvent(void* data)
     int handler = ScriptHandlerMgr::getInstance()->getObjectHandler(basicScriptData->nativeObject, ScriptHandlerMgr::HandlerType::NODE);
     
     if (0 == handler)
-        return 0;
+    {
+        if (!_stack->pushFunctionByName("NodeEventDispatcher"))
+        {
+            return 0;
+        }
+        _stack->pushObject(static_cast<Ref*>(basicScriptData->nativeObject), "CCNode");
+        _stack->pushInt(kNodeEvent);
+    }
     
     int action = *((int*)(basicScriptData->value));
     switch (action)
@@ -306,7 +313,17 @@ int LuaEngine::handleNodeEvent(void* data)
         default:
             return 0;
     }
-    int ret = _stack->executeFunctionByHandler(handler, 1);
+    
+    int ret;
+    if ((0 == handler))
+    {
+        ret = _stack->executeFunction(3);
+        return ret;
+    }
+    else
+    {
+        ret = _stack->executeFunctionByHandler(handler, 1);
+    }
     _stack->clean();
     return ret;
 }
@@ -363,9 +380,25 @@ int LuaEngine::handleScheduler(void* data)
         return 0;
     
     SchedulerScriptData* schedulerInfo = static_cast<SchedulerScriptData*>(data);
+    if (0==schedulerInfo->handler)
+    {
+        if (!_stack->pushFunctionByName("NodeEventDispatcher"))
+        {
+            return 0;
+        }
+        _stack->pushObject(static_cast<Ref*>(schedulerInfo->node), "CCNode");
+        _stack->pushInt(kScheduleEvent);
+    }
     
     _stack->pushFloat(schedulerInfo->elapse);
-    int ret = _stack->executeFunctionByHandler(schedulerInfo->handler, 1);
+    int ret;
+    if (schedulerInfo->handler)
+    {
+        ret = _stack->executeFunctionByHandler(schedulerInfo->handler, 1);
+    }
+    else{
+        ret = _stack->executeFunction(3);
+    }
     _stack->clean();
     
     return ret;
@@ -997,81 +1030,83 @@ int LuaEngine::handleAssetsManagerEvent(ScriptHandlerMgr::HandlerType type,void*
 
 int LuaEngine::handleStudioEventListener(ScriptHandlerMgr::HandlerType type,void* data)
 {
-    if (nullptr == data)
-        return 0;
-    
-    BasicScriptData* eventData = static_cast<BasicScriptData*>(data);
-    if (nullptr == eventData->nativeObject || nullptr == eventData->value)
-        return 0;
-    
-    LuaStudioEventListenerData* listenerData = static_cast<LuaStudioEventListenerData*>(eventData->value);
-    
-    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)eventData->nativeObject, ScriptHandlerMgr::HandlerType::STUDIO_EVENT_LISTENER);
-    
-    if (0 == handler)
-        return 0;
-    
-    _stack->pushObject(listenerData->objTarget, "cc.Ref");
-    _stack->pushInt(listenerData->eventType);
-    
-    _stack->executeFunctionByHandler(handler, 2);
-    _stack->clean();
-    
     return 0;
+//    if (nullptr == data)
+//        return 0;
+//    
+//    BasicScriptData* eventData = static_cast<BasicScriptData*>(data);
+//    if (nullptr == eventData->nativeObject || nullptr == eventData->value)
+//        return 0;
+//    
+//    LuaStudioEventListenerData* listenerData = static_cast<LuaStudioEventListenerData*>(eventData->value);
+//    
+//    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)eventData->nativeObject, ScriptHandlerMgr::HandlerType::STUDIO_EVENT_LISTENER);
+//    
+//    if (0 == handler)
+//        return 0;
+//    
+//    _stack->pushObject(listenerData->objTarget, "cc.Ref");
+//    _stack->pushInt(listenerData->eventType);
+//    
+//    _stack->executeFunctionByHandler(handler, 2);
+//    _stack->clean();
+//    
+//    return 0;
 }
 
 int LuaEngine::handleArmatureWrapper(ScriptHandlerMgr::HandlerType type,void* data)
 {
-    if (nullptr == data)
-        return 0;
-    
-    BasicScriptData* eventData = static_cast<BasicScriptData*>(data);
-    if (nullptr == eventData->nativeObject || nullptr == eventData->value)
-        return 0;
-    
-    LuaArmatureWrapperEventData* wrapperData = static_cast<LuaArmatureWrapperEventData*>(eventData->value);
-    
-    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)eventData->nativeObject, ScriptHandlerMgr::HandlerType::ARMATURE_EVENT);
-    
-    if (0 == handler)
-        return 0;
-    
-    switch (wrapperData->eventType)
-    {
-        case LuaArmatureWrapperEventData::LuaArmatureWrapperEventType::MOVEMENT_EVENT:
-            {
-                LuaArmatureMovementEventData* movementData = static_cast<LuaArmatureMovementEventData*>(wrapperData->eventData);
-            
-                _stack->pushObject(movementData->objTarget, "ccs.Armature");
-                _stack->pushInt(movementData->movementType);
-                _stack->pushString(movementData->movementID.c_str());
-                _stack->executeFunctionByHandler(handler, 3);
-            }
-            break;
-        case LuaArmatureWrapperEventData::LuaArmatureWrapperEventType::FRAME_EVENT:
-            {
-                LuaArmatureFrameEventData* frameData = static_cast<LuaArmatureFrameEventData*>(wrapperData->eventData);
-            
-                _stack->pushObject(frameData->objTarget, "ccs.Bone");
-                _stack->pushString(frameData->frameEventName.c_str());
-                _stack->pushInt(frameData->originFrameIndex);
-                _stack->pushInt(frameData->currentFrameIndex);
-                _stack->executeFunctionByHandler(handler, 4);
-            }
-            break;
-        case LuaArmatureWrapperEventData::LuaArmatureWrapperEventType::FILE_ASYNC:
-            {
-                _stack->pushFloat(*(float*)wrapperData->eventData);
-                _stack->executeFunctionByHandler(handler, 1);
-            }
-            break;
-        default:
-            break;
-    }
-    
-    _stack->clean();
-    
-    return 0;
+	return 0;
+//    if (nullptr == data)
+//        return 0;
+//    
+//    BasicScriptData* eventData = static_cast<BasicScriptData*>(data);
+//    if (nullptr == eventData->nativeObject || nullptr == eventData->value)
+//        return 0;
+//    
+//    LuaArmatureWrapperEventData* wrapperData = static_cast<LuaArmatureWrapperEventData*>(eventData->value);
+//    
+//    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)eventData->nativeObject, ScriptHandlerMgr::HandlerType::ARMATURE_EVENT);
+//    
+//    if (0 == handler)
+//        return 0;
+//    
+//    switch (wrapperData->eventType)
+//    {
+//        case LuaArmatureWrapperEventData::LuaArmatureWrapperEventType::MOVEMENT_EVENT:
+//            {
+//                LuaArmatureMovementEventData* movementData = static_cast<LuaArmatureMovementEventData*>(wrapperData->eventData);
+//            
+//                _stack->pushObject(movementData->objTarget, "ccs.Armature");
+//                _stack->pushInt(movementData->movementType);
+//                _stack->pushString(movementData->movementID.c_str());
+//                _stack->executeFunctionByHandler(handler, 3);
+//            }
+//            break;
+//        case LuaArmatureWrapperEventData::LuaArmatureWrapperEventType::FRAME_EVENT:
+//            {
+//                LuaArmatureFrameEventData* frameData = static_cast<LuaArmatureFrameEventData*>(wrapperData->eventData);
+//            
+//                _stack->pushObject(frameData->objTarget, "ccs.Bone");
+//                _stack->pushString(frameData->frameEventName.c_str());
+//                _stack->pushInt(frameData->originFrameIndex);
+//                _stack->pushInt(frameData->currentFrameIndex);
+//                _stack->executeFunctionByHandler(handler, 4);
+//            }
+//            break;
+//        case LuaArmatureWrapperEventData::LuaArmatureWrapperEventType::FILE_ASYNC:
+//            {
+//                _stack->pushFloat(*(float*)wrapperData->eventData);
+//                _stack->executeFunctionByHandler(handler, 1);
+//            }
+//            break;
+//        default:
+//            break;
+//    }
+//    
+//    _stack->clean();
+//    
+//    return 0;
 }
 
 int LuaEngine::reload(const char* moduleFileName)

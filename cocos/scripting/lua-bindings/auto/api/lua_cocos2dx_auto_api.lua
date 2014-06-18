@@ -1017,6 +1017,11 @@
 
 
 --------------------------------------------------------
+-- the cc ClippingRegionNode
+-- @field [parent=#cc] ClippingRegionNode#ClippingRegionNode ClippingRegionNode preloaded module
+
+
+--------------------------------------------------------
 -- the cc MotionStreak
 -- @field [parent=#cc] MotionStreak#MotionStreak MotionStreak preloaded module
 
@@ -1224,11 +1229,6 @@
 --------------------------------------------------------
 -- the cc SimpleAudioEngine
 -- @field [parent=#cc] SimpleAudioEngine#SimpleAudioEngine SimpleAudioEngine preloaded module
-
-
---------------------------------------------------------
--- the cc ProtectedNode
--- @field [parent=#cc] ProtectedNode#ProtectedNode ProtectedNode preloaded module
 
 
 return nil

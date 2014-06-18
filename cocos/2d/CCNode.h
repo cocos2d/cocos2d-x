@@ -972,6 +972,13 @@ public:
     /** @deprecated Use getBoundingBox instead */
     CC_DEPRECATED_ATTRIBUTE inline virtual Rect boundingBox() const { return getBoundingBox(); }
 
+    /**
+     * This boundingBox will calculate all children's boundingBox every time
+     */
+    virtual Rect getCascadeBoundingBox(void);
+    virtual void setCascadeBoundingBox(const Rect &boundingBox);
+    virtual void resetCascadeBoundingBox(void);
+    
     virtual void setEventDispatcher(EventDispatcher* dispatcher);
     virtual EventDispatcher* getEventDispatcher() const { return _eventDispatcher; };
 
@@ -1422,6 +1429,8 @@ protected:
 
     Size _contentSize;              ///< untransformed size of the node
     bool _contentSizeDirty;         ///< whether or not the contentSize is dirty
+    
+    Rect m_cascadeBoundingBox;
 
     Mat4 _modelViewTransform;    ///< ModelView transform of the Node.
 

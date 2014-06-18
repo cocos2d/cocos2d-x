@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{397541b3-906f-4a20-aa7d-22167e4c6cf6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win32">
+      <UniqueIdentifier>{da61f590-1a02-49fe-bc34-d653599aa655}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\PlayerProtocol.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="player_win32.h">
+      <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerWin32.h">
+      <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\PlayerServiceProtocol.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\PlayerMacros.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerServiceProtocolWin32.h">
+      <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerFileDialogServiceWin32.h">
+      <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\PlayerFileDialogServiceProtocol.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\PlayerProtocol.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="player_win32.cpp">
+      <Filter>win32</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>win32</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerWin32.cpp">
+      <Filter>win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\PlayerServiceProtocol.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerServiceProtocolWin32.cpp">
+      <Filter>win32</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerFileDialogServiceWin32.cpp">
+      <Filter>win32</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="player_win32.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="player_win32.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+</Project>

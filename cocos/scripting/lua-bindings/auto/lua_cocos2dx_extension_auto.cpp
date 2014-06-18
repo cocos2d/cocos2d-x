@@ -1,6 +1,6 @@
 #include "lua_cocos2dx_extension_auto.hpp"
 #include "cocos-ext.h"
-#include "CocosBuilder.h"
+//#include "CocosBuilder.h"
 #include "tolua_fix.h"
 #include "LuaBasicConversions.h"
 
@@ -4094,7 +4094,7 @@ int lua_register_cocos2dx_extension_ControlButton(lua_State* tolua_S)
     g_typeCast["ControlButton"] = "cc.ControlButton";
     return 1;
 }
-
+#if 0
 int lua_cocos2dx_extension_ControlHuePicker_setEnabled(lua_State* tolua_S)
 {
     int argc = 0;
@@ -16495,6 +16495,7 @@ int lua_register_cocos2dx_extension_CCBReader(lua_State* tolua_S)
     g_typeCast["CCBReader"] = "cc.CCBReader";
     return 1;
 }
+#endif //0
 TOLUA_API int register_all_cocos2dx_extension(lua_State* tolua_S)
 {
 	tolua_open(tolua_S);
@@ -16503,22 +16504,22 @@ TOLUA_API int register_all_cocos2dx_extension(lua_State* tolua_S)
 	tolua_beginmodule(tolua_S,"cc");
 
 	lua_register_cocos2dx_extension_Control(tolua_S);
-	lua_register_cocos2dx_extension_ControlHuePicker(tolua_S);
-	lua_register_cocos2dx_extension_TableViewCell(tolua_S);
+//	lua_register_cocos2dx_extension_ControlHuePicker(tolua_S);
+//	lua_register_cocos2dx_extension_TableViewCell(tolua_S);
 	lua_register_cocos2dx_extension_Scale9Sprite(tolua_S);
-	lua_register_cocos2dx_extension_AssetsManager(tolua_S);
-	lua_register_cocos2dx_extension_ControlColourPicker(tolua_S);
-	lua_register_cocos2dx_extension_CCBAnimationManager(tolua_S);
+//	lua_register_cocos2dx_extension_AssetsManager(tolua_S);
+//	lua_register_cocos2dx_extension_ControlColourPicker(tolua_S);
+//	lua_register_cocos2dx_extension_CCBAnimationManager(tolua_S);
 	lua_register_cocos2dx_extension_ControlButton(tolua_S);
-	lua_register_cocos2dx_extension_ControlSlider(tolua_S);
-	lua_register_cocos2dx_extension_ControlSaturationBrightnessPicker(tolua_S);
-	lua_register_cocos2dx_extension_ScrollView(tolua_S);
-	lua_register_cocos2dx_extension_ControlPotentiometer(tolua_S);
-	lua_register_cocos2dx_extension_ControlStepper(tolua_S);
-	lua_register_cocos2dx_extension_TableView(tolua_S);
-	lua_register_cocos2dx_extension_EditBox(tolua_S);
-	lua_register_cocos2dx_extension_CCBReader(tolua_S);
-	lua_register_cocos2dx_extension_ControlSwitch(tolua_S);
+//	lua_register_cocos2dx_extension_ControlSlider(tolua_S);
+//	lua_register_cocos2dx_extension_ControlSaturationBrightnessPicker(tolua_S);
+//	lua_register_cocos2dx_extension_ScrollView(tolua_S);
+//	lua_register_cocos2dx_extension_ControlPotentiometer(tolua_S);
+//	lua_register_cocos2dx_extension_ControlStepper(tolua_S);
+//	lua_register_cocos2dx_extension_TableView(tolua_S);
+//	lua_register_cocos2dx_extension_EditBox(tolua_S);
+//	lua_register_cocos2dx_extension_CCBReader(tolua_S);
+//	lua_register_cocos2dx_extension_ControlSwitch(tolua_S);
 
 	tolua_endmodule(tolua_S);
 	return 1;
