@@ -24,6 +24,9 @@ THE SOFTWARE.
 package org.cocos2dx.lib;
 
 import org.cocos2dx.lib.Cocos2dxHelper.Cocos2dxHelperListener;
+import org.cocos2dx.lib.GameControllerDelegate.ControllerEventListener;
+import org.cocos2dx.lib.inputmanagercompat.InputManagerCompat;
+import org.cocos2dx.lib.inputmanagercompat.InputManagerCompat.InputDeviceListener;
 
 import android.app.Activity;
 import android.content.Context;
@@ -33,12 +36,14 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
+import android.view.InputDevice;
+import android.view.KeyEvent;
 import android.view.ViewGroup;
 import android.util.Log;
 import android.widget.FrameLayout;
 import android.preference.PreferenceManager.OnActivityResultListener;
 
-public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelperListener {
+public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelperListener, InputDeviceListener {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -53,6 +58,9 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	private Cocos2dxHandler mHandler;
 	private static Cocos2dxActivity sContext = null;
 	private Cocos2dxVideoHelper mVideoHelper = null;
+	private InputManagerCompat mInputManager = null;
+	
+	protected GameControllerDelegate mCocos2dxController = null;
 	
 	public static Context getContext() {
 		return sContext;
@@ -76,6 +84,36 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		}
 	}
 	
+	public void setGameControllerInstance(GameControllerDelegate controllerDelegate) {
+		mCocos2dxController = controllerDelegate;
+		mCocos2dxController.setControllerEventListener(mControllerEventListener);
+	}
+	
+	ControllerEventListener mControllerEventListener = new ControllerEventListener() {
+		
+		@Override
+		public void onButtonEvent(String vendorName, int controller, int button,
+				boolean isPressed, float value, boolean isAnalog) {
+			GameControllerAdapter.onButtonEvent(vendorName, controller, button, isPressed, value, isAnalog);
+		}
+		
+		@Override
+		public void onAxisEvent(String vendorName, int controller, int axisID,
+				float value, boolean isAnalog) {
+			GameControllerAdapter.onAxisEvent(vendorName, controller, axisID, value, isAnalog);
+		}
+
+		@Override
+		public void onConnected(String vendorName, int controller) {
+			GameControllerAdapter.onConnected(vendorName, controller);
+		}
+
+		@Override
+		public void onDisconnected(String vendorName, int controller) {
+			GameControllerAdapter.onDisconnected(vendorName, controller);
+		}
+	};
+	
 	// ===========================================================
 	// Constructors
 	// ===========================================================
@@ -95,6 +133,13 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     	if (mVideoHelper == null) {
     		mVideoHelper = new Cocos2dxVideoHelper(this, mFrameLayout);
 		}
+    	
+    	mInputManager = InputManagerCompat.Factory.getInputManager(this);
+    	mInputManager.registerInputDeviceListener(this, null);
+    	
+    	if (mCocos2dxController != null) {
+			mCocos2dxController.onCreate(this);
+		}
 	}
 	
 	// ===========================================================
@@ -106,19 +151,104 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	// ===========================================================
 
 	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		boolean handled = false;
+        
+        int eventSource = event.getSource();
+        if (((eventSource & InputDevice.SOURCE_GAMEPAD)  == InputDevice.SOURCE_GAMEPAD) ||
+            ((eventSource & InputDevice.SOURCE_JOYSTICK) == InputDevice.SOURCE_JOYSTICK))
+        {
+        	GameControllerAdapter.onButtonEvent("Standard", event.getDeviceId(), keyCode, false, 0.0f, false);
+        	handled = true;
+        }
+        else if(mCocos2dxController != null){       	
+        	handled = mCocos2dxController.onKeyDown(keyCode, event);    	
+		}
+        
+		return handled || super.onKeyDown(keyCode, event);
+	}
+	
+	@Override
+	public boolean onKeyUp(int keyCode, KeyEvent event) {
+		boolean handled = false;
+        int eventSource = event.getSource();
+        
+        if (((eventSource & InputDevice.SOURCE_GAMEPAD)  == InputDevice.SOURCE_GAMEPAD) ||
+            ((eventSource & InputDevice.SOURCE_JOYSTICK) == InputDevice.SOURCE_JOYSTICK)){
+        	
+        	GameControllerAdapter.onButtonEvent("Standard", event.getDeviceId(), keyCode, true, 1.0f, false);
+        	handled = true;
+        }
+        else if(mCocos2dxController != null){       	
+        	handled = mCocos2dxController.onKeyUp(keyCode, event);    	
+		}
+        
+        return handled || super.onKeyUp(keyCode, event);
+	}
+	
+	@Override
+	public void onInputDeviceAdded(int deviceId) {
+		Log.d(TAG,"onInputDeviceAdded:" + deviceId);
+		
+		GameControllerAdapter.onConnected("Standard", deviceId);
+	}
+
+	/*
+	 * This is an unusual case. Input devices don't typically change, but they
+	 * certainly can --- for example a device may have different modes. We use
+	 * this to make sure that the ship has an up-to-date InputDevice.
+	 * 
+	 * @see
+	 * com.example.inputmanagercompat.InputManagerCompat.InputDeviceListener
+	 * #onInputDeviceChanged(int)
+	 */
+	@Override
+	public void onInputDeviceChanged(int deviceId) {
+		Log.d(TAG,"onInputDeviceChanged:" + deviceId);
+	}
+	
+	/*
+	 * Remove any ship associated with the ID.
+	 * 
+	 * @see
+	 * com.example.inputmanagercompat.InputManagerCompat.InputDeviceListener
+	 * #onInputDeviceRemoved(int)
+	 */
+	@Override
+	public void onInputDeviceRemoved(int deviceId) {
+		Log.d(TAG,"onInputDeviceRemoved:" + deviceId);
+		GameControllerAdapter.onDisconnected("Standard", deviceId);
+	}
+
+	@Override
 	protected void onResume() {
 		super.onResume();
 
 		Cocos2dxHelper.onResume();
 		this.mGLSurfaceView.onResume();
+		
+		if (mCocos2dxController != null) {
+			mCocos2dxController.onResume();
+		}
 	}
 
 	@Override
 	protected void onPause() {
+		if (mCocos2dxController != null) {
+			mCocos2dxController.onPause();
+		}
 		super.onPause();
-
+		
 		Cocos2dxHelper.onPause();
 		this.mGLSurfaceView.onPause();
+	}
+	
+	@Override
+	protected void onDestroy() {
+		if (mCocos2dxController != null) {
+			mCocos2dxController.onDestroy();
+		}
+		super.onDestroy();
 	}
 
 	@Override

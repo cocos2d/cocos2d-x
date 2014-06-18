@@ -72,7 +72,11 @@ bool HelloWorld::init()
 
     // add the sprite as a child to this layer
     this->addChild(sprite);
-    
+
+    auto label22 = Label::create("Deep-sea","fonts/en.ttf",20);
+    label22->setPosition(Vec2(visibleSize / 2) + origin);
+    this->addChild(label22);
+
     return true;
 }
 
