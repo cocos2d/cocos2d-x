@@ -54,10 +54,7 @@ namespace cocostudio
         virtual void setColorPropsFromJsonDictionary(cocos2d::ui::Widget* widget,
                                                      const rapidjson::Value& options);
         
-        virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* pCocoLoader,  stExpCocoNode*	pCocoNode)
-        {
-           
-        };
+        virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* pCocoLoader,  stExpCocoNode*	pCocoNode);
     protected:
         std::string getResourcePath(const rapidjson::Value& dict,
                                     const std::string& key,
