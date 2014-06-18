@@ -80,6 +80,10 @@ function Node:getCascadeBoundingBox()
     return rc
 end
 
+function Node:isTouchEnabled()
+    return self._isTouchEnabled_
+end
+
 function Node:setTouchEnabled( isEnable )
     if self._isTouchEnabled_ and self._isTouchEnabled_==isEnable then return end
     self._isTouchEnabled_ = isEnable
@@ -125,6 +129,14 @@ function Node:setTouchMode(mode)
       self:setTouchEnabled(false)   --unregister old listeners
       self:setTouchEnabled(true)
     end
+end
+
+function Node:getTouchMode()
+    return self._TouchMode_
+end
+
+function Node:isSwallowsTouches()
+    return self._isTouchSwallowEnabled_
 end
 
 function Node:removeSelf()
@@ -223,21 +235,17 @@ function Node:registerScriptTouchHandler(handler, isMultiTouches)
     end)
 end
 
-Node.scheduleUpdate_ = Node.scheduleUpdate
 function Node:scheduleUpdate(handler)
-    if handler then
-        PRINT_DEPRECATED("Node.scheduleUpdate(handler) is deprecated, please use Node.addNodeEventListener()")
-        self:addNodeEventListener(c.NODE_ENTER_FRAME_EVENT, handler)
-        self:scheduleUpdate_()
-    else
-        self:scheduleUpdate_()
+    PRINT_DEPRECATED("Node.scheduleUpdate(handler) is deprecated, please use Node.addNodeEventListener()")
+    if not handler then
+        handler = function(dt) self:onEnterFrame(dt) end
     end
+    self:addNodeEventListener(c.NODE_ENTER_FRAME_EVENT, handler)
 end
 
 function Node:scheduleUpdateWithPriorityLua(handler)
     PRINT_DEPRECATED("Node.scheduleUpdateWithPriorityLua() is deprecated, please use Node.addNodeEventListener()")
     self:addNodeEventListener(c.NODE_ENTER_FRAME_EVENT, handler)
-    self:scheduleUpdate_()
 end
 
 function Node:setTouchPriority()
@@ -316,6 +324,7 @@ function Node:addNodeEventListener( evt, hdl, tag, priority )
         lis.regHanler = listener
         lis.regHanler:retain()
         lis.mode = mode
+        if nil==self._isTouchEnabled_ then self._isTouchEnabled_=true end
     end
 
     return self._nextScriptEventHandleIndex_
