@@ -47,7 +47,7 @@
 -- @function [parent=#ControlSwitch] locationFromTouch 
 -- @param self
 -- @param #cc.Touch touch
--- @return vector2_table#vector2_table ret (return value: vector2_table)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- overload function: create(cc.Sprite, cc.Sprite, cc.Sprite, cc.Sprite)

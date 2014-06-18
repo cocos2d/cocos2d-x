@@ -23,8 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_PLATFORM_CONFIG_H__
-#define __CC_PLATFORM_CONFIG_H__
+#ifndef __BASE_CC_PLATFORM_CONFIG_H__
+#define __BASE_CC_PLATFORM_CONFIG_H__
 
 /**
 Config of cocos2d-x project, per target platform.
@@ -154,5 +154,5 @@ Config of cocos2d-x project, per target platform.
 #endif 
 #endif  // CC_PLATFORM_WIN32
 
-#endif  // __CC_PLATFORM_CONFIG_H__
+#endif  // __BASE_CC_PLATFORM_CONFIG_H__
 

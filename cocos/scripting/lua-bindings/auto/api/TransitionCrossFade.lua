@@ -14,7 +14,7 @@
 -- @function [parent=#TransitionCrossFade] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #matrix_table matrix
--- @param #bool bool
+-- @param #mat4_table mat4
+-- @param #unsigned int int
         
 return nil

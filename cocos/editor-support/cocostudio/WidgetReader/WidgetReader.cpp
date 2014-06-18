@@ -46,8 +46,8 @@ namespace cocostudio
         widget->setSizeType((Widget::SizeType)DICTOOL->getIntValue_json(options, "sizeType"));
         widget->setPositionType((Widget::PositionType)DICTOOL->getIntValue_json(options, "positionType"));
         
-        widget->setSizePercent(Vector2(DICTOOL->getFloatValue_json(options, "sizePercentX"), DICTOOL->getFloatValue_json(options, "sizePercentY")));
-        widget->setPositionPercent(Vector2(DICTOOL->getFloatValue_json(options, "positionPercentX"), DICTOOL->getFloatValue_json(options, "positionPercentY")));
+        widget->setSizePercent(Vec2(DICTOOL->getFloatValue_json(options, "sizePercentX"), DICTOOL->getFloatValue_json(options, "sizePercentY")));
+        widget->setPositionPercent(Vec2(DICTOOL->getFloatValue_json(options, "positionPercentX"), DICTOOL->getFloatValue_json(options, "positionPercentY")));
         
         /* adapt screen */
         float w = 0, h = 0;
@@ -80,7 +80,7 @@ namespace cocostudio
         widget->setName(widgetName);
         float x = DICTOOL->getFloatValue_json(options, "x");
         float y = DICTOOL->getFloatValue_json(options, "y");
-        widget->setPosition(Vector2(x,y));
+        widget->setPosition(Vec2(x,y));
         bool sx = DICTOOL->checkObjectExist_json(options, "scaleX");
         if (sx)
         {
@@ -162,11 +162,9 @@ namespace cocostudio
         int colorG = cg ? DICTOOL->getIntValue_json(options, "colorG") : 255;
         int colorB = cb ? DICTOOL->getIntValue_json(options, "colorB") : 255;
         widget->setColor(Color3B(colorR, colorG, colorB));
-        bool apx = DICTOOL->checkObjectExist_json(options, "anchorPointX");
-        float apxf = apx ? DICTOOL->getFloatValue_json(options, "anchorPointX") : ((widget->getWidgetType() == Widget::Type::ELEMENT) ? 0.5f : 0.0f);
-        bool apy = DICTOOL->checkObjectExist_json(options, "anchorPointY");
-        float apyf = apy ? DICTOOL->getFloatValue_json(options, "anchorPointY") : ((widget->getWidgetType() == Widget::Type::ELEMENT) ? 0.5f : 0.0f);
-        widget->setAnchorPoint(Vector2(apxf, apyf));
+        
+        this->setAnchorPointForWidget(widget, options);
+        
         bool flipX = DICTOOL->getBooleanValue_json(options, "flipX");
         bool flipY = DICTOOL->getBooleanValue_json(options, "flipY");
         widget->setFlippedX(flipX);
@@ -194,4 +192,31 @@ namespace cocostudio
         }
         return imageFileName_tp;
     }
+    
+    void WidgetReader::setAnchorPointForWidget(cocos2d::ui::Widget *widget, const rapidjson::Value &options)
+    {
+        bool isAnchorPointXExists = DICTOOL->checkObjectExist_json(options, "anchorPointX");
+        float anchorPointXInFile;
+        if (isAnchorPointXExists) {
+            anchorPointXInFile = DICTOOL->getFloatValue_json(options, "anchorPointX");
+        }else{
+            anchorPointXInFile = widget->getAnchorPoint().x;
+        }
+        
+        bool isAnchorPointYExists = DICTOOL->checkObjectExist_json(options, "anchorPointY");
+        float anchorPointYInFile;
+        if (isAnchorPointYExists) {
+            anchorPointYInFile = DICTOOL->getFloatValue_json(options, "anchorPointY");
+        }
+        else{
+            anchorPointYInFile = widget->getAnchorPoint().y;
+        }
+        
+        if (isAnchorPointXExists || isAnchorPointYExists) {
+            widget->setAnchorPoint(Vec2(anchorPointXInFile, anchorPointYInFile));
+        }
+    }
 }
+
+
+

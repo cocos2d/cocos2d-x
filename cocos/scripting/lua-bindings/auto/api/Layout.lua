@@ -1,12 +1,12 @@
 
 --------------------------------
 -- @module Layout
--- @extend Widget
+-- @extend Widget,LayoutProtocol
 
 --------------------------------
 -- @function [parent=#Layout] setBackGroundColorVector 
 -- @param self
--- @param #vector2_table array
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#Layout] setClippingType 
@@ -31,7 +31,7 @@
 --------------------------------
 -- @function [parent=#Layout] getBackGroundColorVector 
 -- @param self
--- @return vector2_table#vector2_table ret (return value: vector2_table)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#Layout] getClippingType 
@@ -145,7 +145,7 @@
 --------------------------------
 -- @function [parent=#Layout] getLayoutType 
 -- @param self
--- @return Layout::LayoutType#Layout::LayoutType ret (return value: ccui.Layout::LayoutType)
+-- @return Layout::Type#Layout::Type ret (return value: ccui.Layout::Type)
         
 --------------------------------
 -- @function [parent=#Layout] setPassFocusToChild 
@@ -165,7 +165,7 @@
 --------------------------------
 -- @function [parent=#Layout] setLayoutType 
 -- @param self
--- @param #ccui.Layout::LayoutType layouttype
+-- @param #ccui.Layout::Type type
         
 --------------------------------
 -- @function [parent=#Layout] create 
@@ -202,10 +202,6 @@
         
 --------------------------------
 -- @function [parent=#Layout] removeAllChildren 
--- @param self
-        
---------------------------------
--- @function [parent=#Layout] sortAllChildren 
 -- @param self
         
 --------------------------------

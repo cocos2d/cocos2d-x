@@ -108,15 +108,15 @@ def do_build(cocos_root, ndk_root, app_android_root, ndk_build_param,sdk_root,an
 
     num_of_cpu = get_num_of_cpu()
     if ndk_build_param == None:
-        command = '%s -j%d -C %s %s' % (ndk_path, num_of_cpu, app_android_root, ndk_module_path)
+        command = '%s -j%d -C %s NDK_DEBUG=%d %s' % (ndk_path, num_of_cpu, app_android_root, build_mode=='debug', ndk_module_path)
     else:
-        command = '%s -j%d -C %s %s %s' % (ndk_path, num_of_cpu, app_android_root, ndk_build_param, ndk_module_path)
+        command = '%s -j%d -C %s NDK_DEBUG=%d %s %s' % (ndk_path, num_of_cpu, app_android_root, build_mode=='debug', ndk_build_param, ndk_module_path)
     print command
     if os.system(command) != 0:
         raise Exception("Build dynamic library for project [ " + app_android_root + " ] fails!")
     elif android_platform is not None:
         sdk_tool_path = os.path.join(sdk_root, "tools/android")
-        cocoslib_path = os.path.join(cocos_root, "cocos/2d/platform/android/java")
+        cocoslib_path = os.path.join(cocos_root, "cocos/platform/android/java")
         command = '%s update lib-project -t %s -p %s' % (sdk_tool_path,android_platform,cocoslib_path)
         if os.system(command) != 0:
             raise Exception("update cocos lib-project [ " + cocoslib_path + " ] fails!")

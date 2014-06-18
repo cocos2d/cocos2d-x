@@ -26,6 +26,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "renderer/CCGLProgramCache.h"
+
 #include "renderer/CCGLProgram.h"
 #include "renderer/ccShaders.h"
 #include "base/ccMacros.h"
@@ -48,6 +49,9 @@ enum {
     kShaderType_LabelDistanceFieldGlow,
     kShaderType_LabelNormal,
     kShaderType_LabelOutline,
+    kShaderType_3DPosition,
+    kShaderType_3DPositionTex,
+    kShaderType_3DSkinPositionTex,
     kShaderType_MAX,
 };
 
@@ -188,6 +192,18 @@ void GLProgramCache::loadDefaultGLPrograms()
     p = new GLProgram();
     loadDefaultGLProgram(p, kShaderType_LabelOutline);
     _programs.insert( std::make_pair(GLProgram::SHADER_NAME_LABEL_OUTLINE, p) );
+    
+    p = new GLProgram();
+    loadDefaultGLProgram(p, kShaderType_3DPosition);
+    _programs.insert( std::make_pair(GLProgram::SHADER_3D_POSITION, p) );
+
+    p = new GLProgram();
+    loadDefaultGLProgram(p, kShaderType_3DPositionTex);
+    _programs.insert( std::make_pair(GLProgram::SHADER_3D_POSITION_TEXTURE, p) );
+    
+    p = new GLProgram();
+    loadDefaultGLProgram(p, kShaderType_3DSkinPositionTex);
+    _programs.insert(std::make_pair(GLProgram::SHADER_3D_SKINPOSITION_TEXTURE, p));
 }
 
 void GLProgramCache::reloadDefaultGLPrograms()
@@ -276,6 +292,18 @@ void GLProgramCache::reloadDefaultGLPrograms()
     p = getGLProgram(GLProgram::SHADER_NAME_LABEL_OUTLINE);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_LabelOutline);
+    
+    p = getGLProgram(GLProgram::SHADER_3D_POSITION);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_3DPosition);
+    
+    p = getGLProgram(GLProgram::SHADER_3D_POSITION_TEXTURE);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_3DPositionTex);
+    
+    p = getGLProgram(GLProgram::SHADER_3D_SKINPOSITION_TEXTURE);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_3DSkinPositionTex);
 }
 
 void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
@@ -328,6 +356,15 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
             break;
         case kShaderType_LabelOutline:
             p->initWithByteArrays(ccLabel_vert, ccLabelOutline_frag);
+            break;
+        case kShaderType_3DPosition:
+            p->initWithByteArrays(cc3D_PositionTex_vert, cc3D_Color_frag);
+            break;
+        case kShaderType_3DPositionTex:
+            p->initWithByteArrays(cc3D_PositionTex_vert, cc3D_ColorTex_frag);
+            break;
+        case kShaderType_3DSkinPositionTex:
+            p->initWithByteArrays(cc3D_SkinPositionTex_vert, cc3D_ColorTex_frag);
             break;
         default:
             CCLOG("cocos2d: %s:%d, error shader type", __FUNCTION__, __LINE__);

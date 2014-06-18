@@ -32,11 +32,11 @@
 #include "base/ccMacros.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCVector.h"
+#include "base/CCScriptSupport.h"
+#include "base/CCProtocols.h"
 #include "math/CCAffineTransform.h"
 #include "math/CCMath.h"
 #include "renderer/ccGLStateCache.h"
-#include "2d/CCScriptSupport.h"
-#include "2d/CCProtocols.h"
 #include "CCGL.h"
 
 NS_CC_BEGIN
@@ -70,8 +70,6 @@ enum {
     kNodeOnExitTransitionDidStart,
     kNodeOnCleanup
 };
-
-USING_NS_CC_MATH;
 
 bool nodeComparisonLess(Node* n1, Node* n2);
 
@@ -109,6 +107,12 @@ public:
     /// Default tag used for all the nodes
     static const int INVALID_TAG = -1;
 
+    enum {
+        FLAGS_TRANSFORM_DIRTY = (1 << 0),
+        FLAGS_CONTENT_SIZE_DIRTY = (1 << 1),
+
+        FLAGS_DIRTY_MASK = (FLAGS_TRANSFORM_DIRTY | FLAGS_CONTENT_SIZE_DIRTY),
+    };
     /// @{
     /// @name Constructor, Destructor and Initializers
 
@@ -116,7 +120,7 @@ public:
      * Allocates and initializes a node.
      * @return A initialized node which is marked as "autorelease".
      */
-    static Node * create(void);
+    static Node * create();
 
     /**
      * Gets the description string. It makes debugging easier.
@@ -275,37 +279,54 @@ public:
     /**
      * Sets the position (x,y) of the node in its parent's coordinate system.
      *
-     * Usually we use `Vector2(x,y)` to compose Vector2 object.
+     * Usually we use `Vec2(x,y)` to compose Vec2 object.
      * This code snippet sets the node in the center of screen.
      @code
      Size size = Director::getInstance()->getWinSize();
-     node->setPosition( Vector2(size.width/2, size.height/2) )
+     node->setPosition( Vec2(size.width/2, size.height/2) )
      @endcode
      *
      * @param position  The position (x,y) of the node in OpenGL coordinates
      */
-    virtual void setPosition(const Vector2 &position);
+    virtual void setPosition(const Vec2 &position);
+
+    /** Sets the position (x,y) using values between 0 and 1.
+     The positions in pixels is calculated like the following:
+     @code
+     // pseudo code
+     void setNormalizedPosition(Vec2 pos) {
+       Size s = getParent()->getContentSize();
+       _position = pos * s;
+     }
+     @endcode
+     */
+    virtual void setNormalizedPosition(const Vec2 &position);
+
     /**
      * Gets the position (x,y) of the node in its parent's coordinate system.
      *
-     * @see setPosition(const Vector2&)
+     * @see setPosition(const Vec2&)
      *
      * @return The position (x,y) of the node in OpenGL coordinates
      * @code
      * In js and lua return value is table which contains x,y
      * @endcode
      */
-    virtual const Vector2& getPosition() const;
+    virtual const Vec2& getPosition() const;
+
+    /** returns the normalized position */
+    virtual const Vec2& getNormalizedPosition() const;
+
     /**
      * Sets the position (x,y) of the node in its parent's coordinate system.
      *
-     * Passing two numbers (x,y) is much efficient than passing Vector2 object.
+     * Passing two numbers (x,y) is much efficient than passing Vec2 object.
      * This method is bound to Lua and JavaScript.
      * Passing a number is 10 times faster than passing a object from Lua to c++
      *
      @code
      // sample code in Lua
-     local pos  = node::getPosition()  -- returns Vector2 object from C++
+     local pos  = node::getPosition()  -- returns Vec2 object from C++
      node:setPosition(x, y)            -- pass x, y coordinate to C++
      @endcode
      *
@@ -314,7 +335,7 @@ public:
      */
     virtual void setPosition(float x, float y);
     /**
-     * Gets position in a more efficient way, returns two number instead of a Vector2 object
+     * Gets position in a more efficient way, returns two number instead of a Vec2 object
      *
      * @see `setPosition(float, float)`
      * In js,out value not return
@@ -332,11 +353,11 @@ public:
     /**
      * Sets the position (X, Y, and Z) in its parent's coordinate system
      */
-    virtual void setPosition3D(const Vector3& position);
+    virtual void setPosition3D(const Vec3& position);
     /**
      * returns the position (X,Y,Z) in its parent's coordinate system
      */
-    virtual Vector3 getPosition3D() const;
+    virtual Vec3 getPosition3D() const;
 
     /**
      * Sets the 'z' coordinate in the position. It is the OpenGL Z vertex value.
@@ -421,15 +442,15 @@ public:
      *
      * @param anchorPoint   The anchor point of node.
      */
-    virtual void setAnchorPoint(const Vector2& anchorPoint);
+    virtual void setAnchorPoint(const Vec2& anchorPoint);
     /**
      * Returns the anchor point in percent.
      *
-     * @see `setAnchorPoint(const Vector2&)`
+     * @see `setAnchorPoint(const Vec2&)`
      *
      * @return The anchor point of node.
      */
-    virtual const Vector2& getAnchorPoint() const;
+    virtual const Vec2& getAnchorPoint() const;
     /**
      * Returns the anchorPoint in absolute pixels.
      *
@@ -438,7 +459,7 @@ public:
      *
      * @return The anchor point in absolute pixels.
      */
-    virtual const Vector2& getAnchorPointInPoints() const;
+    virtual const Vec2& getAnchorPointInPoints() const;
 
 
     /**
@@ -500,11 +521,11 @@ public:
      * Sets the rotation (X,Y,Z) in degrees.
      * Useful for 3d rotations
      */
-    virtual void setRotation3D(const Vector3& rotation);
+    virtual void setRotation3D(const Vec3& rotation);
     /**
      * returns the rotation (X,Y,Z) in degrees.
      */
-    virtual Vector3 getRotation3D() const;
+    virtual Vec3 getRotation3D() const;
 
     /**
      * Sets the X rotation (angle) of the node in degrees which performs a horizontal rotational skew.
@@ -645,7 +666,49 @@ public:
      *
      * @return a Node object whose tag equals to the input parameter
      */
-    virtual Node * getChildByTag(int tag);
+    virtual Node * getChildByTag(int tag) const;
+    /**
+     * Gets a child from the container with its name
+     *
+     * @param name   An identifier to find the child node.
+     *
+     * @return a Node object whose name equals to the input parameter
+     *
+     * @since v3.2
+     */
+    virtual Node* getChildByName(const std::string& name) const;
+    /** Search the children of the receiving node to perform processing for nodes which share a name.
+     *
+     * @param name The name to search for, support c++11 regular expression
+     * Search syntax options:
+     * `/` : When placed at the start of the search string, this indicates that the search should be performed on the tree's node.
+     * `//`: Can only be placed at the begin of the search string. This indicates that the search should be performed on the tree's node
+     *       and be performed recursively across the entire node tree.
+     * `..`: The search should move up to the node's parent. Can only be placed at the end of string
+     * `/` : When placed anywhere but the start of the search string, this indicates that the search should move to the node's children
+     *
+     * @code
+     * enumerateChildren("/MyName", ...): This searches the root's children and matches any node with the name `MyName`.
+     * enumerateChildren("//MyName", ...): This searches the root's children recursively and matches any node with the name `MyName`.
+     * enumerateChildren("[[:alnum:]]+", ...): This search string matches every node of its children.
+     * enumerateChildren("/MyName", ...): This searches the node tree and matches the parent node of every node named `MyName`.
+     * enumerateChildren("A[[:digit:]]", ...): This searches the node's children and returns any child named `A0`, `A1`, ..., `A9`
+     * enumerateChildren("Abby/Normal", ...): This searches the node's grandchildren and returns any node whose name is `Normal`
+     * and whose parent is named `Abby`.
+     * enumerateChildren("//Abby/Normal", ...): This searches the node tree and returns any node whose name is `Normal` and whose
+     * parent is named `Abby`.
+     * @endcode
+     *
+     * @warning Only support alpha or number for name, and not support unicode
+     *
+     * @param callback A callback function to execute on nodes that match the `name` parameter. The function takes the following arguments:
+     *  `node` 
+     *      A node that matches the name
+     *  And returns a boolean result. Your callback can return `true` to terminate the enumeration.
+     *
+     * @since v3.2
+     */
+    virtual void enumerateChildren(const std::string &name, std::function<bool(Node* node)> callback) const;
     /**
      * Returns the array of the node's children
      *
@@ -759,6 +822,19 @@ public:
      * @param tag   A integer that identifies the node.
      */
     virtual void setTag(int tag);
+    
+    /** Returns a string that is used to identify the node.
+     * @return A string that identifies the node.
+     * 
+     * @since v3.2
+     */
+    virtual std::string getName() const;
+    /** Changes the name that is used to identify the node easily.
+     * @param name A string that identifies the node.
+     *
+     * @since v3.2
+     */
+    virtual void setName(const std::string& name);
 
     
     /**
@@ -828,10 +904,10 @@ public:
      *
      * @return The GLProgram (shader) currently used for this node
      */
-    GLProgram* getGLProgram();
-    CC_DEPRECATED_ATTRIBUTE GLProgram* getShaderProgram() { return getGLProgram(); }
+    GLProgram* getGLProgram() const;
+    CC_DEPRECATED_ATTRIBUTE GLProgram* getShaderProgram() const { return getGLProgram(); }
 
-    GLProgramState *getGLProgramState();
+    GLProgramState *getGLProgramState() const;
     void setGLProgramState(GLProgramState *glProgramState);
 
     /**
@@ -925,13 +1001,13 @@ public:
      * AND YOU SHOULD NOT DISABLE THEM AFTER DRAWING YOUR NODE
      * But if you enable any other GL state, you should disable it after drawing your node.
      */
-    virtual void draw(Renderer *renderer, const Matrix& transform, bool transformUpdated);
+    virtual void draw(Renderer *renderer, const Mat4& transform, uint32_t flags);
     virtual void draw() final;
 
     /**
      * Visits this node's children and draw them recursively.
      */
-    virtual void visit(Renderer *renderer, const Matrix& parentTransform, bool parentTransformUpdated);
+    virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags);
     virtual void visit() final;
 
 
@@ -939,7 +1015,7 @@ public:
      It returns `nullptr` if the node doesn't belong to any Scene.
      This function recursively calls parent->getScene() until parent is a Scene object. The results are not cached. It is that the user caches the results in case this functions is being used inside a loop.
      */
-    virtual Scene* getScene();
+    virtual Scene* getScene() const;
 
     /**
      * Returns an AABB (axis-aligned bounding-box) in its parent's coordinate system.
@@ -1166,12 +1242,12 @@ public:
      * Resumes all scheduled selectors, actions and event listeners.
      * This method is called internally by onEnter
      */
-    CC_DEPRECATED_ATTRIBUTE void resumeSchedulerAndActions(void);
+    CC_DEPRECATED_ATTRIBUTE void resumeSchedulerAndActions();
     /**
      * Pauses all scheduled selectors, actions and event listeners..
      * This method is called internally by onExit
      */
-    CC_DEPRECATED_ATTRIBUTE void pauseSchedulerAndActions(void);
+    CC_DEPRECATED_ATTRIBUTE void pauseSchedulerAndActions();
 
     /*
      * Update method will be called automatically every frame if "scheduleUpdate" is called, and the node is "live"
@@ -1196,13 +1272,13 @@ public:
      * Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
      * The matrix is in Pixels.
      */
-    virtual const Matrix& getNodeToParentTransform() const;
+    virtual const Mat4& getNodeToParentTransform() const;
     virtual AffineTransform getNodeToParentAffineTransform() const;
 
     /** 
      * Sets the Transformation matrix manually.
      */
-    virtual void setNodeToParentTransform(const Matrix& transform);
+    virtual void setNodeToParentTransform(const Mat4& transform);
 
     /** @deprecated use getNodeToParentTransform() instead */
     CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform nodeToParentTransform() const { return getNodeToParentAffineTransform(); }
@@ -1211,7 +1287,7 @@ public:
      * Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.
      * The matrix is in Pixels.
      */
-    virtual const Matrix& getParentToNodeTransform() const;
+    virtual const Mat4& getParentToNodeTransform() const;
     virtual AffineTransform getParentToNodeAffineTransform() const;
 
     /** @deprecated Use getParentToNodeTransform() instead */
@@ -1220,7 +1296,7 @@ public:
     /**
      * Returns the world affine transform matrix. The matrix is in Pixels.
      */
-    virtual Matrix getNodeToWorldTransform() const;
+    virtual Mat4 getNodeToWorldTransform() const;
     virtual AffineTransform getNodeToWorldAffineTransform() const;
 
     /** @deprecated Use getNodeToWorldTransform() instead */
@@ -1229,7 +1305,7 @@ public:
     /**
      * Returns the inverse world affine transform matrix. The matrix is in Pixels.
      */
-    virtual Matrix getWorldToNodeTransform() const;
+    virtual Mat4 getWorldToNodeTransform() const;
     virtual AffineTransform getWorldToNodeAffineTransform() const;
 
 
@@ -1243,36 +1319,36 @@ public:
     /// @name Coordinate Converters
 
     /**
-     * Converts a Vector2 to node (local) space coordinates. The result is in Points.
+     * Converts a Vec2 to node (local) space coordinates. The result is in Points.
      */
-    Vector2 convertToNodeSpace(const Vector2& worldPoint) const;
+    Vec2 convertToNodeSpace(const Vec2& worldPoint) const;
 
     /**
-     * Converts a Vector2 to world space coordinates. The result is in Points.
+     * Converts a Vec2 to world space coordinates. The result is in Points.
      */
-    Vector2 convertToWorldSpace(const Vector2& nodePoint) const;
+    Vec2 convertToWorldSpace(const Vec2& nodePoint) const;
 
     /**
-     * Converts a Vector2 to node (local) space coordinates. The result is in Points.
+     * Converts a Vec2 to node (local) space coordinates. The result is in Points.
      * treating the returned/received node point as anchor relative.
      */
-    Vector2 convertToNodeSpaceAR(const Vector2& worldPoint) const;
+    Vec2 convertToNodeSpaceAR(const Vec2& worldPoint) const;
 
     /**
-     * Converts a local Vector2 to world space coordinates.The result is in Points.
+     * Converts a local Vec2 to world space coordinates.The result is in Points.
      * treating the returned/received node point as anchor relative.
      */
-    Vector2 convertToWorldSpaceAR(const Vector2& nodePoint) const;
+    Vec2 convertToWorldSpaceAR(const Vec2& nodePoint) const;
 
     /**
-     * convenience methods which take a Touch instead of Vector2
+     * convenience methods which take a Touch instead of Vec2
      */
-    Vector2 convertTouchToNodeSpace(Touch * touch) const;
+    Vec2 convertTouchToNodeSpace(Touch * touch) const;
 
     /**
      * converts a Touch (world coordinates) into a local coordinate. This method is AR (Anchor Relative).
      */
-    Vector2 convertTouchToNodeSpaceAR(Touch * touch) const;
+    Vec2 convertTouchToNodeSpaceAR(Touch * touch) const;
 
 	/**
      *  Sets an additional transform matrix to the node.
@@ -1282,7 +1358,7 @@ public:
      *  @note The additional transform will be concatenated at the end of getNodeToParentTransform.
      *        It could be used to simulate `parent-child` relationship between two nodes (e.g. one is in BatchNode, another isn't).
      */
-    void setAdditionalTransform(Matrix* additionalTransform);
+    void setAdditionalTransform(Mat4* additionalTransform);
     void setAdditionalTransform(const AffineTransform& additionalTransform);
 
     /// @} end of Coordinate Converters
@@ -1292,17 +1368,17 @@ public:
     /**
      *   gets a component by its name
      */
-    Component* getComponent(const std::string& pName);
+    Component* getComponent(const std::string& name);
 
     /**
      *   adds a component
      */
-    virtual bool addComponent(Component *pComponent);
+    virtual bool addComponent(Component *component);
 
     /**
      *   removes a component by its name
      */
-    virtual bool removeComponent(const std::string& pName);
+    virtual bool removeComponent(const std::string& name);
 
     /**
      *   removes all components
@@ -1314,7 +1390,7 @@ public:
 #if CC_USE_PHYSICS
     /**
      *   set the PhysicsBody that let the sprite effect with physics
-     * @note This method will set anchor point to Vector2::ANCHOR_MIDDLE if body not null, and you cann't change anchor point if node has a physics body.
+     * @note This method will set anchor point to Vec2::ANCHOR_MIDDLE if body not null, and you cann't change anchor point if node has a physics body.
      */
     void setPhysicsBody(PhysicsBody* body);
 
@@ -1333,14 +1409,14 @@ public:
     virtual bool isCascadeOpacityEnabled() const;
     virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
     
-    virtual const Color3B& getColor(void) const;
+    virtual const Color3B& getColor() const;
     virtual const Color3B& getDisplayedColor() const;
     virtual void setColor(const Color3B& color);
     virtual void updateDisplayedColor(const Color3B& parentColor);
     virtual bool isCascadeColorEnabled() const;
     virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
     
-    virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
+    virtual void setOpacityModifyRGB(bool value) {CC_UNUSED_PARAM(value);}
     virtual bool isOpacityModifyRGB() const { return false; };
     
 CC_CONSTRUCTOR_ACCESS:
@@ -1361,15 +1437,19 @@ protected:
     void detachChild(Node *child, ssize_t index, bool doCleanup);
 
     /// Convert cocos2d coordinates to UI windows coordinate.
-    Vector2 convertToWindowSpace(const Vector2& nodePoint) const;
+    Vec2 convertToWindowSpace(const Vec2& nodePoint) const;
 
-    Matrix transform(const Matrix &parentTransform);
+    Mat4 transform(const Mat4 &parentTransform);
+    uint32_t processParentFlags(const Mat4& parentTransform, uint32_t parentFlags);
 
     virtual void updateCascadeOpacity();
     virtual void disableCascadeOpacity();
     virtual void updateCascadeColor();
     virtual void disableCascadeColor();
     virtual void updateColor() {}
+    
+    bool doEnumerate(std::string name, std::function<bool (Node *)> callback) const;
+    bool doEnumerateRecursive(const Node* node, const std::string &name, std::function<bool (Node *)> callback) const;
     
 #if CC_USE_PHYSICS
     virtual void updatePhysicsBodyPosition(Scene* layer);
@@ -1387,25 +1467,28 @@ protected:
     float _scaleY;                  ///< scaling factor on y-axis
     float _scaleZ;                  ///< scaling factor on z-axis
 
-    Vector2 _position;                ///< position of the node
+    Vec2 _position;                ///< position of the node
     float _positionZ;               ///< OpenGL real Z position
+    Vec2 _normalizedPosition;
+    bool _usingNormalizedPosition;
 
     float _skewX;                   ///< skew angle on x-axis
     float _skewY;                   ///< skew angle on y-axis
 
-    Vector2 _anchorPointInPoints;     ///< anchor point in points
-    Vector2 _anchorPoint;             ///< anchor point normalized (NOT in points)
+    Vec2 _anchorPointInPoints;     ///< anchor point in points
+    Vec2 _anchorPoint;             ///< anchor point normalized (NOT in points)
 
     Size _contentSize;              ///< untransformed size of the node
+    bool _contentSizeDirty;         ///< whether or not the contentSize is dirty
 
-    Matrix  _modelViewTransform;    ///< ModelView transform of the Node.
+    Mat4 _modelViewTransform;    ///< ModelView transform of the Node.
 
     // "cache" variables are allowed to be mutable
-    mutable Matrix _transform;      ///< transform
+    mutable Mat4 _transform;      ///< transform
     mutable bool _transformDirty;   ///< transform dirty flag
-    mutable Matrix _inverse;        ///< inverse transform
+    mutable Mat4 _inverse;        ///< inverse transform
     mutable bool _inverseDirty;     ///< inverse transform dirty flag
-    mutable Matrix _additionalTransform; ///< transform
+    mutable Mat4 _additionalTransform; ///< transform
     bool _useAdditionalTransform;   ///< The flag to check whether the additional transform is dirty
     bool _transformUpdated;         ///< Whether or not the Transform object was updated since the last frame
 
@@ -1418,6 +1501,7 @@ protected:
     int _tag;                         ///< a tag. Can be any number you assigned just to identify this node
     
     std::string _name;               ///<a string label, an user defined string to identify this node
+    size_t _hashOfName;            ///<hash value of _name, used for speed in getChildByName
 
     void *_userData;                ///< A user assingned void pointer, Can be point to any cpp object
     Ref *_userObject;               ///< A user assigned Object
@@ -1436,7 +1520,7 @@ protected:
 
     bool _visible;                  ///< is this node visible
 
-    bool _ignoreAnchorPointForPosition; ///< true if the Anchor Vector2 will be (0,0) when you position the Node, false otherwise.
+    bool _ignoreAnchorPointForPosition; ///< true if the Anchor Vec2 will be (0,0) when you position the Node, false otherwise.
                                           ///< Used by Layer and Scene.
 
     bool _reorderChildDirty;          ///< children order dirty flag
@@ -1504,7 +1588,7 @@ public:
     virtual void setOpacityModifyRGB(bool bValue) override { return Node::setOpacityModifyRGB(bValue); }
     virtual bool isOpacityModifyRGB() const override { return Node::isOpacityModifyRGB(); }
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     __NodeRGBA();
     virtual ~__NodeRGBA() {}
 

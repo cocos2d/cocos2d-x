@@ -11,7 +11,7 @@
 --------------------------------
 -- @function [parent=#ProgressTimer] setBarChangeRate 
 -- @param self
--- @param #vector2_table array
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#ProgressTimer] getPercentage 
@@ -36,12 +36,12 @@
 --------------------------------
 -- @function [parent=#ProgressTimer] setMidpoint 
 -- @param self
--- @param #vector2_table array
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#ProgressTimer] getBarChangeRate 
 -- @param self
--- @return vector2_table#vector2_table ret (return value: vector2_table)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- overload function: setReverseDirection(bool)
@@ -55,7 +55,7 @@
 --------------------------------
 -- @function [parent=#ProgressTimer] getMidpoint 
 -- @param self
--- @return vector2_table#vector2_table ret (return value: vector2_table)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#ProgressTimer] setPercentage 
@@ -76,14 +76,14 @@
 --------------------------------
 -- @function [parent=#ProgressTimer] setAnchorPoint 
 -- @param self
--- @param #vector2_table array
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#ProgressTimer] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #matrix_table matrix
--- @param #bool bool
+-- @param #mat4_table mat4
+-- @param #unsigned int int
         
 --------------------------------
 -- @function [parent=#ProgressTimer] setColor 

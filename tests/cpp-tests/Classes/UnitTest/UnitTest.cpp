@@ -7,7 +7,8 @@ static std::function<Layer*()> createFunctions[] = {
     CL(TemplateVectorTest),
     CL(TemplateMapTest),
     CL(ValueTest),
-    CL(RefPtrTest)
+    CL(RefPtrTest),
+    CL(UTFConversionTest)
 };
 
 static int sceneIdx = -1;
@@ -658,4 +659,160 @@ std::string ValueTest::subtitle() const
 void ValueTest::constFunc(const Value& value) const
 {
     
+}
+
+// UTFConversionTest
+
+static const int TEST_CODE_NUM = 11;
+
+static const char16_t __utf16Code[] =
+{
+    0x3042,
+    0x3044,
+    0x3046,
+    0x3048,
+    0x304A,
+    0x3042,
+    0x3044,
+    0x3046,
+    0x3048,
+    0x304A,
+    0x0041,
+    0x0000,
+};
+
+// to avoid Xcode error, char => unsigned char
+// If you use this table, please cast manually as (const char *).
+static const unsigned char __utf8Code[] =
+{
+    0xE3,0x81,0x82,
+    0xE3,0x81,0x84,
+    0xE3,0x81,0x86,
+    0xE3,0x81,0x88,
+    0xE3,0x81,0x8A,
+    0xE3,0x81,0x82,
+    0xE3,0x81,0x84,
+    0xE3,0x81,0x86,
+    0xE3,0x81,0x88,
+    0xE3,0x81,0x8A,
+    0x41,
+    0x00,
+};
+
+
+static const char16_t WHITE_SPACE_CODE[] =
+{
+    0x0009,
+    0x000A,
+    0x000B,
+    0x000C,
+    0x000D,
+    0x0020,
+    0x0085,
+    0x00A0,
+    0x1680,
+    0x2000,
+    0x2001,
+    0x2002,
+    0x2003,
+    0x2004,
+    0x2005,
+    0x2006,
+    0x2007,
+    0x2008,
+    0x2009,
+    0x200A,
+    0x2028,
+    0x2029,
+    0x202F,
+    0x205F,
+    0x3000
+};
+
+static void doUTFConversion()
+{
+    bool isSuccess = false;
+    
+    std::string originalUTF8 = (const char*)__utf8Code;
+    std::u16string originalUTF16 = __utf16Code;
+    
+    //---------------------------
+    std::string utf8Str;
+    isSuccess = StringUtils::UTF16ToUTF8(originalUTF16, utf8Str);
+    
+    if (isSuccess)
+    {
+        isSuccess = memcmp(utf8Str.data(), originalUTF8.data(), originalUTF8.length()+1)==0;
+    }
+    
+    CCASSERT(isSuccess, "StringUtils::UTF16ToUTF8 failed");
+    
+    //---------------------------
+    std::u16string utf16Str;
+    isSuccess = StringUtils::UTF8ToUTF16(originalUTF8, utf16Str);
+    
+    if (isSuccess)
+    {
+        isSuccess = memcmp(utf16Str.data(), originalUTF16.data(), originalUTF16.length()+1)==0;
+    }
+    
+    CCASSERT(isSuccess && (utf16Str.length() == TEST_CODE_NUM), "StringUtils::UTF8ToUTF16 failed");
+    
+    //---------------------------
+    auto vec1 = StringUtils::getChar16VectorFromUTF16String(originalUTF16);
+    
+    CCASSERT(vec1.size() == originalUTF16.length(), "StringUtils::getChar16VectorFromUTF16String failed");
+    
+    //---------------------------
+    std::vector<char16_t> vec2( vec1 );
+    vec2.push_back(0x2009);
+    vec2.push_back(0x2009);
+    vec2.push_back(0x2009);
+    vec2.push_back(0x2009);
+    
+    std::vector<char16_t> vec3( vec2 );
+    StringUtils::trimUTF16Vector(vec2);
+    
+    CCASSERT(vec1.size() == vec2.size(), "StringUtils::trimUTF16Vector failed");
+    
+    for (size_t i = 0; i < vec2.size(); i++ )
+    {
+        CCASSERT(vec1.at(i) == vec2.at(i), "StringUtils::trimUTF16Vector failed");
+    }
+    
+    //---------------------------
+    CCASSERT(StringUtils::getCharacterCountInUTF8String(originalUTF8) == TEST_CODE_NUM, "StringUtils::getCharacterCountInUTF8String failed");
+    
+    //---------------------------
+    int lastIndex = StringUtils::getIndexOfLastNotChar16(vec3, 0x2009);
+    CCASSERT(lastIndex == (vec1.size()-1), "StringUtils::getIndexOfLastNotChar16 failed");
+    
+    //---------------------------
+    CCASSERT(originalUTF16.length() == TEST_CODE_NUM, "The length of the original utf16 string isn't equal to TEST_CODE_NUM");
+    
+    //---------------------------
+    size_t whiteCodeNum = sizeof(WHITE_SPACE_CODE) / sizeof(WHITE_SPACE_CODE[0]);
+    for( size_t i = 0; i < whiteCodeNum; i++ )
+    {
+        CCASSERT(StringUtils::isUnicodeSpace(WHITE_SPACE_CODE[i]), "StringUtils::isUnicodeSpace failed");
+    }
+    
+    CCASSERT(!StringUtils::isUnicodeSpace(0xFFFF), "StringUtils::isUnicodeSpace failed");
+    
+    CCASSERT(!StringUtils::isCJKUnicode(0xFFFF) && StringUtils::isCJKUnicode(0x3100), "StringUtils::isCJKUnicode failed");
+}
+
+void UTFConversionTest::onEnter()
+{
+    UnitTestDemo::onEnter();
+
+    for (int i = 0; i < 10000; ++i)
+    {
+        doUTFConversion();
+    }
+}
+
+std::string UTFConversionTest::subtitle() const
+{
+    return "UTF8 <-> UTF16 Conversion Test, no crash";
 }

@@ -25,15 +25,13 @@
 #ifndef _CC_BATCHCOMMAND_H_
 #define _CC_BATCHCOMMAND_H_
 
-#include "CCRenderCommand.h"
+#include "renderer/CCRenderCommand.h"
 #include "renderer/CCGLProgram.h"
 #include "CCRenderCommandPool.h"
 
 NS_CC_BEGIN
 
 class TextureAtlas;
-
-#define CC_NO_TEXTURE 0
 
 class BatchCommand : public RenderCommand
 {
@@ -42,7 +40,7 @@ public:
     BatchCommand();
     ~BatchCommand();
 
-    void init(float depth, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Matrix& modelViewTransform);
+    void init(float depth, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Mat4& modelViewTransform);
 
     void execute();
 
@@ -56,7 +54,7 @@ protected:
     TextureAtlas *_textureAtlas;
 
     // ModelView transform
-    Matrix _mv;
+    Mat4 _mv;
 };
 NS_CC_END
 

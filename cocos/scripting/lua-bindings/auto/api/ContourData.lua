@@ -11,7 +11,7 @@
 --------------------------------
 -- @function [parent=#ContourData] addVertex 
 -- @param self
--- @param #vector2_table array
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#ContourData] create 

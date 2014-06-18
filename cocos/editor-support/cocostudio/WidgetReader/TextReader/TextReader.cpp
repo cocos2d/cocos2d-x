@@ -42,7 +42,7 @@ namespace cocostudio
         bool touchScaleChangeAble = DICTOOL->getBooleanValue_json(options, "touchScaleEnable");
         label->setTouchScaleChangeEnabled(touchScaleChangeAble);
         const char* text = DICTOOL->getStringValue_json(options, "text");
-        label->setText(text);
+        label->setString(text);
         bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
         if (fs)
         {
@@ -51,7 +51,9 @@ namespace cocostudio
         bool fn = DICTOOL->checkObjectExist_json(options, "fontName");
         if (fn)
         {
-            label->setFontName(DICTOOL->getStringValue_json(options, "fontName"));
+            std::string fontName = DICTOOL->getStringValue_json(options, "fontName");
+            std::string fontFilePath = jsonPath.append(fontName);
+            label->setFontName(fontFilePath);
         }
         bool aw = DICTOOL->checkObjectExist_json(options, "areaWidth");
         bool ah = DICTOOL->checkObjectExist_json(options, "areaHeight");

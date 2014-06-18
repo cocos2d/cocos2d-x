@@ -50,9 +50,9 @@ enum {
 
     VERTEX_ATTRIB_FLAG_POSITION   = 1 << 0,
     VERTEX_ATTRIB_FLAG_COLOR      = 1 << 1,
-    VERTEX_ATTRIB_FLAG_TEX_COORDS = 1 << 2,
+    VERTEX_ATTRIB_FLAG_TEX_COORD = 1 << 2,
 
-    VERTEX_ATTRIB_FLAG_POS_COLOR_TEX = (VERTEX_ATTRIB_FLAG_POSITION | VERTEX_ATTRIB_FLAG_COLOR | VERTEX_ATTRIB_FLAG_TEX_COORDS),
+    VERTEX_ATTRIB_FLAG_POS_COLOR_TEX = (VERTEX_ATTRIB_FLAG_POSITION | VERTEX_ATTRIB_FLAG_COLOR | VERTEX_ATTRIB_FLAG_TEX_COORD),
 };
 
 /** @file ccGLStateCache.h
@@ -129,7 +129,7 @@ void CC_DLL deleteTexture(GLuint textureId);
  If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glDeleteTextures() directly.
  @since v2.1.0
  */
-void CC_DLL deleteTextureN(GLuint textureUnit, GLuint textureId);
+CC_DEPRECATED_ATTRIBUTE void CC_DLL deleteTextureN(GLuint textureUnit, GLuint textureId);
 
 /** Select active texture unit.
  If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glActiveTexture() directly.

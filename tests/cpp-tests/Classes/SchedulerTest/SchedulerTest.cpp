@@ -28,7 +28,8 @@ static std::function<Layer*()> createFunctions[] = {
     CL(RescheduleSelector),
     CL(SchedulerDelayAndRepeat),
     CL(SchedulerIssue2268),
-    CL(ScheduleCallbackTest)
+    CL(ScheduleCallbackTest),
+    CL(ScheduleUpdatePriority)
 };
 
 #define MAX_LAYER (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -295,7 +296,7 @@ void SchedulerPauseResumeAllUser::onEnter()
     auto s = Director::getInstance()->getWinSize();
 
     auto sprite = Sprite::create("Images/grossinis_sister1.png");
-    sprite->setPosition(Vector2(s.width/2, s.height/2));
+    sprite->setPosition(Vec2(s.width/2, s.height/2));
     this->addChild(sprite);
     sprite->runAction(RepeatForever::create(RotateBy::create(3.0, 360)));
 
@@ -413,7 +414,7 @@ void SchedulerUnscheduleAllHard::onEnter()
     auto s = Director::getInstance()->getWinSize();
 
     auto sprite = Sprite::create("Images/grossinis_sister1.png");
-    sprite->setPosition(Vector2(s.width/2, s.height/2));
+    sprite->setPosition(Vec2(s.width/2, s.height/2));
     this->addChild(sprite);
     sprite->runAction(RepeatForever::create(RotateBy::create(3.0, 360)));
 
@@ -485,7 +486,7 @@ void SchedulerUnscheduleAllUserLevel::onEnter()
     auto s = Director::getInstance()->getWinSize();
 
     auto sprite = Sprite::create("Images/grossinis_sister1.png");
-    sprite->setPosition(Vector2(s.width/2, s.height/2));
+    sprite->setPosition(Vec2(s.width/2, s.height/2));
     this->addChild(sprite);
     sprite->runAction(RepeatForever::create(RotateBy::create(3.0, 360)));
 
@@ -846,7 +847,7 @@ void SchedulerTimeScale::onEnter()
     auto s = Director::getInstance()->getWinSize();
 
     // rotate and jump
-    auto jump1 = JumpBy::create(4, Vector2(-s.width+80,0), 100, 4);
+    auto jump1 = JumpBy::create(4, Vec2(-s.width+80,0), 100, 4);
     auto jump2 = jump1->reverse();
     auto rot1 = RotateBy::create(4, 360*2);
     auto rot2 = rot1->reverse();
@@ -863,9 +864,9 @@ void SchedulerTimeScale::onEnter()
     auto tamara = Sprite::create("Images/grossinis_sister1.png");
     auto kathia = Sprite::create("Images/grossinis_sister2.png");
 
-    grossini->setPosition(Vector2(40,80));
-    tamara->setPosition(Vector2(40,80));
-    kathia->setPosition(Vector2(40,80));
+    grossini->setPosition(Vec2(40,80));
+    tamara->setPosition(Vec2(40,80));
+    kathia->setPosition(Vec2(40,80));
 
     addChild(grossini);
     addChild(tamara);
@@ -880,7 +881,7 @@ void SchedulerTimeScale::onEnter()
     addChild(emitter);
 
     _sliderCtl = sliderCtl();
-    _sliderCtl->setPosition(Vector2(s.width / 2.0f, s.height / 3.0f));
+    _sliderCtl->setPosition(Vec2(s.width / 2.0f, s.height / 3.0f));
 
     addChild(_sliderCtl);
 }
@@ -942,7 +943,7 @@ void TwoSchedulers::onEnter()
     auto s = Director::getInstance()->getWinSize();
 
         // rotate and jump
-    auto jump1 = JumpBy::create(4, Vector2(0,0), 100, 4);
+    auto jump1 = JumpBy::create(4, Vec2(0,0), 100, 4);
     auto jump2 = jump1->reverse();
 
     auto seq = Sequence::create(jump2, jump1, NULL);
@@ -953,7 +954,7 @@ void TwoSchedulers::onEnter()
         //
     auto grossini = Sprite::create("Images/grossini.png");
     addChild(grossini);
-    grossini->setPosition(Vector2(s.width/2,100));
+    grossini->setPosition(Vec2(s.width/2,100));
     grossini->runAction(action->clone());
 
     auto defaultScheduler = Director::getInstance()->getScheduler();
@@ -979,7 +980,7 @@ void TwoSchedulers::onEnter()
         sprite->setActionManager(actionManager1);
 
         addChild(sprite);
-        sprite->setPosition(Vector2(30+15*i,100));
+        sprite->setPosition(Vec2(30+15*i,100));
 
         sprite->runAction(action->clone());
     }
@@ -1004,7 +1005,7 @@ void TwoSchedulers::onEnter()
         sprite->setActionManager(actionManager2);
 
         addChild(sprite);
-        sprite->setPosition(Vector2(s.width-30-15*i,100));
+        sprite->setPosition(Vec2(s.width-30-15*i,100));
 
         sprite->runAction(action->clone());
     }
@@ -1012,12 +1013,12 @@ void TwoSchedulers::onEnter()
     sliderCtl1 = sliderCtl();
     addChild(sliderCtl1);
     sliderCtl1->retain();
-    sliderCtl1->setPosition(Vector2(s.width / 4.0f, VisibleRect::top().y - 20));
+    sliderCtl1->setPosition(Vec2(s.width / 4.0f, VisibleRect::top().y - 20));
 
     sliderCtl2 = sliderCtl();
     addChild(sliderCtl2);
     sliderCtl2->retain();
-    sliderCtl2->setPosition(Vector2(s.width / 4.0f*3.0f, VisibleRect::top().y-20));
+    sliderCtl2->setPosition(Vec2(s.width / 4.0f*3.0f, VisibleRect::top().y-20));
 }
 
 
@@ -1146,6 +1147,47 @@ void ScheduleCallbackTest::onEnter()
 void ScheduleCallbackTest::callback(float dt)
 {
     log("In the callback of schedule(CC_CALLBACK_1(XXX::member_function), this), this, ...), dt = %f", dt);
+}
+
+
+// ScheduleUpdatePriority
+
+std::string ScheduleUpdatePriority::title() const
+{
+    return "ScheduleUpdatePriorityTest";
+}
+
+std::string ScheduleUpdatePriority::subtitle() const
+{
+    return "click to change update priority with random value";
+}
+
+bool ScheduleUpdatePriority::onTouchBegan(Touch* touch, Event* event)
+{
+    int priority = static_cast<int>(CCRANDOM_0_1() * 11) - 5;  // -5 ~ 5
+    CCLOG("change update priority to %d", priority);
+    scheduleUpdateWithPriority(priority);
+    return true;
+}
+
+void ScheduleUpdatePriority::onEnter()
+{
+    SchedulerTestLayer::onEnter();
+    
+    scheduleUpdate();
+
+    auto listener = EventListenerTouchOneByOne::create();
+    listener->onTouchBegan = CC_CALLBACK_2(ScheduleUpdatePriority::onTouchBegan, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+}
+
+void ScheduleUpdatePriority::onExit()
+{
+    unscheduleUpdate();
+}
+
+void ScheduleUpdatePriority::update(float dt)
+{
 }
 
 //------------------------------------------------------------------

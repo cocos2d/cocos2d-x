@@ -82,7 +82,7 @@
 -- @function [parent=#Label] setBMFontFilePath 
 -- @param self
 -- @param #string str
--- @param #vector2_table array
+-- @param #vec2_table vec2
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -228,7 +228,7 @@
 -- @param #string str
 -- @param #cc.TextHAlignment texthalignment
 -- @param #int int
--- @param #vector2_table array
+-- @param #vec2_table vec2
 -- @return Label#Label ret (return value: cc.Label)
         
 --------------------------------
@@ -266,8 +266,8 @@
 -- @function [parent=#Label] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #matrix_table matrix
--- @param #bool bool
+-- @param #mat4_table mat4
+-- @param #unsigned int int
         
 --------------------------------
 -- @function [parent=#Label] addChild 
@@ -300,6 +300,13 @@
 -- @function [parent=#Label] setBlendFunc 
 -- @param self
 -- @param #cc.BlendFunc blendfunc
+        
+--------------------------------
+-- @function [parent=#Label] visit 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #mat4_table mat4
+-- @param #unsigned int int
         
 --------------------------------
 -- @function [parent=#Label] getScaleX 

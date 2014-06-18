@@ -11,6 +11,7 @@ Core Developers:
     Huabing Xu (dabingnn)
     Bo Yu (boyu0)
     Wenhai Lin(Dhilan007)
+    Guanghui Qu(andyque）
 
 
 Developers:
@@ -673,6 +674,7 @@ Developers:
     xhcnb
         Device::setAccelerometerEnabled needs to be invoked before adding ACC listener.
         Fixed a bug that it will get wrong custom properties when use different count custom properties in CocosBuilder.
+        Correct TotalTime of ActionObject
         
     bopohaa
         Fixed a bug that Webp test crashes.
@@ -714,6 +716,7 @@ Developers:
     kicktheken (Kenneth Chan)
         Fixed a bug that the setBlendFunc method of some classes wasn't exposed to LUA.
         Fix lua project template crash on iOS5.1 device
+        Fix layout constant syntax error in lua-binding
         
     andyque
         Fixed a bug that missing to check self assignment of Vector<T>, Map<K,V>, Value and String.
@@ -788,6 +791,8 @@ Developers:
     newnon
         Adds getCurrentLanguageCode() which returns iso 639-1 language code
         Adds support for get response when Activity's onActivityResult is triggered
+        Improve Android projects
+        Android jni error clear & more readable log
         
     youknowone
         Adds iOS-like elastic bounceback support for cocos2d::extension::ScrollView
@@ -818,6 +823,7 @@ Developers:
         Fixed a bug that HTTPClient reports 2xx status codes as errors
         Added missing Text Font and Placeholder feature of EditBox for Mac platform
         HttpRequest uses std::function as callback
+        EditBox: mac secure input
         
     iSevenDays
         Fixed a bug that the result of 'malloc' is incompatible with type 'unsigned char *' in Image::saveImageToPNG
@@ -825,6 +831,7 @@ Developers:
         Fixed incompatible pointer conversion in external/chipmunk/src/cpArray.c
         Fixed memory leak in 'Image'
         Fixed loosing precision when using 'recv' in 'Console'
+        Fixed link error with Xcode 6 when building with 32-bit architecture
         
     ololomax
         Fixed a potential crash in SceneReader::createNodeWithSceneFile
@@ -834,18 +841,57 @@ Developers:
         
     sachingarg05
         Re-added orientation change callback in java activity
+        GLProgram should not abort() if shader compilation fails, returning false is better.
         
     dplusic
         Fixed that cc.pGetAngle may return wrong value
         
     zifter
         Fixed a bug that the effect of particle loaded from CocosBuilder is incorrectly
+        Fix twice calling onExit
+        Fixed bug with cascade opacity and color for control button
+        Fix Progress Action. Not working with charging from 100 to 0. 
         
     twhittock
         Fixed a bug that Application::run returns wrong value on Mac platform
         
     asmodehn
         Added SDK / NDK detection based on PATH in Setup.py
+        
+    myourys
+        Make cpp template support Eclipse c++ project
+        
+    NatWeiss
+        Fix compilation error using arch i386
+        
+    favorcode
+        Correct some doxygen comment
+        
+    asuuma
+        Fix Repeat will run one more over in rare situations.
+        
+    uqtimes 
+        Fix NSNotificationCenter and NSTimer leaks
+        
+    ntotani
+        fix building error in lua-binding in release mode
+        
+    kezhuw
+        AutoReleasePool manager improvement
+        
+    zhouxiaoxiaoxujian
+        Added TextField::getStringLength()
+        Add shadow, outline, glow filter support for UIText
+        
+    QiuleiWang
+        Fix the bug that calculated height of multi-line string was incorrect on iOS
+        
+    Rumist
+        Fix the bug that the result of Director->convertToUI() is error.
+        
+    kyokomi
+        Fix the bug that UIButton doesn't support TTF font
+        Fix a but of TextReader
     
 Retired Core Developers:
     WenSheng Yang

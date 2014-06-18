@@ -12,6 +12,7 @@ import traceback
 import platform
 import subprocess
 import codecs
+from shutil import copy
 
 #set Jenkins build description using submitDescription to mock browser behavior
 #TODO: need to set parent build description 
@@ -46,6 +47,36 @@ def make_temp_dir():
           cmd = "mklink /J "+os.environ['WORKSPACE']+os.sep+"tests"+os.sep +p+os.sep+"proj.android"+os.sep+"obj " + os.environ['WORKSPACE']+os.sep+"android_build_objs"
           print cmd
           os.system(cmd)
+
+def check_current_3rd_libs(branch):
+    #get current_libs config
+    backup_files = range(2)
+    current_files = range(2)
+    config_file_paths = ['external/config.json','templates/lua-template-runtime/runtime/config.json']
+    if (branch == 'v2'):
+        config_file_paths = ['external/config.json']
+    for i, config_file_path in enumerate(config_file_paths):
+        if not os.path.isfile(config_file_path):
+            raise Exception("Could not find 'external/config.json'")
+
+        with open(config_file_path) as data_file:
+            data = json.load(data_file)
+
+        current_3rd_libs_version = data["version"]
+        filename = current_3rd_libs_version + '.zip'
+        node_name = os.environ['NODE_NAME']
+        backup_file = '../../../cocos-2dx-external/node/' + node_name + '/' + filename
+        backup_files[i] = backup_file
+        current_file = filename
+        current_files[i] = current_file
+        if os.path.isfile(backup_file):
+          copy(backup_file, current_file)
+    #run download-deps.py
+    os.system('python download-deps.py -r no')
+    #backup file
+    for i, backup_file in enumerate(backup_files):
+        current_file = current_files[i]
+        copy(current_file, backup_file)
 
 def main():
     #get tag
@@ -106,6 +137,8 @@ def main():
         os.system('git reset --hard')
         os.system("git clean -xdf -f")
         make_temp_dir()
+        #copy check_current_3rd_libs
+        check_current_3rd_libs(branch)
         if(branch == 'v3'):
           # Generate binding glue codes
           ret = os.system("python tools/jenkins-scripts/gen_jsb.py")
@@ -116,7 +149,7 @@ def main():
             ret = os.system("python build/android-build.py -b " + mode + " -n -j10 all")
             # create and save apk
             if(ret == 0):
-              os.system('android update project -p cocos/2d/platform/android/java/ -t android-13')
+              os.system('android update project -p cocos/platform/android/java/ -t android-13')
               for i, test in enumerate(tests_dirs):
                 os.system('android update project -p ' + test + ' -t android-13')
                 local_apk = test + '/' + tests_names[i] + '.apk'

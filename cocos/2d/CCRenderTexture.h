@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 #include "2d/CCNode.h"
 #include "2d/CCSprite.h"
-#include "2d/platform/CCImage.h"
+#include "platform/CCImage.h"
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCCustomCommand.h"
 
@@ -103,12 +103,12 @@ public:
     /** saves the texture into a file using JPEG format. The file will be saved in the Documents folder.
         Returns true if the operation is successful.
      */
-    bool saveToFile(const std::string& filename);
+    bool saveToFile(const std::string& filename, bool isRGBA = true);
 
     /** saves the texture into a file. The format could be JPG or PNG. The file will be saved in the Documents folder.
         Returns true if the operation is successful.
      */
-    bool saveToFile(const std::string& filename, Image::Format format);
+    bool saveToFile(const std::string& filename, Image::Format format, bool isRGBA = true);
     
     /** Listen "come to background" message, and save render texture.
      It only has effect on Android.
@@ -153,8 +153,8 @@ public:
     };
     
     // Overrides
-    virtual void visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated) override;
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
+    virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
     //flag: use stack matrix computed from scene hierarchy or generate new modelView and projection matrix
     void setKeepMatrix(bool keepMatrix);
@@ -163,7 +163,7 @@ public:
     //fullRect: the total size of screen
     //fullViewport: the total viewportSize
     */
-    void setVirtualViewport(const Vector2& rtBegin, const Rect& fullRect, const Rect& fullViewport);
+    void setVirtualViewport(const Vec2& rtBegin, const Rect& fullRect, const Rect& fullViewport);
 
 public:
     // XXX should be procted.
@@ -222,10 +222,10 @@ protected:
     void onClear();
     void onClearDepth();
 
-    void onSaveToFile(const std::string& fileName);
+    void onSaveToFile(const std::string& fileName, bool isRGBA = true);
     
-    Matrix _oldTransMatrix, _oldProjMatrix;
-    Matrix _transformMatrix, _projectionMatrix;
+    Mat4 _oldTransMatrix, _oldProjMatrix;
+    Mat4 _transformMatrix, _projectionMatrix;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(RenderTexture);
 

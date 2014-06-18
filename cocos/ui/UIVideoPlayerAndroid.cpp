@@ -30,6 +30,9 @@
 #include <jni.h>
 #include <string>
 #include "jni/JniHelper.h"
+#include "base/CCDirector.h"
+#include "CCGLView.h"
+#include "base/CCEventListenerKeyboard.h"
 
 //-----------------------------------------------------------------------------------------------------------
 #define  CLASS_NAME "org/cocos2dx/lib/Cocos2dxVideoHelper"
@@ -156,7 +159,7 @@ static std::unordered_map<int, VideoPlayer*> s_allVideoPlayers;
 
 VideoPlayer::VideoPlayer()
 : _videoPlayerIndex(-1)
-, _callback(nullptr)
+, _eventCallback(nullptr)
 , _fullScreenEnabled(false)
 , _fullScreenDirty(false)
 , _keepAspectRatioEnabled(false)
@@ -181,25 +184,25 @@ VideoPlayer::~VideoPlayer()
     removeVideoWidgetJNI(_videoPlayerIndex);
 }
 
-void VideoPlayer::setVideoFileName(const std::string& fileName)
+void VideoPlayer::setFileName(const std::string& fileName)
 {
-    _videoUrl = fileName;
-    _videoSource = VideoPlayer::VideoSource::FILENAME;
-    setVideoURLJNI(_videoPlayerIndex, (int)VideoSource::FILENAME,_videoUrl);
+    _videoURL = fileName;
+    _videoSource = VideoPlayer::Source::FILENAME;
+    setVideoURLJNI(_videoPlayerIndex, (int)Source::FILENAME,_videoURL);
 }
 
-void VideoPlayer::setVideoURL(const std::string& videoUrl)
+void VideoPlayer::setURL(const std::string& videoUrl)
 {
-    _videoUrl = videoUrl;
-    _videoSource = VideoPlayer::VideoSource::URL;
-    setVideoURLJNI(_videoPlayerIndex,(int)VideoSource::URL,_videoUrl);
+    _videoURL = videoUrl;
+    _videoSource = VideoPlayer::Source::URL;
+    setVideoURLJNI(_videoPlayerIndex,(int)Source::URL,_videoURL);
 }
 
-void VideoPlayer::draw(Renderer* renderer, const Matrix &transform, bool transformUpdated)
+void VideoPlayer::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags)
 {
-    cocos2d::ui::Widget::draw(renderer,transform,transformUpdated);
+    cocos2d::ui::Widget::draw(renderer,transform,flags);
 
-    if (transformUpdated || _fullScreenDirty)
+    if ((flags&FLAGS_TRANSFORM_DIRTY) || _fullScreenDirty)
     {
         _fullScreenDirty = false;
         auto directorInstance = Director::getInstance();
@@ -209,7 +212,7 @@ void VideoPlayer::draw(Renderer* renderer, const Matrix &transform, bool transfo
         if (_fullScreenEnabled)
         {
             setVideoRectJNI(_videoPlayerIndex,0,0,frameSize.width,frameSize.height);
-        } 
+        }
         else
         {
             auto winSize = directorInstance->getWinSize();
@@ -223,7 +226,7 @@ void VideoPlayer::draw(Renderer* renderer, const Matrix &transform, bool transfo
             setVideoRectJNI(_videoPlayerIndex,uiLeft,uiTop,
                 (rightTop.x - leftBottom.x) * glView->getScaleX(),
                 (rightTop.y - leftBottom.y) * glView->getScaleY());
-        } 
+        }
     }
 
 #if CC_VIDEOPLAYER_DEBUG_DRAW
@@ -242,7 +245,7 @@ void VideoPlayer::setFullScreenEnabled(bool enabled)
     }
 }
 
-bool VideoPlayer::isFullScreenEnabled()
+bool VideoPlayer::isFullScreenEnabled()const
 {
     return _fullScreenEnabled;
 }
@@ -281,41 +284,41 @@ void VideoPlayer::drawDebugData()
 }
 #endif
 
-void VideoPlayer::startVideo()
+void VideoPlayer::play()
 {
-    if (! _videoUrl.empty())
+    if (! _videoURL.empty())
     {
         startVideoJNI(_videoPlayerIndex);
     }
 }
 
-void VideoPlayer::pauseVideo()
+void VideoPlayer::pause()
 {
-    if (! _videoUrl.empty())
+    if (! _videoURL.empty())
     {
         pauseVideoJNI(_videoPlayerIndex);
     }
 }
 
-void VideoPlayer::resumeVideo()
+void VideoPlayer::resume()
 {
-    if (! _videoUrl.empty())
+    if (! _videoURL.empty())
     {
         resumeVideoJNI(_videoPlayerIndex);
     }
 }
 
-void VideoPlayer::stopVideo()
+void VideoPlayer::stop()
 {
-    if (! _videoUrl.empty())
+    if (! _videoURL.empty())
     {
         stopVideoJNI(_videoPlayerIndex);
     }
 }
 
-void VideoPlayer::seekVideoTo(float sec)
+void VideoPlayer::seekTo(float sec)
 {
-    if (! _videoUrl.empty())
+    if (! _videoURL.empty())
     {
         seekVideoToJNI(_videoPlayerIndex,int(sec * 1000));
     }
@@ -330,18 +333,18 @@ void VideoPlayer::setVisible(bool visible)
 {
     cocos2d::ui::Widget::setVisible(visible);
 
-    if (! _videoUrl.empty())
+    if (! _videoURL.empty())
     {
         setVideoVisible(_videoPlayerIndex,visible);
     } 
 }
 
-void VideoPlayer::addEventListener(const VideoPlayer::EventCallback& callback)
+void VideoPlayer::addEventListener(const VideoPlayer::ccVideoPlayerCallback& callback)
 {
-    _callback = callback;
+    _eventCallback = callback;
 }
 
-void VideoPlayer::onVideoEvent(VideoPlayer::EventType event)
+void VideoPlayer::onPlayEvent(VideoPlayer::EventType event)
 {
     if (event == VideoPlayer::EventType::PLAYING) {
         _isPlaying = true;
@@ -349,9 +352,31 @@ void VideoPlayer::onVideoEvent(VideoPlayer::EventType event)
         _isPlaying = false;
     }
 
-    if (_callback)
+    if (_eventCallback)
     {
-        _callback(this,event);
+        _eventCallback(this,event);
+    }
+}
+
+cocos2d::ui::Widget* VideoPlayer::createCloneInstance()
+{
+    return VideoPlayer::create();
+}
+
+void VideoPlayer::copySpecialProperties(Widget *widget)
+{
+    VideoPlayer* videoPlayer = dynamic_cast<VideoPlayer*>(widget);
+    if (videoPlayer)
+    {
+        _isPlaying = videoPlayer->_isPlaying;
+        _fullScreenEnabled = videoPlayer->_fullScreenEnabled;
+        _fullScreenDirty = videoPlayer->_fullScreenDirty;
+        _videoURL = videoPlayer->_videoURL;
+        _keepAspectRatioEnabled = videoPlayer->_keepAspectRatioEnabled;
+        _videoSource = videoPlayer->_videoSource;
+        _videoPlayerIndex = videoPlayer->_videoPlayerIndex;
+        _eventCallback = videoPlayer->_eventCallback;
+        _videoView = videoPlayer->_videoView;
     }
 }
 
@@ -360,7 +385,7 @@ void executeVideoCallback(int index,int event)
     auto it = s_allVideoPlayers.find(index);
     if (it != s_allVideoPlayers.end())
     {
-        s_allVideoPlayers[index]->onVideoEvent((VideoPlayer::EventType)event);
+        s_allVideoPlayers[index]->onPlayEvent((VideoPlayer::EventType)event);
     }
 }
 

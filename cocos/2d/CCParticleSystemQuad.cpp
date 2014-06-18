@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "2d/CCParticleSystemQuad.h"
 #include "2d/CCSpriteFrame.h"
 #include "2d/CCParticleBatchNode.h"
-#include "2d/CCTextureAtlas.h"
+#include "renderer/CCTextureAtlas.h"
 #include "base/CCDirector.h"
 #include "base/CCEventType.h"
 #include "base/CCConfiguration.h"
@@ -131,7 +131,7 @@ bool ParticleSystemQuad::initWithTotalParticles(int numberOfParticles)
             setupVBO();
         }
 
-        setGLProgramState(GLProgramState::getWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
+        setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
         // Need to listen the event only when not use batchnode, because it will use VBO
@@ -239,7 +239,7 @@ void ParticleSystemQuad::setTexture(Texture2D* texture)
 
 void ParticleSystemQuad::setDisplayFrame(SpriteFrame *spriteFrame)
 {
-    CCASSERT(spriteFrame->getOffsetInPixels().equals(Vector2::ZERO), 
+    CCASSERT(spriteFrame->getOffsetInPixels().equals(Vec2::ZERO), 
              "QuadParticle only supports SpriteFrames with no offsets");
 
     // update texture before updating texture rect
@@ -265,7 +265,7 @@ void ParticleSystemQuad::initIndices()
     }
 }
 
-void ParticleSystemQuad::updateQuadWithParticle(tParticle* particle, const Vector2& newPosition)
+void ParticleSystemQuad::updateQuadWithParticle(tParticle* particle, const Vec2& newPosition)
 {
     V3F_C4B_T2F_Quad *quad;
 
@@ -368,13 +368,13 @@ void ParticleSystemQuad::postStep()
 }
 
 // overriding draw method
-void ParticleSystemQuad::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void ParticleSystemQuad::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     CCASSERT( _particleIdx == 0 || _particleIdx == _particleCount, "Abnormal error in particle quad");
     //quad command
     if(_particleIdx > 0)
     {
-        _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgram(), _blendFunc, _quads, _particleIdx, transform);
+        _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, _quads, _particleIdx, transform);
         renderer->addCommand(&_quadCommand);
     }
 }
@@ -523,7 +523,6 @@ void ParticleSystemQuad::listenBackToForeground(EventCustom* event)
 
 bool ParticleSystemQuad::allocMemory()
 {
-    CCASSERT( ( !_quads && !_indices), "Memory already alloced");
     CCASSERT( !_batchNode, "Memory should not be alloced when not using batchNode");
 
     CC_SAFE_FREE(_quads);

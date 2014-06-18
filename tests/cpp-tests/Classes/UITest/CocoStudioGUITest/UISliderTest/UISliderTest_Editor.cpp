@@ -24,7 +24,7 @@ bool UISliderTest_Editor::init()
         _touchGroup->addChild(_layout);
         Size screenSize = CCDirector::getInstance()->getWinSize();
         Size rootSize = _layout->getSize();
-        _touchGroup->setPosition(Vector2((screenSize.width - rootSize.width) / 2,
+        _touchGroup->setPosition(Vec2((screenSize.width - rootSize.width) / 2,
                                        (screenSize.height - rootSize.height) / 2));
         
         Layout* root = static_cast<Layout*>(_layout->getChildByName("root_Panel"));
@@ -45,8 +45,8 @@ bool UISliderTest_Editor::init()
         _displayValueLabel = Text::create();
         _displayValueLabel->setFontName("fonts/Marker Felt.ttf");
         _displayValueLabel->setFontSize(30);
-        _displayValueLabel->setText("No event");
-        _displayValueLabel->setPosition(Vector2(_layout->getSize().width / 2,
+        _displayValueLabel->setString("No event");
+        _displayValueLabel->setPosition(Vec2(_layout->getSize().width / 2,
                                               _layout->getSize().height - _displayValueLabel->getSize().height * 1.75f));
         _touchGroup->addChild(_displayValueLabel);
         
@@ -63,7 +63,7 @@ void UISliderTest_Editor::sliderEvent(Ref *pSender, Slider::EventType type)
         case Slider::EventType::ON_PERCENTAGE_CHANGED:
         {
             Slider* slider = static_cast<Slider*>(pSender);
-            _displayValueLabel->setText(CCString::createWithFormat("percent %d", slider->getPercent())->getCString());
+            _displayValueLabel->setString(CCString::createWithFormat("percent %d", slider->getPercent())->getCString());
         }
             break;
             

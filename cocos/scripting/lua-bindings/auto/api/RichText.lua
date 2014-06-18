@@ -12,7 +12,7 @@
 --------------------------------
 -- @function [parent=#RichText] setAnchorPoint 
 -- @param self
--- @param #vector2_table array
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#RichText] pushBackElement 

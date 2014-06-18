@@ -58,11 +58,11 @@ public:
     static void shutdownFreeType();
 
     bool     isDistanceFieldEnabled() const { return _distanceFieldEnabled;}
-    int      getOutlineSize() const { return _outlineSize; }
+    float    getOutlineSize() const { return _outlineSize; }
     void     renderCharAt(unsigned char *dest,int posX, int posY, unsigned char* bitmap,long bitmapWidth,long bitmapHeight); 
 
     virtual FontAtlas   * createFontAtlas() override;
-    virtual int         * getHorizontalKerningForTextUTF16(unsigned short *text, int &outNumLetters) const override;
+    virtual int         * getHorizontalKerningForTextUTF16(const std::u16string& text, int &outNumLetters) const override;
     
     unsigned char       * getGlyphBitmap(unsigned short theChar, long &outWidth, long &outHeight, Rect &outRect,int &xAdvance);
     
@@ -89,7 +89,7 @@ private:
     FT_Stroker        _stroker;
     std::string       _fontName;
     bool              _distanceFieldEnabled;
-    int               _outlineSize;
+    float             _outlineSize;
 };
 
 NS_CC_END

@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "2d/CCAnimation.h"
 #include "2d/CCSpriteFrame.h"
 #include "2d/CCSpriteFrameCache.h"
-#include "2d/platform/CCFileUtils.h"
+#include "platform/CCFileUtils.h"
 #include "deprecated/CCString.h"
 
 using namespace std;
@@ -174,7 +174,7 @@ void AnimationCache::parseVersion2(const ValueMap& animations)
             float delayUnits = entry["delayUnits"].asFloat();
             Value& userInfo = entry["notification"];
 
-            AnimationFrame *animFrame = AnimationFrame::create(spriteFrame, delayUnits, userInfo.asValueMap());
+            AnimationFrame *animFrame = AnimationFrame::create(spriteFrame, delayUnits, userInfo.getType() == Value::Type::MAP ? userInfo.asValueMap() : ValueMapNull);
 
             array.pushBack(animFrame);
         }

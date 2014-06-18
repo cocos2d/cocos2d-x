@@ -42,8 +42,6 @@ THE SOFTWARE.
 
 namespace cocostudio {
 
-USING_NS_CC_MATH;
-
 class Bone;
 
 /**
@@ -107,7 +105,7 @@ public:
     virtual void setShape(cpShape *shape) { _shape = shape; }
     virtual cpShape *getShape() const { return _shape; }
 #elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
-    virtual const std::vector<cocos2d::Vector2> &getCalculatedVertexList() const { return _calculatedVertexList; }
+    virtual const std::vector<cocos2d::Vec2> &getCalculatedVertexList() const { return _calculatedVertexList; }
 #endif
 
 private:
@@ -119,7 +117,7 @@ private:
     cpShape *_shape;
     ColliderFilter *_filter;
 #elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
-    std::vector<cocos2d::Vector2> _calculatedVertexList;
+    std::vector<cocos2d::Vec2> _calculatedVertexList;
 #endif
 
     ContourData *_contourData;
@@ -157,7 +155,7 @@ public:
     void removeContourData(ContourData *contourData);
     void removeAll();
 
-    void updateTransform(Matrix &t);
+    void updateTransform(cocos2d::Mat4 &t);
 
     void setActive(bool active);
     bool getActive();

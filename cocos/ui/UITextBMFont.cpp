@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "ui/UITextBMFont.h"
+#include "2d/CCLabel.h"
 
 NS_CC_BEGIN
 
@@ -64,7 +65,7 @@ TextBMFont* TextBMFont::create(const std::string &text, const std::string &filen
     if (widget && widget->init())
     {
         widget->setFntFile(filename);
-        widget->setText(text);
+        widget->setString(text);
         widget->autorelease();
         return widget;
     }
@@ -86,12 +87,14 @@ void TextBMFont::setFntFile(const std::string& fileName)
     }
     _fntFileName = fileName;
     _labelBMFontRenderer->setBMFontFilePath(fileName);
-    updateRGBAToRenderer(_labelBMFontRenderer);
+    
+    _labelBMFontRenderer->setColor(this->getColor());
+    _labelBMFontRenderer->setOpacity(this->getOpacity());
     _fntFileHasInit = true;
-    setText(_stringValue);
+    setString(_stringValue);
 }
 
-void TextBMFont::setText(const std::string& value)
+void TextBMFont::setString(const std::string& value)
 {
     _stringValue = value;
     if (!_fntFileHasInit)
@@ -103,9 +106,14 @@ void TextBMFont::setText(const std::string& value)
     _labelBMFontRendererAdaptDirty = true;
 }
 
-const std::string TextBMFont::getStringValue()
+const std::string& TextBMFont::getString()const
 {
     return _stringValue;
+}
+    
+ssize_t TextBMFont::getStringLength()const
+{
+    return _labelBMFontRenderer->getStringLength();
 }
 
 void TextBMFont::onSizeChanged()
@@ -159,21 +167,6 @@ std::string TextBMFont::getDescription() const
 {
     return "TextBMFont";
 }
-    
-void TextBMFont::updateTextureColor()
-{
-    updateColorToRenderer(_labelBMFontRenderer);
-}
-
-void TextBMFont::updateTextureOpacity()
-{
-    updateOpacityToRenderer(_labelBMFontRenderer);
-}
-
-void TextBMFont::updateTextureRGBA()
-{
-    updateRGBAToRenderer(_labelBMFontRenderer);
-}
 
 Widget* TextBMFont::createCloneInstance()
 {
@@ -186,7 +179,7 @@ void TextBMFont::copySpecialProperties(Widget *widget)
     if (labelBMFont)
     {
         setFntFile(labelBMFont->_fntFileName);
-        setText(labelBMFont->_stringValue);
+        setString(labelBMFont->_stringValue);
     }
 }
 

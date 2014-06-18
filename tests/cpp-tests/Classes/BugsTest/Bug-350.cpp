@@ -11,7 +11,7 @@ bool Bug350Layer::init()
     {
         auto size = Director::getInstance()->getWinSize();
         auto background = Sprite::create("Hello.png");
-        background->setPosition(Vector2(size.width/2, size.height/2));
+        background->setPosition(Vec2(size.width/2, size.height/2));
         addChild(background);
         return true;
     }

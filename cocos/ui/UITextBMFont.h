@@ -29,6 +29,8 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+class Label;
+
 namespace ui {
     
 /**
@@ -62,10 +64,21 @@ public:
     void setFntFile(const std::string& fileName);
     
     /** set string value for labelbmfont*/
-    void setText(const std::string& value);
+    CC_DEPRECATED_ATTRIBUTE void setText(const std::string& value){this->setString(value);}
+    void setString(const std::string& value);
     
     /** get string value for labelbmfont*/
-    const std::string getStringValue();
+    CC_DEPRECATED_ATTRIBUTE const std::string& getStringValue()const{return this->getString();}
+    const std::string& getString()const;
+    
+    /**
+     * Gets the string length of the label.
+     * Note: This length will be larger than the raw string length,
+     * if you want to get the raw string length, you should call this->getString().size() instead
+     *
+     * @return  string length.
+     */
+    ssize_t getStringLength()const;
 
     virtual const Size& getVirtualRendererSize() const override;
     virtual Node* getVirtualRenderer() override;
@@ -76,15 +89,13 @@ public:
 protected:
     virtual void initRenderer() override;
     virtual void onSizeChanged() override;
-    virtual void updateTextureColor() override;
-    virtual void updateTextureOpacity() override;
-    virtual void updateTextureRGBA() override;
+   
     void labelBMFontScaleChangedWithSize();
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
     virtual void adaptRenderers() override;
 protected:
-    cocos2d::Label* _labelBMFontRenderer;
+    Label* _labelBMFontRenderer;
     bool _fntFileHasInit;
     std::string _fntFileName;
     std::string _stringValue;

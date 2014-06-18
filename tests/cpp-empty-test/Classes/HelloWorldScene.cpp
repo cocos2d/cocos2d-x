@@ -42,11 +42,11 @@ bool HelloWorld::init()
                                         "CloseSelected.png",
                                         CC_CALLBACK_1(HelloWorld::menuCloseCallback,this));
     
-    closeItem->setPosition(origin + Vector2(visibleSize) - Vector2(closeItem->getContentSize() / 2));
+    closeItem->setPosition(origin + Vec2(visibleSize) - Vec2(closeItem->getContentSize() / 2));
 
     // create menu, it's an autorelease object
     auto menu = Menu::create(closeItem, NULL);
-    menu->setPosition(Vector2::ZERO);
+    menu->setPosition(Vec2::ZERO);
     this->addChild(menu, 1);
     
     /////////////////////////////
@@ -58,7 +58,7 @@ bool HelloWorld::init()
     auto label = LabelTTF::create("Hello World", "Arial", TITLE_FONT_SIZE);
     
     // position the label on the center of the screen
-    label->setPosition(Vector2(origin.x + visibleSize.width/2,
+    label->setPosition(Vec2(origin.x + visibleSize.width/2,
                             origin.y + visibleSize.height - label->getContentSize().height));
 
     // add the label as a child to this layer
@@ -68,7 +68,7 @@ bool HelloWorld::init()
     auto sprite = Sprite::create("HelloWorld.png");
 
     // position the sprite on the center of the screen
-    sprite->setPosition(Vector2(visibleSize / 2) + origin);
+    sprite->setPosition(Vec2(visibleSize / 2) + origin);
 
     // add the sprite as a child to this layer
     this->addChild(sprite);

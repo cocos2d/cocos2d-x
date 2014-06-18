@@ -42,8 +42,8 @@ bool Bug914Layer::init()
         {
             layer = LayerColor::create(Color4B(i*20, i*20, i*20,255));
             layer->setContentSize(Size(i*100, i*100));
-            layer->setPosition(Vector2(size.width/2, size.height/2));
-            layer->setAnchorPoint(Vector2(0.5f, 0.5f));
+            layer->setPosition(Vec2(size.width/2, size.height/2));
+            layer->setAnchorPoint(Vec2(0.5f, 0.5f));
             layer->ignoreAnchorPointForPosition(false);
             addChild(layer, -1-i);
         }
@@ -54,11 +54,11 @@ bool Bug914Layer::init()
 
         auto menu = Menu::create(item1, NULL);
         menu->alignItemsVertically();
-        menu->setPosition(Vector2(size.width/2, 100));
+        menu->setPosition(Vec2(size.width/2, 100));
         addChild(menu);
 
         // position the label on the center of the screen
-        label->setPosition(Vector2( size.width /2 , size.height/2 ));
+        label->setPosition(Vec2( size.width /2 , size.height/2 ));
 
         // add the label as a child to this Layer
         addChild(label);

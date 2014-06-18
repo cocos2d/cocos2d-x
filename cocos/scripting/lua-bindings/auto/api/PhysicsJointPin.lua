@@ -8,7 +8,7 @@
 -- @param self
 -- @param #cc.PhysicsBody physicsbody
 -- @param #cc.PhysicsBody physicsbody
--- @param #vector2_table array
+-- @param #vec2_table vec2
 -- @return PhysicsJointPin#PhysicsJointPin ret (return value: cc.PhysicsJointPin)
         
 return nil

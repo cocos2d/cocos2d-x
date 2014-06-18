@@ -12,7 +12,7 @@
 -- @function [parent=#PhysicsShapePolygon] getPoint 
 -- @param self
 -- @param #int int
--- @return vector2_table#vector2_table ret (return value: vector2_table)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#PhysicsShapePolygon] calculateDefaultMoment 
@@ -22,6 +22,6 @@
 --------------------------------
 -- @function [parent=#PhysicsShapePolygon] getCenter 
 -- @param self
--- @return vector2_table#vector2_table ret (return value: vector2_table)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 return nil

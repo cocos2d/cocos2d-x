@@ -99,6 +99,7 @@ endif()
 
 if(MINGW)
   add_definitions(-DGLEW_STATIC)
+  add_definitions(-D__SSIZE_T)
 endif()
 
 
@@ -130,6 +131,8 @@ endif()
 include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos
+  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/platform/desktop
+  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/platform/${PLATFORM_FOLDER}
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/audio/include
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/editor-support
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/scripting/lua-bindings/auto
@@ -140,8 +143,6 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/external/unzip
   ${CMAKE_CURRENT_SOURCE_DIR}/external/edtaa3func
   ${CMAKE_CURRENT_SOURCE_DIR}/external/chipmunk/include/chipmunk
-  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/2d/platform/desktop
-  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/2d/platform/${PLATFORM_FOLDER}
   ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/include/${PLATFORM_FOLDER}
   ${CMAKE_CURRENT_SOURCE_DIR}/external/png/include/${PLATFORM_FOLDER}
   ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/include/${PLATFORM_FOLDER}
@@ -150,9 +151,10 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/include/${PLATFORM_FOLDER}
   ${CMAKE_CURRENT_SOURCE_DIR}/external/websockets/include/${PLATFORM_FOLDER}
   ${CMAKE_CURRENT_SOURCE_DIR}/external/xxhash
+  ${CMAKE_CURRENT_SOURCE_DIR}/external/xxtea
 )
 
-if(WIN32)
+if(WIN32 AND NOT MINGW)
   include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/external/${PLATFORM_FOLDER}-specific/gles/include/OGLES
     ${CMAKE_CURRENT_SOURCE_DIR}/external/${PLATFORM_FOLDER}-specific/icon/include
@@ -257,6 +259,9 @@ add_subdirectory(external/lua/tolua)
 
 # luabinding
 add_subdirectory(cocos/scripting/lua-bindings)
+
+# xxtea
+add_subdirectory(external/xxtea)
 endif(BUILD_LIBS_LUA)
 
 # build tests 

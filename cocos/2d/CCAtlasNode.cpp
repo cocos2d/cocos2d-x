@@ -26,10 +26,10 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCAtlasNode.h"
-#include "2d/CCTextureAtlas.h"
-#include "2d/CCTextureCache.h"
+#include "renderer/CCTextureAtlas.h"
 #include "base/CCDirector.h"
 #include "base/CCDirector.h"
+#include "renderer/CCTextureCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramState.h"
@@ -106,7 +106,7 @@ bool AtlasNode::initWithTexture(Texture2D* texture, int tileWidth, int tileHeigh
     _quadsToDraw = itemsToRender;
 
     // shader stuff
-    setGLProgramState(GLProgramState::getWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
+    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
 
     return true;
 }
@@ -133,12 +133,12 @@ void AtlasNode::updateAtlasValues()
 }
 
 // AtlasNode - draw
-void AtlasNode::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void AtlasNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     _quadCommand.init(
               _globalZOrder,
               _textureAtlas->getTexture()->getName(),
-              getGLProgram(),
+              getGLProgramState(),
               _blendFunc,
               _textureAtlas->getQuads(),
               _quadsToDraw,

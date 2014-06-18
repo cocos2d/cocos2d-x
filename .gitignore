@@ -133,5 +133,7 @@ project.properties
 /external/win32-specific/
 /external/winrt-specific/
 /external/wp8-specific/
-/v*-deps-*.zip
 /external/version.json
+/templates/lua-template-runtime/runtime
+/v*-deps-*.zip
+/v*-lua-runtime-*.zip

@@ -6,7 +6,7 @@
 --------------------------------
 -- overload function: setEye(float, float, float)
 --          
--- overload function: setEye(vector3_table)
+-- overload function: setEye(vec3_table)
 --          
 -- @function [parent=#ActionCamera] setEye
 -- @param self
@@ -17,27 +17,27 @@
 --------------------------------
 -- @function [parent=#ActionCamera] getEye 
 -- @param self
--- @return vector3_table#vector3_table ret (return value: vector3_table)
+-- @return vec3_table#vec3_table ret (return value: vec3_table)
         
 --------------------------------
 -- @function [parent=#ActionCamera] setUp 
 -- @param self
--- @param #vector3_table array
+-- @param #vec3_table vec3
         
 --------------------------------
 -- @function [parent=#ActionCamera] getCenter 
 -- @param self
--- @return vector3_table#vector3_table ret (return value: vector3_table)
+-- @return vec3_table#vec3_table ret (return value: vec3_table)
         
 --------------------------------
 -- @function [parent=#ActionCamera] setCenter 
 -- @param self
--- @param #vector3_table array
+-- @param #vec3_table vec3
         
 --------------------------------
 -- @function [parent=#ActionCamera] getUp 
 -- @param self
--- @return vector3_table#vector3_table ret (return value: vector3_table)
+-- @return vec3_table#vec3_table ret (return value: vec3_table)
         
 --------------------------------
 -- @function [parent=#ActionCamera] startWithTarget 

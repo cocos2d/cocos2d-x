@@ -60,10 +60,17 @@ const Margin MarginZero = Margin();
 *   @js NA
 *   @lua NA
 */
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#ifdef RELATIVE
+#undef RELATIVE
+#endif
+#endif
+
 class LayoutParameter : public Ref
 {
 public:
-    enum class Type : int
+    enum class Type
     {
         NONE = 0,
         LINEAR,
@@ -121,6 +128,15 @@ public:
 protected:
     Margin _margin;
     Type _layoutParameterType;
+};
+    
+class LayoutParameterProtocol
+{
+public:
+    LayoutParameterProtocol(){}
+    virtual ~LayoutParameterProtocol(){}
+    
+    virtual LayoutParameter* getLayoutParameter() const= 0;
 };
 
     
@@ -298,7 +314,7 @@ protected:
     std::string _relativeWidgetName;
     std::string _relativeLayoutName;
     bool _put;
-    friend class RelativeLayoutExecutant;
+    friend class RelativeLayoutManager;
 };
 
 }

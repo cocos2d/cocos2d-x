@@ -182,7 +182,7 @@ bool Armature::init(const std::string& name)
 
         }
 
-        setGLProgramState(GLProgramState::getWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+        setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
         setCascadeOpacityEnabled(true);
         setCascadeColorEnabled(true);
@@ -316,7 +316,7 @@ const cocos2d::Map<std::string, Bone*>& Armature::getBoneDic() const
     return _boneDic;
 }
 
-const Matrix& Armature::getNodeToParentTransform() const
+const Mat4& Armature::getNodeToParentTransform() const
 {
     if (_transformDirty)
         _armatureTransformDirty = true;
@@ -329,25 +329,25 @@ void Armature::updateOffsetPoint()
     // Set contentsize and Calculate anchor point.
     Rect rect = getBoundingBox();
     setContentSize(rect.size);
-    _offsetPoint = Vector2(-rect.origin.x,  -rect.origin.y);
+    _offsetPoint = Vec2(-rect.origin.x,  -rect.origin.y);
     if (rect.size.width != 0 && rect.size.height != 0)
     {
-        setAnchorPoint(Vector2(_offsetPoint.x / rect.size.width, _offsetPoint.y / rect.size.height));
+        setAnchorPoint(Vec2(_offsetPoint.x / rect.size.width, _offsetPoint.y / rect.size.height));
     }
 }
 
-void Armature::setAnchorPoint(const Vector2& point)
+void Armature::setAnchorPoint(const Vec2& point)
 {
     if( ! point.equals(_anchorPoint))
     {
         _anchorPoint = point;
-        _anchorPointInPoints = Vector2(_contentSize.width * _anchorPoint.x - _offsetPoint.x, _contentSize.height * _anchorPoint.y - _offsetPoint.y);
-        _realAnchorPointInPoints = Vector2(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y);
+        _anchorPointInPoints = Vec2(_contentSize.width * _anchorPoint.x - _offsetPoint.x, _contentSize.height * _anchorPoint.y - _offsetPoint.y);
+        _realAnchorPointInPoints = Vec2(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y);
         _transformDirty = _inverseDirty = true;
     }
 }
 
-const Vector2& Armature::getAnchorPointInPoints() const
+const Vec2& Armature::getAnchorPointInPoints() const
 {
     return _realAnchorPointInPoints;
 }
@@ -378,7 +378,7 @@ void Armature::update(float dt)
     _armatureTransformDirty = false;
 }
 
-void Armature::draw(cocos2d::Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void Armature::draw(cocos2d::Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     if (_parentBone == nullptr && _batchNode == nullptr)
     {
@@ -408,17 +408,17 @@ void Armature::draw(cocos2d::Renderer *renderer, const Matrix &transform, bool t
                 {
                     skin->setBlendFunc(bone->getBlendFunc());
                 }
-                skin->draw(renderer, transform, transformUpdated);
+                skin->draw(renderer, transform, flags);
             }
             break;
             case CS_DISPLAY_ARMATURE:
             {
-                node->draw(renderer, transform, transformUpdated);
+                node->draw(renderer, transform, flags);
             }
             break;
             default:
             {
-                node->visit(renderer, transform, transformUpdated);
+                node->visit(renderer, transform, flags);
 //                CC_NODE_DRAW_SETUP();
             }
             break;
@@ -426,7 +426,7 @@ void Armature::draw(cocos2d::Renderer *renderer, const Matrix &transform, bool t
         }
         else if(Node *node = dynamic_cast<Node *>(object))
         {
-            node->visit(renderer, transform, transformUpdated);
+            node->visit(renderer, transform, flags);
 //            CC_NODE_DRAW_SETUP();
         }
     }
@@ -445,7 +445,7 @@ void Armature::onExit()
 }
 
 
-void Armature::visit(cocos2d::Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
+void Armature::visit(cocos2d::Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     // quick return if not visible. children won't be drawn.
     if (!_visible)
@@ -453,13 +453,10 @@ void Armature::visit(cocos2d::Renderer *renderer, const Matrix &parentTransform,
         return;
     }
 
-    bool dirty = parentTransformUpdated || _transformUpdated;
-    if(dirty)
-        _modelViewTransform = transform(parentTransform);
-    _transformUpdated = false;
+    uint32_t flags = processParentFlags(parentTransform, parentFlags);
 
     // IMPORTANT:
-    // To ease the migration to v3.0, we still support the Matrix stack,
+    // To ease the migration to v3.0, we still support the Mat4 stack,
     // but it is deprecated and your code should not rely on it
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -468,7 +465,7 @@ void Armature::visit(cocos2d::Renderer *renderer, const Matrix &parentTransform,
 
 
     sortAllChildren();
-    draw(renderer, _modelViewTransform, dirty);
+    draw(renderer, _modelViewTransform, flags);
 
     // reset for next frame
     _orderOfArrival = 0;
@@ -573,13 +570,13 @@ void CCArmature::drawContour()
         for (auto& object : bodyList)
         {
             ColliderBody *body = static_cast<ColliderBody*>(object);
-            const std::vector<Vector2> &vertexList = body->getCalculatedVertexList();
+            const std::vector<Vec2> &vertexList = body->getCalculatedVertexList();
 
             unsigned long length = vertexList.size();
-            Vector2 *points = new Vector2[length];
+            Vec2 *points = new Vec2[length];
             for (unsigned long i = 0; i<length; i++)
             {
-                Vector2 p = vertexList.at(i);
+                Vec2 p = vertexList.at(i);
                 points[i].x = p.x;
                 points[i].y = p.y;
             }

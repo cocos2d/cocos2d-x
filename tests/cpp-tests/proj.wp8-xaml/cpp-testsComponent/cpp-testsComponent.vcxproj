@@ -178,12 +178,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\Cocos2dRenderer.cpp" />
-    <ClCompile Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\Direct3DContentProvider.cpp" />
-    <ClCompile Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\Direct3DInterop.cpp" />
-    <ClCompile Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\DirectXBase.cpp" />
-    <ClCompile Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\EditBoxEvent.cpp" />
+    <ClCompile Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Cocos2dRenderer.cpp" />
+    <ClCompile Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Direct3DContentProvider.cpp" />
+    <ClCompile Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Direct3DInterop.cpp" />
+    <ClCompile Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\DirectXBase.cpp" />
+    <ClCompile Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\EditBoxEvent.cpp" />
     <ClCompile Include="..\..\Classes\BaseTest.cpp" />
+    <ClCompile Include="..\..\Classes\BugsTest\Bug-Child.cpp" />
     <ClCompile Include="..\..\Classes\ChipmunkTest\ChipmunkTest.cpp" />
     <ClCompile Include="..\..\Classes\ClippingNodeTest\ClippingNodeTest.cpp" />
     <ClCompile Include="..\..\Classes\ConfigurationTest\ConfigurationTest.cpp" />
@@ -213,7 +214,6 @@
     <ClCompile Include="..\..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.cpp" />
     <ClCompile Include="..\..\Classes\FileUtilsTest\FileUtilsTest.cpp" />
     <ClCompile Include="..\..\Classes\InputTest\MouseTest.cpp" />
-    <ClCompile Include="..\..\Classes\KeyboardTest\KeyboardTest.cpp" />
     <ClCompile Include="..\..\Classes\LabelTest\LabelTestNew.cpp" />
     <ClCompile Include="..\..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.cpp" />
     <ClCompile Include="..\..\Classes\NewRendererTest\NewRendererTest.cpp" />
@@ -227,6 +227,7 @@
     <ClCompile Include="..\..\Classes\ReleasePoolTest\ReleasePoolTest.cpp" />
     <ClCompile Include="..\..\Classes\ShaderTest\ShaderTest2.cpp" />
     <ClCompile Include="..\..\Classes\SpineTest\SpineTest.cpp" />
+    <ClCompile Include="..\..\Classes\Sprite3DTest\Sprite3DTest.cpp" />
     <ClCompile Include="..\..\Classes\TexturePackerEncryptionTest\TextureAtlasEncryptionTest.cpp" />
     <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\CocosGUIScene.cpp" />
     <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\CocoStudioGUITest.cpp" />
@@ -305,7 +306,6 @@
     <ClCompile Include="..\..\Classes\SchedulerTest\SchedulerTest.cpp" />
     <ClCompile Include="..\..\Classes\RenderTextureTest\RenderTextureTest.cpp" />
     <ClCompile Include="..\..\Classes\EffectsAdvancedTest\EffectsAdvancedTest.cpp" />
-    <ClCompile Include="..\..\Classes\KeypadTest\KeypadTest.cpp" />
     <ClCompile Include="..\..\Classes\CocosDenshionTest\CocosDenshionTest.cpp" />
     <ClCompile Include="..\..\Classes\PerformanceTest\PerformanceNodeChildrenTest.cpp" />
     <ClCompile Include="..\..\Classes\PerformanceTest\PerformanceParticleTest.cpp" />
@@ -332,7 +332,6 @@
     <ClCompile Include="..\..\Classes\FontTest\FontTest.cpp" />
     <ClCompile Include="..\..\Classes\CurrentLanguageTest\CurrentLanguageTest.cpp" />
     <ClCompile Include="..\..\Classes\TextureCacheTest\TextureCacheTest.cpp" />
-    <ClCompile Include="..\..\Classes\AccelerometerTest\AccelerometerTest.cpp" />
     <ClCompile Include="..\..\Classes\ExtensionsTest\ExtensionsTest.cpp" />
     <ClCompile Include="..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlScene.cpp" />
     <ClCompile Include="..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlSceneManager.cpp" />
@@ -366,18 +365,19 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\Cocos2dRenderer.h" />
-    <ClInclude Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\Direct3DContentProvider.h" />
-    <ClInclude Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\Direct3DInterop.h" />
-    <ClInclude Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\DirectXBase.h" />
-    <ClInclude Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\DirectXHelper.h" />
-    <ClInclude Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\EditBoxEvent.h" />
+    <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Cocos2dRenderer.h" />
+    <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Direct3DContentProvider.h" />
+    <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Direct3DInterop.h" />
+    <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\DirectXBase.h" />
+    <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\DirectXHelper.h" />
+    <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\EditBoxEvent.h" />
     <ClInclude Include="..\..\Classes\BaseTest.h" />
     <ClInclude Include="..\..\Classes\Box2DTestBed\Tests\ConvexHull.h" />
     <ClInclude Include="..\..\Classes\Box2DTestBed\Tests\ConveyorBelt.h" />
     <ClInclude Include="..\..\Classes\Box2DTestBed\Tests\Mobile.h" />
     <ClInclude Include="..\..\Classes\Box2DTestBed\Tests\MobileBalanced.h" />
     <ClInclude Include="..\..\Classes\Box2DTestBed\Tests\MotorJoint.h" />
+    <ClInclude Include="..\..\Classes\BugsTest\Bug-Child.h" />
     <ClInclude Include="..\..\Classes\ChipmunkTest\ChipmunkTest.h" />
     <ClInclude Include="..\..\Classes\ClippingNodeTest\ClippingNodeTest.h" />
     <ClInclude Include="..\..\Classes\ConfigurationTest\ConfigurationTest.h" />
@@ -410,7 +410,6 @@
     <ClInclude Include="..\..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.h" />
     <ClInclude Include="..\..\Classes\FileUtilsTest\FileUtilsTest.h" />
     <ClInclude Include="..\..\Classes\InputTest\MouseTest.h" />
-    <ClInclude Include="..\..\Classes\KeyboardTest\KeyboardTest.h" />
     <ClInclude Include="..\..\Classes\LabelTest\LabelTestNew.h" />
     <ClInclude Include="..\..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.h" />
     <ClInclude Include="..\..\Classes\NewRendererTest\NewRendererTest.h" />
@@ -424,6 +423,7 @@
     <ClInclude Include="..\..\Classes\ReleasePoolTest\ReleasePoolTest.h" />
     <ClInclude Include="..\..\Classes\ShaderTest\ShaderTest2.h" />
     <ClInclude Include="..\..\Classes\SpineTest\SpineTest.h" />
+    <ClInclude Include="..\..\Classes\Sprite3DTest\Sprite3DTest.h" />
     <ClInclude Include="..\..\Classes\TexturePackerEncryptionTest\TextureAtlasEncryptionTest.h" />
     <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\CocosGUIScene.h" />
     <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\CocoStudioGUITest.h" />
@@ -504,7 +504,6 @@
     <ClInclude Include="..\..\Classes\SchedulerTest\SchedulerTest.h" />
     <ClInclude Include="..\..\Classes\RenderTextureTest\RenderTextureTest.h" />
     <ClInclude Include="..\..\Classes\EffectsAdvancedTest\EffectsAdvancedTest.h" />
-    <ClInclude Include="..\..\Classes\KeypadTest\KeypadTest.h" />
     <ClInclude Include="..\..\Classes\CocosDenshionTest\CocosDenshionTest.h" />
     <ClInclude Include="..\..\Classes\PerformanceTest\PerformanceNodeChildrenTest.h" />
     <ClInclude Include="..\..\Classes\PerformanceTest\PerformanceParticleTest.h" />
@@ -531,7 +530,6 @@
     <ClInclude Include="..\..\Classes\FontTest\FontTest.h" />
     <ClInclude Include="..\..\Classes\CurrentLanguageTest\CurrentLanguageTest.h" />
     <ClInclude Include="..\..\Classes\TextureCacheTest\TextureCacheTest.h" />
-    <ClInclude Include="..\..\Classes\AccelerometerTest\AccelerometerTest.h" />
     <ClInclude Include="..\..\Classes\ExtensionsTest\ExtensionsTest.h" />
     <ClInclude Include="..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlScene.h" />
     <ClInclude Include="..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlSceneManager.h" />

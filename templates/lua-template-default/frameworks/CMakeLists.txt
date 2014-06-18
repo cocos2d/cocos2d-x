@@ -58,9 +58,9 @@ include_directories(
   ${COCOS2D_ROOT}
   ${COCOS2D_ROOT}/cocos
   ${COCOS2D_ROOT}/cocos/audio/include
-  ${COCOS2D_ROOT}/cocos/2d/platform
-  ${COCOS2D_ROOT}/cocos/2d/platform/desktop
-  ${COCOS2D_ROOT}/cocos/2d/platform/linux
+  ${COCOS2D_ROOT}/cocos/platform
+  ${COCOS2D_ROOT}/cocos/platform/desktop
+  ${COCOS2D_ROOT}/cocos/platform/linux
   ${COCOS2D_ROOT}/cocos/editor-support
   ${COCOS2D_ROOT}/extensions
   ${COCOS2D_ROOT}/external
@@ -75,6 +75,7 @@ include_directories(
   ${COCOS2D_ROOT}/external/freetype2/include/linux
   ${COCOS2D_ROOT}/external/linux-specific/fmod/include/${ARCH_DIR}
   ${COCOS2D_ROOT}/external/xxhash
+  ${COCOS2D_ROOT}/external/xxtea
 )
 
 link_directories(
@@ -110,6 +111,9 @@ add_subdirectory(${COCOS2D_ROOT}/cocos)
 
 # extensions
 add_subdirectory(${COCOS2D_ROOT}/extensions)
+
+# xxtea library
+add_subdirectory(${COCOS2D_ROOT}/external/xxtea)
 
 ## Editor Support
 
@@ -151,6 +155,7 @@ target_link_libraries(${APP_NAME}
   extensions
   audio
   cocos2d
+  xxtea
   )
 
 set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")

@@ -32,9 +32,6 @@
 #include "Box2DTest/Box2dTest.h"
 #include "Box2DTestBed/Box2dView.h"
 #include "EffectsAdvancedTest/EffectsAdvancedTest.h"
-#include "AccelerometerTest/AccelerometerTest.h"
-#include "KeypadTest/KeypadTest.h"
-#include "KeyboardTest/KeyboardTest.h"
 #include "InputTest/MouseTest.h"
 #include "PerformanceTest/PerformanceTest.h"
 #include "ZwoptexTest/ZwoptexTest.h"
@@ -69,5 +66,7 @@
 #include "ConfigurationTest/ConfigurationTest.h"
 #include "PhysicsTest/PhysicsTest.h"
 #include "ReleasePoolTest/ReleasePoolTest.h"
+
+#include "Sprite3DTest/Sprite3DTest.h"
 
 #endif

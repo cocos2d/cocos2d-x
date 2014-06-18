@@ -119,7 +119,7 @@
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <AdditionalIncludeDirectories>$(ProjectDir);$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\wp8;$(EngineRoot)external\jpeg\include\wp8;$(EngineRoot)external\tiff\include\wp8;$(EngineRoot)external\freetype2\include\wp8;$(EngineRoot)external\wp8-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(IntermediateOutputPath);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
-      <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4453;28204;4996;</DisableSpecificWarnings>
       <PreprocessorDefinitions>WINRT;CC_USE_PHYSICS=0;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -134,7 +134,7 @@
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <AdditionalIncludeDirectories>$(ProjectDir);$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\wp8;$(EngineRoot)external\jpeg\include\wp8;$(EngineRoot)external\tiff\include\wp8;$(EngineRoot)external\freetype2\include\wp8;$(EngineRoot)external\wp8-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(IntermediateOutputPath);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
-      <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4453;28204;4996;</DisableSpecificWarnings>
       <PreprocessorDefinitions>WINRT;CC_USE_PHYSICS=0;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -149,7 +149,7 @@
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <AdditionalIncludeDirectories>$(ProjectDir);$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\wp8;$(EngineRoot)external\jpeg\include\wp8;$(EngineRoot)external\tiff\include\wp8;$(EngineRoot)external\freetype2\include\wp8;$(EngineRoot)external\wp8-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(IntermediateOutputPath);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
-      <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4453;28204;4996;</DisableSpecificWarnings>
       <PreprocessorDefinitions>WINRT;CC_USE_PHYSICS=0;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -164,7 +164,7 @@
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <AdditionalIncludeDirectories>$(ProjectDir);$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\wp8;$(EngineRoot)external\jpeg\include\wp8;$(EngineRoot)external\tiff\include\wp8;$(EngineRoot)external\freetype2\include\wp8;$(EngineRoot)external\wp8-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(IntermediateOutputPath);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
-      <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4453;28204;4996;</DisableSpecificWarnings>
       <PreprocessorDefinitions>WINRT;CC_USE_PHYSICS=0;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -179,7 +179,7 @@
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <AdditionalIncludeDirectories>$(ProjectDir);$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\wp8;$(EngineRoot)external\jpeg\include\wp8;$(EngineRoot)external\tiff\include\wp8;$(EngineRoot)external\freetype2\include\wp8;$(EngineRoot)external\wp8-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(IntermediateOutputPath);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
-      <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4453;28204;4996;</DisableSpecificWarnings>
       <PreprocessorDefinitions>WINRT;CC_USE_PHYSICS=0;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -194,7 +194,7 @@
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <AdditionalIncludeDirectories>$(ProjectDir);$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\wp8;$(EngineRoot)external\jpeg\include\wp8;$(EngineRoot)external\tiff\include\wp8;$(EngineRoot)external\freetype2\include\wp8;$(EngineRoot)external\wp8-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(IntermediateOutputPath);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
-      <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4453;28204;4996;</DisableSpecificWarnings>
       <PreprocessorDefinitions>WINRT;CC_USE_PHYSICS=0;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>

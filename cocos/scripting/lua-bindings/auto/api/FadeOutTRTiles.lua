@@ -6,17 +6,17 @@
 --------------------------------
 -- @function [parent=#FadeOutTRTiles] turnOnTile 
 -- @param self
--- @param #vector2_table array
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#FadeOutTRTiles] turnOffTile 
 -- @param self
--- @param #vector2_table array
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#FadeOutTRTiles] transformTile 
 -- @param self
--- @param #vector2_table array
+-- @param #vec2_table vec2
 -- @param #float float
         
 --------------------------------

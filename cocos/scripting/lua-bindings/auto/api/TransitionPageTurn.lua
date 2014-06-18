@@ -29,8 +29,8 @@
 -- @function [parent=#TransitionPageTurn] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #matrix_table matrix
--- @param #bool bool
+-- @param #mat4_table mat4
+-- @param #unsigned int int
         
 --------------------------------
 -- @function [parent=#TransitionPageTurn] TransitionPageTurn 

@@ -8,7 +8,6 @@ varying vec4 v_fragmentColor;
 varying vec2 v_texCoord;
 
 uniform vec2 resolution;
-uniform sampler2D CC_Texture0;
 
 const float intensity = 0.05;
 vec3 noise(vec2 uv)

@@ -30,24 +30,27 @@ bool UIFocusTestBase::init()
         
         auto winSize = Director::getInstance()->getVisibleSize();
         auto leftItem = MenuItemFont::create("Left", CC_CALLBACK_0(UIFocusTestBase::onLeftKeyPressed, this));
-        leftItem->setPosition(Vector2(winSize.width - 100, winSize.height/2));
+        leftItem->setPosition(Vec2(winSize.width - 100, winSize.height/2));
         _dpadMenu->addChild(leftItem);
         
         
         auto rightItem = MenuItemFont::create("Right", CC_CALLBACK_0(UIFocusTestBase::onRightKeyPressed, this));
-        rightItem->setPosition(Vector2(winSize.width - 30, winSize.height/2));
+        rightItem->setPosition(Vec2(winSize.width - 30, winSize.height/2));
         _dpadMenu->addChild(rightItem);
         
         auto upItem = MenuItemFont::create("Up", CC_CALLBACK_0(UIFocusTestBase::onUpKeyPressed, this));
-        upItem->setPosition(Vector2(winSize.width - 60, winSize.height/2 + 50));
+        upItem->setPosition(Vec2(winSize.width - 60, winSize.height/2 + 50));
         _dpadMenu->addChild(upItem);
         
         auto downItem = MenuItemFont::create("Down", CC_CALLBACK_0(UIFocusTestBase::onDownKeyPressed, this));
-        downItem->setPosition(Vector2(winSize.width - 60, winSize.height/2 - 50));
+        downItem->setPosition(Vec2(winSize.width - 60, winSize.height/2 - 50));
         _dpadMenu->addChild(downItem);
         
-        _dpadMenu->setPosition(Vector2::ZERO);
+        _dpadMenu->setPosition(Vec2::ZERO);
         _uiLayer->addChild(_dpadMenu);
+        
+        //call this method to enable Dpad focus navigation
+        Widget::enableDpadNavigation(true);
         
         _eventListener = EventListenerFocus::create();
         _eventListener->onFocusChanged = CC_CALLBACK_2(UIFocusTestBase::onFocusChanged, this);
@@ -76,56 +79,41 @@ void UIFocusTestBase::onImageViewClicked(cocos2d::Ref *ref, Widget::TouchEventTy
 
 void UIFocusTestBase::onLeftKeyPressed()
 {
-    if (_firstFocusedWidget) {
-        if (!_firstFocusedWidget->isFocused()) {
-            _firstFocusedWidget = _firstFocusedWidget->getCurrentFocusedWidget(false);
-        }
-        _firstFocusedWidget = _firstFocusedWidget->findNextFocusedWidget(Widget::FocusDirection::LEFT, _firstFocusedWidget);
-    }
+    cocos2d::EventKeyboard::KeyCode cocos2dKey =EventKeyboard::KeyCode::KEY_DPAD_LEFT;
+    cocos2d::EventKeyboard event(cocos2dKey, false);
+    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
 }
 
 void UIFocusTestBase::onRightKeyPressed()
 {
-    if (_firstFocusedWidget) {
-        if (!_firstFocusedWidget->isFocused()) {
-            _firstFocusedWidget = _firstFocusedWidget->getCurrentFocusedWidget(false);
-        }
-        _firstFocusedWidget = _firstFocusedWidget->findNextFocusedWidget(Widget::FocusDirection::RIGHT, _firstFocusedWidget);
-    }
+    cocos2d::EventKeyboard::KeyCode cocos2dKey =EventKeyboard::KeyCode::KEY_DPAD_RIGHT;
+    cocos2d::EventKeyboard event(cocos2dKey, false);
+    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
 }
 
 void UIFocusTestBase::onUpKeyPressed()
 {
-    if (_firstFocusedWidget) {
-        if (!_firstFocusedWidget->isFocused()) {
-            _firstFocusedWidget = _firstFocusedWidget->getCurrentFocusedWidget(false);
-        }
-        _firstFocusedWidget = _firstFocusedWidget->findNextFocusedWidget(Widget::FocusDirection::UP, _firstFocusedWidget);
-    }
+    cocos2d::EventKeyboard::KeyCode cocos2dKey =EventKeyboard::KeyCode::KEY_DPAD_UP;
+    cocos2d::EventKeyboard event(cocos2dKey, false);
+    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
     
 }
 
 void UIFocusTestBase::onDownKeyPressed()
 {
-    if (_firstFocusedWidget) {
-        if (!_firstFocusedWidget->isFocused()) {
-            _firstFocusedWidget = _firstFocusedWidget->getCurrentFocusedWidget(false);
-        }
-        _firstFocusedWidget = _firstFocusedWidget->findNextFocusedWidget(Widget::FocusDirection::DOWN, _firstFocusedWidget);
-    }
+    cocos2d::EventKeyboard::KeyCode cocos2dKey =EventKeyboard::KeyCode::KEY_DPAD_DOWN;
+    cocos2d::EventKeyboard event(cocos2dKey, false);
+    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
     
 }
 
 void UIFocusTestBase::onFocusChanged(cocos2d::ui::Widget *widgetLostFocus, cocos2d::ui::Widget *widgetGetFocus)
 {
-    //only change the widgets' state
-    Layout *getLayout = dynamic_cast<Layout*>(widgetGetFocus);
-    if (!getLayout && widgetGetFocus && widgetGetFocus->isFocusEnabled()) {
+    if (widgetGetFocus && widgetGetFocus->isFocusEnabled()) {
         widgetGetFocus->setColor(Color3B::RED);
     }
     
-    Layout *loseLayout = dynamic_cast<Layout*>(widgetLostFocus);
-    if (!loseLayout && widgetLostFocus && widgetLostFocus->isFocusEnabled()) {
+    if (widgetLostFocus && widgetLostFocus->isFocusEnabled()) {
         widgetLostFocus->setColor(Color3B::WHITE);
     }
     
@@ -153,7 +141,7 @@ bool UIFocusTestHorizontal::init()
         Size winSize = Director::getInstance()->getVisibleSize();
         
         _horizontalLayout = HBox::create();
-        _horizontalLayout->setPosition(Vector2(20, winSize.height/2 + 40));
+        _horizontalLayout->setPosition(Vec2(20, winSize.height/2 + 40));
         _uiLayer->addChild(_horizontalLayout);
         
         _horizontalLayout->setFocused(true);
@@ -171,13 +159,13 @@ bool UIFocusTestHorizontal::init()
         }
         
         _loopText = Text::create("loop enabled", "Airal", 20);
-        _loopText->setPosition(Vector2(winSize.width/2, winSize.height - 50));
+        _loopText->setPosition(Vec2(winSize.width/2, winSize.height - 50));
         _loopText->setColor(Color3B::GREEN);
         this->addChild(_loopText);
         
         auto btn = Button::create("cocosui/switch-mask.png");
         btn->setTitleText("Toggle Loop");
-        btn->setPosition(Vector2(60, winSize.height - 50));
+        btn->setPosition(Vec2(60, winSize.height - 50));
         btn->setTitleColor(Color3B::RED);
         btn->addTouchEventListener(CC_CALLBACK_2(UIFocusTestHorizontal::toggleFocusLoop,this));
         this->addChild(btn);
@@ -196,9 +184,9 @@ void UIFocusTestHorizontal::toggleFocusLoop(cocos2d::Ref * pObjc, Widget::TouchE
     if (type == Widget::TouchEventType::ENDED) {
         _horizontalLayout->setLoopFocus(!_horizontalLayout->isLoopFocus());
         if (_horizontalLayout->isLoopFocus()) {
-            _loopText->setText("loop enabled");
+            _loopText->setString("loop enabled");
         }else{
-            _loopText->setText("loop disabled");
+            _loopText->setString("loop disabled");
         }
     }
 }
@@ -222,7 +210,7 @@ bool UIFocusTestVertical::init()
         Size winSize = Director::getInstance()->getVisibleSize();
         
         _verticalLayout = VBox::create();
-        _verticalLayout->setPosition(Vector2(winSize.width/2 - 100, winSize.height - 70));
+        _verticalLayout->setPosition(Vec2(winSize.width/2 - 100, winSize.height - 70));
         _uiLayer->addChild(_verticalLayout);
         _verticalLayout->setTag(100);
         _verticalLayout->setScale(0.5);
@@ -244,13 +232,13 @@ bool UIFocusTestVertical::init()
         }
         
         _loopText = Text::create("loop enabled", "Airal", 20);
-        _loopText->setPosition(Vector2(winSize.width/2, winSize.height - 50));
+        _loopText->setPosition(Vec2(winSize.width/2, winSize.height - 50));
         _loopText->setColor(Color3B::GREEN);
         this->addChild(_loopText);
         
         auto btn = Button::create("cocosui/switch-mask.png");
         btn->setTitleText("Toggle Loop");
-        btn->setPosition(Vector2(60, winSize.height - 50));
+        btn->setPosition(Vec2(60, winSize.height - 50));
         btn->setTitleColor(Color3B::RED);
         btn->addTouchEventListener(CC_CALLBACK_2(UIFocusTestVertical::toggleFocusLoop, this));
         this->addChild(btn);
@@ -267,9 +255,9 @@ void UIFocusTestVertical::toggleFocusLoop(cocos2d::Ref * pObjc, Widget::TouchEve
     if (type == Widget::TouchEventType::ENDED) {
         _verticalLayout->setLoopFocus(!_verticalLayout->isLoopFocus());
         if (_verticalLayout->isLoopFocus()) {
-            _loopText->setText("loop enabled");
+            _loopText->setString("loop enabled");
         }else{
-            _loopText->setText("loop disabled");
+            _loopText->setString("loop disabled");
         }
     }
 }
@@ -292,7 +280,7 @@ bool UIFocusTestNestedLayout1::init()
         Size winSize = Director::getInstance()->getVisibleSize();
         
         _verticalLayout = VBox::create();
-        _verticalLayout->setPosition(Vector2(winSize.width/2 - 80, winSize.height - 70));
+        _verticalLayout->setPosition(Vec2(winSize.width/2 - 80, winSize.height - 70));
         _uiLayer->addChild(_verticalLayout);
         _verticalLayout->setScale(0.5);
         
@@ -304,7 +292,7 @@ bool UIFocusTestNestedLayout1::init()
         int count1 = 1;
         for (int i=0; i<count1; ++i) {
             ImageView *w = ImageView::create("cocosui/scrollviewbg.png");
-            w->setAnchorPoint(Vector2::ZERO);
+            w->setAnchorPoint(Vec2::ZERO);
             w->setTouchEnabled(true);
             w->setScaleX(2.5);
             w->setTag(i+count1);
@@ -321,7 +309,7 @@ bool UIFocusTestNestedLayout1::init()
         int count2 = 2;
         for (int i=0; i < count2; ++i) {
             ImageView *w = ImageView::create("cocosui/scrollviewbg.png");
-            w->setAnchorPoint(Vector2(0,1));
+            w->setAnchorPoint(Vec2(0,1));
             w->setScaleY(2.0);
             w->setTouchEnabled(true);
             w->setTag(i+count1+count2);
@@ -346,13 +334,13 @@ bool UIFocusTestNestedLayout1::init()
         }
 
         _loopText = Text::create("loop enabled", "Airal", 20);
-        _loopText->setPosition(Vector2(winSize.width/2, winSize.height - 50));
+        _loopText->setPosition(Vec2(winSize.width/2, winSize.height - 50));
         _loopText->setColor(Color3B::GREEN);
         this->addChild(_loopText);
         
         auto btn = Button::create("cocosui/switch-mask.png");
         btn->setTitleText("Toggle Loop");
-        btn->setPosition(Vector2(60, winSize.height - 50));
+        btn->setPosition(Vec2(60, winSize.height - 50));
         btn->setTitleColor(Color3B::RED);
         btn->addTouchEventListener(CC_CALLBACK_2(UIFocusTestNestedLayout1::toggleFocusLoop, this));
         this->addChild(btn);
@@ -369,9 +357,9 @@ void UIFocusTestNestedLayout1::toggleFocusLoop(cocos2d::Ref * pObjc, Widget::Tou
     if (type == Widget::TouchEventType::ENDED) {
         _verticalLayout->setLoopFocus(!_verticalLayout->isLoopFocus());
         if (_verticalLayout->isLoopFocus()) {
-            _loopText->setText("loop enabled");
+            _loopText->setString("loop enabled");
         }else{
-            _loopText->setText("loop disabled");
+            _loopText->setString("loop disabled");
         }
     }
 }
@@ -394,7 +382,7 @@ bool UIFocusTestNestedLayout2::init()
         Size winSize = Director::getInstance()->getVisibleSize();
         
         _horizontalLayout = HBox::create();
-        _horizontalLayout->setPosition(Vector2(winSize.width/2 - 200, winSize.height - 70));
+        _horizontalLayout->setPosition(Vec2(winSize.width/2 - 200, winSize.height - 70));
         _uiLayer->addChild(_horizontalLayout);
         _horizontalLayout->setScale(0.6);
         
@@ -406,7 +394,7 @@ bool UIFocusTestNestedLayout2::init()
         int count1 = 2;
         for (int i=0; i<count1; ++i) {
             ImageView *w = ImageView::create("cocosui/scrollviewbg.png");
-            w->setAnchorPoint(Vector2(0,1));
+            w->setAnchorPoint(Vec2(0,1));
             w->setTouchEnabled(true);
             w->setTag(i+count1);
             w->setScaleY(2.4);
@@ -423,7 +411,7 @@ bool UIFocusTestNestedLayout2::init()
         int count2 = 2;
         for (int i=0; i < count2; ++i) {
             ImageView *w = ImageView::create("cocosui/scrollviewbg.png");
-            w->setAnchorPoint(Vector2(0,1));
+            w->setAnchorPoint(Vec2(0,1));
             w->setScaleX(2.0);
             w->setTouchEnabled(true);
             w->setTag(i+count1+count2);
@@ -448,13 +436,13 @@ bool UIFocusTestNestedLayout2::init()
         }
         
         _loopText = Text::create("loop enabled", "Airal", 20);
-        _loopText->setPosition(Vector2(winSize.width/2, winSize.height - 50));
+        _loopText->setPosition(Vec2(winSize.width/2, winSize.height - 50));
         _loopText->setColor(Color3B::GREEN);
         this->addChild(_loopText);
         
         auto btn = Button::create("cocosui/switch-mask.png");
         btn->setTitleText("Toggle Loop");
-        btn->setPosition(Vector2(60, winSize.height - 50));
+        btn->setPosition(Vec2(60, winSize.height - 50));
         btn->setTitleColor(Color3B::RED);
         btn->addTouchEventListener(CC_CALLBACK_2(UIFocusTestNestedLayout2::toggleFocusLoop, this));
         this->addChild(btn);
@@ -471,9 +459,9 @@ void UIFocusTestNestedLayout2::toggleFocusLoop(cocos2d::Ref * pObjc, Widget::Tou
     if (type == Widget::TouchEventType::ENDED) {
         _horizontalLayout->setLoopFocus(!_horizontalLayout->isLoopFocus());
         if (_horizontalLayout->isLoopFocus()) {
-            _loopText->setText("loop enabled");
+            _loopText->setString("loop enabled");
         }else{
-            _loopText->setText("loop disabled");
+            _loopText->setString("loop disabled");
         }
     }
 }
@@ -496,7 +484,7 @@ bool UIFocusTestNestedLayout3::init()
         Size winSize = Director::getInstance()->getVisibleSize();
         
         _verticalLayout = VBox::create();
-        _verticalLayout->setPosition(Vector2(40, winSize.height - 70));
+        _verticalLayout->setPosition(Vec2(40, winSize.height - 70));
         _uiLayer->addChild(_verticalLayout);
         _verticalLayout->setScale(0.8);
         
@@ -558,13 +546,13 @@ bool UIFocusTestNestedLayout3::init()
      
         
         _loopText = Text::create("loop enabled", "Airal", 20);
-        _loopText->setPosition(Vector2(winSize.width/2, winSize.height - 50));
+        _loopText->setPosition(Vec2(winSize.width/2, winSize.height - 50));
         _loopText->setColor(Color3B::GREEN);
         this->addChild(_loopText);
         
         auto btn = Button::create("cocosui/switch-mask.png");
         btn->setTitleText("Toggle Loop");
-        btn->setPosition(Vector2(60, winSize.height - 50));
+        btn->setPosition(Vec2(60, winSize.height - 50));
         btn->setTitleColor(Color3B::RED);
         btn->addTouchEventListener(CC_CALLBACK_2(UIFocusTestNestedLayout3::toggleFocusLoop, this));
         this->addChild(btn);
@@ -581,9 +569,95 @@ void UIFocusTestNestedLayout3::toggleFocusLoop(cocos2d::Ref * pObjc, Widget::Tou
     if (type == Widget::TouchEventType::ENDED) {
         _verticalLayout->setLoopFocus(!_verticalLayout->isLoopFocus());
         if (_verticalLayout->isLoopFocus()) {
-            _loopText->setText("loop enabled");
+            _loopText->setString("loop enabled");
         }else{
-            _loopText->setText("loop disabled");
+            _loopText->setString("loop disabled");
+        }
+    }
+}
+
+//UIFocusTestListView
+UIFocusTestListView::UIFocusTestListView()
+{
+    
+}
+
+UIFocusTestListView::~UIFocusTestListView()
+{
+    
+}
+
+bool UIFocusTestListView::init()
+{
+    if (UIFocusTestBase::init()) {
+        
+        Size winSize = Director::getInstance()->getVisibleSize();
+        
+        _listView = ListView::create();
+        _listView->setDirection(ui::ScrollView::Direction::VERTICAL);
+        _listView->setBounceEnabled(true);
+        _listView->setBackGroundImage("cocosui/green_edit.png");
+        _listView->setBackGroundImageScale9Enabled(true);
+        _listView->setSize(Size(240, 130));
+        
+        _listView->setPosition(Vec2(40, 70));
+        _uiLayer->addChild(_listView);
+        _listView->setScale(0.8);
+        
+        _listView->setFocused(true);
+        _listView->setLoopFocus(true);
+        _listView->setTag(-1000);
+        _firstFocusedWidget = _listView;
+        
+        // create model
+        Button* default_button = Button::create("cocosui/backtotoppressed.png", "cocosui/backtotopnormal.png");
+        default_button->setName("Title Button");
+        
+        
+        // set model
+        _listView->setItemModel(default_button);
+        
+        // add default item
+        ssize_t count = 20;
+        for (int i = 0; i < count / 4; ++i)
+        {
+            _listView->pushBackDefaultItem();
+        }
+        // insert default item
+        for (int i = 0; i < count / 4; ++i)
+        {
+            _listView->insertDefaultItem(0);
+        }
+        
+        
+        
+        _loopText = Text::create("loop enabled", "Airal", 20);
+        _loopText->setPosition(Vec2(winSize.width/2, winSize.height - 50));
+        _loopText->setColor(Color3B::GREEN);
+        this->addChild(_loopText);
+        
+        auto btn = Button::create("cocosui/switch-mask.png");
+        btn->setTitleText("Toggle Loop");
+        btn->setPosition(Vec2(60, winSize.height - 50));
+        btn->setTitleColor(Color3B::RED);
+        btn->addTouchEventListener(CC_CALLBACK_2(UIFocusTestListView::toggleFocusLoop, this));
+        this->addChild(btn);
+        
+        
+        return true;
+    }
+    return false;
+}
+
+
+void UIFocusTestListView::toggleFocusLoop(cocos2d::Ref * pObjc, Widget::TouchEventType type)
+{
+    if (type == Widget::TouchEventType::ENDED) {
+        _listView->setLoopFocus(!_listView->isLoopFocus());
+        if (_listView->isLoopFocus()) {
+            _loopText->setString("loop enabled");
+        }else{
+            _loopText->setString("loop disabled");
         }
     }
 }

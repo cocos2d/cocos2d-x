@@ -27,7 +27,7 @@ void ReleasePoolTestScene::runThisTest()
     // title
     auto label = Label::createWithTTF("AutoreasePool Test", "fonts/arial.ttf", 32);
     addChild(label, 9999);
-    label->setPosition(Vector2(VisibleRect::center().x, VisibleRect::top().y - 30));
+    label->setPosition(Vec2(VisibleRect::center().x, VisibleRect::top().y - 30));
     
     // reference count should be added when added into auto release pool
     
@@ -75,6 +75,11 @@ void ReleasePoolTestScene::runThisTest()
     }
     
     // object in pool2 should be released
+
+    {
+        new AutoreleasePool;
+        PoolManager::destroyInstance();
+    }
     
     Director::getInstance()->replaceScene(this);
 }

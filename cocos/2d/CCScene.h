@@ -54,8 +54,11 @@ public:
     /** creates a new Scene object */
     static Scene *create();
 
+    /** creates a new Scene object with a predefined Size */
+    static Scene *createWithSize(const Size& size);
+
     // Overrides
-    virtual Scene *getScene() override;
+    virtual Scene *getScene() const override;
 
     using Node::addChild;
     virtual std::string getDescription() const override;
@@ -64,7 +67,8 @@ CC_CONSTRUCTOR_ACCESS:
     Scene();
     virtual ~Scene();
     
-    virtual bool init() override;
+    bool init();
+    bool initWithSize(const Size& size);
 
 protected:
     friend class Node;

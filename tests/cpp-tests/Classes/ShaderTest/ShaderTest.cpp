@@ -4,23 +4,23 @@
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    10
+#define MAX_LAYER    11
 
 static Layer* createShaderLayer(int nIndex)
 {
     switch (sceneIdx)
     {
-    case 0: return new ShaderLensFlare();
-    case 1: return new ShaderMandelbrot();
-    case 2: return new ShaderJulia();
-    case 3: return new ShaderHeart();
-    case 4: return new ShaderFlower();
-    case 5: return new ShaderPlasma();
-    case 6: return new ShaderBlur();
-    case 7: return new ShaderRetroEffect();
-    case 8: return new ShaderMonjori();
-    //case 9: return new ShaderFireBall();
-    case 9: return new ShaderGlow();
+        case 0: return new ShaderLensFlare();
+        case 1: return new ShaderMandelbrot();
+        case 2: return new ShaderJulia();
+        case 3: return new ShaderHeart();
+        case 4: return new ShaderFlower();
+        case 5: return new ShaderPlasma();
+        case 6: return new ShaderBlur();
+        case 7: return new ShaderRetroEffect();
+        case 8: return new ShaderMonjori();
+        case 9: return new ShaderGlow();
+        case 10: return new ShaderMultiTexture();
     }
     return NULL;
 }
@@ -110,8 +110,8 @@ enum
 };
 
 ShaderNode::ShaderNode()
-:_center(Vector2(0.0f, 0.0f))
-,_resolution(Vector2(0.0f, 0.0f))
+:_center(Vec2(0.0f, 0.0f))
+,_resolution(Vec2(0.0f, 0.0f))
 ,_time(0.0f)
 {
 }
@@ -120,7 +120,7 @@ ShaderNode::~ShaderNode()
 {
 }
 
-ShaderNode* ShaderNode::shaderNodeWithVertex(const char *vert, const char *frag)
+ShaderNode* ShaderNode::shaderNodeWithVertex(const std::string &vert, const std::string& frag)
 {
     auto node = new ShaderNode();
     node->initWithVertex(vert, frag);
@@ -129,38 +129,55 @@ ShaderNode* ShaderNode::shaderNodeWithVertex(const char *vert, const char *frag)
     return node;
 }
 
-bool ShaderNode::initWithVertex(const char *vert, const char *frag)
+bool ShaderNode::initWithVertex(const std::string &vert, const std::string &frag)
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
-            this->setGLProgram(nullptr);
-            loadShaderVertex(_vertFileName.c_str(), _fragFileName.c_str());
+            this->setGLProgramState(nullptr);
+            loadShaderVertex(_vertFileName, _fragFileName);
         });
 
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 #endif
 
+    _vertFileName = vert;
+    _fragFileName = frag;
+
     loadShaderVertex(vert, frag);
 
     _time = 0;
-    _resolution = Vector2(SIZE_X, SIZE_Y);
+    _resolution = Vec2(SIZE_X, SIZE_Y);
     getGLProgramState()->setUniformVec2("resolution", _resolution);
 
     scheduleUpdate();
 
     setContentSize(Size(SIZE_X, SIZE_Y));
-    setAnchorPoint(Vector2(0.5f, 0.5f));
+    setAnchorPoint(Vec2(0.5f, 0.5f));
     
-    _vertFileName = vert;
-    _fragFileName = frag;
 
     return true;
 }
 
-void ShaderNode::loadShaderVertex(const char *vert, const char *frag)
+void ShaderNode::loadShaderVertex(const std::string &vert, const std::string &frag)
 {
-    auto shader = GLProgram::createWithFilenames(vert, frag);
-    this->setGLProgram(shader);
+    auto fileUtiles = FileUtils::getInstance();
+
+    // frag
+    auto fragmentFilePath = fileUtiles->fullPathForFilename(frag);
+    auto fragSource = fileUtiles->getStringFromFile(fragmentFilePath);
+
+    // vert
+    std::string vertSource;
+    if (vert.empty()) {
+        vertSource = ccPositionTextureColor_vert;
+    } else {
+        std::string vertexFilePath = fileUtiles->fullPathForFilename(vert);
+        vertSource = fileUtiles->getStringFromFile(vertexFilePath);
+    }
+
+    auto glprogram = GLProgram::createWithByteArrays(vertSource.c_str(), fragSource.c_str());
+    auto glprogramstate = GLProgramState::getOrCreateWithGLProgram(glprogram);
+    setGLProgramState(glprogramstate);
 }
 
 void ShaderNode::update(float dt)
@@ -168,22 +185,22 @@ void ShaderNode::update(float dt)
     _time += dt;
 }
 
-void ShaderNode::setPosition(const Vector2 &newPosition)
+void ShaderNode::setPosition(const Vec2 &newPosition)
 {
     Node::setPosition(newPosition);
     auto position = getPosition();
-    _center = Vector2(position.x * CC_CONTENT_SCALE_FACTOR(), position.y * CC_CONTENT_SCALE_FACTOR());
+    _center = Vec2(position.x * CC_CONTENT_SCALE_FACTOR(), position.y * CC_CONTENT_SCALE_FACTOR());
     getGLProgramState()->setUniformVec2("center", _center);
 }
 
-void ShaderNode::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void ShaderNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(ShaderNode::onDraw, this, transform, transformUpdated);
+    _customCommand.func = CC_CALLBACK_0(ShaderNode::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 }
 
-void ShaderNode::onDraw(const Matrix &transform, bool transformUpdated)
+void ShaderNode::onDraw(const Mat4 &transform, uint32_t flags)
 {
     float w = SIZE_X, h = SIZE_Y;
     GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
@@ -208,10 +225,10 @@ bool ShaderMonjori::init()
 {
     if (ShaderTestDemo::init())
     {
-        auto sn = ShaderNode::shaderNodeWithVertex("Shaders/example_Monjori.vsh", "Shaders/example_Monjori.fsh");
+        auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/example_Monjori.fsh");
 
         auto s = Director::getInstance()->getWinSize();
-        sn->setPosition(Vector2(s.width/2, s.height/2));
+        sn->setPosition(Vec2(s.width/2, s.height/2));
 
         addChild(sn);
 
@@ -242,10 +259,10 @@ bool ShaderMandelbrot::init()
 {
     if (ShaderTestDemo::init())
     {
-        auto sn = ShaderNode::shaderNodeWithVertex("Shaders/example_Mandelbrot.vsh", "Shaders/example_Mandelbrot.fsh");
+        auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/example_Mandelbrot.fsh");
 
         auto s = Director::getInstance()->getWinSize();
-        sn->setPosition(Vector2(s.width/2, s.height/2));
+        sn->setPosition(Vec2(s.width/2, s.height/2));
 
         addChild(sn);
 
@@ -275,10 +292,10 @@ bool ShaderJulia::init()
 {
     if (ShaderTestDemo::init())
     {
-        auto sn = ShaderNode::shaderNodeWithVertex("Shaders/example_Julia.vsh", "Shaders/example_Julia.fsh");
+        auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/example_Julia.fsh");
 
         auto s = Director::getInstance()->getWinSize();
-        sn->setPosition(Vector2(s.width/2, s.height/2));
+        sn->setPosition(Vec2(s.width/2, s.height/2));
 
         addChild(sn);
 
@@ -309,10 +326,10 @@ bool ShaderHeart::init()
 {
     if (ShaderTestDemo::init())
     {
-        auto sn = ShaderNode::shaderNodeWithVertex("Shaders/example_Heart.vsh", "Shaders/example_Heart.fsh");
+        auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/example_Heart.fsh");
 
         auto s = Director::getInstance()->getWinSize();
-        sn->setPosition(Vector2(s.width/2, s.height/2));
+        sn->setPosition(Vec2(s.width/2, s.height/2));
 
         addChild(sn);
 
@@ -342,10 +359,10 @@ bool ShaderFlower::init()
 {
     if (ShaderTestDemo::init())
     {
-        auto sn = ShaderNode::shaderNodeWithVertex("Shaders/example_Flower.vsh", "Shaders/example_Flower.fsh");
+        auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/example_Flower.fsh");
 
         auto s = Director::getInstance()->getWinSize();
-        sn->setPosition(Vector2(s.width/2, s.height/2));
+        sn->setPosition(Vec2(s.width/2, s.height/2));
 
         addChild(sn);
 
@@ -375,10 +392,10 @@ bool ShaderPlasma::init()
 {
     if (ShaderTestDemo::init())
     {
-        auto sn = ShaderNode::shaderNodeWithVertex("Shaders/example_Plasma.vsh", "Shaders/example_Plasma.fsh");
+        auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/example_Plasma.fsh");
 
         auto s = Director::getInstance()->getWinSize();
-        sn->setPosition(Vector2(s.width/2, s.height/2));
+        sn->setPosition(Vec2(s.width/2, s.height/2));
 
         addChild(sn);
 
@@ -404,26 +421,16 @@ class SpriteBlur : public Sprite
 {
 public:
     ~SpriteBlur();
-    void setBlurSize(float f);
     bool initWithTexture(Texture2D* texture, const Rect&  rect);
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
-    void initProgram();
+    void initGLProgram();
 
     static SpriteBlur* create(const char *pszFileName);
+    void setBlurRadius(float radius);
+    void setBlurSampleNum(float num);
 
 protected:
-    void onDraw(const Matrix &transform, bool transformUpdated);
-
-    int       _blurRadius;
-    Vector2     _pixelSize;
-
-    int       _samplingRadius;
-    //gaussian = cons * exp( (dx*dx + dy*dy) * scale);
-    float     _scale;
-    float     _cons;
-    float     _weightSum;
-
-    CustomCommand _customCommand;
+    float _blurRadius;
+    float _blurSampleNum;
 };
 
 SpriteBlur::~SpriteBlur()
@@ -453,20 +460,13 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
 #if CC_ENABLE_CACHE_TEXTURE_DATA
         auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
                 setGLProgram(nullptr);
-                initProgram();
+                initGLProgram();
             });
 
         _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 #endif
         
-        auto s = getTexture()->getContentSizeInPixels();
-
-        _pixelSize = Vector2(1/s.width, 1/s.height);
-
-        _samplingRadius = 0;
-        this->initProgram();
-
-        getGLProgramState()->setUniformVec2("onePixelSize", _pixelSize);
+        initGLProgram();
 
         return true;
     }
@@ -474,82 +474,31 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
     return false;
 }
 
-void SpriteBlur::initProgram()
+void SpriteBlur::initGLProgram()
 {
     GLchar * fragSource = (GLchar*) String::createWithContentsOfFile(
                                 FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur.fsh").c_str())->getCString();  
-    auto program = GLProgram::createWithByteArrays(ccPositionTextureColor_vert, fragSource);
-    setGLProgram(program);
+    auto program = GLProgram::createWithByteArrays(ccPositionTextureColor_noMVP_vert, fragSource);
 
-    auto glProgramState = getGLProgramState();
-#define kQuadSize sizeof(_quad.bl)
-    size_t offset = (size_t)&_quad;
-
-    // position
-    int diff = offsetof( V3F_C4B_T2F, vertices);
-    glProgramState->setVertexAttribPointer("a_position", 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
-    // texcoord
-    diff = offsetof( V3F_C4B_T2F, texCoords);
-    glProgramState->setVertexAttribPointer("a_texCoord", 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
-    // color
-    diff = offsetof( V3F_C4B_T2F, colors);
-    glProgramState->setVertexAttribPointer("a_color", 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
+    auto glProgramState = GLProgramState::getOrCreateWithGLProgram(program);
+    setGLProgramState(glProgramState);
+    
+    auto size = getTexture()->getContentSizeInPixels();
+    getGLProgramState()->setUniformVec2("resolution", size);
+    getGLProgramState()->setUniformFloat("blurRadius", _blurRadius);
+    getGLProgramState()->setUniformFloat("sampleNum", 7.0f);
 }
 
-void SpriteBlur::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void SpriteBlur::setBlurRadius(float radius)
 {
-    _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(SpriteBlur::onDraw, this, transform, transformUpdated);
-    renderer->addCommand(&_customCommand);
+    _blurRadius = radius;
+    getGLProgramState()->setUniformFloat("blurRadius", _blurRadius);
 }
 
-void SpriteBlur::onDraw(const Matrix &transform, bool transformUpdated)
+void SpriteBlur::setBlurSampleNum(float num)
 {
-    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
-    GL::bindTexture2D(_texture->getName());
-
-    auto glProgramState = getGLProgramState();
-    glProgramState->apply(transform);
-
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,4);
-}
-
-void SpriteBlur::setBlurSize(float f)
-{
-    if(_blurRadius == (int)f)
-        return;
-    _blurRadius = (int)f;
-
-    _samplingRadius = _blurRadius;
-    if (_samplingRadius > 10)
-    {
-        _samplingRadius = 10;
-    }
-    if (_blurRadius > 0)
-    {
-        float sigma = _blurRadius / 2.0f;
-        _scale = -0.5f / (sigma * sigma);
-        _cons = -1.0f * _scale / 3.141592f;
-        _weightSum = -_cons;
-
-        float weight;
-        int squareX;
-        for(int dx = 0; dx <= _samplingRadius; ++dx)
-        {
-            squareX = dx * dx;
-            weight = _cons * exp(squareX * _scale);
-            _weightSum += 2.0 * weight;
-            for (int dy = 1; dy <= _samplingRadius; ++dy)
-            {
-                weight = _cons * exp((squareX + dy * dy) * _scale);
-                _weightSum += 4.0 * weight;
-            }
-        }
-    }
-    log("_blurRadius:%d",_blurRadius);
-
-    getGLProgramState()->setUniformVec4("gaussianCoefficient", Vector4(_samplingRadius, _scale, _cons, _weightSum));
+    _blurSampleNum = num;
+    getGLProgramState()->setUniformFloat("sampleNum", _blurSampleNum);
 }
 
 // ShaderBlur
@@ -569,22 +518,43 @@ std::string ShaderBlur::subtitle() const
      return "Gaussian blur";
 }
 
-ControlSlider* ShaderBlur::createSliderCtl()
+void ShaderBlur::createSliderCtls()
 {
     auto screenSize = Director::getInstance()->getWinSize();
     
-    ControlSlider *slider = ControlSlider::create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
-    slider->setAnchorPoint(Vector2(0.5f, 1.0f));
-    slider->setMinimumValue(0.0f); // Sets the min value of range
-    slider->setMaximumValue(25.0f); // Sets the max value of range
+    {
+        ControlSlider *slider = ControlSlider::create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
+        slider->setAnchorPoint(Vec2(0.5f, 1.0f));
+        slider->setMinimumValue(0.0f);
+        slider->setMaximumValue(25.0f);
+        slider->setScale(0.6f);
+        slider->setPosition(Vec2(screenSize.width / 4.0f, screenSize.height / 3.0f));
+        slider->addTargetWithActionForControlEvents(this, cccontrol_selector(ShaderBlur::onRadiusChanged), Control::EventType::VALUE_CHANGED);
+        slider->setValue(2.0f);
+        addChild(slider);
+        _sliderRadiusCtl = slider;
+        
+        auto label = Label::createWithTTF("Blur Radius", "fonts/arial.ttf", 12.0f);
+        addChild(label);
+        label->setPosition(Vec2(screenSize.width / 4.0f, screenSize.height / 3.0f - 24.0f));
+    }
     
-    slider->setPosition(Vector2(screenSize.width / 2.0f, screenSize.height / 3.0f));
-
-    // When the value of the slider will change, the given selector will be call
-    slider->addTargetWithActionForControlEvents(this, cccontrol_selector(ShaderBlur::sliderAction), Control::EventType::VALUE_CHANGED);
-    slider->setValue(2.0f);
-
-    return slider;
+    {
+        ControlSlider *slider = ControlSlider::create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
+        slider->setAnchorPoint(Vec2(0.5f, 1.0f));
+        slider->setMinimumValue(0.0f);
+        slider->setMaximumValue(11.0f);
+        slider->setScale(0.6f);
+        slider->setPosition(Vec2(screenSize.width * 3 / 4.0f, screenSize.height / 3.0f));
+        slider->addTargetWithActionForControlEvents(this, cccontrol_selector(ShaderBlur::onSampleNumChanged), Control::EventType::VALUE_CHANGED);
+        slider->setValue(7.0f);
+        addChild(slider);
+        _sliderNumCtrl = slider;
+        
+        auto label = Label::createWithTTF("Blur Sample Num", "fonts/arial.ttf", 12.0f);
+        addChild(label);
+        label->setPosition(Vec2(screenSize.width * 3 / 4.0f, screenSize.height / 3.0f - 24.0f));
+    }
  
 }
 
@@ -593,29 +563,32 @@ bool ShaderBlur::init()
     if( ShaderTestDemo::init() ) 
     {
         _blurSprite = SpriteBlur::create("Images/grossini.png");
-
         auto sprite = Sprite::create("Images/grossini.png");
-
         auto s = Director::getInstance()->getWinSize();
-        _blurSprite->setPosition(Vector2(s.width/3, s.height/2));
-        sprite->setPosition(Vector2(2*s.width/3, s.height/2));
+        _blurSprite->setPosition(Vec2(s.width/3, s.height/2));
+        sprite->setPosition(Vec2(2*s.width/3, s.height/2));
 
         addChild(_blurSprite);
         addChild(sprite);
 
-        _sliderCtl = createSliderCtl();
+        createSliderCtls();
 
-        addChild(_sliderCtl);
         return true;
     }
 
     return false;
 }
 
-void ShaderBlur::sliderAction(Ref* sender, Control::EventType controlEvent)
+void ShaderBlur::onRadiusChanged(Ref* sender, Control::EventType)
 {
-    ControlSlider* pSlider = (ControlSlider*)sender;
-    _blurSprite->setBlurSize(pSlider->getValue());
+    ControlSlider* slider = (ControlSlider*)sender;
+    _blurSprite->setBlurRadius(slider->getValue());
+}
+
+void ShaderBlur::onSampleNumChanged(Ref* sender, Control::EventType)
+{
+    ControlSlider* slider = (ControlSlider*)sender;
+    _blurSprite->setBlurSampleNum(slider->getValue());
 }
 
 // ShaderRetroEffect
@@ -638,10 +611,10 @@ bool ShaderRetroEffect::init()
         auto s = director->getWinSize();
 
         _label = Label::createWithBMFont("fonts/west_england-64.fnt","RETRO EFFECT");
-        _label->setAnchorPoint(Vector2::ANCHOR_MIDDLE);
+        _label->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
         _label->setGLProgram(p);
 
-        _label->setPosition(Vector2(s.width/2,s.height/2));
+        _label->setPosition(Vec2(s.width/2,s.height/2));
 
         addChild(_label);
 
@@ -660,7 +633,7 @@ void ShaderRetroEffect::update(float dt)
     {
         auto sprite = _label->getLetter(i);
         auto oldPosition = sprite->getPosition();
-        sprite->setPosition(Vector2( oldPosition.x, sinf( _accum * 2 + i/2.0) * 20  ));
+        sprite->setPosition(Vec2( oldPosition.x, sinf( _accum * 2 + i/2.0) * 20  ));
         
         // add fabs() to prevent negative scaling
         float scaleY = ( sinf( _accum * 2 + i/2.0 + 0.707) );
@@ -679,101 +652,6 @@ std::string ShaderRetroEffect::subtitle() const
     return "sin() effect with moving colors";
 }
 
-
-
-UniformShaderNode::UniformShaderNode()
-:_center(Vector2(0.0f, 0.0f))
-,_resolution(Vector2(0.0f, 0.0f))
-,_time(0.0f)
-{
-    
-}
-
-UniformShaderNode::~UniformShaderNode()
-{
-    
-}
-
-bool UniformShaderNode::initWithVertex(const char *vert, const char *frag)
-{
-    
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
-        this->setGLProgram(nullptr);
-        loadShaderVertex(_vertFileName.c_str(), _fragFileName.c_str());
-    });
-    
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-#endif
-    
-    loadShaderVertex(vert, frag);
-    
-    _time = 0;
-    auto s = Director::getInstance()->getWinSize();
-    _resolution = Vector2(s.width , s.height );
-    getGLProgramState()->setUniformVec2("resolution", _resolution);
-    
-    scheduleUpdate();
-    
-    //setContentSize(Size(getContentSize().width, getContentSize().height));
-    setAnchorPoint(Vector2(0.5f, 0.5f));
-    
-    _vertFileName = vert;
-    _fragFileName = frag;
-	
-	return true;
-}
-
-void UniformShaderNode::loadShaderVertex(const char *vert, const char *frag)
-{
-    auto shader = GLProgram::createWithFilenames(vert, frag);
-    this->setGLProgram(shader);
-}
-
-void UniformShaderNode::update(float dt)
-{
-    _time += dt;
-}
-
-void UniformShaderNode::setPosition(const Vector2 &newPosition)
-{
-    Node::setPosition(newPosition);
-    auto position = getPosition();
-	_center = Vector2(position.x * CC_CONTENT_SCALE_FACTOR(), position.y * CC_CONTENT_SCALE_FACTOR());
-    getGLProgramState()->setUniformVec2("center", _center);
-}
-
-void UniformShaderNode::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
-{
-    _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(UniformShaderNode::onDraw, this, transform, transformUpdated);
-    renderer->addCommand(&_customCommand);
-
-}
-
-UniformShaderNode* UniformShaderNode::shaderNodeWithVertex(const char *vert, const char *frag)
-{
-    auto node = new UniformShaderNode();
-    node->initWithVertex(vert, frag);
-    node->autorelease();
-    
-    return node;
-}
-
-void UniformShaderNode::onDraw(const Matrix &transform, bool transformUpdated)
-{
-    float w = getContentSize().width, h = getContentSize().height;
-    GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
-    
-    auto glProgramState = getGLProgramState();
-    glProgramState->setVertexAttribPointer("a_position", 2, GL_FLOAT, GL_FALSE, 0, vertices);
-    glProgramState->apply(transform);
-    
-    glDrawArrays(GL_TRIANGLES, 0, 6);
-    
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,6);
-
-}
 
 ShaderLensFlare::ShaderLensFlare()
 {
@@ -794,10 +672,10 @@ bool ShaderLensFlare::init()
 {
     if (ShaderTestDemo::init())
     {
-        auto sn = UniformShaderNode::shaderNodeWithVertex("Shaders/example_Heart.vsh", "Shaders/shadertoy_LensFlare.fsh");
+        auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/shadertoy_LensFlare.fsh");
         
         auto s = Director::getInstance()->getWinSize();
-        sn->setPosition(Vector2(s.width/2, s.height/2));
+        sn->setPosition(Vec2(s.width/2, s.height/2));
         sn->setContentSize(Size(s.width/2,s.height/2));
         addChild(sn);
         
@@ -807,39 +685,9 @@ bool ShaderLensFlare::init()
     return false;
 }
 
-ShaderFireBall::ShaderFireBall()
-{
-    init();
-}
-
-std::string ShaderFireBall::title() const
-{
-    return "ShaderToy Test";
-}
-
-std::string ShaderFireBall::subtitle() const
-{
-    return "Fire Ball";
-}
-
-bool ShaderFireBall::init()
-{
-    if (ShaderTestDemo::init())
-    {
-        auto sn = UniformShaderNode::shaderNodeWithVertex("Shaders/example_Heart.vsh", "Shaders/shadertoy_FireBall.fsh");
-        
-        auto s = Director::getInstance()->getWinSize();
-        sn->setPosition(Vector2(s.width/2, s.height/2));
-        sn->setContentSize(Size(s.width/2,s.height/2));
-        addChild(sn);
-        
-        return true;
-    }
-    
-    return false;
-}
-
-
+//
+// ShaderGlow
+//
 ShaderGlow::ShaderGlow()
 {
     init();
@@ -859,10 +707,10 @@ bool ShaderGlow::init()
 {
     if (ShaderTestDemo::init())
     {
-        auto sn = UniformShaderNode::shaderNodeWithVertex("Shaders/example_Heart.vsh", "Shaders/shadertoy_Glow.fsh");
+        auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/shadertoy_Glow.fsh");
         
         auto s = Director::getInstance()->getWinSize();
-        sn->setPosition(Vector2(s.width/2, s.height/2));
+        sn->setPosition(Vec2(s.width/2, s.height/2));
         sn->setContentSize(Size(s.width/2,s.height/2));
         addChild(sn);
         
@@ -870,6 +718,109 @@ bool ShaderGlow::init()
     }
     
     return false;
+}
+
+//
+// ShaderMultiTexture
+//
+ShaderMultiTexture::ShaderMultiTexture():_changedTextureId(0)
+{
+    init();
+}
+
+std::string ShaderMultiTexture::title() const
+{
+    return "MultiTexture test";
+}
+
+std::string ShaderMultiTexture::subtitle() const
+{
+    return "MultiTexture";
+}
+
+ui::Slider* ShaderMultiTexture::createSliderCtl()
+{
+    auto screenSize = Director::getInstance()->getWinSize();
+
+    ui::Slider* slider = ui::Slider::create();
+    slider->loadBarTexture("cocosui/sliderTrack.png");
+    slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
+    slider->loadProgressBarTexture("cocosui/sliderProgress.png");
+    slider->setPercent(50);
+
+    slider->setPosition(Vec2(screenSize.width / 2.0f, screenSize.height / 3.0f));
+    addChild(slider);
+
+    slider->addEventListener([&](Ref* sender, ui::Slider::EventType type) {
+
+        if (type == ui::Slider::EventType::ON_PERCENTAGE_CHANGED)
+        {
+            ui::Slider* slider = dynamic_cast<ui::Slider*>(sender);
+            float p = slider->getPercent() / 100.0f;
+            _sprite->getGLProgramState()->setUniformFloat("u_interpolate",p);
+        }
+    });
+    return slider;
+}
+
+bool ShaderMultiTexture::init()
+{
+    if (ShaderTestDemo::init())
+    {
+        auto s = Director::getInstance()->getWinSize();
+
+        // Left: normal sprite
+        auto left = Sprite::create("Images/grossinis_sister1.png");
+        addChild(left);
+        left->setPosition(s.width*1/4, s.height/2);
+
+        // Right: normal sprite
+        auto right = Sprite::create("Images/grossinis_sister2.png");
+        addChild(right, 0, rightSpriteTag);
+        right->setPosition(s.width*3/4, s.height/2);
+
+
+        // Center: MultiTexture
+        _sprite = Sprite::createWithTexture(left->getTexture());
+        addChild(_sprite);
+        _sprite->setPosition(Vec2(s.width/2, s.height/2));
+
+        auto glprogram = GLProgram::createWithFilenames("Shaders/example_MultiTexture.vsh", "Shaders/example_MultiTexture.fsh");
+        auto glprogramstate = GLProgramState::getOrCreateWithGLProgram(glprogram);
+        _sprite->setGLProgramState(glprogramstate);
+
+        glprogramstate->setUniformTexture("u_texture1", right->getTexture());
+        glprogramstate->setUniformFloat("u_interpolate",0.5);
+
+        // slider
+        createSliderCtl();
+        
+        // menu
+        auto label = Label::createWithTTF(TTFConfig("fonts/arial.ttf"), "change");
+        auto mi = MenuItemLabel::create(label, CC_CALLBACK_1(ShaderMultiTexture::changeTexture, this));
+        auto menu = Menu::create(mi, nullptr);
+        addChild(menu);
+        menu->setPosition(s.width * 7 / 8, s.height / 2);
+
+        return true;
+    }
+
+    return false;
+}
+
+void ShaderMultiTexture::changeTexture(Ref*)
+{
+    static const int textureFilesCount = 3;
+    static const std::string textureFiles[textureFilesCount] = {
+        "Images/grossini.png",
+        "Images/grossinis_sister1.png",
+        "Images/grossinis_sister2.png"
+    };
+    auto textrue = Director::getInstance()->getTextureCache()->addImage(textureFiles[_changedTextureId++ % textureFilesCount]);
+    Sprite* right = dynamic_cast<Sprite*>(getChildByTag(rightSpriteTag));
+    right->setTexture(textrue);
+    auto programState = _sprite->getGLProgramState();
+    programState->setUniformTexture("u_texture1", right->getTexture());
 }
 
 

@@ -64,32 +64,30 @@ public:
     /**
      * create a LoadingBar with a texture and a percentage
      **/
-    static LoadingBar* create(const std::string& textureName, int percentage = 0);
+    static LoadingBar* create(const std::string& textureName, float percentage = 0);
     
     /**
      * Changes the progress direction of loadingbar.
      *
-     * @see LoadingBarType  LoadingBarTypeLeft means progress left to right, LoadingBarTypeRight otherwise.
+     * @see Direction  LEFT means progress left to right, RIGHT otherwise.
      *
-     * @param LoadingBarType
+     * @param direction Direction
      */
-    CC_DEPRECATED_ATTRIBUTE void setDirection(Direction direction);
-    void setBarDirection(Direction direction);
+    void setDirection(Direction direction);
     
     /**
      * Gets the progress direction of loadingbar.
      *
-     * @see LoadingBarType  LoadingBarTypeLeft means progress left to right, LoadingBarTypeRight otherwise.
+     * @see Direction  LEFT means progress left to right, RIGHT otherwise.
      *
-     * @param LoadingBarType
+     * @return Direction
      */
-    CC_DEPRECATED_ATTRIBUTE int getDirection();
-    Direction getBarDirection();
+    Direction getDirection()const;
     
     /**
      * Load texture for loadingbar.
      *
-     * @param fileName   file name of texture.
+     * @param texture   file name of texture.
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
@@ -100,23 +98,23 @@ public:
      *
      * @param percent    percent value from 1 to 100.
      */
-    void setPercent(int percent);
+    void setPercent(float percent);
     
     /**
      * Gets the progress direction of loadingbar.
      *
-     * @return percent    percent value from 1 to 100.
+     * @return percent value from 1 to 100.
      */
-    int getPercent();
+    float getPercent() const;
     
     /**
      * Sets if loadingbar is using scale9 renderer.
      *
-     * @param true that using scale9 renderer, false otherwise.
+     * @param enabled true that using scale9 renderer, false otherwise.
      */
     void setScale9Enabled(bool enabled);
     
-    bool isScale9Enabled();
+    bool isScale9Enabled()const;
     
     /**
      * Sets capinsets for loadingbar, if loadingbar is using scale9 renderer.
@@ -125,7 +123,7 @@ public:
      */
     void setCapInsets(const Rect &capInsets);
     
-    const Rect& getCapInsets();
+    const Rect& getCapInsets()const;
     
     //override "ignoreContentAdaptWithSize" method of widget.
     virtual void ignoreContentAdaptWithSize(bool ignore) override;
@@ -143,17 +141,17 @@ public:
 protected:
     virtual void initRenderer() override;
     virtual void onSizeChanged() override;
-    virtual void updateTextureColor() override;
-    virtual void updateTextureOpacity() override;
-    virtual void updateTextureRGBA() override;
+   
     void setScale9Scale();
     void barRendererScaleChangedWithSize();
+    
+    virtual void adaptRenderers() override;
+    
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
-    virtual void adaptRenderers() override;
 protected:
     Direction _direction;
-    int _percent;
+    float _percent;
     float _totalLength;
     Node* _barRenderer;
     TextureResType _renderBarTexType;

@@ -52,8 +52,8 @@
 
 
 --------------------------------------------------------
--- the cc GLProgram
--- @field [parent=#cc] GLProgram#GLProgram GLProgram preloaded module
+-- the cc GLProgramState
+-- @field [parent=#cc] GLProgramState#GLProgramState GLProgramState preloaded module
 
 
 --------------------------------------------------------
@@ -84,6 +84,11 @@
 --------------------------------------------------------
 -- the cc FileUtils
 -- @field [parent=#cc] FileUtils#FileUtils FileUtils preloaded module
+
+
+--------------------------------------------------------
+-- the cc UserDefault
+-- @field [parent=#cc] UserDefault#UserDefault UserDefault preloaded module
 
 
 --------------------------------------------------------
@@ -737,6 +742,11 @@
 
 
 --------------------------------------------------------
+-- the cc GLProgram
+-- @field [parent=#cc] GLProgram#GLProgram GLProgram preloaded module
+
+
+--------------------------------------------------------
 -- the cc SpriteBatchNode
 -- @field [parent=#cc] SpriteBatchNode#SpriteBatchNode SpriteBatchNode preloaded module
 
@@ -1122,6 +1132,16 @@
 
 
 --------------------------------------------------------
+-- the cc GLProgramCache
+-- @field [parent=#cc] GLProgramCache#GLProgramCache GLProgramCache preloaded module
+
+
+--------------------------------------------------------
+-- the cc TextureCache
+-- @field [parent=#cc] TextureCache#TextureCache TextureCache preloaded module
+
+
+--------------------------------------------------------
 -- the cc Application
 -- @field [parent=#cc] Application#Application Application preloaded module
 
@@ -1144,16 +1164,6 @@
 --------------------------------------------------------
 -- the cc SpriteFrameCache
 -- @field [parent=#cc] SpriteFrameCache#SpriteFrameCache SpriteFrameCache preloaded module
-
-
---------------------------------------------------------
--- the cc UserDefault
--- @field [parent=#cc] UserDefault#UserDefault UserDefault preloaded module
-
-
---------------------------------------------------------
--- the cc TextureCache
--- @field [parent=#cc] TextureCache#TextureCache TextureCache preloaded module
 
 
 --------------------------------------------------------
@@ -1199,6 +1209,16 @@
 --------------------------------------------------------
 -- the cc Component
 -- @field [parent=#cc] Component#Component Component preloaded module
+
+
+--------------------------------------------------------
+-- the cc Sprite3D
+-- @field [parent=#cc] Sprite3D#Sprite3D Sprite3D preloaded module
+
+
+--------------------------------------------------------
+-- the cc Mesh
+-- @field [parent=#cc] Mesh#Mesh Mesh preloaded module
 
 
 --------------------------------------------------------

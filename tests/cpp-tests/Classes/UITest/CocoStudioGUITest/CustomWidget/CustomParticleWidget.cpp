@@ -7,6 +7,8 @@
 //
 
 #include "CustomParticleWidget.h"
+#include "2d/CCParticleSystem.h"
+#include "2d/CCParticleSystemQuad.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -82,14 +84,14 @@ const char* CustomParticleWidget::getParticlePlist() const
     return _emitterPlist;
 }
 
-void CustomParticleWidget::setParticlePosition(const Vector2 &pos)
+void CustomParticleWidget::setParticlePosition(const Vec2 &pos)
 {
     _emitter->setPosition(pos);
     
     _emitterPostion = pos;
 }
 
-const Vector2& CustomParticleWidget::getParticlePosition() const
+const Vec2& CustomParticleWidget::getParticlePosition() const
 {
     return _emitterPostion;
 }

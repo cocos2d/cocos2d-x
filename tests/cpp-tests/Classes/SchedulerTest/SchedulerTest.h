@@ -302,6 +302,21 @@ public:
 private:
 };
 
+class ScheduleUpdatePriority : public SchedulerTestLayer
+{
+public:
+    CREATE_FUNC(ScheduleUpdatePriority);
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    void onEnter();
+    void onExit();
+    
+    virtual void update(float dt);
+    
+    bool onTouchBegan(Touch* touch, Event* event);
+};
+
 class SchedulerTestScene : public TestScene
 {
 public:

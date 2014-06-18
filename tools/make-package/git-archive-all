@@ -7,9 +7,18 @@ from __future__ import unicode_literals
 __version__ = "1.7"
 
 import sys
+import os
+import shutil
+import traceback
+
 from os import path, extsep
 from subprocess import Popen, PIPE, CalledProcessError
 
+class UnrecognizedFormat:
+    def __init__(self, prompt):
+        self._prompt = prompt
+    def __str__(self):
+        return self._prompt
 
 class GitArchiver(object):
     """
@@ -71,6 +80,65 @@ class GitArchiver(object):
         self.force_sub = force_sub
         self.main_repo_abspath = main_repo_abspath
 
+    def load_json_file(self, file_path):
+        import json
+        if not path.isfile(file_path):
+            raise Exception("Could not find (%s)" % (file_path))
+
+        with open(file_path) as data_file:
+            data = json.load(data_file)
+        return data
+
+    def ensure_directory(self, target):
+        if not os.path.exists(target):
+            os.mkdir(target)
+
+    def unpack_zipfile(self, zip_file_path, extract_dir):
+        """Unpack zip `filename` to `extract_dir`
+
+        Raises ``UnrecognizedFormat`` if `filename` is not a zipfile (as determined
+        by ``zipfile.is_zipfile()``).
+        """
+
+        import zipfile
+        if not zipfile.is_zipfile(zip_file_path):
+            raise UnrecognizedFormat("%s is not a zip file" % zip_file_path)
+
+        file_paths = []
+        print("==> Extracting files, please wait ...")
+        z = zipfile.ZipFile(zip_file_path)
+        try:
+            for info in z.infolist():
+                name = info.filename
+
+                # don't extract absolute paths or ones with .. in them
+                if name.startswith('/') or '..' in name:
+                    continue
+
+                target = os.path.join(extract_dir, *name.split('/'))
+                if not target:
+                    continue
+                if name.endswith('/'):
+                    # directory
+                    self.ensure_directory(target)
+                else:
+                    # file
+                    data = z.read(info.filename)
+                    file_paths.append(target)
+                    f = open(target,'wb')
+                    try:
+                        f.write(data)
+                    finally:
+                        f.close()
+                        del data
+                unix_attributes = info.external_attr >> 16
+                if unix_attributes:
+                    os.chmod(target, unix_attributes)
+        finally:
+            z.close()
+            print("==> Extraction done!")
+        return file_paths
+
     def create(self, output_path, dry_run=False, output_format=None):
         """
         Creates the archive, written to the given output_file_path
@@ -114,6 +182,7 @@ class GitArchiver(object):
         else:
             raise RuntimeError("Unknown format: {f}".format(f=output_format))
 
+        print("Making archive: (%s) , please wait ..." % output_path)
         for file_path in self.extra:
             if not dry_run:
                 if self.verbose:
@@ -129,13 +198,49 @@ class GitArchiver(object):
                 if self.verbose:
                     print("Compressing {f} => {a}...".format(f=path.join(self.main_repo_abspath, file_path),
                                                              a=path.join(self.prefix, file_path)))
+
                 add(path.join(self.main_repo_abspath, file_path), file_path)
             else:
                 print("{f} => {a}".format(f=path.join(self.main_repo_abspath, file_path),
                                           a=path.join(self.prefix, file_path)))
 
+
+        # Execute download-deps.py in root folder
+        import subprocess
+        subprocess.call("python %s -d -f" % (path.join(self.main_repo_abspath, "download-deps.py")), shell=True, cwd=self.main_repo_abspath)
+
+        # Execute download-bin.py in cocos2d-console folder
+        console_path = path.join(self.main_repo_abspath, "tools", "cocos2d-console")
+        subprocess.call("python %s -d -f" % (path.join(console_path, "download-bin.py")), shell=True, cwd=console_path)
+
+        # Check config.json to insert a zip file content to the final generated zip file
+        extra_folders = []
+        config_data = self.load_json_file("config.json")
+
+        for zip_file in config_data["extra_zip_files"]:
+            zip_config = self.load_json_file(zip_file["zip_config_path"])
+            zip_file_name = zip_config["version"] + '.zip'
+            extra_to_zip_file = zip_file["extract_to_zip_path"]
+            zip_file_path = os.path.join(zip_file["zip_file_path"], zip_file_name)
+            # 'v' letter was swallowed by github, so we need to substring it from the 2nd letter
+            extra_folder_name = zip_config["repo_name"] + '-' + zip_config["version"][1:]
+            extra_folder_path = os.path.join(self.main_repo_abspath, extra_folder_name)
+            extra_folders.append(extra_folder_path)
+            extra_file_paths = self.unpack_zipfile(zip_file_path, self.main_repo_abspath)
+            for file_path in extra_file_paths:
+                if file_path.find(extra_folder_path) == -1:
+                    raise Exception("Couldn't find extra folder path (%s) in (%s)!" % (extra_folder_path, file_path))
+
+                path_in_zip = extra_to_zip_file + file_path[(len(extra_folder_path)):]
+                add(file_path, path_in_zip)
+
         if not dry_run:
             archive.close()
+
+        for extra_folder in extra_folders:
+            if os.path.exists(extra_folder):
+                shutil.rmtree(extra_folder)
+
 
     def get_path_components(self, repo_abspath, abspath):
         """
@@ -459,6 +564,7 @@ if __name__ == '__main__':
                                options.extra)
         archiver.create(output_file_path, options.dry_run)
     except Exception as e:
+        traceback.print_exc()
         parser.exit(2, "{exception}\n".format(exception=e))
 
     sys.exit(0)

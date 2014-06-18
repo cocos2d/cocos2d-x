@@ -1,7 +1,7 @@
 
 --------------------------------
 -- @module ScrollView
--- @extend Layout,UIScrollInterface
+-- @extend Layout
 
 --------------------------------
 -- @function [parent=#ScrollView] scrollToTop 
@@ -24,7 +24,7 @@
 --------------------------------
 -- @function [parent=#ScrollView] scrollToPercentBothDirection 
 -- @param self
--- @param #vector2_table array
+-- @param #vec2_table vec2
 -- @param #float float
 -- @param #bool bool
         
@@ -128,7 +128,7 @@
 --------------------------------
 -- @function [parent=#ScrollView] jumpToPercentBothDirection 
 -- @param self
--- @param #vector2_table array
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#ScrollView] scrollToPercentVertical 
@@ -211,7 +211,7 @@
 --------------------------------
 -- @function [parent=#ScrollView] getLayoutType 
 -- @param self
--- @return Layout::LayoutType#Layout::LayoutType ret (return value: ccui.Layout::LayoutType)
+-- @return Layout::Type#Layout::Type ret (return value: ccui.Layout::Type)
         
 --------------------------------
 -- @function [parent=#ScrollView] removeAllChildrenWithCleanup 
@@ -221,6 +221,13 @@
 --------------------------------
 -- @function [parent=#ScrollView] removeAllChildren 
 -- @param self
+        
+--------------------------------
+-- @function [parent=#ScrollView] findNextFocusedWidget 
+-- @param self
+-- @param #ccui.Widget::FocusDirection focusdirection
+-- @param #ccui.Widget widget
+-- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
 -- @function [parent=#ScrollView] removeChild 
@@ -251,7 +258,7 @@
 --------------------------------
 -- @function [parent=#ScrollView] setLayoutType 
 -- @param self
--- @param #ccui.Layout::LayoutType layouttype
+-- @param #ccui.Layout::Type type
         
 --------------------------------
 -- @function [parent=#ScrollView] ScrollView 

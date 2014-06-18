@@ -23,7 +23,9 @@
  ****************************************************************************/
 
 #include "UIRichText.h"
-
+#include "platform/CCFileUtils.h"
+#include "2d/CCLabel.h"
+#include "2d/CCSprite.h"
 
 NS_CC_BEGIN
 
@@ -162,7 +164,7 @@ bool RichText::init()
 void RichText::initRenderer()
 {
     _elementRenderersContainer = Node::create();
-    _elementRenderersContainer->setAnchorPoint(Vector2(0.5f, 0.5f));
+    _elementRenderersContainer->setAnchorPoint(Vec2(0.5f, 0.5f));
     addProtectedChild(_elementRenderersContainer, 0, -1);
 }
 
@@ -367,8 +369,8 @@ void RichText::formarRenderers()
         for (ssize_t j=0; j<row->size(); j++)
         {
             Node* l = row->at(j);
-            l->setAnchorPoint(Vector2::ZERO);
-            l->setPosition(Vector2(nextPosX, 0.0f));
+            l->setAnchorPoint(Vec2::ZERO);
+            l->setPosition(Vec2(nextPosX, 0.0f));
             _elementRenderersContainer->addChild(l, 1, (int)j);
             Size iSize = l->getContentSize();
             newContentSizeWidth += iSize.width;
@@ -406,8 +408,8 @@ void RichText::formarRenderers()
             for (ssize_t j=0; j<row->size(); j++)
             {
                 Node* l = row->at(j);
-                l->setAnchorPoint(Vector2::ZERO);
-                l->setPosition(Vector2(nextPosX, nextPosY));
+                l->setAnchorPoint(Vec2::ZERO);
+                l->setPosition(Vec2(nextPosX, nextPosY));
                 _elementRenderersContainer->addChild(l, 1, (int)(i*10 + j));
                 nextPosX += l->getContentSize().width;
             }
@@ -447,12 +449,12 @@ void RichText::pushToContainer(cocos2d::Node *renderer)
     _elementRenders[_elementRenders.size()-1]->pushBack(renderer);
 }
 
-void RichText::visit(cocos2d::Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
+void RichText::visit(cocos2d::Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     if (_enabled)
     {
         formatText();
-        Widget::visit(renderer, parentTransform, parentTransformUpdated);
+        Widget::visit(renderer, parentTransform, parentFlags);
     }
 }
     
@@ -461,7 +463,7 @@ void RichText::setVerticalSpace(float space)
     _verticalSpace = space;
 }
     
-void RichText::setAnchorPoint(const Vector2 &pt)
+void RichText::setAnchorPoint(const Vec2 &pt)
 {
     Widget::setAnchorPoint(pt);
     _elementRenderersContainer->setAnchorPoint(pt);

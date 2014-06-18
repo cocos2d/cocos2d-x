@@ -26,20 +26,12 @@ THE SOFTWARE.
 #define __UISCROLLVIEW_H__
 
 #include "ui/UILayout.h"
-#include "ui/UIScrollInterface.h"
 
 NS_CC_BEGIN
 
+class EventFocusListener;
+
 namespace ui {
-    
-class ScrollInnerContainer : public Layout
-{
-public:
-    ScrollInnerContainer();
-    virtual ~ScrollInnerContainer();
-    static ScrollInnerContainer* create();
-    virtual const Size& getLayoutSize() override;
-};
 
 CC_DEPRECATED_ATTRIBUTE typedef enum
 {
@@ -58,7 +50,7 @@ CC_DEPRECATED_ATTRIBUTE typedef void (Ref::*SEL_ScrollViewEvent)(Ref*, Scrollvie
 #define scrollvieweventselector(_SELECTOR) (SEL_ScrollViewEvent)(&_SELECTOR)
 
 
-class ScrollView : public Layout , public UIScrollInterface
+class ScrollView : public Layout
 {
     
     DECLARE_CLASS_GUI_INFO
@@ -85,6 +77,7 @@ public:
         BOUNCE_RIGHT
     };
     typedef std::function<void(Ref*, EventType)> ccScrollViewCallback;
+   
     /**
      * Default constructor
      */
@@ -94,7 +87,6 @@ public:
      * Default destructor
      */
     virtual ~ScrollView();
-    
     /**
      * Allocates and initializes.
      */
@@ -116,7 +108,7 @@ public:
      *
      * @return SCROLLVIEW_DIR
      */
-    Direction getDirection();
+    Direction getDirection()const;
     
     /**
      * Gets inner container of scrollview.
@@ -125,7 +117,7 @@ public:
      *
      * @return inner container.
      */
-    Layout* getInnerContainer();
+    Layout* getInnerContainer()const;
     
     /**
      * Scroll inner container to bottom boundary of scrollview.
@@ -180,7 +172,7 @@ public:
     /**
      * Scroll inner container to both direction percent position of scrollview.
      */
-    void scrollToPercentBothDirection(const Vector2& percent, float time, bool attenuated);
+    void scrollToPercentBothDirection(const Vec2& percent, float time, bool attenuated);
     
     /**
      * Move inner container to bottom boundary of scrollview.
@@ -235,7 +227,7 @@ public:
     /**
      * Move inner container to both direction percent position of scrollview.
      */
-    void jumpToPercentBothDirection(const Vector2& percent);
+    void jumpToPercentBothDirection(const Vec2& percent);
     
     /**
      * Changes inner container size of scrollview.
@@ -259,47 +251,22 @@ public:
      * Add call back function called scrollview event triggered
      */
     CC_DEPRECATED_ATTRIBUTE void addEventListenerScrollView(Ref* target, SEL_ScrollViewEvent selector);
-    void addEventListener(ccScrollViewCallback callback);
-        
+    void addEventListener(const ccScrollViewCallback& callback);
+    
+    //all of these functions are related to innerContainer.
     virtual void addChild(Node * child) override;
-    /**
-     * Adds a child to the container with a z-order
-     *
-     * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
-     *
-     * @param child     A child node
-     * @param zOrder    Z order for drawing priority. Please refer to setLocalZOrder(int)
-     */
     virtual void addChild(Node * child, int zOrder) override;
-    /**
-     * Adds a child to the container with z order and tag
-     *
-     * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
-     *
-     * @param child     A child node
-     * @param zOrder    Z order for drawing priority. Please refer to setLocalZOrder(int)
-     * @param tag       A interger to identify the node easily. Please refer to setTag(int)
-     */
     virtual void addChild(Node* child, int zOrder, int tag) override;
-    
-    //override "removeAllChildrenAndCleanUp" method of widget.
     virtual void removeAllChildren() override;
-    
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
-    
-    //override "removeChild" method of widget.
 	virtual void removeChild(Node* child, bool cleaup = true) override;
-    
-    //override "getChildren" method of widget.
     virtual Vector<Node*>& getChildren() override;
     virtual const Vector<Node*>& getChildren() const override;
-    
     virtual ssize_t getChildrenCount() const override;
+    virtual Node * getChildByTag(int tag) const override;
+    virtual Node* getChildByName(const std::string& name)const override;
     
-    virtual Node * getChildByTag(int tag) override;
-    
-    virtual Widget* getChildByName(const std::string& name) override;
-    
+    //handle touch event
     virtual bool onTouchBegan(Touch *touch, Event *unusedEvent) override;
     virtual void onTouchMoved(Touch *touch, Event *unusedEvent) override;
     virtual void onTouchEnded(Touch *touch, Event *unusedEvent) override;
@@ -322,7 +289,7 @@ public:
      *
      * @param LayoutType
      */
-    virtual void setLayoutType(LayoutType type) override;
+    virtual void setLayoutType(Type type) override;
     
     /**
      * Gets LayoutType.
@@ -331,7 +298,7 @@ public:
      *
      * @return LayoutType
      */
-    virtual LayoutType getLayoutType() const override;
+    virtual Type getLayoutType() const override;
     
     /**
      * Returns the "class name" of widget.
@@ -339,59 +306,79 @@ public:
     virtual std::string getDescription() const override;
     
     virtual void onEnter() override;
+    
+    /**
+     *  When a widget is in a layout, you could call this method to get the next focused widget within a specified direction.
+     *  If the widget is not in a layout, it will return itself
+     *@param dir the direction to look for the next focused widget in a layout
+     *@param current  the current focused widget
+     *@return the next focused widget in a layout
+     */
+    virtual Widget* findNextFocusedWidget(FocusDirection direction, Widget* current) override;
 
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
-
+    
 protected:
     virtual void initRenderer() override;
+    
+    virtual void onSizeChanged() override;
+    virtual void doLayout() override;
+
+    virtual Widget* createCloneInstance() override;
+    virtual void copySpecialProperties(Widget* model) override;
+    virtual void copyClonedWidgetChildren(Widget* model) override;
+    
+    
     void moveChildren(float offsetX, float offsetY);
     void autoScrollChildren(float dt);
     void bounceChildren(float dt);
     void checkBounceBoundary();
     bool checkNeedBounce();
-    void startAutoScrollChildrenWithOriginalSpeed(const Vector2& dir, float v, bool attenuated, float acceleration);
-    void startAutoScrollChildrenWithDestination(const Vector2& des, float time, bool attenuated);
-    void jumpToDestination(const Vector2& des);
+    void startAutoScrollChildrenWithOriginalSpeed(const Vec2& dir, float v, bool attenuated, float acceleration);
+    void startAutoScrollChildrenWithDestination(const Vec2& des, float time, bool attenuated);
+    void jumpToDestination(const Vec2& des);
     void stopAutoScrollChildren();
     void startBounceChildren(float v);
     void stopBounceChildren();
     bool checkCustomScrollDestination(float* touchOffsetX, float* touchOffsetY);
+    
     virtual bool scrollChildren(float touchOffsetX, float touchOffsetY);
+
+    bool scrollChildrenVertical(float touchOffsetX, float touchOffsetY);
+    bool scrollChildrenHorizontal(float touchOffsetX, float touchOffestY);
+    bool scrollChildrenBoth(float touchOffsetX, float touchOffsetY);
+
+    
     bool bounceScrollChildren(float touchOffsetX, float touchOffsetY);
     void startRecordSlidAction();
     virtual void endRecordSlidAction();
-    virtual void handlePressLogic(const Vector2 &touchPoint) override;
-    virtual void handleMoveLogic(const Vector2 &touchPoint) override;
-    virtual void handleReleaseLogic(const Vector2 &touchPoint) override;
-    virtual void interceptTouchEvent(int handleState,Widget* sender,const Vector2 &touchPoint) override;
-    virtual void checkChildInfo(int handleState,Widget* sender,const Vector2 &touchPoint) override;
+    
+    //ScrollViewProtocol
+    virtual void handlePressLogic(Touch *touch) ;
+    virtual void handleMoveLogic(Touch *touch) ;
+    virtual void handleReleaseLogic(Touch *touch) ;
+    
+    virtual void interceptTouchEvent(Widget::TouchEventType event,Widget* sender,Touch *touch) override;
+    
     void recordSlidTime(float dt);
+    
     void scrollToTopEvent();
     void scrollToBottomEvent();
     void scrollToLeftEvent();
     void scrollToRightEvent();
     void scrollingEvent();
+    
     void bounceTopEvent();
     void bounceBottomEvent();
     void bounceLeftEvent();
     void bounceRightEvent();
-    virtual void onSizeChanged() override;
-    virtual Widget* createCloneInstance() override;
-    virtual void copySpecialProperties(Widget* model) override;
-    virtual void copyClonedWidgetChildren(Widget* model) override;
-    virtual void setClippingEnabled(bool able) override{Layout::setClippingEnabled(able);};
-    virtual void doLayout() override;
+    
 protected:
     Layout* _innerContainer;
     
     Direction _direction;
-
-    Vector2 _touchBeganPoint;
-    Vector2 _touchMovedPoint;
-    Vector2 _touchEndedPoint;
-    Vector2 _touchMovingPoint;
-    Vector2 _autoScrollDir;
+    Vec2 _autoScrollDir;
     
     float _topBoundary;
     float _bottomBoundary;
@@ -411,11 +398,11 @@ protected:
     float _autoScrollAcceleration;
     bool _isAutoScrollSpeedAttenuated;
     bool _needCheckAutoScrollDestination;
-    Vector2 _autoScrollDestination;
+    Vec2 _autoScrollDestination;
     
     bool _bePressed;
     float _slidTime;
-    Vector2 _moveChildPoint;
+    Vec2 _moveChildPoint;
     float _childFocusCancelOffset;
     
     bool _leftBounceNeeded;
@@ -425,11 +412,9 @@ protected:
     
     bool _bounceEnabled;
     bool _bouncing;
-    Vector2 _bounceDir;
+    Vec2 _bounceDir;
     float _bounceOriginalSpeed;
     bool _inertiaScrollEnabled;
-
-
     
     Ref* _scrollViewEventListener;
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))

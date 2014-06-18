@@ -27,4 +27,11 @@
 -- @param self
 -- @return NodeGrid#NodeGrid ret (return value: cc.NodeGrid)
         
+--------------------------------
+-- @function [parent=#NodeGrid] visit 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #mat4_table mat4
+-- @param #unsigned int int
+        
 return nil

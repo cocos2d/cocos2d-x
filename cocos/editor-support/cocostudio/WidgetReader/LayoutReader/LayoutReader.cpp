@@ -72,7 +72,7 @@ namespace cocostudio
         
         float bgcv1 = DICTOOL->getFloatValue_json(options, "vectorX");
         float bgcv2 = DICTOOL->getFloatValue_json(options, "vectorY");
-        panel->setBackGroundColorVector(Vector2(bgcv1, bgcv2));
+        panel->setBackGroundColorVector(Vec2(bgcv1, bgcv2));
         
         int co = DICTOOL->getIntValue_json(options, "bgColorOpacity");
         
@@ -97,7 +97,7 @@ namespace cocostudio
             float ch = DICTOOL->getFloatValue_json(options, "capInsetsHeight");
             panel->setBackGroundImageCapInsets(Rect(cx, cy, cw, ch));
         }
-        panel->setLayoutType((Layout::LayoutType)DICTOOL->getIntValue_json(options, "layoutType"));
+        panel->setLayoutType((Layout::Type)DICTOOL->getIntValue_json(options, "layoutType"));
         
         int bgimgcr = DICTOOL->getIntValue_json(options, "colorR");
         int bgimgcg = DICTOOL->getIntValue_json(options, "colorG");

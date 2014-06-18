@@ -270,7 +270,7 @@ function TestAsynchronousLoading:onEnter()
 end
 
 function TestAsynchronousLoading.restartCallback()
-    ccs.ArmatureDataManager:destoryInstance()
+    ccs.ArmatureDataManager:destroyInstance()
     local newScene = ArmatureTestScene.create()
     newScene:addChild(restartArmatureTest())
     cc.Director:getInstance():replaceScene(newScene)

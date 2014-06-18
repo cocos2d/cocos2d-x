@@ -53,4 +53,12 @@ public:
     void constFunc(const Value& value) const;
 };
 
+class UTFConversionTest : public UnitTestDemo
+{
+public:
+    CREATE_FUNC(UTFConversionTest);
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+};
+
 #endif /* __UNIT_TEST__ */

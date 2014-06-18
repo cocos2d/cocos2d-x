@@ -197,6 +197,9 @@ public:
     virtual void onExit() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+    
+private:
+    EventListenerCustom* _frameDisplayedListener;
 };
 
 class ActionSequence : public ActionsDemo
@@ -376,11 +379,11 @@ public:
     CREATE_FUNC(ActionFollow);
 
     virtual void onEnter() override;
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     virtual std::string subtitle() const override;
 
 protected:
-    void onDraw(const Matrix &transform, bool transformUpdated);
+    void onDraw(const Mat4 &transform, uint32_t flags);
 
     CustomCommand _customCommand;
 };
@@ -413,7 +416,7 @@ public:
     virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void addNewSpriteWithCoords(Vector2 p);
+    virtual void addNewSpriteWithCoords(Vec2 p);
     virtual void runActionsInSprite(Sprite* sprite);
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 };
@@ -451,17 +454,17 @@ public:
     CREATE_FUNC(ActionCatmullRomStacked);
 
     virtual ~ActionCatmullRomStacked();
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
 protected:
-    void onDraw(const Matrix &transform, bool transformUpdated);
+    void onDraw(const Mat4 &transform, uint32_t flags);
 
     //cached data and callback
-    Matrix _modelViewMV1;
-    Matrix _modelViewMV2;
+    Mat4 _modelViewMV1;
+    Mat4 _modelViewMV2;
     PointArray* _array1;
     PointArray* _array2;
     CustomCommand _customCommand;
@@ -473,16 +476,16 @@ public:
     CREATE_FUNC(ActionCardinalSplineStacked);
 
     virtual ~ActionCardinalSplineStacked();
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated);
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags);
     virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
 protected:
-    void onDraw(const Matrix &transform, bool transformUpdated);
+    void onDraw(const Mat4 &transform, uint32_t flags);
 
-    Matrix _modelViewMV1;
-    Matrix _modelViewMV2;
+    Mat4 _modelViewMV1;
+    Mat4 _modelViewMV2;
     CustomCommand _customCommand;
     PointArray* _array;
 };
@@ -561,6 +564,18 @@ private:
     int _testInteger;
 };
 
+class Issue2599 : public ActionsDemo
+{
+public:
+    CREATE_FUNC(Issue2599);
+    
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+    virtual std::string title() const override;
+private:
+    int _count;
+};
+
 class ActionCatmullRom : public ActionsDemo
 {
 public:
@@ -569,15 +584,15 @@ public:
     ~ActionCatmullRom();
     
     virtual void onEnter() override;
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     virtual std::string subtitle() const override;
     virtual std::string title() const override;
 
 protected:
-    void onDraw(const Matrix &transform, bool transformUpdated);
+    void onDraw(const Mat4 &transform, uint32_t flags);
 
-    Matrix _modelViewMV1;
-    Matrix _modelViewMV2;
+    Mat4 _modelViewMV1;
+    Mat4 _modelViewMV2;
     CustomCommand _customCommand;
     PointArray *_array1;
     PointArray *_array2;
@@ -591,16 +606,16 @@ public:
     ~ActionCardinalSpline();
     
     virtual void onEnter() override;
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     virtual std::string subtitle() const override;
     virtual std::string title() const override;
 
 protected:
-    void onDraw(const Matrix &transform, bool transformUpdated);
+    void onDraw(const Mat4 &transform, uint32_t flags);
 
     PointArray *_array;
-    Matrix _modelViewMV1;
-    Matrix _modelViewMV2;
+    Mat4 _modelViewMV1;
+    Mat4 _modelViewMV2;
     CustomCommand _customCommand;
 };
 

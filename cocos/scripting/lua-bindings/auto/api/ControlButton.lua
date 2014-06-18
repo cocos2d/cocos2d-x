@@ -43,12 +43,12 @@
 --------------------------------
 -- @function [parent=#ControlButton] setLabelAnchorPoint 
 -- @param self
--- @param #vector2_table array
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#ControlButton] getLabelAnchorPoint 
 -- @param self
--- @return vector2_table#vector2_table ret (return value: vector2_table)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#ControlButton] getTitleTTFSizeForState 
@@ -251,11 +251,6 @@
 -- @param #color3b_table color3b
         
 --------------------------------
--- @function [parent=#ControlButton] getColor 
--- @param self
--- @return color3b_table#color3b_table ret (return value: color3b_table)
-        
---------------------------------
 -- @function [parent=#ControlButton] onTouchCancelled 
 -- @param self
 -- @param #cc.Touch touch
@@ -267,9 +262,14 @@
 -- @param #unsigned char char
         
 --------------------------------
--- @function [parent=#ControlButton] getOpacity 
+-- @function [parent=#ControlButton] updateDisplayedOpacity 
 -- @param self
--- @return unsigned char#unsigned char ret (return value: unsigned char)
+-- @param #unsigned char char
+        
+--------------------------------
+-- @function [parent=#ControlButton] updateDisplayedColor 
+-- @param self
+-- @param #color3b_table color3b
         
 --------------------------------
 -- @function [parent=#ControlButton] onTouchBegan 

@@ -30,6 +30,10 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
+-- @function [parent=#Texture2D] releaseGLTexture 
+-- @param self
+        
+--------------------------------
 -- @function [parent=#Texture2D] updateWithData 
 -- @param self
 -- @param #void void
@@ -144,7 +148,7 @@
 --------------------------------
 -- @function [parent=#Texture2D] drawAtPoint 
 -- @param self
--- @param #vector2_table array
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#Texture2D] getGLProgram 

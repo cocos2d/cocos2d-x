@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __CC_EXTENTIONS_CCCOMAUDIO_H__
 
 #include "CCComBase.h"
+#include "2d/CCComponent.h"
 
 namespace cocostudio {
 

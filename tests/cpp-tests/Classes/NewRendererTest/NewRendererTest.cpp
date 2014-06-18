@@ -40,6 +40,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(NewDrawNodeTest),
     CL(NewCullingTest),
     CL(VBOFullTest),
+    CL(CaptureScreenTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -230,7 +231,7 @@ protected:
 public:
     static SpriteInGroupCommand* create(const std::string& filename);
     
-    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 };
 
 SpriteInGroupCommand* SpriteInGroupCommand::create(const std::string &filename)
@@ -241,13 +242,13 @@ SpriteInGroupCommand* SpriteInGroupCommand::create(const std::string &filename)
     return sprite;
 }
 
-void SpriteInGroupCommand::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void SpriteInGroupCommand::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     CCASSERT(renderer, "Render is null");
     _spriteWrapperCommand.init(_globalZOrder);
     renderer->addCommand(&_spriteWrapperCommand);
     renderer->pushGroup(_spriteWrapperCommand.getRenderQueueID());
-    Sprite::draw(renderer, transform, transformUpdated);
+    Sprite::draw(renderer, transform, flags);
     renderer->popGroup();
 }
 
@@ -309,7 +310,7 @@ void NewSpriteBatchTest::onTouchesEnded(const std::vector<Touch *> &touches, Eve
     }
 }
 
-void NewSpriteBatchTest::addNewSpriteWithCoords(Vector2 p)
+void NewSpriteBatchTest::addNewSpriteWithCoords(Vec2 p)
 {
     auto BatchNode = static_cast<SpriteBatchNode*>( getChildByTag(kTagSpriteBatchNode) );
 
@@ -321,7 +322,7 @@ void NewSpriteBatchTest::addNewSpriteWithCoords(Vector2 p)
     auto sprite = Sprite::createWithTexture(BatchNode->getTexture(), Rect(x,y,85,121));
     BatchNode->addChild(sprite);
 
-    sprite->setPosition( Vector2( p.x, p.y) );
+    sprite->setPosition( Vec2( p.x, p.y) );
 
     ActionInterval* action;
     float random = CCRANDOM_0_1();
@@ -338,7 +339,7 @@ void NewSpriteBatchTest::addNewSpriteWithCoords(Vector2 p)
         action = FadeOut::create(2);
 
     auto action_back = action->reverse();
-    auto seq = Sequence::create(action, action_back, NULL);
+    auto seq = Sequence::create(action, action_back, nullptr);
 
     sprite->runAction( RepeatForever::create(seq));
 }
@@ -350,19 +351,19 @@ NewClippingNodeTest::NewClippingNodeTest()
     auto clipper = ClippingNode::create();
     clipper->setTag( kTagClipperNode );
     clipper->setContentSize(  Size(200, 200) );
-    clipper->setAnchorPoint(  Vector2(0.5, 0.5) );
-    clipper->setPosition( Vector2(s.width / 2, s.height / 2) );
+    clipper->setAnchorPoint(  Vec2(0.5, 0.5) );
+    clipper->setPosition( Vec2(s.width / 2, s.height / 2) );
 
     clipper->runAction(RepeatForever::create(RotateBy::create(1, 45)));
     this->addChild(clipper);
 
     //TODO Fix draw node as clip node
 //    auto stencil = NewDrawNode::create();
-//    Vector2 rectangle[4];
-//    rectangle[0] = Vector2(0, 0);
-//    rectangle[1] = Vector2(clipper->getContentSize().width, 0);
-//    rectangle[2] = Vector2(clipper->getContentSize().width, clipper->getContentSize().height);
-//    rectangle[3] = Vector2(0, clipper->getContentSize().height);
+//    Vec2 rectangle[4];
+//    rectangle[0] = Vec2(0, 0);
+//    rectangle[1] = Vec2(clipper->getContentSize().width, 0);
+//    rectangle[2] = Vec2(clipper->getContentSize().width, clipper->getContentSize().height);
+//    rectangle[3] = Vec2(0, clipper->getContentSize().height);
 //
 //    Color4F white(1, 1, 1, 1);
 //    stencil->drawPolygon(rectangle, 4, white, 1, white);
@@ -376,8 +377,8 @@ NewClippingNodeTest::NewClippingNodeTest()
 
     auto content = Sprite::create("Images/background2.png");
     content->setTag( kTagContentNode );
-    content->setAnchorPoint(  Vector2(0.5, 0.5) );
-    content->setPosition( Vector2(clipper->getContentSize().width / 2, clipper->getContentSize().height / 2) );
+    content->setAnchorPoint(  Vec2(0.5, 0.5) );
+    content->setPosition( Vec2(clipper->getContentSize().width / 2, clipper->getContentSize().height / 2) );
     clipper->addChild(content);
 
     _scrolling = false;
@@ -408,7 +409,7 @@ void NewClippingNodeTest::onTouchesBegan(const std::vector<Touch *> &touches, Ev
 {
     Touch *touch = touches[0];
     auto clipper = this->getChildByTag(kTagClipperNode);
-    Vector2 point = clipper->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
+    Vec2 point = clipper->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
     auto rect = Rect(0, 0, clipper->getContentSize().width, clipper->getContentSize().height);
     _scrolling = rect.containsPoint(point);
     _lastPoint = point;
@@ -420,7 +421,7 @@ void NewClippingNodeTest::onTouchesMoved(const std::vector<Touch *> &touches, Ev
     Touch *touch = touches[0];
     auto clipper = this->getChildByTag(kTagClipperNode);
     auto point = clipper->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
-    Vector2 diff = point - _lastPoint;
+    Vec2 diff = point - _lastPoint;
     auto content = clipper->getChildByTag(kTagContentNode);
     content->setPosition(content->getPosition() + diff);
     _lastPoint = point;
@@ -444,11 +445,11 @@ NewDrawNodeTest::NewDrawNodeTest()
     addChild(parent);
 
     auto rectNode = DrawNode::create();
-    Vector2 rectangle[4];
-    rectangle[0] = Vector2(-50, -50);
-    rectangle[1] = Vector2(50, -50);
-    rectangle[2] = Vector2(50, 50);
-    rectangle[3] = Vector2(-50, 50);
+    Vec2 rectangle[4];
+    rectangle[0] = Vec2(-50, -50);
+    rectangle[1] = Vec2(50, -50);
+    rectangle[2] = Vec2(50, 50);
+    rectangle[3] = Vec2(-50, 50);
 
     Color4F white(1, 1, 1, 1);
     rectNode->drawPolygon(rectangle, 4, white, 1, white);
@@ -475,13 +476,13 @@ NewCullingTest::NewCullingTest()
     Size size = Director::getInstance()->getWinSize();
     auto sprite = Sprite::create("Images/btn-about-normal-vertical.png");
     sprite->setRotation(5);
-    sprite->setPosition(Vector2(size.width/2,size.height/3));
+    sprite->setPosition(Vec2(size.width/2,size.height/3));
     sprite->setScale(2);
     addChild(sprite);
 
     auto sprite2 = Sprite::create("Images/btn-about-normal-vertical.png");
     sprite2->setRotation(-85);
-    sprite2->setPosition(Vector2(size.width/2,size.height * 2/3));
+    sprite2->setPosition(Vec2(size.width/2,size.height * 2/3));
     sprite2->setScale(2);
     addChild(sprite2);
     
@@ -540,7 +541,7 @@ VBOFullTest::VBOFullTest()
     for (int i=0; i<Renderer::VBO_SIZE * 2; ++i)
     {
         Sprite* sprite = Sprite::create("Images/grossini_dance_01.png");
-        sprite->setPosition(Vector2(0,0));
+        sprite->setPosition(Vec2(0,0));
         parent->addChild(sprite);
     }
 }
@@ -558,4 +559,72 @@ std::string VBOFullTest::title() const
 std::string VBOFullTest::subtitle() const
 {
     return "VBO full Test, everthing should render normally";
+}
+
+CaptureScreenTest::CaptureScreenTest()
+{
+    Size s = Director::getInstance()->getWinSize();
+    Vec2 left(s.width / 4, s.height / 2);
+    Vec2 right(s.width / 4 * 3, s.height / 2);
+	
+    auto sp1 = Sprite::create("Images/grossini.png");
+    sp1->setPosition(left);
+    auto move1 = MoveBy::create(1, Vec2(s.width/2, 0));
+    auto seq1 = RepeatForever::create(Sequence::create(move1, move1->reverse(), nullptr));
+    addChild(sp1);
+    sp1->runAction(seq1);
+    auto sp2 = Sprite::create("Images/grossinis_sister1.png");
+    sp2->setPosition(right);
+    auto move2 = MoveBy::create(1, Vec2(-s.width/2, 0));
+    auto seq2 = RepeatForever::create(Sequence::create(move2, move2->reverse(), nullptr));
+    addChild(sp2);
+    sp2->runAction(seq2);
+
+    auto label1 = Label::createWithTTF(TTFConfig("fonts/arial.ttf"), "capture all");
+    auto mi1 = MenuItemLabel::create(label1, CC_CALLBACK_1(CaptureScreenTest::onCaptured, this));
+    auto menu = Menu::create(mi1, nullptr);
+    addChild(menu);
+    menu->setPosition(s.width / 2, s.height / 4);
+
+    _filename = "";
+}
+
+CaptureScreenTest::~CaptureScreenTest()
+{
+    Director::getInstance()->getTextureCache()->removeTextureForKey(_filename);
+}
+
+std::string CaptureScreenTest::title() const
+{
+    return "New Renderer";
+}
+
+std::string CaptureScreenTest::subtitle() const
+{
+    return "Capture screen test, press the menu items to capture the screen";
+}
+
+void CaptureScreenTest::onCaptured(Ref*)
+{
+    Director::getInstance()->getTextureCache()->removeTextureForKey(_filename);
+    removeChildByTag(childTag);
+    _filename = "CaptureScreenTest.png";
+    utils::captureScreen(CC_CALLBACK_2(CaptureScreenTest::afterCaptured, this), _filename);
+}
+
+void CaptureScreenTest::afterCaptured(bool succeed, const std::string& outputFile)
+{
+    if (succeed)
+    {
+        auto sp = Sprite::create(outputFile);
+        addChild(sp, 0, childTag);
+        Size s = Director::getInstance()->getWinSize();
+        sp->setPosition(s.width / 2, s.height / 2);
+        sp->setScale(0.25);
+        _filename = outputFile;
+    }
+    else
+    {
+        log("Capture screen failed.");
+    }
 }

@@ -178,6 +178,13 @@
 -- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
+-- @function [parent=#LabelTTF] visit 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #mat4_table mat4
+-- @param #unsigned int int
+        
+--------------------------------
 -- @function [parent=#LabelTTF] LabelTTF 
 -- @param self
         

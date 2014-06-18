@@ -73,9 +73,6 @@
     <Filter Include="Classes\EffectsAdvancedTest">
       <UniqueIdentifier>{6eeb2da8-4ecb-4602-9ac5-80caabe39ee6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\KeypadTest">
-      <UniqueIdentifier>{34e82723-7a60-4bed-ba19-de427c04d212}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\CocosDenshionTest">
       <UniqueIdentifier>{a786a2de-3545-4fdc-9884-5a8c68bf8eb8}</UniqueIdentifier>
     </Filter>
@@ -111,9 +108,6 @@
     </Filter>
     <Filter Include="Classes\TextureCacheTest">
       <UniqueIdentifier>{1cf546eb-abc6-4b66-a85e-66a68f82b536}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\AccelerometerTest">
-      <UniqueIdentifier>{0a4490ab-a3f5-4ccf-9b5d-ce03d80d4004}</UniqueIdentifier>
     </Filter>
     <Filter Include="Classes\ExtensionsTest">
       <UniqueIdentifier>{897838bb-90e6-492d-adcb-e719415c37b0}</UniqueIdentifier>
@@ -241,9 +235,6 @@
     <Filter Include="Classes\PhysicsTest">
       <UniqueIdentifier>{a83cb042-e3d6-4d3b-a4f6-30a4b3fcb3e9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\KeyboardTest">
-      <UniqueIdentifier>{8d7d37cd-5cc2-4a7d-9bd2-7b5c928adbb5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\InputTest">
       <UniqueIdentifier>{8e8124bd-adb2-4a8f-8727-9868a9c42d80}</UniqueIdentifier>
     </Filter>
@@ -327,6 +318,9 @@
     </Filter>
     <Filter Include="Classes\UITest\CocosStudioGUITest\UIWidgetAddNodeTest">
       <UniqueIdentifier>{085acc82-08d1-46c1-affe-74af030ce284}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Sprite3DTest">
+      <UniqueIdentifier>{8c7572e8-5643-4301-b902-ff71f0cfca2d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -414,9 +408,6 @@
     <ClCompile Include="..\..\Classes\EffectsAdvancedTest\EffectsAdvancedTest.cpp">
       <Filter>Classes\EffectsAdvancedTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Classes\KeypadTest\KeypadTest.cpp">
-      <Filter>Classes\KeypadTest</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Classes\CocosDenshionTest\CocosDenshionTest.cpp">
       <Filter>Classes\CocosDenshionTest</Filter>
     </ClCompile>
@@ -494,9 +485,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Classes\TextureCacheTest\TextureCacheTest.cpp">
       <Filter>Classes\TextureCacheTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Classes\AccelerometerTest\AccelerometerTest.cpp">
-      <Filter>Classes\AccelerometerTest</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Classes\ExtensionsTest\ExtensionsTest.cpp">
       <Filter>Classes\ExtensionsTest</Filter>
@@ -642,9 +630,6 @@
     <ClCompile Include="..\..\Classes\PhysicsTest\PhysicsTest.cpp">
       <Filter>Classes\PhysicsTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Classes\KeyboardTest\KeyboardTest.cpp">
-      <Filter>Classes\KeyboardTest</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Classes\InputTest\MouseTest.cpp">
       <Filter>Classes\InputTest</Filter>
     </ClCompile>
@@ -684,11 +669,6 @@
     <ClCompile Include="..\..\Classes\ShaderTest\ShaderTest2.cpp">
       <Filter>Classes\ShaderTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\Cocos2dRenderer.cpp" />
-    <ClCompile Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\Direct3DContentProvider.cpp" />
-    <ClCompile Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\Direct3DInterop.cpp" />
-    <ClCompile Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\DirectXBase.cpp" />
-    <ClCompile Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\EditBoxEvent.cpp" />
     <ClCompile Include="..\..\Classes\ConfigurationTest\ConfigurationTest.cpp">
       <Filter>Classes\ConfigurationTest</Filter>
     </ClCompile>
@@ -849,6 +829,17 @@
     <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\UISceneManager_Editor.cpp">
       <Filter>Classes\UITest\CocosStudioGUITest</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Cocos2dRenderer.cpp" />
+    <ClCompile Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Direct3DContentProvider.cpp" />
+    <ClCompile Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Direct3DInterop.cpp" />
+    <ClCompile Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\DirectXBase.cpp" />
+    <ClCompile Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\EditBoxEvent.cpp" />
+    <ClCompile Include="..\..\Classes\BugsTest\Bug-Child.cpp">
+      <Filter>Classes\BugsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\Sprite3DTest\Sprite3DTest.cpp">
+      <Filter>Classes\Sprite3DTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Classes\AppDelegate.h">
@@ -941,9 +932,6 @@
     <ClInclude Include="..\..\Classes\EffectsAdvancedTest\EffectsAdvancedTest.h">
       <Filter>Classes\EffectsAdvancedTest</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Classes\KeypadTest\KeypadTest.h">
-      <Filter>Classes\KeypadTest</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Classes\CocosDenshionTest\CocosDenshionTest.h">
       <Filter>Classes\CocosDenshionTest</Filter>
     </ClInclude>
@@ -1021,9 +1009,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Classes\TextureCacheTest\TextureCacheTest.h">
       <Filter>Classes\TextureCacheTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Classes\AccelerometerTest\AccelerometerTest.h">
-      <Filter>Classes\AccelerometerTest</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Classes\ExtensionsTest\ExtensionsTest.h">
       <Filter>Classes\ExtensionsTest</Filter>
@@ -1343,9 +1328,6 @@
     <ClInclude Include="..\..\Classes\PhysicsTest\PhysicsTest.h">
       <Filter>Classes\PhysicsTest</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Classes\KeyboardTest\KeyboardTest.h">
-      <Filter>Classes\KeyboardTest</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Classes\InputTest\MouseTest.h">
       <Filter>Classes\InputTest</Filter>
     </ClInclude>
@@ -1406,12 +1388,6 @@
     <ClInclude Include="..\..\Classes\ShaderTest\ShaderTest2.h">
       <Filter>Classes\ShaderTest</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\Cocos2dRenderer.h" />
-    <ClInclude Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\Direct3DContentProvider.h" />
-    <ClInclude Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\Direct3DInterop.h" />
-    <ClInclude Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\DirectXBase.h" />
-    <ClInclude Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\DirectXHelper.h" />
-    <ClInclude Include="..\..\..\..\cocos\2d\platform\wp8-xaml\cpp\EditBoxEvent.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="..\..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.h">
       <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
@@ -1568,6 +1544,18 @@
     </ClInclude>
     <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\UISceneManager_Editor.h">
       <Filter>Classes\UITest\CocosStudioGUITest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Cocos2dRenderer.h" />
+    <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Direct3DContentProvider.h" />
+    <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Direct3DInterop.h" />
+    <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\DirectXBase.h" />
+    <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\DirectXHelper.h" />
+    <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\EditBoxEvent.h" />
+    <ClInclude Include="..\..\Classes\BugsTest\Bug-Child.h">
+      <Filter>Classes\BugsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\Sprite3DTest\Sprite3DTest.h">
+      <Filter>Classes\Sprite3DTest</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

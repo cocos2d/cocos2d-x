@@ -25,9 +25,14 @@ THE SOFTWARE.
 #ifndef __UIHELPER_H__
 #define __UIHELPER_H__
 
+#include <string>
+#include "base/CCPlatformMacros.h"
+
 NS_CC_BEGIN
 
 namespace ui {
+    
+    class Widget;
 
 /**
 *   @js NA

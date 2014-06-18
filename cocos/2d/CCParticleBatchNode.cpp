@@ -30,16 +30,16 @@
 
 #include "2d/CCParticleBatchNode.h"
 
-#include "2d/CCTextureCache.h"
-#include "2d/CCTextureAtlas.h"
+#include "renderer/CCTextureAtlas.h"
 #include "2d/CCGrid.h"
 #include "2d/CCParticleSystem.h"
-#include "2d/platform/CCFileUtils.h"
+#include "platform/CCFileUtils.h"
 #include "base/CCProfiling.h"
 #include "base/ccConfig.h"
 #include "base/ccMacros.h"
 #include "base/base64.h"
 #include "base/ZipUtils.h"
+#include "renderer/CCTextureCache.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/ccGLStateCache.h"
@@ -103,7 +103,7 @@ bool ParticleBatchNode::initWithTexture(Texture2D *tex, int capacity)
     
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 
-    setGLProgramState(GLProgramState::getWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
     return true;
 }
@@ -121,7 +121,7 @@ bool ParticleBatchNode::initWithFile(const std::string& fileImage, int capacity)
 
 // override visit.
 // Don't call visit on it's children
-void ParticleBatchNode::visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
+void ParticleBatchNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     // CAREFUL:
     // This visit is almost identical to Node#visit
@@ -135,20 +135,16 @@ void ParticleBatchNode::visit(Renderer *renderer, const Matrix &parentTransform,
         return;
     }
 
-    bool dirty = parentTransformUpdated || _transformUpdated;
-    if(dirty)
-        _modelViewTransform = transform(parentTransform);
-    _transformUpdated = false;
+    uint32_t flags = processParentFlags(parentTransform, parentFlags);
 
     // IMPORTANT:
-    // To ease the migration to v3.0, we still support the Matrix stack,
+    // To ease the migration to v3.0, we still support the Mat4 stack,
     // but it is deprecated and your code should not rely on it
     Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
 
-    draw(renderer, _modelViewTransform, dirty);
+    draw(renderer, _modelViewTransform, flags);
 
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
@@ -383,7 +379,7 @@ void ParticleBatchNode::removeAllChildrenWithCleanup(bool doCleanup)
     _textureAtlas->removeAllQuads();
 }
 
-void ParticleBatchNode::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
+void ParticleBatchNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     CC_PROFILER_START("CCParticleBatchNode - draw");
 

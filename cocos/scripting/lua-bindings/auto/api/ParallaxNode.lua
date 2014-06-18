@@ -8,8 +8,8 @@
 -- @param self
 -- @param #cc.Node node
 -- @param #int int
--- @param #vector2_table array
--- @param #vector2_table array
+-- @param #vec2_table vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#ParallaxNode] removeAllChildrenWithCleanup 
@@ -32,6 +32,13 @@
 -- @param #cc.Node node
 -- @param #int int
 -- @param #int int
+        
+--------------------------------
+-- @function [parent=#ParallaxNode] visit 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #mat4_table mat4
+-- @param #unsigned int int
         
 --------------------------------
 -- @function [parent=#ParallaxNode] removeChild 

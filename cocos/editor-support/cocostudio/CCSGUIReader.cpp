@@ -216,7 +216,83 @@ Widget* GUIReader::widgetFromJsonFile(const char *fileName)
     CC_SAFE_DELETE(pReader);
     return widget;
 }
+    
 
+
+std::string WidgetPropertiesReader::getGUIClassName(const std::string &name)
+{
+    std::string convertedClassName = name;
+    if (name == "Panel")
+    {
+        convertedClassName = "Layout";
+    }
+    else if (name == "TextArea")
+    {
+        convertedClassName = "Text";
+    }
+    else if (name == "TextButton")
+    {
+        convertedClassName = "Button";
+    }
+    else if (name == "Label")
+    {
+        convertedClassName = "Text";
+    }
+    else if (name == "LabelAtlas")
+    {
+        convertedClassName = "TextAtlas";
+    }
+    else if (name == "LabelBMFont")
+    {
+        convertedClassName = "TextBMFont";
+    }
+   
+    
+    return convertedClassName;
+}
+    
+cocos2d::ui::Widget* WidgetPropertiesReader::createGUI(const std::string &classname)
+{
+    std::string name = this->getGUIClassName(classname);
+
+    Ref* object = ObjectFactory::getInstance()->createObject(name);
+    
+    return dynamic_cast<ui::Widget*>(object);
+}
+
+WidgetReaderProtocol* WidgetPropertiesReader::createWidgetReaderProtocol(const std::string &classname)
+{
+    Ref* object = ObjectFactory::getInstance()->createObject(classname);
+    
+    return dynamic_cast<WidgetReaderProtocol*>(object);
+}
+    
+   
+
+
+void WidgetPropertiesReader::setAnchorPointForWidget(cocos2d::ui::Widget *widget, const rapidjson::Value &options)
+{
+    bool isAnchorPointXExists = DICTOOL->checkObjectExist_json(options, "anchorPointX");
+    float anchorPointXInFile;
+    if (isAnchorPointXExists) {
+        anchorPointXInFile = DICTOOL->getFloatValue_json(options, "anchorPointX");
+    }else{
+        anchorPointXInFile = widget->getAnchorPoint().x;
+    }
+    
+    bool isAnchorPointYExists = DICTOOL->checkObjectExist_json(options, "anchorPointY");
+    float anchorPointYInFile;
+    if (isAnchorPointYExists) {
+        anchorPointYInFile = DICTOOL->getFloatValue_json(options, "anchorPointY");
+    }
+    else{
+        anchorPointYInFile = widget->getAnchorPoint().y;
+    }
+    
+    if (isAnchorPointXExists || isAnchorPointYExists) {
+        widget->setAnchorPoint(Vec2(anchorPointXInFile, anchorPointYInFile));
+    }
+}
 
 
 Widget* WidgetPropertiesReader0250::createWidget(const rapidjson::Value& data, const char* fullPath, const char* fileName)
@@ -372,7 +448,7 @@ void WidgetPropertiesReader0250::setPropsForWidgetFromJsonDictionary(Widget*widg
     widget->setName(widgetName);
     float x = DICTOOL->getFloatValue_json(options, "x");
     float y = DICTOOL->getFloatValue_json(options, "y");
-    widget->setPosition(Vector2(x,y));
+    widget->setPosition(Vec2(x,y));
     bool sx = DICTOOL->checkObjectExist_json(options, "scaleX");
     if (sx)
     {
@@ -411,11 +487,9 @@ void WidgetPropertiesReader0250::setColorPropsForWidgetFromJsonDictionary(Widget
     int colorG = cg ? DICTOOL->getIntValue_json(options, "colorG") : 255;
     int colorB = cb ? DICTOOL->getIntValue_json(options, "colorB") : 255;
     widget->setColor(Color3B(colorR, colorG, colorB));
-    bool apx = DICTOOL->checkObjectExist_json(options, "anchorPointX");
-    float apxf = apx ? DICTOOL->getFloatValue_json(options, "anchorPointX") : ((widget->getWidgetType() == Widget::Type::ELEMENT) ? 0.5f : 0.0f);
-    bool apy = DICTOOL->checkObjectExist_json(options, "anchorPointY");
-    float apyf = apy ? DICTOOL->getFloatValue_json(options, "anchorPointY") : ((widget->getWidgetType() == Widget::Type::ELEMENT) ? 0.5f : 0.0f);
-    widget->setAnchorPoint(Vector2(apxf, apyf));
+    
+    this->setAnchorPointForWidget(widget, options);
+    
     bool flipX = DICTOOL->getBooleanValue_json(options, "flipX");
     bool flipY = DICTOOL->getBooleanValue_json(options, "flipY");
     widget->setFlippedX(flipX);
@@ -610,7 +684,7 @@ void WidgetPropertiesReader0250::setPropsForLabelFromJsonDictionary(Widget*widge
     bool touchScaleChangeAble = DICTOOL->getBooleanValue_json(options, "touchScaleEnable");
     label->setTouchScaleChangeEnabled(touchScaleChangeAble);
     const char* text = DICTOOL->getStringValue_json(options, "text");
-    label->setText(text);
+    label->setString(text);
     bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
     if (fs)
     {
@@ -689,7 +763,7 @@ void WidgetPropertiesReader0250::setPropsForLayoutFromJsonDictionary(Widget*widg
     
     float bgcv1 = DICTOOL->getFloatValue_json(options, "vectorX");
     float bgcv2 = DICTOOL->getFloatValue_json(options, "vectorY");
-    panel->setBackGroundColorVector(Vector2(bgcv1, bgcv2));
+    panel->setBackGroundColorVector(Vec2(bgcv1, bgcv2));
     
     int co = DICTOOL->getIntValue_json(options, "bgColorOpacity");
     
@@ -890,7 +964,7 @@ void WidgetPropertiesReader0250::setPropsForLoadingBarFromJsonDictionary(Widget 
     {
         loadingBar->loadTexture(imageFileName_tp);
     }
-    loadingBar->setBarDirection(LoadingBar::Direction(DICTOOL->getIntValue_json(options, "direction")));
+    loadingBar->setDirection(LoadingBar::Direction(DICTOOL->getIntValue_json(options, "direction")));
     loadingBar->setPercent(DICTOOL->getIntValue_json(options, "percent"));
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
@@ -910,7 +984,7 @@ void WidgetPropertiesReader0250::setPropsForLabelBMFontFromJsonDictionary(Widget
     labelBMFont->setFntFile(cmf_tp);
     
     const char* text = DICTOOL->getStringValue_json(options, "text");
-    labelBMFont->setText(text);
+    labelBMFont->setString(text);
     
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
@@ -979,7 +1053,7 @@ Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Va
 {
     const char* classname = DICTOOL->getStringValue_json(data, "classname");
     const rapidjson::Value& uiOptions = DICTOOL->getSubDictionary_json(data, "options");
-    Widget* widget = ObjectFactory::getInstance()->createGUI(classname);
+    Widget* widget = this->createGUI(classname);
     
     // create widget reader to parse properties of widget
     std::string readerName = classname;
@@ -1008,7 +1082,8 @@ Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Va
         readerName = "TextBMFont";
     }
     readerName.append("Reader");
-    WidgetReaderProtocol* reader = ObjectFactory::getInstance()->createWidgetReaderProtocol(readerName);
+    
+    WidgetReaderProtocol* reader = this->createWidgetReaderProtocol(readerName);
     
     if (reader)
     {
@@ -1074,7 +1149,9 @@ Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Va
         {
             readerName = "WidgetReader";
         }
-        reader = ObjectFactory::getInstance()->createWidgetReaderProtocol(readerName);
+        
+        reader = dynamic_cast<WidgetReaderProtocol*>(ObjectFactory::getInstance()->createObject(readerName));
+        
         setPropsForAllWidgetFromJsonDictionary(reader, widget, uiOptions);
         
         // 2nd., custom widget parse with custom reader
@@ -1113,9 +1190,9 @@ Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Va
                     {
                         if (child->getPositionType() == ui::Widget::PositionType::PERCENT)
                         {
-                            child->setPositionPercent(Vector2(child->getPositionPercent().x + widget->getAnchorPoint().x, child->getPositionPercent().y + widget->getAnchorPoint().y));
+                            child->setPositionPercent(Vec2(child->getPositionPercent().x + widget->getAnchorPoint().x, child->getPositionPercent().y + widget->getAnchorPoint().y));
                         }
-                        child->setPosition(Vector2(child->getPositionX() + widget->getAnchorPointInPoints().x, child->getPositionY() + widget->getAnchorPointInPoints().y));
+                        child->setPosition(Vec2(child->getPositionX() + widget->getAnchorPointInPoints().x, child->getPositionY() + widget->getAnchorPointInPoints().y));
                     }
                     widget->addChild(child);
                 }
@@ -1136,8 +1213,8 @@ void WidgetPropertiesReader0300::setPropsForWidgetFromJsonDictionary(Widget*widg
     widget->setSizeType((Widget::SizeType)DICTOOL->getIntValue_json(options, "sizeType"));
     widget->setPositionType((Widget::PositionType)DICTOOL->getIntValue_json(options, "positionType"));
     
-    widget->setSizePercent(Vector2(DICTOOL->getFloatValue_json(options, "sizePercentX"), DICTOOL->getFloatValue_json(options, "sizePercentY")));
-    widget->setPositionPercent(Vector2(DICTOOL->getFloatValue_json(options, "positionPercentX"), DICTOOL->getFloatValue_json(options, "positionPercentY")));
+    widget->setSizePercent(Vec2(DICTOOL->getFloatValue_json(options, "sizePercentX"), DICTOOL->getFloatValue_json(options, "sizePercentY")));
+    widget->setPositionPercent(Vec2(DICTOOL->getFloatValue_json(options, "positionPercentX"), DICTOOL->getFloatValue_json(options, "positionPercentY")));
     
     float w = DICTOOL->getFloatValue_json(options, "width");
     float h = DICTOOL->getFloatValue_json(options, "height");
@@ -1151,7 +1228,7 @@ void WidgetPropertiesReader0300::setPropsForWidgetFromJsonDictionary(Widget*widg
     widget->setName(widgetName);
     float x = DICTOOL->getFloatValue_json(options, "x");
     float y = DICTOOL->getFloatValue_json(options, "y");
-    widget->setPosition(Vector2(x,y));
+    widget->setPosition(Vec2(x,y));
     bool sx = DICTOOL->checkObjectExist_json(options, "scaleX");
     if (sx)
     {
@@ -1233,16 +1310,16 @@ void WidgetPropertiesReader0300::setColorPropsForWidgetFromJsonDictionary(Widget
     int colorG = cg ? DICTOOL->getIntValue_json(options, "colorG") : 255;
     int colorB = cb ? DICTOOL->getIntValue_json(options, "colorB") : 255;
     widget->setColor(Color3B(colorR, colorG, colorB));
-    bool apx = DICTOOL->checkObjectExist_json(options, "anchorPointX");
-    float apxf = apx ? DICTOOL->getFloatValue_json(options, "anchorPointX") : ((widget->getWidgetType() == Widget::Type::ELEMENT) ? 0.5f : 0.0f);
-    bool apy = DICTOOL->checkObjectExist_json(options, "anchorPointY");
-    float apyf = apy ? DICTOOL->getFloatValue_json(options, "anchorPointY") : ((widget->getWidgetType() == Widget::Type::ELEMENT) ? 0.5f : 0.0f);
-    widget->setAnchorPoint(Vector2(apxf, apyf));
+   
+    this->setAnchorPointForWidget(widget, options);
+    
     bool flipX = DICTOOL->getBooleanValue_json(options, "flipX");
     bool flipY = DICTOOL->getBooleanValue_json(options, "flipY");
     widget->setFlippedX(flipX);
     widget->setFlippedY(flipY);
 }
+    
+
 
 void WidgetPropertiesReader0300::setPropsForButtonFromJsonDictionary(Widget*widget,const rapidjson::Value& options)
 {
@@ -1549,7 +1626,7 @@ void WidgetPropertiesReader0300::setPropsForLabelFromJsonDictionary(Widget*widge
     bool touchScaleChangeAble = DICTOOL->getBooleanValue_json(options, "touchScaleEnable");
     label->setTouchScaleChangeEnabled(touchScaleChangeAble);
     const char* text = DICTOOL->getStringValue_json(options, "text");
-    label->setText(text);
+    label->setString(text);
     bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
     if (fs)
     {
@@ -1653,7 +1730,7 @@ void WidgetPropertiesReader0300::setPropsForLayoutFromJsonDictionary(Widget*widg
     
     float bgcv1 = DICTOOL->getFloatValue_json(options, "vectorX");
     float bgcv2 = DICTOOL->getFloatValue_json(options, "vectorY");
-    panel->setBackGroundColorVector(Vector2(bgcv1, bgcv2));
+    panel->setBackGroundColorVector(Vec2(bgcv1, bgcv2));
     
     int co = DICTOOL->getIntValue_json(options, "bgColorOpacity");
     
@@ -1694,7 +1771,7 @@ void WidgetPropertiesReader0300::setPropsForLayoutFromJsonDictionary(Widget*widg
         float ch = DICTOOL->getFloatValue_json(options, "capInsetsHeight");
         panel->setBackGroundImageCapInsets(Rect(cx, cy, cw, ch));
     }
-    panel->setLayoutType((Layout::LayoutType)DICTOOL->getIntValue_json(options, "layoutType"));
+    panel->setLayoutType((Layout::Type)DICTOOL->getIntValue_json(options, "layoutType"));
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
@@ -1967,7 +2044,7 @@ void WidgetPropertiesReader0300::setPropsForLoadingBarFromJsonDictionary(Widget 
     }
     /**/
     
-    loadingBar->setBarDirection(LoadingBar::Direction(DICTOOL->getIntValue_json(options, "direction")));
+    loadingBar->setDirection(LoadingBar::Direction(DICTOOL->getIntValue_json(options, "direction")));
     loadingBar->setPercent(DICTOOL->getIntValue_json(options, "percent"));
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
@@ -1998,7 +2075,7 @@ void WidgetPropertiesReader0300::setPropsForLabelBMFontFromJsonDictionary(Widget
     }
     
     const char* text = DICTOOL->getStringValue_json(options, "text");
-    labelBMFont->setText(text);
+    labelBMFont->setString(text);
     
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }

@@ -14,7 +14,6 @@ else()
 endif()
 
 set(SAMPLE_SRC
-  Classes/AccelerometerTest/AccelerometerTest.cpp
   Classes/ActionManagerTest/ActionManagerTest.cpp
   Classes/ActionsEaseTest/ActionsEaseTest.cpp
   Classes/ActionsProgressTest/ActionsProgressTest.cpp
@@ -35,6 +34,7 @@ set(SAMPLE_SRC
   Classes/BugsTest/Bug-899.cpp
   Classes/BugsTest/Bug-914.cpp
   Classes/BugsTest/BugsTest.cpp
+  Classes/BugsTest/Bug-Child.cpp
   Classes/ChipmunkTest/ChipmunkTest.cpp
   Classes/ClickAndMoveTest/ClickAndMoveTest.cpp
   Classes/ClippingNodeTest/ClippingNodeTest.cpp
@@ -124,9 +124,7 @@ set(SAMPLE_SRC
   Classes/NewEventDispatcherTest/NewEventDispatcherTest.cpp
   Classes/FontTest/FontTest.cpp
   Classes/IntervalTest/IntervalTest.cpp
-  Classes/KeyboardTest/KeyboardTest.cpp
   Classes/InputTest/MouseTest.cpp
-  Classes/KeypadTest/KeypadTest.cpp
   Classes/LabelTest/LabelTest.cpp
   Classes/LabelTest/LabelTestNew.cpp
   Classes/LayerTest/LayerTest.cpp
@@ -158,6 +156,7 @@ set(SAMPLE_SRC
   Classes/ShaderTest/ShaderTest.cpp
   Classes/ShaderTest/ShaderTest2.cpp
   Classes/SpriteTest/SpriteTest.cpp
+  Classes/Sprite3DTest/Sprite3DTest.cpp
   Classes/TextInputTest/TextInputTest.cpp
   Classes/Texture2dTest/Texture2dTest.cpp
   Classes/TexturePackerEncryptionTest/TextureAtlasEncryptionTest.cpp
@@ -203,6 +202,10 @@ target_link_libraries(${APP_NAME}
   cocos2d
   box2d
 )
+# MinGW builds need to link libws2_32 manually
+if (MINGW)
+  target_link_libraries(${APP_NAME} ws2_32)
+endif()
 
 set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
 
