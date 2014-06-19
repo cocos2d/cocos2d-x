@@ -3527,6 +3527,7 @@
         "cocos/scripting/lua-bindings/auto/api/ActionManager.lua", 
         "cocos/scripting/lua-bindings/auto/api/ActionManagerEx.lua", 
         "cocos/scripting/lua-bindings/auto/api/ActionObject.lua", 
+        "cocos/scripting/lua-bindings/auto/api/ActionTimelineData.lua", 
         "cocos/scripting/lua-bindings/auto/api/ActionTween.lua", 
         "cocos/scripting/lua-bindings/auto/api/Animate.lua", 
         "cocos/scripting/lua-bindings/auto/api/Animation.lua", 
