@@ -11,29 +11,19 @@ LOCAL_SRC_FILES := manual/CCLuaBridge.cpp \
           manual/lua_debugger.c \
           manual/CCLuaValue.cpp \
           manual/Cocos2dxLuaLoader.cpp \
-          manual/CCBProxy.cpp \
           manual/Lua_web_socket.cpp \
-          manual/LuaOpengl.cpp \
           manual/LuaScriptHandlerMgr.cpp \
           manual/LuaBasicConversions.cpp \
-          manual/LuaSkeletonAnimation.cpp \
           manual/lua_cocos2dx_manual.cpp \
           manual/lua_cocos2dx_extension_manual.cpp \
-          manual/lua_cocos2dx_coco_studio_manual.cpp \
-          manual/lua_cocos2dx_ui_manual.cpp \
-          manual/lua_cocos2dx_spine_manual.cpp \
           manual/lua_cocos2dx_physics_manual.cpp \
           manual/lua_cocos2dx_deprecated.cpp \
-          manual/lua_xml_http_request.cpp \
           manual/platform/android/CCLuaJavaBridge.cpp \
           manual/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxLuaJavaBridge.cpp \
           manual/tolua_fix.cpp \
           manual/lua_extensions.c \
           auto/lua_cocos2dx_auto.cpp \
           auto/lua_cocos2dx_extension_auto.cpp \
-          auto/lua_cocos2dx_studio_auto.cpp \
-          auto/lua_cocos2dx_ui_auto.cpp \
-          auto/lua_cocos2dx_spine_auto.cpp \
           auto/lua_cocos2dx_physics_auto.cpp \
           ../../../external/lua/tolua/tolua_event.c \
           ../../../external/lua/tolua/tolua_is.c \
@@ -85,9 +75,9 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos_extension_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos2dx_static
 LOCAL_WHOLE_STATIC_LIBRARIES += websockets_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_network_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocosbuilder_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocostudio_static
-LOCAL_WHOLE_STATIC_LIBRARIES += spine_static
+#LOCAL_WHOLE_STATIC_LIBRARIES += cocosbuilder_static
+#LOCAL_WHOLE_STATIC_LIBRARIES += cocostudio_static
+#LOCAL_WHOLE_STATIC_LIBRARIES += spine_static
 
 LOCAL_CFLAGS += -Wno-psabi
 LOCAL_EXPORT_CFLAGS += -Wno-psabi
@@ -99,6 +89,6 @@ $(call import-module,extensions)
 $(call import-module,.)
 $(call import-module,websockets/prebuilt/android)
 $(call import-module,network)
-$(call import-module,editor-support/cocostudio)
-$(call import-module,editor-support/cocosbuilder)
-$(call import-module,editor-support/spine)
+#$(call import-module,editor-support/cocostudio)
+#$(call import-module,editor-support/cocosbuilder)
+#$(call import-module,editor-support/spine)

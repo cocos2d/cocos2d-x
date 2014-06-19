@@ -25,6 +25,7 @@ cocos2d.cpp \
 2d/CCAnimationCache.cpp \
 2d/CCAtlasNode.cpp \
 2d/CCClippingNode.cpp \
+2d/CCClippingRegionNode.cpp \
 2d/CCComponent.cpp \
 2d/CCComponentContainer.cpp \
 2d/CCDrawNode.cpp \
@@ -170,6 +171,7 @@ physics/chipmunk/CCPhysicsWorldInfo_chipmunk.cpp \
 ../external/tinyxml2/tinyxml2.cpp \
 ../external/unzip/ioapi.cpp \
 ../external/unzip/unzip.cpp \
+../external/unzip/ioapi_mem.cpp \
 ../external/edtaa3func/edtaa3func.cpp \
 ../external/xxhash/xxhash.c
 
@@ -190,7 +192,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/chipmunk/include/chipmunk \
                     $(LOCAL_PATH)/../external/edtaa3func \
                     $(LOCAL_PATH)/../external/xxhash \
-                    $(LOCAL_PATH)/../external/ConvertUTF
+                    $(LOCAL_PATH)/../external/ConvertUTF \
+                    $(LOCAL_PATH)/base
 
 
 LOCAL_LDLIBS := -lGLESv2 \

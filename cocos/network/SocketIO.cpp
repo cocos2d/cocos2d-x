@@ -232,7 +232,7 @@ bool SIOClientImpl::init()
 
 void SIOClientImpl::connect()
 {
-    this->handshake();
+//    this->handshake();
 }
 
 void SIOClientImpl::disconnect()
