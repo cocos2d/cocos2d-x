@@ -34,6 +34,26 @@
  
 NS_CC_BEGIN
 
+// vertex usage elements.
+enum Vertex_Usage
+{
+    Vertex_Usage_POSITION = 1,
+    Vertex_Usage_NORMAL = 2,
+    Vertex_Usage_COLOR = 3,
+    Vertex_Usage_TANGENT = 4,
+    Vertex_Usage_BINORMAL = 5,
+    Vertex_Usage_BLENDWEIGHTS = 6,
+    Vertex_Usage_BLENDINDICES = 7,
+    Vertex_Usage_TEXCOORD0 = 8,
+    Vertex_Usage_TEXCOORD1 = 9,
+    Vertex_Usage_TEXCOORD2 = 10,
+    Vertex_Usage_TEXCOORD3 = 11,
+    Vertex_Usage_TEXCOORD4 = 12,
+    Vertex_Usage_TEXCOORD5 = 13,
+    Vertex_Usage_TEXCOORD6 = 14,
+    Vertex_Usage_TEXCOORD7 = 15
+};
+
 //mesh vertex attribute
 struct MeshVertexAttrib
 {
@@ -182,6 +202,17 @@ public:
     }
 };
 
+class Reference
+{
+public:
+    std::string id;
+    unsigned int type;
+    unsigned int offset;
+
+    Reference(){};
+
+    ~Reference(){};
+};
 NS_CC_END
 
 #endif //__CC_BUNDLE_3D_DATA_H__

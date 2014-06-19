@@ -26,8 +26,22 @@
 
 #include "base/ccMacros.h"
 #include "platform/CCFileUtils.h"
+#include "CCBundleReader.h"
+#include "base/CCData.h"
 
-
+#define BUNDLE_TYPE_SCENE               1
+#define BUNDLE_TYPE_NODE                2
+#define BUNDLE_TYPE_ANIMATIONS          3
+#define BUNDLE_TYPE_ANIMATION           4
+#define BUNDLE_TYPE_ANIMATION_CHANNEL   5
+#define BUNDLE_TYPE_MODEL               10
+#define BUNDLE_TYPE_MATERIAL            16
+#define BUNDLE_TYPE_EFFECT              18
+#define BUNDLE_TYPE_CAMERA              32
+#define BUNDLE_TYPE_LIGHT               33
+#define BUNDLE_TYPE_MESH                34
+#define BUNDLE_TYPE_MESHPART            35
+#define BUNDLE_TYPE_MESHSKIN            36
 
 NS_CC_BEGIN
 
@@ -95,6 +109,8 @@ void Bundle3D::purgeBundle3D()
 
 bool Bundle3D::load(const std::string& path)
 {
+    return loadBinary(path);//
+
     if (_path == path)
         return true;
 
@@ -122,6 +138,8 @@ bool Bundle3D::load(const std::string& path)
  */
 bool Bundle3D::loadMeshData(const std::string& id, MeshData* meshdata)
 {
+    return loadMeshDataBinary(meshdata);
+
     meshdata->resetData();
     
     assert(_document.HasMember("mesh"));
@@ -168,7 +186,7 @@ bool Bundle3D::loadMeshData(const std::string& id, MeshData* meshdata)
         meshdata->attribs[i].type = parseGLType(mesh_vertex_attribute_val["type"].GetString());
         meshdata->attribs[i].vertexAttrib = parseGLProgramAttribute(mesh_vertex_attribute_val["attribute"].GetString());
     }
-
+    
     return true;
 }
 
@@ -299,6 +317,229 @@ bool Bundle3D::loadAnimationData(const std::string& id, Animation3DData* animati
     return true;
 }
 
+bool Bundle3D::loadBinary(const std::string& path)
+{
+    if (_path == path)
+        return true;
+
+    // get file data
+    CC_SAFE_DELETE(_data);
+    _data = new Data();
+    *_data = FileUtils::getInstance()->getDataFromFile(path);
+    if (_data->isNull()) 
+    {
+        _path = "";
+        return false;
+    }
+
+    CC_SAFE_DELETE(_bundleReader);
+    _bundleReader = BundleReader::create((char*)_data->getBytes(), _data->getSize());
+
+    char identifier[] = { 'C', '3', 'B', '\0'};
+
+    // Read header info
+    char sig[4];
+
+    if (_bundleReader->read(sig, 1, 4) != 4 || memcmp(sig, identifier, 4) != 0)
+    {
+        _path = "";
+        CCLOGINFO(false, "Invalid header: %s", path.c_str());
+        return false;
+    }
+
+    // Read version
+    unsigned char ver[2];
+    if (_bundleReader->read(ver, 1, 2) != 2 || ver[0] != 0 || ver[1] != 1)
+    {
+        _path = "";
+        CCLOGINFO(false, "Unsupported version: (%d, %d)", ver[0], ver[1]);
+        return false;
+    }
+
+    // Read has skin
+    unsigned char isSkin;
+    if (!_bundleReader->read(&isSkin))
+    {
+        _path = "";
+        CCLOGINFO(false, "Invalid bundle header");
+        return false;
+    }
+
+    //// Read ref table
+
+    // Read ref table size
+    unsigned int refCount;
+    if (_bundleReader->read(&refCount, 4, 1) != 1)
+    {
+        _path = "";
+        CCLOGINFO("Failed to read ref table size '%s'.", path.c_str());
+        return false;
+    }
+    _referenceCount = refCount;
+
+    // Read all refs
+    CC_SAFE_DELETE_ARRAY(_references);
+    _references = new Reference[refCount];
+    for (unsigned int i = 0; i < refCount; ++i)
+    {
+        if ((_references[i].id = _bundleReader->readString()).empty() ||
+            _bundleReader->read(&_references[i].type, 4, 1) != 1 ||
+            _bundleReader->read(&_references[i].offset, 4, 1) != 1)
+        {
+            _path = "";
+            CCLOGINFO("Failed to read ref number %d for bundle '%s'.", i,path.c_str());
+            CC_SAFE_DELETE_ARRAY(_references);
+            return false;
+        }
+    }
+
+    seekToFirstType(BUNDLE_TYPE_MESH);
+
+    /*unsigned int childrenCount;
+    if (!_bundleReader->read(&childrenCount))
+    {
+    _path = "";
+    CCLOGINFO("Failed to read childrenCount '%s'.", path.c_str());
+    return false;
+    }
+
+    unsigned int nodeType;
+    _bundleReader->read(&nodeType);
+
+    float transform[16];
+    if(_bundleReader->read(transform, sizeof(float), 16) != 16)
+    {
+    _path = "";
+    return false;
+    }
+    std::string parentName = _bundleReader->readString();
+
+    if (!_bundleReader->read(&childrenCount))
+    {
+    _path = "";
+    CCLOGINFO("Failed to read childrenCount '%s'.", path.c_str());
+    return false;
+    }
+
+    unsigned char hasMesh;
+    _bundleReader->read(&hasMesh);
+
+    unsigned char hasMorph;
+    _bundleReader->read(&hasMorph);
+
+    unsigned char hasSkin;
+    _bundleReader->read(&hasSkin);
+
+    unsigned char hasMaterial;
+    _bundleReader->read(&hasMaterial);*/
+
+    _path = path;
+    return true;
+}
+
+bool Bundle3D::loadMeshDataBinary(MeshData* meshdata)
+{
+    meshdata->resetData();
+
+    // read mesh data
+    if (_bundleReader->read(&meshdata->attribCount, 4, 1) != 1 || meshdata->attribCount < 1)
+        return false;
+
+    meshdata->attribs.resize(meshdata->attribCount);
+    for (ssize_t i = 0; i < meshdata->attribCount; i++)
+    {
+        unsigned int vUsage, vSize;
+        if (_bundleReader->read(&vUsage, 4, 1) != 1 || _bundleReader->read(&vSize, 4, 1) != 1)
+        {
+            return false;
+        }
+
+        meshdata->attribs[i].size = vSize;
+        meshdata->attribs[i].attribSizeBytes = meshdata->attribs[i].size * 4;
+        meshdata->attribs[i].type = GL_FLOAT;
+        meshdata->attribs[i].vertexAttrib = vUsage;
+    }
+
+    // Read vertex data
+    if (_bundleReader->read(&meshdata->vertexSizeInFloat, 4, 1) != 1 || meshdata->vertexSizeInFloat == 0)
+    {
+        return false;
+    }
+
+    meshdata->vertex.resize(meshdata->vertexSizeInFloat);
+    if (_bundleReader->read(&meshdata->vertex, 4, meshdata->vertexSizeInFloat) != meshdata->vertexSizeInFloat)
+    {
+        return false;
+    }
+
+    // Read index data
+    unsigned int meshPartCount;
+    if (_bundleReader->read(&meshPartCount, 4, 1) != 1)
+    {
+        return false;
+    }
+
+    for (unsigned int i = 0; i < meshPartCount; ++i)
+    {
+        // Read primitive type, index format and index count
+        unsigned int pType, iFormat, iByteCount;
+        if (_bundleReader->read(&pType, 4, 1) != 1 ||
+            _bundleReader->read(&iFormat, 4, 1) != 1 ||
+            _bundleReader->read(&iByteCount, 4, 1) != 1)
+        {
+            return false;
+        }
+
+        meshdata->numIndex = iByteCount / 4;
+
+        if (_bundleReader->read(&meshdata->indices, 2, iByteCount) != iByteCount)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool Bundle3D::loadMeshSkin(SkinData* skindata)
+{
+    skindata->resetData();
+
+    // bind shape
+    float bindShape[16];
+    _bundleReader->readMatrix(bindShape);
+
+    unsigned int jointCount;
+    _bundleReader->read(&jointCount);
+    
+    for (unsigned int i = 0; i < jointCount; i++)
+    {
+        skindata->boneNames.push_back(_bundleReader->readString());
+    }
+
+    unsigned int jointsBindPosesCount;
+    _bundleReader->read(&jointsBindPosesCount);
+
+    if (jointsBindPosesCount > 0)
+    {
+        assert(jointCount * 16 == jointsBindPosesCount);
+        float m[16];
+        for (unsigned int i = 0; i < jointCount; i++)
+        {
+            if (!_bundleReader->readMatrix(m))
+            {
+                CCLOGINFO("Failed to load C3DMeshSkin in bundle '%s'.", _path.c_str());
+                return NULL;
+            }
+            skindata->inverseBindPoseMatrices.push_back(m);
+        }
+    }
+
+    skindata->rootBoneIndex = 0;//?????
+
+    return true;
+}
+
 GLenum Bundle3D::parseGLType(const std::string& str)
 {
     if (str == "GL_FLOAT")
@@ -383,16 +624,44 @@ void Bundle3D::getModelPath(const std::string& path)
     } 
 }
 
+Reference* Bundle3D::seekToFirstType(unsigned int type)
+{
+    // for each Reference
+    for (unsigned int i = 0; i < _referenceCount; ++i)
+    {
+        Reference* ref = &_references[i];
+        if (ref->type == type)
+        {
+            // Found a match
+            if (_bundleReader->seek(ref->offset, SEEK_SET) == false)
+            {
+                CCLOGINFO("Failed to seek to object '%s' in bundle '%s'.", ref->id.c_str(), _path.c_str());
+                return NULL;
+            }
+            return ref;
+        }
+    }
+    return NULL;
+}
+
 Bundle3D::Bundle3D()
-:_isBinary(false),_modelRelativePath(""),_documentBuffer(NULL),_path("")
+:_isBinary(false),
+_modelRelativePath(""),
+_documentBuffer(NULL),
+_path(""),
+_referenceCount(0),
+_bundleReader(NULL),
+_references(NULL),
+_data(NULL)
 {
 
 }
 Bundle3D::~Bundle3D()
 {
     CC_SAFE_DELETE_ARRAY(_documentBuffer);
+    CC_SAFE_DELETE_ARRAY(_bundleReader);
+    CC_SAFE_DELETE_ARRAY(_references);
+    CC_SAFE_DELETE(_data);
 }
-
-
 
 NS_CC_END

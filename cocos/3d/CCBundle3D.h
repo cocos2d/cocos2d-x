@@ -39,8 +39,10 @@
 #include "json/document.h"
 
 NS_CC_BEGIN
-
+class BundleReader;
 class Animation3D;
+class Data;
+
 class Bundle3D
 {
 public:
@@ -78,6 +80,12 @@ public:
      */
     bool loadAnimationData(const std::string& id, Animation3DData* animationdata);
     
+    bool loadBinary(const std::string& path);
+
+    bool loadMeshDataBinary(MeshData* meshdata);
+
+    bool loadMeshSkin(SkinData* skindata);
+
 protected:
     GLenum parseGLType(const std::string& str);
 
@@ -87,6 +95,8 @@ protected:
 
     // get model path
     void getModelPath(const std::string& path);
+
+    Reference* seekToFirstType(unsigned int type);
 
 protected:
     Bundle3D();
@@ -100,6 +110,13 @@ protected:
     std::string         _path;
 
     rapidjson::Document _document;
+
+    BundleReader* _bundleReader;
+
+    unsigned int _referenceCount;
+    Reference* _references;
+
+    Data* _data;
 
     bool  _isBinary;
 };

@@ -580,6 +580,9 @@
     <ClCompile Include="..\3d\CCSprite3DMaterial.cpp">
       <Filter>3d</Filter>
     </ClCompile>
+    <ClCompile Include="..\3d\CCBundleReader.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -1178,6 +1181,9 @@
       <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="..\3d\CCSprite3DMaterial.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCBundleReader.h">
       <Filter>3d</Filter>
     </ClInclude>
   </ItemGroup>
