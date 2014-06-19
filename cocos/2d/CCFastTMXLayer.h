@@ -48,7 +48,7 @@ struct _ccCArray;
  * @{
  */
 
-/** @brief TMXLayer2 represents the TMX layer.
+/** @brief FastTMXLayer represents the TMX layer.
 
 It is a subclass of SpriteBatchNode. By default the tiles are rendered using a TextureAtlas.
 If you modify a tile on runtime, then, that tile will become a Sprite, otherwise no Sprite objects are created.
@@ -77,25 +77,25 @@ Tiles can have tile flags for additional properties. At the moment only flip hor
 @since 1.1
 */
 
-class CC_DLL TMXLayer2 : public Node
+class CC_DLL FastTMXLayer : public Node
 {
 public:
-    /** creates a TMXLayer2 with an tileset info, a layer info and a map info */
-    static TMXLayer2 * create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
+    /** creates a FastTMXLayer with an tileset info, a layer info and a map info */
+    static FastTMXLayer * create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     /**
      * @js ctor
      */
-    TMXLayer2();
+    FastTMXLayer();
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~TMXLayer2();
+    virtual ~FastTMXLayer();
 
     /** returns the tile gid at a given tile coordinate. It also returns the tile flags.
      */
-    int getTileGIDAt(const Point& tileCoordinate, TMXTileFlags* flags = nullptr);
-    CC_DEPRECATED_ATTRIBUTE int tileGIDAt(const Point& tileCoordinate, TMXTileFlags* flags = nullptr){
+    int getTileGIDAt(const Vec2& tileCoordinate, TMXTileFlags* flags = nullptr);
+    CC_DEPRECATED_ATTRIBUTE int tileGIDAt(const Vec2& tileCoordinate, TMXTileFlags* flags = nullptr){
         return getTileGIDAt(tileCoordinate, flags);
     };
 
@@ -103,7 +103,7 @@ public:
     The Tile GID can be obtained by using the method "tileGIDAt" or by using the TMX editor -> Tileset Mgr +1.
     If a tile is already placed at that position, then it will be removed.
     */
-    void setTileGID(int gid, const Point& tileCoordinate);
+    void setTileGID(int gid, const Vec2& tileCoordinate);
 
     /** sets the tile gid (gid = tile global id) at a given tile coordinate.
      The Tile GID can be obtained by using the method "tileGIDAt" or by using the TMX editor -> Tileset Mgr +1.
@@ -112,14 +112,14 @@ public:
      Use withFlags if the tile flags need to be changed as well
      */
 
-    void setTileGID(int gid, const Point& tileCoordinate, TMXTileFlags flags);
+    void setTileGID(int gid, const Vec2& tileCoordinate, TMXTileFlags flags);
 
     /** removes a tile at given tile coordinate */
-    void removeTileAt(const Point& tileCoordinate);
+    void removeTileAt(const Vec2& tileCoordinate);
 
     /** returns the position in points of a given tile coordinate */
-    Point getPositionAt(const Point& tileCoordinate);
-    CC_DEPRECATED_ATTRIBUTE Point positionAt(const Point& tileCoordinate) { return getPositionAt(tileCoordinate); };
+    Vec2 getPositionAt(const Vec2& tileCoordinate);
+    CC_DEPRECATED_ATTRIBUTE Vec2 positionAt(const Vec2& tileCoordinate) { return getPositionAt(tileCoordinate); };
 
     /** return the value for the specific property name */
     Value getProperty(const std::string& propertyName) const;
@@ -171,11 +171,11 @@ public:
      You can remove either by calling:
      - layer->removeChild(sprite, cleanup);
      */
-    Sprite* getTileAt(const Point& tileCoordinate);
+    Sprite* getTileAt(const Vec2& tileCoordinate);
     
-    Sprite* updateTileForGID(int gid, const Point& pos);
+    Sprite* updateTileForGID(int gid, const Vec2& pos);
 
-    void setupTileSprite(Sprite* sprite, Point pos, int gid);
+    void setupTileSprite(Sprite* sprite, Vec2 pos, int gid);
 
     //
     // Override
@@ -189,7 +189,7 @@ protected:
     bool initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     int updateTiles(const Rect& culledRect, V3F_T2F_Quad *quads, GLushort *indices);
     void setupVBO();
-    Point calculateLayerOffset(const Point& offset);
+    Vec2 calculateLayerOffset(const Vec2& offset);
 
     /* The layer recognizes some special properties, like cc_vertez */
     void parseInternalProperties();
@@ -199,9 +199,9 @@ protected:
 
     void onDraw(const Mat4 &transform, bool transformUpdated);
     
-    int getVertexZForPos(const Point& pos);
+    int getVertexZForPos(const Vec2& pos);
     
-    void insertTileForGID(int gid, const Point& pos);
+    void insertTileForGID(int gid, const Vec2& pos);
     void setTileForGID(int index, int gid);
     
 protected:

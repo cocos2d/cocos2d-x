@@ -33,7 +33,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class TMXObjectGroup;
-class TMXLayer2;
+class FastTMXLayer;
 class TMXLayerInfo;
 class TMXTilesetInfo;
 class TMXMapInfo;
@@ -47,16 +47,16 @@ class TMXMapInfo;
 enum
 {
     /** Orthogonal orientation */
-    TMXOrientationOrtho2,
+    FastTMXOrientationOrtho,
 
     /** Hexagonal orientation */
-    TMXOrientationHex2,
+    FastTMXOrientationHex,
 
     /** Isometric orientation */
-    TMXOrientationIso2,
+    FastTMXOrientationIso,
 };
 
-/** @brief TMXTiledMap2 knows how to parse and render a TMX map.
+/** @brief FastTMXTiledMap knows how to parse and render a TMX map.
 
 It adds support for the TMX tiled map format used by http://www.mapeditor.org
 It supports isometric, hexagonal and orthogonal tiles.
@@ -85,9 +85,9 @@ Limitations:
 - It only supports the XML format (the JSON format is not supported)
 
 Technical description:
-Each layer is created using an TMXLayer2 (subclass of SpriteBatchNode). If you have 5 layers, then 5 TMXLayer2 will be created,
+Each layer is created using an FastTMXLayer (subclass of SpriteBatchNode). If you have 5 layers, then 5 FastTMXLayer will be created,
 unless the layer visibility is off. In that case, the layer won't be created at all.
-You can obtain the layers (TMXLayer2 objects) at runtime by:
+You can obtain the layers (FastTMXLayer objects) at runtime by:
 - map->getChildByTag(tag_number);  // 0=1st layer, 1=2nd layer, 2=3rd layer, etc...
 - map->getLayer(name_of_the_layer);
 
@@ -107,22 +107,22 @@ object->getProperty(name_of_the_property);
 
 @since v0.8.1
 */
-class CC_DLL TMXTiledMap2 : public Node
+class CC_DLL FastTMXTiledMap : public Node
 {
 public:
     /** creates a TMX Tiled Map with a TMX file.*/
-    static TMXTiledMap2* create(const std::string& tmxFile);
+    static FastTMXTiledMap* create(const std::string& tmxFile);
 
     /** initializes a TMX Tiled Map with a TMX formatted XML string and a path to TMX resources */
-    static TMXTiledMap2* createWithXML(const std::string& tmxString, const std::string& resourcePath);
+    static FastTMXTiledMap* createWithXML(const std::string& tmxString, const std::string& resourcePath);
 
-    /** return the TMXLayer2 for the specific layer */
-    TMXLayer2* getLayer(const std::string& layerName) const;
+    /** return the FastTMXLayer for the specific layer */
+    FastTMXLayer* getLayer(const std::string& layerName) const;
     /**
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE TMXLayer2* layerNamed(const std::string& layerName) const { return getLayer(layerName); };
+    CC_DEPRECATED_ATTRIBUTE FastTMXLayer* layerNamed(const std::string& layerName) const { return getLayer(layerName); };
 
     /** return the TMXObjectGroup for the specific group */
     TMXObjectGroup* getObjectGroup(const std::string& groupName) const;
@@ -175,12 +175,12 @@ protected:
     /**
      * @js ctor
      */
-    TMXTiledMap2();
+    FastTMXTiledMap();
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~TMXTiledMap2();
+    virtual ~FastTMXTiledMap();
 
     /** initializes a TMX Tiled Map with a TMX file */
     bool initWithTMXFile(const std::string& tmxFile);
@@ -188,7 +188,7 @@ protected:
     /** initializes a TMX Tiled Map with a TMX formatted XML string and a path to TMX resources */
     bool initWithXML(const std::string& tmxString, const std::string& resourcePath);
     
-    TMXLayer2 * parseLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
+    FastTMXLayer * parseLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     TMXTilesetInfo * tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     void buildWithMapInfo(TMXMapInfo* mapInfo);
 
@@ -207,7 +207,7 @@ protected:
     ValueMapIntKey _tileProperties;
 
 private:
-    CC_DISALLOW_COPY_AND_ASSIGN(TMXTiledMap2);
+    CC_DISALLOW_COPY_AND_ASSIGN(FastTMXTiledMap);
 
 };
 
