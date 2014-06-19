@@ -121,7 +121,7 @@ function device.showActivityIndicator()
     if DEBUG > 1 then
         printInfo("device.showActivityIndicator()")
     end
-    CCNative:showActivityIndicator()
+    cc.Native:showActivityIndicator()
 end
 
 --[[--
@@ -133,7 +133,7 @@ function device.hideActivityIndicator()
     if DEBUG > 1 then
         printInfo("device.hideActivityIndicator()")
     end
-    CCNative:hideActivityIndicator()
+    cc.Native:hideActivityIndicator()
 end
 
 --[[--
@@ -192,16 +192,16 @@ function device.showAlert(title, message, buttonLabels, listener)
 	        table.remove(buttonLabels, 1)
 	    end
 
-	    CCNative:createAlert(title, message, defaultLabel)
+	    cc.Native:createAlert(title, message, defaultLabel)
 	    for i, label in ipairs(buttonLabels) do
-	        CCNative:addAlertButton(label)
+	        cc.Native:addAlertButton(label)
 	    end
 
 	    if type(listener) ~= "function" then
 	        listener = function() end
 	    end
 
-	    CCNative:showAlert(listener)
+	    cc.Native:showAlert(listener)
 	end
 end
 
@@ -216,7 +216,7 @@ function device.cancelAlert()
     if DEBUG > 1 then
         printInfo("device.cancelAlert()")
     end
-    CCNative:cancelAlert()
+    cc.Native:cancelAlert()
 end
 
 --[[--
@@ -234,7 +234,7 @@ OpenUDID 是为设备仿造的 UDID（唯一设备识别码），可以用来识
 
 ]]
 function device.getOpenUDID()
-    local ret = CCNative:getOpenUDID()
+    local ret = cc.Native:getOpenUDID()
     if DEBUG > 1 then
         printInfo("device.getOpenUDID() - Open UDID: %s", tostring(ret))
     end
@@ -269,7 +269,7 @@ function device.openURL(url)
     if DEBUG > 1 then
         printInfo("device.openURL() - url: %s", tostring(url))
     end
-    CCNative:openURL(url)
+    cc.Native:openURL(url)
 end
 
 --[[--
@@ -294,7 +294,7 @@ function device.showInputBox(title, message, defaultValue)
         printInfo("    message: %s", tostring(message))
         printInfo("    defaultValue: %s", tostring(defaultValue))
     end
-    return CCNative:getInputText(title, message, defaultValue)
+    return cc.Native:getInputText(title, message, defaultValue)
 end
 
 return device

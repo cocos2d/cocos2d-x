@@ -6,9 +6,8 @@ end)
 local random = math.random
 
 function BenchmarkScene:ctor()
-    -- self.batch = display.newBatchNode(GAME_TEXTURE_IMAGE_FILENAME, 10000)
-    -- self:addChild(self.batch)
 
+    print("htl benchmark ctor")
     self.layer = display.newNode()
     self.layer:setContentSize(cc.size(display.width, display.height))
     self:addChild(self.layer)
@@ -27,27 +26,20 @@ function BenchmarkScene:ctor()
         end)
         :pos(display.right - 100, display.top - 100)
         :addTo(self)
-    -- local button = ui.newImageMenuItem({
-    --     image = "#ExitButton.png",
-    --     listener = function()
-    --         game.exit()
-    --     end,
-    --     x = display.right - 100,
-    --     y = display.top - 100,
-    -- })
-    -- local menu = ui.newMenu({button})
-    -- self:addChild(menu)
 
+print("htl benchmark ctor1")
     self.label = ui.newBMFontLabel({
         text = "00000",
         font = "UIFont.fnt",
         x = display.cx,
         y = display.top - 40,
     })
+        print("htl benchmark ctor2")
     self:addChild(self.label)
 
     self.coins = {}
     self.state = "IDLE"
+
 
     local frames = display.newFrames("CoinSpin%02d.png", 1, 8)
     local animation = display.newAnimation(frames, 0.4 / 8)
@@ -57,11 +49,13 @@ function BenchmarkScene:ctor()
     self.right  = display.right  - display.width / 4
     self.top    = display.top    - display.height / 3
     self.bottom = display.bottom + display.height / 3
+
+    print("htl benchmark ctor end")
 end
 
 function BenchmarkScene:onTouch(event, x, y)
     if event == "began" then
-        local p = cc.point(x, y)
+        local p = cc.p(x, y)
         if cc.rectContainsPoint(self.addCoinButtonBoundingBox, p) then
             self.state = "ADD"
         elseif cc.rectContainsPoint(self.removeCoinButtonBoundingBox, p) then

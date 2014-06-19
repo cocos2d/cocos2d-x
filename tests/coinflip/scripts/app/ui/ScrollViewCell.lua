@@ -1,7 +1,5 @@
 
 local ScrollViewCell = class("ScrollViewCell", function(contentSize)
-	-- print("htl scrollview new")
-	-- dump(contentSize, "content size:")
     local node = display.newNode()
     if contentSize then node:setContentSize(contentSize) end
     node:setNodeEventEnabled(true)

@@ -16,12 +16,12 @@ function makeUIControl_(control)
     end)
 end
 
-ui.TEXT_ALIGN_LEFT    = kCCTextAlignmentLeft
-ui.TEXT_ALIGN_CENTER  = kCCTextAlignmentCenter
-ui.TEXT_ALIGN_RIGHT   = kCCTextAlignmentRight
-ui.TEXT_VALIGN_TOP    = kCCVerticalTextAlignmentTop
-ui.TEXT_VALIGN_CENTER = kCCVerticalTextAlignmentCenter
-ui.TEXT_VALIGN_BOTTOM = kCCVerticalTextAlignmentBottom
+ui.TEXT_ALIGN_LEFT    = cc.TEXT_ALIGNMENT_LEFT
+ui.TEXT_ALIGN_CENTER  = cc.TEXT_ALIGNMENT_CENTER
+ui.TEXT_ALIGN_RIGHT   = cc.TEXT_ALIGNMENT_RIGHT
+ui.TEXT_VALIGN_TOP    = cc.VERTICAL_TEXT_ALIGNMENT_TOP
+ui.TEXT_VALIGN_CENTER = cc.VERTICAL_TEXT_ALIGNMENT_CENTER
+ui.TEXT_VALIGN_BOTTOM = cc.VERTICAL_TEXT_ALIGNMENT_BOTTOM
 
 ui.UIGroup               = import(".UIGroup")
 ui.UIImage               = import(".UIImage")

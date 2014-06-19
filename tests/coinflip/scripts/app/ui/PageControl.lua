@@ -3,7 +3,6 @@ local ScrollView = import(".ScrollView")
 local PageControl = class("PageControl", ScrollView)
 
 function PageControl:onTouchEndedWithoutTap(x, y)
-    print("htl page control ontouchendedwithtap ", x, y)
     local offsetX, offsetY = self.offsetX, self.offsetY
     local index = 0
     local count = #self.cells
