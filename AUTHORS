@@ -892,6 +892,9 @@ Developers:
     kyokomi
         Fix the bug that UIButton doesn't support TTF font
         Fix a but of TextReader
+        
+    gin0606
+        Add a new line at the end of a file
     
 Retired Core Developers:
     WenSheng Yang
