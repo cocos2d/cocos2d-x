@@ -384,7 +384,7 @@ bool LabelTextFormatter::createStringSprites(Label *theLabel)
             continue;
         }
 
-        nextFontPositionX += charAdvance + kernings[i];
+        nextFontPositionX += charAdvance + kernings[i] + theLabel->_additionalKerning;
         
         if (longestLine < nextFontPositionX)
         {
