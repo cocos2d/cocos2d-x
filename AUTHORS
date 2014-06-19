@@ -752,7 +752,9 @@ Developers:
         
     hanjukim
         Fixed a bug that color and opacity settings were not applied when invoking Label::alignText.
-        
+        Fixed the bug that FileUtils:getStringFromFile() may return a unterminated string
+        Skip BOM in DataReaderHelper::addDataFromJsonCache()
+
     bagobor
         Fixed a memory leak in AssetsManager::uncompress.
         Code format fix and small optimizations in cocostudio/CCActionNode.cpp.
