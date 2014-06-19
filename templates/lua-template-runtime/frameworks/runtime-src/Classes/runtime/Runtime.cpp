@@ -154,7 +154,7 @@ private:
     void loopReceiveFile();
     void loopWriteFile();
     void loopResponse();
-
+    void addResponse(int fd, string fileName,int errortype);
     enum PROTONUM
     {
         FILEPROTO=1,
@@ -377,6 +377,19 @@ bool CreateDir(const char *sPathName)
     return   true;  
 }
 
+void recvBuf(int fd,char *pbuf,int bufsize)
+{
+    int startFlagLen = bufsize;
+    while (startFlagLen != 0){
+        int recvlen = recv(fd, pbuf+bufsize-startFlagLen,startFlagLen ,0);
+        if (recvlen<=0) {
+            sleep(1);
+            continue;
+        }
+        startFlagLen -= recvlen;
+    }
+}
+
 void FileServer::loopReceiveFile()
 {
     struct sockaddr client;
@@ -393,9 +406,7 @@ void FileServer::loopReceiveFile()
 
         // recv start flag
         char startflag[13]={0};
-        if (recv(fd, startflag, sizeof(startflag)-1,0)<=0) {
-            continue;
-        }
+        recvBuf(fd,startflag,sizeof(startflag)-1);
         if (strcmp(startflag,"RuntimeSend:")!=0){
             continue;
         }
@@ -406,25 +417,18 @@ void FileServer::loopReceiveFile()
             char char_type[3];
             unsigned short uint16_type;
         }protonum;
-        if (recv(fd, protonum.char_type, sizeof(protonum.char_type) - 1,0)<=0) {
-            continue;
-        }
-
+        recvBuf(fd,protonum.char_type,sizeof(protonum.char_type) - 1);
         //recv protobuf length
         union 
         {
             char char_type[3];
             unsigned short uint16_type;
         }protolength;
-        if (recv(fd, protolength.char_type, sizeof(protolength.char_type) - 1,0)<=0) {
-            continue;
-        }
+        recvBuf(fd,protolength.char_type,sizeof(protolength.char_type) - 1);
 
         //recv variable length
         memset(_protoBuf,0,MAXPROTOLENGTH);
-        if (recv(fd, _protoBuf, protolength.uint16_type,0)<=0) {
-            continue;
-        }
+        recvBuf(fd,_protoBuf,protolength.uint16_type);
 
         RecvBufStruct recvDataBuf;
         recvDataBuf.fd = fd;
@@ -441,7 +445,7 @@ void FileServer::loopReceiveFile()
                     recvLen = recvTotalLen;
                 memset(_protoBuf,0,MAXPROTOLENGTH);
                 int result= recv(fd, _protoBuf, recvLen,0);
-                //cocos2d::log("recv fullfilename = %s,file size:%d",recvDataBuf.fileProto.filename().c_str(),result);
+                //cocos2d::log("recv fullfilename = %s,file size:%d",recvDataBuf.fileProto.file_name().c_str(),result);
                 if (result<=0) {
                     sleep(1);
                     continue;
@@ -503,44 +507,35 @@ void FileServer::loopWriteFile()
              fp=fopen(fullfilename.c_str(), "ab");
          }
          if (errno == ENOSPC){
-
+              addResponse(recvDataBuf.fd,filename,runtime::FileSendComplete::RESULT::FileSendComplete_RESULT_FAILED_LOWDISKSPACE);
          }
          if (fp){
              fwrite(recvDataBuf.contentBuf.c_str(), sizeof(char), recvDataBuf.contentBuf.size(),fp);
              fclose(fp);
-             //errno()
          }
 
          if (recvDataBuf.fileProto.package_seq() == recvDataBuf.fileProto.package_sum()){
 
              //record new file modify
              addResFileInfo(filename.c_str(),recvDataBuf.fileProto.modified_time());
-             ResponseStruct responseBuf;
-             responseBuf.fd = recvDataBuf.fd;
-             responseBuf.fileResponseProto.set_file_name(filename.c_str());
-             responseBuf.fileResponseProto.set_result(runtime::FileSendComplete::RESULT::FileSendComplete_RESULT_SUCCESS);
-
-             // push Response struct
-             _responseBufListMutex.lock();
-             _responseBufList.push_back(responseBuf);
-             _responseBufListMutex.unlock();
+             addResponse(recvDataBuf.fd,filename,runtime::FileSendComplete::RESULT::FileSendComplete_RESULT_SUCCESS);
          }
      }
 }
 
 
-// void FileServer::loopResponse(string fileName,int errortype)
-// {
-//     ResponseStruct responseBuf;
-//     responseBuf.fd = recvDataBuf.fd;
-//     responseBuf.fileResponseProto.set_file_name(filename.c_str());
-//     responseBuf.fileResponseProto.set_result(runtime::FileSendComplete::RESULT::FileSendComplete_RESULT_FAILED_LOWDISKSPACE);
-// 
-//     // push Response struct
-//     _responseBufListMutex.lock();
-//     _responseBufList.push_back(responseBuf);
-//     _responseBufListMutex.unlock();
-// }
+void FileServer::addResponse(int fd, string filename,int errortype)
+{
+    ResponseStruct responseBuf;
+    responseBuf.fd = fd;
+    responseBuf.fileResponseProto.set_file_name(filename.c_str());
+    responseBuf.fileResponseProto.set_result((::runtime::FileSendComplete_RESULT)errortype);
+
+    // push Response struct
+    _responseBufListMutex.lock();
+    _responseBufList.push_back(responseBuf);
+    _responseBufListMutex.unlock();
+}
 
 void FileServer::loopResponse()
 {
@@ -573,9 +568,10 @@ void FileServer::loopResponse()
         ResponseStruct responseData;
         strcpy(responseData.startFlag,"RuntimeSend:");
         responseData.protoNum=PROTONUM::FILESENDCOMPLETE;
-        responseData.protoBufLen=responseString.length();
+        responseData.protoBufLen= (unsigned short)responseString.size();
         memcpy(dataBuf,&responseData,sizeof(responseData));
         memcpy(dataBuf+sizeof(responseData),responseString.c_str(),responseString.size());
+        cocos2d::log("responseFile:%s,result:%d",fileSendProtoComplete.file_name().c_str(),fileSendProtoComplete.result());
         int sendLen = send(responseBuf.fd, dataBuf, sizeof(responseData)+responseString.size(),0);
         //pop response buf
     }
