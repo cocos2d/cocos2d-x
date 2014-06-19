@@ -111,7 +111,6 @@ void Bone::setAnimationValue(float* trans, float* rot, float* scale, float weigh
     state.weight = weight;
     
     _blendStates.push_back(state);
-    _localDirty = true;
 }
 
 void Bone::clearBoneBlendState()
@@ -177,7 +176,6 @@ void Bone::removeAllChildBone()
 Bone::Bone(const std::string& id)
 : _name(id)
 , _parent(nullptr)
-, _localDirty(true)
 , _worldDirty(true)
 {
     
@@ -240,7 +238,6 @@ void Bone::updateLocalMat()
         _local.scale(scale);
         
         _blendStates.clear();
-        _localDirty = false;
     }
     else
     {

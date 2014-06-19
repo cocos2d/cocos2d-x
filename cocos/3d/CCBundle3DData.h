@@ -34,7 +34,7 @@
  
 NS_CC_BEGIN
 
-//mesh vertex attribute
+/**mesh vertex attribute*/
 struct MeshVertexAttrib
 {
     //attribute size
@@ -47,6 +47,7 @@ struct MeshVertexAttrib
     int attribSizeBytes;
 };
 
+/**mesh data*/
 struct MeshData
 {
     std::vector<float> vertex;
@@ -78,6 +79,7 @@ public:
     }
 };
 
+/**skin data*/
 struct SkinData
 {
     std::vector<std::string> skinBoneNames; //skin bones affect skin
@@ -120,11 +122,13 @@ struct SkinData
 
 };
 
+/**material data*/
 struct MaterialData
 {
     std::string texturePath;
 };
 
+/**animation data*/
 struct Animation3DData
 {
 public:

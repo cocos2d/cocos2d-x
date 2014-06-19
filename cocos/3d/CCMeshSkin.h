@@ -52,17 +52,19 @@ public:
      */
     const Mat4& getInverseBindPose();
     
-    //update own world matrix and children's
+    /**update own world matrix and children's*/
     void updateWorldMat();
     
-    void setWorldMatDirty(bool dirty = true);
-    
+    /**get wrod matrix*/
     const Mat4& getWorldMat();
     
+    /**get bone name*/
     const std::string& getName() const { return _name; }
     
+    /**set animation value*/
     void setAnimationValue(float* trans, float* rot, float* scale, float weight = 1.0f);
     
+    /**clear bone blend states*/
     void clearBoneBlendState();
     /**
      * Creates C3DBone.
@@ -95,13 +97,19 @@ public:
      */
     void updateJointMatrix(Vec4* matrixPalette);
     
-    //bone tree, we do not inherit from Node, Node has too many properties that we do not need. A clean Node is needed.
+    /**bone tree, we do not inherit from Node, Node has too many properties that we do not need. A clean Node is needed.*/
     Bone* getParentBone();
+    /**get child bone count*/
     int getChildBoneCount() const;
+    /**get child bone by index*/
     Bone* getChildBoneByIndex(int index);
+    /**add child bone*/
     void addChildBone(Bone* bone);
+    /**remove child bone by index*/
     void removeChildBoneByIndex(int index);
+    /**remove child bone*/
     void removeChildBone(Bone* bone);
+    /**remove all child bone*/
     void removeAllChildBone();
     
     
@@ -138,7 +146,10 @@ protected:
      */
     void updateLocalMat();
     
-    std::string _name;
+    /**set world matrix dirty flag*/
+    void setWorldMatDirty(bool dirty = true);
+    
+    std::string _name; // bone name
     /**
      * The Mat4 representation of the Joint's bind pose.
      */
@@ -146,11 +157,10 @@ protected:
     
     Mat4 _oriPose; //original bone pose
     
-    Bone* _parent;
+    Bone* _parent; //parent bone
     
     Vector<Bone*> _children;
     
-    bool           _localDirty;
     bool          _worldDirty;
     Mat4          _world;
     Mat4          _local;
@@ -159,35 +169,38 @@ protected:
     
 };
 
-/////////////////////////////////////////////////////////////////////////////
-//
-/////////////////////////////////////////////////////////////////////////////
+/**
+ * MeshSkin, A class maintain a collection of bones that affect Mesh vertex.
+ * And it is responsible for computing matrix palletes that used by skin mesh rendering.
+ */
 class MeshSkin: public Ref
 {
 public:
     
-    //create a new meshskin if do not want to share meshskin
+    /**create a new meshskin if do not want to share meshskin*/
     static MeshSkin* create(const std::string& filename, const std::string& name);
     
+    /**get skin bone count*/
     ssize_t getSkinBoneCount() const;
     
-    //get bone
+    /**get bone*/
     Bone* getBoneByIndex(unsigned int index) const;
     Bone* getBoneByName(const std::string& id) const;
     
-    //get & set root bone
+    /**get & set root bone*/
     Bone* getRootBone() const;
     void setRootBone(Bone* bone);
     
+    /**get bone index*/
     int getBoneIndex(Bone* bone) const;
     
-    //compute matrix palette used by gpu skin
+    /**compute matrix palette used by gpu skin*/
     Vec4* getMatrixPalette();
     
-    //getSkinBoneCount() * 3
+    /**getSkinBoneCount() * 3*/
     ssize_t getMatrixPaletteSize() const;
     
-    //refresh bone world matrix
+    /**refresh bone world matrix*/
     void updateBoneMatrix();
     
 CC_CONSTRUCTOR_ACCESS:
@@ -196,12 +209,16 @@ CC_CONSTRUCTOR_ACCESS:
     
     ~MeshSkin();
     
+    /**init from skin data*/
     bool initFromSkinData(const SkinData& skindata);
     
+    /**remove all bones*/
     void removeAllBones();
     
+    /**add skin bone*/
     void addSkinBone(Bone* bone);
     
+    /**add Node bone*/
     void addNodeBone(Bone* bone);
     
 protected:
@@ -218,25 +235,32 @@ protected:
     Vec4* _matrixPalette;
 };
 
+/**
+ * MeshSkinData Cache
+ */
 class MeshSkinDataCache
 {
 public:
+    /**get & destroy*/
     static MeshSkinDataCache* getInstance();
     static void destroyInstance();
     
+    /**get mesh skin data from cache*/
     const SkinData* getMeshSkinData(const std::string& key) const;
     
+    /**add mesh skin data to cache*/
     bool addMeshSkinData(const std::string& key, const SkinData& skinData);
     
+    /**remove all mesh skin data*/
     void removeAllMeshSkinData();
     
 protected:
     MeshSkinDataCache();
     ~MeshSkinDataCache();
     
-    static MeshSkinDataCache* _cacheInstance;
+    static MeshSkinDataCache* _cacheInstance; // instance
     
-    std::unordered_map<std::string, SkinData> _skinDatas;
+    std::unordered_map<std::string, SkinData> _skinDatas; //cached skindatas
 };
 
 NS_CC_END

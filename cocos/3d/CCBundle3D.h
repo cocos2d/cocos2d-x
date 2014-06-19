@@ -37,7 +37,12 @@
 
 NS_CC_BEGIN
 
-class Animation3D;
+/**
+ * Defines a bundle file that contains a collection of assets. Mesh, Material, MeshSkin, Animation
+ * There are two types of bundle files, c3t and c3b.
+ * c3t text file
+ * c3b binary file
+ */
 class Bundle3D
 {
 public:
@@ -46,6 +51,11 @@ public:
     
     static void destroyInstance();
     
+    /**
+     * load a file. You must load a file first, then call loadMeshData, loadSkinData, and so on
+     * @param path File to be loaded
+     * @return result of load
+     */
     bool load(const std::string& path);
     
     /**
