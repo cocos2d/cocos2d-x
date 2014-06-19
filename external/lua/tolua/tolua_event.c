@@ -145,6 +145,22 @@ static int class_table_get_index (lua_State* L)
             else
                 lua_pop(L,1);
         }
+        /* try C/C++ variable */
+        lua_pushstring(L,".get");
+        lua_rawget(L,-2);                   /* stack: obj key ... mt tget */
+        if (lua_istable(L,-1))
+        {
+            lua_pushvalue(L,2);  /* stack: obj key ... mt tget key */
+            lua_rawget(L,-2);    /* stack: obj key ... mt tget value */
+            if (lua_iscfunction(L,-1))
+            {
+                lua_call(L,0,1);
+                return 1;
+            }
+            else if (lua_istable(L,-1))
+                return 1;
+            lua_pop(L, 2);
+        }
     }
     lua_pushnil(L);
     return 1;
@@ -366,6 +382,21 @@ static int class_newindex_event (lua_State* L)
     else if (t== LUA_TTABLE)
     {
 //        module_newindex_event(L);
+        lua_getmetatable(L,1);  /* stack: t k v mt */
+        lua_pushstring(L,".set");
+        lua_rawget(L,-2);       /* stack: t k v mt tset */
+        if (lua_istable(L,-1))
+        {
+            lua_pushvalue(L,2);  /* stack: t k v mt tset k */
+            lua_rawget(L,-2);
+            if (lua_iscfunction(L,-1))  /* ... func */
+            {
+                lua_pushvalue(L,1); /* ... func t */
+                lua_pushvalue(L,3); /* ... func t v */
+                lua_call(L,2,0);
+                return 0;
+            }
+        }
 		lua_settop(L,3);
         class_backup_before_newindex(L);
 		lua_settop(L,3);
@@ -618,4 +649,3 @@ TOLUA_API void tolua_classevents (lua_State* L)
     /*lua_pushcfunction(L,class_gc_event);*/
     lua_rawset(L,-3);
 }
-
