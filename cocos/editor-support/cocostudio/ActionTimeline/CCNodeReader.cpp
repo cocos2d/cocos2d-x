@@ -55,6 +55,7 @@ static const char* ClassName_ScrollView = "ScrollView";
 static const char* ClassName_ListView   = "ListView";
 static const char* ClassName_PageView   = "PageView";
 static const char* ClassName_Widget     = "Widget";
+static const char* ClassName_Label      = "Label";
 
 
 static const char* NODE        = "nodeTree";
@@ -147,6 +148,7 @@ void NodeReader::init()
     _funcs.insert(Pair(ClassName_ListView,  std::bind(&NodeReader::loadWidget,   this, _1)));
     _funcs.insert(Pair(ClassName_PageView,  std::bind(&NodeReader::loadWidget,   this, _1)));
     _funcs.insert(Pair(ClassName_Widget,    std::bind(&NodeReader::loadWidget,   this, _1)));
+    _funcs.insert(Pair(ClassName_Label,     std::bind(&NodeReader::loadWidget,   this, _1)));
 
     _guiReader = new WidgetPropertiesReader0300();
 }
