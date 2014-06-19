@@ -9,6 +9,28 @@ using namespace ui;
 
 namespace cocostudio
 {
+    static const char* P_CapInsetsX = "capInsetsX";
+    static const char* P_CapInsetsY = "capInsetsY";
+    static const char* P_CapInsetsWidth = "capInsetsWidth";
+    static const char* P_CapInsetsHeight = "capInsetsHeight";
+    static const char* P_ClipAble = "clipAble";
+    static const char* P_BackGroundScale9Enable = "backGroundScale9Enable";
+    static const char* P_BgColorR = "bgColorR";
+    static const char* P_BgColorG = "bgColorG";
+    static const char* P_BgColorB = "bgColorB";
+    static const char* P_BgStartColorR = "bgStartColorR";
+    static const char* P_BgStartColorG = "bgStartColorG";
+    static const char* P_BgStartColorB = "bgStartColorB";
+    static const char* P_BgEndColorR = "bgEndColorR";
+    static const char* P_BgEndColorG = "bgEndColorG";
+    static const char* P_BgEndColorB = "bgEndColorB";
+    static const char* P_VectorX = "vectorX";
+    static const char* P_VectorY = "vectorY";
+    static const char* P_BgColorOpacity = "bgColorOpacity";
+    static const char* P_ColorType = "colorType";
+    static const char* P_BackGroundImageData = "backGroundImageData";
+    static const char* P_LayoutType = "layoutType";
+    
     static LayoutReader* instanceLayoutReader = NULL;
     
     IMPLEMENT_CLASS_WIDGET_READER_INFO(LayoutReader)
@@ -38,7 +60,6 @@ namespace cocostudio
         
         Layout* panel = static_cast<Layout*>(widget);
 
-        float w = 0, h= 0;
         
         stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
         this->beginSetBasicProperties(widget);
@@ -60,52 +81,44 @@ namespace cocostudio
             //read all color related properties of widget
             CC_COLOR_PROPERTY_BINARY_READER
             
-            else if(key == "anchorPointX"){
-                _originalAnchorPoint.x = valueToFloat(value);
-            }else if(key == "anchorPointY"){
-                _originalAnchorPoint.y = valueToFloat(value);
+            else if(key == P_AdaptScreen){
+                _isAdaptScreen = valueToBool(value);
             }
-            else if(key == "width"){
-                w = valueToFloat(value);
-            }
-            else if(key == "height"){
-                h = valueToFloat(value);
-            }
-            else if( key == "clipAble"){
+            else if( key == P_ClipAble){
                 panel->setClippingEnabled(valueToBool(value));
-            }else if(key == "backGroundScale9Enable"){
+            }else if(key == P_BackGroundScale9Enable){
                 panel->setBackGroundImageScale9Enabled(valueToBool(value));
-            }else if(key == "bgColorR"){
+            }else if(key == P_BgColorR){
                 cr = valueToInt(value);
-            }else if(key == "bgColorG"){
+            }else if(key == P_BgColorG){
                 cg = valueToInt(value);
-            }else if(key == "bgColorB")
+            }else if(key == P_BgColorB)
             {
                 cb = valueToInt(value);
-            }else if(key == "bgStartColorR"){
+            }else if(key == P_BgStartColorR){
                 scr = valueToInt(value);
-            }else if(key == "bgStartColorG"){
+            }else if(key == P_BgStartColorG){
                 scg = valueToInt(value);
-            }else if(key == "bgStartColorB")
+            }else if(key == P_BgStartColorB)
             {
                 scb = valueToInt(value);
             }
-            else if(key == "bgEndColorR"){
+            else if(key == P_BgEndColorR){
                 ecr = valueToInt(value);
-            }else if(key == "bgEndColorG"){
+            }else if(key == P_BgEndColorG){
                 ecg = valueToInt(value);
-            }else if(key == "bgEndColorB")
+            }else if(key == P_BgEndColorB)
             {
                 ecb = valueToInt(value);
-            }else if (key == "vectorX"){
+            }else if (key == P_VectorX){
                 bgcv1 = valueToFloat(value);
-            }else if(key == "vectorY"){
+            }else if(key == P_VectorY){
                 bgcv2 = valueToFloat(value);
-            }else if(key == "bgColorOpacity"){
+            }else if(key == P_BgColorOpacity){
                 bgColorOpacity = valueToInt(value);
-            }else if( key == "colorType"){
+            }else if( key == P_ColorType){
                 panel->setBackGroundColorType(Layout::BackGroundColorType(valueToInt(value)));
-            }else if (key == "backGroundImageData"){
+            }else if (key == P_BackGroundImageData){
                 
                 stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
                 if (backGroundChildren) {
@@ -114,20 +127,19 @@ namespace cocostudio
                     Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                     
                     std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
-//                    CCLOG("Layout : image =%s", backgroundValue.c_str());
                     
                     panel->setBackGroundImage(backgroundValue, imageFileNameType);
                 }
                 
-            }else if(key == "capInsetsX"){
+            }else if(key == P_CapInsetsX){
                 capsx = valueToFloat(value);
-            }else if(key == "capInsetsY"){
+            }else if(key == P_CapInsetsY){
                 capsy = valueToFloat(value);
-            }else if(key == "capInsetsWidth"){
+            }else if(key == P_CapInsetsWidth){
                 capsWidth = valueToFloat(value);
-            }else if(key == "capInsetsHeight"){
+            }else if(key == P_CapInsetsHeight){
                 capsHeight = valueToFloat(value);
-            }else if (key == "layoutType"){
+            }else if (key == P_LayoutType){
                 layoutType = (Layout::Type)valueToInt(value);
             }
             
@@ -163,7 +175,7 @@ namespace cocostudio
         
         /* adapt screen gui */
         float w = 0, h = 0;
-        bool adaptScrenn = DICTOOL->getBooleanValue_json(options, "adaptScreen");
+        bool adaptScrenn = DICTOOL->getBooleanValue_json(options, P_AdaptScreen);
         if (adaptScrenn)
         {
             Size screenSize = CCDirector::getInstance()->getWinSize();
@@ -172,61 +184,61 @@ namespace cocostudio
         }
         else
         {
-            w = DICTOOL->getFloatValue_json(options, "width");
-            h = DICTOOL->getFloatValue_json(options, "height");
+            w = DICTOOL->getFloatValue_json(options, P_Width);
+            h = DICTOOL->getFloatValue_json(options, P_Height);
         }
         panel->setSize(Size(w, h));
         /**/
         
-        panel->setClippingEnabled(DICTOOL->getBooleanValue_json(options, "clipAble"));
+        panel->setClippingEnabled(DICTOOL->getBooleanValue_json(options, P_ClipAble));
         
-        bool backGroundScale9Enable = DICTOOL->getBooleanValue_json(options, "backGroundScale9Enable");
+        bool backGroundScale9Enable = DICTOOL->getBooleanValue_json(options, P_BackGroundScale9Enable);
         panel->setBackGroundImageScale9Enabled(backGroundScale9Enable);
-        int cr = DICTOOL->getIntValue_json(options, "bgColorR");
-        int cg = DICTOOL->getIntValue_json(options, "bgColorG");
-        int cb = DICTOOL->getIntValue_json(options, "bgColorB");
+        int cr = DICTOOL->getIntValue_json(options, P_BgColorR);
+        int cg = DICTOOL->getIntValue_json(options, P_BgColorG);
+        int cb = DICTOOL->getIntValue_json(options, P_BgColorB);
         
-        int scr = DICTOOL->getIntValue_json(options, "bgStartColorR");
-        int scg = DICTOOL->getIntValue_json(options, "bgStartColorG");
-        int scb = DICTOOL->getIntValue_json(options, "bgStartColorB");
+        int scr = DICTOOL->getIntValue_json(options, P_BgStartColorR);
+        int scg = DICTOOL->getIntValue_json(options, P_BgStartColorG);
+        int scb = DICTOOL->getIntValue_json(options, P_BgStartColorB);
         
-        int ecr = DICTOOL->getIntValue_json(options, "bgEndColorR");
-        int ecg = DICTOOL->getIntValue_json(options, "bgEndColorG");
-        int ecb = DICTOOL->getIntValue_json(options, "bgEndColorB");
+        int ecr = DICTOOL->getIntValue_json(options, P_BgEndColorR);
+        int ecg = DICTOOL->getIntValue_json(options, P_BgEndColorG);
+        int ecb = DICTOOL->getIntValue_json(options, P_BgEndColorB);
         
-        float bgcv1 = DICTOOL->getFloatValue_json(options, "vectorX");
-        float bgcv2 = DICTOOL->getFloatValue_json(options, "vectorY");
+        float bgcv1 = DICTOOL->getFloatValue_json(options, P_VectorX);
+        float bgcv2 = DICTOOL->getFloatValue_json(options, P_VectorY);
         panel->setBackGroundColorVector(Vec2(bgcv1, bgcv2));
         
-        int co = DICTOOL->getIntValue_json(options, "bgColorOpacity");
+        int co = DICTOOL->getIntValue_json(options, P_BgColorOpacity);
         
-        int colorType = DICTOOL->getIntValue_json(options, "colorType");
+        int colorType = DICTOOL->getIntValue_json(options, P_ColorType);
         panel->setBackGroundColorType(Layout::BackGroundColorType(colorType));
         panel->setBackGroundColor(Color3B(scr, scg, scb),Color3B(ecr, ecg, ecb));
         panel->setBackGroundColor(Color3B(cr, cg, cb));
         panel->setBackGroundColorOpacity(co);
         
         
-        const rapidjson::Value& imageFileNameDic = DICTOOL->getSubDictionary_json(options, "backGroundImageData");
-        int imageFileNameType = DICTOOL->getIntValue_json(imageFileNameDic, "resourceType");
-        std::string imageFileName = this->getResourcePath(imageFileNameDic, "path", (Widget::TextureResType)imageFileNameType);
+        const rapidjson::Value& imageFileNameDic = DICTOOL->getSubDictionary_json(options, P_BackGroundImageData);
+        int imageFileNameType = DICTOOL->getIntValue_json(imageFileNameDic, P_ResourceType);
+        std::string imageFileName = this->getResourcePath(imageFileNameDic, P_Path, (Widget::TextureResType)imageFileNameType);
         panel->setBackGroundImage(imageFileName, (Widget::TextureResType)imageFileNameType);
         
 
         if (backGroundScale9Enable)
         {
-            float cx = DICTOOL->getFloatValue_json(options, "capInsetsX");
-            float cy = DICTOOL->getFloatValue_json(options, "capInsetsY");
-            float cw = DICTOOL->getFloatValue_json(options, "capInsetsWidth");
-            float ch = DICTOOL->getFloatValue_json(options, "capInsetsHeight");
+            float cx = DICTOOL->getFloatValue_json(options, P_CapInsetsX);
+            float cy = DICTOOL->getFloatValue_json(options, P_CapInsetsY);
+            float cw = DICTOOL->getFloatValue_json(options, P_CapInsetsWidth);
+            float ch = DICTOOL->getFloatValue_json(options, P_CapInsetsHeight);
             panel->setBackGroundImageCapInsets(Rect(cx, cy, cw, ch));
         }
         
-        panel->setLayoutType((Layout::Type)DICTOOL->getIntValue_json(options, "layoutType"));
+        panel->setLayoutType((Layout::Type)DICTOOL->getIntValue_json(options, P_LayoutType));
         
-        int bgimgcr = DICTOOL->getIntValue_json(options, "colorR");
-        int bgimgcg = DICTOOL->getIntValue_json(options, "colorG");
-        int bgimgcb = DICTOOL->getIntValue_json(options, "colorB");
+        int bgimgcr = DICTOOL->getIntValue_json(options, P_ColorR);
+        int bgimgcg = DICTOOL->getIntValue_json(options, P_ColorG);
+        int bgimgcb = DICTOOL->getIntValue_json(options, P_ColorB);
         panel->setBackGroundImageColor(Color3B(bgimgcr, bgimgcg, bgimgcb));
         
         

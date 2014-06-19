@@ -9,6 +9,9 @@ using namespace ui;
 
 namespace cocostudio
 {
+    static const char* P_Direction = "direction";
+    static const char* P_ItemMargin = "itemMargin";
+    
     static ListViewReader* instanceListViewReader = NULL;
     
     IMPLEMENT_CLASS_WIDGET_READER_INFO(ListViewReader)
@@ -44,12 +47,12 @@ namespace cocostudio
             std::string key = stChildArray[i].GetName(pCocoLoader);
             std::string value = stChildArray[i].GetValue();
             
-            if (key == "direction") {
+            if (key == P_Direction) {
                 listView->setDirection((ScrollView::Direction)valueToInt(value));
             }
-            else if(key == "gravity"){
+            else if(key == P_Gravity){
                 listView->setGravity((ListView::Gravity)valueToInt(value));
-            }else if(key == "itemMargin"){
+            }else if(key == P_ItemMargin){
                 listView->setItemsMargin(valueToFloat(value));
             }
             
@@ -63,13 +66,13 @@ namespace cocostudio
         
         ListView* listView = static_cast<ListView*>(widget);
                 
-        int direction = DICTOOL->getFloatValue_json(options, "direction");
+        int direction = DICTOOL->getFloatValue_json(options, P_Direction);
         listView->setDirection((ScrollView::Direction)direction);
         
-        ListView::Gravity gravity = (ListView::Gravity)DICTOOL->getIntValue_json(options, "gravity");
+        ListView::Gravity gravity = (ListView::Gravity)DICTOOL->getIntValue_json(options, P_Gravity);
         listView->setGravity(gravity);
         
-        float itemMargin = DICTOOL->getFloatValue_json(options, "itemMargin");
+        float itemMargin = DICTOOL->getFloatValue_json(options, P_ItemMargin);
         listView->setItemsMargin(itemMargin);
     }
 }

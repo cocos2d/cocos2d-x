@@ -9,6 +9,15 @@ using namespace ui;
 
 namespace cocostudio
 {
+    static const char* P_StringValue = "stringValue";
+    static const char* P_CharMapFileData = "charMapFileData";
+    static const char* P_ItemWidth = "itemWidth";
+    static const char* P_ItemHeight = "itemHeight";
+    static const char* P_StartCharMap = "startCharMap";
+    
+    
+    static const char* P_CharMapFile = "charMapFile";
+    
     static TextAtlasReader* instanceTextAtalsReader = NULL;
     
     IMPLEMENT_CLASS_WIDGET_READER_INFO(TextAtlasReader)
@@ -55,15 +64,10 @@ namespace cocostudio
             //read all color related properties of widget
             CC_COLOR_PROPERTY_BINARY_READER
             
-            else if(key == "anchorPointX"){
-                _originalAnchorPoint.x = valueToFloat(value);
-            }else if(key == "anchorPointY"){
-                _originalAnchorPoint.y = valueToFloat(value);
-            }
-            else if (key == "stringValue") {
+            else if (key == P_StringValue) {
                 stringValue = value;
             }
-            else if(key == "charMapFileData"){
+            else if(key == P_CharMapFileData){
                 stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
                 std::string resType = backGroundChildren[2].GetValue();;
                 
@@ -74,11 +78,11 @@ namespace cocostudio
                 charMapFileName = backgroundValue;
                 type  = imageFileNameType;
                 
-            }else if(key == "itemWidth"){
+            }else if(key == P_ItemWidth){
                 itemWidth = valueToFloat(value);
-            }else if(key == "itemHeight"){
+            }else if(key == P_ItemHeight){
                 itemHeight = valueToFloat(value);
-            }else if(key == "startCharMap"){
+            }else if(key == P_StartCharMap){
                 startCharMap = value;
             }
         } //end of for loop
@@ -97,23 +101,23 @@ namespace cocostudio
         std::string jsonPath = GUIReader::getInstance()->getFilePath();
         
         TextAtlas* labelAtlas = static_cast<TextAtlas*>(widget);
-        bool sv = DICTOOL->checkObjectExist_json(options, "stringValue");
-        bool cmf = DICTOOL->checkObjectExist_json(options, "charMapFile");
-        bool iw = DICTOOL->checkObjectExist_json(options, "itemWidth");
-        bool ih = DICTOOL->checkObjectExist_json(options, "itemHeight");
-        bool scm = DICTOOL->checkObjectExist_json(options, "startCharMap");
+        bool sv = DICTOOL->checkObjectExist_json(options, P_StringValue);
+        bool cmf = DICTOOL->checkObjectExist_json(options, P_CharMapFile);
+        bool iw = DICTOOL->checkObjectExist_json(options, P_ItemWidth);
+        bool ih = DICTOOL->checkObjectExist_json(options, P_ItemHeight);
+        bool scm = DICTOOL->checkObjectExist_json(options, P_StartCharMap);
         if (sv && cmf && iw && ih && scm)
         {
-            const rapidjson::Value& cmftDic = DICTOOL->getSubDictionary_json(options, "charMapFileData");
-            int cmfType = DICTOOL->getIntValue_json(cmftDic, "resourceType");
+            const rapidjson::Value& cmftDic = DICTOOL->getSubDictionary_json(options, P_CharMapFileData);
+            int cmfType = DICTOOL->getIntValue_json(cmftDic, P_ResourceType);
             switch (cmfType)
             {
                 case 0:
                 {
                     std::string tp_c = jsonPath;
-                    const char* cmfPath = DICTOOL->getStringValue_json(cmftDic, "path");
+                    const char* cmfPath = DICTOOL->getStringValue_json(cmftDic, P_Path);
                     const char* cmf_tp = tp_c.append(cmfPath).c_str();
-                    labelAtlas->setProperty(DICTOOL->getStringValue_json(options, "stringValue"),cmf_tp,DICTOOL->getIntValue_json(options, "itemWidth"),DICTOOL->getIntValue_json(options,"itemHeight"), DICTOOL->getStringValue_json(options, "startCharMap"));
+                    labelAtlas->setProperty(DICTOOL->getStringValue_json(options, P_StringValue),cmf_tp,DICTOOL->getIntValue_json(options, P_ItemWidth),DICTOOL->getIntValue_json(options,P_ItemHeight), DICTOOL->getStringValue_json(options, P_StartCharMap));
                     break;
                 }
                 case 1:

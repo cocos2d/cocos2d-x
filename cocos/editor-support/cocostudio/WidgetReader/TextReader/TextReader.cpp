@@ -9,6 +9,15 @@ using namespace ui;
 
 namespace cocostudio
 {
+    static const char* P_TouchScaleEnable = "touchScaleEnable";
+    static const char* P_Text = "text";
+    static const char* P_FontSize = "fontSize";
+    static const char* P_FontName = "fontName";
+    static const char* P_AreaWidth = "areaWidth";
+    static const char* P_AreaHeight = "areaHeight";
+    static const char* P_HAlignment = "hAlignment";
+    static const char* P_VAlignment = "vAlignment";
+    
     static TextReader* instanceTextReader = NULL;
     
     IMPLEMENT_CLASS_WIDGET_READER_INFO(TextReader)
@@ -48,29 +57,24 @@ namespace cocostudio
             CC_BASIC_PROPERTY_BINARY_READER
             //read all color related properties of widget
             CC_COLOR_PROPERTY_BINARY_READER
-            
-            else if(key == "anchorPointX"){
-                _originalAnchorPoint.x = valueToFloat(value);
-            }else if(key == "anchorPointY"){
-                _originalAnchorPoint.y = valueToFloat(value);
-            }
-            else if (key == "touchScaleEnable") {
+
+            else if (key == P_TouchScaleEnable) {
                 label->setTouchScaleChangeEnabled(valueToBool(value));
             }
             
-            else if(key == "text"){
+            else if(key == P_Text){
                 label->setString(value);
-            }else if(key == "fontSize"){
+            }else if(key == P_FontSize){
                 label->setFontSize(valueToInt(value));
-            }else if(key == "fontName"){
+            }else if(key == P_FontName){
                 label->setFontName(value);
-            }else if(key == "areaWidth"){
+            }else if(key == P_AreaWidth){
                 label->setTextAreaSize(Size(valueToFloat(value), label->getTextAreaSize().height));
-            }else if(key == "areaHeight"){
+            }else if(key == P_AreaHeight){
                 label->setTextAreaSize(Size(label->getTextAreaSize().width, valueToFloat(value)));
-            }else if(key == "hAlignment"){
+            }else if(key == P_HAlignment){
                 label->setTextHorizontalAlignment((TextHAlignment)valueToInt(value));
-            }else if(key == "vAlignment"){
+            }else if(key == P_VAlignment){
                 label->setTextVerticalAlignment((TextVAlignment)valueToInt(value));
             }
             
@@ -86,38 +90,38 @@ namespace cocostudio
         std::string jsonPath = GUIReader::getInstance()->getFilePath();
         
         Text* label = static_cast<Text*>(widget);
-        bool touchScaleChangeAble = DICTOOL->getBooleanValue_json(options, "touchScaleEnable");
+        bool touchScaleChangeAble = DICTOOL->getBooleanValue_json(options, P_TouchScaleEnable);
         label->setTouchScaleChangeEnabled(touchScaleChangeAble);
-        const char* text = DICTOOL->getStringValue_json(options, "text");
+        const char* text = DICTOOL->getStringValue_json(options, P_Text);
         label->setString(text);
-        bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
+        bool fs = DICTOOL->checkObjectExist_json(options, P_FontSize);
         if (fs)
         {
-            label->setFontSize(DICTOOL->getIntValue_json(options, "fontSize"));
+            label->setFontSize(DICTOOL->getIntValue_json(options, P_FontSize));
         }
-        bool fn = DICTOOL->checkObjectExist_json(options, "fontName");
+        bool fn = DICTOOL->checkObjectExist_json(options, P_FontName);
         if (fn)
         {
-            std::string fontName = DICTOOL->getStringValue_json(options, "fontName");
+            std::string fontName = DICTOOL->getStringValue_json(options, P_FontName);
             std::string fontFilePath = jsonPath.append(fontName);
             label->setFontName(fontFilePath);
         }
-        bool aw = DICTOOL->checkObjectExist_json(options, "areaWidth");
-        bool ah = DICTOOL->checkObjectExist_json(options, "areaHeight");
+        bool aw = DICTOOL->checkObjectExist_json(options, P_AreaWidth);
+        bool ah = DICTOOL->checkObjectExist_json(options, P_AreaHeight);
         if (aw && ah)
         {
-            Size size = Size(DICTOOL->getFloatValue_json(options, "areaWidth"),DICTOOL->getFloatValue_json(options,"areaHeight"));
+            Size size = Size(DICTOOL->getFloatValue_json(options, P_AreaWidth),DICTOOL->getFloatValue_json(options,P_AreaHeight));
             label->setTextAreaSize(size);
         }
-        bool ha = DICTOOL->checkObjectExist_json(options, "hAlignment");
+        bool ha = DICTOOL->checkObjectExist_json(options, P_HAlignment);
         if (ha)
         {
-            label->setTextHorizontalAlignment((TextHAlignment)DICTOOL->getIntValue_json(options, "hAlignment"));
+            label->setTextHorizontalAlignment((TextHAlignment)DICTOOL->getIntValue_json(options, P_HAlignment));
         }
-        bool va = DICTOOL->checkObjectExist_json(options, "vAlignment");
+        bool va = DICTOOL->checkObjectExist_json(options, P_VAlignment);
         if (va)
         {
-            label->setTextVerticalAlignment((TextVAlignment)DICTOOL->getIntValue_json(options, "vAlignment"));
+            label->setTextVerticalAlignment((TextVAlignment)DICTOOL->getIntValue_json(options, P_VAlignment));
         }
         
         

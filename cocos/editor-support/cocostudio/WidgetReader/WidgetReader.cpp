@@ -51,9 +51,13 @@ namespace cocostudio
     const char* P_ColorB = "colorB";
     const char* P_FlipX = "flipX";
     const char* P_FlipY = "flipY";
+    const char* P_AnchorPointX = "anchorPointX";
+    const char* P_AnchorPointY = "anchorPointY";
+    
+    
+    const char* P_ResourceType = "resourceType";
+    const char* P_Path = "path";
 
-    
-    
     
     static WidgetReader* instanceWidgetReader = NULL;
     
@@ -259,6 +263,7 @@ namespace cocostudio
         }
         widget->setColor(_color);
         widget->setOpacity(_opacity);
+        //the setSize method will be conflict with scale9Width & scale9Height
         widget->setSize(Size(_width, _height));
         widget->setPosition(_position);
         widget->setAnchorPoint(_originalAnchorPoint);
@@ -315,18 +320,18 @@ namespace cocostudio
     
     void WidgetReader::setAnchorPointForWidget(cocos2d::ui::Widget *widget, const rapidjson::Value &options)
     {
-        bool isAnchorPointXExists = DICTOOL->checkObjectExist_json(options, "anchorPointX");
+        bool isAnchorPointXExists = DICTOOL->checkObjectExist_json(options, P_AnchorPointX);
         float anchorPointXInFile;
         if (isAnchorPointXExists) {
-            anchorPointXInFile = DICTOOL->getFloatValue_json(options, "anchorPointX");
+            anchorPointXInFile = DICTOOL->getFloatValue_json(options, P_AnchorPointX);
         }else{
             anchorPointXInFile = widget->getAnchorPoint().x;
         }
         
-        bool isAnchorPointYExists = DICTOOL->checkObjectExist_json(options, "anchorPointY");
+        bool isAnchorPointYExists = DICTOOL->checkObjectExist_json(options, P_AnchorPointY);
         float anchorPointYInFile;
         if (isAnchorPointYExists) {
-            anchorPointYInFile = DICTOOL->getFloatValue_json(options, "anchorPointY");
+            anchorPointYInFile = DICTOOL->getFloatValue_json(options, P_AnchorPointY);
         }
         else{
             anchorPointYInFile = widget->getAnchorPoint().y;

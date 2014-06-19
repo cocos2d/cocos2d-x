@@ -126,6 +126,11 @@ namespace cocostudio
     extern const char* P_ColorB;
     extern const char* P_FlipX;
     extern const char* P_FlipY;
+    extern const char* P_AnchorPointX;
+    extern const char* P_AnchorPointY;
+    
+    extern const char* P_ResourceType;
+    extern const char* P_Path;
     
 #define CC_BASIC_PROPERTY_BINARY_READER  \
     if (key == P_IgnoreSize) {   \
@@ -143,9 +148,7 @@ namespace cocostudio
     }else if(key == P_PositionPercentY){  \
         _positionPercentY = valueToFloat(value);  \
     } \
-    else if(key == P_AdaptScreen){ \
-        _isAdaptScreen = valueToBool(value); \
-    }else if (key == P_Width){  \
+    else if (key == P_Width){  \
         _width = valueToFloat(value);  \
     }else if(key == P_Height){  \
         _height = valueToFloat(value);  \
@@ -229,6 +232,11 @@ namespace cocostudio
         widget->setFlippedX(valueToBool(value));\
     }else if(key == P_FlipY){\
         widget->setFlippedY(valueToBool(value));\
+    } \
+    else if(key == P_AnchorPointX){ \
+        _originalAnchorPoint.x = valueToFloat(value); \
+    }else if(key == P_AnchorPointY){ \
+        _originalAnchorPoint.y = valueToFloat(value); \
     }
 
 

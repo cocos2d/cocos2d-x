@@ -9,6 +9,11 @@ using namespace ui;
 
 namespace cocostudio
 {
+    static const char* P_InnerWidth = "innerWidth";
+    static const char* P_InnerHeight = "innerHeight";
+    static const char* P_Direction = "direction";
+    static const char* P_BounceEnable = "bounceEnable";
+    
     static ScrollViewReader* instanceScrollViewReader = NULL;
     
     IMPLEMENT_CLASS_WIDGET_READER_INFO(ScrollViewReader)
@@ -45,14 +50,14 @@ namespace cocostudio
         for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
             std::string key = stChildArray[i].GetName(pCocoLoader);
             std::string value = stChildArray[i].GetValue();
-            if (key == "innerWidth") {
+            if (key == P_InnerWidth) {
                 innerWidth = valueToFloat(value);
             }
-            else if(key == "innerHeight"){
+            else if(key == P_InnerHeight){
                 innerHeight = valueToFloat(value);
-            }else if(key == "direction"){
+            }else if(key == P_Direction){
                 scrollView->setDirection((ScrollView::Direction)valueToInt(value));
-            }else if(key == "bounceEnable"){
+            }else if(key == P_BounceEnable){
                 scrollView->setBounceEnabled(valueToBool(value));
             }
             
@@ -67,12 +72,12 @@ namespace cocostudio
         
         
         ScrollView* scrollView = static_cast<ScrollView*>(widget);
-        float innerWidth = DICTOOL->getFloatValue_json(options, "innerWidth");
-        float innerHeight = DICTOOL->getFloatValue_json(options, "innerHeight");
+        float innerWidth = DICTOOL->getFloatValue_json(options, P_InnerWidth);
+        float innerHeight = DICTOOL->getFloatValue_json(options, P_InnerHeight);
         scrollView->setInnerContainerSize(Size(innerWidth, innerHeight));
-        int direction = DICTOOL->getFloatValue_json(options, "direction");
+        int direction = DICTOOL->getFloatValue_json(options, P_Direction);
         scrollView->setDirection((ScrollView::Direction)direction);
-        scrollView->setBounceEnabled(DICTOOL->getBooleanValue_json(options, "bounceEnable"));
+        scrollView->setBounceEnabled(DICTOOL->getBooleanValue_json(options, P_BounceEnable));
         
         
         LayoutReader::setColorPropsFromJsonDictionary(widget, options);

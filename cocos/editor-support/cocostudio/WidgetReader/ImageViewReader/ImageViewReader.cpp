@@ -9,6 +9,16 @@ using namespace ui;
 
 namespace cocostudio
 {
+    static const char* P_Scale9Enable = "scale9Enable";
+    static const char* P_FileNameData = "fileNameData";
+    static const char* P_CapInsetsX = "capInsetsX";
+    static const char* P_CapInsetsY = "capInsetsY";
+    static const char* P_CapInsetsWidth = "capInsetsWidth";
+    static const char* P_CapInsetsHeight = "capInsetsHeight";
+    static const char* P_Scale9Width = "scale9Width";
+    static const char* P_Scale9Height = "scale9Height";
+
+    
     static ImageViewReader* instanceImageViewReader = NULL;
     
     IMPLEMENT_CLASS_WIDGET_READER_INFO(ImageViewReader)
@@ -51,15 +61,10 @@ namespace cocostudio
             //read all color related properties of widget
             CC_COLOR_PROPERTY_BINARY_READER
             
-            else if(key == "anchorPointX"){
-                _originalAnchorPoint.x = valueToFloat(value);
-            }else if(key == "anchorPointY"){
-                _originalAnchorPoint.y = valueToFloat(value);
-            }
-            else if (key == "scale9Enable") {
+            else if (key == P_Scale9Enable) {
                 imageView->setScale9Enabled(valueToBool(value));
             }
-            else if (key == "fileNameData"){
+            else if (key == P_FileNameData){
                 stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
                 std::string resType = backGroundChildren[2].GetValue();;
                 
@@ -70,18 +75,18 @@ namespace cocostudio
                 imageView->loadTexture(backgroundValue, imageFileNameType);
                 
             }
-            else if(key == "scale9Width"){
+            else if(key == P_Scale9Width){
                 imageView->setSize(Size(valueToFloat(value), imageView->getSize().height));
-            }else if(key == "scale9Height"){
+            }else if(key == P_Scale9Height){
                 imageView->setSize(Size(imageView->getSize().width, valueToFloat(value)));
             }
-            else if(key == "capInsetsX"){
+            else if(key == P_CapInsetsX){
                 capsx = valueToFloat(value);
-            }else if(key == "capInsetsY"){
+            }else if(key == P_CapInsetsY){
                 capsy = valueToFloat(value);
-            }else if(key == "capInsetsWidth"){
+            }else if(key == P_CapInsetsWidth){
                 capsWidth = valueToFloat(value);
-            }else if(key == "capInsetsHeight"){
+            }else if(key == P_CapInsetsHeight){
                 capsHeight = valueToFloat(value);
             }
             
@@ -103,36 +108,36 @@ namespace cocostudio
         
         ImageView* imageView = static_cast<ImageView*>(widget);
         
-        const rapidjson::Value& imageFileNameDic = DICTOOL->getSubDictionary_json(options, "fileNameData");
-        int imageFileNameType = DICTOOL->getIntValue_json(imageFileNameDic, "resourceType");
-        std::string imageFileName = this->getResourcePath(imageFileNameDic, "path", (Widget::TextureResType)imageFileNameType);
+        const rapidjson::Value& imageFileNameDic = DICTOOL->getSubDictionary_json(options, P_FileNameData);
+        int imageFileNameType = DICTOOL->getIntValue_json(imageFileNameDic, P_ResourceType);
+        std::string imageFileName = this->getResourcePath(imageFileNameDic, P_Path, (Widget::TextureResType)imageFileNameType);
         imageView->loadTexture(imageFileName, (Widget::TextureResType)imageFileNameType);
         
         
-        bool scale9EnableExist = DICTOOL->checkObjectExist_json(options, "scale9Enable");
+        bool scale9EnableExist = DICTOOL->checkObjectExist_json(options, P_Scale9Enable);
         bool scale9Enable = false;
         if (scale9EnableExist)
         {
-            scale9Enable = DICTOOL->getBooleanValue_json(options, "scale9Enable");
+            scale9Enable = DICTOOL->getBooleanValue_json(options, P_Scale9Enable);
         }
         imageView->setScale9Enabled(scale9Enable);
         
         
         if (scale9Enable)
         {
-            bool sw = DICTOOL->checkObjectExist_json(options, "scale9Width");
-            bool sh = DICTOOL->checkObjectExist_json(options, "scale9Height");
+            bool sw = DICTOOL->checkObjectExist_json(options, P_Scale9Width);
+            bool sh = DICTOOL->checkObjectExist_json(options, P_Scale9Height);
             if (sw && sh)
             {
-                float swf = DICTOOL->getFloatValue_json(options, "scale9Width");
-                float shf = DICTOOL->getFloatValue_json(options, "scale9Height");
+                float swf = DICTOOL->getFloatValue_json(options, P_Scale9Width);
+                float shf = DICTOOL->getFloatValue_json(options, P_Scale9Height);
                 imageView->setSize(Size(swf, shf));
             }
             
-            float cx = DICTOOL->getFloatValue_json(options, "capInsetsX");
-            float cy = DICTOOL->getFloatValue_json(options, "capInsetsY");
-            float cw = DICTOOL->getFloatValue_json(options, "capInsetsWidth");
-            float ch = DICTOOL->getFloatValue_json(options, "capInsetsHeight");
+            float cx = DICTOOL->getFloatValue_json(options, P_CapInsetsX);
+            float cy = DICTOOL->getFloatValue_json(options, P_CapInsetsY);
+            float cw = DICTOOL->getFloatValue_json(options, P_CapInsetsWidth);
+            float ch = DICTOOL->getFloatValue_json(options, P_CapInsetsHeight);
             
             imageView->setCapInsets(Rect(cx, cy, cw, ch));
             

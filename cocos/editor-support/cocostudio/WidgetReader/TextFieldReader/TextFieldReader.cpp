@@ -11,6 +11,17 @@ namespace cocostudio
 {
     static TextFieldReader* instanceTextFieldReader = NULL;
     
+    static const char* P_PlaceHolder = "placeHolder";
+    static const char* P_Text = "text";
+    static const char* P_FontSize = "fontSize";
+    static const char* P_FontName = "fontName";
+    static const char* P_TouchSizeWidth = "touchSizeWidth";
+    static const char* P_TouchSizeHeight = "touchSizeHeight";
+    static const char* P_MaxLengthEnable = "maxLengthEnable";
+    static const char* P_MaxLength = "maxLength";
+    static const char* P_PasswordEnable = "passwordEnable";
+    static const char* P_PasswordStyleText = "passwordStyleText";
+    
     IMPLEMENT_CLASS_WIDGET_READER_INFO(TextFieldReader)
     
     TextFieldReader::TextFieldReader()
@@ -49,30 +60,25 @@ namespace cocostudio
             //read all color related properties of widget
             CC_COLOR_PROPERTY_BINARY_READER
             
-            else if(key == "anchorPointX"){
-                _originalAnchorPoint.x = valueToFloat(value);
-            }else if(key == "anchorPointY"){
-                _originalAnchorPoint.y = valueToFloat(value);
-            }
-            else if(key == "placeHolder"){
+            else if(key == P_PlaceHolder){
                 textField->setPlaceHolder(value);
-            }else if(key == "text"){
+            }else if(key == P_Text){
                 textField->setText(value);
-            }else if(key == "fontSize"){
+            }else if(key == P_FontSize){
                 textField->setFontSize(valueToInt(value));
-            }else if(key == "fontName"){
+            }else if(key == P_FontName){
                 textField->setFontName(value);
-            }else if(key == "touchSizeWidth"){
+            }else if(key == P_TouchSizeWidth){
                 textField->setTouchSize(Size(valueToFloat(value), textField->getTouchSize().height));
-            }else if(key == "touchSizeHeight"){
+            }else if(key == P_TouchSizeHeight){
                 textField->setTouchSize(Size(textField->getTouchSize().width,  valueToFloat(value)));
-            }else if (key == "maxLengthEnable"){
+            }else if (key == P_MaxLengthEnable){
                 textField->setMaxLengthEnabled(valueToBool(value));
-            }else if(key == "maxLength"){
+            }else if(key == P_MaxLength){
                 textField->setMaxLength(valueToInt(value));
-            }else if(key == "passwordEnable"){
+            }else if(key == P_PasswordEnable){
                 textField->setPasswordEnabled(valueToBool(value));
-            }else if(key == "passwordStyleText"){
+            }else if(key == P_PasswordStyleText){
                 textField->setPasswordStyleText(value.c_str());
             }
         } //end of for loop
@@ -85,48 +91,48 @@ namespace cocostudio
         
         
         TextField* textField = static_cast<TextField*>(widget);
-        bool ph = DICTOOL->checkObjectExist_json(options, "placeHolder");
+        bool ph = DICTOOL->checkObjectExist_json(options, P_PlaceHolder);
         if (ph)
         {
-            textField->setPlaceHolder(DICTOOL->getStringValue_json(options, "placeHolder"));
+            textField->setPlaceHolder(DICTOOL->getStringValue_json(options, P_PlaceHolder));
         }
-        textField->setText(DICTOOL->getStringValue_json(options, "text"));
-        bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
+        textField->setText(DICTOOL->getStringValue_json(options, P_Text));
+        bool fs = DICTOOL->checkObjectExist_json(options, P_FontSize);
         if (fs)
         {
-            textField->setFontSize(DICTOOL->getIntValue_json(options, "fontSize"));
+            textField->setFontSize(DICTOOL->getIntValue_json(options, P_FontSize));
         }
-        bool fn = DICTOOL->checkObjectExist_json(options, "fontName");
+        bool fn = DICTOOL->checkObjectExist_json(options, P_FontName);
         if (fn)
         {
-            textField->setFontName(DICTOOL->getStringValue_json(options, "fontName"));
+            textField->setFontName(DICTOOL->getStringValue_json(options, P_FontName));
         }
-        bool tsw = DICTOOL->checkObjectExist_json(options, "touchSizeWidth");
-        bool tsh = DICTOOL->checkObjectExist_json(options, "touchSizeHeight");
+        bool tsw = DICTOOL->checkObjectExist_json(options, P_TouchSizeWidth);
+        bool tsh = DICTOOL->checkObjectExist_json(options, P_TouchSizeHeight);
         if (tsw && tsh)
         {
-            textField->setTouchSize(Size(DICTOOL->getFloatValue_json(options, "touchSizeWidth"), DICTOOL->getFloatValue_json(options,"touchSizeHeight")));
+            textField->setTouchSize(Size(DICTOOL->getFloatValue_json(options, P_TouchSizeWidth), DICTOOL->getFloatValue_json(options,P_TouchSizeHeight)));
         }
         
-        float dw = DICTOOL->getFloatValue_json(options, "width");
-        float dh = DICTOOL->getFloatValue_json(options, "height");
-        if (dw > 0.0f || dh > 0.0f)
-        {
-            //textField->setSize(Size(dw, dh));
-        }
-        bool maxLengthEnable = DICTOOL->getBooleanValue_json(options, "maxLengthEnable");
+//        float dw = DICTOOL->getFloatValue_json(options, "width");
+//        float dh = DICTOOL->getFloatValue_json(options, "height");
+//        if (dw > 0.0f || dh > 0.0f)
+//        {
+//            //textField->setSize(Size(dw, dh));
+//        }
+        bool maxLengthEnable = DICTOOL->getBooleanValue_json(options, P_MaxLengthEnable);
         textField->setMaxLengthEnabled(maxLengthEnable);
         
         if (maxLengthEnable)
         {
-            int maxLength = DICTOOL->getIntValue_json(options, "maxLength");
+            int maxLength = DICTOOL->getIntValue_json(options, P_MaxLength);
             textField->setMaxLength(maxLength);
         }
-        bool passwordEnable = DICTOOL->getBooleanValue_json(options, "passwordEnable");
+        bool passwordEnable = DICTOOL->getBooleanValue_json(options, P_PasswordEnable);
         textField->setPasswordEnabled(passwordEnable);
         if (passwordEnable)
         {
-            textField->setPasswordStyleText(DICTOOL->getStringValue_json(options, "passwordStyleText"));
+            textField->setPasswordStyleText(DICTOOL->getStringValue_json(options, P_PasswordStyleText));
         }
         
         

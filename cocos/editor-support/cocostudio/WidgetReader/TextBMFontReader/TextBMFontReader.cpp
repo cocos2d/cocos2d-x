@@ -9,6 +9,9 @@ using namespace ui;
 
 namespace cocostudio
 {
+    static const char* P_FileNameData = "fileNameData";
+    static const char* P_Text = "text";
+    
     static TextBMFontReader* instanceTextBMFontReader = NULL;
     
     IMPLEMENT_CLASS_WIDGET_READER_INFO(TextBMFontReader)
@@ -49,12 +52,7 @@ namespace cocostudio
             //read all color related properties of widget
             CC_COLOR_PROPERTY_BINARY_READER
             
-            else if(key == "anchorPointX"){
-                _originalAnchorPoint.x = valueToFloat(value);
-            }else if(key == "anchorPointY"){
-                _originalAnchorPoint.y = valueToFloat(value);
-            }
-            else if(key == "fileNameData"){
+            else if(key == P_FileNameData){
                 stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
                 std::string resType = backGroundChildren[2].GetValue();;
                 
@@ -65,7 +63,7 @@ namespace cocostudio
                     labelBMFont->setFntFile(backgroundValue);
                 }
                 
-            }else if(key == "text"){
+            }else if(key == P_Text){
                 labelBMFont->setString(value);
             }
         } //end of for loop
@@ -81,14 +79,14 @@ namespace cocostudio
         
         TextBMFont* labelBMFont = static_cast<TextBMFont*>(widget);
         
-        const rapidjson::Value& cmftDic = DICTOOL->getSubDictionary_json(options, "fileNameData");
-        int cmfType = DICTOOL->getIntValue_json(cmftDic, "resourceType");
+        const rapidjson::Value& cmftDic = DICTOOL->getSubDictionary_json(options, P_FileNameData);
+        int cmfType = DICTOOL->getIntValue_json(cmftDic, P_ResourceType);
         switch (cmfType)
         {
             case 0:
             {
                 std::string tp_c = jsonPath;
-                const char* cmfPath = DICTOOL->getStringValue_json(cmftDic, "path");
+                const char* cmfPath = DICTOOL->getStringValue_json(cmftDic, P_Path);
                 const char* cmf_tp = tp_c.append(cmfPath).c_str();
                 labelBMFont->setFntFile(cmf_tp);
                 break;
@@ -100,7 +98,7 @@ namespace cocostudio
                 break;
         }
         
-        const char* text = DICTOOL->getStringValue_json(options, "text");
+        const char* text = DICTOOL->getStringValue_json(options, P_Text);
         labelBMFont->setString(text);
         
         

@@ -9,6 +9,26 @@ using namespace ui;
 
 namespace cocostudio
 {
+    
+    static const char* P_Scale9Enable = "scale9Enable";
+    static const char* P_NormalData = "normalData";
+    static const char* P_PressedData = "pressedData";
+    static const char* P_DisabledData = "disabledData";
+    static const char* P_Text = "text";
+    static const char* P_CapInsetsX = "capInsetsX";
+    static const char* P_CapInsetsY = "capInsetsY";
+    static const char* P_CapInsetsWidth = "capInsetsWidth";
+    static const char* P_CapInsetsHeight = "capInsetsHeight";
+    static const char* P_Scale9Width = "scale9Width";
+    static const char* P_Scale9Height = "scale9Height";
+    static const char* P_TextColorR = "textColorR";
+    static const char* P_TextColorG = "textColorG";
+    static const char* P_TextColorB = "textColorB";
+    static const char* P_FontSize = "fontSize";
+    static const char* P_FontName = "fontName";
+    
+   
+    
     static ButtonReader* instanceButtonReader = NULL;
     
     IMPLEMENT_CLASS_WIDGET_READER_INFO(ButtonReader)
@@ -60,15 +80,11 @@ namespace cocostudio
             //read all color related properties of widget
             CC_COLOR_PROPERTY_BINARY_READER
             
-            else if(key == "anchorPointX"){
-                _originalAnchorPoint.x = valueToFloat(value);
-            }else if(key == "anchorPointY"){
-                _originalAnchorPoint.y = valueToFloat(value);
-            }
-            else if (key == "scale9Enable") {
+           
+            else if (key == P_Scale9Enable) {
                 button->setScale9Enabled(valueToBool(value));
             }
-            else if (key == "normalData"){
+            else if (key == P_NormalData){
                 
                 stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
                 std::string resType = backGroundChildren[2].GetValue();;
@@ -80,7 +96,7 @@ namespace cocostudio
                 button->loadTextureNormal(backgroundValue, imageFileNameType);
                 
             }
-            else if (key == "pressedData"){
+            else if (key == P_PressedData){
                 
                 stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
                 std::string resType = backGroundChildren[2].GetValue();;
@@ -92,7 +108,7 @@ namespace cocostudio
                 button->loadTexturePressed(backgroundValue, imageFileNameType);
                 
             }
-            else if (key == "disabledData"){
+            else if (key == P_DisabledData){
                 
                 stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
                 std::string resType = backGroundChildren[2].GetValue();;
@@ -103,30 +119,30 @@ namespace cocostudio
                 
                 button->loadTextureDisabled(backgroundValue, imageFileNameType);
                 
-            }else if (key == "text"){
+            }else if (key == P_Text){
                 button->setTitleText(value);
             }
-            else if(key == "capInsetsX"){
+            else if(key == P_CapInsetsX){
                 capsx = valueToFloat(value);
-            }else if(key == "capInsetsY"){
+            }else if(key == P_CapInsetsY){
                 capsy = valueToFloat(value);
-            }else if(key == "capInsetsWidth"){
+            }else if(key == P_CapInsetsWidth){
                 capsWidth = valueToFloat(value);
-            }else if(key == "capInsetsHeight"){
+            }else if(key == P_CapInsetsHeight){
                 capsHeight = valueToFloat(value);
-            }else if(key == "scale9Width"){
+            }else if(key == P_Scale9Width){
                 scale9Width = valueToFloat(value);
-            }else if(key == "scale9Height"){
+            }else if(key == P_Scale9Height){
                 scale9Height = valueToFloat(value);
-            }else if(key == "textColorR"){
+            }else if(key == P_TextColorR){
                 cri = valueToInt(value);
-            }else if(key == "textColorG"){
+            }else if(key == P_TextColorG){
                 cgi = valueToInt(value);
-            }else if(key == "textColorB"){
+            }else if(key == P_TextColorB){
                 cbi = valueToInt(value);
-            }else if(key == "fontSize"){
+            }else if(key == P_FontSize){
                 button->setTitleFontSize(valueToFloat(value));
-            }else if(key == "fontName"){
+            }else if(key == P_FontName){
                 button->setTitleFontName(value);
             }
             
@@ -150,72 +166,72 @@ namespace cocostudio
         
         
         Button* button = static_cast<Button*>(widget);
-        bool scale9Enable = DICTOOL->getBooleanValue_json(options, "scale9Enable");
+        bool scale9Enable = DICTOOL->getBooleanValue_json(options, P_Scale9Enable);
         button->setScale9Enabled(scale9Enable);
         
         
-        const rapidjson::Value& normalDic = DICTOOL->getSubDictionary_json(options, "normalData");
-        int normalType = DICTOOL->getIntValue_json(normalDic, "resourceType");
-        std::string normalTexturePath = this->getResourcePath(normalDic, "path", (Widget::TextureResType)normalType);
+        const rapidjson::Value& normalDic = DICTOOL->getSubDictionary_json(options, P_NormalData);
+        int normalType = DICTOOL->getIntValue_json(normalDic, P_ResourceType);
+        std::string normalTexturePath = this->getResourcePath(normalDic, P_Path, (Widget::TextureResType)normalType);
         button->loadTextureNormal(normalTexturePath, (Widget::TextureResType)normalType);
         
         
-        const rapidjson::Value& pressedDic = DICTOOL->getSubDictionary_json(options, "pressedData");
-        int pressedType = DICTOOL->getIntValue_json(pressedDic, "resourceType");
+        const rapidjson::Value& pressedDic = DICTOOL->getSubDictionary_json(options, P_PressedData);
+        int pressedType = DICTOOL->getIntValue_json(pressedDic, P_ResourceType);
         
-        std::string pressedTexturePath = this->getResourcePath(pressedDic, "path", (Widget::TextureResType)pressedType);
+        std::string pressedTexturePath = this->getResourcePath(pressedDic, P_Path, (Widget::TextureResType)pressedType);
         button->loadTexturePressed(pressedTexturePath, (Widget::TextureResType)pressedType);
         
         
-        const rapidjson::Value& disabledDic = DICTOOL->getSubDictionary_json(options, "disabledData");
-        int disabledType = DICTOOL->getIntValue_json(disabledDic, "resourceType");
+        const rapidjson::Value& disabledDic = DICTOOL->getSubDictionary_json(options, P_DisabledData);
+        int disabledType = DICTOOL->getIntValue_json(disabledDic, P_ResourceType);
         
-        std::string disabledTexturePath = this->getResourcePath(disabledDic, "path", (Widget::TextureResType)disabledType);
+        std::string disabledTexturePath = this->getResourcePath(disabledDic, P_Path, (Widget::TextureResType)disabledType);
         button->loadTextureDisabled(disabledTexturePath, (Widget::TextureResType)disabledType);
        
         if (scale9Enable)
         {
-            float cx = DICTOOL->getFloatValue_json(options, "capInsetsX");
-            float cy = DICTOOL->getFloatValue_json(options, "capInsetsY");
-            float cw = DICTOOL->getFloatValue_json(options, "capInsetsWidth");
-            float ch = DICTOOL->getFloatValue_json(options, "capInsetsHeight");
+            float cx = DICTOOL->getFloatValue_json(options, P_CapInsetsX);
+            float cy = DICTOOL->getFloatValue_json(options, P_CapInsetsY);
+            float cw = DICTOOL->getFloatValue_json(options, P_CapInsetsWidth);
+            float ch = DICTOOL->getFloatValue_json(options, P_CapInsetsHeight);
             
             button->setCapInsets(Rect(cx, cy, cw, ch));
-            bool sw = DICTOOL->checkObjectExist_json(options, "scale9Width");
-            bool sh = DICTOOL->checkObjectExist_json(options, "scale9Height");
+            bool sw = DICTOOL->checkObjectExist_json(options, P_Scale9Width);
+            bool sh = DICTOOL->checkObjectExist_json(options, P_Scale9Height);
             if (sw && sh)
             {
-                float swf = DICTOOL->getFloatValue_json(options, "scale9Width");
-                float shf = DICTOOL->getFloatValue_json(options, "scale9Height");
+                float swf = DICTOOL->getFloatValue_json(options, P_Scale9Width);
+                float shf = DICTOOL->getFloatValue_json(options, P_Scale9Height);
                 button->setSize(Size(swf, shf));
             }
         }
-        bool tt = DICTOOL->checkObjectExist_json(options, "text");
+        bool tt = DICTOOL->checkObjectExist_json(options, P_Text);
         if (tt)
         {
-            const char* text = DICTOOL->getStringValue_json(options, "text");
+            const char* text = DICTOOL->getStringValue_json(options, P_Text);
             if (text)
             {
                 button->setTitleText(text);
             }
         }
         
-        bool cr = DICTOOL->checkObjectExist_json(options, "textColorR");
-        bool cg = DICTOOL->checkObjectExist_json(options, "textColorG");
-        bool cb = DICTOOL->checkObjectExist_json(options, "textColorB");
-        int cri = cr?DICTOOL->getIntValue_json(options, "textColorR"):255;
-        int cgi = cg?DICTOOL->getIntValue_json(options, "textColorG"):255;
-        int cbi = cb?DICTOOL->getIntValue_json(options, "textColorB"):255;
+        bool cr = DICTOOL->checkObjectExist_json(options, P_TextColorR);
+        bool cg = DICTOOL->checkObjectExist_json(options, P_TextColorG);
+        bool cb = DICTOOL->checkObjectExist_json(options, P_TextColorB);
+        int cri = cr?DICTOOL->getIntValue_json(options, P_TextColorR):255;
+        int cgi = cg?DICTOOL->getIntValue_json(options, P_TextColorG):255;
+        int cbi = cb?DICTOOL->getIntValue_json(options, P_TextColorB):255;
         button->setTitleColor(Color3B(cri,cgi,cbi));
-        bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
+        bool fs = DICTOOL->checkObjectExist_json(options, P_FontSize);
         if (fs)
         {
-            button->setTitleFontSize(DICTOOL->getIntValue_json(options, "fontSize"));
+            button->setTitleFontSize(DICTOOL->getIntValue_json(options, P_FontSize));
         }
-        bool fn = DICTOOL->checkObjectExist_json(options, "fontName");
+        bool fn = DICTOOL->checkObjectExist_json(options, P_FontName);
         if (fn)
         {
-            button->setTitleFontName(DICTOOL->getStringValue_json(options, "fontName"));
+            button->setTitleFontName(DICTOOL->getStringValue_json(options, P_FontName));
         }
         
         
