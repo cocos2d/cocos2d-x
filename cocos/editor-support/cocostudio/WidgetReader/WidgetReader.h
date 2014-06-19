@@ -31,7 +31,6 @@
 #include "ui/UIWidget.h"
 
 
-
 namespace cocostudio
 {
     class CocoLoader;
@@ -87,6 +86,46 @@ namespace cocostudio
         cocos2d::Vec2 _originalAnchorPoint;
 
     };
+    
+    //property const define
+    extern const char* P_IgnoreSize;
+    extern const char* P_SizeType;
+    extern const char* P_PositionType;
+    extern const char* P_SizePercentX;
+    extern const char* P_SizePercentY;
+    extern const char* P_PositionPercentX;
+    extern const char* P_PositionPercentY;
+    extern const char* P_AdaptScreen;
+    extern const char* P_Width;
+    extern const char* P_Height;
+    extern const char* P_Tag;
+    extern const char* P_ActionTag;
+    extern const char* P_TouchAble;
+    extern const char* P_Name;
+    extern const char* P_X;
+    extern const char* P_Y;
+    extern const char* P_ScaleX;
+    extern const char* P_ScaleY;
+    extern const char* P_Rotation;
+    extern const char* P_Visbile;
+    extern const char* P_ZOrder;
+    extern const char* P_LayoutParameter;
+    extern const char* P_Type;
+    extern const char* P_Gravity;
+    extern const char* P_RelativeName;
+    extern const char* P_RelativeToName;
+    extern const char* P_Align;
+    extern const char* P_MarginLeft;
+    extern const char* P_MarginRight;
+    extern const char* P_MarginTop;
+    extern const char* P_MarginDown;
+    
+    extern const char* P_Opacity;
+    extern const char* P_ColorR;
+    extern const char* P_ColorG;
+    extern const char* P_ColorB;
+    extern const char* P_FlipX;
+    extern const char* P_FlipY;
 }
 
 #endif /* defined(__TestCpp__WidgetReader__) */
