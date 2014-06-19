@@ -194,7 +194,7 @@ function MainScene:createGridShow()
         end
         local cell = {
             backgroundsize = 140,
-            background = CCLayerColor:create(colors[-1], 140, 140),
+            background = cc.LayerColor:create(colors[-1], 140, 140),
             num = cc.ui.UILabel.new({
                 text = s,
                 size = 40,

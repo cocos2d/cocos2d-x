@@ -50,18 +50,18 @@ end
 
 function Node:schedule(callback, interval)
     local seq = transition.sequence({
-        CCDelayTime:create(interval),
-        CCCallFunc:create(callback),
+        cc.DelayTime:create(interval),
+        cc.CallFunc:create(callback),
     })
-    local action = CCRepeatForever:create(seq)
+    local action = cc.RepeatForever:create(seq)
     self:runAction(action)
     return action
 end
 
 function Node:performWithDelay(callback, delay)
     local action = transition.sequence({
-        CCDelayTime:create(delay),
-        CCCallFunc:create(callback),
+        cc.DelayTime:create(delay),
+        cc.CallFunc:create(callback),
     })
     self:runAction(action)
     return action
