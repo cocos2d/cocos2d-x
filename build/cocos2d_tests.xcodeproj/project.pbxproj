@@ -572,8 +572,6 @@
 		1AC35D6018CEDE9E00F37B72 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D5B18CEDE9E00F37B72 /* main.cpp */; };
 		1AC35D8118CEE5B100F37B72 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D7D18CEE5B100F37B72 /* AppDelegate.cpp */; };
 		1AC35D8218CEE5B100F37B72 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D7D18CEE5B100F37B72 /* AppDelegate.cpp */; };
-		1AC35D8318CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D7F18CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp */; };
-		1AC35D8418CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D7F18CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp */; };
 		1AC35D9818CEE5D100F37B72 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D8718CEE5D100F37B72 /* AppController.mm */; };
 		1AC35D9918CEE5D100F37B72 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D8818CEE5D100F37B72 /* Default-568h@2x.png */; };
 		1AC35D9A18CEE5D100F37B72 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D8918CEE5D100F37B72 /* Default.png */; };
@@ -737,6 +735,8 @@
 		C08689C318D370C90093E810 /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
 		C08689C418D370C90093E810 /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
 		D60AE43417F7FFE100757E4B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
+		DA045A831952911E00444A66 /* res in Resources */ = {isa = PBXBuildFile; fileRef = DA853F8A194EF19B0057DF22 /* res */; };
+		DA045A841952912300444A66 /* scripts in Resources */ = {isa = PBXBuildFile; fileRef = DAB4DB31194B231600081B37 /* scripts */; };
 		DA853F89194EF15E0057DF22 /* scripts in Resources */ = {isa = PBXBuildFile; fileRef = DAB4DB31194B231600081B37 /* scripts */; };
 		DA853F8B194EF19B0057DF22 /* res in Resources */ = {isa = PBXBuildFile; fileRef = DA853F8A194EF19B0057DF22 /* res */; };
 		EDCC747F17C455FD007B692C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
@@ -1620,8 +1620,6 @@
 		1AC35D5B18CEDE9E00F37B72 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		1AC35D7D18CEE5B100F37B72 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		1AC35D7E18CEE5B100F37B72 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		1AC35D7F18CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_assetsmanager_test_sample.cpp; sourceTree = "<group>"; };
-		1AC35D8018CEE5B100F37B72 /* lua_assetsmanager_test_sample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_assetsmanager_test_sample.h; sourceTree = "<group>"; };
 		1AC35D8618CEE5D100F37B72 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		1AC35D8718CEE5D100F37B72 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
 		1AC35D8818CEE5D100F37B72 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -3265,8 +3263,6 @@
 			children = (
 				1AC35D7D18CEE5B100F37B72 /* AppDelegate.cpp */,
 				1AC35D7E18CEE5B100F37B72 /* AppDelegate.h */,
-				1AC35D7F18CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp */,
-				1AC35D8018CEE5B100F37B72 /* lua_assetsmanager_test_sample.h */,
 			);
 			name = Classes;
 			path = "../tests/lua-tests/project/Classes";
@@ -4149,6 +4145,7 @@
 				1AC35DF118CEE65B00F37B72 /* fileLookup.plist in Resources */,
 				1ABCA39518CD9E180087CE3A /* luaoc.lua in Resources */,
 				1AC35DEF18CEE65B00F37B72 /* background.ogg in Resources */,
+				DA045A831952911E00444A66 /* res in Resources */,
 				1AC35D9E18CEE5D100F37B72 /* Icon-144.png in Resources */,
 				1AC35DF818CEE65B00F37B72 /* pew-pew-lei.wav in Resources */,
 				1AC35D9918CEE5D100F37B72 /* Default-568h@2x.png in Resources */,
@@ -4181,6 +4178,7 @@
 				1AC35DDA18CEE65200F37B72 /* spine in Resources */,
 				1AC35DDB18CEE65200F37B72 /* TileMaps in Resources */,
 				1AC35DF318CEE65B00F37B72 /* Hello.png in Resources */,
+				DA045A841952912300444A66 /* scripts in Resources */,
 				1AC35D9C18CEE5D100F37B72 /* Icon-114.png in Resources */,
 				1ABCA38B18CD9E180087CE3A /* DrawPrimitives.lua in Resources */,
 				1ABCA37918CD9E180087CE3A /* AudioEngine.lua in Resources */,
@@ -4336,7 +4334,6 @@
 				1AC35D8118CEE5B100F37B72 /* AppDelegate.cpp in Sources */,
 				1AC35DB518CEE5DA00F37B72 /* LuaObjectCBridgeTest.mm in Sources */,
 				1AC35DB618CEE5DA00F37B72 /* main.cpp in Sources */,
-				1AC35D8318CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4349,7 +4346,6 @@
 				1AC35D9818CEE5D100F37B72 /* AppController.mm in Sources */,
 				1AC35D8218CEE5B100F37B72 /* AppDelegate.cpp in Sources */,
 				1AC35DA618CEE5D100F37B72 /* RootViewController.mm in Sources */,
-				1AC35D8418CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5190,7 +5186,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto $(SRCROOT)/../external/unzip";
 			};
 			name = Debug;
 		};
@@ -5206,7 +5202,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto $(SRCROOT)/../external/unzip";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

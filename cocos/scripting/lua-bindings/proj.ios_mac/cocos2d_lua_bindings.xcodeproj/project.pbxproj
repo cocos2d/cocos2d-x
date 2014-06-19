@@ -165,6 +165,8 @@
 		C0FEF4D718BE0E70001F446C /* lua_debugger.c in Sources */ = {isa = PBXBuildFile; fileRef = C0FEF4D418BE0E70001F446C /* lua_debugger.c */; };
 		C0FEF4D818BE0E70001F446C /* lua_debugger.h in Headers */ = {isa = PBXBuildFile; fileRef = C0FEF4D518BE0E70001F446C /* lua_debugger.h */; };
 		C0FEF4D918BE0E70001F446C /* lua_debugger.h in Headers */ = {isa = PBXBuildFile; fileRef = C0FEF4D518BE0E70001F446C /* lua_debugger.h */; };
+		DA045A8019528F1B00444A66 /* lua_cocos2dx_deprecated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA853F7D194EC9230057DF22 /* lua_cocos2dx_deprecated.cpp */; };
+		DA045A8119528FA800444A66 /* lua_cocos2dx_extension_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA853F7F194ECC200057DF22 /* lua_cocos2dx_extension_auto.cpp */; };
 		DA853F7E194EC9230057DF22 /* lua_cocos2dx_deprecated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA853F7D194EC9230057DF22 /* lua_cocos2dx_deprecated.cpp */; };
 		DA853F81194ECC200057DF22 /* lua_cocos2dx_extension_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA853F7F194ECC200057DF22 /* lua_cocos2dx_extension_auto.cpp */; };
 		DA853F82194ECC200057DF22 /* lua_cocos2dx_extension_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = DA853F80194ECC200057DF22 /* lua_cocos2dx_extension_auto.hpp */; };
@@ -644,6 +646,7 @@
 				1ABCA20518CD8F6E0087CE3A /* tolua_is.c in Sources */,
 				1ABCA24E18CD8F7D0087CE3A /* options.c in Sources */,
 				1A262AB918BEEF5900D2DB92 /* tolua_fix.cpp in Sources */,
+				DA045A8019528F1B00444A66 /* lua_cocos2dx_deprecated.cpp in Sources */,
 				1AACE80218BC45C200215002 /* lua_cocos2dx_manual.cpp in Sources */,
 				1ABCA23E18CD8F7D0087CE3A /* luasocket.c in Sources */,
 				1ABCA25218CD8F7D0087CE3A /* select.c in Sources */,
@@ -664,6 +667,7 @@
 				1AACE7EE18BC45C200215002 /* Cocos2dxLuaLoader.cpp in Sources */,
 				1ABCA23A18CD8F7D0087CE3A /* inet.c in Sources */,
 				1AACE7E218BC45C200215002 /* CCLuaEngine.cpp in Sources */,
+				DA045A8119528FA800444A66 /* lua_cocos2dx_extension_auto.cpp in Sources */,
 				1ABCA26E18CD8F7D0087CE3A /* usocket.c in Sources */,
 				1AACE81218BC45C200215002 /* Lua_web_socket.cpp in Sources */,
 				1AACE7FA18BC45C200215002 /* lua_cocos2dx_extension_manual.cpp in Sources */,
@@ -821,7 +825,7 @@
 				"OTHER_LDFLAGS[sdk=iphonesimulator7.1]" = "-llua";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../../platform/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../../platform/ios $(SRCROOT)/../../../../external/unzip";
 			};
 			name = Debug;
 		};
@@ -845,7 +849,7 @@
 				"OTHER_LDFLAGS[sdk=iphonesimulator7.1]" = "-llua";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../../platform/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../../platform/ios $(SRCROOT)/../../../../external/unzip";
 			};
 			name = Release;
 		};
