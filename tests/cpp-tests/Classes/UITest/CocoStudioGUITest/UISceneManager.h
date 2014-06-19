@@ -64,9 +64,8 @@ enum
     kUITextAtlasTest,
     kUITextTest,
     kUITextTest_LineWrap,
-    /*
+    
     kUILabelTest_Effect,
-     */
     kUITextTest_TTF,
     kUITextBMFontTest,
     kUITextFieldTest,
@@ -106,6 +105,7 @@ enum
     KUIFocusTest_NestedLayout1,
     KUIFocusTest_NestedLayout2,
     KUIFocusTest_NestedLayout3,
+    kUIFocusTest_ListView,
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     kUIVideoPlayerTest,
 #endif

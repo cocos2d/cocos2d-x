@@ -589,7 +589,6 @@ const int FileSendComplete::RESULTTYPE_ARRAYSIZE;
 #ifndef _MSC_VER
 const int FileSendComplete::kFileNameFieldNumber;
 const int FileSendComplete::kResultFieldNumber;
-const int FileSendComplete::kPackageSeqFieldNumber;
 const int FileSendComplete::kErrorNumFieldNumber;
 #endif  // !_MSC_VER
 
@@ -611,7 +610,6 @@ void FileSendComplete::SharedCtor() {
   _cached_size_ = 0;
   file_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   result_ = 0;
-  package_seq_ = 0;
   error_num_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -660,7 +658,6 @@ void FileSendComplete::Clear() {
       }
     }
     result_ = 0;
-    package_seq_ = 0;
     error_num_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -700,28 +697,12 @@ bool FileSendComplete::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(24)) goto parse_package_seq;
+        if (input->ExpectTag(24)) goto parse_error_num;
         break;
       }
 
-      // required int32 package_seq = 3;
+      // required int32 error_num = 3;
       case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_package_seq:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &package_seq_)));
-          set_has_package_seq();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(32)) goto parse_error_num;
-        break;
-      }
-
-      // required int32 error_num = 4;
-      case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_error_num:
@@ -765,14 +746,9 @@ void FileSendComplete::SerializeWithCachedSizes(
       2, this->result(), output);
   }
 
-  // required int32 package_seq = 3;
-  if (has_package_seq()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->package_seq(), output);
-  }
-
-  // required int32 error_num = 4;
+  // required int32 error_num = 3;
   if (has_error_num()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->error_num(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->error_num(), output);
   }
 
 }
@@ -794,14 +770,7 @@ int FileSendComplete::ByteSize() const {
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->result());
     }
 
-    // required int32 package_seq = 3;
-    if (has_package_seq()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->package_seq());
-    }
-
-    // required int32 error_num = 4;
+    // required int32 error_num = 3;
     if (has_error_num()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
@@ -829,9 +798,6 @@ void FileSendComplete::MergeFrom(const FileSendComplete& from) {
     if (from.has_result()) {
       set_result(from.result());
     }
-    if (from.has_package_seq()) {
-      set_package_seq(from.package_seq());
-    }
     if (from.has_error_num()) {
       set_error_num(from.error_num());
     }
@@ -845,7 +811,7 @@ void FileSendComplete::CopyFrom(const FileSendComplete& from) {
 }
 
 bool FileSendComplete::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
+  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
 
   return true;
 }
@@ -854,7 +820,6 @@ void FileSendComplete::Swap(FileSendComplete* other) {
   if (other != this) {
     std::swap(file_name_, other->file_name_);
     std::swap(result_, other->result_);
-    std::swap(package_seq_, other->package_seq_);
     std::swap(error_num_, other->error_num_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     std::swap(_cached_size_, other->_cached_size_);

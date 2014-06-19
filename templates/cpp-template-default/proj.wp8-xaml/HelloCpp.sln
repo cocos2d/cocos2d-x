@@ -1,8 +1,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloCpp", "HelloCpp\HelloCpp.csproj", "{83CC88FE-7E79-4E1E-A129-742987130B5C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloCpp", "App\HelloCpp.csproj", "{83CC88FE-7E79-4E1E-A129-742987130B5C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloCppComponent", "HelloCppComponent\HelloCppComponent.vcxproj", "{60EC6889-C3C4-45AD-A006-47D9EE689212}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloCppComponent", "AppComponent\HelloCppComponent.vcxproj", "{60EC6889-C3C4-45AD-A006-47D9EE689212}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcocos2d", "..\cocos2d\cocos\2d\cocos2d_wp8.vcxproj", "{B5AF91B3-64EA-44E1-84B0-D759E93758FB}"
 EndProject

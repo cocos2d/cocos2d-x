@@ -268,7 +268,7 @@ void ProtectedNode::reorderProtectedChild(cocos2d::Node *child, int localZOrder)
     child->_setLocalZOrder(localZOrder);
 }
 
-void ProtectedNode::visit(Renderer* renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
+void ProtectedNode::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     // quick return if not visible. children won't be drawn.
     if (!_visible)
@@ -276,11 +276,7 @@ void ProtectedNode::visit(Renderer* renderer, const Mat4 &parentTransform, bool 
         return;
     }
     
-    bool dirty = _transformUpdated || parentTransformUpdated;
-    if(dirty)
-        _modelViewTransform = this->transform(parentTransform);
-    _transformUpdated = false;
-    
+    uint32_t flags = processParentFlags(parentTransform, parentFlags);
     
     // IMPORTANT:
     // To ease the migration to v3.0, we still support the Mat4 stack,
@@ -304,7 +300,7 @@ void ProtectedNode::visit(Renderer* renderer, const Mat4 &parentTransform, bool 
         auto node = _children.at(i);
         
         if ( node && node->getLocalZOrder() < 0 )
-            node->visit(renderer, _modelViewTransform, dirty);
+            node->visit(renderer, _modelViewTransform, flags);
         else
             break;
     }
@@ -314,7 +310,7 @@ void ProtectedNode::visit(Renderer* renderer, const Mat4 &parentTransform, bool 
         auto node = _protectedChildren.at(j);
         
         if ( node && node->getLocalZOrder() < 0 )
-            node->visit(renderer, _modelViewTransform, dirty);
+            node->visit(renderer, _modelViewTransform, flags);
         else
             break;
     }
@@ -322,16 +318,16 @@ void ProtectedNode::visit(Renderer* renderer, const Mat4 &parentTransform, bool 
     //
     // draw self
     //
-    this->draw(renderer, _modelViewTransform, dirty);
+    this->draw(renderer, _modelViewTransform, flags);
     
     //
     // draw children and protectedChildren zOrder >= 0
     //
     for(auto it=_protectedChildren.cbegin()+j; it != _protectedChildren.cend(); ++it)
-        (*it)->visit(renderer, _modelViewTransform, dirty);
+        (*it)->visit(renderer, _modelViewTransform, flags);
     
     for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
-        (*it)->visit(renderer, _modelViewTransform, dirty);
+        (*it)->visit(renderer, _modelViewTransform, flags);
     
     // reset for next frame
     _orderOfArrival = 0;

@@ -26,7 +26,7 @@
 #define __TestCpp__GUIDefine__
 
 #include <string>
-#include "cocostudio/ObjectFactory.h"
+#include "base/ObjectFactory.h"
 
 //
 //// Widget macro
@@ -34,7 +34,7 @@
 
 #define DECLARE_CLASS_GUI_INFO \
     public: \
-    static cocostudio::ObjectFactory::TInfo __Type; \
+    static cocos2d::ObjectFactory::TInfo __Type; \
     static cocos2d::Ref* createInstance(void); \
 
 #define IMPLEMENT_CLASS_GUI_INFO(className) \
@@ -42,10 +42,10 @@
     { \
         return className::create(); \
     } \
-    cocostudio::ObjectFactory::TInfo className::__Type(#className, &className::createInstance); \
+    cocos2d::ObjectFactory::TInfo className::__Type(#className, &className::createInstance); \
 
 #define CREATE_CLASS_GUI_INFO(className) \
-    cocostudio::ObjectFactory::TInfo(#className, &className::createInstance) \
+    cocos2d::ObjectFactory::TInfo(#className, &className::createInstance) \
 
 
 //
@@ -54,7 +54,7 @@
 
 #define DECLARE_CLASS_WIDGET_READER_INFO \
     public: \
-    static cocostudio::ObjectFactory::TInfo __Type; \
+    static cocos2d::ObjectFactory::TInfo __Type; \
     static cocos2d::Ref* createInstance(void); \
 
 #define IMPLEMENT_CLASS_WIDGET_READER_INFO(className) \
@@ -62,10 +62,10 @@
     { \
         return className::getInstance(); \
     } \
-    cocostudio::ObjectFactory::TInfo className::__Type(#className, &className::createInstance); \
+    cocos2d::ObjectFactory::TInfo className::__Type(#className, &className::createInstance); \
 
 #define CREATE_CLASS_WIDGET_READER_INFO(className) \
-    cocostudio::ObjectFactory::TInfo(#className, &className::createInstance) \
+    cocos2d::ObjectFactory::TInfo(#className, &className::createInstance) \
 
 
 #endif /* defined(__TestCpp__GUIDefine__) */

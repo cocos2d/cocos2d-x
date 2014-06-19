@@ -107,6 +107,12 @@ public:
     /// Default tag used for all the nodes
     static const int INVALID_TAG = -1;
 
+    enum {
+        FLAGS_TRANSFORM_DIRTY = (1 << 0),
+        FLAGS_CONTENT_SIZE_DIRTY = (1 << 1),
+
+        FLAGS_DIRTY_MASK = (FLAGS_TRANSFORM_DIRTY | FLAGS_CONTENT_SIZE_DIRTY),
+    };
     /// @{
     /// @name Constructor, Destructor and Initializers
 
@@ -114,7 +120,7 @@ public:
      * Allocates and initializes a node.
      * @return A initialized node which is marked as "autorelease".
      */
-    static Node * create(void);
+    static Node * create();
 
     /**
      * Gets the description string. It makes debugging easier.
@@ -283,6 +289,19 @@ public:
      * @param position  The position (x,y) of the node in OpenGL coordinates
      */
     virtual void setPosition(const Vec2 &position);
+
+    /** Sets the position (x,y) using values between 0 and 1.
+     The positions in pixels is calculated like the following:
+     @code
+     // pseudo code
+     void setNormalizedPosition(Vec2 pos) {
+       Size s = getParent()->getContentSize();
+       _position = pos * s;
+     }
+     @endcode
+     */
+    virtual void setNormalizedPosition(const Vec2 &position);
+
     /**
      * Gets the position (x,y) of the node in its parent's coordinate system.
      *
@@ -294,6 +313,10 @@ public:
      * @endcode
      */
     virtual const Vec2& getPosition() const;
+
+    /** returns the normalized position */
+    virtual const Vec2& getNormalizedPosition() const;
+
     /**
      * Sets the position (x,y) of the node in its parent's coordinate system.
      *
@@ -826,10 +849,10 @@ public:
      *
      * @return The GLProgram (shader) currently used for this node
      */
-    GLProgram* getGLProgram();
-    CC_DEPRECATED_ATTRIBUTE GLProgram* getShaderProgram() { return getGLProgram(); }
+    GLProgram* getGLProgram() const;
+    CC_DEPRECATED_ATTRIBUTE GLProgram* getShaderProgram() const { return getGLProgram(); }
 
-    GLProgramState *getGLProgramState();
+    GLProgramState *getGLProgramState() const;
     void setGLProgramState(GLProgramState *glProgramState);
 
     /**
@@ -923,13 +946,13 @@ public:
      * AND YOU SHOULD NOT DISABLE THEM AFTER DRAWING YOUR NODE
      * But if you enable any other GL state, you should disable it after drawing your node.
      */
-    virtual void draw(Renderer *renderer, const Mat4& transform, bool transformUpdated);
+    virtual void draw(Renderer *renderer, const Mat4& transform, uint32_t flags);
     virtual void draw() final;
 
     /**
      * Visits this node's children and draw them recursively.
      */
-    virtual void visit(Renderer *renderer, const Mat4& parentTransform, bool parentTransformUpdated);
+    virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags);
     virtual void visit() final;
 
 
@@ -1164,12 +1187,12 @@ public:
      * Resumes all scheduled selectors, actions and event listeners.
      * This method is called internally by onEnter
      */
-    CC_DEPRECATED_ATTRIBUTE void resumeSchedulerAndActions(void);
+    CC_DEPRECATED_ATTRIBUTE void resumeSchedulerAndActions();
     /**
      * Pauses all scheduled selectors, actions and event listeners..
      * This method is called internally by onExit
      */
-    CC_DEPRECATED_ATTRIBUTE void pauseSchedulerAndActions(void);
+    CC_DEPRECATED_ATTRIBUTE void pauseSchedulerAndActions();
 
     /*
      * Update method will be called automatically every frame if "scheduleUpdate" is called, and the node is "live"
@@ -1290,17 +1313,17 @@ public:
     /**
      *   gets a component by its name
      */
-    Component* getComponent(const std::string& pName);
+    Component* getComponent(const std::string& name);
 
     /**
      *   adds a component
      */
-    virtual bool addComponent(Component *pComponent);
+    virtual bool addComponent(Component *component);
 
     /**
      *   removes a component by its name
      */
-    virtual bool removeComponent(const std::string& pName);
+    virtual bool removeComponent(const std::string& name);
 
     /**
      *   removes all components
@@ -1331,14 +1354,14 @@ public:
     virtual bool isCascadeOpacityEnabled() const;
     virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
     
-    virtual const Color3B& getColor(void) const;
+    virtual const Color3B& getColor() const;
     virtual const Color3B& getDisplayedColor() const;
     virtual void setColor(const Color3B& color);
     virtual void updateDisplayedColor(const Color3B& parentColor);
     virtual bool isCascadeColorEnabled() const;
     virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
     
-    virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
+    virtual void setOpacityModifyRGB(bool value) {CC_UNUSED_PARAM(value);}
     virtual bool isOpacityModifyRGB() const { return false; };
     
 CC_CONSTRUCTOR_ACCESS:
@@ -1362,6 +1385,7 @@ protected:
     Vec2 convertToWindowSpace(const Vec2& nodePoint) const;
 
     Mat4 transform(const Mat4 &parentTransform);
+    uint32_t processParentFlags(const Mat4& parentTransform, uint32_t parentFlags);
 
     virtual void updateCascadeOpacity();
     virtual void disableCascadeOpacity();
@@ -1387,6 +1411,8 @@ protected:
 
     Vec2 _position;                ///< position of the node
     float _positionZ;               ///< OpenGL real Z position
+    Vec2 _normalizedPosition;
+    bool _usingNormalizedPosition;
 
     float _skewX;                   ///< skew angle on x-axis
     float _skewY;                   ///< skew angle on y-axis
@@ -1395,6 +1421,7 @@ protected:
     Vec2 _anchorPoint;             ///< anchor point normalized (NOT in points)
 
     Size _contentSize;              ///< untransformed size of the node
+    bool _contentSizeDirty;         ///< whether or not the contentSize is dirty
 
     Mat4 _modelViewTransform;    ///< ModelView transform of the Node.
 
@@ -1502,7 +1529,7 @@ public:
     virtual void setOpacityModifyRGB(bool bValue) override { return Node::setOpacityModifyRGB(bValue); }
     virtual bool isOpacityModifyRGB() const override { return Node::isOpacityModifyRGB(); }
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     __NodeRGBA();
     virtual ~__NodeRGBA() {}
 

@@ -154,7 +154,7 @@ private:
     void loopReceiveFile();
     void loopWriteFile();
     void loopResponse();
-    void addResponse(int fd, string filename,int errortype,int errornum,int packageseq);
+    void addResponse(int fd, string filename,int errortype,int errornum);
     enum PROTONUM
     {
         FILEPROTO=1,
@@ -473,7 +473,7 @@ void FileServer::loopReceiveFile()
                 if (err != Z_OK){
                     CC_SAFE_DELETE_ARRAY(buff);
                     CC_SAFE_DELETE_ARRAY(contentbuf);
-                    addResponse(recvDataBuf.fd,recvDataBuf.fileProto.file_name(),runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_UNCOMPRESS_ERROR,err,recvDataBuf.fileProto.package_seq());
+                    addResponse(recvDataBuf.fd,recvDataBuf.fileProto.file_name(),runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_UNCOMPRESS_ERROR,err);
                     continue;
                 }
                 CC_SAFE_DELETE_ARRAY(contentbuf);
@@ -525,12 +525,12 @@ void FileServer::loopWriteFile()
              fp=fopen(fullfilename.c_str(), "ab");
          }
          if (nullptr == fp){
-              addResponse(recvDataBuf.fd,filename,runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_FOPEN_ERROR,errno,recvDataBuf.fileProto.package_seq());
+              addResponse(recvDataBuf.fd,filename,runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_FOPEN_ERROR,errno);
             continue;
          }
          if (fp){
              if (0 == fwrite(recvDataBuf.contentBuf.c_str(), sizeof(char), recvDataBuf.contentBuf.size(),fp)){
-                 addResponse(recvDataBuf.fd,filename,runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_FWRITE_ERROR,errno,recvDataBuf.fileProto.package_seq());
+                 addResponse(recvDataBuf.fd,filename,runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_FWRITE_ERROR,errno);
              }
              fclose(fp);
             continue;
@@ -539,12 +539,12 @@ void FileServer::loopWriteFile()
          if (recvDataBuf.fileProto.package_seq() == recvDataBuf.fileProto.package_sum()){
              //record new file modify
              addResFileInfo(filename.c_str(),recvDataBuf.fileProto.modified_time());
-             addResponse(recvDataBuf.fd,filename,runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_SUCCESS,errno,recvDataBuf.fileProto.package_seq());
+             addResponse(recvDataBuf.fd,filename,runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_SUCCESS,errno);
          }
      }
 }
 
-void FileServer::addResponse(int fd, string filename,int errortype,int errornum,int packageseq)
+void FileServer::addResponse(int fd, string filename,int errortype,int errornum)
 {
     switch (errortype)
     {
@@ -565,7 +565,6 @@ void FileServer::addResponse(int fd, string filename,int errortype,int errornum,
     responseBuf.fileResponseProto.set_file_name(filename.c_str());
     responseBuf.fileResponseProto.set_result((::runtime::FileSendComplete_RESULTTYPE)errortype);
     responseBuf.fileResponseProto.set_error_num(errornum);
-    responseBuf.fileResponseProto.set_package_seq(packageseq);
 
     // push Response struct
     _responseBufListMutex.lock();

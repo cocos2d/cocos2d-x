@@ -40,6 +40,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(NewDrawNodeTest),
     CL(NewCullingTest),
     CL(VBOFullTest),
+    CL(CaptureScreenTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -230,7 +231,7 @@ protected:
 public:
     static SpriteInGroupCommand* create(const std::string& filename);
     
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 };
 
 SpriteInGroupCommand* SpriteInGroupCommand::create(const std::string &filename)
@@ -241,13 +242,13 @@ SpriteInGroupCommand* SpriteInGroupCommand::create(const std::string &filename)
     return sprite;
 }
 
-void SpriteInGroupCommand::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void SpriteInGroupCommand::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     CCASSERT(renderer, "Render is null");
     _spriteWrapperCommand.init(_globalZOrder);
     renderer->addCommand(&_spriteWrapperCommand);
     renderer->pushGroup(_spriteWrapperCommand.getRenderQueueID());
-    Sprite::draw(renderer, transform, transformUpdated);
+    Sprite::draw(renderer, transform, flags);
     renderer->popGroup();
 }
 
@@ -338,7 +339,7 @@ void NewSpriteBatchTest::addNewSpriteWithCoords(Vec2 p)
         action = FadeOut::create(2);
 
     auto action_back = action->reverse();
-    auto seq = Sequence::create(action, action_back, NULL);
+    auto seq = Sequence::create(action, action_back, nullptr);
 
     sprite->runAction( RepeatForever::create(seq));
 }
@@ -558,4 +559,72 @@ std::string VBOFullTest::title() const
 std::string VBOFullTest::subtitle() const
 {
     return "VBO full Test, everthing should render normally";
+}
+
+CaptureScreenTest::CaptureScreenTest()
+{
+    Size s = Director::getInstance()->getWinSize();
+    Vec2 left(s.width / 4, s.height / 2);
+    Vec2 right(s.width / 4 * 3, s.height / 2);
+	
+    auto sp1 = Sprite::create("Images/grossini.png");
+    sp1->setPosition(left);
+    auto move1 = MoveBy::create(1, Vec2(s.width/2, 0));
+    auto seq1 = RepeatForever::create(Sequence::create(move1, move1->reverse(), nullptr));
+    addChild(sp1);
+    sp1->runAction(seq1);
+    auto sp2 = Sprite::create("Images/grossinis_sister1.png");
+    sp2->setPosition(right);
+    auto move2 = MoveBy::create(1, Vec2(-s.width/2, 0));
+    auto seq2 = RepeatForever::create(Sequence::create(move2, move2->reverse(), nullptr));
+    addChild(sp2);
+    sp2->runAction(seq2);
+
+    auto label1 = Label::createWithTTF(TTFConfig("fonts/arial.ttf"), "capture all");
+    auto mi1 = MenuItemLabel::create(label1, CC_CALLBACK_1(CaptureScreenTest::onCaptured, this));
+    auto menu = Menu::create(mi1, nullptr);
+    addChild(menu);
+    menu->setPosition(s.width / 2, s.height / 4);
+
+    _filename = "";
+}
+
+CaptureScreenTest::~CaptureScreenTest()
+{
+    Director::getInstance()->getTextureCache()->removeTextureForKey(_filename);
+}
+
+std::string CaptureScreenTest::title() const
+{
+    return "New Renderer";
+}
+
+std::string CaptureScreenTest::subtitle() const
+{
+    return "Capture screen test, press the menu items to capture the screen";
+}
+
+void CaptureScreenTest::onCaptured(Ref*)
+{
+    Director::getInstance()->getTextureCache()->removeTextureForKey(_filename);
+    removeChildByTag(childTag);
+    _filename = "CaptureScreenTest.png";
+    utils::captureScreen(CC_CALLBACK_2(CaptureScreenTest::afterCaptured, this), _filename);
+}
+
+void CaptureScreenTest::afterCaptured(bool succeed, const std::string& outputFile)
+{
+    if (succeed)
+    {
+        auto sp = Sprite::create(outputFile);
+        addChild(sp, 0, childTag);
+        Size s = Director::getInstance()->getWinSize();
+        sp->setPosition(s.width / 2, s.height / 2);
+        sp->setScale(0.25);
+        _filename = outputFile;
+    }
+    else
+    {
+        log("Capture screen failed.");
+    }
 }

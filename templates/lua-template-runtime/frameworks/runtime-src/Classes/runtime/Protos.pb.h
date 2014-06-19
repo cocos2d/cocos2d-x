@@ -356,17 +356,10 @@ class FileSendComplete : public ::google::protobuf::MessageLite {
   inline ::runtime::FileSendComplete_RESULTTYPE result() const;
   inline void set_result(::runtime::FileSendComplete_RESULTTYPE value);
 
-  // required int32 package_seq = 3;
-  inline bool has_package_seq() const;
-  inline void clear_package_seq();
-  static const int kPackageSeqFieldNumber = 3;
-  inline ::google::protobuf::int32 package_seq() const;
-  inline void set_package_seq(::google::protobuf::int32 value);
-
-  // required int32 error_num = 4;
+  // required int32 error_num = 3;
   inline bool has_error_num() const;
   inline void clear_error_num();
-  static const int kErrorNumFieldNumber = 4;
+  static const int kErrorNumFieldNumber = 3;
   inline ::google::protobuf::int32 error_num() const;
   inline void set_error_num(::google::protobuf::int32 value);
 
@@ -376,18 +369,15 @@ class FileSendComplete : public ::google::protobuf::MessageLite {
   inline void clear_has_file_name();
   inline void set_has_result();
   inline void clear_has_result();
-  inline void set_has_package_seq();
-  inline void clear_has_package_seq();
   inline void set_has_error_num();
   inline void clear_has_error_num();
 
   ::std::string* file_name_;
   int result_;
-  ::google::protobuf::int32 package_seq_;
   ::google::protobuf::int32 error_num_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Protos_2eproto_impl();
@@ -800,37 +790,15 @@ inline void FileSendComplete::set_result(::runtime::FileSendComplete_RESULTTYPE 
   result_ = value;
 }
 
-// required int32 package_seq = 3;
-inline bool FileSendComplete::has_package_seq() const {
+// required int32 error_num = 3;
+inline bool FileSendComplete::has_error_num() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void FileSendComplete::set_has_package_seq() {
+inline void FileSendComplete::set_has_error_num() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void FileSendComplete::clear_has_package_seq() {
-  _has_bits_[0] &= ~0x00000004u;
-}
-inline void FileSendComplete::clear_package_seq() {
-  package_seq_ = 0;
-  clear_has_package_seq();
-}
-inline ::google::protobuf::int32 FileSendComplete::package_seq() const {
-  return package_seq_;
-}
-inline void FileSendComplete::set_package_seq(::google::protobuf::int32 value) {
-  set_has_package_seq();
-  package_seq_ = value;
-}
-
-// required int32 error_num = 4;
-inline bool FileSendComplete::has_error_num() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
-}
-inline void FileSendComplete::set_has_error_num() {
-  _has_bits_[0] |= 0x00000008u;
-}
 inline void FileSendComplete::clear_has_error_num() {
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline void FileSendComplete::clear_error_num() {
   error_num_ = 0;

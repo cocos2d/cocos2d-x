@@ -593,6 +593,9 @@
       <Filter>renderer</Filter>
     </ClCompile>
     <ClCompile Include="..\platform\wp8\pch.cpp" />
+    <ClCompile Include="..\base\ObjectFactory.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -1205,6 +1208,9 @@
       <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\wp8\pch.h" />
+    <ClInclude Include="..\base\ObjectFactory.h">
+      <Filter>base</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\math\Mat4.inl">

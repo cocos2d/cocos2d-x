@@ -37,8 +37,8 @@ THE SOFTWARE.
 
 #define  CLASS_NAME "org/cocos2dx/lib/Cocos2dxHelper"
 
-EditTextCallback s_pfEditTextCallback = NULL;
-void* s_ctx = NULL;
+static EditTextCallback s_editTextCallback = nullptr;
+static void* s_ctx = nullptr;
 
 using namespace cocos2d;
 using namespace std;
@@ -61,17 +61,17 @@ extern "C" {
 
         if (size > 0) {
             jbyte * data = (jbyte*)env->GetByteArrayElements(text, 0);
-            char* pBuf = (char*)malloc(size+1);
-            if (pBuf != NULL) {
-                memcpy(pBuf, data, size);
-                pBuf[size] = '\0';
+            char* buffer = (char*)malloc(size+1);
+            if (buffer != nullptr) {
+                memcpy(buffer, data, size);
+                buffer[size] = '\0';
                 // pass data to edittext's delegate
-                if (s_pfEditTextCallback) s_pfEditTextCallback(pBuf, s_ctx);
-                free(pBuf);
+                if (s_editTextCallback) s_editTextCallback(buffer, s_ctx);
+                free(buffer);
             }
             env->ReleaseByteArrayElements(text, data, 0);
         } else {
-            if (s_pfEditTextCallback) s_pfEditTextCallback("", s_ctx);
+            if (s_editTextCallback) s_editTextCallback("", s_ctx);
         }
     }
 }
@@ -80,8 +80,8 @@ const char * getApkPath() {
     return g_apkPath.c_str();
 }
 
-void showDialogJNI(const char * pszMsg, const char * pszTitle) {
-    if (!pszMsg) {
+void showDialogJNI(const char * message, const char * title) {
+    if (!message) {
         return;
     }
 
@@ -89,13 +89,13 @@ void showDialogJNI(const char * pszMsg, const char * pszTitle) {
     if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "showDialog", "(Ljava/lang/String;Ljava/lang/String;)V")) {
         jstring stringArg1;
 
-        if (!pszTitle) {
+        if (!title) {
             stringArg1 = t.env->NewStringUTF("");
         } else {
-            stringArg1 = t.env->NewStringUTF(pszTitle);
+            stringArg1 = t.env->NewStringUTF(title);
         }
 
-        jstring stringArg2 = t.env->NewStringUTF(pszMsg);
+        jstring stringArg2 = t.env->NewStringUTF(message);
         t.env->CallStaticVoidMethod(t.classID, t.methodID, stringArg1, stringArg2);
 
         t.env->DeleteLocalRef(stringArg1);
@@ -104,27 +104,27 @@ void showDialogJNI(const char * pszMsg, const char * pszTitle) {
     }
 }
 
-void showEditTextDialogJNI(const char* pszTitle, const char* pszMessage, int nInputMode, int nInputFlag, int nReturnType, int nMaxLength, EditTextCallback pfEditTextCallback, void* ctx) {
-    if (pszMessage == NULL) {
+void showEditTextDialogJNI(const char* title, const char* message, int inputMode, int inputFlag, int returnType, int maxLength, EditTextCallback callback, void* ctx) {
+    if (message == nullptr) {
         return;
     }
 
-    s_pfEditTextCallback = pfEditTextCallback;
+    s_editTextCallback = callback;
     s_ctx = ctx;
 
     JniMethodInfo t;
     if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "showEditTextDialog", "(Ljava/lang/String;Ljava/lang/String;IIII)V")) {
         jstring stringArg1;
 
-        if (!pszTitle) {
+        if (!title) {
             stringArg1 = t.env->NewStringUTF("");
         } else {
-            stringArg1 = t.env->NewStringUTF(pszTitle);
+            stringArg1 = t.env->NewStringUTF(title);
         }
 
-        jstring stringArg2 = t.env->NewStringUTF(pszMessage);
+        jstring stringArg2 = t.env->NewStringUTF(message);
 
-        t.env->CallStaticVoidMethod(t.classID, t.methodID, stringArg1, stringArg2, nInputMode, nInputFlag, nReturnType, nMaxLength);
+        t.env->CallStaticVoidMethod(t.classID, t.methodID, stringArg1, stringArg2,inputMode, inputFlag, returnType, maxLength);
 
         t.env->DeleteLocalRef(stringArg1);
         t.env->DeleteLocalRef(stringArg2);
@@ -210,12 +210,12 @@ void disableAccelerometerJni() {
 }
 
 // functions for UserDefault
-bool getBoolForKeyJNI(const char* pKey, bool defaultValue)
+bool getBoolForKeyJNI(const char* key, bool defaultValue)
 {
     JniMethodInfo t;
     
     if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "getBoolForKey", "(Ljava/lang/String;Z)Z")) {
-        jstring stringArg = t.env->NewStringUTF(pKey);
+        jstring stringArg = t.env->NewStringUTF(key);
         jboolean ret = t.env->CallStaticBooleanMethod(t.classID, t.methodID, stringArg, defaultValue);
         
         t.env->DeleteLocalRef(t.classID);
@@ -227,12 +227,12 @@ bool getBoolForKeyJNI(const char* pKey, bool defaultValue)
     return defaultValue;
 }
 
-int getIntegerForKeyJNI(const char* pKey, int defaultValue)
+int getIntegerForKeyJNI(const char* key, int defaultValue)
 {
     JniMethodInfo t;
     
     if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "getIntegerForKey", "(Ljava/lang/String;I)I")) {
-        jstring stringArg = t.env->NewStringUTF(pKey);
+        jstring stringArg = t.env->NewStringUTF(key);
         jint ret = t.env->CallStaticIntMethod(t.classID, t.methodID, stringArg, defaultValue);
         
         t.env->DeleteLocalRef(t.classID);
@@ -244,12 +244,12 @@ int getIntegerForKeyJNI(const char* pKey, int defaultValue)
     return defaultValue;
 }
 
-float getFloatForKeyJNI(const char* pKey, float defaultValue)
+float getFloatForKeyJNI(const char* key, float defaultValue)
 {
     JniMethodInfo t;
     
     if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "getFloatForKey", "(Ljava/lang/String;F)F")) {
-        jstring stringArg = t.env->NewStringUTF(pKey);
+        jstring stringArg = t.env->NewStringUTF(key);
         jfloat ret = t.env->CallStaticFloatMethod(t.classID, t.methodID, stringArg, defaultValue);
         
         t.env->DeleteLocalRef(t.classID);
@@ -261,12 +261,12 @@ float getFloatForKeyJNI(const char* pKey, float defaultValue)
     return defaultValue;
 }
 
-double getDoubleForKeyJNI(const char* pKey, double defaultValue)
+double getDoubleForKeyJNI(const char* key, double defaultValue)
 {
     JniMethodInfo t;
     
     if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "getDoubleForKey", "(Ljava/lang/String;D)D")) {
-        jstring stringArg = t.env->NewStringUTF(pKey);
+        jstring stringArg = t.env->NewStringUTF(key);
         jdouble ret = t.env->CallStaticDoubleMethod(t.classID, t.methodID, stringArg, defaultValue);
         
         t.env->DeleteLocalRef(t.classID);
@@ -278,13 +278,13 @@ double getDoubleForKeyJNI(const char* pKey, double defaultValue)
     return defaultValue;
 }
 
-std::string getStringForKeyJNI(const char* pKey, const char* defaultValue)
+std::string getStringForKeyJNI(const char* key, const char* defaultValue)
 {
     JniMethodInfo t;
     std::string ret("");
 
     if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "getStringForKey", "(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;")) {
-        jstring stringArg1 = t.env->NewStringUTF(pKey);
+        jstring stringArg1 = t.env->NewStringUTF(key);
         jstring stringArg2 = t.env->NewStringUTF(defaultValue);
         jstring str = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID, stringArg1, stringArg2);
         ret = JniHelper::jstring2string(str);
@@ -300,12 +300,12 @@ std::string getStringForKeyJNI(const char* pKey, const char* defaultValue)
     return defaultValue;
 }
 
-void setBoolForKeyJNI(const char* pKey, bool value)
+void setBoolForKeyJNI(const char* key, bool value)
 {
     JniMethodInfo t;
     
     if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "setBoolForKey", "(Ljava/lang/String;Z)V")) {
-        jstring stringArg = t.env->NewStringUTF(pKey);
+        jstring stringArg = t.env->NewStringUTF(key);
         t.env->CallStaticVoidMethod(t.classID, t.methodID, stringArg, value);
         
         t.env->DeleteLocalRef(t.classID);
@@ -313,12 +313,12 @@ void setBoolForKeyJNI(const char* pKey, bool value)
     }
 }
 
-void setIntegerForKeyJNI(const char* pKey, int value)
+void setIntegerForKeyJNI(const char* key, int value)
 {
     JniMethodInfo t;
     
     if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "setIntegerForKey", "(Ljava/lang/String;I)V")) {
-        jstring stringArg = t.env->NewStringUTF(pKey);
+        jstring stringArg = t.env->NewStringUTF(key);
         t.env->CallStaticVoidMethod(t.classID, t.methodID, stringArg, value);
         
         t.env->DeleteLocalRef(t.classID);
@@ -326,12 +326,12 @@ void setIntegerForKeyJNI(const char* pKey, int value)
     }
 }
 
-void setFloatForKeyJNI(const char* pKey, float value)
+void setFloatForKeyJNI(const char* key, float value)
 {
     JniMethodInfo t;
     
     if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "setFloatForKey", "(Ljava/lang/String;F)V")) {
-        jstring stringArg = t.env->NewStringUTF(pKey);
+        jstring stringArg = t.env->NewStringUTF(key);
         t.env->CallStaticVoidMethod(t.classID, t.methodID, stringArg, value);
         
         t.env->DeleteLocalRef(t.classID);
@@ -339,12 +339,12 @@ void setFloatForKeyJNI(const char* pKey, float value)
     }
 }
 
-void setDoubleForKeyJNI(const char* pKey, double value)
+void setDoubleForKeyJNI(const char* key, double value)
 {
     JniMethodInfo t;
     
     if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "setDoubleForKey", "(Ljava/lang/String;D)V")) {
-        jstring stringArg = t.env->NewStringUTF(pKey);
+        jstring stringArg = t.env->NewStringUTF(key);
         t.env->CallStaticVoidMethod(t.classID, t.methodID, stringArg, value);
         
         t.env->DeleteLocalRef(t.classID);
@@ -352,12 +352,12 @@ void setDoubleForKeyJNI(const char* pKey, double value)
     }
 }
 
-void setStringForKeyJNI(const char* pKey, const char* value)
+void setStringForKeyJNI(const char* key, const char* value)
 {
     JniMethodInfo t;
     
     if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "setStringForKey", "(Ljava/lang/String;Ljava/lang/String;)V")) {
-        jstring stringArg1 = t.env->NewStringUTF(pKey);
+        jstring stringArg1 = t.env->NewStringUTF(key);
         jstring stringArg2 = t.env->NewStringUTF(value);
         t.env->CallStaticVoidMethod(t.classID, t.methodID, stringArg1, stringArg2);
         

@@ -6,6 +6,7 @@ import time
 import os
 from email.mime.text import MIMEText
 import smtplib
+import requests
 
 def send_mail(sub,title,content):
     to_list = os.environ['EMAIL_LIST'].split(' ')
@@ -35,6 +36,17 @@ def send_mail(sub,title,content):
 def sendEmail(msg):
     send_mail("Jenkins node " + msg + " is offline", 'for offline.', msg + ' is offline')
 
+def rebuild_jobs(build):
+    rebuild_jobs = os.environ['REBUILD_JOBS'].split(' ')
+    trigger_urls = os.environ['JOB_TRIGGER_URLS'].split(' ')
+    for i, rebuild_job in enumerate(rebuild_jobs):
+        if rebuild_job in build.__str__():
+            payload = build._poll()['actions'][0]['parameters'][0]['value']
+            job_trigger_url = trigger_urls[i]
+            post_data = {'payload': payload}
+            requests.post(job_trigger_url, data=post_data)
+            print 'build_job:', rebuild_job, 'rebuild : TRUE'
+
 #check & kill dead buid
 def build_time(_job,_threshold):
     #get jenkins-job-watchdog-threshold
@@ -58,6 +70,7 @@ def build_time(_job,_threshold):
     subtime = (nowtime - buildtime)/60
     print 'subtime:', subtime, _threshold
     if subtime > _threshold:
+        rebuild_jobs(build)
         #print 'subtime',subtime
         #kill dead buid
         build.stop()

@@ -95,7 +95,7 @@ public:
      * @lua NA
      */
     virtual void onExit() override;
-    virtual void visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated) override;
+    virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
     
 CC_CONSTRUCTOR_ACCESS:
     ClippingNode();

@@ -5348,6 +5348,66 @@ static int lua_cocos2dx_GLProgramState_setVertexAttribPointer(lua_State* tolua_S
         cobj->setVertexAttribPointer(arg0, arg1, arg2, arg3, arg4, (void*)arg5);
         return 0;
     }
+    else if (argc == 7)
+    {
+        std::string arg0;
+        int arg1;
+        unsigned int arg2;
+        bool arg3;
+        int arg4;
+        GLfloat* arg5;
+        int arg6;
+        
+        
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0);
+        
+        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
+        
+        ok &= luaval_to_uint32(tolua_S, 4,&arg2);
+        
+        ok &= luaval_to_boolean(tolua_S, 5, &arg3);
+        
+        ok &= luaval_to_int32(tolua_S, 6,(int *)&arg4);
+        
+        ok &= luaval_to_int32(tolua_S, 8, (int *)&arg6);
+        
+        size_t len = lua_objlen(tolua_S, 7);
+        
+        if (len != arg6)
+        {
+            CCLOG("table size is  %zu,but input size is %d \n", len, arg6);
+            return 0;
+        }
+        
+        arg5 = new GLfloat[len];
+        for (int i = 0; i < len; i++)
+        {
+            lua_pushnumber(tolua_S,i + 1);
+            lua_gettable(tolua_S,7);
+            bool isnum = true;
+#if COCOS2D_DEBUG >= 1
+            if (!tolua_isnumber(tolua_S, -1, 0, &tolua_err))
+            {
+                isnum = false;
+            }
+#endif
+            if (isnum)
+            {
+                arg5[i] = tolua_tonumber(tolua_S, -1, 0);
+            }
+            else
+            {
+                arg5[i] = 0;
+            }
+            lua_pop(tolua_S, 1);
+        }
+        
+        cobj->setVertexAttribPointer(arg0, arg1, arg2, arg3, arg4, (void*)arg5);
+        
+        CC_SAFE_DELETE(arg5);
+        
+        return 0;
+    }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setVertexAttribPointer",argc, 6);
     return 0;
     

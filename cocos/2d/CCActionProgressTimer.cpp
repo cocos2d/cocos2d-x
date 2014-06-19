@@ -113,7 +113,7 @@ ProgressFromTo* ProgressFromTo::clone() const
 }
 
 
-ProgressFromTo* ProgressFromTo::reverse(void) const
+ProgressFromTo* ProgressFromTo::reverse() const
 {
     return ProgressFromTo::create(_duration, _to, _from);
 }

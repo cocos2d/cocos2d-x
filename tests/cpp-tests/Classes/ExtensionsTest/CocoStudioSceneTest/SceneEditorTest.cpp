@@ -194,9 +194,9 @@ void SceneEditorTestLayer::backCallback(Ref *pSender)
     s->release();
 }
 
-void SceneEditorTestLayer::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void SceneEditorTestLayer::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    Layer::draw(renderer, transform, transformUpdated);
+    Layer::draw(renderer, transform, flags);
 }
 
 

@@ -29,6 +29,8 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+class Sprite;
+
 namespace ui {
 
 CC_DEPRECATED_ATTRIBUTE typedef enum
@@ -170,14 +172,12 @@ public:
      *
      * @return selected    true that checkbox is selected, false otherwise.
      */
-    bool getSelectedState();
+    bool getSelectedState()const;
 
     //add a call back function would called when checkbox is selected or unselected.
     CC_DEPRECATED_ATTRIBUTE void addEventListenerCheckBox(Ref* target,SEL_SelectedStateEvent selector);
     void addEventListener(const ccCheckBoxCallback& callback);
 
-    //override "onTouchEnded" method of widget.
-    virtual void onTouchEnded(Touch *touch, Event *unusedEvent);
 
     //override "getVirtualRendererSize" method of widget.
     virtual const Size& getVirtualRendererSize() const override;
@@ -204,19 +204,23 @@ protected:
     virtual void onPressStateChangedToNormal() override;
     virtual void onPressStateChangedToPressed() override;
     virtual void onPressStateChangedToDisabled() override;
+    
     void selectedEvent();
     void unSelectedEvent();
+    
+    virtual void releaseUpEvent();
+    
     virtual void onSizeChanged() override;
-    virtual void updateTextureColor() override;
-    virtual void updateTextureOpacity() override;
-    virtual void updateTextureRGBA() override;
+  
     virtual void updateFlippedX() override;
     virtual void updateFlippedY() override;
+    
     void backGroundTextureScaleChangedWithSize();
     void backGroundSelectedTextureScaleChangedWithSize();
     void frontCrossTextureScaleChangedWithSize();
     void backGroundDisabledTextureScaleChangedWithSize();
     void frontCrossDisabledTextureScaleChangedWithSize();
+    
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
     virtual void adaptRenderers() override;

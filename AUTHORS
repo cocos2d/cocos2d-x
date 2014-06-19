@@ -716,6 +716,7 @@ Developers:
     kicktheken (Kenneth Chan)
         Fixed a bug that the setBlendFunc method of some classes wasn't exposed to LUA.
         Fix lua project template crash on iOS5.1 device
+        Fix layout constant syntax error in lua-binding
         
     andyque
         Fixed a bug that missing to check self assignment of Vector<T>, Map<K,V>, Value and String.
@@ -790,6 +791,8 @@ Developers:
     newnon
         Adds getCurrentLanguageCode() which returns iso 639-1 language code
         Adds support for get response when Activity's onActivityResult is triggered
+        Improve Android projects
+        Android jni error clear & more readable log
         
     youknowone
         Adds iOS-like elastic bounceback support for cocos2d::extension::ScrollView
@@ -828,6 +831,7 @@ Developers:
         Fixed incompatible pointer conversion in external/chipmunk/src/cpArray.c
         Fixed memory leak in 'Image'
         Fixed loosing precision when using 'recv' in 'Console'
+        Fixed link error with Xcode 6 when building with 32-bit architecture
         
     ololomax
         Fixed a potential crash in SceneReader::createNodeWithSceneFile
@@ -837,6 +841,7 @@ Developers:
         
     sachingarg05
         Re-added orientation change callback in java activity
+        GLProgram should not abort() if shader compilation fails, returning false is better.
         
     dplusic
         Fixed that cc.pGetAngle may return wrong value
@@ -861,6 +866,28 @@ Developers:
         
     favorcode
         Correct some doxygen comment
+        
+    asuuma
+        Fix Repeat will run one more over in rare situations.
+        
+    uqtimes 
+        Fix NSNotificationCenter and NSTimer leaks
+        
+    ntotani
+        fix building error in lua-binding in release mode
+        
+    kezhuw
+        AutoReleasePool manager improvement
+        
+    zhouxiaoxiaoxujian
+        Added TextField::getStringLength()
+        Add shadow, outline, glow filter support for UIText
+        
+    QiuleiWang
+        Fix the bug that calculated height of multi-line string was incorrect on iOS
+        
+    Rumist
+        Fix the bug that the result of Director->convertToUI() is error.
     
 Retired Core Developers:
     WenSheng Yang

@@ -243,6 +243,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void) dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self]; // remove keyboard notification
     [renderer_ release];
     self.keyboardShowNotification = nullptr; // implicit release
     [super dealloc];

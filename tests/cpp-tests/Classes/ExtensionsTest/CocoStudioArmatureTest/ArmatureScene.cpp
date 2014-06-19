@@ -842,7 +842,7 @@ void TestColliderDetector::onExit()
 
     ArmatureTestLayer::onExit();
 }
-void TestColliderDetector::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void TestColliderDetector::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
     Director* director = Director::getInstance();
@@ -1065,14 +1065,14 @@ void TestColliderDetector::update(float delta)
         }
     }
 }
-void TestColliderDetector::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void TestColliderDetector::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(TestColliderDetector::onDraw, this, transform, transformUpdated);
+    _customCommand.func = CC_CALLBACK_0(TestColliderDetector::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 }
 
-void TestColliderDetector::onDraw(const Mat4 &transform, bool transformUpdated)
+void TestColliderDetector::onDraw(const Mat4 &transform, uint32_t flags)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -1106,15 +1106,15 @@ std::string TestBoundingBox::title() const
 {
     return "Test BoundingBox";
 }
-void TestBoundingBox::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void TestBoundingBox::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(TestBoundingBox::onDraw, this, transform, transformUpdated);
+    _customCommand.func = CC_CALLBACK_0(TestBoundingBox::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 
 }
 
-void TestBoundingBox::onDraw(const Mat4 &transform, bool transformUpdated)
+void TestBoundingBox::onDraw(const Mat4 &transform, uint32_t flags)
 {
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);

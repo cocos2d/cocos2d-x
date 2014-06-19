@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="..\..\cocos2d\cocos\2d\platform\wp8-xaml\cpp\Cocos2dRenderer.cpp" />
-    <ClCompile Include="..\..\cocos2d\cocos\2d\platform\wp8-xaml\cpp\Direct3DContentProvider.cpp" />
-    <ClCompile Include="..\..\cocos2d\cocos\2d\platform\wp8-xaml\cpp\Direct3DInterop.cpp" />
-    <ClCompile Include="..\..\cocos2d\cocos\2d\platform\wp8-xaml\cpp\DirectXBase.cpp" />
-    <ClCompile Include="..\..\cocos2d\cocos\2d\platform\wp8-xaml\cpp\EditBoxEvent.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\platform\wp8-xaml\cpp\Cocos2dRenderer.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\platform\wp8-xaml\cpp\Direct3DContentProvider.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\platform\wp8-xaml\cpp\Direct3DInterop.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\platform\wp8-xaml\cpp\DirectXBase.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\platform\wp8-xaml\cpp\EditBoxEvent.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="..\..\Classes\AppDelegate.cpp">
       <Filter>Classes</Filter>
@@ -15,12 +15,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\cocos2d\cocos\2d\platform\wp8-xaml\cpp\Cocos2dRenderer.h" />
-    <ClInclude Include="..\..\cocos2d\cocos\2d\platform\wp8-xaml\cpp\Direct3DContentProvider.h" />
-    <ClInclude Include="..\..\cocos2d\cocos\2d\platform\wp8-xaml\cpp\Direct3DInterop.h" />
-    <ClInclude Include="..\..\cocos2d\cocos\2d\platform\wp8-xaml\cpp\DirectXBase.h" />
-    <ClInclude Include="..\..\cocos2d\cocos\2d\platform\wp8-xaml\cpp\DirectXHelper.h" />
-    <ClInclude Include="..\..\cocos2d\cocos\2d\platform\wp8-xaml\cpp\EditBoxEvent.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\platform\wp8-xaml\cpp\Cocos2dRenderer.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\platform\wp8-xaml\cpp\Direct3DContentProvider.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\platform\wp8-xaml\cpp\Direct3DInterop.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\platform\wp8-xaml\cpp\DirectXBase.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\platform\wp8-xaml\cpp\DirectXHelper.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\platform\wp8-xaml\cpp\EditBoxEvent.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="..\..\Classes\AppDelegate.h">
       <Filter>Classes</Filter>

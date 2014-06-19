@@ -6,7 +6,7 @@
 --------------------------------
 -- @function [parent=#RenderTexture] setVirtualViewport 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
 -- @param #rect_table rect
 -- @param #rect_table rect
         
@@ -64,14 +64,15 @@
 -- @param self
         
 --------------------------------
--- overload function: saveToFile(string, cc.Image::Format)
+-- overload function: saveToFile(string, cc.Image::Format, bool)
 --          
--- overload function: saveToFile(string)
+-- overload function: saveToFile(string, bool)
 --          
 -- @function [parent=#RenderTexture] saveToFile
 -- @param self
 -- @param #string str
 -- @param #cc.Image::Format format
+-- @param #bool bool
 -- @return bool#bool ret (retunr value: bool)
 
 --------------------------------
@@ -169,15 +170,15 @@
 -- @function [parent=#RenderTexture] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #cc.Mat4 mat4
--- @param #bool bool
+-- @param #mat4_table mat4
+-- @param #unsigned int int
         
 --------------------------------
 -- @function [parent=#RenderTexture] visit 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #cc.Mat4 mat4
--- @param #bool bool
+-- @param #mat4_table mat4
+-- @param #unsigned int int
         
 --------------------------------
 -- @function [parent=#RenderTexture] RenderTexture 
