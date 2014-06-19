@@ -54,14 +54,17 @@ const FileSendProtos_VerifyMode FileSendProtos_VerifyMode_VerifyMode_MIN = FileS
 const FileSendProtos_VerifyMode FileSendProtos_VerifyMode_VerifyMode_MAX = FileSendProtos_VerifyMode_MD5;
 const int FileSendProtos_VerifyMode_VerifyMode_ARRAYSIZE = FileSendProtos_VerifyMode_VerifyMode_MAX + 1;
 
-enum FileSendComplete_RESULT {
-  FileSendComplete_RESULT_SUCCESS = 0,
-  FileSendComplete_RESULT_FAILED_LOWDISKSPACE = 1
+enum FileSendComplete_RESULTTYPE {
+  FileSendComplete_RESULTTYPE_SUCCESS = 0,
+  FileSendComplete_RESULTTYPE_RECV_ERROR = 1,
+  FileSendComplete_RESULTTYPE_UNCOMPRESS_ERROR = 2,
+  FileSendComplete_RESULTTYPE_FOPEN_ERROR = 3,
+  FileSendComplete_RESULTTYPE_FWRITE_ERROR = 4
 };
-bool FileSendComplete_RESULT_IsValid(int value);
-const FileSendComplete_RESULT FileSendComplete_RESULT_RESULT_MIN = FileSendComplete_RESULT_SUCCESS;
-const FileSendComplete_RESULT FileSendComplete_RESULT_RESULT_MAX = FileSendComplete_RESULT_FAILED_LOWDISKSPACE;
-const int FileSendComplete_RESULT_RESULT_ARRAYSIZE = FileSendComplete_RESULT_RESULT_MAX + 1;
+bool FileSendComplete_RESULTTYPE_IsValid(int value);
+const FileSendComplete_RESULTTYPE FileSendComplete_RESULTTYPE_RESULTTYPE_MIN = FileSendComplete_RESULTTYPE_SUCCESS;
+const FileSendComplete_RESULTTYPE FileSendComplete_RESULTTYPE_RESULTTYPE_MAX = FileSendComplete_RESULTTYPE_FWRITE_ERROR;
+const int FileSendComplete_RESULTTYPE_RESULTTYPE_ARRAYSIZE = FileSendComplete_RESULTTYPE_RESULTTYPE_MAX + 1;
 
 // ===================================================================
 
@@ -316,18 +319,21 @@ class FileSendComplete : public ::google::protobuf::MessageLite {
 
   // nested types ----------------------------------------------------
 
-  typedef FileSendComplete_RESULT RESULT;
-  static const RESULT SUCCESS = FileSendComplete_RESULT_SUCCESS;
-  static const RESULT FAILED_LOWDISKSPACE = FileSendComplete_RESULT_FAILED_LOWDISKSPACE;
-  static inline bool RESULT_IsValid(int value) {
-    return FileSendComplete_RESULT_IsValid(value);
+  typedef FileSendComplete_RESULTTYPE RESULTTYPE;
+  static const RESULTTYPE SUCCESS = FileSendComplete_RESULTTYPE_SUCCESS;
+  static const RESULTTYPE RECV_ERROR = FileSendComplete_RESULTTYPE_RECV_ERROR;
+  static const RESULTTYPE UNCOMPRESS_ERROR = FileSendComplete_RESULTTYPE_UNCOMPRESS_ERROR;
+  static const RESULTTYPE FOPEN_ERROR = FileSendComplete_RESULTTYPE_FOPEN_ERROR;
+  static const RESULTTYPE FWRITE_ERROR = FileSendComplete_RESULTTYPE_FWRITE_ERROR;
+  static inline bool RESULTTYPE_IsValid(int value) {
+    return FileSendComplete_RESULTTYPE_IsValid(value);
   }
-  static const RESULT RESULT_MIN =
-    FileSendComplete_RESULT_RESULT_MIN;
-  static const RESULT RESULT_MAX =
-    FileSendComplete_RESULT_RESULT_MAX;
-  static const int RESULT_ARRAYSIZE =
-    FileSendComplete_RESULT_RESULT_ARRAYSIZE;
+  static const RESULTTYPE RESULTTYPE_MIN =
+    FileSendComplete_RESULTTYPE_RESULTTYPE_MIN;
+  static const RESULTTYPE RESULTTYPE_MAX =
+    FileSendComplete_RESULTTYPE_RESULTTYPE_MAX;
+  static const int RESULTTYPE_ARRAYSIZE =
+    FileSendComplete_RESULTTYPE_RESULTTYPE_ARRAYSIZE;
 
   // accessors -------------------------------------------------------
 
@@ -343,12 +349,26 @@ class FileSendComplete : public ::google::protobuf::MessageLite {
   inline ::std::string* release_file_name();
   inline void set_allocated_file_name(::std::string* file_name);
 
-  // required .runtime.FileSendComplete.RESULT result = 2;
+  // required .runtime.FileSendComplete.RESULTTYPE result = 2;
   inline bool has_result() const;
   inline void clear_result();
   static const int kResultFieldNumber = 2;
-  inline ::runtime::FileSendComplete_RESULT result() const;
-  inline void set_result(::runtime::FileSendComplete_RESULT value);
+  inline ::runtime::FileSendComplete_RESULTTYPE result() const;
+  inline void set_result(::runtime::FileSendComplete_RESULTTYPE value);
+
+  // required int32 package_seq = 3;
+  inline bool has_package_seq() const;
+  inline void clear_package_seq();
+  static const int kPackageSeqFieldNumber = 3;
+  inline ::google::protobuf::int32 package_seq() const;
+  inline void set_package_seq(::google::protobuf::int32 value);
+
+  // required int32 error_num = 4;
+  inline bool has_error_num() const;
+  inline void clear_error_num();
+  static const int kErrorNumFieldNumber = 4;
+  inline ::google::protobuf::int32 error_num() const;
+  inline void set_error_num(::google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:runtime.FileSendComplete)
  private:
@@ -356,12 +376,18 @@ class FileSendComplete : public ::google::protobuf::MessageLite {
   inline void clear_has_file_name();
   inline void set_has_result();
   inline void clear_has_result();
+  inline void set_has_package_seq();
+  inline void clear_has_package_seq();
+  inline void set_has_error_num();
+  inline void clear_has_error_num();
 
   ::std::string* file_name_;
   int result_;
+  ::google::protobuf::int32 package_seq_;
+  ::google::protobuf::int32 error_num_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Protos_2eproto_impl();
@@ -751,7 +777,7 @@ inline void FileSendComplete::set_allocated_file_name(::std::string* file_name) 
   }
 }
 
-// required .runtime.FileSendComplete.RESULT result = 2;
+// required .runtime.FileSendComplete.RESULTTYPE result = 2;
 inline bool FileSendComplete::has_result() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -765,13 +791,57 @@ inline void FileSendComplete::clear_result() {
   result_ = 0;
   clear_has_result();
 }
-inline ::runtime::FileSendComplete_RESULT FileSendComplete::result() const {
-  return static_cast< ::runtime::FileSendComplete_RESULT >(result_);
+inline ::runtime::FileSendComplete_RESULTTYPE FileSendComplete::result() const {
+  return static_cast< ::runtime::FileSendComplete_RESULTTYPE >(result_);
 }
-inline void FileSendComplete::set_result(::runtime::FileSendComplete_RESULT value) {
-  assert(::runtime::FileSendComplete_RESULT_IsValid(value));
+inline void FileSendComplete::set_result(::runtime::FileSendComplete_RESULTTYPE value) {
+  assert(::runtime::FileSendComplete_RESULTTYPE_IsValid(value));
   set_has_result();
   result_ = value;
+}
+
+// required int32 package_seq = 3;
+inline bool FileSendComplete::has_package_seq() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void FileSendComplete::set_has_package_seq() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void FileSendComplete::clear_has_package_seq() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void FileSendComplete::clear_package_seq() {
+  package_seq_ = 0;
+  clear_has_package_seq();
+}
+inline ::google::protobuf::int32 FileSendComplete::package_seq() const {
+  return package_seq_;
+}
+inline void FileSendComplete::set_package_seq(::google::protobuf::int32 value) {
+  set_has_package_seq();
+  package_seq_ = value;
+}
+
+// required int32 error_num = 4;
+inline bool FileSendComplete::has_error_num() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void FileSendComplete::set_has_error_num() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void FileSendComplete::clear_has_error_num() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void FileSendComplete::clear_error_num() {
+  error_num_ = 0;
+  clear_has_error_num();
+}
+inline ::google::protobuf::int32 FileSendComplete::error_num() const {
+  return error_num_;
+}
+inline void FileSendComplete::set_error_num(::google::protobuf::int32 value) {
+  set_has_error_num();
+  error_num_ = value;
 }
 
 

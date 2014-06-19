@@ -154,7 +154,7 @@ private:
     void loopReceiveFile();
     void loopWriteFile();
     void loopResponse();
-    void addResponse(int fd, string fileName,int errortype);
+    void addResponse(int fd, string filename,int errortype,int errornum,int packageseq);
     enum PROTONUM
     {
         FILEPROTO=1,
@@ -197,6 +197,9 @@ private:
 
     string _strFileName;
     std::mutex _fileNameMutex;
+
+    string _recvErrorFile;
+    string _writeErrorFile;
 };
 
 FileServer* FileServer::s_sharedFileServer =nullptr;
@@ -433,6 +436,14 @@ void FileServer::loopReceiveFile()
         RecvBufStruct recvDataBuf;
         recvDataBuf.fd = fd;
         recvDataBuf.fileProto.ParseFromString(_protoBuf);
+        if (1 == recvDataBuf.fileProto.package_seq()){
+            _recvErrorFile = "";
+        }else{
+            // recv error
+            if (_recvErrorFile == recvDataBuf.fileProto.file_name()){
+                continue;
+            }
+        }
         int contentSize = recvDataBuf.fileProto.content_size();
         if (contentSize>0){  
             //recv body data
@@ -455,12 +466,15 @@ void FileServer::loopReceiveFile()
             }
         
             if (recvDataBuf.fileProto.compress_type() == runtime::FileSendProtos_CompressType::FileSendProtos_CompressType_ZIP){
-                ULONG uncompressSize = recvDataBuf.fileProto.uncompress_size();
+                unsigned long uncompressSize = recvDataBuf.fileProto.uncompress_size();
                 Bytef *buff = new Bytef[uncompressSize * sizeof(Bytef)];
                 memset(buff, 0, uncompressSize * sizeof(Bytef));
-                int err = uncompress(buff, &uncompressSize,contentbuf, contentSize * sizeof(Bytef));
+                int err = ::uncompress(buff, &uncompressSize,contentbuf, contentSize * sizeof(Bytef));
                 if (err != Z_OK){
-                    // ?
+                    CC_SAFE_DELETE_ARRAY(buff);
+                    CC_SAFE_DELETE_ARRAY(contentbuf);
+                    addResponse(recvDataBuf.fd,recvDataBuf.fileProto.file_name(),runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_UNCOMPRESS_ERROR,err,recvDataBuf.fileProto.package_seq());
+                    continue;
                 }
                 CC_SAFE_DELETE_ARRAY(contentbuf);
                 contentbuf = buff;
@@ -482,7 +496,7 @@ void FileServer::loopWriteFile()
          _recvBufListMutex.lock();
          int recvSize = _recvBufList.size();
          _recvBufListMutex.unlock();
-         if(recvSize==0){
+         if(0 == recvSize){
              sleep(500);
              continue;
          }
@@ -502,34 +516,56 @@ void FileServer::loopWriteFile()
 
          FILE *fp= nullptr;
          if (1 == recvDataBuf.fileProto.package_seq()){
-              fp=fopen(fullfilename.c_str(), "wb");
+             _writeErrorFile ="";
+             fp=fopen(fullfilename.c_str(), "wb");
          }else{
+             if (_writeErrorFile == filename){
+                 continue;
+             }
              fp=fopen(fullfilename.c_str(), "ab");
          }
-         if (errno == ENOSPC){
-              addResponse(recvDataBuf.fd,filename,runtime::FileSendComplete::RESULT::FileSendComplete_RESULT_FAILED_LOWDISKSPACE);
+         if (nullptr == fp){
+              addResponse(recvDataBuf.fd,filename,runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_FOPEN_ERROR,errno,recvDataBuf.fileProto.package_seq());
+            continue;
          }
          if (fp){
-             fwrite(recvDataBuf.contentBuf.c_str(), sizeof(char), recvDataBuf.contentBuf.size(),fp);
+             if (0 == fwrite(recvDataBuf.contentBuf.c_str(), sizeof(char), recvDataBuf.contentBuf.size(),fp)){
+                 addResponse(recvDataBuf.fd,filename,runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_FWRITE_ERROR,errno,recvDataBuf.fileProto.package_seq());
+             }
              fclose(fp);
+            continue;
          }
 
          if (recvDataBuf.fileProto.package_seq() == recvDataBuf.fileProto.package_sum()){
-
              //record new file modify
              addResFileInfo(filename.c_str(),recvDataBuf.fileProto.modified_time());
-             addResponse(recvDataBuf.fd,filename,runtime::FileSendComplete::RESULT::FileSendComplete_RESULT_SUCCESS);
+             addResponse(recvDataBuf.fd,filename,runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_SUCCESS,errno,recvDataBuf.fileProto.package_seq());
          }
      }
 }
 
-
-void FileServer::addResponse(int fd, string filename,int errortype)
+void FileServer::addResponse(int fd, string filename,int errortype,int errornum,int packageseq)
 {
+    switch (errortype)
+    {
+    case runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_UNCOMPRESS_ERROR:
+    case runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_RECV_ERROR:
+        _recvErrorFile = filename;
+        break;
+    case runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_FOPEN_ERROR:
+    case runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_FWRITE_ERROR:
+        _writeErrorFile = filename;
+        break;
+    default:
+        break;
+    }
+  
     ResponseStruct responseBuf;
     responseBuf.fd = fd;
     responseBuf.fileResponseProto.set_file_name(filename.c_str());
-    responseBuf.fileResponseProto.set_result((::runtime::FileSendComplete_RESULT)errortype);
+    responseBuf.fileResponseProto.set_result((::runtime::FileSendComplete_RESULTTYPE)errortype);
+    responseBuf.fileResponseProto.set_error_num(errornum);
+    responseBuf.fileResponseProto.set_package_seq(packageseq);
 
     // push Response struct
     _responseBufListMutex.lock();
@@ -543,7 +579,7 @@ void FileServer::loopResponse()
         _responseBufListMutex.lock();
         int responseSize =  _responseBufList.size();
         _responseBufListMutex.unlock();
-        if(responseSize==0){
+        if(0 == responseSize){
             sleep(500);
             continue;
         }

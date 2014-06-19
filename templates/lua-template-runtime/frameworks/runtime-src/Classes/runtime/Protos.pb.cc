@@ -563,10 +563,13 @@ void FileSendProtos::Swap(FileSendProtos* other) {
 
 // ===================================================================
 
-bool FileSendComplete_RESULT_IsValid(int value) {
+bool FileSendComplete_RESULTTYPE_IsValid(int value) {
   switch(value) {
     case 0:
     case 1:
+    case 2:
+    case 3:
+    case 4:
       return true;
     default:
       return false;
@@ -574,15 +577,20 @@ bool FileSendComplete_RESULT_IsValid(int value) {
 }
 
 #ifndef _MSC_VER
-const FileSendComplete_RESULT FileSendComplete::SUCCESS;
-const FileSendComplete_RESULT FileSendComplete::FAILED_LOWDISKSPACE;
-const FileSendComplete_RESULT FileSendComplete::RESULT_MIN;
-const FileSendComplete_RESULT FileSendComplete::RESULT_MAX;
-const int FileSendComplete::RESULT_ARRAYSIZE;
+const FileSendComplete_RESULTTYPE FileSendComplete::SUCCESS;
+const FileSendComplete_RESULTTYPE FileSendComplete::RECV_ERROR;
+const FileSendComplete_RESULTTYPE FileSendComplete::UNCOMPRESS_ERROR;
+const FileSendComplete_RESULTTYPE FileSendComplete::FOPEN_ERROR;
+const FileSendComplete_RESULTTYPE FileSendComplete::FWRITE_ERROR;
+const FileSendComplete_RESULTTYPE FileSendComplete::RESULTTYPE_MIN;
+const FileSendComplete_RESULTTYPE FileSendComplete::RESULTTYPE_MAX;
+const int FileSendComplete::RESULTTYPE_ARRAYSIZE;
 #endif  // _MSC_VER
 #ifndef _MSC_VER
 const int FileSendComplete::kFileNameFieldNumber;
 const int FileSendComplete::kResultFieldNumber;
+const int FileSendComplete::kPackageSeqFieldNumber;
+const int FileSendComplete::kErrorNumFieldNumber;
 #endif  // !_MSC_VER
 
 FileSendComplete::FileSendComplete()
@@ -603,6 +611,8 @@ void FileSendComplete::SharedCtor() {
   _cached_size_ = 0;
   file_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   result_ = 0;
+  package_seq_ = 0;
+  error_num_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -650,6 +660,8 @@ void FileSendComplete::Clear() {
       }
     }
     result_ = 0;
+    package_seq_ = 0;
+    error_num_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -673,7 +685,7 @@ bool FileSendComplete::MergePartialFromCodedStream(
         break;
       }
 
-      // required .runtime.FileSendComplete.RESULT result = 2;
+      // required .runtime.FileSendComplete.RESULTTYPE result = 2;
       case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
@@ -682,9 +694,41 @@ bool FileSendComplete::MergePartialFromCodedStream(
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-          if (::runtime::FileSendComplete_RESULT_IsValid(value)) {
-            set_result(static_cast< ::runtime::FileSendComplete_RESULT >(value));
+          if (::runtime::FileSendComplete_RESULTTYPE_IsValid(value)) {
+            set_result(static_cast< ::runtime::FileSendComplete_RESULTTYPE >(value));
           }
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(24)) goto parse_package_seq;
+        break;
+      }
+
+      // required int32 package_seq = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_package_seq:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &package_seq_)));
+          set_has_package_seq();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(32)) goto parse_error_num;
+        break;
+      }
+
+      // required int32 error_num = 4;
+      case 4: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_error_num:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &error_num_)));
+          set_has_error_num();
         } else {
           goto handle_uninterpreted;
         }
@@ -715,10 +759,20 @@ void FileSendComplete::SerializeWithCachedSizes(
       1, this->file_name(), output);
   }
 
-  // required .runtime.FileSendComplete.RESULT result = 2;
+  // required .runtime.FileSendComplete.RESULTTYPE result = 2;
   if (has_result()) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       2, this->result(), output);
+  }
+
+  // required int32 package_seq = 3;
+  if (has_package_seq()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->package_seq(), output);
+  }
+
+  // required int32 error_num = 4;
+  if (has_error_num()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->error_num(), output);
   }
 
 }
@@ -734,10 +788,24 @@ int FileSendComplete::ByteSize() const {
           this->file_name());
     }
 
-    // required .runtime.FileSendComplete.RESULT result = 2;
+    // required .runtime.FileSendComplete.RESULTTYPE result = 2;
     if (has_result()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->result());
+    }
+
+    // required int32 package_seq = 3;
+    if (has_package_seq()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->package_seq());
+    }
+
+    // required int32 error_num = 4;
+    if (has_error_num()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->error_num());
     }
 
   }
@@ -761,6 +829,12 @@ void FileSendComplete::MergeFrom(const FileSendComplete& from) {
     if (from.has_result()) {
       set_result(from.result());
     }
+    if (from.has_package_seq()) {
+      set_package_seq(from.package_seq());
+    }
+    if (from.has_error_num()) {
+      set_error_num(from.error_num());
+    }
   }
 }
 
@@ -771,7 +845,7 @@ void FileSendComplete::CopyFrom(const FileSendComplete& from) {
 }
 
 bool FileSendComplete::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
+  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
 
   return true;
 }
@@ -780,6 +854,8 @@ void FileSendComplete::Swap(FileSendComplete* other) {
   if (other != this) {
     std::swap(file_name_, other->file_name_);
     std::swap(result_, other->result_);
+    std::swap(package_seq_, other->package_seq_);
+    std::swap(error_num_, other->error_num_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     std::swap(_cached_size_, other->_cached_size_);
   }
