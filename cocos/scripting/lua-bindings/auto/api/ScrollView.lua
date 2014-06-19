@@ -196,7 +196,7 @@
 -- @function [parent=#ScrollView] getChildByName 
 -- @param self
 -- @param #string str
--- @return Widget#Widget ret (return value: ccui.Widget)
+-- @return Node#Node ret (return value: cc.Node)
         
 --------------------------------
 -- @function [parent=#ScrollView] getDescription 

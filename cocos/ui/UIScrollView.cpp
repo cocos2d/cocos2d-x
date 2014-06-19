@@ -95,9 +95,16 @@ ScrollView* ScrollView::create()
     
 void ScrollView::onEnter()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnEnter))
+            return;
+    }
+#endif
+    
     Layout::onEnter();
     scheduleUpdate();
-   
 }
 
 bool ScrollView::init()
@@ -268,7 +275,7 @@ Node* ScrollView::getChildByTag(int tag) const
     return _innerContainer->getChildByTag(tag);
 }
     
-Widget* ScrollView::getChildByName(const std::string& name)const
+Node* ScrollView::getChildByName(const std::string& name)const
 {
     return _innerContainer->getChildByName(name);
 }

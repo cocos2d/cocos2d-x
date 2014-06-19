@@ -1741,10 +1741,12 @@
 		B29594CB1926D61F003EEF37 /* CCSprite3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B29594BD1926D61F003EEF37 /* CCSprite3D.cpp */; };
 		B29594CC1926D61F003EEF37 /* CCSprite3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B29594BE1926D61F003EEF37 /* CCSprite3D.h */; };
 		B29594CD1926D61F003EEF37 /* CCSprite3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B29594BE1926D61F003EEF37 /* CCSprite3D.h */; };
-		B29594CE1926D61F003EEF37 /* CCSprite3DDataCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B29594BF1926D61F003EEF37 /* CCSprite3DDataCache.cpp */; };
-		B29594CF1926D61F003EEF37 /* CCSprite3DDataCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B29594BF1926D61F003EEF37 /* CCSprite3DDataCache.cpp */; };
-		B29594D01926D61F003EEF37 /* CCSprite3DDataCache.h in Headers */ = {isa = PBXBuildFile; fileRef = B29594C01926D61F003EEF37 /* CCSprite3DDataCache.h */; };
-		B29594D11926D61F003EEF37 /* CCSprite3DDataCache.h in Headers */ = {isa = PBXBuildFile; fileRef = B29594C01926D61F003EEF37 /* CCSprite3DDataCache.h */; };
+		B29594CE1926D61F003EEF37 /* CCSprite3DMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B29594BF1926D61F003EEF37 /* CCSprite3DMaterial.cpp */; };
+		B29594CF1926D61F003EEF37 /* CCSprite3DMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B29594BF1926D61F003EEF37 /* CCSprite3DMaterial.cpp */; };
+		B29594D01926D61F003EEF37 /* CCSprite3DMaterial.h in Headers */ = {isa = PBXBuildFile; fileRef = B29594C01926D61F003EEF37 /* CCSprite3DMaterial.h */; };
+		B29594D11926D61F003EEF37 /* CCSprite3DMaterial.h in Headers */ = {isa = PBXBuildFile; fileRef = B29594C01926D61F003EEF37 /* CCSprite3DMaterial.h */; };
+		B2D3D3B91948613300BA4831 /* CCBundle3DData.h in Headers */ = {isa = PBXBuildFile; fileRef = B2D3D3B81948613300BA4831 /* CCBundle3DData.h */; };
+		B2D3D3BA1948613300BA4831 /* CCBundle3DData.h in Headers */ = {isa = PBXBuildFile; fileRef = B2D3D3B81948613300BA4831 /* CCBundle3DData.h */; };
 		B37510711823AC9F00B3BA6A /* CCPhysicsBodyInfo_chipmunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B37510451823AC7B00B3BA6A /* CCPhysicsBodyInfo_chipmunk.cpp */; };
 		B37510721823AC9F00B3BA6A /* CCPhysicsBodyInfo_chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = B37510461823AC7B00B3BA6A /* CCPhysicsBodyInfo_chipmunk.h */; };
 		B37510731823AC9F00B3BA6A /* CCPhysicsContactInfo_chipmunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B37510471823AC7B00B3BA6A /* CCPhysicsContactInfo_chipmunk.cpp */; };
@@ -1773,6 +1775,24 @@
 		B3AF01A31842FBA400A98B85 /* b2MotorJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = B3AF019F1842FBA400A98B85 /* b2MotorJoint.h */; };
 		B3B12A5A17E7F44000026B4A /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A03F2CB81780BD04006731B9 /* libchipmunk Mac.a */; };
 		B3B12A5B17E7F45C00026B4A /* libchipmunk iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A4F3B178387670073F6A7 /* libchipmunk iOS.a */; };
+		B6AAF84119404E0D0069DE01 /* CCBundle3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6AAF83F19404E0D0069DE01 /* CCBundle3D.cpp */; };
+		B6AAF84219404E0D0069DE01 /* CCBundle3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6AAF83F19404E0D0069DE01 /* CCBundle3D.cpp */; };
+		B6AAF84319404E0D0069DE01 /* CCBundle3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B6AAF84019404E0D0069DE01 /* CCBundle3D.h */; };
+		B6AAF84419404E0D0069DE01 /* CCBundle3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B6AAF84019404E0D0069DE01 /* CCBundle3D.h */; };
+		B6ACD897193D6693005E0B8A /* CCMeshSkin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6ACD895193D6693005E0B8A /* CCMeshSkin.cpp */; };
+		B6ACD898193D6693005E0B8A /* CCMeshSkin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6ACD895193D6693005E0B8A /* CCMeshSkin.cpp */; };
+		B6ACD899193D6693005E0B8A /* CCMeshSkin.h in Headers */ = {isa = PBXBuildFile; fileRef = B6ACD896193D6693005E0B8A /* CCMeshSkin.h */; };
+		B6ACD89A193D6693005E0B8A /* CCMeshSkin.h in Headers */ = {isa = PBXBuildFile; fileRef = B6ACD896193D6693005E0B8A /* CCMeshSkin.h */; };
+		B6ACD89E193DC0CC005E0B8A /* CCAnimate3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6ACD89C193DC0CC005E0B8A /* CCAnimate3D.cpp */; };
+		B6ACD89F193DC0CC005E0B8A /* CCAnimate3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6ACD89C193DC0CC005E0B8A /* CCAnimate3D.cpp */; };
+		B6ACD8A0193DC0CC005E0B8A /* CCAnimate3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B6ACD89D193DC0CC005E0B8A /* CCAnimate3D.h */; };
+		B6ACD8A1193DC0CC005E0B8A /* CCAnimate3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B6ACD89D193DC0CC005E0B8A /* CCAnimate3D.h */; };
+		B6B2633F19381FBF0088FE25 /* CCAnimationCurve.h in Headers */ = {isa = PBXBuildFile; fileRef = B6B2633C19381FBF0088FE25 /* CCAnimationCurve.h */; };
+		B6B2634019381FBF0088FE25 /* CCAnimationCurve.h in Headers */ = {isa = PBXBuildFile; fileRef = B6B2633C19381FBF0088FE25 /* CCAnimationCurve.h */; };
+		B6B26343193884D60088FE25 /* CCAnimation3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6B26341193884D60088FE25 /* CCAnimation3D.cpp */; };
+		B6B26344193884D60088FE25 /* CCAnimation3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6B26341193884D60088FE25 /* CCAnimation3D.cpp */; };
+		B6B26345193884D60088FE25 /* CCAnimation3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B6B26342193884D60088FE25 /* CCAnimation3D.h */; };
+		B6B26346193884D60088FE25 /* CCAnimation3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B6B26342193884D60088FE25 /* CCAnimation3D.h */; };
 		ED9C6A9418599AD8000A5232 /* CCNodeGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */; };
 		ED9C6A9518599AD8000A5232 /* CCNodeGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */; };
 		ED9C6A9618599AD8000A5232 /* CCNodeGrid.h in Headers */ = {isa = PBXBuildFile; fileRef = ED9C6A9318599AD8000A5232 /* CCNodeGrid.h */; };
@@ -2792,8 +2812,9 @@
 		B29594BC1926D61F003EEF37 /* CCObjLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCObjLoader.h; sourceTree = "<group>"; };
 		B29594BD1926D61F003EEF37 /* CCSprite3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSprite3D.cpp; sourceTree = "<group>"; };
 		B29594BE1926D61F003EEF37 /* CCSprite3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSprite3D.h; sourceTree = "<group>"; };
-		B29594BF1926D61F003EEF37 /* CCSprite3DDataCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSprite3DDataCache.cpp; sourceTree = "<group>"; };
-		B29594C01926D61F003EEF37 /* CCSprite3DDataCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSprite3DDataCache.h; sourceTree = "<group>"; };
+		B29594BF1926D61F003EEF37 /* CCSprite3DMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSprite3DMaterial.cpp; sourceTree = "<group>"; };
+		B29594C01926D61F003EEF37 /* CCSprite3DMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSprite3DMaterial.h; sourceTree = "<group>"; };
+		B2D3D3B81948613300BA4831 /* CCBundle3DData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBundle3DData.h; sourceTree = "<group>"; };
 		B37510451823AC7B00B3BA6A /* CCPhysicsBodyInfo_chipmunk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsBodyInfo_chipmunk.cpp; sourceTree = "<group>"; };
 		B37510461823AC7B00B3BA6A /* CCPhysicsBodyInfo_chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsBodyInfo_chipmunk.h; sourceTree = "<group>"; };
 		B37510471823AC7B00B3BA6A /* CCPhysicsContactInfo_chipmunk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsContactInfo_chipmunk.cpp; sourceTree = "<group>"; };
@@ -2807,6 +2828,16 @@
 		B375104F1823AC7B00B3BA6A /* CCPhysicsWorldInfo_chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsWorldInfo_chipmunk.h; sourceTree = "<group>"; };
 		B3AF019E1842FBA400A98B85 /* b2MotorJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2MotorJoint.cpp; sourceTree = "<group>"; };
 		B3AF019F1842FBA400A98B85 /* b2MotorJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2MotorJoint.h; sourceTree = "<group>"; };
+		B6AAF83F19404E0D0069DE01 /* CCBundle3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBundle3D.cpp; sourceTree = "<group>"; };
+		B6AAF84019404E0D0069DE01 /* CCBundle3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBundle3D.h; sourceTree = "<group>"; };
+		B6ACD895193D6693005E0B8A /* CCMeshSkin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMeshSkin.cpp; sourceTree = "<group>"; };
+		B6ACD896193D6693005E0B8A /* CCMeshSkin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMeshSkin.h; sourceTree = "<group>"; };
+		B6ACD89C193DC0CC005E0B8A /* CCAnimate3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAnimate3D.cpp; sourceTree = "<group>"; };
+		B6ACD89D193DC0CC005E0B8A /* CCAnimate3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAnimate3D.h; sourceTree = "<group>"; };
+		B6B2633B19381FBF0088FE25 /* CCAnimationCurve.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CCAnimationCurve.inl; sourceTree = "<group>"; };
+		B6B2633C19381FBF0088FE25 /* CCAnimationCurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAnimationCurve.h; sourceTree = "<group>"; };
+		B6B26341193884D60088FE25 /* CCAnimation3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAnimation3D.cpp; sourceTree = "<group>"; };
+		B6B26342193884D60088FE25 /* CCAnimation3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAnimation3D.h; sourceTree = "<group>"; };
 		ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCNodeGrid.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		ED9C6A9318599AD8000A5232 /* CCNodeGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNodeGrid.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -4817,14 +4848,25 @@
 		B29594B81926D61F003EEF37 /* 3d */ = {
 			isa = PBXGroup;
 			children = (
+				B6AAF83F19404E0D0069DE01 /* CCBundle3D.cpp */,
+				B6AAF84019404E0D0069DE01 /* CCBundle3D.h */,
+				B6ACD89C193DC0CC005E0B8A /* CCAnimate3D.cpp */,
+				B6ACD89D193DC0CC005E0B8A /* CCAnimate3D.h */,
+				B6ACD895193D6693005E0B8A /* CCMeshSkin.cpp */,
+				B6ACD896193D6693005E0B8A /* CCMeshSkin.h */,
+				B6B26341193884D60088FE25 /* CCAnimation3D.cpp */,
+				B6B26342193884D60088FE25 /* CCAnimation3D.h */,
+				B6B2633B19381FBF0088FE25 /* CCAnimationCurve.inl */,
+				B6B2633C19381FBF0088FE25 /* CCAnimationCurve.h */,
 				B29594B91926D61F003EEF37 /* CCMesh.cpp */,
 				B29594BA1926D61F003EEF37 /* CCMesh.h */,
 				B29594BB1926D61F003EEF37 /* CCObjLoader.cpp */,
 				B29594BC1926D61F003EEF37 /* CCObjLoader.h */,
 				B29594BD1926D61F003EEF37 /* CCSprite3D.cpp */,
 				B29594BE1926D61F003EEF37 /* CCSprite3D.h */,
-				B29594BF1926D61F003EEF37 /* CCSprite3DDataCache.cpp */,
-				B29594C01926D61F003EEF37 /* CCSprite3DDataCache.h */,
+				B29594BF1926D61F003EEF37 /* CCSprite3DMaterial.cpp */,
+				B29594C01926D61F003EEF37 /* CCSprite3DMaterial.h */,
+				B2D3D3B81948613300BA4831 /* CCBundle3DData.h */,
 			);
 			name = 3d;
 			path = ../cocos/3d;
@@ -4851,7 +4893,7 @@
 				06CAAAC9186AD7EE0012A414 /* TriggerMng.h in Headers */,
 				2905FA6018CF08D100240AA3 /* UILayoutParameter.h in Headers */,
 				50ABBEA51925AB6F00A911A9 /* CCScriptSupport.h in Headers */,
-				B29594D01926D61F003EEF37 /* CCSprite3DDataCache.h in Headers */,
+				B29594D01926D61F003EEF37 /* CCSprite3DMaterial.h in Headers */,
 				1ABA68B01888D700007D1BB4 /* CCFontCharMap.h in Headers */,
 				5034CA3F191D591100CE6051 /* ccShader_Position_uColor.vert in Headers */,
 				50ABBD461925AB0000A911A9 /* CCVertex.h in Headers */,
@@ -4892,6 +4934,7 @@
 				50ABBD8D1925AB4100A911A9 /* CCGLProgram.h in Headers */,
 				50ABBEA11925AB6F00A911A9 /* CCScheduler.h in Headers */,
 				50ABBDB71925AB4100A911A9 /* CCTexture2D.h in Headers */,
+				B2D3D3B91948613300BA4831 /* CCBundle3DData.h in Headers */,
 				2905FA6C18CF08D100240AA3 /* UIPageView.h in Headers */,
 				50FCEB9518C72017004AD434 /* ButtonReader.h in Headers */,
 				50ABBE811925AB6F00A911A9 /* CCEventType.h in Headers */,
@@ -5183,6 +5226,11 @@
 				1A8C5A0F180E930E00EF57C3 /* DictionaryHelper.h in Headers */,
 				50FCEBBD18C72017004AD434 /* TextBMFontReader.h in Headers */,
 				50FCEBCB18C72017004AD434 /* WidgetReaderProtocol.h in Headers */,
+				B6B2633F19381FBF0088FE25 /* CCAnimationCurve.h in Headers */,
+				B6B26345193884D60088FE25 /* CCAnimation3D.h in Headers */,
+				B6ACD899193D6693005E0B8A /* CCMeshSkin.h in Headers */,
+				B6ACD8A0193DC0CC005E0B8A /* CCAnimate3D.h in Headers */,
+				B6AAF84319404E0D0069DE01 /* CCBundle3D.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5339,7 +5387,7 @@
 				50ABBD3B1925AB0000A911A9 /* CCAffineTransform.h in Headers */,
 				5034CA38191D591100CE6051 /* ccShader_PositionColorLengthTexture.vert in Headers */,
 				50ABBE7C1925AB6F00A911A9 /* CCEventMouse.h in Headers */,
-				B29594D11926D61F003EEF37 /* CCSprite3DDataCache.h in Headers */,
+				B29594D11926D61F003EEF37 /* CCSprite3DMaterial.h in Headers */,
 				46A171011807CECB005B8026 /* CCPhysicsJoint.h in Headers */,
 				46A170FD1807CECB005B8026 /* CCPhysicsBody.h in Headers */,
 				2905FA6118CF08D100240AA3 /* UILayoutParameter.h in Headers */,
@@ -5375,6 +5423,7 @@
 				1A01C68918F57BE800EFE3A6 /* CCBool.h in Headers */,
 				1A57007C180BC5A10088DEC7 /* CCActionInstant.h in Headers */,
 				50ABBE781925AB6F00A911A9 /* CCEventListenerTouch.h in Headers */,
+				B2D3D3BA1948613300BA4831 /* CCBundle3DData.h in Headers */,
 				B37510861823ACA100B3BA6A /* CCPhysicsWorldInfo_chipmunk.h in Headers */,
 				1A570080180BC5A10088DEC7 /* CCActionInterval.h in Headers */,
 				1A570084180BC5A10088DEC7 /* CCActionManager.h in Headers */,
@@ -5678,6 +5727,11 @@
 				1A8C5A08180E930E00EF57C3 /* CocoStudio.h in Headers */,
 				1A8C5A10180E930E00EF57C3 /* DictionaryHelper.h in Headers */,
 				50ABBEB21925AB6F00A911A9 /* CCUserDefault.h in Headers */,
+				B6B2634019381FBF0088FE25 /* CCAnimationCurve.h in Headers */,
+				B6B26346193884D60088FE25 /* CCAnimation3D.h in Headers */,
+				B6ACD89A193D6693005E0B8A /* CCMeshSkin.h in Headers */,
+				B6ACD8A1193DC0CC005E0B8A /* CCAnimate3D.h in Headers */,
+				B6AAF84419404E0D0069DE01 /* CCBundle3D.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6289,7 +6343,7 @@
 				1A8C59C3180E930E00EF57C3 /* CCComController.cpp in Sources */,
 				2905FA5218CF08D100240AA3 /* UIImageView.cpp in Sources */,
 				50ABBDBD1925AB4100A911A9 /* CCTextureCache.cpp in Sources */,
-				B29594CE1926D61F003EEF37 /* CCSprite3DDataCache.cpp in Sources */,
+				B29594CE1926D61F003EEF37 /* CCSprite3DMaterial.cpp in Sources */,
 				299754F4193EC95400A54AC3 /* ObjectFactory.cpp in Sources */,
 				2905FA7C18CF08D100240AA3 /* UIText.cpp in Sources */,
 				50FCEB9F18C72017004AD434 /* LayoutReader.cpp in Sources */,
@@ -6329,6 +6383,10 @@
 				50ABBE931925AB6F00A911A9 /* CCProfiling.cpp in Sources */,
 				1ABA68AE1888D700007D1BB4 /* CCFontCharMap.cpp in Sources */,
 				2905FA4618CF08D100240AA3 /* UIButton.cpp in Sources */,
+				B6B26343193884D60088FE25 /* CCAnimation3D.cpp in Sources */,
+				B6ACD897193D6693005E0B8A /* CCMeshSkin.cpp in Sources */,
+				B6ACD89E193DC0CC005E0B8A /* CCAnimate3D.cpp in Sources */,
+				B6AAF84119404E0D0069DE01 /* CCBundle3D.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6535,7 +6593,7 @@
 				50ABBE3E1925AB6F00A911A9 /* CCDataVisitor.cpp in Sources */,
 				1A57009F180BC5D20088DEC7 /* CCNode.cpp in Sources */,
 				B37510831823ACA100B3BA6A /* CCPhysicsShapeInfo_chipmunk.cpp in Sources */,
-				B29594CF1926D61F003EEF37 /* CCSprite3DDataCache.cpp in Sources */,
+				B29594CF1926D61F003EEF37 /* CCSprite3DMaterial.cpp in Sources */,
 				1A57010F180BC8EE0088DEC7 /* CCDrawingPrimitives.cpp in Sources */,
 				1A570113180BC8EE0088DEC7 /* CCDrawNode.cpp in Sources */,
 				1A57011C180BC90D0088DEC7 /* CCGrabber.cpp in Sources */,
@@ -6770,6 +6828,10 @@
 				1ABA68AF1888D700007D1BB4 /* CCFontCharMap.cpp in Sources */,
 				50ABBE7A1925AB6F00A911A9 /* CCEventMouse.cpp in Sources */,
 				50ABBD981925AB4100A911A9 /* CCGLProgramStateCache.cpp in Sources */,
+				B6B26344193884D60088FE25 /* CCAnimation3D.cpp in Sources */,
+				B6ACD898193D6693005E0B8A /* CCMeshSkin.cpp in Sources */,
+				B6ACD89F193DC0CC005E0B8A /* CCAnimate3D.cpp in Sources */,
+				B6AAF84219404E0D0069DE01 /* CCBundle3D.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7075,6 +7137,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "../cocos/cocos2d-prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -7110,6 +7173,7 @@
 		A03F2CB71780BD04006731B9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				HEADER_SEARCH_PATHS = "";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../external/chipmunk/include/chipmunk/";
@@ -7135,6 +7199,7 @@
 			buildSettings = {
 				CLANG_WARN_BOOL_CONVERSION = NO;
 				CLANG_WARN_CONSTANT_CONVERSION = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_SHADOW = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
@@ -7185,6 +7250,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = CC_TARGET_OS_MAC;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				HEADER_SEARCH_PATHS = "";
@@ -7212,6 +7278,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_MAC,
@@ -7268,6 +7335,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "../cocos/cocos2d-prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -7346,6 +7414,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
@@ -7376,6 +7445,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				SDKROOT = iphoneos;
@@ -7408,6 +7478,7 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_WARN_BOOL_CONVERSION = NO;
 				CLANG_WARN_CONSTANT_CONVERSION = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_SHADOW = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
@@ -7443,6 +7514,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,

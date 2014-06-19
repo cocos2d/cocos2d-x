@@ -240,6 +240,7 @@ Label::Label(FontAtlas *atlas /* = nullptr */, TextHAlignment hAlignment /* = Te
              TextVAlignment vAlignment /* = TextVAlignment::TOP */,bool useDistanceField /* = false */,bool useA8Shader /* = false */)
 : _reusedLetter(nullptr)
 , _commonLineHeight(0.0f)
+, _additionalKerning(0.0f)
 , _lineBreakWithoutSpaces(false)
 , _maxLineWidth(0)
 , _labelWidth(0)
@@ -719,19 +720,30 @@ void Label::sortAllChildren()
 
 void Label::enableGlow(const Color4B& glowColor)
 {
-    if(! _useDistanceField)
-        return;
-    _currLabelEffect = LabelEffect::GLOW;
-    _effectColor = glowColor;
-    _effectColorF.r = _effectColor.r / 255.0f;
-    _effectColorF.g = _effectColor.g / 255.0f;
-    _effectColorF.b = _effectColor.b / 255.0f;
-    _effectColorF.a = _effectColor.a / 255.0f;
-    updateShaderProgram();
+    if (_currentLabelType == LabelType::TTF)
+    {
+        if (_fontConfig.distanceFieldEnabled == false)
+        {
+            auto config = _fontConfig;
+            config.outlineSize = 0;
+            config.distanceFieldEnabled = true;
+            setTTFConfig(config);
+            _contentDirty = true;
+        }
+        _currLabelEffect = LabelEffect::GLOW;
+        _effectColor = glowColor;
+        _effectColorF.r = _effectColor.r / 255.0f;
+        _effectColorF.g = _effectColor.g / 255.0f;
+        _effectColorF.b = _effectColor.b / 255.0f;
+        _effectColorF.a = _effectColor.a / 255.0f;
+        updateShaderProgram();
+    }
 }
 
 void Label::enableOutline(const Color4B& outlineColor,int outlineSize /* = -1 */)
 {
+    CCASSERT(_currentLabelType == LabelType::STRING_TEXTURE || _currentLabelType == LabelType::TTF, "Only supported system font and TTF!");
+
     _effectColor = outlineColor;
     _effectColorF.r = _effectColor.r / 255.0f;
     _effectColorF.g = _effectColor.g / 255.0f;
@@ -1163,9 +1175,38 @@ Sprite * Label::getLetter(int letterIndex)
     return nullptr;
 }
 
-int Label::getCommonLineHeight() const
+void Label::setLineHeight(float height)
 {
-    return _textSprite ? 0 : _commonLineHeight;
+    CCASSERT(_currentLabelType != LabelType::STRING_TEXTURE, "Not supported system font!");
+
+    if (_commonLineHeight != height)
+    {
+        _commonLineHeight = height;
+        _contentDirty = true;
+    }
+}
+
+float Label::getLineHeight() const
+{
+    CCASSERT(_currentLabelType != LabelType::STRING_TEXTURE, "Not supported system font!");
+    return _textSprite ? 0.0f : _commonLineHeight;
+}
+
+void Label::setAdditionalKerning(float space)
+{
+    CCASSERT(_currentLabelType != LabelType::STRING_TEXTURE, "Not supported system font!");
+    if (_additionalKerning != space)
+    {
+        _additionalKerning = space;
+        _contentDirty = true;
+    }
+}
+
+float Label::getAdditionalKerning() const
+{
+    CCASSERT(_currentLabelType != LabelType::STRING_TEXTURE, "Not supported system font!");
+
+    return _additionalKerning;
 }
 
 void Label::computeStringNumLines()
@@ -1247,6 +1288,8 @@ void Label::updateDisplayedOpacity(GLubyte parentOpacity)
 
 void Label::setTextColor(const Color4B &color)
 {
+    CCASSERT(_currentLabelType == LabelType::TTF || _currentLabelType == LabelType::STRING_TEXTURE, "Only supported system font and ttf!");
+
     _textColor = color;
     _textColorF.r = _textColor.r / 255.0f;
     _textColorF.g = _textColor.g / 255.0f;

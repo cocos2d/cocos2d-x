@@ -103,12 +103,12 @@ public:
     /** saves the texture into a file using JPEG format. The file will be saved in the Documents folder.
         Returns true if the operation is successful.
      */
-    bool saveToFile(const std::string& filename);
+    bool saveToFile(const std::string& filename, bool isRGBA = true);
 
     /** saves the texture into a file. The format could be JPG or PNG. The file will be saved in the Documents folder.
         Returns true if the operation is successful.
      */
-    bool saveToFile(const std::string& filename, Image::Format format);
+    bool saveToFile(const std::string& filename, Image::Format format, bool isRGBA = true);
     
     /** Listen "come to background" message, and save render texture.
      It only has effect on Android.
@@ -222,7 +222,7 @@ protected:
     void onClear();
     void onClearDepth();
 
-    void onSaveToFile(const std::string& fileName);
+    void onSaveToFile(const std::string& fileName, bool isRGBA = true);
     
     Mat4 _oldTransMatrix, _oldProjMatrix;
     Mat4 _transformMatrix, _projectionMatrix;

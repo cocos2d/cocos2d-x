@@ -64,29 +64,29 @@ void Cocos2dRenderer::CreateGLResources()
     else
     {
         cocos2d::GL::invalidateStateCache();
-        cocos2d::ShaderCache::getInstance()->reloadDefaultShaders();
+        cocos2d::ShaderCache::getInstance()->reloadDefaultGLPrograms();
         cocos2d::DrawPrimitives::init();
         cocos2d::VolatileTextureMgr::reloadAllTextures();
         cocos2d::EventCustom foregroundEvent(EVENT_COME_TO_FOREGROUND);
-        director->setGLDefaultValues();
         director->getEventDispatcher()->dispatchEvent(&foregroundEvent);
         cocos2d::Application::getInstance()->applicationWillEnterForeground();
-    }
+        director->setGLDefaultValues();
+  }
 
     m_loadingComplete = true;
 }
 
 void Cocos2dRenderer::Connect()
 {
+
 }
 
 // purge Cocos2d-x gl GL resourses since the DirectX/Angle Context has been lost 
 void Cocos2dRenderer::Disconnect()
 {
     Application::getInstance()->applicationDidEnterBackground();
-    EventCustom backgroundEvent(EVENT_COME_TO_BACKGROUND);
-    Director::getInstance()->getEventDispatcher()->dispatchEvent(&backgroundEvent);
-    Director::getInstance()->purgeCachedData(); 
+    cocos2d::EventCustom backgroundEvent(EVENT_COME_TO_BACKGROUND);
+    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&backgroundEvent); 
     CloseAngle();
     m_loadingComplete = false;
 }

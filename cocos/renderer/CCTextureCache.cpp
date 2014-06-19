@@ -706,6 +706,12 @@ void VolatileTextureMgr::reloadAllTextures()
 {
     _isReloading = true;
 
+    // we need to release all of the glTextures to avoid collisions of texture id's when reloading the textures onto the GPU
+    for(auto iter = _textures.begin(); iter != _textures.end(); ++iter)
+    {
+	    (*iter)->_texture->releaseGLTexture();
+    }
+
     CCLOG("reload all texture");
     auto iter = _textures.begin();
 

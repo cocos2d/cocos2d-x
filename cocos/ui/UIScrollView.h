@@ -264,7 +264,7 @@ public:
     virtual const Vector<Node*>& getChildren() const override;
     virtual ssize_t getChildrenCount() const override;
     virtual Node * getChildByTag(int tag) const override;
-    virtual Widget* getChildByName(const std::string& name)const override;
+    virtual Node* getChildByName(const std::string& name)const override;
     
     //handle touch event
     virtual bool onTouchBegan(Touch *touch, Event *unusedEvent) override;
