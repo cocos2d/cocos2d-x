@@ -92,4 +92,3 @@ function CCPointArray:create( capacity )
 	setmetatable(a, CCPointArray_mt)
 	return a
 end
-
