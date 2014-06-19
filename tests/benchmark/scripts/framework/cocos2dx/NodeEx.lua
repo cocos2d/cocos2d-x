@@ -80,6 +80,10 @@ function Node:getCascadeBoundingBox()
     return rc
 end
 
+function Node:isTouchEnabled()
+    return self._isTouchEnabled_
+end
+
 function Node:setTouchEnabled( isEnable )
     if self._isTouchEnabled_ and self._isTouchEnabled_==isEnable then return end
     self._isTouchEnabled_ = isEnable
@@ -125,6 +129,14 @@ function Node:setTouchMode(mode)
       self:setTouchEnabled(false)   --unregister old listeners
       self:setTouchEnabled(true)
     end
+end
+
+function Node:getTouchMode()
+    return self._TouchMode_
+end
+
+function Node:isSwallowsTouches()
+    return self._isTouchSwallowEnabled_
 end
 
 function Node:removeSelf()
@@ -223,21 +235,17 @@ function Node:registerScriptTouchHandler(handler, isMultiTouches)
     end)
 end
 
-Node.scheduleUpdate_ = Node.scheduleUpdate
 function Node:scheduleUpdate(handler)
-    if handler then
-        PRINT_DEPRECATED("Node.scheduleUpdate(handler) is deprecated, please use Node.addNodeEventListener()")
-        self:addNodeEventListener(c.NODE_ENTER_FRAME_EVENT, handler)
-        self:scheduleUpdate_()
-    else
-        self:scheduleUpdate_()
+    PRINT_DEPRECATED("Node.scheduleUpdate(handler) is deprecated, please use Node.addNodeEventListener()")
+    if not handler then
+        handler = function(dt) self:onEnterFrame(dt) end
     end
+    self:addNodeEventListener(c.NODE_ENTER_FRAME_EVENT, handler)
 end
 
 function Node:scheduleUpdateWithPriorityLua(handler)
     PRINT_DEPRECATED("Node.scheduleUpdateWithPriorityLua() is deprecated, please use Node.addNodeEventListener()")
     self:addNodeEventListener(c.NODE_ENTER_FRAME_EVENT, handler)
-    self:scheduleUpdate_()
 end
 
 function Node:setTouchPriority()
@@ -316,6 +324,23 @@ function Node:addNodeEventListener( evt, hdl, tag, priority )
         lis.regHanler = listener
         lis.regHanler:retain()
         lis.mode = mode
+        if nil==self._isTouchEnabled_ then self._isTouchEnabled_=true end
+    elseif evt==c.KEYPAD_EVENT then
+        local onKeyPressed = function ( keycode, event )
+            return NodeEventDispatcher(event:getCurrentTarget(), c.KEYPAD_EVENT, {keycode, event, "Pressed"})
+        end
+
+        local onKeyReleased = function ( keycode, event )
+            return NodeEventDispatcher(event:getCurrentTarget(), c.KEYPAD_EVENT, {keycode, event, "Released"})
+        end
+
+        local listener = cc.EventListenerKeyboard:create()
+        listener:registerScriptHandler(onKeyPressed, cc.Handler.EVENT_KEYBOARD_PRESSED )
+        listener:registerScriptHandler(onKeyReleased, cc.Handler.EVENT_KEYBOARD_RELEASED )
+        local eventDispatcher = self:getEventDispatcher()
+        eventDispatcher:addEventListenerWithSceneGraphPriority(listener, self)
+        lis.regHanler = listener
+        lis.regHanler:retain()
     end
 
     return self._nextScriptEventHandleIndex_
@@ -324,7 +349,7 @@ end
 function Node:removeNodeEventListenersByEvent( evt )
     if self._scriptEventListeners_ and self._scriptEventListeners_[evt] then
         local eventDispatcher = self:getEventDispatcher()
-        if evt==c.NODE_TOUCH_EVENT then
+        if evt==c.NODE_TOUCH_EVENT or evt==c.KEYPAD_EVENT then
             for i,v in ipairs(self._scriptEventListeners_[evt]) do
                     if v.regHanler then
                         eventDispatcher:removeEventListener(v.regHanler)
@@ -342,6 +367,7 @@ end
 function Node:removeAllNodeEventListeners()
     self:removeNodeEventListenersByEvent(c.NODE_ENTER_FRAME_EVENT)
     self:removeNodeEventListenersByEvent(c.NODE_TOUCH_EVENT)
+    self:removeNodeEventListenersByEvent(c.KEYPAD_EVENT)
 end
 
 function NodeEventDispatcher( obj, idx, data )
@@ -410,6 +436,12 @@ function NodeEventDispatcher( obj, idx, data )
                 points = pts,
             }
         end
+    elseif idx==c.KEYPAD_EVENT then
+        local code = data[1]
+        -- local evt = data[2]
+        local ename = data[3]
+        if ename~='Released' then return true end
+        event = { code=code, key=KeypadEventCodeConvert(code), }
     end
 
     local rnval = false

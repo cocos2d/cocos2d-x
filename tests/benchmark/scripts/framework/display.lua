@@ -245,6 +245,27 @@ end
 
 --[[--
 
+创建一个新场景，并返回 CCScene 场景对象。
+
+指定场景名称方便调试。
+
+@param string name 场景名称
+
+@return Scene 场景对象
+
+@see Scene
+
+]]
+function display.newPhysicsScene(name)
+    local scene = cc.Scene:createWithPhysics()
+    scene:setNodeEventEnabled(true)
+    scene:setAutoCleanupEnabled()
+    scene.name = name or "<unknown-scene>"
+    return scene
+end
+
+--[[--
+
 用场景切换过渡效果包装场景对象，并返回场景过渡对象。
 
 ~~~ lua
@@ -393,7 +414,7 @@ CCLayer 对象提供了触摸事件、重力感应、Android 按键检测等功�
 
 ]]
 function display.newLayer()
-    return CCLayer:create()
+    return cc.Layer:create()
 end
 
 --[[--
@@ -410,7 +431,7 @@ CCLayerColor 对象使用指定的颜色填充。
 
 ]]
 function display.newColorLayer(color)
-    return CCLayerColor:create(color)
+    return cc.LayerColor:create(color)
 end
 
 --[[--

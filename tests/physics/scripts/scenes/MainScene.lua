@@ -1,6 +1,7 @@
 
 local MainScene = class("MainScene", function()
     return display.newPhysicsScene("MainScene")
+    -- return display.newScene("MainScene")
 end)
 
 local GRAVITY         = -200
@@ -21,64 +22,50 @@ function MainScene:ctor()
     self:addChild(self.layer)
 
     -- create label
-    self:addChild(ui.newTTFLabel({
-        text = "TAP SCREEN",
-        size = 32,
-        x = display.cx,
-        y = display.cy,
-        align = ui.TEXT_ALIGN_CENTER
-    }))
+    cc.ui.UILabel.new({text = "TAP SCREEN", size = 32, color = display.COLOR_WHITE})
+        :align(display.CENTER, display.cx, display.cy)
+        :addTo(self)
 
     -- create physics world
     self.world = self:getPhysicsWorld()
-    self.world:setGravity(0, GRAVITY)
+    self.world:setGravity(cc.p(0, GRAVITY))
 
-    -- add static body
     local leftWallSprite = display.newSprite("#Wall.png")
     leftWallSprite:setScaleY(display.height / WALL_THICKNESS)
+    leftWallSprite:setPosition(display.left + WALL_THICKNESS / 2, display.cy + WALL_THICKNESS)
     self:addChild(leftWallSprite)
-    local leftWallBody = self.world:createBoxBody(0, WALL_THICKNESS, display.height)
-    leftWallBody:setFriction(WALL_FRICTION)
-    leftWallBody:setElasticity(WALL_ELASTICITY)
-    leftWallBody:bind(leftWallSprite)
-    leftWallBody:setPosition(display.left + WALL_THICKNESS / 2, display.cy + WALL_THICKNESS)
 
     local rightWallSprite = display.newSprite("#Wall.png")
     rightWallSprite:setScaleY(display.height / WALL_THICKNESS)
+    rightWallSprite:setPosition(display.right - WALL_THICKNESS / 2, display.cy + WALL_THICKNESS)
     self:addChild(rightWallSprite)
-    local rightWallBody = self.world:createBoxBody(0, WALL_THICKNESS, display.height)
-    rightWallBody:setFriction(WALL_FRICTION)
-    rightWallBody:setElasticity(WALL_ELASTICITY)
-    rightWallBody:bind(rightWallSprite)
-    rightWallBody:setPosition(display.right - WALL_THICKNESS / 2, display.cy + WALL_THICKNESS)
 
     local bottomWallSprite = display.newSprite("#Wall.png")
     bottomWallSprite:setScaleX(display.width / WALL_THICKNESS)
+    bottomWallSprite:setPosition(display.cx, display.bottom + WALL_THICKNESS / 2)
     self:addChild(bottomWallSprite)
-    local bottomWallBody = self.world:createBoxBody(0, display.width, WALL_THICKNESS)
-    bottomWallBody:setFriction(WALL_FRICTION)
-    bottomWallBody:setElasticity(WALL_ELASTICITY)
-    bottomWallBody:bind(bottomWallSprite)
-    bottomWallBody:setPosition(display.cx, display.bottom + WALL_THICKNESS / 2)
+
+    local wallBox = display.newNode()
+    wallBox:setAnchorPoint(cc.p(0.5, 0.5))
+    wallBox:setPhysicsBody(
+        cc.PhysicsBody:createEdgeBox(cc.size(display.width - WALL_THICKNESS*2, display.height - WALL_THICKNESS)))
+    wallBox:setPosition(display.cx, display.height/2 + WALL_THICKNESS/2)
+    self:addChild(wallBox)
 
     -- add debug node
-    self.worldDebug = self.world:createDebugNode()
-    self:addChild(self.worldDebug)
+    -- self:getPhysicsWorld():setDebugDrawMask(
+    --     true and cc.PhysicsWorld.DEBUGDRAW_ALL or cc.PhysicsWorld.DEBUGDRAW_NONE)
 end
 
 function MainScene:createCoin(x, y)
     -- add sprite to scene
     local coinSprite = display.newSprite("#Coin.png")
     self:addChild(coinSprite)
-
-    -- create body
-    local coinBody = self.world:createCircleBody(COIN_MASS, COIN_RADIUS)
-    coinBody:setFriction(COIN_FRICTION)
-    coinBody:setElasticity(COIN_ELASTICITY)
-    -- binding sprite to body
-    coinBody:bind(coinSprite)
-    -- set body position
-    coinBody:setPosition(x, y)
+    local coinBody = cc.PhysicsBody:createCircle(COIN_RADIUS,
+        cc.PhysicsMaterial(COIN_RADIUS, COIN_FRICTION, COIN_ELASTICITY))
+    coinBody:setMass(COIN_MASS)
+    coinSprite:setPhysicsBody(coinBody)
+    coinSprite:setPosition(x, y)
 end
 
 function MainScene:onTouch(event, x, y)
@@ -89,8 +76,12 @@ end
 
 function MainScene:onEnter()
     self.layer:setTouchEnabled(true)
-    -- make world running
-    self.world:start()
+    self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.onEnterFrame))
+    -- self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, function(dt) self:onEnterFrame(dt) end)
+end
+
+function MainScene:onEnterFrame(dt)
+    -- body
 end
 
 return MainScene
