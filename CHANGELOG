@@ -1,5 +1,6 @@
 cocos2d-x-3.2 ???
     [NEW]           Node: added getName(), setName(), getChildByName(), enumerateChildren()
+    [NEW]           Label: support setting line height and additional kerning of label that not using system font
 
     [FIX]           UIButton: doesn't support TTF font
 
