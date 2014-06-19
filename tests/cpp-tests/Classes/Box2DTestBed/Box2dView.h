@@ -42,7 +42,7 @@ public:
 
     bool initWithEntryID(int entryId);
     std::string title() const;
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
 //    virtual void registerWithTouchDispatcher();
     bool onTouchBegan(Touch* touch, Event* event);
@@ -55,7 +55,7 @@ public:
 
     static Box2DView* viewWithEntryID(int entryId);
 protected:
-    void onDraw(const Mat4 &transform, bool transformUpdated);
+    void onDraw(const Mat4 &transform, uint32_t flags);
 
     CustomCommand _customCmd;
 };

@@ -29,7 +29,9 @@
 using namespace cocos2d::experimental::ui;
 //-------------------------------------------------------------------------------------
 #include "CCEAGLView.h"
+#include "CCGLView.h"
 #import <MediaPlayer/MediaPlayer.h>
+#include "base/CCDirector.h"
 
 @interface UIVideoViewWrapperIos : NSObject
 
@@ -312,11 +314,11 @@ void VideoPlayer::setURL(const std::string& videoUrl)
     [((UIVideoViewWrapperIos*)_videoView) setURL:(int)_videoSource :_videoURL];
 }
 
-void VideoPlayer::draw(Renderer* renderer, const Mat4 &transform, bool transformUpdated)
+void VideoPlayer::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags)
 {
-    cocos2d::ui::Widget::draw(renderer,transform,transformUpdated);
+    cocos2d::ui::Widget::draw(renderer,transform,flags);
     
-    if (transformUpdated)
+    if (flags & FLAGS_TRANSFORM_DIRTY)
     {
         auto directorInstance = Director::getInstance();
         auto glView = directorInstance->getOpenGLView();

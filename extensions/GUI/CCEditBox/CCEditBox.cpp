@@ -318,9 +318,9 @@ void EditBox::setAnchorPoint(const Vec2& anchorPoint)
     }
 }
 
-void EditBox::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
+void EditBox::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
-    ControlButton::visit(renderer, parentTransform, parentTransformUpdated);
+    ControlButton::visit(renderer, parentTransform, parentFlags);
     if (_editBoxImpl != NULL)
     {
         _editBoxImpl->visit();
@@ -329,6 +329,14 @@ void EditBox::visit(Renderer *renderer, const Mat4 &parentTransform, bool parent
 
 void EditBox::onEnter(void)
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnEnter))
+            return;
+    }
+#endif
+    
     ControlButton::onEnter();
     if (_editBoxImpl != NULL)
     {

@@ -62,7 +62,6 @@ static std::function<Layer*()> createFunctions[] =
     CL(LabelTTFAlignmentNew),
     CL(LabelFNTBounds),
     CL(LabelTTFLongLineWrapping),
-    CL(LabelTTFLargeText),
     CL(LabelTTFColor),
     CL(LabelTTFFontsTestNew),
     CL(LabelTTFDynamicAlignment),
@@ -79,7 +78,9 @@ static std::function<Layer*()> createFunctions[] =
     CL(LabelFontNameTest),
     CL(LabelAlignmentTest),
     CL(LabelIssue4428Test),
-    CL(LabelIssue4999Test)
+    CL(LabelIssue4999Test),
+    CL(LabelLineHeightTest),
+    CL(LabelAdditionalKerningTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -309,15 +310,15 @@ LabelFNTSpriteActions::LabelFNTSpriteActions()
     schedule( schedule_selector(LabelFNTSpriteActions::step), 0.1f);
 }
 
-void LabelFNTSpriteActions::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void LabelFNTSpriteActions::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     _renderCmd.init(_globalZOrder);
-    _renderCmd.func = CC_CALLBACK_0(LabelFNTSpriteActions::onDraw, this, transform, transformUpdated);
+    _renderCmd.func = CC_CALLBACK_0(LabelFNTSpriteActions::onDraw, this, transform, flags);
     renderer->addCommand(&_renderCmd);
 
 }
 
-void LabelFNTSpriteActions::onDraw(const Mat4 &transform, bool transformUpdated)
+void LabelFNTSpriteActions::onDraw(const Mat4 &transform, uint32_t flags)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -606,7 +607,7 @@ LabelTTFUnicodeChinese::LabelTTFUnicodeChinese()
     auto size = Director::getInstance()->getWinSize();
     // Adding "啊" letter at the end of string to make VS2012 happy, otherwise VS will generate errors  
     // like "Error 3 error C2146: syntax error : missing ')' before identifier 'label'"; 
-    TTFConfig ttfConfig("fonts/wt021.ttf",28,GlyphCollection::CUSTOM, "美好的一天啊");
+    TTFConfig ttfConfig("fonts/HKYuanMini.ttf",28,GlyphCollection::CUSTOM, "美好的一天啊");
     auto label = Label::createWithTTF(ttfConfig,"美好的一天啊", TextHAlignment::CENTER, size.width);
 
     if(label) {
@@ -908,14 +909,14 @@ std::string LabelFNTBounds::subtitle() const
     return "You should see string enclosed by a box";
 }
 
-void LabelFNTBounds::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void LabelFNTBounds::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     _renderCmd.init(_globalZOrder);
-    _renderCmd.func = CC_CALLBACK_0(LabelFNTBounds::onDraw, this, transform, transformUpdated);
+    _renderCmd.func = CC_CALLBACK_0(LabelFNTBounds::onDraw, this, transform, flags);
     renderer->addCommand(&_renderCmd);
 }
 
-void LabelFNTBounds::onDraw(const Mat4 &transform, bool transformUpdated)
+void LabelFNTBounds::onDraw(const Mat4 &transform, uint32_t flags)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -960,30 +961,6 @@ std::string LabelTTFLongLineWrapping::title() const
 std::string LabelTTFLongLineWrapping::subtitle() const
 {
     return "Uses the new Label with TTF. Testing auto-wrapping";
-}
-
-LabelTTFLargeText::LabelTTFLargeText()
-{
-    auto size = Director::getInstance()->getWinSize();
-
-    // Long sentence
-    TTFConfig ttfConfig("fonts/wt021.ttf",18,GlyphCollection::DYNAMIC);
-    std::string text = FileUtils::getInstance()->getStringFromFile("commonly_used_words.txt");
-    auto label = Label::createWithTTF(ttfConfig,text, TextHAlignment::CENTER, size.width);
-    if(label) {
-        label->setPosition( Vec2(size.width/2, size.height/2) );
-        addChild(label);
-    }
-}
-
-std::string LabelTTFLargeText::title() const
-{
-    return "New Label + .TTF";
-}
-
-std::string LabelTTFLargeText::subtitle() const
-{
-    return "Uses the new Label with TTF. Testing large text";
 }
 
 LabelTTFColor::LabelTTFColor()
@@ -1093,7 +1070,7 @@ LabelTTFCJKWrappingTest::LabelTTFCJKWrappingTest()
         Vec2(size.width * 0.85, size.height * 0.8),
         Vec2(size.width * 0.85, 0), 1, Color4F(1, 0, 0, 1));
     
-    TTFConfig ttfConfig("fonts/wt021.ttf", 25, GlyphCollection::DYNAMIC);
+    TTFConfig ttfConfig("fonts/HKYuanMini.ttf", 25, GlyphCollection::DYNAMIC);
     auto label1 = Label::createWithTTF(ttfConfig,
         "你好，Cocos2d-x v3的New Label.", TextHAlignment::LEFT, size.width * 0.75);
     if(label1) {
@@ -1162,7 +1139,7 @@ LabelTTFUnicodeNew::LabelTTFUnicodeNew()
     addChild(label2);
     
     // chinese
-    ttfConfig.fontFilePath = "fonts/wt021.ttf";
+    ttfConfig.fontFilePath = "fonts/HKYuanMini.ttf";
     ttfConfig.glyphs = GlyphCollection::CUSTOM;
     ttfConfig.customGlyphs = chinese.c_str();
     auto label3 = Label::createWithTTF(ttfConfig,chinese, TextHAlignment::CENTER,size.width);
@@ -1533,7 +1510,7 @@ LabelTTFOldNew::LabelTTFOldNew()
     label2->setPosition(Vec2(s.width/2, delta * 2));
 }
 
-void LabelTTFOldNew::onDraw(const Mat4 &transform, bool transformUpdated)
+void LabelTTFOldNew::onDraw(const Mat4 &transform, uint32_t flags)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -1577,10 +1554,10 @@ void LabelTTFOldNew::onDraw(const Mat4 &transform, bool transformUpdated)
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
-void LabelTTFOldNew::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void LabelTTFOldNew::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     _renderCmd.init(_globalZOrder);
-    _renderCmd.func = CC_CALLBACK_0(LabelTTFOldNew::onDraw, this, transform, transformUpdated);
+    _renderCmd.func = CC_CALLBACK_0(LabelTTFOldNew::onDraw, this, transform, flags);
     renderer->addCommand(&_renderCmd);
 }
 
@@ -1797,4 +1774,92 @@ std::string LabelIssue4999Test::title() const
 std::string LabelIssue4999Test::subtitle() const
 {
     return "Reorder issue #4999.The label should be display cleanly.";
+}
+
+LabelLineHeightTest::LabelLineHeightTest()
+{
+    auto size = Director::getInstance()->getWinSize();
+
+    auto bg = LayerColor::create(Color4B(200,191,231,255));
+    this->addChild(bg);
+
+    TTFConfig ttfConfig("fonts/arial.ttf", 25, GlyphCollection::DYNAMIC,nullptr,false);
+
+    label = Label::createWithTTF(ttfConfig,"Test\nLine\nHeight");
+    label->setPosition( Vec2(size.width/2, size.height*0.5f) );
+    label->setTextColor( Color4B::RED );
+    addChild(label);
+
+    auto slider = ui::Slider::create();
+    slider->setTouchEnabled(true);
+    slider->loadBarTexture("cocosui/sliderTrack.png");
+    slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
+    slider->loadProgressBarTexture("cocosui/sliderProgress.png");
+    slider->setPosition(Vec2(size.width / 2.0f, size.height * 0.15f + slider->getSize().height * 2.0f));
+    slider->setPercent(label->getLineHeight());
+    slider->addEventListener(CC_CALLBACK_2(LabelLineHeightTest::sliderEvent, this));
+    addChild(slider);
+}
+
+void LabelLineHeightTest::sliderEvent(Ref *sender, ui::Slider::EventType type)
+{
+    if (type == Slider::EventType::ON_PERCENTAGE_CHANGED)
+    {
+        Slider*  slider = (Slider*)sender;
+        label->setLineHeight(slider->getPercent());
+    }
+}
+
+std::string LabelLineHeightTest::title() const
+{
+    return "New Label";
+}
+
+std::string LabelLineHeightTest::subtitle() const
+{
+    return "Testing line height of label";
+}
+
+LabelAdditionalKerningTest::LabelAdditionalKerningTest()
+{
+    auto size = Director::getInstance()->getWinSize();
+
+    auto bg = LayerColor::create(Color4B(200,191,231,255));
+    this->addChild(bg);
+
+    TTFConfig ttfConfig("fonts/arial.ttf", 40, GlyphCollection::DYNAMIC,nullptr,false);
+
+    label = Label::createWithTTF(ttfConfig,"Test additional kerning");
+    label->setPosition( Vec2(size.width/2, size.height*0.65f) );
+    label->setTextColor( Color4B::RED );
+    addChild(label);
+
+    auto slider = ui::Slider::create();
+    slider->setTouchEnabled(true);
+    slider->loadBarTexture("cocosui/sliderTrack.png");
+    slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
+    slider->loadProgressBarTexture("cocosui/sliderProgress.png");
+    slider->setPosition(Vec2(size.width / 2.0f, size.height * 0.15f + slider->getSize().height * 2.0f));
+    slider->setPercent(0);
+    slider->addEventListener(CC_CALLBACK_2(LabelAdditionalKerningTest::sliderEvent, this));
+    addChild(slider);
+}
+
+void LabelAdditionalKerningTest::sliderEvent(Ref *sender, ui::Slider::EventType type)
+{
+    if (type == Slider::EventType::ON_PERCENTAGE_CHANGED)
+    {
+        Slider*  slider = (Slider*)sender;
+        label->setAdditionalKerning(slider->getPercent());
+    }
+}
+
+std::string LabelAdditionalKerningTest::title() const
+{
+    return "New Label";
+}
+
+std::string LabelAdditionalKerningTest::subtitle() const
+{
+    return "Testing additional kerning of label";
 }

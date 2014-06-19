@@ -206,11 +206,11 @@ void TextureCache::loadImage()
            for (; pos < infoSize; pos++)
            {
                imageInfo = (*_imageInfoQueue)[pos];
-               if(imageInfo->asyncStruct->filename.compare(asyncStruct->filename))
+               if(imageInfo->asyncStruct->filename.compare(asyncStruct->filename) == 0)
                    break;
            }
            _imageInfoMutex.unlock();
-           if(infoSize == 0 || pos < infoSize)
+           if(infoSize == 0 || pos == infoSize)
                generateImage = true;
         }
 
@@ -705,6 +705,12 @@ void VolatileTextureMgr::removeTexture(Texture2D *t)
 void VolatileTextureMgr::reloadAllTextures()
 {
     _isReloading = true;
+
+    // we need to release all of the glTextures to avoid collisions of texture id's when reloading the textures onto the GPU
+    for(auto iter = _textures.begin(); iter != _textures.end(); ++iter)
+    {
+	    (*iter)->_texture->releaseGLTexture();
+    }
 
     CCLOG("reload all texture");
     auto iter = _textures.begin();

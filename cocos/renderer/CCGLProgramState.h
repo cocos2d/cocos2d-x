@@ -39,6 +39,8 @@ class GLProgram;
 class Texture2D;
 struct Uniform;
 struct VertexAttrib;
+class EventListenerCustom;
+class EventCustom;
 
 //
 //
@@ -48,7 +50,7 @@ struct VertexAttrib;
 class UniformValue
 {
     friend class GLProgram;
-
+    friend class GLProgramState;
 public:
     UniformValue();
     UniformValue(Uniform *uniform, GLProgram* glprogram);
@@ -60,7 +62,7 @@ public:
     void setVec3(const Vec3& value);
     void setVec4(const Vec4& value);
     void setMat4(const Mat4& value);
-    void setCallback(const std::function<void(Uniform*)> &callback);
+    void setCallback(const std::function<void(GLProgram*, Uniform*)> &callback);
     void setTexture(GLuint textureId, GLuint activeTexture);
 
     void apply();
@@ -81,7 +83,7 @@ protected:
             GLuint textureId;
             GLuint textureUnit;
         } tex;
-        std::function<void(Uniform*)> *callback;
+        std::function<void(GLProgram*, Uniform*)> *callback;
 
         U() { memset( this, 0, sizeof(*this) ); }
         ~U(){}
@@ -174,10 +176,10 @@ public:
     void setUniformVec3(const std::string &uniformName, const Vec3& value);
     void setUniformVec4(const std::string &uniformName, const Vec4& value);
     void setUniformMat4(const std::string &uniformName, const Mat4& value);
-    void setUniformCallback(const std::string &uniformName, const std::function<void(Uniform*)> &callback);
+    void setUniformCallback(const std::string &uniformName, const std::function<void(GLProgram*, Uniform*)> &callback);
     void setUniformTexture(const std::string &uniformName, Texture2D *texture);
     void setUniformTexture(const std::string &uniformName, GLuint textureId);
-
+    
 protected:
     GLProgramState();
     ~GLProgramState();
@@ -185,13 +187,19 @@ protected:
     void resetGLProgram();
     VertexAttribValue* getVertexAttribValue(const std::string &attributeName);
     UniformValue* getUniformValue(const std::string &uniformName);
-
+    
+    bool _uniformAttributeValueDirty;
     std::unordered_map<std::string, UniformValue> _uniforms;
     std::unordered_map<std::string, VertexAttribValue> _attributes;
+    std::unordered_map<std::string, int> _boundTextureUnits;
 
     int _textureUnitIndex;
     uint32_t _vertexAttribsFlags;
     GLProgram *_glprogram;
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    EventListenerCustom* _backToForegroundlistener;
+#endif
 };
 
 NS_CC_END

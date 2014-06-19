@@ -54,13 +54,4 @@
 -- @param #int int
 -- @return bool#bool ret (return value: bool)
         
---------------------------------
--- @function [parent=#Mesh] create 
--- @param self
--- @param #array_table array
--- @param #array_table array
--- @param #array_table array
--- @param #array_table vector<short, std::allocator<short> >
--- @return Mesh#Mesh ret (return value: cc.Mesh)
-        
 return nil

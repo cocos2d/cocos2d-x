@@ -8,7 +8,9 @@ import sys
 import traceback
 from jenkinsapi.jenkins import Jenkins
 
-http_proxy = os.environ['HTTP_PROXY']
+http_proxy = ''
+if(os.environ.has_key('HTTP_PROXY')):
+    http_proxy = os.environ['HTTP_PROXY']
 proxyDict = {'http':http_proxy,'https':http_proxy}
 
 def check_queue_build(action, pr_num, statuses_url):
@@ -88,7 +90,7 @@ def main():
         print 'skip build for pull request #' + str(pr_num)
         return(0)
     
-    data = {"state":"pending", "target_url":target_url}
+    data = {"state":"pending", "target_url":target_url, "context":"Jenkins CI", "description":"Waiting available build machine..."}
     access_token = os.environ['GITHUB_ACCESS_TOKEN']
     Headers = {"Authorization":"token " + access_token} 
 

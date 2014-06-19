@@ -61,7 +61,9 @@ def check_current_3rd_libs(branch):
         current_file = current_files[i]
         copy(current_file, backup_file)
 
-http_proxy = os.environ['HTTP_PROXY']
+http_proxy = ''
+if(os.environ.has_key('HTTP_PROXY')):
+    http_proxy = os.environ['HTTP_PROXY']
 proxyDict = {'http':http_proxy,'https':http_proxy}
 def main():
     #get payload from os env
@@ -102,7 +104,7 @@ def main():
     set_description(pr_desc, target_url)
  
     
-    data = {"state":"pending", "target_url":target_url}
+    data = {"state":"pending", "target_url":target_url, "context":"Jenkins CI", "description":"Build started..."}
     access_token = os.environ['GITHUB_ACCESS_TOKEN']
     Headers = {"Authorization":"token " + access_token} 
 

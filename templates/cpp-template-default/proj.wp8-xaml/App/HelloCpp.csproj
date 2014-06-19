@@ -130,7 +130,7 @@
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HelloCppComponent\HelloCppComponent.vcxproj">
+    <ProjectReference Include="..\AppComponent\HelloCppComponent.vcxproj">
       <Name>HelloCppComponent</Name>
     </ProjectReference>
   </ItemGroup>

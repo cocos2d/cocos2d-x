@@ -29,6 +29,8 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+class Label;
+
 namespace ui {
 
 /**
@@ -158,6 +160,25 @@ public:
 
     TextVAlignment getTextVerticalAlignment()const;
     
+    /**
+     * Enable shadow for the label
+     *
+     * @todo support blur for shadow effect
+     */
+    void enableShadow(const Color4B& shadowColor = Color4B::BLACK,const Size &offset = Size(2,-2), int blurRadius = 0);
+    
+    /**
+     * Enable outline for the label
+     * It only works on IOS and Android when you use System fonts
+     */ 
+    void enableOutline(const Color4B& outlineColor,int outlineSize = 1);
+    
+    /** only support for TTF */
+    void enableGlow(const Color4B& glowColor);
+    
+    /** disable shadow/outline/glow rendering */
+    void disableEffect();
+    
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
     virtual bool init(const std::string& textContent,
@@ -170,9 +191,7 @@ protected:
     virtual void onPressStateChangedToPressed() override;
     virtual void onPressStateChangedToDisabled() override;
     virtual void onSizeChanged() override;
-    virtual void updateTextureColor() override;
-    virtual void updateTextureOpacity() override;
-    virtual void updateTextureRGBA() override;
+   
     virtual void updateFlippedX() override;
     virtual void updateFlippedY() override;
     void labelScaleChangedWithSize();

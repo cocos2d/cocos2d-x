@@ -194,7 +194,6 @@
     <ClCompile Include="..\CCTween.cpp" />
     <ClCompile Include="..\CCUtilMath.cpp" />
     <ClCompile Include="..\DictionaryHelper.cpp" />
-    <ClCompile Include="..\ObjectFactory.cpp" />
     <ClCompile Include="..\TriggerBase.cpp" />
     <ClCompile Include="..\TriggerMng.cpp" />
     <ClCompile Include="..\TriggerObj.cpp" />

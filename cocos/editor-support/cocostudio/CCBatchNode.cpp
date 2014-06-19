@@ -101,7 +101,7 @@ void BatchNode::removeChild(Node* child, bool cleanup)
     Node::removeChild(child, cleanup);
 }
 
-void BatchNode::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
+void BatchNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     // quick return if not visible. children won't be drawn.
     if (!_visible)
@@ -109,21 +109,17 @@ void BatchNode::visit(Renderer *renderer, const Mat4 &parentTransform, bool pare
         return;
     }
 
-    bool dirty = parentTransformUpdated || _transformUpdated;
-    if(dirty)
-        _modelViewTransform = transform(parentTransform);
-    _transformUpdated = false;
+    uint32_t flags = processParentFlags(parentTransform, parentFlags);
 
     // IMPORTANT:
     // To ease the migration to v3.0, we still support the Mat4 stack,
     // but it is deprecated and your code should not rely on it
     Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
 
     sortAllChildren();
-    draw(renderer, _modelViewTransform, dirty);
+    draw(renderer, _modelViewTransform, flags);
 
     // reset for next frame
     _orderOfArrival = 0;
@@ -131,7 +127,7 @@ void BatchNode::visit(Renderer *renderer, const Mat4 &parentTransform, bool pare
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
-void BatchNode::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void BatchNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     if (_children.empty())
     {
@@ -152,14 +148,14 @@ void BatchNode::draw(Renderer *renderer, const Mat4 &transform, bool transformUp
                 pushed = true;
             }
         
-            armature->visit(renderer, transform, transformUpdated);
+            armature->visit(renderer, transform, flags);
         }
         else
         {
             renderer->popGroup();
             pushed = false;
             
-            ((Node *)object)->visit(renderer, transform, transformUpdated);
+            ((Node *)object)->visit(renderer, transform, flags);
         }
     }
 }

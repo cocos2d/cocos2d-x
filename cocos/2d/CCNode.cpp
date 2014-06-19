@@ -29,6 +29,8 @@ THE SOFTWARE.
 #include "2d/CCNode.h"
 
 #include <algorithm>
+#include <string>
+#include <regex>
 
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
@@ -121,6 +123,9 @@ Node::Node(void)
 , _realColor(Color3B::WHITE)
 , _cascadeColorEnabled(false)
 , _cascadeOpacityEnabled(false)
+, _usingNormalizedPosition(false)
+, _name("")
+, _hashOfName(0)
 {
     // set default scheduler and actionManager
     Director *director = Director::getInstance();
@@ -423,6 +428,7 @@ void Node::setPosition(const Vec2& position)
     
     _position = position;
     _transformUpdated = _transformDirty = _inverseDirty = true;
+    _usingNormalizedPosition = false;
 
 #if CC_USE_PHYSICS
     if (_physicsBody != nullptr && !_physicsBody->_positionResetTag)
@@ -498,6 +504,23 @@ void Node::setPositionZ(float positionZ)
     setGlobalZOrder(positionZ);
 }
 
+/// position getter
+const Vec2& Node::getNormalizedPosition() const
+{
+    return _normalizedPosition;
+}
+
+/// position setter
+void Node::setNormalizedPosition(const Vec2& position)
+{
+    if (_normalizedPosition.equals(position))
+        return;
+
+    _normalizedPosition = position;
+    _usingNormalizedPosition = true;
+    _transformUpdated = _transformDirty = _inverseDirty = true;
+}
+
 ssize_t Node::getChildrenCount() const
 {
     return _children.size();
@@ -561,7 +584,7 @@ void Node::setContentSize(const Size & size)
         _contentSize = size;
 
         _anchorPointInPoints = Vec2(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y );
-        _transformUpdated = _transformDirty = _inverseDirty = true;
+        _transformUpdated = _transformDirty = _inverseDirty = _contentSizeDirty = true;
     }
 }
 
@@ -575,6 +598,7 @@ bool Node::isRunning() const
 void Node::setParent(Node * parent)
 {
     _parent = parent;
+    _transformUpdated = _transformDirty = _inverseDirty = true;
 }
 
 /// isRelativeAnchorPoint getter
@@ -602,6 +626,18 @@ int Node::getTag() const
 void Node::setTag(int tag)
 {
     _tag = tag ;
+}
+
+std::string Node::getName() const
+{
+    return _name;
+}
+
+void Node::setName(const std::string& name)
+{
+    _name = name;
+    std::hash<std::string> h;
+    _hashOfName = h(name);
 }
 
 /// userData setter
@@ -657,7 +693,7 @@ GLProgram * Node::getGLProgram() const
     return _glProgramState ? _glProgramState->getGLProgram() : nullptr;
 }
 
-Scene* Node::getScene()
+Scene* Node::getScene() const
 {
     if(!_parent)
         return nullptr;
@@ -728,6 +764,159 @@ Node* Node::getChildByTag(int tag) const
             return child;
     }
     return nullptr;
+}
+
+Node* Node::getChildByName(const std::string& name) const
+{
+    CCASSERT(name.length() != 0, "Invalid name");
+    
+    std::hash<std::string> h;
+    size_t hash = h(name);
+    
+    for (const auto& child : _children)
+    {
+        // Different strings may have the same hash code, but can use it to compare first for speed
+        if(child->_hashOfName == hash && child->_name.compare(name) == 0)
+            return child;
+    }
+    return nullptr;
+}
+
+void Node::enumerateChildren(const std::string &name, std::function<bool (Node *)> callback) const
+{
+    CCASSERT(name.length() != 0, "Invalid name");
+    CCASSERT(callback != nullptr, "Invalid callback function");
+    
+    size_t length = name.length();
+    
+    size_t subStrStartPos = 0;  // sub string start index
+    size_t subStrlength = length; // sub string length
+    
+    // Starts with '/' or '//'?
+    bool searchFromRoot = false;
+    bool searchFromRootRecursive = false;
+    if (name[0] == '/')
+    {
+        if (length > 2 && name[1] == '/')
+        {
+            searchFromRootRecursive = true;
+            subStrStartPos = 2;
+            subStrlength -= 2;
+        }
+        else
+        {
+            searchFromRoot = true;
+            subStrStartPos = 1;
+            subStrlength -= 1;
+        }
+    }
+    
+    // End with '/..'?
+    bool searchFromParent = false;
+    if (length > 3 &&
+        name[length-3] == '/' &&
+        name[length-2] == '.' &&
+        name[length-1] == '.')
+    {
+        searchFromParent = true;
+        subStrlength -= 3;
+    }
+    
+    // Remove '/', '//' and '/..' if exist
+    std::string newName = name.substr(subStrStartPos, subStrlength);
+    // If search from parent, then add * at first to make it match its children, which will do make
+    if (searchFromParent)
+    {
+        newName.insert(0, "[[:alnum:]]+/");
+    }
+    
+    if (searchFromRoot)
+    {
+        // name is '/xxx'
+        auto root = getScene();
+        if (root)
+        {
+            root->doEnumerate(newName, callback);
+        }
+    }
+    else if (searchFromRootRecursive)
+    {
+        // name is '//xxx'
+        auto root = getScene();
+        if (root)
+        {
+            doEnumerateRecursive(root, newName, callback);
+        }
+    }
+    else
+    {
+        // name is xxx
+        doEnumerate(newName, callback);
+    }
+}
+
+bool Node::doEnumerateRecursive(const Node* node, const std::string &name, std::function<bool (Node *)> callback) const
+{
+    bool ret =false;
+    
+    if (node->doEnumerate(name, callback))
+    {
+        // search itself
+        ret = true;
+    }
+    else
+    {
+        // search its children
+        for (const auto& child : node->getChildren())
+        {
+            if (doEnumerateRecursive(child, name, callback))
+            {
+                ret = true;
+                break;
+            }
+        }
+    }
+    
+    return ret;
+}
+
+bool Node::doEnumerate(std::string name, std::function<bool (Node *)> callback) const
+{
+    // name may be xxx/yyy, should find its parent
+    size_t pos = name.find('/');
+    std::string searchName = name;
+    bool needRecursive = false;
+    if (pos != name.npos)
+    {
+        searchName = name.substr(0, pos);
+        name.erase(0, pos+1);
+        needRecursive = true;
+    }
+    
+    bool ret = false;
+    for (const auto& child : _children)
+    {
+        if(std::regex_match(child->_name, std::regex(searchName)))
+        {
+            if (!needRecursive)
+            {
+                // terminate enumeration if callback return true
+                if (callback(child))
+                {
+                    ret = true;
+                    break;
+                }
+            }
+            else
+            {
+                ret = child->doEnumerate(name, callback);
+                if (ret)
+                    break;
+            }
+        }
+    }
+    
+    return ret;
 }
 
 /* "add" logic MUST only be on this method
@@ -943,7 +1132,7 @@ void Node::draw()
     draw(renderer, _modelViewTransform, true);
 }
 
-void Node::draw(Renderer* renderer, const Mat4 &transform, bool transformUpdated)
+void Node::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags)
 {
 }
 
@@ -954,7 +1143,30 @@ void Node::visit()
     visit(renderer, parentTransform, true);
 }
 
-void Node::visit(Renderer* renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
+uint32_t Node::processParentFlags(const Mat4& parentTransform, uint32_t parentFlags)
+{
+    uint32_t flags = parentFlags;
+    flags |= (_transformUpdated ? FLAGS_TRANSFORM_DIRTY : 0);
+    flags |= (_contentSizeDirty ? FLAGS_CONTENT_SIZE_DIRTY : 0);
+
+    if(_usingNormalizedPosition && (flags & FLAGS_CONTENT_SIZE_DIRTY)) {
+        CCASSERT(_parent, "setNormalizedPosition() doesn't work with orphan nodes");
+        auto s = _parent->getContentSize();
+        _position.x = _normalizedPosition.x * s.width;
+        _position.y = _normalizedPosition.y * s.height;
+        _transformUpdated = _transformDirty = _inverseDirty = true;
+    }
+
+    if(flags & FLAGS_DIRTY_MASK)
+        _modelViewTransform = this->transform(parentTransform);
+
+    _transformUpdated = false;
+    _contentSizeDirty = false;
+
+    return flags;
+}
+
+void Node::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     // quick return if not visible. children won't be drawn.
     if (!_visible)
@@ -962,17 +1174,12 @@ void Node::visit(Renderer* renderer, const Mat4 &parentTransform, bool parentTra
         return;
     }
 
-    bool dirty = _transformUpdated || parentTransformUpdated;
-    if(dirty)
-        _modelViewTransform = this->transform(parentTransform);
-    _transformUpdated = false;
-
+    uint32_t flags = processParentFlags(parentTransform, parentFlags);
 
     // IMPORTANT:
     // To ease the migration to v3.0, we still support the Mat4 stack,
     // but it is deprecated and your code should not rely on it
     Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
 
@@ -987,25 +1194,27 @@ void Node::visit(Renderer* renderer, const Mat4 &parentTransform, bool parentTra
             auto node = _children.at(i);
 
             if ( node && node->_localZOrder < 0 )
-                node->visit(renderer, _modelViewTransform, dirty);
+                node->visit(renderer, _modelViewTransform, flags);
             else
                 break;
         }
         // self draw
-        this->draw(renderer, _modelViewTransform, dirty);
+        this->draw(renderer, _modelViewTransform, flags);
 
         for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
-            (*it)->visit(renderer, _modelViewTransform, dirty);
+            (*it)->visit(renderer, _modelViewTransform, flags);
     }
     else
     {
-        this->draw(renderer, _modelViewTransform, dirty);
+        this->draw(renderer, _modelViewTransform, flags);
     }
 
-    // reset for next frame
-    _orderOfArrival = 0;
- 
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    
+    // FIX ME: Why need to set _orderOfArrival to 0??
+    // Please refer to https://github.com/cocos2d/cocos2d-x/pull/6920
+    // reset for next frame
+    // _orderOfArrival = 0;
 }
 
 Mat4 Node::transform(const Mat4& parentTransform)
@@ -1015,46 +1224,12 @@ Mat4 Node::transform(const Mat4& parentTransform)
     return ret;
 }
 
-
-#if CC_ENABLE_SCRIPT_BINDING
-
-static bool sendNodeEventToJS(Node* node, int action)
-{
-    auto scriptEngine = ScriptEngineManager::getInstance()->getScriptEngine();
-
-    if (scriptEngine->isCalledFromScript())
-    {
-        scriptEngine->setCalledFromScript(false);
-    }
-    else
-    {
-        BasicScriptData data(node,(void*)&action);
-        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
-        if (scriptEngine->sendEvent(&scriptEvent))
-            return true;
-    }
-    
-    return false;
-}
-
-static void sendNodeEventToLua(Node* node, int action)
-{
-    auto scriptEngine = ScriptEngineManager::getInstance()->getScriptEngine();
-    
-    BasicScriptData data(node,(void*)&action);
-    ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
-    
-    scriptEngine->sendEvent(&scriptEvent);
-}
-
-#endif
-
 void Node::onEnter()
 {
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
-        if (sendNodeEventToJS(this, kNodeOnEnter))
+        if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnEnter))
             return;
     }
 #endif
@@ -1071,7 +1246,7 @@ void Node::onEnter()
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeLua)
     {
-        sendNodeEventToLua(this, kNodeOnEnter);
+        ScriptEngineManager::sendNodeEventToLua(this, kNodeOnEnter);
     }
 #endif
 }
@@ -1081,7 +1256,7 @@ void Node::onEnterTransitionDidFinish()
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
-        if (sendNodeEventToJS(this, kNodeOnEnterTransitionDidFinish))
+        if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnEnterTransitionDidFinish))
             return;
     }
 #endif
@@ -1093,7 +1268,7 @@ void Node::onEnterTransitionDidFinish()
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeLua)
     {
-        sendNodeEventToLua(this, kNodeOnEnterTransitionDidFinish);
+        ScriptEngineManager::sendNodeEventToLua(this, kNodeOnEnterTransitionDidFinish);
     }
 #endif
 }
@@ -1103,7 +1278,7 @@ void Node::onExitTransitionDidStart()
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
-        if (sendNodeEventToJS(this, kNodeOnExitTransitionDidStart))
+        if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnExitTransitionDidStart))
             return;
     }
 #endif
@@ -1114,7 +1289,7 @@ void Node::onExitTransitionDidStart()
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeLua)
     {
-        sendNodeEventToLua(this, kNodeOnExitTransitionDidStart);
+        ScriptEngineManager::sendNodeEventToLua(this, kNodeOnExitTransitionDidStart);
     }
 #endif
 }
@@ -1124,7 +1299,7 @@ void Node::onExit()
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
-        if (sendNodeEventToJS(this, kNodeOnExit))
+        if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnExit))
             return;
     }
 #endif
@@ -1139,7 +1314,7 @@ void Node::onExit()
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeLua)
     {
-        sendNodeEventToLua(this, kNodeOnExit);
+        ScriptEngineManager::sendNodeEventToLua(this, kNodeOnExit);
     }
 #endif
 }
@@ -1640,8 +1815,18 @@ void Node::updatePhysicsBodyRotation(Scene* scene)
 
 void Node::setPhysicsBody(PhysicsBody* body)
 {
+    if (_physicsBody == body)
+    {
+        return;
+    }
+    
     if (body != nullptr)
     {
+        if (body->getNode() != nullptr)
+        {
+            body->getNode()->setPhysicsBody(nullptr);
+        }
+        
         body->_node = this;
         body->retain();
         
@@ -1681,6 +1866,11 @@ void Node::setPhysicsBody(PhysicsBody* body)
                 scene = tmpScene;
                 break;
             }
+        }
+        
+        if (scene != nullptr)
+        {
+            scene->getPhysicsWorld()->addBody(body);
         }
         
         updatePhysicsBodyPosition(scene);

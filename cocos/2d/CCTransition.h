@@ -91,7 +91,7 @@ public:
     //
     // Overrides
     //
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     virtual void onEnter() override;
     virtual void onExit() override;
     virtual void cleanup() override;
@@ -613,7 +613,7 @@ public :
      * @js NA
      * @lua NA
      */
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     /**
      * @js NA
      * @lua NA
@@ -651,7 +651,7 @@ public :
     virtual void onEnter() override;
     virtual void onExit() override;
     virtual ActionInterval * easeActionWithAction(ActionInterval * action) override;
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
 protected:
     TransitionTurnOffTiles();
@@ -684,7 +684,7 @@ public:
     virtual void onEnter() override;
     virtual ActionInterval * easeActionWithAction(ActionInterval * action) override;
     virtual void onExit() override;
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 protected:
     TransitionSplitCols();
     virtual ~TransitionSplitCols();
@@ -735,7 +735,7 @@ public:
     virtual void onEnter() override;
     virtual ActionInterval* easeActionWithAction(ActionInterval * action) override;
     virtual void onExit() override;
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 protected:
     TransitionFadeTR();
     virtual ~TransitionFadeTR();
