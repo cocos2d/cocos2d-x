@@ -32,8 +32,8 @@ local c = cc
 local Node = c.Node
 
 -- touch
-c.TouchesAllAtOnce              = kCCTouchesAllAtOnce
-c.TouchesOneByOne               = kCCTouchesOneByOne
+c.TouchesAllAtOnce              = cc.TOUCHES_ALL_AT_ONCE
+c.TouchesOneByOne               = cc.TOUCHES_ONE_BY_ONE
 c.TOUCH_MODE_ALL_AT_ONCE        = c.TouchesAllAtOnce
 c.TOUCH_MODE_ONE_BY_ONE         = c.TouchesOneByOne
 
@@ -50,18 +50,18 @@ end
 
 function Node:schedule(callback, interval)
     local seq = transition.sequence({
-        CCDelayTime:create(interval),
-        CCCallFunc:create(callback),
+        cc.DelayTime:create(interval),
+        cc.CallFunc:create(callback),
     })
-    local action = CCRepeatForever:create(seq)
+    local action = cc.RepeatForever:create(seq)
     self:runAction(action)
     return action
 end
 
 function Node:performWithDelay(callback, delay)
     local action = transition.sequence({
-        CCDelayTime:create(delay),
-        CCCallFunc:create(callback),
+        cc.DelayTime:create(delay),
+        cc.CallFunc:create(callback),
     })
     self:runAction(action)
     return action
@@ -280,7 +280,6 @@ function Node:addNodeEventListener( evt, hdl, tag, priority )
 
     if evt==c.NODE_ENTER_FRAME_EVENT then
         local func = tolua.getcfunction(self, "scheduleUpdateWithPriorityLua")
-        -- print("=============func:")
         if func then 
             local listener = function (dt)
                 NodeEventDispatcher(self, c.NODE_ENTER_FRAME_EVENT, dt)

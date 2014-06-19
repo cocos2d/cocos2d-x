@@ -13,19 +13,34 @@ function MenuScene:ctor()
     self.adBar = AdBar.new()
     self:addChild(self.adBar)
 
-    cc.ui.UIPushButton.new("#MenuSceneMoreGamesButton.png")
-        :onButtonClicked(function(event)
-            app:enterMoreGamesScene()
-        end)
+    self.moreGamesButton = BubbleButton.new({
+            image = "#MenuSceneMoreGamesButton.png",
+            sound = GAME_SFX.tapButton,
+            prepare = function()
+                audio.playSound(GAME_SFX.tapButton)
+                self.moreGamesButton:setButtonEnabled(false)
+            end,
+            listener = function()
+                app:enterMoreGamesScene()
+            end,
+        })
         :align(display.CENTER, display.left + 150, display.bottom + 300)
         :addTo(self)
 
-    cc.ui.UIPushButton.new("#MenuSceneStartButton.png")
-        :onButtonClicked(function(event)
-            app:enterChooseLevelScene()
-        end)
+    self.startButton = BubbleButton.new({
+            image = "#MenuSceneStartButton.png",
+            sound = GAME_SFX.tapButton,
+            prepare = function()
+                audio.playSound(GAME_SFX.tapButton)
+                self.startButton:setButtonEnabled(false)
+            end,
+            listener = function()
+                app:enterChooseLevelScene()
+            end,
+        })
         :align(display.CENTER, display.right - 150, display.bottom + 300)
         :addTo(self)
+
 end
 
 function MenuScene:onEnter()

@@ -55,7 +55,7 @@ end
 
 function BenchmarkScene:onTouch(event, x, y)
     if event == "began" then
-        local p = cc.point(x, y)
+        local p = cc.p(x, y)
         if cc.rectContainsPoint(self.addCoinButtonBoundingBox, p) then
             self.state = "ADD"
         elseif cc.rectContainsPoint(self.removeCoinButtonBoundingBox, p) then

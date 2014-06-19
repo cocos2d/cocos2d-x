@@ -191,48 +191,48 @@ display.ANCHOR_POINTS = {
 }
 
 display.SCENE_TRANSITIONS = {
-    CROSSFADE       = {CCTransitionCrossFade, 2},
-    FADE            = {CCTransitionFade, 3, cc.c3b(0, 0, 0)},
-    FADEBL          = {CCTransitionFadeBL, 2},
-    FADEDOWN        = {CCTransitionFadeDown, 2},
-    FADETR          = {CCTransitionFadeTR, 2},
-    FADEUP          = {CCTransitionFadeUp, 2},
-    FLIPANGULAR     = {CCTransitionFlipAngular, 3, kCCTransitionOrientationLeftOver},
-    FLIPX           = {CCTransitionFlipX, 3, kCCTransitionOrientationLeftOver},
-    FLIPY           = {CCTransitionFlipY, 3, kCCTransitionOrientationUpOver},
-    JUMPZOOM        = {CCTransitionJumpZoom, 2},
-    MOVEINB         = {CCTransitionMoveInB, 2},
-    MOVEINL         = {CCTransitionMoveInL, 2},
-    MOVEINR         = {CCTransitionMoveInR, 2},
-    MOVEINT         = {CCTransitionMoveInT, 2},
-    PAGETURN        = {CCTransitionPageTurn, 3, false},
-    ROTOZOOM        = {CCTransitionRotoZoom, 2},
-    SHRINKGROW      = {CCTransitionShrinkGrow, 2},
-    SLIDEINB        = {CCTransitionSlideInB, 2},
-    SLIDEINL        = {CCTransitionSlideInL, 2},
-    SLIDEINR        = {CCTransitionSlideInR, 2},
-    SLIDEINT        = {CCTransitionSlideInT, 2},
-    SPLITCOLS       = {CCTransitionSplitCols, 2},
-    SPLITROWS       = {CCTransitionSplitRows, 2},
-    TURNOFFTILES    = {CCTransitionTurnOffTiles, 2},
-    ZOOMFLIPANGULAR = {CCTransitionZoomFlipAngular, 2},
-    ZOOMFLIPX       = {CCTransitionZoomFlipX, 3, kCCTransitionOrientationLeftOver},
-    ZOOMFLIPY       = {CCTransitionZoomFlipY, 3, kCCTransitionOrientationUpOver},
+    CROSSFADE       = {cc.TransitionCrossFade, 2},
+    FADE            = {cc.TransitionFade, 3, cc.c3b(0, 0, 0)},
+    FADEBL          = {cc.TransitionFadeBL, 2},
+    FADEDOWN        = {cc.TransitionFadeDown, 2},
+    FADETR          = {cc.TransitionFadeTR, 2},
+    FADEUP          = {cc.TransitionFadeUp, 2},
+    FLIPANGULAR     = {cc.TransitionFlipAngular, 3, kCCTransitionOrientationLeftOver},
+    FLIPX           = {cc.TransitionFlipX, 3, kCCTransitionOrientationLeftOver},
+    FLIPY           = {cc.TransitionFlipY, 3, kCCTransitionOrientationUpOver},
+    JUMPZOOM        = {cc.TransitionJumpZoom, 2},
+    MOVEINB         = {cc.TransitionMoveInB, 2},
+    MOVEINL         = {cc.TransitionMoveInL, 2},
+    MOVEINR         = {cc.TransitionMoveInR, 2},
+    MOVEINT         = {cc.TransitionMoveInT, 2},
+    PAGETURN        = {cc.TransitionPageTurn, 3, false},
+    ROTOZOOM        = {cc.TransitionRotoZoom, 2},
+    SHRINKGROW      = {cc.TransitionShrinkGrow, 2},
+    SLIDEINB        = {cc.TransitionSlideInB, 2},
+    SLIDEINL        = {cc.TransitionSlideInL, 2},
+    SLIDEINR        = {cc.TransitionSlideInR, 2},
+    SLIDEINT        = {cc.TransitionSlideInT, 2},
+    SPLITCOLS       = {cc.TransitionSplitCols, 2},
+    SPLITROWS       = {cc.TransitionSplitRows, 2},
+    TURNOFFTILES    = {cc.TransitionTurnOffTiles, 2},
+    ZOOMFLIPANGULAR = {cc.TransitionZoomFlipAngular, 2},
+    ZOOMFLIPX       = {cc.TransitionZoomFlipX, 3, kCCTransitionOrientationLeftOver},
+    ZOOMFLIPY       = {cc.TransitionZoomFlipY, 3, kCCTransitionOrientationUpOver},
 }
 
 display.TEXTURES_PIXEL_FORMAT = {}
 
 --[[--
 
-创建一个新场景，并返回 CCScene 场景对象。
+创建一个新场景，并返回 Scene 场景对象。
 
 指定场景名称方便调试。
 
 @param string name 场景名称
 
-@return CCScene 场景对象
+@return Scene 场景对象
 
-@see CCScene
+@see Scene
 
 ]]
 function display.newScene(name)
@@ -245,7 +245,7 @@ end
 
 --[[--
 
-创建一个新场景，并返回 CCScene 场景对象。
+创建一个新场景，并返回 Scene 场景对象。
 
 指定场景名称方便调试。
 
@@ -313,12 +313,12 @@ display.replaceScene(nextScene)
 -   splitRows 分成多行切换入新场景，类似百叶窗
 -   turnOffTiles 当前场景分成多个块，逐渐替换为新场景
 
-@param CCScene scene 场景对象
+@param Scene scene 场景对象
 @param string transitionType 过渡效果名
 @param number time 过渡时间
 @param string more 过渡效果附加参数
 
-@return CCScene 场景对象
+@return Scene 场景对象
 
 ]]
 function display.wrapSceneWithTransition(scene, transitionType, time, more)
@@ -358,7 +358,7 @@ display.replaceScene(nextScene, "fade", 0.5, cc.c3b(255, 0, 0))
 
 ~~~
 
-@param CCScene newScene 场景对象
+@param Scene newScene 场景对象
 @param string transitionType 过渡效果名
 @param number time 过渡时间
 @param mixed more 过渡效果附加参数
@@ -379,7 +379,7 @@ end
 
 返回当前正在运行的场景对象
 
-@return CCScene 场景对象
+@return Scene 场景对象
 
 ]]
 function display.getRunningScene()
@@ -406,11 +406,11 @@ end
 
 --[[--
 
-创建并返回一个 CCLayer 层对象
+创建并返回一个 Layer 层对象
 
-CCLayer 对象提供了触摸事件、重力感应、Android 按键检测等功能，具体请参考 CCLayer。
+Layer 对象提供了触摸事件、重力感应、Android 按键检测等功能，具体请参考 Layer。
 
-@see CCLayer
+@see Layer
 
 ]]
 function display.newLayer()
@@ -421,13 +421,13 @@ end
 
 创建一个颜色填充层
 
-CCLayerColor 对象使用指定的颜色填充。
+LayerColor 对象使用指定的颜色填充。
 
 @param ccColor3B color
 
-@return CCLayerColor
+@return LayerColor
 
-@see CCLayerColor
+@see LayerColor
 
 ]]
 function display.newColorLayer(color)
@@ -436,9 +436,9 @@ end
 
 --[[--
 
-创建并返回一个 cc.Node 对象
+创建并返回一个 Node 对象
 
-cc.Node 对象并不能显示对象，但可以作为其他显示对象的容器（起到群组的作用）。具体请参考 cc.Node 。
+Node 对象并不能显示对象，但可以作为其他显示对象的容器（起到群组的作用）。具体请参考 Node 。
 
 ~~~ lua
 
@@ -451,9 +451,9 @@ transition.moveBy(group, {time = 2.0, x = 100})
 
 ~~~
 
-@return cc.Node cc.Node对象
+@return Node Node对象
 
-@see cc.Node
+@see Node
 
 ]]
 function display.newNode()
@@ -462,14 +462,14 @@ end
 
 --[[--
 
-创建并返回一个 CCClippingRegionNode 对象。
+创建并返回一个 ClippingRegionNode 对象。
 
-创建 CCClippingRegionNode 对象时需要指定一个屏幕区域，然后在显示时，所以加入 CCClippingRegionNode 对象的内容都会进行剪裁，超出指定区域的内容不会显示。
+创建 ClippingRegionNode 对象时需要指定一个屏幕区域，然后在显示时，所以加入 ClippingRegionNode 对象的内容都会进行剪裁，超出指定区域的内容不会显示。
 
 ~~~ lua
 
 -- 剪裁区域从屏幕左下角靠内 100 点，到屏幕右上角
-local rect = CCRect(display.left + 100,
+local rect = cc.rect(display.left + 100,
                     display.bottom + 100,
                     display.width - 200,
                     display.height - 200)
@@ -482,11 +482,11 @@ scene:addChild(clipnode)
 
 ~~~
 
-注意：CCClippingRegionNode 的父对象其坐标必须是 0, 0。
+注意：ClippingRegionNode 的父对象其坐标必须是 0, 0。
 
-@param CCRect rect 指定的区域
+@param table rect 指定的区域
 
-@return CCClippingRegionNode CCClippingRegionNode对象
+@return ClippingRegionNode ClippingRegionNode对象
 
 ]]
 function display.newClippingRegionNode(rect)
@@ -495,13 +495,13 @@ end
 
 --[[--
 
-创建并返回一个 CCSprite 显示对象。
+创建并返回一个 Sprite 显示对象。
 
 display.newSprite() 有三种方式创建显示对象：
 
 -   从图片文件创建
 -   从缓存的图像帧创建
--   从 CCSpriteFrame 对象创建
+-   从 SpriteFrame 对象创建
 
 ~~~ lua
 
@@ -513,7 +513,7 @@ local sprite1 = display.newSprite("hello1.png")
 -- 添加 “#” 的规则适用于所有需要区分图像和图像帧的地方
 local sprite2 = display.newSprite("#frame0001.png")
 
--- 从 CCSpriteFrame 对象创建
+-- 从 SpriteFrame 对象创建
 local frame = display.newFrame("frame0002.png")
 local sprite3 = display.newSprite(frame)
 
@@ -521,14 +521,14 @@ local sprite3 = display.newSprite(frame)
 
 如果指定了 x,y 参数，那么创建显示对象后会调用对象的 setPosition() 方法设置对象位置。
 
-@param mixed 图像名或CCSpriteFrame对象
+@param mixed 图像名或SpriteFrame对象
 @param number x
 @param number y
 @param table params
 
-@return CCSprite
+@return Sprite
 
-@see CCSprite
+@see Sprite
 
 ]]
 function display.newSprite(filename, x, y, params)
@@ -555,16 +555,16 @@ function display.newSprite(filename, x, y, params)
             end
         else
             if display.TEXTURES_PIXEL_FORMAT[filename] then
-                CCTexture2D:setDefaultAlphaPixelFormat(display.TEXTURES_PIXEL_FORMAT[filename])
+                cc.Texture2D:setDefaultAlphaPixelFormat(display.TEXTURES_PIXEL_FORMAT[filename])
                 sprite = spriteClass:create(filename)
-                CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888)
+                cc.Texture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888)
             else
                 sprite = spriteClass:create(filename)
             end
         end
-    elseif t == "CCSpriteFrame" then
+    elseif t == "SpriteFrame" then
         sprite = spriteClass:createWithSpriteFrame(filename)
-	elseif t == "CCTexture2D" then
+	elseif t == "Texture2D" then
 		sprite = spriteClass:createWithTexture(filename)
     else
         printError("display.newSprite() - invalid filename value type")
@@ -584,31 +584,31 @@ end
 
 --[[--
 
-创建并返回一个 CCSprite9Scale 显示对象。
+创建并返回一个 Sprite9Scale 显示对象。
 
 格式：
 
-sprite = display.newScale9Sprite(图像名, [x, y], [CCSize 对象])
+sprite = display.newScale9Sprite(图像名, [x, y], [size 对象])
 
-CCSprite9Scale 就是通常所說的“九宫格”图像。一个矩形图像会被分为 9 部分，然后根据要求拉伸图像，同时保证拉伸后的图像四边不变形。
+Sprite9Scale 就是通常所說的“九宫格”图像。一个矩形图像会被分为 9 部分，然后根据要求拉伸图像，同时保证拉伸后的图像四边不变形。
 
 ~~~ lua
 
 -- 创建一个 Scale9 图像，并拉伸到 400, 300 点大小
-local sprite = display.newScale9Sprite("Box.png", 0, 0, CCSize(400, 300))
+local sprite = display.newScale9Sprite("Box.png", 0, 0, cc.size(400, 300))
 
 ~~~
 
 @param string filename 图像名
 @param integer x
 @param integer y
-@param CCSize size
+@param table size
 
-@return CCSprite9Scale CCSprite9Scale显示对象
+@return Sprite9Scale Sprite9Scale显示对象
 
 ]]
 function display.newScale9Sprite(filename, x, y, size)
-	return display.newSprite(filename, x, y, {class = CCScale9Sprite, size = size})
+	return display.newSprite(filename, x, y, {class = cc.Scale9Sprite, size = size})
 end
 
 --[[--
@@ -616,9 +616,9 @@ end
 ]]
 function display.newTilesSprite(filename, rect)
     if not rect then
-        rect = CCRect(0, 0, display.width, display.height)
+        rect = cc.rect(0, 0, display.width, display.height)
     end
-    local sprite = CCSprite:create(filename, rect)
+    local sprite = cc.Sprite:create(filename, rect)
     if not sprite then
         printError("display.newTilesSprite() - create sprite failure, filename %s", tostring(filename))
         return
@@ -638,15 +638,15 @@ end
 
 --[[--
 
-create a tiled cc.SpriteBatchNode, the image can not a POT file.
+create a tiled SpriteBatchNode, the image can not a POT file.
 
 @param mixed filename As same a the first parameter for display.newSprite
 @param string plistFile Texture(plist) image filename, filename must be a part of the texture.
-@param CCSize size The tiled node size, use cc.size create it please.
+@param size size The tiled node size, use cc.size create it please.
 @param integer hPadding Horizontal padding, it will display 1 px gap on moving the node, set padding for fix it.
 @param integer vPadding Vertical padding.
 
-@return A cc.SpriteBatchNode
+@return A SpriteBatchNode
 
 ]]
 function display.newTiledBatchNode(filename, plistFile, size, hPadding, vPadding)
@@ -699,13 +699,13 @@ function display.newMaskedSprite(__mask, __pic)
 	__picSprite:setBlendFunc(__pb)
 
 	local __maskSize = __maskSprite:getContentSize()
-	local __canva = CCRenderTexture:create(__maskSize.width,__maskSize.height)
+	local __canva = cc.RenderTexture:create(__maskSize.width,__maskSize.height)
 	__canva:begin()
 	__maskSprite:visit()
 	__picSprite:visit()
 	__canva:endToLua()
 
-	local __resultSprite = CCSprite:createWithTexture(__canva:getSprite():getTexture())
+	local __resultSprite = cc.Sprite:createWithTexture(__canva:getSprite():getTexture())
     __resultSprite:setFlipY(true)
 	return __resultSprite
 end
@@ -717,20 +717,20 @@ Create a Filtered Sprite
 @param mixed filename As same a the first parameter for display.newSprite
 @param mixed filters One of the following:
 
-- A CCFilter name;
-- More CCFilter names(in a table);
-- An instance of CCFilter;
-- Some instances of CCFilter(in a table);
-- A CCArray inclueds some instances of CCFilter.
+- A Filter name;
+- More Filter names(in a table);
+- An instance of Filter;
+- Some instances of Filter(in a table);
+- A Array inclueds some instances of Filter.
 
-@param table params A or some parameters for CCFilter.
+@param table params A or some parameters for Filter.
 
-@return An instance of CCFilteredSprite
+@return An instance of FilteredSprite
 
 ]]
 function display.newFilteredSprite(filename, filters, params)
-	local __one = {class=CCFilteredSpriteWithOne}
-	local __multi = {class=CCFilteredSpriteWithMulti}
+	local __one = {class=cc.FilteredSpriteWithOne}
+	local __multi = {class=cc.FilteredSpriteWithMulti}
 	if not filters then return display.newSprite(filtename, nil,nil , __one) end
 	local __sp = nil
 	local __type = type(filters)
@@ -747,19 +747,19 @@ function display.newFilteredSprite(filename, filters, params)
 		if type(filters[1]) == "string" then
 			__sp:setFilters(filter.newFilters(filters, params))
 		else
-			-- treat filters as {CCFilter, CCFilter , ...}
-			local __filters = CCArray:create()
+			-- treat filters as {Filter, Filter , ...}
+			local __filters = cc.Array:create()
 			for i in ipairs(filters) do
 				__filters:addObject(filters[i])
 			end
 			__sp:setFilters(__filters)
 		end
-	elseif __type == "CCArray" then
-		-- treat filters as CCArray(CCFilter, CCFilter, ...)
+	elseif __type == "Array" then
+		-- treat filters as Array(Filter, Filter, ...)
 		__sp = display.newSprite(filename, nil, nil, __multi)
 		__sp:setFilters(filters)
 	else
-		-- treat filters as CCFilter
+		-- treat filters as Filter
 		__sp = display.newSprite(filename, nil, nil, __one)
 		__sp:setFilter(filters)
 	end
@@ -768,12 +768,12 @@ end
 
 --[[--
 
-Create a Gray Sprite by CCFilteredSprite
+Create a Gray Sprite by FilteredSprite
 
 @param mixed filename As same a the first parameter for display.newSprite
 @param table params As same as the third parameter for display.newFilteredSprite
 
-@return An instance of CCFilteredSprite
+@return An instance of FilteredSprite
 
 ]]
 function display.newGraySprite(filename, params)
@@ -781,12 +781,12 @@ function display.newGraySprite(filename, params)
 end
 
 function display.newDrawNode()
-	return CCDrawNode:create()
+	return cc.DrawNode:create()
 end
 
 --[[--
 
-Create a circle or a sector or a pie by CCDrawNode
+Create a circle or a sector or a pie by DrawNode
 
 Creation: 2014-03-11
 
@@ -795,7 +795,7 @@ Creation: 2014-03-11
 @param mixed filename As same a the first parameter for display.newSprite
 @param table params As same as the third parameter for display.newFilteredSprite
 
-@return An instance of CCFilteredSprite
+@return An instance of FilteredSprite
 
 ]]
 function display.newSolidCircle(radius, params)
@@ -812,17 +812,17 @@ end
 
 --[[--
 
-创建并返回一个 CCCircleShape （圆）对象。
+创建并返回一个 CircleShape （圆）对象。
 
 @param number radius
 
-@return CCCircleShape
+@return CircleShape
 
-@see CCShapeNode
+@see ShapeNode
 
 ]]
 function display.newCircle(radius, params)
-    local circle = CCCircleShape:create(radius)
+    local circle = cc.CircleShape:create(radius)
 	local x,y = 0,0
 	local align=display.CENTER
 	if params then
@@ -843,40 +843,40 @@ end
 
 --[[--
 
-创建并返回一个 CCRectShape （矩形）对象。
+创建并返回一个 RectShape （矩形）对象。
 
 格式：
 
-shape = display.newRect(宽度, 高度 | CCRect | CCSize)
+shape = display.newRect(宽度, 高度 | Rect | Size)
 
 ~~~ lua
 
 -- 下面两行代码都创建一个宽度 200，高度 100 的矩形
 local shape1 = display.newRect(200, 100)
-local shape2 = display.newRect(CCSize(200, 100))
+local shape2 = display.newRect(cc.size(200, 100))
 
 -- 创建一个宽度 200，高度 100 的矩形，并且定位于 50, 80
-local shape3 = display.newRect(CCRect(50, 80, 200, 100))
+local shape3 = display.newRect(cc.rect(50, 80, 200, 100))
 
 ~~~
 
-@param [mixed ...] 宽度，高度 或 CCRect 或 CCSize
+@param [mixed ...] 宽度，高度 或 Rect 或 Size
 
-@return CCRectShape
+@return RectShape
 
-@see CCShapeNode
+@see ShapeNode
 
 ]]
 function display.newRect(width, height, params)
     local x, y = 0, 0
     if type(width) == "userdata" then
         local t = tolua.type(width)
-        if t == "CCRect" then
+        if t == "Rect" then
             x = width.origin.x
             y = width.origin.y
             height = width.size.height
             width = width.size.width
-        elseif t == "CCSize" then
+        elseif t == "Size" then
             height = width.height
             width = width.width
         else
@@ -885,7 +885,7 @@ function display.newRect(width, height, params)
         end
     end
 
-    local rect = CCRectShape:create(CCSize(width, height))
+    local rect = cc.RectShape:create(cc.size(width, height))
 	local align=display.CENTER
 	if type(height) == "table" then params = hight end
 	if type(params) == "table" then
@@ -906,7 +906,7 @@ end
 
 --[[--
 
-创建并返回一个 CCPolygonShape （多边形）对象。
+创建并返回一个 PolygonShape （多边形）对象。
 
 ~~~ lua
 
@@ -923,21 +923,21 @@ polygon:setClose(true) -- 将第一个点和最后一个点相连
 @param table points 包含多边形每一个点坐标的表格对象
 @param number scale 缩放比例
 
-@return CCPolygonShape CCPolygonShape对象
+@return PolygonShape PolygonShape对象
 
-@see CCShapeNode
+@see ShapeNode
 
 ]]
 -- function display.newPolygon(points, scale)
 --     if type(scale) ~= "number" then scale = 1 end
---     local arr = CCPointArray:create(#points)
+--     local arr = cc.PointArray:create(#points)
 --     local ccp = cc.p
 --     for i, p in ipairs(points) do
 --         p = ccp(p[1] * scale, p[2] * scale)
 --         arr:add(p)
 --     end
 
---     return CCPolygonShape:create(arr)
+--     return cc.PolygonShape:create(arr)
 -- end
 
 --[[--
@@ -975,7 +975,7 @@ display.align(sprite, display.LEFT_TOP, 0, 0)
 
 ~~~
 
-@param CCSprite target 显示对象
+@param Sprite target 显示对象
 @param integer anchorPoint 锚点位置
 @param integer x
 @param integer y
@@ -1026,13 +1026,13 @@ function display.addSpriteFrames(plistFilename, image, handler)
 	end
 
     if display.TEXTURES_PIXEL_FORMAT[image] then
-        CCTexture2D:setDefaultAlphaPixelFormat(display.TEXTURES_PIXEL_FORMAT[image])
+        cc.Texture2D:setDefaultAlphaPixelFormat(display.TEXTURES_PIXEL_FORMAT[image])
 		if async then
 			sharedTextureCache:addImageAsync(image, asyncHandler)
 		else
 			sharedSpriteFrameCache:addSpriteFrames(plistFilename, image)
 		end
-        CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888)
+        cc.Texture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888)
     else
 		if async then
 			sharedTextureCache:addImageAsync(image, asyncHandler)
@@ -1082,7 +1082,7 @@ end
 
 有时候，某些图像仅在特定场景中使用，例如背景图。那么在场景退出时，就可以用 display.removeSpriteFrameByImageName() 从缓存里删除不再使用的图像数据。
 
-此外，CCScene 提供了 markAutoCleanupImage() 接口，可以指定场景退出时需要自动清理的图像，推荐使用。
+此外，Scene 提供了 markAutoCleanupImage() 接口，可以指定场景退出时需要自动清理的图像，推荐使用。
 
 @param string imageName 图像文件名
 
@@ -1120,7 +1120,7 @@ end
 @param string image 图像文件名
 @param integer capacity
 
-@return cc.SpriteBatchNode
+@return SpriteBatchNode
 
 @see Batch Node
 
@@ -1137,20 +1137,20 @@ end
 
 display.addSpriteFrames("Sprites.plist", "Sprites.png")
 
--- 创建一个 CCSprite
+-- 创建一个 Sprite
 local sprite = display.newSprite("#Yes.png")
 
 -- 创建一个图像帧
 local frameNo = display.newSpriteFrame("No.png")
 
--- 在需要时，修改 CCSprite 的显示内容
+-- 在需要时，修改 Sprite 的显示内容
 sprite:setDisplayFrame(frameNo)
 
 ~~~
 
 @param string 图像帧名称
 
-@return CCSpriteFrameCache
+@return SpriteFrameCache
 
 ]]
 function display.newSpriteFrame(frameName)
@@ -1221,12 +1221,12 @@ sprite:playAnimationOnce(animation) -- 播放一次动画
 @param number time 每一桢动画之间的间隔时间
 
 
-@return CCAnimation CCAnimation对象
+@return Animation Animation对象
 
 ]]
 function display.newAnimation(frames, time)
     local count = #frames
-    -- local array = CCArray:create()
+    -- local array = Array:create()
     -- for i = 1, count do
     --     array:addObject(frames[i])
     -- end
@@ -1250,7 +1250,7 @@ sprite:playAnimationOnce(display.getAnimationCache("Walk")) -- 播放一次动�
 ~~~
 
 @param string name 名字
-@param CCAnimation animation 动画对象
+@param Animation animation 动画对象
 
 
 ]]
@@ -1264,7 +1264,7 @@ end
 
 @param string name
 
-@return CCAnimation
+@return Animation
 
 ]]
 function display.getAnimationCache(name)
@@ -1295,17 +1295,17 @@ function display.newProgressTimer(image, progresssType)
         image = display.newSprite(image)
     end
 
-    local progress = CCProgressTimer:create(image)
+    local progress = cc.ProgressTimer:create(image)
     progress:setType(progresssType)
     return progress
 end
 
--- Get a screenshot of a cc.Node
+-- Get a screenshot of a Node
 -- @author zrong(zengrong.net)
 -- Creation: 2014-04-10
 -- @param node A node to print.
 -- @param args
--- @return An instance of CCSprite or CCFilteredSprite.
+-- @return An instance of Sprite or FilteredSprite.
 function display.printscreen(node, args)
 	local sp = true
 	local file = nil
@@ -1318,7 +1318,7 @@ function display.printscreen(node, args)
 		filterParams = args.filterParams
 	end
 	local size = node:getContentSize()
-	local canvas = CCRenderTexture:create(size.width,size.height)
+	local canvas = cc.RenderTexture:create(size.width,size.height)
 	canvas:begin()
 	node:visit()
 	canvas:endToLua()
