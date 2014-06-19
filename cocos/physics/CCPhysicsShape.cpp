@@ -51,6 +51,7 @@ PhysicsShape::PhysicsShape()
 , _collisionBitmask(UINT_MAX)
 , _contactTestBitmask(0)
 , _group(0)
+, _sensor(false)
 {
     
 }
@@ -275,6 +276,14 @@ void PhysicsShape::setBody(PhysicsBody *body)
     {
         _info->setBody(body->_info->getBody());
         _body = body;
+    }
+}
+
+void PhysicsShape::setSensor(bool enable)
+{
+    for (auto shape : _info->getShapes())
+    {
+        cpShapeSetSensor(shape, enable);
     }
 }
 

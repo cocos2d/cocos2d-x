@@ -68,6 +68,7 @@ PhysicsBody::PhysicsBody()
 , _isDamping(false)
 , _linearDamping(0.0f)
 , _angularDamping(0.0f)
+, _sensor(false)
 , _tag(0)
 , _categoryBitmask(UINT_MAX)
 , _collisionBitmask(0)
@@ -341,6 +342,17 @@ void PhysicsBody::setGravityEnable(bool enable)
             {
                 applyForce(-_world->getGravity() * _mass);
             }
+        }
+    }
+}
+
+void PhysicsBody::setSensor(bool enable)
+{
+    for (auto& shapeInfo : _shapes)
+    {
+        for (auto shape : shapeInfo->_info->getShapes())
+        {
+            cpShapeSetSensor(shape, enable);
         }
     }
 }

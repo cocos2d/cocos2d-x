@@ -287,6 +287,17 @@ public:
     /** set the body is affected by the physics world's gravitational force or not. */
     void setGravityEnable(bool enable);
     
+    /**
+     *  Is this body a sensor? A sensor will call a collision delegate but does not physically cause collisions between bodies.
+     *  Defaults to false
+     */
+    inline bool isSensor() const { return _sensor; }
+    /**
+     *  Set this body as a sensor. A sensor will call a collision delegate but does not physically cause collisions between bodies.
+     *  Defaults to false
+     */
+    void setSensor(bool enable);
+    
     /** get the body's tag */
     inline int getTag() const { return _tag; }
     /** set the body's tag */
@@ -333,6 +344,7 @@ protected:
     bool _isDamping;
     float _linearDamping;
     float _angularDamping;
+    bool _sensor;
     int _tag;
     
     int _categoryBitmask;
