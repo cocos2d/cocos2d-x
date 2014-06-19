@@ -67,7 +67,7 @@ function LevelsListCell:onTap(x, y)
 end
 
 function LevelsListCell:checkButton(x, y)
-    local pos = CCPoint(x, y)
+    local pos = cc.p(x, y)
     for i = 1, #self.buttons do
         local button = self.buttons[i]
         if cc.rectContainsPoint(button:getBoundingBox(), pos) then

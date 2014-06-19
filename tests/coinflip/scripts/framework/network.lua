@@ -40,7 +40,7 @@ local network = {}
 
 ]]
 function network.isLocalWiFiAvailable()
-    return CCNetwork:isLocalWiFiAvailable()
+    return cc.Network:isLocalWiFiAvailable()
 end
 
 --[[--
@@ -53,7 +53,7 @@ end
 
 ]]
 function network.isInternetConnectionAvailable()
-    return CCNetwork:isInternetConnectionAvailable()
+    return cc.Network:isInternetConnectionAvailable()
 end
 
 --[[--
@@ -78,7 +78,7 @@ function network.isHostNameReachable(hostname)
         printError("network.isHostNameReachable() - invalid hostname %s", tostring(hostname))
         return false
     end
-    return CCNetwork:isHostNameReachable(hostname)
+    return cc.Network:isHostNameReachable(hostname)
 end
 
 --[[--
@@ -95,12 +95,12 @@ end
 
 ]]
 function network.getInternetConnectionStatus()
-    return CCNetwork:getInternetConnectionStatus()
+    return cc.Network:getInternetConnectionStatus()
 end
 
 --[[--
 
-创建异步 HTTP 请求，并返回 CCHTTPRequest 对象。 
+创建异步 HTTP 请求，并返回 cc.HTTPRequest 对象。 
 
 ~~~ lua
 
@@ -136,7 +136,7 @@ request:start()
 
 ~~~
 
-@return CCHTTPRequest 结果
+@return HTTPRequest 结果
 
 ]]
 function network.createHTTPRequest(callback, url, method)
@@ -146,10 +146,10 @@ function network.createHTTPRequest(callback, url, method)
     else
         method = kCCHTTPRequestMethodPOST
     end
-    return CCHTTPRequest:createWithUrl(callback, url, method)
+    return cc.HTTPRequest:createWithUrl(callback, url, method)
 end
 
---- Upload a file through a CCHTTPRequest instance.
+--- Upload a file through a HTTPRequest instance.
 -- @author zrong(zengrong.net)
 -- Creation: 2014-04-14
 -- @param callback As same as the first parameter of network.createHTTPRequest.

@@ -32,24 +32,24 @@ local ui = {}
 ui.DEFAULT_TTF_FONT      = "Arial"
 ui.DEFAULT_TTF_FONT_SIZE = 24
 
-ui.TEXT_ALIGN_LEFT    = kCCTextAlignmentLeft
-ui.TEXT_ALIGN_CENTER  = kCCTextAlignmentCenter
-ui.TEXT_ALIGN_RIGHT   = kCCTextAlignmentRight
-ui.TEXT_VALIGN_TOP    = kCCVerticalTextAlignmentTop
-ui.TEXT_VALIGN_CENTER = kCCVerticalTextAlignmentCenter
-ui.TEXT_VALIGN_BOTTOM = kCCVerticalTextAlignmentBottom
+ui.TEXT_ALIGN_LEFT    = cc.TEXT_ALIGNMENT_LEFT
+ui.TEXT_ALIGN_CENTER  = cc.TEXT_ALIGNMENT_CENTER
+ui.TEXT_ALIGN_RIGHT   = cc.TEXT_ALIGNMENT_RIGHT
+ui.TEXT_VALIGN_TOP    = cc.VERTICAL_TEXT_ALIGNMENT_TOP
+ui.TEXT_VALIGN_CENTER = cc.VERTICAL_TEXT_ALIGNMENT_CENTER
+ui.TEXT_VALIGN_BOTTOM = cc.VERTICAL_TEXT_ALIGNMENT_BOTTOM
 
 --[[--
 
-创建一个文字输入框，并返回 CCEditBox 对象。
+创建一个文字输入框，并返回 EditBox 对象。
 
 可用参数：
 
--   image: 输入框的图像，可以是图像名或者是 CCSprite9Scale 显示对象。用 display.newScale9Sprite() 创建 CCSprite9Scale 显示对象。
+-   image: 输入框的图像，可以是图像名或者是 Sprite9Scale 显示对象。用 display.newScale9Sprite() 创建 Sprite9Scale 显示对象。
 -   imagePressed: 输入状态时输入框显示的图像（可选）
 -   imageDisabled: 禁止状态时输入框显示的图像（可选）
 -   listener: 回调函数
--   size: 输入框的尺寸，用 CCSize(宽度, 高度) 创建
+-   size: 输入框的尺寸，用 cc.size(宽度, 高度) 创建
 -   x, y: 坐标（可选）
 
 ~~~ lua
@@ -69,7 +69,7 @@ end
 local editbox = ui.newEditBox({
     image = "EditBox.png",
     listener = onEdit,
-    size = CCSize(200, 40)
+    size = cc.size(200, 40)
 })
 
 ~~~
@@ -103,7 +103,7 @@ end
 
 @param table params 参数表格对象
 
-@return CCEditBox 文字输入框
+@return EditBox 文字输入框
 
 ]]
 function ui.newEditBox(params)
@@ -135,11 +135,11 @@ end
 
 --[[--
 
-创建菜单，并返回 CCMenu 对象。
+创建菜单，并返回 Menu 对象。
 
 @param table items 菜单项的数组表
 
-@return CCMenu CCMenu对象
+@return Menu Menu对象
 
 ]]
 function ui.newMenu(items)
@@ -158,7 +158,7 @@ end
 
 --[[--
 
-创建一个图像菜单项，并返回 CCMenuItemSprite 对象。
+创建一个图像菜单项，并返回 MenuItemSprite 对象。
 
 可用参数：
 
@@ -190,7 +190,7 @@ scene:addChild(menu)
 
 @param table params 参数表格对象
 
-@return CCMenuItemSprite CCMenuItemSprite对象
+@return MenuItemSprite MenuItemSprite对象
 
 ]]
 function ui.newImageMenuItem(params)
@@ -230,7 +230,7 @@ end
 
 --[[--
 
-创建一个文字标签菜单项，并返回 CCMenuItemLabel 对象。
+创建一个文字标签菜单项，并返回 MenuItemLabel 对象。
 
 可用参数：
 
@@ -243,7 +243,7 @@ end
 
 @param table params 参数表格对象
 
-@return CCMenuItemLabel CCMenuItemLabel对象
+@return MenuItemLabel MenuItemLabel对象
 
 ]]
 
@@ -275,7 +275,7 @@ end
 
 --[[--
 
-用位图字体创建文本显示对象，并返回 CCLabelBMFont 对象。
+用位图字体创建文本显示对象，并返回 LabelBMFont 对象。
 
 BMFont 通常用于显示英文内容，因为英文字母加数字和常用符号也不多，生成的 BMFont 文件较小。如果是中文，应该用 TTFLabel。
 
@@ -297,7 +297,7 @@ local label = ui.newBMFontLabel({
 
 @param table params 参数表格对象
 
-@return CCLabelBMFont CCLabelBMFont对象
+@return LabelBMFont LabelBMFont对象
 
 ]]
 function ui.newBMFontLabel(params)
@@ -310,7 +310,7 @@ function ui.newBMFontLabel(params)
     local x, y      = params.x, params.y
     assert(font ~= nil, "ui.newBMFontLabel() - not set font")
 
-    local label = cc.LabelBMFont:create(text, font, kCCLabelAutomaticWidth, textAlign)
+    local label = cc.LabelBMFont:create(text, font, cc.LABEL_AUTOMATIC_WIDTH, textAlign)
     if not label then return end
 
     if type(x) == "number" and type(y) == "number" then
@@ -330,7 +330,7 @@ end
 
 --[[--
 
-使用 TTF 字体创建文字显示对象，并返回 CCLabelTTF 对象。
+使用 TTF 字体创建文字显示对象，并返回 LabelTTF 对象。
 
 可用参数：
 
@@ -340,7 +340,7 @@ end
 -    color: 文字颜色（可选），用 cc.c3b() 指定，默认为白色
 -    align: 文字的水平对齐方式（可选）
 -    valign: 文字的垂直对齐方式（可选），仅在指定了 dimensions 参数时有效
--    dimensions: 文字显示对象的尺寸（可选），使用 CCSize() 指定
+-    dimensions: 文字显示对象的尺寸（可选），使用 cc.size() 指定
 -    x, y: 坐标（可选）
 
 align 和 valign 参数可用的值：
@@ -370,14 +370,14 @@ local label = ui.newTTFLabel({
     color = cc.c3b(255, 0, 0), -- 使用纯红色
     align = ui.TEXT_ALIGN_LEFT,
     valign = ui.TEXT_VALIGN_TOP,
-    dimensions = CCSize(400, 200)
+    dimensions = cc.size(400, 200)
 })
 
 ~~~
 
 @param table params 参数表格对象
 
-@return CCLabelTTF CCLabelTTF对象
+@return LabelTTF LabelTTF对象
 
 ]]
 function ui.newTTFLabel(params)
@@ -424,7 +424,7 @@ end
 
 --[[--
 
-创建带阴影的 TTF 文字显示对象，并返回 CCLabelTTF 对象。
+创建带阴影的 TTF 文字显示对象，并返回 LabelTTF 对象。
 
 相比 ui.newTTFLabel() 增加一个参数：
 
@@ -432,7 +432,7 @@ end
 
 @param table params 参数表格对象
 
-@return CCLabelTTF CCLabelTTF对象
+@return LabelTTF LabelTTF对象
 
 ]]
 function ui.newTTFLabelWithShadow(params)
@@ -492,7 +492,7 @@ end
 
 --[[--
 
-创建带描边效果的 TTF 文字显示对象，并返回 CCLabelTTF 对象。
+创建带描边效果的 TTF 文字显示对象，并返回 LabelTTF 对象。
 
 相比 ui.newTTFLabel() 增加一个参数：
 
@@ -500,7 +500,7 @@ end
 
 @param table params 参数表格对象
 
-@return CCLabelTTF CCLabelTTF对象
+@return LabelTTF LabelTTF对象
 
 ]]
 function ui.newTTFLabelWithOutline(params)

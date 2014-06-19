@@ -1,7 +1,5 @@
 
 local ScrollView = class("ScrollView", function(rect)
-    -- print("htl scrollview new")
-    -- dump(rect, "Rect")
     if not rect then rect = cc.rect(0, 0, 0, 0) end
     local node = display.newClippingRegionNode(rect)
     node:setNodeEventEnabled(true)
@@ -16,8 +14,6 @@ function ScrollView:ctor(rect, direction)
     assert(direction == ScrollView.DIRECTION_VERTICAL or direction == ScrollView.DIRECTION_HORIZONTAL,
            "ScrollView:ctor() - invalid direction")
 
-    -- print("htl scrollview ctor")
-
     self.dragThreshold = 40
     self.bouncThreshold = 140
     self.defaultAnimateTime = 0.4
@@ -30,10 +26,7 @@ function ScrollView:ctor(rect, direction)
     self.cells = {}
     self.currentIndex = 0
 
-    print("htl add node event listener")
-    -- self:setTouchEnabled(true)
     self:addNodeEventListener(cc.NODE_EVENT, function(event)
-        print("scrollview node event:", event)
         if event.name == "enter" then
             self:onEnter()
         elseif event.name == "exit" then
@@ -46,7 +39,6 @@ function ScrollView:ctor(rect, direction)
     self:addChild(self.view)
 
     self.view:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
-        dump(event, "scrollview node touch event:")
         return self:onTouch(event.name, event.x, event.y)
     end)
 end
@@ -218,8 +210,6 @@ function ScrollView:onTouchCancelled(x, y)
 end
 
 function ScrollView:onTouch(event, x, y)
-    print("htl scrollview ontouch:", event, x, y)
-
     if self.currentIndex < 1 then return end
 
     if event == "began" then
