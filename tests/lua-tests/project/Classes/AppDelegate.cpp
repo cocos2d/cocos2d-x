@@ -50,7 +50,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID ||CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     LuaStack* stack = pEngine->getLuaStack();
-    register_assetsmanager_test_sample(stack->getLuaState());
+//    register_assetsmanager_test_sample(stack->getLuaState());
 #endif
 
 //    pEngine->executeScriptFile("src/controller.lua");
