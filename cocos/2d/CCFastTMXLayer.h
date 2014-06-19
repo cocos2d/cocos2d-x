@@ -187,7 +187,7 @@ public:
 protected:
 
     bool initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
-    int updateTiles(const Rect& culledRect, V3F_T2F_Quad *quads, GLushort *indices);
+    int updateTiles(const Rect& culledRect);
     void setupVBO();
     Vec2 calculateLayerOffset(const Vec2& offset);
 
@@ -242,11 +242,9 @@ protected:
     /** tile coordinate to node coordinate transform */
     Mat4 _tileToNodeTransform;
     /** quads to be rendered */
-    V3F_T2F_Quad* _quads;
-    /** number of quads */
-    int _numQuads;
+    std::vector<V3F_T2F_Quad> _quads;
     /** indices */
-    GLushort* _indices;
+    std::vector<GLushort> _indices;
     bool _dirty;
 };
 
