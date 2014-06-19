@@ -341,100 +341,16 @@ namespace cocostudio
     {
         stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
         
+        this->beginSetBasicProperties(widget);
         
         for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
             std::string key = stChildArray[i].GetName(pCocoLoader);
             std::string value = stChildArray[i].GetValue();
             
-            if (key == "ignoreSize") {
-                widget->ignoreContentAdaptWithSize(valueToBool(value));
-            }else if(key == "sizeType"){
-                widget->setSizeType((Widget::SizeType)valueToInt(value));
-            }else if(key == "positionType"){
-                widget->setPositionType((Widget::PositionType)valueToInt(value));
-            }else if(key == "sizePercentX"){
-                widget->setSizePercent(Vec2(valueToFloat(value), widget->getSizePercent().y));
-            }else if(key == "sizePercentY"){
-                widget->setSizePercent(Vec2(widget->getSizePercent().x, valueToFloat(value)));
-            }else if(key == "positionPercentX"){
-                widget->setPositionPercent(Vec2(valueToFloat(value), widget->getPositionPercent().y));
-            }else if(key == "positionPercentY"){
-                widget->setPositionPercent(Vec2(widget->getPositionPercent().x, valueToFloat(value)));
-            }else if (key == "width"){
-                widget->setSize(Size(valueToFloat(value), widget->getSize().height));
-            }else if(key == "height"){
-                widget->setSize(Size(widget->getSize().width, valueToFloat(value)));
-            }else if(key == "tag"){
-                widget->setTag(valueToInt(value));
-            }else if(key == "actiontag"){
-                widget->setActionTag(valueToInt(value));
-            }else if(key == "touchAble"){
-                widget->setTouchEnabled(valueToBool(value));
-            }else if(key == "name"){
-                std::string widgetName = value.empty() ? "default" : value;
-                widget->setName(widgetName);
-            }else if(key == "x"){
-                widget->setPosition(Vec2(valueToFloat(value), widget->getPosition().y));
-            }else if(key == "y"){
-                widget->setPosition(Vec2(widget->getPosition().x, valueToFloat(value)));
-            }else if(key == "scaleX"){
-                widget->setScaleX(valueToFloat(value));
-            }else if(key == "scaleY"){
-                widget->setScaleY(valueToFloat(value));
-            }else if(key == "rotation"){
-                widget->setRotation(valueToFloat(value));
-            }else if(key == "visible"){
-                widget->setVisible(valueToBool(value));
-            }else if(key == "ZOrder"){
-                widget->setZOrder(valueToInt(value));
-            }else if(key == "layoutParameter"){
-                stExpCocoNode *layoutCocosNode = stChildArray[i].GetChildArray();
-                
-                ui::LinearLayoutParameter *linearParameter = ui::LinearLayoutParameter::create();
-                ui::RelativeLayoutParameter *relativeParameter = ui::RelativeLayoutParameter::create();
-                ui::Margin mg;
-                
-                int paramType = -1;
-                for (int j = 0; j < stChildArray[i].GetChildNum(); ++j) {
-                    std::string innerKey = layoutCocosNode[j].GetName(pCocoLoader);
-                    std::string innerValue = layoutCocosNode[j].GetValue();
-                    
-                    if (innerKey == "type") {
-                        paramType = valueToInt(innerValue);
-                    }else if(innerKey == "gravity"){
-                        linearParameter->setGravity((cocos2d::ui::LinearLayoutParameter::LinearGravity)valueToInt(innerValue));
-                    }else if(innerKey == "relativeName"){
-                        relativeParameter->setRelativeName(innerValue);
-                    }else if(innerKey == "relativeToName"){
-                        relativeParameter->setRelativeToWidgetName(innerValue);
-                    }else if(innerKey == "align"){
-                        relativeParameter->setAlign((cocos2d::ui::RelativeLayoutParameter::RelativeAlign)valueToInt(innerValue));
-                    }else if(innerKey == "marginLeft"){
-                        mg.left = valueToFloat(innerValue);
-                    }else if(innerKey == "marginTop"){
-                        mg.top = valueToFloat(innerValue);
-                    }else if(innerKey == "marginRight"){
-                        mg.right = valueToFloat(innerValue);
-                    }else if(innerKey == "marginDown"){
-                        mg.bottom = valueToFloat(innerValue);
-                    }
-                }
-                
-                linearParameter->setMargin(mg);
-                relativeParameter->setMargin(mg);
-                
-                switch (paramType) {
-                    case 1:
-                        widget->setLayoutParameter(linearParameter);
-                        break;
-                    case 2:
-                        widget->setLayoutParameter(relativeParameter);
-                    default:
-                        break;
-                }
-            }
-            
+            CC_BASIC_PROPERTY_BINARY_READER
         }
+        
+        this->endSetBasicProperties(widget);
     }
     
 }
