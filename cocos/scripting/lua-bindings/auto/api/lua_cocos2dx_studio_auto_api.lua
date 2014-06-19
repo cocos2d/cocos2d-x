@@ -146,4 +146,9 @@
 -- @field [parent=#ccs] SceneReader#SceneReader SceneReader preloaded module
 
 
+--------------------------------------------------------
+-- the ccs ActionTimelineData
+-- @field [parent=#ccs] ActionTimelineData#ActionTimelineData ActionTimelineData preloaded module
+
+
 return nil
