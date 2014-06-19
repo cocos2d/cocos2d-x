@@ -78,6 +78,7 @@
       <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS_DEBUG;COCOS2D_DEBUG=1;GLFW_EXPOSE_NATIVE_WIN32;GLFW_EXPOSE_NATIVE_WGL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ProgramDataBaseFileName>$(ProjectDir)../../../runtime/win32/$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -85,6 +86,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libcurl_imp.lib;lua51.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ProgramDatabaseFile>$(ProjectDir)../../../runtime/win32/$(TargetName).pdb</ProgramDatabaseFile>
+      <OutputFile>$(ProjectDir)../../../runtime/win32/$(TargetName)$(TargetExt)</OutputFile>
     </Link>
     <ResourceCompile>
       <Culture>0x0409</Culture>
@@ -105,21 +108,17 @@
     </Midl>
     <PreBuildEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-if exist "$(OutDir)\Resource" rd /s /q "$(OutDir)\Resource"
-mkdir "$(OutDir)\Resource"
-mkdir "$(OutDir)\Resource\src"
-mkdir "$(OutDir)\Resource\res"
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script" "$(OutDir)\Resource" /e /Y
-xcopy "$(ProjectDir)..\..\..\src" "$(OutDir)\Resource\src" /e /Y
-xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\Resource\res" /e /Y
-copy "$(ProjectDir)..\..\..\config.json" "$(OutDir)\Resource\config.json" /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\external\lua\luasocket\*.lua" "$(OutDir)\Resource" /e /Y</Command>
+xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
+xcopy "$(ProjectDir)..\..\cocos2d-x\external\lua\luasocket\*.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y</Command>
       <Message>copy files</Message>
     </PreBuildEvent>
     <PreLinkEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
 xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</Command>
     </PreLinkEvent>
+    <PostBuildEvent>
+      <Command>xcopy /Y /Q "$(OutDir)*.dll" "$(ProjectDir)..\..\..\runtime\win32\"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -134,6 +133,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
       <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGSNDEBUG;GLFW_EXPOSE_NATIVE_WIN32;GLFW_EXPOSE_NATIVE_WGL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ProgramDataBaseFileName>$(ProjectDir)../../../runtime/win32/$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -141,6 +141,8 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libcurl_imp.lib;lua51.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OutputFile>$(ProjectDir)../../../runtime/win32/$(TargetName)$(TargetExt)</OutputFile>
+      <ProgramDatabaseFile>$(ProjectDir)../../../runtime/win32/$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <ResourceCompile>
       <Culture>0x0409</Culture>
@@ -161,15 +163,8 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     </Midl>
     <PreBuildEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-if exist "$(OutDir)\Resource" rd /s /q "$(OutDir)\Resource"
-mkdir "$(OutDir)\Resource"
-mkdir "$(OutDir)\Resource\src"
-mkdir "$(OutDir)\Resource\res"
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script" "$(OutDir)\Resource" /e /Y
-xcopy "$(ProjectDir)..\..\..\src" "$(OutDir)\Resource\src" /e /Y
-xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\Resource\res" /e /Y
-copy "$(ProjectDir)..\..\..\config.json" "$(OutDir)\Resource\config.json" /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\external\lua\luasocket\*.lua" "$(OutDir)\Resource" /e /Y</Command>
+xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
+xcopy "$(ProjectDir)..\..\cocos2d-x\external\lua\luasocket\*.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y</Command>
       <Message>copy files</Message>
     </PreBuildEvent>
     <PreLinkEvent>
