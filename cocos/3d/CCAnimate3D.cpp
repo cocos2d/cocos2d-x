@@ -77,7 +77,7 @@ void Animate3D::startWithTarget(Node *target)
     
     _boneCurves.clear();
     auto skin = sprite->getSkin();
-    for (unsigned int  i = 0; i < skin->getBoneCount(); i++) {
+    for (unsigned int  i = 0; i < skin->getSkinBoneCount(); i++) {
         auto bone = skin->getBoneByIndex(i);
         auto curve = _animation->getBoneCurveByName(bone->getName());
         if (curve)

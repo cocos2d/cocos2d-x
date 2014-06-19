@@ -160,6 +160,8 @@ protected:
 };
 
 /////////////////////////////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////////////////////////////
 class MeshSkin: public Ref
 {
 public:
@@ -167,9 +169,7 @@ public:
     //create a new meshskin if do not want to share meshskin
     static MeshSkin* create(const std::string& filename, const std::string& name);
     
-    unsigned int getBoneCount() const;
-    
-    void setBoneCount(int boneCount);
+    ssize_t getSkinBoneCount() const;
     
     //get bone
     Bone* getBoneByIndex(unsigned int index) const;
@@ -177,15 +177,15 @@ public:
     
     //get & set root bone
     Bone* getRootBone() const;
-    void setRootBone(Bone* joint);
+    void setRootBone(Bone* bone);
     
-    int getBoneIndex(Bone* joint) const;
+    int getBoneIndex(Bone* bone) const;
     
     //compute matrix palette used by gpu skin
     Vec4* getMatrixPalette();
     
-    //getBoneCount() * 3
-    unsigned int getMatrixPaletteSize() const;
+    //getSkinBoneCount() * 3
+    ssize_t getMatrixPaletteSize() const;
     
     //refresh bone world matrix
     void updateBoneMatrix();
@@ -200,17 +200,21 @@ CC_CONSTRUCTOR_ACCESS:
     
     void removeAllBones();
     
-    void addBone(Bone* bone);
+    void addSkinBone(Bone* bone);
+    
+    void addNodeBone(Bone* bone);
     
 protected:
     
-    Vector<Bone*> _bones;
+    Vector<Bone*> _skinBones; // bones with skin
+    Vector<Bone*> _nodeBones; //bones without skin, only used to compute transform of children
+
     Bone* _rootBone;
     
     // Pointer to the array of palette matrices.
     // This array is passed to the vertex shader as a uniform.
     // Each 4x3 row-wise matrix is represented as 3 Vec4's.
-    // The number of Vec4's is (_joints.size() * 3).
+    // The number of Vec4's is (_skinBones.size() * 3).
     Vec4* _matrixPalette;
 };
 

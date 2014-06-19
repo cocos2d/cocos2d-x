@@ -187,7 +187,7 @@ bool Bundle3D::loadSkinData(const std::string& id, SkinData* skindata)
     {
         const rapidjson::Value& skin_data_bone = skin_data_bones[i];
         std::string name = skin_data_bone["node"].GetString();
-        skindata->boneNames.push_back(name);
+        skindata->skinBoneNames.push_back(name);
         
         Mat4 mat_bind_pos;
         const rapidjson::Value& bind_pos = skin_data_bone["bindshape"];
