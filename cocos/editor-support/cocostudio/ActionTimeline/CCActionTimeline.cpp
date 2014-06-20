@@ -171,7 +171,7 @@ void ActionTimeline::step(float delta)
         if(!_playing)
             _time = _endFrame * _frameInternal;
         else           
-            _time = _startFrame * _frameInternal;
+            gotoFrameAndPlay(_startFrame, _endFrame, _loop);
     }
 
 }
