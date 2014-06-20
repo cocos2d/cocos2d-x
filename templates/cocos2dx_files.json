@@ -48,6 +48,7 @@
         "build/winrt/scripts/templates/wp8_lib_template.vcxproj", 
         "build/winrt/scripts/templates/wp8_sln_header_template.txt", 
         "build/winrt/scripts/winrtconverter.ps1", 
+        "build/winrt/wp8_precompiled_shaders.txt", 
         "cocos/2d/CCAction.cpp", 
         "cocos/2d/CCAction.h", 
         "cocos/2d/CCActionCamera.cpp", 
