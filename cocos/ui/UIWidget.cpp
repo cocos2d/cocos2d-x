@@ -144,7 +144,6 @@ _touchMovePosition(Vec2::ZERO),
 _touchEndPosition(Vec2::ZERO),
 _touchEventListener(nullptr),
 _touchEventSelector(nullptr),
-_name("default"),
 _actionTag(0),
 _size(Size::ZERO),
 _customSize(Size::ZERO),
@@ -248,25 +247,6 @@ Widget* Widget::getWidgetParent()
 void Widget::setEnabled(bool enabled)
 {
     _enabled = enabled;
-}
-
-Widget* Widget::getChildByName(const std::string& name)const
-{
-    for (auto& child : _children)
-    {
-        if (child)
-        {
-            Widget* widgetChild = dynamic_cast<Widget*>(child);
-            if (widgetChild)
-            {
-                if (widgetChild->getName() == name)
-                {
-                    return widgetChild;
-                }
-            }
-        }
-    }
-    return nullptr;
 }
     
 void Widget::initRenderer()
@@ -963,17 +943,6 @@ const Vec2& Widget::getTouchEndPosition()const
 {
     return _touchEndPosition;
 }
-
-void Widget::setName(const std::string& name)
-{
-    _name = name;
-}
-
-const std::string& Widget::getName() const
-{
-    return _name;
-}
-
 
 void Widget::setLayoutParameter(LayoutParameter *parameter)
 {

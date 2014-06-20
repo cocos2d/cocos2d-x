@@ -207,9 +207,6 @@ public:
 
     virtual FrameData *getTweenData() const { return _tweenData; }
 
-    virtual void setName(const std::string &name) { _name = name; }
-    virtual const std::string getName() const { return _name; }
-
     virtual BaseData *getWorldInfo() const { return _worldInfo; }
 protected:
     void applyParentTransform(Bone *parent);
@@ -241,8 +238,6 @@ protected:
 
     //! Used for making tween effect in every frame
     FrameData *_tweenData;
-
-    std::string _name;
 
     Bone *_parentBone;	               //! A weak reference to its parent
     bool _boneTransformDirty;          //! Whether or not transform dirty
