@@ -435,13 +435,21 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
 
     if (! status)
     {
-        GLsizei length;
-        glGetShaderiv(*shader, GL_SHADER_SOURCE_LENGTH, &length);
-        GLchar* src = (GLchar *)malloc(sizeof(GLchar) * length);
-        
-        glGetShaderSource(*shader, length, nullptr, src);
-        CCLOG("cocos2d: ERROR: Failed to compile shader:\n%s", src);
-        
+    	GLsizei log_length,src_length;
+	glGetShaderiv(*shader, GL_INFO_LOG_LENGTH, &log_length);
+	glGetShaderiv(*shader, GL_SHADER_SOURCE_LENGTH, &src_length);
+
+	GLchar* log = (GLchar *)malloc(sizeof(GLchar) * log_length);
+	GLchar* src = (GLchar *)malloc(sizeof(GLchar) * src_length);
+		
+		
+	glGetShaderInfoLog(*shader,log_length,nullptr,log); //get shader compile error info
+
+	glGetShaderSource(*shader, src_length, nullptr, src);	//get shader source code
+
+	CCLOG("cocos2d: ERROR: Failed to compile shader:\n%s\nerror log:%s\n", src,log);
+	
+       
         if (type == GL_VERTEX_SHADER)
         {
             CCLOG("cocos2d: %s", getVertexShaderLog().c_str());
@@ -450,6 +458,7 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
         {
             CCLOG("cocos2d: %s", getFragmentShaderLog().c_str());
         }
+        free(log);
         free(src);
 
         return false;;
