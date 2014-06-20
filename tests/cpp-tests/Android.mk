@@ -54,6 +54,7 @@ Classes/ExtensionsTest/CocosBuilderTest/MenuTest/MenuTestLayer.cpp \
 Classes/ExtensionsTest/CocosBuilderTest/TestHeader/TestHeaderLayer.cpp \
 Classes/ExtensionsTest/CocosBuilderTest/TimelineCallbackTest/TimelineCallbackTestLayer.cpp \
 Classes/ExtensionsTest/CocoStudioArmatureTest/ArmatureScene.cpp \
+Classes/ExtensionsTest/CocoStudioActionTimelineTest/ActionTimelineTestScene.cpp \
 Classes/ExtensionsTest/CocoStudioComponentsTest/ComponentsTestScene.cpp \
 Classes/ExtensionsTest/CocoStudioComponentsTest/EnemyController.cpp \
 Classes/ExtensionsTest/CocoStudioComponentsTest/GameOverScene.cpp \

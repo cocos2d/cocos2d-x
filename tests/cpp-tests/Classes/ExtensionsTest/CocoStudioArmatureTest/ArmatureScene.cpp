@@ -411,10 +411,10 @@ void TestPerformance::addArmature(int number)
 
         Armature *armature = nullptr;
         armature = new Armature();
-        armature->init("Knight_f/Knight");
+        armature->init("Cowboy");
         armature->getAnimation()->playWithIndex(0);
         armature->setPosition(50 + armatureCount * 2, 150);
-        armature->setScale(0.6f);
+        armature->setScale(0.1f);
         addArmatureToParent(armature);
         armature->release();
     }

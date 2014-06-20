@@ -301,14 +301,14 @@ MeshSkin* MeshSkin::create(const std::string& filename, const std::string& name)
 bool MeshSkin::initFromSkinData(const SkinData& skindata)
 {
     ssize_t i = 0;
-    for (; i < skindata.skinBoneNames.size(); i++) {
-        auto bone = Bone::create(skindata.skinBoneNames[i]);
+    for (; i < skindata.boneNames.size(); i++) {
+        auto bone = Bone::create(skindata.boneNames[i]);
         bone->_invBindPose = skindata.inverseBindPoseMatrices[i];
         //bone->setOriPose(skindata.skinBoneOriginMatrices[i]);
         addSkinBone(bone);
     }
-    for (i = 0; i < skindata.nodeBoneNames.size(); i++) {
-        auto bone = Bone::create(skindata.nodeBoneNames[i]);
+    for (i = 0; i < skindata.boneNames.size(); i++) {
+        auto bone = Bone::create(skindata.boneNames[i]);
         //bone->setOriPose(skindata.nodeBoneOriginMatrices[i]);
         addNodeBone(bone);
     }
