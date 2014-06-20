@@ -59,12 +59,13 @@ public:
      */
     const cocos2d::Size getFileDesignSize(const char* fileName) const;
     
-    const std::string& getFilePath() const { return m_strFilePath; };
+    void setFilePath(const std::string& strFilePath) { m_strFilePath = strFilePath; }
+    const std::string& getFilePath() const { return m_strFilePath; }
+
     void registerTypeAndCallBack(const std::string& classType,
                                  cocos2d::ObjectFactory::Instance ins,
                                  Ref* object,
                                  SEL_ParseEvent callBack);
-    
     
 protected:
     GUIReader();

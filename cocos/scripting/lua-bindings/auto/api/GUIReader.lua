@@ -4,6 +4,11 @@
 -- @extend Ref
 
 --------------------------------
+-- @function [parent=#GUIReader] setFilePath 
+-- @param self
+-- @param #string str
+        
+--------------------------------
 -- @function [parent=#GUIReader] widgetFromJsonFile 
 -- @param self
 -- @param #char char
