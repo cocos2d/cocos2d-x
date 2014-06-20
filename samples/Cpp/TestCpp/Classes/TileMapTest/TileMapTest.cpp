@@ -140,22 +140,15 @@ TMXOrthoTest::TMXOrthoTest()
 
         child->getTexture()->setAntiAliasTexParameters();
     }
-
-    float x, y, z;
-    map->getCamera()->getEyeXYZ(&x, &y, &z);
-    map->getCamera()->setEyeXYZ(x-200, y, z+300);    
 }
 
 void TMXOrthoTest::onEnter()
 {
     TileDemo::onEnter();
-
-    //CCDirector::sharedDirector()->setProjection(kCCDirectorProjection3D);
 }
 
 void TMXOrthoTest::onExit()
 {
-    //CCDirector::sharedDirector()->setProjection(kCCDirectorProjection2D);
     TileDemo::onExit();
 }
 

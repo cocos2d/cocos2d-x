@@ -1007,7 +1007,7 @@ public:
      * @return A "local" axis aligned boudning box of the node.
      * @js getBoundingBox
      */
-    CCRect boundingBox(void);
+    virtual CCRect boundingBox(void);
 
     /// @{
     /// @name Actions
