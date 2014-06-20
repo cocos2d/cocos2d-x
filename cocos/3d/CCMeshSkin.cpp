@@ -46,6 +46,23 @@ const Mat4& Bone::getInverseBindPose()
     return _invBindPose;
 }
 
+void Bone::setOriPose(const Mat4& m)
+{
+    _oriPose = m;
+}
+
+void Bone::resetPose()
+{
+    if (_parent)
+        _world = _parent->_world * _oriPose;
+    else
+        _world = _oriPose;
+    
+    for (auto it : _children) {
+        it->resetPose();
+    }
+}
+
 void Bone::setWorldMatDirty(bool dirty)
 {
     _worldDirty = dirty;
@@ -94,7 +111,6 @@ void Bone::setAnimationValue(float* trans, float* rot, float* scale, float weigh
     state.weight = weight;
     
     _blendStates.push_back(state);
-    _localDirty = true;
 }
 
 void Bone::clearBoneBlendState()
@@ -115,13 +131,6 @@ Bone* Bone::create(const std::string& id)
     return bone;
 }
 
-
-
-/**
- * Updates the joint matrix.
- *
- * @param matrixPalette The matrix palette to update.
- */
 void Bone::updateJointMatrix(Vec4* matrixPalette)
 {
     {
@@ -134,12 +143,11 @@ void Bone::updateJointMatrix(Vec4* matrixPalette)
     }
 }
 
-//bone tree, we do not inherit from Node, Node has too many properties that we do not need. A clean Node is needed.
 Bone* Bone::getParentBone()
 {
     return _parent;
 }
-int Bone::getChildBoneCount() const
+ssize_t Bone::getChildBoneCount() const
 {
     return _children.size();
 }
@@ -168,15 +176,11 @@ void Bone::removeAllChildBone()
 Bone::Bone(const std::string& id)
 : _name(id)
 , _parent(nullptr)
-, _localDirty(true)
 , _worldDirty(true)
 {
     
 }
 
-/**
- * Destructor.
- */
 Bone::~Bone()
 {
     removeAllChildBone();
@@ -234,7 +238,6 @@ void Bone::updateLocalMat()
         _local.scale(scale);
         
         _blendStates.clear();
-        _localDirty = false;
     }
     else
     {
@@ -295,11 +298,17 @@ MeshSkin* MeshSkin::create(const std::string& filename, const std::string& name)
 
 bool MeshSkin::initFromSkinData(const SkinData& skindata)
 {
-    setBoneCount((int)skindata.boneNames.size());
-    for (size_t i = 0; i < skindata.boneNames.size(); i++) {
+    ssize_t i = 0;
+    for (; i < skindata.boneNames.size(); i++) {
         auto bone = Bone::create(skindata.boneNames[i]);
         bone->_invBindPose = skindata.inverseBindPoseMatrices[i];
-        addBone(bone);
+        //bone->setOriPose(skindata.skinBoneOriginMatrices[i]);
+        addSkinBone(bone);
+    }
+    for (i = 0; i < skindata.boneNames.size(); i++) {
+        auto bone = Bone::create(skindata.boneNames[i]);
+        //bone->setOriPose(skindata.nodeBoneOriginMatrices[i]);
+        addNodeBone(bone);
     }
     for (auto it : skindata.boneChild) {
         auto parent = getBoneByIndex(it.first);
@@ -311,29 +320,42 @@ bool MeshSkin::initFromSkinData(const SkinData& skindata)
     }
     
     setRootBone(getBoneByIndex(skindata.rootBoneIndex));
+    _rootBone->resetPose();
+    
     return true;
 }
 
-unsigned int MeshSkin::getBoneCount() const
+ssize_t MeshSkin::getSkinBoneCount() const
 {
-    return _bones.size();
+    return _skinBones.size();
 }
 
 //get bone
 Bone* MeshSkin::getBoneByIndex(unsigned int index) const
 {
-    return _bones.at(index);
+    if (index < _skinBones.size())
+        return _skinBones.at(index);
+    index -= _skinBones.size();
+    if (index < _nodeBones.size())
+        return _nodeBones.at(index);
+    
+    return nullptr;
 }
 Bone* MeshSkin::getBoneByName(const std::string& id) const
 {
-    for (auto it : _bones) {
+    //search from skin bones
+    for (auto it : _skinBones) {
+        if (it->getName() == id)
+            return it;
+    }
+    //search from node bones
+    for (auto it : _nodeBones) {
         if (it->getName() == id )
             return it;
     }
     return nullptr;
 }
 
-//get & set root bone
 Bone* MeshSkin::getRootBone() const
 {
     return _rootBone;
@@ -345,36 +367,16 @@ void MeshSkin::setRootBone(Bone* joint)
     _rootBone = joint;
 }
 
-void MeshSkin::setBoneCount(int boneCount)
+int MeshSkin::getBoneIndex(Bone* bone) const
 {
-    removeAllBones();
-    
-    // Resize the joints vector and initialize to NULL
-    _bones.reserve(boneCount);
-//    for (auto i = 0; i < boneCount; i++)
-//    {
-//        _bones.pushBack(nullptr);
-//    }
-    
-    // Rebuild the matrix palette. Each matrix is 3 rows of Vec4.
-    CC_SAFE_DELETE_ARRAY(_matrixPalette);
-    
-    if (boneCount > 0)
-    {
-        _matrixPalette = new Vec4[boneCount * PALETTE_ROWS];
-        for (unsigned int i = 0; i < boneCount * PALETTE_ROWS; i+=PALETTE_ROWS)
-        {
-            _matrixPalette[i+0].set(1.0f, 0.0f, 0.0f, 0.0f);
-            _matrixPalette[i+1].set(0.0f, 1.0f, 0.0f, 0.0f);
-            _matrixPalette[i+2].set(0.0f, 0.0f, 1.0f, 0.0f);
-        }
+    int i = 0;
+    for (; i < _skinBones.size(); i++) {
+        if (_skinBones.at(i) == bone)
+            return i;
     }
-}
-
-int MeshSkin::getBoneIndex(Bone* joint) const
-{
-    for (auto i = 0; i < _bones.size(); i++) {
-        if (_bones.at(i) == joint)
+    int index = 0;
+    for (; index < _nodeBones.size(); index++, i++) {
+        if (_nodeBones.at(index) == bone)
             return i;
     }
     return -1;
@@ -385,8 +387,12 @@ Vec4* MeshSkin::getMatrixPalette()
 {
     updateBoneMatrix();
     
+    if (_matrixPalette == nullptr)
+    {
+        _matrixPalette = new Vec4[_skinBones.size() * PALETTE_ROWS];
+    }
     int i = 0;
-	for (auto it : _bones )
+	for (auto it : _skinBones )
 	{
         it->updateJointMatrix(&_matrixPalette[i++ * PALETTE_ROWS]);
 	}
@@ -394,10 +400,9 @@ Vec4* MeshSkin::getMatrixPalette()
     return _matrixPalette;
 }
 
-//getBoneCount() * 3
-unsigned int MeshSkin::getMatrixPaletteSize() const
+ssize_t MeshSkin::getMatrixPaletteSize() const
 {
-    return _bones.size() * PALETTE_ROWS;
+    return _skinBones.size() * PALETTE_ROWS;
 }
 
 //refresh bone world matrix
@@ -409,14 +414,20 @@ void MeshSkin::updateBoneMatrix()
 
 void MeshSkin::removeAllBones()
 {
-    _bones.clear();
+    _skinBones.clear();
+    _nodeBones.clear();
     CC_SAFE_DELETE_ARRAY(_matrixPalette);
     CC_SAFE_RELEASE(_rootBone);
 }
 
-void MeshSkin::addBone(Bone* bone)
+void MeshSkin::addSkinBone(Bone* bone)
 {
-    _bones.pushBack(bone);
+    _skinBones.pushBack(bone);
+}
+
+void MeshSkin::addNodeBone(Bone* bone)
+{
+    _nodeBones.pushBack(bone);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -428,7 +439,7 @@ MeshSkinDataCache* MeshSkinDataCache::getInstance()
         _cacheInstance = new MeshSkinDataCache();
     return _cacheInstance;
 }
-void MeshSkinDataCache::purgeMeshSkinCache()
+void MeshSkinDataCache::destroyInstance()
 {
     if (_cacheInstance)
     {

@@ -27,14 +27,11 @@
 
 #include <map>
 
-#include "3d/CCMesh.h"
 #include "3d/CCBundle3DData.h"
+
 #include "base/ccMacros.h"
 #include "base/CCRef.h"
 #include "base/ccTypes.h"
-
-#include "3d/CCMesh.h"
-#include "3d/CCBundle3DData.h"
 
 #include "json/document.h"
 
@@ -43,37 +40,41 @@ class BundleReader;
 class Animation3D;
 class Data;
 
+/**
+ * Defines a bundle file that contains a collection of assets. Mesh, Material, MeshSkin, Animation
+ * There are two types of bundle files, c3t and c3b.
+ * c3t text file
+ * c3b binary file
+ */
 class Bundle3D
 {
 public:
     
     static Bundle3D* getInstance();
     
-    static void purgeBundle3D();
+    static void destroyInstance();
     
-    void clearBuffer();
+	void clearBuffer();
 
     /**
-     * load file data include .c3t and .c3b
-     * @param path Model path
+     * load a file. You must load a file first, then call loadMeshData, loadSkinData, and so on
+     * @param path File to be loaded
+     * @return result of load
      */
     bool load(const std::string& path);
     
-    //
     /**
      * load mesh data from bundle
      * @param id The ID of the mesh, load the first Mesh in the bundle if it is empty
      */
     bool loadMeshData(const std::string& id, MeshData* meshdata);
     
-    //
     /**
      * load skin data from bundle
      * @param id The ID of the skin, load the first Skin in the bundle if it is empty
      */
     bool loadSkinData(const std::string& id, SkinData* skindata);
     
-    //
     /**
      * load material data from bundle
      * @param id The ID of the material, load the first Material in the bundle if it is empty
@@ -154,8 +155,11 @@ protected:
     Reference* seekToFirstType(unsigned int type);
 
 protected:
+CC_CONSTRUCTOR_ACCESS:
     Bundle3D();
     ~Bundle3D();
+    
+protected:
     
     static Bundle3D* _instance;
     

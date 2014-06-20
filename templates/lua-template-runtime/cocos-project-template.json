@@ -5,41 +5,14 @@
             "runtime/config.json",
             "runtime/version.json"
         ],
-        "append_from_template": {
-            "from": "frameworks/runtime-src/proj.android",
-            "to": "frameworks/runtime-src/proj.android",
-            "exclude": [
-                "bin",
-                "assets"
-            ]
-        },
         "project_replace_project_name": {
             "src_project_name": "HelloLua",
             "files": [
                 "config.json",
-                ".project",
-                "frameworks/runtime-src/proj.android/.project",
-                "frameworks/runtime-src/proj.android/AndroidManifest.xml",
-                "frameworks/runtime-src/proj.android/build.xml",
-                "frameworks/runtime-src/proj.android/res/values/strings.xml"
+                ".project"
             ]
         },
         "append_dir": [
-            {
-                "from": "cocos/platform/android/java",
-                "to": "frameworks/cocos2d-x/cocos/platform/android/java"
-            },
-            {
-                "from": "cocos/scripting/lua-bindings/script",
-                "to": "frameworks/cocos2d-x/cocos/scripting/lua-bindings/script"
-            },
-            {
-                "from": "external/lua/luasocket",
-                "to": "frameworks/cocos2d-x/external/lua/luasocket",
-                "include": [
-                    "*.lua"
-                ]
-            },
             {
                 "from": "templates/lua-template-runtime/runtime/rtres",
                 "to": "runtime/mac/PrebuiltRuntimeLua.app/Contents/Resources/rtres",
@@ -147,7 +120,9 @@
             "from": "frameworks/runtime-src",
             "to": "frameworks/runtime-src",
             "exclude": [
-                "proj.android",
+                "proj.android/bin",
+                "proj.android/assets",
+                "proj.android/libs",
                 "proj.ios_mac/HelloLua.xcodeproj/project.xcworkspace",
                 "proj.ios_mac/HelloLua.xcodeproj/xcuserdata",
                 "proj.win32/Debug.win32",
@@ -180,6 +155,10 @@
                 "frameworks/runtime-src/proj.win32/PROJECT_NAME.sln",
                 "frameworks/runtime-src/proj.win32/main.cpp",
                 "frameworks/runtime-src/proj.win32/Runtime_win32.cpp",
+                "frameworks/runtime-src/proj.android/.project",
+                "frameworks/runtime-src/proj.android/AndroidManifest.xml",
+                "frameworks/runtime-src/proj.android/build.xml",
+                "frameworks/runtime-src/proj.android/res/values/strings.xml",
                 "frameworks/runtime-src/proj.ios_mac/ios/main.m",
                 "frameworks/runtime-src/proj.ios_mac/ios/Prefix.pch",
                 "frameworks/runtime-src/proj.ios_mac/mac/SimulatorApp.mm",

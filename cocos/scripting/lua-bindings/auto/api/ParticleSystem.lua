@@ -197,12 +197,6 @@
 -- @param #color4f_table color4f
         
 --------------------------------
--- @function [parent=#ParticleSystem] updateQuadWithParticle 
--- @param self
--- @param #cc.sParticle sparticle
--- @param #vec2_table vec2
-        
---------------------------------
 -- @function [parent=#ParticleSystem] getAtlasIndex 
 -- @param self
 -- @return int#int ret (return value: int)
@@ -275,11 +269,6 @@
 -- @function [parent=#ParticleSystem] getRotatePerSecond 
 -- @param self
 -- @return float#float ret (return value: float)
-        
---------------------------------
--- @function [parent=#ParticleSystem] initParticle 
--- @param self
--- @param #cc.sParticle sparticle
         
 --------------------------------
 -- @function [parent=#ParticleSystem] setEmitterMode 

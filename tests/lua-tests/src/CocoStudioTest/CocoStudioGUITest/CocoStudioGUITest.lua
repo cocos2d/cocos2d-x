@@ -462,7 +462,7 @@ function UICheckBoxTest:initExtend()
                                "cocosui/check_box_active_disable.png")
     checkBox:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
         
-    checkBox:addEventListenerCheckBox(selectedEvent)  
+    checkBox:addEventListener(selectedEvent)  
 
     self._uiLayer:addChild(checkBox)
 end
@@ -524,7 +524,7 @@ function UISliderTest:initExtend()
     slider:loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "")
     slider:loadProgressBarTexture("cocosui/sliderProgress.png")
     slider:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
-    slider:addEventListenerSlider(percentChangedEvent)
+    slider:addEventListener(percentChangedEvent)
 
     self._uiLayer:addChild(slider)
 end
@@ -589,7 +589,7 @@ function UISliderScale9Test:initExtend()
     slider:setCapInsets(cc.rect(0, 0, 0, 0))
     slider:setSize(cc.size(250, 10))
     slider:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
-    slider:addEventListenerSlider(percentChangedEvent)
+    slider:addEventListener(percentChangedEvent)
 
     self._uiLayer:addChild(slider)
 end
@@ -1422,7 +1422,7 @@ function UITextFieldTest:initExtend()
     textField:setFontSize(30)
     textField:setPlaceHolder("input words here")
     textField:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
-    textField:addEventListenerTextField(textFieldEvent) 
+    textField:addEventListener(textFieldEvent) 
     self._uiLayer:addChild(textField) 
 end
 
@@ -1500,7 +1500,7 @@ function UITextFieldMaxLengthTest:initExtend()
     textField:setFontSize(30)
     textField:setPlaceHolder("input words here")
     textField:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
-    textField:addEventListenerTextField(textFieldEvent) 
+    textField:addEventListener(textFieldEvent) 
     self._uiLayer:addChild(textField) 
 end
 
@@ -1572,7 +1572,7 @@ function UITextFieldPasswordTest:initExtend()
     textField:setFontSize(30)
     textField:setPlaceHolder("input password here")
     textField:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
-    textField:addEventListenerTextField(textFieldEvent) 
+    textField:addEventListener(textFieldEvent) 
     self._uiLayer:addChild(textField) 
 end
 
@@ -2364,7 +2364,7 @@ function UIPageViewTest:initExtend()
         end
     end 
 
-    pageView:addEventListenerPageView(pageViewEvent)
+    pageView:addEventListener(pageViewEvent)
         
     self._uiLayer:addChild(pageView)
   
@@ -2441,7 +2441,7 @@ function UIListViewVerticalTest:initExtend()
                               (backgroundSize.width - listView:getSize().width) / 2.0,
                               (widgetSize.height - backgroundSize.height) / 2.0 +
                               (backgroundSize.height - listView:getSize().height) / 2.0))
-    listView:addEventListenerListView(listViewEvent)
+    listView:addEventListener(listViewEvent)
     self._uiLayer:addChild(listView)
 
 
@@ -2602,7 +2602,7 @@ function UIListViewHorizontalTest:initExtend()
                               (backgroundSize.width - listView:getSize().width) / 2.0,
                               (widgetSize.height - backgroundSize.height) / 2.0 +
                               (backgroundSize.height - listView:getSize().height) / 2.0))
-    listView:addEventListenerListView(listViewEvent)
+    listView:addEventListener(listViewEvent)
     self._uiLayer:addChild(listView)
 
 

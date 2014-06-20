@@ -55,7 +55,7 @@ bool RenderMeshData::hasVertexAttrib(int attrib)
     return false;
 }
 
-bool RenderMeshData::initFrom(const std::vector<float>& positions,
+bool RenderMeshData::init(const std::vector<float>& positions,
                               const std::vector<float>& normals,
                               const std::vector<float>& texs,
                               const std::vector<unsigned short>& indices)
@@ -125,7 +125,7 @@ bool RenderMeshData::initFrom(const std::vector<float>& positions,
     return true;
 }
 
-bool RenderMeshData::initFrom(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount)
+bool RenderMeshData::init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount)
 {
     _vertexs = vertices;
     _indices = indices;
@@ -188,7 +188,7 @@ Mesh* Mesh::create(const std::vector<float> &vertices, int vertexSizeInFloat, co
 
 bool Mesh::init(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices)
 {
-    bool bRet = _renderdata.initFrom(positions, normals, texs, indices);
+    bool bRet = _renderdata.init(positions, normals, texs, indices);
     if (!bRet)
         return false;
     
@@ -198,7 +198,7 @@ bool Mesh::init(const std::vector<float>& positions, const std::vector<float>& n
 
 bool Mesh::init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount)
 {
-    bool bRet = _renderdata.initFrom(vertices, vertexSizeInFloat, indices, numIndex, attribs, attribCount);
+    bool bRet = _renderdata.init(vertices, vertexSizeInFloat, indices, numIndex, attribs, attribCount);
     if (!bRet)
         return false;
     
@@ -271,7 +271,7 @@ MeshCache* MeshCache::getInstance()
     
     return _cacheInstance;
 }
-void MeshCache::purgeMeshCache()
+void MeshCache::destroyInstance()
 {
     if (_cacheInstance)
         CC_SAFE_DELETE(_cacheInstance);
@@ -299,7 +299,7 @@ bool MeshCache::addMesh(const std::string& key, Mesh* mesh)
     return false;
 }
 
-void MeshCache::removeAllMesh()
+void MeshCache::removeAllMeshes()
 {
     for (auto it : _meshes) {
         CC_SAFE_RELEASE(it.second);
@@ -330,7 +330,7 @@ MeshCache::MeshCache()
 }
 MeshCache::~MeshCache()
 {
-    removeAllMesh();
+    removeAllMeshes();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundlistener);
 #endif

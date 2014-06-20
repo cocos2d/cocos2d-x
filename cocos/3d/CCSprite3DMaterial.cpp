@@ -56,7 +56,7 @@ Sprite3DMaterialCache* Sprite3DMaterialCache::getInstance()
     return _cacheInstance;
 }
 
-void Sprite3DMaterialCache::purgeSprite3DMaterialCache()
+void Sprite3DMaterialCache::destroyInstance()
 {
     if (_cacheInstance)
     {

@@ -22,10 +22,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCAnimate3D.h"
-#include "CCAnimation3D.h"
-#include "CCSprite3D.h"
-#include "CCMeshSkin.h"
+#include "3d/CCAnimate3D.h"
+#include "3d/CCAnimation3D.h"
+#include "3d/CCSprite3D.h"
+#include "3d/CCMeshSkin.h"
 
 #include "base/ccMacros.h"
 #include "platform/CCFileUtils.h"
@@ -45,15 +45,30 @@ Animate3D* Animate3D::create(Animation3D* animation)
     return animate;
 }
 
+Animate3D* Animate3D::createSubAnimate3D(Animate3D* animate, float fromTime, float duration)
+{
+    auto subAnimate = animate->clone();
+    float fullDuration = animate->getDuration();
+    if (duration > fullDuration - fromTime)
+        duration = fullDuration - fromTime;
+    
+    subAnimate->_start = fromTime / fullDuration;
+    subAnimate->_last = duration / fullDuration;
+    
+    return  subAnimate;
+}
+
 /** returns a clone of action */
 Animate3D* Animate3D::clone() const
 {
     
     auto animate = const_cast<Animate3D*>(this);
-    auto copy = animate->create(animate->_animation);
+    auto copy = Animate3D::create(animate->_animation);
     
     copy->_speed = _speed;
     copy->_elapsed = _elapsed;
+    copy->_start = _start;
+    copy->_last = _last;
     copy->_playBack = _playBack;
 
     return copy;
@@ -77,7 +92,7 @@ void Animate3D::startWithTarget(Node *target)
     
     _boneCurves.clear();
     auto skin = sprite->getSkin();
-    for (unsigned int  i = 0; i < skin->getBoneCount(); i++) {
+    for (unsigned int  i = 0; i < skin->getSkinBoneCount(); i++) {
         auto bone = skin->getBoneByIndex(i);
         auto curve = _animation->getBoneCurveByName(bone->getName());
         if (curve)
@@ -106,22 +121,23 @@ void Animate3D::update(float t)
         if (_playBack)
             t = 1 - t;
         
+        t = _start + t * _last;
         for (const auto& it : _boneCurves) {
             auto bone = it.first;
             auto curve = it.second;
             if (curve->translateCurve)
             {
-                curve->translateCurve->evaluate(t, transDst, Linear);
+                curve->translateCurve->evaluate(t, transDst, EvaluateType::INT_LINEAR);
                 trans = &transDst[0];
             }
             if (curve->rotCurve)
             {
-                curve->rotCurve->evaluate(t, rotDst, QuatSlerp);
+                curve->rotCurve->evaluate(t, rotDst, EvaluateType::INT_QUAT_SLERP);
                 rot = &rotDst[0];
             }
             if (curve->scaleCurve)
             {
-                curve->scaleCurve->evaluate(t, scaleDst, Linear);
+                curve->scaleCurve->evaluate(t, scaleDst, EvaluateType::INT_LINEAR);
                 scale = &scaleDst[0];
             }
             bone->setAnimationValue(trans, rot, scale, _weight);
@@ -133,6 +149,8 @@ void Animate3D::update(float t)
 Animate3D::Animate3D()
 : _speed(1)
 , _weight(1.f)
+, _start(0.f)
+, _last(1.f)
 , _animation(nullptr)
 , _playBack(false)
 {

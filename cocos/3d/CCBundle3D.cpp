@@ -26,6 +26,7 @@
 
 #include "base/ccMacros.h"
 #include "platform/CCFileUtils.h"
+#include "renderer/CCGLProgram.h"
 #include "CCBundleReader.h"
 #include "base/CCData.h"
 
@@ -81,7 +82,7 @@ Bundle3D* Bundle3D::getInstance()
     return _instance;
 }
 
-void Bundle3D::purgeBundle3D()
+void Bundle3D::destroyInstance()
 {
     CC_SAFE_DELETE(_instance);
 }
@@ -239,11 +240,6 @@ bool Bundle3D::loadMeshDataJson(MeshData* meshdata)
     return true;
 }
 
-//
-/**
- * load skin data from bundle
- * @param id The ID of the skin, load the first Skin in the bundle if it is empty
- */
 bool Bundle3D::loadSkinDataJson(SkinData* skindata)
 {
     if (!_document.HasMember("skin")) return false;
@@ -263,7 +259,7 @@ bool Bundle3D::loadSkinDataJson(SkinData* skindata)
     {
         const rapidjson::Value& skin_data_bone = skin_data_bones[i];
         std::string name = skin_data_bone["node"].GetString();
-        skindata->boneNames.push_back(name);
+        skindata->skinBoneNames.push_back(name);
         
         Mat4 mat_bind_pos;
         const rapidjson::Value& bind_pos = skin_data_bone["bindshape"];
@@ -281,10 +277,6 @@ bool Bundle3D::loadSkinDataJson(SkinData* skindata)
     return true;
 }
 
-/**
- * load material data from bundle
- * @param id The ID of the material, load the first Material in the bundle if it is empty
- */
 bool Bundle3D::loadMaterialDataJson(MaterialData* materialdata)
 {
     if (!_document.HasMember("material")) 
@@ -303,10 +295,6 @@ bool Bundle3D::loadMaterialDataJson(MaterialData* materialdata)
     return true;
 }
 
-/**
- * load material data from bundle
- * @param id The ID of the animation, load the first animation in the bundle if it is empty
- */
 bool Bundle3D::loadAnimationDataJson(Animation3DData* animationdata)
 {
     if (!_document.HasMember("animation")) return false;
