@@ -25,9 +25,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto glview = director->getOpenGLView();    
     if(!glview) {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-//        extern void createSimulator(const char* viewName, float width, float height,bool isLandscape = true, float frameZoomFactor = 1.0f);
-//        bool isLanscape = ConfigParser::getInstance()->isLanscape();
-//        createSimulator(title.c_str(),viewSize.width,viewSize.height,isLanscape);
 #else
         glview = GLView::createWithRect(title.c_str(), Rect(0,0,960,640));
         director->setOpenGLView(glview);
@@ -163,6 +160,10 @@ void StartupCall::startup()
     }
     lua_setglobal(L, "__G__OPEN_RECENTS__");
     
+    // set quick-cocos2d-x root path
+    std::string quickPath = SimulatorConfig::sharedDefaults()->getQuickCocos2dxRootPath();
+    lua_pushstring(L, quickPath.c_str());
+    lua_setglobal(L, "__G__QUICK_PATH__");
     
     CCLOG("------------------------------------------------");
     CCLOG("LOAD LUA FILE: %s", path.c_str());

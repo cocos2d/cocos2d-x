@@ -34,6 +34,7 @@
 		9F29B271194E90DF001A6981 /* libcocos2dx-extensions Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F29B26B194E90DF001A6981 /* libcocos2dx-extensions Mac.a */; };
 		9F29B272194E90DF001A6981 /* libCocosDenshion Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F29B26C194E90DF001A6981 /* libCocosDenshion Mac.a */; };
 		9F29B273194E90DF001A6981 /* libluabindings Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F29B26D194E90DF001A6981 /* libluabindings Mac.a */; };
+		9F359E3D1953C8CD0052017E /* AppControllerBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9F359E3C1953C8CD0052017E /* AppControllerBridge.mm */; };
 		9F3BF72C194E91380072B3D0 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F3BF72A194E91380072B3D0 /* AppDelegate.cpp */; };
 		9F3BF72E194E91900072B3D0 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3BF72D194E91900072B3D0 /* libcurl.dylib */; };
 		9F3BF730194E91960072B3D0 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3BF72F194E91960072B3D0 /* libz.dylib */; };
@@ -185,6 +186,8 @@
 		9F29B26B194E90DF001A6981 /* libcocos2dx-extensions Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libcocos2dx-extensions Mac.a"; path = "../../../../Library/Developer/Xcode/DerivedData/cocos2d_tests-axzqtwgwkrktttafksiahajkeowp/Build/Products/Debug/libcocos2dx-extensions Mac.a"; sourceTree = "<group>"; };
 		9F29B26C194E90DF001A6981 /* libCocosDenshion Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libCocosDenshion Mac.a"; path = "../../../../Library/Developer/Xcode/DerivedData/cocos2d_tests-axzqtwgwkrktttafksiahajkeowp/Build/Products/Debug/libCocosDenshion Mac.a"; sourceTree = "<group>"; };
 		9F29B26D194E90DF001A6981 /* libluabindings Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libluabindings Mac.a"; path = "../../../../Library/Developer/Xcode/DerivedData/cocos2d_tests-axzqtwgwkrktttafksiahajkeowp/Build/Products/Debug/libluabindings Mac.a"; sourceTree = "<group>"; };
+		9F359E3B1953C8CD0052017E /* AppControllerBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppControllerBridge.h; sourceTree = SOURCE_ROOT; };
+		9F359E3C1953C8CD0052017E /* AppControllerBridge.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppControllerBridge.mm; sourceTree = SOURCE_ROOT; };
 		9F3BF72A194E91380072B3D0 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		9F3BF72B194E91380072B3D0 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9F3BF72D194E91900072B3D0 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
@@ -279,6 +282,8 @@
 			isa = PBXGroup;
 			children = (
 				9F2561B0194FD958009E57D7 /* CreateNewProjectDialog.xib */,
+				9F359E3B1953C8CD0052017E /* AppControllerBridge.h */,
+				9F359E3C1953C8CD0052017E /* AppControllerBridge.mm */,
 				9F2561B1194FD958009E57D7 /* CreateNewProjectDialogController.h */,
 				9F2561B2194FD958009E57D7 /* CreateNewProjectDialogController.mm */,
 				9F25617A194F07BF009E57D7 /* ProjectConfigDialog.xib */,
@@ -532,6 +537,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F359E3D1953C8CD0052017E /* AppControllerBridge.mm in Sources */,
 				9F1C8DA2194DEFE40068C99B /* PlayerMac.mm in Sources */,
 				9F05A10A194EF988003CFA1F /* NSApplication+SheetAdditions.m in Sources */,
 				9F25617E194F07BF009E57D7 /* ProjectConfigDialogController.mm in Sources */,

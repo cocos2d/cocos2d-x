@@ -11,6 +11,7 @@
 #import "ConsoleWindowController.h"
 
 #include "AppDelegate.h"
+#include "AppControllerBridge.h"
 #include "glfw3.h"
 #include "glfw3native.h"
 
@@ -283,11 +284,11 @@ USING_NS_CC;
 
 - (void) createWindowAndGLView
 {
-    GLView *view = GLView::createWithRect("quick-x-player", cocos2d::Rect(0,0,projectConfig.getFrameSize().width, projectConfig.getFrameSize().height), projectConfig.getFrameScale());
-    Director::getInstance()->setOpenGLView(view);
+    eglView = GLView::createWithRect("quick-x-player", cocos2d::Rect(0,0,projectConfig.getFrameSize().width, projectConfig.getFrameSize().height), projectConfig.getFrameScale());
+    Director::getInstance()->setOpenGLView(eglView);
     
-    window = glfwGetCocoaWindow(view->getWindow());
-    window.delegate = self;
+    window = glfwGetCocoaWindow(eglView->getWindow());
+//    window.delegate = self;
     [NSApp setDelegate: self];
     
     // set window parameters
@@ -341,14 +342,15 @@ USING_NS_CC;
     }
     
     app = new AppDelegate();
-//    bridge = new AppControllerBridge(self);
-//    
-//    CCNotificationCenter::sharedNotificationCenter()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeNewProject), "WELCOME_NEW_PROJECT", NULL);
-//    CCNotificationCenter::sharedNotificationCenter()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeOpen), "WELCOME_OPEN_PROJECT", NULL);
-//    CCNotificationCenter::sharedNotificationCenter()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeSamples), "WELCOME_SAMPLES", NULL);
-//    CCNotificationCenter::sharedNotificationCenter()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeGetStarted), "WELCOME_OPEN_DOCUMENTS", NULL);
-//    CCNotificationCenter::sharedNotificationCenter()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeGetCommunity), "WELCOME_OPEN_COMMUNITY", NULL);
-//    CCNotificationCenter::sharedNotificationCenter()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeOpenRecent), "WELCOME_OPEN_PROJECT_ARGS", NULL);
+    bridge = new AppControllerBridge(self);
+    
+    
+    NotificationCenter::getInstance()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeNewProject), "WELCOME_NEW_PROJECT", NULL);
+    NotificationCenter::getInstance()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeOpen), "WELCOME_OPEN_PROJECT", NULL);
+    NotificationCenter::getInstance()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeSamples), "WELCOME_LIST_SAMPLES", NULL);
+    NotificationCenter::getInstance()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeGetStarted), "WELCOME_OPEN_DOCUMENTS", NULL);
+    NotificationCenter::getInstance()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeGetCommunity), "WELCOME_OPEN_COMMUNITY", NULL);
+    NotificationCenter::getInstance()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeOpenRecent), "WELCOME_OPEN_PROJECT_ARGS", NULL);
     
     // send recent to Lua
     LuaValueArray titleArray;
@@ -363,6 +365,9 @@ USING_NS_CC;
     app->setProjectConfig(projectConfig);
     app->run();
 //    Application::getInstance()->run();
+    
+    // After run, application needs to be terminated immediately.
+    [NSApp terminate: self];
 }
 
 - (void) openConsoleWindow
@@ -435,7 +440,8 @@ USING_NS_CC;
 
 - (void) setZoom:(float)scale
 {
-    Director::getInstance()->getOpenGLView()->setFrameZoomFactor(scale);
+    eglView->setFrameZoomFactor(scale);
+//    Director::getInstance()->getOpenGLView()->setFrameZoomFactor(scale);
     projectConfig.setFrameScale(scale);
 }
 
@@ -682,8 +688,21 @@ USING_NS_CC;
     if ([sender state] == NSOnState) return;
     float scale = (float)[sender tag] / 100.0f;
     [self setZoom:scale];
+    [self updateView];
     [self updateUI];
     [self updateOpenRect];
+
+}
+
+- (void) updateView
+{
+    auto policy = eglView->getResolutionPolicy();
+    auto designSize = eglView->getDesignResolutionSize();
+    
+    cocos2d::Size frameSize = projectConfig.getFrameSize();
+    eglView->setFrameSize(frameSize.width, frameSize.height);
+    
+    eglView->setDesignResolutionSize(designSize.width, designSize.height, policy);
 }
 
 -(IBAction) onWindowAlwaysOnTop:(id)sender

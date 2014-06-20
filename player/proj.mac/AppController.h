@@ -10,6 +10,8 @@
 #include "SimulatorConfig.h"
 #include "AppDelegate.h"
 
+class AppControllerBridge;
+
 @interface AppController : NSObject <NSApplicationDelegate, NSWindowDelegate>
 {
     NSWindow *window;
@@ -19,10 +21,13 @@
     BOOL isMaximized;
     
     AppDelegate *app;
+    GLView      *eglView;
     ProjectConfig projectConfig;
     BOOL hasPopupDialog;
     
     int debugLogFile;
+    
+    AppControllerBridge *bridge;
     
     //log file
     ConsoleWindowController *consoleController;
