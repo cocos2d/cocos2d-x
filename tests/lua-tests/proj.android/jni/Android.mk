@@ -13,7 +13,22 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../project/Classes
 
 #LOCAL_CFLAGS += -std=c++11 -Wno-psabi -DCC_LUA_ENGINE_ENABLED=1 $(ANDROID_COCOS2D_BUILD_FLAGS)
 
+LOCAL_LDLIBS := -lGLESv2 \
+                -llog \
+                -lz \
+                -landroid
+
+LOCAL_EXPORT_LDLIBS := -lGLESv1_CM \
+                       -lGLESv2 \
+                       -lEGL \
+                       -llog \
+                       -lz \
+                       -landroid
+
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos_lua_static
+#LOCAL_WHOLE_SHARED_LIBRARIES := cocos_lua_static
+#LOCAL_STATIC_LIBRARIES := cocos_lua_static
+#LOCAL_SHARED_LIBRARIES := cocos_lua_shared
 
 include $(BUILD_SHARED_LIBRARY)
 

@@ -3,8 +3,8 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 APP_ROOT="$DIR/.."
 APP_ANDROID_ROOT="$DIR"
-QUICK_COCOS2DX_ROOT=/Users/zhujunfeng/quick-x-3
-COCOS2DX_ROOT=$QUICK_COCOS2DX_ROOT/cocos
+QUICK_COCOS2DX_ROOT=/Users/zhujunfeng/quick-x-v3
+COCOS2DX_ROOT=${QUICK_COCOS2DX_ROOT}/lib/cocos2d-x/cocos
 
 echo "- config:"
 echo "  ANDROID_NDK_ROOT    = $ANDROID_NDK_ROOT"
@@ -13,12 +13,9 @@ echo "  COCOS2DX_ROOT       = $COCOS2DX_ROOT"
 echo "  APP_ROOT            = $APP_ROOT"
 echo "  APP_ANDROID_ROOT    = $APP_ANDROID_ROOT"
 
-# if use quick-cocos2d-x mini, uncomments line below
-# NDK_BUILD_FLAGS="CPPFLAGS=\"-DQUICK_MINI_TARGET=1\" QUICK_MINI_TARGET=1"
-NDK_BUILD_FLAGS="CPPFLAGS=\"-DCOCOS2D_DEBUG=1\" COCOS2D_DEBUG=1"
-
-# if use DEBUG, set NDK_DEBUG=1, otherwise set NDK_DEBUG=0
+# if dont use DEBUG, comments out two lines below
 NDK_DEBUG=1
+NDK_BUILD_FLAGS="CPPFLAGS=\"-DCOCOS2D_DEBUG=1\""
 
 echo "- cleanup"
 find "$APP_ANDROID_ROOT" -type d | xargs chmod 755 $1
@@ -42,4 +39,4 @@ cp -rf "$APP_ROOT"/res "$APP_ANDROID_ROOT"/assets/
 # build
 echo "Using prebuilt externals"
 "$ANDROID_NDK_ROOT"/ndk-build $ANDROID_NDK_BUILD_FLAGS NDK_DEBUG=$NDK_DEBUG $NDK_BUILD_FLAGS -C "$APP_ANDROID_ROOT" $* \
-"NDK_MODULE_PATH=${APP_ANDROID_ROOT}:${QUICK_COCOS2DX_ROOT}:${COCOS2DX_ROOT}:${QUICK_COCOS2DX_ROOT}/external"
+"NDK_MODULE_PATH=${QUICK_COCOS2DX_ROOT}/lib/precompiled/android"

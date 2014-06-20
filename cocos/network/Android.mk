@@ -6,7 +6,6 @@ LOCAL_MODULE := cocos_network_static
 LOCAL_MODULE_FILENAME := libnetwork
 
 LOCAL_SRC_FILES := \
-SocketIO.cpp \
 WebSocket.cpp
 
 
