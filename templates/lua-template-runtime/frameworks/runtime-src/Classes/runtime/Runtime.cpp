@@ -526,20 +526,21 @@ void FileServer::loopWriteFile()
          }
          if (nullptr == fp){
               addResponse(recvDataBuf.fd,filename,runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_FOPEN_ERROR,errno);
-            continue;
+              continue;
          }
          if (fp){
              if (0 == fwrite(recvDataBuf.contentBuf.c_str(), sizeof(char), recvDataBuf.contentBuf.size(),fp)){
                  addResponse(recvDataBuf.fd,filename,runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_FWRITE_ERROR,errno);
+                 fclose(fp);
+                 continue;
              }
              fclose(fp);
-            continue;
          }
 
          if (recvDataBuf.fileProto.package_seq() == recvDataBuf.fileProto.package_sum()){
              //record new file modify
              addResFileInfo(filename.c_str(),recvDataBuf.fileProto.modified_time());
-             addResponse(recvDataBuf.fd,filename,runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_SUCCESS,errno);
+             addResponse(recvDataBuf.fd,filename,runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_SUCCESS,0);
          }
      }
 }
@@ -592,6 +593,7 @@ void FileServer::loopResponse()
         runtime::FileSendComplete  fileSendProtoComplete;
         fileSendProtoComplete.set_file_name(responseBuf.fileResponseProto.file_name());
         fileSendProtoComplete.set_result(responseBuf.fileResponseProto.result());
+        fileSendProtoComplete.set_error_num(responseBuf.fileResponseProto.error_num());
         fileSendProtoComplete.SerializeToString(&responseString);
         char dataBuf[1024] ={0};
         struct ResponseStruct 
