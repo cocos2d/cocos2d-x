@@ -45,6 +45,19 @@ Animate3D* Animate3D::create(Animation3D* animation)
     return animate;
 }
 
+Animate3D* Animate3D::createSubAnimate3D(Animate3D* animate, float fromTime, float duration)
+{
+    auto subAnimate = animate->clone();
+    float fullDuration = animate->getDuration();
+    if (duration > fullDuration - fromTime)
+        duration = fullDuration - fromTime;
+    
+    subAnimate->_start = fromTime / fullDuration;
+    subAnimate->_last = duration / fullDuration;
+    
+    return  subAnimate;
+}
+
 /** returns a clone of action */
 Animate3D* Animate3D::clone() const
 {
@@ -54,6 +67,8 @@ Animate3D* Animate3D::clone() const
     
     copy->_speed = _speed;
     copy->_elapsed = _elapsed;
+    copy->_start = _start;
+    copy->_last = _last;
     copy->_playBack = _playBack;
 
     return copy;
@@ -106,6 +121,7 @@ void Animate3D::update(float t)
         if (_playBack)
             t = 1 - t;
         
+        t = _start + t * _last;
         for (const auto& it : _boneCurves) {
             auto bone = it.first;
             auto curve = it.second;
@@ -133,6 +149,8 @@ void Animate3D::update(float t)
 Animate3D::Animate3D()
 : _speed(1)
 , _weight(1.f)
+, _start(0.f)
+, _last(1.f)
 , _animation(nullptr)
 , _playBack(false)
 {

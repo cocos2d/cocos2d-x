@@ -100,7 +100,7 @@ public:
     /**bone tree, we do not inherit from Node, Node has too many properties that we do not need. A clean Node is needed.*/
     Bone* getParentBone();
     /**get child bone count*/
-    int getChildBoneCount() const;
+    ssize_t getChildBoneCount() const;
     /**get child bone by index*/
     Bone* getChildBoneByIndex(int index);
     /**add child bone*/

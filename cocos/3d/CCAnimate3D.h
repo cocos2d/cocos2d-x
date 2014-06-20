@@ -48,6 +48,14 @@ public:
     /**create Animate3D using Animation.*/
     static Animate3D* create(Animation3D* animation);
     
+    /**
+     * create sub Animate3D
+     * @param animate Animate3D used to generate sub animate3D
+     * @param formTime 
+     * @param duration Time the Animate3D lasts
+     * @return Animate3D created using animate
+     */
+    static Animate3D* createSubAnimate3D(Animate3D* animate, float fromTime, float duration);
     //
     // Overrides
     //
@@ -76,6 +84,8 @@ protected:
 
     float      _speed; //playing speed
     float      _weight; //blend weight
+    float      _start; //start time 0 - 1, used to generate sub Animate3D
+    float      _last; //last time 0 - 1, used to generate sub Animate3D
     bool       _playBack; // is playing back
     std::map<Bone*, Animation3D::Curve*> _boneCurves; //weak ref
 };

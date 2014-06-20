@@ -147,7 +147,7 @@ Bone* Bone::getParentBone()
 {
     return _parent;
 }
-int Bone::getChildBoneCount() const
+ssize_t Bone::getChildBoneCount() const
 {
     return _children.size();
 }
