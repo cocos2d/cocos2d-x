@@ -35,15 +35,25 @@
 NS_CC_BEGIN
 
 /**
- * Stream is an interface for reading and writing a sequence of bytes.
+ * BundleReader is an interface for reading sequence of bytes.
  */
 class BundleReader: public cocos2d::Ref
 {
 public:
+    /**
+     * Destructor
+	 */
     ~BundleReader();
 
+    /** creates an BundleReader with lpbuffer and length 
+     * @param lpbuffer The pointer to the file data 
+     * @param length The size for lpbuffer in bytes
+     */
     static BundleReader* create(char* lpbuffer, unsigned int length);
 
+    /**
+     * Close and delete buffer
+	 */
     void close();
 
 	/**
@@ -59,9 +69,9 @@ public:
     size_t read(void* ptr, size_t size, size_t count);
 
 	/**
-     * Reads a line from the stream.
+     * Reads a line from the buffer.
      */
-	char* readLine(int num,char* line);
+	char* readLine(int num, char* line);
 
 	 /**
      * Writes an array of elements.
@@ -75,12 +85,12 @@ public:
 	size_t write(const void* ptr, size_t size, size_t count);
 
 	/**
-     * Returns true if the end of the stream has been reached.
+     * Returns true if the end of the buffer has been reached.
      */
     bool eof();
 
 	/**
-     * Returns the length of the stream in bytes.
+     * Returns the length of the buffer in bytes.
      */
     size_t length();
 

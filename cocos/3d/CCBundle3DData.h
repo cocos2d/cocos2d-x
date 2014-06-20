@@ -115,17 +115,16 @@ struct SkinData
 
     int getBoneNameIndex(const std::string& name)const
     {
-        std::vector<std::string>::const_iterator iter = boneNames.begin();
-        for (int i = 0; iter != boneNames.end(); ++iter, ++i)
+        int i = 0;
+        for( const auto &item : boneNames )
         {
-            if ((*iter) == name)
-            {
+            if (item == name)
                 return i;
-            }
+            else
+                ++i;
         }
         return -1;
     }
-
 };
 
 struct MaterialData
