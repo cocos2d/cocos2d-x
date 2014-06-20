@@ -201,13 +201,13 @@ bool Widget::init()
 {
     if (ProtectedNode::init())
     {
+        _contentSize = Size::ZERO;
         initRenderer();
         setBright(true);
-        //TODO: need refactor
-        ignoreContentAdaptWithSize(true);
         onFocusChanged = CC_CALLBACK_2(Widget::onFocusChange,this);
         onNextFocusedWidget = nullptr;
         this->setAnchorPoint(Vec2(0.5f, 0.5f));
+        ignoreContentAdaptWithSize(true);
         this->setTouchEnabled(true);
         this->setCascadeColorEnabled(true);
         this->setCascadeOpacityEnabled(true);
@@ -254,6 +254,9 @@ void Widget::initRenderer()
     
 void Widget::setContentSize(const cocos2d::Size &contentSize)
 {
+    ProtectedNode::setContentSize(contentSize);
+    
+    
     _customSize = contentSize;
     if (_ignoreSize)
     {
