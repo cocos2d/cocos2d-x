@@ -14561,6 +14561,52 @@ int lua_cocos2dx_FileUtils_isAbsolutePath(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_FileUtils_setSearchRootPath(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::FileUtils* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.FileUtils",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::FileUtils*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_setSearchRootPath'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        const char* arg0;
+
+        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
+        if(!ok)
+            return 0;
+        cobj->setSearchRootPath(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setSearchRootPath",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_FileUtils_setSearchRootPath'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_FileUtils_loadFilenameLookupDictionaryFromFile(lua_State* tolua_S)
 {
     int argc = 0;
@@ -15163,6 +15209,52 @@ int lua_cocos2dx_FileUtils_fullPathFromRelativeFile(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_FileUtils_setWritablePath(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::FileUtils* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.FileUtils",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::FileUtils*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_setWritablePath'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        const char* arg0;
+
+        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
+        if(!ok)
+            return 0;
+        cobj->setWritablePath(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setWritablePath",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_FileUtils_setWritablePath'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_FileUtils_setPopupNotify(lua_State* tolua_S)
 {
     int argc = 0;
@@ -15374,6 +15466,7 @@ int lua_register_cocos2dx_FileUtils(lua_State* tolua_S)
         tolua_function(tolua_S,"getStringFromFile",lua_cocos2dx_FileUtils_getStringFromFile);
         tolua_function(tolua_S,"setFilenameLookupDictionary",lua_cocos2dx_FileUtils_setFilenameLookupDictionary);
         tolua_function(tolua_S,"isAbsolutePath",lua_cocos2dx_FileUtils_isAbsolutePath);
+        tolua_function(tolua_S,"setSearchRootPath",lua_cocos2dx_FileUtils_setSearchRootPath);
         tolua_function(tolua_S,"loadFilenameLookup",lua_cocos2dx_FileUtils_loadFilenameLookupDictionaryFromFile);
         tolua_function(tolua_S,"isPopupNotify",lua_cocos2dx_FileUtils_isPopupNotify);
         tolua_function(tolua_S,"getValueVectorFromFile",lua_cocos2dx_FileUtils_getValueVectorFromFile);
@@ -15387,6 +15480,7 @@ int lua_register_cocos2dx_FileUtils(lua_State* tolua_S)
         tolua_function(tolua_S,"isFileExist",lua_cocos2dx_FileUtils_isFileExist);
         tolua_function(tolua_S,"purgeCachedEntries",lua_cocos2dx_FileUtils_purgeCachedEntries);
         tolua_function(tolua_S,"fullPathFromRelativeFile",lua_cocos2dx_FileUtils_fullPathFromRelativeFile);
+        tolua_function(tolua_S,"setWritablePath",lua_cocos2dx_FileUtils_setWritablePath);
         tolua_function(tolua_S,"setPopupNotify",lua_cocos2dx_FileUtils_setPopupNotify);
         tolua_function(tolua_S,"getSearchResolutionsOrder",lua_cocos2dx_FileUtils_getSearchResolutionsOrder);
         tolua_function(tolua_S,"getWritablePath",lua_cocos2dx_FileUtils_getWritablePath);
@@ -67309,6 +67403,484 @@ int lua_register_cocos2dx_SimpleAudioEngine(lua_State* tolua_S)
     g_typeCast["SimpleAudioEngine"] = "cc.SimpleAudioEngine";
     return 1;
 }
+
+int lua_cocos2dx___NotificationCenter_postNotification(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::__NotificationCenter* cobj = nullptr;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.__NotificationCenter",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocos2d::__NotificationCenter*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx___NotificationCenter_postNotification'", nullptr);
+        return 0;
+    }
+#endif
+    argc = lua_gettop(tolua_S)-1;
+    do{
+        if (argc == 2) {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0);
+
+            if (!ok) { break; }
+            cocos2d::Ref* arg1;
+            ok &= luaval_to_object<cocos2d::Ref>(tolua_S, 3, "cc.Ref",&arg1);
+
+            if (!ok) { break; }
+            cobj->postNotification(arg0, arg1);
+            return 0;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 1) {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0);
+
+            if (!ok) { break; }
+            cobj->postNotification(arg0);
+            return 0;
+        }
+    }while(0);
+    ok  = true;
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "postNotification",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx___NotificationCenter_postNotification'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx___NotificationCenter_removeObserver(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::__NotificationCenter* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.__NotificationCenter",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::__NotificationCenter*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx___NotificationCenter_removeObserver'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 2) 
+    {
+        cocos2d::Ref* arg0;
+        std::string arg1;
+
+        ok &= luaval_to_object<cocos2d::Ref>(tolua_S, 2, "cc.Ref",&arg0);
+
+        ok &= luaval_to_std_string(tolua_S, 3,&arg1);
+        if(!ok)
+            return 0;
+        cobj->removeObserver(arg0, arg1);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "removeObserver",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx___NotificationCenter_removeObserver'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx___NotificationCenter_getObserverHandlerByName(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::__NotificationCenter* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.__NotificationCenter",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::__NotificationCenter*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx___NotificationCenter_getObserverHandlerByName'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        std::string arg0;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0);
+        if(!ok)
+            return 0;
+        int ret = cobj->getObserverHandlerByName(arg0);
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getObserverHandlerByName",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx___NotificationCenter_getObserverHandlerByName'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx___NotificationCenter_removeAllObservers(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::__NotificationCenter* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.__NotificationCenter",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::__NotificationCenter*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx___NotificationCenter_removeAllObservers'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::Ref* arg0;
+
+        ok &= luaval_to_object<cocos2d::Ref>(tolua_S, 2, "cc.Ref",&arg0);
+        if(!ok)
+            return 0;
+        int ret = cobj->removeAllObservers(arg0);
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "removeAllObservers",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx___NotificationCenter_removeAllObservers'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx___NotificationCenter_unregisterScriptObserver(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::__NotificationCenter* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.__NotificationCenter",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::__NotificationCenter*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx___NotificationCenter_unregisterScriptObserver'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 2) 
+    {
+        cocos2d::Ref* arg0;
+        std::string arg1;
+
+        ok &= luaval_to_object<cocos2d::Ref>(tolua_S, 2, "cc.Ref",&arg0);
+
+        ok &= luaval_to_std_string(tolua_S, 3,&arg1);
+        if(!ok)
+            return 0;
+        cobj->unregisterScriptObserver(arg0, arg1);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "unregisterScriptObserver",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx___NotificationCenter_unregisterScriptObserver'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx___NotificationCenter_getScriptHandler(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::__NotificationCenter* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.__NotificationCenter",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::__NotificationCenter*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx___NotificationCenter_getScriptHandler'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        int ret = cobj->getScriptHandler();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getScriptHandler",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx___NotificationCenter_getScriptHandler'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx___NotificationCenter_registerScriptObserver(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::__NotificationCenter* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.__NotificationCenter",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::__NotificationCenter*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx___NotificationCenter_registerScriptObserver'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 3) 
+    {
+        cocos2d::Ref* arg0;
+        int arg1;
+        std::string arg2;
+
+        bool ret = luaval_to_object<cocos2d::Ref>(tolua_S, 2, "cc.Ref",&arg0);
+//        ok &= ret;
+
+#if COCOS2D_DEBUG >= 1
+        if (!toluafix_isfunction(tolua_S,3,"LUA_FUNCTION",0,&tolua_err) )       {
+            goto tolua_lerror;
+        }
+#endif
+         arg1 = (int)(  toluafix_ref_function(tolua_S,3,0));
+//        ret =luaval_to_int32(tolua_S, 3,(int *)&arg1);
+//        ok &= ret;
+
+        ret =luaval_to_std_string(tolua_S, 4,&arg2);
+        ok &= ret;
+        if(!ok)
+            return 0;
+        cobj->registerScriptObserver(arg0, arg1, arg2);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "registerScriptObserver",argc, 3);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx___NotificationCenter_registerScriptObserver'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx___NotificationCenter_destroyInstance(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.__NotificationCenter",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+            return 0;
+        cocos2d::__NotificationCenter::destroyInstance();
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "destroyInstance",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx___NotificationCenter_destroyInstance'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx___NotificationCenter_getInstance(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.__NotificationCenter",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+            return 0;
+        cocos2d::__NotificationCenter* ret = cocos2d::__NotificationCenter::getInstance();
+        object_to_luaval<cocos2d::__NotificationCenter>(tolua_S, "cc.__NotificationCenter",(cocos2d::__NotificationCenter*)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "getInstance",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx___NotificationCenter_getInstance'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx___NotificationCenter_constructor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::__NotificationCenter* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cobj = new cocos2d::__NotificationCenter();
+        cobj->autorelease();
+        int ID =  (int)cobj->_ID ;
+        int* luaID =  &cobj->_luaID ;
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.__NotificationCenter");
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "__NotificationCenter",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx___NotificationCenter_constructor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+
+static int lua_cocos2dx___NotificationCenter_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (__NotificationCenter)");
+    return 0;
+}
+
+int lua_register_cocos2dx___NotificationCenter(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"cc.__NotificationCenter");
+    tolua_cclass(tolua_S,"__NotificationCenter","cc.__NotificationCenter","cc.Ref",nullptr);
+
+    tolua_beginmodule(tolua_S,"__NotificationCenter");
+        tolua_function(tolua_S,"new",lua_cocos2dx___NotificationCenter_constructor);
+        tolua_function(tolua_S,"postNotification",lua_cocos2dx___NotificationCenter_postNotification);
+        tolua_function(tolua_S,"removeObserver",lua_cocos2dx___NotificationCenter_removeObserver);
+        tolua_function(tolua_S,"getObserverHandlerByName",lua_cocos2dx___NotificationCenter_getObserverHandlerByName);
+        tolua_function(tolua_S,"removeAllObservers",lua_cocos2dx___NotificationCenter_removeAllObservers);
+        tolua_function(tolua_S,"unregisterScriptObserver",lua_cocos2dx___NotificationCenter_unregisterScriptObserver);
+        tolua_function(tolua_S,"getScriptHandler",lua_cocos2dx___NotificationCenter_getScriptHandler);
+        tolua_function(tolua_S,"registerScriptObserver",lua_cocos2dx___NotificationCenter_registerScriptObserver);
+        tolua_function(tolua_S,"destroyInstance", lua_cocos2dx___NotificationCenter_destroyInstance);
+        tolua_function(tolua_S,"getInstance", lua_cocos2dx___NotificationCenter_getInstance);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::__NotificationCenter).name();
+    g_luaType[typeName] = "cc.__NotificationCenter";
+    g_typeCast["__NotificationCenter"] = "cc.__NotificationCenter";
+    return 1;
+}
 TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 {
 	tolua_open(tolua_S);
@@ -67420,6 +67992,7 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	lua_register_cocos2dx_TransitionFadeTR(tolua_S);
 	lua_register_cocos2dx_TransitionFadeDown(tolua_S);
 	lua_register_cocos2dx_ParticleSun(tolua_S);
+	lua_register_cocos2dx___NotificationCenter(tolua_S);
 	lua_register_cocos2dx_TransitionProgressHorizontal(tolua_S);
 	lua_register_cocos2dx_TMXObjectGroup(tolua_S);
 	lua_register_cocos2dx_TMXLayer(tolua_S);
