@@ -251,17 +251,17 @@ void Widget::setEnabled(bool enabled)
 void Widget::initRenderer()
 {
 }
-
-void Widget::setSize(const Size &size)
+    
+void Widget::setContentSize(const cocos2d::Size &contentSize)
 {
-    _customSize = size;
+    _customSize = contentSize;
     if (_ignoreSize)
     {
         _contentSize = getVirtualRendererSize();
     }
     else
     {
-        _contentSize = size;
+        _contentSize = contentSize;
     }
     if (_running)
     {
@@ -269,7 +269,7 @@ void Widget::setSize(const Size &size)
         Size pSize;
         if (widgetParent)
         {
-            pSize = widgetParent->getSize();
+            pSize = widgetParent->getContentSize();
         }
         else
         {
@@ -290,6 +290,11 @@ void Widget::setSize(const Size &size)
     onSizeChanged();
 }
 
+void Widget::setSize(const Size &size)
+{
+    this->setContentSize(size);
+}
+
 void Widget::setSizePercent(const Vec2 &percent)
 {
     _sizePercent = percent;
@@ -299,7 +304,7 @@ void Widget::setSizePercent(const Vec2 &percent)
         Widget* widgetParent = getWidgetParent();
         if (widgetParent)
         {
-            cSize = Size(widgetParent->getSize().width * percent.x , widgetParent->getSize().height * percent.y);
+            cSize = Size(widgetParent->getContentSize().width * percent.x , widgetParent->getContentSize().height * percent.y);
         }
         else
         {
@@ -440,7 +445,7 @@ bool Widget::isIgnoreContentAdaptWithSize() const
 
 const Size& Widget::getSize() const
 {
-    return _contentSize;
+    return this->getContentSize();
 }
     
 const Size& Widget::getCustomSize() const
@@ -855,7 +860,7 @@ void Widget::setPosition(const Vec2 &pos)
         Widget* widgetParent = getWidgetParent();
         if (widgetParent)
         {
-            Size pSize = widgetParent->getSize();
+            Size pSize = widgetParent->getContentSize();
             if (pSize.width <= 0.0f || pSize.height <= 0.0f)
             {
                 _positionPercent = Vec2::ZERO;
@@ -877,7 +882,7 @@ void Widget::setPositionPercent(const Vec2 &percent)
         Widget* widgetParent = getWidgetParent();
         if (widgetParent)
         {
-            Size parentSize = widgetParent->getSize();
+            Size parentSize = widgetParent->getContentSize();
             Vec2 absPos = Vec2(parentSize.width * _positionPercent.x, parentSize.height * _positionPercent.y);
             setPosition(absPos);
         }

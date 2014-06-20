@@ -371,7 +371,8 @@ public:
      *
      * @param size that is widget's size
      */
-    virtual void setSize(const Size &size);
+    CC_DEPRECATED_ATTRIBUTE virtual void setSize(const Size &size);
+    virtual void setContentSize(const Size& contentSize) override;
 
     /**
      * Changes the percent that is widget's percent size
@@ -403,7 +404,7 @@ public:
      *
      * @return size
      */
-    const Size& getSize() const;
+    CC_DEPRECATED_ATTRIBUTE const Size& getSize() const;
     
     const Size& getCustomSize() const;
     

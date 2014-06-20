@@ -947,7 +947,7 @@ void Layout::requestDoLayout()
     
 Size Layout::getLayoutContentSize()const
 {
-    return this->getSize();
+    return this->getContentSize();
 }
     
 const Vector<Node*>& Layout::getLayoutElements()const
@@ -1068,7 +1068,7 @@ Size Layout::getLayoutAccumulatedSize()const
             {
                 widgetCount++;
                 Margin m = w->getLayoutParameter()->getMargin();
-                layoutSize = layoutSize + w->getSize() + Size(m.right + m.left,  m.top + m.bottom) * 0.5;
+                layoutSize = layoutSize + w->getContentSize() + Size(m.right + m.left,  m.top + m.bottom) * 0.5;
             }
         }
     }
@@ -1090,7 +1090,7 @@ Vec2 Layout::getWorldCenterPoint(Widget* widget)const
 {
     Layout *layout = dynamic_cast<Layout*>(widget);
     //FIXEDME: we don't need to calculate the content size of layout anymore
-    Size widgetSize = layout ? layout->getLayoutAccumulatedSize() :  widget->getSize();
+    Size widgetSize = layout ? layout->getLayoutAccumulatedSize() :  widget->getContentSize();
 //    CCLOG("contnet size : width = %f, height = %f", widgetSize.width, widgetSize.height);
     return widget->convertToWorldSpace(Vec2(widgetSize.width/2, widgetSize.height/2));
 }

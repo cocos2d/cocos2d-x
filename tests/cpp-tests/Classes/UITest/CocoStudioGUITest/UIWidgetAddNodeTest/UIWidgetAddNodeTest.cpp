@@ -18,7 +18,7 @@ bool UIWidgetAddNodeTest::init()
 {
     if (UIScene::init())
     {
-        Size widgetSize = _widget->getSize();
+        Size widgetSize = _widget->getContentSize();
         
         // Add the alert
         Text* alert = Text::create();
@@ -26,7 +26,7 @@ bool UIWidgetAddNodeTest::init()
         alert->setFontName("fonts/Marker Felt.ttf");
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 1.75));
         _uiLayer->addChild(alert);
         
         // Create the ui node container

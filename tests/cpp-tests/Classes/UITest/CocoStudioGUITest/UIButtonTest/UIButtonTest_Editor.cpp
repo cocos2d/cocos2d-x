@@ -23,7 +23,7 @@ bool UIButtonTest_Editor::init()
         _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIButton_Editor/UIButton_Editor_1.json"));
         _touchGroup->addChild(_layout);
         Size screenSize = CCDirector::getInstance()->getWinSize();
-        Size rootSize = _layout->getSize();
+        Size rootSize = _layout->getContentSize();
         _touchGroup->setPosition(Vec2((screenSize.width - rootSize.width) / 2,
                                        (screenSize.height - rootSize.height) / 2));
         
@@ -51,8 +51,8 @@ bool UIButtonTest_Editor::init()
         _displayValueLabel->setFontName("fonts/Marker Felt.ttf");
         _displayValueLabel->setFontSize(30);
         _displayValueLabel->setString("No event");
-        _displayValueLabel->setPosition(Vec2(_layout->getSize().width / 2,
-                                              _layout->getSize().height - _displayValueLabel->getSize().height * 1.75f));
+        _displayValueLabel->setPosition(Vec2(_layout->getContentSize().width / 2,
+                                              _layout->getContentSize().height - _displayValueLabel->getContentSize().height * 1.75f));
         _touchGroup->addChild(_displayValueLabel);
         
         return true;

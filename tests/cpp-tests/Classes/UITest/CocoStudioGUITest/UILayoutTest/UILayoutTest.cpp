@@ -17,13 +17,13 @@ bool UILayoutTest::init()
 {
     if (UIScene::init())
     {
-        Size widgetSize = _widget->getSize();
+        Size widgetSize = _widget->getContentSize();
         
         // Add the alert
         Text* alert = Text::create("Layout", "fonts/Marker Felt.ttf", 30 );
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Vec2(widgetSize.width / 2.0f,
-                                 widgetSize.height / 2.0f - alert->getSize().height * 3.075f));
+                                 widgetSize.height / 2.0f - alert->getContentSize().height * 3.075f));
         
         _uiLayer->addChild(alert);
         
@@ -34,28 +34,28 @@ bool UILayoutTest::init()
         // Create the layout
         Layout* layout = Layout::create();
         layout->setSize(Size(280, 150));
-        Size backgroundSize = background->getSize();
+        Size backgroundSize = background->getContentSize();
         layout->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
-                                  (backgroundSize.width - layout->getSize().width) / 2.0f,
+                                  (backgroundSize.width - layout->getContentSize().width) / 2.0f,
                                   (widgetSize.height - backgroundSize.height) / 2.0f +
-                                  (backgroundSize.height - layout->getSize().height) / 2.0f));
+                                  (backgroundSize.height - layout->getContentSize().height) / 2.0f));
         _uiLayer->addChild(layout);
         
         Button* button = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
-        button->setPosition(Vec2(button->getSize().width / 2.0f,
-                                  layout->getSize().height - button->getSize().height / 2.0f));
+        button->setPosition(Vec2(button->getContentSize().width / 2.0f,
+                                  layout->getContentSize().height - button->getContentSize().height / 2.0f));
         layout->addChild(button);
         
         Button* titleButton = Button::create("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png");
         titleButton->setTitleText("Title Button");
-        titleButton->setPosition(Vec2(layout->getSize().width / 2.0f, layout->getSize().height / 2.0f));
+        titleButton->setPosition(Vec2(layout->getContentSize().width / 2.0f, layout->getContentSize().height / 2.0f));
         layout->addChild(titleButton);
         
         Button* button_scale9 = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
         button_scale9->setScale9Enabled(true);
         button_scale9->setSize(Size(100.0f, button_scale9->getVirtualRendererSize().height));
-        button_scale9->setPosition(Vec2(layout->getSize().width - button_scale9->getSize().width / 2.0f,
-                                         button_scale9->getSize().height / 2.0f));
+        button_scale9->setPosition(Vec2(layout->getContentSize().width - button_scale9->getContentSize().width / 2.0f,
+                                         button_scale9->getContentSize().height / 2.0f));
         
         layout->addChild(button_scale9);
         
@@ -79,13 +79,13 @@ bool UILayoutTest_Color::init()
 {
     if (UIScene::init())
     {
-        Size widgetSize = _widget->getSize();
+        Size widgetSize = _widget->getContentSize();
         
         // Add the alert
         Text* alert = Text::create("Layout color render", "fonts/Marker Felt.ttf", 30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Vec2(widgetSize.width / 2.0f,
-                                 widgetSize.height / 2.0f - alert->getSize().height * 3.075f));
+                                 widgetSize.height / 2.0f - alert->getContentSize().height * 3.075f));
         
         _uiLayer->addChild(alert);
         
@@ -100,27 +100,27 @@ bool UILayoutTest_Color::init()
         layout->setSize(Size(280, 150));
         Size backgroundSize = background->getContentSize();
         layout->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
-                                  (backgroundSize.width - layout->getSize().width) / 2.0f,
+                                  (backgroundSize.width - layout->getContentSize().width) / 2.0f,
                                   (widgetSize.height - backgroundSize.height) / 2.0f +
-                                  (backgroundSize.height - layout->getSize().height) / 2.0f));
+                                  (backgroundSize.height - layout->getContentSize().height) / 2.0f));
         _uiLayer->addChild(layout);
         
         Button* button = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
-        button->setPosition(Vec2(button->getSize().width / 2.0f,
-                                  layout->getSize().height - button->getSize().height / 2.0f));
+        button->setPosition(Vec2(button->getContentSize().width / 2.0f,
+                                  layout->getContentSize().height - button->getContentSize().height / 2.0f));
         
         layout->addChild(button);
         
         Button* titleButton = Button::create("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png");
         titleButton->setTitleText("Title Button");
-        titleButton->setPosition(Vec2(layout->getSize().width / 2.0f, layout->getSize().height / 2.0f));
+        titleButton->setPosition(Vec2(layout->getContentSize().width / 2.0f, layout->getContentSize().height / 2.0f));
         layout->addChild(titleButton);
         
         Button* button_scale9 = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
         button_scale9->setScale9Enabled(true);
         button_scale9->setSize(Size(100.0f, button_scale9->getVirtualRendererSize().height));
-        button_scale9->setPosition(Vec2(layout->getSize().width - button_scale9->getSize().width / 2.0f,
-                                         button_scale9->getSize().height / 2.0f));
+        button_scale9->setPosition(Vec2(layout->getContentSize().width - button_scale9->getContentSize().width / 2.0f,
+                                         button_scale9->getContentSize().height / 2.0f));
         
         layout->addChild(button_scale9);        
         
@@ -143,13 +143,13 @@ bool UILayoutTest_Gradient::init()
 {
     if (UIScene::init())
     {
-        Size widgetSize = _widget->getSize();
+        Size widgetSize = _widget->getContentSize();
         
         // Add the alert
         Text* alert = Text::create("Layout gradient render", "fonts/Marker Felt.ttf", 30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Vec2(widgetSize.width / 2.0f,
-                                 widgetSize.height / 2.0f - alert->getSize().height * 3.075f));
+                                 widgetSize.height / 2.0f - alert->getContentSize().height * 3.075f));
         
         _uiLayer->addChild(alert);
         
@@ -164,27 +164,27 @@ bool UILayoutTest_Gradient::init()
         layout->setSize(Size(280, 150));
         Size backgroundSize = background->getContentSize();
         layout->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
-                                  (backgroundSize.width - layout->getSize().width) / 2.0f,
+                                  (backgroundSize.width - layout->getContentSize().width) / 2.0f,
                                   (widgetSize.height - backgroundSize.height) / 2.0f +
-                                  (backgroundSize.height - layout->getSize().height) / 2.0f));
+                                  (backgroundSize.height - layout->getContentSize().height) / 2.0f));
         _uiLayer->addChild(layout);
         
         Button* button = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
-        button->setPosition(Vec2(button->getSize().width / 2.0f,
-                                  layout->getSize().height - button->getSize().height / 2.0f));
+        button->setPosition(Vec2(button->getContentSize().width / 2.0f,
+                                  layout->getContentSize().height - button->getContentSize().height / 2.0f));
         
         layout->addChild(button);
         
         Button* titleButton = Button::create("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png");
         titleButton->setTitleText("Title Button");
-        titleButton->setPosition(Vec2(layout->getSize().width / 2.0f, layout->getSize().height / 2.0f));
+        titleButton->setPosition(Vec2(layout->getContentSize().width / 2.0f, layout->getContentSize().height / 2.0f));
         layout->addChild(titleButton);
         
         Button* button_scale9 = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
         button_scale9->setScale9Enabled(true);
         button_scale9->setSize(Size(100.0f, button_scale9->getVirtualRendererSize().height));
-        button_scale9->setPosition(Vec2(layout->getSize().width - button_scale9->getSize().width / 2.0f,
-                                         button_scale9->getSize().height / 2.0f));
+        button_scale9->setPosition(Vec2(layout->getContentSize().width - button_scale9->getContentSize().width / 2.0f,
+                                         button_scale9->getContentSize().height / 2.0f));
         
         layout->addChild(button_scale9);        
         
@@ -207,12 +207,12 @@ bool UILayoutTest_BackGroundImage::init()
 {
     if (UIScene::init())
     {
-        Size widgetSize = _widget->getSize();
+        Size widgetSize = _widget->getContentSize();
         
         // Add the alert
         Text* alert = Text::create("Layout background image", "fonts/Marker Felt.ttf", 20);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 4.5f));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 4.5f));
         _uiLayer->addChild(alert);
         
         Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
@@ -226,26 +226,26 @@ bool UILayoutTest_BackGroundImage::init()
         layout->setSize(Size(280, 150));
         Size backgroundSize = background->getContentSize();
         layout->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
-                                  (backgroundSize.width - layout->getSize().width) / 2.0f,
+                                  (backgroundSize.width - layout->getContentSize().width) / 2.0f,
                                   (widgetSize.height - backgroundSize.height) / 2.0f +
-                                  (backgroundSize.height - layout->getSize().height) / 2.0f));
+                                  (backgroundSize.height - layout->getContentSize().height) / 2.0f));
         _uiLayer->addChild(layout);
         
         Button* button = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
-        button->setPosition(Vec2(button->getSize().width / 2.0f,
-                                  layout->getSize().height - button->getSize().height / 2.0f));
+        button->setPosition(Vec2(button->getContentSize().width / 2.0f,
+                                  layout->getContentSize().height - button->getContentSize().height / 2.0f));
         layout->addChild(button);
         
         Button* titleButton = Button::create("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png");
         titleButton->setTitleText("Title Button");
-        titleButton->setPosition(Vec2(layout->getSize().width / 2.0f, layout->getSize().height / 2.0f));
+        titleButton->setPosition(Vec2(layout->getContentSize().width / 2.0f, layout->getContentSize().height / 2.0f));
         layout->addChild(titleButton);
         
         Button* button_scale9 = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
         button_scale9->setScale9Enabled(true);
         button_scale9->setSize(Size(100.0f, button_scale9->getVirtualRendererSize().height));
-        button_scale9->setPosition(Vec2(layout->getSize().width - button_scale9->getSize().width / 2.0f,
-                                         button_scale9->getSize().height / 2.0f));
+        button_scale9->setPosition(Vec2(layout->getContentSize().width - button_scale9->getContentSize().width / 2.0f,
+                                         button_scale9->getContentSize().height / 2.0f));
         
         layout->addChild(button_scale9);        
         
@@ -268,12 +268,12 @@ bool UILayoutTest_BackGroundImage_Scale9::init()
 {
     if (UIScene::init())
     {
-        Size widgetSize = _widget->getSize();
+        Size widgetSize = _widget->getContentSize();
         
         // Add the alert
         Text* alert = Text::create("Layout background image scale9", "fonts/Marker Felt.ttf", 20);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 4.5f));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 4.5f));
         _uiLayer->addChild(alert);
         
         Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
@@ -287,27 +287,27 @@ bool UILayoutTest_BackGroundImage_Scale9::init()
         layout->setSize(Size(280, 150));
         Size backgroundSize = background->getContentSize();
         layout->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
-                                  (backgroundSize.width - layout->getSize().width) / 2.0f,
+                                  (backgroundSize.width - layout->getContentSize().width) / 2.0f,
                                   (widgetSize.height - backgroundSize.height) / 2.0f +
-                                  (backgroundSize.height - layout->getSize().height) / 2.0f));
+                                  (backgroundSize.height - layout->getContentSize().height) / 2.0f));
         _uiLayer->addChild(layout);
         
         Button* button = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
-        button->setPosition(Vec2(button->getSize().width / 2.0f,
-                                  layout->getSize().height - button->getSize().height / 2.0f));
+        button->setPosition(Vec2(button->getContentSize().width / 2.0f,
+                                  layout->getContentSize().height - button->getContentSize().height / 2.0f));
         
         layout->addChild(button);
         
         Button* titleButton = Button::create("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png");
         titleButton->setTitleText("Title Button");
-        titleButton->setPosition(Vec2(layout->getSize().width / 2.0f, layout->getSize().height / 2.0f));
+        titleButton->setPosition(Vec2(layout->getContentSize().width / 2.0f, layout->getContentSize().height / 2.0f));
         layout->addChild(titleButton);
         
         Button* button_scale9 = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
         button_scale9->setScale9Enabled(true);
         button_scale9->setSize(Size(100.0f, button_scale9->getVirtualRendererSize().height));
-        button_scale9->setPosition(Vec2(layout->getSize().width - button_scale9->getSize().width / 2.0f,
-                                         button_scale9->getSize().height / 2.0f));
+        button_scale9->setPosition(Vec2(layout->getContentSize().width - button_scale9->getContentSize().width / 2.0f,
+                                         button_scale9->getContentSize().height / 2.0f));
         layout->addChild(button_scale9);
         
         return true;
@@ -329,13 +329,13 @@ bool UILayoutTest_Layout_Linear_Vertical::init()
 {
     if (UIScene::init())
     {
-        Size widgetSize = _widget->getSize();
+        Size widgetSize = _widget->getContentSize();
         
         // Add the alert
         Text* alert = Text::create("Layout Linear Vertical", "fonts/Marker Felt.ttf", 20);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Vec2(widgetSize.width / 2.0f,
-                                 widgetSize.height / 2.0f - alert->getSize().height * 4.5f));
+                                 widgetSize.height / 2.0f - alert->getContentSize().height * 4.5f));
         
         _uiLayer->addChild(alert);
         
@@ -347,11 +347,11 @@ bool UILayoutTest_Layout_Linear_Vertical::init()
         Layout* layout = Layout::create();
         layout->setLayoutType(LayoutType::VERTICAL);
         layout->setSize(Size(280, 150));        
-        Size backgroundSize = background->getSize();
+        Size backgroundSize = background->getContentSize();
         layout->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
-                                  (backgroundSize.width - layout->getSize().width) / 2.0f,
+                                  (backgroundSize.width - layout->getContentSize().width) / 2.0f,
                                   (widgetSize.height - backgroundSize.height) / 2.0f +
-                                  (backgroundSize.height - layout->getSize().height) / 2.0f));
+                                  (backgroundSize.height - layout->getContentSize().height) / 2.0f));
         _uiLayer->addChild(layout);
         
         
@@ -405,12 +405,12 @@ bool UILayoutTest_Layout_Linear_Horizontal::init()
 {
     if (UIScene::init())
     {
-        Size widgetSize = _widget->getSize();
+        Size widgetSize = _widget->getContentSize();
         
         // Add the alert
         Text* alert = Text::create("Layout Linear Horizontal", "fonts/Marker Felt.ttf", 20);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 4.5f));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 4.5f));
         _uiLayer->addChild(alert);
         
         Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
@@ -422,11 +422,11 @@ bool UILayoutTest_Layout_Linear_Horizontal::init()
         layout->setLayoutType(LayoutType::HORIZONTAL);
         layout->setClippingEnabled(true);
         layout->setSize(Size(280, 150));        
-        Size backgroundSize = background->getSize();
+        Size backgroundSize = background->getContentSize();
         layout->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
-                                  (backgroundSize.width - layout->getSize().width) / 2.0f,
+                                  (backgroundSize.width - layout->getContentSize().width) / 2.0f,
                                   (widgetSize.height - backgroundSize.height) / 2.0f +
-                                  (backgroundSize.height - layout->getSize().height) / 2.0f));
+                                  (backgroundSize.height - layout->getContentSize().height) / 2.0f));
         _uiLayer->addChild(layout);
         
         Button* button = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
@@ -479,12 +479,12 @@ bool UILayoutTest_Layout_Relative_Align_Parent::init()
 {
     if (UIScene::init())
     {
-        Size widgetSize = _widget->getSize();
+        Size widgetSize = _widget->getContentSize();
         
         // Add the alert
         Text* alert = Text::create("Layout Relative Align Parent", "fonts/Marker Felt.ttf", 20);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 4.5f));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 4.5f));
         _uiLayer->addChild(alert);
         
         Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
@@ -497,11 +497,11 @@ bool UILayoutTest_Layout_Relative_Align_Parent::init()
         layout->setSize(Size(280, 150));
         layout->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
         layout->setBackGroundColor(Color3B::GREEN);
-        Size backgroundSize = background->getSize();
+        Size backgroundSize = background->getContentSize();
         layout->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
-                                (backgroundSize.width - layout->getSize().width) / 2.0f,
+                                (backgroundSize.width - layout->getContentSize().width) / 2.0f,
                                 (widgetSize.height - backgroundSize.height) / 2.0f +
-                                (backgroundSize.height - layout->getSize().height) / 2.0f));
+                                (backgroundSize.height - layout->getContentSize().height) / 2.0f));
         _uiLayer->addChild(layout);
         
         // top left
@@ -614,12 +614,12 @@ bool UILayoutTest_Layout_Relative_Location::init()
 {
     if (UIScene::init())
     {
-        Size widgetSize = _widget->getSize();
+        Size widgetSize = _widget->getContentSize();
         
         // Add the alert
         Text* alert = Text::create("Layout Relative Location", "fonts/Marker Felt.ttf", 20);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 4.5f));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 4.5f));
         _uiLayer->addChild(alert);
         
         Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
@@ -630,11 +630,11 @@ bool UILayoutTest_Layout_Relative_Location::init()
         Layout* layout = Layout::create();
         layout->setLayoutType(LayoutType::RELATIVE);
         layout->setSize(Size(280, 150));
-        Size backgroundSize = background->getSize();
+        Size backgroundSize = background->getContentSize();
         layout->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
-                                (backgroundSize.width - layout->getSize().width) / 2.0f,
+                                (backgroundSize.width - layout->getContentSize().width) / 2.0f,
                                 (widgetSize.height - backgroundSize.height) / 2.0f +
-                                (backgroundSize.height - layout->getSize().height) / 2.0f));
+                                (backgroundSize.height - layout->getContentSize().height) / 2.0f));
         _uiLayer->addChild(layout);
         
         // center

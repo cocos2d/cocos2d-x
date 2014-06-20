@@ -22,7 +22,7 @@ bool UIScrollViewTest_Vertical_Editor::init()
         _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/ui_scrollview_editor_1.json"));
         _touchGroup->addChild(_layout);
         Size screenSize = CCDirector::getInstance()->getWinSize();
-        Size rootSize = _layout->getSize();
+        Size rootSize = _layout->getContentSize();
         _touchGroup->setPosition(Vec2((screenSize.width - rootSize.width) / 2,
                                        (screenSize.height - rootSize.height) / 2));
         
@@ -35,8 +35,8 @@ bool UIScrollViewTest_Vertical_Editor::init()
         
         Button* left_button = Button::create();
         left_button->loadTextures("Images/b1.png", "Images/b2.png", "");
-        left_button->setPosition(Vec2(_layout->getSize().width / 2 - left_button->getSize().width,
-                                     left_button->getSize().height * 0.625));
+        left_button->setPosition(Vec2(_layout->getContentSize().width / 2 - left_button->getContentSize().width,
+                                     left_button->getContentSize().height * 0.625));
         left_button->setTouchEnabled(true);
         left_button->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::previousCallback, this));
         left_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
@@ -44,8 +44,8 @@ bool UIScrollViewTest_Vertical_Editor::init()
         
         Button* right_button = Button::create();
         right_button->loadTextures("Images/f1.png", "Images/f2.png", "");
-        right_button->setPosition(Vec2(_layout->getSize().width / 2 + right_button->getSize().width,
-                                      right_button->getSize().height * 0.625));
+        right_button->setPosition(Vec2(_layout->getContentSize().width / 2 + right_button->getContentSize().width,
+                                      right_button->getContentSize().height * 0.625));
         right_button->setTouchEnabled(true);
         right_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
         right_button->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::nextCallback, this));
@@ -77,7 +77,7 @@ bool UIScrollViewTest_Horizontal_Editor::init()
         _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/ui_scrollview_horizontal_editor_1.json"));
         _touchGroup->addChild(_layout);
         Size screenSize = CCDirector::getInstance()->getWinSize();
-        Size rootSize = _layout->getSize();
+        Size rootSize = _layout->getContentSize();
         _touchGroup->setPosition(Vec2((screenSize.width - rootSize.width) / 2,
                                         (screenSize.height - rootSize.height) / 2));
         
@@ -90,8 +90,8 @@ bool UIScrollViewTest_Horizontal_Editor::init()
         
         Button* left_button = Button::create();
         left_button->loadTextures("Images/b1.png", "Images/b2.png", "");
-        left_button->setPosition(Vec2(_layout->getSize().width / 2 - left_button->getSize().width,
-                                     left_button->getSize().height * 0.625));
+        left_button->setPosition(Vec2(_layout->getContentSize().width / 2 - left_button->getContentSize().width,
+                                     left_button->getContentSize().height * 0.625));
         left_button->setTouchEnabled(true);
         left_button->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::previousCallback, this));
 		left_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
@@ -99,8 +99,8 @@ bool UIScrollViewTest_Horizontal_Editor::init()
         
         Button* right_button = Button::create();
         right_button->loadTextures("Images/f1.png", "Images/f2.png", "");
-        right_button->setPosition(Vec2(_layout->getSize().width / 2 + right_button->getSize().width,
-                                      right_button->getSize().height * 0.625));
+        right_button->setPosition(Vec2(_layout->getContentSize().width / 2 + right_button->getContentSize().width,
+                                      right_button->getContentSize().height * 0.625));
         right_button->setTouchEnabled(true);
         right_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
         right_button->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::nextCallback, this));
@@ -132,7 +132,7 @@ bool UIScrollViewTest_Both_Editor::init()
         _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/ui_scrollview_both_editor_1.json"));
         _touchGroup->addChild(_layout);
         Size screenSize = CCDirector::getInstance()->getWinSize();
-        Size rootSize = _layout->getSize();
+        Size rootSize = _layout->getContentSize();
         _touchGroup->setPosition(Vec2((screenSize.width - rootSize.width) / 2,
                                         (screenSize.height - rootSize.height) / 2));
         
@@ -145,8 +145,8 @@ bool UIScrollViewTest_Both_Editor::init()
         
         Button* left_button = Button::create();
         left_button->loadTextures("Images/b1.png", "Images/b2.png", "");
-        left_button->setPosition(Vec2(_layout->getSize().width / 2 - left_button->getSize().width,
-                                     left_button->getSize().height * 0.625));
+        left_button->setPosition(Vec2(_layout->getContentSize().width / 2 - left_button->getContentSize().width,
+                                     left_button->getContentSize().height * 0.625));
         left_button->setTouchEnabled(true);
         left_button->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::previousCallback, this));
         left_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
@@ -154,8 +154,8 @@ bool UIScrollViewTest_Both_Editor::init()
         
         Button* right_button = Button::create();
         right_button->loadTextures("Images/f1.png", "Images/f2.png", "");
-        right_button->setPosition(Vec2(_layout->getSize().width / 2 + right_button->getSize().width,
-                                      right_button->getSize().height * 0.625));
+        right_button->setPosition(Vec2(_layout->getContentSize().width / 2 + right_button->getContentSize().width,
+                                      right_button->getContentSize().height * 0.625));
         right_button->setTouchEnabled(true);
         right_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
         right_button->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::nextCallback, this));
@@ -187,7 +187,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection_Editor::init()
         _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UITest/UITest.json"));
         _touchGroup->addChild(_layout);
         Size screenSize = CCDirector::getInstance()->getWinSize();
-        Size rootSize = _layout->getSize();
+        Size rootSize = _layout->getContentSize();
         _touchGroup->setPosition(Vec2((screenSize.width - rootSize.width) / 2,
                                         (screenSize.height - rootSize.height) / 2));
         
@@ -233,7 +233,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection_Bounce_Editor::init()
         _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UITest/UITest.json"));
         _touchGroup->addChild(_layout);
         Size screenSize = CCDirector::getInstance()->getWinSize();
-        Size rootSize = _layout->getSize();
+        Size rootSize = _layout->getContentSize();
         _touchGroup->setPosition(Vec2((screenSize.width - rootSize.width) / 2,
                                         (screenSize.height - rootSize.height) / 2));
         
