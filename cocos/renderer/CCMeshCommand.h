@@ -34,7 +34,7 @@ NS_CC_BEGIN
 
 class GLProgramState;
 class GLProgram;
-class Uniform;
+struct Uniform;
 
 //it is a common mesh
 class MeshCommand : public RenderCommand
