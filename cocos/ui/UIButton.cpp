@@ -56,9 +56,9 @@ _capInsetsDisabled(Rect::ZERO),
 _normalTexType(TextureResType::LOCAL),
 _pressedTexType(TextureResType::LOCAL),
 _disabledTexType(TextureResType::LOCAL),
-_normalTextureSize(_size),
-_pressedTextureSize(_size),
-_disabledTextureSize(_size),
+_normalTextureSize(_contentSize),
+_pressedTextureSize(_contentSize),
+_disabledTextureSize(_contentSize),
 _pressedActionEnabled(false),
 _titleColor(Color3B::WHITE),
 _normalTextureScaleXInSize(1.0f),
@@ -615,7 +615,7 @@ void Button::normalTextureScaleChangedWithSize()
     {
         if (_scale9Enabled)
         {
-            static_cast<extension::Scale9Sprite*>(_buttonNormalRenderer)->setPreferredSize(_size);
+            static_cast<extension::Scale9Sprite*>(_buttonNormalRenderer)->setPreferredSize(_contentSize);
             _normalTextureScaleXInSize = _normalTextureScaleYInSize = 1.0f;
         }
         else
@@ -626,8 +626,8 @@ void Button::normalTextureScaleChangedWithSize()
                 _buttonNormalRenderer->setScale(1.0f);
                 return;
             }
-            float scaleX = _size.width / textureSize.width;
-            float scaleY = _size.height / textureSize.height;
+            float scaleX = _contentSize.width / textureSize.width;
+            float scaleY = _contentSize.height / textureSize.height;
             _buttonNormalRenderer->setScaleX(scaleX);
             _buttonNormalRenderer->setScaleY(scaleY);
             _normalTextureScaleXInSize = scaleX;
@@ -651,7 +651,7 @@ void Button::pressedTextureScaleChangedWithSize()
     {
         if (_scale9Enabled)
         {
-            static_cast<extension::Scale9Sprite*>(_buttonClickedRenderer)->setPreferredSize(_size);
+            static_cast<extension::Scale9Sprite*>(_buttonClickedRenderer)->setPreferredSize(_contentSize);
             _pressedTextureScaleXInSize = _pressedTextureScaleYInSize = 1.0f;
         }
         else
@@ -662,8 +662,8 @@ void Button::pressedTextureScaleChangedWithSize()
                 _buttonClickedRenderer->setScale(1.0f);
                 return;
             }
-            float scaleX = _size.width / _pressedTextureSize.width;
-            float scaleY = _size.height / _pressedTextureSize.height;
+            float scaleX = _contentSize.width / _pressedTextureSize.width;
+            float scaleY = _contentSize.height / _pressedTextureSize.height;
             _buttonClickedRenderer->setScaleX(scaleX);
             _buttonClickedRenderer->setScaleY(scaleY);
             _pressedTextureScaleXInSize = scaleX;
@@ -686,7 +686,7 @@ void Button::disabledTextureScaleChangedWithSize()
     {
         if (_scale9Enabled)
         {
-            static_cast<extension::Scale9Sprite*>(_buttonDisableRenderer)->setPreferredSize(_size);
+            static_cast<extension::Scale9Sprite*>(_buttonDisableRenderer)->setPreferredSize(_contentSize);
         }
         else
         {
@@ -696,8 +696,8 @@ void Button::disabledTextureScaleChangedWithSize()
                 _buttonDisableRenderer->setScale(1.0f);
                 return;
             }
-            float scaleX = _size.width / _disabledTextureSize.width;
-            float scaleY = _size.height / _disabledTextureSize.height;
+            float scaleX = _contentSize.width / _disabledTextureSize.width;
+            float scaleY = _contentSize.height / _disabledTextureSize.height;
             _buttonDisableRenderer->setScaleX(scaleX);
             _buttonDisableRenderer->setScaleY(scaleY);
         }

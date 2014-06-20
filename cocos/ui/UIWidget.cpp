@@ -145,7 +145,6 @@ _touchEndPosition(Vec2::ZERO),
 _touchEventListener(nullptr),
 _touchEventSelector(nullptr),
 _actionTag(0),
-_size(Size::ZERO),
 _customSize(Size::ZERO),
 _ignoreSize(false),
 _affectByClipping(false),
@@ -258,11 +257,11 @@ void Widget::setSize(const Size &size)
     _customSize = size;
     if (_ignoreSize)
     {
-        _size = getVirtualRendererSize();
+        _contentSize = getVirtualRendererSize();
     }
     else
     {
-        _size = size;
+        _contentSize = size;
     }
     if (_running)
     {
@@ -309,11 +308,11 @@ void Widget::setSizePercent(const Vec2 &percent)
     }
     if (_ignoreSize)
     {
-        _size = getVirtualRendererSize();
+        _contentSize = getVirtualRendererSize();
     }
     else
     {
-        _size = cSize;
+        _contentSize = cSize;
     }
     _customSize = cSize;
     onSizeChanged();
@@ -342,11 +341,11 @@ void Widget::updateSizeAndPosition(const cocos2d::Size &parentSize)
         {
             if (_ignoreSize)
             {
-                _size = getVirtualRendererSize();
+                _contentSize = getVirtualRendererSize();
             }
             else
             {
-                _size = _customSize;
+                _contentSize = _customSize;
             }
             float spx = 0.0f;
             float spy = 0.0f;
@@ -366,11 +365,11 @@ void Widget::updateSizeAndPosition(const cocos2d::Size &parentSize)
             Size cSize = Size(parentSize.width * _sizePercent.x , parentSize.height * _sizePercent.y);
             if (_ignoreSize)
             {
-                _size = getVirtualRendererSize();
+                _contentSize = getVirtualRendererSize();
             }
             else
             {
-                _size = cSize;
+                _contentSize = cSize;
             }
             _customSize = cSize;
             break;
@@ -425,11 +424,11 @@ void Widget::ignoreContentAdaptWithSize(bool ignore)
     if (_ignoreSize)
     {
         Size s = getVirtualRendererSize();
-        _size = s;
+        _contentSize = s;
     }
     else
     {
-        _size = _customSize;
+        _contentSize = _customSize;
     }
     onSizeChanged();
 }
@@ -441,7 +440,7 @@ bool Widget::isIgnoreContentAdaptWithSize() const
 
 const Size& Widget::getSize() const
 {
-    return _size;
+    return _contentSize;
 }
     
 const Size& Widget::getCustomSize() const
@@ -466,7 +465,7 @@ Node* Widget::getVirtualRenderer()
 
 void Widget::onSizeChanged()
 {
-    setContentSize(_size);
+    setContentSize(_contentSize);
     for (auto& child : getChildren())
     {
         Widget* widgetChild = dynamic_cast<Widget*>(child);
@@ -486,11 +485,11 @@ void Widget::updateContentSizeWithTextureSize(const cocos2d::Size &size)
 {
     if (_ignoreSize)
     {
-        _size = size;
+        _contentSize = size;
     }
     else
     {
-        _size = _customSize;
+        _contentSize = _customSize;
     }
     onSizeChanged();
 }
@@ -911,22 +910,22 @@ bool Widget::isEnabled() const
 
 float Widget::getLeftBoundary() const
 {
-    return getPosition().x - getAnchorPoint().x * _size.width;
+    return getPosition().x - getAnchorPoint().x * _contentSize.width;
 }
 
 float Widget::getBottomBoundary() const
 {
-    return getPosition().y - getAnchorPoint().y * _size.height;
+    return getPosition().y - getAnchorPoint().y * _contentSize.height;
 }
 
 float Widget::getRightBoundary() const
 {
-    return getLeftBoundary() + _size.width;
+    return getLeftBoundary() + _contentSize.width;
 }
 
 float Widget::getTopBoundary() const
 {
-    return getBottomBoundary() + _size.height;
+    return getBottomBoundary() + _contentSize.height;
 }
 
 const Vec2& Widget::getTouchBeganPosition()const
@@ -1012,7 +1011,7 @@ void Widget::copyProperties(Widget *widget)
     setName(widget->getName());
     setActionTag(widget->getActionTag());
     _ignoreSize = widget->_ignoreSize;
-    _size = widget->_size;
+    _contentSize = widget->_contentSize;
     _customSize = widget->_customSize;
     _sizeType = widget->getSizeType();
     _sizePercent = widget->_sizePercent;

@@ -407,7 +407,7 @@ public:
     
     const Size& getCustomSize() const;
     
-    virtual const Size& getLayoutSize() {return _size;};
+    virtual const Size& getLayoutSize() {return _contentSize;};
 
     /**
      * Returns size percent of widget
@@ -659,7 +659,6 @@ protected:
     //use
     int _actionTag;
 
-    Size _size;
     Size _customSize;
 
     Vec2 _sizePercent;
