@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "CCTMXXMLParser.h"
 #include "CCNode.h"
 #include "renderer/CCCustomCommand.h"
+#include "renderer/CCQuadCommand.h"
 
 #include <map>
 
@@ -187,7 +188,7 @@ public:
 protected:
 
     bool initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
-    int updateTiles(const Rect& culledRect);
+    int updateTiles(const Rect& culledRect, Renderer* renderer);
     void setupVBO();
     Vec2 calculateLayerOffset(const Vec2& offset);
 
@@ -242,7 +243,8 @@ protected:
     /** tile coordinate to node coordinate transform */
     Mat4 _tileToNodeTransform;
     /** quads to be rendered */
-    std::vector<V3F_T2F_Quad> _quads;
+    std::vector<V3F_C4B_T2F_Quad> _quads;
+    std::vector<QuadCommand> _renderCommands;
     /** indices */
     std::vector<GLushort> _indices;
     bool _dirty;

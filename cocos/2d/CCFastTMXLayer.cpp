@@ -45,6 +45,7 @@ THE SOFTWARE.
 #include "base/CCConfiguration.h"
 #include "renderer/CCRenderer.h"
 #include "deprecated/CCString.h"
+#include "renderer/CCGLProgramStateCache.h"
 
 NS_CC_BEGIN
 
@@ -129,70 +130,42 @@ FastTMXLayer::~FastTMXLayer()
 
 void FastTMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
 {
-    _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(FastTMXLayer::onDraw, this, transform, flags);
-    renderer->addCommand(&_customCommand);
-}
-
-void FastTMXLayer::onDraw(const Mat4 &transform, bool transformUpdated)
-{
-    GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORD);
-    GL::bindTexture2D( _texture->getName() );
-
-
-    // tex coords + indices
-    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-
-
-    if( transformUpdated || _dirty )
+    if( flags != 0 || _dirty )
     {
-    
         Size s = Director::getInstance()->getWinSize();
         auto rect = Rect(0, 0, s.width, s.height);
-
+        
         Mat4 inv = transform;
         inv.inverse();
         rect = RectApplyTransform(rect, inv);
         
-        _verticesToDraw = updateTiles(rect);
+        _verticesToDraw = updateTiles(rect, renderer);
         
-        if (_quads.size() > 0 && _indices.size() > 0 && _verticesToDraw > 0)
-        {
-            glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _quads.size() , &_quads[0], GL_DYNAMIC_DRAW);
-            glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _quads.size() * 6 , &_indices[0], GL_STATIC_DRAW);
-        }
-
         // don't draw more than 65535 vertices since we are using GL_UNSIGNED_SHORT for indices
         _verticesToDraw = std::min(_verticesToDraw, 65535);
         
         _dirty = false;
-    }
-
-    if(_verticesToDraw > 0) {
-
-        getGLProgram()->use();
-        getGLProgram()->setUniformsForBuiltins(_modelViewTransform);
-
-        // vertices
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_T2F), (GLvoid*) offsetof(V3F_T2F, vertices));
-
-        // tex coords
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_T2F), (GLvoid*) offsetof(V3F_T2F, texCoords));
-
-        // color
-        glVertexAttrib4f(GLProgram::VERTEX_ATTRIB_COLOR, _displayedColor.r/255.0f, _displayedColor.g/255.0f, _displayedColor.b/255.0f, _displayedOpacity/255.0f);
         
-        glDrawElements(GL_TRIANGLES, _verticesToDraw, GL_UNSIGNED_SHORT, nullptr);
-        CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_verticesToDraw);
     }
-
-    // cleanup
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    
+    auto glprogramState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
+    for( int index = 0; index < _verticesToDraw/6; ++index)
+    {
+        float z = _quads[index].bl.vertices.z;
+        _renderCommands[index].init(z, _texture->getName(), glprogramState, BlendFunc::ALPHA_PREMULTIPLIED, &_quads[index], 1, transform);
+        renderer->addCommand(&_renderCommands[index]);
+    }
+    
+//    _customCommand.init(_globalZOrder);
+//    _customCommand.func = CC_CALLBACK_0(FastTMXLayer::onDraw, this, transform, flags);
+//    renderer->addCommand(&_customCommand);
 }
 
-int FastTMXLayer::updateTiles(const Rect& culledRect)
+void FastTMXLayer::onDraw(const Mat4 &transform, bool transformUpdated)
+{
+}
+
+int FastTMXLayer::updateTiles(const Rect& culledRect, Renderer* renderer)
 {
     int tilesUsed = 0;
 
@@ -237,15 +210,13 @@ int FastTMXLayer::updateTiles(const Rect& culledRect)
     }
     
     // doesn't support VBO
-    int quadsNeed = std::min(static_cast<int>((visibleTiles.size.width + tilesOverX) * (visibleTiles.size.height + tilesOverY)), MAX_QUADS_COUNT);
+    int quadsNeed = std::min(static_cast<int>((visibleTiles.size.width + 2 *tilesOverX) * (visibleTiles.size.height + 2 * tilesOverY)), MAX_QUADS_COUNT);
     if (_quads.size() < quadsNeed)
     {
         _quads.resize(quadsNeed);
+        _renderCommands.resize(quadsNeed);
         _indices.resize(quadsNeed * 6);
     }
-    
-    V3F_T2F_Quad* quadsTmp = &_quads[0];
-    GLushort* indicesTmp = &_indices[0];
 
     Size texSize = _tileSet->_imageSize;
     for (int y =  visibleTiles.origin.y - tilesOverY; y < visibleTiles.origin.y + visibleTiles.size.height + tilesOverY; ++y)
@@ -263,7 +234,7 @@ int FastTMXLayer::updateTiles(const Rect& culledRect)
             if(tileGID!=0)
             {
 
-                V3F_T2F_Quad *quad = &quadsTmp[tilesUsed];
+                V3F_C4B_T2F_Quad *quad = &_quads[tilesUsed];
                 
                 Vec3 nodePos(static_cast<float>(x), static_cast<float>(y), 0);
                 _tileToNodeTransform.transformPoint(&nodePos);
@@ -340,18 +311,20 @@ int FastTMXLayer::updateTiles(const Rect& culledRect)
                 quad->tl.texCoords.v = top;
                 quad->tr.texCoords.u = right;
                 quad->tr.texCoords.v = top;
-
-
-                GLushort *idxbase = indicesTmp + tilesUsed * 6;
+                
+                quad->bl.colors = Color4B::WHITE;
+                quad->br.colors = Color4B::WHITE;
+                quad->tl.colors = Color4B::WHITE;
+                quad->tr.colors = Color4B::WHITE;
+                
                 int vertexbase = tilesUsed * 4;
-
-                idxbase[0] = vertexbase;
-                idxbase[1] = vertexbase + 1;
-                idxbase[2] = vertexbase + 2;
-                idxbase[3] = vertexbase + 3;
-                idxbase[4] = vertexbase + 2;
-                idxbase[5] = vertexbase + 1;
-
+                _indices[tilesUsed * 6 + 0] = vertexbase;
+                _indices[tilesUsed * 6 + 1] = vertexbase + 1;
+                _indices[tilesUsed * 6 + 2] = vertexbase + 2;
+                _indices[tilesUsed * 6 + 3] = vertexbase + 3;
+                _indices[tilesUsed * 6 + 4] = vertexbase + 2;
+                _indices[tilesUsed * 6 + 5]= vertexbase + 1;
+                
                 tilesUsed++;
             }
             
