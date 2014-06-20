@@ -54,10 +54,10 @@ extern string getIPAddress();
 //1M size 
 #define MAXPROTOLENGTH 1048576
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-#define sleep(t) Sleep(t)
-#elif(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#define usleep(t) Sleep(t)
+#else
 #include <unistd.h>
-#define sleep(t) usleep(t)
+#define usleep(t) usleep(t)
 #endif
 
 const char* getRuntimeVersion()
@@ -364,7 +364,7 @@ bool CreateDir(const char *sPathName)
             if(access(DirName,   NULL)!=0   )
             {
 #ifdef _WIN32
-                if(mkdir(DirName/*,   0755*/)==-1)
+                if(_mkdir(DirName/*,   0755*/)==-1)
 #else
                 if(mkdir(DirName,   0755)==-1)
 #endif
@@ -386,7 +386,7 @@ void recvBuf(int fd,char *pbuf,int bufsize)
     while (startFlagLen != 0){
         int recvlen = recv(fd, pbuf+bufsize-startFlagLen,startFlagLen ,0);
         if (recvlen<=0) {
-            sleep(1);
+            usleep(1);
             continue;
         }
         startFlagLen -= recvlen;
@@ -458,7 +458,7 @@ void FileServer::loopReceiveFile()
                 int result= recv(fd, _protoBuf, recvLen,0);
                 //cocos2d::log("recv fullfilename = %s,file size:%d",recvDataBuf.fileProto.file_name().c_str(),result);
                 if (result<=0) {
-                    sleep(1);
+                    usleep(1);
                     continue;
                 }
                 memcpy(contentbuf+contentSize-recvTotalLen,_protoBuf,result);
@@ -497,7 +497,7 @@ void FileServer::loopWriteFile()
          int recvSize = _recvBufList.size();
          _recvBufListMutex.unlock();
          if(0 == recvSize){
-             sleep(500);
+             usleep(500);
              continue;
          }
 
@@ -580,7 +580,7 @@ void FileServer::loopResponse()
         int responseSize =  _responseBufList.size();
         _responseBufListMutex.unlock();
         if(0 == responseSize){
-            sleep(500);
+            usleep(500);
             continue;
         }
 
@@ -662,12 +662,12 @@ public:
         shineSprite->setOpacity(0);
         shineSprite->setPosition(Vec2(lanscaptX,lanscaptY));
         Vector<FiniteTimeAction*> arrayOfActions;
-        arrayOfActions.pushBack(DelayTime::create(0.4));
+        arrayOfActions.pushBack(DelayTime::create(0.4f));
         arrayOfActions.pushBack(FadeTo::create(0.8f,200));
         arrayOfActions.pushBack(FadeTo::create(0.8f,255));
         arrayOfActions.pushBack(FadeTo::create(0.8f,200));
         arrayOfActions.pushBack(FadeTo::create(0.8f,0));
-        arrayOfActions.pushBack(DelayTime::create(0.4));
+        arrayOfActions.pushBack(DelayTime::create(0.4f));
         Sequence * arrayAction = Sequence::create(arrayOfActions);
         shineSprite->runAction(RepeatForever::create(Sequence::create(arrayOfActions)));
         addChild(shineSprite,9998);
@@ -675,7 +675,10 @@ public:
         string strip = getIPAddress();
         char szIPAddress[512]={0};
         sprintf(szIPAddress, "IP: %s",strip.c_str());
-        auto IPlabel = Label::create(szIPAddress, fontName.c_str(), 72);
+        auto IPlabel = Label::create();
+        IPlabel->setString(szIPAddress);
+        IPlabel->setSystemFontName(fontName.c_str());
+        IPlabel->setSystemFontSize(72);
         IPlabel->setAnchorPoint(Vec2(0,0));
         int spaceSizex = 72;
         int spaceSizey = 200;
@@ -689,15 +692,20 @@ public:
 
         char szVersion[1024]={0};
         sprintf(szVersion,"runtimeVersion:%s \ncocos2dVersion:%s",getRuntimeVersion(),cocos2dVersion());
-        Label* verLable = Label::create(szVersion, fontName.c_str(), 24);
+        Label* verLable = Label::create();
+        verLable->setString(szVersion);
+        verLable->setSystemFontName(fontName.c_str());
+        verLable->setSystemFontSize(24);
         verLable->setAnchorPoint(Vec2(0,0));
         int width = verLable->getBoundingBox().size.width;
         int height = verLable->getBoundingBox().size.height;
         verLable->setPosition( Point(VisibleRect::right().x-width, VisibleRect::rightBottom().y) );
         verLable->setAlignment(TextHAlignment::LEFT);
         addChild(verLable, 9002);
-
-        _labelUploadFile = Label::create(_transferTip.c_str(), fontName.c_str(), 36);
+        _labelUploadFile = Label::create();
+        _labelUploadFile->setString(_transferTip);
+        _labelUploadFile->setSystemFontName(fontName.c_str());
+        _labelUploadFile->setSystemFontSize(36);
         _labelUploadFile->setAnchorPoint(Vec2(0,0));
         _labelUploadFile->setPosition( Point(VisibleRect::leftTop().x+spaceSizex, IPlabel->getPositionY()-spaceSizex) );
         _labelUploadFile->setAlignment(TextHAlignment::LEFT);
