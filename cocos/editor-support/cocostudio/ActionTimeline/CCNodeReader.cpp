@@ -383,9 +383,9 @@ Node* NodeReader::loadSprite(const rapidjson::Value& json)
     bool flipY          = DICTOOL->getBooleanValue_json(json, FLIPY);
 
     if(flipX != false)
-        sprite->setFlipX(flipX);
+        sprite->setFlippedX(flipX);
     if(flipY != false)
-        sprite->setFlipY(flipY);
+        sprite->setFlippedY(flipY);
 
     return sprite;
 }
