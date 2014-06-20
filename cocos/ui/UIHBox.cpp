@@ -74,7 +74,7 @@ bool HBox::initWithSize(const Size& size)
 {
     if (init())
     {
-        setSize(size);
+        setContentSize(size);
         return true;
     }
     return false;

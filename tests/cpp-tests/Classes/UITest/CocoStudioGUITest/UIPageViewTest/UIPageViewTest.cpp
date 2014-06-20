@@ -40,7 +40,7 @@ bool UIPageViewTest::init()
         
         // Create the page view
         PageView* pageView = PageView::create();
-        pageView->setSize(Size(240.0f, 130.0f));
+        pageView->setContentSize(Size(240.0f, 130.0f));
         Size backgroundSize = background->getContentSize();
         pageView->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
                                   (backgroundSize.width - pageView->getContentSize().width) / 2.0f,
@@ -53,11 +53,11 @@ bool UIPageViewTest::init()
         for (int i = 0; i < pageCount; ++i)
         {
             Layout* layout = Layout::create();
-            layout->setSize(Size(240.0f, 130.0f));
+            layout->setContentSize(Size(240.0f, 130.0f));
             
             ImageView* imageView = ImageView::create("cocosui/scrollviewbg.png");
             imageView->setScale9Enabled(true);
-            imageView->setSize(Size(240, 130));
+            imageView->setContentSize(Size(240, 130));
             imageView->setPosition(Vec2(layout->getContentSize().width / 2.0f, layout->getContentSize().height / 2.0f));
             layout->addChild(imageView);
             

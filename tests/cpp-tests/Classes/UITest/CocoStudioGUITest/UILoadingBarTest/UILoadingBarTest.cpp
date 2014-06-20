@@ -193,7 +193,7 @@ bool UILoadingBarTest_Left_Scale9::init()
         loadingBar->setTag(0);
         loadingBar->setScale9Enabled(true);
         loadingBar->setCapInsets(Rect(0, 0, 0, 0));
-        loadingBar->setSize(Size(300, 13));
+        loadingBar->setContentSize(Size(300, 13));
         
         loadingBar->setPosition(Vec2(widgetSize.width / 2.0f,
                                       widgetSize.height / 2.0f + loadingBar->getContentSize().height / 4.0f));
@@ -275,7 +275,7 @@ bool UILoadingBarTest_Right_Scale9::init()
         loadingBar->setTag(0);
         loadingBar->setScale9Enabled(true);
         loadingBar->setCapInsets(Rect(0, 0, 0, 0));
-        loadingBar->setSize(Size(300, 13));
+        loadingBar->setContentSize(Size(300, 13));
         loadingBar->setDirection(LoadingBar::Direction::RIGHT);
         
         loadingBar->setPosition(Vec2(widgetSize.width / 2.0f,

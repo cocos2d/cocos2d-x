@@ -39,7 +39,7 @@ bool UIScrollViewTest_Vertical::init()
         
         // Create the scrollview by vertical
         ui::ScrollView* scrollView = ui::ScrollView::create();
-        scrollView->setSize(Size(280.0f, 150.0f));        
+        scrollView->setContentSize(Size(280.0f, 150.0f));
         Size backgroundSize = background->getContentSize();
         scrollView->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
                                (backgroundSize.width - scrollView->getContentSize().width) / 2.0f,
@@ -65,7 +65,7 @@ bool UIScrollViewTest_Vertical::init()
         
         Button* button_scale9 = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
         button_scale9->setScale9Enabled(true);
-        button_scale9->setSize(Size(100.0f, button_scale9->getVirtualRendererSize().height));
+        button_scale9->setContentSize(Size(100.0f, button_scale9->getVirtualRendererSize().height));
         button_scale9->setPosition(Vec2(innerWidth / 2.0f, titleButton->getBottomBoundary() - titleButton->getContentSize().height));
         scrollView->addChild(button_scale9);
         
@@ -114,7 +114,7 @@ bool UIScrollViewTest_Horizontal::init()
         ui::ScrollView* scrollView = ui::ScrollView::create();
         scrollView->setBounceEnabled(true);
         scrollView->setDirection(ui::ScrollView::Direction::HORIZONTAL);
-        scrollView->setSize(Size(280.0f, 150.0f));
+        scrollView->setContentSize(Size(280.0f, 150.0f));
         scrollView->setInnerContainerSize(scrollView->getContentSize());
         Size backgroundSize = background->getContentSize();
         scrollView->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
@@ -143,7 +143,7 @@ bool UIScrollViewTest_Horizontal::init()
         
         Button* button_scale9 = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
         button_scale9->setScale9Enabled(true);
-        button_scale9->setSize(Size(100.0f, button_scale9->getVirtualRendererSize().height));
+        button_scale9->setContentSize(Size(100.0f, button_scale9->getVirtualRendererSize().height));
         button_scale9->setPosition(Vec2(titleButton->getRightBoundary() + titleButton->getContentSize().width / 2.0f,
                                        titleButton->getBottomBoundary() - titleButton->getContentSize().height / 2.0f));
         scrollView->addChild(button_scale9);                
@@ -198,7 +198,7 @@ bool UIScrollViewTest_Both::init()
         scrollView->setBounceEnabled(true);
         scrollView->setBackGroundImageScale9Enabled(true);
         scrollView->setBackGroundImage("cocosui/green_edit.png");
-        scrollView->setSize(Size(210, 122.5));
+        scrollView->setContentSize(Size(210, 122.5));
         Size backgroundSize = background->getContentSize();
         scrollView->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
                                     (backgroundSize.width - scrollView->getContentSize().width) / 2.0f,
@@ -257,7 +257,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection::init()
         sc->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
         sc->setDirection(ui::ScrollView::Direction::BOTH);
         sc->setInnerContainerSize(Size(480, 320));
-        sc->setSize(Size(100,100));
+        sc->setContentSize(Size(100,100));
         Size backgroundSize = background->getContentSize();
         sc->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
                               (backgroundSize.width - sc->getContentSize().width) / 2.0f,
@@ -313,7 +313,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection_Bounce::init()
         sc->setBounceEnabled(true);
         sc->setDirection(ui::ScrollView::Direction::BOTH);
         sc->setInnerContainerSize(Size(480, 320));
-        sc->setSize(Size(100,100));
+        sc->setContentSize(Size(100,100));
         Size backgroundSize = background->getContentSize();
         sc->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
                               (backgroundSize.width - sc->getContentSize().width) / 2.0f,

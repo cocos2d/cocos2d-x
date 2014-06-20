@@ -62,7 +62,7 @@ namespace cocostudio
             {
                 float swf = DICTOOL->getFloatValue_json(options, "scale9Width");
                 float shf = DICTOOL->getFloatValue_json(options, "scale9Height");
-                imageView->setSize(Size(swf, shf));
+                imageView->setContentSize(Size(swf, shf));
             }
             
             float cx = DICTOOL->getFloatValue_json(options, "capInsetsX");

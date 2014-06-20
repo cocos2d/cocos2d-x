@@ -95,7 +95,7 @@ bool UISliderTest_Scale9::init()
         slider->loadProgressBarTexture("cocosui/slider_bar_active_9patch.png");
         slider->setScale9Enabled(true);
         slider->setCapInsets(Rect(0, 0, 0, 0));
-        slider->setSize(Size(250.0f, 19));
+        slider->setContentSize(Size(250.0f, 19));
         slider->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f/* + slider->getSize().height * 3.0f*/));
         slider->addEventListener(CC_CALLBACK_2(UISliderTest_Scale9::sliderEvent, this));
         _uiLayer->addChild(slider);

@@ -145,7 +145,7 @@ bool Layout::init()
     if (Widget::init())
     {
         ignoreContentAdaptWithSize(false);
-        setSize(Size::ZERO);
+        setContentSize(Size::ZERO);
         setAnchorPoint(Vec2::ZERO);
         onPassFocusToChild = CC_CALLBACK_2(Layout::findNearestChildWidgetIndex, this);
         return true;

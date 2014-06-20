@@ -141,7 +141,7 @@ void ScrollView::onSizeChanged()
     float orginInnerSizeHeight = innerSize.height;
     float innerSizeWidth = MAX(orginInnerSizeWidth, _contentSize.width);
     float innerSizeHeight = MAX(orginInnerSizeHeight, _contentSize.height);
-    _innerContainer->setSize(Size(innerSizeWidth, innerSizeHeight));
+    _innerContainer->setContentSize(Size(innerSizeWidth, innerSizeHeight));
     _innerContainer->setPosition(Vec2(0, _contentSize.height - _innerContainer->getContentSize().height));
 }
 
@@ -166,7 +166,7 @@ void ScrollView::setInnerContainerSize(const Size &size)
     {
         innerSizeHeight = size.height;
     }
-    _innerContainer->setSize(Size(innerSizeWidth, innerSizeHeight));
+    _innerContainer->setContentSize(Size(innerSizeWidth, innerSizeHeight));
 
     switch (_direction)
     {

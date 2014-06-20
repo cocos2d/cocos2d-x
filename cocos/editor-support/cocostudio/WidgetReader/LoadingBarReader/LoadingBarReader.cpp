@@ -59,7 +59,7 @@ namespace cocostudio
             
             float width = DICTOOL->getFloatValue_json(options, "width");
             float height = DICTOOL->getFloatValue_json(options, "height");
-            loadingBar->setSize(Size(width, height));
+            loadingBar->setContentSize(Size(width, height));
         }
         /**/
         

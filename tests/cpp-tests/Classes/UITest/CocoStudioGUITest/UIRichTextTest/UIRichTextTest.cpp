@@ -40,7 +40,7 @@ bool UIRichTextTest::init()
         // RichText
         _richText = RichText::create();
         _richText->ignoreContentAdaptWithSize(false);
-        _richText->setSize(Size(100, 100));
+        _richText->setContentSize(Size(100, 100));
         
         RichElementText* re1 = RichElementText::create(1, Color3B::WHITE, 255, "This color is white. ", "Helvetica", 10);
         RichElementText* re2 = RichElementText::create(2, Color3B::YELLOW, 255, "And this is yellow. ", "Helvetica", 10);
@@ -85,7 +85,7 @@ void UIRichTextTest::touchEvent(Ref *pSender, Widget::TouchEventType type)
             if (_richText->isIgnoreContentAdaptWithSize())
             {
                 _richText->ignoreContentAdaptWithSize(false);
-                _richText->setSize(Size(100, 100));
+                _richText->setContentSize(Size(100, 100));
             }
             else
             {

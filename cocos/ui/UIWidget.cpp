@@ -325,16 +325,8 @@ void Widget::setSizePercent(const Vec2 &percent)
 
 void Widget::updateSizeAndPosition()
 {
-    Widget* widgetParent = getWidgetParent();
-    Size pSize;
-    if (widgetParent)
-    {
-        pSize = widgetParent->getLayoutSize();
-    }
-    else
-    {
-        pSize = _parent->getContentSize();
-    }
+    Size pSize = _parent->getContentSize();
+    
     updateSizeAndPosition(pSize);
 }
     
@@ -470,7 +462,6 @@ Node* Widget::getVirtualRenderer()
 
 void Widget::onSizeChanged()
 {
-    setContentSize(_contentSize);
     for (auto& child : getChildren())
     {
         Widget* widgetChild = dynamic_cast<Widget*>(child);

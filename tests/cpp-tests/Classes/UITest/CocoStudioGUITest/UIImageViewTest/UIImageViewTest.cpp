@@ -51,7 +51,7 @@ bool UIImageViewTest_Scale9::init()
         // Create the imageview
         ImageView* imageView = ImageView::create("cocosui/buttonHighlighted.png");
         imageView->setScale9Enabled(true);
-        imageView->setSize(Size(300, 115));
+        imageView->setContentSize(Size(300, 115));
         imageView->setPosition(Vec2(widgetSize.width / 2.0f,
                                      widgetSize.height / 2.0f));
         

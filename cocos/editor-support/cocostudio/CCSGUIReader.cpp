@@ -326,7 +326,7 @@ Widget* WidgetPropertiesReader0250::createWidget(const rapidjson::Value& data, c
     if (widget->getContentSize().equals(Size::ZERO))
     {
         Layout* rootWidget = dynamic_cast<Layout*>(widget);
-        rootWidget->setSize(Size(fileDesignWidth, fileDesignHeight));
+        rootWidget->setContentSize(Size(fileDesignWidth, fileDesignHeight));
     }
     /* ********************** */
     
@@ -439,7 +439,7 @@ void WidgetPropertiesReader0250::setPropsForWidgetFromJsonDictionary(Widget*widg
     
     float w = DICTOOL->getFloatValue_json(options, "width");
     float h = DICTOOL->getFloatValue_json(options, "height");
-    widget->setSize(Size(w, h));
+    widget->setContentSize(Size(w, h));
     
     widget->setTag(DICTOOL->getIntValue_json(options, "tag"));
 	widget->setActionTag(DICTOOL->getIntValue_json(options, "actiontag"));
@@ -538,7 +538,7 @@ void WidgetPropertiesReader0250::setPropsForButtonFromJsonDictionary(Widget*widg
         {
             float swf = DICTOOL->getFloatValue_json(options, "scale9Width");
             float shf = DICTOOL->getFloatValue_json(options, "scale9Height");
-            button->setSize(Size(swf, shf));
+            button->setContentSize(Size(swf, shf));
         }
     }
     else
@@ -654,7 +654,7 @@ void WidgetPropertiesReader0250::setPropsForImageViewFromJsonDictionary(Widget*w
         {
             float swf = DICTOOL->getFloatValue_json(options, "scale9Width");
             float shf = DICTOOL->getFloatValue_json(options, "scale9Height");
-            imageView->setSize(Size(swf, shf));
+            imageView->setContentSize(Size(swf, shf));
         }
         
         float cx = DICTOOL->getFloatValue_json(options, "capInsetsX");
@@ -847,7 +847,7 @@ void WidgetPropertiesReader0250::setPropsForSliderFromJsonDictionary(Widget*widg
             {
                 slider->loadBarTexture(imageFileName_tp);
             }
-            slider->setSize(Size(barLength, slider->getContentSize().height));
+            slider->setContentSize(Size(barLength, slider->getContentSize().height));
         }
         else
         {
@@ -1035,7 +1035,7 @@ Widget* WidgetPropertiesReader0300::createWidget(const rapidjson::Value& data, c
     if (widget->getContentSize().equals(Size::ZERO))
     {
         Layout* rootWidget = dynamic_cast<Layout*>(widget);
-        rootWidget->setSize(Size(fileDesignWidth, fileDesignHeight));
+        rootWidget->setContentSize(Size(fileDesignWidth, fileDesignHeight));
     }
     /* ********************** */
     
@@ -1219,7 +1219,7 @@ void WidgetPropertiesReader0300::setPropsForWidgetFromJsonDictionary(Widget*widg
     
     float w = DICTOOL->getFloatValue_json(options, "width");
     float h = DICTOOL->getFloatValue_json(options, "height");
-    widget->setSize(Size(w, h));
+    widget->setContentSize(Size(w, h));
     
     widget->setTag(DICTOOL->getIntValue_json(options, "tag"));
 	widget->setActionTag(DICTOOL->getIntValue_json(options, "actiontag"));
@@ -1406,7 +1406,7 @@ void WidgetPropertiesReader0300::setPropsForButtonFromJsonDictionary(Widget*widg
         {
             float swf = DICTOOL->getFloatValue_json(options, "scale9Width");
             float shf = DICTOOL->getFloatValue_json(options, "scale9Height");
-            button->setSize(Size(swf, shf));
+            button->setContentSize(Size(swf, shf));
         }
     }
     bool tt = DICTOOL->checkObjectExist_json(options, "text");
@@ -1606,7 +1606,7 @@ void WidgetPropertiesReader0300::setPropsForImageViewFromJsonDictionary(Widget*w
         {
             float swf = DICTOOL->getFloatValue_json(options, "scale9Width");
             float shf = DICTOOL->getFloatValue_json(options, "scale9Height");
-            imageView->setSize(Size(swf, shf));
+            imageView->setContentSize(Size(swf, shf));
         }
         
         float cx = DICTOOL->getFloatValue_json(options, "capInsetsX");
@@ -1825,7 +1825,7 @@ void WidgetPropertiesReader0300::setPropsForSliderFromJsonDictionary(Widget*widg
                     break;
             }
             
-            slider->setSize(Size(barLength, slider->getContentSize().height));
+            slider->setContentSize(Size(barLength, slider->getContentSize().height));
         }
         else
         {
@@ -2041,7 +2041,7 @@ void WidgetPropertiesReader0300::setPropsForLoadingBarFromJsonDictionary(Widget 
         
         float width = DICTOOL->getFloatValue_json(options, "width");
         float height = DICTOOL->getFloatValue_json(options, "height");
-        loadingBar->setSize(Size(width, height));
+        loadingBar->setContentSize(Size(width, height));
     }
     /**/
     

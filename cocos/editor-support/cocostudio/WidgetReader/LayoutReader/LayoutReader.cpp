@@ -51,7 +51,7 @@ namespace cocostudio
             w = DICTOOL->getFloatValue_json(options, "width");
             h = DICTOOL->getFloatValue_json(options, "height");
         }
-        panel->setSize(Size(w, h));
+        panel->setContentSize(Size(w, h));
         /**/
         
         panel->setClippingEnabled(DICTOOL->getBooleanValue_json(options, "clipAble"));

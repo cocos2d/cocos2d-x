@@ -110,7 +110,7 @@ bool UIButtonTest_Scale9::init()
         // open scale9 render
         button->setScale9Enabled(true);
         button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
-        button->setSize(Size(150, 70));
+        button->setContentSize(Size(150, 70));
 //        button->addTouchEventListener(this, toucheventselector(UIButtonTest_Scale9::touchEvent));
         button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest_Scale9::touchEvent, this));
         _uiLayer->addChild(button);

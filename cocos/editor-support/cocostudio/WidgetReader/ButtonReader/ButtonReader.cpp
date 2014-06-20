@@ -79,7 +79,7 @@ namespace cocostudio
             {
                 float swf = DICTOOL->getFloatValue_json(options, "scale9Width");
                 float shf = DICTOOL->getFloatValue_json(options, "scale9Height");
-                button->setSize(Size(swf, shf));
+                button->setContentSize(Size(swf, shf));
             }
         }
         bool tt = DICTOOL->checkObjectExist_json(options, "text");

@@ -42,7 +42,7 @@ bool UITextTest_LineWrap::init()
         // Create the line wrap
         Text* text = Text::create("Text can line wrap","AmericanTypewriter",32);
         text->ignoreContentAdaptWithSize(false);
-        text->setSize(Size(280, 150));
+        text->setContentSize(Size(280, 150));
         text->setTextHorizontalAlignment(TextHAlignment::CENTER);
         text->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - text->getContentSize().height / 8.0f));
         _uiLayer->addChild(text);

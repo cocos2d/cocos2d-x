@@ -63,7 +63,7 @@ namespace cocostudio
             w = DICTOOL->getFloatValue_json(options, "width");
             h = DICTOOL->getFloatValue_json(options, "height");
         }
-        widget->setSize(Size(w, h));
+        widget->setContentSize(Size(w, h));
         // before
         /*
          float w = DICTOOL->getFloatValue_json(options, "width");

@@ -121,7 +121,7 @@ void PageView::addWidgetToPage(Widget *widget, ssize_t pageIdx, bool forceCreate
 Layout* PageView::createPage()
 {
     Layout* newPage = Layout::create();
-    newPage->setSize(getContentSize());
+    newPage->setContentSize(getContentSize());
     return newPage;
 }
 
@@ -228,7 +228,7 @@ void PageView::updateAllPagesSize()
     Size selfSize = getContentSize();
     for (auto& page : _pages)
     {
-        page->setSize(selfSize);
+        page->setContentSize(selfSize);
     }
 }
 
