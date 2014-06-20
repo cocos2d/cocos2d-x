@@ -70,6 +70,10 @@ public:
     float getSpeed() const { return _speed; }
     void setSpeed(float speed) { _speed = speed; }
     
+    /**get & set blend weight*/
+    float getWeight() const { return _weight; }
+    void setWeight(float weight) { _weight = weight; }
+    
     /**get & set play back*/
     bool getPlayBack() const { return _playBack; }
     void setPlayBack(bool playBack) { _playBack = playBack; }

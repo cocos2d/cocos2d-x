@@ -61,11 +61,11 @@ Animate3D* Animate3D::createSubAnimate3D(Animate3D* animate, float fromTime, flo
 /** returns a clone of action */
 Animate3D* Animate3D::clone() const
 {
-    
     auto animate = const_cast<Animate3D*>(this);
     auto copy = Animate3D::create(animate->_animation);
     
     copy->_speed = _speed;
+    copy->_weight = _weight;
     copy->_elapsed = _elapsed;
     copy->_start = _start;
     copy->_last = _last;
@@ -140,7 +140,7 @@ void Animate3D::update(float t)
                 curve->scaleCurve->evaluate(t, scaleDst, EvaluateType::INT_LINEAR);
                 scale = &scaleDst[0];
             }
-            bone->setAnimationValue(trans, rot, scale, _weight);
+            bone->setAnimationValue(trans, rot, scale, this, _weight);
         }
     }
     

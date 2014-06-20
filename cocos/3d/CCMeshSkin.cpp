@@ -98,8 +98,21 @@ const Mat4& Bone::getWorldMat()
     return _world;
 }
 
-void Bone::setAnimationValue(float* trans, float* rot, float* scale, float weight)
+void Bone::setAnimationValue(float* trans, float* rot, float* scale, void* tag, float weight)
 {
+    for (auto& it : _blendStates) {
+        if (it.tag == tag)
+        {
+            if (trans)
+                it.localTranslate.set(trans);
+            if (rot)
+                it.localRot.set(rot);
+            if (scale)
+                it.localScale.set(scale);
+            it.weight = weight;
+            return;
+        }
+    }
     BoneBlendState state;
     if (trans)
         state.localTranslate.set(trans);
@@ -109,6 +122,7 @@ void Bone::setAnimationValue(float* trans, float* rot, float* scale, float weigh
         state.localScale.set(scale);
     
     state.weight = weight;
+    state.tag = tag;
     
     _blendStates.push_back(state);
 }
@@ -190,8 +204,8 @@ void Bone::updateLocalMat()
 {
     if (_blendStates.size())
     {
-        Vec3 translate(Vec3::ZERO), scale(Vec3::ONE);
-        Quaternion quat(Quaternion::identity());
+        Vec3 translate(Vec3::ZERO), scale(Vec3::ZERO);
+        Quaternion quat(Quaternion::zero());
         
         float total = 0.f;
         for (auto it: _blendStates) {
@@ -199,13 +213,12 @@ void Bone::updateLocalMat()
         }
         if (total)
         {
-            //if (_blendStates.size() == 1)
-            if (true)
+            if (_blendStates.size() == 1)
             {
-                int cnt = _blendStates.size();
-                translate = _blendStates[cnt - 1].localTranslate;
-                scale = _blendStates[cnt - 1].localScale;
-                quat = _blendStates[cnt - 1].localRot;
+                auto& state = _blendStates[0];
+                translate = state.localTranslate;
+                scale = state.localScale;
+                quat = state.localRot;
             }
             else
             {
@@ -213,24 +226,18 @@ void Bone::updateLocalMat()
                 for (auto it : _blendStates) {
                     float weight = (it.weight * invTotal);
                     translate += it.localTranslate * weight;
-                    if (!it.localScale.isZero())
+                    scale.x += it.localScale.x * weight;
+                    scale.y += it.localScale.y * weight;
+                    scale.z += it.localScale.z * weight;
+                    if (!quat.isZero())
                     {
-                        scale.x *= it.localScale.x * weight;
-                        scale.y *= it.localScale.y * weight;
-                        scale.z *= it.localScale.z * weight;
-                    }
-                    if (!it.localRot.isZero())
-                    {
-                        if (!quat.isZero())
-                        {
-                            Quaternion& q = _blendStates[0].localRot;
-                            if (q.x * quat.x + q.y * quat.y + q.z * quat.z + q.w * quat.w < 0)
+                        Quaternion& q = _blendStates[0].localRot;
+                        if (q.x * quat.x + q.y * quat.y + q.z * quat.z + q.w * quat.w < 0)
                             weight = -weight;
-                        }
-                        quat = Quaternion(it.localRot.x * weight + quat.x, it.localRot.y * weight + quat.y, it.localRot.z * weight + quat.z, it.localRot.w * weight + quat.w);
                     }
+                    quat = Quaternion(it.localRot.x * weight + quat.x, it.localRot.y * weight + quat.y, it.localRot.z * weight + quat.z, it.localRot.w * weight + quat.w);
                 }
-            }  
+            }
         }
         
         Mat4::createTranslation(translate, &_local);
@@ -239,11 +246,6 @@ void Bone::updateLocalMat()
         
         _blendStates.clear();
     }
-    else
-    {
-        CCLOG("use cached local");
-    }
-    
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -61,8 +61,15 @@ public:
     /**get bone name*/
     const std::string& getName() const { return _name; }
     
-    /**set animation value*/
-    void setAnimationValue(float* trans, float* rot, float* scale, float weight = 1.0f);
+    /**
+     * set animation value
+     * @param trans translate vec3
+     * @param rot   rotation quaternion
+     * @param scale scale vec3
+     * @param tag, unique tag, only blend animation between different tags
+     * @param weight, blend weight
+     */
+    void setAnimationValue(float* trans, float* rot, float* scale, void* tag = nullptr, float weight = 1.0f);
     
     /**clear bone blend states*/
     void clearBoneBlendState();
@@ -122,11 +129,13 @@ protected:
         Quaternion    localRot;
         Vec3          localScale;
         float         weight;
+        void*         tag; //
         BoneBlendState()
         : localTranslate(Vec3::ZERO)
         , localRot(Quaternion::identity())
         , localScale(Vec3::ONE)
         , weight(1.f)
+        , tag(nullptr)
         {
             
         }
