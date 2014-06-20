@@ -308,9 +308,6 @@
     <ClCompile Include="..\3d\CCSprite3D.cpp">
       <Filter>3d</Filter>
     </ClCompile>
-    <ClCompile Include="..\3d\CCSprite3DDataCache.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
     <ClCompile Include="..\base\atitc.cpp">
       <Filter>base</Filter>
     </ClCompile>
@@ -856,9 +853,6 @@
       <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="..\3d\CCSprite3D.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3d\CCSprite3DDataCache.h">
       <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="..\base\atitc.h">
