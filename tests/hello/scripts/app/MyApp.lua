@@ -9,7 +9,7 @@ function MyApp:ctor()
 end
 
 function MyApp:run()
-    CCFileUtils:sharedFileUtils():addSearchPath("res/")
+    cc.FileUtils:getInstance():addSearchPath("res/")
     self:enterScene("MainScene")
 end
 

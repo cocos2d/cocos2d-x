@@ -24,6 +24,7 @@ THE SOFTWARE.
 package com.quick_x.test.hello;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
+import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 
 import android.os.Bundle;
 
@@ -34,7 +35,16 @@ public class Hello extends Cocos2dxActivity {
 		super.onCreate(savedInstanceState);
 	}
 
+    public Cocos2dxGLSurfaceView onCreateView() {
+        Cocos2dxGLSurfaceView glSurfaceView = new Cocos2dxGLSurfaceView(this);
+        // Tests should create stencil buffer
+        glSurfaceView.setEGLConfigChooser(5, 6, 5, 0, 16, 8);
+        
+        return glSurfaceView;
+    }
+    
     static {
+//    	System.loadLibrary("lua");
     	System.loadLibrary("game");
     }
 }

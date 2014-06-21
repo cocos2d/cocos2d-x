@@ -3,6 +3,7 @@
 set DIR=%~dp0
 set APP_ROOT=%DIR%..\
 set APP_ANDROID_ROOT=%DIR%
+set QUICK_COCOS2DX_ROOT=C:\zjf\mywork\quick-x-v3
 set COCOS2DX_ROOT=%QUICK_COCOS2DX_ROOT%\lib\cocos2d-x
 
 echo - config:
@@ -30,4 +31,4 @@ mkdir "%APP_ANDROID_ROOT%assets\res"
 xcopy /s /q "%APP_ROOT%res\*.*" "%APP_ANDROID_ROOT%assets\res\"
 
 echo Using prebuilt externals
-"%ANDROID_NDK_ROOT%\ndk-build" %ANDROID_NDK_BUILD_FLAGS% NDK_DEBUG=%NDK_DEBUG% %NDK_BUILD_FLAGS% -C %APP_ANDROID_ROOT% NDK_MODULE_PATH=%QUICK_COCOS2DX_ROOT%;%COCOS2DX_ROOT%;%COCOS2DX_ROOT%\cocos2dx\platform\third_party\android\prebuilt
+"%ANDROID_NDK_ROOT%\ndk-build" %ANDROID_NDK_BUILD_FLAGS% NDK_DEBUG=%NDK_DEBUG% %NDK_BUILD_FLAGS% -C %APP_ANDROID_ROOT% NDK_MODULE_PATH=%QUICK_COCOS2DX_ROOT%\lib\precompiled\android
