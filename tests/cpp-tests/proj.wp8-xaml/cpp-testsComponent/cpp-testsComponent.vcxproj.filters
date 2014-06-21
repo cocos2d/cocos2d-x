@@ -322,6 +322,9 @@
     <Filter Include="Classes\Sprite3DTest">
       <UniqueIdentifier>{8c7572e8-5643-4301-b902-ff71f0cfca2d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocoStudioActionTimelineTest">
+      <UniqueIdentifier>{dff38415-43e7-4aff-98ec-c6094899d142}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Classes\AppDelegate.cpp">
@@ -839,6 +842,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Classes\Sprite3DTest\Sprite3DTest.cpp">
       <Filter>Classes\Sprite3DTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\ExtensionsTest\CocoStudioActionTimelineTest\ActionTimelineTestScene.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioActionTimelineTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1556,6 +1562,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Classes\Sprite3DTest\Sprite3DTest.h">
       <Filter>Classes\Sprite3DTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\ExtensionsTest\CocoStudioActionTimelineTest\ActionTimelineTestScene.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioActionTimelineTest</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
