@@ -244,10 +244,6 @@ void HttpClient::networkThreadAlone(HttpRequest* request)
     // Create a HttpResponse object, the default setting is http access failed
     HttpResponse *response = new HttpResponse(request);
 
-    // request's refcount = 2 here, it's retained by HttpRespose constructor
-    request->release();
-    // ok, refcount = 1 now, only HttpResponse hold it.
-
     long responseCode = -1;
     int retValue = 0;
 
@@ -316,7 +312,7 @@ void HttpClient::networkThreadAlone(HttpRequest* request)
 
     auto scheduler = Director::getInstance()->getScheduler();
     scheduler->performFunctionInCocosThread([response]{
-        HttpRequest *request = response->getHttpRequest();
+        auto request = response->getHttpRequest();
         const ccHttpRequestCallback& callback = request->getCallback();
         Ref* pTarget = request->getTarget();
         SEL_HttpResponse pSelector = request->getSelector();
@@ -329,8 +325,9 @@ void HttpClient::networkThreadAlone(HttpRequest* request)
         {
             (pTarget->*pSelector)(s_pHttpClient, response);
         }
-        
         response->release();
+        // do not release in other thread
+        request->release();
     });
 }
 
