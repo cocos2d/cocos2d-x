@@ -220,7 +220,7 @@ Node* NodeReader::loadNode(const rapidjson::Value& json)
     Node* node = nullptr;
     std::string nodeType = DICTOOL->getStringValue_json(json, CLASSNAME);
 
-    NodeCreateFunc func = _funcs.at(nodeType);
+    NodeCreateFunc func = _funcs[nodeType];
     if (func != nullptr)
     {
         const rapidjson::Value& options = DICTOOL->getSubDictionary_json(json, OPTIONS);
