@@ -100,7 +100,7 @@ static int processPostTask(HttpRequest *request, write_callback callback, void *
 static int processPutTask(HttpRequest *request, write_callback callback, void *stream, long *errorCode, write_callback headerCallback, void *headerStream, char *errorBuffer);
 static int processDeleteTask(HttpRequest *request, write_callback callback, void *stream, long *errorCode, write_callback headerCallback, void *headerStream, char *errorBuffer);
 // int processDownloadTask(HttpRequest *task, write_callback callback, void *stream, int32_t *errorCode);
-
+static void processResponse(HttpResponse* response, char* errorBuffer);
 
 // Worker thread
 void HttpClient::networkThread()
@@ -144,75 +144,9 @@ void HttpClient::networkThread()
         // Create a HttpResponse object, the default setting is http access failed
         HttpResponse *response = new HttpResponse(request);
         
-        // request's refcount = 2 here, it's retained by HttpRespose constructor
-        request->release();
-        // ok, refcount = 1 now, only HttpResponse hold it.
+        processResponse(response, s_errorBuffer);
         
-        long responseCode = -1;
-        int retValue = 0;
 
-        // Process the request -> get response packet
-        switch (request->getRequestType())
-        {
-            case HttpRequest::Type::GET: // HTTP GET
-                retValue = processGetTask(request,
-                                          writeData, 
-                                          response->getResponseData(), 
-                                          &responseCode,
-                                          writeHeaderData,
-                                          response->getResponseHeader(),
-                                          s_errorBuffer);
-                break;
-            
-            case HttpRequest::Type::POST: // HTTP POST
-                retValue = processPostTask(request,
-                                           writeData, 
-                                           response->getResponseData(), 
-                                           &responseCode,
-                                           writeHeaderData,
-                                           response->getResponseHeader(),
-                                           s_errorBuffer);
-                break;
-
-            case HttpRequest::Type::PUT:
-                retValue = processPutTask(request,
-                                          writeData,
-                                          response->getResponseData(),
-                                          &responseCode,
-                                          writeHeaderData,
-                                          response->getResponseHeader(),
-                                          s_errorBuffer);
-                break;
-
-            case HttpRequest::Type::DELETE:
-                retValue = processDeleteTask(request,
-                                             writeData,
-                                             response->getResponseData(),
-                                             &responseCode,
-                                             writeHeaderData,
-                                             response->getResponseHeader(),
-                                             s_errorBuffer);
-                break;
-            
-            default:
-                CCASSERT(true, "CCHttpClient: unkown request type, only GET and POSt are supported");
-                break;
-        }
-                
-        // write data to HttpResponse
-        response->setResponseCode(responseCode);
-        
-        if (retValue != 0) 
-        {
-            response->setSucceed(false);
-            response->setErrorBuffer(s_errorBuffer);
-        }
-        else
-        {
-            response->setSucceed(true);
-        }
-
-        
         // add response packet into queue
         s_responseQueueMutex.lock();
         s_responseQueue->pushBack(response);
@@ -243,72 +177,8 @@ void HttpClient::networkThreadAlone(HttpRequest* request)
 {
     // Create a HttpResponse object, the default setting is http access failed
     HttpResponse *response = new HttpResponse(request);
-
-    long responseCode = -1;
-    int retValue = 0;
-
     char errorBuffer[CURL_ERROR_SIZE] = { 0 };
-
-    // Process the request -> get response packet
-    switch (request->getRequestType())
-    {
-    case HttpRequest::Type::GET: // HTTP GET
-        retValue = processGetTask(request,
-            writeData, 
-            response->getResponseData(), 
-            &responseCode,
-            writeHeaderData,
-            response->getResponseHeader(),
-            errorBuffer);
-        break;
-
-    case HttpRequest::Type::POST: // HTTP POST
-        retValue = processPostTask(request,
-            writeData, 
-            response->getResponseData(), 
-            &responseCode,
-            writeHeaderData,
-            response->getResponseHeader(),
-            errorBuffer);
-        break;
-
-    case HttpRequest::Type::PUT:
-        retValue = processPutTask(request,
-            writeData,
-            response->getResponseData(),
-            &responseCode,
-            writeHeaderData,
-            response->getResponseHeader(),
-            errorBuffer);
-        break;
-
-    case HttpRequest::Type::DELETE:
-        retValue = processDeleteTask(request,
-            writeData,
-            response->getResponseData(),
-            &responseCode,
-            writeHeaderData,
-            response->getResponseHeader(),
-            errorBuffer);
-        break;
-
-    default:
-        CCASSERT(true, "CCHttpClient: unkown request type, only GET and POSt are supported");
-        break;
-    }
-
-    // write data to HttpResponse
-    response->setResponseCode(responseCode);
-
-    if (retValue != 0) 
-    {
-        response->setSucceed(false);
-        response->setErrorBuffer(errorBuffer);
-    }
-    else
-    {
-        response->setSucceed(true);
-    }
+    processResponse(response, errorBuffer);
 
     auto scheduler = Director::getInstance()->getScheduler();
     scheduler->performFunctionInCocosThread([response]{
@@ -491,6 +361,76 @@ static int processDeleteTask(HttpRequest *request, write_callback callback, void
     return ok ? 0 : 1;
 }
 
+
+// Process Response
+static void processResponse(HttpResponse* response, char* errorBuffer)
+{
+    auto request = response->getHttpRequest();
+    long responseCode = -1;
+    int retValue = 0;
+
+    // Process the request -> get response packet
+    switch (request->getRequestType())
+    {
+    case HttpRequest::Type::GET: // HTTP GET
+        retValue = processGetTask(request,
+            writeData, 
+            response->getResponseData(), 
+            &responseCode,
+            writeHeaderData,
+            response->getResponseHeader(),
+            errorBuffer);
+        break;
+
+    case HttpRequest::Type::POST: // HTTP POST
+        retValue = processPostTask(request,
+            writeData, 
+            response->getResponseData(), 
+            &responseCode,
+            writeHeaderData,
+            response->getResponseHeader(),
+            errorBuffer);
+        break;
+
+    case HttpRequest::Type::PUT:
+        retValue = processPutTask(request,
+            writeData,
+            response->getResponseData(),
+            &responseCode,
+            writeHeaderData,
+            response->getResponseHeader(),
+            errorBuffer);
+        break;
+
+    case HttpRequest::Type::DELETE:
+        retValue = processDeleteTask(request,
+            writeData,
+            response->getResponseData(),
+            &responseCode,
+            writeHeaderData,
+            response->getResponseHeader(),
+            errorBuffer);
+        break;
+
+    default:
+        CCASSERT(true, "CCHttpClient: unkown request type, only GET and POSt are supported");
+        break;
+    }
+
+    // write data to HttpResponse
+    response->setResponseCode(responseCode);
+
+    if (retValue != 0) 
+    {
+        response->setSucceed(false);
+        response->setErrorBuffer(errorBuffer);
+    }
+    else
+    {
+        response->setSucceed(true);
+    }
+}
+
 // HttpClient implementation
 HttpClient* HttpClient::getInstance()
 {
@@ -625,6 +565,8 @@ void HttpClient::dispatchResponseCallbacks()
         }
         
         response->release();
+        // do not release in other thread
+        request->release();
     }
 }
 
