@@ -576,7 +576,7 @@ void HttpClient::send(HttpRequest* request)
     }
 }
 
-void HttpClient::immediateSend(HttpRequest* request)
+void HttpClient::sendImmediate(HttpRequest* request)
 {
     if(!request)
     {

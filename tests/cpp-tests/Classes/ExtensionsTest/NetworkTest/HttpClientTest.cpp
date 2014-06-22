@@ -55,31 +55,31 @@ HttpClientTest::HttpClientTest()
     itemDelete->setPosition(Vec2(LEFT, winSize.height - MARGIN - 5 * SPACE));
     menuRequest->addChild(itemDelete);
 
-    // Get for immediateSend
+    // Get for sendImmediate
     labelGet = Label::createWithTTF("Test Immediate Get", "fonts/arial.ttf", 22);
     itemGet = MenuItemLabel::create(labelGet, CC_CALLBACK_1(HttpClientTest::onMenuGetTestClicked, this, true));
     itemGet->setPosition(Vec2(RIGHT, winSize.height - MARGIN - SPACE));
     menuRequest->addChild(itemGet);
 
-    // Post for immediateSend
+    // Post for sendImmediate
     labelPost = Label::createWithTTF("Test Immediate Post", "fonts/arial.ttf", 22);
     itemPost = MenuItemLabel::create(labelPost, CC_CALLBACK_1(HttpClientTest::onMenuPostTestClicked, this, true));
     itemPost->setPosition(Vec2(RIGHT, winSize.height - MARGIN - 2 * SPACE));
     menuRequest->addChild(itemPost);
 
-    // Post Binary for immediateSend
+    // Post Binary for sendImmediate
     labelPostBinary = Label::createWithTTF("Test Immediate Post Binary", "fonts/arial.ttf", 22);
     itemPostBinary = MenuItemLabel::create(labelPostBinary, CC_CALLBACK_1(HttpClientTest::onMenuPostBinaryTestClicked, this, true));
     itemPostBinary->setPosition(Vec2(RIGHT, winSize.height - MARGIN - 3 * SPACE));
     menuRequest->addChild(itemPostBinary);
 
-    // Put for immediateSend
+    // Put for sendImmediate
     labelPut = Label::createWithTTF("Test Immediate Put", "fonts/arial.ttf", 22);
     itemPut = MenuItemLabel::create(labelPut, CC_CALLBACK_1(HttpClientTest::onMenuPutTestClicked, this, true));
     itemPut->setPosition(Vec2(RIGHT, winSize.height - MARGIN - 4 * SPACE));
     menuRequest->addChild(itemPut);
 
-    // Delete for immediateSend
+    // Delete for sendImmediate
     labelDelete = Label::createWithTTF("Test Immediate Delete", "fonts/arial.ttf", 22);
     itemDelete = MenuItemLabel::create(labelDelete, CC_CALLBACK_1(HttpClientTest::onMenuDeleteTestClicked, this, true));
     itemDelete->setPosition(Vec2(RIGHT, winSize.height - MARGIN - 5 * SPACE));
@@ -114,7 +114,7 @@ void HttpClientTest::onMenuGetTestClicked(cocos2d::Ref *sender, bool isImmediate
         if (isImmediate)
         {
             request->setTag("GET immediate test1");
-            HttpClient::getInstance()->immediateSend(request);
+            HttpClient::getInstance()->sendImmediate(request);
         }else
         {
             request->setTag("GET test1");
@@ -133,7 +133,7 @@ void HttpClientTest::onMenuGetTestClicked(cocos2d::Ref *sender, bool isImmediate
         if (isImmediate)
         {
             request->setTag("GET immediate test2");
-            HttpClient::getInstance()->immediateSend(request);
+            HttpClient::getInstance()->sendImmediate(request);
         }else
         {
             request->setTag("GET test2");
@@ -152,7 +152,7 @@ void HttpClientTest::onMenuGetTestClicked(cocos2d::Ref *sender, bool isImmediate
         if (isImmediate)
         {
             request->setTag("GET immediate test3");
-            HttpClient::getInstance()->immediateSend(request);
+            HttpClient::getInstance()->sendImmediate(request);
         }else
         {
             request->setTag("GET test3");
@@ -181,7 +181,7 @@ void HttpClientTest::onMenuPostTestClicked(cocos2d::Ref *sender, bool isImmediat
         if (isImmediate)
         {
             request->setTag("POST immediate test1");
-            HttpClient::getInstance()->immediateSend(request);
+            HttpClient::getInstance()->sendImmediate(request);
         }else
         {
             request->setTag("POST test1");
@@ -206,7 +206,7 @@ void HttpClientTest::onMenuPostTestClicked(cocos2d::Ref *sender, bool isImmediat
         if (isImmediate)
         {
             request->setTag("POST immediate test2");
-            HttpClient::getInstance()->immediateSend(request);
+            HttpClient::getInstance()->sendImmediate(request);
         }else
         {
             request->setTag("POST test2");
@@ -232,7 +232,7 @@ void HttpClientTest::onMenuPostBinaryTestClicked(cocos2d::Ref *sender, bool isIm
     if (isImmediate)
     {
         request->setTag("POST Binary immediate test");
-        HttpClient::getInstance()->immediateSend(request);
+        HttpClient::getInstance()->sendImmediate(request);
     }else
     {
         request->setTag("POST Binary test");
@@ -261,7 +261,7 @@ void HttpClientTest::onMenuPutTestClicked(Ref *sender, bool isImmediate)
         if (isImmediate)
         {
             request->setTag("PUT Binary immediate test1");
-            HttpClient::getInstance()->immediateSend(request);
+            HttpClient::getInstance()->sendImmediate(request);
         }else
         {
             request->setTag("PUT Binary test1");
@@ -286,7 +286,7 @@ void HttpClientTest::onMenuPutTestClicked(Ref *sender, bool isImmediate)
         if (isImmediate)
         {
             request->setTag("PUT Binary immediate test2");
-            HttpClient::getInstance()->immediateSend(request);
+            HttpClient::getInstance()->sendImmediate(request);
         }else
         {
             request->setTag("PUT Binary test2");
@@ -310,7 +310,7 @@ void HttpClientTest::onMenuDeleteTestClicked(Ref *sender, bool isImmediate)
         if (isImmediate)
         {
             request->setTag("DELETE immediate test1");
-            HttpClient::getInstance()->immediateSend(request);
+            HttpClient::getInstance()->sendImmediate(request);
         }else
         {
             request->setTag("DELETE test1");
@@ -328,7 +328,7 @@ void HttpClientTest::onMenuDeleteTestClicked(Ref *sender, bool isImmediate)
         if (isImmediate)
         {
             request->setTag("DELETE immediate test2");
-            HttpClient::getInstance()->immediateSend(request);
+            HttpClient::getInstance()->sendImmediate(request);
         }else
         {
             request->setTag("DELETE test2");

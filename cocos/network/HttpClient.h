@@ -66,9 +66,9 @@ public:
     /**
      * Immediate send a request
      * @param request a HttpRequest object, which includes url, response callback etc.
-                      please make sure request->_requestData is clear before calling "immediateSend" here.
+                      please make sure request->_requestData is clear before calling "sendImmediate" here.
      */
-    void immediateSend(HttpRequest* request);
+    void sendImmediate(HttpRequest* request);
   
     
     /**
