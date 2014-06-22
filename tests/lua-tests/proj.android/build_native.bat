@@ -3,7 +3,6 @@
 set DIR=%~dp0
 set APP_ROOT=%DIR%..\
 set APP_ANDROID_ROOT=%DIR%
-set QUICK_COCOS2DX_ROOT=C:\zjf\mywork\GitHub\quick-x-3
 set COCOS2DX_ROOT=%QUICK_COCOS2DX_ROOT%\cocos
 
 echo - config:

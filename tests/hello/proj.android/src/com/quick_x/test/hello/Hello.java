@@ -44,7 +44,6 @@ public class Hello extends Cocos2dxActivity {
     }
     
     static {
-//    	System.loadLibrary("lua");
     	System.loadLibrary("game");
     }
 }

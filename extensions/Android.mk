@@ -13,8 +13,9 @@ GUI/CCControlExtension/CCInvocation.cpp \
 GUI/CCControlExtension/CCScale9Sprite.cpp \
 GUI/CCEditBox/CCEditBox.cpp \
 GUI/CCEditBox/CCEditBoxImplAndroid.cpp \
-GUI/CCEditBox/CCEditBoxImplNone.cpp \
-GUI/CCEditBox/CCEditBoxImplWin.cpp \
+
+#GUI/CCEditBox/CCEditBoxImplNone.cpp \
+#GUI/CCEditBox/CCEditBoxImplWin.cpp \
 
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static

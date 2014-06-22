@@ -26,9 +26,6 @@ LOCAL_EXPORT_LDLIBS := -lGLESv1_CM \
                        -landroid
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos_lua_static
-#LOCAL_WHOLE_SHARED_LIBRARIES := cocos_lua_static
-#LOCAL_STATIC_LIBRARIES := cocos_lua_static
-#LOCAL_SHARED_LIBRARIES := cocos_lua_shared
 
 include $(BUILD_SHARED_LIBRARY)
 
