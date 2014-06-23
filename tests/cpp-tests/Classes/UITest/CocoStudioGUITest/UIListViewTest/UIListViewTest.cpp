@@ -65,7 +65,9 @@ bool UIListViewTest_Vertical::init()
                                     (backgroundSize.width - listView->getSize().width) / 2.0f,
                                     (widgetSize.height - backgroundSize.height) / 2.0f +
                                     (backgroundSize.height - listView->getSize().height) / 2.0f));
-        listView->addEventListener(CC_CALLBACK_2(UIListViewTest_Vertical::selectedItemEvent, this));
+        listView->addEventListener((ui::ListView::ccListViewCallback)CC_CALLBACK_2(UIListViewTest_Vertical::selectedItemEvent, this));
+        listView->addEventListener((ui::ListView::ccScrollViewCallback)CC_CALLBACK_2(UIListViewTest_Vertical::selectedItemEventScrollView,this));
+        
         _uiLayer->addChild(listView);
         
         
@@ -187,6 +189,21 @@ void UIListViewTest_Vertical::selectedItemEvent(Ref *pSender, ListView::EventTyp
     }
 }
 
+void UIListViewTest_Vertical::selectedItemEventScrollView(Ref* pSender, ui::ScrollView::EventType type)
+{
+    switch (type) {
+        case ui::ScrollView::EventType::SCROLL_TO_BOTTOM:
+            CCLOG("SCROLL_TO_BOTTOM");
+            break;
+        case ui::ScrollView::EventType::SCROLL_TO_TOP:
+            CCLOG("SCROLL_TO_TOP");
+            break;
+        default:
+            break;
+    }
+}
+
+
 // UIListViewTest_Horizontal
 
 UIListViewTest_Horizontal::UIListViewTest_Horizontal()
@@ -249,7 +266,7 @@ bool UIListViewTest_Horizontal::init()
                                     (backgroundSize.width - listView->getSize().width) / 2.0f,
                                     (widgetSize.height - backgroundSize.height) / 2.0f +
                                     (backgroundSize.height - listView->getSize().height) / 2.0f));
-        listView->addEventListener(CC_CALLBACK_2(UIListViewTest_Horizontal::selectedItemEvent, this));
+        listView->addEventListener((ui::ListView::ccListViewCallback)CC_CALLBACK_2(UIListViewTest_Horizontal::selectedItemEvent, this));
         _uiLayer->addChild(listView);
         
         

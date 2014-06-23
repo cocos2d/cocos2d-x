@@ -174,7 +174,8 @@ public:
     
     CC_DEPRECATED_ATTRIBUTE void addEventListenerListView(Ref* target, SEL_ListViewEvent selector);
     void addEventListener(const ccListViewCallback& callback);
-    
+    using ScrollView::addEventListener;
+
     /**
      * Changes scroll direction of scrollview.
      *
