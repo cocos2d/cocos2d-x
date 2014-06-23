@@ -464,15 +464,21 @@ USING_NS_CC;
 
 - (void) showPreferences:(BOOL)relaunch
 {
-    string quickRootPath = player::PlayerProtocol::getInstance()->getFileDialogService()->openDirectory("Choose Quick Root Path");
-    [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithUTF8String:quickRootPath.c_str()]
-                                              forKey:@"QUICK_COCOS2DX_ROOT"];
-    
-    if (relaunch)
-    {
-        projectConfig.resetToWelcome();
-        [self relaunch];
-    }
+    [self showModelSheet];
+    PlayerPreferencesDialogController *controller = [[PlayerPreferencesDialogController alloc] initWithWindowNibName:@"PlayerPreferencesDialog"];
+    [NSApp beginSheet:controller.window modalForWindow:window didEndBlock:^(NSInteger returnCode) {
+        [self stopModelSheet];
+        [controller release];
+        
+        NSString *path = [[NSUserDefaults standardUserDefaults] objectForKey:@"QUICK_COCOS2DX_ROOT"];
+        SimulatorConfig::sharedDefaults()->setQuickCocos2dxRootPath([path cStringUsingEncoding:NSUTF8StringEncoding]);
+        
+        if (relaunch)
+        {
+            projectConfig.resetToWelcome();
+            [self relaunch];
+        }
+    }];
 }
 
 #pragma mark -

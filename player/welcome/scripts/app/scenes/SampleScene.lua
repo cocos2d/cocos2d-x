@@ -61,72 +61,65 @@ function SampleScene:createPageView()
     
     local pageCount = math.ceil(sampleCount / maxNum)
     local pageSize  = CCSize(display.width - 40 ,display.height - 50)
-    -- local pageView  = PageView:create()
-    -- pageView:setTouchEnabled(true)
-    -- pageView:setSize(pageSize)
-    -- pageView:setAnchorPoint(ccp(0.5,0.5))
-    -- pageView:setPosition(CCPoint(display.width / 2, display.height / 2))
-    
-    -- for pageCount = 1, pageCount do
-    --     local layout = Layout:create()
-    --     layout:setSize(pageSize)
-        
-    --     top = originTop
-    --     for i = 1, 3 do
-    --         for j = 1, 4 do
-    --             local sample = self.samples[self.sampleIndex]
-    --             self.sampleIndex = self.sampleIndex + 1
 
-    --             if sample ~= nil then
-    --                 layout:addChild(self:createDemoTitle(sample, left, top + 95))
-    --                 layout:addChild(self:createDemoDescription(sample ,left ,top + 75))
-    --                 layout:addChild(self:createDemoButton(sample, left, top))
-    --             else
-    --                 break
-    --             end
-    --             left = left + vMargin + imageWidth
-    --         end
+    self.pageCount = pageCount
+    self.currentPageIndex = 1
 
-    --         left = originLeft
-    --         top  = top - hMargin - imageHeight
-    --     end
+    for pageCount = 1, pageCount do
+        local wallLayer = display.newLayer()
+        wallLayer:setPosition(20, 25)
+        wallLayer:setTag(1000 + pageCount)
+        self:addChild(wallLayer)
 
-    --     pageView:addPage(layout)
-    -- end
+        top = originTop
+        for i = 1, 3 do
+            for j = 1, 4 do
+                local sample = self.samples[self.sampleIndex]
+                self.sampleIndex = self.sampleIndex + 1
 
-    -- local uiLayer = TouchGroup:create()
-    -- uiLayer:addWidget(pageView)
-    -- self:addChild(uiLayer)
+                if sample ~= nil then
+                    wallLayer:addChild(self:createDemoTitle(sample, left, top + 95))
+                    wallLayer:addChild(self:createDemoDescription(sample ,left ,top + 75))
+                    wallLayer:addChild(self:createDemoButton(sample, left, top))
+                else
+                    break
+                end
+                left = left + vMargin + imageWidth
+            end
 
-    -- pageView:addEventListenerPageView(function(tagret, eventType)
-    --     self:updateArrow()
-    -- end)
-
-    -- self.pageView = pageView
+            left = originLeft
+            top  = top - hMargin - imageHeight
+        end
+    end
 
     self:createBackButton()
     self:createLRButton()
+    self:updateWall()
 end
 
 -- helper
 
 function SampleScene:createDemoTitle(sample, x, y)
-    local title = Label:create()
-    title:setText(sample.title)
-    title:setFontSize(14)
-    title:setFontName("Monaco")
-    title:setColor(ccc3(144,144,144))
-    title:setPosition(ccp(x, y))
-    return title
+    local label = ui.newTTFLabel({
+        text = sample.title,
+        align = ui.TEXT_ALIGNMENT_CENTER,
+        color = ccc3(144,144,144),
+        size = 14,
+        font = "Monaco",
+    })
+    label:setPosition(cc.p(x, y))
+    return label
 end
 
 function SampleScene:createDemoDescription(sample, x, y)
-    local description = Label:create()
-    description:setText(sample.description)
-    description:setFontSize(12)
-    description:setColor(ccc3(50,144,144))
-    description:setPosition(ccp(x, y))
-    return description
+    local label = ui.newTTFLabel({
+        text = sample.title,
+        align = ui.TEXT_ALIGNMENT_CENTER,
+        color = ccc3(50,144,144),
+        size = 12,
+    })
+    label:setPosition(cc.p(x, y))
+    return label
 end
 
 function SampleScene:createDemoButton(sample, x, y)
@@ -149,12 +142,12 @@ function SampleScene:createDemoButton(sample, x, y)
     end
 
     local demoImage = sample.image or "ListSamplesButton_zh.png"
-    local button = Button:create()
-    button:setTouchEnabled(true)
-    button:setScale9Enabled(false)
-    button:loadTextures(demoImage, demoImage, "")
-    button:setPosition(CCPoint(x, y))
-    button:addTouchEventListener(onButtonClick)
+    
+    local button = cc.ui.UIPushButton.new(demoImage, {scale9 = true})
+                        :onButtonClicked(function(event)
+                            print("open ", sample.title)
+                        end)
+                        :align(display.CENTER, x, y)
     return button
 end
 
@@ -175,7 +168,7 @@ function SampleScene:createLRButton()
         :pos(30, display.cy)
         :addTo(self, 0, 100)
         :onButtonClicked(function()
-            self.pageView:scrollToPage(0)
+            self:goLeftWall()
             self:updateArrow()
         end)
 
@@ -184,7 +177,7 @@ function SampleScene:createLRButton()
         :pos(display.width - 30, display.cy)
         :addTo(self, 0, 101)
         :onButtonClicked(function()
-            self.pageView:scrollToPage(1)
+            self:goRightWall()
             self:updateArrow()
         end)
 
@@ -192,14 +185,39 @@ function SampleScene:createLRButton()
 end
 
 function SampleScene:updateArrow()
-    -- local pageIdx = self.pageView:getCurPageIndex()
-    -- if 0 == pageIdx then
-    --     self:getChildByTag(100):setVisible(false)
-    --     self:getChildByTag(101):setVisible(true)
-    -- else
-    --     self:getChildByTag(100):setVisible(true)
-    --     self:getChildByTag(101):setVisible(false)
-    -- end
+    local pageIdx = self.currentPageIndex - 1
+    if 0 == pageIdx then
+        self:getChildByTag(100):setVisible(false)
+        self:getChildByTag(101):setVisible(true)
+    else
+        self:getChildByTag(100):setVisible(true)
+        self:getChildByTag(101):setVisible(false)
+    end
+end
+
+function SampleScene:goLeftWall()
+    if self.currentPageIndex > 1 then 
+        self.currentPageIndex = self.currentPageIndex - 1 
+    end
+    self:updateWall()
+end
+
+function SampleScene:goRightWall()
+    if self.currentPageIndex < self.pageCount then 
+        self.currentPageIndex = self.currentPageIndex + 1 
+    end
+    self:updateWall()
+end
+
+function SampleScene:updateWall()
+   for i=1,self.pageCount do
+        local tag = 1000 + i
+        if i == self.currentPageIndex then
+            self:getChildByTag(tag):setVisible(true)
+        else
+            self:getChildByTag(tag):setVisible(false)
+        end
+    end
 end
 
 return SampleScene
