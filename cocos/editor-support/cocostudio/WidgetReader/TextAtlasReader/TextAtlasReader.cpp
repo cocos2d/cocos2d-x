@@ -41,22 +41,22 @@ namespace cocostudio
         return instanceTextAtalsReader;
     }
     
-    void TextAtlasReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode)
+    void TextAtlasReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode *cocoNode)
     {
         this->beginSetBasicProperties(widget);
         
         TextAtlas* labelAtlas = static_cast<TextAtlas*>(widget);
 
         
-        stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+        stExpCocoNode *stChildArray = cocoNode->GetChildArray();
         Widget::TextureResType type;
         std::string charMapFileName;
         std::string stringValue;
         std::string startCharMap;
         float itemWidth;
         float itemHeight;
-        for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
-            std::string key = stChildArray[i].GetName(pCocoLoader);
+        for (int i = 0; i < cocoNode->GetChildNum(); ++i) {
+            std::string key = stChildArray[i].GetName(cocoLoader);
             std::string value = stChildArray[i].GetValue();
             
             //read all basic properties of widget
@@ -73,7 +73,7 @@ namespace cocostudio
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
-                std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+                std::string backgroundValue = this->getResourcePath(cocoLoader, &stChildArray[i], imageFileNameType);
                 
                 charMapFileName = backgroundValue;
                 type  = imageFileNameType;

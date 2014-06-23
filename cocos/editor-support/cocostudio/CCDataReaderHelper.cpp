@@ -1865,11 +1865,11 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
         }
     }
     
-    ArmatureData* DataReaderHelper::decodeArmature(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo)
+    ArmatureData* DataReaderHelper::decodeArmature(CocoLoader *cocoLoader, stExpCocoNode *cocoNode, DataInfo *dataInfo)
     {
         ArmatureData *armatureData = new ArmatureData();
         armatureData->init();
-        stExpCocoNode *pAramtureDataArray = pCocoNode->GetChildArray();
+        stExpCocoNode *pAramtureDataArray = cocoNode->GetChildArray();
         const char *name = pAramtureDataArray[2].GetValue(); //DICTOOL->getStringValue_json(json, A_NAME);
         if(name != NULL)
         {
@@ -1886,7 +1886,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
         {
             //const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, BONE_DATA, i); //json[BONE_DATA][i];
             child = &pBoneChildren[i];
-            BoneData *boneData = decodeBone(pCocoLoader, child, dataInfo);
+            BoneData *boneData = decodeBone(cocoLoader, child, dataInfo);
             armatureData->addBoneData(boneData);
             boneData->release();
         }
@@ -1894,22 +1894,22 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
         return armatureData;
     }
     
-    BoneData* DataReaderHelper::decodeBone(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo)
+    BoneData* DataReaderHelper::decodeBone(CocoLoader *cocoLoader, stExpCocoNode *cocoNode, DataInfo *dataInfo)
     {
         BoneData *boneData = new BoneData();
         boneData->init();
         
-        decodeNode(boneData, pCocoLoader, pCocoNode, dataInfo);
+        decodeNode(boneData, cocoLoader, cocoNode, dataInfo);
         
-        int length = pCocoNode->GetChildNum();
-        stExpCocoNode *pBoneChildren = pCocoNode->GetChildArray();
+        int length = cocoNode->GetChildNum();
+        stExpCocoNode *pBoneChildren = cocoNode->GetChildArray();
         stExpCocoNode* child;
         const char *str = NULL;
         std::string key;
         for (int i = 0; i < length; ++i)
         {
             child = &pBoneChildren[i];
-            key = child->GetName(pCocoLoader);
+            key = child->GetName(cocoLoader);
             str = child->GetValue();
             if (key.compare(A_NAME) == 0)
             {
@@ -1933,7 +1933,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                 stExpCocoNode *pDisplayData = child->GetChildArray();
                 for (int ii = 0; ii < count; ++ii)
                 {
-                    DisplayData *displayData = decodeBoneDisplay(pCocoLoader, &pDisplayData[ii], dataInfo);
+                    DisplayData *displayData = decodeBoneDisplay(cocoLoader, &pDisplayData[ii], dataInfo);
                     if(displayData == NULL)
                         continue;
                     boneData->addDisplayData(displayData);
@@ -1945,13 +1945,13 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
         return boneData;
     }
     
-    DisplayData* DataReaderHelper::decodeBoneDisplay(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo)
+    DisplayData* DataReaderHelper::decodeBoneDisplay(CocoLoader *cocoLoader, stExpCocoNode *cocoNode, DataInfo *dataInfo)
     {
-        stExpCocoNode* children = pCocoNode->GetChildArray();
+        stExpCocoNode* children = cocoNode->GetChildArray();
         stExpCocoNode* child = &children[1];
         const char *str = NULL;
         
-        std::string key = child->GetName(pCocoLoader);
+        std::string key = child->GetName(cocoLoader);
         str = child->GetValue();
         DisplayData *displayData = NULL;
         if (key.compare(A_DISPLAY_TYPE) == 0)
@@ -1982,7 +1982,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                             stExpCocoNode *SkinDataValue = pSkinData->GetChildArray();
                             for (int i = 0; i < length; ++i)
                             {
-                                key = SkinDataValue[i].GetName(pCocoLoader);
+                                key = SkinDataValue[i].GetName(cocoLoader);
                                 str = SkinDataValue[i].GetValue();
                                 if (key.compare(A_X) == 0)
                                 {
@@ -2021,7 +2021,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                 {
                     displayData = new ArmatureDisplayData();
                     
-                    const char *name = pCocoNode[0].GetValue();
+                    const char *name = cocoNode[0].GetValue();
                     if(name != NULL)
                     {
                         ((ArmatureDisplayData *)displayData)->displayName = name;
@@ -2031,11 +2031,11 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                 case CS_DISPLAY_PARTICLE:
                 {
                     displayData = new ParticleDisplayData();
-                    length = pCocoNode->GetChildNum();
-                    stExpCocoNode *pDisplayData = pCocoNode->GetChildArray();
+                    length = cocoNode->GetChildNum();
+                    stExpCocoNode *pDisplayData = cocoNode->GetChildArray();
                     for (int i = 0; i < length; ++i)
                     {
-                        key = pDisplayData[i].GetName(pCocoLoader);
+                        key = pDisplayData[i].GetName(cocoLoader);
                         str = pDisplayData[i].GetValue();
                         if (key.compare(A_PLIST) == 0)
                         {
@@ -2065,12 +2065,12 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
         return displayData;
     }
     
-    AnimationData* DataReaderHelper::decodeAnimation(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo)
+    AnimationData* DataReaderHelper::decodeAnimation(CocoLoader *cocoLoader, stExpCocoNode *cocoNode, DataInfo *dataInfo)
     {
         AnimationData *aniData = new AnimationData();
         
-        int length = pCocoNode->GetChildNum();
-        stExpCocoNode *pAnimationData = pCocoNode->GetChildArray();
+        int length = cocoNode->GetChildNum();
+        stExpCocoNode *pAnimationData = cocoNode->GetChildArray();
         const char *str = NULL;
         std::string key;
         stExpCocoNode* child;
@@ -2078,7 +2078,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
         for (int i = 0; i < length; ++i)
         {
             child = &pAnimationData[i];
-            key = child->GetName(pCocoLoader);
+            key = child->GetName(cocoLoader);
             str = child->GetValue();
             if (key.compare(A_NAME) == 0)
             {
@@ -2093,7 +2093,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                 stExpCocoNode* movArray =  child->GetChildArray();
                 for( int movnum =0; movnum <movcount; movnum++)
                 {
-                    movementData = decodeMovement(pCocoLoader, &movArray[movnum], dataInfo);
+                    movementData = decodeMovement(cocoLoader, &movArray[movnum], dataInfo);
                     aniData->addMovement(movementData);
                     movementData->release();
                 }
@@ -2102,13 +2102,13 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
         return aniData;
     }
 
-    MovementData* DataReaderHelper::decodeMovement(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo)
+    MovementData* DataReaderHelper::decodeMovement(CocoLoader *cocoLoader, stExpCocoNode *cocoNode, DataInfo *dataInfo)
     {
         MovementData *movementData = new MovementData();
         movementData->scale = 1.0f;
         
-        int length = pCocoNode->GetChildNum();
-        stExpCocoNode *pMoveDataArray = pCocoNode->GetChildArray();
+        int length =  cocoNode->GetChildNum();
+        stExpCocoNode *pMoveDataArray = cocoNode->GetChildArray();
         
         const char *str = NULL;
         std::string key;
@@ -2116,7 +2116,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
         for (int i = 0; i < length; ++i)
         {
             child = &pMoveDataArray[i];
-            key = child->GetName(pCocoLoader);
+            key = child->GetName(cocoLoader);
             str = child->GetValue();
             if (key.compare(A_NAME) == 0)
             {
@@ -2183,7 +2183,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                 MovementBoneData *movementBoneData;
                 for (int ii = 0; ii < count; ++ii)
                 {
-                    movementBoneData = decodeMovementBone(pCocoLoader, &pMoveBoneData[ii],dataInfo);
+                    movementBoneData = decodeMovementBone(cocoLoader, &pMoveBoneData[ii],dataInfo);
                     movementData->addMovementBoneData(movementBoneData);
                     movementBoneData->release();
                 }
@@ -2192,19 +2192,19 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
         return movementData;
     }
     
-    MovementBoneData* DataReaderHelper::decodeMovementBone(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo)
+    MovementBoneData* DataReaderHelper::decodeMovementBone(CocoLoader *cocoLoader, stExpCocoNode *cocoNode, DataInfo *dataInfo)
     {
         MovementBoneData *movementBoneData = new MovementBoneData();
         movementBoneData->init();
         
-        int length = pCocoNode->GetChildNum();
-        stExpCocoNode *pMovementBoneDataArray = pCocoNode->GetChildArray();
+        int length = cocoNode->GetChildNum();
+        stExpCocoNode *pMovementBoneDataArray = cocoNode->GetChildArray();
         stExpCocoNode* movebonechild;
         const char *str = NULL;
         for (int i = 0; i < length; ++i)
         {
             movebonechild = &pMovementBoneDataArray[i];
-            std::string key = movebonechild->GetName(pCocoLoader);
+            std::string key = movebonechild->GetName(cocoLoader);
             str = movebonechild->GetValue();
             if (key.compare(A_NAME) == 0)
             {
@@ -2226,7 +2226,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                 stExpCocoNode *pFrameDataArray = movebonechild->GetChildArray();
                 for (int ii = 0; ii < count; ++ii)
                 {
-                    FrameData *frameData = decodeFrame(pCocoLoader, &pFrameDataArray[ii], dataInfo);
+                    FrameData *frameData = decodeFrame(cocoLoader, &pFrameDataArray[ii], dataInfo);
                     movementBoneData->addFrameData(frameData);
                     frameData->release();
                     
@@ -2286,18 +2286,18 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
         return movementBoneData;
     }
     
-    FrameData* DataReaderHelper::decodeFrame(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo)
+    FrameData* DataReaderHelper::decodeFrame(CocoLoader *cocoLoader, stExpCocoNode *cocoNode, DataInfo *dataInfo)
     {
         FrameData *frameData = new FrameData();
         
-        decodeNode(frameData, pCocoLoader, pCocoNode, dataInfo);
+        decodeNode(frameData, cocoLoader, cocoNode, dataInfo);
         
-        int length = pCocoNode->GetChildNum();
-        stExpCocoNode *pFrameDataArray = pCocoNode->GetChildArray();
+        int length = cocoNode->GetChildNum();
+        stExpCocoNode *pFrameDataArray = cocoNode->GetChildArray();
         const char *str = NULL;
         for (int i = 0; i < length; ++i)
         {
-            std::string key = pFrameDataArray[i].GetName(pCocoLoader);
+            std::string key = pFrameDataArray[i].GetName(cocoLoader);
             str = pFrameDataArray[i].GetValue();
             if (key.compare(A_TWEEN_EASING) == 0)
             {
@@ -2390,33 +2390,33 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
         return frameData;
     }
     
-    TextureData* DataReaderHelper::decodeTexture(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode)
+    TextureData* DataReaderHelper::decodeTexture(CocoLoader *cocoLoader, stExpCocoNode *cocoNode)
     {
         TextureData *textureData = new TextureData();
         textureData->init();
         
-        if(pCocoNode == NULL)
+        if(cocoNode == nullptr)
         {
             return textureData;
         }
         
-        int length = pCocoNode->GetChildNum();
-        stExpCocoNode *pTextureDataArray = pCocoNode->GetChildArray();
-        const char *str = NULL;
+        int length =  cocoNode->GetChildNum();
+        stExpCocoNode *pTextureDataArray = cocoNode->GetChildArray();
+        const char *str = nullptr;
         for (int i = 0; i < length; ++i)
         {
-            std::string key = pTextureDataArray[i].GetName(pCocoLoader);
+            std::string key = pTextureDataArray[i].GetName(cocoLoader);
             str = pTextureDataArray[i].GetValue();
             if (key.compare(A_NAME) == 0)
             {
-                if(str != NULL)
+                if(str != nullptr)
                 {
                     textureData->name = str;
                 }
             }
             else if (key.compare(A_WIDTH) == 0)
             {
-                if(str != NULL)
+                if(str != nullptr)
                 {
                     textureData->width = atof(str);
                 }
@@ -2448,7 +2448,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                 stExpCocoNode *pContourArray = pTextureDataArray[i].GetChildArray();
                 for (int ii = 0; ii < count; ++ii)
                 {
-                    ContourData *contourData = decodeContour(pCocoLoader, &pContourArray[ii]);
+                    ContourData *contourData = decodeContour(cocoLoader, &pContourArray[ii]);
                     textureData->contourDataList.pushBack(contourData);
                     contourData->release();
                 }
@@ -2457,17 +2457,17 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
         return textureData;
     }
     
-    ContourData* DataReaderHelper::decodeContour(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode)
+    ContourData* DataReaderHelper::decodeContour(CocoLoader *cocoLoader, stExpCocoNode *cocoNode)
     {
         ContourData *contourData = new ContourData();
         contourData->init();
         
-        int length = pCocoNode->GetChildNum();
-        stExpCocoNode *verTexPointArray = pCocoNode->GetChildArray();
-        const char *str = NULL;
+        int length = cocoNode->GetChildNum();
+        stExpCocoNode *verTexPointArray = cocoNode->GetChildArray();
+        const char *str = nullptr;
         for (int i = 0; i < length; ++i)
         {
-            std::string key = verTexPointArray[i].GetName(pCocoLoader);
+            std::string key = verTexPointArray[i].GetName(cocoLoader);
             str = verTexPointArray[i].GetValue();
             if (key.compare(VERTEX_POINT) == 0)
             {
@@ -2487,10 +2487,10 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
         return contourData;
     }
     
-    void DataReaderHelper::decodeNode(BaseData *node, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo)
+    void DataReaderHelper::decodeNode(BaseData *node, CocoLoader *cocoLoader, stExpCocoNode* cocoNode, DataInfo *dataInfo)
     {
-        int length = pCocoNode->GetChildNum();
-        stExpCocoNode *NodeArray = pCocoNode->GetChildArray();
+        int length = cocoNode->GetChildNum();
+        stExpCocoNode *NodeArray = cocoNode->GetChildArray();
         const char *str = NULL;
         
         bool isVersionL = dataInfo->cocoStudioVersion < VERSION_COLOR_READING;
@@ -2498,7 +2498,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
         for (int i = 0; i < length; ++i)
         {
             child = &NodeArray[i];
-            std::string key = child->GetName(pCocoLoader);
+            std::string key = child->GetName(cocoLoader);
             str = child->GetValue();
             if (key.compare(A_X) == 0)
             {
@@ -2532,7 +2532,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
             {
                 if (!isVersionL)
                 {
-                    if (child->GetType(pCocoLoader) == rapidjson::kObjectType)
+                    if (child->GetType(cocoLoader) == rapidjson::kObjectType)
                     {
                         if(child->GetChildNum() == 4)
                         {
@@ -2559,7 +2559,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
             if(colorcoount>0)
             {
                 
-                if (NodeArray[0].GetType(pCocoLoader) == rapidjson::kObjectType)
+                if (NodeArray[0].GetType(cocoLoader) == rapidjson::kObjectType)
                 {
                     if(NodeArray[0].GetChildNum() == 4)
                     {

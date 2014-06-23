@@ -35,17 +35,17 @@ namespace cocostudio
         return instanceTextBMFontReader;
     }
     
-    void TextBMFontReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode)
+    void TextBMFontReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode *cocoNode)
     {
         this->beginSetBasicProperties(widget);
         
         TextBMFont* labelBMFont = static_cast<TextBMFont*>(widget);
         
         
-        stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+        stExpCocoNode *stChildArray = cocoNode->GetChildArray();
         
-        for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
-            std::string key = stChildArray[i].GetName(pCocoLoader);
+        for (int i = 0; i < cocoNode->GetChildNum(); ++i) {
+            std::string key = stChildArray[i].GetName(cocoLoader);
             std::string value = stChildArray[i].GetValue();
             //read all basic properties of widget
             CC_BASIC_PROPERTY_BINARY_READER
@@ -58,7 +58,7 @@ namespace cocostudio
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
-                std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+                std::string backgroundValue = this->getResourcePath(cocoLoader, &stChildArray[i], imageFileNameType);
                 if (imageFileNameType == (Widget::TextureResType)0) {
                     labelBMFont->setFntFile(backgroundValue);
                 }

@@ -42,19 +42,19 @@ namespace cocostudio
         return instanceLoadingBar;
     }
     
-    void LoadingBarReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode)
+    void LoadingBarReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode *cocoNode)
     {
-        WidgetReader::setPropsFromBinary(widget, pCocoLoader, pCocoNode);
+        WidgetReader::setPropsFromBinary(widget, cocoLoader, cocoNode);
         
         LoadingBar* loadingBar = static_cast<LoadingBar*>(widget);
         this->beginSetBasicProperties(widget);
         float capsx = 0.0f, capsy = 0.0, capsWidth = 0.0, capsHeight = 0.0f;
         int percent = loadingBar->getPercent();
         
-        stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+        stExpCocoNode *stChildArray = cocoNode->GetChildArray();
         
-        for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
-            std::string key = stChildArray[i].GetName(pCocoLoader);
+        for (int i = 0; i < cocoNode->GetChildNum(); ++i) {
+            std::string key = stChildArray[i].GetName(cocoLoader);
             std::string value = stChildArray[i].GetValue();
             
             //read all basic properties of widget
@@ -72,7 +72,7 @@ namespace cocostudio
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
-                std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+                std::string backgroundValue = this->getResourcePath(cocoLoader, &stChildArray[i], imageFileNameType);
                 
                 loadingBar->loadTexture(backgroundValue, imageFileNameType);
                 

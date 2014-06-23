@@ -35,16 +35,16 @@ namespace cocostudio
         return instanceListViewReader;
     }
     
-    void ListViewReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode)
+    void ListViewReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode* cocoNode)
     {
-        ScrollViewReader::setPropsFromBinary(widget, pCocoLoader, pCocoNode);
+        ScrollViewReader::setPropsFromBinary(widget, cocoLoader, cocoNode);
         
         ListView* listView = static_cast<ListView*>(widget);
         
-        stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+        stExpCocoNode *stChildArray = cocoNode->GetChildArray();
         
-        for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
-            std::string key = stChildArray[i].GetName(pCocoLoader);
+        for (int i = 0; i < cocoNode->GetChildNum(); ++i) {
+            std::string key = stChildArray[i].GetName(cocoLoader);
             std::string value = stChildArray[i].GetValue();
             
             if (key == P_Direction) {

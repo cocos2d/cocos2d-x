@@ -43,16 +43,16 @@ namespace cocostudio
         return instanceTextFieldReader;
     }
     
-    void TextFieldReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode)
+    void TextFieldReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode* cocoNode)
     {
         this->beginSetBasicProperties(widget);
         
         TextField* textField = static_cast<TextField*>(widget);
         
-        stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+        stExpCocoNode *stChildArray = cocoNode->GetChildArray();
         
-        for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
-            std::string key = stChildArray[i].GetName(pCocoLoader);
+        for (int i = 0; i < cocoNode->GetChildNum(); ++i) {
+            std::string key = stChildArray[i].GetName(cocoLoader);
             std::string value = stChildArray[i].GetValue();
             
             //read all basic properties of widget

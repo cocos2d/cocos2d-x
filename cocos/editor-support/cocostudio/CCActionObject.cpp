@@ -128,15 +128,15 @@ void ActionObject::initWithDictionary(const rapidjson::Value& dic, Ref* root)
     _fTotalTime = maxLength*_fUnitTime;
 }
 
-void ActionObject::initWithBinary(CocoLoader *pCocoLoader,
-                                  stExpCocoNode *pCocoNode,
+void ActionObject::initWithBinary(CocoLoader *cocoLoader,
+                                  stExpCocoNode *cocoNode,
                                   cocos2d::Ref *root)
 {
-    stExpCocoNode *stChildNode = pCocoNode->GetChildArray();
+    stExpCocoNode *stChildNode = cocoNode->GetChildArray();
     stExpCocoNode *actionNodeList = NULL;
-    int count = pCocoNode->GetChildNum();
+    int count = cocoNode->GetChildNum();
     for (int i = 0; i < count; ++i) {
-        std::string key = stChildNode[i].GetName(pCocoLoader);
+        std::string key = stChildNode[i].GetName(cocoLoader);
         std::string value = stChildNode[i].GetValue();
         if (key == "name") {
             setName(value.c_str());
@@ -158,7 +158,7 @@ void ActionObject::initWithBinary(CocoLoader *pCocoLoader,
             ActionNode* actionNode = new ActionNode();
             actionNode->autorelease();
             
-            actionNode->initWithBinary(pCocoLoader, &actionNodeArray[i] , root);
+            actionNode->initWithBinary(cocoLoader, &actionNodeArray[i] , root);
             
             actionNode->setUnitTime(getUnitTime());
             

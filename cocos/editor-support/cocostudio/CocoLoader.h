@@ -97,7 +97,7 @@ public:
 	stExpCocoNode*	GetChildArray();
     
 public:
-	inline  void	ReBuild(char* pCocoNodeAddr,char* pStringMemoryAddr);
+	inline  void	ReBuild(char* cocoNodeAddr,char* pStringMemoryAddr);
 	void	WriteJson(CocoLoader* pCoco, void* pFileName = NULL, int vLayer = 0, bool bEndNode = false, bool bParentNodeIsArray = false);
 };
 

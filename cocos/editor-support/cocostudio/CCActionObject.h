@@ -164,7 +164,7 @@ public:
 	/*init properties with a json dictionary*/
 	void initWithDictionary(const rapidjson::Value& dic, cocos2d::Ref* root);
     
-    void initWithBinary(CocoLoader* pCocoLoader, stExpCocoNode*	pCocoNode, cocos2d::Ref* root);
+    void initWithBinary(CocoLoader* cocoLoader, stExpCocoNode*	pCocoNode, cocos2d::Ref* root);
 
 
 	/*scheduler update function*/

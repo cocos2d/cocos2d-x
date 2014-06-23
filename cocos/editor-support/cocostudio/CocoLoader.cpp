@@ -122,19 +122,19 @@ stExpCocoNode*	stExpCocoNode::GetChildArray()
 	return (stExpCocoNode*)m_ChildArray;
 }
 
-void	stExpCocoNode::ReBuild(char* pCocoNodeAddr,char* pStringMemoryAddr)
+void	stExpCocoNode::ReBuild(char* cocoNodeAddr,char* pStringMemoryAddr)
 {
 	m_szValue = m_szValue + (uint64_t)pStringMemoryAddr;
 	if( -1 == m_AttribIndex )
 	{
 		if(m_ChildNum > 0)
 		{
-			m_ChildArray = m_ChildArray + (uint64_t)pCocoNodeAddr;
+			m_ChildArray = m_ChildArray + (uint64_t)cocoNodeAddr;
 		
 			stExpCocoNode* tpChildArray = (stExpCocoNode*)m_ChildArray;
 			for(int i = 0 ; i < m_ChildNum ; i++)
 			{
-				tpChildArray[i].ReBuild(pCocoNodeAddr,pStringMemoryAddr);
+				tpChildArray[i].ReBuild(cocoNodeAddr,pStringMemoryAddr);
 			}
 		}
 	}

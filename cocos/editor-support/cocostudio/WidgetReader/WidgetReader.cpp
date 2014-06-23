@@ -291,9 +291,9 @@ namespace cocostudio
         return imageFileName_tp;
     }
     
-    std::string WidgetReader::getResourcePath(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, cocos2d::ui::Widget::TextureResType texType)
+    std::string WidgetReader::getResourcePath(CocoLoader *cocoLoader, stExpCocoNode *cocoNode, cocos2d::ui::Widget::TextureResType texType)
     {
-        stExpCocoNode *backGroundChildren = pCocoNode->GetChildArray();
+        stExpCocoNode *backGroundChildren = cocoNode->GetChildArray();
         std::string backgroundValue = backGroundChildren[0].GetValue();
 
         if (backgroundValue.size() < 3) {
@@ -342,14 +342,14 @@ namespace cocostudio
         }
     }
     
-    void WidgetReader::setPropsFromBinary(cocos2d::ui::Widget *widget, cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode)
+    void WidgetReader::setPropsFromBinary(cocos2d::ui::Widget *widget, cocostudio::CocoLoader *cocoLoader, cocostudio::stExpCocoNode *cocoNode)
     {
-        stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+        stExpCocoNode *stChildArray = cocoNode->GetChildArray();
         
         this->beginSetBasicProperties(widget);
         
-        for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
-            std::string key = stChildArray[i].GetName(pCocoLoader);
+        for (int i = 0; i < cocoNode->GetChildNum(); ++i) {
+            std::string key = stChildArray[i].GetName(cocoLoader);
             std::string value = stChildArray[i].GetValue();
             
             CC_BASIC_PROPERTY_BINARY_READER

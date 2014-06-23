@@ -180,19 +180,19 @@ public:
 // for binary decode
 public:
 	static void addDataFromBinaryCache(const char *fileContent, DataInfo *dataInfo = NULL);
-	static ArmatureData *decodeArmature(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
-	static BoneData *decodeBone(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
-	static DisplayData *decodeBoneDisplay(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
-	static AnimationData *decodeAnimation(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
-	static MovementData *decodeMovement(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+	static ArmatureData *decodeArmature(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+	static BoneData *decodeBone(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+	static DisplayData *decodeBoneDisplay(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+	static AnimationData *decodeAnimation(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+	static MovementData *decodeMovement(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
     
-	static MovementBoneData *decodeMovementBone(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
-	static FrameData *decodeFrame(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+	static MovementBoneData *decodeMovementBone(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+	static FrameData *decodeFrame(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
     
-	static TextureData *decodeTexture(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode);
-	static ContourData *decodeContour(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode);
+	static TextureData *decodeTexture(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode);
+	static ContourData *decodeContour(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode);
     
-	static void decodeNode(BaseData *node, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+	static void decodeNode(BaseData *node, CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
     
 protected:
 	void loadData();

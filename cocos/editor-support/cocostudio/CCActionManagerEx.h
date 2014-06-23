@@ -99,7 +99,7 @@ public:
 
 	/*init properties with json dictionay*/
 	void initWithDictionary(const char* jsonName,const rapidjson::Value &dic, Ref* root);
-    void initWithBinary(const char* file, Ref* root,  CocoLoader* pCocoLoader, stExpCocoNode*	pCocoNode);
+    void initWithBinary(const char* file, Ref* root,  CocoLoader* cocoLoader, stExpCocoNode*	pCocoNode);
 
 	/**
 	* Release all actions.

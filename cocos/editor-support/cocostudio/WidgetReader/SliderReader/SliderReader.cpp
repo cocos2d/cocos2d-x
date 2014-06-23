@@ -43,7 +43,7 @@ namespace cocostudio
         return instanceSliderReader;
     }
     
-    void SliderReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode)
+    void SliderReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode* cocoNode)
     {
         this->beginSetBasicProperties(widget);
         
@@ -51,10 +51,10 @@ namespace cocostudio
         
         float barLength = 0.0f;
         int percent = slider->getPercent();
-        stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+        stExpCocoNode *stChildArray = cocoNode->GetChildArray();
         
-        for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
-            std::string key = stChildArray[i].GetName(pCocoLoader);
+        for (int i = 0; i < cocoNode->GetChildNum(); ++i) {
+            std::string key = stChildArray[i].GetName(cocoLoader);
             std::string value = stChildArray[i].GetValue();
             
             //read all basic properties of widget
@@ -74,7 +74,7 @@ namespace cocostudio
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
-                std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+                std::string backgroundValue = this->getResourcePath(cocoLoader, &stChildArray[i], imageFileNameType);
                 
                 slider->loadBarTexture(backgroundValue, imageFileNameType);
                 
@@ -86,7 +86,7 @@ namespace cocostudio
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
-                std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+                std::string backgroundValue = this->getResourcePath(cocoLoader, &stChildArray[i], imageFileNameType);
                 
                 slider->loadSlidBallTextureNormal(backgroundValue, imageFileNameType);
 
@@ -96,7 +96,7 @@ namespace cocostudio
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
-                std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+                std::string backgroundValue = this->getResourcePath(cocoLoader, &stChildArray[i], imageFileNameType);
                 
                 slider->loadSlidBallTexturePressed(backgroundValue, imageFileNameType);
                 
@@ -106,7 +106,7 @@ namespace cocostudio
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
-                std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+                std::string backgroundValue = this->getResourcePath(cocoLoader, &stChildArray[i], imageFileNameType);
                 
                 slider->loadSlidBallTextureDisabled(backgroundValue, imageFileNameType);
                 
@@ -116,7 +116,7 @@ namespace cocostudio
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
-                std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+                std::string backgroundValue = this->getResourcePath(cocoLoader, &stChildArray[i], imageFileNameType);
                 
                 slider->loadProgressBarTexture(backgroundValue, imageFileNameType);
                 

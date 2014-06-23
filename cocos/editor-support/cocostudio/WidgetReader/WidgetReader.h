@@ -53,7 +53,7 @@ namespace cocostudio
         virtual void setColorPropsFromJsonDictionary(cocos2d::ui::Widget* widget,
                                                      const rapidjson::Value& options);
         
-        virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* pCocoLoader,  stExpCocoNode*	pCocoNode);
+        virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* cocoLoader,  stExpCocoNode*	pCocoNode);
     protected:
         std::string getResourcePath(const rapidjson::Value& dict,
                                     const std::string& key,
@@ -61,7 +61,7 @@ namespace cocostudio
         void setAnchorPointForWidget(cocos2d::ui::Widget* widget, const rapidjson::Value&options);
         
         
-        std::string getResourcePath(CocoLoader* pCocoLoader,
+        std::string getResourcePath(CocoLoader* cocoLoader,
                                     stExpCocoNode*	pCocoNode,
                                     cocos2d::ui::Widget::TextureResType texType);
 
@@ -182,7 +182,7 @@ namespace cocostudio
         ui::Margin mg;  \
         int paramType = -1;  \
         for (int j = 0; j < stChildArray[i].GetChildNum(); ++j) {  \
-            std::string innerKey = layoutCocosNode[j].GetName(pCocoLoader);  \
+            std::string innerKey = layoutCocosNode[j].GetName(cocoLoader);  \
             std::string innerValue = layoutCocosNode[j].GetValue(); \
             if (innerKey == P_Type) {  \
                 paramType = valueToInt(innerValue); \

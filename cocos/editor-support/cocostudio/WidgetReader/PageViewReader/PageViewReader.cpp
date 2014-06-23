@@ -33,9 +33,9 @@ namespace cocostudio
         return instancePageViewReader;
     }
     
-    void PageViewReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode)
+    void PageViewReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode *cocoNode)
 	{
-		LayoutReader::setPropsFromBinary(widget, pCocoLoader, pCocoNode);
+		LayoutReader::setPropsFromBinary(widget, cocoLoader, cocoNode);
     }
     
     void PageViewReader::setPropsFromJsonDictionary(Widget *widget, const rapidjson::Value &options)

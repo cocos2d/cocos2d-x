@@ -151,7 +151,7 @@ public:
 
 	/*init properties with a json dictionary*/
 	virtual void initWithDictionary(const rapidjson::Value& dic, cocos2d::Ref* root);
-    virtual void initWithBinary(CocoLoader* pCocoLoader, stExpCocoNode*	pCocoNode, Ref* root);
+    virtual void initWithBinary(CocoLoader* cocoLoader, stExpCocoNode*	pCocoNode, Ref* root);
 
 	/**
 	* Gets if the action is done once time.

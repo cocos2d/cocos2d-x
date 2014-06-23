@@ -57,21 +57,21 @@ namespace cocostudio
         CC_SAFE_DELETE(instanceButtonReader);
     }
     
-    void ButtonReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode)
+    void ButtonReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode *cocoNode)
     {
-        WidgetReader::setPropsFromBinary(widget, pCocoLoader, pCocoNode);
+        WidgetReader::setPropsFromBinary(widget, cocoLoader, cocoNode);
         
         Button *button = static_cast<Button*>(widget);
         
-        stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+        stExpCocoNode *stChildArray = cocoNode->GetChildArray();
         
         this->beginSetBasicProperties(widget);
         
         float capsx = 0.0f, capsy = 0.0, capsWidth = 0.0, capsHeight = 0.0f;
         int cri = 255, cgi = 255, cbi = 255;
         float scale9Width = 0.0f, scale9Height = 0.0f;
-        for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
-            std::string key = stChildArray[i].GetName(pCocoLoader);
+        for (int i = 0; i < cocoNode->GetChildNum(); ++i) {
+            std::string key = stChildArray[i].GetName(cocoLoader);
             std::string value = stChildArray[i].GetValue();
 //            CCLOG("Button: key = %s, value = %d", key.c_str(), i);
 
@@ -91,7 +91,7 @@ namespace cocostudio
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
-                std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+                std::string backgroundValue = this->getResourcePath(cocoLoader, &stChildArray[i], imageFileNameType);
                 
                 button->loadTextureNormal(backgroundValue, imageFileNameType);
                 
@@ -103,7 +103,7 @@ namespace cocostudio
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
-                std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+                std::string backgroundValue = this->getResourcePath(cocoLoader, &stChildArray[i], imageFileNameType);
                 
                 button->loadTexturePressed(backgroundValue, imageFileNameType);
                 
@@ -115,7 +115,7 @@ namespace cocostudio
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
-                std::string backgroundValue = this->getResourcePath(pCocoLoader, &stChildArray[i], imageFileNameType);
+                std::string backgroundValue = this->getResourcePath(cocoLoader, &stChildArray[i], imageFileNameType);
                 
                 button->loadTextureDisabled(backgroundValue, imageFileNameType);
                 

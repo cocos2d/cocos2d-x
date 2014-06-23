@@ -37,18 +37,18 @@ namespace cocostudio
         return instanceScrollViewReader;
     }
     
-    void ScrollViewReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode)
+    void ScrollViewReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode* cocoNode)
     {
         //TODO::need to refactor...
-        LayoutReader::setPropsFromBinary(widget, pCocoLoader, pCocoNode);
+        LayoutReader::setPropsFromBinary(widget, cocoLoader, cocoNode);
         
         ScrollView* scrollView = static_cast<ScrollView*>(widget);
         
-        stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+        stExpCocoNode *stChildArray = cocoNode->GetChildArray();
         float innerWidth;
         float innerHeight;
-        for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
-            std::string key = stChildArray[i].GetName(pCocoLoader);
+        for (int i = 0; i < cocoNode->GetChildNum(); ++i) {
+            std::string key = stChildArray[i].GetName(cocoLoader);
             std::string value = stChildArray[i].GetValue();
             if (key == P_InnerWidth) {
                 innerWidth = valueToFloat(value);
