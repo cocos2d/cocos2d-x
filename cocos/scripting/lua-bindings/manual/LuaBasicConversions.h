@@ -76,6 +76,8 @@ extern bool luaval_to_vec3(lua_State* L,int lo,cocos2d::Vec3* outValue);
 extern bool luaval_to_vec4(lua_State* L,int lo,cocos2d::Vec4* outValue);
 extern bool luaval_to_blendfunc(lua_State* L, int lo, cocos2d::BlendFunc* outValue);
 extern bool luaval_to_ttfconfig(lua_State* L, int lo, cocos2d::TTFConfig* outValue);
+extern bool luaval_to_uniform(lua_State* L, int lo, cocos2d::Uniform* outValue);
+extern bool luaval_to_vertexattrib(lua_State* L, int lo, cocos2d::VertexAttrib* outValue);
 
 CC_DEPRECATED_ATTRIBUTE static inline bool luaval_to_point(lua_State* L,int lo,cocos2d::Vec2* outValue)
 {
@@ -253,6 +255,8 @@ extern void dictionary_to_luaval(lua_State* L, __Dictionary* dict);
 extern void mat4_to_luaval(lua_State* L, const cocos2d::Mat4& mat);
 extern void blendfunc_to_luaval(lua_State* L, const cocos2d::BlendFunc& func);
 extern void ttfconfig_to_luaval(lua_State* L, const cocos2d::TTFConfig& config);
+extern void uniform_to_luaval(lua_State* L, const cocos2d::Uniform& uniform);
+extern void vertexattrib_to_luaval(lua_State* L, const cocos2d::VertexAttrib& verAttrib);
 
 CC_DEPRECATED_ATTRIBUTE static inline void point_to_luaval(lua_State* L,const cocos2d::Vec2& pt)
 {

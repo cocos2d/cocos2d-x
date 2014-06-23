@@ -97,9 +97,8 @@
       </Command>
     </PostBuildEvent>
     <PreLinkEvent>
-      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\..\external\websockets\prebuilt\win32\*.*" "$(OutDir)"
-</Command>
+      <Command>
+      </Command>
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -134,9 +133,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\websockets\prebuilt\win32\*.*" "$(Ou
       </Command>
     </PostBuildEvent>
     <PreLinkEvent>
-      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\..\external\websockets\prebuilt\win32\*.*" "$(OutDir)"
-</Command>
+      <Command>
+      </Command>
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -149,6 +147,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\websockets\prebuilt\win32\*.*" "$(Ou
     <ClCompile Include="..\Classes\DataVisitorTest\DataVisitorTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackTestLayer.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioActionTimelineTest\ActionTimelineTestScene.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioArmatureTest\ArmatureScene.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\ComponentsTestScene.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\EnemyController.cpp" />
@@ -329,6 +328,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\websockets\prebuilt\win32\*.*" "$(Ou
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackLayerLoader.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackTestLayer.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioActionTimelineTest\ActionTimelineTestScene.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioArmatureTest\ArmatureScene.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\ComponentsTestScene.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\EnemyController.h" />

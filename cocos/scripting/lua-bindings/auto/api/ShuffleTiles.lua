@@ -4,18 +4,6 @@
 -- @extend TiledGrid3DAction
 
 --------------------------------
--- @function [parent=#ShuffleTiles] placeTile 
--- @param self
--- @param #vec2_table vec2
--- @param #cc.Tile tile
-        
---------------------------------
--- @function [parent=#ShuffleTiles] shuffle 
--- @param self
--- @param #unsigned int int
--- @param #unsigned int int
-        
---------------------------------
 -- @function [parent=#ShuffleTiles] getDelta 
 -- @param self
 -- @param #size_table size

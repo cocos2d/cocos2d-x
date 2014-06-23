@@ -58,7 +58,7 @@ public:
     static Scene *createWithSize(const Size& size);
 
     // Overrides
-    virtual Scene *getScene() override;
+    virtual Scene *getScene() const override;
 
     using Node::addChild;
     virtual std::string getDescription() const override;

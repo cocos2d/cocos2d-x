@@ -295,6 +295,15 @@ protected:
     float _accum;
 };
 
+class NodeNameTest : public TestCocosNodeDemo
+{
+public:
+    CREATE_FUNC(NodeNameTest);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    virtual void onEnter() override;
+};
 
 
 // main

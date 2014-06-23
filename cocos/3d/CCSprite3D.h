@@ -38,6 +38,7 @@ NS_CC_BEGIN
 class GLProgramState;
 class Mesh;
 class Texture2D;
+class MeshSkin;
 
 /** Sprite3D: TODO add description */
 class Sprite3D : public Node, public BlendProtocol
@@ -54,18 +55,24 @@ public:
     void setTexture(Texture2D* texture);
 
     Mesh* getMesh() const { return _mesh; }
+    
+    MeshSkin* getSkin() const { return _skin; }
 
     // overrides
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
     virtual const BlendFunc &getBlendFunc() const override;
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
+    
     Sprite3D();
     virtual ~Sprite3D();
     bool initWithFile(const std::string &path);
     
     //.mtl file should at the same directory with the same name if exist
     bool loadFromObj(const std::string& path);
+    
+    //load from .c3b or .c3t
+    bool loadFromC3x(const std::string& path);
 
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     
@@ -73,7 +80,10 @@ protected:
     
     void genGLProgramState();
 
+protected:
     Mesh              *_mesh;
+    MeshSkin              *_skin;
+    
     MeshCommand        _meshCommand;
     Texture2D*        _texture;
     BlendFunc _blend;

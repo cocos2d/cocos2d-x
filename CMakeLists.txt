@@ -100,6 +100,8 @@ endif()
 if(MINGW)
   add_definitions(-DGLEW_STATIC)
   add_definitions(-D__SSIZE_T)
+  set(CMAKE_C_STANDARD_LIBRARIES "${CMAKE_C_STANDARD_LIBRARIES} -lws2_32")
+  set(CMAKE_CXX_STANDARD_LIBRARIES "${CMAKE_CXX_STANDARD_LIBRARIES} -lws2_32")
 endif()
 
 
