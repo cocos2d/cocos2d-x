@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\sources\AppDelegate.cpp" />
+    <ClCompile Include="app.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\sources\AppDelegate.h" />
+    <ClInclude Include="app.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="app.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="app.rc" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{71666DE3-D772-41E9-8624-8881686C7AED}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>__PROJECT_PACKAGE_LAST_NAME_L__</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfAtl>false</UseOfAtl>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <TargetName>__PROJECT_PACKAGE_LAST_NAME_L__</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <TargetName>__PROJECT_PACKAGE_LAST_NAME_L__</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_LUA_ENGINE_ENABLED=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx\include;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx\kazmath\include;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx\support;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx\support\tinyxml2;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx\platform;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx\platform\win32;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx\platform\third_party\win32;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx\platform\third_party\win32\curl;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx\platform\third_party\win32\iconv;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx\platform\third_party\win32\libjpeg;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx\platform\third_party\win32\libpng;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx\platform\third_party\win32\libtiff;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx\platform\third_party\win32\libwebp;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx\platform\third_party\win32\OGLES;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx\platform\third_party\win32\pthread;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx\platform\third_party\win32\zlib;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\CocosDenshion\include;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\CocosDenshion\win32;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\scripting\lua\cocos2dx_support;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\scripting\lua\tolua;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\scripting\lua\luajit\include;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\scripting\lua\lua_extensions;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\scripting\lua\lua_extensions\cjson;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\scripting\lua\lua_extensions\filesystem;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\scripting\lua\lua_extensions\lpack;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\scripting\lua\lua_extensions\socket;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\scripting\lua\lua_extensions\zlib;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions\GUI\CCControlExtension;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions\GUI\CCEditBox;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions\GUI\CCScrollView;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions\AssetsManager;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions\CCBReader;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions\network;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions\CocoStudio\Action;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions\CocoStudio\Armature;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions\CocoStudio\Armature\animation;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions\CocoStudio\Armature\datas;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions\CocoStudio\Armature\display;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions\CocoStudio\Armature\external_tool;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions\CocoStudio\Armature\utils;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions\CocoStudio\Components;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions\CocoStudio\GUI;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions\CocoStudio\Json;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions\CocoStudio\Reader;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\external\libwebsockets\win32\include;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\external\libwebsockets\win32\include\win32helpers;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\external\chipmunk\include;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\external\chipmunk\luabinding;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\external\chipmunk\cocos2dx_support;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\external\luaproxy;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\external\luaproxy\tolua;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\external\luaproxy\ui;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\external\extra;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\external\extra\crypto;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\external\extra\luabinding;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\external\extra\native;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\external\extra\network;$(ProjectDir)..\sources;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4068;4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>cocos2dx.lib;opengl32.lib;ws2_32.lib;wsock32.lib;pthreadVCE2.lib;lua51.lib;winmm.lib;glew32.lib;libcurl_imp.lib;libiconv.lib;libjpeg.lib;libpng.lib;libtiff.lib;libzlib.lib;libwebp.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>.\$(Configuration);$(QUICK_COCOS2DX_ROOT)\lib\luajit2\proj.win32;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx\platform\third_party\win32\libraries;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\external\libwebsockets\win32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_LUA_ENGINE_ENABLED=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx\include;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx\kazmath\include;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx\support;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx\support\tinyxml2;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx\platform;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx\platform\win32;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx\platform\third_party\win32;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx\platform\third_party\win32\curl;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx\platform\third_party\win32\iconv;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx\platform\third_party\win32\libjpeg;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx\platform\third_party\win32\libpng;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx\platform\third_party\win32\libtiff;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx\platform\third_party\win32\libwebp;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx\platform\third_party\win32\OGLES;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx\platform\third_party\win32\pthread;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx\platform\third_party\win32\zlib;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\CocosDenshion\include;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\CocosDenshion\win32;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\scripting\lua\cocos2dx_support;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\scripting\lua\tolua;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\scripting\lua\luajit\include;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\scripting\lua\lua_extensions;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\scripting\lua\lua_extensions\cjson;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\scripting\lua\lua_extensions\filesystem;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\scripting\lua\lua_extensions\lpack;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\scripting\lua\lua_extensions\socket;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\scripting\lua\lua_extensions\zlib;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions\GUI\CCControlExtension;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions\GUI\CCEditBox;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions\GUI\CCScrollView;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions\AssetsManager;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions\CCBReader;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions\network;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions\CocoStudio\Action;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions\CocoStudio\Armature;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions\CocoStudio\Armature\animation;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions\CocoStudio\Armature\datas;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions\CocoStudio\Armature\display;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions\CocoStudio\Armature\external_tool;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions\CocoStudio\Armature\utils;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions\CocoStudio\Components;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions\CocoStudio\GUI;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions\CocoStudio\Json;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\extensions\CocoStudio\Reader;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\external\libwebsockets\win32\include;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\external\libwebsockets\win32\include\win32helpers;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\external\chipmunk\include;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\external\chipmunk\luabinding;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\external\chipmunk\cocos2dx_support;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\external\luaproxy;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\external\luaproxy\tolua;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\external\luaproxy\ui;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\external\extra;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\external\extra\crypto;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\external\extra\luabinding;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\external\extra\native;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\external\extra\network;$(ProjectDir)..\sources;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4068;4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>cocos2dx.lib;opengl32.lib;ws2_32.lib;wsock32.lib;pthreadVCE2.lib;lua51.lib;winmm.lib;glew32.lib;libcurl_imp.lib;libiconv.lib;libjpeg.lib;libpng.lib;libtiff.lib;libzlib.lib;libwebp.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>.\$(Configuration);$(QUICK_COCOS2DX_ROOT)\lib\luajit2\proj.win32;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\cocos2dx\platform\third_party\win32\libraries;$(QUICK_COCOS2DX_ROOT)\lib\cocos2d-x\external\libwebsockets\win32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
