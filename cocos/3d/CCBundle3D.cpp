@@ -430,7 +430,7 @@ bool Bundle3D::loadBinary(const std::string& path)
     // Read all refs
     CC_SAFE_DELETE_ARRAY(_references);
     _references = new Reference[_referenceCount];
-    for (unsigned int i = 0; i < _referenceCount; ++i)
+    for (size_t i = 0; i < _referenceCount; ++i)
     {
         if ((_references[i].id = _bundleReader->readString()).empty() ||
             _bundleReader->read(&_references[i].type, 4, 1) != 1 ||
@@ -490,12 +490,12 @@ bool Bundle3D::loadMeshDataBinary(MeshData* meshdata)
     }
 
     // Read index data
-    unsigned int meshPartCount = 1;
+    size_t meshPartCount = 1;
     //_bundleReader->read(&meshPartCount, 4, 1);
 
-    for (unsigned int i = 0; i < meshPartCount; ++i)
+    for (size_t i = 0; i < meshPartCount; ++i)
     {
-        unsigned int nIndexCount;
+        size_t nIndexCount;
         if (_bundleReader->read(&nIndexCount, 4, 1) != 1)
         {
             CCLOGINFO("Failed to read meshdata: nIndexCount '%s'.", _path.c_str());
@@ -530,7 +530,7 @@ bool Bundle3D::loadSkinDataBinary(SkinData* skindata)
     }
 
     // bone count 
-    unsigned int boneNum;
+    size_t boneNum;
     if (!_bundleReader->read(&boneNum))
     {
         CCLOGINFO("Failed to read SkinData: boneNum  '%s'.", _path.c_str());
@@ -539,7 +539,7 @@ bool Bundle3D::loadSkinDataBinary(SkinData* skindata)
     
     // bone names and bind pos
     float bindpos[16];
-    for (unsigned int i = 0; i < boneNum; i++)
+    for (size_t i = 0; i < boneNum; i++)
     {
         skindata->skinBoneNames.push_back(_bundleReader->readString());
         if (!_bundleReader->readMatrix(bindpos))
@@ -549,15 +549,15 @@ bool Bundle3D::loadSkinDataBinary(SkinData* skindata)
         }
         skindata->inverseBindPoseMatrices.push_back(bindpos);
     }
-
+     
     // bind shape
     _bundleReader->readMatrix(bindShape);
-
+     
     // read parent and child relationship map
     float transform[16];
-    unsigned int linkNum;
+    size_t linkNum;
     _bundleReader->read(&linkNum);
-    for (unsigned int i = 0; i < linkNum; ++i)
+    for (size_t i = 0; i < linkNum; ++i)
     {
         std::string id = _bundleReader->readString();
         int index = skindata->getBoneNameIndex(id);
@@ -608,7 +608,7 @@ bool Bundle3D::loadAnimationDataBinary(Animation3DData* animationdata)
     animationdata->_scaleKeys.clear();
     animationdata->_translationKeys.clear();
 
-    std::string id = _bundleReader->readString();
+    _bundleReader->readString();
 
     if (!_bundleReader->read(&animationdata->_totalTime))
     {
@@ -616,24 +616,24 @@ bool Bundle3D::loadAnimationDataBinary(Animation3DData* animationdata)
         return false;
     }
 
-    unsigned int animNum;
+    size_t animNum;
     if (!_bundleReader->read(&animNum))
     {
         CCLOGINFO("Failed to read AnimationData: animNum '%s'.", _path.c_str());
         return false;
     }
 
-    for (unsigned int i = 0; i < animNum; ++i)
+    for (size_t i = 0; i < animNum; ++i)
     {
         std::string boneName = _bundleReader->readString();
-        unsigned int keyframeNum;
+        size_t keyframeNum;
         if (!_bundleReader->read(&keyframeNum))
         {
             CCLOGINFO("Failed to read AnimationData: keyframeNum '%s'.", _path.c_str());
             return false;
         }
 
-        for (unsigned int j = 0; j < keyframeNum; ++j)
+        for (size_t j = 0; j < keyframeNum; ++j)
         {
             float keytime;
             if (!_bundleReader->read(&keytime))
@@ -763,9 +763,9 @@ _modelRelativePath(""),
 _jsonBuffer(nullptr),
 _path(""),
 _referenceCount(0),
-_bundleReader(NULL),
-_references(NULL),
-_binaryBuffer(NULL)
+_bundleReader(nullptr),
+_references(nullptr),
+_binaryBuffer(nullptr)
 {
 
 }
