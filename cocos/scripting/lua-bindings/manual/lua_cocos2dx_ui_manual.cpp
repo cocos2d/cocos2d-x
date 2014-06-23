@@ -463,6 +463,61 @@ tolua_lerror:
 #endif
 }
 
+static int lua_cocos2dx_ListView_addScrollViewEventListener(lua_State* L)
+{
+    if (nullptr == L)
+        return 0;
+    
+    int argc = 0;
+    ListView* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+	if (!tolua_isusertype(L,1,"ccui.ListView",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = static_cast<ListView*>(tolua_tousertype(L,1,0));
+    
+#if COCOS2D_DEBUG >= 1
+	if (nullptr == self) {
+		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_ListView_addScrollViewEventListener'\n", NULL);
+		return 0;
+	}
+#endif
+    argc = lua_gettop(L) - 1;
+    if (1 == argc)
+    {
+#if COCOS2D_DEBUG >= 1
+        if (!toluafix_isfunction(L,2,"LUA_FUNCTION",0,&tolua_err))
+        {
+            goto tolua_lerror;
+        }
+#endif
+        LUA_FUNCTION handler = (  toluafix_ref_function(L,2,0));
+        
+        //TODO CHANGE
+        ui::ScrollView* scrollView = static_cast<ui::ScrollView*>(self);
+        if(nullptr != scrollView)
+        {
+            scrollView->addEventListener([=](cocos2d::Ref* ref, ui::ScrollView::EventType eventType){
+                handleUIEvent(handler, ref, (int)eventType);
+            });
+        }
+        
+        return 0;
+    }
+    
+    CCLOG("'addScrollViewEventListener' function of ListView has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'addScrollViewEventListener'.",&tolua_err);
+    return 0;
+#endif
+}
+
 static void extendListView(lua_State* L)
 {
     lua_pushstring(L, "ccui.ListView");
@@ -470,6 +525,7 @@ static void extendListView(lua_State* L)
     if (lua_istable(L,-1))
     {
         tolua_function(L, "addEventListener", lua_cocos2dx_ListView_addEventListener);
+        tolua_function(L, "addScrollViewEventListener", lua_cocos2dx_ListView_addScrollViewEventListener);
     }
     lua_pop(L, 1);
 }
