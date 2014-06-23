@@ -31,7 +31,6 @@ THE SOFTWARE.
 #include "cocostudio/DictionaryHelper.h"
 
 #include "json/document.h"
-#include "Cocoloader.h"
 #include "DictionaryHelper.h"
 
 #include <string>
@@ -47,7 +46,8 @@ namespace tinyxml2
 }
 
 namespace cocostudio {
-
+    class CocoLoader;
+    struct stExpCocoNode;
 /**
  *  @js NA
  *  @lua NA

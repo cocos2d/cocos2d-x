@@ -35,6 +35,9 @@ THE SOFTWARE.
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CCDatas.h"
 
+#include "cocostudio/CocoLoader.h"
+
+
 using namespace cocos2d;
 
 

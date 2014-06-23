@@ -30,11 +30,10 @@ THE SOFTWARE.
 #include "WidgetReader/WidgetReaderProtocol.h"
 #include "base/ObjectFactory.h"
 
-class CocoLoader;
-class stExpCocoNode;
-
-
 namespace cocostudio {
+    
+    class CocoLoader;
+    struct stExpCocoNode;
 
     
 #define kCCSVersion 1.0
