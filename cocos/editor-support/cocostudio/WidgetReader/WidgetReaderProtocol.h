@@ -41,7 +41,7 @@ namespace cocos2d
 namespace cocostudio
 {
     class CocoLoader;
-    class stExpCocoNode;
+    struct stExpCocoNode;
     
     class WidgetReaderProtocol
     {

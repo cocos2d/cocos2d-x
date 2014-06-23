@@ -26,7 +26,7 @@
 #define __TestCpp__WidgetReader__
 
 #include "WidgetReaderProtocol.h"
-#include "../CCSGUIReader.h"
+#include "cocostudio/CCSGUIReader.h"
 #include "ui/GUIDefine.h"
 #include "ui/UIWidget.h"
 
@@ -34,7 +34,7 @@
 namespace cocostudio
 {
     class CocoLoader;
-    class stExpCocoNode;
+    struct stExpCocoNode;
     
     class WidgetReader : public cocos2d::Ref, public WidgetReaderProtocol
     {

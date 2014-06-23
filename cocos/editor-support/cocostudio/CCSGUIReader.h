@@ -110,11 +110,6 @@ public:
                                                 CocoLoader* cocoLoader,
                                                 stExpCocoNode*	pCocoNode) = 0;
     
-    virtual void setPropsForAllCustomWidgetFromBinary(const std::string& classType,
-                                                      cocos2d::ui::Widget* widget,
-                                                      CocoLoader* cocoLoader,
-                                                      stExpCocoNode*	pCocoNode) = 0;
-    
 protected:
     void setAnchorPointForWidget(cocos2d::ui::Widget* widget, const rapidjson::Value&options);
     std::string  getWidgetReaderClassName(const std::string& classname);
@@ -153,11 +148,6 @@ public:
                                                 cocos2d::ui::Widget* widget,
                                                 CocoLoader* cocoLoader,
                                                 stExpCocoNode*	pCocoNode) {}
-    
-    virtual void setPropsForAllCustomWidgetFromBinary(const std::string& classType,
-                                                      cocos2d::ui::Widget* widget,
-                                                      CocoLoader* cocoLoader,
-                                                      stExpCocoNode*	pCocoNode) {}
 
     virtual void setPropsForWidgetFromJsonDictionary(cocos2d::ui::Widget* widget,const rapidjson::Value& options);
     

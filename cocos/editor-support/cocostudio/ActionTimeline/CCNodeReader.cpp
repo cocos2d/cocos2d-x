@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "CCActionTimelineCache.h"
 #include "CCActionTimeline.h"
 
-#include "../CCSGUIReader.h"
+#include "cocostudio/CCSGUIReader.h"
 
 using namespace cocos2d;
 using namespace ui;
@@ -150,7 +150,6 @@ void NodeReader::init()
     _funcs.insert(Pair(ClassName_Widget,    std::bind(&NodeReader::loadWidget,   this, _1)));
     _funcs.insert(Pair(ClassName_Label,     std::bind(&NodeReader::loadWidget,   this, _1)));
 
-    _guiReader = new WidgetPropertiesReader0300();
 }
 
 Node* NodeReader::createNode(const std::string& filename)
@@ -445,7 +444,9 @@ Node* NodeReader::loadWidget(const rapidjson::Value& json)
 
     WidgetReaderProtocol* reader = dynamic_cast<WidgetReaderProtocol*>(ObjectFactory::getInstance()->createObject(readerName));
 
-    _guiReader->setPropsForAllWidgetFromJsonDictionary(reader, widget, json);
+    WidgetPropertiesReader0300* guiReader = new WidgetPropertiesReader0300();
+    guiReader->setPropsForAllWidgetFromJsonDictionary(reader, widget, json);
+    CC_SAFE_DELETE(guiReader);
     
     int actionTag = DICTOOL->getIntValue_json(json, ACTION_TAG);
     widget->setUserObject(ActionTimelineData::create(actionTag));
