@@ -277,6 +277,7 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
 {
     ssize_t size = queue.size();
     
+    uint32_t material3DID = 0; //last material 3d ID
     for (ssize_t index = 0; index < size; ++index)
     {
         auto command = queue[index];
@@ -323,6 +324,19 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
         {
             flush();
             auto cmd = static_cast<MeshCommand*>(command);
+//            if (material3DID != cmd->getMaterialID())
+//            {
+//                if (material3DID != 0)
+//                    cmd->postDraw();
+//                
+//                cmd->preDraw();
+//                material3DID = cmd->getMaterialID();
+//            }
+//            else
+//            {
+//                cmd->draw();
+//            }
+            
             cmd->execute();
         }
         else

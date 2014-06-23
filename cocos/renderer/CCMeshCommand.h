@@ -59,8 +59,17 @@ public:
     void setMatrixPalette(const Vec4* matrixPalette) { _matrixPalette = matrixPalette; }
     
     void setMatrixPaletteSize(int size) { _matrixPaletteSize = size; }
-
+    
     void execute();
+    
+    //used for bath
+    void preDraw();
+    void draw();
+    void postDraw();
+    
+    void genMaterialID(GLuint texID, void* glProgramState, void* mesh, const BlendFunc& blend);
+    
+    uint32_t getMaterialID() const { return _materialID; }
 
 protected:
     // apply renderstate
@@ -82,6 +91,8 @@ protected:
     // used for skin
     const Vec4* _matrixPalette;
     int   _matrixPaletteSize;
+    
+    uint32_t _materialID; //material ID
     
     GLuint _vertexBuffer;
     GLuint _indexBuffer;
