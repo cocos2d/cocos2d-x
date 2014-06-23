@@ -34,9 +34,11 @@ class ShaderCompiler : private cocos2d::Application
 public:
     ShaderCompiler();
     ~ShaderCompiler();
-    bool Compile();
+    bool Compile(Windows::UI::Xaml::Controls::TextBlock^ resultText);
 
 private:
+
+    Windows::UI::Xaml::Controls::TextBlock^ m_resultText;
 
     virtual bool applicationDidFinishLaunching();
     virtual void applicationDidEnterBackground();
