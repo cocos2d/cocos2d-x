@@ -7,9 +7,9 @@ if [ ! -f $BIN ]; then
     exit
 fi
 
-echo $QUICK_COCOS2DX_ROOT
+echo $QUICK_V3_ROOT
 
-ARG="-relaunch-off -quick $QUICK_COCOS2DX_ROOT -workdir $DIR"
+ARG="-relaunch-off -quick $QUICK_V3_ROOT -workdir $DIR"
 SIZE="-__SCREEN_ORIENTATION_L__"
 CMD="$BIN $ARG $SIZE"
 
