@@ -29,7 +29,6 @@
 #include <vector>
 #include <cstdio>
 #include <stdint.h>
-#include "extensions/ExtensionMacros.h"
 #include "json/rapidjson.h"
 #include "json/document.h"
 
