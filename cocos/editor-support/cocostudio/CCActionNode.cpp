@@ -169,11 +169,11 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
     initActionNodeFromRoot(root);
 }
     
-    int ActionNode::valueToInt(std::string& value)
+    int ActionNode::valueToInt(const std::string& value)
     {
         return atoi(value.c_str());
     }
-    bool ActionNode::valueToBool(std::string& value)
+    bool ActionNode::valueToBool(const std::string& value)
     {
         int intValue = valueToInt(value);
         if (1 == intValue) {
@@ -182,7 +182,7 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
             return false;
         }
     }
-    float ActionNode::valueToFloat(std::string& value)
+    float ActionNode::valueToFloat(const std::string& value)
     {
         return atof(value.c_str());
     }
@@ -196,7 +196,7 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
         
         int actionNodeCount =  stChildNode->GetChildNum();
         stChildNode = stChildNode[0].GetChildArray();
-        stExpCocoNode *frameListNode = NULL;
+        stExpCocoNode *frameListNode = nullptr;
         for (int i = 0; i < actionNodeCount; ++i) {
             std::string key = stChildNode[i].GetName(cocoLoader);
             std::string value = stChildNode[i].GetValue();

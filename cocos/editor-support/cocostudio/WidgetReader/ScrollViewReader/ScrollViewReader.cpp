@@ -14,7 +14,7 @@ namespace cocostudio
     static const char* P_Direction = "direction";
     static const char* P_BounceEnable = "bounceEnable";
     
-    static ScrollViewReader* instanceScrollViewReader = NULL;
+    static ScrollViewReader* instanceScrollViewReader = nullptr;
     
     IMPLEMENT_CLASS_WIDGET_READER_INFO(ScrollViewReader)
     

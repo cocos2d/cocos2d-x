@@ -73,11 +73,11 @@ namespace cocostudio
     _positionPercentY(0.0f),
     _opacity(255)
     {
-        valueToInt = [=](std::string str) -> int{
+        valueToInt = [=](const std::string& str) -> int{
             return atoi(str.c_str());
         };
         
-        valueToBool = [=](std::string str) -> bool{
+        valueToBool = [=](const std::string& str) -> bool{
             int intValue = valueToInt(str);
             if (1 == intValue) {
                 return true;
@@ -86,7 +86,7 @@ namespace cocostudio
             }
         };
         
-        valueToFloat = [=](std::string str) -> float{
+        valueToFloat = [=](const std::string& str) -> float{
             return atof(str.c_str());
         };
     }

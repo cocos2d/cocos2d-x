@@ -10,7 +10,7 @@ using namespace ui;
 
 namespace cocostudio
 {
-    static PageViewReader* instancePageViewReader = NULL;
+    static PageViewReader* instancePageViewReader = nullptr;
     
     IMPLEMENT_CLASS_WIDGET_READER_INFO(PageViewReader)
     

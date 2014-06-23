@@ -84,7 +84,7 @@ void ActionManagerEx::initWithDictionary(const char* jsonName,const rapidjson::V
         cocos2d::Vector<ActionObject*> actionList;
         
         stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
-        stExpCocoNode *actionNode = NULL;
+        stExpCocoNode *actionNode = nullptr;
         for (int i=0; i < pCocoNode->GetChildNum(); ++i) {
             std::string key = stChildArray[i].GetName(cocoLoader);
             if (key == "actionlist") {
@@ -92,7 +92,7 @@ void ActionManagerEx::initWithDictionary(const char* jsonName,const rapidjson::V
                 break;
             }
         }
-        if (NULL != actionNode)
+        if (nullptr != actionNode)
         {
             int actionCount = actionNode->GetChildNum();
             for (int i = 0; i < actionCount; ++i) {

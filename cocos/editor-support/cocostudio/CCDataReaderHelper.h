@@ -179,7 +179,7 @@ public:
     
 // for binary decode
 public:
-	static void addDataFromBinaryCache(const char *fileContent, DataInfo *dataInfo = NULL);
+	static void addDataFromBinaryCache(const char *fileContent, DataInfo *dataInfo = nullptr);
 	static ArmatureData *decodeArmature(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
 	static BoneData *decodeBone(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
 	static DisplayData *decodeBoneDisplay(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);

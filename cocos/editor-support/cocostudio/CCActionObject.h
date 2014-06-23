@@ -170,9 +170,9 @@ public:
 	/*scheduler update function*/
 	void simulationActionUpdate(float dt);
 protected:
-    int valueToInt(std::string& value);
-    bool valueToBool(std::string& value);
-    float valueToFloat(std::string& value);
+    int valueToInt(const std::string& value);
+    bool valueToBool(const std::string& value);
+    float valueToFloat(const std::string& value);
     
 	cocos2d::Vector<ActionNode*> _actionNodeList;
 	std::string _name;

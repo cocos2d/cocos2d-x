@@ -160,9 +160,9 @@ public:
 	*/
 	virtual bool isActionDoneOnce();
 protected:
-    int valueToInt(std::string& value);
-    bool valueToBool(std::string& value);
-    float valueToFloat(std::string& value);
+    int valueToInt(const std::string& value);
+    bool valueToBool(const std::string& value);
+    float valueToFloat(const std::string& value);
     
 	int _currentFrameIndex;
 	int _destFrameIndex;

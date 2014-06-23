@@ -29,7 +29,7 @@ namespace cocostudio
     
    
     
-    static ButtonReader* instanceButtonReader = NULL;
+    static ButtonReader* instanceButtonReader = nullptr;
     
     IMPLEMENT_CLASS_WIDGET_READER_INFO(ButtonReader)
     

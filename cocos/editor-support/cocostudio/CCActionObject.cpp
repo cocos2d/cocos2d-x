@@ -133,7 +133,7 @@ void ActionObject::initWithBinary(CocoLoader *cocoLoader,
                                   cocos2d::Ref *root)
 {
     stExpCocoNode *stChildNode = cocoNode->GetChildArray();
-    stExpCocoNode *actionNodeList = NULL;
+    stExpCocoNode *actionNodeList = nullptr;
     int count = cocoNode->GetChildNum();
     for (int i = 0; i < count; ++i) {
         std::string key = stChildNode[i].GetName(cocoLoader);
@@ -149,7 +149,7 @@ void ActionObject::initWithBinary(CocoLoader *cocoLoader,
         }
     }
     
-    if(NULL != actionNodeList)
+    if(nullptr != actionNodeList)
     {
         int actionNodeCount = actionNodeList->GetChildNum();
         stExpCocoNode *actionNodeArray = actionNodeList->GetChildArray();
@@ -174,11 +174,11 @@ void ActionObject::initWithBinary(CocoLoader *cocoLoader,
     }
 }
 
-int ActionObject::valueToInt(std::string& value)
+int ActionObject::valueToInt(const std::string& value)
 {
     return atoi(value.c_str());
 }
-bool ActionObject::valueToBool(std::string& value)
+bool ActionObject::valueToBool(const std::string& value)
 {
     int intValue = valueToInt(value);
     if (1 == intValue) {
@@ -187,7 +187,7 @@ bool ActionObject::valueToBool(std::string& value)
         return false;
     }
 }
-float ActionObject::valueToFloat(std::string& value)
+float ActionObject::valueToFloat(const std::string& value)
 {
     return atof(value.c_str());
 }

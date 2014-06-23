@@ -69,9 +69,9 @@ namespace cocostudio
         void endSetBasicProperties(cocos2d::ui::Widget *widget);
         
         
-        std::function<int(std::string)> valueToInt;
-        std::function<bool(std::string)> valueToBool;
-        std::function<float(std::string)> valueToFloat;
+        std::function<int(const std::string&)> valueToInt;
+        std::function<bool(const std::string&)> valueToBool;
+        std::function<float(const std::string&)> valueToFloat;
         
         float _sizePercentX;
         float _sizePercentY;
