@@ -16,10 +16,7 @@ public:
 
 class PerformanceEventDispatcherScene : public Scene
 {
-public:
-    static const int TAG_TITLE = 100;
-    static const int TAG_SUBTITLE = 101;
-    
+public:    
     struct TestFunction
     {
         const char* name;

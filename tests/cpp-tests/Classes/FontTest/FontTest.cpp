@@ -1,16 +1,14 @@
 #include "FontTest.h"
 #include "../testResource.h"
 
-enum {
-    kTagLabel1,
-    kTagLabel2,
-    kTagLabel3,
-    kTagLabel4,
-    
-    kTagColor1,
-    kTagColor2,
-    kTagColor3,
-};
+
+#define NAME_LABEL1 "label1"
+#define NAME_LABEL2 "label2"
+#define NAME_LABEL3 "label3"
+#define NAME_LABEL4 "label4"
+#define NAME_COLOR1 "color1"
+#define NAME_COLOR2 "color2"
+#define NAME_COLOR3 "color3"
 
 static int fontIdx = 0;
 
@@ -89,13 +87,13 @@ void FontTest::showFont(const char *pFont)
     auto blockSize = Size(s.width/3, 200);
     float fontSize = 26;
 
-    removeChildByTag(kTagLabel1, true);
-    removeChildByTag(kTagLabel2, true);
-    removeChildByTag(kTagLabel3, true);
-    removeChildByTag(kTagLabel4, true);
-    removeChildByTag(kTagColor1, true);
-    removeChildByTag(kTagColor2, true);
-    removeChildByTag(kTagColor3, true);
+    removeChildByName(NAME_LABEL1, true);
+    removeChildByName(NAME_LABEL2, true);
+    removeChildByName(NAME_LABEL3, true);
+    removeChildByName(NAME_LABEL4, true);
+    removeChildByName(NAME_COLOR1, true);
+    removeChildByName(NAME_COLOR2, true);
+    removeChildByName(NAME_COLOR3, true);
 
     auto top = Label::createWithSystemFont(pFont, pFont, 24);
     auto left = Label::createWithSystemFont("alignment left", pFont, fontSize,
@@ -130,13 +128,13 @@ void FontTest::showFont(const char *pFont)
     right->setPosition(Vec2(blockSize.width*2, s.height/2));
     rightColor->setPosition(right->getPosition());
 
-    this->addChild(leftColor, -1, kTagColor1);
-    this->addChild(left, 0, kTagLabel1);
-    this->addChild(rightColor, -1, kTagColor2);
-    this->addChild(right, 0, kTagLabel2);
-    this->addChild(centerColor, -1, kTagColor3);
-    this->addChild(center, 0, kTagLabel3);
-    this->addChild(top, 0, kTagLabel4);
+    this->addChild(leftColor, -1, NAME_COLOR1);
+    this->addChild(left, 0, NAME_LABEL1);
+    this->addChild(rightColor, -1, NAME_COLOR2);
+    this->addChild(right, 0, NAME_LABEL2);
+    this->addChild(centerColor, -1, NAME_COLOR3);
+    this->addChild(center, 0, NAME_LABEL3);
+    this->addChild(top, 0, NAME_LABEL4);
 }
 
 void FontTest::backCallback(Ref* sender)

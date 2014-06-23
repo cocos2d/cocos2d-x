@@ -1,13 +1,11 @@
 #include "ParticleTest.h"
 #include "../testResource.h"
 
-enum {
-    kTagParticleCount = 1,
-};
-
 Layer* nextParticleAction();
 Layer* backParticleAction();
 Layer* restartParticleAction();
+
+#define PARTICLE_COUNT_ATLAS  "ParticleCountAtlas"
 
 //------------------------------------------------------------------
 //
@@ -1090,7 +1088,7 @@ void ParticleDemo::onEnter(void)
     addChild( menu, 100 );
 
     auto labelAtlas = LabelAtlas::create("0000", "fps_images.png", 12, 32, '.');
-    addChild(labelAtlas, 100, kTagParticleCount);
+    addChild(labelAtlas, 100, PARTICLE_COUNT_ATLAS);
     labelAtlas->setPosition(Vec2(s.width-66,50));
 
     // moving background
@@ -1149,7 +1147,7 @@ void ParticleDemo::update(float dt)
 {
     if (_emitter)
     {
-        auto atlas = (LabelAtlas*)getChildByTag(kTagParticleCount);
+        auto atlas = (LabelAtlas*)getChildByName(PARTICLE_COUNT_ATLAS);
         char str[5] = {0};
         sprintf(str, "%04d", _emitter->getParticleCount());
         atlas->setString(str);
@@ -1308,6 +1306,7 @@ void ParticleReorder::onEnter()
     auto parent2 = ParticleBatchNode::createWithTexture(ignore->getTexture());
     ignore->unscheduleUpdate();
 
+    char name[10];
     for( unsigned int i=0; i<2;i++)
     {
         auto parent = ( i==0 ? parent1 : parent2 );
@@ -1330,11 +1329,12 @@ void ParticleReorder::onEnter()
         emitter2->setPosition(Vec2( s.width/2,        s.height/2+60*neg));
         emitter3->setPosition(Vec2( s.width/2+30,    s.height/2+60*neg));
 
-        parent->addChild(emitter1, 0, 1);
-        parent->addChild(emitter2, 0, 2);
-        parent->addChild(emitter3, 0, 3);
+        parent->addChild(emitter1, 0, "1");
+        parent->addChild(emitter2, 0, "2");
+        parent->addChild(emitter3, 0, "3");
 
-        addChild(parent, 10, 1000+i);
+        sprintf(name, "1000%d", i);
+        addChild(parent, 10, name);
     }
 
     schedule(schedule_selector(ParticleReorder::reorderParticles), 1.0f);
@@ -1352,12 +1352,14 @@ std::string ParticleReorder::subtitle() const
 
 void ParticleReorder::reorderParticles(float dt)
 {
+    char name[10];
     for( int i=0; i<2;i++) {
-        auto parent = getChildByTag(1000+i);
+        sprintf(name, "1000%d", i);
+        auto parent = getChildByName(name);
 
-        auto child1 = parent->getChildByTag(1);
-        auto child2 = parent->getChildByTag(2);
-        auto child3 = parent->getChildByTag(3);
+        auto child1 = parent->getChildByName("1");
+        auto child2 = parent->getChildByName("2");
+        auto child3 = parent->getChildByName("3");
 
         if( _order % 3 == 0 ) {
             parent->reorderChild(child1, 1);
@@ -1530,7 +1532,7 @@ std::string MultipleParticleSystems::subtitle() const
 
 void MultipleParticleSystems::update(float dt)
 {
-    auto atlas = (LabelAtlas*) getChildByTag(kTagParticleCount);
+    auto atlas = (LabelAtlas*) getChildByName(PARTICLE_COUNT_ATLAS);
 
     unsigned int count = 0; 
     
@@ -1559,7 +1561,7 @@ void MultipleParticleSystemsBatched::onEnter()
 
     ParticleBatchNode *batchNode = ParticleBatchNode::createWithTexture(nullptr, 3000);
 
-    addChild(batchNode, 1, 2);
+    addChild(batchNode, 1, "batchNode");
 
     for (int i = 0; i<5; i++) {
 
@@ -1577,11 +1579,11 @@ void MultipleParticleSystemsBatched::onEnter()
 
 void MultipleParticleSystemsBatched::update(float dt)
 {
-    auto atlas = (LabelAtlas*) getChildByTag(kTagParticleCount);
+    auto atlas = (LabelAtlas*) getChildByName(PARTICLE_COUNT_ATLAS);
 
     int count = 0;
 
-    auto batchNode = getChildByTag(2);
+    auto batchNode = getChildByName("batchNode");
     for(const auto &child : batchNode->getChildren()) {
         auto item = dynamic_cast<ParticleSystem*>(child);
         if (item != NULL)
@@ -1618,7 +1620,7 @@ void AddAndDeleteParticleSystems::onEnter()
     //adds the texture inside the plist to the texture cache
     _batchNode = ParticleBatchNode::createWithTexture((Texture2D*)NULL, 16000);
 
-    addChild(_batchNode, 1, 2);
+    addChild(_batchNode, 1, "batchNode");
 
     for (int i = 0; i<6; i++) {
 
@@ -1631,7 +1633,7 @@ void AddAndDeleteParticleSystems::onEnter()
         particleSystem->setPosition(Vec2(i*15 +100,i*15+100));
 
         unsigned int randZ = rand() % 100;
-        _batchNode->addChild(particleSystem, randZ, -1);
+        _batchNode->addChild(particleSystem, randZ, "-1");
 
     }
 
@@ -1659,17 +1661,17 @@ void AddAndDeleteParticleSystems::removeSystem(float dt)
 
         CCLOG("add a new system");
         unsigned int randZ = rand() % 100;
-        _batchNode->addChild(particleSystem, randZ, -1);
+        _batchNode->addChild(particleSystem, randZ, "-1");
     }
 }
 
 void AddAndDeleteParticleSystems::update(float dt)
 {
-    auto atlas = (LabelAtlas*) getChildByTag(kTagParticleCount);
+    auto atlas = (LabelAtlas*) getChildByName(PARTICLE_COUNT_ATLAS);
 
     int count = 0;
 
-    auto batchNode = getChildByTag(2);
+    auto batchNode = getChildByName("batchNode");
     for(const auto &child : batchNode->getChildren()) {
         auto item = dynamic_cast<ParticleSystem*>(child);
         if (item != NULL)
@@ -1705,7 +1707,7 @@ void ReorderParticleSystems::onEnter()
 
     _batchNode = ParticleBatchNode::create("Images/stars-grayscale.png" ,3000);
 
-    addChild(_batchNode, 1, 2);
+    addChild(_batchNode, 1, "batchNode");
 
 
     for (int i = 0; i<3; i++) {
@@ -1800,11 +1802,11 @@ void ReorderParticleSystems::reorderSystem(float time)
 
 void ReorderParticleSystems::update(float dt)
 {
-    auto atlas = static_cast<LabelAtlas*>(getChildByTag(kTagParticleCount));
+    auto atlas = static_cast<LabelAtlas*>(getChildByName(PARTICLE_COUNT_ATLAS));
 
     int count = 0;
 
-    auto batchNode = getChildByTag(2);
+    auto batchNode = getChildByName("batchNode");
     for(const auto &child : batchNode->getChildren()) {
         auto item = dynamic_cast<ParticleSystem*>(child);
         if (item != nullptr)

@@ -6,10 +6,7 @@
 
 #include "ChipmunkTest.h"
 
-
-enum {
-    kTagParentNode = 1,
-};
+#define NAME_BATCHNODE  "batchNode"
 
 enum {
     Z_PHYSICS_DEBUG = 100,
@@ -50,7 +47,7 @@ ChipmunkTestLayer::ChipmunkTestLayer()
     _spriteTexture = Director::getInstance()->getTextureCache()->addImage("Images/grossini_dance_atlas.png");
     auto parent = Node::create();
 #endif
-    addChild(parent, 0, kTagParentNode);
+    addChild(parent, 0, NAME_BATCHNODE);
 
     addNewSpriteAtPosition(cocos2d::Vec2(200,200));
 
@@ -179,7 +176,7 @@ void ChipmunkTestLayer::addNewSpriteAtPosition(cocos2d::Vec2 pos)
 #if CC_ENABLE_CHIPMUNK_INTEGRATION    
     int posx, posy;
 
-    auto parent = getChildByTag(kTagParentNode);
+    auto parent = getChildByName(NAME_BATCHNODE);
 
     posx = CCRANDOM_0_1() * 200.0f;
     posy = CCRANDOM_0_1() * 200.0f;

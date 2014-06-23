@@ -17,8 +17,6 @@ public:
 class PerformanceContainerScene : public Scene
 {
 public:
-    static const int TAG_TITLE = 100;
-    static const int TAG_SUBTITLE = 101;
     
     struct TestFunction
     {

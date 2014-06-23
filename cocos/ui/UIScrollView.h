@@ -263,7 +263,7 @@ public:
     virtual Vector<Node*>& getChildren() override;
     virtual const Vector<Node*>& getChildren() const override;
     virtual ssize_t getChildrenCount() const override;
-    virtual Node * getChildByTag(int tag) const override;
+    CC_DEPRECATED_ATTRIBUTE virtual Node * getChildByTag(int tag) const override;
     virtual Node* getChildByName(const std::string& name)const override;
     
     //handle touch event

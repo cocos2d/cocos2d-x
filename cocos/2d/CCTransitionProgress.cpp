@@ -36,9 +36,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-enum {
-    kSceneRadial = 0xc001,
-};
+#define NAME_SCENERADIAL "sceenRadial"
 
 TransitionProgress::TransitionProgress()
 : _to(0.0f)
@@ -100,14 +98,14 @@ void TransitionProgress::onEnter()
     node->runAction(layerAction);
 
     // add the layer (which contains our two rendertextures) to the scene
-    addChild(node, 2, kSceneRadial);
+    addChild(node, 2, NAME_SCENERADIAL);
 }
 
 // clean up on exit
 void TransitionProgress::onExit()
 {
     // remove our layer and release all containing objects
-    removeChildByTag(kSceneRadial, true);
+    removeChildByName(NAME_SCENERADIAL, true);
     TransitionScene::onExit();
 }
 

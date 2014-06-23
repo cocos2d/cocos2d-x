@@ -1,10 +1,8 @@
 #include "TileMapTest.h"
 #include "../testResource.h"
 
-enum 
-{
-    kTagTileMap = 1,
-};
+
+#define NAME_TILEMAP  "tileMap"
 
 Layer* nextTileMapAction();
 Layer* backTileMapAction();
@@ -151,7 +149,7 @@ void TileDemo::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
     auto touch = touches[0];
 
     auto diff = touch->getDelta();
-    auto node = getChildByTag(kTagTileMap);
+    auto node = getChildByName(NAME_TILEMAP);
     auto currentPos = node->getPosition();
     node->setPosition(currentPos + diff);
 }
@@ -188,7 +186,7 @@ TileMapTest::TileMapTest()
     // NEW since v0.7
     map->releaseMap();
     
-    addChild(map, 0, kTagTileMap);
+    addChild(map, 0, NAME_TILEMAP);
     
     map->setAnchorPoint( Vec2(0, 0.5f) );
 
@@ -224,7 +222,7 @@ TileMapEditTest::TileMapEditTest()
     // And if you are going to use, it you can access the data with:
     schedule(schedule_selector(TileMapEditTest::updateMap), 0.2f);
     
-    addChild(map, 0, kTagTileMap);
+    addChild(map, 0, NAME_TILEMAP);
     
     map->setAnchorPoint( Vec2(0, 0) );
     map->setPosition( Vec2(-20,-200) );
@@ -236,7 +234,7 @@ void TileMapEditTest::updateMap(float dt)
     //   The only limitation is that you cannot change an empty, or assign an empty tile to a tile
     //   The value 0 not rendered so don't assign or change a tile with value 0
 
-    auto tilemap = (TileMapAtlas*) getChildByTag(kTagTileMap);
+    auto tilemap = (TileMapAtlas*) getChildByName(NAME_TILEMAP);
     
     //
     // For example you can iterate over all the tiles
@@ -284,7 +282,7 @@ TMXOrthoTest::TMXOrthoTest()
 
     auto map = TMXTiledMap::create("TileMaps/orthogonal-test2.tmx");
 
-    addChild(map, 0, kTagTileMap);
+    addChild(map, 0, NAME_TILEMAP);
     
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
@@ -326,7 +324,7 @@ std::string TMXOrthoTest::title() const
 TMXOrthoTest2::TMXOrthoTest2()
 {
     auto map = TMXTiledMap::create("TileMaps/orthogonal-test1.tmx");
-    addChild(map, 0, kTagTileMap);
+    addChild(map, 0, NAME_TILEMAP);
 
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
@@ -355,7 +353,7 @@ std::string TMXOrthoTest2::title() const
 TMXOrthoTest3::TMXOrthoTest3()
 {
     auto map = TMXTiledMap::create("TileMaps/orthogonal-test3.tmx");
-    addChild(map, 0, kTagTileMap);
+    addChild(map, 0, NAME_TILEMAP);
     
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
@@ -385,7 +383,7 @@ std::string TMXOrthoTest3::title() const
 TMXOrthoTest4::TMXOrthoTest4()
 {
     auto map = TMXTiledMap::create("TileMaps/orthogonal-test4.tmx");
-    addChild(map, 0, kTagTileMap);
+    addChild(map, 0, NAME_TILEMAP);
     
     Size CC_UNUSED s1 = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s1.width,s1.height);
@@ -422,7 +420,7 @@ void TMXOrthoTest4::removeSprite(float dt)
 {
     unschedule(schedule_selector(TMXOrthoTest4::removeSprite));
 
-    auto map = static_cast<TMXTiledMap*>( getChildByTag(kTagTileMap) );
+    auto map = static_cast<TMXTiledMap*>( getChildByName(NAME_TILEMAP) );
     auto layer = map->getLayer("Layer 0");
     auto s = layer->getLayerSize();
 
@@ -456,7 +454,7 @@ TMXReadWriteTest::TMXReadWriteTest()
     _gid = 0;
     
     auto map = TMXTiledMap::create("TileMaps/orthogonal-test2.tmx");
-    addChild(map, 0, kTagTileMap);
+    addChild(map, 0, NAME_TILEMAP);
     
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
@@ -522,7 +520,7 @@ void TMXReadWriteTest::removeSprite(Node* sender)
 
 void TMXReadWriteTest::updateCol(float dt)
 {    
-    auto map = (TMXTiledMap*)getChildByTag(kTagTileMap);
+    auto map = (TMXTiledMap*)getChildByName(NAME_TILEMAP);
     auto layer = (TMXLayer*)map->getChildByTag(0);
 
     ////----CCLOG("++++atlas quantity: %d", layer->textureAtlas()->getTotalQuads());
@@ -543,7 +541,7 @@ void TMXReadWriteTest::repaintWithGID(float dt)
 {
 //    unschedule:_cmd);
     
-    auto map = (TMXTiledMap*)getChildByTag(kTagTileMap);
+    auto map = (TMXTiledMap*)getChildByName(NAME_TILEMAP);
     auto layer = (TMXLayer*)map->getChildByTag(0);
     
     auto s = layer->getLayerSize();
@@ -559,7 +557,7 @@ void TMXReadWriteTest::removeTiles(float dt)
 {
     unschedule(schedule_selector(TMXReadWriteTest::removeTiles));
 
-    auto map = (TMXTiledMap*)getChildByTag(kTagTileMap);
+    auto map = (TMXTiledMap*)getChildByName(NAME_TILEMAP);
     auto layer = (TMXLayer*)map->getChildByTag(0);
     auto s = layer->getLayerSize();
 
@@ -587,7 +585,7 @@ TMXHexTest::TMXHexTest()
     addChild(color, -1);
     
     auto map = TMXTiledMap::create("TileMaps/hexa-test.tmx");
-    addChild(map, 0, kTagTileMap);
+    addChild(map, 0, NAME_TILEMAP);
     
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
@@ -609,7 +607,7 @@ TMXIsoTest::TMXIsoTest()
     addChild(color, -1);
     
     auto map = TMXTiledMap::create("TileMaps/iso-test.tmx");
-    addChild(map, 0, kTagTileMap);        
+    addChild(map, 0, NAME_TILEMAP);
     
     // move map to the center of the screen
     auto ms = map->getMapSize();
@@ -633,7 +631,7 @@ TMXIsoTest1::TMXIsoTest1()
     addChild(color, -1);
     
     auto map = TMXTiledMap::create("TileMaps/iso-test1.tmx");
-    addChild(map, 0, kTagTileMap);
+    addChild(map, 0, NAME_TILEMAP);
     
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
@@ -657,7 +655,7 @@ TMXIsoTest2::TMXIsoTest2()
     addChild(color, -1);
     
     auto map = TMXTiledMap::create("TileMaps/iso-test2.tmx");
-    addChild(map, 0, kTagTileMap);    
+    addChild(map, 0, NAME_TILEMAP);
     
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
@@ -684,7 +682,7 @@ TMXUncompressedTest::TMXUncompressedTest()
     addChild(color, -1);
     
     auto map = TMXTiledMap::create("TileMaps/iso-test2-uncompressed.tmx");
-    addChild(map, 0, kTagTileMap);    
+    addChild(map, 0, NAME_TILEMAP);
     
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
@@ -718,7 +716,7 @@ std::string TMXUncompressedTest::title() const
 TMXTilesetTest::TMXTilesetTest()
 {
     auto map = TMXTiledMap::create("TileMaps/orthogonal-test5.tmx");
-    addChild(map, 0, kTagTileMap);
+    addChild(map, 0, NAME_TILEMAP);
     
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
@@ -747,7 +745,7 @@ std::string TMXTilesetTest::title() const
 TMXOrthoObjectsTest::TMXOrthoObjectsTest()
 {
     auto map = TMXTiledMap::create("TileMaps/ortho-objects.tmx");
-    addChild(map, -1, kTagTileMap);
+    addChild(map, -1, NAME_TILEMAP);
     
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
@@ -773,7 +771,7 @@ void TMXOrthoObjectsTest::onDraw(const Mat4 &transform, uint32_t flags)
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
     
-    auto map = static_cast<TMXTiledMap*>( getChildByTag(kTagTileMap) );
+    auto map = static_cast<TMXTiledMap*>( getChildByName(NAME_TILEMAP) );
     auto pos = map->getPosition();
     auto group = map->getObjectGroup("Object Group 1");
 
@@ -821,7 +819,7 @@ std::string TMXOrthoObjectsTest::subtitle() const
 TMXIsoObjectsTest::TMXIsoObjectsTest()
 {
     auto map = TMXTiledMap::create("TileMaps/iso-test-objectgroup.tmx");
-    addChild(map, -1, kTagTileMap);
+    addChild(map, -1, NAME_TILEMAP);
     
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
@@ -848,7 +846,7 @@ void TMXIsoObjectsTest::onDraw(const Mat4 &transform, uint32_t flags)
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
 
-    auto map = (TMXTiledMap*) getChildByTag(kTagTileMap);
+    auto map = (TMXTiledMap*) getChildByName(NAME_TILEMAP);
     auto pos = map->getPosition();
     auto group = map->getObjectGroup("Object Group 1");
 
@@ -894,7 +892,7 @@ std::string TMXIsoObjectsTest::subtitle() const
 TMXResizeTest::TMXResizeTest()
 {
     auto map = TMXTiledMap::create("TileMaps/orthogonal-test5.tmx");
-    addChild(map, 0, kTagTileMap);
+    addChild(map, 0, NAME_TILEMAP);
     
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
@@ -931,7 +929,7 @@ std::string TMXResizeTest::subtitle() const
 TMXIsoZorder::TMXIsoZorder()
 {
     auto map = TMXTiledMap::create("TileMaps/iso-test-zorder.tmx");
-    addChild(map, 0, kTagTileMap);
+    addChild(map, 0, NAME_TILEMAP);
 
     auto s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
@@ -968,7 +966,7 @@ void TMXIsoZorder::repositionSprite(float dt)
 {
     auto p = _tamara->getPosition();
     p = CC_POINT_POINTS_TO_PIXELS(p);
-    auto map = getChildByTag(kTagTileMap);
+    auto map = getChildByName(NAME_TILEMAP);
     
     // there are only 4 layers. (grass and 3 trees layers)
     // if tamara < 48, z=4
@@ -1000,7 +998,7 @@ std::string TMXIsoZorder::subtitle() const
 TMXOrthoZorder::TMXOrthoZorder()
 {
     auto map = TMXTiledMap::create("TileMaps/orthogonal-test-zorder.tmx");
-    addChild(map, 0, kTagTileMap);
+    addChild(map, 0, NAME_TILEMAP);
     
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
@@ -1028,7 +1026,7 @@ void TMXOrthoZorder::repositionSprite(float dt)
 {
     auto p = _tamara->getPosition();
     p = CC_POINT_POINTS_TO_PIXELS(p);
-    auto map = getChildByTag(kTagTileMap);
+    auto map = getChildByName(NAME_TILEMAP);
     
     // there are only 4 layers. (grass and 3 trees layers)
     // if tamara < 81, z=4
@@ -1061,7 +1059,7 @@ std::string TMXOrthoZorder::subtitle() const
 TMXIsoVertexZ::TMXIsoVertexZ()
 {
     auto map = TMXTiledMap::create("TileMaps/iso-test-vertexz.tmx");
-    addChild(map, 0, kTagTileMap);
+    addChild(map, 0, NAME_TILEMAP);
     
     auto s = map->getContentSize();
     map->setPosition( Vec2(-s.width/2,0) );
@@ -1133,7 +1131,7 @@ std::string TMXIsoVertexZ::subtitle() const
 TMXOrthoVertexZ::TMXOrthoVertexZ()
 {
     auto map = TMXTiledMap::create("TileMaps/orthogonal-test-vertexz.tmx");
-    addChild(map, 0, kTagTileMap);
+    addChild(map, 0, NAME_TILEMAP);
     
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
@@ -1204,7 +1202,7 @@ std::string TMXOrthoVertexZ::subtitle() const
 TMXIsoMoveLayer::TMXIsoMoveLayer()
 {
     auto map = TMXTiledMap::create("TileMaps/iso-test-movelayer.tmx");
-    addChild(map, 0, kTagTileMap);
+    addChild(map, 0, NAME_TILEMAP);
     
     map->setPosition(Vec2(-700,-50));
 
@@ -1231,7 +1229,7 @@ std::string TMXIsoMoveLayer::subtitle() const
 TMXOrthoMoveLayer::TMXOrthoMoveLayer()
 {
     auto map = TMXTiledMap::create("TileMaps/orthogonal-test-movelayer.tmx");
-    addChild(map, 0, kTagTileMap);
+    addChild(map, 0, NAME_TILEMAP);
 
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
@@ -1256,7 +1254,7 @@ std::string TMXOrthoMoveLayer::subtitle() const
 TMXTilePropertyTest::TMXTilePropertyTest()
 {
     auto map = TMXTiledMap::create("TileMaps/ortho-tile-property.tmx");
-    addChild(map ,0 ,kTagTileMap);
+    addChild(map ,0, NAME_TILEMAP);
 
     for(int i=1;i<=20;i++){
         for(const auto& value : map->getPropertiesForGID(i).asValueMap())
@@ -1285,7 +1283,7 @@ std::string TMXTilePropertyTest::subtitle() const
 TMXOrthoFlipTest::TMXOrthoFlipTest()
 {
     auto map = TMXTiledMap::create("TileMaps/ortho-rotation-test.tmx");
-    addChild(map, 0, kTagTileMap);
+    addChild(map, 0, NAME_TILEMAP);
 
     Size CC_UNUSED s = map->getContentSize();
     log("ContentSize: %f, %f", s.width,s.height);
@@ -1314,7 +1312,7 @@ std::string TMXOrthoFlipTest::title() const
 TMXOrthoFlipRunTimeTest::TMXOrthoFlipRunTimeTest()
 {
     auto map = TMXTiledMap::create("TileMaps/ortho-rotation-test.tmx");
-    addChild(map, 0, kTagTileMap);
+    addChild(map, 0, NAME_TILEMAP);
 
     auto s = map->getContentSize();
     log("ContentSize: %f, %f", s.width,s.height);
@@ -1343,7 +1341,7 @@ std::string TMXOrthoFlipRunTimeTest::subtitle() const
 
 void TMXOrthoFlipRunTimeTest::flipIt(float dt)
 {
-    auto map = (TMXTiledMap*) getChildByTag(kTagTileMap); 
+    auto map = (TMXTiledMap*) getChildByName(NAME_TILEMAP);
     auto layer = map->getLayer("Layer 0");
 
     //blue diamond 
@@ -1392,7 +1390,7 @@ TMXOrthoFromXMLTest::TMXOrthoFromXMLTest()
     CCASSERT(str != NULL, "Unable to open file");
 
     auto map = TMXTiledMap::createWithXML(str->getCString() ,resources.c_str());
-    addChild(map, 0, kTagTileMap);
+    addChild(map, 0, NAME_TILEMAP);
 
     auto s = map->getContentSize();
     log("ContentSize: %f, %f", s.width,s.height);
@@ -1424,7 +1422,7 @@ TMXOrthoXMLFormatTest::TMXOrthoXMLFormatTest()
     // 2. gid lower than firstgid is ignored
     // 3. firstgid in tsx is ignored, tile property in tsx loaded correctly.
     auto map = TMXTiledMap::create("TileMaps/xml-test.tmx");
-    addChild(map, 0, kTagTileMap);
+    addChild(map, 0, NAME_TILEMAP);
     
     auto s = map->getContentSize();
     log("ContentSize: %f, %f", s.width,s.height);
@@ -1456,7 +1454,7 @@ std::string TMXOrthoXMLFormatTest::title() const
 TMXBug987::TMXBug987()
 {
     auto map = TMXTiledMap::create("TileMaps/orthogonal-test6.tmx");
-    addChild(map, 0, kTagTileMap);
+    addChild(map, 0, NAME_TILEMAP);
 
     Size CC_UNUSED s1 = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s1.width,s1.height);
@@ -1490,7 +1488,7 @@ std::string TMXBug987::subtitle() const
 TMXBug787::TMXBug787()
 {
     auto map = TMXTiledMap::create("TileMaps/iso-test-bug787.tmx");
-    addChild(map, 0, kTagTileMap);
+    addChild(map, 0, NAME_TILEMAP);
 
     map->setScale(0.25f);
 }
@@ -1513,7 +1511,7 @@ std::string TMXBug787::subtitle() const
 TMXGIDObjectsTest::TMXGIDObjectsTest()
 {
     auto map = TMXTiledMap::create("TileMaps/test-object-layer.tmx");
-    addChild(map, -1, kTagTileMap);
+    addChild(map, -1, NAME_TILEMAP);
 
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("Contentsize: %f, %f", s.width, s.height);
@@ -1537,7 +1535,7 @@ void TMXGIDObjectsTest::onDraw(const Mat4 &transform, uint32_t flags)
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
 
-    auto map = (TMXTiledMap*)getChildByTag(kTagTileMap);
+    auto map = (TMXTiledMap*)getChildByName(NAME_TILEMAP);
     auto pos = map->getPosition();
     auto group = map->getObjectGroup("Object Layer 1");
     

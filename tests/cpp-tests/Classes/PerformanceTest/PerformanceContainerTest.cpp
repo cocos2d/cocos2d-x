@@ -32,6 +32,11 @@
 #undef CC_PROFILER_RESET_INSTANCE
 #define CC_PROFILER_RESET_INSTANCE(__id__, __name__) do{ ProfilingResetTimingBlock( String::createWithFormat("%08X - %s", __id__, __name__)->getCString() ); } while(0)
 
+#define NAME_TITLE  "tagTitle"
+#define NAME_SUBTITLE "subTitle"
+
+#define NAME_INFOLAYER "infoLayer"
+
 static std::function<PerformanceContainerScene*()> createFunctions[] =
 {
     CL(TemplateVectorPerfTest),
@@ -43,12 +48,6 @@ static std::function<PerformanceContainerScene*()> createFunctions[] =
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
-enum {
-    kTagInfoLayer = 1,
-
-    kTagBase = 20000,
-};
 
 enum {
     kMaxNodes = 15000,
@@ -97,7 +96,7 @@ void PerformanceContainerScene::initWithQuantityOfNodes(unsigned int nNodes)
 
     // Title
     auto label = Label::createWithTTF(title().c_str(), "fonts/arial.ttf", 32);
-    addChild(label, 1, TAG_TITLE);
+    addChild(label, 1, NAME_TITLE);
     label->setPosition(Vec2(s.width/2, s.height-50));
 
     // Subtitle
@@ -105,7 +104,7 @@ void PerformanceContainerScene::initWithQuantityOfNodes(unsigned int nNodes)
     if(strSubTitle.length())
     {
         auto l = Label::createWithTTF(strSubTitle.c_str(), "fonts/Thonburi.ttf", 16);
-        addChild(l, 1, TAG_SUBTITLE);
+        addChild(l, 1, NAME_SUBTITLE);
         l->setPosition(Vec2(s.width/2, s.height-80));
     }
 
@@ -150,7 +149,7 @@ void PerformanceContainerScene::initWithQuantityOfNodes(unsigned int nNodes)
     auto infoLabel = Label::createWithTTF("0 nodes", "fonts/Marker Felt.ttf", 30);
     infoLabel->setColor(Color3B(0,200,20));
     infoLabel->setPosition(Vec2(s.width/2, s.height/2-15));
-    addChild(infoLabel, 1, kTagInfoLayer);
+    addChild(infoLabel, 1, NAME_INFOLAYER);
 
     auto menuLayer = new ContainerBasicLayer(true, MAX_LAYER, g_curCase);
     addChild(menuLayer);
@@ -176,7 +175,7 @@ void PerformanceContainerScene::initWithQuantityOfNodes(unsigned int nNodes)
     auto toggle = MenuItemToggle::createWithCallback([this](Ref* sender){
         auto toggle = static_cast<MenuItemToggle*>(sender);
         this->_type = toggle->getSelectedIndex();
-        auto label = static_cast<Label*>(this->getChildByTag(TAG_SUBTITLE));
+        auto label = static_cast<Label*>(this->getChildByName(NAME_SUBTITLE));
         label->setString(StringUtils::format("Test '%s', See console", this->_testFunctions[this->_type].name));
         this->updateProfilerName();
     }, toggleItems);
@@ -248,7 +247,7 @@ void PerformanceContainerScene::updateQuantityLabel()
 {
     if( quantityOfNodes != lastRenderedCount )
     {
-        auto infoLabel = static_cast<Label*>( getChildByTag(kTagInfoLayer) );
+        auto infoLabel = static_cast<Label*>( getChildByName(NAME_INFOLAYER) );
         char str[20] = {0};
         sprintf(str, "%u nodes", quantityOfNodes);
         infoLabel->setString(str);

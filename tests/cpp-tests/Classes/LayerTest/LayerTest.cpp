@@ -1,10 +1,9 @@
 #include "LayerTest.h"
 #include "../testResource.h"
 
-enum 
-{
-    kTagLayer = 1,
-};
+#include <string>
+
+static std::string layerName = "layerTest";
 
 static std::function<Layer*()> createFunctions[] = {
     CL(LayerTestCascadingOpacityA),
@@ -139,7 +138,7 @@ void LayerTestCascadingOpacityA::onEnter()
     layer1->addChild(sister1);
     layer1->addChild(sister2);
     layer1->addChild(label);
-    this->addChild( layer1, 0, kTagLayer);
+    this->addChild( layer1, 0, layerName);
     
     sister1->setPosition( Vec2( s.width*1/3, s.height/2));
     sister2->setPosition( Vec2( s.width*2/3, s.height/2));
@@ -191,7 +190,7 @@ void LayerTestCascadingOpacityB::onEnter()
     layer1->addChild(sister1);
     layer1->addChild(sister2);
     layer1->addChild(label);
-    this->addChild( layer1, 0, kTagLayer);
+    this->addChild( layer1, 0, layerName);
     
     sister1->setPosition( Vec2( s.width*1/3, 0));
     sister2->setPosition( Vec2( s.width*2/3, 0));
@@ -244,7 +243,7 @@ void LayerTestCascadingOpacityC::onEnter()
     layer1->addChild(sister1);
     layer1->addChild(sister2);
     layer1->addChild(label);
-    this->addChild( layer1, 0, kTagLayer);
+    this->addChild( layer1, 0, layerName);
     
     sister1->setPosition( Vec2( s.width*1/3, 0));
     sister2->setPosition( Vec2( s.width*2/3, 0));
@@ -292,7 +291,7 @@ void LayerTestCascadingColorA::onEnter()
     layer1->addChild(sister1);
     layer1->addChild(sister2);
     layer1->addChild(label);
-    this->addChild( layer1, 0, kTagLayer);
+    this->addChild( layer1, 0, layerName);
     
     sister1->setPosition( Vec2( s.width*1/3, s.height/2));
     sister2->setPosition( Vec2( s.width*2/3, s.height/2));
@@ -345,7 +344,7 @@ void LayerTestCascadingColorB::onEnter()
     layer1->addChild(sister1);
     layer1->addChild(sister2);
     layer1->addChild(label);
-    this->addChild( layer1, 0, kTagLayer);
+    this->addChild( layer1, 0, layerName);
     
     sister1->setPosition( Vec2( s.width*1/3, 0));
     sister2->setPosition( Vec2( s.width*2/3, 0));
@@ -397,7 +396,7 @@ void LayerTestCascadingColorC::onEnter()
     layer1->addChild(sister1);
     layer1->addChild(sister2);
     layer1->addChild(label);
-    this->addChild( layer1, 0, kTagLayer);
+    this->addChild( layer1, 0, layerName);
     
     sister1->setPosition( Vec2( s.width*1/3, 0));
     sister2->setPosition( Vec2( s.width*2/3, 0));
@@ -450,7 +449,7 @@ void LayerTest1::onEnter()
     
     layer->ignoreAnchorPointForPosition(false);
     layer->setPosition( Vec2(s.width/2, s.height/2) );
-    addChild(layer, 1, kTagLayer);
+    addChild(layer, 1, layerName);
 }
 
 void LayerTest1::updateSize(Vec2 &touchLocation)
@@ -459,7 +458,7 @@ void LayerTest1::updateSize(Vec2 &touchLocation)
     
     auto newSize = Size( fabs(touchLocation.x - s.width/2)*2, fabs(touchLocation.y - s.height/2)*2);
     
-    auto l = (LayerColor*) getChildByTag(kTagLayer);
+    auto l = (LayerColor*) getChildByName(layerName);
 
     l->setContentSize( newSize );
 }
@@ -538,7 +537,7 @@ LayerTestBlend::LayerTestBlend()
     
     addChild(sister1);
     addChild(sister2);
-    addChild(layer1, 100, kTagLayer);
+    addChild(layer1, 100, layerName);
     
     sister1->setPosition( Vec2( s.width*1/3, s.height/2) );
     sister2->setPosition( Vec2( s.width*2/3, s.height/2) );
@@ -548,7 +547,7 @@ LayerTestBlend::LayerTestBlend()
 
 void LayerTestBlend::newBlend(float dt)
 {
-     auto layer = (LayerColor*)getChildByTag(kTagLayer);
+     auto layer = (LayerColor*)getChildByName(layerName);
 
     GLenum src;
     GLenum dst;
@@ -582,7 +581,7 @@ std::string LayerTestBlend::subtitle() const
 LayerGradientTest::LayerGradientTest()
 {
     auto layer1 = LayerGradient::create(Color4B(255,0,0,255), Color4B(0,255,0,255), Vec2(0.9f, 0.9f));
-    addChild(layer1, 0, kTagLayer);
+    addChild(layer1, 0, layerName);
 
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesMoved = CC_CALLBACK_2(LayerGradientTest::onTouchesMoved, this);
@@ -602,7 +601,7 @@ LayerGradientTest::LayerGradientTest()
 
 void LayerGradientTest::toggleItem(Ref *sender)
 {
-    auto gradient = static_cast<LayerGradient*>( getChildByTag(kTagLayer) );
+    auto gradient = static_cast<LayerGradient*>( getChildByName(layerName) );
     gradient->setCompressedInterpolation(! gradient->isCompressedInterpolation());
 }
 
@@ -675,7 +674,7 @@ std::string LayerGradientTest3::subtitle() const
 
 // LayerIgnoreAnchorPointPos
 
-#define kLayerIgnoreAnchorPoint  1000
+#define LAYER_IGNORE_ANCHOR_POINT  "LayerIgnoreAnchorPoint"
 
 void LayerIgnoreAnchorPointPos::onEnter()
 {
@@ -692,7 +691,7 @@ void LayerIgnoreAnchorPointPos::onEnter()
     auto back = (MoveBy *)move->reverse();
     auto seq = Sequence::create(move, back, NULL);
     l->runAction(RepeatForever::create(seq));
-    this->addChild(l, 0, kLayerIgnoreAnchorPoint);
+    this->addChild(l, 0, LAYER_IGNORE_ANCHOR_POINT);
 
     auto child = Sprite::create("Images/grossini.png");
     l->addChild(child);
@@ -709,7 +708,7 @@ void LayerIgnoreAnchorPointPos::onEnter()
 
 void LayerIgnoreAnchorPointPos::onToggle(Ref* pObject)
 {
-    auto layer = this->getChildByTag(kLayerIgnoreAnchorPoint);
+    auto layer = this->getChildByName(LAYER_IGNORE_ANCHOR_POINT);
     bool ignore = layer->isIgnoreAnchorPointForPosition();
     layer->ignoreAnchorPointForPosition(! ignore);
 }
@@ -736,7 +735,7 @@ void LayerIgnoreAnchorPointRot::onEnter()
     l->setAnchorPoint(Vec2(0.5f, 0.5f));
     l->setPosition(Vec2( s.width/2, s.height/2));
 
-    this->addChild(l, 0, kLayerIgnoreAnchorPoint);
+    this->addChild(l, 0, LAYER_IGNORE_ANCHOR_POINT);
 
     auto rot = RotateBy::create(2, 360);
     l->runAction(RepeatForever::create(rot));
@@ -757,7 +756,7 @@ void LayerIgnoreAnchorPointRot::onEnter()
 
 void LayerIgnoreAnchorPointRot::onToggle(Ref* pObject)
 {
-    auto layer = this->getChildByTag(kLayerIgnoreAnchorPoint);
+    auto layer = this->getChildByName(LAYER_IGNORE_ANCHOR_POINT);
     bool ignore = layer->isIgnoreAnchorPointForPosition();
     layer->ignoreAnchorPointForPosition(! ignore);
 }
@@ -791,7 +790,7 @@ void LayerIgnoreAnchorPointScale::onEnter()
 
     l->runAction(RepeatForever::create(seq));
 
-    this->addChild(l, 0, kLayerIgnoreAnchorPoint);
+    this->addChild(l, 0, LAYER_IGNORE_ANCHOR_POINT);
 
     auto child = Sprite::create("Images/grossini.png");
     l->addChild(child);
@@ -808,7 +807,7 @@ void LayerIgnoreAnchorPointScale::onEnter()
 
 void LayerIgnoreAnchorPointScale::onToggle(Ref* pObject)
 {
-    auto layer = this->getChildByTag(kLayerIgnoreAnchorPoint);
+    auto layer = this->getChildByName(LAYER_IGNORE_ANCHOR_POINT);
     bool ignore = layer->isIgnoreAnchorPointForPosition();
     layer->ignoreAnchorPointForPosition(! ignore);
 }

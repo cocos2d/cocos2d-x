@@ -162,7 +162,7 @@ void VideoPlayerTest::createSlider()
     hSlider->setPosition(Vec2(centerPos.x, _visibleRect.origin.y + _visibleRect.size.height * 0.15f));
     hSlider->setPercent(50);
     hSlider->addEventListener(CC_CALLBACK_2(VideoPlayerTest::sliderCallback, this));
-    _uiLayer->addChild(hSlider,0,1);
+    _uiLayer->addChild(hSlider,0,"1");
 
     auto vSlider = ui::Slider::create();
     vSlider->setTouchEnabled(true);
@@ -173,15 +173,15 @@ void VideoPlayerTest::createSlider()
     vSlider->setRotation(90);
     vSlider->setPercent(50);
     vSlider->addEventListener(CC_CALLBACK_2(VideoPlayerTest::sliderCallback, this));
-    _uiLayer->addChild(vSlider,0,2);
+    _uiLayer->addChild(vSlider,0,"2");
 }
 
 void VideoPlayerTest::sliderCallback(Ref *sender, ui::Slider::EventType eventType)
 {
     if (eventType == Slider::EventType::ON_PERCENTAGE_CHANGED && _videoPlayer)
     {
-        Slider*  hSlider = (Slider*)this->getChildByTag(1);
-        Slider*  vSlider = (Slider*)this->getChildByTag(2);
+        Slider*  hSlider = (Slider*)this->getChildByName("1");
+        Slider*  vSlider = (Slider*)this->getChildByName("2");
 
         auto newPosX = _visibleRect.origin.x + _visibleRect.size.width / 2 + hSlider->getPercent() - 50;
         auto newPosY = _visibleRect.origin.y + _visibleRect.size.height / 2 + 50 - vSlider->getPercent();

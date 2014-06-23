@@ -7,12 +7,10 @@ enum {
     TEST_COUNT = 5,
 };
 
-enum {
-    kTagInfoLayer = 1,
-    kTagMainLayer,
-    kTagAutoTestMenu,
-    kTagMenuLayer = (kMaxNodes + 1000),
-};
+#define NAME_INFOLAYER  "infoLayer"
+#define NAME_MAINLAYER  "mainLayer"
+#define NAME_AUTOTESTMENU "autoTestMenu"
+#define NAME_MENULAYER "menuLayer"
 
 enum {
     kCaseLabelTTFUpdate = 0,
@@ -105,11 +103,11 @@ void LabelMainScene::initWithSubTest(int nodes)
     auto infoLabel = Label::createWithTTF("0 nodes", "fonts/Marker Felt.ttf", 30);
     infoLabel->setColor(Color3B(0,200,20));
     infoLabel->setPosition(Vec2(s.width/2, s.height-90));
-    addChild(infoLabel, 1, kTagInfoLayer);
+    addChild(infoLabel, 1, NAME_INFOLAYER);
 
     // add menu
     auto menuLayer = new LabelMenuLayer(true, TEST_COUNT, LabelMainScene::_s_labelCurCase);
-    addChild(menuLayer, 1, kTagMenuLayer);
+    addChild(menuLayer, 1, NAME_MENULAYER);
     menuLayer->release();
     
     /**
@@ -134,7 +132,7 @@ void LabelMainScene::initWithSubTest(int nodes)
     autoTestItem->setPosition(Vec2( s.width - 90, s.height / 2));
     autoTestItem->setColor(Color3B::RED);
     menuAutoTest->addChild(autoTestItem);
-    addChild( menuAutoTest, 3, kTagAutoTestMenu );
+    addChild( menuAutoTest, 3, NAME_AUTOTESTMENU );
     
     _title = Label::createWithTTF(title().c_str(), "fonts/arial.ttf", 32);
     addChild(_title, 1);
@@ -173,7 +171,7 @@ void LabelMainScene::updateNodes()
 {
     if( _quantityNodes != _lastRenderedCount )
     {
-        auto infoLabel = (Label *) getChildByTag(kTagInfoLayer);
+        auto infoLabel = (Label *) getChildByName(NAME_INFOLAYER);
         char str[16] = {0};
         sprintf(str, "%u nodes", _quantityNodes);
         infoLabel->setString(str);
@@ -196,7 +194,7 @@ void LabelMainScene::onIncrease(Ref* sender)
         {
             auto label = Label::createWithSystemFont("LabelTTF", "Marker Felt", 30);
             label->setPosition(Vec2((size.width/2 + rand() % 50), ((int)size.height/2 + rand() % 50)));
-            _labelContainer->addChild(label, 1, _quantityNodes);
+            _labelContainer->addChild(label, 1);
 
             _quantityNodes++;
         }
@@ -206,7 +204,7 @@ void LabelMainScene::onIncrease(Ref* sender)
         {
             auto label = Label::createWithBMFont("fonts/bitmapFontTest3.fnt","LabelBMFont");
             label->setPosition(Vec2((size.width/2 + rand() % 50), ((int)size.height/2 + rand() % 50)));
-            _labelContainer->addChild(label, 1, _quantityNodes);
+            _labelContainer->addChild(label, 1);
 
             _quantityNodes++;
         }
@@ -218,7 +216,7 @@ void LabelMainScene::onIncrease(Ref* sender)
             {
                 auto label = Label::createWithTTF(ttfConfig, "Label", TextHAlignment::LEFT);
                 label->setPosition(Vec2((size.width/2 + rand() % 50), ((int)size.height/2 + rand() % 50)));
-                _labelContainer->addChild(label, 1, _quantityNodes);
+                _labelContainer->addChild(label, 1);
 
                 _quantityNodes++;
             }
@@ -229,7 +227,7 @@ void LabelMainScene::onIncrease(Ref* sender)
         {
             auto label = Label::createWithBMFont("fonts/bitmapFontTest3.fnt", LongSentencesExample);
             label->setPosition(Vec2((size.width/2 + rand() % 50), ((int)size.height/2 + rand() % 50)));
-            _labelContainer->addChild(label, 1, _quantityNodes);
+            _labelContainer->addChild(label, 1);
 
             _quantityNodes++;
         }
@@ -241,7 +239,7 @@ void LabelMainScene::onIncrease(Ref* sender)
             {
                 auto label = Label::createWithTTF(ttfConfig, LongSentencesExample, TextHAlignment::CENTER, size.width);
                 label->setPosition(Vec2((rand() % 50), rand()%((int)size.height/3)));
-                _labelContainer->addChild(label, 1, _quantityNodes);
+                _labelContainer->addChild(label, 1);
 
                 _quantityNodes++;
             }
@@ -406,7 +404,7 @@ void  LabelMainScene::finishAutoTest()
 {
     LabelMainScene::_s_autoTest = false;
     
-    auto autoTestMenu = dynamic_cast<Menu*>(getChildByTag(kTagAutoTestMenu));
+    auto autoTestMenu = dynamic_cast<Menu*>(getChildByName(NAME_AUTOTESTMENU));
     if (nullptr != autoTestMenu)
     {
         auto menuItemFont = dynamic_cast<MenuItemFont*>(autoTestMenu->getChildByTag(1));

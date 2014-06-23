@@ -1,10 +1,7 @@
 #include "ClickAndMoveTest.h"
 #include "../testResource.h"
 
-enum
-{
-    kTagSprite = 1,
-};
+#define NAME_SPRITE "sprite"
 
 void ClickAndMoveTestScene::runThisTest()
 {
@@ -27,7 +24,7 @@ MainLayer::MainLayer()
     auto layer = LayerColor::create(Color4B(255,255,0,255));
     addChild(layer, -1);
         
-    addChild(sprite, 0, kTagSprite);
+    addChild(sprite, 0, NAME_SPRITE);
     sprite->setPosition( Vec2(20,150) );
     
     sprite->runAction( JumpTo::create(4, Vec2(300,48), 100, 4) );
@@ -49,7 +46,7 @@ void MainLayer::onTouchEnded(Touch* touch, Event  *event)
 {
     auto location = touch->getLocation();
 
-    auto s = getChildByTag(kTagSprite);
+    auto s = getChildByName(NAME_SPRITE);
     s->stopAllActions();
     s->runAction( MoveTo::create(1, Vec2(location.x, location.y) ) );
     float o = location.x - s->getPosition().x;

@@ -47,7 +47,7 @@ bool ComponentsTestLayer::init()
         
         auto root = createGameScene();
         CC_BREAK_IF(!root);
-        this->addChild(root, 0, 1);
+        this->addChild(root, 0);
 
         root->getChildByTag(1)->addComponent(ComAudio::create());
         root->getChildByTag(1)->addComponent(PlayerController::create());  
@@ -77,7 +77,7 @@ cocos2d::Node* ComponentsTestLayer::createGameScene()
                                  origin.y + visibleSize.height/2) );
         
         root = cocos2d::Node::create();
-        root->addChild(player, 1, 1);
+        root->addChild(player, 1);
         
 
         auto itemBack = MenuItemFont::create("Back", [](Ref* sender){

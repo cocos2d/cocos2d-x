@@ -1,13 +1,6 @@
 #include "EffectsTest.h"
 #include "../testResource.h"
 
-enum {
-    kTagTextLayer = 1,
-
-    kTagBackground = 1,
-    kTagLabel = 2,
-};
-
 static int actionIdx=0; 
 static std::string effectsList[] =
 {
@@ -345,7 +338,7 @@ TextLayer::TextLayer(void)
     _gridNodeTarget = NodeGrid::create();
     auto effect = getAction();
     _gridNodeTarget->runAction(effect);
-    addChild(_gridNodeTarget, 0, kTagBackground);
+    addChild(_gridNodeTarget, 0);
     
     auto bg = Sprite::create(s_back3);
     _gridNodeTarget->addChild(bg, 0);
@@ -370,14 +363,12 @@ TextLayer::TextLayer(void)
     
     label->setPosition( Vec2(VisibleRect::center().x,VisibleRect::top().y-80) );
     addChild(label);
-    label->setTag( kTagLabel );
     
     schedule( schedule_selector(TextLayer::checkAnim) );
 }
 
 void TextLayer::checkAnim(float dt)
 {
-    //auto s2 = getChildByTag(kTagBackground);
     if ( _gridNodeTarget->getNumberOfRunningActions() == 0 && _gridNodeTarget->getGrid() != NULL)
         _gridNodeTarget->setGrid(nullptr);;
 }

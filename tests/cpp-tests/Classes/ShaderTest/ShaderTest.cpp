@@ -776,7 +776,7 @@ bool ShaderMultiTexture::init()
 
         // Right: normal sprite
         auto right = Sprite::create("Images/grossinis_sister2.png");
-        addChild(right, 0, rightSpriteTag);
+        addChild(right, 0, "rightSprite");
         right->setPosition(s.width*3/4, s.height/2);
 
 
@@ -817,7 +817,7 @@ void ShaderMultiTexture::changeTexture(Ref*)
         "Images/grossinis_sister2.png"
     };
     auto textrue = Director::getInstance()->getTextureCache()->addImage(textureFiles[_changedTextureId++ % textureFilesCount]);
-    Sprite* right = dynamic_cast<Sprite*>(getChildByTag(rightSpriteTag));
+    Sprite* right = dynamic_cast<Sprite*>(getChildByName("rightSprite"));
     right->setTexture(textrue);
     auto programState = _sprite->getGLProgramState();
     programState->setUniformTexture("u_texture1", right->getTexture());

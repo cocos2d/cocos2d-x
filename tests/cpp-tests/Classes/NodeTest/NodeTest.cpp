@@ -26,13 +26,10 @@
 #include "NodeTest.h"
 #include "../testResource.h"
 
-enum 
-{
-    kTagSprite1 = 1,
-    kTagSprite2 = 2,
-    kTagSprite3 = 3,
-    kTagSlider,
-};
+#define NameSprite1 "Sprite1"
+#define NameSprite2 "Sprite2"
+#define NameSprite3 "Sprite3"
+#define NameSlider  "Slider"
 
 
 Layer* nextCocosNodeAction();
@@ -218,8 +215,8 @@ Test4::Test4()
     sp1->setPosition( Vec2(100,160) );
     sp2->setPosition( Vec2(380,160) );
     
-    addChild(sp1, 0, 2);
-    addChild(sp2, 0, 3);
+    addChild(sp1, 0, "2");
+    addChild(sp2, 0, "3");
     
     schedule( schedule_selector(Test4::delay2), 2.0f); 
     schedule( schedule_selector(Test4::delay4), 4.0f); 
@@ -227,7 +224,7 @@ Test4::Test4()
 
 void Test4::delay2(float dt)
 {
-    auto node = static_cast<Sprite*>(getChildByTag(2));
+    auto node = static_cast<Sprite*>(getChildByName("2"));
     auto action1 = RotateBy::create(1, 360);
     node->runAction(action1);
 }
@@ -235,12 +232,12 @@ void Test4::delay2(float dt)
 void Test4::delay4(float dt)
 {
     unschedule(schedule_selector(Test4::delay4)); 
-    removeChildByTag(3, false);
+    removeChildByName("3", false);
 }
 
 std::string Test4::subtitle() const
 {
-    return "tags";
+    return "removeChildByName";
 }
 
 
@@ -264,8 +261,8 @@ Test5::Test5()
     forever->setTag(101);
     forever2->setTag(102);
                                                   
-    addChild(sp1, 0, kTagSprite1);
-    addChild(sp2, 0, kTagSprite2);
+    addChild(sp1, 0, NameSprite1);
+    addChild(sp2, 0, NameSprite2);
             
     sp1->runAction(forever);
     sp2->runAction(forever2);
@@ -275,8 +272,8 @@ Test5::Test5()
 
 void Test5::addAndRemove(float dt)
 {
-    auto sp1 = getChildByTag(kTagSprite1);
-    auto sp2 = getChildByTag(kTagSprite2);
+    auto sp1 = getChildByName(NameSprite1);
+    auto sp2 = getChildByName(NameSprite2);
 
     sp1->retain();
     sp2->retain();
@@ -284,8 +281,8 @@ void Test5::addAndRemove(float dt)
     removeChild(sp1, false);
     removeChild(sp2, true);
     
-    addChild(sp1, 0, kTagSprite1);
-    addChild(sp2, 0, kTagSprite2);
+    addChild(sp1, 0, NameSprite1);
+    addChild(sp2, 0, NameSprite2);
     
     sp1->release();
     sp2->release();
@@ -320,9 +317,9 @@ Test6::Test6()
     auto forever2 = forever1->clone();
     auto forever21 = forever1->clone();
     
-    addChild(sp1, 0, kTagSprite1);
+    addChild(sp1, 0, NameSprite1);
     sp1->addChild(sp11);
-    addChild(sp2, 0, kTagSprite2);
+    addChild(sp2, 0, NameSprite2);
     sp2->addChild(sp21);
     
     sp1->runAction(forever1);
@@ -335,8 +332,8 @@ Test6::Test6()
 
 void Test6::addAndRemove(float dt)
 {
-    auto sp1 = getChildByTag(kTagSprite1);
-    auto sp2 = getChildByTag(kTagSprite2);
+    auto sp1 = getChildByName(NameSprite1);
+    auto sp2 = getChildByName(NameSprite2);
 
     sp1->retain();
     sp2->retain();
@@ -344,8 +341,8 @@ void Test6::addAndRemove(float dt)
     removeChild(sp1, false);
     removeChild(sp2, true);
     
-    addChild(sp1, 0, kTagSprite1);
-    addChild(sp2, 0, kTagSprite2);
+    addChild(sp1, 0, NameSprite1);
+    addChild(sp2, 0, NameSprite2);
     
     sp1->release();
     sp2->release();
@@ -368,7 +365,7 @@ StressTest1::StressTest1()
     auto s = Director::getInstance()->getWinSize();
 
     auto sp1 = Sprite::create(s_pathSister1);
-    addChild(sp1, 0, kTagSprite1);
+    addChild(sp1, 0, NameSprite1);
     
     sp1->setPosition( Vec2(s.width/2, s.height/2) );        
 
@@ -443,13 +440,13 @@ StressTest2::StressTest2()
             
     schedule(schedule_selector(StressTest2::shouldNotLeak), 6.0f);
     
-    addChild(sublayer, 0, kTagSprite1);
+    addChild(sublayer, 0, NameSprite1);
 }
 
 void StressTest2::shouldNotLeak(float dt)
 {
     unschedule( schedule_selector(StressTest2::shouldNotLeak) );
-    auto sublayer = static_cast<Layer*>( getChildByTag(kTagSprite1) );
+    auto sublayer = static_cast<Layer*>( getChildByName(NameSprite1) );
     sublayer->removeAllChildrenWithCleanup(true); 
 }
 
@@ -687,12 +684,12 @@ CameraZoomTest::CameraZoomTest()
 
     // CENTER
     sprite = Sprite::create(s_pathGrossini);
-    addChild( sprite, 0, 40);
+    addChild( sprite, 0, "40");
     sprite->setPosition(Vec2(s.width/4*2, s.height/2));
     
     // RIGHT
     sprite = Sprite::create(s_pathGrossini);
-    addChild( sprite, 0, 20);
+    addChild( sprite, 0, "20");
     sprite->setPosition(Vec2(s.width/4*3, s.height/2));
 
     _z = 0;
@@ -706,11 +703,11 @@ void CameraZoomTest::update(float dt)
 
     _z += dt * 100;
     
-    sprite = getChildByTag(20);
+    sprite = getChildByName("20");
 //    cam = sprite->getCamera();
 //    cam->setEye(0, 0, _z);
 
-    sprite = getChildByTag(40);
+    sprite = getChildByName("40");
 //    cam = sprite->getCamera();
 //    cam->setEye(0, 0, -_z);    
 }
@@ -759,7 +756,7 @@ CameraCenterTest::CameraCenterTest()
     
     // LEFT-BOTTOM
     sprite = Sprite::create("Images/white-512x512.png");
-    addChild( sprite, 0, 40);
+    addChild( sprite, 0);
     sprite->setPosition(Vec2(s.width/5*1, s.height/5*4));
     sprite->setColor(Color3B::BLUE);
     sprite->setTextureRect(Rect(0, 0, 120, 50));
@@ -779,7 +776,7 @@ CameraCenterTest::CameraCenterTest()
     
     // RIGHT-BOTTOM
     sprite = Sprite::create("Images/white-512x512.png");
-    addChild( sprite, 0, 40);
+    addChild( sprite, 0);
     sprite->setPosition(Vec2(s.width/5*4, s.height/5*4));
     sprite->setColor(Color3B::GREEN);
     sprite->setTextureRect(Rect(0, 0, 120, 50));
@@ -788,7 +785,7 @@ CameraCenterTest::CameraCenterTest()
 
     // CENTER
     sprite = Sprite::create("Images/white-512x512.png");
-    addChild( sprite, 0, 40);
+    addChild( sprite, 0);
     sprite->setPosition(Vec2(s.width/2, s.height/2));
     sprite->setColor(Color3B::WHITE);
     sprite->setTextureRect(Rect(0, 0, 120, 50));
@@ -821,6 +818,7 @@ ConvertToNode::ConvertToNode()
 
     auto rotate = RotateBy::create(10, 360);
     auto action = RepeatForever::create(rotate);
+    char name[10];
     for(int i = 0; i < 3; i++)
     {
         auto sprite = Sprite::create("Images/grossini.png");
@@ -829,7 +827,8 @@ ConvertToNode::ConvertToNode()
         auto point = Sprite::create("Images/r1.png");
         point->setScale(0.25f);
         point->setPosition(sprite->getPosition());
-        addChild(point, 10, 100 + i);
+        sprintf(name, "100%d", i);
+        addChild(point, 10, name);
 
         switch(i)
         {
@@ -853,13 +852,15 @@ ConvertToNode::ConvertToNode()
 
 void ConvertToNode::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
 {
+    char name[10];
     for( auto& touch : touches)
     {
         auto location = touch->getLocation();
 
         for( int i = 0; i < 3; i++)
         {
-            auto node = getChildByTag(100+i);
+            sprintf(name, "100%d", i);
+            auto node = getChildByName(name);
             Vec2 p1, p2;
 
             p1 = node->convertToNodeSpaceAR(location);
@@ -1267,22 +1268,8 @@ void NodeNameTest::onEnter()
     }
     
     // enumerateChildren()
-    int i = 0;
-    parent->enumerateChildren("test", [&i](Node* node) -> bool {
-        ++i;
-        return true;
-    });
-    CCAssert(i == 1, "");
-    
-    i = 0;
-    parent->enumerateChildren("test", [&i](Node* node) -> bool {
-        ++i;
-        return false;
-    });
-    CCAssert(i == 2, "");
-    
-    // enumerateChildren()
     // name = regular expression
+    int i = 0;
     parent = Node::create();
     for (int i = 0; i < 100; ++i)
     {

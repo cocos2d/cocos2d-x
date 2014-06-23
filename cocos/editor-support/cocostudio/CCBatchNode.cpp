@@ -66,19 +66,34 @@ bool BatchNode::init()
     return ret;
 }
 
-void BatchNode::addChild(Node *pChild)
-{
-    Node::addChild(pChild);
-}
-
-void BatchNode::addChild(Node *child, int zOrder)
-{
-    Node::addChild(child, zOrder);
-}
-
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (push)
+#pragma warning (disable: 4996)
+#endif
 void BatchNode::addChild(Node *child, int zOrder, int tag)
 {
     Node::addChild(child, zOrder, tag);
+    Armature *armature = dynamic_cast<Armature *>(child);
+    if (armature != nullptr)
+    {
+        armature->setBatchNode(this);
+        if (_groupCommand == nullptr)
+        {
+            _groupCommand = new GroupCommand();
+        }
+    }
+}
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic warning "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (pop)
+#endif
+    
+void addChild(cocos2d::Node *pChild, int zOrder, const std::string &name)
+{
+    Node::addChild(child, zOrder, name);
     Armature *armature = dynamic_cast<Armature *>(child);
     if (armature != nullptr)
     {

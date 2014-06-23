@@ -1498,14 +1498,14 @@ void TextureBlend::onEnter()
         // BOTTOM sprites have alpha pre-multiplied
         // they use by default GL_ONE, GL_ONE_MINUS_SRC_ALPHA
         auto cloud = Sprite::create("Images/test_blend.png");
-        addChild(cloud, i+1, 100+i);
+        addChild(cloud, i+1);
         cloud->setPosition(Vec2(50+25*i, 80));
         cloud->setBlendFunc( BlendFunc::ALPHA_PREMULTIPLIED );
 
         // CENTER sprites have also alpha pre-multiplied
         // they use by default GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA
         cloud = Sprite::create("Images/test_blend.png");
-        addChild(cloud, i+1, 200+i);
+        addChild(cloud, i+1);
         cloud->setPosition(Vec2(50+25*i, 160));
         BlendFunc blendFunc2 = { GL_ONE_MINUS_DST_COLOR, GL_ZERO };
         cloud->setBlendFunc(blendFunc2);
@@ -1513,7 +1513,7 @@ void TextureBlend::onEnter()
         // UPPER sprites are using custom blending function
         // You can set any blend function to your sprites
         cloud = Sprite::create("Images/test_blend.png");
-        addChild(cloud, i+1, 200+i);
+        addChild(cloud, i+1);
         cloud->setPosition(Vec2(50+25*i, 320-80));
         BlendFunc blendFunc3 = { GL_SRC_ALPHA, GL_ONE };
         cloud->setBlendFunc(blendFunc3);  // additive blending
@@ -1629,7 +1629,7 @@ void TextureGlClamp::onEnter()
     // The .png image MUST be power of 2 in order to create a continue effect.
     // eg: 32x64, 512x128, 256x1024, 64x64, etc..
     auto sprite = Sprite::create("Images/pattern1.png", Rect(0,0,512,256));
-    addChild(sprite, -1, kTagSprite1);
+    addChild(sprite, -1);
     sprite->setPosition(Vec2(size.width/2,size.height/2));
     Texture2D::TexParams params = {GL_LINEAR,GL_LINEAR,GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE};
     sprite->getTexture()->setTexParameters(params);
@@ -1666,7 +1666,7 @@ void TextureGlRepeat::onEnter()
     // The .png image MUST be power of 2 in order to create a continue effect.
     // eg: 32x64, 512x128, 256x1024, 64x64, etc..
     auto sprite = Sprite::create("Images/pattern1.png", Rect(0, 0, 4096, 4096));
-    addChild(sprite, -1, kTagSprite1);
+    addChild(sprite, -1);
     sprite->setPosition(Vec2(size.width/2,size.height/2));
     Texture2D::TexParams params = {GL_LINEAR,GL_LINEAR,GL_REPEAT,GL_REPEAT};
     sprite->getTexture()->setTexParameters(params);

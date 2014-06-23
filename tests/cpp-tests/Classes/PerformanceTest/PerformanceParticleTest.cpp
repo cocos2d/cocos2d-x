@@ -1,15 +1,11 @@
 #include "PerformanceParticleTest.h"
 
 
-enum {
-    kTagInfoLayer = 1,
-    kTagMainLayer = 2,
-    kTagParticleSystem = 3,
-    kTagLabelAtlas = 4,
-    kTagMenuLayer = 1000,
+#define TEST_COUNT  4
 
-    TEST_COUNT = 4,
-};
+#define NAME_LABELATLAS "labelAtals"
+#define NAME_PARTICLESYSTEM "particleSystem"
+#define NAME_MENULAYER "menuLayer"
 
 enum {
     kMaxParticles = 14000,
@@ -106,16 +102,16 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     auto infoLabel = Label::createWithTTF("0 nodes", "fonts/Marker Felt.ttf", 30);
     infoLabel->setColor(Color3B(0,200,20));
     infoLabel->setPosition(Vec2(s.width/2, s.height - 90));
-    addChild(infoLabel, 1, kTagInfoLayer);
+    addChild(infoLabel, 1, "infoLayer");
 
     // particles on stage
     auto labelAtlas = LabelAtlas::create("0000", "fps_images.png", 12, 32, '.');
-    addChild(labelAtlas, 0, kTagLabelAtlas);
+    addChild(labelAtlas, 0, NAME_LABELATLAS);
     labelAtlas->setPosition(Vec2(s.width-66,50));
 
     // Next Prev Test
     auto menuLayer = new ParticleMenuLayer(true, TEST_COUNT, s_nParCurIdx);
-    addChild(menuLayer, 1, kTagMenuLayer);
+    addChild(menuLayer, 1, NAME_MENULAYER);
     menuLayer->release();
 
     // Sub Tests
@@ -159,8 +155,8 @@ std::string ParticleMainScene::title() const
 
 void ParticleMainScene::step(float dt)
 {
-    auto atlas = (LabelAtlas*) getChildByTag(kTagLabelAtlas);
-    auto emitter = (ParticleSystem*) getChildByTag(kTagParticleSystem);
+    auto atlas = (LabelAtlas*) getChildByName(NAME_LABELATLAS);
+    auto emitter = (ParticleSystem*) getChildByName(NAME_PARTICLESYSTEM);
 
     char str[10] = {0};
     sprintf(str, "%4d", emitter->getParticleCount());
@@ -183,7 +179,7 @@ void ParticleMainScene::createParticleSystem()
     * 7: Quad Particle System using 8-bit textures (PNG)
     * 8: Quad Particle System using 4-bit textures (PVRTC)
     */
-    removeChildByTag(kTagParticleSystem, true);
+    removeChildByName(NAME_PARTICLESYSTEM, true);
 
     // remove the "fire.png" from the TextureCache cache. 
     auto texture = Director::getInstance()->getTextureCache()->addImage("Images/fire.png");
@@ -238,7 +234,7 @@ void ParticleMainScene::createParticleSystem()
         CCLOG("Shall not happen!");
         break;
     }
-    addChild(particleSystem, 0, kTagParticleSystem);
+    addChild(particleSystem, 0, NAME_PARTICLESYSTEM);
 
     doTest();
 
@@ -250,7 +246,7 @@ void ParticleMainScene::testNCallback(Ref* sender)
 {
     subtestNumber = static_cast<Node*>(sender)->getTag();
 
-    auto menu = static_cast<ParticleMenuLayer*>( getChildByTag(kTagMenuLayer) );
+    auto menu = static_cast<ParticleMenuLayer*>( getChildByName(NAME_MENULAYER) );
     menu->restartCallback(sender);
 }
 
@@ -258,7 +254,7 @@ void ParticleMainScene::updateQuantityLabel()
 {
     if( quantityParticles != lastRenderedCount )
     {
-        auto infoLabel = (Label *) getChildByTag(kTagInfoLayer);
+        auto infoLabel = (Label *) getChildByName("infoLayer");
         char str[20] = {0};
         sprintf(str, "%u particles", quantityParticles);
         infoLabel->setString(str);
@@ -283,7 +279,7 @@ std::string ParticlePerformTest1::title() const
 void ParticlePerformTest1::doTest()
 {
     auto s = Director::getInstance()->getWinSize();
-    auto particleSystem = (ParticleSystem*)getChildByTag(kTagParticleSystem);
+    auto particleSystem = (ParticleSystem*)getChildByName(NAME_PARTICLESYSTEM);
 
     // duration
     particleSystem->setDuration(-1);
@@ -353,7 +349,7 @@ std::string ParticlePerformTest2::title() const
 void ParticlePerformTest2::doTest()
 {
     auto s = Director::getInstance()->getWinSize();
-    auto particleSystem = (ParticleSystem*) getChildByTag(kTagParticleSystem);
+    auto particleSystem = (ParticleSystem*) getChildByName(NAME_PARTICLESYSTEM);
 
     // duration
     particleSystem->setDuration(-1);
@@ -423,7 +419,7 @@ std::string ParticlePerformTest3::title() const
 void ParticlePerformTest3::doTest()
 {
     auto s = Director::getInstance()->getWinSize();
-    auto particleSystem = (ParticleSystem*)getChildByTag(kTagParticleSystem);
+    auto particleSystem = (ParticleSystem*)getChildByName(NAME_PARTICLESYSTEM);
 
     // duration
     particleSystem->setDuration(-1);
@@ -493,7 +489,7 @@ std::string ParticlePerformTest4::title() const
 void ParticlePerformTest4::doTest()
 {
     auto s = Director::getInstance()->getWinSize();
-    auto particleSystem = (ParticleSystem*) getChildByTag(kTagParticleSystem);
+    auto particleSystem = (ParticleSystem*) getChildByName(NAME_PARTICLESYSTEM);
 
     // duration
     particleSystem->setDuration(-1);

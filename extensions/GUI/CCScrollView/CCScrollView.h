@@ -228,7 +228,8 @@ public:
     virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
     
     using Node::addChild;
-    virtual void addChild(Node * child, int zOrder, int tag) override;
+    CC_DEPRECATED_ATTRIBUTE virtual void addChild(Node * child, int zOrder, int tag) override;
+    virtual void addChild(Node * child, int zOrder, const std::string &name) override;
 
     /**
      * CCActionTweenDelegate

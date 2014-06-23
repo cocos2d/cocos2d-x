@@ -35,7 +35,7 @@ void CustomParticleWidgetLayer::onEnter()
     CustomParticleWidget* custom = CustomParticleWidget::create();
     custom->setParticlePlist("Particles/BoilingFoam.plist");
     
-    addChild(custom, 10, -1);
+    addChild(custom, 10);
 }
 
 
