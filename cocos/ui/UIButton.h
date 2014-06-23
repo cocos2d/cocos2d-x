@@ -71,7 +71,6 @@ public:
                           const std::string& disableImage = "",
                           TextureResType texType = TextureResType::LOCAL);
     
-
     /**
      * Load textures for button.
      *
