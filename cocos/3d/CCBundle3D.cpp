@@ -551,7 +551,6 @@ bool Bundle3D::loadSkinDataBinary(SkinData* skindata)
     }
 
     // bind shape
-    bindShape[16];
     _bundleReader->readMatrix(bindShape);
 
     // read parent and child relationship map
