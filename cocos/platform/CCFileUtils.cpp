@@ -947,8 +947,9 @@ bool FileUtils::isDirectoryExist(const std::string& dirPath)
     
 	return false;
 #else
-    if ((GetFileAttributesA(path.c_str())) != INVALID_FILE_ATTRIBUTES &&
-        (dwAttrib & FILE_ATTRIBUTE_DIRECTORY))
+    unsigned long fAttrib = GetFileAttributesA(dirPath.c_str());
+    if (fAttrib != INVALID_FILE_ATTRIBUTES &&
+        (fAttrib & FILE_ATTRIBUTE_DIRECTORY))
     {
 		return true;
     }
@@ -970,7 +971,7 @@ bool FileUtils::createDirectory(const std::string& dirPath)
     }
     return true;
 #else
-    if ((GetFileAttributesA(path.c_str())) == INVALID_FILE_ATTRIBUTES)
+    if (GetFileAttributesA(dirPath.c_str()) == INVALID_FILE_ATTRIBUTES)
     {
 		BOOL ret = CreateDirectoryA(dirPath.c_str(), NULL);
         if (!ret && ERROR_ALREADY_EXISTS != GetLastError())
