@@ -496,14 +496,10 @@ static int lua_cocos2dx_ListView_addScrollViewEventListener(lua_State* L)
 #endif
         LUA_FUNCTION handler = (  toluafix_ref_function(L,2,0));
         
-        //TODO CHANGE
-        ui::ScrollView* scrollView = static_cast<ui::ScrollView*>(self);
-        if(nullptr != scrollView)
-        {
-            scrollView->addEventListener([=](cocos2d::Ref* ref, ui::ScrollView::EventType eventType){
-                handleUIEvent(handler, ref, (int)eventType);
-            });
-        }
+        auto scrollViewCallback = [=](cocos2d::Ref* ref, ui::ScrollView::EventType eventType){
+            handleUIEvent(handler, ref, (int)eventType);
+        };
+        self->addEventListener((ui::ScrollView::ccScrollViewCallback)scrollViewCallback);
         
         return 0;
     }
