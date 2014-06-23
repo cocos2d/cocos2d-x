@@ -108,6 +108,7 @@ static const int DEFAULT_RENDER_QUEUE = 0;
 //
 Renderer::Renderer()
 :_lastMaterialID(0)
+,_lastBatchedMeshCommand(nullptr)
 ,_numQuads(0)
 ,_glViewAssigned(false)
 ,_isRendering(false)
@@ -284,6 +285,7 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
         auto commandType = command->getType();
         if(RenderCommand::Type::QUAD_COMMAND == commandType)
         {
+            flush3D();
             auto cmd = static_cast<QuadCommand*>(command);
             //Batch quads
             if(_numQuads + cmd->getQuadCount() > VBO_SIZE)
@@ -322,22 +324,24 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
         }
         else if (RenderCommand::Type::MESH_COMMAND == commandType)
         {
-            flush();
+            flush2D();
             auto cmd = static_cast<MeshCommand*>(command);
-//            if (material3DID != cmd->getMaterialID())
+//            cmd->preDraw();
+//            cmd->draw();
+//            cmd->postDraw();
+            cmd->execute();
+//            if (_lastBatchedMeshCommand == nullptr || _lastBatchedMeshCommand->getMaterialID() != cmd->getMaterialID())
 //            {
-//                if (material3DID != 0)
-//                    cmd->postDraw();
-//                
+//                flush3D();
 //                cmd->preDraw();
-//                material3DID = cmd->getMaterialID();
+//                cmd->draw();
 //            }
 //            else
 //            {
 //                cmd->draw();
 //            }
-            
-            cmd->execute();
+//            _lastBatchedMeshCommand = cmd;
+//            cmd->execute();
         }
         else
         {
@@ -390,6 +394,7 @@ void Renderer::clean()
     _numQuads = 0;
 
     _lastMaterialID = 0;
+    _lastBatchedMeshCommand = nullptr;
 }
 
 void Renderer::convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const Mat4& modelView)
@@ -520,8 +525,23 @@ void Renderer::drawBatchedQuads()
 
 void Renderer::flush()
 {
+    flush2D();
+    flush3D();
+}
+
+void Renderer::flush2D()
+{
     drawBatchedQuads();
     _lastMaterialID = 0;
+}
+
+void Renderer::flush3D()
+{
+    if (_lastBatchedMeshCommand)
+    {
+        _lastBatchedMeshCommand->postDraw();
+        _lastBatchedMeshCommand = nullptr;
+    }
 }
 
 // helpers

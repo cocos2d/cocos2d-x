@@ -47,6 +47,7 @@ MeshCommand::MeshCommand()
 , _displayColor(1.0f, 1.0f, 1.0f, 1.0f)
 , _matrixPalette(nullptr)
 , _matrixPaletteSize(0)
+, _materialID(0)
 {
     _type = RenderCommand::Type::MESH_COMMAND;
 }
@@ -169,27 +170,49 @@ void MeshCommand::preDraw()
     GL::bindTexture2D(_textureID);
     GL::blendFunc(_blendType.src, _blendType.dst);
     glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
-    
-    
+//    
     _glProgramState->apply(_mv);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
 }
 void MeshCommand::draw()
 {
-    auto glProgram = _glProgramState->getGLProgram();
-    auto uniform = glProgram->getUniform("u_color");
-    if (uniform)
+    if (_matrixPalette)
     {
-        glProgram->setUniformLocationWith4f(uniform->location, _displayColor.x, _displayColor.y, _displayColor.z, _displayColor.w);
+        CCLOG("skin");
     }
+    auto glProgram = _glProgramState->getGLProgram();
+    //glProgram->use();
+    //glProgram->setUniformsForBuiltins(_mv);
+//    auto uniform = glProgram->getUniform("u_color");
+//    if (uniform)
+//    {
+//        glProgram->setUniformLocationWith4f(uniform->location, _displayColor.x, _displayColor.y, _displayColor.z, _displayColor.w);
+//    }
+//    
+//    if (_matrixPaletteSize && _matrixPalette)
+//    {
+//        uniform = glProgram->getUniform("u_matrixPalette");
+//        if (uniform)
+//            glProgram->setUniformLocationWith4fv(uniform->location, (const float*)_matrixPalette, _matrixPaletteSize);
+//    }
+//
+//    // Draw
+//    glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
+//    
+//    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
+//    glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
+    _glProgramState->setUniformVec4("u_color", _displayColor);
     
     if (_matrixPaletteSize && _matrixPalette)
     {
-        uniform = glProgram->getUniform("u_matrixPalette");
-        if (uniform)
-            glProgram->setUniformLocationWith4fv(uniform->location, (const float*)_matrixPalette, _matrixPaletteSize);
+        _glProgramState->setUniformCallback("u_matrixPalette", CC_CALLBACK_2(MeshCommand::MatrixPalleteCallBack, this));
+        
     }
-
+    
+    //_glProgramState->apply(_mv);
+    
+//    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
+    
     // Draw
     glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
     
