@@ -1711,6 +1711,7 @@ void Bug5482::onEnter()
 
 void Bug5482::onExit()
 {
+    PhysicsDemo::onExit();
     _body->release();
 }
 
