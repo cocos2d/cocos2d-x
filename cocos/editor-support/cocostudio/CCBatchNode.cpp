@@ -91,7 +91,7 @@ void BatchNode::addChild(Node *child, int zOrder, int tag)
 #pragma warning (pop)
 #endif
     
-void addChild(cocos2d::Node *pChild, int zOrder, const std::string &name)
+void BatchNode::addChild(cocos2d::Node *child, int zOrder, const std::string &name)
 {
     Node::addChild(child, zOrder, name);
     Armature *armature = dynamic_cast<Armature *>(child);

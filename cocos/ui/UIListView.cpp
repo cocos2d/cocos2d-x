@@ -279,16 +279,6 @@ void ListView::pushBackCustomItem(Widget* item)
     _refreshViewDirty = true;
 }
     
-void ListView::addChild(cocos2d::Node *child)
-{
-    ListView::addChild(child, child->getZOrder(), child->getTag());
-}
-    
-void ListView::addChild(cocos2d::Node *child, int zOrder)
-{
-    ListView::addChild(child, zOrder, child->getTag());
-}
-    
 void ListView::addChild(cocos2d::Node *child, int zOrder, int tag)
 {
     ScrollView::addChild(child, zOrder, tag);
@@ -298,8 +288,29 @@ void ListView::addChild(cocos2d::Node *child, int zOrder, int tag)
     {
         _items.pushBack(widget);
     }
-
 }
+ 
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (push)
+#pragma warning (disable: 4996)
+#endif
+void ListView::addChild(Node* child, int zOrder, const std::string &name)
+{
+    ScrollView::addChild(child, zOrder, name);
+    
+    Widget* widget = dynamic_cast<Widget*>(child);
+    if (widget)
+    {
+        _items.pushBack(widget);
+    }
+}
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic warning "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (pop)
+#endif
     
 void ListView::removeChild(cocos2d::Node *child, bool cleaup)
 {

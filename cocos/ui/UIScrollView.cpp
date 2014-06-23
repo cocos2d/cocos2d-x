@@ -224,20 +224,26 @@ const Size& ScrollView::getInnerContainerSize() const
 {
 	return _innerContainer->getSize();
 }
-    
-void ScrollView::addChild(Node *child)
-{
-    ScrollView::addChild(child, child->getZOrder(), child->getTag());
-}
 
-void ScrollView::addChild(Node * child, int zOrder)
-{
-    ScrollView::addChild(child, zOrder, child->getTag());
-}
-
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (push)
+#pragma warning (disable: 4996)
+#endif
 void ScrollView::addChild(Node *child, int zOrder, int tag)
 {
     _innerContainer->addChild(child, zOrder, tag);
+}
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic warning "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (pop)
+#endif
+    
+void ScrollView::addChild(Node* child, int zOrder, const std::string &name)
+{
+    _innerContainer->addChild(child, zOrder, name);
 }
 
 void ScrollView::removeAllChildren()
