@@ -1110,7 +1110,9 @@ void Label::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t pare
 
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     
-    setOrderOfArrival(0);
+    // FIX ME: Why need to set _orderOfArrival to 0??
+    // Please refer to https://github.com/cocos2d/cocos2d-x/pull/6920
+    // setOrderOfArrival(0);
 }
 
 void Label::setSystemFontName(const std::string& systemFont)

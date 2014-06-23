@@ -35,7 +35,11 @@ using namespace Windows::UI::Core;
 
 USING_NS_CC;
 
-ShaderCompiler::ShaderCompiler() : m_display(nullptr), m_context(nullptr), m_initialized(false)
+ShaderCompiler::ShaderCompiler() 
+    : m_display(nullptr), 
+    m_context(nullptr), 
+    m_initialized(false),
+    m_resultText(nullptr)
 {
 
 }
@@ -64,14 +68,22 @@ void ShaderCompiler::applicationWillEnterForeground()
 }
 
 
-bool ShaderCompiler::Compile()
+bool ShaderCompiler::Compile(Windows::UI::Xaml::Controls::TextBlock^ resultText)
 {
+    m_resultText = resultText;
+    resultText->Text = "Compiling shaders...";
 
-    bool result = InitializeAngle(ANGLE_D3D_FEATURE_LEVEL::ANGLE_D3D_FEATURE_LEVEL_9_3);
+    if (!InitializeAngle(ANGLE_D3D_FEATURE_LEVEL::ANGLE_D3D_FEATURE_LEVEL_9_3))
+    {
+        resultText->Text = "Unable to initialize Angle";
+        return false;
+    }
+
     Director::getInstance()->setAnimationInterval(1.0 / 60.0);
     CCShaderCache::getInstance()->loadDefaultShaders();
     CCPrecompiledShaders::getInstance()->savePrecompiledShaders();
-    return result;
+    resultText->Text = "Complete";
+    return true;
 }
 
 

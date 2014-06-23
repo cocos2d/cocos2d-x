@@ -2419,8 +2419,8 @@ function UIListViewVerticalTest:initExtend()
     local backgroundSize = background:getContentSize()
 
     local array = {}
-    for i = 0,19 do
-        array[i] = string.format("ListView_item_%d",i)
+    for i = 1,20 do
+        array[i] = string.format("ListView_item_%d",i - 1)
     end
 
     local function listViewEvent(sender, eventType)
@@ -2429,10 +2429,17 @@ function UIListViewVerticalTest:initExtend()
         end
     end
 
+    local function scrollViewEvent(sender, evenType)
+        if evenType == ccui.ScrollviewEventType.scrollToBottom then
+            print("SCROLL_TO_BOTTOM")
+        elseif evenType ==  ccui.ScrollviewEventType.scrollToTop then
+            print("SCROLL_TO_TOP")
+        end
+    end
+
     local listView = ccui.ListView:create()
     -- set list view ex direction
     listView:setDirection(ccui.ScrollViewDir.vertical)
-    listView:setTouchEnabled(true)
     listView:setBounceEnabled(true)
     listView:setBackGroundImage("cocosui/green_edit.png")
     listView:setBackGroundImageScale9Enabled(true)
@@ -2442,14 +2449,13 @@ function UIListViewVerticalTest:initExtend()
                               (widgetSize.height - backgroundSize.height) / 2.0 +
                               (backgroundSize.height - listView:getSize().height) / 2.0))
     listView:addEventListener(listViewEvent)
+    listView:addScrollViewEventListener(scrollViewEvent)
     self._uiLayer:addChild(listView)
 
 
     -- create model
-    local default_button = ccui.Button:create()
+    local default_button = ccui.Button:create("cocosui/backtotoppressed.png", "cocosui/backtotopnormal.png")
     default_button:setName("Title Button")
-    default_button:setTouchEnabled(true)
-    default_button:loadTextures("cocosui/backtotoppressed.png", "cocosui/backtotopnormal.png", "")
     
     local default_item = ccui.Layout:create()
     default_item:setTouchEnabled(true)
@@ -2461,8 +2467,7 @@ function UIListViewVerticalTest:initExtend()
     listView:setItemModel(default_item)
     
     --add default item
-    local count = table.getn(array) + 1
-    print(math.floor(count / 4))
+    local count = table.getn(array)
     for i = 1,math.floor(count / 4) do
         listView:pushBackDefaultItem()
     end
@@ -2470,13 +2475,17 @@ function UIListViewVerticalTest:initExtend()
     for i = 1,math.floor(count / 4) do
         listView:insertDefaultItem(0)
     end
+
+    listView:removeAllChildren()
+
+    local testSprite = cc.Sprite:create("cocosui/backtotoppressed.png")
+    testSprite:setPosition(cc.p(200,200))
+    listView:addChild(testSprite)
       
     --add custom item
     for i = 1,math.floor(count / 4) do
-        local custom_button = ccui.Button:create()
+        local custom_button = ccui.Button:create("cocosui/button.png", "cocosui/buttonHighlighted.png")
         custom_button:setName("Title Button")
-        custom_button:setTouchEnabled(true)
-        custom_button:loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "")
         custom_button:setScale9Enabled(true)
         custom_button:setSize(default_button:getSize())
         
@@ -2485,17 +2494,15 @@ function UIListViewVerticalTest:initExtend()
         custom_button:setPosition(cc.p(custom_item:getSize().width / 2.0, custom_item:getSize().height / 2.0))
         custom_item:addChild(custom_button)
         
-        listView:pushBackCustomItem(custom_item) 
+        listView:addChild(custom_item) 
     end
 
     --insert custom item
     local items = listView:getItems()
     local items_count = table.getn(items)
     for i = 1, math.floor(count / 4) do
-        local custom_button = ccui.Button:create()
+        local custom_button = ccui.Button:create("cocosui/button.png", "cocosui/buttonHighlighted.png")
         custom_button:setName("Title Button")
-        custom_button:setTouchEnabled(true)
-        custom_button:loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "")
         custom_button:setScale9Enabled(true)
         custom_button:setSize(default_button:getSize())
         
@@ -2503,6 +2510,7 @@ function UIListViewVerticalTest:initExtend()
         custom_item:setSize(custom_button:getSize())
         custom_button:setPosition(cc.p(custom_item:getSize().width / 2.0, custom_item:getSize().height / 2.0))
         custom_item:addChild(custom_button)
+        custom_item:setTag(1)
         
         listView:insertCustomItem(custom_item, items_count)
     end
@@ -2513,14 +2521,14 @@ function UIListViewVerticalTest:initExtend()
         local item = listView:getItem(i - 1)
         local button = item:getChildByName("Title Button")
         local index = listView:getIndex(item)
-        button:setTitleText(array[index])
+        button:setTitleText(array[index + 1])
     end
     
     -- remove last item
-    listView:removeLastItem()
+    listView:removeChildByTag(1)
     
     -- remove item by index
-    items_count = table.getn(items)
+    items_count = table.getn(listView:getItems())
     listView:removeItem(items_count - 1)
     
     -- set all items layout gravity
@@ -2580,8 +2588,8 @@ function UIListViewHorizontalTest:initExtend()
     local backgroundSize = background:getContentSize()
 
     local array = {}
-    for i = 0,19 do
-        array[i] = string.format("ListView_item_%d",i)
+    for i = 1,20 do
+        array[i] = string.format("ListView_item_%d",i - 1)
     end
 
     local function listViewEvent(sender, eventType)
@@ -2607,10 +2615,8 @@ function UIListViewHorizontalTest:initExtend()
 
 
     -- create model
-    local default_button = ccui.Button:create()
+    local default_button = ccui.Button:create("cocosui/backtotoppressed.png", "cocosui/backtotopnormal.png")
     default_button:setName("Title Button")
-    default_button:setTouchEnabled(true)
-    default_button:loadTextures("cocosui/backtotoppressed.png", "cocosui/backtotopnormal.png", "")
     
     local default_item = ccui.Layout:create()
     default_item:setTouchEnabled(true)
@@ -2622,7 +2628,7 @@ function UIListViewHorizontalTest:initExtend()
     listView:setItemModel(default_item)
     
     --add default item
-    local count = table.getn(array) + 1
+    local count = table.getn(array)
     for i = 1,math.floor(count / 4) do
         listView:pushBackDefaultItem()
     end
@@ -2633,10 +2639,8 @@ function UIListViewHorizontalTest:initExtend()
       
     --add custom item
     for i = 1,math.floor(count / 4) do
-        local custom_button = ccui.Button:create()
+        local custom_button = ccui.Button:create("cocosui/button.png", "cocosui/buttonHighlighted.png")
         custom_button:setName("Title Button")
-        custom_button:setTouchEnabled(true)
-        custom_button:loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "")
         custom_button:setScale9Enabled(true)
         custom_button:setSize(default_button:getSize())
         
@@ -2652,10 +2656,8 @@ function UIListViewHorizontalTest:initExtend()
     local items = listView:getItems()
     local items_count = table.getn(items)
     for i = 1, math.floor(count / 4) do
-        local custom_button = ccui.Button:create()
+        local custom_button = ccui.Button:create("cocosui/button.png", "cocosui/buttonHighlighted.png")
         custom_button:setName("Title Button")
-        custom_button:setTouchEnabled(true)
-        custom_button:loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "")
         custom_button:setScale9Enabled(true)
         custom_button:setSize(default_button:getSize())
         
@@ -2669,18 +2671,20 @@ function UIListViewHorizontalTest:initExtend()
     
     -- set item data
     items_count = table.getn(listView:getItems())
+    print("items_count", items_count)
     for i = 1,items_count do
         local item = listView:getItem(i - 1)
         local button = item:getChildByName("Title Button")
         local index = listView:getIndex(item)
-        button:setTitleText(array[index])
+        print("index is ", index)
+        button:setTitleText(array[index + 1])
     end
     
     -- remove last item
     listView:removeLastItem()
     
     -- remove item by index
-    items_count = table.getn(items)
+    items_count = table.getn(listView:getItems())
     listView:removeItem(items_count - 1)
     
     -- set all items layout gravity

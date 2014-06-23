@@ -193,6 +193,7 @@
     <ClCompile Include="..\..\Classes\DataVisitorTest\DataVisitorTest.cpp" />
     <ClCompile Include="..\..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.cpp" />
     <ClCompile Include="..\..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackTestLayer.cpp" />
+    <ClCompile Include="..\..\Classes\ExtensionsTest\CocoStudioActionTimelineTest\ActionTimelineTestScene.cpp" />
     <ClCompile Include="..\..\Classes\ExtensionsTest\CocoStudioArmatureTest\ArmatureScene.cpp" />
     <ClCompile Include="..\..\Classes\ExtensionsTest\CocoStudioComponentsTest\ComponentsTestScene.cpp" />
     <ClCompile Include="..\..\Classes\ExtensionsTest\CocoStudioComponentsTest\EnemyController.cpp" />
@@ -388,6 +389,7 @@
     <ClInclude Include="..\..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.h" />
     <ClInclude Include="..\..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackLayerLoader.h" />
     <ClInclude Include="..\..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackTestLayer.h" />
+    <ClInclude Include="..\..\Classes\ExtensionsTest\CocoStudioActionTimelineTest\ActionTimelineTestScene.h" />
     <ClInclude Include="..\..\Classes\ExtensionsTest\CocoStudioArmatureTest\ArmatureScene.h" />
     <ClInclude Include="..\..\Classes\ExtensionsTest\CocoStudioComponentsTest\ComponentsTestScene.h" />
     <ClInclude Include="..\..\Classes\ExtensionsTest\CocoStudioComponentsTest\EnemyController.h" />
