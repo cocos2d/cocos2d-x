@@ -496,6 +496,36 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class LabelLineHeightTest : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelLineHeightTest);
+
+    LabelLineHeightTest();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    void sliderEvent(Ref *sender, ui::Slider::EventType type);
+private:
+    Label* label;
+};
+
+class LabelAdditionalKerningTest : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelAdditionalKerningTest);
+
+    LabelAdditionalKerningTest();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    void sliderEvent(Ref *sender, ui::Slider::EventType type);
+private:
+    Label* label;
+};
+
 // we don't support linebreak mode
 
 #endif

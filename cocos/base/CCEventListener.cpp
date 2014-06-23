@@ -22,6 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#include "base/CCConsole.h"
 #include "base/CCEventListener.h"
 #include "platform/CCCommon.h"
 

@@ -945,6 +945,95 @@ bool luaval_to_ttfconfig(lua_State* L,int lo, cocos2d::TTFConfig* outValue)
     return false;
 }
 
+
+bool luaval_to_uniform(lua_State* L, int lo, cocos2d::Uniform* outValue)
+{
+    if (nullptr == L || nullptr == outValue)
+        return false;
+    
+    bool ok = true;
+    
+    tolua_Error tolua_err;
+    if (!tolua_istable(L, lo, 0, &tolua_err) )
+    {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
+        ok = false;
+    }
+    
+    if (ok)
+    {
+        lua_pushstring(L, "location");             /* L: paramStack key */
+        lua_gettable(L,lo);                        /* L: paramStack paramStack[lo][key] */
+        outValue->location = lua_isnumber(L, -1)? (GLint)lua_tointeger(L, -1) : 0;
+        lua_pop(L,1);                              /* L: paramStack*/
+        
+        lua_pushstring(L, "size");
+        lua_gettable(L,lo);
+        outValue->size = lua_isnumber(L, -1)?(GLint)lua_tointeger(L, -1) : 0;
+        lua_pop(L,1);
+        
+        lua_pushstring(L, "type");
+        lua_gettable(L, lo);
+        outValue->type = lua_isnumber(L, -1)?(GLenum)lua_tointeger(L, -1) : 0;
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "name");
+        lua_gettable(L, lo);
+        outValue->name = lua_isstring(L, -1)?lua_tostring(L, -1) : "";
+        lua_pop(L, 1);
+        
+        return true;
+    }
+    
+    return false;
+}
+
+bool luaval_to_vertexattrib(lua_State* L, int lo, cocos2d::VertexAttrib* outValue)
+{
+    if (nullptr == L || nullptr == outValue)
+        return false;
+    
+    bool ok = true;
+    
+    tolua_Error tolua_err;
+    if (!tolua_istable(L, lo, 0, &tolua_err) )
+    {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
+        ok = false;
+    }
+
+    if (ok)
+    {
+        lua_pushstring(L, "index");                 /* L: paramStack key */
+        lua_gettable(L,lo);                         /* L: paramStack paramStack[lo][key] */
+        outValue->index = lua_isnumber(L, -1)? (GLint)lua_tointeger(L, -1) : 0;
+        lua_pop(L,1);                              /* L: paramStack*/
+        
+        lua_pushstring(L, "size");
+        lua_gettable(L,lo);
+        outValue->size = lua_isnumber(L, -1)?(GLint)lua_tointeger(L, -1) : 0;
+        lua_pop(L,1);
+        
+        lua_pushstring(L, "type");
+        lua_gettable(L, lo);
+        outValue->type = lua_isnumber(L, -1)?(GLenum)lua_tointeger(L, -1) : 0;
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "name");
+        lua_gettable(L, lo);
+        outValue->name = lua_isstring(L, -1)?lua_tostring(L, -1) : "";
+        lua_pop(L, 1);
+        
+        return true;
+    }
+    
+    return false;
+}
+
 bool luaval_to_mat4(lua_State* L, int lo, cocos2d::Mat4* outValue )
 {
     if (nullptr == L || nullptr == outValue)
@@ -2659,6 +2748,55 @@ void ttfconfig_to_luaval(lua_State* L, const cocos2d::TTFConfig& config)
     
     lua_pushstring(L, "outlineSize");
     lua_pushnumber(L, (lua_Number)config.outlineSize);
+    lua_rawset(L, -3);
+}
+
+
+void uniform_to_luaval(lua_State* L, const cocos2d::Uniform& uniform)
+{
+    if (nullptr == L)
+        return;
+
+    lua_newtable(L);
+    
+    lua_pushstring(L, "location");
+    lua_pushnumber(L, (lua_Number)uniform.location);
+    lua_rawset(L, -3);
+    
+    lua_pushstring(L, "size");
+    lua_pushnumber(L, (lua_Number)uniform.size);
+    lua_rawset(L, -3);
+    
+    lua_pushstring(L, "type");
+    lua_pushnumber(L, (lua_Number)uniform.type);
+    lua_rawset(L, -3);
+    
+    lua_pushstring(L, "name");
+    tolua_pushcppstring(L, uniform.name);
+    lua_rawset(L, -3);
+}
+
+void vertexattrib_to_luaval(lua_State* L, const cocos2d::VertexAttrib& verAttrib)
+{
+    if (nullptr == L)
+        return;
+    
+    lua_newtable(L);
+    
+    lua_pushstring(L, "index");
+    lua_pushnumber(L, (lua_Number)verAttrib.index);
+    lua_rawset(L, -3);
+    
+    lua_pushstring(L, "size");
+    lua_pushnumber(L, (lua_Number)verAttrib.size);
+    lua_rawset(L, -3);
+    
+    lua_pushstring(L, "type");
+    lua_pushnumber(L, (lua_Number)verAttrib.type);
+    lua_rawset(L, -3);
+    
+    lua_pushstring(L, "name");
+    tolua_pushcppstring(L, verAttrib.name);
     lua_rawset(L, -3);
 }
 

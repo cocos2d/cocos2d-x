@@ -203,6 +203,12 @@ public:
      */
     virtual std::string getDescription() const;
 
+	/** release only the gl texture.
+     * @js NA
+     * @lua NA
+     */
+	void releaseGLTexture();
+
     /** Initializes with a texture2d with data 
      * @js NA
      * @lua NA

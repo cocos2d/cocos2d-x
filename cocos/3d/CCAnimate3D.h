@@ -22,62 +22,61 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCSPRIT3DDATA_CACHE_H__
-#define __CCSPRIT3DDATA_CACHE_H__
+#ifndef __CCANIMATE3D_H__
+#define __CCANIMATE3D_H__
 
-#include <string>
-#include <unordered_map>
+#include <map>
+
+#include "3d/CCAnimation3D.h"
+
+#include "base/ccMacros.h"
+#include "base/CCRef.h"
 #include "base/ccTypes.h"
-#include "base/CCMap.h"
+#include "2d/CCActionInterval.h"
 
 NS_CC_BEGIN
 
-class Sprite3D;
-class Mesh;
-class EventListenerCustom;
-class EventCustom;
-class Texture2D;
-
-class Sprite3DDataCache
+class Animation3D;
+class Bone;
+/**
+ * Animate3D
+ */
+class Animate3D: public ActionInterval
 {
 public:
-    struct Sprite3DData
-    {
-        Mesh* mesh;
-        std::string texture;
-    };
     
-    static Sprite3DDataCache* getInstance();
-    static void purgeMeshCache();
+    //create Animate3D using Animation.
+    static Animate3D* create(Animation3D* animation);
     
-    bool addSprite3D(const std::string& fileName, Mesh* mesh, const std::string& texture);
+    //
+    // Overrides
+    //
+    virtual void step(float dt) override;
+    virtual void startWithTarget(Node *target) override;
+    virtual Animate3D* reverse() const override;
+    virtual Animate3D *clone() const override;
     
-    Mesh* getSprite3DMesh(const std::string& fileName);
+    virtual void update(float t) override;
     
-    Texture2D* getSprite3DTexture(const std::string& fileName);
+    float getSpeed() const { return _speed; }
+    void setSpeed(float speed) { _speed = speed; }
     
-    void removeAllSprite3DData();
-    void removeUnusedSprite3DData();
+    bool getPlayBack() const { return _playBack; }
+    void setPlayBack(bool playBack) { _playBack = playBack; }
+    
+CC_CONSTRUCTOR_ACCESS:
+    
+    Animate3D();
+    virtual ~Animate3D();
+    
+    Animation3D* _animation;
 
-    
- #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-     void listenBackToForeground(EventCustom* event);
- #endif
-    
-protected:
-    Sprite3DDataCache();
-    
-    ~Sprite3DDataCache();
-    
-    static Sprite3DDataCache* _cacheInstance;
-
-    std::unordered_map<std::string, Sprite3DData> _sprite3DDatas; //sprites 
-    
- #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-     EventListenerCustom* _backToForegroundlistener;
- #endif
+    float      _speed;
+    float      _weight;
+    bool       _playBack;
+    std::map<Bone*, Animation3D::Curve*> _boneCurves; //weak ref
 };
 
 NS_CC_END
 
-#endif // __CCSPRIT3DDATA_CACHE_H__
+#endif // __CCANIMATE3D_H__

@@ -35,14 +35,4 @@ extern "C" {
 #include "base/CCRef.h"
 
 TOLUA_API int register_all_cocos2dx_ui_manual(lua_State* L);
-
-struct LuaStudioEventListenerData
-{
-    cocos2d::Ref* objTarget;
-    int eventType;
-    
-    LuaStudioEventListenerData(cocos2d::Ref* _objTarget, int _eventType):objTarget(_objTarget),eventType(_eventType)
-    {
-    }
-};
 #endif // #ifndef COCOS_SCRIPTING_LUA_BINDINGS_LUA_COCOS2DX_GUI_MANUAL_H

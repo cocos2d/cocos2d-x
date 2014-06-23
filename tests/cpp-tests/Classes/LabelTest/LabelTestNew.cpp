@@ -78,7 +78,9 @@ static std::function<Layer*()> createFunctions[] =
     CL(LabelFontNameTest),
     CL(LabelAlignmentTest),
     CL(LabelIssue4428Test),
-    CL(LabelIssue4999Test)
+    CL(LabelIssue4999Test),
+    CL(LabelLineHeightTest),
+    CL(LabelAdditionalKerningTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -1772,4 +1774,92 @@ std::string LabelIssue4999Test::title() const
 std::string LabelIssue4999Test::subtitle() const
 {
     return "Reorder issue #4999.The label should be display cleanly.";
+}
+
+LabelLineHeightTest::LabelLineHeightTest()
+{
+    auto size = Director::getInstance()->getWinSize();
+
+    auto bg = LayerColor::create(Color4B(200,191,231,255));
+    this->addChild(bg);
+
+    TTFConfig ttfConfig("fonts/arial.ttf", 25, GlyphCollection::DYNAMIC,nullptr,false);
+
+    label = Label::createWithTTF(ttfConfig,"Test\nLine\nHeight");
+    label->setPosition( Vec2(size.width/2, size.height*0.5f) );
+    label->setTextColor( Color4B::RED );
+    addChild(label);
+
+    auto slider = ui::Slider::create();
+    slider->setTouchEnabled(true);
+    slider->loadBarTexture("cocosui/sliderTrack.png");
+    slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
+    slider->loadProgressBarTexture("cocosui/sliderProgress.png");
+    slider->setPosition(Vec2(size.width / 2.0f, size.height * 0.15f + slider->getSize().height * 2.0f));
+    slider->setPercent(label->getLineHeight());
+    slider->addEventListener(CC_CALLBACK_2(LabelLineHeightTest::sliderEvent, this));
+    addChild(slider);
+}
+
+void LabelLineHeightTest::sliderEvent(Ref *sender, ui::Slider::EventType type)
+{
+    if (type == Slider::EventType::ON_PERCENTAGE_CHANGED)
+    {
+        Slider*  slider = (Slider*)sender;
+        label->setLineHeight(slider->getPercent());
+    }
+}
+
+std::string LabelLineHeightTest::title() const
+{
+    return "New Label";
+}
+
+std::string LabelLineHeightTest::subtitle() const
+{
+    return "Testing line height of label";
+}
+
+LabelAdditionalKerningTest::LabelAdditionalKerningTest()
+{
+    auto size = Director::getInstance()->getWinSize();
+
+    auto bg = LayerColor::create(Color4B(200,191,231,255));
+    this->addChild(bg);
+
+    TTFConfig ttfConfig("fonts/arial.ttf", 40, GlyphCollection::DYNAMIC,nullptr,false);
+
+    label = Label::createWithTTF(ttfConfig,"Test additional kerning");
+    label->setPosition( Vec2(size.width/2, size.height*0.65f) );
+    label->setTextColor( Color4B::RED );
+    addChild(label);
+
+    auto slider = ui::Slider::create();
+    slider->setTouchEnabled(true);
+    slider->loadBarTexture("cocosui/sliderTrack.png");
+    slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
+    slider->loadProgressBarTexture("cocosui/sliderProgress.png");
+    slider->setPosition(Vec2(size.width / 2.0f, size.height * 0.15f + slider->getSize().height * 2.0f));
+    slider->setPercent(0);
+    slider->addEventListener(CC_CALLBACK_2(LabelAdditionalKerningTest::sliderEvent, this));
+    addChild(slider);
+}
+
+void LabelAdditionalKerningTest::sliderEvent(Ref *sender, ui::Slider::EventType type)
+{
+    if (type == Slider::EventType::ON_PERCENTAGE_CHANGED)
+    {
+        Slider*  slider = (Slider*)sender;
+        label->setAdditionalKerning(slider->getPercent());
+    }
+}
+
+std::string LabelAdditionalKerningTest::title() const
+{
+    return "New Label";
+}
+
+std::string LabelAdditionalKerningTest::subtitle() const
+{
+    return "Testing additional kerning of label";
 }
