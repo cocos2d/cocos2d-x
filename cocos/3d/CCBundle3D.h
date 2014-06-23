@@ -170,7 +170,7 @@ protected:
     rapidjson::Document _document;
 
     BundleReader* _bundleReader;
-    unsigned int _referenceCount;
+    size_t _referenceCount;
     Reference* _references;
     Data* _binaryBuffer;
 
