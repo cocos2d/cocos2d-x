@@ -83,40 +83,6 @@ char* BundleReader::readLine(int num,char* line)
 	return line;
 }
 
-size_t BundleReader::write(const void* ptr, size_t size, size_t count)
-{
-    if (!m_buffer)
-        return 0;
-
-	size_t validCount;
-	size_t validLength = m_length - m_position;
-	size_t needLength = size*count;
-	const char* ptr1 = (const char*)ptr;
-	if (validLength <= needLength)
-	{
-		validCount = validLength / size;
-		size_t readLength = size * validCount;
-		memcpy((char*)m_buffer + m_position, ptr1, readLength);
-		ptr1 += readLength;
-		m_position += readLength;
-		readLength = validLength - readLength;
-		if(readLength > 0)
-		{
-			memcpy((char*)m_buffer+m_position, ptr1, readLength);
-		    m_position += readLength;
-			validCount += 1;
-		}
-	}
-	else
-	{
-		memcpy((char*)m_buffer + m_position, ptr1, needLength);
-		m_position += needLength;
-		validCount = count;
-	}
-
-	return validCount;
-}
-
 bool BundleReader::eof()
 {
     if (!m_buffer)

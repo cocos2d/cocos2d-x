@@ -304,12 +304,12 @@ bool MeshSkin::initFromSkinData(const SkinData& skindata)
     for (; i < skindata.skinBoneNames.size(); i++) {
         auto bone = Bone::create(skindata.skinBoneNames[i]);
         bone->_invBindPose = skindata.inverseBindPoseMatrices[i];
-        //bone->setOriPose(skindata.skinBoneOriginMatrices[i]);
+        bone->setOriPose(skindata.skinBoneOriginMatrices[i]);
         addSkinBone(bone);
     }
     for (i = 0; i < skindata.nodeBoneNames.size(); i++) {
         auto bone = Bone::create(skindata.nodeBoneNames[i]);
-        //bone->setOriPose(skindata.nodeBoneOriginMatrices[i]);
+        bone->setOriPose(skindata.nodeBoneOriginMatrices[i]);
         addNodeBone(bone);
     }
     for (auto it : skindata.boneChild) {

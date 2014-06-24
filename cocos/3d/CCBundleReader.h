@@ -73,17 +73,6 @@ public:
      */
 	char* readLine(int num, char* line);
 
-	 /**
-     * Writes an array of elements.
-     *
-     * @param ptr   The pointer to the array of elements to be written.
-     * @param size  The size of each element to be written, in bytes.
-     * @param count The number of elements to write.
-     *
-     * @return The number of elements written.
-     */
-	size_t write(const void* ptr, size_t size, size_t count);
-
 	/**
      * Returns true if the end of the buffer has been reached.
      */

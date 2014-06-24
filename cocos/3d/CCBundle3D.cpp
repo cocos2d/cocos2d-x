@@ -62,6 +62,7 @@ static const char* SKINDATA_BONES = "bones";
 static const char* SKINDATA_NODE = "node";
 static const char* SKINDATA_BINDSHAPE = "bindshape";
 static const char* SKINDATA_CHILDREN = "children";
+static const char* SKINDATA_TRANSFORM = "tansform";
 
 static const char* MATERIALDATA_MATERIAL = "material";
 static const char* MATERIALDATA_BASE = "base";
@@ -83,26 +84,57 @@ void getChildMap(std::map<int, std::vector<int> >& map, SkinData* skinData, cons
 {
     if (!skinData)
         return;
-
+    
     if (!val.HasMember(SKINDATA_CHILDREN))
         return;
-
+    
+    // get transform matrix
+    Mat4 transform;
+    const rapidjson::Value& parent_tranform = val[SKINDATA_TRANSFORM];
+    for (rapidjson::SizeType j = 0; j < parent_tranform.Size(); j++)
+    {
+        transform.m[j] = parent_tranform[j].GetDouble();
+    }
+    
+    // set origin matrices
     std::string parent_name = val[ID].GetString();
-    int parent_name_index = skinData->getBoneNameIndex(parent_name);
-
+    int parent_name_index = skinData->getSkinBoneNameIndex(parent_name);
+    if (parent_name_index < 0)
+    {
+        skinData->addNodeBoneNames(parent_name);
+        parent_name_index = skinData->getBoneNameIndex(parent_name);
+        skinData->nodeBoneOriginMatrices.push_back(transform);
+    }
+    else
+    {
+        skinData->skinBoneOriginMatrices.push_back(transform);
+    }
+    
+    // set root bone index
+    if(skinData->rootBoneIndex < 0)
+    {
+        skinData->rootBoneIndex = parent_name_index;
+    }
+    
     const rapidjson::Value& children = val[SKINDATA_CHILDREN];
     for (rapidjson::SizeType i = 0; i < children.Size(); i++)
     {
+        // get child bone name
         const rapidjson::Value& child = children[i];
+        
         std::string child_name = child[ID].GetString();
-
-        int child_name_index = skinData->getBoneNameIndex(child_name);
-        if (child_name_index >= 0)
+        int child_name_index = skinData->getSkinBoneNameIndex(child_name);
+        if (child_name_index < 0)
         {
-            map[parent_name_index].push_back(child_name_index);
-
-            getChildMap(map, skinData, child);
+            skinData->addNodeBoneNames(child_name);
+            child_name_index = skinData->getBoneNameIndex(child_name);
+            
         }
+        
+        map[parent_name_index].push_back(child_name_index);
+        
+        getChildMap(map, skinData, child);
+        
     }
 }
 
@@ -276,23 +308,23 @@ bool Bundle3D::loadMeshDataJson(MeshData* meshdata)
 bool Bundle3D::loadSkinDataJson(SkinData* skindata)
 {
     if (!_document.HasMember(SKINDATA_SKIN )) return false;
-
+    
     skindata->resetData();
-
+    
     const rapidjson::Value& skin_data_array = _document[SKINDATA_SKIN ];
-
+    
     assert(skin_data_array.IsArray());
     const rapidjson::Value& skin_data_array_val_0 = skin_data_array[(rapidjson::SizeType)0];
-
+    
     if (!skin_data_array_val_0.HasMember(SKINDATA_BONES))
         return false;
-
+    
     const rapidjson::Value& skin_data_bones = skin_data_array_val_0[SKINDATA_BONES];
     for (rapidjson::SizeType i = 0; i < skin_data_bones.Size(); i++)
     {
         const rapidjson::Value& skin_data_bone = skin_data_bones[i];
         std::string name = skin_data_bone[SKINDATA_NODE].GetString();
-        skindata->skinBoneNames.push_back(name);
+        skindata->addSkinBoneNames(name);
         
         Mat4 mat_bind_pos;
         const rapidjson::Value& bind_pos = skin_data_bone[SKINDATA_BINDSHAPE];
@@ -302,11 +334,12 @@ bool Bundle3D::loadSkinDataJson(SkinData* skindata)
         }
         skindata->inverseBindPoseMatrices.push_back(mat_bind_pos);
     }
-
+    
+    // set root bone infomation
     const rapidjson::Value& skin_data_1 = skin_data_array[1];
-    const rapidjson::Value& bone_array_0 = skin_data_1[SKINDATA_CHILDREN][(rapidjson::SizeType)0];
-    skindata->rootBoneIndex = skindata->getBoneNameIndex(bone_array_0[ID].GetString());
-    getChildMap(skindata->boneChild, skindata, bone_array_0);
+    
+    // parent and child relationship map
+    getChildMap(skindata->boneChild, skindata, skin_data_1);
     return true;
 }
 
@@ -353,7 +386,7 @@ bool Bundle3D::loadAnimationDataJson(Animation3DData* animationdata)
         {
             const rapidjson::Value& bone_keyframes =  bone[ANIMATIONDATA_KEYFRAMES];
             rapidjson::SizeType keyframe_size = bone_keyframes.Size();
-            for (rapidjson::SizeType j = 0; j < bone_keyframes.Size(); j++)
+            for (rapidjson::SizeType j = 0; j < keyframe_size; j++)
             {
                 const rapidjson::Value&  bone_keyframe =  bone_keyframes[j];
 
@@ -430,7 +463,7 @@ bool Bundle3D::loadBinary(const std::string& path)
     // Read all refs
     CC_SAFE_DELETE_ARRAY(_references);
     _references = new Reference[_referenceCount];
-    for (unsigned int i = 0; i < _referenceCount; ++i)
+    for (size_t i = 0; i < _referenceCount; ++i)
     {
         if ((_references[i].id = _bundleReader->readString()).empty() ||
             _bundleReader->read(&_references[i].type, 4, 1) != 1 ||
@@ -490,12 +523,12 @@ bool Bundle3D::loadMeshDataBinary(MeshData* meshdata)
     }
 
     // Read index data
-    unsigned int meshPartCount = 1;
+    size_t meshPartCount = 1;
     //_bundleReader->read(&meshPartCount, 4, 1);
 
-    for (unsigned int i = 0; i < meshPartCount; ++i)
+    for (size_t i = 0; i < meshPartCount; ++i)
     {
-        unsigned int nIndexCount;
+        size_t nIndexCount;
         if (_bundleReader->read(&nIndexCount, 4, 1) != 1)
         {
             CCLOGINFO("Failed to read meshdata: nIndexCount '%s'.", _path.c_str());
@@ -518,9 +551,9 @@ bool Bundle3D::loadSkinDataBinary(SkinData* skindata)
 {
     if (!seekToFirstType(BUNDLE_TYPE_MESHSKIN))
         return false;
-
+    
     skindata->resetData();
-
+    
     // transform
     float bindShape[16];
     if (!_bundleReader->readMatrix(bindShape))
@@ -528,8 +561,8 @@ bool Bundle3D::loadSkinDataBinary(SkinData* skindata)
         CCLOGINFO("Failed to read SkinData: bindShape matrix  '%s'.", _path.c_str());
         return false;
     }
-
-    // bone count 
+    
+    // bone count
     unsigned int boneNum;
     if (!_bundleReader->read(&boneNum))
     {
@@ -549,10 +582,10 @@ bool Bundle3D::loadSkinDataBinary(SkinData* skindata)
         }
         skindata->inverseBindPoseMatrices.push_back(bindpos);
     }
-
+    
     // bind shape
     _bundleReader->readMatrix(bindShape);
-
+    
     // read parent and child relationship map
     float transform[16];
     unsigned int linkNum;
@@ -560,24 +593,44 @@ bool Bundle3D::loadSkinDataBinary(SkinData* skindata)
     for (unsigned int i = 0; i < linkNum; ++i)
     {
         std::string id = _bundleReader->readString();
-        int index = skindata->getBoneNameIndex(id);
-
-        if (index >= 0 && skindata->rootBoneIndex < 0)
+        int index = skindata->getSkinBoneNameIndex(id);
+        if(index < 0)
+        {
+            skindata->addNodeBoneNames(id);
+            index = skindata->getBoneNameIndex(id);
+            skindata->nodeBoneOriginMatrices.push_back(transform);
+        }
+        else
+        {
+            skindata->skinBoneOriginMatrices.push_back(transform);
+        }
+        
+        // set root bone index
+        if (skindata->rootBoneIndex < 0)
             skindata->rootBoneIndex = index;
-
+        
         std::string parentid = _bundleReader->readString();
-        int parentIndex = skindata->getBoneNameIndex(parentid);
         
         if (!_bundleReader->readMatrix(transform))
         {
             CCLOGINFO("Failed to load SkinData: transform '%s'.", _path.c_str());
             return nullptr;
         }
-
-        if (parentIndex < 0 || index < 0)
-            continue;
-
+        
+        int parentIndex = skindata->getBoneNameIndex(parentid);
+        if(parentIndex < 0)
+        {
+            skindata->addNodeBoneNames(parentid);
+            parentIndex = skindata->getBoneNameIndex(parentid);
+            skindata->nodeBoneOriginMatrices.push_back(transform);
+        }
+        else
+        {
+            skindata->skinBoneOriginMatrices.push_back(transform);
+        }
+        
         skindata->boneChild[parentIndex].push_back(index);
+        
     }
 
     return true;
@@ -608,7 +661,7 @@ bool Bundle3D::loadAnimationDataBinary(Animation3DData* animationdata)
     animationdata->_scaleKeys.clear();
     animationdata->_translationKeys.clear();
 
-    std::string id = _bundleReader->readString();
+    _bundleReader->readString();
 
     if (!_bundleReader->read(&animationdata->_totalTime))
     {
@@ -616,24 +669,24 @@ bool Bundle3D::loadAnimationDataBinary(Animation3DData* animationdata)
         return false;
     }
 
-    unsigned int animNum;
+    size_t animNum;
     if (!_bundleReader->read(&animNum))
     {
         CCLOGINFO("Failed to read AnimationData: animNum '%s'.", _path.c_str());
         return false;
     }
 
-    for (unsigned int i = 0; i < animNum; ++i)
+    for (size_t i = 0; i < animNum; ++i)
     {
         std::string boneName = _bundleReader->readString();
-        unsigned int keyframeNum;
+        size_t keyframeNum;
         if (!_bundleReader->read(&keyframeNum))
         {
             CCLOGINFO("Failed to read AnimationData: keyframeNum '%s'.", _path.c_str());
             return false;
         }
 
-        for (unsigned int j = 0; j < keyframeNum; ++j)
+        for (size_t j = 0; j < keyframeNum; ++j)
         {
             float keytime;
             if (!_bundleReader->read(&keytime))
@@ -763,9 +816,9 @@ _modelRelativePath(""),
 _jsonBuffer(nullptr),
 _path(""),
 _referenceCount(0),
-_bundleReader(NULL),
-_references(NULL),
-_binaryBuffer(NULL)
+_bundleReader(nullptr),
+_references(nullptr),
+_binaryBuffer(nullptr)
 {
 
 }
