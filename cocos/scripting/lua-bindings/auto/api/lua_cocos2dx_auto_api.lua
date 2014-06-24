@@ -1221,4 +1221,14 @@
 -- @field [parent=#cc] ProtectedNode#ProtectedNode ProtectedNode preloaded module
 
 
+--------------------------------------------------------
+-- the cc Animation3D
+-- @field [parent=#cc] Animation3D#Animation3D Animation3D preloaded module
+
+
+--------------------------------------------------------
+-- the cc Animate3D
+-- @field [parent=#cc] Animate3D#Animate3D Animate3D preloaded module
+
+
 return nil
