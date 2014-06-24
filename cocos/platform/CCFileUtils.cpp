@@ -962,12 +962,13 @@ bool FileUtils::createDirectory(const std::string& dirPath)
     CCASSERT(!dirPath.empty(), "Invalid path");
     
     if (isDirectoryExist(dirPath))
-        return false;
+        return true;
     
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
     if (mkdir(dirPath.c_str(), S_IRWXU | S_IRWXG | S_IRWXO) != 0)
     {
         CCLOGERROR("Create directory (%s) failed", dirPath.c_str());
+        return false;
     }
     return true;
 #else
@@ -1051,7 +1052,7 @@ bool FileUtils::removeDirectory(const std::string& path)
 {
     if (path.size() > 0 && path[path.size() - 1] != '/')
     {
-        CCLOGERROR("Fail to remove directory, invalid path: %s", path.c_str());
+        CCLOGERROR("Fail to remove directory, path must termniate with '/': %s", path.c_str());
         return false;
     }
     
