@@ -167,13 +167,11 @@ namespace PhoneDirect3DXamlAppInterop
             }
             else
             {
-                // If the app has received a 'reset' navigation, then we need to check
-                // on the next navigation to see if the page stack should be reset
                 RootFrame.Navigated += ClearBackStackAfterReset;
             }
             _isResume = false;
         }
-        
+
         private void ClearBackStackAfterReset(object sender, NavigationEventArgs e)
         {
             // Unregister the event so it doesn't get called again

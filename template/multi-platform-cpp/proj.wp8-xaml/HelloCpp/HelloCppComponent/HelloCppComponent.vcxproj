@@ -199,7 +199,7 @@
       <Project>{a5ce59f9-2785-4e08-bd3c-0f370eeca439}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\..\external\Box2D\proj.wp8\Box2D.vcxproj">
-      <Project>{79fc91d4-974c-4bc7-8e8c-79e194437de7}</Project>
+      <Project>{b04642cc-e2c3-4388-8eb9-19ba3922060c}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\..\external\chipmunk\proj.wp8\chipmunk.vcxproj">
       <Project>{3ad76ea1-d698-40d2-b04d-d9ab8171f40b}</Project>

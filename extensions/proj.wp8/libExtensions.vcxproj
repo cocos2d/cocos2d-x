@@ -501,6 +501,11 @@
     <ClInclude Include="EditBoxEvent.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\external\chipmunk\proj.wp8\chipmunk.vcxproj">
+      <Project>{3ad76ea1-d698-40d2-b04d-d9ab8171f40b}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsPhone\v$(TargetPlatformVersion)\Microsoft.Cpp.WindowsPhone.$(TargetPlatformVersion).targets" />
   <ImportGroup Label="ExtensionTargets">
