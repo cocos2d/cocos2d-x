@@ -22,10 +22,10 @@ PLAYER_NS_BEGIN
 #define kPlayerAltModifyKey   "alt"
 
 
-class MenuItem
+class PlayerMenuItem
 {
 public:
-    MenuItem():itemId(""), scriptHandlerId(0),isChecked(false),isEnabled(true), shortcut("")
+    PlayerMenuItem():itemId(""), scriptHandlerId(0),isChecked(false),isEnabled(true), shortcut("")
     {
     }
     
@@ -48,7 +48,7 @@ public:
     //
     // @param item 菜单项定义
     // @param parentIndex 父级菜单对象
-    virtual void addItem(const MenuItem &item,
+    virtual void addItem(const PlayerMenuItem &item,
                          std::string parentId = std::string(),
                          int index = MAX_INT) = 0;
     
@@ -56,13 +56,13 @@ public:
     // 修改一个菜单项
     //
     // @param item 菜单项
-    virtual void modifyItem(const MenuItem &item) = 0;
+    virtual void modifyItem(const PlayerMenuItem &item) = 0;
     
     
     // 删除一个菜单项
     //
     // @param item 菜单项
-    virtual void deleteItem(const MenuItem &item) = 0;
+    virtual void deleteItem(const PlayerMenuItem &item) = 0;
     
 };
 
