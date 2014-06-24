@@ -60,6 +60,8 @@ extern "C" {
 //#include "lua_xml_http_request.h"
 #include "lua_cocos2dx_physics_auto.hpp"
 #include "lua_cocos2dx_physics_manual.hpp"
+#include "lua_cocos2dx_extra_auto.hpp"
+#include "lua_cocos2dx_external_extra_manual.h"
 
 namespace {
 int lua_print(lua_State * luastate)
@@ -164,6 +166,8 @@ bool LuaStack::init(void)
     //register_all_cocos2dx_spine(_state);
     //register_all_cocos2dx_spine_manual(_state);
     //register_glnode_manual(_state);
+    register_all_cocos2dx_extra(_state);
+    register_all_cocos2dx_external_extra_manual(_state);
 #if CC_USE_PHYSICS
     register_all_cocos2dx_physics(_state);
     register_all_cocos2dx_physics_manual(_state);

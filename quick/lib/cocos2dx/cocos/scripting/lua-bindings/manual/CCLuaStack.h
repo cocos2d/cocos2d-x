@@ -152,6 +152,12 @@ public:
     int luaLoadBuffer(lua_State *L, const char *chunk, int chunkSize, const char *chunkName);
     static int lua_loadChunksFromZIP(lua_State *L);
     
+    bool  _xxteaEnabled;
+    char* _xxteaKey;
+    int   _xxteaKeyLen;
+    char* _xxteaSign;
+    int   _xxteaSignLen;
+    
 protected:
     LuaStack(void)
     : _state(nullptr)
@@ -172,11 +178,6 @@ protected:
     int _debuggerType;
     
     int _callFromLua;
-    bool  _xxteaEnabled;
-    char* _xxteaKey;
-    int   _xxteaKeyLen;
-    char* _xxteaSign;
-    int   _xxteaSignLen;
 };
 
 NS_CC_END

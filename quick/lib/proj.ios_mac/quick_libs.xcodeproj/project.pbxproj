@@ -1031,6 +1031,28 @@
 		DA045A821952900C00444A66 /* CCClippingRegionNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49F5C3CF195038C8009F8643 /* CCClippingRegionNode.cpp */; };
 		DA853FA2195029B00057DF22 /* ioapi_mem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA853F9B19501BC90057DF22 /* ioapi_mem.cpp */; };
 		DA853FA3195029B40057DF22 /* ioapi_mem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA853F9B19501BC90057DF22 /* ioapi_mem.cpp */; };
+		DAB2BFAB195954F700ADD4E0 /* HelperFunc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAD445A619592CA000D3A30C /* HelperFunc.cpp */; };
+		DAB2BFAC195954F700ADD4E0 /* HelperFunc.h in Sources */ = {isa = PBXBuildFile; fileRef = DAD445A719592CA000D3A30C /* HelperFunc.h */; };
+		DAB2BFAD195954F700ADD4E0 /* cocos2dx_extra.h in Sources */ = {isa = PBXBuildFile; fileRef = DAD445A819592CA000D3A30C /* cocos2dx_extra.h */; };
+		DAB2BFAE195954F700ADD4E0 /* libbase64.c in Sources */ = {isa = PBXBuildFile; fileRef = DAD445AB19592CA000D3A30C /* libbase64.c */; };
+		DAB2BFAF195954F700ADD4E0 /* libbase64.h in Sources */ = {isa = PBXBuildFile; fileRef = DAD445AC19592CA000D3A30C /* libbase64.h */; };
+		DAB2BFB0195954F700ADD4E0 /* CCCrypto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAD445AD19592CA000D3A30C /* CCCrypto.cpp */; };
+		DAB2BFB1195954F700ADD4E0 /* CCCrypto.h in Sources */ = {isa = PBXBuildFile; fileRef = DAD445AE19592CA000D3A30C /* CCCrypto.h */; };
+		DAB2BFB2195954F700ADD4E0 /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = DAD445B019592CA000D3A30C /* md5.c */; };
+		DAB2BFB3195954F700ADD4E0 /* md5.h in Sources */ = {isa = PBXBuildFile; fileRef = DAD445B119592CA000D3A30C /* md5.h */; };
+		DAB2BFB4195954F700ADD4E0 /* CCAlertViewDelegate.h in Sources */ = {isa = PBXBuildFile; fileRef = DAD445B319592CA000D3A30C /* CCAlertViewDelegate.h */; };
+		DAB2BFB5195954F700ADD4E0 /* CCNative.h in Sources */ = {isa = PBXBuildFile; fileRef = DAD445B419592CA000D3A30C /* CCNative.h */; };
+		DAB2BFB6195954F700ADD4E0 /* CCHTTPRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAD445B619592CA000D3A30C /* CCHTTPRequest.cpp */; };
+		DAB2BFB7195954F700ADD4E0 /* CCHTTPRequest.h in Sources */ = {isa = PBXBuildFile; fileRef = DAD445B719592CA000D3A30C /* CCHTTPRequest.h */; };
+		DAB2BFB8195954F700ADD4E0 /* CCHTTPRequestDelegate.h in Sources */ = {isa = PBXBuildFile; fileRef = DAD445B819592CA000D3A30C /* CCHTTPRequestDelegate.h */; };
+		DAB2BFB9195954F700ADD4E0 /* CCNetwork.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAD445B919592CA000D3A30C /* CCNetwork.cpp */; };
+		DAB2BFBA195954F700ADD4E0 /* CCNetwork.h in Sources */ = {isa = PBXBuildFile; fileRef = DAD445BA19592CA000D3A30C /* CCNetwork.h */; };
+		DAB2BFBB195958F600ADD4E0 /* CCCryptoMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = DAD445DC19592CA000D3A30C /* CCCryptoMac.mm */; };
+		DAB2BFBC195958F600ADD4E0 /* CCNative.mm in Sources */ = {isa = PBXBuildFile; fileRef = DAD445DD19592CA000D3A30C /* CCNative.mm */; };
+		DAB2BFBD195958F600ADD4E0 /* CCNativeMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = DAD445DF19592CA000D3A30C /* CCNativeMac.mm */; };
+		DAB2BFBE195958F600ADD4E0 /* OpenUDIDMac.m in Sources */ = {isa = PBXBuildFile; fileRef = DAD445E219592CA000D3A30C /* OpenUDIDMac.m */; };
+		DAB2BFC1195959F300ADD4E0 /* CCNetworkIOSMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = DAD445D819592CA000D3A30C /* CCNetworkIOSMac.mm */; };
+		DAB2BFC2195959F300ADD4E0 /* ReachabilityIOSMac.m in Sources */ = {isa = PBXBuildFile; fileRef = DAD445DA19592CA000D3A30C /* ReachabilityIOSMac.m */; };
 		ED9C6A9418599AD8000A5232 /* CCNodeGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */; };
 		ED9C6A9518599AD8000A5232 /* CCNodeGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */; };
 		ED9C6A9618599AD8000A5232 /* CCNodeGrid.h in Headers */ = {isa = PBXBuildFile; fileRef = ED9C6A9318599AD8000A5232 /* CCNodeGrid.h */; };
@@ -1688,6 +1710,7 @@
 		B375104F1823AC7B00B3BA6A /* CCPhysicsWorldInfo_chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsWorldInfo_chipmunk.h; sourceTree = "<group>"; };
 		DA853F9B19501BC90057DF22 /* ioapi_mem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ioapi_mem.cpp; sourceTree = "<group>"; };
 		DA853F9C19501BC90057DF22 /* ioapi_mem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi_mem.h; sourceTree = "<group>"; };
+		DAB2BFC319595A2E00ADD4E0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		DAD445A619592CA000D3A30C /* HelperFunc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelperFunc.cpp; sourceTree = "<group>"; };
 		DAD445A719592CA000D3A30C /* HelperFunc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelperFunc.h; sourceTree = "<group>"; };
 		DAD445A819592CA000D3A30C /* cocos2dx_extra.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocos2dx_extra.h; sourceTree = "<group>"; };
@@ -1893,6 +1916,7 @@
 		1551A341158F2AB200E66CFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DAB2BFC319595A2E00ADD4E0 /* SystemConfiguration.framework */,
 				1551A342158F2AB200E66CFE /* Foundation.framework */,
 			);
 			name = Frameworks;
@@ -4158,6 +4182,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAB2BFBB195958F600ADD4E0 /* CCCryptoMac.mm in Sources */,
+				DAB2BFBC195958F600ADD4E0 /* CCNative.mm in Sources */,
+				DAB2BFBD195958F600ADD4E0 /* CCNativeMac.mm in Sources */,
+				DAB2BFBE195958F600ADD4E0 /* OpenUDIDMac.m in Sources */,
+				DAB2BFAB195954F700ADD4E0 /* HelperFunc.cpp in Sources */,
+				DAB2BFAC195954F700ADD4E0 /* HelperFunc.h in Sources */,
+				DAB2BFAD195954F700ADD4E0 /* cocos2dx_extra.h in Sources */,
+				DAB2BFAE195954F700ADD4E0 /* libbase64.c in Sources */,
+				DAB2BFAF195954F700ADD4E0 /* libbase64.h in Sources */,
+				DAB2BFB0195954F700ADD4E0 /* CCCrypto.cpp in Sources */,
+				DAB2BFB1195954F700ADD4E0 /* CCCrypto.h in Sources */,
+				DAB2BFB2195954F700ADD4E0 /* md5.c in Sources */,
+				DAB2BFB3195954F700ADD4E0 /* md5.h in Sources */,
+				DAB2BFB4195954F700ADD4E0 /* CCAlertViewDelegate.h in Sources */,
+				DAB2BFB5195954F700ADD4E0 /* CCNative.h in Sources */,
+				DAB2BFB6195954F700ADD4E0 /* CCHTTPRequest.cpp in Sources */,
+				DAB2BFB7195954F700ADD4E0 /* CCHTTPRequest.h in Sources */,
+				DAB2BFB8195954F700ADD4E0 /* CCHTTPRequestDelegate.h in Sources */,
+				DAB2BFB9195954F700ADD4E0 /* CCNetwork.cpp in Sources */,
+				DAB2BFBA195954F700ADD4E0 /* CCNetwork.h in Sources */,
 				49F5C3D1195038F0009F8643 /* CCClippingRegionNode.cpp in Sources */,
 				50ABBE2B1925AB6F00A911A9 /* ccCArray.cpp in Sources */,
 				1A01C68A18F57BE800EFE3A6 /* CCDeprecated.cpp in Sources */,
@@ -4222,6 +4266,7 @@
 				50ABBE551925AB6F00A911A9 /* CCEventFocus.cpp in Sources */,
 				50ABBE491925AB6F00A911A9 /* CCEventAcceleration.cpp in Sources */,
 				1A5701C1180BCB5A0088DEC7 /* CCLabelBMFont.cpp in Sources */,
+				DAB2BFC2195959F300ADD4E0 /* ReachabilityIOSMac.m in Sources */,
 				50ABBD4C1925AB0000A911A9 /* MathUtil.cpp in Sources */,
 				1A087AE81860400400196EF5 /* edtaa3func.cpp in Sources */,
 				B37510731823AC9F00B3BA6A /* CCPhysicsContactInfo_chipmunk.cpp in Sources */,
@@ -4262,6 +4307,7 @@
 				50ABC0111926664800A911A9 /* CCGLViewProtocol.cpp in Sources */,
 				B29594C21926D61F003EEF37 /* CCMesh.cpp in Sources */,
 				50ABBE3D1925AB6F00A911A9 /* CCDataVisitor.cpp in Sources */,
+				DAB2BFC1195959F300ADD4E0 /* CCNetworkIOSMac.mm in Sources */,
 				1A5702C8180BCE370088DEC7 /* CCTextFieldTTF.cpp in Sources */,
 				50ABBE7D1925AB6F00A911A9 /* CCEventTouch.cpp in Sources */,
 				1A5702EA180BCE750088DEC7 /* CCTileMapAtlas.cpp in Sources */,
@@ -4756,6 +4802,7 @@
 					"COCOS2D_DEBUG=1",
 					USE_FILE32API,
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
+					"CC_LUA_ENGINE_ENABLED=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
@@ -4773,7 +4820,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../.. $(SRCROOT)/../../../cocos $(SRCROOT)/../../../cocos/editor-support $(SRCROOT)/../../../external/chipmunk/include/chipmunk $(SRCROOT)/../../../external $(SRCROOT)/../../../external/unzip";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../.. $(SRCROOT)/../../../cocos $(SRCROOT)/../../../cocos/editor-support $(SRCROOT)/../../../external/chipmunk/include/chipmunk $(SRCROOT)/../../../external $(SRCROOT)/../../../external/unzip $(SRCROOT)/../cocos2dx/extra $(SRCROOT)/../../../external/lua/luajit/include $(SRCROOT)/../../../external/xxtea $(QUICK_V3_ROOT)/lib/cocos2dx/cocos/scripting/lua-bindings/manual $(SRCROOT)/../../../external/lua/tolua";
 			};
 			name = Debug;
 		};
@@ -4791,6 +4838,7 @@
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
 					NDEBUG,
 					USE_FILE32API,
+					"CC_LUA_ENGINE_ENABLED=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
@@ -4807,7 +4855,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../.. $(SRCROOT)/../../../cocos $(SRCROOT)/../../../cocos/editor-support $(SRCROOT)/../../../external/chipmunk/include/chipmunk $(SRCROOT)/../../../external $(SRCROOT)/../../../external/unzip";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../.. $(SRCROOT)/../../../cocos $(SRCROOT)/../../../cocos/editor-support $(SRCROOT)/../../../external/chipmunk/include/chipmunk $(SRCROOT)/../../../external $(SRCROOT)/../../../external/unzip $(SRCROOT)/../cocos2dx/extra $(SRCROOT)/../../../external/lua/luajit/include $(SRCROOT)/../../../external/xxtea $(QUICK_V3_ROOT)/lib/cocos2dx/cocos/scripting/lua-bindings/manual $(SRCROOT)/../../../external/lua/tolua";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
