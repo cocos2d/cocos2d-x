@@ -1756,19 +1756,19 @@ int tolua_cocos2d_Sequence_create(lua_State* tolua_S)
                     goto tolua_lerror;
 #endif
                 
-                cocos2d::FiniteTimeAction* item = static_cast<cocos2d::FiniteTimeAction*>(tolua_tousertype(tolua_S, 1 + i, NULL));
-                if (NULL != item)
+                cocos2d::FiniteTimeAction* item = static_cast<cocos2d::FiniteTimeAction*>(tolua_tousertype(tolua_S, 1 + i, nullptr));
+                if (nullptr != item)
                 {
                     array.pushBack(item);
-                    ++i;
                 }
+                ++i;
             }
         }
         
         cocos2d::Sequence* tolua_ret = cocos2d::Sequence::create(array);
         //issue 2433 uncheck
         int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
-        int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
+        int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : nullptr;
         toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"cc.Sequence");
         return 1;
     }

@@ -26,6 +26,7 @@
 #define __TestCpp__UIListViewTest__
 
 #include "../UIScene.h"
+#include "ui/UIScrollView.h"
 
 class UIListViewTest_Vertical : public UIScene
 {
@@ -34,7 +35,8 @@ public:
     ~UIListViewTest_Vertical();
     bool init();
     void selectedItemEvent(Ref* pSender, ListView::EventType type);
-    
+    void selectedItemEventScrollView(Ref* pSender, ui::ScrollView::EventType type);
+
 protected:
     UI_SCENE_CREATE_FUNC(UIListViewTest_Vertical)
     Text* _displayValueLabel;
@@ -49,6 +51,7 @@ public:
     ~UIListViewTest_Horizontal();
     bool init();
     void selectedItemEvent(Ref* pSender, ListView::EventType type);
+
     
 protected:
     UI_SCENE_CREATE_FUNC(UIListViewTest_Horizontal)
