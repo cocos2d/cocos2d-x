@@ -137,3 +137,13 @@ project.properties
 /templates/lua-template-runtime/runtime
 /v*-deps-*.zip
 /v*-lua-runtime-*.zip
+
+/tests/lua-tests/res/
+
+tests/hello/proj.android/.classpath
+tests/hello/proj.android/.project
+tests/hello/proj.android/.settings/org.eclipse.jdt.core.prefs
+tests/lua-tests/proj.android/.classpath
+tests/lua-tests/proj.android/.project
+tests/lua-tests/proj.android/.settings/org.eclipse.jdt.core.prefs
+tests/lua-tests/project/proj.android/.settings/org.eclipse.jdt.core.prefs

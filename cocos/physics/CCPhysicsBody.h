@@ -350,7 +350,6 @@ protected:
     friend class PhysicsJoint;
     friend class Node;
     friend class Layer;
-    friend class ProtectedNode;
 };
 
 NS_CC_END

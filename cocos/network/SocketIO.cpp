@@ -31,7 +31,6 @@
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 #include "WebSocket.h"
-#include "HttpClient.h"
 #include <algorithm>
 #include <sstream>
 
@@ -73,7 +72,7 @@ public:
     void disconnect();
     bool init();
     void handshake();
-    void handshakeResponse(HttpClient *sender, HttpResponse *response);
+//    void handshakeResponse(HttpClient *sender, HttpResponse *response);
     void openSocket();
     void heartbeat(float dt);
 
@@ -113,101 +112,101 @@ SIOClientImpl::~SIOClientImpl()
     CC_SAFE_DELETE(_ws);
 }
 
-void SIOClientImpl::handshake()
-{
-    log("SIOClientImpl::handshake() called");
+//void SIOClientImpl::handshake()
+//{
+//    log("SIOClientImpl::handshake() called");
+//
+//    std::stringstream pre;
+//    pre << "http://" << _uri << "/socket.io/1";
+//
+//    HttpRequest* request = new HttpRequest();
+//    request->setUrl(pre.str().c_str());
+//    request->setRequestType(HttpRequest::Type::GET);
+//
+//    request->setResponseCallback(CC_CALLBACK_2(SIOClientImpl::handshakeResponse, this));
+//    request->setTag("handshake");
+//
+//    log("SIOClientImpl::handshake() waiting");
+//
+//    HttpClient::getInstance()->send(request);
+//
+//    request->release();
+//
+//    return;
+//}
 
-    std::stringstream pre;
-    pre << "http://" << _uri << "/socket.io/1";
-
-    HttpRequest* request = new HttpRequest();
-    request->setUrl(pre.str().c_str());
-    request->setRequestType(HttpRequest::Type::GET);
-
-    request->setResponseCallback(CC_CALLBACK_2(SIOClientImpl::handshakeResponse, this));
-    request->setTag("handshake");
-
-    log("SIOClientImpl::handshake() waiting");
-
-    HttpClient::getInstance()->send(request);
-
-    request->release();
-
-    return;
-}
-
-void SIOClientImpl::handshakeResponse(HttpClient *sender, HttpResponse *response)
-{
-    log("SIOClientImpl::handshakeResponse() called");
-
-    if (0 != strlen(response->getHttpRequest()->getTag()))
-    {
-        log("%s completed", response->getHttpRequest()->getTag());
-    }
-
-    long statusCode = response->getResponseCode();
-    char statusString[64] = {};
-    sprintf(statusString, "HTTP Status Code: %ld, tag = %s", statusCode, response->getHttpRequest()->getTag());
-    log("response code: %ld", statusCode);
-
-    if (!response->isSucceed())
-    {
-        log("SIOClientImpl::handshake() failed");
-        log("error buffer: %s", response->getErrorBuffer());
-
-        for (auto iter = _clients.begin(); iter != _clients.end(); ++iter)
-        {
-            iter->second->getDelegate()->onError(iter->second, response->getErrorBuffer());
-        }
-
-        return;
-    }
-
-    log("SIOClientImpl::handshake() succeeded");
-
-    std::vector<char> *buffer = response->getResponseData();
-    std::stringstream s;
-
-    for (unsigned int i = 0; i < buffer->size(); i++)
-    {
-        s << (*buffer)[i];
-    }
-
-    log("SIOClientImpl::handshake() dump data: %s", s.str().c_str());
-
-    std::string res = s.str();
-    std::string sid;
-    size_t pos = 0;
-    int heartbeat = 0, timeout = 0;
-
-    pos = res.find(":");
-    if(pos != std::string::npos)
-    {
-        sid = res.substr(0, pos);
-        res.erase(0, pos+1);
-    }
-
-    pos = res.find(":");
-    if(pos != std::string::npos)
-    {
-        heartbeat = atoi(res.substr(pos+1, res.size()).c_str());
-    }
-
-    pos = res.find(":");
-    if(pos != std::string::npos)
-    {
-        timeout = atoi(res.substr(pos+1, res.size()).c_str());
-    }
-
-    _sid = sid;
-    _heartbeat = heartbeat;
-    _timeout = timeout;
-
-    openSocket();
-
-    return;
-
-}
+//void SIOClientImpl::handshakeResponse(HttpClient *sender, HttpResponse *response)
+//{
+//    log("SIOClientImpl::handshakeResponse() called");
+//
+//    if (0 != strlen(response->getHttpRequest()->getTag()))
+//    {
+//        log("%s completed", response->getHttpRequest()->getTag());
+//    }
+//
+//    long statusCode = response->getResponseCode();
+//    char statusString[64] = {};
+//    sprintf(statusString, "HTTP Status Code: %ld, tag = %s", statusCode, response->getHttpRequest()->getTag());
+//    log("response code: %ld", statusCode);
+//
+//    if (!response->isSucceed())
+//    {
+//        log("SIOClientImpl::handshake() failed");
+//        log("error buffer: %s", response->getErrorBuffer());
+//
+//        for (auto iter = _clients.begin(); iter != _clients.end(); ++iter)
+//        {
+//            iter->second->getDelegate()->onError(iter->second, response->getErrorBuffer());
+//        }
+//
+//        return;
+//    }
+//
+//    log("SIOClientImpl::handshake() succeeded");
+//
+//    std::vector<char> *buffer = response->getResponseData();
+//    std::stringstream s;
+//
+//    for (unsigned int i = 0; i < buffer->size(); i++)
+//    {
+//        s << (*buffer)[i];
+//    }
+//
+//    log("SIOClientImpl::handshake() dump data: %s", s.str().c_str());
+//
+//    std::string res = s.str();
+//    std::string sid;
+//    size_t pos = 0;
+//    int heartbeat = 0, timeout = 0;
+//
+//    pos = res.find(":");
+//    if(pos != std::string::npos)
+//    {
+//        sid = res.substr(0, pos);
+//        res.erase(0, pos+1);
+//    }
+//
+//    pos = res.find(":");
+//    if(pos != std::string::npos)
+//    {
+//        heartbeat = atoi(res.substr(pos+1, res.size()).c_str());
+//    }
+//
+//    pos = res.find(":");
+//    if(pos != std::string::npos)
+//    {
+//        timeout = atoi(res.substr(pos+1, res.size()).c_str());
+//    }
+//
+//    _sid = sid;
+//    _heartbeat = heartbeat;
+//    _timeout = timeout;
+//
+//    openSocket();
+//
+//    return;
+//
+//}
 
 void SIOClientImpl::openSocket()
 {

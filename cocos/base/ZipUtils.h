@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "base/CCPlatformConfig.h"
 #include "CCPlatformDefine.h"
 #include "base/CCPlatformMacros.h"
+#include "unzip.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/CCFileUtilsAndroid.h"
@@ -270,9 +271,21 @@ namespace cocos2d
         */
         unsigned char *getFileData(const std::string &fileName, ssize_t *size);
 
+        const std::string getFirstFilename(void);
+        const std::string getNextFilename(void);
+        
+        static ZipFile *createWithBuffer(const void* buffer, unsigned long size);
+        
     private:
         /** Internal data like zip file pointer / file list array and so on */
         ZipFilePrivate *_data;
+
+        ZipFile(void);
+//        bool initWithFilename(const char *zipFilename);
+        bool initWithBuffer(const void *buffer, unsigned long size);
+
+        int getCurrentFileInfo(std::string *filename, unz_file_info *info);
+        
     };
 } // end of namespace cocos2d
 #endif // __SUPPORT_ZIPUTILS_H__

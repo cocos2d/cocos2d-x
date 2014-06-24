@@ -11,15 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\HttpClient.h" />
-    <ClInclude Include="..\HttpRequest.h" />
-    <ClInclude Include="..\HttpResponse.h" />
-    <ClInclude Include="..\SocketIO.h" />
     <ClInclude Include="..\WebSocket.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\HttpClient.cpp" />
-    <ClCompile Include="..\SocketIO.cpp" />
     <ClCompile Include="..\WebSocket.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

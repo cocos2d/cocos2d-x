@@ -483,6 +483,7 @@ void ZipUtils::setPvrEncryptionKey(unsigned int keyPart1, unsigned int keyPart2,
 // --------------------- ZipFile ---------------------
 // from unzip.cpp
 #define UNZ_MAXFILENAMEINZIP 256
+static const std::string emptyFilename("");
 
 struct ZipEntryInfo
 {
@@ -499,6 +500,27 @@ public:
     typedef std::unordered_map<std::string, struct ZipEntryInfo> FileListContainer;
     FileListContainer fileList;
 };
+
+ZipFile *ZipFile::createWithBuffer(const void* buffer, uLong size)
+{
+    ZipFile *zip = new ZipFile();
+    if (zip->initWithBuffer(buffer, size))
+    {
+//        zip->autorelease();
+        return zip;
+    }
+    else
+    {
+        delete zip;
+        return NULL;
+    }
+}
+
+ZipFile::ZipFile(void)
+: _data(new ZipFilePrivate)
+{
+    _data->zipFile = nullptr;
+}
 
 ZipFile::ZipFile(const std::string &zipFile, const std::string &filter)
 : _data(new ZipFilePrivate)
@@ -576,6 +598,24 @@ bool ZipFile::fileExists(const std::string &fileName) const
     return ret;
 }
 
+const std::string ZipFile::getFirstFilename(void)
+{
+    if (unzGoToFirstFile(_data->zipFile) != UNZ_OK) return emptyFilename;
+    std::string path;
+    unz_file_info info;
+    getCurrentFileInfo(&path, &info);
+    return path;
+}
+
+const std::string ZipFile::getNextFilename(void)
+{
+    if (unzGoToNextFile(_data->zipFile) != UNZ_OK) return emptyFilename;
+    std::string path;
+    unz_file_info info;
+    getCurrentFileInfo(&path, &info);
+    return path;
+}
+
 unsigned char *ZipFile::getFileData(const std::string &fileName, ssize_t *size)
 {
     unsigned char * buffer = nullptr;
@@ -610,6 +650,32 @@ unsigned char *ZipFile::getFileData(const std::string &fileName, ssize_t *size)
     } while (0);
     
     return buffer;
+}
+
+int ZipFile::getCurrentFileInfo(std::string *filename, unz_file_info *info)
+{
+    char path[FILENAME_MAX + 1];
+    int ret = unzGetCurrentFileInfo(_data->zipFile, info, path, sizeof(path), NULL, 0, NULL, 0);
+    if (ret != UNZ_OK)
+    {
+        *filename = emptyFilename;
+    }
+    else
+    {
+        filename->assign(path);
+    }
+    return ret;
+}
+
+bool ZipFile::initWithBuffer(const void *buffer, uLong size)
+{
+    if (!buffer || size == 0) return false;
+    
+    _data->zipFile = unzOpenBuffer(buffer, size);
+    if (!_data->zipFile) return false;
+    
+    setFilter(emptyFilename);
+    return true;
 }
 
 NS_CC_END

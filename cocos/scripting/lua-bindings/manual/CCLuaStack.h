@@ -35,6 +35,15 @@ extern "C" {
 
 NS_CC_BEGIN
 
+class CCLuaStack;
+
+typedef std::map<lua_State*, CCLuaStack*> CCLuaStackMap;
+typedef CCLuaStackMap::iterator CCLuaStackMapIterator;
+
+#define kCCLuaDebuggerNone      0
+#define kCCLuaDebuggerLDT       1
+#define kCCLuaDebuggerGlobalKey "DEBUG_DISABLE_QUICK_LUA_LOADER"
+
 class LuaStack : public Ref
 {
 public:
@@ -50,6 +59,11 @@ public:
     lua_State* getLuaState(void) {
         return _state;
     }
+    
+    /**
+     @brief Connect to Debugger
+     */
+    virtual void connectDebugger(int debuggerType, const char *host, int port, const char *debugKey, const char *workDir);
     
     /**
      @brief Add a path to find lua files in
@@ -121,6 +135,7 @@ public:
     virtual void pushLuaValueDict(const LuaValueDict& dict);
     virtual void pushLuaValueArray(const LuaValueArray& array);    
     virtual bool pushFunctionByHandler(int nHandler);
+    virtual bool pushFunctionByName(const char* functionName);
     virtual int executeFunction(int numArgs);
     
     virtual int executeFunctionByHandler(int nHandler, int numArgs);
@@ -129,10 +144,13 @@ public:
 
     virtual bool handleAssert(const char *msg);
     
+    virtual int loadChunksFromZIP(const char *zipFilePath);
+    
     virtual void setXXTEAKeyAndSign(const char *key, int keyLen, const char *sign, int signLen);
     virtual void cleanupXXTEAKeyAndSign();
     
     int luaLoadBuffer(lua_State *L, const char *chunk, int chunkSize, const char *chunkName);
+    static int lua_loadChunksFromZIP(lua_State *L);
     
 protected:
     LuaStack(void)
@@ -143,6 +161,7 @@ protected:
     , _xxteaKeyLen(0)
     , _xxteaSign(nullptr)
     , _xxteaSignLen(0)
+    , _debuggerType(kCCLuaDebuggerNone)
     {
     }
     
@@ -150,6 +169,8 @@ protected:
     bool initWithLuaState(lua_State *L);
     
     lua_State *_state;
+    int _debuggerType;
+    
     int _callFromLua;
     bool  _xxteaEnabled;
     char* _xxteaKey;

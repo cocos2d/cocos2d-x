@@ -727,7 +727,7 @@ std::string FileUtils::fullPathForFilename(const std::string &filename)
         }
     }
     
-    CCLOG("cocos2d: fullPathForFilename: No file found at %s. Possible missing file.", filename.c_str());
+    // CCLOG("cocos2d: fullPathForFilename: No file found at %s. Possible missing file.", filename.c_str());
 
     // XXX: Should it return nullptr ? or an empty string ?
     // The file wasn't found, return the file name passed in.
@@ -818,6 +818,11 @@ void FileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
     }
 }
 
+void FileUtils::setSearchRootPath(const char* path)
+{
+    _defaultResRootPath = path ? path : "";
+}
+
 void FileUtils::addSearchPath(const std::string &searchpath)
 {
     std::string prefix;
@@ -872,6 +877,11 @@ std::string FileUtils::getFullPathForDirectoryAndFilename(const std::string& dir
         ret = "";
     }
     return ret;
+}
+
+void FileUtils::setWritablePath(const char *writablePath)
+{
+    m_strWritablePath = writablePath ? writablePath : "";
 }
 
 bool FileUtils::isFileExist(const std::string& filename) const
