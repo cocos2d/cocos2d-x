@@ -48,7 +48,9 @@ class CC_DLL ParallaxNode : public Node
 {
 public:
     // Create a Parallax node
-    static ParallaxNode * create();
+    CREATE_FUNC(ParallaxNode);
+
+    Vec2 parallaxPosition = {0.0, 0.0};
 
     // prevents compiler warning: "Included function hides overloaded virtual functions"
     using Node::addChild;
@@ -60,6 +62,14 @@ public:
     /** Returns the array of layers of the Parallax node */
     struct _ccArray* getParallaxArray() { return _parallaxArray; }
     const struct _ccArray* getParallaxArray() const { return _parallaxArray; }
+
+    inline void setParallaxX(float x) { parallaxPosition.x = x; }
+    inline void setParallaxY(float y) { parallaxPosition.y = y; }
+    inline void setParallaxPosition(float x, float y) { setParallaxX(x); setParallaxY(y); }
+
+    inline float getParallaxX() { return parallaxPosition.x; }
+    inline float getParallaxY() { return parallaxPosition.y; }
+    inline Vec2 getParallaxPosition() const { return parallaxPosition; }
 
     //
     // Overrides
@@ -81,8 +91,6 @@ protected:
      * @lua NA
      */
     virtual ~ParallaxNode();
-
-    Vec2 absolutePosition();
 
     Vec2    _lastPosition;
     struct _ccArray* _parallaxArray;

@@ -78,13 +78,6 @@ ParallaxNode::~ParallaxNode()
     }
 }
 
-ParallaxNode * ParallaxNode::create()
-{
-    ParallaxNode *ret = new ParallaxNode();
-    ret->autorelease();
-    return ret;
-}
-
 void ParallaxNode::addChild(Node * child, int zOrder, int tag)
 {
     CC_UNUSED_PARAM(zOrder);
@@ -99,11 +92,6 @@ void ParallaxNode::addChild(Node *child, int z, const Vec2& ratio, const Vec2& o
     PointObject *obj = PointObject::create(ratio, offset);
     obj->setChild(child);
     ccArrayAppendObjectWithResize(_parallaxArray, (Ref*)obj);
-
-    Vec2 pos = this->absolutePosition();
-    pos.x = -pos.x + pos.x * ratio.x + offset.x;
-    pos.y = -pos.y + pos.y * ratio.y + offset.y;
-    child->setPosition(pos);
 
     Node::addChild(child, z, child->getTag());
 }
@@ -128,18 +116,6 @@ void ParallaxNode::removeAllChildrenWithCleanup(bool cleanup)
     Node::removeAllChildrenWithCleanup(cleanup);
 }
 
-Vec2 ParallaxNode::absolutePosition()
-{
-    Vec2 ret = _position;
-    Node *cn = this;
-    while (cn->getParent() != nullptr)
-    {
-        cn = cn->getParent();
-        ret = ret + cn->getPosition();
-    }
-    return ret;
-}
-
 /*
 The positions are updated at visit because:
 - using a timer is not guaranteed that it will called after all the positions were updated
@@ -147,17 +123,14 @@ The positions are updated at visit because:
 */
 void ParallaxNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
-    //    Vec2 pos = position_;
-    //    Vec2    pos = [self convertToWorldSpace:Vec2::ZERO];
-    Vec2 pos = this->absolutePosition();
-    if( ! pos.equals(_lastPosition) )
-    {
-        for( int i=0; i < _parallaxArray->num; i++ ) 
-        {
+    Vec2 pos = parallaxPosition;
+
+    if (!pos.equals(_lastPosition)) {
+        for( int i=0; i < _parallaxArray->num; i++ ) {
             PointObject *point = (PointObject*)_parallaxArray->arr[i];
-            float x = -pos.x + pos.x * point->getRatio().x + point->getOffset().x;
-            float y = -pos.y + pos.y * point->getRatio().y + point->getOffset().y;            
-            point->getChild()->setPosition(Vec2(x,y));
+            float x = pos.x * point->getRatio().x + point->getOffset().x;
+            float y = pos.y * point->getRatio().y + point->getOffset().y;
+            point->getChild()->setPosition({x, y});
         }
         _lastPosition = pos;
     }
