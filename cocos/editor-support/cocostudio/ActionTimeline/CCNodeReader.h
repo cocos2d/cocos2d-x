@@ -30,7 +30,6 @@ THE SOFTWARE.
 
 namespace cocostudio {
 
-class WidgetPropertiesReader0300;
 
 namespace timeline{
 
@@ -78,7 +77,6 @@ protected:
 
     std::unordered_map<std::string, NodeCreateFunc> _funcs;
 
-    WidgetPropertiesReader0300* _guiReader;
     bool _recordJsonPath;
 
     std::string _jsonPath;
