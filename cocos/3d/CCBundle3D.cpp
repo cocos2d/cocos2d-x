@@ -621,7 +621,7 @@ bool Bundle3D::loadSkinDataBinary(SkinData* skindata)
         if(parentIndex < 0)
         {
             skindata->addNodeBoneNames(parentid);
-            index = skindata->getBoneNameIndex(parentid);
+            parentIndex = skindata->getBoneNameIndex(parentid);
             skindata->nodeBoneOriginMatrices.push_back(transform);
         }
         else
