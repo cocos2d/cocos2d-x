@@ -46,6 +46,7 @@
 		9F3BF739194E91D10072B3D0 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3BF738194E91D10072B3D0 /* OpenAL.framework */; };
 		9F3BF73B194E91D70072B3D0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3BF73A194E91D70072B3D0 /* QuartzCore.framework */; };
 		9F3BF73D194E91E10072B3D0 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3BF73C194E91E10072B3D0 /* OpenGL.framework */; };
+		9F6D88E61959647800B36BA2 /* player.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9F1C8D2F194DE61E0068C99B /* player.app */; };
 		DAB2BFC619595AE800ADD4E0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAB2BFC519595AE800ADD4E0 /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +67,19 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		9F6D88E31959645800B36BA2 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(SRCROOT)/../mac";
+			dstSubfolderSpec = 0;
+			files = (
+				9F6D88E61959647800B36BA2 /* player.app in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		9F05A0CC194EB080003CFA1F /* PlayerMenuServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerMenuServiceProtocol.h; sourceTree = "<group>"; };
 		9F05A0CD194EC0DB003CFA1F /* MessageBoxServiceMac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageBoxServiceMac.h; sourceTree = SOURCE_ROOT; };
@@ -84,7 +98,7 @@
 		9F05A109194EF988003CFA1F /* NSApplication+SheetAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSApplication+SheetAdditions.m"; sourceTree = SOURCE_ROOT; };
 		9F19C52719580A5800CA020E /* PlayerUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayerUtils.cpp; sourceTree = "<group>"; };
 		9F19C52819580A5800CA020E /* PlayerUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerUtils.h; sourceTree = "<group>"; };
-		9F1C8D2F194DE61E0068C99B /* quick-x-player.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "quick-x-player.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F1C8D2F194DE61E0068C99B /* player.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = player.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F1C8D32194DE61E0068C99B /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		9F1C8D35194DE61E0068C99B /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		9F1C8D36194DE61E0068C99B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -175,7 +189,7 @@
 		9F1C8D30194DE61E0068C99B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9F1C8D2F194DE61E0068C99B /* quick-x-player.app */,
+				9F1C8D2F194DE61E0068C99B /* player.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -294,21 +308,22 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9F1C8D2E194DE61E0068C99B /* quick-x-player */ = {
+		9F1C8D2E194DE61E0068C99B /* player */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9F1C8D60194DE61E0068C99B /* Build configuration list for PBXNativeTarget "quick-x-player" */;
+			buildConfigurationList = 9F1C8D60194DE61E0068C99B /* Build configuration list for PBXNativeTarget "player" */;
 			buildPhases = (
 				9F1C8D2B194DE61E0068C99B /* Sources */,
 				9F1C8D2C194DE61E0068C99B /* Frameworks */,
 				9F1C8D2D194DE61E0068C99B /* Resources */,
+				9F6D88E31959645800B36BA2 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "quick-x-player";
+			name = player;
 			productName = "quick-x-player";
-			productReference = 9F1C8D2F194DE61E0068C99B /* quick-x-player.app */;
+			productReference = 9F1C8D2F194DE61E0068C99B /* player.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -339,7 +354,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				9F1C8D2E194DE61E0068C99B /* quick-x-player */,
+				9F1C8D2E194DE61E0068C99B /* player */,
 			);
 		};
 /* End PBXProject section */
@@ -444,12 +459,12 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(QUICK_V3_ROOT)",
-					"$(QUICK_V3_ROOT)/../cocos",
-					"$(QUICK_V3_ROOT)/../cocos/editor-support",
-					"$(QUICK_V3_ROOT)/../extensions",
-					"$(QUICK_V3_ROOT)/../external",
-					"$(QUICK_V3_ROOT)/../external/chipmunk/include/chipmunk",
-					"$(QUICK_V3_ROOT)/../cocos/audio/include",
+					"$(QUICK_V3_ROOT)/cocos",
+					"$(QUICK_V3_ROOT)/cocos/editor-support",
+					"$(QUICK_V3_ROOT)/extensions",
+					"$(QUICK_V3_ROOT)/external",
+					"$(QUICK_V3_ROOT)/external/chipmunk/include/chipmunk",
+					"$(QUICK_V3_ROOT)/cocos/audio/include",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
@@ -492,12 +507,12 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(QUICK_V3_ROOT)",
-					"$(QUICK_V3_ROOT)/../cocos",
-					"$(QUICK_V3_ROOT)/../cocos/editor-support",
-					"$(QUICK_V3_ROOT)/../extensions",
-					"$(QUICK_V3_ROOT)/../external",
-					"$(QUICK_V3_ROOT)/../external/chipmunk/include/chipmunk",
-					"$(QUICK_V3_ROOT)/../cocos/audio/include",
+					"$(QUICK_V3_ROOT)/cocos",
+					"$(QUICK_V3_ROOT)/cocos/editor-support",
+					"$(QUICK_V3_ROOT)/extensions",
+					"$(QUICK_V3_ROOT)/external",
+					"$(QUICK_V3_ROOT)/external/chipmunk/include/chipmunk",
+					"$(QUICK_V3_ROOT)/cocos/audio/include",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
@@ -520,16 +535,16 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					../src,
-					"$(QUICK_V3_ROOT)/../cocos/platform/mac",
-					"$(QUICK_V3_ROOT)/../external/glfw3/include/mac",
-					"$(QUICK_V3_ROOT)/../external",
-					"$(QUICK_V3_ROOT)/../external/lua/luajit/include",
-					"$(QUICK_V3_ROOT)/../external/lua/tolua",
-					"$(QUICK_V3_ROOT)/lib/cocos2dx/cocos/scripting/lua-bindings/manual",
-					"$(QUICK_V3_ROOT)/lib/cocos2dx/cocos/scripting/lua-bindings/auto",
-					"$(QUICK_V3_ROOT)/../external/unzip",
-					"$(QUICK_V3_ROOT)/../cocos",
-					"$(QUICK_V3_ROOT)/../cocos/audio/include",
+					"$(QUICK_V3_ROOT)/cocos/platform/mac",
+					"$(QUICK_V3_ROOT)/external/glfw3/include/mac",
+					"$(QUICK_V3_ROOT)/external",
+					"$(QUICK_V3_ROOT)/external/lua/luajit/include",
+					"$(QUICK_V3_ROOT)/external/lua/tolua",
+					"$(QUICK_V3_ROOT)/quick/lib/cocos2dx/cocos/scripting/lua-bindings/manual",
+					"$(QUICK_V3_ROOT)/quick/lib/cocos2dx/cocos/scripting/lua-bindings/auto",
+					"$(QUICK_V3_ROOT)/external/unzip",
+					"$(QUICK_V3_ROOT)/cocos",
+					"$(QUICK_V3_ROOT)/cocos/audio/include",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = (
@@ -563,16 +578,16 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					../src,
-					"$(QUICK_V3_ROOT)/../cocos/platform/mac",
-					"$(QUICK_V3_ROOT)/../external/glfw3/include/mac",
-					"$(QUICK_V3_ROOT)/../external",
-					"$(QUICK_V3_ROOT)/../external/lua/luajit/include",
-					"$(QUICK_V3_ROOT)/../external/lua/tolua",
-					"$(QUICK_V3_ROOT)/lib/cocos2dx/cocos/scripting/lua-bindings/manual",
-					"$(QUICK_V3_ROOT)/lib/cocos2dx/cocos/scripting/lua-bindings/auto",
-					"$(QUICK_V3_ROOT)/../external/unzip",
-					"$(QUICK_V3_ROOT)/../cocos",
-					"$(QUICK_V3_ROOT)/../cocos/audio/include",
+					"$(QUICK_V3_ROOT)/cocos/platform/mac",
+					"$(QUICK_V3_ROOT)/external/glfw3/include/mac",
+					"$(QUICK_V3_ROOT)/external",
+					"$(QUICK_V3_ROOT)/external/lua/luajit/include",
+					"$(QUICK_V3_ROOT)/external/lua/tolua",
+					"$(QUICK_V3_ROOT)/quick/lib/cocos2dx/cocos/scripting/lua-bindings/manual",
+					"$(QUICK_V3_ROOT)/quick/lib/cocos2dx/cocos/scripting/lua-bindings/auto",
+					"$(QUICK_V3_ROOT)/external/unzip",
+					"$(QUICK_V3_ROOT)/cocos",
+					"$(QUICK_V3_ROOT)/cocos/audio/include",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = (
@@ -602,7 +617,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9F1C8D60194DE61E0068C99B /* Build configuration list for PBXNativeTarget "quick-x-player" */ = {
+		9F1C8D60194DE61E0068C99B /* Build configuration list for PBXNativeTarget "player" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9F1C8D61194DE61E0068C99B /* Debug */,

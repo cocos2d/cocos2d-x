@@ -168,7 +168,7 @@ static NativeIOS *s_sharedInstance;
 {
     if (alertViewLuaListener_)
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(alertViewLuaListener_);
+        ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(alertViewLuaListener_);
     }
 }
 #endif
@@ -206,7 +206,7 @@ static NativeIOS *s_sharedInstance;
         LuaValueDict event;
         event["action"] = LuaValue::stringValue("clicked");
         event["buttonIndex"] = LuaValue::intValue(buttonIndex + 1);
-        stack->pushCCLuaValueDict(event);
+        stack->pushLuaValueDict(event);
         stack->executeFunctionByHandler(alertViewLuaListener_, 1);
     }
 #endif
