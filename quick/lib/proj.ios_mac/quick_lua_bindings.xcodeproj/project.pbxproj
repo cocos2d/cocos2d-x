@@ -179,6 +179,8 @@
 		49FA971819595F69003C25B4 /* lua_zlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 49FA96F919595F69003C25B4 /* lua_zlib.c */; };
 		49FA971919595F69003C25B4 /* lua_zlib.h in Headers */ = {isa = PBXBuildFile; fileRef = 49FA96FA19595F69003C25B4 /* lua_zlib.h */; };
 		49FA971A19595F69003C25B4 /* lua_zlib.h in Headers */ = {isa = PBXBuildFile; fileRef = 49FA96FA19595F69003C25B4 /* lua_zlib.h */; };
+		9F6D893C19596B1700B36BA2 /* lua_cocos2dx_extra_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAD445F819593FF900D3A30C /* lua_cocos2dx_extra_auto.cpp */; };
+		9F6D895D195970C600B36BA2 /* lua_cocos2dx_external_extra_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAD445FC1959400F00D3A30C /* lua_cocos2dx_external_extra_manual.cpp */; };
 		C0FEF4D618BE0E70001F446C /* lua_debugger.c in Sources */ = {isa = PBXBuildFile; fileRef = C0FEF4D418BE0E70001F446C /* lua_debugger.c */; };
 		C0FEF4D718BE0E70001F446C /* lua_debugger.c in Sources */ = {isa = PBXBuildFile; fileRef = C0FEF4D418BE0E70001F446C /* lua_debugger.c */; };
 		C0FEF4D818BE0E70001F446C /* lua_debugger.h in Headers */ = {isa = PBXBuildFile; fileRef = C0FEF4D518BE0E70001F446C /* lua_debugger.h */; };
@@ -952,6 +954,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F6D893C19596B1700B36BA2 /* lua_cocos2dx_extra_auto.cpp in Sources */,
 				1AACE7C818BC45C200215002 /* lua_cocos2dx_physics_auto.cpp in Sources */,
 				1AACE83418BC45C200215002 /* CCLuaObjcBridge.mm in Sources */,
 				1ABCA24E18CD8F7D0087CE3A /* options.c in Sources */,
@@ -982,6 +985,7 @@
 				1AACE81A18BC45C200215002 /* LuaBasicConversions.cpp in Sources */,
 				1AACE7EE18BC45C200215002 /* Cocos2dxLuaLoader.cpp in Sources */,
 				1ABCA23A18CD8F7D0087CE3A /* inet.c in Sources */,
+				9F6D895D195970C600B36BA2 /* lua_cocos2dx_external_extra_manual.cpp in Sources */,
 				1AACE7E218BC45C200215002 /* CCLuaEngine.cpp in Sources */,
 				DA045A8119528FA800444A66 /* lua_cocos2dx_extension_auto.cpp in Sources */,
 				1ABCA26E18CD8F7D0087CE3A /* usocket.c in Sources */,
@@ -1079,6 +1083,7 @@
 					"COCOS2D_DEBUG=1",
 					USE_FILE32API,
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
+					"CC_LUA_ENGINE_ENABLED=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
@@ -1096,7 +1101,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../.. $(SRCROOT)/../../../cocos $(SRCROOT)/../../../cocos/base $(SRCROOT)/../../../cocos/2d $(SRCROOT)/../../../cocos/deprecated $(SRCROOT)/../../../cocos/physics $(SRCROOT)/../../../cocos/math/kazmath $(SRCROOT)/../../../cocos/2d/platform $(SRCROOT)/../../../cocos/audio/include $(SRCROOT)/../../../cocos/editor-support $(SRCROOT)/../../../cocos/editor-support/spine $(SRCROOT)/../../../cocos/editor-support/cocostudio $(SRCROOT)/../../../cocos/editor-support/cocosbuilder $(SRCROOT)/../../../cocos/ui $(SRCROOT)/../../../cocos/storage $(SRCROOT)/../../../extensions $(SRCROOT)/../../../external $(SRCROOT)/../../../external/chipmunk/include/chipmunk $(SRCROOT)/../../../external/lua $(SRCROOT)/../../../external/lua/luajit/include $(SRCROOT)/../../../external/lua/tolua $(SRCROOT)/../cocos2dx/lua_extensions";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../.. $(SRCROOT)/../../../cocos $(SRCROOT)/../../../cocos/base $(SRCROOT)/../../../cocos/2d $(SRCROOT)/../../../cocos/deprecated $(SRCROOT)/../../../cocos/physics $(SRCROOT)/../../../cocos/math/kazmath $(SRCROOT)/../../../cocos/2d/platform $(SRCROOT)/../../../cocos/audio/include $(SRCROOT)/../../../cocos/editor-support $(SRCROOT)/../../../cocos/editor-support/spine $(SRCROOT)/../../../cocos/editor-support/cocostudio $(SRCROOT)/../../../cocos/editor-support/cocosbuilder $(SRCROOT)/../../../cocos/ui $(SRCROOT)/../../../cocos/storage $(SRCROOT)/../../../extensions $(SRCROOT)/../../../external $(SRCROOT)/../../../external/chipmunk/include/chipmunk $(SRCROOT)/../../../external/lua $(SRCROOT)/../../../external/lua/luajit/include $(SRCROOT)/../../../external/lua/tolua $(SRCROOT)/../cocos2dx/lua_extensions $(SRCROOT)/../cocos2dx/";
 			};
 			name = Debug;
 		};
@@ -1113,6 +1118,7 @@
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
 					NDEBUG,
 					USE_FILE32API,
+					"CC_LUA_ENGINE_ENABLED=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
@@ -1129,7 +1135,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../.. $(SRCROOT)/../../../cocos $(SRCROOT)/../../../cocos/base $(SRCROOT)/../../../cocos/2d $(SRCROOT)/../../../cocos/deprecated $(SRCROOT)/../../../cocos/physics $(SRCROOT)/../../../cocos/math/kazmath $(SRCROOT)/../../../cocos/2d/platform $(SRCROOT)/../../../cocos/audio/include $(SRCROOT)/../../../cocos/editor-support $(SRCROOT)/../../../cocos/editor-support/spine $(SRCROOT)/../../../cocos/editor-support/cocostudio $(SRCROOT)/../../../cocos/editor-support/cocosbuilder $(SRCROOT)/../../../cocos/ui $(SRCROOT)/../../../cocos/storage $(SRCROOT)/../../../extensions $(SRCROOT)/../../../external $(SRCROOT)/../../../external/chipmunk/include/chipmunk $(SRCROOT)/../../../external/lua $(SRCROOT)/../../../external/lua/luajit/include $(SRCROOT)/../../../external/lua/tolua $(SRCROOT)/../cocos2dx/lua_extensions";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../.. $(SRCROOT)/../../../cocos $(SRCROOT)/../../../cocos/base $(SRCROOT)/../../../cocos/2d $(SRCROOT)/../../../cocos/deprecated $(SRCROOT)/../../../cocos/physics $(SRCROOT)/../../../cocos/math/kazmath $(SRCROOT)/../../../cocos/2d/platform $(SRCROOT)/../../../cocos/audio/include $(SRCROOT)/../../../cocos/editor-support $(SRCROOT)/../../../cocos/editor-support/spine $(SRCROOT)/../../../cocos/editor-support/cocostudio $(SRCROOT)/../../../cocos/editor-support/cocosbuilder $(SRCROOT)/../../../cocos/ui $(SRCROOT)/../../../cocos/storage $(SRCROOT)/../../../extensions $(SRCROOT)/../../../external $(SRCROOT)/../../../external/chipmunk/include/chipmunk $(SRCROOT)/../../../external/lua $(SRCROOT)/../../../external/lua/luajit/include $(SRCROOT)/../../../external/lua/tolua $(SRCROOT)/../cocos2dx/lua_extensions $(SRCROOT)/../cocos2dx/";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1154,7 +1160,7 @@
 				"OTHER_LDFLAGS[sdk=iphonesimulator7.1]" = "-llua";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../../cocos/platform/ios $(SRCROOT)/../../../external/unzip";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../../cocos/platform/ios $(SRCROOT)/../../../external/unzip $(SRCROOT)/../cocos2dx/extra/ $(SRCROOT)/../cocos2dx/extra/native $(SRCROOT)/../cocos2dx/extra/crypto $(SRCROOT)/../cocos2dx/extra/network $(SRCROOT)/../../../external/curl/include/ios";
 			};
 			name = Debug;
 		};
@@ -1178,7 +1184,7 @@
 				"OTHER_LDFLAGS[sdk=iphonesimulator7.1]" = "-llua";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../../cocos/platform/ios $(SRCROOT)/../../../external/unzip";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../../cocos/platform/ios $(SRCROOT)/../../../external/unzip $(SRCROOT)/../cocos2dx/extra/ $(SRCROOT)/../cocos2dx/extra/native $(SRCROOT)/../cocos2dx/extra/crypto $(SRCROOT)/../cocos2dx/extra/network $(SRCROOT)/../../../external/curl/include/ios";
 			};
 			name = Release;
 		};
