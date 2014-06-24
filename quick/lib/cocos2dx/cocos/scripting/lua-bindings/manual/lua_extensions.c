@@ -4,11 +4,32 @@
 #if __cplusplus
 extern "C" {
 #endif
+
+// cjson
+#include "cjson/lua_cjson.h"
+    
+// zlib
+#include "zlib/lua_zlib.h"
+    
+// lpack
+#include "lpack/lpack.h"
+
+// filesystem
+#include "filesystem/lfs.h"
+    
+// lsqlite3
+#include "lsqlite3/lsqlite3.h"
+    
 // socket
 #include "luasocket/luasocket.h"
 #include "luasocket/mime.h"
 
 static luaL_Reg luax_exts[] = {
+    {"cjson", luaopen_cjson_safe},
+    {"zlib", luaopen_zlib},
+    {"pack", luaopen_pack},
+    {"lfs", luaopen_lfs},
+    {"lsqlite3", luaopen_lsqlite3},
     {"socket.core", luaopen_socket_core},
     {"mime.core", luaopen_mime_core},
     {NULL, NULL}

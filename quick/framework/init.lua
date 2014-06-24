@@ -128,7 +128,7 @@ audio      = require(cc.PACKAGE_NAME .. ".audio")
 ui         = require(cc.PACKAGE_NAME .. ".ui")
 network    = require(cc.PACKAGE_NAME .. ".network")
 crypto     = require(cc.PACKAGE_NAME .. ".crypto")
--- json       = require(cc.PACKAGE_NAME .. ".json")
+json       = require(cc.PACKAGE_NAME .. ".json")
 
 if device.platform == "android" then
     require(cc.PACKAGE_NAME .. ".platform.android")
