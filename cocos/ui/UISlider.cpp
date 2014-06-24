@@ -66,6 +66,7 @@ _barRendererAdaptDirty(true),
 _progressBarRendererDirty(true),
 _eventCallback(nullptr)
 {
+    setTouchEnabled(true);
 }
 
 Slider::~Slider()

@@ -62,6 +62,7 @@ _frontCrossRendererAdaptDirty(true),
 _backGroundBoxDisabledRendererAdaptDirty(true),
 _frontCrossDisabledRendererAdaptDirty(true)
 {
+    setTouchEnabled(true);
 }
 
 CheckBox::~CheckBox()
@@ -128,7 +129,6 @@ bool CheckBox::init()
     if (Widget::init())
     {
         setSelectedState(false);
-        setTouchEnabled(true);
         return true;
     }
     return false;

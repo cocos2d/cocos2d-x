@@ -75,7 +75,7 @@ _fontName("Thonburi"),
 _fontSize(10),
 _type(FontType::SYSTEM)
 {
-
+    setTouchEnabled(true);
 }
 
 Button::~Button()
@@ -129,7 +129,6 @@ bool Button::init()
 {
     if (Widget::init())
     {
-        setTouchEnabled(true);
         return true;
     }
     return false;

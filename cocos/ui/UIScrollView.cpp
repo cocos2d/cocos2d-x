@@ -73,6 +73,7 @@ _scrollViewEventListener(nullptr),
 _scrollViewEventSelector(nullptr),
 _eventCallback(nullptr)
 {
+    setTouchEnabled(true);
 }
 
 ScrollView::~ScrollView()

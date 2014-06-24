@@ -209,7 +209,6 @@ bool Widget::init()
         onFocusChanged = CC_CALLBACK_2(Widget::onFocusChange,this);
         onNextFocusedWidget = nullptr;
         this->setAnchorPoint(Vec2(0.5f, 0.5f));
-        this->setTouchEnabled(true);
         this->setCascadeColorEnabled(true);
         this->setCascadeOpacityEnabled(true);
         
@@ -1037,7 +1036,6 @@ void Widget::copyProperties(Widget *widget)
     
     copySpecialProperties(widget);
 
-    //FIXME:copy focus properties, also make sure all the subclass the copy behavior is correct
     Map<int, LayoutParameter*>& layoutParameterDic = widget->_layoutParameterDictionary;
     for (auto iter = layoutParameterDic.begin(); iter != layoutParameterDic.end(); ++iter)
     {
