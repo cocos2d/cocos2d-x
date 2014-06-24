@@ -530,7 +530,7 @@ void Sprite::updateTransform(void)
             // calculate the Quad based on the Affine Matrix
             //
 
-            Size size = _rect.size;
+            Size &size = _rect.size;
 
             float x1 = _offsetPosition.x;
             float y1 = _offsetPosition.y;
