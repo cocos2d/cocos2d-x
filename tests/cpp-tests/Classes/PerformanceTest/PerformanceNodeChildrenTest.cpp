@@ -50,11 +50,8 @@ static std::function<NodeChildrenMainScene*()> createFunctions[] =
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
 
-enum {
-    kTagInfoLayer = 1,
 
-    kTagBase = 20000,
-};
+#define NAME_INFOLAYER  "infoLayer"
 
 enum {
     kMaxNodes = 15000,
@@ -174,7 +171,7 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
     auto infoLabel = Label::createWithTTF("0 nodes", "fonts/Marker Felt.ttf", 30);
     infoLabel->setColor(Color3B(0,200,20));
     infoLabel->setPosition(Vec2(s.width/2, s.height/2-15));
-    addChild(infoLabel, 1, kTagInfoLayer);
+    addChild(infoLabel, 1, NAME_INFOLAYER);
 
     auto menuLayer = new NodeChildrenMenuLayer(true, MAX_LAYER, g_curCase);
     addChild(menuLayer);
@@ -200,7 +197,7 @@ void NodeChildrenMainScene::updateQuantityLabel()
 {
     if( quantityOfNodes != lastRenderedCount )
     {
-        auto infoLabel = static_cast<Label*>( getChildByTag(kTagInfoLayer) );
+        auto infoLabel = static_cast<Label*>( getChildByName(NAME_INFOLAYER) );
         char str[20] = {0};
         sprintf(str, "%u nodes", quantityOfNodes);
         infoLabel->setString(str);
@@ -500,9 +497,11 @@ void AddSprite::update(float dt)
         // add them with random Z (very important!)
         CC_PROFILER_START( this->profilerName() );
 
+        char name[10];
         for( int i=0; i < totalToAdd;i++ )
         {
-            this->addChild( sprites[i], zs[i], kTagBase+i);
+            sprintf(name, "Base%d", i);
+            this->addChild( sprites[i], zs[i], name);
         }
         CC_PROFILER_STOP(this->profilerName());
 
@@ -565,7 +564,7 @@ void AddSpriteSheet::update(float dt)
 
         for( int i=0; i < totalToAdd;i++ )
         {
-            batchNode->addChild( sprites[i], zs[i], kTagBase+i);
+            batchNode->addChild( sprites[i], zs[i], "");
         }
         CC_PROFILER_STOP(this->profilerName());
 
@@ -625,7 +624,7 @@ void GetSpriteSheet::update(float dt)
 
         for( int i=0; i < totalToAdd;i++ )
         {
-            batchNode->addChild( sprites[i], zs[i], kTagBase+i);
+            batchNode->addChild( sprites[i], zs[i], "child");
         }
 
         batchNode->sortAllChildren();
@@ -633,7 +632,7 @@ void GetSpriteSheet::update(float dt)
         CC_PROFILER_START( this->profilerName() );
         for( int i=0; i < totalToAdd;i++ )
         {
-            batchNode->getChildByTag(kTagBase+1);
+            batchNode->getChildByName("child");
         }
         CC_PROFILER_STOP(this->profilerName());
 
@@ -650,17 +649,17 @@ void GetSpriteSheet::update(float dt)
 
 std::string GetSpriteSheet::title() const
 {
-    return "getChildByTag from spritesheet";
+    return "getChildByName from spritesheet";
 }
 
 std::string GetSpriteSheet::subtitle() const
 {
-    return "Get sprites using getChildByTag(). See console";
+    return "Get sprites using getChildByName(). See console";
 }
 
 const char*  GetSpriteSheet::testName()
 {
-    return "SpriteBatchNode::getChildByTag()";
+    return "SpriteBatchNode::getChildByName()";
 }
 
 
@@ -689,7 +688,7 @@ void RemoveSprite::update(float dt)
         // add them with random Z (very important!)
         for( int i=0; i < totalToAdd;i++ )
         {
-            this->addChild( sprites[i], CCRANDOM_MINUS1_1() * 50, kTagBase+i);
+            this->addChild( sprites[i], CCRANDOM_MINUS1_1() * 50, "");
         }
 
         // remove them
@@ -744,7 +743,7 @@ void RemoveSpriteSheet::update(float dt)
         // add them with random Z (very important!)
         for( int i=0; i < totalToAdd;i++ )
         {
-            batchNode->addChild( sprites[i], CCRANDOM_MINUS1_1() * 50, kTagBase+i);
+            batchNode->addChild( sprites[i], CCRANDOM_MINUS1_1() * 50, "");
         }
 
         // remove them
@@ -799,7 +798,7 @@ void ReorderSpriteSheet::update(float dt)
         // add them with random Z (very important!)
         for( int i=0; i < totalToAdd;i++ )
         {
-            batchNode->addChild( sprites[i], CCRANDOM_MINUS1_1() * 50, kTagBase+i);
+            batchNode->addChild( sprites[i], CCRANDOM_MINUS1_1() * 50, "");
         }
 
         batchNode->sortAllChildren();
@@ -862,7 +861,7 @@ void SortAllChildrenSpriteSheet::update(float dt)
         // add them with random Z (very important!)
         for( int i=0; i < totalToAdd;i++ )
         {
-            batchNode->addChild( sprites[i], CCRANDOM_MINUS1_1() * 50, kTagBase+i);
+            batchNode->addChild( sprites[i], CCRANDOM_MINUS1_1() * 50, "");
         }
 
         batchNode->sortAllChildren();

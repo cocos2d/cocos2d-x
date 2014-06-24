@@ -43,11 +43,7 @@ static std::function<PerformceAllocScene*()> createFunctions[] =
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
 
-enum {
-    kTagInfoLayer = 1,
-
-    kTagBase = 20000,
-};
+#define NAME_INFOLAYER "inforLayer"
 
 enum {
     kMaxNodes = 15000,
@@ -145,7 +141,7 @@ void PerformceAllocScene::initWithQuantityOfNodes(unsigned int nNodes)
     auto infoLabel = Label::createWithTTF("0 nodes", "fonts/Marker Felt.ttf", 30);
     infoLabel->setColor(Color3B(0,200,20));
     infoLabel->setPosition(Vec2(s.width/2, s.height/2-15));
-    addChild(infoLabel, 1, kTagInfoLayer);
+    addChild(infoLabel, 1, NAME_INFOLAYER);
 
     auto menuLayer = new AllocBasicLayer(true, MAX_LAYER, g_curCase);
     addChild(menuLayer);
@@ -171,7 +167,7 @@ void PerformceAllocScene::updateQuantityLabel()
 {
     if( quantityOfNodes != lastRenderedCount )
     {
-        auto infoLabel = static_cast<Label*>( getChildByTag(kTagInfoLayer) );
+        auto infoLabel = static_cast<Label*>( getChildByName(NAME_INFOLAYER) );
         char str[20] = {0};
         sprintf(str, "%u nodes", quantityOfNodes);
         infoLabel->setString(str);

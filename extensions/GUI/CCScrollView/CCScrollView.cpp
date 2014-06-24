@@ -478,6 +478,14 @@ void ScrollView::updateInset()
 	}
 }
 
+// ignore warning of ScrollView::addChild
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (push)
+#pragma warning (disable: 4996)
+#endif
+
 /**
  * make sure all children go to the container
  */
@@ -487,6 +495,24 @@ void ScrollView::addChild(Node * child, int zOrder, int tag)
         _container->addChild(child, zOrder, tag);
     } else {
         Layer::addChild(child, zOrder, tag);
+    }
+}
+
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic warning "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (pop)
+#endif
+
+void ScrollView::addChild(Node * child, int zOrder, const std::string &name)
+{
+    if (_container != child)
+    {
+        _container->addChild(child, zOrder, name);
+    }
+    else
+    {
+        Layer::addChild(child, zOrder, name);
     }
 }
 

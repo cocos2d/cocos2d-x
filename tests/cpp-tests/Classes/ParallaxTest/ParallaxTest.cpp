@@ -1,12 +1,6 @@
 #include "ParallaxTest.h"
 #include "../testResource.h"
 
-enum 
-{
-    kTagNode,
-    kTagGrossini,
-};
-
 Layer* nextParallaxAction();
 Layer* backParallaxAction();
 Layer* restartParallaxAction();
@@ -131,14 +125,14 @@ Parallax2::Parallax2()
     
     // top image is moved at a ratio of 3.0x, 2.5y
     voidNode->addChild( cocosImage, 2, Vec2(3.0f,2.5f), Vec2(200,1000) );
-    addChild(voidNode, 0, kTagNode);
+    addChild(voidNode, 0, "voidNode");
 }
 
 void Parallax2::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
 {
     auto diff = touches[0]->getDelta();
     
-    auto node = getChildByTag(kTagNode);
+    auto node = getChildByName("voidNode");
     auto currentPos = node->getPosition();
     node->setPosition(currentPos + diff);
 }
@@ -165,7 +159,7 @@ Issue2572::Issue2572()
     
     // create a parallax node, a parent node
     _paraNode = ParallaxNode::create();
-    addChild(_paraNode, 0, kTagNode);
+    addChild(_paraNode, 0);
 
     this->scheduleUpdate();
 }

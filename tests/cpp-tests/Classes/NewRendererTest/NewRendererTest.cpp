@@ -25,6 +25,14 @@
 
 #include "NewRendererTest.h"
 
+//#define kTagSpriteBatchNode 100
+//#define kTagClipperNode     101
+//#define kTagContentNode     102
+
+#define SpriteBatchNodeName "SpriteBatchNode"
+#define ClipperNodeName     "ClipperNode"
+#define ContentNodeName     "ContentNode"
+
 static int sceneIdx = -1;
 
 Layer* nextSpriteTestAction();
@@ -283,7 +291,7 @@ NewSpriteBatchTest::NewSpriteBatchTest()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
 
     auto BatchNode = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 50);
-    addChild(BatchNode, 0, kTagSpriteBatchNode);
+    addChild(BatchNode, 0, SpriteBatchNodeName);
 }
 
 NewSpriteBatchTest::~NewSpriteBatchTest()
@@ -312,7 +320,7 @@ void NewSpriteBatchTest::onTouchesEnded(const std::vector<Touch *> &touches, Eve
 
 void NewSpriteBatchTest::addNewSpriteWithCoords(Vec2 p)
 {
-    auto BatchNode = static_cast<SpriteBatchNode*>( getChildByTag(kTagSpriteBatchNode) );
+    auto BatchNode = static_cast<SpriteBatchNode*>( getChildByName(SpriteBatchNodeName) );
 
     int idx = (int) (CCRANDOM_0_1() * 1400 / 100);
     int x = (idx%5) * 85;
@@ -349,7 +357,7 @@ NewClippingNodeTest::NewClippingNodeTest()
     auto s = Director::getInstance()->getWinSize();
 
     auto clipper = ClippingNode::create();
-    clipper->setTag( kTagClipperNode );
+    clipper->setName(ClipperNodeName);
     clipper->setContentSize(  Size(200, 200) );
     clipper->setAnchorPoint(  Vec2(0.5, 0.5) );
     clipper->setPosition( Vec2(s.width / 2, s.height / 2) );
@@ -376,7 +384,7 @@ NewClippingNodeTest::NewClippingNodeTest()
     clipper->setStencil(stencil);
 
     auto content = Sprite::create("Images/background2.png");
-    content->setTag( kTagContentNode );
+    content->setName(ContentNodeName);
     content->setAnchorPoint(  Vec2(0.5, 0.5) );
     content->setPosition( Vec2(clipper->getContentSize().width / 2, clipper->getContentSize().height / 2) );
     clipper->addChild(content);
@@ -408,7 +416,7 @@ std::string NewClippingNodeTest::subtitle() const
 void NewClippingNodeTest::onTouchesBegan(const std::vector<Touch *> &touches, Event *event)
 {
     Touch *touch = touches[0];
-    auto clipper = this->getChildByTag(kTagClipperNode);
+    auto clipper = this->getChildByName(ClipperNodeName);
     Vec2 point = clipper->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
     auto rect = Rect(0, 0, clipper->getContentSize().width, clipper->getContentSize().height);
     _scrolling = rect.containsPoint(point);
@@ -419,10 +427,10 @@ void NewClippingNodeTest::onTouchesMoved(const std::vector<Touch *> &touches, Ev
 {
     if (!_scrolling) return;
     Touch *touch = touches[0];
-    auto clipper = this->getChildByTag(kTagClipperNode);
+    auto clipper = this->getChildByName(ClipperNodeName);
     auto point = clipper->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
     Vec2 diff = point - _lastPoint;
-    auto content = clipper->getChildByTag(kTagContentNode);
+    auto content = clipper->getChildByName(ContentNodeName);
     content->setPosition(content->getPosition() + diff);
     _lastPoint = point;
 }
@@ -589,6 +597,8 @@ CaptureScreenTest::CaptureScreenTest()
     _filename = "";
 }
 
+std::string CaptureScreenTest::childName = "119";
+
 CaptureScreenTest::~CaptureScreenTest()
 {
     Director::getInstance()->getTextureCache()->removeTextureForKey(_filename);
@@ -607,7 +617,7 @@ std::string CaptureScreenTest::subtitle() const
 void CaptureScreenTest::onCaptured(Ref*)
 {
     Director::getInstance()->getTextureCache()->removeTextureForKey(_filename);
-    removeChildByTag(childTag);
+    removeChildByName(childName);
     _filename = "CaptureScreenTest.png";
     utils::captureScreen(CC_CALLBACK_2(CaptureScreenTest::afterCaptured, this), _filename);
 }
@@ -617,7 +627,7 @@ void CaptureScreenTest::afterCaptured(bool succeed, const std::string& outputFil
     if (succeed)
     {
         auto sp = Sprite::create(outputFile);
-        addChild(sp, 0, childTag);
+        addChild(sp, 0, childName);
         Size s = Director::getInstance()->getWinSize();
         sp->setPosition(s.width / 2, s.height / 2);
         sp->setScale(0.25);

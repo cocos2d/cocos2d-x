@@ -74,7 +74,7 @@ void CustomParticleWidget::setParticlePlist(const char *plist)
         _emitter->removeFromParent();
         _emitter = ParticleSystemQuad::create(plist);
     }
-    Node::addChild(_emitter , getLocalZOrder() + 1, -1);
+    Node::addChild(_emitter , getLocalZOrder() + 1);
     
     _emitterPlist = plist;
 }

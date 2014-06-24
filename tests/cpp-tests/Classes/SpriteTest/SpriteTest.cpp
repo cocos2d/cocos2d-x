@@ -29,27 +29,22 @@
 #include "../testResource.h"
 
 
-enum 
-{
-    kTagTileMap = 1,
-    kTagSpriteBatchNode = 1,
-    kTagNode = 2,
-    kTagAnimation1 = 1,
-    kTagSpriteLeft,
-    kTagSpriteRight,
-};
+#define NAME_TILEMAP        "tilemap"
+#define NAME_BATCHNODE      "batchNode"
+#define NAME_NODE           "node"
+#define NAME_ANIMATION      "animation"
+#define NAME_SPRITE_LEFT    "leftSprite"
+#define NAME_SPRITE_RIGHT   "rightSprite"
 
-enum 
-{
-    kTagSprite1,
-    kTagSprite2,
-    kTagSprite3,
-    kTagSprite4,
-    kTagSprite5,
-    kTagSprite6,
-    kTagSprite7,
-    kTagSprite8,
-};
+
+#define NAME_SPRITE1   "sprite1"
+#define NAME_SPRITE2   "sprite2"
+#define NAME_SPRITE3   "sprite3"
+#define NAME_SPRITE4   "sprite4"
+#define NAME_SPRITE5   "sprite5"
+#define NAME_SPRITE6   "sprite6"
+#define NAME_SPRITE7   "sprite7"
+#define NAME_SPRITE8   "sprite8"
 
 enum
 {
@@ -297,7 +292,7 @@ SpriteBatchNode1::SpriteBatchNode1()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
     auto BatchNode = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 50);
-    addChild(BatchNode, 0, kTagSpriteBatchNode);
+    addChild(BatchNode, 0, NAME_BATCHNODE);
     
     auto s = Director::getInstance()->getWinSize();
     addNewSpriteWithCoords( Vec2(s.width/2, s.height/2) );
@@ -305,7 +300,7 @@ SpriteBatchNode1::SpriteBatchNode1()
 
 void SpriteBatchNode1::addNewSpriteWithCoords(Vec2 p)
 {
-    auto BatchNode = static_cast<SpriteBatchNode*>( getChildByTag(kTagSpriteBatchNode) );
+    auto BatchNode = static_cast<SpriteBatchNode*>( getChildByName(NAME_BATCHNODE) );
     
     int idx = CCRANDOM_0_1() * 1400 / 100;
     int x = (idx%5) * 85;
@@ -409,14 +404,14 @@ SpriteColorOpacity::SpriteColorOpacity()
     sprite8->runAction(fade);
     
     // late add: test dirtyColor and dirtyPosition
-    addChild(sprite1, 0, kTagSprite1);
-    addChild(sprite2, 0, kTagSprite2);
-    addChild(sprite3, 0, kTagSprite3);
-    addChild(sprite4, 0, kTagSprite4);
-    addChild(sprite5, 0, kTagSprite5);
-    addChild(sprite6, 0, kTagSprite6);
-    addChild(sprite7, 0, kTagSprite7);
-    addChild(sprite8, 0, kTagSprite8);
+    addChild(sprite1, 0, NAME_SPRITE1);
+    addChild(sprite2, 0, NAME_SPRITE2);
+    addChild(sprite3, 0, NAME_SPRITE3);
+    addChild(sprite4, 0, NAME_SPRITE4);
+    addChild(sprite5, 0, NAME_SPRITE5);
+    addChild(sprite6, 0, NAME_SPRITE6);
+    addChild(sprite7, 0, NAME_SPRITE7);
+    addChild(sprite8, 0, NAME_SPRITE8);
     
     schedule( schedule_selector(SpriteColorOpacity::removeAndAddSprite), 2 );
 }
@@ -425,11 +420,11 @@ SpriteColorOpacity::SpriteColorOpacity()
 //   color array and vertex array should be reindexed
 void SpriteColorOpacity::removeAndAddSprite(float dt)
 {
-    auto sprite = static_cast<Sprite*>( getChildByTag(kTagSprite5) );
+    auto sprite = static_cast<Sprite*>( getChildByName(NAME_SPRITE5) );
     sprite->retain();
     
     removeChild(sprite, false);
-    addChild(sprite, 0, kTagSprite5);
+    addChild(sprite, 0, NAME_SPRITE5);
     
     sprite->release();
 }
@@ -455,7 +450,7 @@ SpriteBatchNodeColorOpacity::SpriteBatchNodeColorOpacity()
     // small capacity. Testing resizing.
     // Don't use capacity=1 in your real game. It is expensive to resize the capacity
     auto batch = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 1);
-    addChild(batch, 0, kTagSpriteBatchNode);        
+    addChild(batch, 0, NAME_BATCHNODE);
     
     auto sprite1 = Sprite::createWithTexture(batch->getTexture(), Rect(85*0, 121*1, 85, 121));
     auto sprite2 = Sprite::createWithTexture(batch->getTexture(), Rect(85*1, 121*1, 85, 121));
@@ -501,14 +496,14 @@ SpriteBatchNodeColorOpacity::SpriteBatchNodeColorOpacity()
     sprite8->runAction(fade);
     
     // late add: test dirtyColor and dirtyPosition
-    batch->addChild(sprite1, 0, kTagSprite1);
-    batch->addChild(sprite2, 0, kTagSprite2);
-    batch->addChild(sprite3, 0, kTagSprite3);
-    batch->addChild(sprite4, 0, kTagSprite4);
-    batch->addChild(sprite5, 0, kTagSprite5);
-    batch->addChild(sprite6, 0, kTagSprite6);
-    batch->addChild(sprite7, 0, kTagSprite7);
-    batch->addChild(sprite8, 0, kTagSprite8);
+    batch->addChild(sprite1, 0, NAME_SPRITE1);
+    batch->addChild(sprite2, 0, NAME_SPRITE2);
+    batch->addChild(sprite3, 0, NAME_SPRITE3);
+    batch->addChild(sprite4, 0, NAME_SPRITE4);
+    batch->addChild(sprite5, 0, NAME_SPRITE5);
+    batch->addChild(sprite6, 0, NAME_SPRITE6);
+    batch->addChild(sprite7, 0, NAME_SPRITE7);
+    batch->addChild(sprite8, 0, NAME_SPRITE8);
     
     
     schedule( schedule_selector(SpriteBatchNodeColorOpacity::removeAndAddSprite), 2);
@@ -518,13 +513,13 @@ SpriteBatchNodeColorOpacity::SpriteBatchNodeColorOpacity()
 //   color array and vertex array should be reindexed
 void SpriteBatchNodeColorOpacity::removeAndAddSprite(float dt)
 {
-    auto batch= static_cast<SpriteBatchNode*>( getChildByTag(kTagSpriteBatchNode) );
-    auto sprite = static_cast<Sprite*>( batch->getChildByTag(kTagSprite5) );
+    auto batch= static_cast<SpriteBatchNode*>( getChildByName(NAME_BATCHNODE) );
+    auto sprite = static_cast<Sprite*>( batch->getChildByName(NAME_SPRITE5) );
     
     sprite->retain();
 
     batch->removeChild(sprite, false);
-    batch->addChild(sprite, 0, kTagSprite5);
+    batch->addChild(sprite, 0, NAME_SPRITE5);
     
     sprite->release();
 }
@@ -568,7 +563,7 @@ SpriteZOrder::SpriteZOrder()
     }
     
     auto sprite = Sprite::create("Images/grossini_dance_atlas.png", Rect(85*3, 121*0, 85, 121));
-    addChild(sprite, -1, kTagSprite1);
+    addChild(sprite, -1, NAME_SPRITE1);
     sprite->setPosition( Vec2(s.width/2, s.height/2 - 20) );
     sprite->setScaleX( 6 );
     sprite->setColor(Color3B::RED);
@@ -578,7 +573,7 @@ SpriteZOrder::SpriteZOrder()
 
 void SpriteZOrder::reorderSprite(float dt)
 {
-    auto sprite = static_cast<Sprite*>( getChildByTag(kTagSprite1) );
+    auto sprite = static_cast<Sprite*>( getChildByName(NAME_SPRITE1) );
     
     int z = sprite->getLocalZOrder();
     
@@ -616,7 +611,7 @@ SpriteBatchNodeZOrder::SpriteBatchNodeZOrder()
     // small capacity. Testing resizing.
     // Don't use capacity=1 in your real game. It is expensive to resize the capacity
     auto batch = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 1);
-    addChild(batch, 0, kTagSpriteBatchNode);        
+    addChild(batch, 0, NAME_BATCHNODE);
     
     auto s = Director::getInstance()->getWinSize();
 
@@ -636,7 +631,7 @@ SpriteBatchNodeZOrder::SpriteBatchNodeZOrder()
     }
     
     auto sprite = Sprite::createWithTexture(batch->getTexture(), Rect(85*3, 121*0, 85, 121));
-    batch->addChild(sprite, -1, kTagSprite1);
+    batch->addChild(sprite, -1, NAME_SPRITE1);
     sprite->setPosition( Vec2(s.width/2, s.height/2 - 20) );
     sprite->setScaleX( 6 );
     sprite->setColor(Color3B::RED);
@@ -646,8 +641,8 @@ SpriteBatchNodeZOrder::SpriteBatchNodeZOrder()
 
 void SpriteBatchNodeZOrder::reorderSprite(float dt)
 {
-    auto batch= static_cast<SpriteBatchNode*>( getChildByTag( kTagSpriteBatchNode ));
-    auto sprite = static_cast<Sprite*>(batch->getChildByTag(kTagSprite1));
+    auto batch= static_cast<SpriteBatchNode*>( getChildByName(NAME_BATCHNODE));
+    auto sprite = static_cast<Sprite*>(batch->getChildByName(NAME_SPRITE1));
     
     int z = sprite->getLocalZOrder();
     
@@ -745,7 +740,7 @@ SpriteBatchNodeReorderIssue744::SpriteBatchNodeReorderIssue744()
     // Testing issue #744
     // http://code.google.com/p/cocos2d-iphone/issues/detail?id=744
     auto batch = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 15);
-    addChild(batch, 0, kTagSpriteBatchNode);        
+    addChild(batch, 0, NAME_BATCHNODE);
 
     auto sprite = Sprite::createWithTexture(batch->getTexture(),Rect(0, 0, 85, 121));
     sprite->setPosition( Vec2(s.width/2, s.height/2) );
@@ -772,15 +767,15 @@ std::string SpriteBatchNodeReorderIssue744::subtitle() const
 Sprite* SpriteBatchNodeReorderIssue766::makeSpriteZ(int aZ)
 {
     auto sprite = Sprite::createWithTexture(batchNode->getTexture(), Rect(128,0,64,64));
-    batchNode->addChild(sprite, aZ+1, 0);
+    batchNode->addChild(sprite, aZ+1);
 
     //children
     auto spriteShadow = Sprite::createWithTexture(batchNode->getTexture(), Rect(0,0,64,64));
     spriteShadow->setOpacity(128);
-    sprite->addChild(spriteShadow, aZ, 3);
+    sprite->addChild(spriteShadow, aZ);
 
     auto spriteTop = Sprite::createWithTexture(batchNode->getTexture(), Rect(64,0,64,64));
-    sprite->addChild(spriteTop, aZ+2, 3);
+    sprite->addChild(spriteTop, aZ+2);
 
     return sprite;
 }
@@ -796,7 +791,7 @@ void SpriteBatchNodeReorderIssue766::reorderSprite(float dt)
 SpriteBatchNodeReorderIssue766::SpriteBatchNodeReorderIssue766()
 {
     batchNode = SpriteBatchNode::create("Images/piece.png", 15);
-    addChild(batchNode, 1, 0);
+    addChild(batchNode, 1);
 
     sprite1 = makeSpriteZ(2);
     sprite1->setPosition(Vec2(200,160));
@@ -837,25 +832,25 @@ SpriteBatchNodeReorderIssue767::SpriteBatchNodeReorderIssue767()
     // SpriteBatchNode: 3 levels of children
     //
     aParent = SpriteBatchNode::create("animations/ghosts.png");
-    addChild(aParent, 0, kTagSprite1);
+    addChild(aParent, 0, NAME_SPRITE1);
 
     // parent
     l1 = Sprite::createWithSpriteFrameName("father.gif");
     l1->setPosition(Vec2( s.width/2, s.height/2));
-    aParent->addChild(l1, 0, kTagSprite2);
+    aParent->addChild(l1, 0, NAME_SPRITE2);
     auto l1Size = l1->getContentSize();
 
     // child left
     l2a = Sprite::createWithSpriteFrameName("sister1.gif");
     l2a->setPosition(Vec2( -25 + l1Size.width/2, 0 + l1Size.height/2));
-    l1->addChild(l2a, -1, kTagSpriteLeft);
+    l1->addChild(l2a, -1, NAME_SPRITE_LEFT);
     auto l2aSize = l2a->getContentSize();        
 
 
     // child right
     l2b = Sprite::createWithSpriteFrameName("sister2.gif");
     l2b->setPosition(Vec2( +25 + l1Size.width/2, 0 + l1Size.height/2));
-    l1->addChild(l2b, 1, kTagSpriteRight);
+    l1->addChild(l2b, 1, NAME_SPRITE_RIGHT);
     auto l2bSize = l2a->getContentSize();
 
 
@@ -898,10 +893,10 @@ std::string SpriteBatchNodeReorderIssue767::subtitle() const
 
 void SpriteBatchNodeReorderIssue767::reorderSprites(float dt)
 {
-    auto spritebatch = static_cast<SpriteBatchNode*>( getChildByTag(kTagSprite1) );
-    auto father = static_cast<Sprite*>( spritebatch->getChildByTag(kTagSprite2) );
-    auto left = static_cast<Sprite*>( father->getChildByTag(kTagSpriteLeft) );
-    auto right = static_cast<Sprite*>( father->getChildByTag(kTagSpriteRight) );
+    auto spritebatch = static_cast<SpriteBatchNode*>( getChildByName(NAME_SPRITE1) );
+    auto father = static_cast<Sprite*>( spritebatch->getChildByName(NAME_SPRITE2) );
+    auto left = static_cast<Sprite*>( father->getChildByName(NAME_SPRITE_LEFT) );
+    auto right = static_cast<Sprite*>( father->getChildByName(NAME_SPRITE_RIGHT) );
 
     int newZLeft = 1;
 
@@ -1057,7 +1052,7 @@ SpriteBatchNodeZVertex::SpriteBatchNodeZVertex()
     batch->setPosition( Vec2(s.width/2, s.height/2));
     
     batch->setGLProgram(alphaTestShader);
-    addChild(batch, 0, kTagSpriteBatchNode);        
+    addChild(batch, 0, NAME_BATCHNODE);
     
     for(int i=0;i<5;i++) 
     {
@@ -1152,7 +1147,7 @@ SpriteBatchNodeAnchorPoint::SpriteBatchNodeAnchorPoint()
     // small capacity. Testing resizing.
     // Don't use capacity=1 in your real game. It is expensive to resize the capacity
     auto batch = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 1);
-    addChild(batch, 0, kTagSpriteBatchNode);        
+    addChild(batch, 0, NAME_BATCHNODE);
     
     auto s = Director::getInstance()->getWinSize();
     
@@ -1211,7 +1206,7 @@ Sprite6::Sprite6()
     // small capacity. Testing resizing
     // Don't use capacity=1 in your real game. It is expensive to resize the capacity
     auto batch = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 1);
-    addChild(batch, 0, kTagSpriteBatchNode);
+    addChild(batch, 0, NAME_BATCHNODE);
     batch->ignoreAnchorPointForPosition( true );
 
     auto s = Director::getInstance()->getWinSize();
@@ -1265,19 +1260,19 @@ SpriteFlip::SpriteFlip()
     
     auto sprite1 = Sprite::create("Images/grossini_dance_atlas.png", Rect(85*1, 121*1, 85, 121));
     sprite1->setPosition( Vec2( s.width/2 - 100, s.height/2 ) );
-    addChild(sprite1, 0, kTagSprite1);
+    addChild(sprite1, 0, NAME_SPRITE1);
     
     auto sprite2 = Sprite::create("Images/grossini_dance_atlas.png", Rect(85*1, 121*1, 85, 121));
     sprite2->setPosition( Vec2( s.width/2 + 100, s.height/2 ) );
-    addChild(sprite2, 0, kTagSprite2);
+    addChild(sprite2, 0, NAME_SPRITE2);
     
     schedule( schedule_selector(SpriteFlip::flipSprites), 1);
 }
 
 void SpriteFlip::flipSprites(float dt)
 {
-    auto sprite1 = static_cast<Sprite*>(getChildByTag(kTagSprite1));
-    auto sprite2 = static_cast<Sprite*>(getChildByTag(kTagSprite2));
+    auto sprite1 = static_cast<Sprite*>(getChildByName(NAME_SPRITE1));
+    auto sprite2 = static_cast<Sprite*>(getChildByName(NAME_SPRITE2));
     
     bool x = sprite1->isFlippedX();
     bool y = sprite2->isFlippedY();
@@ -1307,26 +1302,26 @@ std::string SpriteFlip::subtitle() const
 SpriteBatchNodeFlip::SpriteBatchNodeFlip()
 {
     auto batch = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 10);
-    addChild(batch, 0, kTagSpriteBatchNode);
+    addChild(batch, 0, NAME_BATCHNODE);
     
     auto s = Director::getInstance()->getWinSize();
     
     auto sprite1 = Sprite::createWithTexture(batch->getTexture(), Rect(85*1, 121*1, 85, 121));
     sprite1->setPosition( Vec2( s.width/2 - 100, s.height/2 ) );
-    batch->addChild(sprite1, 0, kTagSprite1);
+    batch->addChild(sprite1, 0, NAME_SPRITE1);
     
     auto sprite2 = Sprite::createWithTexture(batch->getTexture(), Rect(85*1, 121*1, 85, 121));
     sprite2->setPosition( Vec2( s.width/2 + 100, s.height/2 ) );
-    batch->addChild(sprite2, 0, kTagSprite2);
+    batch->addChild(sprite2, 0, NAME_SPRITE2);
     
     schedule( schedule_selector(SpriteBatchNodeFlip::flipSprites), 1);
 }
 
 void SpriteBatchNodeFlip::flipSprites(float dt)
 {
-    auto batch= static_cast<SpriteBatchNode*>(getChildByTag( kTagSpriteBatchNode ));
-    auto sprite1 = static_cast<Sprite*>(batch->getChildByTag(kTagSprite1));
-    auto sprite2 = static_cast<Sprite*>(batch->getChildByTag(kTagSprite2));
+    auto batch= static_cast<SpriteBatchNode*>(getChildByName( NAME_BATCHNODE ));
+    auto sprite1 = static_cast<Sprite*>(batch->getChildByName(NAME_SPRITE1));
+    auto sprite2 = static_cast<Sprite*>(batch->getChildByName(NAME_SPRITE2));
     
     bool x = sprite1->isFlippedX();
     bool y = sprite2->isFlippedY();
@@ -1360,11 +1355,11 @@ SpriteAliased::SpriteAliased()
     
     auto sprite1 = Sprite::create("Images/grossini_dance_atlas.png", Rect(85*1, 121*1, 85, 121));
     sprite1->setPosition( Vec2( s.width/2 - 100, s.height/2 ) );
-    addChild(sprite1, 0, kTagSprite1);
+    addChild(sprite1, 0, NAME_SPRITE1);
     
     auto sprite2 = Sprite::create("Images/grossini_dance_atlas.png", Rect(85*1, 121*1, 85, 121));
     sprite2->setPosition( Vec2( s.width/2 + 100, s.height/2 ) );
-    addChild(sprite2, 0, kTagSprite2);
+    addChild(sprite2, 0, NAME_SPRITE2);
     
     auto scale = ScaleBy::create(2, 5);
     auto scale_back = scale->reverse();
@@ -1387,14 +1382,14 @@ void SpriteAliased::onEnter()
     // This change will affect every sprite that uses the same texture
     // So sprite1 and sprite2 will be affected by this change
     //
-    auto sprite = static_cast<Sprite*>( getChildByTag(kTagSprite1) );
+    auto sprite = static_cast<Sprite*>( getChildByName(NAME_SPRITE1) );
     sprite->getTexture()->setAliasTexParameters();
 }
 
 void SpriteAliased::onExit()
 {
     // restore the tex parameter to AntiAliased.
-    auto sprite = static_cast<Sprite*>( getChildByTag(kTagSprite1) );
+    auto sprite = static_cast<Sprite*>( getChildByName(NAME_SPRITE1) );
     sprite->getTexture()->setAntiAliasTexParameters();
     SpriteTestDemo::onExit();
 }
@@ -1419,17 +1414,17 @@ std::string SpriteAliased::subtitle() const
 SpriteBatchNodeAliased::SpriteBatchNodeAliased()
 {
     auto batch = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 10);
-    addChild(batch, 0, kTagSpriteBatchNode);
+    addChild(batch, 0, NAME_BATCHNODE);
     
     auto s = Director::getInstance()->getWinSize();
 
     auto sprite1 = Sprite::createWithTexture(batch->getTexture(), Rect(85*1, 121*1, 85, 121));
     sprite1->setPosition( Vec2( s.width/2 - 100, s.height/2 ) );
-    batch->addChild(sprite1, 0, kTagSprite1);
+    batch->addChild(sprite1, 0, NAME_SPRITE1);
     
     auto sprite2 = Sprite::createWithTexture(batch->getTexture(), Rect(85*1, 121*1, 85, 121));
     sprite2->setPosition( Vec2( s.width/2 + 100, s.height/2 ) );
-    batch->addChild(sprite2, 0, kTagSprite2);
+    batch->addChild(sprite2, 0, NAME_SPRITE2);
     
     auto scale = ScaleBy::create(2, 5);
     auto scale_back = scale->reverse();
@@ -1445,14 +1440,14 @@ SpriteBatchNodeAliased::SpriteBatchNodeAliased()
 void SpriteBatchNodeAliased::onEnter()
 {
     SpriteTestDemo::onEnter();
-    auto batch = static_cast<SpriteBatchNode*>( getChildByTag(kTagSpriteBatchNode) );
+    auto batch = static_cast<SpriteBatchNode*>( getChildByName(NAME_BATCHNODE) );
     batch->getTexture()->setAliasTexParameters();
 }
 
 void SpriteBatchNodeAliased::onExit()
 {
     // restore the tex parameter to AntiAliased.
-    auto batch = static_cast<SpriteBatchNode*>( getChildByTag(kTagSpriteBatchNode) );
+    auto batch = static_cast<SpriteBatchNode*>( getChildByName(NAME_BATCHNODE) );
     batch->getTexture()->setAntiAliasTexParameters();
     SpriteTestDemo::onExit();
 }
@@ -1481,7 +1476,7 @@ SpriteNewTexture::SpriteNewTexture()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     auto node = Node::create();
-    addChild(node, 0, kTagSpriteBatchNode);
+    addChild(node, 0, NAME_BATCHNODE);
 
     _texture1 = Director::getInstance()->getTextureCache()->addImage("Images/grossini_dance_atlas.png");
     _texture1->retain();
@@ -1511,7 +1506,7 @@ void SpriteNewTexture::addNewSprite()
     int y = (idx/5) * 121;
     
     
-    auto node = getChildByTag( kTagSpriteBatchNode );
+    auto node = getChildByName( NAME_BATCHNODE );
     auto sprite = Sprite::createWithTexture(_texture1, Rect(x,y,85,121));
     node->addChild(sprite);
     
@@ -1540,7 +1535,7 @@ void SpriteNewTexture::addNewSprite()
 void SpriteNewTexture::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
 
-    auto node = getChildByTag( kTagSpriteBatchNode );
+    auto node = getChildByName( NAME_BATCHNODE );
 
     auto& children = node->getChildren();
     Sprite* sprite;
@@ -1589,7 +1584,7 @@ SpriteBatchNodeNewTexture::SpriteBatchNodeNewTexture()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     auto batch = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 50);
-    addChild(batch, 0, kTagSpriteBatchNode);
+    addChild(batch, 0, NAME_BATCHNODE);
     
     _texture1 = batch->getTexture(); _texture1->retain();
     _texture2 = Director::getInstance()->getTextureCache()->addImage("Images/grossini_dance_atlas-mono.png");
@@ -1611,7 +1606,7 @@ void SpriteBatchNodeNewTexture::addNewSprite()
     
     auto p = Vec2( CCRANDOM_0_1() * s.width, CCRANDOM_0_1() * s.height);
     
-    auto batch = static_cast<SpriteBatchNode*>( getChildByTag( kTagSpriteBatchNode ) );
+    auto batch = static_cast<SpriteBatchNode*>( getChildByName( NAME_BATCHNODE ) );
     
     int idx = CCRANDOM_0_1() * 1400 / 100;
     int x = (idx%5) * 85;
@@ -1644,7 +1639,7 @@ void SpriteBatchNodeNewTexture::addNewSprite()
 
 void SpriteBatchNodeNewTexture::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
-    auto batch = static_cast<SpriteBatchNode*>( getChildByTag( kTagSpriteBatchNode) );
+    auto batch = static_cast<SpriteBatchNode*>( getChildByName( NAME_BATCHNODE) );
     
     if( batch->getTexture() == _texture1 )
         batch->setTexture(_texture2);
@@ -2273,8 +2268,8 @@ SpriteHybrid::SpriteHybrid()
     auto parent1 = Node::create();
     auto parent2 = SpriteBatchNode::create("animations/grossini.png", 50);
     
-    addChild(parent1, 0, kTagNode);
-    addChild(parent2, 0, kTagSpriteBatchNode);
+    addChild(parent1, 0, NAME_NODE);
+    addChild(parent2, 0, NAME_BATCHNODE);
     
     
     // IMPORTANT:
@@ -2292,7 +2287,7 @@ SpriteHybrid::SpriteHybrid()
         sprintf(str, "grossini_dance_%02d.png", (spriteIdx+1));
         auto frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(str);
         auto sprite = Sprite::createWithSpriteFrame(frame);
-        parent1->addChild(sprite, i, i);
+        parent1->addChild(sprite, i);
         
         float x=-1000;
         float y=-1000;
@@ -2314,8 +2309,8 @@ SpriteHybrid::SpriteHybrid()
 
 void SpriteHybrid::reparentSprite(float dt)
 {
-    auto p1 = getChildByTag(kTagNode);
-    auto p2 = getChildByTag( kTagSpriteBatchNode );
+    auto p1 = getChildByName(NAME_NODE);
+    auto p2 = getChildByName( NAME_BATCHNODE );
     
     Vector<Node*> retArray(250);
 
@@ -2333,7 +2328,7 @@ void SpriteHybrid::reparentSprite(float dt)
     p1->removeAllChildrenWithCleanup(false);
 
     for(const auto &node : retArray) {
-        p2->addChild(node, i, i);
+        p2->addChild(node, i);
         i++;
     }
 
@@ -2364,7 +2359,7 @@ SpriteBatchNodeChildren::SpriteBatchNodeChildren()
     // parents
     auto batch = SpriteBatchNode::create("animations/grossini.png", 50);
     
-    addChild(batch, 0, kTagSpriteBatchNode);
+    addChild(batch, 0, NAME_BATCHNODE);
     
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("animations/grossini.plist");
     
@@ -2439,7 +2434,7 @@ SpriteBatchNodeChildrenZ::SpriteBatchNodeChildrenZ()
     
     // test 1
     batch = SpriteBatchNode::create("animations/grossini.png", 50);
-    addChild(batch, 0, kTagSpriteBatchNode);
+    addChild(batch, 0, NAME_BATCHNODE);
     
     sprite1 = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
     sprite1->setPosition(Vec2( s.width/3, s.height/2));
@@ -2456,7 +2451,7 @@ SpriteBatchNodeChildrenZ::SpriteBatchNodeChildrenZ()
     
     // test 2
     batch = SpriteBatchNode::create("animations/grossini.png", 50);
-    addChild(batch, 0, kTagSpriteBatchNode);
+    addChild(batch, 0, NAME_BATCHNODE);
     
     sprite1 = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
     sprite1->setPosition(Vec2( 2*s.width/3, s.height/2));
@@ -2473,7 +2468,7 @@ SpriteBatchNodeChildrenZ::SpriteBatchNodeChildrenZ()
     
     // test 3
     batch = SpriteBatchNode::create("animations/grossini.png", 50);
-    addChild(batch, 0, kTagSpriteBatchNode);
+    addChild(batch, 0, NAME_BATCHNODE);
     
     sprite1 = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
     sprite1->setPosition(Vec2( s.width/2 - 90, s.height/4));
@@ -2490,7 +2485,7 @@ SpriteBatchNodeChildrenZ::SpriteBatchNodeChildrenZ()
 
     // test 4
     batch = SpriteBatchNode::create("animations/grossini.png", 50);
-    addChild(batch, 0, kTagSpriteBatchNode);
+    addChild(batch, 0, NAME_BATCHNODE);
     
     sprite1 = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
     sprite1->setPosition(Vec2( s.width/2 +30, s.height/4));
@@ -4248,27 +4243,27 @@ std::string SpriteBatchNodeOffsetAnchorFlip::subtitle() const
 NodeSort::NodeSort()
 {
     _node = Node::create();
-    addChild(_node, 0, 0);
+    addChild(_node, 0);
 
     _sprite1 = Sprite::create("Images/piece.png", Rect(128, 0, 64, 64));
     _sprite1->setPosition(Vec2(100, 160));
-    _node->addChild(_sprite1, -6, 1);
+    _node->addChild(_sprite1, -6, "1");
 
     _sprite2 = Sprite::create("Images/piece.png", Rect(128, 0, 64, 64));
     _sprite2->setPosition(Vec2(164, 160));
-    _node->addChild(_sprite2, -6, 2);
+    _node->addChild(_sprite2, -6, "2");
 
     _sprite4 = Sprite::create("Images/piece.png", Rect(128, 0, 64, 64));
     _sprite4->setPosition(Vec2(292, 160));
-    _node->addChild(_sprite4, -3, 4);
+    _node->addChild(_sprite4, -3, "4");
 
     _sprite3 = Sprite::create("Images/piece.png", Rect(128, 0, 64, 64));
     _sprite3->setPosition(Vec2(228, 160));
-    _node->addChild(_sprite3, -4, 3);
+    _node->addChild(_sprite3, -4, "3");
 
     _sprite5 = Sprite::create("Images/piece.png", Rect(128, 0, 64, 64));
     _sprite5->setPosition(Vec2(356, 160));
-    _node->addChild(_sprite5, -3, 5);
+    _node->addChild(_sprite5, -3, "5");
 
     schedule(schedule_selector(NodeSort::reorderSprite));
 }
@@ -4280,7 +4275,7 @@ std::string NodeSort::title() const
 
 std::string NodeSort::subtitle() const
 {
-    return "tag order in console should be 2,1,3,4,5";
+    return "name order in console should be 2,1,3,4,5";
 }
 
 void NodeSort::reorderSprite(float dt)
@@ -4292,7 +4287,7 @@ void NodeSort::reorderSprite(float dt)
     auto& children = _node->getChildren();
     
     for(const auto &child : children) {
-        log("tag %i z %i",(int)child->getTag(),(int)child->getLocalZOrder());
+        log("name %s z %i",child->getName().c_str(),(int)child->getLocalZOrder());
     }
     //z-4
     _node->reorderChild( _node->getChildren().at(0), -6);
@@ -4301,7 +4296,7 @@ void NodeSort::reorderSprite(float dt)
     
     log("After reorder--");
     for(const auto &child : children) {
-        log("tag %i z %i",(int)child->getTag(),(int)child->getLocalZOrder());
+        log("name %s z %i",child->getName().c_str(),(int)child->getLocalZOrder());
     }
 }
 
@@ -4309,27 +4304,27 @@ void NodeSort::reorderSprite(float dt)
 SpriteBatchNodeReorderSameIndex::SpriteBatchNodeReorderSameIndex()
 {
     _batchNode = SpriteBatchNode::create("Images/piece.png", 15);
-    addChild(_batchNode, 1, 0);
+    addChild(_batchNode, 1);
 
     _sprite1 = Sprite::createWithTexture(_batchNode->getTexture(), Rect(128,0,64,64));
     _sprite1->setPosition(Vec2(100,160));
-    _batchNode->addChild(_sprite1, 3, 1);
+    _batchNode->addChild(_sprite1, 3, "1");
 
     _sprite2= Sprite::createWithTexture(_batchNode->getTexture(), Rect(128,0,64,64));
     _sprite2->setPosition(Vec2(164,160));
-    _batchNode->addChild(_sprite2, 4, 2);
+    _batchNode->addChild(_sprite2, 4, "2");
 
     _sprite3 = Sprite::createWithTexture(_batchNode->getTexture(), Rect(128,0,64,64));
     _sprite3->setPosition(Vec2(228,160));
-    _batchNode->addChild(_sprite3, 4, 3);
+    _batchNode->addChild(_sprite3, 4, "3");
 
     _sprite4 = Sprite::createWithTexture(_batchNode->getTexture(), Rect(128,0,64,64));
     _sprite4->setPosition(Vec2(292,160));
-    _batchNode->addChild(_sprite4, 5, 4);
+    _batchNode->addChild(_sprite4, 5, "4");
 
     _sprite5 = Sprite::createWithTexture(_batchNode->getTexture(), Rect(128,0,64,64));
     _sprite5->setPosition(Vec2(356,160));
-    _batchNode->addChild(_sprite5, 6, 5);
+    _batchNode->addChild(_sprite5, 6, "5");
 
 
     scheduleOnce(schedule_selector(SpriteBatchNodeReorderSameIndex::reorderSprite), 2);
@@ -4342,7 +4337,7 @@ std::string SpriteBatchNodeReorderSameIndex::title() const
 
 std::string SpriteBatchNodeReorderSameIndex::subtitle() const
 {
-    return "tag order in console should be 2,3,4,5,1";
+    return "name order in console should be 2,3,4,5,1";
 }
 
 void SpriteBatchNodeReorderSameIndex::reorderSprite(float dt)
@@ -4354,7 +4349,7 @@ void SpriteBatchNodeReorderSameIndex::reorderSprite(float dt)
     _batchNode->sortAllChildren();
 
     for(const auto &sprite : _batchNode->getDescendants()) {
-        log("tag %i", sprite->getTag() );
+        log("name %s", sprite->getName().c_str());
     }
 }
 

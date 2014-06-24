@@ -677,16 +677,31 @@ public:
      * @param child     A child node
      * @param zOrder    Z order for drawing priority. Please refer to `setLocalZOrder(int)`
      * @param tag       An integer to identify the node easily. Please refer to `setTag(int)`
+     * 
+     * Please use `addChild(Node* child, int localZOrder, const std::string &name)` instead.
      */
-    virtual void addChild(Node* child, int localZOrder, int tag);
+    CC_DEPRECATED_ATTRIBUTE virtual void addChild(Node* child, int localZOrder, int tag);
+    /**
+     * Adds a child to the container with z order and tag
+     *
+     * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
+     *
+     * @param child     A child node
+     * @param zOrder    Z order for drawing priority. Please refer to `setLocalZOrder(int)`
+     * @param name      A string to identify the node easily. Please refer to `setName(int)`
+     *
+     */
+    virtual void addChild(Node* child, int localZOrder, const std::string &name);
     /**
      * Gets a child from the container with its tag
      *
      * @param tag   An identifier to find the child node.
      *
      * @return a Node object whose tag equals to the input parameter
+     *
+     * Please use `getChildByName()` instead
      */
-    virtual Node * getChildByTag(int tag) const;
+    CC_DEPRECATED_ATTRIBUTE virtual Node * getChildByTag(int tag) const;
     /**
      * Gets a child from the container with its name
      *
@@ -791,8 +806,17 @@ public:
      *
      * @param tag       An interger number that identifies a child node
      * @param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
+     *
+     * Please use `removeChildByName` instead.
      */
-    virtual void removeChildByTag(int tag, bool cleanup = true);
+    CC_DEPRECATED_ATTRIBUTE virtual void removeChildByTag(int tag, bool cleanup = true);
+    /**
+     * Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
+     *
+     * @param name       A string that identifies a child node
+     * @param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
+     */
+    virtual void removeChildByName(const std::string &name, bool cleanup = true);
     /**
      * Removes all children from the container with a cleanup.
      *
@@ -832,16 +856,20 @@ public:
      * Returns a tag that is used to identify the node easily.
      *
      * @return An integer that identifies the node.
+     *
+     * Please use `getTag()` instead.
      */
-    virtual int getTag() const;
+    CC_DEPRECATED_ATTRIBUTE virtual int getTag() const;
     /**
      * Changes the tag that is used to identify the node easily.
      *
      * Please refer to getTag for the sample code.
      *
      * @param tag   A integer that identifies the node.
+     *
+     * Please use `setName()` instead.
      */
-    virtual void setTag(int tag);
+    CC_DEPRECATED_ATTRIBUTE virtual void setTag(int tag);
     
     /** Returns a string that is used to identify the node.
      * @return A string that identifies the node.
@@ -1475,6 +1503,11 @@ protected:
     virtual void updatePhysicsBodyPosition(Scene* layer);
     virtual void updatePhysicsBodyRotation(Scene* layer);
 #endif // CC_USE_PHYSICS
+    
+private:
+    void addChildHelper(Node* child, int localZOrder, int tag, const std::string &name, bool setTag);
+    
+protected:
 
     float _rotationX;               ///< rotation on the X-axis
     float _rotationY;               ///< rotation on the Y-axis

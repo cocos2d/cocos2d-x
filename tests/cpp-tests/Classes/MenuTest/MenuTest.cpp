@@ -211,6 +211,7 @@ void MenuLayerMainMenu::menuMovingCallback(Ref *pSender)
 //------------------------------------------------------------------
 MenuLayer2::MenuLayer2()
 {
+    char name[10];
     for( int i=0;i < 2;i++ ) 
     {
         auto item1 = MenuItemImage::create(s_PlayNormal, s_PlaySelect, CC_CALLBACK_1(MenuLayer2::menuCallback, this));
@@ -227,8 +228,8 @@ MenuLayer2::MenuLayer2()
         menu->setPosition(Vec2(s.width/2, s.height/2));
 
         menu->setTag( kTagMenu );
-        
-        addChild(menu, 0, 100+i);
+        sprintf(name, "100%d", i);
+        addChild(menu, 0, name);
 
         _centeredMenu = menu->getPosition();
     }
@@ -243,9 +244,11 @@ MenuLayer2::~MenuLayer2()
 
 void MenuLayer2::alignMenusH()
 {
+    char name[10];
     for(int i=0;i<2;i++) 
     {
-        auto menu = static_cast<Menu*>( getChildByTag(100+i) );
+        sprintf(name, "100%d", i);
+        auto menu = static_cast<Menu*>( getChildByName(name) );
         menu->setPosition( _centeredMenu );
         if(i==0) 
         {

@@ -40,13 +40,11 @@ static std::function<PerformanceEventDispatcherScene*()> createFunctions[] =
     CL(CustomEventDispatchingPerfTest),
 };
 
-#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
+#define NAME_TITLE "title"
+#define NAME_SUBTITLE "subTitle"
+#define NAME_INFOLAYER "infoLayer"
 
-enum {
-    kTagInfoLayer = 1,
-    
-    kTagBase = 20000,
-};
+#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
 
 enum {
     kMaxNodes = 15000,
@@ -95,7 +93,7 @@ void PerformanceEventDispatcherScene::initWithQuantityOfNodes(unsigned int nNode
     
     // Title
     auto label = Label::createWithTTF(title().c_str(), "fonts/arial.ttf", 32);
-    addChild(label, 1, TAG_TITLE);
+    addChild(label, 1, NAME_TITLE);
     label->setPosition(Vec2(s.width/2, s.height-50));
     
     // Subtitle
@@ -103,7 +101,7 @@ void PerformanceEventDispatcherScene::initWithQuantityOfNodes(unsigned int nNode
     if(strSubTitle.length())
     {
         auto l = Label::createWithTTF(strSubTitle.c_str(), "fonts/Thonburi.ttf", 16);
-        addChild(l, 1, TAG_SUBTITLE);
+        addChild(l, 1, NAME_SUBTITLE);
         l->setPosition(Vec2(s.width/2, s.height-80));
     }
     
@@ -148,7 +146,7 @@ void PerformanceEventDispatcherScene::initWithQuantityOfNodes(unsigned int nNode
     auto infoLabel = Label::createWithTTF("0 listeners", "fonts/Marker Felt.ttf", 30);
     infoLabel->setColor(Color3B(0,200,20));
     infoLabel->setPosition(Vec2(s.width/2, s.height/2-15));
-    addChild(infoLabel, 1, kTagInfoLayer);
+    addChild(infoLabel, 1, NAME_INFOLAYER);
     
     auto menuLayer = new EventDispatcherBasicLayer(true, MAX_LAYER, g_curCase);
     addChild(menuLayer);
@@ -190,7 +188,7 @@ void PerformanceEventDispatcherScene::initWithQuantityOfNodes(unsigned int nNode
     auto toggle = MenuItemToggle::createWithCallback([=](Ref* sender){
         auto toggle = static_cast<MenuItemToggle*>(sender);
         this->_type = toggle->getSelectedIndex();
-        auto label = static_cast<Label*>(this->getChildByTag(TAG_SUBTITLE));
+        auto label = static_cast<Label*>(this->getChildByName(NAME_SUBTITLE));
         label->setString(StringUtils::format("Test '%s', See console", this->_testFunctions[this->_type].name));
         this->updateProfilerName();
         reset();
@@ -265,7 +263,7 @@ void PerformanceEventDispatcherScene::updateQuantityLabel()
 {
     if( _quantityOfNodes != _lastRenderedCount )
     {
-        auto infoLabel = static_cast<Label*>( getChildByTag(kTagInfoLayer) );
+        auto infoLabel = static_cast<Label*>( getChildByName(NAME_INFOLAYER) );
         char str[20] = {0};
         sprintf(str, "%u listeners", _quantityOfNodes);
         infoLabel->setString(str);

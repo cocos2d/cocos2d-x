@@ -4,10 +4,10 @@
 
 enum 
 {
-    kTagNode,
-    kTagGrossini,
     kTagSequence,
-}; 
+};
+
+#define NAME_GROSSINI "grossini"
 
 Layer* nextActionManagerAction();
 Layer* backActionManagerAction();
@@ -162,7 +162,7 @@ void LogicTest::onEnter()
     ActionManagerTest::onEnter();
 
     auto grossini = Sprite::create(s_pathGrossini);
-    addChild(grossini, 0, 2);
+    addChild(grossini, 0);
     grossini->setPosition(VisibleRect::center());
 
     grossini->runAction( Sequence::create( 
@@ -207,7 +207,7 @@ void PauseTest::onEnter()
     // Also, this test MUST be done, after [super onEnter]
     //
     auto grossini = Sprite::create(s_pathGrossini);
-    addChild(grossini, 0, kTagGrossini);
+    addChild(grossini, 0, NAME_GROSSINI);
     grossini->setPosition(VisibleRect::center() );
     
     auto action = MoveBy::create(1, Vec2(150,0));
@@ -221,7 +221,7 @@ void PauseTest::onEnter()
 void PauseTest::unpause(float dt)
 {
     unschedule( schedule_selector(PauseTest::unpause) );
-    auto node = getChildByTag( kTagGrossini );
+    auto node = getChildByName( NAME_GROSSINI );
     auto director = Director::getInstance();
     director->getActionManager()->resumeTarget(node);
 }
@@ -252,13 +252,13 @@ void StopActionTest::onEnter()
     auto pChild = Sprite::create(s_pathGrossini);
     pChild->setPosition( VisibleRect::center() );
 
-    addChild(pChild, 1, kTagGrossini);
+    addChild(pChild, 1, NAME_GROSSINI);
     pChild->runAction(pSequence);
 }
 
 void StopActionTest::stopAction()
 {
-    auto sprite = getChildByTag(kTagGrossini);
+    auto sprite = getChildByName(NAME_GROSSINI);
     sprite->stopActionByTag(kTagSequence);
 }
 
@@ -286,7 +286,7 @@ void ResumeTest::onEnter()
     l->setPosition( Vec2(VisibleRect::center().x, VisibleRect::top().y - 75));
 
     auto pGrossini = Sprite::create(s_pathGrossini);
-    addChild(pGrossini, 0, kTagGrossini);
+    addChild(pGrossini, 0, NAME_GROSSINI);
     pGrossini->setPosition(VisibleRect::center());
 
     pGrossini->runAction(ScaleBy::create(2, 2));
@@ -302,7 +302,7 @@ void ResumeTest::resumeGrossini(float time)
 {
     this->unschedule(schedule_selector(ResumeTest::resumeGrossini));
 
-    auto pGrossini = getChildByTag(kTagGrossini);
+    auto pGrossini = getChildByName(NAME_GROSSINI);
     auto director = Director::getInstance();
     director->getActionManager()->resumeTarget(pGrossini);
 }

@@ -169,7 +169,6 @@ public:
 
 class ShaderMultiTexture : public ShaderTestDemo
 {
-    static const int rightSpriteTag = 2014;
 public:
     ShaderMultiTexture();
     ui::Slider* createSliderCtl();

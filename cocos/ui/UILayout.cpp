@@ -152,23 +152,33 @@ bool Layout::init()
     }
     return false;
 }
-    
-void Layout::addChild(Node *child)
-{
-    Layout::addChild(child, child->getZOrder(), child->getTag());
-}
 
-void Layout::addChild(Node * child, int zOrder)
-{
-    Layout::addChild(child, zOrder, child->getTag());
-}
-
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (push)
+#pragma warning (disable: 4996)
+#endif
 void Layout::addChild(Node *child, int zOrder, int tag)
 {
     if (dynamic_cast<Widget*>(child)) {
         supplyTheLayoutParameterLackToChild(static_cast<Widget*>(child));
     }
     Widget::addChild(child, zOrder, tag);
+    _doLayoutDirty = true;
+}
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic warning "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (pop)
+#endif
+    
+void Layout::addChild(Node* child, int zOrder, const std::string &name)
+{
+    if (dynamic_cast<Widget*>(child)) {
+        supplyTheLayoutParameterLackToChild(static_cast<Widget*>(child));
+    }
+    Widget::addChild(child, zOrder, name);
     _doLayoutDirty = true;
 }
     

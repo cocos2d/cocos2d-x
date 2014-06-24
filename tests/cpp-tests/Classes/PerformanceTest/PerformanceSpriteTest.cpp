@@ -34,12 +34,10 @@ enum {
     TEST_COUNT = 7,
 };
 
-enum {
-    kTagInfoLayer = 1,
-    kTagMainLayer = 2,
-    kTagAutoTestMenu = 3,
-    kTagMenuLayer = (kMaxNodes + 1000),
-};
+#define NAME_INFOLAYER  "infoLayer"
+#define NAME_MAINLAYER  "mainLayer"
+#define NAME_AUTOTESTEMENU "autoTestMenu"
+#define NAME_MENULAYER "menuLayer"
 
 ////////////////////////////////////////////////////////
 //
@@ -147,6 +145,8 @@ Sprite* SubTest::createSpriteWithTag(int tag)
     TextureCache *cache = Director::getInstance()->getTextureCache();
 
     Sprite* sprite = NULL;
+    char name[10];
+    sprintf(name, "%d", tag + 100);
     switch (subtestNumber)
     {
         ///
@@ -154,7 +154,7 @@ Sprite* SubTest::createSpriteWithTag(int tag)
         case 2:
         {
             sprite = Sprite::create("Images/grossinis_sister1.png");
-            _parentNode->addChild(sprite, 0, tag+100);
+            _parentNode->addChild(sprite, 0, name);
             break;
         }
         case 3:
@@ -162,7 +162,7 @@ Sprite* SubTest::createSpriteWithTag(int tag)
         {
             Texture2D *texture = cache->addImage("Images/grossinis_sister1.png");
             sprite = Sprite::createWithTexture(texture, Rect(0, 0, 52, 139));
-            _parentNode->addChild(sprite, 0, tag+100);
+            _parentNode->addChild(sprite, 0, name);
             break;
         }
 
@@ -173,7 +173,7 @@ Sprite* SubTest::createSpriteWithTag(int tag)
             char str[32] = {0};
             sprintf(str, "Images/grossini_dance_%02d.png", idx);
             sprite = Sprite::create(str);
-            _parentNode->addChild(sprite, 0, tag+100);
+            _parentNode->addChild(sprite, 0, name);
             break;
         }
         case 6:
@@ -190,7 +190,7 @@ Sprite* SubTest::createSpriteWithTag(int tag)
             y *= 121;
             Texture2D *texture = cache->addImage("Images/grossini_dance_atlas.png");
             sprite = Sprite::createWithTexture(texture, Rect(x,y,85,121));
-            _parentNode->addChild(sprite, 0, tag+100);
+            _parentNode->addChild(sprite, 0, name);
             break;
         }
 
@@ -206,7 +206,7 @@ Sprite* SubTest::createSpriteWithTag(int tag)
                 char str[40] = {0};
                 sprintf(str, "Images/sprites_test/sprite-%d-%d.png", x, y);
                 sprite = Sprite::create(str);
-                _parentNode->addChild(sprite, 0, tag+100);
+                _parentNode->addChild(sprite, 0, name);
                 break;
             }
 
@@ -224,7 +224,7 @@ Sprite* SubTest::createSpriteWithTag(int tag)
             y *= 32;
             Texture2D *texture = cache->addImage("Images/spritesheet1.png");
             sprite = Sprite::createWithTexture(texture, CC_RECT_PIXELS_TO_POINTS(Rect(x,y,32,32)));
-            _parentNode->addChild(sprite, 0, tag+100);
+            _parentNode->addChild(sprite, 0, name);
             break;
         }
             ///
@@ -235,7 +235,7 @@ Sprite* SubTest::createSpriteWithTag(int tag)
             if(test==0) {
                 // Switch case 1
                 sprite = Sprite::create("Images/grossinis_sister1.png");
-                _parentNode->addChild(sprite, 0, tag+100);
+                _parentNode->addChild(sprite, 0, name);
             }
             else if(test==1)
             {
@@ -250,7 +250,7 @@ Sprite* SubTest::createSpriteWithTag(int tag)
                 y *= 121;
                 Texture2D *texture = cache->addImage("Images/grossini_dance_atlas.png");
                 sprite = Sprite::createWithTexture(texture, Rect(x,y,85,121));
-                _parentNode->addChild(sprite, 0, tag+100);
+                _parentNode->addChild(sprite, 0, name);
 
             }
             else if(test==2)
@@ -265,7 +265,7 @@ Sprite* SubTest::createSpriteWithTag(int tag)
                 y *= 32;
                 Texture2D *texture = cache->addImage("Images/spritesheet1.png");
                 sprite = Sprite::createWithTexture(texture, CC_RECT_PIXELS_TO_POINTS(Rect(x,y,32,32)));
-                _parentNode->addChild(sprite, 0, tag+100);
+                _parentNode->addChild(sprite, 0, name);
             }
         }
 
@@ -278,7 +278,9 @@ Sprite* SubTest::createSpriteWithTag(int tag)
 
 void SubTest::removeByTag(int tag)
 {
-    _parentNode->removeChildByTag(tag+100, true);
+    char name[10];
+    sprintf(name, "%d", tag);
+    _parentNode->removeChildByName(name, true);
 }
 
 ////////////////////////////////////////////////////////
@@ -394,11 +396,11 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     auto infoLabel = Label::createWithTTF("0 nodes", "fonts/Marker Felt.ttf", 30);
     infoLabel->setColor(Color3B(0,200,20));
     infoLabel->setPosition(Vec2(s.width/2, s.height-90));
-    addChild(infoLabel, 1, kTagInfoLayer);
+    addChild(infoLabel, 1, NAME_INFOLAYER);
 
     // add menu
     auto menuLayer = new SpriteMenuLayer(true, TEST_COUNT, SpriteMainScene::_s_nSpriteCurCase);
-    addChild(menuLayer, 1, kTagMenuLayer);
+    addChild(menuLayer, 1, NAME_MENULAYER);
     menuLayer->release();
     
     /**
@@ -422,7 +424,7 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     autoTestItem->setTag(1);
     autoTestItem->setPosition(Vec2( s.width - 90, s.height / 2));
     menuAutoTest->addChild(autoTestItem);
-    addChild( menuAutoTest, 3, kTagAutoTestMenu );
+    addChild( menuAutoTest, 3, NAME_AUTOTESTEMENU );
     
     // Sub Tests
     MenuItemFont::setFontSize(28);
@@ -497,7 +499,7 @@ void SpriteMainScene::testNCallback(Ref* sender)
     }
     
     subtestNumber = static_cast<MenuItemFont*>(sender)->getTag();
-    auto menu = static_cast<SpriteMenuLayer*>( getChildByTag(kTagMenuLayer) );
+    auto menu = static_cast<SpriteMenuLayer*>( getChildByName(NAME_MENULAYER) );
     menu->restartCallback(sender);
 }
 
@@ -505,7 +507,7 @@ void SpriteMainScene::updateNodes()
 {
     if( quantityNodes != lastRenderedCount )
     {
-        auto infoLabel = (Label *) getChildByTag(kTagInfoLayer);
+        auto infoLabel = (Label *) getChildByName(NAME_INFOLAYER);
         char str[16] = {0};
         sprintf(str, "%u nodes", quantityNodes);
         infoLabel->setString(str);
@@ -715,7 +717,7 @@ void  SpriteMainScene::finishAutoTest()
     auto sched = director->getScheduler();
     sched->unschedule( schedule_selector( SpriteMainScene::updateAutoTest ), this);
     
-    auto autoTestMenu = dynamic_cast<Menu*>(getChildByTag(kTagAutoTestMenu));
+    auto autoTestMenu = dynamic_cast<Menu*>(getChildByName(NAME_AUTOTESTEMENU));
     if (nullptr != autoTestMenu)
     {
         auto menuItemFont = dynamic_cast<MenuItemFont*>(autoTestMenu->getChildByTag(1));

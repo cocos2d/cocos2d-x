@@ -232,16 +232,7 @@ public:
     
     virtual  Type getLayoutType() const;
 
-    virtual void addChild(Node * child) override;
-    /**
-     * Adds a child to the container with a z-order
-     *
-     * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
-     *
-     * @param child     A child node
-     * @param zOrder    Z order for drawing priority. Please refer to setLocalZOrder(int)
-     */
-    virtual void addChild(Node * child, int zOrder) override;
+    using Node::addChild;
     /**
      * Adds a child to the container with z order and tag
      *
@@ -251,7 +242,8 @@ public:
      * @param zOrder    Z order for drawing priority. Please refer to setLocalZOrder(int)
      * @param tag       A interger to identify the node easily. Please refer to setTag(int)
      */
-    virtual void addChild(Node* child, int zOrder, int tag) override;
+    CC_DEPRECATED_ATTRIBUTE virtual void addChild(Node* child, int zOrder, int tag) override;
+    virtual void addChild(Node* child, int zOrder, const std::string &name) override;
     
     virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
 

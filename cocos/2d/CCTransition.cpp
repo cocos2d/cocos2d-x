@@ -39,7 +39,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-const unsigned int kSceneFade = 0xFADEFADE;
+#define NAME_SCENEFADE "sceneFade"
 
 TransitionScene::TransitionScene()
 : _inScene(nullptr)
@@ -1218,8 +1218,7 @@ void TransitionFade :: onEnter()
     LayerColor* l = LayerColor::create(_color);
     _inScene->setVisible(false);
 
-    addChild(l, 2, kSceneFade);
-    Node* f = getChildByTag(kSceneFade);
+    addChild(l, 2, NAME_SCENEFADE);
 
     ActionInterval* a = (ActionInterval *)Sequence::create
         (
@@ -1230,13 +1229,13 @@ void TransitionFade :: onEnter()
 
          nullptr
         );
-    f->runAction(a);
+    l->runAction(a);
 }
 
 void TransitionFade::onExit()
 {
     TransitionScene::onExit();
-    this->removeChildByTag(kSceneFade, false);
+    this->removeChildByName(NAME_SCENEFADE, false);
 }
 
 //
@@ -1335,14 +1334,14 @@ void TransitionCrossFade::onEnter()
     outTexture->getSprite()->runAction( layerAction );
 
     // add the layer (which contains our two rendertextures) to the scene
-    addChild(layer, 2, kSceneFade);
+    addChild(layer, 2, NAME_SCENEFADE);
 }
 
 // clean up on exit
 void TransitionCrossFade::onExit()
 {
     // remove our layer and release all containing objects 
-    this->removeChildByTag(kSceneFade, false);
+    this->removeChildByName(NAME_SCENEFADE, false);
     TransitionScene::onExit();
 }
 

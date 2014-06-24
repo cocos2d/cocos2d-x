@@ -8,12 +8,9 @@
 #define __NewRendererTest_H_
 
 #include "cocos2d.h"
+#include <string>
 #include "../testBasic.h"
 #include "../BaseTest.h"
-
-#define kTagSpriteBatchNode 100
-#define kTagClipperNode     101
-#define kTagContentNode     102
 
 class NewRendererTestScene : public TestScene
 {
@@ -148,7 +145,7 @@ protected:
 
 class CaptureScreenTest : public MultiSceneTest
 {
-    static const int childTag = 119;
+    static std::string childName;
 public:
     CREATE_FUNC(CaptureScreenTest);
     virtual std::string title() const override;

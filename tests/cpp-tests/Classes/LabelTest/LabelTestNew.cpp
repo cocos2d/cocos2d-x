@@ -4,25 +4,21 @@
 
 using namespace ui;
 
-enum {
-    kTagTileMap = 1,
-    kTagSpriteManager = 1,
-    kTagAnimation1 = 1,
-    kTagBitmapAtlas1 = 1,
-    kTagBitmapAtlas2 = 2,
-    kTagBitmapAtlas3 = 3,
-};
+#define NAME_TILEMAP  "tilemap"
+#define NAME_SPRITEMANAGER "spriteManager"
+#define NAME_ANIMATION "animation"
+#define NAME_BITMAPATLAS1 "bitmapAtlas1"
+#define NAME_BITMAPATLAS2 "bitmapAtlas2"
+#define NAME_BITMAPATLAS3 "bitmapAtlas3"
 
-enum {
-    kTagSprite1,
-    kTagSprite2,
-    kTagSprite3,
-    kTagSprite4,
-    kTagSprite5,
-    kTagSprite6,
-    kTagSprite7,
-    kTagSprite8,
-};
+#define NAME_SPRITE1 "sprite1"
+#define NAME_SPRITE2 "sprite2"
+#define NAME_SPRITE3 "sprite3"
+#define NAME_SPRITE4 "sprite4"
+#define NAME_SPRITE5 "sprite5"
+#define NAME_SPRITE6 "sprite6"
+#define NAME_SPRITE7 "sprite7"
+#define NAME_SPRITE8 "sprite8"
 
 //------------------------------------------------------------------
 //
@@ -207,7 +203,7 @@ LabelFNTColorAndOpacity::LabelFNTColorAndOpacity()
     auto label1 = Label::createWithBMFont("fonts/bitmapFontTest2.fnt", "Test");
     
     label1->setAnchorPoint( Vec2(0,0) );
-    addChild(label1, 0, kTagBitmapAtlas1);
+    addChild(label1, 0, NAME_BITMAPATLAS1);
     auto fade = FadeOut::create(1.0f);
     auto fade_in = fade->reverse();
     auto seq = Sequence::create(fade, fade_in, NULL);
@@ -216,7 +212,7 @@ LabelFNTColorAndOpacity::LabelFNTColorAndOpacity()
     
     auto label2 = Label::createWithBMFont("fonts/bitmapFontTest2.fnt", "Test");
     label2->setColor( Color3B::RED );
-    addChild(label2, 0, kTagBitmapAtlas2);
+    addChild(label2, 0, NAME_BITMAPATLAS2);
     auto tint = Sequence::create(TintTo::create(1, 255, 0, 0),
         TintTo::create(1, 0, 255, 0),
         TintTo::create(1, 0, 0, 255),
@@ -225,7 +221,7 @@ LabelFNTColorAndOpacity::LabelFNTColorAndOpacity()
     
     auto label3 = Label::createWithBMFont("fonts/bitmapFontTest2.fnt", "Test");
     label3->setAnchorPoint( Vec2(1,1) );
-    addChild(label3, 0, kTagBitmapAtlas3);
+    addChild(label3, 0, NAME_BITMAPATLAS3);
     
     label1->setPosition( VisibleRect::leftBottom() );
     label2->setPosition( VisibleRect::center() );
@@ -240,13 +236,13 @@ void LabelFNTColorAndOpacity::step(float dt)
     char string[15] = {0};
     sprintf(string, "%2.2f Test j", _time);
     
-    auto label1 = (Label*) getChildByTag(kTagBitmapAtlas1);
+    auto label1 = (Label*) getChildByName(NAME_BITMAPATLAS1);
     label1->setString(string);
     
-    auto label2 = (Label*) getChildByTag(kTagBitmapAtlas2);
+    auto label2 = (Label*) getChildByName(NAME_BITMAPATLAS2);
     label2->setString(string);
     
-    auto label3 = (Label*) getChildByTag(kTagBitmapAtlas3);
+    auto label3 = (Label*) getChildByName(NAME_BITMAPATLAS3);
     label3->setString(string);
 }
 
@@ -301,7 +297,7 @@ LabelFNTSpriteActions::LabelFNTSpriteActions()
     
     // Bottom Label
     auto label2 = Label::createWithBMFont("fonts/bitmapFontTest.fnt", "00.0");
-    addChild(label2, 0, kTagBitmapAtlas2);
+    addChild(label2, 0, NAME_BITMAPATLAS2);
     label2->setPosition( Vec2(s.width/2.0f, 80) );
     
     auto lastChar = (Sprite*) label2->getLetter(3);
@@ -337,7 +333,7 @@ void LabelFNTSpriteActions::step(float dt)
     _time += dt;
     char string[10] = {0};
     sprintf(string, "%04.1f", _time);
-    auto label1 = (Label*) getChildByTag(kTagBitmapAtlas2);
+    auto label1 = (Label*) getChildByName(NAME_BITMAPATLAS2);
     label1->setString(string);
 }
 
@@ -465,7 +461,7 @@ LabelFNTMultiLine::LabelFNTMultiLine()
     // Left
     auto label1 = Label::createWithBMFont("fonts/bitmapFontTest3.fnt", " Multi line\nLeft");
     label1->setAnchorPoint(Vec2(0,0));
-    addChild(label1, 0, kTagBitmapAtlas1);
+    addChild(label1, 0, NAME_BITMAPATLAS1);
 
     s = label1->getContentSize();
     CCLOG("content size: %.2fx%.2f", s.width, s.height);
@@ -473,7 +469,7 @@ LabelFNTMultiLine::LabelFNTMultiLine()
 
     // Center
     auto label2 = Label::createWithBMFont( "fonts/bitmapFontTest3.fnt", "Multi line\nCenter");
-    addChild(label2, 0, kTagBitmapAtlas2);
+    addChild(label2, 0, NAME_BITMAPATLAS2);
 
     s= label2->getContentSize();
     CCLOG("content size: %.2fx%.2f", s.width, s.height);
@@ -481,7 +477,7 @@ LabelFNTMultiLine::LabelFNTMultiLine()
     // right
     auto label3 = Label::createWithBMFont("fonts/bitmapFontTest3.fnt", "Multi line\nRight\nThree lines Three");
     label3->setAnchorPoint(Vec2(1, 1));
-    addChild(label3, 0, kTagBitmapAtlas3);
+    addChild(label3, 0, NAME_BITMAPATLAS3);
 
     s = label3->getContentSize();
     CCLOG("content size: %.2fx%.2f", s.width, s.height);
@@ -507,17 +503,17 @@ LabelFNTandTTFEmpty::LabelFNTandTTFEmpty()
 
     // LabelBMFont
     auto label1 = Label::createWithBMFont("fonts/bitmapFontTest3.fnt", "", TextHAlignment::CENTER, s.width);
-    addChild(label1, 0, kTagBitmapAtlas1);
+    addChild(label1, 0, NAME_BITMAPATLAS1);
     label1->setPosition(Vec2(s.width/2, s.height - 100));
 
     // LabelTTF
     TTFConfig ttfConfig("fonts/arial.ttf",24);
     auto label2 = Label::createWithTTF(ttfConfig,"", TextHAlignment::CENTER,s.width);
-    addChild(label2, 0, kTagBitmapAtlas2);
+    addChild(label2, 0, NAME_BITMAPATLAS2);
     label2->setPosition(Vec2(s.width/2, s.height / 2));
 
     auto label3 = Label::createWithCharMap("fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
-    addChild(label3, 0, kTagBitmapAtlas3);
+    addChild(label3, 0, NAME_BITMAPATLAS3);
     label3->setPosition(Vec2(s.width/2, 100));
 
     schedule(schedule_selector(LabelFNTandTTFEmpty::updateStrings), 1.0f);
@@ -527,9 +523,9 @@ LabelFNTandTTFEmpty::LabelFNTandTTFEmpty()
 
 void LabelFNTandTTFEmpty::updateStrings(float dt)
 {
-    auto label1 = static_cast<Label*>( getChildByTag(kTagBitmapAtlas1) );
-    auto label2 = static_cast<Label*>( getChildByTag(kTagBitmapAtlas2) );
-    auto label3 = static_cast<Label*>( getChildByTag(kTagBitmapAtlas3) );
+    auto label1 = static_cast<Label*>( getChildByName(NAME_BITMAPATLAS1) );
+    auto label2 = static_cast<Label*>( getChildByName(NAME_BITMAPATLAS2) );
+    auto label3 = static_cast<Label*>( getChildByName(NAME_BITMAPATLAS3) );
 
     if( ! setEmpty )
     {
@@ -1376,13 +1372,13 @@ LabelCharMapTest::LabelCharMapTest()
     _time = 0.0f;
 
     auto label1 = Label::createWithCharMap("fonts/tuffy_bold_italic-charmap.plist");
-    addChild(label1, 0, kTagSprite1);
+    addChild(label1, 0, NAME_SPRITE1);
     label1->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
     label1->setPosition( Vec2(10,100) );
     label1->setOpacity( 200 );
 
     auto label2 = Label::createWithCharMap("fonts/tuffy_bold_italic-charmap.plist");
-    addChild(label2, 0, kTagSprite2);
+    addChild(label2, 0, NAME_SPRITE2);
     label2->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
     label2->setPosition( Vec2(10,200) );
     label2->setOpacity( 32 );
@@ -1396,10 +1392,10 @@ void LabelCharMapTest::step(float dt)
     char string[12] = {0};
     sprintf(string, "%2.2f Test", _time);
 
-    auto label1 = (Label*)getChildByTag(kTagSprite1);
+    auto label1 = (Label*)getChildByName(NAME_SPRITE1);
     label1->setString(string);
 
-    auto label2 = (Label*)getChildByTag(kTagSprite2);
+    auto label2 = (Label*)getChildByName(NAME_SPRITE2);
     sprintf(string, "%d", (int)_time);
     label2->setString(string);
 }
@@ -1422,13 +1418,13 @@ std::string LabelCharMapTest::subtitle() const
 LabelCharMapColorTest::LabelCharMapColorTest()
 {
     auto label1 = Label::createWithCharMap( "fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
-    addChild(label1, 0, kTagSprite1);
+    addChild(label1, 0, NAME_SPRITE1);
     label1->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
     label1->setPosition( Vec2(10,100) );
     label1->setOpacity( 200 );
 
     auto label2 = Label::createWithCharMap("fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
-    addChild(label2, 0, kTagSprite2);
+    addChild(label2, 0, NAME_SPRITE2);
     label2->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
     label2->setPosition( Vec2(10,200) );
     label2->setColor( Color3B::RED );
@@ -1455,10 +1451,10 @@ void LabelCharMapColorTest::step(float dt)
     _time += dt;
     char string[12] = {0};
     sprintf(string, "%2.2f Test", _time);
-    auto label1 = (Label*)getChildByTag(kTagSprite1);
+    auto label1 = (Label*)getChildByName(NAME_SPRITE1);
     label1->setString(string);
 
-    auto label2 = (Label*)getChildByTag(kTagSprite2);
+    auto label2 = (Label*)getChildByName(NAME_SPRITE2);
     sprintf(string, "%d", (int)_time);
     label2->setString( string );    
 }
@@ -1500,13 +1496,13 @@ LabelTTFOldNew::LabelTTFOldNew()
     float delta = s.height/4;
 
     auto label1 = Label::createWithSystemFont("Cocos2d-x Label Test", "arial", 24);
-    addChild(label1, 0, kTagBitmapAtlas1);
+    addChild(label1, 0, NAME_BITMAPATLAS1);
     label1->setPosition(Vec2(s.width/2, delta * 2));
     label1->setColor(Color3B::RED);
 
     TTFConfig ttfConfig("fonts/arial.ttf", 24);
     auto label2 = Label::createWithTTF(ttfConfig, "Cocos2d-x Label Test");
-    addChild(label2, 0, kTagBitmapAtlas2);
+    addChild(label2, 0, NAME_BITMAPATLAS2);
     label2->setPosition(Vec2(s.width/2, delta * 2));
 }
 
@@ -1517,7 +1513,7 @@ void LabelTTFOldNew::onDraw(const Mat4 &transform, uint32_t flags)
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
 
-    auto label1 = (Label*)getChildByTag(kTagBitmapAtlas1);
+    auto label1 = (Label*)getChildByName(NAME_BITMAPATLAS1);
     auto labelSize = label1->getContentSize();
     auto origin    = Director::getInstance()->getWinSize();
     
@@ -1534,7 +1530,7 @@ void LabelTTFOldNew::onDraw(const Mat4 &transform, uint32_t flags)
     DrawPrimitives::setDrawColor4B(Color4B::RED.r,Color4B::RED.g,Color4B::RED.b,Color4B::RED.a);
     DrawPrimitives::drawPoly(vertices, 4, true);
 
-    auto label2 = (Label*)getChildByTag(kTagBitmapAtlas2);
+    auto label2 = (Label*)getChildByName(NAME_BITMAPATLAS2);
     labelSize = label2->getContentSize();
     origin    = Director::getInstance()->getWinSize();
 

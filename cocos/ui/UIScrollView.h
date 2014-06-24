@@ -254,16 +254,16 @@ public:
     virtual void addEventListener(const ccScrollViewCallback& callback);
     
     //all of these functions are related to innerContainer.
-    virtual void addChild(Node * child) override;
-    virtual void addChild(Node * child, int zOrder) override;
-    virtual void addChild(Node* child, int zOrder, int tag) override;
+    using Layout::addChild;
+    CC_DEPRECATED_ATTRIBUTE virtual void addChild(Node* child, int zOrder, int tag) override;
+    virtual void addChild(Node* child, int zOrder, const std::string &name) override;
     virtual void removeAllChildren() override;
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
 	virtual void removeChild(Node* child, bool cleaup = true) override;
     virtual Vector<Node*>& getChildren() override;
     virtual const Vector<Node*>& getChildren() const override;
     virtual ssize_t getChildrenCount() const override;
-    virtual Node * getChildByTag(int tag) const override;
+    CC_DEPRECATED_ATTRIBUTE virtual Node * getChildByTag(int tag) const override;
     virtual Node* getChildByName(const std::string& name)const override;
     
     //handle touch event

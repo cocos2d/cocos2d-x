@@ -10,10 +10,8 @@ extern int g_totalEntries;
 
 Settings settings;
 
-enum 
-{
-    kTagBox2DNode,
-}; 
+
+#define NAME_BOX2DNODE "box2dNode"
 
 
 //------------------------------------------------------------------
@@ -55,7 +53,7 @@ bool MenuLayer::initWithEntryID(int entryId)
     m_entryID = entryId;
     
     Box2DView* view = Box2DView::viewWithEntryID( entryId );
-    addChild(view, 0, kTagBox2DNode);
+    addChild(view, 0, NAME_BOX2DNODE);
     view->setScale(15);
     view->setAnchorPoint( Vec2(0,0) );
     view->setPosition( Vec2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/3) );  
@@ -148,7 +146,7 @@ bool MenuLayer::onTouchBegan(Touch* touch, Event* event)
 void MenuLayer::onTouchMoved(Touch* touch, Event* event)
 {
     auto diff = touch->getDelta();    
-    auto node = getChildByTag( kTagBox2DNode );
+    auto node = getChildByName( NAME_BOX2DNODE );
     auto currentPos = node->getPosition();
     node->setPosition(currentPos + diff);
 }
