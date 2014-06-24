@@ -119,16 +119,16 @@
 			remoteGlobalIDString = A07A4FB4178387730073F6A7;
 			remoteInfo = "CocosDenshion iOS";
 		};
-		9FA94B47195835710038EE38 /* PBXContainerItemProxy */ = {
+		DAD445651959199F00D3A30C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 9FA94B42195835710038EE38 /* cocos2d_lua_bindings.xcodeproj */;
+			containerPortal = DAD445521959199F00D3A30C /* quick_lua_bindings.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 1AACE74618BC45A000215002;
 			remoteInfo = "luabindings Mac";
 		};
-		9FA94B49195835710038EE38 /* PBXContainerItemProxy */ = {
+		DAD445671959199F00D3A30C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 9FA94B42195835710038EE38 /* cocos2d_lua_bindings.xcodeproj */;
+			containerPortal = DAD445521959199F00D3A30C /* quick_lua_bindings.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 1AACE74718BC45A000215002;
 			remoteInfo = "luabindings iOS";
@@ -200,7 +200,7 @@
 		9F3BF73A194E91D70072B3D0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		9F3BF73C194E91E10072B3D0 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		9FA94B1F1958355D0038EE38 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../../../build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
-		9FA94B42195835710038EE38 /* cocos2d_lua_bindings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_lua_bindings.xcodeproj; path = "../../../cocos/scripting/lua-bindings/proj.ios_mac/cocos2d_lua_bindings.xcodeproj"; sourceTree = "<group>"; };
+		DAD445521959199F00D3A30C /* quick_lua_bindings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = quick_lua_bindings.xcodeproj; path = ../../lib/proj.ios_mac/quick_lua_bindings.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -232,7 +232,7 @@
 		9F1C8D26194DE61E0068C99B = {
 			isa = PBXGroup;
 			children = (
-				9FA94B42195835710038EE38 /* cocos2d_lua_bindings.xcodeproj */,
+				DAD445521959199F00D3A30C /* quick_lua_bindings.xcodeproj */,
 				9FA94B1F1958355D0038EE38 /* cocos2d_libs.xcodeproj */,
 				9F1C8D94194DEE040068C99B /* src */,
 				9F1C8D38194DE61E0068C99B /* mac */,
@@ -367,11 +367,11 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		9FA94B43195835710038EE38 /* Products */ = {
+		DAD445531959199F00D3A30C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9FA94B48195835710038EE38 /* libluabindings Mac.a */,
-				9FA94B4A195835710038EE38 /* libluabindings iOS.a */,
+				DAD445661959199F00D3A30C /* libluabindings Mac.a */,
+				DAD445681959199F00D3A30C /* libluabindings iOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -422,8 +422,8 @@
 					ProjectRef = 9FA94B1F1958355D0038EE38 /* cocos2d_libs.xcodeproj */;
 				},
 				{
-					ProductGroup = 9FA94B43195835710038EE38 /* Products */;
-					ProjectRef = 9FA94B42195835710038EE38 /* cocos2d_lua_bindings.xcodeproj */;
+					ProductGroup = DAD445531959199F00D3A30C /* Products */;
+					ProjectRef = DAD445521959199F00D3A30C /* quick_lua_bindings.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -504,18 +504,18 @@
 			remoteRef = 9FA94B401958355D0038EE38 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		9FA94B48195835710038EE38 /* libluabindings Mac.a */ = {
+		DAD445661959199F00D3A30C /* libluabindings Mac.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libluabindings Mac.a";
-			remoteRef = 9FA94B47195835710038EE38 /* PBXContainerItemProxy */;
+			remoteRef = DAD445651959199F00D3A30C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		9FA94B4A195835710038EE38 /* libluabindings iOS.a */ = {
+		DAD445681959199F00D3A30C /* libluabindings iOS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libluabindings iOS.a";
-			remoteRef = 9FA94B49195835710038EE38 /* PBXContainerItemProxy */;
+			remoteRef = DAD445671959199F00D3A30C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
