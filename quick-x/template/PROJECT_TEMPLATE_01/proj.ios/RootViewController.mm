@@ -43,41 +43,19 @@
 // Override to allow orientations other than the default portrait orientation.
 // This method is deprecated on ios6
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    //
-    return UIInterfaceOrientationIsLandscape( interfaceOrientation );
-    
-    // runtime
-//    if (ConfigParser::getInstance()->isLanscape()) {
-//        return UIInterfaceOrientationIsLandscape( interfaceOrientation );
-//    }else{
-//        return UIInterfaceOrientationIsPortrait( interfaceOrientation );
-//    }
-    
-    // quick
-//    return UIInterfaceOrientationIs__SCREEN_ORIENTATION_UF__(interfaceOrientation);
+    return UIInterfaceOrientationIs__SCREEN_ORIENTATION_UF__(interfaceOrientation);
 }
 
 // For ios6.0 and higher, use supportedInterfaceOrientations & shouldAutorotate instead
 - (NSUInteger) supportedInterfaceOrientations
 {
 #ifdef __IPHONE_6_0
-
-    return UIInterfaceOrientationMaskLandscape;
-    
-//    // runtime
-//    if (ConfigParser::getInstance()->isLanscape()) {
-//        return UIInterfaceOrientationMaskLandscape;
-//    }else{
-//        return UIInterfaceOrientationMaskPortraitUpsideDown;
-//    }
-    
-    // quick
-//    return UIInterfaceOrientationMask__SCREEN_ORIENTATION_UF__;
+    return UIInterfaceOrientationMask__SCREEN_ORIENTATION_UF__;
 #endif
 }
 
 - (BOOL) shouldAutorotate {
-    return NO;
+    return YES;
 }
 
 //fix not hide status on ios7
