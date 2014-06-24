@@ -29,9 +29,9 @@
 -- @return Node#Node ret (return value: cc.Node)
         
 --------------------------------
--- @function [parent=#Widget] getSize 
+-- @function [parent=#Widget] getSizePercent 
 -- @param self
--- @return size_table#size_table ret (return value: size_table)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#Widget] setPositionPercent 
@@ -204,11 +204,6 @@
 -- @param #size_table size
 
 --------------------------------
--- @function [parent=#Widget] getSizePercent 
--- @param self
--- @return vec2_table#vec2_table ret (return value: vec2_table)
-        
---------------------------------
 -- @function [parent=#Widget] getTouchMovePosition 
 -- @param self
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
@@ -261,11 +256,6 @@
 -- @param #ccui.Widget::SizeType sizetype
         
 --------------------------------
--- @function [parent=#Widget] setSize 
--- @param self
--- @param #size_table size
-        
---------------------------------
 -- @function [parent=#Widget] setBright 
 -- @param self
 -- @param #bool bool
@@ -294,6 +284,11 @@
 -- @function [parent=#Widget] setPosition 
 -- @param self
 -- @param #vec2_table vec2
+        
+--------------------------------
+-- @function [parent=#Widget] setContentSize 
+-- @param self
+-- @param #size_table size
         
 --------------------------------
 -- @function [parent=#Widget] Widget 
