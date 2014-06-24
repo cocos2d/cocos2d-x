@@ -201,7 +201,6 @@ bool Widget::init()
 {
     if (ProtectedNode::init())
     {
-        _contentSize = Size::ZERO;
         initRenderer();
         setBright(true);
         onFocusChanged = CC_CALLBACK_2(Widget::onFocusChange,this);
@@ -255,7 +254,6 @@ void Widget::initRenderer()
 void Widget::setContentSize(const cocos2d::Size &contentSize)
 {
     ProtectedNode::setContentSize(contentSize);
-    
     
     _customSize = contentSize;
     if (_ignoreSize)
@@ -316,11 +314,11 @@ void Widget::setSizePercent(const Vec2 &percent)
     }
     if (_ignoreSize)
     {
-        _contentSize = getVirtualRendererSize();
+        this->setContentSize(getVirtualRendererSize());
     }
     else
     {
-        _contentSize = cSize;
+        this->setContentSize(cSize);
     }
     _customSize = cSize;
     onSizeChanged();
@@ -341,11 +339,11 @@ void Widget::updateSizeAndPosition(const cocos2d::Size &parentSize)
         {
             if (_ignoreSize)
             {
-                _contentSize = getVirtualRendererSize();
+                this->setContentSize(getVirtualRendererSize());
             }
             else
             {
-                _contentSize = _customSize;
+                this->setContentSize(_customSize);
             }
             float spx = 0.0f;
             float spy = 0.0f;
@@ -365,11 +363,11 @@ void Widget::updateSizeAndPosition(const cocos2d::Size &parentSize)
             Size cSize = Size(parentSize.width * _sizePercent.x , parentSize.height * _sizePercent.y);
             if (_ignoreSize)
             {
-                _contentSize = getVirtualRendererSize();
+                this->setContentSize(getVirtualRendererSize());
             }
             else
             {
-                _contentSize = cSize;
+                this->setContentSize(cSize);
             }
             _customSize = cSize;
             break;
@@ -424,11 +422,11 @@ void Widget::ignoreContentAdaptWithSize(bool ignore)
     if (_ignoreSize)
     {
         Size s = getVirtualRendererSize();
-        _contentSize = s;
+        this->setContentSize(s);
     }
     else
     {
-        _contentSize = _customSize;
+        this->setContentSize(_customSize);
     }
     onSizeChanged();
 }
@@ -484,11 +482,11 @@ void Widget::updateContentSizeWithTextureSize(const cocos2d::Size &size)
 {
     if (_ignoreSize)
     {
-        _contentSize = size;
+        this->setContentSize(size);
     }
     else
     {
-        _contentSize = _customSize;
+        this->setContentSize(_customSize);
     }
     onSizeChanged();
 }
@@ -1010,7 +1008,7 @@ void Widget::copyProperties(Widget *widget)
     setName(widget->getName());
     setActionTag(widget->getActionTag());
     _ignoreSize = widget->_ignoreSize;
-    _contentSize = widget->_contentSize;
+    this->setContentSize(widget->_contentSize);
     _customSize = widget->_customSize;
     _sizeType = widget->getSizeType();
     _sizePercent = widget->_sizePercent;

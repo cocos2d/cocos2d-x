@@ -430,11 +430,11 @@ void RichText::formarRenderers()
     if (_ignoreSize)
     {
         Size s = getVirtualRendererSize();
-        _contentSize = s;
+        this->setContentSize(s);
     }
     else
     {
-        _contentSize = _customSize;
+        this->setContentSize(_customSize);
     }
     updateContentSizeWithTextureSize(_contentSize);
     _elementRenderersContainer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
