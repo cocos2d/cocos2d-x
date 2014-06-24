@@ -63,76 +63,6 @@
 			remoteGlobalIDString = 1AACE74718BC45A000215002;
 			remoteInfo = "luabindings iOS";
 		};
-		DAD44590195922DE00D3A30C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DAD44581195922DE00D3A30C /* quick_libs.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 1551A33F158F2AB200E66CFE;
-			remoteInfo = "cocos2dx Mac";
-		};
-		DAD44592195922DE00D3A30C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DAD44581195922DE00D3A30C /* quick_libs.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A03F2FD617814595006731B9;
-			remoteInfo = "cocos2dx-extensions Mac";
-		};
-		DAD44594195922DE00D3A30C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DAD44581195922DE00D3A30C /* quick_libs.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A03F2CB81780BD04006731B9;
-			remoteInfo = "chipmunk Mac";
-		};
-		DAD44596195922DE00D3A30C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DAD44581195922DE00D3A30C /* quick_libs.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A03F2D9B1780BDF7006731B9;
-			remoteInfo = "box2d Mac";
-		};
-		DAD44598195922DE00D3A30C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DAD44581195922DE00D3A30C /* quick_libs.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A03F2ED617814268006731B9;
-			remoteInfo = "CocosDenshion Mac";
-		};
-		DAD4459A195922DE00D3A30C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DAD44581195922DE00D3A30C /* quick_libs.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A07A4D641783777C0073F6A7;
-			remoteInfo = "cocos2dx iOS";
-		};
-		DAD4459C195922DE00D3A30C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DAD44581195922DE00D3A30C /* quick_libs.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A07A4EFC1783867C0073F6A7;
-			remoteInfo = "cocos2dx-extensions iOS";
-		};
-		DAD4459E195922DE00D3A30C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DAD44581195922DE00D3A30C /* quick_libs.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A07A4F3B178387670073F6A7;
-			remoteInfo = "chipmunk iOS";
-		};
-		DAD445A0195922DE00D3A30C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DAD44581195922DE00D3A30C /* quick_libs.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A07A4F9E1783876B0073F6A7;
-			remoteInfo = "box2d iOS";
-		};
-		DAD445A2195922DE00D3A30C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DAD44581195922DE00D3A30C /* quick_libs.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A07A4FB4178387730073F6A7;
-			remoteInfo = "CocosDenshion iOS";
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -200,7 +130,6 @@
 		9F3BF73A194E91D70072B3D0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		9F3BF73C194E91E10072B3D0 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		DAD445521959199F00D3A30C /* quick_lua_bindings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = quick_lua_bindings.xcodeproj; path = ../../lib/proj.ios_mac/quick_lua_bindings.xcodeproj; sourceTree = "<group>"; };
-		DAD44581195922DE00D3A30C /* quick_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = quick_libs.xcodeproj; path = ../../lib/proj.ios_mac/quick_libs.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -232,7 +161,6 @@
 		9F1C8D26194DE61E0068C99B = {
 			isa = PBXGroup;
 			children = (
-				DAD44581195922DE00D3A30C /* quick_libs.xcodeproj */,
 				DAD445521959199F00D3A30C /* quick_lua_bindings.xcodeproj */,
 				9F1C8D94194DEE040068C99B /* src */,
 				9F1C8D38194DE61E0068C99B /* mac */,
@@ -359,23 +287,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		DAD44582195922DE00D3A30C /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				DAD44591195922DE00D3A30C /* libcocos2dx Mac.a */,
-				DAD44593195922DE00D3A30C /* libcocos2dx-extensions Mac.a */,
-				DAD44595195922DE00D3A30C /* libchipmunk Mac.a */,
-				DAD44597195922DE00D3A30C /* libbox2d Mac.a */,
-				DAD44599195922DE00D3A30C /* libCocosDenshion Mac.a */,
-				DAD4459B195922DE00D3A30C /* libcocos2dx iOS.a */,
-				DAD4459D195922DE00D3A30C /* libcocos2dx-extensions iOS.a */,
-				DAD4459F195922DE00D3A30C /* libchipmunk iOS.a */,
-				DAD445A1195922DE00D3A30C /* libbox2d iOS.a */,
-				DAD445A3195922DE00D3A30C /* libCocosDenshion iOS.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -405,7 +316,7 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = quick;
 			};
-			buildConfigurationList = 9F1C8D2A194DE61E0068C99B /* Build configuration list for PBXProject "quick-x-player" */;
+			buildConfigurationList = 9F1C8D2A194DE61E0068C99B /* Build configuration list for PBXProject "player" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -417,10 +328,6 @@
 			productRefGroup = 9F1C8D30194DE61E0068C99B /* Products */;
 			projectDirPath = "";
 			projectReferences = (
-				{
-					ProductGroup = DAD44582195922DE00D3A30C /* Products */;
-					ProjectRef = DAD44581195922DE00D3A30C /* quick_libs.xcodeproj */;
-				},
 				{
 					ProductGroup = DAD445531959199F00D3A30C /* Products */;
 					ProjectRef = DAD445521959199F00D3A30C /* quick_lua_bindings.xcodeproj */;
@@ -446,76 +353,6 @@
 			fileType = archive.ar;
 			path = "libluabindings iOS.a";
 			remoteRef = DAD445671959199F00D3A30C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		DAD44591195922DE00D3A30C /* libcocos2dx Mac.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libcocos2dx Mac.a";
-			remoteRef = DAD44590195922DE00D3A30C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		DAD44593195922DE00D3A30C /* libcocos2dx-extensions Mac.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libcocos2dx-extensions Mac.a";
-			remoteRef = DAD44592195922DE00D3A30C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		DAD44595195922DE00D3A30C /* libchipmunk Mac.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libchipmunk Mac.a";
-			remoteRef = DAD44594195922DE00D3A30C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		DAD44597195922DE00D3A30C /* libbox2d Mac.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libbox2d Mac.a";
-			remoteRef = DAD44596195922DE00D3A30C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		DAD44599195922DE00D3A30C /* libCocosDenshion Mac.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libCocosDenshion Mac.a";
-			remoteRef = DAD44598195922DE00D3A30C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		DAD4459B195922DE00D3A30C /* libcocos2dx iOS.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libcocos2dx iOS.a";
-			remoteRef = DAD4459A195922DE00D3A30C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		DAD4459D195922DE00D3A30C /* libcocos2dx-extensions iOS.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libcocos2dx-extensions iOS.a";
-			remoteRef = DAD4459C195922DE00D3A30C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		DAD4459F195922DE00D3A30C /* libchipmunk iOS.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libchipmunk iOS.a";
-			remoteRef = DAD4459E195922DE00D3A30C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		DAD445A1195922DE00D3A30C /* libbox2d iOS.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libbox2d iOS.a";
-			remoteRef = DAD445A0195922DE00D3A30C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		DAD445A3195922DE00D3A30C /* libCocosDenshion iOS.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libCocosDenshion iOS.a";
-			remoteRef = DAD445A2195922DE00D3A30C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -754,7 +591,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9F1C8D2A194DE61E0068C99B /* Build configuration list for PBXProject "quick-x-player" */ = {
+		9F1C8D2A194DE61E0068C99B /* Build configuration list for PBXProject "player" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9F1C8D5E194DE61E0068C99B /* Debug */,
