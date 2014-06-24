@@ -143,6 +143,7 @@
 		1ABCA26F18CD8F7D0087CE3A /* usocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 1ABCA22E18CD8F7D0087CE3A /* usocket.h */; };
 		1ABCA27018CD8F7D0087CE3A /* usocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 1ABCA22E18CD8F7D0087CE3A /* usocket.h */; };
 		1ABCA36318CD9D7F0087CE3A /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA1F618CD8F5F0087CE3A /* libluajit.a */; };
+		49E577571959837400C26077 /* libcocos2dx Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DAB2BF9119594C4800ADD4E0 /* libcocos2dx Mac.a */; };
 		49FA96FB19595F69003C25B4 /* fpconv.c in Sources */ = {isa = PBXBuildFile; fileRef = 49FA96E719595F69003C25B4 /* fpconv.c */; };
 		49FA96FC19595F69003C25B4 /* fpconv.c in Sources */ = {isa = PBXBuildFile; fileRef = 49FA96E719595F69003C25B4 /* fpconv.c */; };
 		49FA96FD19595F69003C25B4 /* fpconv.h in Headers */ = {isa = PBXBuildFile; fileRef = 49FA96E819595F69003C25B4 /* fpconv.h */; };
@@ -399,6 +400,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49E577571959837400C26077 /* libcocos2dx Mac.a in Frameworks */,
 				1ABCA36318CD9D7F0087CE3A /* libluajit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
