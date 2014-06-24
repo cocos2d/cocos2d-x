@@ -326,21 +326,17 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
         {
             flush2D();
             auto cmd = static_cast<MeshCommand*>(command);
-//            cmd->preDraw();
-//            cmd->draw();
-//            cmd->postDraw();
-            cmd->execute();
-//            if (_lastBatchedMeshCommand == nullptr || _lastBatchedMeshCommand->getMaterialID() != cmd->getMaterialID())
-//            {
-//                flush3D();
-//                cmd->preDraw();
-//                cmd->draw();
-//            }
-//            else
-//            {
-//                cmd->draw();
-//            }
-//            _lastBatchedMeshCommand = cmd;
+            if (_lastBatchedMeshCommand == nullptr || _lastBatchedMeshCommand->getMaterialID() != cmd->getMaterialID())
+            {
+                flush3D();
+                cmd->preDraw();
+                cmd->draw();
+            }
+            else
+            {
+                cmd->draw();
+            }
+            _lastBatchedMeshCommand = cmd;
 //            cmd->execute();
         }
         else
