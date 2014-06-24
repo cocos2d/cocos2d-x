@@ -102,6 +102,40 @@ struct SkinData
         rootBoneIndex = -1;
     }
 
+    void addSkinBoneNames(const std::string& name)
+    {
+        for (auto iter : skinBoneNames)
+        {
+            if ((iter) == name)
+                return;
+        }
+        
+        skinBoneNames.push_back(name);
+    }
+    
+    void addNodeBoneNames(const std::string& name)
+    {
+        for (auto iter : nodeBoneNames)
+        {
+            if ((iter) == name)
+                return;
+        }
+        
+        nodeBoneNames.push_back(name);
+    }
+    
+    int getSkinBoneNameIndex(const std::string& name)const
+    {
+        int i = 0;
+        for (auto iter : skinBoneNames)
+        {
+            if ((iter) == name)
+                return i;
+            i++;
+        }
+        return -1;
+    }
+    
     int getBoneNameIndex(const std::string& name)const
     {
         int i = 0;
