@@ -11,27 +11,27 @@ USING_NS_CC;
 
 unsigned char* CZHelperFunc::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
 {
-    unsigned long size;
-    unsigned char* buf = CCFileUtils::sharedFileUtils()->getFileData(pszFileName, pszMode, &size);
+    ssize_t size;
+    unsigned char* buf = FileUtils::getInstance()->getFileData(pszFileName, pszMode, &size);
     if (NULL==buf || size<1) return NULL;
     
     LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
 	unsigned char* buffer = NULL;
 
-        bool isXXTEA = stack && stack->m_xxteaEnabled;
-        for (unsigned int i = 0; isXXTEA && ((int)i) < stack->m_xxteaSignLen && i < size; ++i)
+        bool isXXTEA = stack && stack->_xxteaEnabled;
+        for (unsigned int i = 0; isXXTEA && ((int)i) < stack->_xxteaSignLen && i < size; ++i)
         {
-            isXXTEA = buf[i] == stack->m_xxteaSign[i];
+            isXXTEA = buf[i] == stack->_xxteaSign[i];
         }
 
         if (isXXTEA)
         {
             // decrypt XXTEA
             xxtea_long len = 0;
-            buffer = xxtea_decrypt(buf + stack->m_xxteaSignLen,
-                                   (xxtea_long)size - (xxtea_long)stack->m_xxteaSignLen,
-                                   (unsigned char*)stack->m_xxteaKey,
-                                   (xxtea_long)stack->m_xxteaKeyLen,
+            buffer = xxtea_decrypt(buf + stack->_xxteaSignLen,
+                                   (xxtea_long)size - (xxtea_long)stack->_xxteaSignLen,
+                                   (unsigned char*)stack->_xxteaKey,
+                                   (xxtea_long)stack->_xxteaKeyLen,
                                    &len);
             delete []buf;
             buf = NULL;

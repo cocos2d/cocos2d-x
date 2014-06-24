@@ -46,6 +46,7 @@
 		9F3BF739194E91D10072B3D0 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3BF738194E91D10072B3D0 /* OpenAL.framework */; };
 		9F3BF73B194E91D70072B3D0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3BF73A194E91D70072B3D0 /* QuartzCore.framework */; };
 		9F3BF73D194E91E10072B3D0 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3BF73C194E91E10072B3D0 /* OpenGL.framework */; };
+		DAB2BFC619595AE800ADD4E0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAB2BFC519595AE800ADD4E0 /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,6 +130,7 @@
 		9F3BF738194E91D10072B3D0 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		9F3BF73A194E91D70072B3D0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		9F3BF73C194E91E10072B3D0 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		DAB2BFC519595AE800ADD4E0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		DAD445521959199F00D3A30C /* quick_lua_bindings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = quick_lua_bindings.xcodeproj; path = ../../lib/proj.ios_mac/quick_lua_bindings.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -137,6 +139,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAB2BFC619595AE800ADD4E0 /* SystemConfiguration.framework in Frameworks */,
 				9F3BF73D194E91E10072B3D0 /* OpenGL.framework in Frameworks */,
 				9F3BF73B194E91D70072B3D0 /* QuartzCore.framework in Frameworks */,
 				9F3BF739194E91D10072B3D0 /* OpenAL.framework in Frameworks */,
@@ -180,6 +183,7 @@
 		9F1C8D31194DE61E0068C99B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DAB2BFC519595AE800ADD4E0 /* SystemConfiguration.framework */,
 				9F3BF73C194E91E10072B3D0 /* OpenGL.framework */,
 				9F3BF73A194E91D70072B3D0 /* QuartzCore.framework */,
 				9F3BF738194E91D10072B3D0 /* OpenAL.framework */,
@@ -439,13 +443,13 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../..",
-					"$(SRCROOT)/../../cocos",
-					"$(SRCROOT)/../../cocos/editor-support",
-					"$(SRCROOT)/../../extensions",
-					"$(SRCROOT)/../../external",
-					"$(SRCROOT)/../../external/chipmunk/include/chipmunk",
-					"$(SRCROOT)/../../cocos/audio/include",
+					"$(QUICK_V3_ROOT)",
+					"$(QUICK_V3_ROOT)/../cocos",
+					"$(QUICK_V3_ROOT)/../cocos/editor-support",
+					"$(QUICK_V3_ROOT)/../extensions",
+					"$(QUICK_V3_ROOT)/../external",
+					"$(QUICK_V3_ROOT)/../external/chipmunk/include/chipmunk",
+					"$(QUICK_V3_ROOT)/../cocos/audio/include",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
@@ -487,13 +491,13 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../..",
-					"$(SRCROOT)/../../cocos",
-					"$(SRCROOT)/../../cocos/editor-support",
-					"$(SRCROOT)/../../extensions",
-					"$(SRCROOT)/../../external",
-					"$(SRCROOT)/../../external/chipmunk/include/chipmunk",
-					"$(SRCROOT)/../../cocos/audio/include",
+					"$(QUICK_V3_ROOT)",
+					"$(QUICK_V3_ROOT)/../cocos",
+					"$(QUICK_V3_ROOT)/../cocos/editor-support",
+					"$(QUICK_V3_ROOT)/../extensions",
+					"$(QUICK_V3_ROOT)/../external",
+					"$(QUICK_V3_ROOT)/../external/chipmunk/include/chipmunk",
+					"$(QUICK_V3_ROOT)/../cocos/audio/include",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
@@ -516,21 +520,20 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					../src,
-					"$(QUICK_V3_ROOT)/cocos/platform/mac",
-					"$(QUICK_V3_ROOT)/external/glfw3/include/mac",
-					"$(QUICK_V3_ROOT)/external",
-					"$(QUICK_V3_ROOT)/external/lua/luajit/include",
-					"$(QUICK_V3_ROOT)/external/lua/tolua",
-					"$(QUICK_V3_ROOT)/cocos/scripting/lua-bindings/manual",
-					"$(QUICK_V3_ROOT)/cocos/scripting/lua-bindings/auto",
-					"$(QUICK_V3_ROOT)/external/unzip",
-					"$(QUICK_V3_ROOT)/cocos",
-					"$(QUICK_V3_ROOT)/cocos/audio/include",
+					"$(QUICK_V3_ROOT)/../cocos/platform/mac",
+					"$(QUICK_V3_ROOT)/../external/glfw3/include/mac",
+					"$(QUICK_V3_ROOT)/../external",
+					"$(QUICK_V3_ROOT)/../external/lua/luajit/include",
+					"$(QUICK_V3_ROOT)/../external/lua/tolua",
+					"$(QUICK_V3_ROOT)/lib/cocos2dx/cocos/scripting/lua-bindings/manual",
+					"$(QUICK_V3_ROOT)/lib/cocos2dx/cocos/scripting/lua-bindings/auto",
+					"$(QUICK_V3_ROOT)/../external/unzip",
+					"$(QUICK_V3_ROOT)/../cocos",
+					"$(QUICK_V3_ROOT)/../cocos/audio/include",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/jryin/workspace/cocos2d-x/build/build/Debug",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/cocos2d_tests-axzqtwgwkrktttafksiahajkeowp/Build/Products/Debug",
 				);
 				OTHER_LDFLAGS = (
@@ -560,21 +563,20 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					../src,
-					"$(QUICK_V3_ROOT)/cocos/platform/mac",
-					"$(QUICK_V3_ROOT)/external/glfw3/include/mac",
-					"$(QUICK_V3_ROOT)/external",
-					"$(QUICK_V3_ROOT)/external/lua/luajit/include",
-					"$(QUICK_V3_ROOT)/external/lua/tolua",
-					"$(QUICK_V3_ROOT)/cocos/scripting/lua-bindings/manual",
-					"$(QUICK_V3_ROOT)/cocos/scripting/lua-bindings/auto",
-					"$(QUICK_V3_ROOT)/external/unzip",
-					"$(QUICK_V3_ROOT)/cocos",
-					"$(QUICK_V3_ROOT)/cocos/audio/include",
+					"$(QUICK_V3_ROOT)/../cocos/platform/mac",
+					"$(QUICK_V3_ROOT)/../external/glfw3/include/mac",
+					"$(QUICK_V3_ROOT)/../external",
+					"$(QUICK_V3_ROOT)/../external/lua/luajit/include",
+					"$(QUICK_V3_ROOT)/../external/lua/tolua",
+					"$(QUICK_V3_ROOT)/lib/cocos2dx/cocos/scripting/lua-bindings/manual",
+					"$(QUICK_V3_ROOT)/lib/cocos2dx/cocos/scripting/lua-bindings/auto",
+					"$(QUICK_V3_ROOT)/../external/unzip",
+					"$(QUICK_V3_ROOT)/../cocos",
+					"$(QUICK_V3_ROOT)/../cocos/audio/include",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/jryin/workspace/cocos2d-x/build/build/Debug",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/cocos2d_tests-axzqtwgwkrktttafksiahajkeowp/Build/Products/Debug",
 				);
 				OTHER_LDFLAGS = (
