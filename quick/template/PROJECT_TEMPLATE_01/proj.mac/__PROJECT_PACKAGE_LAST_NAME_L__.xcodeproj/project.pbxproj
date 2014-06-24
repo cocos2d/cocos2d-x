@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		9F359E1B195193B40052017E /* SimulatorConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F359E19195193B40052017E /* SimulatorConfig.cpp */; };
 		9F359E1F195197810052017E /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F359E1E195197810052017E /* IOKit.framework */; };
-		9F6D8906195967EE00B36BA2 /* libluabindings Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F6D89031959678D00B36BA2 /* libluabindings Mac.a */; };
 		9F6D890B195967EF00B36BA2 /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F6D8907195967EF00B36BA2 /* libchipmunk Mac.a */; };
 		9F6D890C195967EF00B36BA2 /* libcocos2dx Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F6D8908195967EF00B36BA2 /* libcocos2dx Mac.a */; };
 		9F6D890D195967EF00B36BA2 /* libcocos2dx-extensions Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F6D8909195967EF00B36BA2 /* libcocos2dx-extensions Mac.a */; };
@@ -33,23 +32,6 @@
 		F4DDD22D1926533C00D37F83 /* __PROJECT_PACKAGE_LAST_NAME_L__.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = F44C957215F49004004D4151 /* __PROJECT_PACKAGE_LAST_NAME_L__.app */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		9F6D89021959678D00B36BA2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9F6D88F31959665B00B36BA2 /* quick_lua_bindings.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 1AACE74618BC45A000215002;
-			remoteInfo = "luabindings Mac";
-		};
-		9F6D89041959678D00B36BA2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9F6D88F31959665B00B36BA2 /* quick_lua_bindings.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 1AACE74718BC45A000215002;
-			remoteInfo = "luabindings iOS";
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		F4DDD22C1926532400D37F83 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -67,11 +49,11 @@
 		9F359E19195193B40052017E /* SimulatorConfig.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SimulatorConfig.cpp; sourceTree = "<group>"; };
 		9F359E1A195193B40052017E /* SimulatorConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimulatorConfig.h; sourceTree = "<group>"; };
 		9F359E1E195197810052017E /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
-		9F6D88F31959665B00B36BA2 /* quick_lua_bindings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = quick_lua_bindings.xcodeproj; path = quick/lib/proj.ios_mac/quick_lua_bindings.xcodeproj; sourceTree = QUICK_V3_ROOT; };
 		9F6D8907195967EF00B36BA2 /* libchipmunk Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libchipmunk Mac.a"; path = "../../../lib/proj.ios_mac/build/Debug/libchipmunk Mac.a"; sourceTree = "<group>"; };
 		9F6D8908195967EF00B36BA2 /* libcocos2dx Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libcocos2dx Mac.a"; path = "../../../lib/proj.ios_mac/build/Debug/libcocos2dx Mac.a"; sourceTree = "<group>"; };
 		9F6D8909195967EF00B36BA2 /* libcocos2dx-extensions Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libcocos2dx-extensions Mac.a"; path = "../../../lib/proj.ios_mac/build/Debug/libcocos2dx-extensions Mac.a"; sourceTree = "<group>"; };
 		9F6D890A195967EF00B36BA2 /* libCocosDenshion Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libCocosDenshion Mac.a"; path = "../../../lib/proj.ios_mac/build/Debug/libCocosDenshion Mac.a"; sourceTree = "<group>"; };
+		DAEBA9D71959895A00C31FBB /* quick_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = quick_libs.xcodeproj; path = quick/lib/proj.ios_mac/quick_libs.xcodeproj; sourceTree = QUICK_V3_ROOT; };
 		F44C957215F49004004D4151 /* __PROJECT_PACKAGE_LAST_NAME_L__.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = __PROJECT_PACKAGE_LAST_NAME_L__.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F44C957615F49004004D4151 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		F44C957915F49004004D4151 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -107,7 +89,6 @@
 				9F6D890C195967EF00B36BA2 /* libcocos2dx Mac.a in Frameworks */,
 				9F6D890D195967EF00B36BA2 /* libcocos2dx-extensions Mac.a in Frameworks */,
 				9F6D890E195967EF00B36BA2 /* libCocosDenshion Mac.a in Frameworks */,
-				9F6D8906195967EE00B36BA2 /* libluabindings Mac.a in Frameworks */,
 				9F359E1F195197810052017E /* IOKit.framework in Frameworks */,
 				F4B4EF6616CA2A8B00736FFE /* SystemConfiguration.framework in Frameworks */,
 				F40EE898163F83E000090121 /* AppKit.framework in Frameworks */,
@@ -126,19 +107,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9F6D88FE1959678D00B36BA2 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				9F6D89031959678D00B36BA2 /* libluabindings Mac.a */,
-				9F6D89051959678D00B36BA2 /* libluabindings iOS.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		F44C956715F49004004D4151 = {
 			isa = PBXGroup;
 			children = (
-				9F6D88F31959665B00B36BA2 /* quick_lua_bindings.xcodeproj */,
+				DAEBA9D71959895A00C31FBB /* quick_libs.xcodeproj */,
 				F44C957C15F49004004D4151 /* __PROJECT_PACKAGE_LAST_NAME_L__ */,
 				F44C957515F49004004D4151 /* Frameworks */,
 				F44C957315F49004004D4151 /* Products */,
@@ -254,35 +226,12 @@
 			mainGroup = F44C956715F49004004D4151;
 			productRefGroup = F44C957315F49004004D4151 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 9F6D88FE1959678D00B36BA2 /* Products */;
-					ProjectRef = 9F6D88F31959665B00B36BA2 /* quick_lua_bindings.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				F44C957115F49004004D4151 /* __PROJECT_PACKAGE_LAST_NAME_L__ */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		9F6D89031959678D00B36BA2 /* libluabindings Mac.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libluabindings Mac.a";
-			remoteRef = 9F6D89021959678D00B36BA2 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		9F6D89051959678D00B36BA2 /* libluabindings iOS.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libluabindings iOS.a";
-			remoteRef = 9F6D89041959678D00B36BA2 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		F44C957015F49004004D4151 /* Resources */ = {
@@ -411,9 +360,7 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INFOPLIST_OUTPUT_FORMAT = binary;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -457,9 +404,7 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INFOPLIST_OUTPUT_FORMAT = binary;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
