@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "cocostudio/DictionaryHelper.h"
 #include "ui/UIWidget.h"
 #include "ui/UIHelper.h"
+#include "cocostudio/CocoLoader.h"
 
 using namespace cocos2d;
 using namespace ui;
@@ -167,6 +168,149 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
     }
     initActionNodeFromRoot(root);
 }
+    
+    int ActionNode::valueToInt(const std::string& value)
+    {
+        return atoi(value.c_str());
+    }
+    bool ActionNode::valueToBool(const std::string& value)
+    {
+        int intValue = valueToInt(value);
+        if (1 == intValue) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+    float ActionNode::valueToFloat(const std::string& value)
+    {
+        return atof(value.c_str());
+    }
+    
+    void ActionNode::initWithBinary(CocoLoader *cocoLoader,
+                                    stExpCocoNode *cocoNode,
+                                    cocos2d::Ref *root)
+    {
+        
+        stExpCocoNode *stChildNode = cocoNode;
+        
+        int actionNodeCount =  stChildNode->GetChildNum();
+        stChildNode = stChildNode[0].GetChildArray();
+        stExpCocoNode *frameListNode = nullptr;
+        for (int i = 0; i < actionNodeCount; ++i) {
+            std::string key = stChildNode[i].GetName(cocoLoader);
+            std::string value = stChildNode[i].GetValue();
+            if (key == "ActionTag") {
+                setActionTag(valueToInt(value));
+            }else if (key == "actionframelist"){
+                frameListNode = &stChildNode[i];
+            }
+        }
+        
+        int actionFrameCount = frameListNode->GetChildNum();
+        stExpCocoNode *stFrameChildNode = frameListNode->GetChildArray();
+        for (int i=0; i<actionFrameCount; i++) {
+            
+            int frameIndex;
+            int frameTweenType;
+            float positionX;
+            float positionY;
+            float scaleX;
+            float scaleY;
+            float rotation;
+            int opacity;
+            int colorR = -1;
+            int colorG = -1;
+            int colorB = -1;
+            std::vector<float> frameTweenParameter;
+            
+            int framesCount = stFrameChildNode[i].GetChildNum();
+            stExpCocoNode *innerFrameNode = stFrameChildNode[i].GetChildArray();
+            for (int j = 0; j < framesCount; j++) {
+                std::string key = innerFrameNode[j].GetName(cocoLoader);
+                std::string value = innerFrameNode[j].GetValue();
+                
+                if (key == "frameid") {
+                    frameIndex = valueToInt(value);
+                }else if(key == "tweenType"){
+                    frameTweenType = valueToInt(value);
+                }else if (key == "tweenParameter"){
+                    //  There are no tweenParameter args in the json file
+                    int tweenParameterCount = innerFrameNode[j].GetChildNum();
+                    stExpCocoNode *tweenParameterArray = innerFrameNode[j].GetChildArray();
+                    for (int k = 0; k < tweenParameterCount; ++k) {
+                        std::string t_key = tweenParameterArray[j].GetName(cocoLoader);
+                        std::string t_value = tweenParameterArray[j].GetValue();
+                        frameTweenParameter.push_back(valueToFloat(t_value));
+                    }
+                }else if (key == "positionx"){
+                    positionX = valueToFloat(value);
+                }else if (key == "positiony"){
+                    positionY = valueToFloat(value);
+                    ActionMoveFrame* actionFrame = new ActionMoveFrame();
+                    actionFrame->autorelease();
+                    actionFrame->setEasingType(frameTweenType);
+                    actionFrame->setEasingParameter(frameTweenParameter);
+                    actionFrame->setFrameIndex(frameIndex);
+                    actionFrame->setPosition(Vec2(positionX, positionY));
+                    auto cActionArray = _frameArray.at((int)kKeyframeMove);
+                    cActionArray->pushBack(actionFrame);
+                }else if(key == "scalex"){
+                    scaleX = valueToFloat(value);
+                }else if(key == "scaley"){
+                    scaleY = valueToFloat(value);
+                    ActionScaleFrame* actionFrame = new ActionScaleFrame();
+                    actionFrame->autorelease();
+                    actionFrame->setEasingType(frameTweenType);
+                    actionFrame->setEasingParameter(frameTweenParameter);
+                    actionFrame->setFrameIndex(frameIndex);
+                    actionFrame->setScaleX(scaleX);
+                    actionFrame->setScaleY(scaleY);
+                    auto cActionArray = _frameArray.at((int)kKeyframeScale);
+                    cActionArray->pushBack(actionFrame);
+                }else if (key == "rotation"){
+                    rotation = valueToFloat(value);
+                    ActionRotationFrame* actionFrame = new ActionRotationFrame();
+                    actionFrame->autorelease();
+                    actionFrame->setEasingType(frameTweenType);
+                    actionFrame->setEasingParameter(frameTweenParameter);
+                    actionFrame->setFrameIndex(frameIndex);
+                    actionFrame->setRotation(rotation);
+                    auto cActionArray = _frameArray.at((int)kKeyframeRotate);
+                    cActionArray->pushBack(actionFrame);
+                }else if (key == "opacity"){
+                    opacity = valueToInt(value);
+                    ActionFadeFrame* actionFrame = new ActionFadeFrame();
+                    actionFrame->autorelease();
+                    actionFrame->setEasingType(frameTweenType);
+                    actionFrame->setEasingParameter(frameTweenParameter);
+                    actionFrame->setFrameIndex(frameIndex);
+                    actionFrame->setOpacity(opacity);
+                    auto cActionArray = _frameArray.at((int)kKeyframeFade);
+                    cActionArray->pushBack(actionFrame);
+                }else if (key == "colorb"){
+                    colorB = valueToInt(value);
+                }else if(key == "colorg"){
+                    colorG = valueToInt(value);
+                }else if(key == "colorr"){
+                    colorR = valueToInt(value);
+                    
+                    ActionTintFrame* actionFrame = new ActionTintFrame();
+                    actionFrame->autorelease();
+                    actionFrame->setEasingType(frameTweenType);
+                    actionFrame->setEasingParameter(frameTweenParameter);
+                    actionFrame->setFrameIndex(frameIndex);
+                    actionFrame->setColor(Color3B(colorR,colorG,colorB));
+                    auto cActionArray = _frameArray.at((int)kKeyframeTint);
+                    cActionArray->pushBack(actionFrame);
+                }
+                
+                
+            }
+            
+        }
+        initActionNodeFromRoot(root);
+    }
 
 void ActionNode::initActionNodeFromRoot(Ref* root)
 {	
