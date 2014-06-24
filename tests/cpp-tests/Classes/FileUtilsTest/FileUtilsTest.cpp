@@ -5,6 +5,8 @@ static std::function<Layer*()> createFunctions[] = {
     CL(TestSearchPath),
     CL(TestFilenameLookup),
     CL(TestIsFileExist),
+    CL(TestFileFuncs),
+    CL(TestDirectoryFuncs),
     CL(TextWritePlist),
 };
 
@@ -303,6 +305,168 @@ std::string TestIsFileExist::title() const
 }
 
 std::string TestIsFileExist::subtitle() const
+{
+    return "";
+}
+
+// TestFileFuncs
+
+void TestFileFuncs::onEnter()
+{
+    FileUtilsDemo::onEnter();
+    auto s = Director::getInstance()->getWinSize();
+    auto sharedFileUtils = FileUtils::getInstance();
+    
+    int x = s.width/2,
+        y = s.height/5;
+    Label* pTTF = nullptr;
+    
+    std::string filename = "__test.test";
+    std::string filename2 = "__newtest.test";
+    std::string filepath = sharedFileUtils->getWritablePath() + filename;
+    std::string content = "Test string content to put into created file";
+    std::string msg;
+    
+    FILE *out = fopen(filepath.c_str(), "w");
+    fputs(content.c_str(), out);
+    fclose(out);
+    
+    // Check whether file can be created
+    if (sharedFileUtils->isFileExist(filepath))
+    {
+        pTTF = Label::createWithSystemFont("Test file '__test.test' created", "", 20);
+        pTTF->setPosition(Vec2(x, y * 4));
+        this->addChild(pTTF);
+        
+        // getFileSize Test
+        long size = sharedFileUtils->getFileSize(filepath);
+        msg = StringUtils::format("getFileSize: Test file size equals %ld", size);
+        pTTF = Label::createWithSystemFont(msg, "", 20);
+        pTTF->setPosition(Vec2(x, y * 3));
+        this->addChild(pTTF);
+        
+        // renameFile Test
+        if (sharedFileUtils->renameFile(sharedFileUtils->getWritablePath(), filename, filename2))
+        {
+            pTTF = Label::createWithSystemFont("renameFile: Test file renamed to  '__newtest.test'", "", 20);
+            pTTF->setPosition(Vec2(x, y * 2));
+            this->addChild(pTTF);
+            
+            // removeFile Test
+            filepath = sharedFileUtils->getWritablePath() + filename2;
+            if (sharedFileUtils->removeFile(filepath))
+            {
+                pTTF = Label::createWithSystemFont("removeFile: Test file removed", "", 20);
+                pTTF->setPosition(Vec2(x, y * 1));
+                this->addChild(pTTF);
+            }
+            else
+            {
+                pTTF = Label::createWithSystemFont("removeFile: Failed to remove test file", "", 20);
+                pTTF->setPosition(Vec2(x, y * 1));
+                this->addChild(pTTF);
+            }
+        }
+        else
+        {
+            pTTF = Label::createWithSystemFont("renameFile: Failed to rename test file to  '__newtest.test', further test skipped", "", 20);
+            pTTF->setPosition(Vec2(x, y * 2));
+            this->addChild(pTTF);
+        }
+    }
+    else
+    {
+        pTTF = Label::createWithSystemFont("Test file can not be created, test skipped", "", 20);
+        pTTF->setPosition(Vec2(x, y * 4));
+        this->addChild(pTTF);
+    }
+}
+
+std::string TestFileFuncs::title() const
+{
+    return "FileUtils: file control functions";
+}
+
+std::string TestFileFuncs::subtitle() const
+{
+    return "";
+}
+
+// TestDirectoryFuncs
+
+void TestDirectoryFuncs::onEnter()
+{
+    FileUtilsDemo::onEnter();
+    auto s = Director::getInstance()->getWinSize();
+    auto sharedFileUtils = FileUtils::getInstance();
+    
+    int x = s.width/2,
+    y = s.height/4;
+    Label* pTTF = nullptr;
+    
+    std::string dir = sharedFileUtils->getWritablePath() + "__test/";
+    std::string subDir = "dir1/dir2";
+    std::string msg;
+    bool ok;
+    
+    // Check whether dir can be created
+    ok = sharedFileUtils->createDirectory(dir);
+    if (ok && sharedFileUtils->isDirectoryExist(dir))
+    {
+        msg = StringUtils::format("createDirectory: Directory '__test' created");
+        pTTF = Label::createWithSystemFont(msg, "", 20);
+        pTTF->setPosition(Vec2(x, y * 3));
+        this->addChild(pTTF);
+        
+        // Create sub directories recursively
+        ok = sharedFileUtils->createDirectories(dir + subDir);
+        if (ok && sharedFileUtils->isDirectoryExist(dir + subDir))
+        {
+            msg = StringUtils::format("createDirectories: Sub directories '%s' created", subDir.c_str());
+            pTTF = Label::createWithSystemFont(msg, "", 20);
+            pTTF->setPosition(Vec2(x, y * 2));
+            this->addChild(pTTF);
+        }
+        else
+        {
+            msg = StringUtils::format("createDirectories: Failed to create sub directories '%s'", subDir.c_str());
+            pTTF = Label::createWithSystemFont(msg, "", 20);
+            pTTF->setPosition(Vec2(x, y * 2));
+            this->addChild(pTTF);
+        }
+        
+        // Remove directory
+        ok = sharedFileUtils->removeDirectory(dir);
+        if (ok && !sharedFileUtils->isDirectoryExist(dir))
+        {
+            msg = StringUtils::format("removeDirectory: Directory '__test' removed");
+            pTTF = Label::createWithSystemFont(msg, "", 20);
+            pTTF->setPosition(Vec2(x, y));
+            this->addChild(pTTF);
+        }
+        else
+        {
+            msg = StringUtils::format("removeDirectory: Failed to remove directory '__test'");
+            pTTF = Label::createWithSystemFont(msg, "", 20);
+            pTTF->setPosition(Vec2(x, y));
+            this->addChild(pTTF);
+        }
+    }
+    else
+    {
+        msg = StringUtils::format("createDirectory: Directory '__test' can not be created");
+        pTTF = Label::createWithSystemFont(msg, "", 20);
+        pTTF->setPosition(Vec2(x, y * 2));
+        this->addChild(pTTF);
+    }
+}
+
+std::string TestDirectoryFuncs::title() const
+{
+    return "FileUtils: directory control functions";
+}
+
+std::string TestDirectoryFuncs::subtitle() const
 {
     return "";
 }
