@@ -916,6 +916,7 @@ std::string PhysicsDemoJoints::title() const
 void PhysicsDemoActions::onEnter()
 {
     PhysicsDemo::onEnter();
+    _scene->getPhysicsWorld()->setGravity(Vect::ZERO);
     
     auto touchListener = EventListenerTouchOneByOne::create();
     touchListener->onTouchBegan = CC_CALLBACK_2(PhysicsDemoActions::onTouchBegan, this);
@@ -934,16 +935,23 @@ void PhysicsDemoActions::onEnter()
     Sprite* sp4 = addGrossiniAtPosition(VisibleRect::leftTop() + Vec2(50, -50));
     sp4->getPhysicsBody()->setGravityEnable(false);
     
+    sp1->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+    sp2->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+    sp3->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+    sp4->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+    
     
     auto actionTo = JumpTo::create(2, Vec2(100,100), 50, 4);
     auto actionBy = JumpBy::create(2, Vec2(300,0), 50, 4);
     auto actionUp = JumpBy::create(2, Vec2(0,50), 80, 4);
     auto actionByBack = actionBy->reverse();
+    auto rotateBy = RotateBy::create(2, 180);
+    auto rotateByBack = RotateBy::create(2, -180);
     
     sp1->runAction(RepeatForever::create(actionUp));
     sp2->runAction(RepeatForever::create(Sequence::create(actionBy, actionByBack, NULL)));
     sp3->runAction(actionTo);
-    sp4->runAction(RepeatForever::create(Sequence::create(actionBy->clone(), actionByBack->clone(), NULL)));
+    sp4->runAction(RepeatForever::create(Sequence::create(rotateBy, rotateByBack, NULL)));
 }
 
 std::string PhysicsDemoActions::title() const
@@ -1703,6 +1711,7 @@ void Bug5482::onEnter()
 
 void Bug5482::onExit()
 {
+    PhysicsDemo::onExit();
     _body->release();
 }
 

@@ -23,6 +23,14 @@
 -- @return ActionObject#ActionObject ret (return value: ccs.ActionObject)
         
 --------------------------------
+-- @function [parent=#ActionManagerEx] initWithBinary 
+-- @param self
+-- @param #char char
+-- @param #cc.Ref ref
+-- @param #ccs.CocoLoader cocoloader
+-- @param #ccs.stExpCocoNode stexpcoconode
+        
+--------------------------------
 -- @function [parent=#ActionManagerEx] releaseActions 
 -- @param self
         
