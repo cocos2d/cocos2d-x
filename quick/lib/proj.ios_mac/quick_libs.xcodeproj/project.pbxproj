@@ -579,6 +579,10 @@
 		46C02E0818E91123004B7456 /* xxhash.c in Sources */ = {isa = PBXBuildFile; fileRef = 46C02E0518E91123004B7456 /* xxhash.c */; };
 		46C02E0918E91123004B7456 /* xxhash.h in Headers */ = {isa = PBXBuildFile; fileRef = 46C02E0618E91123004B7456 /* xxhash.h */; };
 		46C02E0A18E91123004B7456 /* xxhash.h in Headers */ = {isa = PBXBuildFile; fileRef = 46C02E0618E91123004B7456 /* xxhash.h */; };
+		497DB352195986F900271944 /* xxtea.h in Headers */ = {isa = PBXBuildFile; fileRef = 49E5774A19597E0B00C26077 /* xxtea.h */; };
+		497DB353195986FC00271944 /* xxtea.h in Headers */ = {isa = PBXBuildFile; fileRef = 49E5774A19597E0B00C26077 /* xxtea.h */; };
+		497DB3541959870300271944 /* xxtea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49E5774919597E0B00C26077 /* xxtea.cpp */; };
+		497DB3551959870600271944 /* xxtea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49E5774919597E0B00C26077 /* xxtea.cpp */; };
 		49F5C3D1195038F0009F8643 /* CCClippingRegionNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49F5C3CF195038C8009F8643 /* CCClippingRegionNode.cpp */; };
 		5027253A190BF1B900AAF4ED /* cocos2d.h in Headers */ = {isa = PBXBuildFile; fileRef = 50272538190BF1B900AAF4ED /* cocos2d.h */; };
 		5027253B190BF1B900AAF4ED /* cocos2d.h in Headers */ = {isa = PBXBuildFile; fileRef = 50272538190BF1B900AAF4ED /* cocos2d.h */; };
@@ -1673,6 +1677,8 @@
 		46A170781807CE7A005B8026 /* CCPhysicsWorld.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPhysicsWorld.h; sourceTree = "<group>"; };
 		46C02E0518E91123004B7456 /* xxhash.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = xxhash.c; sourceTree = "<group>"; };
 		46C02E0618E91123004B7456 /* xxhash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xxhash.h; sourceTree = "<group>"; };
+		49E5774919597E0B00C26077 /* xxtea.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = xxtea.cpp; sourceTree = "<group>"; };
+		49E5774A19597E0B00C26077 /* xxtea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xxtea.h; sourceTree = "<group>"; };
 		49F5C3CF195038C8009F8643 /* CCClippingRegionNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCClippingRegionNode.cpp; sourceTree = "<group>"; };
 		49F5C3D0195038C8009F8643 /* CCClippingRegionNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCClippingRegionNode.h; sourceTree = "<group>"; };
 		50272538190BF1B900AAF4ED /* cocos2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cocos2d.h; path = ../../../cocos/cocos2d.h; sourceTree = "<group>"; };
@@ -2626,6 +2632,7 @@
 		1A57033E180BD0490088DEC7 /* external */ = {
 			isa = PBXGroup;
 			children = (
+				49E5774719597E0B00C26077 /* xxtea */,
 				1AC026971914068200FA920D /* ConvertUTF */,
 				46C02E0418E91123004B7456 /* xxhash */,
 				46A1693A1807AFD6005B8026 /* chipmunk */,
@@ -3324,6 +3331,16 @@
 			);
 			name = xxhash;
 			path = ../../../external/xxhash;
+			sourceTree = "<group>";
+		};
+		49E5774719597E0B00C26077 /* xxtea */ = {
+			isa = PBXGroup;
+			children = (
+				49E5774919597E0B00C26077 /* xxtea.cpp */,
+				49E5774A19597E0B00C26077 /* xxtea.h */,
+			);
+			name = xxtea;
+			path = ../../../external/xxtea;
 			sourceTree = "<group>";
 		};
 		500DC89819105D41007B91BF /* renderer */ = {
@@ -4168,6 +4185,7 @@
 				50ABBD5A1925AB0000A911A9 /* Vec2.h in Headers */,
 				50ABBEBD1925AB6F00A911A9 /* ccUtils.h in Headers */,
 				DAEBA9A8195980D100C31FBB /* CCLuaObjcBridge.h in Headers */,
+				497DB352195986F900271944 /* xxtea.h in Headers */,
 				50ABC0231926664800A911A9 /* CCGLView.h in Headers */,
 				50ABBFFD1926664800A911A9 /* CCFileUtilsApple.h in Headers */,
 				5034CA41191D591100CE6051 /* ccShader_Position_uColor.frag in Headers */,
@@ -4411,6 +4429,7 @@
 				DAEBA8E51959808A00C31FBB /* xxtea.h in Headers */,
 				1A5701CA180BCB5A0088DEC7 /* CCLabelTextFormatter.h in Headers */,
 				5034CA22191D591100CE6051 /* ccShader_PositionTextureColorAlphaTest.frag in Headers */,
+				497DB353195986FC00271944 /* xxtea.h in Headers */,
 				50ABBECE1925AB6F00A911A9 /* s3tc.h in Headers */,
 				50ABBE901925AB6F00A911A9 /* CCPlatformConfig.h in Headers */,
 				1A5701CE180BCB5A0088DEC7 /* CCLabelTTF.h in Headers */,
@@ -4886,6 +4905,7 @@
 				DAB2BFB1195954F700ADD4E0 /* CCCrypto.h in Sources */,
 				DAB2BFB2195954F700ADD4E0 /* md5.c in Sources */,
 				DAEBA90A1959808A00C31FBB /* mime.c in Sources */,
+				497DB3541959870300271944 /* xxtea.cpp in Sources */,
 				DAB2BFB3195954F700ADD4E0 /* md5.h in Sources */,
 				DAB2BFB4195954F700ADD4E0 /* CCAlertViewDelegate.h in Sources */,
 				DAB2BFB5195954F700ADD4E0 /* CCNative.h in Sources */,
@@ -5371,6 +5391,7 @@
 				50ABBE2C1925AB6F00A911A9 /* ccCArray.cpp in Sources */,
 				50ABC0061926664800A911A9 /* CCThread.mm in Sources */,
 				DAEBA940195980B800C31FBB /* lua_cocos2dx_auto.cpp in Sources */,
+				497DB3551959870600271944 /* xxtea.cpp in Sources */,
 				B375107C1823ACA100B3BA6A /* CCPhysicsBodyInfo_chipmunk.cpp in Sources */,
 				50ABBEB61925AB6F00A911A9 /* CCUserDefaultAndroid.cpp in Sources */,
 				1A57034C180BD09B0088DEC7 /* tinyxml2.cpp in Sources */,

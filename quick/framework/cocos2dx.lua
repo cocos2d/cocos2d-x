@@ -54,6 +54,8 @@ local p = cc.PACKAGE_NAME .. ".cocos2dx."
 require(p .. "Cocos2dConstants")
 require (p .. "OpenglConstants")
 require (p .. "Cocos2d")
+require (p .. "Cocos2dExtral")
+
 cc.c3 = cc.c3b
 kResolutionExactFit = cc.ResolutionPolicy.EXACT_FIT
 kResolutionNoBorder = cc.ResolutionPolicy.NO_BORDER
