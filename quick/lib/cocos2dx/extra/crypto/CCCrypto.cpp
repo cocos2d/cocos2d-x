@@ -25,7 +25,6 @@ unsigned char* Crypto::encryptXXTEA(unsigned char* plaintext,
                                       int keyLength,
                                       int* resultLength)
 {
-    return plaintext;
     xxtea_long len;
     unsigned char* result = xxtea_encrypt(plaintext, (xxtea_long)plaintextLength, key, (xxtea_long)keyLength, &len);
     *resultLength = (int)len;
@@ -38,7 +37,6 @@ unsigned char* Crypto::decryptXXTEA(unsigned char* ciphertext,
                                       int keyLength,
                                       int* resultLength)
 {
-    return ciphertext;
     xxtea_long len;
     unsigned char* result = xxtea_decrypt(ciphertext, (xxtea_long)ciphertextLength, key, (xxtea_long)keyLength, &len);
     *resultLength = (int)len;
