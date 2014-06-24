@@ -128,6 +128,11 @@ FastTMXLayer::~FastTMXLayer()
     CC_SAFE_DELETE_ARRAY(_tiles);
 }
 
+bool sortQuadCommand(const V3F_C4B_T2F_Quad& a, const V3F_C4B_T2F_Quad& b)
+{
+    return a.bl.vertices.z < b.bl.vertices.z;
+}
+
 void FastTMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
 {
     if( flags != 0 || _dirty )
@@ -140,7 +145,7 @@ void FastTMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flag
         rect = RectApplyTransform(rect, inv);
         
         _verticesToDraw = updateTiles(rect, renderer);
-        
+        std::sort(_quads.begin(), _quads.end(), sortQuadCommand);
         // don't draw more than 65535 vertices since we are using GL_UNSIGNED_SHORT for indices
         _verticesToDraw = std::min(_verticesToDraw, 65535);
         
@@ -148,13 +153,22 @@ void FastTMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flag
         
     }
     
-    auto glprogramState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
-    for( int index = 0; index < _verticesToDraw/6; ++index)
+    auto glprogramState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR);
+    int index = 0;
+    for(const auto& quadNumberIter : _quadsNumber)
     {
-        float z = _quads[index].bl.vertices.z;
-        _renderCommands[index].init(z, _texture->getName(), glprogramState, BlendFunc::ALPHA_PREMULTIPLIED, &_quads[index], 1, transform);
-        renderer->addCommand(&_renderCommands[index]);
+        int z = quadNumberIter.first;
+        auto& quadCommand = _renderCommands2[quadNumberIter.first];
+        quadCommand.init(z, _texture->getName(), glprogramState, BlendFunc::ALPHA_PREMULTIPLIED, &_quads[index], quadNumberIter.second, transform);
+        index += quadNumberIter.second;
+        renderer->addCommand(&quadCommand);
     }
+//    for( int index = 0; index < _verticesToDraw/6; ++index)
+//    {
+//        float z = _quads[index].bl.vertices.z;
+//        _renderCommands[index].init(z, _texture->getName(), glprogramState, BlendFunc::ALPHA_PREMULTIPLIED, &_quads[index], 1, transform);
+//        renderer->addCommand(&_renderCommands[index]);
+//    }
     
 //    _customCommand.init(_globalZOrder);
 //    _customCommand.func = CC_CALLBACK_0(FastTMXLayer::onDraw, this, transform, flags);
@@ -218,6 +232,9 @@ int FastTMXLayer::updateTiles(const Rect& culledRect, Renderer* renderer)
         _indices.resize(quadsNeed * 6);
     }
 
+    //clear quadsNumber
+    _quadsNumber.clear();
+
     Size texSize = _tileSet->_imageSize;
     for (int y =  visibleTiles.origin.y - tilesOverY; y < visibleTiles.origin.y + visibleTiles.size.height + tilesOverY; ++y)
     {
@@ -242,7 +259,18 @@ int FastTMXLayer::updateTiles(const Rect& culledRect, Renderer* renderer)
                 float left, right, top, bottom, z;
                 
                 z = getVertexZForPos(Vec2(x, y));
-
+                
+                //add quadsNumber
+                auto quadsNumberIter = _quadsNumber.find(z);
+                if(quadsNumberIter == _quadsNumber.end())
+                {
+                    _quadsNumber.insert(std::make_pair(z, 1));
+                }
+                else
+                {
+                    quadsNumberIter->second += 1;
+                }
+                
                 // vertices
                 if (tileGID & kTMXTileDiagonalFlag)
                 {

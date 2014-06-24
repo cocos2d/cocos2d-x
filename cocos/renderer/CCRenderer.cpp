@@ -296,7 +296,13 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
             _batchedQuadCommands.push_back(cmd);
             
             memcpy(_quads + _numQuads, cmd->getQuads(), sizeof(V3F_C4B_T2F_Quad) * cmd->getQuadCount());
-            convertToWorldCoordinates(_quads + _numQuads, cmd->getQuadCount(), cmd->getModelView());
+            
+            //only multiply mv when getPremultiplyMV is true
+            if(cmd->getPremultiplyMV())
+            {
+                convertToWorldCoordinates(_quads + _numQuads, cmd->getQuadCount(), cmd->getModelView());
+            }
+            
             
             _numQuads += cmd->getQuadCount();
 

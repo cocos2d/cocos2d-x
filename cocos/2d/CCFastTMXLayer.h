@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include "renderer/CCQuadCommand.h"
 
 #include <map>
+#include <unordered_map>
 
 NS_CC_BEGIN
 
@@ -245,6 +246,9 @@ protected:
     /** quads to be rendered */
     std::vector<V3F_C4B_T2F_Quad> _quads;
     std::vector<QuadCommand> _renderCommands;
+    
+    std::map<int/*zorder*/, ssize_t/*number*/> _quadsNumber;
+    std::unordered_map<int/*zorder*/, NopreMultiplyMVQuadCommand> _renderCommands2;
     /** indices */
     std::vector<GLushort> _indices;
     bool _dirty;

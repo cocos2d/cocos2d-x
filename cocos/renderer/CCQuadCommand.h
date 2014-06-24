@@ -38,7 +38,7 @@ public:
     static const int MATERIAL_ID_DO_NOT_BATCH = 0;
 
     QuadCommand();
-    ~QuadCommand();
+    virtual ~QuadCommand();
 
     /** Initializes the command with a globalZOrder, a texture ID, a `GLProgram`, a blending function, a pointer to quads,
      * quantity of quads, and the Model View transform to be used for the quads */
@@ -55,10 +55,10 @@ public:
     inline GLProgramState* getGLProgramState() const { return _glProgramState; }
     inline BlendFunc getBlendType() const { return _blendType; }
     inline const Mat4& getModelView() const { return _mv; }
-    
+    inline bool getPremultiplyMV() const { return _preMultiplyMV; }
 
 protected:
-    void generateMaterialID();
+    virtual void generateMaterialID();
 
     uint32_t _materialID;
     GLuint _textureID;
@@ -67,7 +67,29 @@ protected:
     V3F_C4B_T2F_Quad* _quads;
     ssize_t _quadsCount;
     Mat4 _mv;
+    bool _preMultiplyMV;
 };
+
+class NopreMultiplyMVQuadCommand : public QuadCommand
+{
+public:
+    NopreMultiplyMVQuadCommand()
+    :QuadCommand()
+    {
+        _preMultiplyMV = false;
+    }
+    
+    virtual ~NopreMultiplyMVQuadCommand()
+    {
+    }
+    
+protected:
+    virtual void generateMaterialID()
+    {
+        _materialID = QuadCommand::MATERIAL_ID_DO_NOT_BATCH;
+    }
+};
+
 NS_CC_END
 
 #endif //_CC_QUADCOMMAND_H_
