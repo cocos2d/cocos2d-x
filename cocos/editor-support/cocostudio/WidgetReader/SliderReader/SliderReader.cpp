@@ -156,7 +156,7 @@ namespace cocostudio
             
             if (barTextureScale9Enable)
             {
-                slider->setSize(Size(barLength, slider->getContentSize().height));
+                slider->setContentSize(Size(barLength, slider->getContentSize().height));
             }
         }
         
