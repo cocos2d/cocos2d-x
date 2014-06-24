@@ -66,6 +66,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../external/lua/tolua \
                     $(LOCAL_PATH)/../../editor-support/cocosbuilder \
                     $(LOCAL_PATH)/../../editor-support/cocostudio \
                     $(LOCAL_PATH)/../../ui \
+                    $(LOCAL_PATH)/../../2d \
+                    $(LOCAL_PATH)/../../3d \
                     $(LOCAL_PATH)/auto \
                     $(LOCAL_PATH)/manual \
                     $(LOCAL_PATH)/manual/platform/android \
