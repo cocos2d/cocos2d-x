@@ -329,12 +329,12 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
             if (_lastBatchedMeshCommand == nullptr || _lastBatchedMeshCommand->getMaterialID() != cmd->getMaterialID())
             {
                 flush3D();
-                cmd->preDraw();
-                cmd->draw();
+                cmd->preBatchDraw();
+                cmd->batchDraw();
             }
             else
             {
-                cmd->draw();
+                cmd->batchDraw();
             }
             _lastBatchedMeshCommand = cmd;
 //            cmd->execute();
@@ -535,7 +535,7 @@ void Renderer::flush3D()
 {
     if (_lastBatchedMeshCommand)
     {
-        _lastBatchedMeshCommand->postDraw();
+        _lastBatchedMeshCommand->postBatchDraw();
         _lastBatchedMeshCommand = nullptr;
     }
 }

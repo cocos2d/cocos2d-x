@@ -157,7 +157,12 @@ public:
     /** gets-or-creates an instance of GLProgramState for a given GLProgramName */
     static GLProgramState* getOrCreateWithGLProgramName(const std::string &glProgramName );
 
+    // apply GLProgram, attributes and uniforms
     void apply(const Mat4& modelView);
+    
+    void applyGLProgram(const Mat4& modelView);
+    void applyAttributes();
+    void applyUniforms();
 
     void setGLProgram(GLProgram* glprogram);
     GLProgram* getGLProgram() const { return _glprogram; }

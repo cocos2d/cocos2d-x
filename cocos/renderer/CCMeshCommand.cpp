@@ -23,7 +23,12 @@
  ****************************************************************************/
 
 #include "base/ccMacros.h"
+#include "base/CCConfiguration.h"
 #include "base/CCDirector.h"
+#include "base/CCEventCustom.h"
+#include "base/CCEventListenerCustom.h"
+#include "base/CCEventDispatcher.h"
+#include "base/CCEventType.h"
 #include "renderer/CCMeshCommand.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgram.h"
@@ -48,8 +53,14 @@ MeshCommand::MeshCommand()
 , _matrixPalette(nullptr)
 , _matrixPaletteSize(0)
 , _materialID(0)
+, _vao(0)
 {
     _type = RenderCommand::Type::MESH_COMMAND;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    // listen the event when app go to foreground
+    _backToForegroundlistener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, CC_CALLBACK_1(MeshCommand::listenBackToForeground, this));
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundlistener, -1);
+#endif
 }
 
 void MeshCommand::init(float globalOrder,
@@ -74,6 +85,7 @@ void MeshCommand::init(float globalOrder,
     _indexBuffer = indexBuffer;
     _primitive = primitive;
     _indexFormat = indexFormat;
+    //_vao = vao;
     _indexCount = indexCount;
     _mv = mv;
 }
@@ -105,12 +117,14 @@ void MeshCommand::setDisplayColor(const Vec4& color)
 
 MeshCommand::~MeshCommand()
 {
+    releaseVAO();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundlistener);
+#endif
 }
 
 void MeshCommand::applyRenderState()
 {
-    
-    
     if (_cullFaceEnabled)
     {
         glEnable(GL_CULL_FACE);
@@ -155,6 +169,8 @@ void MeshCommand::genMaterialID(GLuint texID, void* glProgramState, void* mesh, 
     }
     int intArray[] = {(int)texID, statekey[0], statekey[1], meshkey[0], meshkey[1], (int)blend.src, (int)blend.dst};
     _materialID = XXH32((const void*)intArray, sizeof(intArray), 0);
+    
+    //generate vao here
 }
 
 void MeshCommand::MatrixPalleteCallBack( GLProgram* glProgram, Uniform* uniform)
@@ -162,19 +178,30 @@ void MeshCommand::MatrixPalleteCallBack( GLProgram* glProgram, Uniform* uniform)
     glProgram->setUniformLocationWith4fv(uniform->location, (const float*)_matrixPalette, _matrixPaletteSize);
 }
 
-void MeshCommand::preDraw()
+void MeshCommand::preBatchDraw()
 {
     // set render state
     applyRenderState();
     // Set material
     GL::bindTexture2D(_textureID);
     GL::blendFunc(_blendType.src, _blendType.dst);
-    glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
-//    
-    //_glProgramState->apply(_mv);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
+    
+    if (_vao == 0)
+        buildVAO();
+    if (_vao)
+    {
+        GL::bindVAO(_vao);
+    }
+    else
+    {
+        glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
+        _glProgramState->applyAttributes();
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
+    }
+    
+    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
 }
-void MeshCommand::draw()
+void MeshCommand::batchDraw()
 {
     auto glProgram = _glProgramState->getGLProgram();
 
@@ -186,19 +213,28 @@ void MeshCommand::draw()
         
     }
     
-    _glProgramState->apply(_mv);
+    _glProgramState->applyGLProgram(_mv);
+    _glProgramState->applyUniforms();
+    //_glProgramState->apply(_mv);
     
     // Draw
     glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
     
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
 }
-void MeshCommand::postDraw()
+void MeshCommand::postBatchDraw()
 {
     //restore render state
     restoreRenderState();
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    if (_vao)
+    {
+        GL::bindVAO(0);
+    }
+    else
+    {
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+    }
 }
 
 void MeshCommand::execute()
@@ -232,5 +268,35 @@ void MeshCommand::execute()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
+
+void MeshCommand::buildVAO()
+{
+    releaseVAO();
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
+        glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
+        _glProgramState->applyAttributes();
+        
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
+        GL::bindVAO(0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    }
+}
+void MeshCommand::releaseVAO()
+{
+    if (Configuration::getInstance()->supportsShareableVAO() && _vao)
+    {
+        glDeleteVertexArrays(1, &_vao);
+        GL::bindVAO(0);
+    }
+}
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+void MeshCommand::listenBackToForeground(EventCustom* event)
+{
+    releaseVAO();
+}
+#endif
 
 NS_CC_END
