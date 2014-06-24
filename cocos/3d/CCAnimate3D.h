@@ -49,13 +49,13 @@ public:
     static Animate3D* create(Animation3D* animation);
     
     /**
-     * create sub Animate3D
-     * @param animate Animate3D used to generate sub animate3D
+     * create Animate3D
+     * @param animation used to generate animate3D
      * @param formTime 
      * @param duration Time the Animate3D lasts
      * @return Animate3D created using animate
      */
-    static Animate3D* createSubAnimate3D(Animate3D* animate, float fromTime, float duration);
+    static Animate3D* create(Animation3D* animation, float fromTime, float duration);
     //
     // Overrides
     //

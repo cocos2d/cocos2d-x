@@ -108,6 +108,7 @@ static const int DEFAULT_RENDER_QUEUE = 0;
 //
 Renderer::Renderer()
 :_lastMaterialID(0)
+,_lastBatchedMeshCommand(nullptr)
 ,_numQuads(0)
 ,_glViewAssigned(false)
 ,_isRendering(false)
@@ -277,12 +278,14 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
 {
     ssize_t size = queue.size();
     
+    uint32_t material3DID = 0; //last material 3d ID
     for (ssize_t index = 0; index < size; ++index)
     {
         auto command = queue[index];
         auto commandType = command->getType();
         if(RenderCommand::Type::QUAD_COMMAND == commandType)
         {
+            flush3D();
             auto cmd = static_cast<QuadCommand*>(command);
             //Batch quads
             if(_numQuads + cmd->getQuadCount() > VBO_SIZE)
@@ -321,9 +324,20 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
         }
         else if (RenderCommand::Type::MESH_COMMAND == commandType)
         {
-            flush();
+            flush2D();
             auto cmd = static_cast<MeshCommand*>(command);
-            cmd->execute();
+            if (_lastBatchedMeshCommand == nullptr || _lastBatchedMeshCommand->getMaterialID() != cmd->getMaterialID())
+            {
+                flush3D();
+                cmd->preDraw();
+                cmd->draw();
+            }
+            else
+            {
+                cmd->draw();
+            }
+            _lastBatchedMeshCommand = cmd;
+//            cmd->execute();
         }
         else
         {
@@ -376,6 +390,7 @@ void Renderer::clean()
     _numQuads = 0;
 
     _lastMaterialID = 0;
+    _lastBatchedMeshCommand = nullptr;
 }
 
 void Renderer::convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const Mat4& modelView)
@@ -506,8 +521,23 @@ void Renderer::drawBatchedQuads()
 
 void Renderer::flush()
 {
+    flush2D();
+    flush3D();
+}
+
+void Renderer::flush2D()
+{
     drawBatchedQuads();
     _lastMaterialID = 0;
+}
+
+void Renderer::flush3D()
+{
+    if (_lastBatchedMeshCommand)
+    {
+        _lastBatchedMeshCommand->postDraw();
+        _lastBatchedMeshCommand = nullptr;
+    }
 }
 
 // helpers

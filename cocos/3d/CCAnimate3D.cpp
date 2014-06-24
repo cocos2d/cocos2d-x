@@ -45,17 +45,18 @@ Animate3D* Animate3D::create(Animation3D* animation)
     return animate;
 }
 
-Animate3D* Animate3D::createSubAnimate3D(Animate3D* animate, float fromTime, float duration)
+Animate3D* Animate3D::create(Animation3D* animation, float fromTime, float duration)
 {
-    auto subAnimate = animate->clone();
-    float fullDuration = animate->getDuration();
+    auto animate = Animate3D::create(animation);
+    
+    float fullDuration = animation->getDuration();
     if (duration > fullDuration - fromTime)
         duration = fullDuration - fromTime;
     
-    subAnimate->_start = fromTime / fullDuration;
-    subAnimate->_last = duration / fullDuration;
+    animate->_start = fromTime / fullDuration;
+    animate->_last = duration / fullDuration;
     
-    return  subAnimate;
+    return  animate;
 }
 
 /** returns a clone of action */

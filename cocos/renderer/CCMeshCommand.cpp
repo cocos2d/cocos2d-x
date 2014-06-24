@@ -32,6 +32,7 @@
 #include "renderer/CCTextureAtlas.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/ccGLStateCache.h"
+#include "xxhash.h"
 
 NS_CC_BEGIN
 
@@ -46,6 +47,7 @@ MeshCommand::MeshCommand()
 , _displayColor(1.0f, 1.0f, 1.0f, 1.0f)
 , _matrixPalette(nullptr)
 , _matrixPaletteSize(0)
+, _materialID(0)
 {
     _type = RenderCommand::Type::MESH_COMMAND;
 }
@@ -107,6 +109,8 @@ MeshCommand::~MeshCommand()
 
 void MeshCommand::applyRenderState()
 {
+    
+    
     if (_cullFaceEnabled)
     {
         glEnable(GL_CULL_FACE);
@@ -138,16 +142,69 @@ void MeshCommand::restoreRenderState()
     }
 }
 
+void MeshCommand::genMaterialID(GLuint texID, void* glProgramState, void* mesh, const BlendFunc& blend)
+{
+    int* intstate = static_cast<int*>(glProgramState);
+    int* intmesh = static_cast<int*>(mesh);
+    
+    int statekey[] = {intstate[0], 0}, meshkey[] = {intmesh[0], 0};
+    if (sizeof(void*) > sizeof(int))
+    {
+        statekey[1] = intstate[1];
+        meshkey[1] = intmesh[1];
+    }
+    int intArray[] = {(int)texID, statekey[0], statekey[1], meshkey[0], meshkey[1], (int)blend.src, (int)blend.dst};
+    _materialID = XXH32((const void*)intArray, sizeof(intArray), 0);
+}
+
 void MeshCommand::MatrixPalleteCallBack( GLProgram* glProgram, Uniform* uniform)
 {
     glProgram->setUniformLocationWith4fv(uniform->location, (const float*)_matrixPalette, _matrixPaletteSize);
+}
+
+void MeshCommand::preDraw()
+{
+    // set render state
+    applyRenderState();
+    // Set material
+    GL::bindTexture2D(_textureID);
+    GL::blendFunc(_blendType.src, _blendType.dst);
+    glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
+//    
+    //_glProgramState->apply(_mv);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
+}
+void MeshCommand::draw()
+{
+    auto glProgram = _glProgramState->getGLProgram();
+
+    _glProgramState->setUniformVec4("u_color", _displayColor);
+    
+    if (_matrixPaletteSize && _matrixPalette)
+    {
+        _glProgramState->setUniformCallback("u_matrixPalette", CC_CALLBACK_2(MeshCommand::MatrixPalleteCallBack, this));
+        
+    }
+    
+    _glProgramState->apply(_mv);
+    
+    // Draw
+    glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
+    
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
+}
+void MeshCommand::postDraw()
+{
+    //restore render state
+    restoreRenderState();
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 void MeshCommand::execute()
 {
     // set render state
     applyRenderState();
-    
     // Set material
     GL::bindTexture2D(_textureID);
     GL::blendFunc(_blendType.src, _blendType.dst);
@@ -172,7 +229,6 @@ void MeshCommand::execute()
     
     //restore render state
     restoreRenderState();
-    
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
