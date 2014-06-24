@@ -47,6 +47,7 @@
 		9F3BF73B194E91D70072B3D0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3BF73A194E91D70072B3D0 /* QuartzCore.framework */; };
 		9F3BF73D194E91E10072B3D0 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3BF73C194E91E10072B3D0 /* OpenGL.framework */; };
 		9F6D88E61959647800B36BA2 /* player.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9F1C8D2F194DE61E0068C99B /* player.app */; };
+		9FC192B31959784900417A1E /* player_tolua.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FC192B11959784900417A1E /* player_tolua.cpp */; };
 		DAB2BFC619595AE800ADD4E0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAB2BFC519595AE800ADD4E0 /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
 
@@ -144,6 +145,8 @@
 		9F3BF738194E91D10072B3D0 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		9F3BF73A194E91D70072B3D0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		9F3BF73C194E91E10072B3D0 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		9FC192B11959784900417A1E /* player_tolua.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = player_tolua.cpp; sourceTree = "<group>"; };
+		9FC192B21959784900417A1E /* player_tolua.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = player_tolua.h; sourceTree = "<group>"; };
 		DAB2BFC519595AE800ADD4E0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		DAD445521959199F00D3A30C /* quick_lua_bindings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = quick_lua_bindings.xcodeproj; path = ../../lib/proj.ios_mac/quick_lua_bindings.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -277,6 +280,8 @@
 		9F1C8D94194DEE040068C99B /* src */ = {
 			isa = PBXGroup;
 			children = (
+				9FC192B11959784900417A1E /* player_tolua.cpp */,
+				9FC192B21959784900417A1E /* player_tolua.h */,
 				9F19C52719580A5800CA020E /* PlayerUtils.cpp */,
 				9F19C52819580A5800CA020E /* PlayerUtils.h */,
 				9F05A0D4194EDAF6003CFA1F /* SimulatorConfig.cpp */,
@@ -402,6 +407,7 @@
 				9F1C8DA2194DEFE40068C99B /* PlayerMac.mm in Sources */,
 				9F05A10A194EF988003CFA1F /* NSApplication+SheetAdditions.m in Sources */,
 				9F25617E194F07BF009E57D7 /* ProjectConfigDialogController.mm in Sources */,
+				9FC192B31959784900417A1E /* player_tolua.cpp in Sources */,
 				9F1C8D82194DECE80068C99B /* main.m in Sources */,
 				9F05A0D6194EDAF6003CFA1F /* SimulatorConfig.cpp in Sources */,
 				9F05A0D3194ECA3F003CFA1F /* MenuServiceMac.mm in Sources */,

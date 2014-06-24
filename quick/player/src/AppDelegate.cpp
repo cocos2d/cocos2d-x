@@ -3,6 +3,8 @@
 #include "SimpleAudioEngine.h"
 #include "cocos2d.h"
 
+// player interface
+#include "player_tolua.h"
 
 using namespace CocosDenshion;
 
@@ -40,6 +42,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     // register lua engine
     LuaEngine* pEngine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
+    
+    tolua_player_luabinding_open(pEngine->getLuaStack()->getLuaState());
     
     StartupCall *call = StartupCall::create(this);
     if (m_projectConfig.getDebuggerType() != kCCLuaDebuggerNone)

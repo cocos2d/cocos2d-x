@@ -4,37 +4,9 @@
 //
 
 #include "MenuServiceMac.h"
+#include "PlayerUtils.h"
 
 #include "CCLuaEngine.h"
-
-///////////////////////////////////////  splite helper  ////////////////////////////////////////////
-
-#include <sstream>
-#include <string>
-
-struct split
-{
-    enum empties_t { empties_ok, no_empties };
-};
-
-template <typename Container>
-static Container& split(
-                        Container&                                 result,
-                        const typename Container::value_type&      s,
-                        typename Container::value_type::value_type delimiter,
-                        split::empties_t                           empties = split::empties_ok )
-{
-    result.clear();
-    std::istringstream ss( s );
-    while (!ss.eof())
-    {
-        typename Container::value_type field;
-        getline( ss, field, delimiter );
-        if ((empties == split::no_empties) && field.empty()) continue;
-        result.push_back( field );
-    }
-    return result;
-}
 
 
 ///////////////////////////////////////  menu helper  //////////////////////////////////////////////
@@ -47,7 +19,7 @@ static Container& split(
 @implementation NNMenuItem
 
 
--(id) initWithData:(const player::MenuItem &) itemData
+-(id) initWithData:(const player::PlayerMenuItem &) itemData
 {
     NSString *title = [NSString stringWithUTF8String:itemData.title.c_str()];
     if ([super initWithTitle:title action:@selector(onClicked:) keyEquivalent:@""])
@@ -61,7 +33,7 @@ static Container& split(
 -(void) setShortcut:(std::string) shortcut
 {
     std::vector <std::string> fields;
-    split(fields, shortcut, '+');
+    player::split(fields, shortcut, '+');
     
     NSUInteger mask = [self keyEquivalentModifierMask];
     for (auto cut : fields)
@@ -130,7 +102,7 @@ MenuServiceMac::~MenuServiceMac()
     m_id2Menu.clear();
 }
 
-void MenuServiceMac::addItem( const MenuItem &item,
+void MenuServiceMac::addItem( const PlayerMenuItem &item,
                               std::string    parentId,
                               int index)
 {
@@ -202,7 +174,7 @@ void MenuServiceMac::addItem( const MenuItem &item,
     modifyItem(item);
 }
 
-void MenuServiceMac::modifyItem(const MenuItem &item)
+void MenuServiceMac::modifyItem(const PlayerMenuItem &item)
 {
     std::unordered_map<std::string, id>::iterator it = m_id2Menu.find(item.itemId);
     if (it != m_id2Menu.end())
@@ -241,7 +213,7 @@ void MenuServiceMac::modifyItem(const MenuItem &item)
     }
 }
 
-void MenuServiceMac::deleteItem(const MenuItem &item)
+void MenuServiceMac::deleteItem(const PlayerMenuItem &item)
 {
     std::unordered_map<std::string, id>::iterator it = m_id2Menu.find(item.itemId);
     if (it != m_id2Menu.end())

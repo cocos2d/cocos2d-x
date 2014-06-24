@@ -19,13 +19,13 @@ public:
     MenuServiceMac();
     ~MenuServiceMac();
     
-    virtual void addItem(const MenuItem &item,
+    virtual void addItem(const PlayerMenuItem &item,
                          std::string parentId = std::string(),
                          int index = MAX_INT);
     
-    virtual void modifyItem(const MenuItem &item);
+    virtual void modifyItem(const PlayerMenuItem &item);
     
-    virtual void deleteItem(const MenuItem &item);
+    virtual void deleteItem(const PlayerMenuItem &item);
     
 private:
     void removeIdRecursion(NSMenuItem *menuItem);
