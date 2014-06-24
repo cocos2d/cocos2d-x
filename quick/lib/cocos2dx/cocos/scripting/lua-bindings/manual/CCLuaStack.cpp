@@ -25,7 +25,7 @@
 
 #include "CCLuaStack.h"
 #include "tolua_fix.h"
-#include "external/xxtea/xxtea.h"
+
 extern "C" {
 #include "lua.h"
 #include "tolua++.h"
@@ -34,6 +34,7 @@ extern "C" {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include "lua_extensions.h"
 #endif
+#include "external/xxtea/xxtea.h"
 }
 
 #include "Cocos2dxLuaLoader.h"
