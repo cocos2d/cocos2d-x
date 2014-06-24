@@ -203,6 +203,13 @@ void Node::setSkewX(float skewX)
     if (_skewX == skewX)
         return;
     
+#if CC_USE_PHYSICS
+    if (_physicsBody != nullptr)
+    {
+        CCLOG("Node WARNING: PhysicsBody doesn't support setSkewX");
+    }
+#endif
+    
     _skewX = skewX;
     _transformUpdated = _transformDirty = _inverseDirty = true;
 }
@@ -216,6 +223,13 @@ void Node::setSkewY(float skewY)
 {
     if (_skewY == skewY)
         return;
+    
+#if CC_USE_PHYSICS
+    if (_physicsBody != nullptr)
+    {
+        CCLOG("Node WARNING: PhysicsBody doesn't support setSkewY");
+    }
+#endif
     
     _skewY = skewY;
     _transformUpdated = _transformDirty = _inverseDirty = true;
@@ -298,10 +312,9 @@ void Node::setRotation3D(const Vec3& rotation)
     _rotationZ_Y = _rotationZ_X = rotation.z;
 
 #if CC_USE_PHYSICS
-    if (_physicsBody)
+    if (_physicsBody != nullptr)
     {
-        Scene* scene = _physicsBody->getWorld() != nullptr ? &_physicsBody->getWorld()->getScene() : nullptr;
-        updatePhysicsBodyRotation(scene);
+        CCLOG("Node WARNING: PhysicsBody doesn't support setRotation3D");
     }
 #endif
 }
@@ -387,6 +400,13 @@ void Node::setScale(float scaleX,float scaleY)
     if (_scaleX == scaleX && _scaleY == scaleY)
         return;
     
+#if CC_USE_PHYSICS
+    if (_physicsBody != nullptr)
+    {
+        CCLOG("Node WARNING: PhysicsBody doesn't support setScale");
+    }
+#endif
+    
     _scaleX = scaleX;
     _scaleY = scaleY;
     _transformUpdated = _transformDirty = _inverseDirty = true;
@@ -420,6 +440,13 @@ void Node::setScaleZ(float scaleZ)
 {
     if (_scaleZ == scaleZ)
         return;
+    
+#if CC_USE_PHYSICS
+    if (_physicsBody != nullptr)
+    {
+        CCLOG("Node WARNING: PhysicsBody doesn't support setScaleZ");
+    }
+#endif
     
     _scaleZ = scaleZ;
     _transformUpdated = _transformDirty = _inverseDirty = true;
