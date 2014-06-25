@@ -16,6 +16,7 @@ LOCAL_SRC_FILES := manual/CCLuaBridge.cpp \
           manual/LuaBasicConversions.cpp \
           manual/lua_cocos2dx_manual.cpp \
           manual/lua_cocos2dx_extension_manual.cpp \
+          manual/lua_cocos2dx_external_extra_manual.cpp \
           manual/lua_cocos2dx_physics_manual.cpp \
           manual/lua_cocos2dx_deprecated.cpp \
           manual/platform/android/CCLuaJavaBridge.cpp \
@@ -24,53 +25,62 @@ LOCAL_SRC_FILES := manual/CCLuaBridge.cpp \
           manual/lua_extensions.c \
           auto/lua_cocos2dx_auto.cpp \
           auto/lua_cocos2dx_extension_auto.cpp \
+          auto/lua_cocos2dx_extra_auto.cpp \
           auto/lua_cocos2dx_physics_auto.cpp \
-          ../../../external/lua/tolua/tolua_event.c \
-          ../../../external/lua/tolua/tolua_is.c \
-          ../../../external/lua/tolua/tolua_map.c \
-          ../../../external/lua/tolua/tolua_push.c \
-          ../../../external/lua/tolua/tolua_to.c \
-          ../../../external/lua/luasocket/auxiliar.c \
-          ../../../external/lua/luasocket/buffer.c \
-          ../../../external/lua/luasocket/except.c \
-          ../../../external/lua/luasocket/inet.c \
-          ../../../external/lua/luasocket/io.c \
-          ../../../external/lua/luasocket/luasocket.c \
-          ../../../external/lua/luasocket/mime.c \
-          ../../../external/lua/luasocket/options.c \
-          ../../../external/lua/luasocket/select.c \
-          ../../../external/lua/luasocket/serial.c \
-          ../../../external/lua/luasocket/tcp.c \
-          ../../../external/lua/luasocket/timeout.c \
-          ../../../external/lua/luasocket/udp.c \
-          ../../../external/lua/luasocket/unix.c \
-          ../../../external/lua/luasocket/usocket.c \
-          ../../../external/xxtea/xxtea.cpp
+          $(COCOS2DX_ROOT)/external/lua/tolua/tolua_event.c \
+          $(COCOS2DX_ROOT)/external/lua/tolua/tolua_is.c \
+          $(COCOS2DX_ROOT)/external/lua/tolua/tolua_map.c \
+          $(COCOS2DX_ROOT)/external/lua/tolua/tolua_push.c \
+          $(COCOS2DX_ROOT)/external/lua/tolua/tolua_to.c \
+          $(COCOS2DX_ROOT)/external/lua/luasocket/auxiliar.c \
+          $(COCOS2DX_ROOT)/external/lua/luasocket/buffer.c \
+          $(COCOS2DX_ROOT)/external/lua/luasocket/except.c \
+          $(COCOS2DX_ROOT)/external/lua/luasocket/inet.c \
+          $(COCOS2DX_ROOT)/external/lua/luasocket/io.c \
+          $(COCOS2DX_ROOT)/external/lua/luasocket/luasocket.c \
+          $(COCOS2DX_ROOT)/external/lua/luasocket/mime.c \
+          $(COCOS2DX_ROOT)/external/lua/luasocket/options.c \
+          $(COCOS2DX_ROOT)/external/lua/luasocket/select.c \
+          $(COCOS2DX_ROOT)/external/lua/luasocket/serial.c \
+          $(COCOS2DX_ROOT)/external/lua/luasocket/tcp.c \
+          $(COCOS2DX_ROOT)/external/lua/luasocket/timeout.c \
+          $(COCOS2DX_ROOT)/external/lua/luasocket/udp.c \
+          $(COCOS2DX_ROOT)/external/lua/luasocket/unix.c \
+          $(COCOS2DX_ROOT)/external/lua/luasocket/usocket.c \
+          $(COCOS2DX_ROOT)/external/xxtea/xxtea.cpp
 
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../external/lua/tolua \
-                    $(LOCAL_PATH)/../../../external/lua/luajit/include \
-                    $(LOCAL_PATH)/../../../external/lua \
-                    $(LOCAL_PATH)/../../../extensions \
-                    $(LOCAL_PATH)/../../editor-support/spine \
-                    $(LOCAL_PATH)/../../editor-support/cocosbuilder \
-                    $(LOCAL_PATH)/../../editor-support/cocostudio \
-                    $(LOCAL_PATH)/../../ui \
+LOCAL_C_INCLUDES := $(COCOS2DX_ROOT)/external/lua/tolua \
+                    $(COCOS2DX_ROOT)/external/lua/luajit/include \
+                    $(COCOS2DX_ROOT)/external/lua \
+                    $(COCOS2DX_ROOT)/extensions \
+                    $(COCOS2DX_CORE)/editor-support/spine \
+                    $(COCOS2DX_CORE)/editor-support/cocosbuilder \
+                    $(COCOS2DX_CORE)/editor-support/cocostudio \
+                    $(COCOS2DX_CORE)/ui \
                     $(LOCAL_PATH)/auto \
                     $(LOCAL_PATH)/manual \
                     $(LOCAL_PATH)/manual/platform/android \
                     $(LOCAL_PATH)/manual/platform/android/jni \
-                    $(LOCAL_PATH)/../../../external/xxtea
+                    $(QUICK_V3_LIB)/cocos2dx \
+                    $(QUICK_V3_LIB)/cocos2dx/lua_extensions \
+                    $(QUICK_V3_LIB)/cocos2dx/extra \
+                    $(QUICK_V3_LIB)/cocos2dx/extra/native \
+                    $(QUICK_V3_LIB)/cocos2dx/extra/crypto \
+                    $(QUICK_V3_LIB)/cocos2dx/extra/network \
+                    $(COCOS2DX_ROOT)/external/xxtea
 
 
-LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../../../external/lua/tolua \
-                           $(LOCAL_PATH)/../../../external/lua/luajit/include \
-                           $(LOCAL_PATH)/../external \
+LOCAL_EXPORT_C_INCLUDES := $(COCOS2DX_ROOT)/external/lua/tolua \
+                           $(COCOS2DX_ROOT)/external/lua/luajit/include \
+                           $(QUICK_V3_LIB)/cocos2dx/lua_extensions \
                            $(LOCAL_PATH)/auto \
                            $(LOCAL_PATH)/manual
 
 
 LOCAL_WHOLE_STATIC_LIBRARIES := luajit_static
+LOCAL_WHOLE_STATIC_LIBRARIES += lua_extensions_static
+LOCAL_WHOLE_STATIC_LIBRARIES += extra_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_extension_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos2dx_static
 LOCAL_WHOLE_STATIC_LIBRARIES += websockets_static
@@ -79,12 +89,14 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos_network_static
 #LOCAL_WHOLE_STATIC_LIBRARIES += cocostudio_static
 #LOCAL_WHOLE_STATIC_LIBRARIES += spine_static
 
-LOCAL_CFLAGS += -Wno-psabi
+LOCAL_CFLAGS += -Wno-psabi -DCC_LUA_ENGINE_ENABLED=1
 LOCAL_EXPORT_CFLAGS += -Wno-psabi
 
 include $(BUILD_STATIC_LIBRARY)
 
 $(call import-module,lua/luajit/prebuilt/android)
+$(call import-module,cocos2dx/lua_extensions)
+$(call import-module,cocos2dx/extra)
 $(call import-module,extensions)
 $(call import-module,.)
 $(call import-module,websockets/prebuilt/android)
