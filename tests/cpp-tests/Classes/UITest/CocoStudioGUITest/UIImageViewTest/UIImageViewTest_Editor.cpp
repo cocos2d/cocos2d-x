@@ -14,7 +14,7 @@ bool UIImageViewTest_Editor::init()
 
         _touchGroup->addChild(_layout);
         Size screenSize = CCDirector::getInstance()->getWinSize();
-        Size rootSize = _layout->getSize();
+        Size rootSize = _layout->getContentSize();
         _touchGroup->setPosition(Vec2((screenSize.width - rootSize.width) / 2,
                                        (screenSize.height - rootSize.height) / 2));
         

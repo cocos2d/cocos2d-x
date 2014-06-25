@@ -122,7 +122,7 @@ void PageView::addWidgetToPage(Widget *widget, ssize_t pageIdx, bool forceCreate
 Layout* PageView::createPage()
 {
     Layout* newPage = Layout::create();
-    newPage->setSize(getSize());
+    newPage->setContentSize(getContentSize());
     return newPage;
 }
 
@@ -213,23 +213,23 @@ ssize_t PageView::getPageCount()const
 
 float PageView::getPositionXByIndex(ssize_t idx)const
 {
-    return (getSize().width * (idx-_curPageIdx));
+    return (getContentSize().width * (idx-_curPageIdx));
 }
 
 void PageView::onSizeChanged()
 {
     Layout::onSizeChanged();
-    _rightBoundary = getSize().width;
+    _rightBoundary = getContentSize().width;
     
     _doLayoutDirty = true;
 }
 
 void PageView::updateAllPagesSize()
 {
-    Size selfSize = getSize();
+    Size selfSize = getContentSize();
     for (auto& page : _pages)
     {
-        page->setSize(selfSize);
+        page->setContentSize(selfSize);
     }
 }
 
@@ -248,7 +248,7 @@ void PageView::updateAllPagesPosition()
         _curPageIdx = pageCount-1;
     }
     
-    float pageWidth = getSize().width;
+    float pageWidth = getContentSize().width;
     for (int i=0; i<pageCount; i++)
     {
         Layout* page = _pages.at(i);
@@ -468,7 +468,7 @@ void PageView::handleReleaseLogic(Touch *touch)
         Vec2 curPagePos = curPage->getPosition();
         ssize_t pageCount = this->getPageCount();
         float curPageLocation = curPagePos.x;
-        float pageWidth = getSize().width;
+        float pageWidth = getContentSize().width;
         float boundary = pageWidth/2.0f;
         if (curPageLocation <= -boundary)
         {

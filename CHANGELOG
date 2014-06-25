@@ -1,9 +1,13 @@
 cocos2d-x-3.2 ???
-    [NEW]           Node: added getName(), setName(), getChildByName(), enumerateChildren()
     [NEW]           Label: support setting line height and additional kerning of label that not using system font
+    [NEW]           Lua-binding: Animation3D supported
+    [NEW]           Node: added getName(), setName(), getChildByName(), enumerateChildren()
+    [NEW]           Node: physical body supports rotation
+    
 
     [FIX]           FileUtils: getStringFromFile may return a unterminated string
     [FIX]           Lua-binding: Sequence:create will cause drop-dead issue
+    [FIX]           Studio support: NodeReader may cause crash
     [FIX]           UIButton: doesn't support TTF font
     [FIX]           UIListView: addEventListener can not work
 
