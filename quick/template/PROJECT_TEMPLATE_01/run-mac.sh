@@ -9,7 +9,7 @@ fi
 
 echo $QUICK_V3_ROOT
 
-ARG="-relaunch-off -quick $QUICK_V3_ROOT -workdir $DIR"
+ARG="-relaunch-off -quick $QUICK_V3_ROOT/quick -workdir $DIR"
 SIZE="-__SCREEN_ORIENTATION_L__"
 CMD="$BIN $ARG $SIZE"
 
