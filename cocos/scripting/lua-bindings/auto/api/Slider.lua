@@ -2,6 +2,7 @@
 --------------------------------
 -- @module Slider
 -- @extend Widget
+-- @parent_module ccui
 
 --------------------------------
 -- @function [parent=#Slider] setPercent 

@@ -2,6 +2,7 @@
 --------------------------------
 -- @module VBox
 -- @extend Layout
+-- @parent_module ccui
 
 --------------------------------
 -- overload function: create(size_table)

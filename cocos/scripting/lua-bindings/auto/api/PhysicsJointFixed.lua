@@ -2,6 +2,7 @@
 --------------------------------
 -- @module PhysicsJointFixed
 -- @extend PhysicsJoint
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#PhysicsJointFixed] construct 

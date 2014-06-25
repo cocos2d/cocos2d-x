@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ActionTimelineData
 -- @extend Ref
+-- @parent_module ccs
 
 --------------------------------
 -- @function [parent=#ActionTimelineData] setActionTag 

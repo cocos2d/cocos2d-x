@@ -2,6 +2,7 @@
 --------------------------------
 -- @module LoadingBar
 -- @extend Widget
+-- @parent_module ccui
 
 --------------------------------
 -- @function [parent=#LoadingBar] setPercent 

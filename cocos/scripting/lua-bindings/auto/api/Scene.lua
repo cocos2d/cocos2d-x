@@ -2,6 +2,7 @@
 --------------------------------
 -- @module Scene
 -- @extend Node
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#Scene] getPhysicsWorld 

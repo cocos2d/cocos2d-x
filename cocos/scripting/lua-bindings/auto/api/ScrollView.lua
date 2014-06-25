@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ScrollView
 -- @extend Layout
+-- @parent_module ccui
 
 --------------------------------
 -- @function [parent=#ScrollView] scrollToTop 

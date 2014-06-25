@@ -2,6 +2,7 @@
 --------------------------------
 -- @module SpriteBatchNode
 -- @extend Node,TextureProtocol
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#SpriteBatchNode] appendChild 
