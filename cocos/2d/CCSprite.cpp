@@ -644,6 +644,27 @@ void Sprite::addChild(Node *child, int zOrder, int tag)
     Node::addChild(child, zOrder, tag);
 }
 
+void Sprite::addChild(Node *child, int zOrder, const std::string &name)
+{
+    CCASSERT(child != nullptr, "Argument must be non-nullptr");
+    
+    if (_batchNode)
+    {
+        Sprite* childSprite = dynamic_cast<Sprite*>(child);
+        CCASSERT( childSprite, "CCSprite only supports Sprites as children when using SpriteBatchNode");
+        CCASSERT(childSprite->getTexture()->getName() == _textureAtlas->getTexture()->getName(), "");
+        //put it in descendants array of batch node
+        _batchNode->appendChild(childSprite);
+        
+        if (!_reorderChildDirty)
+        {
+            setReorderChildDirtyRecursively();
+        }
+    }
+    //CCNode already sets isReorderChildDirty_ so this needs to be after batchNode check
+    Node::addChild(child, zOrder, name);
+}
+
 void Sprite::reorderChild(Node *child, int zOrder)
 {
     CCASSERT(child != nullptr, "child must be non null");

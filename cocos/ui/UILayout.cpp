@@ -152,16 +152,6 @@ bool Layout::init()
     }
     return false;
 }
-    
-void Layout::addChild(Node *child)
-{
-    Layout::addChild(child, child->getZOrder(), child->getTag());
-}
-
-void Layout::addChild(Node * child, int zOrder)
-{
-    Layout::addChild(child, zOrder, child->getTag());
-}
 
 void Layout::addChild(Node *child, int zOrder, int tag)
 {
@@ -169,6 +159,15 @@ void Layout::addChild(Node *child, int zOrder, int tag)
         supplyTheLayoutParameterLackToChild(static_cast<Widget*>(child));
     }
     Widget::addChild(child, zOrder, tag);
+    _doLayoutDirty = true;
+}
+    
+void Layout::addChild(Node* child, int zOrder, const std::string &name)
+{
+    if (dynamic_cast<Widget*>(child)) {
+        supplyTheLayoutParameterLackToChild(static_cast<Widget*>(child));
+    }
+    Widget::addChild(child, zOrder, name);
     _doLayoutDirty = true;
 }
     

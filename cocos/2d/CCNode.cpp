@@ -985,20 +985,36 @@ bool Node::doEnumerate(std::string name, std::function<bool (Node *)> callback) 
 * If a class want's to extend the 'addChild' behavior it only needs
 * to override this method
 */
-void Node::addChild(Node *child, int zOrder, int tag)
+void Node::addChild(Node *child, int localZOrder, int tag)
 {    
     CCASSERT( child != nullptr, "Argument must be non-nil");
     CCASSERT( child->_parent == nullptr, "child already added. It can't be added again");
 
+    addChildHelper(child, localZOrder, tag, "", true);
+}
+
+void Node::addChild(Node* child, int localZOrder, const std::string &name)
+{
+    CCASSERT(child != nullptr, "Argument must be non-nil");
+    CCASSERT(child->_parent == nullptr, "child already added. It can't be added again");
+    
+    addChildHelper(child, localZOrder, INVALID_TAG, name, false);
+}
+
+void Node::addChildHelper(Node* child, int localZOrder, int tag, const std::string &name, bool setTag)
+{
     if (_children.empty())
     {
         this->childrenAlloc();
     }
-
-    this->insertChild(child, zOrder);
-
-    child->_tag = tag;
-
+    
+    this->insertChild(child, localZOrder);
+    
+    if (setTag)
+        child->setTag(tag);
+    else
+        child->setName(name);
+    
     child->setParent(this);
     child->setOrderOfArrival(s_globalOrderOfArrival++);
     
@@ -1014,7 +1030,7 @@ void Node::addChild(Node *child, int zOrder, int tag)
         }
     }
 #endif
-
+    
     if( _running )
     {
         child->onEnter();
@@ -1038,13 +1054,13 @@ void Node::addChild(Node *child, int zOrder, int tag)
 void Node::addChild(Node *child, int zOrder)
 {
     CCASSERT( child != nullptr, "Argument must be non-nil");
-    this->addChild(child, zOrder, child->_tag);
+    this->addChild(child, zOrder, child->_name);
 }
 
 void Node::addChild(Node *child)
 {
     CCASSERT( child != nullptr, "Argument must be non-nil");
-    this->addChild(child, child->_localZOrder, child->_tag);
+    this->addChild(child, child->_localZOrder, child->_name);
 }
 
 void Node::removeFromParent()
@@ -1086,6 +1102,22 @@ void Node::removeChildByTag(int tag, bool cleanup/* = true */)
     if (child == nullptr)
     {
         CCLOG("cocos2d: removeChildByTag(tag = %d): child not found!", tag);
+    }
+    else
+    {
+        this->removeChild(child, cleanup);
+    }
+}
+
+void Node::removeChildByName(const std::string &name, bool cleanup)
+{
+    CCASSERT(name.length() != 0, "Invalid name");
+    
+    Node *child = this->getChildByName(name);
+    
+    if (child == nullptr)
+    {
+        CCLOG("cocos2d: removeChildByName(name = %s): child not found!", name.c_str());
     }
     else
     {

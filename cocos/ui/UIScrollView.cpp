@@ -229,20 +229,15 @@ const Size& ScrollView::getInnerContainerSize() const
 {
 	return _innerContainer->getContentSize();
 }
-    
-void ScrollView::addChild(Node *child)
-{
-    ScrollView::addChild(child, child->getZOrder(), child->getTag());
-}
-
-void ScrollView::addChild(Node * child, int zOrder)
-{
-    ScrollView::addChild(child, zOrder, child->getTag());
-}
 
 void ScrollView::addChild(Node *child, int zOrder, int tag)
 {
     _innerContainer->addChild(child, zOrder, tag);
+}
+    
+void ScrollView::addChild(Node* child, int zOrder, const std::string &name)
+{
+    _innerContainer->addChild(child, zOrder, name);
 }
 
 void ScrollView::removeAllChildren()
