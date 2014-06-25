@@ -1230,6 +1230,18 @@ function UIWidgetDeprecated.getTopInParent(self)
 end
 rawset(ccui.Widget,"getTopInParent", UIWidgetDeprecated.getTopInParent)
 
+function UIWidgetDeprecated.getSize(self)
+    deprecatedTip("ccui.Widget:getSize","ccui.Widget:getContentSize")
+    return self:getContentSize()
+end
+rawset(ccui.Widget,"getSize", UIWidgetDeprecated.getSize)
+
+function UIWidgetDeprecated.setSize(self, ...)
+    deprecatedTip("ccui.Widget:setSize","ccui.Widget:setContentSize")
+    return self:setContentSize(...)
+end
+rawset(ccui.Widget,"setSize", UIWidgetDeprecated.setSize)
+
 --functions of ccui.Widget will be deprecated end
 
 --functions of ccui.CheckBox will be deprecated begin
