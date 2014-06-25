@@ -1,10 +1,16 @@
-//
-//  PVRDecompressor.h
-//  inferno
-//
-//  Created by user-i121 on 09.07.13.
-//
-//
+/******************************************************************************
+ 
+ @File         PVRTDecompress.h
+ 
+ @Title
+ 
+ @Copyright    Copyright (C) 2000 - 2008 by Imagination Technologies Limited.
+ 
+ @Platform     ANSI compatible
+ 
+ @Description  PVRTC Texture Decompression.
+ 
+ ******************************************************************************/
 
 #ifndef __PVR_H__
 #define __PVR_H__

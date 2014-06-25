@@ -1241,34 +1241,33 @@ namespace
     
     bool testFormatForPvr3TCSupport(PVR3TexturePixelFormat format)
     {
-        if (format == PVR3TexturePixelFormat::PVRTC2_2BPP_RGBA  ||
-            format == PVR3TexturePixelFormat::PVRTC2_4BPP_RGBA  ||
-            format == PVR3TexturePixelFormat::DXT1              ||
-            format == PVR3TexturePixelFormat::DXT2              ||
-            format == PVR3TexturePixelFormat::DXT3              ||
-            format == PVR3TexturePixelFormat::DXT4              ||
-            format == PVR3TexturePixelFormat::DXT5              ||
-            format == PVR3TexturePixelFormat::BC4               ||
-            format == PVR3TexturePixelFormat::BC5               ||
-            format == PVR3TexturePixelFormat::BC6               ||
-            format == PVR3TexturePixelFormat::BC7               ||
-            format == PVR3TexturePixelFormat::UYVY              ||
-            format == PVR3TexturePixelFormat::YUY2              ||
-            format == PVR3TexturePixelFormat::BW1bpp            ||
-            format == PVR3TexturePixelFormat::R9G9B9E5          ||
-            format == PVR3TexturePixelFormat::RGBG8888          ||
-            format == PVR3TexturePixelFormat::ETC2_RGB          ||
-            format == PVR3TexturePixelFormat::ETC2_RGBA         ||
-            format == PVR3TexturePixelFormat::ETC2_RGBA1        ||
-            format == PVR3TexturePixelFormat::EAC_R11_Unsigned  ||
-            format == PVR3TexturePixelFormat::EAC_R11_Signed    ||
-            format == PVR3TexturePixelFormat::EAC_RG11_Unsigned ||
-            format == PVR3TexturePixelFormat::EAC_RG11_Signed)
-        {
-            return false;
+        switch (format) {
+            case PVR3TexturePixelFormat::DXT1:
+            case PVR3TexturePixelFormat::DXT3:
+            case PVR3TexturePixelFormat::DXT5:
+                return Configuration::getInstance()->supportsS3TC();
+                
+            case PVR3TexturePixelFormat::BGRA8888:
+                return Configuration::getInstance()->supportsBGRA8888();
+                
+            case PVR3TexturePixelFormat::PVRTC2BPP_RGB:
+            case PVR3TexturePixelFormat::PVRTC2BPP_RGBA:
+            case PVR3TexturePixelFormat::PVRTC4BPP_RGB:
+            case PVR3TexturePixelFormat::PVRTC4BPP_RGBA:
+            case PVR3TexturePixelFormat::ETC1:
+            case PVR3TexturePixelFormat::RGBA8888:
+            case PVR3TexturePixelFormat::RGBA4444:
+            case PVR3TexturePixelFormat::RGBA5551:
+            case PVR3TexturePixelFormat::RGB565:
+            case PVR3TexturePixelFormat::RGB888:
+            case PVR3TexturePixelFormat::A8:
+            case PVR3TexturePixelFormat::L8:
+            case PVR3TexturePixelFormat::LA88:
+                return true;
+                
+            default:
+                return false;
         }
-        
-        return true;
     }
 }
 
@@ -1348,47 +1347,47 @@ bool Image::initWithPVRv2Data(const unsigned char * data, ssize_t dataLen)
     while (dataOffset < dataLength)
     {
         switch (formatFlags) {
-        case PVR2TexturePixelFormat::PVRTC2BPP_RGBA:
-            if(!Configuration::getInstance()->supportsPVRTC())
-            {
-                CCLOG("cocos2d: Hardware PVR decoder not present. Using software decoder");
-                _unpack = true;
-                _mipmaps[_numberOfMipmaps].len = width*height*4;
-                _mipmaps[_numberOfMipmaps].address = new unsigned char[width*height*4];
-                PVRTDecompressPVRTC(_data+dataOffset,width,height,_mipmaps[_numberOfMipmaps].address, true);
-                bpp = 2;
-            }
-            blockSize = 8 * 4; // Pixel by pixel block size for 2bpp
-            widthBlocks = width / 8;
-            heightBlocks = height / 4;
-            break;
-        case PVR2TexturePixelFormat::PVRTC4BPP_RGBA:
-            if(!Configuration::getInstance()->supportsPVRTC())
-            {
-                CCLOG("cocos2d: Hardware PVR decoder not present. Using software decoder");
-                _unpack = true;
-                _mipmaps[_numberOfMipmaps].len = width*height*4;
-                _mipmaps[_numberOfMipmaps].address = new unsigned char[width*height*4];
-                PVRTDecompressPVRTC(_data+dataOffset,width,height,_mipmaps[_numberOfMipmaps].address, false);
-                bpp = 4;
-            }
-            blockSize = 4 * 4; // Pixel by pixel block size for 4bpp
-            widthBlocks = width / 4;
-            heightBlocks = height / 4;
-            break;
-        case PVR2TexturePixelFormat::BGRA8888:
-            if (Configuration::getInstance()->supportsBGRA8888() == false)
-            {
-                CCLOG("cocos2d: Image. BGRA8888 not supported on this device");
-                return false;
-            }
-        default:
-            blockSize = 1;
-            widthBlocks = width;
-            heightBlocks = height;
-            break;
+            case PVR2TexturePixelFormat::PVRTC2BPP_RGBA:
+                if(!Configuration::getInstance()->supportsPVRTC())
+                {
+                    CCLOG("cocos2d: Hardware PVR decoder not present. Using software decoder");
+                    _unpack = true;
+                    _mipmaps[_numberOfMipmaps].len = width*height*4;
+                    _mipmaps[_numberOfMipmaps].address = new unsigned char[width*height*4];
+                    PVRTDecompressPVRTC(_data+dataOffset,width,height,_mipmaps[_numberOfMipmaps].address, true);
+                    bpp = 2;
+                }
+                blockSize = 8 * 4; // Pixel by pixel block size for 2bpp
+                widthBlocks = width / 8;
+                heightBlocks = height / 4;
+                break;
+            case PVR2TexturePixelFormat::PVRTC4BPP_RGBA:
+                if(!Configuration::getInstance()->supportsPVRTC())
+                {
+                    CCLOG("cocos2d: Hardware PVR decoder not present. Using software decoder");
+                    _unpack = true;
+                    _mipmaps[_numberOfMipmaps].len = width*height*4;
+                    _mipmaps[_numberOfMipmaps].address = new unsigned char[width*height*4];
+                    PVRTDecompressPVRTC(_data+dataOffset,width,height,_mipmaps[_numberOfMipmaps].address, false);
+                    bpp = 4;
+                }
+                blockSize = 4 * 4; // Pixel by pixel block size for 4bpp
+                widthBlocks = width / 4;
+                heightBlocks = height / 4;
+                break;
+            case PVR2TexturePixelFormat::BGRA8888:
+                if (Configuration::getInstance()->supportsBGRA8888() == false)
+                {
+                    CCLOG("cocos2d: Image. BGRA8888 not supported on this device");
+                    return false;
+                }
+            default:
+                blockSize = 1;
+                widthBlocks = width;
+                heightBlocks = height;
+                break;
         }
-
+        
         // Clamp to minimum number of blocks
         if (widthBlocks < 2)
         {
@@ -1398,11 +1397,11 @@ bool Image::initWithPVRv2Data(const unsigned char * data, ssize_t dataLen)
         {
             heightBlocks = 2;
         }
-
+        
         dataSize = widthBlocks * heightBlocks * ((blockSize  * bpp) / 8);
         int packetLength = (dataLength - dataOffset);
         packetLength = packetLength > dataSize ? dataSize : packetLength;
-
+        
         //Make record to the mipmaps array and increment counter
         if(!_unpack)
         {
@@ -1410,9 +1409,9 @@ bool Image::initWithPVRv2Data(const unsigned char * data, ssize_t dataLen)
             _mipmaps[_numberOfMipmaps].len = packetLength;
         }
         _numberOfMipmaps++;
-
+        
         dataOffset += packetLength;
-
+        
         //Update width and height to the next lower power of two
         width = MAX(width >> 1, 1);
         height = MAX(height >> 1, 1);
@@ -1501,65 +1500,65 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
     {
 		switch ((PVR3TexturePixelFormat)pixelFormat)
         {
-			case PVR3TexturePixelFormat::PVRTC2BPP_RGB :
-			case PVR3TexturePixelFormat::PVRTC2BPP_RGBA :
- 				if(!Configuration::getInstance()->supportsPVRTC())
-				{
-					CCLOG("cocos2d: Hardware PVR decoder not present. Using software decoder");
-					_unpack = true;
-					_mipmaps[i].len = width*height*4;
-					_mipmaps[i].address = new unsigned char[width*height*4];
-					PVRTDecompressPVRTC(_data+dataOffset,width,height,_mipmaps[i].address, true);
-                    bpp = 2;
-				}
-				blockSize = 8 * 4; // Pixel by pixel block size for 2bpp
-				widthBlocks = width / 8;
-				heightBlocks = height / 4;
-				break;
-			case PVR3TexturePixelFormat::PVRTC4BPP_RGB :
-			case PVR3TexturePixelFormat::PVRTC4BPP_RGBA :
-				if(!Configuration::getInstance()->supportsPVRTC())
-				{
-					CCLOG("cocos2d: Hardware PVR decoder not present. Using software decoder");
-					_unpack = true;
-					_mipmaps[i].len = width*height*4;
-					_mipmaps[i].address = new unsigned char[width*height*4];
-					PVRTDecompressPVRTC(_data+dataOffset,width,height,_mipmaps[i].address, false);
-                    bpp = 4;
-				}
-				blockSize = 4 * 4; // Pixel by pixel block size for 4bpp
-				widthBlocks = width / 4;
-				heightBlocks = height / 4;
-				break;
-			case PVR3TexturePixelFormat::ETC1:
-				if(!Configuration::getInstance()->supportsETC())
-				{
-					CCLOG("cocos2d: Hardware ETC1 decoder not present. Using software decoder");
-					int bytePerPixel = 3;
-					unsigned int stride = width * bytePerPixel;
-                    _unpack = true;
-					_mipmaps[i].len = width*height*bytePerPixel;
-					_mipmaps[i].address = new unsigned char[width*height*bytePerPixel];
-					if (etc1_decode_image(static_cast<const unsigned char*>(_data+dataOffset), static_cast<etc1_byte*>(_mipmaps[i].address), width, height, bytePerPixel, stride) != 0)
-					{
-						return false;
-					}
-				}
-				blockSize = 4 * 4; // Pixel by pixel block size for 4bpp
-				widthBlocks = width / 4;
-				heightBlocks = height / 4;
-				break;
-			case PVR3TexturePixelFormat::BGRA8888:
-				if( ! Configuration::getInstance()->supportsBGRA8888())
+            case PVR3TexturePixelFormat::PVRTC2BPP_RGB :
+            case PVR3TexturePixelFormat::PVRTC2BPP_RGBA :
+                if(!Configuration::getInstance()->supportsPVRTC())
                 {
-					CCLOG("cocos2d: Image. BGRA8888 not supported on this device");
-					return false;
-				}
-			default:
-				blockSize = 1;
-				widthBlocks = width;
-				heightBlocks = height;
-				break;
+                    CCLOG("cocos2d: Hardware PVR decoder not present. Using software decoder");
+                    _unpack = true;
+                    _mipmaps[i].len = width*height*4;
+                    _mipmaps[i].address = new unsigned char[width*height*4];
+                    PVRTDecompressPVRTC(_data+dataOffset,width,height,_mipmaps[i].address, true);
+                    bpp = 2;
+                }
+                blockSize = 8 * 4; // Pixel by pixel block size for 2bpp
+                widthBlocks = width / 8;
+                heightBlocks = height / 4;
+                break;
+            case PVR3TexturePixelFormat::PVRTC4BPP_RGB :
+            case PVR3TexturePixelFormat::PVRTC4BPP_RGBA :
+                if(!Configuration::getInstance()->supportsPVRTC())
+                {
+                    CCLOG("cocos2d: Hardware PVR decoder not present. Using software decoder");
+                    _unpack = true;
+                    _mipmaps[i].len = width*height*4;
+                    _mipmaps[i].address = new unsigned char[width*height*4];
+                    PVRTDecompressPVRTC(_data+dataOffset,width,height,_mipmaps[i].address, false);
+                    bpp = 4;
+                }
+                blockSize = 4 * 4; // Pixel by pixel block size for 4bpp
+                widthBlocks = width / 4;
+                heightBlocks = height / 4;
+                break;
+            case PVR3TexturePixelFormat::ETC1:
+                if(!Configuration::getInstance()->supportsETC())
+                {
+                    CCLOG("cocos2d: Hardware ETC1 decoder not present. Using software decoder");
+                    int bytePerPixel = 3;
+                    unsigned int stride = width * bytePerPixel;
+                    _unpack = true;
+                    _mipmaps[i].len = width*height*bytePerPixel;
+                    _mipmaps[i].address = new unsigned char[width*height*bytePerPixel];
+                    if (etc1_decode_image(static_cast<const unsigned char*>(_data+dataOffset), static_cast<etc1_byte*>(_mipmaps[i].address), width, height, bytePerPixel, stride) != 0)
+                    {
+                        return false;
+                    }
+                }
+                blockSize = 4 * 4; // Pixel by pixel block size for 4bpp
+                widthBlocks = width / 4;
+                heightBlocks = height / 4;
+                break;
+            case PVR3TexturePixelFormat::BGRA8888:
+                if( ! Configuration::getInstance()->supportsBGRA8888())
+                {
+                    CCLOG("cocos2d: Image. BGRA8888 not supported on this device");
+                    return false;
+                }
+            default:
+                blockSize = 1;
+                widthBlocks = width;
+                heightBlocks = height;
+                break;
 		}
         
 		// Clamp to minimum number of blocks

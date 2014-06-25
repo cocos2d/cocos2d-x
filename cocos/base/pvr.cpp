@@ -1,6 +1,14 @@
 /******************************************************************************
  
- @File         pvr.cpp
+ @File         PVRTDecompress.cpp
+ 
+ @Title
+ 
+ @Copyright    Copyright (C) 2000 - 2008 by Imagination Technologies Limited.
+ 
+ @Platform     ANSI compatible
+ 
+ @Description  PVRTC Texture Decompression.
  
  ******************************************************************************/
 #include <stdlib.h>
