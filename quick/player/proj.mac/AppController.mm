@@ -50,6 +50,7 @@ USING_NS_CC;
     }
     
     env = [env stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+    env = [NSString stringWithFormat:@"%@/quick", env];
     SimulatorConfig::sharedDefaults()->setQuickCocos2dxRootPath([env cStringUsingEncoding:NSUTF8StringEncoding]);
     
     
