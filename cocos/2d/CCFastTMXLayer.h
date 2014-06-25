@@ -189,7 +189,7 @@ public:
 protected:
 
     bool initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
-    int updateTiles(const Rect& culledRect, Renderer* renderer);
+    int updateTiles(const Rect& culledRect);
     void setupVBO();
     Vec2 calculateLayerOffset(const Vec2& offset);
 
@@ -198,8 +198,6 @@ protected:
     
     Mat4 tileToNodeTransform();
     Rect tileBoundsForClipTransform(const Mat4 &tileToClip);
-
-    void onDraw(const Mat4 &transform, bool transformUpdated);
     
     int getVertexZForPos(const Vec2& pos);
     
@@ -207,7 +205,6 @@ protected:
     void setTileForGID(int index, int gid);
     
 protected:
-    CustomCommand _customCommand;
     
     //! name of the layer
     std::string _layerName;
@@ -240,17 +237,12 @@ protected:
     int _vertexZvalue;
     bool _useAutomaticVertexZ;
     
-    
     /** tile coordinate to node coordinate transform */
     Mat4 _tileToNodeTransform;
     /** quads to be rendered */
     std::vector<V3F_C4B_T2F_Quad> _quads;
-    std::vector<QuadCommand> _renderCommands;
-    
     std::map<int/*zorder*/, ssize_t/*number*/> _quadsNumber;
     std::unordered_map<int/*zorder*/, NopreMultiplyMVQuadCommand> _renderCommands2;
-    /** indices */
-    std::vector<GLushort> _indices;
     bool _dirty;
 };
 

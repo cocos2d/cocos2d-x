@@ -144,7 +144,7 @@ void FastTMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flag
         inv.inverse();
         rect = RectApplyTransform(rect, inv);
         
-        _verticesToDraw = updateTiles(rect, renderer);
+        _verticesToDraw = updateTiles(rect);
         std::sort(_quads.begin(), _quads.end(), sortQuadCommand);
         // don't draw more than 65535 vertices since we are using GL_UNSIGNED_SHORT for indices
         _verticesToDraw = std::min(_verticesToDraw, 65535);
@@ -163,23 +163,9 @@ void FastTMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flag
         index += quadNumberIter.second;
         renderer->addCommand(&quadCommand);
     }
-//    for( int index = 0; index < _verticesToDraw/6; ++index)
-//    {
-//        float z = _quads[index].bl.vertices.z;
-//        _renderCommands[index].init(z, _texture->getName(), glprogramState, BlendFunc::ALPHA_PREMULTIPLIED, &_quads[index], 1, transform);
-//        renderer->addCommand(&_renderCommands[index]);
-//    }
-    
-//    _customCommand.init(_globalZOrder);
-//    _customCommand.func = CC_CALLBACK_0(FastTMXLayer::onDraw, this, transform, flags);
-//    renderer->addCommand(&_customCommand);
 }
 
-void FastTMXLayer::onDraw(const Mat4 &transform, bool transformUpdated)
-{
-}
-
-int FastTMXLayer::updateTiles(const Rect& culledRect, Renderer* renderer)
+int FastTMXLayer::updateTiles(const Rect& culledRect)
 {
     int tilesUsed = 0;
 
@@ -228,8 +214,6 @@ int FastTMXLayer::updateTiles(const Rect& culledRect, Renderer* renderer)
     if (_quads.size() < quadsNeed)
     {
         _quads.resize(quadsNeed);
-        _renderCommands.resize(quadsNeed);
-        _indices.resize(quadsNeed * 6);
     }
 
     //clear quadsNumber
@@ -344,14 +328,6 @@ int FastTMXLayer::updateTiles(const Rect& culledRect, Renderer* renderer)
                 quad->br.colors = Color4B::WHITE;
                 quad->tl.colors = Color4B::WHITE;
                 quad->tr.colors = Color4B::WHITE;
-                
-                int vertexbase = tilesUsed * 4;
-                _indices[tilesUsed * 6 + 0] = vertexbase;
-                _indices[tilesUsed * 6 + 1] = vertexbase + 1;
-                _indices[tilesUsed * 6 + 2] = vertexbase + 2;
-                _indices[tilesUsed * 6 + 3] = vertexbase + 3;
-                _indices[tilesUsed * 6 + 4] = vertexbase + 2;
-                _indices[tilesUsed * 6 + 5]= vertexbase + 1;
                 
                 tilesUsed++;
             }
@@ -608,8 +584,6 @@ void FastTMXLayer::setTileForGID(int index, int gid)
     _tiles[index] = gid;
     _dirty = true;
 }
-
-
 
 void FastTMXLayer::removeChild(Node* node, bool cleanup)
 {
