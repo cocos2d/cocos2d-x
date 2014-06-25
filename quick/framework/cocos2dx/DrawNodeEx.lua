@@ -45,7 +45,7 @@ function DrawNode:drawPolygon(points, params)
 		if params.borderWidth then borderWidth = params.borderWidth end
 		if params.borderColor then borderColor = params.borderColor end
 	end
-	local pa = CCPointArray:create(segments)
+	local pa = cc.PointArray:create(segments)
 	for i=1,segments do
 		pa:add(cc.p(points[i][1], points[i][2]))
 	end
@@ -79,7 +79,7 @@ function DrawNode:drawCircle(radius, params)
 		end
 	end
 	local radianPerSegm = 2 * math.pi/segments
-	local points = CCPointArray:create(segments)
+	local points = cc.PointArray:create(segments)
 	for i=1,segments do
 		local radii = startRadian+i*radianPerSegm
 		if radii > endRadian then break end
@@ -117,7 +117,7 @@ function DrawNode:drawRect(xywh, params)
 			w = xywh[3]
 			h = xywh[4]
 		end
-	-- Treat xywh as a CCRect
+	-- Treat xywh as a cc.rect
 	else
 		x = xywh.origin.x
 		y = xywh.origin.y

@@ -7,7 +7,7 @@ local WelcomeApp = class("WelcomeApp", cc.mvc.AppBase)
 function WelcomeApp:run()
     self.eventNode = cc.Node:create()
 
-    CCFileUtils:getInstance():addSearchPath("res/")
+    cc.FileUtils:getInstance():addSearchPath("res/")
 
     local evl = cc.EventListenerCustom:create("WELCOME_LIST_SAMPLES", function() self:enterSampleScene() end )
     self.eventNode:getEventDispatcher():addEventListenerWithFixedPriority(evl,1)

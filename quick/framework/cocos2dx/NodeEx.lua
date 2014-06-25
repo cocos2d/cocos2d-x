@@ -32,8 +32,8 @@ local c = cc
 local Node = c.Node
 
 -- touch
-c.TouchesAllAtOnce              = kCCTouchesAllAtOnce
-c.TouchesOneByOne               = kCCTouchesOneByOne
+c.TouchesAllAtOnce              = cc.TOUCHES_ALL_AT_ONCE
+c.TouchesOneByOne               = cc.TOUCHES_ONE_BY_ONE
 c.TOUCH_MODE_ALL_AT_ONCE        = c.TouchesAllAtOnce
 c.TOUCH_MODE_ONE_BY_ONE         = c.TouchesOneByOne
 
@@ -50,18 +50,18 @@ end
 
 function Node:schedule(callback, interval)
     local seq = transition.sequence({
-        CCDelayTime:create(interval),
-        CCCallFunc:create(callback),
+        cc.DelayTime:create(interval),
+        cc.CallFunc:create(callback),
     })
-    local action = CCRepeatForever:create(seq)
+    local action = cc.RepeatForever:create(seq)
     self:runAction(action)
     return action
 end
 
 function Node:performWithDelay(callback, delay)
     local action = transition.sequence({
-        CCDelayTime:create(delay),
-        CCCallFunc:create(callback),
+        cc.DelayTime:create(delay),
+        cc.CallFunc:create(callback),
     })
     self:runAction(action)
     return action
@@ -280,7 +280,6 @@ function Node:addNodeEventListener( evt, hdl, tag, priority )
 
     if evt==c.NODE_ENTER_FRAME_EVENT then
         local func = tolua.getcfunction(self, "scheduleUpdateWithPriorityLua")
-        -- print("=============func:")
         if func then 
             local listener = function (dt)
                 NodeEventDispatcher(self, c.NODE_ENTER_FRAME_EVENT, dt)
@@ -325,6 +324,22 @@ function Node:addNodeEventListener( evt, hdl, tag, priority )
         lis.regHanler:retain()
         lis.mode = mode
         if nil==self._isTouchEnabled_ then self._isTouchEnabled_=true end
+    elseif evt==c.KEYPAD_EVENT then
+        local onKeyPressed = function ( keycode, event )
+            return NodeEventDispatcher(event:getCurrentTarget(), c.KEYPAD_EVENT, {keycode, event, "Pressed"})
+        end
+
+        local onKeyReleased = function ( keycode, event )
+            return NodeEventDispatcher(event:getCurrentTarget(), c.KEYPAD_EVENT, {keycode, event, "Released"})
+        end
+
+        local listener = cc.EventListenerKeyboard:create()
+        listener:registerScriptHandler(onKeyPressed, cc.Handler.EVENT_KEYBOARD_PRESSED )
+        listener:registerScriptHandler(onKeyReleased, cc.Handler.EVENT_KEYBOARD_RELEASED )
+        local eventDispatcher = self:getEventDispatcher()
+        eventDispatcher:addEventListenerWithSceneGraphPriority(listener, self)
+        lis.regHanler = listener
+        lis.regHanler:retain()
     end
 
     return self._nextScriptEventHandleIndex_
@@ -333,7 +348,7 @@ end
 function Node:removeNodeEventListenersByEvent( evt )
     if self._scriptEventListeners_ and self._scriptEventListeners_[evt] then
         local eventDispatcher = self:getEventDispatcher()
-        if evt==c.NODE_TOUCH_EVENT then
+        if evt==c.NODE_TOUCH_EVENT or evt==c.KEYPAD_EVENT then
             for i,v in ipairs(self._scriptEventListeners_[evt]) do
                     if v.regHanler then
                         eventDispatcher:removeEventListener(v.regHanler)
@@ -351,6 +366,7 @@ end
 function Node:removeAllNodeEventListeners()
     self:removeNodeEventListenersByEvent(c.NODE_ENTER_FRAME_EVENT)
     self:removeNodeEventListenersByEvent(c.NODE_TOUCH_EVENT)
+    self:removeNodeEventListenersByEvent(c.KEYPAD_EVENT)
 end
 
 function NodeEventDispatcher( obj, idx, data )
@@ -416,6 +432,12 @@ function NodeEventDispatcher( obj, idx, data )
                 points = pts,
             }
         end
+    elseif idx==c.KEYPAD_EVENT then
+        local code = data[1]
+        -- local evt = data[2]
+        local ename = data[3]
+        if ename~='Released' then return true end
+        event = { code=code, key=KeypadEventCodeConvert(code), }
     end
 
     local rnval = false

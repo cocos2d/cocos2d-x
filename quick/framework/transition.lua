@@ -30,27 +30,27 @@ THE SOFTWARE.
 local transition = {}
 
 local ACTION_EASING = {}
-ACTION_EASING["BACKIN"]           = {CCEaseBackIn, 1}
-ACTION_EASING["BACKINOUT"]        = {CCEaseBackInOut, 1}
-ACTION_EASING["BACKOUT"]          = {CCEaseBackOut, 1}
-ACTION_EASING["BOUNCE"]           = {CCEaseBounce, 1}
-ACTION_EASING["BOUNCEIN"]         = {CCEaseBounceIn, 1}
-ACTION_EASING["BOUNCEINOUT"]      = {CCEaseBounceInOut, 1}
-ACTION_EASING["BOUNCEOUT"]        = {CCEaseBounceOut, 1}
-ACTION_EASING["ELASTIC"]          = {CCEaseElastic, 2, 0.3}
-ACTION_EASING["ELASTICIN"]        = {CCEaseElasticIn, 2, 0.3}
-ACTION_EASING["ELASTICINOUT"]     = {CCEaseElasticInOut, 2, 0.3}
-ACTION_EASING["ELASTICOUT"]       = {CCEaseElasticOut, 2, 0.3}
-ACTION_EASING["EXPONENTIALIN"]    = {CCEaseExponentialIn, 1}
-ACTION_EASING["EXPONENTIALINOUT"] = {CCEaseExponentialInOut, 1}
-ACTION_EASING["EXPONENTIALOUT"]   = {CCEaseExponentialOut, 1}
-ACTION_EASING["IN"]               = {CCEaseIn, 2, 1}
-ACTION_EASING["INOUT"]            = {CCEaseInOut, 2, 1}
-ACTION_EASING["OUT"]              = {CCEaseOut, 2, 1}
-ACTION_EASING["RATEACTION"]       = {CCEaseRateAction, 2, 1}
-ACTION_EASING["SINEIN"]           = {CCEaseSineIn, 1}
-ACTION_EASING["SINEINOUT"]        = {CCEaseSineInOut, 1}
-ACTION_EASING["SINEOUT"]          = {CCEaseSineOut, 1}
+ACTION_EASING["BACKIN"]           = {cc.EaseBackIn, 1}
+ACTION_EASING["BACKINOUT"]        = {cc.EaseBackInOut, 1}
+ACTION_EASING["BACKOUT"]          = {cc.EaseBackOut, 1}
+ACTION_EASING["BOUNCE"]           = {cc.EaseBounce, 1}
+ACTION_EASING["BOUNCEIN"]         = {cc.EaseBounceIn, 1}
+ACTION_EASING["BOUNCEINOUT"]      = {cc.EaseBounceInOut, 1}
+ACTION_EASING["BOUNCEOUT"]        = {cc.EaseBounceOut, 1}
+ACTION_EASING["ELASTIC"]          = {cc.EaseElastic, 2, 0.3}
+ACTION_EASING["ELASTICIN"]        = {cc.EaseElasticIn, 2, 0.3}
+ACTION_EASING["ELASTICINOUT"]     = {cc.EaseElasticInOut, 2, 0.3}
+ACTION_EASING["ELASTICOUT"]       = {cc.EaseElasticOut, 2, 0.3}
+ACTION_EASING["EXPONENTIALIN"]    = {cc.EaseExponentialIn, 1}
+ACTION_EASING["EXPONENTIALINOUT"] = {cc.EaseExponentialInOut, 1}
+ACTION_EASING["EXPONENTIALOUT"]   = {cc.EaseExponentialOut, 1}
+ACTION_EASING["IN"]               = {cc.EaseIn, 2, 1}
+ACTION_EASING["INOUT"]            = {cc.EaseInOut, 2, 1}
+ACTION_EASING["OUT"]              = {cc.EaseOut, 2, 1}
+ACTION_EASING["RATEACTION"]       = {cc.EaseRateAction, 2, 1}
+ACTION_EASING["SINEIN"]           = {cc.EaseSineIn, 1}
+ACTION_EASING["SINEINOUT"]        = {cc.EaseSineInOut, 1}
+ACTION_EASING["SINEOUT"]          = {cc.EaseSineOut, 1}
 
 local actionManager = cc.Director:getInstance():getActionManager()
 
@@ -84,14 +84,14 @@ function transition.create(action, args)
     local actions = {}
     local delay = checknumber(args.delay)
     if delay > 0 then
-        actions[#actions + 1] = CCDelayTime:create(delay)
+        actions[#actions + 1] = cc.DelayTime:create(delay)
     end
     actions[#actions + 1] = action
 
     local onComplete = args.onComplete
     if type(onComplete) ~= "function" then onComplete = nil end
     if onComplete then
-        actions[#actions + 1] = CCCallFunc:create(onComplete)
+        actions[#actions + 1] = cc.CallFunc:create(onComplete)
     end
 
     if #actions > 1 then
@@ -111,7 +111,7 @@ end
 -- 耗时 1.5 秒，将对象移动到屏幕中央
 -- 移动使用 backout 缓动效果
 -- 移动结束后执行函数，显示 move completed
-transition.execute(sprite, CCMoveTo:create(1.5, CCPoint(display.cx, display.cy)), {
+transition.execute(sprite, MoveTo:create(1.5, cc.p(display.cx, display.cy)), {
     delay = 1.0,
     easing = "backout",
     onComplete = function()
@@ -155,7 +155,7 @@ transition.execute() 支持的缓动效果：
 -    sineOut
 
 @param cc.Node target 显示对象
-@param CCAction action 动作对象
+@param Action action 动作对象
 @param table args 参数表格对象
 
 @return mixed 结果 
@@ -170,7 +170,7 @@ end
 
 --[[--
 
-将显示对象旋转到指定角度，并返回 CCAction 动作对象。
+将显示对象旋转到指定角度，并返回 Action 动作对象。
 
 ~~~ lua
 
@@ -188,13 +188,13 @@ transition.rotateTo(sprite, {rotate = 180, time = 0.5})
 function transition.rotateTo(target, args)
     assert(not tolua.isnull(target), "transition.rotateTo() - target is not cc.Node")
     -- local rotation = args.rotate
-    local action = CCRotateTo:create(args.time, args.rotate)
+    local action = cc.RotateTo:create(args.time, args.rotate)
     return transition.execute(target, action, args)
 end
 
 --[[--
 
-将显示对象移动到指定位置，并返回 CCAction 动作对象。
+将显示对象移动到指定位置，并返回 Action 动作对象。
 
 ~~~ lua
 
@@ -218,13 +218,13 @@ function transition.moveTo(target, args)
     local tx, ty = target:getPosition()
     local x = args.x or tx
     local y = args.y or ty
-    local action = CCMoveTo:create(args.time, cc.p(x, y))
+    local action = cc.MoveTo:create(args.time, cc.p(x, y))
     return transition.execute(target, action, args)
 end
 
 --[[
 
-将显示对象移动一定距离，并返回 CCAction 动作对象。 
+将显示对象移动一定距离，并返回 Action 动作对象。 
 
 ~~~ lua
 
@@ -247,13 +247,13 @@ function transition.moveBy(target, args)
     assert(not tolua.isnull(target), "transition.moveBy() - target is not cc.Node")
     local x = args.x or 0
     local y = args.y or 0
-    local action = CCMoveBy:create(args.time, cc.p(x, y))
+    local action = cc.MoveBy:create(args.time, cc.p(x, y))
     return transition.execute(target, action, args)
 end
 
 --[[
 
-淡入显示对象，并返回 CCAction 动作对象。 
+淡入显示对象，并返回 Action 动作对象。 
 
 fadeIn 操作会首先将对象的透明度设置为 0（0%，完全透明），然后再逐步增加为 255（100%，完全不透明）。
 
@@ -273,13 +273,13 @@ action = transition.fadeIn(sprite, {time = 1.5})
 ]]
 function transition.fadeIn(target, args)
     assert(not tolua.isnull(target), "transition.fadeIn() - target is not cc.Node")
-    local action = CCFadeIn:create(args.time)
+    local action = cc.FadeIn:create(args.time)
     return transition.execute(target, action, args)
 end
 
 --[[
 
-淡出显示对象，并返回 CCAction 动作对象。
+淡出显示对象，并返回 Action 动作对象。
 
 fadeOut 操作会首先将对象的透明度设置为 255（100%，完全不透明），然后再逐步减少为 0（0%，完全透明）。
 
@@ -299,13 +299,13 @@ action = transition.fadeOut(sprite, {time = 1.5})
 ]]
 function transition.fadeOut(target, args)
     assert(not tolua.isnull(target), "transition.fadeOut() - target is not cc.Node")
-    local action = CCFadeOut:create(args.time)
+    local action = cc.FadeOut:create(args.time)
     return transition.execute(target, action, args)
 end
 
 --[[--
 
-将显示对象的透明度改变为指定值，并返回 CCAction 动作对象。 
+将显示对象的透明度改变为指定值，并返回 Action 动作对象。 
 
 ~~~ lua
 
@@ -328,13 +328,13 @@ function transition.fadeTo(target, args)
     elseif opacity > 255 then
         opacity = 255
     end
-    local action = CCFadeTo:create(args.time, opacity)
+    local action = cc.FadeTo:create(args.time, opacity)
     return transition.execute(target, action, args)
 end
 
 --[[--
 
-将显示对象缩放到指定比例，并返回 CCAction 动作对象。
+将显示对象缩放到指定比例，并返回 Action 动作对象。
 
 ~~~ lua
 
@@ -357,7 +357,7 @@ function transition.scaleTo(target, args)
     assert(not tolua.isnull(target), "transition.scaleTo() - target is not cc.Node")
     local action
     if args.scale then
-        action = CCScaleTo:create(checknumber(args.time), checknumber(args.scale))
+        action = cc.ScaleTo:create(checknumber(args.time), checknumber(args.scale))
     elseif args.scaleX or args.scaleY then
         local scaleX, scaleY
         if args.scaleX then
@@ -370,7 +370,7 @@ function transition.scaleTo(target, args)
         else
             scaleY = target:getScaleY()
         end
-        action = CCScaleTo:create(checknumber(args.time), scaleX, scaleY)
+        action = cc.ScaleTo:create(checknumber(args.time), scaleX, scaleY)
     end
     return transition.execute(target, action, args)
 end
@@ -382,10 +382,10 @@ end
 ~~~ lua
 
 local sequence = transition.sequence({
-    CCMoveTo:create(0.5, CCPoint(display.cx, display.cy)),
-    CCFadeOut:create(0.2),
-    CCDelayTime:create(0.5),
-    CCFadeIn:create(0.3),
+    cc.MoveTo:create(0.5, cc.p(display.cx, display.cy)),
+    cc.FadeOut:create(0.2),
+    cc.DelayTime:create(0.5),
+    cc.FadeIn:create(0.3),
 })
 sprite:runAction(sequence)
 
@@ -393,7 +393,7 @@ sprite:runAction(sequence)
 
 @param table args 动作的表格对象
 
-@return CCSequence 动作序列对象
+@return Sequence 动作序列对象
 
 ]]
 function transition.sequence(actions)
@@ -409,7 +409,7 @@ end
 
 --[[--
 
-在显示对象上播放一次动画，并返回 CCAction 动作对象。 
+在显示对象上播放一次动画，并返回 Action 动作对象。 
 
 ~~~ lua
 
@@ -419,7 +419,7 @@ transition.playAnimationOnce(sprite, animation)
 
 ~~~
 
-还可以用 CCSprite 对象的 playAnimationOnce() 方法来直接播放动画：
+还可以用 Sprite 对象的 playAnimationOnce() 方法来直接播放动画：
 
 ~~~ lua
 
@@ -429,14 +429,14 @@ sprite:playAnimationOnce(animation)
 
 ~~~
 
-playAnimationOnce() 提供了丰富的功能，例如在动画播放完成后就删除用于播放动画的 CCSprite 对象。例如一个爆炸效果： 
+playAnimationOnce() 提供了丰富的功能，例如在动画播放完成后就删除用于播放动画的 Sprite 对象。例如一个爆炸效果： 
 
 ~~~ lua
 
 local frames = display.newFrames("Boom%04d.png", 1, 8)
 local boom = display.newSprite(frames[1])
  
--- playAnimationOnce() 第二个参数为 true 表示动画播放完后删除 boom 这个 CCSprite 对象
+-- playAnimationOnce() 第二个参数为 true 表示动画播放完后删除 boom 这个 Sprite 对象
 -- 这样爆炸动画播放完毕，就自动清理了不需要的显示对象
 boom:playAnimationOnce(display.newAnimation(frames, 0.3/ 8), true)
 
@@ -457,17 +457,17 @@ function transition.playAnimationOnce(target, animation, removeWhenFinished, onC
     local actions = {}
     if type(delay) == "number" and delay > 0 then
         target:setVisible(false)
-        actions[#actions + 1] = CCDelayTime:create(delay)
-        actions[#actions + 1] = CCShow:create()
+        actions[#actions + 1] = cc.DelayTime:create(delay)
+        actions[#actions + 1] = cc.Show:create()
     end
 
-    actions[#actions + 1] = CCAnimate:create(animation)
+    actions[#actions + 1] = cc.Animate:create(animation)
 
     if removeWhenFinished then
-        actions[#actions + 1] = CCRemoveSelf:create()
+        actions[#actions + 1] = cc.RemoveSelf:create()
     end
     if onComplete then
-        actions[#actions + 1] = CCCallFunc:create(onComplete)
+        actions[#actions + 1] = cc.CallFunc:create(onComplete)
     end
 
     local action
@@ -482,7 +482,7 @@ end
 
 --[[
 
-在显示对象上循环播放动画，并返回 CCAction 动作对象。
+在显示对象上循环播放动画，并返回 Action 动作对象。
 
 ~~~ lua
 
@@ -500,18 +500,18 @@ sprite:playAnimationForever(animation)
 
 ]]
 function transition.playAnimationForever(target, animation, delay)
-    local animate = CCAnimate:create(animation)
+    local animate = cc.Animate:create(animation)
     local action
     if type(delay) == "number" and delay > 0 then
         target:setVisible(false)
         local sequence = transition.sequence({
-            CCDelayTime:create(delay),
-            CCShow:create(),
+            cc.DelayTime:create(delay),
+            cc.Show:create(),
             animate,
         })
-        action = CCRepeatForever:create(sequence)
+        action = cc.RepeatForever:create(sequence)
     else
-        action = CCRepeatForever:create(animate)
+        action = cc.RepeatForever:create(animate)
     end
     target:runAction(action)
     return action

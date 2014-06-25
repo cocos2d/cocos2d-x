@@ -75,7 +75,7 @@ function Node:size(width, height)
     if type(width) == "userdata" then
         self:setContentSize(width)
     else
-        self:setContentSize(CCSize(width, height))
+        self:setContentSize(cc.size(width, height))
     end
     return self
 end
@@ -179,64 +179,64 @@ function Node:stop()
 end
 
 function Node:fadeIn(time)
-    self:runAction(CCFadeIn:create(time))
+    self:runAction(cc.FadeIn:create(time))
     return self
 end
 
 function Node:fadeOut(time)
-    self:runAction(CCFadeOut:create(time))
+    self:runAction(cc.FadeOut:create(time))
     return self
 end
 
 function Node:fadeTo(time, opacity)
-    self:runAction(CCFadeTo:create(time, opacity))
+    self:runAction(cc.FadeTo:create(time, opacity))
     return self
 end
 
 function Node:moveTo(time, x, y)
-    self:runAction(CCMoveTo:create(time, cc.p(x or self:getPositionX(), y or self:getPositionY())))
+    self:runAction(cc.MoveTo:create(time, cc.p(x or self:getPositionX(), y or self:getPositionY())))
     return self
 end
 
 function Node:moveBy(time, x, y)
-    self:runAction(CCMoveBy:create(time, cc.p(x or 0, y or 0)))
+    self:runAction(cc.MoveBy:create(time, cc.p(x or 0, y or 0)))
     return self
 end
 
 function Node:rotateTo(time, rotation)
-    self:runAction(CCRotateTo:create(time, rotation))
+    self:runAction(cc.RotateTo:create(time, rotation))
     return self
 end
 
 function Node:rotateBy(time, rotation)
-    self:runAction(CCRotateBy:create(time, rotation))
+    self:runAction(cc.RotateBy:create(time, rotation))
     return self
 end
 
 function Node:scaleTo(time, scale)
-    self:runAction(CCScaleTo:create(time, scale))
+    self:runAction(cc.ScaleTo:create(time, scale))
     return self
 end
 
 function Node:scaleBy(time, scale)
-    self:runAction(CCScaleBy:create(time, scale))
+    self:runAction(cc.ScaleBy:create(time, scale))
     return self
 end
 
 function Node:skewTo(time, sx, sy)
-    self:runAction(CCSkewTo:create(time, sx or self:getSkewX(), sy or self:getSkewY()))
+    self:runAction(cc.SkewTo:create(time, sx or self:getSkewX(), sy or self:getSkewY()))
 end
 
 function Node:skewBy(time, sx, sy)
-    self:runAction(CCSkewBy:create(time, sx or 0, sy or 0))
+    self:runAction(cc.SkewBy:create(time, sx or 0, sy or 0))
 end
 
 function Node:tintTo(time, r, g, b)
-    self:runAction(CCTintTo:create(time, r or 0, g or 0, b or 0))
+    self:runAction(cc.TintTo:create(time, r or 0, g or 0, b or 0))
     return self
 end
 
 function Node:tintBy(time, r, g, b)
-    self:runAction(CCTintBy:create(time, r or 0, g or 0, b or 0))
+    self:runAction(cc.TintBy:create(time, r or 0, g or 0, b or 0))
     return self
 end
