@@ -231,6 +231,9 @@
     <ClCompile Include="..\WidgetReader\PageViewReader\PageViewReader.cpp">
       <Filter>reader\WidgetReader\PageViewReader</Filter>
     </ClCompile>
+    <ClCompile Include="..\CocoLoader.cpp">
+      <Filter>json</Filter>
+    </ClCompile>
     <ClCompile Include="..\ActionTimeline\CCNodeReader.cpp">
       <Filter>TimelineAction</Filter>
     </ClCompile>
@@ -427,6 +430,12 @@
     </ClInclude>
     <ClInclude Include="..\WidgetReader\PageViewReader\PageViewReader.h">
       <Filter>reader\WidgetReader\PageViewReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoLoader.h">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio.h">
+      <Filter>json</Filter>
     </ClInclude>
     <ClInclude Include="..\ActionTimeline\CCNodeReader.h">
       <Filter>TimelineAction</Filter>

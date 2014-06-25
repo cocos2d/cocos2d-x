@@ -370,6 +370,7 @@ class CC_DLL RotateBy : public ActionInterval
 public:
     /** creates the action */
     static RotateBy* create(float duration, float deltaAngle);
+    /** @warning The physics body contained in Node doesn't support rotate with different x and y angle. */
     static RotateBy* create(float duration, float deltaAngleZ_X, float deltaAngleZ_Y);
     static RotateBy* create(float duration, const Vec3& deltaAngle3D);
 
@@ -387,6 +388,7 @@ CC_CONSTRUCTOR_ACCESS:
 
     /** initializes the action */
     bool initWithDuration(float duration, float deltaAngle);
+    /** @warning The physics body contained in Node doesn't support rotate with different x and y angle. */
     bool initWithDuration(float duration, float deltaAngleZ_X, float deltaAngleZ_Y);
     bool initWithDuration(float duration, const Vec3& deltaAngle3D);
     
@@ -675,6 +677,7 @@ private:
 
 /** @brief Scales a Node object to a zoom factor by modifying it's scale attribute.
  @warning This action doesn't support "reverse"
+ @warning The physics body contained in Node doesn't support this action.
  */
 class CC_DLL ScaleTo : public ActionInterval
 {
@@ -726,6 +729,7 @@ private:
 };
 
 /** @brief Scales a Node object a zoom factor by modifying it's scale attribute.
+ @warning The physics body contained in Node doesn't support this action.
 */
 class CC_DLL ScaleBy : public ScaleTo
 {
