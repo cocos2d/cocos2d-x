@@ -974,7 +974,7 @@ rawset(CCTMXObjectGroup,"objectNamed", CCTMXObjectGroupDeprecated.objectNamed)
 
 --functions of WebSocket will be deprecated begin
 local targetPlatform = CCApplication:getInstance():getTargetPlatform()
-if (kTargetIphone == targetPlatform) or (kTargetIpad == targetPlatform) or (kTargetAndroid == targetPlatform) or (kTargetWindows == targetPlatform) then
+if (cc.PLATFORM_OS_IPHONE == targetPlatform) or (cc.PLATFORM_OS_IPAD == targetPlatform) or (cc.PLATFORM_OS_ANDROID == targetPlatform) or (cc.PLATFORM_OS_WINDOWS == targetPlatform) then
     local WebSocketDeprecated = { }
     function WebSocketDeprecated.sendTextMsg(self, string)
         deprecatedTip("WebSocket:sendTextMsg","WebSocket:sendString")

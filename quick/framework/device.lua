@@ -57,15 +57,15 @@ device.model       = "unknown"
 
 local sharedApplication = cc.Application:getInstance()
 local target = sharedApplication:getTargetPlatform()
-if target == kTargetWindows then
+if target == cc.PLATFORM_OS_WINDOWS then
     device.platform = "windows"
-elseif target == kTargetMacOS then
+elseif target == cc.PLATFORM_OS_MAC then
     device.platform = "mac"
-elseif target == kTargetAndroid then
+elseif target == cc.PLATFORM_OS_ANDROID then
     device.platform = "android"
-elseif target == kTargetIphone or target == kTargetIpad then
+elseif target == cc.PLATFORM_OS_IPHONE or target == cc.PLATFORM_OS_IPAD then
     device.platform = "ios"
-    if target == kTargetIphone then
+    if target == cc.PLATFORM_OS_IPHONE then
         device.model = "iphone"
     else
         device.model = "ipad"
@@ -73,20 +73,28 @@ elseif target == kTargetIphone or target == kTargetIpad then
 end
 
 local language_ = sharedApplication:getCurrentLanguage()
-if language_ == kLanguageChinese then
+if language_ == cc.LANGUAGE_CHINESE then
     language_ = "cn"
-elseif language_ == kLanguageChineseTW then
-    language_ = "tw"
-elseif language_ == kLanguageFrench then
+elseif language_ == cc.LANGUAGE_FRENCH then
     language_ = "fr"
-elseif language_ == kLanguageItalian then
+elseif language_ == cc.LANGUAGE_ITALIAN then
     language_ = "it"
-elseif language_ == kLanguageGerman then
+elseif language_ == cc.LANGUAGE_GERMAN then
     language_ = "gr"
-elseif language_ == kLanguageSpanish then
+elseif language_ == cc.LANGUAGE_SPANISH then
     language_ = "sp"
-elseif language_ == kLanguageRussian then
+elseif language_ == cc.LANGUAGE_RUSSIAN then
     language_ = "ru"
+elseif language_ == cc.LANGUAGE_KOREAN then
+    language_ = "kr"
+elseif language_ == cc.LANGUAGE_JAPANESE then
+    language_ = "jp"
+elseif language_ == cc.LANGUAGE_HUNGARIAN then
+    language_ = "hu"
+elseif language_ == cc.LANGUAGE_PORTUGUESE then
+    language_ = "pt"
+elseif language_ == cc.LANGUAGE_ARABIC then
+    language_ = "ar"
 else
     language_ = "en"
 end

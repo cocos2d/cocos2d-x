@@ -53,12 +53,6 @@ require (p .. "Cocos2d")
 require (p .. "Cocos2dExtral")
 
 cc.c3 = cc.c3b
-kResolutionExactFit = cc.ResolutionPolicy.EXACT_FIT
-kResolutionNoBorder = cc.ResolutionPolicy.NO_BORDER
-kResolutionShowAll  = cc.ResolutionPolicy.SHOW_ALL
-kResolutionFixedHeight   = cc.ResolutionPolicy.FIXED_HEIGHT
-kResolutionFixedWidth    = cc.ResolutionPolicy.FIXED_WIDTH
-kResolutionUnKnown       = cc.ResolutionPolicy.UNKNOWN
 
 -- require(p .. "Global")
 -- require(p .. "ObjectBinding")
