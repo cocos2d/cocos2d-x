@@ -10,11 +10,13 @@
 --          
 -- overload function: addChild(cc.Node, int, int)
 --          
+-- overload function: addChild(cc.Node, int, string)
+--          
 -- @function [parent=#Node] addChild
 -- @param self
 -- @param #cc.Node node
 -- @param #int int
--- @param #int int
+-- @param #string str
 
 --------------------------------
 -- @function [parent=#Node] removeComponent 
@@ -368,6 +370,12 @@
 -- @param #mat4_table mat4
 -- @param #unsigned int int
 
+--------------------------------
+-- @function [parent=#Node] removeChildByName 
+-- @param self
+-- @param #string str
+-- @param #bool bool
+        
 --------------------------------
 -- @function [parent=#Node] getGLProgramState 
 -- @param self

@@ -40,10 +40,14 @@
 -- @param #float float
         
 --------------------------------
--- @function [parent=#Scene] addChild 
+-- overload function: addChild(cc.Node, int, string)
+--          
+-- overload function: addChild(cc.Node, int, int)
+--          
+-- @function [parent=#Scene] addChild
 -- @param self
 -- @param #cc.Node node
 -- @param #int int
 -- @param #int int
-        
+
 return nil

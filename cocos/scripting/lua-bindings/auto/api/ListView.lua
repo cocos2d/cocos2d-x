@@ -106,9 +106,7 @@
 -- @return Ref#Ref ret (return value: cc.Ref)
         
 --------------------------------
--- overload function: addChild(cc.Node, int)
---          
--- overload function: addChild(cc.Node)
+-- overload function: addChild(cc.Node, int, string)
 --          
 -- overload function: addChild(cc.Node, int, int)
 --          
