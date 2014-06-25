@@ -238,7 +238,7 @@ void LoadSceneEdtiorFileTest::onExit()
 
 cocos2d::Node* LoadSceneEdtiorFileTest::createGameScene()
 {
-    Node *node = SceneReader::getInstance()->createNodeWithSceneFile("scenetest/LoadSceneEdtiorFileTest/FishJoy2.json");
+    Node *node = SceneReader::getInstance()->createNodeWithSceneFile("scenetest/LoadSceneEdtiorFileTest/FishJoy2.csb");
 	if (node == nullptr)
 	{
 		return nullptr;
@@ -283,7 +283,7 @@ void SpriteComponentTest::onExit()
 
 cocos2d::Node* SpriteComponentTest::createGameScene()
 {
-    Node *node = SceneReader::getInstance()->createNodeWithSceneFile("scenetest/SpriteComponentTest/SpriteComponentTest.json");
+    Node *node = SceneReader::getInstance()->createNodeWithSceneFile("scenetest/SpriteComponentTest/SpriteComponentTest.csb");
 	if (node == nullptr)
 	{
 		return nullptr;
@@ -338,7 +338,7 @@ void ArmatureComponentTest::onExit()
 
 cocos2d::Node* ArmatureComponentTest::createGameScene()
 {
-    Node *node = SceneReader::getInstance()->createNodeWithSceneFile("scenetest/ArmatureComponentTest/ArmatureComponentTest.json");
+    Node *node = SceneReader::getInstance()->createNodeWithSceneFile("scenetest/ArmatureComponentTest/ArmatureComponentTest.csb");
 	if (node == nullptr)
 	{
 		return nullptr;
@@ -389,7 +389,7 @@ void UIComponentTest::onExit()
 
 cocos2d::Node* UIComponentTest::createGameScene()
 {
-    Node *node = SceneReader::getInstance()->createNodeWithSceneFile("scenetest/UIComponentTest/UIComponentTest.json");
+    Node *node = SceneReader::getInstance()->createNodeWithSceneFile("scenetest/UIComponentTest/UIComponentTest.csb");
 	if (node == nullptr)
 	{
 		return nullptr;
@@ -460,7 +460,7 @@ void TmxMapComponentTest::onExit()
 
 cocos2d::Node* TmxMapComponentTest::createGameScene()
 {
-    Node *node = SceneReader::getInstance()->createNodeWithSceneFile("scenetest/TmxMapComponentTest/TmxMapComponentTest.json");
+    Node *node = SceneReader::getInstance()->createNodeWithSceneFile("scenetest/TmxMapComponentTest/TmxMapComponentTest.csb");
 	if (node == nullptr)
 	{
 		return nullptr;
@@ -516,7 +516,7 @@ void ParticleComponentTest::onExit()
 
 cocos2d::Node* ParticleComponentTest::createGameScene()
 {
-    Node *node = SceneReader::getInstance()->createNodeWithSceneFile("scenetest/ParticleComponentTest/ParticleComponentTest.json");
+    Node *node = SceneReader::getInstance()->createNodeWithSceneFile("scenetest/ParticleComponentTest/ParticleComponentTest.csb");
 	if (node == nullptr)
 	{
 		return nullptr;
@@ -567,7 +567,7 @@ void EffectComponentTest::onExit()
 
 cocos2d::Node* EffectComponentTest::createGameScene()
 {
-    Node *node = SceneReader::getInstance()->createNodeWithSceneFile("scenetest/EffectComponentTest/EffectComponentTest.json");
+    Node *node = SceneReader::getInstance()->createNodeWithSceneFile("scenetest/EffectComponentTest/EffectComponentTest.csb");
 	if (node == nullptr)
 	{
 		return nullptr;
@@ -629,7 +629,7 @@ void BackgroundComponentTest::onExit()
 
 cocos2d::Node* BackgroundComponentTest::createGameScene()
 {
-    Node *node = SceneReader::getInstance()->createNodeWithSceneFile("scenetest/BackgroundComponentTest/BackgroundComponentTest.json");
+    Node *node = SceneReader::getInstance()->createNodeWithSceneFile("scenetest/BackgroundComponentTest/BackgroundComponentTest.csb");
 	if (node == nullptr)
 	{
 		return nullptr;
@@ -694,7 +694,7 @@ bool AttributeComponentTest::initData()
 
 cocos2d::Node* AttributeComponentTest::createGameScene()
 {
-    Node *node = SceneReader::getInstance()->createNodeWithSceneFile("scenetest/AttributeComponentTest/AttributeComponentTest.json");
+    Node *node = SceneReader::getInstance()->createNodeWithSceneFile("scenetest/AttributeComponentTest/AttributeComponentTest.csb");
 	if (node == nullptr)
 	{
 		return nullptr;
@@ -783,7 +783,7 @@ void TriggerTest::gameLogic(float dt)
 
 cocos2d::Node* TriggerTest::createGameScene()
 {
-    Node *node = SceneReader::getInstance()->createNodeWithSceneFile("scenetest/TriggerTest/TriggerTest.json");
+    Node *node = SceneReader::getInstance()->createNodeWithSceneFile("scenetest/TriggerTest/TriggerTest.csb");
 	if (node == nullptr)
 	{
 		return nullptr;

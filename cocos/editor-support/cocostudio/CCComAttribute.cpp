@@ -145,36 +145,60 @@ ComAttribute* ComAttribute::create(void)
 bool ComAttribute::serialize(void* r) 
 {
     bool bRet = false;
-	do 
+	do
 	{
-		CC_BREAK_IF(r == nullptr);
-		rapidjson::Value *v = (rapidjson::Value *)r;
-		const char *className = DICTOOL->getStringValue_json(*v, "classname");
-		CC_BREAK_IF(className == nullptr);
-		const char *comName = DICTOOL->getStringValue_json(*v, "name");
-		if (comName != nullptr)
+		CC_BREAK_IF(r == NULL);
+		SerData *pSerData = (SerData *)(r);
+		const rapidjson::Value *v = pSerData->_rData;
+		stExpCocoNode *pCocoNode = pSerData->_cocoNode;
+		const char *pClassName = NULL;
+		const char *pComName = NULL;
+		const char *pFile = NULL;
+		std::string strFilePath;
+		int nResType = 0;
+		if (v != NULL)
 		{
-			setName(comName);
+			pClassName = DICTOOL->getStringValue_json(*v, "classname");
+			CC_BREAK_IF(pClassName == NULL);
+			pComName = DICTOOL->getStringValue_json(*v, "name");
+			const rapidjson::Value &fileData = DICTOOL->getSubDictionary_json(*v, "fileData");
+			CC_BREAK_IF(!DICTOOL->checkObjectExist_json(fileData));
+			pFile = DICTOOL->getStringValue_json(fileData, "path");
+			CC_BREAK_IF(pFile == NULL);
+			nResType = DICTOOL->getIntValue_json(fileData, "resourceType", -1);
+			CC_BREAK_IF(nResType != 0);
+		}
+		else if (pCocoNode != NULL)
+		{
+			pClassName = pCocoNode[1].GetValue();
+			CC_BREAK_IF(pClassName == NULL);
+			pComName = pCocoNode[2].GetValue();
+			stExpCocoNode *pfileData = pCocoNode[3].GetChildArray();
+			CC_BREAK_IF(!pfileData);
+			pFile = pfileData[0].GetValue();
+			CC_BREAK_IF(pFile == NULL);
+			nResType = atoi(pfileData[2].GetValue());
+			CC_BREAK_IF(nResType != 0);
+			
+		}
+		if (pComName != NULL)
+		{
+			setName(pComName);
 		}
 		else
 		{
-			setName(className);
+			setName(pClassName);
 		}
-		const rapidjson::Value &fileData = DICTOOL->getSubDictionary_json(*v, "fileData");
-		CC_BREAK_IF(!DICTOOL->checkObjectExist_json(fileData));
-		const char *file = DICTOOL->getStringValue_json(fileData, "path");
-		CC_BREAK_IF(file == nullptr);
-		std::string filePath;
-		if (file != nullptr)
+		if (pFile != NULL)
 		{
-			filePath.assign(cocos2d::FileUtils::getInstance()->fullPathForFilename(file));
+			strFilePath.assign(cocos2d::FileUtils::getInstance()->fullPathForFilename(pFile));
 		}
-		int resType = DICTOOL->getIntValue_json(fileData, "resourceType", -1);
-		CC_BREAK_IF(resType != 0);
-        parse(filePath.c_str());
-		bRet = true;
-	} while (0);
-
+		if (parse(strFilePath.c_str()))
+		{
+            bRet = true;
+		}
+        
+	}while (0);
 	return bRet;
 }
 
