@@ -521,8 +521,8 @@ void Sprite::updateTransform(void)
             else
             {
                 CCASSERT( dynamic_cast<Sprite*>(_parent), "Logic error in Sprite. Parent must be a Sprite");
-                Mat4 nodeToParent = getNodeToParentTransform();
-                Mat4 parentTransform = static_cast<Sprite*>(_parent)->_transformToBatch;
+                const Mat4 &nodeToParent = getNodeToParentTransform();
+                Mat4 &parentTransform = static_cast<Sprite*>(_parent)->_transformToBatch;
                 _transformToBatch = parentTransform * nodeToParent;
             }
 
@@ -530,7 +530,7 @@ void Sprite::updateTransform(void)
             // calculate the Quad based on the Affine Matrix
             //
 
-            Size size = _rect.size;
+            Size &size = _rect.size;
 
             float x1 = _offsetPosition.x;
             float y1 = _offsetPosition.y;

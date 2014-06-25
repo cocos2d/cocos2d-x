@@ -14,9 +14,9 @@
 -- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
--- @function [parent=#Widget] getLeftBoundary 
+-- @function [parent=#Widget] setFlippedY 
 -- @param self
--- @return float#float ret (return value: float)
+-- @param #bool bool
         
 --------------------------------
 -- @function [parent=#Widget] setFlippedX 
@@ -29,9 +29,9 @@
 -- @return Node#Node ret (return value: cc.Node)
         
 --------------------------------
--- @function [parent=#Widget] getSize 
+-- @function [parent=#Widget] getSizePercent 
 -- @param self
--- @return size_table#size_table ret (return value: size_table)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#Widget] setPositionPercent 
@@ -52,11 +52,6 @@
 -- @function [parent=#Widget] setPositionType 
 -- @param self
 -- @param #ccui.Widget::PositionType positiontype
-        
---------------------------------
--- @function [parent=#Widget] getName 
--- @param self
--- @return string#string ret (return value: string)
         
 --------------------------------
 -- @function [parent=#Widget] isIgnoreContentAdaptWithSize 
@@ -96,10 +91,9 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- @function [parent=#Widget] getChildByName 
+-- @function [parent=#Widget] ignoreContentAdaptWithSize 
 -- @param self
--- @param #string str
--- @return Widget#Widget ret (return value: ccui.Widget)
+-- @param #bool bool
         
 --------------------------------
 -- @function [parent=#Widget] isEnabled 
@@ -147,9 +141,9 @@
 -- @param #bool bool
         
 --------------------------------
--- @function [parent=#Widget] setFlippedY 
+-- @function [parent=#Widget] getLeftBoundary 
 -- @param self
--- @param #bool bool
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- @function [parent=#Widget] setEnabled 
@@ -165,11 +159,6 @@
 -- @function [parent=#Widget] setBrightStyle 
 -- @param self
 -- @param #ccui.Widget::BrightStyle brightstyle
-        
---------------------------------
--- @function [parent=#Widget] setName 
--- @param self
--- @param #string str
         
 --------------------------------
 -- @function [parent=#Widget] setLayoutParameter 
@@ -215,11 +204,6 @@
 -- @param #size_table size
 
 --------------------------------
--- @function [parent=#Widget] getSizePercent 
--- @param self
--- @return vec2_table#vec2_table ret (return value: vec2_table)
-        
---------------------------------
 -- @function [parent=#Widget] getTouchMovePosition 
 -- @param self
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
@@ -228,11 +212,6 @@
 -- @function [parent=#Widget] getSizeType 
 -- @param self
 -- @return Widget::SizeType#Widget::SizeType ret (return value: ccui.Widget::SizeType)
-        
---------------------------------
--- @function [parent=#Widget] ignoreContentAdaptWithSize 
--- @param self
--- @param #bool bool
         
 --------------------------------
 -- @function [parent=#Widget] addTouchEventListener 
@@ -277,11 +256,6 @@
 -- @param #ccui.Widget::SizeType sizetype
         
 --------------------------------
--- @function [parent=#Widget] setSize 
--- @param self
--- @param #size_table size
-        
---------------------------------
 -- @function [parent=#Widget] setBright 
 -- @param self
 -- @param #bool bool
@@ -310,6 +284,11 @@
 -- @function [parent=#Widget] setPosition 
 -- @param self
 -- @param #vec2_table vec2
+        
+--------------------------------
+-- @function [parent=#Widget] setContentSize 
+-- @param self
+-- @param #size_table size
         
 --------------------------------
 -- @function [parent=#Widget] Widget 

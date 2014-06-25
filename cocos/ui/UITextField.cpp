@@ -415,6 +415,14 @@ bool TextField::init()
     
 void TextField::onEnter()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnEnter))
+            return;
+    }
+#endif
+    
     Widget::onEnter();
     scheduleUpdate();
 }
@@ -775,15 +783,15 @@ void TextField::textfieldRendererScaleChangedWithSize()
     }
     else
     {
-        _textFieldRenderer->setDimensions(_size.width,_size.height);
+        _textFieldRenderer->setDimensions(_contentSize.width, _contentSize.height);
         Size textureSize = getContentSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
             _textFieldRenderer->setScale(1.0f);
             return;
         }
-        float scaleX = _size.width / textureSize.width;
-        float scaleY = _size.height / textureSize.height;
+        float scaleX = _contentSize.width / textureSize.width;
+        float scaleY = _contentSize.height / textureSize.height;
         _textFieldRenderer->setScaleX(scaleX);
         _textFieldRenderer->setScaleY(scaleY);
     }

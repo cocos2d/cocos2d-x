@@ -752,7 +752,9 @@ Developers:
         
     hanjukim
         Fixed a bug that color and opacity settings were not applied when invoking Label::alignText.
-        
+        Fixed the bug that FileUtils:getStringFromFile() may return a unterminated string
+        Skip BOM in DataReaderHelper::addDataFromJsonCache()
+
     bagobor
         Fixed a memory leak in AssetsManager::uncompress.
         Code format fix and small optimizations in cocostudio/CCActionNode.cpp.
@@ -841,6 +843,7 @@ Developers:
         
     sachingarg05
         Re-added orientation change callback in java activity
+        GLProgram should not abort() if shader compilation fails, returning false is better.
         
     dplusic
         Fixed that cc.pGetAngle may return wrong value
@@ -881,6 +884,19 @@ Developers:
     zhouxiaoxiaoxujian
         Added TextField::getStringLength()
         Add shadow, outline, glow filter support for UIText
+        
+    QiuleiWang
+        Fix the bug that calculated height of multi-line string was incorrect on iOS
+        
+    Rumist
+        Fix the bug that the result of Director->convertToUI() is error.
+        
+    kyokomi
+        Fix the bug that UIButton doesn't support TTF font
+        Fix a but of TextReader
+        
+    gin0606
+        Add a new line at the end of a file
     
 Retired Core Developers:
     WenSheng Yang

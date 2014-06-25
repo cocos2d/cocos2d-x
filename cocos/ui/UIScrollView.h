@@ -251,7 +251,7 @@ public:
      * Add call back function called scrollview event triggered
      */
     CC_DEPRECATED_ATTRIBUTE void addEventListenerScrollView(Ref* target, SEL_ScrollViewEvent selector);
-    void addEventListener(const ccScrollViewCallback& callback);
+    virtual void addEventListener(const ccScrollViewCallback& callback);
     
     //all of these functions are related to innerContainer.
     virtual void addChild(Node * child) override;
@@ -264,7 +264,7 @@ public:
     virtual const Vector<Node*>& getChildren() const override;
     virtual ssize_t getChildrenCount() const override;
     virtual Node * getChildByTag(int tag) const override;
-    virtual Widget* getChildByName(const std::string& name)const override;
+    virtual Node* getChildByName(const std::string& name)const override;
     
     //handle touch event
     virtual bool onTouchBegan(Touch *touch, Event *unusedEvent) override;

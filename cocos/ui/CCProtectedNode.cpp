@@ -337,6 +337,14 @@ void ProtectedNode::visit(Renderer* renderer, const Mat4 &parentTransform, uint3
 
 void ProtectedNode::onEnter()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnEnter))
+            return;
+    }
+#endif
+    
     Node::onEnter();
     for( const auto &child: _protectedChildren)
         child->onEnter();
