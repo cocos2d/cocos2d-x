@@ -45,7 +45,7 @@ _capInsets(Rect::ZERO),
 _imageRenderer(nullptr),
 _textureFile(""),
 _imageTexType(TextureResType::LOCAL),
-_imageTextureSize(_size),
+_imageTextureSize(_contentSize),
 _imageRendererAdaptDirty(true)
 {
 
@@ -300,7 +300,7 @@ void ImageView::imageTextureScaleChangedWithSize()
     {
         if (_scale9Enabled)
         {
-            static_cast<extension::Scale9Sprite*>(_imageRenderer)->setPreferredSize(_size);
+            static_cast<extension::Scale9Sprite*>(_imageRenderer)->setPreferredSize(_contentSize);
         }
         else
         {
@@ -310,8 +310,8 @@ void ImageView::imageTextureScaleChangedWithSize()
                 _imageRenderer->setScale(1.0f);
                 return;
             }
-            float scaleX = _size.width / textureSize.width;
-            float scaleY = _size.height / textureSize.height;
+            float scaleX = _contentSize.width / textureSize.width;
+            float scaleY = _contentSize.height / textureSize.height;
             _imageRenderer->setScaleX(scaleX);
             _imageRenderer->setScaleY(scaleY);
         }

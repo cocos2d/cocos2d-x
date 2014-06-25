@@ -9,10 +9,12 @@ bool UIImageViewTest_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIImageView_Editor/ui_ImageView_editor_1.json"));
+//        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIImageView_Editor/ui_ImageView_editor_1.json"));
+        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UIImageView_Editor/ui_ImageView_editor_1.csb"));
+
         _touchGroup->addChild(_layout);
         Size screenSize = CCDirector::getInstance()->getWinSize();
-        Size rootSize = _layout->getSize();
+        Size rootSize = _layout->getContentSize();
         _touchGroup->setPosition(Vec2((screenSize.width - rootSize.width) / 2,
                                        (screenSize.height - rootSize.height) / 2));
         

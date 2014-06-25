@@ -265,7 +265,7 @@ void GLViewProtocol::handleTouchesBegin(int num, intptr_t ids[], float xs[], flo
 			touch->setTouchInfo(unusedIndex, (x - _viewPortRect.origin.x) / _scaleX,
                                      (y - _viewPortRect.origin.y) / _scaleY);
             
-            CCLOGINFO("x = %f y = %f", pTouch->getLocationInView().x, pTouch->getLocationInView().y);
+            CCLOGINFO("x = %f y = %f", touch->getLocationInView().x, touch->getLocationInView().y);
             
             g_touchIdReorderMap.insert(std::make_pair(id, unusedIndex));
             touchEvent._touches.push_back(touch);

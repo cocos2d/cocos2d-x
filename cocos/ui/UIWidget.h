@@ -228,15 +228,6 @@ public:
     CC_DEPRECATED_ATTRIBUTE float getTopInParent(){return this->getTopBoundary();}
     float getTopBoundary() const;
 
-    /**
-     * Gets a child from the container with its name
-     *
-     * @param name   An key to find the child widget.
-     *
-     * @return a Widget object whose name equals to the input parameter
-     */
-    virtual Widget* getChildByName(const std::string& name) const;
-
     virtual void visit(cocos2d::Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
 
     /**
@@ -376,27 +367,12 @@ public:
     const Vec2& getTouchEndPosition()const;
 
     /**
-     * Changes the name that is used to identify the widget easily.
-     *
-     * @param A const std::string that indentifies the widget.
-     */
-    void setName(const std::string& name);
-
-    /**
-     * Returns a name that is used to identify the widget easily.
-     *
-     * You can set tags to widget then identify them easily.
-     *
-     * @return A const std::string that identifies the widget.
-     */
-    const std::string& getName() const;
-
-    /**
      * Changes the size that is widget's size
      *
      * @param size that is widget's size
      */
-    virtual void setSize(const Size &size);
+    CC_DEPRECATED_ATTRIBUTE virtual void setSize(const Size &size);
+    virtual void setContentSize(const Size& contentSize) override;
 
     /**
      * Changes the percent that is widget's percent size
@@ -428,11 +404,11 @@ public:
      *
      * @return size
      */
-    const Size& getSize() const;
+    CC_DEPRECATED_ATTRIBUTE const Size& getSize() const;
     
     const Size& getCustomSize() const;
     
-    virtual const Size& getLayoutSize() {return _size;};
+    virtual const Size& getLayoutSize() {return _contentSize;};
 
     /**
      * Returns size percent of widget
@@ -628,7 +604,6 @@ CC_CONSTRUCTOR_ACCESS:
      *@return void
      */
     void  dispatchFocusEvent(Widget* widgetLoseFocus, Widget* widgetGetFocus);
-
     
 protected:
     //call back function called when size changed.
@@ -682,10 +657,8 @@ protected:
     PositionType _positionType;
 
     //use
-    std::string _name;
     int _actionTag;
 
-    Size _size;
     Size _customSize;
 
     Vec2 _sizePercent;
