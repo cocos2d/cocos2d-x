@@ -331,12 +331,13 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
                 flush3D();
                 cmd->preBatchDraw();
                 cmd->batchDraw();
+                _lastBatchedMeshCommand = cmd;
             }
             else
             {
                 cmd->batchDraw();
             }
-            _lastBatchedMeshCommand = cmd;
+            
 //            cmd->execute();
         }
         else

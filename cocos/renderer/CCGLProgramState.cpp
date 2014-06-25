@@ -358,13 +358,14 @@ void GLProgramState::applyGLProgram(const Mat4& modelView)
     _glprogram->use();
     _glprogram->setUniformsForBuiltins(modelView);
 }
-void GLProgramState::applyAttributes()
+void GLProgramState::applyAttributes(bool applyAttribFlags)
 {
     // Don't set attributes if they weren't set
     // Use Case: Auto-batching
     if(_vertexAttribsFlags) {
         // enable/disable vertex attribs
-        GL::enableVertexAttribs(_vertexAttribsFlags);
+        if (applyAttribFlags)
+            GL::enableVertexAttribs(_vertexAttribsFlags);
         // set attributes
         for(auto &attribute : _attributes)
         {

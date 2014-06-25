@@ -161,7 +161,11 @@ public:
     void apply(const Mat4& modelView);
     
     void applyGLProgram(const Mat4& modelView);
-    void applyAttributes();
+    /**
+     * apply vertex attributes
+     * @param applyAttribFlags Call GL::enableVertexAttribs(_vertexAttribsFlags) or not
+     */
+    void applyAttributes(bool applyAttribFlags = true);
     void applyUniforms();
 
     void setGLProgram(GLProgram* glprogram);

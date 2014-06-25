@@ -85,7 +85,6 @@ void MeshCommand::init(float globalOrder,
     _indexBuffer = indexBuffer;
     _primitive = primitive;
     _indexFormat = indexFormat;
-    //_vao = vao;
     _indexCount = indexCount;
     _mv = mv;
 }
@@ -169,8 +168,6 @@ void MeshCommand::genMaterialID(GLuint texID, void* glProgramState, void* mesh, 
     }
     int intArray[] = {(int)texID, statekey[0], statekey[1], meshkey[0], meshkey[1], (int)blend.src, (int)blend.dst};
     _materialID = XXH32((const void*)intArray, sizeof(intArray), 0);
-    
-    //generate vao here
 }
 
 void MeshCommand::MatrixPalleteCallBack( GLProgram* glProgram, Uniform* uniform)
@@ -185,12 +182,13 @@ void MeshCommand::preBatchDraw()
     // Set material
     GL::bindTexture2D(_textureID);
     GL::blendFunc(_blendType.src, _blendType.dst);
-    
+
     if (_vao == 0)
         buildVAO();
     if (_vao)
     {
         GL::bindVAO(_vao);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
     }
     else
     {
@@ -198,8 +196,6 @@ void MeshCommand::preBatchDraw()
         _glProgramState->applyAttributes();
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
     }
-    
-    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
 }
 void MeshCommand::batchDraw()
 {
@@ -215,7 +211,6 @@ void MeshCommand::batchDraw()
     
     _glProgramState->applyGLProgram(_mv);
     _glProgramState->applyUniforms();
-    //_glProgramState->apply(_mv);
     
     // Draw
     glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
@@ -274,10 +269,20 @@ void MeshCommand::buildVAO()
     releaseVAO();
     if (Configuration::getInstance()->supportsShareableVAO())
     {
+        glGenVertexArrays(1, &_vao);
+        GL::bindVAO(_vao);
         glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
-        _glProgramState->applyAttributes();
+        auto flags = _glProgramState->getVertexAttribsFlags();
+        for (int i = 0; flags > 0; i++) {
+            int flag = 1 << i;
+            if (flag & flags)
+                glEnableVertexAttribArray(i);
+            flags &= ~flag;
+        }
+        _glProgramState->applyAttributes(false);
         
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
+        
         GL::bindVAO(0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -288,6 +293,7 @@ void MeshCommand::releaseVAO()
     if (Configuration::getInstance()->supportsShareableVAO() && _vao)
     {
         glDeleteVertexArrays(1, &_vao);
+        _vao = 0;
         GL::bindVAO(0);
     }
 }
